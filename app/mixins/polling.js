@@ -1,7 +1,8 @@
-import Ember from 'ember';
+import { isArray } from '@ember/array';
+import Mixin from '@ember/object/mixin';
 import { service } from 'ember-decorators/service';
 
-export default Ember.Mixin.create({
+export default Mixin.create({
   @service polling: null,
 
   init() {
@@ -55,7 +56,7 @@ export default Ember.Mixin.create({
     let pollModels;
     pollModels = this.get('pollModels');
     if (pollModels) {
-      if (!Ember.isArray(pollModels)) {
+      if (!isArray(pollModels)) {
         pollModels = [pollModels];
       }
       pollModels.forEach((property) => {
@@ -72,7 +73,7 @@ export default Ember.Mixin.create({
     let pollModels = this.get('pollModels');
 
     if (pollModels) {
-      if (!Ember.isArray(pollModels)) {
+      if (!isArray(pollModels)) {
         pollModels = [pollModels];
       }
       pollModels.forEach((property) => {

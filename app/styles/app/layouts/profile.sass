@@ -112,19 +112,13 @@ p.profile-user-last
   display: inline-block !important
 
 .profile-repo
-  border-radius: 2px
+  display: inline-block
   position: relative
-  width: grid-calc(13, 24)
   padding: .25em .5em .3em
   white-space: nowrap
   overflow: hidden
   vertical-align: middle
-  span:not(.loading-indicator)
-    display: none
-    margin-left: 1rem
-    font-size: $font-size-sm
-    color: $cement-grey
-    line-height: 1
+  border-radius: 2px
   .sync-spinner
     vertical-align: top
   &.admin
@@ -153,10 +147,6 @@ p.profile-user-last
   @media #{$medium-up}
     width: grid-calc(18, 24)
     height: 30px
-    &:hover
-      span
-        display: inline-block
-        color: $cement-grey
   @media #{$large-up}
     width: grid-calc(19, 24)
 

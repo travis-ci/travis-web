@@ -1,8 +1,8 @@
-import Ember from 'ember';
+import Service from '@ember/service';
 import config from 'travis/config/environment';
 import { service } from 'ember-decorators/service';
 
-export default Ember.Service.extend({
+export default Service.extend({
   @service auth: null,
   @service features: null,
 

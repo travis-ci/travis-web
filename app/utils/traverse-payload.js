@@ -1,15 +1,15 @@
-import Ember from 'ember';
+import { isArray } from '@ember/array';
 
 let traverse = function (object, callback) {
   if (!object) {
     return;
   }
 
-  if (typeof(object) === 'object' && !Ember.isArray(object)) {
+  if (typeof(object) === 'object' && !isArray(object)) {
     callback(object);
   }
 
-  if (Ember.isArray(object)) {
+  if (isArray(object)) {
     for (let item of object) {
       traverse(item, callback);
     }

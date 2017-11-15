@@ -1,8 +1,6 @@
-import Ember from 'ember';
+import Service, { inject as service } from '@ember/service';
 
-let { service } = Ember.inject;
-
-export default Ember.Service.extend({
+export default Service.extend({
   auth: service(),
   isShowingTriggerBuildModal: false,
 

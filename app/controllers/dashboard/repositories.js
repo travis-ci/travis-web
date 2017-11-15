@@ -1,10 +1,11 @@
-import Ember from 'ember';
+import { isBlank, isEqual } from '@ember/utils';
+import Controller from '@ember/controller';
 import { task, taskGroup } from 'ember-concurrency';
 import { service } from 'ember-decorators/service';
 import { computed } from 'ember-decorators/object';
 import dashboardRepositoriesSort from 'travis/utils/dashboard-repositories-sort';
 
-export default Ember.Controller.extend({
+export default Controller.extend({
   queryParams: ['account', 'offset'],
   offset: 0,
 
@@ -74,13 +75,13 @@ export default Ember.Controller.extend({
     }
 
     const repos = repositories.filter((item) => {
-      if (!Ember.isBlank(account)) {
-        if (Ember.isEqual(type, 'user')) {
-          if (Ember.isEqual(item.get('owner.@type'), 'user')) {
+      if (!isBlank(account)) {
+        if (isEqual(type, 'user')) {
+          if (isEqual(item.get('owner.@type'), 'user')) {
             return item;
           }
         } else {
-          if (Ember.isEqual(item.get('owner.login'), accountParam)) {
+          if (isEqual(item.get('owner.login'), accountParam)) {
             return item;
           }
         }
@@ -103,7 +104,7 @@ export default Ember.Controller.extend({
 
   actions: {
     selectOrg(org) {
-      let login = Ember.isBlank(org) ? undefined : org.get('login');
+      let login = isBlank(org) ? undefined : org.get('login');
       return this.set('account', login);
     }
   }

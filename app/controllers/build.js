@@ -1,3 +1,4 @@
+import Controller from '@ember/controller';
 import Ember from 'ember';
 import Polling from 'travis/mixins/polling';
 import GithubUrlProperties from 'travis/mixins/github-url-properties';
@@ -9,7 +10,7 @@ import { service } from 'ember-decorators/service';
 import { alias } from 'ember-decorators/object/computed';
 import { observes } from 'ember-decorators/object';
 
-export default Ember.Controller.extend(GithubUrlProperties, Polling, {
+export default Controller.extend(GithubUrlProperties, Polling, {
   @service auth: null,
   @service('updateTimes') updateTimesService: null,
 

@@ -1,9 +1,10 @@
+import { htmlSafe } from '@ember/string';
+import { helper } from '@ember/component/helper';
 import formatCommit from 'travis/utils/format-commit';
-import Ember from 'ember';
 
-export default Ember.Helper.helper((params) => {
+export default helper((params) => {
   const [commit] = params;
   if (commit) {
-    return new Ember.String.htmlSafe(formatCommit(commit.get('sha'), commit.get('branch')));
+    return new htmlSafe(formatCommit(commit.get('sha'), commit.get('branch')));
   }
 });

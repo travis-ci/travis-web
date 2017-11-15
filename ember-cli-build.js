@@ -36,9 +36,7 @@ module.exports = function () {
     'ember-cli-babel': {
       includePolyfill: true,
     },
-    // need to use babel6 key here until
-    // we can upgrade to ember-cli@2.13
-    babel6: {
+    babel: {
       blacklist: ['regenerator'],
       plugins: [
         'transform-decorators-legacy',
@@ -68,7 +66,6 @@ module.exports = function () {
 
   app.import('bower_components/pusher/dist/pusher.js');
   app.import('bower_components/jquery-timeago/jquery.timeago.js');
-  app.import('bower_components/moment/moment.js');
 
   app.import('bower_components/js-emoji/demo/emoji.css');
   app.import('bower_components/js-emoji/lib/emoji.js');

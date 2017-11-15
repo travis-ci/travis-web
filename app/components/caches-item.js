@@ -1,9 +1,9 @@
-import Ember from 'ember';
+import Component from '@ember/component';
 import config from 'travis/config/environment';
 import { service } from 'ember-decorators/service';
 import { task } from 'ember-concurrency';
 
-export default Ember.Component.extend({
+export default Component.extend({
   @service ajax: null,
 
   tagName: 'li',

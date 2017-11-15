@@ -1,9 +1,9 @@
-import Ember from 'ember';
+import ArrayProxy from '@ember/array/proxy';
 import limit from 'travis/utils/computed-limit';
 import { computed } from 'ember-decorators/object';
 import { alias } from 'ember-decorators/object/computed';
 
-export default Ember.ArrayProxy.extend({
+export default ArrayProxy.extend({
   limit: 10,
 
   arrangedContent: limit('content', 'limit'),

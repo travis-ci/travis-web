@@ -1,5 +1,8 @@
 /* global Travis */
-import Ember from 'ember';
+import ArrayProxy from '@ember/array/proxy';
+
+import { next } from '@ember/runloop';
+import { observer } from '@ember/object';
 import Model from 'ember-data/model';
 import config from 'travis/config/environment';
 import attr from 'ember-data/attr';
@@ -26,8 +29,8 @@ export default Model.extend({
     return name || login;
   },
 
-  isSyncingDidChange: Ember.observer('isSyncing', function () {
-    return Ember.run.next(this, function () {
+  isSyncingDidChange: observer('isSyncing', function () {
+    return next(this, function () {
       if (this.get('isSyncing')) {
         return this.poll();
       }
@@ -46,7 +49,7 @@ export default Model.extend({
 
   @computed('_rawPermissions')
   permissions(_rawPermissions) {
-    let permissions = Ember.ArrayProxy.create({
+    let permissions = ArrayProxy.create({
       content: []
     });
     _rawPermissions.then(data => permissions.set('content', data.permissions));
@@ -55,7 +58,7 @@ export default Model.extend({
 
   @computed('_rawPermissions')
   adminPermissions(_rawPermissions) {
-    let permissions = Ember.ArrayProxy.create({
+    let permissions = ArrayProxy.create({
       content: []
     });
     _rawPermissions.then(data => permissions.set('content', data.admin));
@@ -64,7 +67,7 @@ export default Model.extend({
 
   @computed('_rawPermissions')
   pullPermissions(_rawPermissions) {
-    const permissions = Ember.ArrayProxy.create({
+    const permissions = ArrayProxy.create({
       content: []
     });
     _rawPermissions.then(data => permissions.set('content', data.pull));
@@ -73,7 +76,7 @@ export default Model.extend({
 
   @computed('_rawPermissions')
   pushPermissions(_rawPermissions) {
-    const permissions = Ember.ArrayProxy.create({
+    const permissions = ArrayProxy.create({
       content: []
     });
     _rawPermissions.then(data => permissions.set('content', data.push));

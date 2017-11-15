@@ -1,7 +1,7 @@
+import { getWithDefault } from '@ember/object';
 import TravisRoute from 'travis/routes/basic';
 import Repo from 'travis/models/repo';
 import ScrollResetMixin from 'travis/mixins/scroll-reset';
-import Ember from 'ember';
 import { service } from 'ember-decorators/service';
 
 export default TravisRoute.extend(ScrollResetMixin, {
@@ -36,7 +36,7 @@ export default TravisRoute.extend(ScrollResetMixin, {
 
   serialize(repo) {
     // slugs are sometimes unknown ???
-    const slug = Ember.getWithDefault(repo, 'slug', 'unknown/unknown');
+    const slug = getWithDefault(repo, 'slug', 'unknown/unknown');
     const [owner, name] = slug.split('/');
 
     return {

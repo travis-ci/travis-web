@@ -1,10 +1,10 @@
 /* global signInUser */
+import { assign } from '@ember/polyfills';
 import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import page from 'travis/tests/pages/build-list';
 import topPage from 'travis/tests/pages/top';
 import generatePusherPayload from 'travis/tests/helpers/generate-pusher-payload';
-import Ember from 'ember';
 
 moduleForAcceptance('Acceptance | repo build list routes', {
   beforeEach() {
@@ -47,13 +47,12 @@ moduleForAcceptance('Acceptance | repo build list routes', {
 
     const commitAttributes = {
       sha: '1234567890',
-      author_name: currentUser.name,
       author: gitUser,
       committer: gitUser
     };
     this.commitAttributes = commitAttributes;
 
-    lastBuild.createCommit(Ember.assign({
+    lastBuild.createCommit(assign({
       message: 'A generic cron commit message'
     }, commitAttributes));
     lastBuild.save();
@@ -161,9 +160,11 @@ test('build history shows, more can be loaded, and a created build gets added an
       state: 'passed'
     });
 
+    let us = server.create('git-user', { name: 'us' });
+
     olderBuild.createCommit({
       sha: 'acab',
-      author_name: 'us'
+      author: us
     });
     olderBuild.save();
   });

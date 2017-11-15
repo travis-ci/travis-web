@@ -24,5 +24,4 @@ test('it switches state when clicked', function (assert) {
   this.render(hbs`{{repository-status-toggle repository=repository}}`);
 
   assert.ok(this.$('.switch').hasClass('active'), 'switch should have active class');
-  assert.equal(this.$('.profile-repo span').text().trim(), 'A foo repo', 'repo description should be displayed');
 });

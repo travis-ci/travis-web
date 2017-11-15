@@ -1,8 +1,8 @@
-import Ember from 'ember';
+import Mixin from '@ember/object/mixin';
 import attr from 'ember-data/attr';
 import { computed } from 'ember-decorators/object';
 
-export default Ember.Mixin.create({
+export default Mixin.create({
   _startedAt: attr(),
   _finishedAt: attr(),
 

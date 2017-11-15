@@ -1,11 +1,15 @@
 /* global Travis */
+import { observer } from '@ember/object';
+
+import { isEmpty } from '@ember/utils';
+import { Promise as EmberPromise } from 'rsvp';
+import Service from '@ember/service';
 import config from 'travis/config/environment';
-import Ember from 'ember';
 import { computed } from 'ember-decorators/object';
 import { alias } from 'ember-decorators/object/computed';
 import { service } from 'ember-decorators/service';
 
-export default Ember.Service.extend({
+export default Service.extend({
   @service router: null,
   @service flashes: null,
   @service store: null,
@@ -42,7 +46,14 @@ export default Ember.Service.extend({
       this.autoSignIn(data);
     } else {
       this.set('state', 'signing-in');
-      window.location = `${this.get('endpoint')}/auth/handshake?redirect_uri=${location}`;
+
+      let url = new URL(window.location.href);
+
+      if (url.pathname === '/plans') {
+        url.pathname = '/';
+      }
+
+      window.location = `${this.get('endpoint')}/auth/handshake?redirect_uri=${url}`;
     }
   },
 
@@ -144,11 +155,11 @@ export default Ember.Service.extend({
             Travis.trigger('user:refreshed', data.user);
           }
         } else {
-          return Ember.RSVP.Promise.reject();
+          return EmberPromise.reject();
         }
       });
     } else {
-      return Ember.RSVP.Promise.resolve();
+      return EmberPromise.resolve();
     }
   },
 
@@ -199,7 +210,7 @@ export default Ember.Service.extend({
   clearNonAuthFlashes() {
     const flashMessages = this.get('flashes.flashes.content') || [];
     const errorMessages = flashMessages.filterBy('type', 'error');
-    if (!Ember.isEmpty(errorMessages)) {
+    if (!isEmpty(errorMessages)) {
       const errMsg = errorMessages.get('firstObject.message');
       if (errMsg !== this.get('tokenExpiredMsg')) {
         return this.get('flashes').clear();
@@ -213,7 +224,7 @@ export default Ember.Service.extend({
     return this.get('currentUser').sync();
   },
 
-  syncingDidChange: Ember.observer('isSyncing', 'currentUser', function () {
+  syncingDidChange: observer('isSyncing', 'currentUser', function () {
     const user = this.get('currentUser');
     if (user && user.get('isSyncing') && !user.get('syncedAt')) {
       return this.get('router').transitionTo('first_sync');

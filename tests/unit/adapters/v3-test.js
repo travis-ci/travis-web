@@ -1,10 +1,10 @@
+import EmberObject from '@ember/object';
 import { moduleFor, test } from 'ember-qunit';
-import Ember from 'ember';
 
 moduleFor('adapter:v3', 'Unit | Adapter | V3', {
   needs: ['model:build', 'service:auth'],
   beforeEach: function () {
-    this.register('service:auth', Ember.Object.extend({
+    this.register('service:auth', EmberObject.extend({
       token: function () {
         return 'foo';
       }

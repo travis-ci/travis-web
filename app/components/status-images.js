@@ -1,8 +1,8 @@
-import Ember from 'ember';
+import Component from '@ember/component';
 import { service } from 'ember-decorators/service';
 import { computed } from 'ember-decorators/object';
 
-export default Ember.Component.extend({
+export default Component.extend({
   @service auth: null,
   @service externalLinks: null,
   @service statusImages: null,

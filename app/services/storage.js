@@ -1,7 +1,7 @@
-import Ember from 'ember';
+import Service from '@ember/service';
 import Storage from 'travis/utils/hash-storage';
 
-export default Ember.Service.extend({
+export default Service.extend({
   init() {
     let storage;
     try {

@@ -1,11 +1,13 @@
-import Ember from 'ember';
+import { isArray } from '@ember/array';
+import { isEmpty } from '@ember/utils';
+import Service from '@ember/service';
 import config from 'travis/config/environment';
 import Repo from 'travis/models/repo';
 import { task, timeout } from 'ember-concurrency';
 import { computed } from 'ember-decorators/object';
 import { service } from 'ember-decorators/service';
 
-export default Ember.Service.extend({
+export default Service.extend({
   @service auth: null,
   @service store: null,
   @service tabStates: null,
@@ -51,7 +53,7 @@ export default Ember.Service.extend({
   }).restartable(),
 
   requestOwnedRepositories: task(function* () {
-    if (!Ember.isEmpty(this.get('ownedRepos'))) {
+    if (!isEmpty(this.get('ownedRepos'))) {
       return this.set('_repos', this.get('ownedRepos'));
     } else {
       let user = this.get('auth.currentUser');
@@ -120,7 +122,7 @@ export default Ember.Service.extend({
         }
       });
     } else {
-      if (Ember.isArray(repos)) {
+      if (isArray(repos)) {
         return repos;
       } else {
         return [];

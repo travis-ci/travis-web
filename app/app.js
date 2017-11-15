@@ -1,5 +1,7 @@
 /* global Travis, HS */
-import Ember from 'ember';
+import Evented from '@ember/object/evented';
+
+import Application from '@ember/application';
 import Resolver from './resolver';
 import loadInitializers from 'ember-load-initializers';
 import config from './config/environment';
@@ -9,7 +11,7 @@ import initHsBeacon from 'travis/utils/init-hs-beacon';
 const debuggingEnabled = config.featureFlags['debug-logging'];
 const proVersion = config.featureFlags['pro-version'];
 
-const App = Ember.Application.extend(Ember.Evented, {
+const App = Application.extend(Evented, {
   modulePrefix: config.modulePrefix,
   podModulePrefix: config.podModulePrefix,
   Resolver,

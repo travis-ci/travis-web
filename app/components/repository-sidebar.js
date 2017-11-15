@@ -1,3 +1,6 @@
+import { isEmpty } from '@ember/utils';
+import { schedule } from '@ember/runloop';
+import Component from '@ember/component';
 import Ember from 'ember';
 import Visibility from 'npm:visibilityjs';
 import { task } from 'ember-concurrency';
@@ -5,7 +8,7 @@ import { computed } from 'ember-decorators/object';
 import { alias } from 'ember-decorators/object/computed';
 import { service } from 'ember-decorators/service';
 
-export default Ember.Component.extend({
+export default Component.extend({
   @service tabStates: null,
   @service jobState: null,
   @service ajax: null,
@@ -14,15 +17,19 @@ export default Ember.Component.extend({
   @service store: null,
   @service auth: null,
   @service router: null,
+  classNames: ['dupa'],
 
-  init(...args) {
+  didInsertElement(...args) {
     this._super(args);
     // this starts the fetch after the sidebar is rendered, which is not ideal.
     // But I'm otherwise unable to reference that state within two separate
     // templates...
-    Ember.run.schedule('afterRender', () => {
+    schedule('afterRender', () => {
       this.get('fetchRepositoryData').perform();
-      this.get('jobState.fetchRunningJobs').perform();
+      if (this.get('features.proVersion')) {
+        this.get('jobState.fetchRunningJobs').perform();
+        this.get('jobState.fetchQueuedJobs').perform();
+      }
     });
   },
 
@@ -74,26 +81,17 @@ export default Ember.Component.extend({
     return runningJobs;
   },
 
-  @computed('features.proVersion')
-  queuedJobs(proVersion) {
+  @computed('features.proVersion', 'jobState.queuedJobs.[]')
+  queuedJobs(proVersion, queuedJobs) {
     if (!proVersion) { return []; }
-
-    const queuedStates = ['created'];
-    const result = this.get('store').filter(
-      'job',
-      job => queuedStates.includes(job.get('state'))
-    );
-    result.set('isLoaded', false);
-    result.then(() => result.set('isLoaded', true));
-
-    return result;
+    return queuedJobs;
   },
 
   viewOwned: task(function* () {
     const ownedRepositories = yield this.get('repositories.requestOwnedRepositories').perform();
     const onIndexPage = this.get('router.currentRouteName') === 'index';
 
-    if (this.get('auth.signedIn') && Ember.isEmpty(ownedRepositories) && onIndexPage) {
+    if (this.get('auth.signedIn') && isEmpty(ownedRepositories) && onIndexPage) {
       this.get('router').transitionTo('getting_started');
     }
   }),

@@ -19,7 +19,6 @@
   height: 0
   transform-origin: center center
   opacity: 0
-  z-index: -1
   will-change: opacity
   transition: opacity 150ms ease
 
@@ -49,7 +48,7 @@
     text-decoration: underline
 
   &.is-open
-    z-index: 90
+    @include z-index(above-flashes)
     border: solid 2px $cream-dark
     opacity: 1
     height: auto

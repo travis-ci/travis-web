@@ -1,9 +1,11 @@
-import Ember from 'ember';
+import { isNone } from '@ember/utils';
+import { get } from '@ember/object';
+import Controller from '@ember/controller';
 import { controller } from 'ember-decorators/controller';
 import { computed } from 'ember-decorators/object';
 import { alias, notEmpty, filter } from 'ember-decorators/object/computed';
 
-export default Ember.Controller.extend({
+export default Controller.extend({
   @controller('repo') repoController: null,
 
   @alias('repoController.tab') tab: null,
@@ -31,8 +33,8 @@ export default Ember.Controller.extend({
 
   _sortBranchesByFinished(branches) {
     const unfinished = branches.filter(branch => {
-      const finishedAt = Ember.get(branch, 'last_build.finished_at');
-      return Ember.isNone(finishedAt);
+      const finishedAt = get(branch, 'last_build.finished_at');
+      return isNone(finishedAt);
     });
 
     const sortedFinished = branches

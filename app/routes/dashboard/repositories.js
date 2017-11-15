@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import { hash } from 'rsvp';
 import TravisRoute from 'travis/routes/basic';
 import dashboardRepositoriesSort from 'travis/utils/dashboard-repositories-sort';
 
@@ -19,7 +19,7 @@ export default TravisRoute.extend({
   },
 
   model(params) {
-    return Ember.RSVP.hash({
+    return hash({
       starredRepos: this.store.filter('repo', {
         active: true,
         sort_by: 'current_build:desc',
@@ -45,7 +45,7 @@ export default TravisRoute.extend({
     const repos = model.repos;
 
     // This preloads related models to prevent a backtracking rerender error.
-    return Ember.RSVP.hash({
+    return hash({
       currentBuilds: repos.map(repo => repo.get('currentBuild')),
       defaultBranches: repos.map(repo => repo.get('defaultBranch'))
     });

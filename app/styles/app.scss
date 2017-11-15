@@ -6,6 +6,7 @@
 @import "app/data";
 @import "app/mixins";
 @import "app/base";
+@import "app/z-index";
 
 @import "app/modules/logo";
 @import "app/modules/tofuburger";
@@ -67,6 +68,5 @@
 @import "app/pages/landing";
 @import "app/pages/home-pro";
 @import "app/pages/getting-started";
-@import "app/pages/team";
 @import "app/pages/plans";
 @import "app/pages/logo";

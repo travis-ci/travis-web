@@ -1,9 +1,10 @@
-import Ember from 'ember';
+import EmberObject from '@ember/object';
+import Service from '@ember/service';
 import { test, moduleForComponent } from 'ember-qunit';
 // import wait from 'ember-test-helpers/wait';
 import hbs from 'htmlbars-inline-precompile';
 
-const ajaxStub = Ember.Service.extend({
+const ajaxStub = Service.extend({
   ajax() {
     // console.log('calling ....');
   }
@@ -18,7 +19,7 @@ moduleForComponent('dashboard-row', 'Integration | Component | dashboard row', {
 });
 
 test('it renders data correctly', function (assert) {
-  const repo = Ember.Object.create({
+  const repo = EmberObject.create({
     active: true,
     currentBuild: {
       branch: { name: 'some-branch' },

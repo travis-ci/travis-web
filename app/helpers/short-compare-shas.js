@@ -1,6 +1,6 @@
-import Ember from 'ember';
+import { helper } from '@ember/component/helper';
 
-export default Ember.Helper.helper((params) => {
+export default helper((params) => {
   const [url] = params;
   let path, shas;
   path = (url || '').split('/').pop();

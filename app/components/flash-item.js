@@ -1,9 +1,9 @@
-import Ember from 'ember';
+import Component from '@ember/component';
 import { computed } from 'ember-decorators/object';
 import { alias } from 'ember-decorators/object/computed';
 import { service } from 'ember-decorators/service';
 
-export default Ember.Component.extend({
+export default Component.extend({
   tagName: 'li',
   classNameBindings: ['type', 'topBarVisible:below-top-bar:fixed'],
 

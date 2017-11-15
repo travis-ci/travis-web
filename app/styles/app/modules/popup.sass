@@ -1,5 +1,5 @@
 .ember-modal-dialog
-  z-index: 51
+  @include z-index(dialog)
   position: fixed
   &.emd-in-place
     position: static
@@ -17,7 +17,6 @@
     position: fixed
     top: 0
     left: 0
-    z-index: 50
     display: flex
     align-items: center
     justify-content: center
@@ -34,7 +33,7 @@
   position: fixed
   top: 0
   left: 0
-  z-index: 50
+  @include z-index(overlay)
 
 .ember-modal-dialog
   border-radius: 2px

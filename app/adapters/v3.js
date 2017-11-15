@@ -1,3 +1,6 @@
+import { merge } from '@ember/polyfills';
+import { underscore } from '@ember/string';
+import { get } from '@ember/object';
 import Ember from 'ember';
 import config from 'travis/config/environment';
 import RESTAdapter from 'ember-data/adapters/rest';
@@ -16,9 +19,10 @@ export default RESTAdapter.extend({
     'Content-Type': 'application/json'
   },
 
-  ajaxOptions: function (url, type, options) {
+  ajaxOptions: function (url, type = 'GET', options) {
     options = options || {};
     options.data = options.data || {};
+    options.data = merge({}, options.data); // clone
 
     for (let key in options.data) {
       let value = options.data[key];
@@ -53,9 +57,9 @@ export default RESTAdapter.extend({
     return hash;
   },
 
-  buildURL: function (modelName, id) {
+  buildURL: function (modelName, id, snapshot, requestType, query) {
     let url = [];
-    const host = Ember.get(this, 'host');
+    const host = get(this, 'host');
     const prefix = this.urlPrefix();
     const pathPrefix = this.pathPrefix(...arguments);
 
@@ -82,7 +86,7 @@ export default RESTAdapter.extend({
   pathPrefix() {},
 
   pathForType: function (modelName, id) {
-    const underscored = Ember.String.underscore(modelName);
+    const underscored = underscore(modelName);
     return id ? underscored :  Ember.String.pluralize(underscored);
   },
 

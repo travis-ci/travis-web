@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import $ from 'jquery';
 
 export default (function () {
   function LogFolder(element) {
@@ -9,7 +9,7 @@ export default (function () {
         .off('click', handlerSelector) // remove any previous click handlers
         .on('click', handlerSelector, (function (_this) {
           return function (event) {
-            let folder = _this.getFolderFromLine(Ember.$(event.target));
+            let folder = _this.getFolderFromLine($(event.target));
             _this.toggle(folder);
             event.preventDefault();
             return false;

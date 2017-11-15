@@ -25,6 +25,7 @@ test('renders no pull requests messaging when none present', function (assert) {
 });
 
 test('view and cancel pull requests', function (assert) {
+  server.logging = true;
   const repository = server.create('repository');
 
   const pullRequestBuild = server.create('build', {
@@ -39,12 +40,14 @@ test('view and cancel pull requests', function (assert) {
     branch: this.branch,
   });
 
+  const gitUser = server.create('git-user', {
+    name: this.currentUser.name
+  });
+
   const pullRequestCommit = pullRequestBuild.createCommit({
     sha: '1234567890',
-    author_name: this.currentUser.name,
-    author_email: this.currentUser.email,
-    committer_name: this.currentUser.name,
-    committer_email: this.currentUser.email,
+    author: gitUser,
+    committer: gitUser
   });
 
   pullRequestBuild.save();

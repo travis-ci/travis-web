@@ -1,4 +1,5 @@
-import Ember from 'ember';
+import $ from 'jquery';
+import { throttle, later } from '@ember/runloop';
 
 export default (function () {
   function Tailing(window1, tailSelector, logSelector) {
@@ -7,7 +8,7 @@ export default (function () {
     this.logSelector = logSelector;
     this.position = this.window.scrollTop();
     this.window.scroll(() => {
-      Ember.run.throttle(this, this.onScroll, [], 200, false);
+      throttle(this, this.onScroll, [], 200, false);
     });
     return this;
   }
@@ -17,18 +18,18 @@ export default (function () {
   };
 
   Tailing.prototype.tail = function () {
-    return Ember.$(this.tailSelector);
+    return $(this.tailSelector);
   };
 
   Tailing.prototype.log = function () {
-    return Ember.$(this.logSelector);
+    return $(this.logSelector);
   };
 
   Tailing.prototype.run = function () {
     this.autoScroll();
     this.positionButton();
     if (this.active()) {
-      return Ember.run.later(this.run.bind(this), this.options.timeout);
+      return later(this.run.bind(this), this.options.timeout);
     }
   };
 
@@ -84,12 +85,12 @@ export default (function () {
 
   Tailing.prototype.positionButton = function () {
     let max, offset, tail;
-    tail = Ember.$('#tail');
+    tail = $('#tail');
     if (tail.length === 0) {
       return;
     }
-    offset = Ember.$(window).scrollTop() - Ember.$('#log').offset().top;
-    max = Ember.$('#log').height() - Ember.$('#tail').height() + 5;
+    offset = $(window).scrollTop() - $('#log').offset().top;
+    max = $('#log').height() - $('#tail').height() + 5;
     if (offset > max) {
       offset = max;
     }

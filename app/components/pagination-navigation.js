@@ -1,8 +1,8 @@
-import Ember from 'ember';
+import Component from '@ember/component';
 import { computed } from 'ember-decorators/object';
 import { alias } from 'ember-decorators/object/computed';
 
-export default Ember.Component.extend({
+export default Component.extend({
   tagName: 'nav',
   classNames: ['pagination-navigation'],
   @alias('collection.pagination') pagination: null,

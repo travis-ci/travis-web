@@ -1,9 +1,9 @@
-import Ember from 'ember';
+import Component from '@ember/component';
 import { service } from 'ember-decorators/service';
 import { task } from 'ember-concurrency';
 import { computed } from 'ember-decorators/object';
 
-export default Ember.Component.extend({
+export default Component.extend({
   @service flashes: null,
 
   tagName: 'button',
@@ -24,10 +24,11 @@ export default Ember.Component.extend({
   },
 
   save: task(function* () {
-    this.toggleProperty('active');
-
     try {
-      yield this.get('repo').saveSetting(this.get('key'), this.get('active'));
+      // try saving with the new state, only change local state if successful
+      const futureState = !this.get('active');
+      yield this.get('repo').saveSetting(this.get('key'), futureState);
+      this.toggleProperty('active');
     } catch (e) {
       this.get('flashes').error('There was an error while saving your settings. Please try again.');
     }

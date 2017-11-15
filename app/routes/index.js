@@ -1,7 +1,8 @@
-import Ember from 'ember';
+import $ from 'jquery';
+import Route from '@ember/routing/route';
 import { service } from 'ember-decorators/service';
 
-export default Ember.Route.extend({
+export default Route.extend({
   @service auth: null,
   @service tabStates: null,
   @service repositories: null,
@@ -18,7 +19,7 @@ export default Ember.Route.extend({
 
   renderTemplate(...args) {
     if (this.get('auth.signedIn')) {
-      Ember.$('body').attr('id', 'home');
+      $('body').attr('id', 'home');
     }
     return this._super(args);
   },

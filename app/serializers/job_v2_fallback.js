@@ -18,7 +18,7 @@ export default V2FallbackSerializer.extend({
   },
 
   normalizeSingleResponse: function (store, primaryModelClass, payload/* , id, requestType*/) {
-    if (payload.commit) {
+    if (!payload['@type'] && payload.commit) {
       payload.job.commit = payload.commit;
       delete payload.job.commit_id;
     }

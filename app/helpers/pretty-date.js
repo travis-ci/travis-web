@@ -1,7 +1,10 @@
-/* global moment */
-import Ember from 'ember';
+import { htmlSafe } from '@ember/string';
 
-export default Ember.Helper.helper((params) => {
+import { helper } from '@ember/component/helper';
+
+import moment from 'moment';
+
+export default helper((params) => {
   let date = new Date(params[0]);
-  return new Ember.String.htmlSafe(moment(date).format('MMMM D, YYYY H:mm:ss') || '-');
+  return new htmlSafe(moment(date).format('MMMM D, YYYY H:mm:ss') || '-');
 });

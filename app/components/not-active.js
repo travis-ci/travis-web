@@ -1,11 +1,12 @@
-import Ember from 'ember';
+import $ from 'jquery';
+import Component from '@ember/component';
 import config from 'travis/config/environment';
 import { service } from 'ember-decorators/service';
 import { computed } from 'ember-decorators/object';
 import { alias } from 'ember-decorators/object/computed';
 import { task } from 'ember-concurrency';
 
-export default Ember.Component.extend({
+export default Component.extend({
   @service auth: null,
   @service flashes: null,
   @service permissions: null,
@@ -25,7 +26,7 @@ export default Ember.Component.extend({
     const repoId = this.get('repo.id');
 
     try {
-      const response = yield Ember.$.ajax(`${apiEndpoint}/repo/${repoId}/activate`, {
+      const response = yield $.ajax(`${apiEndpoint}/repo/${repoId}/activate`, {
         headers: {
           Authorization: `token ${this.get('auth').token()}`,
           'Travis-API-Version': '3'

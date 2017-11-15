@@ -1,4 +1,5 @@
-import Ember from 'ember';
+import $ from 'jquery';
+import ArrayProxy from '@ember/array/proxy';
 import TravisRoute from 'travis/routes/basic';
 import config from 'travis/config/environment';
 import { service } from 'ember-decorators/service';
@@ -11,7 +12,7 @@ export default TravisRoute.extend({
     let allTheBranches, apiEndpoint, options, repoId;
     apiEndpoint = config.apiEndpoint;
     repoId = this.modelFor('repo').get('id');
-    allTheBranches = Ember.ArrayProxy.create();
+    allTheBranches = ArrayProxy.create();
     options = {
       headers: {
         'Travis-API-Version': '3'
@@ -25,7 +26,7 @@ export default TravisRoute.extend({
     let includes = 'build.commit&limit=100';
     let url = `${path}?include=${includes}`;
 
-    return Ember.$.ajax(url, options).then((response) => {
+    return $.ajax(url, options).then((response) => {
       allTheBranches = response.branches;
       return allTheBranches;
     });

@@ -1,8 +1,9 @@
-import Ember from 'ember';
+import { sort } from '@ember/object/computed';
+import Component from '@ember/component';
 import { computed } from 'ember-decorators/object';
 import { alias } from 'ember-decorators/object/computed';
 
-export default Ember.Component.extend({
+export default Component.extend({
   @alias('build.jobs.firstObject') job: null,
 
   @computed('build.jobs.[]')
@@ -12,13 +13,15 @@ export default Ember.Component.extend({
 
   @alias('build.isLoading') loading: null,
 
-  @computed('build.jobs.@each.config')
-  jobsLoaded(jobs) {
-    if (jobs) {
-      return jobs.isEvery('config');
-    }
+  @computed('build.jobs.@each.configLoaded',
+    'build.jobs.@each.isLoaded',
+    'build.stagesAreLoaded')
+  jobsLoaded(jobs, _, stagesAreLoaded) {
+    jobs.forEach((j) => j.get('config'));
+    return jobs.isEvery('configLoaded') && jobs.isEvery('isLoaded') &&
+      stagesAreLoaded;
   },
 
   buildStagesSort: ['number'],
-  sortedBuildStages: Ember.computed.sort('build.stages', 'buildStagesSort')
+  sortedBuildStages: sort('build.stages', 'buildStagesSort')
 });

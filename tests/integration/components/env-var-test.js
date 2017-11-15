@@ -1,4 +1,5 @@
-import Ember from 'ember';
+import { run } from '@ember/runloop';
+import { getOwner } from '@ember/application';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import DS from 'ember-data';
@@ -11,8 +12,8 @@ test('it renders an env-var with private value', function (assert) {
   assert.expect(2);
 
   this.registry.register('transform:boolean', DS.BooleanTransform);
-  var store = Ember.getOwner(this).lookup('service:store');
-  Ember.run(() => {
+  var store = getOwner(this).lookup('service:store');
+  run(() => {
     var envVar = store.push({ data: { id: 1, type: 'env-var', attributes: { name: 'foo', value: 'bar', public: false } } });
     this.set('envVar', envVar);
   });
@@ -27,8 +28,8 @@ test('it renders an env-var with public value', function (assert) {
   assert.expect(2);
 
   this.registry.register('transform:boolean', DS.BooleanTransform);
-  var store = Ember.getOwner(this).lookup('service:store');
-  Ember.run(() => {
+  var store = getOwner(this).lookup('service:store');
+  run(() => {
     var envVar = store.push({ data: { id: 1, type: 'env-var', attributes: { name: 'foo', value: 'bar', public: true } } });
     this.set('envVar', envVar);
   });

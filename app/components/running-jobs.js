@@ -1,10 +1,11 @@
+import Component from '@ember/component';
 import Ember from 'ember';
 import Polling from 'travis/mixins/polling';
 import config from 'travis/config/environment';
 import Visibility from 'npm:visibilityjs';
 import { service } from 'ember-decorators/service';
 
-export default Ember.Component.extend(Polling, {
+export default Component.extend(Polling, {
   @service store: null,
   @service('updateTimes') updateTimesService: null,
 

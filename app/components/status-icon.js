@@ -1,8 +1,8 @@
-import Ember from 'ember';
+import Component from '@ember/component';
 import { computed } from 'ember-decorators/object';
 import { equal, empty } from 'ember-decorators/object/computed';
 
-export default Ember.Component.extend({
+export default Component.extend({
   tagName: 'span',
   classNames: ['status-icon', 'icon'],
   classNameBindings: ['status'],
