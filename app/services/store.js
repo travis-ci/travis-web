@@ -122,5 +122,31 @@ export default DS.Store.extend({
         content: this.query(...arguments)
       });
     }
+  },
+
+  // We shouldn't override private methods, but at the moment I don't see any
+  // other way to prevent updating records with outdated data.
+  // _pushInternalModel seems to be the entry point for all of the data loading
+  // related functions, so it's the best place to override to check the
+  // updated_at field
+  _pushInternalModel(data) {
+    let type = data.type;
+    let newUpdatedAt = data.attributes ? data.attributes.updatedAt : null;
+
+    if (newUpdatedAt) {
+      let internalModel = this._internalModelForId(type, data.id),
+        record = internalModel.getRecord(),
+        existingUpdatedAt = record.get('updatedAt');
+
+      if (!existingUpdatedAt || existingUpdatedAt <= newUpdatedAt) {
+        return this._super(...arguments);
+      } else {
+        // record to push is older than the existing one, we need to skip,
+        // but we still need to return the result
+        return internalModel;
+      }
+    } else {
+      return this._super(...arguments);
+    }
   }
 });
