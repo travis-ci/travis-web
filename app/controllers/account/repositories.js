@@ -12,8 +12,8 @@ export default Controller.extend({
   filterQuery(query) {
     return this.get('store')
       .query('repo', {
-        slug_matches: query,
-        sort_by: 'slug_match:desc',
+        slug_filter: query,
+        sort_by: 'slug_filter:desc',
         limit: 10,
         custom: {
           owner: this.get('login'),
