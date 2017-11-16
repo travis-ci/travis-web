@@ -3,9 +3,15 @@
   queryFunction=(action 'filterQuery') as |filter| }}
   {{#component filter.form as |form|}}
     {{#if features.repositoryFiltering}}
-      <div class="repository-filter">
-        <label>Filter repositories:</label>
-        {{component form.searchField}}
+      <div class="profile-repositories-filter">
+        <label for="profile-repositories-filter-input">
+          {{tooltip-on-element text='Filter repositories'}}
+          {{svg-jar 'icon-filter' class="icon" alt="Filter repositories"}}
+        </label>
+        {{component form.searchField
+            inputId="profile-repositories-filter-input"
+            placeholder="Filter"
+        }}
       </div>
     {{/if}}
   {{/component}}
