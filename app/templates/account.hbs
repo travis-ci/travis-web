@@ -23,11 +23,17 @@
     </header>
 
     {{#unless config.enterprise}}
-      {{#if features.proVersion}}
-        <p class="text-medium">We're only showing your private repositories. You can find your public projects on <a href="https://travis-ci.org" title="travis-ci.org">travis-ci.org</a>.</p>
-      {{else}}
-        <p class="text-medium">We're only showing your public repositories. You can find your private projects on <a href="https://travis-ci.com" title="travis-ci.com">travis-ci.com</a>.</p>
-      {{/if}}
+      <section class='profile-other-site-link'>
+        {{#if features.proVersion}}
+          <p class="text-medium">We’re only showing your private repositories here.</p>
+          <span class='divider'></span>
+          <p class="text-medium lighter">Find your public projects on <a href="https://travis-ci.org" title="travis-ci.org">travis-ci.org</a>. {{svg-jar 'arrow'}}</p>
+        {{else}}
+          <p class="text-medium">We’re only showing your public repositories here.</p>
+          <span class='divider'></span>
+          <p class="text-medium lighter">Find your private projects on <a href="https://travis-ci.com" title="travis-ci.com">travis-ci.com</a>. {{svg-jar 'arrow'}}</p>
+        {{/if}}
+      </section>
     {{/unless}}
 
     <ol class="profile-getstarted">
