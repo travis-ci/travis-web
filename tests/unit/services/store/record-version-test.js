@@ -1,10 +1,9 @@
-import { Promise as EmberPromise } from 'rsvp';
 import { run } from '@ember/runloop';
 import { moduleForModel, test } from 'ember-qunit';
 
 moduleForModel('build', 'Unit | Store | record version management', {
   needs: ['model:build', 'model:job', 'service:store', 'service:auth', 'service:ajax',
-          'service:jobConfigFetcher']
+    'service:jobConfigFetcher']
 });
 
 test('it does not allow to push an older record to the store', function (assert) {
@@ -20,7 +19,7 @@ test('it does not allow to push an older record to the store', function (assert)
         attributes: {
           number: '1',
           state: 'started',
-          updatedAt: transform.deserialize("2017-11-11T12:00:00.100Z")
+          updatedAt: transform.deserialize('2017-11-11T12:00:00.100Z')
         }
       }
     });
@@ -39,7 +38,7 @@ test('it does not allow to push an older record to the store', function (assert)
         attributes: {
           number: '1',
           state: 'created',
-          updatedAt: transform.deserialize("2017-11-11T12:00:00.000Z")
+          updatedAt: transform.deserialize('2017-11-11T12:00:00.000Z')
         }
       }
     });
@@ -63,7 +62,7 @@ test('it does not allow to push an older record to the store even if it is not t
         attributes: {
           number: '1',
           state: 'started',
-          updatedAt: transform.deserialize("2017-11-11T12:00:00.000Z")
+          updatedAt: transform.deserialize('2017-11-11T12:00:00.000Z')
         },
       },
 
@@ -73,7 +72,7 @@ test('it does not allow to push an older record to the store even if it is not t
         attributes: {
           number: '1.1',
           state: 'started',
-          updatedAt: transform.deserialize("2017-11-11T12:00:00.100Z")
+          updatedAt: transform.deserialize('2017-11-11T12:00:00.100Z')
         }
       }]
     });
@@ -94,7 +93,7 @@ test('it does not allow to push an older record to the store even if it is not t
         attributes: {
           number: '2',
           state: 'started',
-          updatedAt: transform.deserialize("2017-11-11T12:00:00.100Z")
+          updatedAt: transform.deserialize('2017-11-11T12:00:00.100Z')
         },
       },
 
@@ -104,7 +103,7 @@ test('it does not allow to push an older record to the store even if it is not t
         attributes: {
           number: '1.1',
           state: 'created',
-          updatedAt: transform.deserialize("2017-11-11T12:00:00.000Z")
+          updatedAt: transform.deserialize('2017-11-11T12:00:00.000Z')
         }
       }]
     });
