@@ -76,13 +76,13 @@ test('filter profile repositories', function (assert) {
 
     profilePage.filter('patriarchy');
 
-    andThen(function() {
+    andThen(function () {
       assert.equal(profilePage.administerableRepositories().count, 0, 'expected no repositories');
       assert.equal(profilePage.noRepositoriesFoundByFilter, 'Sorry, no results found.');
     });
 
     profilePage.filter('feminist-lf');
-    andThen(function() {
+    andThen(function () {
       assert.equal(profilePage.administerableRepositories().count, 1, 'expected one repository');
 
       assert.equal(profilePage.administerableRepositories(0).name, 'feministkilljoy/living-a-feminist-life');
