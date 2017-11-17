@@ -21,6 +21,11 @@ export default Service.extend({
   receivingEnd: `${location.protocol}//${location.host}`,
   tokenExpiredMsg: 'You\'ve been signed out, because your access token has expired.',
 
+  init() {
+    this.afterSignOutCallbacks = [];
+    return this._super(...arguments);
+  },
+
   token() {
     return this.get('sessionStorage').getItem('travis.token');
   },
@@ -39,6 +44,7 @@ export default Service.extend({
     this.get('store').unloadAll();
     this.set('currentUser', null);
     this.clearNonAuthFlashes();
+    this.runAfterSignOutCallbacks();
   },
 
   signIn(data) {
@@ -76,6 +82,16 @@ export default Service.extend({
         }
       });
     }
+  },
+
+  afterSignOut(callback) {
+    this.afterSignOutCallbacks.push(callback);
+  },
+
+  runAfterSignOutCallbacks() {
+    this.afterSignOutCallbacks.forEach((callback) => {
+      callback();
+    });
   },
 
   userDataFrom(storage) {
