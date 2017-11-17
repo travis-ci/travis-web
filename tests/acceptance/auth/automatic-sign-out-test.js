@@ -14,10 +14,11 @@ test('when token is invalid user should be signed out', function (assert) {
   window.sessionStorage.setItem('travis.token', 'wrong-token');
   window.localStorage.setItem('travis.token', 'wrong-token');
 
-  visit('/');
+  visit('/profile');
 
   andThen(function () {
     assert.equal(topPage.flashMessage.text, "You've been signed out, because your access token has expired.");
+    assert.equal(currentURL(), '/');
   });
   percySnapshot(assert);
 });
