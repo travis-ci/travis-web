@@ -71,7 +71,6 @@ test('filter profile repositories', function (assert) {
   profilePage.visit({ username: 'feministkilljoy' });
 
   andThen(function () {
-    percySnapshot(assert);
     assert.equal(profilePage.administerableRepositories().count, 3, 'expected three repositories');
 
     profilePage.filter('patriarchy');
@@ -83,6 +82,7 @@ test('filter profile repositories', function (assert) {
 
     profilePage.filter('feminist-lf');
     andThen(function () {
+      percySnapshot(assert);
       assert.equal(profilePage.administerableRepositories().count, 1, 'expected one repository');
 
       assert.equal(profilePage.administerableRepositories(0).name, 'feministkilljoy/living-a-feminist-life');
