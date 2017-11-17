@@ -113,4 +113,9 @@ export default Component.extend({
     }
     return pageArray;
   },
+
+  @computed('pages')
+  showPagination(pages) {
+    return pages.length > 1;
+  }
 });
