@@ -157,7 +157,7 @@ module.exports = function (environment) {
         tablet: 768,
         desktop: 1280
       },
-      defaultBreakpoints: ['desktop']
+      defaultBreakpoints: ['mobile', 'tablet', 'desktop']
     };
 
     ENV.featureFlags['debug-logging'] = false;
