@@ -1,16 +1,18 @@
 {{#repository-filter
   repositories=sortedRepositories
   queryFunction=(action 'filterQuery') as |filter| }}
-  {{#component filter.form as |form|}}
-    {{#if features.repositoryFiltering}}
-      <div class="profile-repositories-filter">
-        {{component form.searchField
-          placeholder="Filter repositories"
-          title="Filter repositories"
-        }}
-      </div>
-    {{/if}}
-  {{/component}}
+  {{#if sortedRepositories.length}}
+    {{#component filter.form as |form|}}
+      {{#if features.repositoryFiltering}}
+        <div class="profile-repositories-filter">
+          {{component form.searchField
+            placeholder="Filter repositories"
+            title="Filter repositories"
+          }}
+        </div>
+      {{/if}}
+    {{/component}}
+  {{/if}}
   <div id="administerable-repositories">
     {{#if filter.isLoading}}
       {{loading-indicator}}
