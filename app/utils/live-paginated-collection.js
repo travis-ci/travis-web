@@ -106,4 +106,8 @@ LivePaginatedCollection.reopenClass({
   }
 });
 
+LivePaginatedCollection.toString = function () {
+  return 'LivePaginatedCollection';
+};
+
 export default LivePaginatedCollection;
