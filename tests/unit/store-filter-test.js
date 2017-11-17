@@ -207,3 +207,28 @@ test('it adds new records in the store to the filtered collection', function (as
     assert.deepEqual(collection.toArray().map((r) => r.get('id')), ['1']);
   });
 });
+
+test('it takes into account nested query params when caching collections', function (assert) {
+  assert.expect(2);
+  let store = this.store();
+
+  let queryCount = 0;
+  store.query = function () {
+    queryCount += 1;
+
+    return resolve();
+  };
+
+  let promises = [];
+  promises.push(store.filter('repo', { foo: { bar: 'baz' } }, () => true, []));
+  promises.push(store.filter('repo', { foo: { bar: 'qux' } }, () => true, []));
+
+  let done = assert.async();
+
+  all(promises).then((results) => {
+    done();
+
+    assert.notEqual(results[0], results[1]);
+    assert.equal(queryCount, 2);
+  });
+});
