@@ -4,13 +4,9 @@
   {{#component filter.form as |form|}}
     {{#if features.repositoryFiltering}}
       <div class="profile-repositories-filter">
-        <label for="profile-repositories-filter-input">
-          {{tooltip-on-element text='Filter repositories'}}
-          {{svg-jar 'icon-filter' class="icon" alt="Filter repositories"}}
-        </label>
         {{component form.searchField
-            inputId="profile-repositories-filter-input"
-            placeholder="Filter"
+          placeholder="Filter repositories"
+          title="Filter repositories"
         }}
       </div>
     {{/if}}
