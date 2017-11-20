@@ -16,13 +16,6 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
 
   needsAuth: false,
 
-  init() {
-    this.get('auth').afterSignOut(() => {
-      this.afterSignOut();
-    });
-    return this._super(...arguments);
-  },
-
   renderTemplate: function () {
     if (this.get('config').pro) {
       $('body').addClass('pro');
@@ -109,7 +102,9 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
     },
 
     signOut() {
+      this.get('featureFlags').reset();
       this.get('auth').signOut();
+      this.afterSignOut();
     },
 
     disableTailing() {
@@ -155,7 +150,6 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
   },
 
   afterSignOut() {
-    this.get('featureFlags').reset();
     this.set('repositories.accessible', []);
     this.setDefault();
     if (this.get('config.enterprise')) {
