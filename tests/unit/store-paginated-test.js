@@ -224,3 +224,23 @@ test('it updates pagination data when forceReload is set to true', function (ass
   });
 });
 
+test('it returns live paginated collection even if offset is a string', function (assert) {
+  assert.expect(1);
+
+  let store = this.store();
+  store.query = function () {
+    let queryResult = ArrayProxy.create({ content: [] });
+    queryResult.set('meta', {});
+    queryResult.set('meta.pagination', { count: 1, limit: 1, offset: 0 });
+    return resolve(queryResult);
+  };
+
+  let done = assert.async();
+  let collection = store.paginated('repo', { offset: '0' }, {});
+
+  collection.then((collection) => {
+    assert.equal(collection.constructor.toString(), 'LivePaginatedCollection', 'paginated should return live paginated collection instance');
+
+    done();
+  });
+});

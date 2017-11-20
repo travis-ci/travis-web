@@ -114,7 +114,7 @@ export default DS.Store.extend({
   //     }
   //
   paginated(modelName, queryParams, options) {
-    if (!queryParams.offset) {
+    if (!parseInt(queryParams.offset)) {
       // we're on the first page, live updates can be enabled
       return fetchLivePaginatedCollection(this, ...arguments);
     } else {

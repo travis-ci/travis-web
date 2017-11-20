@@ -25,7 +25,9 @@ export default Component.extend({
 
   @computed('repository.permissions')
   admin(permissions) {
-    return permissions.admin;
+    if (permissions) {
+      return permissions.admin;
+    }
   },
 
   toggleRepositoryTask: task(function* () {

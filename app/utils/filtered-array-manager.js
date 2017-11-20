@@ -191,7 +191,7 @@ let FilteredArrayManagerForType = EmberObject.extend({
   calculateId(queryParams, filterFunction, dependencies) {
     const params = queryParams || {};
     let id = stringHash([
-      Object.entries(params).map(([key, value]) => `${key}:${value}`).sort(),
+      JSON.stringify(params),
       (dependencies || []).sort(),
       // not sure if this is a good idea, but I want to get the unique id for
       // each set of arguments to filter
