@@ -22,7 +22,7 @@ export default TravisRoute.extend({
             type: 'byOwner',
           },
         },
-        {}
+        { live: false }
       );
     }
   },
