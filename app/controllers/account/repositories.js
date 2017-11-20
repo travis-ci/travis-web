@@ -2,6 +2,8 @@ import { computed, action } from 'ember-decorators/object';
 import Controller from '@ember/controller';
 
 export default Controller.extend({
+  offset: 0,
+
   @computed('model')
   sortedRepositories(repos) {
     return repos.sortBy('name');
