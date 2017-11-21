@@ -1,25 +1,28 @@
-<aside class="profile-orglist columns medium-4 ember-view">
-  <section class="profile-orgs">
+<aside class="profile-aside">
+  <ul class="profile-user">
+    {{org-item account=user}}
+  </ul>
+  <div class="profile-orgs">
+    <h2>Organizations</h2>
     <ul>
-      {{org-item account=user}}
+      {{#each organizations as |org|}}
+        {{org-item account=org}}
+      {{else}}
+        <li class="profile-text">You are not currently a member of <br> any organization.</li>
+      {{/each}}
     </ul>
-    <h1>Beta Features</h1>
+  </div>
+
+  <div class="profile-betafeatures">
+    <h2>Beta Features</h2>
     {{#link-to "features" tagName="button" class="button beta-features"}}See what's new!{{/link-to}}
-      <h1>Organizations</h1>
-      <ul>
-        {{#each organizations as |org|}}
-          {{org-item account=org}}
-        {{else}}
-          <li class="profile-text">You are not currently a member of <br> any organization.</li>
-        {{/each}}
-      </ul>
-  </section>
+  </div>
 
   {{#if config.githubOrgsOauthAccessSettingsUrl}}
-    <section class="profile-additional">
+    <div class="profile-additional">
       <p>Is an organization missing?<br>
         <a href={{config.githubOrgsOauthAccessSettingsUrl}} title="Organizations Oauth Access Settings on GitHub">Review and add</a> your authorized organizations.</p>
-    </section>
+    </div>
   {{/if}}
 </aside>
 <article class="profile-main">

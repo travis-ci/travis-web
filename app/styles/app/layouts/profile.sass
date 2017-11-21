@@ -1,16 +1,39 @@
+$profile-breakpoint: 600px
+
 .profile-page
-  clear: both
-  overflow-y: auto
-  overflow-x: hidden
+  display: flex
+  padding-top: 20px
+  @media (max-width: $profile-breakpoint)
+    flex-flow: column-reverse
 
 .profile-main
-  padding: 0 $column-gutter/2
+  flex-grow: 1
+
+.profile-aside
+  flex: 0 0 180px
+  margin-right: 55px
   @media #{$medium-up}
-    width: grid-calc(8, 12)
-    float: right
-    padding: 0 0 0 $column-gutter/2
-  .cta-btn
-    text-align: right
+    flex: 0 0 290px
+  @media (max-width: $profile-breakpoint)
+    margin-top: 55px
+  @media (min-width: $profile-breakpoint)
+    display: flex
+    flex-flow: column wrap
+    .profile-user
+      order: 1
+    .profile-betafeatures
+      order: 2
+    .profile-orgs
+      order: 3
+    .profile-additional
+      order: 4
+  ul
+    padding: 0
+    margin: 0
+
+  h2
+    font-size: $font-size-sm
+    border-bottom: solid 2px $pebble-grey
 
 .profile-header
   display: flex
@@ -18,6 +41,7 @@
   align-items: center
   .h2--grey
     margin-bottom: 0
+    line-heigth: 1
 
 .profile-getstarted
   display: flex
@@ -41,84 +65,27 @@
     @media #{$medium-up}
       text-align: left
 
-.profile-orgs,
-.profile-user
-
-  .media-elem
-    width: 14%
-  .media-body
-    width: 86%
-  p
-    margin: .1em 0
-  ul
-    @include resetul
-  li
-    margin: 1.5rem 0 2.5rem
-  a
-    width: 100%
-    position: relative
-    &:hover
-      h1, h2
-        text-decoration: underline
-
-.profile-user h1,
-.profile-orgs h2
-  font-size: $font-size-sm
-  margin: 0
-  font-weight: 600
-  line-height: 1
-
-.profile-orgs
-  h1
-    font-size: $font-size-sm
-    border-bottom: solid 2px $pebble-grey
-
-.profile-user
-  margin: 1rem 0 2rem
-
-p.profile-user-last
-  margin-top: .5em
-
-
-.profile-orglist
-  @media #{$large-up}
-    padding: 0 3em 0 0
-
 .profile-repositorylist
   @include resetul
   font-size: $font-size-m
+  dispay: flex
+  flex-flow: column wrap
   li
-    clear: both
+    display: flex
+    flex-flow: row wrap
     margin-bottom: .8em
-  .profile-repositories
-    display: inline-block
-    vertical-align: middle
-  .switch
-    display: inline-block
-    vertical-align: middle
-    padding: 0
-  .profile-settings
-    display: inline-block
-    padding: .2em .2em .2em .5em
-    height: 28px
-
-.profile-repositorylist .sync-spinner
-  display: inline !important
 
 .profile-settings .icon-disabled
   +colorSVG(rgba(black, 0.2))
 
-.profile-settings span
-  display: inline-block !important
-
 .profile-repo
-  display: inline-block
   position: relative
+  flex: 1
   padding: .25em .5em .3em
   white-space: nowrap
   overflow: hidden
-  vertical-align: middle
   border-radius: 2px
+
   .sync-spinner
     vertical-align: top
   &.admin
@@ -144,14 +111,9 @@ p.profile-user-last
       &:after
         content: ""
         @include fadeOut(right, -90deg, $agate-blue)
-  @media #{$medium-up}
-    width: grid-calc(17, 24)
-    height: 30px
-  @media #{$large-up}
-    width: grid-calc(18, 24)
-
 
 .profile-additional
+  margin-top: 20px
   border-top: solid 2px $pebble-grey
 .profile-text,
 .profile-additional
@@ -159,10 +121,9 @@ p.profile-user-last
 
 .repositories-error
   width: 100%
-  margin-top: 1.3rem
   p
     position: relative
-    padding: .7em 1.5em .7em 0.5em
+    padding: .7em em .7em 0.5em
     color: $brick-red
     background-color: $quartz-red
     a
@@ -178,8 +139,11 @@ p.profile-user-last
       background: $quartz-red
       transform: rotate(45deg)
   .close
-    float: right
+    position: absolute
+    top: .5em
+    right: 0
     line-height: 1
+
 .profile-token-toggle
   .icon-seemore
     vertical-align: middle

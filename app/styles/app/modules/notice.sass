@@ -30,10 +30,6 @@
   border-radius: 2px
   font-size: $font-size-m
   display: block
-  clear: both
-  @media #{$medium}
-    .right
-      float: right
   .icon-flag
     +colorSVG($color)
     width: 18px
@@ -53,6 +49,15 @@
   display: flex
   justify-content: space-between
   margin-top: 2.5rem
+
+.profile-main .notice-banner--yellow,
+.profile-main .notice-banner--green
+  @media (min-width: 600px) // aka profile-breakpoint
+    margin: 0 0 20px
+  @media #{$large}
+    display: flex
+    justify-content: space-between
+    align-items: baseline
 
 .notice-banner--yellow
   +notice-banner($haze-yellow, $dozer-yellow)

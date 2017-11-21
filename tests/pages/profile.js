@@ -13,7 +13,7 @@ let {
 function existingRepositoriesCollection(scope) {
   return collection({
     scope: scope,
-    itemScope: '.profile-repositorylist .row',
+    itemScope: '.profile-repositorylist li.profile-repolist-item',
 
     item: {
       name: text('a.profile-repo'),
@@ -37,7 +37,7 @@ export default PageObject.create({
   administerableRepositories: existingRepositoriesCollection('#administerable-repositories'),
 
   token: {
-    scope: '.profile-user-last',
+    scope: '.profile-user',
 
     isHidden: 'strong',
 
@@ -46,12 +46,12 @@ export default PageObject.create({
   },
 
   accounts: collection({
-    scope: '.profile-orgs',
+    scope: '.profile-aside',
     itemScope: '.account',
 
     item: {
-      name: text('h2'),
-      repositoryCount: text('.repository-count')
+      name: text('.account-name'),
+      repositoryCount: text('.account-repo-count')
     }
   })
 });
