@@ -5,7 +5,7 @@ import { computed } from 'ember-decorators/object';
 
 export default Component.extend({
   tagName: 'li',
-  classNames: ['profile-repo'],
+  classNames: ['profile-repolist-item'],
   classNameBindings: ['repository.active:active'],
   githubOrgsOauthAccessSettingsUrl: config.githubOrgsOauthAccessSettingsUrl,
 

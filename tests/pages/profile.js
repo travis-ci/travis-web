@@ -13,7 +13,7 @@ let {
 function existingRepositoriesCollection(scope) {
   return collection({
     scope: scope,
-    itemScope: '.profile-repositorylist li.profile-repo',
+    itemScope: '.profile-repositorylist li.profile-repolist-item',
 
     item: {
       name: text('a.profile-repo'),
