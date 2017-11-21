@@ -49,7 +49,8 @@ module.exports = function (environment) {
       branchCreatedSyncDelay: 2000,
       repositorySearchDebounceRate: 500,
       triggerBuildRequestDelay: 3000,
-      fetchRecordsForPusherUpdatesThrottle: 1000
+      fetchRecordsForPusherUpdatesThrottle: 1000,
+      repositoryFilteringDebounceRate: 200,
     },
     githubOrgsOauthAccessSettingsUrl: 'https://github.com/settings/connections/applications/f244293c729d5066cf27',
     ajaxPolling: false,
@@ -60,6 +61,7 @@ module.exports = function (environment) {
   };
 
   ENV.featureFlags = {
+    'repository-filtering': true,
     'debug-logging': false,
     'pro-version': !!process.env.TRAVIS_PRO || false,
     'enterprise-version': !!process.env.TRAVIS_ENTERPRISE || false

@@ -50,6 +50,7 @@
     "ember-cli-shims": "^1.1.0",
     "ember-cli-sri": "^2.1.0",
     "ember-cli-test-loader": "^2.1.0",
+    "ember-composable-helpers": "^2.0.3",
     "ember-cli-uglify": "^2.0.0",
     "ember-concurrency": "0.8.7",
     "ember-data": "~2.16.2",
@@ -63,6 +64,7 @@
     "ember-keyboard-shortcuts": "0.3.0",
     "ember-load-initializers": "1.0.0",
     "ember-modal-dialog": "^2.2.0",
+    "ember-one-way-controls": "^2.0.1",
     "ember-moment": "^7.4.1",
     "ember-percy": "1.2.13",
     "ember-prism": "0.1.1",
@@ -88,5 +90,8 @@
   "engines": {
     "node": "8.5.0",
     "npm": "5.4.2"
+  },
+  "dependencies": {
+    "fuzzysort": "^1.0.1"
   }
 }

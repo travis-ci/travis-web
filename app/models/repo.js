@@ -32,7 +32,6 @@ const Repo = Model.extend({
   @oneWay('currentBuild.state') currentBuildState: null,
   @oneWay('currentBuild.id') currentBuildId: null,
 
-
   defaultBranch: belongsTo('branch', {
     async: false
   }),

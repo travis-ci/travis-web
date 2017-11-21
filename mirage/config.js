@@ -2,6 +2,7 @@
 import Ember from 'ember';
 import Mirage from 'ember-cli-mirage';
 import config from 'travis/config/environment';
+import fuzzysort from 'npm:fuzzysort';
 
 const { apiEndpoint } = config;
 
@@ -230,6 +231,12 @@ export default function () {
     const { queryParams } = request;
     if (queryParams && queryParams.sort_by) {
       repositories.models = repositories.models.sortBy(queryParams.sort_by);
+    }
+
+    if (queryParams && queryParams.slug_filter) {
+      repositories.models = repositories.models.filter((repo) => {
+        return fuzzysort.single(queryParams.slug_filter, repo.slug);
+      });
     }
     return this.serialize(repositories);
   });

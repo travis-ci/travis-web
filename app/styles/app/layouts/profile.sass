@@ -193,3 +193,27 @@ p.profile-user-last
       &:hover
         ellipse
           fill: $asphalt-grey
+
+.profile-repositories-filter
+  margin-bottom: 1.5em
+  .search
+    padding: 0 0.5em 0 2.1em
+    border: 1px solid $pebble-grey
+    width: 40%
+    border-radius: 2px
+    width: 100%
+    max-width: 400px
+    background: url(/images/stroke-icons/icon-filter.svg) no-repeat scroll
+    background-size: auto 50%
+    background-position: 0.5em center
+    height: 2.1em
+    box-sizing: content-box
+    font-size: $font-size-sm
+    -webkit-appearance: none
+    -webkit-appearance: textfield
+    &::-webkit-search-decoration
+      -webkit-appearance: none
+    &::placeholder
+      color: rgba($cement-grey, .6)
+      padding: 0
+      text-indent: 0

@@ -6,7 +6,8 @@ let {
   collection,
   hasClass,
   text,
-  visitable
+  visitable,
+  fillable
 } = PageObject;
 
 function existingRepositoriesCollection(scope) {
@@ -28,6 +29,8 @@ function existingRepositoriesCollection(scope) {
 export default PageObject.create({
   visit: visitable('profile/:username'),
   name: text('.profile-header h1'),
+  filter: fillable('.profile-repositories-filter input.search'),
+  noRepositoriesFoundByFilter: text('#administerable-repositories .no-results'),
 
   notFoundOrgName: text('.page-title .h2--red'),
 
