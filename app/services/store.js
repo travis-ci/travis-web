@@ -113,8 +113,9 @@ export default DS.Store.extend({
   //       forceReload: true
   //     }
   //
-  paginated(modelName, queryParams, options) {
-    if (!parseInt(queryParams.offset)) {
+  paginated(modelName, queryParams, options = {}) {
+    let allowLive = !options.hasOwnProperty('live') || options.live;
+    if (!parseInt(queryParams.offset) && allowLive) {
       // we're on the first page, live updates can be enabled
       return fetchLivePaginatedCollection(this, ...arguments);
     } else {
