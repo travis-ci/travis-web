@@ -10,7 +10,7 @@
 <div class="dash-body">
   <div class="dash-main">
     <header class="fade-out dash-header">
-      <h2 class="row-label">{{#link-to "owner" repo.owner.login title=repo.owner.login}}{{repo.owner.login}}{{/link-to}}</h2>
+      <h2 class="row-label">{{#link-to "owner" repo.owner.login title=repo.owner.login}}{{repo.owner.login}}{{/link-to}}{{trial-expired-badge}}</h2>
       <h1 class="row-content">{{#link-to "repo" repo.owner.login repo.name title=repo.name}}{{repo.name}}{{/link-to}}</h1>
     </header>
 
