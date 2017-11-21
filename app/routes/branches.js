@@ -8,6 +8,7 @@ export default TravisRoute.extend({
 
   model() {
     let repoId = this.modelFor('repo').get('id');
+    //debugger
     return RSVP.hash({
       activeBranches: this.store.paginated('branch', {
         repoId: repoId,
