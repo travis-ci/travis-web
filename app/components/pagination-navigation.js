@@ -47,14 +47,16 @@ export default Component.extend({
         num: 1,
         offset: 0
       });
+
       // outerwindow first page
-      for (let i = 1; i <= outerWindow; i++) {
-        let index = i + 1;
-        if (i !== currentPage  && index < lowerOuterBoundary) {
-          pageArray.push({
-            num: index,
-            offset: perPage * i
-          });
+      if (currentPage !== 1) {
+        for (let i = 1; i <= outerWindow; i++) {
+          if (i !== currentPage) {
+            pageArray.push({
+              num: i + 1,
+              offset: perPage * i
+            });
+          }
         }
       }
 
