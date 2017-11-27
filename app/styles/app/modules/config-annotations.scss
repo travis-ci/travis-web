@@ -1,0 +1,17 @@
+.config-annotations {
+  @include travisBorder;
+
+  // FIXME where does this come from?
+  margin-top: 1.2em;
+
+  font-size: 16px;
+
+  .annotation {
+    display: flex;
+    align-items: flex-start;
+
+    svg {
+      width: 18px;
+    }
+  }
+}

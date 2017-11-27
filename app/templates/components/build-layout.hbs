@@ -31,6 +31,7 @@
           {{loading-indicator center=true}}
         {{/if}}
       {{else}}
+        {{config-annotations job=job}}
         {{job-infrastructure-notification job=job}}
         {{job-tabs job=job repo=repo}}
         {{job-log job=job}}
