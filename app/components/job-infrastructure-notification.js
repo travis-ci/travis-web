@@ -77,7 +77,7 @@ export default Component.extend({
     const newImage = this.get('imageToNewImage')[image];
     const newImageString = this.get('newImageStrings')[newImage];
     const newImageAnchor = newImageString.replace(' ', '-');
-    const newImageURLString = `<a href='https://docs.travis-ci.com/user/osx-ci-environment/#${newImageAnchor}'>${newImageString}</a>`;
+    const newImageURLString = `<a href='https://docs.travis-ci.com/user/reference/osx/#${newImageAnchor}'>${newImageString}</a>`;
     const imageRetirementAnnouncementURL = 'https://blog.travis-ci.com/2017-11-21-xcode8-3-default-image-announce';
 
     const jobRanBeforeRetirementDate = Date.parse(startedAt) < retirementDate;
