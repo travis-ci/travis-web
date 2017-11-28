@@ -86,7 +86,8 @@ export default Component.extend({
     const formattedRetirementDate = moment(retirementDate).format('MMMM D, YYYY');
 
     const retirementLink =
-      `<a href='${imageRetirementAnnouncementURL}'>${retirementDateIsInTheFuture ? 'will be retired' : 'was retired'}
+      `<a href='${imageRetirementAnnouncementURL}'>
+      ${retirementDateIsInTheFuture ? 'will be retired' : 'was retired'}
       on ${formattedRetirementDate}</a>`;
 
     let retirementSentence, routingSentence;
