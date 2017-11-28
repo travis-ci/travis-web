@@ -77,7 +77,8 @@ export default Component.extend({
     const newImage = this.get('imageToNewImage')[image];
     const newImageString = this.get('newImageStrings')[newImage];
     const newImageAnchor = newImageString.replace(' ', '-');
-    const newImageURL = `https://docs.travis-ci.com/user/osx-ci-environment/#${newImageAnchor}`;
+    const newImageURLString = `<a href='https://docs.travis-ci.com/user/osx-ci-environment/#${newImageAnchor}'>${newImageString}</a>`;
+    const imageRetirementAnnouncementURL = 'https://blog.travis-ci.com/2017-11-21-xcode8-3-default-image-announce';
 
     const jobRanBeforeRetirementDate = Date.parse(startedAt) < retirementDate;
     const retirementDateIsInTheFuture = retirementDate > new Date();
@@ -85,7 +86,7 @@ export default Component.extend({
     const formattedRetirementDate = moment(retirementDate).format('MMMM D, YYYY');
 
     const retirementLink =
-      `<a href='${newImageURL}'>${retirementDateIsInTheFuture ? 'will be retired' : 'was retired'}
+      `<a href='${imageRetirementAnnouncementURL}'>${retirementDateIsInTheFuture ? 'will be retired' : 'was retired'}
       on ${formattedRetirementDate}</a>`;
 
     let retirementSentence, routingSentence;
@@ -100,11 +101,11 @@ export default Component.extend({
 
     if (retirementDateIsInTheFuture) {
       routingSentence =
-        `After that, it will route to our ${newImageString} image.`;
+        `After that, it will route to our ${newImageURLString} image.`;
     } else if (jobRanBeforeRetirementDate) {
-      routingSentence = `New jobs will route to our ${newImageString} image.`;
+      routingSentence = `New jobs will route to our ${newImageURLString} image.`;
     } else {
-      routingSentence = `It was routed to our ${newImageString} image.`;
+      routingSentence = `It was routed to our ${newImageURLString} image.`;
     }
 
     return `${retirementSentence} ${routingSentence}`;
