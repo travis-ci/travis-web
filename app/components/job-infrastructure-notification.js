@@ -4,8 +4,6 @@ import { alias, equal } from 'ember-decorators/object/computed';
 
 import moment from 'moment';
 
-const NOVEMBER_2016_RETIREMENT = '2016-11-28T12:00:00-08:00';
-const JANUARY_2017_RETIREMENT = '2017-01-20T12:00:00-08:00';
 const NOVEMBER_2017_RETIREMENT = '2017-11-28T12:00:00-08:00';
 const LATEST_TRUSTY_RELEASE = '2017-07-12T18:00:00-00:00';
 
