@@ -46,27 +46,15 @@ export default Component.extend({
 
     @alias('jobConfig.osx_image') macOSImage: null,
 
-    deprecatedXcodeImages: ['beta-xcode6.1', 'beta-xcode6.2', 'beta-xcode6.3', 'xcode7', 'xcode7.1', 'xcode7.2', 'xcode8', 'xcode8.1', 'xcode8.2'],
+    deprecatedXcodeImages: ['xcode8', 'xcode8.1', 'xcode8.2'],
 
     imageToRetirementDate: {
-        'beta-xcode6.1': JANUARY_2017_RETIREMENT,
-        'beta-xcode6.2': NOVEMBER_2016_RETIREMENT,
-        'beta-xcode6.3': NOVEMBER_2016_RETIREMENT,
-        'xcode7': NOVEMBER_2016_RETIREMENT,
-        'xcode7.1': NOVEMBER_2016_RETIREMENT,
-        'xcode7.2': NOVEMBER_2016_RETIREMENT,
         'xcode8': NOVEMBER_2017_RETIREMENT,
         'xcode8.1': NOVEMBER_2017_RETIREMENT,
         'xcode8.2': NOVEMBER_2017_RETIREMENT
     },
 
     imageToNewImage: {
-        'beta-xcode6.1': 'xcode8.3',
-        'beta-xcode6.2': 'xcode8.3',
-        'beta-xcode6.3': 'xcode8.3',
-        'xcode7': 'xcode8.3',
-        'xcode7.1': 'xcode8.3',
-        'xcode7.2': 'xcode8.3',
         'xcode8': 'xcode8.3',
         'xcode8.1': 'xcode8.3',
         'xcode8.2': 'xcode8.3'
