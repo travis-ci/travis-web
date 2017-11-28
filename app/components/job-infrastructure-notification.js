@@ -59,7 +59,7 @@ export default Component.extend({
   },
 
   newImageStrings: {
-    'xcode8.3': 'Xcode 8.3.3',
+    'xcode8.3': 'Xcode 8.3',
     'xcode7.3': 'Xcode 7.3.1',
     'xcode6.4': 'Xcode 6.4'
   },
