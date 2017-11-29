@@ -54,6 +54,14 @@ moduleForAcceptance('Acceptance | repo/trigger build', {
       sha: 'c0ffee'
     });
 
+    server.create('branch', {
+      name: 'deleted',
+      id: `/v3/repo/${repoId}/branch/deleted`,
+      default_branch: false,
+      exists_on_github: false,
+      repository: repo
+    });
+
     repo.currentBuild = latestBuild;
     repo.save();
   }
@@ -71,6 +79,9 @@ test('triggering a custom build via the dropdown', function (assert) {
 
   andThen(() => {
     assert.ok(triggerBuildPage.popupIsVisible, 'modal is visible after click');
+
+    assert.equal(triggerBuildPage.branches().count, 1, 'expected the not-on-GitHub branch to be hidden');
+    assert.equal(triggerBuildPage.branches(0).value, 'master');
   });
 
   triggerBuildPage.selectBranch('master');
