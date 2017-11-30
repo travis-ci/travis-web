@@ -61,6 +61,9 @@ module.exports = function () {
     },
     sassOptions: {
       extensions: 'sass'
+    },
+    treeShaking: {
+      enabled: true
     }
   });
 
