@@ -81,8 +81,7 @@ const Repo = Model.extend({
   builds(id) {
     const builds = this.store.filter('build', {
       event_type: ['push', 'api', 'cron'],
-      repository_id: id,
-      include: 'build.jobs'
+      repository_id: id
     }, (b) => {
       let eventTypes = ['push', 'api', 'cron'];
       return this._buildRepoMatches(b, id) && eventTypes.includes(b.get('eventType'));
@@ -94,8 +93,7 @@ const Repo = Model.extend({
   pullRequests(id) {
     const builds = this.store.filter('build', {
       event_type: 'pull_request',
-      repository_id: id,
-      include: 'build.jobs'
+      repository_id: id
     }, (b) => {
       const isPullRequest = b.get('eventType') === 'pull_request';
       return this._buildRepoMatches(b, id) && isPullRequest;
