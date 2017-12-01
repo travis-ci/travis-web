@@ -94,8 +94,7 @@ const Repo = Model.extend({
   pullRequests(id) {
     const builds = this.store.filter('build', {
       event_type: 'pull_request',
-      repository_id: id,
-      include: 'build.jobs'
+      repository_id: id
     }, (b) => {
       const isPullRequest = b.get('eventType') === 'pull_request';
       return this._buildRepoMatches(b, id) && isPullRequest;
