@@ -47,13 +47,11 @@ export default Component.extend({
   deprecatedXcodeImages: ['xcode8', 'xcode8.1', 'xcode8.2'],
 
   imageToRetirementDate: {
-    'xcode8': NOVEMBER_2017_RETIREMENT,
     'xcode8.1': NOVEMBER_2017_RETIREMENT,
     'xcode8.2': NOVEMBER_2017_RETIREMENT
   },
 
   imageToNewImage: {
-    'xcode8': 'xcode8.3',
     'xcode8.1': 'xcode8.3',
     'xcode8.2': 'xcode8.3'
   },
