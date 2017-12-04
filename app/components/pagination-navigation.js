@@ -47,13 +47,16 @@ export default Component.extend({
         num: 1,
         offset: 0
       });
+
       // outerwindow first page
-      for (let i = 1; i <= outerWindow; i++) {
-        if (i !== currentPage) {
-          pageArray.push({
-            num: 1 + i,
-            offset: perPage * i
-          });
+      if (currentPage !== 1) {
+        for (let i = 1; i <= outerWindow; i++) {
+          if (i !== currentPage) {
+            pageArray.push({
+              num: i + 1,
+              offset: perPage * i
+            });
+          }
         }
       }
 
@@ -113,4 +116,9 @@ export default Component.extend({
     }
     return pageArray;
   },
+
+  @computed('pages')
+  showPagination(pages) {
+    return pages.length > 1;
+  }
 });

@@ -813,7 +813,8 @@ export default {
           "repository",
           "commit",
           "owner",
-          "stage"
+          "stage",
+          "allow_failure"
         ]
       },
       "permissions": [

@@ -1,27 +1,24 @@
-<div class="profile-repositories profile-switch">
-  {{#if admin}}
-    {{repository-switch
-      repository=repository
-      onToggleError="handleToggleError"
-      onToggle="resetErrors"
-      toggleRepositoryTask=toggleRepositoryTask}}
-    {{#if toggleRepositoryTask.isRunning}}
-      {{loading-indicator inline=true}}
-    {{else}}
-      {{#link-to "settings" repository.owner.login repository.name class="profile-settings" title="Go to Travis CI repository settings"}}
-        {{svg-jar 'icon-settings' class="icon icon-hover"}}
-      {{/link-to}}
-    {{/if}}
+{{#if admin}}
+  {{repository-switch
+    repository=repository
+    onToggleError="handleToggleError"
+    onToggle="resetErrors"
+    toggleRepositoryTask=toggleRepositoryTask}}
+  {{#if toggleRepositoryTask.isRunning}}
+    {{loading-indicator inline=true}}
   {{else}}
-    {{repository-switch repository=repository disabled=true}}
-    <a class="profile-settings">{{svg-jar 'icon-private' class="icon"}}</a>
+    {{#link-to "settings" repository.owner.login repository.name class="profile-settings" title="Go to Travis CI repository settings"}}
+      {{svg-jar 'icon-settings' class="icon icon-hover"}}
+    {{/link-to}}
   {{/if}}
-</div>
+{{else}}
+  {{repository-switch repository=repository disabled=true}}
+  <a class="profile-settings">{{svg-jar 'icon-private' class="icon"}}</a>
+{{/if}}
 
 {{#link-to "repo" repository.owner.login repository.name class="profile-repo"
   classNameBindings="admin:admin:non-admin"}}
-  {{repository.slug}}
-  <span>{{repository.description}}</span>
+  {{slug}}
 {{/link-to}}
 
 {{#if showError}}
@@ -31,7 +28,7 @@
       {{#if githubOrgsOauthAccessSettingsUrl}}
         It may be caused by API restrictions, please
         <a href={{githubOrgsOauthAccessSettingsUrl}}
-          title="Orgs Oauth Access Settings on GitHub">
+           title="Orgs Oauth Access Settings on GitHub">
           review and add
         </a> your authorized Orgs.
       {{/if}}

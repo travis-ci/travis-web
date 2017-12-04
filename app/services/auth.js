@@ -21,6 +21,11 @@ export default Service.extend({
   receivingEnd: `${location.protocol}//${location.host}`,
   tokenExpiredMsg: 'You\'ve been signed out, because your access token has expired.',
 
+  init() {
+    this.afterSignOutCallbacks = [];
+    return this._super(...arguments);
+  },
+
   token() {
     return this.get('sessionStorage').getItem('travis.token');
   },
@@ -36,9 +41,10 @@ export default Service.extend({
     this.get('storage').clear();
     this.set('state', 'signed-out');
     this.set('user', null);
-    this.get('store').unloadAll();
     this.set('currentUser', null);
     this.clearNonAuthFlashes();
+    this.runAfterSignOutCallbacks();
+    this.get('store').unloadAll();
   },
 
   signIn(data) {
@@ -46,7 +52,14 @@ export default Service.extend({
       this.autoSignIn(data);
     } else {
       this.set('state', 'signing-in');
-      window.location = `${this.get('endpoint')}/auth/handshake?redirect_uri=${location}`;
+
+      let url = new URL(window.location.href);
+
+      if (url.pathname === '/plans') {
+        url.pathname = '/';
+      }
+
+      window.location = `${this.get('endpoint')}/auth/handshake?redirect_uri=${url}`;
     }
   },
 
@@ -69,6 +82,16 @@ export default Service.extend({
         }
       });
     }
+  },
+
+  afterSignOut(callback) {
+    this.afterSignOutCallbacks.push(callback);
+  },
+
+  runAfterSignOutCallbacks() {
+    this.afterSignOutCallbacks.forEach((callback) => {
+      callback();
+    });
   },
 
   userDataFrom(storage) {

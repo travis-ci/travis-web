@@ -6,13 +6,14 @@ let {
   collection,
   hasClass,
   text,
-  visitable
+  visitable,
+  fillable
 } = PageObject;
 
 function existingRepositoriesCollection(scope) {
   return collection({
     scope: scope,
-    itemScope: '.profile-repositorylist .row',
+    itemScope: '.profile-repositorylist li.profile-repolist-item',
 
     item: {
       name: text('a.profile-repo'),
@@ -28,13 +29,15 @@ function existingRepositoriesCollection(scope) {
 export default PageObject.create({
   visit: visitable('profile/:username'),
   name: text('.profile-header h1'),
+  filter: fillable('.profile-repositories-filter input.search'),
+  noRepositoriesFoundByFilter: text('#administerable-repositories .no-results'),
 
   notFoundOrgName: text('.page-title .h2--red'),
 
   administerableRepositories: existingRepositoriesCollection('#administerable-repositories'),
 
   token: {
-    scope: '.profile-user-last',
+    scope: '.profile-user',
 
     isHidden: 'strong',
 
@@ -43,12 +46,12 @@ export default PageObject.create({
   },
 
   accounts: collection({
-    scope: '.profile-orgs',
+    scope: '.profile-aside',
     itemScope: '.account',
 
     item: {
-      name: text('h2'),
-      repositoryCount: text('.repository-count')
+      name: text('.account-name'),
+      repositoryCount: text('.account-repo-count')
     }
   })
 });

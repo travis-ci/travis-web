@@ -90,8 +90,9 @@
 
 .job-number
   display: inline-block
+  white-space: nowrap
   @media #{$medium-up}
-    flex: 0 0 6em
+    flex: 0 0 7em
     padding-right: 1em
     border-right: 1px solid $cream-dark
 
@@ -122,11 +123,14 @@
   @media #{$medium-up}
     flex: 1 0 20%
     position: relative
+    padding: 0.3em 0.5em 0.5em 0.7em
+    align-self: flex-start
     white-space: nowrap
+    overflow: hidden
     text-overflow: ellipsis
     &:after
-      content: ""
       @include fadeOut(right, -90deg, white)
+      top: -1px
 
 .job-env
   @media #{$medium-up}
@@ -134,7 +138,7 @@
     position: relative
     max-width: 23em
     margin-left: -1em
-    padding: 0.3em 0.5em 0.5em 0.7em
+    padding: 0.3em 0.5em 0.5em 1.2em
     align-self: flex-start
     white-space: nowrap
     overflow: hidden

@@ -1,3 +1,4 @@
+import { merge } from '@ember/polyfills';
 import { underscore } from '@ember/string';
 import { get } from '@ember/object';
 import Ember from 'ember';
@@ -18,9 +19,10 @@ export default RESTAdapter.extend({
     'Content-Type': 'application/json'
   },
 
-  ajaxOptions: function (url, type, options) {
+  ajaxOptions: function (url, type = 'GET', options) {
     options = options || {};
     options.data = options.data || {};
+    options.data = merge({}, options.data); // clone
 
     for (let key in options.data) {
       let value = options.data[key];
@@ -55,7 +57,7 @@ export default RESTAdapter.extend({
     return hash;
   },
 
-  buildURL: function (modelName, id) {
+  buildURL: function (modelName, id, snapshot, requestType, query) {
     let url = [];
     const host = get(this, 'host');
     const prefix = this.urlPrefix();

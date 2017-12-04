@@ -71,6 +71,7 @@ test('view profile', function (assert) {
   profilePage.visit({ username: 'feministkilljoy' });
 
   andThen(function () {
+    percySnapshot(assert);
     assert.equal(document.title, 'Sara Ahmed - Profile - Travis CI');
 
     assert.equal(profilePage.name, 'Sara Ahmed');

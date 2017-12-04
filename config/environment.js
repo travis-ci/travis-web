@@ -32,12 +32,25 @@ module.exports = function (environment) {
       host: 'ws.pusherapp.com',
       debug: false
     },
+    urls: {
+      about: 'https://about.travis-ci.com',
+      blog: 'https://blog.travis-ci.com',
+      docs: 'https://docs.travis-ci.com',
+      status: 'https://www.traviscistatus.com/',
+      imprint: 'https://docs.travis-ci.com/imprint.html',
+      enterprise: 'https://enterprise.travis-ci.com',
+      twitter: 'https://twitter.com/travisci',
+      jobs:'https://travisci.workable.com/',
+      support: 'mailto:support@travis-ci.com'
+    },
     endpoints: {},
     intervals: {
       updateTimes: 1000,
       branchCreatedSyncDelay: 2000,
       repositorySearchDebounceRate: 500,
-      triggerBuildRequestDelay: 3000
+      triggerBuildRequestDelay: 3000,
+      fetchRecordsForPusherUpdatesThrottle: 1000,
+      repositoryFilteringDebounceRate: 200,
     },
     githubOrgsOauthAccessSettingsUrl: 'https://github.com/settings/connections/applications/f244293c729d5066cf27',
     ajaxPolling: false,
@@ -48,6 +61,7 @@ module.exports = function (environment) {
   };
 
   ENV.featureFlags = {
+    'repository-filtering': true,
     'debug-logging': false,
     'pro-version': !!process.env.TRAVIS_PRO || false,
     'enterprise-version': !!process.env.TRAVIS_ENTERPRISE || false
@@ -80,16 +94,22 @@ module.exports = function (environment) {
       };
       ENV.userlike = true;
       ENV.beacon = true;
-      ENV.urls = {
-        legal: ENV.billingEndpoint + '/pages/legal',
-        imprint: ENV.billingEndpoint + '/pages/imprint',
-        security: ENV.billingEndpoint + '/pages/security',
-        terms: ENV.billingEndpoint + '/pages/terms'
-      };
+      ENV.urls.legal = ENV.billingEndpoint + '/pages/legal';
+      ENV.urls.imprint = ENV.billingEndpoint + '/pages/imprint';
+      ENV.urls.security = ENV.billingEndpoint + '/pages/security';
+      ENV.urls.terms = ENV.billingEndpoint + '/pages/terms';
     }
 
     if (process.env.API_ENDPOINT) {
       ENV.apiEndpoint = process.env.API_ENDPOINT;
+
+      if (ENV.apiEndpoint === 'https://api-staging.travis-ci.org') {
+        ENV.pusher.key = 'dd3f11c013317df48b50';
+      }
+
+      if (ENV.apiEndpoint === 'https://api-staging.travis-ci.com') {
+        ENV.pusher.key = '87d0723b25c51e36def8';
+      }
     }
 
     if (process.env.AUTH_ENDPOINT) {
@@ -114,6 +134,7 @@ module.exports = function (environment) {
     ENV.intervals.searchDebounceRate = 0;
     ENV.intervals.branchCreatedSyncDelay = 0;
     ENV.intervals.triggerBuildRequestDelay = 0;
+    ENV.intervals.fetchRecordsForPusherUpdatesThrottle = 0;
 
     ENV.APP.rootElement = '#ember-testing';
 
@@ -138,7 +159,7 @@ module.exports = function (environment) {
         tablet: 768,
         desktop: 1280
       },
-      defaultBreakpoints: ['desktop']
+      defaultBreakpoints: ['mobile', 'tablet', 'desktop']
     };
 
     ENV.featureFlags['debug-logging'] = false;

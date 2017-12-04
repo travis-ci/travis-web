@@ -1,13 +1,10 @@
 /* global Travis */
 
 import { observer } from '@ember/object';
-
 import { Promise as EmberPromise } from 'rsvp';
 import { isEqual } from '@ember/utils';
-import { later } from '@ember/runloop';
 import { getOwner } from '@ember/application';
 
-import pickBy from 'npm:lodash.pickby';
 import Model from 'ember-data/model';
 import Log from 'travis/models/log';
 import DurationCalculations from 'travis/mixins/duration-calculations';
@@ -22,6 +19,7 @@ import moment from 'moment';
 
 export default Model.extend(DurationCalculations, DurationAttributes, {
   @service ajax: null,
+  @service jobConfigFetcher: null,
 
   logId: attr(),
   queue: attr(),
@@ -31,12 +29,12 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
   tags: attr(),
   repositoryPrivate: attr(),
   repositorySlug: attr(),
-  _config: attr(),
+  updatedAt: attr('date'),
 
   repo: belongsTo('repo'),
   build: belongsTo('build', { async: true }),
   commit: belongsTo('commit', { async: true }),
-  stage: belongsTo('stage', { async: false }),
+  stage: belongsTo('stage', { async: true }),
 
   @alias('build.isPullRequest') isPullRequest: null,
   @alias('build.pullRequestNumber') pullRequestNumber: null,
@@ -58,26 +56,11 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
     });
   },
 
-  // TODO: DO NOT SET OTHER PROPERTIES WITHIN A COMPUTED PROPERTY!
-  @computed('_config')
-  config(config) {
-    if (config) {
-      return pickBy(config);
-    } else {
-      let fetchConfig = () => {
-        if (this.getCurrentState() !== 'root.loading') {
-          if (this.get('isFetchingConfig')) {
-            return;
-          }
-          this.set('isFetchingConfig', true);
-          this.reload();
-        } else {
-          later(fetchConfig, 20);
-        }
-      };
+  @alias('config.content') configLoaded: null,
 
-      fetchConfig();
-    }
+  @computed()
+  config() {
+    return this.get('jobConfigFetcher').fetch(this.get('id'));
   },
 
   getCurrentState() {
@@ -112,14 +95,6 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
     if (this.get('isLogAccessed')) {
       return this.get('log').clear();
     }
-  },
-
-  @computed('config', 'build.rawConfigKeys.[]')
-  configValues(config, keys) {
-    if (config && keys) {
-      return keys.map(key => config[key]);
-    }
-    return [];
   },
 
   @computed('isFinished', 'state')

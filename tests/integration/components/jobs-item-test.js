@@ -11,10 +11,13 @@ test('it renders', function (assert) {
     state: 'passed',
     number: '2',
     config: {
-      rvm: '2.1.2',
-      jdk: 'openjdk6',
-      os: 'linux',
-      env: 'TESTS=unit'
+      // this simulates a promise
+      content: {
+        rvm: '2.1.2',
+        jdk: 'openjdk6',
+        os: 'linux',
+        env: 'TESTS=unit'
+      },
     },
     duration: 100
   };
@@ -43,10 +46,10 @@ test('when env is not set, gemfile is displayed in the env section', function (a
     id: 10,
     state: 'passed',
     number: '2',
-    config: {
+    config: { content: {
       rvm: '2.1.2',
       gemfile: 'foo/Gemfile'
-    },
+    } },
     duration: 100
   };
 
@@ -62,11 +65,11 @@ test('when env is set, gemfile is displayed in the language section', function (
     id: 10,
     state: 'passed',
     number: '2',
-    config: {
+    config: { content: {
       rvm: '2.1.2',
       gemfile: 'foo/Gemfile',
       env: 'FOO=bar'
-    },
+    } },
     duration: 100
   };
   this.job = job;

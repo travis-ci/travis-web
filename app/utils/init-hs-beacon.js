@@ -5,6 +5,7 @@ export default function initHsBeacon() {
   HS.beacon.config({
     modal: true,
     attachment: true,
-    instructions: 'Please make sure to include a link if your question involves a specific repo, build or job.'
+    instructions: 'Please make sure to include a link if your question involves a specific repo, build or job.',
+    showSubject: true
   });
 }

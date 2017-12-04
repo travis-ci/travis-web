@@ -20,21 +20,22 @@ moduleForAcceptance('Acceptance | home/sidebar tabs', {
     let testRepo = server.create('repository', {
       slug: 'killjoys/willful-subjects'
     });
+    this.repo = testRepo;
 
     server.create('repository', {
       slug: 'other/other',
       skipPermissions: true
     });
 
+    let  gitUser = server.create('git-user', { name: 'Mr T' });
     let commit = server.create('commit', {
-      author_email: 'mrt@travis-ci.org',
-      author_name: 'Mr T',
-      committer_email: 'mrt@travis-ci.org',
-      committer_name: 'Mr T',
+      author: gitUser,
+      committer: gitUser,
       branch: 'acceptance-tests',
       message: 'This is a message',
       branch_is_default: true
     });
+    this.commit = commit;
 
     let build = server.create('build', {
       repository: testRepo,
@@ -44,6 +45,7 @@ moduleForAcceptance('Acceptance | home/sidebar tabs', {
         name: 'acceptance-tests'
       })
     });
+    this.build = build;
 
     let job = server.create('job', {
       number: '1234.1',
@@ -52,6 +54,7 @@ moduleForAcceptance('Acceptance | home/sidebar tabs', {
       commit,
       build
     });
+    this.job = job;
 
     commit.job = job;
 
@@ -68,10 +71,28 @@ test('the home page shows running tab in pro version', (assert) => {
     .clickSidebarRunningTab();
 
   andThen(() => {
-    assert.equal(sidebarPage.sidebarRunningTabText, 'Running (1/1)', 'running tab correctly shows number of started/queued jobs');
+    assert.equal(sidebarPage.sidebarRunningTabText, 'Running (0/1)', 'running tab correctly shows number of started/queued jobs');
     assert.equal(sidebarPage.sidebarRunningRepositories().count, 1, 'expected one running repositories');
   });
   percySnapshot(assert);
+});
+
+test('we query the API for all the jobs', function (assert) {
+  withFeature('pro-version');
+
+  // the default mirage limit is 10, so if we create 15 jobs for each queued and
+  // started lists, the app code will have to do 2 queries
+  server.createList('job', 15, { state: 'created', repository: this.repo, commit: this.commit, build: this.build });
+  server.createList('job', 15, { state: 'started', repository: this.repo, commit: this.commit, build: this.build });
+
+  sidebarPage
+    .visit()
+    .clickSidebarRunningTab();
+
+  andThen(() => {
+    assert.equal(sidebarPage.sidebarRunningTabText, 'Running (15/31)', 'running tab correctly shows number of started/queued jobs');
+    assert.equal(sidebarPage.sidebarRunningRepositories().count, 31, 'expected one running repositories');
+  });
 });
 
 test('maintains sidebar tab state when viewing running job in pro version', (assert) => {

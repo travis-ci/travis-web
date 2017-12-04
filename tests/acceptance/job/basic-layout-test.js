@@ -15,7 +15,8 @@ test('visiting job-view', function (assert) {
   let repo = server.create('repository', { slug: 'travis-ci/travis-web' }),
     branch = server.create('branch', { name: 'acceptance-tests' });
 
-  let commit = server.create('commit', { author_email: 'mrt@travis-ci.org', author_name: 'Mr T', committer_email: 'mrt@travis-ci.org', committer_name: 'Mr T', branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
+  let  gitUser = server.create('git-user', { name: 'Mr T' });
+  let commit = server.create('commit', { author: gitUser, committer: gitUser, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
   let build = server.create('build', { repository: repo, state: 'passed', commit, branch });
   let job = server.create('job', { number: '1234.1', repository: repo, state: 'passed', build, commit });
   commit.job = job;
@@ -47,7 +48,8 @@ test('visiting a job with a truncated log', function (assert) {
   let repo =  server.create('repository', { slug: 'travis-ci/travis-web' });
   let branch = server.create('branch', { name: 'acceptance-tests' });
 
-  let commit = server.create('commit', { author_email: 'mrt@travis-ci.org', author_name: 'Mr T', committer_email: 'mrt@travis-ci.org', committer_name: 'Mr T', branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
+  let  gitUser = server.create('git-user', { name: 'Mr T' });
+  let commit = server.create('commit', { author: gitUser, committer: gitUser, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
   let build = server.create('build', { repository: repo, state: 'passed', commit, branch });
   let job = server.create('job', { number: '1234.1', repository: repo, state: 'passed', commit, build });
   commit.job = job;
@@ -73,7 +75,8 @@ test('visiting a job with a complex log', function (assert) {
   let repo =  server.create('repository', { slug: 'travis-ci/travis-web' }),
     branch = server.create('branch', { name: 'acceptance-tests' });
 
-  let commit = server.create('commit', { author_email: 'mrt@travis-ci.org', author_name: 'Mr T', committer_email: 'mrt@travis-ci.org', committer_name: 'Mr T', branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
+  let  gitUser = server.create('git-user', { name: 'Mr T' });
+  let commit = server.create('commit', { author: gitUser, committer: gitUser, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
   let build = server.create('build', { repository: repo, state: 'passed', commit, branch });
   let job = server.create('job', { number: '1234.1', repository: repo, state: 'passed', commit, build });
   commit.job = job;
@@ -91,7 +94,7 @@ I am a line between folds.
 travis_fold:start:afold
 I am the first line of a second fold.
 travis_fold:end:afold
-[0K[30;47;1mI am a bold black line with white background.
+[0K[30;47;1mI am a bold black line with white background.     I have some whitespace within my line.
 [0K[31;46;3mI am an italic red line with cyan background.
 [0K[32;45;4mI am an underlined green line with magenta background.
 [0K[33;44mI am a yellow line with blue background.

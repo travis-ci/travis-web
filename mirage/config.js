@@ -2,6 +2,7 @@
 import Ember from 'ember';
 import Mirage from 'ember-cli-mirage';
 import config from 'travis/config/environment';
+import fuzzysort from 'npm:fuzzysort';
 
 const { apiEndpoint } = config;
 
@@ -231,6 +232,12 @@ export default function () {
     if (queryParams && queryParams.sort_by) {
       repositories.models = repositories.models.sortBy(queryParams.sort_by);
     }
+
+    if (queryParams && queryParams.slug_filter) {
+      repositories.models = repositories.models.filter((repo) => {
+        return fuzzysort.single(queryParams.slug_filter, repo.slug);
+      });
+    }
     return this.serialize(repositories);
   });
 
@@ -264,12 +271,44 @@ export default function () {
     };
   });
 
+  this.get('/job/:id', function (schema, request) {
+    let job = schema.jobs.find(request.params.id);
+    return this.serialize(job, 'job');
+  });
+
   this.get('/jobs/:id', function (schema, request) {
     let job = schema.jobs.find(request.params.id);
     return this.serialize(job, 'v2-job');
   });
 
-  this.get('/jobs');
+  this.get('/jobs', function (schema, request) {
+    if (request.requestHeaders['Travis-API-Version'] === '3') {
+      let jobs = schema.jobs;
+      if (request.queryParams.active) {
+        jobs = jobs.where((j) => ['created', 'queued', 'received', 'started'].includes(j.state));
+      }
+
+      if (request.queryParams.state) {
+        let states = request.queryParams.state.split(',');
+        jobs = jobs.where((j) => states.includes(j.state));
+      }
+
+      return jobs.all ? jobs.all() : jobs;
+    } else {
+      let jobs = schema.jobs;
+      let ids = request.queryParams.ids;
+      if (ids) {
+        jobs = jobs.where((j) => ids.includes(j.id.toString()));
+      }
+      jobs = jobs.all ? jobs.all() : jobs;
+      return this.serialize(jobs, 'v2-job');
+    }
+  });
+
+  this.get('/build/:id/jobs', (schema, request) => {
+    request.noPagination = true;
+    return schema.jobs.where({ buildId: request.params.id });
+  });
 
   this.get('/build/:id/stages', (schema, request) => {
     return schema.stages.where({ buildId: request.params.id });

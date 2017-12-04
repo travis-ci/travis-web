@@ -10,7 +10,7 @@ export default TravisRoute.extend({
   model(params) {
     const account = this.modelFor('account');
     // account is an Ember-Data model
-    if (account.get) {
+    if (!account.error) {
       return this.store.paginated(
         'repo',
         {
@@ -22,8 +22,16 @@ export default TravisRoute.extend({
             type: 'byOwner',
           },
         },
-        {}
+        { live: false }
       );
     }
+  },
+
+  setupController(controller, model) {
+    const account = this.modelFor('account');
+    if (!account.error) {
+      controller.set('login', account.get('login'));
+    }
+    return this._super(...arguments);
   },
 });

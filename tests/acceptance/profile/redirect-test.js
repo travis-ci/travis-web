@@ -12,6 +12,6 @@ test('visiting /profile redirects to /profile/:username', function (assert) {
   visit('/profile');
 
   andThen(() => {
-    assert.equal(currentURL(), '/profile/testuser?offset=0');
+    assert.equal(currentURL(), '/profile/testuser');
   });
 });

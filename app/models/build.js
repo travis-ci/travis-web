@@ -30,6 +30,7 @@ export default Model.extend(DurationCalculations, {
   tag: attr(),
   eventType: attr('string'),
   _config: attr(),
+  updatedAt: attr('date'),
 
   repo: belongsTo('repo'),
   branch: belongsTo('branch', { async: false, inverse: 'builds' }),
@@ -38,6 +39,8 @@ export default Model.extend(DurationCalculations, {
 
   jobs: hasMany('job', { async: true }),
   stages: hasMany('stage', { async: true }),
+
+  @alias('stages.isSettled') stagesAreLoaded: null,
 
   @computed('_config', 'currentState.stateName')
   config(config, stateName) {

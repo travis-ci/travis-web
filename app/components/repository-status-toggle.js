@@ -5,7 +5,7 @@ import { computed } from 'ember-decorators/object';
 
 export default Component.extend({
   tagName: 'li',
-  classNames: ['row'],
+  classNames: ['profile-repolist-item'],
   classNameBindings: ['repository.active:active'],
   githubOrgsOauthAccessSettingsUrl: config.githubOrgsOauthAccessSettingsUrl,
 
@@ -25,7 +25,9 @@ export default Component.extend({
 
   @computed('repository.permissions')
   admin(permissions) {
-    return permissions.admin;
+    if (permissions) {
+      return permissions.admin;
+    }
   },
 
   toggleRepositoryTask: task(function* () {
