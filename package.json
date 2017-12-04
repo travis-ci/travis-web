@@ -84,6 +84,7 @@
     "lodash.intersection": "4.4.0",
     "lodash.pickby": "4.6.0",
     "morgan": "1.8.2",
+    "timeago.js": "^3.0.2",
     "visibilityjs": "^1.2.4",
     "yamljs": "^0.3.0"
   },

@@ -30,7 +30,7 @@ test('it renders', function (assert) {
   this.render(hbs`{{requests-item request=request}}`);
 
   assert.equal(this.$().find('.row-item:nth-of-type(2) strong').text().trim(), 'dev');
-  assert.equal(this.$().find('.row-item:nth-of-type(3) .label-align').text().trim(), 'a day ago');
+  assert.equal(this.$().find('.row-item:nth-of-type(3) .label-align').text().trim(), '1 day ago');
   assert.ok(this.$().find('.status-icon').hasClass('approved'), 'icon should have approved class');
   assert.equal(this.$().find('.row-item:nth-child(4)').text().trim(), 'Bam!');
   assert.equal(this.$().find('.row-item:nth-child(4) .emoji').length, 1, 'there should be an emoji icon in commit message');

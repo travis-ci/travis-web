@@ -44,7 +44,7 @@ test('view and delete caches', function (assert) {
 
     page.pushCaches(0).as(pushCache => {
       assert.equal(pushCache.name, 'a-branch-name');
-      assert.equal(pushCache.lastModified, 'a day ago');
+      assert.equal(pushCache.lastModified, '1 day ago');
       assert.equal(pushCache.size, '85.27MB');
     });
 

@@ -63,7 +63,7 @@ test('the owner page shows their repositories', (assert) => {
       assert.equal(repo.buildNumber, '1917');
       assert.equal(repo.defaultBranch, 'primary');
       assert.equal(repo.commitSha, 'abc124');
-      assert.equal(repo.commitDate, 'about a year ago');
+      assert.equal(repo.commitDate, '1 year ago');
     });
 
     ownerPage.repos(1).as(repo => {
