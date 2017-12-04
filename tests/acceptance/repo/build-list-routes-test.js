@@ -135,7 +135,7 @@ test('build history shows, more can be loaded, and a created build gets added an
       assert.equal(build.name, 'successful-cron-branch');
       assert.equal(build.committer, 'Sara Ahmed');
       assert.equal(build.commitSha, '1234567');
-      assert.equal(build.commitDate, 'about a year ago');
+      assert.equal(build.commitDate, '1 year ago');
       assert.equal(build.requestIconTitle, 'Triggered by a cron job');
       assert.equal(build.duration, '5 min');
       assert.equal(build.message, 'cron A generic cron commit message', 'expected a prefixed cron marker');
@@ -260,7 +260,7 @@ test('view and cancel pull requests', function (assert) {
       assert.equal(pullRequest.message, 'A pull request');
       assert.equal(pullRequest.committer, 'Sara Ahmed');
       assert.equal(pullRequest.commitSha, '1234567');
-      assert.equal(pullRequest.commitDate, 'about a year ago');
+      assert.equal(pullRequest.commitDate, '1 year ago');
       assert.equal(pullRequest.duration, '5 min');
 
       assert.ok(pullRequest.cancelButton.visible, 'expected the cancel button to be visible');

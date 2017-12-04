@@ -172,7 +172,7 @@ test('view branches', function (assert) {
     assert.equal(branchesPage.defaultBranch.request, '1919 passed');
     assert.equal(branchesPage.defaultBranch.commitSha, '1234567');
     assert.equal(branchesPage.defaultBranch.committer, 'Sara Ahmed');
-    assert.equal(branchesPage.defaultBranch.commitDate, 'about a year ago');
+    assert.equal(branchesPage.defaultBranch.commitDate, '1 year ago');
 
     const buildTiles = branchesPage.defaultBranch.buildTiles;
 
