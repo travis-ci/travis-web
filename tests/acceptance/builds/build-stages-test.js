@@ -72,6 +72,7 @@ test('visiting build with stages', function (assert) {
 
   andThen(function () {
     assert.equal(buildPage.stages().count, 2, 'expected two build stages');
+    return pauseTest();
 
     buildPage.stages(0).as(stage => {
       assert.equal(stage.name, 'first', 'expected the stages to be numerically sorted');
