@@ -9,7 +9,7 @@
     <time class="label-align" datetime="{{cron.last_run}}">Ran {{format-time cron.last_run}}</time></div>
 <div class="cron-job-text next-run" title="{{cron.next_run}}">
     {{svg-jar 'icon-nextcron' class="icon"}}
-    <time class="label-align" datetime="{{cron.next_run}}">Scheduled in {{format-time cron.next_run}}</time></div>
+    <time class="label-align" datetime="{{cron.next_run}}">Scheduled {{format-time cron.next_run}}</time></div>
 <div class="cron-job-text dont-run-if-recent-build-exists" title="{{dontRunIfRecentBuildExists}}">
     {{svg-jar 'icon-settings' class="icon"}}
     <span class="label-align">{{dontRunIfRecentBuildExists}}</span></div>

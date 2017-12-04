@@ -119,7 +119,7 @@ test('view settings', function (assert) {
       assert.equal(cron.branchName, 'Cron job event daily-branch');
       assert.equal(cron.interval, 'Runs daily');
       assert.equal(cron.lastRun, 'Ran just now');
-      assert.equal(cron.nextRun, 'Scheduled in about 24 hours from now');
+      assert.equal(cron.nextRun, 'Scheduled in 23 hours');
       assert.ok(cron.dontRunIfRecentBuildExistsText.indexOf('Always run') === 0, 'expected cron to run even if there is a build in the last 24h');
     });
 
