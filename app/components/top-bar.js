@@ -1,6 +1,4 @@
-/* global HS, Waypoint */
-import { run } from '@ember/runloop';
-
+/* global HS */
 import { htmlSafe } from '@ember/string';
 import Component from '@ember/component';
 import Ember from 'ember';
@@ -15,6 +13,7 @@ export default Component.extend({
   @service features: null,
   @service flashes: null,
   @service('broadcasts') broadcastsService: null,
+  @service viewport: null,
 
   tagName: 'header',
   classNames: ['top'],
@@ -99,27 +98,19 @@ export default Component.extend({
   },
 
   didInsertElement() {
-    const component = this; // Not pleasant, but I can’t find a better way.
-
     if (Ember.testing) {
       return;
     }
 
-    const waypoint = new Waypoint.Inview({
-      element: this.element,
-      exited() {
-        run(() => {
-          component.get('flashes').set('topBarVisible', false);
-        });
-      },
+    const element = this.element;
+    const watcher = this.get('viewport').getWatcher({ time: 0.01 });
 
-      enter() {
-        run(() => {
-          component.get('flashes').set('topBarVisible', true);
-        });
+    watcher.watch(element, (event) => {
+      if (event === 'impressed') {
+        this.get('flashes').set('topBarVisible', true);
+      } else if (event === 'impression-complete') {
+        this.get('flashes').set('topBarVisible', false);
       }
     });
-
-    this.set('waypoint', waypoint);
   }
 });
