@@ -8,10 +8,9 @@ import EmojiConvertor from 'npm:emoji-js';
 
 const emojiConvertor = new EmojiConvertor();
 
-emojiConvertor.img_sets.apple.sheet = `${config.emojiPrepend}/images/emoji/sheet_apple_64.png`;
+emojiConvertor.img_sets.apple.path = `${config.emojiPrepend}/images/emoji/`;
 emojiConvertor.include_title = true;
 emojiConvertor.allow_native = false;
-emojiConvertor.use_sheet = true;
 
 function formatMessage(message, options) {
   message = message || '';
