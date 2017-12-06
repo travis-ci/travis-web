@@ -65,7 +65,7 @@ module.exports = function () {
   });
 
   app.import('bower_components/pusher/dist/pusher.js');
-  app.import('bower_components/jquery-timeago/jquery.timeago.js');
+  app.import('node_modules/timeago/jquery.timeago.js');
 
   app.import('bower_components/js-emoji/demo/emoji.css');
   app.import('bower_components/js-emoji/lib/emoji.js');
