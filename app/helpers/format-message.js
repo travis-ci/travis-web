@@ -1,14 +1,16 @@
-/* global EmojiConvertor */
 import { helper } from '@ember/component/helper';
 
 import { htmlSafe } from '@ember/string';
 import { get } from '@ember/object';
 import config from 'travis/config/environment';
 
+import EmojiConvertor from 'npm:emoji-js';
+
 const emojiConvertor = new EmojiConvertor();
 
 emojiConvertor.img_sets.apple.path = `${config.emojiPrepend}/images/emoji/`;
 emojiConvertor.include_title = true;
+emojiConvertor.allow_native = false;
 
 function formatMessage(message, options) {
   message = message || '';

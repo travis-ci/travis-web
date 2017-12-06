@@ -67,13 +67,10 @@ module.exports = function () {
   app.import('bower_components/pusher/dist/pusher.js');
   app.import('node_modules/timeago/jquery.timeago.js');
 
-  app.import('bower_components/js-emoji/demo/emoji.css');
-  app.import('bower_components/js-emoji/lib/emoji.js');
-
   app.import('bower_components/waypoints/lib/jquery.waypoints.js');
   app.import('bower_components/waypoints/lib/shortcuts/inview.js');
 
-  const emojiAssets = new Funnel('bower_components/emoji-data/img-apple-64', {
+  const emojiAssets = new Funnel('node_modules/emoji-datasource-apple/img/apple/64', {
     destDir: '/images/emoji'
   });
 
