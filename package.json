@@ -61,7 +61,7 @@
     "ember-export-application-global": "2.0.0",
     "ember-feature-flags": "3.0.0",
     "ember-inflector": "^2.0.0",
-    "ember-keyboard-shortcuts": "0.3.0",
+    "ember-keyboard-shortcuts": "^1.0.2",
     "ember-load-initializers": "1.0.0",
     "ember-modal-dialog": "^2.2.0",
     "ember-moment": "^7.4.1",
@@ -85,6 +85,7 @@
     "lodash.intersection": "4.4.0",
     "lodash.pickby": "4.6.0",
     "morgan": "1.8.2",
+    "timeago": "^1.6.1",
     "visibilityjs": "^1.2.4",
     "yamljs": "^0.3.0"
   },

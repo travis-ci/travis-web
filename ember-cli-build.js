@@ -65,7 +65,7 @@ module.exports = function () {
   });
 
   app.import('bower_components/pusher/dist/pusher.js');
-  app.import('bower_components/jquery-timeago/jquery.timeago.js');
+  app.import('node_modules/timeago/jquery.timeago.js');
 
   app.import('bower_components/waypoints/lib/jquery.waypoints.js');
   app.import('bower_components/waypoints/lib/shortcuts/inview.js');

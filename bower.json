@@ -1,10 +1,8 @@
 {
   "name": "travis",
   "dependencies": {
-    "jquery-timeago": "~1.5.2",
     "pusher": "~2.2.3",
     "raven-js": "3.10.0",
-    "mousetrap": "~1.5.2",
     "waypoints": "4.0.1"
   }
 }
