@@ -170,10 +170,10 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
     });
   },
 
-  @computed('repo.private', 'id')
-  channelName(isRepoPrivate, id) {
+  @computed('repo.private', 'id', 'features.enterpriseVersion')
+  channelName(isRepoPrivate, id, enterprise) {
     // Currently always using private channels on Enterprise
-    const usePrivateChannel = this.get('config.enterprise') || isRepoPrivate;
+    const usePrivateChannel = enterprise || isRepoPrivate;
     const prefix = usePrivateChannel ? 'private-job' : 'job';
     return `${prefix}-${id}`;
   },
