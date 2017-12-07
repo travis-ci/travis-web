@@ -10,9 +10,7 @@
       </button>
     </div>
   {{/if}}
-{{/if}}
-
-{{#if canRestart}}
+{{else if canRestart}}
   {{#if restarters.isRunning}}
     {{loading-indicator height=true}}
   {{else}}
