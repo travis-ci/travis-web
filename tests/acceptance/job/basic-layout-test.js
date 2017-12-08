@@ -94,7 +94,7 @@ I am a line between folds.
 travis_fold:start:afold
 I am the first line of a second fold.
 travis_fold:end:afold
-[0K[30;47;1mI am a bold black line with white background.     I have some whitespace within my line.
+[0K[30;47;1mI am a bold black line with white background.     I have some whitespace within my line. I am very long to provoke wrapping. So I keep going on and on. And on!
 [0K[31;46;3mI am an italic red line with cyan background.
 [0K[32;45;4mI am an underlined green line with magenta background.
 [0K[33;44mI am a yellow line with blue background.
