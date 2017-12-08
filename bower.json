@@ -2,7 +2,6 @@
   "name": "travis",
   "dependencies": {
     "pusher": "~2.2.3",
-    "raven-js": "3.10.0",
-    "waypoints": "4.0.1"
+    "raven-js": "3.10.0"
   }
 }
