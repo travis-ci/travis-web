@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { service } from 'ember-decorators/service';
-import { task } from 'ember-concurrency';
+import { task, timeout } from 'ember-concurrency';
 
 export default Component.extend({
   @service store: null,
@@ -38,6 +38,15 @@ export default Component.extend({
 
     yield cron.save();
   }).drop(),
+
+  searchBranches: task(function* (term) {
+    // FIXME why? When I originally had the yield instead of the return, nothing showed in the results.
+    yield timeout(1);
+    const store = this.get('store');
+    const repoId = this.get('branches.firstObject.repoId');
+
+    return store.query('branch', { repository_id: repoId, name_filter: term });
+  }),
 
   intervals: ['monthly', 'weekly', 'daily'],
 

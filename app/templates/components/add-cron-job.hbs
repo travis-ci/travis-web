@@ -6,6 +6,14 @@
         {{#xs.option value=branch}}{{branch.name}}{{/xs.option}}
       {{/each}}
     {{/x-select}}
+    {{#power-select
+      search=(perform searchBranches)
+      selected=selectedBranch
+      onchange=(action (mut selectedBranch))
+      as |branch|
+    }}
+      {{branch.name}}
+    {{/power-select}}
   </div>
   <div class="form-elem select">
     <span class="label">Interval</span>
