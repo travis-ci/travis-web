@@ -24,10 +24,12 @@ export default Component.extend({
     if (queue === 'builds.gce' && config.dist === 'trusty') {
       const jobRanAfterReleaseDate = Date.parse(startedAt) > Date.parse(LATEST_TRUSTY_RELEASE);
       if (jobRanAfterReleaseDate) {
+        console.log('!!!!! Ran after release date!');
         return true;
       }
     }
 
+    console.log('!!!!! Ran before release date!');
     return false;
   },
 
