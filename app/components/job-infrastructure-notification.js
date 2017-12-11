@@ -20,8 +20,8 @@ export default Component.extend({
   @equal('queue', 'builds.ec2') isTrustySudoFalse: null,
 
   @computed('job.startedAt', 'job.config')
-  isTrustyStable(startedAt, config = {}) {
-    if (config.dist === 'trusty' && config.group === 'stable' && config.sudo !== 'false') {
+  isTrustySudoRequired(startedAt, config = {}) {
+    if (config.dist === 'trusty' && config.sudo !== 'false') {
       const jobRanAfterReleaseDate = Date.parse(startedAt) > Date.parse(LATEST_TRUSTY_RELEASE);
       if (jobRanAfterReleaseDate) {
         return true;
