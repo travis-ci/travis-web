@@ -21,7 +21,7 @@ export default Component.extend({
 
   @computed('job.startedAt', 'job.config')
   isTrustySudoRequired(startedAt, config = {}) {
-    if (config.dist === 'trusty' && config.sudo !== 'false') {
+    if (config.dist === 'trusty' && config.sudo !== false) {
       const jobRanAfterReleaseDate = Date.parse(startedAt) > Date.parse(LATEST_TRUSTY_RELEASE);
       if (jobRanAfterReleaseDate) {
         return true;
