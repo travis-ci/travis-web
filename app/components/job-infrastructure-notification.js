@@ -5,7 +5,7 @@ import { alias, equal } from 'ember-decorators/object/computed';
 import moment from 'moment';
 
 const NOVEMBER_2017_RETIREMENT = '2017-11-28T12:00:00-08:00';
-const LATEST_TRUSTY_RELEASE = '2017-12-11T18:00:00-00:00';
+const LATEST_TRUSTY_RELEASE = '2017-12-11T00:00:00-00:00';
 
 export default Component.extend({
   @alias('job.queue') queue: null,
