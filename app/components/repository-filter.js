@@ -1,11 +1,13 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { isEmpty } from '@ember/utils';
 import { task, timeout } from 'ember-concurrency';
 import config from 'travis/config/environment';
 import { service } from 'ember-decorators/service';
 import { computed, action } from 'ember-decorators/object';
+import { htmlSafe } from 'ember-inflector';
 import fuzzyMatch from 'travis/utils/fuzzy-match';
 
-export default Ember.Component.extend({
+export default Component.extend({
   tagName: '',
   @service store: null,
 
@@ -16,7 +18,7 @@ export default Ember.Component.extend({
 
   @computed('search.isRunning', 'lastQuery')
   isFiltering(isRunning, lastQuery) {
-    return isRunning || !Ember.isEmpty(lastQuery);
+    return isRunning || !isEmpty(lastQuery);
   },
 
   @action
@@ -45,7 +47,7 @@ export default Ember.Component.extend({
 
   computeSlug(slug, isFiltering, query) {
     if (isFiltering) {
-      return Ember.String.htmlSafe(fuzzyMatch(slug, query));
+      return htmlSafe(fuzzyMatch(slug, query));
     } else {
       return slug;
     }

@@ -1,6 +1,6 @@
-import Ember from 'ember';
 import { JSONAPISerializer } from 'ember-cli-mirage';
 import { singularize, pluralize } from 'ember-inflector';
+import { camelize } from 'ember-string';
 import apiSpec from '../api-spec';
 
 export default JSONAPISerializer.extend({
@@ -105,7 +105,7 @@ export default JSONAPISerializer.extend({
     }
 
     this.getAttributes(type, representation, request).forEach((attributeName) => {
-      let relationship = model[Ember.String.camelize(attributeName)];
+      let relationship = model[camelize(attributeName)];
 
       if (attributeName === 'id') {
         result['id'] = this.normalizeId(model, model.attrs.id);

@@ -1,5 +1,6 @@
 import { merge } from '@ember/polyfills';
 import { underscore } from '@ember/string';
+import { pluralize } from 'ember-inflector';
 import { get } from '@ember/object';
 import Ember from 'ember';
 import config from 'travis/config/environment';
@@ -87,7 +88,7 @@ export default RESTAdapter.extend({
 
   pathForType: function (modelName, id) {
     const underscored = underscore(modelName);
-    return id ? underscored :  Ember.String.pluralize(underscored);
+    return id ? underscored : pluralize(underscored);
   },
 
   // Get the host alone, without a path

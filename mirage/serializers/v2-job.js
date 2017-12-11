@@ -1,5 +1,5 @@
-import Ember from 'ember';
 import V2Serializer from './v2';
+import { underscore } from '@ember/string';
 
 export default V2Serializer.extend({
   serialize(job/* , request */) {
@@ -27,7 +27,7 @@ export default V2Serializer.extend({
     let newAttrs = {};
 
     Object.keys(attrs).forEach((key) => {
-      newAttrs[Ember.String.underscore(key)] = attrs[key];
+      newAttrs[underscore(key)] = attrs[key];
     });
 
     return newAttrs;
