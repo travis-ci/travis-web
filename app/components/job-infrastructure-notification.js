@@ -5,7 +5,7 @@ import { alias, equal } from 'ember-decorators/object/computed';
 import moment from 'moment';
 
 const NOVEMBER_2017_RETIREMENT = '2017-11-28T12:00:00-08:00';
-const LATEST_TRUSTY_RELEASE = '2017-07-12T18:00:00-00:00';
+const LATEST_TRUSTY_RELEASE = '2017-12-11T18:00:00-00:00';
 
 export default Component.extend({
   @alias('job.queue') queue: null,
@@ -21,7 +21,7 @@ export default Component.extend({
 
   @computed('job.startedAt', 'job.config')
   isTrustyStable(startedAt, config = {}) {
-    if (config.dist === 'trusty' && config.group === 'stable') {
+    if (config.dist === 'trusty' && config.group === 'stable' && config.sudo !== 'false') {
       const jobRanAfterReleaseDate = Date.parse(startedAt) > Date.parse(LATEST_TRUSTY_RELEASE);
       if (jobRanAfterReleaseDate) {
         return true;
