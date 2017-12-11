@@ -21,7 +21,7 @@ export default Component.extend({
 
   @computed('job.startedAt', 'queue', 'job.config.dist')
   isTrustySudoRequired(startedAt, queue, dist) {
-    if (queue === 'builds.gce' && config.dist === 'trusty') {
+    if (queue === 'builds.gce' && dist === 'trusty') {
       console.log('!!!! Before date condition.');
       const jobRanAfterReleaseDate = Date.parse(startedAt) > Date.parse(LATEST_TRUSTY_RELEASE);
       if (jobRanAfterReleaseDate) {
