@@ -57,12 +57,12 @@ const App = Application.extend(Evented, {
   identifyHSBeacon(user) {
     if (HS && HS.beacon) {
       HS.beacon.ready(() => {
-        const { name, email, login, synced_at } = user;
+        const { name, email, login, synced_at: syncedAt } = user;
         const userParams = {
           name,
           email,
           login,
-          last_synced_at: synced_at,
+          last_synced_at: syncedAt,
         };
         return HS.beacon.identify(userParams);
       });
