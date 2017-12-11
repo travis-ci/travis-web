@@ -19,11 +19,8 @@ export default Component.extend({
   @equal('queue', 'builds.linux') isLegacyInfrastructure: null,
   @equal('queue', 'builds.ec2') isTrustySudoFalse: null,
 
-  @computed('job.startedAt', 'queue', 'job.config')
-  isTrustySudoRequired(startedAt, queue, config) {
-    console.log(queue);
-    console.log(config);
-    console.log(config.dist);
+  @computed('job.startedAt', 'queue', 'job.config.dist')
+  isTrustySudoRequired(startedAt, queue, dist) {
     if (queue === 'builds.gce' && config.dist === 'trusty') {
       console.log('!!!! Before date condition.');
       const jobRanAfterReleaseDate = Date.parse(startedAt) > Date.parse(LATEST_TRUSTY_RELEASE);
