@@ -33,7 +33,7 @@ export default Component.extend({
 
   @equal('queue', 'builds.macstadium6') isMacStadium6: null,
 
-  @computed('queue', 'job.config,dist', 'job.config.language')
+  @computed('queue', 'job.config.dist', 'job.config.language')
   isPreciseEOL(queue, dist, language) {
     if (queue === 'builds.gce' && dist === 'precise') {
       if (language !== 'android') {
