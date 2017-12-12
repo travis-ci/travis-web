@@ -1,14 +1,14 @@
 import { ActiveModelSerializer } from 'ember-cli-mirage';
-
-import Ember from 'ember';
+import { underscore } from '@ember/string';
+import { pluralize } from 'ember-inflector';
 
 export default ActiveModelSerializer.extend({
   keyForModel(modelName) {
-    return Ember.String.underscore(modelName);
+    return underscore(modelName);
   },
 
   keyForCollection(modelName) {
-    return Ember.String.pluralize(Ember.String.underscore(modelName));
+    return pluralize(underscore(modelName));
   },
 
   /**
