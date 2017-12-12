@@ -2,7 +2,6 @@ import { merge } from '@ember/polyfills';
 import { underscore } from '@ember/string';
 import { pluralize } from 'ember-inflector';
 import { get } from '@ember/object';
-import Ember from 'ember';
 import config from 'travis/config/environment';
 import RESTAdapter from 'ember-data/adapters/rest';
 import { service } from 'ember-decorators/service';
