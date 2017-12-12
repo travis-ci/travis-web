@@ -196,6 +196,9 @@ test('build history shows, more can be loaded, and a created build gets added an
       event_type: 'push',
     });
 
+    branch.lastBuild = build;
+    branch.save();
+
     commit = build.createCommit({
       id: 1920,
       sha: 'acab',
