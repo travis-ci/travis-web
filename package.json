@@ -87,7 +87,7 @@
     "lodash.pickby": "4.6.0",
     "morgan": "1.8.2",
     "timeago": "^1.6.1",
-    "visibilityjs": "^1.2.4",
+    "visibilityjs": "^1.2.6",
     "yamljs": "^0.3.0"
   },
   "engines": {
