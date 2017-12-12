@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { isEmpty } from '@ember/utils';
+import { isBlank, isEmpty } from '@ember/utils';
 import { task, timeout } from 'ember-concurrency';
 import config from 'travis/config/environment';
 import { service } from 'ember-decorators/service';
@@ -33,7 +33,7 @@ export default Component.extend({
 
     this.set('lastQuery', query);
 
-    if (Ember.isBlank(query)) {
+    if (isBlank(query)) {
       this.set('filteredRepositories', null);
       return;
     }
