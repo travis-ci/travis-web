@@ -4,7 +4,7 @@ import { task, timeout } from 'ember-concurrency';
 import config from 'travis/config/environment';
 import { service } from 'ember-decorators/service';
 import { computed, action } from 'ember-decorators/object';
-import { htmlSafe } from 'ember-inflector';
+import { htmlSafe } from '@ember/string';
 import fuzzyMatch from 'travis/utils/fuzzy-match';
 
 export default Component.extend({
