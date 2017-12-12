@@ -28,6 +28,7 @@ before_install:
   - npm install -g bower
   - bower --version
   - npm --version
+  - npm install -g greenkeeper-lockfile@1
 
 install:
   - npm install
@@ -38,9 +39,13 @@ before_script:
   - echo $PERCY_ENABLE
   - if [ "$PERCY_ENABLE" -ne 1 ]; then export RANDOMISE=--random; fi
   - echo $RANDOMISE
+  - greenkeeper-lockfile-update
 
 script:
   - ember exam --reporter dot $RANDOMISE
+
+after_script:
+  - greenkeeper-lockfile-upload
 
 before_deploy:
   - ASSETS_HOST=https://s3.amazonaws.com/travis-error-pages ember build --env production
