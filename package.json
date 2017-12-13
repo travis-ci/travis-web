@@ -82,6 +82,7 @@
     "emberx-select": "~3.1.0",
     "emoji-datasource-apple": "^4.0.0",
     "emoji-js": "^3.4.0",
+    "fuzzysort": "^1.0.1",
     "glob": "^7.1.2",
     "loader.js": "^4.2.3",
     "lodash.intersection": "4.4.0",
@@ -93,8 +94,5 @@
   "engines": {
     "node": "8.5.0",
     "npm": "5.4.2"
-  },
-  "dependencies": {
-    "fuzzysort": "^1.0.1"
   }
 }
