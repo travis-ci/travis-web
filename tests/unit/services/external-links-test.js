@@ -1,7 +1,4 @@
 import { moduleFor, test } from 'ember-qunit';
-import config from 'travis/config/environment';
-
-const { apiEndpoint } = config;
 
 moduleFor('service:external-links', 'Unit | Service | external-links', {
   beforeEach() {
@@ -11,11 +8,6 @@ moduleFor('service:external-links', 'Unit | Service | external-links', {
     this.branch = 'new-pr';
     this.pullRequestNumber = '999';
   }
-});
-
-test('plainTextLog', function (assert) {
-  let service = this.subject();
-  assert.equal(service.plainTextLog(this.id), `${apiEndpoint}/jobs/1/log.txt?deansi=true`);
 });
 
 test('githubPullRequest', function (assert) {

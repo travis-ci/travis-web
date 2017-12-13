@@ -24,7 +24,7 @@ test('restarting build', function (assert) {
     .visit({ slug: 'travis-ci/travis-web', build_id: build.id })
     .restartBuild();
 
-  andThen(function () {
+  andThen(() => {
     assert.equal(topPage.flashMessage.text, 'The build was successfully restarted.', 'restarted notification should display proper build restarted text');
     assert.equal(buildPage.singleJobLogText, 'Hello log', 'shows log text of single build job');
   });
