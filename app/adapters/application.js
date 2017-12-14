@@ -30,6 +30,10 @@ export default ActiveModelAdapter.extend({
       }
     }
 
+    if (window.localStorage['apiTrace']) {
+      hash.headers['Trace'] = 'true';
+    }
+
     return hash;
   },
 
