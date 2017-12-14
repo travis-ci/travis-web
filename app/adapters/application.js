@@ -54,6 +54,7 @@ export default ActiveModelAdapter.extend({
     }
 
     if (window.localStorage['apiTrace']) {
+      // eslint-disable-next-line
       console.log(`${request.method} ${request.url} ${status} ${headers['x-request-id']}`);
     }
 
