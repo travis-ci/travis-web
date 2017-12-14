@@ -45,12 +45,16 @@ export default ActiveModelAdapter.extend({
     });
   },
 
-  handleResponse(status, headers, payload) {
+  handleResponse(status, headers, payload, request) {
     if (status > 299) {
       if (this.get('features.debugLogging')) {
         // eslint-disable-next-line
         console.log("[ERROR] API responded with an error (" + status + "): " + (JSON.stringify(payload)));
       }
+    }
+
+    if (window.localStorage['apiTrace']) {
+      console.log(`${request.method} ${request.url} ${status} ${headers['x-request-id']}`);
     }
 
     return this._super(...arguments);
