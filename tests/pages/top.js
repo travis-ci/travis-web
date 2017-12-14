@@ -61,4 +61,9 @@ export default PageObject.create({
   },
 
   clickSigOutLink: clickable('ul.navigation-nested li:last a'),
+
+  enterpriseTrialBanner: {
+    scope: '.enterprise-banner',
+    resetScope: true
+  }
 });
