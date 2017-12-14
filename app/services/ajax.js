@@ -63,6 +63,9 @@ export default Ember.Service.extend({
         options.headers['Authorization'] = `token ${token}`;
       }
     }
+    if (window.localStorage['apiTrace']) {
+      options.headers['Trace'] = 'true';
+    }
     options.url = url = `${endpoint}${url}`;
     options.type = method;
     options.dataType = options.dataType || 'json';
@@ -138,6 +141,12 @@ export default Ember.Service.extend({
             return xhr.responseText;
           }
         })();
+
+        if (window.localStorage['apiTrace']) {
+          // eslint-disable-next-line
+          console.log(`${options.type} ${options.url} ${xhr.status} ${xhr.getResponseHeader('x-request-id')}`);
+        }
+
         if (xhr.status >= 200 && xhr.status < 300) {
           resolve(data);
           return options.success.call(options.context, data, xhr.status, xhr);
