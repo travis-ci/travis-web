@@ -1,4 +1,6 @@
-import Ember from 'ember';
+import { hash } from 'rsvp';
+import $ from 'jquery';
+import EmberObject from '@ember/object';
 import TravisRoute from 'travis/routes/basic';
 import config from 'travis/config/environment';
 import { service } from 'ember-decorators/service';
@@ -25,12 +27,12 @@ export default TravisRoute.extend({
     const canCreateCron = repo.get('permissions.create_cron');
 
     if (canCreateCron) {
-      return Ember.Object.create({
+      return EmberObject.create({
         enabled: true,
         jobs: repo.get('cronJobs')
       });
     } else {
-      return Ember.Object.create({
+      return EmberObject.create({
         enabled: false,
         jobs: []
       });
@@ -62,7 +64,7 @@ export default TravisRoute.extend({
       const repo = this.modelFor('repo');
       const url = `/repos/${repo.get('id')}/key`;
       return this.get('ajax').get(url, (data) => {
-        const fingerprint = Ember.Object.create({
+        const fingerprint = EmberObject.create({
           fingerprint: data.fingerprint
         });
         return fingerprint;
@@ -73,7 +75,7 @@ export default TravisRoute.extend({
   fetchRepositoryActiveFlag() {
     const repoId = this.modelFor('repo').get('id');
     const url = `${config.apiEndpoint}/repo/${repoId}`;
-    return Ember.$.ajax(url, {
+    return $.ajax(url, {
       headers: {
         Authorization: `token ${this.auth.token()}`,
         'Travis-API-Version': '3'
@@ -90,7 +92,7 @@ export default TravisRoute.extend({
   },
 
   model() {
-    return Ember.RSVP.hash({
+    return hash({
       settings: this.modelFor('repo').fetchSettings(),
       envVars: this.fetchEnvVars(),
       cronJobs: this.fetchCronJobs(),

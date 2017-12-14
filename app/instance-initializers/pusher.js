@@ -11,6 +11,7 @@ export function initialize(applicationInstance) {
   app.inject('route', 'pusher', 'pusher:main');
   app.inject('component', 'pusher', 'pusher:main');
   app.pusher.store = applicationInstance.lookup('service:store');
+  app.pusher.pusherService = applicationInstance.lookup('service:pusher');
 }
 
 export default {

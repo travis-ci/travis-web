@@ -1,6 +1,6 @@
 /* global Pusher */
+import { next } from '@ember/runloop';
 import ENV from 'travis/config/environment';
-import Ember from 'ember';
 
 let TravisPusher = function (config, ajaxService) {
   this.active_channels = [];
@@ -94,11 +94,8 @@ TravisPusher.prototype.receive = function (event, data) {
       job.clearLog();
     }
   }
-  return Ember.run.next((function (_this) {
-    return function () {
-      return _this.store.receivePusherEvent(event, data);
-    };
-  })(this));
+
+  next(() => this.pusherService.receive(event, data));
 };
 
 TravisPusher.prototype.normalize = function (event, data) {
@@ -118,7 +115,8 @@ TravisPusher.prototype.normalize = function (event, data) {
         data.queue = data.queue.replace('builds.', '');
       }
       return {
-        job: data
+        job: data,
+        _no_full_payload: data._no_full_payload
       };
     case 'worker:added':
     case 'worker:updated':
@@ -136,7 +134,7 @@ TravisPusher.prototype.normalize = function (event, data) {
 
 TravisPusher.prototype.warn = function (type, object) {
   if (!this.ignoreWarning(type, object.error)) {
-    //eslint-disable-next-line
+    // eslint-disable-next-line
     return console.warn(type, object.error);
   }
 };

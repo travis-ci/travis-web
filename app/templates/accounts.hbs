@@ -1,0 +1,30 @@
+<aside class="profile-aside">
+  <ul class="profile-user">
+    {{org-item account=user}}
+  </ul>
+  <div class="profile-orgs">
+    <h2>Organizations</h2>
+    <ul>
+      {{#each organizations as |org|}}
+        {{org-item account=org}}
+      {{else}}
+        <li class="profile-text">You are not currently a member of <br> any organization.</li>
+      {{/each}}
+    </ul>
+  </div>
+
+  <div class="profile-betafeatures">
+    <h2>Beta Features</h2>
+    {{#link-to "features" tagName="button" class="button beta-features"}}See what's new!{{/link-to}}
+  </div>
+
+  {{#if config.githubOrgsOauthAccessSettingsUrl}}
+    <div class="profile-additional">
+      <p>Is an organization missing?<br>
+        <a href={{config.githubOrgsOauthAccessSettingsUrl}} title="Organizations Oauth Access Settings on GitHub">Review and add</a> your authorized organizations.</p>
+    </div>
+  {{/if}}
+</aside>
+<article class="profile-main">
+  {{outlet}}
+</article>

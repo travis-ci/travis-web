@@ -1,8 +1,1 @@
-<svg x="0px" y="0px" viewBox="0 0 15 15" style="enable-background:new 0 0 15 15;" xml:space="preserve">
-  <line class="st0" x1="0.5" y1="2.521" x2="9.944" y2="11.965"/>
-  <line class="st0" x1="9.944" y1="2.521" x2="0.5" y2="11.965"/>
-  <line class="st0" x1="12.391" y1="2.5" x2="14.5" y2="2.5"/>
-  <line class="st0" x1="10.125" y1="5.662" x2="14.5" y2="5.662"/>
-  <line class="st0" x1="10.092" y1="8.824" x2="14.5" y2="8.824"/>
-  <line class="st0" x1="12.76" y1="11.986" x2="14.5" y2="11.986"/>
-</svg>
+<svg viewBox="0 0 15 15"><path class="st0" d="M.5 2.521l9.444 9.444M9.944 2.521L.5 11.965M12.391 2.5H14.5M10.125 5.662H14.5M10.092 8.824H14.5M12.76 11.986h1.74"/></svg>

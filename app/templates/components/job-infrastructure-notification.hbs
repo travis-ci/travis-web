@@ -5,6 +5,11 @@
         {{{deprecatedOrRetiredMacImageMessage}}}
       {{/notice-banner}}
     {{/if}}
+    {{#if isTrustySudoRequired}}
+      {{#notice-banner}}
+       This job {{conjugatedRun}} on our <b>Trusty</b> environment, which has been updated on Tuesday, December 12th, 2017. Read all about this <a href="https://blog.travis-ci.com/2017-12-12-new-trusty-images-q4-launch">on our blog</a> and take note that you can add <code>group: deprecated-2017Q4</code> in your .travis.yml file to use the previous image version.
+      {{/notice-banner}}
+    {{/if}}
     {{#if isPreciseEOL}}
       {{#notice-banner}}
         This job {{conjugatedRun}} on our <b>Precise</b> environment, which is in the process of being decommissioned.  Please read about the status of the rollout <a href="https://blog.travis-ci.com/2017-08-31-trusty-as-default-status">on the blog</a>, and take note that you can explicitly stay on Precise by specifying <code>dist: precise</code> in your .travis.yml.

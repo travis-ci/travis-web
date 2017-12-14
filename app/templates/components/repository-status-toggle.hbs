@@ -1,0 +1,40 @@
+{{#if admin}}
+  {{repository-switch
+    repository=repository
+    onToggleError="handleToggleError"
+    onToggle="resetErrors"
+    toggleRepositoryTask=toggleRepositoryTask}}
+  {{#if toggleRepositoryTask.isRunning}}
+    {{loading-indicator inline=true}}
+  {{else}}
+    {{#link-to "settings" repository.owner.login repository.name class="profile-settings" title="Go to Travis CI repository settings"}}
+      {{svg-jar 'icon-settings' class="icon icon-hover"}}
+    {{/link-to}}
+  {{/if}}
+{{else}}
+  {{repository-switch repository=repository disabled=true}}
+  <a class="profile-settings">{{svg-jar 'icon-private' class="icon"}}</a>
+{{/if}}
+
+{{#link-to "repo" repository.owner.login repository.name class="profile-repo"
+  classNameBindings="admin:admin:non-admin"}}
+  {{slug}}
+{{/link-to}}
+
+{{#if showError}}
+  <div class="repositories-error">
+    <p>
+      An error happened when we tried to alter settings on GitHub.
+      {{#if githubOrgsOauthAccessSettingsUrl}}
+        It may be caused by API restrictions, please
+        <a href={{githubOrgsOauthAccessSettingsUrl}}
+           title="Orgs Oauth Access Settings on GitHub">
+          review and add
+        </a> your authorized Orgs.
+      {{/if}}
+      <button type="button" class="no-button close" {{action "close" target=view}}>
+        {{svg-jar 'icon-failed' class="icon red"}}
+      </button>
+    </p>
+  </div>
+{{/if}}

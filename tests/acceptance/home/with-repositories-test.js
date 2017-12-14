@@ -75,14 +75,14 @@ test('Pusher events change the main display', function (assert) {
     assert.equal(sidebarPage.repoTitle, 'killjoys / willful-subjects', 'expected the displayed repository to be the one with a running build');
   });
 
+  let  gitUser = server.create('git-user', { name: 'Sara Ahmed' });
   const commit = server.create('commit', {
     id: 100,
     sha: 'acab',
     branch: 'primary',
     message: 'Add new chapter',
     committed_at: '2016-12-02T22:02:34Z',
-    author_name: 'Sara Ahmed',
-    author_email: 'sara@example.com'
+    author: gitUser,
   });
 
   const build = this.branch.createBuild({

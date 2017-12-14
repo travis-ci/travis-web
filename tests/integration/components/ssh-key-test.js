@@ -1,4 +1,7 @@
-import Ember from 'ember';
+import { isEmpty } from '@ember/utils';
+import { run } from '@ember/runloop';
+import { getOwner } from '@ember/application';
+import EmberObject from '@ember/object';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { percySnapshot } from 'ember-percy';
@@ -18,7 +21,7 @@ moduleForComponent('ssh-key', 'Integration | Component | ssh-key', {
 test('it renders the default ssh key if no custom key is set', function (assert) {
   assert.expect(2);
 
-  var key = Ember.Object.create({ fingerprint: 'fingerprint' });
+  var key = EmberObject.create({ fingerprint: 'fingerprint' });
   this.set('key', key);
   this.render(hbs`{{ssh-key key=key sshKeyDeleted="sshKeyDeleted"}}`);
 
@@ -30,10 +33,10 @@ test('it renders the default ssh key if no custom key is set', function (assert)
 test('it renders the custom ssh key if custom key is set', function (assert) {
   assert.expect(2);
 
-  var store = Ember.getOwner(this).lookup('service:store');
+  var store = getOwner(this).lookup('service:store');
 
   var key;
-  Ember.run(function () {
+  run(function () {
     key = store.push({ data: { id: 1, type: 'ssh-key', attributes: { description: 'fookey', fingerprint: 'somethingthing' } } });
   });
 
@@ -47,10 +50,10 @@ test('it renders the custom ssh key if custom key is set', function (assert) {
 test('it deletes a custom key if permissions are right', function (assert) {
   assert.expect(1);
 
-  var store = Ember.getOwner(this).lookup('service:store');
+  var store = getOwner(this).lookup('service:store');
 
   var key;
-  Ember.run(function () {
+  run(function () {
     key = store.push({ data: { id: 1, type: 'ssh-key', attributes: { description: 'fookey', fingerprint: 'somethingthing' } } });
   });
 
@@ -70,15 +73,15 @@ test('it deletes a custom key if permissions are right', function (assert) {
 test('it does not delete the custom key if permissions are insufficient', function (assert) {
   assert.expect(1);
 
-  var store = Ember.getOwner(this).lookup('service:store');
+  var store = getOwner(this).lookup('service:store');
 
   var key;
-  Ember.run(function () {
+  run(function () {
     key = store.push({ data: { id: 1, type: 'ssh-key', attributes: { description: 'fookey', fingerprint: 'somethingthing' } } });
   });
 
   this.set('key', key);
   this.render(hbs`{{ssh-key key=key sshKeyDeleted="sshKeyDeleted" pushAccess=false}}`);
 
-  assert.ok(Ember.isEmpty(this.$('.ssh-key-action').find('a')), 'delete link should not be displayed');
+  assert.ok(isEmpty(this.$('.ssh-key-action').find('a')), 'delete link should not be displayed');
 });

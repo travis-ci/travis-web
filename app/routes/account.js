@@ -1,28 +1,24 @@
 import TravisRoute from 'travis/routes/basic';
 
 export default TravisRoute.extend({
-  titleToken(model) {
-    if (model && model.id) {
-      return model.get('name') || model.get('login');
+  titleToken(account) {
+    if (account && account.id) {
+      return account.get('name') || account.get('login');
     } else {
       return 'Account';
     }
   },
 
-  setupController(controller) {
-    this._super(...arguments);
-    controller.reloadHooks();
-  },
-
   model(params) {
     const { login } = params;
-    let account = this.modelFor('accounts')
+    let account = this
+      .modelFor('accounts')
       .find(acct => acct.get('login') === login);
-    if (account) {
-      return account;
-    } else {
-      return { login, error: true };
-    }
+    if (account) { return account; }
+    return {
+      login,
+      error: true
+    };
   },
 
   serialize(account) {

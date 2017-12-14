@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import { dasherize } from '@ember/string';
 import DS from 'ember-data';
 import attr from 'ember-data/attr';
 import { computed } from 'ember-decorators/object';
@@ -11,7 +11,7 @@ export default DS.Model.extend({
 
   @computed('name')
   dasherizedName(name) {
-    return Ember.String.dasherize(name);
+    return dasherize(name);
   },
 
   @computed('dasherizedName')

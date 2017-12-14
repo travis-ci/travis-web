@@ -1,10 +1,12 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
 import { computed } from 'ember-decorators/object';
 import { alias, sort, filterBy } from 'ember-decorators/object/computed';
 
-export default Ember.Controller.extend({
-  envVarSorting: ['name'],
-  envVars: Ember.computed.sort('unsortedEnvVars', 'envVarSorting'),
+export default Controller.extend({
+  @computed('unsortedEnvVars')
+  envVars(envVars) {
+    return envVars.sortBy('name');
+  },
 
   @filterBy('model.envVars', 'isNew', false)
   unsortedEnvVars: null,

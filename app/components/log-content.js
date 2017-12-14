@@ -1,5 +1,8 @@
 /* global Travis */
-import Ember from 'ember';
+import { scheduleOnce, run, schedule } from '@ember/runloop';
+
+import Component from '@ember/component';
+import $ from 'jquery';
 import LinesSelector from 'travis/utils/lines-selector';
 import Log from 'travis/utils/log';
 import LogFolder from 'travis/utils/log-folder';
@@ -17,7 +20,7 @@ Log.Scroll = function (options = {}) {
   return this;
 };
 
-Log.Scroll.prototype = Ember.$.extend(new Log.Listener(), {
+Log.Scroll.prototype = $.extend(new Log.Listener(), {
   insert() {
     if (this.numbers) {
       this.tryScroll();
@@ -26,15 +29,15 @@ Log.Scroll.prototype = Ember.$.extend(new Log.Listener(), {
   },
   tryScroll() {
     let ref;
-    let element = Ember.$('#log p:visible.highlight:first');
+    let element = $('#log p:visible.highlight:first');
     if (element) {
       if (this.beforeScroll) {
         this.beforeScroll();
       }
-      Ember.$('#main').scrollTop(0);
+      $('#main').scrollTop(0);
       let offset = element.offset();
       let scrollTop = ((ref = offset) != null ? ref.top : void 0) - (window.innerHeight / 3);
-      return Ember.$('html, body').scrollTop(scrollTop);
+      return $('html, body').scrollTop(scrollTop);
     }
   }
 });
@@ -64,7 +67,7 @@ Object.defineProperty(Log.Limit.prototype, 'limited', {
   }
 });
 
-export default Ember.Component.extend({
+export default Component.extend({
   @service auth: null,
   @service permissions: null,
   @service externalLinks: null,
@@ -78,19 +81,19 @@ export default Ember.Component.extend({
 
   didInsertElement() {
     if (this.get('features.debugLogging')) {
-      //eslint-disable-next-line
+      // eslint-disable-next-line
       console.log('log view: did insert');
     }
     this._super(...arguments);
-    Ember.run.scheduleOnce('afterRender', this, 'createEngine');
+    scheduleOnce('afterRender', this, 'createEngine');
   },
 
   willDestroyElement() {
     if (this.get('features.debugLogging')) {
-      //eslint-disable-next-line
+      // eslint-disable-next-line
       console.log('log view: will destroy');
     }
-    Ember.run.scheduleOnce('afterRender', this, 'teardownLog');
+    scheduleOnce('afterRender', this, 'teardownLog');
   },
 
   teardownLog(log) {
@@ -131,7 +134,7 @@ export default Ember.Component.extend({
         }
       });
       this.limit = new Log.Limit(Log.LIMIT, () => {
-        Ember.run(() => {
+        run(() => {
           if (!this.isDestroying) {
             this.set('limited', true);
           }
@@ -177,10 +180,10 @@ export default Ember.Component.extend({
   },
 
   partsDidChange(parts, start, _, added) {
-    Ember.run.schedule('afterRender', this, function () {
+    schedule('afterRender', this, function () {
       let i, j, len, part, ref, ref1, ref2, results;
       if (this.get('features.debugLogging')) {
-        //eslint-disable-next-line
+        // eslint-disable-next-line
         console.log('log view: parts did change');
       }
       if (this.get('_state') !== 'inDOM') {
@@ -201,15 +204,9 @@ export default Ember.Component.extend({
     });
   },
 
-  @computed('log.job.id', 'job.log.token', 'job.repo')
-  plainTextLogUrl(id, token, repo) {
-    if (id) {
-      let url = this.get('externalLinks').plainTextLog(id);
-      if (repo.get('private')) {
-        url += `&access_token=${token}`;
-      }
-      return url;
-    }
+  @computed('log.plainTextUrl')
+  plainTextLogUrl(url) {
+    return `${config.apiEndpoint}${url}`;
   },
 
   @computed('permissions.all', 'job.repo')
@@ -234,7 +231,7 @@ export default Ember.Component.extend({
   actions: {
     toTop() {
       Travis.tailing.stop();
-      return Ember.$(window).scrollTop(0);
+      return $(window).scrollTop(0);
     },
 
     toggleTailing() {

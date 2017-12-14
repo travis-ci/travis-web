@@ -1,7 +1,10 @@
-/* global moment, Travis */
+/* global Travis */
 
-import pickBy from 'npm:lodash.pickby';
-import Ember from 'ember';
+import { observer } from '@ember/object';
+import { Promise as EmberPromise } from 'rsvp';
+import { isEqual } from '@ember/utils';
+import { getOwner } from '@ember/application';
+
 import Model from 'ember-data/model';
 import Log from 'travis/models/log';
 import DurationCalculations from 'travis/mixins/duration-calculations';
@@ -12,8 +15,11 @@ import { computed } from 'ember-decorators/object';
 import { alias, not } from 'ember-decorators/object/computed';
 import { service } from 'ember-decorators/service';
 
+import moment from 'moment';
+
 export default Model.extend(DurationCalculations, DurationAttributes, {
   @service ajax: null,
+  @service jobConfigFetcher: null,
 
   logId: attr(),
   queue: attr(),
@@ -23,12 +29,12 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
   tags: attr(),
   repositoryPrivate: attr(),
   repositorySlug: attr(),
-  _config: attr(),
+  updatedAt: attr('date'),
 
   repo: belongsTo('repo'),
   build: belongsTo('build', { async: true }),
   commit: belongsTo('commit', { async: true }),
-  stage: belongsTo('stage', { async: false }),
+  stage: belongsTo('stage', { async: true }),
 
   @alias('build.isPullRequest') isPullRequest: null,
   @alias('build.pullRequestNumber') pullRequestNumber: null,
@@ -46,30 +52,15 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
     return Log.create({
       job: this,
       ajax: this.get('ajax'),
-      container: Ember.getOwner(this)
+      container: getOwner(this)
     });
   },
 
-  // TODO: DO NOT SET OTHER PROPERTIES WITHIN A COMPUTED PROPERTY!
-  @computed('_config')
-  config(config) {
-    if (config) {
-      return pickBy(config);
-    } else {
-      let fetchConfig = () => {
-        if (this.getCurrentState() !== 'root.loading') {
-          if (this.get('isFetchingConfig')) {
-            return;
-          }
-          this.set('isFetchingConfig', true);
-          this.reload();
-        } else {
-          Ember.run.later(fetchConfig, 20);
-        }
-      };
+  @alias('config.content') configLoaded: null,
 
-      fetchConfig();
-    }
+  @computed()
+  config() {
+    return this.get('jobConfigFetcher').fetch(this.get('id'));
   },
 
   getCurrentState() {
@@ -85,7 +76,7 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
   @computed('state')
   toBeQueued(state) {
     let queuedState = 'created';
-    return Ember.isEqual(state, queuedState);
+    return isEqual(state, queuedState);
   },
 
   @computed('state')
@@ -104,14 +95,6 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
     if (this.get('isLogAccessed')) {
       return this.get('log').clear();
     }
-  },
-
-  @computed('config', 'build.rawConfigKeys.[]')
-  configValues(config, keys) {
-    if (config && keys) {
-      return keys.map(key => config[key]);
-    }
-    return [];
   },
 
   @computed('isFinished', 'state')
@@ -153,7 +136,7 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
   },
 
   whenLoaded(callback) {
-    new Ember.RSVP.Promise((resolve, reject) => {
+    new EmberPromise((resolve, reject) => {
       this.whenLoadedCallbacks = this.whenLoadedCallbacks || [];
       if (this.get('isLoaded')) {
         resolve();
@@ -187,9 +170,11 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
     });
   },
 
-  @computed('repo.private', 'id')
-  channelName(isRepoPrivate, id) {
-    const prefix = isRepoPrivate ? 'private-job' : 'job';
+  @computed('repo.private', 'id', 'features.enterpriseVersion')
+  channelName(isRepoPrivate, id, enterprise) {
+    // Currently always using private channels on Enterprise
+    const usePrivateChannel = enterprise || isRepoPrivate;
+    const prefix = usePrivateChannel ? 'private-job' : 'job';
     return `${prefix}-${id}`;
   },
 
@@ -206,7 +191,7 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
     });
   },
 
-  onStateChange: Ember.observer('state', function () {
+  onStateChange: observer('state', function () {
     if (this.get('state') === 'finished' && Travis.pusher) {
       return this.unsubscribe();
     }

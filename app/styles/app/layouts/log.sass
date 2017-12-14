@@ -2,7 +2,7 @@
   position: relative
 
   .log-tail
-    z-index: 80
+    @include z-index(above-above)
     position: absolute
     display: block
     top: 0
@@ -63,7 +63,7 @@
       background-color: #6b0
 
   .to-top
-    z-index: 80
+    @include z-index(above-above)
     position: absolute
     display: block
     bottom: 2px
@@ -150,9 +150,9 @@
 
   p
     position: relative
-    padding: 0 15px 0 55px
+    padding: 0 15px 0 62px
     margin: 0
-    min-height: 16px
+    min-height: 19px
     &:hover
       background-color: $color-bg-log-hover !important
     &.highlight
@@ -163,9 +163,10 @@
       display: inline-block
       text-align: right
       min-width: 40px
-      margin-left: -33px
+      margin-left: -40px
       cursor: pointer
       text-decoration: none
+      position: absolute
 
       &::before
         content: counter(line-numbering)
@@ -174,7 +175,7 @@
 
   .fold
     position: relative
-    height: 16px
+    height: 19px
     overflow: hidden
     cursor: pointer
     &.open
@@ -197,7 +198,7 @@
 
     .fold-name
       position: absolute
-      z-index: 1
+      @include z-index(above)
       display: block
       top: 2px
       right: 85px

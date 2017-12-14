@@ -1,8 +1,8 @@
-import Ember from 'ember';
+import Component from '@ember/component';
 import { computed } from 'ember-decorators/object';
 import { alias } from 'ember-decorators/object/computed';
 
-export default Ember.Component.extend({
+export default Component.extend({
   tagName: 'nav',
   classNames: ['pagination-navigation'],
   @alias('collection.pagination') pagination: null,
@@ -47,13 +47,16 @@ export default Ember.Component.extend({
         num: 1,
         offset: 0
       });
+
       // outerwindow first page
-      for (let i = 1; i <= outerWindow; i++) {
-        if (i !== currentPage) {
-          pageArray.push({
-            num: 1 + i,
-            offset: perPage * i
-          });
+      if (currentPage !== 1) {
+        for (let i = 1; i <= outerWindow; i++) {
+          if (i !== currentPage) {
+            pageArray.push({
+              num: i + 1,
+              offset: perPage * i
+            });
+          }
         }
       }
 
@@ -113,4 +116,9 @@ export default Ember.Component.extend({
     }
     return pageArray;
   },
+
+  @computed('pages')
+  showPagination(pages) {
+    return pages.length > 1;
+  }
 });

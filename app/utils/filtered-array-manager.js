@@ -1,9 +1,12 @@
-import Ember from 'ember';
+import { Promise as EmberPromise, resolve } from 'rsvp';
+import EmberObject from '@ember/object';
+import { alias } from '@ember/object/computed';
+import ArrayProxy from '@ember/array/proxy';
 import stringHash from 'travis/utils/string-hash';
 
 // An array proxy wrapping records that fit a filtered array.
-let FilteredArray = Ember.ArrayProxy.extend({
-  arrangedContent: Ember.computed.alias('content'),
+let FilteredArray = ArrayProxy.extend({
+  arrangedContent: alias('content'),
 
   // check if record should or shouldn't be a part of the filtered array. If the
   // record passed as an argument is not yet in the array and the filter
@@ -53,7 +56,7 @@ let FilteredArray = Ember.ArrayProxy.extend({
 // if the record needs to be added to any of the filtered arrays. Whenever a
 // record is removed, the observers will be removed as well and it will be
 // removed from all of the filtered arrays.
-let FilteredArrayManagerForType = Ember.Object.extend({
+let FilteredArrayManagerForType = EmberObject.extend({
   init() {
     this.arrays = {};
     let store = this.get('store'),
@@ -99,7 +102,7 @@ let FilteredArrayManagerForType = Ember.Object.extend({
     } else if (forceReload) {
       // if forceReload is true and array already exist, just run the query
       // to get new results
-      let promise = new Ember.RSVP.Promise((resolve, reject) => {
+      let promise = new EmberPromise((resolve, reject) => {
         this.fetchQuery(queryParams).then((queryResult) => {
           array.set('queryResult', queryResult);
           resolve(array);
@@ -142,7 +145,7 @@ let FilteredArrayManagerForType = Ember.Object.extend({
     // check existing records
     this.allRecords.forEach((record) => array.tryRecord(record));
 
-    let promise = new Ember.RSVP.Promise((resolve, reject) => {
+    let promise = new EmberPromise((resolve, reject) => {
       // TODO: think about error handling, at the moment it will just pass the
       // reject from store.query
       this.fetchQuery(queryParams).then((queryResult) => {
@@ -163,7 +166,7 @@ let FilteredArrayManagerForType = Ember.Object.extend({
     if (queryParams) {
       return this.get('store').query(this.get('modelName'), queryParams);
     } else {
-      return Ember.RSVP.resolve([]);
+      return resolve([]);
     }
   },
 
@@ -172,7 +175,9 @@ let FilteredArrayManagerForType = Ember.Object.extend({
   },
 
   removeObserver(record, property) {
-    record.removeObserver(property, this, 'propertyDidChange');
+    if (record) {
+      record.removeObserver(property, this, 'propertyDidChange');
+    }
   },
 
   propertyDidChange(record, key, value, rev) {
@@ -186,7 +191,7 @@ let FilteredArrayManagerForType = Ember.Object.extend({
   calculateId(queryParams, filterFunction, dependencies) {
     const params = queryParams || {};
     let id = stringHash([
-      Object.entries(params).map(([key, value]) => `${key}:${value}`).sort(),
+      JSON.stringify(params),
       (dependencies || []).sort(),
       // not sure if this is a good idea, but I want to get the unique id for
       // each set of arguments to filter
@@ -232,7 +237,7 @@ let FilteredArrayManagerForType = Ember.Object.extend({
   }
 });
 
-let FilteredArrayManager = Ember.Object.extend({
+let FilteredArrayManager = EmberObject.extend({
   init() {
     this.filteredArrayManagersByType = {};
   },

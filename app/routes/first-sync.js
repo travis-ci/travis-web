@@ -1,5 +1,5 @@
+import { later } from '@ember/runloop';
 import SimpleLayoutRoute from 'travis/routes/simple-layout';
-import Ember from 'ember';
 
 export default SimpleLayoutRoute.extend({
   activate() {
@@ -18,7 +18,7 @@ export default SimpleLayoutRoute.extend({
     let controller, self;
     controller = this.controllerFor('firstSync');
     if (!controller.get('isSyncing')) {
-      return Ember.run.later(this, function () {
+      return later(this, function () {
         return this.store.query('repo', {
           member: this.get('controller.user.login')
         }).then((repos) => {

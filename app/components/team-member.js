@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import Component from '@ember/component';
 import { computed } from 'ember-decorators/object';
 import { or } from 'ember-decorators/object/computed';
 
@@ -7,7 +7,9 @@ const countrySentenceOverrides = {
   occupiedcanada: 'occupied Canada',
   uk: 'United Kingdom',
   ukswitzerland: 'UK/Switzerland',
-  usa: 'United States of America'
+  usa: 'United States of America',
+  polandchile: 'Poland and Chile',
+  germanycolombia: 'Germany and Colombia'
 };
 
 function countryToSentence(country) {
@@ -20,7 +22,7 @@ function countryToSentence(country) {
   }
 }
 
-export default Ember.Component.extend({
+export default Component.extend({
   tagName: 'li',
   classNames: ['team-member'],
 

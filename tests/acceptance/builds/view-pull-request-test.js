@@ -13,7 +13,8 @@ test('renders a pull request', function (assert) {
   let repository =  server.create('repository', { slug: 'travis-ci/travis-web' });
 
   const branch = server.create('branch', { name: 'acceptance-tests' });
-  let commit = server.create('commit', { sha: 'abc123', author_email: 'mrt@travis-ci.org', author_name: 'Mr T', committer_email: 'mrt@travis-ci.org', committer_name: 'Mr T', branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
+  let  gitUser = server.create('git-user', { name: 'Mr T' });
+  let commit = server.create('commit', { author: gitUser, committer: gitUser, committer_name: 'Mr T', branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
   let build = server.create('build', {
     number: '5',
     state: 'passed',

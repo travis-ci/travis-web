@@ -1,8 +1,9 @@
-import Ember from 'ember';
+import ArrayProxy from '@ember/array/proxy';
+import { computed as emberComputed } from '@ember/object';
 import { computed } from 'ember-decorators/object';
 import { alias } from 'ember-decorators/object/computed';
 
-export default Ember.ArrayProxy.extend({
+export default ArrayProxy.extend({
 
   @alias('content') arrangedContent: null,
 
@@ -18,11 +19,11 @@ export default Ember.ArrayProxy.extend({
       next: paginationData.next,
       first: paginationData.first,
       last: paginationData.last,
-      currentPage: Ember.computed(() => {
+      currentPage: emberComputed(() => {
         const { offset, limit } = paginationData;
         return (offset / limit + 1);
       }),
-      numberOfPages: Ember.computed(() => {
+      numberOfPages: emberComputed(() => {
         const { count, limit } = paginationData;
         return Math.ceil(count / limit);
       })

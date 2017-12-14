@@ -1,10 +1,10 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
 import { service } from 'ember-decorators/service';
 import { controller } from 'ember-decorators/controller';
 import { computed, observes } from 'ember-decorators/object';
 import { alias } from 'ember-decorators/object/computed';
 
-export default Ember.Controller.extend({
+export default Controller.extend({
   @service auth: null,
   @service externalLinks: null,
 

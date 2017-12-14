@@ -1,4 +1,1 @@
-<svg x="0px" y="0px" viewBox="0 0 15 15" style="enable-background:new 0 0 15 15;" xml:space="preserve">
-  <line class="st0" x1="2.25" y1="0.5" x2="2.25" y2="14.5"/>
-  <polygon class="st0" points="12.592,7.311 2.25,7.815 2.25,0.5 12.592,1.005 9.565,3.905"/>
-</svg>
+<svg viewBox="0 0 15 15"><path class="st0" d="M2.25.5v14M12.592 7.311L2.25 7.815V.5l10.342.505-3.027 2.9z"/></svg>

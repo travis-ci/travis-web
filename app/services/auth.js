@@ -1,11 +1,15 @@
 /* global Travis */
+import { observer } from '@ember/object';
+
+import { isEmpty } from '@ember/utils';
+import { Promise as EmberPromise } from 'rsvp';
+import Service from '@ember/service';
 import config from 'travis/config/environment';
-import Ember from 'ember';
 import { computed } from 'ember-decorators/object';
 import { alias } from 'ember-decorators/object/computed';
 import { service } from 'ember-decorators/service';
 
-export default Ember.Service.extend({
+export default Service.extend({
   @service router: null,
   @service flashes: null,
   @service store: null,
@@ -16,6 +20,11 @@ export default Ember.Service.extend({
   state: 'signed-out',
   receivingEnd: `${location.protocol}//${location.host}`,
   tokenExpiredMsg: 'You\'ve been signed out, because your access token has expired.',
+
+  init() {
+    this.afterSignOutCallbacks = [];
+    return this._super(...arguments);
+  },
 
   token() {
     return this.get('sessionStorage').getItem('travis.token');
@@ -32,9 +41,10 @@ export default Ember.Service.extend({
     this.get('storage').clear();
     this.set('state', 'signed-out');
     this.set('user', null);
-    this.get('store').unloadAll();
     this.set('currentUser', null);
     this.clearNonAuthFlashes();
+    this.runAfterSignOutCallbacks();
+    this.get('store').unloadAll();
   },
 
   signIn(data) {
@@ -42,7 +52,14 @@ export default Ember.Service.extend({
       this.autoSignIn(data);
     } else {
       this.set('state', 'signing-in');
-      window.location = `${this.get('endpoint')}/auth/handshake?redirect_uri=${location}`;
+
+      let url = new URL(window.location.href);
+
+      if (url.pathname === '/plans') {
+        url.pathname = '/';
+      }
+
+      window.location = `${this.get('endpoint')}/auth/handshake?redirect_uri=${url}`;
     }
   },
 
@@ -65,6 +82,16 @@ export default Ember.Service.extend({
         }
       });
     }
+  },
+
+  afterSignOut(callback) {
+    this.afterSignOutCallbacks.push(callback);
+  },
+
+  runAfterSignOutCallbacks() {
+    this.afterSignOutCallbacks.forEach((callback) => {
+      callback();
+    });
   },
 
   userDataFrom(storage) {
@@ -144,11 +171,11 @@ export default Ember.Service.extend({
             Travis.trigger('user:refreshed', data.user);
           }
         } else {
-          return Ember.RSVP.Promise.reject();
+          return EmberPromise.reject();
         }
       });
     } else {
-      return Ember.RSVP.Promise.resolve();
+      return EmberPromise.resolve();
     }
   },
 
@@ -199,20 +226,21 @@ export default Ember.Service.extend({
   clearNonAuthFlashes() {
     const flashMessages = this.get('flashes.flashes.content') || [];
     const errorMessages = flashMessages.filterBy('type', 'error');
-    if (!Ember.isEmpty(errorMessages)) {
+    if (!isEmpty(errorMessages)) {
       const errMsg = errorMessages.get('firstObject.message');
       if (errMsg !== this.get('tokenExpiredMsg')) {
         return this.get('flashes').clear();
       }
+    } else {
+      return this.get('flashes').clear();
     }
-    return this.get('flashes').clear();
   },
 
   sync() {
     return this.get('currentUser').sync();
   },
 
-  syncingDidChange: Ember.observer('isSyncing', 'currentUser', function () {
+  syncingDidChange: observer('isSyncing', 'currentUser', function () {
     const user = this.get('currentUser');
     if (user && user.get('isSyncing') && !user.get('syncedAt')) {
       return this.get('router').transitionTo('first_sync');

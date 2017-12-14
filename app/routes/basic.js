@@ -1,7 +1,8 @@
-import Ember from 'ember';
+import { reject } from 'rsvp';
+import Route from '@ember/routing/route';
 import { service } from 'ember-decorators/service';
 
-export default Ember.Route.extend({
+export default Route.extend({
   @service auth: null,
   @service featureFlags: null,
 
@@ -18,7 +19,7 @@ export default Ember.Route.extend({
     }
     if (!this.signedIn() && this.get('needsAuth')) {
       this.auth.set('afterSignInTransition', transition);
-      return Ember.RSVP.reject('needs-auth');
+      return reject('needs-auth');
     } else if (this.redirectToProfile(transition)) {
       return this.transitionTo('profile', this.get('auth.currentUser.login'));
     } else {
@@ -35,10 +36,12 @@ export default Ember.Route.extend({
     let { targetName } = transition;
     let { params } = transition;
     if (targetName === 'owner.repositories' &&
-       params.owner &&
-       params.owner.owner &&
-       params.owner.owner === 'profile') {
-      this.transitionTo('account', this.get('auth.currentUser.login'));
+      params.owner &&
+      params.owner.owner &&
+      params.owner.owner === 'profile') {
+      this.transitionTo('account', this.get('auth.currentUser.login'), {
+        queryParams: { offset: 0 }
+      });
     }
   }
 });

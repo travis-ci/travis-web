@@ -1,8 +1,8 @@
-import Ember from 'ember';
+import Mixin from '@ember/object/mixin';
 import durationFrom from 'travis/utils/duration-from';
 import { computed } from 'ember-decorators/object';
 
-export default Ember.Mixin.create({
+export default Mixin.create({
   @computed('_duration', 'finishedAt', 'startedAt', 'notStarted')
   duration(duration, finishedAt, startedAt, notStarted) {
     if (notStarted) {

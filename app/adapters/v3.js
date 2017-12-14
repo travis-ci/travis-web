@@ -1,4 +1,7 @@
-import Ember from 'ember';
+import { merge } from '@ember/polyfills';
+import { underscore } from '@ember/string';
+import { pluralize } from 'ember-inflector';
+import { get } from '@ember/object';
 import config from 'travis/config/environment';
 import RESTAdapter from 'ember-data/adapters/rest';
 import { service } from 'ember-decorators/service';
@@ -16,9 +19,10 @@ export default RESTAdapter.extend({
     'Content-Type': 'application/json'
   },
 
-  ajaxOptions: function (url, type, options) {
+  ajaxOptions: function (url, type = 'GET', options) {
     options = options || {};
     options.data = options.data || {};
+    options.data = merge({}, options.data); // clone
 
     for (let key in options.data) {
       let value = options.data[key];
@@ -41,7 +45,7 @@ export default RESTAdapter.extend({
       delete options.data.page_size;
     }
 
-    let hash = this._super(...arguments);
+    let hash = this._super(url, type, options);
 
     hash.headers = hash.headers || {};
 
@@ -53,9 +57,9 @@ export default RESTAdapter.extend({
     return hash;
   },
 
-  buildURL: function (modelName, id) {
+  buildURL: function (modelName, id, snapshot, requestType, query) {
     let url = [];
-    const host = Ember.get(this, 'host');
+    const host = get(this, 'host');
     const prefix = this.urlPrefix();
     const pathPrefix = this.pathPrefix(...arguments);
 
@@ -82,8 +86,8 @@ export default RESTAdapter.extend({
   pathPrefix() {},
 
   pathForType: function (modelName, id) {
-    const underscored = Ember.String.underscore(modelName);
-    return id ? underscored :  Ember.String.pluralize(underscored);
+    const underscored = underscore(modelName);
+    return id ? underscored : pluralize(underscored);
   },
 
   // Get the host alone, without a path

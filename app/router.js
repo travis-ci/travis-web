@@ -1,8 +1,8 @@
 /* global _gaq */
-import Ember from 'ember';
+import EmberRouter from '@ember/routing/router';
 import config from './config/environment';
 
-const Router = Ember.Router.extend({
+const Router = EmberRouter.extend({
   location: config.locationType,
   rootURL: config.rootURL,
 
@@ -52,7 +52,9 @@ Router.map(function () {
   this.route('logo', { path: '/logo' });
   this.route('profile', { path: '/profile', resetNamespace: true }, function () {
     this.route('accounts', { path: '/', resetNamespace: true }, function () {
-      this.route('account', { path: '/:login', resetNamespace: true });
+      this.route('account', { path: '/:login', resetNamespace: true }, function () {
+        this.route('repositories', { path: '/' });
+      });
     });
   });
   this.route('owner', { path: '/:owner', resetNamespace: true }, function () {

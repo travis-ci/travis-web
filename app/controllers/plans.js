@@ -1,9 +1,9 @@
 /* global _gaq */
-import Ember from 'ember';
+import Controller from '@ember/controller';
 import config from 'travis/config/environment';
 import { action } from 'ember-decorators/object';
 
-export default Ember.Controller.extend({
+export default Controller.extend({
   @action
   gaCta(location) {
     if (config.gaCode) {

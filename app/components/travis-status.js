@@ -1,8 +1,9 @@
-import Ember from 'ember';
+import $ from 'jquery';
+import Component from '@ember/component';
 import config from 'travis/config/environment';
 import { computed } from 'ember-decorators/object';
 
-export default Ember.Component.extend({
+export default Component.extend({
   status: null,
 
   @computed()
@@ -22,6 +23,6 @@ export default Ember.Component.extend({
   },
 
   getStatus(url) {
-    return Ember.$.ajax(url);
+    return $.ajax(url);
   }
 });

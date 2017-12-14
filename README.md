@@ -1,4 +1,5 @@
 ## Travis CI ember web client
+
 [![Build Status](https://travis-ci.org/travis-ci/travis-web.svg?branch=master)](https://travis-ci.org/travis-ci/travis-web)
 ### Running the app
 
@@ -9,6 +10,10 @@ In order to run the app you need to install dependencies with:
 
     bower install
     npm install
+
+And then install ember-cli globally in order to have access to the `ember` command:
+
+    npm install -g ember-cli
 
 Now you can run the server:
 

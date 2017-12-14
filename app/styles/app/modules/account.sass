@@ -1,0 +1,30 @@
+.account
+  display: flex
+  flex-flow: row nowrap
+  align-items: center
+  margin-bottom: 35px
+  .avatar
+    margin-right: 1em
+  @media #{$medium-up}
+    flex-flow: row wrap
+  &.user
+    .avatar
+      align-self: flex-start
+
+.account-name
+  margin: 0
+  font-size: $font-size-sm
+  font-weight: $font-weight-bold
+  width: 180px
+  white-space: nowrap
+  text-overflow: ellipsis
+  overflow: hidden
+  @media #{$medium-up}
+    width: 240px
+  &:active,
+  &:hover
+    text-decoration: underline
+
+.account-repo-count,
+.account-token
+  margin: 0

@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import EmberObject from '@ember/object';
 import { test, moduleForComponent } from 'ember-qunit';
 // import wait from 'ember-test-helpers/wait';
 import hbs from 'htmlbars-inline-precompile';
@@ -9,7 +9,7 @@ moduleForComponent('orgs-filter', 'Integration | Component | orgs filter', {
 
 test('it renders data correctly', function (assert) {
   const orgs = [
-    Ember.Object.create({
+    EmberObject.create({
       id: 'lislis',
       name: 'Lisa P',
       type: 'user',
@@ -18,7 +18,7 @@ test('it renders data correctly', function (assert) {
       subscribed: false,
       education: false
     }),
-    Ember.Object.create({
+    EmberObject.create({
       id: 'travis-ci',
       name: 'Travis CI',
       type: 'organization',

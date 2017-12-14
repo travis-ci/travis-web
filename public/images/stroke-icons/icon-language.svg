@@ -1,8 +1,1 @@
-<svg version="1.1" id="icon-lang" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 15 15" style="enable-background:new 0 0 15 15;" xml:space="preserve">
-<g id="lang">
-	<polyline class="st0" points="3.781,10.458 0.5,7.177 3.781,3.896 	"/>
-	<polyline class="st0" points="11.219,3.896 14.5,7.177 11.219,10.458 	"/>
-	<line class="st0" x1="9.246" y1="2" x2="5.746" y2="12.792"/>
-</g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15 15"><path class="st0" d="M3.781 10.458L.5 7.177l3.281-3.281M11.219 3.896L14.5 7.177l-3.281 3.281M9.246 2l-3.5 10.792"/></svg>

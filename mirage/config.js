@@ -2,6 +2,7 @@
 import Ember from 'ember';
 import Mirage from 'ember-cli-mirage';
 import config from 'travis/config/environment';
+import fuzzysort from 'npm:fuzzysort';
 
 const { apiEndpoint } = config;
 
@@ -21,7 +22,8 @@ export default function () {
     };
   });
 
-  this.namespace = apiEndpoint;
+  this.urlPrefix = apiEndpoint;
+  this.namespace = '';
 
   this.get('/users/:id');
   this.get('/accounts', (schema/* , request*/) => {
@@ -29,16 +31,6 @@ export default function () {
     const accounts = schema.accounts.all().models.map(account => account.attrs);
 
     return { accounts: users.concat(accounts) };
-  });
-
-  this.get('/hooks', function ({ hooks }, { queryParams: { owner_name } }) {
-    return this.serialize(hooks.where({ owner_name }), 'hook');
-  });
-
-  this.put('/hooks/:id', (schema, request) => {
-    const user = schema.hooks.find(request.params.id);
-    server.create('repository', { id: request.params.id });
-    return user.update(JSON.parse(request.requestBody).hook);
   });
 
   this.get('/users/:id', function ({ users }, request) {
@@ -115,6 +107,28 @@ export default function () {
   this.get('/repo/:repositoryId/crons', function (schema, request) {
     const { repositoryId } = request.params;
     return this.serialize(schema.crons.where({ repositoryId }), 'cron');
+  });
+
+  this.post('/repo/:repositoryId/activate', function (schema, request) {
+    const { repositoryId } = request.params;
+    const repository = schema.repositories.find(repositoryId);
+
+    if (repository) {
+      repository.update('active', true);
+    }
+
+    return this.serialize(repository);
+  });
+
+  this.post('/repo/:repositoryId/deactivate', function (schema, request) {
+    const { repositoryId } = request.params;
+    const repository = schema.repositories.find(repositoryId);
+
+    if (repository) {
+      repository.update('active', false);
+    }
+
+    return this.serialize(repository);
   });
 
   this.get('/cron/:id');
@@ -211,6 +225,22 @@ export default function () {
     }
   });
 
+  this.get('/owner/:login/repos', function (schema, request) {
+    const { login } = request.params;
+    let repositories = schema.repositories.all().filter(repo => repo.owner.login === login);
+    const { queryParams } = request;
+    if (queryParams && queryParams.sort_by) {
+      repositories.models = repositories.models.sortBy(queryParams.sort_by);
+    }
+
+    if (queryParams && queryParams.slug_filter) {
+      repositories.models = repositories.models.filter((repo) => {
+        return fuzzysort.single(queryParams.slug_filter, repo.slug);
+      });
+    }
+    return this.serialize(repositories);
+  });
+
   this.delete('/settings/ssh_key/:repo_id', function (schema, request) {
     schema.sshKeys
       .where({ repositoryId: request.queryParams.repository_id })
@@ -241,12 +271,44 @@ export default function () {
     };
   });
 
+  this.get('/job/:id', function (schema, request) {
+    let job = schema.jobs.find(request.params.id);
+    return this.serialize(job, 'job');
+  });
+
   this.get('/jobs/:id', function (schema, request) {
     let job = schema.jobs.find(request.params.id);
     return this.serialize(job, 'v2-job');
   });
 
-  this.get('/jobs');
+  this.get('/jobs', function (schema, request) {
+    if (request.requestHeaders['Travis-API-Version'] === '3') {
+      let jobs = schema.jobs;
+      if (request.queryParams.active) {
+        jobs = jobs.where((j) => ['created', 'queued', 'received', 'started'].includes(j.state));
+      }
+
+      if (request.queryParams.state) {
+        let states = request.queryParams.state.split(',');
+        jobs = jobs.where((j) => states.includes(j.state));
+      }
+
+      return jobs.all ? jobs.all() : jobs;
+    } else {
+      let jobs = schema.jobs;
+      let ids = request.queryParams.ids;
+      if (ids) {
+        jobs = jobs.where((j) => ids.includes(j.id.toString()));
+      }
+      jobs = jobs.all ? jobs.all() : jobs;
+      return this.serialize(jobs, 'v2-job');
+    }
+  });
+
+  this.get('/build/:id/jobs', (schema, request) => {
+    request.noPagination = true;
+    return schema.jobs.where({ buildId: request.params.id });
+  });
 
   this.get('/build/:id/stages', (schema, request) => {
     return schema.stages.where({ buildId: request.params.id });
@@ -357,10 +419,19 @@ export default function () {
     });
   });
 
-  this.get('/jobs/:id/log', function (schema, request) {
-    let log = schema.logs.find(request.params.id);
+  this.get('/job/:id/log', function (schema, request) {
+    let jobId = request.params.id;
+    let log = schema.logs.find(jobId);
     if (log) {
-      return { log: { parts: [{ id: log.attrs.id, number: 1, content: log.attrs.content }] } };
+      const { id, content } = log.attrs;
+      return {
+        id,
+        content,
+        log_parts: [
+          { number: 1, content },
+        ],
+        '@raw_log_href': `/v3/job/${jobId}/log.txt`
+      };
     } else {
       return new Mirage.Response(404, {}, {});
     }

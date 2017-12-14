@@ -1,7 +1,8 @@
-import Ember from 'ember';
+import { computed } from '@ember/object';
+import Controller from '@ember/controller';
 
-export default Ember.Controller.extend({
-  layoutName: Ember.computed({
+export default Controller.extend({
+  layoutName: computed({
     get() {
       if (this._layoutName) {
         return `layouts/${this._layoutName}`;

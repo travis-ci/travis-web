@@ -1,14 +1,13 @@
-<div class="media-elem">
-  {{user-avatar url=account.avatarUrl name=name size=36}}
-</div>
-<div class="media-body">
-  {{#link-to "account" account.login}}
-    <h2>{{name}}</h2>
-    {{#if account.reposCount}}<p class='repository-count'>{{pluralize account.reposCount 'repository'}}</p>{{else}}No repositories{{/if}}
+{{user-avatar url=account.avatarUrl name=name size=36}}
+
+<div class="org-info">
+  {{#link-to "account" account.login (query-params offset=0)}}
+    <h3 class="account-name">{{name}}</h3>
+    {{#if account.reposCount}}<p class="account-repo-count">{{pluralize account.reposCount 'repository'}}</p>{{else}}No repositories{{/if}}
   {{/link-to}}
 
   {{#if isUser}}
-    <p class="profile-user-last">Token:
+    <p class="account-token">Token:
       {{#if tokenIsVisible}}
         <strong>{{auth.currentUser.token}}</strong>
       {{/if}}

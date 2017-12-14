@@ -1,4 +1,5 @@
-import Ember from 'ember';
+import { run } from '@ember/runloop';
+import { getOwner } from '@ember/application';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import fillIn from '../../helpers/fill-in';
@@ -21,10 +22,10 @@ test('it adds an ssh key on submit', function (assert) {
   assert.expect(6);
 
   this.registry.register('transform:boolean', DS.BooleanTransform);
-  var store = Ember.getOwner(this).lookup('service:store');
+  var store = getOwner(this).lookup('service:store');
 
   var repo;
-  Ember.run(function () {
+  run(function () {
     repo  = store.push({ data: { id: 1, type: 'repo', attributes: { slug: 'travis-ci/travis-web' } } });
   });
 
@@ -58,10 +59,10 @@ test('it throws an error if value for ssh key is blank', function (assert) {
   assert.expect(5);
 
   this.registry.register('transform:boolean', DS.BooleanTransform);
-  var store = Ember.getOwner(this).lookup('service:store');
+  var store = getOwner(this).lookup('service:store');
 
   var repo;
-  Ember.run(function () {
+  run(function () {
     repo  = store.push({ data: { id: 1, type: 'repo', attributes: { slug: 'travis-ci/travis-web' } } });
   });
 

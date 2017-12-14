@@ -8,7 +8,8 @@ test('visiting build matrix', function (assert) {
   let repo =  server.create('repository', { slug: 'travis-ci/travis-web' });
   let branch = server.create('branch', { name: 'acceptance-tests' });
 
-  let commit = server.create('commit', { author_email: 'mrt@travis-ci.org', author_name: 'Mr T', committer_email: 'mrt@travis-ci.org', committer_name: 'Mr T', branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
+  let  gitUser = server.create('git-user', { name: 'Mr T' });
+  let commit = server.create('commit', { author: gitUser, committer: gitUser, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
   let build = server.create('build', { repository: repo, state: 'passed', commit_id: commit.id, commit, branch });
 
   let firstJob = server.create('job', { number: '1234.1', repository: repo, state: 'passed', config: { env: 'JORTS', os: 'linux', language: 'node_js', node_js: 5 }, commit, build });
@@ -22,6 +23,7 @@ test('visiting build matrix', function (assert) {
 
   visit(`/travis-ci/travis-web/builds/${build.id}`);
 
+  andThen(() => {});
   andThen(function () {
     assert.equal(buildPage.requiredJobs().count, 2, 'expected two required jobs in the matrix');
 

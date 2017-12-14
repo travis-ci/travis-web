@@ -41,7 +41,7 @@ test('it accepts a pre-formatting flag', assert => {
 
 test('it replaces colon-surrounded emoji names', assert => {
   const formattedWithEmoji = formatMessage(['a string with :joy: emoji'], {});
-  assert.equal(formattedWithEmoji, 'a string with <span class=\"emoji emoji-sizer\" style=\"background-image:url(/images/emoji/1f602.png)\" title=\"joy\"></span> emoji');
+  assert.equal(formattedWithEmoji.string, 'a string with <span class=\"emoji emoji-sizer\" style=\"background-image:url(/images/emoji/1f602.png)\" title=\"joy\" data-codepoints=\"1f602\"></span> emoji');
 });
 
 test('it adds GitHub links', assert => {

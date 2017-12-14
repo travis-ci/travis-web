@@ -1,7 +1,8 @@
-import Ember from 'ember';
+import { get } from '@ember/object';
+import Service from '@ember/service';
 import config from 'travis/config/environment';
 
-export default Ember.Service.extend({
+export default Service.extend({
   pollingInterval: 30000,
   ajaxPolling: true,
 
@@ -60,7 +61,7 @@ export default Ember.Service.extend({
     this.get('watchedModels').forEach(model => model.reload());
 
     return this.get('sources').forEach((source) => {
-      if (Ember.get(source, 'isDestroyed')) {
+      if (get(source, 'isDestroyed')) {
         return this.get('sources').removeObject(source);
       } else {
         return source.pollHook();

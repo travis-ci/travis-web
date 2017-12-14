@@ -1,12 +1,12 @@
-/* global Travis */
+/* global Travis, HS */
+import $ from 'jquery';
+
+import { inject as service } from '@ember/service';
 import TravisRoute from 'travis/routes/basic';
 import config from 'travis/config/environment';
 import BuildFaviconMixin from 'travis/mixins/build-favicon';
-import Ember from 'ember';
 
 import KeyboardShortcuts from 'ember-keyboard-shortcuts/mixins/route';
-
-let { service } = Ember.inject;
 
 export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
   flashes: service(),
@@ -16,9 +16,16 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
 
   needsAuth: false,
 
+  init() {
+    this.get('auth').afterSignOut(() => {
+      this.afterSignOut();
+    });
+    return this._super(...arguments);
+  },
+
   renderTemplate: function () {
     if (this.get('config').pro) {
-      Ember.$('body').addClass('pro');
+      $('body').addClass('pro');
     }
     return this._super(...arguments);
   },
@@ -103,7 +110,6 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
 
     signOut() {
       this.get('auth').signOut();
-      this.afterSignOut();
     },
 
     disableTailing() {
@@ -130,6 +136,11 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
     viewSearchResults(query) {
       this.transitionTo('search', query);
     },
+
+    helpscoutTrigger() {
+      HS.beacon.open();
+      return false;
+    }
   },
 
   afterSignIn() {
@@ -144,9 +155,9 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
   },
 
   afterSignOut() {
+    this.get('featureFlags').reset();
     this.set('repositories.accessible', []);
     this.setDefault();
-    this.get('featureFlags').reset();
     if (this.get('config.enterprise')) {
       return this.transitionTo('auth');
     }

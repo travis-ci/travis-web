@@ -1,4 +1,5 @@
-import Ember from 'ember';
+import { run } from '@ember/runloop';
+import EmberObject from '@ember/object';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
@@ -7,7 +8,7 @@ moduleForComponent('feature-toggle', 'Integration | Component | feature toggle',
 });
 
 test('it renders feature state correctly', function (assert) {
-  const feature = Ember.Object.create({
+  const feature = EmberObject.create({
     name: 'Shiny New Feature',
     description: 'Shiny new feature for Travis CI users',
     enabled: true
@@ -19,7 +20,7 @@ test('it renders feature state correctly', function (assert) {
 
   assert.ok(this.$().find('a.switch').hasClass('active'));
 
-  Ember.run(() => {
+  run(() => {
     feature.toggleProperty('enabled');
   });
 

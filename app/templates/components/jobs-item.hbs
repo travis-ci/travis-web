@@ -8,9 +8,9 @@
     <span class="label-align" aria-label="Job number">{{job.number}}</span>
   </div>
 
-  <div class="job-os {{job.config.os}}">
-    {{tooltip-on-element text=job.config.os}}
-    {{#if job.config.os}}
+  <div class="job-os {{job.config.content.os}}">
+    {{tooltip-on-element text=job.config.content.os}}
+    {{#if job.config.content.os}}
     {{svg-jar 'icon-linux' class="icon linux"}}
     {{svg-jar 'icon-mac' class="icon mac"}}
     {{/if}}

@@ -1,13 +1,16 @@
 /* global define */
+import { run } from '@ember/runloop';
+
+import Component from '@ember/component';
+import EmberObject from '@ember/object';
 import { test, moduleForComponent } from 'ember-qunit';
-import Ember from 'ember';
 import Polling from 'travis/mixins/polling';
 
 var hookRuns = 0,
   pollingChangesHistory = [];
 
 define('travis/components/polling-test', [], function () {
-  const PollingService = Ember.Object.extend({
+  const PollingService = EmberObject.extend({
     startPolling: function (model) {
       return pollingChangesHistory.push({
         type: 'start',
@@ -33,7 +36,7 @@ define('travis/components/polling-test', [], function () {
       });
     }
   });
-  return Ember.Component.extend(Polling, {
+  return Component.extend(Polling, {
     init: function () {
       this._super.apply(this, arguments);
       return this.set('polling', PollingService.create());
@@ -62,7 +65,7 @@ test('it properly stops polling hook without any models', function (assert) {
     pollModels: null
   });
   this.render();
-  Ember.run(function () {
+  run(function () {
     return component.destroy();
   });
   const expected = [
@@ -84,7 +87,7 @@ test('it works even if one of the model is null', function (assert) {
     }
   });
   this.render();
-  Ember.run(function () {
+  run(function () {
     return component.destroy();
   });
   const expected = [
@@ -119,7 +122,7 @@ test('it polls for both models if they are present', function (assert) {
     }
   });
   this.render();
-  Ember.run(function () {
+  run(function () {
     return component.destroy();
   });
   const expected = [
@@ -161,12 +164,12 @@ test('it detects model changes', function (assert) {
     }
   });
   this.render();
-  Ember.run(function () {
+  run(function () {
     return component.set('model1', {
       name: 'bar'
     });
   });
-  Ember.run(function () {
+  run(function () {
     return component.destroy();
   });
   const expected = [

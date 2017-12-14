@@ -13,7 +13,7 @@ moduleForAcceptance('Acceptance | builds/current tab', {
 });
 
 test('renders most recent repository without builds', function (assert) {
-  server.create('repository', { slug: 'travis-ci/travis-web' });
+  server.create('repository');
 
   currentRepoTab
     .visit();
@@ -25,10 +25,12 @@ test('renders most recent repository without builds', function (assert) {
 });
 
 test('renders most recent repository and most recent build when builds present, single-job build shows job status instead', function (assert) {
+  server.logging = true;
   let repository =  server.create('repository', { slug: 'travis-ci/travis-web' });
 
   const branch = server.create('branch', { name: 'acceptance-tests' });
-  let commit = server.create('commit', { author_email: 'mrt@travis-ci.org', author_name: 'Mr T', committer_email: 'mrt@travis-ci.org', committer_name: 'Mr T', branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
+  let  gitUser = server.create('git-user', { name: 'Mr T' });
+  let commit = server.create('commit', { author: gitUser, committer: gitUser, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
   let build = server.create('build', { number: '5', state: 'started', repository, branch, commit });
   let job = server.create('job', { number: '1234.1', state: 'received', build, commit, repository, config: { language: 'Hello' } });
 
@@ -67,7 +69,8 @@ test('renders the repository and subscribes to private log channel for a private
   let repository =  server.create('repository', { slug: 'travis-ci/travis-web', private: true });
 
   const branch = server.create('branch', { name: 'acceptance-tests' });
-  let commit = server.create('commit', { author_email: 'mrt@travis-ci.org', author_name: 'Mr T', committer_email: 'mrt@travis-ci.org', committer_name: 'Mr T', branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
+  let  gitUser = server.create('git-user', { name: 'Mr T' });
+  let commit = server.create('commit', { author: gitUser, committer: gitUser, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
   let build = server.create('build', { number: '5', state: 'started', repository, branch, commit });
   let job = server.create('job', { number: '1234.1', state: 'received', build, commit, repository, config: { language: 'Hello' } });
   server.create('log', { id: job.id, content: 'teh log' });
@@ -87,9 +90,13 @@ test('renders the repository and subscribes to private log channel for a private
 
 test('error message when build jobs array is empty', function (assert) {
   let repository =  server.create('repository', { slug: 'travis-ci/travis-web' });
-  const branch = server.create('branch', { name: 'accenptance-tests' });
-  let build = server.create('build', { number: '5', state: 'passed', repository, branch });
-  build.createCommit({ author_email: 'mrt@travis-ci.org', author_name: 'Mr T', committer_email: 'mrt@travis-ci.org', committer_name: 'Mr T', branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
+
+  const branch = server.create('branch', { name: 'acceptance-tests' });
+  let  gitUser = server.create('git-user', { name: 'Mr T' });
+  let commit = server.create('commit', { author: gitUser, committer: gitUser, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
+  let build = server.create('build', { number: '5', state: 'passed', repository, branch, commit });
+
+  commit.update('build', build);
 
   currentRepoTab.visit();
 

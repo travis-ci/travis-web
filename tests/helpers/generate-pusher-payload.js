@@ -1,10 +1,10 @@
-import Ember from 'ember';
+import { underscore } from '@ember/string';
 
 export default function generatePusherPayload(model, overrides = {}) {
   let result = {};
 
   Object.keys(model.attrs).forEach((key) => {
-    result[Ember.String.underscore(key)] = model.attrs[key];
+    result[underscore(key)] = model.attrs[key];
   });
 
   if (model.jobIds) {

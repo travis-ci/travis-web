@@ -1,13 +1,14 @@
-import Ember from 'ember';
+import { Promise as EmberPromise } from 'rsvp';
+import ArrayProxy from '@ember/array/proxy';
 import { computed } from 'ember-decorators/object';
 
-export default Ember.ArrayProxy.extend({
+export default ArrayProxy.extend({
   isLoaded: false,
   isLoading: false,
 
   @computed()
   promise() {
-    return new Ember.RSVP.Promise((resolve) => {
+    return new EmberPromise((resolve) => {
       let observer = () => {
         if (this.get('isLoaded')) {
           resolve(this);

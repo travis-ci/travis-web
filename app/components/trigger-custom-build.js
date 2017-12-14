@@ -1,11 +1,11 @@
-import Ember from 'ember';
+import Component from '@ember/component';
 import { task, timeout } from 'ember-concurrency';
 import YAML from 'npm:yamljs';
 import config from 'travis/config/environment';
 import { service } from 'ember-decorators/service';
 import { filterBy, notEmpty } from 'ember-decorators/object/computed';
 
-export default Ember.Component.extend({
+export default Component.extend({
   @service ajax: null,
   @service flashes: null,
   @service router: null,
@@ -114,7 +114,16 @@ export default Ember.Component.extend({
   },
 
   displayError(e) {
-    this.get('flashes').error('Oops, something went wrong, please try again.');
+    let message;
+
+    if (e.status === 429) {
+      message =
+        'You’ve exceeded the limit for triggering builds, please wait a while before trying again.';
+    } else {
+      message = 'Oops, something went wrong, please try again.';
+    }
+
+    this.get('flashes').error(message);
     return this.get('onClose')();
   },
 

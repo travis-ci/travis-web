@@ -1,5 +1,5 @@
 /* global signInUser */
-import { skip } from 'qunit';
+import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import topPage from 'travis/tests/pages/top';
 
@@ -10,14 +10,15 @@ moduleForAcceptance('Acceptance | automatic sign out', {
   }
 });
 
-skip('when token is invalid user should be signed out', function (assert) {
+test('when token is invalid user should be signed out', function (assert) {
   window.sessionStorage.setItem('travis.token', 'wrong-token');
   window.localStorage.setItem('travis.token', 'wrong-token');
 
-  visit('/');
+  visit('/profile');
 
   andThen(function () {
     assert.equal(topPage.flashMessage.text, "You've been signed out, because your access token has expired.");
+    assert.equal(currentURL(), '/');
   });
   percySnapshot(assert);
 });

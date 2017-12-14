@@ -1,9 +1,9 @@
-import Ember from 'ember';
+import Component from '@ember/component';
 import { computed } from 'ember-decorators/object';
 import durationFrom from 'travis/utils/duration-from';
 import { service } from 'ember-decorators/service';
 
-export default Ember.Component.extend({
+export default Component.extend({
   @service externalLinks: null,
 
   tagName: 'section',

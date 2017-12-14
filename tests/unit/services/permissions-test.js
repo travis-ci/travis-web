@@ -1,8 +1,9 @@
-import Ember from 'ember';
+import EmberObject from '@ember/object';
+import Service from '@ember/service';
 import { moduleFor, test } from 'ember-qunit';
 
-const authStub = Ember.Service.extend({
-  currentUser: Ember.Object.create()
+const authStub = Service.extend({
+  currentUser: EmberObject.create()
 });
 
 moduleFor('service:permissions', 'Unit | Service | permissions', {
@@ -27,9 +28,9 @@ test('it checks permissions if a repo object is given', function (assert) {
   let service = this.subject();
   service.set('currentUser.permissions', [1, 3]);
 
-  let repo1 = Ember.Object.create({ id: 1 }),
-    repo2 = Ember.Object.create({ id: 2 }),
-    repo3 = Ember.Object.create({ id: '3' });
+  let repo1 = EmberObject.create({ id: 1 }),
+    repo2 = EmberObject.create({ id: 2 }),
+    repo3 = EmberObject.create({ id: '3' });
 
   assert.ok(service.hasPermission(repo1));
   assert.notOk(service.hasPermission(repo2));
@@ -52,9 +53,9 @@ test('it checks push permissions if a repo object is given', function (assert) {
   let service = this.subject();
   service.set('currentUser.pushPermissions', [1, 3]);
 
-  let repo1 = Ember.Object.create({ id: 1 }),
-    repo2 = Ember.Object.create({ id: 2 }),
-    repo3 = Ember.Object.create({ id: '3' });
+  let repo1 = EmberObject.create({ id: 1 }),
+    repo2 = EmberObject.create({ id: 2 }),
+    repo3 = EmberObject.create({ id: '3' });
 
   assert.ok(service.hasPushPermission(repo1));
   assert.notOk(service.hasPushPermission(repo2));
@@ -77,9 +78,9 @@ test('it checks admin permissions if a repo object is given', function (assert) 
   let service = this.subject();
   service.set('currentUser.adminPermissions', [1, 3]);
 
-  let repo1 = Ember.Object.create({ id: 1 }),
-    repo2 = Ember.Object.create({ id: 2 }),
-    repo3 = Ember.Object.create({ id: '3' });
+  let repo1 = EmberObject.create({ id: 1 }),
+    repo2 = EmberObject.create({ id: 2 }),
+    repo3 = EmberObject.create({ id: '3' });
 
   assert.ok(service.hasAdminPermission(repo1));
   assert.ok(service.hasAdminPermission(repo3));

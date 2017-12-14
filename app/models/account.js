@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import { isBlank } from '@ember/utils';
 import attr from 'ember-data/attr';
 import Model from 'ember-data/model';
 import { computed } from 'ember-decorators/object';
@@ -16,7 +16,7 @@ export default Model.extend({
 
   @computed('login', 'name')
   displayName(login, name) {
-    if (Ember.isBlank(name)) {
+    if (isBlank(name)) {
       return login;
     }
     return name;

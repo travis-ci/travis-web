@@ -1,8 +1,11 @@
+import { Promise as EmberPromise } from 'rsvp';
+import { run } from '@ember/runloop';
 import { moduleForModel, test } from 'ember-qunit';
-import Ember from 'ember';
 
 moduleForModel('job', 'Unit | Model | job', {
-  needs: ['model:repo', 'model:build', 'model:commit', 'model:stage', 'service:ajax']
+  needs: ['model:repo', 'model:build', 'model:commit', 'model:stage', 'service:ajax',
+    'service:jobConfigFetcher', 'service:auth', 'service:features', 'service:flashes',
+    'service:storage', 'service:sessionStorage']
 });
 
 test('config is fetched if it\'s not available', function (assert) {
@@ -10,7 +13,7 @@ test('config is fetched if it\'s not available', function (assert) {
   let done = assert.async();
 
   const model = this.subject();
-  Ember.run(function () {
+  run(function () {
     return model.setProperties({
       _config: null
     });
@@ -21,8 +24,9 @@ test('config is fetched if it\'s not available', function (assert) {
     return 'root.loading';
   };
 
-  model.reload = function () {
-    assert.ok(true);
+  model.get('jobConfigFetcher').fetch = function (id) {
+    assert.equal(id, model.id);
+    return EmberPromise.resolve({});
   };
 
   model.get('config');
@@ -33,12 +37,12 @@ test('config is fetched if it\'s not available', function (assert) {
 
   setTimeout(function () {
     done();
-  }, 60);
+  }, 100);
 });
 
 test('created state', function (assert) {
   const model = this.subject();
-  Ember.run(function () {
+  run(function () {
     return model.setProperties({
       state: 'created'
     });
@@ -51,7 +55,7 @@ test('created state', function (assert) {
 
 test('queued state', function (assert) {
   const model = this.subject();
-  Ember.run(function () {
+  run(function () {
     return model.setProperties({
       state: 'queued'
     });

@@ -1,8 +1,9 @@
-/* global moment */
+import { all } from 'rsvp';
+
+import { isEmpty } from '@ember/utils';
 import safelistedConfigKeys from 'travis/utils/safelisted-config-keys';
 import pickBy from 'npm:lodash.pickby';
 import configKeysMap from 'travis/utils/keys-map';
-import Ember from 'ember';
 import Model from 'ember-data/model';
 import DurationCalculations from 'travis/mixins/duration-calculations';
 import attr from 'ember-data/attr';
@@ -10,6 +11,8 @@ import { hasMany, belongsTo } from 'ember-data/relationships';
 import { service } from 'ember-decorators/service';
 import { computed } from 'ember-decorators/object';
 import { alias } from 'ember-decorators/object/computed';
+
+import moment from 'moment';
 
 export default Model.extend(DurationCalculations, {
   @service ajax: null,
@@ -27,6 +30,7 @@ export default Model.extend(DurationCalculations, {
   tag: attr(),
   eventType: attr('string'),
   _config: attr(),
+  updatedAt: attr('date'),
 
   repo: belongsTo('repo'),
   branch: belongsTo('branch', { async: false, inverse: 'builds' }),
@@ -35,6 +39,8 @@ export default Model.extend(DurationCalculations, {
 
   jobs: hasMany('job', { async: true }),
   stages: hasMany('stage', { async: true }),
+
+  @alias('stages.isSettled') stagesAreLoaded: null,
 
   @computed('_config', 'currentState.stateName')
   config(config, stateName) {
@@ -114,7 +120,7 @@ export default Model.extend(DurationCalculations, {
 
   @computed('jobs.@each.canCancel')
   canCancel(jobs) {
-    return !Ember.isEmpty(jobs.filterBy('canCancel'));
+    return !isEmpty(jobs.filterBy('canCancel'));
   },
 
   @alias('isFinished') canRestart: null,
@@ -135,7 +141,7 @@ export default Model.extend(DurationCalculations, {
   },
 
   debug() {
-    return Ember.RSVP.all(this.get('jobs').map(job => job.debug()));
+    return all(this.get('jobs').map(job => job.debug()));
   },
 
   @computed('finishedAt')

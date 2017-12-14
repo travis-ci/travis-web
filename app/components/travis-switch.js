@@ -1,10 +1,14 @@
-import Ember from 'ember';
+import { next } from '@ember/runloop';
+import Component from '@ember/component';
 import { or } from 'ember-decorators/object/computed';
 
-export default Ember.Component.extend({
+export default Component.extend({
   tagName: 'button',
   classNames: ['travis-switch', 'switch'],
   classNameBindings: ['_active:active'],
+
+  attributeBindings: ['type'],
+  type: 'button',
 
   @or('target.active', 'active') _active: null,
 
@@ -17,7 +21,7 @@ export default Ember.Component.extend({
         this.set('active', !this.get('active'));
       }
     }
-    return Ember.run.next(this, function () {
+    return next(this, function () {
       return this.sendAction('action', target);
     });
   }

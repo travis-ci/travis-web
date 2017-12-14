@@ -1,6 +1,6 @@
-import Ember from 'ember';
+import Component from '@ember/component';
 import Polling from 'travis/mixins/polling';
 
-export default Ember.Component.extend(Polling, {
+export default Component.extend(Polling, {
   pollModels: 'job'
 });

@@ -1,8 +1,11 @@
-/* global moment */
 import { test } from 'qunit';
+import Mirage from 'ember-cli-mirage';
+
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import settingsPage from 'travis/tests/pages/settings';
 import topPage from 'travis/tests/pages/top';
+
+import moment from 'moment';
 
 moduleForAcceptance('Acceptance | repo settings', {
   beforeEach() {
@@ -318,7 +321,7 @@ test('reload cron branches on branch:created', function (assert) {
   });
 });
 
-test('delete and set SSH keys', function (assert) {
+test('delete SSH key', function (assert) {
   settingsPage.visit({ organization: 'killjoys', repo: 'living-a-feminist-life' });
 
   const deletedIds = [];
@@ -336,8 +339,16 @@ test('delete and set SSH keys', function (assert) {
     assert.equal(settingsPage.sshKey.fingerprint, 'aa:bb:cc:dd');
     assert.ok(settingsPage.sshKey.cannotBeDeleted, 'expected default SSH key not to be deletable');
   });
+});
+
+test('add SSH key', function (assert) {
+  server.schema.db.sshKeys.remove();
 
   const requestBodies = [];
+
+  server.get(`/settings/ssh_key/${this.repository.id}`, function (schema, request) {
+    return new Mirage.Response(429, {}, {});
+  });
 
   server.patch(`/settings/ssh_key/${this.repository.id}`, (schema, request) => {
     const newKey = JSON.parse(request.requestBody);
@@ -348,6 +359,8 @@ test('delete and set SSH keys', function (assert) {
       ssh_key: newKey
     };
   });
+
+  settingsPage.visit({ organization: 'killjoys', repo: 'living-a-feminist-life' });
 
   settingsPage.sshKeyForm.fillDescription('hey');
   settingsPage.sshKeyForm.fillKey('hello');

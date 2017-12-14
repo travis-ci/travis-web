@@ -1,16 +1,17 @@
-import Ember from 'ember';
+import { bind } from '@ember/runloop';
+import Service from '@ember/service';
 import config from 'travis/config/environment';
 import eventually from 'travis/utils/eventually';
 import Visibility from 'npm:visibilityjs';
 
-export default Ember.Service.extend({
+export default Service.extend({
   records: [],
   allowFinishedBuilds: false,
 
   init() {
     let visibilityId = Visibility.every(
       config.intervals.updateTimes,
-      Ember.run.bind(this, 'updateTimes')
+      bind(this, 'updateTimes')
     );
     this.set('visibilityId', visibilityId);
     let intervalId = setInterval(

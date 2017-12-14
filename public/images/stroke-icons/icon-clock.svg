@@ -1,7 +1,1 @@
-<svg version="1.1" id="icon-clock" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 15 15" style="enable-background:new 0 0 15 15;" xml:space="preserve">
-<g id="clock">
-	<circle class="st0" cx="7.5" cy="7.5" r="7"/>
-	<polyline class="st1" points="7.275,3.208 7.275,7.5 9.98,9.254 	"/>
-</g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15 15"><circle class="st0" cx="7.5" cy="7.5" r="7"/><path class="st1" d="M7.275 3.208V7.5L9.98 9.254"/></svg>
