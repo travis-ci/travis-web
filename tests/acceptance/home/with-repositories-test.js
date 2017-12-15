@@ -124,6 +124,9 @@ test('Pusher events change the main display', function (assert) {
     // This is necessary to have the log fetch not fail and put the log in an error state.
     server.create('log', { id: job.id });
 
+    build.state = 'started';
+    build.finished_at = null;
+    build.save();
     // After this line, the displayed repository should change, because it will
     // now have a running build
     this.application.pusher.receive('build:started', {

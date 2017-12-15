@@ -30,6 +30,7 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
   repositoryPrivate: attr(),
   repositorySlug: attr(),
   updatedAt: attr('date'),
+  _config: attr(),
 
   repo: belongsTo('repo'),
   build: belongsTo('build', { async: true }),
@@ -60,7 +61,7 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
 
   @computed()
   config() {
-    return this.get('jobConfigFetcher').fetch(this.get('id'));
+    return this.get('jobConfigFetcher').fetch(this);
   },
 
   getCurrentState() {
