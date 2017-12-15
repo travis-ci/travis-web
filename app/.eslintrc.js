@@ -7,7 +7,8 @@ module.exports = {
   parser: 'babel-eslint',
   extends: 'eslint:recommended',
   env: {
-    'browser': true
+    'browser': true,
+    es6: true
   },
   rules: {
     // TODO: Remove this to ensure we handle errors properly in UI

@@ -7,7 +7,8 @@ module.exports = {
   parser: 'babel-eslint',
   extends: 'eslint:recommended',
   env: {
-    browser: true
+    browser: true,
+    es6: true
   },
   rules: {
     // Don't allow unused vars, but allow unused arguments

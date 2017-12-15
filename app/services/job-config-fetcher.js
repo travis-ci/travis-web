@@ -6,22 +6,26 @@ import PromiseProxyMixin from '@ember/object/promise-proxy-mixin';
 import ObjectProxy from '@ember/object/proxy';
 
 export default Service.extend({
-  @service ajax: null,
+  @service store: null,
 
   init() {
-    this.promisesByJobId = {};
-    this.resolvesByJobId = {};
+    this.toFetch = {};
     return this._super(...arguments);
   },
 
-  fetch(jobId) {
-    if (this.promisesByJobId[jobId]) {
-      return this.promisesByJobId[jobId];
+  fetch(job) {
+    if (job.get('_config')) {
+      return EmberPromise.resolve(job.get('_config'));
+    }
+    let jobId = job.get('id');
+    if (this.toFetch[jobId]) {
+      return this.toFetch[jobId].promise;
     } else {
+      let data = this.toFetch[jobId] = { job };
       let promise = new EmberPromise((resolve, reject) => {
-        this.resolvesByJobId[jobId] = resolve;
+        data.resolve = resolve;
       });
-      this.promisesByJobId[jobId] = promise;
+      data.promise = promise;
       once(this, 'flush');
 
       let PromiseObject = ObjectProxy.extend(PromiseProxyMixin);
@@ -30,13 +34,20 @@ export default Service.extend({
   },
 
   flush() {
-    let resolvesByJobId = this.resolvesByJobId;
-    this.promisesByJobId = {};
-    this.resolvesByJobId = {};
-    let jobIds = Object.keys(resolvesByJobId);
-    this.get('ajax').ajax('/jobs', 'GET', { data: { ids: jobIds } }).then((data) => {
-      data.jobs.forEach((jobData) => {
-        resolvesByJobId[jobData.id.toString()](jobData.config);
+    let toFetch = this.toFetch;
+    this.toFetch = {};
+    let buildIds = new Set();
+    Object.values(toFetch).forEach(data => buildIds.add(data.job.get('build.id')));
+
+    buildIds.forEach(id => {
+      let queryParams = { id, include: 'job.config,build.jobs' };
+      this.get('store').queryRecord('build', queryParams).then(build => {
+        build.get('jobs').forEach(job => {
+          let data = toFetch[job.get('id')];
+          if (data) {
+            data.resolve(job.get('_config'));
+          }
+        });
       });
     });
   }
