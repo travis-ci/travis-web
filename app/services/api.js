@@ -36,6 +36,9 @@ export default Service.extend({
 
     options.headers = options.headers || {};
     options.headers['Travis-API-Version'] = '3';
+    if (!options.headers['Accept']) {
+      options.headers['Accept'] = 'application/json';
+    }
 
     if (token) {
       if (!options.headers['Authorization']) {
@@ -45,6 +48,7 @@ export default Service.extend({
     options.url = url = `${endpoint}${url}`;
     options.method = method;
     options.dataType = options.dataType || 'json';
+    options.contentType = 'json';
     let errorCallback = options.error || (() => {});
     options.error = (data, status, xhr) => {
       if (this.get('features.debugLogging')) {
