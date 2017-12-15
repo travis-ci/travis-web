@@ -5,7 +5,6 @@ import { service } from 'ember-decorators/service';
 export default Component.extend({
   @service statusImages: null,
   @service externalLinks: null,
-  @service ajax: null,
 
   isShowingTriggerBuildModal: false,
   isShowingStatusBadgeModal: false,

@@ -6,7 +6,7 @@ import { service } from 'ember-decorators/service';
 import { filterBy, notEmpty } from 'ember-decorators/object/computed';
 
 export default Component.extend({
-  @service ajax: null,
+  @service api: null,
   @service flashes: null,
   @service router: null,
 
@@ -26,7 +26,7 @@ export default Component.extend({
   createBuild: task(function* () {
     try {
       const body = this.buildTriggerRequestBody();
-      return yield this.get('ajax').postV3(`/repo/${this.get('repo.id')}/requests`, body);
+      return yield this.get('api').post(`/repo/${this.get('repo.id')}/requests`, { data: body });
     } catch (e) {
       this.displayError(e);
     }
@@ -48,10 +48,7 @@ export default Component.extend({
   fetchBuildStatus: task(function* (repoId, requestId) {
     try {
       const url = `/repo/${repoId}/request/${requestId}`;
-      const headers = {
-        'Travis-API-Version': '3'
-      };
-      return yield this.get('ajax').ajax(url, 'GET', { headers });
+      return yield this.get('api').request(url);
     } catch (e) {
       this.displayError(e);
     }

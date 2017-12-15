@@ -7,7 +7,7 @@ import { alias } from 'ember-decorators/object/computed';
 export default Component.extend({
   @service('permissions') permissionsService: null,
   @service externalLinks: null,
-  @service ajax: null,
+  @service api: null,
   @service flashes: null,
 
   tagName: 'li',
@@ -40,7 +40,7 @@ export default Component.extend({
     let data = {};
     data.request = `{ 'branch': '${this.get('repo.defaultBranch.name')}' }`;
 
-    this.get('ajax').postV3(`/repo/${this.get('repo.id')}/requests`, data)
+    this.get('api').post(`/repo/${this.get('repo.id')}/requests`, { data: data })
       .then(() => {
         self.set('isTriggering', false);
         self.get('flashes')

@@ -6,7 +6,7 @@ import config from 'travis/config/environment';
 import { service } from 'ember-decorators/service';
 
 export default TravisRoute.extend({
-  @service ajax: null,
+  @service api: null,
 
   needsAuth: true,
 
@@ -63,7 +63,7 @@ export default TravisRoute.extend({
     if (config.endpoints.sshKey) {
       const repo = this.modelFor('repo');
       const url = `/repos/${repo.get('id')}/key`;
-      return this.get('ajax').get(url, (data) => {
+      return this.get('api').get(url, (data) => {
         const fingerprint = EmberObject.create({
           fingerprint: data.fingerprint
         });

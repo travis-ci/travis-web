@@ -11,7 +11,7 @@ export default Service.extend({
   @service auth: null,
   @service store: null,
   @service tabStates: null,
-  @service ajax: null,
+  @service api: null,
   @service router: null,
 
   @computed('requestOwnedRepositories', 'performSearchRequest', 'showSearchResults')
@@ -30,13 +30,12 @@ export default Service.extend({
 
   performSearchRequest: task(function* () {
     const store = this.get('store');
-    const ajax = this.get('ajax');
     const query = this.get('searchQuery');
 
     const urlQuery = this.get('router._router.currentURL').split('/')[2];
 
     if (!this.get('_searchResults.length') || urlQuery !== query) {
-      const searchResults = yield Repo.search(store, ajax, query);
+      const searchResults = yield Repo.search(store, query);
       this.set('_searchResults', searchResults);
     }
   }).drop(),

@@ -14,7 +14,7 @@ import { computed } from 'ember-decorators/object';
 import { oneWay } from 'ember-decorators/object/computed';
 
 const Repo = Model.extend({
-  @service ajax: null,
+  @service api: null,
   @service auth: null,
   permissions: attr(),
   slug: attr(),
@@ -134,27 +134,16 @@ const Repo = Model.extend({
     }
   },
 
-  regenerateKey(options) {
-    const url = `/repos/${this.get('id')}/key`;
-    return this.get('ajax').ajax(url, 'post', options);
-  },
-
   fetchSettings() {
     const url = `/repo/${this.get('id')}/settings`;
-    return this.get('ajax').ajax(url, 'get', {
-      headers: {
-        'Travis-API-Version': '3'
-      },
-      forceAuth: true
-    }).then(data => this._convertV3SettingsToV2(data['settings']));
+    return this.get('api').request(url, 'get').
+      then(data => this._convertV3SettingsToV2(data['settings']));
   },
 
   saveSetting(name, value) {
-    return this.get('ajax').ajax(`/repo/${this.get('id')}/setting/${name}`, 'patch', {
+    return this.get('api').patch(`/repo/${this.get('id')}/setting/${name}`, {
       data: {
         'setting.value': value
-      }, headers: {
-        'Travis-API-Version': '3'
       }
     });
   },
@@ -205,28 +194,12 @@ Repo.reopenClass({
     });
   },
 
-  search(store, ajax, query) {
+  search(store, query) {
     let promise, queryString, result;
-    queryString = $.param({
-      search: query,
-      orderBy: 'name',
-      limit: 5
-    });
-    const url = `/repos?${queryString}`;
-    promise = ajax.ajax(url, 'get');
-    result = ArrayProxy.create({
-      content: []
-    });
-    return promise.then((data) => {
-      let promises = data.repos.map((repoData) => {
-        const repositoryId = repoData.id;
-        return store.findRecord('repo', repositoryId).then((record) => {
-          result.pushObject(record);
-          result.set('isLoaded', true);
-          return record;
-        });
-      });
-      return allSettled(promises).then(() => result);
+    return store.query('repo', {
+      slug_filter: query,
+      sort_by: 'slug_filter:desc',
+      limit: 10
     });
   },
 
