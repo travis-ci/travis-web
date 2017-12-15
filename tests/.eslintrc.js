@@ -2,7 +2,8 @@ module.exports = {
   env: {
     browser: true,
     embertest: true,
-    qunit: true
+    qunit: true,
+    es6: true
   },
   globals: {
     server: true,
