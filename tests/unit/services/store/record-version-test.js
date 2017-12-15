@@ -2,7 +2,7 @@ import { run } from '@ember/runloop';
 import { moduleForModel, test } from 'ember-qunit';
 
 moduleForModel('build', 'Unit | Store | record version management', {
-  needs: ['model:build', 'model:job', 'service:store', 'service:auth', 'service:ajax',
+  needs: ['model:build', 'model:job', 'service:store', 'service:auth', 'service:api',
     'service:jobConfigFetcher']
 });
 

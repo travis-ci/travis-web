@@ -13,8 +13,8 @@ const ajaxStub = Service.extend({
 moduleForComponent('dashboard-row', 'Integration | Component | dashboard row', {
   integration: true,
   beforeEach() {
-    this.register('service:ajax', ajaxStub);
-    this.inject.service('ajax', { as: 'ajax' });
+    this.register('service:api', ajaxStub);
+    this.inject.service('api', { as: 'api' });
   }
 });
 

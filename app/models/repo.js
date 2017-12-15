@@ -1,7 +1,5 @@
-import ArrayProxy from '@ember/array/proxy';
 import {
   Promise as EmberPromise,
-  allSettled
 } from 'rsvp';
 import $ from 'jquery';
 import { A } from '@ember/array';
@@ -195,7 +193,6 @@ Repo.reopenClass({
   },
 
   search(store, query) {
-    let promise, queryString, result;
     return store.query('repo', {
       slug_filter: query,
       sort_by: 'slug_filter:desc',

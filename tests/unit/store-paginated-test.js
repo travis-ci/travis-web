@@ -4,7 +4,7 @@ import { run } from '@ember/runloop';
 import { moduleForModel, test } from 'ember-qunit';
 
 moduleForModel('repo', 'Unit | store.paginated', {
-  needs: ['model:repo', 'service:ajax', 'service:auth', 'service:store']
+  needs: ['model:repo', 'service:api', 'service:auth', 'service:store']
 });
 
 test('it adds records already in the store to paginated collection', function (assert) {

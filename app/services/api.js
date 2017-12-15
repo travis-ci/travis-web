@@ -1,14 +1,7 @@
-/* global jQuery */
-import { isNone } from '@ember/utils';
-
-import { Promise as EmberPromise } from 'rsvp';
 import $ from 'jquery';
-import { get } from '@ember/object';
 import Service from '@ember/service';
 import config from 'travis/config/environment';
 import { service } from 'ember-decorators/service';
-
-jQuery.support.cors = true;
 
 export default Service.extend({
   @service auth: null,
@@ -63,6 +56,6 @@ export default Service.extend({
       return errorCallback.call(this, data, status, xhr);
     };
 
-    return jQuery.ajax(url, options);
+    return $.ajax(url, options);
   }
 });

@@ -3,7 +3,7 @@ import { resolve, all } from 'rsvp';
 import { moduleForModel, test } from 'ember-qunit';
 
 moduleForModel('repo', 'Unit | store.filter', {
-  needs: ['model:repo', 'service:ajax', 'service:auth', 'service:store']
+  needs: ['model:repo', 'service:api', 'service:auth', 'service:store']
 });
 
 test('it does not run query if query params are not passed', function (assert) {
