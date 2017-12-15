@@ -148,8 +148,12 @@ export default Service.extend({
         })();
 
         if (window.localStorage['apiTrace']) {
+          let requestId = xhr.getResponseHeader('x-request-id');
+          if (config.apiTraceEndpoint) {
+            requestId = `${config.apiTraceEndpoint}${requestId}`;
+          }
           // eslint-disable-next-line
-          console.log(`${options.type} ${options.url} ${xhr.status} ${xhr.getResponseHeader('x-request-id')}`);
+          console.log(`${options.type} ${options.url} ${xhr.status} ${requestId}`);
         }
 
         if (xhr.status >= 200 && xhr.status < 300) {

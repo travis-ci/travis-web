@@ -54,8 +54,12 @@ export default ActiveModelAdapter.extend({
     }
 
     if (window.localStorage['apiTrace']) {
+      let requestId = headers['x-request-id'];
+      if (config.apiTraceEndpoint) {
+        requestId = `${config.apiTraceEndpoint}${requestId}`;
+      }
       // eslint-disable-next-line
-      console.log(`${request.method} ${request.url} ${status} ${headers['x-request-id']}`);
+      console.log(`${request.method} ${request.url} ${status} ${requestId}`);
     }
 
     return this._super(...arguments);

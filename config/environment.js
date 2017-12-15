@@ -53,6 +53,7 @@ module.exports = function (environment) {
       repositoryFilteringDebounceRate: 200,
     },
     githubOrgsOauthAccessSettingsUrl: 'https://github.com/settings/connections/applications/f244293c729d5066cf27',
+    apiTraceEndpoint: 'https://papertrailapp.com/systems/travis-org-api-production/events?q=program%3Aapp%2Fweb%20log-tracing%20',
     ajaxPolling: false,
     logLimit: 10000,
     emojiPrepend: '',
@@ -114,6 +115,10 @@ module.exports = function (environment) {
 
     if (process.env.AUTH_ENDPOINT) {
       ENV.authEndpoint = process.env.AUTH_ENDPOINT;
+    }
+
+    if (process.env.API_TRACE_ENDPOINT) {
+      ENV.apiTraceEndpoint = process.env.API_TRACE_ENDPOINT;
     }
   }
 
