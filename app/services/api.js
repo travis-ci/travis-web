@@ -48,7 +48,12 @@ export default Service.extend({
     options.url = url = `${endpoint}${url}`;
     options.method = method;
     options.dataType = options.dataType || 'json';
-    options.contentType = 'json';
+    options.contentType = 'application/json';
+
+    if (options.data) {
+      options.data = JSON.stringify(options.data);
+    }
+
     let errorCallback = options.error || (() => {});
     options.error = (data, status, xhr) => {
       if (this.get('features.debugLogging')) {
