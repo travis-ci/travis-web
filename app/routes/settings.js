@@ -63,7 +63,7 @@ export default TravisRoute.extend({
     if (config.endpoints.sshKey) {
       const repo = this.modelFor('repo');
       const url = `/repos/${repo.get('id')}/key`;
-      return this.get('api').get(url, (data) => {
+      return this.get('api').request(url, 'GET', (data) => {
         const fingerprint = EmberObject.create({
           fingerprint: data.fingerprint
         });
