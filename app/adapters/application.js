@@ -41,7 +41,7 @@ export default ActiveModelAdapter.extend({
     });
   },
 
-  handleResponse(status, headers, payload, request) {
+  handleResponse(status, headers, payload) {
     if (status > 299) {
       if (this.get('features.debugLogging')) {
         // eslint-disable-next-line
