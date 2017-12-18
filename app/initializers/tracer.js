@@ -20,9 +20,7 @@ class Tracer {
   slowest() {
     let requestStack = this.requestStack.slice();
     requestStack = requestStack.filter(req => req.duration);
-    requestStack.sort(function(a, b) {
-      return b.duration - a.duration;
-    });
+    requestStack.sort((a, b) => b.duration - a.duration);
     return requestStack.slice(0, 5);
   }
 
@@ -34,11 +32,15 @@ class Tracer {
       }
       // eslint-disable-next-line
       console.log(`${req.method} ${req.url} ${req.status} ${req.duration}ms\n${requestId}`);
-    })
+    });
+  }
+
+  showAll() {
+    this.format(this.requestStack);
   }
 
   showSlowest() {
-    TravisTracer.format(TravisTracer.slowest())
+    this.format(this.slowest());
   }
 
   // xhr interceptor based on the symfony profiler
