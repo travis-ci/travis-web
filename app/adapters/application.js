@@ -30,10 +30,6 @@ export default ActiveModelAdapter.extend({
       }
     }
 
-    if (window.localStorage['apiTrace']) {
-      hash.headers['Trace'] = 'true';
-    }
-
     return hash;
   },
 
@@ -51,15 +47,6 @@ export default ActiveModelAdapter.extend({
         // eslint-disable-next-line
         console.log("[ERROR] API responded with an error (" + status + "): " + (JSON.stringify(payload)));
       }
-    }
-
-    if (window.localStorage['apiTrace']) {
-      let requestId = headers['x-request-id'];
-      if (config.apiTraceEndpoint) {
-        requestId = `${config.apiTraceEndpoint}${requestId}`;
-      }
-      // eslint-disable-next-line
-      console.log(`${request.method} ${request.url} ${status} ${requestId}`);
     }
 
     return this._super(...arguments);

@@ -68,9 +68,6 @@ export default Service.extend({
         options.headers['Authorization'] = `token ${token}`;
       }
     }
-    if (window.localStorage['apiTrace']) {
-      options.headers['Trace'] = 'true';
-    }
     options.url = url = `${endpoint}${url}`;
     options.type = method;
     options.dataType = options.dataType || 'json';
@@ -146,16 +143,6 @@ export default Service.extend({
             return xhr.responseText;
           }
         })();
-
-        if (window.localStorage['apiTrace']) {
-          let requestId = xhr.getResponseHeader('x-request-id');
-          if (config.apiTraceEndpoint) {
-            requestId = `${config.apiTraceEndpoint}${requestId}`;
-          }
-          // eslint-disable-next-line
-          console.log(`${options.type} ${options.url} ${xhr.status} ${requestId}`);
-        }
-
         if (xhr.status >= 200 && xhr.status < 300) {
           resolve(data);
           return options.success.call(options.context, data, xhr.status, xhr);
