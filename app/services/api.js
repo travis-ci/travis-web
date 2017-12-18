@@ -2,6 +2,8 @@ import $ from 'jquery';
 import Service from '@ember/service';
 import config from 'travis/config/environment';
 import { service } from 'ember-decorators/service';
+import { Promise as EmberPromise } from 'rsvp';
+import { run } from '@ember/runloop';
 
 export default Service.extend({
   @service auth: null,
@@ -47,15 +49,26 @@ export default Service.extend({
       options.data = JSON.stringify(options.data);
     }
 
-    let errorCallback = options.error || (() => {});
-    options.error = (data, status, xhr) => {
-      if (this.get('features.debugLogging')) {
-        // eslint-disable-next-line
-        console.log(`[ERROR] API responded with an error (${status}): ${JSON.stringify(data)}`);
-      }
-      return errorCallback.call(this, data, status, xhr);
-    };
+    return new EmberPromise((resolve, reject) => {
+      options.error = (jqXHR, textStatus, errorThrown) => {
+        if (this.get('features.debugLogging')) {
+          // eslint-disable-next-line
+          console.log(`[ERROR] API responded with an error (${status}): ${JSON.stringify(data)}`);
+        }
+        run(() => {
+          // TODO: in the future we might want to run some handler here
+          // that would process all args
+          reject(jqXHR);
+        });
+      };
 
-    return $.ajax(url, options);
+      options.success = (payload, textStatus, jqXHR) => {
+        run(() => {
+          resolve(payload);
+        });
+      };
+
+      $.ajax(url, options);
+    });
   }
 });
