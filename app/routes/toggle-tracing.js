@@ -5,9 +5,9 @@ import Route from '@ember/routing/route';
 export default Route.extend({
   beforeModel() {
     if (TravisTracer.isEnabled()) {
-      TravisTracer.disable()
+      TravisTracer.disable();
     } else {
-      TravisTracer.enable()
+      TravisTracer.enable();
     }
     window.location = '/';
   }
