@@ -1,15 +1,19 @@
-/* global TravisTracer */
+/* global TravisTracer, window */
 
 import Component from '@ember/component';
 import { action } from 'ember-decorators/object';
 
 export default Component.extend({
   tagName: 'div',
-  panelIsOpen: true,
+  panelIsOpen: false,
   requests: [],
 
   init() {
     this._super(...arguments);
+
+    if (window.localStorage.TravisTracerIsOpen) {
+      this.panelIsOpen = true;
+    }
 
     TravisTracer.onRequest = req => {
       this.get('requests').pushObject(req);
@@ -24,5 +28,10 @@ export default Component.extend({
   @action
   toggleOpen() {
     this.toggleProperty('panelIsOpen');
+    if (this.get('panelIsOpen')) {
+      window.localStorage.TravisTracerIsOpen = 'true';
+    } else {
+      delete window.localStorage.TravisTracerIsOpen;
+    }
   }
 });
