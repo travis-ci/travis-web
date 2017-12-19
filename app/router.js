@@ -60,7 +60,7 @@ Router.map(function () {
   this.route('owner', { path: '/:owner', resetNamespace: true }, function () {
     this.route('repositories', { path: '/' });
   });
-  this.route('toggle-tracer', { path: '/toggle-tracer' });
+  this.route('toggle-tracing', { path: '/toggle-tracing' });
   this.route('error404', { path: '/404' });
   this.route('page-not-found', { path: '/*wildcard' });
 });
