@@ -1,0 +1,75 @@
+// color theme based on fairy-floss
+// http://sailorhg.github.io/fairyfloss/
+
+#tracer-button a {
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
+  padding: 5px 8px;
+
+  background: #5A5475;
+  color: #F8F8F0;
+  border-radius: 8px;
+
+  font-family: monospace;
+  user-select: none;
+  text-decoration: none;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+#tracer-panel {
+  display: none;
+  font-family: monospace;
+
+  position: fixed;
+  bottom: 50px;
+  left: 10px;
+  padding: 10px;
+  width: 500px;
+  height: 300px;
+  z-index: 100;
+  overflow-y: hidden;
+
+  background: #5A5475;
+  color: #F8F8F2;
+  border-radius: 5px;
+
+  a {
+    color: #F8F8F2;
+    text-decoration: underline;
+  }
+
+  &.open {
+    display: block;
+  }
+
+  .requests {
+    width: 100%;
+  }
+
+  .method {
+    color: #FFEA00;
+  }
+  .url {
+    color: #FFB8D1;
+    max-width: 280px;
+    overflow-x: hidden;
+    white-space: nowrap;
+  }
+  .status {
+    color: #A8FF60;
+  }
+  .status.error {
+    color: #FF857F;
+  }
+  .duration {
+    color: #C2FFDF;
+    text-align: right;
+  }
+  .request-id, .request-id a {
+    color: #C5A3FF;
+  }
+}

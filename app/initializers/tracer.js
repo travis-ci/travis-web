@@ -1,8 +1,10 @@
+/* global window, XMLHttpRequest */
+
 import config from 'travis/config/environment';
 
 class Tracer {
   constructor() {
-    this.requestStack = [];
+    this.requests = [];
   }
 
   enable() {
@@ -17,34 +19,15 @@ class Tracer {
     return window.localStorage['apiTrace'] === 'true';
   }
 
-  slowest() {
-    let requestStack = this.requestStack.slice();
-    requestStack = requestStack.filter(req => req.duration);
-    requestStack.sort((a, b) => b.duration - a.duration);
-    return requestStack.slice(0, 5);
+  onRequest() {
   }
 
-  format(requests) {
-    requests.forEach(req => {
-      let requestId = req.requestId;
-      if (config.apiTraceEndpoint) {
-        requestId = `${config.apiTraceEndpoint}${requestId}`;
-      }
-      // eslint-disable-next-line
-      console.log(`${req.method} ${req.url} ${req.status} ${req.duration}ms\n${requestId}`);
-    });
-  }
-
-  showAll() {
-    this.format(this.requestStack);
-  }
-
-  showSlowest() {
-    this.format(this.slowest());
+  install() {
+    this.installXHR();
   }
 
   // xhr interceptor based on the symfony profiler
-  install() {
+  installXHR() {
     let tracer = this;
 
     let proxied = XMLHttpRequest.prototype.open;
@@ -52,7 +35,7 @@ class Tracer {
       let self = this;
 
       if (url.startsWith(config.apiEndpoint)) {
-        let stackElement = {
+        let req = {
           loading: true,
           error: false,
           url: url.substr(config.apiEndpoint.length),
@@ -60,15 +43,18 @@ class Tracer {
           start: new Date()
         };
 
-        tracer.requestStack.push(stackElement);
+        tracer.requests.push(req);
 
         this.addEventListener('readystatechange', () => {
           if (self.readyState == 4) {
-            stackElement.status = self.status;
-            stackElement.duration = new Date() - stackElement.start;
-            stackElement.loading = false;
-            stackElement.error = self.status < 200 || self.status >= 400;
-            stackElement.requestId = self.getResponseHeader('X-Request-ID');
+            req.status = self.status;
+            req.duration = new Date() - req.start;
+            req.loading = false;
+            req.error = self.status < 200 || self.status >= 400;
+            req.requestId = self.getResponseHeader('X-Request-ID');
+            req.requestIdShort = req.requestId.substr(0, 8);
+
+            tracer.onRequest(req);
           }
         }, false);
       }
