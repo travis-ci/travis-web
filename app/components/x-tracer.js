@@ -1,5 +1,6 @@
 /* global TravisTracer, window */
 
+import Ember from 'ember';
 import Component from '@ember/component';
 import { action } from 'ember-decorators/object';
 
