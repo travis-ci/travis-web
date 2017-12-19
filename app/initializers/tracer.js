@@ -73,6 +73,7 @@ export function initialize(app) {
     window.TravisTracer = new Tracer();
     if (window.TravisTracer.isEnabled()) {
       window.TravisTracer.install();
+      config.featureFlags.tracer = true;
     }
     return window.TravisTracer;
   }
