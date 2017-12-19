@@ -18,17 +18,25 @@ export default Component.extend({
 
     TravisTracer.onRequest = req => {
       this.get('requests').pushObject(req);
-
-      Ember.run.next(() => {
-        let panel = document.getElementById('tracer-panel');
-        panel.scrollTop = panel.scrollHeight + 20;
-      })
+      this.ensurePanelScrolledToBottom();
     };
   },
 
   @action
   toggleOpen() {
     this.toggleProperty('panelIsOpen');
+    this.rememberPanelOpenState();
+    this.ensurePanelScrolledToBottom();
+  },
+
+  ensurePanelScrolledToBottom() {
+    Ember.run.next(() => {
+      let panel = document.getElementById('tracer-panel');
+      panel.scrollTop = panel.scrollHeight + 20;
+    });
+  },
+
+  rememberPanelOpenState() {
     if (this.get('panelIsOpen')) {
       window.localStorage.TravisTracerIsOpen = 'true';
     } else {
