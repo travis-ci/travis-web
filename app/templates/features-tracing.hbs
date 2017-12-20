@@ -1,0 +1,21 @@
+{{#travis-layout layoutName="layouts/center"}}
+
+  <header class="features-hero">
+    <h1 class="h1--grey">Tracing ✨</h1>
+    <p class="text-big">Tracing is a super secret feature for performance debugging.</p>
+    <p class="text-big">
+      ➡️&nbsp;
+      <a href="#" {{action "toggle" preventDefault=true}}>
+        {{if tracingEnabled 'Disable tracing' 'Enable tracing'}}
+      </a>
+    </p>
+    <p class="text-big">You can also drag this amazing bookmarklet into your bookmarks:</p>
+    <p class="text-big">
+      ➡️&nbsp;
+      <a href="javascript:window.TravisTracer&amp;&amp;TravisTracer.bookmarklet()">Toggle tracing ✨</a>
+    </p>
+    <p class="text-big">The tracing panel color theme adapted from
+      <a href="http://twitter.com/sailorhg">sailorhg</a>'s
+      <a href="http://sailorhg.github.io/fairyfloss/">fairyfloss</a> theme.</p>
+  </header>
+{{/travis-layout}}

@@ -1,3 +1,7 @@
 <div class="feature-wrapper {{if features.dashboard 'dashboard'}} {{if features.pride 'travis-pride'}} {{if features.comicSans 'travis-comicsans'}}">
   {{outlet}}
 </div>
+
+{{#if features.tracer}}
+  {{x-tracer}}
+{{/if}}
