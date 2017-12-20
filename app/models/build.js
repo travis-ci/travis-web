@@ -15,7 +15,7 @@ import { alias } from 'ember-decorators/object/computed';
 import moment from 'moment';
 
 export default Model.extend(DurationCalculations, {
-  @service ajax: null,
+  @service api: null,
 
   @alias('branch.name') branchName: null,
 
@@ -127,12 +127,12 @@ export default Model.extend(DurationCalculations, {
 
   cancel() {
     const url = `/build/${this.get('id')}/cancel`;
-    return this.get('ajax').postV3(url);
+    return this.get('api').post(url);
   },
 
   restart() {
     const url = `/build/${this.get('id')}/restart`;
-    return this.get('ajax').postV3(url);
+    return this.get('api').post(url);
   },
 
   @computed('jobs.[]')

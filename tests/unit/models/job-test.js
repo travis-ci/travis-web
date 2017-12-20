@@ -5,7 +5,7 @@ import { moduleForModel, test } from 'ember-qunit';
 moduleForModel('job', 'Unit | Model | job', {
   needs: ['model:repo', 'model:build', 'model:commit', 'model:stage', 'service:ajax',
     'service:jobConfigFetcher', 'service:auth', 'service:features', 'service:flashes',
-    'service:storage', 'service:sessionStorage']
+    'service:storage', 'service:sessionStorage', 'service:api']
 });
 
 test('config is fetched if it\'s not available', function (assert) {

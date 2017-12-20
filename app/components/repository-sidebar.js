@@ -11,7 +11,6 @@ import { service } from 'ember-decorators/service';
 export default Component.extend({
   @service tabStates: null,
   @service jobState: null,
-  @service ajax: null,
   @service('updateTimes') updateTimesService: null,
   @service repositories: null,
   @service store: null,

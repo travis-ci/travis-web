@@ -88,6 +88,7 @@ test('view and cancel pull requests', function (assert) {
 
   page.builds(0).cancelButton.click();
 
+  andThen(() => {});
   andThen(() => {
     assert.equal(topPage.flashMessage.text, 'Build has been successfully cancelled.');
   });
