@@ -19,6 +19,7 @@ Router.map(function () {
     this.route('repositories', { path: '/' });
   });
   this.route('features', { resetNamespace: true });
+  this.route('features-tracing', { path: '/features/tracing', resetNamespace: true });
 
   this.route('getting_started');
 
@@ -60,7 +61,6 @@ Router.map(function () {
   this.route('owner', { path: '/:owner', resetNamespace: true }, function () {
     this.route('repositories', { path: '/' });
   });
-  this.route('toggle-tracing', { path: '/toggle-tracing' });
   this.route('error404', { path: '/404' });
   this.route('page-not-found', { path: '/*wildcard' });
 });
