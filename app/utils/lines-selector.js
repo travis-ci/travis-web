@@ -38,7 +38,7 @@ export default (function () {
     this.element.on('click', 'a', (function (_this) {
       return function (event) {
         let element;
-        element = $(event.target).parent('p');
+        element = $(event.target).parent('.log-line');
         _this.loadLineNumbers(element, event.shiftKey);
         event.preventDefault();
         return false;
@@ -60,7 +60,7 @@ export default (function () {
     this.removeAllHighlights();
     let lines = this.getSelectedLines();
     if (lines) {
-      let elements = this.element.find('p:visible').slice(lines.first - 1, lines.last);
+      let elements = this.element.find('.log-line:visible').slice(lines.first - 1, lines.last);
       if (elements.length) {
         elements.addClass('highlight');
       } else if (tries < 4) {
@@ -83,7 +83,7 @@ export default (function () {
       results = [];
       for (index in lines) {
         l = lines[index];
-        line = this.element.find('p:visible').slice(l - 1, l);
+        line = this.element.find('.log-line:visible').slice(l - 1, l);
         results.push(this.folder.unfold(line));
       }
       return results;
@@ -105,13 +105,13 @@ export default (function () {
 
   LinesSelector.prototype.getLineNumberFromElement = function (element) {
     if (this && this.element) {
-      return this.element.find('p:visible').index(element) + 1;
+      return this.element.find('.log-line:visible').index(element) + 1;
     }
   };
 
   LinesSelector.prototype.removeAllHighlights = function () {
     if (this && this.element) {
-      return this.element.find('p.highlight').removeClass('highlight');
+      return this.element.find('.log-line.highlight').removeClass('highlight');
     }
   };
 
