@@ -68,10 +68,10 @@ class Tracer {
   }
 
   bookmarklet() {
-    if (TravisTracer.isEnabled()) {
-      TravisTracer.disable();
+    if (this.isEnabled()) {
+      this.disable();
     } else {
-      TravisTracer.enable();
+      this.enable();
     }
     window.location = window.location;
   }
