@@ -66,6 +66,15 @@ class Tracer {
       }
     };
   }
+
+  bookmarklet() {
+    if (TravisTracer.isEnabled()) {
+      TravisTracer.disable();
+    } else {
+      TravisTracer.enable();
+    }
+    window.location = window.location;
+  }
 }
 
 export function initialize(app) {
