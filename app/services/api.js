@@ -4,10 +4,15 @@ import config from 'travis/config/environment';
 import { service } from 'ember-decorators/service';
 import { Promise as EmberPromise } from 'rsvp';
 import { run } from '@ember/runloop';
+import { get } from '@ember/object';
 
 export default Service.extend({
   @service auth: null,
   @service features: null,
+
+  get(url, options = {}) {
+    return this.request(url, 'GET', options);
+  },
 
   post(url, options = {}) {
     return this.request(url, 'POST', options);
@@ -27,7 +32,7 @@ export default Service.extend({
 
   request(url, method = 'GET', options = {}) {
     let endpoint = config.apiEndpoint || '';
-    let token = this.get('auth').token();
+    let token = get(this, 'auth').token();
 
     options.headers = options.headers || {};
     options.headers['Travis-API-Version'] = '3';
@@ -51,7 +56,7 @@ export default Service.extend({
 
     return new EmberPromise((resolve, reject) => {
       options.error = (jqXHR, textStatus, errorThrown) => {
-        if (this.get('features.debugLogging')) {
+        if (get(this, 'features.debugLogging')) {
           // eslint-disable-next-line
           console.log(`[ERROR] API responded with an error (${status}): ${JSON.stringify(data)}`);
         }

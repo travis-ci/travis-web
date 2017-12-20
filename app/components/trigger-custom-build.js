@@ -48,7 +48,7 @@ export default Component.extend({
   fetchBuildStatus: task(function* (repoId, requestId) {
     try {
       const url = `/repo/${repoId}/request/${requestId}`;
-      return yield this.get('api').request(url);
+      return yield this.get('api').get(url);
     } catch (e) {
       this.displayError(e);
     }

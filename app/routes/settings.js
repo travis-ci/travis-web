@@ -1,11 +1,11 @@
 import { hash } from 'rsvp';
-import $ from 'jquery';
 import EmberObject from '@ember/object';
 import TravisRoute from 'travis/routes/basic';
 import config from 'travis/config/environment';
 import { service } from 'ember-decorators/service';
 
 export default TravisRoute.extend({
+  @service ajax: null,
   @service api: null,
 
   needsAuth: true,
@@ -63,7 +63,7 @@ export default TravisRoute.extend({
     if (config.endpoints.sshKey) {
       const repo = this.modelFor('repo');
       const url = `/repos/${repo.get('id')}/key`;
-      return this.get('api').request(url, 'GET', (data) => {
+      return this.get('ajax').get(url, (data) => {
         const fingerprint = EmberObject.create({
           fingerprint: data.fingerprint
         });
@@ -74,13 +74,7 @@ export default TravisRoute.extend({
 
   fetchRepositoryActiveFlag() {
     const repoId = this.modelFor('repo').get('id');
-    const url = `${config.apiEndpoint}/repo/${repoId}`;
-    return $.ajax(url, {
-      headers: {
-        Authorization: `token ${this.auth.token()}`,
-        'Travis-API-Version': '3'
-      }
-    }).then(response => response.active);
+    return this.get('api').get(`/repo/${repoId}`).then(response => response.active);
   },
 
   hasPushAccess() {

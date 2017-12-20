@@ -134,7 +134,7 @@ const Repo = Model.extend({
 
   fetchSettings() {
     const url = `/repo/${this.get('id')}/settings`;
-    return this.get('api').request(url, 'get').
+    return this.get('api').get(url).
       then(data => this._convertV3SettingsToV2(data['settings']));
   },
 
