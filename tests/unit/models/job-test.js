@@ -5,35 +5,21 @@ import { moduleForModel, test } from 'ember-qunit';
 moduleForModel('job', 'Unit | Model | job', {
   needs: ['model:repo', 'model:build', 'model:commit', 'model:stage', 'service:ajax',
     'service:jobConfigFetcher', 'service:auth', 'service:features', 'service:flashes',
-    'service:storage', 'service:sessionStorage']
+    'service:storage', 'service:sessionStorage', 'service:api']
 });
 
 test('config is fetched if it\'s not available', function (assert) {
-  assert.expect(1);
+  assert.expect(2);
   let done = assert.async();
 
   const model = this.subject();
-  run(function () {
-    return model.setProperties({
-      _config: null
-    });
-  });
 
-  let oldGetCurrentState = model.getCurrentState;
-  model.getCurrentState = function () {
-    return 'root.loading';
+  model.get('jobConfigFetcher').fetch = function (job) {
+    assert.equal(job.get('id'), model.id);
+    return EmberPromise.resolve({ foo: 'bar' });
   };
 
-  model.get('jobConfigFetcher').fetch = function (id) {
-    assert.equal(id, model.id);
-    return EmberPromise.resolve({});
-  };
-
-  model.get('config');
-
-  setTimeout(function () {
-    model.getCurrentState = oldGetCurrentState;
-  }, 30);
+  model.get('config').then(config => assert.equal(config.foo, 'bar'));
 
   setTimeout(function () {
     done();

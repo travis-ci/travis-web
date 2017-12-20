@@ -18,6 +18,7 @@ import { service } from 'ember-decorators/service';
 import moment from 'moment';
 
 export default Model.extend(DurationCalculations, DurationAttributes, {
+  @service api: null,
   @service ajax: null,
   @service jobConfigFetcher: null,
 
@@ -30,6 +31,7 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
   repositoryPrivate: attr(),
   repositorySlug: attr(),
   updatedAt: attr('date'),
+  _config: attr(),
 
   repo: belongsTo('repo'),
   build: belongsTo('build', { async: true }),
@@ -51,7 +53,7 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
     this.set('isLogAccessed', true);
     return Log.create({
       job: this,
-      ajax: this.get('ajax'),
+      api: this.get('api'),
       container: getOwner(this)
     });
   },
@@ -60,7 +62,7 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
 
   @computed()
   config() {
-    return this.get('jobConfigFetcher').fetch(this.get('id'));
+    return this.get('jobConfigFetcher').fetch(this);
   },
 
   getCurrentState() {
@@ -108,7 +110,7 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
 
   cancel() {
     const url = `/job/${this.get('id')}/cancel`;
-    return this.get('ajax').postV3(url);
+    return this.get('api').post(url);
   },
 
   removeLog() {
@@ -123,12 +125,12 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
 
   restart() {
     const url = `/job/${this.get('id')}/restart`;
-    return this.get('ajax').postV3(url);
+    return this.get('api').post(url);
   },
 
   debug() {
     const url = `/job/${this.get('id')}/debug`;
-    return this.get('ajax').postV3(url, { quiet: true });
+    return this.get('api').post(url, { data: { quiet: true } });
   },
 
   appendLog(part) {
