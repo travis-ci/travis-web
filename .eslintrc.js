@@ -218,7 +218,7 @@ module.exports = {
     'no-whitespace-before-property': 2,
 
     // require padding inside curly braces
-    'object-curly-spacing': [2, 'always'],
+    'object-curly-spacing': 0,
 
     // enforce line breaks between braces
     // http://eslint.org/docs/rules/object-curly-newline
