@@ -6,6 +6,7 @@ import $ from 'jquery';
 import LinesSelector from 'travis/utils/lines-selector';
 import Log from 'travis/utils/log';
 import LogFolder from 'travis/utils/log-folder';
+import { Promise as EmberPromise } from 'rsvp';
 
 import config from 'travis/config/environment';
 
@@ -71,6 +72,7 @@ export default Component.extend({
   @service auth: null,
   @service permissions: null,
   @service externalLinks: null,
+  @service router: null,
 
   classNameBindings: ['logIsVisible:is-open'],
   logIsVisible: false,
@@ -145,7 +147,18 @@ export default Component.extend({
       });
       this.engine.limit = this.limit;
       this.logFolder = new LogFolder(this.$('#log'));
-      this.lineSelector = new LinesSelector(this.$('#log'), this.scroll, this.logFolder);
+      let onLogLineClick = () => {
+        let router = this.get('router'),
+          currentRouteName = router.get('currentRouteName');
+        if (currentRouteName === 'build.index' || currentRouteName === 'job.index') {
+          return EmberPromise.resolve();
+        } else {
+          return router.transitionTo('job', log.get('job.repo'), log.get('job'));
+        }
+      };
+      this.lineSelector = new LinesSelector(
+        this.$('#log'), this.scroll, this.logFolder, null, onLogLineClick
+      );
       this.observeParts(log);
     }
   },
