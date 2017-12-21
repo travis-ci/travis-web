@@ -104,7 +104,8 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
 
   actions: {
     signIn() {
-      this.get('auth').signIn();
+      let authParams = this.modelFor('auth');
+      this.get('auth').signIn(null, authParams);
       this.afterSignIn();
     },
 
@@ -123,7 +124,10 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
     error(error) {
       if (error === 'needs-auth') {
         this.set('auth.redirected', true);
-        return this.transitionTo('auth');
+        let currentURL = new URL(window.location.href),
+          routerURL = `${currentURL.origin}${this.get('router.url')}`;
+
+        return this.transitionTo('auth', { queryParams: { redirectUri: routerURL }});
       } else {
         return true;
       }
