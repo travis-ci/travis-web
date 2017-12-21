@@ -47,13 +47,14 @@ export default Service.extend({
     this.get('store').unloadAll();
   },
 
-  signIn(data) {
+  signIn(data, options = {}) {
     if (data) {
       this.autoSignIn(data);
     } else {
       this.set('state', 'signing-in');
 
-      let url = new URL(window.location.href);
+      let uri = options.redirectUri || window.location.href,
+        url = new URL(uri);
 
       if (url.pathname === '/plans') {
         url.pathname = '/';

@@ -5,7 +5,19 @@ import { service } from 'ember-decorators/service';
 export default TravisRoute.extend({
   @service auth: null,
 
+  queryParams: {
+    redirectUri: {
+      refreshModel: true
+    }
+  },
+
   needsAuth: false,
+
+  model(params) {
+    if (params.redirectUri) {
+      return { redirectUri: params.redirectUri };
+    }
+  },
 
   renderTemplate() {
     $('body').attr('id', 'auth');

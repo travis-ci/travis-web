@@ -8,7 +8,7 @@ test('visiting /features directly as guest', function (assert) {
   featurePage.visit();
 
   andThen(function () {
-    assert.equal(currentURL(), '/auth');
+    assert.ok(currentURL().match(/\?redirectUri=.*%2Ffeatures/));
   });
 });
 
