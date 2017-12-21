@@ -25,7 +25,7 @@ export default (function () {
 
   LinesSelector.prototype.last_selected_line = null;
 
-  function LinesSelector(element1, scroll, folder, location) {
+  function LinesSelector(element1, scroll, folder, location, onLogLineClick) {
     this.element = element1;
     this.scroll = scroll;
     this.folder = folder;
@@ -35,15 +35,20 @@ export default (function () {
       this.last_selected_line = (ref = this.getSelectedLines()) != null ? ref.first : void 0;
       return this.highlightLines();
     });
-    this.element.on('click', 'a', (function (_this) {
-      return function (event) {
-        let element;
-        element = $(event.target).parent('.log-line');
-        _this.loadLineNumbers(element, event.shiftKey);
-        event.preventDefault();
-        return false;
+    this.element.on('click', 'a', (event) => {
+      let callback = () => {
+        let element = $(event.target).parent('.log-line');
+        this.loadLineNumbers(element, event.shiftKey);
       };
-    })(this));
+
+      if (onLogLineClick) {
+        onLogLineClick().then(callback);
+      } else {
+        callback();
+      }
+      event.preventDefault();
+      return false;
+    });
   }
 
   LinesSelector.prototype.willDestroy = function () {
