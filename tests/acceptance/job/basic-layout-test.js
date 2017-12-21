@@ -27,7 +27,7 @@ test('visiting job-view', function (assert) {
   server.create('log', { id: job.id });
 
   visit('/travis-ci/travis-web/jobs/' + job.id);
-  waitForElement('#log > p');
+  waitForElement('#log > .log-line');
 
   andThen(() => {
     assert.equal(document.title, 'Job #1234.1 - travis-ci/travis-web - Travis CI');

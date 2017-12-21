@@ -29,7 +29,7 @@ Log.Scroll.prototype = $.extend(new Log.Listener(), {
   },
   tryScroll() {
     let ref;
-    let element = $('#log p:visible.highlight:first');
+    let element = $('#log .log-line:visible.highlight:first');
     if (element) {
       if (this.beforeScroll) {
         this.beforeScroll();

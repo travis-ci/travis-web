@@ -1060,7 +1060,10 @@ Log.extend(Log.Renderer.prototype, {
   },
   createParagraph: function () {
     let para;
-    para = document.createElement('p');
+    // TODO: I know that now naming doesn't make sense, but the code already has
+    // `createSpan` function and I'm not into biggger refactoring at the moment
+    para = document.createElement('div');
+    para.classList.add('log-line');
     para.appendChild(document.createElement('a'));
     return para;
   },

@@ -148,7 +148,7 @@
   .cut
     padding: 20px 15px 0 55px
 
-  p
+  .log-line
     position: relative
     padding: 0 15px 0 62px
     margin: 0
@@ -181,16 +181,16 @@
     &.open
       height: auto
 
-    p:first-of-type
+    .log-line:first-of-type
       padding-right: 190px
 
     // &.active
-    p:first-of-type
+    .log-line:first-of-type
       background: darken($color-bg-log-hover, 10) inline-image('ui/log.fold.open.2.svg') no-repeat 8px 3px
       &.highlight
         background-color: $color-bg-log-fold-highlight
 
-    &:not(.open) p:first-of-type
+    &:not(.open) .log-line:first-of-type
       visibility: visible
       height: auto
       min-height: 16px

@@ -30,6 +30,7 @@ test('cancelling build', function (assert) {
     .visit({ slug: 'travis-ci/travis-web', build_id: build.id })
     .cancelBuild();
 
+  andThen(() => {});
   andThen(function () {
     assert.equal(topPage.flashMessage.text, 'Build has been successfully cancelled.', 'cancelled build notification should be displayed');
     assert.equal($('head link[rel=icon]').attr('href'), getFaviconUri('yellow'), 'expected the favicon data URI to match the one for running');

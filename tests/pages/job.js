@@ -28,7 +28,7 @@ export default PageObject.create({
   logLines: collection({
     scope: 'pre#log',
 
-    itemScope: 'p span:first-of-type',
+    itemScope: '.log-line span:first-of-type',
 
     item: {
       text: text(),
@@ -66,7 +66,7 @@ export default PageObject.create({
 
     item: {
       name: text('span.fold-name'),
-      toggle: clickable('p:first-of-type'),
+      toggle: clickable('.log-line:first-of-type'),
       isOpen: hasClass('open')
     }
   }),
