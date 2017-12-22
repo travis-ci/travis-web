@@ -25,7 +25,16 @@ export default function () {
   this.urlPrefix = apiEndpoint;
   this.namespace = '';
 
-  this.get('/users/:id');
+  this.get('/users', function ({ users }, request)  {
+    if (request.requestHeaders.Authorization === 'token testUserToken') {
+      let userData = JSON.parse(localStorage.getItem('travis.user')),
+        id = userData.id;
+      return this.serialize(users.find(id), 'v2');
+    } else {
+      return new Mirage.Response(403, {}, {});
+    }
+  });
+
   this.get('/accounts', (schema/* , request*/) => {
     const users = schema.users.all().models.map(user => Ember.merge(user.attrs, { type: 'user' }));
     const accounts = schema.accounts.all().models.map(account => account.attrs);

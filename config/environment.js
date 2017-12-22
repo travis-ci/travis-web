@@ -44,6 +44,9 @@ module.exports = function (environment) {
       support: 'mailto:support@travis-ci.com'
     },
     endpoints: {},
+    timing: {
+      syncingPageRedirectionTime: 5000,
+    },
     intervals: {
       updateTimes: 1000,
       branchCreatedSyncDelay: 2000,
@@ -51,6 +54,7 @@ module.exports = function (environment) {
       triggerBuildRequestDelay: 3000,
       fetchRecordsForPusherUpdatesThrottle: 1000,
       repositoryFilteringDebounceRate: 200,
+      syncingPolling: 3000,
     },
     githubOrgsOauthAccessSettingsUrl: 'https://github.com/settings/connections/applications/f244293c729d5066cf27',
     apiTraceEndpoint: 'https://papertrailapp.com/systems/travis-org-api-production/events?q=program%3Aapp%2Fweb%20log-tracing%20',
@@ -140,6 +144,8 @@ module.exports = function (environment) {
     ENV.intervals.branchCreatedSyncDelay = 0;
     ENV.intervals.triggerBuildRequestDelay = 0;
     ENV.intervals.fetchRecordsForPusherUpdatesThrottle = 0;
+    ENV.intervals.syncingPolling = 10;
+    ENV.timing.syncingPageRedirectionTime = 30;
 
     ENV.APP.rootElement = '#ember-testing';
 
