@@ -74,8 +74,9 @@ export default Component.extend({
   @service externalLinks: null,
   @service router: null,
 
-  classNameBindings: ['logIsVisible:is-open'],
+  classNameBindings: ['logIsVisible:is-open', 'isFullScreenLog:is-fullscreen'],
   logIsVisible: false,
+  isFullScreenLog: false,
 
   @alias('auth.currentUser') currentUser: null,
 
@@ -244,7 +245,11 @@ export default Component.extend({
   actions: {
     toTop() {
       Travis.tailing.stop();
-      return $(window).scrollTop(0);
+      if (this.get('isFullScreenLog')) {
+        return $('.log').scrollTop(0);
+      } else {
+        return $(window).scrollTop(0);
+      }
     },
 
     toggleTailing() {
@@ -259,6 +264,10 @@ export default Component.extend({
 
     toggleRemoveLogModal() {
       this.toggleProperty('isShowingRemoveLogModal');
+    },
+
+    toggleFullScreenLog() {
+      this.toggleProperty('isFullScreenLog');
     }
   },
 

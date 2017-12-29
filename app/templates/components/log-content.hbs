@@ -5,20 +5,22 @@
   {{/if}}
 
   <div class="log-container {{if job.notStarted 'hidden'}}">
-      <button type="button" class="toggle-log-button {{if logIsVisible 'hidden'}}" title="Display the log" {{action "toggleLog"}}>
+    <button type="button" class="toggle-log-button {{if logIsVisible 'hidden'}}" title="Display the log" {{action "toggleLog"}}>
       {{svg-jar 'icon-seemore' class="icon"}}
       <span class="label-align">View log</span></button>
 
     <div class="log-main {{if logIsVisible 'is-visible'}} {{if job.notStarted 'hidden'}}">
       <div class="log-header">
-          <button type="button" class="toggle-log-button--dark {{unless logIsVisible 'hidden'}}" title="Display the log" {{action "toggleLog"}}>
-              {{svg-jar 'icon-seemore' class="icon"}}<span class="label-align">Hide log</span></button>
+        <button type="button" class="toggle-log-button--dark {{unless logIsVisible 'hidden'}}" title="Display the log" {{action "toggleLog"}}>
+          {{svg-jar 'icon-seemore' class="icon"}}<span class="label-align">Hide log</span></button>
         {{#if canRemoveLog}}
           <button class="remove-log-button open-popup" {{action "toggleRemoveLogModal"}} title="Remove the log" type="button">
             {{svg-jar 'icon-deletelogs' class="icon"}} Remove log</button>
         {{/if}}
         <a class="download-log-button" href={{plainTextLogUrl}} title="Display the log in plaintext">
           {{svg-jar 'icon-downloadlogs' class="icon"}} Raw log</a>
+        <button type="button" class="fullscreen-log-button" title="Show logs full screen" {{action "toggleFullScreenLog"}}>
+          {{svg-jar 'icon-fullscreen' class="icon"}}<span class="label-align">Fullscreen log</span></button>
       </div>
       <div class="log-body">
         {{#if showTailing}}
