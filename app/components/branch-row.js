@@ -37,7 +37,7 @@ export default Component.extend({
     } else {
       apiEndpoint = config.apiEndpoint;
       repoId = this.get('branch.repository.id');
-      branchName = this.get('branch.name');
+      branchName = encodeURIComponent(this.get('branch.name'));
       options = {
         headers: {
           'Travis-API-Version': '3'
@@ -51,12 +51,12 @@ export default Component.extend({
       let url = `${path}${params}`;
 
       $.ajax(url, options).then(response => {
-        let array, i, ref;
+        let array, i, trueLength;
         array = response.builds.map(build => EmberObject.create(build));
-        // TODO: Clean this up, all we want to do is have 5 elements no matter
-        // what. This code doesn't express that very well.
+        // We need exactly 5 elements in array
         if (array.length < 5) {
-          for (i = 1, ref = 5 - array.length; i <= ref; i += 1) {
+          trueLength = array.length;
+          for (i = trueLength; i < 5; i++) {
             array.push({});
           }
         }

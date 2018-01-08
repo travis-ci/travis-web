@@ -32,8 +32,8 @@ moduleForAcceptance('Acceptance | repo branches', {
     const repoId = parseInt(repository.id);
 
     const primaryBranch = server.create('branch', {
-      name: 'primary',
-      id: `/v3/repo/${repoId}/branch/primary`,
+      name: 'primary#yes',
+      id: `/v3/repo/${repoId}/branch/primary#yes`,
       default_branch: true,
       repository,
     });
@@ -166,7 +166,7 @@ test('view branches', function (assert) {
   });
 
   andThen(() => {
-    assert.equal(branchesPage.defaultBranch.name, 'primary');
+    assert.equal(branchesPage.defaultBranch.name, 'primary#yes');
     assert.ok(branchesPage.defaultBranch.passed, 'expected default branch last build to have passed');
     assert.equal(branchesPage.defaultBranch.buildCount, '3 builds');
     assert.equal(branchesPage.defaultBranch.request, '1919 passed');
