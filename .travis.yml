@@ -35,7 +35,6 @@ install:
   - bower install
 
 before_script:
-  - chmod 4755 /opt/google/chrome/chrome-sandbox
   - if [ $TRAVIS_PULL_REQUEST = 'false' ]; then echo "Enabling Percy on push with default Ember" && export PERCY_ENABLE=1; else export PERCY_ENABLE=0; fi
   - echo $PERCY_ENABLE
   - if [ "$PERCY_ENABLE" -ne 1 ]; then export RANDOMISE=--random; fi
