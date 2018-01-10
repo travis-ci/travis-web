@@ -1,7 +1,7 @@
 /* global Travis */
 import ArrayProxy from '@ember/array/proxy';
 
-import { next } from '@ember/runloop';
+import { next, run, later } from '@ember/runloop';
 import { observer } from '@ember/object';
 import Model from 'ember-data/model';
 import config from 'travis/config/environment';
@@ -27,6 +27,11 @@ export default Model.extend({
   @computed('name', 'login')
   fullName(name, login) {
     return name || login;
+  },
+
+  init() {
+    this.isSyncingDidChange();
+    return this._super(...arguments);
   },
 
   isSyncingDidChange: observer('isSyncing', function () {
@@ -122,12 +127,14 @@ export default Model.extend({
   poll() {
     return this.get('ajax').get('/users', (data) => {
       if (data.user.is_syncing) {
-        return setTimeout(() => { this.poll(); }, 3000);
+        return later(() => { this.poll(); }, config.intervals.syncingPolling);
       } else {
-        this.set('isSyncing', false);
-        this.setWithSession('syncedAt', data.user.synced_at);
-        Travis.trigger('user:synced', data.user);
-        return this.store.query('account', {});
+        run(() => {
+          this.set('isSyncing', false);
+          this.setWithSession('syncedAt', data.user.synced_at);
+          Travis.trigger('user:synced', data.user);
+          this.store.query('account', {});
+        });
       }
     });
   },
