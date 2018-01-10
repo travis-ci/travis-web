@@ -1,5 +1,6 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
+import { prettyDate } from 'travis/helpers/pretty-date';
 
 moduleForComponent('requests-item', 'Integration | Component | requests item', {
   integration: true
@@ -31,6 +32,7 @@ test('it renders', function (assert) {
 
   assert.equal(this.$().find('.row-item:nth-of-type(2) strong').text().trim(), 'dev');
   assert.equal(this.$().find('.row-item:nth-of-type(3) .label-align').text().trim(), 'a day ago');
+  assert.equal(this.$().find('.row-item:nth-of-type(3)').attr('title'), prettyDate([yesterday]));
   assert.ok(this.$().find('.status-icon').hasClass('approved'), 'icon should have approved class');
   assert.equal(this.$().find('.row-item:nth-child(4)').text().trim(), 'Bam!');
   assert.equal(this.$().find('.row-item:nth-child(4) .emoji').length, 1, 'there should be an emoji icon in commit message');
