@@ -55,5 +55,12 @@ module.exports = function(deployTarget) {
     ENV.redis.keyPrefix = `${process.env.CLEANED_BRANCH_SUBDOMAIN}-staging`;
   }
 
+  if (deployTarget === 'org-staging') {
+    ENV.s3.bucket = 'travis-web-staging';
+    ENV.s3.prefix = process.env.TRAVIS_COMMIT;
+    ENV.redis.url = process.env.ORG_STAGING_REDIS_URL;
+    ENV.redis.keyPrefix = `${process.env.CLEANED_BRANCH_SUBDOMAIN}-staging`;
+  }
+
   return ENV;
 };
