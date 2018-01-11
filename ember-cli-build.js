@@ -12,8 +12,9 @@ module.exports = function () {
   } else {
     fingerprint = {
       // FIXME this is probably not desired
-      exclude: ['images/emoji', 'images/logos', 'images/pro-landing/flag*', 'images/team'],
-      extensions: ['js', 'css', 'png', 'jpg', 'gif', 'map', 'svg']
+      // exclude: ['images/emoji', 'images/logos', 'images/pro-landing/flag*', 'images/team'],
+      // extensions: ['js', 'css', 'png', 'jpg', 'gif', 'map', 'svg'],
+      generateAssetMap: true
     };
 
     if (process.env.TRAVIS_ENTERPRISE) {
@@ -34,14 +35,11 @@ module.exports = function () {
 
   const app = new EmberApp({
     'ember-cli-babel': {
-      includePolyfill: true,
+      includePolyfill: true
     },
     babel: {
       blacklist: ['regenerator'],
-      plugins: [
-        'transform-decorators-legacy',
-        'transform-class-properties',
-      ]
+      plugins: ['transform-decorators-legacy', 'transform-class-properties']
     },
     fingerprint: fingerprint,
     sourcemaps: {
@@ -49,15 +47,12 @@ module.exports = function () {
       extensions: ['js']
     },
     'ember-prism': {
-      'components': ['scss', 'javascript', 'json'], // needs to be an array, or undefined.
-      'plugins': ['line-highlight']
+      components: ['scss', 'javascript', 'json'], // needs to be an array, or undefined.
+      plugins: ['line-highlight']
     },
     svg: {
       optimize: false,
-      paths: [
-        'public/images/stroke-icons',
-        'public/images/svg'
-      ]
+      paths: ['public/images/stroke-icons', 'public/images/svg']
     },
     sassOptions: {
       extensions: 'sass'
