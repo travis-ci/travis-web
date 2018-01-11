@@ -186,3 +186,41 @@ But it must be addressed repeatedly!\r${ESCAPE}[0m\nAgain.
 
   percySnapshot(assert);
 });
+
+test('visiting a job with fold duration', function (assert) {
+  let repo =  server.create('repository', { slug: 'travis-ci/travis-web' }),
+    branch = server.create('branch', { name: 'acceptance-tests' });
+
+  let  gitUser = server.create('git-user', { name: 'Mr T' });
+  let commit = server.create('commit', { author: gitUser, committer: gitUser, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
+  let build = server.create('build', { repository: repo, state: 'passed', commit, branch });
+  let job = server.create('job', { number: '1234.1', repository: repo, state: 'passed', commit, build });
+  commit.job = job;
+
+  job.save();
+  commit.save();
+
+  const complexLog = `I am the first line.
+travis_fold:start:afold
+travis_time:start:2fde4b10
+I am the first line of a fold.
+I am the second line of a fold.
+travis_time:end:2fde4b10:start=1515663514660495538,finish=1515663517010906954,duration=2350411416
+travis_fold:end:afold
+`;
+  server.create('log', { id: job.id, content: complexLog });
+
+  jobPage.visit();
+
+  // An unfortunate workaround for log displaying being outside Ember facilities.
+  // eslint-disable-next-line
+  waitForElement('.log-container .duration');
+
+  jobPage.toggleLog();
+
+  andThen(function () {
+    assert.equal(jobPage.logFolds(0).duration, '2.35s');
+  });
+
+  percySnapshot(assert);
+});
