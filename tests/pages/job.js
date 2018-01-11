@@ -66,6 +66,7 @@ export default PageObject.create({
 
     item: {
       name: text('span.fold-name'),
+      duration: text('.duration'),
       toggle: clickable('.log-line:first-of-type'),
       isOpen: hasClass('open')
     }
