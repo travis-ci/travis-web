@@ -6,7 +6,8 @@ var VALID_DEPLOY_TARGETS = [
   'org-beta',
   'com-beta',
   'org-canary',
-  'com-canary'
+  'com-canary',
+  'org-staging'
 ];
 
 module.exports = function (deployTarget) {
