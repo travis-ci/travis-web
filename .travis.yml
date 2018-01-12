@@ -6,7 +6,7 @@ env:
   global:
     - PERCY_ENABLE=0
 
-sudo: false
+sudo: required
 dist: trusty
 
 addons:
