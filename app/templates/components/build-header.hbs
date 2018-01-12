@@ -111,7 +111,7 @@
 
   <ul class="list-icon">
     {{#if isJob}}
-      <li title="PT{{elapsedTime}}S" class="commit-stopwatch">
+      <li class="commit-stopwatch">
         {{svg-jar 'icon-stopwatch' class="icon--m"}}
         <span class="label-align">
           {{#if item.toBeQueued}}
@@ -124,7 +124,7 @@
         </span>
       </li>
     {{else}}
-      <li title="PT{{elapsedTime}}S" class="commit-stopwatch">
+      <li title="Started {{pretty-date item.startedAt}}" class="commit-stopwatch">
         {{svg-jar 'icon-stopwatch' class="icon--m"}}
         <span class="label-align">
           {{if item.isFinished 'Ran for' 'Running for'}} <time datetime="PT{{elapsedTime}}S">{{format-duration elapsedTime}}</time>
@@ -134,7 +134,7 @@
 
     {{#if item.isFinished}}
       {{#if item.isMatrix}}
-        <li title="{{format-duration item.duration}}" class="commit-clock">
+        <li class="commit-clock">
           {{svg-jar 'icon-clock' class="icon"}}
           <span class="label-align">
             Total time <time datetime="PT{{item.duration}}S">{{format-duration item.duration}}</time>
@@ -142,9 +142,9 @@
         </li>
       {{/if}}
 
-      <li title="{{item.finishedAt}}" class="commit-calendar">
+      <li title="Finished {{pretty-date item.finishedAt}}" class="commit-calendar">
         {{svg-jar 'icon-calendar' class="icon"}}
-        <time class="label-align" datetime={{item.finishedAt}}>{{format-time item.finishedAt}}</time>
+        <time class="label-align" datetime={{pretty-date item.finishedAt}}>{{format-time item.finishedAt}}</time>
       </li>
     {{/if}}
   </ul>
