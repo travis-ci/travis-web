@@ -10,7 +10,7 @@ export default Model.extend({
   exists_on_github: attr('boolean'),
 
   builds: hasMany('builds', { inverse: 'branch' }),
-  repo: belongsTo('repo', { inverse: 'defaultBranch' }),
+  repo: belongsTo('repo', { inverse: '_branches' }),
 
   @computed('id')
   repoId(id) {
