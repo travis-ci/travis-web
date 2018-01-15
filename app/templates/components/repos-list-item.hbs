@@ -22,7 +22,7 @@
   <p>
     {{svg-jar 'icon-clock' class="icon"}}
     <span class="label-align">Duration:
-       <time class="duration" datetime="PT{{repo.currentBuild.duration}}S" title={{repo.currentBuild.startedAt}}>{{format-duration repo.currentBuild.duration}}</time>
+       <time class="duration" datetime="PT{{repo.currentBuild.duration}}S" title="Started {{pretty-date repo.currentBuild.startedAt}}">{{format-duration repo.currentBuild.duration}}</time>
     </span>
   </p>
 
@@ -30,7 +30,7 @@
     <p>
       {{svg-jar 'icon-calendar' class="icon"}}
       <span class="label-align">Finished:
-        <time class="finished_at timeago" datetime={{repo.currentBuild.finishedAt}} title={{repo.currentBuild.finishedAt}}>
+        <time class="finished_at timeago" datetime={{repo.currentBuild.finishedAt}} title="Finished {{pretty-date repo.currentBuild.finishedAt}}">
           {{format-time repo.currentBuild.finishedAt}}
         </time></span>
     </p>

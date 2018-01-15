@@ -59,13 +59,13 @@
 
 <div class="two-line">
   <div class="row-item row-duration">
-    <div title="{{format-duration build.duration}}">
+    <div>
       {{svg-jar 'icon-clock' class="icon"}}
       <time class="label-align" datetime="PT{{build.duration}}S">{{format-duration build.duration}}</time>
     </div>
   </div>
   <div class="row-item row-calendar">
-    <div title="{{pretty-date build.formattedFinishedAt}}">
+    <div title="Finished {{pretty-date build.formattedFinishedAt}}">
       {{svg-jar 'icon-calendar' class="icon"}}
       <time class="label-align" datetime={{build.finishedAt}}>{{format-time build.finishedAt}}</time>
     </div>
