@@ -96,7 +96,7 @@
         {{#if auth.signedIn}}
           <ul class="navigation-nested">
             <li>
-              {{#link-to "account" user.login (query-params offset=0) class="signed-in" title="See the Travis accounts you belong to"}}Accounts{{/link-to}}
+              {{#link-to "account" user.login (query-params offset=0) class="signed-in" title="See your Travis profile"}}Profile{{/link-to}}
             </li>
             {{#if config.billingEndpoint}}
               {{#unless features.enterpriseVersion}}
