@@ -10,7 +10,7 @@ let ObjectPromiseProxy = ObjectProxy.extend(PromiseProxyMixin);
 export default Component.extend({
   @service store: null,
 
-  @computed('repo.id', 'build.request_id')
+  @computed('repo.id', 'build.request.id')
   messages(repoId, requestId) {
     const urlRoot = this.get('store').adapterFor('v3').buildURL('repo', repoId);
 

@@ -382,7 +382,7 @@ export default {
           }
         ]
       },
-      "attributes": ["id","number","state","duration","event_type","previous_state","pull_request_title","pull_request_number","started_at","finished_at","repository","branch","commit","jobs","stages","created_by"],
+      "attributes": ["id","number","state","duration","event_type","previous_state","pull_request_title","pull_request_number","started_at","finished_at","repository","branch","commit","jobs","stages","created_by","request"],
       "representations": {
         "minimal": [
           "id",

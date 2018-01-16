@@ -52,7 +52,7 @@ test('visiting job-view', function (assert) {
     }]
   });
 
-  let build = server.create('build', { repository: repo, state: 'passed', commit, branch, request_id: request.id });
+  let build = server.create('build', { repository: repo, state: 'passed', commit, branch, request });
   let job = server.create('job', { number: '1234.1', repository: repo, state: 'passed', build, commit });
   commit.job = job;
 
