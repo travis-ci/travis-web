@@ -15,7 +15,10 @@ export default Component.extend({
     const urlRoot = this.get('store').adapterFor('v3').buildURL('repo', repoId);
 
     return ObjectPromiseProxy.create({
-      promise: fetch(`${urlRoot}/request/${requestId}/messages`)
+      promise: fetch(`${urlRoot}/request/${requestId}/messages`, {
+        headers: {
+          'Travis-API-Version': '3'
+        }})
         .then(response => response.json()).then(response => {
           // FIXME this is because of an ESLint rule I don’t understand at the moment
           response.something;
