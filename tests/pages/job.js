@@ -25,6 +25,21 @@ export default PageObject.create({
 
   toggleLog: clickable('.toggle-log-button'),
 
+  ymlMessages: collection({
+    itemScope: '.yml-message',
+
+    item: {
+      icon: {
+        scope: '.icon',
+        isInfo: hasClass('info'),
+        isWarning: hasClass('warn'),
+        isError: hasClass('error')
+      },
+
+      message: text('.message')
+    }
+  }),
+
   logLines: collection({
     scope: 'pre#log',
 

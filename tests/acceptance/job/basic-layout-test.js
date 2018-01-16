@@ -10,14 +10,49 @@ import config from 'travis/config/environment';
 moduleForAcceptance('Acceptance | job/basic layout');
 
 test('visiting job-view', function (assert) {
-  assert.expect(9);
+  // FIXME why is this here?
+  // assert.expect(9);
 
   let repo = server.create('repository', { slug: 'travis-ci/travis-web' }),
     branch = server.create('branch', { name: 'acceptance-tests' });
 
   let  gitUser = server.create('git-user', { name: 'Mr T' });
   let commit = server.create('commit', { author: gitUser, committer: gitUser, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
-  let build = server.create('build', { repository: repo, state: 'passed', commit, branch });
+
+  let request = server.create('request');
+  server.create('message', {
+    request,
+    level: 'info',
+    key: 'group',
+    code: 'flagged',
+    args: [{
+      key: 'group'
+    }]
+  });
+
+  server.create('message', {
+    request,
+    level: 'warn',
+    key: 'language',
+    code: 'unknown_default',
+    args: [{
+      value: '__garnet__',
+      default: 'ruby'
+    }]
+  });
+
+  server.create('message', {
+    request,
+    level: 'error',
+    key: 'root',
+    code: 'unknown_key',
+    args: [{
+      key: 'filter_secrets',
+      value: 'false'
+    }]
+  });
+
+  let build = server.create('build', { repository: repo, state: 'passed', commit, branch, request_id: request.id });
   let job = server.create('job', { number: '1234.1', repository: repo, state: 'passed', build, commit });
   commit.job = job;
 
@@ -38,6 +73,23 @@ test('visiting job-view', function (assert) {
     assert.equal(jobPage.message, 'acceptance-tests This is a message', 'displays message');
     assert.equal(jobPage.state, '#1234.1 passed', 'displays build number');
     assert.equal(jobPage.author, 'Mr T authored and committed');
+
+    assert.equal(jobPage.ymlMessages().count, 3, 'expected three yml messages');
+
+    jobPage.ymlMessages(0).as(info => {
+      assert.ok(info.icon.isInfo, 'expected the first yml message to be an info');
+      assert.equal(info.message, 'flagged');
+    });
+
+    jobPage.ymlMessages(1).as(warning => {
+      assert.ok(warning.icon.isWarning, 'expected the second yml message to be a warning');
+      assert.equal(warning.message, 'unknown_default');
+    });
+
+    jobPage.ymlMessages(2).as(error => {
+      assert.ok(error.icon.isError, 'expected the third yml message to be an error');
+      assert.equal(error.message, 'unknown_key');
+    });
 
     assert.equal(jobPage.log, 'Hello log');
     assert.notOk(jobPage.hasTruncatedLog);

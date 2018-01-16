@@ -428,6 +428,11 @@ export default function () {
     });
   });
 
+  this.get('/repo/:repo_id/request/:request_id/messages', function ({ messages }) {
+    // FIXME scoping?
+    return this.serialize(messages.all());
+  });
+
   this.get('/job/:id/log', function (schema, request) {
     let jobId = request.params.id;
     let log = schema.logs.find(jobId);
