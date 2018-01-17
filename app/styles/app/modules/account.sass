@@ -1,16 +1,3 @@
-.account
-  display: flex
-  flex-flow: row nowrap
-  align-items: center
-  margin-bottom: 35px
-  .avatar
-    margin-right: 1em
-  @media #{$medium-up}
-    flex-flow: row wrap
-  &.user
-    .avatar
-      align-self: flex-start
-
 .account-name
   margin: 0
   font-size: $font-size-sm
@@ -21,10 +8,24 @@
   overflow: hidden
   @media #{$medium-up}
     width: 240px
-  &:active,
-  &:hover
-    text-decoration: underline
+   
 
 .account-repo-count,
 .account-token
   margin: 0
+
+
+.organization
+  > .org-info
+    > a
+      align-items: center
+      display: flex
+      flex-direction: row
+      padding: .7rem .5rem
+      &:hover
+        color: $oxide-blue     
+      &.active
+        background: $pebble-grey
+        color: $oxide-blue
+      > .account-info
+        margin-left: .5rem
