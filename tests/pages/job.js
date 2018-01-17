@@ -35,7 +35,6 @@ export default PageObject.create({
         isWarning: hasClass('warn'),
         isError: hasClass('error')
       },
-
       message: text('.message')
     }
   }),

@@ -78,17 +78,17 @@ test('visiting job-view', function (assert) {
 
     jobPage.ymlMessages(0).as(info => {
       assert.ok(info.icon.isInfo, 'expected the first yml message to be an info');
-      assert.equal(info.message, 'flagged');
+      assert.equal(info.message, 'your repository must be feature flagged for group to be used');
     });
 
     jobPage.ymlMessages(1).as(warning => {
       assert.ok(warning.icon.isWarning, 'expected the second yml message to be a warning');
-      assert.equal(warning.message, 'unknown_default');
+      assert.equal(warning.message, 'dropping unknown value: __garnet__, defaulting to: ruby');
     });
 
     jobPage.ymlMessages(2).as(error => {
       assert.ok(error.icon.isError, 'expected the third yml message to be an error');
-      assert.equal(error.message, 'unknown_key');
+      assert.equal(error.message, 'dropping unknown key filter_secrets (false)');
     });
 
     assert.equal(jobPage.log, 'Hello log');
