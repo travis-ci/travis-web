@@ -9,18 +9,9 @@ test('it renders', function (assert) {
   // Set any properties with this.set('myProperty', 'value');
   // Handle any actions with this.on('myAction', function(val) { ... });
   // FIXME this is hackish!
-  this.set('message', { code: 'alias' });
+  this.set('message', { code: 'alias', args: [{}] });
 
   this.render(hbs`{{build-message message=message}}`);
 
-  assert.equal(this.$().text().trim(), '');
-
-  // Template block usage:
-  this.render(hbs`
-    {{#build-message message=message}}
-      template block text
-    {{/build-message}}
-  `);
-
-  assert.equal(this.$().text().trim(), 'template block text');
+  assert.equal(this.$().text().trim(), 'undefined is an alias for undefined, using undefined');
 });
