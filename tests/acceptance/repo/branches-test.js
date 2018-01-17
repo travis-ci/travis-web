@@ -220,14 +220,3 @@ test('view branches tab when no branches present', function (assert) {
     assert.equal(branchesPage.showsNoBranchesMessaging, 'No other branches for this repository', 'Branches tab shows no branches message');
   });
 });
-
-
-test('loading branches doesnt update the default branch on the repo', function (assert) {
-  server.logging = true;
-  visit(`/killjoys/living-a-feminist-life`)
-  click('#status-image-popup');
-
-  andThen(() => {
-    assert.equal(find('#status-image-popup img').attr('src'), "http://localhost:4200/killjoys/living-a-feminist-life.svg?branch=primary%23yes");
-  });
-})
