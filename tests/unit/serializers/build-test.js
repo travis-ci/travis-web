@@ -2,7 +2,16 @@ import { moduleForModel, test } from 'ember-qunit';
 
 moduleForModel('build', 'Unit | Serializer | build', {
   // Specify the other units that are required for this test.
-  needs: ['serializer:build', 'serializer:commit', 'serializer:job', 'serializer:repo', 'model:commit', 'model:job', 'model:branch', 'model:repo']
+  needs: [
+    'serializer:build',
+    'serializer:commit',
+    'serializer:job',
+    'serializer:repo',
+    'model:commit',
+    'model:job',
+    'model:branch',
+    'model:repo'
+  ]
 });
 
 test('it normalizes a V3 singular response with nested jobs and repos', function (assert) {
@@ -10,26 +19,26 @@ test('it normalizes a V3 singular response with nested jobs and repos', function
     '@type': 'build',
     '@href': '/v3/build/1',
     '@representation': 'standard',
-    'id': 1,
-    'number': '1',
-    'state': 'passed',
-    'repository': {
+    id: 1,
+    number: '1',
+    state: 'passed',
+    repository: {
       '@type': 'repository',
       '@href': '/v3/repo/1',
       '@representation': 'standard',
-      'id': 1,
-      'name': 'travis-web',
-      'slug': 'travis-ci/travis-web'
+      id: 1,
+      name: 'travis-web',
+      slug: 'travis-ci/travis-web'
     },
-    'jobs': [
+    jobs: [
       {
         '@type': 'job',
         '@href': '/v3/job/1',
         '@representation': 'standard',
-        'id': 1,
-        'number': '1.1',
-        'state': 'passed',
-        'repository': {
+        id: 1,
+        number: '1.1',
+        state: 'passed',
+        repository: {
           '@href': '/v3/repo/1'
         }
       },
@@ -37,10 +46,10 @@ test('it normalizes a V3 singular response with nested jobs and repos', function
         '@type': 'job',
         '@href': '/v3/job/2',
         '@representation': 'standard',
-        'id': 2,
-        'number': '1.2',
-        'state': 'passed',
-        'repository': {
+        id: 2,
+        number: '1.2',
+        state: 'passed',
+        repository: {
           '@href': '/v3/repo/1'
         }
       }
@@ -49,74 +58,80 @@ test('it normalizes a V3 singular response with nested jobs and repos', function
 
   let store = this.store();
   let serializer = store.serializerFor('build');
-  let result = serializer.normalizeResponse(store, store.modelFor('build'), payload, 1, 'findRecord');
+  let result = serializer.normalizeResponse(
+    store,
+    store.modelFor('build'),
+    payload,
+    1,
+    'findRecord'
+  );
   let expectedResult = {
-    'data': {
-      'id': '1',
-      'type': 'build',
-      'attributes': {
-        'state': 'passed',
-        'number': 1
+    data: {
+      id: '1',
+      type: 'build',
+      attributes: {
+        state: 'passed',
+        number: 1
       },
-      'relationships': {
-        'repo': {
-          'data': {
-            'id': '1',
-            'type': 'repo'
+      relationships: {
+        repo: {
+          data: {
+            id: '1',
+            type: 'repo'
           }
         },
-        'jobs': {
-          'data': [
+        jobs: {
+          data: [
             {
-              'id': '1',
-              'type': 'job'
+              id: '1',
+              type: 'job'
             },
             {
-              'id': '2',
-              'type': 'job'
+              id: '2',
+              type: 'job'
             }
           ]
         }
       }
     },
-    'included': [
+    included: [
       {
-        'id': '1',
-        'type': 'repo',
-        'attributes': {
-          'slug': 'travis-ci/travis-web',
-          'name': 'travis-web'
+        id: '1',
+        type: 'repo',
+        attributes: {
+          slug: 'travis-ci/travis-web',
+          name: 'travis-web'
         },
-        'relationships': {}
+        relationships: {}
       },
       {
-        'id': '1',
-        'type': 'job',
-        'attributes': {
-          'state': 'passed',
-          'number': '1.1'
+        id: '1',
+        type: 'job',
+        attributes: {
+          state: 'passed',
+          number: '1.1'
         },
-        'relationships': {
-          'repo': {
-            'data': {
-              'id': '1',
-              'type': 'repo'
+        relationships: {
+          repo: {
+            data: {
+              id: '1',
+              type: 'repo'
             }
           }
         }
       },
       {
-        'id': '2',
-        'type': 'job',
-        'attributes': {
-          'state': 'passed',
-          'number': '1.2'
+        id: '2',
+        type: 'job',
+        attributes: {
+          state: 'passed',
+          number: '1.2'
         },
-        'relationships': {
-          'repo': {
-            'data': {
-              'id': '1',
-              'type': 'repo'
+        relationships: {
+          repo: {
+            data: {
+              id: '1',
+              type: 'repo'
             }
           }
         }
