@@ -30,10 +30,10 @@ export default PageObject.create({
 
     item: {
       icon: {
-        scope: '.icon',
-        isInfo: hasClass('info'),
-        isWarning: hasClass('warn'),
-        isError: hasClass('error')
+        scope: 'svg',
+        isInfo: hasClass('icon-info'),
+        isWarning: hasClass('icon-warn'),
+        isError: hasClass('icon-error')
       },
       message: text('.message')
     }

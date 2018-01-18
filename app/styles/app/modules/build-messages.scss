@@ -1,0 +1,48 @@
+.yml-messages {
+  @include travisBorder;
+
+  // FIXME where does this come from?
+  margin-top: 1.2em;
+
+  font-size: 16px;
+
+  .yml-message {
+    display: flex;
+    align-items: flex-start;
+
+    padding: 10px;
+
+    svg {
+      width: 18px;
+      padding-top: 4px;
+
+      &:after {
+        content: ' ';
+        border-right: 1px solid #aaa;
+      }
+    }
+
+    .icon-info {
+      @include colorSVG($oxide-blue);
+
+      circlex {
+        @include colorSVGFill($oxide-blue);
+      }
+    }
+
+    .icon-warning {
+      @include colorSVG($canary-yellow);
+
+      color: inherit;
+    }
+
+    .icon-error {
+      @include colorSVG($brick-red);
+    }
+
+    code {
+      // FIXME does this exist anywhere?
+      background-color: #eef0f4;
+    }
+  }
+}

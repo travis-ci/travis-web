@@ -41,7 +41,7 @@ export default Component.extend({
 
   @computed('message.level')
   iconClass(level) {
-    return `icon ${level}`;
+    return `icon icon-${level}`;
   }
 });
 /* eslint-enable max-len */
