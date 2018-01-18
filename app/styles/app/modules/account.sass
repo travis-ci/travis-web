@@ -1,31 +1,47 @@
-.account-name
-  margin: 0
-  font-size: $font-size-sm
-  font-weight: $font-weight-bold
-  width: 180px
-  white-space: nowrap
-  text-overflow: ellipsis
-  overflow: hidden
-  @media #{$medium-up}
-    width: 240px
-   
+// Might use extend to clean up the style repetition once the design is locked in
 
-.account-repo-count,
-.account-token
-  margin: 0
+.user,
+.organization
+  > .org-info
+    > a
+      display: flex
+      flex-direction: row
+      padding: .7rem .5rem
+      > .account-info
+        margin-left: .5rem
+
+
+.user
+  > .org-info
+    > a
+      align-items: flex-start
+
 
 
 .organization
   > .org-info
     > a
       align-items: center
-      display: flex
-      flex-direction: row
-      padding: .7rem .5rem
       &:hover
-        color: $oxide-blue     
+        color: $oxide-blue
       &.active
         background: $pebble-grey
         color: $oxide-blue
-      > .account-info
-        margin-left: .5rem
+
+.account-name
+ margin: 0
+ font-size: $font-size-sm
+ font-weight: $font-weight-bold
+ width: 180px
+ white-space: nowrap
+ text-overflow: ellipsis
+ overflow: hidden
+ @media #{$medium-up}
+   width: 240px
+
+
+.account-repo-count,
+.account-token
+  margin: 0
+
+
