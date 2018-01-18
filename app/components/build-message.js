@@ -37,6 +37,11 @@ export default Component.extend({
     };
 
     return MSGS[code];
+  },
+
+  @computed('message.level')
+  iconClass(level) {
+    return `icon ${level}`;
   }
 });
 /* eslint-enable max-len */
