@@ -23,7 +23,7 @@ export default function timeInWords(duration) {
     if (result.length > 0) {
       return result.join(' ');
     } else {
-      return '-';
+      return '';
     }
   }
 }
