@@ -25,9 +25,9 @@ test('visiting job-view', function (assert) {
     level: 'info',
     key: 'group',
     code: 'flagged',
-    args: [{
+    args: {
       key: 'group'
-    }]
+    }
   });
 
   server.create('message', {
@@ -35,10 +35,10 @@ test('visiting job-view', function (assert) {
     level: 'warn',
     key: 'language',
     code: 'unknown_default',
-    args: [{
+    args: {
       value: '__garnet__',
       default: 'ruby'
-    }]
+    }
   });
 
   server.create('message', {
@@ -46,10 +46,10 @@ test('visiting job-view', function (assert) {
     level: 'error',
     key: 'root',
     code: 'unknown_key',
-    args: [{
+    args: {
       key: 'filter_secrets',
       value: 'false'
-    }]
+    }
   });
 
   let build = server.create('build', { repository: repo, state: 'passed', commit, branch, request });

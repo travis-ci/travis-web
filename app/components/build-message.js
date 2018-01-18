@@ -3,9 +3,8 @@ import Component from '@ember/component';
 import { computed } from 'ember-decorators/object';
 
 export default Component.extend({
-  @computed('message.code')
-  readableMessage(code) {
-    const args = this.get('message.args.firstObject');
+  @computed('message.code', 'message.args')
+  readableMessage(code, args) {
     const MSGS = {
       alert: 'using a plain string as a secure',
       alias: `${args.alias} is an alias for ${args.value}, using ${args.value}`,
