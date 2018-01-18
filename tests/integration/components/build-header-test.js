@@ -113,7 +113,6 @@ test('if a build is shown, only show elapsed time while running', function (asse
 
   this.set('build', build);
   this.render(hbs`{{build-header item=build}}`);
-  assert.equal(this.$().find('.commit-stopwatch').length, 1, 'displays running time');
   assert.equal(this.$().find('.commit-calendar').length, 0, 'does not display calendar while running');
   assert.equal(this.$().find('.commit-clock').length, 0, 'does not display elapsed time');
 });
@@ -131,6 +130,6 @@ test('if a job is shown, only show elapsed time while running', function (assert
   this.set('job', job);
   this.render(hbs`{{build-header item=job}}`);
   assert.equal(this.$().find('.commit-stopwatch').length, 1, 'does display elapsed time');
-  assert.equal(this.$().find('.commit-stopwatch').text().trim(), 'Running for -', 'Says running for');
+  assert.equal(this.$().find('.commit-stopwatch').text().trim(), 'Running for', 'Says running for');
   assert.equal(this.$().find('.commit-calendar').length, 0, 'does not display calendar while running');
 });
