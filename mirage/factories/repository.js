@@ -5,11 +5,11 @@ export default Mirage.Factory.extend({
   githubLanguage: 'ruby',
   active: true,
 
-  owner: {
+  owner: Object.freeze({
     login: 'travis-ci',
-  },
+  }),
 
-  permissions: {
+  permissions: Object.freeze({
     read: false,
     activate: false,
     deactivate: false,
@@ -19,19 +19,19 @@ export default Mirage.Factory.extend({
     create_cron: false,
     change_settings: false,
     admin: false,
-  },
+  }),
 
-  customSshKey: {
+  customSshKey: Object.freeze({
     description: 'Custom',
     fingerprint: 'dd:cc:bb:aa',
     type: 'custom'
-  },
+  }),
 
-  defaultSshKey: {
+  defaultSshKey: Object.freeze({
     type: 'default',
     fingerprint: 'aa:bb:cc:dd',
     description: 'Default',
-  },
+  }),
 
   slug: function () {
     return `${this.owner.login}/${this.name}`;
