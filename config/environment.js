@@ -40,7 +40,7 @@ module.exports = function (environment) {
       imprint: 'https://docs.travis-ci.com/imprint.html',
       enterprise: 'https://enterprise.travis-ci.com',
       twitter: 'https://twitter.com/travisci',
-      jobs:'https://travisci.workable.com/',
+      jobs: 'https://travisci.workable.com/',
       support: 'mailto:support@travis-ci.com'
     },
     endpoints: {},
