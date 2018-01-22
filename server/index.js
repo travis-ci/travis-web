@@ -1,4 +1,4 @@
-/*jshint node:true*/
+/* jshint node:true*/
 
 // To use it create some files under `mocks/`
 // e.g. `server/mocks/ember-hamsters.js`
@@ -11,7 +11,7 @@
 
 var bodyParser = require('body-parser');
 
-module.exports = function(app) {
+module.exports = function (app) {
   var globSync   = require('glob').sync;
   var mocks      = globSync('./mocks/**/*.js', { cwd: __dirname }).map(require);
   var proxies    = globSync('./proxies/**/*.js', { cwd: __dirname }).map(require);
@@ -21,15 +21,15 @@ module.exports = function(app) {
   app.use(morgan('dev'));
   app.use(bodyParser.urlencoded({ extended: false }));
 
-  mocks.forEach(function(route) { route(app); });
-  proxies.forEach(function(route) { route(app); });
+  mocks.forEach(function (route) { route(app); });
+  proxies.forEach(function (route) { route(app); });
 
   // this is reimplementation of waiter/lib/travis/web/set_token.rb
-  app.use(function(req, res, next) {
+  app.use(function (req, res, next) {
     var token = req.body['token'];
-    if(req.method == 'POST' && token && token.match(/^[a-zA-Z\-_\d]+$/)) {
+    if (req.method == 'POST' && token && token.match(/^[a-zA-Z\-_\d]+$/)) {
       var storage = req.body['storage'];
-      if(storage !== 'localStorage') {
+      if (storage !== 'localStorage') {
         storage = 'sessionStorage';
       }
       var user = JSON.stringify(req.body['user']);
@@ -49,5 +49,4 @@ module.exports = function(app) {
       next();
     }
   });
-
 };
