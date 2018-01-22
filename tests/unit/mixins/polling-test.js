@@ -41,7 +41,7 @@ define('travis/components/polling-test', [], function () {
       this._super.apply(this, arguments);
       return this.set('polling', PollingService.create());
     },
-    pollModels: ['model1', 'model2'],
+    pollModels: Object.freeze(['model1', 'model2']),
     pollHook: function () {
       return hookRuns += 1;
     },
