@@ -1,5 +1,3 @@
-/* jshint node:true*/
-
 // To use it create some files under `mocks/`
 // e.g. `server/mocks/ember-hamsters.js`
 //
