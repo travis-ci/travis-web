@@ -17,6 +17,7 @@
     "test": "ember test --reporter dot"
   },
   "devDependencies": {
+    "@ember-decorators/babel-transforms": "^0.1.1",
     "active-model-adapter": "2.2.0",
     "ansiparse": "0.1.0",
     "babel-eslint": "^8.0.3",
@@ -56,7 +57,7 @@
     "ember-concurrency": "0.8.12",
     "ember-data": "~2.18.0",
     "ember-data-filter": "1.13.0",
-    "ember-decorators": "1.3.4",
+    "ember-decorators": "^1.3.4",
     "ember-disable-proxy-controllers": "^1.0.1",
     "ember-exam": "1.0.0",
     "ember-export-application-global": "2.0.0",
