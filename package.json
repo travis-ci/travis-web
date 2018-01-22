@@ -26,7 +26,7 @@
     "broccoli-merge-trees": "^2.0.0",
     "ember-ajax": "3.0.0",
     "ember-browserify": "^1.1.13",
-    "ember-cli": "~2.17.1",
+    "ember-cli": "~2.18.1",
     "ember-cli-app-version": "^3.0.0",
     "ember-cli-autoprefixer": "^0.8.1",
     "ember-cli-babel": "^6.10.0",
