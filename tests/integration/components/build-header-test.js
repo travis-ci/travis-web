@@ -21,7 +21,10 @@ test('render api build', function (assert) {
     commit: commit,
     repo: repo,
     branch: branch,
-    branchName: 'feature-branch'
+    branchName: 'feature-branch',
+    startedAt: new Date('January 15, 2018 12:28:49'),
+    finishedAt: new Date('January 15, 2018 12:35:49'),
+    isFinished: true,
   };
 
   this.set('build', build);
@@ -35,6 +38,9 @@ test('render api build', function (assert) {
   assert.equal(this.$().find('.commit-branch-url').attr('href'), 'https://github.com/travis-ci/travis-web/tree/feature-branch', 'displays branch url');
   assert.equal(this.$().find('.commit-branch-url span').text().trim(), 'Branch feature-branch', 'displays link to branch');
   assert.ok(this.$().find('.build-title').text().match(/Endless joy/), 'displays commit message');
+  assert.equal(this.$().find('.commit-stopwatch').attr('title'), 'Started January 15, 2018 12:28:49');
+  assert.ok(this.$().find('.commit-calendar').length, 'displays a calendar after the job is passed');
+  assert.equal(this.$().find('.commit-calendar').attr('title'), 'Finished January 15, 2018 12:35:49');
 });
 
 test('render push build', function (assert) {
