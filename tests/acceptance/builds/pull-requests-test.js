@@ -25,7 +25,6 @@ test('renders no pull requests messaging when none present', function (assert) {
 });
 
 test('view and cancel pull requests', function (assert) {
-  server.logging = true;
   const repository = server.create('repository');
 
   const pullRequestBuild = server.create('build', {

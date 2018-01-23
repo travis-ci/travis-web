@@ -11,7 +11,6 @@ function futureTime(secondsAhead) {
 }
 
 test('visiting build with one stage', function (assert) {
-  server.logging = true;
   let repo =  server.create('repository', { slug: 'travis-ci/travis-web' });
 
   let branch = server.create('branch', { name: 'acceptance-tests' });

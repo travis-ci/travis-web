@@ -11,7 +11,6 @@ moduleForAcceptance('Acceptance | auth/first sync', {
 });
 
 test('first sync shows up and redirects to profile page after the sync is finished', function (assert) {
-  server.logging = true;
   visit('/');
   andThen(() => {
     assert.equal(page.heading, 'One more thing');
