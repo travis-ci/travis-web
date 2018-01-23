@@ -42,6 +42,7 @@ before_script:
   - greenkeeper-lockfile-update
 
 script:
+  - npm run lint:js
   - ember exam --reporter dot $RANDOMISE
 
 after_script:

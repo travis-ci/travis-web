@@ -9,7 +9,7 @@ var VALID_DEPLOY_TARGETS = [
   'com-canary'
 ];
 
-module.exports = function(deployTarget) {
+module.exports = function (deployTarget) {
   var ENV = {
     build: {
       environment: 'production'

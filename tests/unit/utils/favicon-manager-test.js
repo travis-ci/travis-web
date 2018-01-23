@@ -3,7 +3,7 @@ import FaviconManager from 'travis/utils/favicon-manager';
 
 var fakeHead, manager;
 
-const { module, test } = QUnit;
+import { module, test } from 'qunit';
 
 module('Favicon manager', {
   beforeEach() {

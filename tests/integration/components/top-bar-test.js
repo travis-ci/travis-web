@@ -15,11 +15,11 @@ test("it shows 'There are no broadcasts message' if there're no broadcasts", fun
   // which I don't want to do at this point
   stubService(this, 'auth', Service.extend({
     signedIn: 'true',
-    currentUser: {
+    currentUser: Object.freeze({
       name: 'Test User'
-    }
+    })
   }));
-  stubService(this, 'broadcasts', Service.extend({ broadcasts: [] }));
+  stubService(this, 'broadcasts', Service.extend({ broadcasts: Object.freeze([]) }));
   this.render(hbs`{{top-bar}}`);
 
   assert.ok(this.$().text().match(/There are no broadcasts/));

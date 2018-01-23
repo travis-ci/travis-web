@@ -14,7 +14,7 @@ module.exports = function (environment) {
         // e.g. 'with-controller': true
       },
       EXTEND_PROTOTYPES: {
-        // Prevent Ember Data from overriding `Date.parse`.
+        // Prevent Ember Data from overriding Date.parse.
         Date: false
       }
     },
@@ -40,7 +40,7 @@ module.exports = function (environment) {
       imprint: 'https://docs.travis-ci.com/imprint.html',
       enterprise: 'https://enterprise.travis-ci.com',
       twitter: 'https://twitter.com/travisci',
-      jobs:'https://travisci.workable.com/',
+      jobs: 'https://travisci.workable.com/',
       support: 'mailto:support@travis-ci.com'
     },
     endpoints: {},
@@ -148,6 +148,7 @@ module.exports = function (environment) {
     ENV.timing.syncingPageRedirectionTime = 30;
 
     ENV.APP.rootElement = '#ember-testing';
+    ENV.APP.autoboot = false;
 
     ENV.sentry = {
       development: true

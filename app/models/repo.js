@@ -6,7 +6,7 @@ import { A } from '@ember/array';
 import ExpandableRecordArray from 'travis/utils/expandable-record-array';
 import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
-import { belongsTo } from 'ember-data/relationships';
+import { hasMany, belongsTo } from 'ember-data/relationships';
 import { service } from 'ember-decorators/service';
 import { computed } from 'ember-decorators/object';
 import { oneWay } from 'ember-decorators/object/computed';
@@ -36,6 +36,7 @@ const Repo = Model.extend({
   currentBuild: belongsTo('build', {
     async: true, inverse: 'repoCurrentBuild'
   }),
+  _branches: hasMany('branch'),
 
   // TODO: this is a hack, we should remove it once @is_collaborator property is
   // added to a response with the repo
