@@ -24,3 +24,6 @@ public/scripts
 .node_modules.ember-try/
 bower.json.ember-try
 package.json.ember-try
+
+# vs code JavaScript config file
+jsconfig.json

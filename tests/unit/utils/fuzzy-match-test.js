@@ -1,6 +1,6 @@
 import fuzzyMatch from 'travis/utils/fuzzy-match';
 
-const { module, test } = QUnit;
+import { module, test } from 'qunit';
 
 module('fuzzyMatch');
 

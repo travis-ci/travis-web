@@ -1,15 +1,15 @@
-import Ember from 'ember';
 import { Serializer } from 'ember-cli-mirage';
+import { copy } from '@ember/object/internals';
 
 export default Serializer.extend({
   serialize(object) {
-    const user = Ember.copy(object.attrs);
+    const user = copy(object.attrs);
     user['@type'] = 'user';
 
     user.repositories = object._schema.repositories.where(repo => {
       return repo.slug.indexOf(user.login) === 0;
     }).models.map(repo => {
-      const data = Ember.copy(repo.attrs);
+      const data = copy(repo.attrs);
 
       const defaultBranch = repo.branches.models.filterBy('default_branch', true)[0];
 

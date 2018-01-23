@@ -1,8 +1,8 @@
 /* global server */
-import Ember from 'ember';
 import Mirage from 'ember-cli-mirage';
 import config from 'travis/config/environment';
 import fuzzysort from 'npm:fuzzysort';
+import { merge } from '@ember/polyfills';
 
 const { apiEndpoint } = config;
 
@@ -36,7 +36,7 @@ export default function () {
   });
 
   this.get('/accounts', (schema/* , request*/) => {
-    const users = schema.users.all().models.map(user => Ember.merge(user.attrs, { type: 'user' }));
+    const users = schema.users.all().models.map(user => merge(user.attrs, { type: 'user' }));
     const accounts = schema.accounts.all().models.map(account => account.attrs);
 
     return { accounts: users.concat(accounts) };

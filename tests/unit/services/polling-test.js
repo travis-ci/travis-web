@@ -3,7 +3,7 @@ import { run } from '@ember/runloop';
 import Polling from 'travis/services/polling';
 import config from 'travis/config/environment';
 
-const { module, test } = QUnit;
+import { module, test } from 'qunit';
 
 let service;
 

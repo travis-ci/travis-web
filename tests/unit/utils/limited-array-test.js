@@ -1,6 +1,6 @@
 import LimitedArray from 'travis/utils/limited-array';
 
-const { module, test } = QUnit;
+import { module, test } from 'qunit';
 
 module('LimitedArray');
 
