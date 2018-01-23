@@ -61,7 +61,7 @@ test('it sideloads included resources', function (assert) {
   const registryWithInclusion = new SerializerRegistry(this.schema, {
     application: V2Serializer,
     author: V2Serializer.extend({
-      include: ['books']
+      include: Object.freeze(['books'])
     })
   });
 

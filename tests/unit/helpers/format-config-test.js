@@ -1,6 +1,6 @@
 import { safeFormatConfig } from 'travis/helpers/format-config';
 
-const { module, test } = QUnit;
+import { module, test } from 'qunit';
 
 module('Unit | Helper | format config');
 

@@ -1,6 +1,6 @@
 import eventually from 'travis/utils/eventually';
 
-const { module, test } = QUnit;
+import { module, test } from 'qunit';
 
 module('eventually');
 
