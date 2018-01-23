@@ -43,6 +43,14 @@ export default Component.extend({
     return htmlSafe(this[code](args));
   },
 
+  alias(args) {
+    return `<code>${args.alias}</code> is an alias for <code>${args.value}</code>, using <code>${args.value}</code>`;
+  },
+
+  default(args) {
+    return `missing <code>${args.key}</code>, defaulting to: <code>${args.default}</code>`;
+  },
+
   flagged(args) {
     return `your repository must be feature flagged for <code>${args.key}</code> to be used`;
   },
