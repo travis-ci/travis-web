@@ -16,5 +16,5 @@ test('it translates durations in seconds to abbreviated words', function (assert
 
   assert.equal(timeInWords(86400 + 1), 'more than 24 hrs', 'expected a duration longer than a day to be truncated');
 
-  assert.equal(timeInWords(-1), '-', 'expected an invalid duration to return just a hyphen');
+  assert.equal(timeInWords(-1), '-', 'expected an invalid duration to return an empty string');
 });

@@ -123,11 +123,12 @@
           {{/if}}
         </span>
       </li>
-    {{else}}
+    {{else if item.startedAt}}
       <li title="Started {{pretty-date item.startedAt}}" class="commit-stopwatch">
         {{svg-jar 'icon-stopwatch' class="icon--m"}}
         <span class="label-align">
-          {{if item.isFinished 'Ran for' 'Running for'}} <time datetime="PT{{elapsedTime}}S">{{format-duration elapsedTime}}</time>
+          {{if item.isFinished 'Ran for' 'Running for'}} 
+          <time datetime="PT{{elapsedTime}}S" class="commit-stopwatch">{{format-duration elapsedTime}}</time>
         </span>
       </li>
     {{/if}}

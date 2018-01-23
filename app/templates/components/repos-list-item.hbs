@@ -19,13 +19,17 @@
     {{/if}}
   {{/if}}
 
+
   <p>
     {{svg-jar 'icon-clock' class="icon"}}
     <span class="label-align">Duration:
+      {{#if repo.currentBuild.duration}}
        <time class="duration" datetime="PT{{repo.currentBuild.duration}}S" title="Started {{pretty-date repo.currentBuild.startedAt}}">{{format-duration repo.currentBuild.duration}}</time>
+       {{else}}
+       <time class="duration">-</time>
+      {{/if}}
     </span>
   </p>
-
   {{#if repo.currentBuild.isFinished}}
     <p>
       {{svg-jar 'icon-calendar' class="icon"}}
