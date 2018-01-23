@@ -9,7 +9,7 @@ import config from 'travis/config/environment';
 
 moduleForAcceptance('Acceptance | job/basic layout');
 
-test('visiting job-view', function (assert) {
+test('visiting job-view with config messages', function (assert) {
   // FIXME why is this here?
   // assert.expect(9);
 
@@ -95,6 +95,8 @@ test('visiting job-view', function (assert) {
     assert.notOk(jobPage.hasTruncatedLog);
     assert.equal(jobPage.rawLogUrl, `https://api.travis-ci.org/v3/job/${job.id}/log.txt`);
   });
+
+  percySnapshot(assert);
 });
 
 test('visiting a job with a truncated log', function (assert) {
