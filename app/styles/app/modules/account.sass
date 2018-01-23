@@ -1,47 +1,26 @@
-// Might use extend to clean up the style repetition once the design is locked in
-
-// class belongs to wrapping <li>
-.account
-  // display: flex
-
-
 .org-info
-  // border: 1px solid blue
   display: flex
-  flex-direction: row
-  // only specifying the left padding here 
-  // if we use padding for the whole anchor element 
-  // instead of using margin for the account-info span on the right
-  // it compresses the avatar and makes it smaller
+  width: 100%
+  flex-flow: row nowrap
   padding: .5rem .3rem
-  &:hover
-    color: #3eaaaf
-  &.active
-    background: rgba(181, 214, 217, 0.15)
-    color: #3eaaaf
-    border-radius: 4px
-    > .account-avatar
-      border: 2px solid #3eaaaf
-      > .avatar .real-avatar
-        // background-color: transparent
+  justify-content: center
   > .account-info
     margin-left: 1rem
   > .account-avatar
     border-radius: 50%
-  
-    
-
-
-.user
-  > .org-info
-    align-items: flex-start
-
-
-
-.organization
-  > .org-info
-    align-items: center
-    
+    border: 2px solid transparent
+  &:hover
+    color: $oxide-blue
+  &.active
+    background: rgba(181, 214, 217, 0.15)
+    color: $oxide-blue
+    border-radius: 4px
+    > .account-avatar
+      border: 2px solid $oxide-blue
+  .user &
+   align-items: flex-start
+  .organization &
+   align-items: center
 
 .account-name
  margin: 0
