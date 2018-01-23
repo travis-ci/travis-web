@@ -1,7 +1,7 @@
 import EmberObject from '@ember/object';
 import limit from 'travis/utils/computed-limit';
 
-const { test, module } = QUnit;
+import { module, test } from 'qunit';
 
 module('computed-limit');
 

@@ -5,23 +5,23 @@ module.exports = {
       dependencies: {}
     },
     {
-      name: "release",
+      name: 'release',
       dependencies: {
-        "ember": "release"
+        'ember': 'release'
       }
     },
     {
-      name: "beta",
+      name: 'beta',
       dependencies: {
-        "ember": "beta"
+        'ember': 'beta'
       }
     },
     {
-      name: "canary",
+      name: 'canary',
       dependencies: {
-        "ember": "canary"
+        'ember': 'canary'
       }
     }
   ],
   bowerOptions: ['--quiet'],
-}
+};
