@@ -44,7 +44,7 @@ export default Component.extend({
   },
 
   alias(args) {
-    return `<code>${args.alias}</code> is an alias for <code>${args.value}</code>, using <code>${args.value}</code>`;
+    return `<code>${args.alias}</code> is an alias for <code>${args.actual}</code>, using <code>${args.actual}</code>`;
   },
 
   default(args) {
