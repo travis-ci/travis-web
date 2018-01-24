@@ -61,7 +61,7 @@
     "ember-disable-proxy-controllers": "^1.0.1",
     "ember-exam": "1.0.0",
     "ember-export-application-global": "2.0.0",
-    "ember-feature-flags": "3.0.1",
+    "ember-feature-flags": "4.0.0",
     "ember-fetch": "^3.3.1",
     "ember-inflector": "^2.0.0",
     "ember-keyboard-shortcuts": "^1.0.2",
