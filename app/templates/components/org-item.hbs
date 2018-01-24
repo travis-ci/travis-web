@@ -1,20 +1,31 @@
-{{user-avatar url=account.avatarUrl name=name size=36}}
-
-<div class="org-info">
-  {{#link-to "account" account.login (query-params offset=0)}}
+{{#link-to "account" account.login (query-params offset=0) class="org-info"}} 
+  <span class="account-avatar">
+    {{user-avatar url=account.avatarUrl name=name size=36}}
+  </span>
+  <span class="account-info">
     <h3 class="account-name">{{name}}</h3>
-    {{#if account.reposCount}}<p class="account-repo-count">{{pluralize account.reposCount 'repository'}}</p>{{else}}No repositories{{/if}}
-  {{/link-to}}
-
-  {{#if isUser}}
-    <p class="account-token">Token:
-      {{#if tokenIsVisible}}
-        <strong>{{auth.currentUser.token}}</strong>
-      {{/if}}
-      <a {{action 'tokenVisibility' prevenDefault=true}} class="profile-token-toggle {{if tokenIsVisible 'is-visible'}} dropdown">
-        {{#tooltip-on-element}}{{#if tokenIsVisible}}hide token{{else}}show token{{/if}}{{/tooltip-on-element}}
-        {{svg-jar 'icon-seemore' class="icon icon-seemore"}}
-      </a>
-    </p>
-  {{/if}}
-</div>
+    {{#if account.reposCount}}
+      <p class="account-repo-count">{{pluralize account.reposCount 'repository'}}</p>
+    {{else}}
+      No repositories
+    {{/if}} 
+    {{#if isUser}}
+      <p class="account-token">
+        Token: 
+        {{#if tokenIsVisible}}
+          <strong>{{auth.currentUser.token}}</strong>
+        {{/if}}
+        <a {{action 'tokenVisibility' prevenDefault=true}} class="profile-token-toggle {{if tokenIsVisible 'is-visible'}} dropdown">
+          {{#tooltip-on-element}}
+          {{#if tokenIsVisible}}
+            hide token
+          {{else}}
+            show token
+          {{/if}}
+          {{/tooltip-on-element}} 
+          {{svg-jar 'icon-seemore' class="icon icon-seemore"}}
+        </a>
+      </p>
+    {{/if}}
+  </span>
+{{/link-to}}
