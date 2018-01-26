@@ -22,7 +22,8 @@
   <p>
     {{svg-jar 'icon-clock' class="icon"}}
     <span class="label-align">Duration:
-       <time class="duration" datetime="PT{{repo.currentBuild.duration}}S" title="Started {{pretty-date repo.currentBuild.startedAt}}">{{format-duration repo.currentBuild.duration}}</time>
+       <time class="duration" datetime="PT{{repo.currentBuild.duration}}S"
+       title="{{if repo.currentBuild.duration (concat "Started " (pretty-date repo.currentBuild.startedAt))}}">{{format-duration repo.currentBuild.duration}}</time>
     </span>
   </p>
 
