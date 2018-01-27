@@ -17,7 +17,7 @@
     <div class='action-button-container'>
       <button {{action (perform restart)}} class="action-button--restart" aria-label="Restart {{type}}" type="button">
         {{#if labelless}}{{#tooltip-on-element}}Restart {{type}}{{/tooltip-on-element}}{{/if}}
-        {{svg-jar 'icon-restart' class="icon"}}
+        {{svg-jar 'icon-restart' class="icon" width="15px" height="15px" viewBox="0 0 15 15" preserveAspectRatio="none"}}
         <span class="label-align">Restart {{type}}</span>
       </button>
     </div>
