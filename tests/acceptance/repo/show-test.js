@@ -24,7 +24,6 @@ moduleForAcceptance('Acceptance | show repo page', {
 });
 
 test('loading branches doesnt update the default branch on the repo', function (assert) {
-  server.logging = true;
   page.visit({ organization: 'killjoys', repo: 'living-a-feminist-life' });
   page.openStatusImagePopup();
 

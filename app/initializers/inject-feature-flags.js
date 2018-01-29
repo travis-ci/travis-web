@@ -4,7 +4,10 @@ export function initialize(app) {
   let serviceName = config.featureFlagsService || 'features';
   let serviceLookupName = `service:${serviceName}`;
   app.inject('adapter', serviceName, serviceLookupName);
+  app.inject('component', serviceName, serviceLookupName);
+  app.inject('controller', serviceName, serviceLookupName);
   app.inject('model', serviceName, serviceLookupName);
+  app.inject('route', serviceName, serviceLookupName);
   if (config.environment === 'development') {
     // eslint-disable-next-line
     console.log('EMBER FEATURE FLAGS were auto-injected into all: routes, controllers, components, adapters and models');
