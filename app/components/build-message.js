@@ -34,7 +34,7 @@ export default Component.extend({
   },
 
   edge(args) {
-    return `<code>${escape(args.key)}</code> is experimental and might be removed in the future`;
+    return `<code>${escape(args.given)}</code> is experimental and might be removed in the future`;
   },
 
   flagged(args) {
