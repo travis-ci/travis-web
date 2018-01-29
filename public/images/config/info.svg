@@ -7,7 +7,7 @@
 	.st1{fill:none;stroke:#3EAAAF;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
 </style>
 <line class="st0" x1="9.4" y1="12.8" x2="9.4" y2="8.7"/>
-<line class="st1" x1="9.4" y1="5.4" x2="9.4" y2="5.4"/>
+<path class="st1" d="M9.401 5.4 L9.4 5.399"></path>
 <g id="icon-nodata_2_">
 	<circle class="st0" cx="9.4" cy="8.6" r="7"/>
 </g>
