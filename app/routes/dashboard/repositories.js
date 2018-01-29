@@ -3,11 +3,13 @@ import TravisRoute from 'travis/routes/basic';
 import dashboardRepositoriesSort from 'travis/utils/dashboard-repositories-sort';
 
 export default TravisRoute.extend({
+  recordsPerPage: 25,
+
   queryParams: {
     filter: {
       replace: true
     },
-    offset: {
+    page: {
       refreshModel: true
     }
   },
@@ -19,6 +21,7 @@ export default TravisRoute.extend({
   },
 
   model(params) {
+    const offset = (params.page - 1) * this.get('recordsPerPage');
     return hash({
       starredRepos: this.store.filter('repo', {
         active: true,
@@ -28,7 +31,7 @@ export default TravisRoute.extend({
       repos: this.store.paginated('repo', {
         active: true,
         sort_by: 'current_build:desc',
-        offset: params.offset
+        offset,
       }, {
         filter: (repo) => repo.get('active') && repo.get('isCurrentUserACollaborator'),
         sort: dashboardRepositoriesSort,

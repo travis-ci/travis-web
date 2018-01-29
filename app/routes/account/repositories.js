@@ -1,8 +1,10 @@
 import TravisRoute from 'travis/routes/basic';
 
 export default TravisRoute.extend({
+  recordsPerPage: 25,
+
   queryParams: {
-    offset: {
+    page: {
       refreshModel: true
     }
   },
@@ -11,10 +13,12 @@ export default TravisRoute.extend({
     const account = this.modelFor('account');
     // account is an Ember-Data model
     if (!account.error) {
+      // TODO: Make perPage property configurable
+      const offset = (params.page - 1) * this.get('recordsPerPage');
       return this.store.paginated(
         'repo',
         {
-          offset: params.offset,
+          offset,
           sort_by: 'name',
           limit: 25,
           custom: {
