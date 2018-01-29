@@ -65,7 +65,7 @@
     </div>
   </div>
   <div class="row-item row-calendar">
-    <div title="{{if build.finishedAt (concat "Finished " (pretty-date build.formattedFinishedAt))}}">
+    <div title={{conditional-time build.finishedAt "Finished" build.formattedFinishedAt}}>
       {{svg-jar 'icon-calendar' class="icon"}}
       <time class="label-align" datetime={{build.finishedAt}}>{{format-time build.finishedAt}}</time>
     </div>
