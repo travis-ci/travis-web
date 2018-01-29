@@ -10,8 +10,6 @@ let ObjectPromiseProxy = ObjectProxy.extend(PromiseProxyMixin);
 export default Component.extend({
   @service store: null,
 
-  classNames: ['yml-messages'],
-
   @computed('repo.id', 'build.request.id')
   messages(repoId, requestId) {
     const urlRoot = this.get('store').adapterFor('v3').buildURL('repo', repoId);

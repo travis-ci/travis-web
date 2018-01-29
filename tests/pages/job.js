@@ -28,6 +28,8 @@ export default PageObject.create({
   ymlMessages: collection({
     itemScope: '.yml-message',
 
+    isVisible: isVisible('.yml-messages'),
+
     item: {
       icon: {
         scope: 'svg',

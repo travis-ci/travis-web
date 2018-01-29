@@ -74,6 +74,7 @@ test('visiting job-view with config messages', function (assert) {
     assert.equal(jobPage.state, '#1234.1 passed', 'displays build number');
     assert.equal(jobPage.author, 'Mr T authored and committed');
 
+    assert.ok(jobPage.ymlMessages().isVisible, 'expected the messages to be visible');
     assert.equal(jobPage.ymlMessages().count, 3, 'expected three yml messages');
 
     jobPage.ymlMessages(0).as(info => {
@@ -123,6 +124,7 @@ test('visiting a job with a truncated log', function (assert) {
 
   andThen(function () {
     assert.ok(jobPage.hasTruncatedLog);
+    assert.notOk(jobPage.ymlMessages().isVisible, 'expected no yml messages container');
   });
 });
 
