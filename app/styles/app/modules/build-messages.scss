@@ -1,3 +1,5 @@
+$icon-margin-top: 5px;
+
 .yml-messages {
   @include travisBorder;
 
@@ -14,23 +16,19 @@
 
     svg {
       width: 18px;
-      padding-top: 4px;
-
-      &:after {
-        content: ' ';
-        border-right: 1px solid #aaa;
-      }
+      transform: scale(1.2);
+      margin-top: $icon-margin-top;
     }
 
     .icon-info {
-      @include colorSVG($oxide-blue);
+      @include colorSVGFull($oxide-blue, $oxide-blue);
 
-      circlex {
-        @include colorSVGFill($oxide-blue);
+      circle {
+        fill: none;
       }
     }
 
-    .icon-warning {
+    .icon-warn {
       @include colorSVG($canary-yellow);
 
       color: inherit;
@@ -38,12 +36,22 @@
 
     .icon-error {
       @include colorSVG($brick-red);
+      margin-top: $icon-margin-top - 1px;
+    }
+
+    .message {
+      padding-left: 10px;
+      border-left: 1px solid $dry-cement;
+      margin-left: 5px;
     }
 
     code {
       // FIXME does this exist anywhere?
       background-color: #eef0f4;
       font-family: $font-family-monospace;
+      font-size: 14px;
+      padding: 2px;
+      border-radius: 2px;
     }
   }
 }
