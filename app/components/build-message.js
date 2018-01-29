@@ -29,6 +29,10 @@ export default Component.extend({
     return `missing <code>${escape(args.key)}</code>, defaulting to: <code>${escape(args.default)}</code>`;
   },
 
+  deprecated(args) {
+    return `<code>${escape(args.key)}</code> is deprecated`;
+  },
+
   downcase(args) {
     return `downcasing <code>${escape(args.value)}</code>`;
   },
