@@ -9,7 +9,55 @@ import config from 'travis/config/environment';
 
 moduleForAcceptance('Acceptance | job/basic layout');
 
-test('visiting job-view with config messages', function (assert) {
+test('visiting job-view', function (assert) {
+  let repo = server.create('repository', { slug: 'travis-ci/travis-web' }),
+    branch = server.create('branch', { name: 'acceptance-tests' });
+
+  let  gitUser = server.create('git-user', { name: 'Mr T' });
+  let commit = server.create('commit', { author: gitUser, committer: gitUser, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
+
+  let request = server.create('request');
+  server.create('message', {
+    request,
+    level: 'info',
+    key: 'group',
+    code: 'flagged',
+    args: {
+      given: 'group'
+    }
+  });
+
+  let build = server.create('build', { repository: repo, state: 'passed', commit, branch, request });
+  let job = server.create('job', { number: '1234.1', repository: repo, state: 'passed', build, commit });
+  commit.job = job;
+
+  job.save();
+  commit.save();
+
+  server.create('log', { id: job.id });
+
+  visit('/travis-ci/travis-web/jobs/' + job.id);
+  waitForElement('#log > .log-line');
+
+  andThen(() => {
+    assert.equal(document.title, 'Job #1234.1 - travis-ci/travis-web - Travis CI');
+
+    assert.equal($('head link[rel=icon]').attr('href'), getFaviconUri('green'), 'expected the favicon data URI to match the one for passing');
+
+    assert.equal(jobPage.branch, 'acceptance-tests', 'displays the branch');
+    assert.equal(jobPage.message, 'acceptance-tests This is a message', 'displays message');
+    assert.equal(jobPage.state, '#1234.1 passed', 'displays build number');
+    assert.equal(jobPage.author, 'Mr T authored and committed');
+
+    assert.notOk(jobPage.ymlMessages().isVisible, 'expected no yml messages container');
+
+    assert.equal(jobPage.log, 'Hello log');
+    assert.notOk(jobPage.hasTruncatedLog);
+    assert.equal(jobPage.rawLogUrl, `https://api.travis-ci.org/v3/job/${job.id}/log.txt`);
+  });
+});
+
+test('visiting single-job build shows config messages', function (assert) {
   let repo = server.create('repository', { slug: 'travis-ci/travis-web' }),
     branch = server.create('branch', { name: 'acceptance-tests' });
 
@@ -58,19 +106,10 @@ test('visiting job-view with config messages', function (assert) {
 
   server.create('log', { id: job.id });
 
-  visit('/travis-ci/travis-web/jobs/' + job.id);
+  visit('/travis-ci/travis-web/builds/' + build.id);
   waitForElement('#log > .log-line');
 
   andThen(() => {
-    assert.equal(document.title, 'Job #1234.1 - travis-ci/travis-web - Travis CI');
-
-    assert.equal($('head link[rel=icon]').attr('href'), getFaviconUri('green'), 'expected the favicon data URI to match the one for passing');
-
-    assert.equal(jobPage.branch, 'acceptance-tests', 'displays the branch');
-    assert.equal(jobPage.message, 'acceptance-tests This is a message', 'displays message');
-    assert.equal(jobPage.state, '#1234.1 passed', 'displays build number');
-    assert.equal(jobPage.author, 'Mr T authored and committed');
-
     assert.ok(jobPage.ymlMessages().isVisible, 'expected the messages to be visible');
     assert.equal(jobPage.ymlMessages().count, 3, 'expected three yml messages');
 
@@ -88,10 +127,6 @@ test('visiting job-view with config messages', function (assert) {
       assert.ok(error.icon.isError, 'expected the third yml message to be an error');
       assert.equal(error.message, 'dropping unknown key filter_secrets (false)');
     });
-
-    assert.equal(jobPage.log, 'Hello log');
-    assert.notOk(jobPage.hasTruncatedLog);
-    assert.equal(jobPage.rawLogUrl, `https://api.travis-ci.org/v3/job/${job.id}/log.txt`);
   });
 
   percySnapshot(assert);
