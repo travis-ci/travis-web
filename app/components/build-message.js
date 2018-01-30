@@ -128,6 +128,15 @@ export default Component.extend({
   @computed('message.level')
   iconClass(level) {
     return `icon icon-${level}`;
+  },
+
+  @computed('message.level')
+  tooltipText(level) {
+    return {
+      info: 'information',
+      warn: 'warning',
+      error: 'error'
+    }[level];
   }
 });
 /* eslint-enable max-len */

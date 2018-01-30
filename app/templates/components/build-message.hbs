@@ -1,4 +1,8 @@
 <div class='yml-message'>
-  {{svg-jar message.level class=iconClass}}
+  <div class='tooltip-wrapper'>
+    {{svg-jar message.level class=iconClass}}
+    {{tooltip-on-element text=tooltipText}}
+  </div>
+
   <div class='message'>{{readableMessage}}</div>
 </div>

@@ -1,5 +1,3 @@
-$icon-margin-top: 5px;
-
 .yml-messages {
   @include travisBorder;
 
@@ -17,7 +15,6 @@ $icon-margin-top: 5px;
     svg {
       width: 18px;
       transform: scale(1.2);
-      margin-top: $icon-margin-top;
     }
 
     .icon-info {
@@ -36,7 +33,6 @@ $icon-margin-top: 5px;
 
     .icon-error {
       @include colorSVG($brick-red);
-      margin-top: $icon-margin-top - 1px;
     }
 
     .message {
