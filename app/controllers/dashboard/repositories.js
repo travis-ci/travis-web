@@ -6,8 +6,7 @@ import { computed } from 'ember-decorators/object';
 import dashboardRepositoriesSort from 'travis/utils/dashboard-repositories-sort';
 
 export default Controller.extend({
-  queryParams: ['account', 'offset'],
-  offset: 0,
+  page: 1,
 
   @service flashes: null,
   @service api: null,

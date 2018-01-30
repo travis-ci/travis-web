@@ -1,13 +1,16 @@
 import { hash } from 'rsvp';
 import TravisRoute from 'travis/routes/basic';
 import dashboardRepositoriesSort from 'travis/utils/dashboard-repositories-sort';
+// eslint-disable-next-line
+import config from 'travis/config/environment';
+import { alias } from 'ember-decorators/object/computed';
 
 export default TravisRoute.extend({
   queryParams: {
     filter: {
       replace: true
     },
-    offset: {
+    page: {
       refreshModel: true
     }
   },
@@ -18,7 +21,10 @@ export default TravisRoute.extend({
     }
   },
 
+  @alias('config.pagination.dashboardReposPerPage') recordsPerPage: null,
+
   model(params) {
+    const offset = (params.page - 1) * this.get('recordsPerPage');
     return hash({
       starredRepos: this.store.filter('repo', {
         active: true,
@@ -28,7 +34,8 @@ export default TravisRoute.extend({
       repos: this.store.paginated('repo', {
         active: true,
         sort_by: 'current_build:desc',
-        offset: params.offset
+        offset,
+        limit: this.get('recordsPerPage'),
       }, {
         filter: (repo) => repo.get('active') && repo.get('isCurrentUserACollaborator'),
         sort: dashboardRepositoriesSort,
