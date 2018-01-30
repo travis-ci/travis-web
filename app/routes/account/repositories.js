@@ -1,13 +1,15 @@
 import TravisRoute from 'travis/routes/basic';
+import config from 'travis/config/environment';
+import { alias } from 'ember-decorators/object/computed';
 
 export default TravisRoute.extend({
-  recordsPerPage: 25,
-
   queryParams: {
     page: {
       refreshModel: true
     }
   },
+
+  @alias('config.pagination.profileReposPerPage') recordsPerPage: null,
 
   model(params) {
     const account = this.modelFor('account');
@@ -20,7 +22,7 @@ export default TravisRoute.extend({
         {
           offset,
           sort_by: 'name',
-          limit: 25,
+          limit: this.get('recordsPerPage'),
           custom: {
             owner: account.get('login'),
             type: 'byOwner',

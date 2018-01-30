@@ -9,7 +9,6 @@ export default Component.extend({
 
   @computed('pagination.{currentPage,isFirst}')
   prevPageNumber(page, isFirst) {
-    console.log({page});
     if (!isFirst) {
       return page - 1;
     }

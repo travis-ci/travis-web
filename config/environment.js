@@ -72,6 +72,11 @@ module.exports = function (environment) {
     'enterprise-version': !!process.env.TRAVIS_ENTERPRISE || false
   };
 
+  ENV.pagination = {
+    dashboardReposPerPage: 100,
+    profileReposPerPage: 25,
+  };
+
   ENV.sentry = {
     dsn: 'https://e775f26d043843bdb7ae391dc0f2487a@app.getsentry.com/75334',
     whitelistUrls: [

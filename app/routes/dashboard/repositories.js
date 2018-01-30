@@ -1,10 +1,10 @@
 import { hash } from 'rsvp';
 import TravisRoute from 'travis/routes/basic';
 import dashboardRepositoriesSort from 'travis/utils/dashboard-repositories-sort';
+import config from 'travis/config/environment';
+import { alias } from 'ember-decorators/object/computed';
 
 export default TravisRoute.extend({
-  recordsPerPage: 100,
-
   queryParams: {
     filter: {
       replace: true
@@ -19,6 +19,8 @@ export default TravisRoute.extend({
       return this.transitionTo('index');
     }
   },
+
+  @alias('config.pagination.dashboardReposPerPage') recordsPerPage: null,
 
   model(params) {
     const offset = (params.page - 1) * this.get('recordsPerPage');
