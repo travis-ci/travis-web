@@ -72,6 +72,11 @@ module.exports = function (environment) {
     'enterprise-version': !!process.env.TRAVIS_ENTERPRISE || false
   };
 
+  ENV.pagination = {
+    dashboardReposPerPage: 100,
+    profileReposPerPage: 25,
+  };
+
   ENV.sentry = {
     dsn: 'https://e775f26d043843bdb7ae391dc0f2487a@app.getsentry.com/75334',
     whitelistUrls: [
@@ -146,6 +151,8 @@ module.exports = function (environment) {
     ENV.intervals.fetchRecordsForPusherUpdatesThrottle = 0;
     ENV.intervals.syncingPolling = 10;
     ENV.timing.syncingPageRedirectionTime = 30;
+
+    ENV.pagination.dashboardReposPerPage = 10;
 
     ENV.APP.rootElement = '#ember-testing';
     ENV.APP.autoboot = false;
