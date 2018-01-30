@@ -152,6 +152,8 @@ module.exports = function (environment) {
     ENV.intervals.syncingPolling = 10;
     ENV.timing.syncingPageRedirectionTime = 30;
 
+    ENV.pagination.dashboardReposPerPage = 10;
+
     ENV.APP.rootElement = '#ember-testing';
     ENV.APP.autoboot = false;
 
