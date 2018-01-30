@@ -10,6 +10,7 @@
       <p class="notice-banner--red">Sorry, we're having troubles fetching jobs. Please try again later.</p>
     {{else}}
       {{#if build.isMatrix}}
+        {{build-messages-list repo=repo build=build}}
         {{#if jobsLoaded}}
           {{#if build.stages}}
             <p class="notice-banner--yellow spaced">
@@ -32,6 +33,7 @@
         {{/if}}
       {{else}}
         {{job-infrastructure-notification job=job}}
+        {{build-messages-list repo=repo build=job.build}}
         {{job-tabs job=job repo=repo}}
         {{job-log job=job}}
       {{/if}}
