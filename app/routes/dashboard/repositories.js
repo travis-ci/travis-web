@@ -3,7 +3,7 @@ import TravisRoute from 'travis/routes/basic';
 import dashboardRepositoriesSort from 'travis/utils/dashboard-repositories-sort';
 
 export default TravisRoute.extend({
-  recordsPerPage: 25,
+  recordsPerPage: 100,
 
   queryParams: {
     filter: {
@@ -32,6 +32,7 @@ export default TravisRoute.extend({
         active: true,
         sort_by: 'current_build:desc',
         offset,
+        limit: this.get('recordsPerPage'),
       }, {
         filter: (repo) => repo.get('active') && repo.get('isCurrentUserACollaborator'),
         sort: dashboardRepositoriesSort,
