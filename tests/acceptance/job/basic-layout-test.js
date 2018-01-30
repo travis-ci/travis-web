@@ -26,7 +26,7 @@ test('visiting job-view with config messages', function (assert) {
     key: 'group',
     code: 'flagged',
     args: {
-      key: 'group'
+      given: 'group'
     }
   });
 

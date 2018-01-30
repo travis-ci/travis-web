@@ -42,7 +42,7 @@ export default Component.extend({
   },
 
   flagged(args) {
-    return `your repository must be feature flagged for <code>${escape(args.key)}</code> to be used`;
+    return `your repository must be feature flagged for <code>${escape(args.given)}</code> to be used`;
   },
 
   irrelevant(args) {
