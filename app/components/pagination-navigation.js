@@ -77,7 +77,7 @@ export default Component.extend({
         }
       }
 
-      // ... devider unit
+      // ... divider unit
       if (lowerInnerBoundary - pageArray.length > outerWindow) {
         pageArray.push({});
       }
