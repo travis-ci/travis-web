@@ -7,6 +7,23 @@ export default Component.extend({
   classNames: ['pagination-navigation'],
   @alias('collection.pagination') pagination: null,
 
+  @computed('pagination.{currentPage,isFirst}')
+  prevPageNumber(page, isFirst) {
+    console.log({page});
+    if (!isFirst) {
+      return page - 1;
+    }
+    return undefined;
+  },
+
+  @computed('pagination.{currentPage,isLast}')
+  nextPageNumber(page, isLast) {
+    if (!isLast) {
+      return page + 1;
+    }
+    return undefined;
+  },
+
   @computed('outer')
   outerWindow(outer) {
     return outer || 1;

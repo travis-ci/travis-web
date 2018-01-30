@@ -1,8 +1,8 @@
 {{#if showPagination}}
   <ul role="navigation">
-    {{#unless pagination.isFirst}}
-      <li>{{#link-to route (query-params page=pagination.prev.num) rel="prev" class="pagination-button" title="Go to previous page"}}prev{{/link-to}}</li>
-    {{/unless}}
+    {{#if prevPageNumber}}
+      <li>{{#link-to route (query-params page=prevPageNumber) rel="prev" class="pagination-button" title="Go to previous page"}}prev{{/link-to}}</li>
+    {{/if}}
 
     {{#each pages as |page|}}
       <li>
@@ -14,8 +14,8 @@
       </li>
     {{/each}}
 
-    {{#unless pagination.isLast}}
-      <li>{{#link-to route (query-params page=pagination.next.num) rel="next" class="pagination-button" title="Go to next page"}}next{{/link-to}}</li>
-    {{/unless}}
+    {{#if nextPageNumber}}
+      <li>{{#link-to route (query-params page=nextPageNumber) rel="next" class="pagination-button" title="Go to next page"}}next{{/link-to}}</li>
+    {{/if}}
   </ul>
 {{/if}}
