@@ -10,9 +10,6 @@ import config from 'travis/config/environment';
 moduleForAcceptance('Acceptance | job/basic layout');
 
 test('visiting job-view with config messages', function (assert) {
-  // FIXME why is this here?
-  // assert.expect(9);
-
   let repo = server.create('repository', { slug: 'travis-ci/travis-web' }),
     branch = server.create('branch', { name: 'acceptance-tests' });
 
