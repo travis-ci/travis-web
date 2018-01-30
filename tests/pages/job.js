@@ -10,6 +10,8 @@ let {
   attribute
 } = PageObject;
 
+import ymlMessages from './yml-messages';
+
 export default PageObject.create({
   visit: visitable('travis-ci/travis-web/jobs/1'),
 
@@ -25,21 +27,7 @@ export default PageObject.create({
 
   toggleLog: clickable('.toggle-log-button'),
 
-  ymlMessages: collection({
-    itemScope: '.yml-message',
-
-    isVisible: isVisible('.yml-messages'),
-
-    item: {
-      icon: {
-        scope: 'svg',
-        isInfo: hasClass('icon-info'),
-        isWarning: hasClass('icon-warn'),
-        isError: hasClass('icon-error')
-      },
-      message: text('.message')
-    }
-  }),
+  ymlMessages,
 
   logLines: collection({
     scope: 'pre#log',
