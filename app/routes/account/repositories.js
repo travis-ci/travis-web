@@ -1,4 +1,5 @@
 import TravisRoute from 'travis/routes/basic';
+// eslint-disable-next-line
 import config from 'travis/config/environment';
 import { alias } from 'ember-decorators/object/computed';
 

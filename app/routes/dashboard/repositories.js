@@ -1,6 +1,7 @@
 import { hash } from 'rsvp';
 import TravisRoute from 'travis/routes/basic';
 import dashboardRepositoriesSort from 'travis/utils/dashboard-repositories-sort';
+// eslint-disable-next-line
 import config from 'travis/config/environment';
 import { alias } from 'ember-decorators/object/computed';
 
