@@ -9,7 +9,7 @@ import { computed } from 'ember-decorators/object';
 import { alias } from 'ember-decorators/object/computed';
 import { service } from 'ember-decorators/service';
 
-import URLPolyfill from 'npm:url-polyfill';
+import URLPolyfill from 'npm:whatwg-url';
 
 export default Service.extend({
   @service router: null,
