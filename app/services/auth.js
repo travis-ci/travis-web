@@ -9,6 +9,8 @@ import { computed } from 'ember-decorators/object';
 import { alias } from 'ember-decorators/object/computed';
 import { service } from 'ember-decorators/service';
 
+import URL from 'npm:url-polyfill';
+
 export default Service.extend({
   @service router: null,
   @service flashes: null,

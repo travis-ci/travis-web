@@ -91,6 +91,7 @@
     "lodash.intersection": "4.4.0",
     "lodash.pickby": "4.6.0",
     "timeago": "^1.6.1",
+    "url-polyfill": "^1.0.11",
     "visibilityjs": "^1.2.6",
     "yamljs": "^0.3.0"
   },
