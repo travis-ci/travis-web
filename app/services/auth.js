@@ -9,7 +9,7 @@ import { computed } from 'ember-decorators/object';
 import { alias } from 'ember-decorators/object/computed';
 import { service } from 'ember-decorators/service';
 
-import URL from 'npm:url-polyfill';
+import URLPolyfill from 'npm:url-polyfill';
 
 export default Service.extend({
   @service router: null,
@@ -56,7 +56,7 @@ export default Service.extend({
       this.set('state', 'signing-in');
 
       let uri = options.redirectUri || window.location.href,
-        url = new URL(uri);
+        url = new URLPolyfill(uri);
 
       if (url.pathname === '/plans') {
         url.pathname = '/';
