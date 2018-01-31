@@ -9,6 +9,8 @@ import { computed } from 'ember-decorators/object';
 import { alias } from 'ember-decorators/object/computed';
 import { service } from 'ember-decorators/service';
 
+import URLPolyfill from 'travis/utils/url';
+
 export default Service.extend({
   @service router: null,
   @service flashes: null,
@@ -54,7 +56,7 @@ export default Service.extend({
       this.set('state', 'signing-in');
 
       let uri = options.redirectUri || window.location.href,
-        url = new URL(uri);
+        url = new URLPolyfill(uri);
 
       if (url.pathname === '/plans') {
         url.pathname = '/';
