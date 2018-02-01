@@ -1,6 +1,6 @@
-{{#if messages.messages.length}}
+{{#if messagesRequest.messages.length}}
   <div class='yml-messages'>
-    {{#each messages.messages as |message|}}
+    {{#each messagesRequest.messages as |message|}}
       {{build-message message=message}}
     {{/each}}
   </div>

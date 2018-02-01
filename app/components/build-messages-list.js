@@ -11,7 +11,7 @@ export default Component.extend({
   @service store: null,
 
   @computed('repo.id', 'build.request.id')
-  messages(repoId, requestId) {
+  messagesRequest(repoId, requestId) {
     const urlRoot = this.get('store').adapterFor('v3').buildURL('repo', repoId);
 
     return ObjectPromiseProxy.create({
@@ -19,14 +19,7 @@ export default Component.extend({
         headers: {
           'Travis-API-Version': '3'
         }})
-        .then(response => response.json()).then(response => {
-          // FIXME this is because of an ESLint rule I don’t understand at the moment
-          response.something;
-          // FIXME this nesting is weird, obvs
-          return {
-            messages: response.messages
-          };
-        })
+        .then(response => response.json()).then(response => ({messages: response.messages}))
     });
   }
 });
