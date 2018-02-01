@@ -12,7 +12,7 @@ export default Component.extend({
     if (this[code]) {
       return htmlSafe(this[code](args));
     } else {
-      return `unrecognised message code ${escape(code)}`;
+      return htmlSafe(`unrecognised message code <code>${escape(code)}</code>`);
     }
   },
 
