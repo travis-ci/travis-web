@@ -1035,7 +1035,6 @@ export default {
         "delete_log"
       ]
     },
-    // FIXME is this manually maintained?
     "message":            {
       "@type":            "resource",
       "actions":          { },
