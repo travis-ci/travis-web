@@ -1,7 +1,6 @@
 .yml-messages {
   @include travisBorder;
 
-  // FIXME where does this come from?
   margin-top: 1.2em;
 
   font-size: 16px;
@@ -42,7 +41,6 @@
     }
 
     code {
-      // FIXME does this exist anywhere?
       background-color: #eef0f4;
       font-family: $font-family-monospace;
       font-size: 14px;
