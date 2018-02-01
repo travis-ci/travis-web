@@ -35,6 +35,7 @@ test('visiting build with one stage', function (assert) {
 
   andThen(function () {
     assert.equal(buildPage.stages().count, 1, 'expected one build stage');
+    assert.notOk(buildPage.ymlMessages().isVisible, 'expected no yml messages container');
 
     buildPage.stages(0).as(stage => {
       assert.ok(stage.isPassed);
@@ -44,13 +45,25 @@ test('visiting build with one stage', function (assert) {
   percySnapshot(assert);
 });
 
-test('visiting build with stages', function (assert) {
+test('visiting build with stages and an unknown config message', function (assert) {
   let repo =  server.create('repository', { slug: 'travis-ci/travis-web' });
   server.create('branch', {});
 
   let  gitUser = server.create('git-user', { name: 'Mr T' });
   let commit = server.create('commit', { author: gitUser, committer: gitUser, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
-  let build = server.create('build', { repository: repo, state: 'passed', commit_id: commit.id, commit });
+
+  let request = server.create('request');
+  server.create('message', {
+    request,
+    level: 'info',
+    key: 'jortleby',
+    code: 'skortleby',
+    args: {
+      jortle: 'tortle'
+    }
+  });
+
+  let build = server.create('build', { repository: repo, state: 'passed', commit_id: commit.id, commit, request });
 
   let secondStage = build.createStage({ number: 2, name: 'second', state: 'failed', started_at: jobTime, finished_at: futureTime(11) });
   let firstStage = build.createStage({ number: 1, name: 'first :two_men_holding_hands:', state: 'passed', started_at: jobTime, finished_at: futureTime(71), allow_failure: true });
@@ -71,6 +84,15 @@ test('visiting build with stages', function (assert) {
 
   andThen(function () {
     assert.equal(buildPage.stages().count, 2, 'expected two build stages');
+
+    assert.ok(buildPage.ymlMessages().isVisible, 'expected a yml messages container');
+
+    assert.equal(buildPage.ymlMessages().count, 1, 'expected one yml message');
+
+    buildPage.ymlMessages(0).as(info => {
+      assert.ok(info.icon.isInfo, 'expected the yml message to be an info');
+      assert.equal(info.message, 'unrecognised message code skortleby');
+    });
 
     buildPage.stages(0).as(stage => {
       assert.equal(stage.name, 'first', 'expected the stages to be numerically sorted');

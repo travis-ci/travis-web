@@ -382,7 +382,7 @@ export default {
           }
         ]
       },
-      "attributes": ["id","number","state","duration","event_type","previous_state","pull_request_title","pull_request_number","started_at","finished_at","repository","branch","commit","jobs","stages","created_by"],
+      "attributes": ["id","number","state","duration","event_type","previous_state","pull_request_title","pull_request_number","started_at","finished_at","repository","branch","commit","jobs","stages","created_by","request"],
       "representations": {
         "minimal": [
           "id",
@@ -1035,7 +1035,52 @@ export default {
         "delete_log"
       ]
     },
-    "organization": {
+    "message":            {
+      "@type":            "resource",
+      "actions":          { },
+      "attributes":       [
+        "id",
+        "level",
+        "key",
+        "code",
+        "args"
+      ],
+      "representations":  {
+        "standard":       [
+          "id",
+          "level",
+          "key",
+          "code",
+          "args"
+        ]
+      }
+    },
+    "messages":           {
+      "@type":            "resource",
+      "actions":          {
+        "for_request":    [
+          {
+            "@type":          "template",
+            "request_method": "GET",
+            "uri_template":   "/repo/{repository.id}/request/{request.id}/messages{?include,limit,offset}"
+          },
+          {
+            "@type":          "template",
+            "request_method": "GET",
+            "uri_template":   "/repo/{repository.slug}/request/{request.id}/messages{?include,limit,offset}"
+          }
+        ]
+      },
+      "attributes":       [
+        "messages"
+      ],
+      "representations":  {
+        "standard":       [
+          "messages"
+        ]
+      }
+    },
+      "organization": {
       "@type": "resource",
       "actions": {
         "find": [
