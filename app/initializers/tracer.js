@@ -52,7 +52,7 @@ class Tracer {
             req.loading = false;
             req.error = self.status < 200 || self.status >= 400;
             req.requestId = self.getResponseHeader('X-Request-ID');
-            req.requestIdShort = req.requestId.substr(0, 8);
+            req.requestIdShort = req.requestId ? req.requestId.substr(0, 8) : null;
 
             tracer.onRequest(req);
           }
