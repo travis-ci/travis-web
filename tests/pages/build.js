@@ -10,6 +10,8 @@ let {
   text
 } = PageObject;
 
+import ymlMessages from './yml-messages';
+
 const jobComponent = {
   state: {
     scope: '.job-state',
@@ -42,6 +44,8 @@ export default PageObject.create({
   buildTabLinkText: text('#tab_build'),
 
   hasNoDebugButton: isHidden('.action-button--debug', { multiple: true }),
+
+  ymlMessages,
 
   requiredJobs: collection({
     scope: '.jobs-list:eq(0)',

@@ -9,8 +9,11 @@ const { escapeExpression: escape } = Ember.Handlebars.Utils;
 export default Component.extend({
   @computed('message.code', 'message.args')
   readableMessage(code, args) {
-    // FIXME fallback for missing code
-    return htmlSafe(this[code](args));
+    if (this[code]) {
+      return htmlSafe(this[code](args));
+    } else {
+      return `unrecognised message code ${escape(code)}`;
+    }
   },
 
   alert() {
