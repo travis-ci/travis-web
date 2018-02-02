@@ -16,16 +16,16 @@
         <button {{action (perform delete)}} type="button" class="no-button ssh-delete">
           {{svg-jar 'icon-trash' class="icon"}}
         </button>
-        {{tooltip-on-element title='Delete'}}
+        {{tooltip-on-element text='Delete'}}
       {{else}}
         {{svg-jar 'icon-trash-disabled' class="icon ssh-no-delete"}}
-        {{tooltip-on-element title='You can’t delete keys'}}
+        {{tooltip-on-element text='You can’t delete keys'}}
       {{/if}}
     {{/if}}
   </div>
 {{else}}
   <div class="ssh-key-action">
     {{svg-jar 'icon-trash-disabled' class="icon ssh-no-delete"}}
-    {{tooltip-on-element title='Default key cannot be deleted'}}
+    {{tooltip-on-element text='Default key cannot be deleted'}}
   </div>
 {{/if}}
