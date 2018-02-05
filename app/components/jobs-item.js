@@ -21,9 +21,9 @@ export default Component.extend({
     }
   },
 
-  @computed('job.config.os')
+  @computed('job.config.content.os')
   os(os) {
-    if (os === 'linux') {
+    if (os === 'linux' || os === 'linux-ppc64le') {
       return 'linux';
     } else if (os === 'osx') {
       return 'osx';

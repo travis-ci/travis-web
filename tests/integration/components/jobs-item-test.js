@@ -15,7 +15,7 @@ test('it renders', function (assert) {
       content: {
         rvm: '2.1.2',
         jdk: 'openjdk6',
-        os: 'linux',
+        os: 'linux-ppc64le',
         env: 'TESTS=unit'
       },
     },
@@ -28,6 +28,7 @@ test('it renders', function (assert) {
   assert.equal(this.$().find('.job-number .label-align').text().trim(), '2', 'job number should be displayed');
   assert.equal(this.$().find('.job-lang').text().trim(), 'JDK: openjdk6 Ruby: 2.1.2', 'langauges list should be displayed');
   assert.equal(this.$().find('.job-env').text().trim(), 'TESTS=unit', 'env should be displayed');
+  console.log('classes?', this.$().find('job-os').attr('class'));
   assert.ok(this.$().find('.job-os').hasClass('linux'), 'OS class should be added for OS icon');
   assert.equal(this.$().find('.job-duration').text().trim(), '1 min 40 sec', 'duration should be displayed');
 });
