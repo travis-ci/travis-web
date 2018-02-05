@@ -10,7 +10,7 @@
   {{/if}}
 
   <li id="tab_new" class={{classNew}}>
-    {{#link-to "account" currentUser.login (query-params offset=0) trackEvent="add-repository-from-list" title="Add New Repository"}}
+    {{#link-to "account" currentUser.login trackEvent="add-repository-from-list" title="Add New Repository"}}
     <span class="icon icon--plus"></span>
     {{/link-to}}
   </li>
