@@ -85,7 +85,7 @@
             </button>
         {{/if}}
         {{#if auth.signedIn}}
-          {{#link-to "account" user.login (query-params offset=0) class="navigation-anchor signed-in"}}
+          {{#link-to "account" user.login class="navigation-anchor signed-in"}}
             {{userName}}
             {{user-avatar url=user.avatarUrl name=user.fullName size=40}}
           {{/link-to}}
@@ -96,7 +96,7 @@
         {{#if auth.signedIn}}
           <ul class="navigation-nested">
             <li>
-              {{#link-to "account" user.login (query-params offset=0) class="signed-in" title="See your Travis profile"}}Profile{{/link-to}}
+              {{#link-to "account" user.login class="signed-in" title="See your Travis profile"}}Profile{{/link-to}}
             </li>
             {{#if config.billingEndpoint}}
               {{#unless features.enterpriseVersion}}

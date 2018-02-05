@@ -1,4 +1,4 @@
-{{#link-to "account" account.login (query-params offset=0) class="org-info"}} 
+{{#link-to "account" account.login class="org-info"}}
   <span class="account-avatar">
     {{user-avatar url=account.avatarUrl name=name size=36}}
   </span>
@@ -8,10 +8,10 @@
       <p class="account-repo-count">{{pluralize account.reposCount 'repository'}}</p>
     {{else}}
       No repositories
-    {{/if}} 
+    {{/if}}
     {{#if isUser}}
       <p class="account-token">
-        Token: 
+        Token:
         {{#if tokenIsVisible}}
           <strong>{{auth.currentUser.token}}</strong>
         {{/if}}
@@ -22,7 +22,7 @@
           {{else}}
             show token
           {{/if}}
-          {{/tooltip-on-element}} 
+          {{/tooltip-on-element}}
           {{svg-jar 'icon-seemore' class="icon icon-seemore"}}
         </a>
       </p>
