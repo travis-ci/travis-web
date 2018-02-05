@@ -10,14 +10,24 @@ import config from 'travis/config/environment';
 moduleForAcceptance('Acceptance | job/basic layout');
 
 test('visiting job-view', function (assert) {
-  assert.expect(9);
-
   let repo = server.create('repository', { slug: 'travis-ci/travis-web' }),
     branch = server.create('branch', { name: 'acceptance-tests' });
 
   let  gitUser = server.create('git-user', { name: 'Mr T' });
   let commit = server.create('commit', { author: gitUser, committer: gitUser, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
-  let build = server.create('build', { repository: repo, state: 'passed', commit, branch });
+
+  let request = server.create('request');
+  server.create('message', {
+    request,
+    level: 'info',
+    key: 'group',
+    code: 'flagged',
+    args: {
+      given: 'group'
+    }
+  });
+
+  let build = server.create('build', { repository: repo, state: 'passed', commit, branch, request });
   let job = server.create('job', { number: '1234.1', repository: repo, state: 'passed', build, commit });
   commit.job = job;
 
@@ -39,10 +49,87 @@ test('visiting job-view', function (assert) {
     assert.equal(jobPage.state, '#1234.1 passed', 'displays build number');
     assert.equal(jobPage.author, 'Mr T authored and committed');
 
+    assert.notOk(jobPage.ymlMessages().isVisible, 'expected no yml messages container');
+
     assert.equal(jobPage.log, 'Hello log');
     assert.notOk(jobPage.hasTruncatedLog);
     assert.equal(jobPage.rawLogUrl, `https://api.travis-ci.org/v3/job/${job.id}/log.txt`);
   });
+});
+
+test('visiting single-job build shows config messages', function (assert) {
+  let repo = server.create('repository', { slug: 'travis-ci/travis-web' }),
+    branch = server.create('branch', { name: 'acceptance-tests' });
+
+  let  gitUser = server.create('git-user', { name: 'Mr T' });
+  let commit = server.create('commit', { author: gitUser, committer: gitUser, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
+
+  let request = server.create('request');
+  server.create('message', {
+    request,
+    level: 'info',
+    key: 'group',
+    code: 'flagged',
+    args: {
+      given: 'group'
+    }
+  });
+
+  server.create('message', {
+    request,
+    level: 'warn',
+    key: 'language',
+    code: 'unknown_default',
+    args: {
+      value: '__garnet__',
+      default: 'ruby'
+    }
+  });
+
+  server.create('message', {
+    request,
+    level: 'error',
+    key: 'root',
+    code: 'unknown_key',
+    args: {
+      key: 'filter_secrets',
+      value: 'false'
+    }
+  });
+
+  let build = server.create('build', { repository: repo, state: 'passed', commit, branch, request });
+  let job = server.create('job', { number: '1234.1', repository: repo, state: 'passed', build, commit });
+  commit.job = job;
+
+  job.save();
+  commit.save();
+
+  server.create('log', { id: job.id });
+
+  visit('/travis-ci/travis-web/builds/' + build.id);
+  waitForElement('#log > .log-line');
+
+  andThen(() => {
+    assert.ok(jobPage.ymlMessages().isVisible, 'expected the messages to be visible');
+    assert.equal(jobPage.ymlMessages().count, 3, 'expected three yml messages');
+
+    jobPage.ymlMessages(0).as(info => {
+      assert.ok(info.icon.isInfo, 'expected the first yml message to be an info');
+      assert.equal(info.message, 'your repository must be feature flagged for group to be used');
+    });
+
+    jobPage.ymlMessages(1).as(warning => {
+      assert.ok(warning.icon.isWarning, 'expected the second yml message to be a warning');
+      assert.equal(warning.message, 'dropping unknown value: __garnet__, defaulting to: ruby');
+    });
+
+    jobPage.ymlMessages(2).as(error => {
+      assert.ok(error.icon.isError, 'expected the third yml message to be an error');
+      assert.equal(error.message, 'dropping unknown key filter_secrets (false)');
+    });
+  });
+
+  percySnapshot(assert);
 });
 
 test('visiting a job with a truncated log', function (assert) {
@@ -69,6 +156,7 @@ test('visiting a job with a truncated log', function (assert) {
 
   andThen(function () {
     assert.ok(jobPage.hasTruncatedLog);
+    assert.notOk(jobPage.ymlMessages().isVisible, 'expected no yml messages container');
   });
 });
 

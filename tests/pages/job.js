@@ -10,6 +10,8 @@ let {
   attribute
 } = PageObject;
 
+import ymlMessages from './yml-messages';
+
 export default PageObject.create({
   visit: visitable('travis-ci/travis-web/jobs/1'),
 
@@ -24,6 +26,8 @@ export default PageObject.create({
   hasTruncatedLog: isVisible('.log-container p.warning'),
 
   toggleLog: clickable('.toggle-log-button'),
+
+  ymlMessages,
 
   logLines: collection({
     scope: 'pre#log',

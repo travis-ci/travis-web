@@ -13,12 +13,16 @@
         <td class="status {{if req.error 'error'}}">{{req.status}}</td>
         <td class="duration">{{req.duration}}ms</td>
         <td class="request-id">
-          {{#if config.apiTraceEndpoint}}
-            <a href="{{config.apiTraceEndpoint}}{{req.requestId}}">
+          {{#if req.requestId}}
+            {{#if config.apiTraceEndpoint}}
+              <a href="{{config.apiTraceEndpoint}}{{req.requestId}}">
+                {{req.requestIdShort}}
+              </a>
+            {{else}}
               {{req.requestIdShort}}
-            </a>
+            {{/if}}
           {{else}}
-            {{req.requestIdShort}}
+            n/a
           {{/if}}
         </td>
       </tr>

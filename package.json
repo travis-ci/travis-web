@@ -35,7 +35,7 @@
     "ember-cli-content-security-policy": "^1.0.0",
     "ember-cli-dependency-checker": "^2.0.0",
     "ember-cli-deploy": "^1.0.2",
-    "ember-cli-deploy-lightning-pack": "1.2.0",
+    "ember-cli-deploy-lightning-pack": "1.2.2",
     "ember-cli-deprecation-workflow": "^0.2.4",
     "ember-cli-document-title": "0.3.3",
     "ember-cli-eslint": "^4.2.1",
@@ -91,6 +91,7 @@
     "lodash.intersection": "4.4.0",
     "lodash.pickby": "4.6.0",
     "timeago": "^1.6.1",
+    "url-polyfill": "^1.0.11",
     "visibilityjs": "^1.2.6",
     "yamljs": "^0.3.0"
   },

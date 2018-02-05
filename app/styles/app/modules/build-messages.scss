@@ -1,0 +1,51 @@
+.yml-messages {
+  @include travisBorder;
+
+  margin-top: 1.2em;
+
+  font-size: 16px;
+
+  .yml-message {
+    display: flex;
+    align-items: flex-start;
+
+    padding: 10px;
+
+    svg {
+      width: 18px;
+      transform: scale(1.2);
+    }
+
+    .icon-info {
+      @include colorSVGFull($oxide-blue, $oxide-blue);
+
+      circle {
+        fill: none;
+      }
+    }
+
+    .icon-warn {
+      @include colorSVG($canary-yellow);
+
+      color: inherit;
+    }
+
+    .icon-error {
+      @include colorSVG($brick-red);
+    }
+
+    .message {
+      padding-left: 10px;
+      border-left: 1px solid $dry-cement;
+      margin-left: 5px;
+    }
+
+    code {
+      background-color: #eef0f4;
+      font-family: $font-family-monospace;
+      font-size: 14px;
+      padding: 2px;
+      border-radius: 2px;
+    }
+  }
+}

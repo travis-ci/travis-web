@@ -5,6 +5,7 @@ import { service } from 'ember-decorators/service';
 export default Service.extend({
   @service store: null,
   @service features: null,
+  @service raven: null,
 
   serverFlags: [],
 
@@ -16,26 +17,33 @@ export default Service.extend({
    * transition, this is a decent interim solution. */
 
   fetchTask: task(function* () {
-    const featureSet = yield this.get('store').findAll('beta-feature');
-    this.set('serverFlags', featureSet);
-    let featuresService = this.get('features');
-    featureSet.map((feature) => {
-      // this means that non-single-word feature names will turn
-      // 'comic sans' into 'comic-sans'. This may/may not work as expected.
-      // TODO: Confirm that this won't break if we add a feature name with
-      // spaces.
-      let featureName = feature.get('dasherizedName');
-      if (feature.get('enabled')) {
-        featuresService.enable(featureName);
-      } else {
-        featuresService.disable(featureName);
-      }
-    });
+    try {
+      const featureSet = yield this.get('store').findAll('beta-feature');
+      this.set('serverFlags', featureSet);
+      let featuresService = this.get('features');
+      featureSet.map(feature => {
+        // this means that non-single-word feature names will turn
+        // 'comic sans' into 'comic-sans'. This may/may not work as expected.
+        // TODO: Confirm that this won't break if we add a feature name with
+        // spaces.
+        let featureName = feature.get('dasherizedName');
+        if (feature.get('enabled')) {
+          featuresService.enable(featureName);
+        } else {
+          featuresService.disable(featureName);
+        }
+      });
+      // TODO:
+      // We are still thinking about how to handle a failure from a UX perspective.
+      // For instance, we might want to show the user a flash message etc.
+    } catch (e) {
+      this.get('raven').logException(e);
+    }
   }).drop(),
 
   reset() {
     this.get('serverFlags').map(flag => {
       this.get('features').disable(flag.get('name').dasherize());
     });
-  },
+  }
 });
