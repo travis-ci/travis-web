@@ -19,7 +19,7 @@ test('visiting build matrix', function (assert) {
   commit.save();
 
   server.create('job', { number: '1234.2', repository: repo, state: 'passed', config: { env: 'JANTS', os: 'osx', language: 'ruby', rvm: 2.2 }, commit, build });
-  server.create('job', { allow_failure: true, number: '1234.999', repository: repo, state: 'failed', config: { language: 'ruby' }, commit, build });
+  server.create('job', { allow_failure: true, number: '1234.999', repository: repo, state: 'failed', config: { language: 'ruby', os: 'jorts' }, commit, build });
 
   visit(`/travis-ci/travis-web/builds/${build.id}`);
 
@@ -47,6 +47,7 @@ test('visiting build matrix', function (assert) {
     buildPage.allowedFailureJobs(0).as(failedJobRow => {
       assert.ok(failedJobRow.state.isFailed, 'expected the allowed failure job to have failed');
       assert.equal(failedJobRow.language, 'Ruby');
+      assert.ok(failedJobRow.os.isUnknown, 'expected the job OS to be unknown');
     });
   });
   percySnapshot(assert);

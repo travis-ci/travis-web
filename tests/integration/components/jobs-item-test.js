@@ -15,7 +15,7 @@ test('it renders', function (assert) {
       content: {
         rvm: '2.1.2',
         jdk: 'openjdk6',
-        os: 'linux',
+        os: 'linux-ppc64le',
         env: 'TESTS=unit'
       },
     },
