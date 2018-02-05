@@ -1,6 +1,7 @@
 import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import { Response } from 'ember-cli-mirage';
+import Service from '@ember/service';
 
 moduleForAcceptance('Acceptance | feature flags/app boots');
 
@@ -14,7 +15,7 @@ test('app boots even if call to `/beta_features` fails', function (assert) {
   const currentUser = server.create('user');
   signInUser(currentUser);
 
-  const mockSentry = Ember.Service.extend({
+  const mockSentry = Service.extend({
     logException(error) {
       assert.ok(true);
     },
