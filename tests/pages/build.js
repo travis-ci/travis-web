@@ -23,7 +23,8 @@ const jobComponent = {
   os: {
     scope: '.job-os',
     isLinux: hasClass('linux'),
-    isMacOS: hasClass('osx')
+    isMacOS: hasClass('osx'),
+    isUnknown: hasClass('unknown')
   },
   language: text('.job-lang .label-align')
 };

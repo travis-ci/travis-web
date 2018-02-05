@@ -20,4 +20,15 @@ export default Component.extend({
       return `Gemfile: ${gemfile}`;
     }
   },
+
+  @computed('job.config.os')
+  os(os) {
+    if (os === 'linux') {
+      return 'linux';
+    } else if (os === 'osx') {
+      return 'osx';
+    } else {
+      return 'unknown';
+    }
+  }
 });
