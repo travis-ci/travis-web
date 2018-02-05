@@ -5,6 +5,7 @@ import { service } from 'ember-decorators/service';
 export default Service.extend({
   @service store: null,
   @service features: null,
+  @service raven: null,
 
   serverFlags: [],
 
@@ -32,13 +33,12 @@ export default Service.extend({
           featuresService.disable(featureName);
         }
       });
-    // We purposely left the catch block blank because:
-    // 1) We don't want to add any state here
-    // 2) We are still thinking about how to handle this from a UX perspective.
-    //    For instance the exception might be logged to Sentry
-    //    or we might want to show the user a flash message etc.
-    //    But this will be done at a later date.
-    } catch (e) {}
+      // TODO:
+      // We are still thinking about how to handle a failure from a UX perspective.
+      // For instance, we might want to show the user a flash message etc.
+    } catch (e) {
+      this.get('raven').logException(e);
+    }
   }).drop(),
 
   reset() {
