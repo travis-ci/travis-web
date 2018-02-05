@@ -10,10 +10,7 @@
 
   <div class="job-os {{os}}">
     {{tooltip-on-element text=job.config.content.os}}
-    {{#if job.config.content.os}}
-    {{svg-jar 'icon-linux' class="icon linux"}}
-    {{svg-jar 'icon-mac' class="icon mac"}}
-    {{/if}}
+    {{svg-jar osIcon class='icon'}}
   </div>
 
   <div class="job-lang">

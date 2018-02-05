@@ -30,5 +30,16 @@ export default Component.extend({
     } else {
       return 'unknown';
     }
+  },
+
+  @computed('os')
+  osIcon(os) {
+    if (os === 'linux') {
+      return 'icon-linux';
+    } else if (os === 'osx') {
+      return 'icon-mac';
+    } else {
+      return 'help';
+    }
   }
 });

@@ -111,12 +111,8 @@
       text-indent: 999%
       white-space: nowrap
       overflow: hidden
-  &.linux
-    .icon.mac
-      display: none
-  &.osx
-    .icon.linux
-      display: none
+  &.unknown .icon
+    +colorSVGFill($cement-grey)
 
 .job-lang
   overflow: hidden
