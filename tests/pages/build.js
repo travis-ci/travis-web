@@ -30,7 +30,7 @@ const jobComponent = {
 };
 
 export default PageObject.create({
-  visit: visitable(':slug/builds/:build_id'),
+  visit: visitable(':owner/:repo/builds/:build_id'),
   restartBuild: clickable('.action-button--restart'),
   cancelBuild: clickable('.action-button--cancel'),
   debugBuild: clickable('.action-button--debug'),

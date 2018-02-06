@@ -12,7 +12,7 @@ let {
 } = PageObject;
 
 export default PageObject.create({
-  visit: visitable(':slug'),
+  visit: visitable(':owner/:repo'),
   popupIsHidden: isHidden('.trigger-build-modal'),
   popupTriggerLinkIsHidden: isHidden('.option-dropdown .trigger-build-anchor'),
   openPopup: clickable('.option-dropdown .trigger-build-anchor'),

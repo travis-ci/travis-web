@@ -7,12 +7,12 @@ import Mirage from 'ember-cli-mirage';
 moduleForAcceptance('Acceptance | repo/trigger build');
 
 test('trigger link is not visible to not logged in users', function (assert) {
-  const repo = server.create('repository', {
+  server.create('repository', {
     name: 'difference-engine',
     slug: 'adal/difference-engine'
   });
 
-  triggerBuildPage.visit({ slug: repo.slug });
+  triggerBuildPage.visit({ owner: 'adal', repo: 'difference-engine' });
   assert.ok(triggerBuildPage.popupTriggerLinkIsHidden, 'cannot see trigger build link');
 });
 
@@ -31,8 +31,6 @@ moduleForAcceptance('Acceptance | repo/trigger build', {
         create_request: true
       }
     });
-
-    this.repo = repo;
 
     const repoId = parseInt(repo.id);
 
@@ -68,7 +66,7 @@ moduleForAcceptance('Acceptance | repo/trigger build', {
 });
 
 test('triggering a custom build via the dropdown', function (assert) {
-  triggerBuildPage.visit({ slug: this.repo.slug });
+  triggerBuildPage.visit({ owner: 'adal', repo: 'difference-engine' });
 
   andThen(() => {
     assert.equal(currentURL(), 'adal/difference-engine', 'we are on the repo page');
@@ -103,7 +101,7 @@ test('an error triggering a build is displayed', function (assert) {
     return new Mirage.Response(500, {}, {});
   });
 
-  triggerBuildPage.visit({ slug: this.repo.slug });
+  triggerBuildPage.visit({ owner: 'adal', repo: 'difference-engine' });
   triggerBuildPage.openPopup();
   triggerBuildPage.selectBranch('master');
   triggerBuildPage.clickSubmit();
@@ -118,7 +116,7 @@ test('a 429 shows a specific error message', function (assert) {
     return new Mirage.Response(429, {}, {});
   });
 
-  triggerBuildPage.visit({ slug: this.repo.slug });
+  triggerBuildPage.visit({ owner: 'adal', repo: 'difference-engine' });
   triggerBuildPage.openPopup();
   triggerBuildPage.selectBranch('master');
   triggerBuildPage.clickSubmit();
