@@ -4,7 +4,7 @@ import Service from '@ember/service';
 
 moduleForAcceptance('Acceptance | sign in');
 
-test('visiting sign starts auth flow if unauthenticated', function (assert) {
+test('visiting /signin starts auth flow if unauthenticated', function (assert) {
   assert.expect(2);
 
   // avoid actually contacting GitHub
