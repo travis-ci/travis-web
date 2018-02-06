@@ -3,7 +3,7 @@ import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import dashboardPage from 'travis/tests/pages/dashboard';
 import topPage from 'travis/tests/pages/top';
 
-moduleForAcceptance('Acceptance | home/sidebar tabs', {
+moduleForAcceptance('Acceptance | broadcasts', {
   beforeEach() {
     const currentUser = server.create('user', {
       name: 'Sara Ahmed',
