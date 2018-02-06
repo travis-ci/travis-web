@@ -271,7 +271,7 @@ test('view and cancel pull requests', function (assert) {
   });
   percySnapshot(assert);
 
-  page.builds[0].cancelButton.click();
+  page.builds.objectAt(0).cancelButton.click();
 
   andThen(() => {
     assert.equal(topPage.flashMessage.text, 'Build has been successfully cancelled.');
