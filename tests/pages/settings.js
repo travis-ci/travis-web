@@ -68,18 +68,13 @@ export default PageObject.create({
     toggle: clickable()
   },
 
-  environmentVariables: collection({
-    scope: '.settings-list--envvars',
-    itemScope: '.settings-envvar',
+  environmentVariables: collection('.settings-list--envvars .settings-envvar', {
+    name: text('.env-var-name'),
+    isPublic: hasClass('is-public'),
+    isNewlyCreated: hasClass('newly-created'),
+    value: value('input'),
 
-    item: {
-      name: text('.env-var-name'),
-      isPublic: hasClass('is-public'),
-      isNewlyCreated: hasClass('newly-created'),
-      value: value('input'),
-
-      delete: clickable('.env-var-delete')
-    }
+    delete: clickable('.env-var-delete')
   }),
 
   environmentVariableForm: {
@@ -91,24 +86,16 @@ export default PageObject.create({
     add: clickable('input[type=submit]')
   },
 
-  crons: collection({
-    scope: '.settings-list--crons',
-    itemScope: '.settings-cron',
-
-    item: {
-      branchName: text('.branch-name'),
-      interval: text('.interval'),
-      nextRun: text('.next-run'),
-      lastRun: text('.last-run'),
-      dontRunIfRecentBuildExistsText: text('.dont-run-if-recent-build-exists'),
-      delete: clickable('.cron-job-delete')
-    }
+  crons: collection('.settings-list--crons .settings-cron', {
+    branchName: text('.branch-name'),
+    interval: text('.interval'),
+    nextRun: text('.next-run'),
+    lastRun: text('.last-run'),
+    dontRunIfRecentBuildExistsText: text('.dont-run-if-recent-build-exists'),
+    delete: clickable('.cron-job-delete')
   }),
 
-  cronBranches: collection({
-    scope: '.form--cron form select:nth(0)',
-    itemScope: 'option'
-  }),
+  cronBranches: collection('.form--cron form select:nth(0) option'),
 
   sshKey: {
     scope: '.settings-sshkey',

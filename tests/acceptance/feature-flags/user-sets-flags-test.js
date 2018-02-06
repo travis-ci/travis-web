@@ -34,15 +34,15 @@ test('visiting /features directly when authenticated', function (assert) {
   andThen(function () {
     assert.equal(currentURL(), '/features');
 
-    assert.equal(featurePage.features().count, 2, 'expected there to be two features');
+    assert.equal(featurePage.features.length, 2, 'expected there to be two features');
 
-    featurePage.features(0).as(jants => {
+    featurePage.features[0].as(jants => {
       assert.equal(jants.name, 'Jants');
       assert.equal(jants.description, 'Jants?');
       assert.notOk(jants.isOn, 'expected the jants switch to be off');
     });
 
-    featurePage.features(1).as(jorts => {
+    featurePage.features[1].as(jorts => {
       assert.equal(jorts.name, 'Jorts');
       assert.equal(jorts.description, 'Jorts!');
       assert.ok(jorts.isOn, 'expected the jorts switch to be on');
@@ -58,10 +58,12 @@ test('visiting /features directly when authenticated', function (assert) {
     return feature;
   });
 
-  featurePage.features(0).click();
+  andThen(() => {
+    featurePage.features[0].click();
+  });
 
   andThen(() => {
-    assert.ok(featurePage.features(0).isOn, 'expected the jants switch to now be on');
+    assert.ok(featurePage.features[0].isOn, 'expected the jants switch to now be on');
     assert.deepEqual(patchRequestBody, { 'beta_feature.enabled': true });
   });
 });

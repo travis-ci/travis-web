@@ -35,31 +35,33 @@ test('the broadcast tower shows a warning even when an announcement exists, broa
 
   andThen(() => {
     assert.ok(topPage.broadcastTower.hasWarning, 'expected the broadcast tower to have a warning class');
-    assert.ok(topPage.broadcasts().isClosed, 'expected the broadcast list to be closed');
+    assert.ok(topPage.broadcasts.isClosed, 'expected the broadcast list to be closed');
     assert.equal(topPage.broadcastBadge.text, 2, 'expected the badge to show two broadcasts');
   });
 
   topPage.broadcastTower.click();
 
   andThen(() => {
-    assert.ok(topPage.broadcasts().isOpen, 'expected the broadcast list to be open');
-    assert.equal(topPage.broadcasts().count, 2, 'expected there to be two broadcasts');
+    assert.ok(topPage.broadcasts.isOpen, 'expected the broadcast list to be open');
+    assert.equal(topPage.broadcasts.items.length, 2, 'expected there to be two broadcasts');
 
-    assert.ok(topPage.broadcasts(0).isAnnouncement, 'expected the first broadcast to be an announcement');
-    assert.equal(topPage.broadcasts(0).message, 'We need you.');
+    assert.ok(topPage.broadcasts.items[0].isAnnouncement, 'expected the first broadcast to be an announcement');
+    assert.equal(topPage.broadcasts.items[0].message, 'We need you.');
 
-    assert.ok(topPage.broadcasts(1).isWarning, 'expected the second broadcast to be a warning');
-    assert.equal(topPage.broadcasts(1).message, 'Join the resistance!');
+    assert.ok(topPage.broadcasts.items[1].isWarning, 'expected the second broadcast to be a warning');
+    assert.equal(topPage.broadcasts.items[1].message, 'Join the resistance!');
   });
 
   percySnapshot(assert);
 
-  topPage.broadcasts(0).dismiss();
+  andThen(() => {
+    topPage.broadcasts.items[0].dismiss();
+  });
 
   andThen(() => {
-    assert.ok(topPage.broadcasts().count, 1, 'expected there to be one broadcast');
+    assert.ok(topPage.broadcasts.items.length, 1, 'expected there to be one broadcast');
     assert.equal(topPage.broadcastBadge.text, 1, 'expected the badge to show one broadcast');
-    assert.ok(topPage.broadcasts(0).isWarning, 'expected the remaining broadcast to be a warning');
+    assert.ok(topPage.broadcasts.items[0].isWarning, 'expected the remaining broadcast to be a warning');
 
     assert.equal(localStorage.getItem('travis.seen_broadcasts'), JSON.stringify(['2016']));
   });

@@ -49,8 +49,6 @@ test('visiting job-view', function (assert) {
     assert.equal(jobPage.state, '#1234.1 passed', 'displays build number');
     assert.equal(jobPage.author, 'Mr T authored and committed');
 
-    assert.notOk(jobPage.ymlMessages().isVisible, 'expected no yml messages container');
-
     assert.equal(jobPage.log, 'Hello log');
     assert.notOk(jobPage.hasTruncatedLog);
     assert.equal(jobPage.rawLogUrl, `https://api.travis-ci.org/v3/job/${job.id}/log.txt`);
@@ -110,20 +108,19 @@ test('visiting single-job build shows config messages', function (assert) {
   waitForElement('#log > .log-line');
 
   andThen(() => {
-    assert.ok(jobPage.ymlMessages().isVisible, 'expected the messages to be visible');
-    assert.equal(jobPage.ymlMessages().count, 3, 'expected three yml messages');
+    assert.equal(jobPage.ymlMessages.length, 3, 'expected three yml messages');
 
-    jobPage.ymlMessages(0).as(info => {
+    jobPage.ymlMessages[0].as(info => {
       assert.ok(info.icon.isInfo, 'expected the first yml message to be an info');
       assert.equal(info.message, 'your repository must be feature flagged for group to be used');
     });
 
-    jobPage.ymlMessages(1).as(warning => {
+    jobPage.ymlMessages[1].as(warning => {
       assert.ok(warning.icon.isWarning, 'expected the second yml message to be a warning');
       assert.equal(warning.message, 'dropping unknown value: __garnet__, defaulting to: ruby');
     });
 
-    jobPage.ymlMessages(2).as(error => {
+    jobPage.ymlMessages[2].as(error => {
       assert.ok(error.icon.isError, 'expected the third yml message to be an error');
       assert.equal(error.message, 'dropping unknown key filter_secrets (false)');
     });
@@ -156,7 +153,6 @@ test('visiting a job with a truncated log', function (assert) {
 
   andThen(function () {
     assert.ok(jobPage.hasTruncatedLog);
-    assert.notOk(jobPage.ymlMessages().isVisible, 'expected no yml messages container');
   });
 });
 
@@ -209,67 +205,67 @@ But it must be addressed repeatedly!\r${ESCAPE}[0m\nAgain.
   jobPage.toggleLog();
 
   andThen(function () {
-    assert.equal(jobPage.logLines(0).text, 'I am the first line.');
+    assert.equal(jobPage.logLines[0].text, 'I am the first line.');
 
-    assert.equal(jobPage.logFolds(0).name, 'afold');
-    assert.notOk(jobPage.logFolds(0).isOpen);
+    assert.equal(jobPage.logFolds[0].name, 'afold');
+    assert.notOk(jobPage.logFolds[0].isOpen);
 
-    assert.equal(jobPage.logLines(1).text, 'I am the first line of a fold.');
+    assert.equal(jobPage.logLines[1].text, 'I am the first line of a fold.');
 
-    assert.equal(jobPage.logLines(2).text, 'I am the second line of a fold.');
+    assert.equal(jobPage.logLines[2].text, 'I am the second line of a fold.');
 
-    assert.equal(jobPage.logLines(3).text, 'I am a line between folds.');
+    assert.equal(jobPage.logLines[3].text, 'I am a line between folds.');
 
-    assert.equal(jobPage.logFolds(0).name, 'afold');
-    assert.equal(jobPage.logLines(4).text, 'I am the first line of a second fold.');
+    assert.equal(jobPage.logFolds[0].name, 'afold');
+    assert.equal(jobPage.logLines[4].text, 'I am the first line of a second fold.');
 
-    assert.ok(jobPage.logLines(5).isBlack);
-    assert.ok(jobPage.logLines(5).hasWhiteBackground);
-    assert.ok(jobPage.logLines(5).isBolded);
+    assert.ok(jobPage.logLines[5].isBlack);
+    assert.ok(jobPage.logLines[5].hasWhiteBackground);
+    assert.ok(jobPage.logLines[5].isBolded);
 
-    assert.ok(jobPage.logLines(6).isRed);
-    assert.ok(jobPage.logLines(6).hasCyanBackground);
-    assert.ok(jobPage.logLines(6).isItalicised);
+    assert.ok(jobPage.logLines[6].isRed);
+    assert.ok(jobPage.logLines[6].hasCyanBackground);
+    assert.ok(jobPage.logLines[6].isItalicised);
 
-    assert.ok(jobPage.logLines(7).isGreen);
-    assert.ok(jobPage.logLines(7).hasMagentaBackground);
-    assert.ok(jobPage.logLines(7).isUnderlined);
+    assert.ok(jobPage.logLines[7].isGreen);
+    assert.ok(jobPage.logLines[7].hasMagentaBackground);
+    assert.ok(jobPage.logLines[7].isUnderlined);
 
-    assert.ok(jobPage.logLines(8).isYellow);
-    assert.ok(jobPage.logLines(8).hasBlueBackground);
+    assert.ok(jobPage.logLines[8].isYellow);
+    assert.ok(jobPage.logLines[8].hasBlueBackground);
 
-    assert.ok(jobPage.logLines(9).isBlue);
-    assert.ok(jobPage.logLines(9).hasYellowBackground);
+    assert.ok(jobPage.logLines[9].isBlue);
+    assert.ok(jobPage.logLines[9].hasYellowBackground);
 
-    assert.ok(jobPage.logLines(10).isMagenta);
-    assert.ok(jobPage.logLines(10).hasGreenBackground);
+    assert.ok(jobPage.logLines[10].isMagenta);
+    assert.ok(jobPage.logLines[10].hasGreenBackground);
 
-    assert.ok(jobPage.logLines(11).isCyan);
-    assert.ok(jobPage.logLines(11).hasRedBackground);
+    assert.ok(jobPage.logLines[11].isCyan);
+    assert.ok(jobPage.logLines[11].hasRedBackground);
 
-    assert.ok(jobPage.logLines(12).isWhite);
-    assert.ok(jobPage.logLines(12).hasBlackBackground);
+    assert.ok(jobPage.logLines[12].isWhite);
+    assert.ok(jobPage.logLines[12].hasBlackBackground);
 
-    assert.ok(jobPage.logLines(13).isGrey);
+    assert.ok(jobPage.logLines[13].isGrey);
 
-    assert.equal(jobPage.logLines(14).text, 'I used to be the final line.');
+    assert.equal(jobPage.logLines[14].text, 'I used to be the final line.');
 
     // FIXME why is this line in an adjacent span?
-    assert.equal(jobPage.logLines(15).nextText, 'I am the final replacer.');
-    assert.equal(jobPage.logLines(16).text, 'I do not replace because the previous line ended with a line feed.');
+    assert.equal(jobPage.logLines[15].nextText, 'I am the final replacer.');
+    assert.equal(jobPage.logLines[16].text, 'I do not replace because the previous line ended with a line feed.');
 
-    assert.equal(jobPage.logLines(17).nextText, 'This should have replaced it.');
+    assert.equal(jobPage.logLines[17].nextText, 'This should have replaced it.');
 
-    assert.equal(jobPage.logLines(18).text, 'A particular log formation is addressed here, this should remain.');
-    assert.equal(jobPage.logLines(19).text, 'This should be on a separate line.');
-    assert.equal(jobPage.logLines(20).text, 'But it must be addressed repeatedly!');
-    assert.equal(jobPage.logLines(21).text, 'Again.');
+    assert.equal(jobPage.logLines[18].text, 'A particular log formation is addressed here, this should remain.');
+    assert.equal(jobPage.logLines[19].text, 'This should be on a separate line.');
+    assert.equal(jobPage.logLines[20].text, 'But it must be addressed repeatedly!');
+    assert.equal(jobPage.logLines[21].text, 'Again.');
+
+    jobPage.logFolds[0].toggle();
   });
 
-  jobPage.logFolds(0).toggle();
-
   andThen(function () {
-    assert.ok(jobPage.logFolds(0).isOpen);
+    assert.ok(jobPage.logFolds[0].isOpen);
   });
 
   percySnapshot(assert);
@@ -307,7 +303,7 @@ travis_fold:end:afold
   jobPage.toggleLog();
 
   andThen(function () {
-    assert.equal(jobPage.logFolds(0).duration, '2.35s');
+    assert.equal(jobPage.logFolds[0].duration, '2.35s');
   });
 
   percySnapshot(assert);

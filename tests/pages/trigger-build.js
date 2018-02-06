@@ -19,14 +19,8 @@ export default PageObject.create({
   popupIsVisible: isVisible('.trigger-build-modal'),
 
   selectBranch: selectable('#trigger-build-branches'),
-  branches: collection({
-    scope: '#trigger-build-branches',
-
-    itemScope: 'option',
-
-    item: {
-      value: attribute('value')
-    }
+  branches: collection('#trigger-build-branches option', {
+    value: attribute('value')
   }),
 
   writeMessage: fillable('#trigger-build-message'),

@@ -78,8 +78,8 @@ test('triggering a custom build via the dropdown', function (assert) {
   andThen(() => {
     assert.ok(triggerBuildPage.popupIsVisible, 'modal is visible after click');
 
-    assert.equal(triggerBuildPage.branches().count, 1, 'expected the not-on-GitHub branch to be hidden');
-    assert.equal(triggerBuildPage.branches(0).value, 'master');
+    assert.equal(triggerBuildPage.branches.length, 1, 'expected the not-on-GitHub branch to be hidden');
+    assert.equal(triggerBuildPage.branches[0].value, 'master');
   });
 
   triggerBuildPage.selectBranch('master');

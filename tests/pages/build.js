@@ -48,41 +48,22 @@ export default PageObject.create({
 
   ymlMessages,
 
-  requiredJobs: collection({
-    scope: '.jobs-list:eq(0)',
-    itemScope: '.jobs-item',
+  requiredJobs: collection('.jobs-list:eq(0) .jobs-item', jobComponent),
+  allowedFailureJobs: collection('.jobs-list:eq(1) .jobs-item', jobComponent),
 
-    item: jobComponent
-  }),
+  stages: collection('.jobs.stage', {
+    name: text('h2 .name'),
+    nameEmojiTitle: attribute('title', 'h2 .emoji'),
+    duration: text('.stage-duration'),
 
-  allowedFailureJobs: collection({
-    scope: '.jobs-list:eq(1)',
-    itemScope: '.jobs-item',
+    isPassed: hasClass('passed', '.stage-header'),
+    isFailed: hasClass('failed', '.stage-header'),
 
-    item: jobComponent
-  }),
+    stateTitle: attribute('title', 'h2 .state-icon-container'),
 
-  stages: collection({
-    itemScope: '.jobs.stage',
+    allowFailures: { scope: 'aside' },
 
-    item: {
-      name: text('h2 .name'),
-      nameEmojiTitle: attribute('title', 'h2 .emoji'),
-      duration: text('.stage-duration'),
-
-      isPassed: hasClass('passed', '.stage-header'),
-      isFailed: hasClass('failed', '.stage-header'),
-
-      stateTitle: attribute('title', 'h2 .state-icon-container'),
-
-      allowFailures: { scope: 'aside' },
-
-      jobs: collection({
-        itemScope: '.jobs-item',
-
-        item: jobComponent
-      })
-    }
+    jobs: collection('.jobs-item', jobComponent)
   }),
 
   buildNotFoundMessage: text('h2.page-title'),

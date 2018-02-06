@@ -72,7 +72,7 @@ test('the home page shows running tab in pro version', (assert) => {
 
   andThen(() => {
     assert.equal(sidebarPage.sidebarRunningTabText, 'Running (0/1)', 'running tab correctly shows number of started/queued jobs');
-    assert.equal(sidebarPage.sidebarRunningRepositories().count, 1, 'expected one running repositories');
+    assert.equal(sidebarPage.sidebarRunningRepositories.length, 1, 'expected one running repositories');
   });
   percySnapshot(assert);
 });
@@ -91,7 +91,7 @@ test('we query the API for all the jobs', function (assert) {
 
   andThen(() => {
     assert.equal(sidebarPage.sidebarRunningTabText, 'Running (15/31)', 'running tab correctly shows number of started/queued jobs');
-    assert.equal(sidebarPage.sidebarRunningRepositories().count, 31, 'expected one running repositories');
+    assert.equal(sidebarPage.sidebarRunningRepositories.length, 31, 'expected one running repositories');
   });
 });
 
