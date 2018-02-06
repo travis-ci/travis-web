@@ -6,7 +6,7 @@ export default Model.extend({
   envVars: hasMany(),
   settings: hasMany(),
   caches: hasMany(),
-  defaultBranch: belongsTo('branch'),
+  defaultBranch: belongsTo('branch', { inverse: null }),
   currentBuild: belongsTo('build', { inverse: null }),
   account: belongsTo(),
 });
