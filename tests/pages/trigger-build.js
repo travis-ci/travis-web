@@ -1,4 +1,4 @@
-import PageObject from 'travis/tests/page-object';
+import PageObject from 'ember-cli-page-object';
 
 let {
   attribute,
