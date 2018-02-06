@@ -31,3 +31,15 @@ test('visiting /signin starts auth flow if unauthenticated', function (assert) {
     assert.equal(currentURL(), '/signin');
   });
 });
+
+test('visiting signin redirects to index if authenticated', function (assert) {
+  const currentUser = server.create('user', 'withRepository');
+
+  signInUser(currentUser);
+
+  visit('/signin');
+
+  andThen(function () {
+    assert.equal(currentURL(), '/');
+  });
+});
