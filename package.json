@@ -45,7 +45,7 @@
     "ember-cli-inline-images": "^0.0.4",
     "ember-cli-mirage": "0.2.9",
     "ember-cli-moment-shim": "^3.5.0",
-    "ember-cli-page-object": "san650/ember-cli-page-object#collection-item",
+    "ember-cli-page-object": "san650/ember-cli-page-object#master",
     "ember-cli-qunit": "^4.1.1",
     "ember-cli-sass": "^7.1.1",
     "ember-cli-sentry": "2.4.4",
