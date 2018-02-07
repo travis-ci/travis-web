@@ -99,5 +99,8 @@
   "engines": {
     "node": "8.5.0",
     "npm": "5.4.2"
+  },
+  "dependencies": {
+    "watchman": "^1.0.0"
   }
 }
