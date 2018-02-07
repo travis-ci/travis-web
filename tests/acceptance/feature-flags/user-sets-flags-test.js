@@ -58,9 +58,7 @@ test('visiting /features directly when authenticated', function (assert) {
     return feature;
   });
 
-  andThen(() => {
-    featurePage.features[0].click();
-  });
+  featurePage.features[0].click();
 
   andThen(() => {
     assert.ok(featurePage.features[0].isOn, 'expected the jants switch to now be on');

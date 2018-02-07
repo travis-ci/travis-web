@@ -195,9 +195,7 @@ test('delete and create environment variables', function (assert) {
     deletedIds.push(request.params.id);
   });
 
-  andThen(() => {
-    settingsPage.environmentVariables[0].delete();
-  });
+  settingsPage.environmentVariables[0].delete();
 
   andThen(() => {
     assert.equal(deletedIds.pop(), 'a', 'expected the server to have received a deletion request for the first environment variable');
@@ -250,9 +248,7 @@ test('delete and create environment variables', function (assert) {
     server.delete('/settings/env_vars/:id', () => {}, 500);
   });
 
-  andThen(() => {
-    settingsPage.environmentVariables[1].delete();
-  });
+  settingsPage.environmentVariables[1].delete();
 
   andThen(() => {
     assert.equal(settingsPage.environmentVariables.length, 2, 'expected the environment variable to remain');
@@ -261,9 +257,7 @@ test('delete and create environment variables', function (assert) {
     server.delete('/settings/env_vars/:id', () => {}, 404);
   });
 
-  andThen(() => {
-    settingsPage.environmentVariables[1].delete();
-  });
+  settingsPage.environmentVariables[1].delete();
 
   andThen(() => {
     assert.equal(settingsPage.environmentVariables.length, 2, 'expected the environment variable to remain');
@@ -284,9 +278,7 @@ test('delete and create crons', function (assert) {
     return {};
   });
 
-  andThen(() => {
-    settingsPage.crons[0].delete();
-  });
+  settingsPage.crons[0].delete();
 
   andThen(() => {
     assert.equal(deletedIds.pop(), this.dailyCron.id, 'expected the server to have received a deletion request for the first cron');

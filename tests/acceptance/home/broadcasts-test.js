@@ -54,9 +54,7 @@ test('the broadcast tower shows a warning even when an announcement exists, broa
 
   percySnapshot(assert);
 
-  andThen(() => {
-    topPage.broadcasts.items[0].dismiss();
-  });
+  topPage.broadcasts.items[0].dismiss();
 
   andThen(() => {
     assert.ok(topPage.broadcasts.items.length, 1, 'expected there to be one broadcast');

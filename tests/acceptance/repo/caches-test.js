@@ -66,9 +66,7 @@ test('view and delete caches', function (assert) {
     requestBodies.push(request.requestBody || 'empty');
   });
 
-  andThen(() => {
-    page.pushCaches[0].delete();
-  });
+  page.pushCaches[0].delete();
 
   andThen(() => {
     assert.deepEqual(JSON.parse(requestBodies.pop()), { branch: 'a-branch-name' });
