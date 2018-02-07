@@ -8,7 +8,9 @@ import { computed } from 'ember-decorators/object';
 import { alias } from 'ember-decorators/object/computed';
 import { service } from 'ember-decorators/service';
 
-export default Component.extend({
+import InViewportMixin from 'ember-in-viewport';
+
+export default Component.extend(InViewportMixin, {
   @service auth: null,
   @service store: null,
   @service externalLinks: null,
@@ -19,6 +21,8 @@ export default Component.extend({
   tagName: 'header',
   classNames: ['top'],
   landingPage: false,
+
+  classNameBindings: ['viewportEntered:jorty'],
 
   @alias('auth.currentUser') user: null,
 
@@ -121,5 +125,19 @@ export default Component.extend({
     });
 
     this.set('waypoint', waypoint);
-  }
+    Ember.setProperties(this, {
+      viewportSpy: true,
+      intersectionThreshold: 0.001,
+      scrollableArea: '.topbar'
+    });
+    this._super(...arguments);
+  },
+
+  didEnterViewport() {
+    console.log('entered');
+  },
+
+  didExitViewport() {
+    console.log('exited');
+  },
 });

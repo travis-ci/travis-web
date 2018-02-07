@@ -69,6 +69,7 @@
           </li>
         {{/unless}}
       {{/if}}
+      <li>{{if viewportEntered 'entered' 'not entered'}}</li>
 
       {{#if deploymentVersion}}<li><span class='deployment-version'>{{deploymentVersion}}</span></li>{{/if}}
     {{else}}
