@@ -1,0 +1,143 @@
+.dash-star {
+  cursor: pointer;
+  padding: 0 0.3em;
+
+  &:hover,
+  &:active {
+    svg path {
+      stroke-width: 2px;
+    }
+  }
+
+  &.is-starred {
+    @include colorSVGFull($dozer-yellow, $canary-yellow);
+  }
+}
+
+.dash-private {
+  display: block;
+  text-align: center;
+
+  .icon {
+    margin-right: 0;
+  }
+}
+
+.dash-head {
+  flex: 0 0 2%;
+  display: flex;
+  padding: 1em;
+  justify-content: space-between;
+  align-items: center;
+
+  @media #{$medium-up} {
+    flex: 0 0 4em;
+    display: flex;
+    flex-direction: column;
+    height: 55px;
+    padding: 0.3em 0;
+    border-right: 1px solid rgba($asphalt-grey, 0.2);
+  }
+}
+
+.dash-body {
+  flex-grow: 1;
+  position: relative;
+
+  @media #{$medium-up} {
+    padding: 0 1.5em 0;
+    height: 5rem;
+  }
+}
+
+.dash-main {
+  @media #{$small-only} {
+    padding: 0 1em;
+  }
+
+  @media #{$medium-up} {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: space-between;
+    height: 70px;
+  }
+}
+
+.dash-finished {
+  display: relative;
+}
+
+.dash-aside {
+  @media #{$medium-up} {
+    position: relative;
+    top: -2rem;
+    width: 100%;
+    bottom: 0;
+    overflow: hidden;
+  }
+}
+
+section[class^="dash-"] {
+  @media #{$small-only} {
+    margin-top: 1em;
+  }
+}
+
+.dash-header {
+  position: relative;
+  flex: 0 0 19%;
+}
+
+.dash-default {
+  flex: 0 0 19%;
+  position: relative;
+  overflow: hidden;
+}
+
+.dash-menu {
+  flex: 0 0 34%;
+}
+
+.dash-last {
+  flex: 0 0 19%;
+}
+
+.dash-commit {
+  flex: 0 0 17%;
+}
+
+.dash-finished {
+  flex: 0 0 21%;
+}
+
+.dash-no-build {
+  flex: 0 0 62%;
+}
+
+.dash-helptext {
+  display: inline-block;
+  margin-right: 1em;
+}
+
+.activate-repo-button {
+  @extend %button;
+
+  background-color: $pebble-grey;
+  color: $cement-grey;
+  font-size: 14px;
+  cursor: default;
+
+  &.is-active:hover {
+    background-color: $oxide-blue;
+    color: white;
+    cursor: pointer;
+  }
+}
+
+.dash-default,
+.dash-last {
+  @each $key, $value in $stateMap {
+    @include rowColor(#{$key}, map-get($value, color));
+  }
+}

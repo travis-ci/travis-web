@@ -1,0 +1,160 @@
+.broadcast {
+  display: inline-block;
+  height: $top-height;
+  width: 40px;
+  margin-left: 1em;
+  line-height: 2.5;
+  cursor: pointer;
+  vertical-align: middle;
+
+  @media #{$medium-up} {
+    float: left;
+  }
+}
+
+.broadcasts {
+  position: relative;
+  background-color: white;
+  list-style: none;
+  padding: 0 1em;
+  margin: 0 auto 0.7em;
+  border-radius: 2px;
+  height: 0;
+  transform-origin: center center;
+  opacity: 0;
+  will-change: opacity;
+  transition: opacity 150ms ease;
+
+  &:after {
+    content: "";
+    position: absolute;
+    display: block;
+    width: 14px;
+    height: 14px;
+    background: white;
+    top: -0.5em;
+    left: 136px;
+    transform: rotate(45deg);
+    border-top: solid 2px $cream-dark;
+    border-left: solid 2px $cream-dark;
+  }
+
+  li {
+    border-bottom: solid 2px $cream-dark;
+
+    &:last-of-type {
+      border-bottom: none;
+    }
+  }
+
+  p {
+    position: relative;
+    margin: 0.5em 0;
+    padding: 0 1.5rem;
+    word-wrap: break-word;
+  }
+
+  a {
+    line-height: 1.45;
+    text-decoration: underline;
+  }
+
+  &.is-open {
+    @include z-index(above-flashes);
+
+    border: solid 2px $cream-dark;
+    opacity: 1;
+    height: auto;
+  }
+
+  @media #{$medium-up} {
+    position: absolute;
+    top: $top-height;
+    left: 145px;
+    width: 27em;
+    height: auto;
+    margin-left: -0.4em;
+
+    &:after {
+      left: 1rem;
+    }
+  }
+}
+
+.broadcast-status {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-right: 0.5rem;
+  margin-left: -1.5rem;
+  border-radius: 50%;
+  background-color: $cement-grey;
+
+  &.warning {
+    background-color: $brick-red;
+  }
+
+  &.announcement {
+    background-color: $turf-green;
+  }
+}
+
+.broadcast-close {
+  position: absolute;
+  top: -2px;
+  right: -0.5em;
+}
+
+$broadcast-states: (warning: $brick-red, announcement: $turf-green);
+
+@mixin colorBroadcast($color) {
+  @include colorSVG($color);
+
+  &:hover,
+  &.is-open {
+    @include colorSVG($color);
+  }
+
+  .count-wrapper {
+    color: $color;
+  }
+}
+
+.icon-broadcast {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
+
+  @include colorSVG($cement-grey);
+
+  &:hover,
+  &.is-open {
+    @include colorSVG($asphalt-grey);
+  }
+
+  @each $class, $color in $broadcast-states {
+    &.#{$class} {
+      @include colorBroadcast($color);
+    }
+  }
+
+  .count-wrapper {
+    position: absolute;
+    top: 0;
+    height: 15px;
+    width: 15px;
+    margin-top: 11px;
+    margin-left: 7px;
+    border-radius: 50%;
+    border: 1px solid currentColor;
+    background: white;
+    text-align: center;
+    line-height: normal;
+    font-size: 11px;
+
+    .count {
+      margin-top: -1px;
+    }
+  }
+}

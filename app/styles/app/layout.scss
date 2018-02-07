@@ -1,0 +1,139 @@
+$max-width: 1024px;
+$padding-top: 24px;
+
+.main {
+  position: relative;
+  width: 100%;
+  min-height: calc(100vh - 174px - 55px);
+  margin-top: $padding-top;
+  padding-bottom: 5rem;
+  background-color: white;
+}
+
+.loading-page {
+  background-color: white;
+
+  @extend .centered;
+
+  .main {
+    padding-bottom: 5rem;
+    margin-bottom: -5rem;
+  }
+}
+
+#left {
+  position: relative;
+  padding: 0 0 110px 0;
+  background-color: white;
+  border-right: 2px solid #f2f2f2;
+}
+
+.wrapper {
+  overflow: hidden;
+  background-color: white;
+
+  #main,
+  #left {
+    margin-bottom: -99989px;
+    padding-bottom: 100034px;
+  }
+
+  .footer {
+    display: none;
+  }
+}
+
+.wrapper-main {
+  padding: 0 ($column-gutter / 2);
+}
+
+@media #{$large-up} {
+  #left,
+  .wrapper-main {
+    min-height: 100vh;
+  }
+
+  #left {
+    width: grid-calc(6, 24);
+    float: left;
+    margin-left: -100%;
+    max-width: 325px;
+  }
+
+  .wrapper-main {
+    width: grid-calc(18, 24);
+    float: left;
+    margin-left: grid-calc(6, 24);
+    overflow: visible;
+  }
+}
+
+@media #{$xlarge-up} {
+  #left {
+    width: grid-calc(7, 36);
+  }
+
+  .wrapper-main {
+    width: grid-calc(29, 36);
+    margin-left: grid-calc(7, 36);
+  }
+}
+
+@media #{$xxlarge-up} {
+  #left {
+    width: grid-calc(6, 36);
+  }
+
+  .wrapper-main {
+    width: grid-calc(30, 36);
+    margin-left: grid-calc(6, 36);
+  }
+}
+
+@media screen and (min-width: 2200px) {
+  #left {
+    width: grid-calc(5, 36);
+  }
+
+  .wrapper-main {
+    width: grid-calc(31, 36);
+    margin-left: grid-calc(5, 36);
+  }
+}
+
+.feature-wrapper.dashboard,
+.centered,
+.centered.wrapper {
+  #left {
+    display: none;
+  }
+
+  #main {
+    padding-bottom: 5rem;
+    margin-bottom: 0;
+  }
+
+  .row {
+    max-width: $max-width;
+  }
+
+  .topbar,
+  .inner {
+    max-width: $max-width;
+    margin: auto;
+    padding-left: $column-gutter / 2;
+    padding-right: $column-gutter / 2;
+  }
+
+  .main,
+  .wrapper-main {
+    max-width: $max-width;
+    margin-left: auto;
+    margin-right: auto;
+    float: none;
+  }
+
+  .footer {
+    display: block;
+  }
+}

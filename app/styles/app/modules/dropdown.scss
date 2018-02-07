@@ -1,0 +1,167 @@
+.option-button {
+  position: relative;
+  width: 17em;
+
+  &.is-open,
+  .is-open & {}
+
+  &:hover {
+    .option-display {
+      color: $oxide-blue;
+      border-color: $oxide-blue;
+    }
+
+    .option-tofu {
+      @include colorSVGFill($oxide-blue);
+
+      border-color: $oxide-blue;
+    }
+
+    .option-arrow {
+      border-color: $oxide-blue;
+      transform: rotate(-90deg);
+      border-bottom: none;
+      border-top: 1px solid $oxide-blue;
+    }
+  }
+
+  &.is-open {
+    .option-dropdown {
+      display: block;
+    }
+  }
+}
+
+$dropdown-button-height: 30px;
+$dropdown-button-margin: -9px;
+
+.option-display {
+  height: $dropdown-button-height;
+  width: 100%;
+  padding: 0;
+  border: 1px solid $dry-cement;
+  color: $asphalt-grey;
+  border-radius: 2px;
+  text-align: center;
+  line-height: 2;
+  font-size: 14px;
+  cursor: pointer;
+  text-align: left;
+  white-space: nowrap;
+
+  &:focus {
+    outline: none;
+  }
+
+  .label-align {
+    padding: 0 1em;
+    overflow: hidden;
+    float: left;
+    line-height: 2;
+  }
+
+  .avatar {
+    max-width: 20px;
+    max-height: 20px;
+    margin-right: 0.5em;
+    margin-top: -0.1em;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+}
+
+.option-tofu,
+.option-arrow {
+  width: 2em;
+  height: 2em;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.option-tofu {
+  padding: 0 5px;
+  border-left: 1px solid $pebble-grey;
+
+  .icon-tofu {
+    @include colorSVGFill($cement-grey);
+
+    width: 1.4rem;
+    height: 2rem;
+  }
+}
+
+.option-arrow {
+  @include colorSVG($cement-grey);
+
+  background: {
+    repeat: no-repeat;
+    position: 50%;
+  };
+  transform: rotate(90deg);
+  background-size: 14px;
+  float: right;
+
+  @media #{$medium-up} {
+    border-bottom: 1px solid $dry-cement;
+  }
+}
+
+.option-dropdown {
+  display: none;
+  position: absolute;
+  top: $dropdown-button-height + $dropdown-button-margin * 0.8;
+  width: 100%;
+  padding: 0;
+  margin: 6px 0 0;
+  list-style: none;
+
+  @include z-index(above);
+
+  background-color: white;
+  border: 1px solid $oxide-blue;
+
+  a,
+  button {
+    display: block;
+    width: 100%;
+    margin-bottom: 0px;
+    padding: 0.5em 1em;
+    font-size: 14px;
+    color: $oxide-blue;
+    cursor: pointer;
+
+    &:hover {
+      color: white;
+      background-color: $oxide-blue;
+    }
+  }
+}
+
+.option-search {
+  input[type="text"] {
+    display: block;
+    padding-left: 1em;
+    outline: none;
+    border-bottom: 1px solid $oxide-blue;
+    border-radius: 0;
+  }
+}
+
+.option-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  a {
+    color: $asphalt-grey;
+    cursor: pointer;
+  }
+
+  img {
+    width: 22px;
+    height: 22px;
+    vertical-align: top;
+    margin-right: 0.3em;
+    border-radius: 50%;
+  }
+}

@@ -1,0 +1,56 @@
+.org-info {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  padding: 0.5rem 0.3rem;
+
+  > .account-info {
+    margin-left: 1rem;
+  }
+
+  > .account-avatar {
+    border-radius: 50%;
+    border: 2px solid transparent;
+  }
+
+  &:hover {
+    color: $oxide-blue;
+  }
+
+  &.active {
+    background: rgba(181, 214, 217, 0.15);
+    color: $oxide-blue;
+    border-radius: 4px;
+
+    > .account-avatar {
+      border: 2px solid $oxide-blue;
+    }
+  }
+
+  .user & {}
+
+  align-items: flex-start;
+
+  .organization & {}
+
+  align-items: center;
+}
+
+.account-name {
+  margin: 0;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-bold;
+  width: 180px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+
+  @media #{$medium-up} {
+    width: 240px;
+  }
+}
+
+.account-repo-count,
+.account-token {
+  margin: 0;
+}

@@ -1,0 +1,116 @@
+.flash {
+  @include resetul;
+
+  text-align: center;
+  height: 0;
+
+  li {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+
+  li.notice, li.success, li.error {
+    opacity: 1;
+
+    @include z-index(flashes);
+
+    height: $top-height;
+    top: -1px;
+
+    &.fixed {
+      position: fixed;
+      top: 0;
+    }
+  }
+
+  .close {
+    position: absolute;
+    cursor: pointer;
+    right: 0.6rem;
+    top: 0;
+    height: 100%;
+
+    .icon {
+      margin-right: 0;
+      height: 24px;
+      width: 22px;
+    }
+  }
+
+  .success {
+    color: $turf-green;
+    background-color: $seed-green;
+
+    @include colorSVGFill($turf-green);
+
+    animation: fadeFlashOut 7s 1 ease forwards;
+
+    .flash-message svg {
+      height: 38px;
+      width: 32px;
+      margin-top: -5px;
+    }
+  }
+
+  .error {
+    color: $brick-red;
+    background-color: $quartz-red;
+
+    @include colorSVGFill($brick-red);
+
+    .flash-message svg {
+      height: 34px;
+      width: 30px;
+      margin-top: -1px;
+    }
+  }
+
+  .notice {
+    color: $dozer-yellow;
+    background-color: $haze-yellow;
+
+    @include colorSVGFill($dozer-yellow);
+
+    .flash-message svg {
+      height: 19px;
+      width: 14px;
+      margin-right: 6px;
+
+      @include colorSVG($dozer-yellow);
+
+      stroke-width: 1.5px;
+    }
+  }
+}
+
+.flash-message {
+  display: flex;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+  line-height: 1;
+  font-size: 1.14rem;
+
+  .preamble {
+    font-weight: bold;
+    padding-right: 0.5rem;
+  }
+}
+
+@keyframes fadeFlashOut {
+  0% {
+    opacity: 1;
+  }
+
+  98% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}

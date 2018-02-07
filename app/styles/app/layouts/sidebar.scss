@@ -1,0 +1,79 @@
+.tile {
+  @include travisColorRows(8px);
+
+  height: auto;
+  padding: 0.8em 0.5em 0.8em 1.5em;
+  margin-bottom: 0.46rem;
+  background-color: white;
+  border-radius: 0;
+
+  li:last-child & {
+    margin-bottom: 0;
+  }
+
+  h2, p {
+    margin: 0;
+    font-size: inherit;
+  }
+
+  h2 {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 0.7em;
+    padding-left: 1px;
+
+    @media #{$medium-up} {
+      width: 72%;
+      white-space: nowrap;
+      overflow: hidden;
+
+      &:after {
+        @include fadeOut(right, -90deg, white);
+      }
+    }
+  }
+
+  p.tile-title {
+    width: 10%;
+
+    @media #{$medium-up} {
+      width: 27%;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+}
+
+#tab_new {
+  a:hover {
+    .icon--plus:after {
+      color: $oxide-blue;
+    }
+  }
+}
+
+.sidebar-list {
+  margin-top: 1.4rem;
+
+  ul {
+    @include resetul;
+
+    border-bottom: 0.46rem solid $pebble-grey;
+    background-color: $pebble-grey;
+  }
+}
+
+.travistab-nav--sidebar {
+  padding: 0 1em;
+}
+
+.sidebar-seperator {
+  width: 90%;
+  margin: 1rem auto;
+  border: none;
+  border-bottom: solid 2px $pebble-grey;
+}

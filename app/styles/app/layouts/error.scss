@@ -1,0 +1,250 @@
+/* Error Pages + Maintenance
+ */
+
+@mixin error-bg-gradient($color) {
+  background: linear-gradient(0deg, $color, $color 38.9%, $error-bg-gradient 39%, white 60%, white);
+}
+
+.navigation.is-error {
+  height: 100%;
+
+  li {
+    display: inline-block;
+    margin-right: 1.5em;
+  }
+
+  a {
+    line-height: 56px;
+  }
+}
+
+.error,
+.maintenance {
+  height: 100vh;
+  overflow: hidden;
+}
+
+.error-full-size {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  background-repeat: no-repeat;
+}
+
+.main--error {
+  min-height: 100%;
+}
+
+.error-text,
+.maintenance-text {
+  position: absolute;
+  top: 6%;
+  left: 0;
+  right: 0;
+  text-align: center;
+
+  h1 {
+    margin: 1em 0 0.4em;
+    font-size: 40px;
+
+    @media #{$medium-up} {
+      font-size: 70px;
+    }
+  }
+
+  p {
+    padding: 0 1em;
+    font-size: 20px;
+    color: $cement-grey;
+
+    @include linkStyle;
+  }
+}
+
+.icon-twitter {
+  display: inline-block;
+  width: 1.1em;
+  height: 1.1em;
+  background: {
+    image: url(/images/error/twitter.svg);
+    repeat: no-repeat;
+    size: 100% auto;
+    position: 0 0.2em;
+  };
+}
+
+.error500 {
+  .error-bg {
+    @include error-bg-gradient($error-sand);
+  }
+
+  .hill-left {
+    background: {
+      image: url(/images/error/500-hills-left.svg);
+      size: auto 10vh;
+      position: 0 58%;
+    };
+
+    @media #{$medium-up} {
+      background-size: 38vw auto;
+    }
+  }
+
+  .hill-right {
+    @media #{$medium-up} {
+      background: {
+        image: url(/images/error/500-hills-right.svg);
+        size: 38vw auto;
+        position: 99% 59%;
+      };
+    }
+  }
+
+  .shadow-left {
+    background: {
+      image: url(/images/error/500-hills-shade-left.svg);
+      size: 24vw auto;
+      position: 6% 72%;
+    };
+  }
+
+  .shadow-right {
+    background: {
+      image: url(/images/error/500-hills-shade-right.svg);
+      size: 17vw auto;
+      position: 95% 79%;
+    };
+  }
+
+  .road {
+    background: {
+      image: url(/images/error/500-road.svg);
+      size: auto 27vh;
+      position: 42% 78%;
+    };
+
+    @media #{$medium-up} {
+      background: {
+        size: auto 40vh;
+        position: 42% 91.3%;
+      };
+    }
+  }
+}
+
+.error404 {
+  .error-bg {
+    @include error-bg-gradient($error-hill-grey);
+  }
+
+  .hill-left {
+    @media #{$medium-up} {
+      background: {
+        image: url(/images/error/404-hills-left.svg);
+        size: auto 25vh;
+        position: 0 58%;
+      };
+    }
+  }
+
+  .hill-right {
+    background: {
+      image: url(/images/error/404-hills-right.svg);
+      size: auto 20vw;
+      position: 99% 60%;
+    };
+
+    @media #{$medium-up} {
+      background-size: 50vw auto;
+    }
+  }
+
+  .error-excavator {
+    background: {
+      image: url(/images/error/excavator.svg);
+      size: auto 25vh;
+      position: 71% 83%;
+    };
+  }
+
+  .error-travis {
+    background: {
+      image: url(/images/error/pensive-travis.svg);
+      size: auto 60vh;
+      position: 34% 100%;
+    };
+
+    @media #{$medium-up} {
+      background-size: auto 50vh;
+    }
+
+    @media #{$large-up} {
+      background-size: auto 60vh;
+    }
+  }
+}
+
+.maintenance {
+  .maintenance-bg {
+    @include error-bg-gradient($maintenance-grass);
+  }
+
+  .hill-left {
+    background: {
+      image: url(/images/error/maintenance-hills-left.svg);
+      size: 80vw auto;
+      position: 0 58%;
+    };
+
+    @media #{$medium-up} {
+      background-size: 58vw auto;
+    }
+
+    @media #{$large-up} {
+      bakground-size: 50vw auto;
+    }
+  }
+
+  .hill-right {
+    @media #{$medium-up} {
+      background: {
+        image: url(/images/error/maintenance-hills-right.svg);
+        size: 38vw auto;
+        position: 99% 59%;
+      };
+    }
+  }
+
+  .shadow-left {
+    background: {
+      image: url(/images/error/maintenance-grass-shade-left.svg);
+      size: 24vw auto;
+      position: 6% 73%;
+    };
+  }
+
+  .shadow-right {
+    background: {
+      image: url(/images/error/maintenance-grass-shade-right.svg);
+      size: 17vw auto;
+      position: 95% 79%;
+    };
+  }
+
+  .maintenance-tractor {
+    background: {
+      image: url(/images/error/maintenance-tractor.svg);
+      size: 87vw auto;
+      position: 63% 87%;
+    };
+
+    @media #{$medium-up} {
+      background: {
+        size: auto 44vh;
+        position: 63% 83%;
+      };
+    }
+  }
+}

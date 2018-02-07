@@ -1,0 +1,72 @@
+// used in first_sync, auth and insufficient_oauth_permissions
+
+.content-page {
+  padding: 70px 0;
+  text-align: center;
+}
+
+.content-title {
+  color: $oxide-blue;
+  font-size: 36px;
+
+  @media #{$medium-up} {
+    font-size: 50px;
+  }
+
+  &.auth {
+    margin-bottom: 0;
+    line-height: 1.2;
+  }
+}
+
+.content-subtitle {
+  font-size: 22px;
+}
+
+.content-text {
+  @include linkStyle;
+
+  margin: 0 1em;
+  font-size: 18px;
+  line-height: 1.5;
+  text-align: left;
+
+  @media #{$medium-up} {
+    width: 600px;
+    margin: auto;
+  }
+}
+
+.content-button {
+  @extend %button;
+
+  font-size: 24px;
+  padding: 0.6em 0.8em;
+  font-weight: 300;
+  background-color: $oxide-blue;
+  color: white;
+
+  &:hover,
+  &:active {
+    background-color: darken($oxide-blue, 10);
+  }
+
+  .loading-indicator {
+    margin-left: 0.5em;
+  }
+}
+
+.mascot-spin {
+  animation: mrT 2.5s infinite ease;
+  animation-direction: alternate;
+}
+
+@keyframes mrT {
+  0% {
+    transform: rotateY(0deg);
+  }
+
+  100% {
+    transform: rotateY(360deg);
+  }
+}
