@@ -1,0 +1,96 @@
+@mixin notice($color: $haze-yellow, $bg: doyer-yellow) {
+  @include linkStyle($color);
+
+  padding: 0.3em 0.5em 0.2em;
+  margin-bottom: 0.5em;
+  background-color: $bg;
+  color: $color;
+  border-radius: 2px;
+  font-size: $font-size-m;
+
+  .icon-flag {
+    @include colorSVG($color);
+
+    width: 1.3em;
+    height: 1.5em;
+    margin: 0 0.6em 0 0.2em;
+    vertical-align: middle;
+  }
+}
+
+.notice,
+.notice--yellow {
+  @include notice($dozer-yellow, $haze-yellow);
+}
+
+.notice--blue {
+  @include notice($oxide-blue, $agate-blue);
+}
+
+.notice--red {
+  @include notice($brick-red, $quartz-red);
+}
+
+@mixin notice-banner($bg, $color) {
+  @include linkStyle($color);
+
+  padding: 1em 1.5em;
+  margin-bottom: 0.5em;
+  background-color: $bg;
+  color: $color;
+  border-radius: 2px;
+  font-size: $font-size-m;
+  display: block;
+
+  .icon-flag {
+    @include colorSVG($color);
+
+    width: 18px;
+    height: 18px;
+    margin-right: 0.3em;
+    vertical-align: middle;
+  }
+
+  code {
+    font-size: 0.9em;
+    padding: 0.1em 0.3em;
+    border-radius: 2px;
+    border: 1px solid lighten($color, 10);
+  }
+
+  strong {
+    font-weight: 600;
+    padding-right: 0.5rem;
+  }
+}
+
+.notice-banner--yellow.spaced {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2.5rem;
+}
+
+.profile-main .notice-banner--yellow,
+.profile-main .notice-banner--green {
+  @media (min-width: 600px) {
+    margin: 0 0 20px;
+  }
+
+  @media #{$large} {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+}
+
+.notice-banner--yellow {
+  @include notice-banner($haze-yellow, $dozer-yellow);
+}
+
+.notice-banner--green {
+  @include notice-banner($seed-green, $turf-green);
+}
+
+.notice-banner--red {
+  @include notice-banner($quartz-red, $brick-red);
+}

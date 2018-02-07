@@ -1,0 +1,19 @@
+.barricade {
+  .reflector path:last-child {
+    stroke: rgba(198, 52, 52, 0.8);
+    animation: blinking infinite 800ms ease;
+    animation-direction: alternate;
+  }
+}
+
+@keyframes blinking {
+  0% {
+    stroke-width: 0px;
+    stroke-opacity: 1;
+  }
+
+  100% {
+    stroke-width: 15px;
+    stroke-opacity: 0.4;
+  }
+}

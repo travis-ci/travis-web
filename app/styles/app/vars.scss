@@ -1,0 +1,67 @@
+$font-size-ml: 18px;
+$font-size-m: 16px;
+$font-size-sm: 14px;
+$line-height-m: 1.3;
+$font-size-s: 12px;
+
+$font-weight-light: 300;
+$font-weight-normal: 400;
+$font-weight-bold: 600;
+
+$top-height: 55px;
+
+$turf-green: #39aa56;
+$seed-green: #deecdc;
+
+$canary-yellow: #edde3f;
+$dozer-yellow: #cdb62c;
+$haze-yellow: #faf6db;
+
+$cement-grey: #9d9d9d;
+$dry-cement: lighten($cement-grey, 30);
+$asphalt-grey: #666666;
+$pebble-grey: #f1f1f1;
+
+$brick-red: #db4545;
+$quartz-red: #fce8e2;
+
+$oxide-blue: #3eaaaf;
+$agate-blue: #b6d6d9;
+
+$cream-light: #FAFAF8;
+$cream-dark: #EFF0EC;
+
+// log
+$log-header-bg: #444444;
+$line-height-log: 19px;
+$font-size-log: 12px;
+$color-bg-log-hover: #444;
+$color-bg-log-highlight: $cement-grey;
+$color-bg-log-fold: #222;
+$color-bg-log-fold-highlight: #777;
+
+$ansi-black: #4E4E4E;
+$ansi-black-bold: #7C7C7C;
+$ansi-red: #FF6C60;
+$ansi-red-bold: #FF9B93;
+$ansi-green: #00AA00;
+$ansi-green-bold: #B1FD79;
+$ansi-yellow: #FFFFB6;
+$ansi-yellow-bold: #FFFF91;
+$ansi-blue: #96CBFE;
+$ansi-blue-bold: #B5DCFE;
+$ansi-magenta: #FF73FD;
+$ansi-magenta-bold: #FF9CFE;
+$ansi-cyan: #00AAAA;
+$ansi-cyan-bold: #55FFFF;
+$ansi-white: #EEEEEE;
+$ansi-white-bold: #FFFFFF;
+$ansi-grey: #969696;
+
+// error pages
+$error-heading-color: #357389;
+$error-copy-color: $asphalt-grey;
+$error-bg-gradient: rgba(204, 235, 247, 1);
+$maintenance-grass: #8cad7d;
+$error-hill-grey: #bbcac6;
+$error-sand: #dcc682;

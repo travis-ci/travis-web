@@ -1,0 +1,102 @@
+.footer {
+  position: relative;
+  padding: 20px 0;
+  background-color: $pebble-grey;
+  font-size: 12px;
+  line-height: 22px;
+  color: $asphalt-grey;
+
+  a {
+    display: inline-block;
+    vertical-align: middle;
+    color: $asphalt-grey;
+    text-decoration: none;
+
+    &:hover,
+    &:active {
+      text-decoration: underline;
+    }
+  }
+
+  ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  .inner {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    max-width: 1024px;
+    margin: auto;
+  }
+
+  .footer-elem {
+    flex: 1 0 70%;
+    margin-left: 1em;
+  }
+
+  @media #{$medium-up} {
+    .footer-elem {
+      flex: 0 1 16%;
+      margin-left: 1em;
+
+      &:first-of-type {
+        flex: 1 1 30%;
+        margin-left: 0;
+      }
+    }
+  }
+}
+
+.footer-title {
+  font-size: 15px;
+  margin: 0 0 10px 0;
+  padding-top: 6px;
+  font-weight: 400;
+  color: $cement-grey;
+  border-top: solid 4px rgba($cement-grey, 0.15);
+}
+
+.travis-footer {
+  width: 100%;
+  height: 3.5rem;
+  background-repeat: no-repeat;
+  opacity: 0.4;
+
+  .travis-logo {
+    height: 49px;
+  }
+}
+
+.status-circle {
+  display: inline-block;
+  height: 11px;
+  width: 11px;
+  text-indent: -9999px;
+  margin-right: 5px;
+  border-radius: 100px;
+  vertical-align: middle;
+
+  &.none {
+    background: $turf-green;
+  }
+
+  &.maintenance {
+    background: $dozer-yellow;
+  }
+
+  &.degraded {
+    background: $dozer-yellow;
+  }
+
+  &.minor {
+    background: mix($brick-red, $dozer-yellow);
+  }
+
+  &.major {
+    background: $brick-red;
+  }
+}

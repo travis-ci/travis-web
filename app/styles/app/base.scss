@@ -1,0 +1,133 @@
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  color: $asphalt-grey;
+  font-size: 14px;
+  font-weight: 400;
+  font-style: normal;
+  font-family: $font-family-sans-serif;
+  line-height: 1.45;
+  background-color: $pebble-grey;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: $font-weight-normal;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  -ms-interpolation-mode: bicubic;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+button {
+  background: white;
+  border: none;
+  font-family: $font-family-sans-serif;
+  font-size: inherit;
+  color: $asphalt-grey;
+}
+
+textarea {
+  height: auto;
+  min-height: 50px;
+}
+
+address {
+  font-style: normal;
+}
+
+select {
+  width: 100%;
+}
+
+strong {
+  font-weight: 400;
+}
+
+a {
+  color: $asphalt-grey;
+  text-decoration: none;
+
+  &:hover,
+  &:active {
+    text-decoration: none;
+  }
+}
+
+.display {
+  display: block !important;
+}
+
+.display-inline {
+  display: inline-block !important;
+}
+
+.hidden {
+  display: none;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.helptext {
+  font-size: $font-size-m;
+  color: $cement-grey;
+
+  @include linkStyle;
+}
+
+span.emoji.emoji-sizer {
+  width: 20px;
+  height: 20px;
+  margin: (-4px) 0;
+  display: inline-block;
+  background-size: contain;
+}
+
+.warning {
+  color: #c00;
+
+  a {
+    color: #c00;
+    text-decoration: underline;
+  }
+}
+
+.small-title {
+  font-size: 18px;
+  color: $oxide-blue;
+}
+
+.blank-list {
+  @include resetul;
+}
+
+.monospace {
+  font-family: Cousine, monospace;
+  font-size: 13px;
+  line-height: 1;
+}
+
+.float-right {
+  float: right;
+}
+
+.m-l-s {
+  margin-left: 0.6rem;
+}
+
+.margin-left-s {
+  margin-left: 10px;
+}

@@ -1,0 +1,139 @@
+.build-header {
+  @include travisBorder;
+  @include travisColorRows;
+
+  font-size: 16px;
+  clear: both;
+
+  @media #{$medium-up} {
+    display: flex;
+    flex-flow: row no-wrap;
+    justify-content: space-between;
+  }
+
+  a:hover,
+  a:active {
+    .inner-underline {
+      text-decoration: underline;
+    }
+  }
+}
+
+.build-commit,
+.build-tools {
+  padding-left: 2rem;
+}
+
+.build-commit {
+  font-size: 16px;
+  overflow: hidden;
+  position: relative;
+
+  &:after {
+    content: "";
+
+    @include fadeOut(right, -90deg, white, 20%);
+  }
+
+  @media #{$medium-up} {
+    flex: 0 1 55%;
+    padding-left: 2.2rem;
+  }
+}
+
+.build-tools {
+  padding: 1rem 0 1rem 3rem;
+  overflow: auto;
+
+  @media #{$medium-up} {
+    flex: 0 0 10rem;
+    padding: 1rem 0;
+  }
+
+  .action-button-container + .action-button-container {
+    margin-top: 0.7rem;
+  }
+}
+
+.build-info {
+  font-size: 15px;
+  padding-left: 2rem;
+
+  @media #{$medium-up} {
+    flex: 0 1 37%;
+  }
+}
+
+.build-title,
+.build-status {
+  margin: 1rem 0;
+  padding-left: 1rem;
+  font-weight: $font-weight-normal;
+  font-size: 16px;
+}
+
+.build-title {
+  .status-icon {
+    margin-left: -1.9rem;
+    margin-right: 0.7rem;
+  }
+
+  @media #{$medium-up} {
+    white-space: nowrap;
+  }
+}
+
+.commit-info {
+  font-size: 15px;
+  padding-left: 1rem;
+}
+
+.commit-branch {
+  margin-right: 0.5em;
+  font-weight: $font-weight-bold;
+  font-size: 16px;
+}
+
+.build-status {
+  padding-left: 0;
+}
+
+.commit-author {
+  margin: 1rem 0 0.7rem;
+
+  .avatar--small:first-of-type {
+    margin-left: -2px;
+  }
+
+  .avatar--small:not(:first-of-type) {
+    margin-left: 20px;
+  }
+}
+
+.commit-description {
+  margin: 1rem 0;
+
+  @media #{$medium-up} {
+    max-height: 4.5em;
+    position: relative;
+    overflow: hidden;
+
+    &:after {
+      conent: "";
+
+      @include fadeOut(bottom, 360deg, white, 5%);
+    }
+  }
+}
+
+.list-icon {
+  padding: 0;
+  margin: 1rem 0;
+  list-style: none;
+  line-height: 1.7;
+  white-space: nowrap;
+
+  .commit-clock {
+    margin-bottom: 1rem;
+  }
+}
