@@ -71,7 +71,6 @@ test('view profile', function (assert) {
   profilePage.visit({ username: 'feministkilljoy' });
 
   andThen(function () {
-    percySnapshot(assert);
     assert.equal(document.title, 'Sara Ahmed - Profile - Travis CI');
 
     assert.equal(profilePage.name, 'Sara Ahmed');
@@ -92,5 +91,6 @@ test('view profile', function (assert) {
     assert.ok(profilePage.administerableRepositories(1).isActive, 'expected active repository to appear active');
     assert.equal(profilePage.administerableRepositories(2).name, 'feministkilljoy/willful-subjects');
     assert.notOk(profilePage.administerableRepositories(2).isActive, 'expected inactive repository to appear inactive');
+    percySnapshot(assert);
   });
 });
