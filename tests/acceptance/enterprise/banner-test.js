@@ -87,9 +87,9 @@ test('when it’s not a trial as indicated by the license_type attribute', funct
 //   });
 // });
 
-test('when it’s not a trial and the expiration date is more than 21 days away', function (assert) {
+test('when it’s not a trial and the expiration date is more than 60 days away', function (assert) {
   withFeature('enterpriseVersion');
-  this.expirationTime = new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * 22);
+  this.expirationTime = new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * 61);
   this.licenseType = 'a non-trial license type';
   visit('/');
 
@@ -98,15 +98,39 @@ test('when it’s not a trial and the expiration date is more than 21 days away'
   });
 });
 
-test('when it’s not a trial but the expiration date is less than 21 days away', function (assert) {
+test('when it’s not a trial but the expiration date is less than 60 days away', function (assert) {
   withFeature('enterpriseVersion');
-  this.expirationTime = new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * 19);
+  this.expirationTime = new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * 59);
   this.licenseType = 'a non-trial license type';
   visit('/');
 
   andThen(function () {
     assert.ok(topPage.enterpriseTrialBanner.isVisible);
-    assert.equal(topPage.enterpriseTrialBanner.text, 'Your license expires 19 days from now, please contact enterprise@travis-ci.com');
+    assert.equal(topPage.enterpriseTrialBanner.text, 'Your license expires 30 days from now, please contact enterprise@travis-ci.com');
+  });
+});
+
+test('when it’s not a trial but the expiration date is less than 30 days away', function (assert) {
+  withFeature('enterpriseVersion');
+  this.expirationTime = new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * 29);
+  this.licenseType = 'a non-trial license type';
+  visit('/');
+
+  andThen(function () {
+    assert.ok(topPage.enterpriseTrialBanner.isVisible);
+    assert.equal(topPage.enterpriseTrialBanner.text, 'Your license expires 30 days from now, please contact enterprise@travis-ci.com');
+  });
+});
+
+test('when it’s not a trial but the expiration date is less than 10 days away', function (assert) {
+  withFeature('enterpriseVersion');
+  this.expirationTime = new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * 9);
+  this.licenseType = 'a non-trial license type';
+  visit('/');
+
+  andThen(function () {
+    assert.ok(topPage.enterpriseTrialBanner.isVisible);
+    assert.equal(topPage.enterpriseTrialBanner.text, 'Your license expires 10 days from now, please contact enterprise@travis-ci.com');
   });
 });
 
