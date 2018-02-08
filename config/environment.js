@@ -176,7 +176,7 @@ module.exports = function (environment) {
       breakpointsConfig: {
         mobile: 375,
         tablet: 768,
-        desktop: 1280
+        desktop: 1920
       },
       defaultBreakpoints: ['mobile', 'tablet', 'desktop']
     };
