@@ -64,6 +64,24 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
       },
       active: false
     });
+
+    server.create('subscription', {
+      'id': 2,
+      'valid to': '2018-03-08T02:38:08Z',
+      'first name': 'User first name',
+      'last name': 'User last name',
+      'company': 'company',
+      'zip code': '11111',
+      'address': 'address',
+      'address2': null,
+      'city': 'city',
+      'state': null,
+      'country': 'country',
+      'vat id': null,
+      'status': 'subscribed',
+      'source': 'stripe',
+      'selected plan': 'travis-ci-two-builds'
+    });
   }
 });
 
@@ -83,6 +101,9 @@ test('view profile', function (assert) {
 
     assert.equal(profilePage.accounts(1).name, 'Feminist Killjoys');
     assert.equal(profilePage.accounts(1).repositoryCount, '30 repositories');
+
+    assert.equal(profilePage.subscription.isVisible, 'expected a subscription to show');
+    assert.equal(profilePage.subscription.validTo, 'March 8, 2018');
 
     assert.equal(profilePage.administerableRepositories().count, 3, 'expected three repositories');
 
