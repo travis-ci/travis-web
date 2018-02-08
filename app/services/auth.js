@@ -58,7 +58,7 @@ export default Service.extend({
       let uri = options.redirectUri || window.location.href,
         url = new URLPolyfill(uri);
 
-      if (url.pathname === '/plans') {
+      if (url.pathname === '/plans' || url.pathname === '/signin') {
         url.pathname = '/';
       }
 
