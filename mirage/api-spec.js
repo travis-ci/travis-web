@@ -1610,6 +1610,20 @@ export default {
         "read",
         "sync"
       ]
-    }
+    },
+    "subscription":            {
+      "@type":            "resource",
+      "actions":          { },
+      "attributes":       [
+        "id",
+        "valid_to",
+      ],
+      "representations":  {
+        "standard":       [
+          "id",
+          "valid_to",
+        ]
+      }
+    },
   }
 }

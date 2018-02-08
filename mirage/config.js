@@ -24,6 +24,7 @@ export default function () {
 
   this.urlPrefix = apiEndpoint;
   this.namespace = '';
+  this.logging = true;
 
   this.get('/users', function ({ users }, request)  {
     if (request.requestHeaders.Authorization === 'token testUserToken') {
@@ -41,6 +42,8 @@ export default function () {
 
     return { accounts: users.concat(accounts) };
   });
+
+  this.get('/subscriptions/:id');
 
   this.get('/users/:id', function ({ users }, request) {
     if (request.requestHeaders.Authorization === 'token testUserToken') {

@@ -66,8 +66,8 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
     });
 
     server.create('subscription', {
-      'id': 2,
-      'valid to': '2018-03-08T02:38:08Z',
+      'id': 1,
+      'valid_to': '2018-03-08T02:38:08Z',
       'first name': 'User first name',
       'last name': 'User last name',
       'company': 'company',
@@ -102,8 +102,7 @@ test('view profile', function (assert) {
     assert.equal(profilePage.accounts(1).name, 'Feminist Killjoys');
     assert.equal(profilePage.accounts(1).repositoryCount, '30 repositories');
 
-    assert.equal(profilePage.subscription.isVisible, 'expected a subscription to show');
-    assert.equal(profilePage.subscription.validTo, 'March 8, 2018');
+    assert.equal(profilePage.subscription.validTo, 'March 7, 2018');
 
     assert.equal(profilePage.administerableRepositories().count, 3, 'expected three repositories');
 
