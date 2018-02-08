@@ -14,9 +14,8 @@
             {{subscription-status-banner color="yellow" message="This account does not have an active subscription." billingLinkText="Sign this account up!" billingUrl=billingUrl}}
           {{/if}}
         {{/if}}
-
-        <div class='subscription'>test</div>
       {{/if}}
+    <div class='subscription'><span class="valid-to">{{moment-format model.subscription.validTo "MMMM D, YYYY"}}</span></div>
     {{/unless}}
 
     <header class="profile-header">
