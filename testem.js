@@ -12,7 +12,6 @@ module.exports = {
       mode: 'ci',
       args: [
         '--disable-gpu',
-        '--headless',
         '--remote-debugging-port=0',
         '--window-size=1920x1080'
       ]
