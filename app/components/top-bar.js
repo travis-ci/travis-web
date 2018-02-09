@@ -1,5 +1,4 @@
-/* global HS, Waypoint */
-import { run } from '@ember/runloop';
+/* global HS */
 
 import { htmlSafe } from '@ember/string';
 import Component from '@ember/component';
@@ -103,41 +102,24 @@ export default Component.extend(InViewportMixin, {
   },
 
   didInsertElement() {
-    const component = this; // Not pleasant, but I can’t find a better way.
-
     if (Ember.testing) {
       return;
     }
 
-    const waypoint = new Waypoint.Inview({
-      element: this.element,
-      exited() {
-        run(() => {
-          component.get('flashes').set('topBarVisible', false);
-        });
-      },
-
-      enter() {
-        run(() => {
-          component.get('flashes').set('topBarVisible', true);
-        });
-      }
-    });
-
-    this.set('waypoint', waypoint);
     Ember.setProperties(this, {
-      viewportSpy: true,
-      intersectionThreshold: 0.001,
-      scrollableArea: '.topbar'
+      viewportSpy: true
     });
     this._super(...arguments);
+    Ember.run.scheduleOnce('afterRender', this, () => {
+      Ember.set(this, 'viewportTolerance.top', this.$().height());
+    });
   },
 
   didEnterViewport() {
-    console.log('entered');
+    this.get('flashes').set('topBarVisible', true);
   },
 
   didExitViewport() {
-    console.log('exited');
+    this.get('flashes').set('topBarVisible', false);
   },
 });
