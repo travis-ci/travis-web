@@ -68,6 +68,7 @@ export default Service.extend({
         options.headers['Authorization'] = `token ${token}`;
       }
     }
+    options.headers['X-Client-Release'] = config.release;
     options.url = url = `${endpoint}${url}`;
     options.type = method;
     options.dataType = options.dataType || 'json';
