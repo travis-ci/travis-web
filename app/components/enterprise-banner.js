@@ -8,7 +8,7 @@ import timeAgoInWords from 'travis/utils/time-ago-in-words';
 export default Ember.Component.extend({
 	@service ajax: null,
 
-  init() {
+  didInsertElement() {
     this._super(...arguments);
 
     const url = '/v3/enterprise_license';
@@ -25,21 +25,17 @@ export default Ember.Component.extend({
 
   @computed('seats', 'activeUsers')
   exceedingSeats(seats, activeUsers) {
-    if (activeUsers > seats) {
-      return true;
-    }
+    return (activeUsers > seats);
   },
 
   @computed('seats', 'activeUsers')
   almostExceedingSeats(seats, activeUsers) {
-    if (seats - activeUsers > 5) {
-      return false;
-    }
+    return (seats - activeUsers <= 5);
   },
 
-  @computed('licenseType')
-  isTrial(licenseType) {
-    return (licenseType === 'trial');
+  @computed('licenseType', 'isExpired')
+  isTrial(licenseType, isExpired) {
+    return (licenseType === 'trial' && !isExpired);
   },
 
   @computed('expirationTime')
@@ -50,6 +46,12 @@ export default Ember.Component.extend({
   @computed('expirationTime')
   expirationTimeFromNow(expirationTime) {
     return new Ember.String.htmlSafe(timeAgoInWords(expirationTime) || '-');
+  },
+
+  @computed('expirationIn60Days')
+  expiresSoon(soon) {
+    // localStorage
+    return soon;
   },
 
   @computed('expirationTime')
@@ -88,5 +90,20 @@ export default Ember.Component.extend({
     return daysFromNowThatLicenseExpires < 11;
   },
 
-  showBanner: true
+  @computed('isTrial', 'expiresSoon')
+  showLicenseBanner(isTrial, expiresSoon) {
+    return isTrial || expiresSoon;
+  },
+
+  @computed('almostExceedingSeats', 'exceedingSeats')
+  showSeatsBanner(almost, did) {
+    return almost || did;
+  },
+
+  @computed('isTrial', 'expiresSoon')
+  licenseClass(isTrial, expiresSoon) {
+    if (expiresSoon && !isTrial) return 'alert';
+  },
+
+  seatsClass: 'alert'
 });
