@@ -15,7 +15,7 @@
           {{/if}}
         {{/if}}
       {{/if}}
-    <div class='subscription'><span class="valid-to">{{moment-format model.subscription.validTo "MMMM D, YYYY"}}</span></div>
+      {{account-subscription account=account}}
     {{/unless}}
 
     <header class="profile-header">
