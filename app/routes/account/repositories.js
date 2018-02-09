@@ -13,11 +13,10 @@ export default TravisRoute.extend({
   @alias('config.pagination.profileReposPerPage') recordsPerPage: null,
 
   model(params) {
-    const accountModel = this.modelFor('account');
+    const account = this.modelFor('account');
     // account is an Ember-Data model
-    if (!accountModel.error) {
+    if (!account.error) {
       // TODO: Make perPage property configurable
-      const account = accountModel.account;
       const offset = (params.page - 1) * this.get('recordsPerPage');
       return this.store.paginated(
         'repo',
@@ -36,9 +35,8 @@ export default TravisRoute.extend({
   },
 
   setupController(controller, model) {
-    const accountModel = this.modelFor('account');
-    if (!accountModel.error) {
-      const account = accountModel.account;
+    const account = this.modelFor('account');
+    if (!account.error) {
       controller.set('login', account.get('login'));
     }
     return this._super(...arguments);
