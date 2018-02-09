@@ -1,6 +1,7 @@
 import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import profilePage from 'travis/tests/pages/profile';
+import moment from 'moment';
 
 moduleForAcceptance('Acceptance | profile/basic layout', {
   beforeEach() {
@@ -65,7 +66,7 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
       active: false
     });
 
-    server.create('subscription', {
+    this.subscription = server.create('subscription', {
       'id': 1,
       'valid_to': '2018-03-08T02:38:08Z',
       'first name': 'User first name',
@@ -88,7 +89,7 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
 test('view profile', function (assert) {
   profilePage.visit({ username: 'feministkilljoy' });
 
-  andThen(function () {
+  andThen(() =>  {
     percySnapshot(assert);
     assert.equal(document.title, 'Sara Ahmed - Profile - Travis CI');
 
@@ -102,7 +103,7 @@ test('view profile', function (assert) {
     assert.equal(profilePage.accounts(1).name, 'Feminist Killjoys');
     assert.equal(profilePage.accounts(1).repositoryCount, '30 repositories');
 
-    assert.equal(profilePage.subscription.validTo, 'March 7, 2018');
+    assert.equal(profilePage.subscription.validTo, moment(this.subscription.valid_to).format('MMMM D, YYYY'));
 
     assert.equal(profilePage.administerableRepositories().count, 3, 'expected three repositories');
 
