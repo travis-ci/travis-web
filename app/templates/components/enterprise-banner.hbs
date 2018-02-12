@@ -1,26 +1,35 @@
-{{#if showLicenseBanner}}
-  <div class="enterprise-banner {{licenseClass}}">
+{{#if showTrialBanner}}
+  <div class="enterprise-banner {{trialClass}}">
     <div class="inner">
-    {{#if isTrial}}
-      <p>{{svg-jar 'icon-flag' class="icon"}} Your trial license <strong>expires {{expirationTimeFromNow}}</strong>.</p>
-    {{else}}
-      {{#if expiresSoon}}
-        <p>{{svg-jar 'icon-flag' class="icon"}} Your license <strong>expires {{expirationTimeFromNow}}</strong>, please contact enterprise@travis-ci.com</p>
-      {{else if isExpired}}
-        <p>{{svg-jar 'icon-flag' class="icon"}} Your license has <strong>expired</strong>, please contact enterprise@travis-ci.com</p>
+      {{#if isExpired}}
+        <p>{{svg-jar 'icon-flag' class="icon"}} Your trial license has <strong>expired</strong>, please contact enterprise@travis-ci.com</p>
+      {{else if expiresSoon}}
+        <p>{{svg-jar 'icon-flag' class="icon"}} Your trial license <strong>expires {{expirationTimeFromNow}}</strong>, please contact enterprise@travis-ci.com</p>
+      {{else}}
+        <p>{{svg-jar 'icon-flag' class="icon"}} Your trial license <strong>expires {{expirationTimeFromNow}}</strong>.</p>
       {{/if}}
-    {{/if}}
     </div>
   </div>
 {{/if}}
 
-{{#if showSeatsBanner}}
-  <div class="enterprise-banner {{seatsClass}}">
+{{#if showPaidBanner}}
+  <div class="enterprise-banner {{paidClass}}">
     <div class="inner">
-      {{#if exceedingSeats}}
-        <p>{{svg-jar 'icon-flag' class="icon"}} You’ve exceeded the <strong>maximum seats</strong> that your license permits, please contact enterprise@travis-ci.com if you need more seats.</p>
-      {{else if almostExceedingSeats}}
-        <p>{{svg-jar 'icon-flag' class="icon"}} You’re approaching the <strong>maximum seats</strong> that your license permits, please contact enterprise@travis-ci.com if you need more seats.</p>
+      {{#if isExpired}}
+        <p>{{svg-jar 'icon-flag' class="icon"}} Your license has <strong>expired</strong>, please contact enterprise@travis-ci.com</p>
+      {{else if expiresSoon}}
+        <p>{{svg-jar 'icon-flag' class="icon"}} Your license <strong>expires {{expirationTimeFromNow}}</strong>, please contact enterprise@travis-ci.com</p>
+      {{/if}}
+      {{#if showSeatsBanner}}
+        <div class="enterprise-banner {{seatsClass}}">
+          <div class="inner">
+            {{#if exceedingSeats}}
+              <p>{{svg-jar 'icon-flag' class="icon"}} You’ve exceeded the <strong>maximum seats</strong> that your license permits, please contact enterprise@travis-ci.com if you need more seats.</p>
+            {{else if almostExceedingSeats}}
+              <p>{{svg-jar 'icon-flag' class="icon"}} You’re approaching the <strong>maximum seats</strong> that your license permits, please contact enterprise@travis-ci.com if you need more seats.</p>
+            {{/if}}
+          </div>
+        </div>
       {{/if}}
     </div>
   </div>

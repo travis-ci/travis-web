@@ -33,9 +33,14 @@ export default Ember.Component.extend({
     return (seats - activeUsers <= 5);
   },
 
-  @computed('licenseType', 'isExpired')
-  isTrial(licenseType, isExpired) {
-    return (licenseType === 'trial' && !isExpired);
+  @computed('licenseType')
+  isTrial(licenseType) {
+    return (licenseType === 'trial');
+  },
+
+  @computed('licenseType')
+  isPaid(licenseType) {
+    return (licenseType === 'paid');
   },
 
   @computed('expirationTime')
@@ -90,20 +95,26 @@ export default Ember.Component.extend({
     return daysFromNowThatLicenseExpires < 11;
   },
 
-  @computed('isTrial', 'expiresSoon')
-  showLicenseBanner(isTrial, expiresSoon) {
-    return isTrial || expiresSoon;
+  @computed('isTrial')
+  showTrialBanner(isTrial) {
+    return isTrial;
+  },
+
+  @computed('isPaid')
+  showPaidBanner(isPaid) {
+    return isPaid;
   },
 
   @computed('almostExceedingSeats', 'exceedingSeats')
-  showSeatsBanner(almost, did) {
-    return almost || did;
+  showSeatsBanner(almostExceeding, exceeding) {
+    return almostExceeding || exceeding;
   },
 
-  @computed('isTrial', 'expiresSoon')
-  licenseClass(isTrial, expiresSoon) {
-    if (expiresSoon && !isTrial) return 'alert';
+  @computed('expiresSoon')
+  licenseClass(expiresSoon) {
+    if (expiresSoon) return 'alert';
   },
 
-  seatsClass: 'alert'
+  seatsClass: 'alert',
+  paidClass: 'alert'
 });
