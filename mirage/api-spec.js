@@ -1622,7 +1622,11 @@ export default {
         "standard":       [
           "id",
           "valid_to",
-        ]
+        ],
+        "minimal":       [
+            "id",
+            "valid_to",
+        ],
       }
     },
   }

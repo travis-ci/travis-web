@@ -83,6 +83,9 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
       'source': 'stripe',
       'selected plan': 'travis-ci-two-builds'
     });
+
+    currentUser.subscription = this.subscription;
+    currentUser.save();
   }
 });
 

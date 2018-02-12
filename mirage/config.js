@@ -43,8 +43,6 @@ export default function () {
     return { accounts: users.concat(accounts) };
   });
 
-  this.get('/subscriptions/:id');
-
   this.get('/users/:id', function ({ users }, request) {
     if (request.requestHeaders.Authorization === 'token testUserToken') {
       return this.serialize(users.find(request.params.id), 'v2');
@@ -231,7 +229,11 @@ export default function () {
   this.get('/owner/:login', function (schema, request) {
     let owner = schema.users.where({ login: request.params.login }).models[0];
     if (owner) {
-      return this.serialize(owner, 'owner');
+      if (request.queryParams.include === 'owner.subscription') {
+        return this.serialize(owner, 'v3');
+      } else {
+        return this.serialize(owner, 'owner');
+      }
     } else {
       return new Mirage.Response(404, {}, {});
     }
