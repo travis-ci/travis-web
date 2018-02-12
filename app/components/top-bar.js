@@ -21,8 +21,6 @@ export default Component.extend(InViewportMixin, {
   classNames: ['top'],
   landingPage: false,
 
-  classNameBindings: ['viewportEntered:jorty'],
-
   @alias('auth.currentUser') user: null,
 
   @computed('user.{login,name}')
