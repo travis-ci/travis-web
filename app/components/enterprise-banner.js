@@ -14,8 +14,12 @@ export default Ember.Component.extend({
     const url = '/v3/enterprise_license';
     this.get('ajax').get(url).then(response => {
       Ember.run(() => {
+        const exp = new Date(Date.parse(response.expiration_time));
         this.set('licenseId', response.license_id);
-        this.set('expirationTime', new Date(Date.parse(response.expiration_time)));
+        this.set('expirationTime', exp);
+        this.set('daysUntilExpiry', Math.ceil(
+          (exp.getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24)
+        ));
         this.set('licenseType', response.license_type);
         this.set('seats', response.seats);
         this.set('activeUsers', response.active_users);
@@ -40,7 +44,7 @@ export default Ember.Component.extend({
 
   @computed('licenseType')
   isPaid(licenseType) {
-    return (licenseType === 'paid');
+    return (licenseType !== 'trial');
   },
 
   @computed('expirationTime')
@@ -53,46 +57,41 @@ export default Ember.Component.extend({
     return new Ember.String.htmlSafe(timeAgoInWords(expirationTime) || '-');
   },
 
-  @computed('expirationIn60Days')
-  expiresSoon(soon) {
-    // localStorage
-    return soon;
+  @computed('daysUntilExpiry')
+  expiring(days) {
+    if (!days) return false;
+    return days <= 60;
   },
 
-  @computed('expirationTime')
-  expirationIn60Days(expirationTime) {
-    if (!expirationTime) {
-      return false;
-    }
-
-    const daysFromNowThatLicenseExpires =
-            (expirationTime.getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24);
-
-    return daysFromNowThatLicenseExpires < 61;
+  @computed('daysUntilExpiry')
+  expiringHalfway(days) {
+    if (!days) return false;
+    return days <= 30;
   },
 
-  @computed('expirationTime')
-  expirationIn30Days(expirationTime) {
-    if (!expirationTime) {
-      return false;
-    }
-
-    const daysFromNowThatLicenseExpires =
-            (expirationTime.getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24);
-
-    return daysFromNowThatLicenseExpires < 31;
+  @computed('daysUntilExpiry')
+  expiringSoon(days) {
+    if (!days) return false;
+    return days <= 10;
   },
 
-  @computed('expirationTime')
-  expirationIn10Days(expirationTime) {
-    if (!expirationTime) {
+  @computed('expiring', 'expiringHalfway', 'expiringSoon')
+  checkLicenseBanner(expiring, halfway, soon) {
+    let lastSeen = this.get('getStorage')();
+    if (
+      // User has never closed banner, and license expires in 60 days or less
+      (!lastSeen && expiring) ||
+      // User has either never closed the banner, or closed it before 30 days,
+      // and license expires in 30 days or less
+      ((!lastSeen || lastSeen > 30) && halfway) ||
+      // License expires in 10 days or less
+      (soon)
+    ) {
+      return true;
+    } else {
+      this.get('clearStorage')();
       return false;
     }
-
-    const daysFromNowThatLicenseExpires =
-            (expirationTime.getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24);
-
-    return daysFromNowThatLicenseExpires < 11;
   },
 
   @computed('isTrial')
@@ -100,14 +99,27 @@ export default Ember.Component.extend({
     return isTrial;
   },
 
-  @computed('isPaid')
-  showPaidBanner(isPaid) {
-    return isPaid;
+  @computed('isPaid', 'checkLicenseBanner')
+  showLicenseBanner(isPaid, check) {
+    return (isPaid && check);
   },
 
-  @computed('almostExceedingSeats', 'exceedingSeats')
-  showSeatsBanner(almostExceeding, exceeding) {
-    return almostExceeding || exceeding;
+  @computed('isPaid', 'almostExceedingSeats', 'exceedingSeats')
+  showSeatsBanner(isPaid, almostExceeding, exceeding) {
+    return (isPaid && (almostExceeding || exceeding));
+  },
+
+  getStorage() {
+    return window.localStorage['travis.enterprise.license_msg_last_seen'];
+  },
+
+  @computed('daysUntilExpiry')
+  setStorage(days) {
+    return window.localStorage['travis.enterprise.license_msg_last_seen'] = days;
+  },
+
+  clearStorage() {
+    return window.localStorage.removeItem('travis.enterprise.license_msg_last_seen');
   },
 
   @computed('expiresSoon')
@@ -116,5 +128,12 @@ export default Ember.Component.extend({
   },
 
   seatsClass: 'alert',
-  paidClass: 'alert'
+  paidClass: 'alert',
+
+  actions: {
+    close() {
+      this.get('setStorage');
+      return this.$().remove();
+    }
+  }
 });
