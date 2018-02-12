@@ -63,6 +63,7 @@
     "ember-export-application-global": "2.0.0",
     "ember-feature-flags": "^4.0.0",
     "ember-fetch": "^3.3.1",
+    "ember-in-viewport": "^2.1.1",
     "ember-inflector": "^2.0.0",
     "ember-keyboard-shortcuts": "^1.0.2",
     "ember-load-initializers": "1.0.0",
