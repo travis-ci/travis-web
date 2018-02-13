@@ -15,7 +15,7 @@ export default Component.extend({
   messagesRequest(repoId, requestId) {
     if (requestId) {
       return ObjectPromiseProxy.create({
-        promise: this.get('ajax').ajax(`/repo/${repoId}/request/${requestId}/messages`, 'GET', {
+        promise: this.get('ajax').ajax(`/repo/${repoId}/request/${requestId}/messages`, 'get', {
           headers: {
             'Travis-API-Version': '3'
           }})
