@@ -53,7 +53,7 @@ test('view and cancel pull requests', function (assert) {
 
   server.create('job', {
     number: '1000.1',
-    repositoryId: this.repoId,
+    repository,
     state: 'started',
     commit: pullRequestCommit,
     build: pullRequestBuild,
