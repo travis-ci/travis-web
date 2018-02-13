@@ -1,5 +1,4 @@
-/* global HS, Waypoint */
-import { run } from '@ember/runloop';
+/* global HS */
 
 import { htmlSafe } from '@ember/string';
 import Component from '@ember/component';
@@ -8,7 +7,9 @@ import { computed } from 'ember-decorators/object';
 import { alias } from 'ember-decorators/object/computed';
 import { service } from 'ember-decorators/service';
 
-export default Component.extend({
+import InViewportMixin from 'ember-in-viewport';
+
+export default Component.extend(InViewportMixin, {
   @service auth: null,
   @service store: null,
   @service externalLinks: null,
@@ -99,27 +100,24 @@ export default Component.extend({
   },
 
   didInsertElement() {
-    const component = this; // Not pleasant, but I can’t find a better way.
-
     if (Ember.testing) {
       return;
     }
 
-    const waypoint = new Waypoint.Inview({
-      element: this.element,
-      exited() {
-        run(() => {
-          component.get('flashes').set('topBarVisible', false);
-        });
-      },
-
-      enter() {
-        run(() => {
-          component.get('flashes').set('topBarVisible', true);
-        });
-      }
+    Ember.setProperties(this, {
+      viewportSpy: true
     });
+    this._super(...arguments);
+    Ember.run.scheduleOnce('afterRender', this, () => {
+      Ember.set(this, 'viewportTolerance.top', this.$().height());
+    });
+  },
 
-    this.set('waypoint', waypoint);
-  }
+  didEnterViewport() {
+    this.get('flashes').set('topBarVisible', true);
+  },
+
+  didExitViewport() {
+    this.get('flashes').set('topBarVisible', false);
+  },
 });
