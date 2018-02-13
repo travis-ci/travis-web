@@ -1,19 +1,23 @@
 import Ember from 'ember';
 
 import { computed } from 'ember-decorators/object';
+import { alias } from 'ember-decorators/object/computed';
 import { service } from 'ember-decorators/service';
 
 import timeAgoInWords from 'travis/utils/time-ago-in-words';
 
 export default Ember.Component.extend({
   @service ajax: null,
+  @service storage: null,
+
+  key: 'travis.enterprise.license_msg_last_seen',
 
   didInsertElement() {
     this._super(...arguments);
 
     const url = '/v3/enterprise_license';
-    this.get('ajax').get(url).then(response => {
-      Ember.run(() => {
+    Ember.run(() => {
+      this.get('ajax').get(url).then(response => {
         const exp = new Date(Date.parse(response.expiration_time));
         this.set('licenseId', response.license_id);
         this.set('expirationTime', exp);
@@ -23,7 +27,11 @@ export default Ember.Component.extend({
         this.set('licenseType', response.license_type);
         this.set('seats', response.seats);
         this.set('activeUsers', response.active_users);
-        if (!this.get('expiring')) this.get('clearStorage')();
+        this.set('isTrial', response.license_type === 'trial');
+        this.set('isPaid', response.license_type !== 'trial');
+        if (!this.get('expiring')) {
+          this.get('storage').removeItem(this.get('key'));
+        }
       });
     });
   },
@@ -36,16 +44,6 @@ export default Ember.Component.extend({
   @computed('seats', 'activeUsers')
   almostExceedingSeats(seats, activeUsers) {
     return (seats - activeUsers <= 5);
-  },
-
-  @computed('licenseType')
-  isTrial(licenseType) {
-    return (licenseType === 'trial');
-  },
-
-  @computed('licenseType')
-  isPaid(licenseType) {
-    return (licenseType !== 'trial');
   },
 
   @computed('expirationTime')
@@ -78,7 +76,7 @@ export default Ember.Component.extend({
 
   @computed('expiring', 'expiringHalfway', 'expiringSoon')
   checkLicenseBanner(expiring, halfway, soon) {
-    let lastSeen = this.get('getStorage')();
+    let lastSeen = this.get('storage').getItem(this.get('key'));
     if (
       // User has never closed banner, and license expires in 60 days or less
       (!lastSeen && expiring) ||
@@ -94,10 +92,7 @@ export default Ember.Component.extend({
     }
   },
 
-  @computed('isTrial')
-  showTrialBanner(isTrial) {
-    return isTrial;
-  },
+  @alias('isTrial') showTrialBanner: null,
 
   @computed('isPaid', 'checkLicenseBanner')
   showLicenseBanner(isPaid, check) {
@@ -114,25 +109,13 @@ export default Ember.Component.extend({
     if (expiresSoon) return 'alert';
   },
 
-  getStorage() {
-    return window.localStorage['travis.enterprise.license_msg_last_seen'];
-  },
-
-  @computed('daysUntilExpiry')
-  setStorage(days) {
-    return window.localStorage['travis.enterprise.license_msg_last_seen'] = days;
-  },
-
-  clearStorage() {
-    return window.localStorage.removeItem('travis.enterprise.license_msg_last_seen');
-  },
-
+  trialClass: null,
   seatsClass: 'alert',
   paidClass: 'alert',
 
   actions: {
     closeLicenseBanner() {
-      this.get('setStorage');
+      this.get('storage').setItem(this.get('key'), this.get('daysUntilExpiry'));
       return this.$('.enterprise-banner-license').remove();
     }
   }

@@ -1,11 +1,7 @@
 import PageObject from 'travis/tests/page-object';
 
 let {
-  clickable,
-  collection,
-  hasClass,
   isHidden,
-  notHasClass,
   text
 } = PageObject;
 
