@@ -23,6 +23,7 @@ export default Ember.Component.extend({
         this.set('licenseType', response.license_type);
         this.set('seats', response.seats);
         this.set('activeUsers', response.active_users);
+        if (!this.get('expiring')) this.get('clearStorage')();
       });
     });
   },
@@ -89,7 +90,6 @@ export default Ember.Component.extend({
     ) {
       return true;
     } else {
-      this.get('clearStorage')();
       return false;
     }
   },
@@ -109,6 +109,11 @@ export default Ember.Component.extend({
     return (isPaid && (almostExceeding || exceeding));
   },
 
+  @computed('expiresSoon')
+  licenseClass(expiresSoon) {
+    if (expiresSoon) return 'alert';
+  },
+
   getStorage() {
     return window.localStorage['travis.enterprise.license_msg_last_seen'];
   },
@@ -122,18 +127,13 @@ export default Ember.Component.extend({
     return window.localStorage.removeItem('travis.enterprise.license_msg_last_seen');
   },
 
-  @computed('expiresSoon')
-  licenseClass(expiresSoon) {
-    if (expiresSoon) return 'alert';
-  },
-
   seatsClass: 'alert',
   paidClass: 'alert',
 
   actions: {
-    close() {
+    closeLicenseBanner() {
       this.get('setStorage');
-      return this.$().remove();
+      return this.$('.enterprise-banner-license').remove();
     }
   }
 });

@@ -1,5 +1,5 @@
 {{#if showTrialBanner}}
-  <div class="enterprise-banner {{trialClass}}">
+  <div class="enterprise-banner enterprise-banner-trial {{trialClass}}">
     <div class="inner">
       {{#if isExpired}}
         <p>{{svg-jar 'icon-flag' class="icon"}} Your trial license has <strong>expired</strong>, please contact enterprise@travis-ci.com</p>
@@ -13,7 +13,7 @@
 {{/if}}
 
 {{#if showLicenseBanner}}
-  <div class="enterprise-banner {{paidClass}}">
+  <div class="enterprise-banner enterprise-banner-license {{paidClass}}">
     <div class="inner">
       {{#if isExpired}}
         <p>{{svg-jar 'icon-flag' class="icon"}} Your license has <strong>expired</strong>, please contact enterprise@travis-ci.com</p>
@@ -22,7 +22,7 @@
           {{svg-jar 'icon-flag' class="icon"}}
           Your license <strong>expires {{expirationTimeFromNow}}</strong>, please contact enterprise@travis-ci.com
           {{#unless expiringSoon}}
-            <button class="close-btn" {{action "close"}}>{{svg-jar 'flash-close' class="close-icon"}}</button>
+            <button class="close-btn" {{action "closeLicenseBanner"}}>{{svg-jar 'flash-close' class="close-icon"}}</button>
           {{/unless}}
         </p>
       {{/if}}
@@ -31,7 +31,7 @@
 {{/if}}
 
 {{#if showSeatsBanner}}
-  <div class="enterprise-banner {{seatsClass}}">
+  <div class="enterprise-banner enterprise-banner-seats {{seatsClass}}">
     <div class="inner">
       {{#if exceedingSeats}}
         <p>{{svg-jar 'icon-flag' class="icon"}} You’ve exceeded the <strong>maximum seats</strong> that your license permits, please contact enterprise@travis-ci.com if you need more seats.</p>
