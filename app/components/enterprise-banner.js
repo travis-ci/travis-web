@@ -6,7 +6,7 @@ import { service } from 'ember-decorators/service';
 import timeAgoInWords from 'travis/utils/time-ago-in-words';
 
 export default Ember.Component.extend({
-	@service ajax: null,
+  @service ajax: null,
 
   didInsertElement() {
     this._super(...arguments);
