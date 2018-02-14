@@ -29,7 +29,7 @@ test('renders trial banner unexpired', function (assert) {
 
   wait().then(() => {
     assert.ok(this.$('.enterprise-banner-trial').text().match(/Your trial license expires/));
-    assert.ok(!this.$('.enterprise-banner-trial').hasClass('warning'));
+    assert.notOk(this.$('.enterprise-banner-trial').hasClass('alert'));
   });
 });
 
@@ -49,7 +49,7 @@ test('renders trial banner expired', function (assert) {
 
   wait().then(() => {
     assert.ok(this.$('.enterprise-banner-trial').text().match(/Your trial license has expired/));
-    assert.ok(!this.$('.enterprise-banner-trial').hasClass('warning'));
+    assert.notOk(this.$('.enterprise-banner-trial').hasClass('alert'));
   });
 });
 
@@ -63,13 +63,14 @@ test('renders paid banner 60 days from expiry', function (assert) {
       'expiration_time': new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * 59).toISOString()
     };
   });
-  assert.expect(2);
+  assert.expect(3);
 
   this.render(hbs`{{enterprise-banner}}`);
 
   wait().then(() => {
     assert.ok(this.$('.enterprise-banner-license').text().match(/Your license expires 2 months from now/));
     assert.ok(this.$('.enterprise-banner-license').hasClass('alert'));
+    assert.ok(this.$('.enterprise-banner-license button').length);
   });
 });
 
@@ -83,13 +84,14 @@ test('renders paid banner 30 days from expiry', function (assert) {
       'expiration_time': new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * 26).toISOString()
     };
   });
-  assert.expect(2);
+  assert.expect(3);
 
   this.render(hbs`{{enterprise-banner}}`);
 
   wait().then(() => {
     assert.ok(this.$('.enterprise-banner-license').text().match(/Your license expires 26 days from now/));
     assert.ok(this.$('.enterprise-banner-license').hasClass('alert'));
+    assert.ok(this.$('.enterprise-banner-license button').length);
   });
 });
 
@@ -103,13 +105,14 @@ test('renders paid banner 10 days from expiry', function (assert) {
       'expiration_time': new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * 8).toISOString()
     };
   });
-  assert.expect(2);
+  assert.expect(3);
 
   this.render(hbs`{{enterprise-banner}}`);
 
   wait().then(() => {
     assert.ok(this.$('.enterprise-banner-license').text().match(/Your license expires 8 days from now/));
     assert.ok(this.$('.enterprise-banner-license').hasClass('alert'));
+    assert.notOk(this.$('.enterprise-banner-license button').length);
   });
 });
 
