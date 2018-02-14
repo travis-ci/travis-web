@@ -20,7 +20,7 @@
       {{else if expiring}}
         <p>
           {{svg-jar 'icon-flag' class="icon"}}
-          Your license <strong>expires {{expirationTimeFromNow}}</strong>, please contact enterprise@travis-ci.com
+          Your license <strong>expires {{expirationTimeFromNow}}</strong>, please contact <a href="mailto:enterprise@travis-ci.com">enterprise@travis-ci.com</a>
           {{#unless expiringSoon}}
             <button class="close-btn" {{action "closeLicenseBanner"}}>{{svg-jar 'flash-close' class="close-icon"}}</button>
           {{/unless}}
@@ -34,9 +34,9 @@
   <div class="enterprise-banner enterprise-banner-seats {{seatsClass}}">
     <div class="inner">
       {{#if exceedingSeats}}
-        <p>{{svg-jar 'icon-flag' class="icon"}} You’ve exceeded the <strong>maximum seats</strong> that your license permits, please contact enterprise@travis-ci.com if you need more seats.</p>
+        <p>{{svg-jar 'icon-flag' class="icon"}} You’ve exceeded the <strong>maximum seats</strong> that your license permits, please contact <a href="mailto:enterprise@travis-ci.com">enterprise@travis-ci.com</a> if you need more seats.</p>
       {{else if almostExceedingSeats}}
-        <p>{{svg-jar 'icon-flag' class="icon"}} You’re approaching the <strong>maximum seats</strong> that your license permits, please contact enterprise@travis-ci.com if you need more seats.</p>
+        <p>{{svg-jar 'icon-flag' class="icon"}} You’re approaching the <strong>maximum seats</strong> that your license permits, please contact <a href="mailto:enterprise@travis-ci.com">enterprise@travis-ci.com</a> if you need more seats.</p>
       {{/if}}
     </div>
   </div>
