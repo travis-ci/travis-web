@@ -8,6 +8,7 @@ export default Component.extend({
   classNameBindings: ['type', 'selected'],
 
   tokenIsVisible: false,
+  showCopySuccess: false,
 
   @alias('account.type') type: null,
   @alias('account.selected') selected: null,
@@ -29,7 +30,14 @@ export default Component.extend({
 
   actions: {
     tokenVisibility() {
+      if (this.get('showCopySuccess')) {
+        this.toggleProperty('showCopySuccess');
+      }
       this.toggleProperty('tokenIsVisible');
-    }
+    },
+
+    copyTokenSuccessful() {
+      this.toggleProperty('showCopySuccess');
+    },
   },
 });

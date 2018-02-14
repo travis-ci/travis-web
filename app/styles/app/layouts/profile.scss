@@ -283,3 +283,11 @@ $profile-breakpoint: 600px;
     }
   }
 }
+
+.account-token .italic {
+  font-style: italic;
+}
+
+.token-actions button {
+  border: 1px solid $cement-grey;
+}

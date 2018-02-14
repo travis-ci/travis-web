@@ -12,19 +12,20 @@
     {{#if isUser}}
       <p class="account-token">
         API Token:
-        {{#if tokenIsVisible}}
-          <strong>{{auth.token}}</strong>
+        {{#if showCopySuccess}}
+          <span class="italic">Token copied!</span>
+        {{else}}
+          <span class="italic">{{if tokenIsVisible auth.token 'hidden'}}</span>
         {{/if}}
-        <a {{action 'tokenVisibility' prevenDefault=true}} class="profile-token-toggle {{if tokenIsVisible 'is-visible'}} dropdown">
-          {{#tooltip-on-element}}
-          {{#if tokenIsVisible}}
-            hide token
-          {{else}}
-            show token
-          {{/if}}
-          {{/tooltip-on-element}}
-          {{svg-jar 'icon-seemore' class="icon icon-seemore"}}
-        </a>
+        <div class="token-actions">
+          <button {{action 'tokenVisibility'}}>{{if tokenIsVisible 'Hide' 'Show'}}</button>
+          {{#copy-button
+            clipboardText=auth.token
+            title="Copy to clipboard"
+            success=(action 'copyTokenSuccessful')}}
+            Copy
+          {{/copy-button}}
+        </div>
       </p>
     {{/if}}
   </span>
