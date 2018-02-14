@@ -227,32 +227,6 @@ $profile-breakpoint: 600px;
   }
 }
 
-.profile-token-toggle {
-  .icon-seemore {
-    vertical-align: middle;
-
-    &:hover {
-      path, ellipse {
-        stroke: $asphalt-grey;
-      }
-    }
-  }
-
-  &.is-visible {
-    .icon-seemore {
-      ellipse {
-        fill: $cement-grey;
-      }
-
-      &:hover {
-        ellipse {
-          fill: $asphalt-grey;
-        }
-      }
-    }
-  }
-}
-
 .profile-repositories-filter {
   margin-bottom: 1.5em;
 
