@@ -13,7 +13,7 @@ moduleForComponent('enterprise-banner', 'Integration | Component | enterprise ba
   }
 });
 
-test('renders trial banner', function(assert) {
+test('renders trial banner', function (assert) {
   this.server.get('/v3/enterprise_license', (schema, response) => {
     return {
       'license_id': 'ad12345',
@@ -21,12 +21,12 @@ test('renders trial banner', function(assert) {
       'active_users': '21',
       'license_type': 'trial',
       'expiration_time': '2020-01-01T00:00:00Z'
-    }
+    };
   });
   assert.expect(2);
-  
+
   this.render(hbs`{{enterprise-banner}}`);
-  
+
   wait().then(() => {
     assert.ok(this.$('.enterprise-banner-trial').text().match(/Your trial license expires/));
     assert.ok(!this.$('.enterprise-banner-trial').hasClass('warning'));
