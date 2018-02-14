@@ -13,7 +13,7 @@
       <p class="account-token">
         Token:
         {{#if tokenIsVisible}}
-          <strong>{{auth.currentUser.token}}</strong>
+          <strong>{{auth.token}}</strong>
         {{/if}}
         <a {{action 'tokenVisibility' prevenDefault=true}} class="profile-token-toggle {{if tokenIsVisible 'is-visible'}} dropdown">
           {{#tooltip-on-element}}
