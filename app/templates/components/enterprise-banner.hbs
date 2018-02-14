@@ -16,11 +16,11 @@
   <div class="enterprise-banner enterprise-banner-license {{paidClass}}">
     <div class="inner">
       {{#if isExpired}}
-        <p>{{svg-jar 'icon-flag' class="icon"}} Your license has <strong>expired</strong>, please contact enterprise@travis-ci.com</p>
+        <p>{{svg-jar 'icon-flag' class="icon"}} Your license has <strong>expired</strong>, please contact <a href="mailto:enterprise@travis-ci.com">enterprise@travis-ci.com</a>.</p>
       {{else if expiring}}
         <p>
           {{svg-jar 'icon-flag' class="icon"}}
-          Your license <strong>expires {{expirationTimeFromNow}}</strong>, please contact <a href="mailto:enterprise@travis-ci.com">enterprise@travis-ci.com</a>
+          Your license <strong>expires {{expirationTimeFromNow}}</strong>, please contact <a href="mailto:enterprise@travis-ci.com">enterprise@travis-ci.com</a>.
           {{#unless expiringSoon}}
             <button class="close-btn" {{action "closeLicenseBanner"}}>{{svg-jar 'flash-close' class="close-icon"}}</button>
           {{/unless}}
