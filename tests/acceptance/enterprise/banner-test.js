@@ -27,18 +27,6 @@ test('banner is rendered in enterprise mode', function (assert) {
     setTimeout(() => {
       assert.ok(enterpriseBanners.trialBanner.isVisible);
       done();
-    }, 100);
-  });
-});
-
-test('banner is not rendered otherwise', function (assert) {
-  withoutFeature('enterpriseVersion');
-  visit('/');
-  andThen(function () {
-    var done = assert.async();
-    setTimeout(() => {
-      assert.notOk(enterpriseBanners.trialBanner.isVisible);
-      done();
-    }, 100);
+    }, 500);
   });
 });
