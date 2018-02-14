@@ -19,16 +19,18 @@ export default Ember.Component.extend({
     Ember.run(() => {
       this.get('ajax').get(url).then(response => {
         const exp = new Date(Date.parse(response.expiration_time));
-        this.set('licenseId', response.license_id);
-        this.set('expirationTime', exp);
-        this.set('daysUntilExpiry', Math.ceil(
-          (exp.getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24)
-        ));
-        this.set('licenseType', response.license_type);
-        this.set('seats', response.seats);
-        this.set('activeUsers', response.active_users);
-        this.set('isTrial', response.license_type === 'trial');
-        this.set('isPaid', response.license_type !== 'trial');
+        this.setProperties({
+          licenseId: response.license_id,
+          expirationTime: exp,
+          daysUntilExpiry: Math.ceil(
+            (exp.getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24)
+          ),
+          licenceType: response.license_type,
+          seats: response.seats,
+          activeUsers: response.active_users,
+          isTrial: response.license_type === 'trial',
+          isPaid: response.license_type !== 'trial'
+        });
         if (!this.get('expiring')) {
           this.get('storage').removeItem(this.get('key'));
         }
