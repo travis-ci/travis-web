@@ -7,20 +7,14 @@ let {
 
 export const enterpriseBanners = {
   trialBanner: PageObject.create({
-    scope: '.enterprise-banner-trial',
-    text: text(),
-    isHidden: isHidden()
+    scope: '.enterprise-banner-trial'
   }),
 
   licenseBanner: PageObject.create({
-    scope: '.enterprise-license-banner',
-    text: text(),
-    isHidden: isHidden()
+    scope: '.enterprise-license-banner'
   }),
 
   seatsBanner: PageObject.create({
-    scope: '.enterprise-banner-seats',
-    text: text(),
-    isHidden: isHidden()
+    scope: '.enterprise-banner-seats'
   })
 };
