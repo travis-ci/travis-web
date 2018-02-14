@@ -16,25 +16,24 @@ export default Ember.Component.extend({
     this._super(...arguments);
 
     const url = '/v3/enterprise_license';
-    Ember.run(() => {
-      this.get('ajax').get(url).then(response => {
-        const exp = new Date(Date.parse(response.expiration_time));
-        this.setProperties({
-          licenseId: response.license_id,
-          expirationTime: exp,
-          daysUntilExpiry: Math.ceil(
-            (exp.getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24)
-          ),
-          licenceType: response.license_type,
-          seats: response.seats,
-          activeUsers: response.active_users,
-          isTrial: response.license_type === 'trial',
-          isPaid: response.license_type !== 'trial'
-        });
-        if (!this.get('expiring')) {
-          this.get('storage').removeItem(this.get('key'));
-        }
+
+    this.get('ajax').get(url).then(response => {
+      const exp = new Date(Date.parse(response.expiration_time));
+      this.setProperties({
+        licenseId: response.license_id,
+        expirationTime: exp,
+        daysUntilExpiry: Math.ceil(
+          (exp.getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24)
+        ),
+        licenceType: response.license_type,
+        seats: response.seats,
+        activeUsers: response.active_users,
+        isTrial: response.license_type === 'trial',
+        isPaid: response.license_type !== 'trial'
       });
+      if (!this.get('expiring')) {
+        this.get('storage').removeItem(this.get('key'));
+      }
     });
   },
 
