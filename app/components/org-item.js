@@ -37,7 +37,9 @@ export default Component.extend({
     },
 
     copyTokenSuccessful() {
-      this.toggleProperty('showCopySuccess');
+      if (!this.get('showCopySuccess')) {
+        this.toggleProperty('showCopySuccess');
+      }
     },
   },
 });

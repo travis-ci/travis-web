@@ -49,5 +49,12 @@ test('copy token', function (assert) {
   andThen(function () {
     assert.equal(profilePage.token.tokenCopiedText, 'Token copied!');
   });
+
+  // ensure a second copy success does not show incorrect text/feel buggy
+  triggerCopySuccess();
+
+  andThen(function () {
+    assert.equal(profilePage.token.tokenCopiedText, 'Token copied!');
+  });
   percySnapshot(assert);
 });
