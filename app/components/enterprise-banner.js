@@ -118,7 +118,7 @@ export default Ember.Component.extend({
   actions: {
     closeLicenseBanner() {
       this.get('storage').setItem(this.get('key'), this.get('daysUntilExpiry'));
-      return this.$('.enterprise-banner-license').remove();
+      this.set('showLicenseBanner', false);
     }
   }
 });
