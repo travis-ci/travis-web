@@ -26,13 +26,28 @@ test('view token', function (assert) {
   profilePage.visit({ username: 'feministkilljoy' });
 
   andThen(() => {
-    assert.ok(profilePage.token.isHidden, 'expected token to be hidden by default');
+    assert.equal(profilePage.token.hiddenMessage, 'hidden', 'expected token to be hidden by default');
   });
 
   profilePage.token.show();
 
   andThen(function () {
     assert.equal(profilePage.token.value, 'testUserToken');
+  });
+  percySnapshot(assert);
+});
+
+test('copy token', function (assert) {
+  profilePage.visit({ username: 'feministkilljoy' });
+
+  andThen(() => {
+    assert.equal(profilePage.token.hiddenMessage, 'hidden', 'expected token to be hidden by default');
+  });
+
+  triggerCopySuccess();
+
+  andThen(function () {
+    assert.equal(profilePage.token.tokenCopiedText, 'Token copied!');
   });
   percySnapshot(assert);
 });

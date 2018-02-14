@@ -13,13 +13,14 @@
       <p class="account-token">
         API Token:
         {{#if showCopySuccess}}
-          <span class="italic">Token copied!</span>
+          <span class="token-copied-text italic">Token copied!</span>
         {{else}}
-          <span class="italic">{{if tokenIsVisible auth.token 'hidden'}}</span>
+          <span class="auth-token italic">{{if tokenIsVisible auth.token 'hidden'}}</span>
         {{/if}}
         <div class="token-actions">
-          <button {{action 'tokenVisibility'}}>{{if tokenIsVisible 'Hide' 'Show'}}</button>
+          <button {{action 'tokenVisibility'}} class="show-token">{{if tokenIsVisible 'Hide' 'Show'}}</button>
           {{#copy-button
+            class="copy-button"
             clipboardText=auth.token
             title="Copy to clipboard"
             success=(action 'copyTokenSuccessful')}}
