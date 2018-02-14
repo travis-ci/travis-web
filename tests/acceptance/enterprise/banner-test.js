@@ -12,25 +12,32 @@ moduleForAcceptance('Acceptance | enterprise/banner', {
         'license_id': 'ad12345',
         'seats': '30',
         'active_users': '21',
-        'license_type': this.licenseType,
-        'expiration_time': this.expirationTime
+        'license_type': 'trial',
+        'expiration_time': '2019-01-01T00:00:00Z'
       };
     });
   }
 });
 
-test('when the trial has expired', function (assert) {
+test('banner is rendered in enterprise mode', function (assert) {
   withFeature('enterpriseVersion');
-  this.licenseType = 'trial';
-  this.expirationTime = (new Date(new Date().getTime() - 10000)).toISOString();
-
   visit('/');
-
   andThen(function () {
     var done = assert.async();
     setTimeout(() => {
       assert.ok(enterpriseBanners.trialBanner.isVisible);
-      assert.equal(enterpriseBanners.trialBanner.text, 'Your trial license has expired, please contact enterprise@travis-ci.com');
+      done();
+    }, 100);
+  });
+});
+
+test('banner is not rendered otherwise', function (assert) {
+  withoutFeature('enterpriseVersion');
+  visit('/');
+  andThen(function () {
+    var done = assert.async();
+    setTimeout(() => {
+      assert.notOk(enterpriseBanners.trialBanner.isVisible);
       done();
     }, 100);
   });
