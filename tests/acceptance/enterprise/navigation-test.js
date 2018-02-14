@@ -4,7 +4,7 @@
 // moduleForAcceptance('Acceptance | enterprise/navigation');
 
 // test('visiting `/` without being authenticated redirects to `/auth`', function (assert) {
-//   withFeature('enterpriseVersion');
+//   withFeature('enterprise');
 //   visit('/');
 
 //   andThen(function () {
