@@ -40,7 +40,7 @@ test('renders trial banner expired', function (assert) {
       'seats': '30',
       'active_users': '21',
       'license_type': 'trial',
-      'expiration_time': '2017-01-01T00:00:00Z'
+      'expiration_time': new Date(new Date().getTime() - 1000 * 60 * 60 * 24).toISOString()
     };
   });
   assert.expect(2);
@@ -80,7 +80,7 @@ test('renders paid banner 30 days from expiry', function (assert) {
       'seats': '30',
       'active_users': '21',
       'license_type': 'paid',
-      'expiration_time': new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * 29).toISOString()
+      'expiration_time': new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * 26).toISOString()
     };
   });
   assert.expect(2);
@@ -88,8 +88,67 @@ test('renders paid banner 30 days from expiry', function (assert) {
   this.render(hbs`{{enterprise-banner}}`);
 
   wait().then(() => {
-    assert.ok(this.$('.enterprise-banner-license').text().match(/Your license expires 1 month from now/));
+    assert.ok(this.$('.enterprise-banner-license').text().match(/Your license expires 26 days from now/));
     assert.ok(this.$('.enterprise-banner-license').hasClass('alert'));
   });
 });
 
+test('renders paid banner 10 days from expiry', function (assert) {
+  this.server.get('/v3/enterprise_license', (schema, response) => {
+    return {
+      'license_id': 'ad12345',
+      'seats': '30',
+      'active_users': '21',
+      'license_type': 'paid',
+      'expiration_time': new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * 8).toISOString()
+    };
+  });
+  assert.expect(2);
+
+  this.render(hbs`{{enterprise-banner}}`);
+
+  wait().then(() => {
+    assert.ok(this.$('.enterprise-banner-license').text().match(/Your license expires 8 days from now/));
+    assert.ok(this.$('.enterprise-banner-license').hasClass('alert'));
+  });
+});
+
+test('renders seats banner nearing excess', function (assert) {
+  this.server.get('/v3/enterprise_license', (schema, response) => {
+    return {
+      'license_id': 'ad12345',
+      'seats': '30',
+      'active_users': '26',
+      'license_type': 'paid',
+      'expiration_time': new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * 8).toISOString()
+    };
+  });
+  assert.expect(2);
+
+  this.render(hbs`{{enterprise-banner}}`);
+
+  wait().then(() => {
+    assert.ok(this.$('.enterprise-banner-seats').text().match(/You’re approaching the maximum seats that your license permits/));
+    assert.ok(this.$('.enterprise-banner-seats').hasClass('alert'));
+  });
+});
+
+test('renders seats banner exceeding', function (assert) {
+  this.server.get('/v3/enterprise_license', (schema, response) => {
+    return {
+      'license_id': 'ad12345',
+      'seats': '30',
+      'active_users': '47',
+      'license_type': 'paid',
+      'expiration_time': new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * 8).toISOString()
+    };
+  });
+  assert.expect(2);
+
+  this.render(hbs`{{enterprise-banner}}`);
+
+  wait().then(() => {
+    assert.ok(this.$('.enterprise-banner-seats').text().match(/You’ve exceeded the maximum seats that your license permits/));
+    assert.ok(this.$('.enterprise-banner-seats').hasClass('alert'));
+  });
+});
