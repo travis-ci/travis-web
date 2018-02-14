@@ -22,11 +22,10 @@ moduleForAcceptance('Acceptance | enterprise/banner', {
 test('banner is rendered in enterprise mode', function (assert) {
   withFeature('enterpriseVersion');
   visit('/');
+
+  andThen(() => {});
+
   andThen(function () {
-    var done = assert.async();
-    setTimeout(() => {
-      assert.ok(enterpriseBanners.trialBanner.isVisible);
-      done();
-    }, 500);
+    assert.ok(enterpriseBanners.trialBanner.isVisible);
   });
 });
