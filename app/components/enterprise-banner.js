@@ -1,12 +1,13 @@
-import Ember from 'ember';
+import Component from '@ember/component';
 
 import { computed } from 'ember-decorators/object';
 import { alias } from 'ember-decorators/object/computed';
 import { service } from 'ember-decorators/service';
+import { htmlSafe } from '@ember/string';
 
 import timeAgoInWords from 'travis/utils/time-ago-in-words';
 
-export default Ember.Component.extend({
+export default Component.extend({
   @service ajax: null,
   @service storage: null,
 
@@ -54,7 +55,7 @@ export default Ember.Component.extend({
 
   @computed('expirationTime')
   expirationTimeFromNow(expirationTime) {
-    return new Ember.String.htmlSafe(timeAgoInWords(expirationTime) || '-');
+    return new htmlSafe(timeAgoInWords(expirationTime) || '-');
   },
 
   @computed('daysUntilExpiry')
