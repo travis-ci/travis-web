@@ -1,4 +1,4 @@
-import PageObject from 'travis/tests/page-object';
+import PageObject from 'ember-cli-page-object';
 
 let {
   attribute,
@@ -11,18 +11,13 @@ let {
 } = PageObject;
 
 function existingRepositoriesCollection(scope) {
-  return collection({
-    scope: scope,
-    itemScope: '.profile-repositorylist li.profile-repolist-item',
-
-    item: {
-      name: text('a.profile-repo'),
-      isActive: hasClass('active', '.switch'),
-      isDisabled: hasClass('non-admin', 'a.profile-repo'),
-      toggle: clickable('.switch'),
-      ariaChecked: attribute('aria-checked', '.switch'),
-      role: attribute('role', '.switch')
-    }
+  return collection(`${scope} .profile-repositorylist li.profile-repolist-item`, {
+    name: text('a.profile-repo'),
+    isActive: hasClass('active', '.switch'),
+    isDisabled: hasClass('non-admin', 'a.profile-repo'),
+    toggle: clickable('.switch'),
+    ariaChecked: attribute('aria-checked', '.switch'),
+    role: attribute('role', '.switch')
   });
 }
 
@@ -45,13 +40,8 @@ export default PageObject.create({
     value: text('strong')
   },
 
-  accounts: collection({
-    scope: '.profile-aside',
-    itemScope: '.account',
-
-    item: {
-      name: text('.account-name'),
-      repositoryCount: text('.account-repo-count')
-    }
+  accounts: collection('.profile-aside .account', {
+    name: text('.account-name'),
+    repositoryCount: text('.account-repo-count')
   })
 });

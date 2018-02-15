@@ -1,4 +1,4 @@
-import PageObject from 'travis/tests/page-object';
+import PageObject from 'ember-cli-page-object';
 
 let {
   collection,
@@ -24,17 +24,13 @@ const branchRowComponent = {
   committer: text('.row-commiter .label-align'),
   commitDate: text('.row-calendar .label-align'),
 
-  buildTiles: collection({
-    itemScope: '.build-tiles li',
+  buildTiles: collection('.build-tiles li', {
+    passed: hasClass('passed'),
+    failed: hasClass('failed'),
+    errored: hasClass('errored'),
+    empty: is(':empty'),
 
-    item: {
-      passed: hasClass('passed'),
-      failed: hasClass('failed'),
-      errored: hasClass('errored'),
-      empty: is(':empty'),
-
-      number: text('.build-tile-number')
-    }
+    number: text('.build-tile-number')
   })
 };
 
@@ -47,17 +43,6 @@ export default PageObject.create({
 
   defaultBranch: branchRowComponent,
 
-  activeBranches: collection({
-    scope: '.active-branches',
-    itemScope: '.branch-row',
-
-    item: branchRowComponent
-  }),
-
-  inactiveBranches: collection({
-    scope: '.inactive-branches',
-    itemScope: '.branch-row',
-
-    item: branchRowComponent
-  })
+  activeBranches: collection('.active-branches .branch-row', branchRowComponent),
+  inactiveBranches: collection('.inactive-branches .branch-row', branchRowComponent),
 });

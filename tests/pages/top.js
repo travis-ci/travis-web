@@ -1,4 +1,4 @@
-import PageObject from 'travis/tests/page-object';
+import PageObject from 'ember-cli-page-object';
 
 let {
   clickable,
@@ -28,23 +28,22 @@ export default PageObject.create({
     isHidden: isHidden()
   },
 
-  broadcasts: collection({
+  broadcasts: {
     scope: 'ul.broadcasts',
 
     isClosed: notHasClass('is-open'),
     isOpen: hasClass('is-open'),
 
-    itemScope: 'li',
 
-    item: {
+    items: collection('li', {
       isAnnouncement: hasClass('announcement', '.broadcast-status'),
       isWarning: hasClass('warning', '.broadcast-status'),
 
       message: text('.message'),
 
       dismiss: clickable('.broadcast-close')
-    }
-  }),
+    })
+  },
 
   flashMessage: {
     scope: 'ul.flash li:eq(0)',

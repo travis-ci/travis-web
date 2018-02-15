@@ -1,4 +1,4 @@
-import PageObject from 'travis/tests/page-object';
+import PageObject from 'ember-cli-page-object';
 
 let {
   clickable,
@@ -25,13 +25,6 @@ export default PageObject.create({
   deleteAllCaches: clickable('.delete-cache-button'),
   noCachesExist: isVisible('p.helptext.no-caches'),
 
-  pushCaches: collection({
-    itemScope: '.push-caches .cache-item',
-    item: cacheComponent
-  }),
-
-  pullRequestCaches: collection({
-    itemScope: '.pull-request-caches .cache-item',
-    item: cacheComponent
-  })
+  pushCaches: collection('.push-caches .cache-item', cacheComponent),
+  pullRequestCaches: collection('.pull-request-caches .cache-item', cacheComponent)
 });
