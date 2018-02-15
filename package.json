@@ -68,6 +68,7 @@
     "ember-inflector": "^2.0.0",
     "ember-keyboard-shortcuts": "^1.0.2",
     "ember-load-initializers": "1.0.0",
+    "ember-local-storage": "^1.4.1",
     "ember-modal-dialog": "^2.2.0",
     "ember-moment": "^7.4.1",
     "ember-one-way-controls": "^3.0.0",
