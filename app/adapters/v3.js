@@ -16,7 +16,8 @@ export default RESTAdapter.extend({
   headers: {
     'Travis-API-Version': '3',
     'Accept': 'application/json',
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
+    'X-Client-Release': config.release
   },
 
   ajaxOptions: function (url, type = 'GET', options) {

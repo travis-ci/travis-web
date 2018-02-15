@@ -1,0 +1,103 @@
+.owner-header {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 3rem;
+
+  .owner-title {
+    margin: 0.3em 0 0.2em;
+    font-size: 36px;
+    font-weight: 400;
+    line-height: 0.9;
+
+    @media #{$medium-up} {
+      white-space: nowrap;
+    }
+  }
+
+  .owner-handle {
+    margin: 0;
+    font-size: $font-size-ml;
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    svg {
+      @include colorSVGFill(rgba(black, 0.2));
+    }
+  }
+
+  img {
+    border-radius: 50%;
+    background-color: $pebble-grey;
+  }
+}
+
+.owner-avatar {
+  flex: 0 0 20%;
+
+  @media #{$medium-up} {
+    flex: 0 0 17%;
+  }
+
+  .avatar {
+    width: 125px;
+    height: 125px;
+  }
+}
+
+.owner-info {
+  flex: 1 0 75%;
+
+  @media #{$medium-up} {
+    flex: 1 0 80%;
+  }
+
+  position: relative;
+  overflow: hidden;
+
+  &:after {
+    content: "";
+
+    @include fadeOut(right, -90deg, white);
+  }
+}
+
+.owner-tiles {
+  padding: 0;
+  list-style-type: none;
+
+  .build-status {
+    text-transform: capitalize;
+  }
+}
+
+.owner-tile {
+  padding: 0.5em 0;
+
+  @media #{$medium-up} {
+    & > div:first-of-type {
+      flex: 0 0 30%;
+      padding-left: 1em;
+    }
+
+    & > div:nth-of-type(2) {
+      flex: 0 0 13%;
+    }
+
+    & > div:nth-of-type(3) {
+      flex: 0 0 13%;
+    }
+
+    & > div:nth-of-type(4) {
+      flex: 0 0 12%;
+      margin-right: 2em;
+    }
+
+    & > div:nth-of-type(5) {
+      flex: 0 0 24%;
+    }
+  }
+}

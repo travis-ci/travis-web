@@ -1,0 +1,285 @@
+$profile-breakpoint: 600px;
+
+.profile-page {
+  display: flex;
+  padding-top: 20px;
+
+  @media (max-width: $profile-breakpoint) {
+    flex-flow: column-reverse;
+  }
+}
+
+.profile-main {
+  flex-grow: 1;
+}
+
+.profile-aside {
+  flex: 0 0 180px;
+  margin-right: 55px;
+
+  @media #{$medium-up} {
+    flex: 0 0 290px;
+  }
+
+  @media (max-width: $profile-breakpoint) {
+    margin-top: 55px;
+  }
+
+  @media (min-width: $profile-breakpoint) {
+    display: flex;
+    flex-flow: column wrap;
+
+    .profile-user {
+      order: 1;
+    }
+
+    .profile-betafeatures {
+      order: 2;
+    }
+
+    .profile-orgs {
+      order: 3;
+    }
+
+    .profile-additional {
+      order: 4;
+    }
+  }
+
+  ul {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+  }
+
+  h2 {
+    font-size: $font-size-sm;
+    border-bottom: solid 2px $pebble-grey;
+  }
+}
+
+.profile-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .h2--grey {
+    margin-bottom: 0;
+    line-heigth: 1;
+  }
+}
+
+.profile-getstarted {
+  display: flex;
+  flex-flow: column wrap;
+  margin: 0 0 3rem;
+  padding: 1em;
+  list-style: none;
+  border-radius: 4px;
+
+  @media #{$medium} {
+    flex-flow: row nowrap;
+    justify-content: space-around;
+  }
+
+  li {
+    text-align: center;
+  }
+
+  figure {
+    margin: 0;
+  }
+
+  figcaption {
+    width: 90%;
+    margin: auto;
+    padding: 0 1em 0 2.8em;
+
+    @media #{$medium-up} {
+      text-align: left;
+    }
+  }
+}
+
+.profile-repositorylist {
+  @include resetul;
+
+  font-size: $font-size-m;
+  dispay: flex;
+  flex-flow: column wrap;
+
+  li {
+    display: flex;
+    flex-flow: row wrap;
+    margin-bottom: 0.8em;
+  }
+}
+
+.profile-settings {
+  display: flex;
+  align-items: center;
+}
+
+.profile-settings .icon-disabled {
+  @include colorSVG(rgba(black, 0.2));
+}
+
+.profile-repo {
+  position: relative;
+  flex: 1;
+  padding: 0.25em 0.5em 0.3em;
+  white-space: nowrap;
+  overflow: hidden;
+  border-radius: 2px;
+
+  .sync-spinner {
+    vertical-align: top;
+  }
+
+  &.admin {
+    &:hover {
+      background-color: $pebble-grey;
+
+      &:after {
+        content: "";
+
+        @include fadeOut(right, -90deg, $pebble-grey);
+      }
+    }
+
+    .active &:hover {
+      background-color: $agate-blue;
+
+      &:after {
+        content: "";
+
+        @include fadeOut(right, -90deg, $agate-blue);
+      }
+    }
+  }
+
+  &.non-admin {
+    color: rgba(black, 0.45);
+
+    &:hover {
+      background-color: transparentize($pebble-grey, 0.5);
+
+      &:after {
+        content: "";
+
+        @include fadeOut(right, -90deg, $pebble-grey);
+      }
+    }
+
+    .active &:hover {
+      background-color: transparentize($agate-blue, 0.5);
+
+      &:after {
+        content: "";
+
+        @include fadeOut(right, -90deg, $agate-blue);
+      }
+    }
+  }
+}
+
+.profile-additional {
+  margin-top: 20px;
+  border-top: solid 2px $pebble-grey;
+}
+
+.profile-text,
+.profile-additional {
+  @include linkStyle;
+}
+
+.repositories-error {
+  width: 100%;
+
+  p {
+    position: relative;
+    padding: 0.7em em 0.7em 0.5em;
+    color: $brick-red;
+    background-color: $quartz-red;
+
+    a {
+      color: $brick-red;
+      text-decoration: underline;
+    }
+
+    &:after {
+      content: "";
+      position: absolute;
+      top: -0.5em;
+      left: 1.5em;
+      width: 1.2em;
+      height: 1.2em;
+      background: $quartz-red;
+      transform: rotate(45deg);
+    }
+  }
+
+  .close {
+    position: absolute;
+    top: 0.5em;
+    right: 0;
+    line-height: 1;
+  }
+}
+
+.profile-token-toggle {
+  .icon-seemore {
+    vertical-align: middle;
+
+    &:hover {
+      path, ellipse {
+        stroke: $asphalt-grey;
+      }
+    }
+  }
+
+  &.is-visible {
+    .icon-seemore {
+      ellipse {
+        fill: $cement-grey;
+      }
+
+      &:hover {
+        ellipse {
+          fill: $asphalt-grey;
+        }
+      }
+    }
+  }
+}
+
+.profile-repositories-filter {
+  margin-bottom: 1.5em;
+
+  .search {
+    padding: 0 0.5em 0 2.1em;
+    border: 1px solid $pebble-grey;
+    width: 40%;
+    border-radius: 2px;
+    width: 100%;
+    max-width: 400px;
+    background: url(/images/stroke-icons/icon-filter.svg) no-repeat scroll;
+    background-size: auto 50%;
+    background-position: 0.5em center;
+    height: 2.1em;
+    box-sizing: content-box;
+    font-size: $font-size-sm;
+    -webkit-appearance: none;
+    -webkit-appearance: textfield;
+
+    &::-webkit-search-decoration {
+      -webkit-appearance: none;
+    }
+
+    &::placeholder {
+      color: rgba($cement-grey, 0.6);
+      padding: 0;
+      text-indent: 0;
+    }
+  }
+}

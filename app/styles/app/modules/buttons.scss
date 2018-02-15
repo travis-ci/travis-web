@@ -1,0 +1,259 @@
+%button {
+  display: inline-block;
+  padding: 0.7em 0.8rem 0.6em;
+  cursor: pointer;
+  white-space: nowrap;
+  border-radius: 2px;
+  border: none;
+  vertical-align: middle;
+  line-height: 1;
+  text-decoration: none;
+  font-family: inherit;
+  font-size: 14px;
+}
+
+.button {
+  @extend %button;
+
+  position: relative;
+  overflow: visible;
+  outline: none;
+  text-align: center;
+  color: white;
+  background-color: darken($pebble-grey, 10);
+}
+
+.no-button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.button:hover,
+.button:focus,
+.button:active,
+.button.active {
+  border-color: $pebble-grey;
+  background-color: $cement-grey;
+}
+
+.auth-button {
+  @extend %button;
+
+  height: 36px;
+  color: #fff;
+  line-height: 0.5;
+  background-color: $turf-green;
+
+  .label-align {
+    line-height: 1.4;
+  }
+
+  .loading-indicator {
+    vertical-align: top;
+    margin-left: 0.3em;
+
+    i {
+      background-color: white;
+      width: 6px;
+      height: 6px;
+    }
+  }
+}
+
+.auth-button.signed-out {
+  .icon {
+    margin: 0 0 0 4px;
+    vertical-align: top;
+  }
+
+  &:hover,
+  &:active {
+    background-color: darken($turf-green, 10);
+  }
+}
+
+.auth-button--white {
+  @extend %button;
+
+  vertical-align: baseline;
+  border: 1px solid #f1f1f1 !important;
+  padding: 0.7em 0.8em !important;
+  border-radius: 2px;
+  font-size: inherit;
+
+  &:active,
+  &:hover,
+  &:focus {
+    color: $oxide-blue !important;
+    border-color: $oxide-blue !important;
+  }
+}
+
+.button--blue {
+  @extend %button;
+
+  border: none;
+  color: white;
+  background-color: $oxide-blue;
+
+  &:hover,
+  &:active {
+    background-color: darken($oxide-blue, 10);
+  }
+}
+
+.inactive {
+  cursor: default;
+  background: $dry-cement !important;
+  color: white;
+
+  &:hover,
+  &:active {
+    background: $dry-cement !important;
+  }
+}
+
+#auth #navigation .auth-button {
+  display: none;
+}
+
+.action-button--restart,
+.action-button--debug,
+.action-button--cancel {
+  display: block;
+  width: 8em;
+  padding: 0 0.5em;
+  border: 1px solid $pebble-grey;
+  border-radius: 14px;
+  cursor: pointer;
+  white-space: nowrap;
+
+  &:active,
+  &:focus {
+    outline: thin dotted;
+  }
+
+  &:hover,
+  &:active {
+    @include colorSVG($oxide-blue);
+
+    border-color: $oxide-blue;
+    color: $oxide-blue;
+    text-decoration: none !important;
+  }
+}
+
+.action-button--cancel {
+  &:hover,
+  &:active {
+    @include colorSVG($brick-red);
+
+    border-color: $brick-red;
+    color: $brick-red;
+  }
+}
+
+.repo-main-tools.labelless {
+  display: inline-flex;
+  padding-top: 2px;
+  margin-left: 5px;
+
+  button {
+    display: inline-block;
+    width: 22px;
+    height: 22px;
+    padding: 0;
+    margin-right: 5px;
+    border-radius: 30px;
+    border-color: $cement-grey;
+    transform: translate(0, 1px) scale(0.85);
+
+    &:hover, &:active {
+      border-color: $oxide-blue;
+    }
+
+    .label-align {
+      display: none;
+    }
+  }
+
+  .action-button--restart .icon {
+    transform: scale(0.75) translate(4px, -2px);
+  }
+
+  .action-button--cancel {
+    .icon {
+      transform: scale(0.65) translate(1px, -2px);
+      margin-right: 1px;
+    }
+
+    &:hover, &:active {
+      @include colorSVG($brick-red);
+
+      border-color: $brick-red;
+      color: $brick-red;
+    }
+  }
+
+  .action-button--debug {
+    display: none;
+  }
+}
+
+.jobs-item {
+  .repo-main-tools {
+    transform: translate(-5px, -2px);
+
+    button {
+      background: transparent;
+    }
+  }
+}
+
+%log-button {
+  display: inline-block;
+  height: 28px;
+  padding: 0 0.8em;
+  border: 1px solid $pebble-grey;
+  color: $pebble-grey;
+  border-radius: 2px;
+  text-align: center;
+  line-height: 1.8;
+  font-size: 14px;
+  font-weight: 300;
+  background-color: inherit;
+  cursor: pointer;
+
+  [class^="icon"] {
+    margin-right: 0.3em;
+  }
+
+  .icon {
+    @include colorSVG(white);
+  }
+}
+
+.remove-log-button {
+  @extend %log-button;
+
+  &:hover,
+  &:active {
+    background-color: #d94341;
+  }
+
+  display: none;
+
+  @media #{$medium-up} {
+    display: inline-block;
+  }
+}
+
+.download-log-button {
+  @extend %log-button;
+
+  &:hover,
+  &:active {
+    background-color: #999a98;
+  }
+}
