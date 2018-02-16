@@ -1,12 +1,11 @@
-import PageObject from 'ember-cli-page-object';
-
-let {
+import {
+  create,
   clickable,
   attribute,
   visitable
-} = PageObject;
+} from 'ember-cli-page-object';
 
-export default PageObject.create({
+export default create({
   visit: visitable(':organization/:repo'),
   openStatusImagePopup: clickable('#status-image-popup'),
   statusBadgeImageSrc: attribute('src', '#status-image-popup img')

@@ -1,6 +1,5 @@
-import PageObject from 'ember-cli-page-object';
-
-let {
+import {
+  create,
   attribute,
   clickable,
   collection,
@@ -8,7 +7,7 @@ let {
   text,
   visitable,
   fillable
-} = PageObject;
+} from 'ember-cli-page-object';
 
 function existingRepositoriesCollection(scope) {
   return collection(`${scope} .profile-repositorylist li.profile-repolist-item`, {
@@ -21,7 +20,7 @@ function existingRepositoriesCollection(scope) {
   });
 }
 
-export default PageObject.create({
+export default create({
   visit: visitable('profile/:username'),
   name: text('.profile-header h1'),
   filter: fillable('.profile-repositories-filter input.search'),

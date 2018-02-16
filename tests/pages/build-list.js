@@ -1,6 +1,5 @@
-import PageObject from 'ember-cli-page-object';
-
-let {
+import {
+  create,
   attribute,
   clickable,
   collection,
@@ -8,9 +7,9 @@ let {
   isVisible,
   text,
   visitable
-} = PageObject;
+} from 'ember-cli-page-object';
 
-export default PageObject.create({
+export default create({
   visitBuildHistory: visitable(':organization/:repo/builds'),
   visitPullRequests: visitable(':organization/:repo/pull_requests'),
 

@@ -1,6 +1,5 @@
-import PageObject from 'ember-cli-page-object';
-
-let {
+import {
+  create,
   attribute,
   visitable,
   clickable,
@@ -9,9 +8,9 @@ let {
   isVisible,
   selectable,
   fillable
-} = PageObject;
+} from 'ember-cli-page-object';
 
-export default PageObject.create({
+export default create({
   visit: visitable(':owner/:repo'),
   popupIsHidden: isHidden('.trigger-build-modal'),
   popupTriggerLinkIsHidden: isHidden('.option-dropdown .trigger-build-anchor'),

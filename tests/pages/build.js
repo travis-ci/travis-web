@@ -1,6 +1,5 @@
-import PageObject from 'ember-cli-page-object';
-
-let {
+import {
+  create,
   attribute,
   clickable,
   collection,
@@ -8,7 +7,7 @@ let {
   isHidden,
   visitable,
   text
-} = PageObject;
+} from 'ember-cli-page-object';
 
 import ymlMessages from './yml-messages';
 
@@ -29,7 +28,7 @@ const jobComponent = {
   language: text('.job-lang .label-align')
 };
 
-export default PageObject.create({
+export default create({
   visit: visitable(':owner/:repo/builds/:build_id'),
   restartBuild: clickable('.action-button--restart'),
   cancelBuild: clickable('.action-button--cancel'),

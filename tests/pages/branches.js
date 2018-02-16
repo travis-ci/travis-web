@@ -1,12 +1,11 @@
-import PageObject from 'ember-cli-page-object';
-
-let {
+import {
+  create,
   collection,
   hasClass,
   is,
   text,
   visitable
-} = PageObject;
+} from 'ember-cli-page-object';
 
 const branchRowComponent = {
   scope: '.default-branch .branch-row',
@@ -34,7 +33,7 @@ const branchRowComponent = {
   })
 };
 
-export default PageObject.create({
+export default create({
   visit: visitable(':organization/:repo/branches'),
 
   branchesTabActive: hasClass('active', '#tab_branches'),
