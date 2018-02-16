@@ -1,13 +1,12 @@
-import PageObject from 'ember-cli-page-object';
-
-let {
+import {
+  create,
   clickable,
   collection,
   hasClass,
   isVisible,
   text,
   visitable
-} = PageObject;
+} from 'ember-cli-page-object';
 
 const cacheComponent = {
   name: text('.row-branch .label-align'),
@@ -17,7 +16,7 @@ const cacheComponent = {
   delete: clickable('.delete-cache-icon')
 };
 
-export default PageObject.create({
+export default create({
   visit: visitable(':organization/:repo/caches'),
 
   tabIsActive: hasClass('active', '#tab_caches'),

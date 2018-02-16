@@ -1,6 +1,5 @@
-import PageObject from 'ember-cli-page-object';
-
-let {
+import {
+  create,
   attribute,
   clickable,
   collection,
@@ -10,9 +9,9 @@ let {
   text,
   value,
   visitable
-} = PageObject;
+} from 'ember-cli-page-object';
 
-export default PageObject.create({
+export default create({
   visit: visitable(':organization/:repo/settings'),
 
   autoCancellationSection: {

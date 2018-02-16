@@ -1,15 +1,15 @@
-import PageObject from 'travis/tests/page-object';
+import { create } from 'ember-cli-page-object';
 
 export const enterpriseBanners = {
-  trialBanner: PageObject.create({
+  trialBanner: create({
     scope: '.enterprise-banner-trial'
   }),
 
-  licenseBanner: PageObject.create({
+  licenseBanner: create({
     scope: '.enterprise-license-banner'
   }),
 
-  seatsBanner: PageObject.create({
+  seatsBanner: create({
     scope: '.enterprise-banner-seats'
   })
 };

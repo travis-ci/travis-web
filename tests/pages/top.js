@@ -1,15 +1,14 @@
-import PageObject from 'ember-cli-page-object';
-
-let {
+import {
+  create,
   clickable,
   collection,
   hasClass,
   isHidden,
   notHasClass,
   text
-} = PageObject;
+} from 'ember-cli-page-object';
 
-export default PageObject.create({
+export default create({
   scope: '.topbar',
 
   broadcastTower: {

@@ -1,12 +1,11 @@
-import PageObject from 'ember-cli-page-object';
-
-let {
+import {
+  create,
   collection,
   text,
   visitable
-} = PageObject;
+} from 'ember-cli-page-object';
 
-export default PageObject.create({
+export default create({
   visit: visitable('/:username'),
 
   repos: collection('.owner-tiles .owner-tile', {

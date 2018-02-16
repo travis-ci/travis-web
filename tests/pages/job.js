@@ -1,6 +1,5 @@
-import PageObject from 'ember-cli-page-object';
-
-let {
+import {
+  create,
   visitable,
   clickable,
   collection,
@@ -8,11 +7,12 @@ let {
   isVisible,
   text,
   attribute
-} = PageObject;
+} from 'ember-cli-page-object';
+
 
 import ymlMessages from './yml-messages';
 
-export default PageObject.create({
+export default create({
   visit: visitable('travis-ci/travis-web/jobs/1'),
 
   branch: text('.commit-branch'),

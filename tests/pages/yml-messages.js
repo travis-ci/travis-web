@@ -1,10 +1,8 @@
-import PageObject from 'ember-cli-page-object';
-
-let {
+import {
   collection,
   hasClass,
   text,
-} = PageObject;
+} from 'ember-cli-page-object';
 
 export default collection('.yml-message', {
   icon: {
