@@ -15,7 +15,7 @@
         {{#if showCopySuccess}}
           <span class="token-copied-text italic">Token copied!</span>
         {{else}}
-          <span class="auth-token italic">{{if tokenIsVisible auth.token 'hidden'}}</span>
+          <span class="auth-token italic">{{if tokenIsVisible auth.token (obfuscated-chars 12)}}</span>
         {{/if}}
         <div class="token-actions">
           <button {{action 'tokenVisibility'}} class="show-token">{{if tokenIsVisible 'Hide' 'Show'}}</button>
