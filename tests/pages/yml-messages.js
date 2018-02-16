@@ -1,24 +1,15 @@
-import PageObject from 'travis/tests/page-object';
-
-let {
+import {
   collection,
   hasClass,
-  isVisible,
   text,
-} = PageObject;
+} from 'ember-cli-page-object';
 
-export default collection({
-  itemScope: '.yml-message',
-
-  isVisible: isVisible('.yml-messages'),
-
-  item: {
-    icon: {
-      scope: 'svg',
-      isInfo: hasClass('icon-info'),
-      isWarning: hasClass('icon-warn'),
-      isError: hasClass('icon-error')
-    },
-    message: text('.message')
-  }
+export default collection('.yml-message', {
+  icon: {
+    scope: 'svg',
+    isInfo: hasClass('icon-info'),
+    isWarning: hasClass('icon-warn'),
+    isError: hasClass('icon-error')
+  },
+  message: text('.message')
 });

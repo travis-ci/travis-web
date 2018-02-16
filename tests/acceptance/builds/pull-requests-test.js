@@ -68,26 +68,24 @@ test('view and cancel pull requests', function (assert) {
   andThen(() => {});
 
   andThen(() => {
-    assert.equal(page.builds().count, 1, 'expected one pull request build');
+    assert.equal(page.builds.length, 1, 'expected one pull request build');
+    page.builds[0].as(pullRequest => {
+      assert.ok(pullRequest.started, 'expected the pull request to have started');
+      assert.equal(pullRequest.name, 'PR #2010');
+      assert.equal(pullRequest.message, 'A pull request');
+      assert.equal(pullRequest.committer, 'Travis CI');
+      assert.equal(pullRequest.commitSha, '1234567');
+      assert.equal(pullRequest.commitDate, 'less than a minute ago');
+      assert.equal(pullRequest.duration, '-');
 
-    const pullRequest = page.builds(0);
-
-    assert.ok(pullRequest.started, 'expected the pull request to have started');
-    assert.equal(pullRequest.name, 'PR #2010');
-    assert.equal(pullRequest.message, 'A pull request');
-    assert.equal(pullRequest.committer, 'Travis CI');
-    assert.equal(pullRequest.commitSha, '1234567');
-    assert.equal(pullRequest.commitDate, 'less than a minute ago');
-    assert.equal(pullRequest.duration, '-');
-
-    assert.ok(pullRequest.cancelButton.visible, 'expected the cancel button to be visible');
+      assert.ok(pullRequest.cancelButton.visible, 'expected the cancel button to be visible');
+    });
   });
 
   percySnapshot(assert);
 
-  page.builds(0).cancelButton.click();
+  page.builds[0].cancelButton.click();
 
-  andThen(() => {});
   andThen(() => {
     assert.equal(topPage.flashMessage.text, 'Build has been successfully cancelled.');
   });

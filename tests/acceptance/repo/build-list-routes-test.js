@@ -128,9 +128,9 @@ test('build history shows, more can be loaded, and a created build gets added an
   page.visitBuildHistory({ organization: 'killjoys', repo: 'living-a-feminist-life' });
 
   andThen(() => {
-    assert.equal(page.builds().count, 4, 'expected four non-PR builds');
+    assert.equal(page.builds.length, 4, 'expected four non-PR builds');
 
-    page.builds(0).as(build => {
+    page.builds[0].as(build => {
       assert.ok(build.passed, 'expected the first build to have passed');
       assert.equal(build.name, 'successful-cron-branch');
       assert.equal(build.committer, 'Sara Ahmed');
@@ -141,12 +141,12 @@ test('build history shows, more can be loaded, and a created build gets added an
       assert.equal(build.message, 'cron A generic cron commit message', 'expected a prefixed cron marker');
     });
 
-    assert.ok(page.builds(1).failed, 'expected the second build to have failed');
-    assert.ok(page.builds(2).errored, 'expected the third build to have errored');
+    assert.ok(page.builds[1].failed, 'expected the second build to have failed');
+    assert.ok(page.builds[2].errored, 'expected the third build to have errored');
 
     assert.ok(page.showMoreButton.exists, 'expected the Show More button to exist');
 
-    assert.equal(page.builds(2).name, 'rarely-used', 'expected the old default branch to show');
+    assert.equal(page.builds[2].name, 'rarely-used', 'expected the old default branch to show');
 
     const sevenOaksBranch = server.create('branch', {
       name: 'oldest-build-branch'
@@ -174,8 +174,8 @@ test('build history shows, more can be loaded, and a created build gets added an
   page.showMoreButton.click();
 
   andThen(() => {
-    assert.equal(page.builds().count, 5, 'expected five builds');
-    assert.equal(page.builds(4).name, 'oldest-build-branch', 'expected an earlier build to have been added');
+    assert.equal(page.builds.length, 5, 'expected five builds');
+    assert.equal(page.builds[4].name, 'oldest-build-branch', 'expected an earlier build to have been added');
   });
 
   let build, commit;
@@ -217,9 +217,9 @@ test('build history shows, more can be loaded, and a created build gets added an
 
 
   andThen(() => {
-    assert.equal(page.builds().count, 6, 'expected another build');
+    assert.equal(page.builds.length, 6, 'expected another build');
 
-    page.builds(0).as(newBuild => {
+    page.builds[0].as(newBuild => {
       assert.ok(newBuild.created, 'expected the new build to show as created');
       assert.equal(newBuild.name, 'no-dapl');
       assert.equal(newBuild.message, 'Standing with Standing Rock');
@@ -235,7 +235,7 @@ test('build history shows, more can be loaded, and a created build gets added an
   });
 
   andThen(() => {
-    assert.ok(page.builds(0).started, 'expected the new build to show as started');
+    assert.ok(page.builds[0].started, 'expected the new build to show as started');
 
     const finishedData = {
       build: generatePusherPayload(build, { state: 'passed' }),
@@ -246,7 +246,7 @@ test('build history shows, more can be loaded, and a created build gets added an
   });
 
   andThen(() => {
-    assert.ok(page.builds(0).passed, 'expected the newly-finished build to have passed');
+    assert.ok(page.builds[0].passed, 'expected the newly-finished build to have passed');
   });
 });
 
@@ -255,9 +255,9 @@ test('view and cancel pull requests', function (assert) {
   page.visitPullRequests({ organization: 'killjoys', repo: 'living-a-feminist-life' });
 
   andThen(() => {
-    assert.equal(page.builds().count, 1, 'expected one pull request build');
+    assert.equal(page.builds.length, 1, 'expected one pull request build');
 
-    page.builds(0).as(pullRequest => {
+    page.builds[0].as(pullRequest => {
       assert.ok(pullRequest.started, 'expected the pull request to have started');
       assert.equal(pullRequest.name, 'PR #2010');
       assert.equal(pullRequest.message, 'A pull request');
@@ -271,7 +271,7 @@ test('view and cancel pull requests', function (assert) {
   });
   percySnapshot(assert);
 
-  page.builds(0).cancelButton.click();
+  page.builds[0].cancelButton.click();
 
   andThen(() => {
     assert.equal(topPage.flashMessage.text, 'Build has been successfully cancelled.');

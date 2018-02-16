@@ -17,20 +17,12 @@ export default create({
   runningTabIsActive: hasClass('active', '#tab_running'),
   myReposTabIsActive: hasClass('active', '#tab_owned'),
   navigateToProfilePage: clickable('#profile-page-link'),
-  sidebarRepositories: collection({
-    scope: 'ul.repos-list',
-    itemScope: 'li.repo',
-    item: {
-      name: text('.tile h2.tile-title span.label-align')
-    }
+  sidebarRepositories: collection('ul.repos-list li.repo', {
+    name: text('.tile h2.tile-title span.label-align')
   }),
   sidebarRunningTabText: text('#tab_running a'),
-  sidebarRunningRepositories: collection({
-    scope: '.sidebar-list',
-    itemScope: '.tile--sidebar',
-    item: {
-      name: text('.tile h2.tile-title span.label-align')
-    }
+  sidebarRunningRepositories: collection('.sidebar-list .tile--sidebar', {
+    name: text('.tile h2.tile-title span.label-align')
   }),
   missingReposMessage: text('.loading-container'),
   viewRunningJob: clickable('p.tile-title a'),
