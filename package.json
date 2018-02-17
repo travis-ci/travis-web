@@ -17,7 +17,7 @@
     "test": "ember test --reporter dot"
   },
   "devDependencies": {
-    "@ember-decorators/babel-transforms": "^0.1.1",
+    "@ember-decorators/babel-transforms": "^2.0.0",
     "active-model-adapter": "2.2.0",
     "ansiparse": "0.1.0",
     "babel-eslint": "8.2.1",
