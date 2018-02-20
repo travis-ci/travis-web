@@ -62,12 +62,16 @@ export default Service.extend({
     endpoint = config.apiEndpoint || '';
     options = options || {};
     token = get(this, 'auth').token();
+
+    options.headers = options.headers || {};
+
     if (token && (this.needsAuth(method, url) || options.forceAuth)) {
-      options.headers = options.headers || {};
       if (!options.headers['Authorization']) {
         options.headers['Authorization'] = `token ${token}`;
       }
     }
+
+    options.headers['X-Client-Release'] = config.release;
     options.url = url = `${endpoint}${url}`;
     options.type = method;
     options.dataType = options.dataType || 'json';

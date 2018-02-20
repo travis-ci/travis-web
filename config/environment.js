@@ -191,7 +191,7 @@ module.exports = function (environment) {
   }
 
   if (environment === 'production') {
-    ENV.release = process.env.SOURCE_VERSION || '-';
+    ENV.release = process.env.SOURCE_VERSION || process.env.TRAVIS_COMMIT || '-';
     // if (true) {
     ENV.sentry = {
       development: true

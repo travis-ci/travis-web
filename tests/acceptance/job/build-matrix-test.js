@@ -25,9 +25,9 @@ test('visiting build matrix', function (assert) {
 
   andThen(() => {});
   andThen(function () {
-    assert.equal(buildPage.requiredJobs().count, 2, 'expected two required jobs in the matrix');
+    assert.equal(buildPage.requiredJobs.length, 2, 'expected two required jobs in the matrix');
 
-    buildPage.requiredJobs(0).as(firstJobRow => {
+    buildPage.requiredJobs[0].as(firstJobRow => {
       assert.ok(firstJobRow.state.isPassed, 'expected the first job to have passed');
       assert.equal(firstJobRow.number, '1234.1');
       assert.equal(firstJobRow.env, 'JORTS');
@@ -35,16 +35,16 @@ test('visiting build matrix', function (assert) {
       assert.equal(firstJobRow.language, 'Node.js: 5');
     });
 
-    buildPage.requiredJobs(1).as(secondJobRow => {
+    buildPage.requiredJobs[1].as(secondJobRow => {
       assert.equal(secondJobRow.number, '1234.2');
       assert.equal(secondJobRow.env, 'JANTS');
       assert.ok(secondJobRow.os.isMacOS, 'expect MacOS');
       assert.equal(secondJobRow.language, 'Ruby: 2.2');
     });
 
-    assert.equal(buildPage.allowedFailureJobs().count, 1, 'expected one allowed failure job');
+    assert.equal(buildPage.allowedFailureJobs.length, 1, 'expected one allowed failure job');
 
-    buildPage.allowedFailureJobs(0).as(failedJobRow => {
+    buildPage.allowedFailureJobs[0].as(failedJobRow => {
       assert.ok(failedJobRow.state.isFailed, 'expected the allowed failure job to have failed');
       assert.equal(failedJobRow.language, 'Ruby');
       assert.ok(failedJobRow.os.isUnknown, 'expected the job OS to be unknown');

@@ -476,6 +476,10 @@ export default function () {
     let repo = schema.repositories.find(request.params.repo_id);
     repo.update('starred', false);
   });
+
+  this.get('/v3/enterprise_license', function (schema, request) {
+    return new Mirage.Response(404, {}, {});
+  });
 }
 
 /*

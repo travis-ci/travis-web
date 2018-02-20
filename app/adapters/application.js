@@ -22,6 +22,7 @@ export default ActiveModelAdapter.extend({
     let hash = this._super(...arguments);
     hash.headers = hash.headers || {};
     hash.headers['accept'] = 'application/json; version=2';
+    hash.headers['X-Client-Release'] = config.release;
 
     let token = this.get('auth').token();
     if (token) {
