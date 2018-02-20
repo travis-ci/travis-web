@@ -89,7 +89,9 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
   }
 });
 
-test('view profile', function (assert) {
+test('view profile when v2 billing is on', function (assert) {
+  localStorage.setItem('travis.billing-v2', 'true');
+
   profilePage.visit({ username: 'feministkilljoy' });
 
   andThen(() =>  {
@@ -116,5 +118,13 @@ test('view profile', function (assert) {
     assert.ok(profilePage.administerableRepositories[1].isActive, 'expected active repository to appear active');
     assert.equal(profilePage.administerableRepositories[2].name, 'feministkilljoy/willful-subjects');
     assert.notOk(profilePage.administerableRepositories[2].isActive, 'expected inactive repository to appear inactive');
+  });
+});
+
+test('subscription is hidden when v2 billing is not on', function (assert) {
+  profilePage.visit({ username: 'feministkilljoy' });
+
+  andThen(() => {
+    assert.ok(profilePage.subscription.isHidden, 'expected subscription to be hidden when v2 billing is not on');
   });
 });

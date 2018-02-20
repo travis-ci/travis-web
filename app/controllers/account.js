@@ -48,4 +48,10 @@ export default Controller.extend({
       education,
     };
   },
+
+  @computed()
+  billingV2() {
+    console.log(localStorage);
+    return window.localStorage.getItem('travis.billing-v2') === 'true';
+  }
 });

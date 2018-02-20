@@ -15,7 +15,9 @@
           {{/if}}
         {{/if}}
       {{/if}}
-      {{account-subscription account=model}}
+      {{#if billingV2}}
+        {{account-subscription account=model}}
+      {{/if}}
     {{/unless}}
 
     <header class="profile-header">
