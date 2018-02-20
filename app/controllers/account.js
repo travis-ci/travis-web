@@ -51,7 +51,6 @@ export default Controller.extend({
 
   @computed()
   billingV2() {
-    console.log(localStorage);
     return window.localStorage.getItem('travis.billing-v2') === 'true';
   }
 });
