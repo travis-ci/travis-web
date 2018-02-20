@@ -1,1 +1,3 @@
-<div class='subscription'><span class="valid-to">{{moment-format subscription.valid_to "MMMM D, YYYY"}}</span></div>
+{{#if subscription}}
+  <div class='subscription'><span class="valid-to">{{moment-format subscription.valid_to "MMMM D, YYYY"}}</span></div>
+{{/if}}

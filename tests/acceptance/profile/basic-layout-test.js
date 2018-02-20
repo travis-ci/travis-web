@@ -10,6 +10,7 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
       login: 'feministkilljoy',
       repos_count: 3
     });
+    this.user = currentUser;
 
     signInUser(currentUser);
 
@@ -122,6 +123,19 @@ test('view profile when v2 billing is on', function (assert) {
 });
 
 test('subscription is hidden when v2 billing is not on', function (assert) {
+  profilePage.visit({ username: 'feministkilljoy' });
+
+  andThen(() => {
+    assert.ok(profilePage.subscription.isHidden, 'expected subscription to be hidden when v2 billing is not on');
+  });
+});
+
+test('subscription is hidden when v2 billing is on but there is no subscription', function (assert) {
+  this.user.subscription = null;
+  this.user.save();
+
+  localStorage.setItem('travis.billing-v2', 'true');
+
   profilePage.visit({ username: 'feministkilljoy' });
 
   andThen(() => {
