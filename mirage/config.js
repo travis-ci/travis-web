@@ -24,7 +24,6 @@ export default function () {
 
   this.urlPrefix = apiEndpoint;
   this.namespace = '';
-  this.logging = true;
 
   this.get('/users', function ({ users }, request)  {
     if (request.requestHeaders.Authorization === 'token testUserToken') {
