@@ -1,8 +1,6 @@
 import { isEmpty } from '@ember/utils';
 import { schedule } from '@ember/runloop';
 import Component from '@ember/component';
-import Ember from 'ember';
-import Visibility from 'npm:visibilityjs';
 import { task } from 'ember-concurrency';
 import { computed } from 'ember-decorators/object';
 import { alias } from 'ember-decorators/object/computed';
@@ -39,14 +37,6 @@ export default Component.extend({
     } else {
       yield this.get('viewOwned').perform();
       this.set('_data', this.get('repositories.accessible'));
-    }
-
-    if (!Ember.testing) {
-      Visibility.every(this.config.intervals.updateTimes, () => {
-        const callback = (record) => record.get('currentBuild');
-        const withCurrentBuild = this.get('_data').filter(callback).map(callback);
-        this.get('updateTimesService').push(withCurrentBuild);
-      });
     }
   }),
 

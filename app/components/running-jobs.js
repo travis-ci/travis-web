@@ -1,8 +1,5 @@
 import Component from '@ember/component';
-import Ember from 'ember';
 import Polling from 'travis/mixins/polling';
-import config from 'travis/config/environment';
-import Visibility from 'npm:visibilityjs';
 import { service } from 'ember-decorators/service';
 
 export default Component.extend(Polling, {
@@ -15,9 +12,6 @@ export default Component.extend(Polling, {
 
   init() {
     this._super(...arguments);
-    if (!Ember.testing) {
-      return Visibility.every(config.intervals.updateTimes, this.updateTimes.bind(this));
-    }
   },
 
   updateTimes() {

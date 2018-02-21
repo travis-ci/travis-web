@@ -1,9 +1,7 @@
 import { scheduleOnce } from '@ember/runloop';
 import { isEmpty } from '@ember/utils';
 import Controller from '@ember/controller';
-import Ember from 'ember';
 import eventually from 'travis/utils/eventually';
-import Visibility from 'npm:visibilityjs';
 import { service } from 'ember-decorators/service';
 import { controller } from 'ember-decorators/controller';
 import { computed } from 'ember-decorators/object';
@@ -37,9 +35,6 @@ export default Controller.extend({
 
   init() {
     this._super(...arguments);
-    if (!Ember.testing) {
-      Visibility.every(this.config.intervals.updateTimes, this.updateTimes.bind(this));
-    }
   },
 
   updateTimes() {

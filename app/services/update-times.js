@@ -1,33 +1,9 @@
-import { bind } from '@ember/runloop';
 import Service from '@ember/service';
-import config from 'travis/config/environment';
 import eventually from 'travis/utils/eventually';
-import Visibility from 'npm:visibilityjs';
 
 export default Service.extend({
   records: [],
   allowFinishedBuilds: false,
-
-  init() {
-    let visibilityId = Visibility.every(
-      config.intervals.updateTimes,
-      bind(this, 'updateTimes')
-    );
-    this.set('visibilityId', visibilityId);
-    let intervalId = setInterval(
-      this.resetAllowFinishedBuilds.bind(this),
-      60000
-    );
-    this.set('intervalId', intervalId);
-
-    return this._super(...arguments);
-  },
-
-  willDestroy() {
-    Visibility.stop(this.get('visibilityId'));
-    clearInterval(this.get('intervalId'));
-    this._super(...arguments);
-  },
 
   resetAllowFinishedBuilds() {
     this.set('allowFinishedBuilds', true);

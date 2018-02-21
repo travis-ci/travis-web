@@ -1,9 +1,6 @@
 import Controller from '@ember/controller';
-import Ember from 'ember';
 import Polling from 'travis/mixins/polling';
 import GithubUrlProperties from 'travis/mixins/github-url-properties';
-import Visibility from 'npm:visibilityjs';
-import config from 'travis/config/environment';
 
 import { controller } from 'ember-decorators/controller';
 import { service } from 'ember-decorators/service';
@@ -28,9 +25,6 @@ export default Controller.extend(GithubUrlProperties, Polling, {
 
   init() {
     this._super(...arguments);
-    if (!Ember.testing) {
-      return Visibility.every(config.intervals.updateTimes, this.updateTimes.bind(this));
-    }
   },
 
   @observes('build.state')
