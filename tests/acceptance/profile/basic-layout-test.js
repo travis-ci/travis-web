@@ -69,20 +69,7 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
 
     this.subscription = server.create('subscription', {
       'id': 1,
-      'valid_to': '2018-03-08T02:38:08Z',
-      'first name': 'User first name',
-      'last name': 'User last name',
-      'company': 'company',
-      'zip code': '11111',
-      'address': 'address',
-      'address2': null,
-      'city': 'city',
-      'state': null,
-      'country': 'country',
-      'vat id': null,
-      'status': 'subscribed',
-      'source': 'stripe',
-      'selected plan': 'travis-ci-two-builds'
+      'valid_to': '2018-03-08T02:38:08Z'
     });
 
     currentUser.subscription = this.subscription;
