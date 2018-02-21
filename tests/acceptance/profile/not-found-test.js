@@ -19,7 +19,6 @@ test('try to view account that does not exist', function (assert) {
 
   andThen(() => {
     percySnapshot(assert);
-
     assert.equal(document.title, 'Account - Profile - Travis CI');
     assert.equal(profilePage.notFoundOrgName, 'random-org');
   });
