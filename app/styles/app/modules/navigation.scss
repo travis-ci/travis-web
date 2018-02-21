@@ -113,6 +113,10 @@ $nav-line-height: 35px;
         text-decoration: none;
         background-color: $cream-light;
       }
+
+      &.active:hover {
+        background-color: #f1f1f1;
+      }
     }
   }
 }
