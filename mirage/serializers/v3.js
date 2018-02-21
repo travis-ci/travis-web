@@ -145,9 +145,12 @@ export default JSONAPISerializer.extend({
     if (include) {
       include.split(',').forEach((includeSegment) => {
         let [includeType, includeAttribute] = includeSegment.split('.');
-        // FIXME
-        // eslint-disable-next-line
-        if ((includeType === type || (includeType === 'owner' && type === 'user')) && !attributes.includes(includeAttribute)) {
+
+        const includedTypeIsThisType = includeType == type;
+        const includedTypeIsOwnerAlias = includeType === 'owner' && type === 'user';
+
+        if ((includedTypeIsThisType || includedTypeIsOwnerAlias) &&
+          !attributes.includes(includeAttribute)) {
           attributes.push(includeAttribute);
         }
       });
