@@ -1,4 +1,4 @@
-import Pusher from 'npm:pusher';
+import Pusher from 'npm:pusher-js';
 
 import { next } from '@ember/runloop';
 import ENV from 'travis/config/environment';
