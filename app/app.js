@@ -51,7 +51,7 @@ const App = Application.extend(Evented, {
     if (!user.channels) {
       return;
     }
-    Travis.pusher.subscribeAll(user.channels);
+    // Travis.pusher.subscribeAll(user.channels);
   },
 
   identifyHSBeacon(user) {
