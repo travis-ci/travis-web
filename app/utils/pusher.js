@@ -39,7 +39,20 @@ TravisPusher.prototype.init = function (config, ajaxService) {
 
   return this.pusher = new Pusher(config.key, {
     encrypted: config.encrypted,
-    disableStats: true
+    disableStats: true,
+    authorizer: function (channel, options) {
+      return {
+        authorize: function (socketId, callback) {
+          let channelName = this.channel.name;
+          TravisPusher.ajaxService.post(Pusher.channel_auth_endpoint, {
+            socket_id: socketId,
+            channels: [channelName]
+          }).then((data) => {
+            callback(false, { auth: data['channels'][channelName] });
+          });
+        }
+      };
+    }
   });
 };
 
@@ -163,17 +176,6 @@ TravisPusher.prototype.ignoreMessage = function (message) {
 //     return false;
 //   }
 // };
-
-Pusher.channel_auth_transport = 'travis_ajax';
-Pusher.authorizers.travis_ajax = function (socketId, callback) {
-  let channelName = this.channel.name;
-  TravisPusher.ajaxService.post(Pusher.channel_auth_endpoint, {
-    socket_id: socketId,
-    channels: [channelName]
-  }).then((data) => {
-    callback(false, { auth: data['channels'][channelName] });
-  });
-};
 
 Pusher.getDefaultStrategy = function (config) {
   let pusherPath = ENV.pusher.path || '';
