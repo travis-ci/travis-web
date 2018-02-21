@@ -68,7 +68,6 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
     });
 
     this.subscription = server.create('subscription', {
-      'id': 1,
       'valid_to': '2018-03-08T02:38:08Z'
     });
 
