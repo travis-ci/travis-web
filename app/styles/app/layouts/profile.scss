@@ -258,8 +258,18 @@ $profile-breakpoint: 600px;
   }
 }
 
-.account-token .italic {
-  font-style: italic;
+
+.account-token {
+  .token-copied-text {
+    margin-left: 8px;
+    font-size: 12px;
+    font-style: italic;
+  }
+
+  .auth-token {
+    margin-left: 8px;
+    font-size: 12px
+  }
 }
 
 .token-actions {
