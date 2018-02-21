@@ -157,11 +157,12 @@ TravisPusher.prototype.ignoreMessage = function (message) {
   return existingSubscription || noSubscription;
 };
 
-Pusher.SockJSTransport.isSupported = function () {
-  if (ENV.pusher.host !== 'ws.pusherapp.com') {
-    return false;
-  }
-};
+// FIXME is this still needed?
+// Pusher.SockJSTransport.isSupported = function () {
+//   if (ENV.pusher.host !== 'ws.pusherapp.com') {
+//     return false;
+//   }
+// };
 
 Pusher.channel_auth_transport = 'travis_ajax';
 Pusher.authorizers.travis_ajax = function (socketId, callback) {
