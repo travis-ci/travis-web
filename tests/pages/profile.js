@@ -35,7 +35,7 @@ export default create({
 
     show: clickable('.token-actions button.show-token'),
     value: text('.auth-token'),
-    hiddenMessage: text('.auth-token'),
+    obfuscatedCharacters: text('.obfuscated-chars'),
     tokenCopiedText: text('.token-copied-text'),
   },
 

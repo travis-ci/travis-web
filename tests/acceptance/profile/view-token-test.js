@@ -26,7 +26,7 @@ test('view token', function (assert) {
   profilePage.visit({ username: 'feministkilljoy' });
 
   andThen(() => {
-    assert.equal(profilePage.token.hiddenMessage, 'hidden', 'expected token to be hidden by default');
+    assert.equal(profilePage.token.obfuscatedCharacters, '••••••••••••••••••••', 'expected token to be obfuscated by default');
   });
 
   profilePage.token.show();
@@ -41,7 +41,7 @@ test('copy token', function (assert) {
   profilePage.visit({ username: 'feministkilljoy' });
 
   andThen(() => {
-    assert.equal(profilePage.token.hiddenMessage, 'hidden', 'expected token to be hidden by default');
+    assert.equal(profilePage.token.obfuscatedCharacters, '••••••••••••••••••••', 'expected token to be obfuscated by default');
   });
 
   triggerCopySuccess();
