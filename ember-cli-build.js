@@ -60,8 +60,6 @@ module.exports = function () {
     }
   });
 
-  app.import('node_modules/timeago/jquery.timeago.js');
-
   const emojiAssets = new Funnel('node_modules/emoji-datasource-apple/img/apple/64', {
     destDir: '/images/emoji'
   });
