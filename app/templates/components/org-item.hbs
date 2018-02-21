@@ -11,21 +11,28 @@
     {{/if}}
     {{#if isUser}}
       <p class="account-token">
-        API Token:
+        API Token
         {{#if showCopySuccess}}
           <span class="token-copied-text italic">Token copied!</span>
         {{else}}
-          <span class="auth-token italic">{{if tokenIsVisible auth.token (obfuscated-chars 12)}}</span>
+          {{#if tokenIsVisible}}
+            <span class="auth-token">{{auth.token}}</span>
+          {{else}}
+            <span class="obfuscated-chars">{{obfuscated-chars 20}}</span>
+          {{/if}}
         {{/if}}
         <div class="token-actions">
-          <button {{action 'tokenVisibility'}} class="show-token">{{if tokenIsVisible 'Hide' 'Show'}}</button>
           {{#copy-button
             class="copy-button"
             clipboardText=auth.token
             title="Copy to clipboard"
             success=(action 'copyTokenSuccessful')}}
-            Copy
+            {{svg-jar 'icon-copy' class="icon"}} <span>Copy token</span>
           {{/copy-button}}
+          <button {{action 'tokenVisibility'}} class="show-token">
+            {{svg-jar 'icon-seemore' class="icon"}} <span>{{if tokenIsVisible
+              'Hide token' 'View token'}}</span>
+          </button>
         </div>
       </p>
     {{/if}}

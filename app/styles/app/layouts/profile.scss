@@ -262,6 +262,47 @@ $profile-breakpoint: 600px;
   font-style: italic;
 }
 
+.token-actions {
+  margin-top: 0.5em;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.obfuscated-chars {
+  padding-left: 0.4em;
+  letter-spacing: 0.2em;
+}
+
 .token-actions button {
-  border: 1px solid $cement-grey;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 10px;
+  background-color: transparent;
+  border-radius: 0.25em;
+  width: calc(1/2*100% - (1 - 1/2)*0.5em);
+  padding: 4px 0;
+
+  & svg {
+    margin-right: 4px;
+    height: 12px;
+  }
+
+  &.copy-button {
+    border: 0.09em solid lighten($oxide-blue, 20%);
+    box-shadow: 0 .15px 0 $oxide-blue;
+    color: $oxide-blue;
+    svg {
+      @include colorSVG($oxide-blue);
+    }
+  }
+
+  &.show-token {
+    border: 0.09em solid lighten($cement-grey, 20%);
+    box-shadow: 0 .15px 0 $cement-grey;
+    color: $cement-grey;
+  }
 }
