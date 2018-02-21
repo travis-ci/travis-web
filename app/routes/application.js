@@ -124,7 +124,7 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
     error(error) {
       if (error === 'needs-auth') {
         this.set('auth.redirected', true);
-        let currentURL = new URL(window.location.href),
+        let currentURL = new URL('/'),
           routerURL = `${currentURL.origin}${this.get('router.url')}`;
 
         return this.transitionTo('auth', { queryParams: { redirectUri: routerURL }});

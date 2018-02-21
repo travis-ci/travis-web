@@ -20,7 +20,7 @@ export default Service.extend({
   @service ajax: null,
 
   state: 'signed-out',
-  receivingEnd: `${location.protocol}//${location.host}`,
+  receivingEnd: 'https://api.travis-ci.org',
   tokenExpiredMsg: 'You\'ve been signed out, because your access token has expired.',
 
   init() {

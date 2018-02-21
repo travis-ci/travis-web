@@ -54,26 +54,6 @@ export default Service.extend({
       options.data = JSON.stringify(options.data);
     }
 
-    return new EmberPromise((resolve, reject) => {
-      options.error = (jqXHR, textStatus, errorThrown) => {
-        if (get(this, 'features.debugLogging')) {
-          // eslint-disable-next-line
-          console.log(`[ERROR] API responded with an error (${status}): ${JSON.stringify(data)}`);
-        }
-        run(() => {
-          // TODO: in the future we might want to run some handler here
-          // that would process all args
-          reject(jqXHR);
-        });
-      };
-
-      options.success = (payload, textStatus, jqXHR) => {
-        run(() => {
-          resolve(payload);
-        });
-      };
-
-      $.ajax(url, options);
-    });
+    return EmberPromise.reject();
   }
 });
