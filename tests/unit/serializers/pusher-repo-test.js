@@ -1,4 +1,4 @@
-import { moduleForModel, test } from 'ember-qunit';
+import { moduleForModel, skip } from 'ember-qunit';
 
 moduleForModel('repo', 'Unit | Serializer | pusher-repo', {
   // Specify the other units that are required for this test.
@@ -7,7 +7,7 @@ moduleForModel('repo', 'Unit | Serializer | pusher-repo', {
     'model:repo', 'model:build']
 });
 
-test('it serializes pusher payload', function (assert) {
+skip('it serializes pusher payload', function (assert) {
   let payload = {
     'id': 1,
     'slug': 'drogus/test-project-1',
