@@ -79,7 +79,7 @@ TravisPusher.prototype.unsubscribeAll = function (channels) {
 TravisPusher.prototype.subscribe = function (channelName) {
   if (channelName && this.pusher && !this.pusher.channel(channelName)) {
     this.active_channels.push(channelName);
-    return this.pusher.subscribe(channelName).bind_all((event, data) => {
+    return this.pusher.subscribe(channelName).bind_global((event, data) => {
       this.receive(event, data);
     });
   }
