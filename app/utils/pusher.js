@@ -16,7 +16,7 @@ TravisPusher.prototype.init = function (config, ajaxService) {
     return this.pusher = {
       subscribe() {
         return {
-          bind_all() {}
+          bind_global() {}
         };
       },
       channel() {}
