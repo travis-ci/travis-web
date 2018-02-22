@@ -6,6 +6,7 @@ import defaultHeader from 'travis/tests/pages/header/default';
 moduleForAcceptance('Acceptance | layouts/cta');
 
 test('cta is shown on .org when not on landing page and unauthenticated', function (assert) {
+  withFeature('landingPageCta');
   server.create('repository');
   existingRepoPage.visit();
 

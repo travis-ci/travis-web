@@ -69,6 +69,7 @@ module.exports = function (environment) {
     'repository-filtering': true,
     'debug-logging': false,
     'pro-version': !!process.env.TRAVIS_PRO || false,
+    'landing-page-cta': !(!!process.env.TRAVIS_PRO),
     'enterprise-version': !!process.env.TRAVIS_ENTERPRISE || false
   };
 
