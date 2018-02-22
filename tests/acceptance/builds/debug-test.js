@@ -11,7 +11,7 @@ moduleForAcceptance('Acceptance | builds/debug', {
 });
 
 test('debugging single-job build', function (assert) {
-  withFeature('pro-version');
+  withFeature('debugBuilds');
 
   let repository =  server.create('repository');
   server.create('branch', {});
@@ -40,7 +40,7 @@ test('debugging single-job build', function (assert) {
 });
 
 test('multi-job builds cannot be debugged', function (assert) {
-  withFeature('pro-version');
+  withFeature('debugBuilds');
 
   let repository =  server.create('repository');
   server.create('branch', {});

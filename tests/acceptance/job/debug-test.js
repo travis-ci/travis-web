@@ -11,7 +11,7 @@ moduleForAcceptance('Acceptance | jobs/debug', {
 });
 
 test('debugging job', function (assert) {
-  withFeature('pro-version');
+  withFeature('debugBuilds');
 
   let repo =  server.create('repository', { slug: 'travis-ci/travis-web' });
   let branch = server.create('branch', { name: 'acceptance-tests' });

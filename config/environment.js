@@ -71,6 +71,7 @@ module.exports = function (environment) {
     'pro-version': !!process.env.TRAVIS_PRO || false,
     'landing-page-cta': !(!!process.env.TRAVIS_PRO),
     'show-running-jobs-in-sidebar': !!process.env.TRAVIS_PRO || false,
+    'debug-builds': (!(!!process.env.TRAVIS_ENTERPRISE) && !!process.env.TRAVIS_PRO) || false,
     'enterprise-version': !!process.env.TRAVIS_ENTERPRISE || false
   };
 
