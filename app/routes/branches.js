@@ -19,7 +19,7 @@ export default TravisRoute.extend({
       }
     };
     if (this.get('auth.signedIn')) {
-      options.headers.Authorization = `token ${this.auth.token()}`;
+      options.headers.Authorization = `token ${this.auth.token}`;
     }
 
     let path = `${apiEndpoint}/repo/${repoId}/branches`;
