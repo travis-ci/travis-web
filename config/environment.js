@@ -72,7 +72,8 @@ module.exports = function (environment) {
     'landing-page-cta': !(process.env.TRAVIS_PRO),
     'show-running-jobs-in-sidebar': !!process.env.TRAVIS_PRO,
     'debug-builds': !process.env.TRAVIS_ENTERPRISE && !!process.env.TRAVIS_PRO,
-    'enterprise-version': !!process.env.TRAVIS_ENTERPRISE
+    'enterprise-version': !!process.env.TRAVIS_ENTERPRISE,
+    'broadcasts': !process.env.TRAVIS_ENTERPRISE
   };
 
   ENV.pagination = {
