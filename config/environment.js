@@ -68,11 +68,11 @@ module.exports = function (environment) {
   ENV.featureFlags = {
     'repository-filtering': true,
     'debug-logging': false,
-    'pro-version': !!process.env.TRAVIS_PRO || false,
-    'landing-page-cta': !(!!process.env.TRAVIS_PRO),
-    'show-running-jobs-in-sidebar': !!process.env.TRAVIS_PRO || false,
-    'debug-builds': (!(!!process.env.TRAVIS_ENTERPRISE) && !!process.env.TRAVIS_PRO) || false,
-    'enterprise-version': !!process.env.TRAVIS_ENTERPRISE || false
+    'pro-version': !!process.env.TRAVIS_PRO,
+    'landing-page-cta': !(process.env.TRAVIS_PRO),
+    'show-running-jobs-in-sidebar': !!process.env.TRAVIS_PRO,
+    'debug-builds': !process.env.TRAVIS_ENTERPRISE && !!process.env.TRAVIS_PRO,
+    'enterprise-version': !!process.env.TRAVIS_ENTERPRISE
   };
 
   ENV.pagination = {
