@@ -4,7 +4,7 @@ import config from 'travis/config/environment';
 import $ from 'jquery';
 
 export default Service.extend({
-  fetchTravisStatus: task(function * () {
+  fetchTravisStatus: task(function* () {
     const { statusPageStatusUrl: url } = config;
     if (url) {
       const response = yield $.get(url);
