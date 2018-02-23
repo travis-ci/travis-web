@@ -40,6 +40,7 @@ TravisPusher.prototype.init = function (config, ajaxService) {
   return this.pusher = new Pusher(config.key, {
     encrypted: config.encrypted,
     disableStats: true,
+
     authorizer: function (channel, options) {
       return {
         authorize: function (socketId, callback) {
