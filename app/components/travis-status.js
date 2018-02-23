@@ -1,28 +1,12 @@
 import $ from 'jquery';
 import Component from '@ember/component';
-import config from 'travis/config/environment';
-import { computed } from 'ember-decorators/object';
+import { service } from 'ember-decorators/service';
 
 export default Component.extend({
-  status: null,
-
-  @computed()
-  statusPageStatusUrl() {
-    return config.statusPageStatusUrl;
-  },
+  @service appLoading: null,
 
   didInsertElement() {
-    let url = this.get('statusPageStatusUrl');
-    if (url) {
-      return this.getStatus(url).then((response) => {
-        if (response.status && response.status.indicator) {
-          return this.set('status', response.status.indicator);
-        }
-      });
-    }
+    this._super(...arguments);
+    return this.get('appLoading.fetchTravisStatus').perform();
   },
-
-  getStatus(url) {
-    return $.ajax(url);
-  }
 });
