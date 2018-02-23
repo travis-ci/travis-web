@@ -1,4 +1,3 @@
-import $ from 'jquery';
 import Component from '@ember/component';
 import { service } from 'ember-decorators/service';
 
