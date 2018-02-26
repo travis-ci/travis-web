@@ -51,7 +51,8 @@ moduleForAcceptance('Acceptance | home/sidebar tabs', {
       branch: server.create('branch', {
         name: 'master'
       }),
-      ...durationAgo(53 / 60, 2 * 60)
+      ...durationAgo(53 / 60, 2 * 60),
+      event_type: 'push'
     });
     this.build = build;
 
