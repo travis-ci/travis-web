@@ -7,9 +7,13 @@ export default Service.extend({
   fetchTravisStatus: task(function* () {
     const { statusPageStatusUrl: url } = config;
     if (url) {
-      const response = yield $.get(url);
-      if (response.status && response.status.indicator) {
-        return this.set('travisStatus', response.status.indicator);
+      try {
+        const response = yield $.get(url);
+        if (response.status && response.status.indicator) {
+          return this.set('travisStatus', response.status.indicator);
+        }
+      } catch (e) {
+        return this.set('travisStatus', 'unknown');
       }
     }
   }).drop()
