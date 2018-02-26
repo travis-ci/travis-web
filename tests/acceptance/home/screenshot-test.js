@@ -1,19 +1,16 @@
 import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 
-function startedAt(duration, finished) {
+function durationAgo(duration, finished) {
   const nowTime = new Date().getTime();
 
   const finishedAt = nowTime - finished * 60 * 1000;
   const startedAt = finishedAt - duration * 60 * 1000;
 
-  return new Date(startedAt);
-}
-
-function finishedAt(finished) {
-  const nowTime = new Date().getTime();
-
-  return new Date(nowTime - finished * 60 * 1000);
+  return {
+    started_at: new Date(startedAt),
+    finished_at: new Date(finishedAt)
+  };
 }
 
 moduleForAcceptance('Acceptance | home/sidebar tabs', {
@@ -43,8 +40,7 @@ moduleForAcceptance('Acceptance | home/sidebar tabs', {
       committer: sven,
       branch: 'master',
       message: 'adding in Oh the places you’ll go!\nYou’ll be on your way up!\nYou’ll be seeing great sights!',
-      branch_is_default: true,
-      sha: 'd019f29'
+      branch_is_default: true
     });
 
     let build = server.create('build', {
@@ -55,8 +51,7 @@ moduleForAcceptance('Acceptance | home/sidebar tabs', {
       branch: server.create('branch', {
         name: 'master'
       }),
-      finished_at: finishedAt(2 * 60),
-      started_at: startedAt(53 / 60, 2 * 60)
+      ...durationAgo(53 / 60, 2 * 60)
     });
     this.build = build;
 
@@ -65,9 +60,7 @@ moduleForAcceptance('Acceptance | home/sidebar tabs', {
       repository: ham,
       state: 'passed',
       commit,
-      build,
-      finished_at: finishedAt(2 * 60),
-      started_at: startedAt(53 / 60, 2 * 60)
+      build
     });
     this.job = job;
 
