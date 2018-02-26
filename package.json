@@ -92,6 +92,7 @@
     "loader.js": "^4.2.3",
     "lodash.intersection": "4.4.0",
     "lodash.pickby": "4.6.0",
+    "pusher-js": "^4.2.2",
     "timeago": "^1.6.1",
     "url-polyfill": "^1.0.11",
     "visibilityjs": "^1.2.6",

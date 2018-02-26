@@ -1,6 +1,5 @@
 {
   "name": "travis",
   "dependencies": {
-    "pusher": "~2.2.3"
   }
 }
