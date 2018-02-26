@@ -8,7 +8,6 @@ with npm installed.
 
 In order to run the app you need to install dependencies with:
 
-    bower install
     npm install
 
 And then install ember-cli globally in order to have access to the `ember` command:

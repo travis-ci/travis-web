@@ -15,7 +15,6 @@ addons:
 cache:
   directories:
     - node_modules
-    - bower_components
 
 env:
   global:
@@ -25,14 +24,11 @@ env:
 before_install:
   - npm config set spin false
   - npm install -g npm@5
-  - npm install -g bower
-  - bower --version
   - npm --version
   - npm install -g greenkeeper-lockfile@1
 
 install:
   - npm install
-  - bower install
 
 before_script:
   - if [ $TRAVIS_PULL_REQUEST = 'false' ]; then echo "Enabling Percy on push with default Ember" && export PERCY_ENABLE=1; else export PERCY_ENABLE=0; fi
