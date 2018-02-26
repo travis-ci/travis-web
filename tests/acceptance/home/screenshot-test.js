@@ -80,9 +80,5 @@ moduleForAcceptance('Acceptance | home/sidebar tabs', {
 
 test('the screenshot renders', (assert) => {
   visit('/green-eggs/ham');
-
-  andThen(() => {
-    pauseTest();
-  });
   percySnapshot(assert);
 });
