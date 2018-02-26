@@ -68,6 +68,13 @@ moduleForAcceptance('Acceptance | home/sidebar tabs', {
 
     job.save();
     commit.save();
+
+    server.create('build', {
+      repository: twoFish,
+      state: 'passed',
+      number: '2686',
+      ...durationAgo(33 + 46 / 60, 30)
+    });
   }
 });
 
