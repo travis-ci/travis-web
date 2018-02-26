@@ -1,8 +1,6 @@
-{{#if statusPageStatusUrl}}
-  <h3 class="footer-title">Travis CI Status</h3>
-  <ul>
-    <li><div class="status-circle {{status}}">Status:</div>
-        <a href="http://www.traviscistatus.com/">Travis CI Status</a>
-    </li>
-  </ul>
-{{/if}}
+<h3 class="footer-title">Travis CI Status</h3>
+<ul>
+  <li><div class="status-circle {{appLoading.fetchTravisStatus.last.value}}">Status:</div>
+      <a href="http://www.traviscistatus.com/">Travis CI Status</a>
+  </li>
+</ul>
