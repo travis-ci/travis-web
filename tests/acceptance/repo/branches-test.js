@@ -176,32 +176,32 @@ test('view branches', function (assert) {
 
     const buildTiles = branchesPage.defaultBranch.buildTiles;
 
-    assert.ok(buildTiles(0).passed, 'expected most recent build to have passed');
-    assert.equal(buildTiles(0).number, '#1919');
+    assert.ok(buildTiles[0].passed, 'expected most recent build to have passed');
+    assert.equal(buildTiles[0].number, '#1919');
 
-    assert.ok(buildTiles(1).errored, 'expected second-most recent build to have errored');
-    assert.equal(buildTiles(1).number, '#1918');
+    assert.ok(buildTiles[1].errored, 'expected second-most recent build to have errored');
+    assert.equal(buildTiles[1].number, '#1918');
 
-    assert.ok(buildTiles(2).failed, 'expected third-most recent build to have failed');
-    assert.equal(buildTiles(2).number, '#1917');
+    assert.ok(buildTiles[2].failed, 'expected third-most recent build to have failed');
+    assert.equal(buildTiles[2].number, '#1917');
 
-    assert.ok(buildTiles(3).empty, 'expected fourth tile to be empty');
+    assert.ok(buildTiles[3].empty, 'expected fourth tile to be empty');
 
-    assert.equal(branchesPage.activeBranches().count, 3, 'expected three active branches');
+    assert.equal(branchesPage.activeBranches.length, 3, 'expected three active branches');
 
-    assert.equal(branchesPage.activeBranches(0).name, 'created', 'expected created branch to be sorted first');
-    assert.ok(branchesPage.activeBranches(0).created, 'expected created branch to be running');
-    assert.equal(branchesPage.activeBranches(0).buildCount, '1 build');
+    assert.equal(branchesPage.activeBranches[0].name, 'created', 'expected created branch to be sorted first');
+    assert.ok(branchesPage.activeBranches[0].created, 'expected created branch to be running');
+    assert.equal(branchesPage.activeBranches[0].buildCount, '1 build');
 
-    assert.equal(branchesPage.activeBranches(1).name, 'edits', 'expected newer completed branch to be sorted next');
-    assert.ok(branchesPage.activeBranches(1).failed, 'expected edits branch to have failed');
+    assert.equal(branchesPage.activeBranches[1].name, 'edits', 'expected newer completed branch to be sorted next');
+    assert.ok(branchesPage.activeBranches[1].failed, 'expected edits branch to have failed');
 
-    assert.equal(branchesPage.activeBranches(2).name, 'old-old-edits', 'expected older completed branch to be sorted last');
+    assert.equal(branchesPage.activeBranches[2].name, 'old-old-edits', 'expected older completed branch to be sorted last');
 
-    assert.equal(branchesPage.inactiveBranches().count, 2, 'expected two inactive branches');
-    assert.equal(branchesPage.inactiveBranches(0).name, 'old-edits');
-    assert.ok(branchesPage.inactiveBranches(0).errored, 'expected first inactive branch to have errored');
-    assert.equal(branchesPage.inactiveBranches(1).name, 'older-edits');
+    assert.equal(branchesPage.inactiveBranches.length, 2, 'expected two inactive branches');
+    assert.equal(branchesPage.inactiveBranches[0].name, 'old-edits');
+    assert.ok(branchesPage.inactiveBranches[0].errored, 'expected first inactive branch to have errored');
+    assert.equal(branchesPage.inactiveBranches[1].name, 'older-edits');
   });
   percySnapshot(assert);
 });

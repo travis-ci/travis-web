@@ -1,15 +1,14 @@
-import PageObject from 'travis/tests/page-object';
-
-let {
+import {
+  create,
   clickable,
   collection,
   hasClass,
   isHidden,
   notHasClass,
   text
-} = PageObject;
+} from 'ember-cli-page-object';
 
-export default PageObject.create({
+export default create({
   scope: '.topbar',
 
   broadcastTower: {
@@ -28,23 +27,22 @@ export default PageObject.create({
     isHidden: isHidden()
   },
 
-  broadcasts: collection({
+  broadcasts: {
     scope: 'ul.broadcasts',
 
     isClosed: notHasClass('is-open'),
     isOpen: hasClass('is-open'),
 
-    itemScope: 'li',
 
-    item: {
+    items: collection('li', {
       isAnnouncement: hasClass('announcement', '.broadcast-status'),
       isWarning: hasClass('warning', '.broadcast-status'),
 
       message: text('.message'),
 
       dismiss: clickable('.broadcast-close')
-    }
-  }),
+    })
+  },
 
   flashMessage: {
     scope: 'ul.flash li:eq(0)',

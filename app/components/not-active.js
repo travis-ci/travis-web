@@ -28,7 +28,7 @@ export default Component.extend({
     try {
       const response = yield $.ajax(`${apiEndpoint}/repo/${repoId}/activate`, {
         headers: {
-          Authorization: `token ${this.get('auth').token()}`,
+          Authorization: `token ${this.get('auth.token')}`,
           'Travis-API-Version': '3'
         },
         method: 'POST'
