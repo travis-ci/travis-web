@@ -80,5 +80,6 @@ moduleForAcceptance('Acceptance | home/sidebar tabs', {
 
 test('the screenshot renders', (assert) => {
   visit('/green-eggs/ham');
+  assert.expect(0);
   percySnapshot(assert);
 });
