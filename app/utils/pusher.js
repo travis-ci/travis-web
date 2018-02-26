@@ -172,13 +172,6 @@ TravisPusher.prototype.ignoreMessage = function (message) {
   return existingSubscription || noSubscription;
 };
 
-// FIXME is this still needed?
-// Pusher.SockJSTransport.isSupported = function () {
-//   if (ENV.pusher.host !== 'ws.pusherapp.com') {
-//     return false;
-//   }
-// };
-
 Pusher.getDefaultStrategy = function (config) {
   let pusherPath = ENV.pusher.path || '';
   if (pusherPath) {
