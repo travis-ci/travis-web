@@ -13,6 +13,32 @@ function durationAgo(duration, finished) {
   };
 }
 
+const ESCAPE = String.fromCharCode(27);
+const log = `I am the first line.
+travis_fold:start:afold
+I am the first line of a fold.
+I am the second line of a fold.
+travis_fold:end:afold
+I am a line between folds.
+travis_fold:start:afold
+I am the first line of a second fold.
+travis_fold:end:afold
+[0K[30;47;1mI am a bold black line with white background.     I have some whitespace within my line. I am very long to provoke wrapping. So I keep going on and on. And on!
+[0K[31;46;3mI am an italic red line with cyan background. The next line has a long unbroken string to test wrapping of unbroken text.
+[0K[32;45;4mI am an underlined green line with magenta background. ...........................................................................**....................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................
+[0K[33;44mI am a yellow line with blue background.
+[0K[34;43mI am a blue line yellow background.
+[0K[35;42mI am a magenta line with green background.
+[0K[36;41mI am a cyan line with red background.
+[0K[37;40mI am a white line with black background.
+[0K[90mI am a grey line.
+I used to be the final line.
+I am another line finished by a CR.\rI replace that line?\r${ESCAPE}[0mI am the final replacer.\nI do not replace because the previous line ended with a line feed.
+This should also be gone.\r This should have replaced it.
+A particular log formation is addressed here, this should remain.\r${ESCAPE}[0m\nThis should be on a separate line.
+But it must be addressed repeatedly!\r${ESCAPE}[0m\nAgain.
+`;
+
 moduleForAcceptance('Acceptance | home/sidebar tabs', {
   beforeEach() {
     const currentUser = server.create('user', {
@@ -69,6 +95,8 @@ moduleForAcceptance('Acceptance | home/sidebar tabs', {
 
     job.save();
     commit.save();
+
+    server.create('log', { id: job.id, content: log });
 
     server.create('build', {
       repository: twoFish,
