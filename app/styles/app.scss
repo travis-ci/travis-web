@@ -72,3 +72,24 @@
 @import "app/pages/getting-started";
 @import "app/pages/plans";
 @import "app/pages/logo";
+
+#ember-testing-container {
+  width: 2322px !important;
+  height: 1449px !important;
+}
+
+#ember-testing {
+  width: 50% !important;
+  height: 50% !important;
+
+  transform: scale(2) !important;
+}
+
+#left {
+  width: 25% !important;
+}
+
+.wrapper-main {
+  width: 75% !important;
+  margin-left: 25%;
+}

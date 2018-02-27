@@ -39,6 +39,7 @@ module.exports = function () {
       plugins: [
         'transform-decorators-legacy',
         'transform-class-properties',
+        'transform-object-rest-spread'
       ]
     },
     fingerprint: fingerprint,
