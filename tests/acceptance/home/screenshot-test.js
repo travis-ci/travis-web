@@ -125,7 +125,7 @@ moduleForAcceptance('Acceptance | home/sidebar tabs', {
       ...durationAgo(53 / 60, 2 * 60)
     });
 
-    const placesYoullGo = server.create('repository', { slug: 'ohthe/places-youll/go' });
+    const placesYoullGo = server.create('repository', { slug: 'ohthe/places-youllgo' });
     server.create('build', {
       repository: placesYoullGo,
       state: 'passed',
