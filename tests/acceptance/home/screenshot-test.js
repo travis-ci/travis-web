@@ -60,7 +60,11 @@ moduleForAcceptance('Acceptance | home/sidebar tabs', {
       slug: 'one-fish/two-fish'
     });
 
-    let sven = server.create('git-user', { name: 'Sven Fuchs' });
+    let sven = server.create('git-user', {
+      name: 'Sven Fuchs',
+      avatar_url: 'https://0.gravatar.com/avatar/2f042f300d1249917adf6f13d3f698b2'
+    });
+
     let commit = server.create('commit', {
       author: sven,
       committer: sven,
