@@ -108,6 +108,38 @@ moduleForAcceptance('Acceptance | home/sidebar tabs', {
       number: '2686',
       ...durationAgo(33 + 46 / 60, 30)
     });
+
+    const pop = server.create('repository', { slug: 'hop-on/pop'});
+    server.create('build', {
+      repository: pop,
+      state: 'passed',
+      number: '7001',
+      ...durationAgo(22 + 54 / 60, 61)
+    });
+
+    const awho = server.create('repository', { slug: 'horton-hears/awho'});
+    server.create('build', {
+      repository: awho,
+      state: 'passed',
+      number: '209',
+      ...durationAgo(53 / 60, 2 * 60)
+    });
+
+    const placesYoullGo = server.create('repository', { slug: 'ohthe/places-youll/go' });
+    server.create('build', {
+      repository: placesYoullGo,
+      state: 'passed',
+      number: '778',
+      ...durationAgo(6 + 55 / 60, 4 * 60)
+    });
+
+    const whostolechristmas = server.create('repository', { slug: 'thegrinch/whostolechristmas' });
+    server.create('build', {
+      repository: whostolechristmas,
+      state: 'passed',
+      number: '35',
+      ...durationAgo(15 + 50 / 60, 5 * 60)
+    });
   }
 });
 
