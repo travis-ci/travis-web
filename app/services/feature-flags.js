@@ -35,18 +35,19 @@ export default Service.extend({
     return state;
   },
 
-  fetchTask: task(function* () {
+  fetchTask: task(function* ({forceServerRequest} = false) {
     try {
       // try to read from local storage first, fall back to API
       const localFlags = yield JSON.parse(this.get('storage').getItem('travis.features'));
 
-      if (!isEmpty(localFlags)) {
+      if (!forceServerRequest && !isEmpty(localFlags)) {
         this._setFlagStateFromStorage(localFlags);
       } else {
         const featureSet = yield this.get('store').findAll('beta-feature');
         this.set('serverFlags', featureSet);
         const persisted = this._storeRemoteFlagState(featureSet);
         this._setFlagStateFromStorage(persisted);
+        return featureSet;
       }
     } catch (e) {
       // TODO:
