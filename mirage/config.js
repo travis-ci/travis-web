@@ -1,5 +1,5 @@
 /* global server */
-import Mirage from 'ember-cli-mirage';
+import { Response } from 'ember-cli-mirage';
 import config from 'travis/config/environment';
 import fuzzysort from 'npm:fuzzysort';
 import { merge } from '@ember/polyfills';
@@ -33,7 +33,7 @@ export default function () {
   });
 
   this.get('/unauthorized', function () {
-    return new Mirage.Response(403, {}, {});
+    return new Response(403, {}, {});
   });
 
   this.urlPrefix = apiEndpoint;
@@ -236,7 +236,7 @@ export default function () {
     if (owner) {
       return this.serialize(owner, 'owner');
     } else {
-      return new Mirage.Response(404, {}, {});
+      return new Response(404, {}, {});
     }
   });
 
@@ -262,7 +262,7 @@ export default function () {
       .models
       .map(sshKey => sshKey.destroyRecord());
 
-    return new Mirage.Response(204, {}, {});
+    return new Response(204, {}, {});
   });
 
   this.get('/settings/ssh_key/:repo_id', function (schema, request) {
@@ -339,16 +339,16 @@ export default function () {
         result: true
       };
     } else {
-      return new Mirage.Response(404, {}, {});
+      return new Response(404, {}, {});
     }
   });
 
   this.post('/build/:id/cancel', (schema, request) => {
     let build = schema.builds.find(request.params.id);
     if (build) {
-      return new Mirage.Response(204, {}, {});
+      return new Response(204, {}, {});
     } else {
-      return new Mirage.Response(404, {}, {});
+      return new Response(404, {}, {});
     }
   });
 
@@ -360,16 +360,16 @@ export default function () {
         result: true
       };
     } else {
-      return new Mirage.Response(404, {}, {});
+      return new Response(404, {}, {});
     }
   });
 
   this.post('/job/:id/cancel', (schema, request) => {
     let job = schema.jobs.find(request.params.id);
     if (job) {
-      return new Mirage.Response(204, {}, {});
+      return new Response(204, {}, {});
     } else {
-      return new Mirage.Response(404, {}, {});
+      return new Response(404, {}, {});
     }
   });
 
@@ -413,7 +413,7 @@ export default function () {
     let repository = schema.find('repository', request.params.repo_id);
     server.create('build', { number: '2', id: 9999,  repository, state: 'started' });
 
-    return new Mirage.Response(200, {}, {
+    return new Response(200, {}, {
       request: {
         id: fakeRequestId,
         message: requestBody.request.message,
@@ -427,7 +427,7 @@ export default function () {
   this.get('/repo/:repo_id/request/:request_id', function (schema, request) {
     let build = schema.builds.find(9999);
 
-    return new Mirage.Response(200, {}, {
+    return new Response(200, {}, {
       id: request.params.request_id,
       result: 'approved',
       builds: [build]
@@ -453,7 +453,7 @@ export default function () {
         '@raw_log_href': `/v3/job/${jobId}/log.txt`
       };
     } else {
-      return new Mirage.Response(404, {}, {});
+      return new Response(404, {}, {});
     }
   });
 
@@ -479,7 +479,7 @@ export default function () {
   });
 
   this.get('/v3/enterprise_license', function (schema, request) {
-    return new Mirage.Response(404, {}, {});
+    return new Response(404, {}, {});
   });
 }
 
