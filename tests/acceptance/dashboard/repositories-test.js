@@ -85,8 +85,6 @@ moduleForAcceptance('Acceptance | dashboard/repositories', {
 });
 
 test('visiting /dashboard/ with feature flag disabled', function (assert) {
-  withoutFeature('dashboard');
-
   visit('/dashboard/');
 
   andThen(() => {
