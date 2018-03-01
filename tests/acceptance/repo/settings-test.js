@@ -234,7 +234,7 @@ test('delete and create environment variables', function (assert) {
     } });
 
     // This will trigger a client-side error
-    server.post('/settings/env_vars', {}, 403);
+    server.post('/settings/env_vars', () => new Response(403, {}, {}));
   });
 
   settingsPage.environmentVariableForm.fillName('willFail');
@@ -245,7 +245,7 @@ test('delete and create environment variables', function (assert) {
     assert.equal(topPage.flashMessage.text, 'There was an error saving this environment variable.');
 
     // This will cause deletions to fail
-    server.delete('/settings/env_vars/:id', () => {}, 500);
+    server.delete('/settings/env_vars/:id', () => new Response(500, {}, {}));
   });
 
   settingsPage.environmentVariables[1].delete();
@@ -254,7 +254,7 @@ test('delete and create environment variables', function (assert) {
     assert.equal(settingsPage.environmentVariables.length, 2, 'expected the environment variable to remain');
     assert.equal(topPage.flashMessage.text, 'There was an error deleting this environment variable.');
 
-    server.delete('/settings/env_vars/:id', () => {}, 404);
+    server.delete('/settings/env_vars/:id', () => new Response(404, {}, {}));
   });
 
   settingsPage.environmentVariables[1].delete();
