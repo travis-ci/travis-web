@@ -1,5 +1,5 @@
 import { test } from 'qunit';
-import Mirage from 'ember-cli-mirage';
+import { Response } from 'ember-cli-mirage';
 
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import settingsPage from 'travis/tests/pages/settings';
@@ -234,7 +234,7 @@ test('delete and create environment variables', function (assert) {
     } });
 
     // This will trigger a client-side error
-    server.post('/settings/env_vars', {}, 403);
+    server.post('/settings/env_vars', () => new Response(403, {}, {}));
   });
 
   settingsPage.environmentVariableForm.fillName('willFail');
@@ -245,7 +245,7 @@ test('delete and create environment variables', function (assert) {
     assert.equal(topPage.flashMessage.text, 'There was an error saving this environment variable.');
 
     // This will cause deletions to fail
-    server.delete('/settings/env_vars/:id', () => {}, 500);
+    server.delete('/settings/env_vars/:id', () => new Response(500, {}, {}));
   });
 
   settingsPage.environmentVariables[1].delete();
@@ -254,7 +254,7 @@ test('delete and create environment variables', function (assert) {
     assert.equal(settingsPage.environmentVariables.length, 2, 'expected the environment variable to remain');
     assert.equal(topPage.flashMessage.text, 'There was an error deleting this environment variable.');
 
-    server.delete('/settings/env_vars/:id', () => {}, 404);
+    server.delete('/settings/env_vars/:id', () => new Response(404, {}, {}));
   });
 
   settingsPage.environmentVariables[1].delete();
@@ -347,7 +347,7 @@ test('add SSH key', function (assert) {
   const requestBodies = [];
 
   server.get(`/settings/ssh_key/${this.repository.id}`, function (schema, request) {
-    return new Mirage.Response(429, {}, {});
+    return new Response(429, {}, {});
   });
 
   server.patch(`/settings/ssh_key/${this.repository.id}`, (schema, request) => {
