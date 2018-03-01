@@ -4,9 +4,19 @@ import config from 'travis/config/environment';
 import fuzzysort from 'npm:fuzzysort';
 import { merge } from '@ember/polyfills';
 
-const { apiEndpoint } = config;
+const { validAuthToken, apiEndpoint } = config;
 
 export default function () {
+  const _defaultHandler = this.pretender._handlerFor;
+
+  this.pretender._handlerFor = function (verb, path, request) {
+    const authHeader = request.requestHeaders.Authorization;
+    if (authHeader && authHeader !== `token ${validAuthToken}`) {
+      return _defaultHandler.apply(this, ['GET', '/unauthorized', request]);
+    }
+    return _defaultHandler.apply(this, arguments);
+  };
+
   this.get('https://pnpcptp8xh9k.statuspage.io/api/v2/status.json', function () {
     return {
       'page': {
@@ -22,17 +32,17 @@ export default function () {
     };
   });
 
+  this.get('/unauthorized', function () {
+    return new Mirage.Response(403, {}, {});
+  });
+
   this.urlPrefix = apiEndpoint;
   this.namespace = '';
 
   this.get('/users', function ({ users }, request)  {
-    if (request.requestHeaders.Authorization === 'token testUserToken') {
-      let userData = JSON.parse(localStorage.getItem('travis.user')),
-        id = userData.id;
-      return this.serialize(users.find(id), 'v2');
-    } else {
-      return new Mirage.Response(403, {}, {});
-    }
+    let userData = JSON.parse(localStorage.getItem('travis.user')),
+      id = userData.id;
+    return this.serialize(users.find(id), 'v2');
   });
 
   this.get('/accounts', (schema/* , request*/) => {
@@ -43,11 +53,7 @@ export default function () {
   });
 
   this.get('/users/:id', function ({ users }, request) {
-    if (request.requestHeaders.Authorization === 'token testUserToken') {
-      return this.serialize(users.find(request.params.id), 'v2');
-    } else {
-      return new Mirage.Response(403, {}, {});
-    }
+    return this.serialize(users.find(request.params.id), 'v2');
   });
 
   this.get('/users/permissions', (schema, request) => {

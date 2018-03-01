@@ -145,6 +145,8 @@ module.exports = function (environment) {
     // Testem prefers this...
     ENV.locationType = 'none';
 
+    ENV.validAuthToken = 'testUserToken';
+
     ENV.intervals.searchDebounceRate = 0;
     ENV.intervals.branchCreatedSyncDelay = 0;
     ENV.intervals.triggerBuildRequestDelay = 0;
