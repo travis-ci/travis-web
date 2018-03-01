@@ -74,14 +74,14 @@ test('updating repository', function (assert) {
   profilePage.visit({ username: 'feministkilljoy' });
 
   andThen(() => {
-    profilePage.administerableRepositories(0).toggle();
-    profilePage.administerableRepositories(1).toggle();
-    profilePage.administerableRepositories(2).toggle();
+    profilePage.administerableRepositories[0].toggle();
+    profilePage.administerableRepositories[1].toggle();
+    profilePage.administerableRepositories[2].toggle();
   });
 
   andThen(() => {
-    assert.ok(profilePage.administerableRepositories(0).isActive, 'expected unadministerable repository to be unchanged');
-    assert.notOk(profilePage.administerableRepositories(1).isActive, 'expected previously enabled repository to be disabled');
-    assert.ok(profilePage.administerableRepositories(2).isActive, 'expected previously disabled job to be enabled');
+    assert.ok(profilePage.administerableRepositories[0].isActive, 'expected unadministerable repository to be unchanged');
+    assert.notOk(profilePage.administerableRepositories[1].isActive, 'expected previously enabled repository to be disabled');
+    assert.ok(profilePage.administerableRepositories[2].isActive, 'expected previously disabled job to be enabled');
   });
 });

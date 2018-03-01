@@ -15,14 +15,14 @@ test('plans page renders correct header/footer', function (assert) {
 
     assert.ok(proHeader.logoPresent, 'Pro header has logo');
 
-    assert.equal(proHeader.navigationLinks(0).title, 'About Us', 'Shows link to team page');
-    assert.equal(proHeader.navigationLinks(1).title, 'Plans & Pricing', 'Shows link to plans page');
-    assert.equal(proHeader.navigationLinks(2).title, 'Enterprise', 'Shows link to Enterprise offering');
+    assert.equal(proHeader.navigationLinks[0].title, 'About Us', 'Shows link to team page');
+    assert.equal(proHeader.navigationLinks[1].title, 'Plans & Pricing', 'Shows link to plans page');
+    assert.equal(proHeader.navigationLinks[2].title, 'Enterprise', 'Shows link to Enterprise offering');
 
     assert.ok(proHeader.loginLinkPresent, 'Pro header has login button');
-    assert.equal(footer.sections(1).title, '©Travis CI, GmbH', 'Shows company info section');
-    assert.equal(footer.sections(2).title, 'Help', 'Shows help info section');
-    assert.equal(footer.sections(3).title, 'Legal', 'Shows legal info section');
+    assert.equal(footer.sections[1].title, '©Travis CI, GmbH', 'Shows company info section');
+    assert.equal(footer.sections[2].title, 'Help', 'Shows help info section');
+    assert.equal(footer.sections[3].title, 'Legal', 'Shows legal info section');
   });
 });
 

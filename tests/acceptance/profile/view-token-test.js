@@ -1,6 +1,7 @@
 import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import profilePage from 'travis/tests/pages/profile';
+import config from 'travis/config/environment';
 
 moduleForAcceptance('Acceptance | profile/view token', {
   beforeEach() {
@@ -26,13 +27,35 @@ test('view token', function (assert) {
   profilePage.visit({ username: 'feministkilljoy' });
 
   andThen(() => {
-    assert.ok(profilePage.token.isHidden, 'expected token to be hidden by default');
+    assert.equal(profilePage.token.obfuscatedCharacters, '••••••••••••••••••••', 'expected token to be obfuscated by default');
   });
 
   profilePage.token.show();
 
   andThen(function () {
-    assert.equal(profilePage.token.value, 'testUserToken');
+    assert.equal(profilePage.token.value, config.validAuthToken);
+  });
+  percySnapshot(assert);
+});
+
+test('copy token', function (assert) {
+  profilePage.visit({ username: 'feministkilljoy' });
+
+  andThen(() => {
+    assert.equal(profilePage.token.obfuscatedCharacters, '••••••••••••••••••••', 'expected token to be obfuscated by default');
+  });
+
+  triggerCopySuccess();
+
+  andThen(function () {
+    assert.equal(profilePage.token.tokenCopiedText, 'Token copied!');
+  });
+
+  // ensure a second copy success does not show incorrect text/feel buggy
+  triggerCopySuccess();
+
+  andThen(function () {
+    assert.equal(profilePage.token.tokenCopiedText, 'Token copied!');
   });
   percySnapshot(assert);
 });

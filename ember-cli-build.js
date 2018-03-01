@@ -10,8 +10,7 @@ module.exports = function () {
     fingerprint = false;
   } else {
     fingerprint = {
-      // FIXME this is probably not desired
-      exclude: ['images/emoji', 'images/logos', 'images/pro-landing/flag*', 'images/team'],
+      exclude: ['images/emoji', 'images/logos'],
       extensions: ['js', 'css', 'png', 'jpg', 'gif', 'map', 'svg']
     };
 
@@ -60,7 +59,6 @@ module.exports = function () {
     }
   });
 
-  app.import('bower_components/pusher/dist/pusher.js');
   app.import('node_modules/timeago/jquery.timeago.js');
 
   const emojiAssets = new Funnel('node_modules/emoji-datasource-apple/img/apple/64', {

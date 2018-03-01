@@ -1,12 +1,22 @@
 /* global server */
-import Mirage from 'ember-cli-mirage';
+import { Response } from 'ember-cli-mirage';
 import config from 'travis/config/environment';
 import fuzzysort from 'npm:fuzzysort';
 import { merge } from '@ember/polyfills';
 
-const { apiEndpoint } = config;
+const { validAuthToken, apiEndpoint } = config;
 
 export default function () {
+  const _defaultHandler = this.pretender._handlerFor;
+
+  this.pretender._handlerFor = function (verb, path, request) {
+    const authHeader = request.requestHeaders.Authorization;
+    if (authHeader && authHeader !== `token ${validAuthToken}`) {
+      return _defaultHandler.apply(this, ['GET', '/unauthorized', request]);
+    }
+    return _defaultHandler.apply(this, arguments);
+  };
+
   this.get('https://pnpcptp8xh9k.statuspage.io/api/v2/status.json', function () {
     return {
       'page': {
@@ -22,17 +32,17 @@ export default function () {
     };
   });
 
+  this.get('/unauthorized', function () {
+    return new Response(403, {}, {});
+  });
+
   this.urlPrefix = apiEndpoint;
   this.namespace = '';
 
   this.get('/users', function ({ users }, request)  {
-    if (request.requestHeaders.Authorization === 'token testUserToken') {
-      let userData = JSON.parse(localStorage.getItem('travis.user')),
-        id = userData.id;
-      return this.serialize(users.find(id), 'v2');
-    } else {
-      return new Mirage.Response(403, {}, {});
-    }
+    let userData = JSON.parse(localStorage.getItem('travis.user')),
+      id = userData.id;
+    return this.serialize(users.find(id), 'v2');
   });
 
   this.get('/accounts', (schema/* , request*/) => {
@@ -43,11 +53,7 @@ export default function () {
   });
 
   this.get('/users/:id', function ({ users }, request) {
-    if (request.requestHeaders.Authorization === 'token testUserToken') {
-      return this.serialize(users.find(request.params.id), 'v2');
-    } else {
-      return new Mirage.Response(403, {}, {});
-    }
+    return this.serialize(users.find(request.params.id), 'v2');
   });
 
   this.get('/users/permissions', (schema, request) => {
@@ -230,7 +236,7 @@ export default function () {
     if (owner) {
       return this.serialize(owner, 'owner');
     } else {
-      return new Mirage.Response(404, {}, {});
+      return new Response(404, {}, {});
     }
   });
 
@@ -256,7 +262,7 @@ export default function () {
       .models
       .map(sshKey => sshKey.destroyRecord());
 
-    return new Mirage.Response(204, {}, {});
+    return new Response(204, {}, {});
   });
 
   this.get('/settings/ssh_key/:repo_id', function (schema, request) {
@@ -333,16 +339,16 @@ export default function () {
         result: true
       };
     } else {
-      return new Mirage.Response(404, {}, {});
+      return new Response(404, {}, {});
     }
   });
 
   this.post('/build/:id/cancel', (schema, request) => {
     let build = schema.builds.find(request.params.id);
     if (build) {
-      return new Mirage.Response(204, {}, {});
+      return new Response(204, {}, {});
     } else {
-      return new Mirage.Response(404, {}, {});
+      return new Response(404, {}, {});
     }
   });
 
@@ -354,16 +360,16 @@ export default function () {
         result: true
       };
     } else {
-      return new Mirage.Response(404, {}, {});
+      return new Response(404, {}, {});
     }
   });
 
   this.post('/job/:id/cancel', (schema, request) => {
     let job = schema.jobs.find(request.params.id);
     if (job) {
-      return new Mirage.Response(204, {}, {});
+      return new Response(204, {}, {});
     } else {
-      return new Mirage.Response(404, {}, {});
+      return new Response(404, {}, {});
     }
   });
 
@@ -407,7 +413,7 @@ export default function () {
     let repository = schema.find('repository', request.params.repo_id);
     server.create('build', { number: '2', id: 9999,  repository, state: 'started' });
 
-    return new Mirage.Response(200, {}, {
+    return new Response(200, {}, {
       request: {
         id: fakeRequestId,
         message: requestBody.request.message,
@@ -421,7 +427,7 @@ export default function () {
   this.get('/repo/:repo_id/request/:request_id', function (schema, request) {
     let build = schema.builds.find(9999);
 
-    return new Mirage.Response(200, {}, {
+    return new Response(200, {}, {
       id: request.params.request_id,
       result: 'approved',
       builds: [build]
@@ -447,7 +453,7 @@ export default function () {
         '@raw_log_href': `/v3/job/${jobId}/log.txt`
       };
     } else {
-      return new Mirage.Response(404, {}, {});
+      return new Response(404, {}, {});
     }
   });
 
@@ -470,6 +476,10 @@ export default function () {
   this.post('/repo/:repo_id/unstar', function (schema, request) {
     let repo = schema.repositories.find(request.params.repo_id);
     repo.update('starred', false);
+  });
+
+  this.get('/v3/enterprise_license', function (schema, request) {
+    return new Response(404, {}, {});
   });
 }
 
