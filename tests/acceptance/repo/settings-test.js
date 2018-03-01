@@ -1,5 +1,5 @@
 import { test } from 'qunit';
-import Mirage from 'ember-cli-mirage';
+import { Response } from 'ember-cli-mirage';
 
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import settingsPage from 'travis/tests/pages/settings';
@@ -347,7 +347,7 @@ test('add SSH key', function (assert) {
   const requestBodies = [];
 
   server.get(`/settings/ssh_key/${this.repository.id}`, function (schema, request) {
-    return new Mirage.Response(429, {}, {});
+    return new Response(429, {}, {});
   });
 
   server.patch(`/settings/ssh_key/${this.repository.id}`, (schema, request) => {
