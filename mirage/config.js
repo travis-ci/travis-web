@@ -7,6 +7,16 @@ import { merge } from '@ember/polyfills';
 const { apiEndpoint } = config;
 
 export default function () {
+  const _defaultHandler = this.pretender._handlerFor;
+
+  this.pretender._handlerFor = function (verb, path, request) {
+    const authHeader = request.requestHeaders.Authorization;
+    if (authHeader && authHeader !== 'token testUserToken') {
+      return _defaultHandler.apply(this, ['GET', '/unauthorized', request]);
+    }
+    return _defaultHandler.apply(this, arguments);
+  };
+
   this.get('https://pnpcptp8xh9k.statuspage.io/api/v2/status.json', function () {
     return {
       'page': {
@@ -20,6 +30,10 @@ export default function () {
         'description': 'AllSystems Operational'
       }
     };
+  });
+
+  this.get('/unauthorized', function () {
+    return new Mirage.Response(403, {}, {});
   });
 
   this.urlPrefix = apiEndpoint;
