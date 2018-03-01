@@ -1,6 +1,7 @@
 import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import profilePage from 'travis/tests/pages/profile';
+import config from 'travis/config/environment';
 
 moduleForAcceptance('Acceptance | profile/view token', {
   beforeEach() {
@@ -32,7 +33,7 @@ test('view token', function (assert) {
   profilePage.token.show();
 
   andThen(function () {
-    assert.equal(profilePage.token.value, 'testUserToken');
+    assert.equal(profilePage.token.value, config.validAuthToken);
   });
   percySnapshot(assert);
 });
