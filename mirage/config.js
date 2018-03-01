@@ -40,13 +40,9 @@ export default function () {
   this.namespace = '';
 
   this.get('/users', function ({ users }, request)  {
-    if (request.requestHeaders.Authorization === 'token testUserToken') {
-      let userData = JSON.parse(localStorage.getItem('travis.user')),
-        id = userData.id;
-      return this.serialize(users.find(id), 'v2');
-    } else {
-      return new Mirage.Response(403, {}, {});
-    }
+    let userData = JSON.parse(localStorage.getItem('travis.user')),
+      id = userData.id;
+    return this.serialize(users.find(id), 'v2');
   });
 
   this.get('/accounts', (schema/* , request*/) => {
@@ -57,11 +53,7 @@ export default function () {
   });
 
   this.get('/users/:id', function ({ users }, request) {
-    if (request.requestHeaders.Authorization === 'token testUserToken') {
-      return this.serialize(users.find(request.params.id), 'v2');
-    } else {
-      return new Mirage.Response(403, {}, {});
-    }
+    return this.serialize(users.find(request.params.id), 'v2');
   });
 
   this.get('/users/permissions', (schema, request) => {
