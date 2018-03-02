@@ -24,13 +24,6 @@ export default Component.extend(InViewportMixin, {
     return name || login;
   },
 
-  actions: {
-    toggleBurgerMenu() {
-      this.toggleProperty('is-open');
-      return false;
-    },
-  },
-
   @computed('auth.signedIn', 'landingPage', 'features.proVersion')
   showCta(signedIn, landingPage, pro) {
     return !signedIn && !landingPage && !pro;
