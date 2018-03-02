@@ -99,10 +99,13 @@ export default Component.extend({
 
   @computed('tab', 'repositories.{searchResults.[],accessible.[]}')
   repositoryResults(tab, searchResults, accessible) {
+    let results = accessible;
+
     if (tab === 'search') {
-      return searchResults;
+      results =  searchResults;
     }
-    return accessible;
+
+    return results.filter(repo => repo.get('active'));
   },
 
   @computed('tab')
