@@ -12,7 +12,6 @@ export default Component.extend(InViewportMixin, {
   @service externalLinks: null,
   @service features: null,
   @service flashes: null,
-  @service('broadcasts') broadcastsService: null,
 
   tagName: 'header',
   classNames: ['top'],
@@ -25,21 +24,9 @@ export default Component.extend(InViewportMixin, {
     return name || login;
   },
 
-  @alias('broadcastsService.broadcasts') broadcasts: null,
-
   actions: {
     toggleBurgerMenu() {
       this.toggleProperty('is-open');
-      return false;
-    },
-
-    toggleBroadcasts() {
-      this.toggleProperty('showBroadcasts');
-      return false;
-    },
-
-    markBroadcastAsSeen(broadcast) {
-      this.get('broadcastsService').markAsSeen(broadcast);
       return false;
     },
   },

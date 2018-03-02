@@ -8,29 +8,7 @@
         </button>
       </div>
 
-      {{#unless features.enterpriseVersion}}
-        {{#if auth.signedIn}}
-
-          {{broadcast-tower toggleBroadcasts="toggleBroadcasts" status=broadcasts.lastBroadcastStatus count=broadcasts.length}}
-
-          <ul class="broadcasts {{if showBroadcasts 'is-open'}}">
-            {{#each broadcasts.content as |broadcast|}}
-              <li>
-                <p>
-                  <span class="broadcast-status {{broadcast.category}}" title="Transmitted on {{broadcast.updated_at}}"></span>
-                  <span class='message'>{{{broadcast.message}}}</span>
-                  <button {{action 'markBroadcastAsSeen' broadcast}} title="hide this broadcast" class="broadcast-close no-button" type="button">
-                    {{svg-jar 'icon-failed' class="icon"}}
-                  </button>
-                </p>
-              </li>
-            {{else}}
-              <li><p>There are no broadcasts</p></li>
-            {{/each}}
-          </ul>
-        {{/if}}
-      {{/unless}}
-
+      {{header-broadcasts showBroadcasts=showBroadcasts}}
       {{header-links}}
     </div>
   </header>
