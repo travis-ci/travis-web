@@ -12,6 +12,7 @@ export default Component.extend({
 
   @service auth: null,
   @service features: null,
+  @service externalLinks: null,
 
   @alias('auth.currentUser') user: null,
 
