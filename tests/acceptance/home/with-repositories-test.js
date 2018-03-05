@@ -59,6 +59,7 @@ moduleForAcceptance('Acceptance | home/with repositories', {
 test('the home page shows the repositories', (assert) => {
   sidebarPage.visit();
 
+  andThen(() => {});
   andThen(() => {
     assert.equal(sidebarPage.sidebarRepositories.length, 3, 'expected three repositories in the sidebar');
     assert.equal(sidebarPage.sidebarRepositories[0].name, 'killjoys/willful-subjects');
@@ -71,6 +72,7 @@ test('Pusher events change the main display', function (assert) {
   assert.expect(4);
   sidebarPage.visit();
 
+  andThen(() => {});
   andThen(() => {
     assert.equal(sidebarPage.repoTitle, 'killjoys / willful-subjects', 'expected the displayed repository to be the one with a running build');
   });

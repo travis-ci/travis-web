@@ -12,6 +12,7 @@ moduleForAcceptance('Acceptance | home/without repositories', {
 test('signed in but without repositories', function (assert) {
   sidebarPage.visit();
 
+  andThen(() => {});
   andThen(function () {
     assert.equal(currentURL(), '/getting_started');
   });
