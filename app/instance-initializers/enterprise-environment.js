@@ -15,5 +15,6 @@ export function initialize(appInstance) {
 
 export default {
   name: 'enterprise-environment',
+  after: 'pro-environment',
   initialize,
 };
