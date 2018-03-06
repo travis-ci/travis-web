@@ -65,15 +65,17 @@ module.exports = function (environment) {
     randomiseTeam: process.env.PERCY_ENABLE !== '1'
   };
 
+  const { TRAVIS_PRO, TRAVIS_ENTERPRISE } = process.env;
+
   ENV.featureFlags = {
     'repository-filtering': true,
     'debug-logging': false,
-    'pro-version': !!process.env.TRAVIS_PRO,
-    'landing-page-cta': !(process.env.TRAVIS_PRO),
-    'show-running-jobs-in-sidebar': !!process.env.TRAVIS_PRO,
-    'debug-builds': !process.env.TRAVIS_ENTERPRISE && !!process.env.TRAVIS_PRO,
-    'enterprise-version': !!process.env.TRAVIS_ENTERPRISE,
-    'broadcasts': !process.env.TRAVIS_ENTERPRISE
+    'pro-version': !!TRAVIS_PRO,
+    'landing-page-cta': !(TRAVIS_PRO),
+    'show-running-jobs-in-sidebar': !!TRAVIS_PRO,
+    'debug-builds': !TRAVIS_ENTERPRISE && !!TRAVIS_PRO,
+    'enterprise-version': !!TRAVIS_ENTERPRISE,
+    'broadcasts': !TRAVIS_ENTERPRISE
   };
 
   ENV.pagination = {
