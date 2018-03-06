@@ -3,6 +3,7 @@ import Ember from 'ember';
 import { computed } from 'ember-decorators/object';
 import { alias } from 'ember-decorators/object/computed';
 import { service } from 'ember-decorators/service';
+import { htmlSafe } from '@ember/string';
 
 import InViewportMixin from 'ember-in-viewport';
 
@@ -70,11 +71,6 @@ export default Component.extend(InViewportMixin, {
       this.get('broadcastsService').markAsSeen(broadcast);
       return false;
     },
-
-    helpscoutTrigger() {
-      HS.beacon.open();
-      return false;
-    }
   },
 
   @computed('auth.signedIn', 'landingPage', 'features.landingPageCta')
