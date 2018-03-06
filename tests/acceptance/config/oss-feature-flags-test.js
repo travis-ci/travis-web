@@ -13,9 +13,3 @@ test('configures feature flags', function (assert) {
   assert.equal(featureFlags['debug-builds'], false);
   assert.equal(featureFlags['broadcasts'], true);
 });
-
-test('configures environment flags', function (assert) {
-  const { featureFlags } = config;
-  assert.equal(featureFlags['pro-version'], false);
-  assert.equal(featureFlags['enterprise-version'], false);
-});
