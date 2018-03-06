@@ -22,7 +22,6 @@ module('Unit | Instance Initializer | enterprise environment', {
 test('it sets flags appropriately', function (assert) {
   initialize(this.appInstance);
 
-  // you would normally confirm the results of the initializer here
   const { featureFlags } = this.appInstance.resolveRegistration('config:environment');
 
   assert.equal(featureFlags['repository-filtering'], true);
