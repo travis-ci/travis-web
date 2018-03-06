@@ -76,11 +76,11 @@ module.exports = function (environment) {
 
   const { TRAVIS_PRO, TRAVIS_ENTERPRISE } = process.env;
 
-  if (!!TRAVIS_PRO) {
+  if (TRAVIS_PRO) {
     ENV.featureFlags['pro-version'] = true;
   }
 
-  if (!!TRAVIS_ENTERPRISE) {
+  if (TRAVIS_ENTERPRISE) {
     ENV.featureFlags['enterprise-version'] = true;
   }
 
