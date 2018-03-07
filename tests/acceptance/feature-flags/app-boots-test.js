@@ -37,3 +37,22 @@ test('app boots even if call to `/beta_features` fails', function (assert) {
     assert.equal(currentURL(), '/');
   });
 });
+
+test('app does not request feature flags on boot if available in local storage', function (assert) {
+  assert.expect(1);
+
+  server.get('/user/:user_id/beta_features', function (schema) {
+    assert.ok(false);
+  });
+
+  const currentUser = server.create('user');
+  signInUser(currentUser);
+
+  window.localStorage.setItem('travis.features', JSON.stringify([{foo: false}, {bar: false}]));
+
+  visit('/');
+
+  andThen(() => {
+    assert.ok(true);
+  });
+});

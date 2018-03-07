@@ -61,7 +61,7 @@ export default Service.extend({
     method = (method || 'GET').toUpperCase();
     endpoint = config.apiEndpoint || '';
     options = options || {};
-    token = get(this, 'auth').token();
+    token = get(this, 'auth.token');
 
     options.headers = options.headers || {};
 

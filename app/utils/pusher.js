@@ -1,4 +1,5 @@
-/* global Pusher */
+import Pusher from 'npm:pusher-js';
+
 import { next } from '@ember/runloop';
 import ENV from 'travis/config/environment';
 
@@ -15,7 +16,7 @@ TravisPusher.prototype.init = function (config, ajaxService) {
     return this.pusher = {
       subscribe() {
         return {
-          bind_all() {}
+          bind_global() {}
         };
       },
       channel() {}
@@ -38,7 +39,22 @@ TravisPusher.prototype.init = function (config, ajaxService) {
 
   return this.pusher = new Pusher(config.key, {
     encrypted: config.encrypted,
-    disableStats: true
+    disableStats: true,
+
+    authorizer: function (channel, options) {
+      return {
+        authorize: function (socketId, callback) {
+          let channelName = channel.name;
+
+          TravisPusher.ajaxService.post('/pusher/auth', {
+            socket_id: socketId,
+            channels: [channelName]
+          }).then((data) => {
+            callback(false, { auth: data['channels'][channelName] });
+          });
+        }
+      };
+    }
   });
 };
 
@@ -65,7 +81,7 @@ TravisPusher.prototype.unsubscribeAll = function (channels) {
 TravisPusher.prototype.subscribe = function (channelName) {
   if (channelName && this.pusher && !this.pusher.channel(channelName)) {
     this.active_channels.push(channelName);
-    return this.pusher.subscribe(channelName).bind_all((event, data) => {
+    return this.pusher.subscribe(channelName).bind_global((event, data) => {
       this.receive(event, data);
     });
   }
@@ -154,23 +170,6 @@ TravisPusher.prototype.ignoreMessage = function (message) {
   let existingSubscription = message.indexOf('Existing subscription') === 0;
   let noSubscription = message.indexOf('No current subscription') === 0;
   return existingSubscription || noSubscription;
-};
-
-Pusher.SockJSTransport.isSupported = function () {
-  if (ENV.pusher.host !== 'ws.pusherapp.com') {
-    return false;
-  }
-};
-
-Pusher.channel_auth_transport = 'travis_ajax';
-Pusher.authorizers.travis_ajax = function (socketId, callback) {
-  let channelName = this.channel.name;
-  TravisPusher.ajaxService.post(Pusher.channel_auth_endpoint, {
-    socket_id: socketId,
-    channels: [channelName]
-  }).then((data) => {
-    callback(false, { auth: data['channels'][channelName] });
-  });
 };
 
 Pusher.getDefaultStrategy = function (config) {

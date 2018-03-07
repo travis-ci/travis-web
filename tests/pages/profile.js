@@ -33,10 +33,10 @@ export default create({
   token: {
     scope: '.profile-user',
 
-    isHidden: 'strong',
-
-    show: clickable('a.profile-token-toggle'),
-    value: text('strong')
+    show: clickable('.token-actions button.show-token'),
+    value: text('.auth-token'),
+    obfuscatedCharacters: text('.obfuscated-chars'),
+    tokenCopiedText: text('.token-copied-text'),
   },
 
   accounts: collection('.profile-aside .account', {

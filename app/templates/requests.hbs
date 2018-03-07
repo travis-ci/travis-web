@@ -1,11 +1,3 @@
-{{#if features.proVersion}}
-<div class="helptext">
-  <p>Travis Lint for clean .yml files
-    <a href={{lintUrl}} title="Travis WebLint">lint.travis-ci.org/{{repo.slug}}</a>
-  </p>
-</div>
-{{/if}}
-
 <ul class="requests">
   {{#each model as |request| }}
     {{requests-item request=request highlightedRequestId=requestId}}
