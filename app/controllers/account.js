@@ -26,16 +26,6 @@ export default Controller.extend({
     return name || login;
   },
 
-  @computed()
-  showPrivateReposHint() {
-    return this.config.show_repos_hint === 'private';
-  },
-
-  @computed()
-  showPublicReposHint() {
-    return this.config.show_repos_hint === 'public';
-  },
-
   @computed('model.{type,login}')
   billingUrl(type, login) {
     const id = type === 'user' ? 'user' : login;
