@@ -96,7 +96,6 @@ module.exports = function (environment) {
     ]
   };
 
-  ENV.enterprise = ENV.featureFlags['enterprise-version'];
   ENV.pro = ENV.featureFlags['pro-version'];
 
   if (typeof process !== 'undefined') {
