@@ -28,7 +28,8 @@ export default Service.extend({
     return this._super(...arguments);
   },
 
-  token() {
+  @computed()
+  get token() {
     return this.get('sessionStorage').getItem('travis.token');
   },
 

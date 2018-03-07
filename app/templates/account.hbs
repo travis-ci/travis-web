@@ -3,7 +3,7 @@
     There was a problem while loading the repositories list, please try again. In case
     the problem persists, please contact support.
   {{else}}
-    {{#unless config.enterprise}}
+    {{#unless features.enterpriseVersion}}
       {{#if config.billingEndpoint}}
         {{#if subscribeButtonInfo.subscribed}}
           {{subscription-status-banner color="green" message="This account has an active subscription." billingLinkText="Manage your subscription!" billingUrl=billingUrl}}
@@ -22,7 +22,7 @@
       {{sync-button}}
     </header>
 
-    {{#unless config.enterprise}}
+    {{#unless features.enterpriseVersion}}
       {{#if features.proVersion}}
         <p class="text-medium">We're only showing your private repositories. You can find your public projects on <a href="https://travis-ci.org" title="travis-ci.org">travis-ci.org</a>.</p>
       {{else}}

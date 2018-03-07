@@ -25,7 +25,7 @@ export default Service.extend({
       options = {};
       options.type = 'GET';
       options.headers = {
-        Authorization: `token ${this.get('auth').token()}`,
+        Authorization: `token ${this.get('auth.token')}`,
         'Travis-API-Version': '3'
       };
       seenBroadcasts = this.get('storage').getItem('travis.seen_broadcasts');
