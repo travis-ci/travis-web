@@ -12,7 +12,7 @@ export default Route.extend({
       if (this.get('features.dashboard')) {
         this.transitionTo('dashboard');
       }
-    } else if (this.get('features.enterprise')) {
+    } else if (this.get('features.enterpriseVersion')) {
       this.transitionTo('auth');
     }
   },

@@ -9,7 +9,7 @@ moduleForComponent('top-bar', 'Integration | Component | top bar', {
 });
 
 test("it shows 'There are no broadcasts message' if there're no broadcasts", function (assert) {
-  withFeature(this, 'proVersion');
+  withFeature(this, 'broadcasts');
   // in the future I would like to make a test helper that works properly for
   // integration and acceptance tests, but I'd have to do some changes in auth
   // which I don't want to do at this point
