@@ -1,10 +1,23 @@
+import Ember from 'ember';
 import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 
-moduleForAcceptance('Acceptance | enterprise/navigation');
+let adapterException;
+
+moduleForAcceptance('Acceptance | enterprise/navigation', {
+  beforeEach() {
+    adapterException = Ember.Test.adapter.exception;
+    Ember.Test.adapter.exception = () => null;
+  },
+
+  afterEach() {
+    Ember.Test.adapter.exception = adapterException;
+  },
+});
 
 test('visiting `/` without being authenticated redirects to `/auth`', function (assert) {
-  withFeature('enterprise');
+  withFeature('enterpriseVersion');
+
   visit('/');
 
   andThen(function () {

@@ -73,6 +73,11 @@
     &:hover {
       text-decoration: underline;
     }
+
+    &.active:hover {
+      text-decoration: none;
+      cursor: inherit;
+    }
   }
 
   &.has-autoheight {
