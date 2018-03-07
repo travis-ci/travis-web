@@ -21,18 +21,14 @@
         <span class="label-align">Restart {{type}}</span>
       </button>
     </div>
-    {{#unless features.enterpriseVersion}}
-      {{#if features.proVersion}}
-        {{#if canDebug}}
-          <div class='action-button-container'>
-            <button {{action (perform debug)}} class="action-button--debug" aria-label="Restart as debug {{type}}" type="button">
-              {{#if labelless}}{{#tooltip-on-element}}Restart as debug {{type}}{{/tooltip-on-element}}{{/if}}
-              {{svg-jar 'icon-debug' class="icon"}}
-              <span class="label-align">Debug {{type}}</span>
-            </button>
-          </div>
-        {{/if}}
-      {{/if}}
-    {{/unless}}
+    {{#if (and features.debugBuilds canDebug)}}
+      <div class='action-button-container'>
+        <button {{action (perform debug)}} class="action-button--debug" aria-label="Restart as debug {{type}}" type="button">
+          {{#if labelless}}{{#tooltip-on-element}}Restart as debug {{type}}{{/tooltip-on-element}}{{/if}}
+          {{svg-jar 'icon-debug' class="icon"}}
+          <span class="label-align">Debug {{type}}</span>
+        </button>
+      </div>
+    {{/if}}
   {{/if}}
 {{/if}}

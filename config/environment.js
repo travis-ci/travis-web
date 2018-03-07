@@ -68,9 +68,21 @@ module.exports = function (environment) {
   ENV.featureFlags = {
     'repository-filtering': true,
     'debug-logging': false,
-    'pro-version': !!process.env.TRAVIS_PRO || false,
-    'enterprise-version': !!process.env.TRAVIS_ENTERPRISE || false
+    'landing-page-cta': true,
+    'show-running-jobs-in-sidebar': false,
+    'debug-builds': false,
+    'broadcasts': true,
   };
+
+  const { TRAVIS_PRO, TRAVIS_ENTERPRISE } = process.env;
+
+  if (TRAVIS_PRO) {
+    ENV.featureFlags['pro-version'] = true;
+  }
+
+  if (TRAVIS_ENTERPRISE) {
+    ENV.featureFlags['enterprise-version'] = true;
+  }
 
   ENV.pagination = {
     dashboardReposPerPage: 100,
@@ -84,7 +96,7 @@ module.exports = function (environment) {
     ]
   };
 
-  ENV.enterprise = ENV.featureFlags['enterprise-version'];
+  ENV.pro = ENV.featureFlags['pro-version'];
 
   if (typeof process !== 'undefined') {
     if (ENV.featureFlags['pro-version'] && !ENV.featureFlags['enterprise-version']) {

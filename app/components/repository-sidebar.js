@@ -25,7 +25,7 @@ export default Component.extend({
     // templates...
     schedule('afterRender', () => {
       this.get('fetchRepositoryData').perform();
-      if (this.get('features.proVersion')) {
+      if (this.get('features.showRunningJobsInSidebar')) {
         this.get('jobState.fetchRunningJobs').perform();
         this.get('jobState.fetchQueuedJobs').perform();
       }
@@ -74,15 +74,15 @@ export default Component.extend({
     return runningAmount + queuedAmount;
   },
 
-  @computed('features.proVersion', 'jobState.runningJobs.[]')
-  runningJobs(proVersion, runningJobs) {
-    if (!proVersion) { return []; }
+  @computed('features.showRunningJobsInSidebar', 'jobState.runningJobs.[]')
+  runningJobs(showRunningJobs, runningJobs) {
+    if (!showRunningJobs) { return []; }
     return runningJobs;
   },
 
-  @computed('features.proVersion', 'jobState.queuedJobs.[]')
-  queuedJobs(proVersion, queuedJobs) {
-    if (!proVersion) { return []; }
+  @computed('features.showRunningJobsInSidebar', 'jobState.queuedJobs.[]')
+  queuedJobs(showRunningJobs, queuedJobs) {
+    if (!showRunningJobs) { return []; }
     return queuedJobs;
   },
 

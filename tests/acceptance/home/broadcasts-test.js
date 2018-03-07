@@ -20,6 +20,8 @@ moduleForAcceptance('Acceptance | broadcasts', {
 });
 
 test('the broadcast tower shows a warning even when an announcement exists, broadcasts are listed in reverse order, and closing a broadcast records it', (assert) => {
+  withFeature('broadcasts');
+
   server.create('broadcast', {
     category: 'warning',
     message: 'Join the resistance!'
@@ -66,6 +68,8 @@ test('the broadcast tower shows a warning even when an announcement exists, broa
 });
 
 test('the broadcast tower shows an announcement', assert => {
+  withFeature('broadcasts');
+
   server.create('broadcast', {
     category: 'announcement',
     message: 'We have all joined the resistance.'
@@ -79,6 +83,8 @@ test('the broadcast tower shows an announcement', assert => {
 });
 
 test('a dismissed broadcast does not highlight the tower', assert => {
+  withFeature('broadcasts');
+
   server.create('broadcast', {
     category: 'announcement',
     message: 'Welcome.',

@@ -24,9 +24,9 @@ export default Component.extend(InViewportMixin, {
     return name || login;
   },
 
-  @computed('auth.signedIn', 'landingPage', 'features.proVersion')
-  showCta(signedIn, landingPage, pro) {
-    return !signedIn && !landingPage && !pro;
+  @computed('auth.signedIn', 'landingPage', 'features.landingPageCta')
+  showCta(signedIn, landingPage, ctaEnabled) {
+    return !signedIn && !landingPage && ctaEnabled;
   },
 
   didInsertElement() {
