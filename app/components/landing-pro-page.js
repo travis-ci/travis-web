@@ -11,7 +11,7 @@ export default Component.extend({
       if (config.gaCode) {
         _gaq.push(['_trackPageview', `/virtual/signup?${location}`]);
       }
-      this.auth.signIn();
+      this.get('auth').signIn();
     },
 
     signIn() {
