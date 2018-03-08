@@ -19,6 +19,13 @@ export default create({
     exists: isVisible()
   },
 
+  buildRepository: {
+    scope: 'section.settings-section .repository_active.switch',
+
+    isActive: hasClass('active'),
+    toggle: clickable()
+  },
+
   autoCancelPushes: {
     scope: 'section.settings-section .auto_cancel_pushes.switch',
 
