@@ -3,7 +3,6 @@ import config from 'travis/config/environment';
 export function initialize(app) {
   let serviceName = config.featureFlagsService || 'features';
   let serviceLookupName = `service:${serviceName}`;
-  app.inject('adapter', serviceName, serviceLookupName);
   app.inject('component', serviceName, serviceLookupName);
   app.inject('controller', serviceName, serviceLookupName);
   app.inject('model', serviceName, serviceLookupName);
