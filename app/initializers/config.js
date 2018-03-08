@@ -5,7 +5,6 @@ export function initialize(app) {
     instantiate: false
   });
   app.inject('controller', 'config', 'config:main');
-  app.inject('component', 'config', 'config:main');
 }
 
 export default {

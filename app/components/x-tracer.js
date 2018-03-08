@@ -1,8 +1,10 @@
 /* global TravisTracer, window */
+/* eslint no-unused-vars: ["error", { "varsIgnorePattern": "config" }]*/
 
 import Ember from 'ember';
 import Component from '@ember/component';
 import { action } from 'ember-decorators/object';
+import config from 'travis/config/environment';
 
 export default Component.extend({
   tagName: 'div',
