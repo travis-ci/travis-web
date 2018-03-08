@@ -1,8 +1,11 @@
 /* global _gaq */
 import Component from '@ember/component';
 import config from 'travis/config/environment';
+import { service } from 'ember-decorators/service';
 
 export default Component.extend({
+  @service auth: null,
+
   actions: {
     gaCta(location) {
       if (config.gaCode) {
