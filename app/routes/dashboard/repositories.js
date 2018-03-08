@@ -1,9 +1,8 @@
 import { hash } from 'rsvp';
 import TravisRoute from 'travis/routes/basic';
 import dashboardRepositoriesSort from 'travis/utils/dashboard-repositories-sort';
-// eslint-disable-next-line
 import config from 'travis/config/environment';
-import { alias } from 'ember-decorators/object/computed';
+import { computed } from 'ember-decorators/object';
 
 export default TravisRoute.extend({
   queryParams: {
@@ -21,7 +20,10 @@ export default TravisRoute.extend({
     }
   },
 
-  @alias('config.pagination.dashboardReposPerPage') recordsPerPage: null,
+  @computed()
+  recordsPerPage() {
+    return config.pagination.dashboardReposPerPage;
+  },
 
   model(params) {
     const offset = (params.page - 1) * this.get('recordsPerPage');
