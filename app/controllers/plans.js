@@ -4,6 +4,8 @@ import config from 'travis/config/environment';
 import { action } from 'ember-decorators/object';
 
 export default Controller.extend({
+  config,
+
   @action
   gaCta(location) {
     if (config.gaCode) {

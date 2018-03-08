@@ -4,7 +4,6 @@ export function initialize(app) {
   app.register('config:main', config, {
     instantiate: false
   });
-  app.inject('controller', 'config', 'config:main');
 }
 
 export default {

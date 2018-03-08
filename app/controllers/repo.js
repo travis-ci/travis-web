@@ -25,6 +25,8 @@ export default Controller.extend({
   @alias('buildsController.model') builds: null,
   @alias('jobController.job') job: null,
 
+  config,
+
   classNames: ['repo'],
 
   reset() {

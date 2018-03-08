@@ -9,6 +9,8 @@ export default Controller.extend({
   @service externalLinks: null,
   @service features: null,
 
+  config,
+
   @alias('auth.currentUser') user: null,
 
   @action
