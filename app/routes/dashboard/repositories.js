@@ -5,6 +5,8 @@ import config from 'travis/config/environment';
 import { computed } from 'ember-decorators/object';
 
 export default TravisRoute.extend({
+  @service features: null,
+
   queryParams: {
     filter: {
       replace: true
