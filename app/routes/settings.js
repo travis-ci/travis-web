@@ -7,6 +7,7 @@ import { service } from 'ember-decorators/service';
 export default TravisRoute.extend({
   @service ajax: null,
   @service api: null,
+  @service auth: null,
 
   needsAuth: true,
 
@@ -79,7 +80,7 @@ export default TravisRoute.extend({
 
   hasPushAccess() {
     const repoId = parseInt(this.modelFor('repo').get('id'));
-    return this.auth.get('currentUser').get('pushPermissionsPromise').then((permissions) => {
+    return this.get('auth.currentUser').get('pushPermissionsPromise').then((permissions) => {
       const hasPushAccess = permissions.filter(p => p === repoId);
       return hasPushAccess;
     });

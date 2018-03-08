@@ -1,5 +1,4 @@
 export function initialize(app) {
-  app.inject('route', 'auth', 'service:auth');
   app.inject('application', 'auth', 'service:auth');
 }
 

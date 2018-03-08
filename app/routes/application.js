@@ -150,9 +150,9 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
 
   afterSignIn() {
     this.get('flashes').clear();
-    let transition = this.auth.get('afterSignInTransition');
+    let transition = this.get('auth.afterSignInTransition');
     if (transition) {
-      this.auth.set('afterSignInTransition', null);
+      this.set('auth.afterSignInTransition', null);
       return transition.retry();
     } else {
       return this.transitionTo('index');
