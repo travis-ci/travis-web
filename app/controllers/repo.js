@@ -10,6 +10,7 @@ import { computed } from 'ember-decorators/object';
 import { alias } from 'ember-decorators/object/computed';
 
 export default Controller.extend({
+  @service auth: null,
   @service repositories: null,
   @service tabStates: null,
   @service('updateTimes') updateTimesService: null,
