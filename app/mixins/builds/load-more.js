@@ -1,5 +1,6 @@
 import Mixin from '@ember/object/mixin';
 import { service } from 'ember-decorators/service';
+import { task } from 'ember-concurrency';
 
 export default Mixin.create({
   @service tabStates: null,
@@ -30,10 +31,10 @@ export default Mixin.create({
     const tabName = this.get('tabStates.mainTab');
     const singularTab = tabName.substr(0, tabName.length - 1);
     const type = tabName === 'builds' ? 'push' : singularTab;
-    this.loadMoreBuilds(id, buildsLength, type);
+    return this.get('loadMoreBuilds').perform(id, buildsLength, type);
   },
 
-  loadMoreBuilds(id, buildsLength, type) {
+  loadMoreBuilds: task(function* (id, buildsLength, type) {
     let options = {
       repository_id: id,
       offset: buildsLength
@@ -44,8 +45,8 @@ export default Mixin.create({
         options.event_type = ['push', 'api', 'cron'];
       }
     }
-    return this.store.query('build', options);
-  },
+    yield this.store.query('build', options);
+  }).drop(),
 
   actions: {
     showMoreBuilds() {
