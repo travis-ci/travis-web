@@ -31,6 +31,10 @@ export default create({
       scope: '[data-requests-item-commit-message]'
     },
 
+    createdAt: {
+      scope: '[data-requests-item-created-at]'
+    },
+
     buildNumber: {
       scope: '[data-requests-item-build] .inner-underline'
     },

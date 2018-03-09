@@ -10,7 +10,8 @@ test('list requests', function (assert) {
 
   let approvedRequest = repo.createRequest({
     result: 'approved',
-    message: 'A request message'
+    message: 'A request message',
+    created_at: new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 365)
   });
 
   let approvedCommit = server.create('commit', {
@@ -50,6 +51,9 @@ test('list requests', function (assert) {
 
       assert.equal(request.commitLink.text, 'abc123');
       assert.equal(request.commitMessage.text, 'A commit message');
+
+      assert.equal(request.createdAt.text, 'about a year ago');
+
       assert.equal(request.buildNumber.text, '1919');
       assert.equal(request.requestMessage.text, 'A request message');
     });
