@@ -19,6 +19,6 @@ export default Component.extend({
   },
 
   click() {
-    return this.attrs.showMore();
+    return this.get('showMore')();
   },
 });
