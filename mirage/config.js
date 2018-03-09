@@ -407,6 +407,12 @@ export default function () {
     return this.serialize(builds, 'build');
   });
 
+  this.get('/requests', function (schema, request) {
+    let requests = schema.requests.where({ repositoryId: request.queryParams.repository_id });
+
+    return requests;
+  });
+
   this.post('/repo/:repo_id/requests', function (schema, request) {
     const requestBody = JSON.parse(request.requestBody);
     const fakeRequestId = 5678;
