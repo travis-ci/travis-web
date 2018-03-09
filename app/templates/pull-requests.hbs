@@ -8,10 +8,10 @@
   </ul>
   {{#if displayShowMoreButton}}
     <p>
-      {{#if loadMoreTask.isRunning}}
+      {{#if loadMoreBuilds.isRunning}}
         {{loading-indicator}}
       {{else}}
-        {{show-more-button showMore=(action 'showMoreBuilds')}}
+        {{show-more-button click=(perform loadMoreBuilds)}}
       {{/if}}
     </p>
   {{/if}}
