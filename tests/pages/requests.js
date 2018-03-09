@@ -17,6 +17,8 @@ export default create({
     isRejected: hasClass('rejected'),
     isPending: hasClass('pending'),
 
+    isHighlighted: hasClass('highlighted'),
+
     commitLink: {
       scope: '[data-requests-item-related-model] a'
     },

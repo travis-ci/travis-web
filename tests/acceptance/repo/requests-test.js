@@ -40,12 +40,14 @@ test('list requests', function (assert) {
 
   repo.save();
 
-  requestsPage.visit({organization: 'travis-ci', repo: 'travis-web'});
+  requestsPage.visit({organization: 'travis-ci', repo: 'travis-web', requestId: approvedRequest.id});
 
   andThen(function () {
     pauseTest();
     requestsPage.requests[0].as(request => {
       assert.ok(request.isApproved);
+      assert.ok(request.isHighlighted, 'expected the request to be highlighted because of the query param');
+
       assert.equal(request.commitLink.text, 'abc123');
       assert.equal(request.commitMessage.text, 'A commit message');
       assert.equal(request.buildNumber.text, '1919');
@@ -54,6 +56,8 @@ test('list requests', function (assert) {
 
     requestsPage.requests[1].as(request => {
       assert.ok(request.isRejected);
+      assert.notOk(request.isHighlighted);
+
       assert.ok(request.commitLink.isHidden);
       assert.ok(request.commitMissing.text, 'missing');
       assert.ok(request.buildNumber.isHidden);
