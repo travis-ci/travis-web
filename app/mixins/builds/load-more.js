@@ -31,7 +31,7 @@ export default Mixin.create({
     const tabName = this.get('tabStates.mainTab');
     const singularTab = tabName.substr(0, tabName.length - 1);
     const type = tabName === 'builds' ? 'push' : singularTab;
-    return this.get('loadMoreBuilds').perform(id, buildsLength, type);
+    return this.set('loadMoreTask', this.get('loadMoreBuilds').perform(id, buildsLength, type));
   },
 
   loadMoreBuilds: task(function* (id, buildsLength, type) {
