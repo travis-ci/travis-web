@@ -1,4 +1,5 @@
 /* global HS */
+/* eslint no-unused-vars: ["error", { "varsIgnorePattern": "config" }]*/
 
 import Ember from 'ember';
 import Component from '@ember/component';
@@ -6,9 +7,12 @@ import { htmlSafe } from '@ember/string';
 import { service } from 'ember-decorators/service';
 import { action, computed } from 'ember-decorators/object';
 import { alias } from 'ember-decorators/object/computed';
+import config from 'travis/config/environment';
 
 export default Component.extend({
   tagName: '',
+
+  config,
 
   @service auth: null,
   @service features: null,

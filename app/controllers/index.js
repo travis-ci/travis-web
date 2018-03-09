@@ -13,6 +13,8 @@ export default Controller.extend({
   @service statusImages: null,
   @service repositories: null,
 
+  config,
+
   init() {
     this._super(...arguments);
     if (!Ember.testing) {

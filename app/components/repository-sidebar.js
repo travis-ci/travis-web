@@ -7,6 +7,7 @@ import { task } from 'ember-concurrency';
 import { computed } from 'ember-decorators/object';
 import { alias } from 'ember-decorators/object/computed';
 import { service } from 'ember-decorators/service';
+import config from 'travis/config/environment';
 
 export default Component.extend({
   @service tabStates: null,
@@ -42,7 +43,7 @@ export default Component.extend({
     }
 
     if (!Ember.testing) {
-      Visibility.every(this.config.intervals.updateTimes, () => {
+      Visibility.every(config.intervals.updateTimes, () => {
         const callback = (record) => record.get('currentBuild');
         const withCurrentBuild = this.get('_data').filter(callback).map(callback);
         this.get('updateTimesService').push(withCurrentBuild);
