@@ -31,7 +31,7 @@ before_install:
   - npm install -g greenkeeper-lockfile@1
 
 install:
-  - npm install
+  - npm ci
   - bower install
 
 before_script:
