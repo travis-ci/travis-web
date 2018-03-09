@@ -11,7 +11,8 @@ test('list requests', function (assert) {
   let approvedRequest = repo.createRequest({
     result: 'approved',
     message: 'A request message',
-    created_at: new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 365)
+    created_at: new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 365),
+    event_type: 'pull_request'
   });
 
   let approvedCommit = server.create('commit', {
@@ -32,11 +33,13 @@ test('list requests', function (assert) {
   approvedRequest.save();
 
   repo.createRequest({
-    result: 'rejected'
+    result: 'rejected',
+    event_type: 'cron'
   });
 
   repo.createRequest({
-    result: 'pending'
+    result: 'pending',
+    event_type: 'api'
   });
 
   repo.save();
