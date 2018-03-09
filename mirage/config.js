@@ -39,8 +39,6 @@ export default function () {
   this.urlPrefix = apiEndpoint;
   this.namespace = '';
 
-  this.logging = true;
-
   this.get('/users', function ({ users }, request)  {
     let userData = JSON.parse(localStorage.getItem('travis.user')),
       id = userData.id;
