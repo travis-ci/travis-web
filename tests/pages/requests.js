@@ -15,6 +15,26 @@ export default create({
   requests: collection('.request-item', {
     isApproved: hasClass('approved'),
     isRejected: hasClass('rejected'),
-    isPending: hasClass('pending')
+    isPending: hasClass('pending'),
+
+    commitLink: {
+      scope: 'a:first-child'
+    },
+
+    commitMissing: {
+      scope: '.row-item:eq(1) em'
+    },
+
+    commitMessage: {
+      scope: '.row-item:eq(3)'
+    },
+
+    buildNumber: {
+      scope: '.row-item:eq(4) .inner-underline'
+    },
+
+    requestMessage: {
+      scope: '.row-item:eq(5)'
+    }
   })
 });
