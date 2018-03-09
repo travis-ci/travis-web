@@ -6,7 +6,7 @@ import { service } from 'ember-decorators/service';
 
 export default Controller.extend({
   config,
-  
+
   @service auth: null,
 
   @action
