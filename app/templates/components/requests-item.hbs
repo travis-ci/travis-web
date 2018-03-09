@@ -4,7 +4,7 @@
 
 <div class="row-item fade-out {{requestClass}}">
   {{request-icon event=request.event_type state=requestClass}}
-  <span class="label-align m-l-s">
+  <span class="label-align m-l-s" data-requests-item-related-model>
     {{#if request.isPullRequest}}
       <strong class="label-align">#{{request.pullRequestNumber}}</strong>
     {{/if}}
@@ -14,7 +14,7 @@
     {{#if request.commit}}
       {{github-commit-link request.repo.slug request.commit.sha}}
     {{else}}
-      <em>No commit available</em>
+      <em data-requests-item-commit-missing>No commit available</em>
     {{/if}}
   </span>
 </div>
@@ -23,11 +23,11 @@
   {{svg-jar 'icon-calendar' class="icon"}}
   <span class="label-align">{{format-time request.created_at}}</span></div>
 
-<div class="row-item fade-out">
+<div class="row-item fade-out" data-requests-item-commit-message>
   {{{format-message request.commit.message short="true" repo=request.build.repo}}}
 </div>
 
-<div class="row-item">
+<div class="row-item" data-requests-item-build>
   {{#if request.build}}
     {{svg-jar 'icon-hash' class="icon"}}
     {{#link-to "build" request.build title="Go to the build this request triggered"}}
@@ -37,6 +37,6 @@
   {{/if}}
 </div>
 
-<div class="row-item fade-out">
+<div class="row-item fade-out" data-requests-item-message>
   <span class="label-align" title="{{message}}">{{message}}</span>
 </div>

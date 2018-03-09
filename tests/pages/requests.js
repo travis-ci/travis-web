@@ -18,23 +18,23 @@ export default create({
     isPending: hasClass('pending'),
 
     commitLink: {
-      scope: 'a:first-child'
+      scope: '[data-requests-item-related-model] a'
     },
 
     commitMissing: {
-      scope: '.row-item:eq(1) em'
+      scope: '[data-requests-item-commit-missing]'
     },
 
     commitMessage: {
-      scope: '.row-item:eq(3)'
+      scope: '[data-requests-item-commit-message]'
     },
 
     buildNumber: {
-      scope: '.row-item:eq(4) .inner-underline'
+      scope: '[data-requests-item-build] .inner-underline'
     },
 
     requestMessage: {
-      scope: '.row-item:eq(5)'
+      scope: '[data-requests-item-message]'
     }
   })
 });
