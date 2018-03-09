@@ -42,5 +42,9 @@ export default create({
     requestMessage: {
       scope: '[data-requests-item-message]'
     }
-  })
+  }),
+
+  missingNotice: {
+    scope: '.missing-notice'
+  }
 });

@@ -3,12 +3,14 @@ import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 
 import requestsPage from 'travis/tests/pages/requests';
 
-moduleForAcceptance('Acceptance | repo | requests');
+moduleForAcceptance('Acceptance | repo | requests', {
+  beforeEach() {
+    this.repo = server.create('repository', { slug: 'travis-ci/travis-web' });
+  }
+});
 
 test('list requests', function (assert) {
-  let repo = server.create('repository', { slug: 'travis-ci/travis-web' });
-
-  let approvedRequest = repo.createRequest({
+  let approvedRequest = this.repo.createRequest({
     result: 'approved',
     message: 'A request message',
     created_at: new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 365),
@@ -22,7 +24,7 @@ test('list requests', function (assert) {
   });
 
   let approvedBuild = server.create('build', {
-    repository: repo,
+    repository: this.repo,
     state: 'passed',
     commit_id: approvedCommit.id,
     commit: approvedCommit,
@@ -32,17 +34,17 @@ test('list requests', function (assert) {
 
   approvedRequest.save();
 
-  repo.createRequest({
+  this.repo.createRequest({
     result: 'rejected',
     event_type: 'cron'
   });
 
-  repo.createRequest({
+  this.repo.createRequest({
     result: 'pending',
     event_type: 'api'
   });
 
-  repo.save();
+  this.repo.save();
 
   requestsPage.visit({organization: 'travis-ci', repo: 'travis-web', requestId: approvedRequest.id});
 
@@ -73,7 +75,18 @@ test('list requests', function (assert) {
     requestsPage.requests[2].as(request => {
       assert.ok(request.isPending);
     });
+
+    assert.ok(requestsPage.missingNotice.isHidden);
   });
 
   percySnapshot(assert);
+});
+
+test('a placeholder shows when there are no requests', function (assert) {
+  requestsPage.visit({organization: 'travis-ci', repo: 'travis-web'});
+
+  andThen(() => {
+    assert.equal(requestsPage.requests.length, 0);
+    assert.ok(requestsPage.missingNotice.isVisible);
+  });
 });
