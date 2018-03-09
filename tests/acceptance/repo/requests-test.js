@@ -47,7 +47,6 @@ test('list requests', function (assert) {
   requestsPage.visit({organization: 'travis-ci', repo: 'travis-web', requestId: approvedRequest.id});
 
   andThen(function () {
-    pauseTest();
     requestsPage.requests[0].as(request => {
       assert.ok(request.isApproved);
       assert.ok(request.isHighlighted, 'expected the request to be highlighted because of the query param');
