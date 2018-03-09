@@ -32,8 +32,6 @@ test('list requests', function (assert) {
     number: '1919'
   });
 
-  approvedRequest.save();
-
   this.repo.createRequest({
     result: 'rejected',
     event_type: 'cron'
@@ -43,8 +41,6 @@ test('list requests', function (assert) {
     result: 'pending',
     event_type: 'api'
   });
-
-  this.repo.save();
 
   requestsPage.visit({organization: 'travis-ci', repo: 'travis-web', requestId: approvedRequest.id});
 
