@@ -23,7 +23,7 @@ test('list requests', function (assert) {
     request: approvedRequest
   });
 
-  let approvedBuild = server.create('build', {
+  server.create('build', {
     repository: this.repo,
     state: 'passed',
     commit_id: approvedCommit.id,

@@ -1,11 +1,7 @@
 import {
   create,
-  attribute,
-  clickable,
   collection,
   hasClass,
-  isVisible,
-  text,
   visitable
 } from 'ember-cli-page-object';
 
