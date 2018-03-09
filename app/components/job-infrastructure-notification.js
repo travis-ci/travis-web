@@ -9,6 +9,7 @@ const NOVEMBER_2017_RETIREMENT = '2017-11-28T12:00:00-08:00';
 const LATEST_TRUSTY_RELEASE = '2017-12-12T17:25:00-00:00';
 
 export default Component.extend({
+  @service auth: null,
   @service features: null,
 
   @alias('job.queue') queue: null,

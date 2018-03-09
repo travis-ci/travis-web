@@ -7,6 +7,7 @@ import { service } from 'ember-decorators/service';
 export default TravisRoute.extend({
   @service repositories: null,
   @service tabStates: null,
+  @service auth: null,
 
   model(/* params*/) {
     let allTheBranches, apiEndpoint, options, repoId;

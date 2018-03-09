@@ -11,6 +11,7 @@ import { alias } from 'ember-decorators/object/computed';
 import config from 'travis/config/environment';
 
 export default Controller.extend({
+  @service auth: null,
   @service repositories: null,
   @service tabStates: null,
   @service('updateTimes') updateTimesService: null,
