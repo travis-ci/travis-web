@@ -12,6 +12,8 @@ import config from 'travis/config/environment';
 export default Component.extend({
   tagName: '',
 
+  config,
+
   @service auth: null,
   @service features: null,
   @service externalLinks: null,

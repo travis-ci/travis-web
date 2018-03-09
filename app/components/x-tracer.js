@@ -11,6 +11,8 @@ export default Component.extend({
   panelIsOpen: false,
   requests: [],
 
+  config,
+
   init() {
     this._super(...arguments);
 

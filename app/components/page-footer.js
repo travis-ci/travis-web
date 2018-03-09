@@ -7,6 +7,8 @@ import config from 'travis/config/environment';
 export default Component.extend({
   @service features: null,
 
+  config,
+
   tagName: 'footer',
   classNames: ['footer']
 });
