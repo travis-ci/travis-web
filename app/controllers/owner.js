@@ -9,8 +9,8 @@ export default Controller.extend({
 
   @computed('model.login')
   githubProfile(login) {
-    const { endpoint } = config;
-    return `${endpoint}/${login}`;
+    const { sourceEndpoint } = config;
+    return `${sourceEndpoint}/${login}`;
   },
 
   @computed('model')
