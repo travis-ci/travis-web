@@ -3,6 +3,7 @@ import TravisRoute from 'travis/routes/basic';
 import dashboardRepositoriesSort from 'travis/utils/dashboard-repositories-sort';
 import config from 'travis/config/environment';
 import { computed } from 'ember-decorators/object';
+import { service } from 'ember-decorators/service';
 
 export default TravisRoute.extend({
   @service features: null,

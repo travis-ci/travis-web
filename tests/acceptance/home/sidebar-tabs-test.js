@@ -63,12 +63,13 @@ moduleForAcceptance('Acceptance | home/sidebar tabs', {
   }
 });
 
-test('the home page shows running tab in pro version', (assert) => {
+test('the home page shows running tab when feature flag enabled', (assert) => {
   withFeature('showRunningJobsInSidebar');
 
   sidebarPage
     .visit()
     .clickSidebarRunningTab();
+
 
   andThen(() => {
     assert.equal(sidebarPage.sidebarRunningTabText, 'Running (0/1)', 'running tab correctly shows number of started/queued jobs');
