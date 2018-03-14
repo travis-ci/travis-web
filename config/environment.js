@@ -78,10 +78,13 @@ module.exports = function (environment) {
 
   if (TRAVIS_PRO) {
     ENV.featureFlags['pro-version'] = true;
+    ENV.pro = true;
+
   }
 
   if (TRAVIS_ENTERPRISE) {
     ENV.featureFlags['enterprise-version'] = true;
+    ENV.enterprise = true;
   }
 
   ENV.pagination = {
@@ -95,8 +98,6 @@ module.exports = function (environment) {
       /https:\/\/cdn\.travis-ci\.(org|com)\/assets\/(vendor|travis)-.+.js/
     ]
   };
-
-  ENV.pro = ENV.featureFlags['pro-version'];
 
   if (typeof process !== 'undefined') {
     if (ENV.featureFlags['pro-version'] && !ENV.featureFlags['enterprise-version']) {
