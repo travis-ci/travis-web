@@ -25,9 +25,6 @@ TravisPusher.prototype.init = function (config, ajaxService) {
 
   this.ajaxService = ajaxService;
   Pusher.warn = this.warn.bind(this);
-  if (config.host) {
-    Pusher.host = config.host;
-  }
 
   if (config.debug) {
     Pusher.log = function (message) {
@@ -40,6 +37,7 @@ TravisPusher.prototype.init = function (config, ajaxService) {
   return this.pusher = new Pusher(config.key, {
     encrypted: config.encrypted,
     disableStats: true,
+    wsHost: config.host,
 
     authorizer: function (channel, options) {
       return {
