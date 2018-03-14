@@ -434,6 +434,16 @@ export default function () {
     });
   });
 
+  this.get('/requests/:request_id', function (schema, request) {
+    let build = schema.builds.find(9999);
+
+    return new Response(200, {}, {
+      id: request.params.request_id,
+      result: 'approved',
+      builds: [build]
+    });
+  });
+
   this.get('/repo/:repo_id/request/:request_id/messages',
     function ({ messages }, { params: { request_id: requestId }}) {
       return this.serialize(messages.where({ requestId }));
