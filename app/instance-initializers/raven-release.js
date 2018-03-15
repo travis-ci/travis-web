@@ -1,4 +1,5 @@
 import config from 'travis/config/environment';
+import Raven from 'npm:raven-js';
 
 export function initialize(appInstance) {
   let sha;
@@ -13,7 +14,7 @@ export function initialize(appInstance) {
   let domain = env.includes('.org') ? 'org' : 'com';
   let release = `${domain}-${sha}`;
 
-  window.Raven.setRelease(release);
+  Raven.setRelease(release);
 }
 
 export default {

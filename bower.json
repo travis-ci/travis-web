@@ -1,6 +1,0 @@
-{
-  "name": "travis",
-  "dependencies": {
-    "raven-js": "3.10.0"
-  }
-}
