@@ -1,6 +1,7 @@
 import { moduleFor, test } from 'ember-qunit';
 
 moduleFor('service:raven', 'Unit | Service | raven', {
+  needs: ['service:features'],
 });
 
 test('it filters benign errors', function (assert) {

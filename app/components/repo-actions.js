@@ -7,6 +7,7 @@ import { task, taskGroup } from 'ember-concurrency';
 
 export default Component.extend({
   @service flashes: null,
+  @service features: null,
   @service auth: null,
 
   classNames: ['repo-main-tools'],

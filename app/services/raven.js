@@ -1,7 +1,10 @@
 import RavenLogger from 'ember-cli-sentry/services/raven';
 import config from 'travis/config/environment';
+import { service } from 'ember-decorators/service';
 
 export default RavenLogger.extend({
+  @service features: null,
+
   benignErrors: [
     'TransitionAborted',
     'TaskInstance',
@@ -57,7 +60,7 @@ export default RavenLogger.extend({
   shouldReportError() {
     // Sentry recommends only reporting a small subset of the actual
     // frontend errors. This can get *very* noisy otherwise.
-    if (config.enterprise || config.sentry.development) {
+    if (this.get('features.enterpriseVersion') || config.sentry.development) {
       return false;
     } else {
       let sampleRate = 10;

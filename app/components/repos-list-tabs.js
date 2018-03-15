@@ -5,6 +5,7 @@ import { alias } from 'ember-decorators/object/computed';
 
 export default Component.extend({
   @service auth: null,
+  @service features: null,
   @service tabStates: null,
 
   tagName: 'nav',
