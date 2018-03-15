@@ -15,6 +15,7 @@ export default TravisRoute.extend({
       .modelFor('accounts')
       .find(acct => acct.get('login') === login);
     if (account) { return account; }
+
     return {
       login,
       error: true

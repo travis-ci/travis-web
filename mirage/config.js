@@ -234,7 +234,11 @@ export default function () {
   this.get('/owner/:login', function (schema, request) {
     let owner = schema.users.where({ login: request.params.login }).models[0];
     if (owner) {
-      return this.serialize(owner, 'owner');
+      if (request.queryParams.include === 'owner.subscription') {
+        return this.serialize(owner, 'v3');
+      } else {
+        return this.serialize(owner, 'owner');
+      }
     } else {
       return new Response(404, {}, {});
     }

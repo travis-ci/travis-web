@@ -1,6 +1,7 @@
 import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import profilePage from 'travis/tests/pages/profile';
+import moment from 'moment';
 
 moduleForAcceptance('Acceptance | profile/basic layout', {
   beforeEach() {
@@ -9,6 +10,7 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
       login: 'feministkilljoy',
       repos_count: 3
     });
+    this.user = currentUser;
 
     signInUser(currentUser);
 
@@ -64,13 +66,22 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
       },
       active: false
     });
+
+    this.subscription = server.create('subscription', {
+      'valid_to': '2018-03-08T02:38:08Z'
+    });
+
+    currentUser.subscription = this.subscription;
+    currentUser.save();
   }
 });
 
-test('view profile', function (assert) {
+test('view profile when v2 billing is on', function (assert) {
+  localStorage.setItem('travis.billing-v2', 'true');
+
   profilePage.visit({ username: 'feministkilljoy' });
 
-  andThen(function () {
+  andThen(() =>  {
     percySnapshot(assert);
     assert.equal(document.title, 'Sara Ahmed - Profile - Travis CI');
 
@@ -84,6 +95,8 @@ test('view profile', function (assert) {
     assert.equal(profilePage.accounts[1].name, 'Feminist Killjoys');
     assert.equal(profilePage.accounts[1].repositoryCount, '30 repositories');
 
+    assert.equal(profilePage.subscription.validTo, moment(this.subscription.valid_to).format('MMMM D, YYYY'));
+
     assert.equal(profilePage.administerableRepositories.length, 3, 'expected three repositories');
 
     assert.equal(profilePage.administerableRepositories[0].name, 'feministkilljoy/affect-theory-reader');
@@ -92,5 +105,26 @@ test('view profile', function (assert) {
     assert.ok(profilePage.administerableRepositories[1].isActive, 'expected active repository to appear active');
     assert.equal(profilePage.administerableRepositories[2].name, 'feministkilljoy/willful-subjects');
     assert.notOk(profilePage.administerableRepositories[2].isActive, 'expected inactive repository to appear inactive');
+  });
+});
+
+test('subscription is hidden when v2 billing is not on', function (assert) {
+  profilePage.visit({ username: 'feministkilljoy' });
+
+  andThen(() => {
+    assert.ok(profilePage.subscription.isHidden, 'expected subscription to be hidden when v2 billing is not on');
+  });
+});
+
+test('subscription is hidden when v2 billing is on but there is no subscription', function (assert) {
+  this.user.subscription = null;
+  this.user.save();
+
+  localStorage.setItem('travis.billing-v2', 'true');
+
+  profilePage.visit({ username: 'feministkilljoy' });
+
+  andThen(() => {
+    assert.ok(profilePage.subscription.isHidden, 'expected subscription to be hidden when v2 billing is not on');
   });
 });

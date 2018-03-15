@@ -42,4 +42,9 @@ export default Controller.extend({
       education,
     };
   },
+
+  @computed()
+  billingV2() {
+    return window.localStorage.getItem('travis.billing-v2') === 'true';
+  }
 });
