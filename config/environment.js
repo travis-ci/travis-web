@@ -79,7 +79,6 @@ module.exports = function (environment) {
   if (TRAVIS_PRO) {
     ENV.featureFlags['pro-version'] = true;
     ENV.pro = true;
-
   }
 
   if (TRAVIS_ENTERPRISE) {
