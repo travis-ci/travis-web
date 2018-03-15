@@ -14,6 +14,7 @@ export default Controller.extend({
   @service auth: null,
   @service repositories: null,
   @service tabStates: null,
+  @service features: null,
   @service('updateTimes') updateTimesService: null,
 
   @controller('job') jobController: null,

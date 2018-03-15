@@ -6,6 +6,7 @@ export default Route.extend({
   @service auth: null,
   @service tabStates: null,
   @service repositories: null,
+  @service features: null,
 
   redirect() {
     if (this.get('auth.signedIn')) {

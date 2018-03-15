@@ -4,6 +4,7 @@ import { service } from 'ember-decorators/service';
 
 export default ActiveModelAdapter.extend({
   @service auth: null,
+  @service features: null,
 
   host: config.apiEndpoint,
   coalesceFindRequests: true,

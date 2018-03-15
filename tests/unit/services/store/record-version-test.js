@@ -3,7 +3,7 @@ import { moduleForModel, test } from 'ember-qunit';
 
 moduleForModel('build', 'Unit | Store | record version management', {
   needs: ['model:build', 'model:job', 'service:store', 'service:auth', 'service:ajax',
-    'service:jobConfigFetcher', 'service:api']
+    'service:jobConfigFetcher', 'service:api', 'service:features']
 });
 
 test('it does not allow to push an older record to the store', function (assert) {
