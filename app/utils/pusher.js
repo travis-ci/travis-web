@@ -38,6 +38,7 @@ TravisPusher.prototype.init = function (config, ajaxService) {
     encrypted: config.encrypted,
     disableStats: true,
     wsHost: config.host,
+    wsPath: `/${config.path}`, 
 
     authorizer: function (channel, options) {
       return {
