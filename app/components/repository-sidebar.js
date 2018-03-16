@@ -14,6 +14,7 @@ export default Component.extend({
   @service jobState: null,
   @service('updateTimes') updateTimesService: null,
   @service repositories: null,
+  @service features: null,
   @service store: null,
   @service auth: null,
   @service router: null,
@@ -109,8 +110,8 @@ export default Component.extend({
     return results.filter(repo => repo.get('active'));
   },
 
-  @computed('tab')
-  showRunningJobs(tab) {
-    return tab === 'running';
+  @computed('tab', 'features.showRunningJobsInSidebar')
+  showRunningJobs(tab, featureEnabled) {
+    return featureEnabled && tab === 'running';
   },
 });

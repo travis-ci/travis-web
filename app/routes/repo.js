@@ -10,6 +10,7 @@ export default TravisRoute.extend(ScrollResetMixin, {
   @service tabStates: null,
   @service repositories: null,
   @service auth: null,
+  @service features: null,
 
   @computed('features.showRunningJobsInSidebar', 'tabStates.sidebarTab')
   onRunningTab(showRunningJobsInSidebar, sidebarTab) {

@@ -12,6 +12,7 @@ export default Controller.extend({
   @service('updateTimes') updateTimesService: null,
   @service statusImages: null,
   @service repositories: null,
+  @service features: null,
 
   config,
 
