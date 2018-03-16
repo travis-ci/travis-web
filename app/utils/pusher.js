@@ -33,11 +33,10 @@ TravisPusher.prototype.init = function (config, ajaxService) {
     };
   }
 
-  return this.pusher = new Pusher(config.key, {
+  this.pusher = new Pusher(config.key, {
     encrypted: config.encrypted,
     disableStats: true,
     wsHost: config.host,
-    wsPath: `/${config.path}`,
 
     authorizer: function (channel, options) {
       return {
@@ -54,6 +53,12 @@ TravisPusher.prototype.init = function (config, ajaxService) {
       };
     }
   });
+
+  if (config.path) {
+    this.pusher.wsPath = `/${config.path}`,
+  }
+
+  return this.pusher;
 };
 
 TravisPusher.prototype.subscribeAll = function (channels) {
