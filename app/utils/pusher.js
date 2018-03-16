@@ -52,7 +52,7 @@ TravisPusher.prototype.init = function (config, ajaxService) {
         }
       };
     }
-  }
+  };
 
   if (config.path) {
     pusherConfig.wsPath = `/${config.path}`;
