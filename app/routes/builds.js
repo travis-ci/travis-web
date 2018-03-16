@@ -3,6 +3,7 @@ import { service } from 'ember-decorators/service';
 
 export default TravisRoute.extend({
   @service tabStates: null,
+  @service auth: null,
 
   activate(...args) {
     this._super(args);

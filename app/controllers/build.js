@@ -16,6 +16,8 @@ export default Controller.extend(GithubUrlProperties, Polling, {
 
   @controller('repo') repoController: null,
 
+  config,
+
   @alias('repoController.repo') repo: null,
   @alias('auth.currentUser') currentUser: null,
   @alias('repoController.tab') tab: null,

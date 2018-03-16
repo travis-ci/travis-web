@@ -2,10 +2,14 @@ import Controller from '@ember/controller';
 import { service } from 'ember-decorators/service';
 import { computed, action } from 'ember-decorators/object';
 import { alias } from 'ember-decorators/object/computed';
+import config from 'travis/config/environment';
 
 export default Controller.extend({
   @service auth: null,
   @service externalLinks: null,
+  @service features: null,
+
+  config,
 
   @alias('auth.currentUser') user: null,
 
@@ -24,20 +28,10 @@ export default Controller.extend({
     return name || login;
   },
 
-  @computed()
-  showPrivateReposHint() {
-    return this.config.show_repos_hint === 'private';
-  },
-
-  @computed()
-  showPublicReposHint() {
-    return this.config.show_repos_hint === 'public';
-  },
-
   @computed('model.{type,login}')
   billingUrl(type, login) {
     const id = type === 'user' ? 'user' : login;
-    return `${this.config.billingEndpoint}/subscriptions/${id}`;
+    return `${config.billingEndpoint}/subscriptions/${id}`;
   },
 
   @computed('model.{subscribed,education}', 'billingUrl')

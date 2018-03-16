@@ -63,12 +63,8 @@ COPY waiter       /usr/src/app/waiter
 RUN bundle install --without assets development test
 
 COPY package.json /usr/src/app
-COPY bower.json   /usr/src/app
-
-RUN npm install -g bower
 
 RUN npm install --quiet
-RUN bower install --allow-root
 
 COPY . /usr/src/app
 

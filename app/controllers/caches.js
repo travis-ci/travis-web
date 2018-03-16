@@ -11,6 +11,8 @@ export default Controller.extend({
 
   @alias('model.repo') repo: null,
 
+  config,
+
   @computed('model.pushes.[]', 'model.pullRequests.[]')
   cachesExist(pushes, pullRequests) {
     if (pushes || pullRequests) {

@@ -63,12 +63,13 @@ moduleForAcceptance('Acceptance | home/sidebar tabs', {
   }
 });
 
-test('the home page shows running tab in pro version', (assert) => {
-  withFeature('pro-version');
+test('the home page shows running tab when feature flag enabled', (assert) => {
+  withFeature('showRunningJobsInSidebar');
 
   sidebarPage
     .visit()
     .clickSidebarRunningTab();
+
 
   andThen(() => {
     assert.equal(sidebarPage.sidebarRunningTabText, 'Running (0/1)', 'running tab correctly shows number of started/queued jobs');
@@ -78,7 +79,7 @@ test('the home page shows running tab in pro version', (assert) => {
 });
 
 test('we query the API for all the jobs', function (assert) {
-  withFeature('pro-version');
+  withFeature('showRunningJobsInSidebar');
 
   // the default mirage limit is 10, so if we create 15 jobs for each queued and
   // started lists, the app code will have to do 2 queries
@@ -96,7 +97,7 @@ test('we query the API for all the jobs', function (assert) {
 });
 
 test('maintains sidebar tab state when viewing running job in pro version', (assert) => {
-  withFeature('pro-version');
+  withFeature('showRunningJobsInSidebar');
 
   sidebarPage
     .visit()

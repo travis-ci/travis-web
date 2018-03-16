@@ -8,6 +8,7 @@ import { computed } from 'ember-decorators/object';
 import { service } from 'ember-decorators/service';
 
 export default Component.extend({
+  @service auth: null,
   @service router: null,
   @service permissions: null,
   @service externalLinks: null,

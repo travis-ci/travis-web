@@ -3,7 +3,7 @@
     <a href="#" {{action showMyRepositories}}>My Repositories</a>
   </li>
 
-  {{#if features.proVersion}}
+  {{#if features.showRunningJobsInSidebar}}
     <li id="tab_running" class={{classRunning}}>
       <a href="#" {{action showRunningJobs}}>Running ({{startedJobsCount}}/{{allJobsCount}})</a>
     </li>
