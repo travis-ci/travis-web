@@ -1,7 +1,8 @@
 import { registerAsyncHelper } from '@ember/test';
+import config from 'travis/config/environment';
 
 export default registerAsyncHelper('signInUser', function (app, user) {
-  const token = 'testUserToken';
+  const { validAuthToken: token }  = config;
   user.attrs.token = token;
   user.save();
 

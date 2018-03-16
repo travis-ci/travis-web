@@ -2,7 +2,7 @@ import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import jobPage from 'travis/tests/pages/job';
 import topPage from 'travis/tests/pages/top';
-import Mirage from 'ember-cli-mirage';
+import { Response } from 'ember-cli-mirage';
 
 moduleForAcceptance('Acceptance | job/delete log', {
   beforeEach() {
@@ -48,7 +48,7 @@ test('deleting job log when successful', function (assert) {
 
 test('deleting job log when error occurs', function (assert) {
   server.patch('/jobs/:id/log', (schema, request) => {
-    return new Mirage.Response(500, {}, {});
+    return new Response(500, {}, {});
   });
 
   jobPage

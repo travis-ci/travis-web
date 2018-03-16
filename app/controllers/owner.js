@@ -1,12 +1,16 @@
 import Controller from '@ember/controller';
 import { computed } from 'ember-decorators/object';
+import config from 'travis/config/environment';
 
 export default Controller.extend({
   isLoading: false,
 
-  @computed('config.sourceEndpoint', 'model.login')
-  githubProfile(endpoint, login) {
-    return `${endpoint}/${login}`;
+  config,
+
+  @computed('model.login')
+  githubProfile(login) {
+    const { sourceEndpoint } = config;
+    return `${sourceEndpoint}/${login}`;
   },
 
   @computed('model')

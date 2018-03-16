@@ -1,0 +1,84 @@
+<nav id="navigation" class="navigation {{if is-open 'is-open'}}">
+  <ul>
+    <li><a href="{{ config.urls.about }}" title="Travis CI team" class="navigation-anchor">About Us</a></li>
+    {{#unless features.enterpriseVersion}}
+      {{#unless features.proVersion}}
+        <li><a href="{{ config.urls.blog }}" title="Travis CI Blog" class="navigation-anchor">Blog</a></li>
+        <li><a href="{{ config.urls.status }}" title="Travis CI Status" class="navigation-anchor">Status</a></li>
+        <li>
+          <span class="navigation-anchor">Help</span>
+          <ul class="navigation-nested">
+            <li><a href="{{ config.urls.docs }}" title="Browse our documentation">Read Our Docs</a></li>
+            <li><a href="{{ config.urls.imprint }}" title="Go to the imprint">Imprint</a></li>
+          </ul>
+        </li>
+      {{/unless}}
+
+      {{#if features.proVersion}}
+        {{#unless auth.signedIn}}
+          <li><a href="/plans" title="Plans and Prices for Travis CI" class="navigation-anchor">Plans & Pricing</a></li>
+          <li><a href="{{ config.urls.enterprise }}" title="Travis CI for Enterprise" class="navigation-anchor">Enterprise</a></li>
+        {{else}}
+          <li><a href="{{ config.urls.status }}" title="Travis CI Status" class="navigation-anchor">Status</a></li>
+          <li>
+            <span class="navigation-anchor">Help</span>
+            <ul class="navigation-nested">
+              <li><a href="{{ config.urls.support }}" title="Email the Travis support team" {{action 'helpscoutTrigger'}}>Email Support</a></li>
+              <li><a href="{{ config.urls.docs }}" title="Browse our documentation">Read Our Docs</a></li>
+              <li><a href="{{ config.urls.twitter }}" title="Travis in the Twitter-sphere">Twitter</a></li>
+            </ul>
+          </li>
+          <li>
+            <span class="navigation-anchor">Legal</span>
+            <ul class="navigation-nested">
+              <li><a href={{config.urls.imprint}} title="Go to the imprint">Imprint</a></li>
+              <li><a href={{config.urls.security}} title="Go to our security statement">Security</a></li>
+              <li><a href={{config.urls.terms}} title="Go to our terms of service">Terms</a></li>
+            </ul>
+          </li>
+        {{/unless}}
+      {{/if}}
+
+      {{#if deploymentVersion}}<li><span class='deployment-version'>{{deploymentVersion}}</span></li>{{/if}}
+      {{else}}
+        {{#if auth.signedIn}}
+          <li><a class="navigation-anchor" title="Documentation" href="{{ config.urls.docs }}">Docs</a></li>
+        {{/if}}
+      {{/unless}}
+
+      <li class="{{classProfile}}">
+        {{#if auth.signedOut}}
+          <button class="auth-button signed-out" type="button" {{action 'signIn'}}>
+            <span class="label-align">Sign in with GitHub</span>
+            {{svg-jar 'icon-github-white' class="icon white"}}
+          </button>
+        {{/if}}
+        {{#if auth.signedIn}}
+          {{#link-to "account" user.login class="navigation-anchor signed-in"}}
+            {{userName}}
+            {{user-avatar url=user.avatarUrl name=user.fullName size=40}}
+          {{/link-to}}
+        {{/if}}
+        {{#if auth.signingIn}}
+          <button class="auth-button signing-in" type="button">Signing In {{loading-indicator inline=true}}</button>
+        {{/if}}
+        {{#if auth.signedIn}}
+          <ul class="navigation-nested">
+            <li>
+              {{#link-to "account" user.login class="signed-in" title="See your Travis profile"}}Profile{{/link-to}}
+              </li>
+              {{#if config.billingEndpoint}}
+                {{#unless features.enterpriseVersion}}
+                  <li>
+                    <a href={{config.billingEndpoint}} title="Take a look at your subscriptions">Billing</a>
+                  </li>
+                {{/unless}}
+              {{/if}}
+              <li>
+                <a href="/" {{action 'signOut'}} title="Sign out of Travis">Sign Out</a>
+              </li>
+          </ul>
+        {{/if}}
+      </li>
+  </ul>
+</nav>

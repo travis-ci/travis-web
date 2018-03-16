@@ -84,6 +84,10 @@
     background: $turf-green;
   }
 
+  &.unknown {
+    background: $cement-grey;
+  }
+
   &.maintenance {
     background: $dozer-yellow;
   }

@@ -1,12 +1,17 @@
+/* eslint no-unused-vars: ["error", { "varsIgnorePattern": "config" }]*/
+
 import Controller from '@ember/controller';
 import { computed } from 'ember-decorators/object';
 import { alias, sort, filterBy } from 'ember-decorators/object/computed';
+import config from 'travis/config/environment';
 
 export default Controller.extend({
   @computed('unsortedEnvVars')
   envVars(envVars) {
     return envVars.sortBy('name');
   },
+
+  config,
 
   @filterBy('model.envVars', 'isNew', false)
   unsortedEnvVars: null,

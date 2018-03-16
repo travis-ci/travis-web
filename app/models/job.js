@@ -21,6 +21,7 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
   @service api: null,
   @service ajax: null,
   @service jobConfigFetcher: null,
+  @service features: null,
 
   logId: attr(),
   queue: attr(),

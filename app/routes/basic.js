@@ -15,10 +15,10 @@ export default Route.extend({
 
   beforeModel(transition) {
     if (!this.signedIn()) {
-      this.auth.autoSignIn();
+      this.get('auth').autoSignIn();
     }
     if (!this.signedIn() && this.get('needsAuth')) {
-      this.auth.set('afterSignInTransition', transition);
+      this.set('auth.afterSignInTransition', transition);
       return reject('needs-auth');
     } else if (this.redirectToProfile(transition)) {
       return this.transitionTo('profile', this.get('auth.currentUser.login'));

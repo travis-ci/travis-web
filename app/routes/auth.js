@@ -4,6 +4,7 @@ import { service } from 'ember-decorators/service';
 
 export default TravisRoute.extend({
   @service auth: null,
+  @service features: null,
 
   queryParams: {
     redirectUri: {

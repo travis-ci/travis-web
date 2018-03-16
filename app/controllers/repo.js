@@ -8,10 +8,13 @@ import { service } from 'ember-decorators/service';
 import { controller } from 'ember-decorators/controller';
 import { computed } from 'ember-decorators/object';
 import { alias } from 'ember-decorators/object/computed';
+import config from 'travis/config/environment';
 
 export default Controller.extend({
+  @service auth: null,
   @service repositories: null,
   @service tabStates: null,
+  @service features: null,
   @service('updateTimes') updateTimesService: null,
 
   @controller('job') jobController: null,
@@ -23,6 +26,8 @@ export default Controller.extend({
   @alias('buildController.build') build: null,
   @alias('buildsController.model') builds: null,
   @alias('jobController.job') job: null,
+
+  config,
 
   classNames: ['repo'],
 
@@ -38,7 +43,7 @@ export default Controller.extend({
   init() {
     this._super(...arguments);
     if (!Ember.testing) {
-      Visibility.every(this.config.intervals.updateTimes, this.updateTimes.bind(this));
+      Visibility.every(config.intervals.updateTimes, this.updateTimes.bind(this));
     }
   },
 
