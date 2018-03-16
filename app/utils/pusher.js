@@ -55,7 +55,7 @@ TravisPusher.prototype.init = function (config, ajaxService) {
   });
 
   if (config.path) {
-    this.pusher.wsPath = `/${config.path}`,
+    this.pusher.wsPath = `/${config.path}`;
   }
 
   return this.pusher;
