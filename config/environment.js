@@ -85,7 +85,7 @@ module.exports = function (environment) {
   }
 
   ENV.pagination = {
-    dashboardReposPerPage: 100,
+    dashboardReposPerPage: 25,
     profileReposPerPage: 25,
   };
 
