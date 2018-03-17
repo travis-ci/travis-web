@@ -22,7 +22,7 @@ module.exports = function (deployTarget) {
       region: 'eu-west-1',
       accessKeyId: process.env.AWS_KEY,
       secretAccessKey: process.env.AWS_SECRET,
-      filePattern: function(context, pluginHelper) {
+      filePattern: function (context, pluginHelper) {
         let filePattern = pluginHelper.readConfigDefault('filePattern');
         return filePattern.replace('}', ',json}');
       },
