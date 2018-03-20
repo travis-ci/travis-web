@@ -20,7 +20,7 @@ module('Integration | Component | top bar', function (hooks) {
         name: 'Test User'
       })
     }));
-    stubService(this, 'broadcasts', Service.extend({ broadcasts: Object.freeze([]) }));
+    stubService('broadcasts', Service.extend({ broadcasts: Object.freeze([]) }));
     await render(hbs`{{top-bar}}`);
 
     assert.ok(this.$('header').text().match(/There are no broadcasts/));
