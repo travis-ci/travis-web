@@ -1,14 +1,16 @@
-import { test } from 'qunit';
-import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
+import { currentURL, visit } from '@ember/test-helpers';
+import { module, test } from 'qunit';
+import { setupApplicationTest } from 'ember-qunit';
 import page404 from 'travis/tests/pages/404';
 
-moduleForAcceptance('Acceptance | non existent routes');
+module('Acceptance | non existent routes', function(hooks) {
+  setupApplicationTest(hooks);
 
-test('visiting /some/non-existent/route', function (assert) {
-  visit('/some/non-existent/route');
+  test('visiting /some/non-existent/route', async function(assert) {
+    await visit('/some/non-existent/route');
 
-  andThen(() => {
     assert.equal(currentURL(), '/some/non-existent/route');
-    assert.equal(page404.errorHeader, '404: Something\'s Missing We\'re sorry! It seems like this page cannot be found.');
+    assert.dom('[data-test-error-404-header]').hasText('404: Something\'s Missing');
+    assert.dom('[data-test-error-404-subheader]').hasText('We\'re sorry! It seems like this page cannot be found.');
   });
 });
