@@ -1,13 +1,16 @@
-import { test } from 'qunit';
-import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
+import { currentURL, visit } from '@ember/test-helpers';
+import { module, test } from 'qunit';
+import { setupApplicationTest } from 'ember-qunit';
+import { enableFeature } from 'ember-feature-flags/test-support';
+import { percySnapshot } from 'ember-percy';
 
-moduleForAcceptance('Acceptance | plans');
+module('Acceptance | plans', function(hooks) {
+  setupApplicationTest(hooks);
 
-test('visiting /plans', function (assert) {
-  withFeature('proVersion');
-  visit('/plans');
+  test('visiting /plans', async function(assert) {
+    enableFeature('pro-version');
+    await visit('/plans');
 
-  andThen(function () {
     assert.equal(currentURL(), '/plans');
     percySnapshot(assert);
   });
