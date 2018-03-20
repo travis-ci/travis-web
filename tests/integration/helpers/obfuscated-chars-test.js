@@ -1,14 +1,16 @@
-import { moduleForComponent, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-moduleForComponent('obfuscated-chars', 'helper:obfuscated-chars', {
-  integration: true
-});
+module('helper:obfuscated-chars', function(hooks) {
+  setupRenderingTest(hooks);
 
-test('it returns obfuscated chars of length passed', function (assert) {
-  this.set('inputValue', 12);
+  test('it returns obfuscated chars of length passed', async function(assert) {
+    this.set('inputValue', 12);
 
-  this.render(hbs`{{obfuscated-chars inputValue}}`);
+    await render(hbs`{{obfuscated-chars inputValue}}`);
 
-  assert.equal(this.$().text().trim(), '••••••••••••');
+    assert.equal(this.$().text().trim(), '••••••••••••');
+  });
 });
