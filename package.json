@@ -88,7 +88,7 @@
     "emberx-select": "~3.1.0",
     "emoji-datasource-apple": "^4.0.0",
     "emoji-js": "^3.4.0",
-    "eslint-plugin-ember": "^5.0.0",
+    "eslint-plugin-ember": "^5.1.0",
     "fuzzysort": "^1.0.1",
     "glob": "^7.1.2",
     "loader.js": "^4.2.3",
