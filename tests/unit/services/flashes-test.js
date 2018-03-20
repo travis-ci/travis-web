@@ -1,43 +1,44 @@
-import { moduleFor, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupTest } from 'ember-qunit';
 
-moduleFor('service:flashes', 'Unit | Service | flashes', {
-  needs: ['service:auth']
-});
+module('Unit | Service | flashes', function(hooks) {
+  setupTest(hooks);
 
-// This strips the extra flash information (icon, close button presence, etc) and compares what matters.
-function subsetFlashObject(o) {
-  return {
-    message: o.message,
-    type: o.type
-  };
-}
+  // This strips the extra flash information (icon, close button presence, etc) and compares what matters.
+  function subsetFlashObject(o) {
+    return {
+      message: o.message,
+      type: o.type
+    };
+  }
 
-test('it allows to show an error', function (assert) {
-  let service = this.subject();
+  test('it allows to show an error', function (assert) {
+    let service = this.owner.lookup('service:flashes');
 
-  assert.equal(service.get('flashes.length'), 0, 'precond - flashes initializes with 0 elements');
+    assert.equal(service.get('flashes.length'), 0, 'precond - flashes initializes with 0 elements');
 
-  service.error('There was an error!');
+    service.error('There was an error!');
 
-  assert.deepEqual(subsetFlashObject(service.get('flashes.firstObject')), { message: 'There was an error!', type: 'error' }, 'there should be an error message in flashes');
-});
+    assert.deepEqual(subsetFlashObject(service.get('flashes.firstObject')), { message: 'There was an error!', type: 'error' }, 'there should be an error message in flashes');
+  });
 
-test('it allows to show a notice', function (assert) {
-  let service = this.subject();
+  test('it allows to show a notice', function (assert) {
+    let service = this.owner.lookup('service:flashes');
 
-  assert.equal(service.get('flashes.length'), 0, 'precond - flashes initializes with 0 elements');
+    assert.equal(service.get('flashes.length'), 0, 'precond - flashes initializes with 0 elements');
 
-  service.notice('There was a notice!');
+    service.notice('There was a notice!');
 
-  assert.deepEqual(subsetFlashObject(service.get('flashes.firstObject')), { message: 'There was a notice!', type: 'notice' }, 'there should be a notice message in flashes');
-});
+    assert.deepEqual(subsetFlashObject(service.get('flashes.firstObject')), { message: 'There was a notice!', type: 'notice' }, 'there should be a notice message in flashes');
+  });
 
-test('it allows to show a success', function (assert) {
-  let service = this.subject();
+  test('it allows to show a success', function (assert) {
+    let service = this.owner.lookup('service:flashes');
 
-  assert.equal(service.get('flashes.length'), 0, 'precond - flashes initializes with 0 elements');
+    assert.equal(service.get('flashes.length'), 0, 'precond - flashes initializes with 0 elements');
 
-  service.success('There was a success!');
+    service.success('There was a success!');
 
-  assert.deepEqual(subsetFlashObject(service.get('flashes.firstObject')), { message: 'There was a success!', type: 'success' }, 'there should be a notice message in flashes');
+    assert.deepEqual(subsetFlashObject(service.get('flashes.firstObject')), { message: 'There was a success!', type: 'success' }, 'there should be a notice message in flashes');
+  });
 });

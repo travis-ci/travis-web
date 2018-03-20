@@ -1,17 +1,18 @@
-import { moduleFor, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupTest } from 'ember-qunit';
 
-moduleFor('service:raven', 'Unit | Service | raven', {
-  needs: ['service:features'],
-});
+module('Unit | Service | raven', function(hooks) {
+  setupTest(hooks);
 
-test('it filters benign errors', function (assert) {
-  let service = this.subject();
-  let filteredError = { message: 'foo is an error we should filter' };
-  let unfilteredError = { message: 'throw dat' };
+  test('it filters benign errors', function (assert) {
+    let service = this.owner.lookup('service:raven');
+    let filteredError = { message: 'foo is an error we should filter' };
+    let unfilteredError = { message: 'throw dat' };
 
-  service.shouldReportError = () => true;
-  service.set('benignErrors', ['foo', 'bar', 'baz']);
+    service.shouldReportError = () => true;
+    service.set('benignErrors', ['foo', 'bar', 'baz']);
 
-  assert.ok(service.ignoreError(filteredError), 'Service should ignore benign error');
-  assert.notOk(service.ignoreError(unfilteredError), 'Service should not ignore serious error');
+    assert.ok(service.ignoreError(filteredError), 'Service should ignore benign error');
+    assert.notOk(service.ignoreError(unfilteredError), 'Service should not ignore serious error');
+  });
 });
