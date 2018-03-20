@@ -6,12 +6,15 @@ let adapterException;
 
 moduleForAcceptance('Acceptance | enterprise/navigation', {
   beforeEach() {
-    adapterException = Ember.Test.adapter.exception;
-    Ember.Test.adapter.exception = () => null;
-  },
-
-  afterEach() {
-    Ember.Test.adapter.exception = adapterException;
+    server.get('/v3/enterprise_license', (schema, response) => {
+      return {
+        'license_id': 'ad12345',
+        'seats': '30',
+        'active_users': '21',
+        'license_type': 'trial',
+        'expiration_time': new Date(new Date().getTime() + 1000).toISOString()
+      };
+    });
   },
 });
 
