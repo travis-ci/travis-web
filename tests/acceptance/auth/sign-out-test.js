@@ -13,7 +13,7 @@ moduleForAcceptance('Acceptance | auth/sign out', {
 test('signing out clears flash messages', function (assert) {
   visit('/');
   this.application.__container__.lookup('service:flashes').success('TOTAL SUCCESS');
-  topPage.clickSigOutLink();
+  topPage.clickSignOutLink();
 
   andThen(() => {
     assert.equal(currentURL(), '/');

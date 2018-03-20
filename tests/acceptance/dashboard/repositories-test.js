@@ -161,7 +161,7 @@ test('logging out leaves the dashboard', function (assert) {
   dashboardPage.visit();
 
   andThen(() => {});
-  topPage.clickSigOutLink();
+  topPage.clickSignOutLink();
 
   andThen(() => {
     assert.equal(currentURL(), '/');
