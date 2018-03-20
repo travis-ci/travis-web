@@ -1,46 +1,44 @@
-import { test } from 'qunit';
-import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
+import { currentURL, visit } from '@ember/test-helpers';
+import { module, test } from 'qunit';
+import { setupApplicationTest } from 'ember-qunit';
 import Service from '@ember/service';
 import signInUser from 'travis/tests/helpers/sign-in-user';
+import { stubService } from 'travis/tests/helpers/stub-service';
 
-moduleForAcceptance('Acceptance | sign in');
+module('Acceptance | sign in', function (hooks) {
+  setupApplicationTest(hooks);
 
-test('visiting /signin starts auth flow if unauthenticated', function (assert) {
-  assert.expect(2);
+  test('visiting /signin starts auth flow if unauthenticated', async function (assert) {
+    assert.expect(2);
 
-  // avoid actually contacting GitHub
-  const mockAuthService = Service.extend({
-    signedIn: false,
-    signIn() {
-      assert.ok(true);
-    },
-    afterSignOut() {
-      return undefined;
-    },
-    autoSignIn() {
-      return undefined;
-    },
-  });
+    // avoid actually contacting GitHub
+    const mockAuthService = Service.extend({
+      signedIn: false,
+      signIn() {
+        assert.ok(true);
+      },
+      afterSignOut() {
+        return undefined;
+      },
+      autoSignIn() {
+        return undefined;
+      },
+    });
 
-  const instance = this.application.__deprecatedInstance__;
-  const registry = instance.register ? instance : instance.registry;
-  registry.register('service:auth', mockAuthService);
+    stubService('auth', mockAuthService);
 
-  visit('/signin');
+    await visit('/signin');
 
-  andThen(function () {
     assert.equal(currentURL(), '/signin');
   });
-});
 
-test('visiting signin redirects to index if authenticated', function (assert) {
-  const currentUser = server.create('user', 'withRepository');
+  test('visiting signin redirects to index if authenticated', async function (assert) {
+    const currentUser = server.create('user', 'withRepository');
 
-  signInUser(currentUser);
+    signInUser(currentUser);
 
-  visit('/signin');
+    await visit('/signin');
 
-  andThen(function () {
     assert.equal(currentURL(), '/');
   });
 });
