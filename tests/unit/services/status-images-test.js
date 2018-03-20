@@ -10,10 +10,10 @@ const authServiceStub = Service.extend({
   }
 });
 
-module('Unit | Service | status images', function(hooks) {
+module('Unit | Service | status images', function (hooks) {
   setupTest(hooks);
 
-  hooks.beforeEach(function() {
+  hooks.beforeEach(function () {
     this.owner.register('service:auth', authServiceStub);
     this.auth = this.owner.lookup('service:auth');
 

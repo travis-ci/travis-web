@@ -3,10 +3,10 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | pagination navigation', function(hooks) {
+module('Integration | Component | pagination navigation', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders list of pages', async function(assert) {
+  test('it renders list of pages', async function (assert) {
     let pageData = {
       pagination: {
         total: 97,
@@ -34,7 +34,7 @@ module('Integration | Component | pagination navigation', function(hooks) {
   });
 
   // this caused duplication of pages
-  test('test case then inner and outer bounds may overlap', async function(assert) {
+  test('test case then inner and outer bounds may overlap', async function (assert) {
     let pageData = {
       pagination: {
         total: 397,
@@ -58,7 +58,7 @@ module('Integration | Component | pagination navigation', function(hooks) {
   });
 
   // this appeared after the first fix for ^ this
-  test('test case when current page is in inner/outer bound intersection', async function(assert) {
+  test('test case when current page is in inner/outer bound intersection', async function (assert) {
     let pageData = {
       pagination: {
         total: 397,

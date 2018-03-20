@@ -3,10 +3,10 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-module('RepositoryStatusToggleComponent', function(hooks) {
+module('RepositoryStatusToggleComponent', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it switches state when clicked', async function(assert) {
+  test('it switches state when clicked', async function (assert) {
     this.set('repository', {
       id: 10000,
       name: 'foo-bar',

@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 
-module('Unit | Service | flashes', function(hooks) {
+module('Unit | Service | flashes', function (hooks) {
   setupTest(hooks);
 
   // This strips the extra flash information (icon, close button presence, etc) and compares what matters.

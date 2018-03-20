@@ -3,10 +3,10 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | build header', function(hooks) {
+module('Integration | Component | build header', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('render api build', async function(assert) {
+  test('render api build', async function (assert) {
     let repo = { slug: 'travis-ci/travis-web' };
     let commit = {
       compareUrl: 'https://github.com/travis-repos/php-test-staging/compare/3d86ee98be2b...a82f6ba76c7b',
@@ -44,7 +44,7 @@ module('Integration | Component | build header', function(hooks) {
     assert.equal(this.$().find('.commit-calendar').attr('title'), 'Finished January 15, 2018 12:35:49');
   });
 
-  test('render push build', async function(assert) {
+  test('render push build', async function (assert) {
     let commit = {
       compareUrl: 'https://github.com/travis-repos/php-test-staging/compare/3d86ee98be2b...a82f6ba76c7b'
     };
@@ -64,7 +64,7 @@ module('Integration | Component | build header', function(hooks) {
     assert.equal(this.$().find('.commit-compare').text().trim(), 'Compare 3d86ee9..a82f6ba', 'does display compare link for push builds');
   });
 
-  test('render cron build', async function(assert) {
+  test('render cron build', async function (assert) {
     let commit = {
       subject: 'Just complete and utter joy',
       branch: 'a-cron-branch-of-utter-joy'
@@ -83,7 +83,7 @@ module('Integration | Component | build header', function(hooks) {
   });
 
 
-  test('render tag build', async function(assert) {
+  test('render tag build', async function (assert) {
     let commit = {
       subject: 'Just complete and utter joy',
       branch: { name: 'v1.0.0' }
@@ -105,7 +105,7 @@ module('Integration | Component | build header', function(hooks) {
     assert.ok(this.$().find('.commit-branch-url').attr('href').match(/releases\/tag\/v1.0.0/), 'url is correct');
   });
 
-  test('if a build is shown, only show elapsed time while running', async function(assert) {
+  test('if a build is shown, only show elapsed time while running', async function (assert) {
     let build = {
       eventType: 'push',
       status: 'running',
@@ -119,7 +119,7 @@ module('Integration | Component | build header', function(hooks) {
     assert.equal(this.$().find('.commit-clock').length, 0, 'does not display elapsed time');
   });
 
-  test('if a job is shown, only show elapsed time while running', async function(assert) {
+  test('if a job is shown, only show elapsed time while running', async function (assert) {
     let job = {
       eventType: 'push',
       status: 'running',

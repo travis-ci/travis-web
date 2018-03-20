@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 
-module('Unit | Serializer | build', function(hooks) {
+module('Unit | Serializer | build', function (hooks) {
   setupTest(hooks);
 
   test('it normalizes a V3 singular response with nested jobs and repos', function (assert) {

@@ -4,7 +4,7 @@ import { run } from '@ember/runloop';
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 
-module('Unit | store.paginated', function(hooks) {
+module('Unit | store.paginated', function (hooks) {
   setupTest(hooks);
 
   test('it adds records already in the store to paginated collection', function (assert) {

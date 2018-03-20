@@ -6,20 +6,20 @@ import { startMirage } from 'travis/initializers/ember-cli-mirage';
 import config from 'travis/config/environment';
 import { Response } from 'ember-cli-mirage';
 
-module('Integration | Component | travis-status', function(hooks) {
+module('Integration | Component | travis-status', function (hooks) {
   setupRenderingTest(hooks);
 
-  hooks.beforeEach(function() {
+  hooks.beforeEach(function () {
     config.statusPageStatusUrl = 'https://pnpcptp8xh9k.statuspage.io/api/v2/status.json';
     this.server = startMirage();
   });
 
-  hooks.afterEach(function() {
+  hooks.afterEach(function () {
     config.statusPageStatusUrl = undefined;
     this.server.shutdown();
   });
 
-  test('shows normal status when nothing wrong', async function(assert) {
+  test('shows normal status when nothing wrong', async function (assert) {
     await render(hbs`{{travis-status}}`);
 
     return settled().then(() => {
@@ -27,7 +27,7 @@ module('Integration | Component | travis-status', function(hooks) {
     });
   });
 
-  test('shows unknown status when statuspage returns error', async function(assert) {
+  test('shows unknown status when statuspage returns error', async function (assert) {
     this.server.get(config.statusPageStatusUrl, () => {
       return new Response(500, {}, {});
     });

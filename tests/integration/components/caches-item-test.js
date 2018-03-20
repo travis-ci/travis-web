@@ -3,10 +3,10 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | caches item', function(hooks) {
+module('Integration | Component | caches item', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders', async function(assert) {
+  test('it renders', async function (assert) {
     const cache = {
       repository_id: 10,
       size: 1024 * 1024,

@@ -7,10 +7,10 @@ const authStub = Service.extend({
   currentUser: EmberObject.create()
 });
 
-module('Unit | Service | permissions', function(hooks) {
+module('Unit | Service | permissions', function (hooks) {
   setupTest(hooks);
 
-  hooks.beforeEach(function() {
+  hooks.beforeEach(function () {
     this.owner.register('service:auth', authStub);
     this.auth = this.owner.lookup('service:auth');
   });

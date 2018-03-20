@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 
-module('Unit | Service | raven', function(hooks) {
+module('Unit | Service | raven', function (hooks) {
   setupTest(hooks);
 
   test('it filters benign errors', function (assert) {

@@ -4,10 +4,10 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-module('OwnerRepoTileComponent', function(hooks) {
+module('OwnerRepoTileComponent', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders', async function(assert) {
+  test('it renders', async function (assert) {
     const repo = EmberObject.create({
       slug: 'travis-ci/travis-chat',
       active: false,

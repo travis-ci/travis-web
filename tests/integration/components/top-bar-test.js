@@ -5,10 +5,10 @@ import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { stubService } from 'travis/tests/helpers/stub-service';
 
-module('Integration | Component | top bar', function(hooks) {
+module('Integration | Component | top bar', function (hooks) {
   setupRenderingTest(hooks);
 
-  test("it shows 'There are no broadcasts message' if there're no broadcasts", async function(assert) {
+  test("it shows 'There are no broadcasts message' if there're no broadcasts", async function (assert) {
     const features = this.owner.lookup('service:features');
     features.enable('broadcasts');
     // in the future I would like to make a test helper that works properly for

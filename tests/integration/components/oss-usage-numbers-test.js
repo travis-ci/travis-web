@@ -3,10 +3,10 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | oss usage numbers', function(hooks) {
+module('Integration | Component | oss usage numbers', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders correct images', async function(assert) {
+  test('it renders correct images', async function (assert) {
     this.set('numbers', 1000);
     await render(hbs`{{oss-usage-numbers numbers=numbers}}`);
 

@@ -3,10 +3,10 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | jobs item', function(hooks) {
+module('Integration | Component | jobs item', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders', async function(assert) {
+  test('it renders', async function (assert) {
     const job = {
       id: 10,
       state: 'passed',
@@ -33,7 +33,7 @@ module('Integration | Component | jobs item', function(hooks) {
     assert.equal(this.$().find('.job-duration').text().trim(), '1 min 40 sec', 'duration should be displayed');
   });
 
-  test('outputs info on not set properties', async function(assert) {
+  test('outputs info on not set properties', async function (assert) {
     const job = {};
     this.job = job;
     await render(hbs`{{jobs-item job=job}}`);
@@ -42,7 +42,7 @@ module('Integration | Component | jobs item', function(hooks) {
     assert.ok(this.$().find('.job-lang').text().match(/no language set/), 'a message about no language being set should be displayed');
   });
 
-  test('when env is not set, gemfile is displayed in the env section', async function(assert) {
+  test('when env is not set, gemfile is displayed in the env section', async function (assert) {
     const job = {
       id: 10,
       state: 'passed',
@@ -61,7 +61,7 @@ module('Integration | Component | jobs item', function(hooks) {
     assert.equal(this.$().find('.job-env .label-align').text().trim(), 'Gemfile: foo/Gemfile', 'env should be displayed');
   });
 
-  test('when env is set, gemfile is displayed in the language section', async function(assert) {
+  test('when env is set, gemfile is displayed in the language section', async function (assert) {
     const job = {
       id: 10,
       state: 'passed',

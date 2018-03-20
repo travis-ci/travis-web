@@ -4,10 +4,10 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | no account', function(hooks) {
+module('Integration | Component | no account', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders', async function(assert) {
+  test('it renders', async function (assert) {
     let org = EmberObject.create({
       name: 'famous-org'
     });

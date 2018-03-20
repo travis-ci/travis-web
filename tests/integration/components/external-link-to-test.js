@@ -3,10 +3,10 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | external link to', function(hooks) {
+module('Integration | Component | external link to', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders correctly and securely', async function(assert) {
+  test('it renders correctly and securely', async function (assert) {
     const content = 'LINK TO GITHUB';
     const href = 'https://github.com/travis-ci/travis-web';
 

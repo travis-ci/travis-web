@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 
-module('Unit | Serializer | repo', function(hooks) {
+module('Unit | Serializer | repo', function (hooks) {
   setupTest(hooks);
 
   test('it includes pagination info in collections', function (assert) {

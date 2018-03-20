@@ -12,15 +12,15 @@ const ajaxStub = Service.extend({
   }
 });
 
-module('Integration | Component | dashboard row', function(hooks) {
+module('Integration | Component | dashboard row', function (hooks) {
   setupRenderingTest(hooks);
 
-  hooks.beforeEach(function() {
+  hooks.beforeEach(function () {
     this.owner.register('service:api', ajaxStub);
     this.api = this.owner.lookup('service:api');
   });
 
-  test('it renders data correctly', async function(assert) {
+  test('it renders data correctly', async function (assert) {
     const repo = EmberObject.create({
       active: true,
       currentBuild: {

@@ -3,10 +3,10 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | builds item', function(hooks) {
+module('Integration | Component | builds item', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders', async function(assert) {
+  test('it renders', async function (assert) {
     const build = {
       id: 10000,
       state: 'passed',
@@ -34,7 +34,7 @@ module('Integration | Component | builds item', function(hooks) {
     assert.equal(this.$().find('.row-message').text().trim(), 'Generic test author commit message');
   });
 
-  test('it renders a cron build with a prefix', async function(assert) {
+  test('it renders a cron build with a prefix', async function (assert) {
     const build = {
       eventType: 'cron',
       commit: {

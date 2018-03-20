@@ -1,10 +1,10 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 
-module('Unit | Service | external-links', function(hooks) {
+module('Unit | Service | external-links', function (hooks) {
   setupTest(hooks);
 
-  hooks.beforeEach(function() {
+  hooks.beforeEach(function () {
     this.id = '1';
     this.slug = 'travis-ci/travis-web';
     this.sha = '123abc';

@@ -3,10 +3,10 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | subscription status banner', function(hooks) {
+module('Integration | Component | subscription status banner', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders', async function(assert) {
+  test('it renders', async function (assert) {
     await render(
       hbs`{{subscription-status-banner color='green' message='Ohai' billingLinkText='Click' billingUrl='lol'}}`
     );

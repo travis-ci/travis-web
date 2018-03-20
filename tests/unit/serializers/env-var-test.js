@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 
-module('Unit | Serializer | envVar', function(hooks) {
+module('Unit | Serializer | envVar', function (hooks) {
   setupTest(hooks);
 
   test('it normalizes a V2 array response', function (assert) {

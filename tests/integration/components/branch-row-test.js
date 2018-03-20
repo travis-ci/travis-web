@@ -4,10 +4,10 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | branch row', function(hooks) {
+module('Integration | Component | branch row', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders data correctly', async function(assert) {
+  test('it renders data correctly', async function (assert) {
     const branch = EmberObject.create({
       name: 'master',
       repository: {

@@ -1,6 +1,5 @@
 import { isEmpty } from '@ember/utils';
 import { run } from '@ember/runloop';
-import { getOwner } from '@ember/application';
 import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
@@ -9,23 +8,23 @@ import hbs from 'htmlbars-inline-precompile';
 import { percySnapshot } from 'ember-percy';
 import { startMirage } from 'travis/initializers/ember-cli-mirage';
 
-module('Integration | Component | ssh-key', function(hooks) {
+module('Integration | Component | ssh-key', function (hooks) {
   setupRenderingTest(hooks);
 
-  hooks.beforeEach(function() {
+  hooks.beforeEach(function () {
     this.actions = {};
     this.send = (actionName, ...args) => this.actions[actionName].apply(this, args);
   });
 
-  hooks.beforeEach(function() {
+  hooks.beforeEach(function () {
     this.server = startMirage();
   });
 
-  hooks.afterEach(function() {
+  hooks.afterEach(function () {
     this.server.shutdown();
   });
 
-  test('it renders the default ssh key if no custom key is set', async function(assert) {
+  test('it renders the default ssh key if no custom key is set', async function (assert) {
     assert.expect(2);
 
     var key = EmberObject.create({ fingerprint: 'fingerprint' });
@@ -37,7 +36,7 @@ module('Integration | Component | ssh-key', function(hooks) {
     percySnapshot(assert);
   });
 
-  test('it renders the custom ssh key if custom key is set', async function(assert) {
+  test('it renders the custom ssh key if custom key is set', async function (assert) {
     assert.expect(2);
 
     var store = this.owner.lookup('service:store');
@@ -54,7 +53,7 @@ module('Integration | Component | ssh-key', function(hooks) {
     assert.equal(this.$('.ssh-key-value span').text().trim(), 'somethingthing', 'should display custom key fingerprint');
   });
 
-  test('it deletes a custom key if permissions are right', async function(assert) {
+  test('it deletes a custom key if permissions are right', async function (assert) {
     assert.expect(1);
 
     var store = this.owner.lookup('service:store');
@@ -77,7 +76,7 @@ module('Integration | Component | ssh-key', function(hooks) {
     done();
   });
 
-  test('it does not delete the custom key if permissions are insufficient', async function(assert) {
+  test('it does not delete the custom key if permissions are insufficient', async function (assert) {
     assert.expect(1);
 
     var store = this.owner.lookup('service:store');

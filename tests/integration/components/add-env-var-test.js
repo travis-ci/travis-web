@@ -1,6 +1,5 @@
 import { isBlank } from '@ember/utils';
 import { run } from '@ember/runloop';
-import { getOwner } from '@ember/application';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
@@ -10,18 +9,18 @@ import DS from 'ember-data';
 import { percySnapshot } from 'ember-percy';
 import { startMirage } from 'travis/initializers/ember-cli-mirage';
 
-module('Integration | Component | add env-var', function(hooks) {
+module('Integration | Component | add env-var', function (hooks) {
   setupRenderingTest(hooks);
 
-  hooks.beforeEach(function() {
+  hooks.beforeEach(function () {
     this.server = startMirage();
   });
 
-  hooks.afterEach(function() {
+  hooks.afterEach(function () {
     this.server.shutdown();
   });
 
-  test('it adds an env var on submit', async function(assert) {
+  test('it adds an env var on submit', async function (assert) {
     assert.expect(6);
 
     var store = this.owner.lookup('service:store');
@@ -54,7 +53,7 @@ module('Integration | Component | add env-var', function(hooks) {
     done();
   });
 
-  test('it shows an error if no name is present', async function(assert) {
+  test('it shows an error if no name is present', async function (assert) {
     assert.expect(3);
 
     await render(hbs`{{add-env-var repo=repo}}`);
@@ -74,7 +73,7 @@ module('Integration | Component | add env-var', function(hooks) {
     assert.ok(!this.$('.form-error-message').length, 'the error message should be removed after value is changed');
   });
 
-  test('it does not show an error when changing the public switch', async function(assert) {
+  test('it does not show an error when changing the public switch', async function (assert) {
     assert.expect(1);
 
     await render(hbs`{{add-env-var repo=repo}}`);
@@ -84,7 +83,7 @@ module('Integration | Component | add env-var', function(hooks) {
     assert.notOk(this.$('.form-error-message').length, 'there should be no error message');
   });
 
-  test('it adds a public env var on submit', async function(assert) {
+  test('it adds a public env var on submit', async function (assert) {
     assert.expect(6);
 
     this.owner.register('transform:boolean', DS.BooleanTransform);

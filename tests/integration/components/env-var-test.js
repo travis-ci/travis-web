@@ -1,15 +1,14 @@
 import { run } from '@ember/runloop';
-import { getOwner } from '@ember/application';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import DS from 'ember-data';
 
-module('Integration | Component | env-var', function(hooks) {
+module('Integration | Component | env-var', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders an env-var with private value', async function(assert) {
+  test('it renders an env-var with private value', async function (assert) {
     assert.expect(2);
 
     this.owner.register('transform:boolean', DS.BooleanTransform);
@@ -25,7 +24,7 @@ module('Integration | Component | env-var', function(hooks) {
     assert.equal(this.$('.env-var-value input').val(), '••••••••••••••••', 'value should be hidden');
   });
 
-  test('it renders an env-var with public value', async function(assert) {
+  test('it renders an env-var with public value', async function (assert) {
     assert.expect(2);
 
     this.owner.register('transform:boolean', DS.BooleanTransform);

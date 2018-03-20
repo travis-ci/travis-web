@@ -6,10 +6,10 @@ import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import fillIn from '../../helpers/fill-in';
 
-module('Integration | Component | status images', function(hooks) {
+module('Integration | Component | status images', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('shows default branch as option and updates output', async function(assert) {
+  test('shows default branch as option and updates output', async function (assert) {
     const repo = EmberObject.create({
       slug: 'travis-ci/travis-web',
       defaultBranch: {

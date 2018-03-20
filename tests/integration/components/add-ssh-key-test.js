@@ -1,5 +1,4 @@
 import { run } from '@ember/runloop';
-import { getOwner } from '@ember/application';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
@@ -9,18 +8,18 @@ import DS from 'ember-data';
 import { percySnapshot } from 'ember-percy';
 import { startMirage } from 'travis/initializers/ember-cli-mirage';
 
-module('Integration | Component | add ssh-key', function(hooks) {
+module('Integration | Component | add ssh-key', function (hooks) {
   setupRenderingTest(hooks);
 
-  hooks.beforeEach(function() {
+  hooks.beforeEach(function () {
     this.server = startMirage();
   });
 
-  hooks.afterEach(function() {
+  hooks.afterEach(function () {
     this.server.shutdown();
   });
 
-  test('it adds an ssh key on submit', async function(assert) {
+  test('it adds an ssh key on submit', async function (assert) {
     assert.expect(6);
 
     this.owner.register('transform:boolean', DS.BooleanTransform);
@@ -57,7 +56,7 @@ module('Integration | Component | add ssh-key', function(hooks) {
   });
 
 
-  test('it throws an error if value for ssh key is blank', async function(assert) {
+  test('it throws an error if value for ssh key is blank', async function (assert) {
     assert.expect(5);
 
     this.owner.register('transform:boolean', DS.BooleanTransform);

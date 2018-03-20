@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 
-module('Unit | Service | trigger build popup', function(hooks) {
+module('Unit | Service | trigger build popup', function (hooks) {
   setupTest(hooks);
 
   test('it toggles the isShowingFlag', function (assert) {

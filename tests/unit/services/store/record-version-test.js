@@ -2,7 +2,7 @@ import { run } from '@ember/runloop';
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 
-module('Unit | Store | record version management', function(hooks) {
+module('Unit | Store | record version management', function (hooks) {
   setupTest(hooks);
 
   test('it does not allow to push an older record to the store', function (assert) {

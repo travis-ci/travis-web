@@ -5,10 +5,10 @@ import { render } from '@ember/test-helpers';
 // import wait from 'ember-test-helpers/wait';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | orgs filter', function(hooks) {
+module('Integration | Component | orgs filter', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders data correctly', async function(assert) {
+  test('it renders data correctly', async function (assert) {
     const orgs = [
       EmberObject.create({
         id: 'lislis',

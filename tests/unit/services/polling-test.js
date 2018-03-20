@@ -7,12 +7,12 @@ import { module, test } from 'qunit';
 
 let service;
 
-module('PollingService', function(hooks) {
-  hooks.beforeEach(function() {
+module('PollingService', function (hooks) {
+  hooks.beforeEach(function () {
     return config.ajaxPolling = true;
   });
 
-  hooks.afterEach(function() {
+  hooks.afterEach(function () {
     config.ajaxPolling = false;
     if (!service.get('isDestroyed')) {
       return run(function () {

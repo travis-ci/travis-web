@@ -3,10 +3,10 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | user avatar', function(hooks) {
+module('Integration | Component | user avatar', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders correctly', async function(assert) {
+  test('it renders correctly', async function (assert) {
     this.set('name', 'Hello Test');
     this.set('url', 'https://someurl.com/someimage.jpg');
     this.set('size', 38);

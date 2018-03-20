@@ -5,10 +5,10 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | feature toggle', function(hooks) {
+module('Integration | Component | feature toggle', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders feature state correctly', async function(assert) {
+  test('it renders feature state correctly', async function (assert) {
     const feature = EmberObject.create({
       name: 'Shiny New Feature',
       description: 'Shiny new feature for Travis CI users',

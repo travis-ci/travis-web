@@ -4,10 +4,10 @@ import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { prettyDate } from 'travis/helpers/pretty-date';
 
-module('Integration | Component | requests item', function(hooks) {
+module('Integration | Component | requests item', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders', async function(assert) {
+  test('it renders', async function (assert) {
     let yesterday = new Date();
     yesterday.setDate(yesterday.getDate() - 1);
     const request = {
@@ -40,7 +40,7 @@ module('Integration | Component | requests item', function(hooks) {
     return assert.equal(this.$().find('.row-item:nth-child(5) .label-align').text().trim(), '10', 'build number should be displayed');
   });
 
-  test('it renders PR number if a request is a PR', async function(assert) {
+  test('it renders PR number if a request is a PR', async function (assert) {
     const request = {
       id: 1,
       isPullRequest: true,
