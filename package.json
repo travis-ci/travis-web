@@ -47,7 +47,7 @@
     "ember-cli-mirage": "0.4.1",
     "ember-cli-moment-shim": "^3.5.0",
     "ember-cli-page-object": "^1.14.1",
-    "ember-cli-qunit": "^4.3.2",
+    "ember-qunit": "^3.3.2",
     "ember-cli-sass": "^7.1.1",
     "ember-cli-sentry": "^3.0.0",
     "ember-cli-shims": "^1.2.0",
