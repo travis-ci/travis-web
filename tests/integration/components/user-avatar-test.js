@@ -5,7 +5,7 @@ moduleForComponent('user-avatar', 'Integration | Component | user avatar', {
   integration: true
 });
 
-test('it renders correctly', function(assert) {
+test('it renders correctly', function (assert) {
   this.set('name', 'Hello Test');
   this.set('url', 'https://someurl.com/someimage.jpg');
   this.set('size', 38);

@@ -5,7 +5,7 @@ moduleForComponent('loading-indicator', 'Integration | Component | loading indic
   integration: true
 });
 
-test('it renders', function(assert) {
+test('it renders', function (assert) {
   this.set('center', true);
 
   this.render(hbs`{{loading-indicator center=center}}`);
