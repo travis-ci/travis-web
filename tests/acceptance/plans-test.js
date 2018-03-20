@@ -4,10 +4,10 @@ import { setupApplicationTest } from 'ember-qunit';
 import { enableFeature } from 'ember-feature-flags/test-support';
 import { percySnapshot } from 'ember-percy';
 
-module('Acceptance | plans', function(hooks) {
+module('Acceptance | plans', function (hooks) {
   setupApplicationTest(hooks);
 
-  test('visiting /plans', async function(assert) {
+  test('visiting /plans', async function (assert) {
     enableFeature('pro-version');
     await visit('/plans');
 
