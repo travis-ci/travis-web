@@ -23,7 +23,6 @@ module('Integration | Component | top bar', function (hooks) {
     stubService(this, 'broadcasts', Service.extend({ broadcasts: Object.freeze([]) }));
     await render(hbs`{{top-bar}}`);
 
-    this.pauseTest();
     assert.ok(this.$('header').text().match(/There are no broadcasts/));
 
     // renders user name
