@@ -1,7 +1,6 @@
 import { currentURL, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
-import page404 from 'travis/tests/pages/404';
 
 module('Acceptance | non existent routes', function(hooks) {
   setupApplicationTest(hooks);
