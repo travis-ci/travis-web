@@ -4,6 +4,7 @@ import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import currentRepoTab from 'travis/tests/pages/repo-tabs/current';
 import jobTabs from 'travis/tests/pages/job-tabs';
 import jobPage from 'travis/tests/pages/job';
+import signInUser from 'travis/tests/helpers/sign-in-user';
 
 moduleForAcceptance('Acceptance | builds/current tab', {
   beforeEach() {

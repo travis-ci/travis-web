@@ -1,6 +1,7 @@
 import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import sidebarPage from 'travis/tests/pages/sidebar';
+import signInUser from 'travis/tests/helpers/sign-in-user';
 
 moduleForAcceptance('Acceptance | home/sidebar tabs', {
   beforeEach() {

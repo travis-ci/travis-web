@@ -2,6 +2,7 @@ import $ from 'jquery';
 import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import buildPage from 'travis/tests/pages/build';
+import signInUser from 'travis/tests/helpers/sign-in-user';
 
 import topPage from 'travis/tests/pages/top';
 import getFaviconUri from 'travis/utils/favicon-data-uris';

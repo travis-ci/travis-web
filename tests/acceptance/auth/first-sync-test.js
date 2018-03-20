@@ -2,6 +2,7 @@ import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import page from 'travis/tests/pages/first-sync';
 import { run } from '@ember/runloop';
+import signInUser from 'travis/tests/helpers/sign-in-user';
 
 moduleForAcceptance('Acceptance | auth/first sync', {
   beforeEach() {
