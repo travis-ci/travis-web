@@ -1,52 +1,54 @@
-import { moduleForComponent, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { prettyDate } from 'travis/helpers/pretty-date';
 
-moduleForComponent('requests-item', 'Integration | Component | requests item', {
-  integration: true
-});
+module('Integration | Component | requests item', function(hooks) {
+  setupRenderingTest(hooks);
 
-test('it renders', function (assert) {
-  let yesterday = new Date();
-  yesterday.setDate(yesterday.getDate() - 1);
-  const request = {
-    id: 1,
-    branchName: 'dev',
-    commit: {
-      sha: 'abcdef123',
-      message: 'Bam! :bomb:'
-    },
-    repo: {
-      slug: 'travis-ci/travis-ci'
-    },
-    build: {
-      number: 10
-    },
-    result: 'approved',
-    created_at: yesterday,
-    isAccepted: true
-  };
+  test('it renders', async function(assert) {
+    let yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    const request = {
+      id: 1,
+      branchName: 'dev',
+      commit: {
+        sha: 'abcdef123',
+        message: 'Bam! :bomb:'
+      },
+      repo: {
+        slug: 'travis-ci/travis-ci'
+      },
+      build: {
+        number: 10
+      },
+      result: 'approved',
+      created_at: yesterday,
+      isAccepted: true
+    };
 
-  this.request = request;
-  this.render(hbs`{{requests-item request=request}}`);
+    this.request = request;
+    await render(hbs`{{requests-item request=request}}`);
 
-  assert.equal(this.$().find('.row-item:nth-of-type(2) strong').text().trim(), 'dev');
-  assert.equal(this.$().find('.row-item:nth-of-type(3) .label-align').text().trim(), 'a day ago');
-  assert.equal(this.$().find('.row-item:nth-of-type(3)').attr('title'), prettyDate([yesterday]));
-  assert.ok(this.$().find('.status-icon').hasClass('approved'), 'icon should have approved class');
-  assert.equal(this.$().find('.row-item:nth-child(4)').text().trim(), 'Bam!');
-  assert.equal(this.$().find('.row-item:nth-child(4) .emoji').length, 1, 'there should be an emoji icon in commit message');
-  return assert.equal(this.$().find('.row-item:nth-child(5) .label-align').text().trim(), '10', 'build number should be displayed');
-});
+    assert.equal(this.$().find('.row-item:nth-of-type(2) strong').text().trim(), 'dev');
+    assert.equal(this.$().find('.row-item:nth-of-type(3) .label-align').text().trim(), 'a day ago');
+    assert.equal(this.$().find('.row-item:nth-of-type(3)').attr('title'), prettyDate([yesterday]));
+    assert.ok(this.$().find('.status-icon').hasClass('approved'), 'icon should have approved class');
+    assert.equal(this.$().find('.row-item:nth-child(4)').text().trim(), 'Bam!');
+    assert.equal(this.$().find('.row-item:nth-child(4) .emoji').length, 1, 'there should be an emoji icon in commit message');
+    return assert.equal(this.$().find('.row-item:nth-child(5) .label-align').text().trim(), '10', 'build number should be displayed');
+  });
 
-test('it renders PR number if a request is a PR', function (assert) {
-  const request = {
-    id: 1,
-    isPullRequest: true,
-    pullRequestNumber: 20
-  };
+  test('it renders PR number if a request is a PR', async function(assert) {
+    const request = {
+      id: 1,
+      isPullRequest: true,
+      pullRequestNumber: 20
+    };
 
-  this.request = request;
-  this.render(hbs`{{requests-item request=request}}`);
-  return assert.equal(this.$().find('.row-item:nth-child(2) strong').text().trim(), '#20');
+    this.request = request;
+    await render(hbs`{{requests-item request=request}}`);
+    return assert.equal(this.$().find('.row-item:nth-child(2) strong').text().trim(), '#20');
+  });
 });

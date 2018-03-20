@@ -1,15 +1,17 @@
-import { moduleForComponent, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-moduleForComponent('loading-indicator', 'Integration | Component | loading indicator', {
-  integration: true
-});
+module('Integration | Component | loading indicator', function(hooks) {
+  setupRenderingTest(hooks);
 
-test('it renders', function (assert) {
-  this.set('center', true);
+  test('it renders', async function(assert) {
+    this.set('center', true);
 
-  this.render(hbs`{{loading-indicator center=center}}`);
+    await render(hbs`{{loading-indicator center=center}}`);
 
-  assert.ok(this.$('span').hasClass('loading-indicator'), 'component has loading indicator class');
-  assert.ok(this.$('div').hasClass('loading-container'), 'indicator gets parent class if centered flag is given');
+    assert.ok(this.$('span').hasClass('loading-indicator'), 'component has loading indicator class');
+    assert.ok(this.$('div').hasClass('loading-container'), 'indicator gets parent class if centered flag is given');
+  });
 });

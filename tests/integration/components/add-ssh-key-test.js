@@ -1,90 +1,93 @@
 import { run } from '@ember/runloop';
 import { getOwner } from '@ember/application';
-import { moduleForComponent, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import fillIn from '../../helpers/fill-in';
 import DS from 'ember-data';
 import { percySnapshot } from 'ember-percy';
 import { startMirage } from 'travis/initializers/ember-cli-mirage';
 
-moduleForComponent('add-ssh-key', 'Integration | Component | add ssh-key', {
-  integration: true,
-  beforeEach() {
+module('Integration | Component | add ssh-key', function(hooks) {
+  setupRenderingTest(hooks);
+
+  hooks.beforeEach(function() {
     this.server = startMirage();
-  },
+  });
 
-  afterEach() {
+  hooks.afterEach(function() {
     this.server.shutdown();
-  }
-});
-
-test('it adds an ssh key on submit', function (assert) {
-  assert.expect(6);
-
-  this.registry.register('transform:boolean', DS.BooleanTransform);
-  var store = getOwner(this).lookup('service:store');
-
-  var repo;
-  run(function () {
-    repo  = store.push({ data: { id: 1, type: 'repo', attributes: { slug: 'travis-ci/travis-web' } } });
   });
 
-  this.set('repo', repo);
+  test('it adds an ssh key on submit', async function(assert) {
+    assert.expect(6);
 
-  this.render(hbs`{{add-ssh-key repo=repo sshKeyAdded="sshKeyAdded"}}`);
+    this.owner.register('transform:boolean', DS.BooleanTransform);
+    var store = this.owner.lookup('service:store');
 
-  var sshKey = store.peekAll('ssh_key').objectAt(0);
+    var repo;
+    run(function () {
+      repo  = store.push({ data: { id: 1, type: 'repo', attributes: { slug: 'travis-ci/travis-web' } } });
+    });
 
-  assert.ok(! sshKey.get('description'), 'description should be blank');
-  assert.ok(! sshKey.get('value'), 'value should be blank');
-  assert.equal(sshKey.get('id'), 1, 'ssh key id is set to repo id');
+    this.set('repo', repo);
 
-  fillIn(this.$('.ssh-description'), 'FOO');
-  fillIn(this.$('.ssh-value'), 'bar');
+    await render(hbs`{{add-ssh-key repo=repo sshKeyAdded="sshKeyAdded"}}`);
 
-  this.$('.form-submit').click();
+    var sshKey = store.peekAll('ssh_key').objectAt(0);
 
-  assert.equal(sshKey.get('description'), 'FOO', 'description should be set');
-  assert.equal(sshKey.get('value'), 'bar', 'value should be set');
-  assert.equal(sshKey.get('id'), 1, 'ssh key id should still be repo id');
+    assert.ok(! sshKey.get('description'), 'description should be blank');
+    assert.ok(! sshKey.get('value'), 'value should be blank');
+    assert.equal(sshKey.get('id'), 1, 'ssh key id is set to repo id');
 
-  percySnapshot(assert);
+    fillIn(this.$('.ssh-description'), 'FOO');
+    fillIn(this.$('.ssh-value'), 'bar');
 
-  var done = assert.async();
-  done();
-});
+    this.$('.form-submit').click();
 
+    assert.equal(sshKey.get('description'), 'FOO', 'description should be set');
+    assert.equal(sshKey.get('value'), 'bar', 'value should be set');
+    assert.equal(sshKey.get('id'), 1, 'ssh key id should still be repo id');
 
-test('it throws an error if value for ssh key is blank', function (assert) {
-  assert.expect(5);
+    percySnapshot(assert);
 
-  this.registry.register('transform:boolean', DS.BooleanTransform);
-  var store = getOwner(this).lookup('service:store');
-
-  var repo;
-  run(function () {
-    repo  = store.push({ data: { id: 1, type: 'repo', attributes: { slug: 'travis-ci/travis-web' } } });
+    var done = assert.async();
+    done();
   });
 
-  this.set('repo', repo);
 
-  this.render(hbs`{{add-ssh-key repo=repo sshKeyAdded="sshKeyAdded"}}`);
+  test('it throws an error if value for ssh key is blank', async function(assert) {
+    assert.expect(5);
 
-  var sshKey = store.peekAll('ssh_key').objectAt(0);
+    this.owner.register('transform:boolean', DS.BooleanTransform);
+    var store = this.owner.lookup('service:store');
 
-  assert.ok(! sshKey.get('description'), 'description should be blank');
-  assert.ok(! sshKey.get('value'), 'value should be blank');
-  assert.equal(sshKey.get('id'), 1, 'ssh key id is set to repo id');
+    var repo;
+    run(function () {
+      repo  = store.push({ data: { id: 1, type: 'repo', attributes: { slug: 'travis-ci/travis-web' } } });
+    });
 
-  fillIn(this.$('.ssh-description'), 'FOO');
-  fillIn(this.$('.ssh-value'), '');
+    this.set('repo', repo);
 
-  this.$('.form-submit').click();
+    await render(hbs`{{add-ssh-key repo=repo sshKeyAdded="sshKeyAdded"}}`);
 
-  assert.ok(this.$('.form-error-message').length, 'there is an error message if value is blank');
+    var sshKey = store.peekAll('ssh_key').objectAt(0);
 
-  percySnapshot(assert);
+    assert.ok(! sshKey.get('description'), 'description should be blank');
+    assert.ok(! sshKey.get('value'), 'value should be blank');
+    assert.equal(sshKey.get('id'), 1, 'ssh key id is set to repo id');
 
-  fillIn(this.$('.ssh-value'), 'bar');
-  assert.ok(!this.$('.form-error-message').length, 'error message is removed if value is filled in');
+    fillIn(this.$('.ssh-description'), 'FOO');
+    fillIn(this.$('.ssh-value'), '');
+
+    this.$('.form-submit').click();
+
+    assert.ok(this.$('.form-error-message').length, 'there is an error message if value is blank');
+
+    percySnapshot(assert);
+
+    fillIn(this.$('.ssh-value'), 'bar');
+    assert.ok(!this.$('.form-error-message').length, 'error message is removed if value is filled in');
+  });
 });

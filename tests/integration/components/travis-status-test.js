@@ -1,39 +1,41 @@
-import { test, moduleForComponent } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import { render, settled } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { startMirage } from 'travis/initializers/ember-cli-mirage';
 import config from 'travis/config/environment';
-import wait from 'ember-test-helpers/wait';
 import { Response } from 'ember-cli-mirage';
 
-moduleForComponent('travis-status', 'Integration | Component | travis-status', {
-  integration: true,
-  beforeEach() {
+module('Integration | Component | travis-status', function(hooks) {
+  setupRenderingTest(hooks);
+
+  hooks.beforeEach(function() {
     config.statusPageStatusUrl = 'https://pnpcptp8xh9k.statuspage.io/api/v2/status.json';
     this.server = startMirage();
-  },
+  });
 
-  afterEach() {
+  hooks.afterEach(function() {
     config.statusPageStatusUrl = undefined;
     this.server.shutdown();
-  },
-});
-
-test('shows normal status when nothing wrong', function (assert) {
-  this.render(hbs`{{travis-status}}`);
-
-  return wait().then(() => {
-    assert.ok(this.$('.status-circle').hasClass('none'), 'status class is set on .status-circle');
-  });
-});
-
-test('shows unknown status when statuspage returns error', function (assert) {
-  this.server.get(config.statusPageStatusUrl, () => {
-    return new Response(500, {}, {});
   });
 
-  this.render(hbs`{{travis-status}}`);
+  test('shows normal status when nothing wrong', async function(assert) {
+    await render(hbs`{{travis-status}}`);
 
-  return wait().then(() => {
-    assert.ok(this.$('.status-circle').hasClass('unknown'), 'unknown status class is set on error');
+    return settled().then(() => {
+      assert.ok(this.$('.status-circle').hasClass('none'), 'status class is set on .status-circle');
+    });
+  });
+
+  test('shows unknown status when statuspage returns error', async function(assert) {
+    this.server.get(config.statusPageStatusUrl, () => {
+      return new Response(500, {}, {});
+    });
+
+    await render(hbs`{{travis-status}}`);
+
+    return settled().then(() => {
+      assert.ok(this.$('.status-circle').hasClass('unknown'), 'unknown status class is set on error');
+    });
   });
 });

@@ -1,15 +1,17 @@
-import { moduleForComponent, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-moduleForComponent('job-tabs', 'Integration | Component | job tabs', {
-  integration: true
-});
+module('Integration | Component | job tabs', function(hooks) {
+  setupRenderingTest(hooks);
 
-test('it renders', function (assert) {
-  // Set any properties with this.set('myProperty', 'value');
-  // Handle any actions with this.on('myAction', function(val) { ... });
+  test('it renders', async function(assert) {
+    // Set any properties with this.set('myProperty', 'value');
+    // Handle any actions with this.on('myAction', function(val) { ... });
 
-  this.render(hbs`{{job-tabs}}`);
+    await render(hbs`{{job-tabs}}`);
 
-  assert.ok(this.$('.travistab-nav'), 'renders the tab nav element');
+    assert.ok(this.$('.travistab-nav'), 'renders the tab nav element');
+  });
 });
