@@ -1,10 +1,9 @@
-import { isBlank } from '@ember/utils';
 import { run } from '@ember/runloop';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, click, find, findAll } from '@ember/test-helpers';
+import { render, click } from '@ember/test-helpers';
+import { fillInWithKeyEvent } from 'travis/tests/helpers/extra-test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import fillIn from '../../helpers/fill-in';
 import DS from 'ember-data';
 import { percySnapshot } from 'ember-percy';
 
@@ -26,8 +25,8 @@ module('Integration | Component | add env-var', function (hooks) {
 
     await render(hbs`{{add-env-var repo=repo}}`);
 
-    fillIn(this.$('.env-name'), 'FOO');
-    fillIn(this.$('.env-value'), 'bar');
+    await fillInWithKeyEvent('.env-name', 'FOO');
+    await fillInWithKeyEvent('.env-value', 'bar');
 
     await click('.form-submit');
 
@@ -49,19 +48,18 @@ module('Integration | Component | add env-var', function (hooks) {
 
     await render(hbs`{{add-env-var repo=repo}}`);
 
-    find('.env-name').value;
-    assert.ok(isBlank(find('.env-name').value), 'precond: name input should be empty');
+    assert.dom('.env-name').doesNotHaveAttribute('value', 'precond: name input should be empty');
 
     await click('.form-submit');
 
-    assert.ok(findAll('.form-error-message').length, 'the error message should be displayed');
+    assert.dom('.form-error-message').exists('the error message should be displayed');
 
     percySnapshot(assert);
 
-    fillIn(this.$('.env-name'), 'FOO');
-    fillIn(this.$('.env-value'), 'bar');
+    await fillInWithKeyEvent('.env-name', 'FOO');
+    await fillInWithKeyEvent('.env-value', 'bar');
 
-    assert.ok(!findAll('.form-error-message').length, 'the error message should be removed after value is changed');
+    assert.dom('.form-error-message').doesNotExist('the error message should be removed after value is changed');
   });
 
   test('it does not show an error when changing the public switch', async function (assert) {
@@ -71,7 +69,7 @@ module('Integration | Component | add env-var', function (hooks) {
 
     await click('.switch-inner');
 
-    assert.notOk(findAll('.form-error-message').length, 'there should be no error message');
+    assert.dom('.form-error-message').doesNotExist('there should be no error message');
   });
 
   test('it adds a public env var on submit', async function (assert) {
@@ -90,8 +88,8 @@ module('Integration | Component | add env-var', function (hooks) {
 
     await render(hbs`{{add-env-var repo=repo}}`);
 
-    fillIn(this.$('.env-name'), 'FOO');
-    fillIn(this.$('.env-value'), 'bar');
+    await fillInWithKeyEvent('.env-name', 'FOO');
+    await fillInWithKeyEvent('.env-value', 'bar');
 
     await click('.switch');
 
