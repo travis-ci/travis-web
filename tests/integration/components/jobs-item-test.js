@@ -25,12 +25,12 @@ module('Integration | Component | jobs item', function (hooks) {
     this.job = job;
     await render(hbs`{{jobs-item job=job}}`);
 
-    assert.ok(this.$().find('.jobs-item').hasClass('passed'), 'component should have a state class (passed)');
-    assert.equal(this.$().find('.job-number .label-align').text().trim(), '2', 'job number should be displayed');
-    assert.equal(this.$().find('.job-lang').text().trim(), 'JDK: openjdk6 Ruby: 2.1.2', 'langauges list should be displayed');
-    assert.equal(this.$().find('.job-env').text().trim(), 'TESTS=unit', 'env should be displayed');
-    assert.ok(this.$().find('.job-os').hasClass('linux'), 'OS class should be added for OS icon');
-    assert.equal(this.$().find('.job-duration').text().trim(), '1 min 40 sec', 'duration should be displayed');
+    assert.dom('.jobs-item').hasClass('passed', 'component should have a state class (passed)');
+    assert.dom('.job-number .label-align').hasText('2', 'job number should be displayed');
+    assert.dom('.job-lang').hasText('JDK: openjdk6 Ruby: 2.1.2', 'langauges list should be displayed');
+    assert.dom('.job-env').hasText('TESTS=unit', 'env should be displayed');
+    assert.dom('.job-os').hasClass('linux', 'OS class should be added for OS icon');
+    assert.dom('.job-duration').hasText('1 min 40 sec', 'duration should be displayed');
   });
 
   test('outputs info on not set properties', async function (assert) {
@@ -38,8 +38,8 @@ module('Integration | Component | jobs item', function (hooks) {
     this.job = job;
     await render(hbs`{{jobs-item job=job}}`);
 
-    assert.ok(this.$().find('.job-env').text().match(/no environment variables set/), 'a message for no env vars should be displayed');
-    assert.ok(this.$().find('.job-lang').text().match(/no language set/), 'a message about no language being set should be displayed');
+    assert.dom('.job-env').hasText(/no environment variables set/, 'a message for no env vars should be displayed');
+    assert.dom('.job-lang').hasText(/no language set/, 'a message about no language being set should be displayed');
   });
 
   test('when env is not set, gemfile is displayed in the env section', async function (assert) {

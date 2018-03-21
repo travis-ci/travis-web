@@ -58,11 +58,13 @@ module('Integration | Component | dashboard row', function (hooks) {
     this.set('repo', repo);
     await render(hbs`{{dashboard-row repo=repo}}`);
 
-    assert.ok(this.$().find('.dash-default').hasClass('passed'), 'Indicates right state of default branch last build');
-    assert.ok(this.$().find('.dash-last').hasClass('failed'), 'Indicates right state of current build');
-    // assert.equal(this.$().find('.dash-default .row-content a').text().trim(), 'master passed', 'Displays the default branch name and state');
-    assert.equal(this.$().find('.dash-last .row-content a').text().trim(), '#2 failed', 'Displays the number and state of the current build');
+    assert.dom('.dash-default').hasClass('passed', 'Indicates right state of default branch last build');
+    assert.dom('.dash-last').hasClass('failed', 'Indicates right state of current build');
+    // TODO: Remove this
+    // assert.dom('.dash-default .row-content a').text().trim(), 'master passed', 'Displays the default branch name and state');
+    assert.dom('.dash-last .row-content a').hasText('#2 failed', 'Displays the number and state of the current build');
 
+    // TODO: Clarify what coverage is missing here.
     // this.$('.dropup-list a:first-of-type').click();
 
     // wait().then(() => {
