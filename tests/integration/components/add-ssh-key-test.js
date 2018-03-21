@@ -6,18 +6,9 @@ import hbs from 'htmlbars-inline-precompile';
 import fillIn from '../../helpers/fill-in';
 import DS from 'ember-data';
 import { percySnapshot } from 'ember-percy';
-import { startMirage } from 'travis/initializers/ember-cli-mirage';
 
 module('Integration | Component | add ssh-key', function (hooks) {
   setupRenderingTest(hooks);
-
-  hooks.beforeEach(function () {
-    this.server = startMirage();
-  });
-
-  hooks.afterEach(function () {
-    this.server.shutdown();
-  });
 
   test('it adds an ssh key on submit', async function (assert) {
     assert.expect(6);
