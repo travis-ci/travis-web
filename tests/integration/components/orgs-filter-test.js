@@ -1,7 +1,7 @@
 import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, click, find } from '@ember/test-helpers';
+import { render, click } from '@ember/test-helpers';
 // import wait from 'ember-test-helpers/wait';
 import hbs from 'htmlbars-inline-precompile';
 
@@ -36,9 +36,9 @@ module('Integration | Component | orgs filter', function (hooks) {
     this.set('selectedOrg', selectedOrg);
     await render(hbs`{{orgs-filter orgs=orgs selected=selectedOrg }}`);
 
-    assert.equal(this.$('.option-list').children().length, 2, 'Lists right amount of accounts');
+    assert.dom('[data-test-org-filter-item]').exists({ count: 2}, 'Lists right amount of accounts');
     assert.dom('.option-display .label-align').hasText('All accounts', 'Displays right message if no account is selected');
-    assert.ok(!find('*').classList.contains('is-open'), 'Account list is not open per default');
+    assert.dom('*').doesNotHaveClass('is-open', 'Account list is not open per default');
     await click('.option-button .option-display');
 
     /*
