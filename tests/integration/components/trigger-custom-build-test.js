@@ -20,7 +20,7 @@ module('Integration | Component | trigger custom build', function (hooks) {
     this.set('repo', repo);
     await render(hbs`{{trigger-custom-build repo=repo}}`);
 
-    assert.equal(this.$().find('h2').text().trim(), 'Trigger a custom build\nBeta Feature');
-    assert.equal(this.$().find('select').val(), 'master');
+    assert.dom('h2').hasText('Trigger a custom build\nBeta Feature');
+    assert.dom('select').hasValue('master');
   });
 });

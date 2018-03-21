@@ -10,6 +10,6 @@ module('Integration | Component | oss usage digit', function (hooks) {
     this.set('digit', 1);
     await render(hbs`{{oss-usage-digit digit=digit}}`);
 
-    assert.equal(this.$().find('img').attr('src'), '../images/landing-page/oss-num-1.svg');
+    assert.dom('img').hasAttribute('src', '../images/landing-page/oss-num-1.svg');
   });
 });

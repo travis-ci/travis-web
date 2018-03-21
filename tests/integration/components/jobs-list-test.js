@@ -5,10 +5,10 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | jobs list', function(hooks) {
+module('Integration | Component | jobs list', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders a list of jobs', async function(assert) {
+  test('it renders a list of jobs', async function (assert) {
     const jobs = {
       jobs: [
         {
@@ -30,7 +30,7 @@ module('Integration | Component | jobs list', function(hooks) {
     assert.dom('.jobs-item:nth-of-type(2)').hasClass('failed', 'failed class should be applied to a job');
   });
 
-  test('it renders "Allowed Failures" version without a `required` property', async function(assert) {
+  test('it renders "Allowed Failures" version without a `required` property', async function (assert) {
     const jobs = {
       jobs: [
         { id: 1 }

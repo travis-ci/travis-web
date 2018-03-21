@@ -57,8 +57,8 @@ module('Integration | Component | jobs item', function (hooks) {
     this.job = job;
     await render(hbs`{{jobs-item job=job}}`);
 
-    assert.equal(this.$().find('.job-lang .label-align').text().trim(), 'Ruby: 2.1.2', 'langauges list should be displayed');
-    assert.equal(this.$().find('.job-env .label-align').text().trim(), 'Gemfile: foo/Gemfile', 'env should be displayed');
+    assert.dom('.job-lang .label-align').hasText('Ruby: 2.1.2', 'langauges list should be displayed');
+    assert.dom('.job-env .label-align').hasText('Gemfile: foo/Gemfile', 'env should be displayed');
   });
 
   test('when env is set, gemfile is displayed in the language section', async function (assert) {
@@ -76,7 +76,7 @@ module('Integration | Component | jobs item', function (hooks) {
     this.job = job;
     await render(hbs`{{jobs-item job=job}}`);
 
-    assert.equal(this.$().find('.job-lang .label-align').text().trim(), 'Ruby: 2.1.2 Gemfile: foo/Gemfile', 'Gemfile should be displayed in languages section');
-    assert.equal(this.$().find('.job-env .label-align').text().trim(), 'FOO=bar', 'env should be displayed');
+    assert.dom('.job-lang .label-align').hasText('Ruby: 2.1.2 Gemfile: foo/Gemfile', 'Gemfile should be displayed in languages section');
+    assert.dom('.job-env .label-align').hasText('FOO=bar', 'env should be displayed');
   });
 });

@@ -31,13 +31,13 @@ module('Integration | Component | requests item', function (hooks) {
     this.request = request;
     await render(hbs`{{requests-item request=request}}`);
 
-    assert.equal(this.$().find('.row-item:nth-of-type(2) strong').text().trim(), 'dev');
-    assert.equal(this.$().find('.row-item:nth-of-type(3) .label-align').text().trim(), 'a day ago');
-    assert.equal(this.$().find('.row-item:nth-of-type(3)').attr('title'), prettyDate([yesterday]));
-    assert.ok(this.$().find('.status-icon').hasClass('approved'), 'icon should have approved class');
-    assert.equal(this.$().find('.row-item:nth-child(4)').text().trim(), 'Bam!');
-    assert.equal(this.$().find('.row-item:nth-child(4) .emoji').length, 1, 'there should be an emoji icon in commit message');
-    return assert.equal(this.$().find('.row-item:nth-child(5) .label-align').text().trim(), '10', 'build number should be displayed');
+    assert.dom('.row-item:nth-of-type(2) strong').hasText('dev');
+    assert.dom('.row-item:nth-of-type(3) .label-align').hasText('a day ago');
+    assert.dom('.row-item:nth-of-type(3)').hasAttribute('title', `${prettyDate([yesterday])}`);
+    assert.dom('.status-icon').hasClass('approved', 'icon should have approved class');
+    assert.dom('.row-item:nth-child(4)').hasText('Bam!');
+    assert.dom('.row-item:nth-child(4) .emoji').exists('there should be an emoji icon in commit message');
+    return assert.dom('.row-item:nth-child(5) .label-align').hasText('10', 'build number should be displayed');
   });
 
   test('it renders PR number if a request is a PR', async function (assert) {
@@ -49,6 +49,6 @@ module('Integration | Component | requests item', function (hooks) {
 
     this.request = request;
     await render(hbs`{{requests-item request=request}}`);
-    return assert.equal(this.$().find('.row-item:nth-child(2) strong').text().trim(), '#20');
+    return assert.dom('.row-item:nth-child(2) strong').hasText('#20');
   });
 });
