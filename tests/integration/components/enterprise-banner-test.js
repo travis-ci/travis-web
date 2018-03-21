@@ -3,10 +3,10 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, settled } from '@ember/test-helpers';
 
-module('Integration | Component | enterprise banner', function(hooks) {
+module('Integration | Component | enterprise banner', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('renders trial banner unexpired', async function(assert) {
+  test('renders trial banner unexpired', async function (assert) {
     this.server.get('/v3/enterprise_license', (schema, response) => {
       return {
         'license_id': 'ad12345',
@@ -26,7 +26,7 @@ module('Integration | Component | enterprise banner', function(hooks) {
     });
   });
 
-  test('renders trial banner expired', async function(assert) {
+  test('renders trial banner expired', async function (assert) {
     this.server.get('/v3/enterprise_license', (schema, response) => {
       return {
         'license_id': 'ad12345',
@@ -46,7 +46,7 @@ module('Integration | Component | enterprise banner', function(hooks) {
     });
   });
 
-  test('renders paid banner 60 days from expiry', async function(assert) {
+  test('renders paid banner 60 days from expiry', async function (assert) {
     this.server.get('/v3/enterprise_license', (schema, response) => {
       return {
         'license_id': 'ad12345',
@@ -67,7 +67,7 @@ module('Integration | Component | enterprise banner', function(hooks) {
     });
   });
 
-  test('renders paid banner 30 days from expiry', async function(assert) {
+  test('renders paid banner 30 days from expiry', async function (assert) {
     this.server.get('/v3/enterprise_license', (schema, response) => {
       return {
         'license_id': 'ad12345',
@@ -88,7 +88,7 @@ module('Integration | Component | enterprise banner', function(hooks) {
     });
   });
 
-  test('renders paid banner 10 days from expiry', async function(assert) {
+  test('renders paid banner 10 days from expiry', async function (assert) {
     this.server.get('/v3/enterprise_license', (schema, response) => {
       return {
         'license_id': 'ad12345',
@@ -109,7 +109,7 @@ module('Integration | Component | enterprise banner', function(hooks) {
     });
   });
 
-  test('renders seats banner nearing excess', async function(assert) {
+  test('renders seats banner nearing excess', async function (assert) {
     this.server.get('/v3/enterprise_license', (schema, response) => {
       return {
         'license_id': 'ad12345',
@@ -129,7 +129,7 @@ module('Integration | Component | enterprise banner', function(hooks) {
     });
   });
 
-  test('renders seats banner exceeding', async function(assert) {
+  test('renders seats banner exceeding', async function (assert) {
     this.server.get('/v3/enterprise_license', (schema, response) => {
       return {
         'license_id': 'ad12345',
