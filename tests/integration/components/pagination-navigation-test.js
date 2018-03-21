@@ -27,10 +27,10 @@ module('Integration | Component | pagination navigation', function (hooks) {
     this.set('pagination', pageData);
     await render(hbs`{{pagination-navigation collection=pagination route="someroute"}}`);
 
-    assert.equal(this.$().find('a.pagination-button').length, 1, 'on the first page should have one navigation button');
-    assert.equal(this.$().find('a.pagination-button').text(), 'next', 'should have a next button on the first page');
-    assert.equal(this.$().find('.pagination-link').length, 4, 'should calculate with pages to display (here the first and last 2)');
-    assert.equal(this.$().find('li:nth-of-type(3)').text().trim(), '...', 'get ... page separator right');
+    assert.dom('a.pagination-button').exists('on the first page should have one navigation button');
+    assert.dom('a.pagination-button').hasText('next', 'should have a next button on the first page');
+    assert.dom('.pagination-link').exists({ count: 4 }, 'should calculate with pages to display (here the first and last 2)');
+    assert.dom('li:nth-of-type(3)').hasText('...', 'get ... page separator right');
   });
 
   // this caused duplication of pages
@@ -54,7 +54,7 @@ module('Integration | Component | pagination navigation', function (hooks) {
 
     this.set('pagination', pageData);
     await render(hbs`{{pagination-navigation collection=pagination inner=6 outer=2 route="someroute"}}`);
-    assert.equal(this.$().find('.pagination-link').length, 7, 'should calculate with pages to display');
+    assert.dom('.pagination-link').exists({ count: 7 }, 'should calculate with pages to display');
   });
 
   // this appeared after the first fix for ^ this
@@ -78,6 +78,6 @@ module('Integration | Component | pagination navigation', function (hooks) {
 
     this.set('pagination', pageData);
     await render(hbs`{{pagination-navigation collection=pagination inner=6 outer=2 route="someroute"}}`);
-    assert.equal(this.$().find('.pagination-navigation li:nth-of-type(4) a').text(), '3', 'should display page number 3');
+    assert.dom('.pagination-navigation li:nth-of-type(4) a').hasText('3', 'should display page number 3');
   });
 });
