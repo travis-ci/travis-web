@@ -23,9 +23,9 @@ module('Integration | Component | top bar', function (hooks) {
     stubService('broadcasts', Service.extend({ broadcasts: Object.freeze([]) }));
     await render(hbs`{{top-bar}}`);
 
-    assert.ok(this.$('header').text().match(/There are no broadcasts/));
+    assert.dom('header').hasText(/There are no broadcasts/);
 
     // renders user name
-    assert.ok(this.$('a.navigation-anchor').text().match(/Test User/));
+    assert.dom('[data-test-header-account-link]').hasText(/Test User/);
   });
 });

@@ -1,7 +1,7 @@
 import hbs from 'htmlbars-inline-precompile';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, find, findAll } from '@ember/test-helpers';
 
 module('Integration | Component | enterprise banner', function (hooks) {
   setupRenderingTest(hooks);
@@ -21,8 +21,8 @@ module('Integration | Component | enterprise banner', function (hooks) {
     await render(hbs`{{enterprise-banner}}`);
 
     settled().then(() => {
-      assert.ok(this.$('.enterprise-banner-trial').text().match(/Your trial license expires/));
-      assert.notOk(this.$('.enterprise-banner-trial').hasClass('alert'));
+      assert.ok(find('.enterprise-banner-trial').textContent.match(/Your trial license expires/));
+      assert.dom('.enterprise-banner-trial').hasNoClass('alert');
     });
   });
 
@@ -41,8 +41,8 @@ module('Integration | Component | enterprise banner', function (hooks) {
     await render(hbs`{{enterprise-banner}}`);
 
     settled().then(() => {
-      assert.ok(this.$('.enterprise-banner-trial').text().match(/Your trial license has expired/));
-      assert.notOk(this.$('.enterprise-banner-trial').hasClass('alert'));
+      assert.ok(find('.enterprise-banner-trial').textContent.match(/Your trial license has expired/));
+      assert.dom('.enterprise-banner-trial').hasNoClass('alert');
     });
   });
 
@@ -61,9 +61,9 @@ module('Integration | Component | enterprise banner', function (hooks) {
     await render(hbs`{{enterprise-banner}}`);
 
     settled().then(() => {
-      assert.ok(this.$('.enterprise-banner-license').text().match(/Your license expires 2 months from now/));
-      assert.ok(this.$('.enterprise-banner-license').hasClass('alert'));
-      assert.ok(this.$('.enterprise-banner-license button').length);
+      assert.ok(find('.enterprise-banner-license').textContent.match(/Your license expires 2 months from now/));
+      assert.dom('.enterprise-banner-license').hasClass('alert');
+      assert.ok(findAll('.enterprise-banner-license button').length);
     });
   });
 
@@ -82,9 +82,9 @@ module('Integration | Component | enterprise banner', function (hooks) {
     await render(hbs`{{enterprise-banner}}`);
 
     settled().then(() => {
-      assert.ok(this.$('.enterprise-banner-license').text().match(/Your license expires 26 days from now/));
-      assert.ok(this.$('.enterprise-banner-license').hasClass('alert'));
-      assert.ok(this.$('.enterprise-banner-license button').length);
+      assert.ok(find('.enterprise-banner-license').textContent.match(/Your license expires 26 days from now/));
+      assert.dom('.enterprise-banner-license').hasClass('alert');
+      assert.ok(findAll('.enterprise-banner-license button').length);
     });
   });
 
@@ -103,9 +103,9 @@ module('Integration | Component | enterprise banner', function (hooks) {
     await render(hbs`{{enterprise-banner}}`);
 
     settled().then(() => {
-      assert.ok(this.$('.enterprise-banner-license').text().match(/Your license expires 8 days from now/));
-      assert.ok(this.$('.enterprise-banner-license').hasClass('alert'));
-      assert.notOk(this.$('.enterprise-banner-license button').length);
+      assert.ok(find('.enterprise-banner-license').textContent.match(/Your license expires 8 days from now/));
+      assert.dom('.enterprise-banner-license').hasClass('alert');
+      assert.notOk(findAll('.enterprise-banner-license button').length);
     });
   });
 
@@ -124,8 +124,8 @@ module('Integration | Component | enterprise banner', function (hooks) {
     await render(hbs`{{enterprise-banner}}`);
 
     settled().then(() => {
-      assert.ok(this.$('.enterprise-banner-seats').text().match(/You’re approaching the maximum seats that your license permits/));
-      assert.ok(this.$('.enterprise-banner-seats').hasClass('alert'));
+      assert.ok(find('.enterprise-banner-seats').textContent.match(/You’re approaching the maximum seats that your license permits/));
+      assert.dom('.enterprise-banner-seats').hasClass('alert');
     });
   });
 
@@ -144,8 +144,8 @@ module('Integration | Component | enterprise banner', function (hooks) {
     await render(hbs`{{enterprise-banner}}`);
 
     settled().then(() => {
-      assert.ok(this.$('.enterprise-banner-seats').text().match(/You’ve exceeded the maximum seats that your license permits/));
-      assert.ok(this.$('.enterprise-banner-seats').hasClass('alert'));
+      assert.ok(find('.enterprise-banner-seats').textContent.match(/You’ve exceeded the maximum seats that your license permits/));
+      assert.dom('.enterprise-banner-seats').hasClass('alert');
     });
   });
 });

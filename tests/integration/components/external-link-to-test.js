@@ -15,12 +15,11 @@ module('Integration | Component | external link to', function (hooks) {
 
     await render(hbs`{{external-link-to href=href content=content}}`);
 
-    assert.equal(this.$().text().trim(), content);
-    assert.equal(this.$('a').attr('href'), href, 'Sets href correctly');
-
-    assert.equal(this.$('a').attr('target'), '_blank', 'Opens up the link in a new tab');
+    assert.dom('a').hasAttribute('href', href, 'Sets href correctly');
+    assert.dom('a').hasAttribute('target', '_blank', 'Opens up the link in a new tab');
+    assert.dom('a').hasText(content);
     // eslint-disable-next-line
-    assert.equal(this.$('a').attr('rel'), 'noopener noreferrer', 'Mitigates the security vulnerability discussed in https://www.jitbit.com/alexblog/256-targetblank---the-most-underestimated-vulnerability-ever/');
+    assert.dom('a').hasAttribute('rel', 'noopener noreferrer', 'Mitigates the security vulnerability discussed in https://www.jitbit.com/alexblog/256-targetblank---the-most-underestimated-vulnerability-ever/');
 
     await render(hbs`
       {{#external-link-to href=href}}
@@ -28,10 +27,10 @@ module('Integration | Component | external link to', function (hooks) {
       {{/external-link-to}}
     `);
 
-    assert.equal(this.$('a').attr('href'), href, 'Sets href correctly');
-    assert.equal(this.$('span.foobar').text().trim(), 'FOOBAR');
-    assert.equal(this.$('a').attr('target'), '_blank', 'Opens up the link in a new tab');
+    assert.dom('a').hasAttribute('href', href, 'Sets href correctly');
+    assert.dom('a').hasAttribute('target', '_blank', 'Opens up the link in a new tab');
+    assert.dom('span.foobar').hasText('FOOBAR');
     // eslint-disable-next-line
-    assert.equal(this.$('a').attr('rel'), 'noopener noreferrer', 'Mitigates the security vulnerability discussed in https://www.jitbit.com/alexblog/256-targetblank---the-most-underestimated-vulnerability-ever/');
+    assert.dom('a').hasAttribute('rel', 'noopener noreferrer', 'Mitigates the security vulnerability discussed in https://www.jitbit.com/alexblog/256-targetblank---the-most-underestimated-vulnerability-ever/');
   });
 });

@@ -11,7 +11,7 @@ module('Integration | Component | loading indicator', function (hooks) {
 
     await render(hbs`{{loading-indicator center=center}}`);
 
-    assert.ok(this.$('span').hasClass('loading-indicator'), 'component has loading indicator class');
-    assert.ok(this.$('div').hasClass('loading-container'), 'indicator gets parent class if centered flag is given');
+    assert.dom('span').hasClass('loading-indicator', 'component has loading indicator class');
+    assert.dom('div.loading-container').exists('indicator gets parent class if centered flag is given');
   });
 });

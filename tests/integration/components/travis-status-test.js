@@ -20,7 +20,7 @@ module('Integration | Component | travis-status', function (hooks) {
     await render(hbs`{{travis-status}}`);
 
     return settled().then(() => {
-      assert.ok(this.$('.status-circle').hasClass('none'), 'status class is set on .status-circle');
+      assert.dom('.status-circle').hasClass('none', 'status class is set on .status-circle');
     });
   });
 
@@ -32,7 +32,7 @@ module('Integration | Component | travis-status', function (hooks) {
     await render(hbs`{{travis-status}}`);
 
     return settled().then(() => {
-      assert.ok(this.$('.status-circle').hasClass('unknown'), 'unknown status class is set on error');
+      assert.dom('.status-circle').hasClass('unknown', 'unknown status class is set on error');
     });
   });
 });

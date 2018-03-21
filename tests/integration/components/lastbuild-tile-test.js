@@ -19,7 +19,7 @@ module('Integration | Component | lastbuild tile', function (hooks) {
 
     await render(hbs`{{lastbuild-tile build=build}}`);
 
-    assert.equal(this.$('.label-align').text().trim(), '#222', 'shows the right build number');
-    assert.equal(this.$('li').hasClass('passed'), true, 'has class according to build state');
+    assert.dom('.label-align').hasText('#222', 'shows the right build number');
+    assert.dom('li').hasClass('passed', 'has class according to build state');
   });
 });

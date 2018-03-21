@@ -11,6 +11,6 @@ module('helper:obfuscated-chars', function (hooks) {
 
     await render(hbs`{{obfuscated-chars inputValue}}`);
 
-    assert.equal(this.$().text().trim(), '••••••••••••');
+    assert.dom('div.ember-view').containsText('••••••••••••');
   });
 });

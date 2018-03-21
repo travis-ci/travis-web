@@ -54,7 +54,7 @@
           </button>
         {{/if}}
         {{#if auth.signedIn}}
-          {{#link-to "account" user.login class="navigation-anchor signed-in"}}
+          {{#link-to "account" user.login data-test-header-account-link class="navigation-anchor signed-in"}}
             {{userName}}
             {{user-avatar url=user.avatarUrl name=user.fullName size=40}}
           {{/link-to}}

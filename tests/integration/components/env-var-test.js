@@ -20,8 +20,8 @@ module('Integration | Component | env-var', function (hooks) {
 
     await render(hbs`{{env-var envVar=envVar}}`);
 
-    assert.equal(this.$('.env-var-name').text(), 'foo', 'name should be displayed');
-    assert.equal(this.$('.env-var-value input').val(), '••••••••••••••••', 'value should be hidden');
+    assert.dom('.env-var-name').hasText('foo', 'name should be displayed');
+    assert.dom('.env-var-value input').hasValue('••••••••••••••••', 'value should be hidden');
   });
 
   test('it renders an env-var with public value', async function (assert) {
@@ -36,8 +36,8 @@ module('Integration | Component | env-var', function (hooks) {
 
     await render(hbs`{{env-var envVar=envVar}}`);
 
-    assert.equal(this.$('.env-var-name').text(), 'foo', 'name should be displayed');
-    assert.equal(this.$('.env-var-value input').val(), 'bar', 'value should not be hidden');
+    assert.dom('.env-var-name').hasText('foo', 'name should be displayed');
+    assert.dom('.env-var-value input').hasValue('bar', 'value should not be hidden');
   });
 
   // test('it deletes an env-var', function(assert) {

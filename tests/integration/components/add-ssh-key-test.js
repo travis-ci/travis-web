@@ -1,7 +1,7 @@
 import { run } from '@ember/runloop';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, click, findAll } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import fillIn from '../../helpers/fill-in';
 import DS from 'ember-data';
@@ -34,7 +34,7 @@ module('Integration | Component | add ssh-key', function (hooks) {
     fillIn(this.$('.ssh-description'), 'FOO');
     fillIn(this.$('.ssh-value'), 'bar');
 
-    this.$('.form-submit').click();
+    await click('.form-submit');
 
     assert.equal(sshKey.get('description'), 'FOO', 'description should be set');
     assert.equal(sshKey.get('value'), 'bar', 'value should be set');
@@ -71,13 +71,13 @@ module('Integration | Component | add ssh-key', function (hooks) {
     fillIn(this.$('.ssh-description'), 'FOO');
     fillIn(this.$('.ssh-value'), '');
 
-    this.$('.form-submit').click();
+    await click('.form-submit');
 
-    assert.ok(this.$('.form-error-message').length, 'there is an error message if value is blank');
+    assert.ok(findAll('.form-error-message').length, 'there is an error message if value is blank');
 
     percySnapshot(assert);
 
     fillIn(this.$('.ssh-value'), 'bar');
-    assert.ok(!this.$('.form-error-message').length, 'error message is removed if value is filled in');
+    assert.ok(!findAll('.form-error-message').length, 'error message is removed if value is filled in');
   });
 });

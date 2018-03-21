@@ -2,7 +2,7 @@ import { isBlank } from '@ember/utils';
 import { run } from '@ember/runloop';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, click, find, findAll } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import fillIn from '../../helpers/fill-in';
 import DS from 'ember-data';
@@ -29,7 +29,7 @@ module('Integration | Component | add env-var', function (hooks) {
     fillIn(this.$('.env-name'), 'FOO');
     fillIn(this.$('.env-value'), 'bar');
 
-    this.$('.form-submit').click();
+    await click('.form-submit');
 
     assert.equal(store.peekAll('envVar').get('length'), 1, 'env var should be added to store');
 
@@ -49,19 +49,19 @@ module('Integration | Component | add env-var', function (hooks) {
 
     await render(hbs`{{add-env-var repo=repo}}`);
 
-    this.$('.env-name').val();
-    assert.ok(isBlank(this.$('.env-name').val()), 'precond: name input should be empty');
+    find('.env-name').value;
+    assert.ok(isBlank(find('.env-name').value), 'precond: name input should be empty');
 
-    this.$('.form-submit').click();
+    await click('.form-submit');
 
-    assert.ok(this.$('.form-error-message').length, 'the error message should be displayed');
+    assert.ok(findAll('.form-error-message').length, 'the error message should be displayed');
 
     percySnapshot(assert);
 
     fillIn(this.$('.env-name'), 'FOO');
     fillIn(this.$('.env-value'), 'bar');
 
-    assert.ok(!this.$('.form-error-message').length, 'the error message should be removed after value is changed');
+    assert.ok(!findAll('.form-error-message').length, 'the error message should be removed after value is changed');
   });
 
   test('it does not show an error when changing the public switch', async function (assert) {
@@ -69,9 +69,9 @@ module('Integration | Component | add env-var', function (hooks) {
 
     await render(hbs`{{add-env-var repo=repo}}`);
 
-    this.$('.switch-inner').click();
+    await click('.switch-inner');
 
-    assert.notOk(this.$('.form-error-message').length, 'there should be no error message');
+    assert.notOk(findAll('.form-error-message').length, 'there should be no error message');
   });
 
   test('it adds a public env var on submit', async function (assert) {
@@ -93,9 +93,9 @@ module('Integration | Component | add env-var', function (hooks) {
     fillIn(this.$('.env-name'), 'FOO');
     fillIn(this.$('.env-value'), 'bar');
 
-    this.$('.switch').click();
+    await click('.switch');
 
-    this.$('.form-submit').click();
+    await click('.form-submit');
 
     assert.equal(store.peekAll('envVar').get('length'), 1, 'env var should be added to store');
 

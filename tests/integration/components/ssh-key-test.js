@@ -1,9 +1,8 @@
-import { isEmpty } from '@ember/utils';
 import { run } from '@ember/runloop';
 import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { percySnapshot } from 'ember-percy';
 
@@ -22,8 +21,8 @@ module('Integration | Component | ssh-key', function (hooks) {
     this.set('key', key);
     await render(hbs`{{ssh-key key=key sshKeyDeleted="sshKeyDeleted"}}`);
 
-    assert.equal(this.$('.ssh-key-name span').text().trim(), 'Default', 'should display that no custom key is set');
-    assert.equal(this.$('.ssh-key-value span').text().trim(), 'fingerprint', 'should display default key fingerprint');
+    assert.dom('.ssh-key-name span').hasText('Default', 'should display that no custom key is set');
+    assert.dom('.ssh-key-value span').hasText('fingerprint', 'should display default key fingerprint');
     percySnapshot(assert);
   });
 
@@ -40,8 +39,8 @@ module('Integration | Component | ssh-key', function (hooks) {
     this.set('key', key);
     await render(hbs`{{ssh-key key=key sshKeyDeleted="sshKeyDeleted"}}`);
 
-    assert.equal(this.$('.ssh-key-name span').text().trim(), 'fookey', 'should display key description');
-    assert.equal(this.$('.ssh-key-value span').text().trim(), 'somethingthing', 'should display custom key fingerprint');
+    assert.dom('.ssh-key-name span').hasText('fookey', 'should display key description');
+    assert.dom('.ssh-key-value span').hasText('somethingthing', 'should display custom key fingerprint');
   });
 
   test('it deletes a custom key if permissions are right', async function (assert) {
@@ -58,7 +57,7 @@ module('Integration | Component | ssh-key', function (hooks) {
     await render(hbs`{{ssh-key key=key sshKeyDeleted="sshKeyDeleted" pushAccess=true}}`);
     this.actions.sshKeyDeleted = function () {};
 
-    this.$('.ssh-key-action button').click();
+    await click('.ssh-key-action button');
 
     assert.ok(key.get('isDeleted'), 'key should be deleted');
     percySnapshot(assert);
@@ -80,6 +79,6 @@ module('Integration | Component | ssh-key', function (hooks) {
     this.set('key', key);
     await render(hbs`{{ssh-key key=key sshKeyDeleted="sshKeyDeleted" pushAccess=false}}`);
 
-    assert.ok(isEmpty(this.$('.ssh-key-action').find('a')), 'delete link should not be displayed');
+    assert.dom('.ssh-key-action a').doesNotExist('delete link should not be displayed');
   });
 });

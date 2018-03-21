@@ -11,8 +11,8 @@ module('Integration | Component | subscription status banner', function (hooks) 
       hbs`{{subscription-status-banner color='green' message='Ohai' billingLinkText='Click' billingUrl='lol'}}`
     );
 
-    assert.ok(this.$().find('p').hasClass('notice-banner--green'), 'it generates the correct class name');
-    assert.equal(this.$().text().trim(), 'Ohai Click', 'it renders correct message and link text');
-    assert.equal(this.$().find('a').attr('href'), 'lol', 'it renders the correct href');
+    assert.dom('.notice-banner--green').exists('it generates the correct class name');
+    assert.dom('p').hasText('Ohai Click', 'it renders correct message and link text');
+    assert.dom('a').hasAttribute('href', 'lol', 'it renders the correct href');
   });
 });
