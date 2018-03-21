@@ -1,7 +1,7 @@
 import { run } from '@ember/runloop';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, click, findAll } from '@ember/test-helpers';
+import { render, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import fillIn from '../../helpers/fill-in';
 import DS from 'ember-data';
@@ -73,11 +73,11 @@ module('Integration | Component | add ssh-key', function (hooks) {
 
     await click('.form-submit');
 
-    assert.ok(findAll('.form-error-message').length, 'there is an error message if value is blank');
+    assert.dom('.form-error-message').exists('there is an error message if value is blank');
 
     percySnapshot(assert);
 
     fillIn(this.$('.ssh-value'), 'bar');
-    assert.ok(!findAll('.form-error-message').length, 'error message is removed if value is filled in');
+    assert.dom('.form-error-message').doesNotExist('error message is removed if value is filled in');
   });
 });

@@ -29,7 +29,7 @@ module('Integration | Component | status images', function (hooks) {
 
     let selectBranch = this.$('.form-pair:first-of-type select');
     let outputTextarea = this.$('.form-pair textarea');
-    assert.equal(this.$().find('h3').text().trim(), 'Status Image');
+    assert.dom('h3').hasText('Status Image');
     assert.equal(selectBranch.val(), 'not-actually-master');
     assert.ok(outputTextarea.val().match(/branch=not-actually-master/));
 
