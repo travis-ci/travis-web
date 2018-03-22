@@ -1,6 +1,6 @@
 <p class="flash-message">
   {{#if flash.icon}}{{svg-jar flash.icon}}{{/if}}
-  {{#if flash.preamble}}<span class='preamble'>{{flash.preamble}}
+  {{#if flash.preamble}}<span data-test-flash-message-preamble class='preamble'>{{flash.preamble}}
     </span>{{/if}}<span data-test-flash-message-text class='message'>{{{flash.message}}}</span>
 </p>
 {{#if flash.closeButton}}
