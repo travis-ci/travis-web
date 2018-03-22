@@ -1,15 +1,14 @@
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { visit, click } from '@ember/test-helpers';
-import sidebarPage from 'travis/tests/pages/sidebar';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { enableFeature } from 'ember-feature-flags/test-support';
 import { percySnapshot } from 'ember-percy';
 
-module('Acceptance | home/sidebar tabs', function(hooks) {
+module('Acceptance | home/sidebar tabs', function (hooks) {
   setupApplicationTest(hooks);
 
-  hooks.beforeEach(function() {
+  hooks.beforeEach(function () {
     const currentUser = server.create('user', {
       name: 'User Name',
       login: 'user-login'
