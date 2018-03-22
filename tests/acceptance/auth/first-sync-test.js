@@ -5,7 +5,7 @@ import signInUser from 'travis/tests/helpers/sign-in-user';
 
 moduleForAcceptance('Acceptance | auth/first sync', {
   beforeEach() {
-    this.currentUser = server.create('user', { is_syncing: true, synced_at: null });
+    this.currentUser = server.create('user', 'syncing');
     signInUser(this.currentUser);
   }
 });
