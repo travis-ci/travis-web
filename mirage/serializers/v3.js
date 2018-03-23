@@ -139,7 +139,13 @@ export default JSONAPISerializer.extend({
   },
 
   getAttributes(type, representation, request) {
-    let attributes = apiSpec.resources[type].representations[representation],
+    let resource = apiSpec.resources[type];
+
+    if (!resource) {
+      throw new Error(`Unable to find API spec for resource ${type}`);
+    }
+
+    let attributes = resource.representations[representation],
       include = request.queryParams.include;
 
     if (include) {
