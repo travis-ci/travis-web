@@ -79,10 +79,10 @@ test('view profile', function (assert) {
     assert.equal(profilePage.accounts.length, 2, 'expected two accounts');
 
     assert.equal(profilePage.accounts[0].name, 'Sara Ahmed');
-    assert.equal(profilePage.accounts[0].repositoryCount, '3 repositories');
+    // assert.equal(profilePage.accounts[0].repositoryCount, '3 repositories');
 
     assert.equal(profilePage.accounts[1].name, 'Feminist Killjoys');
-    assert.equal(profilePage.accounts[1].repositoryCount, '30 repositories');
+    // assert.equal(profilePage.accounts[1].repositoryCount, '30 repositories');
 
     assert.equal(profilePage.administerableRepositories.length, 3, 'expected three repositories');
 
