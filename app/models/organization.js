@@ -119,7 +119,7 @@ export default Model.extend({
     }
   },
 
-  type: 'org',
+  type: 'organization',
 
   sync() {
     const callback = () => { this.setWithSession('isSyncing', true); };

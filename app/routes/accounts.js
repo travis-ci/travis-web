@@ -42,7 +42,7 @@ export default TravisRoute.extend({
       return models.concat(this.store.push({
         data: orgs.organizations.map(org => ({
           id: org.id,
-          type: 'org',
+          type: 'organization',
           attributes: {
             login: org.login,
             name: org.name,
@@ -58,7 +58,7 @@ export default TravisRoute.extend({
   setupController(controller, model) {
     let orgs, user;
     user = model.filterBy('type', 'user')[0];
-    orgs = model.filterBy('type', 'org');
+    orgs = model.filterBy('type', 'organization');
     controller.set('user', user);
     controller.set('organizations', orgs);
     return controller.set('model', model);
