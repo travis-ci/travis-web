@@ -121,7 +121,7 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
 
   reloadLog() {
     this.clearLog();
-    return this.get('log').fetch();
+    return this.get('log.fetchTask').perform();
   },
 
   restart() {
