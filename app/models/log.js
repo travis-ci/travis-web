@@ -49,7 +49,7 @@ export default EmberObject.extend({
     //       switch to API V3
     const response = yield fetch(url, {
       headers: new Headers(headers)
-    })
+    });
     let json;
     if (response.ok) {
       json = yield response.json();
