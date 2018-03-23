@@ -12,7 +12,6 @@ export default EmberObject.extend({
   @service auth: null,
 
   version: 0,
-  isLoaded: false,
   length: 0,
   @gt('parts.length', 0) hasContent: null,
 
@@ -85,14 +84,12 @@ export default EmberObject.extend({
   },
 
   loadParts(parts) {
-    this.get('isLoaded', false);
     let i, len, part;
     this.debug('log model: load parts');
     for (i = 0, len = parts.length; i < len; i++) {
       part = parts[i];
       this.append(part);
     }
-    return this.set('isLoaded', true);
   },
 
   debug(message) {
