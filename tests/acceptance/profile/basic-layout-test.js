@@ -14,7 +14,7 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
     signInUser(currentUser);
 
     // create organization
-    server.create('account', {
+    server.create('organization', {
       name: 'Feminist Killjoys',
       type: 'organization',
       login: 'killjoys',
