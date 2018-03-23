@@ -163,18 +163,6 @@ export default Component.extend({
     }
   },
 
-  didUpdateAttrs() {
-    let oldJob = this.get('_oldJob');
-    let newJob = this.get('job');
-
-    if (oldJob && (oldJob.get('id') != newJob.get('id'))) {
-      this.teardownLog(oldJob.get('log'));
-      return this.createEngine(newJob.get('log'));
-    }
-
-    this.set('_oldJob', this.get('job'));
-  },
-
   unfoldHighlight() {
     return this.lineSelector.unfoldLines();
   },
