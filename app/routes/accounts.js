@@ -1,8 +1,5 @@
 import TravisRoute from 'travis/routes/basic';
-import { fetch, Headers } from 'fetch';
 import { hash } from 'rsvp';
-import { service } from 'ember-decorators/service';
-import config from 'travis/config/environment';
 
 export default TravisRoute.extend({
   model() {
