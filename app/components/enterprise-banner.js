@@ -111,13 +111,13 @@ export default Component.extend({
   checkSeatsBanner(almostExceeding, exceeding) {
     let closed = this.get('storage').getItem('seatsBannerClosed');
     if (exceeding) {
-        return true;
+      return true;
     } else if (almostExceeding && !closed) {
-        return true;
+      return true;
     } else {
-        return false;
+      return false;
     }
-},
+  },
 
   @computed('expiresSoon')
   licenseClass(expiresSoon) {
