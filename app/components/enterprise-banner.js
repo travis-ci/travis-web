@@ -36,7 +36,7 @@ export default Component.extend({
         this.get('storage').removeItem(this.get('key'));
       }
       if (!this.get('almostExceeding') && !this.get('exceeding')) {
-        this.get('storage').removeItem(this.get('seatsBannerClosed'));
+        this.get('storage').removeItem('seatsBannerClosed');
       }
     });
   },
