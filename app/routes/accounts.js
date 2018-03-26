@@ -5,42 +5,13 @@ import { service } from 'ember-decorators/service';
 import config from 'travis/config/environment';
 
 export default TravisRoute.extend({
-  @service auth: null,
-
   model() {
-    // FIXME much of this is taken directly from models/log
-
-    let userUrl = `${config.apiEndpoint}/user`;
-    let orgsUrl = `${config.apiEndpoint}/orgs`;
-
-    let headers = new Headers({
-      'Authorization': `token ${this.get('auth.token')}`,
-      'Travis-API-Version': '3'
-    });
-
     // FIXME this ignores errors from either endpoint
     return hash({
-      user: fetch(userUrl, {headers}).then(response => response.json()),
+      // FIXME is this an acceptable way to query the singleton endpoint?
+      user: this.store.queryRecord('user', { current: true }),
       orgs: this.store.paginated('organization', {}, { live: false })
-    }).then(({user, orgs}) => {
-      let models = [];
-
-      models.push(this.store.push({
-        data: [{
-          id: user.id,
-          type: 'user',
-          attributes: {
-            login: user.login,
-            name: user.name,
-            avatarUrl: user.avatar_url,
-            isSyncing: user.is_syncing,
-            syncedAt: user.synced_at
-          }
-        }]
-      })[0]);
-
-      return models.concat(orgs.toArray());
-    });
+    }).then(({user, orgs}) => [user].concat(orgs.toArray()));
   },
 
   setupController(controller, model) {
