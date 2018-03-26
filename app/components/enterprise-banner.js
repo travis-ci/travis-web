@@ -101,10 +101,23 @@ export default Component.extend({
     return (isPaid && check);
   },
 
-  @computed('isPaid', 'almostExceedingSeats', 'exceedingSeats')
-  showSeatsBanner(isPaid, almostExceeding, exceeding) {
-    return (isPaid && (almostExceeding || exceeding));
+@computed('isPaid', 'checkSeatsBanner')
+  showSeatsBanner(isPaid, check) {
+    return (isPaid && check);
   },
+
+
+@computed('almostExceedingSeats', 'exceedingSeats')
+  checkSeatsBanner(almostExceeding, exceeding) {
+    let closed = this.get('storage').getItem('seatsBannerClosed');
+    if (exceeding) {
+        return true;
+    } else if (almostExceeding && !closed) {
+        return true;
+    } else {
+        return false;
+    }
+},
 
   @computed('expiresSoon')
   licenseClass(expiresSoon) {
@@ -119,6 +132,10 @@ export default Component.extend({
     closeLicenseBanner() {
       this.get('storage').setItem(this.get('key'), this.get('daysUntilExpiry'));
       this.set('showLicenseBanner', false);
+    },
+    closeSeatsBanner() {
+      this.get('storage').setItem('seatsBannerClosed', true);
+      this.set('showSeatsBanner', false);
     }
   }
 });
