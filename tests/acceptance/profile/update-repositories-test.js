@@ -5,8 +5,8 @@ import profilePage from 'travis/tests/pages/profile';
 moduleForAcceptance('Acceptance | profile/update-repositories', {
   beforeEach() {
     const currentUser = server.create('user', {
-      name: 'Sara Ahmed',
-      login: 'feministkilljoy',
+      name: 'User Name',
+      login: 'user-login',
       repos_count: 3,
     });
 
@@ -14,17 +14,17 @@ moduleForAcceptance('Acceptance | profile/update-repositories', {
 
     // create organization
     server.create('account', {
-      name: 'Feminist Killjoys',
+      name: 'Org Name',
       type: 'organization',
-      login: 'killjoys',
+      login: 'org-login',
       repos_count: 30,
     });
 
     // create active repository
     server.create('repository', {
-      name: 'living-a-feminist-life',
+      name: 'repository-name',
       owner: {
-        login: 'feministkilljoy',
+        login: 'user-login',
       },
       active: true,
       permissions: {
@@ -34,9 +34,9 @@ moduleForAcceptance('Acceptance | profile/update-repositories', {
 
     // create inactive repository
     server.create('repository', {
-      name: 'willful-subjects',
+      name: 'yet-another-repository-name',
       owner: {
-        login: 'feministkilljoy',
+        login: 'user-login',
       },
       active: false,
       permissions: {
@@ -46,9 +46,9 @@ moduleForAcceptance('Acceptance | profile/update-repositories', {
 
     // create repository without admin permissions
     server.create('repository', {
-      name: 'affect-theory-reader',
+      name: 'other-repository-name',
       owner: {
-        login: 'feministkilljoy',
+        login: 'user-login',
       },
       active: true,
       permissions: {
@@ -71,7 +71,7 @@ moduleForAcceptance('Acceptance | profile/update-repositories', {
 });
 
 test('updating repository', function (assert) {
-  profilePage.visit({ username: 'feministkilljoy' });
+  profilePage.visit({ username: 'user-login' });
 
   andThen(() => {
     profilePage.administerableRepositories[0].toggle();

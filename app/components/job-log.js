@@ -1,5 +1,6 @@
 import Component from '@ember/component';
 import { alias } from 'ember-decorators/object/computed';
+import { task } from 'ember-concurrency';
 
 export default Component.extend({
   @alias('job.log') log: null,
@@ -11,12 +12,12 @@ export default Component.extend({
     let newJob = this.get('job');
 
     if (newJob !== oldJob) {
-      if (newJob) {
-        this.setupLog(newJob);
-      }
-
       if (oldJob) {
         this.teardownLog(oldJob);
+      }
+
+      if (newJob) {
+        this.get('setupLog').perform(newJob);
       }
     }
 
@@ -27,11 +28,13 @@ export default Component.extend({
     job.unsubscribe();
   },
 
-  setupLog(job) {
+  setupLog: task(function* (job) {
     this.set('error', false);
-    job.get('log').fetch().then(() => { }, () => {
+    try {
+      yield job.get('log.fetchTask').perform();
+    } catch (e) {
       this.set('error', true);
-    });
+    }
     job.subscribe();
-  }
+  }),
 });

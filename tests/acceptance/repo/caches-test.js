@@ -5,14 +5,14 @@ import page from 'travis/tests/pages/caches';
 moduleForAcceptance('Acceptance | repo caches', {
   beforeEach() {
     const currentUser = server.create('user', {
-      name: 'Sara Ahmed',
-      login: 'feministkilljoy'
+      name: 'User Name',
+      login: 'user-login'
     });
 
     signInUser(currentUser);
 
     const repository = server.create('repository', {
-      slug: 'killjoys/living-a-feminist-life'
+      slug: 'org-login/repository-name'
     });
 
     this.repository = repository;
@@ -36,7 +36,7 @@ moduleForAcceptance('Acceptance | repo caches', {
 });
 
 test('view and delete caches', function (assert) {
-  page.visit({ organization: 'killjoys', repo: 'living-a-feminist-life' });
+  page.visit({ organization: 'org-login', repo: 'repository-name' });
 
   andThen(() => {
     assert.equal(page.pushCaches.length, 1, 'expected one push cache');

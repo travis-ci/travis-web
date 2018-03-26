@@ -6,8 +6,8 @@ import config from 'travis/config/environment';
 moduleForAcceptance('Acceptance | profile/view token', {
   beforeEach() {
     const currentUser = server.create('user', {
-      name: 'Sara Ahmed',
-      login: 'feministkilljoy',
+      name: 'User Name',
+      login: 'user-login',
       repos_count: 3
     });
 
@@ -15,16 +15,16 @@ moduleForAcceptance('Acceptance | profile/view token', {
 
     // create organization
     server.create('account', {
-      name: 'Feminist Killjoys',
+      name: 'Org Name',
       type: 'organization',
-      login: 'killjoys',
+      login: 'org-login',
       repos_count: 30
     });
   }
 });
 
 test('view token', function (assert) {
-  profilePage.visit({ username: 'feministkilljoy' });
+  profilePage.visit({ username: 'user-login' });
 
   andThen(() => {
     assert.equal(profilePage.token.obfuscatedCharacters, '••••••••••••••••••••', 'expected token to be obfuscated by default');
@@ -39,7 +39,7 @@ test('view token', function (assert) {
 });
 
 test('copy token', function (assert) {
-  profilePage.visit({ username: 'feministkilljoy' });
+  profilePage.visit({ username: 'user-login' });
 
   andThen(() => {
     assert.equal(profilePage.token.obfuscatedCharacters, '••••••••••••••••••••', 'expected token to be obfuscated by default');
