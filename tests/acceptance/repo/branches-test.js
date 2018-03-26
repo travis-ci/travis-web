@@ -5,28 +5,28 @@ import branchesPage from 'travis/tests/pages/branches';
 moduleForAcceptance('Acceptance | repo branches', {
   beforeEach() {
     this.currentUser = server.create('user', {
-      name: 'Sara Ahmed',
-      login: 'feministkilljoy',
+      name: 'User Name',
+      login: 'user-login',
       repos_count: 3
     });
 
     signInUser(this.currentUser);
 
     const gitUser = server.create('git-user', {
-      name: 'Sara Ahmed'
+      name: 'User Name'
     });
 
     // create organization
     server.create('account', {
-      name: 'Feminist Killjoys',
+      name: 'Org Name',
       type: 'organization',
-      login: 'killjoys',
+      login: 'org-login',
       repos_count: 30
     });
 
     const repository = server.create('repository', {
-      name: 'living-a-feminist-life',
-      slug: 'killjoys/living-a-feminist-life'
+      name: 'repository-name',
+      slug: 'org-login/repository-name'
     });
 
     const repoId = parseInt(repository.id);
@@ -158,10 +158,10 @@ moduleForAcceptance('Acceptance | repo branches', {
 });
 
 test('view branches', function (assert) {
-  branchesPage.visit({ organization: 'killjoys', repo: 'living-a-feminist-life' });
+  branchesPage.visit({ organization: 'org-login', repo: 'repository-name' });
 
   andThen(() => {
-    assert.equal(document.title, 'killjoys/living-a-feminist-life - Travis CI');
+    assert.equal(document.title, 'org-login/repository-name - Travis CI');
     assert.ok(branchesPage.branchesTabActive, 'Branches tab is active when visiting /org/repo/branches');
   });
 
@@ -171,7 +171,7 @@ test('view branches', function (assert) {
     assert.equal(branchesPage.defaultBranch.buildCount, '3 builds');
     assert.equal(branchesPage.defaultBranch.request, '1919 passed');
     assert.equal(branchesPage.defaultBranch.commitSha, '1234567');
-    assert.equal(branchesPage.defaultBranch.committer, 'Sara Ahmed');
+    assert.equal(branchesPage.defaultBranch.committer, 'User Name');
     assert.equal(branchesPage.defaultBranch.commitDate, 'about a year ago');
 
     const buildTiles = branchesPage.defaultBranch.buildTiles;

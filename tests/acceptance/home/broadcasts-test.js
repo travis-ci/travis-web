@@ -6,15 +6,15 @@ import topPage from 'travis/tests/pages/top';
 moduleForAcceptance('Acceptance | broadcasts', {
   beforeEach() {
     const currentUser = server.create('user', {
-      name: 'Sara Ahmed',
-      login: 'feministkilljoy'
+      name: 'User Name',
+      login: 'user-login'
     });
 
     signInUser(currentUser);
 
     // create active repo
     server.create('repository', {
-      slug: 'killjoys/living-a-feminist-life'
+      slug: 'org-login/repository-name'
     });
   }
 });

@@ -6,8 +6,8 @@ import topPage from 'travis/tests/pages/top';
 moduleForAcceptance('Acceptance | dashboard/repositories', {
   beforeEach() {
     const currentUser = server.create('user', {
-      name: 'Sara Ahmed',
-      login: 'feministkilljoy',
+      name: 'User Name',
+      login: 'user-login',
       repos_count: 3
     });
 

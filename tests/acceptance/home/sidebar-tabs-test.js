@@ -5,20 +5,20 @@ import sidebarPage from 'travis/tests/pages/sidebar';
 moduleForAcceptance('Acceptance | home/sidebar tabs', {
   beforeEach() {
     const currentUser = server.create('user', {
-      name: 'Sara Ahmed',
-      login: 'feministkilljoy'
+      name: 'User Name',
+      login: 'user-login'
     });
 
     signInUser(currentUser);
 
     // create active repo
     server.create('repository', {
-      slug: 'killjoys/living-a-feminist-life'
+      slug: 'org-login/repository-name'
     });
 
     // create active repo
     let testRepo = server.create('repository', {
-      slug: 'killjoys/willful-subjects'
+      slug: 'org-login/yet-another-repository-name'
     });
     this.repo = testRepo;
 

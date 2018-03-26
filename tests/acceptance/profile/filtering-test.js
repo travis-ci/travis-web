@@ -5,8 +5,8 @@ import profilePage from 'travis/tests/pages/profile';
 moduleForAcceptance('Acceptance | profile/filtering', {
   beforeEach() {
     const currentUser = server.create('user', {
-      name: 'Sara Ahmed',
-      login: 'feministkilljoy',
+      name: 'User Name',
+      login: 'user-login',
       repos_count: 3
     });
 
@@ -14,17 +14,17 @@ moduleForAcceptance('Acceptance | profile/filtering', {
 
     // create organization
     server.create('account', {
-      name: 'Feminist Killjoys',
+      name: 'Org Name',
       type: 'organization',
-      login: 'killjoys',
+      login: 'org-login',
       repos_count: 30
     });
 
     // create active repository
     server.create('repository', {
-      name: 'living-a-feminist-life',
+      name: 'specific-repository-name',
       owner: {
-        login: 'feministkilljoy',
+        login: 'user-login',
       },
       active: true,
       permissions: {
@@ -34,9 +34,9 @@ moduleForAcceptance('Acceptance | profile/filtering', {
 
     // create inactive repository
     server.create('repository', {
-      name: 'willful-subjects',
+      name: 'yet-another-repository-name',
       owner: {
-        login: 'feministkilljoy',
+        login: 'user-login',
       },
       active: false,
       permissions: {
@@ -46,9 +46,9 @@ moduleForAcceptance('Acceptance | profile/filtering', {
 
     // create repository without admin permissions
     server.create('repository', {
-      name: 'affect-theory-reader',
+      name: 'other-repository-name',
       owner: {
-        login: 'feministkilljoy',
+        login: 'user-login',
       },
       active: true,
       permissions: {
@@ -68,7 +68,7 @@ moduleForAcceptance('Acceptance | profile/filtering', {
 });
 
 test('filter profile repositories', function (assert) {
-  profilePage.visit({ username: 'feministkilljoy' });
+  profilePage.visit({ username: 'user-login' });
 
   andThen(function () {
     assert.equal(profilePage.administerableRepositories.length, 3, 'expected three repositories');
@@ -80,12 +80,12 @@ test('filter profile repositories', function (assert) {
       assert.equal(profilePage.noRepositoriesFoundByFilter, 'Sorry, no results found.');
     });
 
-    profilePage.filter('feminist-lf');
+    profilePage.filter('spec');
     andThen(function () {
       percySnapshot(assert);
       assert.equal(profilePage.administerableRepositories.length, 1, 'expected one repository');
 
-      assert.equal(profilePage.administerableRepositories[0].name, 'feministkilljoy/living-a-feminist-life');
+      assert.equal(profilePage.administerableRepositories[0].name, 'user-login/specific-repository-name');
     });
   });
 });
