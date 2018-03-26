@@ -49,6 +49,11 @@
 }
 
 #tab_new {
+  .icon--plus {
+    margin-right: 0px;
+    text-align: center;
+  }
+
   a:hover {
     .icon--plus:after {
       color: $oxide-blue;

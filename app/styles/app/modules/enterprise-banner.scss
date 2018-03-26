@@ -1,0 +1,47 @@
+.enterprise-banner {
+  padding: 0.1em 0;
+  font-size: 16px;
+  color: $dozer-yellow;
+  text-align: center;
+  background-color: $haze-yellow;
+
+  .icon {
+    @include colorSVG($dozer-yellow);
+  }
+
+  .close-btn {
+    background: transparent;
+    cursor: pointer;
+    padding: 0;
+
+    > .close-icon {
+      width: 20px;
+      height: 20px;
+      margin-bottom: -6px;
+    }
+  }
+
+  a {
+    color: $dozer-yellow;
+    text-decoration: underline;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  strong {
+    font-weight: 700;
+  }
+
+  &.alert {
+    color: $brick-red;
+    background-color: $quartz-red;
+
+    @include colorSVG($brick-red);
+
+    a {
+      color: $brick-red;
+    }
+  }
+}

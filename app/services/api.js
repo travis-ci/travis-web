@@ -32,7 +32,7 @@ export default Service.extend({
 
   request(url, method = 'GET', options = {}) {
     let endpoint = config.apiEndpoint || '';
-    let token = get(this, 'auth').token();
+    let token = get(this, 'auth.token');
 
     options.headers = options.headers || {};
     options.headers['Travis-API-Version'] = '3';

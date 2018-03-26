@@ -34,7 +34,7 @@ export default EmberObject.extend({
 
     let id = this.get('job.id');
     const url = `${config.apiEndpoint}/job/${id}/log`;
-    const token = this.get('auth').token();
+    const token = this.get('auth.token');
     let headers = {
       'Travis-API-Version': '3'
     };

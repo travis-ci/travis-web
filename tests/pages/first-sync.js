@@ -1,9 +1,8 @@
-import PageObject from 'travis/tests/page-object';
-
-let {
+import {
+  create,
   text
-} = PageObject;
+} from 'ember-cli-page-object';
 
-export default PageObject.create({
+export default create({
   heading: text('h1.content-title')
 });

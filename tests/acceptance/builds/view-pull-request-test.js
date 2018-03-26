@@ -31,7 +31,7 @@ test('renders a pull request', function (assert) {
   commit.update('build', build);
   commit.update('job', job);
 
-  page.visit({ slug: 'travis-ci/travis-web', build_id: build.id });
+  page.visit({ owner: 'travis-ci', repo: 'travis-web', build_id: build.id });
 
   andThen(() => {
     assert.equal(document.title, 'Build #5 - travis-ci/travis-web - Travis CI');

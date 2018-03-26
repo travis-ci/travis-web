@@ -60,10 +60,10 @@ test('the home page shows the repositories', (assert) => {
   sidebarPage.visit();
 
   andThen(() => {
-    assert.equal(sidebarPage.sidebarRepositories().count, 3, 'expected three repositories in the sidebar');
-    assert.equal(sidebarPage.sidebarRepositories(0).name, 'killjoys/willful-subjects');
-    assert.equal(sidebarPage.sidebarRepositories(1).name, 'killjoys/queer-phenomenology');
-    assert.equal(sidebarPage.sidebarRepositories(2).name, 'killjoys/living-a-feminist-life');
+    assert.equal(sidebarPage.sidebarRepositories.length, 3, 'expected three repositories in the sidebar');
+    assert.equal(sidebarPage.sidebarRepositories[0].name, 'killjoys/willful-subjects');
+    assert.equal(sidebarPage.sidebarRepositories[1].name, 'killjoys/queer-phenomenology');
+    assert.equal(sidebarPage.sidebarRepositories[2].name, 'killjoys/living-a-feminist-life');
   });
 });
 
@@ -159,7 +159,7 @@ test('Pusher events change the main display', function (assert) {
   });
 
   andThen(() => {
-    assert.equal(jobPage.logLines(0).text, 'The first line');
-    assert.ok(jobPage.logLines(0).isYellow, 'expected the first line to be yellow');
+    assert.equal(jobPage.logLines[0].text, 'The first line');
+    assert.ok(jobPage.logLines[0].isYellow, 'expected the first line to be yellow');
   });
 });

@@ -102,20 +102,20 @@ test('view settings', function (assert) {
 
     assert.ok(settingsPage.buildPullRequests.isActive, 'expected builds for pull requests');
 
-    settingsPage.environmentVariables(0).as(environmentVariable => {
+    settingsPage.environmentVariables[0].as(environmentVariable => {
       assert.equal(environmentVariable.name, 'intersectionality');
       assert.ok(environmentVariable.isPublic, 'expected environment variable to be public');
       assert.notOk(environmentVariable.isNewlyCreated, 'expected existing variable to not be newly created');
       assert.equal(environmentVariable.value, 'Kimberlé Crenshaw');
     });
 
-    settingsPage.environmentVariables(1).as(environmentVariable => {
+    settingsPage.environmentVariables[1].as(environmentVariable => {
       assert.equal(environmentVariable.name, 'published');
       assert.notOk(environmentVariable.isPublic, 'expected environment variable to not be public');
       assert.equal(environmentVariable.value, '••••••••••••••••');
     });
 
-    settingsPage.crons(0).as(cron => {
+    settingsPage.crons[0].as(cron => {
       assert.equal(cron.branchName, 'Cron job event daily-branch');
       assert.equal(cron.interval, 'Runs daily');
       assert.equal(cron.lastRun, 'Ran less than a minute ago');
@@ -123,7 +123,7 @@ test('view settings', function (assert) {
       assert.ok(cron.dontRunIfRecentBuildExistsText.indexOf('Always run') === 0, 'expected cron to run even if there is a build in the last 24h');
     });
 
-    settingsPage.crons(1).as(cron => {
+    settingsPage.crons[1].as(cron => {
       assert.equal(cron.branchName, 'Cron job event weekly-branch');
       assert.equal(cron.interval, 'Runs weekly');
       assert.equal(cron.lastRun, 'Ran less than a minute ago');
@@ -195,12 +195,12 @@ test('delete and create environment variables', function (assert) {
     deletedIds.push(request.params.id);
   });
 
-  settingsPage.environmentVariables(0).delete();
+  settingsPage.environmentVariables[0].delete();
 
   andThen(() => {
     assert.equal(deletedIds.pop(), 'a', 'expected the server to have received a deletion request for the first environment variable');
-    assert.equal(settingsPage.environmentVariables().count, 1, 'expected only one environment variable to remain');
-    assert.equal(settingsPage.environmentVariables(0).name, 'published', 'expected the formerly-second variable to be first');
+    assert.equal(settingsPage.environmentVariables.length, 1, 'expected only one environment variable to remain');
+    assert.equal(settingsPage.environmentVariables[0].name, 'published', 'expected the formerly-second variable to be first');
   });
 
   const requestBodies = [];
@@ -218,7 +218,7 @@ test('delete and create environment variables', function (assert) {
   settingsPage.environmentVariableForm.add();
 
   andThen(() => {
-    settingsPage.environmentVariables(0).as(environmentVariable => {
+    settingsPage.environmentVariables[0].as(environmentVariable => {
       assert.equal(environmentVariable.name, 'drafted', 'expected leading whitespace to be trimmed');
       assert.ok(environmentVariable.isPublic, 'expected environment variable to be public');
       assert.ok(environmentVariable.isNewlyCreated, 'expected environment variable to be newly created');
@@ -248,19 +248,19 @@ test('delete and create environment variables', function (assert) {
     server.delete('/settings/env_vars/:id', () => {}, 500);
   });
 
-  settingsPage.environmentVariables(1).delete();
+  settingsPage.environmentVariables[1].delete();
 
   andThen(() => {
-    assert.equal(settingsPage.environmentVariables().count, 2, 'expected the environment variable to remain');
+    assert.equal(settingsPage.environmentVariables.length, 2, 'expected the environment variable to remain');
     assert.equal(topPage.flashMessage.text, 'There was an error deleting this environment variable.');
 
     server.delete('/settings/env_vars/:id', () => {}, 404);
   });
 
-  settingsPage.environmentVariables(1).delete();
+  settingsPage.environmentVariables[1].delete();
 
   andThen(() => {
-    assert.equal(settingsPage.environmentVariables().count, 2, 'expected the environment variable to remain');
+    assert.equal(settingsPage.environmentVariables.length, 2, 'expected the environment variable to remain');
     assert.equal(topPage.flashMessage.text, 'This environment variable has already been deleted. Try refreshing.');
   });
 });
@@ -278,11 +278,11 @@ test('delete and create crons', function (assert) {
     return {};
   });
 
-  settingsPage.crons(0).delete();
+  settingsPage.crons[0].delete();
 
   andThen(() => {
     assert.equal(deletedIds.pop(), this.dailyCron.id, 'expected the server to have received a deletion request for the first cron');
-    assert.equal(settingsPage.crons().count, 1, 'expected only one cron to remain');
+    assert.equal(settingsPage.crons.length, 1, 'expected only one cron to remain');
     done();
   });
 });
@@ -300,7 +300,7 @@ test('reload cron branches on branch:created', function (assert) {
   settingsPage.visit({ organization: 'killjoys', repo: 'living-a-feminist-life' });
 
   andThen(() => {
-    assert.equal(settingsPage.cronBranches().count, 1, 'expected only one branch');
+    assert.equal(settingsPage.cronBranches.length, 1, 'expected only one branch');
 
     server.create('branch', {
       name: 'bar',
@@ -316,7 +316,7 @@ test('reload cron branches on branch:created', function (assert) {
   });
 
   andThen(() => {
-    assert.equal(settingsPage.cronBranches().count, 2, 'expected two branches after event');
+    assert.equal(settingsPage.cronBranches.length, 2, 'expected two branches after event');
     done();
   });
 });

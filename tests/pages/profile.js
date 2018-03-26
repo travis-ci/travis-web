@@ -1,6 +1,5 @@
-import PageObject from 'travis/tests/page-object';
-
-let {
+import {
+  create,
   attribute,
   clickable,
   collection,
@@ -8,25 +7,20 @@ let {
   text,
   visitable,
   fillable
-} = PageObject;
+} from 'ember-cli-page-object';
 
 function existingRepositoriesCollection(scope) {
-  return collection({
-    scope: scope,
-    itemScope: '.profile-repositorylist li.profile-repolist-item',
-
-    item: {
-      name: text('a.profile-repo'),
-      isActive: hasClass('active', '.switch'),
-      isDisabled: hasClass('non-admin', 'a.profile-repo'),
-      toggle: clickable('.switch'),
-      ariaChecked: attribute('aria-checked', '.switch'),
-      role: attribute('role', '.switch')
-    }
+  return collection(`${scope} .profile-repositorylist li.profile-repolist-item`, {
+    name: text('a.profile-repo'),
+    isActive: hasClass('active', '.switch'),
+    isDisabled: hasClass('non-admin', 'a.profile-repo'),
+    toggle: clickable('.switch'),
+    ariaChecked: attribute('aria-checked', '.switch'),
+    role: attribute('role', '.switch')
   });
 }
 
-export default PageObject.create({
+export default create({
   visit: visitable('profile/:username'),
   name: text('.profile-header h1'),
   filter: fillable('.profile-repositories-filter input.search'),
@@ -39,19 +33,14 @@ export default PageObject.create({
   token: {
     scope: '.profile-user',
 
-    isHidden: 'strong',
-
-    show: clickable('a.profile-token-toggle'),
-    value: text('strong')
+    show: clickable('.token-actions button.show-token'),
+    value: text('.auth-token'),
+    obfuscatedCharacters: text('.obfuscated-chars'),
+    tokenCopiedText: text('.token-copied-text'),
   },
 
-  accounts: collection({
-    scope: '.profile-aside',
-    itemScope: '.account',
-
-    item: {
-      name: text('.account-name'),
-      repositoryCount: text('.account-repo-count')
-    }
+  accounts: collection('.profile-aside .account', {
+    name: text('.account-name'),
+    repositoryCount: text('.account-repo-count')
   })
 });

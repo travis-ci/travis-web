@@ -108,18 +108,18 @@ test('starring and unstarring a repo', function (assert) {
   dashboardPage.visit();
 
   andThen(() => {
-    assert.equal(dashboardPage.starredRepos().count, 1, 'there is one starred repo');
-    assert.ok(dashboardPage.starredRepos(0).hasTofuButton, 'shows tofubutton if user has proper permissions');
+    assert.equal(dashboardPage.starredRepos.length, 1, 'there is one starred repo');
+    assert.ok(dashboardPage.starredRepos[0].hasTofuButton, 'shows tofubutton if user has proper permissions');
 
-    dashboardPage.activeRepos(3).clickStarButton();
+    dashboardPage.activeRepos[3].clickStarButton();
 
     andThen(() => {
-      assert.equal(dashboardPage.starredRepos().count, 2, 'there are two starred repos');
+      assert.equal(dashboardPage.starredRepos.length, 2, 'there are two starred repos');
 
-      dashboardPage.starredRepos(0).clickUnStarButton();
+      dashboardPage.starredRepos[0].clickUnStarButton();
 
       andThen(() => {
-        assert.equal(dashboardPage.starredRepos().count, 1, 'there are two starred repos');
+        assert.equal(dashboardPage.starredRepos.length, 1, 'there are two starred repos');
       });
     });
   });
@@ -135,19 +135,19 @@ test('Dashboard pagination works', function (assert) {
   dashboardPage.visit();
 
   andThen(() => {
-    assert.equal(dashboardPage.starredRepos().count, 1, 'filters starred repos');
-    assert.equal(dashboardPage.activeRepos().count, 10, 'lists all active repos');
+    assert.equal(dashboardPage.starredRepos.length, 1, 'filters starred repos');
+    assert.equal(dashboardPage.activeRepos.length, 10, 'lists all active repos');
     assert.ok(dashboardPage.paginationIsVisible, 'pagination component renders');
-    assert.equal(dashboardPage.paginationLinks().count, 3, 'calcs and displays pagination links');
-    assert.equal(dashboardPage.paginationLinks(2).label, 'next', 'also displays next link');
+    assert.equal(dashboardPage.paginationLinks.length, 3, 'calcs and displays pagination links');
+    assert.equal(dashboardPage.paginationLinks[2].label, 'next', 'also displays next link');
 
     percySnapshot(assert);
 
-    dashboardPage.paginationLinks(1).page();
+    dashboardPage.paginationLinks[1].page();
 
     andThen(() => {
-      assert.equal(dashboardPage.starredRepos().count, 1, 'still lists starred repos on top');
-      assert.equal(dashboardPage.activeRepos().count, 6, 'lists other repos on the 2nd page');
+      assert.equal(dashboardPage.starredRepos.length, 1, 'still lists starred repos on top');
+      assert.equal(dashboardPage.activeRepos.length, 6, 'lists other repos on the 2nd page');
     });
   });
 });

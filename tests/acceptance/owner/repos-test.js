@@ -55,9 +55,9 @@ test('the owner page shows their repositories', (assert) => {
   andThen(() => {
     assert.equal(document.title, 'Sara Ahmed - Travis CI');
 
-    assert.equal(ownerPage.repos().count, 2);
+    assert.equal(ownerPage.repos.length, 2);
 
-    ownerPage.repos(0).as(repo => {
+    ownerPage.repos[0].as(repo => {
       assert.equal(repo.name, 'living-a-feminist-life');
 
       assert.equal(repo.buildNumber, '1917');
@@ -66,7 +66,7 @@ test('the owner page shows their repositories', (assert) => {
       assert.equal(repo.commitDate, 'about a year ago');
     });
 
-    ownerPage.repos(1).as(repo => {
+    ownerPage.repos[1].as(repo => {
       assert.equal(repo.name, 'willful-subjects');
       assert.equal(repo.noBuildMessage, 'There is no build on the default branch yet.');
     });

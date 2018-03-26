@@ -10,15 +10,11 @@ import {
 export default create({
   visit: visitable('/features'),
 
-  features: collection({
-    itemScope: '.features-list .feature',
+  features: collection('.features-list .feature', {
+    name: text('.feature-name'),
+    description: text('p'),
+    isOn: hasClass('active', '.switch'),
 
-    item: {
-      name: text('.feature-name'),
-      description: text('p'),
-      isOn: hasClass('active', '.switch'),
-
-      click: clickable('.switch')
-    }
+    click: clickable('.switch')
   })
 });

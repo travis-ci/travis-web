@@ -10,20 +10,14 @@ export default create({
   visit: visitable('/'),
   logoPresent: contains('h1.logo', { scope: '.topbar' }),
 
-  navigationLinks: collection({
-    itemScope: 'nav#navigation ul li',
-    item: {
-      title: text('a'),
-    },
+  navigationLinks: collection('nav#navigation ul li', {
+    title: text('a'),
   }),
 
   helpDropdownPresent: contains('nav#navigation ul li span.navigation-anchor'),
 
-  helpLinks: collection({
-    itemScope: 'nav#navigation ul li ul.navigation-nested li',
-    item: {
-      title: text('a'),
-    },
+  helpLinks: collection('nav#navigation ul li ul.navigation-nested li', {
+    title: text('a'),
   }),
 
   loginLinkPresent: contains('.auth-button.signed-out', { scope: '.topbar nav#navigation ul li.menu.profile' }),

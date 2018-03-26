@@ -71,21 +71,21 @@ test('filter profile repositories', function (assert) {
   profilePage.visit({ username: 'feministkilljoy' });
 
   andThen(function () {
-    assert.equal(profilePage.administerableRepositories().count, 3, 'expected three repositories');
+    assert.equal(profilePage.administerableRepositories.length, 3, 'expected three repositories');
 
     profilePage.filter('patriarchy');
 
     andThen(function () {
-      assert.equal(profilePage.administerableRepositories().count, 0, 'expected no repositories');
+      assert.equal(profilePage.administerableRepositories.length, 0, 'expected no repositories');
       assert.equal(profilePage.noRepositoriesFoundByFilter, 'Sorry, no results found.');
     });
 
     profilePage.filter('feminist-lf');
     andThen(function () {
       percySnapshot(assert);
-      assert.equal(profilePage.administerableRepositories().count, 1, 'expected one repository');
+      assert.equal(profilePage.administerableRepositories.length, 1, 'expected one repository');
 
-      assert.equal(profilePage.administerableRepositories(0).name, 'feministkilljoy/living-a-feminist-life');
+      assert.equal(profilePage.administerableRepositories[0].name, 'feministkilljoy/living-a-feminist-life');
     });
   });
 });
