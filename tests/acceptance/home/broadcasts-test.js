@@ -24,12 +24,12 @@ test('the broadcast tower shows a warning even when an announcement exists, broa
 
   server.create('broadcast', {
     category: 'warning',
-    message: 'Join the resistance!'
+    message: 'A warning'
   });
 
   server.create('broadcast', {
     category: 'announcement',
-    message: 'We need you.',
+    message: 'An announcement',
     id: 2016
   });
 
@@ -48,10 +48,10 @@ test('the broadcast tower shows a warning even when an announcement exists, broa
     assert.equal(topPage.broadcasts.items.length, 2, 'expected there to be two broadcasts');
 
     assert.ok(topPage.broadcasts.items[0].isAnnouncement, 'expected the first broadcast to be an announcement');
-    assert.equal(topPage.broadcasts.items[0].message, 'We need you.');
+    assert.equal(topPage.broadcasts.items[0].message, 'An announcement');
 
     assert.ok(topPage.broadcasts.items[1].isWarning, 'expected the second broadcast to be a warning');
-    assert.equal(topPage.broadcasts.items[1].message, 'Join the resistance!');
+    assert.equal(topPage.broadcasts.items[1].message, 'A warning');
   });
 
   percySnapshot(assert);
@@ -72,7 +72,7 @@ test('the broadcast tower shows an announcement', assert => {
 
   server.create('broadcast', {
     category: 'announcement',
-    message: 'We have all joined the resistance.'
+    message: 'Another announcement'
   });
 
   dashboardPage.visit();
