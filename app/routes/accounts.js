@@ -21,7 +21,7 @@ export default TravisRoute.extend({
     // FIXME this ignores errors from either endpoint
     return hash({
       user: fetch(userUrl, {headers}).then(response => response.json()),
-      orgs: fetch(orgsUrl, {headers}).then(response => response.json())
+      orgs: this.store.paginated('organization', {}, { live: false })
     }).then(({user, orgs}) => {
       let models = [];
 
@@ -39,19 +39,7 @@ export default TravisRoute.extend({
         }]
       })[0]);
 
-      return models.concat(this.store.push({
-        data: orgs.organizations.map(org => ({
-          id: org.id,
-          type: 'organization',
-          attributes: {
-            login: org.login,
-            name: org.name,
-            avatarUrl: org.avatar_url,
-            isSyncing: org.is_syncing,
-            syncedAt: org.synced_at
-          }
-        }))
-      }));
+      return models.concat(orgs.toArray());
     });
   },
 
