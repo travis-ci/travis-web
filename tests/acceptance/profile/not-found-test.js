@@ -5,8 +5,8 @@ import profilePage from 'travis/tests/pages/profile';
 moduleForAcceptance('Acceptance | profile/not found', {
   beforeEach() {
     const currentUser = server.create('user', {
-      name: 'Sara Ahmed',
-      login: 'feministkilljoy',
+      name: 'User Name',
+      login: 'user-login',
       repos_count: 3
     });
 

@@ -5,8 +5,8 @@ import profilePage from 'travis/tests/pages/profile';
 moduleForAcceptance('Acceptance | profile/basic layout', {
   beforeEach() {
     const currentUser = server.create('user', {
-      name: 'Sara Ahmed',
-      login: 'feministkilljoy',
+      name: 'User Name',
+      login: 'user-login',
       repos_count: 3
     });
 
@@ -14,17 +14,17 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
 
     // create organization
     server.create('account', {
-      name: 'Feminist Killjoys',
+      name: 'Org Name',
       type: 'organization',
-      login: 'killjoys',
+      login: 'org-login',
       repos_count: 30
     });
 
     // create active repository
     server.create('repository', {
-      name: 'living-a-feminist-life',
+      name: 'repository-name',
       owner: {
-        login: 'feministkilljoy',
+        login: 'user-login',
       },
       active: true,
       permissions: {
@@ -34,9 +34,9 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
 
     // create inactive repository
     server.create('repository', {
-      name: 'willful-subjects',
+      name: 'yet-another-repository-name',
       owner: {
-        login: 'feministkilljoy',
+        login: 'user-login',
       },
       active: false,
       permissions: {
@@ -46,9 +46,9 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
 
     // create repository without admin permissions
     server.create('repository', {
-      name: 'affect-theory-reader',
+      name: 'other-repository-name',
       owner: {
-        login: 'feministkilljoy',
+        login: 'user-login',
       },
       active: true,
       permissions: {
@@ -68,29 +68,29 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
 });
 
 test('view profile', function (assert) {
-  profilePage.visit({ username: 'feministkilljoy' });
+  profilePage.visit({ username: 'user-login' });
 
   andThen(function () {
     percySnapshot(assert);
-    assert.equal(document.title, 'Sara Ahmed - Profile - Travis CI');
+    assert.equal(document.title, 'User Name - Profile - Travis CI');
 
-    assert.equal(profilePage.name, 'Sara Ahmed');
+    assert.equal(profilePage.name, 'User Name');
 
     assert.equal(profilePage.accounts.length, 2, 'expected two accounts');
 
-    assert.equal(profilePage.accounts[0].name, 'Sara Ahmed');
+    assert.equal(profilePage.accounts[0].name, 'User Name');
     assert.equal(profilePage.accounts[0].repositoryCount, '3 repositories');
 
-    assert.equal(profilePage.accounts[1].name, 'Feminist Killjoys');
+    assert.equal(profilePage.accounts[1].name, 'Org Name');
     assert.equal(profilePage.accounts[1].repositoryCount, '30 repositories');
 
     assert.equal(profilePage.administerableRepositories.length, 3, 'expected three repositories');
 
-    assert.equal(profilePage.administerableRepositories[0].name, 'feministkilljoy/affect-theory-reader');
+    assert.equal(profilePage.administerableRepositories[0].name, 'user-login/other-repository-name');
     assert.ok(profilePage.administerableRepositories[0].isDisabled, 'expected disabled repository to be disabled in UI');
-    assert.equal(profilePage.administerableRepositories[1].name, 'feministkilljoy/living-a-feminist-life');
+    assert.equal(profilePage.administerableRepositories[1].name, 'user-login/repository-name');
     assert.ok(profilePage.administerableRepositories[1].isActive, 'expected active repository to appear active');
-    assert.equal(profilePage.administerableRepositories[2].name, 'feministkilljoy/willful-subjects');
+    assert.equal(profilePage.administerableRepositories[2].name, 'user-login/yet-another-repository-name');
     assert.notOk(profilePage.administerableRepositories[2].isActive, 'expected inactive repository to appear inactive');
   });
 });
