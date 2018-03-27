@@ -15,7 +15,6 @@ let fetchAll = function (store, type, query) {
 
 export default TravisRoute.extend({
   model() {
-    // FIXME this ignores errors from either endpoint
     return hash({
       // FIXME is this an acceptable way to query the singleton endpoint?
       user: this.store.queryRecord('user', { current: true }),
