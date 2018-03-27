@@ -36,7 +36,9 @@
       {{#if exceedingSeats}}
         <p>{{svg-jar 'icon-flag' class="icon"}} You’ve exceeded the <strong>maximum seats</strong> that your license permits, please contact <a href="mailto:enterprise@travis-ci.com">enterprise@travis-ci.com</a> if you need more seats.</p>
       {{else if almostExceedingSeats}}
-        <p>{{svg-jar 'icon-flag' class="icon"}} You’re approaching the <strong>maximum seats</strong> that your license permits, please contact <a href="mailto:enterprise@travis-ci.com">enterprise@travis-ci.com</a> if you need more seats.</p>
+        <p>{{svg-jar 'icon-flag' class="icon"}} You’re approaching the <strong>maximum seats</strong> that your license permits, please contact <a href="mailto:enterprise@travis-ci.com">enterprise@travis-ci.com</a> if you need more seats.
+            <button class="close-btn" {{action "closeSeatsBanner"}}>{{svg-jar 'flash-close' class="close-icon"}}</button>
+          </p>
       {{/if}}
     </div>
   </div>
