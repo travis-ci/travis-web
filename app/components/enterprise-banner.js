@@ -37,7 +37,7 @@ export default Component.extend({
         this.get('storage').removeItem(this.get('lsLicense'));
       }
       if (!this.get('almostExceeding') && !this.get('exceeding')) {
-        this.get('storage').removeItem('lsSeats');
+        this.get('storage').removeItem(this.get('lsSeats'));
       }
     });
   },
