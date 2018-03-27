@@ -20,6 +20,15 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
       repos_count: 30
     });
 
+    // Pad with extra organisations to force an extra API response page
+    for (let orgIndex = 0; orgIndex < 10; orgIndex++) {
+      server.create('organization', {
+        name: `Generic org ${orgIndex}`,
+        type: 'organization',
+        login: `org${orgIndex}`,
+      });
+    }
+
     // create active repository
     server.create('repository', {
       name: 'repository-name',
@@ -76,7 +85,7 @@ test('view profile', function (assert) {
 
     assert.equal(profilePage.name, 'User Name');
 
-    assert.equal(profilePage.accounts.length, 2, 'expected two accounts');
+    assert.equal(profilePage.accounts.length, 12, 'expected two accounts');
 
     assert.equal(profilePage.accounts[0].name, 'User Name');
     // assert.equal(profilePage.accounts[0].repositoryCount, '3 repositories');
