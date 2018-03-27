@@ -20,7 +20,9 @@ export default TravisRoute.extend({
       // FIXME is this an acceptable way to query the singleton endpoint?
       user: this.store.queryRecord('user', { current: true }),
       orgs: this.store.filter('organization', () => true)
-    }).then(({user, orgs}) => fetchAll(this.store, 'organization', {}).then(() => [user].concat(orgs.toArray())));
+    }).then(
+      ({user, orgs}) => fetchAll(this.store, 'organization', {}).then(
+        () => [user].concat(orgs.toArray())));
   },
 
   setupController(controller, model) {
