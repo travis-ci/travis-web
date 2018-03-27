@@ -86,7 +86,7 @@ test('view profile', function (assert) {
 
     assert.equal(profilePage.name, 'Sara Ahmed');
 
-    assert.equal(profilePage.accounts.length, 12, 'expected two accounts');
+    assert.equal(profilePage.accounts.length, 12, 'expected all accounts to be listed');
 
     assert.equal(profilePage.accounts[0].name, 'Sara Ahmed');
     // assert.equal(profilePage.accounts[0].repositoryCount, '3 repositories');
