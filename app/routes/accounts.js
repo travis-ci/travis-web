@@ -1,17 +1,6 @@
 import TravisRoute from 'travis/routes/basic';
 import { hash } from 'rsvp';
-import { merge } from '@ember/polyfills';
-
-// Adapted from services:job-state
-let fetchAll = function (store, type, query) {
-  return store.query(type, query).then((collection) => {
-    let nextPage = collection.get('meta.pagination.next');
-    if (nextPage) {
-      let { limit, offset } = nextPage;
-      return fetchAll(store, type, merge(query, { limit, offset }));
-    }
-  });
-};
+import fetchAll from 'travis/utils/fetch-all';
 
 export default TravisRoute.extend({
   model() {
