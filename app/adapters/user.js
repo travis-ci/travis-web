@@ -1,11 +1,9 @@
 import V3Adapter from 'travis/adapters/v3';
 
 export default V3Adapter.extend({
-  urlForQueryRecord: function (query) {
-    if (query.current) {
-      return '/user';
-    } else {
-      return this._super(...arguments);
-    }
+  // FIXME is this approprate???
+  buildURL: function () {
+    const prefix = this.urlPrefix();
+    return `${prefix}/user`;
   },
 });
