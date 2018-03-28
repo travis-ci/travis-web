@@ -34,8 +34,10 @@ export default TravisRoute.extend({
       };
 
       // FIXME this p uggers, what is to be done?
-      let deprecatedParams = merge(Object.create(queryParams), {'repository.managed_by_github_apps': false});
-      let githubParams = merge(Object.create(queryParams), {'repository.managed_by_github_apps': true});
+      let deprecatedParams =
+        merge(Object.create(queryParams), {'repository.managed_by_github_apps': false});
+      let githubParams =
+        merge(Object.create(queryParams), {'repository.managed_by_github_apps': true});
 
       return hash({
         deprecated: this.store.paginated(
