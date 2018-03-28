@@ -20,6 +20,12 @@ function existingRepositoriesCollection(scope) {
   });
 }
 
+function githubAppsRepositoryCollection(scope) {
+  return collection(`${scope} li.profile-repolist-item`, {
+    name: text('a.profile-repo')
+  });
+}
+
 export default create({
   visit: visitable('profile/:username'),
   name: text('.profile-header h1'),
@@ -30,9 +36,9 @@ export default create({
 
   administerableRepositories: existingRepositoriesCollection('#administerable-repositories'),
 
-  githubAppsRepositories: existingRepositoriesCollection('#github-apps-repositories'),
-  notLockedGithubAppsRepositories: existingRepositoriesCollection('#not-locked-github-apps-repositories'),
-  lockedGithubAppsRepositories: existingRepositoriesCollection('#locked-github-apps-repositories'),
+  githubAppsRepositories: githubAppsRepositoryCollection('#github-apps-repositories'),
+  notLockedGithubAppsRepositories: githubAppsRepositoryCollection('#not-locked-github-apps-repositories'),
+  lockedGithubAppsRepositories: githubAppsRepositoryCollection('#locked-github-apps-repositories'),
 
   token: {
     scope: '.profile-user',

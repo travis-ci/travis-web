@@ -2,17 +2,13 @@
   <h2>GitHub Apps</h2>
   <ul class="profile-repositorylist" id='not-locked-github-apps-repositories'>
     {{#each notLockedGithubAppsRepositories as |repository|}}
-      {{repository-status-toggle
-      repository=repository
-      }}
+      {{github-apps-repository repository=repository}}
     {{/each}}
   </ul>
   locked:
   <ul class="profile-repositorylist" id='locked-github-apps-repositories'>
     {{#each lockedGithubAppsRepositories as |repository|}}
-      {{repository-status-toggle
-      repository=repository
-      }}
+      {{github-apps-repository repository=repository}}
     {{/each}}
   </ul>
 </div>
