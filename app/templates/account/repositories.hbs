@@ -1,3 +1,14 @@
+<div id="github-apps-repositories">
+  GitHub Apps ya
+  <ul class="profile-repositorylist">
+    {{#each model.githubApps as |repository|}}
+      {{repository-status-toggle
+      repository=repository
+      }}
+    {{/each}}
+  </ul>
+</div>
+
 {{#repository-filter
   repositories=sortedRepositories
   queryFunction=(action 'filterQuery') as |filter| }}
@@ -37,14 +48,3 @@
     {{pagination-navigation collection=model.deprecated route="account.repositories" inner=6 outer=2}}
   {{/unless}}
 {{/repository-filter}}
-
-<div id="github-apps-repositories">
-  GitHub Apps ya
-  <ul class="profile-repositorylist">
-    {{#each model.githubApps as |repository|}}
-      {{repository-status-toggle
-      repository=repository
-      }}
-    {{/each}}
-  </ul>
-</div>
