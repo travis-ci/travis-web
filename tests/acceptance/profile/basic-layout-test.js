@@ -134,5 +134,8 @@ test('view profile', function (assert) {
     assert.notOk(profilePage.administerableRepositories[2].isActive, 'expected inactive repository to appear inactive');
 
     assert.equal(profilePage.githubAppsRepositories.length, 3, 'expected three GitHub Apps-managed repositories');
+
+    assert.equal(profilePage.notLockedGithubAppsRepositories.length, 2, 'expected two not-locked GitHub Apps-managed repositories');
+    assert.equal(profilePage.lockedGithubAppsRepositories.length, 1, 'expected one locked GitHub Apps-managed repository');
   });
 });

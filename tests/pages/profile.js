@@ -10,7 +10,7 @@ import {
 } from 'ember-cli-page-object';
 
 function existingRepositoriesCollection(scope) {
-  return collection(`${scope} .profile-repositorylist li.profile-repolist-item`, {
+  return collection(`${scope} li.profile-repolist-item`, {
     name: text('a.profile-repo'),
     isActive: hasClass('active', '.switch'),
     isDisabled: hasClass('non-admin', 'a.profile-repo'),
@@ -29,7 +29,10 @@ export default create({
   notFoundOrgName: text('.page-title .h2--red'),
 
   administerableRepositories: existingRepositoriesCollection('#administerable-repositories'),
+
   githubAppsRepositories: existingRepositoriesCollection('#github-apps-repositories'),
+  notLockedGithubAppsRepositories: existingRepositoriesCollection('#not-locked-github-apps-repositories'),
+  lockedGithubAppsRepositories: existingRepositoriesCollection('#locked-github-apps-repositories'),
 
   token: {
     scope: '.profile-user',
