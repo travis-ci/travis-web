@@ -1,3 +1,9 @@
+{{#if repository.private}}
+  {{svg-jar 'icon-private' class='icon private'}}
+{{else}}
+  {{svg-jar 'stage-passed' class='icon public'}}
+{{/if}}
+
 {{#link-to "repo" repository.owner.login repository.name class="profile-repo"}}
   {{repository.slug}}
 {{/link-to}}

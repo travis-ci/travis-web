@@ -137,7 +137,9 @@ test('view profile', function (assert) {
 
     assert.equal(profilePage.notLockedGithubAppsRepositories.length, 2, 'expected two not-locked GitHub Apps-managed repositories');
     assert.equal(profilePage.notLockedGithubAppsRepositories[0].name, 'user-login/github-apps-public-repository');
+    assert.ok(profilePage.notLockedGithubAppsRepositories[0].isPublic);
     assert.equal(profilePage.notLockedGithubAppsRepositories[1].name, 'user-login/github-apps-private-repository');
+    assert.ok(profilePage.notLockedGithubAppsRepositories[1].isPrivate);
 
     assert.equal(profilePage.lockedGithubAppsRepositories.length, 1, 'expected one locked GitHub Apps-managed repository');
     assert.equal(profilePage.lockedGithubAppsRepositories[0].name, 'user-login/github-apps-locked-repository');

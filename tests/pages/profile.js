@@ -4,6 +4,7 @@ import {
   clickable,
   collection,
   hasClass,
+  isPresent,
   text,
   visitable,
   fillable
@@ -22,7 +23,10 @@ function existingRepositoriesCollection(scope) {
 
 function githubAppsRepositoryCollection(scope) {
   return collection(`${scope} li.profile-repolist-item`, {
-    name: text('a.profile-repo')
+    name: text('a.profile-repo'),
+
+    isPublic: isPresent('.icon.public'),
+    isPrivate: isPresent('.icon.private')
   });
 }
 
