@@ -1,16 +1,11 @@
 import TravisRoute from 'travis/routes/basic';
-import { hash } from 'rsvp';
-import fetchAll from 'travis/utils/fetch-all';
+import { service } from 'ember-decorators/service';
 
 export default TravisRoute.extend({
+  @service accounts: null,
+
   model() {
-    return hash({
-      // FIXME is this an acceptable way to query the singleton endpoint?
-      user: this.store.queryRecord('user', { current: true }),
-      orgs: this.store.filter('organization', () => true)
-    }).then(
-      ({user, orgs}) => fetchAll(this.store, 'organization', {}).then(
-        () => [user].concat(orgs.toArray())));
+    return this.get('accounts').fetch();
   },
 
   setupController(controller, model) {

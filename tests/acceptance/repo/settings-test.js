@@ -18,9 +18,8 @@ moduleForAcceptance('Acceptance | repo settings', {
     signInUser(currentUser);
 
     // create organization
-    server.create('account', {
+    server.create('organization', {
       name: 'Org Name',
-      type: 'organization',
       login: 'org-login',
       repos_count: 30
     });
