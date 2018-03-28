@@ -133,6 +133,6 @@ test('view profile', function (assert) {
     assert.equal(profilePage.administerableRepositories[2].name, 'user-login/yet-another-repository-name');
     assert.notOk(profilePage.administerableRepositories[2].isActive, 'expected inactive repository to appear inactive');
 
-    // assert.equal(profilePage.githubAppsRepositories.length, 3, 'expected three GitHub Apps-managed repositories');
+    assert.equal(profilePage.githubAppsRepositories.length, 3, 'expected three GitHub Apps-managed repositories');
   });
 });

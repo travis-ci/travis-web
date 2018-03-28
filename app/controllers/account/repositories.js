@@ -7,7 +7,7 @@ export default Controller.extend({
 
   page: 1,
 
-  @computed('model')
+  @computed('model.deprecated')
   sortedRepositories(repos) {
     return repos.sortBy('name');
   },

@@ -29,6 +29,7 @@ export default create({
   notFoundOrgName: text('.page-title .h2--red'),
 
   administerableRepositories: existingRepositoriesCollection('#administerable-repositories'),
+  githubAppsRepositories: existingRepositoriesCollection('#github-apps-repositories'),
 
   token: {
     scope: '.profile-user',

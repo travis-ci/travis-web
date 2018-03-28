@@ -34,6 +34,16 @@
     {{/if}}
   </div>
   {{#unless filter.isFiltering}}
-    {{pagination-navigation collection=model route="account.repositories" inner=6 outer=2}}
+    {{pagination-navigation collection=model.deprecated route="account.repositories" inner=6 outer=2}}
   {{/unless}}
 {{/repository-filter}}
+
+<div id="github-apps-repositories">
+  <ul class="profile-repositorylist">
+    {{#each model.githubApps as |repository|}}
+      {{repository-status-toggle
+      repository=repository
+      }}
+    {{/each}}
+  </ul>
+</div>
