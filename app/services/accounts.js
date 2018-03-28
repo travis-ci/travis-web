@@ -9,7 +9,6 @@ export default Service.extend({
 
   fetch() {
     return hash({
-      // FIXME is this an acceptable way to query the singleton endpoint?
       user: this.get('store').queryRecord('user', { current: true }),
       orgs: this.get('store').filter('organization', () => true)
     }).then(
