@@ -65,6 +65,37 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
       },
     });
 
+    server.create('repository', {
+      name: 'github-apps-public-repository',
+      owner: {
+        login: 'user-login',
+      },
+      active: true,
+      managed_by_github_apps: true,
+      private: false
+    });
+
+    server.create('repository', {
+      name: 'github-apps-private-repository',
+      owner: {
+        login: 'user-login'
+      },
+      active: true,
+      managed_by_github_apps: true,
+      private: true
+    });
+
+    server.create('repository', {
+      name: 'github-apps-locked-repository',
+      owner: {
+        login: 'user-login'
+      },
+      active: true,
+      managed_by_github_apps: true,
+      private: false,
+      locked: true
+    });
+
     // create other random repository to ensure correct filtering
     server.create('repository', {
       name: 'feminism-is-for-everybody',
@@ -93,7 +124,7 @@ test('view profile', function (assert) {
     assert.equal(profilePage.accounts[1].name, 'Org Name');
     // assert.equal(profilePage.accounts[1].repositoryCount, '30 repositories');
 
-    assert.equal(profilePage.administerableRepositories.length, 3, 'expected three repositories');
+    assert.equal(profilePage.administerableRepositories.length, 3, 'expected three classic repositories');
 
     assert.equal(profilePage.administerableRepositories[0].name, 'user-login/other-repository-name');
     assert.ok(profilePage.administerableRepositories[0].isDisabled, 'expected disabled repository to be disabled in UI');
@@ -101,5 +132,7 @@ test('view profile', function (assert) {
     assert.ok(profilePage.administerableRepositories[1].isActive, 'expected active repository to appear active');
     assert.equal(profilePage.administerableRepositories[2].name, 'user-login/yet-another-repository-name');
     assert.notOk(profilePage.administerableRepositories[2].isActive, 'expected inactive repository to appear inactive');
+
+    // assert.equal(profilePage.githubAppsRepositories.length, 3, 'expected three GitHub Apps-managed repositories');
   });
 });

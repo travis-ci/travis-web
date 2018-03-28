@@ -27,6 +27,7 @@ export default TravisRoute.extend({
           offset,
           sort_by: 'name',
           limit: this.get('recordsPerPage'),
+          'repository.managed_by_github_apps': false,
           custom: {
             owner: account.get('login'),
             type: 'byOwner',
