@@ -13,7 +13,6 @@ moduleForAcceptance('Acceptance | repo settings', {
     const currentUser = server.create('user', {
       name: 'User Name',
       login: 'user-login',
-      repos_count: 3
     });
 
     signInUser(currentUser);
@@ -22,7 +21,6 @@ moduleForAcceptance('Acceptance | repo settings', {
     server.create('organization', {
       name: 'Org Name',
       login: 'org-login',
-      repos_count: 30
     });
 
     const repository = server.create('repository', {

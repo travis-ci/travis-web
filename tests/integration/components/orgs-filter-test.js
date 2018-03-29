@@ -15,7 +15,6 @@ module('Integration | Component | orgs filter', function (hooks) {
         name: 'Lisa P',
         type: 'user',
         avatarUrl: 'https://placekitten.com/200/200',
-        reposCount: 4,
         subscribed: false,
         education: false
       }),
@@ -24,7 +23,6 @@ module('Integration | Component | orgs filter', function (hooks) {
         name: 'Travis CI',
         type: 'organization',
         avatarUrl: 'https://placekitten.com/200/200',
-        reposCount: 23,
         subscribed: true,
         education: false
       })
