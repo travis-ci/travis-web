@@ -59,6 +59,7 @@ export default TravisRoute.extend({
     if (!account.error) {
       controller.set('login', account.get('login'));
     }
+    controller.set('account', account);
     return this._super(...arguments);
   },
 });

@@ -1,27 +1,31 @@
-<div id="github-apps-repositories">
-  <h2>GitHub Apps</h2>
-  <ul class="profile-repositorylist" id='not-locked-github-apps-repositories'>
-    {{#each notLockedGithubAppsRepositories as |repository|}}
-      {{github-apps-repository repository=repository}}
-    {{/each}}
-  </ul>
-  {{#if lockedGithubAppsRepositories}}
-    <p class="notice-banner--red spaced">
-      <span class="label-align">
-        These repositories cannot yet be migrated because they are active on
-        {{external-link-to href="https://travis-ci.org" content="travis-ci.org"}}.
-        This feature will be available shortly. Please
-        <a href="{{ config.urls.support }}" title="Email the Travis support team" {{action 'helpscoutTrigger'}}>email support</a>
-        if you have further questions.
-      </span>
-    </p>
-    <ul class="profile-repositorylist" id='locked-github-apps-repositories'>
-      {{#each lockedGithubAppsRepositories as |repository|}}
+{{#if account.githubAppsInstallationId}}
+  <div id="github-apps-repositories">
+    <h2>GitHub Apps</h2>
+    <ul class="profile-repositorylist" id='not-locked-github-apps-repositories'>
+      {{#each notLockedGithubAppsRepositories as |repository|}}
         {{github-apps-repository repository=repository}}
       {{/each}}
     </ul>
-  {{/if}}
-</div>
+    {{#if lockedGithubAppsRepositories}}
+      <p class="notice-banner--red spaced">
+        <span class="label-align">
+          These repositories cannot yet be migrated because they are active on
+          {{external-link-to href="https://travis-ci.org" content="travis-ci.org"}}.
+          This feature will be available shortly. Please
+          <a href="{{ config.urls.support }}" title="Email the Travis support team" {{action 'helpscoutTrigger'}}>email support</a>
+          if you have further questions.
+        </span>
+      </p>
+      <ul class="profile-repositorylist" id='locked-github-apps-repositories'>
+        {{#each lockedGithubAppsRepositories as |repository|}}
+          {{github-apps-repository repository=repository}}
+        {{/each}}
+      </ul>
+    {{/if}}
+  </div>
+{{else}}
+  <div id='github-apps-invitation'>SIGN UP FOR GITHUB APPS! do it</div>
+{{/if}}
 
 <h2>Service Hooks <div class="badge deprecated">Deprecated</div></h2>
 {{#repository-filter

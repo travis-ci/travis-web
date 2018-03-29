@@ -6,7 +6,8 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
   beforeEach() {
     const currentUser = server.create('user', {
       name: 'User Name',
-      login: 'user-login'
+      login: 'user-login',
+      github_apps_installation_id: 123
     });
 
     signInUser(currentUser);
@@ -119,6 +120,8 @@ test('view profile', function (assert) {
     assert.equal(profilePage.accounts[0].name, 'User Name');
     assert.equal(profilePage.accounts[1].name, 'Org Name');
 
+    assert.notOk(profilePage.githubAppsInvitation.isVisible, 'expected GitHub Apps invitation not to be visible');
+
     assert.equal(profilePage.administerableRepositories.length, 3, 'expected three classic repositories');
 
     assert.equal(profilePage.administerableRepositories[0].name, 'user-login/other-repository-name');
@@ -138,5 +141,14 @@ test('view profile', function (assert) {
 
     assert.equal(profilePage.lockedGithubAppsRepositories.length, 1, 'expected one locked GitHub Apps-managed repository');
     assert.equal(profilePage.lockedGithubAppsRepositories[0].name, 'user-login/github-apps-locked-repository');
+
+  });
+});
+
+test('view a profile for an organisation that doesn’t have GitHub Apps', function (assert) {
+  profilePage.visit({ username: 'org-login' });
+
+  andThen(function () {
+    assert.ok(profilePage.githubAppsInvitation.isVisible, 'expected GitHub Apps invitation to be visible');
   });
 });
