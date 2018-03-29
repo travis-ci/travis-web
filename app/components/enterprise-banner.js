@@ -11,7 +11,8 @@ export default Component.extend({
   @service ajax: null,
   @service storage: null,
 
-  key: 'travis.enterprise.license_msg_last_seen',
+  lsLicense: 'travis.enterprise.license_msg_last_seen',
+  lsSeats: 'travis.enterprise.seats_msg_seen',
 
   didInsertElement() {
     this._super(...arguments);
@@ -33,7 +34,10 @@ export default Component.extend({
         isPaid: response.license_type !== 'trial'
       });
       if (!this.get('expiring')) {
-        this.get('storage').removeItem(this.get('key'));
+        this.get('storage').removeItem(this.get('lsLicense'));
+      }
+      if (!this.get('almostExceeding') && !this.get('exceeding')) {
+        this.get('storage').removeItem(this.get('lsSeats'));
       }
     });
   },
@@ -78,7 +82,7 @@ export default Component.extend({
 
   @computed('expiring', 'expiringHalfway', 'expiringSoon')
   checkLicenseBanner(expiring, halfway, soon) {
-    let lastSeen = this.get('storage').getItem(this.get('key'));
+    let lastSeen = this.get('storage').getItem(this.get('lsLicense'));
     if (
       // User has never closed banner, and license expires in 60 days or less
       (!lastSeen && expiring) ||
@@ -101,9 +105,22 @@ export default Component.extend({
     return (isPaid && check);
   },
 
-  @computed('isPaid', 'almostExceedingSeats', 'exceedingSeats')
-  showSeatsBanner(isPaid, almostExceeding, exceeding) {
-    return (isPaid && (almostExceeding || exceeding));
+  @computed('isPaid', 'checkSeatsBanner')
+  showSeatsBanner(isPaid, check) {
+    return (isPaid && check);
+  },
+
+
+  @computed('almostExceedingSeats', 'exceedingSeats')
+  checkSeatsBanner(almostExceeding, exceeding) {
+    let closed = this.get('storage').getItem(this.get('lsSeats'));
+    if (exceeding) {
+      return true;
+    } else if (almostExceeding && !closed) {
+      return true;
+    } else {
+      return false;
+    }
   },
 
   @computed('expiresSoon')
@@ -117,8 +134,12 @@ export default Component.extend({
 
   actions: {
     closeLicenseBanner() {
-      this.get('storage').setItem(this.get('key'), this.get('daysUntilExpiry'));
+      this.get('storage').setItem(this.get('lsLicense'), this.get('daysUntilExpiry'));
       this.set('showLicenseBanner', false);
+    },
+    closeSeatsBanner() {
+      this.get('storage').setItem(this.get('lsSeats'), true);
+      this.set('showSeatsBanner', false);
     }
   }
 });
