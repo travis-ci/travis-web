@@ -141,7 +141,8 @@ test('view profile', function (assert) {
 
     assert.equal(profilePage.lockedGithubAppsRepositories.length, 1, 'expected one locked GitHub Apps-managed repository');
     assert.equal(profilePage.lockedGithubAppsRepositories[0].name, 'user-login/github-apps-locked-repository');
-
+    assert.timeout(1000000000);
+    pauseTest();
   });
 });
 
