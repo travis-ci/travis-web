@@ -5,12 +5,22 @@
       {{github-apps-repository repository=repository}}
     {{/each}}
   </ul>
-  locked:
-  <ul class="profile-repositorylist" id='locked-github-apps-repositories'>
-    {{#each lockedGithubAppsRepositories as |repository|}}
-      {{github-apps-repository repository=repository}}
-    {{/each}}
-  </ul>
+  {{#if lockedGithubAppsRepositories}}
+    <p class="notice-banner--red spaced">
+      <span class="label-align">
+        These repositories cannot yet be migrated because they are active on
+        {{external-link-to href="https://travis-ci.org" content="travis-ci.org"}}.
+        This feature will be available shortly. Please
+        <a href="{{ config.urls.support }}" title="Email the Travis support team" {{action 'helpscoutTrigger'}}>email support</a>
+        if you have further questions.
+      </span>
+    </p>
+    <ul class="profile-repositorylist" id='locked-github-apps-repositories'>
+      {{#each lockedGithubAppsRepositories as |repository|}}
+        {{github-apps-repository repository=repository}}
+      {{/each}}
+    </ul>
+  {{/if}}
 </div>
 
 <h2>Service Hooks <div class="badge deprecated">Deprecated</div></h2>
