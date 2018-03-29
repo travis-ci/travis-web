@@ -10,4 +10,10 @@ export default V3Adapter.extend({
         queryRecord request type with a query of current: true`);
     }
   },
+
+  // This overrides the parent implementation to ignore the query parameters
+  queryRecord(store, type, query) {
+    let url = this.buildURL(type.modelName, null, null, 'queryRecord', query);
+    return this.ajax(url, 'GET');
+  }
 });
