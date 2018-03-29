@@ -20,4 +20,10 @@
     font-weight: bold;
     text-transform: uppercase;
   }
+
+  &.deprecated {
+    color: $brick-red;
+    background-color: $quartz-red;
+    border-color: $brick-red;
+  }
 }
