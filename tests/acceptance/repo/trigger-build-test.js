@@ -21,7 +21,6 @@ moduleForAcceptance('Acceptance | repo/trigger build', {
     this.currentUser = server.create('user', {
       name: 'Ada Lovelace',
       login: 'adal',
-      repos_count: 1
     });
 
     const repo = server.create('repository', {

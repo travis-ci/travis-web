@@ -7,7 +7,6 @@ moduleForAcceptance('Acceptance | repo branches', {
     this.currentUser = server.create('user', {
       name: 'User Name',
       login: 'user-login',
-      repos_count: 3
     });
 
     signInUser(this.currentUser);
@@ -20,7 +19,6 @@ moduleForAcceptance('Acceptance | repo branches', {
     server.create('organization', {
       name: 'Org Name',
       login: 'org-login',
-      repos_count: 30
     });
 
     const repository = server.create('repository', {
