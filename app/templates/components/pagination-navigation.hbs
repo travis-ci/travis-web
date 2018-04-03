@@ -11,7 +11,6 @@
     {{#each pages as |page|}}
       <li>
         {{#if page.num}}
-          {{log page.num}}
           {{#link-to route (query-params page=page.num)
             data-test-page-pagination-link=page.num
             class="pagination-link"
