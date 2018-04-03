@@ -3,7 +3,7 @@
     {{#if repo.slug}}
       {{#link-to "repo" repo}}
         {{status-icon status=repo.currentBuild.state}}
-      <span class="label-align inner-underline">{{repo.slug}}</span>
+        <span data-test-repos-list-item-slug class="label-align inner-underline">{{repo.slug}}</span>
       {{/link-to}}
     {{/if}}
   </h2>

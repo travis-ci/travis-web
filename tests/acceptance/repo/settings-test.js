@@ -4,6 +4,7 @@ import { Response } from 'ember-cli-mirage';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import settingsPage from 'travis/tests/pages/settings';
 import topPage from 'travis/tests/pages/top';
+import signInUser from 'travis/tests/helpers/sign-in-user';
 
 import moment from 'moment';
 

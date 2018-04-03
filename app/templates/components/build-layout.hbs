@@ -4,10 +4,10 @@
 {{else}}
 
   {{#if build}}
-    {{build-header item=build commit=build.commit repo=repo}}
+    {{build-header data-test-build-header item=build commit=build.commit repo=repo}}
 
     {{#if noJobsError}}
-      <p class="notice-banner--red">Sorry, we're having troubles fetching jobs. Please try again later.</p>
+      <p data-test-no-jobs-error-message class="notice-banner--red">Sorry, we're having troubles fetching jobs. Please try again later.</p>
     {{else}}
       {{#if build.isMatrix}}
         {{build-messages-list repo=repo build=build}}
@@ -35,7 +35,7 @@
         {{job-infrastructure-notification job=job}}
         {{build-messages-list repo=repo build=job.build}}
         {{job-tabs job=job repo=repo}}
-        {{job-log job=job}}
+        {{job-log data-test-job-log job=job}}
       {{/if}}
     {{/if}}
 

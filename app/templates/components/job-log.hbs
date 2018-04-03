@@ -4,6 +4,6 @@
   {{#if log.fetchTask.isRunning}}
     {{loading-indicator}}
   {{else}}
-    {{log-content log=log job=job}}
+    {{log-content data-test-job-log-content log=log job=job}}
   {{/if}}
 {{/if}}

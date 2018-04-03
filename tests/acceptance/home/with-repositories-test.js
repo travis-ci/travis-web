@@ -3,6 +3,7 @@ import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import sidebarPage from 'travis/tests/pages/sidebar';
 import jobPage from 'travis/tests/pages/job';
 import generatePusherPayload from 'travis/tests/helpers/generate-pusher-payload';
+import signInUser from 'travis/tests/helpers/sign-in-user';
 
 const repoId = 100;
 
