@@ -1,3 +1,8 @@
+{{#link-to "repo" repository.owner.login repository.name class="profile-repo"
+  classNameBindings="admin:admin:non-admin"}}
+  {{slug}}
+{{/link-to}}
+
 {{#if admin}}
   {{repository-switch
     repository=repository
@@ -15,11 +20,6 @@
   {{repository-switch repository=repository disabled=true}}
   <a class="profile-settings">{{svg-jar 'icon-private' class="icon"}}</a>
 {{/if}}
-
-{{#link-to "repo" repository.owner.login repository.name class="profile-repo"
-  classNameBindings="admin:admin:non-admin"}}
-  {{slug}}
-{{/link-to}}
 
 {{#if showError}}
   <div class="repositories-error">
