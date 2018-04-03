@@ -28,22 +28,6 @@ $profile-breakpoint: 600px;
   @media (min-width: $profile-breakpoint) {
     display: flex;
     flex-flow: column wrap;
-
-    .profile-user {
-      order: 1;
-    }
-
-    .profile-betafeatures {
-      order: 2;
-    }
-
-    .profile-orgs {
-      order: 3;
-    }
-
-    .profile-additional {
-      order: 4;
-    }
   }
 
   ul {
@@ -54,7 +38,20 @@ $profile-breakpoint: 600px;
 
   h2 {
     font-size: $font-size-sm;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: $cement-grey;
+    margin-bottom: 0;
+  }
+
+  section {
+    padding-bottom: 1rem;
     border-bottom: solid 2px $pebble-grey;
+
+    &.no-divider {
+      padding-bottom: 0;
+      border-bottom-width: 0;
+    }
   }
 }
 
@@ -183,13 +180,9 @@ $profile-breakpoint: 600px;
   }
 }
 
-.profile-additional {
-  margin-top: 20px;
-  border-top: solid 2px $pebble-grey;
-}
-
 .profile-text,
-.profile-additional {
+.profile-additional,
+.profile-betafeatures {
   @include linkStyle;
 }
 
