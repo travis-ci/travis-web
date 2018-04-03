@@ -2,6 +2,7 @@ import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import defaultHeader from 'travis/tests/pages/header/default';
 import defaultLayout from 'travis/tests/pages/layouts/default';
+import signInUser from 'travis/tests/helpers/sign-in-user';
 
 moduleForAcceptance('Acceptance | layouts/default');
 

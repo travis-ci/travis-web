@@ -1,7 +1,7 @@
 {{#if repos}}
   <ul class="repos-list">
     {{#each repos as |repo|}}
-      {{repos-list-item repo=repo}}
+      {{repos-list-item data-test-components-repos-list-item repo=repo}}
     {{/each}}
   </ul>
   {{else}}
