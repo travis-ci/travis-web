@@ -83,6 +83,25 @@ $profile-breakpoint: 600px;
 .profile-settings {
   display: flex;
   align-items: center;
+  background-color: white;
+  border: 1px solid $pebble-grey;
+  font-size: 10px;
+  color: $asphalt-grey;
+  padding: 0.3rem 0.4rem;
+  margin: 0.3rem 0;
+
+  .icon {
+    width: 12px;
+    height: 12px;
+  }
+
+  &:hover {
+    color: white;
+
+    .icon {
+      @include colorSVG(white);
+    }
+  }
 }
 
 .profile-settings .icon-disabled {

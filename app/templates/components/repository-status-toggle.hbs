@@ -12,8 +12,9 @@
   {{#if toggleRepositoryTask.isRunning}}
     {{loading-indicator inline=true}}
   {{else}}
-    {{#link-to "settings" repository.owner.login repository.name class="profile-settings" title="Go to Travis CI repository settings"}}
+    {{#link-to "settings" repository.owner.login repository.name tagName="button" class="button profile-settings" title="Go to Travis CI repository settings"}}
       {{svg-jar 'icon-settings' class="icon icon-hover"}}
+      Settings
     {{/link-to}}
   {{/if}}
 {{else}}
