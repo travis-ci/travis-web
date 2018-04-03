@@ -58,5 +58,5 @@ export default create({
     isNotShown: isHidden(),
   },
 
-  clickSigOutLink: clickable('ul.navigation-nested li:last a'),
+  clickSignOutLink: clickable('ul.navigation-nested li:last a'),
 });

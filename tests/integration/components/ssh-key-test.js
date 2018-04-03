@@ -1,87 +1,84 @@
-import { isEmpty } from '@ember/utils';
 import { run } from '@ember/runloop';
-import { getOwner } from '@ember/application';
 import EmberObject from '@ember/object';
-import { moduleForComponent, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import { render, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { percySnapshot } from 'ember-percy';
-import { startMirage } from 'travis/initializers/ember-cli-mirage';
 
-moduleForComponent('ssh-key', 'Integration | Component | ssh-key', {
-  integration: true,
-  beforeEach() {
-    this.server = startMirage();
-  },
+module('Integration | Component | ssh-key', function (hooks) {
+  setupRenderingTest(hooks);
 
-  afterEach() {
-    this.server.shutdown();
-  }
-});
-
-test('it renders the default ssh key if no custom key is set', function (assert) {
-  assert.expect(2);
-
-  var key = EmberObject.create({ fingerprint: 'fingerprint' });
-  this.set('key', key);
-  this.render(hbs`{{ssh-key key=key sshKeyDeleted="sshKeyDeleted"}}`);
-
-  assert.equal(this.$('.ssh-key-name span').text().trim(), 'Default', 'should display that no custom key is set');
-  assert.equal(this.$('.ssh-key-value span').text().trim(), 'fingerprint', 'should display default key fingerprint');
-  percySnapshot(assert);
-});
-
-test('it renders the custom ssh key if custom key is set', function (assert) {
-  assert.expect(2);
-
-  var store = getOwner(this).lookup('service:store');
-
-  var key;
-  run(function () {
-    key = store.push({ data: { id: 1, type: 'ssh-key', attributes: { description: 'fookey', fingerprint: 'somethingthing' } } });
+  hooks.beforeEach(function () {
+    this.actions = {};
+    this.send = (actionName, ...args) => this.actions[actionName].apply(this, args);
   });
 
-  this.set('key', key);
-  this.render(hbs`{{ssh-key key=key sshKeyDeleted="sshKeyDeleted"}}`);
+  test('it renders the default ssh key if no custom key is set', async function (assert) {
+    assert.expect(2);
 
-  assert.equal(this.$('.ssh-key-name span').text().trim(), 'fookey', 'should display key description');
-  assert.equal(this.$('.ssh-key-value span').text().trim(), 'somethingthing', 'should display custom key fingerprint');
-});
+    var key = EmberObject.create({ fingerprint: 'fingerprint' });
+    this.set('key', key);
+    await render(hbs`{{ssh-key key=key sshKeyDeleted="sshKeyDeleted"}}`);
 
-test('it deletes a custom key if permissions are right', function (assert) {
-  assert.expect(1);
-
-  var store = getOwner(this).lookup('service:store');
-
-  var key;
-  run(function () {
-    key = store.push({ data: { id: 1, type: 'ssh-key', attributes: { description: 'fookey', fingerprint: 'somethingthing' } } });
+    assert.dom('.ssh-key-name span').hasText('Default', 'should display that no custom key is set');
+    assert.dom('.ssh-key-value span').hasText('fingerprint', 'should display default key fingerprint');
+    percySnapshot(assert);
   });
 
-  this.set('key', key);
-  this.render(hbs`{{ssh-key key=key sshKeyDeleted="sshKeyDeleted" pushAccess=true}}`);
-  this.on('sshKeyDeleted', function () {});
+  test('it renders the custom ssh key if custom key is set', async function (assert) {
+    assert.expect(2);
 
-  this.$('.ssh-key-action button').click();
+    var store = this.owner.lookup('service:store');
 
-  assert.ok(key.get('isDeleted'), 'key should be deleted');
-  percySnapshot(assert);
+    var key;
+    run(function () {
+      key = store.push({ data: { id: 1, type: 'ssh-key', attributes: { description: 'fookey', fingerprint: 'somethingthing' } } });
+    });
 
-  var done = assert.async();
-  done();
-});
+    this.set('key', key);
+    await render(hbs`{{ssh-key key=key sshKeyDeleted="sshKeyDeleted"}}`);
 
-test('it does not delete the custom key if permissions are insufficient', function (assert) {
-  assert.expect(1);
-
-  var store = getOwner(this).lookup('service:store');
-
-  var key;
-  run(function () {
-    key = store.push({ data: { id: 1, type: 'ssh-key', attributes: { description: 'fookey', fingerprint: 'somethingthing' } } });
+    assert.dom('.ssh-key-name span').hasText('fookey', 'should display key description');
+    assert.dom('.ssh-key-value span').hasText('somethingthing', 'should display custom key fingerprint');
   });
 
-  this.set('key', key);
-  this.render(hbs`{{ssh-key key=key sshKeyDeleted="sshKeyDeleted" pushAccess=false}}`);
+  test('it deletes a custom key if permissions are right', async function (assert) {
+    assert.expect(1);
 
-  assert.ok(isEmpty(this.$('.ssh-key-action').find('a')), 'delete link should not be displayed');
+    var store = this.owner.lookup('service:store');
+
+    var key;
+    run(function () {
+      key = store.push({ data: { id: 1, type: 'ssh-key', attributes: { description: 'fookey', fingerprint: 'somethingthing' } } });
+    });
+
+    this.set('key', key);
+    await render(hbs`{{ssh-key key=key sshKeyDeleted="sshKeyDeleted" pushAccess=true}}`);
+    this.actions.sshKeyDeleted = function () {};
+
+    await click('.ssh-key-action button');
+
+    assert.ok(key.get('isDeleted'), 'key should be deleted');
+    percySnapshot(assert);
+
+    var done = assert.async();
+    done();
+  });
+
+  test('it does not delete the custom key if permissions are insufficient', async function (assert) {
+    assert.expect(1);
+
+    var store = this.owner.lookup('service:store');
+
+    var key;
+    run(function () {
+      key = store.push({ data: { id: 1, type: 'ssh-key', attributes: { description: 'fookey', fingerprint: 'somethingthing' } } });
+    });
+
+    this.set('key', key);
+    await render(hbs`{{ssh-key key=key sshKeyDeleted="sshKeyDeleted" pushAccess=false}}`);
+
+    assert.dom('.ssh-key-action a').doesNotExist('delete link should not be displayed');
+  });
 });

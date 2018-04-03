@@ -1,7 +1,7 @@
 {{#job-wrapper repo=repo job=job}}
 {{#if job.isLoaded}}
 
-  {{build-header item=job commit=job.commit repo=repo}}
+  {{build-header data-test-build-header item=job commit=job.commit repo=repo}}
 
   {{job-infrastructure-notification job=job}}
   {{job-tabs job=job repo=repo}}

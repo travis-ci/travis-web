@@ -16,4 +16,14 @@ export default Factory.extend({
       });
     },
   }),
+
+  syncing: trait({
+    afterCreate(user) {
+      user.update({
+        is_syncing: true,
+        synced_at: null,
+      });
+      user.save();
+    }
+  }),
 });

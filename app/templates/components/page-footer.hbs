@@ -9,8 +9,8 @@
       <h3 class="footer-title">&copy;Travis CI, GmbH</h3>
       <address>Rigaer Straße 8<br>10247 Berlin, Germany</address>
       <ul>
-        <li><a href="{{ config.urls.imprint }}" title="Imprint">Imprint</a></li>
-        <li><a href="{{ config.urls.jobs }}" title="Jobs at Travis CI">Jobs</a></li>
+        <li><a data-test-footer-imprint-link href="{{ config.urls.imprint }}" title="Imprint">Imprint</a></li>
+        <li><a data-test-footer-jobs-link href="{{ config.urls.jobs }}" title="Jobs at Travis CI">Jobs</a></li>
       </ul>
     </div>
   {{/unless}}
@@ -19,9 +19,9 @@
     <ul>
       <li><a href="{{ config.urls.docs }}" title="Travis CI Docs">Documentation</a></li>
       {{#unless features.enterpriseVersion}}
-        <li><a href="{{ config.urls.blog }}" title="Travis CI Blog">Blog</a></li>
-        <li><a href="{{ config.urls.support }}" title="Email Travis CI support">Email</a></li>
-        <li><a href="{{ config.urls.twitter }}" title="Travis CI on Twitter">Twitter</a></li>
+        <li><a data-test-footer-blog-link href="{{ config.urls.blog }}" title="Travis CI Blog">Blog</a></li>
+        <li><a data-test-footer-support-link href="{{ config.urls.support }}" title="Email Travis CI support">Email</a></li>
+        <li><a data-test-footer-twitter-link href="{{ config.urls.twitter }}" title="Travis CI on Twitter">Twitter</a></li>
       {{/unless}}
     </ul>
   </div>
@@ -30,9 +30,9 @@
       <div class="footer-elem">
         <h3 class="footer-title">Legal</h3>
         <ul>
-          <li><a href="{{ config.urls.imprint }}" title="Imprint">Imprint</a></li>
-          <li><a href="{{ config.urls.terms }}" title="Terms of Service">Terms of Service</a></li>
-          <li><a href="{{ config.urls.security }}" title="Security Statement">Security Statement</a></li>
+          <li><a data-test-footer-imprint-link href="{{ config.urls.imprint }}" title="Imprint">Imprint</a></li>
+          <li><a data-test-footer-tos-link href="{{ config.urls.terms }}" title="Terms of Service">Terms of Service</a></li>
+          <li><a data-test-footer-security-link href="{{ config.urls.security }}" title="Security Statement">Security Statement</a></li>
         </ul>
       </div>
     {{/if}}
