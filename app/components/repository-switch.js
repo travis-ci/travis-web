@@ -3,7 +3,7 @@ import { computed } from 'ember-decorators/object';
 
 export default Component.extend({
   tagName: 'button',
-  classNames: ['switch'],
+  classNames: ['switch-rounded'],
   classNameBindings: ['repository.active:active', 'disabled:disabled', 'disabled:inline-block'],
   attributeBindings: ['aria-checked', 'role'],
 
