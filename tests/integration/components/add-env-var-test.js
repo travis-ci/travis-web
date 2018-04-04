@@ -1,119 +1,110 @@
-import { isBlank } from '@ember/utils';
 import { run } from '@ember/runloop';
-import { getOwner } from '@ember/application';
-import { moduleForComponent, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import { render, click } from '@ember/test-helpers';
+import { fillInWithKeyEvent } from 'travis/tests/helpers/extra-test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import fillIn from '../../helpers/fill-in';
 import DS from 'ember-data';
 import { percySnapshot } from 'ember-percy';
-import { startMirage } from 'travis/initializers/ember-cli-mirage';
 
-moduleForComponent('add-env-var', 'Integration | Component | add env-var', {
-  integration: true,
-  beforeEach() {
-    this.server = startMirage();
-  },
+module('Integration | Component | add env-var', function (hooks) {
+  setupRenderingTest(hooks);
 
-  afterEach() {
-    this.server.shutdown();
-  }
-});
+  test('it adds an env var on submit', async function (assert) {
+    assert.expect(6);
 
-test('it adds an env var on submit', function (assert) {
-  assert.expect(6);
+    var store = this.owner.lookup('service:store');
+    assert.equal(store.peekAll('envVar').get('length'), 0, 'precond: store should be empty');
 
-  var store = getOwner(this).lookup('service:store');
-  assert.equal(store.peekAll('envVar').get('length'), 0, 'precond: store should be empty');
+    var repo;
+    run(function () {
+      repo  = store.push({ data: { id: 1, type: 'repo', attributes: { slug: 'travis-ci/travis-web' } } });
+    });
 
-  var repo;
-  run(function () {
-    repo  = store.push({ data: { id: 1, type: 'repo', attributes: { slug: 'travis-ci/travis-web' } } });
+    this.set('repo', repo);
+
+    await render(hbs`{{add-env-var repo=repo}}`);
+
+    await fillInWithKeyEvent('.env-name', 'FOO');
+    await fillInWithKeyEvent('.env-value', 'bar');
+
+    await click('.form-submit');
+
+    assert.equal(store.peekAll('envVar').get('length'), 1, 'env var should be added to store');
+
+    var envVar = store.peekAll('envVar').objectAt(0);
+
+    assert.equal(envVar.get('name'), 'FOO', 'name should be set for the env var');
+    assert.equal(envVar.get('value'), 'bar', 'value should be set for the env var');
+    assert.equal(envVar.get('repo.slug'), 'travis-ci/travis-web', 'repo should be set for the env var');
+    assert.ok(!envVar.get('public'), 'env var should be private');
+
+    var done = assert.async();
+    done();
   });
 
-  this.set('repo', repo);
+  test('it shows an error if no name is present', async function (assert) {
+    assert.expect(3);
 
-  this.render(hbs`{{add-env-var repo=repo}}`);
+    await render(hbs`{{add-env-var repo=repo}}`);
 
-  fillIn(this.$('.env-name'), 'FOO');
-  fillIn(this.$('.env-value'), 'bar');
+    assert.dom('.env-name').doesNotHaveAttribute('value', 'precond: name input should be empty');
 
-  this.$('.form-submit').click();
+    await click('.form-submit');
 
-  assert.equal(store.peekAll('envVar').get('length'), 1, 'env var should be added to store');
+    assert.dom('.form-error-message').exists('the error message should be displayed');
 
-  var envVar = store.peekAll('envVar').objectAt(0);
+    percySnapshot(assert);
 
-  assert.equal(envVar.get('name'), 'FOO', 'name should be set for the env var');
-  assert.equal(envVar.get('value'), 'bar', 'value should be set for the env var');
-  assert.equal(envVar.get('repo.slug'), 'travis-ci/travis-web', 'repo should be set for the env var');
-  assert.ok(!envVar.get('public'), 'env var should be private');
+    await fillInWithKeyEvent('.env-name', 'FOO');
+    await fillInWithKeyEvent('.env-value', 'bar');
 
-  var done = assert.async();
-  done();
-});
-
-test('it shows an error if no name is present', function (assert) {
-  assert.expect(3);
-
-  this.render(hbs`{{add-env-var repo=repo}}`);
-
-  this.$('.env-name').val();
-  assert.ok(isBlank(this.$('.env-name').val()), 'precond: name input should be empty');
-
-  this.$('.form-submit').click();
-
-  assert.ok(this.$('.form-error-message').length, 'the error message should be displayed');
-
-  percySnapshot(assert);
-
-  fillIn(this.$('.env-name'), 'FOO');
-  fillIn(this.$('.env-value'), 'bar');
-
-  assert.ok(!this.$('.form-error-message').length, 'the error message should be removed after value is changed');
-});
-
-test('it does not show an error when changing the public switch', function (assert) {
-  assert.expect(1);
-
-  this.render(hbs`{{add-env-var repo=repo}}`);
-
-  this.$('.switch-inner').click();
-
-  assert.notOk(this.$('.form-error-message').length, 'there should be no error message');
-});
-
-test('it adds a public env var on submit', function (assert) {
-  assert.expect(6);
-
-  this.registry.register('transform:boolean', DS.BooleanTransform);
-  var store = getOwner(this).lookup('service:store');
-  assert.equal(store.peekAll('envVar').get('length'), 0, 'precond: store should be empty');
-
-  var repo;
-  run(function () {
-    repo  = store.push({ data: { id: 1, type: 'repo', attributes: { slug: 'travis-ci/travis-web' } } });
+    assert.dom('.form-error-message').doesNotExist('the error message should be removed after value is changed');
   });
 
-  this.set('repo', repo);
+  test('it does not show an error when changing the public switch', async function (assert) {
+    assert.expect(1);
 
-  this.render(hbs`{{add-env-var repo=repo}}`);
+    await render(hbs`{{add-env-var repo=repo}}`);
 
-  fillIn(this.$('.env-name'), 'FOO');
-  fillIn(this.$('.env-value'), 'bar');
+    await click('.switch-inner');
 
-  this.$('.switch').click();
+    assert.dom('.form-error-message').doesNotExist('there should be no error message');
+  });
 
-  this.$('.form-submit').click();
+  test('it adds a public env var on submit', async function (assert) {
+    assert.expect(6);
 
-  assert.equal(store.peekAll('envVar').get('length'), 1, 'env var should be added to store');
+    this.owner.register('transform:boolean', DS.BooleanTransform);
+    var store = this.owner.lookup('service:store');
+    assert.equal(store.peekAll('envVar').get('length'), 0, 'precond: store should be empty');
 
-  var envVar = store.peekAll('envVar').objectAt(0);
+    var repo;
+    run(function () {
+      repo  = store.push({ data: { id: 1, type: 'repo', attributes: { slug: 'travis-ci/travis-web' } } });
+    });
 
-  assert.equal(envVar.get('name'), 'FOO', 'name should be set for the env var');
-  assert.equal(envVar.get('value'), 'bar', 'value should be set for the env var');
-  assert.equal(envVar.get('repo.slug'), 'travis-ci/travis-web', 'repo should be set for the env var');
-  assert.ok(envVar.get('public'), 'env var should be public');
+    this.set('repo', repo);
 
-  var done = assert.async();
-  done();
+    await render(hbs`{{add-env-var repo=repo}}`);
+
+    await fillInWithKeyEvent('.env-name', 'FOO');
+    await fillInWithKeyEvent('.env-value', 'bar');
+
+    await click('.switch');
+
+    await click('.form-submit');
+
+    assert.equal(store.peekAll('envVar').get('length'), 1, 'env var should be added to store');
+
+    var envVar = store.peekAll('envVar').objectAt(0);
+
+    assert.equal(envVar.get('name'), 'FOO', 'name should be set for the env var');
+    assert.equal(envVar.get('value'), 'bar', 'value should be set for the env var');
+    assert.equal(envVar.get('repo.slug'), 'travis-ci/travis-web', 'repo should be set for the env var');
+    assert.ok(envVar.get('public'), 'env var should be public');
+
+    var done = assert.async();
+    done();
+  });
 });

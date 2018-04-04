@@ -1,14 +1,17 @@
-import { skip, test } from 'qunit';
-import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
-import dashboardPage from 'travis/tests/pages/dashboard';
-import topPage from 'travis/tests/pages/top';
+import { currentURL, currentRouteName, visit, click } from '@ember/test-helpers';
+import { module, skip, test } from 'qunit';
+import { setupApplicationTest } from 'ember-qunit';
+import signInUser from 'travis/tests/helpers/sign-in-user';
+import { enableFeature } from 'ember-feature-flags/test-support';
+import { percySnapshot } from 'ember-percy';
 
-moduleForAcceptance('Acceptance | dashboard/repositories', {
-  beforeEach() {
+module('Acceptance | dashboard/repositories', function (hooks) {
+  setupApplicationTest(hooks);
+
+  hooks.beforeEach(function () {
     const currentUser = server.create('user', {
-      name: 'Sara Ahmed',
-      login: 'feministkilljoy',
-      repos_count: 3
+      name: 'User Name',
+      login: 'user-login',
     });
 
     signInUser(currentUser);
@@ -81,88 +84,71 @@ moduleForAcceptance('Acceptance | dashboard/repositories', {
         create_request: true
       }
     });
-  }
-});
+  });
 
-test('visiting /dashboard/ with feature flag disabled', function (assert) {
-  visit('/dashboard/');
+  test('visiting /dashboard/ with feature flag disabled', async function (assert) {
+    await visit('/dashboard/');
 
-  andThen(() => {
     assert.notEqual(currentURL(), '/dashboard/');
   });
-});
 
-test('visiting /dashboard/ with feature flag enabled', function (assert) {
-  withFeature('dashboard');
+  test('visiting /dashboard/ with feature flag enabled', async function (assert) {
+    enableFeature('dashboard');
 
-  visit('/');
+    await visit('/');
 
-  andThen(() => {
     assert.equal(currentRouteName(), 'dashboard.repositories');
     assert.equal(currentURL(), '/dashboard', 'we go to dashboard');
   });
-});
 
-test('starring and unstarring a repo', function (assert) {
-  withFeature('dashboard');
+  test('starring and unstarring a repo', async function (assert) {
+    enableFeature('dashboard');
 
-  dashboardPage.visit();
+    await visit('/dashboard');
 
-  andThen(() => {
-    assert.equal(dashboardPage.starredRepos.length, 1, 'there is one starred repo');
-    assert.ok(dashboardPage.starredRepos[0].hasTofuButton, 'shows tofubutton if user has proper permissions');
+    assert.dom('[data-test-dashboard-starred-repositories] [data-test-dashboard-repository-star]').exists({ count: 1 });
+    assert.dom('[data-test-dashboard-repository-menu="0"] [data-test-tofu-menu]').exists();
 
-    dashboardPage.activeRepos[3].clickStarButton();
 
-    andThen(() => {
-      assert.equal(dashboardPage.starredRepos.length, 2, 'there are two starred repos');
+    await click('[data-test-dashboard-repository-star="2"]');
+    assert.dom('[data-test-dashboard-starred-repositories] [data-test-dashboard-repository-star]').exists({ count: 2 });
 
-      dashboardPage.starredRepos[0].clickUnStarButton();
-
-      andThen(() => {
-        assert.equal(dashboardPage.starredRepos.length, 1, 'there are two starred repos');
-      });
-    });
+    await click('[data-test-dashboard-repository-star="2"]');
+    assert.dom('[data-test-dashboard-starred-repositories] [data-test-dashboard-repository-star]').exists({ count: 1 });
   });
-});
 
-skip('filtering repos');
+  skip('filtering repos');
 
-skip('triggering a build');
+  skip('triggering a build');
 
-test('Dashboard pagination works', function (assert) {
-  withFeature('dashboard');
+  test('Dashboard pagination works', async function (assert) {
+    enableFeature('dashboard');
 
-  server.createList('repository', 12);
+    server.createList('repository', 12);
 
-  dashboardPage.visit();
+    await visit('/dashboard');
 
-  andThen(() => {
-    assert.equal(dashboardPage.starredRepos.length, 1, 'filters starred repos');
-    assert.equal(dashboardPage.activeRepos.length, 10, 'lists all active repos');
-    assert.ok(dashboardPage.paginationIsVisible, 'pagination component renders');
-    assert.equal(dashboardPage.paginationLinks.length, 3, 'calcs and displays pagination links');
-    assert.equal(dashboardPage.paginationLinks[2].label, 'next', 'also displays next link');
+    assert.dom('[data-test-dashboard-starred-repositories] [data-test-dashboard-repository-star]').exists({ count: 1 });
+    assert.dom('[data-test-dashboard-active-repositories] [data-test-dashboard-repository-star]').exists({ count: 10 });
+    assert.dom('[data-test-components-pagination-navigation]').exists();
+    assert.dom('[data-test-page-pagination-link]').exists({ count: 2 });
+    assert.dom('[data-test-next-pagination-link]').exists();
 
     percySnapshot(assert);
 
-    dashboardPage.paginationLinks[1].page();
+    await click('[data-test-page-pagination-link="2"]');
 
-    andThen(() => {
-      assert.equal(dashboardPage.starredRepos.length, 1, 'still lists starred repos on top');
-      assert.equal(dashboardPage.activeRepos.length, 6, 'lists other repos on the 2nd page');
-    });
+    assert.dom('[data-test-dashboard-starred-repositories] [data-test-dashboard-repository-star]').exists({ count: 1 }, 'still lists starred repos on top');
+    assert.dom('[data-test-dashboard-active-repositories] [data-test-dashboard-repository-star]').exists({ count: 6 }, 'lists other repos on the 2nd page');
   });
-});
 
-test('logging out leaves the dashboard', function (assert) {
-  withFeature('dashboard');
-  dashboardPage.visit();
+  test('logging out leaves the dashboard', async function (assert) {
+    enableFeature('dashboard');
 
-  andThen(() => {});
-  topPage.clickSigOutLink();
+    await visit('/dashboard');
 
-  andThen(() => {
+    await click('[data-test-signout-link]');
+
     assert.equal(currentURL(), '/');
   });
 });

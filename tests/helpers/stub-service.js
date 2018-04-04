@@ -1,8 +1,6 @@
-import { registerHelper } from '@ember/test';
+import { getContext } from '@ember/test-helpers';
 
-export function stubService(app, name, service) {
-  let container = app.container || app.__container__;
-  container.registry.register(`service:${name}`, service);
+export function stubService(name, service) {
+  let { owner } = getContext();
+  owner.register(`service:${name}`, service);
 }
-
-registerHelper('stubService', stubService);

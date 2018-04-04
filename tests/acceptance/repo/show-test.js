@@ -5,8 +5,8 @@ import page from 'travis/tests/pages/repo/show';
 moduleForAcceptance('Acceptance | show repo page', {
   beforeEach() {
     const repository = server.create('repository', {
-      name: 'living-a-feminist-life',
-      slug: 'killjoys/living-a-feminist-life'
+      name: 'repository-name',
+      slug: 'org-login/repository-name'
     });
 
     repository.createBranch({
@@ -24,12 +24,12 @@ moduleForAcceptance('Acceptance | show repo page', {
 });
 
 test('loading branches doesnt update the default branch on the repo', function (assert) {
-  page.visit({ organization: 'killjoys', repo: 'living-a-feminist-life' });
+  page.visit({ organization: 'org-login', repo: 'repository-name' });
   page.openStatusImagePopup();
 
   andThen(() => {
     const url = new URL(page.statusBadgeImageSrc);
     const expectedPath = `${url.pathname}?${url.searchParams}`;
-    assert.equal(expectedPath, '/killjoys/living-a-feminist-life.svg?branch=feminist%23yes');
+    assert.equal(expectedPath, '/org-login/repository-name.svg?branch=feminist%23yes');
   });
 });

@@ -1,7 +1,7 @@
 {{#if jobs.isLoaded}}
   {{#if jobs.length}}
     {{#each jobs as |job|}}
-      <div class="tile tile--sidebar {{job.state}}">
+      <div data-test-sidebar-queued-job class="tile tile--sidebar {{job.state}}">
         {{#if job.repo.slug}}
           {{status-icon status=job.state}}
           {{#link-to "job" job.repo job}}{{job.repo.slug}}{{/link-to}}

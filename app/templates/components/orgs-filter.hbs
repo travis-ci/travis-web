@@ -19,7 +19,7 @@
       {{/if}}
       {{#each orgs as |org|}}
       <li>
-        <a title="Select {{org.login}}" {{action 'select' org}}>
+        <a data-test-org-filter-item title="Select {{org.login}}" {{action 'select' org}}>
           {{user-avatar url=org.avatarUrl name=org.name small=true}}
           <span class="label-align">
           {{org.displayName}}

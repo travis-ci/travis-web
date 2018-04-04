@@ -23,10 +23,10 @@ module('Integration | Mirage Serializer | V3Serializer', {
       })
     });
 
-    const author = this.schema.authors.create({ name: 'Sara Ahmed' });
+    const author = this.schema.authors.create({ name: 'User Name' });
 
-    author.createBook({ title: 'Willful Subjects' });
-    author.createBook({ title: 'On Being Included' });
+    author.createBook({ title: 'A Book' });
+    author.createBook({ title: 'A Different Book' });
 
     this.registry = new SerializerRegistry(this.schema, {
       application: V3Serializer,
@@ -53,18 +53,18 @@ test('it serialises a collection with underscored property keys and pagination',
     books: [{
       id: '1',
       author_id: '1',
-      title: 'Willful Subjects',
+      title: 'A Book',
       author: {
         id: '1',
-        name: 'Sara Ahmed'
+        name: 'User Name'
       }
     }, {
       id: '2',
       author_id: '1',
-      title: 'On Being Included',
+      title: 'A Different Book',
       author: {
         id: '1',
-        name: 'Sara Ahmed'
+        name: 'User Name'
       }
     }]
   });
@@ -85,10 +85,10 @@ test('it serialises a single resource with its properties included directly and 
     '@type': 'book',
     id: '1',
     author_id: '1',
-    title: 'Willful Subjects',
+    title: 'A Book',
     author: {
       id: '1',
-      name: 'Sara Ahmed'
+      name: 'User Name'
     }
   });
 });

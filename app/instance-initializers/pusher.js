@@ -5,9 +5,11 @@ export function initialize(applicationInstance) {
   const app = applicationInstance.application;
   app.pusher = new TravisPusher(config.pusher, applicationInstance.lookup('service:ajax'));
 
-  app.register('pusher:main', app.pusher, {
-    instantiate: false
-  });
+  if (!applicationInstance.lookup('pusher:main')) {
+    app.register('pusher:main', app.pusher, {
+      instantiate: false
+    });
+  }
   app.inject('route', 'pusher', 'pusher:main');
   app.inject('component', 'pusher', 'pusher:main');
   app.pusher.store = applicationInstance.lookup('service:store');

@@ -1,5 +1,6 @@
 import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
+import signInUser from 'travis/tests/helpers/sign-in-user';
 
 moduleForAcceptance('Acceptance | profile/redirect', {
   beforeEach() {

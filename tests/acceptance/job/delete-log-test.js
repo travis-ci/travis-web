@@ -3,6 +3,7 @@ import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import jobPage from 'travis/tests/pages/job';
 import topPage from 'travis/tests/pages/top';
 import { Response } from 'ember-cli-mirage';
+import signInUser from 'travis/tests/helpers/sign-in-user';
 
 moduleForAcceptance('Acceptance | job/delete log', {
   beforeEach() {
