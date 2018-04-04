@@ -8,6 +8,12 @@ module.exports = {
     'Firefox'
   ],
   browser_args: {
+    Firefox: {
+      mode: 'ci',
+      args: [
+        '-headless'
+      ]
+    },
     Chrome: {
       mode: 'ci',
       args: [
