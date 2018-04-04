@@ -12,7 +12,6 @@ module('Acceptance | dashboard/repositories', function (hooks) {
     const currentUser = server.create('user', {
       name: 'User Name',
       login: 'user-login',
-      repos_count: 3
     });
 
     signInUser(currentUser);

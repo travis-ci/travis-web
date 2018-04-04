@@ -40,7 +40,6 @@ export default create({
   },
 
   accounts: collection('.profile-aside .account', {
-    name: text('.account-name'),
-    repositoryCount: text('.account-repo-count')
+    name: text('.account-name')
   })
 });
