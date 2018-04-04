@@ -13,11 +13,11 @@ import {
 function existingRepositoriesCollection(scope) {
   return collection(`${scope} li.profile-repolist-item`, {
     name: text('a.profile-repo'),
-    isActive: hasClass('active', '.switch'),
+    isActive: hasClass('active', '.switch-rounded'),
     isDisabled: hasClass('non-admin', 'a.profile-repo'),
     toggle: clickable('.switch'),
-    ariaChecked: attribute('aria-checked', '.switch'),
-    role: attribute('role', '.switch')
+    ariaChecked: attribute('aria-checked', '.switch-rounded'),
+    role: attribute('role', '.switch-rounded')
   });
 }
 
