@@ -43,6 +43,8 @@ script:
 
 after_script:
   - greenkeeper-lockfile-upload
+  - echo $TRAVIS_PULL_REQUEST
+  - echo $TRAVIS_SECURE_ENV_VARS
   - "test $TRAVIS_PULL_REQUEST && test $TRAVIS_PULL_REQUEST != 'false' && $TRAVIS_SECURE_ENV_VARS == 'true' && ./config/deployment/deploy-pull-request.sh"
 
 # FIXME obvsy the above
