@@ -1091,7 +1091,7 @@ export default {
           }
         ]
       },
-      "attributes": ["id","login","name","github_id","avatar_url","repositories","github_apps_installation_id"],
+      "attributes": ["id","login","name","github_id","avatar_url","installation","repositories"],
       "representations": {
         "minimal": [
           "id",
@@ -1102,8 +1102,7 @@ export default {
           "login",
           "name",
           "github_id",
-          "avatar_url",
-          "github_apps_installation_id"
+          "avatar_url"
         ],
         "additional": [
           "repositories"
@@ -1604,7 +1603,7 @@ export default {
           }
         ]
       },
-      "attributes": ["id","login","name","github_id","avatar_url","repositories","is_syncing","synced_at","github_apps_installation_id"],
+      "attributes": ["id","login","name","github_id","avatar_url","installation","repositories","is_syncing","synced_at"],
       "representations": {
         "minimal": [
           "id",
@@ -1617,8 +1616,7 @@ export default {
           "github_id",
           "avatar_url",
           "is_syncing",
-          "synced_at",
-          "github_apps_installation_id"
+          "synced_at"
         ],
         "additional": [
           "repositories"

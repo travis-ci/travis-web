@@ -6,6 +6,7 @@ import { observer } from '@ember/object';
 import Model from 'ember-data/model';
 import config from 'travis/config/environment';
 import attr from 'ember-data/attr';
+import { belongsTo } from 'ember-data/relationships';
 import { service } from 'ember-decorators/service';
 import { computed } from 'ember-decorators/object';
 
@@ -24,7 +25,7 @@ export default Model.extend({
   repoCount: attr('number'),
   avatarUrl: attr(),
 
-  githubAppsInstallationId: attr(),
+  installation: belongsTo(),
 
   @computed('name', 'login')
   fullName(name, login) {

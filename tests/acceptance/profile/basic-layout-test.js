@@ -7,11 +7,15 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
   beforeEach() {
     const currentUser = server.create('user', {
       name: 'User Name',
-      login: 'user-login',
-      github_apps_installation_id: 123
+      login: 'user-login'
     });
 
     signInUser(currentUser);
+
+    server.create('installation', {
+      owner: currentUser
+    });
+    currentUser.save();
 
     // create organization
     server.create('organization', {
