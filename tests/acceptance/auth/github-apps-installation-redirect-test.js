@@ -14,9 +14,10 @@ test('it polls until the GitHub installation ID resolves to an owner', function 
   let done = assert.async();
   let repetition = 0;
 
-  server.create('organization', {
-    login: 'the-org',
-    githubAppsInstallationId: 1919
+  let installation = server.create('installation');
+
+  installation.createOwner('organization', {
+    login: 'the-org'
   });
 
   server.get('/owner/github_apps_installation_id/:id', (schema, {params: {id}}) => {
@@ -24,12 +25,12 @@ test('it polls until the GitHub installation ID resolves to an owner', function 
       repetition++;
       return new Response(404, {}, {});
     } else {
-      assert.equal(id, '1919', 'expected the API request to include the correct installation ID');
-      return schema.organizations.first();
+      assert.equal(id, installation.id, 'expected the API request to include the correct installation ID');
+      return schema.installations.find(id).owners.models[0];
     }
   });
 
-  visit('/github_apps_installation?installation_id=1919');
+  visit(`/github_apps_installation?installation_id=${installation.id}`);
 
   andThen(() => {
     assert.dom('[data-test-github-apps-polling]').hasText('polling!');
