@@ -24,6 +24,8 @@ export default Model.extend({
   repoCount: attr('number'),
   avatarUrl: attr(),
 
+  githubAppsInstallationId: attr(),
+
   @computed('name', 'login')
   fullName(name, login) {
     return name || login;

@@ -8,5 +8,7 @@ export default Model.extend({
   syncedAt: attr(),
   avatarUrl: attr(),
 
+  githubAppsInstallationId: attr(),
+
   type: 'organization',
 });

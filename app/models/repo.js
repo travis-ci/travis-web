@@ -23,6 +23,7 @@ const Repo = Model.extend({
   owner: attr(),
   name: attr(),
   starred: attr('boolean'),
+  locked: attr('boolean'),
 
   @oneWay('owner.@type') ownerType: null,
 

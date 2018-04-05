@@ -28,22 +28,6 @@ $profile-breakpoint: 600px;
   @media (min-width: $profile-breakpoint) {
     display: flex;
     flex-flow: column wrap;
-
-    .profile-user {
-      order: 1;
-    }
-
-    .profile-betafeatures {
-      order: 2;
-    }
-
-    .profile-orgs {
-      order: 3;
-    }
-
-    .profile-additional {
-      order: 4;
-    }
   }
 
   ul {
@@ -54,7 +38,20 @@ $profile-breakpoint: 600px;
 
   h2 {
     font-size: $font-size-sm;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: $cement-grey;
+    margin-bottom: 0;
+  }
+
+  section {
+    padding-bottom: 1rem;
     border-bottom: solid 2px $pebble-grey;
+
+    &.no-divider {
+      padding-bottom: 0;
+      border-bottom-width: 0;
+    }
   }
 }
 
@@ -66,38 +63,6 @@ $profile-breakpoint: 600px;
   .h2--grey {
     margin-bottom: 0;
     line-heigth: 1;
-  }
-}
-
-.profile-getstarted {
-  display: flex;
-  flex-flow: column wrap;
-  margin: 0 0 3rem;
-  padding: 1em;
-  list-style: none;
-  border-radius: 4px;
-
-  @media #{$medium} {
-    flex-flow: row nowrap;
-    justify-content: space-around;
-  }
-
-  li {
-    text-align: center;
-  }
-
-  figure {
-    margin: 0;
-  }
-
-  figcaption {
-    width: 90%;
-    margin: auto;
-    padding: 0 1em 0 2.8em;
-
-    @media #{$medium-up} {
-      text-align: left;
-    }
   }
 }
 
@@ -118,6 +83,25 @@ $profile-breakpoint: 600px;
 .profile-settings {
   display: flex;
   align-items: center;
+  background-color: white;
+  border: 1px solid $pebble-grey;
+  font-size: 10px;
+  color: $asphalt-grey;
+  padding: 0.3rem 0.4rem;
+  margin: 0.3rem 0;
+
+  .icon {
+    width: 12px;
+    height: 12px;
+  }
+
+  &:hover {
+    color: white;
+
+    .icon {
+      @include colorSVG(white);
+    }
+  }
 }
 
 .profile-settings .icon-disabled {
@@ -131,6 +115,7 @@ $profile-breakpoint: 600px;
   white-space: nowrap;
   overflow: hidden;
   border-radius: 2px;
+  margin-right: 1rem;
 
   .sync-spinner {
     vertical-align: top;
@@ -183,13 +168,9 @@ $profile-breakpoint: 600px;
   }
 }
 
-.profile-additional {
-  margin-top: 20px;
-  border-top: solid 2px $pebble-grey;
-}
-
 .profile-text,
-.profile-additional {
+.profile-additional,
+.profile-betafeatures {
   @include linkStyle;
 }
 

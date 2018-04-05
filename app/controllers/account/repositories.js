@@ -2,15 +2,23 @@ import { computed, action } from 'ember-decorators/object';
 import Controller from '@ember/controller';
 import { service } from 'ember-decorators/service';
 
+import { filter, filterBy } from 'ember-decorators/object/computed';
+
 export default Controller.extend({
   @service features: null,
 
   page: 1,
 
-  @computed('model')
+  @computed('model.deprecated')
   sortedRepositories(repos) {
     return repos.sortBy('name');
   },
+
+  @filterBy('model.githubApps', 'locked')
+  lockedGithubAppsRepositories: null,
+
+  @filter('model.githubApps', repo => !repo.get('locked'))
+  notLockedGithubAppsRepositories: null,
 
   @action
   filterQuery(query) {

@@ -1,0 +1,13 @@
+{{#if repository.private}}
+  {{svg-jar 'icon-private' alt='Private repository' class='icon private'}}
+{{else}}
+  {{svg-jar 'stage-passed' alt='Public repository' class='icon public'}}
+{{/if}}
+
+{{#link-to "settings" repository.owner.login repository.name class="profile-settings" title="Go to Travis CI repository settings"}}
+  {{svg-jar 'icon-settings' class="icon icon-hover"}}
+{{/link-to}}
+
+{{#link-to "repo" repository.owner.login repository.name class="profile-repo"}}
+  {{repository.slug}}
+{{/link-to}}

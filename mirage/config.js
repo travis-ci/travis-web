@@ -261,6 +261,17 @@ export default function () {
         return fuzzysort.single(queryParams.slug_filter, repo.slug);
       });
     }
+
+    if (queryParams && queryParams['repository.managed_by_github_apps']) {
+      let paramValue = queryParams['repository.managed_by_github_apps'];
+
+      if (paramValue === 'true') {
+        repositories.models = repositories.models.filterBy('managed_by_github_apps');
+      } else {
+        repositories.models = repositories.models.rejectBy('managed_by_github_apps');
+      }
+    }
+
     return this.serialize(repositories);
   });
 
