@@ -18,11 +18,16 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
     currentUser.save();
 
     // create organization
-    server.create('organization', {
+    let organization = server.create('organization', {
       name: 'Org Name',
       type: 'organization',
       login: 'org-login'
     });
+
+    server.create('installation', {
+      owner: organization
+    });
+    organization.save();
 
     // Pad with extra organisations to force an extra API response page
     for (let orgIndex = 0; orgIndex < 10; orgIndex++) {
@@ -149,10 +154,16 @@ test('view profile', function (assert) {
   });
 });
 
-test('view a profile for an organisation that doesn’t have GitHub Apps', function (assert) {
-  profilePage.visit({ username: 'org-login' });
+test('view a profiles for organizations that do not and do have GitHub Apps installations', function (assert) {
+  profilePage.visit({ username: 'org0' });
 
   andThen(function () {
     assert.ok(profilePage.githubAppsInvitation.isVisible, 'expected GitHub Apps invitation to be visible');
+  });
+
+  profilePage.visit({ username: 'org-login' });
+
+  andThen(function () {
+    assert.notOk(profilePage.githubAppsInvitation.isVisible, 'expected GitHub Apps invitation to not be visible');
   });
 });
