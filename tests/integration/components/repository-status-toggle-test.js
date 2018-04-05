@@ -24,6 +24,6 @@ module('RepositoryStatusToggleComponent', function (hooks) {
 
     await render(hbs`{{repository-status-toggle repository=repository}}`);
 
-    assert.dom('.switch').hasClass('active', 'switch should have active class');
+    assert.dom('.switch-rounded').hasClass('active', 'switch should have active class');
   });
 });
