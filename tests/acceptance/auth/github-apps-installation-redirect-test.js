@@ -20,13 +20,13 @@ test('it polls until the GitHub installation ID resolves to an owner', function 
     login: 'the-org'
   });
 
-  server.get('/owner/github_apps_installation_id/:id', (schema, {params: {id}}) => {
+  server.get('/installation/:id', (schema, {params: {id}}) => {
     if (repetition < 2) {
       repetition++;
       return new Response(404, {}, {});
     } else {
       assert.equal(id, installation.id, 'expected the API request to include the correct installation ID');
-      return schema.installations.find(id).owners.models[0];
+      return schema.installations.find(id);
     }
   });
 

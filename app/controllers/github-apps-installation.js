@@ -17,8 +17,8 @@ export default Controller.extend({
   maxRepetitions: 10,
 
   startPolling() {
-    this.fetchPromise().then(owner => {
-      this.transitionToRoute('account', owner.login);
+    this.fetchPromise().then(installation => {
+      this.transitionToRoute('account', installation.owner.login);
     });
   },
 
@@ -28,8 +28,8 @@ export default Controller.extend({
       'Travis-API-Version': '3'
     });
 
-    let url = `${config.apiEndpoint}/owner/github_apps_installation_id/` +
-      `${this.get('installation_id')}`;
+    let url = `${config.apiEndpoint}/installation/` +
+      `${this.get('installation_id')}?include=installation.owner`;
 
     return fetch(url, {headers}).then(response => {
       if (response.ok) {

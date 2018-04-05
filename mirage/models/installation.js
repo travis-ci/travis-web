@@ -1,5 +1,5 @@
-import { Model, hasMany } from 'ember-cli-mirage';
+import { Model, belongsTo } from 'ember-cli-mirage';
 
 export default Model.extend({
-  owners: hasMany({ polymorphic: true })
+  owner: belongsTo({ polymorphic: true })
 });

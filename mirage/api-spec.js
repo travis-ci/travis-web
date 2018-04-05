@@ -1136,6 +1136,21 @@ export default {
         "github_id"
       ]
     },
+    "installation": {
+      "@type": "resource",
+      "attributes": ["id", "owner"],
+      "representations": {
+        "minimal": [
+          "id"
+        ],
+        "standard": [
+          "id"
+        ],
+        "additional": [
+          "owner"
+        ]
+      }
+    },
     "owner": {
       "@type": "resource",
       "actions": {
