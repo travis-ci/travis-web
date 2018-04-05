@@ -9,7 +9,7 @@ export default Model.extend({
   syncedAt: attr(),
   avatarUrl: attr(),
 
-  installation: belongsTo(),
+  installation: belongsTo({async: false}),
 
   type: 'organization',
 });

@@ -25,7 +25,7 @@ export default Model.extend({
   repoCount: attr('number'),
   avatarUrl: attr(),
 
-  installation: belongsTo(),
+  installation: belongsTo({async: false}),
 
   @computed('name', 'login')
   fullName(name, login) {

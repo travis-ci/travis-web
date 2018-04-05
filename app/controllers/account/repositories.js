@@ -14,6 +14,16 @@ export default Controller.extend({
     return repos.sortBy('name');
   },
 
+  // FIXME this is quite baroque to avoid trying to load an installation ugh
+  @computed('account.id')
+  hasGitHubAppsInstallation() {
+    if (this.get('account').belongsTo('installation').id()) {
+      return true;
+    } else {
+      return false;
+    }
+  },
+
   @filterBy('model.githubApps', 'locked')
   lockedGithubAppsRepositories: null,
 
