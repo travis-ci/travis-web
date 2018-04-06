@@ -102,7 +102,7 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
       active: true,
       managed_by_installation: true,
       private: false,
-      locked: true
+      active_on_org: true
     });
 
     // create other random repository to ensure correct filtering

@@ -24,10 +24,10 @@ export default Controller.extend({
     }
   },
 
-  @filterBy('model.githubApps', 'locked')
+  @filterBy('model.githubApps', 'active_on_org')
   lockedGithubAppsRepositories: null,
 
-  @filter('model.githubApps', repo => !repo.get('locked'))
+  @filter('model.githubApps', repo => !repo.get('active_on_org'))
   notLockedGithubAppsRepositories: null,
 
   @action
