@@ -27,7 +27,10 @@
   <div id='github-apps-invitation'>SIGN UP FOR GITHUB APPS! do it</div>
 {{/if}}
 
-<h2>Legacy Services Integration <div class="badge deprecated">Deprecated</div></h2>
+<header class='github-apps'>
+  <h2>Legacy Services Integration <div class="badge deprecated">Deprecated</div></h2>
+  <button class='button' type='button' onclick="alert('unimplemented')">{{svg-jar 'icon-migrate' class='icon'}} migrate</button>
+</header>
 {{#repository-filter
   repositories=sortedRepositories
   queryFunction=(action 'filterQuery') as |filter| }}

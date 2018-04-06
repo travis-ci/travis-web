@@ -297,3 +297,8 @@ $profile-breakpoint: 600px;
     color: $cement-grey;
   }
 }
+
+header.github-apps {
+  display: flex;
+  justify-content: space-between;
+}
