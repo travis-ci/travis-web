@@ -7,7 +7,6 @@ import { next, run, later } from '@ember/runloop';
 import { observer } from '@ember/object';
 import config from 'travis/config/environment';
 import attr from 'ember-data/attr';
-import { belongsTo } from 'ember-data/relationships';
 import { service } from 'ember-decorators/service';
 import { computed } from 'ember-decorators/object';
 
