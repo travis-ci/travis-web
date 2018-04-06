@@ -41,10 +41,6 @@ script:
   - npm run lint:js
   - ember exam --reporter dot $RANDOMISE
 
-after_script:
+after_success:
   - greenkeeper-lockfile-upload
-  - echo $TRAVIS_PULL_REQUEST
-  - echo $TRAVIS_SECURE_ENV_VARS
   - "test $TRAVIS_PULL_REQUEST && test $TRAVIS_PULL_REQUEST != 'false' && $TRAVIS_SECURE_ENV_VARS == 'true' && ./config/deployment/deploy-pull-request.sh"
-
-# FIXME obvsy the above
