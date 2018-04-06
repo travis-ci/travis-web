@@ -80,7 +80,7 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
         login: 'user-login',
       },
       active: true,
-      managed_by_github_apps: true,
+      managed_by_installation: true,
       private: false
     });
 
@@ -90,7 +90,7 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
         login: 'user-login'
       },
       active: true,
-      managed_by_github_apps: true,
+      managed_by_installation: true,
       private: true
     });
 
@@ -100,7 +100,7 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
         login: 'user-login'
       },
       active: true,
-      managed_by_github_apps: true,
+      managed_by_installation: true,
       private: false,
       locked: true
     });

@@ -262,13 +262,13 @@ export default function () {
       });
     }
 
-    if (queryParams && queryParams['repository.managed_by_github_apps']) {
-      let paramValue = queryParams['repository.managed_by_github_apps'];
+    if (queryParams && queryParams['repository.managed_by_installation']) {
+      let paramValue = queryParams['repository.managed_by_installation'];
 
       if (paramValue === 'true') {
-        repositories.models = repositories.models.filterBy('managed_by_github_apps');
+        repositories.models = repositories.models.filterBy('managed_by_installation');
       } else {
-        repositories.models = repositories.models.rejectBy('managed_by_github_apps');
+        repositories.models = repositories.models.rejectBy('managed_by_installation');
       }
     }
 
