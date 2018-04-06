@@ -26,4 +26,13 @@
     background-color: $quartz-red;
     border-color: $brick-red;
   }
+
+  &.square {
+    border-radius: 0;
+    border-width: 0;
+    font-size: 0.7rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 0.1em 0.5em;
+  }
 }

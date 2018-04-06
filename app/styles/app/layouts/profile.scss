@@ -301,4 +301,8 @@ $profile-breakpoint: 600px;
 header.github-apps {
   display: flex;
   justify-content: space-between;
+
+  .badge {
+    transform: translateY(-3px);
+  }
 }
