@@ -13,5 +13,6 @@ module('Acceptance | config/oss feature flags', function (hooks) {
     assert.equal(featureFlags['show-running-jobs-in-sidebar'], false);
     assert.equal(featureFlags['debug-builds'], false);
     assert.equal(featureFlags['broadcasts'], true);
+    assert.equal(featureFlags['beta-features'], true);
   });
 });

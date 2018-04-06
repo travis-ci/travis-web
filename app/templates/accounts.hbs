@@ -12,11 +12,12 @@
       {{/each}}
     </ul>
   </div>
-
-  <div class="profile-betafeatures">
-    <h2>Beta Features</h2>
-    {{#link-to "features" tagName="button" class="button beta-features"}}See what's new!{{/link-to}}
-  </div>
+  {{#unless features.betaFeatures}}
+    <div class="profile-betafeatures">
+      <h2>Beta Features</h2>
+      {{#link-to "features" tagName="button" class="button beta-features"}}See what's new!{{/link-to}}
+    </div>
+  {{/unless}}
 
   {{#if config.githubOrgsOauthAccessSettingsUrl}}
     <div class="profile-additional">
