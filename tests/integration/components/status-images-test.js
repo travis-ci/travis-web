@@ -4,7 +4,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import fillIn from '../../helpers/fill-in';
+import { select } from 'travis/tests/helpers/x-select';
 
 module('Integration | Component | status images', function (hooks) {
   setupRenderingTest(hooks);
@@ -33,8 +33,7 @@ module('Integration | Component | status images', function (hooks) {
     assert.equal(selectBranch.val(), 'not-actually-master');
     assert.ok(outputTextarea.val().match(/branch=not-actually-master/));
 
-    fillIn(selectBranch, 'foo');
-    selectBranch.change();
+    await select(selectBranch, 'foo');
     assert.ok(outputTextarea.val().match(/branch=foo/));
   });
 });

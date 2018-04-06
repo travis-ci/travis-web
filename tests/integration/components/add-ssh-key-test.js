@@ -1,7 +1,7 @@
 import { run } from '@ember/runloop';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, click } from '@ember/test-helpers';
+import { render, click, triggerEvent } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import fillIn from '../../helpers/fill-in';
 import DS from 'ember-data';
@@ -78,6 +78,7 @@ module('Integration | Component | add ssh-key', function (hooks) {
     percySnapshot(assert);
 
     fillIn(this.$('.ssh-value'), 'bar');
+    await triggerEvent('.ssh-value', 'change');
     assert.dom('.form-error-message').doesNotExist('error message is removed if value is filled in');
   });
 });
