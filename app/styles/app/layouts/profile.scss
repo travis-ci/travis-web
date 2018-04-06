@@ -301,8 +301,28 @@ $profile-breakpoint: 600px;
 header.github-apps {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 
   .badge {
     transform: translateY(-3px);
+  }
+
+  // FIXME this is copied from sync-button.scss
+  .button {
+    height: 2.6rem;
+    padding: 0.6em 0.8em;
+    background-color: $oxide-blue;
+    border: none;
+    border-radius: 2px;
+
+    margin-right: 0.5rem;
+
+    .icon {
+      @include colorSVG(white);
+    }
+
+    &:hover {
+      background-color: #229191;
+    }
   }
 }
