@@ -1,6 +1,6 @@
 {{#if hasGitHubAppsInstallation}}
   <div id="github-apps-repositories">
-    <h2>GitHub Apps</h2>
+    <h2>GitHub Apps Integration</h2>
     <ul class="profile-repositorylist" id='not-locked-github-apps-repositories'>
       {{#each notLockedGithubAppsRepositories as |repository|}}
         {{github-apps-repository repository=repository}}
@@ -27,7 +27,7 @@
   <div id='github-apps-invitation'>SIGN UP FOR GITHUB APPS! do it</div>
 {{/if}}
 
-<h2>Service Hooks <div class="badge deprecated">Deprecated</div></h2>
+<h2>Legacy Services Integration <div class="badge deprecated">Deprecated</div></h2>
 {{#repository-filter
   repositories=sortedRepositories
   queryFunction=(action 'filterQuery') as |filter| }}
