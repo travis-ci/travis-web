@@ -1140,13 +1140,10 @@ export default {
       "attributes": ["id", "owner"],
       "representations": {
         "minimal": [
-          "id"
+          "id", "owner"
         ],
         "standard": [
-          "id"
-        ],
-        "additional": [
-          "owner"
+          "id", "owner"
         ]
       }
     },
