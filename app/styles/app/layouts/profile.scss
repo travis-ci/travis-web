@@ -326,3 +326,27 @@ header.github-apps {
     }
   }
 }
+
+#github-apps-invitation {
+  @include travisBorder;
+  padding: 0 1.25em 1.25em 1.25em;
+
+  // FIXME this is copied from above!
+  .button {
+    height: 2.6rem;
+    padding: 0.6em 0.8em;
+    background-color: $oxide-blue;
+    border: none;
+    border-radius: 2px;
+
+    margin-right: 0.5rem;
+
+    .icon {
+      @include colorSVG(white);
+    }
+
+    &:hover {
+      background-color: #229191;
+    }
+  }
+}
