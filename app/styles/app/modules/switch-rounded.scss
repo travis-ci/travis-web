@@ -4,8 +4,8 @@
 
   $switch-gap: 2px;
 
-  $switch-inner-heigth: $switch-height - $switch-gap*2;
-  $switch-inner-width: $switch-inner-heigth;
+  $switch-inner-height: $switch-height - $switch-gap*2;
+  $switch-inner-width: $switch-inner-height;
 
   padding: 0;
 
@@ -23,7 +23,7 @@
 
     span {
       width: $switch-inner-width;
-      height: $switch-inner-heigth;
+      height: $switch-inner-height;
       border-radius: $switch-inner-width;
       background-color: white;
       color: white;
