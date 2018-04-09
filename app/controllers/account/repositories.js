@@ -1,6 +1,7 @@
 import { computed, action } from 'ember-decorators/object';
 import Controller from '@ember/controller';
 import { service } from 'ember-decorators/service';
+import config from 'travis/config/environment';
 
 import { filter, filterBy } from 'ember-decorators/object/computed';
 
@@ -13,6 +14,8 @@ export default Controller.extend({
   sortedRepositories(repos) {
     return repos.sortBy('name');
   },
+
+  showGitHubApps: config.githubApps,
 
   // FIXME this is quite baroque to avoid trying to load an installation ugh
   @computed('account.id')

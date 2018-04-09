@@ -1,34 +1,36 @@
-{{#if hasGitHubAppsInstallation}}
-  <div id="github-apps-repositories">
-    <h2>GitHub Apps Integration</h2>
-    <ul class="profile-repositorylist" id='not-locked-github-apps-repositories'>
-      {{#each notLockedGithubAppsRepositories as |repository|}}
-        {{github-apps-repository repository=repository}}
-      {{/each}}
-    </ul>
-    {{#if lockedGithubAppsRepositories}}
-      <p class="notice-banner--red spaced">
-        <span class="label-align">
-          These repositories cannot yet be migrated because they are active on
-          {{external-link-to href="https://travis-ci.org" content="travis-ci.org"}}.
-          This feature will be available shortly. Please
-          <a href="{{ config.urls.support }}" title="Email the Travis support team" {{action 'helpscoutTrigger'}}>email support</a>
-          if you have further questions.
-        </span>
-      </p>
-      <ul class="profile-repositorylist" id='locked-github-apps-repositories'>
-        {{#each lockedGithubAppsRepositories as |repository|}}
+{{#if showGitHubApps}}
+  {{#if hasGitHubAppsInstallation}}
+    <div id="github-apps-repositories">
+      <h2>GitHub Apps Integration</h2>
+      <ul class="profile-repositorylist" id='not-locked-github-apps-repositories'>
+        {{#each notLockedGithubAppsRepositories as |repository|}}
           {{github-apps-repository repository=repository}}
         {{/each}}
       </ul>
-    {{/if}}
-  </div>
-{{else}}
-  <div id='github-apps-invitation'>
-    <h2>GitHub Apps Integration</h2>
-    <p>The Travis CI GitHub integration provides enhanced security, X, and supports both <strong>private and open source</strong> repositories.</p>
-    <button class='button' type='button' onclick="alert('unimplemented')">{{svg-jar 'icon-migrate' class='icon'}} Activate GitHub Apps Integration</button>
-  </div>
+      {{#if lockedGithubAppsRepositories}}
+        <p class="notice-banner--red spaced">
+          <span class="label-align">
+            These repositories cannot yet be migrated because they are active on
+            {{external-link-to href="https://travis-ci.org" content="travis-ci.org"}}.
+            This feature will be available shortly. Please
+            <a href="{{ config.urls.support }}" title="Email the Travis support team" {{action 'helpscoutTrigger'}}>email support</a>
+            if you have further questions.
+          </span>
+        </p>
+        <ul class="profile-repositorylist" id='locked-github-apps-repositories'>
+          {{#each lockedGithubAppsRepositories as |repository|}}
+            {{github-apps-repository repository=repository}}
+          {{/each}}
+        </ul>
+      {{/if}}
+    </div>
+  {{else}}
+    <div id='github-apps-invitation'>
+      <h2>GitHub Apps Integration</h2>
+      <p>The Travis CI GitHub integration provides enhanced security, X, and supports both <strong>private and open source</strong> repositories.</p>
+      <button class='button' type='button' onclick="alert('unimplemented')">{{svg-jar 'icon-migrate' class='icon'}} Activate GitHub Apps Integration</button>
+    </div>
+  {{/if}}
 {{/if}}
 
 <header class='github-apps'>

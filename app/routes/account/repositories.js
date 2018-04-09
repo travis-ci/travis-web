@@ -38,18 +38,23 @@ export default TravisRoute.extend({
       let githubParams =
         merge(Object.create(queryParams), {'repository.managed_by_installation': true});
 
-      return hash({
+      let hashObject = {
         deprecated: this.store.paginated(
           'repo',
           deprecatedParams,
           { live: false }
-        ),
-        githubApps: this.store.paginated(
+        )
+      };
+
+      if (config.githubApps) {
+        hashObject.githubApps = this.store.paginated(
           'repo',
           githubParams,
           { live: false }
-        )
-      });
+        );
+      }
+
+      return hash(hashObject);
     }
   },
 

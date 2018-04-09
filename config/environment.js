@@ -44,6 +44,7 @@ module.exports = function (environment) {
       support: 'mailto:support@travis-ci.com'
     },
     endpoints: {},
+    githubApps: false,
     timing: {
       syncingPageRedirectionTime: 5000,
     },
@@ -117,6 +118,7 @@ module.exports = function (environment) {
       };
       ENV.userlike = true;
       ENV.beacon = true;
+      ENV.githubApps = true;
       ENV.urls.legal = ENV.billingEndpoint + '/pages/legal';
       ENV.urls.imprint = ENV.billingEndpoint + '/pages/imprint';
       ENV.urls.security = ENV.billingEndpoint + '/pages/security';
@@ -187,6 +189,8 @@ module.exports = function (environment) {
     };
 
     ENV.pusher = {};
+
+    ENV.githubApps = true;
 
     ENV.skipConfirmations = true;
 
