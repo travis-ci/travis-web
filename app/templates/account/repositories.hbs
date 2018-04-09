@@ -8,7 +8,8 @@
         {{/each}}
       </ul>
       {{#if lockedGithubAppsRepositories}}
-        <p class="notice-banner--red spaced">
+        <p class="notice-banner--yellow iconned">
+          {{svg-jar 'icon-flag' class='icon'}}
           <span class="label-align">
             These repositories cannot yet be migrated because they are active on
             {{external-link-to href="https://travis-ci.org" content="travis-ci.org"}}.
