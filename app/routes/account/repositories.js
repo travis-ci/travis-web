@@ -1,5 +1,4 @@
 import TravisRoute from 'travis/routes/basic';
-// eslint-disable-next-line
 import config from 'travis/config/environment';
 import { computed } from 'ember-decorators/object';
 import { hash } from 'rsvp';
