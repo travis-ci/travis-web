@@ -2,7 +2,7 @@
   $switch-height: 20px;
   $switch-width: 40px;
 
-  $switch-gap: 2px;
+  $switch-gap: 1px;
 
   $switch-inner-height: $switch-height - $switch-gap*2;
   $switch-inner-width: $switch-inner-height;
@@ -57,7 +57,6 @@
 
     .icon-on {
       @include colorSVG($oxide-blue);
-      transform: translateY(-1px);
       stroke-width: 1.5px;
     }
   }
@@ -67,7 +66,7 @@
 
     .icon-off {
       @include colorSVG(darken($pebble-grey, 10));
-      transform: translateX(0.7px);
+      transform: translate(1px, 1px);
       stroke-width: 1.5px;
       padding-bottom: 2px;
     }
