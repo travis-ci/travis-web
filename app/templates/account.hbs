@@ -23,11 +23,9 @@
     </header>
 
     {{#unless features.enterpriseVersion}}
-      {{#if features.proVersion}}
-        <p class="text-medium">We're only showing your private repositories. You can find your public projects on <a href="https://travis-ci.org" title="travis-ci.org">travis-ci.org</a>.</p>
-      {{else}}
+      {{#unless features.proVersion}}
         <p class="text-medium">We're only showing your public repositories. You can find your private projects on <a href="https://travis-ci.com" title="travis-ci.com">travis-ci.com</a>.</p>
-      {{/if}}
+      {{/unless}}
     {{/unless}}
 
     {{outlet}}
