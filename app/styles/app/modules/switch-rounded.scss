@@ -57,7 +57,7 @@
 
     .icon-on {
       @include colorSVG($oxide-blue);
-      transform: translate(-0.5px, -1px);
+      transform: translateY(-1px);
       stroke-width: 1.5px;
     }
   }
@@ -67,6 +67,7 @@
 
     .icon-off {
       @include colorSVG(darken($pebble-grey, 10));
+      transform: translateX(0.7px);
       stroke-width: 1.5px;
       padding-bottom: 2px;
     }
