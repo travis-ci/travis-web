@@ -57,5 +57,15 @@ export default create({
 
   accounts: collection('.profile-aside .account', {
     name: text('.account-name')
-  })
+  }),
+
+  billing: {
+    visit: clickable('li[data-test-billing-tab] a'),
+
+    contact: {
+      scope: '.contact',
+
+      name: text('.name')
+    }
+  }
 });

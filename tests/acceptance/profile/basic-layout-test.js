@@ -17,6 +17,18 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
     });
     currentUser.save();
 
+    let subscription = server.create('subscription', {
+      owner: currentUser
+    });
+
+    subscription.createBillingInfo({
+      first_name: 'User',
+      last_name: 'Name',
+      address: 'Rigaerstraße 8',
+      address2: 'Address 2',
+      city: 'Berlin'
+    });
+
     // create organization
     let organization = server.create('organization', {
       name: 'Org Name',
@@ -116,7 +128,7 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
   }
 });
 
-test('view profile', function (assert) {
+test('view repositories', function (assert) {
   profilePage.visit({ username: 'user-login' });
 
   andThen(function () {
@@ -165,5 +177,14 @@ test('view a profiles for organizations that do not and do have GitHub Apps inst
 
   andThen(function () {
     assert.notOk(profilePage.githubAppsInvitation.isVisible, 'expected GitHub Apps invitation to not be visible');
+  });
+});
+
+test('view billing information', function (assert) {
+  profilePage.visit({ username: 'user-login' });
+  profilePage.billing.visit();
+
+  andThen(() => {
+    assert.equal(profilePage.billing.contact.name, 'User Name');
   });
 });

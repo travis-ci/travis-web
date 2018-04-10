@@ -253,7 +253,9 @@ export default JSONSerializer.extend({
           let meta = relationshipHash.meta || {};
           let relationshipIncluded = relationshipHash.included || [];
 
-          if (meta.representation === 'standard') {
+          // FIXME this is a hack to allow the “minimal” billing_info to load
+          if (meta.representation === 'standard' ||
+            (meta.representation === 'minimal' && key === 'billingInfo')) {
             included.push(relationshipHash.data);
           }
 

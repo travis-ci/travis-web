@@ -250,6 +250,16 @@ export default {
         "standard": ["beta_features"]
       }
     },
+    // FIXME is it weird that this is dashed?
+    "billing-info":            {
+      "@type":            "resource",
+      "actions":          { },
+      "attributes":       ["id", "address", "billing_email", "city", "company", "country", "first_name", "last_name", "state", "vat_id", "zip_code"],
+      "representations":  {
+        "standard":       ["id", "address", "billing_email", "city", "company", "country", "first_name", "last_name", "state", "vat_id", "zip_code"],
+        "minimal":       ["id", "address", "billing_email", "city", "company", "country", "first_name", "last_name", "state", "vat_id", "zip_code"],
+      }
+    },
     "branch": {
       "@type": "resource",
       "actions": {
@@ -1571,6 +1581,28 @@ export default {
         "request_method",
         "uri_template"
       ]
+    },
+    "subscription":            {
+      "@type":            "resource",
+      "actions":          { },
+      "attributes":       [
+        "id",
+        "billing_info",
+        "owner",
+        "valid_to",
+      ],
+      "representations":  {
+        "standard":       [
+          "id",
+          "billing_info",
+          "owner",
+          "valid_to",
+        ],
+        "minimal":       [
+            "id",
+            "valid_to",
+        ],
+      }
     },
     "user": {
       "@type": "resource",
