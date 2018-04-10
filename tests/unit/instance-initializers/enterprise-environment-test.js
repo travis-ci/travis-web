@@ -24,14 +24,6 @@ test('it sets flags appropriately', function (assert) {
 
   const { featureFlags } = this.appInstance.resolveRegistration('config:environment');
 
-<<<<<<< HEAD
-  assert.equal(featureFlags['repository-filtering'], true);
-  assert.equal(featureFlags['debug-logging'], false);
-  assert.equal(featureFlags['landing-page-cta'], false);
-  assert.equal(featureFlags['show-running-jobs-in-sidebar'], false);
-  assert.equal(featureFlags['debug-builds'], false);
-  assert.equal(featureFlags['broadcasts'], false);
-=======
     assert.equal(featureFlags['repository-filtering'], true);
     assert.equal(featureFlags['debug-logging'], false);
     assert.equal(featureFlags['landing-page-cta'], false);
@@ -40,5 +32,4 @@ test('it sets flags appropriately', function (assert) {
     assert.equal(featureFlags['broadcasts'], false);
     assert.equal(featureFlags['beta-features'], false);
   });
->>>>>>> f5890a92a... Don't show Beta Features page in Enterprise (#1607)
 });
