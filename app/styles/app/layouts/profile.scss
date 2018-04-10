@@ -7,6 +7,10 @@ $profile-breakpoint: 600px;
   @media (max-width: $profile-breakpoint) {
     flex-flow: column-reverse;
   }
+
+  nav.travistab-nav {
+    border-bottom: 2px #f1f1f1 solid;
+  }
 }
 
 .profile-main {
