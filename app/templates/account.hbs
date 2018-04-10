@@ -22,6 +22,12 @@
       <h1 class="h2--grey">{{accountName}}</h1>
     </header>
 
+    <nav class='travistab-nav'>
+      <ul>
+        <li>{{#link-to 'account.repositories'}}Repositories{{/link-to}}</li>
+      </ul>
+    </nav>
+
     {{#unless features.enterpriseVersion}}
       {{#unless features.proVersion}}
         <p class="text-medium">We're only showing your public repositories. You can find your private projects on <a href="https://travis-ci.com" title="travis-ci.com">travis-ci.com</a>.</p>
