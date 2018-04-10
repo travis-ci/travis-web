@@ -1,7 +1,6 @@
 import { visit } from '@ember/test-helpers';
 import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
-import signInUser from 'travis/tests/helpers/sign-in-user';
 import { getContext } from '@ember/test-helpers';
 
 moduleForAcceptance('Acceptance | enterprise/beta features disabled', {
