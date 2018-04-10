@@ -3,7 +3,7 @@ import { module, test } from 'qunit';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { getContext } from '@ember/test-helpers';
 
-module('Acceptance | enterprise/beta features disabled', {
+moduleForAcceptance('Acceptance | enterprise/beta features disabled', {
   beforeEach() {
     const currentUser = server.create('user');
     signInUser(currentUser);
