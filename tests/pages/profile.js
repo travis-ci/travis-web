@@ -64,6 +64,8 @@ export default create({
 
     address: {
       scope: '.contact address',
-    }
-  }
+    },
+
+    creditCardNumber: text('[data-test-credit-card]')
+  },
 });

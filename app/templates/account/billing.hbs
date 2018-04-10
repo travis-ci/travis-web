@@ -1,4 +1,4 @@
-<section>
+<section class='billing'>
   <h2>Billing Information</h2>
   <main>
     <section class='contact'>
@@ -11,6 +11,10 @@
         {{model.billingInfo.city}}, {{model.billingInfo.state}} {{model.billingInfo.zipCode}}
         {{model.billingInfo.country}}
       </address>
+    </section>
+    <section class='payment'>
+      <h3>Payment information</h3>
+      <span data-test-credit-card>•••• •••• •••• {{model.creditCardInfo.lastDigits}}</span>
     </section>
   </main>
 </section>

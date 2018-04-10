@@ -529,6 +529,16 @@ export default {
         ]
       }
     },
+    // FIXME also dashed?
+    "credit-card-info":            {
+      "@type":            "resource",
+      "actions":          { },
+      "attributes":       ["id", "card_owner", "expiration_date", "last_digits"],
+      "representations":  {
+        "standard":       ["id", "card_owner", "expiration_date", "last_digits"],
+        "minimal":        ["id", "card_owner", "expiration_date", "last_digits"],
+      }
+    },
     "cron": {
       "@type": "resource",
       "actions": {
@@ -1588,6 +1598,7 @@ export default {
       "attributes":       [
         "id",
         "billing_info",
+        "credit_card_info",
         "owner",
         "valid_to",
       ],
@@ -1595,6 +1606,7 @@ export default {
         "standard":       [
           "id",
           "billing_info",
+          "credit_card_info",
           "owner",
           "valid_to",
         ],

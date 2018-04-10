@@ -344,9 +344,19 @@ header.github-apps {
   }
 }
 
-section.contact {
-  address {
-    white-space: pre-line;
+section.billing {
+  main {
+    display: flex;
+
+    section {
+      flex: 1;
+    }
+  }
+
+  section.contact {
+    address {
+      white-space: pre-line;
+    }
   }
 }
 

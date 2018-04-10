@@ -33,6 +33,10 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
       country: 'Germany'
     });
 
+    subscription.createCreditCardInfo({
+      last_digits: '1919'
+    });
+
     // create organization
     let organization = server.create('organization', {
       name: 'Org Name',
@@ -191,5 +195,6 @@ test('view billing information', function (assert) {
   andThen(() => {
     percySnapshot(assert);
     assert.equal(profilePage.billing.address.text, 'User Name Travis CI GmbH Rigaerstraße 8 Address 2 Berlin, Berlin 10987 Germany');
+    assert.equal(profilePage.billing.creditCardNumber, '•••• •••• •••• 1919');
   });
 });
