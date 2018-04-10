@@ -12,4 +12,5 @@ test('configures feature flags', function (assert) {
   assert.equal(featureFlags['show-running-jobs-in-sidebar'], false);
   assert.equal(featureFlags['debug-builds'], false);
   assert.equal(featureFlags['broadcasts'], true);
+  assert.equal(featureFlags['beta-features'], true);
 });
