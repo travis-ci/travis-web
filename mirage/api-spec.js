@@ -254,10 +254,10 @@ export default {
     "billing-info":            {
       "@type":            "resource",
       "actions":          { },
-      "attributes":       ["id", "address", "billing_email", "city", "company", "country", "first_name", "last_name", "state", "vat_id", "zip_code"],
+      "attributes":       ["id", "address", "address2", "billing_email", "city", "company", "country", "first_name", "last_name", "state", "vat_id", "zip_code"],
       "representations":  {
-        "standard":       ["id", "address", "billing_email", "city", "company", "country", "first_name", "last_name", "state", "vat_id", "zip_code"],
-        "minimal":       ["id", "address", "billing_email", "city", "company", "country", "first_name", "last_name", "state", "vat_id", "zip_code"],
+        "standard":       ["id", "address", "address2", "billing_email", "city", "company", "country", "first_name", "last_name", "state", "vat_id", "zip_code"],
+        "minimal":       ["id", "address", "address2", "billing_email", "city", "company", "country", "first_name", "last_name", "state", "vat_id", "zip_code"],
       }
     },
     "branch": {

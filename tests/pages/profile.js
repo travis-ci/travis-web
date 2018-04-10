@@ -62,10 +62,8 @@ export default create({
   billing: {
     visit: clickable('li[data-test-billing-tab] a'),
 
-    contact: {
-      scope: '.contact',
-
-      name: text('.name')
+    address: {
+      scope: '.contact address',
     }
   }
 });

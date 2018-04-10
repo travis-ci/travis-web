@@ -24,9 +24,13 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
     subscription.createBillingInfo({
       first_name: 'User',
       last_name: 'Name',
+      company: 'Travis CI GmbH',
       address: 'Rigaerstraße 8',
       address2: 'Address 2',
-      city: 'Berlin'
+      city: 'Berlin',
+      state: 'Berlin',
+      zip_code: '10987',
+      country: 'Germany'
     });
 
     // create organization
@@ -186,6 +190,6 @@ test('view billing information', function (assert) {
 
   andThen(() => {
     percySnapshot(assert);
-    assert.equal(profilePage.billing.contact.name, 'User Name');
+    assert.equal(profilePage.billing.address.text, 'User Name Travis CI GmbH Rigaerstraße 8 Address 2 Berlin, Berlin 10987 Germany');
   });
 });

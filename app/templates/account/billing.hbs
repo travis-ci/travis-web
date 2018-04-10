@@ -3,8 +3,13 @@
   <main>
     <section class='contact'>
       <h3>Billing Contact</h3>
-      <address>
-        <div class='name'>{{model.billingInfo.firstName}} {{model.billingInfo.lastName}}</div>
+      {{!FIXME the weird spacing is because I’m using pre-line, which is probs ridic}}
+      <address>{{model.billingInfo.firstName}} {{model.billingInfo.lastName}}
+        {{model.billingInfo.company}}
+        {{model.billingInfo.address}}
+        {{model.billingInfo.address2}}
+        {{model.billingInfo.city}}, {{model.billingInfo.state}} {{model.billingInfo.zipCode}}
+        {{model.billingInfo.country}}
       </address>
     </section>
   </main>

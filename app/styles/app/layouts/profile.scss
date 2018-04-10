@@ -344,6 +344,12 @@ header.github-apps {
   }
 }
 
+section.contact {
+  address {
+    white-space: pre-line;
+  }
+}
+
 #github-apps-invitation {
   @include travisBorder;
   padding: 0 1.25em 1.25em 1.25em;
