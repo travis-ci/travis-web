@@ -10,6 +10,7 @@ export function initialize(appInstance) {
     featureFlags['show-running-jobs-in-sidebar'] = false;
     featureFlags['debug-builds'] = false;
     featureFlags['broadcasts'] = false;
+    featureFlags['beta-features'] = false;
   }
 }
 
