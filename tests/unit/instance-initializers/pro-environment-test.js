@@ -24,12 +24,11 @@ test('it sets flags appropriately', function (assert) {
 
   const { featureFlags } = this.appInstance.resolveRegistration('config:environment');
 
-    assert.equal(featureFlags['repository-filtering'], true);
-    assert.equal(featureFlags['debug-logging'], false);
-    assert.equal(featureFlags['landing-page-cta'], false);
-    assert.equal(featureFlags['show-running-jobs-in-sidebar'], true);
-    assert.equal(featureFlags['debug-builds'], true);
-    assert.equal(featureFlags['broadcasts'], true);
-    assert.equal(featureFlags['beta-features'], true);
-  });
+  assert.equal(featureFlags['repository-filtering'], true);
+  assert.equal(featureFlags['debug-logging'], false);
+  assert.equal(featureFlags['landing-page-cta'], false);
+  assert.equal(featureFlags['show-running-jobs-in-sidebar'], true);
+  assert.equal(featureFlags['debug-builds'], true);
+  assert.equal(featureFlags['broadcasts'], true);
+  assert.equal(featureFlags['beta-features'], true);
 });
