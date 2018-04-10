@@ -1,8 +1,5 @@
-import { visit } from '@ember/test-helpers';
 import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
-import signInUser from 'travis/tests/helpers/sign-in-user';
-import { getContext } from '@ember/test-helpers';
 
 moduleForAcceptance('Acceptance | enterprise/beta features disabled', {
   beforeEach() {
@@ -11,11 +8,12 @@ moduleForAcceptance('Acceptance | enterprise/beta features disabled', {
   }
 });
 
-test('does not display link to beta features page', async function (assert) {
-  let { owner } = getContext();
-  owner.lookup('service:features').disable('betaFeatures');
+test('does not display link to beta features page', function (assert) {
+  this.application.__container__.lookup('service:features').disable('betaFeatures');
 
-  await visit('/profile');
+  visit('/profile');
 
-  assert.dom('[data-test-profile-beta-features-link]').doesNotExist();
+  andThen(() => {
+    assert.notOk(find('[data-test-profile-beta-features-link]').length);
+  });
 });
