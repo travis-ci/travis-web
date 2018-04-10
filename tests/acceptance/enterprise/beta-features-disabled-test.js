@@ -1,7 +1,7 @@
 import { visit } from '@ember/test-helpers';
 import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
-import { getContext } from '@ember/test-helpers';
+import { getOwner } from '@ember/application';
 
 moduleForAcceptance('Acceptance | enterprise/beta features disabled', {
   beforeEach() {
@@ -11,7 +11,7 @@ moduleForAcceptance('Acceptance | enterprise/beta features disabled', {
 });
 
 test('does not display link to beta features page', async function (assert) {
-  let { owner } = getContext();
+  let owner = getOwner(this);
   owner.lookup('service:features').disable('betaFeatures');
 
   await visit('/profile');
