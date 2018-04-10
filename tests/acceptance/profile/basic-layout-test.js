@@ -185,6 +185,7 @@ test('view billing information', function (assert) {
   profilePage.billing.visit();
 
   andThen(() => {
+    percySnapshot(assert);
     assert.equal(profilePage.billing.contact.name, 'User Name');
   });
 });
