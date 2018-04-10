@@ -74,6 +74,7 @@ module.exports = function (environment) {
     'show-running-jobs-in-sidebar': false,
     'debug-builds': false,
     'broadcasts': true,
+    'beta-features': true,
   };
 
   const { TRAVIS_PRO, TRAVIS_ENTERPRISE } = process.env;

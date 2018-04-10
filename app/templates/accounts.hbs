@@ -24,10 +24,12 @@
     </section>
   {{/if}}
 
-  <section class="profile-betafeatures no-divider">
-    <h2>Interested in trying beta features?</h2>
-    {{#link-to "features" class="beta-features"}}Check out what's new{{/link-to}}.
-  </section>
+  {{#if features.betaFeatures}}
+    <section class="profile-betafeatures no-divider">
+      <h2>Interested in trying beta features?</h2>
+      {{#link-to "features" class="beta-features"}}Check out what's new{{/link-to}}.
+    </section>
+  {{/if}}
 </aside>
 <article class="profile-main">
   {{outlet}}

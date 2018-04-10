@@ -27,8 +27,9 @@ module('Unit | Instance Initializer | enterprise environment', function (hooks) 
     assert.equal(featureFlags['repository-filtering'], true);
     assert.equal(featureFlags['debug-logging'], false);
     assert.equal(featureFlags['landing-page-cta'], false);
-    assert.equal(featureFlags['show-running-jobs-in-sidebar'], false);
+    assert.equal(featureFlags['show-running-jobs-in-sidebar'], true);
     assert.equal(featureFlags['debug-builds'], false);
     assert.equal(featureFlags['broadcasts'], false);
+    assert.equal(featureFlags['beta-features'], false);
   });
 });
