@@ -67,11 +67,13 @@
     display: flex;
     align-items: flex-start;
 
-    svg {
-      width: 30px;
-      height: 30px;
+    padding: 1em;
 
-      margin-right: 15px;
+    svg {
+      width: 35px;
+      height: 35px;
+
+      margin-right: 13px;
     }
   }
 }
@@ -97,6 +99,15 @@
 
 .notice-banner--yellow {
   @include notice-banner($haze-yellow, $dozer-yellow);
+
+  svg {
+    @include colorSVG($dozer-yellow);
+
+    &.icon-megaphone {
+      stroke-width: 10px;
+      transform: translateY(-4px);
+    }
+  }
 }
 
 .notice-banner--green {
