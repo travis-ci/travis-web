@@ -30,5 +30,6 @@ module('Unit | Instance Initializer | pro environment', function (hooks) {
     assert.equal(featureFlags['show-running-jobs-in-sidebar'], true);
     assert.equal(featureFlags['debug-builds'], true);
     assert.equal(featureFlags['broadcasts'], true);
+    assert.equal(featureFlags['beta-features'], true);
   });
 });
