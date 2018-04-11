@@ -239,7 +239,7 @@ test('logs an exception viewing billing when there is more than one active subsc
 
   let mockSentry = Service.extend({
     logException(error) {
-      assert.ok(true, 'expected logException to have been called');
+      assert.equal(error.message, 'Account user-login has more than one active subscription!');
     },
   });
 
