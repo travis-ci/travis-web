@@ -18,7 +18,7 @@ export default TravisRoute.extend({
           this.get('raven').logException(exception, true);
         }
 
-        return accountSubscriptions.get('firstObject');
+        return accountSubscriptions.sortBy('validTo').get('firstObject');
       });
   },
 });

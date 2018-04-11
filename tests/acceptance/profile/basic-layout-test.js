@@ -20,7 +20,8 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
     currentUser.save();
 
     let subscription = server.create('subscription', {
-      owner: currentUser
+      owner: currentUser,
+      valid_to: new Date()
     });
 
     subscription.createBillingInfo({
@@ -211,11 +212,12 @@ test('view billing tab when there is no subscription', function (assert) {
   });
 });
 
-test('logs an exception viewing billing when there is more than one active subscription and displays the first', function (assert) {
+test('logs an exception viewing billing when there is more than one active subscription and displays the earliest', function (assert) {
   let done = assert.async();
 
   let otherSubscription = server.create('subscription', {
-    owner: this.user
+    owner: this.user,
+    valid_to: new Date(new Date().getTime() - 10000)
   });
 
   otherSubscription.createCreditCardInfo({
@@ -225,7 +227,7 @@ test('logs an exception viewing billing when there is more than one active subsc
   let mockSentry = Service.extend({
     logException(error) {
       andThen(() => {
-        assert.equal(profilePage.billing.creditCardNumber, '•••• •••• •••• 1919');
+        assert.equal(profilePage.billing.creditCardNumber, '•••• •••• •••• 2010');
         done();
       });
     },
