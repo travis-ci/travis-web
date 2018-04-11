@@ -12,12 +12,42 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
 
     signInUser(currentUser);
 
+    server.create('installation', {
+      owner: currentUser
+    });
+    currentUser.save();
+
+    let subscription = server.create('subscription', {
+      owner: currentUser
+    });
+
+    subscription.createBillingInfo({
+      first_name: 'User',
+      last_name: 'Name',
+      company: 'Travis CI GmbH',
+      address: 'Rigaerstraße 8',
+      address2: 'Address 2',
+      city: 'Berlin',
+      state: 'Berlin',
+      zip_code: '10987',
+      country: 'Germany'
+    });
+
+    subscription.createCreditCardInfo({
+      last_digits: '1919'
+    });
+
     // create organization
-    server.create('organization', {
+    let organization = server.create('organization', {
       name: 'Org Name',
       type: 'organization',
       login: 'org-login'
     });
+
+    server.create('installation', {
+      owner: organization
+    });
+    organization.save();
 
     // Pad with extra organisations to force an extra API response page
     for (let orgIndex = 0; orgIndex < 10; orgIndex++) {
@@ -64,6 +94,37 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
       },
     });
 
+    server.create('repository', {
+      name: 'github-apps-public-repository',
+      owner: {
+        login: 'user-login',
+      },
+      active: true,
+      managed_by_installation: true,
+      private: false
+    });
+
+    server.create('repository', {
+      name: 'github-apps-private-repository',
+      owner: {
+        login: 'user-login'
+      },
+      active: true,
+      managed_by_installation: true,
+      private: true
+    });
+
+    server.create('repository', {
+      name: 'github-apps-locked-repository',
+      owner: {
+        login: 'user-login'
+      },
+      active: true,
+      managed_by_installation: true,
+      private: false,
+      active_on_org: true
+    });
+
     // create other random repository to ensure correct filtering
     server.create('repository', {
       name: 'feminism-is-for-everybody',
@@ -75,7 +136,7 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
   }
 });
 
-test('view profile', function (assert) {
+test('view repositories', function (assert) {
   profilePage.visit({ username: 'user-login' });
 
   andThen(function () {
@@ -89,7 +150,9 @@ test('view profile', function (assert) {
     assert.equal(profilePage.accounts[0].name, 'User Name');
     assert.equal(profilePage.accounts[1].name, 'Org Name');
 
-    assert.equal(profilePage.administerableRepositories.length, 3, 'expected three repositories');
+    assert.notOk(profilePage.githubAppsInvitation.isVisible, 'expected GitHub Apps invitation not to be visible');
+
+    assert.equal(profilePage.administerableRepositories.length, 3, 'expected three classic repositories');
 
     assert.equal(profilePage.administerableRepositories[0].name, 'user-login/other-repository-name');
     assert.ok(profilePage.administerableRepositories[0].isDisabled, 'expected disabled repository to be disabled in UI');
@@ -97,5 +160,41 @@ test('view profile', function (assert) {
     assert.ok(profilePage.administerableRepositories[1].isActive, 'expected active repository to appear active');
     assert.equal(profilePage.administerableRepositories[2].name, 'user-login/yet-another-repository-name');
     assert.notOk(profilePage.administerableRepositories[2].isActive, 'expected inactive repository to appear inactive');
+
+    assert.equal(profilePage.githubAppsRepositories.length, 3, 'expected three GitHub Apps-managed repositories');
+
+    assert.equal(profilePage.notLockedGithubAppsRepositories.length, 2, 'expected two not-locked GitHub Apps-managed repositories');
+    assert.equal(profilePage.notLockedGithubAppsRepositories[0].name, 'user-login/github-apps-public-repository');
+    assert.ok(profilePage.notLockedGithubAppsRepositories[0].isPublic);
+    assert.equal(profilePage.notLockedGithubAppsRepositories[1].name, 'user-login/github-apps-private-repository');
+    assert.ok(profilePage.notLockedGithubAppsRepositories[1].isPrivate);
+
+    assert.equal(profilePage.lockedGithubAppsRepositories.length, 1, 'expected one locked GitHub Apps-managed repository');
+    assert.equal(profilePage.lockedGithubAppsRepositories[0].name, 'user-login/github-apps-locked-repository');
+  });
+});
+
+test('view a profiles for organizations that do not and do have GitHub Apps installations', function (assert) {
+  profilePage.visit({ username: 'org0' });
+
+  andThen(function () {
+    assert.ok(profilePage.githubAppsInvitation.isVisible, 'expected GitHub Apps invitation to be visible');
+  });
+
+  profilePage.visit({ username: 'org-login' });
+
+  andThen(function () {
+    assert.notOk(profilePage.githubAppsInvitation.isVisible, 'expected GitHub Apps invitation to not be visible');
+  });
+});
+
+test('view billing information', function (assert) {
+  profilePage.visit({ username: 'user-login' });
+  profilePage.billing.visit();
+
+  andThen(() => {
+    percySnapshot(assert);
+    assert.equal(profilePage.billing.address.text, 'User Name Travis CI GmbH Rigaerstraße 8 Address 2 Berlin, Berlin 10987 Germany');
+    assert.equal(profilePage.billing.creditCardNumber, '•••• •••• •••• 1919');
   });
 });

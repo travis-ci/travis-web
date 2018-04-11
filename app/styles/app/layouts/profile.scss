@@ -7,6 +7,23 @@ $profile-breakpoint: 600px;
   @media (max-width: $profile-breakpoint) {
     flex-flow: column-reverse;
   }
+
+  nav.travistab-nav {
+    border-bottom: 2px #f1f1f1 solid;
+  }
+
+  // FIXME there’s a naked h2 down there, it seems to me it needs scoping…?
+  h2 {
+    color: $oxide-blue;
+  }
+
+  // FIXME this is almost the same as .profile-aside h2 at the moment
+  h3 {
+    color: $cement-grey;
+    text-transform: uppercase;
+    font-size: $font-size-sm;
+    font-weight: bold;
+  }
 }
 
 .profile-main {
@@ -28,22 +45,6 @@ $profile-breakpoint: 600px;
   @media (min-width: $profile-breakpoint) {
     display: flex;
     flex-flow: column wrap;
-
-    .profile-user {
-      order: 1;
-    }
-
-    .profile-betafeatures {
-      order: 2;
-    }
-
-    .profile-orgs {
-      order: 3;
-    }
-
-    .profile-additional {
-      order: 4;
-    }
   }
 
   ul {
@@ -54,7 +55,20 @@ $profile-breakpoint: 600px;
 
   h2 {
     font-size: $font-size-sm;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: $cement-grey;
+    margin-bottom: 0;
+  }
+
+  section {
+    padding-bottom: 1rem;
     border-bottom: solid 2px $pebble-grey;
+
+    &.no-divider {
+      padding-bottom: 0;
+      border-bottom-width: 0;
+    }
   }
 }
 
@@ -66,38 +80,6 @@ $profile-breakpoint: 600px;
   .h2--grey {
     margin-bottom: 0;
     line-heigth: 1;
-  }
-}
-
-.profile-getstarted {
-  display: flex;
-  flex-flow: column wrap;
-  margin: 0 0 3rem;
-  padding: 1em;
-  list-style: none;
-  border-radius: 4px;
-
-  @media #{$medium} {
-    flex-flow: row nowrap;
-    justify-content: space-around;
-  }
-
-  li {
-    text-align: center;
-  }
-
-  figure {
-    margin: 0;
-  }
-
-  figcaption {
-    width: 90%;
-    margin: auto;
-    padding: 0 1em 0 2.8em;
-
-    @media #{$medium-up} {
-      text-align: left;
-    }
   }
 }
 
@@ -118,6 +100,25 @@ $profile-breakpoint: 600px;
 .profile-settings {
   display: flex;
   align-items: center;
+  background-color: white;
+  border: 1px solid $pebble-grey;
+  font-size: 10px;
+  color: $asphalt-grey;
+  padding: 0.3rem 0.4rem;
+  margin: 0.3rem 0;
+
+  .icon {
+    width: 12px;
+    height: 12px;
+  }
+
+  &:hover {
+    color: white;
+
+    .icon {
+      @include colorSVG(white);
+    }
+  }
 }
 
 .profile-settings .icon-disabled {
@@ -131,6 +132,7 @@ $profile-breakpoint: 600px;
   white-space: nowrap;
   overflow: hidden;
   border-radius: 2px;
+  margin-right: 1rem;
 
   .sync-spinner {
     vertical-align: top;
@@ -183,13 +185,9 @@ $profile-breakpoint: 600px;
   }
 }
 
-.profile-additional {
-  margin-top: 20px;
-  border-top: solid 2px $pebble-grey;
-}
-
 .profile-text,
-.profile-additional {
+.profile-additional,
+.profile-betafeatures {
   @include linkStyle;
 }
 
@@ -314,5 +312,74 @@ $profile-breakpoint: 600px;
     border: 0.09em solid lighten($cement-grey, 20%);
     box-shadow: 0 .15px 0 $cement-grey;
     color: $cement-grey;
+  }
+}
+
+header.github-apps {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .badge {
+    transform: translateY(-3px);
+  }
+
+  // FIXME this is copied from sync-button.scss
+  .button {
+    height: 2.6rem;
+    padding: 0.6em 0.8em;
+    background-color: $oxide-blue;
+    border: none;
+    border-radius: 2px;
+
+    margin-right: 0.5rem;
+
+    .icon {
+      @include colorSVG(white);
+    }
+
+    &:hover {
+      background-color: #229191;
+    }
+  }
+}
+
+section.billing {
+  main {
+    display: flex;
+
+    section {
+      flex: 1;
+    }
+  }
+
+  section.contact {
+    address {
+      white-space: pre-line;
+    }
+  }
+}
+
+#github-apps-invitation {
+  @include travisBorder;
+  padding: 0 1.25em 1.25em 1.25em;
+
+  // FIXME this is copied from above!
+  .button {
+    height: 2.6rem;
+    padding: 0.6em 0.8em;
+    background-color: $oxide-blue;
+    border: none;
+    border-radius: 2px;
+
+    margin-right: 0.5rem;
+
+    .icon {
+      @include colorSVG(white);
+    }
+
+    &:hover {
+      background-color: #229191;
+    }
   }
 }

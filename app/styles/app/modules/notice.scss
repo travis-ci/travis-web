@@ -62,6 +62,20 @@
     font-weight: 600;
     padding-right: 0.5rem;
   }
+
+  &.iconned {
+    display: flex;
+    align-items: flex-start;
+
+    padding: 1em;
+
+    svg {
+      width: 35px;
+      height: 35px;
+
+      margin-right: 13px;
+    }
+  }
 }
 
 .notice-banner--yellow.spaced {
@@ -85,6 +99,15 @@
 
 .notice-banner--yellow {
   @include notice-banner($haze-yellow, $dozer-yellow);
+
+  svg {
+    @include colorSVG($dozer-yellow);
+
+    &.icon-megaphone {
+      stroke-width: 10px;
+      transform: translateY(-4px);
+    }
+  }
 }
 
 .notice-banner--green {

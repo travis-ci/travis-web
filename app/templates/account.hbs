@@ -20,37 +20,14 @@
 
     <header class="profile-header">
       <h1 class="h2--grey">{{accountName}}</h1>
-      {{sync-button}}
     </header>
 
-    {{#unless features.enterpriseVersion}}
-      {{#if features.proVersion}}
-        <p class="text-medium">We're only showing your private repositories. You can find your public projects on <a href="https://travis-ci.org" title="travis-ci.org">travis-ci.org</a>.</p>
-      {{else}}
-        <p class="text-medium">We're only showing your public repositories. You can find your private projects on <a href="https://travis-ci.com" title="travis-ci.com">travis-ci.com</a>.</p>
-      {{/if}}
-    {{/unless}}
-
-    <ol class="profile-getstarted">
-      <li>
-        <figure>
-          {{svg-jar 'hooks-step-1-01'}}
-          <figcaption>Flick the repository switch on</figcaption>
-        </figure>
-      </li>
-      <li>
-        <figure>
-          {{svg-jar 'hooks-step-2-01'}}
-          <figcaption>Add .travis.yml file to your repository</figcaption>
-        </figure>
-      </li>
-      <li>
-        <figure>
-          {{svg-jar 'hooks-step-3-01'}}
-          <figcaption>Trigger your first build with a git push</figcaption>
-        </figure>
-      </li>
-    </ol>
+    <nav class='travistab-nav'>
+      <ul>
+        <li>{{#link-to 'account.repositories'}}Repositories{{/link-to}}</li>
+        <li data-test-billing-tab>{{#link-to 'account.billing'}}Billing{{/link-to}}</li>
+      </ul>
+    </nav>
 
     {{outlet}}
 

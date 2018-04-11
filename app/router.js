@@ -48,6 +48,7 @@ Router.map(function () {
   this.route('first_sync');
   this.route('insufficient_oauth_permissions');
   this.route('auth');
+  this.route('github_apps_installation');
   this.route('plans', { path: '/plans' });
   this.route('team', { path: '/about' });
   this.route('logo', { path: '/logo' });
@@ -55,6 +56,7 @@ Router.map(function () {
     this.route('accounts', { path: '/', resetNamespace: true }, function () {
       this.route('account', { path: '/:login', resetNamespace: true }, function () {
         this.route('repositories', { path: '/' });
+        this.route('billing');
       });
     });
   });

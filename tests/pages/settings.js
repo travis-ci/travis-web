@@ -20,7 +20,7 @@ export default create({
   },
 
   autoCancelPushes: {
-    scope: 'section.settings-section .auto_cancel_pushes.switch',
+    scope: 'section.settings-section .auto_cancel_pushes.switch-rounded',
 
     exists: isVisible(),
     isActive: hasClass('active'),
@@ -28,7 +28,7 @@ export default create({
   },
 
   autoCancelPullRequests: {
-    scope: 'section.settings-section .auto_cancel_pull_requests.switch',
+    scope: 'section.settings-section .auto_cancel_pull_requests.switch-rounded',
 
     exists: isVisible(),
     isActive: hasClass('active'),
@@ -36,14 +36,14 @@ export default create({
   },
 
   buildOnlyWithTravisYml: {
-    scope: 'section.settings-section .builds_only_with_travis_yml.switch',
+    scope: 'section.settings-section .builds_only_with_travis_yml.switch-rounded',
 
     isActive: hasClass('active'),
     toggle: clickable()
   },
 
   buildPushes: {
-    scope: 'section.settings-section .build_pushes.switch',
+    scope: 'section.settings-section .build_pushes.switch-rounded',
 
     isActive: hasClass('active'),
     toggle: clickable(),
@@ -54,14 +54,14 @@ export default create({
   limitConcurrentBuilds: {
     scope: 'section.settings-section .limit-concurrent-builds',
 
-    isActive: hasClass('active', '.switch'),
+    isActive: hasClass('active', '.switch-rounded'),
     value: value('input'),
     fill: fillable('input'),
-    toggle: clickable('.switch')
+    toggle: clickable('.switch-rounded')
   },
 
   buildPullRequests: {
-    scope: 'section.settings-section .build_pull_requests.switch',
+    scope: 'section.settings-section .build_pull_requests.switch-rounded',
 
     isActive: hasClass('active'),
     toggle: clickable()
@@ -81,7 +81,7 @@ export default create({
 
     fillName: fillable('input[placeholder=Name]'),
     fillValue: fillable('input[placeholder=Value]'),
-    makePublic: clickable('.switch'),
+    makePublic: clickable('.switch-rounded'),
     add: clickable('input[type=submit]')
   },
 

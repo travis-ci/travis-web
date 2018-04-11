@@ -90,6 +90,8 @@ export default function () {
     }
   });
 
+  this.get('/subscriptions');
+
   this.get('/broadcasts', schema => {
     return schema.broadcasts.all();
   });
@@ -261,6 +263,17 @@ export default function () {
         return fuzzysort.single(queryParams.slug_filter, repo.slug);
       });
     }
+
+    if (queryParams && queryParams['repository.managed_by_installation']) {
+      let paramValue = queryParams['repository.managed_by_installation'];
+
+      if (paramValue === 'true') {
+        repositories.models = repositories.models.filterBy('managed_by_installation');
+      } else {
+        repositories.models = repositories.models.rejectBy('managed_by_installation');
+      }
+    }
+
     return this.serialize(repositories);
   });
 

@@ -4,7 +4,7 @@ import { or } from 'ember-decorators/object/computed';
 
 export default Component.extend({
   tagName: 'button',
-  classNames: ['travis-switch', 'switch'],
+  classNames: ['travis-switch', 'switch-rounded'],
   classNameBindings: ['_active:active'],
 
   attributeBindings: ['type'],

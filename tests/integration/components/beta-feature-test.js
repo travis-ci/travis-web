@@ -20,6 +20,6 @@ module('Integration | Component | beta feature', function (hooks) {
     assert.dom('.feature-name span').hasText('Dashboard');
     assert.dom('.feature-name a').hasAttribute('href', 'https://github.com/travis-ci/give-feedback');
     assert.dom('p').hasText('super awesome new Dashboard');
-    assert.dom('.switch').hasClass('active');
+    assert.dom('.switch-rounded').hasClass('active');
   });
 });

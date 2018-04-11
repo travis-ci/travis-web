@@ -1,7 +1,8 @@
 import TravisRoute from 'travis/routes/basic';
-// eslint-disable-next-line
 import config from 'travis/config/environment';
 import { computed } from 'ember-decorators/object';
+import { hash } from 'rsvp';
+import { merge } from '@ember/polyfills';
 
 export default TravisRoute.extend({
   queryParams: {
@@ -21,19 +22,39 @@ export default TravisRoute.extend({
     if (!account.error) {
       // TODO: Make perPage property configurable
       const offset = (params.page - 1) * this.get('recordsPerPage');
-      return this.store.paginated(
-        'repo',
-        {
-          offset,
-          sort_by: 'name',
-          limit: this.get('recordsPerPage'),
-          custom: {
-            owner: account.get('login'),
-            type: 'byOwner',
-          },
+      let queryParams = {
+        offset,
+        sort_by: 'name',
+        limit: this.get('recordsPerPage'),
+        custom: {
+          owner: account.get('login'),
+          type: 'byOwner',
         },
-        { live: false }
-      );
+      };
+
+      // FIXME this p uggers, what is to be done?
+      let deprecatedParams =
+        merge(Object.create(queryParams), {'repository.managed_by_installation': false});
+      let githubParams =
+        merge(Object.create(queryParams), {'repository.managed_by_installation': true});
+
+      let hashObject = {
+        deprecated: this.store.paginated(
+          'repo',
+          deprecatedParams,
+          { live: false }
+        )
+      };
+
+      if (config.githubApps) {
+        hashObject.githubApps = this.store.paginated(
+          'repo',
+          githubParams,
+          { live: false }
+        );
+      }
+
+      return hash(hashObject);
     }
   },
 
@@ -42,6 +63,7 @@ export default TravisRoute.extend({
     if (!account.error) {
       controller.set('login', account.get('login'));
     }
+    controller.set('account', account);
     return this._super(...arguments);
   },
 });

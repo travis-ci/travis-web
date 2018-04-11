@@ -7,7 +7,7 @@ export default Component.extend({
   @service flashes: null,
 
   tagName: 'button',
-  classNames: ['switch'],
+  classNames: ['switch-rounded'],
   classNameBindings: ['active', 'key'],
 
   attributeBindings: ['aria-checked', 'role'],

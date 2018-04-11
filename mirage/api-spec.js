@@ -250,6 +250,16 @@ export default {
         "standard": ["beta_features"]
       }
     },
+    // FIXME is it weird that this is dashed?
+    "billing-info":            {
+      "@type":            "resource",
+      "actions":          { },
+      "attributes":       ["id", "address", "address2", "billing_email", "city", "company", "country", "first_name", "last_name", "state", "vat_id", "zip_code"],
+      "representations":  {
+        "standard":       ["id", "address", "address2", "billing_email", "city", "company", "country", "first_name", "last_name", "state", "vat_id", "zip_code"],
+        "minimal":       ["id", "address", "address2", "billing_email", "city", "company", "country", "first_name", "last_name", "state", "vat_id", "zip_code"],
+      }
+    },
     "branch": {
       "@type": "resource",
       "actions": {
@@ -517,6 +527,16 @@ export default {
           "committer",
           "author"
         ]
+      }
+    },
+    // FIXME also dashed?
+    "credit-card-info":            {
+      "@type":            "resource",
+      "actions":          { },
+      "attributes":       ["id", "card_owner", "expiration_date", "last_digits"],
+      "representations":  {
+        "standard":       ["id", "card_owner", "expiration_date", "last_digits"],
+        "minimal":        ["id", "card_owner", "expiration_date", "last_digits"],
       }
     },
     "cron": {
@@ -1091,7 +1111,7 @@ export default {
           }
         ]
       },
-      "attributes": ["id","login","name","github_id","avatar_url","repositories"],
+      "attributes": ["id","login","name","github_id","avatar_url","installation","repositories"],
       "representations": {
         "minimal": [
           "id",
@@ -1134,6 +1154,18 @@ export default {
         "name",
         "github_id"
       ]
+    },
+    "installation": {
+      "@type": "resource",
+      "attributes": ["id", "owner"],
+      "representations": {
+        "minimal": [
+          "id", "owner"
+        ],
+        "standard": [
+          "id", "owner"
+        ]
+      }
     },
     "owner": {
       "@type": "resource",
@@ -1313,7 +1345,7 @@ export default {
           }
         ]
       },
-      "attributes": ["id","name","slug","description","github_language","active","private","owner","default_branch","starred","current_build"],
+      "attributes": ["id","name","slug","description","github_language","active","private","active_on_org","owner","default_branch","starred","current_build"],
       "representations": {
         "minimal": [
           "id",
@@ -1328,6 +1360,7 @@ export default {
           "github_language",
           "active",
           "private",
+          "active_on_org",
           "owner",
           "default_branch",
           "starred"
@@ -1559,6 +1592,30 @@ export default {
         "uri_template"
       ]
     },
+    "subscription":            {
+      "@type":            "resource",
+      "actions":          { },
+      "attributes":       [
+        "id",
+        "billing_info",
+        "credit_card_info",
+        "owner",
+        "valid_to",
+      ],
+      "representations":  {
+        "standard":       [
+          "id",
+          "billing_info",
+          "credit_card_info",
+          "owner",
+          "valid_to",
+        ],
+        "minimal":       [
+            "id",
+            "valid_to",
+        ],
+      }
+    },
     "user": {
       "@type": "resource",
       "actions": {
@@ -1587,7 +1644,7 @@ export default {
           }
         ]
       },
-      "attributes": ["id","login","name","github_id","avatar_url","repositories","is_syncing","synced_at"],
+      "attributes": ["id","login","name","github_id","avatar_url","installation","repositories","is_syncing","synced_at"],
       "representations": {
         "minimal": [
           "id",
