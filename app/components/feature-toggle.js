@@ -9,7 +9,7 @@ export default Component.extend({
   @service raven: null,
 
   tagName: 'a',
-  classNames: ['switch'],
+  classNames: ['switch-rounded'],
   classNameBindings: ['feature.enabled:active', 'disabled:disabled', 'disabled:inline-block'],
 
   click() {
