@@ -1,20 +1,24 @@
 <section class='billing'>
-  <h2>Billing Information</h2>
-  <main>
-    <section class='contact'>
-      <h3>Billing Contact</h3>
-      {{!FIXME the weird spacing is because I’m using pre-line, which is probs ridic}}
-      <address>{{model.billingInfo.firstName}} {{model.billingInfo.lastName}}
-        {{model.billingInfo.company}}
-        {{model.billingInfo.address}}
-        {{model.billingInfo.address2}}
-        {{model.billingInfo.city}}, {{model.billingInfo.state}} {{model.billingInfo.zipCode}}
-        {{model.billingInfo.country}}
-      </address>
-    </section>
-    <section class='payment'>
-      <h3>Payment information</h3>
-      <span data-test-credit-card>•••• •••• •••• {{model.creditCardInfo.lastDigits}}</span>
-    </section>
-  </main>
+  {{#if model}}
+    <h2>Billing Information</h2>
+    <main>
+      <section class='contact'>
+        <h3>Billing Contact</h3>
+        {{!FIXME the weird spacing is because I’m using pre-line, which is probs ridic}}
+        <address>{{model.billingInfo.firstName}} {{model.billingInfo.lastName}}
+          {{model.billingInfo.company}}
+          {{model.billingInfo.address}}
+          {{model.billingInfo.address2}}
+          {{model.billingInfo.city}}, {{model.billingInfo.state}} {{model.billingInfo.zipCode}}
+          {{model.billingInfo.country}}
+        </address>
+      </section>
+      <section class='payment'>
+        <h3>Payment information</h3>
+        <span data-test-credit-card>•••• •••• •••• {{model.creditCardInfo.lastDigits}}</span>
+      </section>
+    </main>
+  {{else}}
+    <span data-test-no-subscription>no subscription found</span>
+  {{/if}}
 </section>

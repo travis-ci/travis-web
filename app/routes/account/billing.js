@@ -2,8 +2,13 @@ import TravisRoute from 'travis/routes/basic';
 
 export default TravisRoute.extend({
   model() {
-    // FIXME this needs to filter to find the subscription for the current account
+    let accountLogin = this.modelFor('account').get('login');
+
+    // FIXME this still uses firstObject
+    // also I HATE the ESLint combination of banning long lines and requiring single-line functions
     return this.store.findAll('subscription')
-      .then(subscriptions => subscriptions.get('firstObject'));
+      .then(subscriptions =>
+        subscriptions.filter(
+          subscription => subscription.get('owner.login') === accountLogin).get('firstObject'));
   },
 });
