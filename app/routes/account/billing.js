@@ -1,14 +1,24 @@
 import TravisRoute from 'travis/routes/basic';
+import { service } from 'ember-decorators/service';
 
 export default TravisRoute.extend({
+  @service raven: null,
+
   model() {
     let accountLogin = this.modelFor('account').get('login');
 
-    // FIXME this still uses firstObject
-    // also I HATE the ESLint combination of banning long lines and requiring single-line functions
     return this.store.findAll('subscription')
-      .then(subscriptions =>
-        subscriptions.filter(
-          subscription => subscription.get('owner.login') === accountLogin).get('firstObject'));
+      .then(subscriptions => {
+        let accountSubscriptions = subscriptions.filter(
+          subscription => subscription.get('owner.login') === accountLogin);
+
+        if (accountSubscriptions.get('length') > 1) {
+          let exception =
+            new Error(`Account ${accountLogin} has more than one active subscription!`);
+          this.get('raven').logException(exception, true);
+        }
+
+        return accountSubscriptions.get('firstObject');
+      });
   },
 });
