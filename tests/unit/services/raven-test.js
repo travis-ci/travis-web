@@ -1,5 +1,6 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
+import config from 'travis/config/environment';
 
 module('Unit | Service | raven', function (hooks) {
   setupTest(hooks);
@@ -14,5 +15,20 @@ module('Unit | Service | raven', function (hooks) {
 
     assert.ok(service.ignoreError(filteredError), 'Service should ignore benign error');
     assert.notOk(service.ignoreError(unfilteredError), 'Service should not ignore serious error');
+  });
+
+  test('it skips sampling when requested', function (assert) {
+    let service = this.owner.lookup('service:raven');
+    let sampledError = { message: 'this error should not be reported due to sampling' };
+    let forcedReportingError = { message: 'this error will be reported despite sampling' };
+
+    service.sampleError = () => false;
+
+    config.sentry.development = false;
+
+    assert.ok(service.ignoreError(sampledError), 'Service should ignore error when not sampled');
+    assert.notOk(service.ignoreError(forcedReportingError, true), 'Service should not ignore error when sampling is forced');
+
+    config.sentry.development = true;
   });
 });
