@@ -10,7 +10,8 @@ export default TravisRoute.extend({
     return this.store.findAll('subscription')
       .then(subscriptions => {
         let accountSubscriptions = subscriptions.filter(
-          subscription => subscription.get('owner.login') === accountLogin);
+          subscription => subscription.get('owner.login') === accountLogin &&
+              subscription.get('status') === 'active');
 
         if (accountSubscriptions.get('length') > 1) {
           let exception =

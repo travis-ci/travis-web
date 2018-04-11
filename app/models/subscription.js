@@ -7,5 +7,6 @@ export default Model.extend({
   creditCardInfo: belongsTo({ async: false }),
   owner: belongsTo('owner', {polymorphic: true}),
 
+  status: attr(),
   validTo: attr('date')
 });

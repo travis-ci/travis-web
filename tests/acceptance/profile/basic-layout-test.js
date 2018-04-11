@@ -21,6 +21,7 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
 
     let subscription = server.create('subscription', {
       owner: currentUser,
+      status: 'active',
       valid_to: new Date()
     });
 
@@ -50,7 +51,18 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
     server.create('installation', {
       owner: organization
     });
+
     organization.save();
+
+    server.create('subscription', {
+      owner: organization,
+      status: 'canceled'
+    });
+
+    server.create('subscription', {
+      owner: organization,
+      status: 'expired'
+    });
 
     // Pad with extra organisations to force an extra API response page
     for (let orgIndex = 0; orgIndex < 10; orgIndex++) {
@@ -217,6 +229,7 @@ test('logs an exception viewing billing when there is more than one active subsc
 
   let otherSubscription = server.create('subscription', {
     owner: this.user,
+    status: 'active',
     valid_to: new Date(new Date().getTime() - 10000)
   });
 

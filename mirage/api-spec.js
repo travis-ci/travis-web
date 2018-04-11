@@ -1600,6 +1600,7 @@ export default {
         "billing_info",
         "credit_card_info",
         "owner",
+        "status",
         "valid_to",
       ],
       "representations":  {
@@ -1608,10 +1609,12 @@ export default {
           "billing_info",
           "credit_card_info",
           "owner",
+          "status",
           "valid_to",
         ],
         "minimal":       [
             "id",
+            "status",
             "valid_to",
         ],
       }
