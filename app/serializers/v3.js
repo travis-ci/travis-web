@@ -257,6 +257,11 @@ export default JSONSerializer.extend({
           if (meta.representation === 'standard' ||
             (meta.representation === 'minimal' &&
               (key === 'billingInfo' || key === 'creditCardInfo'))) {
+            // FIXME hackery because these don’t include IDs
+            if (key === 'billingInfo' || key === 'creditCardInfo') {
+              relationshipHash.data.id = data.id;
+            }
+
             included.push(relationshipHash.data);
           }
 
