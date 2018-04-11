@@ -13,8 +13,8 @@ export default create({
   features: collection('.features-list .feature', {
     name: text('.feature-name'),
     description: text('p'),
-    isOn: hasClass('active', '.switch'),
+    isOn: hasClass('active', '.switch-rounded'),
 
-    click: clickable('.switch')
+    click: clickable('.switch-rounded')
   })
 });

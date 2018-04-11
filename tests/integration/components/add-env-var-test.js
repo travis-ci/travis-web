@@ -91,7 +91,7 @@ module('Integration | Component | add env-var', function (hooks) {
     await fillInWithKeyEvent('.env-name', 'FOO');
     await fillInWithKeyEvent('.env-value', 'bar');
 
-    await click('.switch');
+    await click('.switch-rounded');
 
     await click('.form-submit');
 
