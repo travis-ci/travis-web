@@ -225,7 +225,7 @@ test('view billing tab when there is no subscription', function (assert) {
 });
 
 test('logs an exception viewing billing when there is more than one active subscription and displays the earliest', function (assert) {
-  let done = assert.async();
+  assert.expect(2);
 
   let otherSubscription = server.create('subscription', {
     owner: this.user,
@@ -239,10 +239,7 @@ test('logs an exception viewing billing when there is more than one active subsc
 
   let mockSentry = Service.extend({
     logException(error) {
-      andThen(() => {
-        assert.equal(profilePage.billing.creditCardNumber, '•••• •••• •••• 2010');
-        done();
-      });
+      assert.ok(true, 'expected logException to have been called');
     },
   });
 
@@ -253,5 +250,7 @@ test('logs an exception viewing billing when there is more than one active subsc
   profilePage.visit({ username: 'user-login' });
   profilePage.billing.visit();
 
-  // See logException for the assertion
+  andThen(() => {
+    assert.equal(profilePage.billing.creditCardNumber, '•••• •••• •••• 2010');
+  });
 });
