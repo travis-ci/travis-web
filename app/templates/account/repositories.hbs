@@ -1,3 +1,10 @@
+{{! FIXME what is the future for this? }}
+{{#unless features.enterpriseVersion}}
+  {{#unless features.proVersion}}
+    <p class="text-medium">We're only showing your public repositories. You can find your private projects on <a href="https://travis-ci.com" title="travis-ci.com">travis-ci.com</a>.</p>
+  {{/unless}}
+{{/unless}}
+
 {{#if showGitHubApps}}
   {{#if hasGitHubAppsInstallation}}
     <div id="github-apps-repositories">
