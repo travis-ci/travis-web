@@ -8,7 +8,7 @@ module('Unit | Service | raven', function (hooks) {
   test('it filters benign errors', function (assert) {
     let service = this.owner.lookup('service:raven');
     let filteredError = { message: 'foo is an error we should filter' };
-    let unfilteredError = { message: 'throw dat' };
+    let unfilteredError = { message: 'throw' };
 
     service.shouldReportError = () => true;
     service.set('benignErrors', ['foo', 'bar', 'baz']);
