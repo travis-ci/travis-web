@@ -1,0 +1,55 @@
+.import-page #organizations-list {
+  list-style-type: none;
+}
+
+.import-page #organizations-list h3 {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.5em;
+  margin: 0;
+}
+
+.import-page #organizations-list h3 > span {
+  display: block;
+}
+
+.import-page .org-info {
+  padding-left: 10px;
+}
+
+.import-page #organizations-list > li .info {
+  padding: 0px 10px 20px 10px;
+  display: grid;
+  grid-template-columns: 40px 400px auto;
+}
+
+.import-page .org-avatar {
+  display: flex;
+  align-items: center;
+}
+
+.import-page .progress-container {
+  margin-bottom: 15px;
+}
+
+.import-page .progress-bar {
+  width: 500px;
+  border: 1px solid black;
+  height: 20px;
+}
+
+.import-page .progress-bar .inner {
+  height: 18px;
+  background-color: blue;
+  margin: 0;
+  padding: 0;
+}
+
+.import-page .progress-container {
+  width: 520px;
+}
+
+.import-page .progress-container a {
+  border-bottom: 1px solid #9d9d9d;
+  padding-bottom: 0.1rem;
+}

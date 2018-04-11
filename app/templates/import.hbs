@@ -1,0 +1,10 @@
+{{#travis-layout layoutName="layouts/center" class="import-page"}}
+  <h2 style="padding-left: 60px; font-size: 30px">Import</h2>
+  <ul id="organizations-list">
+  {{#each owners as |organization| }}
+    {{import-owner-item owner=organization}}
+  {{/each}}
+  </ul>
+
+  {{pagination-navigation collection=owners route="import"}}
+{{/travis-layout}}

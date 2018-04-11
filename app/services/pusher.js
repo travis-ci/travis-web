@@ -7,10 +7,32 @@ export default Service.extend({
   @service store: null,
   @service liveUpdatesRecordFetcher: null,
 
+  init() {
+    this.set('subscriptions', {});
+  },
+
+  subscribe(event, callback, guard) {
+    guard = guard || (() => true);
+    let subscriptions = this.get('subscriptions');
+    if (!subscriptions[event]) {
+      subscriptions[event] = [];
+    }
+    subscriptions[event].push({ callback, guard });
+  },
+
   receive(event, data) {
     let build, commit, job;
     let store = this.get('store');
     let [name, type] = event.split(':');
+
+    let subscriptions = this.get('subscriptions');
+    if (subscriptions[event]) {
+      subscriptions[event].forEach((callbackData) => {
+        if (callbackData.guard(event, data)) {
+          callbackData.callback(event, data);
+        }
+      });
+    }
 
     if (name === 'job' && data.job && data.job.commit) {
       store.push(store.normalize('commit', data.job.commit));

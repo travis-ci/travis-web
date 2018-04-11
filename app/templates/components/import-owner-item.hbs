@@ -1,0 +1,32 @@
+<li>
+  <div class="info">
+    <div class="org-avatar">
+      {{user-avatar url=owner.avatarUrl name=name size=36}}
+    </div>
+
+    <div class="org-info">
+      <h3 class="org-name">{{owner.name}}</h3>
+      <span>{{owner.login}}</span>
+    </div>
+
+    <div class="import-button">
+      <button class="form-submit" {{action 'import'}}>Import</button>
+    </div>
+  </div>
+
+  <div class="progress-container">
+    {{#if done}}
+      All data was imported!
+    {{else}}
+      {{progress-bar progress=progressPercent}}
+      {{#if phase2}}
+        The basic data was successfully imported, you can now use your repositories
+        on <a href="#">travis-ci.com</a>. The rest of the data is still importing, though.
+        <a href="#">Learn more</a>.
+      {{else}}
+        Your repositories are being imported.
+      {{/if}}
+    {{/if}}
+  </div>
+</li>
+

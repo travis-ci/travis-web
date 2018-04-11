@@ -15,6 +15,7 @@ const Router = EmberRouter.extend({
 });
 
 Router.map(function () {
+  this.route('import');
   this.route('dashboard', { resetNamespace: true }, function () {
     this.route('repositories', { path: '/' });
   });
