@@ -1,5 +1,5 @@
 /* global Travis */
-import { observer } from '@ember/object';
+import { get, observer } from '@ember/object';
 
 import { isEmpty } from '@ember/utils';
 import { Promise as EmberPromise } from 'rsvp';
@@ -11,9 +11,12 @@ import { service } from 'ember-decorators/service';
 
 import URLPolyfill from 'travis/utils/url';
 
+const proVersion = config.featureFlags['pro-version'];
+
 export default Service.extend({
   @service router: null,
   @service flashes: null,
+  @service intercom: null,
   @service store: null,
   @service storage: null,
   @service sessionStorage: null,
@@ -151,7 +154,16 @@ export default Service.extend({
     user = this.loadUser(data.user);
     this.set('currentUser', user);
     this.set('state', 'signed-in');
-    Travis.trigger('user:signed_in', data.user);
+    this.userSignedIn(data.user);
+  },
+
+  userSignedIn(user) {
+    if (proVersion && get(config, 'intercom.enabled')) {
+      this.get('intercom').set('user.name', user.name);
+      this.get('intercom').set('user.email', user.email);
+      // FIXME createdAt?
+    }
+    Travis.trigger('user:signed_in', user);
   },
 
   refreshUserData(user) {
