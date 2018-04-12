@@ -67,9 +67,6 @@ const App = Application.extend(Evented, {
         return HS.beacon.identify(userParams);
       });
     }
-  },
-
-  setIntercomUser(user) {
   }
 });
 
