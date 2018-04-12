@@ -34,7 +34,8 @@ module.exports = function (environment) {
     },
     // FIXME add handling for enterprise etc
     intercom: {
-      appId: 'dtjzv6xw'
+      appId: 'dtjzv6xw',
+      enabled: true
     },
     urls: {
       about: 'https://about.travis-ci.com',

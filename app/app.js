@@ -2,6 +2,8 @@
 import Evented from '@ember/object/evented';
 
 import Application from '@ember/application';
+import { get } from '@ember/object';
+import { service } from 'ember-decorators/service';
 import Resolver from './resolver';
 import loadInitializers from 'ember-load-initializers';
 import config from './config/environment';
@@ -15,6 +17,8 @@ const App = Application.extend(Evented, {
   modulePrefix: config.modulePrefix,
   podModulePrefix: config.podModulePrefix,
   Resolver,
+
+  @service intercom: null,
 
   // Configure global logging based on debug feature flag
   LOG_TRANSITIONS: debuggingEnabled,
@@ -37,6 +41,10 @@ const App = Application.extend(Evented, {
     if (proVersion && config.beacon) {
       this.setupBeacon();
       this.identifyHSBeacon(user);
+    }
+
+    if (proVersion && get(config, 'intercom.enabled')) {
+      this.setIntercomUser(user);
     }
     return this.subscribePusher(user);
   },
@@ -67,6 +75,12 @@ const App = Application.extend(Evented, {
         return HS.beacon.identify(userParams);
       });
     }
+  },
+
+  setIntercomUser(user) {
+    this.get('intercom').set('user.name', user.name);
+    this.get('intercom').set('user.email', user.email);
+    // FIXME createdAt?
   }
 });
 
