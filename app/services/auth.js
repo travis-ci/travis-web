@@ -162,7 +162,7 @@ export default Service.extend({
       this.get('intercom').set('user.name', user.name);
       this.get('intercom').set('user.email', user.email);
       this.get('intercom').set('user.createdAt', user.first_logged_in_at);
-      this.get('intercom').set('user.user_hash', user.user_hash);
+      this.get('intercom').set('user.user_hash', user.secure_user_hash);
     }
     Travis.trigger('user:signed_in', user);
   },
