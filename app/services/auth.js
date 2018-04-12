@@ -159,6 +159,7 @@ export default Service.extend({
 
   userSignedIn(user) {
     if (proVersion && get(config, 'intercom.enabled')) {
+      this.get('intercom').set('user.user_id', user.id);
       this.get('intercom').set('user.name', user.name);
       this.get('intercom').set('user.email', user.email);
       this.get('intercom').set('user.createdAt', user.first_logged_in_at);
