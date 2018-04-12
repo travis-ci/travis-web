@@ -32,9 +32,10 @@ module.exports = function (environment) {
       host: 'ws.pusherapp.com',
       debug: false
     },
+    // FIXME add handling for enterprise etc
     intercom: {
       appId: 'dtjzv6xw',
-      enabled: false
+      enabled: true
     },
     urls: {
       about: 'https://about.travis-ci.com',
@@ -84,7 +85,6 @@ module.exports = function (environment) {
   if (TRAVIS_PRO) {
     ENV.featureFlags['pro-version'] = true;
     ENV.pro = true;
-    ENV.intercom.enable = true;
   }
 
   if (TRAVIS_ENTERPRISE) {

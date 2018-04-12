@@ -11,6 +11,8 @@ import { service } from 'ember-decorators/service';
 
 import URLPolyfill from 'travis/utils/url';
 
+const proVersion = config.featureFlags['pro-version'];
+
 export default Service.extend({
   @service router: null,
   @service flashes: null,
@@ -156,7 +158,7 @@ export default Service.extend({
   },
 
   userSignedIn(user) {
-    if (get(config, 'intercom.enabled')) {
+    if (proVersion && get(config, 'intercom.enabled')) {
       this.get('intercom').set('user.name', user.name);
       this.get('intercom').set('user.email', user.email);
       this.get('intercom').set('user.createdAt', user.created_at);
