@@ -161,7 +161,7 @@ export default Service.extend({
     if (proVersion && get(config, 'intercom.enabled')) {
       this.get('intercom').set('user.name', user.name);
       this.get('intercom').set('user.email', user.email);
-      this.get('intercom').set('user.createdAt', user.last_synced_at);
+      this.get('intercom').set('user.createdAt', user.created_at);
     }
     Travis.trigger('user:signed_in', user);
   },
