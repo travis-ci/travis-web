@@ -21,7 +21,7 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
 
     let subscription = server.create('subscription', {
       owner: currentUser,
-      status: 'active',
+      status: 'subscribed',
       valid_to: new Date()
     });
 
@@ -229,7 +229,7 @@ test('logs an exception viewing billing when there is more than one active subsc
 
   let otherSubscription = server.create('subscription', {
     owner: this.user,
-    status: 'active',
+    status: 'subscribed',
     valid_to: new Date(new Date().getTime() - 10000)
   });
 
