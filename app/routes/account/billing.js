@@ -11,7 +11,7 @@ export default TravisRoute.extend({
       .then(subscriptions => {
         let accountSubscriptions = subscriptions.filter(
           subscription => subscription.get('owner.login') === accountLogin &&
-              subscription.get('status') === 'active');
+              subscription.get('status') === 'subscribed');
 
         if (accountSubscriptions.get('length') > 1) {
           let exception =
