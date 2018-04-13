@@ -7,26 +7,19 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
   beforeEach() {
     const currentUser = server.create('user', {
       name: 'User Name',
-      login: 'user-login'
+      login: 'user-login',
+      repos_count: 3
     });
 
     signInUser(currentUser);
 
     // create organization
-    server.create('organization', {
+    server.create('account', {
       name: 'Org Name',
       type: 'organization',
-      login: 'org-login'
+      login: 'org-login',
+      repos_count: 30
     });
-
-    // Pad with extra organisations to force an extra API response page
-    for (let orgIndex = 0; orgIndex < 10; orgIndex++) {
-      server.create('organization', {
-        name: `Generic org ${orgIndex}`,
-        type: 'organization',
-        login: `org${orgIndex}`,
-      });
-    }
 
     // create active repository
     server.create('repository', {
@@ -84,10 +77,13 @@ test('view profile', function (assert) {
 
     assert.equal(profilePage.name, 'User Name');
 
-    assert.equal(profilePage.accounts.length, 12, 'expected all accounts to be listed');
+    assert.equal(profilePage.accounts.length, 2, 'expected two accounts');
 
     assert.equal(profilePage.accounts[0].name, 'User Name');
+    assert.equal(profilePage.accounts[0].repositoryCount, '3 repositories');
+
     assert.equal(profilePage.accounts[1].name, 'Org Name');
+    assert.equal(profilePage.accounts[1].repositoryCount, '30 repositories');
 
     assert.equal(profilePage.administerableRepositories.length, 3, 'expected three repositories');
 
