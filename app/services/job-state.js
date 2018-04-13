@@ -1,8 +1,18 @@
+import { merge } from '@ember/polyfills';
 import { isEmpty } from '@ember/utils';
 import Service from '@ember/service';
 import { task } from 'ember-concurrency';
 import { service } from 'ember-decorators/service';
-import fetchAll from 'travis/utils/fetch-all';
+
+let fetchAll = function (store, type, query) {
+  store.query(type, query).then((collection) => {
+    let nextPage = collection.get('meta.pagination.next');
+    if (nextPage) {
+      let { limit, offset } = nextPage;
+      fetchAll(store, type, merge(query, { limit, offset }));
+    }
+  });
+};
 
 export default Service.extend({
   @service store: null,

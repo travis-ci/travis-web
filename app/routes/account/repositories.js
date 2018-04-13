@@ -16,7 +16,7 @@ export default TravisRoute.extend({
 
   model(params) {
     const account = this.modelFor('account');
-    // account is an Ember Data user or organization
+    // account is an Ember-Data model
     if (!account.error) {
       // TODO: Make perPage property configurable
       const offset = (params.page - 1) * this.get('recordsPerPage');

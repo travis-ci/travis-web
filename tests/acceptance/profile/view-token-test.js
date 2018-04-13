@@ -9,14 +9,17 @@ moduleForAcceptance('Acceptance | profile/view token', {
     const currentUser = server.create('user', {
       name: 'User Name',
       login: 'user-login',
+      repos_count: 3
     });
 
     signInUser(currentUser);
 
     // create organization
-    server.create('organization', {
+    server.create('account', {
       name: 'Org Name',
+      type: 'organization',
       login: 'org-login',
+      repos_count: 30
     });
   }
 });

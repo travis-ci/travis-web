@@ -133,7 +133,7 @@ export default Model.extend({
           this.set('isSyncing', false);
           this.setWithSession('syncedAt', data.user.synced_at);
           Travis.trigger('user:synced', data.user);
-          this.store.queryRecord('user', { current: true });
+          this.store.query('account', {});
         });
       }
     });
