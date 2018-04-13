@@ -32,10 +32,8 @@ module.exports = function (environment) {
       host: 'ws.pusherapp.com',
       debug: false
     },
-    // FIXME add handling for enterprise etc
     intercom: {
-      appId: 'dtjzv6xw',
-      enabled: true
+      enabled: false
     },
     urls: {
       about: 'https://about.travis-ci.com',
@@ -146,6 +144,13 @@ module.exports = function (environment) {
 
     if (process.env.API_TRACE_ENDPOINT) {
       ENV.apiTraceEndpoint = process.env.API_TRACE_ENDPOINT;
+    }
+
+    if (process.env.INTERCOM_APP_ID) {
+      ENV.intercom = {
+        appId: process.env.INTERCOM_APP_ID,
+        enabled: true
+      };
     }
   }
 
