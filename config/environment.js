@@ -33,6 +33,7 @@ module.exports = function (environment) {
       debug: false
     },
     intercom: {
+      appId: 'placeholder',
       enabled: false
     },
     urls: {
