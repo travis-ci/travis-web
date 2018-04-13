@@ -2,8 +2,7 @@ export CLEANED_BRANCH_SUBDOMAIN=`echo $TRAVIS_PULL_REQUEST_BRANCH | tr '.' '-' |
 
 ./config/deployment/store-redis-urls.sh
 
-# FIXME obvsy
-if [[ $TRAVIS_PULL_REQUEST_BRANCH = *intercom* ]]
+if [[ $TRAVIS_PULL_REQUEST_BRANCH = *staging* ]]
 then
   API_ENDPOINT=https://api-staging.travis-ci.org ember deploy org-staging-pull-request --activate
   DEPLOYMENT_EXIT_CODE=$? TLD=org ENVIRONMENT=staging ./config/deployment/update-github-status.sh
