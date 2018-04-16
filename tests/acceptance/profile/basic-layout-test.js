@@ -249,7 +249,6 @@ test('switching to another account’s billing tab loads the subscription proper
   profilePage.visit({ username: 'user-login' });
   profilePage.billing.visit();
   profilePage.accounts[1].visit();
-  profilePage.billing.visit();
 
   andThen(() => {
     assert.dom('[data-test-no-subscription]').hasText('no subscription found');
