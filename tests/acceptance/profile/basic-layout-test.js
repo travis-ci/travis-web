@@ -246,7 +246,7 @@ test('view billing tab when there is no subscription', function (assert) {
 });
 
 test('logs an exception viewing billing when there is more than one active subscription and displays the earliest', function (assert) {
-  assert.expect(2);
+  assert.expect(4);
 
   let otherSubscription = server.create('subscription', {
     owner: this.user,
@@ -273,5 +273,7 @@ test('logs an exception viewing billing when there is more than one active subsc
 
   andThen(() => {
     assert.equal(profilePage.billing.creditCardNumber, '•••• •••• •••• 2010');
+    assert.equal(profilePage.billing.invoices.length, 0, 'expected no invoices to be listed');
+    assert.dom('[data-test-no-invoices]').hasText('no invoices found');
   });
 });

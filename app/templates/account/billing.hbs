@@ -21,6 +21,8 @@
         <h3>Invoice History</h3>
         {{#each model.invoices as |invoice|}}
           <a data-test-invoice href={{invoice.url}}>{{invoice.id}} {{moment-format invoice.createdAt 'MMMM YYYY'}}</a>
+        {{else}}
+          <span data-test-no-invoices>no invoices found</span>
         {{/each}}
       </section>
     </main>
