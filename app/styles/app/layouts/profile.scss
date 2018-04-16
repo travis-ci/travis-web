@@ -373,6 +373,16 @@ section.invoices {
   p a {
     text-decoration: underline;
   }
+
+  svg {
+    margin-right: 3px;
+    transform: translateY(-2px);
+
+    &:hover {
+      border-color: $pebble-grey;
+      @include colorSVG($cement-grey);
+    }
+  }
 }
 
 #github-apps-invitation {

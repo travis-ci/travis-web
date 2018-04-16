@@ -24,7 +24,8 @@
 </section>
 <section class='invoices'>
   <h2>Invoice History</h2>
-  <p>Having trouble with your invoices? <a href='https://example.com/fixme'>We’re happy to help</a>.</p>
+  {{! FIXME the icon alignment within the circle is a bit off}}
+  <p>{{svg-jar 'icon-help' class='icon-help' alt=''}} Having trouble with your invoices? <a href='https://example.com/fixme'>We’re happy to help</a>.</p>
   {{#if model.invoices}}
     <ul>
       {{#each model.invoices as |invoice|}}
