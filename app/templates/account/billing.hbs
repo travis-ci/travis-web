@@ -19,11 +19,15 @@
       </section>
       <section class='invoices'>
         <h3>Invoice History</h3>
-        {{#each model.invoices as |invoice|}}
-          <a data-test-invoice href={{invoice.url}}>{{invoice.id}} {{moment-format invoice.createdAt 'MMMM YYYY'}}</a>
+        {{#if model.invoices}}
+          <ul>
+            {{#each model.invoices as |invoice|}}
+              <li><a data-test-invoice href={{invoice.url}}>{{invoice.id}} {{moment-format invoice.createdAt 'MMMM YYYY'}}</a></li>
+            {{/each}}
+          </ul>
         {{else}}
           <span data-test-no-invoices>no invoices found</span>
-        {{/each}}
+        {{/if}}
       </section>
     </main>
   {{else}}
