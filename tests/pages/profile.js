@@ -66,6 +66,10 @@ export default create({
       scope: '.contact address',
     },
 
-    creditCardNumber: text('[data-test-credit-card]')
+    creditCardNumber: text('[data-test-credit-card]'),
+
+    invoices: collection('[data-test-invoice]', {
+      href: attribute('href')
+    })
   },
 });

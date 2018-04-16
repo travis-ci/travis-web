@@ -17,6 +17,12 @@
         <h3>Payment information</h3>
         <span data-test-credit-card>•••• •••• •••• {{model.creditCardInfo.lastDigits}}</span>
       </section>
+      <section class='invoices'>
+        <h3>Invoice History</h3>
+        {{#each model.invoices as |invoice|}}
+          <a data-test-invoice href={{invoice.url}}>{{invoice.id}} {{moment-format invoice.createdAt 'MMMM YYYY'}}</a>
+        {{/each}}
+      </section>
     </main>
   {{else}}
     <span data-test-no-subscription>no subscription found</span>

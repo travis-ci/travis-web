@@ -41,6 +41,18 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
       last_digits: '1919'
     });
 
+    subscription.createInvoice({
+      id: '1919',
+      created_at: new Date(1919, 4, 15),
+      url: 'https://example.com/1919.pdf'
+    });
+
+    subscription.createInvoice({
+      id: '2010',
+      created_at: new Date(2010, 1, 14),
+      url: 'https://example.com/2010.pdf'
+    });
+
     // create organization
     let organization = server.create('organization', {
       name: 'Org Name',
@@ -211,6 +223,15 @@ test('view billing information', function (assert) {
     percySnapshot(assert);
     assert.equal(profilePage.billing.address.text, 'User Name Travis CI GmbH Rigaerstraße 8 Address 2 Berlin, Berlin 10987 Germany');
     assert.equal(profilePage.billing.creditCardNumber, '•••• •••• •••• 1919');
+
+    assert.equal(profilePage.billing.invoices.length, 2);
+
+    profilePage.billing.invoices[0].as(i1919 => {
+      assert.equal(i1919.text, '1919 May 1919');
+      assert.equal(i1919.href, 'https://example.com/1919.pdf');
+    });
+
+    assert.equal(profilePage.billing.invoices[1].text, '2010 February 2010');
   });
 });
 

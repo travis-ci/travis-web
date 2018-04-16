@@ -759,6 +759,15 @@ export default {
         "permission"
       ]
     },
+    "invoice":            {
+      "@type":            "resource",
+      "actions":          { },
+      "attributes":       ["id", "created_at", "url"],
+      "representations":  {
+        "standard":       ["id", "created_at", "url"],
+        "minimal":        ["id", "created_at", "url"],
+      }
+    },
     "home": {
       "@type": "resource",
       "actions": {
@@ -1600,6 +1609,7 @@ export default {
         "billing_info",
         "credit_card_info",
         "owner",
+        "invoices",
         "status",
         "valid_to",
       ],
@@ -1609,6 +1619,8 @@ export default {
           "billing_info",
           "credit_card_info",
           "owner",
+          // FIXME this seems wrong?
+          "invoices",
           "status",
           "valid_to",
         ],

@@ -348,9 +348,14 @@ header.github-apps {
 section.billing {
   main {
     display: flex;
+    flex-wrap: wrap;
 
     section {
       flex: 1;
+
+      &.invoices {
+        flex: 0 1 100%;
+      }
     }
   }
 
