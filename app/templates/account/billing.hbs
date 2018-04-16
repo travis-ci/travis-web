@@ -1,7 +1,7 @@
 <section class='billing'>
   {{#if model}}
     <h2>Billing Information</h2>
-    <main>
+    <section class='row'>
       <section class='contact'>
         <h3>Billing Contact</h3>
         {{!FIXME the weird spacing is because I’m using pre-line, which is probs ridic}}
@@ -17,21 +17,21 @@
         <h3>Payment information</h3>
         <span data-test-credit-card>•••• •••• •••• {{model.creditCardInfo.lastDigits}}</span>
       </section>
-      <section class='invoices'>
-        <h3>Invoice History</h3>
-        <p>Having trouble with your invoices? <a href='https://example.com/fixme'>We’re happy to help</a>.</p>
-        {{#if model.invoices}}
-          <ul>
-            {{#each model.invoices as |invoice|}}
-              <li><a data-test-invoice href={{invoice.url}}>{{invoice.id}} {{moment-format invoice.createdAt 'MMMM YYYY'}}</a></li>
-            {{/each}}
-          </ul>
-        {{else}}
-          <span data-test-no-invoices>no invoices found</span>
-        {{/if}}
-      </section>
-    </main>
+    </section>
   {{else}}
     <span data-test-no-subscription>no subscription found</span>
+  {{/if}}
+</section>
+<section class='invoices'>
+  <h2>Invoice History</h2>
+  <p>Having trouble with your invoices? <a href='https://example.com/fixme'>We’re happy to help</a>.</p>
+  {{#if model.invoices}}
+    <ul>
+      {{#each model.invoices as |invoice|}}
+        <li><a data-test-invoice href={{invoice.url}}>{{invoice.id}} {{moment-format invoice.createdAt 'MMMM YYYY'}}</a></li>
+      {{/each}}
+    </ul>
+  {{else}}
+    <span data-test-no-invoices>no invoices found</span>
   {{/if}}
 </section>

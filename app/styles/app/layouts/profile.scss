@@ -346,16 +346,12 @@ header.github-apps {
 }
 
 section.billing {
-  main {
+  .row {
     display: flex;
     flex-wrap: wrap;
 
     section {
       flex: 1;
-
-      &.invoices {
-        flex: 0 1 100%;
-      }
     }
   }
 
@@ -364,6 +360,10 @@ section.billing {
       white-space: pre-line;
     }
   }
+}
+
+section.invoices {
+  padding-top: 1rem;
 
   ul {
     list-style-type: none;
