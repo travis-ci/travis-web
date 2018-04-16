@@ -370,8 +370,8 @@ section.invoices {
     padding-left: 0;
   }
 
-  p a {
-    text-decoration: underline;
+  p {
+    @include linkStyle;
   }
 
   svg {
