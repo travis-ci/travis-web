@@ -245,6 +245,17 @@ test('view billing tab when there is no subscription', function (assert) {
   });
 });
 
+test('switching to another account’s billing tab loads the subscription properly', function (assert) {
+  profilePage.visit({ username: 'user-login' });
+  profilePage.billing.visit();
+  profilePage.accounts[1].visit();
+  profilePage.billing.visit();
+
+  andThen(() => {
+    assert.dom('[data-test-no-subscription]').hasText('no subscription found');
+  });
+});
+
 test('logs an exception viewing billing when there is more than one active subscription and displays the earliest', function (assert) {
   assert.expect(4);
 

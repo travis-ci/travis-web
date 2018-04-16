@@ -56,7 +56,8 @@ export default create({
   },
 
   accounts: collection('.profile-aside .account', {
-    name: text('.account-name')
+    name: text('.account-name'),
+    visit: clickable('.account-name')
   }),
 
   billing: {
