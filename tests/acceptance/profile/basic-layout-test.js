@@ -82,6 +82,7 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
         name: `Generic org ${orgIndex}`,
         type: 'organization',
         login: `org${orgIndex}`,
+        github_id: 1000 + orgIndex
       });
     }
 
@@ -206,6 +207,7 @@ test('view a profiles for organizations that do not and do have GitHub Apps inst
 
   andThen(function () {
     assert.ok(profilePage.githubAppsInvitation.isVisible, 'expected GitHub Apps invitation to be visible');
+    assert.equal(profilePage.githubAppsInvitation.button.href, 'https://github.com/apps/travis-ci-testing/installations/new/permissions?target_id=1000');
   });
 
   profilePage.visit({ username: 'org-login' });

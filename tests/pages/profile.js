@@ -40,7 +40,14 @@ export default create({
 
   administerableRepositories: existingRepositoriesCollection('#administerable-repositories'),
 
-  githubAppsInvitation: { scope: '#github-apps-invitation' },
+  githubAppsInvitation: {
+    scope: '#github-apps-invitation',
+
+    button: {
+      scope: 'button',
+      href: attribute('href')
+    }
+  },
 
   githubAppsRepositories: githubAppsRepositoryCollection('#github-apps-repositories'),
   notLockedGithubAppsRepositories: githubAppsRepositoryCollection('#not-locked-github-apps-repositories'),

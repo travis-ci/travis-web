@@ -8,6 +8,7 @@ export default Model.extend({
   isSyncing: attr('boolean'),
   syncedAt: attr(),
   avatarUrl: attr(),
+  githubId: attr(),
 
   installation: belongsTo({async: false}),
 });

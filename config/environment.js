@@ -119,7 +119,10 @@ module.exports = function (environment) {
       };
       ENV.userlike = true;
       ENV.beacon = true;
-      ENV.githubApps = true;
+      ENV.githubApps = {
+        // FIXME this should be from the environment
+        appName: 'travis-ci-staging'
+      };
       ENV.urls.legal = ENV.billingEndpoint + '/pages/legal';
       ENV.urls.imprint = ENV.billingEndpoint + '/pages/imprint';
       ENV.urls.security = ENV.billingEndpoint + '/pages/security';
@@ -191,7 +194,9 @@ module.exports = function (environment) {
 
     ENV.pusher = {};
 
-    ENV.githubApps = true;
+    ENV.githubApps = {
+      appName: 'travis-ci-testing'
+    };
 
     ENV.skipConfirmations = true;
 

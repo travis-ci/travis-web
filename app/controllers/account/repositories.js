@@ -3,7 +3,7 @@ import Controller from '@ember/controller';
 import { service } from 'ember-decorators/service';
 import config from 'travis/config/environment';
 
-import { filter, filterBy } from 'ember-decorators/object/computed';
+import { alias, filter, filterBy } from 'ember-decorators/object/computed';
 
 export default Controller.extend({
   @service features: null,
@@ -16,6 +16,14 @@ export default Controller.extend({
   },
 
   showGitHubApps: config.githubApps,
+  config,
+  @alias('config.githubApps.appName') githubAppsAppName: null,
+
+  @computed('githubAppsAppName', 'account.githubId')
+  githubAppsActivationURL(appName, githubId) {
+    return 'https://github.com/apps/' +
+      `${appName}/installations/new/permissions?target_id=${githubId}`;
+  },
 
   // FIXME this is quite baroque to avoid trying to load an installation ugh
   @computed('account.id')
