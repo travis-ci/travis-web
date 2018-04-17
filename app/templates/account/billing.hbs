@@ -24,6 +24,11 @@
       <section class='payment'>
         <h3>Payment information</h3>
         <span data-test-credit-card>•••• •••• •••• {{model.creditCardInfo.lastDigits}}</span>
+        {{#if (eq model.plan.period 'monthly')}}
+          <span class='notice-banner--yellow' data-test-annual-invitation>
+            Save 10% by switching to <a href='javascript:alert("unimplemented")'>annual billing</a>
+          </span>
+        {{/if}}
       </section>
     </section>
   {{else}}

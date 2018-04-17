@@ -363,6 +363,12 @@ section.billing {
       white-space: pre-line;
     }
   }
+
+  .notice-banner--yellow {
+    display: block;
+    margin-top: 1rem;
+    padding: 0.5rem 0.9rem 0.6rem;
+  }
 }
 
 section.invoices {

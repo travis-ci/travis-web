@@ -89,6 +89,8 @@ export default create({
 
     creditCardNumber: text('[data-test-credit-card]'),
 
+    annualInvitation: { scope: '[data-test-annual-invitation]' },
+
     invoices: collection('[data-test-invoice]', {
       href: attribute('href')
     })

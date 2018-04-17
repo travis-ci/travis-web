@@ -273,6 +273,8 @@ test('view billing information', function (assert) {
     assert.equal(profilePage.billing.address.text, 'User Name Travis CI GmbH Rigaerstraße 8 Address 2 Berlin, Berlin 10987 Germany');
     assert.equal(profilePage.billing.creditCardNumber, '•••• •••• •••• 1919');
 
+    assert.ok(profilePage.billing.annualInvitation.isVisible, 'expected the invitation to switch to annual billing to be visible');
+
     assert.equal(profilePage.billing.invoices.length, 2);
 
     profilePage.billing.invoices[0].as(i1919 => {
