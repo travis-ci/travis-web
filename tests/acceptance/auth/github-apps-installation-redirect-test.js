@@ -30,7 +30,7 @@ test('it polls until the GitHub installation ID resolves to an owner', function 
     }
   });
 
-  visit(`/github_apps_installation?installation_id=${installation.id}`);
+  visit(`/settings/github-apps-installations/redirect?installation_id=${installation.id}`);
 
   andThen(() => {
     assert.dom('[data-test-github-apps-polling]').hasText('polling!');
