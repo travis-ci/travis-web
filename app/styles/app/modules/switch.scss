@@ -7,7 +7,7 @@
   $switch-inner-height: $switch-height - $switch-gap*2;
   $switch-inner-width: $switch-inner-height;
 
-  padding: 0;
+  padding-bottom: 3px;
 
   .switch-inner {
     display: inline-block;
