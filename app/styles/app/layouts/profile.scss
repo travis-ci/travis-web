@@ -408,3 +408,25 @@ section.invoices {
     }
   }
 }
+
+header.space-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  // FIXME this is copied from linkStyle but I only want it on .inner-underline
+  .inner-underline {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px solid $cement-grey;
+    padding-bottom: 0.1rem;
+    transition: color 200ms ease, border 200ms ease;
+
+    &:hover,
+    &:active {
+      color: $cement-grey;
+      text-decoration: none;
+      border-color: transparent;
+    }
+  }
+}

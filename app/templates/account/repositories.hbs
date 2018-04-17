@@ -8,7 +8,13 @@
 {{#if showGitHubApps}}
   {{#if hasGitHubAppsInstallation}}
     <div id="github-apps-repositories">
-      <h2>GitHub Apps Integration</h2>
+      <header class='space-between' data-test-github-apps-integration-header>
+        <h2>GitHub Apps Integration</h2>
+        {{#external-link-to href=githubAppsManagementURL}}
+          <span class='inner-underline'>Manage on GitHub</span>
+          {{svg-jar 'icon-external-link' class='icon'}}
+        {{/external-link-to}}
+      </header>
       <ul class="profile-repositorylist" id='not-locked-github-apps-repositories'>
         {{#each notLockedGithubAppsRepositories as |repository|}}
           {{github-apps-repository repository=repository}}

@@ -25,14 +25,19 @@ export default Controller.extend({
       `${appName}/installations/new/permissions?target_id=${githubId}`;
   },
 
-  // FIXME this is quite baroque to avoid trying to load an installation ugh
+  @computed('account.login', 'githubAppsInstallationId')
+  githubAppsManagementURL(login, installationId) {
+    return `https://github.com/organizations/${login}/settings/installations/${installationId}`;
+  },
+
   @computed('account.id')
-  hasGitHubAppsInstallation() {
-    if (this.get('account').belongsTo('installation').id()) {
-      return true;
-    } else {
-      return false;
-    }
+  githubAppsInstallationId() {
+    return this.get('account').belongsTo('installation').id();
+  },
+
+  @computed('githubAppsInstallationId')
+  hasGitHubAppsInstallation(installationId) {
+    return !!installationId;
   },
 
   @filterBy('model.githubApps', 'active_on_org')

@@ -49,6 +49,11 @@ export default create({
     }
   },
 
+  manageGithubAppsLink: {
+    scope: '[data-test-github-apps-integration-header] a',
+    href: attribute('href')
+  },
+
   githubAppsRepositories: githubAppsRepositoryCollection('#github-apps-repositories'),
   notLockedGithubAppsRepositories: githubAppsRepositoryCollection('#not-locked-github-apps-repositories'),
   lockedGithubAppsRepositories: githubAppsRepositoryCollection('#locked-github-apps-repositories'),

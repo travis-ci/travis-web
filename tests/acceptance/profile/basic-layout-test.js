@@ -14,7 +14,7 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
 
     signInUser(currentUser);
 
-    server.create('installation', {
+    this.userInstallation = server.create('installation', {
       owner: currentUser
     });
     currentUser.save();
@@ -167,7 +167,7 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
 test('view repositories', function (assert) {
   profilePage.visit({ username: 'user-login' });
 
-  andThen(function () {
+  andThen(() => {
     percySnapshot(assert);
     assert.equal(document.title, 'User Name - Profile - Travis CI');
 
@@ -189,6 +189,7 @@ test('view repositories', function (assert) {
     assert.equal(profilePage.administerableRepositories[2].name, 'user-login/yet-another-repository-name');
     assert.notOk(profilePage.administerableRepositories[2].isActive, 'expected inactive repository to appear inactive');
 
+    assert.equal(profilePage.manageGithubAppsLink.href, `https://github.com/organizations/user-login/settings/installations/${this.userInstallation.id}`);
     assert.equal(profilePage.githubAppsRepositories.length, 3, 'expected three GitHub Apps-managed repositories');
 
     assert.equal(profilePage.notLockedGithubAppsRepositories.length, 2, 'expected two not-locked GitHub Apps-managed repositories');
