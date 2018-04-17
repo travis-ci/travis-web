@@ -43,8 +43,8 @@ export default create({
   githubAppsInvitation: {
     scope: '#github-apps-invitation',
 
-    button: {
-      scope: 'button',
+    link: {
+      scope: 'a',
       href: attribute('href')
     }
   },
