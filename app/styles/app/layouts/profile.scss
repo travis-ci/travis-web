@@ -316,7 +316,7 @@ $profile-breakpoint: 600px;
   }
 }
 
-header.github-apps {
+header.legacy-services-integration {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -334,6 +334,9 @@ header.github-apps {
     border-radius: 2px;
 
     margin-right: 0.5rem;
+
+    // FIXME this is here for the loading indicator but all is misaligned
+    display: flex;
 
     .icon {
       @include colorSVG(white);

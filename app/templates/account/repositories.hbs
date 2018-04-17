@@ -49,9 +49,16 @@
   {{/if}}
 {{/if}}
 
-<header class='github-apps'>
+<header class='legacy-services-integration'>
   <h2>Legacy Services Integration <div class="badge deprecated square">Deprecated</div></h2>
-  <button class='button' type='button' onclick="alert('unimplemented')">{{svg-jar 'icon-migrate' class='icon'}} Migrate to GitHub Apps</button>
+  <button class='button' type='button' onclick={{perform migrate}} data-test-migrate-github-apps>
+    {{#if migrate.isRunning}}
+      {{loading-indicator}}
+    {{else}}
+      {{svg-jar 'icon-migrate' class='icon'}}
+    {{/if}}
+    Migrate to GitHub Apps
+  </button>
 </header>
 {{#repository-filter
   repositories=sortedRepositories

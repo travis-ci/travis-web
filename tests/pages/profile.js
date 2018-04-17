@@ -54,6 +54,8 @@ export default create({
     href: attribute('href')
   },
 
+  migrateGithubAppsButton: { scope: '[data-test-migrate-github-apps]' },
+
   githubAppsRepositories: githubAppsRepositoryCollection('#github-apps-repositories'),
   notLockedGithubAppsRepositories: githubAppsRepositoryCollection('#not-locked-github-apps-repositories'),
   lockedGithubAppsRepositories: githubAppsRepositoryCollection('#locked-github-apps-repositories'),

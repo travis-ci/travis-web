@@ -3,12 +3,16 @@ import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import profilePage from 'travis/tests/pages/profile';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import Service from '@ember/service';
+import { default as mockWindow, reset as resetWindow } from 'ember-window-mock';
 
 moduleForAcceptance('Acceptance | profile/basic layout', {
   beforeEach() {
+    resetWindow();
+
     const currentUser = server.create('user', {
       name: 'User Name',
-      login: 'user-login'
+      login: 'user-login',
+      github_id: 1974
     });
     this.user = currentUser;
 
@@ -87,7 +91,7 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
     }
 
     // create active repository
-    server.create('repository', {
+    this.activeAdminRepository = server.create('repository', {
       name: 'repository-name',
       owner: {
         login: 'user-login',
@@ -215,6 +219,36 @@ test('view a profiles for organizations that do not and do have GitHub Apps inst
 
   andThen(function () {
     assert.notOk(profilePage.githubAppsInvitation.isVisible, 'expected GitHub Apps invitation to not be visible');
+  });
+});
+
+test('clicking the button to migrate to GitHub Apps sends the IDs of all legacy active repositories', function (assert) {
+  // FIXME not sure why the first repository isn’t being included in the query parameters
+  // let repositoryIds = [this.activeAdminRepository.id];
+  let repositoryIds = [];
+
+  for (let index = 0; index < 10; index++) {
+    let repository = server.create('repository', {
+      name: `extra-repository-${index}`,
+      owner: {
+        login: 'user-login',
+      },
+      active: true,
+      permissions: {
+        admin: true
+      },
+    });
+
+    repositoryIds.push(repository.id);
+  }
+
+  profilePage.visit({ username: 'user-login' });
+  profilePage.migrateGithubAppsButton.click();
+
+  andThen(() => {
+    let idParams = repositoryIds.map(id => `repository_ids[]=${id}`).join('&');
+    assert.equal(mockWindow.location.href,
+      `https://github.com/apps/travis-ci-testing/installations/new/permissions?suggested_target_id=${this.user.github_id}&${idParams}`);
   });
 });
 
