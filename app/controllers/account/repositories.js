@@ -35,7 +35,7 @@ export default Controller.extend({
     return `https://github.com/organizations/${login}/settings/installations/${installationGithubId}`;
   },
 
-  @computed('githubAppsInstallationId')
+  @computed('account.id')
   hasGitHubAppsInstallation(installationId) {
     // FIXME this is trying to not access the installation if it doesn’t exist
     return !!this.get('account').belongsTo('installation').id();
