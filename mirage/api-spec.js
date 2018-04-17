@@ -1176,6 +1176,15 @@ export default {
         ]
       }
     },
+    "plan":            {
+      "@type":            "resource",
+      "actions":          { },
+      "attributes":       ["id", "name", "price", "currency", "concurrency", "period"],
+      "representations":  {
+        "standard":       ["id", "name", "price", "currency", "concurrency", "period"],
+        "minimal":        ["id", "name", "price", "currency", "concurrency", "period"],
+      }
+    },
     "owner": {
       "@type": "resource",
       "actions": {
@@ -1606,6 +1615,7 @@ export default {
       "actions":          { },
       "attributes":       [
         "id",
+        "plan",
         "billing_info",
         "credit_card_info",
         "owner",
@@ -1616,6 +1626,7 @@ export default {
       "representations":  {
         "standard":       [
           "id",
+          "plan",
           "billing_info",
           "credit_card_info",
           "owner",

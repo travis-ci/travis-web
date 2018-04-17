@@ -77,6 +77,12 @@ export default create({
   billing: {
     visit: clickable('li[data-test-billing-tab] a'),
 
+    plan: {
+      scope: '.plan',
+      name: text('[data-test-plan-name]'),
+      concurrency: text('[data-test-plan-concurrency]')
+    },
+
     address: {
       scope: '.contact address',
     },

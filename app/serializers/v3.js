@@ -254,11 +254,15 @@ export default JSONSerializer.extend({
           let relationshipIncluded = relationshipHash.included || [];
 
           // FIXME this is a hack to allow the “minimal” billing_info/credit_card_info to load
+          let keyAllowsMinimalEmbedding =
+            key === 'billingInfo' ||
+            key === 'creditCardInfo' ||
+            key === 'plan';
+
           if (meta.representation === 'standard' ||
-            (meta.representation === 'minimal' &&
-              (key === 'billingInfo' || key === 'creditCardInfo'))) {
+            (meta.representation === 'minimal' && keyAllowsMinimalEmbedding)) {
             // FIXME hackery because these don’t include IDs
-            if (key === 'billingInfo' || key === 'creditCardInfo') {
+            if (keyAllowsMinimalEmbedding) {
               relationshipHash.data.id = data.id;
             }
 

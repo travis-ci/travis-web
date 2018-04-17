@@ -23,7 +23,14 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
     });
     currentUser.save();
 
+    let plan = server.create('plan', {
+      name: 'Small Business Plan',
+      concurrency: 5,
+      period: 'monthly'
+    });
+
     let subscription = server.create('subscription', {
+      plan,
       owner: currentUser,
       status: 'subscribed',
       valid_to: new Date()
@@ -258,6 +265,10 @@ test('view billing information', function (assert) {
 
   andThen(() => {
     percySnapshot(assert);
+
+    assert.equal(profilePage.billing.plan.name, 'Small Business Plan');
+    assert.equal(profilePage.billing.plan.concurrency, '5 concurrent builds');
+
     assert.equal(profilePage.billing.address.text, 'User Name Travis CI GmbH Rigaerstraße 8 Address 2 Berlin, Berlin 10987 Germany');
     assert.equal(profilePage.billing.creditCardNumber, '•••• •••• •••• 1919');
 

@@ -1,5 +1,13 @@
 <section class='billing'>
   {{#if model}}
+    {{!FIXME is this necessary?}}
+    {{#if model.plan}}
+      <h2>Plan Overview</h2>
+      <section class='plan'>
+        <h1 class='h2--grey' data-test-plan-name>{{model.plan.name}}</h1>
+        <span data-test-plan-concurrency>{{pluralize model.plan.concurrency 'concurrent build'}}</span>
+      </section>
+    {{/if}}
     <h2>Billing Information</h2>
     <section class='row'>
       <section class='contact'>
