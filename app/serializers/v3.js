@@ -257,7 +257,10 @@ export default JSONSerializer.extend({
           let keyAllowsMinimalEmbedding =
             key === 'billingInfo' ||
             key === 'creditCardInfo' ||
-            key === 'plan';
+            key === 'plan' ||
+            key === 'installation';
+
+          // FIXME I’m only including installation because the Mirage serialiser has it as minimal?
 
           if (meta.representation === 'standard' ||
             (meta.representation === 'minimal' && keyAllowsMinimalEmbedding)) {

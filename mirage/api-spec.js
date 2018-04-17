@@ -1166,13 +1166,13 @@ export default {
     },
     "installation": {
       "@type": "resource",
-      "attributes": ["id", "owner"],
+      "attributes": ["id", "github_id", "owner"],
       "representations": {
         "minimal": [
-          "id", "owner"
+          "id", "github_id", "owner"
         ],
         "standard": [
-          "id", "owner"
+          "id", "github_id", "owner"
         ]
       }
     },

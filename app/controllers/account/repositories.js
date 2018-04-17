@@ -30,19 +30,15 @@ export default Controller.extend({
       `${appName}/installations/new/permissions?target_id=${githubId}`;
   },
 
-  @computed('account.login', 'githubAppsInstallationId')
-  githubAppsManagementURL(login, installationId) {
-    return `https://github.com/organizations/${login}/settings/installations/${installationId}`;
-  },
-
-  @computed('account.id')
-  githubAppsInstallationId() {
-    return this.get('account').belongsTo('installation').id();
+  @computed('account.login', 'account.installation.githubId')
+  githubAppsManagementURL(login, installationGithubId) {
+    return `https://github.com/organizations/${login}/settings/installations/${installationGithubId}`;
   },
 
   @computed('githubAppsInstallationId')
   hasGitHubAppsInstallation(installationId) {
-    return !!installationId;
+    // FIXME this is trying to not access the installation if it doesn’t exist
+    return !!this.get('account').belongsTo('installation').id();
   },
 
   @filterBy('model.githubApps', 'active_on_org')
