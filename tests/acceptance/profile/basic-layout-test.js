@@ -5,18 +5,28 @@ import signInUser from 'travis/tests/helpers/sign-in-user';
 
 moduleForAcceptance('Acceptance | profile/basic layout', {
   beforeEach() {
-    const currentUser = server.create('user', {
+    this.user = server.create('user', {
       name: 'User Name',
       login: 'user-login'
     });
 
-    signInUser(currentUser);
+    signInUser(this.user);
+
+    server.create('subscription', {
+      owner: this.user,
+      status: 'subscribed'
+    });
 
     // create organization
-    server.create('organization', {
+    this.organization = server.create('organization', {
       name: 'Org Name',
       type: 'organization',
       login: 'org-login'
+    });
+
+    server.create('subscription', {
+      owner: this.organization,
+      status: 'expired'
     });
 
     // Pad with extra organisations to force an extra API response page
@@ -84,6 +94,8 @@ test('view profile', function (assert) {
 
     assert.equal(profilePage.name, 'User Name');
 
+    assert.equal(profilePage.subscriptionStatus.text, 'This account has an active subscription.');
+
     assert.equal(profilePage.accounts.length, 12, 'expected all accounts to be listed');
 
     assert.equal(profilePage.accounts[0].name, 'User Name');
@@ -97,5 +109,24 @@ test('view profile', function (assert) {
     assert.ok(profilePage.administerableRepositories[1].isActive, 'expected active repository to appear active');
     assert.equal(profilePage.administerableRepositories[2].name, 'user-login/yet-another-repository-name');
     assert.notOk(profilePage.administerableRepositories[2].isActive, 'expected inactive repository to appear inactive');
+  });
+});
+
+test('view profile that has an expired subscription', function (assert) {
+  profilePage.visit({ username: 'org-login' });
+
+  andThen(() => {
+    assert.equal(profilePage.subscriptionStatus.text, 'This account does not have an active subscription.');
+  });
+});
+
+test('view profile that has education status', function (assert) {
+  this.organization.education = true;
+  this.organization.save();
+
+  profilePage.visit({ username: 'org-login'});
+
+  andThen(() => {
+    assert.equal(profilePage.subscriptionStatus.text, 'This account\'s subscription is flagged as educational.');
   });
 });
