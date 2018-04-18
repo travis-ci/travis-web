@@ -127,6 +127,6 @@ test('view profile that has education status', function (assert) {
   profilePage.visit({ username: 'org-login' });
 
   andThen(() => {
-    assert.equal(profilePage.subscriptionStatus.text, 'This account\'s subscription is flagged as educational.');
+    assert.equal(profilePage.subscriptionStatus.text, 'This account’s subscription is flagged as educational.');
   });
 });
