@@ -53,7 +53,11 @@ export default TravisRoute.extend({
   },
 
   setupController(controller, model) {
-    controller.set('model', model.account);
-    controller.set('subscription', model.subscription);
+    if (model.error) {
+      controller.set('model', model);
+    } else {
+      controller.set('model', model.account);
+      controller.set('subscription', model.subscription);
+    }
   }
 });
