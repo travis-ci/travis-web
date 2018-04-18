@@ -82,7 +82,7 @@ export default Controller.extend({
     yield fetchAll(this.get('store'), 'repo', queryParams);
 
     let githubQueryParams =
-      repositories.map(repo => `repository_ids[]=${repo.get('id')}`).join('&');
+      repositories.map(repo => `repository_ids[]=${repo.get('githubId')}`).join('&');
 
     window.location.href =
       `https://github.com/apps/${this.get('githubAppsAppName')}/installations/new/permissions` +

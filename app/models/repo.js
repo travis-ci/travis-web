@@ -18,6 +18,7 @@ const Repo = Model.extend({
   slug: attr(),
   description: attr(),
   'private': attr('boolean'),
+  githubId: attr(),
   githubLanguage: attr(),
   active: attr(),
   owner: attr(),

@@ -1363,7 +1363,7 @@ export default {
           }
         ]
       },
-      "attributes": ["id","name","slug","description","github_language","active","private","active_on_org","owner","default_branch","starred","current_build"],
+      "attributes": ["id","name","slug","description","github_id","github_language","active","private","active_on_org","owner","default_branch","starred","current_build"],
       "representations": {
         "minimal": [
           "id",
@@ -1375,6 +1375,7 @@ export default {
           "name",
           "slug",
           "description",
+          "github_id",
           "github_language",
           "active",
           "private",

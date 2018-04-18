@@ -236,7 +236,7 @@ test('clicking the button to migrate to GitHub Apps sends the IDs of all legacy 
   let repositoryIds = [];
 
   for (let index = 0; index < 10; index++) {
-    let repository = server.create('repository', {
+    server.create('repository', {
       name: `extra-repository-${index}`,
       owner: {
         login: 'user-login',
@@ -245,9 +245,10 @@ test('clicking the button to migrate to GitHub Apps sends the IDs of all legacy 
       permissions: {
         admin: true
       },
+      github_id: 10000 + index
     });
 
-    repositoryIds.push(repository.id);
+    repositoryIds.push(10000 + index);
   }
 
   profilePage.visit({ username: 'user-login' });
