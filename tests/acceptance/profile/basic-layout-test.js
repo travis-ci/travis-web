@@ -121,10 +121,10 @@ test('view profile that has an expired subscription', function (assert) {
 });
 
 test('view profile that has education status', function (assert) {
-  this.organization.education = true;
+  this.organization.attrs.education = true;
   this.organization.save();
 
-  profilePage.visit({ username: 'org-login'});
+  profilePage.visit({ username: 'org-login' });
 
   andThen(() => {
     assert.equal(profilePage.subscriptionStatus.text, 'This account\'s subscription is flagged as educational.');

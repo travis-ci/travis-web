@@ -90,6 +90,8 @@ export default function () {
     }
   });
 
+  this.get('/subscriptions');
+
   this.get('/broadcasts', schema => {
     return schema.broadcasts.all();
   });

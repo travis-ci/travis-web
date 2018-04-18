@@ -15,7 +15,7 @@ export default TravisRoute.extend({
   },
 
   model(params) {
-    const account = this.modelFor('account');
+    const account = this.modelFor('account').account;
     // account is an Ember Data user or organization
     if (!account.error) {
       // TODO: Make perPage property configurable
@@ -37,7 +37,7 @@ export default TravisRoute.extend({
   },
 
   setupController(controller, model) {
-    const account = this.modelFor('account');
+    const account = this.modelFor('account').account;
     if (!account.error) {
       controller.set('login', account.get('login'));
     }
