@@ -2,6 +2,7 @@ import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import profilePage from 'travis/tests/pages/profile';
 import signInUser from 'travis/tests/helpers/sign-in-user';
+import Service from '@ember/service';
 
 moduleForAcceptance('Acceptance | profile/basic layout', {
   beforeEach() {
@@ -129,4 +130,25 @@ test('view profile that has education status', function (assert) {
   andThen(() => {
     assert.equal(profilePage.subscriptionStatus.text, 'This account’s subscription is flagged as educational.');
   });
+});
+
+test('logs an exception when there is more than one active subscription', function (assert) {
+  assert.expect(1);
+
+  server.create('subscription', {
+    owner: this.user,
+    status: 'subscribed'
+  });
+
+  let mockSentry = Service.extend({
+    logException(error) {
+      assert.equal(error.message, 'Account user-login has more than one active subscription!');
+    },
+  });
+
+  const instance = this.application.__deprecatedInstance__;
+  const registry = instance.register ? instance : instance.registry;
+  registry.register('service:raven', mockSentry);
+
+  profilePage.visit({ username: 'user-login' });
 });

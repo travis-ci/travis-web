@@ -25,7 +25,6 @@ export default TravisRoute.extend({
                 subscription.get('status') === 'subscribed');
 
           if (accountSubscriptions.get('length') > 1) {
-            // FIXME remember the test for this
             let exception =
               new Error(`Account ${login} has more than one active subscription!`);
             this.get('raven').logException(exception, true);
