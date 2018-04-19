@@ -38,7 +38,11 @@
 <section class='invoices'>
   <h2>Invoice History</h2>
   {{! FIXME the icon alignment within the circle is a bit off}}
-  <p>{{svg-jar 'icon-help' class='icon-help' alt=''}} Having trouble with your invoices? <a href='https://example.com/fixme'>We’re happy to help</a>.</p>
+  <p>
+    {{svg-jar 'icon-help' class='icon-help' alt=''}}
+    Having trouble with your invoices?
+    <a href='{{ config.urls.support }}' title='Email the Travis support team' {{action 'helpscoutTrigger'}}>We’re happy to help</a>.
+  </p>
   {{#if invoices}}
     <ul>
       {{#each invoices as |invoice|}}

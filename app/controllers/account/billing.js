@@ -1,9 +1,13 @@
+/* global HS */
+
 import Controller from '@ember/controller';
 import { service } from 'ember-decorators/service';
-import { computed } from 'ember-decorators/object';
+import { action, computed } from 'ember-decorators/object';
+import config from 'travis/config/environment';
 
 export default Controller.extend({
   @service store: null,
+  config,
 
   @computed('model.id')
   invoices(subscriptionId) {
@@ -12,5 +16,11 @@ export default Controller.extend({
     } else {
       return [];
     }
+  },
+
+  @action
+  helpscoutTrigger() {
+    HS.beacon.open();
+    return false;
   },
 });
