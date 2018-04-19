@@ -405,8 +405,11 @@ section.invoices {
     background-color: $oxide-blue;
     border: none;
     border-radius: 2px;
-
     margin-right: 0.5rem;
+
+    svg {
+      vertical-align: sub;
+    }
 
     .icon {
       @include colorSVG(white);
@@ -416,6 +419,11 @@ section.invoices {
       background-color: #229191;
     }
   }
+}
+
+#github-apps-migrate-loading span {
+  padding-right: 5px;
+  vertical-align: bottom;
 }
 
 header.space-between {

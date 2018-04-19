@@ -53,7 +53,7 @@
   <h2>Legacy Services Integration <div class="badge deprecated square">Deprecated</div></h2>
   <button class='button' type='button' onclick={{perform migrate}} data-test-migrate-github-apps>
     {{#if migrate.isRunning}}
-      {{loading-indicator}}
+      {{loading-indicator id="github-apps-migrate-loading" class="loading-indicator--white"}}
     {{else}}
       {{svg-jar 'icon-migrate' class='icon'}}
     {{/if}}
