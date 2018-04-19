@@ -93,12 +93,9 @@ export default function () {
 
   this.get('/subscriptions');
 
-  // FIXME this is what I want the URL to look like
-  // this.get('/subscription/:subscription_id/invoices', (schema, {params}) => {
-  //   return schema.subscirptions.find(params.subscription_id).invoices();
-  // });
-
-  this.get('/invoice/:id');
+  this.get('/subscription/:subscription_id/invoices', function (schema, {params}) {
+    return schema.subscriptions.find(params.subscription_id).invoices;
+  });
 
   this.get('/broadcasts', schema => {
     return schema.broadcasts.all();

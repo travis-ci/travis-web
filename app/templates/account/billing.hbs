@@ -39,9 +39,9 @@
   <h2>Invoice History</h2>
   {{! FIXME the icon alignment within the circle is a bit off}}
   <p>{{svg-jar 'icon-help' class='icon-help' alt=''}} Having trouble with your invoices? <a href='https://example.com/fixme'>We’re happy to help</a>.</p>
-  {{#if model.invoices}}
+  {{#if invoices}}
     <ul>
-      {{#each model.invoices as |invoice|}}
+      {{#each invoices as |invoice|}}
         <li><a data-test-invoice href={{invoice.url}}>{{invoice.id}} {{moment-format invoice.createdAt 'MMMM YYYY'}}</a></li>
       {{/each}}
     </ul>

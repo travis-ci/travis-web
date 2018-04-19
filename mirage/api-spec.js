@@ -1620,7 +1620,6 @@ export default {
         "billing_info",
         "credit_card_info",
         "owner",
-        "invoices",
         "status",
         "valid_to",
       ],
@@ -1631,8 +1630,6 @@ export default {
           "billing_info",
           "credit_card_info",
           "owner",
-          // FIXME this seems wrong?
-          "invoices",
           "status",
           "valid_to",
         ],
