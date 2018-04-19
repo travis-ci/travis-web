@@ -22,9 +22,4 @@ export default TravisRoute.extend({
         return accountSubscriptions.sortBy('validTo').get('firstObject');
       });
   },
-
-  // FIXME without this, the same subscription was used for all user/orgs?!
-  setupController(controller, model) {
-    controller.set('model', model);
-  }
 });
