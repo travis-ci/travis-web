@@ -47,7 +47,7 @@ module.exports = function (environment) {
     githubApps: false,
     // FIXME preliminary!
     stripe: {
-      publishableKey: 'pk_live_ch2y6Gvzwy9UPstMhmmldpmr',
+      publishableKey: 'pk_test_5i2Bx5nJACluilHLb25d3P6N',
       lazyLoad: false
     },
     timing: {
