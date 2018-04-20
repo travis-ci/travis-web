@@ -16,7 +16,13 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
     });
     this.user = currentUser;
 
-    signInUser(currentUser);
+    signInUser(this.user);
+
+    server.create('subscription', {
+      owner: this.user,
+      status: 'subscribed',
+      valid_to: new Date(new Date().getTime() + 10000)
+    });
 
     this.userInstallation = server.create('installation', {
       owner: currentUser,
@@ -71,6 +77,7 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
       type: 'organization',
       login: 'org-login'
     });
+    this.organization = organization;
 
     server.create('installation', {
       owner: organization
@@ -84,7 +91,7 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
     });
 
     server.create('subscription', {
-      owner: organization,
+      owner: this.organization,
       status: 'expired'
     });
 
@@ -185,6 +192,8 @@ test('view repositories', function (assert) {
 
     assert.equal(profilePage.name, 'User Name');
 
+    assert.equal(profilePage.subscriptionStatus.text, 'This account has an active subscription.');
+
     assert.equal(profilePage.accounts.length, 12, 'expected all accounts to be listed');
 
     assert.equal(profilePage.accounts[0].name, 'User Name');
@@ -212,6 +221,60 @@ test('view repositories', function (assert) {
 
     assert.equal(profilePage.lockedGithubAppsRepositories.length, 1, 'expected one locked GitHub Apps-managed repository');
     assert.equal(profilePage.lockedGithubAppsRepositories[0].name, 'user-login/github-apps-locked-repository');
+  });
+});
+
+
+test('view profile that has an expired subscription', function (assert) {
+  profilePage.visit({ username: 'org-login' });
+
+  andThen(() => {
+    assert.equal(profilePage.subscriptionStatus.text, 'This account does not have an active subscription.');
+  });
+});
+
+test('view profile that has education status', function (assert) {
+  this.organization.attrs.education = true;
+  this.organization.save();
+
+  profilePage.visit({ username: 'org-login' });
+
+  andThen(() => {
+    percySnapshot(assert);
+    assert.equal(profilePage.subscriptionStatus.text, 'This account’s subscription is flagged as educational.');
+  });
+});
+
+test('logs an exception viewing billing when there is more than one active subscription and displays the earliest', function (assert) {
+  assert.expect(4);
+
+  let otherSubscription = server.create('subscription', {
+    owner: this.user,
+    status: 'subscribed',
+    valid_to: new Date(new Date().getTime() - 10000)
+  });
+
+  otherSubscription.createCreditCardInfo({
+    last_digits: '2010'
+  });
+
+  let mockSentry = Service.extend({
+    logException(error) {
+      assert.equal(error.message, 'Account user-login has more than one active subscription!');
+    },
+  });
+
+  const instance = this.application.__deprecatedInstance__;
+  const registry = instance.register ? instance : instance.registry;
+  registry.register('service:raven', mockSentry);
+
+  profilePage.visit({ username: 'user-login' });
+  profilePage.billing.visit();
+
+  andThen(() => {
+    assert.equal(profilePage.billing.creditCardNumber, '•••• •••• •••• 2010');
+    assert.equal(profilePage.billing.invoices.length, 0, 'expected no invoices to be listed');
+    assert.dom('[data-test-no-invoices]').hasText('no invoices found');
   });
 });
 
@@ -304,39 +367,6 @@ test('switching to another account’s billing tab loads the subscription proper
 
   andThen(() => {
     assert.dom('[data-test-no-subscription]').hasText('no subscription found');
-  });
-});
-
-test('logs an exception viewing billing when there is more than one active subscription and displays the earliest', function (assert) {
-  assert.expect(4);
-
-  let otherSubscription = server.create('subscription', {
-    owner: this.user,
-    status: 'subscribed',
-    valid_to: new Date(new Date().getTime() - 10000)
-  });
-
-  otherSubscription.createCreditCardInfo({
-    last_digits: '2010'
-  });
-
-  let mockSentry = Service.extend({
-    logException(error) {
-      assert.equal(error.message, 'Account user-login has more than one active subscription!');
-    },
-  });
-
-  const instance = this.application.__deprecatedInstance__;
-  const registry = instance.register ? instance : instance.registry;
-  registry.register('service:raven', mockSentry);
-
-  profilePage.visit({ username: 'user-login' });
-  profilePage.billing.visit();
-
-  andThen(() => {
-    assert.equal(profilePage.billing.creditCardNumber, '•••• •••• •••• 2010');
-    assert.equal(profilePage.billing.invoices.length, 0, 'expected no invoices to be listed');
-    assert.dom('[data-test-no-invoices]').hasText('no invoices found');
   });
 });
 

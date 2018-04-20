@@ -9,6 +9,7 @@ export default Model.extend({
   syncedAt: attr(),
   avatarUrl: attr(),
   githubId: attr(),
+  education: attr('boolean'),
 
   installation: belongsTo({async: false}),
 });

@@ -32,6 +32,10 @@ module.exports = function (environment) {
       host: 'ws.pusherapp.com',
       debug: false
     },
+    intercom: {
+      appId: 'placeholder',
+      enabled: false
+    },
     urls: {
       about: 'https://about.travis-ci.com',
       blog: 'https://blog.travis-ci.com',
@@ -153,6 +157,13 @@ module.exports = function (environment) {
     if (process.env.API_TRACE_ENDPOINT) {
       ENV.apiTraceEndpoint = process.env.API_TRACE_ENDPOINT;
     }
+
+    if (process.env.INTERCOM_APP_ID) {
+      ENV.intercom = {
+        appId: process.env.INTERCOM_APP_ID,
+        enabled: true
+      };
+    }
   }
 
   if (environment === 'development') {
@@ -251,12 +262,12 @@ module.exports = function (environment) {
   ENV.contentSecurityPolicyRaw = {
     'default-src': "'none'",
     // The sha256 is for a Stripe inline script
-    'script-src': "'self' https://ssl.google-analytics.com https://djtflbt20bdde.cloudfront.net/ https://js.pusher.com https://js.stripe.com/ 'sha256-37u63EBe1EibDZ3vZNr6mxLepqlY1CQw+4N89HrzP9s='",
-    'font-src': "'self' https://fonts.googleapis.com/css https://fonts.gstatic.com",
+    'script-src': "'self' https://ssl.google-analytics.com https://djtflbt20bdde.cloudfront.net/ https://js.pusher.com https://widget.intercom.io/ https://js.intercomcdn.com/ https://js.stripe.com/ 'sha256-37u63EBe1EibDZ3vZNr6mxLepqlY1CQw+4N89HrzP9s='",
+    'font-src': "'self' https://fonts.googleapis.com/css https://fonts.gstatic.com  https://js.intercomcdn.com/",
     'connect-src': "'self' ws://ws.pusherapp.com wss://ws.pusherapp.com https://*.pusher.com https://s3.amazonaws.com/archive.travis-ci.com/ https://s3.amazonaws.com/archive.travis-ci.org/ app.getsentry.com https://pnpcptp8xh9k.statuspage.io/ https://ssl.google-analytics.com",
     'img-src': "'self' data: https://www.gravatar.com http://www.gravatar.com app.getsentry.com https://*.githubusercontent.com https://0.gravatar.com https://ssl.google-analytics.com",
-    'style-src': "'self' https://fonts.googleapis.com 'unsafe-inline' https://djtflbt20bdde.cloudfront.net",
-    'media-src': "'self'",
+    'style-src': "'self' https://fonts.googleapis.com 'unsafe-inline' https://djtflbt20bdde.cloudfront.net https://widget.intercom.io",
+    'media-src': "'self' https://js.intercomcdn.com",
     'frame-src': "'self' https://djtflbt20bdde.cloudfront.net https://js.stripe.com/",
     'report-uri': 'https://65f53bfdfd3d7855b8bb3bf31c0d1b7c.report-uri.io/r/default/csp/reportOnly',
     'block-all-mixed-content': '',

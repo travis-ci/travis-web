@@ -18,7 +18,6 @@ export default Owner.extend({
   email: attr(),
   token: attr(),
   gravatarId: attr(),
-  repoCount: attr('number'),
 
   @computed('name', 'login')
   fullName(name, login) {
