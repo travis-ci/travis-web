@@ -341,7 +341,7 @@ test('logs an exception viewing billing when there is more than one active subsc
 });
 
 test('creating a subscription', function (assert) {
-  assert.expect(11);
+  assert.expect(12);
 
   visit('/profile/org-login/billing/edit');
 
@@ -363,6 +363,7 @@ test('creating a subscription', function (assert) {
     let body = JSON.parse(request.requestBody);
 
     assert.equal(body['credit_card_info.token'], 'aaazzz');
+    assert.equal(body['plan'], 'travis-ci-ten-builds');
     assert.equal(body['billing_info.first_name'], 'Org');
     assert.equal(body['billing_info.last_name'], 'Person');
     assert.equal(body['billing_info.company'], 'Org Name');

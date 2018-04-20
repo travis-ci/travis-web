@@ -6,6 +6,8 @@ export default Controller.extend({
   @service api: null,
   @service stripe: null,
 
+  plan: 'travis-ci-ten-builds',
+
   @action
   save() {
     let card = this.getProperties(
@@ -20,6 +22,7 @@ export default Controller.extend({
     return this.get('stripe').card.createToken(card).then(response => {
       let stripeToken = response.id;
       let subscriptionJson = {
+        'plan': this.get('plan'),
         'credit_card_info.token': stripeToken,
         'billing_info.first_name': billing.firstName,
         'billing_info.last_name': billing.lastName,
