@@ -348,7 +348,6 @@ test('creating a subscription', function (assert) {
   let mockStripe = Service.extend({
     card: Object.freeze({
       createToken(card) {
-        console.log('got this card', card);
         assert.equal(card.exp_month, 11);
         assert.equal(card.exp_year, 2030);
 
