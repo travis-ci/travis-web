@@ -14,6 +14,11 @@ export default Controller.extend({
       'number', 'name', 'expiry', 'cvc'
     );
 
+    // FIXME eep
+    let [expiryMonth, expiryYear] = card.expiry.split('/').map(s => s.trim());
+    card.exp_month = parseInt(expiryMonth);
+    card.exp_year = parseInt(expiryYear) + 2000;
+
     let billing = this.getProperties(
       'firstName', 'lastName', 'company', 'address', 'address2',
       'city', 'state', 'country', 'zipCode', 'email'

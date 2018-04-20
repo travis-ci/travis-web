@@ -341,13 +341,17 @@ test('logs an exception viewing billing when there is more than one active subsc
 });
 
 test('creating a subscription', function (assert) {
-  assert.expect(12);
+  assert.expect(14);
 
   visit('/profile/org-login/billing/edit');
 
   let mockStripe = Service.extend({
     card: Object.freeze({
       createToken(card) {
+        console.log('got this card', card);
+        assert.equal(card.exp_month, 11);
+        assert.equal(card.exp_year, 2030);
+
         return Promise.resolve({
           id: 'aaazzz'
         });
