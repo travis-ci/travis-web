@@ -1,4 +1,6 @@
-export CLEANED_BRANCH_SUBDOMAIN=`echo $TRAVIS_PULL_REQUEST_BRANCH | tr '.' '-' | tr '/' '-' | tr '[:upper:]' '[:lower:]'`
+# FIXME eh
+# export CLEANED_BRANCH_SUBDOMAIN=`echo $TRAVIS_PULL_REQUEST_BRANCH | tr '.' '-' | tr '/' '-' | tr '[:upper:]' '[:lower:]'`
+export CLEANED_BRANCH_SUBDOMAIN=github-apps
 
 ./config/deployment/store-redis-urls.sh
 

@@ -8,7 +8,8 @@ else
 fi
 
 FULL_ENVIRONMENT=`echo $TLD`-`echo $ENVIRONMENT`
-FULL_URL=https://`echo $CLEANED_BRANCH_SUBDOMAIN``echo $SUFFIX`.test-deployments.travis-ci.`echo $TLD`
+# FIXME restore subdomain
+FULL_URL=https://`echo $CLEANED_BRANCH_SUBDOMAIN``echo $SUFFIX`.travis-ci.`echo $TLD`
 
 echo deployment url: $FULL_URL
 
