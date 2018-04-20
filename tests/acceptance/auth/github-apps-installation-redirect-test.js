@@ -42,6 +42,6 @@ test('it polls until the GitHub installation ID resolves to an owner', function 
     andThen(() => {
       assert.equal(currentURL(), '/profile/the-org');
     });
-  }, 8000);
+  }, 10000);
   // FIXME huuuuuge timeout
 });
