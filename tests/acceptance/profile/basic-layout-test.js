@@ -341,15 +341,23 @@ test('logs an exception viewing billing when there is more than one active subsc
 });
 
 test('creating a subscription', function (assert) {
-  assert.expect(14);
+  assert.expect(21);
 
   visit('/profile/org-login/billing/edit');
 
   let mockStripe = Service.extend({
     card: Object.freeze({
       createToken(card) {
+        assert.equal(card.number, 4242424242424242);
         assert.equal(card.exp_month, 11);
         assert.equal(card.exp_year, 2030);
+
+        assert.equal(card['billing_info[address]'], 'An address');
+        assert.equal(card['billing_info[city]'], 'A city');
+        assert.equal(card['billing_info[country]'], 'A country');
+        assert.equal(card['billing_info[last_name]'], 'Person');
+        assert.equal(card['billing_info[zip_code]'], 'A zip code');
+        assert.equal(card['billing_info[billing_email]'], 'billing@example.org');
 
         return Promise.resolve({
           id: 'aaazzz'

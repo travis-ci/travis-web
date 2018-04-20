@@ -15,6 +15,7 @@ export default Controller.extend({
     );
 
     // FIXME eep
+    card.number = parseInt(card.number.replace(/\s/g, ''));
     let [expiryMonth, expiryYear] = card.expiry.split('/').map(s => s.trim());
     card.exp_month = parseInt(expiryMonth);
     card.exp_year = parseInt(expiryYear) + 2000;
@@ -23,6 +24,13 @@ export default Controller.extend({
       'firstName', 'lastName', 'company', 'address', 'address2',
       'city', 'state', 'country', 'zipCode', 'email'
     );
+
+    card['billing_info[address]'] = billing.address;
+    card['billing_info[city]'] = billing.city;
+    card['billing_info[country]'] = billing.country;
+    card['billing_info[last_name]'] = billing.lastName;
+    card['billing_info[zip_code]'] = billing.zipCode;
+    card['billing_info[billing_email]'] = billing.email;
 
     return this.get('stripe').card.createToken(card).then(response => {
       let stripeToken = response.id;
