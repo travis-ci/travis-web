@@ -341,7 +341,7 @@ test('logs an exception viewing billing when there is more than one active subsc
 });
 
 test('creating a subscription', function (assert) {
-  assert.expect(1);
+  assert.expect(11);
 
   visit('/profile/org-login/billing/edit');
 
@@ -360,8 +360,19 @@ test('creating a subscription', function (assert) {
   registry.register('service:stripe', mockStripe);
 
   server.post('/subscriptions', (schema, request) => {
-    let parsedRequestBody = JSON.parse(request.requestBody);
-    assert.equal(parsedRequestBody['credit_card_info.token'], 'aaazzz');
+    let body = JSON.parse(request.requestBody);
+
+    assert.equal(body['credit_card_info.token'], 'aaazzz');
+    assert.equal(body['billing_info.first_name'], 'Org');
+    assert.equal(body['billing_info.last_name'], 'Person');
+    assert.equal(body['billing_info.company'], 'Org Name');
+    assert.equal(body['billing_info.address'], 'An address');
+    assert.equal(body['billing_info.address2'], 'An address 2');
+    assert.equal(body['billing_info.city'], 'A city');
+    assert.equal(body['billing_info.state'], 'A state');
+    assert.equal(body['billing_info.country'], 'A country');
+    assert.equal(body['billing_info.zip_code'], 'A zip code');
+    assert.equal(body['billing_info.billing_email'], 'billing@example.org');
 
     let subscription = server.create('subscription');
     return subscription;
@@ -372,6 +383,19 @@ test('creating a subscription', function (assert) {
     card.name.fillIn('Generic name');
     card.expiry.fillIn('11/30');
     card.cvc.fillIn('999');
+  });
+
+  profilePage.billing.edit.billing.as(billing => {
+    billing.firstName.fillIn('Org');
+    billing.lastName.fillIn('Person');
+    billing.company.fillIn('Org Name');
+    billing.address.fillIn('An address');
+    billing.address2.fillIn('An address 2');
+    billing.city.fillIn('A city');
+    billing.state.fillIn('A state');
+    billing.country.fillIn('A country');
+    billing.zipCode.fillIn('A zip code');
+    billing.email.fillIn('billing@example.org');
   });
 
   profilePage.billing.edit.save.click();

@@ -104,6 +104,19 @@ export default create({
         cvc: { scope: '[name=cvc]' }
       },
 
+      billing: {
+        firstName: { scope: '[name=firstName]'},
+        lastName: { scope: '[name=lastName] '},
+        company: { scope: '[name=company]' },
+        address: { scope: '[name=address]' },
+        address2: { scope: '[name=address2] '},
+        city: { scope: '[name=city]' },
+        state: { scope: '[name=state]' },
+        country: { scope: '[name=country]' },
+        zipCode: { scope: '[name=zipCode]' },
+        email: { scope: '[name=email]' },
+      },
+
       save: {
         scope: '.save'
       }

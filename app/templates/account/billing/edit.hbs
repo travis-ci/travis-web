@@ -7,4 +7,16 @@ secret edit page!
   cvc=cvc
 }}
 
-<button {{action 'save'}} class='save'>save???</button>
+<h3>Billing address</h3>
+{{input name='firstName' value=firstName placeholder='First Name'}}
+{{input name='lastName' value=lastName placeholder='Last Name'}}
+{{input name='company' value=company placeholder='Company'}}
+{{input name='address' value=address placeholder='Address'}}
+{{input name='address2' value=address2 placeholder='Address 2'}}
+{{input name='city' value=city placeholder='City'}}
+{{input name='state' value=state placeholder='State'}}
+{{input name='country' value=country placeholder='Country'}}
+{{input name='zipCode' value=zipCode placeholder='Zip Code'}}
+{{input name='email' value=email placeholder='Billing Email'}}
+
+<button {{action 'save'}} class='button save'>save??? not greyed out 😆</button>
