@@ -50,6 +50,10 @@ export default Controller.extend({
       };
 
       return this.get('api').post('/subscriptions', { data: subscriptionJson });
+    }).then(result => {
+      this.set('result', `success: ${JSON.stringify(result)}`);
+    }).catch(result => {
+      this.set('result', `error: ${JSON.stringify(result)}`);
     });
   },
 });
