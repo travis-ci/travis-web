@@ -1,6 +1,6 @@
-import TravisRoute from 'travis/routes/basic';
+import SimpleLayoutRoute from 'travis/routes/simple-layout';
 
-export default TravisRoute.extend({
+export default SimpleLayoutRoute.extend({
   model() {
     return {};
   },
