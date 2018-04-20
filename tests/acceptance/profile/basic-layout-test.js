@@ -367,10 +367,12 @@ test('creating a subscription', function (assert) {
     return subscription;
   });
 
-  profilePage.billing.edit.creditCard.number.fillIn('4242424242424242');
-  profilePage.billing.edit.creditCard.name.fillIn('Generic name');
-  profilePage.billing.edit.creditCard.expiry.fillIn('11/30');
-  profilePage.billing.edit.creditCard.cvc.fillIn('999');
+  profilePage.billing.edit.creditCard.as(card => {
+    card.number.fillIn('4242424242424242');
+    card.name.fillIn('Generic name');
+    card.expiry.fillIn('11/30');
+    card.cvc.fillIn('999');
+  });
 
   profilePage.billing.edit.save.click();
 });
