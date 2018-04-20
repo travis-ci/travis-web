@@ -30,9 +30,13 @@ export default Controller.extend({
       `${appName}/installations/new/permissions?target_id=${githubId}`;
   },
 
-  @computed('account.login', 'account.installation.githubId')
-  githubAppsManagementURL(login, installationGithubId) {
-    return `https://github.com/organizations/${login}/settings/installations/${installationGithubId}`;
+  @computed('account.login', 'account.installation.githubId', 'account.type')
+  githubAppsManagementURL(login, installationGithubId, accountType) {
+    if (accountType === 'organization') {
+      return `https://github.com/organizations/${login}/settings/installations/${installationGithubId}`;
+    } else {
+      return `https://github.com/settings/installations/${installationGithubId}`;
+    }
   },
 
   @computed('account.id')
