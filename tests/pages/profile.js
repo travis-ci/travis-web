@@ -93,6 +93,20 @@ export default create({
 
     invoices: collection('[data-test-invoice]', {
       href: attribute('href')
-    })
+    }),
+
+    edit: {
+      creditCard: {
+        scope: '#ember-credit-card-form',
+        number: { scope: '[name=number]' },
+        name: { scope: '[name=name]' },
+        expiry: { scope: '[name=expiry]' },
+        cvc: { scope: '[name=cvc]' }
+      },
+
+      save: {
+        scope: '.save'
+      }
+    }
   },
 });

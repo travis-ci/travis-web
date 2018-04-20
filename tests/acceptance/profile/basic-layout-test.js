@@ -339,3 +339,38 @@ test('logs an exception viewing billing when there is more than one active subsc
     assert.dom('[data-test-no-invoices]').hasText('no invoices found');
   });
 });
+
+test('creating a subscription', function (assert) {
+  assert.expect(1);
+
+  visit('/profile/org-login/billing/edit');
+
+  let mockStripe = Service.extend({
+    card: Object.freeze({
+      createToken(card) {
+        return Promise.resolve({
+          id: 'aaazzz'
+        });
+      }
+    })
+  });
+
+  let instance = this.application.__deprecatedInstance__;
+  let registry = instance.register ? instance : instance.registry;
+  registry.register('service:stripe', mockStripe);
+
+  server.post('/subscriptions', (schema, request) => {
+    let parsedRequestBody = JSON.parse(request.requestBody);
+    assert.equal(parsedRequestBody['credit_card_info.token'], 'aaazzz');
+
+    let subscription = server.create('subscription');
+    return subscription;
+  });
+
+  profilePage.billing.edit.creditCard.number.fillIn('4242424242424242');
+  profilePage.billing.edit.creditCard.name.fillIn('Generic name');
+  profilePage.billing.edit.creditCard.expiry.fillIn('11/30');
+  profilePage.billing.edit.creditCard.cvc.fillIn('999');
+
+  profilePage.billing.edit.save.click();
+});

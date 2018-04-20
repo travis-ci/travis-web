@@ -45,6 +45,11 @@ module.exports = function (environment) {
     },
     endpoints: {},
     githubApps: false,
+    // FIXME preliminary!
+    stripe: {
+      publishableKey: 'pk_live_ch2y6Gvzwy9UPstMhmmldpmr',
+      lazyLoad: false
+    },
     timing: {
       syncingPageRedirectionTime: 5000,
     },
