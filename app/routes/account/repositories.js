@@ -8,6 +8,9 @@ export default TravisRoute.extend({
   queryParams: {
     page: {
       refreshModel: true
+    },
+    'apps-page': {
+      refreshModel: true
     }
   },
 
@@ -21,9 +24,10 @@ export default TravisRoute.extend({
     // account is an Ember Data user or organization
     if (!accountCompound.error) {
       // TODO: Make perPage property configurable
-      const offset = (params.page - 1) * this.get('recordsPerPage');
+      const deprecatedOffset = (params.page - 1) * this.get('recordsPerPage');
+      const githubOffset = (params['apps-page'] - 1) * this.get('recordsPerPage');
+
       let queryParams = {
-        offset,
         sort_by: 'name',
         limit: this.get('recordsPerPage'),
         custom: {
@@ -34,9 +38,15 @@ export default TravisRoute.extend({
 
       // FIXME this p uggers, what is to be done?
       let deprecatedParams =
-        merge(Object.create(queryParams), {'repository.managed_by_installation': false});
+        merge(Object.create(queryParams), {
+          'repository.managed_by_installation': false,
+          offset: deprecatedOffset
+        });
       let githubParams =
-        merge(Object.create(queryParams), {'repository.managed_by_installation': true});
+        merge(Object.create(queryParams), {
+          'repository.managed_by_installation': true,
+          offset: githubOffset
+        });
 
       let hashObject = {
         deprecated: this.store.paginated(

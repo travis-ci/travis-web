@@ -14,6 +14,7 @@ export default Controller.extend({
   @service store: null,
 
   page: 1,
+  'apps-page': 1,
 
   @computed('model.deprecated')
   sortedRepositories(repos) {

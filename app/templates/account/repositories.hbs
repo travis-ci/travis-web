@@ -20,6 +20,7 @@
           {{github-apps-repository repository=repository}}
         {{/each}}
       </ul>
+      {{pagination-navigation collection=notLockedGithubAppsRepositories route="account.repositories" queryParam='apps-page' inner=6 outer=2}}
       {{#if lockedGithubAppsRepositories}}
         <p class="notice-banner--yellow iconned">
           {{svg-jar 'icon-megaphone' class='icon icon-megaphone'}}
