@@ -19,7 +19,10 @@
   {{/if}}
 {{else}}
   {{repository-switch repository=repository disabled=true}}
-  <a class="profile-settings">{{svg-jar 'icon-private' class="icon"}}</a>
+  <a class="profile-settings disabled button">
+    {{svg-jar 'icon-private' class="icon"}}
+    Settings
+  </a>
 {{/if}}
 
 {{#if showError}}

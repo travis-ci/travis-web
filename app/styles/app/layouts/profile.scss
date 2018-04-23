@@ -120,6 +120,20 @@ $profile-breakpoint: 600px;
       @include colorSVG(white);
     }
   }
+
+  &.disabled {
+    opacity: 0.5;
+
+    &:hover {
+      color: $asphalt-grey;
+      background-color: white;
+      cursor: not-allowed;
+
+      .icon {
+        @include colorSVG($cement-grey);
+      }
+    }
+  }
 }
 
 .profile-settings .icon-disabled {
