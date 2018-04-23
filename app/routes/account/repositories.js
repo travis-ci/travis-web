@@ -11,6 +11,9 @@ export default TravisRoute.extend({
     },
     'apps-page': {
       refreshModel: true
+    },
+    'apps-org-page': {
+      refreshModel: true
     }
   },
 
@@ -25,7 +28,8 @@ export default TravisRoute.extend({
     if (!accountCompound.error) {
       // TODO: Make perPage property configurable
       const deprecatedOffset = (params.page - 1) * this.get('recordsPerPage');
-      const githubOffset = (params['apps-page'] - 1) * this.get('recordsPerPage');
+      const githubActiveOnOrgOffset = (params['apps-org-page'] - 1) * this.get('recordsPerPage');
+      const githubInactiveOnOrgOffset = (params['apps-page'] - 1) * this.get('recordsPerPage');
 
       let queryParams = {
         sort_by: 'name',
@@ -42,10 +46,18 @@ export default TravisRoute.extend({
           'repository.managed_by_installation': false,
           offset: deprecatedOffset
         });
-      let githubParams =
+
+      let githubActiveOnOrgParams =
         merge(Object.create(queryParams), {
           'repository.managed_by_installation': true,
-          offset: githubOffset
+          'repository.active_on_org': true,
+          offset: githubActiveOnOrgOffset
+        });
+      let githubInactiveOnOrgParams =
+        merge(Object.create(queryParams), {
+          'repository.managed_by_installation': true,
+          'repository.active_on_org': false,
+          offset: githubInactiveOnOrgOffset
         });
 
       let hashObject = {
@@ -57,9 +69,15 @@ export default TravisRoute.extend({
       };
 
       if (config.githubApps) {
-        hashObject.githubApps = this.store.paginated(
+        hashObject.lockedGithubAppsRepositories = this.store.paginated(
           'repo',
-          githubParams,
+          githubActiveOnOrgParams,
+          { live: false }
+        );
+
+        hashObject.notLockedGithubAppsRepositories = this.store.paginated(
+          'repo',
+          githubInactiveOnOrgParams,
           { live: false }
         );
       }

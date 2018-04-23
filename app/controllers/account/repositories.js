@@ -7,7 +7,7 @@ import window from 'ember-window-mock';
 import { task } from 'ember-concurrency';
 import fetchAll from 'travis/utils/fetch-all';
 
-import { alias, filter, filterBy } from 'ember-decorators/object/computed';
+import { alias } from 'ember-decorators/object/computed';
 
 export default Controller.extend({
   @service features: null,
@@ -15,6 +15,7 @@ export default Controller.extend({
 
   page: 1,
   'apps-page': 1,
+  'apps-org-page': 1,
 
   @computed('model.deprecated')
   sortedRepositories(repos) {
@@ -45,12 +46,6 @@ export default Controller.extend({
     // FIXME this is trying to not access the installation if it doesn’t exist
     return !!this.get('account').belongsTo('installation').id();
   },
-
-  @filterBy('model.githubApps', 'active_on_org')
-  lockedGithubAppsRepositories: null,
-
-  @filter('model.githubApps', repo => !repo.get('active_on_org'))
-  notLockedGithubAppsRepositories: null,
 
   @action
   filterQuery(query) {

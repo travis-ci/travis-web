@@ -279,6 +279,16 @@ export default function () {
       }
     }
 
+    if (queryParams && queryParams['repository.active_on_org']) {
+      let paramValue = queryParams['repository.active_on_org'];
+
+      if (paramValue === 'true') {
+        repositories.models = repositories.models.filterBy('active_on_org');
+      } else {
+        repositories.models = repositories.models.rejectBy('active_on_org');
+      }
+    }
+
     return this.serialize(repositories);
   });
 

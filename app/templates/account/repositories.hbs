@@ -16,12 +16,12 @@
         {{/external-link-to}}
       </header>
       <ul class="profile-repositorylist" id='not-locked-github-apps-repositories'>
-        {{#each notLockedGithubAppsRepositories as |repository|}}
+        {{#each model.notLockedGithubAppsRepositories as |repository|}}
           {{github-apps-repository repository=repository}}
         {{/each}}
       </ul>
-      {{pagination-navigation collection=notLockedGithubAppsRepositories route="account.repositories" queryParam='apps-page' inner=6 outer=2}}
-      {{#if lockedGithubAppsRepositories}}
+      {{pagination-navigation collection=model.notLockedGithubAppsRepositories route="account.repositories" queryParam='apps-page' inner=6 outer=2}}
+      {{#if model.lockedGithubAppsRepositories}}
         <p class="notice-banner--yellow iconned">
           {{svg-jar 'icon-megaphone' class='icon icon-megaphone'}}
           <span class="label-align">
@@ -33,7 +33,7 @@
           </span>
         </p>
         <ul class="profile-repositorylist" id='locked-github-apps-repositories'>
-          {{#each lockedGithubAppsRepositories as |repository|}}
+          {{#each model.lockedGithubAppsRepositories as |repository|}}
             {{github-apps-repository repository=repository}}
           {{/each}}
         </ul>
