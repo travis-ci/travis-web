@@ -280,7 +280,7 @@ test('logs an exception viewing billing when there is more than one active subsc
   });
 });
 
-test('view a profiles for organizations that do not and do have GitHub Apps installations', function (assert) {
+test('view profiles for organizations that do not and do have GitHub Apps installations', function (assert) {
   profilePage.visit({ username: 'org0' });
 
   andThen(function () {
