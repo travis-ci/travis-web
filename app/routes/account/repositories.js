@@ -60,6 +60,10 @@ export default TravisRoute.extend({
           offset: githubInactiveOnOrgOffset
         });
 
+      if (config.githubApps) {
+        deprecatedParams['repository.active'] = true;
+      }
+
       let hashObject = {
         deprecated: this.store.paginated(
           'repo',

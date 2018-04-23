@@ -289,6 +289,17 @@ export default function () {
       }
     }
 
+    // FIXME three times!
+    if (queryParams && queryParams['repository.active']) {
+      let paramValue = queryParams['repository.active'];
+
+      if (paramValue === 'true') {
+        repositories.models = repositories.models.filterBy('active');
+      } else {
+        repositories.models = repositories.models.rejectBy('active');
+      }
+    }
+
     return this.serialize(repositories);
   });
 

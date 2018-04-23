@@ -4,6 +4,8 @@ import profilePage from 'travis/tests/pages/profile';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import Service from '@ember/service';
 import { default as mockWindow, reset as resetWindow } from 'ember-window-mock';
+import config from 'travis/config/environment';
+import { get, set } from '@ember/object';
 
 moduleForAcceptance('Acceptance | profile/basic layout', {
   beforeEach() {
@@ -202,14 +204,12 @@ test('view repositories', function (assert) {
 
     assert.notOk(profilePage.githubAppsInvitation.isVisible, 'expected GitHub Apps invitation not to be visible');
 
-    assert.equal(profilePage.administerableRepositories.length, 3, 'expected three classic repositories');
+    assert.equal(profilePage.administerableRepositories.length, 2, 'expected two classic repositories, with inactive repositories hidden');
 
     assert.equal(profilePage.administerableRepositories[0].name, 'user-login/other-repository-name');
     assert.ok(profilePage.administerableRepositories[0].isDisabled, 'expected disabled repository to be disabled in UI');
     assert.equal(profilePage.administerableRepositories[1].name, 'user-login/repository-name');
     assert.ok(profilePage.administerableRepositories[1].isActive, 'expected active repository to appear active');
-    assert.equal(profilePage.administerableRepositories[2].name, 'user-login/yet-another-repository-name');
-    assert.notOk(profilePage.administerableRepositories[2].isActive, 'expected inactive repository to appear inactive');
 
     // FIXME this is coming back as the org-login installation, 1962…???
     // assert.equal(profilePage.manageGithubAppsLink.href, `https://github.com/settings/installations/${this.userInstallation.github_id}`);
@@ -293,6 +293,31 @@ test('view profiles for organizations that do not and do have GitHub Apps instal
   andThen(function () {
     assert.notOk(profilePage.githubAppsInvitation.isVisible, 'expected GitHub Apps invitation to not be visible');
     assert.equal(profilePage.manageGithubAppsLink.href, 'https://github.com/organizations/org-login/settings/installations/1962', 'expected the management link to be organisation-scoped');
+  });
+});
+
+test('view profiles when GitHub Apps is not present', function (assert) {
+  let preservedGithubAppsConfig = get(config, 'githubApps');
+  set(config, 'githubApps', false);
+
+  profilePage.visit({ username: 'org0' });
+
+  andThen(() => {
+    // FIXME this fails when run with the rest of the suite, bleedthrough?
+    assert.notOk(profilePage.githubAppsInvitation.isVisible, 'expected GitHub Apps invitation to not be visible');
+  });
+
+  profilePage.visit({ username: 'user-login' });
+
+  andThen(() => {
+    assert.equal(profilePage.administerableRepositories.length, 3, 'expected inactive repositories to also show');
+
+    assert.equal(profilePage.administerableRepositories[0].name, 'user-login/other-repository-name');
+    assert.ok(profilePage.administerableRepositories[0].isDisabled, 'expected disabled repository to be disabled in UI');
+    assert.equal(profilePage.administerableRepositories[2].name, 'user-login/yet-another-repository-name');
+    assert.notOk(profilePage.administerableRepositories[2].isActive, 'expected inactive repository to appear inactive');
+
+    set(config, 'githubApps', preservedGithubAppsConfig);
   });
 });
 
