@@ -4,10 +4,11 @@
   {{svg-jar 'stage-passed' alt='Public repository' class='icon public'}}
 {{/if}}
 
-{{#link-to "settings" repository.owner.login repository.name class="profile-settings" title="Go to Travis CI repository settings"}}
-  {{svg-jar 'icon-settings' class="icon icon-hover"}}
-{{/link-to}}
-
 {{#link-to "repo" repository.owner.login repository.name class="profile-repo"}}
   {{slug}}
+{{/link-to}}
+
+{{#link-to "settings" repository.owner.login repository.name class="profile-settings button" title="Go to Travis CI repository settings"}}
+  {{svg-jar 'icon-settings' class="icon icon-hover"}}
+  Settings
 {{/link-to}}
