@@ -240,7 +240,7 @@ $profile-breakpoint: 600px;
   }
 }
 
-.profile-repositories-filter {
+.profile-repositories-filter, .not-locked-profile-repositories-filter {
   margin-bottom: 1.5em;
 
   .search {
