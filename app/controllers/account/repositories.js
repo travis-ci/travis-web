@@ -22,7 +22,8 @@ export default Controller.extend({
     return repos.sortBy('name');
   },
 
-  showGitHubApps: config.githubApps,
+  @alias('features.github-apps') showGitHubApps: null,
+
   config,
   @alias('config.githubApps.appName') githubAppsAppName: null,
 

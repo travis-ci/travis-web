@@ -4,8 +4,6 @@ import profilePage from 'travis/tests/pages/profile';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import Service from '@ember/service';
 import { default as mockWindow, reset as resetWindow } from 'ember-window-mock';
-import config from 'travis/config/environment';
-import { get, set } from '@ember/object';
 
 moduleForAcceptance('Acceptance | profile/basic layout', {
   beforeEach() {
@@ -187,6 +185,7 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
 });
 
 test('view repositories', function (assert) {
+  withFeature('github-apps');
   profilePage.visit({ username: 'user-login' });
 
   andThen(() => {
@@ -281,6 +280,7 @@ test('logs an exception viewing billing when there is more than one active subsc
 });
 
 test('view profiles for organizations that do not and do have GitHub Apps installations', function (assert) {
+  withFeature('github-apps');
   profilePage.visit({ username: 'org0' });
 
   andThen(function () {
@@ -297,13 +297,9 @@ test('view profiles for organizations that do not and do have GitHub Apps instal
 });
 
 test('view profiles when GitHub Apps is not present', function (assert) {
-  let preservedGithubAppsConfig = get(config, 'githubApps');
-  set(config, 'githubApps', false);
-
   profilePage.visit({ username: 'org0' });
 
   andThen(() => {
-    // FIXME this fails when run with the rest of the suite, bleedthrough?
     assert.notOk(profilePage.githubAppsInvitation.isVisible, 'expected GitHub Apps invitation to not be visible');
   });
 
@@ -316,12 +312,12 @@ test('view profiles when GitHub Apps is not present', function (assert) {
     assert.ok(profilePage.administerableRepositories[0].isDisabled, 'expected disabled repository to be disabled in UI');
     assert.equal(profilePage.administerableRepositories[2].name, 'user-login/yet-another-repository-name');
     assert.notOk(profilePage.administerableRepositories[2].isActive, 'expected inactive repository to appear inactive');
-
-    set(config, 'githubApps', preservedGithubAppsConfig);
   });
 });
 
 test('clicking the button to migrate to GitHub Apps sends the IDs of all legacy active repositories', function (assert) {
+  withFeature('github-apps');
+
   // FIXME not sure why the first repository isn’t being included in the query parameters
   // let repositoryIds = [this.activeAdminRepository.id];
   let repositoryIds = [];

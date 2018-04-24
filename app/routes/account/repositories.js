@@ -1,10 +1,13 @@
 import TravisRoute from 'travis/routes/basic';
 import config from 'travis/config/environment';
 import { computed } from 'ember-decorators/object';
+import { service } from 'ember-decorators/service';
 import { hash } from 'rsvp';
 import { merge } from '@ember/polyfills';
 
 export default TravisRoute.extend({
+  @service features: null,
+
   queryParams: {
     page: {
       refreshModel: true
@@ -60,7 +63,7 @@ export default TravisRoute.extend({
           offset: githubInactiveOnOrgOffset
         });
 
-      if (config.githubApps) {
+      if (this.get('features.github-apps')) {
         deprecatedParams['repository.active'] = true;
       }
 
@@ -72,7 +75,7 @@ export default TravisRoute.extend({
         )
       };
 
-      if (config.githubApps) {
+      if (this.get('features.github-apps')) {
         hashObject.lockedGithubAppsRepositories = this.store.paginated(
           'repo',
           githubActiveOnOrgParams,

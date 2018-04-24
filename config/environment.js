@@ -84,12 +84,14 @@ module.exports = function (environment) {
     'debug-builds': false,
     'broadcasts': true,
     'beta-features': true,
+    'github-apps': false,
   };
 
   const { TRAVIS_PRO, TRAVIS_ENTERPRISE } = process.env;
 
   if (TRAVIS_PRO) {
     ENV.featureFlags['pro-version'] = true;
+    ENV.featureFlags['github-apps'] = true;
     ENV.pro = true;
   }
 
@@ -230,6 +232,7 @@ module.exports = function (environment) {
     ENV.featureFlags['debug-logging'] = false;
     ENV.featureFlags['dashboard'] = false;
     ENV.featureFlags['pro-version'] = false;
+    ENV.featureFlags['github-apps'] = false;
 
     ENV.billingEndpoint = 'https://billing.travis-ci.com';
 
