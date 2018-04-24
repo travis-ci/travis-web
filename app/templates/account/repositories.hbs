@@ -65,7 +65,7 @@
         </p>
         <ul class="profile-repositorylist" id='locked-github-apps-repositories'>
           {{#each model.lockedGithubAppsRepositories as |repository|}}
-            {{github-apps-repository repository=repository}}
+            {{github-apps-repository repository=repository slug=repository.slug}}
           {{/each}}
         </ul>
       {{/if}}
