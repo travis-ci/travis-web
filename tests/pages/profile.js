@@ -64,8 +64,9 @@ export default create({
 
   githubAppsRepositories: githubAppsRepositoryCollection('#github-apps-repositories'),
 
+  notLockedGithubAppsFilter: fillable('.not-locked-profile-repositories-filter input.search'),
   notLockedGithubAppsRepositories: githubAppsRepositoryCollection('#not-locked-github-apps-repositories'),
-  notLockedGithubAppsPages: collection('#not-locked-github-apps-repositories + .pagination-navigation [data-test-page-pagination-link]', {
+  notLockedGithubAppsPages: collection('#github-apps-repositories .pagination-navigation [data-test-page-pagination-link]', {
     visit: clickable()
   }),
 
