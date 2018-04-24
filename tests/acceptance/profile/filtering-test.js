@@ -131,5 +131,6 @@ test('paginate and filter GitHub Apps-managed repositories', function (assert) {
   andThen(() => {
     assert.equal(profilePage.notLockedGithubAppsPages.length, 0, 'expected pagination to be hidden when filtering');
     assert.equal(profilePage.notLockedGithubAppsRepositories.length, 1, 'expected one filtered repository');
+    assert.equal(profilePage.notLockedGithubAppsRepositories[0].name, 'user-login/github-apps-public-repository-999');
   });
 });

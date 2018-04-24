@@ -36,7 +36,9 @@
           {{else}}
             <ul class="profile-repositorylist" id='not-locked-github-apps-repositories'>
               {{#each filter.repositories as |repository|}}
-                {{github-apps-repository repository=repository}}
+                {{github-apps-repository
+                  repository=repository
+                  slug=(compute filter.computeSlug repository.slug filter.isFiltering filter.query)}}
               {{else}}
                 {{#if filter.isFiltering}}
                   <li class="no-results">Sorry, no results found.</li>
