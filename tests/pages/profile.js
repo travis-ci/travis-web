@@ -63,7 +63,12 @@ export default create({
   migrateGithubAppsButton: { scope: '[data-test-migrate-github-apps]' },
 
   githubAppsRepositories: githubAppsRepositoryCollection('#github-apps-repositories'),
+
   notLockedGithubAppsRepositories: githubAppsRepositoryCollection('#not-locked-github-apps-repositories'),
+  notLockedGithubAppsPages: collection('#not-locked-github-apps-repositories + .pagination-navigation [data-test-page-pagination-link]', {
+    visit: clickable()
+  }),
+
   lockedGithubAppsRepositories: githubAppsRepositoryCollection('#locked-github-apps-repositories'),
 
   token: {
