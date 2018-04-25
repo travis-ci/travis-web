@@ -1,5 +1,6 @@
 import TravisRoute from 'travis/routes/basic';
 import { service } from 'ember-decorators/service';
+import config from 'travis/config/environment';
 
 export default TravisRoute.extend({
   @service raven: null,
@@ -18,23 +19,27 @@ export default TravisRoute.extend({
       .modelFor('accounts')
       .find(acct => acct.get('login') === login);
     if (account) {
-      return this.store.findAll('subscription')
-        .then(subscriptions => {
-          let accountSubscriptions = subscriptions.filter(
-            subscription => subscription.get('owner.login') === login &&
-                subscription.get('status') === 'subscribed');
+      if (config.billingEndpoint) {
+        return this.store.findAll('subscription')
+          .then(subscriptions => {
+            let accountSubscriptions = subscriptions.filter(
+              subscription => subscription.get('owner.login') === login &&
+                  subscription.get('status') === 'subscribed');
 
-          if (accountSubscriptions.get('length') > 1) {
-            let exception =
-              new Error(`Account ${login} has more than one active subscription!`);
-            this.get('raven').logException(exception, true);
-          }
+            if (accountSubscriptions.get('length') > 1) {
+              let exception =
+                new Error(`Account ${login} has more than one active subscription!`);
+              this.get('raven').logException(exception, true);
+            }
 
-          return accountSubscriptions.sortBy('validTo').get('firstObject');
-        }).then(subscription => ({
-          account,
-          subscription
-        }));
+            return accountSubscriptions.sortBy('validTo').get('firstObject');
+          }).then(subscription => ({
+            account,
+            subscription
+          }));
+      } else {
+        return { account };
+      }
     }
 
     return {
