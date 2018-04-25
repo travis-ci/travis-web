@@ -101,6 +101,10 @@ $profile-breakpoint: 600px;
       width: 18px;
       height: 18px;
       margin-right: 0;
+
+      &.private {
+        transform: translateY(-1px);
+      }
     }
   }
 }
