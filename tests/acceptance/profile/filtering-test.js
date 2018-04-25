@@ -99,7 +99,7 @@ test('paginate and filter GitHub Apps-managed repositories', function (assert) {
 
   for (let i = 0; i < 15; i++) {
     server.create('repository', {
-      name: `github-apps-public-repository-${i}${i}${i}`,
+      name: `github-apps-public-repository-${(i + '').padStart(3, '0')}`,
       owner: {
         login: 'user-login',
       },
@@ -116,14 +116,14 @@ test('paginate and filter GitHub Apps-managed repositories', function (assert) {
     assert.equal(profilePage.notLockedGithubAppsPages.length, 2, 'expected 2 pages of not-locked repositories');
 
     assert.equal(profilePage.notLockedGithubAppsRepositories[0].name, 'user-login/github-apps-public-repository-000');
-    assert.equal(profilePage.notLockedGithubAppsRepositories[9].name, 'user-login/github-apps-public-repository-999');
+    assert.equal(profilePage.notLockedGithubAppsRepositories[9].name, 'user-login/github-apps-public-repository-009');
   });
 
   profilePage.notLockedGithubAppsPages[1].visit();
 
   andThen(() => {
     assert.equal(profilePage.githubAppsRepositories.length, 5, 'expected 5 GitHub Apps-managed repositories on the second page');
-    assert.equal(profilePage.notLockedGithubAppsRepositories[0].name, 'user-login/github-apps-public-repository-101010');
+    assert.equal(profilePage.notLockedGithubAppsRepositories[0].name, 'user-login/github-apps-public-repository-010');
   });
 
   profilePage.notLockedGithubAppsFilter('9');
@@ -131,6 +131,6 @@ test('paginate and filter GitHub Apps-managed repositories', function (assert) {
   andThen(() => {
     assert.equal(profilePage.notLockedGithubAppsPages.length, 0, 'expected pagination to be hidden when filtering');
     assert.equal(profilePage.notLockedGithubAppsRepositories.length, 1, 'expected one filtered repository');
-    assert.equal(profilePage.notLockedGithubAppsRepositories[0].name, 'user-login/github-apps-public-repository-999');
+    assert.equal(profilePage.notLockedGithubAppsRepositories[0].name, 'user-login/github-apps-public-repository-009');
   });
 });

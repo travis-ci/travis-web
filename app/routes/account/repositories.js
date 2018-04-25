@@ -3,7 +3,6 @@ import config from 'travis/config/environment';
 import { computed } from 'ember-decorators/object';
 import { service } from 'ember-decorators/service';
 import { hash } from 'rsvp';
-import { merge } from '@ember/polyfills';
 
 export default TravisRoute.extend({
   @service features: null,
@@ -43,25 +42,24 @@ export default TravisRoute.extend({
         },
       };
 
-      // FIXME this p uggers, what is to be done?
       let deprecatedParams =
-        merge(Object.create(queryParams), {
+        Object.assign({
           'repository.managed_by_installation': false,
           offset: deprecatedOffset
-        });
+        }, queryParams);
 
       let githubActiveOnOrgParams =
-        merge(Object.create(queryParams), {
+        Object.assign({
           'repository.managed_by_installation': true,
           'repository.active_on_org': true,
           offset: githubActiveOnOrgOffset
-        });
+        }, queryParams);
       let githubInactiveOnOrgParams =
-        merge(Object.create(queryParams), {
+        Object.assign({
           'repository.managed_by_installation': true,
           'repository.active_on_org': false,
           offset: githubInactiveOnOrgOffset
-        });
+        }, queryParams);
 
       if (this.get('features.github-apps')) {
         deprecatedParams['repository.active'] = true;
