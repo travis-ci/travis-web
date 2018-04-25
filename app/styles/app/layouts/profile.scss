@@ -375,52 +375,6 @@ header.legacy-services-integration {
   }
 }
 
-section.billing {
-  .row {
-    display: flex;
-    flex-wrap: wrap;
-
-    section {
-      flex: 1;
-    }
-  }
-
-  section.contact {
-    address {
-      white-space: pre-line;
-    }
-  }
-
-  .notice-banner--yellow {
-    display: block;
-    margin-top: 1rem;
-    padding: 0.5rem 0.9rem 0.6rem;
-  }
-}
-
-section.invoices {
-  padding-top: 1rem;
-
-  ul {
-    list-style-type: none;
-    padding-left: 0;
-  }
-
-  p {
-    @include linkStyle;
-  }
-
-  svg {
-    margin-right: 3px;
-    transform: translateY(-2px);
-
-    &:hover {
-      border-color: $pebble-grey;
-      @include colorSVG($cement-grey);
-    }
-  }
-}
-
 #github-apps-invitation {
   @include travisBorder;
   padding: 0 1.25em 1.25em 1.25em;
