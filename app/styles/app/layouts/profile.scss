@@ -98,9 +98,11 @@ $profile-breakpoint: 600px;
     align-items: center;
 
     .icon {
-      width: 18px;
-      height: 18px;
-      margin-right: 0;
+      &.private, &.public {
+        width: 18px;
+        height: 18px;
+        margin-right: 0;
+      }
 
       &.private {
         transform: translateY(-1px);
