@@ -12,7 +12,7 @@ import DurationAttributes from 'travis/mixins/duration-attributes';
 import attr from 'ember-data/attr';
 import { belongsTo } from 'ember-data/relationships';
 import { computed } from 'ember-decorators/object';
-import { alias, not } from 'ember-decorators/object/computed';
+import { alias, and, not } from 'ember-decorators/object/computed';
 import { service } from 'ember-decorators/service';
 
 import moment from 'moment';
@@ -107,7 +107,7 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
   },
 
   @alias('isFinished') canRestart: null,
-  @alias('isFinished') canDebug: null,
+  @and('isFinished', 'repo.private') canDebug: null,
 
   cancel() {
     const url = `/job/${this.get('id')}/cancel`;
