@@ -246,6 +246,15 @@ test('view profiles when GitHub Apps is not present', function (assert) {
   });
 });
 
+test('view profile when GitHub Apps is present and no legacy repositories exist', function (assert) {
+  withFeature('github-apps');
+  profilePage.visit({ username: 'org0' });
+
+  andThen(() => {
+    assert.dom('#administerable-repositories').doesNotExist();
+  });
+});
+
 test('clicking the button to migrate to GitHub Apps sends the IDs of all legacy active repositories', function (assert) {
   withFeature('github-apps');
 
