@@ -165,52 +165,6 @@ $profile-breakpoint: 600px;
   .sync-spinner {
     vertical-align: top;
   }
-
-  &.admin {
-    &:hover {
-      background-color: $pebble-grey;
-
-      &:after {
-        content: "";
-
-        @include fadeOut(right, -90deg, $pebble-grey);
-      }
-    }
-
-    .active &:hover {
-      background-color: $agate-blue;
-
-      &:after {
-        content: "";
-
-        @include fadeOut(right, -90deg, $agate-blue);
-      }
-    }
-  }
-
-  &.non-admin {
-    color: rgba(black, 0.45);
-
-    &:hover {
-      background-color: transparentize($pebble-grey, 0.5);
-
-      &:after {
-        content: "";
-
-        @include fadeOut(right, -90deg, $pebble-grey);
-      }
-    }
-
-    .active &:hover {
-      background-color: transparentize($agate-blue, 0.5);
-
-      &:after {
-        content: "";
-
-        @include fadeOut(right, -90deg, $agate-blue);
-      }
-    }
-  }
 }
 
 .profile-text,
