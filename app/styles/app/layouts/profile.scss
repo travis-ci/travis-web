@@ -95,6 +95,13 @@ $profile-breakpoint: 600px;
     display: flex;
     flex-flow: row wrap;
     margin-bottom: 0.8em;
+    align-items: center;
+
+    .icon {
+      width: 18px;
+      height: 18px;
+      margin-right: 0;
+    }
   }
 }
 
