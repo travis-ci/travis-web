@@ -36,6 +36,7 @@ export default TravisRoute.extend({
           subscription
         }));
     }
+
     return {
       login,
       error: true
