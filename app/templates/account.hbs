@@ -4,6 +4,10 @@
     There was a problem while loading the repositories list, please try again. In case
     the problem persists, please contact support.
   {{else}}
+    <header class="profile-header">
+      <h1 class="h2--grey">{{accountName}}</h1>
+    </header>
+
     {{#unless features.enterpriseVersion}}
       {{#if config.billingEndpoint}}
         {{#if (eq subscription.status 'subscribed')}}
@@ -17,10 +21,6 @@
         {{/if}}
       {{/if}}
     {{/unless}}
-
-    <header class="profile-header">
-      <h1 class="h2--grey">{{accountName}}</h1>
-    </header>
 
     {{outlet}}
 
