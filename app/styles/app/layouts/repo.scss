@@ -8,30 +8,30 @@
     }
   }
 
+  .outside-container {
+    position: absolute;
+    margin-left: -36px;
+
+    .icon {
+      width: 24px;
+      height: 24px;
+
+      @include colorSVG($asphalt-grey);
+
+      &.private {
+        transform: translateY(1px);
+      }
+
+      &.public {
+        transform: translateY(4px);
+      }
+    }
+  }
+
   .repo-title {
     margin: 0;
     font-size: 36px;
     font-weight: $font-weight-normal;
-
-    .outside-container {
-      position: absolute;
-      margin-left: -36px;
-
-      .icon {
-        width: 24px;
-        height: 24px;
-
-        @include colorSVG($asphalt-grey);
-
-        &.private {
-          transform: translateY(-2px);
-        }
-
-        &.public {
-          transform: translateY(1px);
-        }
-      }
-    }
 
     a {
       color: $asphalt-grey;
