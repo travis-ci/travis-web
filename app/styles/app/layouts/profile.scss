@@ -432,5 +432,14 @@ header.space-between {
 #locked-github-apps-repositories {
   li {
     opacity: 0.5;
+
+    .button:hover {
+      background-color: inherit;
+      color: inherit;
+
+      .icon {
+        @include colorSVG($cement-grey);
+      }
+    }
   }
 }
