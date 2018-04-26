@@ -6,6 +6,7 @@
   {{else}}
     <header class="profile-header">
       <h1 class="h2--grey">{{accountName}}</h1>
+      {{#if model.education}}<span class='badge square grey'>Education</span>{{/if}}
     </header>
 
     {{#unless features.enterpriseVersion}}
@@ -13,11 +14,9 @@
         {{#if (eq subscription.status 'subscribed')}}
           {{subscription-status-banner color="green" message="This account has an active subscription." billingLinkText="Manage your subscription!" billingUrl=billingUrl}}
         {{else}}
-          {{#if model.education}}
-            {{subscription-status-banner color="green" message="This account’s subscription is flagged as educational." billingLinkText="Take a look!" billingUrl=billingUrl}}
-          {{else}}
+          {{#unless model.education}}
             {{subscription-status-banner color="yellow" message="This account does not have an active subscription." billingLinkText="Sign this account up!" billingUrl=billingUrl}}
-          {{/if}}
+          {{/unless}}
         {{/if}}
       {{/if}}
     {{/unless}}

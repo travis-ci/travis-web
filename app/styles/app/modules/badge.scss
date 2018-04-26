@@ -27,6 +27,11 @@
     border-color: $brick-red;
   }
 
+  &.grey {
+    color: $asphalt-grey;
+    background-color: $pebble-grey;
+  }
+
   &.square {
     border-radius: 0;
     border-width: 0;

@@ -206,7 +206,8 @@ test('view profile that has education status', function (assert) {
 
   andThen(() => {
     percySnapshot(assert);
-    assert.equal(profilePage.subscriptionStatus.text, 'This account’s subscription is flagged as educational.');
+    assert.equal(profilePage.nameBadge.text, 'Education');
+    assert.ok(profilePage.subscriptionStatus.isHidden, 'expected no subscription status banner');
   });
 });
 
