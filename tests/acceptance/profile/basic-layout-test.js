@@ -276,6 +276,18 @@ test('clicking the button to migrate to GitHub Apps sends the IDs of all legacy 
       github_id: 10000 + index
     });
 
+    server.create('repository', {
+      name: `extra-inactive-repository-${index}`,
+      owner: {
+        login: 'user-login',
+      },
+      active: false,
+      permissions: {
+        admin: true
+      },
+      github_id: 20000 + index
+    });
+
     repositoryIds.push(10000 + index);
   }
 

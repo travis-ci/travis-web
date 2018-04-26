@@ -68,6 +68,7 @@ export default Controller.extend({
     let queryParams = {
       sort_by: 'name',
       'repository.managed_by_installation': false,
+      'repository.active': true,
       custom: {
         owner: this.get('account.login'),
         type: 'byOwner',

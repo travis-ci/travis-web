@@ -97,9 +97,9 @@ export default function () {
     return schema.broadcasts.all();
   });
 
-  this.get('/repos', function (schema, request) {
+  this.get('/repos', function (schema, {queryParams}) {
     // search apparently still uses v2, so different response necessary
-    const query = request.queryParams.search;
+    const query = queryParams.search;
     if (query) {
       const allRepositories = schema.repositories.all();
       const filtered = allRepositories.models.filter(repo => repo.attrs.slug.includes(query));
@@ -110,9 +110,17 @@ export default function () {
 
     let repos = schema.repositories.all();
 
-    let starred = request.queryParams['starred'];
+    let starred = queryParams['starred'];
     if (starred) {
       repos = repos.filter(repo => repo.starred);
+    }
+
+    if (queryParams && queryParams['repository.active']) {
+      let paramValue = queryParams['repository.active'];
+
+      if (paramValue === 'true') {
+        repos = repos.filter(repo => repo.active);
+      }
     }
 
     // standard v3 response returning all repositories
