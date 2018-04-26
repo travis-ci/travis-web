@@ -1,6 +1,6 @@
 <article class="repo-header">
   <header>
-    <div class='outside-container'>{{repository-visibility-icon repository=repo}}</div>
+    {{repository-visibility-icon repository=repo}}
     <h1 data-test-repo-header-title class="repo-title">
       {{#link-to "owner" repo.owner.login}}{{repo.owner.login}}{{/link-to}} / {{#link-to "repo" repo}}{{repo.name}}{{/link-to}}
     </h1>

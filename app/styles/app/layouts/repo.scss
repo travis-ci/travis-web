@@ -6,17 +6,12 @@
       justify-content: flex-start;
       align-items: center;
     }
-  }
-
-  .outside-container {
-    position: absolute;
-    margin-left: -36px;
 
     .icon {
-      width: 24px;
-      height: 24px;
+      width: 26px;
+      height: 26px;
 
-      @include colorSVG($asphalt-grey);
+      @include colorSVG($cement-grey);
 
       &.private {
         transform: translateY(1px);
@@ -25,6 +20,8 @@
       &.public {
         transform: translateY(4px);
       }
+
+      margin-right: 10px;
     }
   }
 
