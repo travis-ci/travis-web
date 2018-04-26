@@ -1091,7 +1091,7 @@ export default {
           }
         ]
       },
-      "attributes": ["id","login","name","github_id","avatar_url","repositories","education"],
+      "attributes": ["id","login","name","github_id","avatar_url","repositories"],
       "representations": {
         "minimal": [
           "id",
@@ -1102,8 +1102,7 @@ export default {
           "login",
           "name",
           "github_id",
-          "avatar_url",
-          "education"
+          "avatar_url"
         ],
         "additional": [
           "repositories"
@@ -1551,27 +1550,6 @@ export default {
         "standard": ["stages"]
       }
     },
-    "subscription":            {
-      "@type":            "resource",
-      "actions":          { },
-      "attributes":       [
-        "id",
-        "owner",
-        "status",
-      ],
-      "representations":  {
-        "standard":       [
-          "id",
-          "owner",
-          "status",
-        ],
-        "minimal":       [
-          "id",
-          "owner",
-          "status",
-        ],
-      }
-    },
     "template": {
       "@type": "resource",
       "actions": {
@@ -1609,7 +1587,7 @@ export default {
           }
         ]
       },
-      "attributes": ["id","login","name","github_id","avatar_url","repositories","education","is_syncing","synced_at"],
+      "attributes": ["id","login","name","github_id","avatar_url","repositories","is_syncing","synced_at"],
       "representations": {
         "minimal": [
           "id",
@@ -1621,7 +1599,6 @@ export default {
           "name",
           "github_id",
           "avatar_url",
-          "education",
           "is_syncing",
           "synced_at"
         ],

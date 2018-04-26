@@ -8,6 +8,7 @@ export default Model.extend({
   caches: hasMany(),
   defaultBranch: belongsTo('branch', { inverse: null }),
   currentBuild: belongsTo('build', { inverse: null }),
+  account: belongsTo(),
 
   requests: hasMany(),
 });

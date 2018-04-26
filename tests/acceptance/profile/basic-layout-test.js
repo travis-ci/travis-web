@@ -2,42 +2,24 @@ import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import profilePage from 'travis/tests/pages/profile';
 import signInUser from 'travis/tests/helpers/sign-in-user';
-import Service from '@ember/service';
 
 moduleForAcceptance('Acceptance | profile/basic layout', {
   beforeEach() {
-    this.user = server.create('user', {
+    const currentUser = server.create('user', {
       name: 'User Name',
-      login: 'user-login'
+      login: 'user-login',
+      repos_count: 3
     });
 
-    signInUser(this.user);
-
-    server.create('subscription', {
-      owner: this.user,
-      status: 'subscribed'
-    });
+    signInUser(currentUser);
 
     // create organization
-    this.organization = server.create('organization', {
+    server.create('account', {
       name: 'Org Name',
       type: 'organization',
-      login: 'org-login'
+      login: 'org-login',
+      repos_count: 30
     });
-
-    server.create('subscription', {
-      owner: this.organization,
-      status: 'expired'
-    });
-
-    // Pad with extra organisations to force an extra API response page
-    for (let orgIndex = 0; orgIndex < 10; orgIndex++) {
-      server.create('organization', {
-        name: `Generic org ${orgIndex}`,
-        type: 'organization',
-        login: `org${orgIndex}`,
-      });
-    }
 
     // create active repository
     server.create('repository', {
@@ -95,12 +77,13 @@ test('view profile', function (assert) {
 
     assert.equal(profilePage.name, 'User Name');
 
-    assert.equal(profilePage.subscriptionStatus.text, 'This account has an active subscription.');
-
-    assert.equal(profilePage.accounts.length, 12, 'expected all accounts to be listed');
+    assert.equal(profilePage.accounts.length, 2, 'expected two accounts');
 
     assert.equal(profilePage.accounts[0].name, 'User Name');
+    assert.equal(profilePage.accounts[0].repositoryCount, '3 repositories');
+
     assert.equal(profilePage.accounts[1].name, 'Org Name');
+    assert.equal(profilePage.accounts[1].repositoryCount, '30 repositories');
 
     assert.equal(profilePage.administerableRepositories.length, 3, 'expected three repositories');
 
@@ -111,45 +94,4 @@ test('view profile', function (assert) {
     assert.equal(profilePage.administerableRepositories[2].name, 'user-login/yet-another-repository-name');
     assert.notOk(profilePage.administerableRepositories[2].isActive, 'expected inactive repository to appear inactive');
   });
-});
-
-test('view profile that has an expired subscription', function (assert) {
-  profilePage.visit({ username: 'org-login' });
-
-  andThen(() => {
-    assert.equal(profilePage.subscriptionStatus.text, 'This account does not have an active subscription.');
-  });
-});
-
-test('view profile that has education status', function (assert) {
-  this.organization.attrs.education = true;
-  this.organization.save();
-
-  profilePage.visit({ username: 'org-login' });
-
-  andThen(() => {
-    percySnapshot(assert);
-    assert.equal(profilePage.subscriptionStatus.text, 'This account’s subscription is flagged as educational.');
-  });
-});
-
-test('logs an exception when there is more than one active subscription', function (assert) {
-  assert.expect(1);
-
-  server.create('subscription', {
-    owner: this.user,
-    status: 'subscribed'
-  });
-
-  let mockSentry = Service.extend({
-    logException(error) {
-      assert.equal(error.message, 'Account user-login has more than one active subscription!');
-    },
-  });
-
-  const instance = this.application.__deprecatedInstance__;
-  const registry = instance.register ? instance : instance.registry;
-  registry.register('service:raven', mockSentry);
-
-  profilePage.visit({ username: 'user-login' });
 });

@@ -7,7 +7,6 @@ import { service } from 'ember-decorators/service';
 
 export default TravisRoute.extend({
   @service features: null,
-  @service accounts: null,
 
   queryParams: {
     filter: {
@@ -48,7 +47,9 @@ export default TravisRoute.extend({
         dependencies: ['active', 'isCurrentUserACollaborator'],
         forceReload: true
       }),
-      accounts: this.get('accounts').fetch()
+      accounts: this.store.filter('account', {
+        all: true
+      }, () => true, [], true)
     });
   },
 

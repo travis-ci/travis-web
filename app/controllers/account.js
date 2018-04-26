@@ -33,4 +33,13 @@ export default Controller.extend({
     const id = type === 'user' ? 'user' : login;
     return `${config.billingEndpoint}/subscriptions/${id}`;
   },
+
+  @computed('model.{subscribed,education}', 'billingUrl')
+  subscribeButtonInfo(subscribed, education, billingUrl) {
+    return {
+      billingUrl,
+      subscribed,
+      education,
+    };
+  },
 });
