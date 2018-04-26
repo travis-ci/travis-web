@@ -62,20 +62,6 @@
     font-weight: 600;
     padding-right: 0.5rem;
   }
-
-  &.iconned {
-    display: flex;
-    align-items: flex-start;
-
-    padding: 1em;
-
-    svg {
-      width: 35px;
-      height: 35px;
-
-      margin-right: 13px;
-    }
-  }
 }
 
 .notice-banner--yellow.spaced {

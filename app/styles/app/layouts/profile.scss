@@ -384,6 +384,39 @@ header.space-between {
 }
 
 #locked-github-apps-repositories {
+  box-shadow: 0 0 15px 3px $pebble-grey;
+
+  padding: 1em 1em 0 1em;
+
+  p {
+    display: flex;
+    align-items: flex-start;
+
+    margin: 0 0 1rem;
+
+    color: $cement-grey;
+    font-size: $font-size-sm;
+
+    svg {
+      width: 22px;
+      height: 22px;
+
+      flex-shrink: 0;
+
+      margin-right: 9px;
+
+      stroke-width: 5px;
+
+      @include colorSVG($asphalt-grey);
+    }
+
+    @include linkStyle;
+
+    a {
+      padding-bottom: 0.07rem;
+    }
+  }
+
   li {
     opacity: 0.5;
 
@@ -394,6 +427,10 @@ header.space-between {
       .icon {
         @include colorSVG($cement-grey);
       }
+    }
+
+    &:last-child {
+      padding-bottom: 0.6em;
     }
   }
 }

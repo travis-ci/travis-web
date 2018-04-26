@@ -54,18 +54,21 @@
         {{/unless}}
       {{/repository-filter}}
       {{#if model.lockedGithubAppsRepositories}}
-        <p class="notice-banner--yellow iconned">
-          {{svg-jar 'icon-megaphone' class='icon icon-megaphone'}}
-          <span class="label-align">
-            These repositories cannot be migrated because they are active on travis-ci.org.<br/>
-            Please <a href="https://docs.travis-ci.com/">refer to our docs</a> for more information.
-          </span>
-        </p>
-        <ul class="profile-repositorylist" id='locked-github-apps-repositories'>
-          {{#each model.lockedGithubAppsRepositories as |repository|}}
-            {{github-apps-repository repository=repository slug=repository.slug}}
-          {{/each}}
-        </ul>
+        <div id='locked-github-apps-repositories'>
+          <p>
+            {{svg-jar 'icon-megaphone' class='icon icon-megaphone'}}
+            <span class="label-align">
+              The following repositories cannot be migrated to travis-ci.com at this time because they are
+              currently active on our legacy platform travis-ci.org. This feature will be available shortly.
+              Please <a href='https://docs.travis-ci.com/FIXME'>read our docs on open source migration</a> to learn more.
+            </span>
+          </p>
+          <ul class="profile-repositorylist">
+            {{#each model.lockedGithubAppsRepositories as |repository|}}
+              {{github-apps-repository repository=repository slug=repository.slug}}
+            {{/each}}
+          </ul>
+        </div>
       {{/if}}
     </div>
   {{else}}
