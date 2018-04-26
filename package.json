@@ -82,7 +82,7 @@
     "ember-source": "^2.18.2",
     "ember-svg-jar": "^0.12.0",
     "ember-test-assets": "^1.1.0",
-    "ember-test-selectors": "^0.3.8",
+    "ember-test-selectors": "^1.0.0",
     "ember-tether": "^1.0.0-beta.0",
     "ember-tooltips": "^2.9.2",
     "ember-truth-helpers": "^2.0.0",
