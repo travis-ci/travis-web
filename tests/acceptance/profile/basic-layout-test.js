@@ -133,6 +133,18 @@ test('view profile that has education status', function (assert) {
   });
 });
 
+test('displays an error banner when subscription status cannot be determined', function (assert) {
+  server.get('/subscriptions', function (schema) {
+    return new Response(500, {}, {});
+  });
+
+  profilePage.visit({ username: 'user-login' });
+
+  andThen(() => {
+    assert.equal(profilePage.subscriptionStatus.text, 'There was an error determining your subscription status.');
+  });
+});
+
 test('logs an exception when there is more than one active subscription', function (assert) {
   assert.expect(1);
 

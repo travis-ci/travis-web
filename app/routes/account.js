@@ -36,6 +36,9 @@ export default TravisRoute.extend({
           }).then(subscription => ({
             account,
             subscription
+          })).catch(() => ({
+            account,
+            subscriptionError: true
           }));
       } else {
         return { account };
@@ -64,6 +67,7 @@ export default TravisRoute.extend({
     } else {
       controller.set('model', model.account);
       controller.set('subscription', model.subscription);
+      controller.set('subscriptionError', model.subscriptionError);
     }
   }
 });

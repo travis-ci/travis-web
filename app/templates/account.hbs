@@ -6,13 +6,17 @@
   {{else}}
     {{#unless features.enterpriseVersion}}
       {{#if config.billingEndpoint}}
-        {{#if (eq subscription.status 'subscribed')}}
-          {{subscription-status-banner color="green" message="This account has an active subscription." billingLinkText="Manage your subscription!" billingUrl=billingUrl}}
+        {{#if subscriptionError}}
+          {{subscription-status-banner color="yellow" message="There was an error determining your subscription status." billingLinkText="Visit billing" billingUrl=billingUrl}}
         {{else}}
-          {{#if model.education}}
-            {{subscription-status-banner color="green" message="This account’s subscription is flagged as educational." billingLinkText="Take a look!" billingUrl=billingUrl}}
+          {{#if (eq subscription.status 'subscribed')}}
+            {{subscription-status-banner color="green" message="This account has an active subscription." billingLinkText="Manage your subscription!" billingUrl=billingUrl}}
           {{else}}
-            {{subscription-status-banner color="yellow" message="This account does not have an active subscription." billingLinkText="Sign this account up!" billingUrl=billingUrl}}
+            {{#if model.education}}
+              {{subscription-status-banner color="green" message="This account’s subscription is flagged as educational." billingLinkText="Take a look!" billingUrl=billingUrl}}
+            {{else}}
+              {{subscription-status-banner color="yellow" message="This account does not have an active subscription." billingLinkText="Sign this account up!" billingUrl=billingUrl}}
+            {{/if}}
           {{/if}}
         {{/if}}
       {{/if}}
