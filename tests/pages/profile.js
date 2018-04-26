@@ -35,6 +35,12 @@ export default create({
   name: text('.profile-header h1'),
   nameBadge: { scope: '.profile-header .badge' },
 
+  avatar: {
+    scope: '.profile-header .avatar',
+
+    src: attribute('src', 'img')
+  },
+
   subscriptionStatus: {
     scope: '.subscription-status',
     text: text('[data-test-message]')

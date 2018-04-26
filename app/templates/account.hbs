@@ -5,6 +5,7 @@
     the problem persists, please contact support.
   {{else}}
     <header class="profile-header">
+      {{user-avatar url=model.avatarUrl name=model.name size=96}}
       <h1 class="h2--grey">{{accountName}}</h1>
       {{#if model.education}}<span class='badge square grey'>Education</span>{{/if}}
     </header>

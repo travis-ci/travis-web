@@ -75,8 +75,13 @@ $profile-breakpoint: 600px;
 
 .profile-header {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
+
+  .avatar {
+    margin-right: 1rem;
+    transform: translateY(1px);
+  }
 
   .h2--grey {
     margin-bottom: 0;

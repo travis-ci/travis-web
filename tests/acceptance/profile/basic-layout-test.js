@@ -11,7 +11,8 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
     const currentUser = server.create('user', {
       name: 'User Name',
       login: 'user-login',
-      github_id: 1974
+      github_id: 1974,
+      avatar_url: 'http://example.com/jorty'
     });
     this.user = currentUser;
 
@@ -157,6 +158,7 @@ test('view repositories', function (assert) {
     assert.equal(document.title, 'User Name - Profile - Travis CI');
 
     assert.equal(profilePage.name, 'User Name');
+    assert.ok(profilePage.avatar.src.startsWith('http://example.com/jorty'), 'expected avatar URL to have the same beginning');
 
     assert.equal(profilePage.subscriptionStatus.text, 'This account has an active subscription.');
 
