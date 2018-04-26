@@ -15,9 +15,9 @@ export default TravisRoute.extend({
   },
 
   model(params) {
-    const accountCompound = this.modelFor('account');
-    // account is an Ember Data user or organization
-    if (!accountCompound.error) {
+    const account = this.modelFor('account');
+    // account is an Ember-Data model
+    if (!account.error) {
       // TODO: Make perPage property configurable
       const offset = (params.page - 1) * this.get('recordsPerPage');
       return this.store.paginated(
@@ -27,7 +27,7 @@ export default TravisRoute.extend({
           sort_by: 'name',
           limit: this.get('recordsPerPage'),
           custom: {
-            owner: accountCompound.account.get('login'),
+            owner: account.get('login'),
             type: 'byOwner',
           },
         },
@@ -37,9 +37,9 @@ export default TravisRoute.extend({
   },
 
   setupController(controller, model) {
-    const accountCompound = this.modelFor('account');
-    if (!accountCompound.error) {
-      controller.set('login', accountCompound.account.get('login'));
+    const account = this.modelFor('account');
+    if (!account.error) {
+      controller.set('login', account.get('login'));
     }
     return this._super(...arguments);
   },

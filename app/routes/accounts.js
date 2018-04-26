@@ -1,11 +1,10 @@
 import TravisRoute from 'travis/routes/basic';
-import { service } from 'ember-decorators/service';
 
 export default TravisRoute.extend({
-  @service accounts: null,
-
   model() {
-    return this.get('accounts').fetch();
+    return this.store.query('account', {
+      all: true
+    });
   },
 
   setupController(controller, model) {

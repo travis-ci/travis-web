@@ -23,12 +23,6 @@ function existingRepositoriesCollection(scope) {
 export default create({
   visit: visitable('profile/:username'),
   name: text('.profile-header h1'),
-
-  subscriptionStatus: {
-    scope: '.subscription-status',
-    text: text('[data-test-message]')
-  },
-
   filter: fillable('.profile-repositories-filter input.search'),
   noRepositoriesFoundByFilter: text('#administerable-repositories .no-results'),
 
@@ -46,6 +40,7 @@ export default create({
   },
 
   accounts: collection('.profile-aside .account', {
-    name: text('.account-name')
+    name: text('.account-name'),
+    repositoryCount: text('.account-repo-count')
   })
 });
