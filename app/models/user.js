@@ -1,28 +1,23 @@
 /* global Travis */
+import Owner from 'travis/models/owner';
+
 import ArrayProxy from '@ember/array/proxy';
 
 import { next, run, later } from '@ember/runloop';
 import { observer } from '@ember/object';
-import Model from 'ember-data/model';
 import config from 'travis/config/environment';
 import attr from 'ember-data/attr';
 import { service } from 'ember-decorators/service';
 import { computed } from 'ember-decorators/object';
 
-export default Model.extend({
+export default Owner.extend({
   @service ajax: null,
   // TODO: this totally not should be needed here
   @service sessionStorage: null,
 
-  name: attr(),
   email: attr(),
-  login: attr(),
   token: attr(),
   gravatarId: attr(),
-  isSyncing: attr('boolean'),
-  syncedAt: attr(),
-  repoCount: attr('number'),
-  avatarUrl: attr(),
 
   @computed('name', 'login')
   fullName(name, login) {
@@ -133,7 +128,7 @@ export default Model.extend({
           this.set('isSyncing', false);
           this.setWithSession('syncedAt', data.user.synced_at);
           Travis.trigger('user:synced', data.user);
-          this.store.query('account', {});
+          this.store.queryRecord('user', { current: true });
         });
       }
     });

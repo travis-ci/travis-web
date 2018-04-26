@@ -13,17 +13,14 @@ moduleForAcceptance('Acceptance | repo settings', {
     const currentUser = server.create('user', {
       name: 'User Name',
       login: 'user-login',
-      repos_count: 3
     });
 
     signInUser(currentUser);
 
     // create organization
-    server.create('account', {
+    server.create('organization', {
       name: 'Org Name',
-      type: 'organization',
       login: 'org-login',
-      repos_count: 30
     });
 
     const repository = server.create('repository', {
