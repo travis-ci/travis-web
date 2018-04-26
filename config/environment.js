@@ -125,14 +125,16 @@ module.exports = function (environment) {
       };
       ENV.userlike = true;
       ENV.beacon = true;
-      ENV.githubApps = {
-        // FIXME this should be from the environment
-        appName: 'travis-ci-staging'
-      };
       ENV.urls.legal = ENV.billingEndpoint + '/pages/legal';
       ENV.urls.imprint = ENV.billingEndpoint + '/pages/imprint';
       ENV.urls.security = ENV.billingEndpoint + '/pages/security';
       ENV.urls.terms = ENV.billingEndpoint + '/pages/terms';
+
+      if (process.env.GITHUB_APPS_APP_NAME) {
+        ENV.githubApps = {
+          appName: process.env.GITHUB_APPS_APP_NAME
+        };
+      }
     }
 
     if (process.env.API_ENDPOINT) {
