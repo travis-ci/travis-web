@@ -12,8 +12,13 @@
           {{tooltip-on-element text='This account has an active subscription'}}
         {{/if}}
       </div>
-      <h1 class="h2--grey">{{accountName}}</h1>
-      {{#if model.education}}<span class='badge square grey'>Education</span>{{/if}}
+      <div class='account-details'>
+        <h1 class="h2--grey">{{accountName}}</h1>
+        <div class='addenda'>
+          <span class='login'>@{{model.login}}</span>
+          {{#if model.education}}<span class='badge square grey'>Education</span>{{/if}}
+        </div>
+      </div>
     </header>
 
     {{#if checkSubscriptionStatus}}

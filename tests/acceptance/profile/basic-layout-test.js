@@ -158,6 +158,8 @@ test('view repositories', function (assert) {
     assert.equal(document.title, 'User Name - Profile - Travis CI');
 
     assert.equal(profilePage.name, 'User Name');
+    assert.equal(profilePage.login, '@user-login');
+
     assert.ok(profilePage.avatar.src.startsWith('http://example.com/jorty'), 'expected avatar URL to have the same beginning');
     assert.ok(profilePage.avatar.checkmark.isVisible, 'expected avatar to have a checkmark for active subscription');
 

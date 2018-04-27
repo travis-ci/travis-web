@@ -34,6 +34,7 @@ export default create({
   visit: visitable('profile/:username'),
   name: text('.profile-header h1'),
   nameBadge: { scope: '.profile-header .badge' },
+  login: text('.login'),
 
   avatar: {
     scope: '.profile-header .avatar-wrapper',

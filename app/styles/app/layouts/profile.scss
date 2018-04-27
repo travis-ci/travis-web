@@ -76,15 +76,12 @@ $profile-breakpoint: 600px;
 .profile-header {
   display: flex;
   justify-content: flex-start;
-  align-items: center;
+  align-items: flex-start;
 
   .avatar-wrapper {
     position: relative;
     margin-right: 1rem;
-
-    .avatar {
-      transform: translateY(1px);
-    }
+    margin-top: 1rem;
 
     .checkmark {
       position: absolute;
@@ -99,6 +96,15 @@ $profile-breakpoint: 600px;
   .h2--grey {
     margin-bottom: 0;
     line-heigth: 1;
+  }
+
+  .login {
+    color: $cement-grey;
+    font-size: $font-size-m;
+  }
+
+  .badge {
+    transform: translateY(-1.5px);
   }
 }
 
