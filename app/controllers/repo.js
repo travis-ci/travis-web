@@ -27,6 +27,8 @@ export default Controller.extend({
   @alias('buildsController.model') builds: null,
   @alias('jobController.job') job: null,
 
+  @alias('features.github-apps') showGitHubApps: null,
+
   config,
 
   classNames: ['repo'],
