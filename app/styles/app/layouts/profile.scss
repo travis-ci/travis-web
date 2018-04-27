@@ -471,3 +471,15 @@ header.space-between {
     background-color: $pebble-grey;
   }
 }
+
+.button--green.activate {
+  svg {
+    @extend .icon--m;
+    @include colorSVGFill(white);
+
+    width: 16px;
+    height: 16px;
+    transform: translateY(-2px);
+    padding-right: 2px;
+  }
+}

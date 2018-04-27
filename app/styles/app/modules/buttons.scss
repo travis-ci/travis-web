@@ -109,6 +109,19 @@
   color: $asphalt-grey;
 }
 
+.button--green {
+  @extend %button;
+
+  border: none;
+  color: white;
+  background-color: $turf-green;
+
+  &:hover,
+  &:active {
+    background-color: darken($turf-green, 10);
+  }
+}
+
 .inactive {
   cursor: default;
   background: $dry-cement !important;
