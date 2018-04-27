@@ -103,6 +103,10 @@
   }
 }
 
+.button--white {
+  @extend %button;
+}
+
 .inactive {
   cursor: default;
   background: $dry-cement !important;

@@ -10,9 +10,9 @@
     <div id="github-apps-repositories">
       <header class='space-between' data-test-github-apps-integration-header>
         <h2>GitHub Apps Integration</h2>
-        {{#external-link-to href=githubAppsManagementURL}}
-          <span class='inner-underline'>Manage on GitHub</span>
-          {{svg-jar 'icon-external-link' class='icon'}}
+        {{#external-link-to href=githubAppsManagementURL class='button--white migrate'}}
+          {{svg-jar 'icon-repooctocat'}}
+          Manage repositories on GitHub
         {{/external-link-to}}
       </header>
       {{#repository-filter
