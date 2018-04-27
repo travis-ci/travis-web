@@ -57,6 +57,8 @@ export default create({
   githubAppsInvitation: {
     scope: '#github-apps-invitation',
 
+    isExpanded: hasClass('expanded'),
+
     link: {
       scope: 'a',
       href: attribute('href')

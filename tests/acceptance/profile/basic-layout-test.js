@@ -257,7 +257,9 @@ test('view profile when GitHub Apps is present and no legacy repositories exist'
   profilePage.visit({ username: 'org0' });
 
   andThen(() => {
+    percySnapshot(assert);
     assert.dom('#administerable-repositories').doesNotExist();
+    assert.ok(profilePage.githubAppsInvitation.isExpanded, 'expected the invitation to be expanded in the absence of legacy repositories');
   });
 });
 
