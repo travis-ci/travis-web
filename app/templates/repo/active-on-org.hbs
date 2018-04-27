@@ -1,0 +1,19 @@
+<div data-test-active_on_org-display class="missing-notice">
+  <figure class="page-graphic">
+    {{svg-jar 'wheelbarrow'}}
+  </figure>
+
+  <h2 class="page-title">This project hasn’t been migrated</h2>
+
+  <p class="page-notice">
+    You can view this build and build history on our legacy platform travis-ci.org.<br>
+    To learn more about migrating this project to travis-ci.com, please
+    <a href='https://docs.travis-ci.com/FIXME'>read our docs<br> on open source migration</a>
+    to our new joint platform.
+  </p>
+
+  {{!FIXME what about linking to staging?}}
+  {{#external-link-to href=(concat 'https://travis-ci.org/' repo.slug) class='button button--blue migrate'}}
+    View this build
+  {{/external-link-to}}
+</div>
