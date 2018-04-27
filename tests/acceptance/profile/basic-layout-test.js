@@ -3,18 +3,18 @@ import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import profilePage from 'travis/tests/pages/profile';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { default as mockWindow, reset as resetWindow } from 'ember-window-mock';
+import Service from '@ember/service';
 
 moduleForAcceptance('Acceptance | profile/basic layout', {
   beforeEach() {
     resetWindow();
 
-    const currentUser = server.create('user', {
+    this.user = server.create('user', {
       name: 'User Name',
       login: 'user-login',
       github_id: 1974,
       avatar_url: 'http://example.com/jorty'
     });
-    this.user = currentUser;
 
     signInUser(this.user);
 
@@ -25,13 +25,13 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
     });
 
     this.userInstallation = server.create('installation', {
-      owner: currentUser,
+      owner: this.user,
       github_id: 2691
     });
-    currentUser.save();
+    this.user.save();
 
     server.create('subscription', {
-      owner: currentUser,
+      owner: this.currentUser,
       status: 'subscribed',
       valid_to: new Date()
     });
@@ -214,6 +214,39 @@ test('view profile that has education status', function (assert) {
     assert.ok(profilePage.avatar.checkmark.isVisible, 'expected avatar to have a checkmark for education subscription');
     assert.ok(profilePage.subscriptionStatus.isHidden, 'expected no subscription status banner');
   });
+});
+
+test('displays an error banner when subscription status cannot be determined', function (assert) {
+  server.get('/subscriptions', function (schema) {
+    return new Response(500, {}, {});
+  });
+
+  profilePage.visit({ username: 'user-login' });
+
+  andThen(() => {
+    assert.equal(profilePage.subscriptionStatus.text, 'There was an error determining your subscription status.');
+  });
+});
+
+test('logs an exception when there is more than one active subscription', function (assert) {
+  assert.expect(1);
+
+  server.create('subscription', {
+    owner: this.user,
+    status: 'subscribed'
+  });
+
+  let mockSentry = Service.extend({
+    logException(error) {
+      assert.equal(error.message, 'Account user-login has more than one active subscription!');
+    },
+  });
+
+  const instance = this.application.__deprecatedInstance__;
+  const registry = instance.register ? instance : instance.registry;
+  registry.register('service:raven', mockSentry);
+
+  profilePage.visit({ username: 'user-login' });
 });
 
 test('view profiles for organizations that do not and do have GitHub Apps installations', function (assert) {

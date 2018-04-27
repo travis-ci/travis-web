@@ -16,8 +16,12 @@
       {{#if model.education}}<span class='badge square grey'>Education</span>{{/if}}
     </header>
 
-    {{#if (and checkSubscriptionStatus isNotSubscribed)}}
-      {{subscription-status-banner color="yellow" message="This account does not have an active subscription." billingLinkText="Sign this account up!" billingUrl=billingUrl}}
+    {{#if checkSubscriptionStatus}}
+      {{#if subscriptionError}}
+        {{subscription-status-banner color="yellow" message="There was an error determining your subscription status." billingLinkText="Visit billing" billingUrl=billingUrl}}
+      {{else if (and checkSubscriptionStatus isNotSubscribed)}}
+        {{subscription-status-banner color="yellow" message="This account does not have an active subscription." billingLinkText="Sign this account up!" billingUrl=billingUrl}}
+      {{/if}}
     {{/if}}
 
     {{outlet}}
