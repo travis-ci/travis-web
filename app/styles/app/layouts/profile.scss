@@ -101,8 +101,23 @@ $profile-breakpoint: 600px;
     }
   }
 
-  .h2--grey {
+  h1 {
     margin-bottom: 0;
+    white-space: nowrap;
+    max-width: 9em;
+    overflow: hidden;
+    position: relative;
+
+    &:after {
+      content: "";
+
+      @include fadeOut(right, -90deg, white);
+
+      // I couldn’t get it to work without changing how it was positioned
+      right: auto;
+      left: 7em;
+    }
+
   }
 
   .login {

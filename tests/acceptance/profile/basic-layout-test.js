@@ -10,7 +10,7 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
     resetWindow();
 
     this.user = server.create('user', {
-      name: 'User Name',
+      name: 'User Name of exceeding length',
       login: 'user-login',
       github_id: 1974,
       avatar_url: 'http://example.com/jorty'
@@ -155,9 +155,9 @@ test('view repositories', function (assert) {
 
   andThen(() => {
     percySnapshot(assert);
-    assert.equal(document.title, 'User Name - Profile - Travis CI');
+    assert.equal(document.title, 'User Name of exceeding length - Profile - Travis CI');
 
-    assert.equal(profilePage.name, 'User Name');
+    assert.equal(profilePage.name, 'User Name of exceeding length');
     assert.equal(profilePage.login, '@user-login');
 
     assert.ok(profilePage.avatar.src.startsWith('http://example.com/jorty'), 'expected avatar URL to have the same beginning');
@@ -167,7 +167,7 @@ test('view repositories', function (assert) {
 
     assert.equal(profilePage.accounts.length, 12, 'expected all accounts to be listed');
 
-    assert.equal(profilePage.accounts[0].name, 'User Name');
+    assert.equal(profilePage.accounts[0].name, 'User Name of exceeding length');
     assert.equal(profilePage.accounts[1].name, 'Org Name');
 
     assert.notOk(profilePage.githubAppsInvitation.isVisible, 'expected GitHub Apps invitation not to be visible');
