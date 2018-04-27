@@ -22,13 +22,9 @@
 
     {{#unless features.enterpriseVersion}}
       {{#if config.billingEndpoint}}
-        {{#if (eq subscription.status 'subscribed')}}
-          {{subscription-status-banner color="green" message="This account has an active subscription." billingLinkText="Manage your subscription!" billingUrl=billingUrl}}
-        {{else}}
-          {{#unless model.education}}
-            {{subscription-status-banner color="yellow" message="This account does not have an active subscription." billingLinkText="Sign this account up!" billingUrl=billingUrl}}
-          {{/unless}}
-        {{/if}}
+        {{#unless (or (eq subscription.status 'subscribed') model.education)}}
+          {{subscription-status-banner color="yellow" message="This account does not have an active subscription." billingLinkText="Sign this account up!" billingUrl=billingUrl}}
+        {{/unless}}
       {{/if}}
     {{/unless}}
 

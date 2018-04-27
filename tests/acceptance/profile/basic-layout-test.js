@@ -161,7 +161,7 @@ test('view repositories', function (assert) {
     assert.ok(profilePage.avatar.src.startsWith('http://example.com/jorty'), 'expected avatar URL to have the same beginning');
     assert.ok(profilePage.avatar.checkmark.isVisible, 'expected avatar to have a checkmark for active subscription');
 
-    assert.equal(profilePage.subscriptionStatus.text, 'This account has an active subscription.');
+    assert.ok(profilePage.subscriptionStatus.isHidden, 'expected no subscription status banner');
 
     assert.equal(profilePage.accounts.length, 12, 'expected all accounts to be listed');
 
