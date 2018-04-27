@@ -5,20 +5,27 @@
     the problem persists, please contact support.
   {{else}}
     <header class="profile-header">
-      <div class='avatar-wrapper'>
-        {{user-avatar url=model.avatarUrl name=model.name size=96}}
-        {{#if (and checkSubscriptionStatus isSubscribed)}}
-          {{svg-jar 'avatar-checkmark' class='checkmark'}}
-          {{tooltip-on-element text='This account has an active subscription'}}
-        {{/if}}
-      </div>
-      <div class='account-details'>
-        <h1 class="h2--grey">{{accountName}}</h1>
-        <div class='addenda'>
-          <span class='login'>@{{model.login}}</span>
-          {{#if model.education}}<span class='badge square grey'>Education</span>{{/if}}
+      <div class='left'>
+        <div class='avatar-wrapper'>
+          {{user-avatar url=model.avatarUrl name=model.name size=96}}
+          {{#if (and checkSubscriptionStatus isSubscribed)}}
+            {{svg-jar 'avatar-checkmark' class='checkmark'}}
+            {{tooltip-on-element text='This account has an active subscription'}}
+          {{/if}}
+        </div>
+        <div class='account-details'>
+          <h1 class="h2--grey">{{accountName}}</h1>
+          <div class='addenda'>
+            <span class='login'>@{{model.login}}</span>
+            {{#if model.education}}<span class='badge square grey'>Education</span>{{/if}}
+          </div>
         </div>
       </div>
+      {{#if checkSubscriptionStatus}}
+        {{#external-link-to href=billingUrl class='button--blue manage-subscription'}}
+          Manage Subscription
+        {{/external-link-to}}
+      {{/if}}
     </header>
 
     {{#if checkSubscriptionStatus}}
