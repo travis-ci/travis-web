@@ -78,9 +78,22 @@ $profile-breakpoint: 600px;
   justify-content: flex-start;
   align-items: center;
 
-  .avatar {
+  .avatar-wrapper {
+    position: relative;
     margin-right: 1rem;
-    transform: translateY(1px);
+
+    .avatar {
+      transform: translateY(1px);
+    }
+
+    .checkmark {
+      position: absolute;
+      right: 0;
+      top: 0;
+
+      width: 10px;
+      height: 10px;
+    }
   }
 
   .h2--grey {

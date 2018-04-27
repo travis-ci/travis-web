@@ -36,9 +36,10 @@ export default create({
   nameBadge: { scope: '.profile-header .badge' },
 
   avatar: {
-    scope: '.profile-header .avatar',
+    scope: '.profile-header .avatar-wrapper',
 
-    src: attribute('src', 'img')
+    src: attribute('src', 'img'),
+    checkmark: { scope: '.checkmark' }
   },
 
   subscriptionStatus: {

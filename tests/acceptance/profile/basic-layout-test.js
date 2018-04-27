@@ -159,6 +159,7 @@ test('view repositories', function (assert) {
 
     assert.equal(profilePage.name, 'User Name');
     assert.ok(profilePage.avatar.src.startsWith('http://example.com/jorty'), 'expected avatar URL to have the same beginning');
+    assert.ok(profilePage.avatar.checkmark.isVisible, 'expected avatar to have a checkmark for active subscription');
 
     assert.equal(profilePage.subscriptionStatus.text, 'This account has an active subscription.');
 
@@ -196,6 +197,7 @@ test('view profile that has an expired subscription', function (assert) {
   profilePage.visit({ username: 'org-login' });
 
   andThen(() => {
+    assert.ok(profilePage.avatar.checkmark.isHidden, 'expected avatar to not have a checkmark for active subscription');
     assert.equal(profilePage.subscriptionStatus.text, 'This account does not have an active subscription.');
   });
 });
@@ -209,6 +211,7 @@ test('view profile that has education status', function (assert) {
   andThen(() => {
     percySnapshot(assert);
     assert.equal(profilePage.nameBadge.text, 'Education');
+    assert.ok(profilePage.avatar.checkmark.isVisible, 'expected avatar to have a checkmark for education subscription');
     assert.ok(profilePage.subscriptionStatus.isHidden, 'expected no subscription status banner');
   });
 });
