@@ -94,6 +94,19 @@
       transform: translateY(-4px);
     }
   }
+
+  &.subscription-status {
+    padding: 0.75em 1em;
+    font-size: $font-size-sm;
+
+    justify-content: flex-start;
+    align-items: center;
+
+    .icon {
+      margin-right: 8px;
+      transform: translateY(1px);
+    }
+  }
 }
 
 .notice-banner--green {
