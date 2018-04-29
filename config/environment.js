@@ -60,7 +60,7 @@ module.exports = function (environment) {
       fetchRecordsForPusherUpdatesThrottle: 1000,
       repositoryFilteringDebounceRate: 200,
       syncingPolling: 3000,
-      githubAppsInstallationPolling: 3000,
+      githubAppsInstallationPolling: 4000,
     },
     githubOrgsOauthAccessSettingsUrl: 'https://github.com/settings/connections/applications/f244293c729d5066cf27',
     apiTraceEndpoint: 'https://papertrailapp.com/systems/travis-org-api-production/events?q=program%3Aapp%2Fweb%20log-tracing%20',
