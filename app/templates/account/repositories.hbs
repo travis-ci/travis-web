@@ -17,7 +17,7 @@
       </header>
       {{#repository-filter
         repositories=model.notLockedGithubAppsRepositories
-        queryFunction=(action 'filterQuery') as |filter| }}
+        queryFunction=(action 'filterQueryGitHubApps') as |filter| }}
         {{#if model.notLockedGithubAppsRepositories.length}}
           {{#component filter.form as |form|}}
             {{#if features.repositoryFiltering}}

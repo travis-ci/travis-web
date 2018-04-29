@@ -50,9 +50,32 @@ export default Controller.extend({
 
   @action
   filterQuery(query) {
+    let params = {
+      name_filter: query,
+      'repository.managed_by_installation': false,
+      sort_by: 'name_filter:desc',
+      limit: 10,
+      custom: {
+        owner: this.get('login'),
+        type: 'byOwner',
+      },
+    };
+
+    if (this.get('showGitHubApps')) {
+      params.active = true;
+    }
+
+    return this.get('store')
+      .query('repo', params);
+  },
+
+  @action
+  filterQueryGitHubApps(query) {
     return this.get('store')
       .query('repo', {
         name_filter: query,
+        'repository.managed_by_installation': true,
+        'repository.active_on_org': false,
         sort_by: 'name_filter:desc',
         limit: 10,
         custom: {
