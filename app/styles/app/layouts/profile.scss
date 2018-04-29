@@ -87,18 +87,8 @@ $profile-breakpoint: 600px;
   }
 
   .avatar-wrapper {
-    position: relative;
     margin-right: 1rem;
     margin-top: 1rem;
-
-    .checkmark {
-      position: absolute;
-      right: 0;
-      top: 0;
-
-      width: 10px;
-      height: 10px;
-    }
   }
 
   h1 {

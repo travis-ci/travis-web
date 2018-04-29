@@ -94,6 +94,11 @@ export default create({
 
   accounts: collection('.profile-aside .account', {
     name: text('.account-name'),
-    visit: clickable('.account-name')
+    visit: clickable('.account-name'),
+
+    avatar: {
+      scope: '.avatar-wrapper',
+      checkmark: { scope: '.checkmark' }
+    },
   }),
 });

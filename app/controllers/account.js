@@ -39,7 +39,7 @@ export default Controller.extend({
     return !enterprise && !!billingEndpoint;
   },
 
-  @computed('subscription.status', 'model.education')
+  @computed('model.subscription.status', 'model.education')
   isSubscribed(status, education) {
     return status === 'subscribed' || education;
   },

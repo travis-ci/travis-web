@@ -63,12 +63,19 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
 
     // Pad with extra organisations to force an extra API response page
     for (let orgIndex = 0; orgIndex < 10; orgIndex++) {
-      server.create('organization', {
+      let organization = server.create('organization', {
         name: `Generic org ${orgIndex}`,
         type: 'organization',
         login: `org${orgIndex}`,
         github_id: 1000 + orgIndex
       });
+
+      if (orgIndex === 9) {
+        server.create('subscription', {
+          owner: organization,
+          status: 'subscribed'
+        });
+      }
     }
 
     // create active repository
@@ -168,7 +175,12 @@ test('view repositories', function (assert) {
     assert.equal(profilePage.accounts.length, 12, 'expected all accounts to be listed');
 
     assert.equal(profilePage.accounts[0].name, 'User Name of exceeding length');
+    assert.ok(profilePage.accounts[0].avatar.checkmark.isVisible, 'expected a subscription checkmark for user account');
+
     assert.equal(profilePage.accounts[1].name, 'Org Name');
+    assert.ok(profilePage.accounts[1].avatar.checkmark.isHidden, 'expected no subscription checkmark for org account');
+
+    assert.ok(profilePage.accounts[11].avatar.checkmark.isVisible, 'expected a subscription checkmark for the last org account');
 
     assert.notOk(profilePage.githubAppsInvitation.isVisible, 'expected GitHub Apps invitation not to be visible');
 
