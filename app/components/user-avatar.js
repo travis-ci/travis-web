@@ -50,5 +50,10 @@ export default Component.extend({
   @computed('showSubscriptionStatus', 'account.subscription', 'account.education')
   showSubscriptionCheckmark(showStatus, subscription, education) {
     return showStatus && (subscription || education);
+  },
+
+  @computed('account.education')
+  subscriptionTooltipText(education) {
+    return `This account has an ${education ? 'education' : 'active'} subscription`;
   }
 });
