@@ -35,6 +35,10 @@
     width: 600px;
     margin: auto;
   }
+
+  .centered & {
+    text-align: center;
+  }
 }
 
 .content-button {
