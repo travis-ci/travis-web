@@ -194,6 +194,7 @@ test('view repositories', function (assert) {
     // FIXME this is coming back as the org-login installation, 1962…???
     // assert.equal(profilePage.manageGithubAppsLink.href, `https://github.com/settings/installations/${this.userInstallation.github_id}`);
     assert.equal(profilePage.githubAppsRepositories.length, 3, 'expected three GitHub Apps-managed repositories');
+    assert.ok(profilePage.migrateGithubAppsButton.isHidden, 'expected migration button to be hidden when owner has an installation');
 
     assert.equal(profilePage.notLockedGithubAppsRepositories.length, 2, 'expected two not-locked GitHub Apps-managed repositories');
     assert.equal(profilePage.notLockedGithubAppsRepositories[0].name, 'github-apps-private-repository');
@@ -321,7 +322,7 @@ test('clicking the button to migrate to GitHub Apps sends the IDs of all legacy 
     server.create('repository', {
       name: `extra-repository-${index}`,
       owner: {
-        login: 'user-login',
+        login: 'org0',
       },
       active: true,
       permissions: {
@@ -333,7 +334,7 @@ test('clicking the button to migrate to GitHub Apps sends the IDs of all legacy 
     server.create('repository', {
       name: `extra-inactive-repository-${index}`,
       owner: {
-        login: 'user-login',
+        login: 'org0',
       },
       active: false,
       permissions: {
@@ -345,12 +346,12 @@ test('clicking the button to migrate to GitHub Apps sends the IDs of all legacy 
     repositoryIds.push(10000 + index);
   }
 
-  profilePage.visit({ username: 'user-login' });
+  profilePage.visit({ username: 'org0' });
   profilePage.migrateGithubAppsButton.click();
 
   andThen(() => {
     let idParams = repositoryIds.map(id => `repository_ids[]=${id}`).join('&');
     assert.equal(mockWindow.location.href,
-      `https://github.com/apps/travis-ci-testing/installations/new/permissions?suggested_target_id=${this.user.github_id}&${idParams}`);
+      `https://github.com/apps/travis-ci-testing/installations/new/permissions?suggested_target_id=1000&${idParams}`);
   });
 });
