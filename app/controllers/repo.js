@@ -29,6 +29,11 @@ export default Controller.extend({
 
   @alias('features.github-apps') showGitHubApps: null,
 
+  @computed('showGitHubApps', 'repo.private', 'currentUser')
+  showGitHubAppsCTA(showGitHubApps, isPrivate, currentUser) {
+    return showGitHubApps && !isPrivate && !currentUser;
+  },
+
   config,
 
   classNames: ['repo'],

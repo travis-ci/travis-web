@@ -1,6 +1,6 @@
 <div class="wrapper {{if auth.signedOut 'centered'}} {{if features.dashboard 'centered'}}">
 
-  {{#if (and showGitHubApps (not repo.private))}}
+  {{#if showGitHubAppsCTA}}
     {{#top-bar}}
       <div class='cta'>
         <p class='row'>
