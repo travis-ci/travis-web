@@ -5,7 +5,7 @@ import config from 'travis/config/environment';
 
 import window from 'ember-window-mock';
 import { task } from 'ember-concurrency';
-import fetchAll from 'travis/utils/fetch-all';
+// import fetchAll from 'travis/utils/fetch-all';
 
 import { alias } from 'ember-decorators/object/computed';
 
