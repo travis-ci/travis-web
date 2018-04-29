@@ -89,7 +89,8 @@ export default Controller.extend({
     // FIXME this is adapted from routes/account/repositories
 
     yield window.location.href =
-      `https://github.com/apps/${this.get('githubAppsAppName')}/installations/new/permissions`;
+      `https://github.com/apps/${this.get('githubAppsAppName')}/installations/new/permissions` +
+      `?target_id=${this.get('account.githubId')}`;
 
     // let queryParams = {
     //   sort_by: 'name',
