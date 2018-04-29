@@ -267,9 +267,9 @@ export default function () {
       repositories.models = repositories.models.sortBy(queryParams.sort_by);
     }
 
-    if (queryParams && queryParams.slug_filter) {
+    if (queryParams && queryParams.name_filter) {
       repositories.models = repositories.models.filter((repo) => {
-        return fuzzysort.single(queryParams.slug_filter, repo.slug);
+        return fuzzysort.single(queryParams.name_filter, repo.name);
       });
     }
 

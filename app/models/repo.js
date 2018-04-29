@@ -198,8 +198,8 @@ Repo.reopenClass({
 
   search(store, query) {
     return store.query('repo', {
-      slug_filter: query,
-      sort_by: 'slug_filter:desc',
+      name_filter: query,
+      sort_by: 'name_filter:desc',
       limit: 10
     });
   },
