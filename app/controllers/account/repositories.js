@@ -88,29 +88,34 @@ export default Controller.extend({
   migrate: task(function* () {
     // FIXME this is adapted from routes/account/repositories
 
-    let queryParams = {
-      sort_by: 'name',
-      'repository.managed_by_installation': false,
-      'repository.active': true,
-      custom: {
-        owner: this.get('account.login'),
-        type: 'byOwner',
-      },
-    };
+    yield window.location.href =
+      `https://github.com/apps/${this.get('githubAppsAppName')}/installations/new/permissions`;
 
-    let repositories = yield this.store.paginated(
-      'repo',
-      queryParams,
-      { live: false }
-    );
-
-    yield fetchAll(this.get('store'), 'repo', queryParams);
-
-    let githubQueryParams =
-      repositories.map(repo => `repository_ids[]=${repo.get('githubId')}`).join('&');
-
-    window.location.href =
-      `https://github.com/apps/${this.get('githubAppsAppName')}/installations/new/permissions` +
-      `?suggested_target_id=${this.get('account.githubId')}&${githubQueryParams}`;
+    // let queryParams = {
+    //   sort_by: 'name',
+    //   'repository.managed_by_installation': false,
+    //   'repository.active': true,
+    //   custom: {
+    //     owner: this.get('account.login'),
+    //     type: 'byOwner',
+    //   },
+    // };
+    //
+    // let repositories = yield this.store.paginated(
+    //   'repo',
+    //   queryParams,
+    //   { live: false }
+    // );
+    //
+    // yield fetchAll(this.get('store'), 'repo', queryParams);
+    //
+    // let githubQueryParams =
+    //   repositories.map(repo => `repository_ids[]=${repo.get('githubId')}`).join('&');
+    //
+    //
+    //
+    // window.location.href =
+    //   `https://github.com/apps/${this.get('githubAppsAppName')}/installations/new/permissions` +
+    //   `?suggested_target_id=${this.get('account.githubId')}&${githubQueryParams}`;
   })
 });

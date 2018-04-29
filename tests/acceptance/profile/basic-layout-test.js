@@ -350,8 +350,9 @@ test('clicking the button to migrate to GitHub Apps sends the IDs of all legacy 
   profilePage.migrateGithubAppsButton.click();
 
   andThen(() => {
-    let idParams = repositoryIds.map(id => `repository_ids[]=${id}`).join('&');
-    assert.equal(mockWindow.location.href,
-      `https://github.com/apps/travis-ci-testing/installations/new/permissions?suggested_target_id=1000&${idParams}`);
+    // let idParams = repositoryIds.map(id => `repository_ids[]=${id}`).join('&');
+    // assert.equal(mockWindow.location.href,
+    //   `https://github.com/apps/travis-ci-testing/installations/new/permissions?suggested_target_id=1000&${idParams}`);
+    assert.equal(mockWindow.location.href, 'https://github.com/apps/travis-ci-testing/installations/new/permissions');
   });
 });
