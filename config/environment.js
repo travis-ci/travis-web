@@ -82,7 +82,7 @@ module.exports = function (environment) {
     'github-apps': false,
   };
 
-  const { TRAVIS_PRO, TRAVIS_ENTERPRISE } = process.env;
+  const { TRAVIS_PRO, TRAVIS_ENTERPRISE, PUSHER_KEY_OVERRIDE } = process.env;
 
   if (TRAVIS_PRO) {
     ENV.featureFlags['pro-version'] = true;
@@ -93,6 +93,11 @@ module.exports = function (environment) {
   if (TRAVIS_ENTERPRISE) {
     ENV.featureFlags['enterprise-version'] = true;
     ENV.enterprise = true;
+  }
+
+  // FIXME this is a hack because I can’t change the waiter deployment!
+  if (PUSHER_KEY_OVERRIDE) {
+    ENV.pusher.key = PUSHER_KEY_OVERRIDE;
   }
 
   ENV.pagination = {
@@ -115,7 +120,6 @@ module.exports = function (environment) {
       //       we could just remove it from ruby process and rely
       //       on things set here, but I haven't tested that yet.
       ENV.apiEndpoint = 'https://api.travis-ci.com';
-      ENV.pusher.key = '59236bc0716a551eab40';
       ENV.pusher.channelPrefix = 'private-';
       ENV.pagesEndpoint = 'https://billing.travis-ci.com';
       ENV.billingEndpoint = 'https://billing.travis-ci.com';
