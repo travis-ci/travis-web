@@ -45,11 +45,11 @@ export default Component.extend({
     this.set('filteredRepositories', repositories);
   }).restartable(),
 
-  computeSlug(slug, isFiltering, query) {
+  computeName(name, isFiltering, query) {
     if (isFiltering) {
-      return htmlSafe(fuzzyMatch(slug, query));
+      return htmlSafe(fuzzyMatch(name, query));
     } else {
-      return slug;
+      return name;
     }
   },
 });

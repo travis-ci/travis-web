@@ -38,7 +38,7 @@
               {{#each filter.repositories as |repository|}}
                 {{github-apps-repository
                   repository=repository
-                  slug=(compute filter.computeSlug repository.slug filter.isFiltering filter.query)}}
+                  name=(compute filter.computeName repository.name filter.isFiltering filter.query)}}
               {{else}}
                 {{#if filter.isFiltering}}
                   <li class="no-results">Sorry, no results found.</li>
@@ -65,7 +65,7 @@
           </p>
           <ul class="profile-repositorylist">
             {{#each model.lockedGithubAppsRepositories as |repository|}}
-              {{github-apps-repository repository=repository slug=repository.slug}}
+              {{github-apps-repository repository=repository name=repository.name}}
             {{/each}}
           </ul>
         </div>
@@ -119,7 +119,7 @@
           {{#each filter.repositories as |repository|}}
             {{repository-status-toggle
             repository=repository
-            slug=(compute filter.computeSlug repository.slug filter.isFiltering filter.query)
+            name=(compute filter.computeName repository.name filter.isFiltering filter.query)
             }}
           {{else}}
             {{#if filter.isFiltering}}

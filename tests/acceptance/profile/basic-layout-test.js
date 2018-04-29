@@ -186,9 +186,9 @@ test('view repositories', function (assert) {
 
     assert.equal(profilePage.administerableRepositories.length, 2, 'expected two classic repositories, with inactive repositories hidden');
 
-    assert.equal(profilePage.administerableRepositories[0].name, 'user-login/other-repository-name');
+    assert.equal(profilePage.administerableRepositories[0].name, 'other-repository-name');
     assert.ok(profilePage.administerableRepositories[0].isDisabled, 'expected disabled repository to be disabled in UI');
-    assert.equal(profilePage.administerableRepositories[1].name, 'user-login/repository-name');
+    assert.equal(profilePage.administerableRepositories[1].name, 'repository-name');
     assert.ok(profilePage.administerableRepositories[1].isActive, 'expected active repository to appear active');
 
     // FIXME this is coming back as the org-login installation, 1962…???
@@ -196,13 +196,13 @@ test('view repositories', function (assert) {
     assert.equal(profilePage.githubAppsRepositories.length, 3, 'expected three GitHub Apps-managed repositories');
 
     assert.equal(profilePage.notLockedGithubAppsRepositories.length, 2, 'expected two not-locked GitHub Apps-managed repositories');
-    assert.equal(profilePage.notLockedGithubAppsRepositories[0].name, 'user-login/github-apps-private-repository');
+    assert.equal(profilePage.notLockedGithubAppsRepositories[0].name, 'github-apps-private-repository');
     assert.ok(profilePage.notLockedGithubAppsRepositories[0].isPrivate);
-    assert.equal(profilePage.notLockedGithubAppsRepositories[1].name, 'user-login/github-apps-public-repository');
+    assert.equal(profilePage.notLockedGithubAppsRepositories[1].name, 'github-apps-public-repository');
     assert.ok(profilePage.notLockedGithubAppsRepositories[1].isPublic);
 
     assert.equal(profilePage.lockedGithubAppsRepositories.length, 1, 'expected one locked GitHub Apps-managed repository');
-    assert.equal(profilePage.lockedGithubAppsRepositories[0].name, 'user-login/github-apps-locked-repository');
+    assert.equal(profilePage.lockedGithubAppsRepositories[0].name, 'github-apps-locked-repository');
   });
 });
 
@@ -292,9 +292,9 @@ test('view profiles when GitHub Apps is not present', function (assert) {
   andThen(() => {
     assert.equal(profilePage.administerableRepositories.length, 3, 'expected inactive repositories to also show');
 
-    assert.equal(profilePage.administerableRepositories[0].name, 'user-login/other-repository-name');
+    assert.equal(profilePage.administerableRepositories[0].name, 'other-repository-name');
     assert.ok(profilePage.administerableRepositories[0].isDisabled, 'expected disabled repository to be disabled in UI');
-    assert.equal(profilePage.administerableRepositories[2].name, 'user-login/yet-another-repository-name');
+    assert.equal(profilePage.administerableRepositories[2].name, 'yet-another-repository-name');
     assert.notOk(profilePage.administerableRepositories[2].isActive, 'expected inactive repository to appear inactive');
   });
 });
