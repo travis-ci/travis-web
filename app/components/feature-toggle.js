@@ -6,6 +6,7 @@ import { computed } from 'ember-decorators/object';
 export default Component.extend({
   @service features: null,
   @service flashes: null,
+  @service raven: null,
   @service storage: null,
 
   tagName: 'button',
@@ -27,6 +28,7 @@ export default Component.extend({
         this.applyFeatureState(feature);
       });
     } catch (e) {
+      this.get('raven').logException(e);
       this.get('flashes').error('There was an error while saving your settings. Please try again.');
     }
   }).drop(),
