@@ -40,10 +40,15 @@
 .auth-button {
   @extend %button;
 
-  height: 36px;
-  color: #fff;
+  height: 32px;
+  width: 166px;
+  color: #2EB459;
+  font-size: 16px;
+  font-weight: 400;
+  border: 1px solid #2EB459;
+  border-radius: 2px;
+  padding: 9px 19px;
   line-height: 0.5;
-  background-color: $turf-green;
 
   .label-align {
     line-height: 1.4;
