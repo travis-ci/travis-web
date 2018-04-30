@@ -398,8 +398,13 @@ header.legacy-services-integration {
   }
 
   &.expanded {
+    h2 {
+      font-size: $font-size-xl;
+      margin-top: 0.5em;
+    }
+
     p {
-      font-size: $font-size-m;
+      font-size: $font-size-ml;
     }
 
     .button {
