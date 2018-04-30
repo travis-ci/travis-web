@@ -371,10 +371,6 @@ header.legacy-services-integration {
   box-shadow: 0 0 15px 3px $pebble-grey;
   padding: 0.1em 1.25em 1.25em 1.25em;
 
-  .hidden-unless-expanded {
-    display: none;
-  }
-
   // FIXME this is copied from above!
   .button {
     height: 2.6rem;
@@ -409,10 +405,6 @@ header.legacy-services-integration {
 
     .button {
       margin-top: 1em;
-    }
-
-    .hidden-unless-expanded {
-      display: block;
     }
   }
 
