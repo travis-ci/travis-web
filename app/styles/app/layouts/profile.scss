@@ -366,8 +366,8 @@ header.legacy-services-integration {
 }
 
 #github-apps-invitation {
-  @include travisBorder;
-  padding: 0 1.25em 1.25em 1.25em;
+  box-shadow: 0 0 15px 3px $pebble-grey;
+  padding: 0.1em 1.25em 1.25em 1.25em;
 
   .hidden-unless-expanded {
     display: none;
@@ -396,8 +396,6 @@ header.legacy-services-integration {
   }
 
   &.expanded {
-    box-shadow: 0 0 15px 3px $pebble-grey;
-
     p {
       font-size: $font-size-m;
     }
