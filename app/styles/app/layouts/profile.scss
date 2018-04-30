@@ -409,6 +409,10 @@ header.legacy-services-integration {
       display: block;
     }
   }
+
+  & + .legacy-services-integration {
+    margin-top: 1em;
+  }
 }
 
 #github-apps-migrate-loading span {
