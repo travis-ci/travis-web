@@ -207,7 +207,6 @@ test('view repositories', function (assert) {
   });
 });
 
-
 test('view profile that has an expired subscription', function (assert) {
   profilePage.visit({ username: 'org-login' });
 
