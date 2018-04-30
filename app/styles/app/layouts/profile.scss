@@ -153,10 +153,11 @@ $profile-breakpoint: 600px;
   align-items: center;
   background-color: white;
   border: 1px solid $pebble-grey;
-  font-size: 10px;
+  font-size: $font-size-s;
   color: $asphalt-grey;
   padding: 0.3rem 0.4rem;
   margin: 0.3rem 0;
+  transform: translateY(1px);
 
   .icon {
     width: 12px;
