@@ -52,6 +52,14 @@ export default function () {
     return { accounts: users.concat(accounts) };
   });
 
+  this.get('/orgs', function (schema) {
+    return schema.organizations.all();
+  });
+
+  this.get('/user', function (schema) {
+    return this.serialize(schema.users.first(), 'v3');
+  });
+
   this.get('/users/:id', function ({ users }, request) {
     return this.serialize(users.find(request.params.id), 'v2');
   });
@@ -81,6 +89,8 @@ export default function () {
       return {};
     }
   });
+
+  this.get('/subscriptions');
 
   this.get('/broadcasts', schema => {
     return schema.broadcasts.all();
