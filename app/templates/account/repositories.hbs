@@ -10,10 +10,10 @@
     <div id="github-apps-repositories">
       <header class='space-between' data-test-github-apps-integration-header>
         <h2>GitHub Apps Integration</h2>
-        {{!-- {{#external-link-to href=githubAppsManagementURL class='button--white migrate'}}
+        {{#external-link-to href=githubAppsManagementURL class='button--white migrate'}}
           {{svg-jar 'icon-repooctocat'}}
           Manage repositories on GitHub
-        {{/external-link-to}} --}}
+        {{/external-link-to}}
       </header>
       {{#repository-filter
         repositories=model.notLockedGithubAppsRepositories
@@ -91,14 +91,14 @@
   <header class='legacy-services-integration'>
     <h2>Legacy Services Integration <div class="badge deprecated square">Deprecated</div></h2>
     {{#unless hasGitHubAppsInstallation}}
-      <button class='button' type='button' onclick={{perform migrate}} data-test-migrate-github-apps>
+      {{!-- <button class='button' type='button' onclick={{perform migrate}} data-test-migrate-github-apps>
         {{#if migrate.isRunning}}
           {{loading-indicator id="github-apps-migrate-loading" class="loading-indicator--white"}}
         {{else}}
           {{svg-jar 'icon-migrate' class='icon'}}
         {{/if}}
         Migrate to GitHub Apps
-      </button>
+      </button> --}}
     {{/unless}}
   </header>
   {{#repository-filter
