@@ -43,11 +43,6 @@ test('header layout when authenticated', function (assert) {
     assert.equal(proHeader.navDropdowns[0].childLinks[1].title, 'Read Our Docs', 'Shows docs link in Help dropdown');
     assert.equal(proHeader.navDropdowns[0].childLinks[2].title, 'Changelog', 'Shows Changelog link in Help dropdown');
 
-    assert.equal(proHeader.navDropdowns[1].title, 'Legal', 'Shows Legal dropdown');
-    assert.equal(proHeader.navDropdowns[1].childLinks[0].title, 'Imprint', 'Shows Imprint link in Legal dropdown');
-    assert.equal(proHeader.navDropdowns[1].childLinks[1].title, 'Security', 'Shows Security link in Legal dropdown');
-    assert.equal(proHeader.navDropdowns[1].childLinks[2].title, 'Terms', 'Shows Terms link in Legal dropdown');
-
     assert.ok(proHeader.profileLinkPresent, 'Pro header shows profile links');
   });
 });
