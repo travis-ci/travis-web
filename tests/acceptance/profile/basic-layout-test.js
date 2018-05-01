@@ -1,4 +1,4 @@
-import { skip, test } from 'qunit';
+import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import profilePage from 'travis/tests/pages/profile';
 import signInUser from 'travis/tests/helpers/sign-in-user';
@@ -310,7 +310,7 @@ test('view profile when GitHub Apps is present and no legacy repositories exist'
   });
 });
 
-skip('clicking the button to migrate to GitHub Apps sends the IDs of all legacy active repositories', function (assert) {
+test('clicking the button to migrate to GitHub Apps sends the IDs of all legacy active repositories', function (assert) {
   withFeature('github-apps');
 
   // FIXME not sure why the first repository isn’t being included in the query parameters
