@@ -89,7 +89,12 @@
 
 {{#if (or sortedRepositories (not showGitHubApps))}}
   <header class='legacy-services-integration'>
-    <h2>Legacy Services Integration <div class="badge deprecated square">Deprecated</div></h2>
+    <h2>
+      Legacy Services Integration
+      {{#external-link-to href='https://docs.travis-ci.com/FIXME' class='badge deprecated square' title='FIXME'}}
+        Deprecated
+      {{/external-link-to}}
+    </h2>
     {{#unless hasGitHubAppsInstallation}}
       <button class='button' type='button' onclick={{perform migrate}} data-test-migrate-github-apps>
         {{#if migrate.isRunning}}
