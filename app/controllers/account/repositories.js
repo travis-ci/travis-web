@@ -5,7 +5,7 @@ import config from 'travis/config/environment';
 
 import window from 'ember-window-mock';
 import { task } from 'ember-concurrency';
-// import fetchAll from 'travis/utils/fetch-all';
+import fetchAll from 'travis/utils/fetch-all';
 
 import { alias } from 'ember-decorators/object/computed';
 
@@ -88,35 +88,29 @@ export default Controller.extend({
   migrate: task(function* () {
     // FIXME this is adapted from routes/account/repositories
 
-    yield window.location.href =
-      `https://github.com/apps/${this.get('githubAppsAppName')}/installations/new/permissions` +
-      `?suggested_target_id=${this.get('account.githubId')}`;
+    let queryParams = {
+      sort_by: 'name',
+      'repository.managed_by_installation': false,
+      'repository.active': true,
+      custom: {
+        owner: this.get('account.login'),
+        type: 'byOwner',
+      },
+    };
 
-    // let queryParams = {
-    //   sort_by: 'name',
-    //   'repository.managed_by_installation': false,
-    //   'repository.active': true,
-    //   custom: {
-    //     owner: this.get('account.login'),
-    //     type: 'byOwner',
-    //   },
-    // };
-    //
-    // let repositories = yield this.store.paginated(
-    //   'repo',
-    //   queryParams,
-    //   { live: false }
-    // );
-    //
-    // yield fetchAll(this.get('store'), 'repo', queryParams);
-    //
-    // let githubQueryParams =
-    //   repositories.map(repo => `repository_ids[]=${repo.get('githubId')}`).join('&');
-    //
-    //
-    //
-    // window.location.href =
-    //   `https://github.com/apps/${this.get('githubAppsAppName')}/installations/new/permissions` +
-    //   `?suggested_target_id=${this.get('account.githubId')}&${githubQueryParams}`;
+    let repositories = yield this.store.paginated(
+      'repo',
+      queryParams,
+      { live: false }
+    );
+
+    yield fetchAll(this.get('store'), 'repo', queryParams);
+
+    let githubQueryParams =
+      repositories.map(repo => `repository_ids[]=${repo.get('githubId')}`).join('&');
+
+    window.location.href =
+      `https://github.com/apps/${this.get('githubAppsAppName')}/installations/new/permissions` +
+      `?suggested_target_id=${this.get('account.githubId')}&${githubQueryParams}`;
   })
 });
