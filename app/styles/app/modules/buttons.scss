@@ -71,11 +71,6 @@
     margin: 0 0 0 4px;
     vertical-align: top;
   }
-
-  &:hover,
-  &:active {
-    background-color: darken($turf-green, 10);
-  }
 }
 
 .auth-button--white {

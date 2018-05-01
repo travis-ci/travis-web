@@ -45,10 +45,10 @@ $nav-line-height: 35px;
   }
 
   .profile {
-    float: right;
     line-height: $top-height;
 
     @media #{$medium-up} {
+      float: right;
       margin-right: 0;
 
       > a {
