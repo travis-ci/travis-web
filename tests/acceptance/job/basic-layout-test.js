@@ -51,7 +51,7 @@ test('visiting job-view', function (assert) {
 
     assert.equal(jobPage.log, 'Hello log');
     assert.notOk(jobPage.hasTruncatedLog);
-    assert.equal(jobPage.rawLogUrl, `https://api.travis-ci.org/v3/job/${job.id}/log.txt`);
+    assert.equal(jobPage.rawLogUrl, `${config.apiEndpoint}/v3/job/${job.id}/log.txt`);
   });
 });
 
