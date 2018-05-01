@@ -79,10 +79,26 @@
       <h2>GitHub Apps Integration</h2>
       <p>Activate the GitHub Apps integration to start testing and deploying on Travis CI.</p>
       <p>The GitHub Apps integration supports both private and open source repositories, while providing enhanced security when interacting with GitHub.</p>
-      {{#external-link-to href=githubAppsActivationURL class='button--green activate'}}
-        {{svg-jar 'icon-repooctocat'}}
-        Activate GitHub Apps Integration
-      {{/external-link-to}}
+      {{#if canMigrate}}
+        <button class='button--green migrate-or-activate' type='button' onclick={{perform migrate}} data-test-migrate-github-apps>
+          {{#if migrate.isRunning}}
+            {{loading-indicator class="loading-indicator--white migrate"}}
+          {{else}}
+            {{svg-jar 'icon-repooctocat' class='icon--github'}}
+          {{/if}}
+          Activate & Migrate
+        </button>
+        <p>We will pass to GitHub the repositories that should be included in the activation list for the installation.</p>
+      {{else}}
+        {{#external-link-to href=githubAppsActivationURL class='button--green migrate-or-activate'}}
+          {{svg-jar 'icon-repooctocat' class='icon--github'}}
+          Activate
+        {{/external-link-to}}
+        <p>
+          We are only able to migrate accounts that have 20 or fewer repositories using the Legacy Services Integration.
+          Please refer to our documentation on how to migrate your account.
+        </p>
+      {{/if}}
     </div>
   {{/if}}
 {{/if}}
@@ -98,7 +114,7 @@
     {{#if canMigrate}}
       <button class='button' type='button' onclick={{perform migrate}} data-test-migrate-github-apps>
         {{#if migrate.isRunning}}
-          {{loading-indicator id="github-apps-migrate-loading" class="loading-indicator--white"}}
+          {{loading-indicator class="loading-indicator--white migrate"}}
         {{else}}
           {{svg-jar 'icon-migrate' class='icon'}}
         {{/if}}

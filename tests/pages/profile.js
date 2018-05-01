@@ -63,7 +63,9 @@ export default create({
     link: {
       scope: 'a',
       href: attribute('href')
-    }
+    },
+
+    migrateButton: { scope: '[data-test-migrate-github-apps] '},
   },
 
   manageGithubAppsLink: {
@@ -71,7 +73,7 @@ export default create({
     href: attribute('href')
   },
 
-  migrateGithubAppsButton: { scope: '[data-test-migrate-github-apps]' },
+  migrateGithubAppsButton: { scope: '.legacy-services-integration [data-test-migrate-github-apps]' },
 
   githubAppsRepositories: githubAppsRepositoryCollection('#github-apps-repositories'),
 

@@ -269,7 +269,7 @@ test('view profiles for organizations that do not and do have GitHub Apps instal
 
   andThen(function () {
     assert.ok(profilePage.githubAppsInvitation.isVisible, 'expected GitHub Apps invitation to be visible');
-    assert.equal(profilePage.githubAppsInvitation.link.href, 'https://github.com/apps/travis-ci-testing/installations/new/permissions?suggested_target_id=1000');
+    assert.ok(profilePage.githubAppsInvitation.migrateButton.isVisible, 'expected the invitation to have a migrate button');
   });
 
   profilePage.visit({ username: 'org-login' });
@@ -346,6 +346,11 @@ test('clicking the button to migrate to GitHub Apps sends the IDs of all legacy 
   }
 
   profilePage.visit({ username: 'org0' });
+
+  andThen(() => {
+    assert.ok(profilePage.githubAppsInvitation.migrateButton.isVisible, 'expected the invitation to have a migrate button');
+  });
+
   profilePage.migrateGithubAppsButton.click();
 
   andThen(() => {
@@ -373,6 +378,6 @@ test('the migration button is not present when the owner has over 20 active lega
   profilePage.visit({ username: 'org0' });
 
   andThen(() => {
-    assert.ok(profilePage.migrateGithubAppsButton.isHidden, 'expected migration button to be hidden when owner has an installation');
+    assert.ok(profilePage.migrateGithubAppsButton.isHidden, 'expected migration button to be hidden when owner has too many repositories');
   });
 });

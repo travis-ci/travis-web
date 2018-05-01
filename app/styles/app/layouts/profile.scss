@@ -369,7 +369,7 @@ header.legacy-services-integration {
 
 #github-apps-invitation {
   box-shadow: 0 0 15px 3px $pebble-grey;
-  padding: 0.1em 1.25em 1.25em 1.25em;
+  padding: 0.1em 1.25em .2em 1.25em;
 
   // FIXME this is copied from above!
   .button {
@@ -413,7 +413,7 @@ header.legacy-services-integration {
   }
 }
 
-#github-apps-migrate-loading span {
+.loading-indicator--white.migrate span {
   padding-right: 5px;
   vertical-align: bottom;
 }
@@ -512,17 +512,17 @@ header.space-between {
   }
 }
 
-.button--green.activate {
+.migrate-or-activate {
   margin-top: 1em;
+  padding-bottom: 0.8em;
 
-  svg {
-    @extend .icon--m;
+  .icon--github {
     @include colorSVGFill(white);
 
     width: 14px;
     height: 14px;
-    transform: translateY(-2px);
     margin-right: 4px;
+    transform: translateY(2px);
   }
 }
 
