@@ -48,6 +48,11 @@ export default Controller.extend({
     return !!this.get('account').belongsTo('installation').id();
   },
 
+  @computed('hasGitHubAppsInstallation', 'model.deprecated.pagination.total')
+  canMigrate(hasGitHubAppsInstallation, legacyRepositoryCount) {
+    return !hasGitHubAppsInstallation && legacyRepositoryCount <= 20;
+  },
+
   @action
   filterQuery(query) {
     let params = {

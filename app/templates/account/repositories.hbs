@@ -95,7 +95,7 @@
         Deprecated
       {{/external-link-to}}
     </h2>
-    {{#unless hasGitHubAppsInstallation}}
+    {{#if canMigrate}}
       <button class='button' type='button' onclick={{perform migrate}} data-test-migrate-github-apps>
         {{#if migrate.isRunning}}
           {{loading-indicator id="github-apps-migrate-loading" class="loading-indicator--white"}}
@@ -104,7 +104,7 @@
         {{/if}}
         Migrate to GitHub Apps
       </button>
-    {{/unless}}
+    {{/if}}
   </header>
   {{#repository-filter
     repositories=sortedRepositories

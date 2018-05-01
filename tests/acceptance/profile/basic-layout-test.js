@@ -317,7 +317,7 @@ test('clicking the button to migrate to GitHub Apps sends the IDs of all legacy 
   // let repositoryIds = [this.activeAdminRepository.id];
   let repositoryIds = [];
 
-  for (let index = 0; index < 10; index++) {
+  for (let index = 0; index < 5; index++) {
     server.create('repository', {
       name: `extra-repository-${index}`,
       owner: {
@@ -352,5 +352,27 @@ test('clicking the button to migrate to GitHub Apps sends the IDs of all legacy 
     let idParams = repositoryIds.map(id => `repository_ids[]=${id}`).join('&');
     assert.equal(mockWindow.location.href,
       `https://github.com/apps/travis-ci-testing/installations/new/permissions?suggested_target_id=1000&${idParams}`);
+  });
+});
+
+test('the migration button is not present when the owner has over 20 active legacy repositories', function (assert) {
+  for (let index = 0; index < 30; index++) {
+    server.create('repository', {
+      name: `extra-repository-${index}`,
+      owner: {
+        login: 'org0',
+      },
+      active: true,
+      permissions: {
+        admin: true
+      },
+      github_id: 10000 + index
+    });
+  }
+
+  profilePage.visit({ username: 'org0' });
+
+  andThen(() => {
+    assert.ok(profilePage.migrateGithubAppsButton.isHidden, 'expected migration button to be hidden when owner has an installation');
   });
 });
