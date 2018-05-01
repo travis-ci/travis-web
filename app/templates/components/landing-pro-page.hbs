@@ -53,7 +53,9 @@
         <div class="section-list">
           <ul class="list--features">
             <li>
-              <img src="../images/landing-page/Gh.svg" alt="">
+              <div>
+                <img src="../images/landing-page/Gh.svg" alt="">
+              </div>
               <h3 class="h3">Get set up in seconds</h3>
               <p class="text-small">Login with GitHub, tell Travis CI to test a project, and then push to GitHub. Could it be any simpler!</p>
             </li>
@@ -93,23 +95,27 @@
       <p><em>Seriously. Always.</em> We like to think of it as our way of giving<br>back to a community that gives us so much as well.</p>
     </section>
     <section class="section-branch-pr section--grey section--center">
-      <h2>Branch build flow</h2>
-      <img src="../images/landing-page/build-flow.png" alt="travis build flow">
-      <div class="build-steps-container">
-        <p class="build-step-1 build-steps">You push your<br/>code to GitHub</p>
-        <p class="build-step-2 build-steps">GitHub triggers<br/>Travis CI to build</p>
-        <p class="build-step-3 build-steps">Hooray!<br/>Your build passes!</p>
-        <p class="build-step-4 build-steps">Travis CI deploys<br/>to Heroku</p>
-        <p class="build-step-5 build-steps">Travis CI tells your<br/>team all is well</p>
+      <h2 class="build-flow-header">Branch build flow</h2>
+      <div class="branch-pr-container">
+        <div class="build-flow-image"></div>
+        <div class="build-steps-container">
+          <p class="build-step-1 build-steps">You push your<br/>code to GitHub</p>
+          <p class="build-step-2 build-steps">GitHub triggers<br/>Travis CI to build</p>
+          <p class="build-step-3 build-steps">Hooray!<br/>Your build passes!</p>
+          <p class="build-step-4 build-steps">Travis CI deploys<br/>to Heroku</p>
+          <p class="build-step-5 build-steps">Travis CI tells your<br/>team all is well</p>
+        </div>
       </div>
-      <h2>Pull request build flow</h2>
-      <img src="../images/landing-page/pr-flow.png" alt="travis build flow">
-      <div class="build-steps-container">
-        <p class="build-step-6 build-steps">A pull request<br/>is created</p>
-        <p class="build-step-7 build-steps">GitHub tells Travis CI<br/>the build is mergeable</p>
-        <p class="build-step-8 build-steps">Hooray!<br/>Your build passes!</p>
-        <p class="build-step-9 build-steps">Travis CI updates<br/>the PR that it passed</p>
-        <p class="build-step-10 build-steps">You merge in<br/>the PR goodness</p>
+      <h2 class="build-flow-header">Pull request build flow</h2>
+      <div class="branch-pr-container">
+        <div class="build-pr-image"></div>
+        <div class="build-steps-container">
+          <p class="build-step-6 build-steps">A pull request<br/>is created</p>
+          <p class="build-step-7 build-steps">GitHub tells Travis CI<br/>the build is mergeable</p>
+          <p class="build-step-8 build-steps">Hooray!<br/>Your build passes!</p>
+          <p class="build-step-9 build-steps">Travis CI updates<br/>the PR that it passed</p>
+          <p class="build-step-10 build-steps">You merge in<br/>the PR goodness</p>
+        </div>
       </div>
     </section>
     <section class="section-languages section--white section--center">
