@@ -48,10 +48,7 @@
 
       <li class="{{classProfile}}">
         {{#if auth.signedOut}}
-          <button class="auth-button signed-out" type="button" {{action 'signIn'}}>
-            <span class="label-align">Sign in with GitHub</span>
-            {{svg-jar 'icon-github-white' class="icon white"}}
-          </button>
+          <button class="auth-button signed-out" type="button" {{action 'signIn'}}>Sign in with GitHub</button>
         {{/if}}
         {{#if auth.signedIn}}
           {{#link-to "account" user.login data-test-header-account-link class="navigation-anchor signed-in"}}
