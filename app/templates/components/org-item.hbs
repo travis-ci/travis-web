@@ -24,7 +24,7 @@
             success=(action 'copyTokenSuccessful')}}
             {{svg-jar 'icon-copy' class="icon"}} <span>Copy token</span>
           {{/copy-button}}
-          <button {{action 'tokenVisibility'}} class="show-token">
+          <button {{action 'tokenVisibility' bubbles=false}} class="show-token">
             {{svg-jar 'icon-seemore' class="icon"}} <span>{{if tokenIsVisible
               'Hide token' 'View token'}}</span>
           </button>
