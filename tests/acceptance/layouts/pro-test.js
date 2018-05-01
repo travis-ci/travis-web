@@ -41,7 +41,7 @@ test('header layout when authenticated', function (assert) {
     assert.equal(proHeader.navDropdowns[0].title, 'Help', 'Shows Help dropdown');
     assert.equal(proHeader.navDropdowns[0].childLinks[0].title, 'Email Support', 'Shows support link in Help dropdown');
     assert.equal(proHeader.navDropdowns[0].childLinks[1].title, 'Read Our Docs', 'Shows docs link in Help dropdown');
-    assert.equal(proHeader.navDropdowns[0].childLinks[2].title, 'Twitter', 'Shows Twitter link in Help dropdown');
+    assert.equal(proHeader.navDropdowns[0].childLinks[2].title, 'Changelog', 'Shows Changelog link in Help dropdown');
 
     assert.equal(proHeader.navDropdowns[1].title, 'Legal', 'Shows Legal dropdown');
     assert.equal(proHeader.navDropdowns[1].childLinks[0].title, 'Imprint', 'Shows Imprint link in Legal dropdown');
