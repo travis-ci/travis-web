@@ -269,7 +269,7 @@ test('view profiles for organizations that do not and do have GitHub Apps instal
 
   andThen(function () {
     assert.ok(profilePage.githubAppsInvitation.isVisible, 'expected GitHub Apps invitation to be visible');
-    assert.equal(profilePage.githubAppsInvitation.link.href, 'https://github.com/apps/travis-ci-testing/installations/new/permissions?target_id=1000');
+    assert.equal(profilePage.githubAppsInvitation.link.href, 'https://github.com/apps/travis-ci-testing/installations/new/permissions?suggested_target_id=1000');
   });
 
   profilePage.visit({ username: 'org-login' });
@@ -352,6 +352,6 @@ skip('clicking the button to migrate to GitHub Apps sends the IDs of all legacy 
     // let idParams = repositoryIds.map(id => `repository_ids[]=${id}`).join('&');
     // assert.equal(mockWindow.location.href,
     //   `https://github.com/apps/travis-ci-testing/installations/new/permissions?suggested_target_id=1000&${idParams}`);
-    assert.equal(mockWindow.location.href, 'https://github.com/apps/travis-ci-testing/installations/new/permissions?target_id=1000');
+    assert.equal(mockWindow.location.href, 'https://github.com/apps/travis-ci-testing/installations/new/permissions?suggested_target_id=1000');
   });
 });

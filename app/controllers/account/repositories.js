@@ -30,7 +30,7 @@ export default Controller.extend({
   @computed('githubAppsAppName', 'account.githubId')
   githubAppsActivationURL(appName, githubId) {
     return 'https://github.com/apps/' +
-      `${appName}/installations/new/permissions?target_id=${githubId}`;
+      `${appName}/installations/new/permissions?suggested_target_id=${githubId}`;
   },
 
   @computed('account.login', 'account.installation.githubId', 'account.type')
@@ -90,7 +90,7 @@ export default Controller.extend({
 
     yield window.location.href =
       `https://github.com/apps/${this.get('githubAppsAppName')}/installations/new/permissions` +
-      `?target_id=${this.get('account.githubId')}`;
+      `?suggested_target_id=${this.get('account.githubId')}`;
 
     // let queryParams = {
     //   sort_by: 'name',
