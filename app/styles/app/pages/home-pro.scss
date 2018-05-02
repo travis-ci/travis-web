@@ -88,7 +88,6 @@
         display: grid;
         grid-template-columns: 1fr 1fr;
         grid-gap: 5rem;
-        padding: 0px 1.07143rem;
         max-width: 1024px;
         margin: auto;
       }
@@ -120,7 +119,7 @@
       color: #9E9E9E;
       text-transform: uppercase;
       font-size: 18px;
-      font-weight: 500;
+      font-weight: 600;
       text-align: center;
       margin-bottom: 3px;
     }
@@ -160,6 +159,19 @@
         line-height: 52px;
       }
     }
+  }
+
+  .list-check-container {
+    @media #{$small-only} {
+      max-width: 338px;
+      margin: 0 auto;
+    }
+
+    @media #{$medium-only} {
+      max-width: 338px;
+      margin: 0 auto;
+    }
+
   }
 
   .section-opensource {
@@ -519,7 +531,6 @@
 
     @media #{$medium-up} {
       display: flex;
-      justify-content: flex-start;
       flex-wrap: wrap;
     }
 
@@ -542,16 +553,23 @@
     }
 
     .lang-go {
-      @media #{$medium-up} {
+      @media #{$large-up} {
         margin-left: 23px;
       }
+
+       @media #{$small-up} {
+         margin-right: 33px;
+       }
     }
 
     .lang-scala {
-      @media #{$medium-up} {
+      @media #{$large-up} {
         margin-left: 25px;
       }
 
+      @media #{$small-up} {
+        margin-right: 30px;
+      }
     }
 
     .lang-perl {
@@ -824,6 +842,7 @@ main {
 
 .landing-hero-section {
   background-color: #fafafc;
+  padding-bottom: 55px !important;
 
   @media #{$small-only} {
     text-align: center;
@@ -846,7 +865,7 @@ main {
   h1 {
     font-size: 35px;
     font-weight: 300;
-    line-height: 59px;
+    line-height: 1.35em;
     color: #3eaaaf;
     margin-top: 0px;
     margin-bottom: 36px;
@@ -855,7 +874,7 @@ main {
   p {
     font-size: 20px;
     font-weight: 300;
-    line-height: 36px;
+    line-height: 1.5em;
     color: #666666;
     margin-bottom: 60px;
   }
@@ -900,6 +919,11 @@ main {
 .section-languages {
   @media #{$small-only} {
     padding-top: 40px;
+    padding-bottom: 77px;
+  }
+
+  @media #{$medium-only} {
+    padding-bottom: 77px;
   }
 
   h2 {
@@ -932,6 +956,8 @@ main {
 
   .section-languages-text-container {
     @media #{$small-only} {
+      max-width: 500px;
+      margin: 0 auto;
       padding: 40px 10px;
       h2, p {
         text-align: center;
@@ -939,9 +965,32 @@ main {
     }
     a {
       text-decoration: none;
-      border-bottom: 1px solid #666666;
+      border-bottom: 1px solid #DCDCDC;
+
     }
-    padding: 0 57px;
+    @media #{$large-up} {
+      padding: 0 57px;
+    }
+  }
+  
+  .section-languages-container {
+    max-width: 500px;
+    margin: 0 auto;
+
+    ul {
+      @media #{$small-only} {
+        display: flex;
+        flex-wrap: wrap;
+        padding-bottom: 0px 0px 77px 33px;
+      }
+
+      @media #{$medium-only} {
+        display: flex;
+        flex-wrap: wrap;
+        padding-bottom: 0px 0px 77px 33px;
+      }
+
+    }
   }
 }
 .section-quotes {
@@ -997,6 +1046,10 @@ main {
       height: 35px;
     }
 
+    .quote-python {
+      padding-top: 25px;
+    }
+
     .quote-author {
       font-weight: 600;
     }
@@ -1010,7 +1063,7 @@ main {
     }
 
     .third-signature {
-      margin-top: 129px;
+      margin-top: 104px;
     }
   }
 }

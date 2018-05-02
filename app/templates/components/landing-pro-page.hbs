@@ -82,7 +82,7 @@
             </li>
           </ul>
         </div>
-        <div>
+        <div class="list-check-container">
           <ul class="list-check">
             <li><img src="../images/svg/stage-passed.svg" alt="" class="checkmark"> Quick setup</li>
             <li><img src="../images/svg/stage-passed.svg" alt="" class="checkmark"> Live build views</li>
@@ -126,6 +126,11 @@
     </section>
     <section class="section-languages section--white section--center">
       <div class="inner">
+        <div class="section-languages-text-container">
+          <h2>We support over<br/>30 different languages.</h2>
+          <p>These are just a few of our most popular languages,
+            <a href="http://docs.travis-ci.com/user/languages/" title="Supported languages"> check out the full list in our docs</a>.</p>
+        </div>
         <div class="section-languages-container">
           <ul class="list--languages">
             <li style="padding-bottom: 20px;">
@@ -152,7 +157,7 @@
               <a href="http://docs.travis-ci.com/user/languages/python/" title="Read about Python at Travis CI">
                 <img src="../images/landing-page/lang-python.svg" alt="python logo" class="lang-python language">Python</a>
             </li>
-            <li>
+            <li style="padding-bottom: 20px;">
               <a href="http://docs.travis-ci.com/user/languages/java/" title="Read about Java at Travis CI">
                 <img src="../images/landing-page/lang-java.svg" alt="java logo" class="lang-java language">Java</a>
             </li>
@@ -173,11 +178,6 @@
                 <img src="../images/landing-page/lang-perl.svg" alt="perl logo" class="lang-perl language">Perl</a>
             </li>
           </ul>
-        </div>
-        <div class="section-languages-text-container">
-          <h2>We support over<br/>30 different languages.</h2>
-          <p>These are just a few of our most popular languages,
-            <a href="http://docs.travis-ci.com/user/languages/" title="Supported languages"> check out the full list in our docs</a>.</p>
         </div>
       </div>
     </section>
@@ -202,7 +202,7 @@
         <div class="quote-container">
           <img src="../images/landing-page/pypy.png" alt="pypy logo" class="quote-pypy-logo">
           <img src="../images/landing-page/lang-python.svg" alt="python programming language logo" class="quote-python-logo">
-          <p>Not only is Travis CI the best way to test your software, it is the right way. rm -rf jenkins&amp;&amp;touch .travis.yml</p>
+          <p class="quote-python">Not only is Travis CI the best way to test your software, it is the right way. rm -rf jenkins&amp;&amp;touch .travis.yml</p>
           <p class="quote-author quote-signature third-signature">Alex Gaynor</p>
           <p class="quote-author-org quote-signature">PyPy and Python Core Team Member</p>
           <span>{{svg-jar 'github'}}</span><span><a href="https://github.com/alex">alex</a></span>
