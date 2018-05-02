@@ -413,6 +413,10 @@ header.legacy-services-integration {
   & + .legacy-services-integration {
     margin-top: 1em;
   }
+
+  p {
+    @include linkStyle;
+  }
 }
 
 .loading-indicator--white.migrate span {
