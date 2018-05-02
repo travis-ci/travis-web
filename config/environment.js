@@ -134,7 +134,7 @@ module.exports = function (environment) {
       ENV.urls.imprint = ENV.billingEndpoint + '/pages/imprint';
       ENV.urls.security = ENV.billingEndpoint + '/pages/security';
       ENV.urls.terms = ENV.billingEndpoint + '/pages/terms';
-      ENV.githubApps.appName = 'travis-ci';
+      ENV.githubApps = {appName: 'travis-ci'};
       // FIXME !!!
       // if (process.env.GITHUB_APPS_APP_NAME) {
       //   ENV.githubApps = {
