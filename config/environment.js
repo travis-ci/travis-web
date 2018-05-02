@@ -27,7 +27,7 @@ module.exports = function (environment) {
     // defaults for running travis-web
     apiEndpoint: 'https://api.travis-ci.org',
     sourceEndpoint: 'https://github.com',
-    pusherOverride: {
+    pusher: {
       key: '5df8ac576dcccf4fd076',
       host: 'ws.pusherapp.com',
       debug: false
@@ -98,7 +98,7 @@ module.exports = function (environment) {
 
   // FIXME this is a hack because I can’t change the waiter deployment!
   if (PUSHER_KEY_OVERRIDE) {
-    ENV.pusherOverride.key = PUSHER_KEY_OVERRIDE;
+    ENV.pusher.key = PUSHER_KEY_OVERRIDE;
   }
 
   ENV.pagination = {
@@ -121,7 +121,7 @@ module.exports = function (environment) {
       //       we could just remove it from ruby process and rely
       //       on things set here, but I haven't tested that yet.
       ENV.apiEndpoint = 'https://api.travis-ci.com';
-      ENV.pusherOverride.channelPrefix = 'private-';
+      ENV.pusher.channelPrefix = 'private-';
       ENV.pagesEndpoint = 'https://billing.travis-ci.com';
       ENV.billingEndpoint = 'https://billing.travis-ci.com';
       ENV.endpoints = {
@@ -146,11 +146,11 @@ module.exports = function (environment) {
       ENV.apiEndpoint = process.env.API_ENDPOINT;
 
       if (ENV.apiEndpoint === 'https://api-staging.travis-ci.org') {
-        ENV.pusherOverride.key = 'dd3f11c013317df48b50';
+        ENV.pusher.key = 'dd3f11c013317df48b50';
       }
 
       if (ENV.apiEndpoint === 'https://api-staging.travis-ci.com') {
-        ENV.pusherOverride.key = '87d0723b25c51e36def8';
+        ENV.pusher.key = '87d0723b25c51e36def8';
       }
     }
 
@@ -213,7 +213,7 @@ module.exports = function (environment) {
       caches: true
     };
 
-    ENV.pusherOverride = {};
+    ENV.pusher = {};
 
     ENV.githubApps = {
       appName: 'travis-ci-testing'
