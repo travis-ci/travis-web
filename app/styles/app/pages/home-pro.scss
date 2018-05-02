@@ -54,7 +54,8 @@
   }
 
   .section--grey {
-    background-color: #F6F6F6;
+    background-color: #FAFAFC;
+
 
     @media #{$medium-up} {
       padding: 85px 0;
@@ -842,7 +843,7 @@ main {
 
 .landing-hero-section {
   background-color: #fafafc;
-  padding: 85px 0px 30px 0px !important;
+  padding: 10px 0px 0px 0px !important;
 
   @media #{$small-only} {
     text-align: center;
@@ -867,7 +868,7 @@ main {
     font-weight: 300;
     line-height: 1.35em;
     color: #3eaaaf;
-    margin-top: 0px;
+    margin-top: 1em;
     margin-bottom: 36px;
   }
 
