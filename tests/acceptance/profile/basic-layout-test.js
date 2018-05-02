@@ -194,7 +194,6 @@ test('view repositories', function (assert) {
     // FIXME this is coming back as the org-login installation, 1962…???
     // assert.equal(profilePage.manageGithubAppsLink.href, `https://github.com/settings/installations/${this.userInstallation.github_id}`);
     assert.equal(profilePage.githubAppsRepositories.length, 3, 'expected three GitHub Apps-managed repositories');
-    assert.ok(profilePage.migrateGithubAppsButton.isHidden, 'expected migration button to be hidden when owner has an installation');
 
     assert.equal(profilePage.notLockedGithubAppsRepositories.length, 2, 'expected two not-locked GitHub Apps-managed repositories');
     assert.equal(profilePage.notLockedGithubAppsRepositories[0].name, 'github-apps-private-repository');
@@ -370,7 +369,7 @@ test('clicking the button to migrate to GitHub Apps sends the IDs of all legacy 
     assert.ok(profilePage.githubAppsInvitation.migrateButton.isVisible, 'expected the invitation to have a migrate button');
   });
 
-  profilePage.migrateGithubAppsButton.click();
+  profilePage.githubAppsInvitation.migrateButton.click();
 
   andThen(() => {
     let idParams = repositoryIds.map(id => `repository_ids[]=${id}`).join('&');
@@ -397,6 +396,6 @@ test('the migration button is not present when the owner has over 20 active lega
   profilePage.visit({ username: 'org0' });
 
   andThen(() => {
-    assert.ok(profilePage.migrateGithubAppsButton.isHidden, 'expected migration button to be hidden when owner has too many repositories');
+    assert.ok(profilePage.githubAppsInvitation.migrateButton.isHidden, 'expected migration button to be hidden when owner has too many repositories');
   });
 });

@@ -111,16 +111,6 @@
         Deprecated
       {{/external-link-to}}
     </h2>
-    {{#if canMigrate}}
-      <button class='button' type='button' onclick={{perform migrate}} data-test-migrate-github-apps>
-        {{#if migrate.isRunning}}
-          {{loading-indicator class="loading-indicator--white migrate"}}
-        {{else}}
-          {{svg-jar 'icon-migrate' class='icon'}}
-        {{/if}}
-        Migrate to GitHub Apps
-      </button>
-    {{/if}}
   </header>
   {{#repository-filter
     repositories=sortedRepositories

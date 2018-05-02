@@ -73,8 +73,6 @@ export default create({
     href: attribute('href')
   },
 
-  migrateGithubAppsButton: { scope: '.legacy-services-integration [data-test-migrate-github-apps]' },
-
   githubAppsRepositories: githubAppsRepositoryCollection('#github-apps-repositories'),
 
   notLockedGithubAppsFilter: fillable('.not-locked-profile-repositories-filter input.search'),
