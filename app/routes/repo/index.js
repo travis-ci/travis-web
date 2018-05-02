@@ -39,10 +39,11 @@ export default TravisRoute.extend({
   renderTemplate() {
     let controller = this.controllerFor('repo');
 
-    if (!controller.get('repo.active')) {
-      this.render('repo/not-active');
-    } else if (this.get('features.github-apps') && controller.get('repo.active_on_org')) {
+    // FIXME this is untested
+    if (this.get('features.github-apps') && controller.get('repo.active_on_org')) {
       this.render('repo/active-on-org');
+    } else if (!controller.get('repo.active')) {
+      this.render('repo/not-active');
     } else if (!controller.get('repo.currentBuildId')) {
       this.render('repo/no-build');
     } else {
