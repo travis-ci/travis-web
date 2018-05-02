@@ -18,14 +18,6 @@ $profile-breakpoint: 600px;
     color: $oxide-blue;
     font-weight: 300;
   }
-
-  // FIXME this is almost the same as .profile-aside h2 at the moment
-  h3 {
-    color: $cement-grey;
-    text-transform: uppercase;
-    font-size: $font-size-sm;
-    font-weight: bold;
-  }
 }
 
 .profile-main {
