@@ -114,8 +114,10 @@
     }
 
     h3 {
+      color: #9E9E9E;
+      text-transform: uppercase;
       font-size: 18px;
-      font-weight: 600;
+      font-weight: 500;
       text-align: center;
       margin-bottom: 3px;
     }
@@ -128,9 +130,6 @@
     }
 
     .list-check {
-      @media #{$small-only} {
-        padding-left: 0px;
-      }
       padding-left: 39px;
       padding-top: 12px;
 
@@ -145,10 +144,10 @@
 
       li {
         @media #{$small-only} {
-          font-size: 20px;
+          font-size: 18px;
         }
         color: #666666;
-        font-size: 26px;
+        font-size: 24px;
         font-weight: 300;
         line-height: 52px;
       }
@@ -387,7 +386,7 @@
     @extend %list;
 
     width: 80%;
-    margin: 2em auto 0;
+    margin: 1.5em auto 0;
 
     @media #{$medium-up} {
       display: flex;
@@ -460,6 +459,7 @@
       font-size: 16px;
       font-weight: 600;
       text-decoration: none;
+      text-transform: uppercase;
     }
 
     .lang-erlang {
@@ -553,24 +553,20 @@
   border-radius: 2px;
   background-color: #2EB459;
   cursor: pointer;
-  padding: 21px;
+  padding: 14px 20px;
   font-size: 26px;
   color: white;
+  font-weight: 300;
 
-  &:hover,
-  &:active {
-    color: white;
-    background-color: darken(#2EB459, 8);
-  }
 }
 
 .hero-button {
   @extend .landing-button;
 
   svg {
-    width: 45px;
-    height: 45px;
-    vertical-align: middle;
+    width: 30px;
+    height: 30px;
+    vertical-align: sub;
     margin-right: 0.4em;
   }
 
@@ -633,7 +629,8 @@
 .h2--green {
   @extend %h2;
 
-  color: $turf-green;
+  color: #2EB459;
+
 }
 
 .h2--red {
@@ -763,7 +760,7 @@ main {
 
 .landing-hero-text {
   h1 {
-    font-size: 52px;
+    font-size: 45px;
     font-weight: 300;
     line-height: 59px;
     color: #3eaaaf;
@@ -772,7 +769,7 @@ main {
   }
 
   p {
-    font-size: 26px;
+    font-size: 24px;
     font-weight: 300;
     line-height: 36px;
     color: #666666;
@@ -784,7 +781,10 @@ main {
   @media #{$small-only} {
     margin: 40px 0px 0px 0px;
   }
-  margin-left: 55px;
+
+  img {
+    width: 450px;
+  }
 }
 
 .customers-header {
@@ -847,7 +847,10 @@ main {
         text-align: center;
       }
     }
-
+    a {
+      text-decoration: none;
+      border-bottom: 1px solid #666666;
+    }
     padding: 0 57px;
   }
 }
@@ -942,11 +945,11 @@ main {
   
   .start-building-button {
     color: white;
-    font-size: 30px;
+    font-size: 26px;
     font-weight: 300;
     background-color: #2EB459;
     border-radius: 2px;
-    padding: 15px 40px;
+    padding: 15px 51px;
     cursor: pointer;
   }
 }

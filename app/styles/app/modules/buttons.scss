@@ -50,6 +50,12 @@
   padding: 9px 19px;
   line-height: 0.5;
 
+  &:hover,
+  &:active {
+    color: white;
+    background-color: #2EB459;
+  }
+
   .label-align {
     line-height: 1.4;
   }
