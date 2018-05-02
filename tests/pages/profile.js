@@ -61,7 +61,7 @@ export default create({
     isExpanded: hasClass('expanded'),
 
     link: {
-      scope: 'a',
+      scope: 'a.migrate-or-activate',
       href: attribute('href')
     },
 
