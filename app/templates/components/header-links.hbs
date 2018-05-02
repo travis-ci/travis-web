@@ -16,24 +16,16 @@
 
       {{#if features.proVersion}}
         {{#unless auth.signedIn}}
-          <li><a href="/plans" title="Plans and Prices for Travis CI" class="navigation-anchor">Plans & Pricing</a></li>
+          <li><a href="/plans" title="Plans and Pricing" class="navigation-anchor">Plans & Pricing</a></li>
           <li><a href="{{ config.urls.enterprise }}" title="Travis CI for Enterprise" class="navigation-anchor">Enterprise</a></li>
         {{else}}
           <li><a href="{{ config.urls.status }}" title="Travis CI Status" class="navigation-anchor">Status</a></li>
           <li>
             <span class="navigation-anchor">Help</span>
             <ul class="navigation-nested">
-              <li><a href="{{ config.urls.support }}" title="Email the Travis support team" {{action 'helpscoutTrigger'}}>Email Support</a></li>
+              <li><a href="{{ config.urls.support }}" title="Email the support team" {{action 'helpscoutTrigger'}}>Email Support</a></li>
               <li><a href="{{ config.urls.docs }}" title="Browse our documentation">Read Our Docs</a></li>
-              <li><a href="{{ config.urls.twitter }}" title="Travis in the Twitter-sphere">Twitter</a></li>
-            </ul>
-          </li>
-          <li>
-            <span class="navigation-anchor">Legal</span>
-            <ul class="navigation-nested">
-              <li><a href={{config.urls.imprint}} title="Go to the imprint">Imprint</a></li>
-              <li><a href={{config.urls.security}} title="Go to our security statement">Security</a></li>
-              <li><a href={{config.urls.terms}} title="Go to our terms of service">Terms</a></li>
+              <li><a href="{{ config.urls.changelog }}" title="View our changelog">Changelog</a></li>
             </ul>
           </li>
         {{/unless}}
@@ -65,17 +57,17 @@
         {{#if auth.signedIn}}
           <ul class="navigation-nested">
             <li>
-              {{#link-to "account" user.login class="signed-in" title="See your Travis profile"}}Profile{{/link-to}}
+              {{#link-to "account" user.login class="signed-in" title="Your profile"}}Profile{{/link-to}}
               </li>
               {{#if config.billingEndpoint}}
                 {{#unless features.enterpriseVersion}}
                   <li>
-                    <a href={{config.billingEndpoint}} title="Take a look at your subscriptions">Billing</a>
+                    <a href={{config.billingEndpoint}} title="Your subscription details">Billing</a>
                   </li>
                 {{/unless}}
               {{/if}}
               <li>
-                <a data-test-signout-link href="/" {{action 'signOut'}} title="Sign out of Travis">Sign Out</a>
+                <a data-test-signout-link href="/" {{action 'signOut'}} title="Sign out of Travis CI">Sign Out</a>
               </li>
           </ul>
         {{/if}}
