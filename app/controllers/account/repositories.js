@@ -50,7 +50,7 @@ export default Controller.extend({
 
   @computed('hasGitHubAppsInstallation', 'model.deprecated.pagination.total')
   canMigrate(hasGitHubAppsInstallation, legacyRepositoryCount) {
-    return !hasGitHubAppsInstallation && legacyRepositoryCount <= 20;
+    return !hasGitHubAppsInstallation && legacyRepositoryCount <= 20 && legacyRepositoryCount > 0;
   },
 
   @action

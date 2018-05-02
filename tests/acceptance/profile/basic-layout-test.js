@@ -264,12 +264,31 @@ test('logs an exception when there is more than one active subscription', functi
 });
 
 test('view profiles for organizations that do not and do have GitHub Apps installations', function (assert) {
+  server.create('repository', {
+    name: 'extra-repository',
+    owner: {
+      login: 'org0',
+    },
+    active: true,
+    permissions: {
+      admin: true
+    },
+  });
+
   withFeature('github-apps');
   profilePage.visit({ username: 'org0' });
 
   andThen(function () {
     assert.ok(profilePage.githubAppsInvitation.isVisible, 'expected GitHub Apps invitation to be visible');
-    assert.ok(profilePage.githubAppsInvitation.migrateButton.isVisible, 'expected the invitation to have a migrate button');
+    assert.ok(profilePage.githubAppsInvitation.migrateButton.isVisible, 'expected the invitation to have a migrate button when there are legacy repositories');
+  });
+
+  profilePage.visit({ username: 'org1' });
+
+  andThen(function () {
+    assert.ok(profilePage.githubAppsInvitation.isVisible, 'expected GitHub Apps invitation to be visible');
+    assert.ok(profilePage.githubAppsInvitation.migrateButton.isHidden, 'expected the invitation to not have a migrate button when no legacy repositories are present');
+    assert.equal(profilePage.githubAppsInvitation.link.href, 'https://github.com/apps/travis-ci-testing/installations/new/permissions?suggested_target_id=1001', 'expected the management link to be organisation-scoped');
   });
 
   profilePage.visit({ username: 'org-login' });
