@@ -322,6 +322,7 @@ $profile-breakpoint: 600px;
   border-radius: 0.25em;
   width: calc(1/2*100% - (1 - 1/2)*0.5em);
   padding: 4px 0;
+  cursor: pointer;
 
   & svg {
     margin-right: 4px;
