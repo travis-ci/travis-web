@@ -145,6 +145,15 @@ $profile-breakpoint: 600px;
         transform: translateY(-1px);
       }
     }
+
+    &.empty {
+      border: 1px dashed $pebble-grey;
+      padding: 0 1em;
+
+      p + p {
+        margin-top: 0;
+      }
+    }
   }
 }
 
