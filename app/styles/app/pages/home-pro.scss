@@ -206,6 +206,7 @@
       font-size: 42px;
       font-weight: 300;
       line-height: 50px;
+      margin-top: 0px;
     }
 
     img {
@@ -220,6 +221,7 @@
 
     .build-steps-container {
       display: flex;
+      padding-bottom: 62px;
 
       @media #{$small-up} {
         flex-direction: column;
@@ -265,7 +267,6 @@
         margin: 0 auto;
         width: 215px;
       }
-
     }
 
     .build-steps {
@@ -273,10 +274,6 @@
       font-size:16px;
       font-weight: 300;
       line-height: 22px;
-    }
-
-    .build-flow-header {
-      margin: 62px 0px;
     }
 
    .build-flow-image {
@@ -905,7 +902,7 @@ main {
 }
 
 .spacer {
-  display: inline-block;
+  display: inherit;
   width: 150px;
   height: 3px;
   background-color: #EAEAEA;
