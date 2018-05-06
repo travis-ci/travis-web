@@ -63,6 +63,8 @@ module.exports = function () {
         svgoModule: SVGO,
         plugins: [
           { removeViewBox: false },
+          { removeTitle: false },
+          { removeDesc: false },
           {
             inlineStyles: {
               onlyMatchedOnce: false,
