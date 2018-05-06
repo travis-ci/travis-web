@@ -117,7 +117,7 @@ $profile-breakpoint: 600px;
   @include resetul;
 
   font-size: $font-size-m;
-  dispay: flex;
+  display: flex;
   flex-flow: column wrap;
 
   li {
