@@ -2,6 +2,7 @@
 
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 const Funnel = require('broccoli-funnel');
+const SVGO = require('svgo');
 
 module.exports = function () {
   let fingerprint;
@@ -56,6 +57,20 @@ module.exports = function () {
         'public/images/stroke-icons',
         'public/images/svg'
       ]
+    },
+    svgJar: {
+      optimizer: {
+        svgoModule: SVGO,
+        plugins: [
+          { removeViewBox: false },
+          {
+            inlineStyles: {
+              onlyMatchedOnce: false,
+              removeMatchedSelectors: true
+            }
+          }
+        ]
+      }
     }
   });
 
