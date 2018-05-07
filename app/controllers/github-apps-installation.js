@@ -10,6 +10,7 @@ const interval = config.intervals.githubAppsInstallationPolling;
 
 export default Controller.extend({
   @service auth: null,
+  @service raven: null,
 
   queryParams: ['installation_id'],
 
@@ -48,7 +49,9 @@ export default Controller.extend({
           this.set('repetitions', repetitions + 1);
           return new EmberPromise(resolve => later(() => resolve(this.fetchPromise()), interval));
         } else {
-          throw new Error('FIXME');
+          let exception =
+            new Error(`Timed out looking for owner of installation ${this.get('installation_id')}`);
+          this.get('raven').logException(exception, true);
         }
       }
     });
