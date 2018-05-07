@@ -44,7 +44,7 @@ export default Controller.extend({
 
   @computed('account.id')
   hasGitHubAppsInstallation(installationId) {
-    // FIXME this is trying to not access the installation if it doesn’t exist
+    // this lets us check for the presence of an installation without trying to fetch it
     return !!this.get('account').belongsTo('installation').id();
   },
 
