@@ -24,7 +24,6 @@ const Repo = Model.extend({
   owner: attr(),
   name: attr(),
   starred: attr('boolean'),
-  // FIXME camelCase? hmm
   active_on_org: attr('boolean'),
 
   @oneWay('owner.@type') ownerType: null,
