@@ -191,8 +191,7 @@ test('view repositories', function (assert) {
     assert.equal(profilePage.administerableRepositories[1].name, 'repository-name');
     assert.ok(profilePage.administerableRepositories[1].isActive, 'expected active repository to appear active');
 
-    // FIXME this is coming back as the org-login installation, 1962…???
-    // assert.equal(profilePage.manageGithubAppsLink.href, `https://github.com/settings/installations/${this.userInstallation.github_id}`);
+    assert.equal(profilePage.manageGithubAppsLink.href, `https://github.com/settings/installations/${this.userInstallation.github_id}`);
     assert.equal(profilePage.githubAppsRepositories.length, 3, 'expected three GitHub Apps-managed repositories');
 
     assert.equal(profilePage.notLockedGithubAppsRepositories.length, 2, 'expected two not-locked GitHub Apps-managed repositories');
