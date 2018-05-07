@@ -1,12 +1,14 @@
-import { test } from 'qunit';
-import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
+import { currentURL, visit } from '@ember/test-helpers';
+import { module, test } from 'qunit';
+import { setupApplicationTest } from 'ember-qunit';
+import { percySnapshot } from 'ember-percy';
 
-moduleForAcceptance('Acceptance | logo');
+module('Acceptance | logo', function (hooks) {
+  setupApplicationTest(hooks);
 
-test('visiting /logo', function (assert) {
-  visit('/logo');
+  test('visiting /logo', async function (assert) {
+    await visit('/logo');
 
-  andThen(function () {
     assert.equal(currentURL(), '/logo');
     percySnapshot(assert);
   });

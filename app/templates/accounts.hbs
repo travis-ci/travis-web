@@ -1,8 +1,12 @@
 <aside class="profile-aside">
-  <ul class="profile-user">
-    {{org-item account=user}}
-  </ul>
-  <div class="profile-orgs">
+  <section>
+    <h2>My Account</h2>
+    <ul class="profile-user">
+      {{org-item account=user}}
+    </ul>
+    {{sync-button}}
+  </section>
+  <section class="profile-orgs">
     <h2>Organizations</h2>
     <ul class="profile-orgs-list">
       {{#each organizations as |org|}}
@@ -11,18 +15,20 @@
         <li class="profile-text">You are not currently a member of <br> any organization.</li>
       {{/each}}
     </ul>
-  </div>
-
-  <div class="profile-betafeatures">
-    <h2>Beta Features</h2>
-    {{#link-to "features" tagName="button" class="button beta-features"}}See what's new!{{/link-to}}
-  </div>
+  </section>
 
   {{#if config.githubOrgsOauthAccessSettingsUrl}}
-    <div class="profile-additional">
-      <p>Is an organization missing?<br>
-        <a href={{config.githubOrgsOauthAccessSettingsUrl}} title="Organizations Oauth Access Settings on GitHub">Review and add</a> your authorized organizations.</p>
-    </div>
+    <section class="profile-additional no-divider">
+      <h2>Missing an organization?</h2>
+      <a href={{config.githubOrgsOauthAccessSettingsUrl}} title="Organizations Oauth Access Settings on GitHub">Review and add</a> your authorized organizations.
+    </section>
+  {{/if}}
+
+  {{#if features.betaFeatures}}
+    <section class="profile-betafeatures no-divider">
+      <h2>Interested in trying beta features?</h2>
+      {{#link-to "features" class="beta-features"}}Check out what's new{{/link-to}}.
+    </section>
   {{/if}}
 </aside>
 <article class="profile-main">

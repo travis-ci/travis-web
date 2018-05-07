@@ -1,8 +1,9 @@
 .sync-button {
   vertical-align: middle;
   display: flex;
-  flex-flow: row-reverse wrap;
   position: relative;
+
+  margin-top: 1rem;
 
   .button {
     position: relative;
@@ -15,6 +16,8 @@
     border: none;
     border-radius: 2px;
 
+    margin-right: 0.5rem;
+
     &:hover {
       background-color: #229191;
     }
@@ -22,19 +25,16 @@
 
   .sync-last {
     position: absolute;
-    right: 9em;
-    top: 0;
-    width: 170%;
 
     @include z-index(under);
 
     transition: transform 150ms ease, opacity 250ms ease;
-    transform: translateX(80%);
+    transform: translateX(-100%);
     opacity: 0;
     background: white;
   }
 
-  .button:hover ~ .sync-last {
+  .button:hover ~ .sync-last-container .sync-last {
     transform: translateX(0);
     opacity: 1;
 
@@ -51,11 +51,12 @@
   }
 }
 
+.sync-last-container {
+  display: flex;
+  align-items: center;
+}
+
 .sync-last {
-  display: inline-block;
-  margin: 0 1em 0;
   color: $asphalt-grey;
-  text-align: right;
-  line-height: 3;
   font-size: 0.9rem;
 }

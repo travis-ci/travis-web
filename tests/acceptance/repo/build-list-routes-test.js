@@ -1,26 +1,26 @@
-/* global signInUser */
 import { assign } from '@ember/polyfills';
 import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import page from 'travis/tests/pages/build-list';
 import topPage from 'travis/tests/pages/top';
 import generatePusherPayload from 'travis/tests/helpers/generate-pusher-payload';
+import signInUser from 'travis/tests/helpers/sign-in-user';
 
 moduleForAcceptance('Acceptance | repo build list routes', {
   beforeEach() {
     const currentUser = server.create('user', {
-      name: 'Sara Ahmed',
-      login: 'feministkilljoy'
+      name: 'User Name',
+      login: 'user-login'
     });
 
     signInUser(currentUser);
 
     const gitUser = server.create('git-user', {
-      name: 'Sara Ahmed'
+      name: 'User Name'
     });
 
     const repository = server.create('repository', {
-      slug: 'killjoys/living-a-feminist-life'
+      slug: 'org-login/repository-name'
     });
     this.repository = repository;
 
@@ -125,7 +125,7 @@ moduleForAcceptance('Acceptance | repo build list routes', {
 test('build history shows, more can be loaded, and a created build gets added and can be cancelled', function (assert) {
   assert.expect(22);
 
-  page.visitBuildHistory({ organization: 'killjoys', repo: 'living-a-feminist-life' });
+  page.visitBuildHistory({ organization: 'org-login', repo: 'repository-name' });
 
   andThen(() => {
     assert.equal(page.builds.length, 4, 'expected four non-PR builds');
@@ -133,7 +133,7 @@ test('build history shows, more can be loaded, and a created build gets added an
     page.builds[0].as(build => {
       assert.ok(build.passed, 'expected the first build to have passed');
       assert.equal(build.name, 'successful-cron-branch');
-      assert.equal(build.committer, 'Sara Ahmed');
+      assert.equal(build.committer, 'User Name');
       assert.equal(build.commitSha, '1234567');
       assert.equal(build.commitDate, 'about a year ago');
       assert.equal(build.requestIconTitle, 'Triggered by a cron job');
@@ -252,7 +252,7 @@ test('build history shows, more can be loaded, and a created build gets added an
 
 test('view and cancel pull requests', function (assert) {
   assert.expect(10);
-  page.visitPullRequests({ organization: 'killjoys', repo: 'living-a-feminist-life' });
+  page.visitPullRequests({ organization: 'org-login', repo: 'repository-name' });
 
   andThen(() => {
     assert.equal(page.builds.length, 1, 'expected one pull request build');
@@ -261,7 +261,7 @@ test('view and cancel pull requests', function (assert) {
       assert.ok(pullRequest.started, 'expected the pull request to have started');
       assert.equal(pullRequest.name, 'PR #2010');
       assert.equal(pullRequest.message, 'A pull request');
-      assert.equal(pullRequest.committer, 'Sara Ahmed');
+      assert.equal(pullRequest.committer, 'User Name');
       assert.equal(pullRequest.commitSha, '1234567');
       assert.equal(pullRequest.commitDate, 'about a year ago');
       assert.equal(pullRequest.duration, '5 min');

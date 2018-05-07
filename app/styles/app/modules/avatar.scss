@@ -78,3 +78,20 @@
     line-height: 16px;
   }
 }
+
+.avatar-wrapper {
+  position: relative;
+
+  .checkmark {
+    position: absolute;
+    right: 0;
+    top: -5px;
+
+    width: 10px;
+    height: 10px;
+  }
+}
+
+.profile-header .checkmark {
+  top: 0;
+}

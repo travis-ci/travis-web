@@ -9,10 +9,14 @@
   {{enterprise-banner}}
 {{/if}}
 
-{{#if showCta}}
-  <div class="cta">
-    <p class="row">
-      Help make Open Source a better place and start building better software today!
-    </p>
-  </div>
+{{#if hasBlock}}
+  {{yield}}
+{{else}}
+  {{#if showCta}}
+    <div class="cta">
+      <p class="row">
+        Help make Open Source a better place and start building better software today!
+      </p>
+    </div>
+  {{/if}}
 {{/if}}

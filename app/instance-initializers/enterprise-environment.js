@@ -7,9 +7,10 @@ export function initialize(appInstance) {
     featureFlags['repository-filtering'] = true;
     featureFlags['debug-logging'] = false;
     featureFlags['landing-page-cta'] = false;
-    featureFlags['show-running-jobs-in-sidebar'] = false;
+    featureFlags['show-running-jobs-in-sidebar'] = true;
     featureFlags['debug-builds'] = false;
     featureFlags['broadcasts'] = false;
+    featureFlags['beta-features'] = false;
   }
 }
 

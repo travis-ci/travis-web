@@ -2,29 +2,27 @@ import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import profilePage from 'travis/tests/pages/profile';
 import config from 'travis/config/environment';
+import signInUser from 'travis/tests/helpers/sign-in-user';
 
 moduleForAcceptance('Acceptance | profile/view token', {
   beforeEach() {
     const currentUser = server.create('user', {
-      name: 'Sara Ahmed',
-      login: 'feministkilljoy',
-      repos_count: 3
+      name: 'User Name',
+      login: 'user-login',
     });
 
     signInUser(currentUser);
 
     // create organization
-    server.create('account', {
-      name: 'Feminist Killjoys',
-      type: 'organization',
-      login: 'killjoys',
-      repos_count: 30
+    server.create('organization', {
+      name: 'Org Name',
+      login: 'org-login',
     });
   }
 });
 
 test('view token', function (assert) {
-  profilePage.visit({ username: 'feministkilljoy' });
+  profilePage.visit({ username: 'user-login' });
 
   andThen(() => {
     assert.equal(profilePage.token.obfuscatedCharacters, '••••••••••••••••••••', 'expected token to be obfuscated by default');
@@ -39,7 +37,7 @@ test('view token', function (assert) {
 });
 
 test('copy token', function (assert) {
-  profilePage.visit({ username: 'feministkilljoy' });
+  profilePage.visit({ username: 'user-login' });
 
   andThen(() => {
     assert.equal(profilePage.token.obfuscatedCharacters, '••••••••••••••••••••', 'expected token to be obfuscated by default');

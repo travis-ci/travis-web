@@ -1,14 +1,9 @@
 {{#link-to "account" account.login class="org-info"}}
   <span class="account-avatar">
-    {{user-avatar url=account.avatarUrl name=name size=36}}
+    {{user-avatar account=account url=account.avatarUrl name=name showSubscriptionStatus=true}}
   </span>
   <span class="account-info">
     <h3 class="account-name">{{name}}</h3>
-    {{#if account.reposCount}}
-      <p class="account-repo-count">{{pluralize account.reposCount 'repository'}}</p>
-    {{else}}
-      No repositories
-    {{/if}}
     {{#if isUser}}
       <p class="account-token">
         API Token
@@ -29,7 +24,7 @@
             success=(action 'copyTokenSuccessful')}}
             {{svg-jar 'icon-copy' class="icon"}} <span>Copy token</span>
           {{/copy-button}}
-          <button {{action 'tokenVisibility'}} class="show-token">
+          <button {{action 'tokenVisibility' bubbles=false}} class="show-token">
             {{svg-jar 'icon-seemore' class="icon"}} <span>{{if tokenIsVisible
               'Hide token' 'View token'}}</span>
           </button>

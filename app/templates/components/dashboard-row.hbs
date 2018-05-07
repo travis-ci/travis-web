@@ -1,5 +1,5 @@
 <div class="dash-head">
-  <button {{action "starRepo"}} class="dash-star {{if repo.starred 'is-starred'}}" title="{{if repo.starred 'un'}}star this repo">
+  <button data-test-dashboard-repository-star={{idx}} {{action "starRepo"}} class="dash-star {{if repo.starred 'is-starred'}}" title="{{if repo.starred 'un'}}star this repo">
     {{svg-jar 'icon-star' class="icon--m"}}
   </button>
   {{#if repo.private}}
@@ -63,13 +63,13 @@
       </p>
     </section>
 
-    <div class="dash-menu">
+    <div data-test-dashboard-repository-menu={{idx}} class="dash-menu">
       {{#if displayMenuTofu}}
         {{#if isTriggering}}
           {{loading-indicator}}
         {{else}}
         <div class="dropup {{if dropupIsOpen "is-open"}}">
-          <button type="button" class="dropup-tofu" {{action "openDropup"}}>
+          <button data-test-tofu-menu={{idx}} type="button" class="dropup-tofu" {{action "openDropup"}}>
             {{svg-jar 'icon-tofuburger' class="icon-tofu"}}
           </button>
           <ul class="dropup-list">

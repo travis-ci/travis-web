@@ -4,30 +4,29 @@ import { Response } from 'ember-cli-mirage';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import settingsPage from 'travis/tests/pages/settings';
 import topPage from 'travis/tests/pages/top';
+import signInUser from 'travis/tests/helpers/sign-in-user';
 
 import moment from 'moment';
 
 moduleForAcceptance('Acceptance | repo settings', {
   beforeEach() {
     const currentUser = server.create('user', {
-      name: 'Sara Ahmed',
-      login: 'feministkilljoy',
-      repos_count: 3
+      name: 'User Name',
+      login: 'user-login',
     });
 
     signInUser(currentUser);
 
     // create organization
-    server.create('account', {
-      name: 'Feminist Killjoys',
-      type: 'organization',
-      login: 'killjoys',
-      repos_count: 30
+    server.create('organization', {
+      name: 'Org Name',
+      login: 'org-login',
     });
 
     const repository = server.create('repository', {
-      name: 'living-a-feminist-life',
-      slug: 'killjoys/living-a-feminist-life',
+      name: 'repository-name',
+      slug: 'org-login/repository-name',
+      private: true
     });
     repository.attrs.permissions.create_cron = true;
 
@@ -89,7 +88,7 @@ moduleForAcceptance('Acceptance | repo settings', {
 });
 
 test('view settings', function (assert) {
-  settingsPage.visit({ organization: 'killjoys', repo: 'living-a-feminist-life' });
+  settingsPage.visit({ organization: 'org-login', repo: 'repository-name' });
 
   andThen(function () {
     assert.ok(settingsPage.buildOnlyWithTravisYml.isActive, 'expected builds only with .travis.yml');
@@ -141,7 +140,7 @@ test('view settings', function (assert) {
 });
 
 test('change general settings', function (assert) {
-  settingsPage.visit({ organization: 'killjoys', repo: 'living-a-feminist-life' });
+  settingsPage.visit({ organization: 'org-login', repo: 'repository-name' });
 
   const settingToRequestBody = {};
 
@@ -187,7 +186,7 @@ test('change general settings', function (assert) {
 });
 
 test('delete and create environment variables', function (assert) {
-  settingsPage.visit({ organization: 'killjoys', repo: 'living-a-feminist-life' });
+  settingsPage.visit({ organization: 'org-login', repo: 'repository-name' });
 
   const deletedIds = [];
 
@@ -268,7 +267,7 @@ test('delete and create environment variables', function (assert) {
 test('delete and create crons', function (assert) {
   const done = assert.async();
 
-  settingsPage.visit({ organization: 'killjoys', repo: 'living-a-feminist-life' });
+  settingsPage.visit({ organization: 'org-login', repo: 'repository-name' });
 
   const deletedIds = [];
 
@@ -297,7 +296,7 @@ test('reload cron branches on branch:created', function (assert) {
     repository: this.repository,
   });
 
-  settingsPage.visit({ organization: 'killjoys', repo: 'living-a-feminist-life' });
+  settingsPage.visit({ organization: 'org-login', repo: 'repository-name' });
 
   andThen(() => {
     assert.equal(settingsPage.cronBranches.length, 1, 'expected only one branch');
@@ -322,7 +321,7 @@ test('reload cron branches on branch:created', function (assert) {
 });
 
 test('delete SSH key', function (assert) {
-  settingsPage.visit({ organization: 'killjoys', repo: 'living-a-feminist-life' });
+  settingsPage.visit({ organization: 'org-login', repo: 'repository-name' });
 
   const deletedIds = [];
 
@@ -360,7 +359,7 @@ test('add SSH key', function (assert) {
     };
   });
 
-  settingsPage.visit({ organization: 'killjoys', repo: 'living-a-feminist-life' });
+  settingsPage.visit({ organization: 'org-login', repo: 'repository-name' });
 
   settingsPage.sshKeyForm.fillDescription('hey');
   settingsPage.sshKeyForm.fillKey('hello');
@@ -375,11 +374,20 @@ test('add SSH key', function (assert) {
   });
 });
 
+test('the SSH key section is hidden for public repositories', function (assert) {
+  this.repository.private = false;
+  settingsPage.visit({ organization: 'org-login', repo: 'repository-name' });
+
+  andThen(() => {
+    assert.dom('[data-test-ssh-key-section]').doesNotExist();
+  });
+});
+
 test('on a repository with auto-cancellation', function (assert) {
   this.repository.createSetting({ name: 'auto_cancel_pushes', value: true });
   this.repository.createSetting({ name: 'auto_cancel_pull_requests', value: false });
 
-  settingsPage.visit({ organization: 'killjoys', repo: 'living-a-feminist-life' });
+  settingsPage.visit({ organization: 'org-login', repo: 'repository-name' });
 
   andThen(() => {
     assert.ok(settingsPage.autoCancellationSection.exists, 'expected auto-cancellation section to exist');

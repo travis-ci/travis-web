@@ -1,33 +1,41 @@
 import Component from '@ember/component';
 import { task } from 'ember-concurrency';
 import { service } from 'ember-decorators/service';
+import { computed } from 'ember-decorators/object';
 
 export default Component.extend({
-  @service storage: null,
   @service features: null,
   @service flashes: null,
   @service raven: null,
+  @service storage: null,
 
-  tagName: 'a',
+  tagName: 'button',
   classNames: ['switch'],
   classNameBindings: ['feature.enabled:active', 'disabled:disabled', 'disabled:inline-block'],
+  attributeBindings: ['aria-checked', 'role'],
+  role: 'switch',
 
-  click() {
-    this.get('toggleFeatureTask').perform(this.get('feature'));
+  @computed('active')
+  'aria-checked'(active) {
+    active ? 'true' : 'false';
   },
 
-  toggleFeatureTask: task(function* (feature) {
+  save: task(function* (feature) {
     try {
+      // try saving with the new state, only change local state if successful
       feature.toggleProperty('enabled');
       yield feature.save().then((feature) => {
         this.applyFeatureState(feature);
       });
     } catch (e) {
       this.get('raven').logException(e);
-      const errMsg = 'There was an error while switching the feature. Please try again.';
-      this.get('flashes').error(errMsg);
+      this.get('flashes').error('There was an error while saving your settings. Please try again.');
     }
-  }),
+  }).drop(),
+
+  click() {
+    this.get('save').perform(this.get('feature'));
+  },
 
   _persistToLocalStorage(feature, status) {
     const featureState = JSON.parse(this.get('storage').getItem('travis.features'));

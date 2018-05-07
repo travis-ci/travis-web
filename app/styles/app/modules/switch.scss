@@ -1,30 +1,31 @@
 .switch {
-  $switch-height: 32px;
-  $switch-width: 80px;
+  $switch-height: 20px;
+  $switch-width: 40px;
 
-  $switch-inner-width: 36px;
-  $switch-inner-heigth: 26px;
+  $switch-gap: 1px;
 
-  padding: 0;
+  $switch-inner-height: $switch-height - $switch-gap*2;
+  $switch-inner-width: $switch-inner-height;
+
+  padding-bottom: 3px;
 
   .switch-inner {
     display: inline-block;
     width: $switch-width;
     height: $switch-height;
     margin-right: 1em;
-    padding: 3px;
     vertical-align: middle;
     overflow: visible;
     background-color: darken($pebble-grey, 10);
-    border-radius: 3px;
+    border-radius: $switch-inner-width;
     border: none;
     cursor: pointer;
 
     span {
       width: $switch-inner-width;
-      height: $switch-inner-heigth;
-      border-radius: 2px;
-      background-color: $cement-grey;
+      height: $switch-inner-height;
+      border-radius: $switch-inner-width;
+      background-color: white;
       color: white;
       text-align: center;
       font-weight: 300;
@@ -34,8 +35,8 @@
   }
 
   span {
+    margin-top: $switch-gap;
     display: inline-block;
-    vertical-align: middle;
   }
 
   .label {
@@ -55,21 +56,25 @@
     margin-left: -49%;
 
     .icon-on {
-      margin-left: 1px;
+      @include colorSVG($oxide-blue);
+      stroke-width: 1.5px;
     }
   }
 
   .off {
-    margin-left: 36px;
+    margin-left: 50%;
+
+    .icon-off {
+      @include colorSVG(darken($pebble-grey, 10));
+      transform: translate(1px, 1px);
+      stroke-width: 1.5px;
+      padding-bottom: 2px;
+    }
   }
 
   &.active {
     .switch-inner {
-      background-color: $agate-blue;
-
-      span {
-        background-color: $oxide-blue;
-      }
+      background-color: $oxide-blue;
     }
 
     .on {
@@ -88,13 +93,7 @@
   }
 
   [class^="icon-"] {
-    @include colorSVG(white);
-
-    width: 15px;
+    width: 9px;
     height: 100%;
   }
-}
-
-.feature .switch .on {
-  margin-left: 0;
 }

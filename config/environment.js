@@ -32,8 +32,13 @@ module.exports = function (environment) {
       host: 'ws.pusherapp.com',
       debug: false
     },
+    intercom: {
+      appId: 'placeholder',
+      enabled: false
+    },
     urls: {
       about: 'https://about.travis-ci.com',
+      changelog: 'https://changelog.travis-ci.com',
       blog: 'https://blog.travis-ci.com',
       docs: 'https://docs.travis-ci.com',
       status: 'https://www.traviscistatus.com/',
@@ -44,6 +49,7 @@ module.exports = function (environment) {
       support: 'mailto:support@travis-ci.com'
     },
     endpoints: {},
+    githubApps: false,
     timing: {
       syncingPageRedirectionTime: 5000,
     },
@@ -55,6 +61,7 @@ module.exports = function (environment) {
       fetchRecordsForPusherUpdatesThrottle: 1000,
       repositoryFilteringDebounceRate: 200,
       syncingPolling: 3000,
+      githubAppsInstallationPolling: 4000,
     },
     githubOrgsOauthAccessSettingsUrl: 'https://github.com/settings/connections/applications/f244293c729d5066cf27',
     apiTraceEndpoint: 'https://papertrailapp.com/systems/travis-org-api-production/events?q=program%3Aapp%2Fweb%20log-tracing%20',
@@ -75,12 +82,15 @@ module.exports = function (environment) {
     'show-running-jobs-in-sidebar': false,
     'debug-builds': false,
     'broadcasts': true,
+    'beta-features': true,
+    'github-apps': false,
   };
 
   const { TRAVIS_PRO, TRAVIS_ENTERPRISE } = process.env;
 
   if (TRAVIS_PRO) {
     ENV.featureFlags['pro-version'] = true;
+    ENV.featureFlags['github-apps'] = true;
     ENV.pro = true;
   }
 
@@ -123,6 +133,12 @@ module.exports = function (environment) {
       ENV.urls.imprint = ENV.billingEndpoint + '/pages/imprint';
       ENV.urls.security = ENV.billingEndpoint + '/pages/security';
       ENV.urls.terms = ENV.billingEndpoint + '/pages/terms';
+
+      if (process.env.GITHUB_APPS_APP_NAME) {
+        ENV.githubApps = {
+          appName: process.env.GITHUB_APPS_APP_NAME
+        };
+      }
     }
 
     if (process.env.API_ENDPOINT) {
@@ -144,6 +160,13 @@ module.exports = function (environment) {
     if (process.env.API_TRACE_ENDPOINT) {
       ENV.apiTraceEndpoint = process.env.API_TRACE_ENDPOINT;
     }
+
+    if (process.env.INTERCOM_APP_ID) {
+      ENV.intercom = {
+        appId: process.env.INTERCOM_APP_ID,
+        enabled: true
+      };
+    }
   }
 
   if (environment === 'development') {
@@ -157,6 +180,10 @@ module.exports = function (environment) {
   }
 
   if (environment === 'test') {
+    ENV['ember-cli-mirage'] = {
+      autostart: true,
+    };
+
     // Testem prefers this...
     ENV.locationType = 'none';
 
@@ -167,9 +194,11 @@ module.exports = function (environment) {
     ENV.intervals.triggerBuildRequestDelay = 0;
     ENV.intervals.fetchRecordsForPusherUpdatesThrottle = 0;
     ENV.intervals.syncingPolling = 10;
+    ENV.intervals.githubAppsInstallationPolling = 10;
     ENV.timing.syncingPageRedirectionTime = 30;
 
     ENV.pagination.dashboardReposPerPage = 10;
+    ENV.pagination.profileReposPerPage = 10;
 
     ENV.APP.rootElement = '#ember-testing';
     ENV.APP.autoboot = false;
@@ -184,6 +213,10 @@ module.exports = function (environment) {
     };
 
     ENV.pusher = {};
+
+    ENV.githubApps = {
+      appName: 'travis-ci-testing'
+    };
 
     ENV.skipConfirmations = true;
 
@@ -201,6 +234,7 @@ module.exports = function (environment) {
     ENV.featureFlags['debug-logging'] = false;
     ENV.featureFlags['dashboard'] = false;
     ENV.featureFlags['pro-version'] = false;
+    ENV.featureFlags['github-apps'] = false;
 
     ENV.billingEndpoint = 'https://billing.travis-ci.com';
 
@@ -232,12 +266,12 @@ module.exports = function (environment) {
   // do it in the same way on the Ruby server.
   ENV.contentSecurityPolicyRaw = {
     'default-src': "'none'",
-    'script-src': "'self' https://ssl.google-analytics.com https://djtflbt20bdde.cloudfront.net/ https://js.pusher.com",
-    'font-src': "'self' https://fonts.googleapis.com/css https://fonts.gstatic.com",
-    'connect-src': "'self' ws://ws.pusherapp.com wss://ws.pusherapp.com https://*.pusher.com https://s3.amazonaws.com/archive.travis-ci.com/ https://s3.amazonaws.com/archive.travis-ci.org/ app.getsentry.com https://pnpcptp8xh9k.statuspage.io/ https://ssl.google-analytics.com",
-    'img-src': "'self' data: https://www.gravatar.com http://www.gravatar.com app.getsentry.com https://*.githubusercontent.com https://0.gravatar.com https://ssl.google-analytics.com",
-    'style-src': "'self' https://fonts.googleapis.com 'unsafe-inline' https://djtflbt20bdde.cloudfront.net",
-    'media-src': "'self'",
+    'script-src': "'self' https://ssl.google-analytics.com https://djtflbt20bdde.cloudfront.net/ https://js.pusher.com https://widget.intercom.io/ https://js.intercomcdn.com/",
+    'font-src': "'self' https://fonts.googleapis.com/css https://fonts.gstatic.com https://js.intercomcdn.com/",
+    'connect-src': "'self' ws://ws.pusherapp.com wss://ws.pusherapp.com https://*.pusher.com https://s3.amazonaws.com/archive.travis-ci.com/ https://s3.amazonaws.com/archive.travis-ci.org/ app.getsentry.com https://pnpcptp8xh9k.statuspage.io/ https://ssl.google-analytics.com https://api-iam.intercom.io https://api-ping.intercom.io https://nexus-websocket-a.intercom.io https://nexus-websocket-b.intercom.io wss://nexus-websocket-a.intercom.io wss://nexus-websocket-b.intercom.io",
+    'img-src': "'self' data: https://www.gravatar.com http://www.gravatar.com app.getsentry.com https://*.githubusercontent.com https://0.gravatar.com https://ssl.google-analytics.com https://static.intercomcdn.com https://js.intercomcdn.com",
+    'style-src': "'self' https://fonts.googleapis.com 'unsafe-inline' https://djtflbt20bdde.cloudfront.net https://widget.intercom.io",
+    'media-src': "'self' https://js.intercomcdn.com",
     'frame-src': "'self' https://djtflbt20bdde.cloudfront.net",
     'report-uri': 'https://65f53bfdfd3d7855b8bb3bf31c0d1b7c.report-uri.io/r/default/csp/reportOnly',
     'block-all-mixed-content': '',

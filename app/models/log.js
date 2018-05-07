@@ -5,13 +5,13 @@ import config from 'travis/config/environment';
 import { service } from 'ember-decorators/service';
 import { computed } from 'ember-decorators/object';
 import { gt } from 'ember-decorators/object/computed';
+import { task } from 'ember-concurrency';
 
 export default EmberObject.extend({
   @service features: null,
   @service auth: null,
 
   version: 0,
-  isLoaded: false,
   length: 0,
   @gt('parts.length', 0) hasContent: null,
 
@@ -28,11 +28,13 @@ export default EmberObject.extend({
     return parts.set('content', []);
   },
 
-  fetch() {
+
+  fetchTask: task(function* () {
     this.debug('log model: fetching log');
     this.clearParts();
 
     let id = this.get('job.id');
+
     const url = `${config.apiEndpoint}/job/${id}/log`;
     const token = this.get('auth.token');
     let headers = {
@@ -45,19 +47,18 @@ export default EmberObject.extend({
 
     // TODO: I'd like to clean API access to use fetch everywhere once we fully
     //       switch to API V3
-    return fetch(url, {
+    const response = yield fetch(url, {
       headers: new Headers(headers)
-    }).then((response) => {
-      if (response.ok) {
-        return response.json();
-      } else {
-        throw 'error';
-      }
-    }).then((json) => {
-      this.loadParts(json['log_parts']);
-      this.set('plainTextUrl', json['@raw_log_href']);
     });
-  },
+    let json;
+    if (response.ok) {
+      json = yield response.json();
+    } else {
+      throw 'error';
+    }
+    this.loadParts(json['log_parts']);
+    this.set('plainTextUrl', json['@raw_log_href']);
+  }),
 
   clear() {
     this.clearParts();
@@ -89,7 +90,6 @@ export default EmberObject.extend({
       part = parts[i];
       this.append(part);
     }
-    return this.set('isLoaded', true);
   },
 
   debug(message) {

@@ -12,7 +12,7 @@ import DurationAttributes from 'travis/mixins/duration-attributes';
 import attr from 'ember-data/attr';
 import { belongsTo } from 'ember-data/relationships';
 import { computed } from 'ember-decorators/object';
-import { alias, not } from 'ember-decorators/object/computed';
+import { alias, and, not } from 'ember-decorators/object/computed';
 import { service } from 'ember-decorators/service';
 
 import moment from 'moment';
@@ -107,7 +107,7 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
   },
 
   @alias('isFinished') canRestart: null,
-  @alias('isFinished') canDebug: null,
+  @and('isFinished', 'repo.private') canDebug: null,
 
   cancel() {
     const url = `/job/${this.get('id')}/cancel`;
@@ -121,7 +121,7 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
 
   reloadLog() {
     this.clearLog();
-    return this.get('log').fetch();
+    return this.get('log.fetchTask').perform();
   },
 
   restart() {
@@ -173,10 +173,10 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
     });
   },
 
-  @computed('repo.private', 'id', 'features.enterpriseVersion')
-  channelName(isRepoPrivate, id, enterprise) {
+  @computed('repo.private', 'id', 'features.enterpriseVersion', 'features.proVersion')
+  channelName(isRepoPrivate, id, enterprise, pro) {
     // Currently always using private channels on Enterprise
-    const usePrivateChannel = enterprise || isRepoPrivate;
+    const usePrivateChannel = enterprise || isRepoPrivate || pro;
     const prefix = usePrivateChannel ? 'private-job' : 'job';
     return `${prefix}-${id}`;
   },

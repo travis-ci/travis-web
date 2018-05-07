@@ -40,10 +40,21 @@
 .auth-button {
   @extend %button;
 
-  height: 36px;
-  color: #fff;
+  height: 32px;
+  width: 166px;
+  color: #2EB459;
+  font-size: 16px;
+  font-weight: 400;
+  border: 1px solid #2EB459;
+  border-radius: 2px;
+  padding: 9px 19px;
   line-height: 0.5;
-  background-color: $turf-green;
+
+  &:hover,
+  &:active {
+    color: white;
+    background-color: #2EB459;
+  }
 
   .label-align {
     line-height: 1.4;
@@ -65,11 +76,6 @@
   .icon {
     margin: 0 0 0 4px;
     vertical-align: top;
-  }
-
-  &:hover,
-  &:active {
-    background-color: darken($turf-green, 10);
   }
 }
 
@@ -100,6 +106,25 @@
   &:hover,
   &:active {
     background-color: darken($oxide-blue, 10);
+  }
+}
+
+.button--white {
+  @extend %button;
+  border: 2px solid $pebble-grey;
+  color: $asphalt-grey;
+}
+
+.button--green {
+  @extend %button;
+
+  border: none;
+  color: white;
+  background-color: $turf-green;
+
+  &:hover,
+  &:active {
+    background-color: darken($turf-green, 10);
   }
 }
 

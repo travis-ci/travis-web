@@ -2,6 +2,7 @@ import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import jobPage from 'travis/tests/pages/job';
 import topPage from 'travis/tests/pages/top';
+import signInUser from 'travis/tests/helpers/sign-in-user';
 
 moduleForAcceptance('Acceptance | jobs/debug', {
   beforeEach() {
@@ -13,7 +14,7 @@ moduleForAcceptance('Acceptance | jobs/debug', {
 test('debugging job', function (assert) {
   withFeature('debugBuilds');
 
-  let repo =  server.create('repository', { slug: 'travis-ci/travis-web' });
+  let repo =  server.create('repository', { slug: 'travis-ci/travis-web', private: true });
   let branch = server.create('branch', { name: 'acceptance-tests' });
 
   let  gitUser = server.create('git-user', { name: 'Mr T' });
