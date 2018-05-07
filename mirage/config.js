@@ -273,36 +273,21 @@ export default function () {
       });
     }
 
-    if (queryParams && queryParams['repository.managed_by_installation']) {
-      let paramValue = queryParams['repository.managed_by_installation'];
+    let filterableProperties = ['managed_by_installation', 'active_on_org', 'active'];
 
-      if (paramValue === 'true') {
-        repositories.models = repositories.models.filterBy('managed_by_installation');
-      } else {
-        repositories.models = repositories.models.rejectBy('managed_by_installation');
+    filterableProperties.forEach(property => {
+      let fullParamName = `repository.${property}`;
+
+      if (queryParams && queryParams[fullParamName]) {
+        let paramValue = queryParams[fullParamName];
+
+        if (paramValue === 'true') {
+          repositories.models = repositories.models.filterBy(property);
+        } else {
+          repositories.models = repositories.models.rejectBy(property);
+        }
       }
-    }
-
-    if (queryParams && queryParams['repository.active_on_org']) {
-      let paramValue = queryParams['repository.active_on_org'];
-
-      if (paramValue === 'true') {
-        repositories.models = repositories.models.filterBy('active_on_org');
-      } else {
-        repositories.models = repositories.models.rejectBy('active_on_org');
-      }
-    }
-
-    // FIXME three times!
-    if (queryParams && queryParams['repository.active']) {
-      let paramValue = queryParams['repository.active'];
-
-      if (paramValue === 'true') {
-        repositories.models = repositories.models.filterBy('active');
-      } else {
-        repositories.models = repositories.models.rejectBy('active');
-      }
-    }
+    });
 
     return this.serialize(repositories);
   });
