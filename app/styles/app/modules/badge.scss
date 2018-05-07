@@ -20,4 +20,25 @@
     font-weight: bold;
     text-transform: uppercase;
   }
+
+  &.deprecated {
+    color: $brick-red;
+    background-color: $quartz-red;
+    border-color: $brick-red;
+  }
+
+  &.grey {
+    color: $asphalt-grey;
+    background-color: $pebble-grey;
+  }
+
+  &.square {
+    border-radius: 0;
+    border-width: 0;
+    font-size: 0.7rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 0.1em 0.5em;
+    letter-spacing: 0.05em;
+  }
 }

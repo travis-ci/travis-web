@@ -65,8 +65,8 @@
 
   </section>
 
-{{#if config.endpoints.sshKey}}
-  <section class="settings-section">
+{{#if (and config.endpoints.sshKey repo.private)}}
+  <section class="settings-section" data-test-ssh-key-section>
     <h2 class="small-title">SSH Key</h2>
 
     {{#if model.customSshKey}}

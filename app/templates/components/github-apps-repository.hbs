@@ -1,0 +1,10 @@
+{{repository-visibility-icon repository=repository}}
+
+{{#link-to "repo" repository.owner.login repository.name class="profile-repo"}}
+  {{name}}
+{{/link-to}}
+
+{{#link-to "settings" repository.owner.login repository.name class="profile-settings button" title="Go to Travis CI repository settings"}}
+  {{svg-jar 'icon-settings' class="icon icon-hover"}}
+  Settings
+{{/link-to}}

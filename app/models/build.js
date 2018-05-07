@@ -137,9 +137,9 @@ export default Model.extend(DurationCalculations, {
     return this.get('api').post(url);
   },
 
-  @computed('jobs.[]')
-  canDebug(jobs) {
-    return jobs.get('length') === 1;
+  @computed('jobs.[]', 'repo.private')
+  canDebug(jobs, repoPrivate) {
+    return jobs.get('length') === 1 && repoPrivate;
   },
 
   debug() {

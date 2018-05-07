@@ -26,6 +26,7 @@ moduleForAcceptance('Acceptance | repo settings', {
     const repository = server.create('repository', {
       name: 'repository-name',
       slug: 'org-login/repository-name',
+      private: true
     });
     repository.attrs.permissions.create_cron = true;
 
@@ -370,6 +371,15 @@ test('add SSH key', function (assert) {
       description: 'hey',
       value: 'hello'
     });
+  });
+});
+
+test('the SSH key section is hidden for public repositories', function (assert) {
+  this.repository.private = false;
+  settingsPage.visit({ organization: 'org-login', repo: 'repository-name' });
+
+  andThen(() => {
+    assert.dom('[data-test-ssh-key-section]').doesNotExist();
   });
 });
 

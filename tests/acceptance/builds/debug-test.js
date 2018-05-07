@@ -15,7 +15,10 @@ module('Acceptance | builds/debug', function (hooks) {
   test('debugging single-job build', async function (assert) {
     enableFeature('debug-builds');
 
-    let repository =  server.create('repository');
+    let repository =  server.create('repository', {
+      private: true
+    });
+
     server.create('branch', {});
 
     let  gitUser = server.create('git-user', { name: 'Mr T' });

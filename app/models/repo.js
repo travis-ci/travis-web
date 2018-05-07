@@ -18,11 +18,13 @@ const Repo = Model.extend({
   slug: attr(),
   description: attr(),
   'private': attr('boolean'),
+  githubId: attr(),
   githubLanguage: attr(),
   active: attr(),
   owner: attr(),
   name: attr(),
   starred: attr('boolean'),
+  active_on_org: attr('boolean'),
 
   @oneWay('owner.@type') ownerType: null,
 
@@ -195,8 +197,8 @@ Repo.reopenClass({
 
   search(store, query) {
     return store.query('repo', {
-      slug_filter: query,
-      sort_by: 'slug_filter:desc',
+      name_filter: query,
+      sort_by: 'name_filter:desc',
       limit: 10
     });
   },

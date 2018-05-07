@@ -48,6 +48,7 @@ Router.map(function () {
   this.route('first_sync');
   this.route('insufficient_oauth_permissions');
   this.route('auth');
+  this.route('github_apps_installation', { path: '/settings/github-apps-installations/redirect' });
   this.route('plans', { path: '/plans' });
   this.route('team', { path: '/about' });
   this.route('logo', { path: '/logo' });
