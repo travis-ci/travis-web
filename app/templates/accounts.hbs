@@ -9,7 +9,6 @@
   <section class="profile-orgs">
     <h2>Organizations</h2>
     <ul class="profile-orgs-list">
-      {{!FIXME each account is highlighted when the route is loading}}
       {{#each organizations as |org|}}
         {{org-item account=org}}
       {{else}}
