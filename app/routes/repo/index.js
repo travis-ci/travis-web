@@ -39,7 +39,6 @@ export default TravisRoute.extend({
   renderTemplate() {
     let controller = this.controllerFor('repo');
 
-    // FIXME this is untested
     if (this.get('features.github-apps') && controller.get('repo.active_on_org')) {
       this.render('repo/active-on-org');
     } else if (!controller.get('repo.active')) {
