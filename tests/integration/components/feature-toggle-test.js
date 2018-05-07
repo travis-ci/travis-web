@@ -19,12 +19,12 @@ module('Integration | Component | feature toggle', function (hooks) {
 
     await render(hbs`{{feature-toggle feature=feature}}`);
 
-    assert.dom('a.switch').hasClass('active');
+    assert.dom('button.switch').hasClass('active');
 
     run(() => {
       feature.toggleProperty('enabled');
     });
 
-    assert.dom('a.switch').doesNotHaveClass('active');
+    assert.dom('button.switch').doesNotHaveClass('active');
   });
 });
