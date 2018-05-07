@@ -5,6 +5,9 @@ import { alias } from 'ember-decorators/object/computed';
 export default Component.extend({
   tagName: 'nav',
   classNames: ['pagination-navigation'],
+
+  queryParam: 'page',
+
   @alias('collection.pagination') pagination: null,
 
   @computed('pagination.{currentPage,isFirst}')

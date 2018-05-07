@@ -38,6 +38,7 @@ export default function () {
 
   this.urlPrefix = apiEndpoint;
   this.namespace = '';
+  this.logging = window.location.search.includes('mirage-logging=true');
 
   this.get('/users', function ({ users }, request)  {
     let userData = JSON.parse(localStorage.getItem('travis.user')),
@@ -89,6 +90,8 @@ export default function () {
       return {};
     }
   });
+
+  this.get('/subscriptions');
 
   this.get('/broadcasts', schema => {
     return schema.broadcasts.all();

@@ -1,5 +1,4 @@
 import TravisRoute from 'travis/routes/basic';
-// eslint-disable-next-line
 import config from 'travis/config/environment';
 import { computed } from 'ember-decorators/object';
 
@@ -16,9 +15,9 @@ export default TravisRoute.extend({
   },
 
   model(params) {
-    const account = this.modelFor('account');
+    const accountCompound = this.modelFor('account');
     // account is an Ember Data user or organization
-    if (!account.error) {
+    if (!accountCompound.error) {
       // TODO: Make perPage property configurable
       const offset = (params.page - 1) * this.get('recordsPerPage');
       return this.store.paginated(
@@ -28,7 +27,7 @@ export default TravisRoute.extend({
           sort_by: 'name',
           limit: this.get('recordsPerPage'),
           custom: {
-            owner: account.get('login'),
+            owner: accountCompound.account.get('login'),
             type: 'byOwner',
           },
         },
@@ -38,9 +37,9 @@ export default TravisRoute.extend({
   },
 
   setupController(controller, model) {
-    const account = this.modelFor('account');
-    if (!account.error) {
-      controller.set('login', account.get('login'));
+    const accountCompound = this.modelFor('account');
+    if (!accountCompound.error) {
+      controller.set('login', accountCompound.account.get('login'));
     }
     return this._super(...arguments);
   },

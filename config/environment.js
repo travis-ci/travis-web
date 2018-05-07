@@ -32,8 +32,13 @@ module.exports = function (environment) {
       host: 'ws.pusherapp.com',
       debug: false
     },
+    intercom: {
+      appId: 'placeholder',
+      enabled: false
+    },
     urls: {
       about: 'https://about.travis-ci.com',
+      changelog: 'https://changelog.travis-ci.com',
       blog: 'https://blog.travis-ci.com',
       docs: 'https://docs.travis-ci.com',
       status: 'https://www.traviscistatus.com/',
@@ -62,7 +67,6 @@ module.exports = function (environment) {
     logLimit: 10000,
     emojiPrepend: '',
     statusPageStatusUrl: 'https://pnpcptp8xh9k.statuspage.io/api/v2/status.json',
-    randomiseTeam: process.env.PERCY_ENABLE !== '1'
   };
 
   ENV.featureFlags = {
@@ -141,6 +145,13 @@ module.exports = function (environment) {
 
     if (process.env.API_TRACE_ENDPOINT) {
       ENV.apiTraceEndpoint = process.env.API_TRACE_ENDPOINT;
+    }
+
+    if (process.env.INTERCOM_APP_ID) {
+      ENV.intercom = {
+        appId: process.env.INTERCOM_APP_ID,
+        enabled: true
+      };
     }
   }
 
@@ -234,12 +245,12 @@ module.exports = function (environment) {
   // do it in the same way on the Ruby server.
   ENV.contentSecurityPolicyRaw = {
     'default-src': "'none'",
-    'script-src': "'self' https://ssl.google-analytics.com https://djtflbt20bdde.cloudfront.net/ https://js.pusher.com",
-    'font-src': "'self' https://fonts.googleapis.com/css https://fonts.gstatic.com",
-    'connect-src': "'self' ws://ws.pusherapp.com wss://ws.pusherapp.com https://*.pusher.com https://s3.amazonaws.com/archive.travis-ci.com/ https://s3.amazonaws.com/archive.travis-ci.org/ app.getsentry.com https://pnpcptp8xh9k.statuspage.io/ https://ssl.google-analytics.com",
-    'img-src': "'self' data: https://www.gravatar.com http://www.gravatar.com app.getsentry.com https://*.githubusercontent.com https://0.gravatar.com https://ssl.google-analytics.com",
-    'style-src': "'self' https://fonts.googleapis.com 'unsafe-inline' https://djtflbt20bdde.cloudfront.net",
-    'media-src': "'self'",
+    'script-src': "'self' https://ssl.google-analytics.com https://djtflbt20bdde.cloudfront.net/ https://js.pusher.com https://widget.intercom.io/ https://js.intercomcdn.com/",
+    'font-src': "'self' https://fonts.googleapis.com/css https://fonts.gstatic.com https://js.intercomcdn.com/",
+    'connect-src': "'self' ws://ws.pusherapp.com wss://ws.pusherapp.com https://*.pusher.com https://s3.amazonaws.com/archive.travis-ci.com/ https://s3.amazonaws.com/archive.travis-ci.org/ app.getsentry.com https://pnpcptp8xh9k.statuspage.io/ https://ssl.google-analytics.com https://api-iam.intercom.io https://api-ping.intercom.io https://nexus-websocket-a.intercom.io https://nexus-websocket-b.intercom.io wss://nexus-websocket-a.intercom.io wss://nexus-websocket-b.intercom.io",
+    'img-src': "'self' data: https://www.gravatar.com http://www.gravatar.com app.getsentry.com https://*.githubusercontent.com https://0.gravatar.com https://ssl.google-analytics.com https://static.intercomcdn.com https://js.intercomcdn.com",
+    'style-src': "'self' https://fonts.googleapis.com 'unsafe-inline' https://djtflbt20bdde.cloudfront.net https://widget.intercom.io",
+    'media-src': "'self' https://js.intercomcdn.com",
     'frame-src': "'self' https://djtflbt20bdde.cloudfront.net",
     'report-uri': 'https://65f53bfdfd3d7855b8bb3bf31c0d1b7c.report-uri.io/r/default/csp/reportOnly',
     'block-all-mixed-content': '',
