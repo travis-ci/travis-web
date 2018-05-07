@@ -253,14 +253,7 @@ export default JSONSerializer.extend({
           let meta = relationshipHash.meta || {};
           let relationshipIncluded = relationshipHash.included || [];
 
-          // FIXME this is a hack to allow the “minimal” installation to load in Mirage
-          let keyAllowsMinimalEmbedding =
-            key === 'installation';
-
-          // FIXME I’m only including installation because the Mirage serialiser has it as minimal?
-
-          if (meta.representation === 'standard' ||
-            (meta.representation === 'minimal' && keyAllowsMinimalEmbedding)) {
+          if (meta.representation === 'standard') {
             included.push(relationshipHash.data);
           }
 
