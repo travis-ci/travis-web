@@ -91,8 +91,6 @@ export default Controller.extend({
   },
 
   migrate: task(function* () {
-    // FIXME this is adapted from routes/account/repositories
-
     let queryParams = {
       sort_by: 'name',
       'repository.managed_by_installation': false,
