@@ -1,10 +1,27 @@
 .repo-header {
-  header {
+  header.name {
     @media #{$medium-up} {
       display: flex;
       flex-flow: row wrap;
       justify-content: flex-start;
       align-items: center;
+    }
+
+    .icon {
+      width: 26px;
+      height: 26px;
+
+      @include colorSVG($cement-grey);
+
+      &.private {
+        transform: translateY(1px);
+      }
+
+      &.public {
+        transform: translateY(4px);
+      }
+
+      margin-right: 10px;
     }
   }
 

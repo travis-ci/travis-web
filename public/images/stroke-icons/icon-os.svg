@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 22.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="icon-lock_1_" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
+	 y="0px" viewBox="0 0 16 16" style="enable-background:new 0 0 16 16;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:none;stroke:#9EA3A8;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+</style>
+<g id="icon-lock">
+	<polyline id="book-base" class="st0" points="7.089,13.343 13.523,13.343 13.524,1 2.176,1 2.176,13.343 4.46,13.343 	"/>
+	<line id="book-edge" class="st0" x1="2.176" y1="10.543" x2="13.524" y2="10.543"/>
+	<polygon id="bookmark" class="st0" points="4.46,12.239 4.46,14.995 5.854,13.71 7.089,14.946 7.089,12.239 	"/>
+	<line id="spine" class="st0" x1="4.199" y1="1" x2="4.199" y2="10.543"/>
+	<line id="line-work-bottom" class="st0" x1="5.635" y1="8.737" x2="6.265" y2="8.737"/>
+	<line id="line-work-middle-bottom" class="st0" x1="5.635" y1="6.782" x2="6.265" y2="6.782"/>
+	<line id="line-work-middle-top_1_" class="st0" x1="5.635" y1="4.828" x2="6.265" y2="4.828"/>
+	<line id="line-work-top_1_" class="st0" x1="5.635" y1="2.873" x2="6.265" y2="2.873"/>
+</g>
+</svg>
