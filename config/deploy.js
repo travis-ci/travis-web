@@ -26,7 +26,13 @@ module.exports = function (deployTarget) {
         let filePattern = pluginHelper.readConfigDefault('filePattern');
         return filePattern.replace('}', ',json}');
       },
-    }
+    },
+    manifest: {
+      filePattern: function (context, pluginHelper) {
+        let filePattern = pluginHelper.readConfigDefault('filePattern');
+        return filePattern.replace('}', ',json}');
+      },
+    },
   };
 
   if (VALID_DEPLOY_TARGETS.indexOf(deployTarget) === -1) {
