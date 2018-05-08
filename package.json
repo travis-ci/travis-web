@@ -88,7 +88,7 @@
     "ember-tooltips": "^2.9.2",
     "ember-truth-helpers": "^2.0.0",
     "ember-window-mock": "^0.4.0",
-    "emberx-select": "~3.1.0",
+    "emberx-select": "~3.1.1",
     "emoji-datasource-apple": "^4.0.0",
     "emoji-js": "^3.4.0",
     "eslint-plugin-ember": "^5.1.0",
