@@ -1,6 +1,6 @@
 import { run } from '@ember/runloop';
 import Service from '@ember/service';
-import LimitedArray from 'travis/utils/limited-array';
+import { A } from '@ember/array';
 import { computed } from 'ember-decorators/object';
 import { alias } from 'ember-decorators/object/computed';
 import { service } from 'ember-decorators/service';
@@ -39,10 +39,8 @@ export default Service.extend({
   },
 
   setup() {
-    this.set('flashes', LimitedArray.create({
-      limit: 1,
-      content: []
-    }));
+    // FIXME this was a limited array to prevent multiple simultaneous flashes
+    this.set('flashes', A());
   },
 
   @computed('flashes.[]')
