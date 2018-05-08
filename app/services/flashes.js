@@ -78,7 +78,8 @@ export default Service.extend({
         preamble,
         closeButton: messageTypeToCloseButton[type]
       };
-      this.get('flashes').unshiftObject(msg);
+      // FIXME is this bad??? haha
+      this.set('flashes', [msg]);
 
       if (!messageTypeToCloseButton[type]) {
         this.removeFlash(msg);
