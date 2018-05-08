@@ -10,6 +10,7 @@ module.exports = function () {
     fingerprint = false;
   } else {
     fingerprint = {
+      enabled: true,
       exclude: ['images/emoji', 'images/logos'],
       extensions: ['js', 'css', 'png', 'jpg', 'gif', 'map', 'svg', 'json'],
       generateAssetMap: true,
