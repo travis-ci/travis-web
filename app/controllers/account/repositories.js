@@ -26,6 +26,7 @@ export default Controller.extend({
 
   config,
   @alias('config.githubApps.appName') githubAppsAppName: null,
+  @alias('config.githubApps.migrationRepositoryCountLimit') migrationRepositoryCountLimit: null,
 
   @computed('githubAppsAppName', 'account.githubId')
   githubAppsActivationURL(appName, githubId) {
@@ -50,7 +51,9 @@ export default Controller.extend({
 
   @computed('hasGitHubAppsInstallation', 'model.deprecated.pagination.total')
   canMigrate(hasGitHubAppsInstallation, legacyRepositoryCount) {
-    return !hasGitHubAppsInstallation && legacyRepositoryCount <= 20 && legacyRepositoryCount > 0;
+    return !hasGitHubAppsInstallation &&
+      legacyRepositoryCount <= config.githubApps.migrationRepositoryCountLimit &&
+      legacyRepositoryCount > 0;
   },
 
   @action

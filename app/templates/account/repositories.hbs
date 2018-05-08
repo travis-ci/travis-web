@@ -94,7 +94,7 @@
           Activate
         {{/external-link-to}}
         <p>
-          We are only able to migrate accounts that have 20 or fewer repositories using the Legacy Services Integration.
+          We are only able to migrate accounts that have {{migrationRepositoryCountLimit}} or fewer repositories using the Legacy Services Integration.
           Please <a href='https://docs.travis-ci.com/user/open-source-on-travis-ci-com/#Existing-Open-Source-Repositories-on-travis-ci.org'>refer to our documentation</a> on how to migrate your account.
         </p>
       {{/if}}
@@ -106,9 +106,11 @@
   <header class='legacy-services-integration'>
     <h2>
       Legacy Services Integration
-      {{#external-link-to href='https://docs.travis-ci.com/user/open-source-on-travis-ci-com/' class='badge deprecated square' title='Read our documentation on open source migration'}}
-        Deprecated
-      {{/external-link-to}}
+      {{#if showGitHubApps}}
+        {{#external-link-to href='https://docs.travis-ci.com/user/open-source-on-travis-ci-com/' class='badge deprecated square' title='Read our documentation on open source migration'}}
+          Deprecated
+        {{/external-link-to}}
+      {{/if}}
     </h2>
   </header>
   {{#repository-filter

@@ -4,6 +4,7 @@ import profilePage from 'travis/tests/pages/profile';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { default as mockWindow, reset as resetWindow } from 'ember-window-mock';
 import Service from '@ember/service';
+import config from 'travis/config/environment';
 
 moduleForAcceptance('Acceptance | profile/basic layout', {
   beforeEach() {
@@ -184,6 +185,7 @@ test('view repositories', function (assert) {
 
     assert.notOk(profilePage.githubAppsInvitation.isVisible, 'expected GitHub Apps invitation not to be visible');
 
+    assert.ok(profilePage.deprecatedBadge.isVisible, 'expected deprecated badge to be visible');
     assert.equal(profilePage.administerableRepositories.length, 2, 'expected two classic repositories, with inactive repositories hidden');
 
     assert.equal(profilePage.administerableRepositories[0].name, 'other-repository-name');
@@ -303,6 +305,7 @@ test('view profiles when GitHub Apps is not present', function (assert) {
 
   andThen(() => {
     assert.notOk(profilePage.githubAppsInvitation.isVisible, 'expected GitHub Apps invitation to not be visible');
+    assert.notOk(profilePage.deprecatedBadge.isVisible, 'expected deprecated badge to not be visible');
   });
 
   profilePage.visit({ username: 'user-login' });
@@ -379,7 +382,7 @@ test('clicking the button to migrate to GitHub Apps sends the IDs of all legacy 
 });
 
 test('the migration button is not present when the owner has over 20 active legacy repositories', function (assert) {
-  for (let index = 0; index < 30; index++) {
+  for (let index = 0; index < config.githubApps.migrationRepositoryCountLimit + 1; index++) {
     server.create('repository', {
       name: `extra-repository-${index}`,
       owner: {
