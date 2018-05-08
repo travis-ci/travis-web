@@ -1,9 +1,8 @@
 import { run } from '@ember/runloop';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, click, triggerEvent } from '@ember/test-helpers';
+import { render, click, fillIn, triggerEvent } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import fillIn from '../../helpers/fill-in';
 import DS from 'ember-data';
 import { percySnapshot } from 'ember-percy';
 
@@ -31,8 +30,8 @@ module('Integration | Component | add ssh-key', function (hooks) {
     assert.ok(! sshKey.get('value'), 'value should be blank');
     assert.equal(sshKey.get('id'), 1, 'ssh key id is set to repo id');
 
-    fillIn(this.$('.ssh-description'), 'FOO');
-    fillIn(this.$('.ssh-value'), 'bar');
+    fillIn('.ssh-description', 'FOO');
+    fillIn('.ssh-value', 'bar');
 
     await click('.form-submit');
 
@@ -68,8 +67,8 @@ module('Integration | Component | add ssh-key', function (hooks) {
     assert.ok(! sshKey.get('value'), 'value should be blank');
     assert.equal(sshKey.get('id'), 1, 'ssh key id is set to repo id');
 
-    fillIn(this.$('.ssh-description'), 'FOO');
-    fillIn(this.$('.ssh-value'), '');
+    fillIn('.ssh-description', 'FOO');
+    fillIn('.ssh-value', '');
 
     await click('.form-submit');
 
@@ -77,7 +76,7 @@ module('Integration | Component | add ssh-key', function (hooks) {
 
     percySnapshot(assert);
 
-    fillIn(this.$('.ssh-value'), 'bar');
+    fillIn('.ssh-value', 'bar');
     await triggerEvent('.ssh-value', 'change');
     assert.dom('.form-error-message').doesNotExist('error message is removed if value is filled in');
   });
