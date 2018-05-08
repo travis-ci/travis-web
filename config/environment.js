@@ -132,7 +132,8 @@ module.exports = function (environment) {
 
       if (process.env.GITHUB_APPS_APP_NAME) {
         ENV.githubApps = {
-          appName: process.env.GITHUB_APPS_APP_NAME
+          appName: process.env.GITHUB_APPS_APP_NAME,
+          migrationRepositoryCountLimit: 50
         };
       }
     }
@@ -211,7 +212,8 @@ module.exports = function (environment) {
     ENV.pusher = {};
 
     ENV.githubApps = {
-      appName: 'travis-ci-testing'
+      appName: 'travis-ci-testing',
+      migrationRepositoryCountLimit: 20
     };
 
     ENV.skipConfirmations = true;
