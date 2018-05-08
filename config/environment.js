@@ -71,8 +71,7 @@ module.exports = function (environment) {
     statusPageStatusUrl: 'https://pnpcptp8xh9k.statuspage.io/api/v2/status.json',
     ifa: {
       enabled: true,
-      // FIXME just trying this out
-      inline: true
+      inline: false
     }
   };
 
