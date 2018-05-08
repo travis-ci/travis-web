@@ -185,6 +185,7 @@ test('view repositories', function (assert) {
 
     assert.notOk(profilePage.githubAppsInvitation.isVisible, 'expected GitHub Apps invitation not to be visible');
 
+    assert.ok(profilePage.deprecatedBadge.isVisible, 'expected deprecated badge to be visible');
     assert.equal(profilePage.administerableRepositories.length, 2, 'expected two classic repositories, with inactive repositories hidden');
 
     assert.equal(profilePage.administerableRepositories[0].name, 'other-repository-name');
@@ -304,6 +305,7 @@ test('view profiles when GitHub Apps is not present', function (assert) {
 
   andThen(() => {
     assert.notOk(profilePage.githubAppsInvitation.isVisible, 'expected GitHub Apps invitation to not be visible');
+    assert.notOk(profilePage.deprecatedBadge.isVisible, 'expected deprecated badge to not be visible');
   });
 
   profilePage.visit({ username: 'user-login' });

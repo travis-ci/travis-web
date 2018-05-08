@@ -106,9 +106,11 @@
   <header class='legacy-services-integration'>
     <h2>
       Legacy Services Integration
-      {{#external-link-to href='https://docs.travis-ci.com/user/open-source-on-travis-ci-com/' class='badge deprecated square' title='Read our documentation on open source migration'}}
-        Deprecated
-      {{/external-link-to}}
+      {{#if showGitHubApps}}
+        {{#external-link-to href='https://docs.travis-ci.com/user/open-source-on-travis-ci-com/' class='badge deprecated square' title='Read our documentation on open source migration'}}
+          Deprecated
+        {{/external-link-to}}
+      {{/if}}
     </h2>
   </header>
   {{#repository-filter

@@ -54,6 +54,7 @@ export default create({
   notFoundOrgName: text('.page-title .h2--red'),
 
   administerableRepositories: existingRepositoriesCollection('#administerable-repositories'),
+  deprecatedBadge: { scope: '.badge.deprecated' },
 
   githubAppsInvitation: {
     scope: '#github-apps-invitation',
