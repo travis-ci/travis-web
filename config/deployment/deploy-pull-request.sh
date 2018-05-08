@@ -1,6 +1,6 @@
-export CLEANED_BRANCH_SUBDOMAIN=`echo $TRAVIS_PULL_REQUEST_BRANCH | tr '.' '-' | tr '[:upper:]' '[:lower:]'`
+export CLEANED_BRANCH_SUBDOMAIN=`echo $TRAVIS_PULL_REQUEST_BRANCH | tr '.' '-' | tr '/' '-' | tr '[:upper:]' '[:lower:]'`
 
-./config/deployment/store-redis-urls.sh
+eval $(./config/deployment/store-redis-urls.sh)
 
 if [[ $TRAVIS_PULL_REQUEST_BRANCH = *staging* ]]
 then

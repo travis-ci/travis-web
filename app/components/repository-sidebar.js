@@ -7,12 +7,14 @@ import { task } from 'ember-concurrency';
 import { computed } from 'ember-decorators/object';
 import { alias } from 'ember-decorators/object/computed';
 import { service } from 'ember-decorators/service';
+import config from 'travis/config/environment';
 
 export default Component.extend({
   @service tabStates: null,
   @service jobState: null,
   @service('updateTimes') updateTimesService: null,
   @service repositories: null,
+  @service features: null,
   @service store: null,
   @service auth: null,
   @service router: null,
@@ -25,7 +27,7 @@ export default Component.extend({
     // templates...
     schedule('afterRender', () => {
       this.get('fetchRepositoryData').perform();
-      if (this.get('features.proVersion')) {
+      if (this.get('features.showRunningJobsInSidebar')) {
         this.get('jobState.fetchRunningJobs').perform();
         this.get('jobState.fetchQueuedJobs').perform();
       }
@@ -42,7 +44,7 @@ export default Component.extend({
     }
 
     if (!Ember.testing) {
-      Visibility.every(this.config.intervals.updateTimes, () => {
+      Visibility.every(config.intervals.updateTimes, () => {
         const callback = (record) => record.get('currentBuild');
         const withCurrentBuild = this.get('_data').filter(callback).map(callback);
         this.get('updateTimesService').push(withCurrentBuild);
@@ -74,15 +76,15 @@ export default Component.extend({
     return runningAmount + queuedAmount;
   },
 
-  @computed('features.proVersion', 'jobState.runningJobs.[]')
-  runningJobs(proVersion, runningJobs) {
-    if (!proVersion) { return []; }
+  @computed('features.showRunningJobsInSidebar', 'jobState.runningJobs.[]')
+  runningJobs(showRunningJobs, runningJobs) {
+    if (!showRunningJobs) { return []; }
     return runningJobs;
   },
 
-  @computed('features.proVersion', 'jobState.queuedJobs.[]')
-  queuedJobs(proVersion, queuedJobs) {
-    if (!proVersion) { return []; }
+  @computed('features.showRunningJobsInSidebar', 'jobState.queuedJobs.[]')
+  queuedJobs(showRunningJobs, queuedJobs) {
+    if (!showRunningJobs) { return []; }
     return queuedJobs;
   },
 
@@ -99,14 +101,17 @@ export default Component.extend({
 
   @computed('tab', 'repositories.{searchResults.[],accessible.[]}')
   repositoryResults(tab, searchResults, accessible) {
+    let results = accessible;
+
     if (tab === 'search') {
-      return searchResults;
+      results =  searchResults;
     }
-    return accessible;
+
+    return results.filter(repo => repo.get('active'));
   },
 
-  @computed('tab')
-  showRunningJobs(tab) {
-    return tab === 'running';
+  @computed('tab', 'features.showRunningJobsInSidebar')
+  showRunningJobs(tab, featureEnabled) {
+    return featureEnabled && tab === 'running';
   },
 });

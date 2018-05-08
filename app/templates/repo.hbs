@@ -1,7 +1,16 @@
 <div class="wrapper {{if auth.signedOut 'centered'}} {{if features.dashboard 'centered'}}">
-  {{top-bar
-    signIn=(route-action 'signIn')
-    signOut=(route-action 'signOut')}}
+
+  {{#if showGitHubAppsCTA}}
+    {{#top-bar}}
+      <div class='cta'>
+        <p class='row'>
+          Join over 500,000 developers testing and building on Travis CI
+        </p>
+      </div>
+    {{/top-bar}}
+  {{else}}
+    {{top-bar}}
+  {{/if}}
 
   {{flash-display}}
 

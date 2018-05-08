@@ -1,6 +1,5 @@
-import PageObject from 'travis/tests/page-object';
-
-let {
+import {
+  create,
   visitable,
   clickable,
   collection,
@@ -8,11 +7,12 @@ let {
   isVisible,
   text,
   attribute
-} = PageObject;
+} from 'ember-cli-page-object';
+
 
 import ymlMessages from './yml-messages';
 
-export default PageObject.create({
+export default create({
   visit: visitable('travis-ci/travis-web/jobs/1'),
 
   branch: text('.commit-branch'),
@@ -29,51 +29,39 @@ export default PageObject.create({
 
   ymlMessages,
 
-  logLines: collection({
-    scope: 'pre#log',
+  logLines: collection('pre#log .log-line span:first-of-type', {
+    text: text(),
+    nextText: text('+ span'),
 
-    itemScope: '.log-line span:first-of-type',
+    isBlack: hasClass('black'),
+    isRed: hasClass('red'),
+    isGreen: hasClass('green'),
+    isYellow: hasClass('yellow'),
+    isBlue: hasClass('blue'),
+    isMagenta: hasClass('magenta'),
+    isCyan: hasClass('cyan'),
+    isWhite: hasClass('white'),
+    isGrey: hasClass('grey'),
 
-    item: {
-      text: text(),
-      nextText: text('+ span'),
+    hasBlackBackground: hasClass('bg-black'),
+    hasRedBackground: hasClass('bg-red'),
+    hasGreenBackground: hasClass('bg-green'),
+    hasYellowBackground: hasClass('bg-yellow'),
+    hasBlueBackground: hasClass('bg-blue'),
+    hasMagentaBackground: hasClass('bg-magenta'),
+    hasCyanBackground: hasClass('bg-cyan'),
+    hasWhiteBackground: hasClass('bg-white'),
 
-      isBlack: hasClass('black'),
-      isRed: hasClass('red'),
-      isGreen: hasClass('green'),
-      isYellow: hasClass('yellow'),
-      isBlue: hasClass('blue'),
-      isMagenta: hasClass('magenta'),
-      isCyan: hasClass('cyan'),
-      isWhite: hasClass('white'),
-      isGrey: hasClass('grey'),
-
-      hasBlackBackground: hasClass('bg-black'),
-      hasRedBackground: hasClass('bg-red'),
-      hasGreenBackground: hasClass('bg-green'),
-      hasYellowBackground: hasClass('bg-yellow'),
-      hasBlueBackground: hasClass('bg-blue'),
-      hasMagentaBackground: hasClass('bg-magenta'),
-      hasCyanBackground: hasClass('bg-cyan'),
-      hasWhiteBackground: hasClass('bg-white'),
-
-      isBolded: hasClass('bold'),
-      isItalicised: hasClass('italic'),
-      isUnderlined: hasClass('underline')
-    }
+    isBolded: hasClass('bold'),
+    isItalicised: hasClass('italic'),
+    isUnderlined: hasClass('underline')
   }),
 
-  logFolds: collection({
-    scope: 'pre#log',
-
-    itemScope: '.fold-start',
-
-    item: {
-      name: text('span.fold-name'),
-      duration: text('.duration'),
-      toggle: clickable('.log-line:first-of-type'),
-      isOpen: hasClass('open')
-    }
+  logFolds: collection('pre#log .fold-start', {
+    name: text('span.fold-name'),
+    duration: text('.duration'),
+    toggle: clickable('.log-line:first-of-type'),
+    isOpen: hasClass('open')
   }),
 
   restartJob: clickable('.action-button--restart'),

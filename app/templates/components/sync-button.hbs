@@ -8,5 +8,7 @@
     {{svg-jar 'icon-restart' class="icon white"}}
     <span class="label-align">Sync account</span>
   </button>
-  <p class="sync-last">Last synced {{format-time user.syncedAt}}</p>
+  <div class='sync-last-container'>
+    <span class="sync-last">Last synced {{format-time user.syncedAt}}</span>
+  </div>
 {{/if}}

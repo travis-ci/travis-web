@@ -1,6 +1,5 @@
-import PageObject from 'travis/tests/page-object';
-
-let {
+import {
+  create,
   attribute,
   clickable,
   collection,
@@ -8,39 +7,35 @@ let {
   isVisible,
   text,
   visitable
-} = PageObject;
+} from 'ember-cli-page-object';
 
-export default PageObject.create({
+export default create({
   visitBuildHistory: visitable(':organization/:repo/builds'),
   visitPullRequests: visitable(':organization/:repo/pull_requests'),
 
   showsNoBuildsMessaging: text('.missing-notice h2.page-title'),
 
-  builds: collection({
-    itemScope: '.build-list .pr-row',
+  builds: collection('.build-list .pr-row', {
+    name: text('.build-info a'),
 
-    item: {
-      name: text('.build-info a'),
+    created: hasClass('created'),
+    started: hasClass('started'),
 
-      created: hasClass('created'),
-      started: hasClass('started'),
+    passed: hasClass('passed'),
+    failed: hasClass('failed'),
+    errored: hasClass('errored'),
 
-      passed: hasClass('passed'),
-      failed: hasClass('failed'),
-      errored: hasClass('errored'),
+    commitSha: text('.row-commit .label-align'),
+    committer: text('.row-committer .label-align'),
+    commitDate: text('.row-calendar .label-align'),
+    requestIconTitle: attribute('title', '.row-item.request span[title]'),
+    duration: text('.row-duration .label-align'),
+    message: text('.row-message'),
 
-      commitSha: text('.row-commit .label-align'),
-      committer: text('.row-committer .label-align'),
-      commitDate: text('.row-calendar .label-align'),
-      requestIconTitle: attribute('title', '.row-item.request span[title]'),
-      duration: text('.row-duration .label-align'),
-      message: text('.row-message'),
-
-      cancelButton: {
-        scope: '.action-button--cancel',
-        visible: isVisible(),
-        click: clickable()
-      }
+    cancelButton: {
+      scope: '.action-button--cancel',
+      visible: isVisible(),
+      click: clickable()
     }
   }),
 

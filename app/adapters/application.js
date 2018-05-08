@@ -4,6 +4,7 @@ import { service } from 'ember-decorators/service';
 
 export default ActiveModelAdapter.extend({
   @service auth: null,
+  @service features: null,
 
   host: config.apiEndpoint,
   coalesceFindRequests: true,
@@ -24,7 +25,7 @@ export default ActiveModelAdapter.extend({
     hash.headers['accept'] = 'application/json; version=2';
     hash.headers['X-Client-Release'] = config.release;
 
-    let token = this.get('auth').token();
+    let token = this.get('auth.token');
     if (token) {
       if (!hash.headers['Authorization']) {
         hash.headers['Authorization'] = `token ${token}`;

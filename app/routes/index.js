@@ -6,13 +6,14 @@ export default Route.extend({
   @service auth: null,
   @service tabStates: null,
   @service repositories: null,
+  @service features: null,
 
   redirect() {
     if (this.get('auth.signedIn')) {
       if (this.get('features.dashboard')) {
         this.transitionTo('dashboard');
       }
-    } else if (this.get('features.enterprise')) {
+    } else if (this.get('features.enterpriseVersion')) {
       this.transitionTo('auth');
     }
   },

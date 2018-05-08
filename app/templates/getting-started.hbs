@@ -1,8 +1,6 @@
 <div class="wrapper {{if auth.signedOut 'centered'}}">
 
-  {{top-bar
-    signIn=(route-action 'signIn')
-    signOut=(route-action 'signOut')}}
+  {{top-bar}}
 
   {{flash-display}}
 
@@ -16,34 +14,29 @@
           <li>
             {{svg-jar 'hooks-step-1-01' class="getting-started-image"}}
             <div>
-              <h2 class="h3--green">Activate GitHub Repositories</h2>
-              <p>Once you're signed in, and we've initially synchronized your repositories from GitHub, go to your {{#link-to "profile" id="profile-page-link"}}profile{{/link-to}} page for open source or for your private projects.</p>
-              <p>You'll see all the organizations you're a member of and all the repositories you have access to. The ones you have administrative access to are the ones you can enable the service hook for.</p>
-              <p>Flip the switch to on for all repositories you'd like to enable.</p>
+              <h2 class="h3--green">Activate your GitHub repositories</h2>
+              <p>Once you're signed in, go to your profile page where you'll see all the organizations you're a member of.</p>
+              <p>You can install the GitHub App integration by clicking the Activate button for each organization you would like to use with
+              Travis CI.</p>
+              <p>Please note: You need to be an admin for any repositories you want to setup on Travis CI.</p>
             </div>
           </li>
           <li>
             {{svg-jar 'hooks-step-2-01' class="getting-started-image"}}
             <div>
-              <h2 class="h3--green">Add .travis.yml file to your repository</h2>
-              <p>In order for Travis CI to build your project, you need to tell the systems a little bit about it. You'll need to add a file named .travis.yml to the root of your repository.</p>
-              <p>If .travis.yml is not in the repository, is misspelled or is not valid YAML, Travis CI will ignore it.</p>
+              <h2 class="h3--green">Add a .travis.yml file to your repository</h2>
+              <p>In order for Travis CI to build your project, you'll need to add a .travis.yml configuration file to the root directory
+              of your repository.</p>
+              <p>If a .travis.yml is not in your repository, or is not valid YAML, Travis CI will ignore it.</p>
               <p>Here you can find some of our basic <a href="http://docs.travis-ci.com/user/language-specific/" title="Progamming languages that Travis CI supports">language examples</a>.</p>
             </div>
           </li>
           <li>
             {{svg-jar 'hooks-step-3-01' class="getting-started-image"}}
             <div>
-              <h2 class="h3--green">Trigger your first build with a git push</h2>
-              <p>Once the GitHub hook is set up, push your commit that adds .travis.yml to your repository. That should add a build into one of the queues on Travis CI and your build will start as soon as one worker for your language is available.</p>
-              <p>To start a build, perform one of the following:</p>
-              <ul>
-                <li>Commit and push something to your repository</li>
-                <li>Go to your repository's settings page, click on "Webhooks & Services" on the left menu, choose "Travis CI" in the "Services", and use the "Test service" button.</li>
-              </ul>
-              <p class="note">
-                <strong>Note:</strong> You cannot trigger your first build using Test Hook button. It has to be triggered by a push to your repository.
-              </p>
+              <h2 class="h3--green">Trigger your first build</h2>
+              <p>You've configured the GitHub App integration, and added a .travis.yml file to your repository, all you need to do now is
+              commit it to your local git history and git push it to GitHub!</p>
             </div>
           </li>
         </ol>

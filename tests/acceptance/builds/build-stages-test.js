@@ -34,10 +34,9 @@ test('visiting build with one stage', function (assert) {
   waitForElement('.jobs.stage .stage-header.passed');
 
   andThen(function () {
-    assert.equal(buildPage.stages().count, 1, 'expected one build stage');
-    assert.notOk(buildPage.ymlMessages().isVisible, 'expected no yml messages container');
+    assert.equal(buildPage.stages.length, 1, 'expected one build stage');
 
-    buildPage.stages(0).as(stage => {
+    buildPage.stages[0].as(stage => {
       assert.ok(stage.isPassed);
     });
   });
@@ -83,34 +82,32 @@ test('visiting build with stages and an unknown config message', function (asser
   waitForElement('.jobs.stage .stage-header.passed');
 
   andThen(function () {
-    assert.equal(buildPage.stages().count, 2, 'expected two build stages');
+    assert.equal(buildPage.stages.length, 2, 'expected two build stages');
 
-    assert.ok(buildPage.ymlMessages().isVisible, 'expected a yml messages container');
+    assert.equal(buildPage.ymlMessages.length, 1, 'expected one yml message');
 
-    assert.equal(buildPage.ymlMessages().count, 1, 'expected one yml message');
-
-    buildPage.ymlMessages(0).as(info => {
+    buildPage.ymlMessages[0].as(info => {
       assert.ok(info.icon.isInfo, 'expected the yml message to be an info');
       assert.equal(info.message, 'unrecognised message code skortleby');
     });
 
-    buildPage.stages(0).as(stage => {
+    buildPage.stages[0].as(stage => {
       assert.equal(stage.name, 'first', 'expected the stages to be numerically sorted');
       assert.equal(stage.nameEmojiTitle, 'two_men_holding_hands');
       assert.ok(stage.isPassed);
       assert.equal(stage.stateTitle, 'Stage passed');
       assert.equal(stage.duration, '1 min 11 sec');
-      assert.equal(stage.jobs(0).number, '1234.1');
-      assert.equal(stage.jobs(1).number, '1234.2');
+      assert.equal(stage.jobs[0].number, '1234.1');
+      assert.equal(stage.jobs[1].number, '1234.2');
       assert.equal(stage.allowFailures.text, 'Your build matrix was set to allow the failure of job 1234.2 so we continued this build to the next stage.');
     });
 
-    buildPage.stages(1).as(stage => {
+    buildPage.stages[1].as(stage => {
       assert.equal(stage.name, 'second');
       assert.ok(stage.isFailed);
       assert.equal(stage.stateTitle, 'Stage failed');
       assert.equal(stage.duration, '11 sec');
-      assert.equal(stage.jobs(0).number, '1234.999');
+      assert.equal(stage.jobs[0].number, '1234.999');
       assert.ok(stage.allowFailures.isHidden, 'expected no allowed failures text');
     });
   });

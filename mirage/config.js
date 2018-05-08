@@ -1,12 +1,22 @@
 /* global server */
-import Mirage from 'ember-cli-mirage';
+import { Response } from 'ember-cli-mirage';
 import config from 'travis/config/environment';
 import fuzzysort from 'npm:fuzzysort';
 import { merge } from '@ember/polyfills';
 
-const { apiEndpoint } = config;
+const { validAuthToken, apiEndpoint } = config;
 
 export default function () {
+  const _defaultHandler = this.pretender._handlerFor;
+
+  this.pretender._handlerFor = function (verb, path, request) {
+    const authHeader = request.requestHeaders.Authorization;
+    if (authHeader && authHeader !== `token ${validAuthToken}`) {
+      return _defaultHandler.apply(this, ['GET', '/unauthorized', request]);
+    }
+    return _defaultHandler.apply(this, arguments);
+  };
+
   this.get('https://pnpcptp8xh9k.statuspage.io/api/v2/status.json', function () {
     return {
       'page': {
@@ -22,17 +32,18 @@ export default function () {
     };
   });
 
+  this.get('/unauthorized', function () {
+    return new Response(403, {}, {});
+  });
+
   this.urlPrefix = apiEndpoint;
   this.namespace = '';
+  this.logging = window.location.search.includes('mirage-logging=true');
 
   this.get('/users', function ({ users }, request)  {
-    if (request.requestHeaders.Authorization === 'token testUserToken') {
-      let userData = JSON.parse(localStorage.getItem('travis.user')),
-        id = userData.id;
-      return this.serialize(users.find(id), 'v2');
-    } else {
-      return new Mirage.Response(403, {}, {});
-    }
+    let userData = JSON.parse(localStorage.getItem('travis.user')),
+      id = userData.id;
+    return this.serialize(users.find(id), 'v2');
   });
 
   this.get('/accounts', (schema/* , request*/) => {
@@ -42,12 +53,16 @@ export default function () {
     return { accounts: users.concat(accounts) };
   });
 
+  this.get('/orgs', function (schema) {
+    return schema.organizations.all();
+  });
+
+  this.get('/user', function (schema) {
+    return this.serialize(schema.users.first(), 'v3');
+  });
+
   this.get('/users/:id', function ({ users }, request) {
-    if (request.requestHeaders.Authorization === 'token testUserToken') {
-      return this.serialize(users.find(request.params.id), 'v2');
-    } else {
-      return new Mirage.Response(403, {}, {});
-    }
+    return this.serialize(users.find(request.params.id), 'v2');
   });
 
   this.get('/users/permissions', (schema, request) => {
@@ -76,13 +91,15 @@ export default function () {
     }
   });
 
+  this.get('/subscriptions');
+
   this.get('/broadcasts', schema => {
     return schema.broadcasts.all();
   });
 
-  this.get('/repos', function (schema, request) {
+  this.get('/repos', function (schema, {queryParams}) {
     // search apparently still uses v2, so different response necessary
-    const query = request.queryParams.search;
+    const query = queryParams.search;
     if (query) {
       const allRepositories = schema.repositories.all();
       const filtered = allRepositories.models.filter(repo => repo.attrs.slug.includes(query));
@@ -93,9 +110,17 @@ export default function () {
 
     let repos = schema.repositories.all();
 
-    let starred = request.queryParams['starred'];
+    let starred = queryParams['starred'];
     if (starred) {
       repos = repos.filter(repo => repo.starred);
+    }
+
+    if (queryParams && queryParams['repository.active']) {
+      let paramValue = queryParams['repository.active'];
+
+      if (paramValue === 'true') {
+        repos = repos.filter(repo => repo.active);
+      }
     }
 
     // standard v3 response returning all repositories
@@ -230,7 +255,7 @@ export default function () {
     if (owner) {
       return this.serialize(owner, 'owner');
     } else {
-      return new Mirage.Response(404, {}, {});
+      return new Response(404, {}, {});
     }
   });
 
@@ -242,11 +267,28 @@ export default function () {
       repositories.models = repositories.models.sortBy(queryParams.sort_by);
     }
 
-    if (queryParams && queryParams.slug_filter) {
+    if (queryParams && queryParams.name_filter) {
       repositories.models = repositories.models.filter((repo) => {
-        return fuzzysort.single(queryParams.slug_filter, repo.slug);
+        return fuzzysort.single(queryParams.name_filter, repo.name);
       });
     }
+
+    let filterableProperties = ['managed_by_installation', 'active_on_org', 'active'];
+
+    filterableProperties.forEach(property => {
+      let fullParamName = `repository.${property}`;
+
+      if (queryParams && queryParams[fullParamName]) {
+        let paramValue = queryParams[fullParamName];
+
+        if (paramValue === 'true') {
+          repositories.models = repositories.models.filterBy(property);
+        } else {
+          repositories.models = repositories.models.rejectBy(property);
+        }
+      }
+    });
+
     return this.serialize(repositories);
   });
 
@@ -256,7 +298,7 @@ export default function () {
       .models
       .map(sshKey => sshKey.destroyRecord());
 
-    return new Mirage.Response(204, {}, {});
+    return new Response(204, {}, {});
   });
 
   this.get('/settings/ssh_key/:repo_id', function (schema, request) {
@@ -333,16 +375,16 @@ export default function () {
         result: true
       };
     } else {
-      return new Mirage.Response(404, {}, {});
+      return new Response(404, {}, {});
     }
   });
 
   this.post('/build/:id/cancel', (schema, request) => {
     let build = schema.builds.find(request.params.id);
     if (build) {
-      return new Mirage.Response(204, {}, {});
+      return new Response(204, {}, {});
     } else {
-      return new Mirage.Response(404, {}, {});
+      return new Response(404, {}, {});
     }
   });
 
@@ -354,16 +396,16 @@ export default function () {
         result: true
       };
     } else {
-      return new Mirage.Response(404, {}, {});
+      return new Response(404, {}, {});
     }
   });
 
   this.post('/job/:id/cancel', (schema, request) => {
     let job = schema.jobs.find(request.params.id);
     if (job) {
-      return new Mirage.Response(204, {}, {});
+      return new Response(204, {}, {});
     } else {
-      return new Mirage.Response(404, {}, {});
+      return new Response(404, {}, {});
     }
   });
 
@@ -401,13 +443,19 @@ export default function () {
     return this.serialize(builds, 'build');
   });
 
+  this.get('/requests', function (schema, request) {
+    let requests = schema.requests.where({ repositoryId: request.queryParams.repository_id });
+
+    return requests;
+  });
+
   this.post('/repo/:repo_id/requests', function (schema, request) {
     const requestBody = JSON.parse(request.requestBody);
     const fakeRequestId = 5678;
     let repository = schema.find('repository', request.params.repo_id);
     server.create('build', { number: '2', id: 9999,  repository, state: 'started' });
 
-    return new Mirage.Response(200, {}, {
+    return new Response(200, {}, {
       request: {
         id: fakeRequestId,
         message: requestBody.request.message,
@@ -421,7 +469,7 @@ export default function () {
   this.get('/repo/:repo_id/request/:request_id', function (schema, request) {
     let build = schema.builds.find(9999);
 
-    return new Mirage.Response(200, {}, {
+    return new Response(200, {}, {
       id: request.params.request_id,
       result: 'approved',
       builds: [build]
@@ -447,7 +495,7 @@ export default function () {
         '@raw_log_href': `/v3/job/${jobId}/log.txt`
       };
     } else {
-      return new Mirage.Response(404, {}, {});
+      return new Response(404, {}, {});
     }
   });
 
@@ -473,7 +521,7 @@ export default function () {
   });
 
   this.get('/v3/enterprise_license', function (schema, request) {
-    return new Mirage.Response(404, {}, {});
+    return new Response(404, {}, {});
   });
 }
 

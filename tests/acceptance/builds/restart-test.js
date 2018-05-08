@@ -2,6 +2,7 @@ import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import buildPage from 'travis/tests/pages/build';
 import topPage from 'travis/tests/pages/top';
+import signInUser from 'travis/tests/helpers/sign-in-user';
 
 moduleForAcceptance('Acceptance | builds/restart', {
   beforeEach() {
@@ -21,7 +22,7 @@ test('restarting build', function (assert) {
   server.create('log', { id: job.id });
 
   buildPage
-    .visit({ slug: 'travis-ci/travis-web', build_id: build.id })
+    .visit({ owner: 'travis-ci', repo: 'travis-web', build_id: build.id })
     .restartBuild();
 
   andThen(() => {

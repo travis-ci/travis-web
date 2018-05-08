@@ -1,33 +1,32 @@
 import { test } from 'qunit';
-import Mirage from 'ember-cli-mirage';
+import { Response } from 'ember-cli-mirage';
 
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import settingsPage from 'travis/tests/pages/settings';
 import topPage from 'travis/tests/pages/top';
+import signInUser from 'travis/tests/helpers/sign-in-user';
 
 import moment from 'moment';
 
 moduleForAcceptance('Acceptance | repo settings', {
   beforeEach() {
     const currentUser = server.create('user', {
-      name: 'Sara Ahmed',
-      login: 'feministkilljoy',
-      repos_count: 3
+      name: 'User Name',
+      login: 'user-login',
     });
 
     signInUser(currentUser);
 
     // create organization
-    server.create('account', {
-      name: 'Feminist Killjoys',
-      type: 'organization',
-      login: 'killjoys',
-      repos_count: 30
+    server.create('organization', {
+      name: 'Org Name',
+      login: 'org-login',
     });
 
     const repository = server.create('repository', {
-      name: 'living-a-feminist-life',
-      slug: 'killjoys/living-a-feminist-life',
+      name: 'repository-name',
+      slug: 'org-login/repository-name',
+      private: true
     });
     repository.attrs.permissions.create_cron = true;
 
@@ -89,7 +88,7 @@ moduleForAcceptance('Acceptance | repo settings', {
 });
 
 test('view settings', function (assert) {
-  settingsPage.visit({ organization: 'killjoys', repo: 'living-a-feminist-life' });
+  settingsPage.visit({ organization: 'org-login', repo: 'repository-name' });
 
   andThen(function () {
     assert.ok(settingsPage.buildOnlyWithTravisYml.isActive, 'expected builds only with .travis.yml');
@@ -102,20 +101,20 @@ test('view settings', function (assert) {
 
     assert.ok(settingsPage.buildPullRequests.isActive, 'expected builds for pull requests');
 
-    settingsPage.environmentVariables(0).as(environmentVariable => {
+    settingsPage.environmentVariables[0].as(environmentVariable => {
       assert.equal(environmentVariable.name, 'intersectionality');
       assert.ok(environmentVariable.isPublic, 'expected environment variable to be public');
       assert.notOk(environmentVariable.isNewlyCreated, 'expected existing variable to not be newly created');
       assert.equal(environmentVariable.value, 'Kimberlé Crenshaw');
     });
 
-    settingsPage.environmentVariables(1).as(environmentVariable => {
+    settingsPage.environmentVariables[1].as(environmentVariable => {
       assert.equal(environmentVariable.name, 'published');
       assert.notOk(environmentVariable.isPublic, 'expected environment variable to not be public');
       assert.equal(environmentVariable.value, '••••••••••••••••');
     });
 
-    settingsPage.crons(0).as(cron => {
+    settingsPage.crons[0].as(cron => {
       assert.equal(cron.branchName, 'Cron job event daily-branch');
       assert.equal(cron.interval, 'Runs daily');
       assert.equal(cron.lastRun, 'Ran less than a minute ago');
@@ -123,7 +122,7 @@ test('view settings', function (assert) {
       assert.ok(cron.dontRunIfRecentBuildExistsText.indexOf('Always run') === 0, 'expected cron to run even if there is a build in the last 24h');
     });
 
-    settingsPage.crons(1).as(cron => {
+    settingsPage.crons[1].as(cron => {
       assert.equal(cron.branchName, 'Cron job event weekly-branch');
       assert.equal(cron.interval, 'Runs weekly');
       assert.equal(cron.lastRun, 'Ran less than a minute ago');
@@ -141,7 +140,7 @@ test('view settings', function (assert) {
 });
 
 test('change general settings', function (assert) {
-  settingsPage.visit({ organization: 'killjoys', repo: 'living-a-feminist-life' });
+  settingsPage.visit({ organization: 'org-login', repo: 'repository-name' });
 
   const settingToRequestBody = {};
 
@@ -187,7 +186,7 @@ test('change general settings', function (assert) {
 });
 
 test('delete and create environment variables', function (assert) {
-  settingsPage.visit({ organization: 'killjoys', repo: 'living-a-feminist-life' });
+  settingsPage.visit({ organization: 'org-login', repo: 'repository-name' });
 
   const deletedIds = [];
 
@@ -195,12 +194,12 @@ test('delete and create environment variables', function (assert) {
     deletedIds.push(request.params.id);
   });
 
-  settingsPage.environmentVariables(0).delete();
+  settingsPage.environmentVariables[0].delete();
 
   andThen(() => {
     assert.equal(deletedIds.pop(), 'a', 'expected the server to have received a deletion request for the first environment variable');
-    assert.equal(settingsPage.environmentVariables().count, 1, 'expected only one environment variable to remain');
-    assert.equal(settingsPage.environmentVariables(0).name, 'published', 'expected the formerly-second variable to be first');
+    assert.equal(settingsPage.environmentVariables.length, 1, 'expected only one environment variable to remain');
+    assert.equal(settingsPage.environmentVariables[0].name, 'published', 'expected the formerly-second variable to be first');
   });
 
   const requestBodies = [];
@@ -218,7 +217,7 @@ test('delete and create environment variables', function (assert) {
   settingsPage.environmentVariableForm.add();
 
   andThen(() => {
-    settingsPage.environmentVariables(0).as(environmentVariable => {
+    settingsPage.environmentVariables[0].as(environmentVariable => {
       assert.equal(environmentVariable.name, 'drafted', 'expected leading whitespace to be trimmed');
       assert.ok(environmentVariable.isPublic, 'expected environment variable to be public');
       assert.ok(environmentVariable.isNewlyCreated, 'expected environment variable to be newly created');
@@ -234,7 +233,7 @@ test('delete and create environment variables', function (assert) {
     } });
 
     // This will trigger a client-side error
-    server.post('/settings/env_vars', {}, 403);
+    server.post('/settings/env_vars', () => new Response(403, {}, {}));
   });
 
   settingsPage.environmentVariableForm.fillName('willFail');
@@ -245,22 +244,22 @@ test('delete and create environment variables', function (assert) {
     assert.equal(topPage.flashMessage.text, 'There was an error saving this environment variable.');
 
     // This will cause deletions to fail
-    server.delete('/settings/env_vars/:id', () => {}, 500);
+    server.delete('/settings/env_vars/:id', () => new Response(500, {}, {}));
   });
 
-  settingsPage.environmentVariables(1).delete();
+  settingsPage.environmentVariables[1].delete();
 
   andThen(() => {
-    assert.equal(settingsPage.environmentVariables().count, 2, 'expected the environment variable to remain');
+    assert.equal(settingsPage.environmentVariables.length, 2, 'expected the environment variable to remain');
     assert.equal(topPage.flashMessage.text, 'There was an error deleting this environment variable.');
 
-    server.delete('/settings/env_vars/:id', () => {}, 404);
+    server.delete('/settings/env_vars/:id', () => new Response(404, {}, {}));
   });
 
-  settingsPage.environmentVariables(1).delete();
+  settingsPage.environmentVariables[1].delete();
 
   andThen(() => {
-    assert.equal(settingsPage.environmentVariables().count, 2, 'expected the environment variable to remain');
+    assert.equal(settingsPage.environmentVariables.length, 2, 'expected the environment variable to remain');
     assert.equal(topPage.flashMessage.text, 'This environment variable has already been deleted. Try refreshing.');
   });
 });
@@ -268,7 +267,7 @@ test('delete and create environment variables', function (assert) {
 test('delete and create crons', function (assert) {
   const done = assert.async();
 
-  settingsPage.visit({ organization: 'killjoys', repo: 'living-a-feminist-life' });
+  settingsPage.visit({ organization: 'org-login', repo: 'repository-name' });
 
   const deletedIds = [];
 
@@ -278,11 +277,11 @@ test('delete and create crons', function (assert) {
     return {};
   });
 
-  settingsPage.crons(0).delete();
+  settingsPage.crons[0].delete();
 
   andThen(() => {
     assert.equal(deletedIds.pop(), this.dailyCron.id, 'expected the server to have received a deletion request for the first cron');
-    assert.equal(settingsPage.crons().count, 1, 'expected only one cron to remain');
+    assert.equal(settingsPage.crons.length, 1, 'expected only one cron to remain');
     done();
   });
 });
@@ -297,10 +296,10 @@ test('reload cron branches on branch:created', function (assert) {
     repository: this.repository,
   });
 
-  settingsPage.visit({ organization: 'killjoys', repo: 'living-a-feminist-life' });
+  settingsPage.visit({ organization: 'org-login', repo: 'repository-name' });
 
   andThen(() => {
-    assert.equal(settingsPage.cronBranches().count, 1, 'expected only one branch');
+    assert.equal(settingsPage.cronBranches.length, 1, 'expected only one branch');
 
     server.create('branch', {
       name: 'bar',
@@ -316,13 +315,13 @@ test('reload cron branches on branch:created', function (assert) {
   });
 
   andThen(() => {
-    assert.equal(settingsPage.cronBranches().count, 2, 'expected two branches after event');
+    assert.equal(settingsPage.cronBranches.length, 2, 'expected two branches after event');
     done();
   });
 });
 
 test('delete SSH key', function (assert) {
-  settingsPage.visit({ organization: 'killjoys', repo: 'living-a-feminist-life' });
+  settingsPage.visit({ organization: 'org-login', repo: 'repository-name' });
 
   const deletedIds = [];
 
@@ -347,7 +346,7 @@ test('add SSH key', function (assert) {
   const requestBodies = [];
 
   server.get(`/settings/ssh_key/${this.repository.id}`, function (schema, request) {
-    return new Mirage.Response(429, {}, {});
+    return new Response(429, {}, {});
   });
 
   server.patch(`/settings/ssh_key/${this.repository.id}`, (schema, request) => {
@@ -360,7 +359,7 @@ test('add SSH key', function (assert) {
     };
   });
 
-  settingsPage.visit({ organization: 'killjoys', repo: 'living-a-feminist-life' });
+  settingsPage.visit({ organization: 'org-login', repo: 'repository-name' });
 
   settingsPage.sshKeyForm.fillDescription('hey');
   settingsPage.sshKeyForm.fillKey('hello');
@@ -375,11 +374,20 @@ test('add SSH key', function (assert) {
   });
 });
 
+test('the SSH key section is hidden for public repositories', function (assert) {
+  this.repository.private = false;
+  settingsPage.visit({ organization: 'org-login', repo: 'repository-name' });
+
+  andThen(() => {
+    assert.dom('[data-test-ssh-key-section]').doesNotExist();
+  });
+});
+
 test('on a repository with auto-cancellation', function (assert) {
   this.repository.createSetting({ name: 'auto_cancel_pushes', value: true });
   this.repository.createSetting({ name: 'auto_cancel_pull_requests', value: false });
 
-  settingsPage.visit({ organization: 'killjoys', repo: 'living-a-feminist-life' });
+  settingsPage.visit({ organization: 'org-login', repo: 'repository-name' });
 
   andThen(() => {
     assert.ok(settingsPage.autoCancellationSection.exists, 'expected auto-cancellation section to exist');

@@ -95,7 +95,7 @@
         {{else}}
           {{request-icon event=item.eventType state=item.state}}
         {{/if}}
-        <span class='inner-underline'>#{{item.number}} {{humanize-state item.state}}</span>
+        <span data-test-build-header-build-state class='inner-underline'>#{{item.number}} {{humanize-state item.state}}</span>
       {{/link-to}}
     {{else}}
       {{#link-to "build" repo item}}
@@ -104,7 +104,7 @@
         {{else}}
           {{request-icon event=item.eventType state=item.state}}
         {{/if}}
-        <span class='inner-underline'>#{{item.number}} {{humanize-state buildState}}</span>
+        <span data-test-build-header-build-state class='inner-underline'>#{{item.number}} {{humanize-state buildState}}</span>
       {{/link-to}}
     {{/if}}
   </h3>

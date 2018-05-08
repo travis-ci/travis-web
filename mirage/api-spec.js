@@ -1091,7 +1091,7 @@ export default {
           }
         ]
       },
-      "attributes": ["id","login","name","github_id","avatar_url","repositories"],
+      "attributes": ["id","login","name","github_id","avatar_url","repositories","installation","education"],
       "representations": {
         "minimal": [
           "id",
@@ -1102,7 +1102,8 @@ export default {
           "login",
           "name",
           "github_id",
-          "avatar_url"
+          "avatar_url",
+          "education"
         ],
         "additional": [
           "repositories"
@@ -1134,6 +1135,18 @@ export default {
         "name",
         "github_id"
       ]
+    },
+    "installation": {
+      "@type": "resource",
+      "attributes": ["id", "github_id", "owner"],
+      "representations": {
+        "minimal": [
+          "id", "github_id", "owner"
+        ],
+        "standard": [
+          "id", "github_id", "owner"
+        ]
+      }
     },
     "owner": {
       "@type": "resource",
@@ -1313,7 +1326,7 @@ export default {
           }
         ]
       },
-      "attributes": ["id","name","slug","description","github_language","active","private","owner","default_branch","starred","current_build"],
+      "attributes": ["id","name","slug","description","github_id","github_language","active","private","active_on_org","owner","default_branch","starred","current_build"],
       "representations": {
         "minimal": [
           "id",
@@ -1325,9 +1338,11 @@ export default {
           "name",
           "slug",
           "description",
+          "github_id",
           "github_language",
           "active",
           "private",
+          "active_on_org",
           "owner",
           "default_branch",
           "starred"
@@ -1550,6 +1565,36 @@ export default {
         "standard": ["stages"]
       }
     },
+    "subscription":            {
+      "@type":            "resource",
+      "actions":          { },
+      "attributes":       [
+        "id",
+        "plan",
+        "billing_info",
+        "credit_card_info",
+        "owner",
+        "status",
+        "valid_to",
+      ],
+      "representations":  {
+        "standard":       [
+          "id",
+          "plan",
+          "billing_info",
+          "credit_card_info",
+          "owner",
+          "status",
+          "valid_to",
+        ],
+        "minimal":       [
+            "id",
+            "owner",
+            "status",
+            "valid_to",
+        ],
+      }
+    },
     "template": {
       "@type": "resource",
       "actions": {
@@ -1587,7 +1632,7 @@ export default {
           }
         ]
       },
-      "attributes": ["id","login","name","github_id","avatar_url","repositories","is_syncing","synced_at"],
+      "attributes": ["id","login","name","github_id","education","avatar_url","repositories","is_syncing","synced_at"],
       "representations": {
         "minimal": [
           "id",
@@ -1599,6 +1644,7 @@ export default {
           "name",
           "github_id",
           "avatar_url",
+          "education",
           "is_syncing",
           "synced_at"
         ],

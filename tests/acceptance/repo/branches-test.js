@@ -1,32 +1,30 @@
 import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import branchesPage from 'travis/tests/pages/branches';
+import signInUser from 'travis/tests/helpers/sign-in-user';
 
 moduleForAcceptance('Acceptance | repo branches', {
   beforeEach() {
     this.currentUser = server.create('user', {
-      name: 'Sara Ahmed',
-      login: 'feministkilljoy',
-      repos_count: 3
+      name: 'User Name',
+      login: 'user-login',
     });
 
     signInUser(this.currentUser);
 
     const gitUser = server.create('git-user', {
-      name: 'Sara Ahmed'
+      name: 'User Name'
     });
 
     // create organization
-    server.create('account', {
-      name: 'Feminist Killjoys',
-      type: 'organization',
-      login: 'killjoys',
-      repos_count: 30
+    server.create('organization', {
+      name: 'Org Name',
+      login: 'org-login',
     });
 
     const repository = server.create('repository', {
-      name: 'living-a-feminist-life',
-      slug: 'killjoys/living-a-feminist-life'
+      name: 'repository-name',
+      slug: 'org-login/repository-name'
     });
 
     const repoId = parseInt(repository.id);
@@ -158,10 +156,10 @@ moduleForAcceptance('Acceptance | repo branches', {
 });
 
 test('view branches', function (assert) {
-  branchesPage.visit({ organization: 'killjoys', repo: 'living-a-feminist-life' });
+  branchesPage.visit({ organization: 'org-login', repo: 'repository-name' });
 
   andThen(() => {
-    assert.equal(document.title, 'killjoys/living-a-feminist-life - Travis CI');
+    assert.equal(document.title, 'org-login/repository-name - Travis CI');
     assert.ok(branchesPage.branchesTabActive, 'Branches tab is active when visiting /org/repo/branches');
   });
 
@@ -171,37 +169,37 @@ test('view branches', function (assert) {
     assert.equal(branchesPage.defaultBranch.buildCount, '3 builds');
     assert.equal(branchesPage.defaultBranch.request, '1919 passed');
     assert.equal(branchesPage.defaultBranch.commitSha, '1234567');
-    assert.equal(branchesPage.defaultBranch.committer, 'Sara Ahmed');
+    assert.equal(branchesPage.defaultBranch.committer, 'User Name');
     assert.equal(branchesPage.defaultBranch.commitDate, 'about a year ago');
 
     const buildTiles = branchesPage.defaultBranch.buildTiles;
 
-    assert.ok(buildTiles(0).passed, 'expected most recent build to have passed');
-    assert.equal(buildTiles(0).number, '#1919');
+    assert.ok(buildTiles[0].passed, 'expected most recent build to have passed');
+    assert.equal(buildTiles[0].number, '#1919');
 
-    assert.ok(buildTiles(1).errored, 'expected second-most recent build to have errored');
-    assert.equal(buildTiles(1).number, '#1918');
+    assert.ok(buildTiles[1].errored, 'expected second-most recent build to have errored');
+    assert.equal(buildTiles[1].number, '#1918');
 
-    assert.ok(buildTiles(2).failed, 'expected third-most recent build to have failed');
-    assert.equal(buildTiles(2).number, '#1917');
+    assert.ok(buildTiles[2].failed, 'expected third-most recent build to have failed');
+    assert.equal(buildTiles[2].number, '#1917');
 
-    assert.ok(buildTiles(3).empty, 'expected fourth tile to be empty');
+    assert.ok(buildTiles[3].empty, 'expected fourth tile to be empty');
 
-    assert.equal(branchesPage.activeBranches().count, 3, 'expected three active branches');
+    assert.equal(branchesPage.activeBranches.length, 3, 'expected three active branches');
 
-    assert.equal(branchesPage.activeBranches(0).name, 'created', 'expected created branch to be sorted first');
-    assert.ok(branchesPage.activeBranches(0).created, 'expected created branch to be running');
-    assert.equal(branchesPage.activeBranches(0).buildCount, '1 build');
+    assert.equal(branchesPage.activeBranches[0].name, 'created', 'expected created branch to be sorted first');
+    assert.ok(branchesPage.activeBranches[0].created, 'expected created branch to be running');
+    assert.equal(branchesPage.activeBranches[0].buildCount, '1 build');
 
-    assert.equal(branchesPage.activeBranches(1).name, 'edits', 'expected newer completed branch to be sorted next');
-    assert.ok(branchesPage.activeBranches(1).failed, 'expected edits branch to have failed');
+    assert.equal(branchesPage.activeBranches[1].name, 'edits', 'expected newer completed branch to be sorted next');
+    assert.ok(branchesPage.activeBranches[1].failed, 'expected edits branch to have failed');
 
-    assert.equal(branchesPage.activeBranches(2).name, 'old-old-edits', 'expected older completed branch to be sorted last');
+    assert.equal(branchesPage.activeBranches[2].name, 'old-old-edits', 'expected older completed branch to be sorted last');
 
-    assert.equal(branchesPage.inactiveBranches().count, 2, 'expected two inactive branches');
-    assert.equal(branchesPage.inactiveBranches(0).name, 'old-edits');
-    assert.ok(branchesPage.inactiveBranches(0).errored, 'expected first inactive branch to have errored');
-    assert.equal(branchesPage.inactiveBranches(1).name, 'older-edits');
+    assert.equal(branchesPage.inactiveBranches.length, 2, 'expected two inactive branches');
+    assert.equal(branchesPage.inactiveBranches[0].name, 'old-edits');
+    assert.ok(branchesPage.inactiveBranches[0].errored, 'expected first inactive branch to have errored');
+    assert.equal(branchesPage.inactiveBranches[1].name, 'older-edits');
   });
   percySnapshot(assert);
 });

@@ -7,6 +7,7 @@ import { service } from 'ember-decorators/service';
 export default TravisRoute.extend({
   @service repositories: null,
   @service tabStates: null,
+  @service auth: null,
 
   model(/* params*/) {
     let allTheBranches, apiEndpoint, options, repoId;
@@ -19,7 +20,7 @@ export default TravisRoute.extend({
       }
     };
     if (this.get('auth.signedIn')) {
-      options.headers.Authorization = `token ${this.auth.token()}`;
+      options.headers.Authorization = `token ${this.get('auth.token')}`;
     }
 
     let path = `${apiEndpoint}/repo/${repoId}/branches`;

@@ -3,23 +3,24 @@ import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import sidebarPage from 'travis/tests/pages/sidebar';
 import jobPage from 'travis/tests/pages/job';
 import generatePusherPayload from 'travis/tests/helpers/generate-pusher-payload';
+import signInUser from 'travis/tests/helpers/sign-in-user';
 
 const repoId = 100;
 
 const repositoryTemplate = {
   id: repoId,
-  slug: 'killjoys/living-a-feminist-life',
+  slug: 'org-login/repository-name',
   owner: {
-    login: 'killjoys'
+    login: 'org-login'
   },
-  name: 'living-a-feminist-life'
+  name: 'repository-name'
 };
 
 moduleForAcceptance('Acceptance | home/with repositories', {
   beforeEach() {
     const currentUser = server.create('user', {
-      name: 'Sara Ahmed',
-      login: 'feministkilljoy'
+      name: 'User Name',
+      login: 'user-login'
     });
 
     signInUser(currentUser);
@@ -32,16 +33,16 @@ moduleForAcceptance('Acceptance | home/with repositories', {
     });
 
     server.create('repository', {
-      slug: 'killjoys/queer-phenomenology'
+      slug: 'org-login/some-other-repository-name'
     });
 
     // create active repo
     server.create('repository', {
-      slug: 'killjoys/willful-subjects',
+      slug: 'org-login/yet-another-repository-name',
       owner: {
-        login: 'killjoys'
+        login: 'org-login'
       },
-      name: 'willful-subjects'
+      name: 'yet-another-repository-name'
     }).createBuild({
       id: 99,
       number: '1',
@@ -56,14 +57,16 @@ moduleForAcceptance('Acceptance | home/with repositories', {
   }
 });
 
-test('the home page shows the repositories', (assert) => {
+test('the home page shows the repositories', function (assert) {
   sidebarPage.visit();
 
+  // TODO: Remove this
+  andThen(() => {});
   andThen(() => {
-    assert.equal(sidebarPage.sidebarRepositories().count, 3, 'expected three repositories in the sidebar');
-    assert.equal(sidebarPage.sidebarRepositories(0).name, 'killjoys/willful-subjects');
-    assert.equal(sidebarPage.sidebarRepositories(1).name, 'killjoys/queer-phenomenology');
-    assert.equal(sidebarPage.sidebarRepositories(2).name, 'killjoys/living-a-feminist-life');
+    assert.equal(sidebarPage.sidebarRepositories.length, 3, 'expected three repositories in the sidebar');
+    assert.equal(sidebarPage.sidebarRepositories[0].name, 'org-login/yet-another-repository-name');
+    assert.equal(sidebarPage.sidebarRepositories[1].name, 'org-login/some-other-repository-name');
+    assert.equal(sidebarPage.sidebarRepositories[2].name, 'org-login/repository-name');
   });
 });
 
@@ -71,11 +74,13 @@ test('Pusher events change the main display', function (assert) {
   assert.expect(4);
   sidebarPage.visit();
 
+  // TODO: Remove this
+  andThen(() => {});
   andThen(() => {
-    assert.equal(sidebarPage.repoTitle, 'killjoys / willful-subjects', 'expected the displayed repository to be the one with a running build');
+    assert.equal(sidebarPage.repoTitle, 'org-login / yet-another-repository-name', 'expected the displayed repository to be the one with a running build');
   });
 
-  let  gitUser = server.create('git-user', { name: 'Sara Ahmed' });
+  let  gitUser = server.create('git-user', { name: 'User Name' });
   const commit = server.create('commit', {
     id: 100,
     sha: 'acab',
@@ -137,7 +142,7 @@ test('Pusher events change the main display', function (assert) {
   });
 
   andThen(() => {
-    assert.equal(sidebarPage.repoTitle, 'killjoys / living-a-feminist-life', 'the displayed repository should have changed');
+    assert.equal(sidebarPage.repoTitle, 'org-login / repository-name', 'the displayed repository should have changed');
   });
 
   andThen(() => {
@@ -159,7 +164,7 @@ test('Pusher events change the main display', function (assert) {
   });
 
   andThen(() => {
-    assert.equal(jobPage.logLines(0).text, 'The first line');
-    assert.ok(jobPage.logLines(0).isYellow, 'expected the first line to be yellow');
+    assert.equal(jobPage.logLines[0].text, 'The first line');
+    assert.ok(jobPage.logLines[0].isYellow, 'expected the first line to be yellow');
   });
 });

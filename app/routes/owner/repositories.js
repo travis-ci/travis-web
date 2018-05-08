@@ -1,8 +1,11 @@
 import $ from 'jquery';
 import TravisRoute from 'travis/routes/basic';
 import config from 'travis/config/environment';
+import { service } from 'ember-decorators/service';
 
 export default TravisRoute.extend({
+  @service auth: null,
+
   needsAuth: false,
 
   titleToken(model) {
@@ -18,7 +21,7 @@ export default TravisRoute.extend({
     };
 
     if (this.get('auth.signedIn')) {
-      options.headers.Authorization = `token ${this.auth.token()}`;
+      options.headers.Authorization = `token ${this.get('auth.token')}`;
     }
 
     // eslint-disable-next-line

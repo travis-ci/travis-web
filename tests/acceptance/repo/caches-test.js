@@ -1,18 +1,19 @@
 import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import page from 'travis/tests/pages/caches';
+import signInUser from 'travis/tests/helpers/sign-in-user';
 
 moduleForAcceptance('Acceptance | repo caches', {
   beforeEach() {
     const currentUser = server.create('user', {
-      name: 'Sara Ahmed',
-      login: 'feministkilljoy'
+      name: 'User Name',
+      login: 'user-login'
     });
 
     signInUser(currentUser);
 
     const repository = server.create('repository', {
-      slug: 'killjoys/living-a-feminist-life'
+      slug: 'org-login/repository-name'
     });
 
     this.repository = repository;
@@ -36,21 +37,21 @@ moduleForAcceptance('Acceptance | repo caches', {
 });
 
 test('view and delete caches', function (assert) {
-  page.visit({ organization: 'killjoys', repo: 'living-a-feminist-life' });
+  page.visit({ organization: 'org-login', repo: 'repository-name' });
 
   andThen(() => {
-    assert.equal(page.pushCaches().count, 1, 'expected one push cache');
+    assert.equal(page.pushCaches.length, 1, 'expected one push cache');
     assert.ok(page.tabIsActive, 'expected the caches tab to be active');
 
-    page.pushCaches(0).as(pushCache => {
+    page.pushCaches[0].as(pushCache => {
       assert.equal(pushCache.name, 'a-branch-name');
       assert.equal(pushCache.lastModified, 'a day ago');
       assert.equal(pushCache.size, '85.27MB');
     });
 
-    assert.equal(page.pullRequestCaches().count, 1, 'expected one pull request cache');
+    assert.equal(page.pullRequestCaches.length, 1, 'expected one pull request cache');
 
-    page.pullRequestCaches(0).as(pullRequestCache => {
+    page.pullRequestCaches[0].as(pullRequestCache => {
       assert.equal(pullRequestCache.name, 'PR.1919');
       assert.equal(pullRequestCache.lastModified, '2 days ago');
       assert.equal(pullRequestCache.size, '19.19MB');
@@ -66,12 +67,12 @@ test('view and delete caches', function (assert) {
     requestBodies.push(request.requestBody || 'empty');
   });
 
-  page.pushCaches(0).delete();
+  page.pushCaches[0].delete();
 
   andThen(() => {
     assert.deepEqual(JSON.parse(requestBodies.pop()), { branch: 'a-branch-name' });
 
-    assert.equal(page.pushCaches().count, 0);
+    assert.equal(page.pushCaches.length, 0);
   });
 
   page.deleteAllCaches();

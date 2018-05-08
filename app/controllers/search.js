@@ -4,6 +4,7 @@ import { service } from 'ember-decorators/service';
 
 export default Controller.extend({
   @service auth: null,
+  @service features: null,
   @service tabStates: null,
   @service statusImages: null,
   @service repositories: null,

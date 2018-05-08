@@ -10,7 +10,7 @@ export default V3Serializer.extend({
     }
 
     if (!repository.currentBuild) {
-      let builds = repository._schema.builds.where((build) => {
+      let builds = repository.schema.builds.where((build) => {
         let repoId = repository.id;
         return build.repository_id === repoId || build.repositoryId == repoId;
       });

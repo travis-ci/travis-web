@@ -3,6 +3,7 @@ import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import nonExistentOwnerPage from 'travis/tests/pages/owner/non-existent';
 import { percySnapshot } from 'ember-percy';
+import signInUser from 'travis/tests/helpers/sign-in-user';
 
 let adapterException;
 let loggerError;

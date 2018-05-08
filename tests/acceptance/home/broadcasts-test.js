@@ -2,32 +2,35 @@ import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import dashboardPage from 'travis/tests/pages/dashboard';
 import topPage from 'travis/tests/pages/top';
+import signInUser from 'travis/tests/helpers/sign-in-user';
 
-moduleForAcceptance('Acceptance | home/sidebar tabs', {
+moduleForAcceptance('Acceptance | broadcasts', {
   beforeEach() {
     const currentUser = server.create('user', {
-      name: 'Sara Ahmed',
-      login: 'feministkilljoy'
+      name: 'User Name',
+      login: 'user-login'
     });
 
     signInUser(currentUser);
 
     // create active repo
     server.create('repository', {
-      slug: 'killjoys/living-a-feminist-life'
+      slug: 'org-login/repository-name'
     });
   }
 });
 
 test('the broadcast tower shows a warning even when an announcement exists, broadcasts are listed in reverse order, and closing a broadcast records it', (assert) => {
+  withFeature('broadcasts');
+
   server.create('broadcast', {
     category: 'warning',
-    message: 'Join the resistance!'
+    message: 'A warning'
   });
 
   server.create('broadcast', {
     category: 'announcement',
-    message: 'We need you.',
+    message: 'An announcement',
     id: 2016
   });
 
@@ -35,40 +38,42 @@ test('the broadcast tower shows a warning even when an announcement exists, broa
 
   andThen(() => {
     assert.ok(topPage.broadcastTower.hasWarning, 'expected the broadcast tower to have a warning class');
-    assert.ok(topPage.broadcasts().isClosed, 'expected the broadcast list to be closed');
+    assert.ok(topPage.broadcasts.isClosed, 'expected the broadcast list to be closed');
     assert.equal(topPage.broadcastBadge.text, 2, 'expected the badge to show two broadcasts');
   });
 
   topPage.broadcastTower.click();
 
   andThen(() => {
-    assert.ok(topPage.broadcasts().isOpen, 'expected the broadcast list to be open');
-    assert.equal(topPage.broadcasts().count, 2, 'expected there to be two broadcasts');
+    assert.ok(topPage.broadcasts.isOpen, 'expected the broadcast list to be open');
+    assert.equal(topPage.broadcasts.items.length, 2, 'expected there to be two broadcasts');
 
-    assert.ok(topPage.broadcasts(0).isAnnouncement, 'expected the first broadcast to be an announcement');
-    assert.equal(topPage.broadcasts(0).message, 'We need you.');
+    assert.ok(topPage.broadcasts.items[0].isAnnouncement, 'expected the first broadcast to be an announcement');
+    assert.equal(topPage.broadcasts.items[0].message, 'An announcement');
 
-    assert.ok(topPage.broadcasts(1).isWarning, 'expected the second broadcast to be a warning');
-    assert.equal(topPage.broadcasts(1).message, 'Join the resistance!');
+    assert.ok(topPage.broadcasts.items[1].isWarning, 'expected the second broadcast to be a warning');
+    assert.equal(topPage.broadcasts.items[1].message, 'A warning');
   });
 
   percySnapshot(assert);
 
-  topPage.broadcasts(0).dismiss();
+  topPage.broadcasts.items[0].dismiss();
 
   andThen(() => {
-    assert.ok(topPage.broadcasts().count, 1, 'expected there to be one broadcast');
+    assert.ok(topPage.broadcasts.items.length, 1, 'expected there to be one broadcast');
     assert.equal(topPage.broadcastBadge.text, 1, 'expected the badge to show one broadcast');
-    assert.ok(topPage.broadcasts(0).isWarning, 'expected the remaining broadcast to be a warning');
+    assert.ok(topPage.broadcasts.items[0].isWarning, 'expected the remaining broadcast to be a warning');
 
     assert.equal(localStorage.getItem('travis.seen_broadcasts'), JSON.stringify(['2016']));
   });
 });
 
 test('the broadcast tower shows an announcement', assert => {
+  withFeature('broadcasts');
+
   server.create('broadcast', {
     category: 'announcement',
-    message: 'We have all joined the resistance.'
+    message: 'Another announcement'
   });
 
   dashboardPage.visit();
@@ -79,6 +84,8 @@ test('the broadcast tower shows an announcement', assert => {
 });
 
 test('a dismissed broadcast does not highlight the tower', assert => {
+  withFeature('broadcasts');
+
   server.create('broadcast', {
     category: 'announcement',
     message: 'Welcome.',

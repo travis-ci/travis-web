@@ -339,6 +339,8 @@ module.exports = {
       },
       globals: {
         server: true,
+        triggerCopySuccess: true,
+        triggerCopyError: true,
         signInUser: true,
         withFeature: true,
         percySnapshot: true,

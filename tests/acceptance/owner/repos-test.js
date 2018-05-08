@@ -5,13 +5,13 @@ import ownerPage from 'travis/tests/pages/owner';
 moduleForAcceptance('Acceptance | owner repositories', {
   beforeEach() {
     server.create('user', {
-      name: 'Sara Ahmed',
-      login: 'feministkilljoy'
+      name: 'User Name',
+      login: 'user-login'
     });
 
     // create active repo
     const firstRepository = server.create('repository', {
-      slug: 'feministkilljoy/living-a-feminist-life'
+      slug: 'user-login/repository-name'
     });
 
     const primaryBranch = firstRepository.createBranch({
@@ -39,7 +39,7 @@ moduleForAcceptance('Acceptance | owner repositories', {
 
     // create active repo
     server.create('repository', {
-      slug: 'feministkilljoy/willful-subjects'
+      slug: 'user-login/yet-another-repository-name'
     });
 
     server.create('repository', {
@@ -50,15 +50,15 @@ moduleForAcceptance('Acceptance | owner repositories', {
 });
 
 test('the owner page shows their repositories', (assert) => {
-  ownerPage.visit({ username: 'feministkilljoy' });
+  ownerPage.visit({ username: 'user-login' });
 
   andThen(() => {
-    assert.equal(document.title, 'Sara Ahmed - Travis CI');
+    assert.equal(document.title, 'User Name - Travis CI');
 
-    assert.equal(ownerPage.repos().count, 2);
+    assert.equal(ownerPage.repos.length, 2);
 
-    ownerPage.repos(0).as(repo => {
-      assert.equal(repo.name, 'living-a-feminist-life');
+    ownerPage.repos[0].as(repo => {
+      assert.equal(repo.name, 'repository-name');
 
       assert.equal(repo.buildNumber, '1917');
       assert.equal(repo.defaultBranch, 'primary');
@@ -66,8 +66,8 @@ test('the owner page shows their repositories', (assert) => {
       assert.equal(repo.commitDate, 'about a year ago');
     });
 
-    ownerPage.repos(1).as(repo => {
-      assert.equal(repo.name, 'willful-subjects');
+    ownerPage.repos[1].as(repo => {
+      assert.equal(repo.name, 'yet-another-repository-name');
       assert.equal(repo.noBuildMessage, 'There is no build on the default branch yet.');
     });
   });

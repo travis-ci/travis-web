@@ -1,55 +1,34 @@
+<div data-test-account-page></div>
 {{#unless model.error}}
   {{#if loadingError}}
     There was a problem while loading the repositories list, please try again. In case
     the problem persists, please contact support.
   {{else}}
-    {{#unless config.enterprise}}
-      {{#if config.billingEndpoint}}
-        {{#if subscribeButtonInfo.subscribed}}
-          {{subscription-status-banner color="green" message="This account has an active subscription." billingLinkText="Manage your subscription!" billingUrl=billingUrl}}
-        {{else}}
-          {{#if subscribeButtonInfo.education}}
-            {{subscription-status-banner color="green" message="This account's subscription is flagged as educational." billingLinkText="Take a look!" billingUrl=billingUrl}}
-          {{else}}
-            {{subscription-status-banner color="yellow" message="This account does not have an active subscription." billingLinkText="Sign this account up!" billingUrl=billingUrl}}
-          {{/if}}
-        {{/if}}
-      {{/if}}
-    {{/unless}}
-
     <header class="profile-header">
-      <h1 class="h2--grey">{{accountName}}</h1>
-      {{sync-button}}
+      <div class='left'>
+        {{user-avatar account=model url=model.avatarUrl name=model.name size=96 showSubscriptionStatus=true}}
+        <div class='account-details'>
+          <h1 class="h2--grey">{{accountName}}</h1>
+          <div class='addenda'>
+            <span class='login'>@{{model.login}}</span>
+            {{#if model.education}}<span class='badge square grey'>Education</span>{{/if}}
+          </div>
+        </div>
+      </div>
+      {{#if checkSubscriptionStatus}}
+        {{#external-link-to href=billingUrl class='button--blue manage-subscription'}}
+          Manage Subscription
+        {{/external-link-to}}
+      {{/if}}
     </header>
 
-    {{#unless config.enterprise}}
-      {{#if features.proVersion}}
-        <p class="text-medium">We're only showing your private repositories. You can find your public projects on <a href="https://travis-ci.org" title="travis-ci.org">travis-ci.org</a>.</p>
-      {{else}}
-        <p class="text-medium">We're only showing your public repositories. You can find your private projects on <a href="https://travis-ci.com" title="travis-ci.com">travis-ci.com</a>.</p>
+    {{#if checkSubscriptionStatus}}
+      {{#if model.subscriptionError}}
+        {{subscription-status-banner color="yellow" message="There was an error determining your subscription status." billingLinkText="Visit billing" billingUrl=billingUrl}}
+      {{else if (and checkSubscriptionStatus isNotSubscribed)}}
+        {{subscription-status-banner color="yellow" message="This account does not have an active subscription." billingLinkText="Sign this account up!" billingUrl=billingUrl}}
       {{/if}}
-    {{/unless}}
-
-    <ol class="profile-getstarted">
-      <li>
-        <figure>
-          {{svg-jar 'hooks-step-1-01'}}
-          <figcaption>Flick the repository switch on</figcaption>
-        </figure>
-      </li>
-      <li>
-        <figure>
-          {{svg-jar 'hooks-step-2-01'}}
-          <figcaption>Add .travis.yml file to your repository</figcaption>
-        </figure>
-      </li>
-      <li>
-        <figure>
-          {{svg-jar 'hooks-step-3-01'}}
-          <figcaption>Trigger your first build with a git push</figcaption>
-        </figure>
-      </li>
-    </ol>
+    {{/if}}
 
     {{outlet}}
 
