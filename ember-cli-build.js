@@ -6,7 +6,7 @@ const Funnel = require('broccoli-funnel');
 module.exports = function () {
   let fingerprint;
 
-  if (process.env.DISABLE_FINGERPRINTS) {
+  if (process.env.DISABLE_FINGERPRINTS || process.env.EMBER_ENV === 'test') {
     fingerprint = false;
   } else {
     fingerprint = {
