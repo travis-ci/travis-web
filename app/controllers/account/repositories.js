@@ -26,6 +26,7 @@ export default Controller.extend({
 
   config,
   @alias('config.githubApps.appName') githubAppsAppName: null,
+  @alias('config.githubApps.migrationRepositoryCountLimit') migrationRepositoryCountLimit: null,
 
   @computed('githubAppsAppName', 'account.githubId')
   githubAppsActivationURL(appName, githubId) {
