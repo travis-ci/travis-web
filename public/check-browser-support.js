@@ -4,5 +4,11 @@ if (isUnsupportedBrowser()) {
 }
 
 function isUnsupportedBrowser() {
-  return true;
+  parser = new UAParser();
+
+  if (parser.getBrowser().name === 'IE') {
+    return true;
+  } else {
+    return false;
+  }
 }
