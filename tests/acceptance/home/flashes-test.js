@@ -40,4 +40,13 @@ module('Acceptance | home/flashes', function (hooks) {
     assert.dom('[data-test-flash-message-preamble]').hasText('Oh no!');
     assert.dom('[data-test-components-flash-item]').hasClass('error');
   });
+
+  test('the most recent flash is the only one that displays', async function (assert) {
+    this.owner.lookup('service:flashes').error('An old error');
+    this.owner.lookup('service:flashes').error('A new error');
+
+    await visit('/');
+
+    assert.dom('[data-test-flash-message-text]').hasText('A new error');
+  });
 });
