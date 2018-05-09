@@ -1,6 +1,5 @@
 import { run } from '@ember/runloop';
 import Service from '@ember/service';
-import { A } from '@ember/array';
 import { computed } from 'ember-decorators/object';
 import { alias } from 'ember-decorators/object/computed';
 import { service } from 'ember-decorators/service';
@@ -39,15 +38,14 @@ export default Service.extend({
   },
 
   setup() {
-    // FIXME this was a limited array to prevent multiple simultaneous flashes
-    this.set('flashes', A());
+    this.set('flashes', []);
   },
 
   @computed('flashes.[]')
   messages(flashes) {
     let model = [];
     if (flashes.length) {
-      model.pushObjects(flashes.toArray().reverse());
+      model.pushObjects(flashes.toArray());
     }
     return model.uniq();
   },
@@ -78,8 +76,7 @@ export default Service.extend({
         preamble,
         closeButton: messageTypeToCloseButton[type]
       };
-      // FIXME is this bad??? haha
-      this.set('flashes', [msg]);
+      this.get('flashes').unshiftObject(msg);
 
       if (!messageTypeToCloseButton[type]) {
         this.removeFlash(msg);

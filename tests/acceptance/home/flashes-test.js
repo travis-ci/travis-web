@@ -1,4 +1,4 @@
-import { visit } from '@ember/test-helpers';
+import { visit, click } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 
@@ -41,12 +41,16 @@ module('Acceptance | home/flashes', function (hooks) {
     assert.dom('[data-test-components-flash-item]').hasClass('error');
   });
 
-  test('the most recent flash is the only one that displays', async function (assert) {
+  test('the most recent flash is the only one that displays but the old one is retained', async function (assert) {
     this.owner.lookup('service:flashes').error('An old error');
     this.owner.lookup('service:flashes').error('A new error');
 
     await visit('/');
 
     assert.dom('[data-test-flash-message-text]').hasText('A new error');
+
+    await click('[data-test-components-flash-item] .close');
+
+    assert.dom('[data-test-flash-message-text]').hasText('An old error');
   });
 });
