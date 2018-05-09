@@ -1,6 +1,5 @@
 import { run } from '@ember/runloop';
 import Service from '@ember/service';
-import LimitedArray from 'travis/utils/limited-array';
 import { computed } from 'ember-decorators/object';
 import { alias } from 'ember-decorators/object/computed';
 import { service } from 'ember-decorators/service';
@@ -39,17 +38,14 @@ export default Service.extend({
   },
 
   setup() {
-    this.set('flashes', LimitedArray.create({
-      limit: 1,
-      content: []
-    }));
+    this.set('flashes', []);
   },
 
   @computed('flashes.[]')
   messages(flashes) {
     let model = [];
     if (flashes.length) {
-      model.pushObjects(flashes.toArray().reverse());
+      model.pushObjects(flashes.toArray());
     }
     return model.uniq();
   },
