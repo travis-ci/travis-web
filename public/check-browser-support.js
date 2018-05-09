@@ -1,6 +1,5 @@
 if (isUnsupportedBrowser()) {
-  // FIXME this needs a different page, obvsy
-  window.location.href = '/500.html';
+  window.location.href = '/unsupported-browser.html';
 }
 
 function isUnsupportedBrowser() {
