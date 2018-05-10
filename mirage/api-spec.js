@@ -1091,7 +1091,7 @@ export default {
           }
         ]
       },
-      "attributes": ["id","login","name","github_id","avatar_url","repositories","education"],
+      "attributes": ["id","login","name","github_id","avatar_url","repositories","installation","education"],
       "representations": {
         "minimal": [
           "id",
@@ -1135,6 +1135,18 @@ export default {
         "name",
         "github_id"
       ]
+    },
+    "installation": {
+      "@type": "resource",
+      "attributes": ["id", "github_id", "owner"],
+      "representations": {
+        "minimal": [
+          "id", "github_id", "owner"
+        ],
+        "standard": [
+          "id", "github_id", "owner"
+        ]
+      }
     },
     "owner": {
       "@type": "resource",
@@ -1314,7 +1326,7 @@ export default {
           }
         ]
       },
-      "attributes": ["id","name","slug","description","github_language","active","private","owner","default_branch","starred","current_build"],
+      "attributes": ["id","name","slug","description","github_id","github_language","active","private","active_on_org","owner","default_branch","starred","current_build"],
       "representations": {
         "minimal": [
           "id",
@@ -1326,9 +1338,11 @@ export default {
           "name",
           "slug",
           "description",
+          "github_id",
           "github_language",
           "active",
           "private",
+          "active_on_org",
           "owner",
           "default_branch",
           "starred"
@@ -1556,19 +1570,28 @@ export default {
       "actions":          { },
       "attributes":       [
         "id",
+        "plan",
+        "billing_info",
+        "credit_card_info",
         "owner",
         "status",
+        "valid_to",
       ],
       "representations":  {
         "standard":       [
           "id",
+          "plan",
+          "billing_info",
+          "credit_card_info",
           "owner",
           "status",
+          "valid_to",
         ],
         "minimal":       [
-          "id",
-          "owner",
-          "status",
+            "id",
+            "owner",
+            "status",
+            "valid_to",
         ],
       }
     },
@@ -1609,7 +1632,7 @@ export default {
           }
         ]
       },
-      "attributes": ["id","login","name","github_id","avatar_url","repositories","education","is_syncing","synced_at"],
+      "attributes": ["id","login","name","github_id","education","avatar_url","repositories","is_syncing","synced_at"],
       "representations": {
         "minimal": [
           "id",

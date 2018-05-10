@@ -38,6 +38,7 @@ export default function () {
 
   this.urlPrefix = apiEndpoint;
   this.namespace = '';
+  this.logging = window.location.search.includes('mirage-logging=true');
 
   this.get('/users', function ({ users }, request)  {
     let userData = JSON.parse(localStorage.getItem('travis.user')),
@@ -96,9 +97,9 @@ export default function () {
     return schema.broadcasts.all();
   });
 
-  this.get('/repos', function (schema, request) {
+  this.get('/repos', function (schema, {queryParams}) {
     // search apparently still uses v2, so different response necessary
-    const query = request.queryParams.search;
+    const query = queryParams.search;
     if (query) {
       const allRepositories = schema.repositories.all();
       const filtered = allRepositories.models.filter(repo => repo.attrs.slug.includes(query));
@@ -109,9 +110,17 @@ export default function () {
 
     let repos = schema.repositories.all();
 
-    let starred = request.queryParams['starred'];
+    let starred = queryParams['starred'];
     if (starred) {
       repos = repos.filter(repo => repo.starred);
+    }
+
+    if (queryParams && queryParams['repository.active']) {
+      let paramValue = queryParams['repository.active'];
+
+      if (paramValue === 'true') {
+        repos = repos.filter(repo => repo.active);
+      }
     }
 
     // standard v3 response returning all repositories
@@ -258,11 +267,28 @@ export default function () {
       repositories.models = repositories.models.sortBy(queryParams.sort_by);
     }
 
-    if (queryParams && queryParams.slug_filter) {
+    if (queryParams && queryParams.name_filter) {
       repositories.models = repositories.models.filter((repo) => {
-        return fuzzysort.single(queryParams.slug_filter, repo.slug);
+        return fuzzysort.single(queryParams.name_filter, repo.name);
       });
     }
+
+    let filterableProperties = ['managed_by_installation', 'active_on_org', 'active'];
+
+    filterableProperties.forEach(property => {
+      let fullParamName = `repository.${property}`;
+
+      if (queryParams && queryParams[fullParamName]) {
+        let paramValue = queryParams[fullParamName];
+
+        if (paramValue === 'true') {
+          repositories.models = repositories.models.filterBy(property);
+        } else {
+          repositories.models = repositories.models.rejectBy(property);
+        }
+      }
+    });
+
     return this.serialize(repositories);
   });
 

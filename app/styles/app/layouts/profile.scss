@@ -7,55 +7,63 @@ $profile-breakpoint: 600px;
   @media (max-width: $profile-breakpoint) {
     flex-flow: column-reverse;
   }
+
+  nav.travistab-nav {
+    border-bottom: 2px #f1f1f1 solid;
+    margin-bottom: 1.5em;
+  }
+
+  // FIXME there’s a naked h2 down there, it seems to me it needs scoping…?
+  h2 {
+    color: $oxide-blue;
+    font-weight: 300;
+  }
+
+  .profile-aside {
+    flex: 0 0 180px;
+    margin-right: 55px;
+
+    @media #{$medium-up} {
+      flex: 0 0 290px;
+    }
+
+    @media (max-width: $profile-breakpoint) {
+      margin-top: 55px;
+    }
+
+    @media (min-width: $profile-breakpoint) {
+      display: flex;
+      flex-flow: column wrap;
+    }
+
+    ul {
+      padding: 0;
+      margin: 0;
+      list-style-type: none;
+    }
+
+    h2 {
+      font-size: $font-size-sm;
+      text-transform: uppercase;
+      font-weight: bold;
+      color: $cement-grey;
+      margin-bottom: 0;
+    }
+
+    section {
+      padding-bottom: 1rem;
+      border-bottom: solid 2px $pebble-grey;
+
+      &.no-divider {
+        padding-bottom: 0;
+        border-bottom-width: 0;
+      }
+    }
+  }
 }
 
 .profile-main {
   flex-grow: 1;
-}
-
-.profile-aside {
-  flex: 0 0 180px;
-  margin-right: 55px;
-
-  @media #{$medium-up} {
-    flex: 0 0 290px;
-  }
-
-  @media (max-width: $profile-breakpoint) {
-    margin-top: 55px;
-  }
-
-  @media (min-width: $profile-breakpoint) {
-    display: flex;
-    flex-flow: column wrap;
-
-    .profile-user {
-      order: 1;
-    }
-
-    .profile-betafeatures {
-      order: 2;
-    }
-
-    .profile-orgs {
-      order: 3;
-    }
-
-    .profile-additional {
-      order: 4;
-    }
-  }
-
-  ul {
-    padding: 0;
-    margin: 0;
-    list-style-type: none;
-  }
-
-  h2 {
-    font-size: $font-size-sm;
-    border-bottom: solid 2px $pebble-grey;
-  }
 }
 
 .profile-header {
@@ -63,41 +71,45 @@ $profile-breakpoint: 600px;
   justify-content: space-between;
   align-items: center;
 
-  .h2--grey {
+  margin-bottom: 2rem;
+
+  .left {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+
+  .avatar-wrapper {
+    margin-right: 1rem;
+    margin-top: 1rem;
+  }
+
+  h1 {
     margin-bottom: 0;
-    line-heigth: 1;
-  }
-}
+    white-space: nowrap;
+    max-width: 8.99em;
+    overflow: hidden;
+    position: relative;
 
-.profile-getstarted {
-  display: flex;
-  flex-flow: column wrap;
-  margin: 0 0 3rem;
-  padding: 1em;
-  list-style: none;
-  border-radius: 4px;
+    &:after {
+      content: "";
 
-  @media #{$medium} {
-    flex-flow: row nowrap;
-    justify-content: space-around;
-  }
+      @include fadeOut(right, -90deg, white);
 
-  li {
-    text-align: center;
-  }
-
-  figure {
-    margin: 0;
-  }
-
-  figcaption {
-    width: 90%;
-    margin: auto;
-    padding: 0 1em 0 2.8em;
-
-    @media #{$medium-up} {
-      text-align: left;
+      // I couldn’t get it to work without changing how it was positioned
+      right: auto;
+      left: 7em;
     }
+
+  }
+
+  .login {
+    color: $cement-grey;
+    font-size: $font-size-m;
+  }
+
+  .badge {
+    transform: translateY(-1.5px);
   }
 }
 
@@ -105,19 +117,73 @@ $profile-breakpoint: 600px;
   @include resetul;
 
   font-size: $font-size-m;
-  dispay: flex;
-  flex-flow: column wrap;
 
   li {
     display: flex;
     flex-flow: row wrap;
     margin-bottom: 0.8em;
+    align-items: center;
+
+    .icon {
+      &.private, &.public {
+        width: 18px;
+        height: 18px;
+        margin-right: 0;
+      }
+
+      &.private {
+        transform: translateY(-1px);
+      }
+    }
+
+    &.empty {
+      border: 1px dashed $pebble-grey;
+      padding: 0 1em;
+
+      p + p {
+        margin-top: 0;
+      }
+    }
   }
 }
 
 .profile-settings {
   display: flex;
   align-items: center;
+  background-color: white;
+  border: 1px solid $pebble-grey;
+  font-size: $font-size-s;
+  color: $asphalt-grey;
+  padding: 0.3rem 0.4rem;
+  margin: 0.3rem 0;
+  transform: translateY(1px);
+
+  .icon {
+    width: 12px;
+    height: 12px;
+  }
+
+  &:hover {
+    color: white;
+
+    .icon {
+      @include colorSVG(white);
+    }
+  }
+
+  &.disabled {
+    opacity: 0.5;
+
+    &:hover {
+      color: $asphalt-grey;
+      background-color: white;
+      cursor: not-allowed;
+
+      .icon {
+        @include colorSVG($cement-grey);
+      }
+    }
+  }
 }
 
 .profile-settings .icon-disabled {
@@ -131,65 +197,16 @@ $profile-breakpoint: 600px;
   white-space: nowrap;
   overflow: hidden;
   border-radius: 2px;
+  margin-right: 1rem;
 
   .sync-spinner {
     vertical-align: top;
   }
-
-  &.admin {
-    &:hover {
-      background-color: $pebble-grey;
-
-      &:after {
-        content: "";
-
-        @include fadeOut(right, -90deg, $pebble-grey);
-      }
-    }
-
-    .active &:hover {
-      background-color: $agate-blue;
-
-      &:after {
-        content: "";
-
-        @include fadeOut(right, -90deg, $agate-blue);
-      }
-    }
-  }
-
-  &.non-admin {
-    color: rgba(black, 0.45);
-
-    &:hover {
-      background-color: transparentize($pebble-grey, 0.5);
-
-      &:after {
-        content: "";
-
-        @include fadeOut(right, -90deg, $pebble-grey);
-      }
-    }
-
-    .active &:hover {
-      background-color: transparentize($agate-blue, 0.5);
-
-      &:after {
-        content: "";
-
-        @include fadeOut(right, -90deg, $agate-blue);
-      }
-    }
-  }
-}
-
-.profile-additional {
-  margin-top: 20px;
-  border-top: solid 2px $pebble-grey;
 }
 
 .profile-text,
-.profile-additional {
+.profile-additional,
+.profile-betafeatures {
   @include linkStyle;
 }
 
@@ -227,7 +244,7 @@ $profile-breakpoint: 600px;
   }
 }
 
-.profile-repositories-filter {
+.profile-repositories-filter, .not-locked-profile-repositories-filter {
   margin-bottom: 1.5em;
 
   .search {
@@ -316,4 +333,208 @@ $profile-breakpoint: 600px;
     box-shadow: 0 .15px 0 $cement-grey;
     color: $cement-grey;
   }
+}
+
+header.legacy-services-integration {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .badge {
+    transform: translateY(-3px);
+  }
+
+  // FIXME this is copied from sync-button.scss
+  .button {
+    height: 2.6rem;
+    padding: 0.6em 0.8em;
+    background-color: $oxide-blue;
+    border: none;
+    border-radius: 2px;
+
+    margin-right: 0.5rem;
+
+    // FIXME this is here for the loading indicator but all is misaligned
+    display: flex;
+
+    .icon {
+      @include colorSVG(white);
+    }
+
+    &:hover {
+      background-color: #229191;
+    }
+  }
+}
+
+#github-apps-invitation {
+  box-shadow: 0 0 15px 3px $pebble-grey;
+  padding: 0.1em 1.25em .2em 1.25em;
+
+  // FIXME this is copied from above!
+  .button {
+    height: 2.6rem;
+    padding: 0.6em 0.8em;
+    background-color: $oxide-blue;
+    border: none;
+    border-radius: 2px;
+    margin-right: 0.5rem;
+
+    svg {
+      vertical-align: sub;
+    }
+
+    .icon {
+      @include colorSVG(white);
+    }
+
+    &:hover {
+      background-color: #229191;
+    }
+  }
+
+  &.expanded {
+    h2 {
+      font-size: $font-size-xl;
+      margin-top: 0.5em;
+    }
+
+    p {
+      font-size: $font-size-ml;
+    }
+
+    .button {
+      margin-top: 1em;
+    }
+  }
+
+  & + .legacy-services-integration {
+    margin-top: 1em;
+  }
+
+  p {
+    @include linkStyle;
+  }
+}
+
+.loading-indicator--white.migrate span {
+  padding-right: 5px;
+  vertical-align: bottom;
+}
+
+header.space-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  // FIXME this is copied from linkStyle but I only want it on .inner-underline
+  .inner-underline {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px solid $cement-grey;
+    padding-bottom: 0.1rem;
+    transition: color 200ms ease, border 200ms ease;
+
+    &:hover,
+    &:active {
+      color: $cement-grey;
+      text-decoration: none;
+      border-color: transparent;
+    }
+  }
+}
+
+#locked-github-apps-repositories {
+  box-shadow: 0 0 15px 3px $pebble-grey;
+
+  padding: 1em 1em 0 1em;
+  margin-top: 1rem;
+
+  p {
+    display: flex;
+    align-items: flex-start;
+
+    margin: 0 0 1rem;
+
+    color: $cement-grey;
+    font-size: $font-size-sm;
+
+    svg {
+      width: 22px;
+      height: 22px;
+
+      flex-shrink: 0;
+
+      margin-right: 9px;
+
+      stroke-width: 5px;
+
+      @include colorSVG($asphalt-grey);
+    }
+
+    @include linkStyle;
+
+    a {
+      padding-bottom: 0.07rem;
+    }
+  }
+
+  li {
+    opacity: 0.5;
+
+    .button:hover {
+      background-color: inherit;
+      color: inherit;
+
+      .icon {
+        @include colorSVG($cement-grey);
+      }
+    }
+
+    &:last-child {
+      padding-bottom: 0.6em;
+    }
+  }
+}
+
+.button--white.migrate {
+  border-radius: 4px;
+  padding: 0.5em 0.9em 0.4em 0.7em;
+
+  svg {
+    @extend .icon--m;
+    @include colorSVGFill(rgba(black, 0.2));
+
+    width: 16px;
+    height: 16px;
+    transform: translateY(-2px);
+    padding-right: 2px;
+  }
+
+  &:hover {
+    background-color: $pebble-grey;
+  }
+}
+
+.migrate-or-activate {
+  margin-top: 1em;
+  padding-bottom: 0.8em;
+
+  .icon--github {
+    @include colorSVGFill(white);
+
+    width: 14px;
+    height: 14px;
+    margin-right: 4px;
+    transform: translateY(2px);
+  }
+}
+
+.link-button {
+  color: #FFFFFF;
+  height: 2.6rem;
+  padding: 0.6em 0.8em;
+  background-color: #3EAAAF;
+  border: none;
+  border-radius: 2px;
 }

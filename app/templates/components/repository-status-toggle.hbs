@@ -1,3 +1,10 @@
+{{repository-visibility-icon repository=repository}}
+
+{{#link-to "repo" repository.owner.login repository.name class="profile-repo"
+  classNameBindings="admin:admin:non-admin"}}
+  {{name}}
+{{/link-to}}
+
 {{#if admin}}
   {{repository-switch
     repository=repository
@@ -7,19 +14,18 @@
   {{#if toggleRepositoryTask.isRunning}}
     {{loading-indicator inline=true}}
   {{else}}
-    {{#link-to "settings" repository.owner.login repository.name class="profile-settings" title="Go to Travis CI repository settings"}}
+    {{#link-to "settings" repository.owner.login repository.name tagName="button" class="button profile-settings" title="Go to Travis CI repository settings"}}
       {{svg-jar 'icon-settings' class="icon icon-hover"}}
+      Settings
     {{/link-to}}
   {{/if}}
 {{else}}
   {{repository-switch repository=repository disabled=true}}
-  <a class="profile-settings">{{svg-jar 'icon-private' class="icon"}}</a>
+  <a class="profile-settings disabled button">
+    {{svg-jar 'icon-private' class="icon"}}
+    Settings
+  </a>
 {{/if}}
-
-{{#link-to "repo" repository.owner.login repository.name class="profile-repo"
-  classNameBindings="admin:admin:non-admin"}}
-  {{slug}}
-{{/link-to}}
 
 {{#if showError}}
   <div class="repositories-error">

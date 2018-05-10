@@ -151,7 +151,10 @@ export default JSONAPISerializer.extend({
     if (include) {
       include.split(',').forEach((includeSegment) => {
         let [includeType, includeAttribute] = includeSegment.split('.');
-        if (includeType === type && !attributes.includes(includeAttribute)) {
+        let includeTypeIsThis = (includeType === type) ||
+          (includeType === 'owner' && (type === 'user' || type === 'organization'));
+
+        if (includeTypeIsThis && !attributes.includes(includeAttribute)) {
           attributes.push(includeAttribute);
         }
       });
@@ -162,6 +165,11 @@ export default JSONAPISerializer.extend({
 
   isIncluded(type, key, request) {
     let include = request.queryParams.include;
+    let ownerAliases = ['user', 'organization'];
+
+    if (ownerAliases.includes(type)) {
+      type = 'owner';
+    }
 
     if (include) {
       return !!include

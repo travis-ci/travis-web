@@ -4,6 +4,7 @@ export default Mirage.Factory.extend({
   name: 'travis-web',
   githubLanguage: 'ruby',
   active: true,
+  active_on_org: false,
 
   owner: Object.freeze({
     login: 'travis-ci',

@@ -119,7 +119,7 @@
     overflow: hidden;
 
     &:after {
-      conent: "";
+      content: "";
 
       @include fadeOut(bottom, 360deg, white, 5%);
     }

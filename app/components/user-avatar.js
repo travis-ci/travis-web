@@ -3,7 +3,7 @@ import { computed } from 'ember-decorators/object';
 
 export default Component.extend({
   tagName: 'span',
-  classNameBindings: ['small:avatar--small:avatar'],
+  classNames: ['avatar-wrapper'],
 
   @computed('name')
   userInitials(name) {
@@ -45,5 +45,15 @@ export default Component.extend({
     } else {
       return `${url}?v=3&s=${size}`;
     }
+  },
+
+  @computed('showSubscriptionStatus', 'account.subscription', 'account.education')
+  showSubscriptionCheckmark(showStatus, subscription, education) {
+    return showStatus && (subscription || education);
+  },
+
+  @computed('account.education')
+  subscriptionTooltipText(education) {
+    return `This account has an ${education ? 'education' : 'active'} subscription`;
   }
 });

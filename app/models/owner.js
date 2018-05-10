@@ -11,5 +11,9 @@ export default Model.extend({
   githubId: attr(),
   education: attr('boolean'),
 
+  // These are inserted artificially by routes:accounts
+  subscription: attr(),
+  subscriptionError: attr('boolean'),
+
   installation: belongsTo({async: false}),
 });

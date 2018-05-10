@@ -14,7 +14,7 @@ moduleForAcceptance('Acceptance | jobs/debug', {
 test('debugging job', function (assert) {
   withFeature('debugBuilds');
 
-  let repo =  server.create('repository', { slug: 'travis-ci/travis-web' });
+  let repo =  server.create('repository', { slug: 'travis-ci/travis-web', private: true });
   let branch = server.create('branch', { name: 'acceptance-tests' });
 
   let  gitUser = server.create('git-user', { name: 'Mr T' });

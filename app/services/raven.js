@@ -23,11 +23,11 @@ export default RavenLogger.extend({
     this._super(...arguments);
   },
 
-  logException(e) {
+  logException(e, forceSampling = false) {
     // eslint-disable-next-line
     console.log('Caught an exception:', e);
 
-    if (!this.ignoreError(e)) {
+    if (!this.ignoreError(e, forceSampling)) {
       this.captureException(e);
     }
   },

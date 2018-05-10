@@ -13,7 +13,6 @@ module('Integration | Component | user avatar', function (hooks) {
 
     await render(hbs`{{user-avatar name=name url=url size=size}}`);
 
-    assert.dom('span').hasClass('avatar', 'component should have right class');
     assert.dom('.pseudo-avatar').hasAttribute('data-initials', 'HT', 'initials should be correct');
     assert.dom('.real-avatar').hasAttribute('src', 'https://someurl.com/someimage.jpg?v=3&s=38', 'avatar should display fallback image');
     assert.dom('.real-avatar').hasAttribute('srcset', 'https://someurl.com/someimage.jpg?v=3&s=38 1x, https://someurl.com/someimage.jpg?v=3&s=76 2x', 'should provide a low and high res avatar');
