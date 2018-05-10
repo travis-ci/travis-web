@@ -1,3 +1,4 @@
+
 /*!
  * UAParser.js v0.7.18
  * Lightweight JavaScript-based User-Agent string parser
@@ -13,9 +14,9 @@ if (isUnsupportedBrowser()) {
 }
 
 function isUnsupportedBrowser() {
-  parser = new UAParser();
+  browser = new UAParser().getBrowser();
 
-  if (parser.getBrowser().name === 'IE') {
+  if (browser.name === 'IE' && browser.version < 11) {
     return true;
   } else {
     return false;
