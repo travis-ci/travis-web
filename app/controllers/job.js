@@ -20,6 +20,6 @@ export default Controller.extend({
 
   @observes('job.state')
   jobStateDidChange() {
-    return this.send('faviconStateDidChange', this.get('job.state'));
+    // return this.send('faviconStateDidChange', this.get('job.state'));
   },
 });
