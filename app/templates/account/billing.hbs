@@ -5,7 +5,7 @@
       <h2>Plan Overview</h2>
       <section class='plan'>
         <h3 data-test-plan-name>{{model.plan.name}}</h3>
-        <span data-test-plan-concurrency>{{pluralize model.plan.concurrency 'concurrent build'}}</span>
+        <span data-test-plan-concurrency>{{pluralize model.plan.builds 'concurrent build'}}</span>
       </section>
     {{/if}}
     <h2>Billing Information</h2>

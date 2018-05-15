@@ -1189,10 +1189,10 @@ export default {
     "plan":            {
       "@type":            "resource",
       "actions":          { },
-      "attributes":       ["id", "name", "price", "currency", "concurrency", "annual"],
+      "attributes":       ["id", "name", "price", "currency", "builds", "annual"],
       "representations":  {
-        "standard":       ["id", "name", "price", "currency", "concurrency", "annual"],
-        "minimal":        ["id", "name", "price", "currency", "concurrency", "annual"],
+        "standard":       ["id", "name", "price", "currency", "builds", "annual"],
+        "minimal":        ["id", "name", "price", "currency", "builds", "annual"],
       }
     },
     "owner": {
