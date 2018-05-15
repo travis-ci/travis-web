@@ -476,12 +476,12 @@ test('view billing information', function (assert) {
 
     assert.equal(profilePage.billing.invoices.length, 2);
 
-    profilePage.billing.invoices[0].as(i1919 => {
+    profilePage.billing.invoices[1].as(i1919 => {
       assert.equal(i1919.text, '1919 May 1919');
       assert.equal(i1919.href, 'https://example.com/1919.pdf');
     });
 
-    assert.equal(profilePage.billing.invoices[1].text, '2010 February 2010');
+    assert.equal(profilePage.billing.invoices[0].text, '2010 February 2010');
   });
 });
 

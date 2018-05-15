@@ -47,7 +47,7 @@
   </p>
   {{#if invoices}}
     <ul>
-      {{#each invoices as |invoice|}}
+      {{#each (sort-by 'createdAt:desc' invoices) as |invoice|}}
         <li><a data-test-invoice href={{invoice.url}}>{{svg-jar 'icon-invoice' class='icon'}} {{invoice.id}} {{moment-format invoice.createdAt 'MMMM YYYY'}}</a></li>
       {{/each}}
     </ul>
