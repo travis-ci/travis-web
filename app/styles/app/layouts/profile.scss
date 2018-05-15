@@ -408,8 +408,9 @@ section.billing {
   }
 
   section.contact {
-    address {
-      white-space: pre-line;
+    .address p {
+      margin-top: 0;
+      margin-bottom: 0.3em;
     }
   }
 

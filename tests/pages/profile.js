@@ -118,7 +118,7 @@ export default create({
     },
 
     address: {
-      scope: '.contact address',
+      scope: '.contact .address',
     },
 
     source: text('[data-test-source]'),
