@@ -34,7 +34,7 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
     let plan = server.create('plan', {
       name: 'Small Business Plan',
       concurrency: 5,
-      period: 'monthly',
+      annual: false,
       currency: 'USD',
       price: 6900
     });

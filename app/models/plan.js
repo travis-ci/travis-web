@@ -5,5 +5,5 @@ export default Model.extend({
   name: attr(),
   concurrency: attr(),
   price: attr(),
-  period: attr(),
+  annual: attr('boolean'),
 });

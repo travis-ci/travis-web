@@ -25,11 +25,11 @@
         <h3>Payment details</h3>
         <div data-test-credit-card>•••• •••• •••• {{model.creditCardInfo.lastDigits}}</div>
         <div data-test-price>{{price}}</div>
-        {{#if (eq model.plan.period 'monthly')}}
+        {{#unless model.plan.annual}}
           <span class='notice-banner--yellow' data-test-annual-invitation>
             Save 10% by switching to <a href='javascript:alert("unimplemented")'>annual billing</a>
           </span>
-        {{/if}}
+        {{/unless}}
       </section>
     </section>
   {{else}}
