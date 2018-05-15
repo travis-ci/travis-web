@@ -428,6 +428,10 @@ section.invoices {
     padding-left: 0;
   }
 
+  li {
+    padding-bottom: 0.4em;
+  }
+
   p {
     @include linkStyle;
   }
