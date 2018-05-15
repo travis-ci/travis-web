@@ -5,6 +5,7 @@ import { service } from 'ember-decorators/service';
 
 export default Component.extend({
   @service auth: null,
+  @service router: null,
 
   classNames: ['media', 'account'],
   tagName: 'li',
@@ -29,6 +30,15 @@ export default Component.extend({
   @computed('account.type')
   isUser(type) {
     return type === 'user';
+  },
+
+  @computed('router.currentRouteName')
+  linkRouteName(routeName) {
+    if (routeName.endsWith('_loading')) {
+      return 'account';
+    } else {
+      return routeName;
+    }
   },
 
   actions: {
