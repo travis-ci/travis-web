@@ -121,6 +121,8 @@ export default create({
       scope: '.contact address',
     },
 
+    source: text('[data-test-source]'),
+
     creditCardNumber: text('[data-test-credit-card]'),
     price: text('[data-test-price]'),
 

@@ -23,6 +23,7 @@
       </section>
       <section class='payment'>
         <h3>Payment details</h3>
+        <div class='source' data-test-source>{{source}}</div>
         <div data-test-credit-card>•••• •••• •••• {{model.creditCardInfo.lastDigits}}</div>
         <div data-test-price>{{price}}</div>
         {{#unless model.plan.annual}}

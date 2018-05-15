@@ -1623,6 +1623,7 @@ export default {
         "owner",
         "status",
         "valid_to",
+        "source",
       ],
       "representations":  {
         "standard":       [
@@ -1633,12 +1634,14 @@ export default {
           "owner",
           "status",
           "valid_to",
+          "source",
         ],
         "minimal":       [
             "id",
             "owner",
             "status",
             "valid_to",
+            "source",
         ],
       }
     },

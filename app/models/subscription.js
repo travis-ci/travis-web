@@ -7,6 +7,7 @@ export default Model.extend({
   billingInfo: belongsTo({ async: false }),
   creditCardInfo: belongsTo({ async: false }),
   owner: belongsTo('owner', {polymorphic: true}),
+  source: attr(),
 
   invoices: hasMany('invoice'),
 

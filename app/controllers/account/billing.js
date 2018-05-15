@@ -10,6 +10,12 @@ let currencyAbbreviationToSymbol = {
   USD: '$'
 };
 
+let sourceToSentence = {
+  manual: 'This is a manual subscription.',
+  github: 'This subscription is managed by GitHub Marketplace.',
+  stripe: 'This plan is paid through Stripe.'
+};
+
 export default Controller.extend({
   @service store: null,
   config,
@@ -26,6 +32,11 @@ export default Controller.extend({
   @computed('model.plan.currency', 'model.plan.price')
   price(currency, price) {
     return `${currencyAbbreviationToSymbol[currency]}${price / 100} per month`;
+  },
+
+  @computed('model.source')
+  source(source) {
+    return `${sourceToSentence[source]}`;
   },
 
   @action

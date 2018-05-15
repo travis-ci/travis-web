@@ -395,6 +395,18 @@ section.billing {
     }
   }
 
+  section.payment {
+    h3 {
+      margin-bottom: 0.3em;
+    }
+
+    .source {
+      font-size: $font-size-s;
+      font-style: italic;
+      color: $cement-grey;
+    }
+  }
+
   section.contact {
     address {
       white-space: pre-line;

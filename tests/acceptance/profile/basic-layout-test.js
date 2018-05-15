@@ -44,8 +44,10 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
       plan,
       owner: this.user,
       status: 'subscribed',
-      valid_to: new Date()
+      valid_to: new Date(),
+      source: 'stripe'
     });
+    this.subscription = subscription;
 
     subscription.createBillingInfo({
       first_name: 'User',
@@ -466,6 +468,7 @@ test('view billing information', function (assert) {
     assert.equal(profilePage.billing.plan.concurrency, '5 concurrent builds');
 
     assert.equal(profilePage.billing.address.text, 'User Name Travis CI GmbH Rigaerstraße 8 Address 2 Berlin, Berlin 10987 Germany');
+    assert.equal(profilePage.billing.source, 'This plan is paid through Stripe.');
     assert.equal(profilePage.billing.creditCardNumber, '•••• •••• •••• 1919');
     assert.equal(profilePage.billing.price, '$69 per month');
 
@@ -482,15 +485,17 @@ test('view billing information', function (assert) {
   });
 });
 
-test('view billing with euros on an annual plan', function (assert) {
+test('view billing with euros on a manually-managed annual plan', function (assert) {
   this.plan.currency = 'EUR';
   this.plan.annual = true;
   this.plan.price = 10000;
+  this.subscription.source = 'manual';
 
   profilePage.visit({ username: 'user-login'});
   profilePage.billing.visit();
 
   andThen(() => {
+    assert.equal(profilePage.billing.source, 'This is a manual subscription.');
     assert.equal(profilePage.billing.price, '€100 per month');
 
     assert.ok(profilePage.billing.annualInvitation.isHidden, 'expected the invitation to switch to annual billing to be hidden');
