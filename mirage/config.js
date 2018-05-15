@@ -93,6 +93,10 @@ export default function () {
 
   this.get('/subscriptions');
 
+  this.get('/subscription/:subscription_id/invoices', function (schema, {params}) {
+    return schema.subscriptions.find(params.subscription_id).invoices;
+  });
+
   this.get('/broadcasts', schema => {
     return schema.broadcasts.all();
   });

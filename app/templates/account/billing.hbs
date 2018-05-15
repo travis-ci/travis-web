@@ -1,0 +1,55 @@
+<section class='billing'>
+  {{#if model}}
+    {{!FIXME is this necessary?}}
+    {{#if model.plan}}
+      <h2>Plan Overview</h2>
+      <section class='plan'>
+        <h1 class='h2--grey' data-test-plan-name>{{model.plan.name}}</h1>
+        <span data-test-plan-concurrency>{{pluralize model.plan.concurrency 'concurrent build'}}</span>
+      </section>
+    {{/if}}
+    <h2>Billing Information</h2>
+    <section class='row'>
+      <section class='contact'>
+        <h3>Billing Contact</h3>
+        {{!FIXME the weird spacing is because I’m using pre-line, which is probs ridic}}
+        <address>{{model.billingInfo.firstName}} {{model.billingInfo.lastName}}
+          {{model.billingInfo.company}}
+          {{model.billingInfo.address}}
+          {{model.billingInfo.address2}}
+          {{model.billingInfo.city}}, {{model.billingInfo.state}} {{model.billingInfo.zipCode}}
+          {{model.billingInfo.country}}
+        </address>
+      </section>
+      <section class='payment'>
+        <h3>Payment information</h3>
+        <span data-test-credit-card>•••• •••• •••• {{model.creditCardInfo.lastDigits}}</span>
+        {{#if (eq model.plan.period 'monthly')}}
+          <span class='notice-banner--yellow' data-test-annual-invitation>
+            Save 10% by switching to <a href='javascript:alert("unimplemented")'>annual billing</a>
+          </span>
+        {{/if}}
+      </section>
+    </section>
+  {{else}}
+    <span data-test-no-subscription>no subscription found</span>
+  {{/if}}
+</section>
+<section class='invoices'>
+  <h2>Invoice History</h2>
+  {{! FIXME the icon alignment within the circle is a bit off}}
+  <p>
+    {{svg-jar 'icon-help' class='icon-help' alt=''}}
+    Having trouble with your invoices?
+    <a href='{{ config.urls.support }}' title='Email the Travis support team' {{action 'helpscoutTrigger'}}>We’re happy to help</a>.
+  </p>
+  {{#if invoices}}
+    <ul>
+      {{#each invoices as |invoice|}}
+        <li><a data-test-invoice href={{invoice.url}}>{{invoice.id}} {{moment-format invoice.createdAt 'MMMM YYYY'}}</a></li>
+      {{/each}}
+    </ul>
+  {{else}}
+    <span data-test-no-invoices>no invoices found</span>
+  {{/if}}
+</section>

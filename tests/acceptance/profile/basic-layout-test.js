@@ -31,10 +31,45 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
     });
     this.user.save();
 
-    server.create('subscription', {
-      owner: this.currentUser,
+    let plan = server.create('plan', {
+      name: 'Small Business Plan',
+      concurrency: 5,
+      period: 'monthly'
+    });
+
+    let subscription = server.create('subscription', {
+      plan,
+      owner: this.user,
       status: 'subscribed',
       valid_to: new Date()
+    });
+
+    subscription.createBillingInfo({
+      first_name: 'User',
+      last_name: 'Name',
+      company: 'Travis CI GmbH',
+      address: 'Rigaerstraße 8',
+      address2: 'Address 2',
+      city: 'Berlin',
+      state: 'Berlin',
+      zip_code: '10987',
+      country: 'Germany'
+    });
+
+    subscription.createCreditCardInfo({
+      last_digits: '1919'
+    });
+
+    subscription.createInvoice({
+      id: '1919',
+      created_at: new Date(1919, 4, 15),
+      url: 'https://example.com/1919.pdf'
+    });
+
+    subscription.createInvoice({
+      id: '2010',
+      created_at: new Date(2010, 1, 14),
+      url: 'https://example.com/2010.pdf'
     });
 
     // create organization
@@ -414,5 +449,31 @@ test('the migration button is not present when the owner has over 20 active lega
 
   andThen(() => {
     assert.ok(profilePage.githubAppsInvitation.migrateButton.isHidden, 'expected migration button to be hidden when owner has too many repositories');
+  });
+});
+
+test('view billing information', function (assert) {
+  profilePage.visit({ username: 'user-login' });
+  profilePage.billing.visit();
+
+  andThen(() => {
+    percySnapshot(assert);
+
+    assert.equal(profilePage.billing.plan.name, 'Small Business Plan');
+    assert.equal(profilePage.billing.plan.concurrency, '5 concurrent builds');
+
+    assert.equal(profilePage.billing.address.text, 'User Name Travis CI GmbH Rigaerstraße 8 Address 2 Berlin, Berlin 10987 Germany');
+    assert.equal(profilePage.billing.creditCardNumber, '•••• •••• •••• 1919');
+
+    assert.ok(profilePage.billing.annualInvitation.isVisible, 'expected the invitation to switch to annual billing to be visible');
+
+    assert.equal(profilePage.billing.invoices.length, 2);
+
+    profilePage.billing.invoices[0].as(i1919 => {
+      assert.equal(i1919.text, '1919 May 1919');
+      assert.equal(i1919.href, 'https://example.com/1919.pdf');
+    });
+
+    assert.equal(profilePage.billing.invoices[1].text, '2010 February 2010');
   });
 });
