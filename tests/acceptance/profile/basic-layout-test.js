@@ -478,6 +478,16 @@ test('view billing information', function (assert) {
   });
 });
 
+test('view billing tab when there is no subscription', function (assert) {
+  profilePage.visit({ username: 'org-login' });
+  profilePage.billing.visit();
+
+  andThen(() => {
+    percySnapshot(assert);
+    assert.dom('[data-test-no-subscription]').hasText('no subscription found');
+  });
+});
+
 test('switching to another account’s billing tab loads the subscription properly', function (assert) {
   profilePage.visit({ username: 'user-login' });
   profilePage.billing.visit();
