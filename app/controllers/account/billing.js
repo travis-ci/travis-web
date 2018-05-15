@@ -5,6 +5,11 @@ import { service } from 'ember-decorators/service';
 import { action, computed } from 'ember-decorators/object';
 import config from 'travis/config/environment';
 
+let currencyAbbreviationToSymbol = {
+  EUR: '€',
+  USD: '$'
+};
+
 export default Controller.extend({
   @service store: null,
   config,
@@ -18,9 +23,9 @@ export default Controller.extend({
     }
   },
 
-  @computed('model.plan.price')
-  price(price) {
-    return `$${price / 100} per month`;
+  @computed('model.plan.currency', 'model.plan.price')
+  price(currency, price) {
+    return `${currencyAbbreviationToSymbol[currency]}${price / 100} per month`;
   },
 
   @action

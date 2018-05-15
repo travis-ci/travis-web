@@ -38,6 +38,7 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
       currency: 'USD',
       price: 6900
     });
+    this.plan = plan;
 
     let subscription = server.create('subscription', {
       plan,
@@ -478,6 +479,21 @@ test('view billing information', function (assert) {
     });
 
     assert.equal(profilePage.billing.invoices[1].text, '2010 February 2010');
+  });
+});
+
+test('view billing with euros on an annual plan', function (assert) {
+  this.plan.currency = 'EUR';
+  this.plan.annual = true;
+  this.plan.price = 10000;
+
+  profilePage.visit({ username: 'user-login'});
+  profilePage.billing.visit();
+
+  andThen(() => {
+    assert.equal(profilePage.billing.price, '€100 per month');
+
+    assert.ok(profilePage.billing.annualInvitation.isHidden, 'expected the invitation to switch to annual billing to be hidden');
   });
 });
 
