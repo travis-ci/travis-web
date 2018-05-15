@@ -375,12 +375,23 @@ section.billing {
     }
   }
 
+  .plan + h2 {
+    margin-bottom: 0;
+  }
+
   .row {
     display: flex;
     flex-wrap: wrap;
 
     section {
       flex: 1;
+    }
+
+    h3 {
+      text-transform: uppercase;
+      font-size: $font-size-s;
+      font-weight: $font-weight-bold;
+      color: $cement-grey;
     }
   }
 
