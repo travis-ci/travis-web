@@ -367,6 +367,14 @@ header.legacy-services-integration {
   }
 }
 section.billing {
+  .plan {
+    h3 {
+      font-size: $font-size-xl;
+      font-weight: $font-weight-light;
+      margin-bottom: 0.2em;
+    }
+  }
+
   .row {
     display: flex;
     flex-wrap: wrap;
