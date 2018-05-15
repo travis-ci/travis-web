@@ -18,6 +18,11 @@ export default Controller.extend({
     }
   },
 
+  @computed('model.plan.price')
+  price(price) {
+    return `$${price / 100} per month`;
+  },
+
   @action
   helpscoutTrigger() {
     HS.beacon.open();

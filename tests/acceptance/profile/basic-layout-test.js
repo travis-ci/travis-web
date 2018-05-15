@@ -34,7 +34,9 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
     let plan = server.create('plan', {
       name: 'Small Business Plan',
       concurrency: 5,
-      period: 'monthly'
+      period: 'monthly',
+      currency: 'USD',
+      price: 6900
     });
 
     let subscription = server.create('subscription', {
@@ -464,6 +466,7 @@ test('view billing information', function (assert) {
 
     assert.equal(profilePage.billing.address.text, 'User Name Travis CI GmbH Rigaerstraße 8 Address 2 Berlin, Berlin 10987 Germany');
     assert.equal(profilePage.billing.creditCardNumber, '•••• •••• •••• 1919');
+    assert.equal(profilePage.billing.price, '$69 per month');
 
     assert.ok(profilePage.billing.annualInvitation.isVisible, 'expected the invitation to switch to annual billing to be visible');
 

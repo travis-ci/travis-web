@@ -122,6 +122,7 @@ export default create({
     },
 
     creditCardNumber: text('[data-test-credit-card]'),
+    price: text('[data-test-price]'),
 
     annualInvitation: { scope: '[data-test-annual-invitation]' },
 
