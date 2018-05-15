@@ -432,7 +432,7 @@ section.invoices {
     @include linkStyle;
   }
 
-  svg {
+  .icon-help {
     margin-right: 3px;
     transform: translateY(-2px);
 
@@ -440,6 +440,11 @@ section.invoices {
       border-color: $pebble-grey;
       @include colorSVG($cement-grey);
     }
+  }
+
+  a svg {
+    @include colorSVG(black);
+    transform: translateY(-2px);
   }
 }
 
