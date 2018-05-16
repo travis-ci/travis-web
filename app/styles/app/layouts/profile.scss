@@ -407,8 +407,8 @@ section.billing {
     }
   }
 
-  section.contact {
-    .address p {
+  section.contact, section.payment {
+    p {
       margin-top: 0;
       margin-bottom: 0.3em;
     }
