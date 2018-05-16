@@ -26,7 +26,12 @@ function githubAppsRepositoryCollection(scope) {
     name: text('a.profile-repo'),
 
     isPublic: isPresent('.icon.public'),
-    isPrivate: isPresent('.icon.private')
+    isPrivate: isPresent('.icon.private'),
+
+    settings: {
+      scope: '.profile-settings',
+      isDisabled: hasClass('disabled')
+    }
   });
 }
 

@@ -122,7 +122,10 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
       },
       active: true,
       managed_by_installation: true,
-      private: false
+      private: false,
+      permissions: {
+        admin: true
+      },
     });
 
     server.create('repository', {
@@ -132,7 +135,10 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
       },
       active: true,
       managed_by_installation: true,
-      private: true
+      private: true,
+      permissions: {
+        admin: false
+      }
     });
 
     server.create('repository', {
@@ -198,10 +204,18 @@ test('view repositories', function (assert) {
     assert.equal(profilePage.githubAppsRepositories.length, 3, 'expected three GitHub Apps-managed repositories');
 
     assert.equal(profilePage.notLockedGithubAppsRepositories.length, 2, 'expected two not-locked GitHub Apps-managed repositories');
-    assert.equal(profilePage.notLockedGithubAppsRepositories[0].name, 'github-apps-private-repository');
-    assert.ok(profilePage.notLockedGithubAppsRepositories[0].isPrivate);
-    assert.equal(profilePage.notLockedGithubAppsRepositories[1].name, 'github-apps-public-repository');
-    assert.ok(profilePage.notLockedGithubAppsRepositories[1].isPublic);
+
+    profilePage.notLockedGithubAppsRepositories[0].as(repository => {
+      assert.equal(repository.name, 'github-apps-private-repository');
+      assert.ok(repository.isPrivate);
+      assert.ok(repository.settings.isDisabled);
+    });
+
+    profilePage.notLockedGithubAppsRepositories[1].as(repository => {
+      assert.equal(repository.name, 'github-apps-public-repository');
+      assert.ok(repository.isPublic);
+      assert.notOk(repository.settings.isDisabled);
+    });
 
     assert.equal(profilePage.lockedGithubAppsRepositories.length, 1, 'expected one locked GitHub Apps-managed repository');
     assert.equal(profilePage.lockedGithubAppsRepositories[0].name, 'github-apps-locked-repository');
