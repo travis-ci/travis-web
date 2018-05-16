@@ -367,6 +367,8 @@ header.legacy-services-integration {
   }
 }
 section.billing {
+  font-size: $font-size-m;
+
   .plan {
     h3 {
       font-size: $font-size-xl;
@@ -422,6 +424,7 @@ section.billing {
 }
 
 section.invoices {
+  font-size: $font-size-m;
   padding-top: 1rem;
 
   ul {
