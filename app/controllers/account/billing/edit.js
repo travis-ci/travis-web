@@ -22,7 +22,7 @@ export default Controller.extend({
 
     let billing = this.getProperties(
       'firstName', 'lastName', 'company', 'address', 'address2',
-      'city', 'state', 'country', 'zipCode', 'email'
+      'city', 'state', 'country', 'zipCode', 'email', 'vatId'
     );
 
     card['billing_info[address]'] = billing.address;
@@ -47,6 +47,7 @@ export default Controller.extend({
         'billing_info.country': billing.country,
         'billing_info.zip_code': billing.zipCode,
         'billing_info.billing_email': billing.email,
+        'billing_info.vat_id': billing.vatId
       };
 
       return this.get('api').post('/subscriptions', { data: subscriptionJson });

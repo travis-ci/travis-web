@@ -533,7 +533,7 @@ test('creating a subscription', function (assert) {
   server.create('plan', { xid: 'travis-ci-five-builds-annual', name: 'CA', builds: 5, price: 273900, currency: 'USD', annual: true });
   server.create('plan', { xid: 'travis-ci-ten-builds-annual', name: 'DA', builds: 10, price: 537900, currency: 'USD', annual: true });
 
-  assert.expect(25);
+  assert.expect(26);
 
   visit('/profile/org-login/billing/edit');
 
@@ -587,6 +587,7 @@ test('creating a subscription', function (assert) {
     assert.equal(body['billing_info.country'], 'A country');
     assert.equal(body['billing_info.zip_code'], 'A zip code');
     assert.equal(body['billing_info.billing_email'], 'billing@example.org');
+    assert.equal(body['billing_info.vat_id'], 'a vat id');
 
     let subscription = server.create('subscription');
     return subscription;
@@ -610,6 +611,7 @@ test('creating a subscription', function (assert) {
     billing.country.fillIn('A country');
     billing.zipCode.fillIn('A zip code');
     billing.email.fillIn('billing@example.org');
+    billing.vatId.fillIn('a vat id');
   });
 
   profilePage.billing.edit.save.click();

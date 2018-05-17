@@ -157,6 +157,7 @@ export default create({
         country: { scope: '[name=country]' },
         zipCode: { scope: '[name=zipCode]' },
         email: { scope: '[name=email]' },
+        vatId: { scope: '[name=vatId]' },
       },
 
       save: {
