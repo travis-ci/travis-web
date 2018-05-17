@@ -4,24 +4,95 @@
   {{/each}}
 </div>
 
-{{input name='name' value=name placeholder='Name on card'}}
-{{input name='number' value=number placeholder='Card number'}}
-{{input name='expiry' value=expiry placeholder='Expiry'}}
-{{input name='cvc' value=cvc placeholder='CVC'}}
+<h2>Contact details</h2>
+
+<p>All fields are required unless marked as optional.</p>
+
+<div class='form-elem'>
+  <label for='subscription-first-name' class='form-label'>First name</label>
+  {{input id='subscription-first-name' name='firstName' value=firstName}}
+</div>
+
+<div class='form-elem'>
+  <label for='subscription-last-name' class='form-label'>Last name</label>
+  {{input id='subscription-last-name' name='lastName' value=lastName}}
+</div>
+
+<div class='form-elem'>
+  <label for='subscription-company' class='form-label'>Company name <span class=optional>(Optional)</span></label>
+  {{input id='subscription-company' name='company' value=company}}
+</div>
+
+<div class='form-elem'>
+  <label for='subscription-email' class='form-label'>Billing email address</label>
+  {{input id='subscription-email' name='email' value=email}}
+</div>
+
+<h2>Billing address</h2>
+
+<p>All fields are required unless marked as optional.</p>
+
+<div class='form-elem'>
+  <label for='subscription-address' class='form-label'>Street address</label>
+  {{input id='subscription-address' name='address' value=address}}
+</div>
+
+<div class='form-elem'>
+  <label for='subscription-address2' class='form-label'>Suite, Apt.</label>
+  {{input id='subscription-address2' name='address2' value=address2}}
+</div>
+
+<div class='form-elem'>
+  <label for='subscription-city' class='form-label'>City</label>
+  {{input id='subscription-city' name='city' value=city}}
+</div>
+
+<div class='form-elem'>
+  <label for='subscription-zip-code' class='form-label'>Zip code</label>
+  {{input id='subscription-zip-code' name='zipCode' value=zipCode}}
+</div>
+
+<div class='form-elem'>
+  <label for='subscription-state' class='form-label'>State</label>
+  {{input id='subscription-state' name='state' value=state}}
+</div>
+
+<div class='form-elem'>
+  <label for='subscription-country' class='form-label'>Country</label>
+  {{input id='subscription-country' name='country' value=country}}
+</div>
+
+<div class='form-elem'>
+  <label for='subscription-vat-id' class='form-label'>VAT ID</label>
+  {{input id='subscription-vat-id' name='vatId' value=vatId}}
+</div>
+
+<h2>Credit card details</h2>
+
+<p>Your credit card details are never stored on or even reach our servers. Payments and credit card data are handled by <a href='https://example.com/FIXME'>Stripe</a>.</p>
+
+<div class='form-elem'>
+  <label for='subscription-card-number' class='form-label'>Card number</label>
+  {{input id='subscription-card-number' name='number' value=number}}
+</div>
+
+<div class='form-elem'>
+  <label for='subscription-name-on-card' class='form-label'>Name on card</label>
+  {{input id='subscription-name-on-card' name='name' value=name}}
+</div>
+
+<div class='form-elem'>
+  <label for='subscription-expiry' class='form-label'>Expiry date of card</label>
+  {{input id='subscription-expiry' name='expiry' value=expiry}}
+</div>
+
+<div class='form-elem'>
+  <label for='subscription-cvc' class='form-label'>CVC</label>
+  {{input id='subscription-cvc' name='cvc' value=cvc}}
+</div>
 
 Hardcoded plan: {{plan}}
 
-{{input name='firstName' value=firstName placeholder='First Name'}}
-{{input name='lastName' value=lastName placeholder='Last Name'}}
-{{input name='company' value=company placeholder='Company'}}
-{{input name='address' value=address placeholder='Address'}}
-{{input name='address2' value=address2 placeholder='Address 2'}}
-{{input name='city' value=city placeholder='City'}}
-{{input name='state' value=state placeholder='State'}}
-{{input name='country' value=country placeholder='Country'}}
-{{input name='zipCode' value=zipCode placeholder='Zip Code'}}
-{{input name='email' value=email placeholder='Billing Email'}}
-{{input name='vatId' value=vatId placeholder='VAT ID'}}
 
 <button {{action 'save'}} class='button save'>save??? not greyed out 😆</button>
 
