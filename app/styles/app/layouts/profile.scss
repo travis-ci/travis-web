@@ -64,6 +64,11 @@ $profile-breakpoint: 600px;
 
 .profile-main {
   flex-grow: 1;
+
+  label {
+    font-weight: bold;
+    font-size: $font-size-s;
+  }
 }
 
 .profile-header {
