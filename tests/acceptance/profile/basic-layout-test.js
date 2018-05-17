@@ -556,7 +556,7 @@ test('creating a subscription', function (assert) {
 
         assert.equal(card['billing_info[address]'], 'An address');
         assert.equal(card['billing_info[city]'], 'A city');
-        assert.equal(card['billing_info[country]'], 'A country');
+        assert.equal(card['billing_info[country]'], 'Malta');
         assert.equal(card['billing_info[last_name]'], 'Person');
         assert.equal(card['billing_info[zip_code]'], 'A zip code');
         assert.equal(card['billing_info[billing_email]'], 'billing@example.org');
@@ -584,7 +584,7 @@ test('creating a subscription', function (assert) {
     assert.equal(body['billing_info.address2'], 'An address 2');
     assert.equal(body['billing_info.city'], 'A city');
     assert.equal(body['billing_info.state'], 'A state');
-    assert.equal(body['billing_info.country'], 'A country');
+    assert.equal(body['billing_info.country'], 'Malta');
     assert.equal(body['billing_info.zip_code'], 'A zip code');
     assert.equal(body['billing_info.billing_email'], 'billing@example.org');
     assert.equal(body['billing_info.vat_id'], 'a vat id');
@@ -609,7 +609,7 @@ test('creating a subscription', function (assert) {
     billing.address2.fillIn('An address 2');
     billing.city.fillIn('A city');
     billing.state.fillIn('A state');
-    billing.country.fillIn('A country');
+    billing.country.fillIn('Malta');
     billing.zipCode.fillIn('A zip code');
     billing.email.fillIn('billing@example.org');
     billing.vatId.fillIn('a vat id');
