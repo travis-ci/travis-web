@@ -521,3 +521,76 @@ test('switching to another account’s billing tab loads the subscription proper
     assert.dom('[data-test-no-subscription]').hasText('no subscription found');
   });
 });
+
+test('creating a subscription', function (assert) {
+  assert.expect(21);
+
+  visit('/profile/org-login/billing/edit');
+
+  let mockStripe = Service.extend({
+    card: Object.freeze({
+      createToken(card) {
+        assert.equal(card.number, 4242424242424242);
+        assert.equal(card.exp_month, 11);
+        assert.equal(card.exp_year, 2030);
+
+        assert.equal(card['billing_info[address]'], 'An address');
+        assert.equal(card['billing_info[city]'], 'A city');
+        assert.equal(card['billing_info[country]'], 'A country');
+        assert.equal(card['billing_info[last_name]'], 'Person');
+        assert.equal(card['billing_info[zip_code]'], 'A zip code');
+        assert.equal(card['billing_info[billing_email]'], 'billing@example.org');
+
+        return Promise.resolve({
+          id: 'aaazzz'
+        });
+      }
+    })
+  });
+
+  let instance = this.application.__deprecatedInstance__;
+  let registry = instance.register ? instance : instance.registry;
+  registry.register('service:stripe', mockStripe);
+
+  server.post('/subscriptions', (schema, request) => {
+    let body = JSON.parse(request.requestBody);
+
+    assert.equal(body['credit_card_info.token'], 'aaazzz');
+    assert.equal(body['plan'], 'travis-ci-ten-builds');
+    assert.equal(body['billing_info.first_name'], 'Org');
+    assert.equal(body['billing_info.last_name'], 'Person');
+    assert.equal(body['billing_info.company'], 'Org Name');
+    assert.equal(body['billing_info.address'], 'An address');
+    assert.equal(body['billing_info.address2'], 'An address 2');
+    assert.equal(body['billing_info.city'], 'A city');
+    assert.equal(body['billing_info.state'], 'A state');
+    assert.equal(body['billing_info.country'], 'A country');
+    assert.equal(body['billing_info.zip_code'], 'A zip code');
+    assert.equal(body['billing_info.billing_email'], 'billing@example.org');
+
+    let subscription = server.create('subscription');
+    return subscription;
+  });
+
+  profilePage.billing.edit.creditCard.as(card => {
+    card.number.fillIn('4242424242424242');
+    card.name.fillIn('Generic name');
+    card.expiry.fillIn('11/30');
+    card.cvc.fillIn('999');
+  });
+
+  profilePage.billing.edit.billing.as(billing => {
+    billing.firstName.fillIn('Org');
+    billing.lastName.fillIn('Person');
+    billing.company.fillIn('Org Name');
+    billing.address.fillIn('An address');
+    billing.address2.fillIn('An address 2');
+    billing.city.fillIn('A city');
+    billing.state.fillIn('A state');
+    billing.country.fillIn('A country');
+    billing.zipCode.fillIn('A zip code');
+    billing.email.fillIn('billing@example.org');
+  });
+
+  profilePage.billing.edit.save.click();
+});

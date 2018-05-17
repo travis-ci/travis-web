@@ -1,0 +1,24 @@
+{{input name='name' value=name placeholder='Name on card'}}
+{{input name='number' value=number placeholder='Card number'}}
+{{input name='expiry' value=expiry placeholder='Expiry'}}
+{{input name='cvc' value=cvc placeholder='CVC'}}
+
+Hardcoded plan: {{plan}}
+
+{{input name='firstName' value=firstName placeholder='First Name'}}
+{{input name='lastName' value=lastName placeholder='Last Name'}}
+{{input name='company' value=company placeholder='Company'}}
+{{input name='address' value=address placeholder='Address'}}
+{{input name='address2' value=address2 placeholder='Address 2'}}
+{{input name='city' value=city placeholder='City'}}
+{{input name='state' value=state placeholder='State'}}
+{{input name='country' value=country placeholder='Country'}}
+{{input name='zipCode' value=zipCode placeholder='Zip Code'}}
+{{input name='email' value=email placeholder='Billing Email'}}
+
+<button {{action 'save'}} class='button save'>save??? not greyed out 😆</button>
+
+{{#if result}}
+result:
+{{result}}
+{{/if}}
