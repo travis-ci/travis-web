@@ -50,6 +50,10 @@ module.exports = function (environment) {
     },
     endpoints: {},
     githubApps: false,
+    stripe: {
+      publishableKey: 'pk_test_5i2Bx5nJACluilHLb25d3P6N',
+      lazyLoad: false
+    },
     timing: {
       syncingPageRedirectionTime: 5000,
     },
@@ -264,13 +268,14 @@ module.exports = function (environment) {
   // do it in the same way on the Ruby server.
   ENV.contentSecurityPolicyRaw = {
     'default-src': "'none'",
-    'script-src': "'self' https://ssl.google-analytics.com https://djtflbt20bdde.cloudfront.net/ https://js.pusher.com https://widget.intercom.io/ https://js.intercomcdn.com/",
+    // The sha256 is for a Stripe inline script
+    'script-src': "'self' https://ssl.google-analytics.com https://djtflbt20bdde.cloudfront.net/ https://js.pusher.com https://widget.intercom.io/ https://js.intercomcdn.com/ https://js.stripe.com/ 'sha256-37u63EBe1EibDZ3vZNr6mxLepqlY1CQw+4N89HrzP9s='",
     'font-src': "'self' https://fonts.googleapis.com/css https://fonts.gstatic.com https://js.intercomcdn.com/",
     'connect-src': "'self' ws://ws.pusherapp.com wss://ws.pusherapp.com https://*.pusher.com https://s3.amazonaws.com/archive.travis-ci.com/ https://s3.amazonaws.com/archive.travis-ci.org/ app.getsentry.com https://pnpcptp8xh9k.statuspage.io/ https://ssl.google-analytics.com https://api-iam.intercom.io https://api-ping.intercom.io https://nexus-websocket-a.intercom.io https://nexus-websocket-b.intercom.io wss://nexus-websocket-a.intercom.io wss://nexus-websocket-b.intercom.io",
     'img-src': "'self' data: https://www.gravatar.com http://www.gravatar.com app.getsentry.com https://*.githubusercontent.com https://0.gravatar.com https://ssl.google-analytics.com https://static.intercomcdn.com https://js.intercomcdn.com",
     'style-src': "'self' https://fonts.googleapis.com 'unsafe-inline' https://djtflbt20bdde.cloudfront.net https://widget.intercom.io",
     'media-src': "'self' https://js.intercomcdn.com",
-    'frame-src': "'self' https://djtflbt20bdde.cloudfront.net",
+    'frame-src': "'self' https://djtflbt20bdde.cloudfront.net https://js.stripe.com/",
     'report-uri': 'https://65f53bfdfd3d7855b8bb3bf31c0d1b7c.report-uri.io/r/default/csp/reportOnly',
     'block-all-mixed-content': '',
     'form-action': "'self'", // probably doesn't matter, but let's have it anyways
