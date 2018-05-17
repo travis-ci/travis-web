@@ -596,7 +596,8 @@ test('creating a subscription', function (assert) {
   profilePage.billing.edit.creditCard.as(card => {
     card.number.fillIn('4242424242424242');
     card.name.fillIn('Generic name');
-    card.expiry.fillIn('11/30');
+    card.expiryMonth.fillIn('11');
+    card.expiryYear.fillIn('30');
     card.cvc.fillIn('999');
   });
 

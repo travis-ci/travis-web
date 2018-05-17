@@ -142,7 +142,8 @@ export default create({
       creditCard: {
         number: { scope: '[name=number]' },
         name: { scope: '[name=name]' },
-        expiry: { scope: '[name=expiry]' },
+        expiryMonth: { scope: '[name=expiryMonth]' },
+        expiryYear: { scope: '[name=expiryYear]' },
         cvc: { scope: '[name=cvc]' }
       },
 

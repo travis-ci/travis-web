@@ -11,14 +11,13 @@ export default Controller.extend({
   @action
   save() {
     let card = this.getProperties(
-      'number', 'name', 'expiry', 'cvc'
+      'number', 'name', 'expiryMonth', 'expiryYear', 'cvc'
     );
 
     // FIXME eep
     card.number = parseInt(card.number.replace(/\s/g, ''));
-    let [expiryMonth, expiryYear] = card.expiry.split('/').map(s => s.trim());
-    card.exp_month = parseInt(expiryMonth);
-    card.exp_year = parseInt(expiryYear) + 2000;
+    card.exp_month = parseInt(card.expiryMonth);
+    card.exp_year = parseInt(card.expiryYear) + 2000;
 
     let billing = this.getProperties(
       'firstName', 'lastName', 'company', 'address', 'address2',
