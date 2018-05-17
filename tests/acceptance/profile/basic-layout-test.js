@@ -552,7 +552,7 @@ test('creating a subscription', function (assert) {
       createToken(card) {
         assert.equal(card.number, 4242424242424242);
         assert.equal(card.exp_month, 11);
-        assert.equal(card.exp_year, 2030);
+        assert.equal(card.exp_year, 2024);
 
         assert.equal(card['billing_info[address]'], 'An address');
         assert.equal(card['billing_info[city]'], 'A city');
@@ -597,7 +597,7 @@ test('creating a subscription', function (assert) {
     card.number.fillIn('4242424242424242');
     card.name.fillIn('Generic name');
     card.expiryMonth.fillIn('11');
-    card.expiryYear.fillIn('30');
+    card.expiryYear.fillIn('2024');
     card.cvc.fillIn('999');
   });
 

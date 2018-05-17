@@ -17,7 +17,7 @@ export default Controller.extend({
     // FIXME eep
     card.number = parseInt(card.number.replace(/\s/g, ''));
     card.exp_month = parseInt(card.expiryMonth);
-    card.exp_year = parseInt(card.expiryYear) + 2000;
+    card.exp_year = parseInt(card.expiryYear);
 
     let billing = this.getProperties(
       'firstName', 'lastName', 'company', 'address', 'address2',

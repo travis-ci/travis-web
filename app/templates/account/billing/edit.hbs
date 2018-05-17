@@ -83,8 +83,35 @@
 
 <div class='form-elem'>
   <label class='form-label'>Expiry date of card</label>
-  {{input name='expiryMonth' value=expiryMonth}}
-  {{input name='expiryYear' value=expiryYear}}
+
+  {{#x-select name='expiryMonth' value=expiryMonth on-change=(action (mut expiryMonth)) as |xs|}}
+    {{#xs.option value=1}}January{{/xs.option}}
+    {{#xs.option value=2}}February{{/xs.option}}
+    {{#xs.option value=3}}March{{/xs.option}}
+    {{#xs.option value=4}}April{{/xs.option}}
+    {{#xs.option value=5}}May{{/xs.option}}
+    {{#xs.option value=6}}June{{/xs.option}}
+    {{#xs.option value=7}}July{{/xs.option}}
+    {{#xs.option value=8}}August{{/xs.option}}
+    {{#xs.option value=9}}September{{/xs.option}}
+    {{#xs.option value=10}}October{{/xs.option}}
+    {{#xs.option value=11}}November{{/xs.option}}
+    {{#xs.option value=12}}December{{/xs.option}}
+  {{/x-select}}
+
+  {{!FIXME hardcoded years}}
+  {{#x-select name='expiryYear' value=expiryYear on-change=(action (mut expiryYear)) as |xs|}}
+    {{#xs.option value=2018}}2018{{/xs.option}}
+    {{#xs.option value=2019}}2019{{/xs.option}}
+    {{#xs.option value=2020}}2020{{/xs.option}}
+    {{#xs.option value=2021}}2021{{/xs.option}}
+    {{#xs.option value=2022}}2022{{/xs.option}}
+    {{#xs.option value=2023}}2023{{/xs.option}}
+    {{#xs.option value=2024}}2024{{/xs.option}}
+    {{#xs.option value=2025}}2025{{/xs.option}}
+    {{#xs.option value=2026}}2026{{/xs.option}}
+    {{#xs.option value=2027}}2027{{/xs.option}}
+  {{/x-select}}
 </div>
 
 <div class='form-elem'>
