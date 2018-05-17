@@ -105,7 +105,7 @@
     "yamljs": "^0.3.0"
   },
   "engines": {
-    "node": "8.5.0",
+    "node": "10",
     "npm": "5.4.2"
   },
   "dependencies": {
