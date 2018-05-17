@@ -133,6 +133,12 @@ export default create({
     }),
 
     edit: {
+      plans: collection('[data-test-plan]', {
+        name: text('[data-test-name]'),
+        concurrency: text('[data-test-concurrency]'),
+        price: text('[data-test-price]')
+      }),
+
       creditCard: {
         number: { scope: '[name=number]' },
         name: { scope: '[name=name]' },

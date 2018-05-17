@@ -97,6 +97,8 @@ export default function () {
     return schema.subscriptions.find(params.subscription_id).invoices;
   });
 
+  this.get('/plans');
+
   this.get('/broadcasts', schema => {
     return schema.broadcasts.all();
   });

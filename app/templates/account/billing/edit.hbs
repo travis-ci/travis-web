@@ -1,3 +1,7 @@
+{{#each plans as |plan|}}
+  {{plans-item plan=plan}}
+{{/each}}
+
 {{input name='name' value=name placeholder='Name on card'}}
 {{input name='number' value=number placeholder='Card number'}}
 {{input name='expiry' value=expiry placeholder='Expiry'}}
