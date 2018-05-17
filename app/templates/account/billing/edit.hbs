@@ -1,6 +1,8 @@
-{{#each plans as |plan|}}
-  {{plans-item plan=plan}}
-{{/each}}
+<div class='plans-container'>
+  {{#each plans as |plan|}}
+    {{plans-item plan=plan}}
+  {{/each}}
+</div>
 
 {{input name='name' value=name placeholder='Name on card'}}
 {{input name='number' value=number placeholder='Card number'}}

@@ -628,3 +628,31 @@ header.space-between {
   border: none;
   border-radius: 2px;
 }
+
+.plans-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.plans-item {
+  display: flex;
+  border: 1px solid $new-grey;
+  border-radius: 3px;
+
+  padding: 15px;
+
+  .name {
+    font-size: $font-size-ml;
+    padding-bottom: 0.5em;
+  }
+
+  .concurrency {
+    padding-bottom: 0.5em;
+  }
+
+  .price {
+    color: $cement-grey;
+    font-size: $font-size-s;
+    font-style: italic;
+  }
+}
