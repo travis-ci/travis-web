@@ -33,12 +33,17 @@ export default Component.extend({
         isTrial: response.license_type === 'trial',
         isPaid: response.license_type !== 'trial'
       });
-      if (!this.get('expiring')) {
-        this.get('storage').removeItem(this.get('lsLicense'));
-      }
-      if (!this.get('almostExceeding') && !this.get('exceeding')) {
-        this.get('storage').removeItem(this.get('lsSeats'));
-      }
+      console.log(this.get('expiring'))
+      console.log(this.get('daysUntilExpiry'))
+
+      console.log(this.get('almostExceedingSeats'))
+      console.log(this.get('exceedingSeats'))
+      // if (this.get('daysUntilExpiry') && !this.get('expiring')) {
+      //  this.get('storage').removeItem(this.get('lsLicense'));
+      //}
+      // if (!this.get('almostExceedingSeats') && !this.get('exceedingSeats')) {
+      //   this.get('storage').removeItem(this.get('lsSeats'));
+      // }
     });
   },
 
