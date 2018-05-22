@@ -38,7 +38,7 @@ export default Component.extend({
       // emberlike and resiliant to odd timing issues
       // if (this.get('daysUntilExpiry') && !this.get('expiring')) {
       //  this.get('storage').removeItem(this.get('lsLicense'));
-      //}
+      // }
       // if (!this.get('almostExceedingSeats') && !this.get('exceedingSeats')) {
       //   this.get('storage').removeItem(this.get('lsSeats'));
       // }
