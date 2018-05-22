@@ -33,11 +33,9 @@ export default Component.extend({
         isTrial: response.license_type === 'trial',
         isPaid: response.license_type !== 'trial'
       });
-      console.log(this.get('expiring'))
-      console.log(this.get('daysUntilExpiry'))
 
-      console.log(this.get('almostExceedingSeats'))
-      console.log(this.get('exceedingSeats'))
+      // Temporary removing these until we can rework these to be more
+      // emberlike and resiliant to odd timing issues
       // if (this.get('daysUntilExpiry') && !this.get('expiring')) {
       //  this.get('storage').removeItem(this.get('lsLicense'));
       //}
