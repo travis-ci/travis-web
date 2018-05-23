@@ -135,6 +135,12 @@ module.exports = function (environment) {
       }
     }
 
+    if (process.env.PUBLIC_MODE) {
+      ENV.publicMode = process.env.PUBLIC_MODE;
+    } else {
+      ENV.publicMode = true;
+    }
+
     if (process.env.AUTH_ENDPOINT) {
       ENV.authEndpoint = process.env.AUTH_ENDPOINT;
     }
