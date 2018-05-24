@@ -150,8 +150,8 @@ module.exports = function (environment) {
       }
     }
 
-    if (process.env.PUBLIC_MODE) {
-      ENV.publicMode = process.env.PUBLIC_MODE;
+    if (process.env.PUBLIC_MODE !== null && process.env.PUBLIC_MODE == 'false') {
+      ENV.publicMode = false;
     } else {
       ENV.publicMode = true;
     }

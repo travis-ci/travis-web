@@ -68,6 +68,7 @@ run Travis::Web::App.build(
   customer_io_site_id: ENV['CUSTOMER_IO_SITE_ID'],
   pro: ENV['TRAVIS_PRO'],
   enterprise: ENV['TRAVIS_ENTERPRISE'],
+  public_mode: ENV['PUBLIC_MODE'],
   assets_host: ENV['ASSETS_HOST'],
   ajax_polling: ENV['AJAX_POLLING'],
   github_orgs_oauth_access_settings_url: ENV['GITHUB_ORGS_OAUTH_ACCESS_SETTINGS_URL']
