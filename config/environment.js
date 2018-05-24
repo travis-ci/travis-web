@@ -99,6 +99,12 @@ module.exports = function (environment) {
     ]
   };
 
+  if (process.env.PUBLIC_MODE) {
+    ENV.publicMode = process.env.PUBLIC_MODE;
+  } else {
+    ENV.publicMode = true;
+  }
+
   if (typeof process !== 'undefined') {
     if (ENV.featureFlags['pro-version'] && !ENV.featureFlags['enterprise-version']) {
       // set defaults for pro if it's used
@@ -133,12 +139,6 @@ module.exports = function (environment) {
       if (ENV.apiEndpoint === 'https://api-staging.travis-ci.com') {
         ENV.pusher.key = '87d0723b25c51e36def8';
       }
-    }
-
-    if (process.env.PUBLIC_MODE) {
-      ENV.publicMode = process.env.PUBLIC_MODE;
-    } else {
-      ENV.publicMode = true;
     }
 
     if (process.env.AUTH_ENDPOINT) {
