@@ -135,7 +135,7 @@ module.exports = function (environment) {
       }
     }
 
-    if (process.env.PUBLIC_MODE !== null && (process.env.PUBLIC_MODE == false || process.env.PUBLIC_MODE == 'false')) {
+    if (process.env.PUBLIC_MODE !== null && process.env.PUBLIC_MODE == 'false') {
       ENV.publicMode = false;
     } else {
       ENV.publicMode = true;
