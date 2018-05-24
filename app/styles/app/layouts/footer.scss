@@ -12,6 +12,7 @@ $styleguide-font-size-small: 14px;
 $styleguide-font-size-title: 20px;
 
 $styleguide-layout-gutter: 2rem;
+$styleguide-layout-max-width: 1024px;
 
 $styleguide-small: 420px;
 $styleguide-medium: 800px;
@@ -59,6 +60,9 @@ $styleguide-medium: 800px;
     flex-flow: row wrap;
     justify-content: space-between;
     align-items: flex-start;
+    max-width: $styleguide-layout-max-width;
+    margin: auto;
+    padding: 0 $styleguide-layout-gutter/2;
   }
 }
 
