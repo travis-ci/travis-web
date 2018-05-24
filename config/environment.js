@@ -46,7 +46,10 @@ module.exports = function (environment) {
       enterprise: 'https://enterprise.travis-ci.com',
       twitter: 'https://twitter.com/travisci',
       jobs: 'https://travisci.workable.com/',
-      support: 'mailto:support@travis-ci.com'
+      support: 'mailto:support@travis-ci.com',
+      security: 'https://docs.travis-ci.com/legal/security',
+      terms: 'https://docs.travis-ci.com/legal/terms-of-service/',
+      privacy: 'https://docs.travis-ci.com/legal/privacy-policy',
     },
     endpoints: {},
     githubApps: false,
@@ -125,10 +128,6 @@ module.exports = function (environment) {
       };
       ENV.userlike = true;
       ENV.beacon = true;
-      ENV.urls.legal = ENV.billingEndpoint + '/pages/legal';
-      ENV.urls.imprint = ENV.billingEndpoint + '/pages/imprint';
-      ENV.urls.security = ENV.billingEndpoint + '/pages/security';
-      ENV.urls.terms = ENV.billingEndpoint + '/pages/terms';
 
       if (process.env.GITHUB_APPS_APP_NAME) {
         ENV.githubApps = {
