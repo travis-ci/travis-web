@@ -196,6 +196,8 @@ class Travis::Web::App
         config['featureFlags']['enterprise-version'] = true
       end
 
+      config['publicMode'] = options[:public_mode] if options[:public_mode]
+
       if config['enterprise']
         config['pagesEndpoint'] = false
         config['billingEndpoint'] = false
