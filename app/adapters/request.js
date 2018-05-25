@@ -16,5 +16,9 @@ export default V3Adapter.extend({
     }
   },
 
-  // FIXME maybe a queryRecord override to remove the query params, like in adapter:user?
+  // This overrides the parent implementation to ignore the query parameters
+  query(store, type, query) {
+    let url = this.buildURL(type.modelName, null, null, 'query', query);
+    return this.ajax(url, 'GET', { data: {include: this.includes }});
+  }
 });
