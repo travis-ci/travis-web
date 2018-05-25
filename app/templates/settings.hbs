@@ -3,6 +3,7 @@
   <section class="settings-section">
     <h2 class="small-title">General</h2>
     <ul class="settings-list--columns">
+      <li>{{settings-switch active=model.settings.builds_only_with_travis_yml repo=repo description="Build only if .travis.yml is present" key="builds_only_with_travis_yml"}}</li>
       <li>{{settings-switch active=model.settings.build_pushes repo=repo description="Build pushed branches" key="build_pushes"}}
         <a href="https://docs.travis-ci.com/user/customizing-the-build/#Building-only-the-latest-commit"
            title="about branch updates" class="settings-tooltip">
