@@ -30,7 +30,7 @@ test('trigger sync', function (assert) {
 
   let syncCalled = false;
 
-  server.post('/users/sync', () => {
+  server.post(`/user/${this.user.id}/sync`, () => {
     this.user.is_syncing = true;
     this.user.save();
     syncCalled = true;
