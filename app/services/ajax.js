@@ -27,6 +27,16 @@ export default Service.extend({
     });
   },
 
+  getV3(url, callback, errorCallback) {
+    return this.ajax(url, 'get', {
+      success: callback,
+      error: errorCallback,
+      headers: {
+        'Travis-API-Version': '3'
+      }
+    });
+  },
+
   post(url, data, callback) {
     return this.ajax(url, 'post', {
       data,
