@@ -44,6 +44,15 @@
       {{/each}}
     </ul>
 
+    <div id='env-sec'>
+      <p>
+        {{svg-jar 'icon-megaphone' class='icon icon-megaphone'}}
+        <span class="label-align">
+          Please make sure your secret is never related to the repository or branch name, or any other guessable string. Ideally use a password generation tool such as mkpasswd instead of choosing a secret yourself.
+        </span>
+      </p>
+    </div>
+
     {{add-env-var repo=repo}}
 
   </section>
