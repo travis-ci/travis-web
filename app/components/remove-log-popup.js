@@ -1,8 +1,13 @@
 import Component from '@ember/component';
 import { service } from 'ember-decorators/service';
+import KeyboardShortcuts from 'ember-keyboard-shortcuts/mixins/component';
 
-export default Component.extend({
+export default Component.extend(KeyboardShortcuts, {
   @service flashes: null,
+
+  keyboardShortcuts: {
+    'esc': 'toggleRemoveLogModal'
+  },
 
   actions: {
     removeLog() {
