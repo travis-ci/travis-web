@@ -48,6 +48,13 @@ export default create({
     checkmark: { scope: '.checkmark' }
   },
 
+  syncButton: {
+    scope: '.sync-button',
+    lastSynced: text('.sync-last'),
+    text: text('.button'),
+    click: clickable('.button'),
+  },
+
   subscriptionStatus: {
     scope: '.subscription-status',
     text: text('[data-test-message]')

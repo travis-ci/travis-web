@@ -6,6 +6,7 @@ export default Factory.extend({
   correct_scopes: true,
   login: 'testuser',
   synced_at: '2016-01-01T23:04:31Z',
+  is_syncing: false,
 
   withRepository: trait({
     afterCreate(user, server) {
