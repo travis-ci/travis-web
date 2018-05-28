@@ -222,10 +222,9 @@ module.exports = function (environment) {
     ENV.percy = {
       breakpointsConfig: {
         mobile: 375,
-        tablet: 768,
         desktop: 1280
       },
-      defaultBreakpoints: ['mobile', 'tablet', 'desktop']
+      defaultBreakpoints: ['mobile', 'desktop']
     };
 
     ENV.featureFlags['debug-logging'] = false;
