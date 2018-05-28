@@ -27,10 +27,10 @@
       border-radius: $switch-inner-width;
       background-color: white;
       color: white;
-      text-align: center;
       font-weight: 300;
       font-size: 12px;
       line-height: 2.2;
+      padding-left: 1px;
     }
   }
 
@@ -66,7 +66,7 @@
 
     .icon-off {
       @include colorSVG(darken($pebble-grey, 10));
-      transform: translate(1px, 1px);
+      transform: translateY(1px);
       stroke-width: 1.5px;
       padding-bottom: 2px;
     }
