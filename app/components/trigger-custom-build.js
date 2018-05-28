@@ -28,6 +28,11 @@ export default Component.extend(KeyboardShortcuts, {
     this.set('triggerBuildBranch', this.get('repo.defaultBranch.name'));
   },
 
+  didInsertElement() {
+    this._super(...arguments);
+    this.$('[autofocus]').focus();
+  },
+
   createBuild: task(function* () {
     try {
       const body = this.buildTriggerRequestBody();
