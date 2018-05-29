@@ -38,6 +38,7 @@ before_script:
   - greenkeeper-lockfile-update
   - echo $SPEECH
   - echo $NEWSPEECH
+  - echo $XSPEECH
 
 script:
   - npm run lint:js
