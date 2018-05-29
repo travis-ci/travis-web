@@ -39,6 +39,16 @@ before_script:
   - echo $SPEECH
   - echo $NEWSPEECH
   - echo $XSPEECH
+  - echo $LONG_100
+  - echo $LONG_200
+  - echo $LONG_300
+  - echo $LONG_400
+  - echo $LONG_500
+  - echo $LONG_600
+  - echo $LONG_700
+  - echo $LONG_800
+  - echo $LONG_900
+  - echo $LONG_1000
 
 script:
   - npm run lint:js
