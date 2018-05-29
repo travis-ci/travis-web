@@ -1,0 +1,20 @@
+{{repository-visibility-icon repository=repository}}
+
+{{#link-to "repo" repository.owner.login repository.name class="profile-repo"}}
+  {{name}}
+{{/link-to}}
+
+{{#unless repository.active_on_org}}
+  {{#if admin}}
+    {{#link-to "settings" repository.owner.login repository.name class="profile-settings button" title="Go to Travis CI repository settings"}}
+      {{svg-jar 'icon-settings' class="icon icon-hover"}}
+      Settings
+    {{/link-to}}
+  {{else}}
+    <a class="profile-settings disabled button">
+      {{svg-jar 'icon-private' class="icon"}}
+      Settings
+      {{tooltip-on-element text='Requires admin permissions'}}
+    </a>
+  {{/if}}
+{{/unless}}

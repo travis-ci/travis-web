@@ -2,7 +2,6 @@
 import { Response } from 'ember-cli-mirage';
 import config from 'travis/config/environment';
 import fuzzysort from 'npm:fuzzysort';
-import { merge } from '@ember/polyfills';
 
 const { validAuthToken, apiEndpoint } = config;
 
@@ -44,13 +43,6 @@ export default function () {
     let userData = JSON.parse(localStorage.getItem('travis.user')),
       id = userData.id;
     return this.serialize(users.find(id), 'v2');
-  });
-
-  this.get('/accounts', (schema/* , request*/) => {
-    const users = schema.users.all().models.map(user => merge(user.attrs, { type: 'user' }));
-    const accounts = schema.accounts.all().models.map(account => account.attrs);
-
-    return { accounts: users.concat(accounts) };
   });
 
   this.get('/orgs', function (schema) {
@@ -97,9 +89,9 @@ export default function () {
     return schema.broadcasts.all();
   });
 
-  this.get('/repos', function (schema, request) {
+  this.get('/repos', function (schema, {queryParams}) {
     // search apparently still uses v2, so different response necessary
-    const query = request.queryParams.search;
+    const query = queryParams.search;
     if (query) {
       const allRepositories = schema.repositories.all();
       const filtered = allRepositories.models.filter(repo => repo.attrs.slug.includes(query));
@@ -110,9 +102,17 @@ export default function () {
 
     let repos = schema.repositories.all();
 
-    let starred = request.queryParams['starred'];
+    let starred = queryParams['starred'];
     if (starred) {
       repos = repos.filter(repo => repo.starred);
+    }
+
+    if (queryParams && queryParams['repository.active']) {
+      let paramValue = queryParams['repository.active'];
+
+      if (paramValue === 'true') {
+        repos = repos.filter(repo => repo.active);
+      }
     }
 
     // standard v3 response returning all repositories
@@ -259,11 +259,28 @@ export default function () {
       repositories.models = repositories.models.sortBy(queryParams.sort_by);
     }
 
-    if (queryParams && queryParams.slug_filter) {
+    if (queryParams && queryParams.name_filter) {
       repositories.models = repositories.models.filter((repo) => {
-        return fuzzysort.single(queryParams.slug_filter, repo.slug);
+        return fuzzysort.single(queryParams.name_filter, repo.name);
       });
     }
+
+    let filterableProperties = ['managed_by_installation', 'active_on_org', 'active'];
+
+    filterableProperties.forEach(property => {
+      let fullParamName = `repository.${property}`;
+
+      if (queryParams && queryParams[fullParamName]) {
+        let paramValue = queryParams[fullParamName];
+
+        if (paramValue === 'true') {
+          repositories.models = repositories.models.filterBy(property);
+        } else {
+          repositories.models = repositories.models.rejectBy(property);
+        }
+      }
+    });
+
     return this.serialize(repositories);
   });
 

@@ -22,15 +22,11 @@
       </aside>
     {{/unless}}
     {{/if}}
-
-    {{#if auth.signedOut}}
-      {{page-footer}}
-    {{else if features.dashboard}}
-      {{page-footer}}
-    {{/if}}
   </div>
 {{else}}
-  {{component landingPage
-    signIn=(route-action 'signIn')
-    signOut=(route-action 'signOut')}}
+  <div class='wrapper centered'>
+    {{component landingPage
+      signIn=(route-action 'signIn')
+      signOut=(route-action 'signOut')}}
+  </div>
 {{/if}}

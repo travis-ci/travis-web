@@ -1,5 +1,16 @@
 <div class="wrapper {{if auth.signedOut 'centered'}} {{if features.dashboard 'centered'}}">
-  {{top-bar}}
+
+  {{#if showGitHubAppsCTA}}
+    {{#top-bar}}
+      <div class='cta'>
+        <p class='row'>
+          Join over 500,000 developers testing and building on Travis CI
+        </p>
+      </div>
+    {{/top-bar}}
+  {{else}}
+    {{top-bar}}
+  {{/if}}
 
   {{flash-display}}
 
@@ -21,11 +32,5 @@
         viewSearchResults=(route-action 'viewSearchResults')}}
     </aside>
   {{/unless}}
-  {{/if}}
-
-  {{#if auth.signedOut}}
-    {{page-footer}}
-  {{else if features.dashboard}}
-    {{page-footer}}
   {{/if}}
 </div>

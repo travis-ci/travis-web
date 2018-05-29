@@ -1,7 +1,7 @@
 import V3Adapter from 'travis/adapters/v3';
 
 export default V3Adapter.extend({
-  includes: 'build.request',
+  includes: 'build.request,build.commit',
 
   coalesceFindRequests: true,
 

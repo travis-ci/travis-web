@@ -46,9 +46,13 @@ module.exports = function (environment) {
       enterprise: 'https://enterprise.travis-ci.com',
       twitter: 'https://twitter.com/travisci',
       jobs: 'https://travisci.workable.com/',
-      support: 'mailto:support@travis-ci.com'
+      support: 'mailto:support@travis-ci.com',
+      security: 'https://docs.travis-ci.com/legal/security',
+      terms: 'https://docs.travis-ci.com/legal/terms-of-service/',
+      privacy: 'https://docs.travis-ci.com/legal/privacy-policy',
     },
     endpoints: {},
+    githubApps: false,
     timing: {
       syncingPageRedirectionTime: 5000,
     },
@@ -60,6 +64,7 @@ module.exports = function (environment) {
       fetchRecordsForPusherUpdatesThrottle: 1000,
       repositoryFilteringDebounceRate: 200,
       syncingPolling: 3000,
+      githubAppsInstallationPolling: 4000,
     },
     githubOrgsOauthAccessSettingsUrl: 'https://github.com/settings/connections/applications/f244293c729d5066cf27',
     apiTraceEndpoint: 'https://papertrailapp.com/systems/travis-org-api-production/events?q=program%3Aapp%2Fweb%20log-tracing%20',
@@ -77,12 +82,14 @@ module.exports = function (environment) {
     'debug-builds': false,
     'broadcasts': true,
     'beta-features': true,
+    'github-apps': false,
   };
 
   const { TRAVIS_PRO, TRAVIS_ENTERPRISE } = process.env;
 
   if (TRAVIS_PRO) {
     ENV.featureFlags['pro-version'] = true;
+    ENV.featureFlags['github-apps'] = true;
     ENV.pro = true;
   }
 
@@ -121,10 +128,13 @@ module.exports = function (environment) {
       };
       ENV.userlike = true;
       ENV.beacon = true;
-      ENV.urls.legal = ENV.billingEndpoint + '/pages/legal';
-      ENV.urls.imprint = ENV.billingEndpoint + '/pages/imprint';
-      ENV.urls.security = ENV.billingEndpoint + '/pages/security';
-      ENV.urls.terms = ENV.billingEndpoint + '/pages/terms';
+
+      if (process.env.GITHUB_APPS_APP_NAME) {
+        ENV.githubApps = {
+          appName: process.env.GITHUB_APPS_APP_NAME,
+          migrationRepositoryCountLimit: 50
+        };
+      }
     }
 
     if (process.env.API_ENDPOINT) {
@@ -180,9 +190,11 @@ module.exports = function (environment) {
     ENV.intervals.triggerBuildRequestDelay = 0;
     ENV.intervals.fetchRecordsForPusherUpdatesThrottle = 0;
     ENV.intervals.syncingPolling = 10;
+    ENV.intervals.githubAppsInstallationPolling = 10;
     ENV.timing.syncingPageRedirectionTime = 30;
 
     ENV.pagination.dashboardReposPerPage = 10;
+    ENV.pagination.profileReposPerPage = 10;
 
     ENV.APP.rootElement = '#ember-testing';
     ENV.APP.autoboot = false;
@@ -198,6 +210,11 @@ module.exports = function (environment) {
 
     ENV.pusher = {};
 
+    ENV.githubApps = {
+      appName: 'travis-ci-testing',
+      migrationRepositoryCountLimit: 20
+    };
+
     ENV.skipConfirmations = true;
 
     ENV.logLimit = 100;
@@ -205,15 +222,15 @@ module.exports = function (environment) {
     ENV.percy = {
       breakpointsConfig: {
         mobile: 375,
-        tablet: 768,
         desktop: 1280
       },
-      defaultBreakpoints: ['mobile', 'tablet', 'desktop']
+      defaultBreakpoints: ['mobile', 'desktop']
     };
 
     ENV.featureFlags['debug-logging'] = false;
     ENV.featureFlags['dashboard'] = false;
     ENV.featureFlags['pro-version'] = false;
+    ENV.featureFlags['github-apps'] = false;
 
     ENV.billingEndpoint = 'https://billing.travis-ci.com';
 

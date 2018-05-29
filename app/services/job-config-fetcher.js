@@ -14,8 +14,10 @@ export default Service.extend({
   },
 
   fetch(job) {
+    let PromiseObject = ObjectProxy.extend(PromiseProxyMixin);
+
     if (job.get('_config')) {
-      return EmberPromise.resolve(job.get('_config'));
+      return PromiseObject.create({promise: EmberPromise.resolve(job.get('_config'))});
     }
     let jobId = job.get('id');
     if (this.toFetch[jobId]) {
@@ -27,8 +29,6 @@ export default Service.extend({
       });
       data.promise = promise;
       once(this, 'flush');
-
-      let PromiseObject = ObjectProxy.extend(PromiseProxyMixin);
       return PromiseObject.create({ promise });
     }
   },
