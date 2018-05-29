@@ -36,6 +36,8 @@ before_script:
   - if [ "$PERCY_ENABLE" -ne 1 ]; then export RANDOMISE=--random; fi
   - echo $RANDOMISE
   - greenkeeper-lockfile-update
+  - echo $SPEECH
+  - echo $NEWSPEECH
 
 script:
   - npm run lint:js
