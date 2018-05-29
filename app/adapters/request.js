@@ -19,6 +19,6 @@ export default V3Adapter.extend({
   // This overrides the parent implementation to ignore the query parameters
   query(store, type, query) {
     let url = this.buildURL(type.modelName, null, null, 'query', query);
-    return this.ajax(url, 'GET', { data: {include: this.includes }});
+    return this.ajax(url, 'GET', { data: {include: this.includes, skip_count: true }});
   }
 });
