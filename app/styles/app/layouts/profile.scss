@@ -444,12 +444,11 @@ header.space-between {
   }
 }
 
-#env-sec {
+#locked-github-apps-repositories {
   box-shadow: 0 0 15px 3px $pebble-grey;
 
-  padding: 1em 1em 0.1em 1em;
+  padding: 1em 1em 0 1em;
   margin-top: 1rem;
-  margin-bottom: 1rem;
 
   p {
     display: flex;

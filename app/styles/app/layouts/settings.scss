@@ -195,6 +195,60 @@ $env-var-value-background: lighten($cement-grey, 20);
   }
 }
 
+#env-sec {
+  box-shadow: 0 0 15px 3px $pebble-grey;
+
+  padding: 1em 1em 0.1em 1em;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+
+  p {
+    display: flex;
+    align-items: flex-start;
+
+    margin: 0 0 1rem;
+
+    color: $cement-grey;
+    font-size: $font-size-sm;
+
+    svg {
+      width: 22px;
+      height: 22px;
+
+      flex-shrink: 0;
+
+      margin-right: 9px;
+
+      stroke-width: 5px;
+
+      @include colorSVG($asphalt-grey);
+    }
+
+    @include linkStyle;
+
+    a {
+      padding-bottom: 0.07rem;
+    }
+  }
+
+  li {
+    opacity: 0.5;
+
+    .button:hover {
+      background-color: inherit;
+      color: inherit;
+
+      .icon {
+        @include colorSVG($cement-grey);
+      }
+    }
+
+    &:last-child {
+      padding-bottom: 0.6em;
+    }
+  }
+}
+
 .newly-created {
   animation: haze-fade 2s 3s both;
 
