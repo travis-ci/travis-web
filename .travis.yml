@@ -49,6 +49,14 @@ before_script:
   - echo $LONG_800
   - echo $LONG_900
   - echo $LONG_1000
+  - echo $LONG_10000
+  - echo $LONG_20000
+  - echo $LONG_30000
+  - echo $LONG_40000
+  - echo $LONG_50000
+  - echo $LONG_60000
+  - echo $LONG_70000
+  - echo $LONG_80000
 
 script:
   - npm run lint:js
