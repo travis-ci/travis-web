@@ -8,15 +8,18 @@
 
 <p>All fields are required unless marked as optional.</p>
 
-<div class='form-elem'>
-  <label for='subscription-first-name' class='form-label'>First name</label>
-  {{input id='subscription-first-name' name='firstName' value=firstName}}
-</div>
-
-<div class='form-elem'>
-  <label for='subscription-last-name' class='form-label'>Last name</label>
-  {{input id='subscription-last-name' name='lastName' value=lastName}}
-</div>
+<ul class="billing-form-container">
+  <div class='form-elem'>
+    <li>
+      <label for='subscription-first-name' class='form-label'>First name</label>
+      {{input id='subscription-first-name' name='firstName' value=firstName}}
+    </li>
+    <li>
+      <label for='subscription-last-name' class='form-label'>Last name</label>
+      {{input id='subscription-last-name' name='lastName' value=lastName}}
+    </li>
+  </div>
+</ul>
 
 <div class='form-elem'>
   <label for='subscription-company' class='form-label optional'>Company name</label>
