@@ -15,6 +15,8 @@ export default V3Adapter.extend({
       delete query.id;
       return this._super(modelName, id, snapshot, 'findRecord', query);
     } else {
+      // FIXME this is an experiment
+      query.skip_count = true;
       return this._super(...arguments);
     }
   }
