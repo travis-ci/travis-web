@@ -1,12 +1,22 @@
 import Controller from '@ember/controller';
 import { service } from 'ember-decorators/service';
-import { action } from 'ember-decorators/object';
+import { action, computed } from 'ember-decorators/object';
+
 
 export default Controller.extend({
   @service api: null,
   @service stripe: null,
 
   plan: 'travis-ci-ten-builds',
+
+
+  @computed('plans.[]')
+  promotedPlans(plans) {
+    let promotedPlanIds = ['travis-ci-one-build', 'travis-ci-two-builds',
+      'travis-ci-five-builds', 'travis-ci-ten-builds'];
+
+    return plans.toArray().sortBy('builds').filter(plan => promotedPlanIds.includes(plan.id));
+  },
 
   @action
   save() {

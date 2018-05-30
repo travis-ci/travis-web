@@ -71,12 +71,16 @@ $profile-breakpoint: 600px;
   }
 
    ul.billing-form-container {
-     max-width: 845px;
      list-style: none;
      padding: 0;
      div {
        display: flex;
-       justify-content: space-around;
+       flex-direction: column;
+
+      @media #{$large-up} {
+        flex-direction: row;
+        justify-content: space-around;
+      }
      }
 
      li {
@@ -84,7 +88,12 @@ $profile-breakpoint: 600px;
      }
      
      li:first-child {
-       padding-right: 30px;
+       padding-bottom: 20px;
+
+       @media #{$large-up} {
+        padding-right: 30px;
+        padding-bottom: 0;
+       }
      }
    }
 }
