@@ -435,8 +435,8 @@ export default function () {
     return this.serialize(builds, 'build');
   });
 
-  this.get('/repo/:repo_id/requests', function (schema, {params: {repo_id: repoId}}) {
-    let requests = schema.requests.where({ repositoryId: repoId });
+  this.get('/requests', function (schema, request) {
+    let requests = schema.requests.where({ repositoryId: request.queryParams.repository_id });
 
     return requests;
   });

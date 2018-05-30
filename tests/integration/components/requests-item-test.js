@@ -20,9 +20,9 @@ module('Integration | Component | requests item', function (hooks) {
       repo: {
         slug: 'travis-ci/travis-ci'
       },
-      builds: [{
+      build: {
         number: 10
-      }],
+      },
       result: 'approved',
       created_at: yesterday,
       isAccepted: true
@@ -44,9 +44,7 @@ module('Integration | Component | requests item', function (hooks) {
     const request = {
       id: 1,
       isPullRequest: true,
-      builds: [{
-        pullRequestNumber: 20
-      }]
+      pullRequestNumber: 20
     };
 
     this.request = request;
