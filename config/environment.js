@@ -46,7 +46,10 @@ module.exports = function (environment) {
       enterprise: 'https://enterprise.travis-ci.com',
       twitter: 'https://twitter.com/travisci',
       jobs: 'https://travisci.workable.com/',
-      support: 'mailto:support@travis-ci.com'
+      support: 'mailto:support@travis-ci.com',
+      security: 'https://docs.travis-ci.com/legal/security',
+      terms: 'https://docs.travis-ci.com/legal/terms-of-service/',
+      privacy: 'https://docs.travis-ci.com/legal/privacy-policy',
     },
     endpoints: {},
     githubApps: false,
@@ -129,10 +132,6 @@ module.exports = function (environment) {
       };
       ENV.userlike = true;
       ENV.beacon = true;
-      ENV.urls.legal = ENV.billingEndpoint + '/pages/legal';
-      ENV.urls.imprint = ENV.billingEndpoint + '/pages/imprint';
-      ENV.urls.security = ENV.billingEndpoint + '/pages/security';
-      ENV.urls.terms = ENV.billingEndpoint + '/pages/terms';
 
       if (process.env.GITHUB_APPS_APP_NAME) {
         ENV.githubApps = {
@@ -152,6 +151,12 @@ module.exports = function (environment) {
       if (ENV.apiEndpoint === 'https://api-staging.travis-ci.com') {
         ENV.pusher.key = '87d0723b25c51e36def8';
       }
+    }
+
+    if (process.env.PUBLIC_MODE == 'false') {
+      ENV.publicMode = false;
+    } else {
+      ENV.publicMode = true;
     }
 
     if (process.env.AUTH_ENDPOINT) {
@@ -227,10 +232,9 @@ module.exports = function (environment) {
     ENV.percy = {
       breakpointsConfig: {
         mobile: 375,
-        tablet: 768,
         desktop: 1280
       },
-      defaultBreakpoints: ['mobile', 'tablet', 'desktop']
+      defaultBreakpoints: ['mobile', 'desktop']
     };
 
     ENV.featureFlags['debug-logging'] = false;

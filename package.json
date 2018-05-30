@@ -44,7 +44,7 @@
     "ember-cli-htmlbars-inline-precompile": "^1.0.0",
     "ember-cli-inject-live-reload": "^1.4.1",
     "ember-cli-inline-images": "^0.0.4",
-    "ember-cli-mirage": "0.4.4",
+    "ember-cli-mirage": "0.4.5",
     "ember-cli-moment-shim": "^3.5.0",
     "ember-cli-page-object": "^1.14.1",
     "ember-cli-sass": "^7.1.1",
@@ -102,7 +102,7 @@
     "qunit-dom": "^0.6.2",
     "timeago": "^1.6.1",
     "url-polyfill": "^1.0.11",
-    "visibilityjs": "^1.2.6",
+    "visibilityjs": "^2.0.0",
     "yamljs": "^0.3.0"
   },
   "engines": {
