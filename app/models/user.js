@@ -116,18 +116,18 @@ export default Owner.extend({
 
   sync() {
     const callback = () => { this.setWithSession('isSyncing', true); };
-    return this.get('ajax').post('/users/sync', {}, callback);
+    return this.get('ajax').postV3(`/user/${this.id}/sync`, {}, callback);
   },
 
   poll() {
-    return this.get('ajax').get('/users', (data) => {
-      if (data.user.is_syncing) {
+    return this.get('ajax').getV3('/user', (data) => {
+      if (data.is_syncing) {
         return later(() => { this.poll(); }, config.intervals.syncingPolling);
       } else {
         run(() => {
           this.set('isSyncing', false);
-          this.setWithSession('syncedAt', data.user.synced_at);
-          Travis.trigger('user:synced', data.user);
+          this.setWithSession('syncedAt', data.synced_at);
+          Travis.trigger('user:synced', data);
           this.store.queryRecord('user', { current: true });
         });
       }

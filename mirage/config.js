@@ -2,7 +2,6 @@
 import { Response } from 'ember-cli-mirage';
 import config from 'travis/config/environment';
 import fuzzysort from 'npm:fuzzysort';
-import { merge } from '@ember/polyfills';
 
 const { validAuthToken, apiEndpoint } = config;
 
@@ -44,13 +43,6 @@ export default function () {
     let userData = JSON.parse(localStorage.getItem('travis.user')),
       id = userData.id;
     return this.serialize(users.find(id), 'v2');
-  });
-
-  this.get('/accounts', (schema/* , request*/) => {
-    const users = schema.users.all().models.map(user => merge(user.attrs, { type: 'user' }));
-    const accounts = schema.accounts.all().models.map(account => account.attrs);
-
-    return { accounts: users.concat(accounts) };
   });
 
   this.get('/orgs', function (schema) {

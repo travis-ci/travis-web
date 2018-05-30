@@ -91,6 +91,7 @@ test('view settings', function (assert) {
   settingsPage.visit({ organization: 'org-login', repo: 'repository-name' });
 
   andThen(function () {
+    assert.ok(settingsPage.buildOnlyWithTravisYml.isActive, 'expected builds only with .travis.yml');
     assert.ok(settingsPage.buildPushes.isActive, 'expected builds for pushes');
     assert.equal(settingsPage.buildPushes.ariaChecked, 'true', 'expected the build pushes switch to have aria-checked=true');
     assert.equal(settingsPage.buildPushes.role, 'switch', 'expected the build pushes switch to be marked as such');
@@ -153,6 +154,13 @@ test('change general settings', function (assert) {
     assert.notOk(settingsPage.buildPushes.isActive, 'expected no builds for pushes');
     assert.equal(settingsPage.buildPushes.ariaChecked, 'false', 'expected the build pushes switch to have aria-checked=false');
     assert.deepEqual(settingToRequestBody.build_pushes, { 'setting.value': false });
+  });
+
+  settingsPage.buildOnlyWithTravisYml.toggle();
+
+  andThen(() => {
+    assert.notOk(settingsPage.buildOnlyWithTravisYml.isActive, 'expected builds without .travis.yml');
+    assert.deepEqual(settingToRequestBody.builds_only_with_travis_yml, { 'setting.value': false });
   });
 
   settingsPage.buildPullRequests.toggle();
