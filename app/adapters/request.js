@@ -12,7 +12,7 @@ export default V3Adapter.extend({
       let repositoryId = snapshot.belongsTo('build').belongsTo('repo').id;
       return `${prefix}/repo/${repositoryId}/request/${id}`;
     } else {
-      throw Error('Message FIXME');
+      throw Error('The request adapter only supports findRecord and query with a repository_id.');
     }
   },
 
