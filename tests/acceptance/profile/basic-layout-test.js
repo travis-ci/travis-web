@@ -538,7 +538,7 @@ test('creating a subscription', function (assert) {
   visit('/profile/org-login/billing/edit');
 
   andThen(() => {
-    assert.equal(profilePage.billing.edit.plans.length, 9);
+    assert.equal(profilePage.billing.edit.plans.length, 4);
 
     profilePage.billing.edit.plans[0].as(plan => {
       assert.equal(plan.name, 'AM');
