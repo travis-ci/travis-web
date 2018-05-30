@@ -9,8 +9,6 @@ export default Component.extend({
 
   @alias('request.result') requestClass: null,
 
-  @alias('request.builds.firstObject') build: null,
-
   @computed('request.isPullRequest')
   type(isPullRequest) {
     return isPullRequest ? 'pull_request' : 'push';
