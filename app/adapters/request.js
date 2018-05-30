@@ -19,6 +19,7 @@ export default V3Adapter.extend({
   // This overrides the parent implementation to ignore the query parameters
   query(store, type, query) {
     let url = this.buildURL(type.modelName, null, null, 'query', query);
+    // skip_count is from travis-ci/travis-api#778, a temporary measure because of slow pagination
     return this.ajax(url, 'GET', { data: {include: this.includes, skip_count: true }});
   }
 });
