@@ -523,15 +523,15 @@ test('switching to another account’s billing tab loads the subscription proper
 });
 
 test('creating a subscription', function (assert) {
-  server.create('plan', { xid: 'travis-ci-one-build', name: 'AM', builds: 1, price: 6900, currency: 'USD' });
-  server.create('plan', { xid: 'travis-ci-two-builds', name: 'BM', builds: 2, price: 12900, currency: 'USD' });
-  server.create('plan', { xid: 'travis-ci-five-builds', name: 'CM', builds: 5, price: 24900, currency: 'USD' });
-  server.create('plan', { xid: 'travis-ci-ten-builds', name: 'DM', builds: 10, price: 48900, currency: 'USD' });
+  server.create('plan', { id: 'travis-ci-one-build', name: 'AM', builds: 1, price: 6900, currency: 'USD' });
+  server.create('plan', { id: 'travis-ci-two-builds', name: 'BM', builds: 2, price: 12900, currency: 'USD' });
+  server.create('plan', { id: 'travis-ci-five-builds', name: 'CM', builds: 5, price: 24900, currency: 'USD' });
+  server.create('plan', { id: 'travis-ci-ten-builds', name: 'DM', builds: 10, price: 48900, currency: 'USD' });
 
-  server.create('plan', { xid: 'travis-ci-one-build-annual', name: 'AA', builds: 1, price: 75900, currency: 'USD', annual: true });
-  server.create('plan', { xid: 'travis-ci-two-builds-annual', name: 'BA', builds: 2, price: 141900, currency: 'USD', annual: true });
-  server.create('plan', { xid: 'travis-ci-five-builds-annual', name: 'CA', builds: 5, price: 273900, currency: 'USD', annual: true });
-  server.create('plan', { xid: 'travis-ci-ten-builds-annual', name: 'DA', builds: 10, price: 537900, currency: 'USD', annual: true });
+  server.create('plan', { id: 'travis-ci-one-build-annual', name: 'AA', builds: 1, price: 75900, currency: 'USD', annual: true });
+  server.create('plan', { id: 'travis-ci-two-builds-annual', name: 'BA', builds: 2, price: 141900, currency: 'USD', annual: true });
+  server.create('plan', { id: 'travis-ci-five-builds-annual', name: 'CA', builds: 5, price: 273900, currency: 'USD', annual: true });
+  server.create('plan', { id: 'travis-ci-ten-builds-annual', name: 'DA', builds: 10, price: 537900, currency: 'USD', annual: true });
 
   assert.expect(26);
 
