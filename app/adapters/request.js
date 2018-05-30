@@ -9,7 +9,7 @@ export default V3Adapter.extend({
     if (requestType === 'query' && query.repository_id) {
       return `${prefix}/repo/${query.repository_id}/requests`;
     } else if (requestType === 'findRecord') {
-      let repositoryId = snapshot.belongsTo('build').belongsTo('repo').id;
+      let repositoryId = snapshot.hasMany('builds')[0].belongsTo('repo').id;
       return `${prefix}/repo/${repositoryId}/request/${id}`;
     } else {
       throw Error('The request adapter only supports findRecord and query with a repository_id.');
