@@ -230,23 +230,6 @@ $env-var-value-background: lighten($cement-grey, 20);
       padding-bottom: 0.07rem;
     }
   }
-
-  li {
-    opacity: 0.5;
-
-    .button:hover {
-      background-color: inherit;
-      color: inherit;
-
-      .icon {
-        @include colorSVG($cement-grey);
-      }
-    }
-
-    &:last-child {
-      padding-bottom: 0.6em;
-    }
-  }
 }
 
 .newly-created {
