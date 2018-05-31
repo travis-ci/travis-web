@@ -533,9 +533,11 @@ test('creating a subscription', function (assert) {
   server.create('plan', { id: 'travis-ci-five-builds-annual', name: 'CA', builds: 5, price: 273900, currency: 'USD', annual: true });
   server.create('plan', { id: 'travis-ci-ten-builds-annual', name: 'DA', builds: 10, price: 537900, currency: 'USD', annual: true });
 
-  assert.expect(26);
+  assert.expect(27);
 
   visit('/profile/org-login/billing/edit');
+
+  profilePage.billing.edit.plans[0].click();
 
   andThen(() => {
     assert.equal(profilePage.billing.edit.plans.length, 4);
@@ -544,6 +546,7 @@ test('creating a subscription', function (assert) {
       assert.equal(plan.name, 'AM');
       assert.equal(plan.concurrency, '1 concurrent job');
       assert.equal(plan.price, '$69 per month');
+      assert.ok(plan.isHighlighted, 'expected the plan to be highlighted');
     });
   });
 
@@ -576,7 +579,7 @@ test('creating a subscription', function (assert) {
     let body = JSON.parse(request.requestBody);
 
     assert.equal(body['credit_card_info.token'], 'aaazzz');
-    assert.equal(body['plan'], 'travis-ci-ten-builds');
+    assert.equal(body['plan'], 'travis-ci-one-build');
     assert.equal(body['billing_info.first_name'], 'Org');
     assert.equal(body['billing_info.last_name'], 'Person');
     assert.equal(body['billing_info.company'], 'Org Name');

@@ -143,7 +143,9 @@ export default create({
       plans: collection('[data-test-plan]', {
         name: text('[data-test-name]'),
         concurrency: text('[data-test-concurrency]'),
-        price: text('[data-test-price]')
+        price: text('[data-test-price]'),
+
+        isHighlighted: hasClass('highlighted'),
       }),
 
       creditCard: {
