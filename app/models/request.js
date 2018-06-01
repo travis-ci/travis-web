@@ -1,6 +1,6 @@
 import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
-import { belongsTo } from 'ember-data/relationships';
+import { belongsTo, hasMany } from 'ember-data/relationships';
 import { computed } from 'ember-decorators/object';
 
 export default Model.extend({
@@ -17,7 +17,7 @@ export default Model.extend({
   pullRequestNumber: attr('number'),
   repo: belongsTo('repo', { async: true }),
   commit: belongsTo('commit', { async: true }),
-  build: belongsTo('build', { async: true }),
+  builds: hasMany('build', { async: true }),
 
   @computed('result', 'build.id')
   isAccepted(result, buildId) {
