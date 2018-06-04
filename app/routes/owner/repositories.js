@@ -25,9 +25,9 @@ export default TravisRoute.extend({
     }
 
     // eslint-disable-next-line
-    let includes = `?include=owner.repositories,repository.default_branch,build.commit,repository.current_build`;
+    let includes = `?include=repository.default_branch, build.commit`;
     let { owner } = transition.params.owner;
-    let url = `${config.apiEndpoint}/owner/${owner}${includes}`;
+    let url = `${config.apiEndpoint}/owner/${owner}/repos/${includes}`;
     return $.ajax(url, options);
   }
 });
