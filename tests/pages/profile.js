@@ -148,6 +148,8 @@ export default create({
         isHighlighted: hasClass('highlighted'),
       }),
 
+      cycle: { scope: '[name=cycle]'},
+
       creditCard: {
         number: { scope: '[name=number]' },
         name: { scope: '[name=name]' },

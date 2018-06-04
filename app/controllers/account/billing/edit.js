@@ -11,10 +11,14 @@ export default Controller.extend({
   country: '',
 
 
-  @computed('plans.[]')
-  promotedPlans(plans) {
-    let promotedPlanIds = ['travis-ci-one-build', 'travis-ci-two-builds',
-      'travis-ci-five-builds', 'travis-ci-ten-builds'];
+  @computed('plans.[]', 'annualCycle')
+  promotedPlans(plans, annualCycle) {
+    let monthlyPromotedPlanIds = ['travis-ci-one-build', 'travis-ci-two-builds',
+        'travis-ci-five-builds', 'travis-ci-ten-builds'],
+      annualPromotedPlanIds = ['travis-ci-one-build-annual', 'travis-ci-two-builds-annual',
+        'travis-ci-five-builds-annual', 'travis-ci-ten-builds-annual'];
+
+    let promotedPlanIds = annualCycle ? annualPromotedPlanIds : monthlyPromotedPlanIds;
 
     return plans.toArray().sortBy('builds').filter(plan => promotedPlanIds.includes(plan.id));
   },

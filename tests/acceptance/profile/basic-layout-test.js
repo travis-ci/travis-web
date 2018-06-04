@@ -533,7 +533,7 @@ test('creating a subscription', function (assert) {
   server.create('plan', { id: 'travis-ci-five-builds-annual', name: 'CA', builds: 5, price: 273900, currency: 'USD', annual: true });
   server.create('plan', { id: 'travis-ci-ten-builds-annual', name: 'DA', builds: 10, price: 537900, currency: 'USD', annual: true });
 
-  assert.expect(29);
+  assert.expect(31);
 
   visit('/profile/org-login/billing/edit');
 
@@ -550,6 +550,14 @@ test('creating a subscription', function (assert) {
     });
 
     assert.ok(profilePage.billing.edit.billing.vatId.isHidden);
+  });
+
+  profilePage.billing.edit.cycle.click();
+
+  andThen(() => {
+    assert.equal(profilePage.billing.edit.plans[0].name, 'AA');
+    assert.notOk(profilePage.billing.edit.plans[0].isHighlighted);
+    // FIXME this leaves the controller’s `plan` still set despite the highlighting changing.
   });
 
   let mockStripe = Service.extend({
@@ -626,6 +634,4 @@ test('creating a subscription', function (assert) {
   });
 
   profilePage.billing.edit.save.click();
-
-
 });
