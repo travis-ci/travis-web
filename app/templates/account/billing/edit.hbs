@@ -1,6 +1,6 @@
 <div class='plans-container'>
-  {{#each promotedPlans as |plan|}}
-    {{plans-item plan=plan}}
+  {{#each promotedPlans as |promotedPlan|}}
+    {{plans-item plan=promotedPlan selectedPlan=plan}}
   {{/each}}
 </div>
 

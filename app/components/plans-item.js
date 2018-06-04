@@ -8,4 +8,13 @@ export default Component.extend({
   price(price) {
     return `$${price / 100} per month`;
   },
+
+  @computed('plan.id', 'selectedPlan')
+  isSelected(planId, selectedPlan) {
+    return planId === selectedPlan;
+  },
+
+  click() {
+    this.set('selectedPlan', this.get('plan.id'));
+  }
 });
