@@ -36,31 +36,6 @@
 <p>All fields are required unless marked as optional.</p>
 
 <div class='form-elem'>
-  <label for='subscription-address' class='form-label'>Street address</label>
-  {{input id='subscription-address' name='address' value=address}}
-</div>
-
-<div class='form-elem'>
-  <label for='subscription-address2' class='form-label'>Suite, Apt.</label>
-  {{input id='subscription-address2' name='address2' value=address2}}
-</div>
-
-<div class='form-elem'>
-  <label for='subscription-city' class='form-label'>City</label>
-  {{input id='subscription-city' name='city' value=city}}
-</div>
-
-<div class='form-elem'>
-  <label for='subscription-zip-code' class='form-label'>Zip code</label>
-  {{input id='subscription-zip-code' name='zipCode' value=zipCode}}
-</div>
-
-<div class='form-elem'>
-  <label for='subscription-state' class='form-label'>State</label>
-  {{input id='subscription-state' name='state' value=state}}
-</div>
-
-<div class='form-elem'>
   <label for='subscription-country' class='form-label'>Country</label>
   {{#x-select name='country' value=country on-change=(action (mut country)) as |xs|}}
     {{#xs.option value='Germany'}}Germany{{/xs.option}}
@@ -324,10 +299,35 @@
 </div>
 
 <div class='form-elem'>
+  <label for='subscription-address' class='form-label'>Street address</label>
+  {{input id='subscription-address' name='address' value=address}}
+</div>
+
+<div class='form-elem'>
+  <label for='subscription-address2' class='form-label'>Suite, Apt.</label>
+  {{input id='subscription-address2' name='address2' value=address2}}
+</div>
+
+<div class='form-elem'>
+  <label for='subscription-city' class='form-label'>City</label>
+  {{input id='subscription-city' name='city' value=city}}
+</div>
+
+<div class='form-elem'>
+  <label for='subscription-zip-code' class='form-label'>Zip code</label>
+  {{input id='subscription-zip-code' name='zipCode' value=zipCode}}
+</div>
+
+<div class='form-elem'>
+  <label for='subscription-state' class='form-label'>State</label>
+  {{input id='subscription-state' name='state' value=state}}
+</div>
+{{#if showVat}}
+<div class='form-elem'>
   <label for='subscription-vat-id' class='form-label optional'>VAT ID</label>
   {{input id='subscription-vat-id' name='vatId' value=vatId}}
 </div>
-
+{{/if}}
 <h2>Credit card details</h2>
 
 <p>Your credit card details are never stored on or even reach our servers. Payments and credit card data are handled by <a href='https://example.com/FIXME'>Stripe</a>.</p>

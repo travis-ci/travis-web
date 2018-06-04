@@ -8,6 +8,7 @@ export default Controller.extend({
   @service stripe: null,
 
   plan: 'travis-ci-ten-builds',
+  country: '',
 
 
   @computed('plans.[]')
@@ -16,6 +17,18 @@ export default Controller.extend({
       'travis-ci-five-builds', 'travis-ci-ten-builds'];
 
     return plans.toArray().sortBy('builds').filter(plan => promotedPlanIds.includes(plan.id));
+  },
+
+  // Define list of EU Countries and U.K.
+  @computed('country')
+  showVat(country) {
+    let vatCountries = ['Austria', 'Belgium', 'Bulgaria', 'Croatia', 'Cyprus', 'Czech Republic',
+      'Denmark', 'Estonia', 'Finland', 'France', 'Germany', 'Greece', 'Hungary', 'Ireland', 'Italy',
+      'Latvia', 'Lithuania', 'Luxembourg', 'Malta', 'Netherlands', 'Poland', 'Portugal', 'Romania',
+      'Slovakia', 'Slovenia', 'Spain', 'Sweden', 'United Kingdom'];
+
+
+    return vatCountries.includes(country);
   },
 
   @action

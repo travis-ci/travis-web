@@ -533,7 +533,7 @@ test('creating a subscription', function (assert) {
   server.create('plan', { id: 'travis-ci-five-builds-annual', name: 'CA', builds: 5, price: 273900, currency: 'USD', annual: true });
   server.create('plan', { id: 'travis-ci-ten-builds-annual', name: 'DA', builds: 10, price: 537900, currency: 'USD', annual: true });
 
-  assert.expect(27);
+  assert.expect(29);
 
   visit('/profile/org-login/billing/edit');
 
@@ -548,6 +548,8 @@ test('creating a subscription', function (assert) {
       assert.equal(plan.price, '$69 per month');
       assert.ok(plan.isHighlighted, 'expected the plan to be highlighted');
     });
+
+    assert.ok(profilePage.billing.edit.billing.vatId.isHidden);
   });
 
   let mockStripe = Service.extend({
@@ -604,6 +606,12 @@ test('creating a subscription', function (assert) {
     card.cvc.fillIn('999');
   });
 
+  profilePage.billing.edit.billing.country.fillIn('Malta');
+
+  andThen(() => {
+    assert.ok(profilePage.billing.edit.billing.vatId.isVisible);
+  });
+
   profilePage.billing.edit.billing.as(billing => {
     billing.firstName.fillIn('Org');
     billing.lastName.fillIn('Person');
@@ -612,11 +620,12 @@ test('creating a subscription', function (assert) {
     billing.address2.fillIn('An address 2');
     billing.city.fillIn('A city');
     billing.state.fillIn('A state');
-    billing.country.fillIn('Malta');
     billing.zipCode.fillIn('A zip code');
     billing.email.fillIn('billing@example.org');
     billing.vatId.fillIn('a vat id');
   });
 
   profilePage.billing.edit.save.click();
+
+
 });
