@@ -4,7 +4,7 @@ import { computed } from 'ember-decorators/object';
 export default Component.extend({
   tagName: 'li',
   classNames: ['owner-tile', 'row-li'],
-  classNameBindings: ['repo.default_branch.last_build.state'],
+  classNameBindings: ['repo.defaultBranch.lastBuild.state'],
 
   @computed('repo.slug')
   ownerName(slug) {
@@ -16,7 +16,7 @@ export default Component.extend({
     return slug.split(/\//)[1];
   },
 
-  @computed('repo.default_branch.last_build.state')
+  @computed('repo.defaultBranch.lastBuild.state')
   isAnimating(state) {
     const animationStates = ['received', 'queued', 'started', 'booting'];
     return animationStates.includes(state);
