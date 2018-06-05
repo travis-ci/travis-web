@@ -261,38 +261,5 @@ module.exports = function (environment) {
     ENV.emojiPrepend = '//' + s3Bucket + '.s3.amazonaws.com';
   }
 
-  // We want CSP settings to be available during development (via ember addon)
-  // and in production (by returning the actual header with a Ruby server)
-  // The problem is that we host travis-web on multiple hosts. Because of that
-  // if we add an api host to CSP rules here, we won't be able to set it up
-  // properly in a Ruby server (because this file will be compiled on deploy,
-  // where host info is not available).
-  // That's why I create a contentSecurityPolicyRaw hash first and then I add
-  // API host to any sections listed in cspSectionsWithApiHost. That way I can
-  // do it in the same way on the Ruby server.
-  ENV.contentSecurityPolicyRaw = {
-    'default-src': "'none'",
-    // The sha256 is for a Stripe inline script
-    'script-src': "'self' https://ssl.google-analytics.com https://djtflbt20bdde.cloudfront.net/ https://js.pusher.com https://widget.intercom.io/ https://js.intercomcdn.com/ https://js.stripe.com/ 'sha256-37u63EBe1EibDZ3vZNr6mxLepqlY1CQw+4N89HrzP9s='",
-    'font-src': "'self' https://fonts.googleapis.com/css https://fonts.gstatic.com https://js.intercomcdn.com/",
-    'connect-src': "'self' ws://ws.pusherapp.com wss://ws.pusherapp.com https://*.pusher.com https://s3.amazonaws.com/archive.travis-ci.com/ https://s3.amazonaws.com/archive.travis-ci.org/ app.getsentry.com https://pnpcptp8xh9k.statuspage.io/ https://ssl.google-analytics.com https://api-iam.intercom.io https://api-ping.intercom.io https://nexus-websocket-a.intercom.io https://nexus-websocket-b.intercom.io wss://nexus-websocket-a.intercom.io wss://nexus-websocket-b.intercom.io",
-    'img-src': "'self' data: https://www.gravatar.com http://www.gravatar.com app.getsentry.com https://*.githubusercontent.com https://0.gravatar.com https://ssl.google-analytics.com https://static.intercomcdn.com https://js.intercomcdn.com",
-    'style-src': "'self' https://fonts.googleapis.com 'unsafe-inline' https://djtflbt20bdde.cloudfront.net https://widget.intercom.io",
-    'media-src': "'self' https://js.intercomcdn.com",
-    'frame-src': "'self' https://djtflbt20bdde.cloudfront.net https://js.stripe.com/",
-    'report-uri': 'https://65f53bfdfd3d7855b8bb3bf31c0d1b7c.report-uri.io/r/default/csp/reportOnly',
-    'block-all-mixed-content': '',
-    'form-action': "'self'", // probably doesn't matter, but let's have it anyways
-    'frame-ancestors': "'none'",
-    'object-src': 'https://djtflbt20bdde.cloudfront.net'
-  };
-  ENV.cspSectionsWithApiHost = ['connect-src', 'img-src'];
-  ENV.contentSecurityPolicy = JSON.parse(JSON.stringify(ENV.contentSecurityPolicyRaw));
-  ENV.contentSecurityPolicyMeta = false;
-
-  ENV.cspSectionsWithApiHost.forEach((section) => {
-    ENV.contentSecurityPolicy[section] += ' ' + ENV.apiEndpoint;
-  });
-
   return ENV;
 };

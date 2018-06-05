@@ -15,6 +15,10 @@ export default V3Adapter.extend({
       delete query.id;
       return this._super(modelName, id, snapshot, 'findRecord', query);
     } else {
+      // This tells the API to skip page count for pagination, speeding up queries.
+      if (query) {
+        query.skip_count = true;
+      }
       return this._super(...arguments);
     }
   }
