@@ -21,7 +21,10 @@ export default TravisRoute.extend({
   },
 
   model(params, transition) {
+    let offset = (params.page - 1) * this.get('recordsPerPage');
+
     let queryParams = {
+      offset,
       limit: this.get('recordsPerPage'),
       sort_by: 'default_branch.last_build:desc',
       custom: {
