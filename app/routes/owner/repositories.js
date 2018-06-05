@@ -1,4 +1,3 @@
-import $ from 'jquery';
 import TravisRoute from 'travis/routes/basic';
 import config from 'travis/config/environment';
 import { service } from 'ember-decorators/service';
