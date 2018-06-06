@@ -96,6 +96,74 @@ $profile-breakpoint: 600px;
        }
      }
    }
+
+   .billing-cycle-container {
+     display: grid;
+     grid-template-columns: 150px 1fr;
+     grid-gap: 30px;
+
+     p {
+       margin: 0 0 5px 0;
+     }
+   }
+   .toggle {
+     display: none;
+     &,
+     &:after,
+     &:before,
+     & *,
+     & *:after,
+     & *:before,
+     &+.toggle-button {
+       box-sizing: border-box;
+       &::selection {
+         background: none;
+       }
+     }
+
+     +.toggle-button {
+       outline: 0;
+       display: block;
+       width: 150px;
+       height: 2em;
+       position: relative;
+       cursor: pointer;
+       user-select: none;
+       background: #D8D8D8;
+       border-radius: 2em;
+       padding: 2px;
+       text-align: center;
+       transition: all .4s ease;
+
+       &:after,
+       &:before {
+         position: relative;
+         display: block;
+         content: "Monthly";
+         width: 50%;
+         height: 100%;
+       }
+
+       &:after {
+         border-radius: 2em;
+         background: #fff;
+         left: 0;
+         transition: all .2s ease;
+       }
+       &:before {
+         display: none;
+       }
+     }
+
+     &:checked+.toggle-button {
+       background: $oxide-blue;
+     }
+
+     &:checked+.toggle-button:after {
+       left: 50%;
+       content: "Annual";
+     }
+   }
 }
 
 .profile-header {
@@ -695,5 +763,4 @@ header.space-between {
     color: #6CA7AE;
     font-weight: 700;
   }
-
 }
