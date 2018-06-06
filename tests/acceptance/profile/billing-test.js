@@ -24,6 +24,16 @@ moduleForAcceptance('Acceptance | profile/billing', {
     });
     this.plan = plan;
 
+    server.create('plan', { id: 'travis-ci-one-build', name: 'AM', builds: 1, price: 6900, currency: 'USD' });
+    server.create('plan', { id: 'travis-ci-two-builds', name: 'BM', builds: 2, price: 12900, currency: 'USD' });
+    server.create('plan', { id: 'travis-ci-five-builds', name: 'CM', builds: 5, price: 24900, currency: 'USD' });
+    server.create('plan', { id: 'travis-ci-ten-builds', name: 'DM', builds: 10, price: 48900, currency: 'USD' });
+
+    server.create('plan', { id: 'travis-ci-one-build-annual', name: 'AA', builds: 1, price: 75900, currency: 'USD', annual: true });
+    server.create('plan', { id: 'travis-ci-two-builds-annual', name: 'BA', builds: 2, price: 141900, currency: 'USD', annual: true });
+    server.create('plan', { id: 'travis-ci-five-builds-annual', name: 'CA', builds: 5, price: 273900, currency: 'USD', annual: true });
+    server.create('plan', { id: 'travis-ci-ten-builds-annual', name: 'DA', builds: 10, price: 537900, currency: 'USD', annual: true });
+
     let subscription = server.create('subscription', {
       plan,
       owner: this.user,
@@ -137,16 +147,6 @@ test('switching to another account’s billing tab loads the subscription proper
 });
 
 test('creating a subscription', function (assert) {
-  server.create('plan', { id: 'travis-ci-one-build', name: 'AM', builds: 1, price: 6900, currency: 'USD' });
-  server.create('plan', { id: 'travis-ci-two-builds', name: 'BM', builds: 2, price: 12900, currency: 'USD' });
-  server.create('plan', { id: 'travis-ci-five-builds', name: 'CM', builds: 5, price: 24900, currency: 'USD' });
-  server.create('plan', { id: 'travis-ci-ten-builds', name: 'DM', builds: 10, price: 48900, currency: 'USD' });
-
-  server.create('plan', { id: 'travis-ci-one-build-annual', name: 'AA', builds: 1, price: 75900, currency: 'USD', annual: true });
-  server.create('plan', { id: 'travis-ci-two-builds-annual', name: 'BA', builds: 2, price: 141900, currency: 'USD', annual: true });
-  server.create('plan', { id: 'travis-ci-five-builds-annual', name: 'CA', builds: 5, price: 273900, currency: 'USD', annual: true });
-  server.create('plan', { id: 'travis-ci-ten-builds-annual', name: 'DA', builds: 10, price: 537900, currency: 'USD', annual: true });
-
   assert.expect(31);
 
   profilePage.visit({ username: 'org-login' });
@@ -185,7 +185,7 @@ test('creating a subscription', function (assert) {
 
         assert.equal(card['billing_info[address]'], 'An address');
         assert.equal(card['billing_info[city]'], 'A city');
-        assert.equal(card['billing_info[country]'], 'Malta');
+        assert.equal(card['billing_info[country]'], 'Belgium');
         assert.equal(card['billing_info[last_name]'], 'Person');
         assert.equal(card['billing_info[zip_code]'], 'A zip code');
         assert.equal(card['billing_info[billing_email]'], 'billing@example.org');
@@ -213,10 +213,10 @@ test('creating a subscription', function (assert) {
     assert.equal(body['billing_info.address2'], 'An address 2');
     assert.equal(body['billing_info.city'], 'A city');
     assert.equal(body['billing_info.state'], 'A state');
-    assert.equal(body['billing_info.country'], 'Malta');
+    assert.equal(body['billing_info.country'], 'Belgium');
     assert.equal(body['billing_info.zip_code'], 'A zip code');
     assert.equal(body['billing_info.billing_email'], 'billing@example.org');
-    assert.equal(body['billing_info.vat_id'], 'a vat id');
+    assert.equal(body['billing_info.vat_id'], 'BG131134023');
 
     let subscription = server.create('subscription');
     return subscription;
@@ -230,7 +230,7 @@ test('creating a subscription', function (assert) {
     card.cvc.fillIn('999');
   });
 
-  profilePage.billing.edit.billing.country.fillIn('Malta');
+  profilePage.billing.edit.billing.country.fillIn('Belgium');
 
   andThen(() => {
     assert.ok(profilePage.billing.edit.billing.vatId.isVisible);
@@ -246,8 +246,25 @@ test('creating a subscription', function (assert) {
     billing.state.fillIn('A state');
     billing.zipCode.fillIn('A zip code');
     billing.email.fillIn('billing@example.org');
-    billing.vatId.fillIn('a vat id');
+    billing.vatId.fillIn('BG131134023');
   });
 
   profilePage.billing.edit.save.click();
+});
+
+test('displays validation errors', function (assert) {
+  profilePage.visit({ username: 'org-login' });
+  profilePage.billing.visit();
+  profilePage.billing.edit.visit();
+
+  profilePage.billing.edit.billing.as(billing => {
+    billing.country.fillIn('Malta');
+    billing.vatId.fillIn('an invalid vat id');
+  });
+
+  profilePage.billing.edit.save.click();
+
+  andThen(() => {
+    assert.ok(profilePage.billing.edit.billing.vatId.hasError);
+  });
 });

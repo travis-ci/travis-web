@@ -2,6 +2,7 @@ import Controller from '@ember/controller';
 import { service } from 'ember-decorators/service';
 import { action, computed } from 'ember-decorators/object';
 
+import jsvat from 'npm:jsvat';
 
 export default Controller.extend({
   @service api: null,
@@ -37,6 +38,17 @@ export default Controller.extend({
 
   @action
   save() {
+    let billing = this.getProperties(
+      'firstName', 'lastName', 'company', 'address', 'address2',
+      'city', 'state', 'country', 'zipCode', 'email', 'vatId'
+    );
+
+    if (!jsvat.checkVAT(billing.vatId).isValid) {
+      this.set('result', 'vat is invalid');
+      this.set('vatIdError', 'is invalid');
+      return;
+    }
+
     let card = this.getProperties(
       'number', 'name', 'expiryMonth', 'expiryYear', 'cvc'
     );
@@ -45,11 +57,6 @@ export default Controller.extend({
     card.number = parseInt(card.number.replace(/\s/g, ''));
     card.exp_month = parseInt(card.expiryMonth);
     card.exp_year = parseInt(card.expiryYear);
-
-    let billing = this.getProperties(
-      'firstName', 'lastName', 'company', 'address', 'address2',
-      'city', 'state', 'country', 'zipCode', 'email', 'vatId'
-    );
 
     card['billing_info[address]'] = billing.address;
     card['billing_info[city]'] = billing.city;

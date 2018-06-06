@@ -94,6 +94,7 @@
     "eslint-plugin-ember": "^5.1.0",
     "fuzzysort": "^1.0.1",
     "glob": "^7.1.2",
+    "jsvat": "^1.2.4",
     "loader.js": "^4.2.3",
     "lodash.intersection": "4.4.0",
     "lodash.pickby": "4.6.0",

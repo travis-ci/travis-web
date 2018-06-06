@@ -343,7 +343,7 @@ Annual: {{input type='checkbox' checked=annualCycle name='cycle'}}
 {{#if showVat}}
 <div class='form-elem'>
   <label for='subscription-vat-id' class='form-label optional'>VAT ID</label>
-  {{input id='subscription-vat-id' name='vatId' value=vatId}}
+  {{input id='subscription-vat-id' name='vatId' value=vatId class=(if vatIdError 'error')}}
 </div>
 {{/if}}
 <h2>Credit card details</h2>
