@@ -340,12 +340,14 @@ Annual: {{input type='checkbox' checked=annualCycle name='cycle'}}
   <label for='subscription-state' class='form-label'>State</label>
   {{input id='subscription-state' name='state' value=state}}
 </div>
+
 {{#if showVat}}
 <div class='form-elem'>
   <label for='subscription-vat-id' class='form-label optional'>VAT ID</label>
   {{input id='subscription-vat-id' name='vatId' value=vatId class=(if vatIdError 'error')}}
 </div>
 {{/if}}
+
 <h2>Credit card details</h2>
 
 <p>Your credit card details are never stored on or even reach our servers. Payments and credit card data are handled by <a href='https://example.com/FIXME'>Stripe</a>.</p>
