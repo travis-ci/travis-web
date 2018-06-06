@@ -54,7 +54,7 @@ export default Controller.extend({
     );
 
     // FIXME eep
-    card.number = parseInt(card.number.replace(/\s/g, ''));
+    card.number = parseInt((card.number || '').replace(/\s/g, ''));
     card.exp_month = parseInt(card.expiryMonth);
     card.exp_year = parseInt(card.expiryYear);
 
@@ -87,7 +87,7 @@ export default Controller.extend({
     }).then(result => {
       this.set('result', `success: ${JSON.stringify(result)}`);
     }).catch(result => {
-      this.set('result', `error: ${JSON.stringify(result)}`);
+      this.set('result', `error: ${JSON.stringify(result.error.type)}`);
     });
   },
 });

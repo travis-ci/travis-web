@@ -176,6 +176,10 @@ export default create({
 
       save: {
         scope: '.save'
+      },
+
+      catchallError: {
+        scope: '.catchall-error'
       }
     }
   },

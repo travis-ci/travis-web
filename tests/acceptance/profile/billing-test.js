@@ -267,4 +267,27 @@ test('displays validation errors', function (assert) {
   andThen(() => {
     assert.ok(profilePage.billing.edit.billing.vatId.hasError);
   });
+
+  let mockStripe = Service.extend({
+    card: Object.freeze({
+      createToken(card) {
+        return Promise.reject({
+          error: {
+            type: 'some_stripe_error'
+          }
+        });
+      }
+    })
+  });
+
+  let instance = this.application.__deprecatedInstance__;
+  let registry = instance.register ? instance : instance.registry;
+  registry.register('service:stripe', mockStripe);
+
+  profilePage.billing.edit.billing.vatId.fillIn('BG131134023');
+  profilePage.billing.edit.save.click();
+
+  andThen(() => {
+    assert.equal(profilePage.billing.edit.catchallError.text, 'error: "some_stripe_error"');
+  });
 });
