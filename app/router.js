@@ -56,8 +56,7 @@ Router.map(function () {
     this.route('accounts', { path: '/', resetNamespace: true }, function () {
       this.route('account', { path: '/:login', resetNamespace: true }, function () {
         this.route('repositories', { path: '/' });
-        this.route('billing', function () {
-          this.route('edit');
+        this.route('billing', () => {
         });
       });
     });

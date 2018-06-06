@@ -138,49 +138,5 @@ export default create({
     invoices: collection('[data-test-invoice]', {
       href: attribute('href')
     }),
-
-    edit: {
-      visit: clickable('.edit-subscription'),
-
-      plans: collection('[data-test-plan]', {
-        name: text('[data-test-name]'),
-        concurrency: text('[data-test-concurrency]'),
-        price: text('[data-test-price]'),
-
-        isHighlighted: hasClass('highlighted'),
-      }),
-
-      cycle: { scope: '[name=cycle]'},
-
-      creditCard: {
-        number: { scope: '[name=number]' },
-        name: { scope: '[name=name]' },
-        expiryMonth: { scope: '[name=expiryMonth]' },
-        expiryYear: { scope: '[name=expiryYear]' },
-        cvc: { scope: '[name=cvc]' }
-      },
-
-      billing: {
-        firstName: { scope: '[name=firstName]'},
-        lastName: { scope: '[name=lastName] '},
-        company: { scope: '[name=company]' },
-        address: { scope: '[name=address]' },
-        address2: { scope: '[name=address2] '},
-        city: { scope: '[name=city]' },
-        state: { scope: '[name=state]' },
-        country: { scope: '[name=country]' },
-        zipCode: { scope: '[name=zipCode]' },
-        email: { scope: '[name=email]' },
-        vatId: { scope: '[name=vatId]', hasError: hasClass('error') },
-      },
-
-      save: {
-        scope: '.save'
-      },
-
-      catchallError: {
-        scope: '.catchall-error'
-      }
-    }
   },
 });

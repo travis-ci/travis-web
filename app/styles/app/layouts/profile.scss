@@ -732,35 +732,3 @@ header.space-between {
 .edit-subscription {
   float: right;
 }
-
-.plans-container {
-  display: flex;
-  justify-content: space-between;
-}
-
-.plans-item {
-  border: 1px solid $new-grey;
-  border-radius: 3px;
-
-  padding: 15px;
-
-  .name {
-    font-size: $font-size-ml;
-    padding-bottom: 0.5em;
-  }
-
-  .concurrency {
-    padding-bottom: 0.5em;
-  }
-
-  .price {
-    color: $cement-grey;
-    font-size: $font-size-s;
-    font-style: italic;
-  }
-
-  &.highlighted {
-    color: #6CA7AE;
-    font-weight: 700;
-  }
-}
