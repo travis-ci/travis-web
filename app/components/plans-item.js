@@ -3,6 +3,7 @@ import { computed } from 'ember-decorators/object';
 
 export default Component.extend({
   classNames: ['plans-item'],
+  classNameBindings: ['isSelected:highlighted'],
 
   @computed('plan.price')
   price(price) {

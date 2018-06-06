@@ -86,7 +86,7 @@ $profile-breakpoint: 600px;
      li {
        flex-grow: 1;
      }
-     
+
      li:first-child {
        padding-bottom: 20px;
 
@@ -667,7 +667,6 @@ header.space-between {
 }
 
 .plans-item {
-  display: flex;
   border: 1px solid $new-grey;
   border-radius: 3px;
 
@@ -688,9 +687,9 @@ header.space-between {
     font-style: italic;
   }
 
-  .highlighted {
+  &.highlighted {
     color: #6CA7AE;
     font-weight: 700;
   }
- 
+
 }
