@@ -1,4 +1,7 @@
 <section class='billing'>
+  {{#external-link-to href=billingUrl class='button--blue manage-subscription'}}
+    Manage Subscription V1
+  {{/external-link-to}}
   {{#if model}}
     {{!FIXME is this necessary?}}
     {{#if model.plan}}
