@@ -1,3 +1,18 @@
+<h2>Billing Cycle</h2>
+
+<div class="billing-cycle-container">
+  <div class="billing-cycle-toggle-input-container">
+    <input id="billing-cycle-toggle" class="toggle"  type="checkbox" />
+    <label class="toggle-button" for="billing-cycle-toggle"></label>
+  </div>
+  <div class="billing-cycle-recommendation">
+    <p>RECOMMENDATION:</p>
+    <p>Switch to annual billing and recieve <em>one month free</em></p>
+  </div>
+</div>
+
+<h2>Choose your plan</h2>
+
 <div class='plans-container'>
   {{#each promotedPlans as |promotedPlan|}}
     {{plans-item data-test-plan plan=promotedPlan selectedPlan=plan}}
