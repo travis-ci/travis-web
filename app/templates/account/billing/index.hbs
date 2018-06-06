@@ -1,4 +1,9 @@
 <section class='billing'>
+  {{#link-to 'account.billing.edit' class='button--blue edit-subscription'}}
+    {{!FIXME we don’t have the pencil icon}}
+    {{svg-jar 'icon-key' class='icon white'}}
+    <span class="label-align">Edit subscription</span>
+  {{/link-to}}
   {{#if model}}
     {{!FIXME is this necessary?}}
     {{#if model.plan}}

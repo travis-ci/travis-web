@@ -140,6 +140,8 @@ export default create({
     }),
 
     edit: {
+      visit: clickable('.edit-subscription'),
+
       plans: collection('[data-test-plan]', {
         name: text('[data-test-name]'),
         concurrency: text('[data-test-concurrency]'),

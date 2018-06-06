@@ -149,7 +149,9 @@ test('creating a subscription', function (assert) {
 
   assert.expect(31);
 
-  visit('/profile/org-login/billing/edit');
+  profilePage.visit({ username: 'org-login' });
+  profilePage.billing.visit();
+  profilePage.billing.edit.visit();
 
   profilePage.billing.edit.plans[0].click();
 
