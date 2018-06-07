@@ -59,18 +59,6 @@ moduleForAcceptance('Acceptance | profile/billing', {
       last_digits: '1919'
     });
 
-    subscription.createInvoice({
-      id: '1919',
-      created_at: new Date(1919, 4, 15),
-      url: 'https://example.com/1919.pdf'
-    });
-
-    subscription.createInvoice({
-      id: '2010',
-      created_at: new Date(2010, 1, 14),
-      url: 'https://example.com/2010.pdf'
-    });
-
     // create organization
     let organization = server.create('organization', {
       name: 'Org Name',
@@ -81,7 +69,19 @@ moduleForAcceptance('Acceptance | profile/billing', {
   }
 });
 
-test('view billing information', function (assert) {
+test('view billing information with invoices', function (assert) {
+  this.subscription.createInvoice({
+    id: '1919',
+    created_at: new Date(1919, 4, 15),
+    url: 'https://example.com/1919.pdf'
+  });
+
+  this.subscription.createInvoice({
+    id: '2010',
+    created_at: new Date(2010, 1, 14),
+    url: 'https://example.com/2010.pdf'
+  });
+
   profilePage.visit({ username: 'user-login' });
   profilePage.billing.visit();
 
@@ -98,18 +98,18 @@ test('view billing information', function (assert) {
 
     assert.ok(profilePage.billing.annualInvitation.isVisible, 'expected the invitation to switch to annual billing to be visible');
 
-    assert.equal(profilePage.billing.invoices.length, 2);
+    assert.equal(profilePage.billing.invoices.items.length, 2);
 
-    profilePage.billing.invoices[1].as(i1919 => {
+    profilePage.billing.invoices.items[1].as(i1919 => {
       assert.equal(i1919.text, '1919 May 1919');
       assert.equal(i1919.href, 'https://example.com/1919.pdf');
     });
 
-    assert.equal(profilePage.billing.invoices[0].text, '2010 February 2010');
+    assert.equal(profilePage.billing.invoices.items[0].text, '2010 February 2010');
   });
 });
 
-test('view billing on a manual plan', function (assert) {
+test('view billing on a manual plan with no invoices', function (assert) {
   this.subscription.source = 'manual';
 
   profilePage.visit({ username: 'user-login'});
@@ -122,6 +122,8 @@ test('view billing on a manual plan', function (assert) {
     assert.ok(profilePage.billing.price.isHidden);
     assert.equal(profilePage.billing.source, 'This is a manual subscription.');
     assert.ok(profilePage.billing.annualInvitation.isHidden);
+
+    assert.ok(profilePage.billing.invoices.isHidden);
   });
 });
 

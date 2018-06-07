@@ -135,8 +135,11 @@ export default create({
 
     annualInvitation: { scope: '[data-test-annual-invitation]' },
 
-    invoices: collection('[data-test-invoice]', {
-      href: attribute('href')
-    }),
+    invoices: {
+      scope: '.invoices',
+      items: collection('[data-test-invoice]', {
+        href: attribute('href')
+      })
+    },
   },
 });
