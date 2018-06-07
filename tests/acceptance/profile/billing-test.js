@@ -116,6 +116,7 @@ test('view billing on a manual plan', function (assert) {
   profilePage.billing.visit();
 
   andThen(() => {
+    assert.ok(profilePage.billing.address.isHidden);
     assert.equal(profilePage.billing.source, 'This is a manual subscription.');
   });
 });
@@ -127,6 +128,7 @@ test('view billing on a marketplace plan', function (assert) {
   profilePage.billing.visit();
 
   andThen(() => {
+    assert.ok(profilePage.billing.address.isHidden);
     assert.equal(profilePage.billing.source, 'This subscription is managed by GitHub Marketplace.');
   });
 });

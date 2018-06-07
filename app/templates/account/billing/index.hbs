@@ -13,10 +13,12 @@
     {{/if}}
     <h2>Billing Information</h2>
     <section class='row'>
-      <section class='contact'>
-        <h3>Billing Contact</h3>
-        {{billing-address billingInfo=model.billingInfo}}
-      </section>
+      {{#if (eq model.source 'stripe')}}
+        <section class='contact'>
+          <h3>Billing Contact</h3>
+          {{billing-address billingInfo=model.billingInfo}}
+        </section>
+      {{/if}}
       <section class='payment'>
         <h3>Payment details</h3>
         {{payment-details subscription=model}}
