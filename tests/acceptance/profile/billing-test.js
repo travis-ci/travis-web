@@ -120,6 +120,7 @@ test('view billing on a manual plan', function (assert) {
     assert.ok(profilePage.billing.creditCardNumber.isHidden);
     assert.ok(profilePage.billing.price.isHidden);
     assert.equal(profilePage.billing.source, 'This is a manual subscription.');
+    assert.ok(profilePage.billing.annualInvitation.isHidden);
   });
 });
 
@@ -133,6 +134,7 @@ test('view billing on a marketplace plan', function (assert) {
     assert.ok(profilePage.billing.address.isHidden);
     assert.ok(profilePage.billing.creditCardNumber.isHidden);
     assert.equal(profilePage.billing.source, 'This subscription is managed by GitHub Marketplace.');
+    assert.ok(profilePage.billing.annualInvitation.isHidden);
   });
 });
 

@@ -8,8 +8,8 @@
   <p data-test-price>{{price}}</p>
 {{/unless}}
 
-{{#unless subscription.plan.annual}}
+{{#if (and (not subscription.plan.annual) (eq subscription.source 'stripe'))}}
   <span class='notice-banner--yellow' data-test-annual-invitation>
     Save 10% by switching to <a href='javascript:alert("unimplemented")'>annual billing</a>
   </span>
-{{/unless}}
+{{/if}}
