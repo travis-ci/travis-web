@@ -109,10 +109,7 @@ test('view billing information', function (assert) {
   });
 });
 
-test('view billing with euros on a manually-managed annual plan', function (assert) {
-  this.plan.currency = 'EUR';
-  this.plan.annual = true;
-  this.plan.price = 10000;
+test('view billing on a manual plan', function (assert) {
   this.subscription.source = 'manual';
 
   profilePage.visit({ username: 'user-login'});
@@ -120,8 +117,19 @@ test('view billing with euros on a manually-managed annual plan', function (asse
 
   andThen(() => {
     assert.equal(profilePage.billing.source, 'This is a manual subscription.');
-    assert.equal(profilePage.billing.price, '€100 per month');
+  });
+});
 
+test('view billing on an annual plan', function (assert) {
+  this.plan.currency = 'EUR';
+  this.plan.annual = true;
+  this.plan.price = 10000;
+
+  profilePage.visit({ username: 'user-login'});
+  profilePage.billing.visit();
+
+  andThen(() => {
+    assert.equal(profilePage.billing.price, '€100 per month');
     assert.ok(profilePage.billing.annualInvitation.isHidden, 'expected the invitation to switch to annual billing to be hidden');
   });
 });
