@@ -1,5 +1,6 @@
 import Component from '@ember/component';
 import { computed } from 'ember-decorators/object';
+import { equal, not } from 'ember-decorators/object/computed';
 
 let sourceToSentence = {
   manual: 'This is a manual subscription.',
@@ -17,4 +18,9 @@ export default Component.extend({
   source(source) {
     return `${sourceToSentence[source]}`;
   },
+
+  @equal('subscription.source', 'stripe') stripe: null,
+  @equal('subscription.source', 'manual') manual: null,
+
+  @not('subscription.plan.annual') monthly: null,
 });
