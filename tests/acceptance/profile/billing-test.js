@@ -143,7 +143,7 @@ test('view billing on an annual plan', function (assert) {
   profilePage.billing.visit();
 
   andThen(() => {
-    assert.equal(profilePage.billing.price.text, '$100 per month');
+    assert.equal(profilePage.billing.price.text, '$100 per year');
     assert.ok(profilePage.billing.annualInvitation.isHidden, 'expected the invitation to switch to annual billing to be hidden');
   });
 });
