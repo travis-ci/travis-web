@@ -56,13 +56,6 @@
             <li>
               {{#link-to "account" user.login class="signed-in" title="Your profile"}}Profile{{/link-to}}
               </li>
-              {{#if config.billingEndpoint}}
-                {{#unless features.enterpriseVersion}}
-                  <li>
-                    <a href={{config.billingEndpoint}} title="Your subscription details">Billing</a>
-                  </li>
-                {{/unless}}
-              {{/if}}
               <li>
                 <a data-test-signout-link href="/" {{action 'signOut'}} title="Sign out of Travis CI">Sign Out</a>
               </li>
