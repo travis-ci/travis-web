@@ -120,6 +120,17 @@ test('view billing on a manual plan', function (assert) {
   });
 });
 
+test('view billing on a marketplace plan', function (assert) {
+  this.subscription.source = 'github';
+
+  profilePage.visit({ username: 'user-login'});
+  profilePage.billing.visit();
+
+  andThen(() => {
+    assert.equal(profilePage.billing.source, 'This subscription is managed by GitHub Marketplace.');
+  });
+});
+
 test('view billing on an annual plan', function (assert) {
   this.plan.annual = true;
   this.plan.price = 10000;
