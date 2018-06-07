@@ -4,7 +4,9 @@
   <p data-test-credit-card>•••• •••• •••• {{subscription.creditCardInfo.lastDigits}}</p>
 {{/if}}
 
-<p data-test-price>{{price}}</p>
+{{#unless (eq subscription.source 'manual')}}
+  <p data-test-price>{{price}}</p>
+{{/unless}}
 
 {{#unless subscription.plan.annual}}
   <span class='notice-banner--yellow' data-test-annual-invitation>
