@@ -116,6 +116,7 @@ test('view billing on a manual plan', function (assert) {
   profilePage.billing.visit();
 
   andThen(() => {
+    assert.ok(profilePage.billing.plan.isHidden);
     assert.ok(profilePage.billing.address.isHidden);
     assert.ok(profilePage.billing.creditCardNumber.isHidden);
     assert.ok(profilePage.billing.price.isHidden);
