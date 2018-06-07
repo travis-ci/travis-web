@@ -121,7 +121,6 @@ test('view billing on a manual plan', function (assert) {
 });
 
 test('view billing on an annual plan', function (assert) {
-  this.plan.currency = 'EUR';
   this.plan.annual = true;
   this.plan.price = 10000;
 
@@ -129,7 +128,7 @@ test('view billing on an annual plan', function (assert) {
   profilePage.billing.visit();
 
   andThen(() => {
-    assert.equal(profilePage.billing.price, '€100 per month');
+    assert.equal(profilePage.billing.price, '$100 per month');
     assert.ok(profilePage.billing.annualInvitation.isHidden, 'expected the invitation to switch to annual billing to be hidden');
   });
 });
