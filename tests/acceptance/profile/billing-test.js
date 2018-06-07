@@ -51,7 +51,8 @@ moduleForAcceptance('Acceptance | profile/billing', {
       city: 'Berlin',
       state: 'Berlin',
       zip_code: '10987',
-      country: 'Germany'
+      country: 'Germany',
+      vat_id: '12345'
     });
 
     subscription.createCreditCardInfo({
@@ -90,7 +91,7 @@ test('view billing information', function (assert) {
     assert.equal(profilePage.billing.plan.name, 'Small Business Plan');
     assert.equal(profilePage.billing.plan.concurrency, '5 concurrent builds');
 
-    assert.equal(profilePage.billing.address.text, 'User Name Travis CI GmbH Rigaerstraße 8 Address 2 Berlin, Berlin 10987 Germany');
+    assert.equal(profilePage.billing.address.text, 'User Name Travis CI GmbH Rigaerstraße 8 Address 2 Berlin, Berlin 10987 Germany VAT: 12345');
     assert.equal(profilePage.billing.source, 'This plan is paid through Stripe.');
     assert.equal(profilePage.billing.creditCardNumber, '•••• •••• •••• 1919');
     assert.equal(profilePage.billing.price, '$69 per month');

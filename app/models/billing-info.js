@@ -12,6 +12,7 @@ export default Model.extend({
   state: attr(),
   zipCode: attr(),
   country: attr(),
+  vatId: attr(),
 
   subscription: belongsTo(),
 });
