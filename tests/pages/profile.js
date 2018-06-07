@@ -130,8 +130,8 @@ export default create({
 
     source: text('[data-test-source]'),
 
-    creditCardNumber: text('[data-test-credit-card]'),
-    price: text('[data-test-price]'),
+    creditCardNumber: { scope: '[data-test-credit-card]' },
+    price: { scope: '[data-test-price]' },
 
     annualInvitation: { scope: '[data-test-annual-invitation]' },
 

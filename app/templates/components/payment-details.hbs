@@ -1,6 +1,11 @@
 <p class='source' data-test-source>{{source}}</p>
-<p data-test-credit-card>•••• •••• •••• {{subscription.creditCardInfo.lastDigits}}</p>
+
+{{#if (eq subscription.source 'stripe')}}
+  <p data-test-credit-card>•••• •••• •••• {{subscription.creditCardInfo.lastDigits}}</p>
+{{/if}}
+
 <p data-test-price>{{price}}</p>
+
 {{#unless subscription.plan.annual}}
   <span class='notice-banner--yellow' data-test-annual-invitation>
     Save 10% by switching to <a href='javascript:alert("unimplemented")'>annual billing</a>

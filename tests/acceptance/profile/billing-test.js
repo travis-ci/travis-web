@@ -93,8 +93,8 @@ test('view billing information', function (assert) {
 
     assert.equal(profilePage.billing.address.text, 'User Name Travis CI GmbH Rigaerstraße 8 Address 2 Berlin, Berlin 10987 Germany VAT: 12345');
     assert.equal(profilePage.billing.source, 'This plan is paid through Stripe.');
-    assert.equal(profilePage.billing.creditCardNumber, '•••• •••• •••• 1919');
-    assert.equal(profilePage.billing.price, '$69 per month');
+    assert.equal(profilePage.billing.creditCardNumber.text, '•••• •••• •••• 1919');
+    assert.equal(profilePage.billing.price.text, '$69 per month');
 
     assert.ok(profilePage.billing.annualInvitation.isVisible, 'expected the invitation to switch to annual billing to be visible');
 
@@ -117,6 +117,7 @@ test('view billing on a manual plan', function (assert) {
 
   andThen(() => {
     assert.ok(profilePage.billing.address.isHidden);
+    assert.ok(profilePage.billing.creditCardNumber.isHidden);
     assert.equal(profilePage.billing.source, 'This is a manual subscription.');
   });
 });
@@ -129,6 +130,7 @@ test('view billing on a marketplace plan', function (assert) {
 
   andThen(() => {
     assert.ok(profilePage.billing.address.isHidden);
+    assert.ok(profilePage.billing.creditCardNumber.isHidden);
     assert.equal(profilePage.billing.source, 'This subscription is managed by GitHub Marketplace.');
   });
 });
@@ -141,7 +143,7 @@ test('view billing on an annual plan', function (assert) {
   profilePage.billing.visit();
 
   andThen(() => {
-    assert.equal(profilePage.billing.price, '$100 per month');
+    assert.equal(profilePage.billing.price.text, '$100 per month');
     assert.ok(profilePage.billing.annualInvitation.isHidden, 'expected the invitation to switch to annual billing to be hidden');
   });
 });
