@@ -19,14 +19,7 @@
       </section>
       <section class='payment'>
         <h3>Payment details</h3>
-        <p class='source' data-test-source>{{source}}</p>
-        <p data-test-credit-card>•••• •••• •••• {{model.creditCardInfo.lastDigits}}</p>
-        <p data-test-price>{{price}}</p>
-        {{#unless model.plan.annual}}
-          <span class='notice-banner--yellow' data-test-annual-invitation>
-            Save 10% by switching to <a href='javascript:alert("unimplemented")'>annual billing</a>
-          </span>
-        {{/unless}}
+        {{payment-details subscription=model}}
       </section>
     </section>
   {{else}}
