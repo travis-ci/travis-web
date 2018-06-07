@@ -9,6 +9,11 @@ export default TravisRoute.extend({
     return this.controllerFor('loading').set('layoutName', null);
   },
 
+  titleToken(model) {
+    let name = model.name || model.login;
+    return name;
+  },
+
   model(params) {
     let options = {
       headers: {
