@@ -10,6 +10,9 @@
 
 {{#if (and stripe monthly)}}
   <span class='notice-banner--yellow' data-test-annual-invitation>
-    Save 10% by switching to <a href='javascript:alert("unimplemented")'>annual billing</a>
+    Save 10% by switching to
+    {{#external-link-to href=billingUrl}}
+      annual billing
+    {{/external-link-to}}
   </span>
 {{/if}}
