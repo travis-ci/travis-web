@@ -118,6 +118,11 @@ export default create({
   billing: {
     visit: clickable('li[data-test-billing-tab] a'),
 
+    manageButton: {
+      scope: '.manage-subscription',
+      href: attribute('href')
+    },
+
     plan: {
       scope: '.plan',
       name: text('[data-test-plan-name]'),

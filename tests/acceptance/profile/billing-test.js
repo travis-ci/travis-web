@@ -88,6 +88,8 @@ test('view billing information with invoices', function (assert) {
   andThen(() => {
     percySnapshot(assert);
 
+    assert.equal(profilePage.billing.manageButton.href, 'https://billing.travis-ci.com/subscriptions/user');
+
     assert.equal(profilePage.billing.plan.name, 'Small Business Plan');
     assert.equal(profilePage.billing.plan.concurrency, '5 concurrent builds');
 
