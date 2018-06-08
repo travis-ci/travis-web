@@ -34,8 +34,7 @@ export default Controller.extend({
       const id = type === 'user' ? 'user' : login;
       return `${config.billingEndpoint}/subscriptions/${id}`;
     } else if (source === 'github') {
-      // FIXME this should be in config
-      return 'https://github.com/marketplace/travis-ci/';
+      return config.marketplaceEndpoint;
     }
   },
 
