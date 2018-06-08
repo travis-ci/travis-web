@@ -136,6 +136,8 @@ test('view billing on a marketplace plan', function (assert) {
   profilePage.billing.visit();
 
   andThen(() => {
+    assert.equal(profilePage.billing.manageButton.href, 'https://github.com/marketplace/travis-ci/');
+
     assert.ok(profilePage.billing.address.isHidden);
     assert.ok(profilePage.billing.creditCardNumber.isHidden);
     assert.equal(profilePage.billing.source, 'This subscription is managed by GitHub Marketplace.');

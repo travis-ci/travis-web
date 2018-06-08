@@ -28,10 +28,15 @@ export default Controller.extend({
     return name || login;
   },
 
-  @computed('model.{type,login}')
-  billingUrl(type, login) {
-    const id = type === 'user' ? 'user' : login;
-    return `${config.billingEndpoint}/subscriptions/${id}`;
+  @computed('model.{type,login}', 'model.subscription.source')
+  billingUrl(type, login, source) {
+    if (source === 'stripe') {
+      const id = type === 'user' ? 'user' : login;
+      return `${config.billingEndpoint}/subscriptions/${id}`;
+    } else if (source === 'github') {
+      // FIXME this should be in config
+      return 'https://github.com/marketplace/travis-ci/';
+    }
   },
 
   @computed('features.enterpriseVersion', 'config.billingEndpoint')
