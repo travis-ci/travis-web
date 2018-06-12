@@ -1,7 +1,7 @@
 /* global server */
 import { Response } from 'ember-cli-mirage';
 import config from 'travis/config/environment';
-import fuzzysort from 'npm:fuzzysort';
+import fuzzysort from 'fuzzysort';
 
 const { validAuthToken, apiEndpoint } = config;
 
