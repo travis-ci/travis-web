@@ -171,12 +171,6 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-
-    &:after {
-      @include fadeOut(right, -90deg, white);
-
-      top: -1px;
-    }
   }
 }
 
