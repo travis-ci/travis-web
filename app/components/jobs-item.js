@@ -12,6 +12,13 @@ export default Component.extend({
     return jobConfigLanguage(config);
   },
 
+  @computed('job.config.content.title')
+  title(title) {
+    if (title) {
+      return title;
+    }
+  },
+
   @computed('job.config.content.{env,gemfile}')
   environment(env, gemfile) {
     if (env) {

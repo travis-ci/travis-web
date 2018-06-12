@@ -160,6 +160,26 @@
   }
 }
 
+.job-title {
+  overflow: hidden;
+
+  @media #{$medium-up} {
+    flex: 1 0 20%;
+    position: relative;
+    padding: 0.3em 0.5em 0.5em 0.7em;
+    align-self: flex-start;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    &:after {
+      @include fadeOut(right, -90deg, white);
+
+      top: -1px;
+    }
+  }
+}
+
 .job-lang {
   overflow: hidden;
 
@@ -213,6 +233,10 @@
 
 .centered {
   @media #{$xlarge-up} {
+    .job-title {
+      flex: 0 0 21em;
+    }
+
     .job-env {
       flex: 0 0 21em;
     }
