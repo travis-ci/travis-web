@@ -164,7 +164,7 @@
   overflow: hidden;
 
   @media #{$medium-up} {
-    flex: 1 0 20%;
+    flex: 1 0 40%;
     position: relative;
     padding: 0.3em 0.5em 0.5em 0.7em;
     align-self: flex-start;
@@ -233,7 +233,7 @@
 .centered {
   @media #{$xlarge-up} {
     .job-name {
-      flex: 0 0 21em;
+      flex: 0 0 42em;
     }
 
     .job-env {
