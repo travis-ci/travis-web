@@ -12,10 +12,10 @@ export default Component.extend({
     return jobConfigLanguage(config);
   },
 
-  @computed('job.config.content.title')
-  title(title) {
-    if (title) {
-      return title;
+  @computed('job.config.content.name')
+  name(name) {
+    if (name) {
+      return name;
     }
   },
 

@@ -160,7 +160,7 @@
   }
 }
 
-.job-title {
+.job-name {
   overflow: hidden;
 
   @media #{$medium-up} {
@@ -232,7 +232,7 @@
 
 .centered {
   @media #{$xlarge-up} {
-    .job-title {
+    .job-name {
       flex: 0 0 21em;
     }
 
