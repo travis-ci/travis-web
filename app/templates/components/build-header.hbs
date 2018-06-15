@@ -24,7 +24,7 @@
   {{/if}}
     <ul class="list-icon">
       <li>
-        {{#external-link-to href=urlGithubCommit}}
+        {{#external-link-to href=urlGithubCommit target='_blank'}}
           {{tooltip-on-element text='View commit on GitHub'}}
           {{svg-jar 'icon-commit' class="icon"}}
           <span class="label-align inner-underline commit-commit">Commit {{format-sha commit.sha}}</span>
@@ -34,7 +34,7 @@
       {{#if displayCompare}}
         <li>
           {{#if item.isPullRequest}}
-            {{#external-link-to href=item.commit.compareUrl}}
+            {{#external-link-to href=item.commit.compareUrl target='_blank'}}
               {{tooltip-on-element text='View Pull Request on GitHub'}}
               {{svg-jar 'icon-compare' class="icon"}}
               <span class="label-align inner-underline commit-compare">#{{item.pullRequestNumber}}: {{item.pullRequestTitle}}</span>
@@ -42,7 +42,7 @@
             {{/external-link-to}}
           {{else}}
             {{#if item.commit.compareUrl}}
-              {{#external-link-to href=item.commit.compareUrl }}
+              {{#external-link-to href=item.commit.compareUrl target='_blank'}}
                 {{tooltip-on-element text='View diff on GitHub'}}
                 {{svg-jar 'icon-compare' class="icon"}}
                 <span class="label-align inner-underline commit-compare">Compare {{short-compare-shas item.commit.compareUrl}}</span>
@@ -54,14 +54,14 @@
       {{/if}}
       <li>
         {{#if item.isTag}}
-          {{#external-link-to href=urlGitHubTag class="commit-branch-url"}}
+          {{#external-link-to href=urlGitHubTag target="_blank" class="commit-branch-url"}}
             {{tooltip-on-element text='View tag on GitHub'}}
             {{svg-jar 'icon-tag' class="icon"}}
             <span class="label-align inner-underline">Tag {{build.tag.name}}</span>
             {{svg-jar 'icon-external-link' class="icon"}}
           {{/external-link-to}}
         {{else}}
-          {{#external-link-to href=urlGitHubBranch class="commit-branch-url"}}
+          {{#external-link-to href=urlGitHubBranch target="_blank" class="commit-branch-url"}}
             {{tooltip-on-element text='View branch on GitHub'}}
             {{svg-jar 'icon-branch' class="icon"}}
             <span class="label-align inner-underline">Branch {{build.branchName}}</span>
