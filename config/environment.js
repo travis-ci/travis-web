@@ -243,6 +243,10 @@ module.exports = function (environment) {
     ENV.statusPageStatusUrl = undefined;
   }
 
+  if (environment === 'staging') {
+    ENV.billingEndpoint = 'https://billing-staging.travis-ci.com';
+  }
+
   if (environment === 'production') {
     ENV.release = process.env.SOURCE_VERSION || process.env.TRAVIS_COMMIT || '-';
     // if (true) {
