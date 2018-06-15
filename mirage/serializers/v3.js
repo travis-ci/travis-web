@@ -212,8 +212,13 @@ export default JSONAPISerializer.extend({
     return request._processedRecords.find(findFn);
   },
 
-  normalizeId(_model, id) {
-    return parseInt(id);
+  normalizeId({modelName}, id) {
+    // plan IDs can be strings
+    if (modelName === 'plan') {
+      return id;
+    } else {
+      return parseInt(id);
+    }
   },
 
   representation(model, request, options) {

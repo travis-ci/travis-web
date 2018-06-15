@@ -31,11 +31,12 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
     });
     this.user.save();
 
-    server.create('subscription', {
-      owner: this.currentUser,
+    let subscription = server.create('subscription', {
+      owner: this.user,
       status: 'subscribed',
-      valid_to: new Date()
+      valid_to: new Date(),
     });
+    this.subscription = subscription;
 
     // create organization
     let organization = server.create('organization', {

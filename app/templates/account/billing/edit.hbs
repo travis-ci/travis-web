@@ -1,0 +1,410 @@
+<h2>Billing Cycle</h2>
+
+<div class="billing-cycle-container">
+  <div class="billing-cycle-toggle-input-container">
+    <input id="billing-cycle-toggle" class="toggle"  type="checkbox" />
+    <label class="toggle-button" for="billing-cycle-toggle"></label>
+  </div>
+  <div class="billing-cycle-recommendation">
+    <p>RECOMMENDATION:</p>
+    <p>Switch to annual billing and recieve <em>one month free</em></p>
+  </div>
+</div>
+
+<h2>Choose your plan</h2>
+
+<div class='plans-container'>
+  {{#each promotedPlans as |promotedPlan|}}
+    {{plans-item data-test-plan plan=promotedPlan selectedPlan=plan}}
+  {{/each}}
+</div>
+
+Billing cycle:
+Annual: {{input type='checkbox' checked=annualCycle name='cycle'}}
+
+<h2>Contact details</h2>
+
+<p>All fields are required unless marked as optional.</p>
+
+<ul class="billing-form-container">
+  <div class='form-elem'>
+    <li>
+      <label for='subscription-first-name' class='form-label'>First name</label>
+      {{input id='subscription-first-name' name='firstName' value=firstName}}
+    </li>
+    <li>
+      <label for='subscription-last-name' class='form-label'>Last name</label>
+      {{input id='subscription-last-name' name='lastName' value=lastName}}
+    </li>
+  </div>
+</ul>
+
+<div class='form-elem'>
+  <label for='subscription-company' class='form-label optional'>Company name</label>
+  {{input id='subscription-company' name='company' value=company}}
+</div>
+
+<div class='form-elem'>
+  <label for='subscription-email' class='form-label'>Billing email address</label>
+  {{input id='subscription-email' name='email' value=email}}
+</div>
+
+<h2>Billing address</h2>
+
+<p>All fields are required unless marked as optional.</p>
+
+<div class='form-elem'>
+  <label for='subscription-country' class='form-label'>Country</label>
+  {{#x-select name='country' value=country on-change=(action (mut country)) as |xs|}}
+    {{#xs.option value='Germany'}}Germany{{/xs.option}}
+    {{#xs.option value='Australia'}}Australia{{/xs.option}}
+    {{#xs.option value='Canada'}}Canada{{/xs.option}}
+    {{#xs.option value='France'}}France{{/xs.option}}
+    {{#xs.option value='Netherlands'}}Netherlands{{/xs.option}}
+    {{#xs.option value='New Zealand'}}New Zealand{{/xs.option}}
+    {{#xs.option value='United Kingdom'}}United Kingdom{{/xs.option}}
+    {{#xs.option value='United States'}}United States{{/xs.option}}
+    {{#xs.option value='' disabled=true}}-------------{{/xs.option}}
+    {{#xs.option value='Afghanistan'}}Afghanistan{{/xs.option}}
+    {{#xs.option value='Aland Islands'}}Aland Islands{{/xs.option}}
+    {{#xs.option value='Albania'}}Albania{{/xs.option}}
+    {{#xs.option value='Algeria'}}Algeria{{/xs.option}}
+    {{#xs.option value='American Samoa'}}American Samoa{{/xs.option}}
+    {{#xs.option value='Andorra'}}Andorra{{/xs.option}}
+    {{#xs.option value='Angola'}}Angola{{/xs.option}}
+    {{#xs.option value='Anguilla'}}Anguilla{{/xs.option}}
+    {{#xs.option value='Antarctica'}}Antarctica{{/xs.option}}
+    {{#xs.option value='Antigua And Barbuda'}}Antigua And Barbuda{{/xs.option}}
+    {{#xs.option value='Argentina'}}Argentina{{/xs.option}}
+    {{#xs.option value='Armenia'}}Armenia{{/xs.option}}
+    {{#xs.option value='Aruba'}}Aruba{{/xs.option}}
+    {{#xs.option value='Australia'}}Australia{{/xs.option}}
+    {{#xs.option value='Austria'}}Austria{{/xs.option}}
+    {{#xs.option value='Azerbaijan'}}Azerbaijan{{/xs.option}}
+    {{#xs.option value='Bahamas'}}Bahamas{{/xs.option}}
+    {{#xs.option value='Bahrain'}}Bahrain{{/xs.option}}
+    {{#xs.option value='Bangladesh'}}Bangladesh{{/xs.option}}
+    {{#xs.option value='Barbados'}}Barbados{{/xs.option}}
+    {{#xs.option value='Belarus'}}Belarus{{/xs.option}}
+    {{#xs.option value='Belgium'}}Belgium{{/xs.option}}
+    {{#xs.option value='Belize'}}Belize{{/xs.option}}
+    {{#xs.option value='Benin'}}Benin{{/xs.option}}
+    {{#xs.option value='Bermuda'}}Bermuda{{/xs.option}}
+    {{#xs.option value='Bhutan'}}Bhutan{{/xs.option}}
+    {{#xs.option value='Bolivia'}}Bolivia{{/xs.option}}
+    {{#xs.option value='Bosnia and Herzegovina'}}Bosnia and Herzegovina{{/xs.option}}
+    {{#xs.option value='Botswana'}}Botswana{{/xs.option}}
+    {{#xs.option value='Bouvet Island'}}Bouvet Island{{/xs.option}}
+    {{#xs.option value='Brazil'}}Brazil{{/xs.option}}
+    {{#xs.option value='British Indian Ocean Territory'}}British Indian Ocean Territory{{/xs.option}}
+    {{#xs.option value='Brunei Darussalam'}}Brunei Darussalam{{/xs.option}}
+    {{#xs.option value='Bulgaria'}}Bulgaria{{/xs.option}}
+    {{#xs.option value='Burkina Faso'}}Burkina Faso{{/xs.option}}
+    {{#xs.option value='Burundi'}}Burundi{{/xs.option}}
+    {{#xs.option value='Cambodia'}}Cambodia{{/xs.option}}
+    {{#xs.option value='Cameroon'}}Cameroon{{/xs.option}}
+    {{#xs.option value='Canada'}}Canada{{/xs.option}}
+    {{#xs.option value='Cape Verde'}}Cape Verde{{/xs.option}}
+    {{#xs.option value='Cayman Islands'}}Cayman Islands{{/xs.option}}
+    {{#xs.option value='Central African Republic'}}Central African Republic{{/xs.option}}
+    {{#xs.option value='Chad'}}Chad{{/xs.option}}
+    {{#xs.option value='Chile'}}Chile{{/xs.option}}
+    {{#xs.option value='China'}}China{{/xs.option}}
+    {{#xs.option value='Christmas Island'}}Christmas Island{{/xs.option}}
+    {{#xs.option value='Cocos (Keeling) Islands'}}Cocos (Keeling) Islands{{/xs.option}}
+    {{#xs.option value='Colombia'}}Colombia{{/xs.option}}
+    {{#xs.option value='Comoros'}}Comoros{{/xs.option}}
+    {{#xs.option value='Congo'}}Congo{{/xs.option}}
+    {{#xs.option value='Congo, the Democratic Republic of the'}}Congo, the Democratic Republic of the{{/xs.option}}
+    {{#xs.option value='Cook Islands'}}Cook Islands{{/xs.option}}
+    {{#xs.option value='Costa Rica'}}Costa Rica{{/xs.option}}
+    {{#xs.option value='Cote d’Ivoire'}}Cote d'Ivoire{{/xs.option}}
+    {{#xs.option value='Croatia'}}Croatia{{/xs.option}}
+    {{#xs.option value='Cuba'}}Cuba{{/xs.option}}
+    {{#xs.option value='Curacao'}}Curacao{{/xs.option}}
+    {{#xs.option value='Cyprus'}}Cyprus{{/xs.option}}
+    {{#xs.option value='Czech Republic'}}Czech Republic{{/xs.option}}
+    {{#xs.option value='Denmark'}}Denmark{{/xs.option}}
+    {{#xs.option value='Djibouti'}}Djibouti{{/xs.option}}
+    {{#xs.option value='Dominica'}}Dominica{{/xs.option}}
+    {{#xs.option value='Dominican Republic'}}Dominican Republic{{/xs.option}}
+    {{#xs.option value='Ecuador'}}Ecuador{{/xs.option}}
+    {{#xs.option value='Egypt'}}Egypt{{/xs.option}}
+    {{#xs.option value='El Salvador'}}El Salvador{{/xs.option}}
+    {{#xs.option value='Equatorial Guinea'}}Equatorial Guinea{{/xs.option}}
+    {{#xs.option value='Eritrea'}}Eritrea{{/xs.option}}
+    {{#xs.option value='Estonia'}}Estonia{{/xs.option}}
+    {{#xs.option value='Ethiopia'}}Ethiopia{{/xs.option}}
+    {{#xs.option value='Falkland Islands (Malvinas)'}}Falkland Islands (Malvinas){{/xs.option}}
+    {{#xs.option value='Faroe Islands'}}Faroe Islands{{/xs.option}}
+    {{#xs.option value='Fiji'}}Fiji{{/xs.option}}
+    {{#xs.option value='Finland'}}Finland{{/xs.option}}
+    {{#xs.option value='France'}}France{{/xs.option}}
+    {{#xs.option value='French Guiana'}}French Guiana{{/xs.option}}
+    {{#xs.option value='French Polynesia'}}French Polynesia{{/xs.option}}
+    {{#xs.option value='French Southern Territories'}}French Southern Territories{{/xs.option}}
+    {{#xs.option value='Gabon'}}Gabon{{/xs.option}}
+    {{#xs.option value='Gambia'}}Gambia{{/xs.option}}
+    {{#xs.option value='Georgia'}}Georgia{{/xs.option}}
+    {{#xs.option value='Germany'}}Germany{{/xs.option}}
+    {{#xs.option value='Ghana'}}Ghana{{/xs.option}}
+    {{#xs.option value='Gibraltar'}}Gibraltar{{/xs.option}}
+    {{#xs.option value='Greece'}}Greece{{/xs.option}}
+    {{#xs.option value='Greenland'}}Greenland{{/xs.option}}
+    {{#xs.option value='Grenada'}}Grenada{{/xs.option}}
+    {{#xs.option value='Guadeloupe'}}Guadeloupe{{/xs.option}}
+    {{#xs.option value='Guam'}}Guam{{/xs.option}}
+    {{#xs.option value='Guatemala'}}Guatemala{{/xs.option}}
+    {{#xs.option value='Guernsey'}}Guernsey{{/xs.option}}
+    {{#xs.option value='Guinea'}}Guinea{{/xs.option}}
+    {{#xs.option value='Guinea-Bissau'}}Guinea-Bissau{{/xs.option}}
+    {{#xs.option value='Guyana'}}Guyana{{/xs.option}}
+    {{#xs.option value='Haiti'}}Haiti{{/xs.option}}
+    {{#xs.option value='Heard and McDonald Islands'}}Heard and McDonald Islands{{/xs.option}}
+    {{#xs.option value='Holy See (Vatican City State)'}}Holy See (Vatican City State){{/xs.option}}
+    {{#xs.option value='Honduras'}}Honduras{{/xs.option}}
+    {{#xs.option value='Hong Kong'}}Hong Kong{{/xs.option}}
+    {{#xs.option value='Hungary'}}Hungary{{/xs.option}}
+    {{#xs.option value='Iceland'}}Iceland{{/xs.option}}
+    {{#xs.option value='India'}}India{{/xs.option}}
+    {{#xs.option value='Indonesia'}}Indonesia{{/xs.option}}
+    {{#xs.option value='Iran, Islamic Republic of'}}Iran, Islamic Republic of{{/xs.option}}
+    {{#xs.option value='Iraq'}}Iraq{{/xs.option}}
+    {{#xs.option value='Ireland'}}Ireland{{/xs.option}}
+    {{#xs.option value='Isle of Man'}}Isle of Man{{/xs.option}}
+    {{#xs.option value='Israel'}}Israel{{/xs.option}}
+    {{#xs.option value='Italy'}}Italy{{/xs.option}}
+    {{#xs.option value='Jamaica'}}Jamaica{{/xs.option}}
+    {{#xs.option value='Japan'}}Japan{{/xs.option}}
+    {{#xs.option value='Jersey'}}Jersey{{/xs.option}}
+    {{#xs.option value='Jordan'}}Jordan{{/xs.option}}
+    {{#xs.option value='Kazakhstan'}}Kazakhstan{{/xs.option}}
+    {{#xs.option value='Kenya'}}Kenya{{/xs.option}}
+    {{#xs.option value='Kiribati'}}Kiribati{{/xs.option}}
+    {{#xs.option value='Korea, Democratic People’s Republic of'}}Korea, Democratic People's Republic of{{/xs.option}}
+    {{#xs.option value='Korea, Republic of'}}Korea, Republic of{{/xs.option}}
+    {{#xs.option value='Kuwait'}}Kuwait{{/xs.option}}
+    {{#xs.option value='Kyrgyzstan'}}Kyrgyzstan{{/xs.option}}
+    {{#xs.option value='Lao People’s Democratic Republic'}}Lao People's Democratic Republic{{/xs.option}}
+    {{#xs.option value='Latvia'}}Latvia{{/xs.option}}
+    {{#xs.option value='Lebanon'}}Lebanon{{/xs.option}}
+    {{#xs.option value='Lesotho'}}Lesotho{{/xs.option}}
+    {{#xs.option value='Liberia'}}Liberia{{/xs.option}}
+    {{#xs.option value='Libyan Arab Jamahiriya'}}Libyan Arab Jamahiriya{{/xs.option}}
+    {{#xs.option value='Liechtenstein'}}Liechtenstein{{/xs.option}}
+    {{#xs.option value='Lithuania'}}Lithuania{{/xs.option}}
+    {{#xs.option value='Luxembourg'}}Luxembourg{{/xs.option}}
+    {{#xs.option value='Macao'}}Macao{{/xs.option}}
+    {{#xs.option value='Macedonia, The Former Yugoslav Republic Of'}}Macedonia, The Former Yugoslav Republic Of{{/xs.option}}
+    {{#xs.option value='Madagascar'}}Madagascar{{/xs.option}}
+    {{#xs.option value='Malawi'}}Malawi{{/xs.option}}
+    {{#xs.option value='Malaysia'}}Malaysia{{/xs.option}}
+    {{#xs.option value='Maldives'}}Maldives{{/xs.option}}
+    {{#xs.option value='Mali'}}Mali{{/xs.option}}
+    {{#xs.option value='Malta'}}Malta{{/xs.option}}
+    {{#xs.option value='Marshall Islands'}}Marshall Islands{{/xs.option}}
+    {{#xs.option value='Martinique'}}Martinique{{/xs.option}}
+    {{#xs.option value='Mauritania'}}Mauritania{{/xs.option}}
+    {{#xs.option value='Mauritius'}}Mauritius{{/xs.option}}
+    {{#xs.option value='Mayotte'}}Mayotte{{/xs.option}}
+    {{#xs.option value='Mexico'}}Mexico{{/xs.option}}
+    {{#xs.option value='Micronesia, Federated States of'}}Micronesia, Federated States of{{/xs.option}}
+    {{#xs.option value='Moldova, Republic of'}}Moldova, Republic of{{/xs.option}}
+    {{#xs.option value='Monaco'}}Monaco{{/xs.option}}
+    {{#xs.option value='Mongolia'}}Mongolia{{/xs.option}}
+    {{#xs.option value='Montenegro'}}Montenegro{{/xs.option}}
+    {{#xs.option value='Montserrat'}}Montserrat{{/xs.option}}
+    {{#xs.option value='Morocco'}}Morocco{{/xs.option}}
+    {{#xs.option value='Mozambique'}}Mozambique{{/xs.option}}
+    {{#xs.option value='Myanmar'}}Myanmar{{/xs.option}}
+    {{#xs.option value='Namibia'}}Namibia{{/xs.option}}
+    {{#xs.option value='Nauru'}}Nauru{{/xs.option}}
+    {{#xs.option value='Nepal'}}Nepal{{/xs.option}}
+    {{#xs.option value='Netherlands'}}Netherlands{{/xs.option}}
+    {{#xs.option value='New Caledonia'}}New Caledonia{{/xs.option}}
+    {{#xs.option value='New Zealand'}}New Zealand{{/xs.option}}
+    {{#xs.option value='Nicaragua'}}Nicaragua{{/xs.option}}
+    {{#xs.option value='Niger'}}Niger{{/xs.option}}
+    {{#xs.option value='Nigeria'}}Nigeria{{/xs.option}}
+    {{#xs.option value='Niue'}}Niue{{/xs.option}}
+    {{#xs.option value='Norfolk Island'}}Norfolk Island{{/xs.option}}
+    {{#xs.option value='Northern Mariana Islands'}}Northern Mariana Islands{{/xs.option}}
+    {{#xs.option value='Norway'}}Norway{{/xs.option}}
+    {{#xs.option value='Oman'}}Oman{{/xs.option}}
+    {{#xs.option value='Pakistan'}}Pakistan{{/xs.option}}
+    {{#xs.option value='Palau'}}Palau{{/xs.option}}
+    {{#xs.option value='Palestinian Territory, Occupied'}}Palestinian Territory, Occupied{{/xs.option}}
+    {{#xs.option value='Panama'}}Panama{{/xs.option}}
+    {{#xs.option value='Papua New Guinea'}}Papua New Guinea{{/xs.option}}
+    {{#xs.option value='Paraguay'}}Paraguay{{/xs.option}}
+    {{#xs.option value='Peru'}}Peru{{/xs.option}}
+    {{#xs.option value='Philippines'}}Philippines{{/xs.option}}
+    {{#xs.option value='Pitcairn'}}Pitcairn{{/xs.option}}
+    {{#xs.option value='Poland'}}Poland{{/xs.option}}
+    {{#xs.option value='Portugal'}}Portugal{{/xs.option}}
+    {{#xs.option value='Puerto Rico'}}Puerto Rico{{/xs.option}}
+    {{#xs.option value='Qatar'}}Qatar{{/xs.option}}
+    {{#xs.option value='Reunion'}}Reunion{{/xs.option}}
+    {{#xs.option value='Romania'}}Romania{{/xs.option}}
+    {{#xs.option value='Russian Federation'}}Russian Federation{{/xs.option}}
+    {{#xs.option value='Rwanda'}}Rwanda{{/xs.option}}
+    {{#xs.option value='Saint Barthelemy'}}Saint Barthelemy{{/xs.option}}
+    {{#xs.option value='Saint Helena'}}Saint Helena{{/xs.option}}
+    {{#xs.option value='Saint Kitts and Nevis'}}Saint Kitts and Nevis{{/xs.option}}
+    {{#xs.option value='Saint Lucia'}}Saint Lucia{{/xs.option}}
+    {{#xs.option value='Saint Pierre and Miquelon'}}Saint Pierre and Miquelon{{/xs.option}}
+    {{#xs.option value='Saint Vincent and the Grenadines'}}Saint Vincent and the Grenadines{{/xs.option}}
+    {{#xs.option value='Samoa'}}Samoa{{/xs.option}}
+    {{#xs.option value='San Marino'}}San Marino{{/xs.option}}
+    {{#xs.option value='Sao Tome and Principe'}}Sao Tome and Principe{{/xs.option}}
+    {{#xs.option value='Saudi Arabia'}}Saudi Arabia{{/xs.option}}
+    {{#xs.option value='Senegal'}}Senegal{{/xs.option}}
+    {{#xs.option value='Serbia'}}Serbia{{/xs.option}}
+    {{#xs.option value='Seychelles'}}Seychelles{{/xs.option}}
+    {{#xs.option value='Sierra Leone'}}Sierra Leone{{/xs.option}}
+    {{#xs.option value='Singapore'}}Singapore{{/xs.option}}
+    {{#xs.option value='Sint Maarten'}}Sint Maarten{{/xs.option}}
+    {{#xs.option value='Slovakia'}}Slovakia{{/xs.option}}
+    {{#xs.option value='Slovenia'}}Slovenia{{/xs.option}}
+    {{#xs.option value='Solomon Islands'}}Solomon Islands{{/xs.option}}
+    {{#xs.option value='Somalia'}}Somalia{{/xs.option}}
+    {{#xs.option value='South Africa'}}South Africa{{/xs.option}}
+    {{#xs.option value='South Georgia and the South Sandwich Islands'}}South Georgia and the South Sandwich Islands{{/xs.option}}
+    {{#xs.option value='Spain'}}Spain{{/xs.option}}
+    {{#xs.option value='Spain (Canary Islands)'}}Spain (Canary Islands){{/xs.option}}
+    {{#xs.option value='Sri Lanka'}}Sri Lanka{{/xs.option}}
+    {{#xs.option value='Sudan'}}Sudan{{/xs.option}}
+    {{#xs.option value='Suriname'}}Suriname{{/xs.option}}
+    {{#xs.option value='Svalbard and Jan Mayen'}}Svalbard and Jan Mayen{{/xs.option}}
+    {{#xs.option value='Swaziland'}}Swaziland{{/xs.option}}
+    {{#xs.option value='Sweden'}}Sweden{{/xs.option}}
+    {{#xs.option value='Switzerland'}}Switzerland{{/xs.option}}
+    {{#xs.option value='Syrian Arab Republic'}}Syrian Arab Republic{{/xs.option}}
+    {{#xs.option value='Taiwan'}}Taiwan{{/xs.option}}
+    {{#xs.option value='Tajikistan'}}Tajikistan{{/xs.option}}
+    {{#xs.option value='Tanzania, United Republic of'}}Tanzania, United Republic of{{/xs.option}}
+    {{#xs.option value='Thailand'}}Thailand{{/xs.option}}
+    {{#xs.option value='Timor-Leste'}}Timor-Leste{{/xs.option}}
+    {{#xs.option value='Togo'}}Togo{{/xs.option}}
+    {{#xs.option value='Tokelau'}}Tokelau{{/xs.option}}
+    {{#xs.option value='Tonga'}}Tonga{{/xs.option}}
+    {{#xs.option value='Trinidad and Tobago'}}Trinidad and Tobago{{/xs.option}}
+    {{#xs.option value='Tunisia'}}Tunisia{{/xs.option}}
+    {{#xs.option value='Turkey'}}Turkey{{/xs.option}}
+    {{#xs.option value='Turkmenistan'}}Turkmenistan{{/xs.option}}
+    {{#xs.option value='Turks and Caicos Islands'}}Turks and Caicos Islands{{/xs.option}}
+    {{#xs.option value='Tuvalu'}}Tuvalu{{/xs.option}}
+    {{#xs.option value='Uganda'}}Uganda{{/xs.option}}
+    {{#xs.option value='Ukraine'}}Ukraine{{/xs.option}}
+    {{#xs.option value='United Arab Emirates'}}United Arab Emirates{{/xs.option}}
+    {{#xs.option value='United Kingdom'}}United Kingdom{{/xs.option}}
+    {{#xs.option value='United Kingdom (Jersey)'}}United Kingdom (Jersey){{/xs.option}}
+    {{#xs.option value='United States'}}United States{{/xs.option}}
+    {{#xs.option value='United States Minor Outlying Islands'}}United States Minor Outlying Islands{{/xs.option}}
+    {{#xs.option value='Uruguay'}}Uruguay{{/xs.option}}
+    {{#xs.option value='Uzbekistan'}}Uzbekistan{{/xs.option}}
+    {{#xs.option value='Vanuatu'}}Vanuatu{{/xs.option}}
+    {{#xs.option value='Venezuela'}}Venezuela{{/xs.option}}
+    {{#xs.option value='Viet Nam'}}Viet Nam{{/xs.option}}
+    {{#xs.option value='Virgin Islands, British'}}Virgin Islands, British{{/xs.option}}
+    {{#xs.option value='Virgin Islands, U.S.'}}Virgin Islands, U.S.{{/xs.option}}
+    {{#xs.option value='Wallis and Futuna'}}Wallis and Futuna{{/xs.option}}
+    {{#xs.option value='Western Sahara'}}Western Sahara{{/xs.option}}
+    {{#xs.option value='Yemen'}}Yemen{{/xs.option}}
+    {{#xs.option value='Zambia'}}Zambia{{/xs.option}}
+    {{#xs.option value='Zimbabwe'}}Zimbabwe{{/xs.option}}
+  {{/x-select}}
+</div>
+
+<div class='form-elem'>
+  <label for='subscription-address' class='form-label'>Street address</label>
+  {{input id='subscription-address' name='address' value=address}}
+</div>
+
+<div class='form-elem'>
+  <label for='subscription-address2' class='form-label'>Suite, Apt.</label>
+  {{input id='subscription-address2' name='address2' value=address2}}
+</div>
+
+<div class='form-elem'>
+  <label for='subscription-city' class='form-label'>City</label>
+  {{input id='subscription-city' name='city' value=city}}
+</div>
+
+<div class='form-elem'>
+  <label for='subscription-zip-code' class='form-label'>Zip code</label>
+  {{input id='subscription-zip-code' name='zipCode' value=zipCode}}
+</div>
+
+<div class='form-elem'>
+  <label for='subscription-state' class='form-label'>State</label>
+  {{input id='subscription-state' name='state' value=state}}
+</div>
+
+{{#if showVat}}
+<div class='form-elem'>
+  <label for='subscription-vat-id' class='form-label'>VAT ID</label>
+  {{input id='subscription-vat-id' name='vatId' value=vatId class=(if vatIdError 'error')}}
+</div>
+{{/if}}
+
+<h2>Credit card details</h2>
+
+<p>Your credit card details are never stored on or even reach our servers. Payments and credit card data are handled by <a href='https://example.com/FIXME'>Stripe</a>.</p>
+
+<div class='form-elem'>
+  <label for='subscription-card-number' class='form-label'>Card number</label>
+  {{input id='subscription-card-number' name='number' value=number}}
+</div>
+
+<div class='form-elem'>
+  <label for='subscription-name-on-card' class='form-label'>Name on card</label>
+  {{input id='subscription-name-on-card' name='name' value=name}}
+</div>
+
+<div class='form-elem'>
+  <label class='form-label'>Expiry date of card</label>
+
+  {{#x-select name='expiryMonth' value=expiryMonth on-change=(action (mut expiryMonth)) as |xs|}}
+    {{#xs.option value=1}}January{{/xs.option}}
+    {{#xs.option value=2}}February{{/xs.option}}
+    {{#xs.option value=3}}March{{/xs.option}}
+    {{#xs.option value=4}}April{{/xs.option}}
+    {{#xs.option value=5}}May{{/xs.option}}
+    {{#xs.option value=6}}June{{/xs.option}}
+    {{#xs.option value=7}}July{{/xs.option}}
+    {{#xs.option value=8}}August{{/xs.option}}
+    {{#xs.option value=9}}September{{/xs.option}}
+    {{#xs.option value=10}}October{{/xs.option}}
+    {{#xs.option value=11}}November{{/xs.option}}
+    {{#xs.option value=12}}December{{/xs.option}}
+  {{/x-select}}
+
+  {{!FIXME hardcoded years}}
+  {{#x-select name='expiryYear' value=expiryYear on-change=(action (mut expiryYear)) as |xs|}}
+    {{#xs.option value=2018}}2018{{/xs.option}}
+    {{#xs.option value=2019}}2019{{/xs.option}}
+    {{#xs.option value=2020}}2020{{/xs.option}}
+    {{#xs.option value=2021}}2021{{/xs.option}}
+    {{#xs.option value=2022}}2022{{/xs.option}}
+    {{#xs.option value=2023}}2023{{/xs.option}}
+    {{#xs.option value=2024}}2024{{/xs.option}}
+    {{#xs.option value=2025}}2025{{/xs.option}}
+    {{#xs.option value=2026}}2026{{/xs.option}}
+    {{#xs.option value=2027}}2027{{/xs.option}}
+  {{/x-select}}
+</div>
+
+<div class='form-elem'>
+  <label for='subscription-cvc' class='form-label'>CVC</label>
+  {{input id='subscription-cvc' name='cvc' value=cvc}}
+</div>
+
+<button {{action 'save'}} class='button--blue save'>Complete sign up</button>
+
+{{#if result}}
+result:
+<div class='catchall-error'>
+{{result}}
+</div>
+{{/if}}

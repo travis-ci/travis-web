@@ -64,6 +64,106 @@ $profile-breakpoint: 600px;
 
 .profile-main {
   flex-grow: 1;
+
+  label {
+    font-weight: bold;
+    font-size: $font-size-s;
+  }
+
+   ul.billing-form-container {
+     list-style: none;
+     padding: 0;
+     div {
+       display: flex;
+       flex-direction: column;
+
+      @media #{$large-up} {
+        flex-direction: row;
+        justify-content: space-around;
+      }
+     }
+
+     li {
+       flex-grow: 1;
+     }
+
+     li:first-child {
+       padding-bottom: 20px;
+
+       @media #{$large-up} {
+        padding-right: 30px;
+        padding-bottom: 0;
+       }
+     }
+   }
+
+   .billing-cycle-container {
+     display: grid;
+     grid-template-columns: 150px 1fr;
+     grid-gap: 30px;
+
+     p {
+       margin: 0 0 5px 0;
+     }
+   }
+   .toggle {
+     display: none;
+     &,
+     &:after,
+     &:before,
+     & *,
+     & *:after,
+     & *:before,
+     &+.toggle-button {
+       box-sizing: border-box;
+       &::selection {
+         background: none;
+       }
+     }
+
+     +.toggle-button {
+       outline: 0;
+       display: block;
+       width: 150px;
+       height: 2em;
+       position: relative;
+       cursor: pointer;
+       user-select: none;
+       background: #D8D8D8;
+       border-radius: 2em;
+       padding: 2px;
+       text-align: center;
+       transition: all .4s ease;
+
+       &:after,
+       &:before {
+         position: relative;
+         display: block;
+         content: "Monthly";
+         width: 50%;
+         height: 100%;
+       }
+
+       &:after {
+         border-radius: 2em;
+         background: #fff;
+         left: 0;
+         transition: all .2s ease;
+       }
+       &:before {
+         display: none;
+       }
+     }
+
+     &:checked+.toggle-button {
+       background: $oxide-blue;
+     }
+
+     &:checked+.toggle-button:after {
+       left: 50%;
+       content: "Annual";
+     }
+   }
 }
 
 .profile-header {
@@ -366,6 +466,96 @@ header.legacy-services-integration {
     }
   }
 }
+section.billing {
+  font-size: $font-size-m;
+
+  .plan {
+    h3 {
+      font-size: $font-size-xl;
+      font-weight: $font-weight-light;
+      margin-bottom: 0.2em;
+    }
+  }
+
+  .plan + h2 {
+    margin-bottom: 0;
+  }
+
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+
+    section {
+      flex: 1;
+    }
+
+    h3 {
+      text-transform: uppercase;
+      font-size: $font-size-s;
+      font-weight: $font-weight-bold;
+      color: $cement-grey;
+    }
+  }
+
+  section.payment {
+    h3 {
+      margin-bottom: 0.3em;
+    }
+
+    .source {
+      font-size: $font-size-s;
+      font-style: italic;
+      color: $cement-grey;
+    }
+  }
+
+  section.contact, section.payment {
+    p {
+      margin-top: 0;
+      margin-bottom: 0.3em;
+    }
+  }
+
+  .notice-banner--yellow {
+    display: block;
+    margin-top: 1rem;
+    padding: 0.5rem 0.9rem 0.6rem;
+    font-size: $font-size-sm;
+  }
+}
+
+section.invoices {
+  font-size: $font-size-m;
+  padding-top: 1rem;
+
+  ul {
+    list-style-type: none;
+    padding-left: 0;
+  }
+
+  li {
+    padding-bottom: 0.4em;
+  }
+
+  p {
+    @include linkStyle;
+  }
+
+  .icon-help {
+    margin-right: 3px;
+    transform: translateY(-2px);
+
+    &:hover {
+      border-color: $pebble-grey;
+      @include colorSVG($cement-grey);
+    }
+  }
+
+  a svg {
+    @include colorSVG(black);
+    transform: translateY(-2px);
+  }
+}
 
 #github-apps-invitation {
   box-shadow: 0 0 15px 3px $pebble-grey;
@@ -537,4 +727,40 @@ header.space-between {
   background-color: #3EAAAF;
   border: none;
   border-radius: 2px;
+}
+
+.edit-subscription {
+  float: right;
+}
+
+.plans-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.plans-item {
+  border: 1px solid $new-grey;
+  border-radius: 3px;
+
+  padding: 15px;
+
+  .name {
+    font-size: $font-size-ml;
+    padding-bottom: 0.5em;
+  }
+
+  .concurrency {
+    padding-bottom: 0.5em;
+  }
+
+  .price {
+    color: $cement-grey;
+    font-size: $font-size-s;
+    font-style: italic;
+  }
+
+  &.highlighted {
+    color: #6CA7AE;
+    font-weight: 700;
+  }
 }

@@ -53,6 +53,10 @@ module.exports = function (environment) {
     },
     endpoints: {},
     githubApps: false,
+    stripe: {
+      publishableKey: 'pk_test_5i2Bx5nJACluilHLb25d3P6N',
+      lazyLoad: false
+    },
     timing: {
       syncingPageRedirectionTime: 5000,
     },

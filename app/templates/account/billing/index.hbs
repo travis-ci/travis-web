@@ -1,0 +1,55 @@
+<section class='billing'>
+  {{#link-to 'account.billing.edit' class='button--blue edit-subscription'}}
+    {{!FIXME we don’t have the pencil icon}}
+    {{svg-jar 'icon-key' class='icon white'}}
+    <span class="label-align">Edit subscription</span>
+  {{/link-to}}
+  {{#if model}}
+    {{!FIXME is this necessary?}}
+    {{#if model.plan}}
+      <h2>Plan Overview</h2>
+      <section class='plan'>
+        <h3 data-test-plan-name>{{model.plan.name}}</h3>
+        <span data-test-plan-concurrency>{{pluralize model.plan.builds 'concurrent build'}}</span>
+      </section>
+    {{/if}}
+    <h2>Billing Information</h2>
+    <section class='row'>
+      <section class='contact'>
+        <h3>Billing Contact</h3>
+        {{billing-address billingInfo=model.billingInfo}}
+      </section>
+      <section class='payment'>
+        <h3>Payment details</h3>
+        <p class='source' data-test-source>{{source}}</p>
+        <p data-test-credit-card>•••• •••• •••• {{model.creditCardInfo.lastDigits}}</p>
+        <p data-test-price>{{price}}</p>
+        {{#unless model.plan.annual}}
+          <span class='notice-banner--yellow' data-test-annual-invitation>
+            Save 10% by switching to <a href='javascript:alert("unimplemented")'>annual billing</a>
+          </span>
+        {{/unless}}
+      </section>
+    </section>
+  {{else}}
+    <span data-test-no-subscription>no subscription found</span>
+  {{/if}}
+</section>
+<section class='invoices'>
+  <h2>Invoice History</h2>
+  {{! FIXME the icon alignment within the circle is a bit off}}
+  <p>
+    {{svg-jar 'icon-help' class='icon-help' alt=''}}
+    Having trouble with your invoices?
+    <a href='{{ config.urls.support }}' title='Email the Travis support team' {{action 'helpscoutTrigger'}}>We’re happy to help</a>.
+  </p>
+  {{#if invoices}}
+    <ul>
+      {{#each (sort-by 'createdAt:desc' invoices) as |invoice|}}
+        <li><a data-test-invoice href={{invoice.url}}>{{svg-jar 'icon-invoice' class='icon'}} {{invoice.id}} {{moment-format invoice.createdAt 'MMMM YYYY'}}</a></li>
+      {{/each}}
+    </ul>
+  {{else}}
+    <span data-test-no-invoices>no invoices found</span>
+  {{/if}}
+</section>
