@@ -16,7 +16,9 @@ export default Component.extend({
   @alias('auth.currentUser') currentUser: null,
 
   click() {
-    return this.toggleProperty('isOpen');
+    if (!this.get('isOpen')) {
+      return this.toggleProperty('isOpen');
+    }
   },
 
   mouseLeave() {
