@@ -149,6 +149,10 @@ module.exports = function (environment) {
       }
     }
 
+    if (process.env.BILLING_ENDPOINT) {
+      ENV.billingEndpoint = process.env.BILLING_ENDPOINT;
+    }
+
     if (process.env.PUBLIC_MODE == 'false') {
       ENV.publicMode = false;
     } else {
@@ -238,13 +242,7 @@ module.exports = function (environment) {
     ENV.featureFlags['pro-version'] = false;
     ENV.featureFlags['github-apps'] = false;
 
-    ENV.billingEndpoint = 'https://billing.travis-ci.com';
-
     ENV.statusPageStatusUrl = undefined;
-  }
-
-  if (environment === 'staging') {
-    ENV.billingEndpoint = 'https://billing-staging.travis-ci.com';
   }
 
   if (environment === 'production') {
@@ -260,6 +258,5 @@ module.exports = function (environment) {
     var s3Bucket = require('./deploy')(process.env.DEPLOY_TARGET).s3.bucket;
     ENV.emojiPrepend = '//' + s3Bucket + '.s3.amazonaws.com';
   }
-
   return ENV;
 };
