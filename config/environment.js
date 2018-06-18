@@ -245,6 +245,8 @@ module.exports = function (environment) {
     ENV.featureFlags['github-apps'] = false;
 
     ENV.statusPageStatusUrl = undefined;
+
+    ENV.billingEndpoint = 'https://billing.travis-ci.com';
   }
 
   if (environment === 'production') {
