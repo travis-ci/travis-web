@@ -247,6 +247,7 @@ module.exports = function (environment) {
     ENV.statusPageStatusUrl = undefined;
 
     ENV.billingEndpoint = 'https://billing.travis-ci.com';
+    ENV.marketplaceEndpoint = 'https://github.com/marketplace/travis-ci/';
   }
 
   if (environment === 'production') {
