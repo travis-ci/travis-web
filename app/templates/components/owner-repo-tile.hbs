@@ -30,7 +30,7 @@
 
   <div class="row-item commit-sha">
     {{tooltip-on-element text='View diff on GitHub'}}
-    {{#external-link-to href=repo.defaultBranch.lastBuild.commit.compareUrl}}
+    {{#external-link-to href=repo.defaultBranch.lastBuild.commit.compareUrl target='_blank'}}
       {{svg-jar 'icon-compare' class="icon"}}
       <span class="label-align inner-underline commit-compare">
         {{format-sha repo.defaultBranch.lastBuild.commit.sha}}

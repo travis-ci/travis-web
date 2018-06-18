@@ -9,11 +9,13 @@ module('Integration | Component | external link to', function (hooks) {
   test('it renders correctly and securely', async function (assert) {
     const content = 'LINK TO GITHUB';
     const href = 'https://github.com/travis-ci/travis-web';
+    const target = '_blank';
 
     this.set('href', href);
     this.set('content', content);
+    this.set('target', target);
 
-    await render(hbs`{{external-link-to href=href content=content}}`);
+    await render(hbs`{{external-link-to href=href target=target content=content}}`);
 
     assert.dom('a').hasAttribute('href', href, 'Sets href correctly');
     assert.dom('a').hasAttribute('target', '_blank', 'Opens up the link in a new tab');
@@ -22,7 +24,7 @@ module('Integration | Component | external link to', function (hooks) {
     assert.dom('a').hasAttribute('rel', 'noopener noreferrer', 'Mitigates the security vulnerability discussed in https://www.jitbit.com/alexblog/256-targetblank---the-most-underestimated-vulnerability-ever/');
 
     await render(hbs`
-      {{#external-link-to href=href}}
+      {{#external-link-to href=href target=target}}
         <span class="foobar">FOOBAR</span>
       {{/external-link-to}}
     `);
