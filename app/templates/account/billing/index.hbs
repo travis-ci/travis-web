@@ -1,8 +1,8 @@
 <section class='billing'>
   {{#if account.subscriptionPermissions.create}}
-    {{#external-link-to href=model.billingUrl class='button--blue manage-subscription'}}
+    <a href={{model.billingUrl}} class='button--blue manage-subscription'>
       Edit subscription
-    {{/external-link-to}}
+    </a>
   {{/if}}
   {{#if (eq model.status 'subscribed')}}
     {{#unless (eq model.source 'manual')}}
