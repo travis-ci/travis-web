@@ -11,7 +11,7 @@
 {{#if (and stripe monthly)}}
   <span class='notice-banner--yellow' data-test-annual-invitation>
     Save 10% by switching to
-    <a href={{concat billingUrl '?switch_annual=true'}}>
+    <a href={{concat subscription.billingUrl '?switch_annual=true'}}>
       annual billing
     </a>
   </span>
