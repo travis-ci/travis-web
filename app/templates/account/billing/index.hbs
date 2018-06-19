@@ -24,10 +24,12 @@
       </section>
     </section>
   {{else if model}}
-    <span data-test-expiry-message>You had a GitHub Marketplace subscription that expired on {{moment-format model.validTo 'MMMM D, YYYY'}}.</span>
-    <a href={{config.marketplaceEndpoint}} class='button--blue marketplace-button'>
-      Continue with GitHub Marketplace
-    </a>
+    <span data-test-expiry-message>You had a {{model.sourceWords}} subscription that expired on {{moment-format model.validTo 'MMMM D, YYYY'}}.</span>
+    {{#if (eq model.source 'github')}}
+      <a href={{config.marketplaceEndpoint}} class='button--blue marketplace-button'>
+        Continue with GitHub Marketplace
+      </a>
+    {{/if}}
   {{else}}
     <span data-test-no-subscription>no subscription found</span>
   {{/if}}

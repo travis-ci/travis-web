@@ -113,6 +113,23 @@ test('view billing information with invoices', function (assert) {
   });
 });
 
+test('view billing on an expired stripe plan', function (assert) {
+  this.subscription.status = 'expired';
+
+  profilePage.visit({ username: 'user-login'});
+  profilePage.billing.visit();
+
+  andThen(() => {
+    assert.equal(profilePage.billing.expiryMessage.text, 'You had a Stripe subscription that expired on June 19, 2018.');
+    assert.equal(profilePage.billing.manageButton.href, 'https://billing.travis-ci.com/subscriptions/user');
+    assert.ok(profilePage.billing.marketplaceButton.isHidden);
+
+    assert.ok(profilePage.billing.address.isHidden);
+    assert.ok(profilePage.billing.creditCardNumber.isHidden);
+    assert.ok(profilePage.billing.annualInvitation.isHidden);
+  });
+});
+
 test('view billing on a manual plan with no invoices', function (assert) {
   this.subscription.source = 'manual';
 

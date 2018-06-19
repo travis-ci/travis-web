@@ -4,6 +4,12 @@ import { belongsTo, hasMany } from 'ember-data/relationships';
 import { computed } from 'ember-decorators/object';
 import config from 'travis/config/environment';
 
+let sourceToWords = {
+  manual: 'manual',
+  github: 'GitHub Marketplace',
+  stripe: 'Stripe'
+};
+
 export default Model.extend({
   plan: belongsTo(),
   billingInfo: belongsTo({ async: false }),
@@ -25,4 +31,9 @@ export default Model.extend({
       return config.marketplaceEndpoint;
     }
   },
+
+  @computed('source')
+  sourceWords(source) {
+    return sourceToWords[source];
+  }
 });
