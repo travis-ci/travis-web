@@ -83,6 +83,7 @@ $dropdown-button-margin: -9px;
 
     width: 1.4rem;
     height: 2rem;
+    margin-bottom: -3px; // Removes a strage protrusion when focused
   }
 }
 
