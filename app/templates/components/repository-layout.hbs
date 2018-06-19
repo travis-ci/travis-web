@@ -15,8 +15,8 @@
   </header>
   <main class="repo-main">
   <div class="repo-navigation">
-    {{repo-show-tools repo=repo build=build job=job tab=tab onTriggerBuild=(action "toggleTriggerBuildModal")}}
     {{repo-show-tabs repo=repo build=build job=job}}
+    {{repo-show-tools repo=repo build=build job=job tab=tab onTriggerBuild=(action "toggleTriggerBuildModal")}}
   </div>
   <div class="travistab-body repo-body">
     {{#if hasBlock}}
