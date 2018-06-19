@@ -9,7 +9,7 @@
     <div id="github-apps-repositories">
       <header class='space-between' data-test-github-apps-integration-header>
         <h2>GitHub Apps Integration</h2>
-        {{#external-link-to href=githubAppsManagementURL target='_blank' class='button--white migrate'}}
+        {{#external-link-to href=githubAppsManagementURL class='button--white migrate'}}
           {{svg-jar 'icon-repooctocat'}}
           Manage repositories on GitHub
         {{/external-link-to}}
@@ -89,7 +89,7 @@
         </button>
         <p>We will pass to GitHub the repositories that should be included in the activation list for the installation.</p>
       {{else}}
-        {{#external-link-to href=githubAppsActivationURL target='_blank' class='button--green migrate-or-activate'}}
+        {{#external-link-to href=githubAppsActivationURL class='button--green migrate-or-activate'}}
           {{svg-jar 'icon-repooctocat' class='icon--github'}}
           Activate
         {{/external-link-to}}
@@ -107,7 +107,7 @@
     <h2>
       Legacy Services Integration
       {{#if showGitHubApps}}
-        {{#external-link-to href='https://docs.travis-ci.com/user/open-source-on-travis-ci-com/' target='_blank' class='badge deprecated square' title='Read our documentation on open source migration'}}
+        {{#external-link-to href='https://docs.travis-ci.com/user/open-source-on-travis-ci-com/' class='badge deprecated square' title='Read our documentation on open source migration'}}
           Deprecated
         {{/external-link-to}}
       {{/if}}
