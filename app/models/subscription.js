@@ -16,9 +16,9 @@ export default Model.extend({
   status: attr(),
   validTo: attr('date'),
 
-  @computed('owner.{type,login}', 'source')
-  billingUrl(type, login, source) {
-    if (source === 'stripe') {
+  @computed('owner.{type,login}', 'source', 'status')
+  billingUrl(type, login, source, status) {
+    if (source === 'stripe' || status === 'expired') {
       const id = type === 'user' ? 'user' : login;
       return `${config.billingEndpoint}/subscriptions/${id}`;
     } else if (source === 'github') {

@@ -23,17 +23,25 @@ export default TravisRoute.extend({
           accounts.forEach(account => {
             let login = account.get('login');
             let accountSubscriptions = subscriptions.filter(
-              subscription => subscription.get('owner.login') === login &&
-                  subscription.get('status') === 'subscribed');
+              subscription => subscription.get('owner.login') === login);
 
-            if (accountSubscriptions.get('length') > 1) {
+            let activeAccountSubscriptions = accountSubscriptions.filter(
+              subscription => subscription.get('status') === 'subscribed');
+
+            if (activeAccountSubscriptions.get('length') > 1) {
               let exception =
                 new Error(`Account ${login} has more than one active subscription!`);
               this.get('raven').logException(exception, true);
             }
 
-            let chosenSubscription = accountSubscriptions.sortBy('validTo').get('firstObject');
+            let chosenSubscription = activeAccountSubscriptions.
+              sortBy('validTo').get('firstObject');
             account.set('subscription', chosenSubscription);
+
+            let expiredAccountSubscription = accountSubscriptions.filter(
+              subscription => subscription.get('status') === 'expired'
+            ).sortBy('validTo').get('lastObject');
+            account.set('expiredSubscription', expiredAccountSubscription);
           });
         } else {
           accounts.setEach('subscriptionError', true);

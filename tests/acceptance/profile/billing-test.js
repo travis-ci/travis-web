@@ -89,6 +89,8 @@ test('view billing information with invoices', function (assert) {
     percySnapshot(assert);
 
     assert.equal(profilePage.billing.manageButton.href, 'https://billing.travis-ci.com/subscriptions/user');
+    assert.ok(profilePage.billing.expiryMessage.isHidden);
+    assert.ok(profilePage.billing.marketplaceButton.isHidden);
 
     assert.equal(profilePage.billing.plan.name, 'Small Business Plan');
     assert.equal(profilePage.billing.plan.concurrency, '5 concurrent builds');
@@ -144,6 +146,25 @@ test('view billing on a marketplace plan', function (assert) {
     assert.ok(profilePage.billing.annualInvitation.isHidden);
   });
 });
+
+test('view billing on an expired marketplace plan', function (assert) {
+  this.subscription.source = 'github';
+  this.subscription.status = 'expired';
+
+  profilePage.visit({ username: 'user-login'});
+  profilePage.billing.visit();
+
+  andThen(() => {
+    assert.equal(profilePage.billing.expiryMessage.text, 'You had a GitHub Marketplace subscription that expired on June 19, 2018.');
+    assert.equal(profilePage.billing.manageButton.href, 'https://billing.travis-ci.com/subscriptions/user');
+    assert.equal(profilePage.billing.marketplaceButton.href, 'https://github.com/marketplace/travis-ci/');
+
+    assert.ok(profilePage.billing.address.isHidden);
+    assert.ok(profilePage.billing.creditCardNumber.isHidden);
+    assert.ok(profilePage.billing.annualInvitation.isHidden);
+  });
+});
+
 
 test('view billing on an annual plan', function (assert) {
   this.plan.annual = true;

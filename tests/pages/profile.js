@@ -123,6 +123,11 @@ export default create({
       href: attribute('href')
     },
 
+    marketplaceButton: {
+      scope: '.marketplace-button',
+      href: attribute('href')
+    },
+
     plan: {
       scope: '.plan',
       name: text('[data-test-plan-name]'),
@@ -139,6 +144,10 @@ export default create({
     price: { scope: '[data-test-price]' },
 
     annualInvitation: { scope: '[data-test-annual-invitation]' },
+
+    expiryMessage: {
+      scope: '[data-test-expiry-message]'
+    },
 
     invoices: {
       scope: '.invoices',

@@ -2,7 +2,7 @@
   {{#external-link-to href=model.billingUrl target='' class='button--blue manage-subscription'}}
     Edit subscription
   {{/external-link-to}}
-  {{#if model}}
+  {{#if (eq model.status 'subscribed')}}
     {{#unless (eq model.source 'manual')}}
       <h2>Plan Overview</h2>
       <section class='plan'>
@@ -25,6 +25,10 @@
     </section>
   {{else}}
     <span data-test-no-subscription>no subscription found</span>
+    <span data-test-expiry-message>You had a GitHub Marketplace subscription that expired on {{moment-format model.validTo 'MMMM D, YYYY'}}.</span>
+    <a href={{config.marketplaceEndpoint}} class='button--blue marketplace-button'>
+      Continue with GitHub Marketplace
+    </a>
   {{/if}}
 </section>
 
