@@ -28,16 +28,6 @@ export default Controller.extend({
     return name || login;
   },
 
-  @computed('model.{type,login}', 'model.subscription.source')
-  billingUrl(type, login, source) {
-    if (source === 'stripe') {
-      const id = type === 'user' ? 'user' : login;
-      return `${config.billingEndpoint}/subscriptions/${id}`;
-    } else if (source === 'github') {
-      return config.marketplaceEndpoint;
-    }
-  },
-
   @computed('features.enterpriseVersion', 'config.billingEndpoint')
   checkSubscriptionStatus(enterprise, billingEndpoint) {
     return !enterprise && !!billingEndpoint;
