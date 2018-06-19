@@ -165,7 +165,6 @@ test('view billing on an expired marketplace plan', function (assert) {
   });
 });
 
-
 test('view billing on an annual plan', function (assert) {
   this.plan.annual = true;
   this.plan.price = 10000;
