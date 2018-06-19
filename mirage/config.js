@@ -96,7 +96,7 @@ export default function () {
           id: owner.id
         },
         '@permissions': {
-          create: owner.permissions.createSubscription
+          create: (owner.permissions || {}).createSubscription
         }
       };
     });
