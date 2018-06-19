@@ -54,9 +54,13 @@
 
 .repo-navigation {
   margin: 1.9em 0 1.2em;
+  display: flex;
+
+  @media #{$small-only} {
+    flex-flow: column-reverse;
+  }
 
   @media #{$medium-up} {
-    display: flex;
     flex-flow: row wrap;
     justify-content: space-between;
     border-bottom: 2px $pebble-grey solid;
