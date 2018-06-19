@@ -57,7 +57,11 @@ export default create({
 
   subscriptionStatus: {
     scope: '.subscription-status',
-    text: text('[data-test-message]')
+    text: text('[data-test-message]'),
+
+    link: {
+      scope: 'a'
+    }
   },
 
   filter: fillable('.profile-repositories-filter input.search'),
