@@ -17,4 +17,7 @@ export default Model.extend({
   expiredSubscription: attr(),
 
   installation: belongsTo({async: false}),
+
+  // This is set by serializers:subscription
+  subscriptionPermissions: attr(),
 });

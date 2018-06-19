@@ -7,9 +7,13 @@ moduleForAcceptance('Acceptance | profile/billing', {
   beforeEach() {
     this.user = server.create('user', {
       name: 'User Name of exceeding length',
+      type: 'user',
       login: 'user-login',
       github_id: 1974,
-      avatar_url: 'http://example.com/jorty'
+      avatar_url: 'http://example.com/jorty',
+      permissions: {
+        createSubscription: true
+      }
     });
 
     signInUser(this.user);
@@ -63,7 +67,10 @@ moduleForAcceptance('Acceptance | profile/billing', {
     let organization = server.create('organization', {
       name: 'Org Name',
       type: 'organization',
-      login: 'org-login'
+      login: 'org-login',
+      permissions: {
+        createSubscription: false
+      }
     });
     this.organization = organization;
   }
@@ -203,6 +210,8 @@ test('view billing tab when there is no subscription', function (assert) {
     percySnapshot(assert);
     assert.dom('[data-test-no-subscription]').hasText('no subscription found');
     assert.ok(profilePage.billing.expiryMessage.isHidden);
+
+    assert.ok(profilePage.billing.manageButton.isHidden, 'expected no subscription management button when lacking permissions');
   });
 });
 

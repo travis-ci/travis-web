@@ -83,7 +83,26 @@ export default function () {
     }
   });
 
-  this.get('/subscriptions');
+  this.get('/subscriptions', function (schema, params) {
+    let response = this.serialize(schema.subscriptions.all());
+
+    let owners = schema.organizations.all().models;
+    owners.push(schema.users.first());
+
+    response.permissions = owners.map(owner => {
+      return {
+        owner: {
+          '@type': owner.type,
+          id: owner.id
+        },
+        '@permissions': {
+          create: owner.permissions.createSubscription
+        }
+      };
+    });
+
+    return response;
+  });
 
   this.get('/subscription/:subscription_id/invoices', function (schema, {params}) {
     return schema.subscriptions.find(params.subscription_id).invoices;
