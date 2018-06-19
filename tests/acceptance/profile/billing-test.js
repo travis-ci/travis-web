@@ -186,6 +186,7 @@ test('view billing tab when there is no subscription', function (assert) {
   andThen(() => {
     percySnapshot(assert);
     assert.dom('[data-test-no-subscription]').hasText('no subscription found');
+    assert.ok(profilePage.billing.expiryMessage.isHidden);
   });
 });
 

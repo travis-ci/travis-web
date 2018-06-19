@@ -23,12 +23,13 @@
         {{payment-details subscription=model billingUrl=billingUrl}}
       </section>
     </section>
-  {{else}}
-    <span data-test-no-subscription>no subscription found</span>
+  {{else if model}}
     <span data-test-expiry-message>You had a GitHub Marketplace subscription that expired on {{moment-format model.validTo 'MMMM D, YYYY'}}.</span>
     <a href={{config.marketplaceEndpoint}} class='button--blue marketplace-button'>
       Continue with GitHub Marketplace
     </a>
+  {{else}}
+    <span data-test-no-subscription>no subscription found</span>
   {{/if}}
 </section>
 
