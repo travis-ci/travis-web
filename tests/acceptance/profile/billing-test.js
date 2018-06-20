@@ -41,7 +41,7 @@ moduleForAcceptance('Acceptance | profile/billing', {
       plan,
       owner: this.user,
       status: 'subscribed',
-      valid_to: new Date(),
+      valid_to: new Date(2018, 5, 19),
       source: 'stripe'
     });
     this.subscription = subscription;
