@@ -7,7 +7,8 @@ export default TravisRoute.extend({
   model() {
     let accountCompound = this.modelFor('account');
     return accountCompound.account.get('subscription') ||
-      accountCompound.account.get('expiredSubscription');
+      accountCompound.account.get('expiredSubscription') ||
+      accountCompound.account.get('canceledSubscription');
   },
 
   // FIXME without this, switching between accounts doesn’t update the billing information?!

@@ -53,7 +53,13 @@
       </section>
     </section>
   {{else if model}}
-    <span data-test-expiry-message>You had a {{model.sourceWords}} subscription that expired on {{moment-format model.validTo 'MMMM D, YYYY'}}.</span>
+    <span data-test-expiry-message>
+      {{#if (eq model.status 'expired')}}
+        You had a {{model.sourceWords}} subscription that expired on {{moment-format model.validTo 'MMMM D, YYYY'}}.
+      {{else}}
+        This subscription has been canceled by you and is valid through {{moment-format model.validTo 'MMMM D, YYYY'}}.
+      {{/if}}
+    </span>
     {{#if (eq model.source 'github')}}
       <a href={{config.marketplaceEndpoint}} class='button--blue marketplace-button'>
         Continue with GitHub Marketplace

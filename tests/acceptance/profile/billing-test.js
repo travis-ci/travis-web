@@ -144,6 +144,17 @@ test('view billing on an expired stripe plan', function (assert) {
   });
 });
 
+test('view billing on a canceled stripe plan', function (assert) {
+  this.subscription.status = 'canceled';
+
+  profilePage.visit({ username: 'user-login'});
+  profilePage.billing.visit();
+
+  andThen(() => {
+    assert.equal(profilePage.billing.expiryMessage.text, 'This subscription has been canceled by you and is valid through June 19, 2018.');
+  });
+});
+
 test('view billing on a manual plan with no invoices', function (assert) {
   this.subscription.source = 'manual';
 

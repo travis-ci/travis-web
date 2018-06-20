@@ -42,6 +42,11 @@ export default TravisRoute.extend({
               subscription => subscription.get('status') === 'expired'
             ).sortBy('validTo').get('lastObject');
             account.set('expiredSubscription', expiredAccountSubscription);
+
+            let canceledAccountSubscription = accountSubscriptions.filter(
+              subscription => subscription.get('status') === 'canceled'
+            ).sortBy('validTo').get('lastObject');
+            account.set('canceledSubscription', canceledAccountSubscription);
           });
         } else {
           accounts.setEach('subscriptionError', true);
