@@ -4,9 +4,14 @@
   <p data-test-credit-card>•••• •••• •••• {{subscription.creditCardInfo.lastDigits}}</p>
 {{/if}}
 
-{{#unless manual}}
+{{#if manual}}
+  <p class='manual-help'>
+    If you have any questions or would like to update your plan, please
+    {{#external-link-to href='mailto:support@travis-ci.com'}}contact our support team{{/external-link-to}}
+  </p>
+{{else}}
   <p data-test-price>{{price}}</p>
-{{/unless}}
+{{/if}}
 
 {{#if (and stripe monthly subscription.permissions.write)}}
   <span class='notice-banner--yellow' data-test-annual-invitation>
