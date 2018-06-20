@@ -8,7 +8,7 @@
   <p data-test-price>{{price}}</p>
 {{/unless}}
 
-{{#if (and stripe monthly)}}
+{{#if (and stripe monthly subscription.permissions.write)}}
   <span class='notice-banner--yellow' data-test-annual-invitation>
     Save 10% by switching to
     <a href={{concat subscription.billingUrl '?switch_annual=true'}}>

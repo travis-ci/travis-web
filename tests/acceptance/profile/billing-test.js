@@ -214,6 +214,7 @@ test('view billing tab when no subscription write permissions', function (assert
   profilePage.billing.visit();
 
   andThen(() => {
+    assert.ok(profilePage.billing.annualInvitation.isHidden);
     assert.ok(profilePage.billing.manageButton.isDisabled, 'expected disabled subscription management button when lacking permissions');
   });
 });
