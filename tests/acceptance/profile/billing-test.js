@@ -100,6 +100,7 @@ test('view billing information with invoices', function (assert) {
 
     assert.equal(profilePage.billing.manageButton.href, 'https://billing.travis-ci.com/subscriptions/user');
     assert.notOk(profilePage.billing.manageButton.isDisabled);
+    assert.equal(profilePage.billing.manageButton.text, 'Edit subscription');
     assert.ok(profilePage.billing.expiryMessage.isHidden);
     assert.ok(profilePage.billing.marketplaceButton.isHidden);
 
@@ -133,6 +134,7 @@ test('view billing on an expired stripe plan', function (assert) {
   andThen(() => {
     assert.equal(profilePage.billing.expiryMessage.text, 'You had a Stripe subscription that expired on June 19, 2018.');
     assert.equal(profilePage.billing.manageButton.href, 'https://billing.travis-ci.com/subscriptions/user');
+    assert.equal(profilePage.billing.manageButton.text, 'Edit subscription');
     assert.ok(profilePage.billing.marketplaceButton.isHidden);
 
     assert.ok(profilePage.billing.address.isHidden);
@@ -229,6 +231,7 @@ test('view billing tab when there is no subscription', function (assert) {
     assert.ok(profilePage.billing.expiryMessage.isHidden);
 
     assert.ok(profilePage.billing.manageButton.isDisabled, 'expected no subscription management button when lacking permissions');
+    assert.equal(profilePage.billing.manageButton.text, 'Create subscription');
   });
 });
 
