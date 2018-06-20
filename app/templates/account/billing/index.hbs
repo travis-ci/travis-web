@@ -1,40 +1,5 @@
 <section class='billing'>
-  {{#if model}}
-    {{#if (eq model.status 'subscribed')}}
-      {{#if model.permissions.write}}
-        <a href={{model.billingUrl}} class='button--blue manage-subscription'>
-          Edit subscription
-        </a>
-      {{else}}
-        <div class='button--blue manage-subscription disabled'>
-          Edit subscription
-          {{tooltip-on-element text='You do not have permission to manage this subscription'}}
-        </div>
-      {{/if}}
-    {{else}}
-      {{#if model.permissions.write}}
-        <a href={{model.billingUrl}} class='button--blue manage-subscription'>
-          Resubscribe
-        </a>
-      {{else}}
-        <div class='button--blue manage-subscription disabled'>
-          Resubscribe
-          {{tooltip-on-element text='You do not have permission to resubscribe'}}
-        </div>
-      {{/if}}
-    {{/if}}
-  {{else}}
-    {{#if account.subscriptionPermissions.create}}
-      <a href={{model.billingUrl}} class='button--blue manage-subscription'>
-        Create subscription
-      </a>
-    {{else}}
-      <div class='button--blue manage-subscription disabled'>
-        Create subscription
-        {{tooltip-on-element text='You do not have permission to create a subscription'}}
-      </div>
-    {{/if}}
-  {{/if}}
+  {{manage-subscription-button subscription=model account=account}}
   {{#if (eq model.status 'subscribed')}}
     {{#unless (eq model.source 'manual')}}
       <h2>Plan Overview</h2>

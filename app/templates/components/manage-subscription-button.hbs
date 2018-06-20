@@ -1,0 +1,36 @@
+{{#if subscription}}
+  {{#if (eq subscription.status 'subscribed')}}
+    {{#if subscription.permissions.write}}
+      <a href={{subscription.billingUrl}} class='button--blue manage-subscription'>
+        Edit subscription
+      </a>
+    {{else}}
+      <div class='button--blue manage-subscription disabled'>
+        Edit subscription
+        {{tooltip-on-element text='You do not have permission to manage this subscription'}}
+      </div>
+    {{/if}}
+  {{else}}
+    {{#if subscription.permissions.write}}
+      <a href={{subscription.billingUrl}} class='button--blue manage-subscription'>
+        Resubscribe
+      </a>
+    {{else}}
+      <div class='button--blue manage-subscription disabled'>
+        Resubscribe
+        {{tooltip-on-element text='You do not have permission to resubscribe'}}
+      </div>
+    {{/if}}
+  {{/if}}
+{{else}}
+  {{#if account.subscriptionPermissions.create}}
+    <a href={{subscription.billingUrl}} class='button--blue manage-subscription'>
+      Create subscription
+    </a>
+  {{else}}
+    <div class='button--blue manage-subscription disabled'>
+      Create subscription
+      {{tooltip-on-element text='You do not have permission to create a subscription'}}
+    </div>
+  {{/if}}
+{{/if}}
