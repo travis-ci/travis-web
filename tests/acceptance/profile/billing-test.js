@@ -42,7 +42,10 @@ moduleForAcceptance('Acceptance | profile/billing', {
       owner: this.user,
       status: 'subscribed',
       valid_to: new Date(2018, 5, 19),
-      source: 'stripe'
+      source: 'stripe',
+      permissions: {
+        write: true
+      }
     });
     this.subscription = subscription;
 
@@ -200,6 +203,18 @@ test('view billing on an annual plan', function (assert) {
   andThen(() => {
     assert.equal(profilePage.billing.price.text, '$100 per year');
     assert.ok(profilePage.billing.annualInvitation.isHidden, 'expected the invitation to switch to annual billing to be hidden');
+  });
+});
+
+test('view billing tab when no subscription write permissions', function (assert) {
+  this.subscription.permissions.write = false;
+  this.subscription.save();
+
+  profilePage.visit({ username: 'user-login' });
+  profilePage.billing.visit();
+
+  andThen(() => {
+    assert.ok(profilePage.billing.manageButton.isDisabled, 'expected disabled subscription management button when lacking permissions');
   });
 });
 

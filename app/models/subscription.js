@@ -22,6 +22,8 @@ export default Model.extend({
   status: attr(),
   validTo: attr('date'),
 
+  permissions: attr(),
+
   @computed('owner.{type,login}', 'source', 'status')
   billingUrl(type, login, source, status) {
     if (source === 'stripe' || status === 'expired') {

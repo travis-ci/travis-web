@@ -1,6 +1,10 @@
 import V3Serializer from 'travis/serializers/v3';
 
 export default V3Serializer.extend({
+  attrs: {
+    permissions: { key: '@permissions' }
+  },
+
   normalizeArrayResponse(store, primaryModelClass, payload) {
     let documentHash = this._super(...arguments);
 
