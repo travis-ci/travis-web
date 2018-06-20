@@ -1,5 +1,7 @@
 <section class='billing'>
-  {{manage-subscription-button subscription=model account=account}}
+  {{#unless (eq model.source 'manual')}}
+    {{manage-subscription-button subscription=model account=account}}
+  {{/unless}}
   {{#if (eq model.status 'subscribed')}}
     {{#unless (eq model.source 'manual')}}
       <h2>Plan Overview</h2>

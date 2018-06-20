@@ -151,6 +151,7 @@ test('view billing on a manual plan with no invoices', function (assert) {
   profilePage.billing.visit();
 
   andThen(() => {
+    assert.ok(profilePage.billing.manageButton.isHidden);
     assert.ok(profilePage.billing.plan.isHidden);
     assert.ok(profilePage.billing.address.isHidden);
     assert.ok(profilePage.billing.creditCardNumber.isHidden);
