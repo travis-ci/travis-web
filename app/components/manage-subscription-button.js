@@ -32,5 +32,10 @@ export default Component.extend({
     } else {
       return 'You do not have permission to create a subscription';
     }
+  },
+
+  @computed('subscription')
+  isNew(subscription) {
+    return !subscription;
   }
 });

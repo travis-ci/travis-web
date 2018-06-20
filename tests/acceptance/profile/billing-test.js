@@ -100,6 +100,7 @@ test('view billing information with invoices', function (assert) {
 
     assert.equal(profilePage.billing.manageButton.href, 'https://billing.travis-ci.com/subscriptions/user');
     assert.notOk(profilePage.billing.manageButton.isDisabled);
+    assert.notOk(profilePage.billing.manageButton.isNew);
     assert.equal(profilePage.billing.manageButton.text, 'Edit subscription');
     assert.ok(profilePage.billing.expiryMessage.isHidden);
     assert.ok(profilePage.billing.marketplaceButton.isHidden);
@@ -227,10 +228,10 @@ test('view billing tab when there is no subscription', function (assert) {
 
   andThen(() => {
     percySnapshot(assert);
-    assert.dom('[data-test-no-subscription]').hasText('no subscription found');
     assert.ok(profilePage.billing.expiryMessage.isHidden);
 
     assert.ok(profilePage.billing.manageButton.isDisabled, 'expected no subscription management button when lacking permissions');
+    assert.ok(profilePage.billing.manageButton.isNew);
     assert.equal(profilePage.billing.manageButton.text, 'New subscription');
   });
 });

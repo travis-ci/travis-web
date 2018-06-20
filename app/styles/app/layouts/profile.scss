@@ -731,4 +731,8 @@ header.space-between {
 
 .manage-subscription {
   float: right;
+
+  &.new {
+    float: none;
+  }
 }
