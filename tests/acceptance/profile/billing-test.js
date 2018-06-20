@@ -134,7 +134,7 @@ test('view billing on an expired stripe plan', function (assert) {
   andThen(() => {
     assert.equal(profilePage.billing.expiryMessage.text, 'You had a Stripe subscription that expired on June 19, 2018.');
     assert.equal(profilePage.billing.manageButton.href, 'https://billing.travis-ci.com/subscriptions/user');
-    assert.equal(profilePage.billing.manageButton.text, 'Edit subscription');
+    assert.equal(profilePage.billing.manageButton.text, 'Resubscribe');
     assert.ok(profilePage.billing.marketplaceButton.isHidden);
 
     assert.ok(profilePage.billing.address.isHidden);
