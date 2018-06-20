@@ -1,3 +1,32 @@
+{{!FIXME remove this}}
+<div id='billing-panel'>
+  {{#if model}}
+    <button {{action (mut model) null}}>Delete subscription</button>
+  {{/if}}
+  Source:
+  <ul>
+    <li><button {{action (mut model.source) 'manual'}}>manual</button></li>
+    <li><button {{action (mut model.source) 'stripe'}}>stripe</button></li>
+    <li><button {{action (mut model.source) 'github'}}>marketplace</button></li>
+  </ul>
+  Status:
+  <ul>
+    <li><button {{action (mut model.status) 'subscribed'}}>subscribed</button></li>
+    <li><button {{action (mut model.status) 'canceled'}}>canceled</button></li>
+    <li><button {{action (mut model.status) 'expired'}}>expired</button></li>
+  </ul>
+  Subscription write permission:
+  <ul>
+    <li><button {{action (mut model.permissions.write) true}}>true</button></li>
+    <li><button {{action (mut model.permissions.write) false}}>false</button></li>
+  </ul>
+  Subscription create permission: (no API support yet)
+  <ul>
+    <li><button {{action (mut account.subscriptionPermissions.create) true}}>true</button></li>
+    <li><button {{action (mut account.subscriptionPermissions.create) false}}>false</button></li>
+  </ul>
+</div>
+
 <section class='billing'>
   {{#unless (eq model.source 'manual')}}
     {{manage-subscription-button subscription=model account=account}}
