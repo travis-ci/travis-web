@@ -19,7 +19,7 @@ export default Component.extend({
     } else if (status) {
       return 'Resubscribe';
     } else {
-      return 'Create subscription';
+      return 'New subscription';
     }
   },
 

@@ -231,7 +231,7 @@ test('view billing tab when there is no subscription', function (assert) {
     assert.ok(profilePage.billing.expiryMessage.isHidden);
 
     assert.ok(profilePage.billing.manageButton.isDisabled, 'expected no subscription management button when lacking permissions');
-    assert.equal(profilePage.billing.manageButton.text, 'Create subscription');
+    assert.equal(profilePage.billing.manageButton.text, 'New subscription');
   });
 });
 
