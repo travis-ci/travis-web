@@ -1,7 +1,10 @@
 <p class='source' data-test-source>{{source}}</p>
 
 {{#if stripe}}
-  <p data-test-credit-card>•••• •••• •••• {{subscription.creditCardInfo.lastDigits}}</p>
+  <p data-test-credit-card>
+    {{svg-jar 'icon-credit-card' class='icon--color' alt=''}}
+    •••• •••• •••• {{subscription.creditCardInfo.lastDigits}}
+  </p>
 {{/if}}
 
 {{#if manual}}
@@ -10,7 +13,10 @@
     {{#external-link-to href='mailto:support@travis-ci.com'}}contact our support team{{/external-link-to}}
   </p>
 {{else}}
-  <p data-test-price>{{price}}</p>
+  <p data-test-price>
+    {{svg-jar 'icon-currency-USD' class='icon--color' alt=''}}
+    {{price}}
+  </p>
 {{/if}}
 
 {{#if (and stripe monthly subscription.permissions.write)}}
