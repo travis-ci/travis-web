@@ -28,9 +28,9 @@
 </div>
 
 <section class='billing'>
-  {{#unless (eq model.source 'manual')}}
+  {{#if (eq model.source 'stripe')}}
     {{manage-subscription-button subscription=model account=account}}
-  {{/unless}}
+  {{/if}}
   {{#if (eq model.status 'subscribed')}}
     {{#unless (eq model.source 'manual')}}
       <h2>Plan Overview</h2>
@@ -56,8 +56,20 @@
     <span data-test-expiry-message>
       {{#if (eq model.status 'expired')}}
         You had a {{model.sourceWords}} subscription that expired on {{moment-format model.validTo 'MMMM D, YYYY'}}.
+        {{#if (eq model.source 'manual')}}
+          <p class='manual-help'>
+            If you have any questions or would like to update your plan, please {{#external-link-to href='mailto:support@travis-ci.com'}}contact
+            our support team{{/external-link-to}}
+          </p>
+        {{/if}}
       {{else}}
         This subscription has been canceled by you and is valid through {{moment-format model.validTo 'MMMM D, YYYY'}}.
+        {{#if (eq model.source 'manual')}}
+          <p class='manual-help'>
+            If you have any questions or would like to update your plan, please {{#external-link-to href='mailto:support@travis-ci.com'}}contact
+            our support team{{/external-link-to}}
+          </p>
+        {{/if}}
       {{/if}}
     </span>
     {{#if (eq model.source 'github')}}

@@ -513,14 +513,13 @@ section.billing {
     p {
       margin-top: 0;
       margin-bottom: 0.3em;
-
-      &.manual-help {
-        @include linkStyle;
-
-        margin-top: 1rem;
-      }
     }
   }
+
+   .manual-help {
+     @include linkStyle;
+     margin-top: 1rem;
+   }
 
   .notice-banner--yellow {
     display: block;
