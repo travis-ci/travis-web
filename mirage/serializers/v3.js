@@ -166,10 +166,12 @@ export default JSONAPISerializer.extend({
   isIncluded(type, key, request) {
     let include = request.queryParams.include;
     let ownerAliases = ['user', 'organization'];
+    let subscriptionInclusions = ['billing_info', 'credit_card_info', 'plan'];
 
     if (ownerAliases.includes(type)) {
       type = 'owner';
     }
+
 
     if (include) {
       return !!include
@@ -178,6 +180,9 @@ export default JSONAPISerializer.extend({
           return includeType === type && includeAttribute === key;
         })
         .length;
+    } else if (type === 'subscription' && subscriptionInclusions.includes(key)) {
+      // The true API always returns these as standard representations.
+      return true;
     }
   },
 
