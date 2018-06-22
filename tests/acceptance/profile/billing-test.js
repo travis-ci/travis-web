@@ -261,7 +261,6 @@ test('view billing tab when there is no subscription', function (assert) {
     assert.ok(profilePage.billing.expiryMessage.isHidden);
 
     assert.ok(profilePage.billing.manageButton.isDisabled, 'expected no subscription management button when lacking permissions');
-    assert.ok(profilePage.billing.manageButton.isNew);
     assert.equal(profilePage.billing.manageButton.text, 'New subscription');
   });
 });
@@ -272,6 +271,6 @@ test('switching to another account’s billing tab loads the subscription proper
   profilePage.accounts[1].visit();
 
   andThen(() => {
-    assert.ok(profilePage.billing.manageButton.isNew);
+    assert.equal(profilePage.billing.manageButton.text, 'New subscription');
   });
 });

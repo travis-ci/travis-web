@@ -514,12 +514,22 @@ section.billing {
       margin-top: 0;
       margin-bottom: 0.3em;
     }
+
+    p.manual-help {
+      @include linkStyle;
+      margin-top: 1rem;
+    }
   }
 
-   .manual-help {
-     @include linkStyle;
-     margin-top: 1rem;
-   }
+  .manual-help {
+    @include linkStyle;
+    margin-top: 1rem;
+  }
+
+  .marketplace-button {
+    margin-top: 1rem;
+  }
+
 
   .notice-banner--yellow {
     display: block;
@@ -736,10 +746,15 @@ header.space-between {
 
 .manage-subscription {
   float: right;
+}
 
-  &.new {
-    float: none;
-  }
+.new {
+  float: none;
+}
+
+.resubscribe {
+  float: none;
+  margin-top: 1rem;
 }
 
 // FIXME get rid of this

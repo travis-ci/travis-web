@@ -126,7 +126,6 @@ export default create({
       scope: '.manage-subscription',
       href: attribute('href'),
       isDisabled: hasClass('disabled'),
-      isNew: hasClass('new')
     },
 
     marketplaceButton: {

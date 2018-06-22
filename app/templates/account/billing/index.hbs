@@ -69,6 +69,9 @@
         </p>
       {{/if}}
     </span>
+    {{#if model.isResubscribe}}
+      {{resubscribe-button subscription=model account=account}}
+    {{/if}}
     {{#if (eq model.source 'github')}}
       <a href={{config.marketplaceEndpoint}} class='button--blue marketplace-button'>Manage on GitHub Marketplace</a>
     {{/if}}
