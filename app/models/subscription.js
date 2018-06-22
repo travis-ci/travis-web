@@ -34,6 +34,16 @@ export default Model.extend({
     }
   },
 
+  @computed('source', 'status')
+  manageSubscription(source, status) {
+    if (source === 'manual' ||
+      (source === 'github' && (status === 'canceled' || status === 'expired'))) {
+      return false;
+    } else {
+      return true;
+    }
+  },
+
   @computed('source')
   sourceWords(source) {
     return sourceToWords[source];

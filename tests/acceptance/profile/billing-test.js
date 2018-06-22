@@ -190,6 +190,25 @@ test('view billing on a marketplace plan', function (assert) {
   });
 });
 
+test('view billing on an canceled marketplace plan', function (assert) {
+  this.subscription.source = 'github';
+  this.subscription.status = 'canceled';
+
+  profilePage.visit({
+    username: 'user-login'
+  });
+  profilePage.billing.visit();
+
+  andThen(() => {
+    assert.equal(profilePage.billing.expiryMessage.text, 'This subscription has been canceled by you and is valid through June 19, 2018.');
+    assert.equal(profilePage.billing.marketplaceButton.href, 'https://github.com/marketplace/travis-ci/');
+
+    assert.ok(profilePage.billing.address.isHidden);
+    assert.ok(profilePage.billing.creditCardNumber.isHidden);
+    assert.ok(profilePage.billing.annualInvitation.isHidden);
+  });
+});
+
 test('view billing on an expired marketplace plan', function (assert) {
   this.subscription.source = 'github';
   this.subscription.status = 'expired';
@@ -199,7 +218,6 @@ test('view billing on an expired marketplace plan', function (assert) {
 
   andThen(() => {
     assert.equal(profilePage.billing.expiryMessage.text, 'You had a GitHub Marketplace subscription that expired on June 19, 2018.');
-    assert.equal(profilePage.billing.manageButton.href, 'https://billing.travis-ci.com/subscriptions/user');
     assert.equal(profilePage.billing.marketplaceButton.href, 'https://github.com/marketplace/travis-ci/');
 
     assert.ok(profilePage.billing.address.isHidden);

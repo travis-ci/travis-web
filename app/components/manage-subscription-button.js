@@ -16,10 +16,8 @@ export default Component.extend({
   label(status) {
     if (status === 'subscribed') {
       return 'Edit subscription';
-    } else if (status) {
-      return 'Resubscribe';
     } else {
-      return 'New subscription';
+      return 'Resubscribe';
     }
   },
 
@@ -27,15 +25,8 @@ export default Component.extend({
   tooltip(status) {
     if (status === 'subscribed') {
       return 'You do not have permission to edit this subscription';
-    } else if (status) {
-      return 'You do not have permission to resubscribe';
     } else {
-      return 'You do not have permission to create a subscription';
+      return 'You do not have permission to resubscribe';
     }
   },
-
-  @computed('subscription')
-  isNew(subscription) {
-    return !subscription;
-  }
 });

@@ -28,7 +28,10 @@
 </div>
 
 <section class='billing'>
-  {{#if (eq model.source 'stripe')}}
+  {{#unless model}}
+    {{new-subscription-button account=account}}
+  {{/unless}}
+  {{#if model.manageSubscription}}
     {{manage-subscription-button subscription=model account=account}}
   {{/if}}
   {{#if (eq model.status 'subscribed')}}
@@ -56,26 +59,18 @@
     <span data-test-expiry-message>
       {{#if (eq model.status 'expired')}}
         You had a {{model.sourceWords}} subscription that expired on {{moment-format model.validTo 'MMMM D, YYYY'}}.
-        {{#if (eq model.source 'manual')}}
-          <p class='manual-help'>
-            If you have any questions or would like to update your plan, please {{#external-link-to href='mailto:support@travis-ci.com'}}contact
-            our support team{{/external-link-to}}
-          </p>
-        {{/if}}
       {{else}}
         This subscription has been canceled by you and is valid through {{moment-format model.validTo 'MMMM D, YYYY'}}.
-        {{#if (eq model.source 'manual')}}
-          <p class='manual-help'>
-            If you have any questions or would like to update your plan, please {{#external-link-to href='mailto:support@travis-ci.com'}}contact
-            our support team{{/external-link-to}}
-          </p>
-        {{/if}}
+      {{/if}}
+      {{#if (eq model.source 'manual')}}
+        <p class='manual-help'>
+          If you have any questions or would like to update your plan, please {{#external-link-to href='mailto:support@travis-ci.com'}}contact
+          our support team{{/external-link-to}}
+        </p>
       {{/if}}
     </span>
     {{#if (eq model.source 'github')}}
-      <a href={{config.marketplaceEndpoint}} class='button--blue marketplace-button'>
-        Continue with GitHub Marketplace
-      </a>
+      <a href={{config.marketplaceEndpoint}} class='button--blue marketplace-button'>Manage on GitHub Marketplace</a>
     {{/if}}
   {{/if}}
 </section>

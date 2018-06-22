@@ -1,9 +1,9 @@
 {{#if havePermissions}}
-  <a href={{subscription.billingUrl}} class='button--blue manage-subscription {{if isNew 'new'}}'>
+  <a href={{subscription.billingUrl}} class='button--blue manage-subscription'>
     {{label}}
   </a>
 {{else}}
-  <div class='button--blue manage-subscription disabled {{if isNew 'new'}}'>
+  <div class='button--blue manage-subscription disabled'>
     {{label}}
     {{tooltip-on-element text=tooltip}}
   </div>
