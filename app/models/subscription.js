@@ -35,13 +35,13 @@ export default Model.extend({
   },
 
   @computed('source', 'status')
+  isResubscribe(source, status) {
+    return (source === 'stripe' && (status === 'canceled' || status === 'expired'));
+  },
+
+  @computed('source', 'status')
   manageSubscription(source, status) {
-    if (source === 'manual' ||
-      (source === 'github' && (status === 'canceled' || status === 'expired'))) {
-      return false;
-    } else {
-      return true;
-    }
+    return ((source === 'stripe' || source === 'github') && status === 'subscribed');
   },
 
   @computed('source')

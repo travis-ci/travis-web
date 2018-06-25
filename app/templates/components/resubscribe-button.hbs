@@ -1,0 +1,9 @@
+{{#if havePermissions}}
+<a href={{subscription.billingUrl}} class='button--blue manage-subscription resubscribe'>
+  Resubscribe
+</a>
+{{else}}
+<div class='button--blue manage-subscription disabled resubscribe'>
+  Resubscribe{{tooltip-on-element text='You do not have permission to resubscribe'}}
+</div>
+{{/if}}
