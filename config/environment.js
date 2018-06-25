@@ -252,11 +252,11 @@ module.exports = function (environment) {
 
   if (environment === 'production') {
     ENV.release = process.env.SOURCE_VERSION || process.env.TRAVIS_COMMIT || '-';
-    // if (true) {
-    ENV.sentry = {
-      development: true
-    };
-    // }
+    if (process.env.DISABLE_SENTRY) {
+      ENV.sentry = {
+        development: true
+      };
+    }
   }
 
   if (process.env.DEPLOY_TARGET) {

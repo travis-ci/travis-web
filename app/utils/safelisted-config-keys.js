@@ -1,4 +1,4 @@
-import intersection from 'npm:lodash.intersection';
+import intersection from 'lodash.intersection';
 import configKeysMap from 'travis/utils/keys-map';
 
 export default function safelistedConfigKeys(config) {

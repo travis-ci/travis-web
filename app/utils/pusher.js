@@ -1,4 +1,4 @@
-import Pusher from 'npm:pusher-js';
+import Pusher from 'pusher-js';
 
 import { next } from '@ember/runloop';
 
