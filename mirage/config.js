@@ -89,15 +89,14 @@ export default function () {
     let owners = schema.organizations.all().models;
     owners.push(schema.users.first());
 
-    response.permissions = owners.map(owner => {
+    response['@permissions'] = owners.map(owner => {
       return {
         owner: {
-          '@type': owner.type,
+          // The API for now is returning these capitalised
+          type: `${owner.type.substr(0, 1).toUpperCase()}${owner.type.substr(1)}`,
           id: owner.id
         },
-        '@permissions': {
-          create: (owner.permissions || {}).createSubscription
-        }
+        create: (owner.permissions || {}).createSubscription
       };
     });
 
