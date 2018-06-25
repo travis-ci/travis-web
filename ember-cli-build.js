@@ -35,6 +35,14 @@ module.exports = function () {
     'ember-cli-babel': {
       includePolyfill: true,
     },
+    autoImport: {
+      webpack: {
+        // workaround for https://github.com/jeremyfa/yaml.js/issues/102
+        node: {
+          fs: 'empty'
+        }
+      }
+    },
     babel: {
       blacklist: ['regenerator'],
       plugins: [

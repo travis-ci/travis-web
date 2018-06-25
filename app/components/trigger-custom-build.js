@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { task, timeout } from 'ember-concurrency';
-import YAML from 'npm:yamljs';
+import YAML from 'yamljs';
 import config from 'travis/config/environment';
 import { service } from 'ember-decorators/service';
 import { filterBy, notEmpty } from 'ember-decorators/object/computed';
