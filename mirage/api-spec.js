@@ -250,7 +250,7 @@ export default {
         "standard": ["beta_features"]
       }
     },
-    // FIXME is it weird that this is dashed?
+    // Why is this and `credit-card-info` dashed and not underscored? 🤔
     "billing-info":            {
       "@type":            "resource",
       "actions":          { },
@@ -529,7 +529,6 @@ export default {
         ]
       }
     },
-    // FIXME also dashed?
     "credit-card-info":            {
       "@type":            "resource",
       "actions":          { },
@@ -768,7 +767,6 @@ export default {
         "minimal":        ["id", "created_at", "url"],
       }
     },
-    // FIXME why is this needed?
     "invoices": {
       "@type": "resource",
       "attributes":       ["id", "created_at", "url"],
