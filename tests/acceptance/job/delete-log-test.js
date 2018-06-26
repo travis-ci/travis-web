@@ -29,7 +29,7 @@ moduleForAcceptance('Acceptance | job/delete log', {
 test('deleting job log when successful', function (assert) {
   assert.expect(2);
 
-  server.patch('/jobs/:id/log', (schema, request) => {
+  server.delete('/job/:id/log', (schema, request) => {
     const job = schema.jobs.find(request.params.id);
     if (job) {
       job.destroy();
@@ -48,7 +48,7 @@ test('deleting job log when successful', function (assert) {
 });
 
 test('deleting job log when error occurs', function (assert) {
-  server.patch('/jobs/:id/log', (schema, request) => {
+  server.delete('/job/:id/log', (schema, request) => {
     return new Response(500, {}, {});
   });
 
