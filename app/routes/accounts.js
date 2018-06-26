@@ -36,17 +36,13 @@ export default TravisRoute.extend({
 
             let chosenSubscription = activeAccountSubscriptions.
               sortBy('validTo').get('firstObject');
-            account.set('subscription', chosenSubscription);
 
-            let expiredAccountSubscription = accountSubscriptions.filter(
-              subscription => subscription.get('status') === 'expired'
-            ).sortBy('validTo').get('lastObject');
-            account.set('expiredSubscription', expiredAccountSubscription);
-
-            let canceledAccountSubscription = accountSubscriptions.filter(
-              subscription => subscription.get('status') === 'canceled'
-            ).sortBy('validTo').get('lastObject');
-            account.set('canceledSubscription', canceledAccountSubscription);
+            if (chosenSubscription) {
+              account.set('subscription', chosenSubscription);
+            } else {
+              let latestSubscription = accountSubscriptions.sortBy('validTo').get('lastObject');
+              account.set('subscription', latestSubscription);
+            }
           });
         } else {
           accounts.setEach('subscriptionError', true);
