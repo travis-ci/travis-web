@@ -32,6 +32,7 @@ export default Component.extend({
     return type === 'user';
   },
 
+  // This keeps the org-item highlighted while a route is loading
   @computed('router.currentRouteName')
   linkRouteName(routeName) {
     if (routeName.endsWith('_loading')) {
