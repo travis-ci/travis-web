@@ -172,7 +172,6 @@ export default JSONAPISerializer.extend({
       type = 'owner';
     }
 
-
     if (include) {
       return !!include
         .split(',').map(s => s.split('.'))
