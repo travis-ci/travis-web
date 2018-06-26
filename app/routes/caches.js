@@ -13,8 +13,8 @@ export default TravisRoute.extend({
 
   model() {
     const repo = this.modelFor('repo');
-    const url = `/repos/${repo.get('id')}/caches`;
-    return this.get('ajax').get(url).then((data) => {
+    const url = `/repo/${repo.get('id')}/caches`;
+    return this.get('ajax').getV3(url).then((data) => {
       let branch, cache, caches, pullRequests, pushes;
       caches = {};
       data['caches'].forEach((cacheData) => {
