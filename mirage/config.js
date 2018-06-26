@@ -319,11 +319,6 @@ export default function () {
     return this.serialize(job, 'job');
   });
 
-  this.get('/jobs/:id', function (schema, request) {
-    let job = schema.jobs.find(request.params.id);
-    return this.serialize(job, 'v2-job');
-  });
-
   this.get('/jobs', function (schema, request) {
     if (request.requestHeaders['Travis-API-Version'] === '3') {
       let jobs = schema.jobs;
