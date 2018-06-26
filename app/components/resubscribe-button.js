@@ -11,13 +11,4 @@ export default Component.extend({
       return createPermissions;
     }
   },
-
-  @computed('subscription.status')
-  isResubscribe(status) {
-    if (status === 'canceled' || status === 'expired') {
-      return true;
-    } else {
-      return false;
-    }
-  },
 });

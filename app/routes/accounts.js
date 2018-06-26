@@ -26,7 +26,7 @@ export default TravisRoute.extend({
               subscription => subscription.get('owner.login') === login);
 
             let activeAccountSubscriptions = accountSubscriptions.filter(
-              subscription => subscription.get('status') === 'subscribed');
+              subscription => subscription.get('isSubscribed'));
 
             if (activeAccountSubscriptions.get('length') > 1) {
               let exception =

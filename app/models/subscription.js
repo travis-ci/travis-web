@@ -2,6 +2,7 @@ import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
 import { belongsTo, hasMany } from 'ember-data/relationships';
 import { computed } from 'ember-decorators/object';
+import { and, equal, or } from 'ember-decorators/object/computed';
 import config from 'travis/config/environment';
 
 let sourceToWords = {
@@ -19,29 +20,37 @@ export default Model.extend({
   plan: belongsTo(),
   source: attr(),
   status: attr(),
+
+  @equal('status', 'subscribed') isSubscribed: null,
+  @equal('status', 'canceled') isCanceled: null,
+  @equal('status', 'expired') isExpired: null,
+
+  @or('isCanceled', 'isExpired') isNotSubscribed: null,
+
+  @equal('source', 'stripe') isStripe: null,
+  @equal('source', 'github') isGithub: null,
+  @equal('source', 'manual') isManual: null,
+
+  @and('isStripe', 'isNotSubscribed') isResubscribable: null,
+
   validTo: attr('date'),
 
-  @computed('owner.{type,login}', 'source', 'status')
-  billingUrl(type, login, source, status) {
+  @computed('owner.{type,login}', 'isGithub', 'isResubscribable')
+  billingUrl(type, login, isGithub, isResubscribable) {
     const id = type === 'user' ? 'user' : login;
 
-    if (source === 'stripe' && (status === 'expired' || status === 'canceled')) {
+    if (isResubscribable) {
       return `${config.billingEndpoint}/subscriptions/${id}/edit`;
-    } else if (source === 'github') {
+    } else if (isGithub) {
       return config.marketplaceEndpoint;
     } else {
       return `${config.billingEndpoint}/subscriptions/${id}`;
     }
   },
 
-  @computed('source', 'status')
-  isResubscribe(source, status) {
-    return (source === 'stripe' && (status === 'canceled' || status === 'expired'));
-  },
-
-  @computed('source', 'status')
-  manageSubscription(source, status) {
-    return ((source === 'stripe' || source === 'github') && status === 'subscribed');
+  @computed('isStripe', 'isGithub', 'isSubscribed')
+  manageSubscription(isStripe, isGithub, isSubscribed) {
+    return ((isStripe || isGithub) && isSubscribed);
   },
 
   @computed('source')

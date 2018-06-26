@@ -47,9 +47,9 @@ export default Component.extend({
     }
   },
 
-  @computed('showSubscriptionStatus', 'account.subscription.status', 'account.education')
-  showSubscriptionCheckmark(showStatus, subscriptionStatus, education) {
-    return showStatus && (subscriptionStatus === 'subscribed' || education);
+  @computed('showSubscriptionStatus', 'account.subscription.isSubscribed', 'account.education')
+  showSubscriptionCheckmark(showStatus, isSubscribed, education) {
+    return showStatus && (isSubscribed || education);
   },
 
   @computed('account.education')
