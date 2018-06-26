@@ -5,32 +5,32 @@ import { computed } from 'ember-decorators/object';
 import config from 'travis/config/environment';
 
 let sourceToWords = {
-  manual: 'manual',
   github: 'GitHub Marketplace',
+  manual: 'manual',
   stripe: 'Stripe'
 };
 
 export default Model.extend({
-  plan: belongsTo(),
   billingInfo: belongsTo({ async: false }),
   creditCardInfo: belongsTo({ async: false }),
-  owner: belongsTo('owner', {polymorphic: true}),
-  source: attr(),
-
   invoices: hasMany('invoice'),
-
+  owner: belongsTo('owner', {polymorphic: true}),
+  permissions: attr(),
+  plan: belongsTo(),
+  source: attr(),
   status: attr(),
   validTo: attr('date'),
 
-  permissions: attr(),
-
   @computed('owner.{type,login}', 'source', 'status')
   billingUrl(type, login, source, status) {
-    if (source === 'stripe' || status === 'expired') {
-      const id = type === 'user' ? 'user' : login;
-      return `${config.billingEndpoint}/subscriptions/${id}`;
+    const id = type === 'user' ? 'user' : login;
+
+    if (source === 'stripe' && (status === 'expired' || status === 'canceled')) {
+      return `${config.billingEndpoint}/subscriptions/${id}/edit`;
     } else if (source === 'github') {
       return config.marketplaceEndpoint;
+    } else {
+      return `${config.billingEndpoint}/subscriptions/${id}`;
     }
   },
 
