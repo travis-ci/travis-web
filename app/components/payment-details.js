@@ -9,8 +9,8 @@ let sourceToSentence = {
 };
 
 export default Component.extend({
-  @computed('subscription.plan.currency', 'subscription.plan.price', 'subscription.plan.annual')
-  price(currency, price, annual) {
+  @computed('subscription.plan.price', 'subscription.plan.annual')
+  price(price, annual) {
     return `$${price / 100} per ${annual ? 'year' : 'month'}`;
   },
 
