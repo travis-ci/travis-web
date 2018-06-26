@@ -649,15 +649,15 @@ header.space-between {
 
 .manage-subscription {
   float: right;
-}
 
-.new {
-  float: none;
-}
+  &.new {
+    float: none;
+  }
 
-.resubscribe {
-  float: none;
-  margin-top: 1rem;
+  &.resubscribe {
+    float: none;
+    margin-top: 1rem;
+  }
 }
 
 // FIXME get rid of this
