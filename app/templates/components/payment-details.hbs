@@ -1,13 +1,13 @@
 <p class='source' data-test-source>{{source}}</p>
 
-{{#if stripe}}
+{{#if subscription.isStripe}}
   <p data-test-credit-card>
     {{svg-jar 'icon-credit-card' class='icon--color' alt=''}}
     •••• •••• •••• {{subscription.creditCardInfo.lastDigits}}
   </p>
 {{/if}}
 
-{{#if manual}}
+{{#if subscription.isManual}}
   <p class='manual-help'>
     If you have any questions or would like to update your plan, please
     {{#external-link-to href='mailto:support@travis-ci.com'}}contact our support team{{/external-link-to}}
@@ -19,7 +19,7 @@
   </p>
 {{/if}}
 
-{{#if (and stripe monthly subscription.permissions.write)}}
+{{#if (and subscription.isStripe monthly subscription.permissions.write)}}
   <span class='notice-banner--yellow' data-test-annual-invitation>
     Save 10% by switching to
     <a href={{concat subscription.billingUrl '?switch_annual=true'}}>
