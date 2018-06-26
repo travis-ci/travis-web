@@ -1,6 +1,7 @@
 import Component from '@ember/component';
 import { computed } from 'ember-decorators/object';
 import { not } from 'ember-decorators/object/computed';
+import config from 'travis/config/environment';
 
 let sourceToSentence = {
   manual: 'This is a manual subscription.',
@@ -9,6 +10,8 @@ let sourceToSentence = {
 };
 
 export default Component.extend({
+  config,
+
   @computed('subscription.plan.price', 'subscription.plan.annual')
   price(price, annual) {
     return `$${price / 100} per ${annual ? 'year' : 'month'}`;

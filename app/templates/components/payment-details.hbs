@@ -10,7 +10,7 @@
 {{#if subscription.isManual}}
   <p class='manual-help'>
     If you have any questions or would like to update your plan, please
-    {{#external-link-to href='mailto:support@travis-ci.com'}}contact our support team{{/external-link-to}}
+    <a href='{{ config.urls.support }}' title='Email the Travis support team' {{action helpscoutTrigger}}>contact our support team</a>.
   </p>
 {{else}}
   <p data-test-price>

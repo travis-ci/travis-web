@@ -53,7 +53,7 @@
       {{/if}}
       <section class='payment'>
         <h3>Payment details</h3>
-        {{payment-details subscription=model}}
+        {{payment-details subscription=model helpscoutTrigger=(action 'helpscoutTrigger')}}
       </section>
     </section>
   {{else if model}}
@@ -65,8 +65,8 @@
       {{/if}}
       {{#if model.isManual}}
         <p class='manual-help'>
-          If you have any questions or would like to update your plan, please {{#external-link-to href='mailto:support@travis-ci.com'}}contact
-          our support team{{/external-link-to}}
+          If you have any questions or would like to update your plan, please
+          <a href='{{ config.urls.support }}' title='Email the Travis support team' {{action 'helpscoutTrigger'}}>contact our support team</a>.
         </p>
       {{/if}}
     </span>
