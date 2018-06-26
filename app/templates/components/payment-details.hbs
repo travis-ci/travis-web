@@ -8,10 +8,7 @@
 {{/if}}
 
 {{#if subscription.isManual}}
-  <p class='manual-help'>
-    If you have any questions or would like to update your plan, please
-    <a href='{{ config.urls.support }}' title='Email the Travis support team' {{action helpscoutTrigger}}>contact our support team</a>.
-  </p>
+  {{manual-subscription-help}}
 {{else}}
   <p data-test-price>
     {{svg-jar 'icon-currency-USD' class='icon--color' alt=''}}
