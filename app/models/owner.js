@@ -1,6 +1,7 @@
 import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
 import { belongsTo } from 'ember-data/relationships';
+import { computed } from 'ember-decorators/object';
 
 export default Model.extend({
   name: attr(),
@@ -19,4 +20,13 @@ export default Model.extend({
 
   // This is set by serializers:subscription
   subscriptionPermissions: attr(),
+
+  @computed('subscription', 'subscription.permissions.write', 'subscriptionPermissions.create')
+  hasSubscriptionPermissions(subscription, writePermissions, createPermissions) {
+    if (subscription) {
+      return writePermissions;
+    } else {
+      return createPermissions;
+    }
+  },
 });
