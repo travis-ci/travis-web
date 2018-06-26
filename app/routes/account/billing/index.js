@@ -8,7 +8,7 @@ export default TravisRoute.extend({
       accountCompound.account.get('canceledSubscription');
   },
 
-  // FIXME without this, switching between accounts doesn’t update the billing information?!
+  // without this, switching between accounts doesn’t update the billing information?!
   setupController(controller, model) {
     controller.set('model', model);
   }
