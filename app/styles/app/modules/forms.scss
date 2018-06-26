@@ -41,14 +41,6 @@ textarea {
     display: block;
     margin-bottom: 5px;
   }
-
-  &.optional::after {
-    content: '(Optional)';
-    text-transform: none;
-    font-weight: normal;
-    font-style: italic;
-    padding-left: 1em;
-  }
 }
 
 .form-submit {
