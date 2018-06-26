@@ -12,12 +12,15 @@ export default Component.extend({
 
   delete: task(function* () {
     if (config.skipConfirmations || confirm('Are you sure?')) {
-      const data = {
-        branch: this.get('cache.branch')
+      let branch = this.get('cache.branch');
+      let repo = this.get('repo');
+      let headers = {
+        'Travis-API-Version': '3'
       };
-      const repo = this.get('repo');
 
-      yield this.get('ajax').ajax(`/repos/${repo.get('id')}/caches`, 'DELETE', { data });
+      let url = `/repo/${repo.get('id')}/caches?branch=${branch}`;
+
+      yield this.get('ajax').ajax(url, 'DELETE', { headers });
       return this.get('caches').removeObject(this.get('cache'));
     }
   }).drop(),
