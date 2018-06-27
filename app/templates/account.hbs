@@ -23,14 +23,14 @@
       {{else if (and checkSubscriptionStatus isNotSubscribed)}}
         {{subscription-status-banner color="yellow" message="This account does not have an active subscription." billingLinkText="Sign this account up!" billingUrl=billingUrl showLink=model.subscriptionPermissions.create}}
       {{/if}}
-    {{/if}}
 
-    <nav class='travistab-nav'>
-       <ul>
-         <li>{{#link-to 'account.repositories'}}Repositories{{/link-to}}</li>
-         <li data-test-billing-tab>{{#link-to 'account.billing'}}Subscription{{/link-to}}</li>
-       </ul>
-     </nav>
+      <nav class='travistab-nav'>
+        <ul>
+          <li>{{#link-to 'account.repositories'}}Repositories{{/link-to}}</li>
+          <li data-test-billing-tab>{{#link-to 'account.billing'}}Subscription{{/link-to}}</li>
+        </ul>
+      </nav>
+    {{/if}}
 
     {{outlet}}
 
