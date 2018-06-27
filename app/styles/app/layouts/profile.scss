@@ -659,12 +659,3 @@ header.space-between {
     margin-top: 1rem;
   }
 }
-
-// FIXME get rid of this
-#billing-panel {
-  position: fixed;
-  bottom: 1rem;
-  left: 1rem;
-  max-width: 10rem;
-  background: rgba(220,220,220,0.2);
-}
