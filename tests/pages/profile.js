@@ -57,7 +57,11 @@ export default create({
 
   subscriptionStatus: {
     scope: '.subscription-status',
-    text: text('[data-test-message]')
+    text: text('[data-test-message]'),
+
+    link: {
+      scope: 'a'
+    }
   },
 
   filter: fillable('.profile-repositories-filter input.search'),
@@ -114,4 +118,47 @@ export default create({
       checkmark: { scope: '.checkmark' }
     },
   }),
+
+  billing: {
+    visit: clickable('li[data-test-billing-tab] a'),
+
+    manageButton: {
+      scope: '.manage-subscription',
+      href: attribute('href'),
+      isDisabled: hasClass('disabled'),
+    },
+
+    marketplaceButton: {
+      scope: '.marketplace-button',
+      href: attribute('href')
+    },
+
+    plan: {
+      scope: '.plan',
+      name: text('[data-test-plan-name]'),
+      concurrency: text('[data-test-plan-concurrency]')
+    },
+
+    address: {
+      scope: '.contact .address',
+    },
+
+    source: text('[data-test-source]'),
+
+    creditCardNumber: { scope: '[data-test-credit-card]' },
+    price: { scope: '[data-test-price]' },
+
+    annualInvitation: { scope: '[data-test-annual-invitation]' },
+
+    expiryMessage: {
+      scope: '[data-test-expiry-message]'
+    },
+
+    invoices: {
+      scope: '.invoices',
+      items: collection('[data-test-invoice]', {
+        href: attribute('href')
+      })
+    },
+  },
 });

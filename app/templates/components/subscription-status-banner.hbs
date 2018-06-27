@@ -1,5 +1,5 @@
 {{svg-jar 'icon-alert' class='icon'}}
 <span>
   <span data-test-message>{{message}}</span>
-  <a href={{billingUrl}} title="Go to Travis CI Billing" class="right">{{billingLinkText}}</a>
+  {{#if showLink}}<a href={{billingUrl}} title="Go to Travis CI Billing" class="right">{{billingLinkText}}</a>{{/if}}
 </span>

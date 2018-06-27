@@ -83,7 +83,31 @@ export default function () {
     }
   });
 
-  this.get('/subscriptions');
+  this.get('/subscriptions', function (schema, params) {
+    let response = this.serialize(schema.subscriptions.all());
+
+    let owners = schema.organizations.all().models;
+    owners.push(schema.users.first());
+
+    response['@permissions'] = owners.map(owner => {
+      return {
+        owner: {
+          // The API for now is returning these capitalised
+          type: `${owner.type.substr(0, 1).toUpperCase()}${owner.type.substr(1)}`,
+          id: owner.id
+        },
+        create: (owner.permissions || {}).createSubscription
+      };
+    });
+
+    return response;
+  });
+
+  this.get('/subscription/:subscription_id/invoices', function (schema, {params}) {
+    return schema.subscriptions.find(params.subscription_id).invoices;
+  });
+
+  this.get('/plans');
 
   this.get('/broadcasts', schema => {
     return schema.broadcasts.all();

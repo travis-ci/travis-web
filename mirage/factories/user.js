@@ -2,6 +2,7 @@ import { Factory, trait } from 'ember-cli-mirage';
 
 export default Factory.extend({
   name: 'Test User',
+  type: 'user',
   email: 'test@travis-ci.com',
   correct_scopes: true,
   login: 'testuser',

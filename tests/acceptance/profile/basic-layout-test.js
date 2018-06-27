@@ -31,11 +31,12 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
     });
     this.user.save();
 
-    server.create('subscription', {
-      owner: this.currentUser,
+    let subscription = server.create('subscription', {
+      owner: this.user,
       status: 'subscribed',
-      valid_to: new Date()
+      valid_to: new Date(),
     });
+    this.subscription = subscription;
 
     // create organization
     let organization = server.create('organization', {
@@ -223,11 +224,25 @@ test('view repositories', function (assert) {
 });
 
 test('view profile that has an expired subscription', function (assert) {
+  this.organization.attrs.permissions = { createSubscription: true };
+  this.organization.save();
+
   profilePage.visit({ username: 'org-login' });
 
   andThen(() => {
     assert.ok(profilePage.avatar.checkmark.isHidden, 'expected avatar to not have a checkmark for active subscription');
     assert.equal(profilePage.subscriptionStatus.text, 'This account does not have an active subscription.');
+    assert.ok(profilePage.subscriptionStatus.link.isVisible, 'expected billing link when account has permissions');
+  });
+});
+
+test('view profile that has an expired subscription and no create permissions', function (assert) {
+  profilePage.visit({ username: 'org-login' });
+
+  andThen(() => {
+    assert.ok(profilePage.avatar.checkmark.isHidden, 'expected avatar to not have a checkmark for active subscription');
+    assert.equal(profilePage.subscriptionStatus.text, 'This account does not have an active subscription.');
+    assert.ok(profilePage.subscriptionStatus.link.isHidden, 'expected no billing link when account has no permissions');
   });
 });
 
