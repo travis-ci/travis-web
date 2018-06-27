@@ -28,20 +28,14 @@ export default Controller.extend({
     return name || login;
   },
 
-  @computed('model.{type,login}')
-  billingUrl(type, login) {
-    const id = type === 'user' ? 'user' : login;
-    return `${config.billingEndpoint}/subscriptions/${id}`;
-  },
-
   @computed('features.enterpriseVersion', 'config.billingEndpoint')
   checkSubscriptionStatus(enterprise, billingEndpoint) {
     return !enterprise && !!billingEndpoint;
   },
 
-  @computed('model.subscription.status', 'model.education')
-  isSubscribed(status, education) {
-    return status === 'subscribed' || education;
+  @computed('model.subscription.isSubscribed', 'model.education')
+  isSubscribed(isSubscribed, education) {
+    return isSubscribed || education;
   },
 
   @not('isSubscribed') isNotSubscribed: null

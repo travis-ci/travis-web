@@ -10,6 +10,15 @@
   text-decoration: none;
   font-family: inherit;
   font-size: 14px;
+
+  &.disabled {
+    background-color: $cement-grey;
+    cursor: not-allowed;
+
+    &:hover {
+      background-color: $cement-grey;
+    }
+  }
 }
 
 .button {
