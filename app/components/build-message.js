@@ -40,6 +40,10 @@ export default Component.extend({
     return `downcasing <code>${escape(args.value)}</code>`;
   },
 
+  duplicate_names(args) {
+    return `duplicate job names: <code>${escape(args.value)}</code>`;
+  },
+
   edge(args) {
     return `<code>${escape(args.given)}</code> is experimental and might be removed in the future`;
   },
