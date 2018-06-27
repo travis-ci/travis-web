@@ -1,7 +1,7 @@
 import Controller from '@ember/controller';
 import { service } from 'ember-decorators/service';
 import { computed, action } from 'ember-decorators/object';
-import { alias, not } from 'ember-decorators/object/computed';
+import { alias, not, or } from 'ember-decorators/object/computed';
 import config from 'travis/config/environment';
 
 export default Controller.extend({
@@ -38,5 +38,8 @@ export default Controller.extend({
     return isSubscribed || education;
   },
 
-  @not('isSubscribed') isNotSubscribed: null
+  @not('isSubscribed') isNotSubscribed: null,
+
+  @or('model.subscription.billingUrl', 'model.billingUrl')
+  billingUrl: null,
 });

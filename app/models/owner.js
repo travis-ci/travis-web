@@ -2,6 +2,7 @@ import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
 import { belongsTo } from 'ember-data/relationships';
 import { computed } from 'ember-decorators/object';
+import config from 'travis/config/environment';
 
 export default Model.extend({
   name: attr(),
@@ -28,5 +29,11 @@ export default Model.extend({
     } else {
       return createPermissions;
     }
+  },
+
+  @computed('type', 'login')
+  billingUrl(type, login) {
+    let id = type === 'user' ? 'user' : login;
+    return `${config.billingEndpoint}/subscriptions/${id}`;
   },
 });
