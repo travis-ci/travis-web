@@ -27,11 +27,18 @@ moduleForAcceptance('Acceptance | repo caches', {
     });
 
     const twoDaysAgo = new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 2);
+    const threeDaysAgo = new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 3);
 
     repository.createCache({
       branch: 'PR.1919',
       lastModified: twoDaysAgo,
-      size: 20122173
+      size: 10061087
+    });
+
+    repository.createCache({
+      branch: 'PR.1919',
+      lastModified: threeDaysAgo,
+      size: 10061086
     });
   }
 });
