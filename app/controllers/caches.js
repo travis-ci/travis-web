@@ -27,7 +27,7 @@ export default Controller.extend({
         yield this.get('ajax').deleteV3(`/repo/${this.get('repo.id')}/caches`);
         this.set('model', EmberObject.create());
       } catch (e) {
-        this.get('flashes').error('Could not delete the cache');
+        this.get('flashes').error('Could not delete the caches');
       }
     }
   }).drop()
