@@ -198,9 +198,9 @@ export default function () {
     };
   });
 
-  this.get('/repos/:id/caches', function (schema, request) {
+  this.get('/repo/:id/caches', function (schema, request) {
     const caches = schema.caches.where({ repositoryId: request.params.id });
-    return this.serialize(caches, 'v2');
+    return caches;
   });
 
   this.patch('/settings/ssh_key/:repository_id', function (schema, request) {
