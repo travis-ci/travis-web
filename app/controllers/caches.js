@@ -25,11 +25,10 @@ export default Controller.extend({
     if (config.skipConfirmations || confirm('Are you sure?')) {
       try {
         yield this.get('ajax').deleteV3(`/repo/${this.get('repo.id')}/caches`);
+        this.set('model', EmberObject.create());
       } catch (e) {
         this.get('flashes').error('Could not delete the cache');
       }
-
-      this.set('model', EmberObject.create());
     }
   }).drop()
 });
