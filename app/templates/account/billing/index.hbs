@@ -11,7 +11,7 @@
       <section class='plan'>
         <h3 data-test-plan-name>{{model.plan.name}}</h3>
         <p data-test-plan-concurrency>{{pluralize model.plan.builds 'concurrent build'}}</p>
-        <p>Valid through {{moment-format model.validTo 'MMMM D, YYYY'}}</p>
+        <p>Renewing on {{moment-format model.validTo 'MMMM D, YYYY'}}</p>
       </section>
     {{/unless}}
     <h2>Billing Information</h2>

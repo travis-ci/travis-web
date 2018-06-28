@@ -115,8 +115,8 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
   },
 
   removeLog() {
-    const url = `/jobs/${this.get('id')}/log`;
-    return this.get('ajax').patch(url).then(() => this.reloadLog());
+    const url = `/job/${this.get('id')}/log`;
+    return this.get('ajax').deleteV3(url).then(() => this.reloadLog());
   },
 
   reloadLog() {

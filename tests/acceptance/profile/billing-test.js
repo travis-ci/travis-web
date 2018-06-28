@@ -273,11 +273,17 @@ test('view billing tab when there is no subscription', function (assert) {
 });
 
 test('switching to another account’s billing tab loads the subscription properly', function (assert) {
+  this.organization.permissions = {
+    createSubscription: true
+  };
+  this.organization.save();
+
   profilePage.visit({ username: 'user-login' });
   profilePage.billing.visit();
   profilePage.accounts[1].visit();
 
   andThen(() => {
     assert.equal(profilePage.billing.manageButton.text, 'New subscription');
+    assert.equal(profilePage.billing.manageButton.href, 'https://billing.travis-ci.com/subscriptions/org-login');
   });
 });
