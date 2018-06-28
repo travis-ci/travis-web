@@ -14,13 +14,10 @@ export default Component.extend({
     if (config.skipConfirmations || confirm('Are you sure?')) {
       let branch = this.get('cache.branch');
       let repo = this.get('repo');
-      let headers = {
-        'Travis-API-Version': '3'
-      };
 
       let url = `/repo/${repo.get('id')}/caches?branch=${branch}`;
 
-      yield this.get('ajax').ajax(url, 'DELETE', { headers });
+      yield this.get('ajax').deleteV3(url);
       return this.get('caches').removeObject(this.get('cache'));
     }
   }).drop(),

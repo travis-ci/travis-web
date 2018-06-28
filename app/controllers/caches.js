@@ -22,12 +22,8 @@ export default Controller.extend({
 
   deleteRepoCache: task(function* () {
     if (config.skipConfirmations || confirm('Are you sure?')) {
-      let headers = {
-        'Travis-API-Version': '3'
-      };
-
       try {
-        yield this.get('ajax').ajax(`/repo/${this.get('repo.id')}/caches`, 'DELETE', { headers });
+        yield this.get('ajax').deleteV3(`/repo/${this.get('repo.id')}/caches`);
       } catch (e) {}
 
       this.set('model', EmberObject.create());
