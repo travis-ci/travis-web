@@ -61,6 +61,16 @@ export default Service.extend({
     });
   },
 
+  deleteV3(url, data, callback) {
+    return this.ajax(url, 'delete', {
+      data,
+      success: callback,
+      headers: {
+        'Travis-API-Version': '3'
+      }
+    });
+  },
+
   needsAuth() {
     return true;
   },
