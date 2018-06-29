@@ -13,6 +13,11 @@
     {{svg-jar osIcon class='icon'}}
   </div>
 
+{{#if name}}
+  <div class="job-name">
+    <span class="label-align" aria-label="Title">{{name}}</span>
+  </div>
+{{else}}
   <div class="job-lang">
     {{svg-jar 'icon-language' class="icon"}}
     <span class="label-align" aria-label="Language">{{#if languages}}{{languages}}{{else}}no language set{{/if}}</span>
@@ -28,6 +33,7 @@
     {{svg-jar 'icon-environment' class="icon"}}
     <span class="label-align" aria-label="Environment variables">no environment variables set</span>
   </div>
+{{/if}}
 {{/if}}
 
   <div class="job-duration" title="Started {{pretty-date job.startedAt}}">
