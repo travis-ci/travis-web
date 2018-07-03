@@ -106,7 +106,7 @@ test('view billing information with invoices', function (assert) {
     assert.ok(profilePage.billing.marketplaceButton.isHidden);
 
     assert.equal(profilePage.billing.plan.name, 'Small Business Plan');
-    assert.equal(profilePage.billing.plan.concurrency, '5 concurrent builds');
+    assert.equal(profilePage.billing.plan.concurrency, '5 concurrent jobs');
 
     assert.equal(profilePage.billing.address.text, 'User Name Travis CI GmbH Rigaerstraße 8 Address 2 Berlin, Berlin 10987 Germany VAT: 12345');
     assert.equal(profilePage.billing.source, 'This plan is paid through Stripe.');
