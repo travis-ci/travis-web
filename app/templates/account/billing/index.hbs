@@ -23,8 +23,13 @@
         </section>
       {{/if}}
       <section class='payment'>
-        <h3>Payment details</h3>
-        {{payment-details subscription=model}}
+        {{#if model.isManual}}
+          <h3 class="manual">This is a manual subscription</h3>
+          {{payment-details subscription=model}}
+        {{else}}
+          <h3>Payment details</h3>
+          {{payment-details subscription=model}}
+        {{/if}}
       </section>
     </section>
   {{else if model}}

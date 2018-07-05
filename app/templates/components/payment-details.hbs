@@ -1,4 +1,6 @@
-<p class='source' data-test-source>{{source}}</p>
+{{#if subscription.notManual}}
+  <p class='source' data-test-source>{{source}}</p>
+{{/if}}
 
 {{#if subscription.isStripe}}
   <p data-test-credit-card>
