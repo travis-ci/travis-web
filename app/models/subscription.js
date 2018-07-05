@@ -39,9 +39,7 @@ export default Model.extend({
   billingUrl(type, login, isGithub, isResubscribable) {
     const id = type === 'user' ? 'user' : login;
 
-    if (isResubscribable) {
-      return `${config.billingEndpoint}/subscriptions/${id}/edit`;
-    } else if (isGithub) {
+    if (isGithub) {
       return config.marketplaceEndpoint;
     } else {
       return `${config.billingEndpoint}/subscriptions/${id}`;
