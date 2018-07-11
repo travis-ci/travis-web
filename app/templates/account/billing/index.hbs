@@ -2,7 +2,7 @@
   {{#unless model}}
     {{new-subscription-button account=account}}
   {{/unless}}
-  {{#if model.manageSubscription}}
+  {{#if model.subscriptions.manageSubscription}}
     {{manage-subscription-button subscription=model account=account}}
   {{/if}}
   {{#if model.isSubscribed}}
@@ -14,15 +14,15 @@
     </section>
     <h2>Billing Information</h2>
     <section class='row'>
-      {{#if model.isStripe}}
+      {{#if model.subscriptions.isStripe}}
         <section class='contact'>
           <h3>Billing Contact</h3>
-          {{billing-address billingInfo=model.billingInfo}}
+          {{billing-address billingInfo=model.subscriptions.billingInfo}}
         </section>
       {{/if}}
       <section class='payment'>
         <h3>Payment details</h3>
-        {{payment-details subscription=model}}
+        {{payment-details subscription=model.subscriptions}}
       </section>
     </section>
   {{else if model}}

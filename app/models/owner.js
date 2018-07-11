@@ -16,6 +16,7 @@ export default Model.extend({
   // These are inserted artificially by routes:accounts
   subscription: attr(),
   subscriptionError: attr('boolean'),
+  trial: attr(),
 
   installation: belongsTo({async: false}),
 
