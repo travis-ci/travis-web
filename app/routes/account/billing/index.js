@@ -4,10 +4,7 @@ import { hash } from 'rsvp';
 export default TravisRoute.extend({
   model() {
     let accountCompound = this.modelFor('account');
-    return hash({
-      subscriptions: accountCompound.account.get('subscription'),
-      trials: this.store.findAll('trial'),
-    });
+    return accountCompound.account.get('subscription');
   },
 
   // without this, switching between accounts doesn’t update the billing information?!
