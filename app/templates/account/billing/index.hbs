@@ -1,69 +1,50 @@
 <section class='billing'>
-  {{#unless model}}
-    {{new-subscription-button account=account}}
+  {{#unless model}} {{new-subscription-button account=account}} {{/unless}} {{#if model.manageSubscription}} {{manage-subscription-button
+  subscription=model account=account}} {{/if}} {{#if model.isSubscribed}} {{#unless model.isManual}}
+  <h2>Plan Overview</h2>
+  <section class='plan'>
+    <h3 data-test-plan-name>{{model.plan.name}}</h3>
+    <p data-test-plan-concurrency>{{pluralize model.plan.builds 'concurrent job'}}</p>
+    <p>Renewing on {{moment-format model.validTo 'MMMM D, YYYY'}}</p>
+  </section>
   {{/unless}}
-  {{#if model.manageSubscription}}
-    {{manage-subscription-button subscription=model account=account}}
-  {{/if}}
-  {{#if model.isSubscribed}}
-    {{#unless model.isManual}}
-      <h2>Plan Overview</h2>
-      <section class='plan'>
-        <h3 data-test-plan-name>{{model.plan.name}}</h3>
-        <p data-test-plan-concurrency>{{pluralize model.plan.builds 'concurrent job'}}</p>
-        <p>Renewing on {{moment-format model.validTo 'MMMM D, YYYY'}}</p>
-      </section>
-    {{/unless}}
-    <h2>Billing Information</h2>
-    <section class='row'>
-      {{#if model.isStripe}}
-        <section class='contact'>
-          <h3>Billing Contact</h3>
-          {{billing-address billingInfo=model.billingInfo}}
-        </section>
-      {{/if}}
-      <section class='payment'>
-        {{#if model.isManual}}
-          <h3 class="manual">This is a manual subscription</h3>
-          {{payment-details subscription=model}}
-        {{else}}
-          <h3>Payment details</h3>
-          {{payment-details subscription=model}}
-        {{/if}}
-      </section>
+  <h2>Billing Information</h2>
+  <section class='row'>
+    {{#if model.isStripe}}
+    <section class='contact'>
+      <h3>Billing Contact</h3>
+      {{billing-address billingInfo=model.billingInfo}}
     </section>
+    {{/if}}
+    <section class='payment'>
+      <h3>Payment details</h3>
+      {{payment-details subscription=model}}
+    </section>
+  </section>
   {{else if model}}
-    <span data-test-expiry-message>
-      {{#if model.isExpired}}
-        You had a {{model.sourceWords}} subscription that expired on {{moment-format model.validTo 'MMMM D, YYYY'}}.
-      {{else}}
-        This subscription has been canceled by you and is valid through {{moment-format model.validTo 'MMMM D, YYYY'}}.
-      {{/if}}
-      {{#if model.isManual}}
-        {{manual-subscription-help}}
-      {{/if}}
-    </span>
-    {{#if model.isResubscribable}}
-      {{resubscribe-button subscription=model account=account}}
-    {{/if}}
-    {{#if model.isGithub}}
-      <a href={{config.marketplaceEndpoint}} class='button--blue marketplace-button'>Manage on GitHub Marketplace</a>
-    {{/if}}
-  {{/if}}
+  <span data-test-expiry-message>
+    {{#if model.isExpired}} You had a {{model.sourceWords}} subscription that expired on {{moment-format model.validTo 'MMMM
+    D, YYYY'}}. {{else}} This subscription has been canceled by you and is valid through {{moment-format model.validTo 'MMMM
+    D, YYYY'}}. {{/if}} {{#if model.isManual}} {{manual-subscription-help}} {{/if}}
+  </span>
+  {{#if model.isResubscribable}} {{resubscribe-button subscription=model account=account}} {{/if}} {{#if model.isGithub}}
+  <a href={{config.marketplaceEndpoint}} class='button--blue marketplace-button'>Manage on GitHub Marketplace</a>
+  {{/if}} {{/if}}
 </section>
 
 {{#if invoices}}
-  <section class='invoices'>
-    <h2>Invoice History</h2>
-    <p>
-      {{svg-jar 'icon-help' class='icon-help' alt=''}}
-      Having trouble with your invoices?
-      <a href='{{ config.urls.support }}' title='Email the Travis support team' {{action 'helpscoutTrigger'}}>We’re happy to help</a>.
-    </p>
-      <ul>
-        {{#each (sort-by 'createdAt:desc' invoices) as |invoice|}}
-          <li><a data-test-invoice href={{invoice.url}}>{{svg-jar 'icon-invoice' class='icon'}} {{invoice.id}} {{moment-format invoice.createdAt 'MMMM YYYY'}}</a></li>
-        {{/each}}
-      </ul>
-  </section>
+<section class='invoices'>
+  <h2>Invoice History</h2>
+  <p>
+    {{svg-jar 'icon-help' class='icon-help' alt=''}} Having trouble with your invoices?
+    <a href='{{ config.urls.support }}' title='Email the Travis support team' {{action 'helpscoutTrigger'}}>We’re happy to help</a>.
+  </p>
+  <ul>
+    {{#each (sort-by 'createdAt:desc' invoices) as |invoice|}}
+    <li>
+      <a data-test-invoice href={{invoice.url}}>{{svg-jar 'icon-invoice' class='icon'}} {{invoice.id}} {{moment-format invoice.createdAt 'MMMM YYYY'}}</a>
+    </li>
+    {{/each}}
+  </ul>
+</section>
 {{/if}}
