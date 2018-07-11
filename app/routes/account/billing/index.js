@@ -6,7 +6,7 @@ export default TravisRoute.extend({
     let accountCompound = this.modelFor('account');
     return hash({
       subscriptions: accountCompound.account.get('subscription'),
-      trials: this.store.findBy('trial'),
+      trials: this.store.findAll('trial'),
     });
   },
 
