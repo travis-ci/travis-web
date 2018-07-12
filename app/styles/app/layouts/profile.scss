@@ -407,6 +407,11 @@ section.billing {
       margin: 20px 0 12px 0;
     }
 
+    p.manual {
+      color: $brick-red;
+      font-size: 16px; 
+    }
+
     @media #{$medium-up} {
       h3 {
         margin: 12px 0;
