@@ -2,7 +2,7 @@ import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
 import { belongsTo, hasMany } from 'ember-data/relationships';
 import { computed } from 'ember-decorators/object';
-import { and, equal, not, or } from 'ember-decorators/object/computed';
+import { and, equal, or } from 'ember-decorators/object/computed';
 import config from 'travis/config/environment';
 
 let sourceToWords = {
@@ -30,8 +30,6 @@ export default Model.extend({
   @equal('source', 'stripe') isStripe: null,
   @equal('source', 'github') isGithub: null,
   @equal('source', 'manual') isManual: null,
-
-  @not('source', 'manual') notManual: null,
 
   @and('isStripe', 'isNotSubscribed') isResubscribable: null,
 
