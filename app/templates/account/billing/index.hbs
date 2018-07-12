@@ -1,5 +1,8 @@
 <section class='billing'>
   {{#unless model.subscriptions}}
+    {{#if model.trials}}
+      <div>{{model.trials.buildsRemaining}}</div>
+    {{/if}}
     {{new-subscription-button account=account}}
   {{/unless}}
   {{#if model.subscriptions.manageSubscription}}
@@ -69,6 +72,7 @@
 >>>>>>> Somewhat working
 </section>
 
+{{#if invoices}}
   <section class='invoices'>
     <h2>Invoice History</h2>
     <p>
@@ -91,3 +95,4 @@
       </ul>
 >>>>>>> Somewhat working
   </section>
+{{/if}}
