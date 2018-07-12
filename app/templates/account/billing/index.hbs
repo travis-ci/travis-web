@@ -1,32 +1,26 @@
 <section class='billing'>
   {{#unless model.subscriptions}}
-    {{#if model.trials}}
-      <div>{{model.trials.buildsRemaining}}</div>
-    {{/if}}
     {{new-subscription-button account=account}}
+    <h2>Plan Overview</h2>
+    {{#if model.trials}}
+      <h3 data-test-plan-name>Trial</h3>
+      <p data-test-plan-concurrency>{{pluralize model.trials.buildsRemaining 'build'}} remaining</p>
+    {{else if model.trials.status.isEnded}}
+      <p class="source manual">The trial period has ended, please start a subscription</p>
+    {{else}}
+      <p class="source manual">Your trial will begin once a build is run.</p>
+    {{/if}}
+
   {{/unless}}
   {{#if model.subscriptions.manageSubscription}}
     {{manage-subscription-button subscription=model.subscriptions account=account}}
   {{/if}}
-<<<<<<< HEAD
-  {{#if model.isSubscribed}}
-    <h2>Plan Overview</h2>
-    <section class='plan'>
-      <h3 data-test-plan-name>{{model.plan.name}}</h3>
-      <p data-test-plan-concurrency>{{pluralize model.plan.builds 'concurrent job'}}</p>
-      <p>Renewing on {{moment-format model.validTo 'MMMM D, YYYY'}}</p>
-    </section>
-=======
   {{#if model.subscriptions.isSubscribed}}
-    {{#unless model.subscriptions.isManual}}
-      <h2>Plan Overview</h2>
-      <section class='plan'>
-        <h3 data-test-plan-name>{{model.subscriptions.plan.name}}</h3>
-        <p data-test-plan-concurrency>{{pluralize model.subscriptions.plan.builds 'concurrent job'}}</p>
-        <p>Renewing on {{moment-format model.subscriptions.validTo 'MMMM D, YYYY'}}</p>
-      </section>
-    {{/unless}}
->>>>>>> Somewhat working
+    <section class='plan'>
+      <h3 data-test-plan-name>{{model.subscriptions.plan.name}}</h3>
+      <p data-test-plan-concurrency>{{pluralize model.subscriptions.plan.builds 'concurrent job'}}</p>
+      <p>Renewing on {{moment-format model.subscriptions.validTo 'MMMM D, YYYY'}}</p>
+    </section>
     <h2>Billing Information</h2>
     <section class='row'>
       {{#if model.subscriptions.isStripe}}
@@ -40,17 +34,6 @@
         {{payment-details subscription=model.subscriptions}}
       </section>
     </section>
-<<<<<<< HEAD
-  {{else if model}}
-  <div data-test-expiry-message>
-    {{#if model.isExpired}} You had a {{model.sourceWords}} subscription that expired on {{moment-format model.validTo 'MMMM
-    D, YYYY'}}. {{else}} This subscription has been canceled by you and is valid through {{moment-format model.validTo 'MMMM
-    D, YYYY'}}. {{/if}} {{#if model.isManual}} {{manual-subscription-help}} {{/if}}
-  </div>
-  {{#if model.isResubscribable}} {{resubscribe-button subscription=model account=account}} {{/if}} {{#if model.isGithub}}
-  <a href={{config.marketplaceEndpoint}} class='button--blue marketplace-button'>Manage on GitHub Marketplace</a>
-  {{/if}} {{/if}}
-=======
   {{else if model.subscriptions}}
     <span data-test-expiry-message>
       {{#if model.subscriptions.isExpired}}
@@ -69,7 +52,6 @@
       <a href={{config.marketplaceEndpoint}} class='button--blue marketplace-button'>Manage on GitHub Marketplace</a>
     {{/if}}
   {{/if}}
->>>>>>> Somewhat working
 </section>
 
 {{#if invoices}}
@@ -79,20 +61,10 @@
       {{svg-jar 'icon-help' class='icon-help' alt=''}} Having trouble with your invoices?
       <a href='{{ config.urls.support }}' title='Email the Travis support team' {{action 'helpscoutTrigger'}}>We’re happy to help</a>.
     </p>
-<<<<<<< HEAD
-    <ul>
-      {{#each (sort-by 'createdAt:desc' invoices) as |invoice|}}
-      <li>
-        <a data-test-invoice href={{invoice.url}}>{{svg-jar 'icon-invoice' class='icon'}} {{invoice.id}} {{moment-format invoice.createdAt 'MMMM YYYY'}}</a>
-      </li>
-      {{/each}}
-    </ul>
-=======
       <ul>
         {{#each (sort-by 'createdAt:desc' invoices) as |invoice|}}
           <li><a data-test-invoice href={{model.subscriptions.invoice.url}}>{{svg-jar 'icon-invoice' class='icon'}} {{model.subscriptions.invoice.id}} {{moment-format model.subscriptions.invoice.createdAt 'MMMM YYYY'}}</a></li>
         {{/each}}
       </ul>
->>>>>>> Somewhat working
   </section>
 {{/if}}
