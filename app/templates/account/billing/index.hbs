@@ -15,10 +15,10 @@
     <h2>Billing Information</h2>
     <section class='row'>
       {{#if model.isStripe}}
-      <section class='contact'>
-        <h3>Billing Contact</h3>
-        {{billing-address billingInfo=model.billingInfo}}
-      </section>
+        <section class='contact'>
+          <h3>Billing Contact</h3>
+          {{billing-address billingInfo=model.billingInfo}}
+        </section>
       {{/if}}
       <section class='payment'>
         <h3>Payment details</h3>
