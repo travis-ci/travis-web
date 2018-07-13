@@ -411,6 +411,11 @@ header.legacy-services-integration {
 section.billing {
   font-size: $font-size-m;
 
+  p.manual {
+    color: $brick-red;
+    font-size: 16px;
+  }
+
   .plan {
     p {
       margin: 0.3em 0 0.3em 0;

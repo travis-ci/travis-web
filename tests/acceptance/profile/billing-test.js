@@ -37,6 +37,13 @@ moduleForAcceptance('Acceptance | profile/billing', {
     server.create('plan', { id: 'travis-ci-five-builds-annual', name: 'CA', builds: 5, price: 273900, currency: 'USD', annual: true });
     server.create('plan', { id: 'travis-ci-ten-builds-annual', name: 'DA', builds: 10, price: 537900, currency: 'USD', annual: true });
 
+    let trial = server.create('trial', {
+      buildsRemaining: 25,
+      owner: this.user,
+      status: 'new'
+    });
+    this.trial = trial;
+
     let subscription = server.create('subscription', {
       plan,
       owner: this.user,
@@ -284,5 +291,23 @@ test('switching to another account’s billing tab loads the subscription proper
   andThen(() => {
     assert.equal(profilePage.billing.manageButton.text, 'New subscription');
     assert.equal(profilePage.billing.manageButton.href, 'https://billing.travis-ci.com/subscriptions/org-login');
+  });
+});
+
+test('view billing tab when there is a trial', function (assert) {
+  this.organization.permissions = {
+    createSubscription: true
+  };
+  this.organization.save();
+
+  profilePage.visit({
+    username: 'org-login'
+  });
+  profilePage.billing.visit();
+
+  andThen(() => {
+    percySnapshot(assert);
+    assert.equal(profilePage.billing.trial.name, 'You are on a trial subscription with 100 builds remaining.');
+    assert.equal(profilePage.billing.manageButton.text, 'New subscription');
   });
 });

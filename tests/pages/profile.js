@@ -153,6 +153,11 @@ export default create({
       concurrency: text('[data-test-plan-concurrency]')
     },
 
+    trial: {
+      scope: '.billing',
+      name: text('[data-test-trial-message]'),
+    },
+
     address: {
       scope: '.contact .address',
     },

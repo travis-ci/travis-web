@@ -1,16 +1,26 @@
 <section class='billing'>
   {{#unless model.subscriptions}}
-    {{new-subscription-button account=account}}
     <h2>Plan Overview</h2>
     {{#if model.trials}}
-      <h3 data-test-plan-name>Trial</h3>
-      <p data-test-plan-concurrency>{{pluralize model.trials.buildsRemaining 'build'}} remaining</p>
-    {{else if model.trials.status.isEnded}}
-      <p class="source manual">The trial period has ended, please start a subscription</p>
+      {{#if model.trials.hasTrial}}
+        <p data-test-trial-message class="source manual">
+          You are on a trial subscription with {{pluralize model.trials.buildsRemaining 'build'}} remaining.
+        </p>
+      {{else}}
+        <p data-test-trial-message class="source manual">
+           Your trial period has ended, please start a new subscription.
+        </p>
+      {{/if}}
     {{else}}
-      <p class="source manual">Your trial will begin once a build is run.</p>
+      <p data-test-trial-message class="source manual">
+        You are on a trial subscription with 100 builds remaining.
+      </p>
     {{/if}}
-
+    {{#if model.subscriptions.isGithub}}
+      <a href={{config.marketplaceEndpoint}} class='button--blue marketplace-button'>Manage on GitHub Marketplace</a>
+    {{else}}
+      {{new-subscription-button account=account}}
+    {{/if}}
   {{/unless}}
   {{#if model.subscriptions.manageSubscription}}
     {{manage-subscription-button subscription=model.subscriptions account=account}}
@@ -63,7 +73,7 @@
     </p>
       <ul>
         {{#each (sort-by 'createdAt:desc' invoices) as |invoice|}}
-          <li><a data-test-invoice href={{model.subscriptions.invoice.url}}>{{svg-jar 'icon-invoice' class='icon'}} {{model.subscriptions.invoice.id}} {{moment-format model.subscriptions.invoice.createdAt 'MMMM YYYY'}}</a></li>
+          <li><a data-test-invoice href={{invoice.url}}>{{svg-jar 'icon-invoice' class='icon'}} {{invoice.id}} {{moment-format invoice.createdAt 'MMMM YYYY'}}</a></li>
         {{/each}}
       </ul>
   </section>
