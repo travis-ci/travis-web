@@ -23,21 +23,9 @@ export default Model.extend({
   // This is set by serializers:subscription
   subscriptionPermissions: attr(),
 
-  // This is set by serializers:trial
-  trialPermissions: attr(),
-
   @computed('subscription', 'subscription.permissions.write', 'subscriptionPermissions.create')
   hasSubscriptionPermissions(subscription, writePermissions, createPermissions) {
     if (subscription) {
-      return writePermissions;
-    } else {
-      return createPermissions;
-    }
-  },
-
-  @computed('trial', 'trial.permissions.write', 'trialPermissions.create')
-  hasCreateSubscriptionPermissions(trial, writePermissions, createPermissions) {
-    if (trial) {
       return writePermissions;
     } else {
       return createPermissions;

@@ -3,30 +3,32 @@
     <h2>Plan Overview</h2>
     {{#if model.trials}}
       {{#if model.trials.hasTrial}}
-        <p data-test-trial-message class="source manual">
+        <p data-test-trial-message class="source alert-status-message">
           You are on a trial subscription with {{pluralize model.trials.buildsRemaining 'build'}} remaining.
         </p>
       {{else}}
-        <p data-test-trial-message class="source manual">
+        <p data-test-trial-message class="source alert-status-message">
            Your trial period has ended, please start a new subscription.
         </p>
       {{/if}}
     {{else}}
-      <p data-test-trial-message class="source manual">
-        You are on a trial subscription with 100 builds remaining.
+      <p data-test-trial-message class="source alert-status-message">
+        Please, run your first build to start your trial.
       </p>
     {{/if}}
     {{#if model.subscriptions.isGithub}}
       <a href={{config.marketplaceEndpoint}} class='button--blue marketplace-button'>Manage on GitHub Marketplace</a>
     {{else}}
-      {{new-subscription-button account=account}}
+      {{new-subscription-button trial=model.trials account=account}}
     {{/if}}
   {{/unless}}
   {{#if model.subscriptions.manageSubscription}}
     {{manage-subscription-button subscription=model.subscriptions account=account}}
   {{/if}}
   {{#if model.subscriptions.isSubscribed}}
+    <div>{{model.subscriptions.permissions.write}}</div>
     <section class='plan'>
+      <h2>Plan Overview</h2>
       <h3 data-test-plan-name>{{model.subscriptions.plan.name}}</h3>
       <p data-test-plan-concurrency>{{pluralize model.subscriptions.plan.builds 'concurrent job'}}</p>
       <p>Renewing on {{moment-format model.subscriptions.validTo 'MMMM D, YYYY'}}</p>

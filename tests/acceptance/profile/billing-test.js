@@ -38,9 +38,13 @@ moduleForAcceptance('Acceptance | profile/billing', {
     server.create('plan', { id: 'travis-ci-ten-builds-annual', name: 'DA', builds: 10, price: 537900, currency: 'USD', annual: true });
 
     let trial = server.create('trial', {
-      buildsRemaining: 25,
+      builds_remaining: 25,
       owner: this.user,
-      status: 'new'
+      status: 'new',
+      created_at: new Date(2018, 5, 19),
+      permissions: {
+        write: true
+      }
     });
     this.trial = trial;
 
@@ -294,7 +298,7 @@ test('switching to another account’s billing tab loads the subscription proper
   });
 });
 
-test('view billing tab when there is a trial', function (assert) {
+test('view billing tab when trial has not started', function (assert) {
   this.organization.permissions = {
     createSubscription: true
   };
@@ -307,7 +311,120 @@ test('view billing tab when there is a trial', function (assert) {
 
   andThen(() => {
     percySnapshot(assert);
+    assert.equal(profilePage.billing.trial.name, 'Please, run your first build to start your trial.');
+    assert.equal(profilePage.billing.manageButton.text, 'New subscription');
+  });
+});
+
+test('view billing tab with no create subscription permissions', function (assert) {
+  this.organization.permissions = {
+    createSubscription: false
+  };
+  this.organization.save();
+
+  profilePage.visit({
+    username: 'org-login'
+  });
+  profilePage.billing.visit();
+
+  andThen(() => {
+    percySnapshot(assert);
+    assert.equal(profilePage.billing.trial.name, 'Please, run your first build to start your trial.');
+    assert.equal(profilePage.billing.manageButton.text, 'New subscription');
+    assert.ok(profilePage.billing.manageButton.isDisabled);
+  });
+});
+
+test('view billing tab when there is a new trial', function (assert) {
+  this.subscription = null;
+  this.organization.permissions = {
+    createSubscription: true
+  };
+  this.organization.save();
+  let trial = server.create('trial', {
+    builds_remaining: 100,
+    owner: this.organization,
+    status: 'new',
+    created_at: new Date(2018, 7, 16),
+    permissions: {
+      read: true,
+      write: true
+    }
+  });
+
+  this.trial = trial;
+  this.trial.save();
+
+  profilePage.visit({
+    username: 'org-login'
+  });
+  profilePage.billing.visit();
+
+  andThen(() => {
+    percySnapshot(assert);
     assert.equal(profilePage.billing.trial.name, 'You are on a trial subscription with 100 builds remaining.');
+    assert.equal(profilePage.billing.manageButton.text, 'New subscription');
+  });
+});
+
+test('view billing tab when trial has started', function (assert) {
+  this.subscription = null;
+  this.organization.permissions = {
+    createSubscription: true
+  };
+  this.organization.save();
+  let trial = server.create('trial', {
+    builds_remaining: 25,
+    owner: this.organization,
+    status: 'started',
+    created_at: new Date(2018, 7, 16),
+    permissions: {
+      read: true,
+      write: true
+    }
+  });
+  this.trial = trial;
+  this.trial.save();
+
+  profilePage.visit({
+    username: 'org-login'
+  });
+  profilePage.billing.visit();
+
+  andThen(() => {
+    percySnapshot(assert);
+    assert.equal(profilePage.billing.trial.name, 'You are on a trial subscription with 25 builds remaining.');
+    assert.equal(profilePage.billing.manageButton.text, 'New subscription');
+  });
+});
+
+test('view billing tab when trial has ended', function (assert) {
+  this.subscription = null;
+  this.organization.permissions = {
+    createSubscription: true
+  };
+  this.organization.save();
+  let trial = server.create('trial', {
+    builds_remaining: 0,
+    owner: this.organization,
+    status: 'ended',
+    created_at: new Date(2018, 7, 16),
+    permissions: {
+      read: true,
+      write: true
+    }
+  });
+  this.trial = trial;
+  this.trial.save();
+
+  profilePage.visit({
+    username: 'org-login'
+  });
+  profilePage.billing.visit();
+
+  andThen(() => {
+    percySnapshot(assert);
+    assert.equal(profilePage.billing.trial.name, 'Your trial period has ended, please start a new subscription.');
     assert.equal(profilePage.billing.manageButton.text, 'New subscription');
   });
 });
