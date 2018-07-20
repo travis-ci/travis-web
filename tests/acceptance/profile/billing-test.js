@@ -444,7 +444,7 @@ test('view billing tab with Github trial subscription', function (assert) {
 
   profilePage.visit({ username: 'org-login' });
   profilePage.billing.visit();
-  pauseTest();
+
   andThen(() => {
     percySnapshot(assert);
     assert.equal(profilePage.billing.trial.name, 'This Github Marketplace Subscription is currently on a 14 days trial');
