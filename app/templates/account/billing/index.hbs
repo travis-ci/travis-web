@@ -26,9 +26,15 @@
     {{manage-subscription-button subscription=model.subscriptions account=account}}
   {{/if}}
   {{#if model.subscriptions.isSubscribed}}
-    <div>{{model.subscriptions.permissions.write}}</div>
     <section class='plan'>
       <h2>Plan Overview</h2>
+      {{#if model.subscriptions.isGithub}}
+        {{#if model.trials.hasTrial}}
+          <p data-test-trial-message class="source alert-status-message">
+            This Github Marketplace Subscription is currently on a 14 days trial
+          </p>
+        {{/if}}
+      {{/if}}
       <h3 data-test-plan-name>{{model.subscriptions.plan.name}}</h3>
       <p data-test-plan-concurrency>{{pluralize model.subscriptions.plan.builds 'concurrent job'}}</p>
       <p>Renewing on {{moment-format model.subscriptions.validTo 'MMMM D, YYYY'}}</p>
@@ -61,7 +67,9 @@
       {{resubscribe-button subscription=model.subscriptions account=account}}
     {{/if}}
     {{#if model.subscriptions.isGithub}}
-      <a href={{config.marketplaceEndpoint}} class='button--blue marketplace-button'>Manage on GitHub Marketplace</a>
+      <a href={{config.marketplaceEndpoint}} class='button--blue marketplace-button'>Continue with GitHub Marketplace</a>
+      <p>Or subscribe directly with Travis CI</p>
+      {{new-subscription-button account=account}}
     {{/if}}
   {{/if}}
 </section>

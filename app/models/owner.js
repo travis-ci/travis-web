@@ -37,4 +37,10 @@ export default Model.extend({
     let id = type === 'user' ? 'user' : login;
     return `${config.billingEndpoint}/subscriptions/${id}`;
   },
+
+  @computed('type', 'login')
+  newSubscriptionUrl(type, login) {
+    let id = type === 'user' ? 'user' : login;
+    return `${config.billingEndpoint}/subscriptions/new?id=${id}`;
+  }
 });

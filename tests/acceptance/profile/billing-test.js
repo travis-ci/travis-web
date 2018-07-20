@@ -37,17 +37,6 @@ moduleForAcceptance('Acceptance | profile/billing', {
     server.create('plan', { id: 'travis-ci-five-builds-annual', name: 'CA', builds: 5, price: 273900, currency: 'USD', annual: true });
     server.create('plan', { id: 'travis-ci-ten-builds-annual', name: 'DA', builds: 10, price: 537900, currency: 'USD', annual: true });
 
-    let trial = server.create('trial', {
-      builds_remaining: 25,
-      owner: this.user,
-      status: 'new',
-      created_at: new Date(2018, 5, 19),
-      permissions: {
-        write: true
-      }
-    });
-    this.trial = trial;
-
     let subscription = server.create('subscription', {
       plan,
       owner: this.user,
@@ -218,7 +207,10 @@ test('view billing on an canceled marketplace plan', function (assert) {
 
   andThen(() => {
     assert.equal(profilePage.billing.expiryMessage.text, 'This subscription has been canceled by you and is valid through June 19, 2018.');
+    assert.equal(profilePage.billing.marketplaceButton.text, 'Continue with GitHub Marketplace');
     assert.equal(profilePage.billing.marketplaceButton.href, 'https://github.com/marketplace/travis-ci/');
+    assert.equal(profilePage.billing.manageButton.text, 'New subscription');
+    assert.equal(profilePage.billing.manageButton.href, 'https://billing.travis-ci.com/subscriptions/new?id=user');
 
     assert.ok(profilePage.billing.address.isHidden);
     assert.ok(profilePage.billing.creditCardNumber.isHidden);
@@ -235,7 +227,10 @@ test('view billing on an expired marketplace plan', function (assert) {
 
   andThen(() => {
     assert.equal(profilePage.billing.expiryMessage.text, 'You had a GitHub Marketplace subscription that expired on June 19, 2018.');
+    assert.equal(profilePage.billing.marketplaceButton.text, 'Continue with GitHub Marketplace');
     assert.equal(profilePage.billing.marketplaceButton.href, 'https://github.com/marketplace/travis-ci/');
+    assert.equal(profilePage.billing.manageButton.text, 'New subscription');
+    assert.equal(profilePage.billing.manageButton.href, 'https://billing.travis-ci.com/subscriptions/new?id=user');
 
     assert.ok(profilePage.billing.address.isHidden);
     assert.ok(profilePage.billing.creditCardNumber.isHidden);
@@ -294,7 +289,7 @@ test('switching to another account’s billing tab loads the subscription proper
 
   andThen(() => {
     assert.equal(profilePage.billing.manageButton.text, 'New subscription');
-    assert.equal(profilePage.billing.manageButton.href, 'https://billing.travis-ci.com/subscriptions/org-login');
+    assert.equal(profilePage.billing.manageButton.href, 'https://billing.travis-ci.com/subscriptions/new?id=org-login');
   });
 });
 
@@ -426,5 +421,37 @@ test('view billing tab when trial has ended', function (assert) {
     percySnapshot(assert);
     assert.equal(profilePage.billing.trial.name, 'Your trial period has ended, please start a new subscription.');
     assert.equal(profilePage.billing.manageButton.text, 'New subscription');
+  });
+});
+
+test('view billing tab with Github trial subscription', function (assert) {
+  let trial = server.create('trial', {
+    builds_remaining: 0,
+    owner: this.organization,
+    status: 'started',
+    created_at: new Date(2018, 7, 16),
+    permissions: {
+      read: true,
+      write: true
+    }
+  });
+
+  this.subscription.owner = this.organization;
+  this.subscription.source = 'github';
+
+  trial.save();
+  this.subscription.save();
+
+  profilePage.visit({ username: 'org-login' });
+  profilePage.billing.visit();
+  pauseTest();
+  andThen(() => {
+    percySnapshot(assert);
+    assert.equal(profilePage.billing.trial.name, 'This Github Marketplace Subscription is currently on a 14 days trial');
+    assert.equal(profilePage.billing.manageButton.text, 'Edit subscription');
+    assert.ok(profilePage.billing.address.isHidden);
+    assert.ok(profilePage.billing.creditCardNumber.isHidden);
+    assert.equal(profilePage.billing.source, 'This subscription is managed by GitHub Marketplace.');
+    assert.ok(profilePage.billing.annualInvitation.isHidden);
   });
 });
