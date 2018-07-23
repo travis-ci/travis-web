@@ -455,3 +455,34 @@ test('view billing tab with Github trial subscription', function (assert) {
     assert.ok(profilePage.billing.annualInvitation.isHidden);
   });
 });
+
+test('view billing tab with Github trial subscription has ended', function (assert) {
+  let trial = server.create('trial', {
+    builds_remaining: 0,
+    owner: this.organization,
+    status: 'ended',
+    created_at: new Date(2018, 7, 16),
+    permissions: {
+      read: true,
+      write: true
+    }
+  });
+
+  this.subscription.owner = this.organization;
+  this.subscription.source = 'github';
+
+  trial.save();
+  this.subscription.save();
+
+  profilePage.visit({ username: 'org-login' });
+  profilePage.billing.visit();
+
+  andThen(() => {
+    percySnapshot(assert);
+    assert.equal(profilePage.billing.manageButton.text, 'Edit subscription');
+    assert.ok(profilePage.billing.address.isHidden);
+    assert.ok(profilePage.billing.creditCardNumber.isHidden);
+    assert.equal(profilePage.billing.source, 'This subscription is managed by GitHub Marketplace.');
+    assert.ok(profilePage.billing.annualInvitation.isHidden);
+  });
+});
