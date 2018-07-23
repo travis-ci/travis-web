@@ -33,12 +33,12 @@ test('it generates an image url with a token for a private repo', function (asse
   assert.equal(url, `${root}/travis-ci/travis-web.svg?token=token-abc-123`);
 });
 
-test('it generates an image url with a token for a repo when publicMode is false', function (assert) {
+test('it generates an image url with a token for a repo when enterprise is true', function (assert) {
   const service = this.subject();
-  config.publicMode = false;
+  config.enterprise = true;
   const url = service.imageUrl(this.repo);
   assert.equal(url, `${root}/travis-ci/travis-web.svg?token=token-abc-123`);
-  config.publicMode = true;
+  config.enterprise = false;
 });
 
 test('it generates an image url with a repo', function (assert) {
