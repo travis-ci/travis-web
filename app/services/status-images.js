@@ -18,8 +18,8 @@ export default Service.extend({
 
     let slug = repo.get('slug');
 
-    // In Enterprise you can toggle enforce authentication where even "public" repositories are hidden
-    // to anonymous users in which cases we need to generate a token for all images
+    // In Enterprise you can toggle enforce authentication where even "public" repositories are
+    // hidden to anonymous users in which cases we need to generate a token for all images
     if (config.enterprise || repo.get('private')) {
       const token = this.get('auth').assetToken();
       return `${prefix}/${slug}.svg?token=${token}${branch ? `&branch=${branch}` : ''}`;
