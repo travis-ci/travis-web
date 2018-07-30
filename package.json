@@ -84,7 +84,7 @@
     "ember-test-assets": "^1.1.0",
     "ember-test-selectors": "^1.0.0",
     "ember-tether": "^1.0.0-beta.0",
-    "ember-tooltips": "^2.9.2",
+    "ember-tooltips": "mattgraham1995/ember-tooltips#fixWillDestroyErrorInEmber3",
     "ember-truth-helpers": "^2.0.0",
     "ember-window-mock": "^0.4.0",
     "emberx-select": "~3.1.1",
