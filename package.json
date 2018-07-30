@@ -56,7 +56,7 @@
     "ember-concurrency": "^0.8.15",
     "ember-data": "~3.0.0",
     "ember-data-filter": "1.13.0",
-    "ember-decorators": "^1.3.4",
+    "ember-decorators": "^2.2.0",
     "ember-disable-proxy-controllers": "^1.0.1",
     "ember-exam": "1.0.0",
     "ember-export-application-global": "2.0.0",
