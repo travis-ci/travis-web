@@ -28,10 +28,10 @@ export default TravisRoute.extend({
     const canCreateCron = repo.get('permissions.create_cron');
 
     if (canCreateCron) {
-      return EmberObject.create({
+      return repo.get('cronJobs').then(jobs => EmberObject.create({
         enabled: true,
-        jobs: repo.get('cronJobs')
-      });
+        jobs
+      }));
     } else {
       return EmberObject.create({
         enabled: false,
