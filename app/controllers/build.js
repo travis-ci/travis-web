@@ -38,7 +38,7 @@ export default Controller.extend(GithubUrlProperties, Polling, {
   @observes('build.state')
   buildStateDidChange() {
     if (this.get('sendFaviconStateChanges')) {
-      // this.send('faviconStateDidChange', this.get('build.state'));
+      this.send('faviconStateDidChange', this.get('build.state'));
     }
   }
 });
