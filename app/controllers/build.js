@@ -2,7 +2,7 @@ import Controller from '@ember/controller';
 import Ember from 'ember';
 import Polling from 'travis/mixins/polling';
 import GithubUrlProperties from 'travis/mixins/github-url-properties';
-import Visibility from 'npm:visibilityjs';
+import Visibility from 'visibilityjs';
 import config from 'travis/config/environment';
 
 import { controller } from 'ember-decorators/controller';

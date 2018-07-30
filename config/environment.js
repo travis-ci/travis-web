@@ -46,7 +46,10 @@ module.exports = function (environment) {
       enterprise: 'https://enterprise.travis-ci.com',
       twitter: 'https://twitter.com/travisci',
       jobs: 'https://travisci.workable.com/',
-      support: 'mailto:support@travis-ci.com'
+      support: 'mailto:support@travis-ci.com',
+      security: 'https://docs.travis-ci.com/legal/security',
+      terms: 'https://docs.travis-ci.com/legal/terms-of-service/',
+      privacy: 'https://docs.travis-ci.com/legal/privacy-policy',
     },
     endpoints: {},
     githubApps: false,
@@ -119,16 +122,13 @@ module.exports = function (environment) {
       ENV.pusher.channelPrefix = 'private-';
       ENV.pagesEndpoint = 'https://billing.travis-ci.com';
       ENV.billingEndpoint = 'https://billing.travis-ci.com';
+      ENV.marketplaceEndpoint = 'https://github.com/marketplace/travis-ci/';
       ENV.endpoints = {
         sshKey: true,
         caches: true
       };
       ENV.userlike = true;
       ENV.beacon = true;
-      ENV.urls.legal = ENV.billingEndpoint + '/pages/legal';
-      ENV.urls.imprint = ENV.billingEndpoint + '/pages/imprint';
-      ENV.urls.security = ENV.billingEndpoint + '/pages/security';
-      ENV.urls.terms = ENV.billingEndpoint + '/pages/terms';
 
       if (process.env.GITHUB_APPS_APP_NAME) {
         ENV.githubApps = {
@@ -147,7 +147,18 @@ module.exports = function (environment) {
 
       if (ENV.apiEndpoint === 'https://api-staging.travis-ci.com') {
         ENV.pusher.key = '87d0723b25c51e36def8';
+        ENV.billingEndpoint = 'https://billing-staging.travis-ci.com';
       }
+    }
+
+    if (process.env.BILLING_ENDPOINT) {
+      ENV.billingEndpoint = process.env.BILLING_ENDPOINT;
+    }
+
+    if (process.env.PUBLIC_MODE == 'false') {
+      ENV.publicMode = false;
+    } else {
+      ENV.publicMode = true;
     }
 
     if (process.env.AUTH_ENDPOINT) {
@@ -223,10 +234,9 @@ module.exports = function (environment) {
     ENV.percy = {
       breakpointsConfig: {
         mobile: 375,
-        tablet: 768,
         desktop: 1280
       },
-      defaultBreakpoints: ['mobile', 'tablet', 'desktop']
+      defaultBreakpoints: ['mobile', 'desktop']
     };
 
     ENV.featureFlags['debug-logging'] = false;
@@ -234,56 +244,24 @@ module.exports = function (environment) {
     ENV.featureFlags['pro-version'] = false;
     ENV.featureFlags['github-apps'] = false;
 
-    ENV.billingEndpoint = 'https://billing.travis-ci.com';
-
     ENV.statusPageStatusUrl = undefined;
+
+    ENV.billingEndpoint = 'https://billing.travis-ci.com';
+    ENV.marketplaceEndpoint = 'https://github.com/marketplace/travis-ci/';
   }
 
   if (environment === 'production') {
     ENV.release = process.env.SOURCE_VERSION || process.env.TRAVIS_COMMIT || '-';
-    // if (true) {
-    ENV.sentry = {
-      development: true
-    };
-    // }
+    if (process.env.DISABLE_SENTRY) {
+      ENV.sentry = {
+        development: true
+      };
+    }
   }
 
   if (process.env.DEPLOY_TARGET) {
     var s3Bucket = require('./deploy')(process.env.DEPLOY_TARGET).s3.bucket;
     ENV.emojiPrepend = '//' + s3Bucket + '.s3.amazonaws.com';
   }
-
-  // We want CSP settings to be available during development (via ember addon)
-  // and in production (by returning the actual header with a Ruby server)
-  // The problem is that we host travis-web on multiple hosts. Because of that
-  // if we add an api host to CSP rules here, we won't be able to set it up
-  // properly in a Ruby server (because this file will be compiled on deploy,
-  // where host info is not available).
-  // That's why I create a contentSecurityPolicyRaw hash first and then I add
-  // API host to any sections listed in cspSectionsWithApiHost. That way I can
-  // do it in the same way on the Ruby server.
-  ENV.contentSecurityPolicyRaw = {
-    'default-src': "'none'",
-    'script-src': "'self' https://ssl.google-analytics.com https://djtflbt20bdde.cloudfront.net/ https://js.pusher.com https://widget.intercom.io/ https://js.intercomcdn.com/",
-    'font-src': "'self' https://fonts.googleapis.com/css https://fonts.gstatic.com https://js.intercomcdn.com/",
-    'connect-src': "'self' ws://ws.pusherapp.com wss://ws.pusherapp.com https://*.pusher.com https://s3.amazonaws.com/archive.travis-ci.com/ https://s3.amazonaws.com/archive.travis-ci.org/ app.getsentry.com https://pnpcptp8xh9k.statuspage.io/ https://ssl.google-analytics.com https://api-iam.intercom.io https://api-ping.intercom.io https://nexus-websocket-a.intercom.io https://nexus-websocket-b.intercom.io wss://nexus-websocket-a.intercom.io wss://nexus-websocket-b.intercom.io",
-    'img-src': "'self' data: https://www.gravatar.com http://www.gravatar.com app.getsentry.com https://*.githubusercontent.com https://0.gravatar.com https://ssl.google-analytics.com https://static.intercomcdn.com https://js.intercomcdn.com",
-    'style-src': "'self' https://fonts.googleapis.com 'unsafe-inline' https://djtflbt20bdde.cloudfront.net https://widget.intercom.io",
-    'media-src': "'self' https://js.intercomcdn.com",
-    'frame-src': "'self' https://djtflbt20bdde.cloudfront.net",
-    'report-uri': 'https://65f53bfdfd3d7855b8bb3bf31c0d1b7c.report-uri.io/r/default/csp/reportOnly',
-    'block-all-mixed-content': '',
-    'form-action': "'self'", // probably doesn't matter, but let's have it anyways
-    'frame-ancestors': "'none'",
-    'object-src': 'https://djtflbt20bdde.cloudfront.net'
-  };
-  ENV.cspSectionsWithApiHost = ['connect-src', 'img-src'];
-  ENV.contentSecurityPolicy = JSON.parse(JSON.stringify(ENV.contentSecurityPolicyRaw));
-  ENV.contentSecurityPolicyMeta = false;
-
-  ENV.cspSectionsWithApiHost.forEach((section) => {
-    ENV.contentSecurityPolicy[section] += ' ' + ENV.apiEndpoint;
-  });
-
   return ENV;
 };

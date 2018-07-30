@@ -250,6 +250,16 @@ export default {
         "standard": ["beta_features"]
       }
     },
+    // Why is this and `credit-card-info` dashed and not underscored? 🤔
+    "billing-info":            {
+      "@type":            "resource",
+      "actions":          { },
+      "attributes":       ["id", "address", "address2", "billing_email", "city", "company", "country", "first_name", "last_name", "state", "vat_id", "zip_code"],
+      "representations":  {
+        "standard":       ["id", "address", "address2", "billing_email", "city", "company", "country", "first_name", "last_name", "state", "vat_id", "zip_code"],
+        "minimal":       ["id", "address", "address2", "billing_email", "city", "company", "country", "first_name", "last_name", "state", "vat_id", "zip_code"],
+      }
+    },
     "branch": {
       "@type": "resource",
       "actions": {
@@ -519,6 +529,15 @@ export default {
         ]
       }
     },
+    "credit-card-info":            {
+      "@type":            "resource",
+      "actions":          { },
+      "attributes":       ["id", "card_owner", "expiration_date", "last_digits"],
+      "representations":  {
+        "standard":       ["id", "card_owner", "expiration_date", "last_digits"],
+        "minimal":        ["id", "card_owner", "expiration_date", "last_digits"],
+      }
+    },
     "cron": {
       "@type": "resource",
       "actions": {
@@ -738,6 +757,23 @@ export default {
         "resource_type",
         "permission"
       ]
+    },
+    "invoice":            {
+      "@type":            "resource",
+      "actions":          { },
+      "attributes":       ["id", "created_at", "url"],
+      "representations":  {
+        "standard":       ["id", "created_at", "url"],
+        "minimal":        ["id", "created_at", "url"],
+      }
+    },
+    "invoices": {
+      "@type": "resource",
+      "attributes":       ["id", "created_at", "url"],
+      "representations":  {
+        "standard":       ["id", "created_at", "url"],
+        "minimal":        ["id", "created_at", "url"],
+      }
     },
     "home": {
       "@type": "resource",
@@ -1146,6 +1182,15 @@ export default {
         "standard": [
           "id", "github_id", "owner"
         ]
+      }
+    },
+    "plan":            {
+      "@type":            "resource",
+      "actions":          { },
+      "attributes":       ["id", "name", "price", "currency", "builds", "annual"],
+      "representations":  {
+        "standard":       ["id", "name", "price", "currency", "builds", "annual"],
+        "minimal":        ["id", "name", "price", "currency", "builds", "annual"],
       }
     },
     "owner": {
@@ -1576,6 +1621,7 @@ export default {
         "owner",
         "status",
         "valid_to",
+        "source",
       ],
       "representations":  {
         "standard":       [
@@ -1586,12 +1632,14 @@ export default {
           "owner",
           "status",
           "valid_to",
+          "source",
         ],
         "minimal":       [
             "id",
             "owner",
             "status",
             "valid_to",
+            "source",
         ],
       }
     },

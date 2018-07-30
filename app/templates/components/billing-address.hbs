@@ -1,0 +1,11 @@
+<p>{{billingInfo.firstName}} {{billingInfo.lastName}}</p>
+{{#if billingInfo.company}}<p>{{billingInfo.company}}</p>{{/if}}
+<p>{{billingInfo.address}}</p>
+{{#if billingInfo.address2}}<p>{{billingInfo.address2}}</p>{{/if}}
+{{#if billingInfo.state}}
+  <p>{{billingInfo.city}}, {{billingInfo.state}} {{billingInfo.zipCode}}</p>
+{{else}}
+  <p>{{billingInfo.city}} {{billingInfo.zipCode}}</p>
+{{/if}}
+<p>{{billingInfo.country}}</p>
+{{#if billingInfo.vatId}}<p>VAT: {{billingInfo.vatId}}</p>{{/if}}

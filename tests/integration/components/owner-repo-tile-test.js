@@ -12,32 +12,32 @@ module('OwnerRepoTileComponent', function (hooks) {
       slug: 'travis-ci/travis-chat',
       active: false,
       'private': false,
-      current_build: {
+      currentBuild: {
         number: '25',
         state: 'passed',
         duration: 252,
-        event_type: 'push',
-        previous_state: 'passed',
-        started_at: '2013-07-08T11:03:19Z',
-        finished_at: '2013-07-08T11:06:50Z',
+        eventType: 'push',
+        previousState: 'passed',
+        startedAt: '2013-07-08T11:03:19Z',
+        finishedAt: '2013-07-08T11:06:50Z',
         commit: {
           sha: '16fff347ff55403caf44c53357855ebc32adf95d',
-          compare_url: 'https://github.com/travis-ci/travis-chat/compare/3c4e9ea50141...16fff347ff55'
+          compareUrl: 'https://github.com/travis-ci/travis-chat/compare/3c4e9ea50141...16fff347ff55'
         }
       },
-      default_branch: {
+      defaultBranch: {
         name: 'master',
-        last_build: {
+        lastBuild: {
           number: '25',
           state: 'passed',
           duration: 252,
           event_type: 'push',
-          previous_state: 'passed',
-          started_at: '2013-07-08T11:03:19Z',
-          finished_at: '2013-07-08T11:06:50Z',
+          previousState: 'passed',
+          startedAt: '2013-07-08T11:03:19Z',
+          finishedAt: '2013-07-08T11:06:50Z',
           commit: {
             sha: '16fff347ff55403caf44c53357855ebc32adf95d',
-            compare_url: 'https://github.com/travis-ci/travis-chat/compare/3c4e9ea50141...16fff347ff55'
+            compareUrl: 'https://github.com/travis-ci/travis-chat/compare/3c4e9ea50141...16fff347ff55'
           }
         }
       }

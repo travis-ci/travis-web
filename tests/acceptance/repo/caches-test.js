@@ -27,11 +27,18 @@ moduleForAcceptance('Acceptance | repo caches', {
     });
 
     const twoDaysAgo = new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 2);
+    const threeDaysAgo = new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 3);
 
     repository.createCache({
       branch: 'PR.1919',
       lastModified: twoDaysAgo,
-      size: 20122173
+      size: 10061087
+    });
+
+    repository.createCache({
+      branch: 'PR.1919',
+      lastModified: threeDaysAgo,
+      size: 10061086
     });
   }
 });
@@ -61,16 +68,16 @@ test('view and delete caches', function (assert) {
   });
   percySnapshot(assert);
 
-  const requestBodies = [];
+  const branchQueryParams = [];
 
-  server.delete(`/repos/${this.repository.id}/caches`, function (schema, request) {
-    requestBodies.push(request.requestBody || 'empty');
+  server.delete(`/repo/${this.repository.id}/caches`, function (schema, {queryParams}) {
+    branchQueryParams.push(queryParams.branch || 'empty');
   });
 
   page.pushCaches[0].delete();
 
   andThen(() => {
-    assert.deepEqual(JSON.parse(requestBodies.pop()), { branch: 'a-branch-name' });
+    assert.deepEqual(branchQueryParams.pop(), 'a-branch-name');
 
     assert.equal(page.pushCaches.length, 0);
   });
@@ -78,7 +85,7 @@ test('view and delete caches', function (assert) {
   page.deleteAllCaches();
 
   andThen(() => {
-    assert.equal(requestBodies.pop(), 'empty', 'expected the delete all request to have no body');
+    assert.equal(branchQueryParams.pop(), 'empty', 'expected the delete all request to have no body');
     assert.ok(page.noCachesExist, 'expected the message that no caches exist to be displayed');
   });
 });

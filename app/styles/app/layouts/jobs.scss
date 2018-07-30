@@ -160,6 +160,25 @@
   }
 }
 
+.job-name {
+  overflow: hidden;
+
+  @media #{$medium-up} {
+    flex: 1 0 40%;
+    position: relative;
+    padding: 0.3em 0.5em 0.5em 0.7em;
+    align-self: flex-start;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    &:after {
+      @include fadeOut(right, -90deg, white);
+      top: -1px;
+    }
+  }
+}
+
 .job-lang {
   overflow: hidden;
 
@@ -203,7 +222,7 @@
   }
 
   @media #{$xxlarge-up} {
-    max-width: 55em;
+    max-width: 48em;
   }
 
   &.is-empty {
@@ -213,6 +232,10 @@
 
 .centered {
   @media #{$xlarge-up} {
+    .job-name {
+      flex: 0 0 42em;
+    }
+
     .job-env {
       flex: 0 0 21em;
     }

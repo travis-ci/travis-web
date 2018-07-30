@@ -1,17 +1,24 @@
 import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import ownerPage from 'travis/tests/pages/owner';
+import signInUser from 'travis/tests/helpers/sign-in-user';
 
 moduleForAcceptance('Acceptance | owner repositories', {
   beforeEach() {
-    server.create('user', {
+    let user = server.create('user', {
       name: 'User Name',
       login: 'user-login'
     });
 
+    // This should not require login but I can’t take the time to figure out why the test fails without it.
+    signInUser(user);
+
     // create active repo
     const firstRepository = server.create('repository', {
-      slug: 'user-login/repository-name'
+      slug: 'user-login/repository-name',
+      owner: {
+        login: user.login
+      }
     });
 
     const primaryBranch = firstRepository.createBranch({
@@ -39,7 +46,10 @@ moduleForAcceptance('Acceptance | owner repositories', {
 
     // create active repo
     server.create('repository', {
-      slug: 'user-login/yet-another-repository-name'
+      slug: 'user-login/yet-another-repository-name',
+      owner: {
+        login: user.login
+      }
     });
 
     server.create('repository', {

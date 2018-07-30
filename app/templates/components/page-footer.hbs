@@ -1,16 +1,18 @@
-<div class="inner">
+<div class="layout-inner">
   <div class="footer-elem">
     <div class="travis-footer">
-      {{svg-jar 'travisci-logo' class="travis-logo"}}</div>
+      {{svg-jar 'travisci-logo-grayscale' class="travis-logo"}}
+    </div>
   </div>
+
+  <div class="footer-elem"></div>
 
   {{#unless features.enterpriseVersion}}
     <div class="footer-elem">
       <h3 class="footer-title">&copy;Travis CI, GmbH</h3>
       <address>Rigaer Straße 8<br>10247 Berlin, Germany</address>
       <ul>
-        <li><a data-test-footer-imprint-link href="{{ config.urls.imprint }}" title="Imprint">Imprint</a></li>
-        <li><a data-test-footer-jobs-link href="{{ config.urls.jobs }}" title="Jobs at Travis CI">Jobs</a></li>
+        <li><a data-test-footer-jobs-link href="{{ config.urls.jobs }}" title="Jobs at Travis CI">Work with Travis CI</a></li>
       </ul>
     </div>
   {{/unless}}
@@ -27,16 +29,15 @@
     </ul>
   </div>
   {{#unless features.enterpriseVersion}}
-    {{#if features.proVersion}}
-      <div class="footer-elem">
-        <h3 class="footer-title">Legal</h3>
-        <ul>
-          <li><a data-test-footer-imprint-link href="{{ config.urls.imprint }}" title="Imprint">Imprint</a></li>
-          <li><a data-test-footer-tos-link href="{{ config.urls.terms }}" title="Terms of Service">Terms of Service</a></li>
-          <li><a data-test-footer-security-link href="{{ config.urls.security }}" title="Security Statement">Security Statement</a></li>
-        </ul>
-      </div>
-    {{/if}}
+    <div class="footer-elem">
+      <h3 class="footer-title">Legal</h3>
+      <ul>
+        <li><a data-test-footer-imprint-link href="{{ config.urls.imprint }}" title="Imprint">Imprint</a></li>
+        <li><a data-test-footer-tos-link href="{{ config.urls.terms }}" title="Terms of Service">Terms of Service</a></li>
+        <li><a href="{{ config.urls.privacy }}">Privacy Policy</a></li>
+        <li><a data-test-footer-security-link href="{{ config.urls.security }}" title="Security Statement">Security Statement</a></li>
+      </ul>
+    </div>
 
     <div class="footer-elem">
       {{travis-status}}

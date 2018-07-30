@@ -1,7 +1,7 @@
 import Controller from '@ember/controller';
 import { service } from 'ember-decorators/service';
 import { computed, action } from 'ember-decorators/object';
-import { alias, not } from 'ember-decorators/object/computed';
+import { alias, not, or } from 'ember-decorators/object/computed';
 import config from 'travis/config/environment';
 
 export default Controller.extend({
@@ -28,21 +28,18 @@ export default Controller.extend({
     return name || login;
   },
 
-  @computed('model.{type,login}')
-  billingUrl(type, login) {
-    const id = type === 'user' ? 'user' : login;
-    return `${config.billingEndpoint}/subscriptions/${id}`;
-  },
-
   @computed('features.enterpriseVersion', 'config.billingEndpoint')
   checkSubscriptionStatus(enterprise, billingEndpoint) {
     return !enterprise && !!billingEndpoint;
   },
 
-  @computed('model.subscription.status', 'model.education')
-  isSubscribed(status, education) {
-    return status === 'subscribed' || education;
+  @computed('model.subscription.isSubscribed', 'model.education')
+  isSubscribed(isSubscribed, education) {
+    return isSubscribed || education;
   },
 
-  @not('isSubscribed') isNotSubscribed: null
+  @not('isSubscribed') isNotSubscribed: null,
+
+  @or('model.subscription.billingUrl', 'model.billingUrl')
+  billingUrl: null,
 });

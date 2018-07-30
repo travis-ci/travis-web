@@ -366,6 +366,127 @@ header.legacy-services-integration {
     }
   }
 }
+section.billing {
+  font-size: $font-size-m;
+
+  .plan {
+    p {
+      margin: 0.3em 0 0.3em 0;
+    }
+    h3 {
+      font-size: $font-size-xl;
+      font-weight: $font-weight-light;
+      margin-bottom: 0.2em;
+    }
+  }
+
+  .plan + h2 {
+    margin-bottom: 0;
+  }
+
+  .row {
+    @media #{$medium-up} {
+      display: flex;
+      flex-wrap: wrap;
+
+      section {
+        flex: 1;
+      }
+    }
+
+    h3 {
+      text-transform: uppercase;
+      font-size: $font-size-s;
+      font-weight: $font-weight-bold;
+      color: $cement-grey;
+    }
+  }
+
+  section.payment {
+    h3 {
+      margin: 20px 0 12px 0;
+    }
+
+    p.manual {
+      color: $brick-red;
+      font-size: 16px; 
+    }
+
+    @media #{$medium-up} {
+      h3 {
+        margin: 12px 0;
+      }
+    }
+
+    .source {
+      font-size: $font-size-s;
+      font-style: italic;
+      color: $cement-grey;
+    }
+  }
+
+  section.contact, section.payment {
+    p {
+      margin-top: 0;
+      margin-bottom: 0.3em;
+    }
+
+    p.manual-help {
+      @include linkStyle;
+      margin-top: 1rem;
+    }
+  }
+
+  .manual-help {
+    @include linkStyle;
+    margin-top: 1rem;
+  }
+
+  .marketplace-button {
+    margin-top: 1rem;
+  }
+
+
+  .notice-banner--yellow {
+    display: block;
+    margin-top: 1rem;
+    padding: 0.5rem 0.9rem 0.6rem;
+    font-size: $font-size-sm;
+  }
+}
+
+section.invoices {
+  font-size: $font-size-m;
+  padding-top: 1rem;
+
+  ul {
+    list-style-type: none;
+    padding-left: 0;
+  }
+
+  li {
+    padding-bottom: 0.4em;
+  }
+
+  p {
+    @include linkStyle;
+  }
+
+  .icon-help {
+    margin-right: 3px;
+    transform: translateY(-2px);
+
+    &:hover {
+      border-color: $pebble-grey;
+      @include colorSVG($cement-grey);
+    }
+  }
+
+  a svg {
+    @include colorSVG(black);
+    transform: translateY(-2px);
+  }
+}
 
 #github-apps-invitation {
   box-shadow: 0 0 15px 3px $pebble-grey;
@@ -537,4 +658,17 @@ header.space-between {
   background-color: #3EAAAF;
   border: none;
   border-radius: 2px;
+}
+
+.manage-subscription {
+  float: right;
+
+  &.new {
+    float: none;
+  }
+
+  &.resubscribe {
+    float: none;
+    margin-top: 1rem;
+  }
 }
