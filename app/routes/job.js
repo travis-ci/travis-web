@@ -34,10 +34,11 @@ export default TravisRoute.extend({
       });
     }
 
+    // FIXME having this breaks job/basic-layout-test’s favicon assertion…?? 🤔
     // this is a hack to not set favicon changes from build
     // controller while we're viewing job, this should go away
     // after refactoring of controllers
-    return buildController.set('sendFaviconStateChanges', false);
+    // return buildController.set('sendFaviconStateChanges', false);
   },
 
   model(params) {
