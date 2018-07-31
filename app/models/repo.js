@@ -111,9 +111,9 @@ const Repo = Model.extend({
 
   @computed('id')
   cronJobs(id) {
-    return this.store.filter('cron', {
+    return this.store.query('cron', {
       repository_id: id
-    }, (cron) => cron.get('branch.repoId') === id);
+    }).then((crons) => this.store.filter('cron', cron => cron.get('repo.id') === id));
   },
 
   // TODO: Stop performing a `set` as part of the cp!
