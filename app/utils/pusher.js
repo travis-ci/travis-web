@@ -58,7 +58,6 @@ TravisPusher.prototype.init = function (config, ajaxService) {
     pusherConfig.wsPath = `/${config.path}`;
   }
 
-  console.log('passing this key to Pusher constructor', config.key); // eslint-disable-line
   return this.pusher = new Pusher(config.key, pusherConfig);
 };
 
