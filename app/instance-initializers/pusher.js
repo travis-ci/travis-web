@@ -3,6 +3,7 @@ import TravisPusher from 'travis/utils/pusher';
 
 export function initialize(applicationInstance) {
   const app = applicationInstance.application;
+  console.log('passing this config to TravisPusher', config.pusher); // eslint-disable-line
   app.pusher = new TravisPusher(config.pusher, applicationInstance.lookup('service:ajax'));
 
   if (!applicationInstance.lookup('pusher:main')) {
