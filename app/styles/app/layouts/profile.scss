@@ -411,10 +411,19 @@ header.legacy-services-integration {
 section.billing {
   font-size: $font-size-m;
 
-  p.alert-status-message {
-    color: $brick-red;
+  .plan-status-message {
+    color: $asphalt-grey;
     font-size: 16px;
   }
+
+  .github-marketplace-link {
+    color: $oxide-blue;
+
+    &:hover, &:visited, &:active {
+      color: $oxide-blue;
+    }
+  }
+
 
   .plan {
     p {

@@ -357,7 +357,7 @@ test('view billing tab when there is a new trial', function (assert) {
 
   andThen(() => {
     percySnapshot(assert);
-    assert.equal(profilePage.billing.trial.name, 'You are on a trial subscription with 100 builds remaining.');
+    assert.equal(profilePage.billing.trial.name, "You've got 100 trial builds left. Ensure unlimited builds by setting up a plan before it runs out!");
     assert.equal(profilePage.billing.manageButton.text, 'New subscription');
   });
 });
@@ -388,7 +388,7 @@ test('view billing tab when trial has started', function (assert) {
 
   andThen(() => {
     percySnapshot(assert);
-    assert.equal(profilePage.billing.trial.name, 'You are on a trial subscription with 25 builds remaining.');
+    assert.equal(profilePage.billing.trial.name, "You've got 25 trial builds left. Ensure unlimited builds by setting up a plan before it runs out!");
     assert.equal(profilePage.billing.manageButton.text, 'New subscription');
   });
 });
@@ -419,7 +419,7 @@ test('view billing tab when trial has ended', function (assert) {
 
   andThen(() => {
     percySnapshot(assert);
-    assert.equal(profilePage.billing.trial.name, 'Your trial period has ended, please start a new subscription.');
+    assert.equal(profilePage.billing.trial.name, 'Your trial has just ended. To get the most out of Travis CI, set up a plan below!');
     assert.equal(profilePage.billing.manageButton.text, 'New subscription');
   });
 });
@@ -447,7 +447,7 @@ test('view billing tab with Github trial subscription', function (assert) {
 
   andThen(() => {
     percySnapshot(assert);
-    assert.equal(profilePage.billing.trial.name, 'This Github Marketplace Subscription is currently on a 14 days trial');
+    assert.equal(profilePage.billing.trial.name, "You're trialing Travis CI via your Github Marketplace subscription.");
     assert.equal(profilePage.billing.manageButton.text, 'Edit subscription');
     assert.ok(profilePage.billing.address.isHidden);
     assert.ok(profilePage.billing.creditCardNumber.isHidden);

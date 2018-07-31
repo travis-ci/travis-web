@@ -3,16 +3,20 @@
     <h2>Plan Overview</h2>
     {{#if model.trials}}
       {{#if model.trials.hasTrial}}
-        <p data-test-trial-message class="source alert-status-message">
-          You are on a trial subscription with {{pluralize model.trials.buildsRemaining 'build'}} remaining.
+        <p data-test-trial-message class="source plan-status-message">
+          You've got {{pluralize model.trials.buildsRemaining 'trial build'}} left.
+          <br/>
+          Ensure unlimited builds by setting up a plan before it runs out!
         </p>
       {{else}}
-        <p data-test-trial-message class="source alert-status-message">
-           Your trial period has ended, please start a new subscription.
+        <p data-test-trial-message class="source plan-status-message">
+          Your trial has just ended.
+          <br/>
+          To get the most out of Travis CI, set up a plan below!
         </p>
       {{/if}}
     {{else}}
-      <p data-test-trial-message class="source alert-status-message">
+      <p data-test-trial-message class="source plan-status-message">
         Please, run your first build to start your trial.
       </p>
     {{/if}}
@@ -30,8 +34,8 @@
       <h2>Plan Overview</h2>
       {{#if model.subscriptions.isGithub}}
         {{#if model.trials.hasTrial}}
-          <p data-test-trial-message class="source alert-status-message">
-            This Github Marketplace Subscription is currently on a 14 days trial
+          <p data-test-trial-message class="source plan-status-message">
+            You're trialing Travis CI via your <a href={{config.marketplaceEndpoint}} class="github-marketplace-link">Github Marketplace subscription</a>.
           </p>
         {{/if}}
       {{/if}}
