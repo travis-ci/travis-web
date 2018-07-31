@@ -306,7 +306,7 @@ test('view billing tab when trial has not started', function (assert) {
 
   andThen(() => {
     percySnapshot(assert);
-    assert.equal(profilePage.billing.trial.name, 'Please, run your first build to start your trial.');
+    assert.equal(profilePage.billing.trial.name, 'Trigger your first build to start testing your projects!');
     assert.equal(profilePage.billing.manageButton.text, 'New subscription');
   });
 });
@@ -324,7 +324,7 @@ test('view billing tab with no create subscription permissions', function (asser
 
   andThen(() => {
     percySnapshot(assert);
-    assert.equal(profilePage.billing.trial.name, 'Please, run your first build to start your trial.');
+    assert.equal(profilePage.billing.trial.name, 'Trigger your first build to start testing your projects!');
     assert.equal(profilePage.billing.manageButton.text, 'New subscription');
     assert.ok(profilePage.billing.manageButton.isDisabled);
   });
