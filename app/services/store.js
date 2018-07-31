@@ -1,12 +1,11 @@
 /* eslint-disable camelcase */
-import Store from 'ember-data/store';
+import DS from 'ember-data';
 import PaginatedCollectionPromise from 'travis/utils/paginated-collection-promise';
 import { service } from 'ember-decorators/service';
 import FilteredArrayManager from 'travis/utils/filtered-array-manager';
-import FilterMixin from 'ember-data-filter/mixins/filter';
 import fetchLivePaginatedCollection from 'travis/utils/fetch-live-paginated-collection';
 
-export default Store.extend(FilterMixin, {
+export default DS.Store.extend({
   @service auth: null,
 
   defaultAdapter: 'application',
