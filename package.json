@@ -106,8 +106,8 @@
     "yamljs": "^0.3.0"
   },
   "engines": {
-    "node": "8.5.0",
-    "npm": "5.4.2"
+    "node": "10.7.0",
+    "npm": "6.1.0"
   },
   "dependencies": {
     "watchman": "^1.0.0"
