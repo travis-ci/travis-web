@@ -115,7 +115,7 @@ export default Owner.extend({
   type: 'user',
 
   sync() {
-    const callback = () => { this.setWithSession('isSyncing', true); };
+    const callback = run(() => { this.setWithSession('isSyncing', true); });
     return this.get('ajax').postV3(`/user/${this.id}/sync`, {}, callback);
   },
 
