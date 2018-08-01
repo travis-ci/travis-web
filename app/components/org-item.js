@@ -4,15 +4,11 @@ import { alias } from 'ember-decorators/object/computed';
 import { service } from 'ember-decorators/service';
 
 export default Component.extend({
-  @service auth: null,
   @service router: null,
 
   classNames: ['media', 'account'],
   tagName: 'li',
   classNameBindings: ['type', 'selected'],
-
-  tokenIsVisible: false,
-  showCopySuccess: false,
 
   @alias('account.type') type: null,
   @alias('account.selected') selected: null,
@@ -40,20 +36,5 @@ export default Component.extend({
     } else {
       return routeName;
     }
-  },
-
-  actions: {
-    tokenVisibility() {
-      if (this.get('showCopySuccess')) {
-        this.toggleProperty('showCopySuccess');
-      }
-      this.toggleProperty('tokenIsVisible');
-    },
-
-    copyTokenSuccessful() {
-      if (!this.get('showCopySuccess')) {
-        this.toggleProperty('showCopySuccess');
-      }
-    },
   },
 });

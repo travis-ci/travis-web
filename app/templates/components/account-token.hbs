@@ -1,0 +1,25 @@
+<p class="account-token">
+  API Token
+  {{#if showCopySuccess}}
+    <span class="token-copied-text">Token copied!</span>
+  {{else}}
+    {{#if tokenIsVisible}}
+      <span class="auth-token">{{auth.token}}</span>
+    {{else}}
+      <span class="obfuscated-chars">{{obfuscated-chars 20}}</span>
+    {{/if}}
+  {{/if}}
+  <div class="token-actions">
+    {{#copy-button
+      class="copy-button"
+      clipboardText=auth.token
+      title="Copy to clipboard"
+      success=(action 'copyTokenSuccessful')}}
+      {{svg-jar 'icon-copy' class="icon"}} <span>Copy token</span>
+    {{/copy-button}}
+    <button {{action 'tokenVisibility' bubbles=false}} class="show-token">
+      {{svg-jar 'icon-seemore' class="icon"}} <span>{{if tokenIsVisible
+        'Hide token' 'View token'}}</span>
+    </button>
+  </div>
+</p>
