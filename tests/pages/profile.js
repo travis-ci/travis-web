@@ -101,8 +101,6 @@ export default create({
   lockedGithubAppsRepositories: githubAppsRepositoryCollection('#locked-github-apps-repositories'),
 
   token: {
-    scope: '.profile-user',
-
     show: clickable('.token-actions button.show-token'),
     value: text('.auth-token'),
     obfuscatedCharacters: text('.obfuscated-chars'),
@@ -118,6 +116,10 @@ export default create({
       checkmark: { scope: '.checkmark' }
     },
   }),
+
+  settings: {
+    visit: clickable('li[data-test-settings-tab] a')
+  },
 
   billing: {
     visit: clickable('li[data-test-billing-tab] a'),
