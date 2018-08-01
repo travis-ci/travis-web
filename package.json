@@ -46,7 +46,7 @@
     "ember-cli-mirage": "0.4.7",
     "ember-cli-moment-shim": "^3.5.0",
     "ember-cli-page-object": "^1.14.1",
-    "ember-cli-sass": "^7.1.1",
+    "ember-cli-sass": "^7.2.0",
     "ember-cli-sentry": "^3.0.0",
     "ember-cli-shims": "^1.2.0",
     "ember-cli-sri": "^2.1.0",
@@ -106,8 +106,8 @@
     "yamljs": "^0.3.0"
   },
   "engines": {
-    "node": "8.5.0",
-    "npm": "5.4.2"
+    "node": "10.7.0",
+    "npm": "6.2.0"
   },
   "dependencies": {
     "watchman": "^1.0.0"
