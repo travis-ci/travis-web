@@ -118,7 +118,15 @@ export default create({
   }),
 
   settings: {
-    visit: clickable('li[data-test-settings-tab] a')
+    visit: clickable('li[data-test-settings-tab] a'),
+
+    features: collection('.features-list .feature', {
+      name: text('.feature-name'),
+      description: text('p'),
+      isOn: hasClass('active', '.switch'),
+
+      click: clickable('.switch')
+    })
   },
 
   billing: {

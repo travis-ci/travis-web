@@ -1,17 +1,9 @@
 import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
-import featurePage from 'travis/tests/pages/features';
+import profilePage from 'travis/tests/pages/profile';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 
 moduleForAcceptance('Acceptance | feature flags/user sets flags');
-
-test('visiting /features directly as guest', function (assert) {
-  featurePage.visit();
-
-  andThen(function () {
-    assert.ok(currentURL().match(/\?redirectUri=.*%2Ffeatures/));
-  });
-});
 
 test('visiting /features directly when authenticated', function (assert) {
   const currentUser = server.create('user');
@@ -29,21 +21,21 @@ test('visiting /features directly when authenticated', function (assert) {
     enabled: false
   });
 
-  featurePage.visit();
+  profilePage.visit({ username: 'testuser' });
+  profilePage.settings.visit();
+
   percySnapshot(assert);
 
   andThen(function () {
-    assert.equal(currentURL(), '/features');
+    assert.equal(profilePage.settings.features.length, 2, 'expected there to be two features');
 
-    assert.equal(featurePage.features.length, 2, 'expected there to be two features');
-
-    featurePage.features[0].as(jants => {
+    profilePage.settings.features[0].as(jants => {
       assert.equal(jants.name, 'Jants');
       assert.equal(jants.description, 'Jants?');
       assert.notOk(jants.isOn, 'expected the jants switch to be off');
     });
 
-    featurePage.features[1].as(jorts => {
+    profilePage.settings.features[1].as(jorts => {
       assert.equal(jorts.name, 'Jorts');
       assert.equal(jorts.description, 'Jorts!');
       assert.ok(jorts.isOn, 'expected the jorts switch to be on');
@@ -59,10 +51,10 @@ test('visiting /features directly when authenticated', function (assert) {
     return feature;
   });
 
-  featurePage.features[0].click();
+  profilePage.settings.features[0].click();
 
   andThen(() => {
-    assert.ok(featurePage.features[0].isOn, 'expected the jants switch to now be on');
+    assert.ok(profilePage.settings.features[0].isOn, 'expected the jants switch to now be on');
     assert.deepEqual(patchRequestBody, { 'beta_feature.enabled': true });
   });
 });
