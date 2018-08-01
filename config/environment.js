@@ -39,6 +39,7 @@ module.exports = function (environment) {
     urls: {
       about: 'https://about.travis-ci.com',
       changelog: 'https://changelog.travis-ci.com',
+      community: 'https://travis-ci.community',
       blog: 'https://blog.travis-ci.com',
       docs: 'https://docs.travis-ci.com',
       status: 'https://www.traviscistatus.com/',
