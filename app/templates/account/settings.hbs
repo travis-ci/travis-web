@@ -1,13 +1,15 @@
 Token:
 {{account-token account=model}}
 
-Features:
 
-<ul class="features-list">
-  {{#each (sort-by "name" featureFlags) as |feature|}}
-    {{beta-feature feature=feature}}
-  {{else}}
-    Oops! It looks like we don't have any experimental features for you
-    to try yet.
-  {{/each}}
-</ul>
+{{#if features.betaFeatures}}
+  Features:
+  <ul class="features-list">
+    {{#each (sort-by "name" featureFlags) as |feature|}}
+      {{beta-feature feature=feature}}
+    {{else}}
+      Oops! It looks like we don't have any experimental features for you
+      to try yet.
+    {{/each}}
+  </ul>
+{{/if}}
