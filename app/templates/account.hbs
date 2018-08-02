@@ -29,7 +29,9 @@
     <nav class='travistab-nav'>
       <ul>
         <li>{{#link-to 'account.repositories'}}Repositories{{/link-to}}</li>
-        <li data-test-settings-tab>{{#link-to 'account.settings'}}Settings{{/link-to}}</li>
+        {{#if (eq model.type 'user')}}
+          <li data-test-settings-tab>{{#link-to 'account.settings'}}Settings{{/link-to}}</li>
+        {{/if}}
         {{#if checkSubscriptionStatus}}
           <li data-test-billing-tab>{{#link-to 'account.billing'}}Subscription{{/link-to}}</li>
         {{/if}}

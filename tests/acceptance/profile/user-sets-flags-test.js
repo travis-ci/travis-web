@@ -3,12 +3,24 @@ import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import profilePage from 'travis/tests/pages/profile';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 
-moduleForAcceptance('Acceptance | user settings');
+moduleForAcceptance('Acceptance | user settings', {
+  beforeEach() {
+    const user = server.create('user');
+    signInUser(user);
+    this.user = user;
+
+    server.create('organization', {
+      name: 'Org Name',
+      type: 'organization',
+      login: 'org-login',
+      permissions: {
+        createSubscription: false
+      }
+    });
+  }
+});
 
 test('changing feature flags', function (assert) {
-  const currentUser = server.create('user');
-  signInUser(currentUser);
-
   server.create('feature', {
     name: 'jorts',
     description: 'Jorts!',
@@ -44,7 +56,7 @@ test('changing feature flags', function (assert) {
 
   let patchRequestBody;
 
-  server.patch(`/user/${currentUser.id}/beta_feature/${jantsFeature.id}`, function (schema, request) {
+  server.patch(`/user/${this.user.id}/beta_feature/${jantsFeature.id}`, function (schema, request) {
     patchRequestBody = JSON.parse(request.requestBody);
     const feature = schema.features.find(jantsFeature.id);
     feature.enabled = true;
@@ -56,5 +68,27 @@ test('changing feature flags', function (assert) {
   andThen(() => {
     assert.ok(profilePage.settings.features[0].isOn, 'expected the jants switch to now be on');
     assert.deepEqual(patchRequestBody, { 'beta_feature.enabled': true });
+  });
+});
+
+test('no settings for org', function (assert) {
+  profilePage.visit({ username: 'testuser' });
+
+  andThen(() => {
+    assert.ok(profilePage.settings.isPresent);
+  });
+
+  profilePage.settings.visit();
+  profilePage.accounts[1].visit();
+
+  andThen(() => {
+    assert.ok(profilePage.settings.isHidden);
+    assert.equal(currentURL(), '/profile/org-login');
+  });
+
+  visit('/profile/org-login/settings');
+
+  andThen(() => {
+    assert.equal(currentURL(), '/profile/org-login');
   });
 });

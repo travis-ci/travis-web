@@ -4,6 +4,7 @@ import {
   clickable,
   collection,
   hasClass,
+  isHidden,
   isPresent,
   text,
   visitable,
@@ -119,6 +120,9 @@ export default create({
 
   settings: {
     visit: clickable('li[data-test-settings-tab] a'),
+
+    isPresent: isPresent('li[data-test-settings-tab]'),
+    isHidden: isHidden('li[data-test-settings-tab]'),
 
     features: collection('.features-list .feature', {
       name: text('.feature-name'),
