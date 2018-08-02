@@ -409,7 +409,7 @@ section.billing {
 
     p.manual {
       color: $brick-red;
-      font-size: 16px; 
+      font-size: 16px;
     }
 
     @media #{$medium-up} {
@@ -670,5 +670,12 @@ header.space-between {
   &.resubscribe {
     float: none;
     margin-top: 1rem;
+  }
+}
+
+.user-settings {
+  h3 {
+    color: $oxide-blue;
+    font-weight: 300;
   }
 }
