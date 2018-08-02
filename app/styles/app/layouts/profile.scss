@@ -674,6 +674,8 @@ header.space-between {
 }
 
 .user-settings {
+  @include linkStyle;
+
   h3 {
     color: $oxide-blue;
     font-weight: 300;
