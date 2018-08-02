@@ -37,8 +37,8 @@
         {{/if}}
         {{#if auth.signedIn}}
           {{#link-to "account" user.login data-test-header-account-link class="navigation-anchor signed-in"}}
-            {{userName}}
             {{user-avatar url=user.avatarUrl name=user.fullName size=40}}
+            {{svg-jar 'icon-arrowdown' class="icon"}}
           {{/link-to}}
         {{/if}}
         {{#if auth.signingIn}}
@@ -46,12 +46,22 @@
         {{/if}}
         {{#if auth.signedIn}}
           <ul class="navigation-nested">
+            <li class="username">{{userName}}</li>
             <li>
-              {{#link-to "account" user.login class="signed-in" title="Your profile"}}Profile{{/link-to}}
+              <div class="nav-nested"></div>
+              {{#link-to "account" user.login class="signed-in" title="Your profile"}}Settings{{/link-to}}
+              <div class="nav-nested"></div>
               </li>
-              <li>
-                <a data-test-signout-link href="/" {{action 'signOut'}} title="Sign out of Travis CI">Sign Out</a>
+            <li>
+              <div class="nav-nested"></div>
+              <a href="{{ config.urls.docs }}">Help</a>
+              <div class="nav-nested"></div>
               </li>
+            <li>
+              <div class="nav-nested"></div>
+              <a data-test-signout-link href="/" {{action 'signOut'}} title="Sign out of Travis CI">Sign Out</a>
+              <div class="nav-nested"></div>
+            </li>
           </ul>
         {{/if}}
       </li>
