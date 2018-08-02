@@ -678,4 +678,14 @@ header.space-between {
     color: $oxide-blue;
     font-weight: 300;
   }
+
+  > section {
+    border-bottom: 2px #f1f1f1 solid;
+    padding-bottom: 2em;
+    margin-bottom: 2em;
+
+    &:last-child {
+      border-bottom: 0;
+    }
+  }
 }

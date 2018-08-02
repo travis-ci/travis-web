@@ -1,16 +1,20 @@
 <section class='user-settings'>
-  <h3>API Authentication</h3>
-  {{account-token account=model}}
+  <section>
+    <h3>API Authentication</h3>
+    {{account-token account=model}}
+  </section>
 
   {{#if features.betaFeatures}}
-    <h3>Features</h3>
-    <ul class="features-list">
-      {{#each (sort-by "name" featureFlags) as |feature|}}
-        {{beta-feature feature=feature}}
-      {{else}}
-        Oops! It looks like we don't have any experimental features for you
-        to try yet.
-      {{/each}}
-    </ul>
+    <section>
+      <h3>Features</h3>
+      <ul class="features-list">
+        {{#each (sort-by "name" featureFlags) as |feature|}}
+          {{beta-feature feature=feature}}
+        {{else}}
+          Oops! It looks like we don't have any experimental features for you
+          to try yet.
+        {{/each}}
+      </ul>
+    </section>
   {{/if}}
 </section>
