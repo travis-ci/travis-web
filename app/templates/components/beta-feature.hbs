@@ -1,10 +1,6 @@
+<div>
+  <span class='name'>{{feature.displayName}}</span>
+  <span class='description'>{{description}}</span>
+</div>
+
 {{feature-toggle feature=feature}}
-<h2 class="feature-name">
-  <span>{{feature.displayName}}</span>
-  {{#if feature.feedbackUrl}}
-    <small>
-      (<a href="{{feature.feedbackUrl}}" title="See the feedback ticket on GitHub">We'd love some feedback!</a>)
-    </small>
-  {{/if}}
-</h2>
-<p>{{feature.description}}</p>

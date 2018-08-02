@@ -689,4 +689,26 @@ header.space-between {
       border-bottom: 0;
     }
   }
+
+  .features-list {
+    list-style-type: none;
+    padding: 0;
+
+    .feature {
+      display: flex;
+      justify-content: space-between;
+
+      margin-bottom: 1em;
+
+      .description {
+        padding-left: 0.5em;
+        font-style: italic;
+        color: $cement-grey;
+      }
+    }
+
+    button {
+      transform: translateY(-2px);
+    }
+  }
 }

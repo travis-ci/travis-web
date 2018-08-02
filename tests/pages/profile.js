@@ -125,8 +125,8 @@ export default create({
     isHidden: isHidden('li[data-test-settings-tab]'),
 
     features: collection('.features-list .feature', {
-      name: text('.feature-name'),
-      description: text('p'),
+      name: text('.name'),
+      description: text('.description'),
       isOn: hasClass('active', '.switch'),
 
       click: clickable('.switch')
