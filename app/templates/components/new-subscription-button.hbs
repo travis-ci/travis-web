@@ -1,9 +1,9 @@
 {{#if account.hasSubscriptionPermissions}}
-  <a href={{account.newSubscriptionUrl}} class='button--blue manage-subscription new'>
+  <a href={{account.newSubscriptionUrl}} class='button--green manage-subscription new'>
     New subscription
   </a>
   {{else}}
-  <div class='button--blue manage-subscription disabled new'>
+  <div class='button--green manage-subscription disabled new'>
     New subscription {{tooltip-on-element text='You do not have permission to create a subscription'}}
   </div>
 {{/if}}
