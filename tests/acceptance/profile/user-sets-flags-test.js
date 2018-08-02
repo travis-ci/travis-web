@@ -3,9 +3,9 @@ import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import profilePage from 'travis/tests/pages/profile';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 
-moduleForAcceptance('Acceptance | feature flags/user sets flags');
+moduleForAcceptance('Acceptance | user settings');
 
-test('visiting /features directly when authenticated', function (assert) {
+test('changing feature flags', function (assert) {
   const currentUser = server.create('user');
   signInUser(currentUser);
 
