@@ -96,7 +96,7 @@
     "lodash.intersection": "4.4.0",
     "lodash.pickby": "4.6.0",
     "pusher-js": "^4.2.2",
-    "qunit-dom": "^0.6.2",
+    "qunit-dom": "^0.7.0",
     "raven-js": "^3.15.0",
     "svgo": "^1.0.5",
     "timeago": "^1.6.1",
