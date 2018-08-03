@@ -63,12 +63,6 @@ test('view and cancel pull requests', function (assert) {
       branch: this.branch,
     });
 
-    let commit = build.createCommit({
-      sha: 'acab',
-      author: gitUser,
-      committer: gitUser
-    });
-
     build.save();
   }
 
