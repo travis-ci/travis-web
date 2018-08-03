@@ -50,6 +50,28 @@ test('view and cancel pull requests', function (assert) {
     committer: gitUser
   });
 
+  for (let i = 0; i < 10; i++) {
+    let build = server.create('build', {
+      state: 'passed',
+      number: 1000 - i,
+      finished_at: new Date() - i * 1000,
+      started_at: new Date() - (i + 1) * 1000,
+      event_type: 'pull_request',
+      pull_request_number: 2010 - i,
+      pull_request_title: 'An older pull request',
+      repository,
+      branch: this.branch,
+    });
+
+    let commit = build.createCommit({
+      sha: 'acab',
+      author: gitUser,
+      committer: gitUser
+    });
+
+    build.save();
+  }
+
   pullRequestBuild.save();
 
   server.create('job', {
@@ -69,7 +91,7 @@ test('view and cancel pull requests', function (assert) {
   andThen(() => {});
 
   andThen(() => {
-    assert.equal(page.builds.length, 1, 'expected one pull request build');
+    assert.equal(page.builds.length, 10, 'expected a page of pull request builds');
     page.builds[0].as(pullRequest => {
       assert.ok(pullRequest.started, 'expected the pull request to have started');
       assert.equal(pullRequest.name, 'PR #2010');
@@ -89,5 +111,11 @@ test('view and cancel pull requests', function (assert) {
 
   andThen(() => {
     assert.equal(topPage.flashMessage.text, 'Build has been successfully cancelled.');
+  });
+
+  page.showMoreButton.click();
+
+  andThen(() => {
+    assert.equal(page.builds.length, 11, 'expected another page to have loaded');
   });
 });
