@@ -18,7 +18,7 @@
           <li><a href="/plans" title="Plans and Pricing" class="navigation-anchor">Plans & Pricing</a></li>
           <li><a href="{{ config.urls.enterprise }}" title="Travis CI for Enterprise" class="navigation-anchor">Enterprise</a></li>
         {{else}}
-          <li><a href="{{ config.urls.dashboard }}" title="Travis CI Dashboard" class="navigation-anchor">Dashboard</a></li>
+          <li><a href="/dashboard" title="Travis CI Dashboard" class="navigation-anchor">Dashboard</a></li>
           <li><a href="{{ config.urls.changelog }}" title="Travis CI Changelog" class="navigation-anchor">Changelog</a></li>
           <li><a href="{{ config.urls.docs }}" title="Travis CI Documentation" class="navigation-anchor">Documentation</a></li>
         {{/unless}}
@@ -48,17 +48,19 @@
           <ul class="navigation-nested">
             <li class="username">{{userName}}</li>
             <li>
-              <div class="nav-nested"></div>
+              {{svg-jar 'icon-settings' class="icon"}}
               {{#link-to "account" user.login class="signed-in" title="Your profile"}}Settings{{/link-to}}
               <div class="nav-nested"></div>
               </li>
             <li>
               <div class="nav-nested"></div>
+              {{svg-jar 'icon-settings' class="icon"}}
               <a href="{{ config.urls.docs }}">Help</a>
               <div class="nav-nested"></div>
               </li>
             <li>
               <div class="nav-nested"></div>
+              {{svg-jar 'icon-settings' class="icon"}}
               <a data-test-signout-link href="/" {{action 'signOut'}} title="Sign out of Travis CI">Sign Out</a>
               <div class="nav-nested"></div>
             </li>
