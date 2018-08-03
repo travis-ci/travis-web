@@ -17,9 +17,9 @@
       {{/if}}
     {{else}}
       <p data-test-trial-message class="source plan-status-message">
-        Trigger your first build to start testing your projects!
+        Your trial includes 100 trial builds and 2-concurrent-jobs, no credit card required.
         <br/>
-        <em>Your trial includes 100 trial builds and 2-concurrent-jobs, no credit card required.</em>
+        Need help? <a data-test-trial-link href={{config.urls.gettingStarted}} class="billing-section-link">Check our getting started guide</a>
       </p>
     {{/if}}
     {{#if model.subscriptions.isGithub}}
@@ -37,7 +37,7 @@
       {{#if model.subscriptions.isGithub}}
         {{#if model.trials.hasTrial}}
           <p data-test-trial-message class="source plan-status-message">
-            You're trialing Travis CI via your <a href={{config.marketplaceEndpoint}} class="github-marketplace-link">Github Marketplace subscription</a>.
+            You're trialing Travis CI via your <a href={{config.marketplaceEndpoint}} class="billing-section-link">Github Marketplace subscription</a>.
           </p>
         {{/if}}
       {{/if}}

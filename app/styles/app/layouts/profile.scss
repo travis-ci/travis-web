@@ -415,15 +415,15 @@ section.billing {
     color: $asphalt-grey;
     font-size: 16px;
   }
+  
+  .billing-section-link {
+    text-decoration: underline;
 
-  .github-marketplace-link {
-    color: $oxide-blue;
-
-    &:hover, &:visited, &:active {
-      color: $oxide-blue;
+    &:hover, &:active {
+      color: $cement-grey;
+      text-decoration: none;
     }
   }
-
 
   .plan {
     p {
