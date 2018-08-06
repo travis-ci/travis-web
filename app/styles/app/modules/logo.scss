@@ -1,6 +1,5 @@
 .logo {
   position: relative;
-  display: inline-block;
   height: $top-height;
   width: 100px;
   margin: 0 1.5rem 0 0;
@@ -16,7 +15,8 @@
     background: inline-image("ui/travis-ci-logo.svg") no-repeat 0 50%;
 
     &:hover {
-      background: $cream-light inline-image("ui/travis-ci-logo-hover.svg") no-repeat 50%;
+      height: 66px;
+      background: $cream-light inline-image("ui/travis-ci-logo-hover.svg") no-repeat 50% 40%;
     }
   }
 

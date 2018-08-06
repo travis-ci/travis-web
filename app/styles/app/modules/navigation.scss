@@ -115,9 +115,7 @@ $nav-line-height: 35px;
   list-style: none;
   line-height: $nav-line-height;
   background-color: #FFFFFF;
-  -webkit-box-shadow: 0px 0px 4px 2px rgba(241, 241, 241, 1);
-  -moz-box-shadow: 0px 0px 4px 2px rgba(241, 241, 241, 1);
-  box-shadow: 0px 0px 4px 2px rgba(241, 241, 241, 1);
+  box-shadow: 0px 0px 4px 2px rgba(216, 216, 216, 1);
 
   @media #{$medium-up} {
     width: 180px;
