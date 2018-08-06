@@ -2,16 +2,38 @@
   <ul>
     {{#unless features.enterpriseVersion}}
       {{#unless features.proVersion}}
-        <li><a href="{{ config.urls.about }}" title="Travis CI team" class="navigation-anchor">About Us</a></li>
-        <li><a href="{{ config.urls.blog }}" title="Travis CI Blog" class="navigation-anchor">Blog</a></li>
-        <li><a href="{{ config.urls.status }}" title="Travis CI Status" class="navigation-anchor">Status</a></li>
-        <li>
-          <span class="navigation-anchor">Help</span>
-          <ul class="navigation-nested">
-            <li><a href="{{ config.urls.docs }}" title="Browse our documentation">Read Our Docs</a></li>
-            <li><a href="{{ config.urls.imprint }}" title="Go to the imprint">Imprint</a></li>
-          </ul>
-        </li>
+        {{#if auth.signedIn}}
+          <li>
+            <a href="/dashboard" title="Travis CI Dashboard" class="navigation-anchor">Dashboard</a>
+          </li>
+          <li>
+            <a href="{{ config.urls.changelog }}" title="Travis CI Changelog" class="navigation-anchor">Changelog</a>
+          </li>
+          <li>
+            <a href="{{ config.urls.docs }}" title="Travis CI Documentation" class="navigation-anchor">Documentation</a>
+          </li>
+        {{else}}
+          <li>
+            <a href="{{ config.urls.about }}" title="Travis CI team" class="navigation-anchor">About Us</a>
+          </li>
+          <li>
+            <a href="{{ config.urls.blog }}" title="Travis CI Blog" class="navigation-anchor">Blog</a>
+          </li>
+          <li>
+            <a href="{{ config.urls.status }}" title="Travis CI Status" class="navigation-anchor">Status</a>
+          </li>
+          <li>
+            <span class="navigation-anchor">Help</span>
+            <ul class="navigation-nested">
+              <li>
+                <a href="{{ config.urls.docs }}" title="Browse our documentation">Read Our Docs</a>
+              </li>
+              <li>
+                <a href="{{ config.urls.imprint }}" title="Go to the imprint">Imprint</a>
+              </li>
+            </ul>
+          </li>
+        {{/if}}
       {{/unless}}
 
       {{#if features.proVersion}}
@@ -40,7 +62,7 @@
       {{#if auth.signedIn}}
         {{#link-to "account" user.login data-test-header-account-link class="navigation-anchor signed-in"}}
           {{user-avatar url=user.avatarUrl name=user.fullName size=40}}
-          {{svg-jar 'icon-arrowdown' class="icon"}}
+          {{svg-jar 'icon-dropdown-arrow' class="icon"}}
         {{/link-to}}
       {{/if}}
       {{#if auth.signingIn}}
@@ -48,7 +70,7 @@
       {{/if}}
       {{#if auth.signedIn}}
         <ul class="navigation-nested">
-          <li class="username">{{userName}}</li>
+          <li class="username"><span>{{userName}}</span></li>
           <li>
             {{svg-jar 'icon-settings' class="icon"}}
             {{#link-to "account" user.login class="signed-in" title="Your profile"}}Settings{{/link-to}}
@@ -56,13 +78,13 @@
             </li>
           <li>
             <div class="nav-nested"></div>
-            {{svg-jar 'icon-settings' class="icon"}}
+            {{svg-jar 'icon-encircled-help' class="icon"}}
             <a href="{{ config.urls.docs }}">Help</a>
             <div class="nav-nested"></div>
             </li>
           <li>
             <div class="nav-nested"></div>
-            {{svg-jar 'icon-settings' class="icon"}}
+            {{svg-jar 'icon-sign-out' class="icon"}}
             <a data-test-signout-link href="/" {{action 'signOut'}} title="Sign out of Travis CI">Sign Out</a>
             <div class="nav-nested"></div>
           </li>

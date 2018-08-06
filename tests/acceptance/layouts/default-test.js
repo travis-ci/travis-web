@@ -29,7 +29,7 @@ test('header layout when authenticated', function (assert) {
   signInUser(currentUser);
 
   defaultHeader.visit();
-  pauseTest();
+
   andThen(function () {
     assert.ok(defaultLayout.headerWrapperWhenAuthenticated, 'Header is wrapped within proper DOM');
     assert.ok(defaultHeader.logoPresent, 'Default header has logo');

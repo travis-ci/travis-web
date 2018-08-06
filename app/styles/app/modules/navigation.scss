@@ -84,6 +84,26 @@ $nav-line-height: 35px;
   top: -2px;
 }
 
+.username {
+  color: $cement-grey;
+  padding: 3px 0 3px 20px;
+  background-color: $cream-light;
+  overflow: hidden;
+  white-space: nowrap;
+  span {
+    &:after {
+      content: "";
+      display: block;
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 2em;
+      height: 40px;
+      background: linear-gradient(-90deg, $cream-light 20%, rgba(255, 255, 255, 0) 100%);
+    }
+  }
+}
+
 .navigation-nested {
   margin: 0;
   padding: 0 0 0 1em;
@@ -94,18 +114,12 @@ $nav-line-height: 35px;
   -moz-box-shadow: 0px 0px 4px 2px rgba(241, 241, 241, 1);
   box-shadow: 0px 0px 4px 2px rgba(241, 241, 241, 1);
 
-  .username {
-    color: $cement-grey;
-    padding: 3px 0 3px 2em;
-    background-color: $cream-light;
-  }
-
   @media #{$medium-up} {
     width: 180px;
     display: none;
     position: absolute;
     padding: 0 0 0 0;
-    margin: (-1px) 0 0 (-77px);
+    margin: (-1px) 0 0 (-94px);
 
     @include z-index(above-flashes);
 
@@ -119,7 +133,7 @@ $nav-line-height: 35px;
         margin: 0 20px;
       }
       
-      &:hover {
+      &:not(:first-child):hover {
         text-decoration: none;
         background-color: lighten($oxide-blue, 50%);
 
@@ -132,7 +146,7 @@ $nav-line-height: 35px;
         }
       }
 
-      &.active:hover {
+      &.active:not(:first-child):hover {
         text-decoration: none;
         background-color: lighten($oxide-blue, 50%);
 
