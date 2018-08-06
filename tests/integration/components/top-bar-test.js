@@ -24,8 +24,5 @@ module('Integration | Component | top bar', function (hooks) {
     await render(hbs`{{top-bar}}`);
 
     assert.dom('header').hasText(/There are no broadcasts/);
-
-    // renders user name
-    assert.dom('[data-test-header-account-link]').hasText(/Test User/);
   });
 });

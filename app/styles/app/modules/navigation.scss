@@ -52,8 +52,13 @@ $nav-line-height: 35px;
       margin-right: 0;
 
       > a {
+        text-decoration: none;
         padding-right: 0;
       }
+    }
+
+    .avatar {
+      margin-right: 10px;
     }
   }
 }
@@ -119,7 +124,7 @@ $nav-line-height: 35px;
     display: none;
     position: absolute;
     padding: 0 0 0 0;
-    margin: (-1px) 0 0 (-94px);
+    margin: (-1px) 0 0 (-80px);
 
     @include z-index(above-flashes);
 
@@ -175,4 +180,8 @@ $nav-line-height: 35px;
 .navigation-anchor:hover ~ .navigation-nested,
 .navigation-nested:hover {
   display: block;
+}
+
+.navigation-anchor:hover {
+  text-decoration: underline;
 }

@@ -69,15 +69,6 @@
 
   a {
     color: $asphalt-grey;
-
-    &:hover {
-      text-decoration: none;
-    }
-
-    &.active:hover {
-      text-decoration: none;
-      cursor: inherit;
-    }
   }
 
   &.has-autoheight {
