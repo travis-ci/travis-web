@@ -1,14 +1,16 @@
-<div>
-  Token
-  {{#if showCopySuccess}}
-    <span class="token-copied-text">Token copied!</span>
-  {{else}}
-    {{#if tokenIsVisible}}
-      <span class="auth-token">{{auth.token}}</span>
+<div class='label-and-token'>
+  <span class='label'>Token</span>
+  <span class='token-field'>
+    {{#if showCopySuccess}}
+      <span class="token-copied-text">Token copied!</span>
     {{else}}
-      <span class="obfuscated-chars">{{obfuscated-chars 20}}</span>
+      {{#if tokenIsVisible}}
+        <span class="auth-token">{{auth.token}}</span>
+      {{else}}
+        <span class="obfuscated-chars">{{obfuscated-chars 20}}</span>
+      {{/if}}
     {{/if}}
-  {{/if}}
+  </span>
 </div>
 <div class="token-actions">
   {{#copy-button
