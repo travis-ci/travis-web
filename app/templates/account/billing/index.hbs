@@ -59,6 +59,7 @@
       </section>
     </section>
   {{else if model.subscriptions}}
+    <h2>Plan Overview</h2>
     <span data-test-expiry-message>
       {{#if model.subscriptions.isExpired}}
         You had a {{model.subscriptions.sourceWords}} subscription that expired on {{moment-format model.subscriptions.validTo 'MMMM D, YYYY'}}.
@@ -73,8 +74,8 @@
       {{resubscribe-button subscription=model.subscriptions account=account}}
     {{/if}}
     {{#if model.subscriptions.isGithub}}
-      <a href={{config.marketplaceEndpoint}} class='button--blue marketplace-button'>Continue with GitHub Marketplace</a>
-      <p>Or subscribe directly with Travis CI</p>
+      <a href={{config.marketplaceEndpoint}} class='button--green marketplace-button'>Continue with GitHub Marketplace</a>
+      <p class="new-subscription-message">Or subscribe directly with Travis CI</p>
       {{new-subscription-button account=account}}
     {{/if}}
   {{/if}}
