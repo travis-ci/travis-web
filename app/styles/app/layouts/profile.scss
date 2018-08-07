@@ -329,12 +329,30 @@ $profile-breakpoint: 600px;
     svg {
       @include colorSVG($oxide-blue);
     }
+
+    &:hover {
+      background-color: #229191;
+      color: white;
+
+      svg {
+        @include colorSVG(white);
+      }
+    }
   }
 
   &.show-token {
     border: 0.09em solid lighten($cement-grey, 20%);
     box-shadow: 0 .15px 0 $cement-grey;
     color: $cement-grey;
+
+    &:hover {
+      background-color: #979797;
+      color: white;
+
+      svg {
+        @include colorSVG(white);
+      }
+    }
   }
 }
 
