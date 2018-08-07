@@ -331,11 +331,11 @@ $profile-breakpoint: 600px;
     }
 
     &:hover {
-      background-color: #229191;
-      color: white;
+      border-color: #229191;
+      color: #229191;
 
       svg {
-        @include colorSVG(white);
+        @include colorSVG(#229191);
       }
     }
   }
@@ -346,11 +346,11 @@ $profile-breakpoint: 600px;
     color: $cement-grey;
 
     &:hover {
-      background-color: #979797;
-      color: white;
+      border-color: #707070;
+      color: #707070;
 
       svg {
-        @include colorSVG(white);
+        @include colorSVG(#707070);
       }
     }
   }
