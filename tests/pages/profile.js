@@ -4,6 +4,7 @@ import {
   clickable,
   collection,
   hasClass,
+  isHidden,
   isPresent,
   text,
   visitable,
@@ -101,8 +102,6 @@ export default create({
   lockedGithubAppsRepositories: githubAppsRepositoryCollection('#locked-github-apps-repositories'),
 
   token: {
-    scope: '.profile-user',
-
     show: clickable('.token-actions button.show-token'),
     value: text('.auth-token'),
     obfuscatedCharacters: text('.obfuscated-chars'),
@@ -118,6 +117,21 @@ export default create({
       checkmark: { scope: '.checkmark' }
     },
   }),
+
+  settings: {
+    visit: clickable('li[data-test-settings-tab] a'),
+
+    isPresent: isPresent('li[data-test-settings-tab]'),
+    isHidden: isHidden('li[data-test-settings-tab]'),
+
+    features: collection('.features-list .feature', {
+      name: text('.name'),
+      description: text('.description'),
+      isOn: hasClass('active', '.switch'),
+
+      click: clickable('.switch')
+    })
+  },
 
   billing: {
     visit: clickable('li[data-test-billing-tab] a'),

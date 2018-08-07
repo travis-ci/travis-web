@@ -18,7 +18,6 @@ Router.map(function () {
   this.route('dashboard', { resetNamespace: true }, function () {
     this.route('repositories', { path: '/' });
   });
-  this.route('features', { resetNamespace: true });
   this.route('features-tracing', { path: '/features/tracing', resetNamespace: true });
 
   this.route('getting_started');
@@ -56,6 +55,7 @@ Router.map(function () {
     this.route('accounts', { path: '/', resetNamespace: true }, function () {
       this.route('account', { path: '/:login', resetNamespace: true }, function () {
         this.route('repositories', { path: '/' });
+        this.route('settings');
         this.route('billing', { path: '/subscription' }, () => {
         });
       });

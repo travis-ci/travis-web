@@ -7,33 +7,6 @@
   margin-bottom: 3em;
 }
 
-.feature-name {
-  display: inline-block;
-  margin: 0;
-  vertical-align: middle;
-
-  small {
-    margin-left: 0.5em;
-    font-size: 0.7em;
-  }
-
-  @include linkStyle;
-}
-
-.features-list {
-  padding: 0;
-  margin: 0;
-  list-style: none;
-
-  @media #{$medium-up} {
-    width: 54%;
-  }
-
-  .feature {
-    margin-bottom: 3em;
-  }
-}
-
 .travis-pride {
   .top {
     background: linear-gradient(to bottom, #e2453c 0%, #e07e39 16%, #e5d667 32%, #51b95b 48%, #1e72b7 66%, #6f5ba7 86%) no-repeat;
