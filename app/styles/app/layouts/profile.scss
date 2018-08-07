@@ -298,12 +298,14 @@ $profile-breakpoint: 600px;
     border-radius: 2px;
 
     font-size: 14px;
+    letter-spacing: 0.3em;
   }
 
   .token-copied-text {
     margin-left: 8px;
     font-style: italic;
     color: #9d9d9d;
+    letter-spacing: normal;
   }
 
   .auth-token {
@@ -320,7 +322,6 @@ $profile-breakpoint: 600px;
 
 .obfuscated-chars {
   padding-left: 0.4em;
-  letter-spacing: 0.3em;
 }
 
 .token-actions button {
