@@ -276,6 +276,10 @@ $profile-breakpoint: 600px;
 }
 
 .account-token {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
   .token-copied-text {
     margin-left: 8px;
     font-size: 12px;
@@ -290,7 +294,6 @@ $profile-breakpoint: 600px;
 }
 
 .token-actions {
-  margin-top: 0.5em;
   width: 15em;
   display: flex;
   justify-content: space-between;
