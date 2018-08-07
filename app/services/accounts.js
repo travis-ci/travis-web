@@ -10,7 +10,7 @@ export default Service.extend({
   fetch() {
     return hash({
       user: this.get('store').queryRecord('user', { current: true }),
-      orgs: this.get('store').filter('organization', () => true)
+      orgs: this.get('store').findAll('organization')
     }).then(
       ({user, orgs}) => fetchAll(this.get('store'), 'organization', {}).then(
         () => [user].concat(orgs.toArray())));
