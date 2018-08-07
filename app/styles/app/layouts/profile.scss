@@ -720,11 +720,12 @@ header.space-between {
     .feature {
       display: flex;
       justify-content: space-between;
+      align-items: flex-start;
 
       margin-bottom: 1em;
 
       .description {
-        padding-left: 0.5em;
+        width: 80%;
         font-style: italic;
         color: $cement-grey;
       }
@@ -732,6 +733,11 @@ header.space-between {
 
     button {
       transform: translateY(-2px);
+      padding: 0;
+
+      .switch-inner {
+        margin-right: 0;
+      }
     }
   }
 }
