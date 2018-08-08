@@ -117,7 +117,11 @@ $padding-top: 24px;
   .inner {
     max-width: $max-width;
     margin: auto;
-    padding: 10px $column-gutter/2 66px $column-gutter/2;
+    padding: 0 $column-gutter/2 20px $column-gutter/2;
+
+    @media #{$medium-up} {
+      padding: 10px $column-gutter/2 66px $column-gutter/2;
+    }
   }
 
   .main,

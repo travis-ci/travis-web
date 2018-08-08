@@ -61,6 +61,10 @@ $nav-line-height: 35px;
       margin-right: 10px;
     }
   }
+
+  .signed-in a {
+    text-decoration: none;
+  }
 }
 
 .navigation-anchor {
@@ -95,23 +99,26 @@ $nav-line-height: 35px;
   background-color: #F7F7F7;
   overflow: hidden;
   white-space: nowrap;
-  span {
-    &:after {
-      content: "";
-      display: block;
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: 4.75em;
-      height: 35px;
-      background: linear-gradient(-90deg, #F7F7F7 20%, rgba(255, 255, 255, 0) 100%);
+  @media #{$medium-up} {
+    span {
+      &:after {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 4.75em;
+        height: 35px;
+        background: linear-gradient(-90deg, #F7F7F7 20%, rgba(255, 255, 255, 0) 100%);
+      }
     }
   }
 }
 
 .navigation-nested {
+  width: 200px;
   margin: 0;
-  padding: 0 0 0 1em;
+  padding: 0;
   list-style: none;
   line-height: $nav-line-height;
   background-color: #FFFFFF;
@@ -119,76 +126,60 @@ $nav-line-height: 35px;
   border-radius:2px;
   box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.15);
 
+  svg {
+    margin-left: 20px;
+    vertical-align: sub;
+  }
+
+  .nav-nested {
+    height: 1px;
+    background-color: $cream-dark;
+    margin: 0 20px;
+  }
+
+  a {
+    display: block;
+    text-align: left;
+    &:not(:first-child) {
+      line-height: 55px;
+    }
+    svg.icon path {
+      stroke: #686B6E;
+    }
+    li {
+      &:hover {
+        background-color: lighten($oxide-blue, 50%);
+      }
+      &.active:hover {
+        background-color: lighten($oxide-blue, 50%);
+      }
+    }
+    &:hover {
+      text-decoration: none;
+      color: $oxide-blue;
+      svg {
+        @include colorSVG($oxide-blue);
+      }
+    }
+    &.active:hover {
+      text-decoration: none;
+      background-color: lighten($oxide-blue, 50%);
+      a {
+        color: $oxide-blue;
+      }
+      svg {
+        @include colorSVG($oxide-blue);
+      }
+    }
+  }
+
   @media #{$medium-up} {
-    width: 200px;
     display: none;
     position: absolute;
     padding: 0 0 0 0;
     margin: (-1px) 0 0 (-103px);
 
-    @include z-index(above-flashes);
-
-    .nav-nested {
-      height: 1px;
-      background-color: $cream-dark;
-      margin: 0 20px;
-    }
-
-    a {
-      display: block;
-      text-align: left;
-
-
-      &:not(:first-child) {
-        line-height: 55px;
-      }
-      
-      svg.icon path{
-        stroke: #686B6E;
-      }
-
-      li {
-        &:hover {
-          background-color: lighten($oxide-blue, 50%);
-        }
-
-        &.active:hover {
-          background-color: lighten($oxide-blue, 50%);
-        }
-      }
-      
-      &:hover {
-        text-decoration: none;
-        color: $oxide-blue;
-
-        svg {
-        @include colorSVG($oxide-blue);
-        }
-      }
-
-      &.active:hover {
-        text-decoration: none;
-        background-color: lighten($oxide-blue, 50%);
-
-        a {
-        color: $oxide-blue;
-        }
-
-        svg {
-          @include colorSVG($oxide-blue);
-        }
-      }
-    }
-
-    svg {
-      margin-left: 20px;
-      vertical-align: sub;
-    }
-
-    a {
-      display: inline;
-      text-decoration: none;
-    }
+    @include z-index(above-flashes)
   }
 }
 
@@ -197,6 +188,6 @@ $nav-line-height: 35px;
   display: block;
 }
 
-.navigation-anchor:hover {
+nav.navigation-anchor:hover {
   text-decoration: underline;
 }
