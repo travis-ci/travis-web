@@ -27,7 +27,12 @@ test('visiting job-view', function (assert) {
     }
   });
 
-  let build = server.create('build', { repository: repo, state: 'passed', commit, branch, request });
+  let user = server.create('user', {
+    name: 'Mr T',
+    avatar_url: '/images/favicon-gray.png'
+  });
+
+  let build = server.create('build', { repository: repo, state: 'passed', createdBy: user, commit, branch, request });
   let job = server.create('job', { number: '1234.1', repository: repo, state: 'passed', build, commit });
   commit.job = job;
 
@@ -47,7 +52,10 @@ test('visiting job-view', function (assert) {
     assert.equal(jobPage.branch, 'acceptance-tests', 'displays the branch');
     assert.equal(jobPage.message, 'acceptance-tests This is a message', 'displays message');
     assert.equal(jobPage.state, '#1234.1 passed', 'displays build number');
-    assert.equal(jobPage.author, 'Mr T authored and committed');
+
+    assert.equal(jobPage.createdBy.href, 'https://github.com/testuser');
+    assert.equal(jobPage.createdBy.text, 'Mr T');
+    assert.ok(jobPage.createdBy.avatarSrc.startsWith('/images/favicon-gray.png'));
 
     assert.equal(jobPage.log, 'Hello log');
     assert.notOk(jobPage.hasTruncatedLog);

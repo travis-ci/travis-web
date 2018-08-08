@@ -72,16 +72,10 @@
     </ul>
 
     <p class="commit-author">
-      {{#if commit.authorName}}
-        {{user-avatar url=commit.authorAvatarUrl name=commit.authorName small=true size=18}}
-        <span class="label-align">{{commit.authorName}} authored{{#if commit.authorIsCommitter}} and committed{{/if}}</span>
-      {{/if}}
-      {{#unless commit.authorIsCommitter}}
-        {{#if commit.committerName}}
-          {{user-avatar url=commit.committerAvatarUrl name=commit.committerName small=true size=18}}
-          <span class="label-align">{{commit.committerName}} committed</span>
-        {{/if}}
-      {{/unless}}
+      <a href='https://github.com/{{build.createdBy.login}}'>
+        {{user-avatar url=build.createdBy.avatarUrl name=build.createdBy.name small=true size=18}}
+        <span class="label-align">{{build.createdBy.name}}</span>
+      </a>
     </p>
   </div>
 </div>
