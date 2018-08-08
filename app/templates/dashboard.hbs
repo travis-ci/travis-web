@@ -13,6 +13,11 @@
     </ul>
   </section>
 
+  <header class='tabs'>
+    <h2 class='small-title'>{{link-to 'Active repositories' 'dashboard' data-test-active-repos-tab}}</h2>
+    <h2 class='small-title'>{{link-to 'My builds' 'dashboard.my-builds' data-test-my-builds-tab}}</h2>
+  </header>
+
   {{outlet}}
 </div>
 {{/travis-layout}}
