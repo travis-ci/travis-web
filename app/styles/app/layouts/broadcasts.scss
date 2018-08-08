@@ -16,7 +16,7 @@
   position: relative;
   background-color: white;
   list-style: none;
-  padding: 0 1em;
+  padding: 1px 1em;
   margin: 0 auto 0.7em;
   border-radius: 2px;
   height: 0;
@@ -26,6 +26,10 @@
   transition: opacity 150ms ease;
   background-color: FFFFFF;
   box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.15);
+
+  @media #{$medium-up} {
+    padding: 0 1em;
+  }
 
   li {
     border-bottom: solid 2px $cream-dark;
@@ -38,8 +42,12 @@
   p {
     position: relative;
     margin: 0.5em 0;
-    padding: 0 1.5rem;
+    padding: 0 1.7rem;
     word-wrap: break-word;
+
+    @media #{$medium-up} {
+      padding: 0 1.5em;
+    }
   }
 
   a {
