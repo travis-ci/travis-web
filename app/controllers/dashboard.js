@@ -1,6 +1,5 @@
 // FIXME this is entirely copied from dashboard/repositories
 
-import { isBlank, isEqual } from '@ember/utils';
 import Controller from '@ember/controller';
 import { task, taskGroup } from 'ember-concurrency';
 import { service } from 'ember-decorators/service';
