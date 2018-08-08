@@ -128,15 +128,16 @@ $nav-line-height: 35px;
 
     @include z-index(above-flashes);
 
-    li {
+    .nav-nested {
+      height: 1px;
+      background-color: $cream-dark;
+      margin: 0 20px;
+    }
+
+    a {
       display: block;
       text-align: left;
 
-      .nav-nested {
-        height: 1px;
-        background-color: $cream-dark;
-        margin: 0 20px;
-      }
 
       &:not(:first-child) {
         line-height: 55px;
@@ -145,21 +146,27 @@ $nav-line-height: 35px;
       svg.icon path{
         stroke: #686B6E;
       }
-      
-      &:not(:first-child):hover {
-        text-decoration: none;
-        background-color: lighten($oxide-blue, 50%);
 
-        a {
-        color: $oxide-blue;
+      li {
+        &:hover {
+          background-color: lighten($oxide-blue, 50%);
         }
+
+        &.active:hover {
+          background-color: lighten($oxide-blue, 50%);
+        }
+      }
+      
+      &:hover {
+        text-decoration: none;
+        color: $oxide-blue;
 
         svg {
         @include colorSVG($oxide-blue);
         }
       }
 
-      &.active:not(:first-child):hover {
+      &.active:hover {
         text-decoration: none;
         background-color: lighten($oxide-blue, 50%);
 

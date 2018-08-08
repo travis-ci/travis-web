@@ -63,24 +63,30 @@
       {{#if auth.signedIn}}
         <ul class="navigation-nested">
           <li class="username"><span>{{userName}}</span></li>
-          <li>
-            {{svg-jar 'icon-settings' class="icon"}}
-            {{#link-to "account" user.login class="signed-in" title="Your settings"}}Settings{{/link-to}}
-            <div class="nav-nested"></div>
-            </li>
+            <a href="{{user.login}}" class="singed-in" title="Your settings">
+              <li>
+                {{svg-jar 'icon-settings' class="icon"}}
+                Settings
+              </li>
+              <div class="nav-nested"></div>
+            </a>
           {{#if features.proVersion}}
-            <li>
-              <div class="nav-nested"></div>
-              {{svg-jar 'icon-encircled-help' class="icon"}}
-              <a href="{{ config.urls.support }}" title="Email the support team" {{action 'helpscoutTrigger'}}>Help</a>
-              <div class="nav-nested"></div>
-            </li>
-          {{/if}}
-          <li>
             <div class="nav-nested"></div>
-            {{svg-jar 'icon-sign-out' class="icon"}}
-            <a data-test-signout-link href="/" {{action 'signOut'}} title="Sign out of Travis CI">Sign Out</a>
-          </li>
+            <a href="{{ config.urls.support }}" title="Email the support team" {{action 'helpscoutTrigger'}}>
+              <li>
+                {{svg-jar 'icon-encircled-help' class="icon"}}
+                Help
+              </li>
+            </a>
+            <div class="nav-nested"></div>
+          {{/if}}
+            <div class="nav-nested"></div>
+            <a data-test-signout-link href="/" {{action 'signOut'}} title="Sign out of Travis CI">
+              <li>
+                {{svg-jar 'icon-sign-out' class="icon"}}
+                Sign Out
+              </li>
+            </a>
         </ul>
       {{/if}}
     </li>
