@@ -24,7 +24,6 @@
   opacity: 0;
   will-change: opacity;
   transition: opacity 150ms ease;
-  background-color: FFFFFF;
   box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.15);
 
   @media #{$medium-up} {
@@ -57,7 +56,6 @@
 
   &.is-open {
     @include z-index(above-flashes);
-
     opacity: 1;
     height: auto;
   }

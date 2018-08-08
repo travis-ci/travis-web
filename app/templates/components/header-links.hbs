@@ -63,13 +63,13 @@
       {{#if auth.signedIn}}
         <ul class="navigation-nested">
           <li class="username"><span>{{userName}}</span></li>
-            <a href="{{user.login}}" class="singed-in" title="Your settings">
-              <li>
-                {{svg-jar 'icon-settings' class="icon"}}
-                Settings
-              </li>
-              <div class="nav-nested"></div>
-            </a>
+           {{#link-to "account" user.login class="signed-in" title="Your profile"}}
+            <li>
+              {{svg-jar 'icon-settings' class="icon"}}
+              Settings
+            </li>
+           {{/link-to}}
+          <div class="nav-nested"></div>
           {{#if features.proVersion}}
             <div class="nav-nested"></div>
             <a href="{{ config.urls.support }}" title="Email the support team" {{action 'helpscoutTrigger'}}>
