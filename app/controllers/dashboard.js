@@ -12,14 +12,6 @@ export default Controller.extend({
 
   starring: taskGroup().drop(),
 
-  @computed()
-  tasks() {
-    return [
-      this.get('star'),
-      this.get('unstar')
-    ];
-  },
-
   star: task(function* (repo) {
     repo.set('starred', true);
     try {
