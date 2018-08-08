@@ -1,5 +1,5 @@
 import { currentURL, currentRouteName, visit, click } from '@ember/test-helpers';
-import { module, skip, test } from 'qunit';
+import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { enableFeature } from 'ember-feature-flags/test-support';
@@ -116,10 +116,6 @@ module('Acceptance | dashboard/repositories', function (hooks) {
     await click('[data-test-dashboard-repository-star="2"]');
     assert.dom('[data-test-dashboard-starred-repositories] [data-test-dashboard-repository-star]').exists({ count: 1 });
   });
-
-  skip('filtering repos');
-
-  skip('triggering a build');
 
   test('Dashboard pagination works', async function (assert) {
     enableFeature('dashboard');
