@@ -13,7 +13,11 @@
   </section>
 
   <section data-test-dashboard-active-repositories class="dashboard-section dashboard-active">
-    <h2 class="small-title">All active repositories</h2>
+    <header class='tabs'>
+      <h2 class="small-title">All active repositories</h2>
+      <h2 class='small-title'>{{link-to 'My builds' 'dashboard.my-builds' data-test-my-builds-tab}}</h2>
+    </header>
+
     <ul class="repo-list">
       {{#each filteredRepos as |repo idx|}}
         {{dashboard-row repo=repo idx=idx star=star unstar=unstar}}

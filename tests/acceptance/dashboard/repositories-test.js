@@ -4,6 +4,7 @@ import { setupApplicationTest } from 'ember-qunit';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { enableFeature } from 'ember-feature-flags/test-support';
 import { percySnapshot } from 'ember-percy';
+import page from 'travis/tests/pages/dashboard';
 
 module('Acceptance | dashboard/repositories', function (hooks) {
   setupApplicationTest(hooks);
@@ -136,6 +137,16 @@ module('Acceptance | dashboard/repositories', function (hooks) {
 
     assert.dom('[data-test-dashboard-starred-repositories] [data-test-dashboard-repository-star]').exists({ count: 1 }, 'still lists starred repos on top');
     assert.dom('[data-test-dashboard-active-repositories] [data-test-dashboard-repository-star]').exists({ count: 6 }, 'lists other repos on the 2nd page');
+  });
+
+  test('listing my builds', async function (assert) {
+    enableFeature('dashboard');
+
+    await page.visit();
+    await page.myBuilds.visit();
+
+    assert.equal(currentURL(), '/dashboard/my-builds');
+    assert.equal(page.myBuilds.builds.length, 4);
   });
 
   test('logging out leaves the dashboard', async function (assert) {

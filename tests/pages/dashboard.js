@@ -37,5 +37,13 @@ export default create({
     label: text('a'),
     page: clickable('a')
   }),
-  flashMessage: text('.flash li.success')
+  flashMessage: text('.flash li.success'),
+
+  myBuilds: {
+    visit: clickable('[data-test-my-builds-tab]'),
+
+    builds: collection('[data-test-my-build]', {
+
+    })
+  }
 });

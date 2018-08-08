@@ -410,6 +410,8 @@ export default function () {
     }
   });
 
+  this.get('/builds');
+
   this.get('/repo/:repo_id/builds', function (schema, request) {
     let builds = schema.builds.where({ repositoryId: request.params.repo_id });
 
