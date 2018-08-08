@@ -152,7 +152,7 @@ module('Acceptance | dashboard/repositories', function (hooks) {
 
     await page.activeRepos.visit();
 
-    assert.equal(page.activeRepos.repos.length, 3);
+    assert.equal(page.activeRepos.repos.length, 4);
   });
 
   test('logging out leaves the dashboard', async function (assert) {
