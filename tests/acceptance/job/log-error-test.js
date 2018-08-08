@@ -5,7 +5,7 @@ import jobPage from 'travis/tests/pages/job';
 moduleForAcceptance('Acceptance | job/log error');
 
 test('handling log error', function (assert) {
-  assert.expect(5);
+  assert.expect(4);
 
   let repository =  server.create('repository', { slug: 'travis-ci/travis-web' }),
     branch = server.create('branch', { name: 'acceptance-tests' });
