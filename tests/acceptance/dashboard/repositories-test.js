@@ -147,6 +147,8 @@ module('Acceptance | dashboard/repositories', function (hooks) {
 
     assert.equal(currentURL(), '/dashboard/my-builds');
     assert.equal(page.myBuilds.builds.length, 4);
+
+    assert.equal(page.starredRepos.length, 1);
   });
 
   test('logging out leaves the dashboard', async function (assert) {
