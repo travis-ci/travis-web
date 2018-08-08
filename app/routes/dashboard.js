@@ -12,9 +12,6 @@ export default TravisRoute.extend({
   @service accounts: null,
 
   queryParams: {
-    filter: {
-      replace: true
-    },
     page: {
       refreshModel: true
     }
