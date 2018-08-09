@@ -145,7 +145,7 @@ module('Acceptance | dashboard/repositories', function (hooks) {
     await page.visit();
     await page.myBuilds.visit();
 
-    assert.equal(currentURL(), '/dashboard/my-builds');
+    assert.equal(currentURL(), '/dashboard/builds');
     assert.equal(page.myBuilds.builds.length, 4);
 
     assert.equal(page.starredRepos.length, 1);
