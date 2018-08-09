@@ -71,6 +71,7 @@ moduleForAcceptance('Acceptance | repo branches', {
       finished_at: oneYearAgo,
       branch: primaryBranch,
       repository,
+      createdBy: this.currentUser
     });
 
     lastBuild.createCommit({
