@@ -1,5 +1,5 @@
 import { assign } from '@ember/polyfills';
-import { test } from 'qunit';
+import { skip, test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import page from 'travis/tests/pages/build-list';
 import topPage from 'travis/tests/pages/top';
@@ -251,7 +251,8 @@ test('build history shows, more can be loaded, and a created build gets added an
   });
 });
 
-test('view and cancel pull requests', function (assert) {
+// FIXME is this truly a duplicate?
+skip('view and cancel pull requests', function (assert) {
   assert.expect(10);
   page.visitPullRequests({ organization: 'org-login', repo: 'repository-name' });
 
