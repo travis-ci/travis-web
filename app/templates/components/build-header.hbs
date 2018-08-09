@@ -72,11 +72,7 @@
     </ul>
 
     <p class="commit-author">
-      {{#link-to 'owner' build.createdBy.login}}
-        {{tooltip-on-element text=(concat 'View owner page for ' build.createdBy.name)}}
-        {{user-avatar url=build.createdBy.avatarUrl name=build.createdBy.name small=true size=18}}
-        <span class="label-align inner-underline">{{build.createdBy.name}}</span>
-      {{/link-to}}
+      {{created-by user=build.createdBy}}
     </p>
   </div>
 </div>
