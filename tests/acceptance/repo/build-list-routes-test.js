@@ -43,6 +43,7 @@ moduleForAcceptance('Acceptance | repo build list routes', {
       event_type: 'cron',
       repository,
       branch: cronBranch,
+      createdBy: currentUser,
     });
 
     const commitAttributes = {
