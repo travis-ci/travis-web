@@ -53,7 +53,7 @@ test('visiting job-view', function (assert) {
     assert.equal(jobPage.message, 'acceptance-tests This is a message', 'displays message');
     assert.equal(jobPage.state, '#1234.1 passed', 'displays build number');
 
-    assert.equal(jobPage.createdBy.href, 'https://github.com/testuser');
+    assert.equal(jobPage.createdBy.href, '/testuser');
     assert.equal(jobPage.createdBy.text, 'Mr T');
     assert.ok(jobPage.createdBy.avatarSrc.startsWith('/images/favicon-gray.png'));
 
