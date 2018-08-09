@@ -80,14 +80,12 @@ test('Pusher events change the main display', function (assert) {
     assert.equal(sidebarPage.repoTitle, 'org-login / yet-another-repository-name', 'expected the displayed repository to be the one with a running build');
   });
 
-  let  gitUser = server.create('git-user', { name: 'User Name' });
   const commit = server.create('commit', {
     id: 100,
     sha: 'acab',
     branch: 'primary',
     message: 'Add new chapter',
     committed_at: '2016-12-02T22:02:34Z',
-    author: gitUser,
   });
 
   const build = this.branch.createBuild({

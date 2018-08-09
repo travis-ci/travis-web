@@ -26,8 +26,7 @@ module('Acceptance | builds/current tab', function (hooks) {
     let repository =  server.create('repository', { slug: 'travis-ci/travis-web' });
 
     const branch = server.create('branch', { name: 'acceptance-tests' });
-    let  gitUser = server.create('git-user', { name: 'Mr T' });
-    let commit = server.create('commit', { author: gitUser, committer: gitUser, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
+    let commit = server.create('commit', { branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
     let build = server.create('build', { number: '5', state: 'started', repository, branch, commit });
     let job = server.create('job', { number: '1234.1', state: 'received', build, commit, repository, config: { language: 'Hello' } });
 
@@ -57,8 +56,7 @@ module('Acceptance | builds/current tab', function (hooks) {
     let repository =  server.create('repository', { slug: 'travis-ci/travis-web', private: true });
 
     const branch = server.create('branch', { name: 'acceptance-tests' });
-    let  gitUser = server.create('git-user', { name: 'Mr T' });
-    let commit = server.create('commit', { author: gitUser, committer: gitUser, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
+    let commit = server.create('commit', { branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
     let build = server.create('build', { number: '5', state: 'started', repository, branch, commit });
     let job = server.create('job', { number: '1234.1', state: 'received', build, commit, repository, config: { language: 'Hello' } });
     server.create('log', { id: job.id, content: 'teh log' });
@@ -78,8 +76,7 @@ module('Acceptance | builds/current tab', function (hooks) {
     let repository =  server.create('repository', { slug: 'travis-ci/travis-web' });
 
     const branch = server.create('branch', { name: 'acceptance-tests' });
-    let  gitUser = server.create('git-user', { name: 'Mr T' });
-    let commit = server.create('commit', { author: gitUser, committer: gitUser, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
+    let commit = server.create('commit', { branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
     let build = server.create('build', { number: '5', state: 'passed', repository, branch, commit });
 
     commit.update('build', build);

@@ -15,10 +15,6 @@ moduleForAcceptance('Acceptance | repo build list routes', {
 
     signInUser(currentUser);
 
-    const gitUser = server.create('git-user', {
-      name: 'User Name'
-    });
-
     const repository = server.create('repository', {
       slug: 'org-login/repository-name'
     });
@@ -48,8 +44,6 @@ moduleForAcceptance('Acceptance | repo build list routes', {
 
     const commitAttributes = {
       sha: '1234567890',
-      author: gitUser,
-      committer: gitUser
     };
     this.commitAttributes = commitAttributes;
 
@@ -161,11 +155,8 @@ test('build history shows, more can be loaded, and a created build gets added an
       state: 'passed'
     });
 
-    let us = server.create('git-user', { name: 'us' });
-
     olderBuild.createCommit({
       sha: 'acab',
-      author: us
     });
     olderBuild.save();
   });
