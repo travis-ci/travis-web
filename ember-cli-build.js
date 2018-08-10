@@ -12,8 +12,8 @@ var svg = function (buffer) {
   var svg = buffer.toString()
     .replace(/\n/g, '')
     .replace(/\r/g, '')
-    .replace(/\#/g, '%23')
-    .replace(/\"/g, "'");
+    .replace(/#/g, '%23')
+    .replace(/"/g, "'");
 
   return '"data:image/svg+xml;utf8,' + svg + '"';
 };
