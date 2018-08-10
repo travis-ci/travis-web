@@ -12,6 +12,8 @@ moduleForAcceptance('Acceptance | builds/pull requests', {
     });
 
     signInUser(this.currentUser);
+
+    this.branch = server.create('branch');
   },
 });
 
