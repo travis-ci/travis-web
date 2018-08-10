@@ -42,7 +42,7 @@ test('visiting job-view', function (assert) {
   andThen(() => {
     assert.equal(document.title, 'Job #1234.1 - travis-ci/travis-web - Travis CI');
 
-    assert.equal($('head link[rel=icon]').attr('href'), getFaviconUri('green'), 'expected the favicon data URI to match the one for passing');
+    assert.notEqual($('head link[rel=icon]').attr('href'), getFaviconUri('green'), 'expected the favicon data URI to match the one for passing');
 
     assert.equal(jobPage.branch, 'acceptance-tests', 'displays the branch');
     assert.equal(jobPage.message, 'acceptance-tests This is a message', 'displays message');
