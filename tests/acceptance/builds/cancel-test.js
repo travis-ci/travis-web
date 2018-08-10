@@ -30,6 +30,6 @@ module('Acceptance | builds/cancel', function (hooks) {
     await click('[data-test-repo-actions-cancel-button]');
 
     assert.dom('[data-test-flash-message-text]').hasText('Build has been successfully cancelled.', 'cancelled build notification should be displayed');
-    assert.notEqual($('head link[rel=icon]').attr('href'), getFaviconUri('yellow'), 'expected the favicon data URI to match the one for running');
+    assert.equal($('head link[rel=icon]').attr('href'), getFaviconUri('yellow'), 'expected the favicon data URI to match the one for running');
   });
 });

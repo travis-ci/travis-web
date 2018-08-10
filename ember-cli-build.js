@@ -4,12 +4,6 @@ const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 const Funnel = require('broccoli-funnel');
 const SVGO = require('svgo');
 
-var path  = require('path');
-var types = require('node-sass').types;
-const Datauri = require('datauri');
-
-var base = process.cwd() + '/public/images';
-
 module.exports = function () {
   let fingerprint;
 
@@ -86,20 +80,6 @@ module.exports = function () {
             }
           }
         ]
-      }
-    },
-    sassOptions: {
-      functions: {
-        'inline-image($file)': function (file) {
-          // we want to file relative to the base
-          var relativePath = './' + file.getValue();
-          var filePath = path.resolve(base, relativePath);
-
-          // read the file
-          var data = new Datauri(filePath).content;
-
-          return types.String('url(' + data + ')');
-        }
       }
     }
   });
