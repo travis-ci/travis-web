@@ -54,7 +54,7 @@
     "ember-cli-uglify": "^2.0.0",
     "ember-composable-helpers": "^2.1.0",
     "ember-concurrency": "^0.8.15",
-    "ember-data": "~3.1.1",
+    "ember-data": "emberjs/data#master",
     "ember-data-filter": "ember-data/ember-data-filter#v2.0.0",
     "ember-decorators": "^1.3.4",
     "ember-exam": "1.0.0",
