@@ -24,6 +24,7 @@ let Serializer = V2FallbackSerializer.extend({
   },
 
   normalize: function (modelClass, resourceHash) {
+    // This converts this from hasMany to belongsTo
     if (resourceHash.builds) {
       resourceHash.build = resourceHash.builds[0];
     }
