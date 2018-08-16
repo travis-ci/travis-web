@@ -22,7 +22,8 @@
 {{else}}
   {{repository-switch repository=repository disabled=true}}
   <a class="profile-settings disabled button">
-    {{svg-jar 'icon-private' class="icon"}}
+    {{tooltip-on-element text='Insufficient permissions'}}
+    {{svg-jar 'icon-settings' class="icon"}}
     Settings
   </a>
 {{/if}}
