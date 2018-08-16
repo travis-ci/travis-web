@@ -21,6 +21,14 @@ let Serializer = V2FallbackSerializer.extend({
       });
     }
     return this._super(...arguments);
+  },
+
+  normalize: function (modelClass, resourceHash) {
+    if (resourceHash.builds) {
+      resourceHash.build = resourceHash.builds[0];
+    }
+
+    return this._super(modelClass, resourceHash);
   }
 });
 
