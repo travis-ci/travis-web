@@ -60,7 +60,7 @@ export default EmberObject.extend({
 
     if (this.get('storage').getItem('travis.logRendering') === 'false') {
       let text = "Log rendering is off because localStorage['travis.logRendering'] is `false`.";
-      this.loadParts([{content: `${text}\r\n`, number: 0, final: true}]);
+      this.get('parts').pushObject({content: `${text}\r\n`, number: 0, final: true});
     } else {
       this.loadParts(json['log_parts']);
     }
@@ -84,7 +84,7 @@ export default EmberObject.extend({
   },
 
   append(part) {
-    if (this.get('parts').isDestroying || this.get('parts').isDestroyed) {
+    if (this.get('parts').isDestroying || this.get('parts').isDestroyed || this.get('storage').getItem('travis.logRendering') === 'false') {
       return;
     }
     return this.get('parts').pushObject(part);
