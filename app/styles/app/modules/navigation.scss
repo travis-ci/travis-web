@@ -45,9 +45,8 @@ $nav-line-height: 35px;
   }
 
   .profile {
-    line-height: $top-height;
-
     @media #{$medium-up} {
+      line-height: $top-height;
       float: right;
       margin-right: 0;
 
@@ -60,6 +59,14 @@ $nav-line-height: 35px;
     .avatar {
       margin-right: 10px;
     }
+
+    .navigation-profile-link{
+      display: none;
+
+      @media #{$medium-up} {
+        display: block;
+      }
+    }
   }
 
   .signed-in a {
@@ -71,6 +78,10 @@ $nav-line-height: 35px;
   display: block;
   width: 100%;
   line-height: $nav-line-height;
+
+  &:last-child {
+    padding-bottom: 10px;
+  }
 
   &:hover {
     text-decoration: underline;
@@ -116,19 +127,79 @@ $nav-line-height: 35px;
 }
 
 .navigation-nested {
-  width: 200px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  line-height: $nav-line-height;
-  background-color: #FFFFFF;
-  border: 1px solid #F7F7F7;
-  border-radius:2px;
-  box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.15);
+  padding: 10px 0px 0px 0px;
+  border-top: 1px #666666 solid;
 
   svg {
-    margin-left: 20px;
-    vertical-align: sub;
+    display: none;
+  }
+
+  a {
+    &:not(:first-child) {
+      line-height: 35px;
+    }
+  }
+
+  @media #{$medium-up} {
+    width: 200px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    line-height: $nav-line-height;
+    background-color: #FFFFFF;
+    border: 1px solid #F7F7F7;
+    border-radius:2px;
+    box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.15);
+
+    svg {
+      display: inline-block;
+      margin-left: 20px;
+      vertical-align: sub;
+    }
+
+    a {
+      display: block;
+      text-align: left;
+      &:not(:first-child) {
+        line-height: 55px;
+      }
+      svg.icon path {
+        stroke: #686B6E;
+      }
+      li {
+        &:hover {
+          background-color: lighten($oxide-blue, 50%);
+        }
+        &.active:hover {
+          background-color: lighten($oxide-blue, 50%);
+        }
+      }
+      &:hover {
+        text-decoration: none;
+        color: $oxide-blue;
+        svg {
+          @include colorSVG($oxide-blue);
+        }
+      }
+      &.active:hover {
+        text-decoration: none;
+        background-color: lighten($oxide-blue, 50%);
+        a {
+          color: $oxide-blue;
+        }
+        svg {
+          @include colorSVG($oxide-blue);
+        }
+      }
+    }
+  }
+
+  .username {
+    display: none;
+
+    @media #{$medium-up} {
+      display: block;
+    }
   }
 
   .nav-nested {
@@ -137,41 +208,7 @@ $nav-line-height: 35px;
     margin: 0 20px;
   }
 
-  a {
-    display: block;
-    text-align: left;
-    &:not(:first-child) {
-      line-height: 55px;
-    }
-    svg.icon path {
-      stroke: #686B6E;
-    }
-    li {
-      &:hover {
-        background-color: lighten($oxide-blue, 50%);
-      }
-      &.active:hover {
-        background-color: lighten($oxide-blue, 50%);
-      }
-    }
-    &:hover {
-      text-decoration: none;
-      color: $oxide-blue;
-      svg {
-        @include colorSVG($oxide-blue);
-      }
-    }
-    &.active:hover {
-      text-decoration: none;
-      background-color: lighten($oxide-blue, 50%);
-      a {
-        color: $oxide-blue;
-      }
-      svg {
-        @include colorSVG($oxide-blue);
-      }
-    }
-  }
+  
 
   @media #{$medium-up} {
     display: none;

@@ -52,7 +52,7 @@
         <button class="auth-button signed-out" type="button" {{action 'signIn'}}>Sign in with GitHub</button>
       {{/if}}
       {{#if auth.signedIn}}
-        {{#link-to "account" user.login data-test-header-account-link class="navigation-anchor signed-in"}}
+        {{#link-to "account" user.login data-test-header-account-link class="navigation-anchor navigation-profile-link signed-in"}}
           {{user-avatar url=user.avatarUrl name=user.fullName size=40}}
           {{svg-jar 'icon-dropdown-arrow' class="icon"}}
         {{/link-to}}
