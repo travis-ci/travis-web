@@ -17,10 +17,5 @@
 {{/if}}
 
 {{#if (and subscription.isStripe monthly subscription.permissions.write)}}
-  <span class='notice-banner--yellow' data-test-annual-invitation>
-    Save 10% by switching to
-    <a href={{concat subscription.billingUrl '/edit?switch_annual=true'}}>
-      annual billing
-    </a>
-  </span>
+  <span class='notice-banner--yellow' data-test-annual-invitation>Get one month for free with annual billing</span>
 {{/if}}
