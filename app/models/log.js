@@ -89,7 +89,9 @@ export default EmberObject.extend({
   },
 
   append(part) {
-    if (this.get('parts').isDestroying || this.get('parts').isDestroyed || this.get('noRendering')) {
+    if (this.get('parts').isDestroying ||
+        this.get('parts').isDestroyed ||
+        this.get('noRendering')) {
       return;
     }
     return this.get('parts').pushObject(part);
