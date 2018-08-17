@@ -308,3 +308,43 @@ travis_fold:end:afold
 
   percySnapshot(assert);
 });
+
+test('visiting a job when log-rendering is off', function (assert) {
+  localStorage.setItem('travis.logRendering', false);
+
+  let repo =  server.create('repository', { slug: 'travis-ci/travis-web' }),
+    branch = server.create('branch', { name: 'acceptance-tests' });
+
+  let  gitUser = server.create('git-user', { name: 'Mr T' });
+  let commit = server.create('commit', { author: gitUser, committer: gitUser, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
+  let build = server.create('build', { repository: repo, state: 'passed', commit, branch });
+  let job = server.create('job', { number: '1234.1', repository: repo, state: 'passed', commit, build });
+  commit.job = job;
+
+  job.save();
+  commit.save();
+
+  const log = 'I am a log that won’t render.';
+  server.create('log', { id: job.id, content: log });
+
+  jobPage.visit();
+
+  // An unfortunate workaround for log displaying being outside Ember facilities.
+  // eslint-disable-next-line
+  waitForElement('.log-container .log-line');
+
+  andThen(() => {
+    assert.equal(jobPage.logLines[0].text, "Log rendering is off because localStorage['travis.logRendering'] is `false`.");
+
+    this.application.pusher.receive('job:log', {
+      id: job.id,
+      number: 1,
+      final: false,
+      _log: 'another log line'
+    });
+  });
+
+  andThen(() => {
+    assert.equal(jobPage.logLines.length, 1);
+  });
+});
