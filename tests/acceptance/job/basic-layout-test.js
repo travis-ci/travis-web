@@ -333,7 +333,18 @@ test('visiting a job when log-rendering is off', function (assert) {
   // eslint-disable-next-line
   waitForElement('.log-container .log-line');
 
-  andThen(function () {
+  andThen(() => {
     assert.equal(jobPage.logLines[0].text, "Log rendering is off because localStorage['travis.logRendering'] is `false`.");
+
+    this.application.pusher.receive('job:log', {
+      id: job.id,
+      number: 1,
+      final: false,
+      _log: 'another log line'
+    });
+  });
+
+  andThen(() => {
+    assert.equal(jobPage.logLines.length, 1);
   });
 });
