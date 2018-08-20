@@ -1,6 +1,7 @@
 import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import page from 'travis/tests/pages/build';
+import jobPage from 'travis/tests/pages/job';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 
 moduleForAcceptance('Acceptance | builds/view pull request', {
@@ -42,6 +43,8 @@ test('renders a pull request', function (assert) {
     assert.equal(page.commitSha, 'Commit abc123');
     assert.equal(page.compare, '#10: Resist');
     assert.equal(page.commitBranch, 'Branch acceptance-tests', 'shows the PR branch');
+
+    assert.ok(jobPage.createdBy.isHidden, 'expected created-by to be hidden when not present in the data');
   });
 
   percySnapshot(assert);

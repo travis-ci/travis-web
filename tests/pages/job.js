@@ -4,6 +4,7 @@ import {
   clickable,
   collection,
   hasClass,
+  isHidden,
   isVisible,
   text,
   attribute
@@ -27,7 +28,9 @@ export default create({
 
     href: attribute('href', 'a'),
     text: text('.label-align'),
-    avatarSrc: attribute('src', 'img')
+    avatarSrc: attribute('src', 'img'),
+
+    isHidden: isHidden('.label-align')
   },
 
   hasTruncatedLog: isVisible('.log-container p.warning'),

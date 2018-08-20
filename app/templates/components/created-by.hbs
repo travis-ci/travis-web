@@ -1,5 +1,7 @@
-{{#link-to 'owner' user.login}}
-  {{tooltip-on-element text=(concat 'View repositories for ' nameOrLogin)}}
-  {{user-avatar url=user.avatarUrl name=user.name small=true size=18}}
-  <span class="label-align inner-underline">{{nameOrLogin}}</span>
-{{/link-to}}
+{{#if user}}
+  {{#link-to 'owner' user.login}}
+    {{tooltip-on-element text=(concat 'View repositories for ' nameOrLogin)}}
+    {{user-avatar url=user.avatarUrl name=user.name small=true size=18}}
+    <span class="label-align inner-underline">{{nameOrLogin}}</span>
+  {{/link-to}}
+{{/if}}
