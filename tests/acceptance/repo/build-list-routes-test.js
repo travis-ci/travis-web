@@ -1,4 +1,5 @@
 import { assign } from '@ember/polyfills';
+import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import page from 'travis/tests/pages/build-list';
 import generatePusherPayload from 'travis/tests/helpers/generate-pusher-payload';
