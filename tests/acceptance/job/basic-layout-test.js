@@ -318,8 +318,7 @@ test('visiting a job when log-rendering is off', function (assert) {
   let repo =  server.create('repository', { slug: 'travis-ci/travis-web' }),
     branch = server.create('branch', { name: 'acceptance-tests' });
 
-  let  gitUser = server.create('git-user', { name: 'Mr T' });
-  let commit = server.create('commit', { author: gitUser, committer: gitUser, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
+  let commit = server.create('commit', { branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
   let build = server.create('build', { repository: repo, state: 'passed', commit, branch });
   let job = server.create('job', { number: '1234.1', repository: repo, state: 'passed', commit, build });
   commit.job = job;
