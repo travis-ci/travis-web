@@ -9,7 +9,7 @@
     {{input value=value class="env-value" placeholder="Value"}}
   </div>
   <div class="form-elem">
-    {{travis-switch active=public description="Display value in build log"}}
+    {{travis-switch active=public description="Display value in build log" onToggle=(action (mut public))}}
   </div>
   <div class="form-elem">
     {{#if save.isRunning}}

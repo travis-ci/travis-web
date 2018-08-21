@@ -135,8 +135,8 @@
         <ul class="profile-repositorylist">
           {{#each filter.repositories as |repository|}}
             {{repository-status-toggle
-            repository=repository
-            name=(compute filter.computeName repository.name filter.isFiltering filter.query)
+              repository=repository
+              name=(compute filter.computeName repository.name filter.isFiltering filter.query)
             }}
           {{else}}
             {{#if filter.isFiltering}}
