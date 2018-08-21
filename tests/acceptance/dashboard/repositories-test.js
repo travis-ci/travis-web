@@ -154,6 +154,8 @@ module('Acceptance | dashboard/repositories', function (hooks) {
     await page.visit();
     await page.myBuilds.visit();
 
+    percySnapshot(assert);
+
     assert.equal(currentURL(), '/dashboard/builds');
     assert.equal(page.myBuilds.builds.length, 4);
 
