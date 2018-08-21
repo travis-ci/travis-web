@@ -120,10 +120,10 @@ module('Acceptance | dashboard/repositories', function (hooks) {
     assert.dom('[data-test-dashboard-repository-menu="0"] [data-test-tofu-menu]').exists();
 
 
-    await click('[data-test-dashboard-repository-star="2"]');
+    await click('[data-test-dashboard-repository-star="3"]');
     assert.dom('[data-test-dashboard-starred-repositories] [data-test-dashboard-repository-star]').exists({ count: 2 });
 
-    await click('[data-test-dashboard-repository-star="2"]');
+    await click('[data-test-dashboard-repository-star="3"]');
     assert.dom('[data-test-dashboard-starred-repositories] [data-test-dashboard-repository-star]').exists({ count: 1 });
   });
 
