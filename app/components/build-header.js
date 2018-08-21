@@ -1,6 +1,5 @@
 import Component from '@ember/component';
 import { computed } from 'ember-decorators/object';
-import durationFrom from 'travis/utils/duration-from';
 import { service } from 'ember-decorators/service';
 
 export default Component.extend({
