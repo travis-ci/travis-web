@@ -40,6 +40,9 @@ module.exports = function () {
         // workaround for https://github.com/jeremyfa/yaml.js/issues/102
         node: {
           fs: 'empty'
+        },
+        module: {
+          noParse: /pusher/
         }
       }
     },

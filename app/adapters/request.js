@@ -9,7 +9,7 @@ export default V3Adapter.extend({
     if (requestType === 'query' && query.repository_id) {
       return `${prefix}/repo/${query.repository_id}/requests`;
     } else if (requestType === 'findRecord') {
-      let build = snapshot.hasMany('builds')[0];
+      let build = snapshot.belongsTo('build');
 
       if (build) {
         let repositoryId = build.belongsTo('repo').id;
