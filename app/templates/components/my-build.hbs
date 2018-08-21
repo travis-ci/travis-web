@@ -1,28 +1,39 @@
-owner: <span data-test-owner>{{build.repo.owner.login}}</span>
-name: <span data-test-repo-name>{{build.repo.name}}</span>
-branch: <span data-test-branch-name>{{build.branch.name}}</span>
-message: <span data-test-commit-message>{{build.commit.message}}</span>
-state/number: <span data-test-state-number>#{{build.number}} {{build.state}}</span>
-sha:
-{{#external-link-to data-test-commit-sha href=urlGithubCommit}}
-  {{tooltip-on-element text='View commit on GitHub'}}
-  {{svg-jar 'icon-commit' class="icon"}}
-  <span class="label-align inner-underline">{{format-sha build.commit.sha}}</span>
-  {{svg-jar 'icon-external-link' class="icon"}}
-{{/external-link-to}}
-<span title="{{if build.elapsedTime (concat "Started " (pretty-date build.startedAt))}}" class="commit-stopwatch">
-  {{svg-jar 'icon-stopwatch' class="icon--m"}}
-  <span class="label-align" data-test-duration>
-    <time datetime="PT{{build.elapsedTime}}S">{{format-duration build.elapsedTime}}</time>
-  </span>
-</span>
-<section class="fade-out dash-finished">
-  <h3 class="label">Finished</h3>
-  <p class="row-content" title="{{build.finishedAt}}">
+<section>
+  S
+</section>
+
+<section>
+  <div data-test-owner>{{build.repo.owner.login}}</div>
+  <div data-test-repo-name>{{build.repo.name}}</div>
+</section>
+
+<section>
+  <div data-test-commit-message>{{build.commit.message}}</div>
+  <div data-test-branch-name>{{build.branch.name}}</div>
+</section>
+
+<section>
+  <div data-test-state-number>#{{build.number}} {{build.state}}</div>
+  {{#external-link-to data-test-commit-sha href=urlGithubCommit}}
+    {{tooltip-on-element text='View commit on GitHub'}}
+    {{svg-jar 'icon-commit' class="icon"}}
+    <span class="label-align inner-underline">{{format-sha build.commit.sha}}</span>
+    {{svg-jar 'icon-external-link' class="icon"}}
+  {{/external-link-to}}
+</section>
+
+<section>
+  <div title="{{if build.elapsedTime (concat "Started " (pretty-date build.startedAt))}}" class="commit-stopwatch">
+    {{svg-jar 'icon-stopwatch' class="icon--m"}}
+    <span class="label-align" data-test-duration>
+      <time datetime="PT{{build.elapsedTime}}S">{{format-duration build.elapsedTime}}</time>
+    </span>
+  </div>
+  <div class="row-content" title="{{build.finishedAt}}">
     {{svg-jar 'icon-calendar' class="icon"}}
     <span class="label-align" data-test-finished>
       {{#if build.finishedAt}}
       {{format-time build.finishedAt}}
       {{else}}still running{{/if}}</span>
-  </p>
+  </div>
 </section>
