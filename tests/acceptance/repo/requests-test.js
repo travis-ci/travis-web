@@ -42,6 +42,27 @@ test('list requests', function (assert) {
     event_type: 'api'
   });
 
+  let olderApprovedRequest = this.repo.createRequest({
+    result: 'approved',
+    message: 'An old request message',
+    created_at: new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 365 * 2),
+    event_type: 'pull_request'
+  });
+
+  let olderApprovedCommit = server.create('commit', {
+    branch: 'acceptance-tests',
+    message: 'An older commit message',
+    request: olderApprovedRequest
+  });
+
+  server.create('build', {
+    repository: this.repo,
+    state: 'passed',
+    commit_id: olderApprovedCommit.id,
+    request: olderApprovedRequest,
+    number: '1871'
+  });
+
   requestsPage.visit({organization: 'travis-ci', repo: 'travis-web', requestId: approvedRequest.id});
 
   andThen(function () {
@@ -70,6 +91,10 @@ test('list requests', function (assert) {
 
     requestsPage.requests[2].as(request => {
       assert.ok(request.isPending);
+    });
+
+    requestsPage.requests[3].as(request => {
+      assert.equal(request.buildNumber.text, '1871');
     });
 
     assert.ok(requestsPage.missingNotice.isHidden);

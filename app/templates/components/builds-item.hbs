@@ -29,8 +29,7 @@
     {{/if}}
   </div>
   <div class="row-item row-committer">
-    {{user-avatar url=build.commit.authorAvatarUrl name=build.commit.authorName small=true size=18}}
-    <span class="label-align">{{build.commit.authorName}}</span>
+    {{created-by user=build.createdBy}}
   </div>
 </div>
 
