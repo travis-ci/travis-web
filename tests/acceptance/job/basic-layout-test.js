@@ -13,8 +13,7 @@ test('visiting job-view', function (assert) {
   let repo = server.create('repository', { slug: 'travis-ci/travis-web' }),
     branch = server.create('branch', { name: 'acceptance-tests' });
 
-  let  gitUser = server.create('git-user', { name: 'Mr T' });
-  let commit = server.create('commit', { author: gitUser, committer: gitUser, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
+  let commit = server.create('commit', { branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
 
   let request = server.create('request');
   server.create('message', {
@@ -27,7 +26,12 @@ test('visiting job-view', function (assert) {
     }
   });
 
-  let build = server.create('build', { repository: repo, state: 'passed', commit, branch, request });
+  let user = server.create('user', {
+    name: 'Mr T',
+    avatar_url: '/images/favicon-gray.png'
+  });
+
+  let build = server.create('build', { repository: repo, state: 'passed', createdBy: user, commit, branch, request });
   let job = server.create('job', { number: '1234.1', repository: repo, state: 'passed', build, commit });
   commit.job = job;
 
@@ -47,7 +51,10 @@ test('visiting job-view', function (assert) {
     assert.equal(jobPage.branch, 'acceptance-tests', 'displays the branch');
     assert.equal(jobPage.message, 'acceptance-tests This is a message', 'displays message');
     assert.equal(jobPage.state, '#1234.1 passed', 'displays build number');
-    assert.equal(jobPage.author, 'Mr T authored and committed');
+
+    assert.equal(jobPage.createdBy.href, '/testuser');
+    assert.equal(jobPage.createdBy.text, 'Mr T');
+    assert.ok(jobPage.createdBy.avatarSrc.startsWith('/images/favicon-gray.png'));
 
     assert.equal(jobPage.log, 'Hello log');
     assert.notOk(jobPage.hasTruncatedLog);
@@ -59,8 +66,7 @@ test('visiting single-job build shows config messages', function (assert) {
   let repo = server.create('repository', { slug: 'travis-ci/travis-web' }),
     branch = server.create('branch', { name: 'acceptance-tests' });
 
-  let  gitUser = server.create('git-user', { name: 'Mr T' });
-  let commit = server.create('commit', { author: gitUser, committer: gitUser, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
+  let commit = server.create('commit', { branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
 
   let request = server.create('request');
   server.create('message', {
@@ -133,8 +139,7 @@ test('visiting a job with a truncated log', function (assert) {
   let repo =  server.create('repository', { slug: 'travis-ci/travis-web' });
   let branch = server.create('branch', { name: 'acceptance-tests' });
 
-  let  gitUser = server.create('git-user', { name: 'Mr T' });
-  let commit = server.create('commit', { author: gitUser, committer: gitUser, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
+  let commit = server.create('commit', { branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
   let build = server.create('build', { repository: repo, state: 'passed', commit, branch });
   let job = server.create('job', { number: '1234.1', repository: repo, state: 'passed', commit, build });
   commit.job = job;
@@ -160,8 +165,7 @@ test('visiting a job with a complex log', function (assert) {
   let repo =  server.create('repository', { slug: 'travis-ci/travis-web' }),
     branch = server.create('branch', { name: 'acceptance-tests' });
 
-  let  gitUser = server.create('git-user', { name: 'Mr T' });
-  let commit = server.create('commit', { author: gitUser, committer: gitUser, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
+  let commit = server.create('commit', { branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
   let build = server.create('build', { repository: repo, state: 'passed', commit, branch });
   let job = server.create('job', { number: '1234.1', repository: repo, state: 'passed', commit, build });
   commit.job = job;
@@ -275,8 +279,7 @@ test('visiting a job with fold duration', function (assert) {
   let repo =  server.create('repository', { slug: 'travis-ci/travis-web' }),
     branch = server.create('branch', { name: 'acceptance-tests' });
 
-  let  gitUser = server.create('git-user', { name: 'Mr T' });
-  let commit = server.create('commit', { author: gitUser, committer: gitUser, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
+  let commit = server.create('commit', { branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
   let build = server.create('build', { repository: repo, state: 'passed', commit, branch });
   let job = server.create('job', { number: '1234.1', repository: repo, state: 'passed', commit, build });
   commit.job = job;
@@ -307,4 +310,43 @@ travis_fold:end:afold
   });
 
   percySnapshot(assert);
+});
+
+test('visiting a job when log-rendering is off', function (assert) {
+  localStorage.setItem('travis.logRendering', false);
+
+  let repo =  server.create('repository', { slug: 'travis-ci/travis-web' }),
+    branch = server.create('branch', { name: 'acceptance-tests' });
+
+  let commit = server.create('commit', { branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
+  let build = server.create('build', { repository: repo, state: 'passed', commit, branch });
+  let job = server.create('job', { number: '1234.1', repository: repo, state: 'passed', commit, build });
+  commit.job = job;
+
+  job.save();
+  commit.save();
+
+  const log = 'I am a log that won’t render.';
+  server.create('log', { id: job.id, content: log });
+
+  jobPage.visit();
+
+  // An unfortunate workaround for log displaying being outside Ember facilities.
+  // eslint-disable-next-line
+  waitForElement('.log-container .log-line');
+
+  andThen(() => {
+    assert.equal(jobPage.logLines[0].text, "Log rendering is off because localStorage['travis.logRendering'] is `false`.");
+
+    this.application.pusher.receive('job:log', {
+      id: job.id,
+      number: 1,
+      final: false,
+      _log: 'another log line'
+    });
+  });
+
+  andThen(() => {
+    assert.equal(jobPage.logLines.length, 1);
+  });
 });

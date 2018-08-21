@@ -172,12 +172,14 @@ $profile-breakpoint: 600px;
   }
 
   &.disabled {
-    opacity: 0.5;
+    opacity: 0.4;
+    color: inherit;
+    background: inherit;
+    cursor: default;
 
     &:hover {
-      color: $asphalt-grey;
-      background-color: white;
-      cursor: not-allowed;
+      color: inherit;
+      background: inherit;
 
       .icon {
         @include colorSVG($cement-grey);
@@ -215,7 +217,7 @@ $profile-breakpoint: 600px;
 
   p {
     position: relative;
-    padding: 0.7em em 0.7em 0.5em;
+    padding: 0.7em 2em 0.7em 0.5em;
     color: $brick-red;
     background-color: $quartz-red;
 
