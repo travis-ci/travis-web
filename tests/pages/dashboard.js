@@ -1,4 +1,5 @@
 import {
+  attribute,
   create,
   visitable,
   clickable,
@@ -49,7 +50,19 @@ export default create({
     visit: clickable('[data-test-my-builds-tab]'),
 
     builds: collection('[data-test-my-build]', {
+      owner: text('[data-test-owner]'),
+      repo: text('[data-test-repo-name]'),
+      branch: text('[data-test-branch-name]'),
+      message: text('[data-test-commit-message]'),
+      stateAndNumber: text('[data-test-state-number]'),
 
+      sha: {
+        scope: '[data-test-commit-sha]',
+        href: attribute('href')
+      },
+
+      duration: text('[data-test-duration]'),
+      finished: text('[data-test-finished]')
     })
   }
 });

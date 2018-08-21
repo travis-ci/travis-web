@@ -32,12 +32,21 @@ module('Acceptance | dashboard/repositories', function (hooks) {
         state: 'passed',
       })
     });
+
+    let oneYearAgo = new Date(new Date() - 1000 * 60 * 60 * 24 * 365);
+    let beforeOneYearAgo = new Date(oneYearAgo.getTime() - 1000 * 60 * 19 - 1000 * 19);
+
     let permissionBuild = server.create('build', {
       branch: server.create('branch', { name: 'another-branch' }),
       eventType: 'push',
       number: 44,
       state: 'passed',
-      finishedAt: '2017-09-19T12:14:00Z'
+      started_at: beforeOneYearAgo,
+      finished_at: oneYearAgo,
+      commit: server.create('commit', {
+        message: 'get used to it',
+        sha: 'acab'
+      })
     });
     let permissionBranch = server.create('branch', {
       name: 'primary',
@@ -147,6 +156,23 @@ module('Acceptance | dashboard/repositories', function (hooks) {
 
     assert.equal(currentURL(), '/dashboard/builds');
     assert.equal(page.myBuilds.builds.length, 4);
+
+    page.myBuilds.builds[0].as(build => {
+      assert.equal(build.owner, 'travis-ci');
+      assert.equal(build.repo, 'travis-lol');
+
+      assert.equal(build.branch, 'another-branch');
+      assert.equal(build.message, 'get used to it');
+      assert.equal(build.stateAndNumber, '#44 passed');
+      assert.equal(build.sha.text, 'acab');
+
+      assert.equal(build.duration, '19 min 19 sec');
+      assert.equal(build.finished, 'about a year ago');
+    });
+
+    page.myBuilds.builds[1].as(build => {
+      assert.equal(build.finished, 'still running');
+    });
 
     assert.equal(page.starredRepos.length, 1);
 
