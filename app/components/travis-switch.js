@@ -1,5 +1,6 @@
 import Component from '@ember/component';
 import { computed } from 'ember-decorators/object';
+import abstractMethod from 'travis/utils/abstract-method';
 
 export default Component.extend({
   tagName: 'button',
@@ -18,7 +19,7 @@ export default Component.extend({
     return active ? 'true' : 'false';
   },
 
-  onToggle() {},
+  onToggle: abstractMethod('onToggle'),
 
   click() {
     if (!this.disabled) {
