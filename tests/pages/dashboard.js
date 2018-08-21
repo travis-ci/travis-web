@@ -62,7 +62,10 @@ export default create({
       },
 
       duration: text('[data-test-duration]'),
-      finished: text('[data-test-finished]')
+      finished: text('[data-test-finished]'),
+
+      isPublic: isVisible('.icon.public'),
+      isPrivate: isVisible('.icon.private'),
     })
   }
 });

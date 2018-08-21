@@ -80,6 +80,7 @@ module('Acceptance | dashboard/repositories', function (hooks) {
       },
       name: 'repo-clojure',
       currentBuild: build,
+      private: true
     });
     server.create('repository', {
       owner: {
@@ -160,6 +161,7 @@ module('Acceptance | dashboard/repositories', function (hooks) {
     assert.equal(page.myBuilds.builds.length, 4);
 
     page.myBuilds.builds[0].as(build => {
+      assert.ok(build.isPublic);
       assert.equal(build.owner, 'travis-ci');
       assert.equal(build.repo, 'travis-lol');
 
@@ -175,6 +177,8 @@ module('Acceptance | dashboard/repositories', function (hooks) {
     page.myBuilds.builds[1].as(build => {
       assert.equal(build.finished, 'still running');
     });
+
+    assert.ok(page.myBuilds.builds[2].isPrivate);
 
     assert.equal(page.starredRepos.length, 1);
 
