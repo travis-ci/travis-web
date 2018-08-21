@@ -4,5 +4,6 @@ export default Component.extend({
   tagName: 'a',
   attributeBindings: ['href', 'target', 'rel'],
 
-  rel: 'noopener noreferrer'
+  rel: 'noopener noreferrer',
+  target: '_blank'
 });
