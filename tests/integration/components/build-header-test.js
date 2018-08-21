@@ -28,6 +28,8 @@ module('Integration | Component | build header', function (hooks) {
       isFinished: true,
     };
 
+    build.elapsedTime = build.finishedAt - build.startedAt;
+
     this.set('build', build);
     this.set('repo', repo);
     this.set('commit', commit);
