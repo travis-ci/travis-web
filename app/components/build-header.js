@@ -50,11 +50,6 @@ export default Component.extend({
     return this.get('externalLinks').githubCommit(slug, sha);
   },
 
-  @computed('item.startedAt', 'item.finishedAt')
-  elapsedTime(startedAt, finishedAt) {
-    return durationFrom(startedAt, finishedAt);
-  },
-
   @computed('item.repo.slug', 'build.branchName')
   urlGitHubBranch(slug, branchName) {
     return this.get('externalLinks').githubBranch(slug, branchName);
