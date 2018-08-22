@@ -162,3 +162,20 @@ section[class^="dash-"] {
     }
   }
 }
+
+.dashboard-repos {
+  .tabs {
+    display: flex;
+
+    h2 {
+      margin-right: 2rem;
+
+      a.active, a:hover {
+        color: $oxide-blue;
+
+        padding-bottom: 1px;
+        border-bottom: 2px solid $oxide-blue;
+      }
+    }
+  }
+}
