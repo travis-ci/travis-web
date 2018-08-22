@@ -145,6 +145,10 @@ section[class^="dash-"] {
 
 .my-build {
   .dash-head {
+    .icon {
+      margin-right: 0;
+    }
+
     @each $key, $value in $stateMap {
       &.#{$key} {
         border-right: 3px solid map-get($value, color);
