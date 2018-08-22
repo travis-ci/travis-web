@@ -12,6 +12,10 @@ moduleForAcceptance('Acceptance | repo branches', {
 
     signInUser(this.currentUser);
 
+    const gitUser = server.create('git-user', {
+      name: 'User Name'
+    });
+
     // create organization
     server.create('organization', {
       name: 'Org Name',
@@ -67,11 +71,11 @@ moduleForAcceptance('Acceptance | repo branches', {
       finished_at: oneYearAgo,
       branch: primaryBranch,
       repository,
-      createdBy: this.currentUser
     });
 
     lastBuild.createCommit({
       sha: '1234567890',
+      committer: gitUser
     });
     lastBuild.save();
 
@@ -146,6 +150,7 @@ moduleForAcceptance('Acceptance | repo branches', {
       repository,
     }).createCommit({
       sha: 'abc134',
+      committer: gitUser
     });
   }
 });

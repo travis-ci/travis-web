@@ -17,7 +17,8 @@ module('Acceptance | builds/cancel', function (hooks) {
     let repository =  server.create('repository', { slug: 'travis-ci/travis-web' });
 
     let branch = server.create('branch', { repository, name: 'acceptance-tests', default_branch: true });
-    let commit = server.create('commit', { committer_name: 'Mr T', message: 'This is a message' });
+    let  gitUser = server.create('git-user', { name: 'Mr T' });
+    let commit = server.create('commit', { author: gitUser, committer: gitUser, committer_name: 'Mr T', message: 'This is a message' });
     let build = server.create('build', { number: '5', state: 'started', repository, commit, branch });
     let job = server.create('job', { number: '1234.1', state: 'started', repository, commit, build });
 
