@@ -162,6 +162,8 @@ module('Acceptance | dashboard/repositories', function (hooks) {
 
     page.myBuilds.builds[0].as(build => {
       assert.ok(build.isPublic);
+
+      assert.ok(build.isPassed);
       assert.equal(build.owner, 'travis-ci');
       assert.equal(build.repo, 'travis-lol');
 
@@ -178,7 +180,10 @@ module('Acceptance | dashboard/repositories', function (hooks) {
       assert.equal(build.finished, 'still running');
     });
 
-    assert.ok(page.myBuilds.builds[2].isPrivate);
+    page.myBuilds.builds[2].as(build => {
+      assert.ok(build.isFailed);
+      assert.ok(build.isPrivate);
+    });
 
     assert.equal(page.starredRepos.length, 1);
 

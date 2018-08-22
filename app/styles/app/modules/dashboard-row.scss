@@ -136,8 +136,29 @@ section[class^="dash-"] {
 }
 
 .dash-default,
-.dash-last {
+.dash-last,
+.my-build .state {
   @each $key, $value in $stateMap {
     @include rowColor(#{$key}, map-get($value, color));
+  }
+}
+
+.my-build {
+  .state {
+    display: flex;
+    align-self: stretch;
+    align-items: top;
+
+    margin-top: 5px;
+    margin-bottom: 5px;
+
+    padding-top: 5px;
+    padding-left: 5px;
+
+    @each $key, $value in $stateMap {
+      &.#{$key} {
+        border-left: 3px solid map-get($value, color);
+      }
+    }
   }
 }

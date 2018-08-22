@@ -2,6 +2,10 @@
   {{repository-visibility-icon repository=build.repo}}
 </section>
 
+<section class='state {{build.state}}'>
+  {{status-icon status=build.state}}
+</section>
+
 <section>
   <div data-test-owner>{{build.repo.owner.login}}</div>
   <div data-test-repo-name>{{build.repo.name}}</div>
