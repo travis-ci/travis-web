@@ -171,6 +171,20 @@ section[class^="dash-"] {
       padding: 0.3em 0;
     }
   }
+
+  .message-and-branch {
+    flex: 0 0 30%;
+
+    .message {
+      overflow: hidden;
+      position: relative;
+      white-space: nowrap;
+
+      &:after {
+        @include fadeOut(right, -90deg, white);
+      }
+    }
+  }
 }
 
 .dashboard-repos {

@@ -13,8 +13,10 @@
       <div data-test-repo-name>{{build.repo.name}}</div>
     </section>
 
-    <section>
-      <div data-test-commit-message>{{build.commit.message}}</div>
+    <section class='message-and-branch'>
+      <div class='message' data-test-commit-message>
+        {{{format-message build.commit.message short='true' repo=build.repo eventType=build.eventType}}}
+      </div>
       <div data-test-branch-name>{{build.branch.name}}</div>
     </section>
 
