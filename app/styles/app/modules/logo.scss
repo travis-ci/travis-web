@@ -15,8 +15,10 @@
     background: inline-image("ui/travis-ci-logo.svg") no-repeat 0 50%;
 
     &:hover {
-      height: 66px;
-      background: $cream-light inline-image("ui/travis-ci-logo-hover.svg") no-repeat 50% 40%;
+      position: relative;
+      bottom: 10px;
+      height: 76px;
+      background: $cream-light inline-image("ui/travis-ci-logo-hover.svg") no-repeat 50% 45%;
     }
   }
 
