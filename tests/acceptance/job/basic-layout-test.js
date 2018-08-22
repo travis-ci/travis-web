@@ -13,7 +13,8 @@ test('visiting job-view', function (assert) {
   let repo = server.create('repository', { slug: 'travis-ci/travis-web' }),
     branch = server.create('branch', { name: 'acceptance-tests' });
 
-  let commit = server.create('commit', { branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
+  let  gitUser = server.create('git-user', { name: 'Mr T' });
+  let commit = server.create('commit', { author: gitUser, committer: gitUser, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
 
   let request = server.create('request');
   server.create('message', {
@@ -26,12 +27,7 @@ test('visiting job-view', function (assert) {
     }
   });
 
-  let user = server.create('user', {
-    name: 'Mr T',
-    avatar_url: '/images/favicon-gray.png'
-  });
-
-  let build = server.create('build', { repository: repo, state: 'passed', createdBy: user, commit, branch, request });
+  let build = server.create('build', { repository: repo, state: 'passed', commit, branch, request });
   let job = server.create('job', { number: '1234.1', repository: repo, state: 'passed', build, commit });
   commit.job = job;
 
@@ -51,10 +47,7 @@ test('visiting job-view', function (assert) {
     assert.equal(jobPage.branch, 'acceptance-tests', 'displays the branch');
     assert.equal(jobPage.message, 'acceptance-tests This is a message', 'displays message');
     assert.equal(jobPage.state, '#1234.1 passed', 'displays build number');
-
-    assert.equal(jobPage.createdBy.href, '/testuser');
-    assert.equal(jobPage.createdBy.text, 'Mr T');
-    assert.ok(jobPage.createdBy.avatarSrc.startsWith('/images/favicon-gray.png'));
+    assert.equal(jobPage.author, 'Mr T authored and committed');
 
     assert.equal(jobPage.log, 'Hello log');
     assert.notOk(jobPage.hasTruncatedLog);
@@ -66,7 +59,8 @@ test('visiting single-job build shows config messages', function (assert) {
   let repo = server.create('repository', { slug: 'travis-ci/travis-web' }),
     branch = server.create('branch', { name: 'acceptance-tests' });
 
-  let commit = server.create('commit', { branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
+  let  gitUser = server.create('git-user', { name: 'Mr T' });
+  let commit = server.create('commit', { author: gitUser, committer: gitUser, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
 
   let request = server.create('request');
   server.create('message', {
@@ -139,7 +133,8 @@ test('visiting a job with a truncated log', function (assert) {
   let repo =  server.create('repository', { slug: 'travis-ci/travis-web' });
   let branch = server.create('branch', { name: 'acceptance-tests' });
 
-  let commit = server.create('commit', { branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
+  let  gitUser = server.create('git-user', { name: 'Mr T' });
+  let commit = server.create('commit', { author: gitUser, committer: gitUser, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
   let build = server.create('build', { repository: repo, state: 'passed', commit, branch });
   let job = server.create('job', { number: '1234.1', repository: repo, state: 'passed', commit, build });
   commit.job = job;
@@ -165,7 +160,8 @@ test('visiting a job with a complex log', function (assert) {
   let repo =  server.create('repository', { slug: 'travis-ci/travis-web' }),
     branch = server.create('branch', { name: 'acceptance-tests' });
 
-  let commit = server.create('commit', { branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
+  let  gitUser = server.create('git-user', { name: 'Mr T' });
+  let commit = server.create('commit', { author: gitUser, committer: gitUser, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
   let build = server.create('build', { repository: repo, state: 'passed', commit, branch });
   let job = server.create('job', { number: '1234.1', repository: repo, state: 'passed', commit, build });
   commit.job = job;
@@ -279,7 +275,8 @@ test('visiting a job with fold duration', function (assert) {
   let repo =  server.create('repository', { slug: 'travis-ci/travis-web' }),
     branch = server.create('branch', { name: 'acceptance-tests' });
 
-  let commit = server.create('commit', { branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
+  let  gitUser = server.create('git-user', { name: 'Mr T' });
+  let commit = server.create('commit', { author: gitUser, committer: gitUser, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
   let build = server.create('build', { repository: repo, state: 'passed', commit, branch });
   let job = server.create('job', { number: '1234.1', repository: repo, state: 'passed', commit, build });
   commit.job = job;
@@ -318,7 +315,8 @@ test('visiting a job when log-rendering is off', function (assert) {
   let repo =  server.create('repository', { slug: 'travis-ci/travis-web' }),
     branch = server.create('branch', { name: 'acceptance-tests' });
 
-  let commit = server.create('commit', { branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
+  let  gitUser = server.create('git-user', { name: 'Mr T' });
+  let commit = server.create('commit', { author: gitUser, committer: gitUser, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
   let build = server.create('build', { repository: repo, state: 'passed', commit, branch });
   let job = server.create('job', { number: '1234.1', repository: repo, state: 'passed', commit, build });
   commit.job = job;

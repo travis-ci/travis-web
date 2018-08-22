@@ -17,9 +17,5 @@ export default function generatePusherPayload(model, overrides = {}) {
     };
   }
 
-  if (model.modelName === 'build' && model.createdBy) {
-    result.created_by = generatePusherPayload(model.createdBy);
-  }
-
   return Object.assign(result, overrides);
 }

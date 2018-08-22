@@ -15,7 +15,8 @@ test('restarting build', function (assert) {
   let repository =  server.create('repository');
   server.create('branch', {});
 
-  let commit = server.create('commit', { branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
+  let  gitUser = server.create('git-user', { name: 'Mr T' });
+  let commit = server.create('commit', { author: gitUser, committer: gitUser, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
   let build = server.create('build', { number: '5', repository, state: 'passed', commit });
   let job = server.create('job', { number: '1234.1', repository, state: 'passed', build, commit });
   server.create('log', { id: job.id });

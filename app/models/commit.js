@@ -11,6 +11,13 @@ export default Model.extend({
   branch: attr(),
   message: attr(),
   compareUrl: attr(),
+  authorName: attr(),
+  authorEmail: attr(),
+  committerName: attr(),
+  committerEmail: attr(),
+  committedAt: attr(),
+  committerAvatarUrl: attr(),
+  authorAvatarUrl: attr(),
 
   build: belongsTo('build'),
 
@@ -28,5 +35,10 @@ export default Model.extend({
     } else {
       return '';
     }
+  },
+
+  @computed('authorName', 'authorEmail', 'committerName', 'committerEmail')
+  authorIsCommitter(authorName, authorEmail, committerName, committerEmail) {
+    return authorName === committerName && authorEmail === committerEmail;
   },
 });

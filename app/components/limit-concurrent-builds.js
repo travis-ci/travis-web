@@ -30,7 +30,8 @@ export default Component.extend({
     }
   },
 
-  toggle: task(function* () {
+  toggle: task(function* (value) {
+    this.set('enabled', value);
     if (!this.get('enabled') && this.get('value') !== 0) {
       try {
         yield this.get('repo').saveSetting('maximum_number_of_builds', 0);

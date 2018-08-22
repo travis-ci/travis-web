@@ -14,7 +14,8 @@ test('visiting build with one stage', function (assert) {
   let repo =  server.create('repository', { slug: 'travis-ci/travis-web' });
 
   let branch = server.create('branch', { name: 'acceptance-tests' });
-  let commit = server.create('commit', { branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
+  let  gitUser = server.create('git-user', { name: 'Mr T' });
+  let commit = server.create('commit', { author: gitUser, committer: gitUser, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
   let build = server.create('build', { repository: repo, state: 'passed', commit, branch });
 
   let firstStage = build.createStage({ number: 1, name: 'first :two_men_holding_hands:', state: 'passed', started_at: jobTime, finished_at: futureTime(71), allow_failure: true });
@@ -47,7 +48,8 @@ test('visiting build with stages and an unknown config message', function (asser
   let repo =  server.create('repository', { slug: 'travis-ci/travis-web' });
   server.create('branch', {});
 
-  let commit = server.create('commit', { branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
+  let  gitUser = server.create('git-user', { name: 'Mr T' });
+  let commit = server.create('commit', { author: gitUser, committer: gitUser, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
 
   let request = server.create('request');
   server.create('message', {
