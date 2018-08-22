@@ -24,7 +24,7 @@ export default TravisRoute.extend({
     }
 
     let path = `${apiEndpoint}/repo/${repoId}/branches`;
-    let includes = 'build.commit,build.created_by&limit=100';
+    let includes = 'build.commit&limit=100';
     let url = `${path}?include=${includes}`;
 
     return $.ajax(url, options).then((response) => {
