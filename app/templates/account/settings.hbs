@@ -20,4 +20,23 @@
       </ul>
     </section>
   {{/if}}
+
+  <section>
+    <h3>Email notifications</h3>
+    <div class="email-settings">
+      <div class="email-settings__row">
+        <div class="email-settings__name">Build emails</div>
+        <div class="email-settings__description">
+          The status of your build straight to your inbox
+        </div>
+        <div class="email-settings__switch">
+          {{travis-switch
+            active=buildEmails
+            disabled=toggleBuildEmails.isRunning
+            onToggle=(perform toggleBuildEmails)
+          }}
+        </div>
+      </div>
+    </div>
+  </section>
 </section>

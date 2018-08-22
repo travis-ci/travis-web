@@ -761,4 +761,37 @@ header.space-between {
       }
     }
   }
+
+  .email-settings {
+
+    .email-settings__row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .email-settings__name {
+      flex: 1;
+      white-space: nowrap;
+      padding-right: 20px;
+    }
+
+    .email-settings__description {
+      flex: 1 1 100%;
+      font-style: italic;
+      color: $cement-grey;
+    }
+
+    .email-settings__switch {
+      flex: 1;
+
+      .switch {
+        padding: 0;
+
+        .switch-inner {
+          margin-right: 0;
+        }
+      }
+    }
+  }
 }
