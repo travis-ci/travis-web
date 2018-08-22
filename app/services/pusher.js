@@ -20,8 +20,12 @@ export default Service.extend({
       build = data.build;
       commit = {
         id: build.commit_id,
+        author_email: build.author_email,
+        author_name: build.author_name,
         branch: build.branch,
         committed_at: build.committed_at,
+        committer_email: build.committer_email,
+        committer_name: build.committer_name,
         compare_url: build.compare_url,
         message: build.message,
         sha: build.commit

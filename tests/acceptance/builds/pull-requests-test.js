@@ -38,11 +38,16 @@ test('view and cancel pull requests', function (assert) {
     pull_request_title: 'A pull request',
     repository: repository,
     branch: this.branch,
-    createdBy: this.currentUser,
+  });
+
+  const gitUser = server.create('git-user', {
+    name: this.currentUser.name
   });
 
   const pullRequestCommit = pullRequestBuild.createCommit({
     sha: '1234567890',
+    author: gitUser,
+    committer: gitUser
   });
 
   for (let i = 0; i < 10; i++) {

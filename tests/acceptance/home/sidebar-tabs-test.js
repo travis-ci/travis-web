@@ -32,7 +32,10 @@ module('Acceptance | home/sidebar tabs', function (hooks) {
       skipPermissions: true
     });
 
+    let  gitUser = server.create('git-user', { name: 'Mr T' });
     let commit = server.create('commit', {
+      author: gitUser,
+      committer: gitUser,
       branch: 'acceptance-tests',
       message: 'This is a message',
       branch_is_default: true
