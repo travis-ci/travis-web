@@ -137,28 +137,34 @@ section[class^="dash-"] {
 
 .dash-default,
 .dash-last,
-.my-build .state {
+.my-build {
   @each $key, $value in $stateMap {
     @include rowColor(#{$key}, map-get($value, color));
   }
 }
 
 .my-build {
-  .state {
-    display: flex;
-    align-self: stretch;
-    align-items: top;
-
-    margin-top: 5px;
-    margin-bottom: 5px;
-
-    padding-top: 5px;
-    padding-left: 5px;
-
+  .dash-head {
     @each $key, $value in $stateMap {
       &.#{$key} {
-        border-left: 3px solid map-get($value, color);
+        border-right: 3px solid map-get($value, color);
       }
+    }
+  }
+
+  .dash-body {
+    padding-left: 5px;
+  }
+
+  .state {
+    display: flex;
+    align-items: center;
+
+    @media #{$medium-up} {
+      display: flex;
+      flex-direction: column;
+      height: 55px;
+      padding: 0.3em 0;
     }
   }
 }
