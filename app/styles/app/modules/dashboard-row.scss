@@ -160,6 +160,10 @@ section[class^="dash-"] {
     padding-left: 5px;
   }
 
+  .dash-main > section {
+    box-sizing: border-box;
+  }
+
   .state, .restart {
     display: flex;
     flex: 0 0 4%;
@@ -176,6 +180,14 @@ section[class^="dash-"] {
   .repo {
     flex: 0 0 17%;
     overflow: hidden;
+  }
+
+  .repo, .message-and-branch, .state-and-sha, .times {
+    padding-right: 1em;
+  }
+
+  .state-and-sha {
+    padding-left: 1em;
   }
 
   .message-and-branch {
