@@ -178,6 +178,7 @@ section[class^="dash-"] {
 
   .message-and-branch {
     flex: 0 0 30%;
+    overflow: hidden;
 
     .message {
       overflow: hidden;
