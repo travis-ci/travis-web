@@ -181,6 +181,8 @@ section[class^="dash-"] {
   .message-and-branch {
     flex: 0 0 30%;
     overflow: hidden;
+
+    border-right: 1px solid rgba($asphalt-grey, 0.2);
   }
 
   .repo .row-content, .message {
