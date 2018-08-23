@@ -17,11 +17,17 @@
       <div class='message row-content' data-test-commit-message>
         {{{format-message build.commit.message short='true' repo=build.repo eventType=build.eventType}}}
       </div>
-      <div  class='row-content' data-test-branch-name>{{build.branch.name}}</div>
+      <div  class='row-content' data-test-branch-name>
+        {{svg-jar 'icon-branch' class='icon'}}
+        {{build.branch.name}}
+      </div>
     </section>
 
     <section class='state-and-sha'>
-      <div  class='row-content' data-test-state-number>#{{build.number}} {{build.state}}</div>
+      <div class='row-content' data-test-state-number>
+        {{request-icon event=build.eventType state=build.state}}
+        #{{build.number}} {{build.state}}
+      </div>
       {{#external-link-to data-test-commit-sha href=urlGithubCommit class='row-content'}}
         {{tooltip-on-element text='View commit on GitHub'}}
         {{svg-jar 'icon-commit' class="icon"}}
