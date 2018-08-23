@@ -9,6 +9,7 @@ export default Controller.extend({
   buildEmails: false,
 
   toggleBuildEmails: task(function* (value) {
+    // TODO implement API integration
     yield this.set('buildEmails', value);
   }).restartable()
 });

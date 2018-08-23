@@ -137,6 +137,10 @@
   }
 }
 
+.button--compact {
+  padding: 3px 7px;
+}
+
 .inactive {
   cursor: default;
   background: $dry-cement !important;

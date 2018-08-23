@@ -21,15 +21,15 @@
     </section>
   {{/if}}
 
-  <section>
+  <section class="email-settings">
     <h3>Email notifications</h3>
-    <div class="email-settings">
-      <div class="email-settings__row">
-        <div class="email-settings__name">Build emails</div>
-        <div class="email-settings__description">
+    <div class="build-emails">
+      <div class="row">
+        <div class="name">Build emails</div>
+        <div class="description">
           The status of your build straight to your inbox
         </div>
-        <div class="email-settings__switch">
+        <div class="controls">
           {{travis-switch
             active=buildEmails
             disabled=toggleBuildEmails.isRunning
@@ -38,5 +38,24 @@
         </div>
       </div>
     </div>
+    {{#if unsubscribedRepos.length}}
+      <div class="unsubscribed-emails">
+        {{#paper-block title="Email notifications you've unsubscribed from" elevation=2}}
+          {{#each unsubscribedRepos as |repo|}}
+            <div class="row">
+              <div class="name">
+                {{repo.owner.login}} / {{repo.name}}
+              </div>
+              <div class="description"></div>
+              <div class="controls">
+                <button class="button--white button--compact unsubscribe-button">
+                  {{svg-jar 'icon-email' class="icon" width="15px"}} Re-subscribe
+                </button>
+              </div>
+            </div>
+          {{/each}}
+        {{/paper-block}}
+      </div>
+    {{/if}}
   </section>
 </section>

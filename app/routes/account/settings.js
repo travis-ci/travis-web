@@ -1,5 +1,6 @@
 import TravisRoute from 'travis/routes/basic';
 import { service } from 'ember-decorators/service';
+import { hash } from 'rsvp';
 
 export default TravisRoute.extend({
   @service featureFlags: null,
@@ -13,11 +14,16 @@ export default TravisRoute.extend({
   },
 
   model() {
-    return this.get('featureFlags.fetchTask').perform({ forceServerRequest: true });
+    return hash({
+      featureFlags: this.featureFlags.fetchTask.perform({ forceServerRequest: true }),
+      repositories: this.store.findAll('repo')
+    });
   },
 
   setupController(controller, model) {
-    controller.set('featureFlags', model);
-    controller.set('account', this.modelFor('account'));
+    const { featureFlags, repositories = [] } = model;
+    const account = this.modelFor('account');
+    const unsubscribedRepos = repositories.filter(repo => !repo.emailSubscribed);
+    controller.setProperties({ featureFlags, account, unsubscribedRepos });
   }
 });

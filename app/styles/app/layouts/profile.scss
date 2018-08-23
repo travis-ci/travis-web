@@ -764,25 +764,25 @@ header.space-between {
 
   .email-settings {
 
-    .email-settings__row {
+    .row {
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
-    .email-settings__name {
+    .name {
       flex: 1;
       white-space: nowrap;
       padding-right: 20px;
     }
 
-    .email-settings__description {
+    .description {
       flex: 1 1 100%;
       font-style: italic;
       color: $cement-grey;
     }
 
-    .email-settings__switch {
+    .controls {
       flex: 1;
 
       .switch {
@@ -791,6 +791,28 @@ header.space-between {
         .switch-inner {
           margin-right: 0;
         }
+      }
+    }
+
+    .build-emails {
+      margin-bottom: 2em;
+    }
+
+    .unsubscribe-button {
+      display: flex;
+      align-items: center;
+      margin: 5px 0;
+      color: $cement-grey;
+      border-width: 1px;
+      border-color: $dry-cement;
+
+      &:hover {
+        border-color: $cement-grey;
+        color: $asphalt-grey;
+      }
+
+      .icon {
+        margin-right: 5px;
       }
     }
   }

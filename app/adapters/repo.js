@@ -6,8 +6,16 @@ const { apiEndpoint } = config;
 export default V3Adapter.extend({
   defaultSerializer: '-repo',
 
-  includes: 'build.branch,build.request,repository.default_branch'
-    + ',repository.current_build,build.commit,build.created_by',
+  includes: [
+    'build.branch',
+    'build.request',
+    'build.request',
+    'repository.default_branch',
+    'repository.current_build',
+    'build.commit',
+    'build.created_by',
+    'repo.email_subscribed'
+  ].join(','),
 
   buildURL(modelName, id, snapshot, requestType, query) {
     if (query) {

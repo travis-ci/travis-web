@@ -25,6 +25,7 @@ const Repo = Model.extend({
   name: attr(),
   starred: attr('boolean'),
   active_on_org: attr('boolean'),
+  emailSubscribed: attr('boolean'),
 
   @oneWay('owner.@type') ownerType: null,
 
