@@ -68,7 +68,9 @@ export default create({
       isPrivate: isVisible('.icon.private'),
 
       isPassed: isVisible('.icon.passed'),
-      isFailed: isVisible('.icon.failed')
+      isFailed: isVisible('.icon.failed'),
+
+      restart: clickable('.action-button--restart'),
     })
   }
 });
