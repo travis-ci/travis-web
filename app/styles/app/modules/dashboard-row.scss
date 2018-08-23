@@ -174,20 +174,21 @@ section[class^="dash-"] {
 
   .repo {
     flex: 0 0 17%;
+    overflow: hidden;
   }
 
   .message-and-branch {
     flex: 0 0 30%;
     overflow: hidden;
+  }
 
-    .message {
-      overflow: hidden;
-      position: relative;
-      white-space: nowrap;
+  .repo .row-content, .message {
+    overflow: hidden;
+    position: relative;
+    white-space: nowrap;
 
-      &:after {
-        @include fadeOut(right, -90deg, white);
-      }
+    &:after {
+      @include fadeOut(right, -90deg, white);
     }
   }
 

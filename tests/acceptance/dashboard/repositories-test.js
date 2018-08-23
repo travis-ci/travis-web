@@ -88,7 +88,7 @@ module('Acceptance | dashboard/repositories', function (hooks) {
         login: 'travis-ci',
         type: 'organization'
       },
-      name: 'travis-lol',
+      name: 'travis-lol-a-very-long-repository',
       starred: true,
       currentBuild: permissionBuild,
       defaultBranch: permissionBranch,
@@ -166,7 +166,7 @@ module('Acceptance | dashboard/repositories', function (hooks) {
 
       assert.ok(build.isPassed);
       assert.equal(build.owner, 'travis-ci');
-      assert.equal(build.repo, 'travis-lol');
+      assert.equal(build.repo, 'travis-lol-a-very-long-repository');
 
       assert.equal(build.branch, 'another-branch');
       assert.equal(build.message, 'get used to it');
