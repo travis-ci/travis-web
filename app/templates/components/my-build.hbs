@@ -20,7 +20,7 @@
       <div data-test-branch-name>{{build.branch.name}}</div>
     </section>
 
-    <section>
+    <section class='state-and-sha'>
       <div data-test-state-number>#{{build.number}} {{build.state}}</div>
       {{#external-link-to data-test-commit-sha href=urlGithubCommit}}
         {{tooltip-on-element text='View commit on GitHub'}}
@@ -30,7 +30,7 @@
       {{/external-link-to}}
     </section>
 
-    <section>
+    <section class='times'>
       <div title="{{if build.elapsedTime (concat "Started " (pretty-date build.startedAt))}}" class="commit-stopwatch">
         {{svg-jar 'icon-stopwatch' class="icon--m"}}
         <span class="label-align" data-test-duration>

@@ -172,6 +172,10 @@ section[class^="dash-"] {
     }
   }
 
+  .repo {
+    flex: 0 0 17%;
+  }
+
   .message-and-branch {
     flex: 0 0 30%;
 
@@ -184,6 +188,14 @@ section[class^="dash-"] {
         @include fadeOut(right, -90deg, white);
       }
     }
+  }
+
+  .state-and-sha {
+    flex: 0 0 21%;
+  }
+
+  .times {
+    flex: 0 0 24%;
   }
 }
 
