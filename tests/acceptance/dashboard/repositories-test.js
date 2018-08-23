@@ -38,6 +38,7 @@ module('Acceptance | dashboard/repositories', function (hooks) {
     let beforeOneYearAgo = new Date(oneYearAgo.getTime() - 1000 * 60 * 19 - 1000 * 19);
 
     let permissionBuild = server.create('build', {
+      id: 1919,
       branch: server.create('branch', { name: 'another-branch' }),
       eventType: 'push',
       number: 44,
@@ -170,7 +171,10 @@ module('Acceptance | dashboard/repositories', function (hooks) {
 
       assert.equal(build.branch, 'another-branch');
       assert.equal(build.message, 'get used to it');
-      assert.equal(build.stateAndNumber, '#44 passed');
+
+      assert.equal(build.stateAndNumber.text, '#44 passed');
+      assert.ok(build.stateAndNumber.href.endsWith('/travis-ci/travis-lol-a-very-long-repository/builds/1919'));
+
       assert.equal(build.sha.text, 'acab');
 
       assert.equal(build.duration, '19 min 19 sec');

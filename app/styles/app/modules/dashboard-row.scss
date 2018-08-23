@@ -214,6 +214,14 @@ section[class^="dash-"] {
   .times {
     flex: 0 0 24%;
   }
+
+  a.row-content {
+    display: block;
+  }
+
+  a:hover .inner-underline {
+    border-bottom: 1px solid;
+  }
 }
 
 .dashboard-repos {

@@ -24,10 +24,10 @@
     </section>
 
     <section class='state-and-sha'>
-      <div class='row-content' data-test-state-number>
+      {{#link-to 'build' build.repo build data-test-state-number class='row-content'}}
         {{request-icon event=build.eventType state=build.state}}
-        #{{build.number}} {{build.state}}
-      </div>
+        <span class='inner-underline'>#{{build.number}} {{build.state}}</span>
+      {{/link-to}}
       {{#external-link-to data-test-commit-sha href=urlGithubCommit class='row-content'}}
         {{tooltip-on-element text='View commit on GitHub'}}
         {{svg-jar 'icon-commit' class="icon"}}

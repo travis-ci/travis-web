@@ -54,7 +54,11 @@ export default create({
       repo: text('[data-test-repo-name]'),
       branch: text('[data-test-branch-name]'),
       message: text('[data-test-commit-message]'),
-      stateAndNumber: text('[data-test-state-number]'),
+      stateAndNumber: {
+        scope: '[data-test-state-number]',
+        href: attribute('href'),
+        text: text('.inner-underline')
+      },
 
       sha: {
         scope: '[data-test-commit-sha]',
