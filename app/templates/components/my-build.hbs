@@ -9,20 +9,20 @@
     </section>
 
     <section class='repo color'>
-      <div data-test-owner>{{build.repo.owner.login}}</div>
-      <div data-test-repo-name>{{build.repo.name}}</div>
+      <div class='row-content' data-test-owner>{{build.repo.owner.login}}</div>
+      <div class='row-content'  data-test-repo-name>{{build.repo.name}}</div>
     </section>
 
     <section class='message-and-branch'>
-      <div class='message' data-test-commit-message>
+      <div class='message row-content' data-test-commit-message>
         {{{format-message build.commit.message short='true' repo=build.repo eventType=build.eventType}}}
       </div>
-      <div data-test-branch-name>{{build.branch.name}}</div>
+      <div  class='row-content' data-test-branch-name>{{build.branch.name}}</div>
     </section>
 
     <section class='state-and-sha'>
-      <div data-test-state-number>#{{build.number}} {{build.state}}</div>
-      {{#external-link-to data-test-commit-sha href=urlGithubCommit}}
+      <div  class='row-content' data-test-state-number>#{{build.number}} {{build.state}}</div>
+      {{#external-link-to data-test-commit-sha href=urlGithubCommit class='row-content'}}
         {{tooltip-on-element text='View commit on GitHub'}}
         {{svg-jar 'icon-commit' class="icon"}}
         <span class="label-align inner-underline">{{format-sha build.commit.sha}}</span>
@@ -31,7 +31,7 @@
     </section>
 
     <section class='times'>
-      <div title="{{if build.elapsedTime (concat "Started " (pretty-date build.startedAt))}}" class="commit-stopwatch">
+      <div title="{{if build.elapsedTime (concat "Started " (pretty-date build.startedAt))}}" class="commit-stopwatch row-content">
         {{svg-jar 'icon-stopwatch' class="icon--m"}}
         <span class="label-align" data-test-duration>
           <time datetime="PT{{build.elapsedTime}}S">{{format-duration build.elapsedTime}}</time>
