@@ -12,7 +12,7 @@
       <li>{{limit-concurrent-builds value=model.settings.maximum_number_of_builds enabled=concurrentBuildsLimit repo=repo}}</li>
       <li>{{settings-switch active=model.settings.build_pull_requests repo=repo description="Build pushed pull requests" key="build_pull_requests"}}
         <a href="https://docs.travis-ci.com/user/web-ui/#build-pushed-pull-requests"
-           title="about the pull request updates" class="settings-tooltip">
+           title="about pull request updates" class="settings-tooltip">
            {{tooltip-on-element text='Read more about pull request updates'}}
            {{svg-jar 'icon-help' class="icon-help"}}</a>
       </li>
