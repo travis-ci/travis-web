@@ -176,6 +176,7 @@ module('Acceptance | dashboard/repositories', function (hooks) {
       assert.ok(build.stateAndNumber.href.endsWith('/travis-ci/travis-lol-a-very-long-repository/builds/1919'));
 
       assert.equal(build.sha.text, 'acab');
+      assert.ok(build.sha.href.endsWith('/travis-ci/travis-lol-a-very-long-repository/commit/acab'));
 
       assert.equal(build.duration, '19 min 19 sec');
       assert.equal(build.finished, 'about a year ago');
