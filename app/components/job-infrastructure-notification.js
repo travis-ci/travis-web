@@ -75,7 +75,9 @@ export default Component.extend({
   @computed('job.startedAt', 'macOSImage', 'job.isFinished', 'conjugatedRun', 'isDeprecatedOrRetiredMacImage')
   deprecatedOrRetiredMacImageMessage(startedAt, image, isFinished, conjugatedRun) {
     if (image === 'xcode6.4') {
-      return `Running builds with Xcode 6.4 in Travis CI is deprecated and will be removed in January 2019. If Xcode 6.4 is critical to your builds, please contact our support team at <a href="mailto:support@travis-ci.com">support@travis-ci.com</a> to discuss options.`;
+      return `Running builds with Xcode 6.4 in Travis CI is deprecated and will be
+removed in January 2019. If Xcode 6.4 is critical to your builds, please contact our support team
+at <a href="mailto:support@travis-ci.com">support@travis-ci.com</a> to discuss options.`;
     }
 
     const retirementDate = Date.parse(this.get('imageToRetirementDate')[image]);
