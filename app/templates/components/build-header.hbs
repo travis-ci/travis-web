@@ -24,7 +24,7 @@
   {{/if}}
     <ul class="list-icon">
       <li>
-        {{#external-link-to href=urlGithubCommit}}
+        {{#external-link-to href=commit.githubUrl}}
           {{tooltip-on-element text='View commit on GitHub'}}
           {{svg-jar 'icon-commit' class="icon"}}
           <span class="label-align inner-underline commit-commit">Commit {{format-sha commit.sha}}</span>

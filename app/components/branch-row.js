@@ -11,7 +11,6 @@ export default Component.extend({
   @service auth: null,
   @service router: null,
   @service permissions: null,
-  @service externalLinks: null,
 
   tagName: 'li',
   classNameBindings: ['branch.last_build.state'],
@@ -19,11 +18,6 @@ export default Component.extend({
   isLoading: false,
   isTriggering: false,
   hasTriggered: false,
-
-  @computed('branch.repository.slug', 'branch.last_build.commit.sha')
-  urlGithubCommit(slug, sha) {
-    return this.get('externalLinks').githubCommit(slug, sha);
-  },
 
   @computed()
   getLast5Builds() {

@@ -44,11 +44,6 @@ export default Component.extend({
     return !['api', 'cron'].includes(eventType);
   },
 
-  @computed('repo.slug', 'commit.sha')
-  urlGithubCommit(slug, sha) {
-    return this.get('externalLinks').githubCommit(slug, sha);
-  },
-
   @computed('item.repo.slug', 'build.branchName')
   urlGitHubBranch(slug, branchName) {
     return this.get('externalLinks').githubBranch(slug, branchName);
