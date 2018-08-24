@@ -10,6 +10,7 @@ export default (function () {
     this.window.scroll(() => {
       throttle(this, this.onScroll, [], 200, false);
     });
+    try { this.sticky = CSS.supports('position: sticky'); } catch (e) { this.sticky = false; }
     return this;
   }
 
@@ -86,7 +87,7 @@ export default (function () {
   Tailing.prototype.positionButton = function () {
     let max, offset, tail;
     tail = $('#tail');
-    if (tail.length === 0) {
+    if (tail.length === 0 || this.sticky === true) {
       return;
     }
     offset = $(window).scrollTop() - $('#log').offset().top;

@@ -29,14 +29,9 @@ $padding-top: 24px;
 }
 
 .wrapper {
-  overflow: hidden;
   background-color: white;
 
-  #main,
-  #left {
-    margin-bottom: -99989px;
-    padding-bottom: 100034px;
-  }
+  @include clearfix;
 }
 
 .wrapper-main {
