@@ -798,6 +798,16 @@ header.space-between {
       margin-bottom: 2em;
     }
 
+    .unsubscribed-emails {
+      .row {
+        padding: 0 20px;
+
+        &:hover {
+          background-color: #fbfbfb;
+        }
+      }
+    }
+
     .unsubscribe-button {
       display: flex;
       align-items: center;

@@ -27,6 +27,14 @@ $base-elevation: 5px;
     @include makeElevation($base-elevation * 4);
   }
 
+  &.no-padding {
+    padding: 0;
+
+    .title {
+      padding: 15px 20px 0;
+    }
+  }
+
   .title {
     text-transform: uppercase;
     margin: 0 0 10px 0;
