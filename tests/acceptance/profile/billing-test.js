@@ -94,7 +94,6 @@ test('view billing information with invoices', function (assert) {
 
   profilePage.visit({ username: 'user-login' });
   profilePage.billing.visit();
-
   andThen(() => {
     percySnapshot(assert);
 
@@ -177,6 +176,26 @@ test('view billing on a manual plan with no invoices', function (assert) {
     assert.ok(profilePage.billing.annualInvitation.isHidden);
 
     assert.ok(profilePage.billing.invoices.isHidden);
+  });
+});
+
+test('view billing on an expired manual plan', function (assert) {
+  this.subscription.source = 'manual';
+  this.subscription.status = 'expired';
+
+  profilePage.visit({
+    username: 'user-login'
+  });
+  profilePage.billing.visit();
+
+  andThen(() => {
+    assert.ok(profilePage.billing.manageButton.isHidden);
+    assert.ok(profilePage.billing.address.isHidden);
+    assert.ok(profilePage.billing.creditCardNumber.isHidden);
+    assert.ok(profilePage.billing.price.isHidden);
+    assert.ok(profilePage.billing.annualInvitation.isHidden);
+    assert.ok(profilePage.billing.invoices.isHidden);
+    assert.equal(profilePage.billing.expiryMessage.text, 'You had a manual subscription that expired on June 19, 2018. If you have any questions or would like to update your plan, please contact our support team.');
   });
 });
 

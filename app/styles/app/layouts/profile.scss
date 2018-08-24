@@ -458,10 +458,6 @@ section.billing {
     }
   }
 
-  .new-subscription-message {
-    margin-top: 50px;
-  }
-
   section.payment {
     h3 {
       margin: 20px 0 12px 0;
@@ -718,6 +714,12 @@ header.space-between {
   background-color: #3EAAAF;
   border: none;
   border-radius: 2px;
+}
+
+.subscription-divider {
+  margin: 40px 0;
+  height: 2px;
+  border-top: 2px $pebble-grey solid;
 }
 
 .manage-subscription {

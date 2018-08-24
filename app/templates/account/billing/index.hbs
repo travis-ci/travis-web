@@ -2,7 +2,7 @@
   {{#unless model.subscriptions}}
     <h2>Plan Overview</h2>
     {{#if model.trials}}
-      {{#if model.trials.hasTrial}}
+      {{#if model.trials.hasActiveTrial}}
         <p data-test-trial-message class="source plan-status-message">
           You've got {{pluralize model.trials.buildsRemaining 'trial build'}} left.
           <br/>
@@ -74,7 +74,8 @@
       {{resubscribe-button subscription=model.subscriptions account=account}}
     {{/if}}
     {{#if model.subscriptions.isGithub}}
-      <a href={{config.marketplaceEndpoint}} class='button--green marketplace-button'>Continue with GitHub Marketplace</a>
+      <a href={{config.marketplaceEndpoint}} class='button--blue marketplace-button'>Continue with GitHub Marketplace</a>
+      <div class="subscription-divider"></div>
       <p class="new-subscription-message">Or subscribe directly with Travis CI</p>
       {{new-subscription-button account=account}}
     {{/if}}

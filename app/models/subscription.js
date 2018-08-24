@@ -20,20 +20,19 @@ export default Model.extend({
   plan: belongsTo(),
   source: attr(),
   status: attr(),
+  validTo: attr('date'),
 
   @equal('status', 'subscribed') isSubscribed: null,
   @equal('status', 'canceled') isCanceled: null,
   @equal('status', 'expired') isExpired: null,
-
-  @or('isCanceled', 'isExpired') isNotSubscribed: null,
-
   @equal('source', 'stripe') isStripe: null,
   @equal('source', 'github') isGithub: null,
   @equal('source', 'manual') isManual: null,
 
+  @or('isCanceled', 'isExpired') isNotSubscribed: null,
+
   @and('isStripe', 'isNotSubscribed') isResubscribable: null,
 
-  validTo: attr('date'),
 
   @computed('owner.{type,login}', 'isGithub', 'isResubscribable')
   billingUrl(type, login, isGithub, isResubscribable) {

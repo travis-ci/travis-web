@@ -178,6 +178,10 @@ export default create({
       scope: '[data-test-expiry-message]'
     },
 
+    contactSupport: {
+      scope: '.manual-help',
+    },
+
     invoices: {
       scope: '.invoices',
       items: collection('[data-test-invoice]', {

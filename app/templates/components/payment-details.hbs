@@ -17,5 +17,9 @@
 {{/if}}
 
 {{#if (and subscription.isStripe monthly subscription.permissions.write)}}
-  <span class='notice-banner--yellow' data-test-annual-invitation>Get one month for free with annual billing</span>
+  <span class='notice-banner--yellow' data-test-annual-invitation>Get one month for free with
+    <a href={{concat subscription.billingUrl '/edit?switch_annual=true?utm_source=web&utm_campaign=switch_to_annual'}}>
+      annual billing
+    </a>
+  </span>
 {{/if}}

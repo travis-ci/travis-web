@@ -13,5 +13,5 @@ export default Model.extend({
   @equal('status', 'started') isStarted: null,
   @equal('status', 'ended') isEnded: null,
 
-  @or('isNew', 'isStarted') hasTrial: null,
+  @or('isNew', 'isStarted') hasActiveTrial: null,
 });
