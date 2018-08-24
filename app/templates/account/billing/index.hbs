@@ -35,7 +35,7 @@
     <section class='plan'>
       <h2>Plan Overview</h2>
       {{#if model.subscriptions.isGithub}}
-        {{#if model.trials.hasTrial}}
+        {{#if model.trials.hasActiveTrial}}
           <p data-test-trial-message class="source plan-status-message">
             You're trialing Travis CI via your <a href={{config.marketplaceEndpoint}} class="billing-section-link">Github Marketplace subscription</a>.
           </p>
