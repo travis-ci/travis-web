@@ -531,7 +531,7 @@ test('view billing tab when there is a trial', function (assert) {
 
   andThen(() => {
     percySnapshot(assert);
-    assert.equal(profilePage.billing.trial.name, 'You are on a trial subscription with 100 builds remaining.');
+    assert.equal(profilePage.billing.trial.name, 'Your trial includes 100 trial builds and 2-concurrent-jobs, no credit card required. Need help? Check our getting started guide.');
     assert.equal(profilePage.billing.manageButton.text, 'New subscription');
   });
 });
