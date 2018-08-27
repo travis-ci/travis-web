@@ -11,14 +11,6 @@ module.exports = {
       }
     },
     {
-      name: 'ember-canary',
-      npm: {
-        devDependencies: {
-          'ember-source': 'canary'
-        }
-      }
-    },
-    {
       name: 'ember-data-beta',
       npm: {
         devDependencies: {

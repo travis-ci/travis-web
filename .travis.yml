@@ -12,13 +12,8 @@ matrix:
       env: TRY_CONFIG=ember-beta
       node_js: 10.7
     - if: branch = bd-ember-betas
-      env: TRY_CONFIG=ember-canary
-      node_js: 10.7
-    - if: branch = bd-ember-betas
       env: TRY_CONFIG=ember-data-beta
       node_js: 10.7
-  allow_failures:
-    - env: TRY_CONFIG=ember-canary
 
 sudo: required
 dist: trusty
