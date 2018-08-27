@@ -6,6 +6,13 @@ env:
   global:
     - PERCY_ENABLE=0
 
+jobs:
+  include:
+    - if: branch = bd-ember-betas
+      env: TRY_CONFIG=ember-beta
+    - if: branch = bd-ember-betas
+      env: TRY_CONFIG=ember-data-beta
+
 sudo: required
 dist: trusty
 
@@ -38,8 +45,9 @@ before_script:
   - greenkeeper-lockfile-update
 
 script:
-  - npm run lint:js
-  - ember exam --reporter dot $RANDOMISE
+  - if [ -z "$TRY_CONFIG" ]; then npm run lint:js; fi
+  - if [ -z "$TRY_CONFIG" ]; then ember exam --reporter dot $RANDOMISE; fi
+  - if [[ ! -z "$TRY_CONFIG" ]]; then ember try:one $TRY_CONFIG
 
 after_script:
   - greenkeeper-lockfile-upload
