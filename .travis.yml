@@ -10,8 +10,10 @@ jobs:
   include:
     - if: branch = bd-ember-betas
       env: TRY_CONFIG=ember-beta
+      node_js: 10.7
     - if: branch = bd-ember-betas
       env: TRY_CONFIG=ember-data-beta
+      node_js: 10.7
 
 sudo: required
 dist: trusty
