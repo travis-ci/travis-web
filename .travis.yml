@@ -8,10 +8,10 @@ env:
 
 matrix:
   include:
-    - if: branch = bd-ember-betas
+    - if: type = cron
       env: TRY_CONFIG=ember-beta
       node_js: 10.7
-    - if: branch = bd-ember-betas
+    - if: type = cron
       env: TRY_CONFIG=ember-data-beta
       node_js: 10.7
 
