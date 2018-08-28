@@ -162,7 +162,7 @@ module('Acceptance | dashboard/repositories', function (hooks) {
     assert.equal(currentURL(), '/dashboard/builds');
     assert.equal(page.myBuilds.builds.length, 4);
 
-    page.myBuilds.builds[0].as(build => {
+    page.myBuilds.builds[2].as(build => {
       assert.ok(build.isPublic);
 
       assert.ok(build.isPassed);
@@ -190,7 +190,7 @@ module('Acceptance | dashboard/repositories', function (hooks) {
       assert.equal(build.finished, 'still running');
     });
 
-    page.myBuilds.builds[2].as(build => {
+    page.myBuilds.builds[0].as(build => {
       assert.ok(build.isFailed);
       assert.ok(build.isPrivate);
     });
