@@ -147,6 +147,18 @@
   }
 }
 
+.button--orange {
+  @extend %button;
+
+  border: none;
+  color: white;
+  background-color: $brick-orange;
+
+  &:hover {
+    background-color: darken($brick-orange, 10);
+  }
+}
+
 .button--compact {
   padding: 3px 7px;
 }

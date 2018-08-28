@@ -25,7 +25,34 @@
 
     {{else}}
 
-      {{repo.slug}}
+      <h1 class="title">
+        Unsubscribe from {{#link-to 'repo' repo target="_blank" class="repo-link repo-slug"}}
+          {{repo.formattedSlug}}
+        {{/link-to}}
+      </h1>
+
+      <p class="description">
+        Please confirm that you would like to unsubscribe from build emails for the
+        <span class="repo-slug repo-slug--bold">{{repo.formattedSlug}}</span>
+        repository.
+      </p>
+
+      <div class="controls">
+        <button class="button--orange control" onclick={{perform fetchRepo}}>
+          Confirm unsubscription
+        </button>
+        {{#link-to 'repo' repo tagName="button" class="no-button control"}}
+          Cancel
+        {{/link-to}}
+      </div>
+
+      <p class="appendix">
+        You can always opt-in to receive emails for this repository
+        again anytime by updating your
+        {{#link-to 'account.settings' class="settings-link"}}
+          email notification settings
+        {{/link-to}}
+      </p>
 
     {{/if}}
 

@@ -52,6 +52,11 @@ const Repo = Model.extend({
     }
   },
 
+  @computed('owner.login', 'name')
+  formattedSlug(login, name) {
+    return `${login} / ${name}`;
+  },
+
   sshKey: function () {
     this.store.find('ssh_key', this.get('id'));
     return this.store.recordForId('ssh_key', this.get('id'));
