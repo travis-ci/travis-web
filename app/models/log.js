@@ -41,11 +41,17 @@ export default EmberObject.extend({
 
     let id = this.get('job.id');
 
-    const url = `${config.apiEndpoint}/job/${id}/log`;
+    let url = `${config.apiEndpoint}/job/${id}/log`;
     const token = this.get('auth.token');
     let headers = {
       'Travis-API-Version': '3'
     };
+
+    let override = id === '421606437';
+
+    if (override) {
+      url = '/failing-log.txt';
+    }
 
     if (token) {
       headers['Authorization'] = `token ${token}`;
@@ -58,7 +64,12 @@ export default EmberObject.extend({
     });
     let json;
     if (response.ok) {
-      json = yield response.json();
+      if (override) {
+        json = yield response.text();
+        json = {log_parts: [{content: json, number: 0, final: true}]};
+      } else {
+        json = yield response.json();
+      }
     } else {
       throw 'error';
     }
