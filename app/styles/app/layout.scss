@@ -6,7 +6,7 @@ $padding-top: 24px;
   width: 100%;
   min-height: calc(100vh - 174px - 55px);
   margin-top: $padding-top;
-  padding-bottom: 3rem;
+  padding-bottom: 5rem;
   background-color: white;
 }
 
@@ -16,22 +16,26 @@ $padding-top: 24px;
   @extend .centered;
 
   .main {
-    padding-bottom: 3rem;
-    margin-bottom: -3rem;
+    padding-bottom: 5rem;
+    margin-bottom: -5rem;
   }
 }
 
 #left {
   position: relative;
-  padding: 0 0 85px 0;
+  padding: 0 0 110px 0;
   background-color: white;
   border-right: 2px solid #f2f2f2;
 }
 
 .wrapper {
   background-color: white;
-
   @include clearfix;
+
+  #main,
+  #left {
+    padding-bottom: 45px;
+  }
 }
 
 .wrapper-main {
@@ -100,7 +104,7 @@ $padding-top: 24px;
   }
 
   #main {
-    padding-bottom: 3rem;
+    padding-bottom: 5rem;
     margin-bottom: 0;
   }
 
