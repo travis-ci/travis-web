@@ -6,7 +6,7 @@ $padding-top: 24px;
   width: 100%;
   min-height: calc(100vh - 174px - 55px);
   margin-top: $padding-top;
-  padding-bottom: 5rem;
+  padding-bottom: 3rem;
   background-color: white;
 }
 
@@ -16,8 +16,8 @@ $padding-top: 24px;
   @extend .centered;
 
   .main {
-    padding-bottom: 5rem;
-    margin-bottom: -5rem;
+    padding-bottom: 3rem;
+    margin-bottom: -3rem;
   }
 }
 
@@ -100,7 +100,7 @@ $padding-top: 24px;
   }
 
   #main {
-    padding-bottom: 5rem;
+    padding-bottom: 3rem;
     margin-bottom: 0;
   }
 
