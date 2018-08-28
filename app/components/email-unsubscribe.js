@@ -53,13 +53,22 @@ export default Component.extend({
   }).drop(),
 
   didInsertElement() {
+    this.flashes.clear();
     this.fetchRepo.perform();
+    return this._super(...arguments);
+  },
+
+  willDestroyElement() {
+    this.flashes.clear();
     return this._super(...arguments);
   },
 
   @action
   processTask() {
     const { isSubscribed } = this;
+
+    this.flashes.clear();
+
     this.task.perform()
       .then(() => {
         const action = isSubscribed ? 'unsubscribed' : 'subscribed';
