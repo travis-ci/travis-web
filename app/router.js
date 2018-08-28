@@ -55,9 +55,10 @@ Router.map(function () {
     this.route('accounts', { path: '/', resetNamespace: true }, function () {
       this.route('account', { path: '/:login', resetNamespace: true }, function () {
         this.route('repositories', { path: '/' });
-        this.route('settings');
-        this.route('billing', { path: '/subscription' }, () => {
+        this.route('settings', function () {
+          this.route('unsubscribe');
         });
+        this.route('billing', { path: '/subscription' });
       });
     });
   });

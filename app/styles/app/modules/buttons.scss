@@ -122,6 +122,16 @@
   @extend %button;
   border: 2px solid $pebble-grey;
   color: $asphalt-grey;
+
+  &.button--hover {
+    transition: all 0.1s linear;
+
+    &:hover {
+      border-color: darken($pebble-grey, 10);
+      color: darken($asphalt-grey, 20);
+      background-color: lighten($pebble-grey, 2);
+    }
+  }
 }
 
 .button--green {

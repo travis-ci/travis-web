@@ -1,3 +1,13 @@
-{{#travis-layout layoutName="layouts/profile" class="profile-view"}}
-  {{outlet}}
-{{/travis-layout}}
+{{#if showLoading}}
+  {{#travis-layout layoutName="layouts/center"}}
+    {{loading-screen center=true margin=true}}
+  {{/travis-layout}}
+{{else if showProfile}}
+  {{#travis-layout layoutName="layouts/profile" class="profile-view"}}
+    {{outlet}}
+  {{/travis-layout}}
+{{else}}
+  {{#travis-layout layoutName="layouts/center"}}
+    {{email-unsubscribe}}
+  {{/travis-layout}}
+{{/if}}
