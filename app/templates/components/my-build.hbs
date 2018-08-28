@@ -28,7 +28,7 @@
     </section>
 
     <section class='state-and-sha'>
-      {{#link-to 'build' build.repo build data-test-state-number class='row-content'}}
+      {{#link-to 'build' build.repo build data-test-state-number class='row-content color'}}
         {{request-icon event=build.eventType state=build.state}}
         <span class='inner-underline'>#{{build.number}} {{build.state}}</span>
       {{/link-to}}
