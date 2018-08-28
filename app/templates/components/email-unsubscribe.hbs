@@ -47,14 +47,14 @@
           disabled={{task.isRunning}}
           onclick={{action 'processTask'}}
         >
-          {{#if isSubscribed}}
-            Confirm unsubscription
-          {{else if isUnsubscribing}}
+          {{#if isUnsubscribing}}
             Unsubscribing...
-          {{else if isUnsubscribed}}
-            Re-subscribe
           {{else if isSubscribing}}
             Subscribing...
+          {{else if isSubscribed}}
+            Confirm unsubscription
+          {{else if isUnsubscribed}}
+            Re-subscribe
           {{/if}}
         </button>
         {{#link-to 'repo' repo
