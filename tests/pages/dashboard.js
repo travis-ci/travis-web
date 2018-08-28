@@ -50,8 +50,16 @@ export default create({
     visit: clickable('[data-test-my-builds-tab]'),
 
     builds: collection('[data-test-my-build]', {
-      owner: text('[data-test-owner]'),
-      repo: text('[data-test-repo-name]'),
+      owner: {
+        scope: '[data-test-owner] a',
+        href: attribute('href'),
+      },
+
+      repo: {
+        scope: '[data-test-repo-name] a',
+        href: attribute('href'),
+      },
+
       branch: text('[data-test-branch-name]'),
       message: text('[data-test-commit-message]'),
       stateAndNumber: {

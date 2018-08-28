@@ -9,8 +9,12 @@
     </section>
 
     <section class='repo color'>
-      <div class='row-content' data-test-owner>{{build.repo.owner.login}}</div>
-      <div class='row-content'  data-test-repo-name>{{build.repo.name}}</div>
+      <div class='row-content' data-test-owner>
+        {{link-to build.repo.owner.login 'owner' build.repo.owner.login class='inner-underline'}}
+      </div>
+      <div class='row-content' data-test-repo-name>
+        {{link-to build.repo.name 'repo' build.repo class='inner-underline'}}
+      </div>
     </section>
 
     <section class='message-and-branch'>

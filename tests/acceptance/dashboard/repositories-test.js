@@ -166,8 +166,12 @@ module('Acceptance | dashboard/repositories', function (hooks) {
       assert.ok(build.isPublic);
 
       assert.ok(build.isPassed);
-      assert.equal(build.owner, 'travis-ci');
-      assert.equal(build.repo, 'travis-lol-a-very-long-repository');
+
+      assert.equal(build.owner.text, 'travis-ci');
+      assert.ok(build.owner.href.endsWith('/travis-ci'));
+
+      assert.equal(build.repo.text, 'travis-lol-a-very-long-repository');
+      assert.ok(build.repo.href.endsWith('/travis-ci/travis-lol-a-very-long-repository'));
 
       assert.equal(build.branch, 'another-branch');
       assert.equal(build.message, 'get used to it');
