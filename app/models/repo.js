@@ -10,7 +10,7 @@ import { hasMany, belongsTo } from 'ember-data/relationships';
 import { service } from 'ember-decorators/service';
 import { computed } from 'ember-decorators/object';
 import { oneWay } from 'ember-decorators/object/computed';
-import { task } from 'ember-concurrency';
+import { task, timeout } from 'ember-concurrency';
 
 const Repo = Model.extend({
   @service api: null,
@@ -185,10 +185,16 @@ const Repo = Model.extend({
 
   subscribe: task(function* () {
     yield this.api.delete(this.emailSubscriptionUrl);
+    // TODO for development purposes, remove after API integration
+    yield timeout(3000);
+    this.set('emailSubscribed', true);
   }).drop(),
 
   unsubscribe: task(function* () {
     yield this.api.post(this.emailSubscriptionUrl);
+    // TODO for development purposes, remove after API integration
+    yield timeout(3000);
+    this.set('emailSubscribed', false);
   }).drop()
 });
 
