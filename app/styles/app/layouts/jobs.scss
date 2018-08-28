@@ -144,6 +144,7 @@
   }
 
   @media #{$medium-up} {
+    padding: 0.3em 0.5em 0.5em 0.7em;
     flex: 0 0 3.6em;
     text-align: center;
     pointer-events: initial;
@@ -250,4 +251,16 @@
 .job-duration {
   flex: 0 0 10rem;
   white-space: nowrap;
+}
+
+.job-container {
+  font-size: 15px;
+  border: 1px solid $cream-dark;
+  margin-bottom: 5px;
+  margin-top: 20px;
+  display: flex;
+  flex-flow: column nowrap;
+  @media #{$medium-up} {
+    flex-flow: row nowrap;
+  }
 }

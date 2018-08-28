@@ -1,0 +1,33 @@
+  <div class="job-os {{os}}">
+    {{tooltip-on-element text=os}}
+    {{svg-jar osIcon class='icon'}}
+  </div>
+
+  <div class="job-lang">
+    {{svg-jar 'icon-language' class="icon"}}
+    <span class="label-align" aria-label="Language">
+      {{#if languages}}
+        {{languages}}
+      {{else}}
+        no language set
+      {{/if}}
+    </span>
+  </div>
+
+  {{#if name}}
+    <div class="job-name">
+      <span class="label-align" aria-label="Title">{{name}}</span>
+    </div>
+  {{/if}}
+
+  {{#if environment}}
+    <div class="job-env">
+      {{svg-jar 'icon-environment' class="icon"}}
+      <span class="label-align" aria-label="Environment variables">{{environment}}</span>
+    </div>
+  {{else}}
+    <div class="job-env is-empty">
+      {{svg-jar 'icon-environment' class="icon"}}
+      <span class="label-align" aria-label="Environment variables">no environment variables set</span>
+    </div>
+  {{/if}}
