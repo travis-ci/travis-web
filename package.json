@@ -85,7 +85,7 @@
     "ember-tether": "^1.0.0",
     "ember-tooltips": "^2.10.0",
     "ember-truth-helpers": "^2.0.0",
-    "ember-try": "0.2.23",
+    "ember-try": "^0.2.23",
     "ember-window-mock": "^0.4.0",
     "emberx-select": "~3.1.1",
     "emoji-datasource-apple": "^4.0.0",
