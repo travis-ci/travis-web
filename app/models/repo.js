@@ -10,6 +10,7 @@ import { hasMany, belongsTo } from 'ember-data/relationships';
 import { service } from 'ember-decorators/service';
 import { computed } from 'ember-decorators/object';
 import { oneWay } from 'ember-decorators/object/computed';
+import { task } from 'ember-concurrency';
 
 const Repo = Model.extend({
   @service api: null,
@@ -176,6 +177,19 @@ const Repo = Model.extend({
 
     return promise;
   },
+
+  @computed('id')
+  emailSubscriptionUrl(id) {
+    return `/repo/${id}/email_subscription`;
+  },
+
+  subscribe: task(function* () {
+    yield this.api.delete(this.emailSubscriptionUrl);
+  }).drop(),
+
+  unsubscribe: task(function* () {
+    yield this.api.post(this.emailSubscriptionUrl);
+  }).drop()
 });
 
 Repo.reopenClass({

@@ -34,6 +34,11 @@
 
     .control {
       margin: 0 10px;
+
+      &.control--primary {
+        width: 165px;
+        text-align: center;
+      }
     }
   }
 

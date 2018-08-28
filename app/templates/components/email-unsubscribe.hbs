@@ -32,17 +32,41 @@
       </h1>
 
       <p class="description">
-        Please confirm that you would like to unsubscribe from build emails for the
+        {{#if isSubscribed}}
+          Please confirm that you would like to unsubscribe from build emails for the
+        {{else}}
+          You are unsubscribed from build emails for the
+        {{/if}}
         <span class="repo-slug repo-slug--bold">{{repo.formattedSlug}}</span>
         repository.
       </p>
 
       <div class="controls">
-        <button class="button--orange control" onclick={{perform fetchRepo}}>
-          Confirm unsubscription
+        <button
+          class="{{if isSubscribed 'button--orange' 'button--white'}} button--hover control control--primary"
+          disabled={{task.isRunning}}
+          onclick={{action 'processTask'}}
+        >
+          {{#if isSubscribed}}
+            Confirm unsubscription
+          {{else if isUnsubscribing}}
+            Unsubscribing...
+          {{else if isUnsubscribed}}
+            Re-subscribe
+          {{else if isSubscribing}}
+            Subscribing...
+          {{/if}}
         </button>
-        {{#link-to 'repo' repo tagName="button" class="no-button control"}}
-          Cancel
+        {{#link-to 'repo' repo
+          tagName="button"
+          disabled=task.isRunning
+          class="no-button control"
+        }}
+          {{#if isSubscribed}}
+            Cancel
+          {{else}}
+            Go to repository
+          {{/if}}
         {{/link-to}}
       </div>
 
