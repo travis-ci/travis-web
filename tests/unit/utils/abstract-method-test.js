@@ -15,6 +15,9 @@ module('Unit | Utility | abstractMethod', function (hooks) {
   test('Abstract function contains method name', function (assert) {
     const METHOD_NAME = 'testMethod';
     let result = abstractMethod(METHOD_NAME);
-    assert.throws(result, err => err.toString().indexOf(METHOD_NAME) > 0);
+
+    assert.throws(result, function (err) {
+      return err.toString().indexOf(METHOD_NAME) > 0;
+    });
   });
 });
