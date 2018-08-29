@@ -58,7 +58,8 @@ Router.map(function () {
         this.route('settings', function () {
           this.route('unsubscribe');
         });
-        this.route('billing', { path: '/subscription' });
+        this.route('billing', { path: '/subscription' }, () => {
+        });
       });
     });
   });
