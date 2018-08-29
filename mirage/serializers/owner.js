@@ -1,5 +1,5 @@
 import { Serializer } from 'ember-cli-mirage';
-import { copy } from '@ember/object/internals';
+import { copy } from 'ember-copy';
 
 export default Serializer.extend({
   serialize(object) {
