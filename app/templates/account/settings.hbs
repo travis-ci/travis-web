@@ -21,12 +21,14 @@
     </section>
   {{/if}}
 
-  <section class="email-settings">
+  <section class="email-settings" data-test-email-settings>
     <h3>Email notifications</h3>
     <div class="build-emails">
       <div class="row">
-        <div class="name">Build emails</div>
-        <div class="description">
+        <div class="name" data-test-email-settings-title>
+          Build emails
+        </div>
+        <div class="description" data-test-email-settings-description>
           The status of your build straight to your inbox
         </div>
         <div class="controls">
@@ -34,15 +36,16 @@
             active=buildEmails
             disabled=toggleBuildEmails.isRunning
             onToggle=(perform toggleBuildEmails)
+            data-test-email-settings-toggle=true
           }}
         </div>
       </div>
     </div>
     {{#if showResubscribeList}}
-      <div class="unsubscribed-emails">
+      <div class="unsubscribed-emails" data-test-email-settings-resubscribe-list>
         {{#paper-block title="Email notifications you've unsubscribed from" elevation=2 padding=false}}
           {{#each unsubscribedRepos as |repo|}}
-            <div class="row">
+            <div class="row" data-test-email-settings-resubscribe-item>
               <div class="name">
                 {{repo.owner.login}} / {{repo.name}}
               </div>

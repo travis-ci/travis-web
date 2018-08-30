@@ -92,3 +92,61 @@ test('no settings for org', function (assert) {
     assert.equal(currentURL(), '/profile/org-login');
   });
 });
+
+test('Email settings sanity', async function (assert) {
+  await profilePage.visit({ username: 'testuser' });
+  await profilePage.settings.visit();
+
+  const { emailSettings } = profilePage.settings;
+
+  assert.ok(emailSettings.isVisible);
+  assert.ok(emailSettings.title.length > 0);
+  assert.ok(emailSettings.description.length > 0);
+  assert.ok(emailSettings.toggle.isVisible);
+});
+
+test('Email settings can be toggled', async function (assert) {
+  const AMOUNT_OF_REPOS = 3;
+
+  server.createList('repository', AMOUNT_OF_REPOS, {
+    emailSubscribed: false
+  });
+
+  await profilePage.visit({ username: 'testuser' });
+  await profilePage.settings.visit();
+
+  const { emailSettings } = profilePage.settings;
+
+  assert.ok(!emailSettings.toggle.isOn);
+  assert.ok(!emailSettings.resubscribeList.isPresent);
+
+  await emailSettings.toggle.click();
+
+  assert.ok(emailSettings.toggle.isOn);
+  assert.ok(emailSettings.resubscribeList.isPresent);
+  assert.equal(emailSettings.resubscribeList.items.length, AMOUNT_OF_REPOS);
+});
+
+test('User can resubscribe to repository', async function (assert) {
+  const repo = server.create('repository', { emailSubscribed: false });
+  let isResubscribed = false;
+
+  server.post(`/repo/${repo.id}/email_subscription`, function () {
+    isResubscribed = true;
+  });
+
+  await profilePage.visit({ username: 'testuser' });
+  await profilePage.settings.visit();
+
+  const { emailSettings } = profilePage.settings;
+
+  await emailSettings.toggle.click();
+
+  assert.equal(emailSettings.resubscribeList.items.length, 1);
+
+  await emailSettings.resubscribeList.items[0].click();
+
+  assert.ok(isResubscribed);
+  assert.ok(!emailSettings.resubscribeList.isPresent);
+});
+

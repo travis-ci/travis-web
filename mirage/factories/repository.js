@@ -5,6 +5,7 @@ export default Mirage.Factory.extend({
   githubLanguage: 'ruby',
   active: true,
   active_on_org: false,
+  emailSubscribed: true,
 
   owner: Object.freeze({
     login: 'travis-ci',
