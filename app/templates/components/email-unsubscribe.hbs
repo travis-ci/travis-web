@@ -5,33 +5,37 @@
 {{else}}
   <div class="container">
 
-    {{svg-jar "sadmail" class="picture"}}
+    {{svg-jar "sadmail" class="picture" data-test-email-unsubscribe-sadmail=true}}
 
     {{#if isError}}
 
-      <h1 class="title">
+      <h1 class="title" data-test-email-unsubscribe-title>
         We didn't find the repository <br /> that you wanted to unsubscribe from
       </h1>
 
-      <p class="description">
+      <p class="description" data-test-email-unsubscribe-description>
         Please make sure you have access to the repository and try again.
       </p>
 
       <div class="controls">
-        <button class="button--white button--hover" onclick={{perform fetchRepo}}>
+        <button
+          class="button--white button--hover"
+          onclick={{perform fetchRepo}}
+          data-test-email-unsubscribe-primary-button
+        >
           Try again
         </button>
       </div>
 
     {{else}}
 
-      <h1 class="title">
+      <h1 class="title" data-test-email-unsubscribe-title>
         Unsubscribe from {{#link-to 'repo' repo target="_blank" class="repo-link repo-slug"}}
           {{repo.formattedSlug}}
         {{/link-to}}
       </h1>
 
-      <p class="description">
+      <p class="description" data-test-email-unsubscribe-description>
         {{#if isSubscribed}}
           Please confirm that you would like to unsubscribe from build emails for the
         {{else}}
@@ -46,6 +50,7 @@
           class="{{if isSubscribed 'button--orange' 'button--white'}} button--hover control control--primary"
           disabled={{task.isRunning}}
           onclick={{action 'processTask'}}
+          data-test-email-unsubscribe-primary-button
         >
           {{#if isUnsubscribing}}
             Unsubscribing...
@@ -61,6 +66,7 @@
           tagName="button"
           disabled=task.isRunning
           class="no-button control"
+          data-test-email-unsubscribe-secondary-button=true
         }}
           {{#if isSubscribed}}
             Cancel
@@ -70,7 +76,7 @@
         {{/link-to}}
       </div>
 
-      <p class="appendix">
+      <p class="appendix" data-test-email-unsubscribe-appendix>
         You can always opt-in to receive emails for this repository
         again anytime by updating your
         {{#link-to 'account.settings' class="settings-link"}}
