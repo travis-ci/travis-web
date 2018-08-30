@@ -48,8 +48,18 @@
               </div>
               <div class="description"></div>
               <div class="controls">
-                <button class="button--white button--compact unsubscribe-button">
-                  {{svg-jar 'icon-email' class="icon" width="15px"}} Re-subscribe
+                <button
+                  class="button--white button--compact unsubscribe-button"
+                  onclick={{perform repo.subscribe}}
+                  data-test-email-settings-resubscribe-button
+                >
+                  {{#if repo.subscribe.isRunning}}
+                    {{loading-indicator inline=true}}
+                  {{else if repo.subscribe.last.error}}
+                    Error! Try again.
+                  {{else}}
+                    {{svg-jar 'icon-email' class="icon" width="15px"}} Re-subscribe
+                  {{/if}}
                 </button>
               </div>
             </div>

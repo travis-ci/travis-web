@@ -184,14 +184,14 @@ const Repo = Model.extend({
   },
 
   subscribe: task(function* () {
-    yield this.api.delete(this.emailSubscriptionUrl);
+    yield this.api.post(this.emailSubscriptionUrl);
     // TODO for development purposes, remove after API integration
     yield timeout(3000);
     this.set('emailSubscribed', true);
   }).drop(),
 
   unsubscribe: task(function* () {
-    yield this.api.post(this.emailSubscriptionUrl);
+    yield this.api.delete(this.emailSubscriptionUrl);
     // TODO for development purposes, remove after API integration
     yield timeout(3000);
     this.set('emailSubscribed', false);

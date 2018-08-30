@@ -23,7 +23,6 @@ export default TravisRoute.extend({
   setupController(controller, model) {
     const { featureFlags, repositories = [] } = model;
     const account = this.modelFor('account');
-    const unsubscribedRepos = repositories.filter(repo => !repo.emailSubscribed);
-    controller.setProperties({ featureFlags, account, unsubscribedRepos });
+    controller.setProperties({ featureFlags, account, repositories });
   }
 });

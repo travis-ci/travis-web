@@ -811,10 +811,12 @@ header.space-between {
     .unsubscribe-button {
       display: flex;
       align-items: center;
+      justify-content: center;
       margin: 5px 0;
       color: $cement-grey;
       border-width: 1px;
       border-color: $dry-cement;
+      width: 115px;
 
       &:hover {
         border-color: $cement-grey;
