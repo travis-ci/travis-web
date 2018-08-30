@@ -1,11 +1,11 @@
 <section class='dash-head {{build.state}}'>
-  {{repository-visibility-icon repository=build.repo}}
+  <div class='row-content'>{{repository-visibility-icon repository=build.repo}}</div>
 </section>
 
 <section class='dash-body'>
   <section class='dash-main'>
     <section class='state {{build.state}}'>
-      {{status-icon status=build.state}}
+      <div class='row-content'>{{status-icon status=build.state}}</div>
     </section>
 
     <section class='repo color'>
@@ -57,7 +57,7 @@
     </section>
 
     <section class='restart'>
-      {{repo-actions build=build repo=build.repo labelless=true}}
+      <div class='row-content'>{{repo-actions build=build repo=build.repo labelless=true}}</div>
     </section>
   </section>
 </section>
