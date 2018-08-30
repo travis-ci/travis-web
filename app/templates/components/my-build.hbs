@@ -13,7 +13,7 @@
         {{link-to build.repo.owner.login 'owner' build.repo.owner.login class='inner-underline'}}
       </div>
       <div class='row-content' data-test-repo-name>
-        {{link-to build.repo.name 'repo' build.repo class='inner-underline'}}
+        {{link-to build.repo.name 'repo' build.repo.owner.login build.repo.name class='inner-underline'}}
       </div>
     </section>
 
@@ -28,7 +28,7 @@
     </section>
 
     <section class='state-and-sha'>
-      {{#link-to 'build' build.repo build data-test-state-number class='row-content color'}}
+      {{#link-to 'build' build.repo.owner.login build.repo.name build.id data-test-state-number class='row-content color'}}
         {{request-icon event=build.eventType state=build.state}}
         <span class='inner-underline'>#{{build.number}} {{build.state}}</span>
       {{/link-to}}
