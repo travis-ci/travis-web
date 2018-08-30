@@ -229,19 +229,18 @@ section[class^="dash-"] {
   }
 }
 
-.dashboard-repos {
-  .tabs {
-    display: flex;
+.tabs.dashboard {
+  display: flex;
+  margin-top: 3em;
 
-    h2 {
-      margin-right: 2rem;
+  h2 {
+    margin-right: 2rem;
 
-      a.active, a:hover {
-        color: $oxide-blue;
+    a.active, a:hover {
+      color: $oxide-blue;
 
-        padding-bottom: 1px;
-        border-bottom: 2px solid $oxide-blue;
-      }
+      padding-bottom: 1px;
+      border-bottom: 2px solid $oxide-blue;
     }
   }
 }
