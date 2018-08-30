@@ -81,7 +81,7 @@
     "ember-sinon": "^2.2.0",
     "ember-source": "~3.4.0",
     "ember-svg-jar": "^1.2.1",
-    "ember-test-assets": "backspace/ember-test-assets#ember-cli-3.3",
+    "ember-test-assets": "^1.1.1",
     "ember-test-selectors": "^1.0.0",
     "ember-tether": "^1.0.0",
     "ember-tooltips": "^2.10.0",
