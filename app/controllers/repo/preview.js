@@ -38,6 +38,7 @@ export default Controller.extend({
         jobs = json.stages.reduce((jobs, stage) => jobs.concat(stage.jobs.map(jobJson => {
           let job = EmberObject.create(jobJson);
           job.set('stage', {id: stage.number});
+          job.set('config', {content: JSON.parse(jobJson.config)});
           return job;
         })), []);
       }
