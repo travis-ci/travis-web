@@ -48,7 +48,10 @@ export default Component.extend({
   },
 
   fetchRepo: task(function* () {
-    const repo = yield this.store.findRecord('repo', this.repositoryId);
+    let repo = null;
+    try {
+      repo = yield this.store.findRecord('repo', this.repositoryId);
+    } catch (e) {}
     return repo && repo.isCurrentUserACollaborator ? repo : null;
   }).drop(),
 

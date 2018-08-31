@@ -10,7 +10,7 @@ import {
   EMAIL_UNSUBSCRIBE_TITLE,
   EMAIL_UNSUBSCRIBE_DESCRIPTION,
   EMAIL_UNSUBSCRIBE_PRIMARY_BUTTON
-} from '../../helpers/selectors';
+} from 'travis/tests/helpers/selectors';
 
 module('Integration | Component | email-unsubscribe', function (hooks) {
   setupRenderingTest(hooks);

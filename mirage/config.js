@@ -170,6 +170,14 @@ export default function () {
     return this.serialize(repository);
   });
 
+  this.post('/repo/:repositoryId/email_subscription', function () {
+    return new Response(204, {}, {});
+  });
+
+  this.delete('/repo/:repositoryId/email_subscription', function () {
+    return new Response(204, {}, {});
+  });
+
   this.post('/repo/:repositoryId/deactivate', function (schema, request) {
     const { repositoryId } = request.params;
     const repository = schema.repositories.find(repositoryId);
