@@ -109,7 +109,7 @@ test('Email settings can be toggled', async function (assert) {
   const AMOUNT_OF_REPOS = 3;
 
   server.createList('repository', AMOUNT_OF_REPOS, {
-    emailSubscribed: false
+    email_subscribed: false
   });
 
   await profilePage.visit({ username: 'testuser' });
@@ -128,7 +128,7 @@ test('Email settings can be toggled', async function (assert) {
 });
 
 test('User can resubscribe to repository', async function (assert) {
-  const repo = server.create('repository', { emailSubscribed: false });
+  const repo = server.create('repository', { email_subscribed: false });
   let isResubscribed = false;
 
   server.post(`/repo/${repo.id}/email_subscription`, function () {
