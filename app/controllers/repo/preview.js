@@ -2,8 +2,12 @@ import Controller from '@ember/controller';
 import { fetch, Headers } from 'fetch';
 import { task } from 'ember-concurrency';
 import { get } from '@ember/object';
+import { service } from 'ember-decorators/service';
+import EmberObject from '@ember/object';
 
 export default Controller.extend({
+  @service store: null,
+
   selected: null,
 
   fetch: task(function* () {
@@ -23,6 +27,27 @@ export default Controller.extend({
 
     if (yaml) {
       this.set('yaml', yaml);
+
+      let jobs;
+
+      if (json.stages) {
+        jobs = json.stages.reduce((jobs, stage) => jobs.concat(stage.jobs.map(jobJson => {
+          let job = EmberObject.create(jobJson);
+          job.set('stage', {id: stage.number});
+          return job;
+        })), []);
+      }
+
+      let build = EmberObject.create({
+        jobs
+      });
+      this.set('build', build);
+
+      this.set('stages', json.stages.map(stageJson => {
+        let stage = this.get('store').createRecord('stage', stageJson);
+        stage.set('id', stage.number);
+        return stage;
+      }));
     } else {
       this.set('yaml', 'error?');
     }
