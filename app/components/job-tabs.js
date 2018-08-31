@@ -6,7 +6,7 @@ export default Component.extend({
   tagName: 'div',
   classNames: ['travistab'],
 
-  didInsertElement() {
+  didRender() {
     if (isEmpty(this.$('.travistab-nav--secondary').find('.active'))) {
       this.$('#tab_log').addClass('active');
     }
