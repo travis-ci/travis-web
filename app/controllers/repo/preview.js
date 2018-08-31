@@ -1,9 +1,8 @@
 import Controller from '@ember/controller';
 import { fetch, Headers } from 'fetch';
 import { task } from 'ember-concurrency';
-import { get } from '@ember/object';
+import EmberObject, { get } from '@ember/object';
 import { service } from 'ember-decorators/service';
-import EmberObject from '@ember/object';
 
 export default Controller.extend({
   @service store: null,
