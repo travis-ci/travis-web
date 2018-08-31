@@ -12,10 +12,14 @@ export default Controller.extend({
 
   fetch: task(function* () {
     // FIXME obvs
-    let url = `http://localhost:4567/${this.get('selected.repo.slug')}/${this.get('selected.commit.sha')}`;
+    let url = new URL(`http://localhost:4567/${this.get('selected.repo.slug')}/${this.get('selected.commit.sha')}`);
     let headers = {
       'Accept': 'application/json'
     };
+
+    if (this.get('eventType')) {
+      url.searchParams.append('event_type', this.get('eventType'));
+    }
 
     let response = yield fetch(url, {
       headers: new Headers(headers)
@@ -42,6 +46,7 @@ export default Controller.extend({
         jobs
       });
       this.set('build', build);
+      this.set('eventType', json.event_type);
 
       this.set('stages', json.stages.map(stageJson => {
         let stage = this.get('store').createRecord('stage', stageJson);

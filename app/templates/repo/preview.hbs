@@ -2,6 +2,12 @@
   {{#if yaml}}
     {{textarea value=yaml rows=20}}
 
+    Event type: {{input value=eventType}}
+
+    <button type='submit' {{action (perform fetch)}} class='button--white'>
+      Submit {{#if fetch.isRunning}}{{loading-indicator}}{{/if}}
+    </button>
+
     {{#if stages}}
       {{#each stages as |stage|}}
         {{jobs-list stage=stage build=build repo=selected.repo stages=stages}}
