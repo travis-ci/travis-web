@@ -27,6 +27,7 @@ module.exports = function (environment) {
     // defaults for running travis-web
     apiEndpoint: 'https://api.travis-ci.org',
     sourceEndpoint: 'https://github.com',
+    previewEndpoint: 'http://localhost:4567',
     pusher: {
       key: '5df8ac576dcccf4fd076',
       host: 'ws.pusherapp.com',
@@ -150,6 +151,10 @@ module.exports = function (environment) {
         ENV.pusher.key = '87d0723b25c51e36def8';
         ENV.billingEndpoint = 'https://billing-staging.travis-ci.com';
       }
+    }
+
+    if (process.env.PREVIEW_ENDPOINT) {
+      ENV.previewEndpoint = process.env.PREVIEW_ENDPOINT;
     }
 
     if (process.env.BILLING_ENDPOINT) {

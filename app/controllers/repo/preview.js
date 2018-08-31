@@ -3,6 +3,7 @@ import { fetch, Headers } from 'fetch';
 import { task } from 'ember-concurrency';
 import EmberObject, { get } from '@ember/object';
 import { service } from 'ember-decorators/service';
+import config from 'travis/config/environment';
 
 export default Controller.extend({
   @service store: null,
@@ -11,7 +12,8 @@ export default Controller.extend({
 
   fetch: task(function* () {
     // FIXME obvs
-    let url = new URL(`http://localhost:4567/${this.get('selected.repo.slug')}/${this.get('selected.commit.sha')}`);
+    let url = new URL(`${config.previewEndpoint}/` +
+      `${this.get('selected.repo.slug')}/${this.get('selected.commit.sha')}`);
     let headers = {
       'Accept': 'application/json'
     };
