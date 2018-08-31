@@ -122,6 +122,8 @@ test('Email settings can be toggled', async function (assert) {
 
   await emailSettings.toggle.click();
 
+  percySnapshot(assert);
+
   assert.ok(emailSettings.toggle.isOn);
   assert.ok(emailSettings.resubscribeList.isPresent);
   assert.equal(emailSettings.resubscribeList.items.length, AMOUNT_OF_REPOS);
