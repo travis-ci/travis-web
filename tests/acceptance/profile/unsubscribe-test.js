@@ -1,6 +1,7 @@
 import { module, test } from 'qunit';
 import { currentRouteName } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
+import { percySnapshot } from 'ember-percy';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import unsubscribePage from 'travis/tests/pages/unsubscribe';
 
@@ -27,6 +28,8 @@ module('Acceptance | profile/unsubscribe', function (hooks) {
     test('it renders correct view', function (assert) {
       const { sadmail, title, description, primaryButton, secondaryButton, appendix } = emailUnsubscribe;
 
+      percySnapshot(assert);
+
       assert.ok(sadmail.isPresent);
       assert.ok(title.isPresent);
       assert.ok(description.isPresent);
@@ -50,6 +53,8 @@ module('Acceptance | profile/unsubscribe', function (hooks) {
 
       test('it renders correct view', function (assert) {
         const { sadmail, title, description, primaryButton, secondaryButton, appendix } = emailUnsubscribe;
+
+        percySnapshot(assert);
 
         assert.ok(sadmail.isPresent);
         assert.ok(title.isPresent);
@@ -96,6 +101,8 @@ module('Acceptance | profile/unsubscribe', function (hooks) {
 
       test('it renders correct view', function (assert) {
         const { sadmail, title, description, primaryButton, secondaryButton, appendix } = emailUnsubscribe;
+
+        percySnapshot(assert);
 
         assert.ok(sadmail.isPresent);
         assert.ok(title.isPresent);
