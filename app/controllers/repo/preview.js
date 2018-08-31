@@ -20,6 +20,10 @@ export default Controller.extend({
       url.searchParams.append('event_type', this.get('eventType'));
     }
 
+    if (this.get('yaml')) {
+      url.searchParams.append('yml', this.get('yaml'));
+    }
+
     let response = yield fetch(url, {
       headers: new Headers(headers)
     });
@@ -29,7 +33,9 @@ export default Controller.extend({
     let yaml = get(json, 'request.yaml_config.yaml');
 
     if (yaml) {
-      this.set('yaml', yaml);
+      if (!this.get('yaml')) {
+        this.set('yaml', yaml);
+      }
 
       let jobs;
 
