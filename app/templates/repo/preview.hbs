@@ -1,0 +1,18 @@
+{{#if selected}}
+  {{#if yaml}}
+    {{textarea value=yaml rows=20}}
+  {{else}}
+    {{loading-indicator}}
+  {{/if}}
+{{else}}
+  Click a request
+{{/if}}
+
+<ul>
+  {{#each model as |request|}}
+    <li onclick={{action 'chooseRequest' request}}>
+      <span style='{{if (eq request selected) 'font-weight: bold'}}'>{{request.commit.sha}}</span>
+      {{{format-message request.commit.message short="true" repo=build.repo}}}
+    </li>
+  {{/each}}
+</ul>
