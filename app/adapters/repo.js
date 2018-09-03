@@ -12,7 +12,7 @@ export default V3Adapter.extend({
     'repository.default_branch',
     'repository.current_build',
     'build.commit',
-    'repo.email_subscribed'
+    'repository.email_subscribed'
   ].join(','),
 
   buildURL(modelName, id, snapshot, requestType, query) {
