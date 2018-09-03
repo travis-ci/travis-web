@@ -2,14 +2,18 @@ import Controller from '@ember/controller';
 import { service } from 'ember-decorators/service';
 import { task } from 'ember-concurrency';
 import { computed } from 'ember-decorators/object';
-import { and } from 'ember-decorators/object/computed';
+import { and, reads } from 'ember-decorators/object/computed';
 
 export default Controller.extend({
   @service features: null,
   @service featureFlags: null,
+  @service preferences: null,
+  @service flashes: null,
 
-  buildEmails: false,
   repositories: null,
+
+  @reads('preferences.buildEmails')
+  buildEmails: false,
 
   @computed('repositories.@each.emailSubscribed')
   unsubscribedRepos(repositories = []) {
@@ -20,7 +24,11 @@ export default Controller.extend({
   showResubscribeList: false,
 
   toggleBuildEmails: task(function* (value) {
-    // TODO implement API integration
-    yield this.set('buildEmails', value);
+    try {
+      yield this.preferences.set('build_emails', value);
+    } catch (err) {
+      this.flashes.clear();
+      this.flashes.error('Something went wrong and your email settings were not saved.');
+    }
   }).restartable()
 });
