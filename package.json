@@ -20,7 +20,7 @@
     "@ember-decorators/babel-transforms": "^2.0.0",
     "active-model-adapter": "2.2.0",
     "ansiparse": "0.1.0",
-    "babel-eslint": "8.2.3",
+    "babel-eslint": "8.2.4",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
     "broccoli-asset-rev": "^3.0.0",
