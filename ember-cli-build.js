@@ -3,7 +3,7 @@
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 const Funnel = require('broccoli-funnel');
 const SVGO = require('svgo');
-const Sass = require('node-sass');
+const Sass = require('sass');
 
 module.exports = function () {
   let fingerprint;
