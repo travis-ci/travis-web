@@ -20,7 +20,7 @@ export default Model.extend({
   plan: belongsTo(),
   source: attr(),
   status: attr(),
-  validTo: attr('date'),
+  validTo: attr(),
 
   @equal('status', 'subscribed') isSubscribed: null,
   @equal('status', 'canceled') isCanceled: null,
@@ -53,5 +53,13 @@ export default Model.extend({
   @computed('source')
   sourceWords(source) {
     return sourceToWords[source];
-  }
+  },
+
+  @computed('isManual', 'validTo')
+  manualSubscriptionExpired(isManual, validTo) {
+    let today = new Date().toISOString();
+    let date = Date.parse(today);
+    let validToDate = Date.parse(validTo);
+    return (isManual && (date > validToDate));
+  },
 });

@@ -31,6 +31,24 @@
   {{#if model.subscriptions.manageSubscription}}
     {{manage-subscription-button subscription=model.subscriptions account=account}}
   {{/if}}
+  {{#if model.subscriptions.isManual}}
+    {{#unless model.subscriptions.manualSubscriptionExpired}}
+      <section class='plan'>
+        <h2>Plan Overview</h2>
+        <h3 data-test-plan-name>{{model.subscriptions.plan.name}}</h3>
+        <p data-test-plan-concurrency>{{pluralize model.subscriptions.plan.builds 'concurrent job'}}</p>
+        <p>Renewing on {{moment-format model.subscriptions.validTo 'MMMM D, YYYY'}}</p>
+      </section>
+      <h2>Billing Information</h2>
+      <section class='row'>
+        <section class='payment'>
+          <h3>Payment details</h3>
+          {{payment-details subscription=model.subscriptions}}
+        </section>
+      </section>
+    {{/unless}}
+  {{/if}}
+
   {{#if model.subscriptions.isSubscribed}}
     <section class='plan'>
       <h2>Plan Overview</h2>
@@ -59,15 +77,20 @@
       </section>
     </section>
   {{else if model.subscriptions}}
-    <h2>Plan Overview</h2>
     <span data-test-expiry-message>
-      {{#if model.subscriptions.isExpired}}
+      {{#if model.subscriptions.manualSubscriptionExpired}}
+        <h2>Plan Overview</h2>
         You had a {{model.subscriptions.sourceWords}} subscription that expired on {{moment-format model.subscriptions.validTo 'MMMM D, YYYY'}}.
-      {{else}}
-        This subscription has been canceled by you and is valid through {{moment-format model.subscriptions.validTo 'MMMM D, YYYY'}}.
-      {{/if}}
-      {{#if model.subscriptions.isManual}}
         {{manual-subscription-help}}
+      {{else}}
+        {{#if model.subscriptions.isExpired}}
+          <h2>Plan Overview</h2>
+          You had a {{model.subscriptions.sourceWords}} subscription that expired on {{moment-format model.subscriptions.validTo 'MMMM D, YYYY'}}.
+        {{/if}}
+        {{#if model.subscriptions.isCanceled}}
+          <h2>Plan Overview</h2>
+          This subscription has been canceled by you and is valid through {{moment-format model.subscriptions.validTo 'MMMM D, YYYY'}}.
+        {{/if}}
       {{/if}}
     </span>
     {{#if model.subscriptions.isResubscribable}}

@@ -94,6 +94,7 @@ test('view billing information with invoices', function (assert) {
 
   profilePage.visit({ username: 'user-login' });
   profilePage.billing.visit();
+
   andThen(() => {
     percySnapshot(assert);
 
@@ -132,7 +133,7 @@ test('view billing on an expired stripe plan', function (assert) {
   profilePage.billing.visit();
 
   andThen(() => {
-    assert.equal(profilePage.billing.expiryMessage.text, 'You had a Stripe subscription that expired on June 19, 2018.');
+    assert.equal(profilePage.billing.expiryMessage.text, 'Plan Overview You had a Stripe subscription that expired on June 19, 2018.');
     assert.equal(profilePage.billing.manageButton.text, 'Resubscribe');
     assert.equal(profilePage.billing.manageButton.href, 'https://billing.travis-ci.com/subscriptions/user');
 
@@ -150,7 +151,7 @@ test('view billing on a canceled stripe plan', function (assert) {
   profilePage.billing.visit();
 
   andThen(() => {
-    assert.equal(profilePage.billing.expiryMessage.text, 'This subscription has been canceled by you and is valid through June 19, 2018.');
+    assert.equal(profilePage.billing.expiryMessage.text, 'Plan Overview This subscription has been canceled by you and is valid through June 19, 2018.');
     assert.equal(profilePage.billing.manageButton.href, 'https://billing.travis-ci.com/subscriptions/user');
     assert.equal(profilePage.billing.manageButton.text, 'Resubscribe');
 
@@ -163,6 +164,8 @@ test('view billing on a canceled stripe plan', function (assert) {
 
 test('view billing on a manual plan with no invoices', function (assert) {
   this.subscription.source = 'manual';
+  this.subscription.status = undefined;
+  this.subscription.valid_to = new Date(2025, 7, 16).toISOString();
 
   profilePage.visit({ username: 'user-login'});
   profilePage.billing.visit();
@@ -181,7 +184,8 @@ test('view billing on a manual plan with no invoices', function (assert) {
 
 test('view billing on an expired manual plan', function (assert) {
   this.subscription.source = 'manual';
-  this.subscription.status = 'expired';
+  this.subscription.status = undefined;
+  this.subscription.valid_to = new Date(2018, 6, 16).toISOString();
 
   profilePage.visit({
     username: 'user-login'
@@ -195,7 +199,7 @@ test('view billing on an expired manual plan', function (assert) {
     assert.ok(profilePage.billing.price.isHidden);
     assert.ok(profilePage.billing.annualInvitation.isHidden);
     assert.ok(profilePage.billing.invoices.isHidden);
-    assert.equal(profilePage.billing.expiryMessage.text, 'You had a manual subscription that expired on June 19, 2018. If you have any questions or would like to update your plan, please contact our support team.');
+    assert.equal(profilePage.billing.expiryMessage.text, 'Plan Overview You had a manual subscription that expired on July 16, 2018. If you have any questions or would like to update your plan, please contact our support team.');
   });
 });
 
@@ -225,7 +229,7 @@ test('view billing on an canceled marketplace plan', function (assert) {
   profilePage.billing.visit();
 
   andThen(() => {
-    assert.equal(profilePage.billing.expiryMessage.text, 'This subscription has been canceled by you and is valid through June 19, 2018.');
+    assert.equal(profilePage.billing.expiryMessage.text, 'Plan Overview This subscription has been canceled by you and is valid through June 19, 2018.');
     assert.equal(profilePage.billing.marketplaceButton.text, 'Continue with GitHub Marketplace');
     assert.equal(profilePage.billing.marketplaceButton.href, 'https://github.com/marketplace/travis-ci/');
     assert.equal(profilePage.billing.manageButton.text, 'New subscription');
@@ -245,7 +249,7 @@ test('view billing on an expired marketplace plan', function (assert) {
   profilePage.billing.visit();
 
   andThen(() => {
-    assert.equal(profilePage.billing.expiryMessage.text, 'You had a GitHub Marketplace subscription that expired on June 19, 2018.');
+    assert.equal(profilePage.billing.expiryMessage.text, 'Plan Overview You had a GitHub Marketplace subscription that expired on June 19, 2018.');
     assert.equal(profilePage.billing.marketplaceButton.text, 'Continue with GitHub Marketplace');
     assert.equal(profilePage.billing.marketplaceButton.href, 'https://github.com/marketplace/travis-ci/');
     assert.equal(profilePage.billing.manageButton.text, 'New subscription');
