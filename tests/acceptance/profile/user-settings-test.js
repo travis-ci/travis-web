@@ -17,6 +17,8 @@ moduleForAcceptance('Acceptance | user settings', {
         createSubscription: false
       }
     });
+
+    server.loadFixtures('preferences');
   }
 });
 
@@ -130,12 +132,7 @@ test('Email settings can be toggled', async function (assert) {
 });
 
 test('User can resubscribe to repository', async function (assert) {
-  const repo = server.create('repository', { email_subscribed: false });
-  let isResubscribed = false;
-
-  server.post(`/repo/${repo.id}/email_subscription`, function () {
-    isResubscribed = true;
-  });
+  server.create('repository', { email_subscribed: false });
 
   await profilePage.visit({ username: 'testuser' });
   await profilePage.settings.visit();
@@ -148,7 +145,6 @@ test('User can resubscribe to repository', async function (assert) {
 
   await emailSettings.resubscribeList.items[0].click();
 
-  assert.ok(isResubscribed);
   assert.ok(!emailSettings.resubscribeList.isPresent);
 });
 

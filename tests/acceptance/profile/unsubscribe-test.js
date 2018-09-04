@@ -67,18 +67,12 @@ module('Acceptance | profile/unsubscribe', function (hooks) {
 
       test('it allows to unsubscribe', async function (assert) {
         const { primaryButton } = emailUnsubscribe;
-        let isSubscribed = true;
-
-        server.delete(`/repo/${this.repo.id}/email_subscription`, function () {
-          isSubscribed = false;
-        });
 
         assert.ok(primaryButton.isUnsubscribe);
 
         await primaryButton.click();
 
         assert.ok(primaryButton.isResubscribe);
-        assert.equal(isSubscribed, false);
       });
 
       test('it allows to cancel unsubscription', async function (assert) {
@@ -115,18 +109,12 @@ module('Acceptance | profile/unsubscribe', function (hooks) {
 
       test('it allows to re-subscribe', async function (assert) {
         const { primaryButton } = emailUnsubscribe;
-        let isSubscribed = false;
-
-        server.post(`/repo/${this.repo.id}/email_subscription`, function () {
-          isSubscribed = true;
-        });
 
         assert.ok(primaryButton.isResubscribe);
 
         await primaryButton.click();
 
         assert.ok(primaryButton.isUnsubscribe);
-        assert.equal(isSubscribed, true);
       });
 
       test('it allows to leave the page', async function (assert) {

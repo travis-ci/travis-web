@@ -1570,6 +1570,55 @@ export default {
         "standard": ["settings"]
       }
     },
+    "preference": {
+      "@type": "resource",
+      "actions": {
+        "find": [
+          {
+            "@type": "template",
+            "request_method": "GET",
+            "uri_template": "/v3/preferences/{preference.name}"
+          }
+        ],
+        "update": [
+          {
+            "@type": "template",
+            "request_method": "PATCH",
+            "uri_template": "/v3/preferences/{preference.name}",
+            "accepted_params": [
+              "preference.value"
+            ]
+          }
+        ]
+      },
+      "attributes": ["name", "value"],
+      "representations": {
+        "standard": [
+          "name",
+          "value"
+        ],
+        "minimal": [
+          "name",
+          "value"
+        ]
+      }
+    },
+    "preferences": {
+      "@type": "resource",
+      "actions": {
+        "for_user": [
+          {
+            "@type": "template",
+            "request_method": "GET",
+            "uri_template": "/v3/preferences/{preference.name}"
+          }
+        ]
+      },
+      "attributes": ["preferences"],
+      "representations": {
+        "standard": ["preferences"]
+      }
+    },
     "stage": {
       "@type": "resource",
       "actions": {
