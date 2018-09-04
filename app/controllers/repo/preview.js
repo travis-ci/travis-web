@@ -51,7 +51,8 @@ export default Controller.extend({
       }
 
       let build = EmberObject.create({
-        jobs
+        jobs,
+        request: json.request
       });
       this.set('build', build);
       this.set('eventType', json.event_type);
