@@ -144,15 +144,60 @@ section[class^="dash-"] {
 }
 
 .my-build {
+  @media #{$small-only} {
+    @each $key, $value in $stateMap {
+      &.#{$key} {
+        border-left: 3px solid map-get($value, color);
+      }
+    }
+
+    .dash-head, .dash-body, .dash-main {
+      margin-top: 0;
+    }
+
+    .dash-body {
+      padding: 0;
+
+      .dash-main > section {
+        padding: 0.5em 0;
+        flex-basis: 100%;
+      }
+
+      .state, .repo {
+        display: inline;
+
+        > .row-content:first-child {
+          display: inline;
+        }
+      }
+
+      .message-and-branch {
+        border-right: 0;
+      }
+    }
+
+    .dash-head {
+      padding: 1.2em 1.2em 0.4em 1.2em;
+    }
+
+    .dash-main {
+      padding: 0.6em;
+    }
+  }
+
+  @media #{$medium-up} {
+    .dash-head {
+      @each $key, $value in $stateMap {
+        &.#{$key} {
+          border-right: 3px solid map-get($value, color);
+        }
+      }
+    }
+  }
+
   .dash-head {
     .icon {
       margin-right: 0;
-    }
-
-    @each $key, $value in $stateMap {
-      &.#{$key} {
-        border-right: 3px solid map-get($value, color);
-      }
     }
   }
 
