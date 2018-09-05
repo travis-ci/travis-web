@@ -201,6 +201,14 @@ section[class^="dash-"] {
         > .row-content:first-child {
           display: inline-flex;
           width: 90%;
+
+          .inner-underline {
+            padding-bottom: 1px;
+
+            &:hover {
+              padding-bottom: 0;
+            }
+          }
         }
       }
 
