@@ -95,7 +95,7 @@ test('no settings for org', function (assert) {
   });
 });
 
-test('Email settings sanity', async function (assert) {
+test('Email settings are listed', async function (assert) {
   await profilePage.visit({ username: 'testuser' });
   await profilePage.settings.visit();
 
