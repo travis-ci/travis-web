@@ -187,11 +187,20 @@ section[class^="dash-"] {
         }
       }
 
-      .state, .repo {
+      .state {
+        display: inline;
+
+        .row-content {
+          display: inline;
+        }
+      }
+
+      .repo {
         display: inline;
 
         > .row-content:first-child {
-          display: inline;
+          display: inline-flex;
+          width: 90%;
         }
       }
 
