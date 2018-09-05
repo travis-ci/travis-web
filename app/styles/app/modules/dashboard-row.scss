@@ -167,6 +167,8 @@ section[class^="dash-"] {
           justify-content: center;
 
           .repo-main-tools {
+            display: flex;
+
             button {
               padding: 0.5em 1em;
               border: 0;
