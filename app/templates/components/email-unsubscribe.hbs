@@ -43,6 +43,11 @@
         {{/if}}
         <span class="repo-slug repo-slug--bold">{{repo.formattedSlug}}</span>
         repository.
+
+        {{#if showConfigNote}}
+          If you’re still receiving emails after unsubscribing, please check your
+          <a target="_blank" href="https://github.com/{{repo.slug}}/blob/master/.travis.yml">.travis.yml</a>
+        {{/if}}
       </p>
 
       <div class="controls">

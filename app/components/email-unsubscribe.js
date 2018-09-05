@@ -13,6 +13,8 @@ export default Component.extend({
   @service store: null,
   @service flashes: null,
 
+  isFirstAction: true,
+
   @computed('router.currentURL')
   repositoryId(url = '') {
     const queryParams = url.split('?')[1] || '';
@@ -39,6 +41,9 @@ export default Component.extend({
 
   @and('isSubscribed', 'task.isRunning')
   isUnsubscribing: false,
+
+  @and('isUnsubscribed', 'isFirstAction')
+  showConfigNote: false,
 
   @computed('isSubscribed', 'repo')
   task(isSubscribed, repo) {
@@ -71,6 +76,7 @@ export default Component.extend({
     const { isSubscribed } = this;
 
     this.flashes.clear();
+    this.set('isFirstAction', false);
 
     this.task.perform()
       .then(() => {
