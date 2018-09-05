@@ -188,7 +188,7 @@
   }
 }
 
-.repo-main-tools.labelless {
+@mixin labelless {
   display: inline-flex;
   padding-top: 2px;
   margin-left: 5px;
@@ -232,6 +232,16 @@
 
   .action-button--debug {
     display: none;
+  }
+}
+
+.repo-main-tools.labelless {
+  @include labelless;
+}
+
+@media #{$medium-up} {
+  .repo-main-tools.mobilelabels {
+    @include labelless;
   }
 }
 
