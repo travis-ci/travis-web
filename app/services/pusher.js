@@ -92,6 +92,9 @@ export default Service.extend({
       }
       lastBuildId = defaultBranch.last_build_id;
 
+      const repo = store.peekRecord('repo', data.id);
+      data.email_subscribed = repo ? repo.emailSubscribed : true;
+
       // a build is a synchronous relationship on a branch model, so we need to
       // have a build record present when we put default_branch from a repository
       // model into the store. We don't send last_build's payload in pusher, so
