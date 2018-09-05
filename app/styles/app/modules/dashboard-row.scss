@@ -161,6 +161,28 @@ section[class^="dash-"] {
       .dash-main > section {
         padding: 0.5em 0;
         flex-basis: 100%;
+
+        &.restart {
+          padding-bottom: 0;
+          justify-content: center;
+
+          .repo-main-tools {
+            button {
+              padding: 0.5em 1em;
+              border: 0;
+              border-radius: 0;
+              font-size: $font-size-sm;
+              width: auto;
+
+              &:hover {
+                @include colorSVG(white);
+                color: white;
+
+                background-color: $oxide-blue;
+              }
+            }
+          }
+        }
       }
 
       .state, .repo {
@@ -181,8 +203,9 @@ section[class^="dash-"] {
     }
 
     .dash-main {
-      padding: 0.6em;
+      padding: 0.6em 0.6em 0 0.6em;
     }
+
   }
 
   @media #{$medium-up} {
