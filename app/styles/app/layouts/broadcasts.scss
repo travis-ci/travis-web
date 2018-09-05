@@ -16,7 +16,7 @@
   position: relative;
   background-color: white;
   list-style: none;
-  padding: 0 1em;
+  padding: 1px 1em;
   margin: 0 auto 0.7em;
   border-radius: 2px;
   height: 0;
@@ -24,19 +24,10 @@
   opacity: 0;
   will-change: opacity;
   transition: opacity 150ms ease;
+  box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.15);
 
-  &:after {
-    content: "";
-    position: absolute;
-    display: block;
-    width: 14px;
-    height: 14px;
-    background: white;
-    top: -0.5em;
-    left: 136px;
-    transform: rotate(45deg);
-    border-top: solid 2px $cream-dark;
-    border-left: solid 2px $cream-dark;
+  @media #{$medium-up} {
+    padding: 0 1em;
   }
 
   li {
@@ -50,8 +41,12 @@
   p {
     position: relative;
     margin: 0.5em 0;
-    padding: 0 1.5rem;
+    padding: 0 1.7rem;
     word-wrap: break-word;
+
+    @media #{$medium-up} {
+      padding: 0 1.5em;
+    }
   }
 
   a {
@@ -61,8 +56,6 @@
 
   &.is-open {
     @include z-index(above-flashes);
-
-    border: solid 2px $cream-dark;
     opacity: 1;
     height: auto;
   }
@@ -70,7 +63,7 @@
   @media #{$medium-up} {
     position: absolute;
     top: $top-height;
-    left: 145px;
+    left: 157px;
     width: 27em;
     height: auto;
     margin-left: -0.4em;
@@ -144,7 +137,7 @@ $broadcast-states: (warning: $brick-red, announcement: $turf-green);
     top: 0;
     height: 15px;
     width: 15px;
-    margin-top: 11px;
+    margin-top: 1px;
     margin-left: 7px;
     border-radius: 50%;
     border: 1px solid currentColor;
@@ -152,6 +145,10 @@ $broadcast-states: (warning: $brick-red, announcement: $turf-green);
     text-align: center;
     line-height: normal;
     font-size: 11px;
+
+    @media #{$medium-up} {
+      margin-top: 11px;
+    }
 
     .count {
       margin-top: -1px;
