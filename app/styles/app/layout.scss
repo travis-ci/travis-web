@@ -133,3 +133,8 @@ $padding-top: 24px;
     display: block;
   }
 }
+@media #{$small-only} {
+  .hidden-on-mobile {
+    display: none;
+  }
+}
