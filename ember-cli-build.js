@@ -3,6 +3,7 @@
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 const Funnel = require('broccoli-funnel');
 const SVGO = require('svgo');
+const Sass = require('node-sass');
 
 module.exports = function () {
   let fingerprint;
@@ -61,6 +62,9 @@ module.exports = function () {
     'ember-prism': {
       'components': ['scss', 'javascript', 'json'], // needs to be an array, or undefined.
       'plugins': ['line-highlight']
+    },
+    sassOptions: {
+      implementation: Sass
     },
     svg: {
       optimize: false,
