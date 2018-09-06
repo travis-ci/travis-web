@@ -1,5 +1,5 @@
 import { helper } from '@ember/component/helper';
-import { copy } from '@ember/object/internals';
+import { copy } from 'ember-copy';
 
 export function safeFormatConfig(config) {
   const rejectKeys = ['.result', 'notifications', 'branches', 'linux_shared'];
