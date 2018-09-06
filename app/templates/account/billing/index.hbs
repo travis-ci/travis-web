@@ -1,121 +1,18 @@
 <section class='billing'>
   {{#unless model.subscriptions}}
-    <h2>Plan Overview</h2>
-    {{#if model.trials}}
-      {{#if model.trials.hasActiveTrial}}
-        <p data-test-trial-message class="source plan-status-message">
-          You've got {{pluralize model.trials.buildsRemaining 'trial build'}} left.
-          <br/>
-          Ensure unlimited builds by setting up a plan before it runs out!
-        </p>
-      {{else}}
-        <p data-test-trial-message class="source plan-status-message">
-          Your trial has just ended.
-          <br/>
-          To get the most out of Travis CI, set up a plan below!
-        </p>
-      {{/if}}
-    {{else}}
-      <p data-test-trial-message class="source plan-status-message">
-        Your trial includes 100 trial builds and 2-concurrent-jobs, no credit card required.
-        <br/>
-        Need help? <a data-test-trial-link href={{config.urls.gettingStarted}} class="billing-section-link">Check our getting started guide</a>.
-      </p>
-    {{/if}}
-    {{#if model.subscriptions.isGithub}}
-      <a href={{config.marketplaceEndpoint}} class='button--blue marketplace-button'>Manage on GitHub Marketplace</a>
-    {{else}}
-      {{new-subscription-button trial=model.trials account=account}}
-    {{/if}}
+    {{billing-trial model=model account=account config=config}}
   {{/unless}}
   {{#if model.subscriptions.manageSubscription}}
     {{manage-subscription-button subscription=model.subscriptions account=account}}
   {{/if}}
-  {{#if model.subscriptions.isManual}}
-    {{#unless model.subscriptions.manualSubscriptionExpired}}
-      <section class='plan'>
-        <h2>Plan Overview</h2>
-        <h3 data-test-plan-name>{{model.subscriptions.plan.name}}</h3>
-        <p data-test-plan-concurrency>{{pluralize model.subscriptions.plan.builds 'concurrent job'}}</p>
-        <p>Renewing on {{moment-format model.subscriptions.validTo 'MMMM D, YYYY'}}</p>
-      </section>
-      <h2>Billing Information</h2>
-      <section class='row'>
-        <section class='payment'>
-          <h3>Payment details</h3>
-          {{payment-details subscription=model.subscriptions}}
-        </section>
-      </section>
-    {{/unless}}
-  {{/if}}
 
-  {{#if model.subscriptions.isSubscribed}}
-    <section class='plan'>
-      <h2>Plan Overview</h2>
-      {{#if model.subscriptions.isGithub}}
-        {{#if model.trials.hasActiveTrial}}
-          <p data-test-trial-message class="source plan-status-message">
-            You're trialing Travis CI via your <a href={{config.marketplaceEndpoint}} class="billing-section-link">Github Marketplace subscription</a>.
-          </p>
-        {{/if}}
-      {{/if}}
-      <h3 data-test-plan-name>{{model.subscriptions.plan.name}}</h3>
-      <p data-test-plan-concurrency>{{pluralize model.subscriptions.plan.builds 'concurrent job'}}</p>
-      <p>Renewing on {{moment-format model.subscriptions.validTo 'MMMM D, YYYY'}}</p>
-    </section>
-    <h2>Billing Information</h2>
-    <section class='row'>
-      {{#if model.subscriptions.isStripe}}
-        <section class='contact'>
-          <h3>Billing Contact</h3>
-          {{billing-address billingInfo=model.subscriptions.billingInfo}}
-        </section>
-      {{/if}}
-      <section class='payment'>
-        <h3>Payment details</h3>
-        {{payment-details subscription=model.subscriptions}}
-      </section>
-    </section>
-  {{else if model.subscriptions}}
-    <span data-test-expiry-message>
-      {{#if model.subscriptions.manualSubscriptionExpired}}
-        <h2>Plan Overview</h2>
-        You had a {{model.subscriptions.sourceWords}} subscription that expired on {{moment-format model.subscriptions.validTo 'MMMM D, YYYY'}}.
-        {{manual-subscription-help}}
-      {{else}}
-        {{#if model.subscriptions.isExpired}}
-          <h2>Plan Overview</h2>
-          You had a {{model.subscriptions.sourceWords}} subscription that expired on {{moment-format model.subscriptions.validTo 'MMMM D, YYYY'}}.
-        {{/if}}
-        {{#if model.subscriptions.isCanceled}}
-          <h2>Plan Overview</h2>
-          This subscription has been canceled by you and is valid through {{moment-format model.subscriptions.validTo 'MMMM D, YYYY'}}.
-        {{/if}}
-      {{/if}}
-    </span>
-    {{#if model.subscriptions.isResubscribable}}
-      {{resubscribe-button subscription=model.subscriptions account=account}}
-    {{/if}}
-    {{#if model.subscriptions.isGithub}}
-      <a href={{config.marketplaceEndpoint}} class='button--blue marketplace-button'>Continue with GitHub Marketplace</a>
-      <div class="subscription-divider"></div>
-      <p class="new-subscription-message">Or subscribe directly with Travis CI</p>
-      {{new-subscription-button account=account}}
-    {{/if}}
+  {{#if model.subscriptions.isManual}}
+    {{billing-manual model=model}}
+  {{else}}
+    {{billing-subscription model=model account=account config=config}}
   {{/if}}
 </section>
 
 {{#if invoices}}
-  <section class='invoices'>
-    <h2>Invoice History</h2>
-    <p>
-      {{svg-jar 'icon-help' class='icon-help' alt=''}} Having trouble with your invoices?
-      <a href='{{ config.urls.support }}' title='Email the Travis support team' {{action 'helpscoutTrigger'}}>We’re happy to help</a>.
-    </p>
-      <ul>
-        {{#each (sort-by 'createdAt:desc' invoices) as |invoice|}}
-          <li><a data-test-invoice href={{invoice.url}}>{{svg-jar 'icon-invoice' class='icon'}} {{invoice.id}} {{moment-format invoice.createdAt 'MMMM YYYY'}}</a></li>
-        {{/each}}
-      </ul>
-  </section>
+  {{billing-invoices invoices=invoices}}
 {{/if}}

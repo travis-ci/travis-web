@@ -1,0 +1,49 @@
+{{#if model.subscriptions.isSubscribed}}
+  <section class='plan'>
+    <h2>Plan Overview</h2>
+      {{#if model.subscriptions.isGithub}}
+        {{#if model.trials.hasActiveTrial}}
+          <p data-test-trial-message class="source plan-status-message">
+            You're trialing Travis CI via your <a href={{config.marketplaceEndpoint}} class="billing-section-link">Github Marketplace subscription</a>.
+          </p>
+        {{/if}}
+      {{/if}}
+    <h3 data-test-plan-name>{{model.subscriptions.plan.name}}</h3>
+    <p data-test-plan-concurrency>{{pluralize model.subscriptions.plan.builds 'concurrent job'}}</p>
+    <p>Renewing on {{moment-format model.subscriptions.validTo 'MMMM D, YYYY'}}</p>
+  </section>
+  <h2>Billing Information</h2>
+  <section class='row'>
+    {{#if model.subscriptions.isStripe}}
+      <section class='contact'>
+        <h3>Billing Contact</h3>
+        {{billing-address billingInfo=model.subscriptions.billingInfo}}
+      </section>
+    {{/if}}
+    <section class='payment'>
+      <h3>Payment details</h3>
+      {{payment-details subscription=model.subscriptions}}
+    </section>
+  </section>
+{{/if}}
+{{#if model.subscriptions}}
+  {{#if model.subscriptions.isExpired}}
+    <span data-test-expiry-message>
+      You had a {{model.subscriptions.sourceWords}} subscription that expired on {{moment-format model.subscriptions.validTo 'MMMM D, YYYY'}}.
+    </span>
+  {{/if}}
+  {{#if model.subscriptions.isCanceled}}
+    <span data-test-expiry-message>
+      This subscription has been canceled by you and is valid through {{moment-format model.subscriptions.validTo 'MMMM D, YYYY'}}.
+    </span>
+  {{/if}}
+  {{#if model.subscriptions.isResubscribable}}
+    {{resubscribe-button subscription=model.subscriptions account=account}}
+  {{/if}}
+  {{#if model.subscriptions.isGithubResubscribable}}
+    <a href={{config.marketplaceEndpoint}} class='button--blue marketplace-button'>Continue with GitHub Marketplace</a>
+    <div class="subscription-divider"></div>
+    <p class="new-subscription-message">Or subscribe directly with Travis CI</p>
+    {{new-subscription-button account=account}}
+  {{/if}}
+{{/if}}

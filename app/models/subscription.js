@@ -32,6 +32,7 @@ export default Model.extend({
   @or('isCanceled', 'isExpired') isNotSubscribed: null,
 
   @and('isStripe', 'isNotSubscribed') isResubscribable: null,
+  @and('isGithub', 'isNotSubscribed') isGithubResubscribable: null,
 
 
   @computed('owner.{type,login}', 'isGithub', 'isResubscribable')
