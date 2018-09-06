@@ -47,7 +47,7 @@
           {{#each unsubscribedRepos as |repo|}}
             <div class="row" data-test-email-settings-resubscribe-item>
               <div class="name">
-                {{repo.owner.login}} / {{repo.name}}
+                {{#link-to 'repo' repo}}{{repo.formattedSlug}}{{/link-to}}
               </div>
               <div class="description"></div>
               <div class="controls">
