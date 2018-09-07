@@ -95,6 +95,10 @@
     width: 13.7rem;
     padding-left: 0.3rem;
 
+    @media #{$xlarge-up} {
+      width: 11.675rem;
+    }
+
     svg {
       font-size: 15px;
     }
