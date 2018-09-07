@@ -67,7 +67,7 @@ test('visiting single-job build shows config messages', function (assert) {
   let repo = server.create('repository', { slug: 'travis-ci/travis-web' }),
     branch = server.create('branch', { name: 'acceptance-tests' });
 
-  let  gitUser = server.create('git-user', { name: 'Mr T' });
+  let  gitUser = server.create('git-user', { name: 'Mr T', avatar_url: '/assets/travis-ci/travis-web.svg' });
   let commit = server.create('commit', { author: gitUser, committer: gitUser, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
 
   let request = server.create('request');
@@ -132,6 +132,9 @@ test('visiting single-job build shows config messages', function (assert) {
       assert.ok(error.icon.isError, 'expected the third yml message to be an error');
       assert.equal(error.message, 'dropping unknown key filter_secrets (false)');
     });
+
+    assert.equal(jobPage.createdBy.text, 'Mr T authored and committed');
+    assert.ok(jobPage.createdBy.avatarSrc.includes('/assets/travis-ci/travis-web.svg'));
   });
 
   percySnapshot(assert);
@@ -141,8 +144,9 @@ test('visiting a job with a truncated log', function (assert) {
   let repo =  server.create('repository', { slug: 'travis-ci/travis-web' });
   let branch = server.create('branch', { name: 'acceptance-tests' });
 
-  let  gitUser = server.create('git-user', { name: 'Mr T' });
-  let commit = server.create('commit', { author: gitUser, committer: gitUser, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
+  let gitAuthor = server.create('git-user', { name: 'Mr T' });
+  let gitCommitter = server.create('git-user', { name: 'Sylvia Rivera' });
+  let commit = server.create('commit', { author: gitAuthor, committer: gitCommitter, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
   let build = server.create('build', { repository: repo, state: 'passed', commit, branch });
   let job = server.create('job', { number: '1234.1', repository: repo, state: 'passed', commit, build });
   commit.job = job;
@@ -161,6 +165,9 @@ test('visiting a job with a truncated log', function (assert) {
 
   andThen(function () {
     assert.ok(jobPage.hasTruncatedLog);
+
+    assert.equal(jobPage.createdBy.text[0], 'Mr T authored');
+    assert.equal(jobPage.createdBy.text[1], 'Sylvia Rivera committed');
   });
 });
 

@@ -27,7 +27,7 @@ export default create({
     scope: '.commit-author',
 
     href: attribute('href', 'a'),
-    text: text('.label-align'),
+    text: text('.label-align', { multiple: true }),
     avatarSrc: attribute('src', 'img'),
 
     isHidden: isHidden('.label-align')
