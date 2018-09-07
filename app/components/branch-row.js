@@ -38,6 +38,25 @@ export default Component.extend({
     };
   },
 
+  @alias('branch.last_build.commit')
+  rawCommit: null,
+
+  @computed(
+    'rawCommit.author.name', 'rawCommit.author.avatar_url',
+    'rawCommit.committer.name', 'rawCommit.committer.avatar_url')
+  commit(authorName, authorAvatarUrl, committerName, committerAvatarUrl) {
+    let authorIsCommitter =
+      authorName === committerName && authorAvatarUrl === committerAvatarUrl;
+
+    return {
+      authorIsCommitter,
+      authorName,
+      authorAvatarUrl,
+      committerName,
+      committerAvatarUrl
+    };
+  },
+
   @computed()
   getLast5Builds() {
     let apiEndpoint, branchName, lastBuilds, options, repoId;

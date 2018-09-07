@@ -16,6 +16,10 @@ moduleForAcceptance('Acceptance | repo branches', {
       name: 'User Name'
     });
 
+    const otherUser = server.create('git-user', {
+      name: 'Marsha P. Johnson'
+    });
+
     // create organization
     server.create('organization', {
       name: 'Org Name',
@@ -92,6 +96,9 @@ moduleForAcceptance('Acceptance | repo branches', {
       state: 'created',
       branch: activeCreatedBranch,
       repository,
+    }).createCommit({
+      author: otherUser,
+      committer: otherUser
     });
 
     const activeFailedBranch = server.create('branch', {
@@ -107,6 +114,9 @@ moduleForAcceptance('Acceptance | repo branches', {
       finished_at: oneYearAgo,
       branch: activeFailedBranch,
       repository,
+    }).createCommit({
+      author: gitUser,
+      committer: otherUser
     });
 
     const activeOlderFailedBranch = server.create('branch', {
@@ -191,9 +201,11 @@ test('view branches', function (assert) {
     assert.equal(branchesPage.activeBranches[0].name, 'created', 'expected created branch to be sorted first');
     assert.ok(branchesPage.activeBranches[0].created, 'expected created branch to be running');
     assert.equal(branchesPage.activeBranches[0].buildCount, '1 build');
+    assert.equal(branchesPage.activeBranches[0].committer, 'Marsha P. Johnson');
 
     assert.equal(branchesPage.activeBranches[1].name, 'edits', 'expected newer completed branch to be sorted next');
     assert.ok(branchesPage.activeBranches[1].failed, 'expected edits branch to have failed');
+    assert.equal(branchesPage.activeBranches[0].committer, 'Marsha P. Johnson', 'ignores author');
 
     assert.equal(branchesPage.activeBranches[2].name, 'old-old-edits', 'expected older completed branch to be sorted last');
 
