@@ -37,6 +37,13 @@ moduleForAcceptance('Acceptance | profile/billing', {
     server.create('plan', { id: 'travis-ci-five-builds-annual', name: 'CA', builds: 5, price: 273900, currency: 'USD', annual: true });
     server.create('plan', { id: 'travis-ci-ten-builds-annual', name: 'DA', builds: 10, price: 537900, currency: 'USD', annual: true });
 
+    let trial = server.create('trial', {
+      buildsRemaining: 25,
+      owner: this.user,
+      status: 'new'
+    });
+    this.trial = trial;
+
     let subscription = server.create('subscription', {
       plan,
       owner: this.user,
@@ -164,6 +171,8 @@ test('view billing on a canceled stripe plan', function (assert) {
 
 test('view billing on a manual plan with no invoices', function (assert) {
   this.subscription.source = 'manual';
+  this.subscription.status = undefined;
+  this.subscription.valid_to = new Date(2025, 7, 16).toISOString();
 
   profilePage.visit({ username: 'user-login'});
   profilePage.billing.visit();
@@ -177,6 +186,27 @@ test('view billing on a manual plan with no invoices', function (assert) {
     assert.ok(profilePage.billing.annualInvitation.isHidden);
 
     assert.ok(profilePage.billing.invoices.isHidden);
+  });
+});
+
+test('view billing on an expired manual plan', function (assert) {
+  this.subscription.source = 'manual';
+  this.subscription.status = undefined;
+  this.subscription.valid_to = new Date(2018, 6, 16).toISOString();
+
+  profilePage.visit({
+    username: 'user-login'
+  });
+  profilePage.billing.visit();
+
+  andThen(() => {
+    assert.ok(profilePage.billing.manageButton.isHidden);
+    assert.ok(profilePage.billing.address.isHidden);
+    assert.ok(profilePage.billing.creditCardNumber.isHidden);
+    assert.ok(profilePage.billing.price.isHidden);
+    assert.ok(profilePage.billing.annualInvitation.isHidden);
+    assert.ok(profilePage.billing.invoices.isHidden);
+    assert.equal(profilePage.billing.expiryMessage.text, 'You had a manual subscription that expired on July 16, 2018. If you have any questions or would like to update your plan, please contact our support team.');
   });
 });
 
@@ -207,7 +237,10 @@ test('view billing on an canceled marketplace plan', function (assert) {
 
   andThen(() => {
     assert.equal(profilePage.billing.expiryMessage.text, 'This subscription has been canceled by you and is valid through June 19, 2018.');
+    assert.equal(profilePage.billing.marketplaceButton.text, 'Continue with GitHub Marketplace');
     assert.equal(profilePage.billing.marketplaceButton.href, 'https://github.com/marketplace/travis-ci/');
+    assert.equal(profilePage.billing.manageButton.text, 'New subscription');
+    assert.equal(profilePage.billing.manageButton.href, 'https://billing.travis-ci.com/subscriptions/new?id=user');
 
     assert.ok(profilePage.billing.address.isHidden);
     assert.ok(profilePage.billing.creditCardNumber.isHidden);
@@ -224,7 +257,10 @@ test('view billing on an expired marketplace plan', function (assert) {
 
   andThen(() => {
     assert.equal(profilePage.billing.expiryMessage.text, 'You had a GitHub Marketplace subscription that expired on June 19, 2018.');
+    assert.equal(profilePage.billing.marketplaceButton.text, 'Continue with GitHub Marketplace');
     assert.equal(profilePage.billing.marketplaceButton.href, 'https://github.com/marketplace/travis-ci/');
+    assert.equal(profilePage.billing.manageButton.text, 'New subscription');
+    assert.equal(profilePage.billing.manageButton.href, 'https://billing.travis-ci.com/subscriptions/new?id=user');
 
     assert.ok(profilePage.billing.address.isHidden);
     assert.ok(profilePage.billing.creditCardNumber.isHidden);
@@ -283,6 +319,219 @@ test('switching to another account’s billing tab loads the subscription proper
 
   andThen(() => {
     assert.equal(profilePage.billing.manageButton.text, 'New subscription');
-    assert.equal(profilePage.billing.manageButton.href, 'https://billing.travis-ci.com/subscriptions/org-login');
+    assert.equal(profilePage.billing.manageButton.href, 'https://billing.travis-ci.com/subscriptions/new?id=org-login');
+  });
+});
+
+test('view billing tab when trial has not started', function (assert) {
+  this.organization.permissions = {
+    createSubscription: true
+  };
+  this.organization.save();
+
+  profilePage.visit({
+    username: 'org-login'
+  });
+  profilePage.billing.visit();
+
+  andThen(() => {
+    percySnapshot(assert);
+    assert.equal(profilePage.billing.trial.name, 'Your trial includes 100 trial builds and 2-concurrent-jobs, no credit card required. Need help? Check our getting started guide.');
+    assert.equal(profilePage.billing.trial.link.href, 'https://docs.travis-ci.com/user/getting-started/#to-get-started-with-travis-ci');
+    assert.equal(profilePage.billing.manageButton.text, 'New subscription');
+  });
+});
+
+test('view billing tab with no create subscription permissions', function (assert) {
+  this.organization.permissions = {
+    createSubscription: false
+  };
+  this.organization.save();
+
+  profilePage.visit({
+    username: 'org-login'
+  });
+  profilePage.billing.visit();
+
+  andThen(() => {
+    percySnapshot(assert);
+    assert.equal(profilePage.billing.trial.name, 'Your trial includes 100 trial builds and 2-concurrent-jobs, no credit card required. Need help? Check our getting started guide.');
+    assert.equal(profilePage.billing.manageButton.text, 'New subscription');
+    assert.ok(profilePage.billing.manageButton.isDisabled);
+  });
+});
+
+test('view billing tab when there is a new trial', function (assert) {
+  this.subscription = null;
+  this.organization.permissions = {
+    createSubscription: true
+  };
+  this.organization.save();
+  let trial = server.create('trial', {
+    builds_remaining: 100,
+    owner: this.organization,
+    status: 'new',
+    created_at: new Date(2018, 7, 16),
+    permissions: {
+      read: true,
+      write: true
+    }
+  });
+
+  this.trial = trial;
+  this.trial.save();
+
+  profilePage.visit({
+    username: 'org-login'
+  });
+  profilePage.billing.visit();
+
+  andThen(() => {
+    percySnapshot(assert);
+    assert.equal(profilePage.billing.trial.name, "You've got 100 trial builds left. Ensure unlimited builds by setting up a plan before it runs out!");
+    assert.equal(profilePage.billing.manageButton.text, 'New subscription');
+  });
+});
+
+test('view billing tab when trial has started', function (assert) {
+  this.subscription = null;
+  this.organization.permissions = {
+    createSubscription: true
+  };
+  this.organization.save();
+  let trial = server.create('trial', {
+    builds_remaining: 25,
+    owner: this.organization,
+    status: 'started',
+    created_at: new Date(2018, 7, 16),
+    permissions: {
+      read: true,
+      write: true
+    }
+  });
+  this.trial = trial;
+  this.trial.save();
+
+  profilePage.visit({
+    username: 'org-login'
+  });
+  profilePage.billing.visit();
+
+  andThen(() => {
+    percySnapshot(assert);
+    assert.equal(profilePage.billing.trial.name, "You've got 25 trial builds left. Ensure unlimited builds by setting up a plan before it runs out!");
+    assert.equal(profilePage.billing.manageButton.text, 'New subscription');
+  });
+});
+
+test('view billing tab when trial has ended', function (assert) {
+  this.subscription = null;
+  this.organization.permissions = {
+    createSubscription: true
+  };
+  this.organization.save();
+  let trial = server.create('trial', {
+    builds_remaining: 0,
+    owner: this.organization,
+    status: 'ended',
+    created_at: new Date(2018, 7, 16),
+    permissions: {
+      read: true,
+      write: true
+    }
+  });
+  this.trial = trial;
+  this.trial.save();
+
+  profilePage.visit({
+    username: 'org-login'
+  });
+  profilePage.billing.visit();
+
+  andThen(() => {
+    percySnapshot(assert);
+    assert.equal(profilePage.billing.trial.name, 'Your trial has just ended. To get the most out of Travis CI, set up a plan below!');
+    assert.equal(profilePage.billing.manageButton.text, 'New subscription');
+  });
+});
+
+test('view billing tab with Github trial subscription', function (assert) {
+  let trial = server.create('trial', {
+    builds_remaining: 0,
+    owner: this.organization,
+    status: 'started',
+    created_at: new Date(2018, 7, 16),
+    permissions: {
+      read: true,
+      write: true
+    }
+  });
+
+  this.subscription.owner = this.organization;
+  this.subscription.source = 'github';
+
+  trial.save();
+  this.subscription.save();
+
+  profilePage.visit({ username: 'org-login' });
+  profilePage.billing.visit();
+
+  andThen(() => {
+    percySnapshot(assert);
+    assert.equal(profilePage.billing.trial.name, "You're trialing Travis CI via your Github Marketplace subscription.");
+    assert.equal(profilePage.billing.manageButton.text, 'Edit subscription');
+    assert.ok(profilePage.billing.address.isHidden);
+    assert.ok(profilePage.billing.creditCardNumber.isHidden);
+    assert.equal(profilePage.billing.source, 'This subscription is managed by GitHub Marketplace.');
+    assert.ok(profilePage.billing.annualInvitation.isHidden);
+  });
+});
+
+test('view billing tab with Github trial subscription has ended', function (assert) {
+  let trial = server.create('trial', {
+    builds_remaining: 0,
+    owner: this.organization,
+    status: 'ended',
+    created_at: new Date(2018, 7, 16),
+    permissions: {
+      read: true,
+      write: true
+    }
+  });
+
+  this.subscription.owner = this.organization;
+  this.subscription.source = 'github';
+
+  trial.save();
+  this.subscription.save();
+
+  profilePage.visit({ username: 'org-login' });
+  profilePage.billing.visit();
+
+  andThen(() => {
+    percySnapshot(assert);
+    assert.equal(profilePage.billing.manageButton.text, 'Edit subscription');
+    assert.ok(profilePage.billing.address.isHidden);
+    assert.ok(profilePage.billing.creditCardNumber.isHidden);
+    assert.equal(profilePage.billing.source, 'This subscription is managed by GitHub Marketplace.');
+    assert.ok(profilePage.billing.annualInvitation.isHidden);
+  });
+});
+
+test('view billing tab when there is a trial', function (assert) {
+  this.organization.permissions = {
+    createSubscription: true
+  };
+  this.organization.save();
+
+  profilePage.visit({
+    username: 'org-login'
+  });
+  profilePage.billing.visit();
+
+  andThen(() => {
+    percySnapshot(assert);
+    assert.equal(profilePage.billing.trial.name, 'Your trial includes 100 trial builds and 2-concurrent-jobs, no credit card required. Need help? Check our getting started guide.');
+    assert.equal(profilePage.billing.manageButton.text, 'New subscription');
   });
 });

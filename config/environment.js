@@ -43,6 +43,7 @@ module.exports = function (environment) {
       community: 'https://travis-ci.community',
       dashboard: 'https://travis-ci.com/dashboard',
       docs: 'https://docs.travis-ci.com',
+      gettingStarted: 'https://docs.travis-ci.com/user/getting-started/#to-get-started-with-travis-ci',
       enterprise: 'https://enterprise.travis-ci.com',
       imprint: 'https://docs.travis-ci.com/imprint.html',
       jobs: 'https://travisci.workable.com/',
