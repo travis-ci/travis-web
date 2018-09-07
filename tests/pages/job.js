@@ -4,7 +4,6 @@ import {
   clickable,
   collection,
   hasClass,
-  isHidden,
   isVisible,
   text,
   attribute
