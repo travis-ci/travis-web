@@ -30,6 +30,7 @@ export default Model.extend({
   @equal('source', 'manual') isManual: null,
 
   @or('isCanceled', 'isExpired') isNotSubscribed: null,
+  @or('isStripe', 'isGithub') managedSubscription: null,
 
   @and('isStripe', 'isNotSubscribed') isResubscribable: null,
   @and('isGithub', 'isNotSubscribed') isGithubResubscribable: null,
@@ -47,7 +48,7 @@ export default Model.extend({
   },
 
   @computed('isStripe', 'isGithub', 'isSubscribed')
-  manageSubscription(isStripe, isGithub, isSubscribed) {
+  activeManagedSubscription(isStripe, isGithub, isSubscribed) {
     return ((isStripe || isGithub) && isSubscribed);
   },
 

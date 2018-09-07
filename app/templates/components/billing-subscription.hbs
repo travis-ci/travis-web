@@ -1,6 +1,9 @@
+<h2>Plan Overview</h2>
 {{#if model.subscriptions.isSubscribed}}
+  {{#if model.subscriptions.activeManagedSubscription}}
+    {{manage-subscription-button subscription=model.subscriptions account=account}}
+  {{/if}}
   <section class='plan'>
-    <h2>Plan Overview</h2>
       {{#if model.subscriptions.isGithub}}
         {{#if model.trials.hasActiveTrial}}
           <p data-test-trial-message class="source plan-status-message">

@@ -2,13 +2,12 @@
   {{#unless model.subscriptions}}
     {{billing-trial model=model account=account config=config}}
   {{/unless}}
-  {{#if model.subscriptions.manageSubscription}}
-    {{manage-subscription-button subscription=model.subscriptions account=account}}
-  {{/if}}
 
   {{#if model.subscriptions.isManual}}
     {{billing-manual model=model}}
-  {{else}}
+  {{/if}}
+
+  {{#if model.subscriptions.managedSubscription}}
     {{billing-subscription model=model account=account config=config}}
   {{/if}}
 </section>
