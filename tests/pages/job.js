@@ -29,8 +29,6 @@ export default create({
     href: attribute('href', 'a'),
     text: text('.label-align', { multiple: true }),
     avatarSrc: attribute('src', 'img'),
-
-    isHidden: isHidden('.label-align')
   },
 
   hasTruncatedLog: isVisible('.log-container p.warning'),

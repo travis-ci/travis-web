@@ -44,8 +44,6 @@ test('renders a pull request', function (assert) {
     assert.equal(page.commitSha, 'Commit abc123');
     assert.equal(page.compare, '#10: Resist');
     assert.equal(page.commitBranch, 'Branch acceptance-tests', 'shows the PR branch');
-
-    assert.ok(jobPage.createdBy.isHidden, 'expected created-by to be hidden when not present in the data');
   });
 
   percySnapshot(assert);
