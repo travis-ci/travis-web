@@ -1,8 +1,8 @@
-<h2>Plan Overview</h2>
 {{#if model.subscriptions.isSubscribed}}
   {{#if model.subscriptions.activeManagedSubscription}}
     {{manage-subscription-button subscription=model.subscriptions account=account}}
   {{/if}}
+  <h2>Plan Overview</h2>
   <section class='plan'>
       {{#if model.subscriptions.isGithub}}
         {{#if model.trials.hasActiveTrial}}
