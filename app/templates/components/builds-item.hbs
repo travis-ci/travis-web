@@ -61,13 +61,13 @@
   <div class="row-item row-duration">
     <div>
       {{svg-jar 'icon-clock' class="icon"}}
-      <time class="label-align" datetime="PT{{build.duration}}S">{{format-duration build.duration}}</time>
+      <time class="label-align" datetime="PT{{build.duration}}S">{{moment-duration build.duration 'seconds'}}</time>
     </div>
   </div>
   <div class="row-item row-calendar">
     <div title="{{if build.finishedAt (concat "Finished " (pretty-date build.formattedFinishedAt))}}">
       {{svg-jar 'icon-calendar' class="icon"}}
-      <time class="label-align" datetime={{build.finishedAt}}>{{format-time build.finishedAt}}</time>
+      <time class="label-align" datetime={{build.finishedAt}}>{{moment-from build.finishedAt}}</time>
     </div>
   </div>
 </div>

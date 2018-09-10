@@ -119,7 +119,7 @@
           {{else if item.toBeStarted}}
             Waiting to start
           {{else}}
-            {{if item.isFinished 'Ran for' 'Running for'}} <time datetime="PT{{elapsedTime}}S">{{format-duration elapsedTime}}</time>
+            {{if item.isFinished 'Ran for' 'Running for'}} <time datetime="PT{{elapsedTime}}S">{{moment-duration elapsedTime 'seconds'}}</time>
           {{/if}}
         </span>
       </li>
@@ -127,7 +127,7 @@
       <li title="{{if elapsedTime (concat "Started " (pretty-date item.startedAt))}}" class="commit-stopwatch">
         {{svg-jar 'icon-stopwatch' class="icon--m"}}
         <span class="label-align">
-          {{if item.isFinished 'Ran for' 'Running for'}} <time datetime="PT{{elapsedTime}}S">{{format-duration elapsedTime}}</time>
+          {{if item.isFinished 'Ran for' 'Running for'}} <time datetime="PT{{elapsedTime}}S">{{moment-duration elapsedTime 'seconds'}}</time>
         </span>
       </li>
     {{/if}}
@@ -137,14 +137,14 @@
         <li class="commit-clock">
           {{svg-jar 'icon-clock' class="icon"}}
           <span class="label-align">
-            Total time <time datetime="PT{{item.duration}}S">{{format-duration item.duration}}</time>
+            Total time <time datetime="PT{{item.duration}}S">{{moment-duration item.duration 'seconds'}}</time>
           </span>
         </li>
       {{/if}}
 
       <li title="Finished {{pretty-date item.finishedAt}}" class="commit-calendar">
         {{svg-jar 'icon-calendar' class="icon"}}
-        <time class="label-align" datetime={{pretty-date item.finishedAt}}>{{format-time item.finishedAt}}</time>
+        <time class="label-align" datetime={{pretty-date item.finishedAt}}>{{moment-from item.finishedAt}}</time>
       </li>
     {{/if}}
   </ul>

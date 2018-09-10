@@ -22,7 +22,7 @@
   <p>
     {{svg-jar 'icon-clock' class="icon"}}
     <span class="label-align">Duration:
-       <time class="duration" datetime="PT{{repo.currentBuild.duration}}S" title="{{if repo.currentBuild.duration (concat "Started " (pretty-date repo.currentBuild.startedAt))}}">{{format-duration repo.currentBuild.duration}}</time>
+       <time class="duration" datetime="PT{{repo.currentBuild.duration}}S" title="{{if repo.currentBuild.duration (concat "Started " (pretty-date repo.currentBuild.startedAt))}}">{{moment-duration repo.currentBuild.duration 'seconds'}}</time>
     </span>
   </p>
 
@@ -31,7 +31,7 @@
       {{svg-jar 'icon-calendar' class="icon"}}
       <span class="label-align">Finished:
         <time class="finished_at timeago" datetime={{repo.currentBuild.finishedAt}} title="Finished {{pretty-date repo.currentBuild.finishedAt}}">
-          {{format-time repo.currentBuild.finishedAt}}
+          {{moment-from repo.currentBuild.finishedAt}}
         </time></span>
     </p>
   {{/if}}

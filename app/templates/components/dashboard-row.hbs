@@ -58,7 +58,7 @@
         {{svg-jar 'icon-calendar' class="icon"}}
         <span class="label-align">
           {{#if repo.currentBuild.finishedAt}}
-          {{format-time repo.currentBuild.finishedAt}}
+          {{moment-from repo.currentBuild.finishedAt}}
           {{else}}still running{{/if}}</span>
       </p>
     </section>

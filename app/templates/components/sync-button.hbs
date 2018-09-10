@@ -9,6 +9,6 @@
     <span class="label-align">Sync account</span>
   </button>
   <div class='sync-last-container'>
-    <span class="sync-last">Last synced {{format-time user.syncedAt}}</span>
+    <span class="sync-last">Last synced {{moment-from user.syncedAt}}</span>
   </div>
 {{/if}}

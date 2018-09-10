@@ -37,7 +37,7 @@
       {{svg-jar 'icon-calendar' class="icon"}}
       <span class="label-align">
       {{#if branch.last_build}}
-        {{format-time branch.last_build.finished_at}}
+        {{moment-from branch.last_build.finished_at}}
       {{else}}
         -
       {{/if}}</span>

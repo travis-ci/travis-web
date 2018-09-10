@@ -20,7 +20,7 @@
           <span class="label-align">
             Duration:
             <time class="duration" datetime={{job.startedAt}} title="Started {{pretty-date job.startedAt}}">
-              {{format-duration job.duration}}
+              {{moment-duration job.duration 'seconds'}}
             </time>
           </span>
         </p>

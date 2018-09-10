@@ -1,10 +1,11 @@
-import $ from 'jquery';
+// import $ from 'jquery';
 
-const timeago = $.timeago;
-timeago.settings.allowFuture = true;
+// const timeago = $.timeago;
+// timeago.settings.allowFuture = true;
 
 export default function timeAgoInWords(date) {
   if (date) {
-    return timeago(date);
+    // return timeago(date);
+    return 'missing for now';
   }
 }

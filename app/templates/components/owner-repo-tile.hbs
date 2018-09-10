@@ -43,7 +43,7 @@
     <div class="one-line">
       {{svg-jar 'icon-calendar' class="icon"}}
       <span class="build-status label-align">{{repo.defaultBranch.lastBuild.state}}</span>
-      <span class="finished-at label-align">{{format-time repo.defaultBranch.lastBuild.finishedAt}}</span>
+      <span class="finished-at label-align">{{moment-from repo.defaultBranch.lastBuild.finishedAt}}</span>
     </div>
   </div>
 {{else}}

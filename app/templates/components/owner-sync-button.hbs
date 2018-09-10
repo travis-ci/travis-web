@@ -10,6 +10,6 @@
       <button {{action sync}} class="button">
       <span class="icon icon-sync"></span>Sync account</button>
     </p>
-    <p class="sync-last">last synced {{format-time owner.syncedAt}}</p>
+    <p class="sync-last">last synced {{moment-from owner.syncedAt}}</p>
   {{/if}}
 </div>
