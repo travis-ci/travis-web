@@ -166,6 +166,7 @@ export default JSONAPISerializer.extend({
   isIncluded(type, key, request) {
     let include = request.queryParams.include;
     let ownerAliases = ['user', 'organization'];
+    let subscriptionInclusions = ['billing_info', 'credit_card_info', 'plan'];
 
     if (ownerAliases.includes(type)) {
       type = 'owner';
@@ -178,6 +179,9 @@ export default JSONAPISerializer.extend({
           return includeType === type && includeAttribute === key;
         })
         .length;
+    } else if (type === 'subscription' && subscriptionInclusions.includes(key)) {
+      // The true API always returns these as standard representations.
+      return true;
     }
   },
 
@@ -212,8 +216,13 @@ export default JSONAPISerializer.extend({
     return request._processedRecords.find(findFn);
   },
 
-  normalizeId(_model, id) {
-    return parseInt(id);
+  normalizeId({modelName}, id) {
+    // plan IDs can be strings
+    if (modelName === 'plan') {
+      return id;
+    } else {
+      return parseInt(id);
+    }
   },
 
   representation(model, request, options) {

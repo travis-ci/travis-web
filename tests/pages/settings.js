@@ -35,13 +35,6 @@ export default create({
     toggle: clickable()
   },
 
-  buildOnlyWithTravisYml: {
-    scope: 'section.settings-section .builds_only_with_travis_yml.switch',
-
-    isActive: hasClass('active'),
-    toggle: clickable()
-  },
-
   buildPushes: {
     scope: 'section.settings-section .build_pushes.switch',
 

@@ -5,7 +5,7 @@ import {
 } from 'ember-cli-page-object';
 
 export default create({
-  sections: collection('footer.footer .inner .footer-elem', {
+  sections: collection('footer.footer .footer-elem', {
     title: text('h3.footer-title'),
   }),
 });

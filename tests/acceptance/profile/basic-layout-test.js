@@ -31,11 +31,12 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
     });
     this.user.save();
 
-    server.create('subscription', {
-      owner: this.currentUser,
+    let subscription = server.create('subscription', {
+      owner: this.user,
       status: 'subscribed',
-      valid_to: new Date()
+      valid_to: new Date(),
     });
+    this.subscription = subscription;
 
     // create organization
     let organization = server.create('organization', {
@@ -122,7 +123,10 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
       },
       active: true,
       managed_by_installation: true,
-      private: false
+      private: false,
+      permissions: {
+        admin: true
+      },
     });
 
     server.create('repository', {
@@ -132,7 +136,10 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
       },
       active: true,
       managed_by_installation: true,
-      private: true
+      private: true,
+      permissions: {
+        admin: false
+      }
     });
 
     server.create('repository', {
@@ -198,10 +205,18 @@ test('view repositories', function (assert) {
     assert.equal(profilePage.githubAppsRepositories.length, 3, 'expected three GitHub Apps-managed repositories');
 
     assert.equal(profilePage.notLockedGithubAppsRepositories.length, 2, 'expected two not-locked GitHub Apps-managed repositories');
-    assert.equal(profilePage.notLockedGithubAppsRepositories[0].name, 'github-apps-private-repository');
-    assert.ok(profilePage.notLockedGithubAppsRepositories[0].isPrivate);
-    assert.equal(profilePage.notLockedGithubAppsRepositories[1].name, 'github-apps-public-repository');
-    assert.ok(profilePage.notLockedGithubAppsRepositories[1].isPublic);
+
+    profilePage.notLockedGithubAppsRepositories[0].as(repository => {
+      assert.equal(repository.name, 'github-apps-private-repository');
+      assert.ok(repository.isPrivate);
+      assert.ok(repository.settings.isDisabled);
+    });
+
+    profilePage.notLockedGithubAppsRepositories[1].as(repository => {
+      assert.equal(repository.name, 'github-apps-public-repository');
+      assert.ok(repository.isPublic);
+      assert.notOk(repository.settings.isDisabled);
+    });
 
     assert.equal(profilePage.lockedGithubAppsRepositories.length, 1, 'expected one locked GitHub Apps-managed repository');
     assert.equal(profilePage.lockedGithubAppsRepositories[0].name, 'github-apps-locked-repository');
@@ -209,11 +224,21 @@ test('view repositories', function (assert) {
 });
 
 test('view profile that has an expired subscription', function (assert) {
+  this.organization.attrs.permissions = { createSubscription: true };
+  this.organization.save();
+
   profilePage.visit({ username: 'org-login' });
 
   andThen(() => {
     assert.ok(profilePage.avatar.checkmark.isHidden, 'expected avatar to not have a checkmark for active subscription');
-    assert.equal(profilePage.subscriptionStatus.text, 'This account does not have an active subscription.');
+  });
+});
+
+test('view profile that has an expired subscription and no create permissions', function (assert) {
+  profilePage.visit({ username: 'org-login' });
+
+  andThen(() => {
+    assert.ok(profilePage.avatar.checkmark.isHidden, 'expected avatar to not have a checkmark for active subscription');
   });
 });
 

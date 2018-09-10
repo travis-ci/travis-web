@@ -1,11 +1,12 @@
 import Component from '@ember/component';
 import { task, timeout } from 'ember-concurrency';
-import YAML from 'npm:yamljs';
+import YAML from 'yamljs';
 import config from 'travis/config/environment';
 import { service } from 'ember-decorators/service';
 import { filterBy, notEmpty } from 'ember-decorators/object/computed';
+import KeyboardShortcuts from 'ember-keyboard-shortcuts/mixins/component';
 
-export default Component.extend({
+export default Component.extend(KeyboardShortcuts, {
   @service api: null,
   @service flashes: null,
   @service router: null,
@@ -18,9 +19,18 @@ export default Component.extend({
   @filterBy('repo.branches', 'exists_on_github', true) branches: null,
   @notEmpty('triggerBuildMessage') triggerBuildMessagePresent: null,
 
+  keyboardShortcuts: {
+    'esc': 'toggleTriggerBuildModal'
+  },
+
   didReceiveAttrs() {
     this._super(...arguments);
     this.set('triggerBuildBranch', this.get('repo.defaultBranch.name'));
+  },
+
+  didInsertElement() {
+    this._super(...arguments);
+    this.$('[autofocus]').focus();
   },
 
   createBuild: task(function* () {

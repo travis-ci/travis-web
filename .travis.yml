@@ -1,10 +1,21 @@
 ---
 language: node_js
-node_js: 8.5
+node_js: 10.7
 
 env:
   global:
     - PERCY_ENABLE=0
+
+matrix:
+  include:
+    - if: type = cron
+      env: TRY_CONFIG=ember-beta
+      node_js: 10.7
+    - if: type = cron
+      env: TRY_CONFIG=ember-data-beta
+      node_js: 10.7
+    - if: NOT type = cron
+      node_js: 10.7
 
 sudo: required
 dist: trusty
@@ -23,7 +34,7 @@ env:
 
 before_install:
   - npm config set spin false
-  - npm install -g npm@5
+  - npm install -g npm@6
   - npm --version
   - npm install -g greenkeeper-lockfile@1
 
@@ -38,8 +49,9 @@ before_script:
   - greenkeeper-lockfile-update
 
 script:
-  - npm run lint:js
-  - ember exam --reporter dot $RANDOMISE
+  - if [ -z "$TRY_CONFIG" ]; then npm run lint:js; fi
+  - if [ -z "$TRY_CONFIG" ]; then ember exam --reporter dot $RANDOMISE; fi
+  - if [[ ! -z "$TRY_CONFIG" ]]; then ember try:one $TRY_CONFIG --skip-cleanup; fi
 
 after_script:
   - greenkeeper-lockfile-upload

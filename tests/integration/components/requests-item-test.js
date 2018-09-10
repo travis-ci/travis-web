@@ -44,7 +44,9 @@ module('Integration | Component | requests item', function (hooks) {
     const request = {
       id: 1,
       isPullRequest: true,
-      pullRequestNumber: 20
+      build: {
+        pullRequestNumber: 20
+      }
     };
 
     this.request = request;

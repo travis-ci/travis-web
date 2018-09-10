@@ -112,17 +112,14 @@
 
 .commit-description {
   margin: 1rem 0;
+  max-height: 4.5em;
+  position: relative;
+  overflow: hidden;
 
-  @media #{$medium-up} {
-    max-height: 4.5em;
-    position: relative;
-    overflow: hidden;
+  &:after {
+    content: "";
 
-    &:after {
-      conent: "";
-
-      @include fadeOut(bottom, 360deg, white, 5%);
-    }
+    @include fadeOut(bottom, 360deg, white, 5%);
   }
 }
 

@@ -95,7 +95,7 @@
         {{/external-link-to}}
         <p>
           We are only able to migrate accounts that have {{migrationRepositoryCountLimit}} or fewer repositories using the Legacy Services Integration.
-          Please <a href='https://docs.travis-ci.com/user/open-source-on-travis-ci-com/#Existing-Open-Source-Repositories-on-travis-ci.org'>refer to our documentation</a> on how to migrate your account.
+          Please <a href='https://docs.travis-ci.com/user/travis-migrate-to-apps-gem-guide/'>refer to our documentation</a> on how to migrate your account.
         </p>
       {{/if}}
     </div>
@@ -135,8 +135,8 @@
         <ul class="profile-repositorylist">
           {{#each filter.repositories as |repository|}}
             {{repository-status-toggle
-            repository=repository
-            name=(compute filter.computeName repository.name filter.isFiltering filter.query)
+              repository=repository
+              name=(compute filter.computeName repository.name filter.isFiltering filter.query)
             }}
           {{else}}
             {{#if filter.isFiltering}}

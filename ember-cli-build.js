@@ -2,6 +2,8 @@
 
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 const Funnel = require('broccoli-funnel');
+const SVGO = require('svgo');
+const Sass = require('node-sass');
 
 module.exports = function () {
   let fingerprint;
@@ -37,6 +39,17 @@ module.exports = function () {
     'ember-cli-babel': {
       includePolyfill: true,
     },
+    autoImport: {
+      webpack: {
+        // workaround for https://github.com/jeremyfa/yaml.js/issues/102
+        node: {
+          fs: 'empty'
+        },
+        module: {
+          noParse: /pusher/
+        }
+      }
+    },
     babel: {
       blacklist: ['regenerator'],
       plugins: [
@@ -53,16 +66,33 @@ module.exports = function () {
       'components': ['scss', 'javascript', 'json'], // needs to be an array, or undefined.
       'plugins': ['line-highlight']
     },
+    sassOptions: {
+      implementation: Sass
+    },
     svg: {
       optimize: false,
       paths: [
         'public/images/stroke-icons',
         'public/images/svg'
       ]
+    },
+    svgJar: {
+      optimizer: {
+        svgoModule: SVGO,
+        plugins: [
+          { removeViewBox: false },
+          { removeTitle: false },
+          { removeDesc: false },
+          {
+            inlineStyles: {
+              onlyMatchedOnce: false,
+              removeMatchedSelectors: true
+            }
+          }
+        ]
+      }
     }
   });
-
-  app.import('node_modules/timeago/jquery.timeago.js');
 
   const emojiAssets = new Funnel('node_modules/emoji-datasource-apple/img/apple/64', {
     destDir: '/images/emoji'

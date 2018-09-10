@@ -4,7 +4,7 @@ import { htmlSafe } from '@ember/string';
 import { get } from '@ember/object';
 import config from 'travis/config/environment';
 
-import EmojiConvertor from 'npm:emoji-js';
+import EmojiConvertor from 'emoji-js';
 
 const emojiConvertor = new EmojiConvertor();
 

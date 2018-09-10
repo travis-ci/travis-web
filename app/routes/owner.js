@@ -9,6 +9,11 @@ export default TravisRoute.extend({
     return this.controllerFor('loading').set('layoutName', null);
   },
 
+  titleToken(model) {
+    let name = model.name || model.login;
+    return name;
+  },
+
   model(params) {
     let options = {
       headers: {
@@ -20,8 +25,7 @@ export default TravisRoute.extend({
     }
     let { owner } = params;
     let { apiEndpoint } = config;
-    let includes = '?include=organization.repositories,repository.default_branch,build.commit';
-    let url = `${apiEndpoint}/owner/${owner}${includes}`;
+    let url = `${apiEndpoint}/owner/${owner}`;
     return $.ajax(url, options);
   },
 

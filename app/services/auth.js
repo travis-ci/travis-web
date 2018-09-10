@@ -242,7 +242,7 @@ export default Service.extend({
   },
 
   clearNonAuthFlashes() {
-    const flashMessages = this.get('flashes.flashes.content') || [];
+    const flashMessages = this.get('flashes.flashes') || [];
     const errorMessages = flashMessages.filterBy('type', 'error');
     if (!isEmpty(errorMessages)) {
       const errMsg = errorMessages.get('firstObject.message');

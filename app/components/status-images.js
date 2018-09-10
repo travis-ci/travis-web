@@ -1,8 +1,9 @@
 import Component from '@ember/component';
 import { service } from 'ember-decorators/service';
 import { computed } from 'ember-decorators/object';
+import KeyboardShortcuts from 'ember-keyboard-shortcuts/mixins/component';
 
-export default Component.extend({
+export default Component.extend(KeyboardShortcuts, {
   @service auth: null,
   @service externalLinks: null,
   @service statusImages: null,
@@ -11,6 +12,10 @@ export default Component.extend({
   attributeBindings: ['id'],
   classNames: ['popup', 'status-images'],
   formats: ['Image URL', 'Markdown', 'Textile', 'Rdoc', 'AsciiDoc', 'RST', 'Pod', 'CCTray'],
+
+  keyboardShortcuts: {
+    'esc': 'toggleStatusImageModal'
+  },
 
   didReceiveAttrs() {
     this._super(...arguments);

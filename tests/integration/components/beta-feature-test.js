@@ -17,9 +17,8 @@ module('Integration | Component | beta feature', function (hooks) {
     this.set('feature', feature);
     await render(hbs`{{beta-feature feature=feature}}`);
 
-    assert.dom('.feature-name span').hasText('Dashboard');
-    assert.dom('.feature-name a').hasAttribute('href', 'https://github.com/travis-ci/give-feedback');
-    assert.dom('p').hasText('super awesome new Dashboard');
+    assert.dom('.name').hasText('Dashboard');
+    assert.dom('.description').hasText('super awesome new Dashboard');
     assert.dom('.switch').hasClass('active');
   });
 });

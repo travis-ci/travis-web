@@ -42,6 +42,26 @@ module('Integration | Component | jobs item', function (hooks) {
     assert.dom('.job-lang').hasText(/no language set/, 'a message about no language being set should be displayed');
   });
 
+  test('when name is set it replaces both language and env', async function (assert) {
+    const job = {
+      id: 10,
+      state: 'passed',
+      number: '2',
+      config: { content: {
+        rvm: '2.1.2',
+        name: 'that name'
+      } },
+      duration: 100
+    };
+
+    this.job = job;
+    await render(hbs`{{jobs-item job=job}}`);
+
+    assert.dom('.job-name .label-align').hasText('that name', 'name should be displayed');
+    assert.dom('.job-language .label-align').doesNotExist();
+    assert.dom('.job-env .label-align').doesNotExist();
+  });
+
   test('when env is not set, gemfile is displayed in the env section', async function (assert) {
     const job = {
       id: 10,

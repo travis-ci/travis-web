@@ -15,20 +15,26 @@
           </div>
         </div>
       </div>
-      {{#if checkSubscriptionStatus}}
-        {{#external-link-to href=billingUrl class='button--blue manage-subscription'}}
-          Manage Subscription
-        {{/external-link-to}}
-      {{/if}}
     </header>
 
     {{#if checkSubscriptionStatus}}
       {{#if model.subscriptionError}}
-        {{subscription-status-banner color="yellow" message="There was an error determining your subscription status." billingLinkText="Visit billing" billingUrl=billingUrl}}
-      {{else if (and checkSubscriptionStatus isNotSubscribed)}}
-        {{subscription-status-banner color="yellow" message="This account does not have an active subscription." billingLinkText="Sign this account up!" billingUrl=billingUrl}}
+        {{subscription-status-banner color="yellow" message="There was an error determining your subscription status." billingLinkText="Visit billing" billingUrl=billingUrl showLink=model.subscriptionPermissions.create}}
       {{/if}}
+
     {{/if}}
+
+    <nav class='travistab-nav'>
+      <ul>
+        <li>{{#link-to 'account.repositories'}}Repositories{{/link-to}}</li>
+        {{#if (eq model.type 'user')}}
+          <li data-test-settings-tab>{{#link-to 'account.settings'}}Settings{{/link-to}}</li>
+        {{/if}}
+        {{#if checkSubscriptionStatus}}
+          <li data-test-billing-tab>{{#link-to 'account.billing'}}Subscription{{/link-to}}</li>
+        {{/if}}
+      </ul>
+    </nav>
 
     {{outlet}}
 

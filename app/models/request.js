@@ -17,6 +17,8 @@ export default Model.extend({
   pullRequestNumber: attr('number'),
   repo: belongsTo('repo', { async: true }),
   commit: belongsTo('commit', { async: true }),
+
+  // API models this as hasMany but serializers:request#normalize overrides it
   build: belongsTo('build', { async: true }),
 
   @computed('result', 'build.id')

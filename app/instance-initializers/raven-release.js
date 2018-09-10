@@ -1,5 +1,5 @@
 import config from 'travis/config/environment';
-import Raven from 'npm:raven-js';
+import Raven from 'raven-js';
 
 export function initialize(appInstance) {
   let sha;

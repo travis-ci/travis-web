@@ -68,6 +68,11 @@ export default (function () {
       let elements = this.element.find('.log-line:visible').slice(lines.first - 1, lines.last);
       if (elements.length) {
         elements.addClass('highlight');
+
+        let focusElement = elements[0];
+        focusElement.setAttribute('tabindex', '0');
+        focusElement.focus();
+        focusElement.removeAttribute('tabindex');
       } else if (tries < 4) {
         later(this, (function () {
           if (!this.destroyed) {

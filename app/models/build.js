@@ -2,7 +2,7 @@ import { all } from 'rsvp';
 
 import { isEmpty } from '@ember/utils';
 import safelistedConfigKeys from 'travis/utils/safelisted-config-keys';
-import pickBy from 'npm:lodash.pickby';
+import pickBy from 'lodash.pickby';
 import configKeysMap from 'travis/utils/keys-map';
 import Model from 'ember-data/model';
 import DurationCalculations from 'travis/mixins/duration-calculations';

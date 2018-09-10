@@ -49,6 +49,7 @@
 @mixin colorFadeOut($status, $color) {
   @media #{$medium-up} {
     &.#{$status}:hover {
+      .job-name,
       .job-lang,
       .job-env {
         &:after {
@@ -56,6 +57,7 @@
         }
       }
 
+      .job-name:hover,
       .job-lang:hover,
       .job-env:hover {
         overflow: visible;

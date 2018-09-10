@@ -75,6 +75,12 @@ You can also start an interactive test runner for easier development:
 
     ember test --serve
 
+### Linting
+
+* `npm run lint:hbs`
+* `npm run lint:js`
+* `npm run lint:js -- --fix`
+
 ### Feature Flags
 
 `travis-web` is beginning the transition to use feature flags wherever it makes
