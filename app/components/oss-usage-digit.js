@@ -8,4 +8,9 @@ export default Component.extend({
   digitClass(digit) {
     return `oss-num-${digit}`;
   },
+
+  @computed('digit')
+  digitImagePath(digit) {
+    return `images/landing-page/oss-num-${digit}.svg`;
+  }
 });

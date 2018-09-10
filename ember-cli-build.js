@@ -8,12 +8,15 @@ const Sass = require('node-sass');
 module.exports = function () {
   let fingerprint;
 
-  if (process.env.DISABLE_FINGERPRINTS) {
+  if (process.env.DISABLE_FINGERPRINTS || process.env.EMBER_ENV === 'test') {
     fingerprint = false;
   } else {
     fingerprint = {
+      enabled: true,
       exclude: ['images/emoji', 'images/logos'],
-      extensions: ['js', 'css', 'png', 'jpg', 'gif', 'map', 'svg']
+      extensions: ['js', 'css', 'png', 'jpg', 'gif', 'map', 'svg', 'json'],
+      generateAssetMap: true,
+      fingerprintAssetMap: true
     };
 
     if (process.env.TRAVIS_ENTERPRISE) {

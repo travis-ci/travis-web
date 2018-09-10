@@ -44,6 +44,7 @@
     "ember-cli-eslint": "^4.2.3",
     "ember-cli-htmlbars": "^3.0.0",
     "ember-cli-htmlbars-inline-precompile": "^1.0.3",
+    "ember-cli-ifa": "RuslanZavacky/ember-cli-ifa#fix-regex-test-for-vendor",
     "ember-cli-inject-live-reload": "^1.8.2",
     "ember-cli-inline-images": "^0.0.4",
     "ember-cli-mirage": "0.4.7",

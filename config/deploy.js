@@ -21,8 +21,18 @@ module.exports = function (deployTarget) {
     s3: {
       region: 'eu-west-1',
       accessKeyId: process.env.AWS_KEY,
-      secretAccessKey: process.env.AWS_SECRET
-    }
+      secretAccessKey: process.env.AWS_SECRET,
+      filePattern: function (context, pluginHelper) {
+        let filePattern = pluginHelper.readConfigDefault('filePattern');
+        return filePattern.replace('}', ',json}');
+      },
+    },
+    manifest: {
+      filePattern: function (context, pluginHelper) {
+        let filePattern = pluginHelper.readConfigDefault('filePattern');
+        return filePattern.replace('}', ',json}');
+      },
+    },
   };
 
   if (VALID_DEPLOY_TARGETS.indexOf(deployTarget) === -1) {
