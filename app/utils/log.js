@@ -2,8 +2,6 @@
 
 import ansiparse from 'ansiparse';
 
-const CR_CLEANUP_EXTENT = 5;
-
 let Log = function () {
   this.autoCloseFold = true;
   this.listeners = [];
@@ -195,6 +193,7 @@ Log.Part = function (id, num, string) {
   this.string = this.string.replace(/\r\u001B\[0m\n/g, '\n');
 
   this.string = this.string.replace(/\r+\n/gm, '\n');
+  this.string = this.string.replace(/\r+/gm, '\r');
   this.strings = this.string.split(/^/gm) || [];
   this.slices = ((function () {
     let _results;
@@ -234,7 +233,7 @@ Log.Part.prototype = Log.extend(new Log.Node, {
         span.render();
         spans.push(span);
       }
-      if ((_ref3 = spans[0]) != null ? (_ref4 = _ref3.line) != null ? _ref4.cr ? _ref4.spans.length > CR_CLEANUP_EXTENT : void 0 : void 0 : void 0) {
+      if ((_ref3 = spans[0]) != null ? (_ref4 = _ref3.line) != null ? _ref4.cr : void 0 : void 0) {
         _ref3['class'] = ['clears'];
         _ref4.clear();
       }
