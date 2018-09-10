@@ -52,7 +52,6 @@
     "ember-cli-sass": "^9.0.0",
     "ember-cli-sentry": "^3.0.0",
     "ember-cli-sri": "^2.1.1",
-    "ember-cli-template-lint": "^1.0.0-beta.1",
     "ember-cli-test-loader": "^2.1.0",
     "ember-cli-uglify": "^2.1.0",
     "ember-composable-helpers": "^2.1.0",

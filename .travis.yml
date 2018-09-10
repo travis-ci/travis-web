@@ -50,7 +50,6 @@ before_script:
 
 script:
   - if [ -z "$TRY_CONFIG" ]; then npm run lint:js; fi
-  - if [ -z "$TRY_CONFIG" ]; then npm run lint:hbs; fi
   - if [ -z "$TRY_CONFIG" ]; then ember exam --reporter dot $RANDOMISE; fi
   - if [[ ! -z "$TRY_CONFIG" ]]; then ember try:one $TRY_CONFIG --skip-cleanup; fi
 
