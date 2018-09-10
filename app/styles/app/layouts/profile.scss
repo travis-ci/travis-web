@@ -774,6 +774,10 @@ header.space-between {
       flex: 1;
       white-space: nowrap;
       padding-right: 20px;
+
+      a {
+        border-bottom: none;
+      }
     }
 
     .description {
