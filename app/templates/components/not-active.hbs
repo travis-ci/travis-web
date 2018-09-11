@@ -9,7 +9,17 @@
     <p class="page-notice">You can activate the repository on {{#link-to "account" repo.owner.login}}your profile{{/link-to}},<br/>
     or by clicking the button below</p>
 
-    <button {{action (perform activate)}} class="button button--blue">Activate repository</button>
+    {{#if config.githubApps}}
+      {{#if repo.owner.installation}}
+        <a
+          href="https://github.com/apps/{{config.githubApps.appName}}/installations/new/permissions?suggested_target_id={{repo.owner.github_id}}&repository_ids[]={{repo.githubId}}"
+          class="button button--blue">Activate repository</a>
+      {{else}}
+        <button {{action (perform activate)}} class="button button--blue">Activate repository</button>
+      {{/if}}
+    {{else}}
+      <button {{action (perform activate)}} class="button button--blue">Activate repository</button>
+    {{/if}}
     {{#if activate.isRunning}}
       {{loading-indicator}}
     {{/if}}

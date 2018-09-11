@@ -13,6 +13,8 @@ export default Component.extend({
 
   @alias('auth.currentUser') user: null,
 
+  config,
+
   @computed('repo', 'repo.permissions.admin')
   canActivate(repo, adminPermissions) {
     if (repo) {
