@@ -60,7 +60,11 @@ export default create({
         href: attribute('href'),
       },
 
-      branch: text('[data-test-branch-name]'),
+      branch: {
+        scope: '[data-test-branch-name]',
+        href: attribute('href')
+      },
+
       message: text('[data-test-commit-message]'),
       stateAndNumber: {
         scope: '[data-test-state-number]',

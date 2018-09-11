@@ -21,9 +21,13 @@
       <div class='message row-content' data-test-commit-message>
         {{{format-message build.commit.message short='true' repo=build.repo eventType=build.eventType}}}
       </div>
-      <div class='row-content' data-test-branch-name>
-        {{svg-jar 'icon-branch' class='icon'}}
-        {{build.branch.name}}
+      <div class='row-content no-hover'>
+        {{#external-link-to data-test-branch-name href=urlGitHubBranch}}
+          {{tooltip-on-element text='View branch on GitHub'}}
+          {{svg-jar 'icon-branch' class="icon"}}
+          <span class='label-align inner-underline'>{{build.branchName}}</span>
+          {{svg-jar 'icon-external-link' class="icon"}}
+        {{/external-link-to}}
       </div>
     </section>
 
