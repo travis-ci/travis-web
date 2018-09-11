@@ -38,18 +38,21 @@ module.exports = function (environment) {
     },
     urls: {
       about: 'https://about.travis-ci.com',
-      changelog: 'https://changelog.travis-ci.com',
       blog: 'https://blog.travis-ci.com',
+      changelog: 'https://changelog.travis-ci.com',
+      community: 'https://travis-ci.community',
+      dashboard: 'https://travis-ci.com/dashboard',
       docs: 'https://docs.travis-ci.com',
-      status: 'https://www.traviscistatus.com/',
-      imprint: 'https://docs.travis-ci.com/imprint.html',
+      gettingStarted: 'https://docs.travis-ci.com/user/getting-started/#to-get-started-with-travis-ci',
       enterprise: 'https://enterprise.travis-ci.com',
-      twitter: 'https://twitter.com/travisci',
+      imprint: 'https://docs.travis-ci.com/imprint.html',
       jobs: 'https://travisci.workable.com/',
-      support: 'mailto:support@travis-ci.com',
-      security: 'https://docs.travis-ci.com/legal/security',
-      terms: 'https://docs.travis-ci.com/legal/terms-of-service/',
       privacy: 'https://docs.travis-ci.com/legal/privacy-policy',
+      security: 'https://docs.travis-ci.com/legal/security',
+      status: 'https://www.traviscistatus.com/',
+      support: 'mailto:support@travis-ci.com',
+      terms: 'https://docs.travis-ci.com/legal/terms-of-service/',
+      twitter: 'https://twitter.com/travisci',
     },
     endpoints: {},
     githubApps: false,
@@ -122,6 +125,7 @@ module.exports = function (environment) {
       ENV.pusher.channelPrefix = 'private-';
       ENV.pagesEndpoint = 'https://billing.travis-ci.com';
       ENV.billingEndpoint = 'https://billing.travis-ci.com';
+      ENV.marketplaceEndpoint = 'https://github.com/marketplace/travis-ci/';
       ENV.endpoints = {
         sshKey: true,
         caches: true
@@ -146,7 +150,12 @@ module.exports = function (environment) {
 
       if (ENV.apiEndpoint === 'https://api-staging.travis-ci.com') {
         ENV.pusher.key = '87d0723b25c51e36def8';
+        ENV.billingEndpoint = 'https://billing-staging.travis-ci.com';
       }
+    }
+
+    if (process.env.BILLING_ENDPOINT) {
+      ENV.billingEndpoint = process.env.BILLING_ENDPOINT;
     }
 
     if (process.env.PUBLIC_MODE == 'false') {
@@ -238,24 +247,24 @@ module.exports = function (environment) {
     ENV.featureFlags['pro-version'] = false;
     ENV.featureFlags['github-apps'] = false;
 
-    ENV.billingEndpoint = 'https://billing.travis-ci.com';
-
     ENV.statusPageStatusUrl = undefined;
+
+    ENV.billingEndpoint = 'https://billing.travis-ci.com';
+    ENV.marketplaceEndpoint = 'https://github.com/marketplace/travis-ci/';
   }
 
   if (environment === 'production') {
     ENV.release = process.env.SOURCE_VERSION || process.env.TRAVIS_COMMIT || '-';
-    // if (true) {
-    ENV.sentry = {
-      development: true
-    };
-    // }
+    if (process.env.DISABLE_SENTRY) {
+      ENV.sentry = {
+        development: true
+      };
+    }
   }
 
   if (process.env.DEPLOY_TARGET) {
     var s3Bucket = require('./deploy')(process.env.DEPLOY_TARGET).s3.bucket;
     ENV.emojiPrepend = '//' + s3Bucket + '.s3.amazonaws.com';
   }
-
   return ENV;
 };

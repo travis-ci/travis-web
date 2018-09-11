@@ -1,0 +1,23 @@
+<section class='user-settings'>
+  <section>
+    <h3>API authentication</h3>
+
+    <p>To learn more about using our API, please head to <a href='https://developer.travis-ci.com'>developer.travis-ci.com</a>.</p>
+
+    {{account-token account=model}}
+  </section>
+
+  {{#if features.betaFeatures}}
+    <section>
+      <h3>Features</h3>
+      <ul class="features-list">
+        {{#each (sort-by "name" featureFlags) as |feature|}}
+          {{beta-feature feature=feature}}
+        {{else}}
+          Oops! It looks like we don't have any experimental features for you
+          to try yet.
+        {{/each}}
+      </ul>
+    </section>
+  {{/if}}
+</section>

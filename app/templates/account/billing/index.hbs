@@ -1,0 +1,17 @@
+<section class='billing'>
+  {{#unless model.subscriptions}}
+    {{billing-trial model=model account=account config=config}}
+  {{/unless}}
+
+  {{#if model.subscriptions.isManual}}
+    {{billing-manual model=model}}
+  {{/if}}
+
+  {{#if model.subscriptions.managedSubscription}}
+    {{billing-subscription model=model account=account config=config}}
+  {{/if}}
+</section>
+
+{{#if invoices}}
+  {{billing-invoices invoices=invoices}}
+{{/if}}

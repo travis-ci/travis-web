@@ -27,13 +27,13 @@ module('Integration | Component | status images', function (hooks) {
 
     percySnapshot(assert);
 
-    let selectBranch = this.$('.form-pair:first-of-type select');
-    let outputTextarea = this.$('.form-pair textarea');
+    let selectBranch = this.element.querySelector('.form-pair:first-of-type select');
+    let outputTextarea = this.element.querySelector('.form-pair textarea');
     assert.dom('h3').hasText('Status Image');
-    assert.equal(selectBranch.val(), 'not-actually-master');
-    assert.ok(outputTextarea.val().match(/branch=not-actually-master/));
+    assert.equal(selectBranch.value, 'not-actually-master');
+    assert.ok(outputTextarea.value.match(/branch=not-actually-master/));
 
     await select(selectBranch, 'foo');
-    assert.ok(outputTextarea.val().match(/branch=foo/));
+    assert.ok(outputTextarea.value.match(/branch=foo/));
   });
 });

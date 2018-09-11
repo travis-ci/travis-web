@@ -11,6 +11,15 @@
   margin-right: 4px;
 }
 
+.icon--color {
+  display: inline-block;
+  vertical-align: middle;
+  width: 18px;
+  height: 19px;
+  margin-right: 4px;
+  transform: translateY(-2px);
+}
+
 .icon--m {
   @extend %icon;
 

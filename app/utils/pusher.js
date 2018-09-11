@@ -1,4 +1,4 @@
-import Pusher from 'npm:pusher-js';
+import Pusher from 'pusher-js';
 
 import { next } from '@ember/runloop';
 
@@ -18,6 +18,7 @@ TravisPusher.prototype.init = function (config, ajaxService) {
           bind_global() {}
         };
       },
+      unsubscribe() {},
       channel() {}
     };
   }

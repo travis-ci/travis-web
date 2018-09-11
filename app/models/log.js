@@ -10,6 +10,7 @@ import { task } from 'ember-concurrency';
 export default EmberObject.extend({
   @service features: null,
   @service auth: null,
+  @service storage: null,
 
   version: 0,
   length: 0,
@@ -20,6 +21,11 @@ export default EmberObject.extend({
     return ArrayProxy.create({
       content: []
     });
+  },
+
+  @computed()
+  noRendering() {
+    return this.get('storage').getItem('travis.logRendering') === 'false';
   },
 
   clearParts() {
@@ -56,7 +62,13 @@ export default EmberObject.extend({
     } else {
       throw 'error';
     }
-    this.loadParts(json['log_parts']);
+
+    if (this.get('noRendering')) {
+      let text = "Log rendering is off because localStorage['travis.logRendering'] is `false`.";
+      this.get('parts').pushObject({content: `${text}\r\n`, number: 0, final: true});
+    } else {
+      this.loadParts(json['log_parts']);
+    }
     this.set('plainTextUrl', json['@raw_log_href']);
   }),
 
@@ -77,7 +89,9 @@ export default EmberObject.extend({
   },
 
   append(part) {
-    if (this.get('parts').isDestroying || this.get('parts').isDestroyed) {
+    if (this.get('parts').isDestroying ||
+        this.get('parts').isDestroyed ||
+        this.get('noRendering')) {
       return;
     }
     return this.get('parts').pushObject(part);

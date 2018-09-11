@@ -4,6 +4,7 @@ import {
   clickable,
   collection,
   hasClass,
+  isHidden,
   isPresent,
   text,
   visitable,
@@ -57,7 +58,11 @@ export default create({
 
   subscriptionStatus: {
     scope: '.subscription-status',
-    text: text('[data-test-message]')
+    text: text('[data-test-message]'),
+
+    link: {
+      scope: 'a'
+    }
   },
 
   filter: fillable('.profile-repositories-filter input.search'),
@@ -97,8 +102,6 @@ export default create({
   lockedGithubAppsRepositories: githubAppsRepositoryCollection('#locked-github-apps-repositories'),
 
   token: {
-    scope: '.profile-user',
-
     show: clickable('.token-actions button.show-token'),
     value: text('.auth-token'),
     obfuscatedCharacters: text('.obfuscated-chars'),
@@ -114,4 +117,76 @@ export default create({
       checkmark: { scope: '.checkmark' }
     },
   }),
+
+  settings: {
+    visit: clickable('li[data-test-settings-tab] a'),
+
+    isPresent: isPresent('li[data-test-settings-tab]'),
+    isHidden: isHidden('li[data-test-settings-tab]'),
+
+    features: collection('.features-list .feature', {
+      name: text('.name'),
+      description: text('.description'),
+      isOn: hasClass('active', '.switch'),
+
+      click: clickable('.switch')
+    })
+  },
+
+  billing: {
+    visit: clickable('li[data-test-billing-tab] a'),
+
+    manageButton: {
+      scope: '.manage-subscription',
+      href: attribute('href'),
+      isDisabled: hasClass('disabled'),
+    },
+
+    marketplaceButton: {
+      scope: '.marketplace-button',
+      href: attribute('href')
+    },
+
+    plan: {
+      scope: '.plan',
+      name: text('[data-test-plan-name]'),
+      concurrency: text('[data-test-plan-concurrency]')
+    },
+
+    trial: {
+      scope: '.billing',
+      name: text('[data-test-trial-message]'),
+
+      link: {
+        scope: '[data-test-trial-link]',
+        href: attribute('href')
+      }
+    },
+
+    address: {
+      scope: '.contact .address',
+    },
+
+    source: text('[data-test-source]'),
+
+    creditCardNumber: { scope: '[data-test-credit-card]' },
+    price: { scope: '[data-test-price]' },
+
+    annualInvitation: { scope: '[data-test-annual-invitation]' },
+
+    expiryMessage: {
+      scope: '[data-test-expiry-message]'
+    },
+
+    contactSupport: {
+      scope: '.manual-help',
+    },
+
+    invoices: {
+      scope: '.invoices',
+      items: collection('[data-test-invoice]', {
+        href: attribute('href')
+      })
+    },
+  },
 });

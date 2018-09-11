@@ -9,7 +9,7 @@ export default Component.extend({
 
   @alias('request.result') requestClass: null,
 
-  @alias('request.builds.firstObject') build: null,
+  @alias('request.build') build: null,
 
   @computed('request.isPullRequest')
   type(isPullRequest) {

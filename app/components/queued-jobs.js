@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 import Ember from 'ember';
 import config from 'travis/config/environment';
-import Visibility from 'npm:visibilityjs';
+import Visibility from 'visibilityjs';
 import { service } from 'ember-decorators/service';
 
 export default Component.extend({

@@ -1,35 +1,8 @@
-{{#link-to "account" account.login class="org-info"}}
+{{#link-to linkRouteName account.login class="org-info"}}
   <span class="account-avatar">
     {{user-avatar account=account url=account.avatarUrl name=name showSubscriptionStatus=true}}
   </span>
   <span class="account-info">
     <h3 class="account-name">{{name}}</h3>
-    {{#if isUser}}
-      <p class="account-token">
-        API Token
-        {{#if showCopySuccess}}
-          <span class="token-copied-text">Token copied!</span>
-        {{else}}
-          {{#if tokenIsVisible}}
-            <span class="auth-token">{{auth.token}}</span>
-          {{else}}
-            <span class="obfuscated-chars">{{obfuscated-chars 20}}</span>
-          {{/if}}
-        {{/if}}
-        <div class="token-actions">
-          {{#copy-button
-            class="copy-button"
-            clipboardText=auth.token
-            title="Copy to clipboard"
-            success=(action 'copyTokenSuccessful')}}
-            {{svg-jar 'icon-copy' class="icon"}} <span>Copy token</span>
-          {{/copy-button}}
-          <button {{action 'tokenVisibility' bubbles=false}} class="show-token">
-            {{svg-jar 'icon-seemore' class="icon"}} <span>{{if tokenIsVisible
-              'Hide token' 'View token'}}</span>
-          </button>
-        </div>
-      </p>
-    {{/if}}
   </span>
 {{/link-to}}

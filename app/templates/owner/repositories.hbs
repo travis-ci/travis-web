@@ -1,7 +1,9 @@
 <ul class="owner-tiles">
-  {{#each repos as |repo|}}
+  {{#each model as |repo|}}
     {{owner-repo-tile repo=repo}}
   {{else}}
     {{no-repos}}
   {{/each}}
 </ul>
+
+{{pagination-navigation collection=model route="owner.repositories" inner=6 outer=2}}

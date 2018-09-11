@@ -31,6 +31,7 @@
       justify-content: flex-start;
       align-items: center;
       height: 34px;
+      min-width: 0;
     }
   }
 
@@ -93,6 +94,10 @@
 
     width: 13.7rem;
     padding-left: 0.3rem;
+
+    @media #{$xlarge-up} {
+      width: 11.675rem;
+    }
 
     svg {
       font-size: 15px;
@@ -160,6 +165,25 @@
   }
 }
 
+.job-name {
+  overflow: hidden;
+
+  @media #{$medium-up} {
+    flex: 1 0 40%;
+    position: relative;
+    padding: 0.3em 0.5em 0.5em 0.7em;
+    align-self: flex-start;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    &:after {
+      @include fadeOut(right, -90deg, white);
+      top: -1px;
+    }
+  }
+}
+
 .job-lang {
   overflow: hidden;
 
@@ -203,7 +227,7 @@
   }
 
   @media #{$xxlarge-up} {
-    max-width: 55em;
+    max-width: 48em;
   }
 
   &.is-empty {
@@ -213,12 +237,16 @@
 
 .centered {
   @media #{$xlarge-up} {
+    .job-name {
+      flex: 0 0 42em;
+    }
+
     .job-env {
-      flex: 0 0 21em;
+      flex: 0 0 21.5em;
     }
 
     .job-lang {
-      flex: 0 0 21em;
+      flex: 0 0 21.5em;
     }
   }
 }

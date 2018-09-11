@@ -1,7 +1,7 @@
 /* global server */
 import { Response } from 'ember-cli-mirage';
 import config from 'travis/config/environment';
-import fuzzysort from 'npm:fuzzysort';
+import fuzzysort from 'fuzzysort';
 
 const { validAuthToken, apiEndpoint } = config;
 
@@ -83,7 +83,40 @@ export default function () {
     }
   });
 
-  this.get('/subscriptions');
+  this.get('/trials', function (schema, params) {
+    let response = this.serialize(schema.trials.all());
+
+    let owners = schema.organizations.all().models;
+    owners.push(schema.users.first());
+
+    return response;
+  });
+
+  this.get('/subscriptions', function (schema, params) {
+    let response = this.serialize(schema.subscriptions.all());
+
+    let owners = schema.organizations.all().models;
+    owners.push(schema.users.first());
+
+    response['@permissions'] = owners.map(owner => {
+      return {
+        owner: {
+          // The API for now is returning these capitalised
+          type: `${owner.type.substr(0, 1).toUpperCase()}${owner.type.substr(1)}`,
+          id: owner.id
+        },
+        create: (owner.permissions || {}).createSubscription
+      };
+    });
+
+    return response;
+  });
+
+  this.get('/subscription/:subscription_id/invoices', function (schema, {params}) {
+    return schema.subscriptions.find(params.subscription_id).invoices;
+  });
+
+  this.get('/plans');
 
   this.get('/broadcasts', schema => {
     return schema.broadcasts.all();
@@ -174,9 +207,9 @@ export default function () {
     };
   });
 
-  this.get('/repos/:id/caches', function (schema, request) {
+  this.get('/repo/:id/caches', function (schema, request) {
     const caches = schema.caches.where({ repositoryId: request.params.id });
-    return this.serialize(caches, 'v2');
+    return caches;
   });
 
   this.patch('/settings/ssh_key/:repository_id', function (schema, request) {
@@ -319,33 +352,18 @@ export default function () {
     return this.serialize(job, 'job');
   });
 
-  this.get('/jobs/:id', function (schema, request) {
-    let job = schema.jobs.find(request.params.id);
-    return this.serialize(job, 'v2-job');
-  });
-
   this.get('/jobs', function (schema, request) {
-    if (request.requestHeaders['Travis-API-Version'] === '3') {
-      let jobs = schema.jobs;
-      if (request.queryParams.active) {
-        jobs = jobs.where((j) => ['created', 'queued', 'received', 'started'].includes(j.state));
-      }
-
-      if (request.queryParams.state) {
-        let states = request.queryParams.state.split(',');
-        jobs = jobs.where((j) => states.includes(j.state));
-      }
-
-      return jobs.all ? jobs.all() : jobs;
-    } else {
-      let jobs = schema.jobs;
-      let ids = request.queryParams.ids;
-      if (ids) {
-        jobs = jobs.where((j) => ids.includes(j.id.toString()));
-      }
-      jobs = jobs.all ? jobs.all() : jobs;
-      return this.serialize(jobs, 'v2-job');
+    let jobs = schema.jobs;
+    if (request.queryParams.active) {
+      jobs = jobs.where((j) => ['created', 'queued', 'received', 'started'].includes(j.state));
     }
+
+    if (request.queryParams.state) {
+      let states = request.queryParams.state.split(',');
+      jobs = jobs.where((j) => states.includes(j.state));
+    }
+
+    return jobs.all ? jobs.all() : jobs;
   });
 
   this.get('/build/:id/jobs', (schema, request) => {
