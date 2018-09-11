@@ -193,6 +193,7 @@ I am another line finished by a CR.\rI replace that line?\r${ESCAPE}[0mI am the 
 This should also be gone.\r This should have replaced it.
 A particular log formation is addressed here, this should remain.\r${ESCAPE}[0m\nThis should be on a separate line.
 But it must be addressed repeatedly!\r${ESCAPE}[0m\nAgain.
+I should not be blank.\r${ESCAPE}
 `;
   server.create('log', { id: job.id, content: complexLog });
 
@@ -260,6 +261,8 @@ But it must be addressed repeatedly!\r${ESCAPE}[0m\nAgain.
     assert.equal(jobPage.logLines[19].text, 'This should be on a separate line.');
     assert.equal(jobPage.logLines[20].text, 'But it must be addressed repeatedly!');
     assert.equal(jobPage.logLines[21].text, 'Again.');
+
+    assert.equal(jobPage.logLines[22].text, 'I should not be blank.');
   });
 
   jobPage.logFolds[0].toggle();

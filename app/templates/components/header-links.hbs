@@ -1,33 +1,38 @@
 <nav id="navigation" class="navigation {{if is-open 'is-open'}}">
   <ul>
-    <li><a href="{{ config.urls.about }}" title="Travis CI team" class="navigation-anchor">About Us</a></li>
     {{#unless features.enterpriseVersion}}
       {{#unless features.proVersion}}
-        <li><a href="{{ config.urls.blog }}" title="Travis CI Blog" class="navigation-anchor">Blog</a></li>
-        <li><a href="{{ config.urls.status }}" title="Travis CI Status" class="navigation-anchor">Status</a></li>
-        <li>
-          <span class="navigation-anchor">Help</span>
-          <ul class="navigation-nested">
-            <li><a href="{{ config.urls.docs }}" title="Browse our documentation">Read Our Docs</a></li>
-            <li><a href="{{ config.urls.imprint }}" title="Go to the imprint">Imprint</a></li>
-          </ul>
-        </li>
+        {{#if auth.signedIn}}
+          <li>
+            <a href="{{ config.urls.changelog }}" title="Travis CI Changelog" class="navigation-anchor">Changelog</a>
+          </li>
+          <li>
+            <a href="{{ config.urls.docs }}" title="Travis CI Documentation" class="navigation-anchor">Documentation</a>
+          </li>
+        {{else}}
+          <li>
+            <a href="{{ config.urls.about }}" title="Travis CI team" class="navigation-anchor">About Us</a>
+          </li>
+          <li>
+            <a href="{{ config.urls.blog }}" title="Travis CI Blog" class="navigation-anchor">Blog</a>
+          </li>
+          <li>
+            <a href="{{ config.urls.status }}" title="Travis CI Status" class="navigation-anchor">Status</a>
+          </li>
+          <li>
+            <a href="{{ config.urls.docs }}" title="Travis CI Documentation" class="navigation-anchor">Documentation</a>
+          </li>
+        {{/if}}
       {{/unless}}
 
       {{#if features.proVersion}}
         {{#unless auth.signedIn}}
+          <li><a href="{{ config.urls.about }}" title="Travis CI team" class="navigation-anchor">About Us</a></li>
           <li><a href="/plans" title="Plans and Pricing" class="navigation-anchor">Plans & Pricing</a></li>
           <li><a href="{{ config.urls.enterprise }}" title="Travis CI for Enterprise" class="navigation-anchor">Enterprise</a></li>
         {{else}}
-          <li><a href="{{ config.urls.status }}" title="Travis CI Status" class="navigation-anchor">Status</a></li>
-          <li>
-            <span class="navigation-anchor">Help</span>
-            <ul class="navigation-nested">
-              <li><a href="{{ config.urls.support }}" title="Email the support team" {{action 'helpscoutTrigger'}}>Email Support</a></li>
-              <li><a href="{{ config.urls.docs }}" title="Browse our documentation">Read Our Docs</a></li>
-              <li><a href="{{ config.urls.changelog }}" title="View our changelog">Changelog</a></li>
-            </ul>
-          </li>
+          <li><a href="{{ config.urls.changelog }}" title="Travis CI Changelog" class="navigation-anchor">Changelog</a></li>
+          <li><a href="{{ config.urls.docs }}" title="Travis CI Documentation" class="navigation-anchor">Documentation</a></li>
         {{/unless}}
       {{/if}}
 
@@ -36,31 +41,50 @@
         {{#if auth.signedIn}}
           <li><a class="navigation-anchor" title="Documentation" href="{{ config.urls.docs }}">Docs</a></li>
         {{/if}}
-      {{/unless}}
+    {{/unless}}
 
-      <li class="{{classProfile}}">
-        {{#if auth.signedOut}}
-          <button class="auth-button signed-out" type="button" {{action 'signIn'}}>Sign in with GitHub</button>
-        {{/if}}
-        {{#if auth.signedIn}}
-          {{#link-to "account" user.login data-test-header-account-link class="navigation-anchor signed-in"}}
-            {{userName}}
-            {{user-avatar url=user.avatarUrl name=user.fullName size=40}}
-          {{/link-to}}
-        {{/if}}
-        {{#if auth.signingIn}}
-          <button class="auth-button signing-in" type="button">Signing In {{loading-indicator inline=true}}</button>
-        {{/if}}
-        {{#if auth.signedIn}}
-          <ul class="navigation-nested">
+    <li class="{{classProfile}}">
+      {{#if auth.signedOut}}
+        <button class="auth-button signed-out" type="button" {{action 'signIn'}}>Sign in with GitHub</button>
+      {{/if}}
+      {{#if auth.signedIn}}
+        {{#link-to "account" user.login data-test-header-account-link class="navigation-anchor navigation-profile-link signed-in"}}
+          {{user-avatar url=user.avatarUrl name=user.fullName size=40}}
+          {{svg-jar 'icon-dropdown-arrow' class="icon"}}
+        {{/link-to}}
+      {{/if}}
+      {{#if auth.signingIn}}
+        <button class="auth-button signing-in" type="button">Signing In {{loading-indicator inline=true}}</button>
+      {{/if}}
+      {{#if auth.signedIn}}
+        <ul class="navigation-nested">
+          <li class="username"><span>{{userName}}</span></li>
+           {{#link-to "account" user.login class="signed-in" title="Your profile"}}
             <li>
-              {{#link-to "account" user.login class="signed-in" title="Your profile"}}Profile{{/link-to}}
-              </li>
+              {{svg-jar 'icon-settings' class="icon"}}
+              Settings
+            </li>
+           {{/link-to}}
+          <div class="nav-nested"></div>
+          {{#if features.proVersion}}
+            <div class="nav-nested"></div>
+            <a href="{{ config.urls.support }}" title="Email the support team" {{action 'helpscoutTrigger'}}>
               <li>
-                <a data-test-signout-link href="/" {{action 'signOut'}} title="Sign out of Travis CI">Sign Out</a>
+                {{svg-jar 'icon-encircled-help' class="icon"}}
+                Help
               </li>
-          </ul>
-        {{/if}}
-      </li>
+            </a>
+            <div class="nav-nested"></div>
+          {{/if}}
+            <div class="nav-nested"></div>
+            <a data-test-signout-link href="/" {{action 'signOut'}} title="Sign out of Travis CI">
+              <li>
+                {{svg-jar 'icon-sign-out' class="icon"}}
+                Sign Out
+              </li>
+            </a>
+        </ul>
+      {{/if}}
+    </li>
   </ul>
 </nav>

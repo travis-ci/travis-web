@@ -1,4 +1,3 @@
-/* global jQuery */
 import { isNone } from '@ember/utils';
 
 import { Promise as EmberPromise } from 'rsvp';
@@ -8,7 +7,7 @@ import Service from '@ember/service';
 import config from 'travis/config/environment';
 import { service } from 'ember-decorators/service';
 
-jQuery.support.cors = true;
+$.support.cors = true;
 
 let defaultOptions = {
   accepts: {
@@ -118,7 +117,7 @@ export default Service.extend({
     options = $.extend(options, defaultOptions);
 
     if (options.data && (method === 'GET' || method === 'HEAD')) {
-      params = jQuery.param(options.data);
+      params = $.param(options.data);
       delimeter = url.indexOf('?') === -1 ? '?' : '&';
       url = url + delimeter + params;
     }
@@ -156,7 +155,7 @@ export default Service.extend({
         data = (() => {
           if (contentType && contentType.match(/application\/json/)) {
             try {
-              return jQuery.parseJSON(xhr.responseText);
+              return $.parseJSON(xhr.responseText);
             } catch (error1) {
               if (get(this, 'features').get('debugLogging')) {
                 // eslint-disable-next-line
