@@ -45,6 +45,7 @@ test('view inactive repo when admin and activate it', function (assert) {
     assert.ok(page.notActiveHeadline, 'Displays not active headline');
     assert.equal(page.notActiveNotice, 'You can activate the repository on your profile, or by clicking the button below', 'Displays admin notice');
     assert.ok(page.activateButton, 'Show activation button');
+    assert.notOk(page.githubAppsActivateButton, 'Does not show Github Apps activation button');
   });
 });
 
@@ -76,5 +77,6 @@ test('view inactive repo when admin connected to Github Apps and activate it', f
   andThen(() => {
     assert.ok(page.notActiveHeadline, 'Displays not active headline');
     assert.ok(page.githubAppsActivateButton, 'Show Github Apps activation button');
+    assert.notOk(page.activateButton, 'Does not show legacy activation button');
   });
 });
