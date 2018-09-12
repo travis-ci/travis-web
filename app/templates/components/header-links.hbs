@@ -57,6 +57,7 @@
         <button class="auth-button signing-in" type="button">Signing In {{loading-indicator inline=true}}</button>
       {{/if}}
       {{#if auth.signedIn}}
+      <div class="menu-separator"></div>
         <ul class="navigation-nested">
           <li class="username"><span>{{userName}}</span></li>
            {{#link-to "account" user.login class="signed-in topbar-menu-item" title="Your profile"}}
