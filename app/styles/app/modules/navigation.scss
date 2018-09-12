@@ -218,7 +218,7 @@ $nav-line-height: 35px;
 
   .nav-nested {
     display: none;
-    
+
     @media #{$medium-up} {
       display: block;
       height: 1px;
@@ -246,9 +246,5 @@ ul #profile-menu-link ul:hover {
 }
 
 nav.navigation-anchor:hover {
-  text-decoration: underline;
-}
-
-nav.topbar-menu-item:hover {
   text-decoration: underline;
 }
