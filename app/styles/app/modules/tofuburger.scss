@@ -1,8 +1,11 @@
 .tofuburger {
-  height: $top-height;
-  width: 35px;
   border: none;
   line-height: 1;
   outline: none;
   cursor: pointer;
+
+  svg {
+    height: $top-height;
+    width: 25px;
+  }
 }
