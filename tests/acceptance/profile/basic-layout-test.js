@@ -42,7 +42,8 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
     let organization = server.create('organization', {
       name: 'Org Name',
       type: 'organization',
-      login: 'org-login'
+      login: 'org-login',
+      github_id: 1983
     });
     this.organization = organization;
 
@@ -325,7 +326,7 @@ test('view profiles for organizations that do not and do have GitHub Apps instal
 
   andThen(function () {
     assert.notOk(profilePage.githubAppsInvitation.isVisible, 'expected GitHub Apps invitation to not be visible');
-    assert.equal(profilePage.manageGithubAppsLink.href, 'https://github.com/organizations/org-login/settings/installations/1962', 'expected the management link to be organisation-scoped');
+    assert.equal(profilePage.manageGithubAppsLink.href, 'https://github.com/apps/travis-ci-testing/installations/new/permissions?suggested_target_id=1983', 'expected the management link to be organisation-scoped');
   });
 });
 
