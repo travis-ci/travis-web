@@ -42,7 +42,6 @@
           <li><a class="navigation-anchor" title="Documentation" href="{{ config.urls.docs }}">Docs</a></li>
         {{/if}}
     {{/unless}}
-    <div class="menu-separator"></div>
     <li id="profile-menu-link" class="{{classProfile}}">
       {{#if auth.signedOut}}
         <button class="auth-button signed-out" type="button" {{action 'signIn'}}>Sign in with GitHub</button>
