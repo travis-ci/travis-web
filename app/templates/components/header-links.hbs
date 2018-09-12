@@ -42,7 +42,7 @@
           <li><a class="navigation-anchor" title="Documentation" href="{{ config.urls.docs }}">Docs</a></li>
         {{/if}}
     {{/unless}}
-    <div class="menu-separator"></div>
+
     <li id="profile-menu-link" class="{{classProfile}}">
       {{#if auth.signedOut}}
         <button class="auth-button signed-out" type="button" {{action 'signIn'}}>Sign in with GitHub</button>
@@ -57,6 +57,7 @@
         <button class="auth-button signing-in" type="button">Signing In {{loading-indicator inline=true}}</button>
       {{/if}}
       {{#if auth.signedIn}}
+      <div class="menu-separator"></div>
         <ul class="navigation-nested">
           <li class="username"><span>{{userName}}</span></li>
            {{#link-to "account" user.login class="signed-in topbar-menu-item" title="Your profile"}}
