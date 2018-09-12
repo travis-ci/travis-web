@@ -43,7 +43,7 @@
         {{/if}}
     {{/unless}}
 
-    <li class="{{classProfile}}">
+    <li id="profile-menu-link" class="{{classProfile}}">
       {{#if auth.signedOut}}
         <button class="auth-button signed-out" type="button" {{action 'signIn'}}>Sign in with GitHub</button>
       {{/if}}
