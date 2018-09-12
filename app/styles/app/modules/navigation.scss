@@ -79,10 +79,6 @@ $nav-line-height: 35px;
   width: 100%;
   line-height: $nav-line-height;
 
-  &:last-child {
-    padding-bottom: 10px;
-  }
-
   &:hover {
     text-decoration: underline;
     cursor: pointer;
@@ -91,6 +87,10 @@ $nav-line-height: 35px;
   @media #{$medium-up} {
     line-height: $top-height + 1px;
     padding: 0 1em;
+
+    &:last-child {
+      padding-bottom: 10px;
+    }
   }
 }
 
@@ -125,10 +125,16 @@ $nav-line-height: 35px;
     }
   }
 }
+.menu-separator {
+  border-bottom: 1px #666666 solid;
+  padding-top: 10px;
 
+  @media #{$medium-up} {
+    display: none;
+  }
+}
 .navigation-nested {
   padding: 10px 0px 0px 0px;
-  border-top: 1px #666666 solid;
 
   svg {
     display: none;
@@ -138,6 +144,10 @@ $nav-line-height: 35px;
     &:not(:first-child) {
       line-height: 35px;
     }
+  }
+
+  .topbar-menu-item:hover {
+    text-decoration: underline;
   }
 
   @media #{$medium-up} {
@@ -192,6 +202,10 @@ $nav-line-height: 35px;
         }
       }
     }
+
+    .topbar-menu-item:hover {
+      text-decoration: none;
+    }
   }
 
   .username {
@@ -203,12 +217,17 @@ $nav-line-height: 35px;
   }
 
   .nav-nested {
-    height: 1px;
-    background-color: $cream-dark;
-    margin: 0 20px;
+    display: none;
+
+    @media #{$medium-up} {
+      display: block;
+      height: 1px;
+      background-color: $cream-dark;
+      margin: 0 20px;
+    }
   }
 
-  
+
 
   @media #{$medium-up} {
     display: none;
