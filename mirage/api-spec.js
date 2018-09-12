@@ -1702,6 +1702,26 @@ export default {
         "uri_template"
       ]
     },
+    "trial": {
+      "@type": "resource",
+      "actions": {},
+      "attributes": [
+        "builds_remaining",
+        "created_at",
+        "id",
+        "owner",
+        "status",
+      ],
+      "representations": {
+        "standard": [
+          "builds_remaining",
+          "created_at",
+          "id",
+          "owner",
+          "status",
+        ],
+      }
+    },
     "user": {
       "@type": "resource",
       "actions": {

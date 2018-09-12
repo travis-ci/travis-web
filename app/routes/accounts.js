@@ -15,9 +15,12 @@ export default TravisRoute.extend({
     if (config.billingEndpoint) {
       compoundFetch.subscriptions = this.store.findAll('subscription').catch(() => false);
       compoundFetch.subscriptionsFetched = true;
+      compoundFetch.trials = this.store.findAll('trial').catch(() => false);
+      compoundFetch.trialsFetched = true;
     }
 
-    return hash(compoundFetch).then(({accounts, subscriptions, subscriptionsFetched}) => {
+    return hash(compoundFetch).then(({ accounts, subscriptions, subscriptionsFetched,
+      trials, trialsFetched}) => {
       if (subscriptionsFetched) {
         if (subscriptions) {
           accounts.forEach(account => {
@@ -46,6 +49,24 @@ export default TravisRoute.extend({
           });
         } else {
           accounts.setEach('subscriptionError', true);
+        }
+      }
+
+      if (trialsFetched) {
+        if (trials) {
+          accounts.forEach(account => {
+            let login = account.get('login');
+            let accountTrials = trials.filter(trial => trial.get('owner.login') === login);
+            let activeAccountTrials = accountTrials.filter(trial => trial.get('hasTrial'));
+            let chosenTrial = activeAccountTrials.sortBy('created_at').get('firstObject');
+
+            if (chosenTrial) {
+              account.set('trial', chosenTrial);
+            } else {
+              let latestTrial = accountTrials.sortBy('created_at').get('lastObject');
+              account.set('trial', latestTrial);
+            }
+          });
         }
       }
 

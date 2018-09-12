@@ -20,8 +20,6 @@
     {{#if checkSubscriptionStatus}}
       {{#if model.subscriptionError}}
         {{subscription-status-banner color="yellow" message="There was an error determining your subscription status." billingLinkText="Visit billing" billingUrl=billingUrl showLink=model.subscriptionPermissions.create}}
-      {{else if (and checkSubscriptionStatus isNotSubscribed)}}
-        {{subscription-status-banner color="yellow" message="This account does not have an active subscription." billingLinkText="Sign this account up!" billingUrl=billingUrl showLink=model.subscriptionPermissions.create}}
       {{/if}}
 
     {{/if}}

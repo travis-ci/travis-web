@@ -83,6 +83,15 @@ export default function () {
     }
   });
 
+  this.get('/trials', function (schema, params) {
+    let response = this.serialize(schema.trials.all());
+
+    let owners = schema.organizations.all().models;
+    owners.push(schema.users.first());
+
+    return response;
+  });
+
   this.get('/subscriptions', function (schema, params) {
     let response = this.serialize(schema.subscriptions.all());
 

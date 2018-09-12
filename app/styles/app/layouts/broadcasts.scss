@@ -114,6 +114,7 @@ $broadcast-states: (warning: $brick-red, announcement: $turf-green);
 }
 
 .icon-broadcast {
+  position: relative;
   display: inline-block;
   width: 16px;
   height: 16px;
@@ -134,10 +135,9 @@ $broadcast-states: (warning: $brick-red, announcement: $turf-green);
 
   .count-wrapper {
     position: absolute;
-    top: 0;
+    top: -4px;
     height: 15px;
     width: 15px;
-    margin-top: 1px;
     margin-left: 7px;
     border-radius: 50%;
     border: 1px solid currentColor;
@@ -145,10 +145,6 @@ $broadcast-states: (warning: $brick-red, announcement: $turf-green);
     text-align: center;
     line-height: normal;
     font-size: 11px;
-
-    @media #{$medium-up} {
-      margin-top: 11px;
-    }
 
     .count {
       margin-top: -1px;

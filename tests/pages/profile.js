@@ -180,6 +180,16 @@ export default create({
       concurrency: text('[data-test-plan-concurrency]')
     },
 
+    trial: {
+      scope: '.billing',
+      name: text('[data-test-trial-message]'),
+
+      link: {
+        scope: '[data-test-trial-link]',
+        href: attribute('href')
+      }
+    },
+
     address: {
       scope: '.contact .address',
     },
@@ -193,6 +203,10 @@ export default create({
 
     expiryMessage: {
       scope: '[data-test-expiry-message]'
+    },
+
+    contactSupport: {
+      scope: '.manual-help',
     },
 
     invoices: {

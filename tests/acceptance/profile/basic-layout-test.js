@@ -231,8 +231,6 @@ test('view profile that has an expired subscription', function (assert) {
 
   andThen(() => {
     assert.ok(profilePage.avatar.checkmark.isHidden, 'expected avatar to not have a checkmark for active subscription');
-    assert.equal(profilePage.subscriptionStatus.text, 'This account does not have an active subscription.');
-    assert.ok(profilePage.subscriptionStatus.link.isVisible, 'expected billing link when account has permissions');
   });
 });
 
@@ -241,8 +239,6 @@ test('view profile that has an expired subscription and no create permissions', 
 
   andThen(() => {
     assert.ok(profilePage.avatar.checkmark.isHidden, 'expected avatar to not have a checkmark for active subscription');
-    assert.equal(profilePage.subscriptionStatus.text, 'This account does not have an active subscription.');
-    assert.ok(profilePage.subscriptionStatus.link.isHidden, 'expected no billing link when account has no permissions');
   });
 });
 
