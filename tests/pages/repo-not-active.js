@@ -11,5 +11,6 @@ export default create({
   notActiveHeadline: text('.missing-notice .page-title'),
   notActiveNotice: text('.missing-notice .page-notice'),
   activateButton: isVisible('.missing-notice button'),
-  activate: clickable('.missing-notice button')
+  activate: clickable('.missing-notice button'),
+  githubAppsActivateButton: isVisible('.missing-notice a.button')
 });

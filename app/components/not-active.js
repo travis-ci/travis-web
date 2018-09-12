@@ -26,7 +26,9 @@ export default Component.extend({
   @computed('config.githubApps.appName', 'repo.owner.github_id', 'repo.githubId')
   githubAppsActivationURL(appName, ownerGithubId, repoGithubId) {
     return 'https://github.com/apps/' +
-      `${appName}/installations/new/permissions?suggested_target_id=${ownerGithubId}&repository_ids=${repoGithubId}`;
+      `${appName}/installations/new/permissions` +
+      `?suggested_target_id=${ownerGithubId}` +
+      `&repository_ids=${repoGithubId}`;
   },
 
   activate: task(function* () {
