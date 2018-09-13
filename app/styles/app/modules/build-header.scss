@@ -1,15 +1,17 @@
+.build-header-container {
+  @media #{$medium-up} {
+    display: flex;
+    flex-flow: row no-wrap;
+    justify-content: space-between;
+  }
+}
+
 .build-header {
   @include travisBorder;
   @include travisColorRows;
 
   font-size: 16px;
   clear: both;
-
-  @media #{$medium-up} {
-    display: flex;
-    flex-flow: row no-wrap;
-    justify-content: space-between;
-  }
 
   a:hover,
   a:active {
@@ -133,4 +135,11 @@
   .commit-clock {
     margin-bottom: 1rem;
   }
+}
+
+.job-matrix-name-separator {
+  width: 90%;
+  margin: 15px auto;
+  height: 1px;
+  border-top: 1px $pebble-grey solid;
 }
