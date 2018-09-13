@@ -276,6 +276,10 @@ section[class^="dash-"] {
   .state-and-sha {
     padding-left: 1em;
     flex: 0 0 21%;
+
+    .monospace {
+      font-size: 14px;
+    }
   }
 
   .message-and-branch {
