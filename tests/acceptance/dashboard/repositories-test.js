@@ -222,7 +222,7 @@ module('Acceptance | dashboard/repositories', function (hooks) {
       event_type: 'push',
       state: 'passed',
       finished_at: '2017-03-27T12:00:00Z',
-      created_by: this.currentUser
+      createdBy: this.currentUser
     });
 
     let job = build.createJob({
