@@ -42,7 +42,6 @@
           <li><a class="navigation-anchor" title="Documentation" href="{{ config.urls.docs }}">Docs</a></li>
         {{/if}}
     {{/unless}}
-
     <li id="profile-menu-link" class="{{classProfile}}">
       {{#if auth.signedOut}}
         <button class="auth-button signed-out" type="button" {{action 'signIn'}}>Sign in with GitHub</button>
@@ -57,9 +56,10 @@
         <button class="auth-button signing-in" type="button">Signing In {{loading-indicator inline=true}}</button>
       {{/if}}
       {{#if auth.signedIn}}
+      <div class="menu-separator"></div>
         <ul class="navigation-nested">
           <li class="username"><span>{{userName}}</span></li>
-           {{#link-to "account" user.login class="signed-in" title="Your profile"}}
+           {{#link-to "account" user.login class="signed-in topbar-menu-item" title="Your profile"}}
             <li>
               {{svg-jar 'icon-settings' class="icon"}}
               Settings
@@ -68,7 +68,7 @@
           <div class="nav-nested"></div>
           {{#if features.proVersion}}
             <div class="nav-nested"></div>
-            <a href="{{ config.urls.support }}" title="Email the support team" {{action 'helpscoutTrigger'}}>
+            <a href="{{ config.urls.support }}" title="Email the support team" class="topbar-menu-item" {{action 'helpscoutTrigger'}}>
               <li>
                 {{svg-jar 'icon-encircled-help' class="icon"}}
                 Help
@@ -77,7 +77,7 @@
             <div class="nav-nested"></div>
           {{/if}}
             <div class="nav-nested"></div>
-            <a data-test-signout-link href="/" {{action 'signOut'}} title="Sign out of Travis CI">
+            <a data-test-signout-link href="/" title="Sign out of Travis CI" class="topbar-menu-item" {{action 'signOut'}}>
               <li>
                 {{svg-jar 'icon-sign-out' class="icon"}}
                 Sign Out
