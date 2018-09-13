@@ -1,4 +1,4 @@
-<p class='source' data-test-source>{{source}}</p>
+<p class='source {{if subscription.isManual "alert-status-message"}}' data-test-source>{{source}}</p>
 
 {{#if subscription.isStripe}}
   <p data-test-credit-card>
@@ -17,9 +17,8 @@
 {{/if}}
 
 {{#if (and subscription.isStripe monthly subscription.permissions.write)}}
-  <span class='notice-banner--yellow' data-test-annual-invitation>
-    Save 10% by switching to
-    <a href={{concat subscription.billingUrl '/edit?switch_annual=true'}}>
+  <span class='notice-banner--yellow' data-test-annual-invitation>Get one month for free with
+    <a href={{concat subscription.billingUrl '/edit?switch_annual=true?utm_source=web&utm_campaign=switch_to_annual'}}>
       annual billing
     </a>
   </span>

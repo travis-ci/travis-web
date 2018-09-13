@@ -4,6 +4,7 @@ import { computed } from 'ember-decorators/object';
 import { alias } from 'ember-decorators/object/computed';
 import { service } from 'ember-decorators/service';
 import { htmlSafe } from '@ember/string';
+import { task } from 'ember-concurrency';
 
 import timeAgoInWords from 'travis/utils/time-ago-in-words';
 
@@ -17,30 +18,37 @@ export default Component.extend({
   didInsertElement() {
     this._super(...arguments);
 
+    this.get('fetchData').perform();
+  },
+
+  fetchData: task(function* () {
     const url = '/v3/enterprise_license';
 
-    this.get('ajax').get(url).then(response => {
-      const exp = new Date(Date.parse(response.expiration_time));
-      this.setProperties({
-        licenseId: response.license_id,
-        expirationTime: exp,
-        daysUntilExpiry: Math.ceil(
-          (exp.getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24)
-        ),
-        licenceType: response.license_type,
-        seats: response.seats,
-        activeUsers: response.active_users,
-        isTrial: response.license_type === 'trial',
-        isPaid: response.license_type !== 'trial'
-      });
-      if (!this.get('expiring')) {
-        this.get('storage').removeItem(this.get('lsLicense'));
-      }
-      if (!this.get('almostExceeding') && !this.get('exceeding')) {
-        this.get('storage').removeItem(this.get('lsSeats'));
-      }
+    let response = yield this.get('ajax').get(url);
+
+    const exp = new Date(Date.parse(response.expiration_time));
+    this.setProperties({
+      licenseId: response.license_id,
+      expirationTime: exp,
+      daysUntilExpiry: Math.ceil(
+        (exp.getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24)
+      ),
+      licenceType: response.license_type,
+      seats: response.seats,
+      activeUsers: response.active_users,
+      isTrial: response.license_type === 'trial',
+      isPaid: response.license_type !== 'trial'
     });
-  },
+
+    // Temporary removing these until we can rework these to be more
+    // emberlike and resiliant to odd timing issues
+    // if (this.get('daysUntilExpiry') && !this.get('expiring')) {
+    //  this.get('storage').removeItem(this.get('lsLicense'));
+    // }
+    // if (!this.get('almostExceedingSeats') && !this.get('exceedingSeats')) {
+    //   this.get('storage').removeItem(this.get('lsSeats'));
+    // }
+  }),
 
   @computed('seats', 'activeUsers')
   exceedingSeats(seats, activeUsers) {

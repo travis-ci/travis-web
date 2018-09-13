@@ -3,6 +3,7 @@
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 const Funnel = require('broccoli-funnel');
 const SVGO = require('svgo');
+const Sass = require('node-sass');
 
 module.exports = function () {
   let fingerprint;
@@ -40,6 +41,9 @@ module.exports = function () {
         // workaround for https://github.com/jeremyfa/yaml.js/issues/102
         node: {
           fs: 'empty'
+        },
+        module: {
+          noParse: /pusher/
         }
       }
     },
@@ -58,6 +62,9 @@ module.exports = function () {
     'ember-prism': {
       'components': ['scss', 'javascript', 'json'], // needs to be an array, or undefined.
       'plugins': ['line-highlight']
+    },
+    sassOptions: {
+      implementation: Sass
     },
     svg: {
       optimize: false,
@@ -83,8 +90,6 @@ module.exports = function () {
       }
     }
   });
-
-  app.import('node_modules/timeago/jquery.timeago.js');
 
   const emojiAssets = new Funnel('node_modules/emoji-datasource-apple/img/apple/64', {
     destDir: '/images/emoji'

@@ -2,7 +2,6 @@ import { assign } from '@ember/polyfills';
 import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import page from 'travis/tests/pages/build-list';
-import topPage from 'travis/tests/pages/top';
 import generatePusherPayload from 'travis/tests/helpers/generate-pusher-payload';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 
@@ -247,34 +246,6 @@ test('build history shows, more can be loaded, and a created build gets added an
 
   andThen(() => {
     assert.ok(page.builds[0].passed, 'expected the newly-finished build to have passed');
-  });
-});
-
-test('view and cancel pull requests', function (assert) {
-  assert.expect(10);
-  page.visitPullRequests({ organization: 'org-login', repo: 'repository-name' });
-
-  andThen(() => {
-    assert.equal(page.builds.length, 1, 'expected one pull request build');
-
-    page.builds[0].as(pullRequest => {
-      assert.ok(pullRequest.started, 'expected the pull request to have started');
-      assert.equal(pullRequest.name, 'PR #2010');
-      assert.equal(pullRequest.message, 'A pull request');
-      assert.equal(pullRequest.committer, 'User Name');
-      assert.equal(pullRequest.commitSha, '1234567');
-      assert.equal(pullRequest.commitDate, 'about a year ago');
-      assert.equal(pullRequest.duration, '5 min');
-
-      assert.ok(pullRequest.cancelButton.visible, 'expected the cancel button to be visible');
-    });
-  });
-  percySnapshot(assert);
-
-  page.builds[0].cancelButton.click();
-
-  andThen(() => {
-    assert.equal(topPage.flashMessage.text, 'Build has been successfully cancelled.');
   });
 });
 

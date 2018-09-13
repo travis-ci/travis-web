@@ -23,6 +23,7 @@ moduleForAcceptance('Acceptance | profile/view token', {
 
 test('view token', function (assert) {
   profilePage.visit({ username: 'user-login' });
+  profilePage.settings.visit();
 
   andThen(() => {
     assert.equal(profilePage.token.obfuscatedCharacters, '••••••••••••••••••••', 'expected token to be obfuscated by default');
@@ -38,6 +39,7 @@ test('view token', function (assert) {
 
 test('copy token', function (assert) {
   profilePage.visit({ username: 'user-login' });
+  profilePage.settings.visit();
 
   andThen(() => {
     assert.equal(profilePage.token.obfuscatedCharacters, '••••••••••••••••••••', 'expected token to be obfuscated by default');

@@ -1,8 +1,1 @@
-<div class="switch-inner">
-  <span class="on">
-    {{svg-jar 'icon-passed' class='icon-on' alt='on'}}
-  </span>
-  <span class="off">
-    {{svg-jar 'icon-failed' class='icon-off' alt='off'}}
-  </span>
-</div>
+{{travis-switch active=feature.enabled disabled=disabled onToggle=(perform save)}}

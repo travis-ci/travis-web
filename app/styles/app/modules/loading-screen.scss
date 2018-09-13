@@ -1,0 +1,15 @@
+.loading-screen {
+
+  &.loading-screen--centered {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    width: 100%;
+  }
+
+  &.loading-screen--with-margins {
+    margin-top: 95px;
+  }
+}
