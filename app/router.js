@@ -55,14 +55,13 @@ Router.map(function () {
     this.route('accounts', { path: '/', resetNamespace: true }, function () {
       this.route('account', { path: '/:login', resetNamespace: true }, function () {
         this.route('repositories', { path: '/' });
-        this.route('settings', function () {
-          this.route('unsubscribe');
-        });
+        this.route('settings');
         this.route('billing', { path: '/subscription' }, () => {
         });
       });
     });
   });
+  this.route('unsubscribe', { path: '/account/preferences/unsubscribe' });
   this.route('owner', { path: '/:owner', resetNamespace: true }, function () {
     this.route('repositories', { path: '/' });
   });

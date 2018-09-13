@@ -22,7 +22,7 @@ module('Acceptance | profile/unsubscribe', function (hooks) {
           login: 'some-user'
         }
       });
-      await unsubscribePage.visit({ username: this.user.login, repository: '2' });
+      await unsubscribePage.visit({ repository: '2' });
     });
 
     test('it renders correct view', function (assert) {
@@ -48,7 +48,7 @@ module('Acceptance | profile/unsubscribe', function (hooks) {
             login: this.user.login
           }
         });
-        await unsubscribePage.visit({ username: this.user.login, repository: this.repo.id });
+        await unsubscribePage.visit({ repository: this.repo.id });
       });
 
       test('it renders correct view', function (assert) {
@@ -90,7 +90,7 @@ module('Acceptance | profile/unsubscribe', function (hooks) {
             login: this.user.login
           }
         });
-        await unsubscribePage.visit({ username: this.user.login, repository: this.repo.id });
+        await unsubscribePage.visit({ repository: this.repo.id });
       });
 
       test('it renders correct view', function (assert) {

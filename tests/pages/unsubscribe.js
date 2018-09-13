@@ -18,7 +18,7 @@ import {
 } from 'travis/tests/helpers/selectors';
 
 export default create({
-  visit: visitable('profile/:username/settings/unsubscribe'),
+  visit: visitable('account/preferences/unsubscribe'),
 
   emailUnsubscribe: {
     scope: EMAIL_UNSUBSCRIBE,

@@ -1,18 +1,3 @@
-{{! This pseudo-routing is necessary because 'account.settings.unsubscribe' route needs to be nested under 'profile'
-    but it has different layout, which has to be overwritten here }}
-{{#if showLoading}}
-  {{! Show loading screen until the entire path is resolved in order to figure out which layout to render }}
-  {{#travis-layout layoutName="layouts/center"}}
-    {{loading-screen center=true margin=true}}
-  {{/travis-layout}}
-{{else if showProfile}}
-  {{! Render profile layout (default path) }}
-  {{#travis-layout layoutName="layouts/profile" class="profile-view"}}
-    {{outlet}}
-  {{/travis-layout}}
-{{else}}
-  {{! Render email-unsubscribe, which has different layout (no side panel, account info, tabs, etc.) }}
-  {{#travis-layout layoutName="layouts/center"}}
-    {{email-unsubscribe}}
-  {{/travis-layout}}
-{{/if}}
+{{#travis-layout layoutName="layouts/profile" class="profile-view"}}
+  {{outlet}}
+{{/travis-layout}}

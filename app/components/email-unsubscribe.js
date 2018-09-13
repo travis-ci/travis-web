@@ -12,6 +12,7 @@ export default Component.extend({
   @service router: null,
   @service store: null,
   @service flashes: null,
+  @service auth: null,
 
   isFirstAction: true,
 
@@ -62,7 +63,11 @@ export default Component.extend({
 
   didInsertElement() {
     this.flashes.clear();
-    this.fetchRepo.perform();
+    if (this.repositoryId) {
+      this.fetchRepo.perform();
+    } else {
+      this.router.transitionTo('account.settings', this.auth.currentUser.login);
+    }
     return this._super(...arguments);
   },
 
