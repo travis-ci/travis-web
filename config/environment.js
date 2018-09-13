@@ -132,12 +132,14 @@ module.exports = function (environment) {
       ENV.userlike = true;
       ENV.beacon = true;
 
-      if (process.env.GITHUB_APPS_APP_NAME) {
-        ENV.githubApps = {
-          appName: process.env.GITHUB_APPS_APP_NAME,
-          migrationRepositoryCountLimit: 50
-        };
-      }
+      // FIXME: This is just to make PR deployments work for testing.
+      //        Reinstate conditional and variable name before merging.
+      // if (process.env.GITHUB_APPS_APP_NAME) {
+      ENV.githubApps = {
+        appName: 'travis-ci', //process.env.GITHUB_APPS_APP_NAME,
+        migrationRepositoryCountLimit: 50
+      };
+      // }
     }
 
     if (process.env.API_ENDPOINT) {
