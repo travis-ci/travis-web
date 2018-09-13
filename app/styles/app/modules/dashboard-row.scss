@@ -285,6 +285,10 @@ section[class^="dash-"] {
 
     .monospace {
       font-size: 14px;
+
+      .label-align {
+        margin-left: -4px;
+      }
     }
   }
 
