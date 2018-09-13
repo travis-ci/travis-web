@@ -34,6 +34,11 @@ export default Controller.extend({
     return showGitHubApps && !isPrivate && !currentUser;
   },
 
+  @computed('auth.signedIn', 'features.dashboard')
+  isCentered(isSignedIn, isDashboard) {
+    return !isSignedIn || isDashboard;
+  },
+
   config,
 
   classNames: ['repo'],
