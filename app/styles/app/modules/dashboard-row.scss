@@ -273,6 +273,12 @@ section[class^="dash-"] {
     padding-right: 1em;
   }
 
+  .message-and-branch, .state-and-sha {
+    .icon {
+      margin-right: 0;
+    }
+  }
+
   .state-and-sha {
     padding-left: 1em;
     flex: 0 0 21%;
