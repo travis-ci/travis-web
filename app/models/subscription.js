@@ -20,20 +20,21 @@ export default Model.extend({
   plan: belongsTo(),
   source: attr(),
   status: attr(),
+  validTo: attr(),
 
   @equal('status', 'subscribed') isSubscribed: null,
   @equal('status', 'canceled') isCanceled: null,
   @equal('status', 'expired') isExpired: null,
-
-  @or('isCanceled', 'isExpired') isNotSubscribed: null,
-
   @equal('source', 'stripe') isStripe: null,
   @equal('source', 'github') isGithub: null,
   @equal('source', 'manual') isManual: null,
 
-  @and('isStripe', 'isNotSubscribed') isResubscribable: null,
+  @or('isCanceled', 'isExpired') isNotSubscribed: null,
+  @or('isStripe', 'isGithub') managedSubscription: null,
 
-  validTo: attr('date'),
+  @and('isStripe', 'isNotSubscribed') isResubscribable: null,
+  @and('isGithub', 'isNotSubscribed') isGithubResubscribable: null,
+
 
   @computed('owner.{type,login}', 'isGithub', 'isResubscribable')
   billingUrl(type, login, isGithub, isResubscribable) {
@@ -47,12 +48,20 @@ export default Model.extend({
   },
 
   @computed('isStripe', 'isGithub', 'isSubscribed')
-  manageSubscription(isStripe, isGithub, isSubscribed) {
+  activeManagedSubscription(isStripe, isGithub, isSubscribed) {
     return ((isStripe || isGithub) && isSubscribed);
   },
 
   @computed('source')
   sourceWords(source) {
     return sourceToWords[source];
-  }
+  },
+
+  @computed('isManual', 'validTo')
+  manualSubscriptionExpired(isManual, validTo) {
+    let today = new Date().toISOString();
+    let date = Date.parse(today);
+    let validToDate = Date.parse(validTo);
+    return (isManual && (date > validToDate));
+  },
 });

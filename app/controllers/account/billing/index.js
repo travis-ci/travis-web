@@ -14,7 +14,7 @@ export default Controller.extend({
   @controller('account') accountController: null,
   @alias('accountController.model') account: null,
 
-  @computed('model.id')
+  @computed('model.subscriptions.id')
   invoices(subscriptionId) {
     if (subscriptionId) {
       return this.get('store').query('invoice', { subscription_id: subscriptionId });

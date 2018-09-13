@@ -217,7 +217,7 @@ $profile-breakpoint: 600px;
 
   p {
     position: relative;
-    padding: 0.7em em 0.7em 0.5em;
+    padding: 0.7em 2em 0.7em 0.5em;
     color: $brick-red;
     background-color: $quartz-red;
 
@@ -411,6 +411,20 @@ header.legacy-services-integration {
 section.billing {
   font-size: $font-size-m;
 
+  .plan-status-message {
+    color: $asphalt-grey;
+    font-size: 16px;
+  }
+  
+  .billing-section-link {
+    text-decoration: underline;
+
+    &:hover, &:active {
+      color: $cement-grey;
+      text-decoration: none;
+    }
+  }
+
   .plan {
     p {
       margin: 0.3em 0 0.3em 0;
@@ -449,7 +463,7 @@ section.billing {
       margin: 20px 0 12px 0;
     }
 
-    p.manual {
+    p.alert-status-message {
       color: $brick-red;
       font-size: 16px;
     }
@@ -700,6 +714,12 @@ header.space-between {
   background-color: #3EAAAF;
   border: none;
   border-radius: 2px;
+}
+
+.subscription-divider {
+  margin: 40px 0;
+  height: 2px;
+  border-top: 2px $pebble-grey solid;
 }
 
 .manage-subscription {
