@@ -284,7 +284,7 @@ section[class^="dash-"] {
     border-right: 1px solid rgba($asphalt-grey, 0.2);
   }
 
-  .repo .row-content, .message {
+  .repo .row-content, .message-and-branch .row-content {
     overflow: hidden;
     position: relative;
     white-space: nowrap;
