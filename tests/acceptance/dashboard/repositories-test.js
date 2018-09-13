@@ -61,7 +61,7 @@ module('Acceptance | dashboard/repositories', function (hooks) {
         state: 'passed'
       })
     });
-    server.create('repository', {
+    this.repository = server.create('repository', {
       owner: {
         login: 'travis-ci',
         type: 'organization'
@@ -235,13 +235,13 @@ module('Acceptance | dashboard/repositories', function (hooks) {
       finished_at: '2017-03-27T12:00:00Z'
     });
 
-    await this.application.pusher.receive('build:created', {
+    await this.owner.application.pusher.receive('build:created', {
       build: generatePusherPayload(build),
       commit: generatePusherPayload(commit),
       repository: generatePusherPayload(this.repository, { current_build_id: build.id })
     });
 
-    assert.equal(page.myBuilds.builds.length, 4);
+    assert.equal(page.myBuilds.builds.length, 5);
 
     await page.activeRepos.visit();
 
