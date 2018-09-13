@@ -5,12 +5,14 @@ import ArrayProxy from '@ember/array/proxy';
 import Component from '@ember/component';
 import config from 'travis/config/environment';
 import { computed } from 'ember-decorators/object';
+import { alias } from 'ember-decorators/object/computed';
 import { service } from 'ember-decorators/service';
 
 export default Component.extend({
   @service auth: null,
   @service router: null,
   @service permissions: null,
+  @service externalLinks: null,
 
   tagName: 'li',
   classNameBindings: ['branch.last_build.state'],
@@ -18,6 +20,42 @@ export default Component.extend({
   isLoading: false,
   isTriggering: false,
   hasTriggered: false,
+
+  @computed('branch.repository.slug', 'branch.last_build.commit.sha')
+  urlGithubCommit(slug, sha) {
+    return this.get('externalLinks').githubCommit(slug, sha);
+  },
+
+  @alias('branch.last_build.created_by')
+  rawCreatedBy: null,
+
+  @computed('rawCreatedBy.name', 'rawCreatedBy.login', 'rawCreatedBy.avatar_url')
+  createdBy(name, login, avatarUrl) {
+    return {
+      name,
+      login,
+      avatarUrl
+    };
+  },
+
+  @alias('branch.last_build.commit')
+  rawCommit: null,
+
+  @computed(
+    'rawCommit.author.name', 'rawCommit.author.avatar_url',
+    'rawCommit.committer.name', 'rawCommit.committer.avatar_url')
+  commit(authorName, authorAvatarUrl, committerName, committerAvatarUrl) {
+    let authorIsCommitter =
+      authorName === committerName && authorAvatarUrl === committerAvatarUrl;
+
+    return {
+      authorIsCommitter,
+      authorName,
+      authorAvatarUrl,
+      committerName,
+      committerAvatarUrl
+    };
+  },
 
   @computed()
   getLast5Builds() {

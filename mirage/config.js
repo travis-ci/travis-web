@@ -58,7 +58,13 @@ export default function () {
   });
 
   this.get('/users/permissions', (schema, request) => {
-    const token = request.requestHeaders.Authorization.split(' ')[1];
+    let authorization = request.requestHeaders.Authorization;
+
+    if (!authorization) {
+      return {};
+    }
+
+    const token = authorization.split(' ')[1];
     const user = schema.users.where({ token }).models[0];
 
     if (user) {
