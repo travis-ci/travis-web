@@ -18,7 +18,7 @@
     </section>
 
     <section class='message-and-branch'>
-      <div class='message row-content' data-test-commit-message>
+      <div class='message row-content' title={{build.commit.message}} data-test-commit-message>
         {{{format-message build.commit.message short='true' repo=build.repo eventType=build.eventType}}}
       </div>
       <div class='row-content no-hover'>
