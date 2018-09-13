@@ -134,7 +134,6 @@ test('visiting single-job build shows config messages', function (assert) {
     });
 
     assert.equal(jobPage.createdBy.text, 'Mr T authored and committed');
-    assert.ok(jobPage.createdBy.avatarSrc.includes('/assets/travis-ci/travis-web.svg'));
   });
 
   percySnapshot(assert);
