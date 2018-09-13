@@ -136,7 +136,8 @@ module.exports = function (environment) {
       //        Reinstate conditional and variable name before merging.
       // if (process.env.GITHUB_APPS_APP_NAME) {
       ENV.githubApps = {
-        appName: 'travis-ci', //process.env.GITHUB_APPS_APP_NAME,
+        // appName: process.env.GITHUB_APPS_APP_NAME,
+        appName: 'travis-ci',
         migrationRepositoryCountLimit: 50
       };
       // }
