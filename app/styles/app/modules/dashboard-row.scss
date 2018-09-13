@@ -275,6 +275,7 @@ section[class^="dash-"] {
 
   .state-and-sha {
     padding-left: 1em;
+    flex: 0 0 21%;
   }
 
   .message-and-branch {
@@ -292,10 +293,6 @@ section[class^="dash-"] {
     &:after {
       @include fadeOut(right, -90deg, white);
     }
-  }
-
-  .state-and-sha {
-    flex: 0 0 21%;
   }
 
   .times {
