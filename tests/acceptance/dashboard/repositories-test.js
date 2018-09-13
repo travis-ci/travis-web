@@ -6,6 +6,7 @@ import { enableFeature } from 'ember-feature-flags/test-support';
 import { percySnapshot } from 'ember-percy';
 import page from 'travis/tests/pages/dashboard';
 import topPage from 'travis/tests/pages/top';
+import generatePusherPayload from 'travis/tests/helpers/generate-pusher-payload';
 
 module('Acceptance | dashboard/repositories', function (hooks) {
   setupApplicationTest(hooks);
@@ -15,6 +16,7 @@ module('Acceptance | dashboard/repositories', function (hooks) {
       name: 'User Name',
       login: 'user-login',
     });
+    this.currentUser = currentUser;
 
     signInUser(currentUser);
 
@@ -33,6 +35,7 @@ module('Acceptance | dashboard/repositories', function (hooks) {
         state: 'passed',
       })
     });
+    this.branch = branch;
 
     let oneYearAgo = new Date(new Date() - 1000 * 60 * 60 * 24 * 365);
     let beforeOneYearAgo = new Date(oneYearAgo.getTime() - 1000 * 60 * 19 - 1000 * 19);
@@ -202,6 +205,43 @@ module('Acceptance | dashboard/repositories', function (hooks) {
     await page.myBuilds.builds[2].restart();
 
     assert.equal(topPage.flashMessage.text, 'The build was successfully restarted.');
+
+    const commit = server.create('commit', {
+      id: 100,
+      sha: 'acab',
+      branch: 'primary',
+      message: 'Add new chapter',
+      committed_at: '2016-12-02T22:02:34Z',
+    });
+
+    let build = this.branch.createBuild({
+      id: 100,
+      number: 15,
+      repository: this.repository,
+      pull_request: false,
+      event_type: 'push',
+      state: 'passed',
+      finished_at: '2017-03-27T12:00:00Z',
+      created_by: this.currentUser
+    });
+
+    let job = build.createJob({
+      id: 100,
+      repository: this.repository,
+      build,
+      commit,
+      number: '15.1',
+      state: 'passed',
+      finished_at: '2017-03-27T12:00:00Z'
+    });
+
+    await this.application.pusher.receive('build:created', {
+      build: generatePusherPayload(build),
+      commit: generatePusherPayload(commit),
+      repository: generatePusherPayload(this.repository, { current_build_id: build.id })
+    });
+
+    assert.equal(page.myBuilds.builds.length, 4);
 
     await page.activeRepos.visit();
 
