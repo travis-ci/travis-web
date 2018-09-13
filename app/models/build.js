@@ -80,7 +80,7 @@ export default Model.extend(DurationCalculations, {
 
   @computed('state')
   notStarted(state) {
-    let waitingStates = ['queued', 'created', 'received'];
+    let waitingStates = ['queued', 'created'];
     return waitingStates.includes(state);
   },
 
