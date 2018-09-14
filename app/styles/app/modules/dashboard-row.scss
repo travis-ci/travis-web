@@ -212,7 +212,7 @@ section[class^="dash-"] {
         }
       }
 
-      .message-and-branch {
+      .message-and-branch::after {
         border-right: 0;
       }
     }
@@ -250,6 +250,13 @@ section[class^="dash-"] {
 
   .dash-main > section {
     box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    padding-top: 0.7em;
+    padding-bottom: 0.7em;
+    position: relative;
   }
 
   .state, .restart {
@@ -296,8 +303,16 @@ section[class^="dash-"] {
   .message-and-branch {
     flex: 0 0 30%;
     overflow: hidden;
+    position: relative;
 
-    border-right: 1px solid rgba($asphalt-grey, 0.2);
+    &::after {
+      border-right: 1px solid rgba($asphalt-grey, 0.2);
+      content: ' ';
+      position: absolute;
+      right: 0;
+      top: 0.7em;
+      bottom: 0.7em;
+    }
   }
 
   .repo .row-content, .message-and-branch .row-content {
