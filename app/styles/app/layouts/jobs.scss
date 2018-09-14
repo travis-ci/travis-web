@@ -210,13 +210,16 @@
     align-self: flex-start;
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis;
+    margin-right: 20px;
 
     &:after {
       @include fadeOut(right, -90deg, white);
     }
 
     &:hover {
+      &:after {
+        background: none;
+      }
       white-space: normal;
     }
   }
