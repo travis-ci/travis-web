@@ -9,9 +9,11 @@ export default V3Adapter.extend({
   includes: [
     'build.branch',
     'build.request',
+    'build.commit',
     'repository.default_branch',
     'repository.current_build',
-    'build.commit',
+    'owner.installation',
+    'owner.github_id',
     'repository.email_subscribed'
   ].join(','),
 
