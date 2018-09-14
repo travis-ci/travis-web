@@ -7,6 +7,6 @@ export default TravisRoute.extend({
   model(params) {
     let currentUserId = this.get('auth.currentUser.id');
 
-    return this.store.filter('build', {}, build => build.get('createdBy.id') == currentUserId);
+    return this.store.filter('build', {limit: 30}, build => build.get('createdBy.id') == currentUserId);
   },
 });
