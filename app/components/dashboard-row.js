@@ -1,12 +1,10 @@
 import { later } from '@ember/runloop';
 import Component from '@ember/component';
 import { service } from 'ember-decorators/service';
-import { computed } from 'ember-decorators/object';
 import { alias } from 'ember-decorators/object/computed';
 
 export default Component.extend({
   @service('permissions') permissionsService: null,
-  @service externalLinks: null,
   @service api: null,
   @service flashes: null,
 
@@ -18,11 +16,6 @@ export default Component.extend({
   dropupIsOpen: false,
 
   @alias('repo.currentBuild') currentBuild: null,
-
-  @computed('repo.slug', 'currentBuild.commit.sha')
-  urlGitHubCommit(slug, sha) {
-    return this.get('externalLinks').githubCommit(slug, sha);
-  },
 
   @alias('repo.permissions.create_request') displayMenuTofu: null,
 

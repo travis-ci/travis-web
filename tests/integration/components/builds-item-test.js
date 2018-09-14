@@ -20,7 +20,8 @@ module('Integration | Component | builds item', function (hooks) {
         branch: 'foobarbranch',
         authorName: 'Test Author',
         authorEmail: 'author@example.com',
-        message: 'Generic test author commit message'
+        message: 'Generic test author commit message',
+        githubUrl: 'a-url'
       },
       repo: {
         slug: 'foo/bar'
@@ -30,7 +31,7 @@ module('Integration | Component | builds item', function (hooks) {
     await render(hbs`{{builds-item build=build}}`);
     assert.dom('.row-li').hasClass('passed', 'component has right status class');
     assert.dom('.row-branch a').hasText('foobarbranch', 'component renders branch if event is push');
-    assert.dom('.row-commit a').hasAttribute('href', 'https://github.com/foo/bar/commit/a5e8093098f9c0fb46856b753fb8943c7fbf26f3', 'component generates right commit link');
+    assert.dom('.row-commit a').hasAttribute('href', 'a-url', 'component uses commit github url');
     assert.dom('.row-message').hasText('Generic test author commit message');
   });
 

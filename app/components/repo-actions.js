@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 import { service } from 'ember-decorators/service';
 import { computed } from 'ember-decorators/object';
-import { alias, and } from 'ember-decorators/object/computed';
+import { alias, and, or } from 'ember-decorators/object/computed';
 import eventually from 'travis/utils/eventually';
 import { task, taskGroup } from 'ember-concurrency';
 
@@ -11,7 +11,7 @@ export default Component.extend({
   @service auth: null,
 
   classNames: ['repo-main-tools'],
-  classNameBindings: ['labelless'],
+  classNameBindings: ['labelless', 'mobilelabels'],
 
   @alias('auth.currentUser') user: null,
 
@@ -57,6 +57,8 @@ export default Component.extend({
   @and('userHasPullPermissionForRepo', 'item.canCancel') canCancel: null,
   @and('userHasPullPermissionForRepo', 'item.canRestart') canRestart: null,
   @and('userHasPushPermissionForRepo', 'item.canDebug') canDebug: null,
+
+  @or('labelless', 'mobilelabels') tooltips: null,
 
   cancel: task(function* () {
     let type = this.get('type');

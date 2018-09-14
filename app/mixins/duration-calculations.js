@@ -18,4 +18,9 @@ export default Mixin.create({
     this.notifyPropertyChange('duration');
     return this.notifyPropertyChange('finishedAt');
   },
+
+  @computed('startedAt', 'finishedAt')
+  elapsedTime(startedAt, finishedAt) {
+    return durationFrom(startedAt, finishedAt);
+  },
 });

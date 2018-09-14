@@ -41,4 +41,9 @@ export default Model.extend({
   authorIsCommitter(authorName, authorEmail, committerName, committerEmail) {
     return authorName === committerName && authorEmail === committerEmail;
   },
+
+  @computed('build.repo.slug', 'sha')
+  githubUrl(slug, sha) {
+    return this.get('externalLinks').githubCommit(slug, sha);
+  },
 });
