@@ -3,3 +3,5 @@
     {{my-build data-test-my-build build=build}}
   {{/each}}
 </ul>
+
+{{pagination-navigation collection=model route='dashboard.builds' queryParam='page' inner=6 outer=2}}

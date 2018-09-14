@@ -4,6 +4,12 @@ import { service } from 'ember-decorators/service';
 export default TravisRoute.extend({
   @service auth: null,
 
+  queryParams: {
+    page: {
+      refreshModel: true
+    },
+  },
+
   model(params) {
     let currentUserId = this.get('auth.currentUser.id');
 

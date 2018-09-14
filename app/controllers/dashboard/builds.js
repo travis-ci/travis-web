@@ -7,6 +7,8 @@ import config from 'travis/config/environment';
 export default Controller.extend({
   @service('updateTimes') updateTimesService: null,
 
+  page: 1,
+
   init() {
     this._super(...arguments);
     if (!Ember.testing) {
