@@ -7,7 +7,7 @@ export default V3Adapter.extend({
   defaultSerializer: '-repo',
 
   includes: 'build.branch,build.request,repository.default_branch'
-    + ',repository.current_build,build.commit,build.created_by',
+    + ',repository.current_build,build.commit,build.created_by,owner.installation,owner.github_id',
 
   buildURL(modelName, id, snapshot, requestType, query) {
     if (query) {
