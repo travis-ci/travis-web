@@ -2,6 +2,7 @@ import { currentURL, currentRouteName, visit, click } from '@ember/test-helpers'
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import signInUser from 'travis/tests/helpers/sign-in-user';
+import { waitForElement } from 'travis/tests/helpers/wait-for-element';
 import { enableFeature } from 'ember-feature-flags/test-support';
 import { percySnapshot } from 'ember-percy';
 import page from 'travis/tests/pages/dashboard';
@@ -25,7 +26,9 @@ module('Acceptance | dashboard/repositories', function (hooks) {
       eventType: 'cron',
       number: 2,
       state: 'failed',
-      finishedAt: '2016-11-10T14:37:44Z'
+      started_at: '2016-11-10T14:32:44Z',
+      finishedAt: '2016-11-10T14:37:44Z',
+      createdBy: currentUser
     });
     let branch = server.create('branch', {
       name: 'master',
@@ -33,6 +36,7 @@ module('Acceptance | dashboard/repositories', function (hooks) {
         number: 1,
         eventType: 'api',
         state: 'passed',
+        createdBy: currentUser
       })
     });
     this.branch = branch;
@@ -51,14 +55,16 @@ module('Acceptance | dashboard/repositories', function (hooks) {
       commit: server.create('commit', {
         message: 'get used to it',
         sha: 'acab'
-      })
+      }),
+      createdBy: currentUser
     });
     let permissionBranch = server.create('branch', {
       name: 'primary',
       lastBuild: server.create('build', {
         number: 55,
         eventType: 'push',
-        state: 'passed'
+        state: 'passed',
+        createdBy: currentUser
       })
     });
     this.repository = server.create('repository', {
@@ -165,7 +171,7 @@ module('Acceptance | dashboard/repositories', function (hooks) {
     assert.equal(currentURL(), '/dashboard/builds');
     assert.equal(page.myBuilds.builds.length, 4);
 
-    page.myBuilds.builds[2].as(build => {
+    page.myBuilds.builds[0].as(build => {
       assert.ok(build.isPublic);
 
       assert.ok(build.isPassed);
@@ -191,18 +197,18 @@ module('Acceptance | dashboard/repositories', function (hooks) {
       assert.equal(build.finished, 'about a year ago');
     });
 
-    page.myBuilds.builds[1].as(build => {
+    page.myBuilds.builds[3].as(build => {
       assert.equal(build.finished, 'still running');
     });
 
-    page.myBuilds.builds[0].as(build => {
+    page.myBuilds.builds[1].as(build => {
       assert.ok(build.isFailed);
       assert.ok(build.isPrivate);
     });
 
     assert.equal(page.starredRepos.length, 1);
 
-    await page.myBuilds.builds[2].restart();
+    await page.myBuilds.builds[0].restart();
 
     assert.equal(topPage.flashMessage.text, 'The build was successfully restarted.');
 
@@ -221,7 +227,7 @@ module('Acceptance | dashboard/repositories', function (hooks) {
       pull_request: false,
       event_type: 'push',
       state: 'passed',
-      finished_at: '2017-03-27T12:00:00Z',
+      started_at: new Date(),
       createdBy: this.currentUser
     });
 
@@ -232,33 +238,52 @@ module('Acceptance | dashboard/repositories', function (hooks) {
       commit,
       number: '15.1',
       state: 'passed',
-      finished_at: '2017-03-27T12:00:00Z'
     });
 
+    await this.owner.application.pusher.receive('job:created', generatePusherPayload(job));
     await this.owner.application.pusher.receive('build:created', {
       build: generatePusherPayload(build),
       commit: generatePusherPayload(commit),
       repository: generatePusherPayload(this.repository, { current_build_id: build.id })
     });
 
-    assert.equal(page.myBuilds.builds.length, 5);
+    let otherUser = server.create('user');
+    let otherBranch = server.create('branch', {
+      lastBuild: server.create('build', {
+        createdBy: otherUser
+      })
+    });
+    let otherRepository = server.create('repository', {
+      defaultBranch: otherBranch
+    });
 
-    let otherRepository = server.create('repository');
-
-    let otherBuild = server.create('build', {
-      createdBy: server.create('user'),
+    let otherBuild = otherBranch.createBuild({
+      started_at: new Date(),
+      createdBy: otherUser,
       repository: otherRepository
     });
 
     let otherCommit = server.create('commit');
 
+    let otherJob = otherBuild.createJob({
+      id: otherBuild.id,
+      repository: otherRepository,
+      build: otherBuild,
+      commit: otherCommit,
+      number: '1999.1',
+      state: 'passed'
+    });
+
+    await this.owner.application.pusher.receive('job:created', generatePusherPayload(otherJob));
     await this.owner.application.pusher.receive('build:created', {
       build: generatePusherPayload(otherBuild),
       commit: generatePusherPayload(otherCommit),
-      repository: generatePusherPayload(otherRepository)
+      repository: generatePusherPayload(otherRepository, { current_build_id: otherBuild.id })
     });
 
-    assert.equal(page.myBuilds.builds.length, 5, 'expected the new build by another user to not be added');
+    await waitForElement('.my-build:nth-child(5)');
+
+    assert.equal(page.myBuilds.builds.length, 5, 'expected the user’s new build to show but not the other user’s');
 
     await page.activeRepos.visit();
 
