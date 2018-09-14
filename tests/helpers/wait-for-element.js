@@ -14,12 +14,10 @@ export function waitForElement(element) {
     Ember.Test.adapter.asyncStart();
     var interval = setInterval(function () {
       if ($(element).length > 0) {
-        console.log('found it!');
         clearInterval(interval);
         Ember.Test.adapter.asyncEnd();
         run(null, resolve, true);
       }
-      console.log('didnt find it', element);
     }, 10);
   });
 }
