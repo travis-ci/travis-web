@@ -1,7 +1,16 @@
 import V3Adapter from 'travis/adapters/v3';
+import Ember from 'ember';
+
+let includes = 'build.commit,build.branch,build.request,build.created_by';
+
+// FIXME this is a workaround for an infinite loop in Mirage serialising 😞
+if (!Ember.testing) {
+  includes += ',build.repository';
+}
+
 
 export default V3Adapter.extend({
-  includes: 'build.commit,build.branch,build.request,build.repository,build.created_by',
+  includes,
 
   pathPrefix(modelName, id, snapshot, type, query) {
     if (type === 'query' && query.repository_id) {
