@@ -3,6 +3,7 @@ import { service } from 'ember-decorators/service';
 import { computed, action } from 'ember-decorators/object';
 import { reads, empty, and, not } from 'ember-decorators/object/computed';
 import { task } from 'ember-concurrency';
+import { SECTION } from 'travis/controllers/account/settings';
 
 const QUERY_PARAM_NAME = 'repository';
 
@@ -66,7 +67,8 @@ export default Component.extend({
     if (this.repositoryId) {
       this.fetchRepo.perform();
     } else {
-      this.router.transitionTo('account.settings', this.auth.currentUser.login);
+      const queryParams = { section: SECTION.EMAIL };
+      this.router.transitionTo('account.settings', this.auth.currentUser.login, { queryParams });
     }
     return this._super(...arguments);
   },

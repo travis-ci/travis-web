@@ -2,7 +2,12 @@ import Controller from '@ember/controller';
 import { service } from 'ember-decorators/service';
 import { task } from 'ember-concurrency';
 import { computed } from 'ember-decorators/object';
-import { and, reads } from 'ember-decorators/object/computed';
+import { and, reads, equal } from 'ember-decorators/object/computed';
+
+export const SECTION = {
+  NONE: '',
+  EMAIL: 'email'
+};
 
 export default Controller.extend({
   @service features: null,
@@ -10,7 +15,13 @@ export default Controller.extend({
   @service preferences: null,
   @service flashes: null,
 
+  queryParams: ['section'],
+
+  section: SECTION.NONE,
   repositories: null,
+
+  @equal('section', SECTION.EMAIL)
+  scrollToEmail: false,
 
   @reads('preferences.buildEmails')
   buildEmails: false,
