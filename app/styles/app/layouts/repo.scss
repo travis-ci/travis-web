@@ -74,3 +74,13 @@
     }
   }
 }
+
+.button--repo-activate-gh svg {
+  @extend .icon--m;
+  @include colorSVGFill(white);
+
+  width: 16px;
+  height: 16px;
+  transform: translateY(-2px);
+  padding-right: 2px;
+}
