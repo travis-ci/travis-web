@@ -243,6 +243,23 @@ module('Acceptance | dashboard/repositories', function (hooks) {
 
     assert.equal(page.myBuilds.builds.length, 5);
 
+    let otherRepository = server.create('repository');
+
+    let otherBuild = server.create('build', {
+      createdBy: server.create('user'),
+      repository: otherRepository
+    });
+
+    let otherCommit = server.create('commit');
+
+    await this.owner.application.pusher.receive('build:created', {
+      build: generatePusherPayload(otherBuild),
+      commit: generatePusherPayload(otherCommit),
+      repository: generatePusherPayload(otherRepository)
+    });
+
+    assert.equal(page.myBuilds.builds.length, 5);
+
     await page.activeRepos.visit();
 
     assert.equal(page.activeRepos.repos.length, 4);
