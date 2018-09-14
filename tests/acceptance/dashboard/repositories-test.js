@@ -258,7 +258,7 @@ module('Acceptance | dashboard/repositories', function (hooks) {
       repository: generatePusherPayload(otherRepository)
     });
 
-    assert.equal(page.myBuilds.builds.length, 5);
+    assert.equal(page.myBuilds.builds.length, 5, 'expected the new build by another user to not be added');
 
     await page.activeRepos.visit();
 
