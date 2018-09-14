@@ -245,6 +245,7 @@ section[class^="dash-"] {
 
   .dash-body {
     padding: 0 5px;
+    max-width: calc(100% - 4em);
   }
 
   .dash-main > section {
