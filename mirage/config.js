@@ -425,7 +425,9 @@ export default function () {
     }
   });
 
-  this.get('/builds');
+  this.get('/builds', (schema, {queryParams: {event_type}}) => {
+    return schema.builds.all().filter(build => event_type.includes(build.eventType));
+  });
 
   this.get('/repo/:repo_id/builds', function (schema, request) {
     let builds = schema.builds.where({ repositoryId: request.params.repo_id });

@@ -6,8 +6,12 @@ export default TravisRoute.extend({
 
   model(params) {
     let currentUserId = this.get('auth.currentUser.id');
-    let query = {};
+    let eventTypes = ['api', 'pull_request', 'push'];
+    let query = {
+      event_type: eventTypes.join(',')
+    };
 
-    return this.store.filter('build', query, build => build.get('createdBy.id') == currentUserId);
+    return this.store.filter('build', query, build =>
+      build.get('createdBy.id') == currentUserId && eventTypes.includes(build.get('eventType')));
   },
 });

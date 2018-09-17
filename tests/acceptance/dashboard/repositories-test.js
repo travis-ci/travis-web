@@ -23,18 +23,29 @@ module('Acceptance | dashboard/repositories', function (hooks) {
 
     let build = server.create('build', {
       branch: server.create('branch', { name: 'some-branch' }),
-      eventType: 'cron',
+      event_type: 'push',
       number: 2,
       state: 'failed',
       started_at: '2016-11-10T14:32:44Z',
       finishedAt: '2016-11-10T14:37:44Z',
       createdBy: currentUser
     });
+
+    server.create('build', {
+      branch: server.create('branch', { name: 'cron-branch' }),
+      event_type: 'cron',
+      number: 1,
+      state: 'failed',
+      started_at: '2015-11-10T14:32:44Z',
+      finishedAt: '2015-11-10T14:37:44Z',
+      createdBy: currentUser
+    });
+
     let branch = server.create('branch', {
       name: 'master',
       lastBuild: server.create('build', {
         number: 1,
-        eventType: 'api',
+        event_type: 'api',
         state: 'passed',
         createdBy: currentUser
       })
@@ -47,7 +58,7 @@ module('Acceptance | dashboard/repositories', function (hooks) {
     let permissionBuild = server.create('build', {
       id: 1919,
       branch: server.create('branch', { name: 'another-branch' }),
-      eventType: 'push',
+      event_type: 'push',
       number: 44,
       state: 'passed',
       started_at: beforeOneYearAgo,
@@ -62,7 +73,7 @@ module('Acceptance | dashboard/repositories', function (hooks) {
       name: 'primary',
       lastBuild: server.create('build', {
         number: 55,
-        eventType: 'push',
+        event_type: 'push',
         state: 'passed',
         createdBy: currentUser
       })
