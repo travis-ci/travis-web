@@ -5,7 +5,7 @@
     <span class="label-align inner-underline">{{nameOrLogin}}</span>
   {{/link-to}}
 {{else if commit}}
-  {{#if committer-only}}
+  {{#if committerOnly}}
     <span class="label-align">{{commit.committerName}}</span>
   {{else}}
     {{#if commit.authorName}}
