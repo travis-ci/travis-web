@@ -1,7 +1,5 @@
 <ul class='repo-list'>
-  {{#each (slice offset offsetEnd (sort-by 'startedAt:desc' model)) as |build|}}
+  {{#each (sort-by 'startedAt:desc' model) as |build|}}
     {{my-build data-test-my-build build=build}}
   {{/each}}
 </ul>
-
-{{pagination-navigation collection=model route='dashboard.builds' queryParam='page' inner=6 outer=2}}
