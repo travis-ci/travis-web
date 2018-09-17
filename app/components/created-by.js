@@ -12,7 +12,6 @@ export default Component.extend({
   // TODO remove this once crons have the proper createdBy
   @computed('nameOrLogin', 'eventType')
   showUser(nameOrLogin, eventType) {
-    console.log('nameorlogin and event type', nameOrLogin, eventType);
     return nameOrLogin && eventType !== 'cron';
   }
 });
