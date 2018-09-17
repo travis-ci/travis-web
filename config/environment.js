@@ -47,6 +47,7 @@ module.exports = function (environment) {
       enterprise: 'https://enterprise.travis-ci.com',
       imprint: 'https://docs.travis-ci.com/imprint.html',
       jobs: 'https://travisci.workable.com/',
+      plans: 'https://travis-ci.com/plans',
       privacy: 'https://docs.travis-ci.com/legal/privacy-policy',
       security: 'https://docs.travis-ci.com/legal/security',
       status: 'https://www.traviscistatus.com/',

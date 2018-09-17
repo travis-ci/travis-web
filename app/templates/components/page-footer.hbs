@@ -13,6 +13,9 @@
       <address>Rigaer Straße 8<br>10247 Berlin, Germany</address>
       <ul>
         <li><a data-test-footer-jobs-link href="{{ config.urls.jobs }}" title="Jobs at Travis CI">Work with Travis CI</a></li>
+        <li><a data-test-footer-blog-link href="{{ config.urls.blog }}" title="Travis CI Blog">Blog</a></li>
+        <li><a data-test-footer-support-link href="{{ config.urls.support }}" title="Email Travis CI support">Email</a></li>
+        <li><a data-test-footer-twitter-link href="{{ config.urls.twitter }}" title="Travis CI on Twitter">Twitter</a></li>
       </ul>
     </div>
   {{/unless}}
@@ -21,11 +24,11 @@
     <ul>
       <li><a href="{{ config.urls.docs }}" title="Travis CI Docs">Documentation</a></li>
       {{#unless features.enterpriseVersion}}
-        <li><a data-test-footer-blog-link href="{{ config.urls.community }}" title="Travis CI Community">Community</a></li>
-        <li><a data-test-footer-blog-link href="{{ config.urls.changelog }}" title="Travis CI Changelog">Changelog</a></li>
-        <li><a data-test-footer-blog-link href="{{ config.urls.blog }}" title="Travis CI Blog">Blog</a></li>
-        <li><a data-test-footer-support-link href="{{ config.urls.support }}" title="Email Travis CI support">Email</a></li>
-        <li><a data-test-footer-twitter-link href="{{ config.urls.twitter }}" title="Travis CI on Twitter">Twitter</a></li>
+        <li><a data-test-footer-community-link href="{{ config.urls.community }}" title="Travis CI Community">Community</a></li>
+        <li><a data-test-footer-changelog-link href="{{ config.urls.changelog }}" title="Travis CI Changelog">Changelog</a></li>
+        {{#if features.proVersion}}
+          <li><a data-test-footer-plans-link href="{{ config.urls.plans }}" title="Travis CI Plans">Plans and Pricing</a></li>
+        {{/if}}
       {{/unless}}
     </ul>
   </div>

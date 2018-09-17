@@ -8,4 +8,10 @@ export default Component.extend({
   nameOrLogin(name, login) {
     return name || login;
   },
+
+  // TODO remove this once crons have the proper createdBy
+  @computed('nameOrLogin', 'eventType')
+  showUser(nameOrLogin, eventType) {
+    return nameOrLogin && eventType !== 'cron';
+  }
 });

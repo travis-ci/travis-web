@@ -85,7 +85,6 @@ $styleguide-medium: 800px;
     margin-top: 1.5rem;
   }
   @media (min-width: $styleguide-medium) {
-    flex: 0 1 (100% - 2% * 6) * 1 / 6;
     padding-right: 2%;
     &:last-of-type {
       padding-right: 0;
