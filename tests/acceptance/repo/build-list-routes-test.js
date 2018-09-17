@@ -133,7 +133,7 @@ test('build history shows, more can be loaded, and a created build gets added an
     page.builds[0].as(build => {
       assert.ok(build.passed, 'expected the first build to have passed');
       assert.equal(build.name, 'successful-cron-branch');
-      assert.equal(build.committer, 'User Name');
+      assert.equal(build.committer, 'Other User Name', 'expected to ignore createdBy for a cron');
       assert.equal(build.commitSha, '1234567');
       assert.equal(build.commitDate, 'about a year ago');
       assert.equal(build.requestIconTitle, 'Triggered by a cron job');
