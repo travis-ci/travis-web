@@ -1,4 +1,4 @@
-{{#if nameOrLogin}}
+{{#if showUser}}
   {{#link-to 'owner' user.login}}
     {{tooltip-on-element text=(concat 'View repositories for ' nameOrLogin)}}
     {{user-avatar url=user.avatarUrl name=user.name small=true size=18}}
