@@ -6,10 +6,19 @@
   <h2 class="page-title">This is not an active repository</h2>
 
   {{#if canActivate}}
-    <p class="page-notice">You can activate the repository on {{#link-to "account" repo.owner.login}}your profile{{/link-to}},<br/>
-    or by clicking the button below</p>
 
-    <button {{action (perform activate)}} class="button button--blue">Activate repository</button>
+    {{#if (and config.githubApps repo.owner.installation)}}
+      {{#external-link-to href=githubAppsActivationURL class='button button--blue button--repo-activate-gh'}}
+        {{svg-jar 'icon-repooctocat' class='icon--github'}}
+        <span>Activate repository on GitHub</span>
+      {{/external-link-to}}
+    {{else}}
+      <p class="page-notice">You can activate the repository on {{#link-to "account" repo.owner.login}}your profile{{/link-to}},<br/>
+      or by clicking the button below</p>
+
+      <button {{action (perform activate)}} class="button button--blue">Activate repository</button>
+    {{/if}}
+
     {{#if activate.isRunning}}
       {{loading-indicator}}
     {{/if}}

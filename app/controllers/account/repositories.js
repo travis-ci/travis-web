@@ -34,9 +34,17 @@ export default Controller.extend({
       `${appName}/installations/new/permissions?suggested_target_id=${githubId}`;
   },
 
-  @computed('account.login', 'account.installation.githubId', 'account.type')
-  githubAppsManagementURL(login, installationGithubId, accountType) {
-    if (accountType === 'organization') {
+  @computed('account.login',
+    'account.installation.githubId',
+    'account.type',
+    'githubAppsAppName',
+    'account.githubId'
+  )
+  githubAppsManagementURL(login, installationGithubId, accountType, appName, accountGithubId) {
+    if (typeof appName === 'string' && appName.length > 0) {
+      return 'https://github.com/apps/' +
+        `${appName}/installations/new/permissions?suggested_target_id=${accountGithubId}`;
+    } else if (accountType === 'organization') {
       return `https://github.com/organizations/${login}/settings/installations/${installationGithubId}`;
     } else {
       return `https://github.com/settings/installations/${installationGithubId}`;
