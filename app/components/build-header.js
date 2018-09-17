@@ -61,5 +61,15 @@ export default Component.extend({
     } else {
       return jobState || buildState;
     }
-  }
+  },
+
+  @computed('item.config.content.{env,gemfile}')
+  environment(env, gemfile) {
+    if (env) {
+      return env;
+    } else if (gemfile) {
+      return `Gemfile: ${gemfile}`;
+    }
+  },
+
 });

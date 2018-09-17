@@ -19,6 +19,60 @@
       text-decoration: underline;
     }
   }
+
+  .job-container {
+    display: grid;
+    grid-template-columns: 20px fit-content(50%) 1fr;
+    grid-template-rows: 1fr 10px 1fr;
+    grid-template-areas: "os name language"
+                         "os name language"
+                         "env env env";
+    margin-left: 18px;
+
+    .detail-job-os {
+      grid-area: os;
+    }
+
+    .detail-job-name {
+      grid-area: name;
+      padding-left: 6px;
+      padding-right: 20px;
+    }
+
+    .detail-job-lang {
+      grid-area: language;
+      padding-left: 6px;
+    }
+  }
+}
+
+.detail-job-env {
+  grid-area: env;
+  margin-left: 45px;
+  margin-right: 60px;
+  white-space: nowrap;
+  overflow: hidden;
+
+
+  &:after {
+    content: "";
+    display: block;
+    position: relative;
+    bottom: 22px;
+    left: 96%;
+    width: 3em;
+    height: 22px;
+    margin-right: 51px;
+    background: linear-gradient(-90deg, white 0%, rgba(0, 128, 0, 0) 100%);
+  }
+
+  &:hover {
+    &:after {
+      background: none;
+    }
+    white-space: normal;
+  }
+
 }
 
 .build-commit,

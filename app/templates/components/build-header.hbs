@@ -151,4 +151,15 @@
 {{#if isJob}}
   <div class="job-matrix-name-separator"></div>
   {{job-name job=item}}
+  {{#if environment}}
+    <div class="detail-job-env">
+      {{svg-jar 'icon-environment' class="icon"}}
+      <span class="label-align" aria-label="Environment variables">{{environment}}</span>
+    </div>
+  {{else}}
+    <div class="detail-job-env is-empty">
+      {{svg-jar 'icon-environment' class="icon"}}
+      <span class="label-align" aria-label="Environment variables">no environment variables set</span>
+    </div>
+  {{/if}}
 {{/if}}
