@@ -425,8 +425,8 @@ export default function () {
     }
   });
 
-  this.get('/builds', (schema, {queryParams: {event_type}}) => {
-    return schema.builds.all().filter(build => event_type.includes(build.eventType));
+  this.get('/builds', (schema, {queryParams: {event_type: eventType}}) => {
+    return schema.builds.all().filter(build => eventType.includes(build.eventType));
   });
 
   this.get('/repo/:repo_id/builds', function (schema, request) {
