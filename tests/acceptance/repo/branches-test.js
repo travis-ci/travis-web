@@ -205,7 +205,7 @@ test('view branches', function (assert) {
 
     assert.equal(branchesPage.activeBranches[1].name, 'edits', 'expected newer completed branch to be sorted next');
     assert.ok(branchesPage.activeBranches[1].failed, 'expected edits branch to have failed');
-    assert.equal(branchesPage.activeBranches[0].committer, 'Marsha P. Johnson', 'ignores author');
+    assert.equal(branchesPage.activeBranches[1].committer, 'Marsha P. Johnson', 'ignores author');
 
     assert.equal(branchesPage.activeBranches[2].name, 'old-old-edits', 'expected older completed branch to be sorted last');
 
