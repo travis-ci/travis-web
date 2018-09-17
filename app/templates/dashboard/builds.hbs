@@ -1,5 +1,5 @@
 <ul class='repo-list'>
-  {{#each (sort-by 'startedAt:desc' model) as |build|}}
+  {{#each (slice offset offsetEnd (sort-by 'startedAt:desc' model)) as |build|}}
     {{my-build data-test-my-build build=build}}
   {{/each}}
 </ul>
