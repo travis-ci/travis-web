@@ -3,6 +3,7 @@ import { service } from 'ember-decorators/service';
 import { task } from 'ember-concurrency';
 import { computed } from 'ember-decorators/object';
 import { and, reads, equal } from 'ember-decorators/object/computed';
+import fetchAll from 'travis/utils/fetch-all';
 
 export const SECTION = {
   NONE: '',
@@ -18,6 +19,8 @@ export default Controller.extend({
   queryParams: ['section'],
 
   section: SECTION.NONE,
+
+  @reads('fetchRepositories.lastSuccessful.value')
   repositories: null,
 
   @equal('section', SECTION.EMAIL)
@@ -33,6 +36,11 @@ export default Controller.extend({
 
   @and('buildEmails', 'unsubscribedRepos.length')
   showResubscribeList: false,
+
+  fetchRepositories: task(function* () {
+    yield fetchAll(this.store, 'repo', {});
+    return this.store.peekAll('repo');
+  }).drop(),
 
   toggleBuildEmails: task(function* (value) {
     try {
