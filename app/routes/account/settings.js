@@ -1,6 +1,7 @@
 import TravisRoute from 'travis/routes/basic';
 import { service } from 'ember-decorators/service';
 import { hash } from 'rsvp';
+import fetchAll from 'travis/utils/fetch-all';
 
 export default TravisRoute.extend({
   @service featureFlags: null,
@@ -14,10 +15,10 @@ export default TravisRoute.extend({
   },
 
   model() {
-    return hash({
+    return fetchAll(this.store, 'repo', {}).then(() => hash({
       featureFlags: this.featureFlags.fetchTask.perform({ forceServerRequest: true }),
-      repositories: this.store.findAll('repo')
-    });
+      repositories: this.store.peekAll('repo')
+    }));
   },
 
   setupController(controller, model) {
