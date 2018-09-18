@@ -1,15 +1,11 @@
-{{!FIXME this is double-wrapped}}
+<section data-test-dashboard-active-repositories class="dashboard-section dashboard-active">
+  <ul class="repo-list">
+    {{#each filteredRepos as |repo idx|}}
+      {{dashboard-row repo=repo idx=idx star=dashboardController.star unstar=dashboardController.unstar}}
+    {{else}}
+      {{no-repos}}
+    {{/each}}
+  </ul>
 
-<div class="dashboard-repos">
-  <section data-test-dashboard-active-repositories class="dashboard-section dashboard-active">
-    <ul class="repo-list">
-      {{#each filteredRepos as |repo idx|}}
-        {{dashboard-row repo=repo idx=idx star=dashboardController.star unstar=dashboardController.unstar}}
-      {{else}}
-        {{no-repos}}
-      {{/each}}
-    </ul>
-
-    {{pagination-navigation data-test-components-pagination-navigation collection=model.repos route="dashboard.repositories"}}
-  </section>
-</div>
+  {{pagination-navigation data-test-components-pagination-navigation collection=model.repos route="dashboard.repositories"}}
+</section>
