@@ -20,7 +20,7 @@
   "devDependencies": {
     "@ember-decorators/babel-transforms": "^2.0.0",
     "@ember/jquery": "^0.5.2",
-    "@ember/optional-features": "^0.6.3",
+    "@ember/optional-features": "^0.7.0",
     "active-model-adapter": "2.2.0",
     "ansiparse": "0.1.0",
     "babel-eslint": "8.2.3",
