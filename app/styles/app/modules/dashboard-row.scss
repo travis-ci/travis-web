@@ -332,6 +332,10 @@ section[class^="dash-"] {
 
   .times {
     flex: 0 0 24%;
+
+    .commit-stopwatch {
+      margin-top: -2px;
+    }
   }
 
   a.row-content {
