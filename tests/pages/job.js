@@ -18,10 +18,17 @@ export default create({
   branch: text('.commit-branch'),
   message: text('.build-title'),
   state: text('.build-status .inner-underline'),
-  author: text('.commit-author'),
   log: text('#log'),
   logError: text('.job-log .notice-banner--red'),
   rawLogUrl: attribute('href', '.download-log-button'),
+
+  createdBy: {
+    scope: '.commit-author',
+
+    href: attribute('href', 'a'),
+    text: text('.label-align', { multiple: true }),
+    avatarSrc: attribute('src', 'img'),
+  },
 
   hasTruncatedLog: isVisible('.log-container p.warning'),
 
