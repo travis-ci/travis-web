@@ -291,6 +291,11 @@ section[class^="dash-"] {
     padding-left: 1em;
     flex: 0 0 21%;
 
+    .icon:last-child {
+      margin-left: -5px;
+      margin-top: -4px;
+    }
+
     .monospace {
       font-size: 14px;
 
