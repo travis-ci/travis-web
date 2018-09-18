@@ -8,7 +8,6 @@ if (!Ember.testing) {
   includes += ',build.repository';
 }
 
-
 export default V3Adapter.extend({
   includes,
 
