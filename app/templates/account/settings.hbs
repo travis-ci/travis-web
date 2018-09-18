@@ -72,6 +72,8 @@
           {{/each}}
         {{/paper-block}}
       </div>
+    {{else if fetchRepositories.isRunning}}
+      {{loading-indicator}}
     {{/if}}
   </section>
 </section>

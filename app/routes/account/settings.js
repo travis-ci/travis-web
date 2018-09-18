@@ -1,7 +1,5 @@
 import TravisRoute from 'travis/routes/basic';
 import { service } from 'ember-decorators/service';
-import { hash } from 'rsvp';
-import fetchAll from 'travis/utils/fetch-all';
 
 export default TravisRoute.extend({
   @service featureFlags: null,
@@ -15,15 +13,13 @@ export default TravisRoute.extend({
   },
 
   model() {
-    return fetchAll(this.store, 'repo', {}).then(() => hash({
-      featureFlags: this.featureFlags.fetchTask.perform({ forceServerRequest: true }),
-      repositories: this.store.peekAll('repo')
-    }));
+    return this.featureFlags.fetchTask.perform({ forceServerRequest: true });
   },
 
   setupController(controller, model) {
-    const { featureFlags, repositories = [] } = model;
+    const featureFlags = model;
     const account = this.modelFor('account');
-    controller.setProperties({ featureFlags, account, repositories });
+    controller.setProperties({ featureFlags, account });
+    controller.fetchRepositories.perform();
   }
 });
