@@ -231,7 +231,7 @@
   }
 }
 
-.centered {
+.centered .jobs:not(.stage) {
   @media #{$xlarge-up} {
     .job-name {
       flex: 0 0 42em;

@@ -16,6 +16,7 @@ export default Model.extend({
   // These are inserted artificially by routes:accounts
   subscription: attr(),
   subscriptionError: attr('boolean'),
+  trial: attr(),
 
   installation: belongsTo({async: false}),
 
@@ -36,4 +37,10 @@ export default Model.extend({
     let id = type === 'user' ? 'user' : login;
     return `${config.billingEndpoint}/subscriptions/${id}`;
   },
+
+  @computed('type', 'login')
+  newSubscriptionUrl(type, login) {
+    let id = type === 'user' ? 'user' : login;
+    return `${config.billingEndpoint}/subscriptions/new?id=${id}`;
+  }
 });

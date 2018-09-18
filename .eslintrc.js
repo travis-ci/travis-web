@@ -315,6 +315,7 @@ module.exports = {
     // node files
     {
       files: [
+        '.template-lintrc.js',
         'ember-cli-build.js',
         'testem.js',
         'blueprints/*/index.js',

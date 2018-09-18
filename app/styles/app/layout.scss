@@ -109,16 +109,18 @@ $padding-top: 24px;
     margin-bottom: 0;
   }
 
-  .row {
-    max-width: $max-width;
-  }
-
   .topbar,
   .inner {
     max-width: $max-width;
     margin: auto;
-    padding-left: $column-gutter / 2;
-    padding-right: $column-gutter / 2;
+    padding: 0 $column-gutter/2 20px $column-gutter/2;
+    @media #{$medium-up} {
+      padding: 10px $column-gutter/2 66px $column-gutter/2;
+    }
+  }
+
+  .row {
+    max-width: $max-width;
   }
 
   .main,

@@ -57,8 +57,11 @@
 
 .profile {
   .avatar {
-    margin-left: 1em;
-    top: -3px;
+    margin: 20px 10px 20px 0;
+    @media #{$medium-up} {
+      margin: 0 10px 0 16px;
+      top: -3px;
+    }
   }
 
   .pseudo-avatar ~ .real-avatar {
@@ -90,6 +93,10 @@
     width: 10px;
     height: 10px;
   }
+}
+
+.label-align + .avatar-wrapper {
+  margin-left: 1rem;
 }
 
 .profile-header .checkmark {

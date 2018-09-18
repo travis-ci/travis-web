@@ -11,6 +11,16 @@ import {
   fillable
 } from 'ember-cli-page-object';
 
+import {
+  EMAIL_SETTINGS,
+  EMAIL_SETTINGS_TITLE,
+  EMAIL_SETTINGS_DESCRITION,
+  EMAIL_SETTINGS_TOGGLE,
+  EMAIL_SETTINGS_RESUBSCRIBE_LIST,
+  EMAIL_SETTINGS_RESUBSCRIBE_ITEM,
+  EMAIL_SETTINGS_RESUBSCRIBE_BUTTON
+} from '../helpers/selectors';
+
 function existingRepositoriesCollection(scope) {
   return collection(`${scope} li.profile-repolist-item`, {
     name: text('a.profile-repo'),
@@ -130,7 +140,24 @@ export default create({
       isOn: hasClass('active', '.switch'),
 
       click: clickable('.switch')
-    })
+    }),
+
+    emailSettings: {
+      scope: EMAIL_SETTINGS,
+      title: text(EMAIL_SETTINGS_TITLE),
+      description: text(EMAIL_SETTINGS_DESCRITION),
+      toggle: {
+        scope: EMAIL_SETTINGS_TOGGLE,
+        isOn: hasClass('active'),
+        click: clickable()
+      },
+      resubscribeList: {
+        scope: EMAIL_SETTINGS_RESUBSCRIBE_LIST,
+        items: collection(EMAIL_SETTINGS_RESUBSCRIBE_ITEM, {
+          click: clickable(EMAIL_SETTINGS_RESUBSCRIBE_BUTTON)
+        })
+      }
+    }
   },
 
   billing: {
@@ -153,6 +180,16 @@ export default create({
       concurrency: text('[data-test-plan-concurrency]')
     },
 
+    trial: {
+      scope: '.billing',
+      name: text('[data-test-trial-message]'),
+
+      link: {
+        scope: '[data-test-trial-link]',
+        href: attribute('href')
+      }
+    },
+
     address: {
       scope: '.contact .address',
     },
@@ -166,6 +203,10 @@ export default create({
 
     expiryMessage: {
       scope: '[data-test-expiry-message]'
+    },
+
+    contactSupport: {
+      scope: '.manual-help',
     },
 
     invoices: {

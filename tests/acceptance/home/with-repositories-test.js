@@ -71,7 +71,7 @@ test('the home page shows the repositories', function (assert) {
 });
 
 test('Pusher events change the main display', function (assert) {
-  assert.expect(4);
+  assert.expect(5);
   sidebarPage.visit();
 
   // TODO: Remove this
@@ -80,14 +80,14 @@ test('Pusher events change the main display', function (assert) {
     assert.equal(sidebarPage.repoTitle, 'org-login / yet-another-repository-name', 'expected the displayed repository to be the one with a running build');
   });
 
-  let  gitUser = server.create('git-user', { name: 'User Name' });
+  let createdBy = server.create('user', { login: 'srivera', name: 'Sylvia Rivera' });
+
   const commit = server.create('commit', {
     id: 100,
     sha: 'acab',
     branch: 'primary',
     message: 'Add new chapter',
     committed_at: '2016-12-02T22:02:34Z',
-    author: gitUser,
   });
 
   const build = this.branch.createBuild({
@@ -97,7 +97,8 @@ test('Pusher events change the main display', function (assert) {
     pull_request: false,
     event_type: 'push',
     state: 'passed',
-    finished_at: '2017-03-27T12:00:00Z'
+    finished_at: '2017-03-27T12:00:00Z',
+    createdBy
   });
   this.branch.lastBuild = build;
   this.branch.save();
@@ -143,6 +144,7 @@ test('Pusher events change the main display', function (assert) {
 
   andThen(() => {
     assert.equal(sidebarPage.repoTitle, 'org-login / repository-name', 'the displayed repository should have changed');
+    assert.equal(jobPage.createdBy.text, 'Sylvia Rivera');
   });
 
   andThen(() => {

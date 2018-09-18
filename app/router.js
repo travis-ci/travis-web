@@ -62,6 +62,7 @@ Router.map(function () {
       });
     });
   });
+  this.route('unsubscribe', { path: '/account/preferences/unsubscribe' });
   this.route('owner', { path: '/:owner', resetNamespace: true }, function () {
     this.route('repositories', { path: '/' });
   });

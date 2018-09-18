@@ -13,11 +13,13 @@ export default TravisRoute.extend({
   },
 
   model() {
-    return this.get('featureFlags.fetchTask').perform({ forceServerRequest: true });
+    return this.featureFlags.fetchTask.perform({ forceServerRequest: true });
   },
 
   setupController(controller, model) {
-    controller.set('featureFlags', model);
-    controller.set('account', this.modelFor('account'));
+    const featureFlags = model;
+    const account = this.modelFor('account');
+    controller.setProperties({ featureFlags, account });
+    controller.fetchRepositories.perform();
   }
 });

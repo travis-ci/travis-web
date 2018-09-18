@@ -42,7 +42,8 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
     let organization = server.create('organization', {
       name: 'Org Name',
       type: 'organization',
-      login: 'org-login'
+      login: 'org-login',
+      github_id: 1983
     });
     this.organization = organization;
 
@@ -231,8 +232,6 @@ test('view profile that has an expired subscription', function (assert) {
 
   andThen(() => {
     assert.ok(profilePage.avatar.checkmark.isHidden, 'expected avatar to not have a checkmark for active subscription');
-    assert.equal(profilePage.subscriptionStatus.text, 'This account does not have an active subscription.');
-    assert.ok(profilePage.subscriptionStatus.link.isVisible, 'expected billing link when account has permissions');
   });
 });
 
@@ -241,8 +240,6 @@ test('view profile that has an expired subscription and no create permissions', 
 
   andThen(() => {
     assert.ok(profilePage.avatar.checkmark.isHidden, 'expected avatar to not have a checkmark for active subscription');
-    assert.equal(profilePage.subscriptionStatus.text, 'This account does not have an active subscription.');
-    assert.ok(profilePage.subscriptionStatus.link.isHidden, 'expected no billing link when account has no permissions');
   });
 });
 
@@ -325,7 +322,11 @@ test('view profiles for organizations that do not and do have GitHub Apps instal
 
   andThen(function () {
     assert.notOk(profilePage.githubAppsInvitation.isVisible, 'expected GitHub Apps invitation to not be visible');
-    assert.equal(profilePage.manageGithubAppsLink.href, 'https://github.com/organizations/org-login/settings/installations/1962', 'expected the management link to be organisation-scoped');
+    if (typeof config.githubApps.appName === 'string' && config.githubApps.appName.length > 0) {
+      assert.equal(profilePage.manageGithubAppsLink.href, 'https://github.com/apps/travis-ci-testing/installations/new/permissions?suggested_target_id=1983', 'expected the management link to be organisation-scoped');
+    } else {
+      assert.equal(profilePage.manageGithubAppsLink.href, 'https://github.com/organizations/org-login/settings/installations/1962', 'expected the management link to be organisation-scoped');
+    }
   });
 });
 
