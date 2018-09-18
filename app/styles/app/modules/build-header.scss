@@ -49,7 +49,7 @@
 .detail-job-env {
   grid-area: env;
   margin-left: 45px;
-  margin-right: 60px;
+  margin-right: 5%;
   white-space: nowrap;
   overflow: hidden;
 
@@ -62,7 +62,6 @@
     left: 96%;
     width: 3em;
     height: 22px;
-    margin-right: 51px;
     background: linear-gradient(-90deg, white 0%, rgba(0, 128, 0, 0) 100%);
   }
 
