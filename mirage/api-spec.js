@@ -1371,7 +1371,7 @@ export default {
           }
         ]
       },
-      "attributes": ["id","name","slug","description","github_id","github_language","active","private","active_on_org","owner","default_branch","starred","current_build"],
+      "attributes": ["id","name","slug","description","github_id","github_language","active","private","active_on_org","owner","default_branch","starred","current_build","email_subscribed"],
       "representations": {
         "minimal": [
           "id",
@@ -1390,7 +1390,8 @@ export default {
           "active_on_org",
           "owner",
           "default_branch",
-          "starred"
+          "starred",
+          "email_subscribed"
         ]
       },
       "permissions": [
@@ -1567,6 +1568,55 @@ export default {
       "attributes": ["settings"],
       "representations": {
         "standard": ["settings"]
+      }
+    },
+    "preference": {
+      "@type": "resource",
+      "actions": {
+        "find": [
+          {
+            "@type": "template",
+            "request_method": "GET",
+            "uri_template": "/v3/preferences/{preference.name}"
+          }
+        ],
+        "update": [
+          {
+            "@type": "template",
+            "request_method": "PATCH",
+            "uri_template": "/v3/preferences/{preference.name}",
+            "accepted_params": [
+              "preference.value"
+            ]
+          }
+        ]
+      },
+      "attributes": ["name", "value"],
+      "representations": {
+        "standard": [
+          "name",
+          "value"
+        ],
+        "minimal": [
+          "name",
+          "value"
+        ]
+      }
+    },
+    "preferences": {
+      "@type": "resource",
+      "actions": {
+        "for_user": [
+          {
+            "@type": "template",
+            "request_method": "GET",
+            "uri_template": "/v3/preferences/{preference.name}"
+          }
+        ]
+      },
+      "attributes": ["preferences"],
+      "representations": {
+        "standard": ["preferences"]
       }
     },
     "stage": {

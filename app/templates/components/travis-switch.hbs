@@ -6,4 +6,6 @@
     {{svg-jar 'icon-failed' class='icon-off' alt='off'}}
   </span>
 </div>
-<span class="label">{{description}}</span>
+{{#if description}}
+  <span class="label">{{description}}</span>
+{{/if}}
