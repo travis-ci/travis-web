@@ -3,7 +3,7 @@ import Ember from 'ember';
 
 let includes = 'build.commit,build.branch,build.request,build.created_by,build.jobs';
 
-// FIXME this is a workaround for an infinite loop in Mirage serialising 😞
+// TODO this is a workaround for an infinite loop in Mirage serialising 😞
 if (!Ember.testing) {
   includes += ',build.repository';
 }
