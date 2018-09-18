@@ -20,4 +20,60 @@
       </ul>
     </section>
   {{/if}}
+
+  {{#if scrollToEmail}}
+    {{scroll-here}}
+  {{/if}}
+  <section class="email-settings" data-test-email-settings>
+    <h3>Email notifications</h3>
+    <div class="build-emails">
+      <div class="row">
+        <div class="name" data-test-email-settings-title>
+          Build emails
+        </div>
+        <div class="description" data-test-email-settings-description>
+          The status of your builds straight to your inbox
+        </div>
+        <div class="controls">
+          {{travis-switch
+            active=buildEmails
+            disabled=toggleBuildEmails.isRunning
+            onToggle=(perform toggleBuildEmails)
+            data-test-email-settings-toggle=true
+          }}
+        </div>
+      </div>
+    </div>
+    {{#if showResubscribeList}}
+      <div class="unsubscribed-emails" data-test-email-settings-resubscribe-list>
+        {{#paper-block title="Email notifications you've unsubscribed from" elevation=2 padding=false}}
+          {{#each unsubscribedRepos as |repo|}}
+            <div class="row" data-test-email-settings-resubscribe-item>
+              <div class="name">
+                {{#link-to 'repo' repo}}{{repo.formattedSlug}}{{/link-to}}
+              </div>
+              <div class="description"></div>
+              <div class="controls">
+                <button
+                  class="button--white button--compact unsubscribe-button"
+                  onclick={{perform repo.subscribe}}
+                  data-test-email-settings-resubscribe-button
+                >
+                  {{#if repo.subscribe.isRunning}}
+                    {{loading-indicator inline=true}}
+                  {{else if repo.subscribe.last.error}}
+                    Error! Try again.
+                  {{else}}
+                    {{svg-jar 'icon-email' class="icon" width="15px"}} Re-subscribe
+                  {{/if}}
+                </button>
+              </div>
+            </div>
+          {{/each}}
+        {{/paper-block}}
+      </div>
+    {{else if fetchRepositories.isRunning}}
+      {{loading-indicator}}
+    {{/if}}
+  </section>
 </section>

@@ -10,6 +10,7 @@ import { hasMany, belongsTo } from 'ember-data/relationships';
 import { service } from 'ember-decorators/service';
 import { computed } from 'ember-decorators/object';
 import { oneWay } from 'ember-decorators/object/computed';
+import { task } from 'ember-concurrency';
 
 const Repo = Model.extend({
   @service api: null,
@@ -25,6 +26,7 @@ const Repo = Model.extend({
   name: attr(),
   starred: attr('boolean'),
   active_on_org: attr('boolean'),
+  emailSubscribed: attr('boolean'),
 
   @oneWay('owner.@type') ownerType: null,
 
@@ -49,6 +51,11 @@ const Repo = Model.extend({
 
       return permissions.includes(id);
     }
+  },
+
+  @computed('owner.login', 'name')
+  formattedSlug(login, name) {
+    return `${login} / ${name}`;
   },
 
   sshKey: function () {
@@ -170,6 +177,21 @@ const Repo = Model.extend({
 
     return promise;
   },
+
+  @computed('id')
+  emailSubscriptionUrl(id) {
+    return `/repo/${id}/email_subscription`;
+  },
+
+  subscribe: task(function* () {
+    yield this.api.post(this.emailSubscriptionUrl);
+    yield this.reload();
+  }).drop(),
+
+  unsubscribe: task(function* () {
+    yield this.api.delete(this.emailSubscriptionUrl);
+    yield this.reload();
+  }).drop()
 });
 
 Repo.reopenClass({
