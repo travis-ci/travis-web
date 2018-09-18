@@ -6,18 +6,11 @@ import { computed } from 'ember-decorators/object';
 import { service } from 'ember-decorators/service';
 
 export default TravisRoute.extend({
-  @service features: null,
   @service accounts: null,
 
   queryParams: {
     page: {
       refreshModel: true
-    }
-  },
-
-  redirect() {
-    if (!this.get('features.dashboard')) {
-      return this.transitionTo('index');
     }
   },
 

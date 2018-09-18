@@ -119,10 +119,12 @@ module('Acceptance | dashboard/repositories', function (hooks) {
     });
   });
 
-  test('visiting /dashboard/ with feature flag disabled', async function (assert) {
+  test('visiting /dashboard/ with feature flag disabled is allowed but visiting / does not forward', async function (assert) {
     await visit('/dashboard/');
+    assert.equal(currentURL(), '/dashboard/');
 
-    assert.notEqual(currentURL(), '/dashboard/');
+    await visit('/');
+    assert.equal(currentURL(), '/');
   });
 
   test('visiting /dashboard/ with feature flag enabled', async function (assert) {
