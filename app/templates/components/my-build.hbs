@@ -46,7 +46,7 @@
 
     <section class='times'>
       <div title="{{if build.elapsedTime (concat "Started " (pretty-date build.startedAt))}}" class="commit-stopwatch row-content">
-        {{svg-jar 'icon-stopwatch' class="icon--m"}}
+        {{svg-jar 'icon-stopwatch' class="icon"}}
         <span class="label-align" data-test-duration>
           <time datetime="PT{{build.elapsedTime}}S">{{format-duration build.elapsedTime}}</time>
         </span>
