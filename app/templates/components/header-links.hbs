@@ -4,6 +4,9 @@
       {{#unless features.proVersion}}
         {{#if auth.signedIn}}
           <li>
+            {{#link-to 'dashboard' class='navigation-anchor'}}Dashboard{{/link-to}}
+          </li>
+          <li>
             <a href="{{ config.urls.changelog }}" title="Travis CI Changelog" class="navigation-anchor">Changelog</a>
           </li>
           <li>
