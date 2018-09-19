@@ -56,11 +56,6 @@ module.exports = function () {
     },
     favicons: {
       faviconsConfig: {
-        appName: 'Travis CI',
-        appDescription: 'The simplest way to test and deploy your projects.',
-        developerName: 'Travis CI GmbH',
-        developerURL: 'https://travis-ci.com',
-
 				appName: 'Travis CI',                                                  // Your application's name. `string`
         appDescription: 'The simplest way to test and deploy your projects.',  // Your application's description. `string`
         developerName: 'Travis CI',                                            // Your (or your developer's) name. `string`
