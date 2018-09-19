@@ -34,6 +34,9 @@
           <li><a href="/plans" title="Plans and Pricing" class="navigation-anchor">Plans & Pricing</a></li>
           <li><a href="{{ config.urls.enterprise }}" title="Travis CI for Enterprise" class="navigation-anchor">Enterprise</a></li>
         {{else}}
+          <li>
+            {{#link-to 'dashboard' class='navigation-anchor'}}Dashboard{{/link-to}}
+          </li>
           <li><a href="{{ config.urls.changelog }}" title="Travis CI Changelog" class="navigation-anchor">Changelog</a></li>
           <li><a href="{{ config.urls.docs }}" title="Travis CI Documentation" class="navigation-anchor">Documentation</a></li>
         {{/unless}}
