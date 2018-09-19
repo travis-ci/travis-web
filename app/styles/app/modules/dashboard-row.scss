@@ -359,11 +359,16 @@ section[class^="dash-"] {
   h2 {
     margin-right: 2rem;
 
-    a.active, a:hover {
+    a.active, a:hover, a.ember-transitioning-in {
       color: $oxide-blue;
 
       padding-bottom: 1px;
       border-bottom: 2px solid $oxide-blue;
+    }
+
+    a.active.ember-transitioning-out {
+      color: $asphalt-grey;
+      border-bottom-width: 0;
     }
   }
 }
