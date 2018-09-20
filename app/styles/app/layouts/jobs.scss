@@ -258,14 +258,3 @@
   flex: 0 0 10rem;
   white-space: nowrap;
 }
-
-.job-container {
-  font-size: 15px;
-  margin-bottom: 5px;
-  margin-top: 20px;
-  display: flex;
-  flex-flow: column nowrap;
-  @media #{$medium-up} {
-    flex-flow: row nowrap;
-  }
-}

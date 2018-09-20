@@ -21,13 +21,20 @@
   }
 
   .job-container {
+    margin-bottom: 14px;
+  }
+
+  .job-detail-container {
+    @media #{$medium-up} {
+      margin-left: 18px;
+    }
+    margin-left: 15px;
     display: grid;
     grid-template-columns: 20px fit-content(50%) 1fr;
-    grid-template-rows: 1fr 10px 1fr;
+    grid-template-rows: 1fr 1fr;
     grid-template-areas: "os name language"
                          "os name language"
                          "env env env";
-    margin-left: 18px;
 
     .detail-job-os {
       grid-area: os;
@@ -35,7 +42,7 @@
 
     .detail-job-name {
       grid-area: name;
-      padding-left: 6px;
+      padding-left: 7px;
       padding-right: 20px;
     }
 
@@ -52,17 +59,10 @@
   margin-right: 5%;
   white-space: nowrap;
   overflow: hidden;
-
+  position: relative;
 
   &:after {
-    content: "";
-    display: block;
-    position: relative;
-    bottom: 22px;
-    left: 96%;
-    width: 3em;
-    height: 22px;
-    background: linear-gradient(-90deg, white 0%, rgba(0, 128, 0, 0) 100%);
+    @include fadeOut(right, -90deg, white);
   }
 
   &:hover {
@@ -71,7 +71,22 @@
     }
     white-space: normal;
   }
+}
 
+.expandEnv {
+  &:after {
+    background: none;
+  }
+  white-space: normal;
+}
+
+.closeEnv {
+  &:after {
+    @include fadeOut(right, -90deg, white);
+  }
+
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .build-commit,
@@ -112,10 +127,11 @@
 
 .build-info {
   font-size: 15px;
-  padding-left: 2rem;
+  padding-left: 43px;
 
   @media #{$medium-up} {
     flex: 0 1 37%;
+    padding-left: 2rem;
   }
 }
 

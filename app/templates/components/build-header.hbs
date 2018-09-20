@@ -148,18 +148,35 @@
     {{/if}}
   </div>
 </div>
-{{#if isJob}}
+{{#if isNotMatrix}}
   <div class="job-matrix-name-separator"></div>
-  {{job-name job=item}}
-  {{#if environment}}
-    <div class="detail-job-env">
-      {{svg-jar 'icon-environment' class="icon"}}
-      <span class="label-align" aria-label="Environment variables">{{environment}}</span>
+  <div class="job-container">
+    <div class="job-detail-container">
+      <div class="detail-job-os {{os}}">
+        {{tooltip-on-element text=os}}
+        {{svg-jar osIcon class='icon'}}
+      </div>
+      {{#if name}}
+        <div class="detail-job-name">
+          <span class="label-align" aria-label="Title">{{name}}</span>
+        </div>
+      {{/if}}
+      <div class="detail-job-lang">
+        {{svg-jar 'icon-language' class="icon"}}
+        <span class="label-align" aria-label="Language">
+          {{#if languages}}
+            {{languages}}
+          {{else}}
+            no language set
+          {{/if}}
+        </span>
+      </div>
     </div>
-  {{else}}
-    <div class="detail-job-env is-empty">
-      {{svg-jar 'icon-environment' class="icon"}}
-      <span class="label-align" aria-label="Environment variables">no environment variables set</span>
-    </div>
-  {{/if}}
+    {{#if environment}}
+      <div class="detail-job-env" {{action "expandEnv" on="click"}}>
+        {{svg-jar 'icon-environment' class="icon"}}
+        <span class="label-align" aria-label="Environment variables">{{environment}}</span>
+      </div>
+    {{/if}}
+  </div>
 {{/if}}

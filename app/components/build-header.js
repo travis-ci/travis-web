@@ -1,6 +1,14 @@
 import Component from '@ember/component';
+<<<<<<< HEAD
 import { computed } from 'ember-decorators/object';
+=======
+import { computed, action } from 'ember-decorators/object';
+import durationFrom from 'travis/utils/duration-from';
+>>>>>>> Fix for mobile and style cleanup
 import { service } from 'ember-decorators/service';
+import jobConfigLanguage from 'travis/utils/job-config-language';
+import { not } from 'ember-decorators/object/computed';
+
 
 export default Component.extend({
   @service externalLinks: null,
@@ -39,6 +47,15 @@ export default Component.extend({
     }
   },
 
+  @computed('isJob', 'item.config', 'item.jobs.firstObject.config')
+  jobsConfig(isJob) {
+    if (isJob) {
+      return this.get('item.config');
+    } else {
+      return this.get('item.jobs.firstObject.config');
+    }
+  },
+
   @computed('item.eventType')
   displayCompare(eventType) {
     return !['api', 'cron'].includes(eventType);
@@ -63,7 +80,19 @@ export default Component.extend({
     }
   },
 
-  @computed('item.config.content.{env,gemfile}')
+  @computed('jobsConfig.content')
+  languages(config) {
+    return jobConfigLanguage(config);
+  },
+
+  @computed('jobsConfig.content.name')
+  name(name) {
+    if (name) {
+      return name;
+    }
+  },
+
+  @computed('jobsConfig.content.{env,gemfile}')
   environment(env, gemfile) {
     if (env) {
       return env;
@@ -72,4 +101,55 @@ export default Component.extend({
     }
   },
 
+  @computed('jobsConfig.content.os')
+  os(os) {
+    if (os === 'linux' || os === 'linux-ppc64le') {
+      return 'linux';
+    } else if (os === 'osx') {
+      return 'osx';
+    } else {
+      return 'unknown';
+    }
+  },
+
+  @computed('os')
+  osIcon(os) {
+    if (os === 'linux') {
+      return 'icon-linux';
+    } else if (os === 'osx') {
+      return 'icon-mac';
+    } else {
+      return 'help';
+    }
+  },
+
+  @not('item.isMatrix') isNotMatrix: null,
+
+  actions: {
+    expandEnv() {
+      console.log('clicked');
+      if(this.$('.detail-job-env').hasClass('expandEnv')) {
+        console.log('remove');
+        this.$('.detail-job-env').removeClass('expandEnv');
+        this.$('.detail-job-env').addClass('closeEnv');
+      } else {
+        console.log('add');
+        this.$('.detail-job-env').addClass('expandEnv');
+      }
+
+      // console.log(this.$('.detail-job-env').css('overflow') === 'unset');
+      // if(this.$('.detail-job-env').css('white-space') === 'normal' && this.$('.detail-job-env').css('overflow') === 'unset') {
+      //   console.log('this is true');
+      //   this.$('.detail-job-env').css('white-space', 'nowrap');
+      //   this.$('.detail-job-env').css('overflow', 'hidden');
+      // } else {
+      //   this.$('.detail-job-env').css('white-space', 'normal');
+      //   this.$('.detail-job-env').css('overflow', 'unset');
+      // }
+      // if(this.$('.detail-job-env').css('white-space') === 'nowrap') {
+      //   this.$('.detail-job-env').css('white-space', 'normal');
+      //   this.$('.detail-job-env').css('overflow', 'unset');
+      // }
+    }
+  }
 });
