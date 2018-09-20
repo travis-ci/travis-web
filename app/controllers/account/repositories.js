@@ -1,6 +1,7 @@
 import { computed, action } from 'ember-decorators/object';
 import Controller from '@ember/controller';
 import { service } from 'ember-decorators/service';
+import { controller } from 'ember-decorators/controller';
 import config from 'travis/config/environment';
 
 import window from 'ember-window-mock';
@@ -12,6 +13,7 @@ import { alias } from 'ember-decorators/object/computed';
 export default Controller.extend({
   @service features: null,
   @service store: null,
+  @controller('accounts') accountsController: null,
 
   page: 1,
   'apps-page': 1,
@@ -51,8 +53,13 @@ export default Controller.extend({
     }
   },
 
-  @computed('account.id')
-  hasGitHubAppsInstallation(installationId) {
+  @computed('account.id', 'accountsController.userInstallation', 'account.type')
+  hasGitHubAppsInstallation(installationId, userInstallation, accountType) {
+    // See controllers:accounts#setupController for explanation.
+    if (accountType === 'user' && userInstallation) {
+      return true;
+    }
+
     // this lets us check for the presence of an installation without trying to fetch it
     return !!this.get('account').belongsTo('installation').id();
   },
