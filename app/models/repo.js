@@ -201,7 +201,7 @@ Repo.reopenClass({
 
   accessibleBy(store, reposIdsOrlogin) {
     let repos, reposIds;
-    reposIds = reposIdsOrlogin || [];
+    reposIds = reposIdsOrlogin;
     repos = store.filter('repo', (repo) => {
       let repoId = parseInt(repo.get('id'));
       return reposIds.includes(repoId);

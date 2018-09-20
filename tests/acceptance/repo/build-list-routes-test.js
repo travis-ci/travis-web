@@ -15,7 +15,7 @@ moduleForAcceptance('Acceptance | repo build list routes', {
     signInUser(currentUser);
 
     const gitUser = server.create('git-user', {
-      name: 'Other User Name'
+      name: 'User Name'
     });
 
     const repository = server.create('repository', {
@@ -42,7 +42,6 @@ moduleForAcceptance('Acceptance | repo build list routes', {
       event_type: 'cron',
       repository,
       branch: cronBranch,
-      createdBy: currentUser,
     });
 
     const commitAttributes = {
@@ -123,7 +122,7 @@ moduleForAcceptance('Acceptance | repo build list routes', {
 });
 
 test('build history shows, more can be loaded, and a created build gets added and can be cancelled', function (assert) {
-  assert.expect(23);
+  assert.expect(22);
 
   page.visitBuildHistory({ organization: 'org-login', repo: 'repository-name' });
 
@@ -133,7 +132,7 @@ test('build history shows, more can be loaded, and a created build gets added an
     page.builds[0].as(build => {
       assert.ok(build.passed, 'expected the first build to have passed');
       assert.equal(build.name, 'successful-cron-branch');
-      assert.equal(build.committer, 'Other User Name', 'expected to ignore createdBy for a cron');
+      assert.equal(build.committer, 'User Name');
       assert.equal(build.commitSha, '1234567');
       assert.equal(build.commitDate, 'about a year ago');
       assert.equal(build.requestIconTitle, 'Triggered by a cron job');
@@ -142,8 +141,6 @@ test('build history shows, more can be loaded, and a created build gets added an
     });
 
     assert.ok(page.builds[1].failed, 'expected the second build to have failed');
-    assert.equal(page.builds[1].committer, 'Other User Name', 'expected a fallback to committer when no createdBy');
-
     assert.ok(page.builds[2].errored, 'expected the third build to have errored');
 
     assert.ok(page.showMoreButton.exists, 'expected the Show More button to exist');

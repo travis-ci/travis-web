@@ -26,10 +26,6 @@ module('Integration | Component | branch row', function (hooks) {
         previous_state: null,
         started_at: '2015-03-10T23:19:31Z',
         finished_at: '2015-03-10T23:19:45Z',
-        created_by: {
-          name: 'Dan Buch',
-          avatar_url: 'https://0.gravatar.com/avatar/563fd372b4d51781853bc85147f06a36'
-        },
         commit: {
           id: 160181,
           sha: 'a82f6ba76c7b729375ed6a1d7a26b765f694df12',

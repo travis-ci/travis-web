@@ -38,7 +38,6 @@ test('view and cancel pull requests', function (assert) {
     pull_request_title: 'A pull request',
     repository: repository,
     branch: this.branch,
-    createdBy: this.currentUser,
   });
 
   const gitUser = server.create('git-user', {
