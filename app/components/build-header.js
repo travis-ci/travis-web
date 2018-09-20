@@ -1,10 +1,6 @@
 import Component from '@ember/component';
-<<<<<<< HEAD
-import { computed } from 'ember-decorators/object';
-=======
 import { computed, action } from 'ember-decorators/object';
 import durationFrom from 'travis/utils/duration-from';
->>>>>>> Fix for mobile and style cleanup
 import { service } from 'ember-decorators/service';
 import jobConfigLanguage from 'travis/utils/job-config-language';
 import { not } from 'ember-decorators/object/computed';
@@ -136,20 +132,6 @@ export default Component.extend({
         console.log('add');
         this.$('.detail-job-env').addClass('expandEnv');
       }
-
-      // console.log(this.$('.detail-job-env').css('overflow') === 'unset');
-      // if(this.$('.detail-job-env').css('white-space') === 'normal' && this.$('.detail-job-env').css('overflow') === 'unset') {
-      //   console.log('this is true');
-      //   this.$('.detail-job-env').css('white-space', 'nowrap');
-      //   this.$('.detail-job-env').css('overflow', 'hidden');
-      // } else {
-      //   this.$('.detail-job-env').css('white-space', 'normal');
-      //   this.$('.detail-job-env').css('overflow', 'unset');
-      // }
-      // if(this.$('.detail-job-env').css('white-space') === 'nowrap') {
-      //   this.$('.detail-job-env').css('white-space', 'normal');
-      //   this.$('.detail-job-env').css('overflow', 'unset');
-      // }
     }
   }
 });
