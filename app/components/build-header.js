@@ -122,10 +122,11 @@ export default Component.extend({
 
   actions: {
     expandEnv() {
-      if (this.$('.detail-job-env').hasClass('expandEnv')) {
+      if (this.$('.expandEnv').css('white-space') === 'normal') {
         this.$('.detail-job-env').removeClass('expandEnv');
         this.$('.detail-job-env').addClass('closeEnv');
       } else {
+        this.$('.detail-job-env').removeClass('closeEnv');
         this.$('.detail-job-env').addClass('expandEnv');
       }
     }

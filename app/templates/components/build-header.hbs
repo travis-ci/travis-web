@@ -175,7 +175,7 @@
       </div>
     </div>
     {{#if environment}}
-      <div class="detail-job-env" {{action "expandEnv" on="click"}}>
+      <div class="detail-job-env" {{action "expandEnv" on="click"}} {{action "expandEnv" on="mouseEnter"}} {{action "expandEnv" on="mouseLeave"}}>
         {{svg-jar 'icon-environment' class="icon"}}
         <span class="label-align" aria-label="Environment variables">{{environment}}</span>
       </div>

@@ -60,16 +60,10 @@
   white-space: nowrap;
   overflow: hidden;
   position: relative;
+  cursor: pointer;
 
   &:after {
     @include fadeOut(right, -90deg, white);
-  }
-
-  &:hover {
-    &:after {
-      background: none;
-    }
-    white-space: normal;
   }
 }
 
