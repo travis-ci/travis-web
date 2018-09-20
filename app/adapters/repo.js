@@ -10,7 +10,6 @@ export default V3Adapter.extend({
     'build.branch',
     'build.request',
     'build.commit',
-    'build.created_by',
     'repository.default_branch',
     'repository.current_build',
     'owner.installation',
