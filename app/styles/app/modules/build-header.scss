@@ -29,6 +29,7 @@
       margin-left: 18px;
     }
     margin-left: 15px;
+    font-size: 15px;
     display: grid;
     grid-template-columns: 20px fit-content(50%) 1fr;
     grid-template-rows: 1fr 1fr;
@@ -54,6 +55,7 @@
 }
 
 .detail-job-env {
+  font-size: 15px;
   grid-area: env;
   margin-left: 45px;
   margin-right: 5%;
@@ -205,4 +207,7 @@
   margin: 15px auto;
   height: 1px;
   border-top: 1px $pebble-grey solid;
+  @media #{$medium-up} {
+    margin: 15px 47px;
+  }
 }
