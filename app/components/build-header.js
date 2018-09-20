@@ -1,6 +1,5 @@
 import Component from '@ember/component';
-import { computed, action } from 'ember-decorators/object';
-import durationFrom from 'travis/utils/duration-from';
+import { computed } from 'ember-decorators/object';
 import { service } from 'ember-decorators/service';
 import jobConfigLanguage from 'travis/utils/job-config-language';
 import { not } from 'ember-decorators/object/computed';
@@ -123,13 +122,10 @@ export default Component.extend({
 
   actions: {
     expandEnv() {
-      console.log('clicked');
-      if(this.$('.detail-job-env').hasClass('expandEnv')) {
-        console.log('remove');
+      if (this.$('.detail-job-env').hasClass('expandEnv')) {
         this.$('.detail-job-env').removeClass('expandEnv');
         this.$('.detail-job-env').addClass('closeEnv');
       } else {
-        console.log('add');
         this.$('.detail-job-env').addClass('expandEnv');
       }
     }
