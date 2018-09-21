@@ -26,5 +26,9 @@ export default Component.extend({
         promise: EmberPromise.resolve([])
       });
     }
+  },
+
+  viewMessage() {
+    // FIXME is this weird? Placeholder empty action when no viewer exists
   }
 });
