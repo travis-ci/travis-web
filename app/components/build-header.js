@@ -102,6 +102,8 @@ export default Component.extend({
       return 'linux';
     } else if (os === 'osx') {
       return 'osx';
+    } else if (os === 'windows') {
+      return 'windows';
     } else {
       return 'unknown';
     }
@@ -113,7 +115,9 @@ export default Component.extend({
       return 'icon-linux';
     } else if (os === 'osx') {
       return 'icon-mac';
-    } else {
+    } else if (os === 'windows') {
+      return 'icon-windows';
+    }  else {
       return 'help';
     }
   },

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="4 2 18 18" style="enable-background:new 0 0 26.1 23;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:none;stroke:#9DA2A7;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+</style>
+<g id="icon-lock_1_">
+	<g>
+		<path class="st0" d="M21.1,14.9c0,1.1-0.9,2-2,2H7.9c-1.1,0-2-0.9-2-2V8.1c0-1.1,0.9-2,2-2h11.2c1.1,0,2,0.9,2,2V14.9z"/>
+	</g>
+	<g>
+		<line class="st0" x1="13.3" y1="8.7" x2="8.3" y2="8.7"/>
+		<line class="st0" x1="18.3" y1="11.5" x2="8.3" y2="11.5"/>
+		<line class="st0" x1="18.3" y1="14.3" x2="8.3" y2="14.3"/>
+	</g>
+</g>
+</svg>
