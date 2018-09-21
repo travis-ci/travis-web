@@ -13,7 +13,7 @@ export default Controller.extend({
   fetch: task(function* () {
     // FIXME obvs
     let url = new URL(`${config.previewEndpoint}/` +
-      `${this.get('selected.repo.slug')}/${this.get('selected.commit.sha')}`);
+      `requests/${this.get('selected.id')}`);
     let headers = {
       'Accept': 'application/json'
     };
