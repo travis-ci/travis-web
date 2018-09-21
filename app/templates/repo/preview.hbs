@@ -22,11 +22,8 @@
   Click a request
 {{/if}}
 
-<ul>
+<ul class='requests'>
   {{#each model as |request|}}
-    <li onclick={{action 'chooseRequest' request}}>
-      <span style='{{if (eq request selected) 'font-weight: bold'}}'>{{request.commit.sha}}</span>
-      {{{format-message request.commit.message short="true" repo=build.repo}}}
-    </li>
+    {{requests-item request=request highlightedRequestId=requestId click=(action 'chooseRequest' request)}}
   {{/each}}
 </ul>
