@@ -69,7 +69,7 @@
     </ul>
 
     {{#if sortedBranchesWithoutCron.length}}
-        {{add-cron-job branches=sortedBranchesWithoutCron}}
+        <a class="button form-submit center" href="#" {{action (mut isShowingAddCronModal) true}}>Add Cron</a>
     {{else}}
         <p class="text-medium">There are no branches you can currently add crons to.</p>
     {{/if}}
@@ -97,3 +97,14 @@
   </section>
 {{/if}}
 </div>
+
+{{#if isShowingAddCronModal}}
+  {{#modal-dialog
+     onClose=(action "closeAddCronModal")
+     targetAttachment="center"
+     translucentOverlay=true as |parent|}}
+     {{add-new-cron-form
+      closeAction=(action "closeAddCronModal")
+      branches=sortedBranchesWithoutCron}}
+  {{/modal-dialog}}
+{{/if}}

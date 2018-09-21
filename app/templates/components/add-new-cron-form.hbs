@@ -1,0 +1,80 @@
+<h3 class="h3--teal">Add New Cron</h3>
+<div class="form-pair">
+  <label class="form-label">Branch</label>
+  {{#x-select value=branch.name on-change=(action (mut branch)) as |xs|}}
+    {{#each branches as |branch|}}
+      {{#xs.option value=branch.name}}{{branch.name}}{{/xs.option}}
+    {{/each}}
+  {{/x-select}}
+</div>
+
+<div class="form-pair">
+  <label class="form-label">Interval</label>
+    {{#x-select
+      value=selectedInterval
+      required="true"
+      on-change=(pipe
+        (action (mut selectedInterval))
+        (action 'intervalSelected' selectedInterval)
+      ) as |xs|}}
+      {{#each intervals as |interval|}}
+        {{#xs.option value=interval}}{{interval}}{{/xs.option}}
+      {{/each}}
+    {{/x-select}}
+</div>
+
+{{#if (eq formInterval 'daily')}}
+<div class="form-pair">
+  <label class="form-label">Scheduled Time (UTC)</label>
+  <div>{{input type="time" value=selectedTime required=true}}</div>
+</div>
+{{/if}}
+
+{{#if (eq formInterval 'weekly')}}
+<div class="form-pair">
+  <label class="form-label">Day of the Week</label>
+  {{#x-select
+    value=selectedDays
+    required="false"
+    on-change=(action (mut selectedDays)) as |xs|}}
+    {{#each daysOfWeek as |day|}}
+      {{#xs.option value=day}}{{day}}{{/xs.option}}
+    {{/each}}
+  {{/x-select}}
+</div>
+<div class="form-pair">
+  <label class="form-label">Scheduled Time (UTC)</label>
+  <div>{{input type="time" value=selectedTime required=true}}</div>
+</div>
+{{/if}}
+
+{{#if (eq formInterval 'monthly')}}
+<div class="form-pair">
+  <label class="form-label">Calendar Day of the Month</label>
+  {{#x-select
+    value=selectedCalendarDays
+    required="false"
+    on-change=(action (mut selectedCalendarDays)) as |xs|}}
+    {{#each calendarDaysOfMonth as |day|}}
+      {{#xs.option value=day}}{{day}}{{/xs.option}}
+    {{/each}}
+  {{/x-select}}
+</div>
+<div class="form-pair">
+  <label class="form-label">Scheduled Time (UTC)</label>
+  <div>{{input type="time" value=selectedTime required=true}}</div>
+</div>
+{{/if}}
+
+<div class="form-pair">
+  <label class="form-label">Options</label>
+    {{#x-select value=selectedOption required="false" on-change=(action (mut selectedOption)) as |xs|}}
+      {{#xs.option value=false}}{{options.[0]}}{{/xs.option}}
+      {{#xs.option value=true}}{{options.[1]}}{{/xs.option}}
+    {{/x-select}}
+</div>
+
+<button trype="button" title="Close modal" class="modal-close pointer" {{action
+  closeAction}}>
+  {{svg-jar 'icon-failed' class="icon"}}
+</button>

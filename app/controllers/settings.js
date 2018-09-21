@@ -53,6 +53,10 @@ export default Controller.extend({
 
     sshKeyDeleted() {
       return this.set('model.customSshKey', null);
-    }
+    },
+
+    closeAddCronModal() {
+      this.set('isShowingAddCronModal', false);
+    },
   }
 });

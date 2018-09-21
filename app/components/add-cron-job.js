@@ -15,6 +15,18 @@ export default Component.extend({
     });
   },
 
+  actions: {
+    intervalSelected(interval) {
+      if (interval.includes('daily')) {
+        this.set('formInterval', 'daily');
+      } else if (interval.includes('weekly')) {
+        this.set('formInterval', 'weekly');
+      } else if (interval.includes('monthly')) {
+        this.set('formInterval', 'monthly');
+      }
+    },
+  },
+
   save: task(function* () {
     const store = this.get('store');
     const repoId = this.get('branches.firstObject.repoId');
@@ -39,7 +51,13 @@ export default Component.extend({
     yield cron.save();
   }).drop(),
 
-  intervals: ['monthly', 'weekly', 'daily'],
+  intervals: ['monthly', 'weekly', 'daily (weekdays)', 'daily (every day)' ],
+
+  daysOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+
+  // Need to warn users that not every month has those days. If you select 30,
+  // it will not run in Feburary
+  calendarDaysOfMonth: [...Array(31).keys()].map(d => d + 1),
 
   options: ['Always run', 'Do not run if there has been a build in the last 24h']
 });
