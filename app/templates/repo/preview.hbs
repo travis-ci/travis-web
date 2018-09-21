@@ -1,14 +1,16 @@
 {{#if selected}}
   {{#if yaml}}
-    {{textarea value=yaml rows=20}}
+    <YamlEditor @yaml={{yaml}} @highlightedKey={{highlightedKey}} />
 
-    Event type: {{input value=eventType}}
+    {{!-- FIXME why the margin?? --}}
+    <div class='yaml-editor-margin'>Event type:</div>
+    {{input value=eventType}}
 
     <button type='submit' {{action (perform fetch)}} class='button--white'>
       Submit {{#if fetch.isRunning}}{{loading-indicator}}{{/if}}
     </button>
 
-    {{build-messages-list messagesRequest=build.request}}
+    {{build-messages-list messagesRequest=build.request viewMessage=(action 'viewMessage')}}
 
     {{#if stages}}
       {{#each stages as |stage|}}

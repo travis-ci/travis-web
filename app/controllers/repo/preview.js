@@ -73,6 +73,10 @@ export default Controller.extend({
 
       this.set('yaml', undefined);
       this.get('fetch').perform();
+    },
+
+    viewMessage(message) {
+      this.set('highlightedKey', message.key);
     }
   }
 });

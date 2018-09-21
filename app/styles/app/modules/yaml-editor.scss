@@ -1,0 +1,35 @@
+.yaml-editor {
+  .backdrop {
+    overflow: auto;
+    position: absolute;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .highlights {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+
+    color: transparent;
+
+    padding: 5px;
+  }
+
+  mark {
+    color: transparent;
+    background-color: yellow;
+  }
+
+  textarea {
+    position: absolute;
+    z-index: 2;
+    margin: 0;
+    padding: 5px;
+    border-radius: 0;
+    background-color: transparent;
+  }
+}
+
+.yaml-editor-margin {
+  margin-top: 400px;
+}
