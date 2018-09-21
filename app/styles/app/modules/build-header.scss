@@ -34,8 +34,7 @@
     grid-template-columns: 20px fit-content(50%) 1fr;
     grid-template-rows: 1fr 1fr;
     grid-template-areas: "os name language"
-                         "os name language"
-                         "env env env";
+                         "os name language";
 
     .detail-job-os {
       grid-area: os;
@@ -55,17 +54,28 @@
 }
 
 .detail-job-env {
+  display: grid;
+  grid-template-columns: 15px 1fr;
+  grid-gap: 8px;
   font-size: 15px;
-  grid-area: env;
-  margin-left: 45px;
-  margin-right: 5%;
+  margin-left: 43px;
+  width: 91%;
   white-space: nowrap;
   overflow: hidden;
   position: relative;
   cursor: pointer;
 
+  @media #{$small-only} {
+    width: 85%;
+  }
+
   &:after {
+    width: auto;
     @include fadeOut(right, -90deg, white);
+  }
+
+  svg {
+    margin-top: 3px;
   }
 }
 
