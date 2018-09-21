@@ -6,6 +6,8 @@
     <div class='yaml-editor-margin'>Event type:</div>
     {{input value=eventType}}
 
+    Commit message: {{input value=commitMessage}}
+
     <button type='submit' {{action (perform fetch)}} class='button--white'>
       Submit {{#if fetch.isRunning}}{{loading-indicator}}{{/if}}
     </button>

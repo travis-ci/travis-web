@@ -22,6 +22,10 @@ export default Controller.extend({
       url.searchParams.append('event_type', this.get('eventType'));
     }
 
+    if (this.get('commitMessage')) {
+      url.searchParams.append('commit_message', this.get('commitMessage'));
+    }
+
     if (this.get('yaml')) {
       url.searchParams.append('yml', this.get('yaml'));
     }
@@ -56,6 +60,7 @@ export default Controller.extend({
       });
       this.set('build', build);
       this.set('eventType', json.event_type);
+      this.set('commitMessage', get(json, 'commit.message'));
 
       this.set('stages', json.stages.map(stageJson => {
         let stage = this.get('store').createRecord('stage', stageJson);
