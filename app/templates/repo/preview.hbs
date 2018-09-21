@@ -18,6 +18,9 @@
       {{#each stages as |stage|}}
         {{jobs-list stage=stage build=build repo=selected.repo stages=stages}}
       {{/each}}
+    {{else}}
+      {{jobs-list jobs=(reject-by 'allow_failure' build.jobs) repo=repo required="true"}}
+      {{jobs-list jobs=(filter-by 'allow_failure' build.jobs) repo=repo}}
     {{/if}}
   {{else}}
     {{loading-indicator}}
