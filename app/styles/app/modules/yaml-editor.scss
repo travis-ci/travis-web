@@ -15,9 +15,10 @@
   }
 
   .highlights {
+    @extend .monospace;
     white-space: pre-wrap;
     word-wrap: break-word;
-    line-height: normal;
+    line-height: 15px;
 
     color: transparent;
 
@@ -30,12 +31,14 @@
   }
 
   textarea {
+    @extend .monospace;
     position: absolute;
     z-index: 2;
     margin: 0;
     padding: 5px;
     border-radius: 0;
     background-color: transparent;
+    line-height: 15px;
   }
 }
 

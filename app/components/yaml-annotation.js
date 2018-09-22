@@ -5,6 +5,6 @@ export default Component.extend({
   @computed('annotation.lineNumber')
   top(lineNumber) {
     // FIXME extract etc obvs
-    return (lineNumber + 1) * 1.2 * 14;
+    return lineNumber * 15;
   }
 });
