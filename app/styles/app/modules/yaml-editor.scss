@@ -8,16 +8,10 @@
 
   textarea {
     @extend .monospace;
-    position: absolute;
-    z-index: 2;
     margin: 0;
     padding: 5px;
     border-radius: 0;
     background-color: transparent;
     line-height: 15px;
   }
-}
-
-.yaml-editor-margin {
-  margin-top: 600px;
 }

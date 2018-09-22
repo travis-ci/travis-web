@@ -2,9 +2,7 @@
   {{#if yaml}}
     <YamlEditor @yaml={{yaml}} @messages={{build.request.messages}} />
 
-    {{!-- FIXME why the margin?? --}}
-    <div class='yaml-editor-margin'>Event type:</div>
-    {{input value=eventType}}
+    Event type: {{input value=eventType}}
 
     Commit message: {{input value=commitMessage}}
 
