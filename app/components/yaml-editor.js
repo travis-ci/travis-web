@@ -29,11 +29,15 @@ export default Component.extend({
       let code = message.code;
       let key = message.key;
 
-      if (key === 'root') {
+      if (code === 'unknown_key') {
+        if (key === 'root') {
+          key = message.args.key;
+        } else {
+          key = `${key}.${message.args.key}`;
+        }
+      } else if (key === 'root') {
         if (code === 'alias') {
           key = message.args.alias;
-        } else if (code === 'unknown_key') {
-          key = message.args.key;
         }
       }
 
