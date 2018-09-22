@@ -26,7 +26,17 @@ export default Component.extend({
   @computed('yaml', 'messages.[]')
   annotations(yaml, messages) {
     return messages.reduce((annotations, message) => {
+      let code = message.code;
       let key = message.key;
+
+      if (key === 'root') {
+        if (code === 'alias') {
+          key = message.args.alias;
+        } else if (code === 'unknown_key') {
+          key = message.args.key;
+        }
+      }
+
       let lineNumber = yamlKeyFinder(yaml, key);
 
       if (lineNumber === 0 || lineNumber) {
