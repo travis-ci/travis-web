@@ -27,8 +27,4 @@ export default Component.extend({
       });
     }
   },
-
-  viewMessage() {
-    // FIXME is this weird? Placeholder empty action when no viewer exists
-  }
 });

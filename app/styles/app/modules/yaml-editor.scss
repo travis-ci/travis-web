@@ -6,29 +6,6 @@
     right: 100%;
   }
 
-  .backdrop {
-    overflow: auto;
-    position: absolute;
-    z-index: 1;
-    pointer-events: none;
-  }
-
-  .highlights {
-    @extend .monospace;
-    white-space: pre-wrap;
-    word-wrap: break-word;
-    line-height: 15px;
-
-    color: transparent;
-
-    padding: 5px;
-  }
-
-  mark {
-    color: transparent;
-    background-color: yellow;
-  }
-
   textarea {
     @extend .monospace;
     position: absolute;
