@@ -29,7 +29,7 @@ export default Component.extend({
       let key = message.key;
       let lineNumber = yamlKeyFinder(yaml, key);
 
-      if (lineNumber >= 0) {
+      if (lineNumber === 0 || lineNumber) {
         annotations.push({
           message,
           lineNumber
