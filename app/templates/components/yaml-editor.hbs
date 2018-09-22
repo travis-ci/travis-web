@@ -1,4 +1,8 @@
 <div class='yaml-editor'>
+  {{#each annotations as |annotation|}}
+    <YamlAnnotation @annotation={{annotation}} />
+  {{/each}}
+
   <div class='backdrop'>
     <div class='highlights'>{{@yaml}}</div>
   </div>

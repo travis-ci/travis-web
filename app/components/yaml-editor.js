@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { observes } from 'ember-decorators/object';
+import { computed, observes } from 'ember-decorators/object';
 import yamlKeyFinder from 'travis/utils/yaml-key-finder';
 
 export default Component.extend({
@@ -21,5 +21,22 @@ export default Component.extend({
 
     let highlights = this.$('.highlights');
     highlights.html(yamlLines.join('\n'));
+  },
+
+  @computed('yaml', 'messages.[]')
+  annotations(yaml, messages) {
+    return messages.reduce((annotations, message) => {
+      let key = message.key;
+      let lineNumber = yamlKeyFinder(yaml, key);
+
+      if (lineNumber >= 0) {
+        annotations.push({
+          message,
+          lineNumber
+        });
+      }
+
+      return annotations;
+    }, []);
   }
 });

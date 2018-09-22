@@ -1,6 +1,6 @@
 {{#if selected}}
   {{#if yaml}}
-    <YamlEditor @yaml={{yaml}} @highlightedKey={{highlightedKey}} />
+    <YamlEditor @yaml={{yaml}} @highlightedKey={{highlightedKey}} @messages={{build.request.messages}} />
 
     {{!-- FIXME why the margin?? --}}
     <div class='yaml-editor-margin'>Event type:</div>

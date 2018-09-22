@@ -1,4 +1,12 @@
 .yaml-editor {
+  position: relative;
+
+  .annotation {
+    position: absolute;
+    left: -3em;
+    width: 3em;
+  }
+
   .backdrop {
     overflow: auto;
     position: absolute;
