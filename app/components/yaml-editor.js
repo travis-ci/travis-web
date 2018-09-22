@@ -1,6 +1,7 @@
 import Component from '@ember/component';
 import { computed } from 'ember-decorators/object';
 import yamlKeyFinder from 'travis/utils/yaml-key-finder';
+import $ from 'jquery';
 
 export default Component.extend({
   @computed('yaml', 'messages.[]')
@@ -32,5 +33,14 @@ export default Component.extend({
 
       return annotations;
     }, []);
+  },
+
+  // FIXME Is there no way to bind to scrollTop? 😐
+  didRender() {
+    this._super(...arguments);
+
+    $('textarea').scroll((e) => {
+      $('.annotation').css('margin-top', -e.target.scrollTop);
+    });
   }
 });
