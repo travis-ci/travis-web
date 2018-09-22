@@ -1,5 +1,6 @@
 import Component from '@ember/component';
 import { observes } from 'ember-decorators/object';
+import yamlKeyFinder from 'travis/utils/yaml-key-finder';
 
 export default Component.extend({
   @observes('highlightedKey')
@@ -9,15 +10,16 @@ export default Component.extend({
     let yaml = this.get('yaml');
     let yamlLines = yaml.split('\n');
 
-    let keyIndex = yamlLines.findIndex(line => line.startsWith(key));
+    if (key) {
+      let keyIndex = yamlKeyFinder(yaml, key);
 
-    let highlights = this.$('.highlights');
-
-    if (keyIndex >= -1) {
-      let line = yamlLines[keyIndex];
-      yamlLines[keyIndex] = `<mark>${line}</mark>`;
+      if (keyIndex >= -1) {
+        let line = yamlLines[keyIndex];
+        yamlLines[keyIndex] = `<mark>${line}</mark>`;
+      }
     }
 
+    let highlights = this.$('.highlights');
     highlights.html(yamlLines.join('\n'));
   }
 });
