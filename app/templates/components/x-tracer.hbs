@@ -10,7 +10,7 @@
       <tr>
         <td class="method">{{req.method}}</td>
         <td class="url">{{req.url}}</td>
-        <td class="status {{if req.error 'error'}}">{{req.status}}</td>
+        <td class="status {{if req.error 'err'}}">{{req.status}}</td>
         <td class="duration">{{req.duration}}ms</td>
         <td class="request-id">
           {{#if req.requestId}}
