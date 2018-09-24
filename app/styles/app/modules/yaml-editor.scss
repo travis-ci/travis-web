@@ -6,6 +6,25 @@
     right: 100%;
     width: 16px;
     height: 100%;
+    overflow: hidden;
+  }
+
+  .above, .below {
+    position: absolute;
+    display: none;
+    right: 100%;
+  }
+
+  .above {
+    bottom: 100%;
+  }
+
+  .below {
+    top: 100%;
+  }
+
+  .annotations.any-above ~ .above, .annotations.any-below ~ .below {
+    display: block;
   }
 
   .annotation {

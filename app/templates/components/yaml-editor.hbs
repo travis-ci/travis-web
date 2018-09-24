@@ -5,5 +5,15 @@
     {{/each}}
   </div>
 
+  <div class='above'>
+    {{tooltip-on-element text='Annotation(s) hidden above'}}
+    {{svg-jar 'workers-close' class='icon'}}
+  </div>
+
+  <div class='below'>
+    {{tooltip-on-element text='Annotation(s) hidden below'}}
+    {{svg-jar 'workers-open' class='icon'}}
+  </div>
+
   {{textarea value=@yaml rows=20}}
 </div>
