@@ -5,7 +5,7 @@
 
     Commit message: {{input value=buffer.commitMessage}}
 
-    <button type='submit' {{action 'submit'}} class='button--white'>
+    <button type='submit' disabled={{unless buffer.hasChanges 'disabled'}} {{action 'submit'}} class='button--white {{unless buffer.hasChanges 'disabled'}}'>
       Submit {{#if fetch.isRunning}}{{loading-indicator}}{{/if}}
     </button>
 

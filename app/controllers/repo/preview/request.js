@@ -11,7 +11,7 @@ export default Controller.extend({
 
   @computed('request.id')
   buffer() {
-    return BufferedProxy.create(this);
+    return BufferedProxy.create({content: this});
   },
 
   actions: {
