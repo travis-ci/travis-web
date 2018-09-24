@@ -167,7 +167,7 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
 
 test('view repositories', function (assert) {
   withFeature('github-apps');
-  profilePage.visit({ username: 'user-login' });
+  profilePage.visit();
 
   andThen(() => {
     percySnapshot(assert);
@@ -228,7 +228,7 @@ test('view profile that has an expired subscription', function (assert) {
   this.organization.attrs.permissions = { createSubscription: true };
   this.organization.save();
 
-  profilePage.visit({ username: 'org-login' });
+  profilePage.visitOrganization({ name: 'org-login' });
 
   andThen(() => {
     assert.ok(profilePage.avatar.checkmark.isHidden, 'expected avatar to not have a checkmark for active subscription');
@@ -236,7 +236,7 @@ test('view profile that has an expired subscription', function (assert) {
 });
 
 test('view profile that has an expired subscription and no create permissions', function (assert) {
-  profilePage.visit({ username: 'org-login' });
+  profilePage.visitOrganization({ name: 'org-login' });
 
   andThen(() => {
     assert.ok(profilePage.avatar.checkmark.isHidden, 'expected avatar to not have a checkmark for active subscription');
@@ -247,7 +247,7 @@ test('view profile that has education status', function (assert) {
   this.organization.attrs.education = true;
   this.organization.save();
 
-  profilePage.visit({ username: 'org-login' });
+  profilePage.visitOrganization({ name: 'org-login' });
 
   andThen(() => {
     percySnapshot(assert);
@@ -262,7 +262,7 @@ test('displays an error banner when subscription status cannot be determined', f
     return new Response(500, {}, {});
   });
 
-  profilePage.visit({ username: 'user-login' });
+  profilePage.visit();
 
   andThen(() => {
     assert.equal(profilePage.subscriptionStatus.text, 'There was an error determining your subscription status.');
@@ -287,7 +287,7 @@ test('logs an exception when there is more than one active subscription', functi
   const registry = instance.register ? instance : instance.registry;
   registry.register('service:raven', mockSentry);
 
-  profilePage.visit({ username: 'user-login' });
+  profilePage.visit();
 });
 
 test('view profiles for organizations that do not and do have GitHub Apps installations', function (assert) {
@@ -303,14 +303,14 @@ test('view profiles for organizations that do not and do have GitHub Apps instal
   });
 
   withFeature('github-apps');
-  profilePage.visit({ username: 'org0' });
+  profilePage.visitOrganization({ name: 'org0' });
 
   andThen(function () {
     assert.ok(profilePage.githubAppsInvitation.isVisible, 'expected GitHub Apps invitation to be visible');
     assert.ok(profilePage.githubAppsInvitation.migrateButton.isVisible, 'expected the invitation to have a migrate button when there are legacy repositories');
   });
 
-  profilePage.visit({ username: 'org1' });
+  profilePage.visitOrganization({ name: 'org1' });
 
   andThen(function () {
     assert.ok(profilePage.githubAppsInvitation.isVisible, 'expected GitHub Apps invitation to be visible');
@@ -318,7 +318,7 @@ test('view profiles for organizations that do not and do have GitHub Apps instal
     assert.equal(profilePage.githubAppsInvitation.link.href, 'https://github.com/apps/travis-ci-testing/installations/new/permissions?suggested_target_id=1001', 'expected the management link to be organisation-scoped');
   });
 
-  profilePage.visit({ username: 'org-login' });
+  profilePage.visitOrganization({ name: 'org-login' });
 
   andThen(function () {
     assert.notOk(profilePage.githubAppsInvitation.isVisible, 'expected GitHub Apps invitation to not be visible');
@@ -331,14 +331,14 @@ test('view profiles for organizations that do not and do have GitHub Apps instal
 });
 
 test('view profiles when GitHub Apps is not present', function (assert) {
-  profilePage.visit({ username: 'org0' });
+  profilePage.visitOrganization({ name: 'org0' });
 
   andThen(() => {
     assert.notOk(profilePage.githubAppsInvitation.isVisible, 'expected GitHub Apps invitation to not be visible');
     assert.notOk(profilePage.deprecatedBadge.isVisible, 'expected deprecated badge to not be visible');
   });
 
-  profilePage.visit({ username: 'user-login' });
+  profilePage.visit();
 
   andThen(() => {
     assert.equal(profilePage.administerableRepositories.length, 3, 'expected inactive repositories to also show');
@@ -352,7 +352,7 @@ test('view profiles when GitHub Apps is not present', function (assert) {
 
 test('view profile when GitHub Apps is present and no legacy repositories exist', function (assert) {
   withFeature('github-apps');
-  profilePage.visit({ username: 'org0' });
+  profilePage.visitOrganization({ name: 'org0' });
 
   andThen(() => {
     percySnapshot(assert);
@@ -396,7 +396,7 @@ test('clicking the button to migrate to GitHub Apps sends the IDs of all legacy 
     repositoryIds.push(10000 + index);
   }
 
-  profilePage.visit({ username: 'org0' });
+  profilePage.visitOrganization({ name: 'org0' });
 
   andThen(() => {
     assert.ok(profilePage.githubAppsInvitation.migrateButton.isVisible, 'expected the invitation to have a migrate button');
@@ -426,7 +426,7 @@ test('the migration button is not present when the owner has over 20 active lega
     });
   }
 
-  profilePage.visit({ username: 'org0' });
+  profilePage.visitOrganization({ name: 'org0' });
 
   andThen(() => {
     assert.ok(profilePage.githubAppsInvitation.migrateButton.isHidden, 'expected migration button to be hidden when owner has too many repositories');

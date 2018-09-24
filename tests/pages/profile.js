@@ -37,7 +37,8 @@ function githubAppsRepositoryCollection(scope) {
 }
 
 export default create({
-  visit: visitable('profile/:username'),
+  visit: visitable('account'),
+  visitOrganization: visitable('organizations/:name'),
   name: text('.profile-header h1'),
   nameBadge: { scope: '.profile-header .badge' },
   login: text('.login'),

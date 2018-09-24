@@ -92,7 +92,7 @@ test('view billing information with invoices', function (assert) {
     url: 'https://example.com/2010.pdf'
   });
 
-  profilePage.visit({ username: 'user-login' });
+  profilePage.visit();
   profilePage.billing.visit();
 
   andThen(() => {
@@ -129,7 +129,7 @@ test('view billing information with invoices', function (assert) {
 test('view billing on an expired stripe plan', function (assert) {
   this.subscription.status = 'expired';
 
-  profilePage.visit({ username: 'user-login'});
+  profilePage.visit();
   profilePage.billing.visit();
 
   andThen(() => {

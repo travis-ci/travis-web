@@ -33,7 +33,7 @@ test('changing feature flags', function (assert) {
     enabled: false
   });
 
-  profilePage.visit({ username: 'testuser' });
+  profilePage.visit();
   profilePage.settings.visit();
 
   percySnapshot(assert);
@@ -72,7 +72,7 @@ test('changing feature flags', function (assert) {
 });
 
 test('no settings for org', function (assert) {
-  profilePage.visit({ username: 'testuser' });
+  profilePage.visit();
 
   andThen(() => {
     assert.ok(profilePage.settings.isPresent);
