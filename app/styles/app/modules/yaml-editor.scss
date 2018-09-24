@@ -1,9 +1,15 @@
 .yaml-editor {
   position: relative;
 
-  .annotation {
+  .annotations {
     position: absolute;
     right: 100%;
+    width: 16px;
+    height: 100%;
+  }
+
+  .annotation {
+    position: absolute;
   }
 
   textarea {

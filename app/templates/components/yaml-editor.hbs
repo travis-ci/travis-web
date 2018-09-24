@@ -1,7 +1,9 @@
 <div class='yaml-editor'>
-  {{#each annotations as |annotation|}}
-    <YamlAnnotation @annotation={{annotation}} />
-  {{/each}}
+  <div class='annotations'>
+    {{#each annotations as |annotation|}}
+      <YamlAnnotation @annotation={{annotation}} />
+    {{/each}}
+  </div>
 
   {{textarea value=@yaml rows=20}}
 </div>
