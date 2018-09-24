@@ -40,7 +40,9 @@ Router.map(function () {
     this.route('settings', { resetNamespace: true }, function () {
       this.route('index', { path: '/' });
     });
-    this.route('preview');
+    this.route('preview', { path: '/preview' }, function () {
+      this.route('request', { path: '/:request_id' });
+    });
   });
 
   this.route('search', { path: '/search/:phrase' });
