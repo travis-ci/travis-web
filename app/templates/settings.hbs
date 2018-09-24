@@ -6,14 +6,14 @@
       <li>{{settings-switch active=model.settings.build_pushes repo=repo description="Build pushed branches" key="build_pushes"}}
         <a href="https://docs.travis-ci.com/user/web-ui/#build-pushed-branches"
            title="about branch updates" class="settings-tooltip">
-           {{tooltip-on-element text='Read more about branch updates'}}
+           {{ember-tooltip text='Read more about branch updates'}}
            {{svg-jar 'icon-help' class="icon-help"}}</a>
       </li>
       <li>{{limit-concurrent-builds value=model.settings.maximum_number_of_builds enabled=concurrentBuildsLimit repo=repo}}</li>
       <li>{{settings-switch active=model.settings.build_pull_requests repo=repo description="Build pushed pull requests" key="build_pull_requests"}}
         <a href="https://docs.travis-ci.com/user/web-ui/#build-pushed-pull-requests"
            title="about pull request updates" class="settings-tooltip">
-           {{tooltip-on-element text='Read more about pull request updates'}}
+           {{ember-tooltip text='Read more about pull request updates'}}
            {{svg-jar 'icon-help' class="icon-help"}}</a>
       </li>
     </ul>

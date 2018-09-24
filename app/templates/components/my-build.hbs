@@ -23,7 +23,7 @@
       </div>
       <div class='row-content no-hover'>
         {{#external-link-to data-test-branch-name href=urlGitHubBranch}}
-          {{tooltip-on-element text='View branch on GitHub'}}
+          {{ember-tooltip text='View branch on GitHub'}}
           {{svg-jar 'icon-branch' class="icon"}}
           <span class='label-align inner-underline'>{{build.branchName}}</span>
           {{svg-jar 'icon-external-link' class="icon"}}
@@ -37,7 +37,7 @@
         <span class='inner-underline'>#{{build.number}} {{build.state}}</span>
       {{/link-to}}
       {{#external-link-to data-test-commit-sha href=build.commit.githubUrl class='row-content monospace'}}
-        {{tooltip-on-element text='View commit on GitHub'}}
+        {{ember-tooltip text='View commit on GitHub'}}
         {{svg-jar 'icon-commit' class="icon"}}
         <span class="label-align inner-underline">{{format-sha build.commit.sha}}</span>
         {{svg-jar 'icon-external-link' class="icon"}}
