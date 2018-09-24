@@ -2,7 +2,13 @@
     <div class='yaml-editor-and-controls'>
       <YamlEditor @yaml={{buffer.yaml}} @messages={{build.request.messages}} />
       <div class='controls'>
-        Event type: {{input value=buffer.eventType}}
+        Event type:
+        {{#x-select value=buffer.eventType action=(action (mut buffer.eventType)) as |xs|}}
+          {{#xs.option value='api'}}API{{/xs.option}}
+          {{#xs.option value='cron'}}Cron{{/xs.option}}
+          {{#xs.option value='pull_request'}}Pull request{{/xs.option}}
+          {{#xs.option value='push'}}Push{{/xs.option}}
+        {{/x-select}}
 
         Commit message: {{input value=buffer.commitMessage}}
 
