@@ -1,0 +1,67 @@
+<section class='dash-head {{build.state}}'>
+  <div class='row-content'>{{repository-visibility-icon repository=build.repo}}</div>
+</section>
+
+<section class='dash-body'>
+  <section class='dash-main'>
+    <section class='state {{build.state}}'>
+      <div class='row-content'>{{status-icon status=build.state}}</div>
+    </section>
+
+    <section class='repo color'>
+      <div class='row-content' data-test-owner>
+        {{link-to build.repo.owner.login 'owner' build.repo.owner.login class='inner-underline'}}
+      </div>
+      <div class='row-content' data-test-repo-name>
+        {{link-to build.repo.name 'repo' build.repo.owner.login build.repo.name class='inner-underline'}}
+      </div>
+    </section>
+
+    <section class='message-and-branch'>
+      <div class='message row-content' title={{build.commit.message}} data-test-commit-message>
+        {{{format-message build.commit.message short='true' repo=build.repo eventType=build.eventType}}}
+      </div>
+      <div class='row-content no-hover'>
+        {{#external-link-to data-test-branch-name href=urlGitHubBranch}}
+          {{tooltip-on-element text='View branch on GitHub'}}
+          {{svg-jar 'icon-branch' class="icon"}}
+          <span class='label-align inner-underline'>{{build.branchName}}</span>
+          {{svg-jar 'icon-external-link' class="icon"}}
+        {{/external-link-to}}
+      </div>
+    </section>
+
+    <section class='state-and-sha'>
+      {{#link-to 'build' build.repo.owner.login build.repo.name build.id data-test-state-number class='row-content color'}}
+        {{request-icon event=build.eventType state=build.state}}
+        <span class='inner-underline'>#{{build.number}} {{build.state}}</span>
+      {{/link-to}}
+      {{#external-link-to data-test-commit-sha href=build.commit.githubUrl class='row-content monospace'}}
+        {{tooltip-on-element text='View commit on GitHub'}}
+        {{svg-jar 'icon-commit' class="icon"}}
+        <span class="label-align inner-underline">{{format-sha build.commit.sha}}</span>
+        {{svg-jar 'icon-external-link' class="icon"}}
+      {{/external-link-to}}
+    </section>
+
+    <section class='times'>
+      <div title="{{if build.elapsedTime (concat "Started " (pretty-date build.startedAt))}}" class="commit-stopwatch row-content">
+        {{svg-jar 'icon-stopwatch' class="icon"}}
+        <span class="label-align" data-test-duration>
+          <time datetime="PT{{build.elapsedTime}}S">{{format-duration build.elapsedTime}}</time>
+        </span>
+      </div>
+      <div class="row-content" title="{{build.finishedAt}}">
+        {{svg-jar 'icon-calendar' class="icon"}}
+        <span class="label-align" data-test-finished>
+          {{#if build.finishedAt}}
+          {{format-time build.finishedAt}}
+          {{else}}still running{{/if}}</span>
+      </div>
+    </section>
+
+    <section class='restart'>
+      <div class='row-content'>{{repo-actions build=build repo=build.repo mobilelabels=true}}</div>
+    </section>
+  </section>
+</section>

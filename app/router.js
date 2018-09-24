@@ -17,6 +17,7 @@ const Router = EmberRouter.extend({
 Router.map(function () {
   this.route('dashboard', { resetNamespace: true }, function () {
     this.route('repositories', { path: '/' });
+    this.route('builds', { path: '/builds' });
   });
   this.route('features-tracing', { path: '/features/tracing', resetNamespace: true });
 
@@ -60,6 +61,7 @@ Router.map(function () {
   this.route('organization', { path: '/organizations/:login' }, function () {
     this.route('repositories');
   });
+  this.route('unsubscribe', { path: '/account/preferences/unsubscribe' });
   this.route('owner', { path: '/:owner', resetNamespace: true }, function () {
     this.route('repositories', { path: '/' });
   });

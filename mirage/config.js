@@ -58,7 +58,13 @@ export default function () {
   });
 
   this.get('/users/permissions', (schema, request) => {
-    const token = request.requestHeaders.Authorization.split(' ')[1];
+    let authorization = request.requestHeaders.Authorization;
+
+    if (!authorization) {
+      return {};
+    }
+
+    const token = authorization.split(' ')[1];
     const user = schema.users.where({ token }).models[0];
 
     if (user) {
@@ -177,6 +183,35 @@ export default function () {
     }
 
     return this.serialize(repository);
+  });
+
+  this.post('/repo/:repositoryId/email_subscription', function ({ repositories }, request) {
+    const repo = repositories.find(request.params.repositoryId);
+    repo.update({ email_subscribed: true });
+    return new Response(204, {}, {});
+  });
+
+  this.delete('/repo/:repositoryId/email_subscription', function ({ repositories }, request) {
+    const repo = repositories.find(request.params.repositoryId);
+    repo.update({ email_subscribed: false });
+    return new Response(204, {}, {});
+  });
+
+  this.get('/v3/preferences', function (schema) {
+    return schema.preferences.all();
+  });
+
+  this.get('/v3/preference/:id', function (schema, request) {
+    return schema.preferences.findBy({ name: request.params.id });
+  });
+
+  this.patch('/v3/preference/:id', function (schema, request) {
+    const preference = schema.preferences.findBy({ name: request.params.id });
+    if (!preference)
+      return new Response(404, {});
+    const requestBody = JSON.parse(request.requestBody);
+    preference.update('value', requestBody['preference.value']);
+    return preference;
   });
 
   this.post('/repo/:repositoryId/deactivate', function (schema, request) {
@@ -417,6 +452,10 @@ export default function () {
     } else {
       return new Response(404, {}, {});
     }
+  });
+
+  this.get('/builds', (schema, {queryParams: {event_type: eventType}}) => {
+    return schema.builds.all().filter(build => eventType.includes(build.eventType));
   });
 
   this.get('/repo/:repo_id/builds', function (schema, request) {

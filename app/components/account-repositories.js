@@ -24,6 +24,8 @@ export default Component.extend({
   deprecated: null,
   lockedGithubAppsRepositories: null,
   notLockedGithubAppsRepositories: null,
+  // TODO send to component from outside
+  accountsController: null,
 
   migrationRepositoryCountLimit,
 
@@ -47,8 +49,10 @@ export default Component.extend({
     }
   },
 
-  @computed('account.id')
-  hasGitHubAppsInstallation(installationId) {
+  @computed('account.id', 'accountsController.userInstallation', 'account.isUser')
+  hasGitHubAppsInstallation(installationId, userInstallation, isUser) {
+    // See controllers:accounts#setupController for explanation.
+    if (isUser && userInstallation) return true;
     // this lets us check for the presence of an installation without trying to fetch it
     return !!this.get('account').belongsTo('installation').id();
   },

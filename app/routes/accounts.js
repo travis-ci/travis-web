@@ -80,6 +80,16 @@ export default TravisRoute.extend({
     orgs = model.filterBy('type', 'organization');
     controller.set('user', user);
     controller.set('organizations', orgs);
+
+    /**
+     * This preserves the user’s installation which gets somehow overwritten
+     * before account/repositories gets to render. This started with #1782;
+     * specifically, the createdBy: belongsTo('user') relationship on a build.
+     */
+    if (user.belongsTo('installation').id()) {
+      controller.set('userInstallation', user.get('installation'));
+    }
+
     return controller.set('model', model);
   },
 });

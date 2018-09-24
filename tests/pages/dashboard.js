@@ -1,4 +1,5 @@
 import {
+  attribute,
   create,
   visitable,
   clickable,
@@ -14,15 +15,21 @@ export default create({
   accountFilter: clickable('.dashboard-header .organisation-filter .option-list a:first-of-type'),
   syncButton: clickable('.dashboard-header .sync-button button'),
   syncButtonIsSyncing: hasClass('is-syncing', '.dashboard-header .sync-button button'),
-  activeRepos: collection('.dashboard-active .repo-list li.rows--dashboard', {
-    owner: text('.dash-header .row-label a'),
-    repoName: text('.dash-header .row-content a'),
-    defaultBranch: text('.dash-default .row-content a'),
-    lastBuild: text('.dash-last a .label-align'),
-    triggerBuild: clickable('.dash-menu .dropup-list li:first-of-type a'),
-    clickStarButton: clickable('.dash-head .dash-star'),
-    hasTofuButton: isVisible('.dash-menu .dropup')
-  }),
+
+  activeRepos: {
+    visit: clickable('[data-test-active-repos-tab]'),
+
+    repos: collection('.dashboard-active .repo-list li.rows--dashboard', {
+      owner: text('.dash-header .row-label a'),
+      repoName: text('.dash-header .row-content a'),
+      defaultBranch: text('.dash-default .row-content a'),
+      lastBuild: text('.dash-last a .label-align'),
+      triggerBuild: clickable('.dash-menu .dropup-list li:first-of-type a'),
+      clickStarButton: clickable('.dash-head .dash-star'),
+      hasTofuButton: isVisible('.dash-menu .dropup')
+    })
+  },
+
   starredRepos: collection('.dashboard-starred .repo-list li.rows--dashboard', {
     owner: text('.dash-header .row-label a'),
     repoName: text('.dash-header .row-content a'),
@@ -37,5 +44,49 @@ export default create({
     label: text('a'),
     page: clickable('a')
   }),
-  flashMessage: text('.flash li.success')
+  flashMessage: text('.flash li.success'),
+
+  myBuilds: {
+    visit: clickable('[data-test-my-builds-tab]'),
+
+    builds: collection('[data-test-my-build]', {
+      owner: {
+        scope: '[data-test-owner] a',
+        href: attribute('href'),
+      },
+
+      repo: {
+        scope: '[data-test-repo-name] a',
+        href: attribute('href'),
+      },
+
+      branch: {
+        scope: '[data-test-branch-name]',
+        href: attribute('href')
+      },
+
+      message: text('[data-test-commit-message]'),
+      stateAndNumber: {
+        scope: '[data-test-state-number]',
+        href: attribute('href'),
+        text: text('.inner-underline')
+      },
+
+      sha: {
+        scope: '[data-test-commit-sha]',
+        href: attribute('href')
+      },
+
+      duration: text('[data-test-duration]'),
+      finished: text('[data-test-finished]'),
+
+      isPublic: isVisible('.icon.public'),
+      isPrivate: isVisible('.icon.private'),
+
+      isPassed: isVisible('.icon.passed'),
+      isFailed: isVisible('.icon.failed'),
+
+      restart: clickable('.action-button--restart'),
+    })
+  }
 });

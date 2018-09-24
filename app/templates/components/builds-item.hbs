@@ -29,8 +29,7 @@
     {{/if}}
   </div>
   <div class="row-item row-committer">
-    {{user-avatar url=build.commit.authorAvatarUrl name=build.commit.authorName small=true size=18}}
-    <span class="label-align">{{build.commit.authorName}}</span>
+    {{created-by user=build.createdBy commit=build.commit committerOnly=true eventType=build.eventType}}
   </div>
 </div>
 
@@ -48,7 +47,7 @@
     {{/if}}
   </h3>
   <div class="row-item row-commit">
-    {{#external-link-to href=urlGithubCommit}}
+    {{#external-link-to href=build.commit.githubUrl}}
       {{tooltip-on-element text='View commit on GitHub'}}
       {{svg-jar 'icon-commit' class="icon"}}
       <span class="label-align inner-underline">{{format-sha build.commit.sha}}</span>

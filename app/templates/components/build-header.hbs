@@ -24,7 +24,7 @@
   {{/if}}
     <ul class="list-icon">
       <li>
-        {{#external-link-to href=urlGithubCommit}}
+        {{#external-link-to href=commit.githubUrl}}
           {{tooltip-on-element text='View commit on GitHub'}}
           {{svg-jar 'icon-commit' class="icon"}}
           <span class="label-align inner-underline commit-commit">Commit {{format-sha commit.sha}}</span>
@@ -72,16 +72,7 @@
     </ul>
 
     <p class="commit-author">
-      {{#if commit.authorName}}
-        {{user-avatar url=commit.authorAvatarUrl name=commit.authorName small=true size=18}}
-        <span class="label-align">{{commit.authorName}} authored{{#if commit.authorIsCommitter}} and committed{{/if}}</span>
-      {{/if}}
-      {{#unless commit.authorIsCommitter}}
-        {{#if commit.committerName}}
-          {{user-avatar url=commit.committerAvatarUrl name=commit.committerName small=true size=18}}
-          <span class="label-align">{{commit.committerName}} committed</span>
-        {{/if}}
-      {{/unless}}
+      {{created-by user=build.createdBy commit=commit eventType=build.eventType}}
     </p>
   </div>
 </div>
@@ -119,15 +110,15 @@
           {{else if item.toBeStarted}}
             Waiting to start
           {{else}}
-            {{if item.isFinished 'Ran for' 'Running for'}} <time datetime="PT{{elapsedTime}}S">{{format-duration elapsedTime}}</time>
+            {{if item.isFinished 'Ran for' 'Running for'}} <time datetime="PT{{item.elapsedTime}}S">{{format-duration item.elapsedTime}}</time>
           {{/if}}
         </span>
       </li>
     {{else}}
-      <li title="{{if elapsedTime (concat "Started " (pretty-date item.startedAt))}}" class="commit-stopwatch">
+      <li title="{{if item.elapsedTime (concat "Started " (pretty-date item.startedAt))}}" class="commit-stopwatch">
         {{svg-jar 'icon-stopwatch' class="icon--m"}}
         <span class="label-align">
-          {{if item.isFinished 'Ran for' 'Running for'}} <time datetime="PT{{elapsedTime}}S">{{format-duration elapsedTime}}</time>
+          {{if item.isFinished 'Ran for' 'Running for'}} <time datetime="PT{{item.elapsedTime}}S">{{format-duration item.elapsedTime}}</time>
         </span>
       </li>
     {{/if}}

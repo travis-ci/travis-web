@@ -47,7 +47,7 @@
 <div class="two-line">
   <div class="row-commit">
     <div class="row-item">
-      {{#external-link-to href=urlGithubCommit}}
+      {{#external-link-to href=branch.last_build.commit.githubUrl}}
         {{tooltip-on-element text='View commit on GitHub'}}
         {{svg-jar 'icon-commit' class="icon"}}
         <span class="inner-underline">
@@ -64,8 +64,7 @@
   <div class="row-commiter">
     <div class="row-item">
       {{#if branch.last_build}}
-          {{user-avatar url=branch.last_build.commit.committer.avatar_url name=branch.last_build.commit.committer.name small=true size=18}}
-          <span class="label-align">{{branch.last_build.commit.committer.name}}</span>
+        {{created-by user=createdBy commit=commit committerOnly=true eventType=branch.last_build.event_type}}
       {{else}}
         <div class="avatar--small"></div><span class="label-align">no commits yet</span>
       {{/if}}
