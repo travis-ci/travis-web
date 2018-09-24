@@ -55,6 +55,5 @@ script:
 
 after_script:
   - greenkeeper-lockfile-upload
-
-after_success:
+  # FIXME restore success check for PR deployments
   - "test $TRAVIS_PULL_REQUEST && test $TRAVIS_PULL_REQUEST != 'false' && $TRAVIS_SECURE_ENV_VARS == 'true' && ./config/deployment/deploy-pull-request.sh"
