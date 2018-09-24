@@ -51,15 +51,14 @@ Router.map(function () {
   this.route('plans', { path: '/plans' });
   this.route('team', { path: '/about' });
   this.route('logo', { path: '/logo' });
-  this.route('profile', { path: '/profile', resetNamespace: true }, function () {
-    this.route('accounts', { path: '/', resetNamespace: true }, function () {
-      this.route('account', { path: '/:login', resetNamespace: true }, function () {
-        this.route('repositories', { path: '/' });
-        this.route('settings');
-        this.route('billing', { path: '/subscription' }, () => {
-        });
-      });
-    });
+  this.route('profile', { path: '/profile/:login/:section' });
+  this.route('account', function () {
+    this.route('repositories');
+    this.route('settings', { path: '/preferences' });
+    this.route('billing', { path: '/subscription' }, () => {});
+  });
+  this.route('organization', { path: '/organizations/:login' }, function () {
+    this.route('repositories');
   });
   this.route('owner', { path: '/:owner', resetNamespace: true }, function () {
     this.route('repositories', { path: '/' });
