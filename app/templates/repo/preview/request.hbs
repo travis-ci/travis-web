@@ -1,11 +1,11 @@
   {{#if yaml}}
-    <YamlEditor @yaml={{yaml}} @messages={{build.request.messages}} />
+    <YamlEditor @yaml={{buffer.yaml}} @messages={{build.request.messages}} />
 
-    Event type: {{input value=eventType}}
+    Event type: {{input value=buffer.eventType}}
 
-    Commit message: {{input value=commitMessage}}
+    Commit message: {{input value=buffer.commitMessage}}
 
-    <button type='submit' {{action (perform fetch)}} class='button--white'>
+    <button type='submit' {{action 'submit'}} class='button--white'>
       Submit {{#if fetch.isRunning}}{{loading-indicator}}{{/if}}
     </button>
 
