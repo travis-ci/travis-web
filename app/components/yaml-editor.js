@@ -4,6 +4,8 @@ import yamlKeyFinder from 'travis/utils/yaml-key-finder';
 import $ from 'jquery';
 
 export default Component.extend({
+  tagName: '',
+
   @computed('yaml', 'messages.[]')
   annotations(yaml, messages) {
     return messages.reduce((annotations, message) => {
