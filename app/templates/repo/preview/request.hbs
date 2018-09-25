@@ -19,7 +19,10 @@
     </div>
 
     {{build-messages-list messagesRequest=requestForMessagesWithoutAnnotations}}
-    {{#if requestForMessagesWithoutAnnotations.messages.length}}The above messages could not be converted to <code>.travis.yml</code> annotations 🤔{{/if}}
+    {{#if requestForMessagesWithoutAnnotations.messages.length}}
+      The above {{pluralize requestForMessagesWithoutAnnotations.messages.length 'message' without-count=true}}
+      could not be converted to <code>.travis.yml</code> annotations 🤔
+    {{/if}}
 
     {{#if stages}}
       {{#each stages as |stage|}}
