@@ -10,6 +10,8 @@ export default Component.extend({
 
     $('textarea').scroll((e) => {
       updateAnnotations(-e.target.scrollTop);
+    }).mouseup(e => {
+      updateAnnotations(-e.target.scrollTop);
     });
 
     updateAnnotations(0);
