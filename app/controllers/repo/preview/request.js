@@ -46,6 +46,20 @@ export default Controller.extend({
     }, []);
   },
 
+  @computed('annotations.@each.message', 'build.request.messages.[]')
+  messagesWithoutAnnotations() {
+    let messagesWithAnnotations = this.get('annotations').mapBy('message');
+    return this.get('build.request.messages')
+      .reject(message => messagesWithAnnotations.includes(message));
+  },
+
+  @computed('messagesWithoutAnnotations.[]')
+  requestForMessagesWithoutAnnotations() {
+    return {
+      messages: this.get('messagesWithoutAnnotations')
+    };
+  },
+
   actions: {
     submit() {
       this.get('buffer').applyBufferedChanges();

@@ -18,7 +18,8 @@
       </div>
     </div>
 
-    {{build-messages-list messagesRequest=build.request}}
+    {{build-messages-list messagesRequest=requestForMessagesWithoutAnnotations}}
+    {{#if requestForMessagesWithoutAnnotations.messages.length}}The above messages could not be converted to <code>.travis.yml</code> annotations 🤔{{/if}}
 
     {{#if stages}}
       {{#each stages as |stage|}}
