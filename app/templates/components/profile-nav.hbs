@@ -19,10 +19,10 @@
     </ul>
   </section>
 
-  {{#if (config-get 'githubOrgsOauthAccessSettingsUrl')}}
+  {{#if githubOrgsOauthAccessSettingsUrl}}
     <section class="profile-additional no-divider">
       <h2>Missing an organization?</h2>
-      <a href={{config-get 'githubOrgsOauthAccessSettingsUrl'}} title="Organizations Oauth Access Settings on GitHub">Review and add</a> your authorized organizations.
+      <a href={{githubOrgsOauthAccessSettingsUrl}} title="Organizations Oauth Access Settings on GitHub">Review and add</a> your authorized organizations.
     </section>
   {{/if}}
 

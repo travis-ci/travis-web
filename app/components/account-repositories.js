@@ -1,19 +1,19 @@
 import Component from '@ember/component';
 import { computed, action } from 'ember-decorators/object';
-import { service } from 'ember-decorators/service';
+import { inject as service } from '@ember/service';
 import config from 'travis/config/environment';
 
 import window from 'ember-window-mock';
 import { task } from 'ember-concurrency';
 import fetchAll from 'travis/utils/fetch-all';
 
-import { reads, sort } from '@ember/object/computed';
+import { reads, sort, notEmpty } from '@ember/object/computed';
 
 const { appName, migrationRepositoryCountLimit } = config.githubApps;
 
 export default Component.extend({
-  @service features: null,
-  @service store: null,
+  features: service(),
+  store: service(),
 
   page: 1,
   appsPage: 1,
@@ -24,10 +24,10 @@ export default Component.extend({
   deprecated: null,
   lockedGithubAppsRepositories: null,
   notLockedGithubAppsRepositories: null,
-  // TODO send to component from outside
-  accountsController: null,
 
-  migrationRepositoryCountLimit,
+  get migrationRepositoryCountLimit() {
+    return migrationRepositoryCountLimit;
+  },
 
   deprecatedSorting: ['name'],
   sortedRepositories: sort('deprecated', 'deprecatedSorting'),
@@ -49,13 +49,7 @@ export default Component.extend({
     }
   },
 
-  @computed('account.id', 'accountsController.userInstallation', 'account.isUser')
-  hasGitHubAppsInstallation(installationId, userInstallation, isUser) {
-    // See controllers:accounts#setupController for explanation.
-    if (isUser && userInstallation) return true;
-    // this lets us check for the presence of an installation without trying to fetch it
-    return !!this.get('account').belongsTo('installation').id();
-  },
+  hasGitHubAppsInstallation: notEmpty('account.installation.id'),
 
   @computed('hasGitHubAppsInstallation', 'deprecated.pagination.total')
   canMigrate(hasGitHubAppsInstallation, legacyRepositoryCount) {

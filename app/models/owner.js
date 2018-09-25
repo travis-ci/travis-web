@@ -5,12 +5,12 @@ import { computed } from 'ember-decorators/object';
 import config from 'travis/config/environment';
 
 export default Model.extend({
-  name: attr(),
-  login: attr(),
+  name: attr('string'),
+  login: attr('string'),
   isSyncing: attr('boolean'),
   syncedAt: attr(),
-  avatarUrl: attr(),
-  githubId: attr(),
+  avatarUrl: attr('string'),
+  githubId: attr('string'),
   education: attr('boolean'),
 
   // These are inserted artificially by routes:accounts
@@ -18,29 +18,25 @@ export default Model.extend({
   subscriptionError: attr('boolean'),
   trial: attr(),
 
-  installation: belongsTo({async: false}),
+  installation: belongsTo('installation', { async: false }),
 
   // This is set by serializers:subscription
   subscriptionPermissions: attr(),
 
   @computed('subscription', 'subscription.permissions.write', 'subscriptionPermissions.create')
   hasSubscriptionPermissions(subscription, writePermissions, createPermissions) {
-    if (subscription) {
-      return writePermissions;
-    } else {
-      return createPermissions;
-    }
+    return subscription ? writePermissions : createPermissions;
   },
 
-  @computed('type', 'login')
-  billingUrl(type, login) {
-    let id = type === 'user' ? 'user' : login;
+  @computed('isUser', 'login')
+  billingUrl(isUser, login) {
+    let id = isUser ? 'user' : login;
     return `${config.billingEndpoint}/subscriptions/${id}`;
   },
 
-  @computed('type', 'login')
-  newSubscriptionUrl(type, login) {
-    let id = type === 'user' ? 'user' : login;
+  @computed('isUser', 'login')
+  newSubscriptionUrl(isUser, login) {
+    let id = isUser ? 'user' : login;
     return `${config.billingEndpoint}/subscriptions/new?id=${id}`;
   }
 });

@@ -19,8 +19,7 @@ export default TravisRoute.extend({
       compoundFetch.trialsFetched = true;
     }
 
-    return hash(compoundFetch).then(({ accounts, subscriptions, subscriptionsFetched,
-      trials, trialsFetched}) => {
+    return hash(compoundFetch).then(({ accounts, subscriptions, subscriptionsFetched, trials, trialsFetched}) => {
       if (subscriptionsFetched) {
         if (subscriptions) {
           accounts.forEach(account => {

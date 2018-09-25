@@ -4,7 +4,7 @@ import { reads, or, and } from '@ember/object/computed';
 import { computed } from 'ember-decorators/object';
 import config from 'travis/config/environment';
 
-const { billingEndpoint } = config;
+const { billingEndpoint, githubOrgsOauthAccessSettingsUrl } = config;
 
 export default Component.extend({
   tagName: '',
@@ -21,6 +21,10 @@ export default Component.extend({
   billingUrl: or('model.subscription.billingUrl', 'model.billingUrl'),
 
   showSubscriptionStatusBanner: and('checkSubscriptionStatus', 'account.subscriptionError'),
+
+  get githubOrgsOauthAccessSettingsUrl() {
+    return githubOrgsOauthAccessSettingsUrl;
+  },
 
   @computed('features.enterpriseVersion')
   checkSubscriptionStatus(enterprise) {
