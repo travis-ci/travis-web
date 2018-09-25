@@ -9,7 +9,8 @@ export default TravisRoute.extend({
     let eventTypes = ['api', 'pull_request', 'push'];
     let query = {
       limit: 30,
-      event_type: eventTypes.join(',')
+      event_type: eventTypes.join(','),
+      include: 'build.jobs'
     };
 
     return this.store.filter('build', query, build =>
