@@ -21,6 +21,7 @@
 
   .below {
     top: 100%;
+    margin-top: -14px;
   }
 
   .annotations.any-above ~ .above, .annotations.any-below ~ .below {
