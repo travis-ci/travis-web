@@ -69,6 +69,12 @@
     a:active {
       border-bottom: 1px solid $asphalt-grey;
     }
+
+    &.no-hover {
+      a:hover, a:active {
+        border-bottom-width: 0;
+      }
+    }
   }
 }
 

@@ -1,7 +1,5 @@
-<a href={{href}} class={{class}} target="_blank" title={{title}} rel="noopener noreferrer">
-  {{#if hasBlock}}
-    {{yield}}
-  {{else}}
-    {{content}}
-  {{/if}}
-</a>
+{{#if hasBlock}}
+  {{yield}}
+{{else}}
+  {{content}}
+{{/if}}
