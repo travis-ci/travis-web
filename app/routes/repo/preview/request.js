@@ -43,7 +43,7 @@ export default TravisRoute.extend({
         headers: new Headers(headers)
       });
     }).then(response => response.json()).then(json => {
-      let yaml = get(json, 'request.yaml_config.yaml');
+      let yaml = params.yaml || get(json, 'request.yaml_config.yaml');
 
       if (yaml) {
         let jobs;
