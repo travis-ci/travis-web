@@ -1,6 +1,6 @@
   {{#if yaml}}
     <div class='yaml-editor-and-controls'>
-      <YamlEditor @yaml={{buffer.yaml}} @messages={{build.request.messages}} />
+      <YamlEditor @yaml={{buffer.yaml}} @annotations={{annotations}} />
       <div class='controls'>
         Event type:
         {{#x-select value=buffer.eventType action=(action (mut buffer.eventType)) as |xs|}}
