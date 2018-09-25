@@ -5,7 +5,7 @@ export default Component.extend({
   tagName: '',
 
   // FIXME Is there no way to bind to scrollTop? 😐
-  didRender() {
+  didInsertElement() {
     this._super(...arguments);
 
     $('textarea').scroll((e) => {
