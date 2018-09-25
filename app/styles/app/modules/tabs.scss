@@ -101,7 +101,8 @@ $border-size: 2px;
   #tab_request,
   #tab_requests,
   #tab_caches,
-  #tab_settings {
+  #tab_settings,
+  #tab_preview {
     display: none;
 
     &.active {

@@ -77,6 +77,13 @@ export default Component.extend({
   },
 
   @computed('tab')
+  classPreview(tab) {
+    if (tab === 'preview') {
+      return 'active';
+    }
+  },
+
+  @computed('tab')
   classSettings(tab) {
     if (tab === 'settings') {
       return 'active';

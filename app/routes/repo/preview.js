@@ -5,5 +5,10 @@ export default TravisRoute.extend({
     return this.store.query('request', {
       repository_id: this.modelFor('repo').get('id')
     });
+  },
+
+  setupController() {
+    this._super(...arguments);
+    return this.controllerFor('repo').activate('preview');
   }
 });
