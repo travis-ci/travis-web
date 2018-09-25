@@ -21,7 +21,7 @@ export default Controller.extend({
       let code = message.code;
       let key = message.key;
 
-      if (code === 'unknown_key') {
+      if (code === 'unknown_key' || code === 'empty') {
         if (key === 'root') {
           key = message.args.key;
         } else {
