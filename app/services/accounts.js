@@ -4,6 +4,7 @@ import { computed } from 'ember-decorators/object';
 import { reads, bool } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
 import config from 'travis/config/environment';
+import fetchAll from 'travis/utils/fetch-all';
 
 const { billingEndpoint } = config;
 
@@ -20,12 +21,13 @@ export default Service.extend({
 
   @computed('user', 'organizations.@each')
   all(user, organizations = []) {
-    return organizations.unshift(user);
+    return organizations.concat([user]);
   },
 
   fetchOrganizations: task(function* () {
-    // limit of 100 orgs seems to be enough for all users, so no need to `fetchAll`
-    return yield this.store.findAll('organization') || [];
+    yield fetchAll(this.store, 'organization', {});
+    const organizations = this.store.peekAll('organization') || [];
+    return organizations;
   }).keepLatest(),
 
   fetchSubscriptions: task(function* () {
@@ -42,7 +44,7 @@ export default Service.extend({
     this.fetchOrganizations.perform();
     if (billingEndpoint) {
       this.fetchSubscriptions.perform();
-      this.fetchTrial.perform();
+      this.fetchTrials.perform();
     }
   },
 
