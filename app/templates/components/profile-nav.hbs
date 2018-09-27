@@ -65,18 +65,26 @@
           {{#link-to 'account.settings'}}Settings{{/link-to}}
         </li>
 
+        {{#if checkSubscriptionStatus}}
+          <li data-test-billing-tab>
+            {{#link-to 'account.billing'}}Subscription{{/link-to}}
+          </li>
+        {{/if}}
+
       {{/if}}
 
       {{#if model.isOrganization}}
+
         <li>
           {{#link-to 'organization.repositories' model }}Repositories{{/link-to}}
         </li>
-      {{/if}}
 
-      {{#if checkSubscriptionStatus}}
-        <li data-test-billing-tab>
-          {{#link-to 'account.billing'}}Subscription{{/link-to}}
-        </li>
+        {{#if checkSubscriptionStatus}}
+          <li data-test-billing-tab>
+            {{#link-to 'organization.billing' model}}Subscription{{/link-to}}
+          </li>
+        {{/if}}
+
       {{/if}}
 
     </ul>

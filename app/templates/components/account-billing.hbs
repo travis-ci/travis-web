@@ -1,13 +1,13 @@
 <section class='billing'>
-  {{#unless model.subscriptions}}
-    {{billing-trial model=model account=account config=config}}
-  {{/unless}}
+  {{#if isTrial}}
+    {{billing-trial account=account}}
+  {{/if}}
 
-  {{#if model.subscriptions.isManual}}
+  {{#if isManual}}
     {{billing-manual model=model}}
   {{/if}}
 
-  {{#if model.subscriptions.managedSubscription}}
+  {{#if isManaged}}
     {{billing-subscription model=model account=account config=config}}
   {{/if}}
 </section>
