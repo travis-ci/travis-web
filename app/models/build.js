@@ -10,7 +10,7 @@ import attr from 'ember-data/attr';
 import { hasMany, belongsTo } from 'ember-data/relationships';
 import { service } from 'ember-decorators/service';
 import { computed } from 'ember-decorators/object';
-import { alias } from 'ember-decorators/object/computed';
+import { alias, not } from 'ember-decorators/object/computed';
 
 import moment from 'moment';
 
@@ -122,11 +122,7 @@ export default Model.extend(DurationCalculations, {
     });
   },
 
-  @computed('jobs.@each.canCancel')
-  canCancel(jobs) {
-    return !isEmpty(jobs.filterBy('canCancel'));
-  },
-
+  @not('isFinished') canCancel: null,
   @alias('isFinished') canRestart: null,
 
   cancel() {
