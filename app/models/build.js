@@ -1,6 +1,5 @@
 import { all } from 'rsvp';
 
-import { isEmpty } from '@ember/utils';
 import safelistedConfigKeys from 'travis/utils/safelisted-config-keys';
 import pickBy from 'lodash.pickby';
 import configKeysMap from 'travis/utils/keys-map';
