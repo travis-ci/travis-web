@@ -21,7 +21,7 @@
         <span class="label-align">Restart {{type}}</span>
       </button>
     </div>
-    {{#if (and features.debugBuilds canDebug)}}
+    {{#if (and features.debugBuilds canDebug allowDebugging)}}
       <div class='action-button-container'>
         <button data-test-repo-actions-debug-button {{action (perform debug)}} class="action-button--debug" aria-label="Restart as debug {{type}}" type="button">
           {{#if tooltips}}{{#tooltip-on-element class=(if mobilelabels 'hidden-on-mobile')}}Restart as debug {{type}}{{/tooltip-on-element}}{{/if}}
