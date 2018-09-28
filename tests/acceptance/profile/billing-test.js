@@ -510,3 +510,21 @@ test('view billing tab with Github trial subscription has ended', function (asse
     assert.ok(profilePage.billing.annualInvitation.isHidden);
   });
 });
+
+test('view billing tab on education account', function (assert) {
+  this.subscription = null;
+  this.organization.attrs.education = true;
+  this.organization.permissions = { createSubscription: true };
+  this.organization.save();
+
+  profilePage.visit({
+    username: 'org-login'
+  });
+  profilePage.billing.visit();
+
+  andThen(() => {
+    percySnapshot(assert);
+    assert.equal(profilePage.billing.education.name, 'This is an educational account and includes a single build plan. Need help? Check our getting started guide');
+    assert.equal(profilePage.billing.manageButton.text, 'New subscription');
+  });
+});

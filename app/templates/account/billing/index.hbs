@@ -1,8 +1,8 @@
 <section class='billing'>
-  {{#if account.education}}
-    {{billing-subscription model=model account=account config=config}}
+  {{#if isEducation}}
+    {{billing-education model=model account=account config=config}}
   {{/if}}
-  
+
   {{#if isTrial}}
     {{billing-trial model=model account=account config=config}}
   {{/if}}
