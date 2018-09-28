@@ -42,6 +42,9 @@
     </div>
   </header>
 
+  {{log showSubscriptionStatusBanner}}
+  {{log checkSubscriptionStatus}}
+  {{log model.subscriptionError}}
   {{#if showSubscriptionStatusBanner}}
     {{subscription-status-banner
       color="yellow"

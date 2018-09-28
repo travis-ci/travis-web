@@ -16,7 +16,7 @@ export default Service.extend({
   organizations: reads('fetchOrganizations.lastSuccessful.value'),
 
   subscriptions: reads('fetchSubscriptions.lastSuccessful.value'),
-  subscriptionError: bool('fetchSubscriptions.last.error'),
+  subscriptionError: false,
   trials: reads('fetchTrials.lastSuccessful.value'),
 
   @computed('user', 'organizations.@each')
@@ -31,8 +31,13 @@ export default Service.extend({
   }).keepLatest(),
 
   fetchSubscriptions: task(function* () {
-    const subscriptions = yield this.store.findAll('subscription') || [];
-    return subscriptions.sortBy('validTo');
+    this.set('subscriptionError', false);
+    try {
+      const subscriptions = yield this.store.findAll('subscription') || [];
+      return subscriptions.sortBy('validTo');
+    } catch (e) {
+      this.set('subscriptionError', true);
+    }
   }),
 
   fetchTrials: task(function* () {

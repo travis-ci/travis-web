@@ -2,7 +2,7 @@ import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
 import { belongsTo } from 'ember-data/relationships';
 import { computed } from 'ember-decorators/object';
-import { bool } from '@ember/object/computed';
+import { reads } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import config from 'travis/config/environment';
 
@@ -23,7 +23,7 @@ export default Model.extend({
 
   installation: belongsTo('installation', { async: false }),
 
-  subscriptionError: bool('accounts.subscriptionError'),
+  subscriptionError: reads('accounts.subscriptionError'),
 
   @computed('accounts.subscriptions.@each.{validTo,owner,isSubscribed}', 'login')
   subscription(subscriptions = [], login) {

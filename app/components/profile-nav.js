@@ -20,7 +20,7 @@ export default Component.extend({
   accountName: or('model.name', 'model.login'),
   billingUrl: or('model.subscription.billingUrl', 'model.billingUrl'),
 
-  showSubscriptionStatusBanner: and('checkSubscriptionStatus', 'account.subscriptionError'),
+  showSubscriptionStatusBanner: and('checkSubscriptionStatus', 'model.subscriptionError'),
 
   get githubOrgsOauthAccessSettingsUrl() {
     return githubOrgsOauthAccessSettingsUrl;

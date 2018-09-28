@@ -43,6 +43,7 @@ Router.map(function () {
     this.route('billing', { path: '/subscription' });
   });
   this.route('unsubscribe', { path: '/account/preferences/unsubscribe' });
+  this.route('profile', { path: '/profile/:login' });
   this.route('profile', { path: '/profile/:login/:section' });
 
   this.route('repo', { path: '/:owner/:name' }, function () {
