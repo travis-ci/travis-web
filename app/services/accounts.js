@@ -21,7 +21,7 @@ export default Service.extend({
 
   @computed('user', 'organizations.@each')
   all(user, organizations = []) {
-    return organizations.concat([user]);
+    return organizations.toArray().concat([user]);
   },
 
   fetchOrganizations: task(function* () {

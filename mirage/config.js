@@ -54,7 +54,7 @@ export default function () {
   });
 
   this.get('/users/:id', function ({ users }, request) {
-    return this.serialize(users.find(request.params.id), 'v2');
+    return this.serialize(users.find(request.params.id), 'user');
   });
 
   this.get('/users/permissions', (schema, request) => {

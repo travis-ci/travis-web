@@ -49,7 +49,7 @@ export default Component.extend({
     }
   },
 
-  hasGitHubAppsInstallation: notEmpty('account.installation.id'),
+  hasGitHubAppsInstallation: notEmpty('account.installation'),
 
   @computed('hasGitHubAppsInstallation', 'deprecated.pagination.total')
   canMigrate(hasGitHubAppsInstallation, legacyRepositoryCount) {

@@ -20,7 +20,7 @@ export default SimpleLayoutRoute.extend({
     let controller = this.controllerFor('firstSync');
     if (!controller.get('isSyncing')) {
       return later(this, function () {
-        return this.transitionTo('profile');
+        return this.transitionTo('account');
       }, config.timing.syncingPageRedirectionTime);
     }
   },
