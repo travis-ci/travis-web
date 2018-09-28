@@ -45,9 +45,9 @@ export default Model.extend({
     return subscription ? writePermissions : createPermissions;
   },
 
-  @computed('isUser', 'login')
-  billingUrl(isUser, login) {
-    let id = isUser ? 'user' : login;
+  @computed('type', 'login')
+  billingUrl(type, login) {
+    let id = type === 'user' ? 'user' : login;
     return `${config.billingEndpoint}/subscriptions/${id}`;
   },
 

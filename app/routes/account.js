@@ -7,8 +7,8 @@ export default TravisRoute.extend({
 
   needsAuth: true,
 
-  titleToken({ account = {} }) {
-    return account.name || account.login || 'Account';
+  titleToken(account = {}) {
+    return `${account.name || account.login || 'Account'} - Profile`;
   },
 
   model() {

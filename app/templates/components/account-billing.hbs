@@ -4,11 +4,11 @@
   {{/if}}
 
   {{#if isManual}}
-    {{billing-manual model=model}}
+    {{billing-manual subscription=subscription}}
   {{/if}}
 
   {{#if isManaged}}
-    {{billing-subscription model=model account=account config=config}}
+    {{billing-subscription account=account}}
   {{/if}}
 </section>
 

@@ -19,6 +19,7 @@ export default Owner.extend({
   token: attr(),
   gravatarId: attr(),
 
+  type: 'user',
   isUser: true,
 
   @computed('name', 'login')
