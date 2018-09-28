@@ -29,70 +29,75 @@
 </aside>
 <article class="profile-main">
 
-  <header class="profile-header">
-    <div class='left'>
-      {{user-avatar account=model url=model.avatarUrl name=model.name size=96 showSubscriptionStatus=true}}
-      <div class='account-details'>
-        <h1 class="h2--grey">{{accountName}}</h1>
-        <div class='addenda'>
-          <span class='login'>@{{model.login}}</span>
-          {{#if model.education}}<span class='badge square grey'>Education</span>{{/if}}
+  {{#unless model.error}}
+
+    <header class="profile-header">
+      <div class='left'>
+        {{user-avatar account=model url=model.avatarUrl name=model.name size=96 showSubscriptionStatus=true}}
+        <div class='account-details'>
+          <h1 class="h2--grey">{{accountName}}</h1>
+          <div class='addenda'>
+            <span class='login'>@{{model.login}}</span>
+            {{#if model.education}}<span class='badge square grey'>Education</span>{{/if}}
+          </div>
         </div>
       </div>
-    </div>
-  </header>
+    </header>
 
-  {{log showSubscriptionStatusBanner}}
-  {{log checkSubscriptionStatus}}
-  {{log model.subscriptionError}}
-  {{#if showSubscriptionStatusBanner}}
-    {{subscription-status-banner
-      color="yellow"
-      message="There was an error determining your subscription status."
-      billingLinkText="Visit billing"
-      billingUrl=billingUrl
-      showLink=model.subscriptionPermissions.create
-    }}
-  {{/if}}
+    {{#if showSubscriptionStatusBanner}}
+      {{subscription-status-banner
+        color="yellow"
+        message="There was an error determining your subscription status."
+        billingLinkText="Visit billing"
+        billingUrl=billingUrl
+        showLink=model.subscriptionPermissions.create
+      }}
+    {{/if}}
 
-  <nav class='travistab-nav'>
-    <ul>
+    <nav class='travistab-nav'>
+      <ul>
 
-      {{#if model.isUser}}
+        {{#if model.isUser}}
 
-        <li>
-          {{#link-to 'account.repositories'}}Repositories{{/link-to}}
-        </li>
-
-        <li data-test-settings-tab>
-          {{#link-to 'account.settings'}}Settings{{/link-to}}
-        </li>
-
-        {{#if checkSubscriptionStatus}}
-          <li data-test-billing-tab>
-            {{#link-to 'account.billing'}}Subscription{{/link-to}}
+          <li>
+            {{#link-to 'account.repositories'}}Repositories{{/link-to}}
           </li>
+
+          <li data-test-settings-tab>
+            {{#link-to 'account.settings'}}Settings{{/link-to}}
+          </li>
+
+          {{#if checkSubscriptionStatus}}
+            <li data-test-billing-tab>
+              {{#link-to 'account.billing'}}Subscription{{/link-to}}
+            </li>
+          {{/if}}
+
         {{/if}}
 
-      {{/if}}
+        {{#if model.isOrganization}}
 
-      {{#if model.isOrganization}}
-
-        <li>
-          {{#link-to 'organization.repositories' model }}Repositories{{/link-to}}
-        </li>
-
-        {{#if checkSubscriptionStatus}}
-          <li data-test-billing-tab>
-            {{#link-to 'organization.billing' model}}Subscription{{/link-to}}
+          <li>
+            {{#link-to 'organization.repositories' model }}Repositories{{/link-to}}
           </li>
+
+          {{#if checkSubscriptionStatus}}
+            <li data-test-billing-tab>
+              {{#link-to 'organization.billing' model}}Subscription{{/link-to}}
+            </li>
+          {{/if}}
+
         {{/if}}
 
-      {{/if}}
+      </ul>
+    </nav>
 
-    </ul>
-  </nav>
+    {{yield}}
 
-  {{yield}}
+  {{else}}
+
+    {{no-account name=model.login}}
+
+  {{/unless}}
 
 </article>

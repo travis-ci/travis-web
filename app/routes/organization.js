@@ -6,8 +6,8 @@ export default TravisRoute.extend({
 
   needsAuth: true,
 
-  titleToken({ org = {} }) {
-    return org.name || org.login || 'Organization';
+  titleToken(org = {}) {
+    return `${org.error ? 'Account' : org.name || org.login} - Profile`;
   },
 
   beforeModel() {

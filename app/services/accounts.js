@@ -1,7 +1,7 @@
 import Service from '@ember/service';
 import { service } from 'ember-decorators/service';
 import { computed } from 'ember-decorators/object';
-import { reads, bool } from '@ember/object/computed';
+import { reads } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
 import config from 'travis/config/environment';
 import fetchAll from 'travis/utils/fetch-all';

@@ -85,13 +85,13 @@ test('no settings for org', function (assert) {
 
   andThen(() => {
     assert.ok(profilePage.settings.isHidden);
-    assert.equal(currentURL(), '/profile/org-login');
+    assert.equal(currentURL(), '/organizations/org-login/repositories');
   });
 
-  visit('/profile/org-login/settings');
+  visit('/organizations/org-login/preferences');
 
   andThen(() => {
-    assert.equal(currentURL(), '/profile/org-login');
+    assert.equal(currentURL(), '/organizations/org-login/repositories');
   });
 });
 
