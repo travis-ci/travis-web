@@ -16,7 +16,7 @@ export default (function () {
     this.window.scroll(() => {
       throttle(this, this.onScroll, [], 200, false);
     });
-    try { this.sticky = CSS.supports('position: sticky'); } catch (e) { this.sticky = false; }
+    // try { this.sticky = CSS.supports('position: sticky'); } catch (e) { this.sticky = false; }
     return this;
   }
 
@@ -36,7 +36,7 @@ export default (function () {
     let container, containerHeight, element, max, offset, windowHeight;
     element = this.element();
     container = this.container();
-    if (element.length === 0 || this.sticky === true) {
+    if (element.length === 0 || element.css('position') === 'sticky') {
       return;
     }
     containerHeight = container.outerHeight();
