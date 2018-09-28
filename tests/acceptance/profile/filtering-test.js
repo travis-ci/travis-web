@@ -92,8 +92,9 @@ test('filter profile repositories', function (assert) {
 test('paginate and filter GitHub Apps-managed repositories', function (assert) {
   withFeature('github-apps');
 
-  this.userInstallation = server.create('installation', {
-    owner: this.user
+  server.create('installation', {
+    owner: this.user,
+    github_id: 2691
   });
   this.user.save();
 
