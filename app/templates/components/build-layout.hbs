@@ -13,14 +13,7 @@
         {{build-tabs build=build}}
         {{build-messages-list repo=repo build=build}}
         {{#if jobsLoaded}}
-          {{#if build.stages}}
-            {{#each sortedBuildStages as |stage|}}
-              {{jobs-list stage=stage build=build repo=repo stages=sortedBuildStages}}
-            {{/each}}
-          {{else}}
-            {{jobs-list jobs=build.requiredJobs repo=repo required="true"}}
-            {{jobs-list jobs=build.allowedFailureJobs repo=repo}}
-          {{/if}}
+         {{! ?? moved to index?? }}
         {{else}}
           {{loading-indicator center=true}}
         {{/if}}
