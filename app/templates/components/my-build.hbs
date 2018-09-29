@@ -23,11 +23,14 @@
       </div>
       <div class='row-content no-hover'>
         {{#external-link-to data-test-branch-name href=urlGitHubBranch}}
-          {{ember-tooltip text='View branch on GitHub'}}
           {{svg-jar 'icon-branch' class="icon"}}
           <span class='label-align inner-underline'>{{build.branchName}}</span>
           {{svg-jar 'icon-external-link' class="icon"}}
         {{/external-link-to}}
+      </div>
+      {{! This has to be outside the row-content because it overflows it }}
+      <div class='tooltip-container'>
+        {{ember-tooltip text='View branch on GitHub'}}
       </div>
     </section>
 
