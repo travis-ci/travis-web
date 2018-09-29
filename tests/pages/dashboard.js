@@ -74,6 +74,7 @@ export default create({
 
       sha: {
         scope: '[data-test-commit-sha]',
+        text: text('.label-align'),
         href: attribute('href')
       },
 
