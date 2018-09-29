@@ -27,6 +27,12 @@ export default Controller.extend({
         } else {
           key = `${key}.${message.args.key}`;
         }
+      } else if (code === 'underscore_key' || code === 'find_key' || code === 'clean_key') {
+        if (key === 'root') {
+          key = message.args.original;
+        } else {
+          key = `${key}.${message.args.original}`;
+        }
       } else if (key === 'root') {
         if (code === 'alias') {
           key = message.args.alias;
