@@ -29,6 +29,11 @@
         {{job-tabs job=job repo=repo}}
         {{job-log data-test-job-log job=job}}
       {{/if}}
+
+      {{#code-block data-test-yaml language='yaml' class='codedisplay'}}
+        {{format-config build.yaml}}
+      {{/code-block}}
+
     {{/if}}
 
   {{else}}

@@ -392,7 +392,7 @@ export default {
           }
         ]
       },
-      "attributes": ["id","number","state","duration","event_type","previous_state","pull_request_title","pull_request_number","started_at","finished_at","repository","branch","commit","jobs","stages","created_by","request"],
+      "attributes": ["id","number","state","duration","event_type","previous_state","pull_request_title","pull_request_number","started_at","finished_at","repository","branch","commit","jobs","stages","created_by","request","yaml"],
       "representations": {
         "minimal": [
           "id",
@@ -422,7 +422,8 @@ export default {
           "commit",
           "jobs",
           "stages",
-          "created_by"
+          "created_by",
+          "yaml"
         ]
       },
       "permissions": [

@@ -66,4 +66,6 @@ export default create({
   }),
 
   buildNotFoundMessage: text('h2.page-title'),
+
+  yaml: text('[data-test-yaml]'),
 });

@@ -44,6 +44,8 @@ export default Model.extend(DurationCalculations, {
 
   createdBy: belongsTo('user'),
 
+  yaml: 'hello: yello',
+
   @alias('stages.isSettled') stagesAreLoaded: null,
 
   @computed('_config', 'currentState.stateName')
