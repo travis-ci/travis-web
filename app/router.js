@@ -28,6 +28,7 @@ Router.map(function () {
     this.route('branches', { path: '/branches', resetNamespace: true });
     this.route('build', { path: '/builds/:build_id', resetNamespace: true }, function () {
       this.route('config');
+      this.route('yaml');
     });
     this.route('job', { path: '/jobs/:job_id', resetNamespace: true }, function () {
       this.route('config');

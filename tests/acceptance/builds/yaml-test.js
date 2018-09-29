@@ -32,6 +32,8 @@ module('Acceptance | builds/yaml', function (hooks) {
     await visit(`/travis-ci/travis-web/builds/${build.id}`);
 
     // assert.equal(document.title, 'FIXME - travis-ci/travis-web - Travis CI');
+    await page.yamlTab.click();
+
     assert.equal(page.yaml, 'language: jortle sudo: tortle');
 
     percySnapshot(assert);

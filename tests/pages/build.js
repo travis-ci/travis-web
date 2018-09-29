@@ -67,5 +67,9 @@ export default create({
 
   buildNotFoundMessage: text('h2.page-title'),
 
+  yamlTab: {
+    click: clickable('[data-test-build-yaml-tab]')
+  },
+
   yaml: text('[data-test-yaml]'),
 });

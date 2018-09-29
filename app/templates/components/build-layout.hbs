@@ -10,6 +10,7 @@
       <p data-test-no-jobs-error-message class="notice-banner--red">Sorry, we're having troubles fetching jobs. Please try again later.</p>
     {{else}}
       {{#if build.isMatrix}}
+        {{build-tabs build=build}}
         {{build-messages-list repo=repo build=build}}
         {{#if jobsLoaded}}
           {{#if build.stages}}
@@ -29,9 +30,6 @@
         {{job-tabs job=job repo=repo}}
         {{job-log data-test-job-log job=job}}
       {{/if}}
-
-      {{#code-block data-test-yaml language='yaml' class='codedisplay'}}{{build.request.yaml_config}}{{/code-block}}
-
     {{/if}}
 
   {{else}}

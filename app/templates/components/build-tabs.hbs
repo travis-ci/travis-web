@@ -1,0 +1,11 @@
+<nav class="travistab-nav--secondary">
+  <ul>
+    <li>{{link-to 'Build matrix?' 'build.index' build.repo build data-test-build-matrix-tab title="Look at this build matrix"}}</li>
+    <li>{{link-to 'View .travis.yml' 'build.yaml' build.repo build data-test-build-yaml-tab title="Look at this build's .travis.yml"}}</li>
+  </ul>
+</nav>
+<div class="travistab-body">
+
+  {{outlet}}
+
+</div>
