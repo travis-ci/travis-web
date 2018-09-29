@@ -60,7 +60,7 @@ module.exports = function () {
       extensions: ['js']
     },
     'ember-prism': {
-      'components': ['scss', 'javascript', 'json'], // needs to be an array, or undefined.
+      'components': ['scss', 'javascript', 'json', 'yaml'], // needs to be an array, or undefined.
       'plugins': ['line-highlight']
     },
     sassOptions: {
