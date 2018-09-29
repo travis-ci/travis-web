@@ -24,14 +24,15 @@ module('Acceptance | builds/yaml', function (hooks) {
     let repository =  server.create('repository', { slug: 'travis-ci/travis-web' });
 
     let branch = server.create('branch', { name: 'acceptance-tests' });
-    let build = server.create('build', { number: '5', state: 'started', repository, branch, yaml });
+    let request = server.create('request', { yaml_config: yaml });
+    let build = server.create('build', { number: '5', state: 'started', repository, branch, request });
     server.create('job', { number: '1234.1', state: 'received', build, repository, config: { language: 'Hello' } });
     server.create('job', { number: '1234.2', state: 'received', build, repository, config: { language: 'Hello' } });
 
     await visit(`/travis-ci/travis-web/builds/${build.id}`);
 
     // assert.equal(document.title, 'FIXME - travis-ci/travis-web - Travis CI');
-    assert.equal(page.yaml, 'language: jortle\nsudo: tortle');
+    assert.equal(page.yaml, 'language: jortle sudo: tortle');
 
     percySnapshot(assert);
   });

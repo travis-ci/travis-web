@@ -1,7 +1,7 @@
 import V3Adapter from 'travis/adapters/v3';
 
 export default V3Adapter.extend({
-  includes: 'request.builds,request.commit',
+  includes: 'request.builds,request.commit,request.yaml_config',
 
   buildURL: function (modelName, id, snapshot, requestType, query) {
     let prefix = this.urlPrefix();

@@ -30,13 +30,16 @@ export default TravisRoute.extend({
   },
 
   model(params) {
-    return this.store.findRecord('build', params.build_id);
+    return this.store.queryRecord('build', {
+      id: params.build_id,
+      include: 'request.yaml_config'
+    });
   },
 
   afterModel(model) {
     const slug = this.modelFor('repo').get('slug');
     this.ensureBuildOwnership(model, slug);
-    return this._super(...arguments);
+    return model.get('request');
   },
 
   ensureBuildOwnership(build, urlSlug) {

@@ -15,6 +15,9 @@ export default Model.extend({
   pullRequest: attr('boolean'),
   pullRequestTitle: attr(),
   pullRequestNumber: attr('number'),
+
+  yaml_config: attr('string'),
+
   repo: belongsTo('repo', { async: true }),
   commit: belongsTo('commit', { async: true }),
 
