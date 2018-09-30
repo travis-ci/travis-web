@@ -57,6 +57,8 @@ module('Acceptance | builds/yaml', function (hooks) {
     assert.ok(page.yamlTab.badge.isVisible, 'expected a badge when a message exists');
     assert.equal(page.yamlTab.badge.text, '1');
 
+    await page.yamlTab.click();
+
     assert.equal(page.ymlMessages.length, 1, 'expected one yml message');
 
     page.ymlMessages[0].as(info => {
