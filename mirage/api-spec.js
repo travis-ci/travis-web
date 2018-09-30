@@ -1444,7 +1444,8 @@ export default {
           "builds",
           "owner",
           "created_at",
-          "event_type"
+          "event_type",
+          "yaml_config"
         ]
       }
     },
