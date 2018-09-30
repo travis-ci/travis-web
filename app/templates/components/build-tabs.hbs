@@ -5,8 +5,8 @@
       {{#link-to 'build.yaml' build.repo build data-test-build-yaml-tab title="Look at this build's .travis.yml"}}
         View <code>.travis.yml</code>
 
-        {{#if messagesRequest.messages.length}}
-          <div data-test-yaml-badge class='badge'>{{messagesRequest.messages.length}}</div>
+        {{#if build.request.messagesRequest.messages.length}}
+          <div data-test-yaml-badge class='badge'>{{build.request.messagesRequest.messages.length}}</div>
         {{/if}}
       {{/link-to}}
     </li>
