@@ -2,7 +2,9 @@ import TravisRoute from 'travis/routes/basic';
 
 export default TravisRoute.extend({
   model() {
-    let requestId = this.modelFor('job').get('build.request.id');
-    return this.store.findRecord('request', requestId);
+    return this.modelFor('job').get('build').then(build => {
+      let requestId = build.get('build.request.id') || build.belongsTo('request').id();
+      return this.store.findRecord('request', requestId);
+    });
   }
 });
