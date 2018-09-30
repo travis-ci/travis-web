@@ -29,9 +29,13 @@ function linesKeyFinder(lines, key, startingLine) {
 }
 
 function searchKeyForMessage(message) {
-  if (message.code === 'empty') {
+  let code = message.code;
+
+  if (code === 'empty' || code === 'unknown_key') {
     if (message.key === 'root') {
       return message.args.key;
+    } else {
+      return `${message.key}.${message.args.key}`;
     }
   }
 

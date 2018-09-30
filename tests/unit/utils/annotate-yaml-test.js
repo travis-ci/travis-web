@@ -32,4 +32,22 @@ module('Unit | Utility | yaml-annotator', function (hooks) {
       line: 0
     }]);
   });
+
+  test('it finds the line for an unknown_key message not at root', function (assert) {
+    let yaml = 'addons:\n  chrome: stable';
+    let message = {
+      code: 'unknown_key',
+      key: 'addons',
+      args: {
+        key: 'chrome',
+        value: 'stable'
+      }
+    };
+
+    let result = yamlAnnotator([message], yaml);
+    assert.deepEqual(result, [{
+      message,
+      line: 1
+    }]);
+  });
 });
