@@ -1,7 +1,15 @@
 <nav class="travistab-nav--secondary">
   <ul>
     <li>{{link-to 'Build matrix?' 'build.index' build.repo build data-test-build-matrix-tab title="Look at this build matrix"}}</li>
-    <li>{{link-to 'View .travis.yml' 'build.yaml' build.repo build data-test-build-yaml-tab title="Look at this build's .travis.yml"}}</li>
+    <li>
+      {{#link-to 'build.yaml' build.repo build data-test-build-yaml-tab title="Look at this build's .travis.yml"}}
+        View <code>.travis.yml</code>
+
+        {{#if messagesRequest.messages.length}}
+          <div data-test-yaml-badge class='badge'>{{messagesRequest.messages.length}}</div>
+        {{/if}}
+      {{/link-to}}
+    </li>
   </ul>
 </nav>
 <div class="travistab-body">

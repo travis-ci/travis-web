@@ -18,18 +18,20 @@ module('Acceptance | builds/yaml', function (hooks) {
   hooks.beforeEach(function () {
     const currentUser = server.create('user');
     signInUser(currentUser);
-  });
 
-  test('renders build yaml', async function (assert) {
     let repository =  server.create('repository', { slug: 'travis-ci/travis-web' });
 
     let branch = server.create('branch', { name: 'acceptance-tests' });
-    let request = server.create('request', { yaml_config: yaml });
-    let build = server.create('build', { number: '5', state: 'started', repository, branch, request });
-    server.create('job', { number: '1234.1', state: 'received', build, repository, config: { language: 'Hello' } });
-    server.create('job', { number: '1234.2', state: 'received', build, repository, config: { language: 'Hello' } });
+    this.request = server.create('request', { yaml_config: yaml });
+    this.build = server.create('build', { number: '5', state: 'started', repository, branch, request: this.request });
+    server.create('job', { number: '1234.1', state: 'received', build: this.build, repository, config: { language: 'Hello' } });
+    server.create('job', { number: '1234.2', state: 'received', build: this.build, repository, config: { language: 'Hello' } });
+  });
 
-    await visit(`/travis-ci/travis-web/builds/${build.id}`);
+  test('renders build yaml', async function (assert) {
+    await visit(`/travis-ci/travis-web/builds/${this.build.id}`);
+
+    assert.ok(page.yamlTab.badge.isHidden, 'expected no badge when no build messages exist');
 
     // assert.equal(document.title, 'FIXME - travis-ci/travis-web - Travis CI');
     await page.yamlTab.click();
@@ -37,5 +39,29 @@ module('Acceptance | builds/yaml', function (hooks) {
     assert.equal(page.yaml, 'language: jortle sudo: tortle');
 
     percySnapshot(assert);
+  });
+
+  test('also shows a badge and build messages when they exist', async function (assert) {
+    server.create('message', {
+      request: this.request,
+      level: 'info',
+      key: 'jortleby',
+      code: 'skortleby',
+      args: {
+        jortle: 'tortle'
+      }
+    });
+
+    await visit(`/travis-ci/travis-web/builds/${this.build.id}`);
+
+    assert.ok(page.yamlTab.badge.isVisible, 'expected a badge when a message exists');
+    assert.equal(page.yamlTab.badge.text, '1');
+
+    assert.equal(page.ymlMessages.length, 1, 'expected one yml message');
+
+    page.ymlMessages[0].as(info => {
+      assert.ok(info.icon.isInfo, 'expected the yml message to be an info');
+      assert.equal(info.message, 'unrecognised message code skortleby');
+    });
   });
 });

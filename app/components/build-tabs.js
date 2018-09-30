@@ -1,4 +1,12 @@
 import Component from '@ember/component';
+import { computed } from 'ember-decorators/object';
+import { service } from 'ember-decorators/service';
+import { alias } from 'ember-decorators/object/computed';
+
+import ObjectProxy from '@ember/object/proxy';
+import PromiseProxyMixin from '@ember/object/promise-proxy-mixin';
+let ObjectPromiseProxy = ObjectProxy.extend(PromiseProxyMixin);
+import { Promise as EmberPromise } from 'rsvp';
 
 export default Component.extend({
 
@@ -6,4 +14,27 @@ export default Component.extend({
   classNames: ['travistab'],
 
   // FIXME what’s didRender in job-tabs for?
+
+  @alias('build.repo') repo: null,
+
+  // FIXME this is brazenly copied from build-messages-list
+  @service ajax: null,
+  @service store: null,
+
+  @computed('repo.id', 'build.request.id')
+  messagesRequest(repoId, requestId) {
+    if (requestId) {
+      return ObjectPromiseProxy.create({
+        promise: this.get('ajax').ajax(`/repo/${repoId}/request/${requestId}/messages`, 'get', {
+          headers: {
+            'Travis-API-Version': '3'
+          }})
+          .then(response => ({messages: response.messages}))
+      });
+    } else {
+      return ObjectPromiseProxy.create({
+        promise: EmberPromise.resolve([])
+      });
+    }
+  }
 });
