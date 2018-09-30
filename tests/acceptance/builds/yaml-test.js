@@ -10,6 +10,7 @@ language: jortle
 sudo: tortle
 `;
 
+// FIXME this isn’t just a builds test…??!?! confusing
 module('Acceptance | builds/yaml', function (hooks) {
   setupApplicationTest(hooks);
 
@@ -19,51 +20,70 @@ module('Acceptance | builds/yaml', function (hooks) {
     const currentUser = server.create('user');
     signInUser(currentUser);
 
-    let repository =  server.create('repository', { slug: 'travis-ci/travis-web' });
+    this.repository =  server.create('repository', { slug: 'travis-ci/travis-web' });
 
     let branch = server.create('branch', { name: 'acceptance-tests' });
     this.request = server.create('request', { yaml_config: yaml });
-    this.build = server.create('build', { number: '5', state: 'started', repository, branch, request: this.request });
-    server.create('job', { number: '1234.1', state: 'received', build: this.build, repository, config: { language: 'Hello' } });
-    server.create('job', { number: '1234.2', state: 'received', build: this.build, repository, config: { language: 'Hello' } });
+    this.build = server.create('build', { number: '5', state: 'started', repository: this.repository, branch, request: this.request });
+    this.job = server.create('job', { number: '1234.1', state: 'received', build: this.build, repository: this.repository, config: { language: 'Hello' } });
   });
 
-  test('renders build yaml', async function (assert) {
-    await visit(`/travis-ci/travis-web/builds/${this.build.id}`);
-
-    assert.ok(page.yamlTab.badge.isHidden, 'expected no badge when no build messages exist');
-
-    // assert.equal(document.title, 'FIXME - travis-ci/travis-web - Travis CI');
-    await page.yamlTab.click();
-
-    assert.equal(page.yaml, 'language: jortle sudo: tortle');
-
-    percySnapshot(assert);
-  });
-
-  test('also shows a badge and build messages when they exist', async function (assert) {
-    server.create('message', {
-      request: this.request,
-      level: 'info',
-      key: 'jortleby',
-      code: 'skortleby',
-      args: {
-        jortle: 'tortle'
-      }
+  module('with a multi-job build', function (hooks) {
+    hooks.beforeEach(function () {
+      server.create('job', { number: '1234.2', state: 'received', build: this.build, repository: this.repository, config: { language: 'Hello' } });
     });
 
-    await visit(`/travis-ci/travis-web/builds/${this.build.id}`);
+    test('renders build yaml', async function (assert) {
+      await visit(`/travis-ci/travis-web/builds/${this.build.id}`);
 
-    assert.ok(page.yamlTab.badge.isVisible, 'expected a badge when a message exists');
-    assert.equal(page.yamlTab.badge.text, '1');
+      assert.ok(page.yamlTab.badge.isHidden, 'expected no badge when no build messages exist');
 
-    await page.yamlTab.click();
+      // assert.equal(document.title, 'FIXME - travis-ci/travis-web - Travis CI');
+      await page.yamlTab.click();
 
-    assert.equal(page.ymlMessages.length, 1, 'expected one yml message');
+      assert.equal(page.yaml, 'language: jortle sudo: tortle');
 
-    page.ymlMessages[0].as(info => {
-      assert.ok(info.icon.isInfo, 'expected the yml message to be an info');
-      assert.equal(info.message, 'unrecognised message code skortleby');
+      percySnapshot(assert);
+    });
+
+    test('also shows a badge and build messages when they exist', async function (assert) {
+      server.create('message', {
+        request: this.request,
+        level: 'info',
+        key: 'jortleby',
+        code: 'skortleby',
+        args: {
+          jortle: 'tortle'
+        }
+      });
+
+      await visit(`/travis-ci/travis-web/builds/${this.build.id}`);
+
+      assert.ok(page.yamlTab.badge.isVisible, 'expected a badge when a message exists');
+      assert.equal(page.yamlTab.badge.text, '1');
+
+      await page.yamlTab.click();
+
+      assert.equal(page.ymlMessages.length, 1, 'expected one yml message');
+
+      page.ymlMessages[0].as(info => {
+        assert.ok(info.icon.isInfo, 'expected the yml message to be an info');
+        assert.equal(info.message, 'unrecognised message code skortleby');
+      });
+    });
+  });
+
+  module('with a single-job build', function () {
+    test('shows a badge, build messages, and yaml', async function (assert) {
+      server.create('message', { request: this.request });
+
+      await visit(`/travis-ci/travis-web/jobs/${this.job.id}`);
+
+      assert.equal(page.yamlTab.badge.text, '1');
+
+      await page.yamlTab.click();
+
+      assert.equal(page.yaml, 'language: jortle sudo: tortle');
     });
   });
 });
