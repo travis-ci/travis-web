@@ -1,6 +1,6 @@
 export default function annotateYaml(messages = [], yaml) {
   return messages.reduce((annotations, message) => {
-    let line = yamlKeyFinder(yaml, message.key);
+    let line = yamlKeyFinder(yaml, searchKeyForMessage(message));
 
     if (line === 0 || line) {
       annotations.push({
@@ -26,4 +26,14 @@ function linesKeyFinder(lines, key, startingLine) {
   } else {
     return null;
   }
+}
+
+function searchKeyForMessage(message) {
+  if (message.code === 'empty') {
+    if (message.key === 'root') {
+      return message.args.key;
+    }
+  }
+
+  return message.key;
 }
