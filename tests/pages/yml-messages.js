@@ -2,6 +2,7 @@ import {
   collection,
   hasClass,
   text,
+  triggerable,
 } from 'ember-cli-page-object';
 
 export default collection('.yml-message', {
@@ -11,5 +12,7 @@ export default collection('.yml-message', {
     isWarning: hasClass('icon-warn'),
     isError: hasClass('icon-error')
   },
-  message: text('.message')
+  message: text('.message'),
+
+  hover: triggerable('mouseenter', '.icon')
 });

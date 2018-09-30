@@ -46,7 +46,7 @@ module('Acceptance | builds/yaml', function (hooks) {
       percySnapshot(assert);
     });
 
-    test('also shows a badge and build messages when they exist', async function (assert) {
+    test('also shows a badge and build messages when they exist, with line-highlighting', async function (assert) {
       server.create('message', {
         request: this.request,
         level: 'info',
@@ -57,25 +57,50 @@ module('Acceptance | builds/yaml', function (hooks) {
         }
       });
 
+      server.create('message', {
+        request: this.request,
+        level: 'info',
+        // FIXME this is really root
+        key: 'language',
+        code: 'cast',
+        args: {
+          given_value: 'tortle',
+          given_type: 'str',
+          value: true,
+          type: 'bool'
+        }
+      });
+
       await visit(`/travis-ci/travis-web/builds/${this.build.id}`);
 
       assert.ok(page.yamlTab.badge.isVisible, 'expected a badge when a message exists');
-      assert.equal(page.yamlTab.badge.text, '1');
+      assert.equal(page.yamlTab.badge.text, '2');
 
       await page.yamlTab.click();
 
-      assert.equal(page.ymlMessages.length, 1, 'expected one yml message');
+      assert.equal(page.ymlMessages.length, 2, 'expected two yml messages');
 
       page.ymlMessages[0].as(info => {
         assert.ok(info.icon.isInfo, 'expected the yml message to be an info');
         assert.equal(info.message, 'unrecognised message code skortleby');
       });
+
+      assert.ok(page.yamlLineHighlights.length, 1, 'expected one line highlight');
+      assert.ok(page.yamlLineHighlights[0].isHidden);
+
+      await page.ymlMessages[1].hover();
+
+      // FIXME this doesn’t work 😞
+      // assert.ok(page.yamlLineHighlights[0].isVisible);
     });
   });
 
   module('with a single-job build', function () {
     test('shows a badge, build messages, and yaml', async function (assert) {
-      server.create('message', { request: this.request });
+      server.create('message', {
+        request: this.request,
+        key: 'jortle'
+      });
 
       await visit(`/travis-ci/travis-web/jobs/${this.job.id}`);
 

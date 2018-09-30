@@ -76,4 +76,5 @@ export default create({
   },
 
   yaml: text('[data-test-yaml]'),
+  yamlLineHighlights: collection('[data-test-yaml-line-highlight]')
 });

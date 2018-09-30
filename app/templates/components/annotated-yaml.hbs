@@ -1,0 +1,9 @@
+{{build-messages-list request=@request viewMessage=(action (mut viewingMessage))}}
+
+<div class='yaml-container'>
+  {{#code-block data-test-yaml language='yaml' class='codedisplay'}}{{@request.yaml_config}}{{/code-block}}
+  {{#each messageHighlights as |messageHighlight|}}
+    <YamlAnnotation @annotation={{messageHighlight}} @viewingMessage={{viewingMessage}} />
+  {{/each}}
+</div>
+
