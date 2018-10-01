@@ -190,6 +190,11 @@ export default create({
       }
     },
 
+    education: {
+      scope: '.billing',
+      name: text('[data-test-education-message]'),
+    },
+
     address: {
       scope: '.contact .address',
     },
