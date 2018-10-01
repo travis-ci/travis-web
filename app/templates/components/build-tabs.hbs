@@ -2,8 +2,8 @@
   <ul>
     <li>{{link-to 'Build matrix?' 'build.index' build.repo build data-test-build-matrix-tab title="Look at this build matrix"}}</li>
     <li>
-      {{#link-to 'build.config' build.repo build data-test-build-yaml-tab title="Look at this build's .travis.yml"}}
-        View <code>.travis.yml</code>
+      {{#link-to 'build.config' build.repo build data-test-build-yaml-tab title="Look at this build's config"}}
+        View config
 
         {{#if build.request.messagesRequest.messages.length}}
           <div data-test-yaml-badge class='badge'>{{build.request.messagesRequest.messages.length}}</div>

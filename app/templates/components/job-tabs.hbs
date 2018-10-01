@@ -2,8 +2,8 @@
   <ul>
     <li>{{link-to 'Job log' 'job.index' repo job data-test-job-log-tab id="tab_log" title="Look at this job's log"}}</li>
     <li>
-      {{#link-to 'job.config' repo job data-test-build-yaml-tab title="Look at this job?? FIXME's .travis.yml"}}
-        View <code>.travis.yml</code>
+      {{#link-to 'job.config' repo job data-test-build-yaml-tab title="Look at this job’s config"}}
+        View config
 
         {{#if job.build.request.messagesRequest.messages.length}}
           <div data-test-yaml-badge class='badge'>{{job.build.request.messagesRequest.messages.length}}</div>
