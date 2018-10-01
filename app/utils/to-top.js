@@ -16,7 +16,6 @@ export default (function () {
     this.window.scroll(() => {
       throttle(this, this.onScroll, [], 200, false);
     });
-    // try { this.sticky = CSS.supports('position: sticky'); } catch (e) { this.sticky = false; }
     return this;
   }
 
