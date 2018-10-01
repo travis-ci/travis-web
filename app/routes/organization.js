@@ -11,7 +11,11 @@ export default TravisRoute.extend({
   },
 
   beforeModel() {
-    return this.accounts.fetchOrganizations.perform();
+    const { fetchOrganizations } = this.accounts;
+    const { performCount, isRunning } = fetchOrganizations;
+    if (performCount === 0 && !isRunning) {
+      return this.accounts.fetchOrganizations.perform();
+    }
   },
 
   model({ login }) {
