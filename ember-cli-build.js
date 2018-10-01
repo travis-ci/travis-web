@@ -60,7 +60,7 @@ module.exports = function () {
       extensions: ['js']
     },
     'ember-prism': {
-      'components': ['scss', 'javascript', 'json', 'yaml'],
+      'components': ['yaml'],
       'plugins': ['line-highlight']
     },
     sassOptions: {
