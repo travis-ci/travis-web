@@ -1,8 +1,9 @@
-.codedisplay {
+pre.codedisplay[class*='language-'] {
   border: 1px solid $pebble-grey;
   white-space: pre-wrap;
   background-color: white !important;
   font-size: 12px;
+  line-height: 17px;
 }
 
 .codedisplay code {
