@@ -61,7 +61,6 @@ module.exports = function () {
     },
     'ember-prism': {
       'components': ['yaml'],
-      'plugins': ['line-highlight']
     },
     sassOptions: {
       implementation: Sass
