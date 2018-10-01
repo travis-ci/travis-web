@@ -12,9 +12,11 @@ export default TravisRoute.extend({
 
   beforeModel() {
     const { fetchOrganizations } = this.accounts;
-    const { performCount, isRunning } = fetchOrganizations;
-    if (performCount === 0 && !isRunning) {
-      return this.accounts.fetchOrganizations.perform();
+    const { lastSuccessful } = fetchOrganizations;
+    if (lastSuccessful && lastSuccessful._promise) {
+      return lastSuccessful._promise;
+    } else {
+      return fetchOrganizations.perform();
     }
   },
 
