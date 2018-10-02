@@ -49,7 +49,7 @@ module('Acceptance | builds/yaml', function (hooks) {
     test('also shows a badge and build messages when they exist, with line-highlighting', async function (assert) {
       server.create('message', {
         request: this.request,
-        level: 'info',
+        level: 'warn',
         key: 'jortleby',
         code: 'skortleby',
         args: {
@@ -59,7 +59,7 @@ module('Acceptance | builds/yaml', function (hooks) {
 
       server.create('message', {
         request: this.request,
-        level: 'info',
+        level: 'warn',
         // FIXME this is really root
         key: 'language',
         code: 'cast',
@@ -80,9 +80,9 @@ module('Acceptance | builds/yaml', function (hooks) {
 
       assert.equal(page.ymlMessages.length, 2, 'expected two yml messages');
 
-      page.ymlMessages[0].as(info => {
-        assert.ok(info.icon.isInfo, 'expected the yml message to be an info');
-        assert.equal(info.message, 'unrecognised message code skortleby');
+      page.ymlMessages[0].as(message => {
+        assert.ok(message.icon.isWarning, 'expected the yml message to be a warn');
+        assert.equal(message.message, 'unrecognised message code skortleby');
       });
 
       assert.ok(page.yamlLineHighlights.length, 1, 'expected one line highlight');
