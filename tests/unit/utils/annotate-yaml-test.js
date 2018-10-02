@@ -50,4 +50,22 @@ module('Unit | Utility | yaml-annotator', function (hooks) {
       line: 1
     }]);
   });
+
+  test('it finds the line for an alias message at root', function (assert) {
+    let yaml = 'jobs:';
+    let message = {
+      code: 'alias',
+      key: 'root',
+      args: {
+        alias: 'jobs',
+        actual: 'matrix'
+      }
+    };
+
+    let result = yamlAnnotator([message], yaml);
+    assert.deepEqual(result, [{
+      message,
+      line: 0
+    }]);
+  });
 });

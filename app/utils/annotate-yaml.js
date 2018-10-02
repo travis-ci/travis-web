@@ -37,6 +37,10 @@ function searchKeyForMessage(message) {
     } else {
       return `${message.key}.${message.args.key}`;
     }
+  } else if (code === 'alias') {
+    if (message.key === 'root') {
+      return message.args.alias;
+    }
   }
 
   return message.key;
