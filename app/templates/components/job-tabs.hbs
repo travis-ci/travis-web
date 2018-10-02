@@ -6,7 +6,11 @@
         View config
 
         {{#if job.build.request.messagesRequest.messages.length}}
-          <div data-test-yaml-badge class='badge'>{{job.build.request.messagesRequest.messages.length}}</div>
+          <span data-test-yaml-badge class='badge--yaml'>
+            <span class='count'>
+              {{job.build.request.messagesRequest.messages.length}}
+            </span>
+          </span>
         {{/if}}
       {{/link-to}}
     </li>

@@ -34,3 +34,21 @@ pre.codedisplay[class*='language-'] {
 .codedisplay code {
   font-family: cousine, monospace;
 }
+
+// FIXME this is mostly copied from broadcasts
+.badge--yaml {
+  display: inline-block;
+  height: 15px;
+  width: 15px;
+  margin-left: 7px;
+  border-radius: 50%;
+  border: 1px solid $turf-green;
+  background: white;
+  text-align: center;
+  line-height: normal;
+  font-size: 11px;
+
+  .count {
+    margin-top: -1px;
+  }
+}

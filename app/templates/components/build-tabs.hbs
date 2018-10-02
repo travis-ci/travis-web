@@ -6,7 +6,9 @@
         View config
 
         {{#if build.request.messagesRequest.messages.length}}
-          <div data-test-yaml-badge class='badge'>{{build.request.messagesRequest.messages.length}}</div>
+          <span data-test-yaml-badge class='badge--yaml'>
+            <span class='count'>{{build.request.messagesRequest.messages.length}}</span>
+          </span>
         {{/if}}
       {{/link-to}}
     </li>
