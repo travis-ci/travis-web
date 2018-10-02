@@ -42,7 +42,7 @@ pre.codedisplay[class*='language-'] {
   width: 15px;
   margin-left: 7px;
   border-radius: 50%;
-  border: 1px solid $turf-green;
+  border: 1px solid transparent;
   background: white;
   text-align: center;
   line-height: normal;
@@ -50,5 +50,15 @@ pre.codedisplay[class*='language-'] {
 
   .count {
     margin-top: -1px;
+  }
+
+  &.level-warn {
+    border-color: $dozer-yellow;
+    color: $dozer-yellow;
+  }
+
+  &.level-error {
+    border-color: $brick-red;
+    color: $brick-red;
   }
 }
