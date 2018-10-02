@@ -139,6 +139,7 @@
 .log-main {
   display: none;
   margin-bottom: 5em;
+  padding-bottom: 55px;
 
   &.is-visible {
     display: block;
@@ -211,6 +212,7 @@
     background-color: $color-bg-log-fold;
     counter-reset: line-numbering;
     margin-top: 0;
+    margin-bottom: -55px;
   }
 
   .cut {
