@@ -68,4 +68,17 @@ module('Unit | Utility | yaml-annotator', function (hooks) {
       line: 0
     }]);
   });
+
+  test('it ignores messages it can’t find', function (assert) {
+    let yaml = 'jorts:';
+    let message = {
+      code: 'empty',
+      key: 'root',
+      args: {
+        key: 'torts'
+      }
+    };
+
+    assert.deepEqual(yamlAnnotator([message], yaml), []);
+  });
 });
