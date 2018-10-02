@@ -1,5 +1,4 @@
 'use strict';
-/* eslint max-len: [2, {"code": 100, "ignoreComments": true}] */
 
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 const Funnel = require('broccoli-funnel');
