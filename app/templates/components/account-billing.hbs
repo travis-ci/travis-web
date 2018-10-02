@@ -1,4 +1,8 @@
 <section class='billing'>
+  {{#if isEducation}}
+    {{billing-education account=account}}
+  {{/if}}
+
   {{#if isTrial}}
     {{billing-trial account=account}}
   {{/if}}
