@@ -5,13 +5,7 @@
       {{#link-to 'job.config' repo job data-test-build-yaml-tab title="Look at this job’s config"}}
         View config
 
-        {{#if job.build.request.messagesRequest.messages.length}}
-          <span data-test-yaml-badge class='badge--yaml'>
-            <span class='count'>
-              {{job.build.request.messagesRequest.messages.length}}
-            </span>
-          </span>
-        {{/if}}
+        <YamlMessageBadge @messages={{job.build.request.messagesRequest.messages}} />
       {{/link-to}}
     </li>
   </ul>

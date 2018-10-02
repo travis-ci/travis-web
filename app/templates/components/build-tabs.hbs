@@ -5,11 +5,7 @@
       {{#link-to 'build.config' build.repo build data-test-build-yaml-tab title="Look at this build's config"}}
         View config
 
-        {{#if build.request.messagesRequest.messages.length}}
-          <span data-test-yaml-badge class='badge--yaml'>
-            <span class='count'>{{build.request.messagesRequest.messages.length}}</span>
-          </span>
-        {{/if}}
+        <YamlMessageBadge @messages={{build.request.messagesRequest.messages}} />
       {{/link-to}}
     </li>
   </ul>
