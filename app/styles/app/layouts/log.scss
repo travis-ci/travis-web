@@ -111,7 +111,7 @@
     @supports(position: sticky) {
       position: sticky;
       float: right;
-      margin-top: 35px;
+      margin-top: 25px;
     }
   }
 }
@@ -139,7 +139,7 @@
 .log-main {
   display: none;
   margin-bottom: 5em;
-  padding-bottom: 55px;
+  padding-bottom: 45px;
 
   &.is-visible {
     display: block;
@@ -212,7 +212,7 @@
     background-color: $color-bg-log-fold;
     counter-reset: line-numbering;
     margin-top: 0;
-    margin-bottom: -55px;
+    margin-bottom: -45px;
   }
 
   .cut {
