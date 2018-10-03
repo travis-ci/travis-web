@@ -34,6 +34,14 @@ export default create({
 
   toggleLog: clickable('.toggle-log-button'),
 
+  yamlTab: {
+    click: clickable('[data-test-build-yaml-tab]'),
+
+    badge: {
+      scope: '[data-test-yaml-badge]'
+    }
+  },
+
   ymlMessages,
 
   logLines: collection('pre#log .log-line span:first-of-type', {
