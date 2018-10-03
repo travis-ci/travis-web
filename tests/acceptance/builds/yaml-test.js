@@ -60,7 +60,6 @@ module('Acceptance | builds/yaml', function (hooks) {
       server.create('message', {
         request: this.request,
         level: 'warn',
-        // FIXME this is really root
         key: 'language',
         code: 'cast',
         args: {
