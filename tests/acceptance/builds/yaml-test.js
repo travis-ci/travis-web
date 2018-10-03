@@ -38,9 +38,10 @@ module('Acceptance | builds/yaml', function (hooks) {
 
       assert.ok(page.yamlTab.badge.isHidden, 'expected no badge when no build messages exist');
 
-      // assert.equal(document.title, 'FIXME - travis-ci/travis-web - Travis CI');
+      assert.equal(document.title, `Build #${this.build.number} - travis-ci/travis-web - Travis CI`);
       await page.yamlTab.click();
 
+      assert.equal(document.title, `Config - Build #${this.build.number} - travis-ci/travis-web - Travis CI`);
       assert.equal(page.yaml, 'language: jortle sudo: tortle');
 
       percySnapshot(assert);
