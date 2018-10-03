@@ -92,7 +92,6 @@
     "emoji-js": "^3.4.0",
     "eslint-plugin-ember": "^5.2.0",
     "fuzzysort": "^1.0.1",
-    "glob": "^7.1.2",
     "loader.js": "^4.7.0",
     "node-sass": "^4.9.3",
     "pusher-js": "^4.2.2",
