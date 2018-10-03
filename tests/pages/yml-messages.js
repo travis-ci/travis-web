@@ -14,5 +14,5 @@ export default collection('.yml-message', {
   },
   message: text('.message'),
 
-  hover: triggerable('mouseenter', '.icon')
+  focus: triggerable('focus', '.icon')
 });

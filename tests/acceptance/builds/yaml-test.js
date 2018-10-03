@@ -88,10 +88,9 @@ module('Acceptance | builds/yaml', function (hooks) {
       assert.ok(page.yamlLineHighlights.length, 1, 'expected one line highlight');
       assert.ok(page.yamlLineHighlights[0].isHidden);
 
-      await page.ymlMessages[1].hover();
+      await page.ymlMessages[1].focus();
 
-      // FIXME this doesn’t work 😞
-      // assert.ok(page.yamlLineHighlights[0].isVisible);
+      assert.ok(page.yamlLineHighlights[0].isVisible);
     });
   });
 
