@@ -1,6 +1,6 @@
-{{#if request.messagesRequest.messages.length}}
+{{#if request.messages.length}}
   <div class='yml-messages'>
-    {{#each request.messagesRequest.messages as |message|}}
+    {{#each request.messages as |message|}}
       {{build-message
           message=message
           mouseEnter=(action viewMessage message) mouseLeave=(action viewMessage)

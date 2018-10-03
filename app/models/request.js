@@ -3,6 +3,7 @@ import attr from 'ember-data/attr';
 import { belongsTo } from 'ember-data/relationships';
 import { computed } from 'ember-decorators/object';
 import { service } from 'ember-decorators/service';
+import { alias } from 'ember-decorators/object/computed';
 
 import ObjectProxy from '@ember/object/proxy';
 import PromiseProxyMixin from '@ember/object/promise-proxy-mixin';
@@ -45,7 +46,6 @@ export default Model.extend({
 
   @service ajax: null,
 
-  // FIXME awkward name and interface…???
   @computed('repo.id', 'build.request.id')
   messagesRequest(repoId, requestId) {
     if (requestId) {
@@ -61,5 +61,7 @@ export default Model.extend({
         promise: EmberPromise.resolve([])
       });
     }
-  }
+  },
+
+  @alias('messagesRequest.messages') messages: null,
 });

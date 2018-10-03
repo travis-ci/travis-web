@@ -3,7 +3,7 @@ import { computed } from 'ember-decorators/object';
 import annotateYaml from 'travis/utils/annotate-yaml';
 
 export default Component.extend({
-  @computed('request.messagesRequest.messages.[]', 'request.yaml_config')
+  @computed('request.messages.[]', 'request.yaml_config')
   messageHighlights(messages, yaml) {
     return annotateYaml(messages, yaml);
   }
