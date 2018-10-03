@@ -10,8 +10,7 @@ language: jortle
 sudo: tortle
 `;
 
-// FIXME this isn’t just a builds test…??!?! confusing
-module('Acceptance | builds/yaml', function (hooks) {
+module('Acceptance | config/yaml', function (hooks) {
   setupApplicationTest(hooks);
 
   // FIXME why is it necessary to be signed in?
