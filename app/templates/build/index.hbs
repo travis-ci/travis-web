@@ -1,6 +1,6 @@
 {{#if build.isMatrix}}
   {{#if build.stages}}
-    {{#each sortedBuildStages as |stage|}}
+    {{#each build.sortedStages as |stage|}}
       {{jobs-list stage=stage build=build repo=build.repo stages=sortedBuildStages}}
     {{/each}}
   {{else}}
