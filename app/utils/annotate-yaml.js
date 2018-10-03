@@ -1,4 +1,8 @@
 export default function annotateYaml(messages = [], yaml) {
+  if (!yaml) {
+    return [];
+  }
+
   return messages.reduce((annotations, message) => {
     let line = yamlKeyFinder(yaml, searchKeyForMessage(message));
 

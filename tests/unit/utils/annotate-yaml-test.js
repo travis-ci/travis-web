@@ -81,4 +81,10 @@ module('Unit | Utility | yaml-annotator', function (hooks) {
 
     assert.deepEqual(yamlAnnotator([message], yaml), []);
   });
+
+  test('it ignores missing yaml', function (assert) {
+    let message = {};
+
+    assert.deepEqual(yamlAnnotator([message], undefined), []);
+  });
 });
