@@ -6,9 +6,9 @@
   margin-bottom: 3rem;
 
   .owner-title {
-    margin: 0.3em 0 0.2em;
+    margin: 0 0 0.2em;
     font-size: 36px;
-    font-weight: 400;
+    font-weight: 300;
     line-height: 0.9;
 
     @media #{$medium-up} {
@@ -36,24 +36,16 @@
 }
 
 .owner-avatar {
-  flex: 0 0 20%;
-
-  @media #{$medium-up} {
-    flex: 0 0 17%;
-  }
+  flex: 0 0 100px;
 
   .avatar {
-    width: 125px;
-    height: 125px;
+    width: 74px;
+    height: 74px;
   }
 }
 
 .owner-info {
-  flex: 1 0 75%;
-
-  @media #{$medium-up} {
-    flex: 1 0 80%;
-  }
+  flex: 1 1 auto;
 
   position: relative;
   overflow: hidden;
