@@ -77,6 +77,9 @@ module.exports = function () {
           }
         ]
       }
+    },
+    'ember-composable-helpers': {
+      only: ['sort-by', 'compute']
     }
   });
 
