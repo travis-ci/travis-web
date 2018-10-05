@@ -6,8 +6,10 @@ import {
   hasClass,
   isVisible,
   text,
-  attribute
+  attribute,
 } from 'ember-cli-page-object';
+
+import joinTexts from './helpers/join-texts';
 
 
 import ymlMessages from './yml-messages';
@@ -36,32 +38,31 @@ export default create({
 
   ymlMessages,
 
-  logLines: collection('pre#log .log-line span:first-of-type', {
-    text: text(),
-    nextText: text('+ span'),
+  logLines: collection('pre#log .log-line', {
+    entireLineText: joinTexts('span'),
 
-    isBlack: hasClass('black'),
-    isRed: hasClass('red'),
-    isGreen: hasClass('green'),
-    isYellow: hasClass('yellow'),
-    isBlue: hasClass('blue'),
-    isMagenta: hasClass('magenta'),
-    isCyan: hasClass('cyan'),
-    isWhite: hasClass('white'),
-    isGrey: hasClass('grey'),
+    isBlack: hasClass('black', 'span:first-of-type'),
+    isRed: hasClass('red', 'span:first-of-type'),
+    isGreen: hasClass('green', 'span:first-of-type'),
+    isYellow: hasClass('yellow', 'span:first-of-type'),
+    isBlue: hasClass('blue', 'span:first-of-type'),
+    isMagenta: hasClass('magenta', 'span:first-of-type'),
+    isCyan: hasClass('cyan', 'span:first-of-type'),
+    isWhite: hasClass('white', 'span:first-of-type'),
+    isGrey: hasClass('grey', 'span:first-of-type'),
 
-    hasBlackBackground: hasClass('bg-black'),
-    hasRedBackground: hasClass('bg-red'),
-    hasGreenBackground: hasClass('bg-green'),
-    hasYellowBackground: hasClass('bg-yellow'),
-    hasBlueBackground: hasClass('bg-blue'),
-    hasMagentaBackground: hasClass('bg-magenta'),
-    hasCyanBackground: hasClass('bg-cyan'),
-    hasWhiteBackground: hasClass('bg-white'),
+    hasBlackBackground: hasClass('bg-black', 'span:first-of-type'),
+    hasRedBackground: hasClass('bg-red', 'span:first-of-type'),
+    hasGreenBackground: hasClass('bg-green', 'span:first-of-type'),
+    hasYellowBackground: hasClass('bg-yellow', 'span:first-of-type'),
+    hasBlueBackground: hasClass('bg-blue', 'span:first-of-type'),
+    hasMagentaBackground: hasClass('bg-magenta', 'span:first-of-type'),
+    hasCyanBackground: hasClass('bg-cyan', 'span:first-of-type'),
+    hasWhiteBackground: hasClass('bg-white', 'span:first-of-type'),
 
-    isBolded: hasClass('bold'),
-    isItalicised: hasClass('italic'),
-    isUnderlined: hasClass('underline')
+    isBolded: hasClass('bold', 'span:first-of-type'),
+    isItalicised: hasClass('italic', 'span:first-of-type'),
+    isUnderlined: hasClass('underline', 'span:first-of-type')
   }),
 
   logFolds: collection('pre#log .fold-start', {

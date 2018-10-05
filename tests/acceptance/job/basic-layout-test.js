@@ -207,7 +207,9 @@ I am another line finished by a CR.\rI replace that line?\r${ESCAPE}[0mI am the 
 This should also be gone.\r This should have replaced it.
 A particular log formation is addressed here, this should remain.\r${ESCAPE}[0m\nThis should be on a separate line.
 But it must be addressed repeatedly!\r${ESCAPE}[0m\nAgain.
+[${ESCAPE}[90m21:09:37${ESCAPE}[39m] ${ESCAPE}[32mRunning tests on 3 Sauce Labs browser(s)...${ESCAPE}[39m
 `;
+
   server.create('log', { id: job.id, content: complexLog });
 
   jobPage.visit();
@@ -219,19 +221,19 @@ But it must be addressed repeatedly!\r${ESCAPE}[0m\nAgain.
   jobPage.toggleLog();
 
   andThen(function () {
-    assert.equal(jobPage.logLines[0].text, 'I am the first line.');
+    assert.equal(jobPage.logLines[0].entireLineText, 'I am the first line.');
 
     assert.equal(jobPage.logFolds[0].name, 'afold');
     assert.notOk(jobPage.logFolds[0].isOpen);
 
-    assert.equal(jobPage.logLines[1].text, 'I am the first line of a fold.');
+    assert.equal(jobPage.logLines[1].entireLineText, 'I am the first line of a fold.');
 
     assert.equal(jobPage.logLines[2].text, 'I am the second line of a fold.');
 
-    assert.equal(jobPage.logLines[3].text, 'I am a line between folds.');
+    assert.equal(jobPage.logLines[3].entireLineText, 'I am a line between folds.');
 
     assert.equal(jobPage.logFolds[0].name, 'afold');
-    assert.equal(jobPage.logLines[4].text, 'I am the first line of a second fold.');
+    assert.equal(jobPage.logLines[4].entireLineText, 'I am the first line of a second fold.');
 
     assert.ok(jobPage.logLines[5].isBlack);
     assert.ok(jobPage.logLines[5].hasWhiteBackground);
@@ -262,18 +264,18 @@ But it must be addressed repeatedly!\r${ESCAPE}[0m\nAgain.
 
     assert.ok(jobPage.logLines[13].isGrey);
 
-    assert.equal(jobPage.logLines[14].text, 'I used to be the final line.');
+    assert.equal(jobPage.logLines[14].entireLineText, 'I used to be the final line.');
 
-    // FIXME why is this line in an adjacent span?
-    assert.equal(jobPage.logLines[15].nextText, 'I am the final replacer.');
-    assert.equal(jobPage.logLines[16].text, 'I do not replace because the previous line ended with a line feed.');
+    assert.equal(jobPage.logLines[15].entireLineText, 'I am the final replacer.');
+    assert.equal(jobPage.logLines[16].entireLineText, 'I do not replace because the previous line ended with a line feed.');
 
-    assert.equal(jobPage.logLines[17].nextText, 'This should have replaced it.');
+    assert.equal(jobPage.logLines[17].entireLineText, 'This should have replaced it.');
 
-    assert.equal(jobPage.logLines[18].text, 'A particular log formation is addressed here, this should remain.');
-    assert.equal(jobPage.logLines[19].text, 'This should be on a separate line.');
-    assert.equal(jobPage.logLines[20].text, 'But it must be addressed repeatedly!');
-    assert.equal(jobPage.logLines[21].text, 'Again.');
+    assert.equal(jobPage.logLines[18].entireLineText, 'A particular log formation is addressed here, this should remain.');
+    assert.equal(jobPage.logLines[19].entireLineText, 'This should be on a separate line.');
+    assert.equal(jobPage.logLines[20].entireLineText, 'But it must be addressed repeatedly!');
+    assert.equal(jobPage.logLines[21].entireLineText, 'Again.');
+    assert.equal(jobPage.logLines[22].entireLineText, '[21:09:37] Running tests on 3 Sauce Labs browser(s)...');
   });
 
   jobPage.logFolds[0].toggle();
@@ -347,7 +349,7 @@ test('visiting a job when log-rendering is off', function (assert) {
   waitForElement('.log-container .log-line');
 
   andThen(() => {
-    assert.equal(jobPage.logLines[0].text, "Log rendering is off because localStorage['travis.logRendering'] is `false`.");
+    assert.equal(jobPage.logLines[0].entireLineText, "Log rendering is off because localStorage['travis.logRendering'] is `false`.");
 
     this.application.pusher.receive('job:log', {
       id: job.id,
