@@ -1,51 +1,59 @@
-{{!-- {{#if repo.private }}
-         <div class="tile-lock"><span class="icon icon-lock"></span></div>
-         {{/if}} --}}
-<div class="row-item fade-out">
-  <div class="one-line">
-    <h2 class="repo-title">
-      {{#link-to "repo" ownerName repoName class="label-align"}}
-        {{status-icon status=repo.defaultBranch.lastBuild.state}}
-        <span class="inner-underline">{{repoName}}</span>
-      {{/link-to}}
-    </h2>
+<div class="owner-tile-head">
+  <div class="owner-tile-visibility">
+    {{repository-visibility-icon repository=repo}}
   </div>
 </div>
-{{#if repo.defaultBranch.lastBuild}}
-  <div class="row-item row-color build-number">
-    <div class="one-line">
-      {{#link-to "build" ownerName repoName repo.defaultBranch.lastBuild.id}}
-        {{svg-jar 'icon-hash' class="icon"}}
-        <span class="label-align inner-underline">{{repo.defaultBranch.lastBuild.number}}</span>
-      {{/link-to}}
+<div class="owner-tile-body">
+  <div class="owner-tile-main">
+    <div class="row-item fade-out">
+      <div class="one-line">
+        <h2 class="repo-title">
+          {{#link-to "repo" ownerName repoName class="label-align"}}
+            {{status-icon status=repo.defaultBranch.lastBuild.state}}
+            <span class="inner-underline">{{repoName}}</span>
+          {{/link-to}}
+        </h2>
+      </div>
     </div>
-  </div>
 
-  <div class="row-item fade-out default-branch">
-    <div class="one-line">
-      {{request-icon event=repo.defaultBranch.lastBuild.eventType}}
-      <span class="label-align">{{repo.defaultBranch.name}}</span>
-    </div>
-  </div>
+    {{#if repo.defaultBranch.lastBuild}}
+      <div class="row-item row-color build-number">
+        <div class="two-line">
+          <h3 class="label">Last Build</h3>
+          {{#link-to "build" ownerName repoName repo.defaultBranch.lastBuild.id}}
+            {{svg-jar 'icon-hash' class="icon"}}
+            <span class="label-align inner-underline">{{repo.defaultBranch.lastBuild.number}}</span>
+          {{/link-to}}
+        </div>
+      </div>
 
-  <div class="row-item commit-sha">
-    {{tooltip-on-element text='View diff on GitHub'}}
-    {{#external-link-to href=repo.defaultBranch.lastBuild.commit.compareUrl}}
-      {{svg-jar 'icon-compare' class="icon"}}
-      <span class="label-align inner-underline commit-compare">
-        {{format-sha repo.defaultBranch.lastBuild.commit.sha}}
-      </span>
-      {{svg-jar 'icon-external-link' class="icon"}}
-    {{/external-link-to}}
-  </div>
+      <div class="row-item fade-out default-branch">
+        <div class="one-line">
+          {{request-icon event=repo.defaultBranch.lastBuild.eventType}}
+          <span class="label-align">{{repo.defaultBranch.name}}</span>
+        </div>
+      </div>
 
-  <div class="row-item fade-out commit-date">
-    <div class="one-line">
-      {{svg-jar 'icon-calendar' class="icon"}}
-      <span class="build-status label-align">{{repo.defaultBranch.lastBuild.state}}</span>
-      <span class="finished-at label-align">{{format-time repo.defaultBranch.lastBuild.finishedAt}}</span>
-    </div>
+      <div class="row-item commit-sha">
+        {{tooltip-on-element text='View diff on GitHub'}}
+        {{#external-link-to href=repo.defaultBranch.lastBuild.commit.compareUrl}}
+          {{svg-jar 'icon-compare' class="icon"}}
+          <span class="label-align inner-underline commit-compare">
+            {{format-sha repo.defaultBranch.lastBuild.commit.sha}}
+          </span>
+          {{svg-jar 'icon-external-link' class="icon"}}
+        {{/external-link-to}}
+      </div>
+
+      <div class="row-item fade-out commit-date">
+        <div class="one-line">
+          {{svg-jar 'icon-calendar' class="icon"}}
+          <span class="build-status label-align">{{repo.defaultBranch.lastBuild.state}}</span>
+          <span class="finished-at label-align">{{format-time repo.defaultBranch.lastBuild.finishedAt}}</span>
+        </div>
+      </div>
+    {{else}}
+      <p class="row-item">There is no build on the default branch yet.</p>
+    {{/if}}
   </div>
-{{else}}
-  <p class="row-item">There is no build on the default branch yet.</p>
-{{/if}}
+</div>
