@@ -6,10 +6,7 @@ export default function joinTexts(selector) {
 
     get() {
       const allTexts = findElement(this, selector, { multiple: true });
-      return allTexts.map(function() { return this.textContent })
-        .get()
-        .join('')
-        .trim();
+      return allTexts.map(function () { return this.textContent; }).get().join('').trim();
     }
   };
 }
