@@ -161,7 +161,7 @@ test('Pusher events change the main display', function (assert) {
       id: job.id,
       number: 0,
       final: false,
-      _log: '\u001B[0K\u001B[33;1mThe first line'
+      _log: '\u001B[0K\u001B[33;1mThe first line\n'
     });
   });
 
