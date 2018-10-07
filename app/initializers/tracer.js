@@ -26,7 +26,7 @@ class Tracer {
     this.installXHR();
   }
 
-  // xhr interceptor based on the symfony profiler
+  // xhr interceptor based on the Symfony profiler
   installXHR() {
     let tracer = this;
 
