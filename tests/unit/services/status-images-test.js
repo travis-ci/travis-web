@@ -145,7 +145,7 @@ module('Unit | Service | status images', function (hooks) {
     assert.equal(url, `#${apiEndpoint}/repos/travis-ci/travis-web/cc.xml?branch=primary`);
   });
 
-  test('it generaes CCTray url with a private repo and a branch', function (assert) {
+  test('it generates CCTray url with a private repo and a branch', function (assert) {
     const service = this.owner.lookup('service:status-images');
     this.repo.set('private', true);
     let url = service.ccXml(this.repo, branch);
