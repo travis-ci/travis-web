@@ -20,7 +20,7 @@ module('Integration | Component | page footer', function (hooks) {
     assert.dom('[data-test-footer-twitter-link]').doesNotExist();
   });
 
-  test("it doesn't show travis-status for enteprise", async function (assert) {
+  test("it doesn't show travis-status for enterprise", async function (assert) {
     stubTemplate('components/travis-status', hbs`<div class="status">TRAVIS STATUS</div>`);
 
     await render(hbs`{{page-footer}}`);
