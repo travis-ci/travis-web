@@ -61,7 +61,7 @@ module('Acceptance | builds/current tab', function (hooks) {
     let commit = server.create('commit', { author: gitUser, committer: gitUser, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
     let build = server.create('build', { number: '5', state: 'started', repository, branch, commit });
     let job = server.create('job', { number: '1234.1', state: 'received', build, commit, repository, config: { language: 'Hello' } });
-    server.create('log', { id: job.id, content: 'teh log' });
+    server.create('log', { id: job.id, content: 'the log' });
 
     commit.update('build', build);
     commit.update('job', job);
