@@ -461,7 +461,7 @@ test('view billing tab with Github trial subscription', function (assert) {
 
   andThen(() => {
     percySnapshot(assert);
-    assert.equal(profilePage.billing.trial.name, "You're trialing Travis CI via your Github Marketplace subscription.");
+    assert.equal(profilePage.billing.trial.name, "You're trying Travis CI via your Github Marketplace subscription.");
     assert.equal(profilePage.billing.manageButton.text, 'Edit subscription');
     assert.ok(profilePage.billing.address.isHidden);
     assert.ok(profilePage.billing.creditCardNumber.isHidden);
