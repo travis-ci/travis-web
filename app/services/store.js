@@ -80,7 +80,7 @@ export default Store.extend(FilterMixin, {
   // Returns a collection with pagination data. If the first page is requested,
   // the collection will be live updated. Otherwise keeping the calculations and
   // figuring out if the record should be put on the page is not easily
-  // achieveable (or even impossible in some cases).
+  // achievable (or even impossible in some cases).
   //
   // modelName   - a type of the model as a string, for example 'repo'
   // queryParams - params for a store.query call that will be fired to fetch the
