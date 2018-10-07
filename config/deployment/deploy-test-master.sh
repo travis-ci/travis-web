@@ -1,3 +1,4 @@
+#!/bin/sh
 export CLEANED_BRANCH_SUBDOMAIN=ember-$EMBER_VERSION
 export DISABLE_SENTRY=true
 

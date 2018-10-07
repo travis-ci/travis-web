@@ -1,3 +1,4 @@
+#!/bin/bash
 echo env = $ENVIRONMENT and tld = $TLD
 
 FULL_ENVIRONMENT=`echo $TLD`-`echo $ENVIRONMENT`
