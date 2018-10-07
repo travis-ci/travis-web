@@ -14,7 +14,7 @@ import {
 import {
   EMAIL_SETTINGS,
   EMAIL_SETTINGS_TITLE,
-  EMAIL_SETTINGS_DESCRITION,
+  EMAIL_SETTINGS_DESCRIPTION,
   EMAIL_SETTINGS_TOGGLE,
   EMAIL_SETTINGS_RESUBSCRIBE_LIST,
   EMAIL_SETTINGS_RESUBSCRIBE_ITEM,
@@ -146,7 +146,7 @@ export default create({
     emailSettings: {
       scope: EMAIL_SETTINGS,
       title: text(EMAIL_SETTINGS_TITLE),
-      description: text(EMAIL_SETTINGS_DESCRITION),
+      description: text(EMAIL_SETTINGS_DESCRIPTION),
       toggle: {
         scope: EMAIL_SETTINGS_TOGGLE,
         isOn: hasClass('active'),
