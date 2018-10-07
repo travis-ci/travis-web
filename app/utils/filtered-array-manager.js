@@ -117,7 +117,7 @@ let FilteredArrayManagerForType = EmberObject.extend({
 
   // Creates an array for a given id and set of params.
   createArray(id, queryParams, filterFunction, dependencies) {
-    // TODO: test what ahppens when records already exist in a store,I think it
+    // TODO: test what happens when records already exist in a store,I think it
     // won't work
     let array = this.arrays[id] = FilteredArray.create({ filterFunction, content: [] });
 
