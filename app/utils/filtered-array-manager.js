@@ -12,7 +12,7 @@ let FilteredArray = ArrayProxy.extend({
   // record passed as an argument is not yet in the array and the filter
   // function returns a truthy value, tryRecord will push the record to the
   // array. If the record is already in the array and the filter function
-  // returns falsey value, it will be removed. In other cases, it will be
+  // returns falsy value, it will be removed. In other cases, it will be
   // ignored.
   tryRecord(record) {
     if (!this.get('content').includes(record) && this.fits(record)) {
