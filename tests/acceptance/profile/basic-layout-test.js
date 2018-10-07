@@ -194,12 +194,12 @@ test('view repositories', function (assert) {
     assert.notOk(profilePage.githubAppsInvitation.isVisible, 'expected GitHub Apps invitation not to be visible');
 
     assert.ok(profilePage.deprecatedBadge.isVisible, 'expected deprecated badge to be visible');
-    assert.equal(profilePage.administerableRepositories.length, 2, 'expected two classic repositories, with inactive repositories hidden');
+    assert.equal(profilePage.administrableRepositories.length, 2, 'expected two classic repositories, with inactive repositories hidden');
 
-    assert.equal(profilePage.administerableRepositories[0].name, 'other-repository-name');
-    assert.ok(profilePage.administerableRepositories[0].isDisabled, 'expected disabled repository to be disabled in UI');
-    assert.equal(profilePage.administerableRepositories[1].name, 'repository-name');
-    assert.ok(profilePage.administerableRepositories[1].isActive, 'expected active repository to appear active');
+    assert.equal(profilePage.administrableRepositories[0].name, 'other-repository-name');
+    assert.ok(profilePage.administrableRepositories[0].isDisabled, 'expected disabled repository to be disabled in UI');
+    assert.equal(profilePage.administrableRepositories[1].name, 'repository-name');
+    assert.ok(profilePage.administrableRepositories[1].isActive, 'expected active repository to appear active');
 
     assert.equal(profilePage.githubAppsRepositories.length, 3, 'expected three GitHub Apps-managed repositories');
 
@@ -339,12 +339,12 @@ test('view profiles when GitHub Apps is not present', function (assert) {
   profilePage.visit();
 
   andThen(() => {
-    assert.equal(profilePage.administerableRepositories.length, 3, 'expected inactive repositories to also show');
+    assert.equal(profilePage.administrableRepositories.length, 3, 'expected inactive repositories to also show');
 
-    assert.equal(profilePage.administerableRepositories[0].name, 'other-repository-name');
-    assert.ok(profilePage.administerableRepositories[0].isDisabled, 'expected disabled repository to be disabled in UI');
-    assert.equal(profilePage.administerableRepositories[2].name, 'yet-another-repository-name');
-    assert.notOk(profilePage.administerableRepositories[2].isActive, 'expected inactive repository to appear inactive');
+    assert.equal(profilePage.administrableRepositories[0].name, 'other-repository-name');
+    assert.ok(profilePage.administrableRepositories[0].isDisabled, 'expected disabled repository to be disabled in UI');
+    assert.equal(profilePage.administrableRepositories[2].name, 'yet-another-repository-name');
+    assert.notOk(profilePage.administrableRepositories[2].isActive, 'expected inactive repository to appear inactive');
   });
 });
 
@@ -354,7 +354,7 @@ test('view profile when GitHub Apps is present and no legacy repositories exist'
 
   andThen(() => {
     percySnapshot(assert);
-    assert.dom('#administerable-repositories').doesNotExist();
+    assert.dom('#administrable-repositories').doesNotExist();
     assert.ok(profilePage.githubAppsInvitation.isExpanded, 'expected the invitation to be expanded in the absence of legacy repositories');
   });
 });

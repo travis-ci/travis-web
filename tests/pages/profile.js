@@ -77,11 +77,11 @@ export default create({
   },
 
   filter: fillable('.profile-repositories-filter input.search'),
-  noRepositoriesFoundByFilter: text('#administerable-repositories .no-results'),
+  noRepositoriesFoundByFilter: text('#administrable-repositories .no-results'),
 
   notFoundOrgName: text('.page-title .h2--red'),
 
-  administerableRepositories: existingRepositoriesCollection('#administerable-repositories'),
+  administrableRepositories: existingRepositoriesCollection('#administrable-repositories'),
   deprecatedBadge: { scope: '.badge.deprecated' },
 
   githubAppsInvitation: {

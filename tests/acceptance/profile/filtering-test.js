@@ -70,21 +70,21 @@ test('filter profile repositories', function (assert) {
   profilePage.visit();
 
   andThen(function () {
-    assert.equal(profilePage.administerableRepositories.length, 3, 'expected three repositories');
+    assert.equal(profilePage.administrableRepositories.length, 3, 'expected three repositories');
 
     profilePage.filter('patriarchy');
 
     andThen(function () {
-      assert.equal(profilePage.administerableRepositories.length, 0, 'expected no repositories');
+      assert.equal(profilePage.administrableRepositories.length, 0, 'expected no repositories');
       assert.equal(profilePage.noRepositoriesFoundByFilter, 'Sorry, no results found.');
     });
 
     profilePage.filter('spec');
     andThen(function () {
       percySnapshot(assert);
-      assert.equal(profilePage.administerableRepositories.length, 1, 'expected one repository');
+      assert.equal(profilePage.administrableRepositories.length, 1, 'expected one repository');
 
-      assert.equal(profilePage.administerableRepositories[0].name, 'specific-repository-name');
+      assert.equal(profilePage.administrableRepositories[0].name, 'specific-repository-name');
     });
   });
 });
