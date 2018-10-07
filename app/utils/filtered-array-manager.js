@@ -31,7 +31,7 @@ let FilteredArray = ArrayProxy.extend({
 
 // Manages filtered arrays for a given type. It keeps a reference to all of the
 // records of a given type (obtained using store.peekAll() function) and watches
-// for changes on all of the records to determine wheather a record should be
+// for changes on all of the records to determine whether a record should be
 // added to one of the filtered arrays.
 //
 // Filtered arrays are indexed by an id unique for a given set of parameters,
