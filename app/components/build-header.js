@@ -75,64 +75,13 @@ export default Component.extend({
     }
   },
 
-  @computed('jobsConfig.content')
-  languages(config) {
-    return jobConfigLanguage(config);
-  },
+  @computed('item.commit.body')
+  commitBody(body) {
+    this.$('commit-description').remove('fade-commit-message');
 
-  @computed('jobsConfig.content.name')
-  name(name) {
-    if (name) {
-      return name;
-    }
-  },
-
-  @computed('jobsConfig.content.{env,gemfile}')
-  environment(env, gemfile) {
-    if (env) {
-      return env;
-    } else if (gemfile) {
-      return `Gemfile: ${gemfile}`;
-    }
-  },
-
-  @computed('jobsConfig.content.os')
-  os(os) {
-    if (os === 'linux' || os === 'linux-ppc64le') {
-      return 'linux';
-    } else if (os === 'osx') {
-      return 'osx';
-    } else if (os === 'windows') {
-      return 'windows';
-    } else {
-      return 'unknown';
-    }
-  },
-
-  @computed('os')
-  osIcon(os) {
-    if (os === 'linux') {
-      return 'icon-linux';
-    } else if (os === 'osx') {
-      return 'icon-mac';
-    } else if (os === 'windows') {
-      return 'icon-windows';
-    }  else {
-      return 'help';
-    }
-  },
-
-  @not('item.isMatrix') isNotMatrix: null,
-
-  actions: {
-    expandEnv() {
-      if (this.$('.expandEnv').css('white-space') === 'normal') {
-        this.$('.detail-job-env').removeClass('expandEnv');
-        this.$('.detail-job-env').addClass('closeEnv');
-      } else {
-        this.$('.detail-job-env').removeClass('closeEnv');
-        this.$('.detail-job-env').addClass('expandEnv');
-      }
+    if(body.length > 72) {
+      console.log(body.length);
+      this.$('.commit-description').addClass('fade-commit-message');
     }
   }
 });
