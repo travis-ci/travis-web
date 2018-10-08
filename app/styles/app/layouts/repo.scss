@@ -1,86 +1,72 @@
-.repo-header {
-  header.name {
-    @media #{$medium-up} {
-      display: flex;
-      flex-flow: row wrap;
-      justify-content: flex-start;
-      align-items: center;
+.repo-header-container {
+  font-size: 16px;
+  display: grid;
+  grid-template-columns: fit-content(100%) 30px 100px;
+  grid-gap: 20px;
+  grid-template-areas:
+    "repoTitle repoGithub repoBadge"
+    "repoNav repoOptions repoOptions";
+}
+
+.repo-type-icon {
+  grid-area: repoType;
+  display: inline;
+
+  .icon {
+    width: 26px;
+    height: 26px;
+    margin-right: 10px;
+
+    @include colorSVG($cement-grey);
+
+    &.private {
+      transform: translateY(-7px);
     }
 
-    .icon {
-      width: 26px;
-      height: 26px;
-
-      @include colorSVG($cement-grey);
-
-      &.private {
-        transform: translateY(1px);
-      }
-
-      &.public {
-        transform: translateY(4px);
-      }
-
-      margin-right: 10px;
+    &.public {
+      transform: translateY(4px);
     }
   }
+}
 
-  .repo-title {
-    margin: 0;
-    font-size: 36px;
-    font-weight: $font-weight-normal;
+.repo-title {
+  grid-area: repoTitle;
+  display: inline;
+  font-size: 2.250em;
 
-    a {
-      color: $asphalt-grey;
-      border-bottom: 2px solid transparent;
-      transition: border-color 100ms ease;
+  a {
+    color: $asphalt-grey;
+    border-bottom: 2px solid transparent;
+    transition: border-color 100ms ease;
 
-      &:hover,
-      &:active {
-        border-color: $asphalt-grey;
-      }
+    &:hover,
+    &:active {
+      border-color: $asphalt-grey;
     }
   }
 }
 
 .repo-gh {
+  grid-area: repoGithub;
+  margin: auto 0;
   @extend .icon--l;
-
-  flex: 0 0 30px;
-  margin: 0 1.2em;
-
   @include colorSVGFill(rgba(black, 0.2));
 }
 
-.repo-navigation {
-  margin: 1.9em 0 1.2em;
-  display: flex;
-
-  @media #{$small-only} {
-    flex-flow: column-reverse;
-  }
-
-  @media #{$medium-up} {
-    flex-flow: row wrap;
-    justify-content: space-between;
-    border-bottom: 2px $pebble-grey solid;
-  }
-
-  .option-button {
-    width: 10em;
-
-    .option-dropdown a {
-      padding-left: 2.4em;
-    }
-  }
+.repo-badge {
+  grid-area: repoBadge;
+  margin: auto 0;
 }
 
-.button--repo-activate-gh svg {
-  @extend .icon--m;
-  @include colorSVGFill(white);
+.repo-navigation {
+  grid-area: repoNav;
+  font-size: 0.875em;
+}
 
-  width: 16px;
-  height: 16px;
-  transform: translateY(-2px);
-  padding-right: 2px;
+.repo-options {
+  grid-area: repoOptions;
+
+  .option-button {
+    width: 140px;
+  }
 }

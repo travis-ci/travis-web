@@ -1,9 +1,11 @@
-<article class="repo-header">
-  <header class='name'>
-    {{repository-visibility-icon repository=repo}}
-    <h1 data-test-repo-header-title class="repo-title">
-      {{#link-to "owner" repo.owner.login}}{{repo.owner.login}}{{/link-to}} / {{#link-to "repo" repo}}{{repo.name}}{{/link-to}}
-    </h1>
+<article class="repo-container">
+  <header class='repo-header-container name'>
+    <div class="repo-header-title-container">
+      {{repository-visibility-icon repository=repo class="repo-type-icon"}}
+      <h1 data-test-repo-header-title class="repo-title">
+        {{#link-to "owner" repo.owner.login}}{{repo.owner.login}}{{/link-to}} / {{#link-to "repo" repo}}{{repo.name}}{{/link-to}}
+      </h1>
+    </div>
     {{#external-link-to href=urlGithub class="repo-gh" title=(concat repo.name " on GitHub")}}
       {{svg-jar 'icon-repooctocat'}}
     {{/external-link-to}}
@@ -12,19 +14,21 @@
         <img src={{statusImageUrl}} alt="build:{{repo.defaultBranch.lastBuild.state}}"/>
       </a>
     </div>
+    <div class="repo-navigation">
+      {{repo-show-tabs repo=repo build=build job=job}}
+    </div>
+    <div class="repo-options">
+      {{repo-show-tools repo=repo build=build job=job tab=tab onTriggerBuild=(action "toggleTriggerBuildModal")}}
+    </div>
   </header>
   <main class="repo-main">
-  <div class="repo-navigation">
-    {{repo-show-tabs repo=repo build=build job=job}}
-    {{repo-show-tools repo=repo build=build job=job tab=tab onTriggerBuild=(action "toggleTriggerBuildModal")}}
-  </div>
-  <div class="travistab-body repo-body">
-    {{#if hasBlock}}
-      {{yield}}
-    {{else}}
-      {{build-layout build=build repo=repo}}
-    {{/if}}
-  </div>
+    <div class="travistab-body repo-body">
+      {{#if hasBlock}}
+        {{yield}}
+      {{else}}
+        {{build-layout build=build repo=repo}}
+      {{/if}}
+    </div>
   </main>
 </article>
 
