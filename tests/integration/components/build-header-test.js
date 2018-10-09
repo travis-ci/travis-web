@@ -137,4 +137,25 @@ module('Integration | Component | build header', function (hooks) {
     assert.dom('.commit-stopwatch').hasText('Running for -', 'Says running for');
     assert.dom('.commit-calendar').doesNotExist('does not display calendar while running');
   });
+
+  test('show os and language for job', async function (assert) {
+    let job = {
+      eventType: 'push',
+      status: 'running',
+      number: '1234.1',
+      os: 'linux',
+      language: 'ruby',
+      build: {
+        id: 123
+      }
+    };
+
+    this.set('job', job);
+    await render(hbs`{{build-header item=job}}`);
+    assert.dom('.commit-stopwatch').exists('does display elapsed time');
+    assert.dom('.commit-stopwatch').hasText('Running for -', 'Says running for');
+    assert.dom('.commit-calendar').doesNotExist('does not display calendar while running');
+    assert.dom('.detail-job-os').exists('does display operating system');
+    assert.dom('.detail-job-lang').exists('does display programming language');
+  });
 });

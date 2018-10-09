@@ -1,3 +1,11 @@
+.build-header-container {
+  @media #{$medium-up} {
+    display: flex;
+    flex-flow: row no-wrap;
+    justify-content: space-between;
+  }
+}
+
 .build-header {
   @include travisBorder;
   @include travisColorRows;
@@ -5,18 +13,86 @@
   font-size: 16px;
   clear: both;
 
-  @media #{$medium-up} {
-    display: flex;
-    flex-flow: row no-wrap;
-    justify-content: space-between;
-  }
-
   a:hover,
   a:active {
     .inner-underline {
       text-decoration: underline;
     }
   }
+
+  .job-container {
+    margin-bottom: 14px;
+  }
+
+  .job-detail-container {
+    @media #{$medium-up} {
+      margin-left: 18px;
+    }
+    margin-left: 15px;
+    font-size: 15px;
+    display: grid;
+    grid-template-columns: 20px fit-content(50%) 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas: "os name language"
+                         "os name language";
+
+    .detail-job-os {
+      grid-area: os;
+    }
+
+    .detail-job-name {
+      grid-area: name;
+      padding-left: 7px;
+      padding-right: 20px;
+    }
+
+    .detail-job-lang {
+      grid-area: language;
+      padding-left: 6px;
+    }
+  }
+}
+
+.detail-job-env {
+  display: grid;
+  grid-template-columns: 15px 1fr;
+  grid-gap: 8px;
+  font-size: 15px;
+  margin-left: 43px;
+  width: 91%;
+  white-space: nowrap;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+
+  @media #{$small-only} {
+    width: 85%;
+  }
+
+  &:after {
+    width: auto;
+    @include fadeOut(right, -90deg, white);
+  }
+
+  svg {
+    margin-top: 3px;
+  }
+}
+
+.expandEnv {
+  &:after {
+    background: none;
+  }
+  white-space: normal;
+}
+
+.closeEnv {
+  &:after {
+    @include fadeOut(right, -90deg, white);
+  }
+
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .build-commit,
@@ -57,10 +133,11 @@
 
 .build-info {
   font-size: 15px;
-  padding-left: 2rem;
+  padding-left: 43px;
 
   @media #{$medium-up} {
     flex: 0 1 37%;
+    padding-left: 2rem;
   }
 }
 
@@ -132,5 +209,15 @@
 
   .commit-clock {
     margin-bottom: 1rem;
+  }
+}
+
+.job-matrix-name-separator {
+  width: 90%;
+  margin: 15px auto;
+  height: 1px;
+  border-top: 1px $pebble-grey solid;
+  @media #{$medium-up} {
+    margin: 15px 47px;
   }
 }
