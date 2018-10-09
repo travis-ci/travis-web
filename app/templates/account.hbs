@@ -1,44 +1,8 @@
-<div data-test-account-page></div>
-{{#unless model.error}}
-  {{#if loadingError}}
-    There was a problem while loading the repositories list, please try again. In case
-    the problem persists, please contact support.
-  {{else}}
-    <header class="profile-header">
-      <div class='left'>
-        {{user-avatar account=model url=model.avatarUrl name=model.name size=96 showSubscriptionStatus=true}}
-        <div class='account-details'>
-          <h1 class="h2--grey">{{accountName}}</h1>
-          <div class='addenda'>
-            <span class='login'>@{{model.login}}</span>
-            {{#if model.education}}<span class='badge square grey'>Education</span>{{/if}}
-          </div>
-        </div>
-      </div>
-    </header>
+{{#travis-layout layoutName="layouts/profile" class="profile-view"}}
+  <div data-test-account-page></div>
 
-    {{#if checkSubscriptionStatus}}
-      {{#if model.subscriptionError}}
-        {{subscription-status-banner color="yellow" message="There was an error determining your subscription status." billingLinkText="Visit billing" billingUrl=billingUrl showLink=model.subscriptionPermissions.create}}
-      {{/if}}
-
-    {{/if}}
-
-    <nav class='travistab-nav'>
-      <ul>
-        <li>{{#link-to 'account.repositories'}}Repositories{{/link-to}}</li>
-        {{#if (eq model.type 'user')}}
-          <li data-test-settings-tab>{{#link-to 'account.settings'}}Settings{{/link-to}}</li>
-        {{/if}}
-        {{#if checkSubscriptionStatus}}
-          <li data-test-billing-tab>{{#link-to 'account.billing'}}Subscription{{/link-to}}</li>
-        {{/if}}
-      </ul>
-    </nav>
-
+  {{#profile-nav activeModel=model }}
     {{outlet}}
+  {{/profile-nav}}
 
-  {{/if}}
-{{else}}
-  {{no-account name=model.login}}
-{{/unless}}
+{{/travis-layout}}

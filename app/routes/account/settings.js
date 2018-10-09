@@ -1,25 +1,18 @@
 import TravisRoute from 'travis/routes/basic';
 import { service } from 'ember-decorators/service';
+import { hash } from 'rsvp';
 
 export default TravisRoute.extend({
   @service featureFlags: null,
 
-  beforeModel() {
-    let account = this.modelFor('account').account;
-
-    if (account.type === 'organization') {
-      this.transitionTo('account');
-    }
-  },
-
   model() {
-    return this.featureFlags.fetchTask.perform({ forceServerRequest: true });
+    const featureFlags = this.featureFlags.fetchTask.perform({ forceServerRequest: true });
+    const account = this.modelFor('account');
+    return hash({ featureFlags, account });
   },
 
   setupController(controller, model) {
-    const featureFlags = model;
-    const account = this.modelFor('account');
-    controller.setProperties({ featureFlags, account });
+    this._super(...arguments);
     controller.fetchRepositories.perform();
   }
 });

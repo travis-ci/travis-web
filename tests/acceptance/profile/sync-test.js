@@ -21,7 +21,7 @@ moduleForAcceptance('Acceptance | profile/sync', {
 test('trigger sync', function (assert) {
   let done = assert.async();
 
-  profilePage.visit({ username: 'miss-major' });
+  profilePage.visit();
 
   andThen(() => {
     assert.equal(profilePage.syncButton.lastSynced, 'Last synced 2 years ago');

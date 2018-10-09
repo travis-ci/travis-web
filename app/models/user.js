@@ -19,6 +19,9 @@ export default Owner.extend({
   token: attr(),
   gravatarId: attr(),
 
+  type: 'user',
+  isUser: true,
+
   @computed('name', 'login')
   fullName(name, login) {
     return name || login;
@@ -111,8 +114,6 @@ export default Owner.extend({
       return permissions.includes(parseInt(id));
     }
   },
-
-  type: 'user',
 
   sync() {
     const callback = run(() => { this.setWithSession('isSyncing', true); });
