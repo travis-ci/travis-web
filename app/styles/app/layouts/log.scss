@@ -76,6 +76,24 @@
     &.active .tail-status {
       background-color: #6b0;
     }
+
+    @supports(position: sticky) {
+      position: sticky;
+      top: 10px;
+      float: right;
+      width: 0;
+      margin-right: 0;
+      margin-bottom: 45px;
+      
+      .tail-status, .tail-label {
+        position: absolute;
+        right: 10px;
+      }
+
+      .tail-label {
+        white-space: nowrap;
+      }
+    }
   }
 
   .to-top {
@@ -90,6 +108,11 @@
     text-align: right;
     color: #999;
     background: inline-image("ui/workers-close.svg") no-repeat right 6px;
+    @supports(position: sticky) {
+      position: sticky;
+      float: right;
+      margin-top: 25px;
+    }
   }
 }
 
@@ -116,6 +139,7 @@
 .log-main {
   display: none;
   margin-bottom: 5em;
+  padding-bottom: 45px;
 
   &.is-visible {
     display: block;
@@ -188,6 +212,7 @@
     background-color: $color-bg-log-fold;
     counter-reset: line-numbering;
     margin-top: 0;
+    margin-bottom: -45px;
   }
 
   .cut {
