@@ -1,0 +1,21 @@
+<section class='billing'>
+  {{#if isEducation}}
+    {{billing-education account=account}}
+  {{/if}}
+
+  {{#if isTrial}}
+    {{billing-trial account=account}}
+  {{/if}}
+
+  {{#if isManual}}
+    {{billing-manual subscription=subscription}}
+  {{/if}}
+
+  {{#if isManaged}}
+    {{billing-subscription account=account}}
+  {{/if}}
+</section>
+
+{{#if invoices}}
+  {{billing-invoices invoices=invoices}}
+{{/if}}

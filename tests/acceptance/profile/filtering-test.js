@@ -67,7 +67,7 @@ moduleForAcceptance('Acceptance | profile/filtering', {
 });
 
 test('filter profile repositories', function (assert) {
-  profilePage.visit({ username: 'user-login' });
+  profilePage.visit();
 
   andThen(function () {
     assert.equal(profilePage.administerableRepositories.length, 3, 'expected three repositories');
@@ -92,8 +92,9 @@ test('filter profile repositories', function (assert) {
 test('paginate and filter GitHub Apps-managed repositories', function (assert) {
   withFeature('github-apps');
 
-  this.userInstallation = server.create('installation', {
-    owner: this.user
+  server.create('installation', {
+    owner: this.user,
+    github_id: 2691
   });
   this.user.save();
 
@@ -109,7 +110,7 @@ test('paginate and filter GitHub Apps-managed repositories', function (assert) {
     });
   }
 
-  profilePage.visit({ username: 'user-login' });
+  profilePage.visit();
 
   andThen(() => {
     assert.equal(profilePage.githubAppsRepositories.length, 10, 'expected 10 GitHub Apps-managed repositories on the first page');

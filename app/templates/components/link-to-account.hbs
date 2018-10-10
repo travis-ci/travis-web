@@ -1,0 +1,9 @@
+{{#if routeModel}}
+  {{#link-to routeName routeModel class=class}}
+    {{yield}}
+  {{/link-to}}
+{{else}}
+  {{#link-to routeName class=class}}
+    {{yield}}
+  {{/link-to}}
+{{/if}}

@@ -1,12 +1,11 @@
 import { helper } from '@ember/component/helper';
-import { copy } from 'ember-copy';
 
 export function safeFormatConfig(config) {
   const rejectKeys = ['.result', 'notifications', 'branches', 'linux_shared'];
   const rejectIfEmptyKeys = ['addons'];
 
   // create deep copy of config
-  let deepCopy = copy(config[0] || {}, true);
+  const deepCopy = JSON.parse(JSON.stringify(config[0] || {}));
 
   rejectKeys.forEach((keyToReject) => {
     delete deepCopy[keyToReject];

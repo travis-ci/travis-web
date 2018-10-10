@@ -13,7 +13,7 @@
         <span>Activate repository on GitHub</span>
       {{/external-link-to}}
     {{else}}
-      <p class="page-notice">You can activate the repository on {{#link-to "account" repo.owner.login}}your profile{{/link-to}},<br/>
+      <p class="page-notice">You can activate the repository on {{#link-to "account"}}your profile{{/link-to}},<br/>
       or by clicking the button below</p>
 
       <button {{action (perform activate)}} class="button button--blue">Activate repository</button>

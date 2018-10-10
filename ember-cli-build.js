@@ -36,17 +36,6 @@ module.exports = function () {
     'ember-cli-babel': {
       includePolyfill: true,
     },
-    autoImport: {
-      webpack: {
-        // workaround for https://github.com/jeremyfa/yaml.js/issues/102
-        node: {
-          fs: 'empty'
-        },
-        module: {
-          noParse: /pusher/
-        }
-      }
-    },
     babel: {
       blacklist: ['regenerator'],
       plugins: [
@@ -88,6 +77,9 @@ module.exports = function () {
           }
         ]
       }
+    },
+    'ember-composable-helpers': {
+      only: ['sort-by', 'compute']
     }
   });
 
@@ -95,5 +87,18 @@ module.exports = function () {
     destDir: '/images/emoji'
   });
 
+  importNpmDependency(app, 'node_modules/fuzzysort/fuzzysort.js');
+  importNpmDependency(app, 'node_modules/pusher-js/dist/web/pusher.js');
+  importNpmDependency(app, 'node_modules/raven-js/dist/raven.js');
+  importNpmDependency(app, 'node_modules/emoji-js/lib/emoji.js');
+  importNpmDependency(app, 'node_modules/visibilityjs/index.js');
+  importNpmDependency(app, 'node_modules/ansiparse/lib/ansiparse.js', 'amd');
+  importNpmDependency(app, 'node_modules/yamljs/index.js');
+
   return app.toTree(emojiAssets);
 };
+
+function importNpmDependency(app, path, transformation = 'cjs', alias) {
+  const as = alias || path.split('/')[1];
+  app.import(path, { using: [{ transformation, as }] });
+}

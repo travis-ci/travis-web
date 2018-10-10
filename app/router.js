@@ -23,6 +23,30 @@ Router.map(function () {
 
   this.route('getting_started');
 
+  this.route('search', { path: '/search/:phrase' });
+
+  this.route('first_sync');
+  this.route('insufficient_oauth_permissions');
+  this.route('auth');
+  this.route('github_apps_installation', { path: '/settings/github-apps-installations/redirect' });
+  this.route('plans', { path: '/plans' });
+  this.route('team', { path: '/about' });
+  this.route('logo', { path: '/logo' });
+
+  this.route('account', function () {
+    this.route('repositories');
+    this.route('settings', { path: '/preferences' });
+    this.route('billing', { path: '/subscription' });
+  });
+  this.route('organization', { path: '/organizations/:login' }, function () {
+    this.route('repositories');
+    this.route('settings', { path: '/preferences' });
+    this.route('billing', { path: '/subscription' });
+  });
+  this.route('unsubscribe', { path: '/account/preferences/unsubscribe' });
+  this.route('profile', { path: '/profile/:login' });
+  this.route('profile', { path: '/profile/:login/:section' });
+
   this.route('repo', { path: '/:owner/:name' }, function () {
     this.route('index', { path: '/' });
     this.route('branches', { path: '/branches', resetNamespace: true });
@@ -42,30 +66,10 @@ Router.map(function () {
       this.route('index', { path: '/' });
     });
   });
-
-  this.route('search', { path: '/search/:phrase' });
-
-  this.route('first_sync');
-  this.route('insufficient_oauth_permissions');
-  this.route('auth');
-  this.route('github_apps_installation', { path: '/settings/github-apps-installations/redirect' });
-  this.route('plans', { path: '/plans' });
-  this.route('team', { path: '/about' });
-  this.route('logo', { path: '/logo' });
-  this.route('profile', { path: '/profile', resetNamespace: true }, function () {
-    this.route('accounts', { path: '/', resetNamespace: true }, function () {
-      this.route('account', { path: '/:login', resetNamespace: true }, function () {
-        this.route('repositories', { path: '/' });
-        this.route('settings');
-        this.route('billing', { path: '/subscription' }, () => {
-        });
-      });
-    });
-  });
-  this.route('unsubscribe', { path: '/account/preferences/unsubscribe' });
   this.route('owner', { path: '/:owner', resetNamespace: true }, function () {
     this.route('repositories', { path: '/' });
   });
+
   this.route('error404', { path: '/404' });
   this.route('page-not-found', { path: '/*wildcard' });
   this.route('signin');

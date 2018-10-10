@@ -15,7 +15,7 @@ moduleForAcceptance('Acceptance | profile/not found', {
 });
 
 test('try to view account that does not exist', function (assert) {
-  profilePage.visit({ username: 'random-org' });
+  profilePage.visitOrganization({ name: 'random-org' });
 
   andThen(() => {
     percySnapshot(assert);

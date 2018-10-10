@@ -1750,7 +1750,7 @@ export default {
           }
         ]
       },
-      "attributes": ["id","login","name","github_id","education","avatar_url","repositories","is_syncing","synced_at"],
+      "attributes": ["id","login","name","github_id","education","avatar_url","repositories","is_syncing","synced_at","installation"],
       "representations": {
         "minimal": [
           "id",

@@ -1,7 +1,9 @@
-{{one-way-search
-    query
-    update=(action 'onSearch')
-    class="search"
-    id=inputId
-    placeholder=placeholder title=title
-}}
+<input
+  type="search"
+  value={{query}}
+  oninput={{action 'onSearch' value="target.value"}}
+  class="search"
+  id={{inputId}}
+  placeholder={{placeholder}}
+  title={{title}}
+/>

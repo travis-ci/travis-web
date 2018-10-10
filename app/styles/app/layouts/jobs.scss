@@ -144,8 +144,8 @@
   }
 
   @media #{$medium-up} {
-    flex: 0 0 3.6em;
-    text-align: center;
+    margin-left: 10px;
+    padding: 0.3em 0.5em 0.5em 0.5em;
     pointer-events: initial;
 
     .icon {
@@ -210,10 +210,17 @@
     align-self: flex-start;
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis;
+    margin-right: 20px;
 
     &:after {
       @include fadeOut(right, -90deg, white);
+    }
+
+    &:hover {
+      &:after {
+        background: none;
+      }
+      white-space: normal;
     }
   }
 
