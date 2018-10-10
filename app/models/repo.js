@@ -49,8 +49,6 @@ const Repo = Model.extend({
   migrationStatus(status) {
     if (['requested', 'migrating'].includes(status)) {
       return 'migrating';
-    } else if (status == 'complete') {
-      return 'success';
     }
     return status;
   },
