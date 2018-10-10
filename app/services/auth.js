@@ -177,21 +177,29 @@ export default Service.extend({
       }
     }
     if (user) {
-      return this.get('ajax').get(`/users/${user.id}`).then((data) => {
-        let userRecord;
-        if (data.user.correct_scopes) {
-          userRecord = this.loadUser(data.user);
-          userRecord.get('permissions');
-          if (this.get('signedIn')) {
-            data.user.token = user.token;
-            this.storeData(data, this.get('sessionStorage'));
-            this.storeData(data, this.get('storage'));
-            Travis.trigger('user:refreshed', data.user);
+      return this.ajax.get(`/users/${user.id}`)
+        .then(data => {
+          let userRecord;
+          if (data.user.correct_scopes) {
+            userRecord = this.loadUser(data.user);
+            userRecord.get('permissions');
+            if (this.signedIn) {
+              data.user.token = user.token;
+              this.storeData(data, this.sessionStorage);
+              this.storeData(data, this.storage);
+              Travis.trigger('user:refreshed', data.user);
+            }
+            return this.store.queryRecord('user', {
+              current: true,
+              included: 'owner.installation'
+            });
+          } else {
+            return EmberPromise.reject();
           }
-        } else {
-          return EmberPromise.reject();
-        }
-      });
+        })
+        .then(({ installation = null }) => {
+          this.currentUser.setProperties({ installation });
+        });
     } else {
       return EmberPromise.resolve();
     }
@@ -226,7 +234,10 @@ export default Service.extend({
       normalized = serializer.normalizeResponse(store, userClass, user, null, 'findRecord');
 
     store.push(normalized);
-    return store.recordForId('user', user.id);
+    const record =  store.recordForId('user', user.id);
+    const installation = store.peekAll('installation').findBy('owner.id', user.id) || null;
+    record.setProperties({ installation });
+    return record;
   },
 
   expectedOrigin() {
