@@ -1,5 +1,5 @@
 /* global window */
-window.deprecationWorkflow = self.deprecationWorkflow || {};
+window.deprecationWorkflow = window.deprecationWorkflow || {};
 window.deprecationWorkflow.config = {
   workflow: [
     { handler: 'silence', matchId: 'macro-computed-deprecated' },
