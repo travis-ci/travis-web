@@ -28,7 +28,8 @@
           {{#external-link-to href=commit.githubUrl}}
             {{tooltip-on-element text='View commit on GitHub'}}
             {{svg-jar 'icon-commit' class="icon"}}
-            <span class="label-align inner-underline commit-commit monospace">Commit {{format-sha commit.sha}}</span>
+            <span class="label-align inner-underline commit-commit">Commit</span>
+            <span class="label-align-item inner-underline commit-commit monospace">{{format-sha commit.sha}}</span>
             {{svg-jar 'icon-external-link' class="icon"}}
           {{/external-link-to}}
         </li>
@@ -46,7 +47,8 @@
                 {{#external-link-to href=item.commit.compareUrl }}
                   {{tooltip-on-element text='View diff on GitHub'}}
                   {{svg-jar 'icon-compare' class="icon"}}
-                  <span class="label-align inner-underline commit-compare">Compare {{short-compare-shas item.commit.compareUrl}}</span>
+                  <span class="label-align inner-underline commit-compare">Compare</span>
+                  <span class="label-align-item inner-underline commit-compare monospace">{{short-compare-shas item.commit.compareUrl}}</span>
                   {{svg-jar 'icon-external-link' class="icon"}}
                 {{/external-link-to}}
               {{/if}}
@@ -65,7 +67,8 @@
             {{#external-link-to href=urlGitHubBranch class="commit-branch-url"}}
               {{tooltip-on-element text='View branch on GitHub'}}
               {{svg-jar 'icon-branch' class="icon"}}
-              <span class="label-align inner-underline">Branch {{build.branchName}}</span>
+              <span class="label-align inner-underline">Branch</span>
+              <span class="label-align-item inner-underline monospace">{{build.branchName}}</span>
               {{svg-jar 'icon-external-link' class="icon"}}
             {{/external-link-to}}
           {{/if}}
