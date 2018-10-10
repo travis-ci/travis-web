@@ -107,7 +107,7 @@ module('Acceptance | profile/migration', function (hooks) {
 
     assert.dom('[data-test-locked-github-app-repository="github-apps-locked-repository"]').exists();
 
-    await click('[data-test-migrate-repository-button]');
+    await click('[data-test-migrate-repository-button="github-apps-locked-repository"]');
     assert.dom('[data-test-repository-migration-modal]').exists();
 
     await click('[data-test-repository-migration-modal-confirm-migration-button]');
@@ -177,7 +177,8 @@ module('Acceptance | profile/migration', function (hooks) {
 
     assert.dom('[data-test-locked-github-app-repository="github-apps-locked-repository"]').exists();
 
-    await click('[data-test-migrate-repository-button]');
+    // order is odd, so click the second link to stay consistent
+    await click('[data-test-migrate-repository-button="github-apps-locked-repository"]');
     assert.dom('[data-test-repository-migration-modal]').exists();
 
     await click('[data-test-repository-migration-modal-confirm-migration-button]');
