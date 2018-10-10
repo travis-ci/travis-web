@@ -28,7 +28,7 @@
           {{#external-link-to href=commit.githubUrl}}
             {{tooltip-on-element text='View commit on GitHub'}}
             {{svg-jar 'icon-commit' class="icon"}}
-            <span class="label-align inner-underline commit-commit">Commit {{format-sha commit.sha}}</span>
+            <span class="label-align inner-underline commit-commit monospace">Commit {{format-sha commit.sha}}</span>
             {{svg-jar 'icon-external-link' class="icon"}}
           {{/external-link-to}}
         </li>
