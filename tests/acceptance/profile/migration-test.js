@@ -17,7 +17,9 @@ module('Acceptance | profile/migration', function (hooks) {
     enableFeature('pro-version');
 
     this.user = server.create('user', {
-      allowMigration: false
+      allowMigration: false,
+      login: 'user-login',
+      github_id: 1974,
     });
 
     // create locked GitHub repository
@@ -33,11 +35,15 @@ module('Acceptance | profile/migration', function (hooks) {
     });
 
     // create GitHub Apps installation
-    server.create('installation', { owner: this.user });
+    server.create('installation', {
+      owner: this.user,
+      github_id: 2691
+    });
+    this.user.save();
 
     signInUser(this.user);
 
-    await visit(`/profile/${this.user.login}`);
+    await visit('/account/repositories');
 
     // shows no migration msg
     const expectedMsg = 'The following repositories cannot be migrated to travis-ci.com at this time because they are currently active on our legacy platform travis-ci.org. This feature will be available shortly. Please read our docs on open source migration to learn more.';
@@ -49,7 +55,9 @@ module('Acceptance | profile/migration', function (hooks) {
     enableFeature('pro-version');
 
     this.user = server.create('user', {
-      allowMigration: true
+      allowMigration: true,
+      login: 'user-login',
+      github_id: 1974,
     });
 
     // create locked GitHub repository
@@ -83,11 +91,15 @@ module('Acceptance | profile/migration', function (hooks) {
     });
 
     // create GitHub Apps installation
-    server.create('installation', { owner: this.user });
+    server.create('installation', {
+      owner: this.user,
+      github_id: 2691,
+    });
+    this.user.save();
 
     signInUser(this.user);
 
-    await visit(`/profile/${this.user.login}`);
+    await visit('/account/repositories');
 
     // shows no migration msg
     const expectedMsg = 'Authorized users can now migrate the following repositories currently active on our legacy platform travis-ci.org to travis-ci.com. Please read our docs on open source migration to learn more.';
@@ -149,11 +161,15 @@ module('Acceptance | profile/migration', function (hooks) {
     });
 
     // create GitHub Apps installation
-    server.create('installation', { owner: this.user });
+    server.create('installation', {
+      owner: this.user,
+      github_id: 2691,
+    });
+    this.user.save();
 
     signInUser(this.user);
 
-    await visit(`/profile/${this.user.login}`);
+    await visit('/account/repositories');
 
     // shows no migration msg
     const expectedMsg = 'Authorized users can now migrate the following repositories currently active on our legacy platform travis-ci.org to travis-ci.com. Please read our docs on open source migration to learn more.';
@@ -201,7 +217,11 @@ module('Acceptance | profile/migration', function (hooks) {
     });
 
     // create GitHub Apps installation
-    server.create('installation', { owner: this.user });
+    server.create('installation', {
+      owner: this.user,
+      github_id: 2691
+    });
+    this.user.save();
 
     signInUser(this.user);
 
