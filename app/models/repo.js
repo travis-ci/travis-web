@@ -27,6 +27,7 @@ const Repo = Model.extend({
   starred: attr('boolean'),
   active_on_org: attr('boolean'),
   emailSubscribed: attr('boolean'),
+  migrate: attr(),
 
   @oneWay('owner.@type') ownerType: null,
 
@@ -41,6 +42,18 @@ const Repo = Model.extend({
     async: true, inverse: 'repoCurrentBuild'
   }),
   _branches: hasMany('branch'),
+
+  // We do not include an error state as part of an API response. This is only
+  // transmitted via a Pusher message for now.
+  @computed('migrate')
+  migrationStatus(status) {
+    if (['requested', 'migrating'].includes(status)) {
+      return 'migrating';
+    } else if (status == 'complete') {
+      return 'success';
+    }
+    return status;
+  },
 
   // TODO: this is a hack, we should remove it once @is_collaborator property is
   // added to a response with the repo
@@ -146,6 +159,13 @@ const Repo = Model.extend({
     const url = `/repo/${this.get('id')}/settings`;
     return this.get('api').get(url).
       then(data => this._convertV3SettingsToV2(data['settings']));
+  },
+
+  startMigration() {
+    const url = `/repo/${this.get('id')}/migrate`;
+    return this.get('api').post(url).then(() => {
+      this.set('migrationStatus', 'migrating');
+    });
   },
 
   saveSetting(name, value) {

@@ -185,6 +185,17 @@ export default function () {
     return this.serialize(repository);
   });
 
+  this.post('/repo/:repositoryId/migrate', function (schema, request) {
+    const { repositoryId } = request.params;
+    const repository = schema.repositories.find(repositoryId);
+
+    if (repository) {
+      repository.update('migrate', 'requested');
+    }
+
+    return this.serialize(repository);
+  });
+
   this.post('/repo/:repositoryId/email_subscription', function ({ repositories }, request) {
     const repo = repositories.find(request.params.repositoryId);
     repo.update({ email_subscribed: true });
