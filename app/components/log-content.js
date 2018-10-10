@@ -38,6 +38,9 @@ Log.Scroll.prototype = $.extend(new Log.Listener(), {
       $('#main').scrollTop(0);
       let offset = element.offset();
       let scrollTop = ((ref = offset) != null ? ref.top : void 0) - (window.innerHeight / 3);
+      if (isNaN(scrollTop)) {
+        return;
+      }
       return $('html, body').scrollTop(scrollTop);
     }
   }
