@@ -18,21 +18,12 @@
     </h2>
     <div class="commit-info">
 
-  {{#if commit.body }}
-    <p class="commit-description" title={{commit.body}}>
-      <span class="monospace {{commitBody}}">{{format-message commit.body repo=item.repo pre=true}}</span>
-    </p>
-  {{/if}}
-    <ul class="list-icon">
-      <li>
-        {{#external-link-to href=commit.githubUrl}}
-          {{tooltip-on-element text='View commit on GitHub'}}
-          {{svg-jar 'icon-commit' class="icon"}}
-          <span class="label-align inner-underline commit-commit">Commit {{format-sha commit.sha}}</span>
-          {{svg-jar 'icon-external-link' class="icon"}}
-        {{/external-link-to}}
-      </li>
-      {{#if displayCompare}}
+    {{#if commit.body }}
+      <p class="commit-description" title="{{commit.body}}">
+        <span class="monospace {{commitBody}}">{{format-message commit.body repo=item.repo pre=true}}</span>
+      </p>
+    {{/if}}
+      <ul class="list-icon">
         <li>
           {{#external-link-to href=commit.githubUrl}}
             {{tooltip-on-element text='View commit on GitHub'}}
