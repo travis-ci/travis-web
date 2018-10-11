@@ -77,7 +77,7 @@
     flex: 0 0 4em;
     display: flex;
     flex-direction: column;
-    height: 55px;
+    height: 76px;
     padding: 0.3em 0;
     border-right: 1px solid rgba($asphalt-grey, 0.2);
   }
@@ -89,11 +89,12 @@
 
   @media #{$medium-up} {
     padding: 0 1.5em 0;
-    height: 5rem;
+    height: 7rem;
   }
 }
 
 .owner-tile-main {
+
   @media #{$small-only} {
     padding: 0 1em;
   }
@@ -103,15 +104,65 @@
     flex-flow: row nowrap;
     align-items: center;
     justify-content: space-between;
-    height: 70px;
+    height: 100%;
   }
 }
 
-.owner-tile-repo .repo-title {
-  font-size: 18px;
+.owner-tile {
+  .label {
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  &:before {
+    content: '';
+    align-self: stretch;
+    min-width: 1.5091%;
+    min-height: 10px;
+    background-color: $pebble-grey;
+  }
+
+  @each $key, $value in $stateMap {
+    &.#{$key}:before {
+      background-color: map-get($value, color);
+    }
+  }
 }
 
-.owner-tile .label {
-  font-size: 12px;
-  font-weight: 700;
+.owner-tile-repo {
+  @media #{$medium-up} {
+    flex: 0 0 25%;
+  }
+
+  .repo-title {
+    font-size: 18px;
+  }
+}
+
+.owner-tile-build {
+  @media #{$medium-up} {
+    flex: 0 0 11%;
+  }
+}
+
+.owner-tile-branch {
+  @media #{$medium-up} {
+    flex: 0 0 15%;
+  }
+}
+
+.owner-tile-commit {
+  @media #{$medium-up} {
+    flex: 0 0 17%;
+  }
+
+  .commit-compare {
+    font-size: 14px;
+  }
+}
+
+.owner-tile-date {
+  @media #{$medium-up} {
+    flex: 0 0 30%;
+  }
 }

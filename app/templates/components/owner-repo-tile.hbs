@@ -1,6 +1,12 @@
 <div class="owner-tile-head">
   <div class="owner-tile-visibility">
-    {{repository-visibility-icon repository=repo}}
+    {{#if repository.private}}
+      {{svg-jar 'icon-lock' alt='Private repository' class='icon icon--m private'}}
+      {{tooltip-on-component text='Private repository'}}
+    {{else}}
+      {{svg-jar 'icon-os' alt='Public repository' class='icon icon--m public'}}
+      {{tooltip-on-component text='Public repository'}}
+    {{/if}}
   </div>
 </div>
 <div class="owner-tile-body">
@@ -45,7 +51,6 @@
             </span>
             {{svg-jar 'icon-external-link' class="icon"}}
           {{/external-link-to}}
-          &nbsp;
         </p>
       </section>
 
