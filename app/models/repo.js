@@ -43,8 +43,6 @@ const Repo = Model.extend({
   }),
   _branches: hasMany('branch'),
 
-  // We do not include an error state as part of an API response. This is only
-  // transmitted via a Pusher message for now.
   @computed('migrate')
   migrationStatus(status) {
     if (['requested', 'migrating'].includes(status)) {
