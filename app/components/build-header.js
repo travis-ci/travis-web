@@ -79,8 +79,7 @@ export default Component.extend({
   commitBody(body) {
     this.$('commit-description').remove('fade-commit-message');
 
-    if(body.length > 72) {
-      console.log(body.length);
+    if (body.length > 72) {
       this.$('.commit-description').addClass('fade-commit-message');
     }
   }
