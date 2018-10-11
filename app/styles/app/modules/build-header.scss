@@ -104,16 +104,18 @@
   font-size: 16px;
   overflow: hidden;
   position: relative;
-
-  &:after {
-    content: "";
-
-    @include fadeOut(right, -90deg, white, 20%);
-  }
+  padding-right: 0.5em;
 
   @media #{$medium-up} {
     flex: 0 1 55%;
     padding-left: 2.2rem;
+    padding-right: 0;
+
+    &:after {
+      content: "";
+
+      @include fadeOut(right, -90deg, white, 20%);
+    }
   }
 }
 
@@ -189,9 +191,13 @@
 
 .commit-description {
   margin: 1rem 0;
-  max-height: 40px;
+  max-height: 65px;
   position: relative;
   overflow: hidden;
+
+  @media #{$medium-up} {
+    max-height: 43px;
+  }
 
   &:after {
     content: "";
