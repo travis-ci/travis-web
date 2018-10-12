@@ -2,10 +2,11 @@
 
 import ansiparse from 'ansiparse';
 
-let Log = function () {
+let Log = function (config) {
+  this.theme = config.theme
   this.autoCloseFold = true;
   this.listeners = [];
-  this.renderer = new Log.Renderer;
+  this.renderer = new Log.Renderer(this.theme);
   this.children = new Log.Nodes(this);
   this.parts = {};
   this.folds = new Log.Folds(this);
@@ -32,7 +33,7 @@ Log.extend(Log, {
   create: function (options) {
     let listener, log, _i, _len, _ref;
     options || (options = {});
-    log = new Log();
+    log = new Log(options);
     if (options.limit) {
       log.listeners.push(log.limit = new Log.Limit(options.limit));
     }
@@ -225,7 +226,7 @@ Log.Part.prototype = Log.extend(new Log.Node, {
         return;
       }
       spans = [];
-      _ref2 = Log.Deansi.apply(string);
+      _ref2 = Log.Deansi.apply(string, this.log.theme);
       for (_j = 0, _len1 = _ref2.length; _j < _len1; _j++) {
         node = _ref2[_j];
         span = Log.Span.create(this, `${this.id}-${(num += 1)}`, num, node.text, node['class']);
@@ -865,52 +866,62 @@ Object.defineProperty(Log.Times.Time.prototype, 'stats', {
 
 Log.Deansi = {
   CLEAR_ANSI: /(?:\033)(?:\[0?c|\[[0356]n|\[7[lh]|\[\?25[lh]|\(B|H|\[(?:\d+(;\d+){,2})?G|\[(?:[12])?[JK]|[DM]|\[0K)/gm,
-  apply: function (string) {
+  apply: function (string, theme) {
     if (!string) {
       return [];
     }
     string = string.replace(this.CLEAR_ANSI, '');
-    return ansiparse(string).map(part => this.node(part));
+    return ansiparse(string).map(part => this.node(part, theme));
   },
-  node: function (part) {
+  node: function (part, theme) {
     let classes, node;
     node = {
       type: 'span',
       text: part.text
     };
 
-    classes = this.classes(part);
+    classes = this.classes(part, theme);
 
     if (classes) {
       node['class'] = classes.join(' ');
     }
     return node;
   },
-  classes: function (part) {
+  classes: function (part, theme) {
     let result;
     result = [];
-    result = result.concat(this.colors(part));
+    result = result.concat(this.colors(part, theme));
     if (result.length > 0) {
       return result;
     }
   },
-  colors: function (part) {
+
+  adjustColorToTheme: function(color) {
+    let theme;
+    if (theme === 'light') {
+      color += '-light';
+    }
+    console.log({color});
+    return color;
+  },
+
+  colors: function (part, theme) {
     let colors;
     colors = [];
     if (part.foreground) {
-      colors.push(part.foreground);
+      colors.push(this.adjustColorToTheme(part.foreground, theme));
     }
     if (part.background) {
-      colors.push(`bg-${part.background}`);
+      colors.push(this.adjustColorToTheme(`bg-${part.background}`, theme));
     }
     if (part.bold) {
-      colors.push('bold');
+      colors.push(this.adjustColorToTheme('bold', theme));
     }
     if (part.italic) {
-      colors.push('italic');
+      colors.push(this.adjustColorToTheme('italic', theme));
     }
     if (part.underline) {
-      colors.push('underline');
+      colors.push(this.adjustColorToTheme('underline', theme));
     }
     return colors;
   },
@@ -942,12 +953,12 @@ Object.defineProperty(Log.Limit.prototype, 'limited', {
   }
 });
 
-Log.Renderer = function () {
+Log.Renderer = function (theme) {
   this.frag = document.createDocumentFragment();
-  this.para = this.createParagraph();
-  this.span = this.createSpan();
+  this.para = this.createParagraph(theme);
+  this.span = this.createSpan(theme);
   this.text = document.createTextNode('');
-  this.fold = this.createFold();
+  this.fold = this.createFold(theme);
   return this;
 };
 
@@ -1058,20 +1069,27 @@ Log.extend(Log.Renderer.prototype, {
     text.nodeValue = data.text;
     return text;
   },
-  createParagraph: function () {
+  createParagraph: function (theme) {
     let para;
     // TODO: I know that now naming doesn't make sense, but the code already has
     // `createSpan` function and I'm not into biggger refactoring at the moment
     para = document.createElement('div');
     para.classList.add('log-line');
+    if (theme === 'light') {
+      para.classList.add('light-theme');
+    }
     para.appendChild(document.createElement('a'));
     return para;
   },
-  createFold: function () {
+  createFold: function (theme) {
     let fold;
     fold = document.createElement('div');
     fold.appendChild(this.createSpan());
-    fold.lastChild.setAttribute('class', 'fold-name');
+    let className = 'fold-name';
+    if (theme === 'light') {
+      className += ' light-theme';
+    }
+    fold.lastChild.setAttribute('class', className);
     return fold;
   },
   createSpan: function () {

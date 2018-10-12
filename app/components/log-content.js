@@ -152,6 +152,7 @@ export default Component.extend({
         });
       });
       this.engine = Log.create({
+        theme: this.get('logTheme.theme'),
         listeners: [this.scroll, this.limit]
       });
       this.engine.limit = this.limit;

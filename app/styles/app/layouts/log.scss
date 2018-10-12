@@ -1,4 +1,7 @@
 .log {
+  &.light-theme {
+    border: 1px solid $pebble-grey;
+  }
   position: relative;
 
   .log-tail {
@@ -84,7 +87,7 @@
       width: 0;
       margin-right: 0;
       margin-bottom: 45px;
-      
+
       .tail-status, .tail-label {
         position: absolute;
         right: 10px;
@@ -122,6 +125,11 @@
   padding: 0.7em 0.8em 0.6em;
   text-align: right;
   background-color: $log-header-bg;
+
+  &.light-theme {
+    border-bottom: 1px solid $pebble-grey;
+    // background-color: white;
+  }
 
   @media #{$small-only} {
     display: flex;
@@ -213,6 +221,12 @@
     counter-reset: line-numbering;
     margin-top: 0;
     margin-bottom: -45px;
+
+    &.light-theme {
+      background-color: white;
+      color: $asphalt-grey;
+    }
+
   }
 
   .cut {
@@ -226,7 +240,11 @@
     min-height: 19px;
 
     &:hover {
-      background-color: $color-bg-log-hover !important;
+      background-color: $color-bg-log-hover;
+    }
+
+    &.light-theme:hover {
+      background-color: $color-bg-log-hover-light;
     }
 
     &.highlight {
@@ -272,8 +290,16 @@
     .log-line:first-of-type {
       background: darken($color-bg-log-hover, 10) inline-image("ui/log.fold.open.2.svg") no-repeat 8px 3px;
 
+      &.light-theme {
+        background: white inline-image("ui/log.fold.open.2.svg") no-repeat 8px 3px;
+      }
+
       &.highlight {
         background-color: $color-bg-log-fold-highlight;
+      }
+
+      &.highlight.light-theme {
+        background-color: $color-bg-log-fold-highlight-light;
       }
     }
 
@@ -295,9 +321,14 @@
       padding: 4px 7px 2px 7px;
       line-height: 10px;
       font-size: 10px;
-      background-color: #666;
       border-radius: 6px;
+      background-color: $fold-name-bg;
       color: #bbb;
+
+      &.light-theme {
+        background-color: $fold-name-bg-light;
+        color: white;
+      }
     }
   }
 
@@ -314,9 +345,14 @@
     padding: 4px 7px 2px 7px;
     line-height: 10px;
     font-size: 10px;
-    background-color: #666;
     border-radius: 6px;
-    color: #bbb;
+    background-color: $duration-bg;
+    color: $duration-color;
+
+    &.light-theme {
+      background-color: $fold-name-bg-light;
+      color: white;
+    }
   }
 
   .loading {

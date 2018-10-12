@@ -63,7 +63,10 @@
         </a>
       </div>
 
-      <div data-test-log-content-log-body class="log-body {{if lightThemeEnabled 'light-theme'}}">
+      <div
+        data-test-log-content-log-body
+        class="log-body {{if lightThemeEnabled 'light-theme'}}"
+      >
         {{#if showTailing}}
           <a href="#" id="tail" class="log-tail" {{action "toggleTailing"}}>
             <span class="tail-status"></span>
@@ -78,7 +81,7 @@
           </a>
         {{/if}}
 
-        <pre id="log" class="ansi"></pre>
+        <pre id="log" class="ansi {{if lightThemeEnabled 'light-theme'}}"></pre>
 
         {{#if showToTop}}
           <a href='#' class="to-top" {{action "toTop"}}>Top</a>

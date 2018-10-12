@@ -41,6 +41,9 @@ $color-bg-log-hover: #444;
 $color-bg-log-highlight: $cement-grey;
 $color-bg-log-fold: #222;
 $color-bg-log-fold-highlight: #777;
+$fold-name-bg: #666;
+$duration-bg: #666;
+$duration-color: #bbb;
 
 $ansi-black: #4E4E4E;
 $ansi-black-bold: #7C7C7C;
@@ -61,31 +64,35 @@ $ansi-white-bold: #FFFFFF;
 $ansi-grey: #969696;
 
 // log-light
-$log-header-bg-light: #444444;
+$log-header-bg-light: $pebble-grey;
 $line-height-log-light: 19px;
 $font-size-log-light: 12px;
-$color-bg-log-hover-light: #444;
-$color-bg-log-highlight-light: $cement-grey;
-$color-bg-log-fold-light: #222;
-$color-bg-log-fold-highlight-light: #777;
+$color-bg-log-hover-light: lighten(#777, 80%);
+$color-bg-log-highlight-light: lighten(#777, 70%);
+$color-bg-log-fold-light: white;
+$color-bg-log-fold-highlight-light: lighten(#777, 80%);
+$fold-name-bg-light: lighten(#666, 10%);
+$duration-bg: lighten(#666, 10%);
+$duration-color: white;
 
-$ansi-black-light: #4E4E4E;
-$ansi-black-bold-light: #7C7C7C;
-$ansi-red-light-light: #FF6C60;
-$ansi-red-bold-light: #FF9B93;
-$ansi-green-light: #00AA00;
-$ansi-green-bold-light: #B1FD79;
-$ansi-yellow-light: #FFFFB6;
-$ansi-yellow-bold-light: #FFFF91;
-$ansi-blue-light: #96CBFE;
-$ansi-blue-bold-light: #B5DCFE;
-$ansi-magenta-light: #FF73FD;
-$ansi-magenta-bold-light: #FF9CFE;
-$ansi-cyan-light: #00AAAA;
-$ansi-cyan-bold-light: #55FFFF;
-$ansi-white-light: #EEEEEE;
-$ansi-white-bold-light: #FFFFFF;
-$ansi-grey-light: #969696;
+$light-theme-darken-pct: 10%;
+$ansi-black-light: darken(#4E4E4E, $light-theme-darken-pct);
+$ansi-black-bold-light: darken(#7C7C7C, $light-theme-darken-pct);
+$ansi-red-light-light: darken(#FF6C60, $light-theme-darken-pct);
+$ansi-red-bold-light: darken(#FF9B93, $light-theme-darken-pct);
+$ansi-green-light: darken(#00AA00, $light-theme-darken-pct);
+$ansi-green-bold-light: darken(#B1FD79, $light-theme-darken-pct);
+$ansi-yellow-light: darken(#FFFFB6, $light-theme-darken-pct);
+$ansi-yellow-bold-light: darken(#FFFF91, $light-theme-darken-pct);
+$ansi-blue-light: darken(#96CBFE, $light-theme-darken-pct);
+$ansi-blue-bold-light: darken(#B5DCFE, $light-theme-darken-pct);
+$ansi-magenta-light: darken(#FF73FD, $light-theme-darken-pct);
+$ansi-magenta-bold-light: darken(#FF9CFE, $light-theme-darken-pct);
+$ansi-cyan-light: darken(#00AAAA, $light-theme-darken-pct);
+$ansi-cyan-bold-light: darken(#55FFFF, $light-theme-darken-pct);
+$ansi-white-light: darken(#EEEEEE, $light-theme-darken-pct);
+$ansi-white-bold-light: darken(#FFFFFF, $light-theme-darken-pct);
+$ansi-grey-light: darken(#969696, $light-theme-darken-pct);
 
 // error pages
 $error-heading-color: #357389;
