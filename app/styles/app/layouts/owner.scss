@@ -69,14 +69,15 @@
 .owner-tile-head {
   flex: 0 0 2%;
   display: flex;
-  padding: 1em;
-  justify-content: center;
+  padding: 0.5rem 1rem 0 1rem;
+  justify-content: flex-start;
   align-items: center;
 
   @media #{$medium-up} {
     flex: 0 0 4em;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     height: 76px;
     padding: 0.3em 0;
     border-right: 1px solid rgba($asphalt-grey, 0.2);
@@ -88,7 +89,7 @@
   position: relative;
 
   @media #{$medium-up} {
-    padding: 0 1.5em 0;
+    padding: 0 1.5rem 0;
     height: 7rem;
   }
 }
@@ -96,7 +97,7 @@
 .owner-tile-main {
 
   @media #{$small-only} {
-    padding: 0 1em;
+    padding: 0 1rem 0.5rem 1rem;
   }
 
   @media #{$medium-up} {
@@ -109,33 +110,32 @@
 }
 
 .owner-tile {
+  background: linear-gradient(to right, $pebble-grey 0%, $pebble-grey 1rem, white 1rem, white 100%) no-repeat;
+  padding-left: 1rem;
+  //   min-width: 1.5091%;
+
+  @each $key, $value in $stateMap {
+    &.#{$key} {
+      background: linear-gradient(to right, map-get($value, color) 0%, map-get($value, color) 1rem, white 1rem, white 100%) no-repeat;
+    }
+  }
+
   .label {
     font-size: 12px;
     font-weight: 700;
   }
-
-  &:before {
-    content: '';
-    align-self: stretch;
-    min-width: 1.5091%;
-    min-height: 10px;
-    background-color: $pebble-grey;
-  }
-
-  @each $key, $value in $stateMap {
-    &.#{$key}:before {
-      background-color: map-get($value, color);
-    }
-  }
 }
 
 .owner-tile-repo {
+  position: relative;
+
   @media #{$medium-up} {
-    flex: 0 0 25%;
+    flex: 0 0 27.5%;
   }
 
   .repo-title {
     font-size: 18px;
+    margin: 0;
   }
 }
 
@@ -163,6 +163,12 @@
 
 .owner-tile-date {
   @media #{$medium-up} {
-    flex: 0 0 30%;
+    flex: 0 0 27.5%;
+  }
+}
+
+.owner-tile-no-build {
+  @media #{$medium-up} {
+    flex: 0 0 72.5%;
   }
 }

@@ -1,11 +1,11 @@
 <div class="owner-tile-head">
   <div class="owner-tile-visibility">
     {{#if repository.private}}
-      {{svg-jar 'icon-lock' alt='Private repository' class='icon icon--m private'}}
-      {{tooltip-on-component text='Private repository'}}
+      {{svg-jar 'icon-lock' alt='Private repository' class='icon private'}}
+      {{tooltip-on-element text='Private repository'}}
     {{else}}
-      {{svg-jar 'icon-os' alt='Public repository' class='icon icon--m public'}}
-      {{tooltip-on-component text='Public repository'}}
+      {{svg-jar 'icon-os' alt='Public repository' class='icon public'}}
+      {{tooltip-on-element text='Public repository'}}
     {{/if}}
   </div>
 </div>
@@ -35,21 +35,23 @@
       <section class="fade-out default-branch owner-tile-branch">
         <h3 class="label">Default Branch</h3>
         <p class="row-content color">
-          {{request-icon event=repo.defaultBranch.lastBuild.eventType class="label-align"}}
-          <span class="label-align">{{repo.defaultBranch.name}}</span>
+          {{#link-to "build" ownerName repoName repo.defaultBranch.lastBuild.id}}
+            {{request-icon event=repo.defaultBranch.lastBuild.eventType class="label-align"}}
+            <span class="label-align">{{repo.defaultBranch.name}}</span>
+          {{/link-to}}
         </p>
       </section>
 
       <section class="commit-sha owner-tile-commit">
         <h3 class="label">Commit</h3>
         <p class="row-content">
-          {{tooltip-on-element text='View diff on GitHub'}}
           {{#external-link-to href=repo.defaultBranch.lastBuild.commit.compareUrl class="label-align"}}
             {{svg-jar 'icon-compare' class="icon"}}
             <span class="label-align inner-underline commit-compare monospace">
               {{format-sha repo.defaultBranch.lastBuild.commit.sha}}
             </span>
             {{svg-jar 'icon-external-link' class="icon"}}
+            {{tooltip-on-element text='View diff on GitHub'}}
           {{/external-link-to}}
         </p>
       </section>
@@ -63,7 +65,7 @@
         </p>
       </section>
     {{else}}
-      <section class="owner-tile-no-build">There is no build on the default branch yet.</section>
+      <section class="owner-tile-no-build"><p class="row-content">There is no build on the default branch yet.</p></section>
     {{/if}}
   </div>
 </div>
