@@ -4,6 +4,7 @@ import { service } from 'ember-decorators/service';
 import jobConfigLanguage from 'travis/utils/job-config-language';
 import { not } from 'ember-decorators/object/computed';
 
+const commitMessageLimit = 72;
 
 export default Component.extend({
   @service externalLinks: null,
@@ -126,7 +127,7 @@ export default Component.extend({
   commitBody(body) {
     this.$('commit-description').remove('fade-commit-message');
 
-    if (body.length > 72) {
+    if (body.length > commitMessageLimit) {
       this.$('.commit-description').addClass('fade-commit-message');
     }
   },
