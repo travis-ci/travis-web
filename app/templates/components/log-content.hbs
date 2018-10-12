@@ -1,25 +1,61 @@
 <section id="log-container" class="log">
 
   {{#if job.notStarted}}
-    <div class="log-notice">Hang tight, the log cannot be shown until the job has started.</div>
+    <div
+      class="log-notice"
+    >
+      Hang tight, the log cannot be shown until the job has started.
+    </div>
   {{/if}}
 
   <div class="log-container {{if job.notStarted 'hidden'}}">
-      <button type="button" class="toggle-log-button {{if logIsVisible 'hidden'}}" title="Display the log" {{action "toggleLog"}}>
+    <button
+      type="button"
+      class="toggle-log-button {{if logIsVisible 'hidden'}}"
+      title="Display the log" {{action "toggleLog"}}
+    >
       {{svg-jar 'icon-seemore' class="icon"}}
-      <span class="label-align">View log</span></button>
+      <span class="label-align">View log</span>
+    </button>
 
-    <div class="log-main {{if logIsVisible 'is-visible'}} {{if job.notStarted 'hidden'}}">
-      <div class="log-header">
-          <button type="button" class="toggle-log-button--dark {{unless logIsVisible 'hidden'}}" title="Display the log" {{action "toggleLog"}}>
-              {{svg-jar 'icon-seemore' class="icon"}}<span class="label-align">Hide log</span></button>
+    <div
+      class="log-main
+      {{if logIsVisible 'is-visible'}}
+      {{if job.notStarted 'hidden'}}"
+    >
+      <div
+        data-test-log-header
+        class="log-header{{if lightThemeEnabled '--light'}}"
+      >
+        <button
+          type="button"
+          class="toggle-log-button--dark {{unless logIsVisible 'hidden'}}"
+          title="Display the log" {{action "toggleLog"}}
+        >
+          {{svg-jar 'icon-seemore' class="icon"}}
+          <span class="label-align">Hide log</span>
+        </button>
+
         {{#if canRemoveLog}}
-          <button class="remove-log-button open-popup" {{action "toggleRemoveLogModal"}} title="Remove the log" type="button">
-            {{svg-jar 'icon-deletelogs' class="icon"}} Remove log</button>
+          <button
+            class="remove-log-button open-popup"
+            title="Remove the log"
+            type="button"
+            {{action "toggleRemoveLogModal"}}
+          >
+            {{svg-jar 'icon-deletelogs' class="icon"}} Remove log
+          </button>
         {{/if}}
-        <a class="download-log-button" href={{plainTextLogUrl}} title="Display the log in plaintext">
-          {{svg-jar 'icon-downloadlogs' class="icon"}} Raw log</a>
+
+        <a
+          class="download-log-button"
+          href={{plainTextLogUrl}}
+          title="Display the log in plaintext"
+        >
+          {{svg-jar 'icon-downloadlogs' class="icon"}} Raw log
+        </a>
       </div>
+
       <div class="log-body">
         {{#if showTailing}}
           <a href="#" id="tail" class="log-tail" {{action "toggleTailing"}}>
