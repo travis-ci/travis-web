@@ -221,7 +221,10 @@ export default Component.extend({
 
   @computed('permissions.all', 'job.repo')
   hasPermission(permissions, repo) {
-    return this.get('permissions').hasPermission(repo);
+    if (repo) {
+      return this.get('permissions').hasPermission(repo);
+    }
+    return false;
   },
 
   @computed('job', 'job.canRemoveLog', 'hasPermission')
