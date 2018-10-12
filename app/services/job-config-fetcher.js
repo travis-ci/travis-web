@@ -37,8 +37,7 @@ export default Service.extend({
   flush() {
     Object.keys(this.toFetch).forEach(id => {
       const data = this.toFetch[id];
-      this.store.findRecord('job', id, { include: 'job.config', reload: true })
-        .then(job => data.resolve(job._config));
+      this.store.findRecord('job', id).then(job => data.resolve(job._config));
     });
     this.toFetch = {};
   }
