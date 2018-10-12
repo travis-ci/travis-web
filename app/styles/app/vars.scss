@@ -33,7 +33,7 @@ $agate-blue: #b6d6d9;
 $cream-light: #FAFAF8;
 $cream-dark: #EFF0EC;
 
-// log
+// log-dark
 $log-header-bg: #444444;
 $line-height-log: 19px;
 $font-size-log: 12px;
@@ -59,6 +59,33 @@ $ansi-cyan-bold: #55FFFF;
 $ansi-white: #EEEEEE;
 $ansi-white-bold: #FFFFFF;
 $ansi-grey: #969696;
+
+// log-light
+$log-header-bg-light: #444444;
+$line-height-log-light: 19px;
+$font-size-log-light: 12px;
+$color-bg-log-hover-light: #444;
+$color-bg-log-highlight-light: $cement-grey;
+$color-bg-log-fold-light: #222;
+$color-bg-log-fold-highlight-light: #777;
+
+$ansi-black-light: #4E4E4E;
+$ansi-black-bold-light: #7C7C7C;
+$ansi-red-light-light: #FF6C60;
+$ansi-red-bold-light: #FF9B93;
+$ansi-green-light: #00AA00;
+$ansi-green-bold-light: #B1FD79;
+$ansi-yellow-light: #FFFFB6;
+$ansi-yellow-bold-light: #FFFF91;
+$ansi-blue-light: #96CBFE;
+$ansi-blue-bold-light: #B5DCFE;
+$ansi-magenta-light: #FF73FD;
+$ansi-magenta-bold-light: #FF9CFE;
+$ansi-cyan-light: #00AAAA;
+$ansi-cyan-bold-light: #55FFFF;
+$ansi-white-light: #EEEEEE;
+$ansi-white-bold-light: #FFFFFF;
+$ansi-grey-light: #969696;
 
 // error pages
 $error-heading-color: #357389;
