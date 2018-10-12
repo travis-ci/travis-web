@@ -1,4 +1,8 @@
-<section id="log-container" class="log">
+<section
+  data-test-log-content-container
+  id="log-container"
+  class="log {{if lightThemeEnabled 'light-theme'}}"
+>
 
   {{#if job.notStarted}}
     <div
@@ -25,8 +29,8 @@
       {{if job.notStarted 'hidden'}}"
     >
       <div
-        data-test-log-header
-        class="log-header{{if lightThemeEnabled '--light'}}"
+        data-test-log-content-header
+        class="log-header {{if lightThemeEnabled 'light-theme'}}"
       >
         <button
           type="button"
@@ -39,7 +43,8 @@
 
         {{#if canRemoveLog}}
           <button
-            class="remove-log-button open-popup"
+            data-test-log-content-remove-log-button
+            class="remove-log-button {{if lightThemeEnabled 'light-theme'}} open-popup"
             title="Remove the log"
             type="button"
             {{action "toggleRemoveLogModal"}}
@@ -49,7 +54,8 @@
         {{/if}}
 
         <a
-          class="download-log-button"
+          data-test-log-content-download-log-button
+          class="download-log-button {{if lightThemeEnabled 'light-theme'}}"
           href={{plainTextLogUrl}}
           title="Display the log in plaintext"
         >
@@ -57,7 +63,7 @@
         </a>
       </div>
 
-      <div class="log-body">
+      <div data-test-log-content-log-body class="log-body {{if lightThemeEnabled 'light-theme'}}">
         {{#if showTailing}}
           <a href="#" id="tail" class="log-tail" {{action "toggleTailing"}}>
             <span class="tail-status"></span>
