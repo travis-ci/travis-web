@@ -1,6 +1,6 @@
 <div class="owner-tile-head">
   <div class="owner-tile-visibility">
-    {{#if repository.private}}
+    {{#if repo.private}}
       {{svg-jar 'icon-lock' alt='Private repository' class='icon private'}}
       {{tooltip-on-element text='Private repository'}}
     {{else}}
