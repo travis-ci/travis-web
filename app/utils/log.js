@@ -896,8 +896,7 @@ Log.Deansi = {
     }
   },
 
-  adjustColorToTheme: function(color) {
-    let theme;
+  adjustColorToTheme: function(color, theme) {
     if (theme === 'light') {
       color += '-light';
     }

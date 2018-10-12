@@ -4,7 +4,15 @@
     font-weight: bold;
   }
 
+  .bold-light {
+    font-weight: bold;
+  }
+
   .italic {
+    font-style: italic;
+  }
+
+  .italic-light {
     font-style: italic;
   }
 
@@ -12,27 +20,56 @@
     text-decoration: underline;
   }
 
+  .underline-light {
+    text-decoration: underline;
+  }
+
   .black {
     color: $ansi-black;
   }
 
+  .black-light {
+    color: $ansi-black-light;
+  }
+
+
   .black.bold {
     color: $ansi-black-bold;
+  }
+
+  .black.bold-light {
+    color: $ansi-black-bold-light;
   }
 
   .red {
     color: $ansi-red;
   }
 
+  .red-light {
+    color: $ansi-red-light;
+  }
+
   .red.bold {
     color: $ansi-red-bold;
+  }
+
+  .red.bold-light {
+    color: $ansi-red-bold-light;
   }
 
   .green {
     color: $ansi-green;
   }
 
+  .green-light {
+    color: $ansi-green-light;
+  }
+
   .green.bold {
+    color: $ansi-green-bold;
+  }
+
+  .green.bold-light {
     color: $ansi-green-bold;
   }
 
@@ -40,48 +77,96 @@
     color: $ansi-yellow;
   }
 
+  .yellow-light {
+    color: $ansi-yellow-light;
+  }
+
   .yellow.bold {
     color: $ansi-yellow-bold;
+  }
+
+  .yellow.bold-light {
+    color: $ansi-yellow-bold-light;
   }
 
   .blue {
     color: $ansi-blue;
   }
 
+  .blue-light {
+    color: $ansi-blue-light;
+  }
+
   .blue.bold {
     color: $ansi-blue-bold;
+  }
+
+  .blue.bold-light {
+    color: $ansi-blue-bold-light;
   }
 
   .magenta {
     color: $ansi-magenta;
   }
 
+  .magenta-light {
+    color: $ansi-magenta-light;
+  }
+
   .magenta.bold {
     color: $ansi-magenta-bold;
+  }
+
+  .magenta.bold-light {
+    color: $ansi-magenta-bold-light;
   }
 
   .cyan {
     color: $ansi-cyan;
   }
 
-  .cyan {
+  .cyan-light {
+    color: $ansi-cyan-light;
+  }
+
+  .cyan.bold {
     color: $ansi-cyan-bold;
+  }
+
+  .cyan.bold-light {
+    color: $ansi-cyan-bold-light;
   }
 
   .white {
     color: $ansi-white;
   }
 
+  .white-light {
+    color: $ansi-white-light;
+  }
+
   .white.bold {
     color: $ansi-white-bold;
+  }
+
+  .white.bold-light {
+    color: $ansi-white-bold-light;
   }
 
   .grey {
     color: $ansi-grey;
   }
 
+  .grey-light {
+    color: $ansi-grey-light;
+  }
+
   .bg-black {
     background-color: $ansi-black;
+  }
+
+  .bg-black-light {
+    background-color: $ansi-black-light;
   }
 
   .bg-red {
