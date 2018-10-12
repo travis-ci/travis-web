@@ -72,6 +72,7 @@ Object.defineProperty(Log.Limit.prototype, 'limited', {
 });
 
 export default Component.extend({
+  @service logTheme: null,
   @service auth: null,
   @service permissions: null,
   @service externalLinks: null,
@@ -81,6 +82,11 @@ export default Component.extend({
   logIsVisible: false,
 
   @alias('auth.currentUser') currentUser: null,
+
+  @computed('logTheme.theme')
+  lightThemeEnabled(theme) {
+    return theme === 'light';
+  },
 
   isShowingRemoveLogModal: false,
 
