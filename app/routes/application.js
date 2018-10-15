@@ -71,7 +71,7 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
   },
 
   unsubscribeFromRepo: function (repo) {
-    if (this.pusher) {
+    if (this.pusher && repo) {
       this.pusher.unsubscribe(`repo-${repo.get('id')}`);
     }
   },

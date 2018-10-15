@@ -19,8 +19,8 @@
     <div class="commit-info">
 
     {{#if commit.body }}
-      <p class="commit-description">
-        <span class="monospace">{{format-message commit.body repo=item.repo pre=true}}</span>
+      <p class="commit-description" title="{{commit.body}}">
+        <span class="monospace {{commitBody}}">{{format-message commit.body repo=item.repo pre=true}}</span>
       </p>
     {{/if}}
       <ul class="list-icon">
@@ -28,7 +28,9 @@
           {{#external-link-to href=commit.githubUrl}}
             {{tooltip-on-element text='View commit on GitHub'}}
             {{svg-jar 'icon-commit' class="icon"}}
-            <span class="label-align inner-underline commit-commit">Commit {{format-sha commit.sha}}</span>
+            <span class="label-align inner-underline commit-commit">Commit
+              <span class="label-align-item monospace">{{format-sha commit.sha}}</span>
+            </span>
             {{svg-jar 'icon-external-link' class="icon"}}
           {{/external-link-to}}
         </li>
@@ -46,7 +48,9 @@
                 {{#external-link-to href=item.commit.compareUrl }}
                   {{tooltip-on-element text='View diff on GitHub'}}
                   {{svg-jar 'icon-compare' class="icon"}}
-                  <span class="label-align inner-underline commit-compare">Compare {{short-compare-shas item.commit.compareUrl}}</span>
+                  <span class="label-align inner-underline commit-compare">Compare
+                    <span class="label-align-item monospace">{{short-compare-shas item.commit.compareUrl}}</span>
+                  </span>
                   {{svg-jar 'icon-external-link' class="icon"}}
                 {{/external-link-to}}
               {{/if}}
@@ -65,7 +69,9 @@
             {{#external-link-to href=urlGitHubBranch class="commit-branch-url"}}
               {{tooltip-on-element text='View branch on GitHub'}}
               {{svg-jar 'icon-branch' class="icon"}}
-              <span class="label-align inner-underline">Branch {{build.branchName}}</span>
+              <span class="label-align inner-underline">Branch
+                <span class="label-align-item monospace">{{build.branchName}}</span>
+              </span>
               {{svg-jar 'icon-external-link' class="icon"}}
             {{/external-link-to}}
           {{/if}}

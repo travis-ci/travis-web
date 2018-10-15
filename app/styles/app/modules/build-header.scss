@@ -104,16 +104,17 @@
   font-size: 16px;
   overflow: hidden;
   position: relative;
-
-  &:after {
-    content: "";
-
-    @include fadeOut(right, -90deg, white, 20%);
-  }
+  padding-right: 0.5em;
 
   @media #{$medium-up} {
     flex: 0 1 55%;
     padding-left: 2.2rem;
+    padding-right: 0;
+
+    &:after {
+      content: "";
+      @include fadeOut(right, -90deg, white, 20%);
+    }
   }
 }
 
@@ -189,14 +190,27 @@
 
 .commit-description {
   margin: 1rem 0;
-  max-height: 4.5em;
+  max-height: 65px;
   position: relative;
   overflow: hidden;
 
+  @media #{$medium-up} {
+    max-height: 43px;
+  }
+
   &:after {
     content: "";
+    display: block;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 2em;
+  }
+}
 
-    @include fadeOut(bottom, 360deg, white, 5%);
+.fade-commit-message {
+  &:after {
+    background: linear-gradient(360deg, white 5%, rgba(255, 255, 255, 0) 100%);
   }
 }
 
@@ -220,4 +234,9 @@
   @media #{$medium-up} {
     margin: 15px 47px;
   }
+}
+
+.label-align-item {
+  vertical-align: baseline;
+  line-height: 1.5;
 }
