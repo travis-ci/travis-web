@@ -14,8 +14,8 @@
 
     <section class="owner-tile-section owner-tile-repo fade-out">
       <h2 class="repo-title color">
+        {{status-icon status=repo.defaultBranch.lastBuild.state}}
         {{#link-to "repo" ownerName repoName class="label-align"}}
-          {{status-icon status=repo.defaultBranch.lastBuild.state}}
           <span class="label-align">{{repoName}}</span>
         {{/link-to}}
       </h2>
@@ -25,8 +25,8 @@
       <section class="owner-tile-section build-number owner-tile-build">
         <h3 class="label">Last Build</h3>
         <p class="row-content color">
+          {{svg-jar 'icon-hash' class="icon color-icon"}}
           {{#link-to "build" ownerName repoName repo.defaultBranch.lastBuild.id}}
-            {{svg-jar 'icon-hash' class="icon color-icon"}}
             <span class="label-align">{{repo.defaultBranch.lastBuild.number}}</span>
           {{/link-to}}
         </p>
@@ -35,8 +35,8 @@
       <section class="owner-tile-section fade-out default-branch owner-tile-branch">
         <h3 class="label">Default Branch</h3>
         <p class="row-content color">
+          {{request-icon event=repo.defaultBranch.lastBuild.eventType class="label-align"}}
           {{#link-to "build" ownerName repoName repo.defaultBranch.lastBuild.id}}
-            {{request-icon event=repo.defaultBranch.lastBuild.eventType class="label-align"}}
             <span class="label-align default-branch-name">{{repo.defaultBranch.name}}</span>
           {{/link-to}}
         </p>
@@ -45,14 +45,12 @@
       <section class="owner-tile-section commit-sha owner-tile-commit">
         <h3 class="label">Commit</h3>
         <p class="row-content">
+          {{svg-jar 'icon-compare' class="icon"}}
           {{#external-link-to href=repo.defaultBranch.lastBuild.commit.compareUrl class="label-align"}}
-            {{svg-jar 'icon-compare' class="icon"}}
-            <span class="label-align commit-compare monospace">
-              {{format-sha repo.defaultBranch.lastBuild.commit.sha}}
-            </span>
-            {{svg-jar 'icon-external-link' class="icon"}}
             {{tooltip-on-element text='View diff on GitHub'}}
+            <span class="label-align commit-compare monospace">{{format-sha repo.defaultBranch.lastBuild.commit.sha}}</span>
           {{/external-link-to}}
+          {{svg-jar 'icon-external-link' class="icon"}}
         </p>
       </section>
 

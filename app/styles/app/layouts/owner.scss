@@ -69,7 +69,7 @@
 .owner-tile-head {
   flex: 0 0 2%;
   display: flex;
-  padding: 0.5rem 1rem 0 1rem;
+  padding: 5px 10px 0 10px;
   justify-content: flex-start;
   align-items: center;
 
@@ -78,7 +78,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    height: 76px;
+    height: 55px;
     padding: 0.3em 0;
     border-right: 1px solid rgba($asphalt-grey, 0.2);
   }
@@ -89,15 +89,15 @@
   position: relative;
 
   @media #{$medium-up} {
-    padding: 0 1.5rem 0;
-    height: 7rem;
+    padding: 0 1.5rem;
+    height: 5rem;
   }
 }
 
 .owner-tile-main {
 
   @media #{$small-only} {
-    padding: 0 1rem 0.5rem 1rem;
+    padding: 0 10px 5px 10px;
   }
 
   @media #{$medium-up} {
@@ -110,13 +110,12 @@
 }
 
 .owner-tile {
-  background: linear-gradient(to right, $pebble-grey 0%, $pebble-grey 1rem, white 1rem, white 100%) no-repeat;
-  padding-left: 1rem;
-  //   min-width: 1.5091%;
+  background: linear-gradient(to right, $pebble-grey 0%, $pebble-grey 10px, white 10px, white 100%) no-repeat;
+  padding-left: 10px;
 
   @each $key, $value in $stateMap {
     &.#{$key} {
-      background: linear-gradient(to right, map-get($value, color) 0%, map-get($value, color) 1rem, white 1rem, white 100%) no-repeat;
+      background: linear-gradient(to right, map-get($value, color) 0%, map-get($value, color) 10px, white 10px, white 100%) no-repeat;
     }
   }
 
@@ -126,8 +125,11 @@
   }
 }
 
-.owner-tile-repo {
+.owner-tile-section {
   position: relative;
+}
+
+.owner-tile-repo {
 
   @media #{$medium-up} {
     flex: 0 0 27.5%;
