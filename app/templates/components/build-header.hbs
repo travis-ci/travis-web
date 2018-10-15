@@ -19,8 +19,8 @@
     <div class="commit-info">
 
     {{#if commit.body }}
-      <p class="commit-description">
-        <span class="monospace">{{format-message commit.body repo=item.repo pre=true}}</span>
+      <p class="commit-description" title="{{commit.body}}">
+        <span class="monospace {{commitBody}}">{{format-message commit.body repo=item.repo pre=true}}</span>
       </p>
     {{/if}}
       <ul class="list-icon">
