@@ -3,7 +3,7 @@ import { computed } from 'ember-decorators/object';
 
 export default Component.extend({
   tagName: 'li',
-  classNames: ['owner-tile', 'rows', 'rows--owner'],
+  classNames: ['owner-tile', 'rows', 'rows--owner', 'fade-out'],
   classNameBindings: ['repo.defaultBranch.lastBuild.state'],
 
   @computed('repo.slug')

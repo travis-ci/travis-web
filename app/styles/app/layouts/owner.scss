@@ -66,8 +66,14 @@
   }
 }
 
+.rows--owner .row-content {
+  white-space: normal;
+  @media #{$medium-up} {
+    white-space: nowrap;
+  }
+}
+
 .owner-tile-head {
-  flex: 0 0 2%;
   display: flex;
   padding: 5px 10px 0 10px;
   justify-content: flex-start;
@@ -75,7 +81,6 @@
 
   @media #{$medium-up} {
     flex: 0 0 4em;
-    display: flex;
     flex-direction: column;
     justify-content: center;
     height: 55px;
