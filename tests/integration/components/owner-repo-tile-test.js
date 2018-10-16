@@ -48,8 +48,9 @@ module('OwnerRepoTileComponent', function (hooks) {
     await render(hbs`{{owner-repo-tile repo=repo}}`);
 
     assert.dom('.owner-tile').hasClass('passed', 'component should have state class (passed)');
-    assert.dom('.row-item:nth-of-type(1)').hasText('travis-chat', 'should display correct repo name');
-    assert.dom('.row-item:nth-of-type(3) span.label-align').hasText('master', 'should display branch name');
-    assert.dom('.row-item:nth-of-type(4) span').hasText('16fff34', 'should display correct commit sha');
+    assert.dom('.owner-tile-section:nth-of-type(1) span.label-align').hasText('travis-chat', 'should display correct repo name');
+    assert.dom('.owner-tile-section:nth-of-type(2) span.label-align').hasText('25', 'should display correct build number');
+    assert.dom('.owner-tile-section:nth-of-type(3) span.default-branch-name').hasText('master', 'should display branch name');
+    assert.dom('.owner-tile-section:nth-of-type(4) span.commit-compare').hasText('16fff34', 'should display correct commit sha');
   });
 });
