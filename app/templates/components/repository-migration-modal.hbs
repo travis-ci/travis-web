@@ -1,0 +1,51 @@
+<h3 data-test-repository-migration-modal-header class="h3--teal">Migrate {{repository.slug}} ?</h3>
+<p data-test-repository-migration-modal-text-first>
+  Please confirm that you would like to migrate the <b>{{repository.slug}}</b>
+  repository from travis-ci.org to travis-ci.com.
+</p>
+
+<p data-test-repository-migration-modal-text-second>
+  We will migrate all the critical information needed to initiate builds to get
+  you back up and running quickly.
+</p>
+
+<p data-test-repository-migration-modal-text-third>
+  Please note that your build history will not be migrated. This will be
+  available shortly. Until then you can access the history on <a
+   data-test-repository-migration-modal-org-build-history-link href={{concat
+  'https://travis-ci.org' repository.slug '/builds'}}>travis-ci.org</a>.
+</p>
+
+<p data-test-repository-migration-modal-text-fourth>
+  If you have any questions or concerns about this process, please click CANCEL
+  and contact our <a data-test-repository-migration-modal-support-mailto-link href="mailto:support@travis-ci.com" title="Email the Travis CI support team">Customer Support Team</a>.
+</p>
+
+<a
+  data-test-repository-migration-modal-confirm-migration-button
+  href="#"
+  role="button"
+  class="button button--blue"
+  {{action "startMigration"}}
+>
+  Migrate
+</a>
+
+<a
+  data-test-repository-migration-modal-cancel-migration-button
+  href="#"
+  role="button"
+  class="migration-modal-cancel button button--blue"
+  {{action onClose}}
+>
+  Cancel
+</a>
+
+<button
+  type="button"
+  title="Close modal"
+  class="modal-close pointer"
+  {{action onClose}}
+>
+  {{svg-jar 'icon-failed' class="icon"}}
+</button>

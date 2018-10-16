@@ -12,6 +12,11 @@ export default Service.extend({
     let store = this.get('store');
     let [name, type] = event.split(':');
 
+    if (name === 'repository' && type === 'migration') {
+      const repository = store.peekRecord('repo', data.repositoryId);
+      repository.set('migrationStatus', data.status);
+    }
+
     if (name === 'job' && data.job && data.job.commit) {
       store.push(store.normalize('commit', data.job.commit));
     }

@@ -18,6 +18,8 @@ export default Owner.extend({
   email: attr(),
   token: attr(),
   gravatarId: attr(),
+  allowMigration: attr(),
+
 
   type: 'user',
   isUser: true,
