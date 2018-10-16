@@ -81,7 +81,7 @@
     "ember-svg-jar": "^1.2.1",
     "ember-test-assets": "^1.1.1",
     "ember-test-selectors": "^1.0.0",
-    "ember-tooltips": "3.0.0-beta.4",
+    "ember-tooltips": "3.0.0-beta.5",
     "ember-truth-helpers": "^2.0.0",
     "ember-try": "^0.2.23",
     "ember-web-app": "^2.3.0",
