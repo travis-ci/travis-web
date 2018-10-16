@@ -23,7 +23,7 @@
       </div>
       <div class='row-content no-hover'>
         {{#external-link-to data-test-branch-name href=urlGitHubBranch}}
-          {{ember-tooltip text='View branch on GitHub'}}
+          {{ember-tooltip text='View branch on GitHub' popperOptions=popperOptions}}
           {{svg-jar 'icon-branch' class="icon"}}
           <span class='label-align inner-underline'>{{build.branchName}}</span>
           {{svg-jar 'icon-external-link' class="icon"}}

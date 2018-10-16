@@ -16,4 +16,12 @@ export default Component.extend({
   urlGitHubBranch(slug, branchName) {
     return this.get('externalLinks').githubBranch(slug, branchName);
   },
+
+  popperOptions: {
+    modifiers: {
+      preventOverflow: {
+        escapeWithReference: false
+      }
+    }
+  },
 });
