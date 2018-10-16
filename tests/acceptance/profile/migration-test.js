@@ -8,6 +8,7 @@ import {
 import { setupApplicationTest } from 'ember-qunit';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { enableFeature } from 'ember-feature-flags/test-support';
+import { percySnapshot } from 'ember-percy';
 
 module('Acceptance | profile/migration', function (hooks) {
   setupApplicationTest(hooks);
@@ -120,6 +121,8 @@ module('Acceptance | profile/migration', function (hooks) {
 
     await waitFor('[data-test-migration-status="success"]');
     assert.dom('[data-test-migration-status="success"]').exists();
+
+    percySnapshot(assert);
   });
 
   test('migrating locked GitHub repositories (sad path)', async function (assert) {
@@ -192,6 +195,8 @@ module('Acceptance | profile/migration', function (hooks) {
 
     await waitFor('[data-test-migration-status="failed"]');
     assert.dom('[data-test-migration-status="failed"]').exists();
+
+    percySnapshot(assert);
   });
 
   test('migrating locked GitHub repositories (cancel in modal)', async function (assert) {
