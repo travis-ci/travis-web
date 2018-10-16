@@ -15,6 +15,8 @@ export default Component.extend({
   @alias('job.queue') queue: null,
   @alias('job.config') jobConfig: null,
 
+  @equal('jobConfig.os', 'windows') isWindows: null,
+
   @computed('job.isFinished')
   conjugatedRun(isFinished) {
     return isFinished ? 'ran' : 'is running';
