@@ -687,18 +687,12 @@ header.space-between {
       }
 
       .success {
-        background-color: white;
-        color: white;
-
         .icon {
           @include colorSVG($turf-green);
         }
       }
 
       .failed {
-        background-color: white;
-        color: white;
-
         .icon {
           @include colorSVG($brick-red);
         }
