@@ -93,6 +93,14 @@ $border-size: 2px;
       }
     }
   }
+
+  &.half-width {
+    width: 50%;
+
+    li {
+      width: calc(50% - 1em);
+    }
+  }
 }
 
 .travistab-nav {
@@ -125,4 +133,33 @@ $border-size: 2px;
     width: 1.2em;
     height: 1.4em;
   }
+}
+
+.support-forum-link {
+  float: right;
+  padding: 0.5em 0;
+
+  a {
+    padding: 0.5em;
+    border-bottom: $border-size solid $pebble-grey;
+
+    &:hover {
+      color: $oxide-blue;
+      border-bottom-color: $oxide-blue;
+
+      .icon-help {
+        @include colorSVG($oxide-blue);
+        border-color: $oxide-blue;
+      }
+    }
+
+    .icon-help {
+      margin-right: 5px;
+    }
+  }
+}
+
+.support-forum-link-tooltip {
+  max-width: 220px;
+  text-align: center;
 }
