@@ -5,7 +5,7 @@
 {{/link-to}}
 
 {{#if repository.active_on_org}}
-  {{#if repository.permissions.migrate}}
+  {{#if migrationEnabled}}
     {{#if repository.migrationStatus}}
       <div
         data-test-migration-status={{repository.migrationStatus}}
