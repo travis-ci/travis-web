@@ -1,6 +1,10 @@
 import Component from '@ember/component';
 import { computed } from 'ember-decorators/object';
 import { service } from 'ember-decorators/service';
+import jobConfigLanguage from 'travis/utils/job-config-language';
+import { not } from 'ember-decorators/object/computed';
+
+const commitMessageLimit = 72;
 
 export default Component.extend({
   @service externalLinks: null,
@@ -39,6 +43,15 @@ export default Component.extend({
     }
   },
 
+  @computed('isJob', 'item.config', 'item.jobs.firstObject.config')
+  jobsConfig(isJob) {
+    if (isJob) {
+      return this.get('item.config');
+    } else {
+      return this.get('item.jobs.firstObject.config');
+    }
+  },
+
   @computed('item.eventType')
   displayCompare(eventType) {
     return !['api', 'cron'].includes(eventType);
@@ -60,6 +73,76 @@ export default Component.extend({
       return buildState;
     } else {
       return jobState || buildState;
+    }
+  },
+
+  @computed('jobsConfig.content')
+  languages(config) {
+    return jobConfigLanguage(config);
+  },
+
+  @computed('jobsConfig.content.name')
+  name(name) {
+    if (name) {
+      return name;
+    }
+  },
+
+  @computed('jobsConfig.content.{env,gemfile}')
+  environment(env, gemfile) {
+    if (env) {
+      return env;
+    } else if (gemfile) {
+      return `Gemfile: ${gemfile}`;
+    }
+  },
+
+  @computed('jobsConfig.content.os')
+  os(os) {
+    if (os === 'linux' || os === 'linux-ppc64le') {
+      return 'linux';
+    } else if (os === 'osx') {
+      return 'osx';
+    } else if (os === 'windows') {
+      return 'windows';
+    } else {
+      return 'unknown';
+    }
+  },
+
+  @computed('os')
+  osIcon(os) {
+    if (os === 'linux') {
+      return 'icon-linux';
+    } else if (os === 'osx') {
+      return 'icon-mac';
+    } else if (os === 'windows') {
+      return 'icon-windows';
+    }  else {
+      return 'help';
+    }
+  },
+
+  @computed('item.commit.body')
+  commitBody(body) {
+    this.$('commit-description').remove('fade-commit-message');
+
+    if (body.length > commitMessageLimit) {
+      this.$('.commit-description').addClass('fade-commit-message');
+    }
+  },
+
+  @not('item.isMatrix') isNotMatrix: null,
+
+  actions: {
+    expandEnv() {
+      if (this.$('.expandEnv').css('white-space') === 'normal') {
+        this.$('.detail-job-env').removeClass('expandEnv');
+        this.$('.detail-job-env').addClass('closeEnv');
+      } else {
+        this.$('.detail-job-env').removeClass('closeEnv');
+        this.$('.detail-job-env').addClass('expandEnv');
+      }
     }
   }
 });

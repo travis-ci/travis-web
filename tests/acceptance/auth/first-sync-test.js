@@ -26,7 +26,7 @@ test('first sync shows up and redirects to profile page after the sync is finish
     setTimeout(() => {
       done();
       andThen(() => {
-        assert.equal(currentURL(), '/profile/testuser');
+        assert.equal(currentURL(), '/account/repositories');
       });
     }, 100);
   });

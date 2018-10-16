@@ -47,7 +47,8 @@ function githubAppsRepositoryCollection(scope) {
 }
 
 export default create({
-  visit: visitable('profile/:username'),
+  visit: visitable('/account'),
+  visitOrganization: visitable('/organizations/:name'),
   name: text('.profile-header h1'),
   nameBadge: { scope: '.profile-header .badge' },
   login: text('.login'),
@@ -188,6 +189,11 @@ export default create({
         scope: '[data-test-trial-link]',
         href: attribute('href')
       }
+    },
+
+    education: {
+      scope: '.billing',
+      name: text('[data-test-education-message]'),
     },
 
     address: {

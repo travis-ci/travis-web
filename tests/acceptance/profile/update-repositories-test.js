@@ -69,7 +69,7 @@ moduleForAcceptance('Acceptance | profile/update-repositories', {
 });
 
 test('updating repository', function (assert) {
-  profilePage.visit({ username: 'user-login' });
+  profilePage.visit();
 
   andThen(() => {
     profilePage.administerableRepositories[0].toggle();

@@ -39,7 +39,7 @@ export default create({
   branchName: text('.build-header .commit-branch'),
   commitSha: text('.build-header .commit-commit'),
   compare: text('.build-header .commit-compare'),
-  commitBranch: text('.build-header .commit-branch-url span'),
+  commitBranch: text('.build-header .commit-branch-url'),
   buildTabLinkIsActive: hasClass('active', '#tab_build'),
   buildTabLinkText: text('#tab_build'),
 

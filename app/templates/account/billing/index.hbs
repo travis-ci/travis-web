@@ -1,7 +1,11 @@
 <section class='billing'>
-  {{#unless model.subscriptions}}
+  {{#if isEducation}}
+    {{billing-education model=model account=account config=config}}
+  {{/if}}
+
+  {{#if isTrial}}
     {{billing-trial model=model account=account config=config}}
-  {{/unless}}
+  {{/if}}
 
   {{#if model.subscriptions.isManual}}
     {{billing-manual model=model}}

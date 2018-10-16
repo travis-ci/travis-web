@@ -2,13 +2,21 @@
   <h2>Invoice History</h2>
   <p>
     {{svg-jar 'icon-help' class='icon-help' alt=''}} Having trouble with your invoices?
-    <a href='{{ config.urls.support }}' title='Email the Travis support team' {{action 'helpscoutTrigger'}}>We’re happy
-      to help</a>.
+    <a href='{{config-get 'urls.support'}}'
+      title='Email the Travis support team'
+      {{action (route-action 'helpscoutTrigger')}}
+    >
+      We’re happy to help
+    </a>.
   </p>
   <ul>
     {{#each (sort-by 'createdAt:desc' invoices) as |invoice|}}
-    <li><a data-test-invoice href={{invoice.url}}>{{svg-jar 'icon-invoice' class='icon'}} {{invoice.id}}
-        {{moment-format invoice.createdAt 'MMMM YYYY'}}</a></li>
+      <li>
+        <a data-test-invoice href={{invoice.url}}>
+          {{svg-jar 'icon-invoice' class='icon'}}
+          {{invoice.id}} {{moment-format invoice.createdAt 'MMMM YYYY'}}
+        </a>
+      </li>
     {{/each}}
   </ul>
 </section>

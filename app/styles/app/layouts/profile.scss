@@ -415,7 +415,7 @@ section.billing {
     color: $asphalt-grey;
     font-size: 16px;
   }
-  
+
   .billing-section-link {
     text-decoration: underline;
 
@@ -668,6 +668,37 @@ header.space-between {
       }
     }
 
+    &.migratable {
+      opacity: 1.0;
+
+      .migration-status {
+        width: 66.5156px;
+        border: none;
+        text-align: center;
+      }
+
+      .button:hover {
+        background-color: $cement-grey;
+        color: white;
+
+        .icon {
+          @include colorSVG(white);
+        }
+      }
+
+      .success {
+        .icon {
+          @include colorSVG($turf-green);
+        }
+      }
+
+      .failed {
+        .icon {
+          @include colorSVG($brick-red);
+        }
+      }
+    }
+
     &:last-child {
       padding-bottom: 0.6em;
     }
@@ -851,5 +882,11 @@ header.space-between {
         margin-right: 5px;
       }
     }
+  }
+}
+
+.repository-migration-modal {
+  .migration-modal-cancel {
+    margin-left: 6px;
   }
 }

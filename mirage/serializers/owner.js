@@ -1,15 +1,14 @@
 import { Serializer } from 'ember-cli-mirage';
-import { copy } from 'ember-copy';
 
 export default Serializer.extend({
   serialize(object) {
-    const user = copy(object.attrs);
+    const user = Object.assign({}, object.attrs);
     user['@type'] = 'user';
 
     user.repositories = object.schema.repositories.where(repo => {
       return repo.slug.indexOf(user.login) === 0;
     }).models.map(repo => {
-      const data = copy(repo.attrs);
+      const data = Object.assign({}, repo.attrs);
 
       const defaultBranch = repo.branches.models.filterBy('default_branch', true)[0];
 

@@ -2,7 +2,6 @@ import { hash } from 'rsvp';
 import TravisRoute from 'travis/routes/basic';
 import dashboardRepositoriesSort from 'travis/utils/dashboard-repositories-sort';
 import config from 'travis/config/environment';
-import { computed } from 'ember-decorators/object';
 import { service } from 'ember-decorators/service';
 
 export default TravisRoute.extend({
@@ -21,13 +20,12 @@ export default TravisRoute.extend({
     }
   },
 
-  @computed()
-  recordsPerPage() {
+  get recordsPerPage() {
     return config.pagination.dashboardReposPerPage;
   },
 
   model(params) {
-    const offset = (params.page - 1) * this.get('recordsPerPage');
+    const offset = (params.page - 1) * this.recordsPerPage;
     return hash({
       starredRepos: this.store.filter('repo', {
         active: true,
@@ -38,24 +36,23 @@ export default TravisRoute.extend({
         active: true,
         sort_by: 'current_build:desc',
         offset,
-        limit: this.get('recordsPerPage'),
+        limit: this.recordsPerPage,
       }, {
         filter: (repo) => repo.get('active') && repo.get('isCurrentUserACollaborator'),
         sort: dashboardRepositoriesSort,
         dependencies: ['active', 'isCurrentUserACollaborator'],
         forceReload: true
       }),
-      accounts: this.get('accounts').fetch()
+      accounts: this.accounts.fetch()
     });
   },
 
   afterModel(model) {
-    const repos = model.repos;
+    const { repos } = model;
+    const currentBuilds = repos.mapBy('currentBuild');
+    const defaultBranches = repos.mapBy('defaultBranch');
 
     // This preloads related models to prevent a backtracking rerender error.
-    return hash({
-      currentBuilds: repos.map(repo => repo.get('currentBuild')),
-      defaultBranches: repos.map(repo => repo.get('defaultBranch'))
-    });
+    return { currentBuilds, defaultBranches };
   }
 });

@@ -27,6 +27,7 @@ const Repo = Model.extend({
   starred: attr('boolean'),
   active_on_org: attr('boolean'),
   emailSubscribed: attr('boolean'),
+  migrate: attr(),
 
   @oneWay('owner.@type') ownerType: null,
 
@@ -41,6 +42,14 @@ const Repo = Model.extend({
     async: true, inverse: 'repoCurrentBuild'
   }),
   _branches: hasMany('branch'),
+
+  @computed('migrate')
+  migrationStatus(status) {
+    if (['requested', 'migrating'].includes(status)) {
+      return 'migrating';
+    }
+    return status;
+  },
 
   // TODO: this is a hack, we should remove it once @is_collaborator property is
   // added to a response with the repo
@@ -89,7 +98,7 @@ const Repo = Model.extend({
   builds(id) {
     const builds = this.store.filter('build', {
       event_type: ['push', 'api', 'cron'],
-      repository_id: id
+      repository_id: id,
     }, (b) => {
       let eventTypes = ['push', 'api', 'cron'];
       return this._buildRepoMatches(b, id) && eventTypes.includes(b.get('eventType'));
@@ -101,7 +110,7 @@ const Repo = Model.extend({
   pullRequests(id) {
     const builds = this.store.filter('build', {
       event_type: 'pull_request',
-      repository_id: id
+      repository_id: id,
     }, (b) => {
       const isPullRequest = b.get('eventType') === 'pull_request';
       return this._buildRepoMatches(b, id) && isPullRequest;
@@ -146,6 +155,13 @@ const Repo = Model.extend({
     const url = `/repo/${this.get('id')}/settings`;
     return this.get('api').get(url).
       then(data => this._convertV3SettingsToV2(data['settings']));
+  },
+
+  startMigration() {
+    const url = `/repo/${this.get('id')}/migrate`;
+    return this.get('api').post(url).then(() => {
+      this.set('migrationStatus', 'migrating');
+    });
   },
 
   saveSetting(name, value) {

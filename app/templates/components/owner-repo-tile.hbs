@@ -32,7 +32,7 @@
     {{ember-tooltip text='View diff on GitHub'}}
     {{#external-link-to href=repo.defaultBranch.lastBuild.commit.compareUrl}}
       {{svg-jar 'icon-compare' class="icon"}}
-      <span class="label-align inner-underline commit-compare">
+      <span class="label-align inner-underline commit-compare monospace">
         {{format-sha repo.defaultBranch.lastBuild.commit.sha}}
       </span>
       {{svg-jar 'icon-external-link' class="icon"}}

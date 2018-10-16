@@ -16,14 +16,15 @@ export default Service.extend({
   fetch(job) {
     let PromiseObject = ObjectProxy.extend(PromiseProxyMixin);
 
-    if (job.get('_config')) {
-      return PromiseObject.create({promise: EmberPromise.resolve(job.get('_config'))});
+    if (job._config) {
+      return PromiseObject.create({
+        promise: EmberPromise.resolve(job._config)
+      });
     }
-    let jobId = job.get('id');
-    if (this.toFetch[jobId]) {
-      return this.toFetch[jobId].promise;
+    if (this.toFetch[job.id]) {
+      return this.toFetch[job.id].promise;
     } else {
-      let data = this.toFetch[jobId] = { job };
+      let data = this.toFetch[job.id] = {};
       let promise = new EmberPromise((resolve, reject) => {
         data.resolve = resolve;
       });
@@ -34,22 +35,11 @@ export default Service.extend({
   },
 
   flush() {
-    let toFetch = this.toFetch;
-    this.toFetch = {};
-    let buildIds = new Set();
-    Object.values(toFetch).forEach(data => buildIds.add(data.job.get('build.id')));
-
-    buildIds.forEach(id => {
-      let queryParams = { id, include: 'job.config,build.jobs' };
-      this.get('store').queryRecord('build', queryParams).then(build => {
-        build.get('jobs').forEach(job => {
-          let data = toFetch[job.get('id')];
-          if (data) {
-            data.resolve(job.get('_config'));
-          }
-        });
-      });
+    Object.keys(this.toFetch).forEach(id => {
+      const data = this.toFetch[id];
+      this.store.findRecord('job', id).then(job => data.resolve(job._config));
     });
+    this.toFetch = {};
   }
 });
 

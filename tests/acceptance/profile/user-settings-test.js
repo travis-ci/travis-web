@@ -35,7 +35,7 @@ test('changing feature flags', function (assert) {
     enabled: false
   });
 
-  profilePage.visit({ username: 'testuser' });
+  profilePage.visit();
   profilePage.settings.visit();
 
   percySnapshot(assert);
@@ -74,7 +74,7 @@ test('changing feature flags', function (assert) {
 });
 
 test('no settings for org', function (assert) {
-  profilePage.visit({ username: 'testuser' });
+  profilePage.visit();
 
   andThen(() => {
     assert.ok(profilePage.settings.isPresent);
@@ -85,13 +85,13 @@ test('no settings for org', function (assert) {
 
   andThen(() => {
     assert.ok(profilePage.settings.isHidden);
-    assert.equal(currentURL(), '/profile/org-login');
+    assert.equal(currentURL(), '/organizations/org-login/repositories');
   });
 
-  visit('/profile/org-login/settings');
+  visit('/organizations/org-login/preferences');
 
   andThen(() => {
-    assert.equal(currentURL(), '/profile/org-login');
+    assert.equal(currentURL(), '/organizations/org-login/repositories');
   });
 });
 

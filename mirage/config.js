@@ -54,7 +54,7 @@ export default function () {
   });
 
   this.get('/users/:id', function ({ users }, request) {
-    return this.serialize(users.find(request.params.id), 'v2');
+    return this.serialize(users.find(request.params.id), 'user');
   });
 
   this.get('/users/permissions', (schema, request) => {
@@ -92,7 +92,7 @@ export default function () {
   this.get('/trials', function (schema, params) {
     let response = this.serialize(schema.trials.all());
 
-    let owners = schema.organizations.all().models;
+    let owners = schema.organizations.all().models.slice();
     owners.push(schema.users.first());
 
     return response;
@@ -101,7 +101,7 @@ export default function () {
   this.get('/subscriptions', function (schema, params) {
     let response = this.serialize(schema.subscriptions.all());
 
-    let owners = schema.organizations.all().models;
+    let owners = schema.organizations.all().models.slice();
     owners.push(schema.users.first());
 
     response['@permissions'] = owners.map(owner => {
@@ -180,6 +180,17 @@ export default function () {
 
     if (repository) {
       repository.update('active', true);
+    }
+
+    return this.serialize(repository);
+  });
+
+  this.post('/repo/:repositoryId/migrate', function (schema, request) {
+    const { repositoryId } = request.params;
+    const repository = schema.repositories.find(repositoryId);
+
+    if (repository) {
+      repository.update('migrate', 'requested');
     }
 
     return this.serialize(repository);
