@@ -89,7 +89,7 @@ import traverse from 'travis/utils/traverse-payload';
 //   * in `normalize` we loop through each relationship and put any related
 //     records with a `standard` representation to the `included` array. This
 //     ensures that they're loaded into the store
-//     * we ommit other representations, because we don't have any mechanism to
+//     * we omit other representations, because we don't have any mechanism to
 //       load missing data
 //     * while looping through relationships we also fix relationships to look
 //       like JSON API's relationships: we leave only id and type and for

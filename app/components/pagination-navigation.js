@@ -113,7 +113,7 @@ export default Component.extend({
         }
       }
 
-      // ... devider unit
+      // ... divider unit
       if (upperOuterBoundary - upperInnerBoundary  > 1) {
         pageArray.push({});
       }

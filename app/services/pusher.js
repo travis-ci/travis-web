@@ -86,7 +86,7 @@ export default Service.extend({
     store.push(store.normalize(type, json));
 
     // we get other types of records only in a few situations and
-    // it's not always needed to update data, so I'm specyfing which
+    // it's not always needed to update data, so I'm specifying which
     // things I want to update here:
     if (type === 'build' && (json.repository || json.repo)) {
       data = json.repository || json.repo;

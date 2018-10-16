@@ -20,7 +20,7 @@ const branchRowComponent = {
 
   request: text('.row-request .label-align'),
   commitSha: text('.row-commit span.inner-underline'),
-  committer: text('.row-commiter .label-align'),
+  committer: text('.row-committer .label-align'),
   commitDate: text('.row-calendar .label-align'),
 
   buildTiles: collection('.build-tiles li', {

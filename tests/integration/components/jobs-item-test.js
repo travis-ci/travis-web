@@ -27,7 +27,7 @@ module('Integration | Component | jobs item', function (hooks) {
 
     assert.dom('.jobs-item').hasClass('passed', 'component should have a state class (passed)');
     assert.dom('.job-number .label-align').hasText('2', 'job number should be displayed');
-    assert.dom('.job-lang').hasText('JDK: openjdk6 Ruby: 2.1.2', 'langauges list should be displayed');
+    assert.dom('.job-lang').hasText('JDK: openjdk6 Ruby: 2.1.2', 'languages list should be displayed');
     assert.dom('.job-env').hasText('TESTS=unit', 'env should be displayed');
     assert.dom('.job-os').hasClass('linux', 'OS class should be added for OS icon');
     assert.dom('.job-duration').hasText('1 min 40 sec', 'duration should be displayed');
@@ -77,7 +77,7 @@ module('Integration | Component | jobs item', function (hooks) {
     this.job = job;
     await render(hbs`{{jobs-item job=job}}`);
 
-    assert.dom('.job-lang .label-align').hasText('Ruby: 2.1.2', 'langauges list should be displayed');
+    assert.dom('.job-lang .label-align').hasText('Ruby: 2.1.2', 'languages list should be displayed');
     assert.dom('.job-env .label-align').hasText('Gemfile: foo/Gemfile', 'env should be displayed');
   });
 

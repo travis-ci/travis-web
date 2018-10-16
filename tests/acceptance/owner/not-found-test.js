@@ -34,7 +34,7 @@ test('visiting /non-existent-owner shows error message when authenticated', func
     assert.equal(currentURL(), '/non-existent-owner');
     assert.ok(nonExistentOwnerPage.showsBarricadeIllustration, 'Shows image for aesthetics');
     assert.equal(nonExistentOwnerPage.errorMessage, 'We couldn\'t find the owner non-existent-owner', 'Shows message that repository was not found');
-    assert.ok(nonExistentOwnerPage.errorMessageProisHidden, 'does not show .com authenticated message');
+    assert.ok(nonExistentOwnerPage.errorMessageProIsHidden, 'does not show .com authenticated message');
   });
 });
 

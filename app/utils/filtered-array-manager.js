@@ -12,7 +12,7 @@ let FilteredArray = ArrayProxy.extend({
   // record passed as an argument is not yet in the array and the filter
   // function returns a truthy value, tryRecord will push the record to the
   // array. If the record is already in the array and the filter function
-  // returns falsey value, it will be removed. In other cases, it will be
+  // returns falsy value, it will be removed. In other cases, it will be
   // ignored.
   tryRecord(record) {
     if (!this.get('content').includes(record) && this.fits(record)) {
@@ -31,7 +31,7 @@ let FilteredArray = ArrayProxy.extend({
 
 // Manages filtered arrays for a given type. It keeps a reference to all of the
 // records of a given type (obtained using store.peekAll() function) and watches
-// for changes on all of the records to determine wheather a record should be
+// for changes on all of the records to determine whether a record should be
 // added to one of the filtered arrays.
 //
 // Filtered arrays are indexed by an id unique for a given set of parameters,
@@ -117,7 +117,7 @@ let FilteredArrayManagerForType = EmberObject.extend({
 
   // Creates an array for a given id and set of params.
   createArray(id, queryParams, filterFunction, dependencies) {
-    // TODO: test what ahppens when records already exist in a store,I think it
+    // TODO: test what happens when records already exist in a store,I think it
     // won't work
     let array = this.arrays[id] = FilteredArray.create({ filterFunction, content: [] });
 

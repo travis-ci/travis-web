@@ -75,7 +75,7 @@ export default Service.extend({
   },
 
   ajax(url, method, options) {
-    let accepts, data, delimeter, endpoint, error, key, name, params,
+    let accepts, data, delimiter, endpoint, error, key, name, params,
       promise, ref, ref1, ref2, reject, resolve, success, token, value, xhr;
     method = (method || 'GET').toUpperCase();
     endpoint = config.apiEndpoint || '';
@@ -118,8 +118,8 @@ export default Service.extend({
 
     if (options.data && (method === 'GET' || method === 'HEAD')) {
       params = $.param(options.data);
-      delimeter = url.indexOf('?') === -1 ? '?' : '&';
-      url = url + delimeter + params;
+      delimiter = url.indexOf('?') === -1 ? '?' : '&';
+      url = url + delimiter + params;
     }
     xhr = new XMLHttpRequest();
     xhr.open(method, url);

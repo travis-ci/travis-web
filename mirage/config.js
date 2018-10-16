@@ -497,7 +497,7 @@ export default function () {
     }
 
     /*
-     * TODO remove this once the seializers/build is removed.
+     * TODO remove this once the serializers/build is removed.
      * The modelName causes Mirage to know how to serialise it.
      */
     return this.serialize(builds, 'build');

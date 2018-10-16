@@ -16,7 +16,7 @@ export default function startApp(attrs) {
 
   let clearStorage = (storage) => {
     storage.removeItem('travis.token');
-    storage.removeItem('trvais.user');
+    storage.removeItem('travis.user');
   };
 
   clearStorage(localStorage);

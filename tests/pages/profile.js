@@ -14,7 +14,7 @@ import {
 import {
   EMAIL_SETTINGS,
   EMAIL_SETTINGS_TITLE,
-  EMAIL_SETTINGS_DESCRITION,
+  EMAIL_SETTINGS_DESCRIPTION,
   EMAIL_SETTINGS_TOGGLE,
   EMAIL_SETTINGS_RESUBSCRIBE_LIST,
   EMAIL_SETTINGS_RESUBSCRIBE_ITEM,
@@ -77,11 +77,11 @@ export default create({
   },
 
   filter: fillable('.profile-repositories-filter input.search'),
-  noRepositoriesFoundByFilter: text('#administerable-repositories .no-results'),
+  noRepositoriesFoundByFilter: text('#administrable-repositories .no-results'),
 
   notFoundOrgName: text('.page-title .h2--red'),
 
-  administerableRepositories: existingRepositoriesCollection('#administerable-repositories'),
+  administrableRepositories: existingRepositoriesCollection('#administrable-repositories'),
   deprecatedBadge: { scope: '.badge.deprecated' },
 
   githubAppsInvitation: {
@@ -146,7 +146,7 @@ export default create({
     emailSettings: {
       scope: EMAIL_SETTINGS,
       title: text(EMAIL_SETTINGS_TITLE),
-      description: text(EMAIL_SETTINGS_DESCRITION),
+      description: text(EMAIL_SETTINGS_DESCRIPTION),
       toggle: {
         scope: EMAIL_SETTINGS_TOGGLE,
         isOn: hasClass('active'),

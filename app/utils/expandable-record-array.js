@@ -38,7 +38,7 @@ export default ArrayProxy.extend({
   observe(collection) {
     return collection.addArrayObserver(this, {
       willChange: 'observedArrayWillChange',
-      didChange: 'observedArraydidChange'
+      didChange: 'observedArrayDidChange'
     });
   },
 
@@ -53,7 +53,7 @@ export default ArrayProxy.extend({
     return results;
   },
 
-  observedArraydidChange(array, index, removedCount, addedCount) {
+  observedArrayDidChange(array, index, removedCount, addedCount) {
     let addedObjects, i, len, object, results;
     addedObjects = array.slice(index, index + addedCount);
     results = [];

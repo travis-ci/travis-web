@@ -16,7 +16,7 @@ export const EMAIL_UNSUBSCRIBE_APPENDIX = '[data-test-email-unsubscribe-appendix
 
 export const EMAIL_SETTINGS = '[data-test-email-settings]';
 export const EMAIL_SETTINGS_TITLE = '[data-test-email-settings-title]';
-export const EMAIL_SETTINGS_DESCRITION = '[data-test-email-settings-description]';
+export const EMAIL_SETTINGS_DESCRIPTION = '[data-test-email-settings-description]';
 export const EMAIL_SETTINGS_TOGGLE = '[data-test-email-settings-toggle]';
 export const EMAIL_SETTINGS_RESUBSCRIBE_LIST = '[data-test-email-settings-resubscribe-list]';
 export const EMAIL_SETTINGS_RESUBSCRIBE_ITEM = '[data-test-email-settings-resubscribe-item]';
