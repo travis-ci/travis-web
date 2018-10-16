@@ -14,6 +14,7 @@ const { appName, migrationRepositoryCountLimit } = config.githubApps;
 export default Component.extend({
   features: service(),
   store: service(),
+  externalLinks: service(),
 
   page: 1,
   appsPage: 1,

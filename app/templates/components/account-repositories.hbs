@@ -63,11 +63,19 @@
               {{#if account.allowMigration}}
                 Authorized users can now migrate the following repositories
                 currently active on our legacy platform travis-ci.org to travis-ci.com.
-                Please <a href='https://docs.travis-ci.com/user/open-source-on-travis-ci-com/#existing-open-source-repositories-on-travis-ciorg'>read our docs on open source migration</a> to learn more.
+                Please
+                {{#external-link-to href=externalLinks.openSourceMigrationDocs}}
+                read our docs on open source migration
+                {{/external-link-to}}
+                to learn more.
               {{else}}
                 The following repositories cannot be migrated to travis-ci.com at this time because they are
                 currently active on our legacy platform travis-ci.org. This feature will be available shortly.
-                Please <a href='https://docs.travis-ci.com/user/open-source-on-travis-ci-com/#existing-open-source-repositories-on-travis-ciorg'>read our docs on open source migration</a> to learn more.
+                Please
+                {{#external-link-to href=externalLinks.openSourceMigrationDocs}}
+                read our docs on open source migration
+                {{/external-link-to}}
+                to learn more.
               {{/if}}
             </span>
           </p>
