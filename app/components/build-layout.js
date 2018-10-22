@@ -13,13 +13,10 @@ export default Component.extend({
 
   @alias('build.isLoading') loading: null,
 
-  @computed('build.jobs.@each.configLoaded',
-    'build.jobs.@each.isLoaded',
-    'build.stagesAreLoaded')
-  jobsLoaded(jobs, _, stagesAreLoaded) {
+  @computed('build.jobs.@each.{isConfigLoaded,isLoaded}', 'build.stagesAreLoaded')
+  jobsLoaded(jobs, stagesAreLoaded) {
     jobs.forEach((j) => j.get('config'));
-    return jobs.isEvery('configLoaded') && jobs.isEvery('isLoaded') &&
-      stagesAreLoaded;
+    return jobs.isEvery('isLoaded') && jobs.isEvery('isConfigLoaded') && stagesAreLoaded;
   },
 
   buildStagesSort: ['number'],
