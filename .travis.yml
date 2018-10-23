@@ -16,10 +16,8 @@ matrix:
       env: TRY_CONFIG=ember-data-beta
     - node_js: 10.7
   allow_failures:
-    - env:
-      - TRY_CONFIG=ember-beta
-    - env:
-      - TRY_CONFIG=ember-data-beta
+    - env: TRY_CONFIG=ember-beta
+    - env: TRY_CONFIG=ember-data-beta
 
 sudo: required
 dist: trusty
