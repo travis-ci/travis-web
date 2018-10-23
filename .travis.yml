@@ -16,6 +16,9 @@ matrix:
       node_js: 10.7
     - if: NOT type = cron
       node_js: 10.7
+  allow_failures:
+    - env: TRY_CONFIG=ember-beta
+    - env: TRY_CONFIG=ember-data-beta
 
 sudo: required
 dist: trusty
