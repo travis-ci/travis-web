@@ -9,13 +9,17 @@ env:
 matrix:
   include:
     - if: type = cron
+      node_js: 10.7
       env: TRY_CONFIG=ember-beta
     - if: type = cron
+      node_js: 10.7
       env: TRY_CONFIG=ember-data-beta
     - node_js: 10.7
   allow_failures:
     - env: TRY_CONFIG=ember-beta
+      node_js: 10.7
     - env: TRY_CONFIG=ember-data-beta
+      node_js: 10.7
 
 sudo: required
 dist: trusty
