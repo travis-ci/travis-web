@@ -9,7 +9,7 @@ export default create({
   visit: visitable('/:username'),
 
   repos: collection('.owner-tiles .owner-tile', {
-    name: text('.repo-title span.label-align'),
+    name: text('.repo-title span.repo-title-text'),
     buildNumber: text('.build-number .label-align'),
     defaultBranch: text('.default-branch .default-branch-name'),
     commitSha: text('.commit-sha .commit-compare'),
