@@ -1,9 +1,24 @@
-<ul class="owner-tiles">
-  {{#each model as |repo|}}
-    {{owner-repo-tile repo=repo}}
-  {{else}}
-    {{no-repos}}
-  {{/each}}
-</ul>
+<nav class='travistab-nav travistab-nav--underline'>
+  <ul>
+    <li>
+      {{#link-to 'owner.repositories' (query-params tab=null)}}Repositories{{/link-to}}
+    </li>
+    <li>
+      {{#link-to 'owner.repositories' (query-params tab='insights')}}Insights{{/link-to}}
+    </li>
+  </ul>
+</nav>
 
-{{pagination-navigation collection=model route="owner.repositories" inner=6 outer=2}}
+{{#if isInsights}}
+  <h2>Insights Page!</h2>
+{{else}}
+  <ul class="owner-tiles">
+    {{#each model as |repo|}}
+      {{owner-repo-tile repo=repo}}
+    {{else}}
+      {{no-repos}}
+    {{/each}}
+  </ul>
+
+  {{pagination-navigation collection=model route="owner.repositories" inner=6 outer=2}}
+{{/if}}

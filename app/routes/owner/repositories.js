@@ -12,6 +12,7 @@ export default TravisRoute.extend({
     page: {
       refreshModel: true
     },
+    tab: null,
   },
 
   @computed()
@@ -20,22 +21,26 @@ export default TravisRoute.extend({
   },
 
   model(params, transition) {
-    let offset = (params.page - 1) * this.get('recordsPerPage');
+    if (params.isInsights === true) {
+      return null;
+    } else {
+      let offset = (params.page - 1) * this.get('recordsPerPage');
 
-    let queryParams = {
-      offset,
-      limit: this.get('recordsPerPage'),
-      sort_by: 'default_branch.last_build:desc',
-      custom: {
-        owner: transition.params.owner.owner,
-        type: 'byOwner',
-      },
-    };
+      let queryParams = {
+        offset,
+        limit: this.get('recordsPerPage'),
+        sort_by: 'default_branch.last_build:desc',
+        custom: {
+          owner: transition.params.owner.owner,
+          type: 'byOwner',
+        },
+      };
 
-    return this.store.paginated(
-      'repo',
-      queryParams,
-      { live: false }
-    );
-  }
+      return this.store.paginated(
+        'repo',
+        queryParams,
+        { live: false }
+      );
+    }
+  },
 });
