@@ -12,7 +12,9 @@ export default TravisRoute.extend({
     page: {
       refreshModel: true
     },
-    tab: null,
+    tab: {
+      refreshModel: true
+    },
   },
 
   @computed()
@@ -21,7 +23,7 @@ export default TravisRoute.extend({
   },
 
   model(params, transition) {
-    if (params.isInsights === true) {
+    if (typeof params.tab === 'string' && params.tab.toLowerCase() === 'insights') {
       return null;
     } else {
       let offset = (params.page - 1) * this.get('recordsPerPage');
