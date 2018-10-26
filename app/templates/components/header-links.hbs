@@ -1,7 +1,7 @@
 <nav id="navigation" class="navigation {{if is-open 'is-open'}}">
   <ul>
-    <li><a href="{{ config.urls.about }}" title="Travis CI team" class="navigation-anchor">About Us</a></li>
     {{#unless features.enterpriseVersion}}
+      <li><a href="{{ config.urls.about }}" title="Travis CI team" class="navigation-anchor">About Us</a></li>
       {{#unless features.proVersion}}
         <li><a href="{{ config.urls.blog }}" title="Travis CI Blog" class="navigation-anchor">Blog</a></li>
         <li><a href="{{ config.urls.status }}" title="Travis CI Status" class="navigation-anchor">Status</a></li>
