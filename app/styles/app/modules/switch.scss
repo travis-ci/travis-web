@@ -54,7 +54,7 @@
 
   .on {
     display: none;
-    margin-left: -50%;
+    margin-left: 50%;
 
     .icon-on {
       @include colorSVG($oxide-blue);
@@ -63,7 +63,7 @@
   }
 
   .off {
-    margin-left: 50%;
+    margin-left: -50%;
 
     .icon-off {
       @include colorSVG(darken($pebble-grey, 10));
