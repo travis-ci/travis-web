@@ -1,10 +1,15 @@
 ---
 language: node_js
+
 node_js: 10.7
 
 env:
   global:
     - PERCY_ENABLE=0
+
+stages:
+  - name: test
+  - name: build docker image
 
 matrix:
   include:
@@ -15,6 +20,18 @@ matrix:
       node_js: 10.7
       env: TRY_CONFIG=ember-data-beta
     - node_js: 10.7
+    - stage: build docker image
+      language: bash
+      before_install: skip
+      install: skip
+      before_script: skip
+      script:
+        - docker build -t quay.io/travisci/travis-api .
+        - docker images
+        - docker login -u="${QUAY_ROBOT_HANDLE}" -p="${QUAY_ROBOT_TOKEN}" quay.io
+        - docker push quay.io/travisci/travis-api
+      after_script: skip
+      after_success: skip
   allow_failures:
     - env: TRY_CONFIG=ember-beta
     - env: TRY_CONFIG=ember-data-beta
