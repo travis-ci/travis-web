@@ -29,7 +29,7 @@ matrix:
         - docker build -t quay.io/travisci/travis-api .
         - docker images
         - docker login -u="${QUAY_ROBOT_HANDLE}" -p="${QUAY_ROBOT_TOKEN}" quay.io
-        - docker push quay.io/travisci/travis-api
+        - docker push quay.io/travisci/travis-web
       after_script: skip
       after_success: skip
   allow_failures:
