@@ -14,7 +14,6 @@ group :development, :test do
   gem 'rake'
 end
 
-
 group :development do
   # gem 'debugger'
   gem 'foreman'
