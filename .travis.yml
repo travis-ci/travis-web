@@ -26,7 +26,7 @@ matrix:
       install: skip
       before_script: skip
       script:
-        - docker build -t quay.io/travisci/travis-api .
+        - docker build -t quay.io/travisci/travis-web .
         - docker images
         - docker login -u="${QUAY_ROBOT_HANDLE}" -p="${QUAY_ROBOT_TOKEN}" quay.io
         - docker push quay.io/travisci/travis-web
