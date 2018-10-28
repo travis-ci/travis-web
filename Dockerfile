@@ -64,6 +64,7 @@ COPY waiter       /usr/src/app/waiter
 RUN bundle install --without assets development test
 
 COPY package.json /usr/src/app
+COPY package-lock.json /usr/src/app
 
 RUN npm install --quiet
 
