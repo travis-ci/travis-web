@@ -10,7 +10,9 @@
 </nav>
 
 {{#if isInsights}}
-  <h2>Insights Page!</h2>
+  <div class="travistab-body">
+    {{insight-tabs}}
+  </div>
 {{else}}
   <ul class="owner-tiles">
     {{#each model as |repo|}}
