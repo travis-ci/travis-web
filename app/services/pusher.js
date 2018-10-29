@@ -15,6 +15,9 @@ export default Service.extend({
     if (name === 'repository' && type === 'migration') {
       const repository = store.peekRecord('repo', data.repositoryId);
       repository.set('migrationStatus', data.status);
+      if (data.success === 'success') {
+        repository.set('active_on_org', false);
+      }
     }
 
     if (name === 'job' && data.job && data.job.commit) {
