@@ -11,7 +11,7 @@
 
 {{#if isInsights}}
   <div class="travistab-body">
-    {{insight-tabs}}
+    {{insight-tabs selectedTab=model.selectedTab setSubTab='setSubTab'}}
   </div>
 {{else}}
   <ul class="owner-tiles">

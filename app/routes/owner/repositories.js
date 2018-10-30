@@ -5,6 +5,7 @@ import { computed } from 'ember-decorators/object';
 
 export default TravisRoute.extend({
   @service auth: null,
+  @service storage: null,
 
   needsAuth: false,
 
@@ -24,7 +25,11 @@ export default TravisRoute.extend({
 
   model(params, transition) {
     if (typeof params.tab === 'string' && params.tab.toLowerCase() === 'insights') {
-      return null;
+      let subTab = this.get('storage').getItem('travis.insight_tabs.owner') || 'month';
+      let data = {
+        selectedTab: subTab,
+      };
+      return data;
     } else {
       let offset = (params.page - 1) * this.get('recordsPerPage');
 
@@ -45,4 +50,11 @@ export default TravisRoute.extend({
       );
     }
   },
+
+  actions: {
+    setSubTab(selection) {
+      this.get('storage').setItem('travis.insight_tabs.owner', selection);
+      this.refresh();
+    }
+  }
 });
