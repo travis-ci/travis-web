@@ -9,7 +9,7 @@
 
 .travis-pride {
   .top {
-    background: linear-gradient(to bottom, #e2453c 0%, #e07e39 16%, #e5d667 32%, #51b95b 48%, #1e72b7 66%, #6f5ba7 86%) no-repeat;
+    background: linear-gradient(to bottom, #e2453c 0, #e2453c 16%, #e07e39 16%, #e07e39 32%, #e5d667 32%, #e5d667 48%, #51b95b 48%, #51b95b 66%, #1e72b7 66%, #1e72b7 86%, #6f5ba7 86%) no-repeat;
   }
 
   .navigation-anchor {
@@ -17,8 +17,8 @@
   }
 
   .navigation-nested {
-    background: linear-gradient(to top, #e2453c 0%, #e07e39 16%, #e5d667 32%, #51b95b 48%, #1e72b7 66%, #6f5ba7 86%) no-repeat;
-
+    background: linear-gradient(to bottom, #e2453c 0, #e2453c 16%, #e07e39 16%, #e07e39 32%, #e5d667 32%, #e5d667 48%, #51b95b 48%, #51b95b 66%, #1e72b7 66%, #1e72b7 86%, #6f5ba7 86%) no-repeat;
+    
     a {
       color: white;
 
