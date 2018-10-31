@@ -19,7 +19,7 @@ export default Controller.extend({
 
   startPolling() {
     this.initialDelayPromise().then(() => this.fetchPromise().then(installation => {
-      this.transitionToRoute('account', installation.owner.login);
+      this.transitionToRoute('account');
     }));
   },
 
