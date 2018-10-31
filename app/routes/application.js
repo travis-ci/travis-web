@@ -1,4 +1,4 @@
-/* global Travis, HS */
+/* global Travis */
 import $ from 'jquery';
 
 import TravisRoute from 'travis/routes/basic';

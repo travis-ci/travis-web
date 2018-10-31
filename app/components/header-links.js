@@ -1,4 +1,3 @@
-/* global HS */
 /* eslint no-unused-vars: ["error", { "varsIgnorePattern": "config" }]*/
 
 import Ember from 'ember';
