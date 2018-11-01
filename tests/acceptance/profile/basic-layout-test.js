@@ -248,7 +248,6 @@ test('view profile that has education status', function (assert) {
   profilePage.visitOrganization({ name: 'org-login' });
 
   andThen(() => {
-    percySnapshot(assert);
     assert.equal(profilePage.nameBadge.text, 'Education');
     assert.ok(profilePage.avatar.checkmark.isVisible, 'expected avatar to have a checkmark for education subscription');
     assert.ok(profilePage.subscriptionStatus.isHidden, 'expected no subscription status banner');

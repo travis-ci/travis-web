@@ -87,7 +87,5 @@ module('Acceptance | builds/current tab', function (hooks) {
     await visit('/travis-ci/travis-web');
 
     assert.dom('[data-test-no-jobs-error-message]').exists();
-
-    percySnapshot(assert);
   });
 });
