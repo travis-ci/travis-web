@@ -343,7 +343,6 @@ test('view billing tab with no create subscription permissions', function (asser
   profilePage.billing.visit();
 
   andThen(() => {
-    percySnapshot(assert);
     assert.equal(profilePage.billing.trial.name, 'Your trial includes 100 trial builds and 2-concurrent-jobs, no credit card required. Need help? Check our getting started guide.');
     assert.equal(profilePage.billing.manageButton.text, 'New subscription');
     assert.ok(profilePage.billing.manageButton.isDisabled);
