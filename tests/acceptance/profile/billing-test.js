@@ -374,7 +374,6 @@ test('view billing tab when there is a new trial', function (assert) {
   profilePage.billing.visit();
 
   andThen(() => {
-    percySnapshot(assert);
     assert.equal(profilePage.billing.trial.name, "You've got 100 trial builds left. Ensure unlimited builds by setting up a plan before it runs out!");
     assert.equal(profilePage.billing.manageButton.text, 'New subscription');
   });
