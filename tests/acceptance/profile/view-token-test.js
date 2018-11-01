@@ -34,7 +34,6 @@ test('view token', function (assert) {
   andThen(function () {
     assert.equal(profilePage.token.value, config.validAuthToken);
   });
-  percySnapshot(assert);
 });
 
 test('copy token', function (assert) {
