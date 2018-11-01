@@ -111,6 +111,7 @@
   },
   "greenkeeper": {
     "ignore": [
+      "ember-decorators",
       "ember-tooltips"
     ]
   }
