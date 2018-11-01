@@ -489,7 +489,6 @@ test('view billing tab with Github trial subscription has ended', function (asse
   profilePage.billing.visit();
 
   andThen(() => {
-    percySnapshot(assert);
     assert.equal(profilePage.billing.manageButton.text, 'Edit subscription');
     assert.ok(profilePage.billing.address.isHidden);
     assert.ok(profilePage.billing.creditCardNumber.isHidden);
