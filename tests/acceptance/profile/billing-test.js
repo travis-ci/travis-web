@@ -430,7 +430,6 @@ test('view billing tab when trial has ended', function (assert) {
   profilePage.billing.visit();
 
   andThen(() => {
-    percySnapshot(assert);
     assert.equal(profilePage.billing.trial.name, 'Your trial has just ended. To get the most out of Travis CI, set up a plan below!');
     assert.equal(profilePage.billing.manageButton.text, 'New subscription');
   });
