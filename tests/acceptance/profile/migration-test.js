@@ -4,6 +4,7 @@ import {
   visit,
   click,
   waitFor,
+  currentURL,
 } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import signInUser from 'travis/tests/helpers/sign-in-user';
@@ -123,6 +124,11 @@ module('Acceptance | profile/migration', function (hooks) {
     assert.dom('[data-test-migration-status="success"]').exists();
 
     percySnapshot(assert);
+
+    await click('[data-test-locked-github-app-repository="github-apps-locked-repository"] a');
+    assert.equal(currentURL(), '/user-login/github-apps-locked-repository?migrationStatus=success');
+
+    assert.dom('[data-test-missing-notice-header]').exists();
   });
 
   test('migrating locked GitHub repositories (sad path)', async function (assert) {
