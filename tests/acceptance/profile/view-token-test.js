@@ -56,5 +56,4 @@ test('copy token', function (assert) {
   andThen(function () {
     assert.equal(profilePage.token.tokenCopiedText, 'Token copied!');
   });
-  percySnapshot(assert);
 });
