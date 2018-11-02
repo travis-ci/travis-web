@@ -343,7 +343,6 @@ test('view billing tab with no create subscription permissions', function (asser
   profilePage.billing.visit();
 
   andThen(() => {
-    percySnapshot(assert);
     assert.equal(profilePage.billing.trial.name, 'Your trial includes 100 trial builds and 2-concurrent-jobs, no credit card required. Need help? Check our getting started guide.');
     assert.equal(profilePage.billing.manageButton.text, 'New subscription');
     assert.ok(profilePage.billing.manageButton.isDisabled);
@@ -374,7 +373,6 @@ test('view billing tab when there is a new trial', function (assert) {
   profilePage.billing.visit();
 
   andThen(() => {
-    percySnapshot(assert);
     assert.equal(profilePage.billing.trial.name, "You've got 100 trial builds left. Ensure unlimited builds by setting up a plan before it runs out!");
     assert.equal(profilePage.billing.manageButton.text, 'New subscription');
   });
@@ -432,7 +430,6 @@ test('view billing tab when trial has ended', function (assert) {
   profilePage.billing.visit();
 
   andThen(() => {
-    percySnapshot(assert);
     assert.equal(profilePage.billing.trial.name, 'Your trial has just ended. To get the most out of Travis CI, set up a plan below!');
     assert.equal(profilePage.billing.manageButton.text, 'New subscription');
   });
@@ -492,7 +489,6 @@ test('view billing tab with Github trial subscription has ended', function (asse
   profilePage.billing.visit();
 
   andThen(() => {
-    percySnapshot(assert);
     assert.equal(profilePage.billing.manageButton.text, 'Edit subscription');
     assert.ok(profilePage.billing.address.isHidden);
     assert.ok(profilePage.billing.creditCardNumber.isHidden);
