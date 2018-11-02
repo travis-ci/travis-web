@@ -17,7 +17,15 @@ let intervalToSubinterval = {
 export default Component.extend({
   @service storage: null,
 
-  options: {},
+  options: {
+    title: {
+      text: undefined
+    },
+    xAxis: { visible: false },
+    yAxis: { visible: false },
+    legend: { enabled: false },
+
+  },
 
   @computed('owner', 'interval')
   dataRequest(owner, interval) {
