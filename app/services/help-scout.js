@@ -10,6 +10,7 @@ export default Service.extend({
     if (typeof HS.beacon.open === 'function') {
       HS.beacon.open();
     } else {
+      console.log('Hello');
       window.location.href = 'mailto:support@travis-ci.com';
       return false;
     }
