@@ -7,13 +7,11 @@ export default Service.extend({
   @service store: null,
 
   openHelpScout() {
-    HS.beacon.ready(function () {
-      if (typeof this.open === 'function') {
-        this.open();
-      } else {
-        window.location.href = 'mailto:support@travis-ci.com';
-        return false;
-      }
-    });
+    if (typeof HS.beacon.open === 'function') {
+      HS.beacon.open();
+    } else {
+      window.location.href = 'mailto:support@travis-ci.com';
+      return false;
+    }
   }
 });
