@@ -5,9 +5,16 @@ export default Controller.extend({
   isLoading: false,
   page: 1,
   tab: null,
+  dataInterval: 'month',
 
   @computed('tab')
   isInsights(tab) {
     return typeof tab === 'string' && tab.toLowerCase() === 'insights';
+  },
+
+  actions: {
+    setSubTab(selection) {
+      this.set('dataInterval', selection);
+    }
   },
 });

@@ -8,22 +8,28 @@ import PromiseProxyMixin from '@ember/object/promise-proxy-mixin';
 let ObjectPromiseProxy = ObjectProxy.extend(PromiseProxyMixin);
 import { Promise as EmberPromise } from 'rsvp';
 
+let intervalToSubinterval = {
+  day: '1min',
+  week: '10min',
+  month: '1hour'
+}
+
 export default Component.extend({
   @service storage: null,
 
   options: {},
 
-  @computed('owner')
-  dataRequest(owner) {
+  @computed('owner', 'interval')
+  dataRequest(owner, interval) {
     // FIXME get a token the real way, unless v3 proxy work finishes first
     let insightToken = this.get('storage').getItem('travis.insight_token') || '';
     let insightEndpoint = 'https://travis-insights-production.herokuapp.com';
     let endTime = moment();
-    let startTime = moment().subtract(1, 'week');
+    let startTime = moment().subtract(1, interval);
 
     let insightParams = $.param({
       subject: 'builds',
-      interval: '1day',
+      interval: intervalToSubinterval[interval],
       func: 'sum',
       name: 'count_started',
       owner_type: owner['@type'] === 'user' ? 'User' : 'Organization',

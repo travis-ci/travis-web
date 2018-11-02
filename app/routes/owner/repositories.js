@@ -57,11 +57,4 @@ export default TravisRoute.extend({
       );
     }
   },
-
-  actions: {
-    setSubTab(selection) {
-      this.get('storage').setItem('travis.insight_tab', selection);
-      this.refresh();
-    }
-  }
 });
