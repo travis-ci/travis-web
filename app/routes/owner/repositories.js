@@ -1,10 +1,9 @@
 import TravisRoute from 'travis/routes/basic';
 import config from 'travis/config/environment';
-import { service } from 'ember-decorators/service';
-import { computed } from 'ember-decorators/object';
+import { inject as service } from '@ember/service';
 
 export default TravisRoute.extend({
-  @service auth: null,
+  features: service(),
 
   needsAuth: false,
 
@@ -14,28 +13,19 @@ export default TravisRoute.extend({
     },
   },
 
-  @computed()
-  recordsPerPage() {
-    return config.pagination.profileReposPerPage;
-  },
+  model({ page }, transition) {
+    const limit = config.pagination.profileReposPerPage;
+    const offset = (page - 1) * limit;
+    const owner = transition.params.owner.owner;
+    const type = 'byOwner';
+    const sort_by = 'default_branch.last_build:desc'; // eslint-disable-line
 
-  model(params, transition) {
-    let offset = (params.page - 1) * this.get('recordsPerPage');
+    const queryParams = { offset, limit, sort_by, custom: { owner, type, }};
 
-    let queryParams = {
-      offset,
-      limit: this.get('recordsPerPage'),
-      sort_by: 'default_branch.last_build:desc',
-      custom: {
-        owner: transition.params.owner.owner,
-        type: 'byOwner',
-      },
-    };
+    if (this.features.get('github-apps')) {
+      queryParams['repository.active'] = true;
+    }
 
-    return this.store.paginated(
-      'repo',
-      queryParams,
-      { live: false }
-    );
+    return this.store.paginated('repo', queryParams, { live: false });
   }
 });
