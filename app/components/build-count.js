@@ -1,12 +1,12 @@
 import Component from '@ember/component';
 import { computed } from 'ember-decorators/object';
 import { service } from 'ember-decorators/service';
+import $ from 'jquery';
 import moment from 'moment';
 
 import ObjectProxy from '@ember/object/proxy';
 import PromiseProxyMixin from '@ember/object/promise-proxy-mixin';
 let ObjectPromiseProxy = ObjectProxy.extend(PromiseProxyMixin);
-import { Promise as EmberPromise } from 'rsvp';
 
 let intervalToSubinterval = {
   day: '1min',
@@ -18,13 +18,10 @@ export default Component.extend({
   @service storage: null,
 
   options: {
-    title: {
-      text: undefined
-    },
+    title: { text: undefined },
     xAxis: { visible: false },
     yAxis: { visible: false },
     legend: { enabled: false },
-
   },
 
   @computed('owner', 'interval')
@@ -50,11 +47,10 @@ export default Component.extend({
 
     return ObjectPromiseProxy.create({
       promise: fetch(url).then(response => {
-          if (response.ok) {
-            return response.json();
-          } else { return false; }
-        })
-        .then(response => ({data: response}))
+        if (response.ok) {
+          return response.json();
+        } else { return false; }
+      }).then(response => ({data: response}))
     });
   },
 
@@ -69,11 +65,10 @@ export default Component.extend({
         return accumulator;
       }, {values: [], processedTimes: []}).values;
       return [{
-          name: 'count',
-          type: 'spline',
-          data: filteredData.map(value => [value.time, value.value]),
-        },
-      ]
+        name: 'count',
+        type: 'spline',
+        data: filteredData.map(value => [value.time, value.value]),
+      }];
     }
   }
 });
