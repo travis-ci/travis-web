@@ -11,7 +11,6 @@ export default Service.extend({
       HS.beacon.open();
     } else {
       window.location.href = 'mailto:support@travis-ci.com';
-      return false;
     }
   }
 });
