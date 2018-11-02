@@ -32,35 +32,9 @@ export default TravisRoute.extend({
       let subTab = this.get('storage').getItem('travis.insight_tab') || 'month';
       let parentModel = this.modelFor('owner');
 
-      // FIXME get a token the real way, unless v3 proxy work finishes first
-      let insightToken = this.get('storage').getItem('travis.insight_token') || '';
-      let insightEndpoint = 'https://travis-insights-production.herokuapp.com';
-      let endTime = moment();
-      let startTime = moment().subtract(1, 'week');
-
-      // let headers = new Headers({
-      //   'authorization': `Token token="${insightToken}"`
-      // });
-      let insightParams = $.param({
-        subject: 'builds',
-        interval: '1day',
-        func: 'sum',
-        name: 'count_started',
-        owner_type: parentModel['@type'] === 'user' ? 'User' : 'Organization',
-        owner_id: parentModel.id,
-        token: insightToken,
-        end_time: endTime.format('YYYY-MM-DD HH:mm:ss UTC'),
-        start_time: startTime.format('YYYY-MM-DD HH:mm:ss UTC'),
-      });
-      let url = `${insightEndpoint}/metrics?${insightParams}`;
-
       let hashObject = {
         selectedTab: subTab,
-        insight: fetch(url).then(response => {
-          if (response.ok) {
-            return response.json();
-          } else { return false; }
-        })
+        owner: parentModel,
       };
       return hash(hashObject);
     } else {

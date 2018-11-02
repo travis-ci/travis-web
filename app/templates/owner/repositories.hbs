@@ -12,7 +12,7 @@
 {{#if isInsights}}
   <div class="travistab-body">
     {{insight-tabs selectedTab=model.selectedTab setSubTab='setSubTab'}}
-    {{build-count data=model.insight}}
+    {{build-count data=model.insight owner=model.owner}}
   </div>
 {{else}}
   <ul class="owner-tiles">
