@@ -108,5 +108,11 @@
   },
   "dependencies": {
     "watchman": "^1.0.0"
+  },
+  "greenkeeper": {
+    "ignore": [
+      "ember-decorators",
+      "ember-tooltips"
+    ]
   }
 }
