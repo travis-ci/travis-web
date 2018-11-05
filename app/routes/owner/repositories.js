@@ -1,9 +1,9 @@
 import TravisRoute from 'travis/routes/basic';
 import config from 'travis/config/environment';
-import { inject as service } from '@ember/service';
+import { service } from 'ember-decorators/service';
 
 export default TravisRoute.extend({
-  features: service(),
+  @service features: null,
 
   needsAuth: false,
 
