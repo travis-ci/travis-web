@@ -1,11 +1,10 @@
 import TravisRoute from 'travis/routes/basic';
 import config from 'travis/config/environment';
 import { service } from 'ember-decorators/service';
-import { computed } from 'ember-decorators/object';
 import { hash } from 'rsvp';
 
 export default TravisRoute.extend({
-  @service auth: null,
+  @service features: null,
 
   needsAuth: false,
 
@@ -18,37 +17,28 @@ export default TravisRoute.extend({
     },
   },
 
-  @computed()
-  recordsPerPage() {
-    return config.pagination.profileReposPerPage;
-  },
+  model({ page, tab }, transition) {
+    if (typeof tab === 'string' && tab.toLowerCase() === 'insights') {
+      const parentModel = this.modelFor('owner');
 
-  model(params, transition) {
-    if (typeof params.tab === 'string' && params.tab.toLowerCase() === 'insights') {
-      let parentModel = this.modelFor('owner');
-
-      let hashObject = {
+      const hashObject = {
         owner: parentModel,
       };
       return hash(hashObject);
     } else {
-      let offset = (params.page - 1) * this.get('recordsPerPage');
+      const limit = config.pagination.profileReposPerPage;
+      const offset = (page - 1) * limit;
+      const owner = transition.params.owner.owner;
+      const type = 'byOwner';
+      const sort_by = 'default_branch.last_build:desc'; // eslint-disable-line
 
-      let queryParams = {
-        offset,
-        limit: this.get('recordsPerPage'),
-        sort_by: 'default_branch.last_build:desc',
-        custom: {
-          owner: transition.params.owner.owner,
-          type: 'byOwner',
-        },
-      };
+      const queryParams = { offset, limit, sort_by, custom: { owner, type, }};
 
-      return this.store.paginated(
-        'repo',
-        queryParams,
-        { live: false }
-      );
+      if (this.features.get('github-apps')) {
+        queryParams['repository.active'] = true;
+      }
+
+      return this.store.paginated('repo', queryParams, { live: false });
     }
-  },
+  }
 });

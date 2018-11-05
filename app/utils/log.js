@@ -193,6 +193,7 @@ Log.Part = function (id, num, string) {
   this.string = this.string.replace(/\r\u001B\[0m\n/g, '\n');
 
   this.string = this.string.replace(/\r+\n/gm, '\n');
+  this.string = this.string.replace(/\r+/gm, '\r');
   this.strings = this.string.split(/^/gm) || [];
   this.slices = ((function () {
     let _results;
@@ -233,7 +234,8 @@ Log.Part.prototype = Log.extend(new Log.Node, {
         spans.push(span);
       }
       if ((_ref3 = spans[0]) != null ? (_ref4 = _ref3.line) != null ? _ref4.cr : void 0 : void 0) {
-        spans[0].line.clear();
+        _ref3['class'] = ['clears'];
+        _ref4.clear();
       }
     }
     if (!(slice >= this.slices.length - 1)) {
@@ -249,15 +251,7 @@ newLineRegexp = new RegExp('\n');
 rRegexp = new RegExp('\r');
 
 removeCarriageReturns = function (string) {
-  let index;
-  index = string.lastIndexOf('\r');
-  if (index === -1) {
-    return string;
-  }
-  // FIXME the previous code is below. It surely was this way for a reason!
-  return string.substr(index + 1);
-  // FIXME indeed it was, reverting for now…
-  // return string.replace('\r', '');
+  return string.replace(/[\r,\n]+$/, '');
 };
 
 let foldNameCount = {};
@@ -298,7 +292,7 @@ Log.Span = function (id, num, text, classes) {
     this.text = this.text.replace(newLineAtTheEndRegexp, '');
     this.nl = !!((_ref = text[text.length - 1]) != null ? _ref.match(newLineRegexp) : void 0);
     this.cr = !!text.match(rRegexp);
-    this['class'] = this.cr && ['clears'] || classes;
+    this['class'] = classes;
   }
   return this;
 };
@@ -866,7 +860,7 @@ Object.defineProperty(Log.Times.Time.prototype, 'stats', {
 Log.Deansi = {
   CLEAR_ANSI: /(?:\033)(?:\[0?c|\[[0356]n|\[7[lh]|\[\?25[lh]|\(B|H|\[(?:\d+(;\d+){,2})?G|\[(?:[12])?[JK]|[DM]|\[0K)/gm,
   apply: function (string) {
-    if (!string) {
+    if (!string || !string.length) {
       return [];
     }
     string = string.replace(this.CLEAR_ANSI, '');
