@@ -9,12 +9,15 @@ import PromiseProxyMixin from '@ember/object/promise-proxy-mixin';
 let ObjectPromiseProxy = ObjectProxy.extend(PromiseProxyMixin);
 
 let intervalToSubinterval = {
-  day: '1min',
-  week: '10min',
-  month: '1hour'
+  day: '10min',
+  week: '1hour',
+  month: '1day'
 }
 
 export default Component.extend({
+  tagName: 'div',
+  classNames: ['insights-row__chart insights-row-chart'],
+
   @service storage: null,
 
   options: {
@@ -22,6 +25,16 @@ export default Component.extend({
     xAxis: { visible: false },
     yAxis: { visible: false },
     legend: { enabled: false },
+    chart: {
+      height: '25%',
+    },
+    plotOptions: {
+      line: {
+        color: '#666',
+        lineWidth: 1,
+        states: {  hover: { lineWidth: 2 } },
+      },
+    },
   },
 
   @computed('owner', 'interval')
@@ -55,20 +68,31 @@ export default Component.extend({
   },
 
   @computed('dataRequest.data')
-  content(data) {
+  filteredData(data) {
     if (data) {
-      let filteredData = data.values.reduce((accumulator, value) => {
+      return data.values.reduce((accumulator, value) => {
         if (!accumulator.processedTimes.includes(value.time)) {
           accumulator.processedTimes.push(value.time);
           accumulator.values.push(value);
         }
         return accumulator;
       }, {values: [], processedTimes: []}).values;
-      return [{
-        name: 'count',
-        type: 'spline',
-        data: filteredData.map(value => [value.time, value.value]),
-      }];
+    } else {
+      return [];
     }
-  }
+  },
+
+  @computed('filteredData')
+  content(filteredData) {
+    return [{
+      name: 'count',
+      type: 'spline',
+      data: filteredData.map(value => [value.time, value.value]),
+    }];
+  },
+
+  @computed('filteredData')
+  totalBuilds(filteredData) {
+    return filteredData.reduce((acc, val) => acc + val.value, 0);
+  },
 });

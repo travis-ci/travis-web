@@ -21,10 +21,10 @@ export default TravisRoute.extend({
     if (typeof tab === 'string' && tab.toLowerCase() === 'insights') {
       const parentModel = this.modelFor('owner');
 
-      const hashObject = {
-        owner: parentModel,
-      };
-      return hash(hashObject);
+      // const hashObject = {
+      //   owner: parentModel,
+      // };
+      return parentModel;
     } else {
       const limit = config.pagination.profileReposPerPage;
       const offset = (page - 1) * limit;
