@@ -1,3 +1,5 @@
+/* eslint-env node */
+
 module.exports = {
   rules: {
     // disable func-names for utils as they are mainly a collection
@@ -7,4 +9,4 @@ module.exports = {
     // need refactoring anyway (at some point).
     'max-len': 0
   }
-}
+};
