@@ -11,44 +11,48 @@ let ObjectPromiseProxy = ObjectProxy.extend(PromiseProxyMixin);
 let intervalToSubinterval = {
   day: '10min',
   week: '1hour',
-  month: '1day'
+  month: '1day',
 };
 
 export default Component.extend({
   @service storage: null,
 
   token: '',
-  options: {
-    title: { text: undefined },
-    xAxis: { visible: false },
-    yAxis: {
-      visible: false,
+
+  @computed('avgBuilds')
+  options(avgBuilds) {
+    return {
       title: { text: undefined },
-      plotLines: [{
-        value: 11,
-        color: '#f1f1f1',
-        width: 1,
-      }],
-      labels: [],
-    },
-    legend: { enabled: false },
-    chart: {
-      height: '25%',
-      spacing: [0, 0, 0, 0],
-    },
-    plotOptions: {
-      series: {
-        color: '#666',
-        lineWidth: 1,
-        states: {  hover: { lineWidth: 2 } },
+      xAxis: { visible: false },
+      yAxis: {
+        visible: true,
+        title: { text: undefined },
+        plotLines: [{
+          value: avgBuilds,
+          color: '#eaeaea',
+          width: 1,
+        }],
+        labels: [],
       },
-    },
+      legend: { enabled: false },
+      chart: {
+        height: '25%',
+        spacing: [0, 0, 0, 0],
+      },
+      plotOptions: {
+        series: {
+          color: '#666',
+          lineWidth: 1,
+          states: {  hover: { lineWidth: 2 } },
+        },
+      },
+    };
   },
 
   @computed('owner', 'interval', 'token')
   dataRequest(owner, interval, token) {
     // FIXME: replace with v3 calls when it is ready
-    const apiToken = token || this.get('storage').getItem('travis.insight_token') || '';
+    const apiToken = token || this.get('storage').getItem('travis.insightToken') || '';
     if (apiToken.length === 0) { return; }
     const insightEndpoint = 'https://travis-insights-production.herokuapp.com';
     let endTime = moment();
@@ -107,10 +111,10 @@ export default Component.extend({
     }
   },
 
-  // @computed('filteredData', 'totalBuilds')
-  // avgBuilds(filteredData, totalBuilds) {
-  //   if (filteredData) {
-  //     return totalBuilds / filteredData.length;
-  //   }
-  // },
+  @computed('filteredData', 'totalBuilds')
+  avgBuilds(filteredData, totalBuilds) {
+    if (filteredData) {
+      return totalBuilds / filteredData.length;
+    }
+  },
 });

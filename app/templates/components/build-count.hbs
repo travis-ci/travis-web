@@ -1,13 +1,18 @@
 <div class="insights-row-item {{unless content 'insights-row-item--loading'}}">
   <h3 class="insights-row-item__title">Builds</h3>
   <div class="insights-row-item__stat">
-    {{#if totalBuilds}}
+    {{#if content}}
       {{totalBuilds}}
-      {{!-- {{avgBuilds}} --}}
     {{else}}
+      {{!-- Put a placeholder here instead? --}}
       &nbsp;
     {{/if}}
   </div>
 
-  {{high-charts content=content chartOptions=options}}
+  {{#if content}}
+    {{high-charts content=content chartOptions=options}}
+  {{else}}
+    {{!-- Put a placeholder here instead? --}}
+    {{high-charts content=content chartOptions=options}}
+  {{/if}}
 </div>
