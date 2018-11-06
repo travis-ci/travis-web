@@ -69,17 +69,6 @@ $border-size: 2px;
   &.travistab-nav--underline {
     border-bottom: $border-size solid $pebble-grey;
   }
-
-  &.travistab-nav--insights {
-    padding: 0;
-    display: flex;
-    justify-content: flex-end;
-
-    a {
-      color: $cement-grey;
-      cursor: pointer;
-    }
-  }
 }
 
 .travistab-nav--secondary {

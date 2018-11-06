@@ -12,12 +12,9 @@ let intervalToSubinterval = {
   day: '10min',
   week: '1hour',
   month: '1day'
-}
+};
 
 export default Component.extend({
-  tagName: 'div',
-  classNames: ['insights-row__chart insights-row-chart'],
-
   @service storage: null,
 
   options: {
@@ -29,7 +26,7 @@ export default Component.extend({
       height: '25%',
     },
     plotOptions: {
-      line: {
+      series: {
         color: '#666',
         lineWidth: 1,
         states: {  hover: { lineWidth: 2 } },
@@ -77,22 +74,31 @@ export default Component.extend({
         }
         return accumulator;
       }, {values: [], processedTimes: []}).values;
-    } else {
-      return [];
     }
   },
 
   @computed('filteredData')
   content(filteredData) {
-    return [{
-      name: 'count',
-      type: 'spline',
-      data: filteredData.map(value => [value.time, value.value]),
-    }];
+    if (filteredData) {
+      return [{
+        name: 'count',
+        type: 'spline',
+        data: filteredData.map(value => [value.time, value.value]),
+      }];
+    }
   },
 
   @computed('filteredData')
   totalBuilds(filteredData) {
-    return filteredData.reduce((acc, val) => acc + val.value, 0);
+    if (filteredData) {
+      return filteredData.reduce((acc, val) => acc + val.value, 0);
+    }
   },
+
+  // @computed('filteredData', 'totalBuilds')
+  // avgBuilds(filteredData, totalBuilds) {
+  //   if (filteredData) {
+  //     return totalBuilds / filteredData.length;
+  //   }
+  // },
 });
