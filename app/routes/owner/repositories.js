@@ -1,7 +1,6 @@
 import TravisRoute from 'travis/routes/basic';
 import config from 'travis/config/environment';
 import { service } from 'ember-decorators/service';
-import { hash } from 'rsvp';
 
 export default TravisRoute.extend({
   @service features: null,
@@ -15,15 +14,12 @@ export default TravisRoute.extend({
     tab: {
       refreshModel: true
     },
+    insightToken: null,
   },
 
   model({ page, tab }, transition) {
     if (typeof tab === 'string' && tab.toLowerCase() === 'insights') {
       const parentModel = this.modelFor('owner');
-
-      // const hashObject = {
-      //   owner: parentModel,
-      // };
       return parentModel;
     } else {
       const limit = config.pagination.profileReposPerPage;

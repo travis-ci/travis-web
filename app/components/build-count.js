@@ -17,6 +17,7 @@ let intervalToSubinterval = {
 export default Component.extend({
   @service storage: null,
 
+  token: '',
   options: {
     title: { text: undefined },
     xAxis: { visible: false },
@@ -34,11 +35,12 @@ export default Component.extend({
     },
   },
 
-  @computed('owner', 'interval')
-  dataRequest(owner, interval) {
-    // FIXME get a token the real way, unless v3 proxy work finishes first
-    let insightToken = this.get('storage').getItem('travis.insight_token') || '';
-    let insightEndpoint = 'https://travis-insights-production.herokuapp.com';
+  @computed('owner', 'interval', 'token')
+  dataRequest(owner, interval, token) {
+    // FIXME: replace with v3 calls when it is ready
+    const apiToken = token || this.get('storage').getItem('travis.insight_token') || '';
+    if (apiToken.length === 0) { return; }
+    const insightEndpoint = 'https://travis-insights-production.herokuapp.com';
     let endTime = moment();
     let startTime = moment().subtract(1, interval);
 
@@ -49,11 +51,11 @@ export default Component.extend({
       name: 'count_started',
       owner_type: owner['@type'] === 'user' ? 'User' : 'Organization',
       owner_id: owner.id,
-      token: insightToken,
+      token: apiToken,
       end_time: endTime.format('YYYY-MM-DD HH:mm:ss UTC'),
       start_time: startTime.format('YYYY-MM-DD HH:mm:ss UTC'),
     });
-    let url = `${insightEndpoint}/metrics?${insightParams}`;
+    const url = `${insightEndpoint}/metrics?${insightParams}`;
 
     return ObjectPromiseProxy.create({
       promise: fetch(url).then(response => {
