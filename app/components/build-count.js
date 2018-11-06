@@ -21,10 +21,20 @@ export default Component.extend({
   options: {
     title: { text: undefined },
     xAxis: { visible: false },
-    yAxis: { visible: false },
+    yAxis: {
+      visible: false,
+      title: { text: undefined },
+      plotLines: [{
+        value: 11,
+        color: '#f1f1f1',
+        width: 1,
+      }],
+      labels: [],
+    },
     legend: { enabled: false },
     chart: {
       height: '25%',
+      spacing: [0, 0, 0, 0],
     },
     plotOptions: {
       series: {
