@@ -27,7 +27,7 @@ const Repo = Model.extend({
   starred: attr('boolean'),
   active_on_org: attr('boolean'),
   emailSubscribed: attr('boolean'),
-  migrate: attr(),
+  migrationStatus: attr(),
 
   @oneWay('owner.@type') ownerType: null,
 
@@ -42,14 +42,6 @@ const Repo = Model.extend({
     async: true, inverse: 'repoCurrentBuild'
   }),
   _branches: hasMany('branch'),
-
-  @computed('migrate')
-  migrationStatus(status) {
-    if (['requested', 'migrating'].includes(status)) {
-      return 'migrating';
-    }
-    return status;
-  },
 
   // TODO: this is a hack, we should remove it once @is_collaborator property is
   // added to a response with the repo
