@@ -30,6 +30,13 @@
   text-align: center;
   color: white;
   background-color: darken($pebble-grey, 10);
+
+  &.already-migrated {
+    background-color: $oxide-blue;
+    &:hover {
+      background-color: darken($oxide-blue, 5%);
+    }
+  }
 }
 
 .no-button {
