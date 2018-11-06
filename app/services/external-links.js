@@ -36,4 +36,8 @@ export default Service.extend({
   },
 
   openSourceMigrationDocs: 'https://docs.travis-ci.com/user/open-source-on-travis-ci-com/#existing-open-source-repositories-on-travis-ciorg',
+
+  migratedToComLink(slug) {
+    return `https://travis-ci.com/${slug}`;
+  },
 });
