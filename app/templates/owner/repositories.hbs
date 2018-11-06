@@ -14,6 +14,7 @@
     {{insight-tabs selectedTab=dataInterval setSubTab='setSubTab'}}
     <div class="insights-row">
       {{build-count owner=model interval=dataInterval token=insightToken}}
+      {{build-minutes owner=model interval=dataInterval token=insightToken}}
     </div>
   </div>
 {{else}}
