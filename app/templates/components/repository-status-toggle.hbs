@@ -5,23 +5,29 @@
   {{name}}
 {{/link-to}}
 
-{{#if admin}}
-  {{travis-switch active=repository.active onToggle=(perform toggleRepositoryTask) }}
-  {{#if toggleRepositoryTask.isRunning}}
-    {{loading-indicator inline=true class="repo-loading"}}
-  {{else}}
-    {{#link-to "settings" repository.owner.login repository.name tagName="button" class="button profile-settings" title="Go to Travis CI repository settings"}}
-      {{svg-jar 'icon-settings' class="icon icon-hover"}}
-      Settings
-    {{/link-to}}
-  {{/if}}
+{{#if (eq repository.migrationStatus 'migrated')}}
+{{#external-link-to href=comLink class="button already-migrated" title="View this repository on travis-ci.com"}}
+ {{svg-jar 'icon-external-link' class="icon white"}} TRAVIS-CI.COM
+{{/external-link-to}}
 {{else}}
-  {{travis-switch active=repository.active disabled=true}}
-  <a class="profile-settings disabled button">
-    {{tooltip-on-element text='Insufficient permissions'}}
-    {{svg-jar 'icon-settings' class="icon"}}
-    Settings
-  </a>
+  {{#if admin}}
+    {{travis-switch active=repository.active onToggle=(perform toggleRepositoryTask) }}
+    {{#if toggleRepositoryTask.isRunning}}
+      {{loading-indicator inline=true class="repo-loading"}}
+    {{else}}
+      {{#link-to "settings" repository.owner.login repository.name tagName="button" class="button profile-settings" title="Go to Travis CI repository settings"}}
+        {{svg-jar 'icon-settings' class="icon icon-hover"}}
+        Settings
+      {{/link-to}}
+    {{/if}}
+  {{else}}
+    {{travis-switch active=repository.active disabled=true}}
+    <a class="profile-settings disabled button">
+      {{tooltip-on-element text='Insufficient permissions'}}
+      {{svg-jar 'icon-settings' class="icon"}}
+      Settings
+    </a>
+  {{/if}}
 {{/if}}
 
 {{#if showError}}

@@ -2,8 +2,11 @@ import Component from '@ember/component';
 import config from 'travis/config/environment';
 import { task } from 'ember-concurrency';
 import { computed } from 'ember-decorators/object';
+import { service } from 'ember-decorators/service';
 
 export default Component.extend({
+  @service externalLinks: null,
+
   tagName: 'li',
   classNames: ['profile-repolist-item'],
   classNameBindings: ['repository.active:active'],
@@ -14,6 +17,11 @@ export default Component.extend({
     if (permissions) {
       return permissions.admin;
     }
+  },
+
+  @computed('repository.slug')
+  comLink(slug) {
+    return this.get('externalLinks').migratedToComLink(slug);
   },
 
   actions: {
