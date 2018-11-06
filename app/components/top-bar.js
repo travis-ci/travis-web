@@ -29,25 +29,5 @@ export default Component.extend(InViewportMixin, {
     return !signedIn && !landingPage && ctaEnabled;
   },
 
-  didInsertElement() {
-    if (Ember.testing) {
-      return;
-    }
-
-    Ember.setProperties(this, {
-      viewportSpy: true
-    });
-    this._super(...arguments);
-    Ember.run.scheduleOnce('afterRender', this, () => {
-      Ember.set(this, 'viewportTolerance.top', this.$().height());
-    });
-  },
-
-  didEnterViewport() {
-    this.get('flashes').set('topBarVisible', true);
-  },
-
-  didExitViewport() {
-    this.get('flashes').set('topBarVisible', false);
-  },
+  // FIXME restore ember-in-viewport use
 });
