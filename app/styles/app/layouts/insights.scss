@@ -14,10 +14,14 @@
 .insights-row {
   display: grid;
   grid-gap: 3.125%;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(100px, 1fr);
 
   @media #{$medium-up} {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, minmax(100px, 1fr));
+  }
+
+  .insights-row__container {
+    overflow: hidden;
   }
 }
 

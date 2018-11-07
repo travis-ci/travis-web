@@ -15,6 +15,8 @@ let intervalToSubinterval = {
 };
 
 export default Component.extend({
+  classNames: ['insights-row__container'],
+
   @service storage: null,
 
   token: '',
@@ -33,11 +35,12 @@ export default Component.extend({
           width: 1,
         }],
         labels: [],
+        gridLineWidth: 0,
       },
       legend: { enabled: false },
       chart: {
         height: '25%',
-        spacing: [0, 0, 0, 0],
+        spacing: [5, 5, 5, 5],
       },
       plotOptions: {
         series: {
@@ -121,7 +124,8 @@ export default Component.extend({
   @computed('filteredData', 'totalWaitMins')
   avgWaitMins(filteredData, totalWaitMins) {
     if (filteredData) {
-      return filteredData.length === 0 ? 0 : Math.round((totalWaitMins / filteredData.length) * 100) / 100;
+      if (filteredData.length === 0) { return 0; }
+      return Math.round((totalWaitMins / filteredData.length) * 100) / 100;
     }
   },
 });
