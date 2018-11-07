@@ -24,6 +24,11 @@ export default Component.extend({
     return this.get('externalLinks').migratedToComLink(slug);
   },
 
+  @computed('features.{proVersion,enterpriseVersion}')
+  onDotOrg(com, enterprise) {
+    return !(com || enterprise);
+  },
+
   actions: {
 
     close() {
