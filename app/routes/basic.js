@@ -21,7 +21,7 @@ export default Route.extend({
       this.set('auth.afterSignInTransition', transition);
       return reject('needs-auth');
     } else if (this.redirectToProfile(transition)) {
-      return this.transitionTo('profile', this.get('auth.currentUser.login'));
+      return this.transitionTo('account');
     } else {
       return this._super(...arguments);
     }
@@ -39,7 +39,7 @@ export default Route.extend({
       params.owner &&
       params.owner.owner &&
       params.owner.owner === 'profile') {
-      this.transitionTo('account', this.get('auth.currentUser.login'), {
+      this.transitionTo('account', {
         queryParams: { offset: 0 }
       });
     }

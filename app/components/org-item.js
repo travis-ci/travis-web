@@ -1,35 +1,27 @@
 import Component from '@ember/component';
 import { computed } from 'ember-decorators/object';
-import { alias } from 'ember-decorators/object/computed';
+import { reads, or } from '@ember/object/computed';
 import { service } from 'ember-decorators/service';
 
 export default Component.extend({
   @service router: null,
 
-  classNames: ['media', 'account'],
   tagName: 'li',
+  classNames: ['media', 'account'],
   classNameBindings: ['type', 'selected'],
 
-  @alias('account.type') type: null,
-  @alias('account.selected') selected: null,
+  account: null,
 
-  @computed('account.{name,login}')
-  name(name, login) {
-    return name || login;
+  selected: reads('account.selected'),
+  name: or('account.name', 'account.login'),
+
+  @computed('account.isOrganization')
+  routeName(isOrganization) {
+    return isOrganization ? 'organization' : 'account';
   },
 
-  @computed('account.avatarUrl')
-  avatarUrl(url) {
-    return url || false;
-  },
-
-  // This keeps the org-item highlighted while a route is loading
-  @computed('router.currentRouteName')
-  linkRouteName(routeName) {
-    if (routeName.endsWith('_loading')) {
-      return 'account';
-    } else {
-      return routeName;
-    }
-  },
+  @computed('account.isOrganization')
+  routeModel(isOrganization) {
+    if (isOrganization) return this.account.login;
+  }
 });

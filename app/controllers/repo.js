@@ -17,6 +17,9 @@ export default Controller.extend({
   @service features: null,
   @service('updateTimes') updateTimesService: null,
 
+  queryParams: ['migrationStatus'],
+  migrationStatus: null,
+
   @controller('job') jobController: null,
   @controller('build') buildController: null,
   @controller('builds') buildsController: null,

@@ -12,6 +12,19 @@ export default Service.extend({
     let store = this.get('store');
     let [name, type] = event.split(':');
 
+    if (name === 'repository' && type === 'migration') {
+      const repository = store.peekRecord('repo', data.repositoryId);
+      repository.set('migrationStatus', data.status);
+      // There is a disconnect between the meaning of `active` in the GitHub
+      // apps world and the Legacy Services world. If the repository was
+      // migrated, it's by definition using GitHub apps, which means it is
+      // by definition active. We no longer show toggle switches for GitHub
+      // app-managed repositories, for instance.
+      if (data.status === 'success') {
+        repository.set('active', true);
+      }
+    }
+
     if (name === 'job' && data.job && data.job.commit) {
       store.push(store.normalize('commit', data.job.commit));
     }

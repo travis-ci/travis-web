@@ -1,4 +1,4 @@
-/* global Travis, HS */
+/* global Travis */
 import $ from 'jquery';
 
 import TravisRoute from 'travis/routes/basic';
@@ -9,11 +9,12 @@ import { service } from 'ember-decorators/service';
 import KeyboardShortcuts from 'ember-keyboard-shortcuts/mixins/route';
 
 export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
-  @service flashes: null,
   @service auth: null,
-  @service featureFlags: null,
-  @service repositories: null,
   @service features: null,
+  @service featureFlags: null,
+  @service flashes: null,
+  @service helpScout: null,
+  @service repositories: null,
 
   needsAuth: false,
 
@@ -71,7 +72,7 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
   },
 
   unsubscribeFromRepo: function (repo) {
-    if (this.pusher) {
+    if (this.pusher && repo) {
       this.pusher.unsubscribe(`repo-${repo.get('id')}`);
     }
   },
@@ -143,8 +144,7 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
     },
 
     helpscoutTrigger() {
-      HS.beacon.open();
-      return false;
+      this.helpScout.openHelpScout();
     }
   },
 

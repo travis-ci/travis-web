@@ -22,7 +22,7 @@ moduleForAcceptance('Acceptance | profile/view token', {
 });
 
 test('view token', function (assert) {
-  profilePage.visit({ username: 'user-login' });
+  profilePage.visit();
   profilePage.settings.visit();
 
   andThen(() => {
@@ -34,11 +34,10 @@ test('view token', function (assert) {
   andThen(function () {
     assert.equal(profilePage.token.value, config.validAuthToken);
   });
-  percySnapshot(assert);
 });
 
 test('copy token', function (assert) {
-  profilePage.visit({ username: 'user-login' });
+  profilePage.visit();
   profilePage.settings.visit();
 
   andThen(() => {
@@ -57,5 +56,4 @@ test('copy token', function (assert) {
   andThen(function () {
     assert.equal(profilePage.token.tokenCopiedText, 'Token copied!');
   });
-  percySnapshot(assert);
 });

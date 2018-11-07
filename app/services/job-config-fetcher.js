@@ -2,8 +2,7 @@ import { once } from '@ember/runloop';
 import { Promise as EmberPromise } from 'rsvp';
 import Service from '@ember/service';
 import { service } from 'ember-decorators/service';
-import PromiseProxyMixin from '@ember/object/promise-proxy-mixin';
-import ObjectProxy from '@ember/object/proxy';
+import { task } from 'ember-concurrency';
 
 export default Service.extend({
   @service store: null,
@@ -14,42 +13,39 @@ export default Service.extend({
   },
 
   fetch(job) {
-    let PromiseObject = ObjectProxy.extend(PromiseProxyMixin);
-
-    if (job.get('_config')) {
-      return PromiseObject.create({promise: EmberPromise.resolve(job.get('_config'))});
+    if (job._config) {
+      return EmberPromise.resolve(job._config);
     }
-    let jobId = job.get('id');
-    if (this.toFetch[jobId]) {
-      return this.toFetch[jobId].promise;
+    if (this.toFetch[job.id]) {
+      return this.toFetch[job.id].promise;
     } else {
-      let data = this.toFetch[jobId] = { job };
+      let data = this.toFetch[job.id] = { job };
       let promise = new EmberPromise((resolve, reject) => {
         data.resolve = resolve;
       });
       data.promise = promise;
       once(this, 'flush');
-      return PromiseObject.create({ promise });
+      return promise;
     }
   },
 
-  flush() {
-    let toFetch = this.toFetch;
-    this.toFetch = {};
-    let buildIds = new Set();
-    Object.values(toFetch).forEach(data => buildIds.add(data.job.get('build.id')));
+  fetchTask: task(function* () {
+    for (let jobId in this.toFetch) {
+      const { job, resolve } = this.toFetch[jobId];
 
-    buildIds.forEach(id => {
-      let queryParams = { id, include: 'job.config,build.jobs' };
-      this.get('store').queryRecord('build', queryParams).then(build => {
-        build.get('jobs').forEach(job => {
-          let data = toFetch[job.get('id')];
-          if (data) {
-            data.resolve(job.get('_config'));
-          }
-        });
-      });
-    });
+      if (job._config) {
+        resolve(job._config);
+      } else {
+        const build = yield job.build;
+        yield this.store.queryRecord('build', { id: build.id, include: 'build.jobs,job.config' });
+        resolve(job._config);
+      }
+    }
+    this.toFetch = {};
+  }),
+
+  flush() {
+    this.fetchTask.perform();
   }
 });
 

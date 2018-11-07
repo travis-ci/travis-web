@@ -3,6 +3,7 @@
     {{#unless features.enterpriseVersion}}
       {{#unless features.proVersion}}
         {{#if auth.signedIn}}
+          <li>{{#link-to 'dashboard' class='navigation-anchor'}}Dashboard{{/link-to}}</li>
           <li>
             <a href="{{ config.urls.changelog }}" title="Travis CI Changelog" class="navigation-anchor">Changelog</a>
           </li>
@@ -31,6 +32,7 @@
           <li><a href="/plans" title="Plans and Pricing" class="navigation-anchor">Plans & Pricing</a></li>
           <li><a href="{{ config.urls.enterprise }}" title="Travis CI for Enterprise" class="navigation-anchor">Enterprise</a></li>
         {{else}}
+          <li>{{#link-to 'dashboard' class='navigation-anchor'}}Dashboard{{/link-to}}</li>
           <li><a href="{{ config.urls.changelog }}" title="Travis CI Changelog" class="navigation-anchor">Changelog</a></li>
           <li><a href="{{ config.urls.docs }}" title="Travis CI Documentation" class="navigation-anchor">Documentation</a></li>
         {{/unless}}
@@ -47,7 +49,7 @@
         <button class="auth-button signed-out" type="button" {{action 'signIn'}}>Sign in with GitHub</button>
       {{/if}}
       {{#if auth.signedIn}}
-        {{#link-to "account" user.login data-test-header-account-link class="navigation-anchor navigation-profile-link signed-in"}}
+        {{#link-to "account" data-test-header-account-link class="navigation-anchor navigation-profile-link signed-in"}}
           {{user-avatar url=user.avatarUrl name=user.fullName size=40}}
           {{svg-jar 'icon-dropdown-arrow' class="icon"}}
         {{/link-to}}
@@ -59,7 +61,7 @@
       <div class="menu-separator"></div>
         <ul class="navigation-nested">
           <li class="username"><span>{{userName}}</span></li>
-           {{#link-to "account" user.login class="signed-in topbar-menu-item" title="Your profile"}}
+           {{#link-to "account" class="signed-in topbar-menu-item" title="Your profile"}}
             <li>
               {{svg-jar 'icon-settings' class="icon"}}
               Settings

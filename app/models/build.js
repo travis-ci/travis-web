@@ -1,8 +1,6 @@
 import { all } from 'rsvp';
 
-import { isEmpty } from '@ember/utils';
-import safelistedConfigKeys from 'travis/utils/safelisted-config-keys';
-import pickBy from 'lodash.pickby';
+import { isEmpty, isPresent } from '@ember/utils';
 import configKeysMap from 'travis/utils/keys-map';
 import Model from 'ember-data/model';
 import DurationCalculations from 'travis/mixins/duration-calculations';
@@ -53,7 +51,11 @@ export default Model.extend(DurationCalculations, {
   @computed('_config', 'currentState.stateName')
   config(config, stateName) {
     if (config) {
-      return pickBy(config);
+      return Object.keys(config).reduce((compact, key) => {
+        const value = config[key];
+        if (isPresent(value)) compact[key] = value;
+        return compact;
+      });
     } else if (stateName !== 'root.loading') {
       if (this.get('isFetchingConfig')) {
         return;
@@ -102,11 +104,11 @@ export default Model.extend(DurationCalculations, {
 
   @computed('jobs.@each.config')
   rawConfigKeys(jobs) {
-    let keys = [];
-    jobs.forEach((job) => {
-      const configKeys = safelistedConfigKeys(job.get('config'));
-      return configKeys.forEach((key) => {
-        if (!keys.includes(key)) {
+    const keys = [];
+    jobs.forEach(job => {
+      const configKeys = job.config || [];
+      return configKeys.forEach(key => {
+        if (!keys.includes(key) && configKeysMap.hasOwnProperty(key)) {
           return keys.pushObject(key);
         }
       });

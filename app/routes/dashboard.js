@@ -8,12 +8,6 @@ export default TravisRoute.extend({
   @service features: null,
   @service accounts: null,
 
-  redirect() {
-    if (!this.get('features.dashboard')) {
-      return this.transitionTo('index');
-    }
-  },
-
   model(params) {
     return hash({
       starredRepos: this.store.filter('repo', {

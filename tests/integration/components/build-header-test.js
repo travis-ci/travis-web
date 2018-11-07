@@ -39,7 +39,7 @@ module('Integration | Component | build header', function (hooks) {
     assert.dom('.commit-compare').doesNotExist('does not display compare link element for api builds');
     assert.dom('.build-status .inner-underline').hasText('#1234', 'displays build number');
     assert.dom('.commit-branch-url').hasAttribute('href', 'https://github.com/travis-ci/travis-web/tree/feature-branch', 'displays branch url');
-    assert.dom('.commit-branch-url span').hasText('Branch feature-branch', 'displays link to branch');
+    assert.dom('.commit-branch-url span').hasText('Branch feature-branch', 'displays link to branch label');
     assert.dom('.build-title').hasText(/Endless joy/, 'displays commit message');
     assert.dom('.commit-stopwatch').hasAttribute('title', 'Started January 15, 2018 12:28:49');
     assert.dom('.commit-calendar').exists('displays a calendar after the job is passed');
@@ -63,7 +63,7 @@ module('Integration | Component | build header', function (hooks) {
 
     assert.dom('.build-status svg title').hasText('Push event', 'displays push icon');
     assert.dom('.commit-compare').exists('does display compare link element');
-    assert.dom('.commit-compare').hasText('Compare 3d86ee9..a82f6ba', 'does display compare link for push builds');
+    assert.dom('.commit-compare').hasText('Compare 3d86ee9..a82f6ba', 'does display compare link label for push builds');
   });
 
   test('render cron build', async function (assert) {
@@ -136,5 +136,26 @@ module('Integration | Component | build header', function (hooks) {
     assert.dom('.commit-stopwatch').exists('does display elapsed time');
     assert.dom('.commit-stopwatch').hasText('Running for -', 'Says running for');
     assert.dom('.commit-calendar').doesNotExist('does not display calendar while running');
+  });
+
+  test('show os and language for job', async function (assert) {
+    let job = {
+      eventType: 'push',
+      status: 'running',
+      number: '1234.1',
+      os: 'linux',
+      language: 'ruby',
+      build: {
+        id: 123
+      }
+    };
+
+    this.set('job', job);
+    await render(hbs`{{build-header item=job}}`);
+    assert.dom('.commit-stopwatch').exists('does display elapsed time');
+    assert.dom('.commit-stopwatch').hasText('Running for -', 'Says running for');
+    assert.dom('.commit-calendar').doesNotExist('does not display calendar while running');
+    assert.dom('.detail-job-os').exists('does display operating system');
+    assert.dom('.detail-job-lang').exists('does display programming language');
   });
 });

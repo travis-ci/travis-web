@@ -1,3 +1,5 @@
+/* eslint-env node */
+
 module.exports = {
   root: true,
   parserOptions: {
@@ -17,10 +19,10 @@ module.exports = {
   },
   rules: {
     // Don't allow unused vars, but allow unused arguments
-    "no-unused-vars": ["error", { "vars": "all", "args": "none", "ignoreRestSiblings": false }],
+    'no-unused-vars': ['error', { 'vars': 'all', 'args': 'none', 'ignoreRestSiblings': false }],
 
     // TODO: Remove this to ensure we handle errors properly in UI
-    "no-empty": ["error", { "allowEmptyCatch": true }],
+    'no-empty': ['error', { 'allowEmptyCatch': true }],
 
     // enforce spacing inside array brackets
     'array-bracket-spacing': [2, 'never'],

@@ -14,6 +14,7 @@ export default TravisRoute.extend({
   deactivate() {
     this.controllerFor('build').set('build', null);
     this.controllerFor('job').set('job', null);
+    this.controllerFor('repo').set('migrationStatus', null);
     this.stopObservingRepoStatus();
     return this._super(...arguments);
   },
@@ -39,7 +40,9 @@ export default TravisRoute.extend({
   renderTemplate() {
     let controller = this.controllerFor('repo');
 
-    if (this.get('features.github-apps') && controller.get('repo.active_on_org')) {
+    if (this.get('features.github-apps') &&
+      controller.get('repo.active_on_org') &&
+      controller.get('migrationStatus') !== 'success') {
       this.render('repo/active-on-org');
     } else if (!controller.get('repo.active')) {
       this.render('repo/not-active');

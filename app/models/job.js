@@ -12,8 +12,9 @@ import DurationAttributes from 'travis/mixins/duration-attributes';
 import attr from 'ember-data/attr';
 import { belongsTo } from 'ember-data/relationships';
 import { computed } from 'ember-decorators/object';
-import { alias, and, not } from 'ember-decorators/object/computed';
+import { alias, and, not, reads } from 'ember-decorators/object/computed';
 import { service } from 'ember-decorators/service';
+import promiseObject from 'travis/utils/promise-object';
 
 import moment from 'moment';
 
@@ -59,12 +60,13 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
     });
   },
 
-  @alias('config.content') configLoaded: null,
-
   @computed()
   config() {
-    return this.get('jobConfigFetcher').fetch(this);
+    return promiseObject(this.jobConfigFetcher.fetch(this));
   },
+
+  @reads('config.isFulfilled')
+  isConfigLoaded: false,
 
   getCurrentState() {
     return this.get('currentState.stateName');

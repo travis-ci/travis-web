@@ -35,7 +35,7 @@ export default (function () {
     let container, containerHeight, element, max, offset, windowHeight;
     element = this.element();
     container = this.container();
-    if (element.length === 0) {
+    if (element.length === 0 || element.css('position').search(/sticky/i) >= 0) {
       return;
     }
     containerHeight = container.outerHeight();

@@ -23,6 +23,20 @@ export default Controller.extend({
     }
   },
 
+  @computed('model', 'account')
+  isEducation(model, account) {
+    if (!model.subscriptions) {
+      return !model.subscriptions && account.education;
+    }
+  },
+
+  @computed('model', 'account')
+  isTrial(model, account) {
+    if (!model.subscriptions) {
+      return !model.subscriptions && !account.education;
+    }
+  },
+
   @action
   helpscoutTrigger() {
     HS.beacon.open();

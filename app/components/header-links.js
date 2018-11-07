@@ -1,4 +1,3 @@
-/* global HS */
 /* eslint no-unused-vars: ["error", { "varsIgnorePattern": "config" }]*/
 
 import Ember from 'ember';
@@ -17,6 +16,7 @@ export default Component.extend({
   @service auth: null,
   @service features: null,
   @service externalLinks: null,
+  @service helpScout: null,
 
   @alias('auth.currentUser') user: null,
 
@@ -61,8 +61,7 @@ export default Component.extend({
 
   @action
   helpscoutTrigger() {
-    HS.beacon.open();
-    return false;
+    this.helpScout.openHelpScout();
   },
 
   @action

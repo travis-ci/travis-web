@@ -92,7 +92,7 @@ test('view billing information with invoices', function (assert) {
     url: 'https://example.com/2010.pdf'
   });
 
-  profilePage.visit({ username: 'user-login' });
+  profilePage.visit();
   profilePage.billing.visit();
 
   andThen(() => {
@@ -129,7 +129,7 @@ test('view billing information with invoices', function (assert) {
 test('view billing on an expired stripe plan', function (assert) {
   this.subscription.status = 'expired';
 
-  profilePage.visit({ username: 'user-login'});
+  profilePage.visit();
   profilePage.billing.visit();
 
   andThen(() => {
@@ -147,7 +147,7 @@ test('view billing on an expired stripe plan', function (assert) {
 test('view billing on a canceled stripe plan', function (assert) {
   this.subscription.status = 'canceled';
 
-  profilePage.visit({ username: 'user-login'});
+  profilePage.visit();
   profilePage.billing.visit();
 
   andThen(() => {
@@ -167,7 +167,7 @@ test('view billing on a manual plan with no invoices', function (assert) {
   this.subscription.status = undefined;
   this.subscription.valid_to = new Date(2025, 7, 16).toISOString();
 
-  profilePage.visit({ username: 'user-login'});
+  profilePage.visit();
   profilePage.billing.visit();
 
   andThen(() => {
@@ -187,9 +187,7 @@ test('view billing on an expired manual plan', function (assert) {
   this.subscription.status = undefined;
   this.subscription.valid_to = new Date(2018, 6, 16).toISOString();
 
-  profilePage.visit({
-    username: 'user-login'
-  });
+  profilePage.visit();
   profilePage.billing.visit();
 
   andThen(() => {
@@ -206,7 +204,7 @@ test('view billing on an expired manual plan', function (assert) {
 test('view billing on a marketplace plan', function (assert) {
   this.subscription.source = 'github';
 
-  profilePage.visit({ username: 'user-login'});
+  profilePage.visit();
   profilePage.billing.visit();
 
   andThen(() => {
@@ -223,9 +221,7 @@ test('view billing on an canceled marketplace plan', function (assert) {
   this.subscription.source = 'github';
   this.subscription.status = 'canceled';
 
-  profilePage.visit({
-    username: 'user-login'
-  });
+  profilePage.visit();
   profilePage.billing.visit();
 
   andThen(() => {
@@ -245,7 +241,7 @@ test('view billing on an expired marketplace plan', function (assert) {
   this.subscription.source = 'github';
   this.subscription.status = 'expired';
 
-  profilePage.visit({ username: 'user-login'});
+  profilePage.visit();
   profilePage.billing.visit();
 
   andThen(() => {
@@ -265,7 +261,7 @@ test('view billing on an annual plan', function (assert) {
   this.plan.annual = true;
   this.plan.price = 10000;
 
-  profilePage.visit({ username: 'user-login'});
+  profilePage.visit();
   profilePage.billing.visit();
 
   andThen(() => {
@@ -278,7 +274,7 @@ test('view billing tab when no subscription write permissions', function (assert
   this.subscription.permissions.write = false;
   this.subscription.save();
 
-  profilePage.visit({ username: 'user-login' });
+  profilePage.visit();
   profilePage.billing.visit();
 
   andThen(() => {
@@ -288,7 +284,10 @@ test('view billing tab when no subscription write permissions', function (assert
 });
 
 test('view billing tab when there is no subscription', function (assert) {
-  profilePage.visit({ username: 'org-login' });
+  server.db.subscriptions.remove();
+  this.user.permissions.createSubscription = false;
+
+  profilePage.visit();
   profilePage.billing.visit();
 
   andThen(() => {
@@ -306,9 +305,10 @@ test('switching to another account’s billing tab loads the subscription proper
   };
   this.organization.save();
 
-  profilePage.visit({ username: 'user-login' });
+  profilePage.visit();
   profilePage.billing.visit();
   profilePage.accounts[1].visit();
+  profilePage.billing.visit();
 
   andThen(() => {
     assert.equal(profilePage.billing.manageButton.text, 'New subscription');
@@ -322,9 +322,7 @@ test('view billing tab when trial has not started', function (assert) {
   };
   this.organization.save();
 
-  profilePage.visit({
-    username: 'org-login'
-  });
+  profilePage.visitOrganization({ name: 'org-login' });
   profilePage.billing.visit();
 
   andThen(() => {
@@ -341,13 +339,10 @@ test('view billing tab with no create subscription permissions', function (asser
   };
   this.organization.save();
 
-  profilePage.visit({
-    username: 'org-login'
-  });
+  profilePage.visitOrganization({ name: 'org-login' });
   profilePage.billing.visit();
 
   andThen(() => {
-    percySnapshot(assert);
     assert.equal(profilePage.billing.trial.name, 'Your trial includes 100 trial builds and 2-concurrent-jobs, no credit card required. Need help? Check our getting started guide.');
     assert.equal(profilePage.billing.manageButton.text, 'New subscription');
     assert.ok(profilePage.billing.manageButton.isDisabled);
@@ -374,13 +369,10 @@ test('view billing tab when there is a new trial', function (assert) {
   this.trial = trial;
   this.trial.save();
 
-  profilePage.visit({
-    username: 'org-login'
-  });
+  profilePage.visitOrganization({ name: 'org-login' });
   profilePage.billing.visit();
 
   andThen(() => {
-    percySnapshot(assert);
     assert.equal(profilePage.billing.trial.name, "You've got 100 trial builds left. Ensure unlimited builds by setting up a plan before it runs out!");
     assert.equal(profilePage.billing.manageButton.text, 'New subscription');
   });
@@ -405,9 +397,7 @@ test('view billing tab when trial has started', function (assert) {
   this.trial = trial;
   this.trial.save();
 
-  profilePage.visit({
-    username: 'org-login'
-  });
+  profilePage.visitOrganization({ name: 'org-login' });
   profilePage.billing.visit();
 
   andThen(() => {
@@ -436,13 +426,10 @@ test('view billing tab when trial has ended', function (assert) {
   this.trial = trial;
   this.trial.save();
 
-  profilePage.visit({
-    username: 'org-login'
-  });
+  profilePage.visitOrganization({ name: 'org-login' });
   profilePage.billing.visit();
 
   andThen(() => {
-    percySnapshot(assert);
     assert.equal(profilePage.billing.trial.name, 'Your trial has just ended. To get the most out of Travis CI, set up a plan below!');
     assert.equal(profilePage.billing.manageButton.text, 'New subscription');
   });
@@ -466,7 +453,7 @@ test('view billing tab with Github trial subscription', function (assert) {
   trial.save();
   this.subscription.save();
 
-  profilePage.visit({ username: 'org-login' });
+  profilePage.visitOrganization({ name: 'org-login' });
   profilePage.billing.visit();
 
   andThen(() => {
@@ -498,15 +485,30 @@ test('view billing tab with Github trial subscription has ended', function (asse
   trial.save();
   this.subscription.save();
 
-  profilePage.visit({ username: 'org-login' });
+  profilePage.visitOrganization({ name: 'org-login' });
   profilePage.billing.visit();
 
   andThen(() => {
-    percySnapshot(assert);
     assert.equal(profilePage.billing.manageButton.text, 'Edit subscription');
     assert.ok(profilePage.billing.address.isHidden);
     assert.ok(profilePage.billing.creditCardNumber.isHidden);
     assert.equal(profilePage.billing.source, 'This subscription is managed by GitHub Marketplace.');
     assert.ok(profilePage.billing.annualInvitation.isHidden);
+  });
+});
+
+test('view billing tab on education account', function (assert) {
+  this.subscription = null;
+  this.organization.attrs.education = true;
+  this.organization.permissions = { createSubscription: true };
+  this.organization.save();
+
+  profilePage.visitOrganization({ name: 'org-login' });
+  profilePage.billing.visit();
+
+  andThen(() => {
+    percySnapshot(assert);
+    assert.equal(profilePage.billing.education.name, 'This is an educational account and includes a single build plan. Need help? Check our getting started guide');
+    assert.equal(profilePage.billing.manageButton.text, 'New subscription');
   });
 });

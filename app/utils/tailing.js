@@ -86,7 +86,7 @@ export default (function () {
   Tailing.prototype.positionButton = function () {
     let max, offset, tail;
     tail = $('#tail');
-    if (tail.length === 0) {
+    if (tail.length === 0 || tail.css('position').search(/sticky/i) >= 0) {
       return;
     }
     offset = $(window).scrollTop() - $('#log').offset().top;
