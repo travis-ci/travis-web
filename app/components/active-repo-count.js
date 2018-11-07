@@ -116,4 +116,43 @@ export default Component.extend({
       return Math.round(filteredData.reduce((acc, val) => acc + val[1], 0) / filteredData.length);
     }
   },
+
+  @computed('owner', 'interval', 'token')
+  activeTotalRequest(owner, interval, token) {
+    // FIXME: replace with v3 calls when it is ready
+    const apiToken = token || this.get('storage').getItem('travis.insightToken') || '';
+    if (apiToken.length === 0) { return; }
+    const insightEndpoint = 'https://travis-insights-production.herokuapp.com';
+    let endTime = moment.utc();
+    let startTime = moment.utc().subtract(1, interval);
+
+    let insightParams = $.param({
+      owner_type: owner['@type'] === 'user' ? 'User' : 'Organization',
+      owner_id: owner.id,
+      token: apiToken,
+      end_time: endTime.format('YYYY-MM-DD HH:mm:ss UTC'),
+      start_time: startTime.format('YYYY-MM-DD HH:mm:ss UTC'),
+    });
+    const url = `${insightEndpoint}/repos/active?${insightParams}`;
+
+    return ObjectPromiseProxy.create({
+      promise: fetch(url).then(response => {
+        if (response.ok) {
+          return response.json();
+        } else { return false; }
+      }).then(response => ({data: response}))
+    });
+  },
+
+  @computed('activeTotalRequest.data')
+  activeTotalIsLoading(data) {
+    return !data;
+  },
+
+  @computed('activeTotalRequest.data')
+  activeTotal(data) {
+    if (data) {
+      return data.count;
+    }
+  },
 });
