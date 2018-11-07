@@ -15,6 +15,7 @@
     <div class="insights-row">
       {{build-count owner=model interval=dataInterval token=insightToken}}
       {{build-minutes owner=model interval=dataInterval token=insightToken}}
+      {{queue-times owner=model interval=dataInterval token=insightToken}}
     </div>
   </div>
 {{else}}

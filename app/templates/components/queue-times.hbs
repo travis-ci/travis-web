@@ -1,0 +1,18 @@
+<div class="insights-row-item {{unless content 'insights-row-item--loading'}}">
+  <h3 class="insights-row-item__title">Average Queue Time</h3>
+  <div class="insights-row-item__stat">
+    {{#if content}}
+      {{avgWaitMins}} mins
+    {{else}}
+      {{!-- Put a placeholder here instead? --}}
+      &nbsp;
+    {{/if}}
+  </div>
+
+  {{#if content}}
+    {{high-charts content=content chartOptions=options}}
+  {{else}}
+    {{!-- Put a placeholder here instead? --}}
+    {{high-charts content=content chartOptions=options}}
+  {{/if}}
+</div>
