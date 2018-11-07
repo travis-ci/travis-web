@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import Ember from 'ember';
+// import Ember from 'ember';
 import { computed } from 'ember-decorators/object';
 import { alias } from 'ember-decorators/object/computed';
 import { service } from 'ember-decorators/service';
