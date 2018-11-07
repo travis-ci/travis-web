@@ -266,7 +266,7 @@ ${ESCAPE}(B[m[32m+},
 
     assert.equal(jobPage.logLines[14].text, 'I used to be the final line.');
 
-    // FIXME why is this line in an adjacent span?
+    assert.equal(jobPage.logLines[15].text, '', 'expected `I replace that line?` to be itself replaced');
     assert.equal(jobPage.logLines[15].nextText, 'I am the final replacer.');
     assert.equal(jobPage.logLines[16].text, 'I do not replace because the previous line ended with a line feed.');
 
