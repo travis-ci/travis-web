@@ -83,13 +83,14 @@ export default Component.extend({
   @computed('dataRequest.data')
   filteredData(data) {
     if (data) {
-      return data.values.reduce((accumulator, value) => {
-        if (!accumulator.processedTimes.includes(value.time)) {
-          accumulator.processedTimes.push(value.time);
-          accumulator.values.push(value);
+      return Object.entries(data.values.reduce((timesMap, value) => {
+        if (timesMap.hasOwnProperty(value.time)) {
+          timesMap[value.time] += Math.round(value.value / 60);
+        } else {
+          timesMap[value.time] = Math.round(value.value / 60);
         }
-        return accumulator;
-      }, {values: [], processedTimes: []}).values;
+        return timesMap;
+      }, {}));
     }
   },
 
@@ -99,7 +100,7 @@ export default Component.extend({
       return [{
         name: 'count',
         type: 'spline',
-        data: filteredData.map(value => [value.time, Math.round(value.value / 60)]),
+        data: filteredData,
       }];
     }
   },
@@ -107,7 +108,7 @@ export default Component.extend({
   @computed('filteredData')
   totalBuildMins(filteredData) {
     if (filteredData) {
-      return Math.round(filteredData.reduce((acc, val) => acc + (val.value / 60), 0));
+      return Math.round(filteredData.reduce((acc, val) => acc + val[1], 0));
     }
   },
 

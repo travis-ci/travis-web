@@ -55,8 +55,8 @@ export default Component.extend({
     const apiToken = token || this.get('storage').getItem('travis.insightToken') || '';
     if (apiToken.length === 0) { return; }
     const insightEndpoint = 'https://travis-insights-production.herokuapp.com';
-    let endTime = moment();
-    let startTime = moment().subtract(1, interval);
+    let endTime = moment.utc();
+    let startTime = moment.utc().subtract(1, interval);
 
     let insightParams = $.param({
       subject: 'builds',
@@ -83,13 +83,14 @@ export default Component.extend({
   @computed('dataRequest.data')
   filteredData(data) {
     if (data) {
-      return data.values.reduce((accumulator, value) => {
-        if (!accumulator.processedTimes.includes(value.time)) {
-          accumulator.processedTimes.push(value.time);
-          accumulator.values.push(value);
+      return Object.entries(data.values.reduce((timesMap, value) => {
+        if (timesMap.hasOwnProperty(value.time)) {
+          timesMap[value.time] += value.value;
+        } else {
+          timesMap[value.time] = value.value;
         }
-        return accumulator;
-      }, {values: [], processedTimes: []}).values;
+        return timesMap;
+      }, {}));
     }
   },
 
@@ -99,7 +100,7 @@ export default Component.extend({
       return [{
         name: 'count',
         type: 'spline',
-        data: filteredData.map(value => [value.time, value.value]),
+        data: filteredData,
       }];
     }
   },
@@ -107,7 +108,7 @@ export default Component.extend({
   @computed('filteredData')
   totalBuilds(filteredData) {
     if (filteredData) {
-      return filteredData.reduce((acc, val) => acc + val.value, 0);
+      return filteredData.reduce((acc, val) => acc + val[1], 0);
     }
   },
 
