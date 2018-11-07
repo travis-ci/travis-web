@@ -1,18 +1,16 @@
-<div class="insights-row-item {{unless content 'insights-row-item--loading'}}">
+<div class="insights-row-item {{if isLoading 'insights-row-item--loading'}}">
   <h3 class="insights-row-item__title">Builds</h3>
   <div class="insights-row-item__stat">
-    {{#if content}}
-      {{totalBuilds}}
-    {{else}}
-      {{!-- Put a placeholder here instead? --}}
+    {{#if isLoading}}
       &nbsp;
+    {{else}}
+      {{totalBuilds}}
     {{/if}}
   </div>
 
-  {{#if content}}
-    {{high-charts content=content chartOptions=options}}
+  {{#if (or isLoading (is-empty filteredData))}}
+    <hr class="insights-row-item__chart-placeholder" />
   {{else}}
-    {{!-- Put a placeholder here instead? --}}
     {{high-charts content=content chartOptions=options}}
   {{/if}}
 </div>

@@ -19,8 +19,8 @@ export default Component.extend({
 
   token: '',
 
-  @computed('avgBuildMins')
-  options(avgBuildMins) {
+  @computed('avgRepos')
+  options(avgRepos) {
     return {
       title: { text: undefined },
       xAxis: { visible: false },
@@ -28,7 +28,7 @@ export default Component.extend({
         visible: true,
         title: { text: undefined },
         plotLines: [{
-          value: avgBuildMins,
+          value: avgRepos,
           color: '#eaeaea',
           width: 1,
         }],
@@ -55,14 +55,14 @@ export default Component.extend({
     const apiToken = token || this.get('storage').getItem('travis.insightToken') || '';
     if (apiToken.length === 0) { return; }
     const insightEndpoint = 'https://travis-insights-production.herokuapp.com';
-    let endTime = moment();
-    let startTime = moment().subtract(1, interval);
+    let endTime = moment.utc();
+    let startTime = moment.utc().subtract(1, interval);
 
     let insightParams = $.param({
       subject: 'builds',
       interval: intervalToSubinterval[interval],
       func: 'sum',
-      name: 'times_running',
+      name: 'count_started',
       owner_type: owner['@type'] === 'user' ? 'User' : 'Organization',
       owner_id: owner.id,
       token: apiToken,
@@ -85,9 +85,9 @@ export default Component.extend({
     if (data) {
       return Object.entries(data.values.reduce((timesMap, value) => {
         if (timesMap.hasOwnProperty(value.time)) {
-          timesMap[value.time] += Math.round(value.value / 60);
+          timesMap[value.time]++;
         } else {
-          timesMap[value.time] = Math.round(value.value / 60);
+          timesMap[value.time] = 1;
         }
         return timesMap;
       }, {}));
@@ -111,16 +111,9 @@ export default Component.extend({
   },
 
   @computed('filteredData')
-  totalBuildMins(filteredData) {
+  avgRepos(filteredData) {
     if (filteredData) {
-      return Math.round(filteredData.reduce((acc, val) => acc + val[1], 0));
-    }
-  },
-
-  @computed('filteredData', 'totalBuildMins')
-  avgBuildMins(filteredData, totalBuildMins) {
-    if (filteredData) {
-      return totalBuildMins / filteredData.length;
+      return Math.round(filteredData.reduce((acc, val) => acc + val[1], 0) / filteredData.length);
     }
   },
 });

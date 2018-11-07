@@ -41,4 +41,10 @@
       color: $ansi-red;
     }
   }
+
+  .insights-row-item__chart-placeholder {
+    margin: 33px 0 12px 0;
+    border: none;
+    border-bottom: 1px solid $pebble-grey;
+  }
 }

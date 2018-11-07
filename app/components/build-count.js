@@ -95,6 +95,11 @@ export default Component.extend({
   },
 
   @computed('filteredData')
+  isLoading(filteredData) {
+    return !filteredData;
+  },
+
+  @computed('filteredData')
   content(filteredData) {
     if (filteredData) {
       return [{

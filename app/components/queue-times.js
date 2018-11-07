@@ -96,6 +96,11 @@ export default Component.extend({
   },
 
   @computed('filteredData')
+  isLoading(filteredData) {
+    return !filteredData;
+  },
+
+  @computed('filteredData')
   content(filteredData) {
     if (filteredData) {
       return [{
@@ -116,7 +121,7 @@ export default Component.extend({
   @computed('filteredData', 'totalWaitMins')
   avgWaitMins(filteredData, totalWaitMins) {
     if (filteredData) {
-      return Math.round((totalWaitMins / filteredData.length) * 100) / 100;
+      return filteredData.length === 0 ? 0 : Math.round((totalWaitMins / filteredData.length) * 100) / 100;
     }
   },
 });
