@@ -616,6 +616,15 @@ export default {
         ]
       }
     },
+    "credit-card-info":            {
+      "@type":            "resource",
+      "actions":          { },
+      "attributes":       ["id", "card_owner", "expiration_date", "last_digits"],
+      "representations":  {
+        "standard":       ["id", "card_owner", "expiration_date", "last_digits"],
+        "minimal":        ["id", "card_owner", "expiration_date", "last_digits"],
+      }
+    },
     "cron": {
       "@type": "resource",
       "actions": {
@@ -938,6 +947,23 @@ export default {
           "github_id",
           "owner"
         ]
+      }
+    },
+    "invoice":            {
+      "@type":            "resource",
+      "actions":          { },
+      "attributes":       ["id", "created_at", "url"],
+      "representations":  {
+        "standard":       ["id", "created_at", "url"],
+        "minimal":        ["id", "created_at", "url"],
+      }
+    },
+    "invoices": {
+      "@type": "resource",
+      "attributes":       ["id", "created_at", "url"],
+      "representations":  {
+        "standard":       ["id", "created_at", "url"],
+        "minimal":        ["id", "created_at", "url"],
       }
     },
     "job": {
