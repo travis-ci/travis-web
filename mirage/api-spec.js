@@ -1962,6 +1962,39 @@ export default {
         "uri_template"
       ]
     },
+    "subscription":            {
+      "@type":            "resource",
+      "actions":          { },
+      "attributes":       [
+        "id",
+        "plan",
+        "billing_info",
+        "credit_card_info",
+        "owner",
+        "status",
+        "valid_to",
+        "source",
+      ],
+      "representations":  {
+        "standard":       [
+          "id",
+          "plan",
+          "billing_info",
+          "credit_card_info",
+          "owner",
+          "status",
+          "valid_to",
+          "source",
+        ],
+        "minimal":       [
+          "id",
+          "owner",
+          "status",
+          "valid_to",
+          "source",
+        ],
+      },
+    },
     "user": {
       "@type": "resource",
       "actions": {
