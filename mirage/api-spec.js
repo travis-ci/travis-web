@@ -1432,6 +1432,15 @@ export default {
         ]
       }
     },
+    "plan":            {
+      "@type":            "resource",
+      "actions":          { },
+      "attributes":       ["id", "name", "price", "currency", "builds", "annual"],
+      "representations":  {
+        "standard":       ["id", "name", "price", "currency", "builds", "annual"],
+        "minimal":        ["id", "name", "price", "currency", "builds", "annual"],
+      }
+    },
     "preference": {
       "@type": "resource",
       "actions": {
