@@ -15,7 +15,8 @@ let intervalToSubinterval = {
 };
 
 export default Component.extend({
-  classNames: [],
+  classNames: ['insights-glance'],
+  classNameBindings: ['isLoading:insights-glance--loading'],
 
   @service storage: null,
 
@@ -106,7 +107,7 @@ export default Component.extend({
   content(filteredData) {
     if (filteredData) {
       return [{
-        name: 'count',
+        name: 'build-count',
         type: 'spline',
         data: filteredData,
       }];

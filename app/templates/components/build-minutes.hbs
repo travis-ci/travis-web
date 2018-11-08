@@ -1,16 +1,14 @@
-<div class="insights-glance {{if isLoading 'insights-glance--loading'}}">
-  <h3 class="insights-glance__title">Total Build Minutes</h3>
-  <div class="insights-glance__stat">
-    {{#if isLoading}}
-      &nbsp;
-    {{else}}
-      {{totalBuildMins}} mins
-    {{/if}}
-  </div>
-
-  {{#if (or isLoading (is-empty filteredData))}}
-    <hr class="insights-glance__chart-placeholder" />
+<h3 class="insights-glance__title">Total Build Minutes</h3>
+<div class="insights-glance__stat">
+  {{#if isLoading}}
+    &nbsp;
   {{else}}
-    {{high-charts content=content chartOptions=options}}
+    {{totalBuildMins}} mins
   {{/if}}
 </div>
+
+{{#if (or isLoading (is-empty filteredData))}}
+  <hr class="insights-glance__chart-placeholder" />
+{{else}}
+  {{high-charts content=content chartOptions=options}}
+{{/if}}

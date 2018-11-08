@@ -9,47 +9,28 @@ import PromiseProxyMixin from '@ember/object/promise-proxy-mixin';
 let ObjectPromiseProxy = ObjectProxy.extend(PromiseProxyMixin);
 
 let intervalToSubinterval = {
-  day: '10min',
-  week: '1hour',
+  day: '1hour',
+  week: '1day',
   month: '1day',
 };
 
 export default Component.extend({
-  classNames: ['insights-glance'],
-  classNameBindings: ['isLoading:insights-glance--loading'],
+  classNames: ['insights-odyssey'],
+  classNameBindings: ['isLoading:insights-odyssey--loading'],
 
   @service storage: null,
 
   token: '',
 
-  @computed('avgBuildMins')
-  options(avgBuildMins) {
+  @computed()
+  options() {
     return {
       title: { text: undefined },
-      xAxis: { visible: false },
-      yAxis: {
-        visible: true,
-        title: { text: undefined },
-        plotLines: [{
-          value: avgBuildMins,
-          color: '#eaeaea',
-          width: 1,
-        }],
-        labels: [],
-        gridLineWidth: 0,
-      },
-      legend: { enabled: false },
-      chart: {
-        height: '25%',
-        spacing: [5, 5, 5, 5],
-      },
-      plotOptions: {
-        series: {
-          color: '#666',
-          lineWidth: 1,
-          states: {  hover: { lineWidth: 2 } },
-        },
-      },
+      // xAxis: { visible: false },
+      // yAxis: { visible: false },
+      legend: { enabled: true },
+      chart: { },
+      plotOptions: { },
     };
   },
 
@@ -59,14 +40,14 @@ export default Component.extend({
     const apiToken = token || this.get('storage').getItem('travis.insightToken') || '';
     if (apiToken.length === 0) { return; }
     const insightEndpoint = 'https://travis-insights-production.herokuapp.com';
-    let endTime = moment();
-    let startTime = moment().subtract(1, interval);
+    let endTime = moment.utc();
+    let startTime = moment.utc().subtract(1, interval);
 
     let insightParams = $.param({
-      subject: 'builds',
+      subject: 'jobs',
       interval: intervalToSubinterval[interval],
-      func: 'sum',
-      name: 'times_running',
+      func: 'max',
+      name: 'gauge_running,gauge_waiting',
       owner_type: owner['@type'] === 'user' ? 'User' : 'Organization',
       owner_id: owner.id,
       token: apiToken,
@@ -87,14 +68,15 @@ export default Component.extend({
   @computed('dataRequest.data')
   filteredData(data) {
     if (data) {
-      return Object.entries(data.values.reduce((timesMap, value) => {
-        if (timesMap.hasOwnProperty(value.time)) {
-          timesMap[value.time] += Math.round(value.value / 60);
+      const reducedData = data.values.reduce((timesMap, value) => {
+        if (timesMap[value.name].hasOwnProperty(value.time)) {
+          timesMap[value.name][value.time] += value.value;
         } else {
-          timesMap[value.time] = Math.round(value.value / 60);
+          timesMap[value.name][value.time] = value.value;
         }
         return timesMap;
-      }, {}));
+      }, { gauge_running: {}, gauge_waiting: {} });
+      return reducedData;
     }
   },
 
@@ -107,24 +89,16 @@ export default Component.extend({
   content(filteredData) {
     if (filteredData) {
       return [{
-        name: 'build-minutes',
-        type: 'spline',
-        data: filteredData,
+        name: 'RUNNING JOBS',
+        type: 'area',
+        step: 'center',
+        data: Object.entries(filteredData.gauge_running),
+      },{
+        name: 'QUEUED JOBS',
+        type: 'area',
+        step: 'center',
+        data: Object.entries(filteredData.gauge_waiting),
       }];
-    }
-  },
-
-  @computed('filteredData')
-  totalBuildMins(filteredData) {
-    if (filteredData) {
-      return Math.round(filteredData.reduce((acc, val) => acc + val[1], 0));
-    }
-  },
-
-  @computed('filteredData', 'totalBuildMins')
-  avgBuildMins(filteredData, totalBuildMins) {
-    if (filteredData) {
-      return totalBuildMins / filteredData.length;
     }
   },
 });

@@ -15,7 +15,8 @@ let intervalToSubinterval = {
 };
 
 export default Component.extend({
-  classNames: [],
+  classNames: ['insights-glance'],
+  classNameBindings: ['isLoading:insights-glance--loading'],
 
   @service storage: null,
 
@@ -62,7 +63,7 @@ export default Component.extend({
     let startTime = moment.utc().subtract(1, interval);
 
     let insightParams = $.param({
-      subject: 'builds',
+      subject: 'jobs',
       interval: intervalToSubinterval[interval],
       func: 'sum',
       name: 'count_started',
@@ -106,7 +107,7 @@ export default Component.extend({
   content(filteredData) {
     if (filteredData) {
       return [{
-        name: 'count',
+        name: 'active-repo-count',
         type: 'spline',
         data: filteredData,
       }];

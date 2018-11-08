@@ -26,14 +26,11 @@
 .insights-grid {
   display: grid;
   grid-gap: 20px;
-  grid-template-columns: minmax(100px, 1fr);
+  grid-template-columns: repeat(4, minmax(100px, 1fr));
 
   @media #{$medium-up} {
     grid-gap: 4%;
-    grid-template-columns: repeat(4, minmax(100px, 1fr));
   }
-
-  // .insights-row__container {  overflow: hidden; }
 }
 
 .insights-glance {
@@ -42,6 +39,15 @@
   border: 1px solid $pebble-grey;
   box-shadow: 0 0 8px 0 $dry-cement;
   overflow: hidden;
+  grid-column: span 4;
+
+  @media #{"only screen and (min-width: 35em)"} {
+    grid-column: span 2;
+  }
+
+  @media #{$medium-up} {
+    grid-column: span 1;
+  }
 
   .insights-glance__title {
     font-weight: 700;
@@ -52,15 +58,20 @@
   .insights-glance__stat {
     font-size: 1.4rem;
     font-weight: 200;
-
-    .insights-glance--loading & {
-      color: $ansi-red;
-    }
   }
 
   .insights-glance__chart-placeholder {
     margin: 33px 0 12px 0;
     border: none;
     border-bottom: 1px solid $pebble-grey;
+  }
+}
+
+.insights-odyssey {
+  grid-column: span 4;
+  overflow: hidden;
+
+  @media #{$medium-up} {
+    grid-column: span 2;
   }
 }
