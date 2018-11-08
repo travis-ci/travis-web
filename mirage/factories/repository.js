@@ -2,10 +2,11 @@ import Mirage from 'ember-cli-mirage';
 
 export default Mirage.Factory.extend({
   name: 'travis-web',
-  githubLanguage: 'ruby',
+  github_language: 'ruby',
   active: true,
   active_on_org: false,
   email_subscribed: true,
+  migration_status: null,
 
   owner: Object.freeze({
     login: 'travis-ci',

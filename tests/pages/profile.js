@@ -25,6 +25,7 @@ function existingRepositoriesCollection(scope) {
   return collection(`${scope} li.profile-repolist-item`, {
     name: text('a.profile-repo'),
     isActive: hasClass('active', '.switch'),
+    isMigrated: isPresent('a.already-migrated'),
     isDisabled: hasClass('non-admin', 'a.profile-repo'),
     toggle: clickable('.switch'),
     ariaChecked: attribute('aria-checked', '.switch'),
