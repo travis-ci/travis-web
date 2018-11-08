@@ -1998,16 +1998,7 @@ export default {
         ]
       }
     },
-    "template": {
-      "@type": "resource",
-      "actions": {
-      },
-      "attributes": [
-        "request_method",
-        "uri_template"
-      ]
-    },
-    "subscription":            {
+    "subscription": {
       "@type":            "resource",
       "actions":          { },
       "attributes":       [
@@ -2029,16 +2020,25 @@ export default {
           "owner",
           "status",
           "valid_to",
-          "source",
+          "source"
         ],
         "minimal":       [
           "id",
           "owner",
           "status",
           "valid_to",
-          "source",
+          "source"
         ],
       },
+    },
+    "template": {
+      "@type": "resource",
+      "actions": {
+      },
+      "attributes": [
+        "request_method",
+        "uri_template"
+      ]
     },
     "trial": {
       "@type": "resource",
