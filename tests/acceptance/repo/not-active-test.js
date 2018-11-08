@@ -49,6 +49,31 @@ test('view inactive repo when admin and activate it', function (assert) {
   });
 });
 
+test('migrated repository does not show activation button or settings', function (assert) {
+  server.create('repository', {
+    slug: 'musterfrau/a-repo',
+    active: false,
+    migrationStatus: 'migrated',
+    permissions: {
+      admin: true,
+    }
+  });
+
+  const user = server.create('user', {
+    name: 'Erika Musterfrau',
+    login: 'musterfrau'
+  });
+
+  signInUser(user);
+
+  visit('/account/repositories');
+
+  pauseTest();
+  andThen(() => {
+    assert.dom('[data-test-migrate-repository-button="a-repo"]').doesNotExist();
+  });
+});
+
 test('view inactive repo when admin connected to Github Apps and activate it', function (assert) {
   server.create('repository', {
     slug: 'musterfrau/a-repo',
