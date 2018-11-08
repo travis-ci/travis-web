@@ -15,7 +15,7 @@ let intervalToSubinterval = {
 };
 
 export default Component.extend({
-  classNames: ['insights-row__container'],
+  classNames: [],
 
   @service storage: null,
 

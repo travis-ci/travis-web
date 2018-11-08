@@ -1,6 +1,6 @@
-<div class="insights-row-item {{if isLoading 'insights-row-item--loading'}}">
-  <h3 class="insights-row-item__title">Active Repositories</h3>
-  <div class="insights-row-item__stat">
+<div class="insights-glance {{if isLoading 'insights-glance--loading'}}">
+  <h3 class="insights-glance__title">Active Repositories</h3>
+  <div class="insights-glance__stat">
     {{#if activeTotalIsLoading}}
       &nbsp;
     {{else}}
@@ -9,7 +9,7 @@
   </div>
 
   {{#if (or isLoading (is-empty filteredData))}}
-    <hr class="insights-row-item__chart-placeholder" />
+    <hr class="insights-glance__chart-placeholder" />
   {{else}}
     {{high-charts content=content chartOptions=options}}
   {{/if}}

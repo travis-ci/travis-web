@@ -12,7 +12,7 @@
 {{#if isInsights}}
   <div class="travistab-body">
     {{insight-tabs selectedTab=dataInterval setSubTab='setSubTab'}}
-    <div class="insights-row">
+    <div class="insights-grid">
       {{build-count owner=model interval=dataInterval token=insightToken}}
       {{build-minutes owner=model interval=dataInterval token=insightToken}}
       {{queue-times owner=model interval=dataInterval token=insightToken}}
