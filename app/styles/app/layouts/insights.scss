@@ -26,10 +26,10 @@
 .insights-grid {
   display: grid;
   grid-gap: 20px;
-  grid-template-columns: repeat(4, minmax(100px, 1fr));
+  grid-template-columns: repeat(4, minmax(50px, 1fr));
 
   @media #{$medium-up} {
-    grid-gap: 4%;
+    grid-gap: 40px 4%;
   }
 }
 
@@ -74,4 +74,8 @@
   @media #{$medium-up} {
     grid-column: span 2;
   }
+
+  // &.insights-odyssey--loading {
+  //   padding-bottom: 84%;
+  // }
 }
