@@ -51,6 +51,9 @@ export default Component.extend({
       plotOptions: {
         area: {
           step: 'center',
+          marker: {
+            enabled: false,
+          },
         }
       },
     };
@@ -115,9 +118,9 @@ export default Component.extend({
         type: 'area',
         color: '#39aa56',
         fillColor: {
-          linearGradient: [0, 0, 0, 250],
+          linearGradient: [0, 0, 0, 300],
           stops: [
-            [0, 'rgba(57, 170, 86, 0.75)'],
+            [0, 'rgba(57, 170, 86, 0.7)'],
             [1, 'rgba(57, 170, 86, 0)'],
           ],
         },
@@ -129,9 +132,9 @@ export default Component.extend({
         type: 'area',
         color: '#3eaaaf',
         fillColor: {
-          linearGradient: [0, 0, 0, 250],
+          linearGradient: [0, 0, 0, 300],
           stops: [
-            [0, 'rgba(62, 170, 175, 0.75)'],
+            [0, 'rgba(62, 170, 175, 0.7)'],
             [1, 'rgba(62, 170, 175, 0)'],
           ],
         },
