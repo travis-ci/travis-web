@@ -1,6 +1,5 @@
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
-import { visit } from '@ember/test-helpers';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import profilePage from 'travis/tests/pages/profile';
 
