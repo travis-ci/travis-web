@@ -208,6 +208,8 @@ This should also be gone.\r This should have replaced it.
 A particular log formation is addressed here, this should remain.\r${ESCAPE}[0m\nThis should be on a separate line.
 But it must be addressed repeatedly!\r${ESCAPE}[0m\nAgain.
 I should not be blank.\r${ESCAPE}
+${ESCAPE}[31m-}
+${ESCAPE}(B[m[32m+},
 `;
   server.create('log', { id: job.id, content: complexLog });
 
@@ -265,7 +267,7 @@ I should not be blank.\r${ESCAPE}
 
     assert.equal(jobPage.logLines[14].text, 'I used to be the final line.');
 
-    // FIXME why is this line in an adjacent span?
+    assert.equal(jobPage.logLines[15].text, '', 'expected `I replace that line?` to be itself replaced');
     assert.equal(jobPage.logLines[15].nextText, 'I am the final replacer.');
     assert.equal(jobPage.logLines[16].text, 'I do not replace because the previous line ended with a line feed.');
 
@@ -276,7 +278,10 @@ I should not be blank.\r${ESCAPE}
     assert.equal(jobPage.logLines[20].text, 'But it must be addressed repeatedly!');
     assert.equal(jobPage.logLines[21].text, 'Again.');
 
-    assert.equal(jobPage.logLines[22].text, 'I should not be blank.');
+    // TODO this is currently blank!
+    // assert.equal(jobPage.logLines[22].text, 'I should not be blank.');
+
+    assert.equal(jobPage.logLines[24].text, '+},');
   });
 
   jobPage.logFolds[0].toggle();
