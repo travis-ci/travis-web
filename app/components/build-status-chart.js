@@ -34,14 +34,16 @@ export default Component.extend({
   @computed('interval')
   options(interval) {
     return {
-      title: { text: undefined, align: 'left', floating: false, color: '#666666' },
+      title: { text: undefined },
       xAxis: {
         type: 'datetime',
         lineColor: '#f3f3f3',
         labels: { format: intervalMap[interval].xAxisLabelFormat },
+        // tickPositions: [],
       },
       yAxis: {
         title: { text: undefined },
+        reversedStacks: false,
         gridLineDashStyle: 'Dash',
         gridLineColor: '#f3f3f3',
         lineWidth: 1,
@@ -51,16 +53,13 @@ export default Component.extend({
       legend: {
       },
       chart: {
-        type: 'area',
+        type: 'column',
         height: '82%',
         plotBackgroundColor: '#fdfdfd',
       },
       plotOptions: {
-        area: {
-          step: 'center',
-          marker: {
-            enabled: false,
-          },
+        column: {
+          stacking: 'normal',
         }
       },
     };
@@ -79,7 +78,7 @@ export default Component.extend({
       subject: 'jobs',
       interval: intervalMap[interval].subInterval,
       func: 'max',
-      name: 'gauge_running,gauge_waiting',
+      name: 'count_passed,count_failed,count_errored,count_canceled',
       owner_type: owner['@type'] === 'user' ? 'User' : 'Organization',
       owner_id: owner.id,
       token: apiToken,
@@ -107,7 +106,7 @@ export default Component.extend({
           timesMap[value.name][value.time] = value.value;
         }
         return timesMap;
-      }, { gauge_running: {}, gauge_waiting: {} });
+      }, { count_passed: {}, count_failed: {}, count_errored: {}, count_canceled: {} });
       return reducedData;
     }
   },
@@ -121,29 +120,27 @@ export default Component.extend({
   content(filteredData) {
     if (filteredData) {
       return [{
-        name: 'Running Jobs',
+        name: 'Passing',
         color: '#39aa56',
-        fillColor: {
-          linearGradient: [0, 0, 0, 300],
-          stops: [
-            [0, 'rgba(57, 170, 86, 0.7)'],
-            [1, 'rgba(57, 170, 86, 0)'],
-          ],
-        },
-        data: Object.entries(filteredData.gauge_running).map(
+        data: Object.entries(filteredData.count_passed).map(
           ([key, val]) => [(new Date(key)).valueOf(), val]
         ),
       }, {
-        name: 'Queued Jobs',
-        color: '#3eaaaf',
-        fillColor: {
-          linearGradient: [0, 0, 0, 300],
-          stops: [
-            [0, 'rgba(62, 170, 175, 0.7)'],
-            [1, 'rgba(62, 170, 175, 0)'],
-          ],
-        },
-        data: Object.entries(filteredData.gauge_waiting).map(
+        name: 'Failing',
+        color: '#db4545',
+        data: Object.entries(filteredData.count_failed).map(
+          ([key, val]) => [(new Date(key)).valueOf(), val]
+        ),
+      }, {
+        name: 'Errored',
+        color: '#edde3f',
+        data: Object.entries(filteredData.count_errored).map(
+          ([key, val]) => [(new Date(key)).valueOf(), val]
+        ),
+      }, {
+        name: 'Cancelled',
+        color: '#9d9d9d',
+        data: Object.entries(filteredData.count_canceled).map(
           ([key, val]) => [(new Date(key)).valueOf(), val]
         ),
       }];
