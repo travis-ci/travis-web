@@ -6,7 +6,7 @@
 {{/link-to}}
 
 {{#if (and onDotOrg (eq repository.migrationStatus 'migrated'))}}
-  {{#external-link-to href=comLink class="button already-migrated" title="View this repository on travis-ci.com"}}
+  {{#external-link-to data-test-already-migrated-link href=comLink class="button already-migrated" title="View this repository on travis-ci.com"}}
   {{svg-jar 'icon-external-link' class="icon white"}} TRAVIS-CI.COM
   {{/external-link-to}}
 {{else}}

@@ -53,9 +53,12 @@ test('migrated repository does not show activation button or settings', function
   server.create('repository', {
     slug: 'musterfrau/a-repo',
     active: false,
-    migrationStatus: 'migrated',
+    migration_status: 'migrated',
     permissions: {
       admin: true,
+    },
+    owner: {
+      login: 'musterfrau'
     }
   });
 
@@ -68,9 +71,8 @@ test('migrated repository does not show activation button or settings', function
 
   visit('/account/repositories');
 
-  pauseTest();
   andThen(() => {
-    assert.dom('[data-test-migrate-repository-button="a-repo"]').doesNotExist();
+    assert.dom('[data-test-already-migrated-link]').exists();
   });
 });
 
