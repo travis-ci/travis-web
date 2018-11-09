@@ -22,14 +22,22 @@ export default Component.extend({
 
   token: '',
 
-  @computed()
-  options() {
+  @computed('interval')
+  options(interval) {
     return {
-      title: { text: undefined },
-      // xAxis: { visible: false },
-      // yAxis: { visible: false },
-      legend: { enabled: true },
-      chart: { },
+      title: { text: 'Maximum Parallel Jobs', align: 'left', floating: false },
+      xAxis: {
+        type: 'datetime',
+        labels: { format: '{value:%b %e}' },
+      },
+      yAxis: { title: { text: undefined } },
+      legend: {
+        // verticalAlign: 'top',
+        // align: 'right',
+        // floating: true,
+      },
+      chart: {
+      },
       plotOptions: { },
     };
   },
@@ -89,15 +97,19 @@ export default Component.extend({
   content(filteredData) {
     if (filteredData) {
       return [{
-        name: 'RUNNING JOBS',
+        name: 'Running Jobs',
         type: 'area',
         step: 'center',
-        data: Object.entries(filteredData.gauge_running),
-      },{
-        name: 'QUEUED JOBS',
+        data: Object.entries(filteredData.gauge_running).map(
+          ([key, val]) => [(new Date(key)).valueOf(), val]
+        ),
+      }, {
+        name: 'Queued Jobs',
         type: 'area',
         step: 'center',
-        data: Object.entries(filteredData.gauge_waiting),
+        data: Object.entries(filteredData.gauge_waiting).map(
+          ([key, val]) => [(new Date(key)).valueOf(), val]
+        ),
       }];
     }
   },
