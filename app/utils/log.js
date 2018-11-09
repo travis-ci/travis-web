@@ -193,7 +193,7 @@ Log.Part = function (id, num, string) {
   this.string = this.string.replace(/\r\u001B\[0m\n/g, '\n');
 
   // Fix for issue: https://github.com/travis-pro/team-teal/issues/2782
-  this.string = this.string.replace(/\r\u001B\[0m/gm, '\n');
+  this.string = this.string.replace(/\r\u001B\[0m\r/gm, '\n');
 
   this.string = this.string.replace(/\r+\n/gm, '\n');
   this.string = this.string.replace(/\r+/gm, '\r');
