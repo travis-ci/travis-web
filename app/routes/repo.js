@@ -54,8 +54,12 @@ export default TravisRoute.extend(ScrollResetMixin, {
   },
 
   model(params) {
+    // Lowercase owner and repo name to allow case-insenstive urls
+    Object.assign(params, {name: params.name.toLowerCase(), owner: params.owner.toLowerCase()});
+
     const { name, owner } = params;
     const slug = `${owner}/${name}`;
+
     return Repo.fetchBySlug(this.get('store'), slug);
   },
 });
