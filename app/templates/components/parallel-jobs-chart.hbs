@@ -1,5 +1,8 @@
-{{#if isLoading}}
-  {{!-- Placeholder? --}}
-{{else}}
-  {{high-charts content=content chartOptions=options}}
-{{/if}}
+<h3 class="insights-odyssey__title">Maximum Parallel Jobs</h3>
+<div class="insights-odyssey__chart">
+  {{#if isLoading}}
+    {{!-- Placeholder? --}}
+  {{else}}
+    {{high-charts content=content chartOptions=options}}
+  {{/if}}
+</div>

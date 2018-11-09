@@ -8,10 +8,19 @@ import ObjectProxy from '@ember/object/proxy';
 import PromiseProxyMixin from '@ember/object/promise-proxy-mixin';
 let ObjectPromiseProxy = ObjectProxy.extend(PromiseProxyMixin);
 
-let intervalToSubinterval = {
-  day: '1hour',
-  week: '1day',
-  month: '1day',
+let intervalMap = {
+  day: {
+    subInterval: '1hour',
+    xAxisLabelFormat: '{value:%H:%M}',
+  },
+  week: {
+    subInterval: '1day',
+    xAxisLabelFormat: '{value:%b %e}',
+  },
+  month: {
+    subInterval: '1day',
+    xAxisLabelFormat: '{value:%b %e}',
+  },
 };
 
 export default Component.extend({
@@ -25,10 +34,10 @@ export default Component.extend({
   @computed('interval')
   options(interval) {
     return {
-      title: { text: 'Maximum Parallel Jobs', align: 'left', floating: false },
+      title: { text: undefined, align: 'left', floating: false, color: '#666666' },
       xAxis: {
         type: 'datetime',
-        labels: { format: '{value:%b %e}' },
+        labels: { format: intervalMap[interval].xAxisLabelFormat },
       },
       yAxis: { title: { text: undefined } },
       legend: {
@@ -37,8 +46,13 @@ export default Component.extend({
         // floating: true,
       },
       chart: {
+        height: '82%',
       },
-      plotOptions: { },
+      plotOptions: {
+        area: {
+          step: 'center',
+        }
+      },
     };
   },
 
@@ -53,7 +67,7 @@ export default Component.extend({
 
     let insightParams = $.param({
       subject: 'jobs',
-      interval: intervalToSubinterval[interval],
+      interval: intervalMap[interval].subInterval,
       func: 'max',
       name: 'gauge_running,gauge_waiting',
       owner_type: owner['@type'] === 'user' ? 'User' : 'Organization',
@@ -99,14 +113,28 @@ export default Component.extend({
       return [{
         name: 'Running Jobs',
         type: 'area',
-        step: 'center',
+        color: '#39aa56',
+        fillColor: {
+          linearGradient: [0, 0, 0, 250],
+          stops: [
+            [0, 'rgba(57, 170, 86, 0.75)'],
+            [1, 'rgba(57, 170, 86, 0)'],
+          ],
+        },
         data: Object.entries(filteredData.gauge_running).map(
           ([key, val]) => [(new Date(key)).valueOf(), val]
         ),
       }, {
         name: 'Queued Jobs',
         type: 'area',
-        step: 'center',
+        color: '#3eaaaf',
+        fillColor: {
+          linearGradient: [0, 0, 0, 250],
+          stops: [
+            [0, 'rgba(62, 170, 175, 0.75)'],
+            [1, 'rgba(62, 170, 175, 0)'],
+          ],
+        },
         data: Object.entries(filteredData.gauge_waiting).map(
           ([key, val]) => [(new Date(key)).valueOf(), val]
         ),

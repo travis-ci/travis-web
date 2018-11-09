@@ -75,7 +75,15 @@
     grid-column: span 2;
   }
 
-  // &.insights-odyssey--loading {
-  //   padding-bottom: 84%;
-  // }
+  &__title {
+    font-size: 1.5rem;
+    margin: 0;
+  }
+
+  &.insights-odyssey--loading .insights-odyssey__chart {
+    padding-bottom: 70%;
+    background-image: linear-gradient(to bottom, rgba($dry-cement, 1) 0px,rgba($dry-cement, 0) 1px,rgba($dry-cement, 0) 50px);
+    background-size: 100% 50px;
+    background-repeat: repeat;
+  }
 }
