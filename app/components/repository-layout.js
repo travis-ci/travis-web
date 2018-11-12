@@ -27,7 +27,6 @@ export default Component.extend({
 
   @computed('features.proVersion', 'repo.migrationStatus')
   showMigratedFromOrgRepositoryLink(onDotCom, migrationStatus) {
-    console.log({onDotCom, migrationStatus});
     return onDotCom && migrationStatus === 'migrated';
   },
 
