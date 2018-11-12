@@ -154,6 +154,21 @@
   }
 }
 
+.button--white-and-teal {
+  @extend %button;
+
+  margin-right: 1em;
+
+  color: $oxide-blue;
+  border: 1px solid $oxide-blue;
+
+  &:hover,
+  &:active {
+    background-color: $oxide-blue;
+    color: white;
+  }
+}
+
 .button--orange {
   @extend %button;
 

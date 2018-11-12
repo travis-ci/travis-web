@@ -41,6 +41,10 @@ export default Service.extend({
     return `https://travis-ci.com/${slug}`;
   },
 
+  migratedToComSettingsLink(slug) {
+    return `https://travis-ci.com/${slug}/settings`;
+  },
+
   orgBuildHistoryLink(slug) {
     return `https://travis-ci.org/${slug}/builds`;
   },
