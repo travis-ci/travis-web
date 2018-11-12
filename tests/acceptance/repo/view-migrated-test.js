@@ -1,13 +1,13 @@
 import { module, test } from 'qunit';
-import { visit, currentURL } from '@ember/test-helpers';
+import { visit } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import { enableFeature } from 'ember-feature-flags/test-support';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 
-module('Acceptance | repo/view migrated', function(hooks) {
+module('Acceptance | repo/view migrated', function (hooks) {
   setupApplicationTest(hooks);
 
-  test('viewing migrated repository on com shows banner', async function(assert) {
+  test('viewing migrated repository on com shows banner', async function (assert) {
     enableFeature('proVersion');
 
     const user = server.create('user', {
