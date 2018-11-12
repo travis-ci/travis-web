@@ -40,4 +40,8 @@ export default Service.extend({
   migratedToComLink(slug) {
     return `https://travis-ci.com/${slug}`;
   },
+
+  orgBuildHistoryLink(slug) {
+    return `https://travis-ci.org/${slug}/builds`;
+  },
 });
