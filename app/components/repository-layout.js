@@ -5,6 +5,7 @@ import { service } from 'ember-decorators/service';
 export default Component.extend({
   @service statusImages: null,
   @service externalLinks: null,
+  @service features: null,
 
   isShowingTriggerBuildModal: false,
   isShowingStatusBadgeModal: false,
@@ -17,6 +18,17 @@ export default Component.extend({
   @computed('repo.slug')
   urlGithub(slug) {
     return this.get('externalLinks').githubRepo(slug);
+  },
+
+  @computed('repo.slug')
+  orgBuildHistoryLink(slug) {
+    return this.get('externalLinks').orgBuildHistoryLink(slug);
+  },
+
+  @computed('features.proVersion', 'repo.migrationStatus')
+  showMigratedFromOrgRepositoryLink(onDotCom, migrationStatus) {
+    console.log({onDotCom, migrationStatus});
+    return onDotCom && migrationStatus === 'migrated';
   },
 
   actions: {
