@@ -22,7 +22,7 @@ module('Acceptance | config/yaml', function (hooks) {
     this.repository =  server.create('repository', { slug: 'travis-ci/travis-web' });
 
     let branch = server.create('branch', { name: 'acceptance-tests' });
-    this.request = server.create('request', { yaml_config: yaml });
+    this.request = server.create('request', { repository: this.repository, yaml_config: yaml });
     this.build = server.create('build', { number: '5', state: 'started', repository: this.repository, branch, request: this.request });
     this.job = server.create('job', { number: '1234.1', state: 'received', build: this.build, repository: this.repository, config: { language: 'Hello' } });
   });
