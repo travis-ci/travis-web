@@ -207,7 +207,7 @@ I am another line finished by a CR.\rI replace that line?\r${ESCAPE}[0mI am the 
 This should also be gone.\r This should have replaced it.
 A particular log formation is addressed here, this should remain.\r${ESCAPE}[0m\nThis should be on a separate line.
 But it must be addressed repeatedly!\r${ESCAPE}[0m\nAgain.
-I should not be blank.\r${ESCAPE}
+I should not be blank.\r${ESCAPE}[0m
 ${ESCAPE}[31m-}
 ${ESCAPE}(B[m[32m+},
 `;
@@ -278,8 +278,7 @@ ${ESCAPE}(B[m[32m+},
     assert.equal(jobPage.logLines[20].text, 'But it must be addressed repeatedly!');
     assert.equal(jobPage.logLines[21].text, 'Again.');
 
-    // TODO this is currently blank!
-    // assert.equal(jobPage.logLines[22].text, 'I should not be blank.');
+    assert.equal(jobPage.logLines[22].text, 'I should not be blank.');
 
     assert.equal(jobPage.logLines[24].text, '+},');
   });
