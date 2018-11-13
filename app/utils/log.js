@@ -192,6 +192,9 @@ Log.Part = function (id, num, string) {
   // https://github.com/travis-ci/travis-ci/issues/7106
   this.string = this.string.replace(/\r\u001B\[0m\n/g, '\n');
 
+  // Fix for issue: https://github.com/travis-pro/team-teal/issues/2782
+  this.string = this.string.replace(/\r\u001B\[0m\r\n/gm, '\n');
+
   this.string = this.string.replace(/\r+\n/gm, '\n');
   this.string = this.string.replace(/\r+/gm, '\r');
   this.strings = this.string.split(/^/gm) || [];
@@ -251,7 +254,8 @@ newLineRegexp = new RegExp('\n');
 rRegexp = new RegExp('\r');
 
 removeCarriageReturns = function (string) {
-  return string.replace(/[\r,\n]+$/, '');
+  const cut = string.lastIndexOf('\r') + 1;
+  return cut ? string.substr(cut) : string;
 };
 
 let foldNameCount = {};

@@ -108,7 +108,7 @@ export default function () {
       return {
         owner: {
           // The API for now is returning these capitalised
-          type: `${owner.type.substr(0, 1).toUpperCase()}${owner.type.substr(1)}`,
+          type: `${owner.modelName.substr(0, 1).toUpperCase()}${owner.modelName.substr(1)}`,
           id: owner.id
         },
         create: (owner.permissions || {}).createSubscription
