@@ -8,10 +8,19 @@ import ObjectProxy from '@ember/object/proxy';
 import PromiseProxyMixin from '@ember/object/promise-proxy-mixin';
 let ObjectPromiseProxy = ObjectProxy.extend(PromiseProxyMixin);
 
-let intervalToSubinterval = {
-  day: '10min',
-  week: '1hour',
-  month: '1day',
+const intervalMap = {
+  day: {
+    subInterval: '10min',
+    tooltipLabelFormat: '%A, %b %e, %H:%M',
+  },
+  week: {
+    subInterval: '1hour',
+    tooltipLabelFormat: '%A, %b %e, %H:%M',
+  },
+  month: {
+    subInterval: '1day',
+    tooltipLabelFormat: '%A, %b %e',
+  },
 };
 
 export default Component.extend({
@@ -22,11 +31,11 @@ export default Component.extend({
 
   token: '',
 
-  @computed('avgBuilds')
-  options(avgBuilds) {
+  @computed('interval', 'avgBuilds')
+  options(interval, avgBuilds) {
     return {
       title: { text: undefined },
-      xAxis: { visible: false },
+      xAxis: { visible: false, type: 'datetime' },
       yAxis: {
         visible: true,
         title: { text: undefined },
@@ -52,6 +61,11 @@ export default Component.extend({
           marker: { enabled: false, radius: 2 },
         },
       },
+      tooltip: {
+        xDateFormat: intervalMap[interval].tooltipLabelFormat,
+        outside: true,
+        pointFormat: '<span>{series.name}: <b>{point.y}</b></span><br/>',
+      },
     };
   },
 
@@ -66,7 +80,7 @@ export default Component.extend({
 
     let insightParams = $.param({
       subject: 'builds',
-      interval: intervalToSubinterval[interval],
+      interval: intervalMap[interval].subInterval,
       func: 'sum',
       name: 'count_started',
       owner_type: owner['@type'] === 'user' ? 'User' : 'Organization',
@@ -96,7 +110,7 @@ export default Component.extend({
           timesMap[value.time] = value.value;
         }
         return timesMap;
-      }, {}));
+      }, {})).map(([key, val]) => [(new Date(key)).valueOf(), val]);
     }
   },
 
