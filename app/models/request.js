@@ -48,7 +48,7 @@ export default Model.extend({
 
   @computed('repo.id', 'build.request.id')
   messagesRequest(repoId, requestId) {
-    if (requestId) {
+    if (repoId && requestId) {
       return ObjectPromiseProxy.create({
         promise: this.get('ajax').ajax(`/repo/${repoId}/request/${requestId}/messages`, 'get', {
           headers: {
