@@ -11,6 +11,6 @@ export default Component.extend({
 
   @computed('top')
   style(top) {
-    return htmlSafe('top: ${top}px;');
+    return htmlSafe(`top: ${top}px;`);
   }
 });
