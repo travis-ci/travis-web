@@ -2,6 +2,8 @@
 <div class="insights-odyssey__chart">
   {{#if isLoading}}
     {{!-- Placeholder? --}}
+  {{else if isEmpty}}
+    No jobs {{currentIntervalLabel}}.
   {{else}}
     {{high-charts content=content chartOptions=options}}
   {{/if}}

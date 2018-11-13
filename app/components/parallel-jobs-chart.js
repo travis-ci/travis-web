@@ -12,14 +12,17 @@ let intervalMap = {
   day: {
     subInterval: '1hour',
     xAxisLabelFormat: '{value:%H:%M}',
+    instanceLabel: 'today',
   },
   week: {
     subInterval: '1day',
     xAxisLabelFormat: '{value:%b %e}',
+    instanceLabel: 'this week',
   },
   month: {
     subInterval: '1day',
     xAxisLabelFormat: '{value:%b %e}',
+    instanceLabel: 'this month',
   },
 };
 
@@ -30,6 +33,11 @@ export default Component.extend({
   @service storage: null,
 
   token: '',
+
+  @computed('interval')
+  currentIntervalLabel(interval) {
+    return intervalMap[interval].instanceLabel;
+  },
 
   @computed('interval')
   options(interval) {
@@ -101,6 +109,7 @@ export default Component.extend({
   filteredData(data) {
     if (data) {
       const reducedData = data.values.reduce((timesMap, value) => {
+        if (typeof value.value !== 'number' || Number.isNaN(value.value)) { return timesMap; }
         if (timesMap[value.name].hasOwnProperty(value.time)) {
           timesMap[value.name][value.time] += value.value;
         } else {
@@ -115,6 +124,13 @@ export default Component.extend({
   @computed('filteredData')
   isLoading(filteredData) {
     return !filteredData;
+  },
+
+  @computed('filteredData')
+  isEmpty(filteredData) {
+    return filteredData &&
+      Object.keys(filteredData.gauge_running).length === 0 &&
+      Object.keys(filteredData.gauge_waiting).length === 0;
   },
 
   @computed('filteredData')
