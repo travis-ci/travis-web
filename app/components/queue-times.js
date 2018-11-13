@@ -40,6 +40,7 @@ export default Component.extend({
       },
       legend: { enabled: false },
       chart: {
+        type: 'spline',
         height: '25%',
         spacing: [5, 5, 5, 5],
       },
@@ -47,7 +48,8 @@ export default Component.extend({
         series: {
           color: '#666',
           lineWidth: 1,
-          states: {  hover: { lineWidth: 2 } },
+          states: {  hover: { lineWidth: 2, halo: { size: 8 } } },
+          marker: { enabled: false, radius: 2 },
         },
       },
     };
@@ -108,8 +110,7 @@ export default Component.extend({
   content(filteredData) {
     if (filteredData) {
       return [{
-        name: 'queue-times',
-        type: 'spline',
+        name: 'Minutes',
         data: filteredData,
       }];
     }

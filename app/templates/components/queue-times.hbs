@@ -3,7 +3,7 @@
   {{#if isLoading}}
     &nbsp;
   {{else}}
-    {{avgWaitMins}} mins
+    {{avgWaitMins}} min{{if (eq avgWaitMins 1) '' 's'}}
   {{/if}}
 </div>
 

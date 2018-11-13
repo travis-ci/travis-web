@@ -3,7 +3,7 @@
   {{#if isLoading}}
     &nbsp;
   {{else}}
-    {{totalBuildMins}} mins
+    {{totalBuildMins}} min{{if (eq totalBuildMins 1) '' 's'}}
   {{/if}}
 </div>
 
