@@ -142,4 +142,10 @@ export default Component.extend({
       return totalBuilds / filteredData.length;
     }
   },
+
+  @computed('isLoading', 'totalBuilds')
+  totalBuildText(isLoading, totalBuilds) {
+    if (isLoading) { return '\xa0'; }
+    return totalBuilds.toLocaleString();
+  },
 });

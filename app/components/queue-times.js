@@ -144,4 +144,10 @@ export default Component.extend({
       return Math.round((totalWaitMins / filteredData.length) * 100) / 100;
     }
   },
+
+  @computed('isLoading', 'avgWaitMins')
+  avgWaitText(isLoading, avgWaitMins) {
+    if (isLoading) { return '\xa0'; }
+    return `${avgWaitMins.toLocaleString()} min${avgWaitMins === 1 ? '' : 's'}`;
+  },
 });

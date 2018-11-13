@@ -1,12 +1,5 @@
 <h3 class="insights-glance__title">Total Build Minutes</h3>
-<div class="insights-glance__stat">
-  {{#if isLoading}}
-    &nbsp;
-  {{else}}
-    {{totalBuildMins}} min{{if (eq totalBuildMins 1) '' 's'}}
-  {{/if}}
-</div>
-
+<div class="insights-glance__stat">{{totalBuildText}}</div>
 {{#if (or isLoading (is-empty filteredData))}}
   <hr class="insights-glance__chart-placeholder" />
 {{else}}
