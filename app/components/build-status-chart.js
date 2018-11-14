@@ -158,25 +158,25 @@ export default Component.extend({
         name: 'Passing',
         color: 'rgba(57, 170, 86, 0.8)',
         data: Object.entries(filteredData.count_passed).map(
-          ([key, val]) => [moment(key, apiTimeReceivedFormat).valueOf(), val]
+          ([key, val]) => [moment.utc(key).valueOf(), val]
         ),
       }, {
         name: 'Failing',
         color: 'rgba(219, 69, 69, 0.8)',
         data: Object.entries(filteredData.count_failed).map(
-          ([key, val]) => [moment(key, apiTimeReceivedFormat).valueOf(), val]
+          ([key, val]) => [moment.utc(key).valueOf(), val]
         ),
       }, {
         name: 'Errored',
         color: 'rgba(237, 222, 63, 0.8)',
         data: Object.entries(filteredData.count_errored).map(
-          ([key, val]) => [moment(key, apiTimeReceivedFormat).valueOf(), val]
+          ([key, val]) => [moment.utc(key).valueOf(), val]
         ),
       }, {
         name: 'Cancelled',
         color: 'rgba(157, 157, 157, 0.8)',
         data: Object.entries(filteredData.count_canceled).map(
-          ([key, val]) => [moment(key, apiTimeReceivedFormat).valueOf(), val]
+          ([key, val]) => [moment.utc(key).valueOf(), val]
         ),
       }];
     }

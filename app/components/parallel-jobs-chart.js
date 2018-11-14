@@ -28,7 +28,7 @@ const intervalMap = {
 
 const apiTimeBaseFormat = 'YYYY-MM-DD HH:mm:ss';
 const apiTimeRequestFormat = `${apiTimeBaseFormat} UTC`;
-const apiTimeReceivedFormat = `${apiTimeBaseFormat} zz`;
+// const apiTimeReceivedFormat = `${apiTimeBaseFormat} zz`;
 
 
 export default Component.extend({
@@ -165,7 +165,7 @@ export default Component.extend({
           ],
         },
         data: Object.entries(filteredData.gauge_running).map(
-          ([key, val]) => [moment(key, apiTimeReceivedFormat).valueOf(), val]
+          ([key, val]) => [moment.utc(key).valueOf(), val]
         ),
       }, {
         name: 'Queued Jobs',
@@ -178,7 +178,7 @@ export default Component.extend({
           ],
         },
         data: Object.entries(filteredData.gauge_waiting).map(
-          ([key, val]) => [moment(key, apiTimeReceivedFormat).valueOf(), val]
+          ([key, val]) => [moment.utc(key).valueOf(), val]
         ),
       }];
     }

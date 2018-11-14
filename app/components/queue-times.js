@@ -25,7 +25,7 @@ const intervalMap = {
 
 const apiTimeBaseFormat = 'YYYY-MM-DD HH:mm:ss';
 const apiTimeRequestFormat = `${apiTimeBaseFormat} UTC`;
-const apiTimeReceivedFormat = `${apiTimeBaseFormat} zz`;
+// const apiTimeReceivedFormat = `${apiTimeBaseFormat} zz`;
 
 export default Component.extend({
   classNames: ['insights-glance'],
@@ -115,7 +115,7 @@ export default Component.extend({
           timesMap[value.time] = Math.round(mins);
         }
         return timesMap;
-      }, {})).map(([key, val]) => [moment(key, apiTimeReceivedFormat).valueOf(), val]);
+      }, {})).map(([key, val]) => [moment.utc(key).valueOf(), val]);
     }
   },
 
