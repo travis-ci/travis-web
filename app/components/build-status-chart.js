@@ -87,9 +87,9 @@ export default Component.extend({
     let startTime = moment.utc().subtract(1, interval);
 
     let insightParams = $.param({
-      subject: 'jobs',
+      subject: 'builds',
       interval: intervalMap[interval].subInterval,
-      func: 'max',
+      func: 'sum',
       name: 'count_passed,count_failed,count_errored,count_canceled',
       owner_type: owner['@type'] === 'user' ? 'User' : 'Organization',
       owner_id: owner.id,
