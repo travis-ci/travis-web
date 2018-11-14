@@ -51,7 +51,6 @@ export default Component.extend({
         type: 'datetime',
         lineColor: '#f3f3f3',
         labels: { format: intervalMap[interval].xAxisLabelFormat },
-        // tickPositions: [],
       },
       yAxis: {
         title: { text: undefined },
@@ -63,6 +62,12 @@ export default Component.extend({
         tickAmount: 6,
       },
       legend: {
+        itemStyle: {
+          fontWeight: 400,
+          fontSize: '10px',
+          color: '#9d9d9d',
+          textTransform: 'uppercase',
+        },
       },
       chart: {
         type: 'column',
@@ -143,25 +148,25 @@ export default Component.extend({
     if (filteredData) {
       return [{
         name: 'Passing',
-        color: '#39aa56',
+        color: 'rgba(57, 170, 86, 0.8)',
         data: Object.entries(filteredData.count_passed).map(
           ([key, val]) => [moment(key, apiTimeReceivedFormat).valueOf(), val]
         ),
       }, {
         name: 'Failing',
-        color: '#db4545',
+        color: 'rgba(219, 69, 69, 0.8)',
         data: Object.entries(filteredData.count_failed).map(
           ([key, val]) => [moment(key, apiTimeReceivedFormat).valueOf(), val]
         ),
       }, {
         name: 'Errored',
-        color: '#edde3f',
+        color: 'rgba(237, 222, 63, 0.8)',
         data: Object.entries(filteredData.count_errored).map(
           ([key, val]) => [moment(key, apiTimeReceivedFormat).valueOf(), val]
         ),
       }, {
         name: 'Cancelled',
-        color: '#9d9d9d',
+        color: 'rgba(157, 157, 157, 0.8)',
         data: Object.entries(filteredData.count_canceled).map(
           ([key, val]) => [moment(key, apiTimeReceivedFormat).valueOf(), val]
         ),

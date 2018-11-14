@@ -50,14 +50,16 @@
   }
 
   .insights-glance__title {
-    font-weight: 700;
+    font-size: 12px;
+    font-weight: 500;
     margin: 0;
     text-transform: uppercase;
   }
 
   .insights-glance__stat {
-    font-size: 1.4rem;
-    font-weight: 200;
+    font-size: 27px;
+    font-weight: 400;
+    color: $cement-grey;
   }
 
   .insights-glance__chart-placeholder {
@@ -76,7 +78,8 @@
   }
 
   &__title {
-    font-size: 1.5rem;
+    font-size: 15px;
+    font-weight: 400;
     margin: 0;
   }
 

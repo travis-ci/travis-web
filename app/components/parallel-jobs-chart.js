@@ -62,6 +62,12 @@ export default Component.extend({
         tickAmount: 6,
       },
       legend: {
+        itemStyle: {
+          fontWeight: 400,
+          fontSize: '10px',
+          color: '#9d9d9d',
+          textTransform: 'uppercase',
+        },
       },
       chart: {
         type: 'area',
@@ -71,9 +77,8 @@ export default Component.extend({
       plotOptions: {
         area: {
           step: 'center',
-          marker: {
-            enabled: false,
-          },
+          marker: { enabled: false, },
+          lineWidth: 1,
         }
       },
     };
