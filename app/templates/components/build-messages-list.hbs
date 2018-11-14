@@ -3,8 +3,6 @@
     {{#each request.messages as |message|}}
       {{build-message
           message=message
-          mouseEnter=(action viewMessage message) mouseLeave=(action viewMessage)
-          focusIn=(action viewMessage message) focusOut=(action viewMessage)
       }}
     {{/each}}
   </div>
