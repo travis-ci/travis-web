@@ -8,7 +8,7 @@ import ObjectProxy from '@ember/object/proxy';
 import PromiseProxyMixin from '@ember/object/promise-proxy-mixin';
 let ObjectPromiseProxy = ObjectProxy.extend(PromiseProxyMixin);
 
-let intervalMap = {
+const intervalMap = {
   day: {
     subInterval: '1hour',
     xAxisLabelFormat: '{value:%H:%M}',
@@ -25,6 +25,11 @@ let intervalMap = {
     instanceLabel: 'this month',
   },
 };
+
+const apiTimeBaseFormat = 'YYYY-MM-DD HH:mm:ss';
+const apiTimeRequestFormat = `${apiTimeBaseFormat} UTC`;
+const apiTimeReceivedFormat = `${apiTimeBaseFormat} zz`;
+
 
 export default Component.extend({
   classNames: ['insights-odyssey'],
@@ -86,13 +91,13 @@ export default Component.extend({
     let insightParams = $.param({
       subject: 'jobs',
       interval: intervalMap[interval].subInterval,
-      func: 'max',
+      func: 'p95',
       name: 'gauge_running,gauge_waiting',
       owner_type: owner['@type'] === 'user' ? 'User' : 'Organization',
       owner_id: owner.id,
       token: apiToken,
-      end_time: endTime.format('YYYY-MM-DD HH:mm:ss UTC'),
-      start_time: startTime.format('YYYY-MM-DD HH:mm:ss UTC'),
+      end_time: endTime.format(apiTimeRequestFormat),
+      start_time: startTime.format(apiTimeRequestFormat),
     });
     const url = `${insightEndpoint}/metrics?${insightParams}`;
 
@@ -147,7 +152,7 @@ export default Component.extend({
           ],
         },
         data: Object.entries(filteredData.gauge_running).map(
-          ([key, val]) => [(new Date(key)).valueOf(), val]
+          ([key, val]) => [moment(key, apiTimeReceivedFormat).valueOf(), val]
         ),
       }, {
         name: 'Queued Jobs',
@@ -160,7 +165,7 @@ export default Component.extend({
           ],
         },
         data: Object.entries(filteredData.gauge_waiting).map(
-          ([key, val]) => [(new Date(key)).valueOf(), val]
+          ([key, val]) => [moment(key, apiTimeReceivedFormat).valueOf(), val]
         ),
       }];
     }

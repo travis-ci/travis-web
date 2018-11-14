@@ -8,7 +8,7 @@ import ObjectProxy from '@ember/object/proxy';
 import PromiseProxyMixin from '@ember/object/promise-proxy-mixin';
 let ObjectPromiseProxy = ObjectProxy.extend(PromiseProxyMixin);
 
-let intervalMap = {
+const intervalMap = {
   day: {
     subInterval: '1hour',
     xAxisLabelFormat: '{value:%H:%M}',
@@ -25,6 +25,10 @@ let intervalMap = {
     instanceLabel: 'this month',
   },
 };
+
+const apiTimeBaseFormat = 'YYYY-MM-DD HH:mm:ss';
+const apiTimeRequestFormat = `${apiTimeBaseFormat} UTC`;
+const apiTimeReceivedFormat = `${apiTimeBaseFormat} zz`;
 
 export default Component.extend({
   classNames: ['insights-odyssey'],
@@ -90,8 +94,8 @@ export default Component.extend({
       owner_type: owner['@type'] === 'user' ? 'User' : 'Organization',
       owner_id: owner.id,
       token: apiToken,
-      end_time: endTime.format('YYYY-MM-DD HH:mm:ss UTC'),
-      start_time: startTime.format('YYYY-MM-DD HH:mm:ss UTC'),
+      end_time: endTime.format(apiTimeRequestFormat),
+      start_time: startTime.format(apiTimeRequestFormat),
     });
     const url = `${insightEndpoint}/metrics?${insightParams}`;
 
@@ -141,25 +145,25 @@ export default Component.extend({
         name: 'Passing',
         color: '#39aa56',
         data: Object.entries(filteredData.count_passed).map(
-          ([key, val]) => [(new Date(key)).valueOf(), val]
+          ([key, val]) => [moment(key, apiTimeReceivedFormat).valueOf(), val]
         ),
       }, {
         name: 'Failing',
         color: '#db4545',
         data: Object.entries(filteredData.count_failed).map(
-          ([key, val]) => [(new Date(key)).valueOf(), val]
+          ([key, val]) => [moment(key, apiTimeReceivedFormat).valueOf(), val]
         ),
       }, {
         name: 'Errored',
         color: '#edde3f',
         data: Object.entries(filteredData.count_errored).map(
-          ([key, val]) => [(new Date(key)).valueOf(), val]
+          ([key, val]) => [moment(key, apiTimeReceivedFormat).valueOf(), val]
         ),
       }, {
         name: 'Cancelled',
         color: '#9d9d9d',
         data: Object.entries(filteredData.count_canceled).map(
-          ([key, val]) => [(new Date(key)).valueOf(), val]
+          ([key, val]) => [moment(key, apiTimeReceivedFormat).valueOf(), val]
         ),
       }];
     }

@@ -23,6 +23,10 @@ const intervalMap = {
   },
 };
 
+const apiTimeBaseFormat = 'YYYY-MM-DD HH:mm:ss';
+const apiTimeRequestFormat = `${apiTimeBaseFormat} UTC`;
+const apiTimeReceivedFormat = `${apiTimeBaseFormat} zz`;
+
 export default Component.extend({
   classNames: ['insights-glance'],
   classNameBindings: ['isLoading:insights-glance--loading'],
@@ -86,8 +90,8 @@ export default Component.extend({
       owner_type: owner['@type'] === 'user' ? 'User' : 'Organization',
       owner_id: owner.id,
       token: apiToken,
-      end_time: endTime.format('YYYY-MM-DD HH:mm:ss UTC'),
-      start_time: startTime.format('YYYY-MM-DD HH:mm:ss UTC'),
+      end_time: endTime.format(apiTimeRequestFormat),
+      start_time: startTime.format(apiTimeRequestFormat),
     });
     const url = `${insightEndpoint}/metrics?${insightParams}`;
 
@@ -110,7 +114,7 @@ export default Component.extend({
           timesMap[value.time] = value.value;
         }
         return timesMap;
-      }, {})).map(([key, val]) => [(new Date(key)).valueOf(), val]);
+      }, {})).map(([key, val]) => [moment(key, apiTimeReceivedFormat).valueOf(), val]);
     }
   },
 
