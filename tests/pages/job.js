@@ -36,10 +36,6 @@ export default create({
 
   yamlTab: {
     click: clickable('[data-test-build-yaml-tab]'),
-
-    badge: {
-      scope: '[data-test-yaml-badge]'
-    }
   },
 
   ymlMessages,
