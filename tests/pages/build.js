@@ -69,12 +69,7 @@ export default create({
 
   yamlTab: {
     click: clickable('[data-test-build-yaml-tab]'),
-
-    badge: {
-      scope: '[data-test-yaml-badge]'
-    }
   },
 
   yaml: text('[data-test-yaml]'),
-  yamlLineHighlights: collection('[data-test-yaml-line-highlight]')
 });

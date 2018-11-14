@@ -35,8 +35,6 @@ module('Acceptance | config/yaml', function (hooks) {
     test('renders build yaml', async function (assert) {
       await visit(`/travis-ci/travis-web/builds/${this.build.id}`);
 
-      assert.ok(page.yamlTab.badge.isHidden, 'expected no badge when no build messages exist');
-
       assert.equal(document.title, `Build #${this.build.number} - travis-ci/travis-web - Travis CI`);
       await page.yamlTab.click();
 
@@ -46,7 +44,7 @@ module('Acceptance | config/yaml', function (hooks) {
       percySnapshot(assert);
     });
 
-    test('also shows a badge and build messages when they exist, with line-highlighting', async function (assert) {
+    test('shows build messages when they exist', async function (assert) {
       server.create('message', {
         request: this.request,
         level: 'warn',
@@ -71,10 +69,6 @@ module('Acceptance | config/yaml', function (hooks) {
       });
 
       await visit(`/travis-ci/travis-web/builds/${this.build.id}`);
-
-      assert.ok(page.yamlTab.badge.isVisible, 'expected a badge when a message exists');
-      assert.equal(page.yamlTab.badge.text, '2');
-
       await page.yamlTab.click();
 
       assert.equal(page.ymlMessages.length, 2, 'expected two yml messages');
@@ -83,27 +77,17 @@ module('Acceptance | config/yaml', function (hooks) {
         assert.ok(message.icon.isWarning, 'expected the yml message to be a warn');
         assert.equal(message.message, 'unrecognised message code skortleby');
       });
-
-      assert.ok(page.yamlLineHighlights.length, 1, 'expected one line highlight');
-      assert.ok(page.yamlLineHighlights[0].isHidden);
-
-      await page.ymlMessages[1].focus();
-
-      assert.ok(page.yamlLineHighlights[0].isVisible);
     });
   });
 
   module('with a single-job build', function () {
-    test('shows a badge, build messages, and yaml', async function (assert) {
+    test('shows yaml', async function (assert) {
       server.create('message', {
         request: this.request,
         key: 'jortle'
       });
 
       await visit(`/travis-ci/travis-web/jobs/${this.job.id}`);
-
-      assert.equal(page.yamlTab.badge.text, '1');
-
       await page.yamlTab.click();
 
       assert.equal(page.yaml, 'language: jortle sudo: tortle');
