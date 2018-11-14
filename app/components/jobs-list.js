@@ -16,10 +16,7 @@ export default Component.extend({
     return 'allowed_failure_jobs';
   },
 
-  @alias('build.jobs') jobs: null,
-  @mapBy('jobs', 'stage') jobStages: null,
-
-  @computed('jobs.[]', 'build.jobs.[]', 'stage', 'jobStages.@each.id')
+  @computed('jobs.[]', 'build.jobs.[]', 'stage', 'FIXME')
   filteredJobs(jobs, buildJobs, stage) {
     if (stage) {
       return buildJobs.filterBy('stage.id', stage.get('id'));
