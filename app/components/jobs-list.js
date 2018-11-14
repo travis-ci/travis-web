@@ -16,8 +16,8 @@ export default Component.extend({
     return 'allowed_failure_jobs';
   },
 
-  @alias('build.jobs') jobsAlias: null,
-  @mapBy('jobsAlias', 'stage') jobStages: null,
+  @alias('build.jobs') buildJobs: null,
+  @mapBy('buildJobs', 'stage') jobStages: null,
 
   @computed('jobs.[]', 'build.jobs.[]', 'stage', 'jobStages.@each.id')
   filteredJobs(jobs, buildJobs, stage) {
