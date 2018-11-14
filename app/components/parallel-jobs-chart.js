@@ -81,6 +81,14 @@ export default Component.extend({
           lineWidth: 1,
         }
       },
+      tooltip: {
+        useHTML: true,
+        pointFormat: `
+          <div style="margin-top: 2px;">
+            <span style="color:{point.color};">●</span> {series.name}: <b>{point.y}</b>
+          </div>
+        `,
+      },
     };
   },
 
