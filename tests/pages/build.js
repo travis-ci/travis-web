@@ -7,7 +7,6 @@ import {
   isHidden,
   visitable,
   text,
-  triggerable
 } from 'ember-cli-page-object';
 
 const jobComponent = {
@@ -76,8 +75,6 @@ export default create({
       isError: hasClass('icon-error')
     },
     message: text('.message'),
-
-    focus: triggerable('focus', '.icon')
   }),
 
   yaml: text('[data-test-yaml]'),
