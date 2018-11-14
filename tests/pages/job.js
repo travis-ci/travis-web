@@ -39,9 +39,6 @@ export default create({
   },
 
   ymlMessages,
-  jobYmlNote: {
-    scope: '[data-test-job-yaml-note]'
-  },
 
   logLines: collection('pre#log .log-line span:first-of-type', {
     text: text(),

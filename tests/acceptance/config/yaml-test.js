@@ -90,7 +90,7 @@ module('Acceptance | config/yaml', function (hooks) {
       await visit(`/travis-ci/travis-web/jobs/${this.job.id}`);
       await page.yamlTab.click();
 
-      assert.ok(page.jobYamlNote.isPresent, 'expected a note about the yml applying to the build to display');
+      assert.ok(page.jobYmlNote.isPresent, 'expected a note about the yml applying to the build to display');
       assert.equal(page.yaml, 'language: jortle sudo: tortle');
     });
   });

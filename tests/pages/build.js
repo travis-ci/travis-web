@@ -72,4 +72,7 @@ export default create({
   },
 
   yaml: text('[data-test-yaml]'),
+  jobYmlNote: {
+    scope: '[data-test-job-yaml-note]'
+  },
 });
