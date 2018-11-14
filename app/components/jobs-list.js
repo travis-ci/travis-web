@@ -1,7 +1,7 @@
 import { get } from '@ember/object';
 import Component from '@ember/component';
 import { computed } from 'ember-decorators/object';
-import { alias, mapBy } from 'ember-decorators/object/computed';
+import { alias } from 'ember-decorators/object/computed';
 
 export default Component.extend({
   tagName: 'section',
