@@ -1,12 +1,6 @@
-.scrollable-yaml-container {
-  max-height: 24em;
-  overflow-y: scroll;
-
-  border: 1px solid $pebble-grey;
-}
-
 .inner-yaml-container {
   position: relative;
+  border: 1px solid $pebble-grey;
 }
 
 .yaml-line-highlight {

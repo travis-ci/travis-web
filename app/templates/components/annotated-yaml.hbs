@@ -1,8 +1,6 @@
 {{build-messages-list request=@request viewMessage=(action (mut viewingMessage))}}
 
-<div class='scrollable-yaml-container'>
-  <div class='inner-yaml-container'>
-    {{#code-block data-test-yaml language='yaml' class='codedisplay'}}{{@request.yaml_config}}{{/code-block}}
-  </div>
+<div class='inner-yaml-container'>
+  {{#code-block data-test-yaml language='yaml' class='codedisplay'}}{{@request.yaml_config}}{{/code-block}}
 </div>
 
