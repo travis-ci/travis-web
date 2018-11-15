@@ -3,7 +3,6 @@ import { module, test } from 'qunit';
 import { visit } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import signInUser from 'travis/tests/helpers/sign-in-user';
-import { percySnapshot } from 'ember-percy';
 
 module('Acceptance | builds/current tab', function (hooks) {
   setupApplicationTest(hooks);
