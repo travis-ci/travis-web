@@ -110,12 +110,17 @@ export default Component.extend({
       return Object.entries(data.values.reduce((timesMap, value) => {
         const mins = value.value / 60;
         if (timesMap.hasOwnProperty(value.time)) {
-          timesMap[value.time] += Math.round(mins);
+          timesMap[value.time][0]++;
+          timesMap[value.time][1] += mins;
         } else {
-          timesMap[value.time] = Math.round(mins);
+          timesMap[value.time] = [1, mins];
         }
         return timesMap;
-      }, {})).map(([key, val]) => [moment.utc(key, apiTimeReceivedFormat).valueOf(), val]);
+      }, {})).map(([key, val]) => [
+        moment.utc(key, apiTimeReceivedFormat).valueOf(),
+        // val[1],
+        (Math.round((val[1] / val[0]) * 100) / 100)
+      ]);
     }
   },
 
