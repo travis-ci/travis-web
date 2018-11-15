@@ -28,7 +28,7 @@ const intervalMap = {
 
 const apiTimeBaseFormat = 'YYYY-MM-DD HH:mm:ss';
 const apiTimeRequestFormat = `${apiTimeBaseFormat} UTC`;
-const apiTimeReceivedFormat = `${apiTimeBaseFormat} zz`;
+// const apiTimeReceivedFormat = `${apiTimeBaseFormat} zz`;
 
 export default Component.extend({
   classNames: ['insights-odyssey'],
