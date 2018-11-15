@@ -28,7 +28,7 @@
       {{#if (eq repository.migrationStatus "success")}}
         <span>{{svg-jar "stage-passed" class="icon"}}</span>
       {{/if}}
-      {{#if (eq repository.migrationStatus "failed")}}
+      {{#if (eq repository.migrationStatus "failure")}}
         <span>{{svg-jar "stage-errored" class="icon"}}</span>
       {{/if}}
       </div>

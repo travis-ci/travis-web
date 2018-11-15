@@ -196,11 +196,11 @@ module('Acceptance | profile/migration', function (hooks) {
 
     let { owner } = getContext();
     let pusherService = owner.lookup('service:pusher');
-    pusherService.receive('repository:migration', { repositoryId: this.lockedRepository.id, status: 'failed' });
+    pusherService.receive('repository:migration', { repositoryId: this.lockedRepository.id, status: 'failure' });
 
 
-    await waitFor('[data-test-migration-status="failed"]');
-    assert.dom('[data-test-migration-status="failed"]').exists();
+    await waitFor('[data-test-migration-status="failure"]');
+    assert.dom('[data-test-migration-status="failure"]').exists();
 
     percySnapshot(assert);
   });
