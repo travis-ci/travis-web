@@ -40,8 +40,6 @@ module('Acceptance | config/yaml', function (hooks) {
 
       assert.equal(document.title, `Config - Build #${this.build.number} - travis-ci/travis-web - Travis CI`);
       assert.equal(page.yaml, 'language: jortle sudo: tortle');
-
-      percySnapshot(assert);
     });
 
     test('shows build messages when they exist', async function (assert) {
@@ -77,6 +75,8 @@ module('Acceptance | config/yaml', function (hooks) {
         assert.ok(message.icon.isWarning, 'expected the yml message to be a warn');
         assert.equal(message.message, 'unrecognised message code skortleby');
       });
+
+      percySnapshot(assert);
     });
   });
 
