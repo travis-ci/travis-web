@@ -43,8 +43,6 @@ module('Acceptance | builds/current tab', function (hooks) {
     assert.dom('[data-test-build-header]').hasClass('started');
 
     assert.dom('[data-test-job-log]').exists();
-
-    percySnapshot(assert);
   });
 
   test('renders the repository and subscribes to private log channel for a private repository', async function (assert) {
