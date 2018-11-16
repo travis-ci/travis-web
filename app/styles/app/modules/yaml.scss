@@ -5,6 +5,17 @@
 .inner-yaml-container {
   position: relative;
   border: 1px solid $pebble-grey;
+
+  button {
+    display: none;
+    position: absolute;
+    right: 1em;
+    top: 1em;
+  }
+
+  &:hover button {
+    display: block;
+  }
 }
 
 pre.codedisplay[class*='language-'] {
