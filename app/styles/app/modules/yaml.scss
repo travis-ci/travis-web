@@ -11,10 +11,15 @@
     position: absolute;
     right: 1em;
     top: 1em;
+    border: 1px solid transparent;
   }
 
   &:hover button {
     display: block;
+
+    &:hover {
+      border-color: $pebble-grey;
+    }
   }
 }
 
