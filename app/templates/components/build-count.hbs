@@ -1,8 +1,13 @@
 <h3 class="insights-glance__title">Builds</h3>
-<div class="insights-glance__stat">{{totalBuildText}}</div>
 
-{{#if (or isLoading (is-empty filteredData))}}
+{{!-- {{#if (or isLoading (is-empty filteredData))}} --}}
+{{#if dataRequest.isRunning}}
+  <div class="insights-glance__stat">&nbsp;</div>
+  <hr class="insights-glance__chart-placeholder" />
+{{else if dataRequest.last.isErrored}}
+<div class="insights-glance__stat">Error</div>
   <hr class="insights-glance__chart-placeholder" />
 {{else}}
+  <div class="insights-glance__stat">{{totalBuilds}}</div>
   {{high-charts content=content chartOptions=options}}
 {{/if}}

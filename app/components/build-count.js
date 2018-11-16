@@ -1,12 +1,8 @@
 import Component from '@ember/component';
-import { computed } from 'ember-decorators/object';
-import { service } from 'ember-decorators/service';
-import $ from 'jquery';
+import { inject as service } from '@ember/service';
+import { task } from 'ember-concurrency';
+import { computed } from '@ember/object';
 import moment from 'moment';
-
-import ObjectProxy from '@ember/object/proxy';
-import PromiseProxyMixin from '@ember/object/promise-proxy-mixin';
-let ObjectPromiseProxy = ObjectProxy.extend(PromiseProxyMixin);
 
 const intervalMap = {
   day: {
@@ -31,12 +27,11 @@ export default Component.extend({
   classNames: ['insights-glance'],
   classNameBindings: ['isLoading:insights-glance--loading'],
 
-  @service storage: null,
+  api: service(),
 
   token: '',
 
-  @computed('interval', 'avgBuilds')
-  options(interval, avgBuilds) {
+  options: computed('interval', 'avgBuilds', function () {
     return {
       title: { text: undefined },
       xAxis: { visible: false, type: 'datetime' },
@@ -44,7 +39,7 @@ export default Component.extend({
         visible: true,
         title: { text: undefined },
         plotLines: [{
-          value: avgBuilds,
+          value: this.avgBuilds,
           color: '#eaeaea',
           width: 1,
         }],
@@ -66,48 +61,40 @@ export default Component.extend({
         },
       },
       tooltip: {
-        xDateFormat: intervalMap[interval].tooltipLabelFormat,
+        xDateFormat: intervalMap[this.interval].tooltipLabelFormat,
         outside: true,
         pointFormat: '<span>{series.name}: <b>{point.y}</b></span><br/>',
       },
     };
-  },
+  }),
 
-  @computed('owner', 'interval', 'token')
-  dataRequest(owner, interval, token) {
-    // FIXME: replace with v3 calls when it is ready
-    const apiToken = token || this.get('storage').getItem('travis.insightToken') || '';
-    if (apiToken.length === 0) { return; }
-    const insightEndpoint = 'https://travis-insights-production.herokuapp.com';
-    let endTime = moment.utc();
-    let startTime = moment.utc().subtract(1, interval);
+  dataRequest: task(function* () {
+    const endpoint = '/insights';
+    const url = `${endpoint}/metrics`;
+    const owner = this.get('owner');
+    const interval = this.get('interval');
+    const endTime = moment.utc();
+    const startTime = moment.utc().subtract(1, interval);
+    const options = {
+      stringifyData: false,
+      data: {
+        subject: 'builds',
+        interval: intervalMap[interval].subInterval,
+        func: 'sum',
+        name: 'count_started',
+        owner_type: owner['@type'] === 'user' ? 'User' : 'Organization',
+        owner_id: owner.id,
+        end_time: endTime.format(apiTimeRequestFormat),
+        start_time: startTime.format(apiTimeRequestFormat),
+      }
+    };
+    return yield this.get('api').get(url, options);
+  }).on('init'),
 
-    let insightParams = $.param({
-      subject: 'builds',
-      interval: intervalMap[interval].subInterval,
-      func: 'sum',
-      name: 'count_started',
-      owner_type: owner['@type'] === 'user' ? 'User' : 'Organization',
-      owner_id: owner.id,
-      token: apiToken,
-      end_time: endTime.format(apiTimeRequestFormat),
-      start_time: startTime.format(apiTimeRequestFormat),
-    });
-    const url = `${insightEndpoint}/metrics?${insightParams}`;
-
-    return ObjectPromiseProxy.create({
-      promise: fetch(url).then(response => {
-        if (response.ok) {
-          return response.json();
-        } else { return false; }
-      }).then(response => ({data: response}))
-    });
-  },
-
-  @computed('dataRequest.data')
-  filteredData(data) {
-    if (data) {
-      return Object.entries(data.values.reduce((timesMap, value) => {
+  aggregateData: computed(function () {
+    const dreq = this.get('dataRequest');
+    if (dreq.last.isSuccessful) {
+      return Object.entries(dreq.last.value.data.values.reduce((timesMap, value) => {
         if (timesMap.hasOwnProperty(value.time)) {
           timesMap[value.time] += value.value;
         } else {
@@ -116,40 +103,31 @@ export default Component.extend({
         return timesMap;
       }, {})).map(([key, val]) => [moment.utc(key, apiTimeReceivedFormat).valueOf(), val]);
     }
-  },
+  }),
 
-  @computed('filteredData')
-  isLoading(filteredData) {
-    return !filteredData;
-  },
-
-  @computed('filteredData')
-  content(filteredData) {
-    if (filteredData) {
+  content: computed('aggregateData', function () {
+    if (this.aggregateData) {
       return [{
         name: 'Builds',
-        data: filteredData,
+        data: this.aggregateData,
       }];
     }
-  },
+  }),
 
-  @computed('filteredData')
-  totalBuilds(filteredData) {
-    if (filteredData) {
-      return filteredData.reduce((acc, val) => acc + val[1], 0);
+  totalBuilds: computed('aggregateData', function () {
+    if (this.aggregateData) {
+      return this.aggregateData.reduce((acc, val) => acc + val[1], 0);
     }
-  },
+  }),
 
-  @computed('filteredData', 'totalBuilds')
-  avgBuilds(filteredData, totalBuilds) {
-    if (filteredData) {
-      return totalBuilds / filteredData.length;
+  avgBuilds: computed('aggregateData', 'totalBuilds', function () {
+    if (this.aggregateData) {
+      return this.totalBuilds / this.aggregateData.length;
     }
-  },
+  }),
 
-  @computed('isLoading', 'totalBuilds')
-  totalBuildText(isLoading, totalBuilds) {
-    if (isLoading) { return '\xa0'; }
-    return totalBuilds.toLocaleString();
-  },
+  totalBuildText: computed('totalBuilds', function () {
+    if (typeof this.totalBuilds !== 'number') { return '\xa0'; }
+    return this.totalBuilds.toLocaleString();
+  }),
 });
