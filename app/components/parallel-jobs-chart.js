@@ -104,7 +104,7 @@ export default Component.extend({
     let insightParams = $.param({
       subject: 'jobs',
       interval: intervalMap[interval].subInterval,
-      func: 'max',
+      func: 'sum',
       name: 'gauge_running,gauge_waiting',
       owner_type: owner['@type'] === 'user' ? 'User' : 'Organization',
       owner_id: owner.id,
@@ -129,9 +129,10 @@ export default Component.extend({
       const reducedData = data.values.reduce((timesMap, value) => {
         if (typeof value.value !== 'number' || Number.isNaN(value.value)) { return timesMap; }
         if (timesMap[value.name].hasOwnProperty(value.time)) {
-          if (value.value > timesMap[value.name][value.time]) {
-            timesMap[value.name][value.time] = value.value;
-          }
+          timesMap[value.name][value.time] += value.value;
+          // if (value.value > timesMap[value.name][value.time]) {
+          //   timesMap[value.name][value.time] = value.value;
+          // }
         } else {
           timesMap[value.name][value.time] = value.value;
         }
