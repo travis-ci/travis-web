@@ -1,9 +1,26 @@
 <section id="log-container" class="log">
 
-  {{#if job.notStarted}}
+  <!-- {{#if job.notStarted}}
     <div class="log-notice">Hang tight, the log cannot be shown until the job has started.</div>
+  {{/if}} -->
+
+  <!-- For queued and received states-->
+  <!-- Booting state in Travis is recevied state in Travis Web -->
+  {{#if job.inReceived}}
+    <div class="log-notice">Starting a new build environment...</div>
   {{/if}}
 
+  {{#if job.reQueue}}
+    <div class="log-notice">Back to the queue...</div>
+  {{/if}}
+
+  {{#if job.inQueue}}
+    <div class="log-notice">Hang tight, this job is next...</div>
+  {{/if}}
+
+  {{#if job.toBeCreated}}
+    <div class="log-notice">Things are being created...</div>
+  {{/if}}
   <div class="log-container {{if job.notStarted 'hidden'}}">
       <button type="button" class="toggle-log-button {{if logIsVisible 'hidden'}}" title="Display the log" {{action "toggleLog"}}>
       {{svg-jar 'icon-seemore' class="icon"}}

@@ -91,8 +91,32 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
   },
 
   @computed('state')
+  inQueue(state) {
+    let waitingStates = ['queued'];
+    return waitingStates.includes(state);
+  },
+
+  @computed('state')
+  reQueue(state) {
+    let waitingStates = ['requeued'];
+    return waitingStates.includes(state);
+  },
+
+  @computed('state')
+  inReceived(state) {
+    let waitingStates = ['received'];
+    return waitingStates.includes(state);
+  },
+
+  @computed('state')
+  toBeCreated(state) {
+    let waitingStates = ['created'];
+    return waitingStates.includes(state);
+  },
+
+  @computed('state')
   notStarted(state) {
-    let waitingStates = ['queued', 'created', 'received'];
+    let waitingStates = ['queued', 'requeued', 'created', 'received'];
     return waitingStates.includes(state);
   },
 
