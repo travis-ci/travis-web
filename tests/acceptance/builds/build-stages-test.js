@@ -45,7 +45,7 @@ test('visiting build with one stage', function (assert) {
   percySnapshot(assert);
 });
 
-test('visiting build with stages and an unknown config message', function (assert) {
+test('visiting build with stages', function (assert) {
   let repo =  server.create('repository', { slug: 'travis-ci/travis-web' });
   server.create('branch', {});
 
