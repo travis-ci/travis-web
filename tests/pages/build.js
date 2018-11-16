@@ -63,6 +63,10 @@ export default create({
 
   buildNotFoundMessage: text('h2.page-title'),
 
+  buildTab: {
+    scope: '[data-test-build-matrix-tab]'
+  },
+
   yamlTab: {
     click: clickable('[data-test-build-yaml-tab]'),
   },
