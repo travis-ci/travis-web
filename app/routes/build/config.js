@@ -5,5 +5,9 @@ export default TravisRoute.extend({
 
   model() {
     return this.modelFor('build').get('request');
+  },
+
+  afterModel(request) {
+    return request.get('messagesRequest');
   }
 });

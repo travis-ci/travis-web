@@ -8,5 +8,9 @@ export default TravisRoute.extend({
       let requestId = build.get('build.request.id') || build.belongsTo('request').id();
       return this.store.findRecord('request', requestId);
     });
+  },
+
+  afterModel(request) {
+    return request.get('messagesRequest');
   }
 });
