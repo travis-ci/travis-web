@@ -1,8 +1,12 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
-import { task } from 'ember-concurrency';
+// import { task } from 'ember-concurrency';
 import { computed } from '@ember/object';
 import moment from 'moment';
+
+import ObjectProxy from '@ember/object/proxy';
+import PromiseProxyMixin from '@ember/object/promise-proxy-mixin';
+let ObjectPromiseProxy = ObjectProxy.extend(PromiseProxyMixin);
 
 const intervalMap = {
   day: {
@@ -68,11 +72,11 @@ export default Component.extend({
     };
   }),
 
-  dataRequest: task(function* () {
+  dataRequest: computed('interval', function () {
     const endpoint = '/insights';
     const url = `${endpoint}/metrics`;
     const owner = this.get('owner');
-    const interval = this.get('interval');
+    const interval = this.interval;
     const endTime = moment.utc();
     const startTime = moment.utc().subtract(1, interval);
     const options = {
@@ -88,13 +92,16 @@ export default Component.extend({
         start_time: startTime.format(apiTimeRequestFormat),
       }
     };
-    return yield this.get('api').get(url, options);
-  }).on('init'),
 
-  aggregateData: computed(function () {
-    const dreq = this.get('dataRequest');
-    if (dreq.last.isSuccessful) {
-      return Object.entries(dreq.last.value.data.values.reduce((timesMap, value) => {
+    return ObjectPromiseProxy.create({
+      promise: this.get('api').get(url, options).then(response => ({data: response.data})),
+    });
+  }),
+
+  aggregateData: computed('dataRequest.data', function () {
+    const responseData = this.get('dataRequest.data');
+    if (responseData) {
+      return Object.entries(responseData.values.reduce((timesMap, value) => {
         if (timesMap.hasOwnProperty(value.time)) {
           timesMap[value.time] += value.value;
         } else {
@@ -106,12 +113,17 @@ export default Component.extend({
   }),
 
   content: computed('aggregateData', function () {
+    // console.log(this.aggregateData);
     if (this.aggregateData) {
       return [{
         name: 'Builds',
         data: this.aggregateData,
       }];
     }
+  }),
+
+  isLoading: computed('aggregateData', function () {
+    return !this.aggregateData;
   }),
 
   totalBuilds: computed('aggregateData', function () {
