@@ -97,7 +97,7 @@ module('Acceptance | config/yaml', function (hooks) {
       await visit(`/travis-ci/travis-web/jobs/${this.job.id}`);
       await page.yamlTab.click();
 
-      assert.equal(page.jobYmlNote.text, 'This is the configuration for all of build #5, not just this job');
+      assert.equal(page.jobYamlNote.text, 'This is the configuration for all of build #5, not just this job');
       assert.equal(page.yaml, 'language: jortle sudo: tortle');
     });
 
