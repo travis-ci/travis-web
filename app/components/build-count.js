@@ -21,7 +21,6 @@ export default Component.extend({
   classNames: ['insights-glance'],
   classNameBindings: ['isLoading:insights-glance--loading'],
 
-  api: service(),
   insights: service(),
 
   options: computed('interval', 'avgBuilds', function () {

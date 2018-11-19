@@ -156,7 +156,7 @@ export default Component.extend({
 
   @computed('isLoading', 'avgWaitMins')
   avgWaitText(isLoading, avgWaitMins) {
-    if (isLoading) { return '\xa0'; }
+    if (isLoading || typeof avgWaitMins !== 'number') { return '\xa0'; }
     return `${avgWaitMins.toLocaleString()} min${avgWaitMins === 1 ? '' : 's'}`;
   },
 });

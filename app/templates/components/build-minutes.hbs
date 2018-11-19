@@ -1,6 +1,6 @@
 <h3 class="insights-glance__title">Total Build Minutes</h3>
 <div class="insights-glance__stat">{{totalBuildText}}</div>
-{{#if (or isLoading (is-empty filteredData))}}
+{{#if (or isLoading (is-empty aggregateData))}}
   <hr class="insights-glance__chart-placeholder" />
 {{else}}
   {{high-charts content=content chartOptions=options}}
