@@ -32,6 +32,7 @@ export default Component.extend({
   classNameBindings: ['isLoading:insights-glance--loading'],
 
   api: service(),
+  insights: service(),
 
   token: '',
 
@@ -72,48 +73,24 @@ export default Component.extend({
     };
   }),
 
-  dataRequest: computed('interval', function () {
-    const endpoint = '/insights';
-    const url = `${endpoint}/metrics`;
-    const owner = this.get('owner');
-    const interval = this.interval;
-    const endTime = moment.utc();
-    const startTime = moment.utc().subtract(1, interval);
-    const options = {
-      stringifyData: false,
-      data: {
-        subject: 'builds',
-        interval: intervalMap[interval].subInterval,
-        func: 'sum',
-        name: 'count_started',
-        owner_type: owner['@type'] === 'user' ? 'User' : 'Organization',
-        owner_id: owner.id,
-        end_time: endTime.format(apiTimeRequestFormat),
-        start_time: startTime.format(apiTimeRequestFormat),
-      }
-    };
-
-    return ObjectPromiseProxy.create({
-      promise: this.get('api').get(url, options).then(response => ({data: response.data})),
-    });
+  dataRequest: computed('owner', 'interval', function () {
+    return this.get('insights').getMetric(
+      this.owner,
+      this.interval,
+      'builds',
+      'sum',
+      ['count_started'],
+    );
   }),
 
   aggregateData: computed('dataRequest.data', function () {
     const responseData = this.get('dataRequest.data');
     if (responseData) {
-      return Object.entries(responseData.values.reduce((timesMap, value) => {
-        if (timesMap.hasOwnProperty(value.time)) {
-          timesMap[value.time] += value.value;
-        } else {
-          timesMap[value.time] = value.value;
-        }
-        return timesMap;
-      }, {})).map(([key, val]) => [moment.utc(key, apiTimeReceivedFormat).valueOf(), val]);
+      return Object.entries(responseData.count_started);
     }
   }),
 
   content: computed('aggregateData', function () {
-    // console.log(this.aggregateData);
     if (this.aggregateData) {
       return [{
         name: 'Builds',
