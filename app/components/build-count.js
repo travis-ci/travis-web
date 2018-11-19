@@ -1,12 +1,6 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
-// import { task } from 'ember-concurrency';
 import { computed } from '@ember/object';
-import moment from 'moment';
-
-import ObjectProxy from '@ember/object/proxy';
-import PromiseProxyMixin from '@ember/object/promise-proxy-mixin';
-let ObjectPromiseProxy = ObjectProxy.extend(PromiseProxyMixin);
 
 const intervalMap = {
   day: {
@@ -23,18 +17,12 @@ const intervalMap = {
   },
 };
 
-const apiTimeBaseFormat = 'YYYY-MM-DD HH:mm:ss';
-const apiTimeRequestFormat = `${apiTimeBaseFormat} UTC`;
-const apiTimeReceivedFormat = `${apiTimeBaseFormat} zz`;
-
 export default Component.extend({
   classNames: ['insights-glance'],
   classNameBindings: ['isLoading:insights-glance--loading'],
 
   api: service(),
   insights: service(),
-
-  token: '',
 
   options: computed('interval', 'avgBuilds', function () {
     return {
