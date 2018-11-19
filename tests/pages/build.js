@@ -6,7 +6,7 @@ import {
   hasClass,
   isHidden,
   visitable,
-  text,
+  text
 } from 'ember-cli-page-object';
 
 const jobComponent = {
