@@ -10,6 +10,8 @@ import PromiseProxyMixin from '@ember/object/promise-proxy-mixin';
 let ObjectPromiseProxy = ObjectProxy.extend(PromiseProxyMixin);
 import { Promise as EmberPromise } from 'rsvp';
 
+const missingYamlResponse = '---\nerror: No YAML found for this request.';
+
 export default Model.extend({
   created_at: attr(),
   event_type: attr(),
@@ -24,6 +26,11 @@ export default Model.extend({
   pullRequestNumber: attr('number'),
 
   yaml_config: attr('string'),
+
+  @computed('yaml_config')
+  noYamlFound(config) {
+    return config == missingYamlResponse;
+  },
 
   repo: belongsTo('repo', { async: true }),
   commit: belongsTo('commit', { async: true }),

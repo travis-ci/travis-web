@@ -68,7 +68,7 @@ export default create({
   },
 
   yamlTab: {
-    click: clickable('[data-test-build-yaml-tab]'),
+    scope: '[data-test-build-yaml-tab]'
   },
 
   ymlMessages: collection('.yml-message', {

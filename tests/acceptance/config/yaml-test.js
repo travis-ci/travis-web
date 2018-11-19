@@ -78,6 +78,13 @@ module('Acceptance | config/yaml', function (hooks) {
 
       percySnapshot(assert);
     });
+
+    test('hides the tab when no yaml is found', async function (assert) {
+      this.request.yaml_config = '---\nerror: No YAML found for this request.';
+
+      await visit(`/travis-ci/travis-web/builds/${this.build.id}`);
+      assert.ok(page.yamlTab.isHidden, 'expected the config tab to be hidden when there’s no .travis.yml');
+    });
   });
 
   module('with a single-job build', function () {
@@ -92,6 +99,13 @@ module('Acceptance | config/yaml', function (hooks) {
 
       assert.equal(page.jobYmlNote.text, 'This is the configuration for all of build #5, not just this job');
       assert.equal(page.yaml, 'language: jortle sudo: tortle');
+    });
+
+    test('hides the tab when no yaml is found', async function (assert) {
+      this.request.yaml_config = '---\nerror: No YAML found for this request.';
+
+      await visit(`/travis-ci/travis-web/jobs/${this.job.id}`);
+      assert.ok(page.yamlTab.isHidden, 'expected the config tab to be hidden when there’s no .travis.yml');
     });
   });
 });
