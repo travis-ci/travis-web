@@ -38,12 +38,24 @@
         {{/unless}}
       {{/if}}
 
-      {{#if deploymentVersion}}<li><span class='deployment-version'>{{deploymentVersion}}</span></li>{{/if}}
-      {{else}}
-        {{#if auth.signedIn}}
-          <li><a class="navigation-anchor" title="Documentation" href="{{ config.urls.docs }}">Docs</a></li>
-        {{/if}}
+      <li>
+        {{#link-to "help" class="navigation-anchor" title="Help"}}
+          Help
+        {{/link-to}}
+      </li>
+
+      {{#if deploymentVersion}}
+        <li><span class='deployment-version'>{{deploymentVersion}}</span></li>
+      {{/if}}
+
+    {{else}}
+
+      {{#if auth.signedIn}}
+        <li><a class="navigation-anchor" title="Documentation" href="{{ config.urls.docs }}">Docs</a></li>
+      {{/if}}
+
     {{/unless}}
+
     <li id="profile-menu-link" class="{{classProfile}}">
       {{#if auth.signedOut}}
         <button class="auth-button signed-out" type="button" {{action 'signIn'}}>Sign in with GitHub</button>
