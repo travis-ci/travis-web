@@ -1,6 +1,6 @@
 <nav class="travistab-nav--secondary">
   <ul>
-    <li>{{link-to (concat 'Build #' build.number) 'build.index' build.repo build data-test-build-matrix-tab title="Look at this build matrix"}}</li>
+    <li>{{link-to 'Build jobs' 'build.index' build.repo build data-test-build-matrix-tab title="Look at this build matrix"}}</li>
     {{#unless build.request.noYamlFound}}
       <li>
         {{#link-to 'build.config' build.repo build data-test-build-yaml-tab title="Look at this build's config"}}

@@ -16,7 +16,7 @@ test('visiting build with one stage', function (assert) {
   let branch = server.create('branch', { name: 'acceptance-tests' });
   let  gitUser = server.create('git-user', { name: 'Mr T' });
   let commit = server.create('commit', { author: gitUser, committer: gitUser, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
-  let build = server.create('build', { repository: repo, number: 1919, state: 'passed', commit, branch });
+  let build = server.create('build', { repository: repo, state: 'passed', commit, branch });
 
   let firstStage = build.createStage({ number: 1, name: 'first :two_men_holding_hands:', state: 'passed', started_at: jobTime, finished_at: futureTime(71), allow_failure: true });
 
@@ -34,7 +34,6 @@ test('visiting build with one stage', function (assert) {
   waitForElement('.jobs.stage .stage-header.passed');
 
   andThen(function () {
-    assert.equal(buildPage.buildTab.text, 'Build #1919');
     assert.equal(buildPage.stages.length, 1, 'expected one build stage');
 
     buildPage.stages[0].as(stage => {
