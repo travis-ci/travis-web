@@ -52,7 +52,11 @@
           {{/if}}
         </div>
         {{#unless filter.isFiltering}}
-          {{pagination-navigation collection=notLockedGithubAppsRepositories route="account.repositories" queryParam='apps-page' inner=6 outer=2}}
+          {{#if account.isOrganization}}
+            {{pagination-navigation collection=notLockedGithubAppsRepositories route='organization.repositories' queryParam='apps-page' inner=6 outer=2}}
+          {{else}}
+            {{pagination-navigation collection=notLockedGithubAppsRepositories route='account.repositories' queryParam='apps-page' inner=6 outer=2}}
+          {{/if}}
         {{/unless}}
       {{/repository-filter}}
       {{#if lockedGithubAppsRepositories}}
@@ -168,7 +172,11 @@
       {{/if}}
     </div>
     {{#unless filter.isFiltering}}
-      {{pagination-navigation collection=deprecated route="account.repositories" inner=6 outer=2}}
+      {{#if account.isOrganization}}
+        {{pagination-navigation collection=deprecated route="organization.repositories" inner=6 outer=2}}
+      {{else}}
+        {{pagination-navigation collection=deprecated route="account.repositories" inner=6 outer=2}}
+      {{/if}}
     {{/unless}}
   {{/repository-filter}}
 {{/if}}

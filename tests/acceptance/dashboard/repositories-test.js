@@ -122,7 +122,7 @@ module('Acceptance | dashboard/repositories', function (hooks) {
   test('visiting /dashboard/ with feature flag disabled', async function (assert) {
     await visit('/dashboard/');
 
-    assert.notEqual(currentURL(), '/dashboard/');
+    assert.equal(currentURL(), '/dashboard/');
   });
 
   test('visiting /dashboard/ with feature flag enabled', async function (assert) {

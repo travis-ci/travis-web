@@ -84,7 +84,7 @@ module.exports = function () {
   });
 
   const emojiAssets = new Funnel('node_modules/emoji-datasource-apple/img/apple/64', {
-    destDir: '/images/emoji'
+    destDir: '/public/images/emoji'
   });
 
   importNpmDependency(app, 'node_modules/fuzzysort/fuzzysort.js');

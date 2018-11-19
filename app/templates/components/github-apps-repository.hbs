@@ -1,8 +1,16 @@
 {{repository-visibility-icon repository=repository}}
 
-{{#link-to "repo" repository.owner.login repository.name class="profile-repo"}}
+{{#link-to
+  "repo"
+  repository.owner.login
+  repository.name
+  (query-params migrationStatus=repository.migrationStatus)
+  class="profile-repo"
+}}
   {{name}}
 {{/link-to}}
+
+
 
 {{#if repository.active_on_org}}
   {{#if migrationEnabled}}
@@ -20,7 +28,7 @@
       {{#if (eq repository.migrationStatus "success")}}
         <span>{{svg-jar "stage-passed" class="icon"}}</span>
       {{/if}}
-      {{#if (eq repository.migrationStatus "failed")}}
+      {{#if (eq repository.migrationStatus "failure")}}
         <span>{{svg-jar "stage-errored" class="icon"}}</span>
       {{/if}}
       </div>
