@@ -1,6 +1,6 @@
-<h3 class="footer-title">Travis CI Status</h3>
-<ul>
-  <li><div class="status-circle {{appLoading.fetchTravisStatus.last.value}}">Status:</div>
-      <a href="http://www.traviscistatus.com/">Travis CI Status</a>
-  </li>
-</ul>
+<div class="status-circle {{appLoading.fetchTravisStatus.last.value}}">
+  &#9679;
+</div>
+{{#external-link-to href="http://www.traviscistatus.com/" class="status-link"}}
+  Travis CI Status
+{{/external-link-to}}

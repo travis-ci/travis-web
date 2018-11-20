@@ -1,0 +1,56 @@
+.travis-status {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  color: $cement-grey;
+
+  &.none {
+    color: $turf-green;
+  }
+
+  &.unknown {
+    color: $cement-grey;
+  }
+
+  &.maintenance {
+    color: $dozer-yellow;
+  }
+
+  &.degraded {
+    color: $dozer-yellow;
+  }
+
+  &.minor {
+    color: mix($brick-red, $dozer-yellow);
+  }
+
+  &.major {
+    color: $brick-red;
+  }
+
+  &.colorize-text {
+    .status-link {
+      color: inherit;
+    }
+  }
+
+  .status-circle {
+    font-size: 1.8em;
+    line-height: 0;
+    position: relative;
+    top: -1px;
+    margin-right: 2px;
+  }
+
+  .status-link {
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+}
+
+.align-center .travis-status {
+  justify-content: center;
+}
+
