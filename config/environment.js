@@ -76,6 +76,10 @@ module.exports = function (environment) {
     logLimit: 10000,
     emojiPrepend: '',
     statusPageStatusUrl: 'https://pnpcptp8xh9k.statuspage.io/api/v2/status.json',
+
+    moment: {
+      includeTimezone: 'subset'
+    }
   };
 
   ENV.featureFlags = {

@@ -1,3 +1,17 @@
 {{#travis-layout layoutName="layouts/center"}}
-  Help page
+
+  <h1 class="header-main align-center">
+    Get help from our support engineers
+  </h1>
+
+  <div class="subheading align-center">
+    Expect a reply between {{startTime}} {{timezone}} – {{endTime}} {{timezone}} Monday through Friday
+  </div>
+
+  {{#if isLoggedIn}}
+    Logged in help
+  {{else}}
+
+  {{/if}}
+
 {{/travis-layout}}
