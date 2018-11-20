@@ -2,28 +2,17 @@ import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 
-const intervalMap = {
-  day: {
-    subInterval: '10min',
-    tooltipLabelFormat: '%A, %b %e, %H:%M',
-  },
-  week: {
-    subInterval: '1hour',
-    tooltipLabelFormat: '%A, %b %e, %H:%M',
-  },
-  month: {
-    subInterval: '1day',
-    tooltipLabelFormat: '%A, %b %e',
-  },
-};
-
 export default Component.extend({
   classNames: ['insights-glance'],
   classNameBindings: ['isLoading:insights-glance--loading'],
 
   insights: service(),
 
-  options: computed('interval', 'avgBuildMins', function () {
+  intervalSettings: computed(function () {
+    return this.get('insights').getIntervalSettings();
+  }),
+
+  options: computed('interval', 'intervalSettings', 'avgBuildMins', function () {
     return {
       title: { text: undefined },
       xAxis: { visible: false, type: 'datetime' },
@@ -53,7 +42,7 @@ export default Component.extend({
         },
       },
       tooltip: {
-        xDateFormat: intervalMap[this.interval].tooltipLabelFormat,
+        xDateFormat: this.intervalSettings[this.interval].tooltipLabelFormat,
         outside: true,
         pointFormat: '<span>{series.name}: <b>{point.y}</b></span><br/>',
       },
@@ -73,7 +62,7 @@ export default Component.extend({
   aggregateData: computed('dataRequest.data', function () {
     const responseData = this.get('dataRequest.data');
     if (responseData) {
-      return Object.entries(responseData.times_running).map(([key, val]) => [
+      return responseData.times_running.map(([key, val]) => [
         key,
         Math.round(val / 60)
       ]);

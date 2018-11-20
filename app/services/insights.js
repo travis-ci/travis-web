@@ -1,12 +1,12 @@
 import Service, { inject as serviceInject } from '@ember/service';
-// import { computed } from '@ember/object';
 import moment from 'moment';
+import $ from 'jquery';
 
 import ObjectProxy from '@ember/object/proxy';
 import PromiseProxyMixin from '@ember/object/promise-proxy-mixin';
 let ObjectPromiseProxy = ObjectProxy.extend(PromiseProxyMixin);
 
-const defaultIntervalMap = {
+const defaultIntervalSettings = {
   day: {
     subInterval: '10min',
     tooltipLabelFormat: '%A, %b %e, %H:%M',
@@ -40,16 +40,19 @@ const endpoints = {
 export default Service.extend({
   api: serviceInject(),
 
-  // intervalMap: {},
+  getIntervalSettings(customIntervalSettings = {}) {
+    return $.extend(true, {}, defaultIntervalSettings, customIntervalSettings);
+  },
 
-  getMetric(owner, interval, subject, func, metrics = []) {
+  getMetric(owner, interval, subject, func, metrics = [], customIntervalSettings = {}) {
+    const intervalSettings = this.getIntervalSettings(customIntervalSettings);
     const endTime = moment.utc();
     const startTime = moment.utc().subtract(1, interval);
     const options = {
       stringifyData: false,
       data: {
         subject: subject,
-        interval: defaultIntervalMap[interval].subInterval,
+        interval: intervalSettings[interval].subInterval,
         func: func,
         name: metrics.join(','),
         owner_type: owner['@type'] === 'user' ? 'User' : 'Organization',
@@ -86,7 +89,15 @@ export default Service.extend({
             return timesMap;
           }, defaultTimesMap
         );
+        Object.entries(aggData).map(([metricKey, metricVal]) => {
+          aggData[metricKey] = Object.entries(metricVal).map(([key, val]) => [
+            Number(key),
+            val
+          ]);
+        });
         return { data: aggData };
+      }).catch(response => {
+        // console.log('Err', response);
       }),
     });
   },
