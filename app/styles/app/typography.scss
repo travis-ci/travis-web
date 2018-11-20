@@ -5,7 +5,11 @@
   font-size: 3.7rem;
   letter-spacing: -0.5px;
   color: $oxide-blue;
-  margin: 10px 0;
+  margin: 20px 0 10px;
+
+  strong {
+    font-weight: 400;
+  }
 }
 
 .subheading {

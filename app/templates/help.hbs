@@ -1,6 +1,18 @@
 {{#travis-layout layoutName="layouts/center"}}
 
   <h1 class="header-main align-center">
+    How can we help{{#if isLoggedIn}}, <strong>{{auth.userName}}</strong>{{/if}}?
+  </h1>
+
+  <div class="subheading align-center">
+    Find our most used resources, popular topics in our Community forum or talk with us!
+  </div>
+
+  <div class="subheading align-center">
+    {{travis-status colorizeText=true }}
+  </div>
+
+  <h1 class="header-main align-center">
     Get help from our support engineers
   </h1>
 
@@ -11,7 +23,7 @@
   {{#if isLoggedIn}}
     Logged in help
   {{else}}
-
+    Not logged in stub
   {{/if}}
 
 {{/travis-layout}}
