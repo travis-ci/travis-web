@@ -1,42 +1,18 @@
 import Component from '@ember/component';
-import { computed } from 'ember-decorators/object';
-import { service } from 'ember-decorators/service';
-import $ from 'jquery';
-import moment from 'moment';
-
-import ObjectProxy from '@ember/object/proxy';
-import PromiseProxyMixin from '@ember/object/promise-proxy-mixin';
-let ObjectPromiseProxy = ObjectProxy.extend(PromiseProxyMixin);
-
-const intervalMap = {
-  day: {
-    subInterval: '10min',
-    tooltipLabelFormat: '%A, %b %e, %H:%M',
-  },
-  week: {
-    subInterval: '1hour',
-    tooltipLabelFormat: '%A, %b %e, %H:%M',
-  },
-  month: {
-    subInterval: '1day',
-    tooltipLabelFormat: '%A, %b %e',
-  },
-};
-
-const apiTimeBaseFormat = 'YYYY-MM-DD HH:mm:ss';
-const apiTimeRequestFormat = `${apiTimeBaseFormat} UTC`;
-const apiTimeReceivedFormat = `${apiTimeBaseFormat} zz`;
+import { computed } from '@ember/object';
+import { inject as service } from '@ember/service';
 
 export default Component.extend({
   classNames: ['insights-glance'],
   classNameBindings: ['isLoading:insights-glance--loading'],
 
-  @service storage: null,
+  insights: service(),
 
-  token: '',
+  intervalSettings: computed(function () {
+    return this.get('insights').getIntervalSettings();
+  }),
 
-  @computed('interval', 'avgWaitMins')
-  options(interval, avgWaitMins) {
+  options: computed('interval', 'intervalSettings', 'avgWaitMins', function () {
     return {
       title: { text: undefined },
       xAxis: { visible: false, type: 'datetime' },
@@ -44,7 +20,7 @@ export default Component.extend({
         visible: true,
         title: { text: undefined },
         plotLines: [{
-          value: avgWaitMins,
+          value: this.avgWaitMins,
           color: '#eaeaea',
           width: 1,
         }],
@@ -66,97 +42,60 @@ export default Component.extend({
         },
       },
       tooltip: {
-        xDateFormat: intervalMap[interval].tooltipLabelFormat,
+        xDateFormat: this.intervalSettings[this.interval].tooltipLabelFormat,
         outside: true,
         pointFormat: '<span>{series.name}: <b>{point.y}</b></span><br/>',
       },
     };
-  },
+  }),
 
-  @computed('owner', 'interval', 'token')
-  dataRequest(owner, interval, token) {
-    // FIXME: replace with v3 calls when it is ready
-    const apiToken = token || this.get('storage').getItem('travis.insightToken') || '';
-    if (apiToken.length === 0) { return; }
-    const insightEndpoint = 'https://travis-insights-production.herokuapp.com';
-    let endTime = moment();
-    let startTime = moment().subtract(1, interval);
+  dataRequest: computed('owner', 'interval', function () {
+    return this.get('insights').getMetric(
+      this.owner,
+      this.interval,
+      'jobs',
+      'avg',
+      ['times_waiting'],
+      undefined,
+      (key, val) => [key, Math.round(val / 60)]
+    );
+  }),
 
-    let insightParams = $.param({
-      subject: 'jobs',
-      interval: intervalMap[interval].subInterval,
-      func: 'avg',
-      name: 'times_waiting',
-      owner_type: owner['@type'] === 'user' ? 'User' : 'Organization',
-      owner_id: owner.id,
-      token: apiToken,
-      end_time: endTime.format(apiTimeRequestFormat),
-      start_time: startTime.format(apiTimeRequestFormat),
-    });
-    const url = `${insightEndpoint}/metrics?${insightParams}`;
-
-    return ObjectPromiseProxy.create({
-      promise: fetch(url).then(response => {
-        if (response.ok) {
-          return response.json();
-        } else { return false; }
-      }).then(response => ({data: response}))
-    });
-  },
-
-  @computed('dataRequest.data')
-  filteredData(data) {
-    if (data) {
-      return Object.entries(data.values.reduce((timesMap, value) => {
-        const mins = value.value / 60;
-        if (timesMap.hasOwnProperty(value.time)) {
-          timesMap[value.time][0]++;
-          timesMap[value.time][1] += mins;
-        } else {
-          timesMap[value.time] = [1, mins];
-        }
-        return timesMap;
-      }, {})).map(([key, val]) => [
-        moment.utc(key, apiTimeReceivedFormat).valueOf(),
-        // val[1],
-        (Math.round((val[1] / val[0]) * 100) / 100)
-      ]);
+  aggregateData: computed('dataRequest.data', function () {
+    const responseData = this.get('dataRequest.data');
+    if (responseData) {
+      return responseData.times_waiting;
     }
-  },
+  }),
 
-  @computed('filteredData')
-  isLoading(filteredData) {
-    return !filteredData;
-  },
+  isLoading: computed('aggregateData', function () {
+    return !this.aggregateData;
+  }),
 
-  @computed('filteredData')
-  content(filteredData) {
-    if (filteredData) {
+  content: computed('aggregateData', function () {
+    if (this.aggregateData) {
       return [{
         name: 'Minutes',
-        data: filteredData,
+        data: this.aggregateData,
       }];
     }
-  },
+  }),
 
-  @computed('filteredData')
-  totalWaitMins(filteredData) {
-    if (filteredData) {
-      return filteredData.reduce((acc, val) => acc + val[1], 0);
+  totalWaitMins: computed('aggregateData', function () {
+    if (this.aggregateData) {
+      return this.aggregateData.reduce((acc, val) => acc + val[1], 0);
     }
-  },
+  }),
 
-  @computed('filteredData', 'totalWaitMins')
-  avgWaitMins(filteredData, totalWaitMins) {
-    if (filteredData) {
-      if (filteredData.length === 0) { return 0; }
-      return Math.round((totalWaitMins / filteredData.length) * 100) / 100;
+  avgWaitMins: computed('aggregateData', 'totalWaitMins', function () {
+    if (this.aggregateData) {
+      if (this.aggregateData.length === 0) { return 0; }
+      return Math.round((this.totalWaitMins / this.aggregateData.length) * 100) / 100;
     }
-  },
+  }),
 
-  @computed('isLoading', 'avgWaitMins')
-  avgWaitText(isLoading, avgWaitMins) {
-    if (isLoading || typeof avgWaitMins !== 'number') { return '\xa0'; }
-    return `${avgWaitMins.toLocaleString()} min${avgWaitMins === 1 ? '' : 's'}`;
-  },
+  avgWaitText: computed('isLoading', 'avgWaitMins', function () {
+    if (this.isLoading || typeof this.avgWaitMins !== 'number') { return '\xa0'; }
+    return `${this.avgWaitMins.toLocaleString()} min${this.avgWaitMins === 1 ? '' : 's'}`;
+  }),
 });

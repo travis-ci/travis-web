@@ -1,7 +1,7 @@
 <h3 class="insights-glance__title">Average Queue Time</h3>
 <div class="insights-glance__stat">{{avgWaitText}}</div>
 
-{{#if (or isLoading (is-empty filteredData))}}
+{{#if (or isLoading (is-empty aggregateData))}}
   <hr class="insights-glance__chart-placeholder" />
 {{else}}
   {{high-charts content=content chartOptions=options}}

@@ -44,7 +44,14 @@ export default Service.extend({
     return $.extend(true, {}, defaultIntervalSettings, customIntervalSettings);
   },
 
-  getMetric(owner, interval, subject, func, metrics = [], customIntervalSettings = {}) {
+  getMetric(owner,
+    interval,
+    subject,
+    func,
+    metrics = [],
+    customIntervalSettings = {},
+    customTransform = ((key, val) => [key, val])
+  ) {
     const intervalSettings = this.getIntervalSettings(customIntervalSettings);
     const endTime = moment.utc();
     const startTime = moment.utc().subtract(1, interval);
@@ -66,39 +73,87 @@ export default Service.extend({
       return map;
     }, {});
 
+    const aggregator = this._getAggregator(func);
+    const transformer = this._getTransformer(func);
+
     return ObjectPromiseProxy.create({
       promise: this.get('api').get(endpoints.metrics, options).then(response => {
-        let aggData = response.data.values.reduce(
+        let aggData;
+
+        // Data aggregation
+        aggData = response.data.values.reduce(
           (timesMap, value) => {
-            if (typeof value.value !== 'number' || Number.isNaN(value.value)) { return timesMap; }
-            const timeKey = moment.utc(value.time, apiTimeReceivedFormat).valueOf();
-            if (timesMap[value.name].hasOwnProperty(timeKey)) {
-              switch (func) {
-                case 'sum':
-                  timesMap[value.name][timeKey] += value.value;
-                  break;
-                case 'max':
-                  if (value.value > timesMap[value.name][timeKey]) {
-                    timesMap[value.name][timeKey] = value.value;
-                  }
-                  break;
-              }
-            } else {
-              timesMap[value.name][timeKey] = value.value;
+            if (typeof value.value !== 'number' || Number.isNaN(value.value)) {
+              return timesMap;
             }
+            const timeKey = moment.utc(value.time, apiTimeReceivedFormat).valueOf();
+            timesMap = aggregator(timesMap, value.name, timeKey, value.value);
             return timesMap;
           }, defaultTimesMap
         );
+
+        // Secondary data transform - to prepare it for charts once aggregation is complete
         Object.entries(aggData).map(([metricKey, metricVal]) => {
-          aggData[metricKey] = Object.entries(metricVal).map(([key, val]) => [
-            Number(key),
-            val
-          ]);
+          aggData[metricKey] = Object.entries(metricVal).map(([key, val]) => {
+            let [newKey, newVal] = transformer(key, val);
+            try {
+              [newKey, newVal] = customTransform(newKey, newVal);
+            } catch (e) {}
+            return [newKey, newVal];
+          });
         });
+
         return { data: aggData };
       }).catch(response => {
         // console.log('Err', response);
       }),
     });
+  },
+
+  _getAggregator(func) {
+    switch (func) {
+      case 'sum':
+        return (map, name, time, value) => {
+          if (map[name].hasOwnProperty(time)) {
+            map[name][time] += value;
+          } else {
+            map[name][time] = value;
+          }
+          return map;
+        };
+      case 'max':
+        return (map, name, time, value) => {
+          if (map[name].hasOwnProperty(time)) {
+            if (value > map[name][time]) {
+              map[name][time] = value;
+            }
+          } else {
+            map[name][time] = value;
+          }
+          return map;
+        };
+      case 'avg':
+        return (map, name, time, value) => {
+          if (map[name].hasOwnProperty(time)) {
+            map[name][time][0]++;
+            map[name][time][1] += value;
+          } else {
+            map[name][time] = [1, value];
+          }
+          return map;
+        };
+      // Don't know that there's a sensible default aggregator
+      default:
+        return (map, name, time, value) => map;
+    }
+  },
+
+  _getTransformer(func) {
+    switch (func) {
+      case 'avg':
+        return (key, val) => [Number(key), (val[1] / val[0])];
+      default:
+        return (key, val) => [Number(key), val];
+    }
   },
 });
