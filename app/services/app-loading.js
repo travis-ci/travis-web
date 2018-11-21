@@ -7,7 +7,7 @@ import { service } from 'ember-decorators/service';
 const { statusPageStatusUrl } = config;
 
 export const TRAVIS_STATUS = {
-  UNKNOWN: 'onknown',
+  UNKNOWN: 'unknown',
   NONE: 'none',
   MAINTENANCE: 'maintenance',
   DEGRADED: 'degraded',
