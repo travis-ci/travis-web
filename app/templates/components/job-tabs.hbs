@@ -1,13 +1,14 @@
 <nav class="travistab-nav--secondary">
   <ul>
     <li>{{link-to 'Job log' 'job.index' repo job data-test-job-log-tab id="tab_log" title="Look at this job's log"}}</li>
-    {{#unless job.build.request.noYamlFound}}
-      <li>
-        {{#link-to 'job.config' repo job data-test-build-yaml-tab title="Look at this job’s config"}}
-          View config
-        {{/link-to}}
-      </li>
-    {{/unless}}
+    <li>
+      {{#link-to 'job.config' repo job data-test-build-yaml-tab title="Look at this job’s config" disabled=job.build.request.noYamlFound}}
+        {{#if job.build.request.noYamlFound}}
+          {{tooltip-on-element text='No config could be found for this job'}}
+        {{/if}}
+        View config
+      {{/link-to}}
+    </li>
   </ul>
 </nav>
 <div class="travistab-body job-tabs">

@@ -68,7 +68,8 @@ export default create({
   },
 
   yamlTab: {
-    scope: '[data-test-build-yaml-tab]'
+    scope: '[data-test-build-yaml-tab]',
+    isDisabled: hasClass('disabled')
   },
 
   ymlMessages: collection('.yml-message', {

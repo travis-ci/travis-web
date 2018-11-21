@@ -83,7 +83,7 @@ module('Acceptance | config/yaml', function (hooks) {
       this.request.yaml_config = '---\nerror: No YAML found for this request.';
 
       await visit(`/travis-ci/travis-web/builds/${this.build.id}`);
-      assert.ok(page.yamlTab.isHidden, 'expected the config tab to be hidden when there’s no .travis.yml');
+      assert.ok(page.yamlTab.isDisabled, 'expected the config tab to be disabled when there’s no .travis.yml');
     });
   });
 
@@ -105,7 +105,7 @@ module('Acceptance | config/yaml', function (hooks) {
       this.request.yaml_config = '---\nerror: No YAML found for this request.';
 
       await visit(`/travis-ci/travis-web/jobs/${this.job.id}`);
-      assert.ok(page.yamlTab.isHidden, 'expected the config tab to be hidden when there’s no .travis.yml');
+      assert.ok(page.yamlTab.isDisabled, 'expected the config tab to be disabled when there’s no .travis.yml');
     });
   });
 });
