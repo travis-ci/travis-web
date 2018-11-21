@@ -8,9 +8,7 @@ const invervalOverrides = {
   },
   week: {
     subInterval: '1day',
-  },
-  month: {
-    subInterval: '1day',
+    tooltipLabelFormat: '%A, %b %e',
   },
 };
 
@@ -64,6 +62,7 @@ export default Component.extend({
         }
       },
       tooltip: {
+        xDateFormat: this.intervalSettings[this.interval].tooltipLabelFormat,
         useHTML: true,
         pointFormat: `
           <div style="margin-top: 2px;">

@@ -59,6 +59,7 @@ export default Component.extend({
         }
       },
       tooltip: {
+        xDateFormat: this.intervalSettings[this.interval].tooltipLabelFormat,
         useHTML: true,
         pointFormat: `
           <div style="margin-top: 2px;">

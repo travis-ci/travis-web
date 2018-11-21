@@ -14,7 +14,6 @@ export default TravisRoute.extend({
     tab: {
       refreshModel: true
     },
-    insightToken: null,
   },
 
   model({ page, tab }, transition) {

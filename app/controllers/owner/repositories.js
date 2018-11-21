@@ -1,5 +1,5 @@
 import Controller from '@ember/controller';
-import { computed } from 'ember-decorators/object';
+import { computed } from '@ember/object';
 
 export default Controller.extend({
   isLoading: false,
@@ -7,10 +7,9 @@ export default Controller.extend({
   tab: null,
   dataInterval: 'month',
 
-  @computed('tab')
-  isInsights(tab) {
-    return typeof tab === 'string' && tab.toLowerCase() === 'insights';
-  },
+  isInsights: computed('tab', function () {
+    return typeof this.tab === 'string' && this.tab.toLowerCase() === 'insights';
+  }),
 
   actions: {
     setSubTab(selection) {

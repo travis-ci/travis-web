@@ -17,8 +17,8 @@
 
     &:after {
       background-color: $asphalt-grey;
-      height: 1px;
-      bottom: -1px;
+      // height: 1px;
+      // bottom: -1px;
     }
   }
 }
@@ -49,20 +49,20 @@
     grid-column: span 1;
   }
 
-  .insights-glance__title {
+  &__title {
     font-size: 12px;
-    font-weight: 500;
+    font-weight: 600;
     margin: 0;
     text-transform: uppercase;
   }
 
-  .insights-glance__stat {
+  &__stat {
     font-size: 27px;
-    font-weight: 400;
+    font-weight: 300;
     color: $cement-grey;
   }
 
-  .insights-glance__chart-placeholder {
+  &__chart-placeholder {
     margin: 33px 0 12px 0;
     border: none;
     border-bottom: 1px solid $pebble-grey;
@@ -80,10 +80,10 @@
   &__title {
     font-size: 15px;
     font-weight: 400;
-    margin: 0;
+    margin: 0 0 5px 0;
   }
 
-  &.insights-odyssey--loading .insights-odyssey__chart {
+  &--loading .insights-odyssey__chart {
     padding-bottom: 70%;
     background-color: #fdfdfd;
     background-image: linear-gradient(to bottom, rgba($dry-cement, 1) 0px,rgba($dry-cement, 0) 1px,rgba($dry-cement, 0) 60px);
