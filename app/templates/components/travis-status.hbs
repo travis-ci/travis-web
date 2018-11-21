@@ -1,6 +1,6 @@
-<div class="status-circle {{appLoading.fetchTravisStatus.last.value}}">
+<div class="status-circle">
   &#9679;
 </div>
 {{#external-link-to href="http://www.traviscistatus.com/" class="status-link"}}
-  Travis CI Status
+  Travis CI Status{{#if showDescription}}: {{description}}{{/if}}
 {{/external-link-to}}

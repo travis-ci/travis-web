@@ -1,16 +1,19 @@
 import Component from '@ember/component';
 import { service } from 'ember-decorators/service';
-import { reads } from '@ember/object/computed';
+import { reads, notEmpty } from '@ember/object/computed';
 
 export default Component.extend({
   classNames: ['travis-status'],
-  classNameBindings: ['status', 'colorizeText:colorize-text'],
+  classNameBindings: ['indicator', 'colorizeText:colorize-text'],
 
   @service appLoading: null,
 
   colorizeText: false,
 
-  status: reads('appLoading.fetchTravisStatus.last.value'),
+  indicator: reads('appLoading.indicator'),
+  description: reads('appLoading.description'),
+
+  showDescription: notEmpty('description'),
 
   didInsertElement() {
     this._super(...arguments);
