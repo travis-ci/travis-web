@@ -13,12 +13,12 @@
   <div class="travistab-body">
     {{insight-tabs selectedTab=dataInterval setSubTab='setSubTab'}}
     <div class="insights-grid">
-      {{build-count owner=model interval=dataInterval token=insightToken}}
-      {{build-minutes owner=model interval=dataInterval token=insightToken}}
-      {{queue-times owner=model interval=dataInterval token=insightToken}}
-      {{active-repo-count owner=model interval=dataInterval token=insightToken}}
-      {{parallel-jobs-chart owner=model interval=dataInterval token=insightToken}}
-      {{build-status-chart owner=model interval=dataInterval token=insightToken}}
+      {{build-count owner=model interval=dataInterval}}
+      {{build-minutes owner=model interval=dataInterval}}
+      {{queue-times owner=model interval=dataInterval}}
+      {{active-repo-count owner=model interval=dataInterval}}
+      {{parallel-jobs-chart owner=model interval=dataInterval}}
+      {{build-status-chart owner=model interval=dataInterval}}
     </div>
   </div>
 {{else}}

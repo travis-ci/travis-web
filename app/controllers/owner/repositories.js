@@ -6,7 +6,6 @@ export default Controller.extend({
   page: 1,
   tab: null,
   dataInterval: 'month',
-  insightToken: '',
 
   @computed('tab')
   isInsights(tab) {
