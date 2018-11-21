@@ -1,10 +1,14 @@
 .help-page {
 
   .help-page__top {
-    margin-bottom: 45px;
+    margin-bottom: 30px;
+
+    .header-main {
+      margin: 30px 0 35px;
+    }
 
     .subheading {
-      margin-bottom: 45px;
+      margin-bottom: 30px;
     }
 
     .status {
@@ -18,7 +22,7 @@
     padding-top: 20px;
 
     .header-main {
-      margin-bottom: 10px;
+      margin: 20px 0 10px;
     }
 
     .subheading {

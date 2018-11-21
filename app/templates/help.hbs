@@ -1,7 +1,7 @@
 {{#if toTop}}{{scroll-here}}{{/if}}
-{{#travis-layout layoutName="layouts/center" class="help-page"}}
+{{#travis-layout layoutName="layouts/striped" class="help-page" as |layout| }}
 
-  <section class="help-page__top">
+  {{#layout.section class="help-page__top"}}
     <h1 class="header-main align-center">
       How can we help{{#if isLoggedIn}}, <strong>{{auth.userName}}</strong>{{/if}}?
     </h1>
@@ -18,9 +18,9 @@
     <div class="status align-center">
       {{travis-status colorizeText=true }}
     </div>
-  </section>
+  {{/layout.section}}
 
-  <section class="help-page__support">
+  {{#layout.section class="help-page__support" hasBackground=(not isLoggedIn) }}
     {{#if toForm}}{{scroll-here}}{{/if}}
 
     {{#if isLoggedIn}}
@@ -40,6 +40,6 @@
     {{else}}
       Not logged in stub
     {{/if}}
-  </section>
+  {{/layout.section}}
 
 {{/travis-layout}}
