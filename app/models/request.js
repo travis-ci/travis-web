@@ -28,7 +28,7 @@ export default Model.extend({
   yaml_config: attr('string'),
 
   @computed('yaml_config')
-  noYamlFound(config) {
+  noYaml(config) {
     return config == missingYamlResponse;
   },
 

@@ -2,8 +2,8 @@
   <ul>
     <li>{{link-to 'Job log' 'job.index' repo job data-test-job-log-tab id="tab_log" title="Look at this job's log"}}</li>
     <li>
-      {{#link-to 'job.config' repo job data-test-build-yaml-tab title="Look at this job’s config" disabled=job.build.request.noYamlFound}}
-        {{#if job.build.request.noYamlFound}}
+      {{#link-to 'job.config' repo job data-test-build-yaml-tab title="Look at this job’s config" disabled=job.build.request.noYaml}}
+        {{#if job.build.request.noYaml}}
           {{tooltip-on-element text='No config could be found for this job'}}
         {{/if}}
         View config

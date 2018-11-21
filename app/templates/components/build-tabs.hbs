@@ -2,8 +2,8 @@
   <ul>
     <li>{{link-to 'Build jobs' 'build.index' build.repo build data-test-build-matrix-tab title="Look at this build matrix"}}</li>
     <li>
-      {{#link-to 'build.config' build.repo build data-test-build-yaml-tab title="Look at this build's config" disabled=build.request.noYamlFound}}
-        {{#if build.request.noYamlFound}}
+      {{#link-to 'build.config' build.repo build data-test-build-yaml-tab title="Look at this build's config" disabled=build.request.noYaml}}
+        {{#if build.request.noYaml}}
           {{tooltip-on-element text='No config could be found for this build' isShown=false}}
         {{/if}}
         View config
