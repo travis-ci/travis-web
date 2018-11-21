@@ -36,9 +36,23 @@
     </div>
 
     {{#if isLoggedIn}}
-      Logged in help
+      Request Form placeholder
     {{else}}
-      Not logged in stub
+
+      <div class="sign-in-image align-center">
+        {{svg-jar 'hard-hat'}}
+      </div>
+
+      <div class="sign-in align-center">
+        <button
+          title="Sign into Travis CI"
+          class="hero-button"
+          {{action (route-action 'signIn' false)}}
+        >
+          {{svg-jar 'icon-repooctocat' }} Sign in with GitHub
+        </button>
+      </div>
+
     {{/if}}
   {{/layout.section}}
 

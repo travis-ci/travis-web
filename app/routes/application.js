@@ -105,10 +105,12 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
   },
 
   actions: {
-    signIn() {
+    signIn(runAfterSignIn = true) {
       let authParams = this.modelFor('auth');
       this.get('auth').signIn(null, authParams);
-      this.afterSignIn();
+      if (runAfterSignIn) {
+        this.afterSignIn();
+      }
     },
 
     signOut() {
