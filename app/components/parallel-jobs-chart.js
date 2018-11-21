@@ -1,57 +1,34 @@
 import Component from '@ember/component';
-import { computed } from 'ember-decorators/object';
-import { service } from 'ember-decorators/service';
-import $ from 'jquery';
-import moment from 'moment';
+import { inject as service } from '@ember/service';
+import { computed } from '@ember/object';
 
-import ObjectProxy from '@ember/object/proxy';
-import PromiseProxyMixin from '@ember/object/promise-proxy-mixin';
-let ObjectPromiseProxy = ObjectProxy.extend(PromiseProxyMixin);
-
-const intervalMap = {
+const invervalOverrides = {
   day: {
     subInterval: '1min',
-    xAxisLabelFormat: '{value:%H:%M}',
-    instanceLabel: 'today',
-  },
-  week: {
-    subInterval: '1hour',
-    xAxisLabelFormat: '{value:%b %e}',
-    instanceLabel: 'this week',
-  },
-  month: {
-    subInterval: '1day',
-    xAxisLabelFormat: '{value:%b %e}',
-    instanceLabel: 'this month',
   },
 };
-
-const apiTimeBaseFormat = 'YYYY-MM-DD HH:mm:ss';
-const apiTimeRequestFormat = `${apiTimeBaseFormat} UTC`;
-const apiTimeReceivedFormat = `${apiTimeBaseFormat} zz`;
-
 
 export default Component.extend({
   classNames: ['insights-odyssey'],
   classNameBindings: ['isLoading:insights-odyssey--loading'],
 
-  @service storage: null,
+  insights: service(),
 
-  token: '',
+  intervalSettings: computed(function () {
+    return this.get('insights').getIntervalSettings(invervalOverrides);
+  }),
 
-  @computed('interval')
-  currentIntervalLabel(interval) {
-    return intervalMap[interval].instanceLabel;
-  },
+  currentIntervalLabel: computed('interval', 'intervalSettings', function () {
+    return this.intervalSettings[this.interval].instanceLabel;
+  }),
 
-  @computed('interval')
-  options(interval) {
+  options: computed('interval', 'intervalSettings', function () {
     return {
       title: { text: undefined, align: 'left', floating: false, color: '#666666' },
       xAxis: {
         type: 'datetime',
         lineColor: '#f3f3f3',
-        labels: { format: intervalMap[interval].xAxisLabelFormat },
+        labels: { format: this.intervalSettings[this.interval].xAxisLabelFormat },
       },
       yAxis: {
         title: { text: undefined },
@@ -90,73 +67,38 @@ export default Component.extend({
         `,
       },
     };
-  },
+  }),
 
-  @computed('owner', 'interval', 'token')
-  dataRequest(owner, interval, token) {
-    // FIXME: replace with v3 calls when it is ready
-    const apiToken = token || this.get('storage').getItem('travis.insightToken') || '';
-    if (apiToken.length === 0) { return; }
-    const insightEndpoint = 'https://travis-insights-production.herokuapp.com';
-    let endTime = moment.utc();
-    let startTime = moment.utc().subtract(1, interval);
+  dataRequest: computed('owner', 'interval', function () {
+    return this.get('insights').getMetric(
+      this.owner,
+      this.interval,
+      'jobs',
+      'max',
+      ['gauge_running', 'gauge_waiting'],
+      {intervalSettings: invervalOverrides}
+    );
+  }),
 
-    let insightParams = $.param({
-      subject: 'jobs',
-      interval: intervalMap[interval].subInterval,
-      func: 'max',
-      name: 'gauge_running,gauge_waiting',
-      owner_type: owner['@type'] === 'user' ? 'User' : 'Organization',
-      owner_id: owner.id,
-      token: apiToken,
-      end_time: endTime.format(apiTimeRequestFormat),
-      start_time: startTime.format(apiTimeRequestFormat),
-    });
-    const url = `${insightEndpoint}/metrics?${insightParams}`;
-
-    return ObjectPromiseProxy.create({
-      promise: fetch(url).then(response => {
-        if (response.ok) {
-          return response.json();
-        } else { return false; }
-      }).then(response => ({data: response}))
-    });
-  },
-
-  @computed('dataRequest.data')
-  filteredData(data) {
-    if (data) {
-      const reducedData = data.values.reduce((timesMap, value) => {
-        if (typeof value.value !== 'number' || Number.isNaN(value.value)) { return timesMap; }
-        if (timesMap[value.name].hasOwnProperty(value.time)) {
-          // timesMap[value.name][value.time] += value.value;
-          if (value.value > timesMap[value.name][value.time]) {
-            timesMap[value.name][value.time] = value.value;
-          }
-        } else {
-          timesMap[value.name][value.time] = value.value;
-        }
-        return timesMap;
-      }, { gauge_running: {}, gauge_waiting: {} });
-      return reducedData;
+  aggregateData: computed('dataRequest.data', function () {
+    const responseData = this.get('dataRequest.data');
+    if (responseData) {
+      return responseData;
     }
-  },
+  }),
 
-  @computed('filteredData')
-  isLoading(filteredData) {
-    return !filteredData;
-  },
+  isLoading: computed('aggregateData', function () {
+    return !this.aggregateData;
+  }),
 
-  @computed('filteredData')
-  isEmpty(filteredData) {
-    return filteredData &&
-      Object.keys(filteredData.gauge_running).length === 0 &&
-      Object.keys(filteredData.gauge_waiting).length === 0;
-  },
+  isEmpty: computed('aggregateData', function () {
+    return this.aggregateData &&
+      this.aggregateData.gauge_running.length === 0 &&
+      this.aggregateData.gauge_waiting.length === 0;
+  }),
 
-  @computed('filteredData')
-  content(filteredData) {
-    if (filteredData) {
+  content: computed('aggregateData', function () {
+    if (this.aggregateData) {
       return [{
         name: 'Running Jobs',
         color: '#39aa56',
@@ -167,9 +109,7 @@ export default Component.extend({
             [1, 'rgba(57, 170, 86, 0)'],
           ],
         },
-        data: Object.entries(filteredData.gauge_running).map(
-          ([key, val]) => [moment.utc(key, apiTimeReceivedFormat).valueOf(), val]
-        ),
+        data: this.aggregateData.gauge_running,
       }, {
         name: 'Queued Jobs',
         color: '#3eaaaf',
@@ -180,10 +120,8 @@ export default Component.extend({
             [1, 'rgba(62, 170, 175, 0)'],
           ],
         },
-        data: Object.entries(filteredData.gauge_waiting).map(
-          ([key, val]) => [moment.utc(key, apiTimeReceivedFormat).valueOf(), val]
-        ),
+        data: this.aggregateData.gauge_waiting,
       }];
     }
-  },
+  }),
 });
