@@ -10,6 +10,8 @@ export default Component.extend({
   @service auth: null,
   @service flashes: null,
   @service permissions: null,
+  @service features: null,
+  @service externalLinks: null,
 
   @alias('auth.currentUser') user: null,
 
@@ -21,6 +23,17 @@ export default Component.extend({
       return adminPermissions;
     }
     return false;
+  },
+
+  @computed('features.{enterpriseVersion,proVersion}', 'repo.migrationStatus')
+  migratedOnOrg(enterprise, pro, migrationStatus) {
+    console.log({enterprise, pro, migrationStatus})
+    return !enterprise && !pro && migrationStatus === 'migrated';   
+  },
+
+  @computed('repo.slug')
+  comRepositoryLink(slug) {
+    return this.get('externalLinks').migratedToComLink(slug);
   },
 
   @computed('config.githubApps.appName', 'repo.owner.github_id', 'repo.githubId')
