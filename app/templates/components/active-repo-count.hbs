@@ -7,7 +7,7 @@
   {{/if}}
 </div>
 
-{{#if (or isLoading (is-empty filteredData))}}
+{{#if (or isLoading (is-empty aggregateData))}}
   <hr class="insights-glance__chart-placeholder" />
 {{else}}
   {{high-charts content=content chartOptions=options}}

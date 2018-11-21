@@ -27,6 +27,11 @@ const defaultIntervalSettings = {
   },
 };
 
+const defaultOptions = {
+  intervalSettings: {},
+  transform: ((key, val) => [key, val]),
+};
+
 const apiTimeBaseFormat = 'YYYY-MM-DD HH:mm:ss';
 const apiTimeRequestFormat = `${apiTimeBaseFormat} UTC`;
 const apiTimeReceivedFormat = `${apiTimeBaseFormat} zz`;
@@ -49,13 +54,16 @@ export default Service.extend({
     subject,
     func,
     metrics = [],
-    customIntervalSettings = {},
-    customTransform = ((key, val) => [key, val])
+    options = {}
   ) {
-    const intervalSettings = this.getIntervalSettings(customIntervalSettings);
+    const currentOptions = $.extend(true, {}, defaultOptions, options);
+    currentOptions.aggregator = currentOptions.aggregator || func;
+    const intervalSettings = this.getIntervalSettings(currentOptions.intervalSettings);
+
     const endTime = moment.utc();
     const startTime = moment.utc().subtract(1, interval);
-    const options = {
+
+    const apiSettings = {
       stringifyData: false,
       data: {
         subject: subject,
@@ -73,11 +81,11 @@ export default Service.extend({
       return map;
     }, {});
 
-    const aggregator = this._getAggregator(func);
+    const aggregator = this._getAggregator(currentOptions.aggregator);
     const transformer = this._getTransformer(func);
 
     return ObjectPromiseProxy.create({
-      promise: this.get('api').get(endpoints.metrics, options).then(response => {
+      promise: this.get('api').get(endpoints.metrics, apiSettings).then(response => {
         let aggData;
 
         // Data aggregation
@@ -97,7 +105,7 @@ export default Service.extend({
           aggData[metricKey] = Object.entries(metricVal).map(([key, val]) => {
             let [newKey, newVal] = transformer(key, val);
             try {
-              [newKey, newVal] = customTransform(newKey, newVal);
+              [newKey, newVal] = currentOptions.transform(newKey, newVal);
             } catch (e) {}
             return [newKey, newVal];
           });
@@ -142,6 +150,15 @@ export default Service.extend({
           }
           return map;
         };
+      case 'count':
+        return (map, name, time, value) => {
+          if (map[name].hasOwnProperty(time)) {
+            map[name][time]++;
+          } else {
+            map[name][time] = 1;
+          }
+          return map;
+        };
       // Don't know that there's a sensible default aggregator
       default:
         return (map, name, time, value) => map;
@@ -155,5 +172,28 @@ export default Service.extend({
       default:
         return (key, val) => [Number(key), val];
     }
+  },
+
+  getActiveRepos(owner, interval) {
+    const endTime = moment.utc();
+    const startTime = moment.utc().subtract(1, interval);
+
+    const apiSettings = {
+      stringifyData: false,
+      data: {
+        owner_type: owner['@type'] === 'user' ? 'User' : 'Organization',
+        owner_id: owner.id,
+        end_time: endTime.format(apiTimeRequestFormat),
+        start_time: startTime.format(apiTimeRequestFormat),
+      }
+    };
+
+    return ObjectPromiseProxy.create({
+      promise: this.get('api').get(endpoints.activeRepos, apiSettings).then(response => {
+        return { data: response.data };
+      }).catch(response => {
+        // console.log('Err', response);
+      }),
+    });
   },
 });

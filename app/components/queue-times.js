@@ -56,8 +56,7 @@ export default Component.extend({
       'jobs',
       'avg',
       ['times_waiting'],
-      undefined,
-      (key, val) => [key, Math.round(val / 60)]
+      {transform: (key, val) => [key, Math.round(val / 60)]}
     );
   }),
 
@@ -83,7 +82,7 @@ export default Component.extend({
 
   totalWaitMins: computed('aggregateData', function () {
     if (this.aggregateData) {
-      return this.aggregateData.reduce((acc, val) => acc + val[1], 0);
+      return this.aggregateData.reduce((acc, [key, val]) => acc + val, 0);
     }
   }),
 
