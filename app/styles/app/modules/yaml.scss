@@ -11,14 +11,18 @@
     position: absolute;
     right: 1em;
     top: 1em;
-    border: 1px solid transparent;
+    border: 1px solid $pebble-grey;
+    border-radius: 2px;
   }
 
   &:hover button {
     display: block;
 
     &:hover {
-      border-color: $pebble-grey;
+      border-color: $oxide-blue;
+      color: $oxide-blue;
+
+      @include colorSVG($oxide-blue);
     }
   }
 }
