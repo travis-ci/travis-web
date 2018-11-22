@@ -27,7 +27,7 @@ export default Component.extend({
 
   @computed('features.{enterpriseVersion,proVersion}', 'repo.migrationStatus')
   migratedOnOrg(enterprise, pro, migrationStatus) {
-    return !enterprise && !pro && migrationStatus === 'migrated';   
+    return !enterprise && !pro && migrationStatus === 'migrated';
   },
 
   @computed('repo.slug')
