@@ -25,9 +25,23 @@ export default Component.extend({
     return this.get('externalLinks').orgBuildHistoryLink(slug);
   },
 
-  @computed('features.proVersion', 'repo.migrationStatus')
-  showMigratedFromOrgRepositoryLink(onDotCom, migrationStatus) {
-    return onDotCom && migrationStatus === 'migrated';
+  @computed('repo.slug')
+  comBuildHistoryLink(slug) {
+    return this.get('externalLinks').comBuildHistoryLink(slug);
+  },
+
+  // this is shown on .com
+  @computed('features.{proVersion,enterpriseVersion}', 'repo.migrationStatus')
+  showMigratedFromOrgRepositoryLink(pro, enterprise, migrationStatus) {
+    const comHosted = pro && !enterprise;
+    return comHosted && migrationStatus === 'migrated';
+  },
+
+  // this is shown on .org
+  @computed('features.{proVersion,enterpriseVersion}', 'repo.migrationStatus')
+  showMigratedToComRepositoryLink(pro, enterprise, migrationStatus) {
+    const orgHosted = !pro && !enterprise;
+    return orgHosted && migrationStatus === 'migrated';
   },
 
   actions: {
