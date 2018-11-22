@@ -13,8 +13,7 @@ sudo: tortle
 module('Acceptance | config/yaml', function (hooks) {
   setupApplicationTest(hooks);
 
-  // FIXME why is it necessary to be signed in?
-  // But without this, Mirage’s beta_features 403s.
+  // Shouldn’t be necessary, but without this, Mirage’s beta_features 403s.
   hooks.beforeEach(function () {
     const currentUser = server.create('user');
     signInUser(currentUser);
