@@ -14,6 +14,24 @@
     .status {
       font-size: 1.8rem;
       font-weight: 100;
+
+      .status-link {
+        &:hover {
+          text-decoration: none;
+          color: inherit;
+          border-color: inherit;
+        }
+      }
+    }
+
+    a {
+      display: inline-block;
+      border-bottom: 1px solid $asphalt-grey;
+
+      &:hover {
+        color: $oxide-blue;
+        border-color: $oxide-blue;
+      }
     }
 
   }
@@ -53,10 +71,6 @@
     height: 4px;
     border-radius: 4px;
     background-color: $dry-cement;
-  }
-
-  a:hover {
-    text-decoration: underline;
   }
 
 }
