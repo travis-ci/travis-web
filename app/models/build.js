@@ -9,6 +9,7 @@ import { hasMany, belongsTo } from 'ember-data/relationships';
 import { service } from 'ember-decorators/service';
 import { computed } from 'ember-decorators/object';
 import { alias } from 'ember-decorators/object/computed';
+import { sort } from '@ember/object/computed';
 
 import moment from 'moment';
 
@@ -39,6 +40,9 @@ export default Model.extend(DurationCalculations, {
 
   jobs: hasMany('job', { async: true }),
   stages: hasMany('stage', { async: true }),
+
+  stagesSort: ['number'],
+  sortedStages: sort('stages', 'stagesSort'),
 
   createdBy: belongsTo('user'),
 
