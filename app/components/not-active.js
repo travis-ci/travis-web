@@ -27,7 +27,6 @@ export default Component.extend({
 
   @computed('features.{enterpriseVersion,proVersion}', 'repo.migrationStatus')
   migratedOnOrg(enterprise, pro, migrationStatus) {
-    console.log({enterprise, pro, migrationStatus})
     return !enterprise && !pro && migrationStatus === 'migrated';   
   },
 
