@@ -18,6 +18,7 @@
     "test": "ember test --reporter dot"
   },
   "devDependencies": {
+    "@bigtest/interactor": "^0.9.1",
     "@ember-decorators/babel-transforms": "^2.0.0",
     "@ember/jquery": "^0.5.2",
     "@ember/optional-features": "^0.6.3",
