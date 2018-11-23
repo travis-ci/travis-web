@@ -92,20 +92,6 @@ $border-size: 2px;
         background-color: $agate-blue;
       }
     }
-
-    &.disabled {
-      opacity: 0.75;
-      cursor: not-allowed;
-
-      &:hover,
-      &:active {
-        color: inherit;
-
-        &:after {
-          background-color: transparent;
-        }
-      }
-    }
   }
 }
 

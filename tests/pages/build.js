@@ -9,6 +9,8 @@ import {
   text
 } from 'ember-cli-page-object';
 
+import ymlMessages from './yml-messages';
+
 const jobComponent = {
   state: {
     scope: '.job-state',
@@ -43,6 +45,8 @@ export default create({
 
   hasNoDebugButton: isHidden('.action-button--debug', { multiple: true }),
 
+  ymlMessages,
+
   requiredJobs: collection('.jobs-list:eq(0) .jobs-item', jobComponent),
   allowedFailureJobs: collection('.jobs-list:eq(1) .jobs-item', jobComponent),
 
@@ -62,28 +66,4 @@ export default create({
   }),
 
   buildNotFoundMessage: text('h2.page-title'),
-
-  buildTab: {
-    scope: '[data-test-build-matrix-tab]'
-  },
-
-  yamlTab: {
-    scope: '[data-test-build-yaml-tab]',
-    isDisabled: hasClass('disabled')
-  },
-
-  ymlMessages: collection('.yml-message', {
-    icon: {
-      scope: 'svg',
-      isInfo: hasClass('icon-info'),
-      isWarning: hasClass('icon-warn'),
-      isError: hasClass('icon-error')
-    },
-    message: text('.message'),
-  }),
-
-  yaml: text('[data-test-yaml]'),
-  jobYamlNote: {
-    scope: '[data-test-job-yaml-note]'
-  },
 });

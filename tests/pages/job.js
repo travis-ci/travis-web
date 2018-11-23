@@ -9,6 +9,9 @@ import {
   attribute
 } from 'ember-cli-page-object';
 
+
+import ymlMessages from './yml-messages';
+
 export default create({
   visit: visitable('travis-ci/travis-web/jobs/1'),
 
@@ -30,6 +33,8 @@ export default create({
   hasTruncatedLog: isVisible('.log-container p.warning'),
 
   toggleLog: clickable('.toggle-log-button'),
+
+  ymlMessages,
 
   logLines: collection('pre#log .log-line span:first-of-type', {
     text: text(),

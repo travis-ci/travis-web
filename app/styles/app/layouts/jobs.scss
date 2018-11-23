@@ -55,16 +55,6 @@
   margin: 3rem 0 1rem;
 }
 
-.travistab-body section:first-child {
-  .section-title, .stage-duration {
-    margin-top: 2rem;
-  }
-
-  .jobs-list:first-child {
-    margin-top: 1.4rem;
-  }
-}
-
 .stage .section-title {
   @extend .small-title;
 }

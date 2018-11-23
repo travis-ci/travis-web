@@ -24,6 +24,7 @@ module('Integration | Component | jobs list', function (hooks) {
     this.jobs = jobs;
     await render(hbs`{{jobs-list jobs=jobs.jobs required=jobs.required}}`);
 
+    assert.dom('.section-title').hasText('Build Jobs');
     assert.dom('.jobs-list li').exists({ count: 2 }, 'there should be 2 job items');
     assert.dom('.jobs-item:nth-of-type(1)').hasClass('passed', 'passed class should be applied to a job');
     assert.dom('.jobs-item:nth-of-type(2)').hasClass('failed', 'failed class should be applied to a job');

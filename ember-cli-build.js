@@ -49,7 +49,8 @@ module.exports = function () {
       extensions: ['js']
     },
     'ember-prism': {
-      'components': ['yaml'],
+      'components': ['scss', 'javascript', 'json'], // needs to be an array, or undefined.
+      'plugins': ['line-highlight']
     },
     sassOptions: {
       implementation: Sass

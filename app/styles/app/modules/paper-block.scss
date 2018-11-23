@@ -42,9 +42,4 @@ $base-elevation: 5px;
     font-weight: bold;
     font-size: 1em;
   }
-
-  .icon-megaphone {
-    @include colorSVG($cement-grey);
-    stroke-width: 10px;
-  }
 }

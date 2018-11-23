@@ -1,8 +1,9 @@
 /* global Travis */
 import { module, test } from 'qunit';
-import { visit } from '@ember/test-helpers';
+import { visit, click } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import signInUser from 'travis/tests/helpers/sign-in-user';
+import { percySnapshot } from 'ember-percy';
 
 module('Acceptance | builds/current tab', function (hooks) {
   setupApplicationTest(hooks);
@@ -42,6 +43,14 @@ module('Acceptance | builds/current tab', function (hooks) {
     assert.dom('[data-test-build-header]').hasClass('started');
 
     assert.dom('[data-test-job-log]').exists();
+    assert.dom('[data-test-job-config-content]').doesNotExist('Job config is hidden');
+    await click('[data-test-job-config-tab]');
+
+    assert.dom('[data-test-job-config-content]').exists();
+    assert.dom('[data-test-job-config-content]').hasText('{ \"language\": \"Hello\" }');
+    assert.dom('[data-test-job-log-content]').doesNotExist();
+
+    percySnapshot(assert);
   });
 
   test('renders the repository and subscribes to private log channel for a private repository', async function (assert) {
