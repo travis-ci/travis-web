@@ -8,11 +8,12 @@ import config from 'travis/config/environment';
 import { controller } from 'ember-decorators/controller';
 import { service } from 'ember-decorators/service';
 import { alias } from 'ember-decorators/object/computed';
-import { observes } from 'ember-decorators/object';
+import { computed, observes } from 'ember-decorators/object';
 
 export default Controller.extend(GithubUrlProperties, Polling, {
   @service auth: null,
   @service('updateTimes') updateTimesService: null,
+  @service repositories: null,
 
   @controller('repo') repoController: null,
 
@@ -21,6 +22,8 @@ export default Controller.extend(GithubUrlProperties, Polling, {
   @alias('repoController.repo') repo: null,
   @alias('auth.currentUser') currentUser: null,
   @alias('repoController.tab') tab: null,
+
+  @alias('repositories.accessible.firstObject.currentBuild') build: null,
 
   sendFaviconStateChanges: true,
 

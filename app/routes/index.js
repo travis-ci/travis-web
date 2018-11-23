@@ -18,11 +18,12 @@ export default Route.extend({
     }
   },
 
-  renderTemplate(...args) {
+  renderTemplate(controller, model) {
     if (this.get('auth.signedIn')) {
       $('body').attr('id', 'home');
     }
-    return this._super(args);
+    this._super(controller, model);
+    this.render('build/index', {into: 'index', controller: 'build'});
   },
 
   activate(...args) {
