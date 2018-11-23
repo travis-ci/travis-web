@@ -4,12 +4,14 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import { select } from 'travis/tests/helpers/x-select';
+import XSelect from 'travis/tests/helpers/x-select';
 
 module('Integration | Component | status images', function (hooks) {
   setupRenderingTest(hooks);
 
   test('shows default branch as option and updates output', async function (assert) {
+    let xselect = new XSelect('.form-pair:first-of-type select');
+
     const repo = EmberObject.create({
       slug: 'travis-ci/travis-web',
       defaultBranch: {
@@ -33,7 +35,7 @@ module('Integration | Component | status images', function (hooks) {
     assert.equal(selectBranch.value, 'not-actually-master');
     assert.ok(outputTextarea.value.match(/branch=not-actually-master/));
 
-    await select(selectBranch, 'foo');
+    await xselect('foo');
     assert.ok(outputTextarea.value.match(/branch=foo/));
   });
 });
