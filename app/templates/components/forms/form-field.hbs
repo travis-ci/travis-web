@@ -1,0 +1,32 @@
+<label>
+  <span class='travis-form__label'>{{label}}</span>
+  {{#if required}}
+    <span class='travis-form__required-mark'>*</span>
+  {{/if}}
+
+  {{#if hasBlock}}
+    {{#component fieldComponentName
+      type=type
+      value=value
+      placeholder=placeholder
+      disabled=disabled
+      onFocus=(action 'handleFocus')
+      onBlur=(action 'handleBlur')
+      onChange=(action 'handleChange')
+      class='travis-form__field-component'
+    }}{{yield}}{{/component}}
+  {{else}}
+    {{component fieldComponentName
+      type=type
+      value=value
+      placeholder=placeholder
+      disabled=disabled
+      onFocus=(action 'handleFocus')
+      onBlur=(action 'handleBlur')
+      onChange=(action 'handleChange')
+      class='travis-form__field-component'
+    }}
+  {{/if}}
+</label>
+
+{{errorMessage}}

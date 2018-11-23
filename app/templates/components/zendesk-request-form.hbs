@@ -1,1 +1,36 @@
-Request Form placeholder
+{{#travis-form
+  onSubmit=(perform 'zendeskRequest')
+  as |form|
+}}
+
+  {{form.input
+    label='Email'
+    value=email
+    validator=(form-validator form.validators.email)
+    required=true
+    disabled=true
+  }}
+
+  {{form.input
+    label='Subject'
+    value=subject
+    required=true
+    onChange=(action (mut subject))
+  }}
+
+  {{#form.textarea
+    label='Description'
+    rows=5
+    required=true
+    onChange=(action (mut description))
+  }}{{description}}{{/form.textarea}}
+
+  <button
+    disabled={{not form.isValid}}
+    onclick={{action form.submit}}
+    class='button--blue'
+  >
+    Submit
+  </button>
+
+{{/travis-form}}
