@@ -1,13 +1,7 @@
 import TravisRoute from 'travis/routes/basic';
 
 export default TravisRoute.extend({
-  titleToken: 'Config',
-
-  model() {
-    return this.modelFor('build').get('request');
-  },
-
-  afterModel(request) {
-    return request.get('messagesRequest');
+  model(params) {
+    return this.modelFor('build').get('jobs.firstObject.config');
   }
 });
