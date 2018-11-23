@@ -35,7 +35,7 @@ module('Integration | Component | status images', function (hooks) {
     assert.equal(selectBranch.value, 'not-actually-master');
     assert.ok(outputTextarea.value.match(/branch=not-actually-master/));
 
-    await xselect('foo');
+    await xselect.select('foo');
     assert.ok(outputTextarea.value.match(/branch=foo/));
   });
 });
