@@ -16,12 +16,12 @@
 
   <div class="form-elem">
     <label for="trigger-build-message" class="form-label">Custom commit message</label>
-    {{input value=triggerBuildMessage onChange=(action (mut triggerBuildMessage)) placeholder="Commit message" id="trigger-build-message"}}
+    {{input value=triggerBuildMessage on-change=(action (mut triggerBuildMessage)) placeholder="Commit message" id="trigger-build-message"}}
   </div>
 
   <div class="form-elem {{if jsonError 'form-error'}}">
     <label for="trigger-build-config" class="form-label display-inline">Custom config</label><p class="form-helptext display-inline m-l-s">Enter config as YAML</p>
-    {{textarea value=triggerBuildConfig onChange=(action (mut triggerBuildConfig)) placeholder="script: echo 'Hello, World'" id="trigger-build-config"}}
+    {{textarea value=triggerBuildConfig on-change=(action (mut triggerBuildConfig)) placeholder="script: echo 'Hello, World'" id="trigger-build-config"}}
   </div>
 
   <div class="form-elem">
