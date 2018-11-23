@@ -1,6 +1,8 @@
 {{#if filteredJobs.length}}
 
-  {{#unless required}}
+  {{#if required}}
+    <h2 class="section-title">Build Jobs</h2>
+  {{else}}
     {{#if stage}}
       <header data-test-stage-header class="stage-header {{stageState}}">
         <h2 class="section-title">
@@ -22,7 +24,7 @@
         </span>
       </h2>
     {{/if}}
-  {{/unless}}
+  {{/if}}
 
     <ul class="jobs-list">
     {{#each filteredJobs as |job|}}
