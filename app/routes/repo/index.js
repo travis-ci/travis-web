@@ -50,6 +50,7 @@ export default TravisRoute.extend({
       this.render('repo/no-build');
     } else {
       this.render('build');
+      this.render('build/index', { into: 'build', controller: 'build' });
     }
   }
 });

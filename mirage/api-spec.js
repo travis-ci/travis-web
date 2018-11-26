@@ -461,7 +461,8 @@ export default {
         "stages",
         "created_by",
         "updated_at",
-        "request"
+        "request",
+        "yaml"
       ],
       "representations": {
         "minimal": [
@@ -496,7 +497,8 @@ export default {
           "jobs",
           "stages",
           "created_by",
-          "updated_at"
+          "updated_at",
+          "yaml"
         ]
       },
       "permissions": [
@@ -1807,7 +1809,8 @@ export default {
           "created_at",
           "event_type",
           "base_commit",
-          "head_commit"
+          "head_commit",
+          "yaml_config"
         ]
       }
     },
