@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-// import Ember from 'ember';
+import Ember from 'ember';
 import { computed } from 'ember-decorators/object';
 import { alias } from 'ember-decorators/object/computed';
 import { service } from 'ember-decorators/service';
@@ -28,26 +28,27 @@ export default Component.extend(InViewportMixin, {
   showCta(signedIn, landingPage, ctaEnabled) {
     return !signedIn && !landingPage && ctaEnabled;
   },
-  // Remove Ember in viewport because of long test/build times
-  // didInsertElement() {
-  //   if (Ember.testing) {
-  //     return;
-  //   }
 
-  //   Ember.setProperties(this, {
-  //     viewportSpy: true
-  //   });
-  //   this._super(...arguments);
-  //   Ember.run.scheduleOnce('afterRender', this, () => {
-  //     Ember.set(this, 'viewportTolerance.top', this.$().height());
-  //   });
-  // },
+  didInsertElement() {
+    if (Ember.testing) {
+      this._super(...arguments);
+      return;
+    }
 
-  // didEnterViewport() {
-  //   this.get('flashes').set('topBarVisible', true);
-  // },
+    Ember.setProperties(this, {
+      viewportSpy: true
+    });
+    this._super(...arguments);
+    Ember.run.scheduleOnce('afterRender', this, () => {
+      Ember.set(this, 'viewportTolerance.top', this.$().height());
+    });
+  },
 
-  // didExitViewport() {
-  //   this.get('flashes').set('topBarVisible', false);
-  // },
+  didEnterViewport() {
+    this.get('flashes').set('topBarVisible', true);
+  },
+
+  didExitViewport() {
+    this.get('flashes').set('topBarVisible', false);
+  },
 });

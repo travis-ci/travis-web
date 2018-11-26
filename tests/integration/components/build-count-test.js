@@ -7,20 +7,14 @@ module('Integration | Component | build-count', function (hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function (assert) {
-    // Set any properties with this.set('myProperty', 'value');
-    // Handle any actions with this.set('myAction', function(val) { ... });
+    this.set('interval', 'month');
+    this.set('ownerData', {
+      '@type': 'Organization',
+      id: 87,
+    });
 
-    await render(hbs`{{build-count}}`);
+    await render(hbs`{{build-count interval=interval owner=ownerData}}`);
 
     assert.equal(this.element.textContent.trim(), '');
-
-    // Template block usage:
-    await render(hbs`
-      {{#build-count}}
-        template block text
-      {{/build-count}}
-    `);
-
-    assert.equal(this.element.textContent.trim(), 'template block text');
   });
 });
