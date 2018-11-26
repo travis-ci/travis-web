@@ -45,6 +45,7 @@ export default Component.extend({
       if (this.isValid) {
         this.onSubmit();
       }
+      return false;
     }
 
   }

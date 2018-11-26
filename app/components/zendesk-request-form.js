@@ -12,7 +12,19 @@ export default Component.extend({
   subject: '',
   description: '',
 
+  isSubmitting: reads('zendeskRequest.isRunning'),
+
   zendeskRequest: task(function* () {
-    yield timeout();
-  })
+    yield timeout(10000);
+  }),
+
+  actions: {
+
+    handleSubmit() {
+      this.zendeskRequest.perform();
+      return false;
+    }
+
+  }
+
 });

@@ -1,5 +1,5 @@
 {{#travis-form
-  onSubmit=(perform 'zendeskRequest')
+  onSubmit=(action 'handleSubmit')
   as |form|
 }}
 
@@ -15,6 +15,7 @@
     label='Subject'
     value=subject
     required=true
+    disabled=isSubmitting
     onChange=(action (mut subject))
   }}
 
@@ -22,17 +23,22 @@
     label='Description'
     helperText="Let us know what's happening and how this is affecting you. Tip: Include any links to failing Travis CI build"
     rows=5
+    disabled=isSubmitting
     validator=(form-validator form.validators.presense "Make sure to add some details on what you'd like to talk with us about")
     onChange=(action (mut description))
   }}{{description}}{{/form.textarea}}
 
   <div class="align-center">
     <button
-      disabled={{not form.isValid}}
-      onclick={{action form.submit}}
+      disabled={{or (not form.isValid isSubmitting)}}
+      onclick={{form.submit}}
       class='submit-button button--blue button--large {{if (not form.isValid) 'inactive'}}'
     >
-      Submit
+      {{#if isSubmitting}}
+        {{loading-indicator white=true }}
+      {{else}}
+        Submit
+      {{/if}}
     </button>
   </div>
 
