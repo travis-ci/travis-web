@@ -22,7 +22,8 @@ export default Route.extend({
     if (this.get('auth.signedIn')) {
       $('body').attr('id', 'home');
     }
-    return this._super(args);
+    this._super(args);
+    this.render('build/index', {into: 'index', controller: 'build/index'});
   },
 
   activate(...args) {
