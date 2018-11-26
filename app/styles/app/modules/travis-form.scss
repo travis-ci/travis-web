@@ -43,6 +43,11 @@ $travis-form-badge-radius: 10px;
 
     }
 
+    .travis-form__helper-text {
+      margin: -3px 0 6px 0;
+      color: $cement-grey;
+    }
+
     .travis-form__field-component {
       display: block;
       width: calc(100% + #{$travis-form-border-width * 2});

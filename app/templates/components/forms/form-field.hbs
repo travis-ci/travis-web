@@ -5,6 +5,12 @@
   {{/if}}
 </label>
 
+{{#if helperText}}
+  <div class="travis-form__helper-text">
+    {{helperText}}
+  </div>
+{{/if}}
+
 {{#if hasBlock}}
   {{#component fieldComponentName
     type=type

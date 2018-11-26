@@ -20,6 +20,7 @@
 
   {{#form.textarea
     label='Description'
+    helperText="Let us know what's happening and how this is affecting you. Tip: Include any links to failing Travis CI build"
     rows=5
     validator=(form-validator form.validators.presense "Make sure to add some details on what you'd like to talk with us about")
     onChange=(action (mut description))

@@ -25,10 +25,11 @@ export default Component.extend({
   label: '',
   value: '',
   placeholder: '',
+  helperText: '',
   disabled: false,
 
-  required: false,
   validator: () => true,
+  required: equal('validator.kind', presense),
 
   onChange() {},
   onFocus() {},
@@ -42,7 +43,7 @@ export default Component.extend({
 
   validate(value) {
     let validator = this.validator;
-    if (this.required) {
+    if (this.required && validator.kind !== presense) {
       validator = combineValidators([validator, presense()]);
     }
     const validationResult = validator(value || this.value);
