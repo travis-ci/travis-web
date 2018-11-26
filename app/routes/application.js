@@ -147,6 +147,11 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
 
     helpscoutTrigger() {
       this.helpScout.openHelpScout();
+    },
+
+    goToHelp() {
+      const page = encodeURI(window.location.href);
+      this.transitionTo('help', { queryParams: { page } })
     }
   },
 

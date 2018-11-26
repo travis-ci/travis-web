@@ -21,8 +21,9 @@ const { docs, community } = config.urls;
 export default Controller.extend({
   auth: service(),
 
-  queryParams: ['anchor'],
+  queryParams: ['anchor', 'page'],
   anchor: ANCHOR.TOP,
+  page: '',
 
   isLoggedIn: reads('auth.signedIn'),
 

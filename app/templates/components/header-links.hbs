@@ -39,9 +39,9 @@
       {{/if}}
 
       <li>
-        {{#link-to "help" class="navigation-anchor" title="Help"}}
+        <a class="navigation-anchor pointer" title="Help" {{action (route-action 'goToHelp')}}>
           Help
-        {{/link-to}}
+        </a>
       </li>
 
       {{#if deploymentVersion}}
