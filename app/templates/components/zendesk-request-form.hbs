@@ -21,7 +21,7 @@
   {{#form.textarea
     label='Description'
     rows=5
-    required=true
+    validator=(form-validator form.validators.presense "Make sure to add some details on what you'd like to talk with us about")
     onChange=(action (mut description))
   }}{{description}}{{/form.textarea}}
 
@@ -29,7 +29,7 @@
     <button
       disabled={{not form.isValid}}
       onclick={{action form.submit}}
-      class='button--blue button--large {{if (not form.isValid) 'inactive'}}'
+      class='submit-button button--blue button--large {{if (not form.isValid) 'inactive'}}'
     >
       Submit
     </button>
