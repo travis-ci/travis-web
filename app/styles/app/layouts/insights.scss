@@ -74,7 +74,7 @@
   overflow: hidden;
 
   @media #{$medium-up} {
-    grid-column: span 2;
+    grid-column: span 4;
   }
 
   &__title {

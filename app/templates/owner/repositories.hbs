@@ -17,7 +17,8 @@
       {{build-minutes owner=model interval=dataInterval}}
       {{queue-times owner=model interval=dataInterval}}
       {{active-repo-count owner=model interval=dataInterval}}
-      {{parallel-jobs-chart owner=model interval=dataInterval}}
+      {{!-- Will reinstate the concurrency chart after initial release --}}
+      {{!-- {{parallel-jobs-chart owner=model interval=dataInterval}} --}}
       {{build-status-chart owner=model interval=dataInterval}}
     </div>
   </div>

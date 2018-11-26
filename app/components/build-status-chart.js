@@ -53,7 +53,7 @@ export default Component.extend({
       },
       chart: {
         type: 'column',
-        height: '82%',
+        height: '40%',
         plotBackgroundColor: '#fdfdfd',
       },
       plotOptions: {
@@ -69,6 +69,14 @@ export default Component.extend({
             <span style="color:{point.color};">●</span> {series.name}: <b>{point.y}</b>
           </div>
         `,
+      },
+      responsive: {
+        rules: [{
+          condition: { maxWidth: 800 },
+          chartOptions: {
+            chart: { height: 400 },
+          },
+        }]
       },
     };
   }),

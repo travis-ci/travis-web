@@ -189,9 +189,9 @@ export default Service.extend({
     };
 
     return ObjectPromiseProxy.create({
-      promise: this.get('api').get(endpoints.activeRepos, apiSettings).then(response => {
-        return { data: response.data };
-      }).catch(response => {
+      promise: this.get('api').get(endpoints.activeRepos, apiSettings).then(response => ({
+        data: response.data
+      })).catch(response => {
         // console.log('Err', response);
       }),
     });
