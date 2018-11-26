@@ -25,12 +25,14 @@
     onChange=(action (mut description))
   }}{{description}}{{/form.textarea}}
 
-  <button
-    disabled={{not form.isValid}}
-    onclick={{action form.submit}}
-    class='button--blue'
-  >
-    Submit
-  </button>
+  <div class="align-center">
+    <button
+      disabled={{not form.isValid}}
+      onclick={{action form.submit}}
+      class='button--blue button--large {{if (not form.isValid) 'inactive'}}'
+    >
+      Submit
+    </button>
+  </div>
 
 {{/travis-form}}

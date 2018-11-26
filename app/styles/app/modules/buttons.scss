@@ -163,6 +163,12 @@
   padding: 3px 7px;
 }
 
+.button--large {
+  font-size: 1.2em;
+  padding: 18px 50px;
+  border-radius: 3px;
+}
+
 .inactive {
   cursor: default;
   background: $dry-cement !important;
