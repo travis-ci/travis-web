@@ -1,0 +1,115 @@
+$travis-form-border-width: 4px;
+$travis-form-badge-radius: 10px;
+
+@mixin makeFieldBorder($color) {
+  box-shadow: inset 0 0 1px 1px $color;
+}
+
+.travis-form {
+
+  .travis-form__field {
+    position: relative;
+
+    &::after {
+      content: '';
+      opacity: 0;
+      position: absolute;
+      top: 50%;
+      margin-top: -$travis-form-badge-radius;
+      right: 0;
+      width: $travis-form-badge-radius * 2;
+      height: $travis-form-badge-radius * 2;
+      border: 2px solid transparent;
+      border-radius: $travis-form-badge-radius;
+      text-align: center;
+      font-size: 16px;
+      line-height: 0.95;
+      color: transparent;
+      font-weight: 700;
+
+      transition: all 0.2s ease-in;
+    }
+
+    .travis-form__label {
+      display: block;
+      text-transform: uppercase;
+      font-weight: 600;
+      font-size: 0.9em;
+      margin-bottom: 5px;
+
+      .travis-form__required-mark {
+        color: $brick-red;
+      }
+
+    }
+
+    .travis-form__field-component {
+      display: block;
+      width: calc(100% + #{$travis-form-border-width * 2});
+      font-size: 1em;
+      padding: 8px 10px 9px;
+      border-radius: $travis-form-border-width * 2;
+      border: $travis-form-border-width solid transparent;
+      margin: -$travis-form-border-width;
+      color: $asphalt-grey;
+      @include makeFieldBorder(lighten($cement-grey, 20%));
+
+      transition: border-color 0.2s ease-in;
+
+      &:focus,
+      &:active {
+        outline: none;
+        border-color: rgba($oxide-blue, 0.2);
+      }
+
+      &[disabled] {
+        opacity: 0.5;
+      }
+
+    }
+
+    .travis-form__error-message {
+      margin-top: 2px;
+      color: $brick-red;
+      opacity: 0;
+
+      transition: opacity 0.2s ease-in;
+    }
+
+    &.travis-form__field--error {
+
+      &::after {
+        content: '!';
+        opacity: 1;
+        right: -$travis-form-badge-radius * 2 - 10px;
+        border-color: $brick-red;
+        color: $brick-red;
+      }
+
+      .travis-form__field-component {
+        @include makeFieldBorder($brick-red);
+
+      }
+
+      .travis-form__error-message {
+        opacity: 1;
+      }
+
+    }
+
+    &.travis-form__field--valid {
+
+      &::after {
+        content: '\2713';
+        opacity: 1;
+        right: -$travis-form-badge-radius * 2 - 10px;
+        border-color: $oxide-blue;
+        color: $oxide-blue;
+        line-height: 1;
+      }
+
+    }
+
+  }
+
+}
