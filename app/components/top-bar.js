@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-// import Ember from 'ember';
+import Ember from 'ember';
 import { computed } from 'ember-decorators/object';
 import { alias } from 'ember-decorators/object/computed';
 import { service } from 'ember-decorators/service';
@@ -29,5 +29,25 @@ export default Component.extend(InViewportMixin, {
     return !signedIn && !landingPage && ctaEnabled;
   },
 
-  // FIXME restore ember-in-viewport use
+  didInsertElement() {
+    if (Ember.testing) {
+      return;
+    }
+
+    Ember.setProperties(this, {
+      viewportSpy: true
+    });
+    this._super(...arguments);
+    Ember.run.scheduleOnce('afterRender', this, () => {
+      Ember.set(this, 'viewportTolerance.top', this.$().height());
+    });
+  },
+
+  didEnterViewport() {
+    this.get('flashes').set('topBarVisible', true);
+  },
+
+  didExitViewport() {
+    this.get('flashes').set('topBarVisible', false);
+  },
 });
