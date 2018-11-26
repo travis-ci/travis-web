@@ -17,7 +17,9 @@ export default Component.extend({
   ],
 
   fieldComponentName: 'forms/form-input',
+  fieldElementId: null,
   form: null,
+
   state: FIELD_STATE.DEFAULT,
 
   label: '',
@@ -93,6 +95,10 @@ export default Component.extend({
     handleChange(value) {
       this.validate(value);
       this.onChange(value);
+    },
+
+    setFieldElementId(fieldElementId) {
+      this.setProperties({ fieldElementId });
     }
 
   }

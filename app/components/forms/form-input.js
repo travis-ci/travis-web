@@ -13,6 +13,7 @@ export default Component.extend({
   onChange() {},
   onFocus() {},
   onBlur() {},
+  onInit() {},
 
   focusIn() {
     this.onFocus();
@@ -24,6 +25,11 @@ export default Component.extend({
 
   change({ target }) {
     this.onChange(target.value);
+  },
+
+  didInsertElement() {
+    this._super(...arguments);
+    this.onInit(this.elementId);
   }
 
 });

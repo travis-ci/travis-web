@@ -1,32 +1,37 @@
-<label>
-  <span class='travis-form__label'>{{label}}</span>
+<label for={{fieldElementId}} class='travis-form__label'>
+  {{label}}
   {{#if required}}
-    <span class='travis-form__required-mark'>*</span>
-  {{/if}}
-
-  {{#if hasBlock}}
-    {{#component fieldComponentName
-      type=type
-      value=value
-      placeholder=placeholder
-      disabled=disabled
-      onFocus=(action 'handleFocus')
-      onBlur=(action 'handleBlur')
-      onChange=(action 'handleChange')
-      class='travis-form__field-component'
-    }}{{yield}}{{/component}}
-  {{else}}
-    {{component fieldComponentName
-      type=type
-      value=value
-      placeholder=placeholder
-      disabled=disabled
-      onFocus=(action 'handleFocus')
-      onBlur=(action 'handleBlur')
-      onChange=(action 'handleChange')
-      class='travis-form__field-component'
-    }}
+  <span class='travis-form__required-mark'>*</span>
   {{/if}}
 </label>
 
-{{errorMessage}}
+{{#if hasBlock}}
+  {{#component fieldComponentName
+    type=type
+    value=value
+    placeholder=placeholder
+    disabled=disabled
+    rows=rows
+    onFocus=(action 'handleFocus')
+    onBlur=(action 'handleBlur')
+    onChange=(action 'handleChange')
+    onInit=(action 'setFieldElementId')
+    class='travis-form__field-component'
+  }}{{yield}}{{/component}}
+{{else}}
+  {{component fieldComponentName
+    type=type
+    value=value
+    placeholder=placeholder
+    disabled=disabled
+    onFocus=(action 'handleFocus')
+    onBlur=(action 'handleBlur')
+    onChange=(action 'handleChange')
+    onInit=(action 'setFieldElementId')
+    class='travis-form__field-component'
+  }}
+{{/if}}
+
+<div class="travis-form__error-message">
+  {{errorMessage}} &nbsp;
+</div>
