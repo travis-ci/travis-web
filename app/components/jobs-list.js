@@ -1,7 +1,7 @@
 import { get } from '@ember/object';
 import Component from '@ember/component';
 import { computed } from 'ember-decorators/object';
-import { alias } from 'ember-decorators/object/computed';
+import { alias, mapBy } from 'ember-decorators/object/computed';
 
 export default Component.extend({
   tagName: 'section',
@@ -16,7 +16,10 @@ export default Component.extend({
     return 'allowed_failure_jobs';
   },
 
-  @computed('jobs.[]', 'build.jobs.[]', 'stage')
+  @alias('build.jobs') buildJobs: null,
+  @mapBy('buildJobs', 'stage') jobStages: null,
+
+  @computed('jobs.[]', 'build.jobs.[]', 'stage', 'jobStages.@each.id')
   filteredJobs(jobs, buildJobs, stage) {
     if (stage) {
       return buildJobs.filterBy('stage.id', stage.get('id'));

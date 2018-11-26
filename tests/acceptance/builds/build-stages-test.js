@@ -44,7 +44,7 @@ test('visiting build with one stage', function (assert) {
   percySnapshot(assert);
 });
 
-test('visiting build with stages and an unknown config message', function (assert) {
+test('visiting build with stages', function (assert) {
   let repo =  server.create('repository', { slug: 'travis-ci/travis-web' });
   server.create('branch', {});
 
@@ -52,15 +52,6 @@ test('visiting build with stages and an unknown config message', function (asser
   let commit = server.create('commit', { author: gitUser, committer: gitUser, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
 
   let request = server.create('request');
-  server.create('message', {
-    request,
-    level: 'info',
-    key: 'jortleby',
-    code: 'skortleby',
-    args: {
-      jortle: 'tortle'
-    }
-  });
 
   let build = server.create('build', { repository: repo, state: 'passed', commit_id: commit.id, commit, request });
 
@@ -83,13 +74,6 @@ test('visiting build with stages and an unknown config message', function (asser
 
   andThen(function () {
     assert.equal(buildPage.stages.length, 2, 'expected two build stages');
-
-    assert.equal(buildPage.ymlMessages.length, 1, 'expected one yml message');
-
-    buildPage.ymlMessages[0].as(info => {
-      assert.ok(info.icon.isInfo, 'expected the yml message to be an info');
-      assert.equal(info.message, 'unrecognised message code skortleby');
-    });
 
     buildPage.stages[0].as(stage => {
       assert.equal(stage.name, 'first', 'expected the stages to be numerically sorted');
