@@ -597,19 +597,22 @@ export default function () {
         'data': queryParams
       };
       response.data.values = [];
-      let d;
 
-      queryParams.name.map(name => {
-        for (let i = 7; i >= 0; i--) {
-          d = new Date(currentDate.getTime() - (i * 24 * 60 * 60 * 1000));
-          response.data.values.push({
-            time: `${d.toISOString().split('.')[0].replace('T', ' ')} UTC`,
-            interval: queryParams.interval,
-            name: name,
-            value: (i * 10),
-          });
-        }
-      });
+      if (queryParams.owner_id !== 2) {
+        let d;
+
+        queryParams.name.map(name => {
+          for (let i = 7; i >= 0; i--) {
+            d = new Date(currentDate.getTime() - (i * 24 * 60 * 60 * 1000));
+            response.data.values.push({
+              time: `${d.toISOString().split('.')[0].replace('T', ' ')} UTC`,
+              interval: queryParams.interval,
+              name: name,
+              value: (i * 10),
+            });
+          }
+        });
+      }
 
       return response;
     } else {
