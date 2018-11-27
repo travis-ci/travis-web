@@ -122,3 +122,25 @@ $travis-form-badge-radius: 10px;
   }
 
 }
+
+@media screen and (max-width: 860px) {
+
+  .travis-form {
+
+    .travis-form__field {
+
+      &.travis-form__field--valid:not(.travis-form__field--focused),
+      &.travis-form__field--error {
+
+        &::after {
+          bottom: 28px;
+          top: auto;
+          right: 5px;
+        }
+
+      }
+
+    }
+
+  }
+}

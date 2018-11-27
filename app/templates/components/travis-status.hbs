@@ -2,5 +2,10 @@
   &#9679;
 </div>
 {{#external-link-to href="http://www.traviscistatus.com/" class="status-link"}}
-  Travis CI Status{{#if showDescription}}: {{description}}{{/if}}
+  Travis CI Status<span class="status-description {{if showDescription 'status-description--visible'}}">:
+    {{description}}
+  </span>
 {{/external-link-to}}
+{{#if showTooltip}}
+  {{tooltip-on-element text=description }}
+{{/if}}

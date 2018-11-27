@@ -60,9 +60,20 @@ $default-status-color: $unknown-status-color;
 
   .status-link {
     border-width: 0;
+    white-space: nowrap;
 
     &:hover {
       text-decoration: underline;
+    }
+  }
+
+  .status-description {
+    display: none;
+
+    @media #{$medium-up} {
+      &.status-description--visible {
+        display: inline;
+      }
     }
   }
 

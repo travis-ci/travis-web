@@ -27,6 +27,7 @@
     a {
       display: inline-block;
       border-bottom: 1px solid #dcdcdc;
+      white-space: nowrap;
 
       &:hover {
         color: $asphalt-grey;
@@ -51,7 +52,7 @@
       margin-bottom: 50px;
 
       button {
-        font-weight: 400;
+        font-weight: 300;
       }
 
       svg {

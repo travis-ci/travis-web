@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { service } from 'ember-decorators/service';
-import { reads, notEmpty } from '@ember/object/computed';
+import { reads, notEmpty, not, and } from '@ember/object/computed';
 
 export default Component.extend({
   classNames: ['travis-status'],
@@ -14,6 +14,10 @@ export default Component.extend({
   description: reads('appLoading.description'),
 
   showDescription: notEmpty('description'),
+  notShowDescription: not('showDescription'),
+
+  // there is description but it's hidden from outside
+  showTooltop: and('notShowDescription', 'description'),
 
   didInsertElement() {
     this._super(...arguments);
