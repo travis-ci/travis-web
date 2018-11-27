@@ -1,4 +1,3 @@
-import { sort } from '@ember/object/computed';
 import Component from '@ember/component';
 import { computed } from 'ember-decorators/object';
 import { alias } from 'ember-decorators/object/computed';
@@ -18,7 +17,4 @@ export default Component.extend({
     jobs.forEach((j) => j.get('config'));
     return jobs.isEvery('isLoaded') && jobs.isEvery('isConfigLoaded') && stagesAreLoaded;
   },
-
-  buildStagesSort: ['number'],
-  sortedBuildStages: sort('build.stages', 'buildStagesSort')
 });

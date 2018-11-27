@@ -1,9 +1,8 @@
 /* global Travis */
 import { module, test } from 'qunit';
-import { visit, click } from '@ember/test-helpers';
+import { visit } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import signInUser from 'travis/tests/helpers/sign-in-user';
-import { percySnapshot } from 'ember-percy';
 
 module('Acceptance | builds/current tab', function (hooks) {
   setupApplicationTest(hooks);
@@ -43,14 +42,6 @@ module('Acceptance | builds/current tab', function (hooks) {
     assert.dom('[data-test-build-header]').hasClass('started');
 
     assert.dom('[data-test-job-log]').exists();
-    assert.dom('[data-test-job-config-content]').doesNotExist('Job config is hidden');
-    await click('[data-test-job-config-tab]');
-
-    assert.dom('[data-test-job-config-content]').exists();
-    assert.dom('[data-test-job-config-content]').hasText('{ \"language\": \"Hello\" }');
-    assert.dom('[data-test-job-log-content]').doesNotExist();
-
-    percySnapshot(assert);
   });
 
   test('renders the repository and subscribes to private log channel for a private repository', async function (assert) {
@@ -87,5 +78,13 @@ module('Acceptance | builds/current tab', function (hooks) {
     await visit('/travis-ci/travis-web');
 
     assert.dom('[data-test-no-jobs-error-message]').exists();
+  });
+
+  test('shows user link to .com if viewing migrated repository on .org', async function (assert) {
+    server.create('repository', { slug: 'travis-ci/travis-web', active: false, migration_status: 'migrated'});
+    await visit('/travis-ci/travis-web');
+
+    assert.dom('[data-test-not-active-migrated-header]').exists();
+    assert.dom('[data-test-not-active-migrated-subtext]').exists();
   });
 });

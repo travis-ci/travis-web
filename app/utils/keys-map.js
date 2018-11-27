@@ -35,7 +35,10 @@ languageConfigKeys = {
   osx_image: 'Xcode',
   xcode_scheme: 'Xcode scheme',
   r: 'R',
-  nix: 'Nix'
+  nix: 'Nix',
+  shell: 'Shell',
+  bash: 'Shell',
+  sh: 'Shell'
 };
 
 configKeys = {

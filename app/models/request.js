@@ -2,6 +2,15 @@ import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
 import { belongsTo } from 'ember-data/relationships';
 import { computed } from 'ember-decorators/object';
+import { service } from 'ember-decorators/service';
+import { alias } from 'ember-decorators/object/computed';
+
+import ObjectProxy from '@ember/object/proxy';
+import PromiseProxyMixin from '@ember/object/promise-proxy-mixin';
+let ObjectPromiseProxy = ObjectProxy.extend(PromiseProxyMixin);
+import { Promise as EmberPromise } from 'rsvp';
+
+const missingYamlResponse = '---\nerror: No YAML found for this request.';
 
 export default Model.extend({
   created_at: attr(),
@@ -15,6 +24,14 @@ export default Model.extend({
   pullRequest: attr('boolean'),
   pullRequestTitle: attr(),
   pullRequestNumber: attr('number'),
+
+  yaml_config: attr('string'),
+
+  @computed('yaml_config')
+  noYaml(config) {
+    return config == missingYamlResponse;
+  },
+
   repo: belongsTo('repo', { async: true }),
   commit: belongsTo('commit', { async: true }),
 
@@ -33,4 +50,25 @@ export default Model.extend({
   isPullRequest(eventType) {
     return eventType === 'pull_request';
   },
+
+  @service ajax: null,
+
+  @computed('repo.id', 'build.request.id')
+  messagesRequest(repoId, requestId) {
+    if (repoId && requestId) {
+      return ObjectPromiseProxy.create({
+        promise: this.get('ajax').ajax(`/repo/${repoId}/request/${requestId}/messages`, 'get', {
+          headers: {
+            'Travis-API-Version': '3'
+          }})
+          .then(response => ({messages: response.messages}))
+      });
+    } else {
+      return ObjectPromiseProxy.create({
+        promise: EmberPromise.resolve([])
+      });
+    }
+  },
+
+  @alias('messagesRequest.messages') messages: null,
 });
