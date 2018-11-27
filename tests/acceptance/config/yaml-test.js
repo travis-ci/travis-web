@@ -84,6 +84,12 @@ module('Acceptance | config/yaml', function (hooks) {
       await visit(`/travis-ci/travis-web/builds/${this.build.id}`);
       assert.ok(page.yamlTab.isDisabled, 'expected the config tab to be disabled when there’s no .travis.yml');
     });
+
+    test('shows the job note when viewing a single job', async function (assert) {
+      await visit(`/travis-ci/travis-web/jobs/${this.job.id}/config`);
+
+      assert.ok(page.jobYamlNote.text, 'This is the configuration for all of build #5, including this job');
+    });
   });
 
   module('with a single-job build', function () {
@@ -96,7 +102,7 @@ module('Acceptance | config/yaml', function (hooks) {
       await visit(`/travis-ci/travis-web/jobs/${this.job.id}`);
       await page.yamlTab.click();
 
-      assert.equal(page.jobYamlNote.text, 'This is the configuration for all of build #5, including this job');
+      assert.ok(page.jobYamlNote.isHidden, 'expected the job note to be hidden for a single-job build');
       assert.equal(page.yaml, 'language: jortle sudo: tortle');
     });
 
