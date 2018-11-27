@@ -46,9 +46,8 @@
 
       <div class="align-center">
         <button
-          disabled={{or (not form.isValid isSubmitting)}}
           onclick={{form.submit}}
-          class='submit-button button--blue button--large {{if (not form.isValid) 'inactive'}}'
+          class='submit-button button--blue button--large'
         >
           {{#if isSubmitting}}
             {{loading-indicator white=true }}
