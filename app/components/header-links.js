@@ -14,6 +14,7 @@ export default Component.extend({
   config,
 
   @service auth: null,
+  @service router: null,
   @service features: null,
   @service externalLinks: null,
   @service helpScout: null,
@@ -73,4 +74,13 @@ export default Component.extend({
   signOut() {
     return this.get('auth').signOut();
   },
+
+  @action
+  goToHelp() {
+    if (this.router.currentRouteName !== 'help') {
+      const page = encodeURI(window.location.href);
+      this.router.transitionTo('help', { queryParams: { page } });
+    }
+  }
+
 });

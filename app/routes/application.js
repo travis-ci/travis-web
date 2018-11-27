@@ -148,13 +148,6 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
     helpscoutTrigger() {
       this.helpScout.openHelpScout();
     },
-
-    goToHelp() {
-      if (this.router.currentRouteName !== 'help') {
-        const page = encodeURI(window.location.href);
-        this.transitionTo('help', { queryParams: { page } });
-      }
-    }
   },
 
   afterSignIn() {
