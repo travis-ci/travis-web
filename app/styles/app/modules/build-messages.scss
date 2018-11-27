@@ -1,15 +1,15 @@
 .yml-messages {
   @include travisBorder;
 
-  margin-top: 1.2em;
+  margin: 1.2em 0;
 
-  font-size: 16px;
+  font-size: $font-size-sm;
 
   .yml-message {
     display: flex;
     align-items: flex-start;
 
-    padding: 10px;
+    padding: 6px;
 
     svg {
       width: 18px;
@@ -35,15 +35,15 @@
     }
 
     .message {
-      padding-left: 10px;
+      padding-left: 7px;
       border-left: 1px solid $dry-cement;
-      margin-left: 5px;
+      margin-left: 2px;
     }
 
     code {
       background-color: #eef0f4;
       font-family: $font-family-monospace;
-      font-size: 14px;
+      font-size: $font-size-sm - 1px;
       padding: 2px;
       border-radius: 2px;
     }

@@ -7,6 +7,7 @@ import { alias } from 'ember-decorators/object/computed';
 export default Component.extend({
   @service auth: null,
   @service permissions: null,
+  @service features: null,
 
   tagName: 'nav',
   classNames: ['option-button'],
@@ -36,6 +37,15 @@ export default Component.extend({
   @computed('permissions.all', 'repo')
   displayStatusImages(permissions, repo) {
     return this.get('permissions').hasPermission(repo);
+  },
+
+  // eslint-disable-next-line
+  @computed('repo.migrationStatus', 'repo.permissions.create_request', 'features.{enterpriseVersion,proVersion}')
+  displayTriggerBuildLink(migrationStatus, canTriggerBuild, enterprise, pro) {
+    if (enterprise || pro) {
+      return canTriggerBuild;
+    }
+    return canTriggerBuild && migrationStatus !== 'migrated';
   },
 
   actions: {

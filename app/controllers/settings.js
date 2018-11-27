@@ -4,8 +4,11 @@ import Controller from '@ember/controller';
 import { computed } from 'ember-decorators/object';
 import { alias, sort, filterBy } from 'ember-decorators/object/computed';
 import config from 'travis/config/environment';
+import { service } from 'ember-decorators/service';
 
 export default Controller.extend({
+  @service externalLinks: null,
+
   @computed('unsortedEnvVars')
   envVars(envVars) {
     return envVars.sortBy('name');
@@ -45,6 +48,17 @@ export default Controller.extend({
     return settings.hasOwnProperty('auto_cancel_pushes')
       || settings.hasOwnProperty('auto_cancel_pull_requests');
   },
+
+  @computed('repo.slug')
+  migratedRepositorySettingsLink(slug) {
+    return this.get('externalLinks').migratedToComSettingsLink(slug);
+  },
+
+  @computed('features.{proVersion,enterpriseVersion}', 'repo.migrationStatus')
+  displaySettingsDisabledAfterMigrationModal(pro, enterprise, migrationStatus) {
+    return !pro && !enterprise && ['migrating', 'migrated'].includes(migrationStatus);
+  },
+
 
   actions: {
     sshKeyAdded(sshKey) {

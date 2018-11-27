@@ -248,4 +248,43 @@ module('Acceptance | profile/migration', function (hooks) {
     assert.dom('[data-test-repository-migration-modal]').doesNotExist();
     assert.dom('[data-test-migration-status]').doesNotExist();
   });
+
+  test('migate button hidden if already migrated', async function (assert) {
+    enableFeature('github-apps');
+    enableFeature('pro-version');
+
+    this.user = server.create('user', {
+      allowMigration: true
+    });
+
+    // create locked GitHub repository
+    this.lockedRepository = server.create('repository', {
+      name: 'github-apps-locked-repository',
+      owner: {
+        login: this.user.login,
+      },
+      active: true,
+      managed_by_installation: true,
+      private: false,
+      active_on_org: true,
+      migrationStatus: 'migrated',
+      permissions: {
+        migrate: true
+      },
+    });
+
+    // create GitHub Apps installation
+    server.create('installation', {
+      owner: this.user,
+      github_id: 2691
+    });
+    this.user.save();
+
+    signInUser(this.user);
+
+    await visit(`/profile/${this.user.login}`);
+
+    assert.dom('[data-test-locked-github-app-repository="github-apps-locked-repository"]').exists();
+    assert.dom('[data-test-migration-status]').doesNotExist();
+  });
 });
