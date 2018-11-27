@@ -17,7 +17,7 @@ export default Component.extend({
   notShowDescription: not('showDescription'),
 
   // there is description but it's hidden from outside
-  showTooltop: and('notShowDescription', 'description'),
+  showTooltip: and('notShowDescription', 'description'),
 
   didInsertElement() {
     this._super(...arguments);
