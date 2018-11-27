@@ -1,4 +1,4 @@
-import { isPresent } from '@ember/utils';
+import { isPresent, isEqual } from '@ember/utils';
 
 function createValidator(validate, errorMessage) {
   return (value) => validate(value) || errorMessage;
@@ -19,5 +19,14 @@ export const email = (errorMessage = 'Email has incorrect format') => {
 export const presense = (errorMessage = 'This field is required') => {
   const validator = createValidator((value) => isPresent(value), errorMessage);
   validator.kind = presense;
+  return validator;
+};
+
+export const difference = (sample, errorMessage) => {
+  const validator = createValidator(
+    (value) => !isEqual(value, sample),
+    errorMessage || `This field should be different from ${sample}`
+  );
+  validator.kind = difference;
   return validator;
 };

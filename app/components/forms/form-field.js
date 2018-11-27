@@ -32,6 +32,8 @@ export default Component.extend({
   validator: () => true,
   required: equal('validator.kind', presense),
 
+  autoValidate: true,
+
   onChange() {},
   onFocus() {},
   onBlur() {},
@@ -75,7 +77,7 @@ export default Component.extend({
   didInsertElement() {
     this._super(...arguments);
     this.form.registerField(this);
-    if (this.value) {
+    if (this.value && this.autoValidate) {
       this.validate();
     }
   },

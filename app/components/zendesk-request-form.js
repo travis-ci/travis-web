@@ -25,7 +25,9 @@ export default Component.extend({
 
   subject: '',
 
-  description: computed(function () {
+  description: reads('descriptionTemplate'),
+
+  descriptionTemplate: computed(function () {
     return buildDescriptionTemplate(this.page);
   }),
 
@@ -87,9 +89,12 @@ export default Component.extend({
 
 function buildDescriptionTemplate(page) {
   const { language, vendor, userAgent, platform, appVersion } = navigator;
+  /* eslint-disable */
   return `
 
 –––––––––––––––
+The following details will be sent along to help us help you better, but you may also edit them as you like.
+
 Page: ${page}
 
 Technical details:
@@ -99,4 +104,5 @@ Technical details:
 - App Version: ${appVersion}
 - Language: ${language}
 `;
+  /* eslint-enable */
 }

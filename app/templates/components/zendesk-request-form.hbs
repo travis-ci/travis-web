@@ -39,7 +39,8 @@
         helperText="Let us know what's happening and how this is affecting you. Tip: Include any links to failing Travis CI build"
         rows=5
         disabled=isSubmitting
-        validator=(form-validator form.validators.presense "Make sure to add some details on what you'd like to talk with us about")
+        validator=(form-validator form.validators.difference descriptionTemplate "Make sure to add some details on what you'd like to talk with us about")
+        autoValidate=false
         onChange=(action (mut description))
       }}{{description}}{{/form.textarea}}
 
