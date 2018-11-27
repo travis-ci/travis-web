@@ -26,11 +26,11 @@
 
     a {
       display: inline-block;
-      border-bottom: 1px solid $asphalt-grey;
+      border-bottom: 1px solid #dcdcdc;
 
       &:hover {
-        color: $oxide-blue;
-        border-color: $oxide-blue;
+        color: $asphalt-grey;
+        border-color: $asphalt-grey;
       }
     }
 
