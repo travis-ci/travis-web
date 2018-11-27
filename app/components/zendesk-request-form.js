@@ -17,6 +17,7 @@ export default Component.extend({
   classNames: ['zendesk-request-form'],
 
   auth: service(),
+  flashes: service(),
 
   page: '',
 
@@ -50,10 +51,28 @@ export default Component.extend({
         }
       });
     } catch (error) {
-      // TODO handle error
+      if (error.readyState === 0) { // Network error
+        this.flashes.error(
+          "We're sorry, API is currently unavailable, please try to submit again a bit later"
+        );
+      } else { // Unknown error
+        this.flashes.error(
+          "Something went wrong while submitting your request. We're working to fix it!"
+        );
+      }
       throw error;
     }
   }),
+
+  didInsertElement() {
+    this.flashes.clear();
+    return this._super(...arguments);
+  },
+
+  willDestroyElement() {
+    this.flashes.clear();
+    return this._super(...arguments);
+  },
 
   actions: {
 
