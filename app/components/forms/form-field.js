@@ -13,7 +13,8 @@ export default Component.extend({
   classNames: ['travis-form__field'],
   classNameBindings: [
     'isValid:travis-form__field--valid',
-    'isError:travis-form__field--error'
+    'isError:travis-form__field--error',
+    'isFocused:travis-form__field--focused'
   ],
 
   fieldComponentName: 'forms/form-input',
@@ -36,6 +37,7 @@ export default Component.extend({
   onBlur() {},
 
   errorMessage: '',
+  isFocused: false,
 
   isDefault: equal('state', FIELD_STATE.DEFAULT),
   isValid: equal('state', FIELD_STATE.VALID),
@@ -64,8 +66,10 @@ export default Component.extend({
   },
 
   clearError() {
-    const state = FIELD_STATE.DEFAULT;
-    this.setProperties({ state, errorMessage: '' });
+    if (this.state === FIELD_STATE.ERROR) {
+      const state = FIELD_STATE.DEFAULT;
+      this.setProperties({ state, errorMessage: '' });
+    }
   },
 
   didInsertElement() {
@@ -84,11 +88,13 @@ export default Component.extend({
   actions: {
 
     handleFocus() {
+      this.set('isFocused', true);
       this.clearError();
       this.onFocus();
     },
 
     handleBlur(value) {
+      this.set('isFocused', false);
       this.validate(value);
       this.onBlur(value);
     },

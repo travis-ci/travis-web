@@ -104,13 +104,17 @@ $travis-form-badge-radius: 10px;
 
     &.travis-form__field--valid {
 
-      &::after {
-        content: '\2713';
-        opacity: 1;
-        right: -$travis-form-badge-radius * 2 - 10px;
-        border-color: $oxide-blue;
-        color: $oxide-blue;
-        line-height: 1;
+      &:not(.travis-form__field--focused) {
+
+        &::after {
+          content: '\2713';
+          opacity: 1;
+          right: -$travis-form-badge-radius * 2 - 10px;
+          border-color: $oxide-blue;
+          color: $oxide-blue;
+          line-height: 1;
+        }
+
       }
 
     }
