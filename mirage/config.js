@@ -606,10 +606,27 @@ export default function () {
             time: `${d.toISOString().split('.')[0].replace('T', ' ')} UTC`,
             interval: queryParams.interval,
             name: name,
-            value: Math.round(Math.random() * 100),
+            value: (i * 10),
           });
         }
       });
+
+      return response;
+    } else {
+      return new Response(404, {}, {});
+    }
+  });
+
+  this.get('/insights/repos/active', function (schema, {queryParams}) {
+    const owner = schema.users.find(queryParams.owner_id);
+
+    if (owner) {
+      const response = {
+        '@type': 'proxy',
+        '@representation': 'standard',
+        'data': queryParams
+      };
+      response.data.count = 75;
 
       return response;
     } else {

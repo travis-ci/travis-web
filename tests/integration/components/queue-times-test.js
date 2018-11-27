@@ -1,26 +1,44 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, settled } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | queue-times', function (hooks) {
   setupRenderingTest(hooks);
 
+  hooks.beforeEach(function () {
+    this.server.create('user');
+  });
+
   test('it renders', async function (assert) {
-    // Set any properties with this.set('myProperty', 'value');
-    // Handle any actions with this.set('myAction', function(val) { ... });
+    this.set('interval', 'week');
+    this.set('ownerData', {
+      '@type': 'User',
+      id: 1,
+    });
 
-    await render(hbs`{{queue-times}}`);
+    await render(hbs`{{queue-times interval=interval owner=ownerData}}`);
+    await settled();
 
-    assert.equal(this.element.textContent.trim(), '');
+    assert.dom('.insights-glance').doesNotHaveClass('insights-glance--loading');
+    assert.dom('.insights-glance__title').hasText('Average Queue Time');
+    assert.dom('.insights-glance__stat').hasText('0.63 mins');
+    assert.dom('.insights-glance__chart').hasAnyText();
+  });
 
-    // Template block usage:
-    await render(hbs`
-      {{#queue-times}}
-        template block text
-      {{/queue-times}}
-    `);
+  test('it renders when data is not found', async function (assert) {
+    this.set('interval', 'week');
+    this.set('ownerData', {
+      '@type': 'User',
+      id: -1,
+    });
 
-    assert.equal(this.element.textContent.trim(), 'template block text');
+    await render(hbs`{{queue-times interval=interval owner=ownerData}}`);
+    await settled();
+
+    assert.dom('.insights-glance').hasClass('insights-glance--loading');
+    assert.dom('.insights-glance__title').hasText('Average Queue Time');
+    assert.dom('.insights-glance__stat').hasText('\xa0');
+    assert.dom('.insights-glance__chart-placeholder').exists();
   });
 });

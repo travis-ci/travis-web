@@ -6,9 +6,10 @@
     {{activeTotal}}
   {{/if}}
 </div>
-
-{{#if (or isLoading (is-empty aggregateData))}}
-  <hr class="insights-glance__chart-placeholder" />
-{{else}}
-  {{high-charts content=content chartOptions=options}}
-{{/if}}
+<div class="insights-glance__chart">
+  {{#if (or isLoading (is-empty aggregateData))}}
+    <hr class="insights-glance__chart-placeholder" />
+  {{else}}
+    {{high-charts content=content chartOptions=options}}
+  {{/if}}
+</div>
