@@ -79,4 +79,12 @@ module('Acceptance | builds/current tab', function (hooks) {
 
     assert.dom('[data-test-no-jobs-error-message]').exists();
   });
+
+  test('shows user link to .com if viewing migrated repository on .org', async function (assert) {
+    server.create('repository', { slug: 'travis-ci/travis-web', active: false, migration_status: 'migrated'});
+    await visit('/travis-ci/travis-web');
+
+    assert.dom('[data-test-not-active-migrated-header]').exists();
+    assert.dom('[data-test-not-active-migrated-subtext]').exists();
+  });
 });
