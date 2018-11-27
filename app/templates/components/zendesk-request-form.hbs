@@ -1,46 +1,96 @@
-{{#travis-form
-  onSubmit=(action 'handleSubmit')
-  as |form|
-}}
+{{#unless isSuccess}}
 
-  {{form.input
-    label='Email'
-    value=email
-    validator=(form-validator form.validators.email)
-    required=true
-    disabled=true
-  }}
+  <h1 class="header-main align-center">
+    Get help from our support engineers
+  </h1>
 
-  {{form.input
-    label='Subject'
-    value=subject
-    required=true
-    disabled=isSubmitting
-    onChange=(action (mut subject))
-  }}
-
-  {{#form.textarea
-    label='Description'
-    value=description
-    helperText="Let us know what's happening and how this is affecting you. Tip: Include any links to failing Travis CI build"
-    rows=5
-    disabled=isSubmitting
-    validator=(form-validator form.validators.presense "Make sure to add some details on what you'd like to talk with us about")
-    onChange=(action (mut description))
-  }}{{description}}{{/form.textarea}}
-
-  <div class="align-center">
-    <button
-      disabled={{or (not form.isValid isSubmitting)}}
-      onclick={{form.submit}}
-      class='submit-button button--blue button--large {{if (not form.isValid) 'inactive'}}'
-    >
-      {{#if isSubmitting}}
-        {{loading-indicator white=true }}
-      {{else}}
-        Submit
-      {{/if}}
-    </button>
+  <div class="subheading align-center">
+    Expect a reply between {{startTime}} {{timezone}} – {{endTime}} {{timezone}} Monday through Friday
   </div>
 
-{{/travis-form}}
+  {{#if isLoggedIn}}
+
+    {{#travis-form
+      onSubmit=(action 'handleSubmit')
+      as |form|
+    }}
+
+      {{form.input
+        label='Email'
+        value=email
+        validator=(form-validator form.validators.email)
+        required=true
+        disabled=true
+      }}
+
+      {{form.input
+        label='Subject'
+        value=subject
+        required=true
+        disabled=isSubmitting
+        onChange=(action (mut subject))
+      }}
+
+      {{#form.textarea
+        label='Description'
+        value=description
+        helperText="Let us know what's happening and how this is affecting you. Tip: Include any links to failing Travis CI build"
+        rows=5
+        disabled=isSubmitting
+        validator=(form-validator form.validators.presense "Make sure to add some details on what you'd like to talk with us about")
+        onChange=(action (mut description))
+      }}{{description}}{{/form.textarea}}
+
+      <div class="align-center">
+        <button
+          disabled={{or (not form.isValid isSubmitting)}}
+          onclick={{form.submit}}
+          class='submit-button button--blue button--large {{if (not form.isValid) 'inactive'}}'
+        >
+          {{#if isSubmitting}}
+            {{loading-indicator white=true }}
+          {{else}}
+            Submit
+          {{/if}}
+        </button>
+      </div>
+
+    {{/travis-form}}
+
+  {{else}}
+
+    <div class="sign-in-image align-center">
+      {{svg-jar 'hard-hat'}}
+    </div>
+
+    <div class="sign-in align-center">
+      <button
+        title="Sign into Travis CI"
+        class="hero-button"
+        {{action (route-action 'signIn' false)}}
+      >
+        {{svg-jar 'icon-repooctocat' }} Sign in with GitHub
+      </button>
+    </div>
+
+  {{/if}}
+
+{{else}}
+
+  <h1 class="header-main align-center">
+    Thank you!
+  </h1>
+
+  <div class="success-image align-center">
+    {{svg-jar 'hard-hat-success'}}
+  </div>
+
+  <div class="subheading align-center">
+    One of our support engineers will get back to you as soon as possible.
+  </div>
+
+  <div class="back-link align-center">
+    <a class="button--blue" href={{page}}>Head back</a>
+  </div>
+
+{{/unless}}

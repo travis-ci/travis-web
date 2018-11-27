@@ -27,35 +27,8 @@
       <div class="section-divider"></div>
     {{/if}}
 
-    <h1 class="header-main align-center">
-      Get help from our support engineers
-    </h1>
+    {{zendesk-request-form page=page }}
 
-    <div class="subheading align-center">
-      Expect a reply between {{startTime}} {{timezone}} – {{endTime}} {{timezone}} Monday through Friday
-    </div>
-
-    {{#if isLoggedIn}}
-
-      {{zendesk-request-form page=page }}
-
-    {{else}}
-
-      <div class="sign-in-image align-center">
-        {{svg-jar 'hard-hat'}}
-      </div>
-
-      <div class="sign-in align-center">
-        <button
-          title="Sign into Travis CI"
-          class="hero-button"
-          {{action (route-action 'signIn' false)}}
-        >
-          {{svg-jar 'icon-repooctocat' }} Sign in with GitHub
-        </button>
-      </div>
-
-    {{/if}}
   {{/layout.section}}
 
 {{/travis-layout}}

@@ -150,8 +150,10 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
     },
 
     goToHelp() {
-      const page = encodeURI(window.location.href);
-      this.transitionTo('help', { queryParams: { page } })
+      if (this.router.currentRouteName !== 'help') {
+        const page = encodeURI(window.location.href);
+        this.transitionTo('help', { queryParams: { page } });
+      }
     }
   },
 

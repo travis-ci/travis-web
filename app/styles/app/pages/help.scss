@@ -63,12 +63,21 @@
       margin: 30px 0 60px;
     }
 
-    .zendesk-request-form {
-      max-width: 730px;
-      margin: 50px auto 0;
+    .success-image {
+      margin: 30px 0 40px;
+    }
 
-      .travis-form__field {
-        margin-bottom: 10px;
+    .zendesk-request-form {
+
+      .travis-form {
+
+        max-width: 730px;
+        margin: 50px auto 0;
+
+        .travis-form__field {
+          margin-bottom: 10px;
+        }
+
       }
 
       .submit-button {
@@ -76,6 +85,14 @@
         min-width: 160px;
       }
 
+    }
+
+    .back-link {
+      margin-top: 30px;
+
+      a {
+        font-size: 1.1em;
+      }
     }
 
   }

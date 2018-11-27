@@ -2,12 +2,7 @@ import Controller from '@ember/controller';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 import { reads, equal } from '@ember/object/computed';
-import moment from 'moment';
 import config from 'travis/config/environment';
-
-const UTC_START_TIME = moment.utc({ h: 9, m: 0, s: 0 });
-const UTC_END_TIME = moment.utc({ h: 23, m: 0, s: 0 });
-const DATE_FORMAT = 'LT';
 
 export const ANCHOR = {
   TOP: 'top',
@@ -34,10 +29,6 @@ export default Controller.extend({
 
   docsUrl: computed(() => docs),
   communityUrl: computed(() => `${community}/top`),
-
-  startTime: UTC_START_TIME.local().format(DATE_FORMAT),
-  endTime: UTC_END_TIME.local().format(DATE_FORMAT),
-  timezone: moment.tz(moment.tz.guess()).format('z'),
 
   actions: {
 
