@@ -6,21 +6,34 @@ import hbs from 'htmlbars-inline-precompile';
 module('Integration | Component | insight-tabs', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders', async function (assert) {
-    // Set any properties with this.set('myProperty', 'value');
-    // Handle any actions with this.set('myAction', function(val) { ... });
-
+  test('it renders with month active by default', async function (assert) {
     await render(hbs`{{insight-tabs}}`);
 
-    assert.equal(this.element.textContent.trim(), '');
+    assert.dom('.insight-tabs').exists();
+    assert.dom('.insight-tabs .insight-tab').exists({ count: 3 });
+    assert.dom('.insight-tabs .insight-tab.active').exists({ count: 1 });
+    assert.dom('.insight-tabs .insight-tab.active').hasText('Month');
+  });
 
-    // Template block usage:
-    await render(hbs`
-      {{#insight-tabs}}
-        template block text
-      {{/insight-tabs}}
-    `);
+  test('it renders with week active', async function (assert) {
+    this.set('interval', 'week');
 
-    assert.equal(this.element.textContent.trim(), 'template block text');
+    await render(hbs`{{insight-tabs selectedTab=interval}}`);
+
+    assert.dom('.insight-tabs').exists();
+    assert.dom('.insight-tabs .insight-tab').exists({ count: 3 });
+    assert.dom('.insight-tabs .insight-tab.active').exists({ count: 1 });
+    assert.dom('.insight-tabs .insight-tab.active').hasText('Week');
+  });
+
+  test('it renders with day active', async function (assert) {
+    this.set('interval', 'day');
+
+    await render(hbs`{{insight-tabs selectedTab=interval}}`);
+
+    assert.dom('.insight-tabs').exists();
+    assert.dom('.insight-tabs .insight-tab').exists({ count: 3 });
+    assert.dom('.insight-tabs .insight-tab.active').exists({ count: 1 });
+    assert.dom('.insight-tabs .insight-tab.active').hasText('Day');
   });
 });
