@@ -8,6 +8,7 @@ import { service } from 'ember-decorators/service';
 
 export default Controller.extend({
   @service externalLinks: null,
+  @service features: null,
 
   @computed('unsortedEnvVars')
   envVars(envVars) {
