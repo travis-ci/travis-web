@@ -1,5 +1,6 @@
 import Service, { inject as serviceInject } from '@ember/service';
 import moment from 'moment';
+// import config from 'travis/config/environment';
 import $ from 'jquery';
 
 import ObjectProxy from '@ember/object/proxy';
@@ -59,6 +60,7 @@ export default Service.extend({
     const currentOptions = $.extend(true, {}, defaultOptions, options);
     currentOptions.aggregator = currentOptions.aggregator || func;
     const intervalSettings = this.getIntervalSettings(currentOptions.intervalSettings);
+    const requestPrivateData = true; // TODO: Clarify permissions plan
 
     const endTime = moment.utc();
     const startTime = moment.utc().subtract(1, interval);
@@ -66,14 +68,15 @@ export default Service.extend({
     const apiSettings = {
       stringifyData: false,
       data: {
-        subject: subject,
+        subject,
         interval: intervalSettings[interval].subInterval,
-        func: func,
+        func,
         name: metrics.join(','),
         owner_type: owner['@type'] === 'user' ? 'User' : 'Organization',
         owner_id: owner.id,
         end_time: endTime.format(apiTimeRequestFormat),
         start_time: startTime.format(apiTimeRequestFormat),
+        private: requestPrivateData,
       }
     };
     const defaultTimesMap = metrics.reduce((map, metric) => {

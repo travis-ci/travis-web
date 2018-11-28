@@ -55,20 +55,25 @@ export default Component.extend({
         type: 'column',
         height: '40%',
         plotBackgroundColor: '#fdfdfd',
+        // animation: false,
       },
       plotOptions: {
-        column: {
-          stacking: 'normal',
-        }
+        column: { stacking: 'normal' },
+        // series: { animation: false },
       },
       tooltip: {
         xDateFormat: this.intervalSettings[this.interval].tooltipLabelFormat,
         useHTML: true,
+        headerFormat: '<div class="ht-int"><div style="font-size: 10px">{point.key}</div>',
         pointFormat: `
           <div style="margin-top: 2px;">
             <span style="color:{point.color};">●</span> {series.name}: <b>{point.y}</b>
           </div>
         `,
+        footerFormat: '</div>',
+        shadow: false,
+        padding: 0,
+        shape: 'square',
       },
       responsive: {
         rules: [{
