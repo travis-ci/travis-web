@@ -1,4 +1,4 @@
 <p class='manual-help'>
   If you have any questions or would like to update your plan, please
-  <a href='{{ config.urls.support }}' title='Email the Travis support team' {{action 'helpscoutTrigger'}}>contact our support team</a>.
+  {{#link-to 'help' (query-params anchor='form')}}contact our support team{{/link-to}}
 </p>

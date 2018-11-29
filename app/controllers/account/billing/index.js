@@ -1,9 +1,7 @@
-/* global HS */
-
 import Controller from '@ember/controller';
 import { service } from 'ember-decorators/service';
 import { controller } from 'ember-decorators/controller';
-import { action, computed } from 'ember-decorators/object';
+import { computed } from 'ember-decorators/object';
 import { alias } from 'ember-decorators/object/computed';
 import config from 'travis/config/environment';
 
@@ -35,11 +33,6 @@ export default Controller.extend({
     if (!model.subscriptions) {
       return !model.subscriptions && !account.education;
     }
-  },
+  }
 
-  @action
-  helpscoutTrigger() {
-    HS.beacon.open();
-    return false;
-  },
 });

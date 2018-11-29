@@ -13,7 +13,6 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
   @service features: null,
   @service featureFlags: null,
   @service flashes: null,
-  @service helpScout: null,
   @service repositories: null,
 
   needsAuth: false,
@@ -143,11 +142,8 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
 
     viewSearchResults(query) {
       this.transitionTo('search', query);
-    },
+    }
 
-    helpscoutTrigger() {
-      this.helpScout.openHelpScout();
-    },
   },
 
   afterSignIn() {

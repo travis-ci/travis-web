@@ -17,7 +17,6 @@ export default Component.extend({
   @service router: null,
   @service features: null,
   @service externalLinks: null,
-  @service helpScout: null,
 
   @alias('auth.currentUser') user: null,
 
@@ -58,11 +57,6 @@ export default Component.extend({
     classes.push(authState || 'signed-out');
 
     return classes.join(' ');
-  },
-
-  @action
-  helpscoutTrigger() {
-    this.helpScout.openHelpScout();
   },
 
   @action
