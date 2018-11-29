@@ -32,7 +32,6 @@ export default Component.extend({
         type: 'spline',
         height: '25%',
         spacing: [5, 5, 5, 5],
-        // animation: false,
       },
       plotOptions: {
         series: {
@@ -40,7 +39,6 @@ export default Component.extend({
           lineWidth: 1,
           states: {  hover: { lineWidth: 2, halo: { size: 8 } } },
           marker: { enabled: false, radius: 2 },
-          // animation: false,
         },
       },
       tooltip: {
