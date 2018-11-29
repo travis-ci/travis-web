@@ -38,7 +38,7 @@ export default Component.extend({
           color: '#666',
           lineWidth: 1,
           states: {  hover: { lineWidth: 2, halo: { size: 8 } } },
-          marker: { enabled: false, radius: 2 },
+          marker: { enabled: false },
         },
       },
       tooltip: {
@@ -66,11 +66,23 @@ export default Component.extend({
     }
   }),
 
-  content: computed('aggregateData', function () {
+  content: computed('aggregateData', 'percentageChange', function () {
     if (this.aggregateData) {
+      const chartData = this.aggregateData;
+      if (typeof this.percentageChange === 'number' && this.percentageChange !== 0) {
+        const lastItem = this.aggregateData[this.aggregateData.length - 1];
+        chartData[chartData.length - 1] = {
+          x: lastItem[0],
+          y: lastItem[1],
+          marker: {
+            enabled: true,
+            fillColor: this.percentageChange > 0 ? '#39aa56' : '#db4545',
+          }
+        };
+      }
       return [{
         name: 'Builds',
-        data: this.aggregateData,
+        data: chartData,
       }];
     }
   }),
@@ -94,5 +106,33 @@ export default Component.extend({
   totalBuildText: computed('totalBuilds', function () {
     if (typeof this.totalBuilds !== 'number') { return '\xa0'; }
     return this.totalBuilds.toLocaleString();
+  }),
+
+  prevDataRequest: computed('owner', 'interval', function () {
+    return this.get('insights').getMetric(
+      this.owner,
+      this.interval,
+      'builds',
+      'sum',
+      ['count_started'],
+      { startInterval: -2, endInterval: -1 }
+    );
+  }),
+
+  percentageChange: computed('prevDataRequest.data', 'totalBuilds', function () {
+    const responseData = this.get('prevDataRequest.data');
+    // console.log('PCRD', responseData);
+    if (responseData && this.totalBuilds) {
+      const previousTotal = responseData.count_started.reduce((acc, val) => acc + val[1], 0);
+      const change = ((this.totalBuilds - previousTotal) / previousTotal);
+      const percent = change * 100;
+      return (Math.round(percent * 10) / 10);
+    }
+
+    return 0;
+  }),
+
+  percentageChangeText: computed('percentageChange', function () {
+    return `${this.percentageChange >= 0 ? this.percentageChange : this.percentageChange * -1}%`;
   }),
 });

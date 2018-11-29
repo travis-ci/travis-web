@@ -30,7 +30,8 @@ const defaultIntervalSettings = {
 
 const defaultOptions = {
   intervalSettings: {},
-  transform: ((key, val) => [key, val]),
+  startInterval: -1,
+  endInterval: 0,
 };
 
 const apiTimeBaseFormat = 'YYYY-MM-DD HH:mm:ss';
@@ -59,11 +60,12 @@ export default Service.extend({
   ) {
     const currentOptions = $.extend(true, {}, defaultOptions, options);
     currentOptions.aggregator = currentOptions.aggregator || func;
+    currentOptions.transformer = currentOptions.transformer || func;
     const intervalSettings = this.getIntervalSettings(currentOptions.intervalSettings);
     const requestPrivateData = true; // TODO: Clarify permissions plan
 
-    const endTime = moment.utc();
-    const startTime = moment.utc().subtract(1, interval);
+    const startTime = moment.utc().add(currentOptions.startInterval, interval);
+    const endTime = moment.utc().add(currentOptions.endInterval, interval);
 
     const apiSettings = {
       stringifyData: false,
@@ -85,7 +87,7 @@ export default Service.extend({
     }, {});
 
     const aggregator = this._getAggregator(currentOptions.aggregator);
-    const transformer = this._getTransformer(func);
+    const transformer = this._getTransformer(currentOptions.transformer);
 
     return ObjectPromiseProxy.create({
       promise: this.get('api').get(endpoints.metrics, apiSettings).then(response => {
@@ -107,9 +109,11 @@ export default Service.extend({
         Object.entries(aggData).map(([metricKey, metricVal]) => {
           aggData[metricKey] = Object.entries(metricVal).map(([key, val]) => {
             let [newKey, newVal] = transformer(key, val);
-            try {
-              [newKey, newVal] = currentOptions.transform(newKey, newVal);
-            } catch (e) {}
+            if (typeof currentOptions.customTransform === 'function') {
+              try {
+                [newKey, newVal] = currentOptions.customTransform(newKey, newVal);
+              } catch (e) {}
+            }
             return [newKey, newVal];
           });
         });
@@ -121,8 +125,8 @@ export default Service.extend({
     });
   },
 
-  _getAggregator(func) {
-    switch (func) {
+  _getAggregator(aggName) {
+    switch (aggName) {
       case 'sum':
         return (map, name, time, value) => {
           if (map[name].hasOwnProperty(time)) {
@@ -168,8 +172,8 @@ export default Service.extend({
     }
   },
 
-  _getTransformer(func) {
-    switch (func) {
+  _getTransformer(transformerName) {
+    switch (transformerName) {
       case 'avg':
         return (key, val) => [Number(key), (val[1] / val[0])];
       default:
