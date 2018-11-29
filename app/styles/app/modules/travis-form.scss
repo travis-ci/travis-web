@@ -10,8 +10,7 @@ $travis-form-badge-radius: 10px;
   .travis-form__field {
     position: relative;
 
-    &::after {
-      content: '';
+    .travis-form__field-badge {
       opacity: 0;
       position: absolute;
       top: 50%;
@@ -19,13 +18,6 @@ $travis-form-badge-radius: 10px;
       right: 0;
       width: $travis-form-badge-radius * 2;
       height: $travis-form-badge-radius * 2;
-      border: 2px solid transparent;
-      border-radius: $travis-form-badge-radius;
-      text-align: center;
-      font-size: 16px;
-      line-height: 0.95;
-      color: transparent;
-      font-weight: 700;
 
       transition: all 0.2s ease-in;
     }
@@ -84,12 +76,9 @@ $travis-form-badge-radius: 10px;
 
     &.travis-form__field--error {
 
-      &::after {
-        content: '!';
+      .travis-form__field-badge--error {
         opacity: 1;
         right: -$travis-form-badge-radius * 2 - 10px;
-        border-color: $brick-red;
-        color: $brick-red;
       }
 
       .travis-form__field-component {
@@ -107,13 +96,9 @@ $travis-form-badge-radius: 10px;
 
       &:not(.travis-form__field--focused) {
 
-        &::after {
-          content: '\2713';
+        .travis-form__field-badge--valid {
           opacity: 1;
           right: -$travis-form-badge-radius * 2 - 10px;
-          border-color: $oxide-blue;
-          color: $oxide-blue;
-          line-height: 1;
         }
 
       }
@@ -133,7 +118,7 @@ $travis-form-badge-radius: 10px;
       &.travis-form__field--valid:not(.travis-form__field--focused),
       &.travis-form__field--error {
 
-        &::after {
+        .travis-form__field-badge {
           bottom: 28px;
           top: auto;
           right: 5px;
