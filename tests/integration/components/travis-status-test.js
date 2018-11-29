@@ -16,14 +16,13 @@ module('Integration | Component | travis-status', function (hooks) {
     config.statusPageStatusUrl = undefined;
   });
 
-  // FIXME Fix awating of status fetching
-  // test('shows normal status when nothing wrong', async function (assert) {
-  // await render(hbs`{{travis-status}}`);
+  test('shows normal status when nothing wrong', async function (assert) {
+    await render(hbs`{{travis-status}}`);
 
-  // return settled().then(() => {
-  // assert.dom('.travis-status').hasClass('none', 'status class is set on travis-status');
-  // });
-  // });
+    return settled().then(() => {
+      assert.dom('.travis-status').hasClass('none', 'status class is set on travis-status');
+    });
+  });
 
   test('shows unknown status when statuspage returns error', async function (assert) {
     this.server.get(config.statusPageStatusUrl, () => {
