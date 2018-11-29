@@ -14,8 +14,13 @@ export default function jobConfigLanguage(config) {
         if (typeof version === 'object' && version.test) {
           version = version.test;
         }
-        output.push(`${languageName}: ${version}`);
-        completedLanguageNames.push(languageName);
+
+        if (languageName === 'Android') {
+          output.push('Android');
+        } else {
+          output.push(`${languageName}: ${version}`);
+          completedLanguageNames.push(languageName);
+        }
       }
     }
     gemfile = config.gemfile;

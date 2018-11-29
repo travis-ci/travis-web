@@ -30,4 +30,8 @@ module('jobConfigLanguage', function () {
   test('a job with a Gemfile without an env does not show the Gemfile', (assert) => {
     assert.equal(jobConfigLanguage({ gemfile: 'Nofile' }), '', 'expected a Gemfile-only config to return an empty string');
   });
+
+  test('a job with an Android components array shows no version', (assert) => {
+    assert.equal(jobConfigLanguage({ android: { components: ['dumont', 'riel'] } }), 'Android');
+  });
 });
