@@ -1,9 +1,9 @@
 import TravisRoute from 'travis/routes/basic';
-import { service } from 'ember-decorators/service';
+import { inject as service } from '@ember/service';
 
 export default TravisRoute.extend({
-  @service raven: null,
-  @service accounts: null,
+  raven: service(),
+  accounts: service(),
 
   needsAuth: true,
 
