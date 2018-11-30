@@ -3,7 +3,6 @@
 
 import Ember from 'ember';
 import Component from '@ember/component';
-import { action } from 'ember-decorators/object';
 import config from 'travis/config/environment';
 
 export default Component.extend({
@@ -26,11 +25,12 @@ export default Component.extend({
     };
   },
 
-  @action
-  toggleOpen() {
-    this.toggleProperty('panelIsOpen');
-    this.rememberPanelOpenState();
-    this.ensurePanelScrolledToBottom();
+  actions: {
+    toggleOpen() {
+      this.toggleProperty('panelIsOpen');
+      this.rememberPanelOpenState();
+      this.ensurePanelScrolledToBottom();
+    }
   },
 
   ensurePanelScrolledToBottom() {

@@ -1,64 +1,69 @@
 import Component from '@ember/component';
-import { service } from 'ember-decorators/service';
-import { computed } from 'ember-decorators/object';
-import { alias, and, or } from 'ember-decorators/object/computed';
+import { inject as service } from '@ember/service';
+import { computed } from '@ember/object';
+import { alias, and, or } from '@ember/object/computed';
 import eventually from 'travis/utils/eventually';
 import { task, taskGroup } from 'ember-concurrency';
 
 export default Component.extend({
-  @service flashes: null,
-  @service features: null,
-  @service auth: null,
+  flashes: service(),
+  features: service(),
+  auth: service(),
 
   classNames: ['repo-main-tools'],
   classNameBindings: ['labelless', 'mobilelabels'],
 
-  @alias('auth.currentUser') user: null,
+  user: alias('auth.currentUser'),
 
-  @computed('type', 'job', 'build')
-  item(type, job, build) {
+  item: computed('type', 'job', 'build', function () {
+    let type = this.get('type');
+    let job = this.get('job');
+    let build = this.get('build');
     if (type === 'job') {
       return job;
     } else {
       return build;
     }
-  },
+  }),
 
-  @computed('job', 'build')
-  type(job) {
+  type: computed('job', 'build', function () {
+    let job = this.get('job');
     if (job) {
       return 'job';
     } else {
       return 'build';
     }
-  },
+  }),
 
-  @computed('repo', 'user', 'user.permissions.[]')
-  userHasPermissionForRepo(repo, user) {
+  userHasPermissionForRepo: computed('repo', 'user', 'user.permissions.[]', function () {
+    let repo = this.get('repo');
+    let user = this.get('user');
     if (user && repo) {
       return user.hasAccessToRepo(repo);
     }
-  },
+  }),
 
-  @computed('repo', 'user', 'user.pullPermissions.[]')
-  userHasPullPermissionForRepo(repo, user) {
+  userHasPullPermissionForRepo: computed('repo', 'user', 'user.pullPermissions.[]', function () {
+    let repo = this.get('repo');
+    let user = this.get('user');
     if (user && repo) {
       return user.hasPullAccessToRepo(repo);
     }
-  },
+  }),
 
-  @computed('repo', 'user', 'user.pushPermissions.[]')
-  userHasPushPermissionForRepo(repo, user) {
+  userHasPushPermissionForRepo: computed('repo', 'user', 'user.pushPermissions.[]', function () {
+    let repo = this.get('repo');
+    let user = this.get('user');
     if (user && repo) {
       return user.hasPushAccessToRepo(repo);
     }
-  },
+  }),
 
-  @and('userHasPullPermissionForRepo', 'item.canCancel') canCancel: null,
-  @and('userHasPullPermissionForRepo', 'item.canRestart') canRestart: null,
-  @and('userHasPushPermissionForRepo', 'item.canDebug') canDebug: null,
+  canCancel: and('userHasPullPermissionForRepo', 'item.canCancel'),
+  canRestart: and('userHasPullPermissionForRepo', 'item.canRestart'),
+  canDebug: and('userHasPushPermissionForRepo', 'item.canDebug'),
 
-  @or('labelless', 'mobilelabels') tooltips: null,
+  tooltips: or('labelless', 'mobilelabels'),
 
   cancel: task(function* () {
     let type = this.get('type');

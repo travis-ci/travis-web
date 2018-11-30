@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { computed } from 'ember-decorators/object';
+import { computed } from '@ember/object';
 
 const eventToIcon = {
   push: 'push',
@@ -22,14 +22,14 @@ export default Component.extend({
   classNameBindings: ['event', 'state'],
   attributeBindings: ['title'],
 
-  @computed('event')
-  icon(event) {
+  icon: computed('event', function () {
+    let event = this.get('event');
     const iconName = eventToIcon[event] || eventToIcon.default;
     return `icon-${iconName}`;
-  },
+  }),
 
-  @computed('event')
-  title(event) {
+  title: computed('event', function () {
+    let event = this.get('event');
     return eventToTitle[event] || eventToTitle.default;
-  }
+  })
 });

@@ -1,6 +1,6 @@
 import Component from '@ember/component';
-import { computed } from 'ember-decorators/object';
-import { or } from 'ember-decorators/object/computed';
+import { computed } from '@ember/object';
+import { or } from '@ember/object/computed';
 
 const countrySentenceOverrides = {
   newzealand: 'New Zealand',
@@ -26,15 +26,15 @@ export default Component.extend({
   tagName: 'li',
   classNames: ['team-member'],
 
-  @computed('member.country')
-  countrySentence(country) {
+  countrySentence: computed('member.country', function () {
+    let country = this.get('member.country');
     return countryToSentence(country);
-  },
+  }),
 
-  @computed('member.nationality')
-  nationalitySentence(nationality) {
+  nationalitySentence: computed('member.nationality', function () {
+    let nationality = this.get('member.nationality');
     return countryToSentence(nationality);
-  },
+  }),
 
-  @or('member.countryAlias', 'member.country') countryOrAlias: null,
+  countryOrAlias: or('member.countryAlias', 'member.country'),
 });

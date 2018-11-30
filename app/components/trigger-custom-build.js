@@ -2,22 +2,22 @@ import Component from '@ember/component';
 import { task, timeout } from 'ember-concurrency';
 import YAML from 'yamljs';
 import config from 'travis/config/environment';
-import { service } from 'ember-decorators/service';
-import { filterBy, notEmpty } from 'ember-decorators/object/computed';
+import { inject as service } from '@ember/service';
+import { filterBy, notEmpty } from '@ember/object/computed';
 import KeyboardShortcuts from 'ember-keyboard-shortcuts/mixins/component';
 
 export default Component.extend(KeyboardShortcuts, {
-  @service api: null,
-  @service flashes: null,
-  @service router: null,
+  api: service(),
+  flashes: service(),
+  router: service(),
 
   classNames: ['trigger-build-modal'],
   triggerBuildBranch: '',
   triggerBuildMessage: '',
   triggerBuildConfig: '',
 
-  @filterBy('repo.branches', 'exists_on_github', true) branches: null,
-  @notEmpty('triggerBuildMessage') triggerBuildMessagePresent: null,
+  branches: filterBy('repo.branches', 'exists_on_github', true),
+  triggerBuildMessagePresent: notEmpty('triggerBuildMessage'),
 
   keyboardShortcuts: {
     'esc': 'toggleTriggerBuildModal'
