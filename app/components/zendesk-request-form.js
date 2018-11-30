@@ -18,6 +18,7 @@ export default Component.extend({
 
   auth: service(),
   flashes: service(),
+  raven: service(),
 
   page: '',
 
@@ -57,10 +58,12 @@ export default Component.extend({
         this.flashes.error(
           "We're sorry, API is currently unavailable, please try to submit again a bit later"
         );
+        this.raven.logException('Zendesk request: network error');
       } else { // Unknown error
         this.flashes.error(
           "Something went wrong while submitting your request. We're working to fix it!"
         );
+        this.raven.logException('Zendesk request: API request error');
       }
       throw error;
     }

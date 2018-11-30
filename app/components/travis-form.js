@@ -13,7 +13,7 @@ export default Component.extend({
 
   hasErrors: gt('erroredFields.length', 0),
 
-  isValid: computed('fields.@each', 'validFields.@each', function () {
+  isValid: computed('fields.length', 'validFields.length', function () {
     return this.validFields.length === this.fields.length;
   }),
 
