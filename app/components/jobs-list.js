@@ -18,7 +18,7 @@ export default Component.extend({
   buildJobs: alias('build.jobs'),
   jobStages: mapBy('buildJobs', 'stage'),
 
-  filteredJobs: computed('jobs.@each.id', 'build.jobs.[]', 'stage', 'jobStages.@each.id', 'jobStages.@each.stage', function () {
+  filteredJobs: computed('jobs.[]', 'build.jobs.[]', 'stage', 'jobStages.@each.id', function () {
     let jobs = this.get('jobs');
     let buildJobs = this.get('buildJobs');
     let stage = this.get('stage');
