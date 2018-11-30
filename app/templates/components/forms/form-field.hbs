@@ -1,7 +1,10 @@
 <label for={{fieldElementId}} class='travis-form__label'>
   {{label}}
   {{#if required}}
-  <span class='travis-form__required-mark'>*</span>
+    <span class='travis-form__required-mark'>
+      *
+      {{tooltip-on-element text='This field is required' delay=300 }}
+    </span>
   {{/if}}
 </label>
 
