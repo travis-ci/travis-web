@@ -1,11 +1,10 @@
-import Service from '@ember/service';
+import Service, { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
 import config from 'travis/config/environment';
 import $ from 'jquery';
-import { service } from 'ember-decorators/service';
 
 export default Service.extend({
-  @service raven: null,
+  raven: service(),
 
   fetchTravisStatus: task(function* () {
     const { statusPageStatusUrl: url } = config;

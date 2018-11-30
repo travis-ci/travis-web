@@ -1,9 +1,9 @@
 import RavenLogger from 'ember-cli-sentry/services/raven';
 import config from 'travis/config/environment';
-import { service } from 'ember-decorators/service';
+import { inject as service } from '@ember/service';
 
 export default RavenLogger.extend({
-  @service features: null,
+  features: service(),
 
   benignErrors: [
     'TransitionAborted',

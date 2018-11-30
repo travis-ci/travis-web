@@ -1,11 +1,10 @@
-import Service from '@ember/service';
+import Service, { inject as service } from '@ember/service';
 import { later } from '@ember/runloop';
 import config from 'travis/config/environment';
-import { service } from 'ember-decorators/service';
 
 export default Service.extend({
-  @service store: null,
-  @service liveUpdatesRecordFetcher: null,
+  store: service(),
+  liveUpdatesRecordFetcher: service(),
 
   receive(event, data) {
     let build, commit, job;

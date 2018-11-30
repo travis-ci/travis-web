@@ -1,14 +1,13 @@
 import $ from 'jquery';
-import Service from '@ember/service';
+import Service, { inject as service } from '@ember/service';
 import config from 'travis/config/environment';
-import { service } from 'ember-decorators/service';
 import { Promise as EmberPromise } from 'rsvp';
 import { run } from '@ember/runloop';
 import { get } from '@ember/object';
 
 export default Service.extend({
-  @service auth: null,
-  @service features: null,
+  auth: service(),
+  features: service(),
 
   get(url, options = {}) {
     return this.request(url, 'GET', options);

@@ -1,6 +1,5 @@
-import Service from '@ember/service';
-import { service } from 'ember-decorators/service';
-import { computed } from 'ember-decorators/object';
+import Service, { inject as service } from '@ember/service';
+import { computed } from '@ember/object';
 import { reads } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
 import config from 'travis/config/environment';
@@ -9,8 +8,8 @@ import fetchAll from 'travis/utils/fetch-all';
 const { billingEndpoint } = config;
 
 export default Service.extend({
-  @service store: null,
-  @service auth: null,
+  store: service(),
+  auth: service(),
 
   user: reads('auth.currentUser'),
   organizations: reads('fetchOrganizations.lastSuccessful.value'),
@@ -19,10 +18,11 @@ export default Service.extend({
   subscriptionError: false,
   trials: reads('fetchTrials.lastSuccessful.value'),
 
-  @computed('user', 'organizations.@each')
-  all(user, organizations = []) {
+  all: computed('user', 'organizations.@each', function () {
+    let user = this.get('user');
+    let organizations = this.get('organizations') || [];
     return organizations.toArray().concat([user]);
-  },
+  }),
 
   fetchOrganizations: task(function* () {
     yield fetchAll(this.store, 'organization', {});
