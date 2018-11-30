@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { computed } from 'ember-decorators/object';
+import { computed } from '@ember/object';
 import jobConfigLanguage from 'travis/utils/job-config-language';
 
 export default Component.extend({
@@ -7,29 +7,32 @@ export default Component.extend({
   classNameBindings: ['job.state'],
   classNames: ['jobs-item'],
 
-  @computed('job.config.content')
-  languages(config) {
+  languages: computed('job.config.content', function () {
+    let config = this.get('job.config.content');
     return jobConfigLanguage(config);
-  },
+  }),
 
-  @computed('job.config.content.name')
-  name(name) {
+  name: computed('job.config.content.name', function () {
+    let name = this.get('job.config.content.name');
     if (name) {
       return name;
     }
-  },
+  }),
 
-  @computed('job.config.content.{env,gemfile}')
-  environment(env, gemfile) {
+  environment: computed('job.config.content.{env,gemfile}', function () {
+    let env = this.get('job.config.content.env');
+    let gemfile = this.get('job.config.content.gemfile');
+
     if (env) {
       return env;
     } else if (gemfile) {
       return `Gemfile: ${gemfile}`;
     }
-  },
+  }),
 
-  @computed('job.config.content.os')
-  os(os) {
+  os: computed('job.config.content.os', function () {
+    let os = this.get('job.config.content.os');
+
     if (os === 'linux' || os === 'linux-ppc64le') {
       return 'linux';
     } else if (os === 'osx') {
@@ -39,10 +42,11 @@ export default Component.extend({
     } else {
       return 'unknown';
     }
-  },
+  }),
 
-  @computed('os')
-  osIcon(os) {
+  osIcon: computed('os', function () {
+    let os = this.get('os');
+
     if (os === 'linux') {
       return 'icon-linux';
     } else if (os === 'osx') {
@@ -52,5 +56,5 @@ export default Component.extend({
     } else {
       return 'help';
     }
-  }
+  })
 });
