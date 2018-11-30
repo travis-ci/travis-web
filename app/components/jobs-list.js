@@ -1,6 +1,5 @@
 import { get, computed } from '@ember/object';
 import Component from '@ember/component';
-import { computed as computedDec } from 'ember-decorators/object';
 import { alias, mapBy } from '@ember/object/computed';
 
 export default Component.extend({
@@ -19,13 +18,19 @@ export default Component.extend({
   buildJobs: alias('build.jobs'),
   jobStages: mapBy('buildJobs', 'stage'),
 
-  @computedDec('jobs.[]', 'build.jobs.[]', 'stage', 'jobStages.@each.id')
-  filteredJobs(jobs, buildJobs, stage) {
+  filteredJobs: computed('jobs.@each.id', 'build.jobs.[]', 'stage', 'jobStages.@each.id', 'jobStages.@each.stage', function () {
+    let jobs = this.get('jobs');
+    let buildJobs = this.get('buildJobs');
+    let stage = this.get('stage');
+
     if (stage) {
+      // FIXME why is this needed? Without it, the stage ids are undefined.
+      // eslint-disable-next-line
+      let jobStageIds = this.get('jobStages').mapBy('id');
       return buildJobs.filterBy('stage.id', stage.get('id'));
     }
     return jobs;
-  },
+  }),
 
   stageState: alias('stage.state'),
 
