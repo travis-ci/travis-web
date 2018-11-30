@@ -5,7 +5,6 @@ import Application from '@ember/application';
 import Resolver from './resolver';
 import loadInitializers from 'ember-load-initializers';
 import config from './config/environment';
-import initHsBeacon from 'travis/utils/init-hs-beacon';
 
 // This can be set per environment in config/environment.js
 const debuggingEnabled = config.featureFlags['debug-logging'];
@@ -39,12 +38,6 @@ const App = Application.extend(Evented, {
       this.identifyHSBeacon(user);
     }
     return this.subscribePusher(user);
-  },
-
-  setupBeacon() {
-    if (!window.HS) {
-      initHsBeacon();
-    }
   },
 
   subscribePusher(user) {
