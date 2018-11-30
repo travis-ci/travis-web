@@ -1,26 +1,24 @@
-import Controller from '@ember/controller';
+import Controller, { inject as controller } from '@ember/controller';
 import Ember from 'ember';
 import Polling from 'travis/mixins/polling';
 import GithubUrlProperties from 'travis/mixins/github-url-properties';
 import Visibility from 'visibilityjs';
 import config from 'travis/config/environment';
 
-import { controller } from 'ember-decorators/controller';
-import { service } from 'ember-decorators/service';
-import { alias } from 'ember-decorators/object/computed';
-import { observes } from 'ember-decorators/object';
+import { inject as service } from '@ember/service';
+import { alias } from '@ember/object/computed';
+import { observer } from '@ember/object';
 
 export default Controller.extend(GithubUrlProperties, Polling, {
-  @service auth: null,
-  @service('updateTimes') updateTimesService: null,
-
-  @controller('repo') repoController: null,
+  auth: service(),
+  updateTimesService: service('updateTimes'),
+  repoController: controller('repo'),
 
   config,
 
-  @alias('repoController.repo') repo: null,
-  @alias('auth.currentUser') currentUser: null,
-  @alias('repoController.tab') tab: null,
+  repo: alias('repoController.repo'),
+  currentUser: alias('auth.currentUser'),
+  tab: alias('repoController.tab'),
 
   sendFaviconStateChanges: true,
 
@@ -35,10 +33,9 @@ export default Controller.extend(GithubUrlProperties, Polling, {
     }
   },
 
-  @observes('build.state')
-  buildStateDidChange() {
+  buildStateDidChange: observer('build.state', function () {
     if (this.get('sendFaviconStateChanges')) {
       this.send('faviconStateDidChange', this.get('build.state'));
     }
-  }
+  })
 });

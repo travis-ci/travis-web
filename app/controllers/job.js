@@ -1,19 +1,16 @@
-import Controller from '@ember/controller';
-import { service } from 'ember-decorators/service';
-import { controller } from 'ember-decorators/controller';
-import { observes } from 'ember-decorators/object';
-import { alias } from 'ember-decorators/object/computed';
+import Controller, { inject as controller } from '@ember/controller';
+import { inject as service } from '@ember/service';
+import { observer } from '@ember/object';
+import { alias } from '@ember/object/computed';
 
 export default Controller.extend({
-  @service auth: null,
+  auth: service(),
+  repoController: controller('repo'),
+  repo: alias('repoController.repo'),
+  currentUser: alias('auth.currentUser'),
+  tab: alias('repoController.tab'),
 
-  @controller('repo') repoController: null,
-  @alias('repoController.repo') repo: null,
-  @alias('auth.currentUser') currentUser: null,
-  @alias('repoController.tab') tab: null,
-
-  @observes('job.state')
-  jobStateDidChange() {
+  jobStateDidChange: observer('job.state', function () {
     return this.send('faviconStateDidChange', this.get('job.state'));
-  },
+  })
 });

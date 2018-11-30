@@ -1,39 +1,36 @@
 /* eslint no-unused-vars: ["error", { "varsIgnorePattern": "config" }]*/
 
 import Controller from '@ember/controller';
-import { computed } from 'ember-decorators/object';
-import { alias, sort, filterBy } from 'ember-decorators/object/computed';
+import { computed } from '@ember/object';
+import { alias, sort, filterBy } from '@ember/object/computed';
 import config from 'travis/config/environment';
-import { service } from 'ember-decorators/service';
+import { inject as service } from '@ember/service';
 
 export default Controller.extend({
-  @service externalLinks: null,
-  @service features: null,
+  externalLinks: service(),
+  features: service(),
 
-  @computed('unsortedEnvVars')
-  envVars(envVars) {
+  envVars: computed('unsortedEnvVars', function () {
+    let envVars = this.get('unsortedEnvVars');
     return envVars.sortBy('name');
-  },
+  }),
 
   config,
+  unsortedEnvVars: filterBy('model.envVars', 'isNew', false),
+  cronJobs: alias('model.cronJobs.jobs.[]'),
 
-  @filterBy('model.envVars', 'isNew', false)
-  unsortedEnvVars: null,
-
-  @alias('model.cronJobs.jobs.[]')
-  cronJobs: null,
-
-  @computed('cronJobs', 'model.branches.@each.exists_on_github')
-  branchesWithoutCron(cronJobs, branches) {
+  branchesWithoutCron: computed('cronJobs', 'model.branches.@each.exists_on_github', function () {
+    let cronJobs = this.get('cronJobs');
+    let branches = this.get('model.branches');
     return branches
       .filter(branch => branch.get('exists_on_github'))
       .filter(branch => {
         const branchName = branch.get('name');
         return ! cronJobs.any(cron => branchName === cron.get('branch.name'));
       });
-  },
+  }),
 
-  @sort('branchesWithoutCron', (a, b) => {
+  sortedBranchesWithoutCron: sort('branchesWithoutCron', (a, b) => {
     if (a.get('defaultBranch')) {
       return -1;
     } else if (b.get('defaultBranch')) {
@@ -41,25 +38,29 @@ export default Controller.extend({
     } else {
       return a.get('name') > b.get('name');
     }
-  })
-  sortedBranchesWithoutCron: null,
+  }),
 
-  @computed('model.settings')
-  showAutoCancellationSwitches(settings) {
+  showAutoCancellationSwitches: computed('model.settings', function () {
+    let settings = this.get('model.settings');
     return settings.hasOwnProperty('auto_cancel_pushes')
       || settings.hasOwnProperty('auto_cancel_pull_requests');
-  },
+  }),
 
-  @computed('repo.slug')
-  migratedRepositorySettingsLink(slug) {
+  migratedRepositorySettingsLink: computed('repo.slug', function () {
+    let slug = this.get('repo.slug');
     return this.get('externalLinks').migratedToComSettingsLink(slug);
-  },
+  }),
 
-  @computed('features.{proVersion,enterpriseVersion}', 'repo.migrationStatus')
-  displaySettingsDisabledAfterMigrationModal(pro, enterprise, migrationStatus) {
-    return !pro && !enterprise && ['migrating', 'migrated'].includes(migrationStatus);
-  },
-
+  displaySettingsDisabledAfterMigrationModal: computed(
+    'features.{proVersion,enterpriseVersion}',
+    'repo.migrationStatus',
+    function () {
+      let pro = this.get('features.proVersion');
+      let enterprise = this.get('features.enterpriseVersion');
+      let migrationStatus = this.get('repo.migrationStatus');
+      return !pro && !enterprise && ['migrating', 'migrated'].includes(migrationStatus);
+    }
+  ),
 
   actions: {
     sshKeyAdded(sshKey) {

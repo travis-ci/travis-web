@@ -1,35 +1,31 @@
 import { isNone } from '@ember/utils';
-import { get } from '@ember/object';
-import Controller from '@ember/controller';
-import { controller } from 'ember-decorators/controller';
-import { computed } from 'ember-decorators/object';
-import { alias, notEmpty, filter } from 'ember-decorators/object/computed';
+import { get, computed } from '@ember/object';
+import Controller, { inject as controller } from '@ember/controller';
+import { alias, notEmpty, filter } from '@ember/object/computed';
 
 export default Controller.extend({
-  @controller('repo') repoController: null,
+  repoController: controller('repo'),
+  tab: alias('repoController.tab'),
 
-  @alias('repoController.tab') tab: null,
-
-  @computed('model')
-  defaultBranch(model) {
+  defaultBranch: computed('model', function () {
+    let model = this.get('model');
     return model.filterBy('default_branch')[0];
-  },
+  }),
 
-  @notEmpty('model') branchesExist: null,
+  branchesExist: notEmpty('model'),
+  nonDefaultBranches: filter('model', (branch) => !branch.default_branch),
 
-  @filter('model', (branch) => !branch.default_branch)  nonDefaultBranches: null,
-
-  @computed('nonDefaultBranches')
-  activeBranches(nonDefaultBranches) {
+  activeBranches: computed('nonDefaultBranches', function () {
+    let nonDefaultBranches = this.get('nonDefaultBranches');
     const activeBranches = nonDefaultBranches.filterBy('exists_on_github');
     return this._sortBranchesByFinished(activeBranches);
-  },
+  }),
 
-  @computed('nonDefaultBranches')
-  inactiveBranches(nonDefaultBranches) {
+  inactiveBranches: computed('nonDefaultBranches', function () {
+    let nonDefaultBranches = this.get('nonDefaultBranches');
     const inactiveBranches = nonDefaultBranches.filterBy('exists_on_github', false);
     return this._sortBranchesByFinished(inactiveBranches);
-  },
+  }),
 
   _sortBranchesByFinished(branches) {
     const unfinished = branches.filter(branch => {

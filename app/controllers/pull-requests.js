@@ -1,25 +1,23 @@
-import { sort } from '@ember/object/computed';
-import Controller from '@ember/controller';
+import { sort, alias } from '@ember/object/computed';
+import Controller, { inject as controller } from '@ember/controller';
 import LoadMoreBuildsMixin from 'travis/mixins/builds/load-more';
-import { controller } from 'ember-decorators/controller';
-import { computed } from 'ember-decorators/object';
-import { alias } from 'ember-decorators/object/computed';
+import { computed } from '@ember/object';
 
 const mixins = [LoadMoreBuildsMixin];
 
 export default Controller.extend(...mixins, {
-  @controller('repo') repoController: null,
+  repoController: controller('repo'),
 
   buildsSorting: ['number:desc'],
   builds: sort('model', 'buildsSorting'),
+  repo: alias('repoController.repo'),
+  tab: alias('repoController.tab'),
+  isLoaded: alias('model.isLoaded'),
+  isLoading: alias('model.isLoading'),
 
-  @alias('repoController.repo') repo: null,
-  @alias('repoController.tab') tab: null,
-  @alias('model.isLoaded') isLoaded: null,
-  @alias('model.isLoading') isLoading: null,
-
-  @computed('tab', 'builds.lastObject.number')
-  displayShowMoreButton(tab, lastBuildNumber) {
+  displayShowMoreButton: computed('tab', 'builds.lastObject.number', function () {
+    let tab = this.get('tab');
+    let lastBuildNumber = this.get('builds.lastObject.number');
     return tab !== 'branches' && parseInt(lastBuildNumber) > 1;
-  },
+  })
 });
