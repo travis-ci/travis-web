@@ -1,10 +1,10 @@
 import Component from '@ember/component';
-import { service } from 'ember-decorators/service';
+import { inject as service } from '@ember/service';
 
 export default Component.extend({
   classNames: ['account-token'],
 
-  @service auth: null,
+  auth: service(),
 
   tokenIsVisible: false,
   showCopySuccess: false,

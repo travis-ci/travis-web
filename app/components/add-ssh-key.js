@@ -1,11 +1,11 @@
 import { observer } from '@ember/object';
 import { isBlank } from '@ember/utils';
 import Component from '@ember/component';
-import { service } from 'ember-decorators/service';
+import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
 
 export default Component.extend({
-  @service store: null,
+  store: service(),
 
   classNames: ['form--sshkey'],
   classNameBindings: ['valueError:form-error'],

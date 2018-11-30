@@ -1,12 +1,12 @@
 import { later } from '@ember/runloop';
 import Component from '@ember/component';
-import { service } from 'ember-decorators/service';
-import { alias } from 'ember-decorators/object/computed';
+import { inject as service } from '@ember/service';
+import { alias } from '@ember/object/computed';
 
 export default Component.extend({
-  @service('permissions') permissionsService: null,
-  @service api: null,
-  @service flashes: null,
+  permissionsService: service('permissions'),
+  api: service(),
+  flashes: service(),
 
   tagName: 'li',
   classNameBindings: ['repo.active:is-active'],
@@ -15,9 +15,9 @@ export default Component.extend({
   isTriggering: false,
   dropupIsOpen: false,
 
-  @alias('repo.currentBuild') currentBuild: null,
+  currentBuild: alias('repo.currentBuild'),
 
-  @alias('repo.permissions.create_request') displayMenuTofu: null,
+  displayMenuTofu: alias('repo.permissions.create_request'),
 
   openDropup() {
     this.toggleProperty('dropupIsOpen');

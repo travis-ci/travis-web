@@ -1,11 +1,11 @@
 import Component from '@ember/component';
 import config from 'travis/config/environment';
-import { service } from 'ember-decorators/service';
+import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
 
 export default Component.extend({
-  @service ajax: null,
-  @service flashes: null,
+  ajax: service(),
+  flashes: service(),
 
   tagName: 'li',
   classNames: ['cache-item'],

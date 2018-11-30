@@ -1,10 +1,10 @@
 import Component from '@ember/component';
-import { service } from 'ember-decorators/service';
-import { computed } from 'ember-decorators/object';
+import { inject as service } from '@ember/service';
+import { computed } from '@ember/object';
 import { reads, empty, bool, not, and } from '@ember/object/computed';
 
 export default Component.extend({
-  @service store: null,
+  store: service(),
 
   account: null,
 
@@ -19,12 +19,12 @@ export default Component.extend({
   isManaged: bool('subscription.managedSubscription'),
   isEducation: and('isSubscriptionEmpty', 'isEducationalAccount'),
 
-  @computed('subscription.id')
-  invoices(subscriptionId) {
+  invoices: computed('subscription.id', function () {
+    let subscriptionId = this.get('subscription.id');
     if (subscriptionId) {
       return this.get('store').query('invoice', { subscription_id: subscriptionId });
     } else {
       return [];
     }
-  }
+  })
 });

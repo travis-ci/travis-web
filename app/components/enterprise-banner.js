@@ -1,16 +1,16 @@
 import Component from '@ember/component';
 
-import { computed } from 'ember-decorators/object';
-import { alias } from 'ember-decorators/object/computed';
-import { service } from 'ember-decorators/service';
+import { computed } from '@ember/object';
+import { alias } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
 import { htmlSafe } from '@ember/string';
 import { task } from 'ember-concurrency';
 
 import timeAgoInWords from 'travis/utils/time-ago-in-words';
 
 export default Component.extend({
-  @service ajax: null,
-  @service storage: null,
+  ajax: service(),
+  storage: service(),
 
   lsLicense: 'travis.enterprise.license_msg_last_seen',
   lsSeats: 'travis.enterprise.seats_msg_seen',
@@ -50,46 +50,50 @@ export default Component.extend({
     // }
   }),
 
-  @computed('seats', 'activeUsers')
-  exceedingSeats(seats, activeUsers) {
+  exceedingSeats: computed('seats', 'activeUsers', function () {
+    let seats = this.get('seats');
+    let activeUsers = this.get('activeUsers');
     return (activeUsers > seats);
-  },
+  }),
 
-  @computed('seats', 'activeUsers')
-  almostExceedingSeats(seats, activeUsers) {
+  almostExceedingSeats: computed('seats', 'activeUsers', function () {
+    let seats = this.get('seats');
+    let activeUsers = this.get('activeUsers');
     return (seats - activeUsers <= 5);
-  },
+  }),
 
-  @computed('expirationTime')
-  isExpired(expirationTime) {
+  isExpired: computed('expirationTime', function () {
+    let expirationTime = this.get('expirationTime');
     return new Date() > expirationTime;
-  },
+  }),
 
-  @computed('expirationTime')
-  expirationTimeFromNow(expirationTime) {
+  expirationTimeFromNow: computed('expirationTime', function () {
+    let expirationTime = this.get('expirationTime');
     return new htmlSafe(timeAgoInWords(expirationTime) || '-');
-  },
+  }),
 
-  @computed('daysUntilExpiry')
-  expiring(days) {
+  expiring: computed('daysUntilExpiry', function () {
+    let days = this.get('daysUntilExpiry');
     if (!days) return false;
     return days <= 60;
-  },
+  }),
 
-  @computed('daysUntilExpiry')
-  expiringHalfway(days) {
+  expiringHalfway: computed('daysUntilExpiry', function () {
+    let days = this.get('daysUntilExpiry');
     if (!days) return false;
     return days <= 30;
-  },
+  }),
 
-  @computed('daysUntilExpiry')
-  expiringSoon(days) {
+  expiringSoon: computed('daysUntilExpiry', function () {
+    let days = this.get('daysUntilExpiry');
     if (!days) return false;
     return days <= 10;
-  },
+  }),
 
-  @computed('expiring', 'expiringHalfway', 'expiringSoon')
-  checkLicenseBanner(expiring, halfway, soon) {
+  checkLicenseBanner: computed('expiring', 'expiringHalfway', 'expiringSoon', function () {
+    let expiring = this.get('expiring');
+    let halfway = this.get('expiringHalfway');
+    let soon = this.get('expiringSoon');
     let lastSeen = this.get('storage').getItem(this.get('lsLicense'));
     if (
       // User has never closed banner, and license expires in 60 days or less
@@ -104,23 +108,25 @@ export default Component.extend({
     } else {
       return false;
     }
-  },
+  }),
 
-  @alias('isTrial') showTrialBanner: null,
+  showTrialBanner: alias('isTrial'),
 
-  @computed('isPaid', 'checkLicenseBanner')
-  showLicenseBanner(isPaid, check) {
+  showLicenseBanner: computed('isPaid', 'checkLicenseBanner', function () {
+    let isPaid = this.get('isPaid');
+    let check = this.get('checkLicenseBanner');
     return (isPaid && check);
-  },
+  }),
 
-  @computed('isPaid', 'checkSeatsBanner')
-  showSeatsBanner(isPaid, check) {
+  showSeatsBanner: computed('isPaid', 'checkSeatsBanner', function () {
+    let isPaid = this.get('isPaid');
+    let check = this.get('checkSeatsBanner');
     return (isPaid && check);
-  },
+  }),
 
-
-  @computed('almostExceedingSeats', 'exceedingSeats')
-  checkSeatsBanner(almostExceeding, exceeding) {
+  checkSeatsBanner: computed('almostExceedingSeats', 'exceedingSeats', function () {
+    let almostExceeding = this.get('almostExceedingSeats');
+    let exceeding = this.get('exceedingSeats');
     let closed = this.get('storage').getItem(this.get('lsSeats'));
     if (exceeding) {
       return true;
@@ -129,12 +135,12 @@ export default Component.extend({
     } else {
       return false;
     }
-  },
+  }),
 
-  @computed('expiresSoon')
-  licenseClass(expiresSoon) {
+  licenseClass: computed('expiresSoon', function () {
+    let expiresSoon = this.get('expiresSoon');
     if (expiresSoon) return 'alert';
-  },
+  }),
 
   trialClass: null,
   seatsClass: 'alert',
