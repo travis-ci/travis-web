@@ -1,12 +1,12 @@
 import Mixin from '@ember/object/mixin';
 import config from 'travis/config/environment';
-import { service } from 'ember-decorators/service';
+import { inject as service } from '@ember/service';
 import { hash } from 'rsvp';
 
 const { profileReposPerPage } = config.pagination;
 
 export default Mixin.create({
-  @service features: null,
+  features: service(),
 
   account: null,
 
