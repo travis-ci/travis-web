@@ -40,6 +40,7 @@
         rows=5
         disabled=isSubmitting
         validator=(form-validator form.validators.difference descriptionTemplate "Make sure to add some details on what you'd like to talk with us about")
+        required=true
         autoValidate=false
         onChange=(action (mut description))
       }}{{description}}{{/form.textarea}}
