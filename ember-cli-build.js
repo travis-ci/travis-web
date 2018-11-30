@@ -38,10 +38,6 @@ module.exports = function () {
     },
     babel: {
       blacklist: ['regenerator'],
-      plugins: [
-        'transform-decorators-legacy',
-        'transform-class-properties',
-      ]
     },
     fingerprint: fingerprint,
     sourcemaps: {
