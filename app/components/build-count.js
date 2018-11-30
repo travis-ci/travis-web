@@ -56,6 +56,7 @@ export default Component.extend({
       'builds',
       'sum',
       ['count_started'],
+      { calcTotal: true, calcAvg: true }
     );
   }),
 
@@ -68,12 +69,12 @@ export default Component.extend({
 
   content: computed('aggregateData', 'percentageChange', function () {
     if (this.aggregateData) {
-      const chartData = this.aggregateData;
+      const chartData = this.aggregateData.chartData;
       if (typeof this.percentageChange === 'number' && this.percentageChange !== 0) {
-        const lastItem = this.aggregateData[this.aggregateData.length - 1];
+        const [xVal, yVal] = chartData[chartData.length - 1];
         chartData[chartData.length - 1] = {
-          x: lastItem[0],
-          y: lastItem[1],
+          x: xVal,
+          y: yVal,
           marker: {
             enabled: true,
             fillColor: this.percentageChange > 0 ? '#39aa56' : '#db4545',
@@ -93,13 +94,13 @@ export default Component.extend({
 
   totalBuilds: computed('aggregateData', function () {
     if (this.aggregateData) {
-      return this.aggregateData.reduce((acc, val) => acc + val[1], 0);
+      return this.aggregateData.total;
     }
   }),
 
   avgBuilds: computed('aggregateData', 'totalBuilds', function () {
     if (this.aggregateData) {
-      return this.totalBuilds / this.aggregateData.length;
+      return this.aggregateData.average;
     }
   }),
 
@@ -115,15 +116,14 @@ export default Component.extend({
       'builds',
       'sum',
       ['count_started'],
-      { startInterval: -2, endInterval: -1 }
+      { startInterval: -2, endInterval: -1, calcTotal: true, calcAvg: true }
     );
   }),
 
   percentageChange: computed('prevDataRequest.data', 'totalBuilds', function () {
     const responseData = this.get('prevDataRequest.data');
-    // console.log('PCRD', responseData);
     if (responseData && this.totalBuilds) {
-      const previousTotal = responseData.count_started.reduce((acc, val) => acc + val[1], 0);
+      const previousTotal = responseData.count_started.total;
       const change = ((this.totalBuilds - previousTotal) / previousTotal);
       const percent = change * 100;
       return (Math.round(percent * 10) / 10);

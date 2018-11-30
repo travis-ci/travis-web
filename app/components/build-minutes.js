@@ -56,16 +56,14 @@ export default Component.extend({
       'builds',
       'sum',
       ['times_running'],
+      { calcTotal: true, calcAvg: true, customTransform: (key, val) => [key, Math.round(val / 60)] }
     );
   }),
 
   aggregateData: computed('dataRequest.data', function () {
     const responseData = this.get('dataRequest.data');
     if (responseData) {
-      return responseData.times_running.map(([key, val]) => [
-        key,
-        Math.round(val / 60)
-      ]);
+      return responseData.times_running;
     }
   }),
 
@@ -77,20 +75,20 @@ export default Component.extend({
     if (this.aggregateData) {
       return [{
         name: 'Minutes',
-        data: this.aggregateData,
+        data: this.aggregateData.chartData,
       }];
     }
   }),
 
   totalBuildMins: computed('aggregateData', function () {
     if (this.aggregateData) {
-      return Math.round(this.aggregateData.reduce((acc, val) => acc + val[1], 0));
+      return this.aggregateData.total;
     }
   }),
 
   avgBuildMins: computed('aggregateData', 'totalBuildMins', function () {
     if (this.aggregateData) {
-      return this.totalBuildMins / this.aggregateData.length;
+      return this.aggregateData.average;
     }
   }),
 

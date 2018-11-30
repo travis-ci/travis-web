@@ -94,8 +94,8 @@ export default Component.extend({
 
   isEmpty: computed('aggregateData', function () {
     return this.aggregateData &&
-      this.aggregateData.gauge_running.length === 0 &&
-      this.aggregateData.gauge_waiting.length === 0;
+      this.aggregateData.gauge_running.chartData.length === 0 &&
+      this.aggregateData.gauge_waiting.chartData.length === 0;
   }),
 
   content: computed('aggregateData', function () {
@@ -110,7 +110,7 @@ export default Component.extend({
             [1, 'rgba(57, 170, 86, 0)'],
           ],
         },
-        data: this.aggregateData.gauge_running,
+        data: this.aggregateData.gauge_running.chartData,
       }, {
         name: 'Queued Jobs',
         color: '#3eaaaf',
@@ -121,7 +121,7 @@ export default Component.extend({
             [1, 'rgba(62, 170, 175, 0)'],
           ],
         },
-        data: this.aggregateData.gauge_waiting,
+        data: this.aggregateData.gauge_waiting.chartData,
       }];
     }
   }),

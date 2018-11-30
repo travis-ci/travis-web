@@ -103,10 +103,10 @@ export default Component.extend({
 
   isEmpty: computed('aggregateData', function () {
     return this.aggregateData &&
-      this.aggregateData.count_passed.length === 0 &&
-      this.aggregateData.count_failed.length === 0 &&
-      this.aggregateData.count_errored.length === 0 &&
-      this.aggregateData.count_canceled.length === 0;
+      this.aggregateData.count_passed.chartData.length === 0 &&
+      this.aggregateData.count_failed.chartData.length === 0 &&
+      this.aggregateData.count_errored.chartData.length === 0 &&
+      this.aggregateData.count_canceled.chartData.length === 0;
   }),
 
   content: computed('aggregateData', function () {
@@ -114,19 +114,19 @@ export default Component.extend({
       return [{
         name: 'Passing',
         color: 'rgba(57, 170, 86, 0.8)',
-        data: this.aggregateData.count_passed,
+        data: this.aggregateData.count_passed.chartData,
       }, {
         name: 'Failing',
         color: 'rgba(219, 69, 69, 0.8)',
-        data: this.aggregateData.count_failed,
+        data: this.aggregateData.count_failed.chartData,
       }, {
         name: 'Errored',
         color: 'rgba(237, 222, 63, 0.8)',
-        data: this.aggregateData.count_errored,
+        data: this.aggregateData.count_errored.chartData,
       }, {
         name: 'Cancelled',
         color: 'rgba(157, 157, 157, 0.8)',
-        data: this.aggregateData.count_canceled,
+        data: this.aggregateData.count_canceled.chartData,
       }];
     }
   }),

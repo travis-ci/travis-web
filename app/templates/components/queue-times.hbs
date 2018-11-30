@@ -1,5 +1,17 @@
 <h3 class="insights-glance__title">Average Queue Time</h3>
-<div class="insights-glance__stat">{{avgWaitText}}</div>
+<div class="insights-glance__center">
+  <div class="insights-glance__stat">{{avgWaitText}}</div>
+  {{#if percentageChange}}
+    <div
+      class="insights-glance__change-stat"
+      data-dir="{{if (gte percentageChange 0) '+' '-'}}"
+      title="Averaged {{prevAvgWaitMins}} mins the previous {{interval}}"
+    >
+      {{svg-jar 'icon-dropdown-arrow' class="icon"}}
+      <span>{{percentageChangeText}}</span>
+    </div>
+  {{/if}}
+</div>
 <div class="insights-glance__chart">
   {{#if (or isLoading (is-empty aggregateData))}}
     <hr class="insights-glance__chart-placeholder" />

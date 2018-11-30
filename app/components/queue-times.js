@@ -56,7 +56,7 @@ export default Component.extend({
       'jobs',
       'avg',
       ['times_waiting'],
-      {customTransform: (key, val) => [key, Math.round(val / 60)]}
+      { calcTotal: true, calcAvg: true, customTransform: (key, val) => [key, Math.round(val / 60)] }
     );
   }),
 
@@ -75,26 +75,75 @@ export default Component.extend({
     if (this.aggregateData) {
       return [{
         name: 'Minutes',
-        data: this.aggregateData,
+        data: this.aggregateData.chartData,
       }];
     }
   }),
 
   totalWaitMins: computed('aggregateData', function () {
     if (this.aggregateData) {
-      return this.aggregateData.reduce((acc, [key, val]) => acc + val, 0);
+      return this.aggregateData.total;
     }
   }),
 
-  avgWaitMins: computed('aggregateData', 'totalWaitMins', function () {
+  avgWaitMins: computed('aggregateData', function () {
     if (this.aggregateData) {
-      if (this.aggregateData.length === 0) { return 0; }
-      return Math.round((this.totalWaitMins / this.aggregateData.length) * 100) / 100;
+      return Math.round(this.aggregateData.average * 100) / 100;
     }
   }),
 
   avgWaitText: computed('isLoading', 'avgWaitMins', function () {
     if (this.isLoading || typeof this.avgWaitMins !== 'number') { return '\xa0'; }
     return `${this.avgWaitMins.toLocaleString()} min${this.avgWaitMins === 1 ? '' : 's'}`;
+  }),
+
+  prevDataRequest: computed('owner', 'interval', function () {
+    return this.get('insights').getMetric(
+      this.owner,
+      this.interval,
+      'jobs',
+      'avg',
+      ['times_waiting'],
+      {
+        startInterval: -2,
+        endInterval: -1,
+        calcTotal: true,
+        calcAvg: true,
+        customTransform: (key, val) => [key, Math.round(val / 60)]
+      }
+    );
+  }),
+
+  prevAggregateData: computed('prevDataRequest.data', function () {
+    const responseData = this.get('prevDataRequest.data');
+    if (responseData) {
+      return responseData.times_waiting;
+    }
+  }),
+
+  prevTotalWaitMins: computed('prevAggregateData', function () {
+    if (this.prevAggregateData) {
+      return this.prevAggregateData.total;
+    }
+  }),
+
+  prevAvgWaitMins: computed('prevAggregateData', 'prevTotalWaitMins', function () {
+    if (this.prevAggregateData) {
+      return Math.round(this.prevAggregateData.average * 100) / 100;
+    }
+  }),
+
+  percentageChange: computed('prevAvgWaitMins', 'avgWaitMins', function () {
+    if (this.prevAvgWaitMins && this.avgWaitMins) {
+      const change = ((this.avgWaitMins - this.prevAvgWaitMins) / this.prevAvgWaitMins);
+      const percent = change * 100;
+      return (Math.round(percent * 10) / 10);
+    }
+
+    return 0;
+  }),
+
+  percentageChangeText: computed('percentageChange', function () {
+    return `${this.percentageChange >= 0 ? this.percentageChange : this.percentageChange * -1}%`;
   }),
 });

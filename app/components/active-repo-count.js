@@ -56,7 +56,7 @@ export default Component.extend({
       'jobs',
       'sum',
       ['count_started'],
-      {aggregator: 'count'}
+      { aggregator: 'count', calcTotal: true, calcAvg: true }
     );
   }),
 
@@ -75,16 +75,14 @@ export default Component.extend({
     if (this.aggregateData) {
       return [{
         name: 'Active Repositories',
-        data: this.aggregateData,
+        data: this.aggregateData.chartData,
       }];
     }
   }),
 
   avgRepos: computed('aggregateData', function () {
     if (this.aggregateData) {
-      return Math.round(
-        this.aggregateData.reduce((acc, [key, val]) => acc + val, 0) / this.aggregateData.length
-      );
+      return Math.round(this.aggregateData.avgerage);
     }
   }),
 

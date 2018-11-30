@@ -32,6 +32,8 @@ const defaultOptions = {
   intervalSettings: {},
   startInterval: -1,
   endInterval: 0,
+  calcTotal: false,
+  calcAvg: false,
 };
 
 const apiTimeBaseFormat = 'YYYY-MM-DD HH:mm:ss';
@@ -106,8 +108,8 @@ export default Service.extend({
         );
 
         // Secondary data transform - to prepare it for charts once aggregation is complete
-        Object.entries(aggData).map(([metricKey, metricVal]) => {
-          aggData[metricKey] = Object.entries(metricVal).map(([key, val]) => {
+        Object.entries(aggData).map(([mKey, mVal]) => {
+          aggData[mKey].chartData = Object.entries(mVal).map(([key, val]) => {
             let [newKey, newVal] = transformer(key, val);
             if (typeof currentOptions.customTransform === 'function') {
               try {
@@ -116,6 +118,17 @@ export default Service.extend({
             }
             return [newKey, newVal];
           });
+
+          if (currentOptions.calcTotal || currentOptions.calcAvg) {
+            aggData[mKey].total = aggData[mKey].chartData.reduce((acc, [key, val]) => acc + val, 0);
+          }
+
+          if (currentOptions.calcAvg) {
+            aggData[mKey].average = aggData[mKey].chartData.length === 0
+              ? 0
+              : aggData[mKey].total / aggData[mKey].chartData.length
+            ;
+          }
         });
 
         return { data: aggData };
