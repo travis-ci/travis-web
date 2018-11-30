@@ -1,6 +1,7 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
+import { pluralize } from 'ember-inflector';
 
 export default Component.extend({
   classNames: ['insights-glance'],
@@ -120,11 +121,30 @@ export default Component.extend({
     );
   }),
 
-  percentageChange: computed('prevDataRequest.data', 'totalBuilds', function () {
+  prevAggregateData: computed('prevDataRequest.data', function () {
     const responseData = this.get('prevDataRequest.data');
-    if (responseData && this.totalBuilds) {
-      const previousTotal = responseData.count_started.total;
-      const change = ((this.totalBuilds - previousTotal) / previousTotal);
+    if (responseData) {
+      return responseData.count_started;
+    }
+  }),
+
+  prevTotalBuilds: computed('prevAggregateData', function () {
+    if (this.prevAggregateData) {
+      return this.prevAggregateData.total;
+    }
+  }),
+
+  percentChangeTitle: computed('prevTotalBuilds', 'interval', 'intervalSettings', function () {
+    return [
+      this.prevTotalBuilds.toLocaleString(),
+      pluralize(this.prevTotalBuilds, 'build', {withoutCount: true}),
+      `the previous ${this.interval}`
+    ].join(' ');
+  }),
+
+  percentageChange: computed('prevTotalBuilds', 'totalBuilds', function () {
+    if (this.prevTotalBuilds && this.totalBuilds) {
+      const change = ((this.totalBuilds - this.prevTotalBuilds) / this.prevTotalBuilds);
       const percent = change * 100;
       return (Math.round(percent * 10) / 10);
     }
@@ -133,6 +153,6 @@ export default Component.extend({
   }),
 
   percentageChangeText: computed('percentageChange', function () {
-    return `${this.percentageChange >= 0 ? this.percentageChange : this.percentageChange * -1}%`;
+    return `${Math.abs(this.percentageChange)}%`;
   }),
 });

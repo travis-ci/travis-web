@@ -5,6 +5,7 @@
     <div
       class="insights-glance__change-stat"
       data-dir="{{if (gte percentageChange 0) '+' '-'}}"
+      title="{{percentChangeTitle}}"
     >
       {{svg-jar 'icon-dropdown-arrow' class="icon"}}
       <span>{{percentageChangeText}}</span>

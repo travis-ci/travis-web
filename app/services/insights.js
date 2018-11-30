@@ -13,18 +13,21 @@ const defaultIntervalSettings = {
     tooltipLabelFormat: '%A, %b %e, %H:%M',
     xAxisLabelFormat: '{value:%H:%M}',
     instanceLabel: 'today',
+    prevInstanceLabel: 'yesterday',
   },
   week: {
     subInterval: '1hour',
     tooltipLabelFormat: '%A, %b %e, %H:%M',
     xAxisLabelFormat: '{value:%b %e}',
     instanceLabel: 'this week',
+    prevInstanceLabel: 'last week',
   },
   month: {
     subInterval: '1day',
     tooltipLabelFormat: '%A, %b %e',
     xAxisLabelFormat: '{value:%b %e}',
     instanceLabel: 'this month',
+    prevInstanceLabel: 'last month',
   },
 };
 

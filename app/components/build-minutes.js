@@ -1,6 +1,7 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
+import { pluralize } from 'ember-inflector';
 
 export default Component.extend({
   classNames: ['insights-glance'],
@@ -94,6 +95,9 @@ export default Component.extend({
 
   totalBuildText: computed('isLoading', 'totalBuildMins', function () {
     if (this.isLoading || typeof this.totalBuildMins !== 'number') { return '\xa0'; }
-    return `${this.totalBuildMins.toLocaleString()} min${this.totalBuildMins === 1 ? '' : 's'}`;
+    return `
+      ${this.totalBuildMins.toLocaleString()}
+      ${pluralize(this.totalBuildMins, 'min', {withoutCount: true})}
+    `.trim();
   }),
 });

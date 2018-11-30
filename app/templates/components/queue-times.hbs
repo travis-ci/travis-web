@@ -5,7 +5,7 @@
     <div
       class="insights-glance__change-stat"
       data-dir="{{if (gte percentageChange 0) '+' '-'}}"
-      title="Averaged {{prevAvgWaitMins}} mins the previous {{interval}}"
+      title="{{percentChangeTitle}}"
     >
       {{svg-jar 'icon-dropdown-arrow' class="icon"}}
       <span>{{percentageChangeText}}</span>

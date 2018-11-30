@@ -1,6 +1,7 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
+import { pluralize } from 'ember-inflector';
 
 export default Component.extend({
   classNames: ['insights-glance'],
@@ -38,7 +39,7 @@ export default Component.extend({
           color: '#666',
           lineWidth: 1,
           states: {  hover: { lineWidth: 2, halo: { size: 8 } } },
-          marker: { enabled: false, radius: 2 },
+          marker: { enabled: false },
         },
       },
       tooltip: {
@@ -71,11 +72,23 @@ export default Component.extend({
     return !this.aggregateData;
   }),
 
-  content: computed('aggregateData', function () {
+  content: computed('aggregateData', 'percentageChange', function () {
     if (this.aggregateData) {
+      const chartData = this.aggregateData.chartData;
+      if (typeof this.percentageChange === 'number' && this.percentageChange !== 0) {
+        const [xVal, yVal] = chartData[chartData.length - 1];
+        chartData[chartData.length - 1] = {
+          x: xVal,
+          y: yVal,
+          marker: {
+            enabled: true,
+            fillColor: this.percentageChange > 0 ? '#39aa56' : '#db4545',
+          }
+        };
+      }
       return [{
         name: 'Minutes',
-        data: this.aggregateData.chartData,
+        data: chartData,
       }];
     }
   }),
@@ -94,7 +107,10 @@ export default Component.extend({
 
   avgWaitText: computed('isLoading', 'avgWaitMins', function () {
     if (this.isLoading || typeof this.avgWaitMins !== 'number') { return '\xa0'; }
-    return `${this.avgWaitMins.toLocaleString()} min${this.avgWaitMins === 1 ? '' : 's'}`;
+    return `
+      ${this.avgWaitMins.toLocaleString()}
+      ${pluralize(this.avgWaitMins, 'min', {withoutCount: true})}
+    `.trim();
   }),
 
   prevDataRequest: computed('owner', 'interval', function () {
@@ -144,6 +160,15 @@ export default Component.extend({
   }),
 
   percentageChangeText: computed('percentageChange', function () {
-    return `${this.percentageChange >= 0 ? this.percentageChange : this.percentageChange * -1}%`;
+    return `${Math.abs(this.percentageChange)}%`;
+  }),
+
+  percentChangeTitle: computed('prevAvgWaitMins', 'interval', 'intervalSettings', function () {
+    return [
+      'Averaged',
+      this.prevAvgWaitMins.toLocaleString(),
+      pluralize(this.prevAvgWaitMins, 'min', {withoutCount: true}),
+      `the previous ${this.interval}`
+    ].join(' ');
   }),
 });

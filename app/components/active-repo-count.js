@@ -56,7 +56,7 @@ export default Component.extend({
       'jobs',
       'sum',
       ['count_started'],
-      { aggregator: 'count', calcTotal: true, calcAvg: true }
+      { aggregator: 'count', calcAvg: true }
     );
   }),
 
