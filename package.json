@@ -18,7 +18,7 @@
     "test": "ember test --reporter dot"
   },
   "devDependencies": {
-    "@ember-decorators/babel-transforms": "^2.0.0",
+    "@ember-decorators/babel-transforms": "^3.1.4",
     "@ember/jquery": "^0.5.2",
     "@ember/optional-features": "^0.6.3",
     "active-model-adapter": "2.2.0",
