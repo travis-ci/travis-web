@@ -17,7 +17,7 @@
   {{#if repo.active}}
     <section class="dash-default {{repo.defaultBranch.lastBuild.state}} fade-out">
       <h3 class="label">Default branch</h3>
-      <p class="row-content color">
+      <div class="row-content color">
         {{request-icon event=repo.defaultBranch.lastBuild.eventType state=repo.defaultBranch.lastBuild.state}}
         {{#if repo.defaultBranch.lastBuild.id}}
           {{#link-to "build" repo.owner.login repo.name repo.defaultBranch.lastBuild.id title="Last build on the default branch"}}
@@ -26,7 +26,7 @@
         {{else}}
           <span title="Default branch has never been built">{{repo.defaultBranch.name}}</span>
         {{/if}}
-      </p>
+      </div>
     </section>
 
     {{#if repo.currentBuild}}
