@@ -3,3 +3,8 @@
   font-size: 12px;
   background-color: #666;
 }
+
+body > .ember-tooltip {
+  // Tweaks “View branch on GitHub” in components:my-build
+  top: 6px !important;
+}
