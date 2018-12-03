@@ -1,6 +1,5 @@
-import Service, { inject as serviceInject } from '@ember/service';
+import Service, { inject as service } from '@ember/service';
 import moment from 'moment';
-// import config from 'travis/config/environment';
 import $ from 'jquery';
 
 import ObjectProxy from '@ember/object/proxy';
@@ -50,7 +49,8 @@ const endpoints = {
 };
 
 export default Service.extend({
-  api: serviceInject(),
+  api: service(),
+  features: service(),
 
   getIntervalSettings(customIntervalSettings = {}) {
     return $.extend(true, {}, defaultIntervalSettings, customIntervalSettings);
@@ -67,7 +67,7 @@ export default Service.extend({
     currentOptions.aggregator = currentOptions.aggregator || func;
     currentOptions.transformer = currentOptions.transformer || func;
     const intervalSettings = this.getIntervalSettings(currentOptions.intervalSettings);
-    const requestPrivateData = true; // TODO: Clarify permissions plan
+    const requestPrivateData = true; // this.get('features.proVersion') === true;
 
     const startTime = moment.utc().add(currentOptions.startInterval, interval);
     const endTime = moment.utc().add(currentOptions.endInterval, interval);
