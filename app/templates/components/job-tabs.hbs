@@ -4,7 +4,7 @@
     <li>
       {{#link-to 'job.config' repo job data-test-build-yaml-tab title="Look at this job’s config" disabled=job.build.request.noYaml}}
         {{#if job.build.request.noYaml}}
-          {{tooltip-on-element text='Try a more recent job to see the config'}}
+          {{ember-tooltip text='Try a more recent job to see the config'}}
         {{/if}}
         View config
       {{/link-to}}

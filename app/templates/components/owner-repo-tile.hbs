@@ -2,10 +2,10 @@
   <div class="owner-tile-visibility">
     {{#if repo.private}}
       {{svg-jar 'icon-lock' alt='Private repository' class='icon private'}}
-      {{tooltip-on-element text='Private repository'}}
+      {{ember-tooltip text='Private repository'}}
     {{else}}
       {{svg-jar 'icon-os' alt='Public repository' class='icon public'}}
-      {{tooltip-on-element text='Public repository'}}
+      {{ember-tooltip text='Public repository'}}
     {{/if}}
   </div>
 </div>
