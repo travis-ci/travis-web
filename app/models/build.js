@@ -6,17 +6,16 @@ import Model from 'ember-data/model';
 import DurationCalculations from 'travis/mixins/duration-calculations';
 import attr from 'ember-data/attr';
 import { hasMany, belongsTo } from 'ember-data/relationships';
-import { service } from 'ember-decorators/service';
-import { computed } from 'ember-decorators/object';
-import { alias } from 'ember-decorators/object/computed';
-import { sort } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
+import { computed } from '@ember/object';
+import { alias, sort } from '@ember/object/computed';
 
 import moment from 'moment';
 
 export default Model.extend(DurationCalculations, {
-  @service api: null,
+  api: service(),
 
-  @alias('branch.name') branchName: null,
+  branchName: alias('branch.name'),
 
   state: attr(),
   number: attr('number'),
@@ -46,10 +45,12 @@ export default Model.extend(DurationCalculations, {
 
   createdBy: belongsTo('user'),
 
-  @alias('stages.isSettled') stagesAreLoaded: null,
+  stagesAreLoaded: alias('stages.isSettled'),
 
-  @computed('_config', 'currentState.stateName')
-  config(config, stateName) {
+  config: computed('_config', 'currentState.stateName', function () {
+    let config = this.get('_config');
+    let stateName = this.get('currentState.stateName');
+
     if (config) {
       return Object.keys(config).reduce((compact, key) => {
         const value = config[key];
@@ -63,47 +64,47 @@ export default Model.extend(DurationCalculations, {
       this.set('isFetchingConfig', true);
       return this.reload();
     }
-  },
+  }),
 
-  @computed('eventType')
-  isPullRequest(eventType) {
+  isPullRequest: computed('eventType', function () {
+    let eventType = this.get('eventType');
     return eventType === 'pull_request';
-  },
+  }),
 
-  @computed('jobs.[]')
-  isMatrix(jobs) {
+  isMatrix: computed('jobs.[]', function () {
+    let jobs = this.get('jobs');
     return jobs.get('length') > 1;
-  },
+  }),
 
-  @computed('tag')
-  isTag(tag) {
+  isTag: computed('tag', function () {
+    let tag = this.get('tag');
     return (tag && tag.name);
-  },
+  }),
 
-  @computed('state')
-  isFinished(state) {
+  isFinished: computed('state', function () {
+    let state = this.get('state');
     let finishedStates = ['passed', 'failed', 'errored', 'canceled'];
     return finishedStates.includes(state);
-  },
+  }),
 
-  @computed('state')
-  notStarted(state) {
+  notStarted: computed('state', function () {
+    let state = this.get('state');
     let waitingStates = ['queued', 'created', 'received'];
     return waitingStates.includes(state);
-  },
+  }),
 
-  @computed('jobs.@each.allowFailure')
-  requiredJobs(jobs) {
+  requiredJobs: computed('jobs.@each.allowFailure', function () {
+    let jobs = this.get('jobs');
     return jobs.filter(job => !job.get('allowFailure'));
-  },
+  }),
 
-  @computed('jobs.@each.allowFailure')
-  allowedFailureJobs(jobs) {
+  allowedFailureJobs: computed('jobs.@each.allowFailure', function () {
+    let jobs = this.get('jobs');
     return jobs.filter(job => job.get('allowFailure'));
-  },
+  }),
 
-  @computed('jobs.@each.config')
-  rawConfigKeys(jobs) {
+  rawConfigKeys: computed('jobs.@each.config', function () {
+    let jobs = this.get('jobs');
     const keys = [];
     jobs.forEach(job => {
       const configKeys = job.config || [];
@@ -114,10 +115,10 @@ export default Model.extend(DurationCalculations, {
       });
     });
     return keys;
-  },
+  }),
 
-  @computed('rawConfigKeys.[]')
-  configKeys(keys) {
+  configKeys: computed('rawConfigKeys.[]', function () {
+    let keys = this.get('rawConfigKeys');
     const headers = ['Job', 'Duration', 'Finished'];
     return headers.concat(keys).map((key) => {
       if (configKeysMap.hasOwnProperty(key)) {
@@ -126,14 +127,14 @@ export default Model.extend(DurationCalculations, {
         return key;
       }
     });
-  },
+  }),
 
-  @computed('jobs.@each.canCancel')
-  canCancel(jobs) {
+  canCancel: computed('jobs.@each.canCancel', function () {
+    let jobs = this.get('jobs');
     return !isEmpty(jobs.filterBy('canCancel'));
-  },
+  }),
 
-  @alias('isFinished') canRestart: null,
+  canRestart: alias('isFinished'),
 
   cancel() {
     const url = `/build/${this.get('id')}/cancel`;
@@ -145,20 +146,21 @@ export default Model.extend(DurationCalculations, {
     return this.get('api').post(url);
   },
 
-  @computed('jobs.[]', 'repo.private')
-  canDebug(jobs, repoPrivate) {
+  canDebug: computed('jobs.[]', 'repo.private', function () {
+    let jobs = this.get('jobs');
+    let repoPrivate = this.get('repo.private');
     return jobs.get('length') === 1 && repoPrivate;
-  },
+  }),
 
   debug() {
     return all(this.get('jobs').map(job => job.debug()));
   },
 
-  @computed('finishedAt')
-  formattedFinishedAt(finishedAt) {
+  formattedFinishedAt: computed('finishedAt', function () {
+    let finishedAt = this.get('finishedAt');
     if (finishedAt) {
       let m = moment(finishedAt);
       return m.isValid() ? m.format('lll') : 'not finished yet';
     }
-  },
+  }),
 });

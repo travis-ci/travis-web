@@ -1,12 +1,12 @@
 import $ from 'jquery';
 import Route from '@ember/routing/route';
-import { service } from 'ember-decorators/service';
+import { inject as service } from '@ember/service';
 
 export default Route.extend({
-  @service auth: null,
-  @service tabStates: null,
-  @service repositories: null,
-  @service features: null,
+  auth: service(),
+  tabStates: service(),
+  repositories: service(),
+  features: service(),
 
   redirect() {
     if (this.get('auth.signedIn')) {

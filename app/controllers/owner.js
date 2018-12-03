@@ -1,5 +1,5 @@
 import Controller from '@ember/controller';
-import { computed } from 'ember-decorators/object';
+import { computed } from '@ember/object';
 import config from 'travis/config/environment';
 
 export default Controller.extend({
@@ -7,14 +7,14 @@ export default Controller.extend({
 
   config,
 
-  @computed('model.login')
-  githubProfile(login) {
+  githubProfile: computed('model.login', function () {
+    let login = this.get('model.login');
     const { sourceEndpoint } = config;
     return `${sourceEndpoint}/${login}`;
-  },
+  }),
 
-  @computed('model')
-  owner(model) {
+  owner: computed('model', function () {
+    let model = this.get('model');
     return {
       login: model.login,
       name: model.name,
@@ -23,5 +23,5 @@ export default Controller.extend({
       avatarUrl: model.avatar_url,
       syncedAt: model.synced_at
     };
-  },
+  })
 });

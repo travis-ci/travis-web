@@ -1,24 +1,23 @@
 import Component from '@ember/component';
-import { action } from 'ember-decorators/object';
-import { alias } from 'ember-decorators/object/computed';
-import { service } from 'ember-decorators/service';
+import { alias } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
 
 export default Component.extend({
-  @service auth: null,
-  @service features: null,
-  @service('broadcasts') broadcastsService: null,
+  auth: service(),
+  features: service(),
+  broadcastsService: service('broadcasts'),
 
-  @alias('broadcastsService.broadcasts') broadcasts: null,
+  broadcasts: alias('broadcastsService.broadcasts'),
 
-  @action
-  toggleBroadcasts() {
-    this.toggleProperty('showBroadcasts');
-    return false;
-  },
+  actions: {
+    toggleBroadcasts() {
+      this.toggleProperty('showBroadcasts');
+      return false;
+    },
 
-  @action
-  markBroadcastAsSeen(broadcast) {
-    this.get('broadcastsService').markAsSeen(broadcast);
-    return false;
-  },
+    markBroadcastAsSeen(broadcast) {
+      this.get('broadcastsService').markAsSeen(broadcast);
+      return false;
+    },
+  }
 });

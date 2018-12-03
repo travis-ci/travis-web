@@ -1,13 +1,13 @@
 import Component from '@ember/component';
-import { computed } from 'ember-decorators/object';
+import { computed } from '@ember/object';
 
 export default Component.extend({
   tagName: 'li',
   classNameBindings: ['build.state'],
   classNames: ['row-li', 'pr-row'],
 
-  @computed('build.eventType')
-  isCronJob(event) {
+  isCronJob: computed('build.eventType', function () {
+    let event = this.get('build.eventType');
     return event === 'cron';
-  },
+  })
 });

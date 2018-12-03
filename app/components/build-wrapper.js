@@ -1,13 +1,13 @@
 import Component from '@ember/component';
-import { computed } from 'ember-decorators/object';
+import { computed } from '@ember/object';
 import colorForState from 'travis/utils/color-for-state';
 
 export default Component.extend({
   classNameBindings: ['color'],
   pollModels: 'build',
 
-  @computed('build.state')
-  color(buildState) {
+  color: computed('build.state', function () {
+    let buildState = this.get('build.state');
     return colorForState(buildState);
-  },
+  })
 });

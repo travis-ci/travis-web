@@ -1,8 +1,8 @@
 import TravisRoute from 'travis/routes/basic';
-import { service } from 'ember-decorators/service';
+import { inject as service } from '@ember/service';
 
 export default TravisRoute.extend({
-  @service router: null,
+  router: service(),
 
   titleToken(model) {
     return `Job #${model.get('number')}`;

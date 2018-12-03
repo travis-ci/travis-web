@@ -1,11 +1,11 @@
 import Component from '@ember/component';
-import { service } from 'ember-decorators/service';
-import { alias } from 'ember-decorators/object/computed';
+import { inject as service } from '@ember/service';
+import { alias } from '@ember/object/computed';
 
 export default Component.extend({
-  @service auth: null,
+  auth: service(),
 
-  @alias('auth.currentUser') user: null,
+  user: alias('auth.currentUser'),
   classNames: ['sync-button'],
 
   actions: {

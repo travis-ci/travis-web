@@ -1,47 +1,61 @@
 import $ from 'jquery';
 import Component from '@ember/component';
 import config from 'travis/config/environment';
-import { service } from 'ember-decorators/service';
-import { computed } from 'ember-decorators/object';
-import { alias } from 'ember-decorators/object/computed';
+import { inject as service } from '@ember/service';
+import { computed } from '@ember/object';
+import { alias } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
 
 export default Component.extend({
-  @service auth: null,
-  @service flashes: null,
-  @service permissions: null,
-  @service features: null,
-  @service externalLinks: null,
+  auth: service(),
+  flashes: service(),
+  permissions: service(),
+  features: service(),
+  externalLinks: service(),
 
-  @alias('auth.currentUser') user: null,
+  user: alias('auth.currentUser'),
 
   config,
 
-  @computed('repo', 'repo.permissions.admin')
-  canActivate(repo, adminPermissions) {
+  canActivate: computed('repo', 'repo.permissions.admin', function () {
+    let repo = this.get('repo');
+    let adminPermissions = this.get('repo.permissions.admin');
     if (repo) {
       return adminPermissions;
     }
     return false;
-  },
+  }),
 
-  @computed('features.{enterpriseVersion,proVersion}', 'repo.migrationStatus')
-  migratedOnOrg(enterprise, pro, migrationStatus) {
-    return !enterprise && !pro && migrationStatus === 'migrated';
-  },
+  migratedOnOrg: computed(
+    'features.{enterpriseVersion,proVersion}',
+    'repo.migrationStatus',
+    function () {
+      let enterprise = this.get('features.enterpriseVersion');
+      let pro = this.get('features.proVersion');
+      let migrationStatus = this.get('repo.migrationStatus');
+      return !enterprise && !pro && migrationStatus === 'migrated';
+    }
+  ),
 
-  @computed('repo.slug')
-  comRepositoryLink(slug) {
+  comRepositoryLink: computed('repo.slug', function () {
+    let slug = this.get('repo.slug');
     return this.get('externalLinks').migratedToComLink(slug);
-  },
+  }),
 
-  @computed('config.githubApps.appName', 'repo.owner.github_id', 'repo.githubId')
-  githubAppsActivationURL(appName, ownerGithubId, repoGithubId) {
-    return 'https://github.com/apps/' +
-      `${appName}/installations/new/permissions` +
-      `?suggested_target_id=${ownerGithubId}` +
-      `&repository_ids=${repoGithubId}`;
-  },
+  githubAppsActivationURL: computed(
+    'config.githubApps.appName',
+    'repo.owner.github_id',
+    'repo.githubId',
+    function () {
+      let appName = this.get('config.githubApps.appName');
+      let ownerGithubId = this.get('repo.owner.github_id');
+      let repoGithubId = this.get('repo.githubId');
+      return 'https://github.com/apps/' +
+        `${appName}/installations/new/permissions` +
+        `?suggested_target_id=${ownerGithubId}` +
+        `&repository_ids=${repoGithubId}`;
+    }
+  ),
 
   activate: task(function* () {
     const apiEndpoint = config.apiEndpoint;

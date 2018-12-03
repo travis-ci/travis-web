@@ -1,26 +1,21 @@
-import Service from '@ember/service';
+import Service, { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
-import { service } from 'ember-decorators/service';
-import { computed } from 'ember-decorators/object';
-import { reads } from 'ember-decorators/object/computed';
+import { computed } from '@ember/object';
+import { reads } from '@ember/object/computed';
 
 export default Service.extend({
-  @service store: null,
+  store: service(),
+  list: reads('fetchPreferences.lastSuccessful.value'),
 
-  @reads('fetchPreferences.lastSuccessful.value')
-  list: null,
-
-  @computed('list.@each.{name,value}')
-  get hash() {
+  hash: computed('list.@each.{name,value}', function () {
     const list = this.list || [];
     return list.reduce((hash, record) => {
       hash[record.name] = record;
       return hash;
     }, {});
-  },
+  }),
 
-  @reads('hash.build_emails.value')
-  buildEmails: false,
+  buildEmails: reads('hash.build_emails.value'),
 
   fetchPreferences: task(function* () {
     return yield this.store.findAll('preference');

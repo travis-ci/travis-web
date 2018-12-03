@@ -1,11 +1,10 @@
 import { once } from '@ember/runloop';
 import { Promise as EmberPromise } from 'rsvp';
-import Service from '@ember/service';
-import { service } from 'ember-decorators/service';
+import Service, { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
 
 export default Service.extend({
-  @service store: null,
+  store: service(),
 
   init() {
     this.toFetch = {};

@@ -1,8 +1,8 @@
 import Component from '@ember/component';
-import { service } from 'ember-decorators/service';
+import { inject as service } from '@ember/service';
 
 export default Component.extend({
-  @service appLoading: null,
+  appLoading: service(),
 
   didInsertElement() {
     this._super(...arguments);

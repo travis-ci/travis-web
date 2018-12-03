@@ -1,9 +1,9 @@
 import TravisRoute from 'travis/routes/basic';
-import { service } from 'ember-decorators/service';
+import { inject as service } from '@ember/service';
 
 export default TravisRoute.extend({
-  @service features: null,
-  @service tabStates: null,
+  features: service(),
+  tabStates: service(),
 
   setupController(controller, model) {
     this._super(...arguments);

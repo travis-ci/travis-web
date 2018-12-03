@@ -1,11 +1,10 @@
 import { isEmpty } from '@ember/utils';
-import Service from '@ember/service';
+import Service, { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
-import { service } from 'ember-decorators/service';
 import fetchAll from 'travis/utils/fetch-all';
 
 export default Service.extend({
-  @service store: null,
+  store: service(),
 
   runningJobs: [],
   queuedJobs: [],

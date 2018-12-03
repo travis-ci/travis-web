@@ -1,36 +1,40 @@
-import { get } from '@ember/object';
+import { get, computed } from '@ember/object';
 import Component from '@ember/component';
-import { computed } from 'ember-decorators/object';
-import { alias, mapBy } from 'ember-decorators/object/computed';
+import { alias, mapBy } from '@ember/object/computed';
 
 export default Component.extend({
   tagName: 'section',
   classNames: ['jobs'],
   classNameBindings: ['stage:stage'],
 
-  @computed('required')
-  jobTableId(required) {
+  jobTableId: computed('required', function () {
+    let required = this.get('required');
     if (required) {
       return 'jobs';
     }
     return 'allowed_failure_jobs';
-  },
+  }),
 
-  @alias('build.jobs') buildJobs: null,
-  @mapBy('buildJobs', 'stage') jobStages: null,
+  buildJobs: alias('build.jobs'),
+  jobStages: mapBy('buildJobs', 'stage'),
 
-  @computed('jobs.[]', 'build.jobs.[]', 'stage', 'jobStages.@each.id')
-  filteredJobs(jobs, buildJobs, stage) {
+  filteredJobs: computed('jobs.[]', 'build.jobs.[]', 'stage', 'jobStages.@each.id', function () {
+    let jobs = this.get('jobs');
+    let buildJobs = this.get('buildJobs');
+    let stage = this.get('stage');
+
     if (stage) {
+      // Without this, the stage ids are undefined, despite the dependent key. 🤔
+      let jobStageIds = this.get('jobStages').mapBy('id'); // eslint-disable-line
       return buildJobs.filterBy('stage.id', stage.get('id'));
     }
     return jobs;
-  },
+  }),
 
-  @alias('stage.state') stageState: null,
+  stageState: alias('stage.state'),
 
-  @computed('stageState')
-  stageStateIcon(stageState) {
+  stageStateIcon: computed('stageState', function () {
+    let stageState = this.get('stageState');
     const icon = {
       'passed': 'passed',
       'failed': 'failed',
@@ -43,55 +47,62 @@ export default Component.extend({
     } else {
       return undefined;
     }
-  },
+  }),
 
-  @computed('stageState')
-  stageStateTitle(stageState) {
-    return `Stage ${stageState}`;
-  },
+  stageStateTitle: computed('stageState', function () {
+    return `Stage ${this.get('stageState')}`;
+  }),
 
-  @computed('stage', 'stageIsLast', 'filteredJobs.@each.{state,allowFailure}')
-  stageAllowFailuresText(stage, stageIsLast, filteredJobs) {
-    if (!stage) {
+  stageAllowFailuresText: computed(
+    'stage',
+    'stageIsLast',
+    'filteredJobs.@each.{state,allowFailure}',
+    function () {
+      let stage = this.get('stage');
+      let stageIsLast = this.get('stageIsLast');
+      let filteredJobs = this.get('filteredJobs');
+      if (!stage) {
+        return false;
+      }
+
+      const jobsAllowedToFail = filteredJobs.filterBy('allowFailure');
+      const relevantJobs = jobsAllowedToFail.filterBy('isFinished').rejectBy('state', 'passed');
+
+      const failedJobsNotAllowedToFail = this.get('filteredJobs').rejectBy('allowFailure')
+        .filterBy('isFinished').rejectBy('state', 'passed');
+
+      if (relevantJobs.length > 0) {
+        let jobList;
+
+        if (relevantJobs.length == 1) {
+          jobList = `job ${relevantJobs.mapBy('number')[0]}`;
+        } else if (relevantJobs.length == 2) {
+          jobList = `jobs ${relevantJobs.mapBy('number').join(' and ')}`;
+        } else if (relevantJobs.length > 5) {
+          jobList = 'multiple jobs';
+        } else {
+          const firstJobs = relevantJobs.slice(0, relevantJobs.length - 1);
+          const lastJob = relevantJobs[relevantJobs.length - 1];
+          jobList = `jobs ${firstJobs.mapBy('number').join(', ')}, ` +
+            `and ${get(lastJob, ('number'))}`;
+        }
+
+        let continuationText = '';
+
+        if (!stageIsLast && failedJobsNotAllowedToFail.length === 0) {
+          continuationText = ' so we continued this build to the next stage';
+        }
+
+        return 'Your build matrix was set to allow the failure of ' +
+                `${jobList}${continuationText}.`;
+      }
       return false;
     }
+  ),
 
-    const jobsAllowedToFail = filteredJobs.filterBy('allowFailure');
-    const relevantJobs = jobsAllowedToFail.filterBy('isFinished').rejectBy('state', 'passed');
-
-    const failedJobsNotAllowedToFail = this.get('filteredJobs').rejectBy('allowFailure')
-      .filterBy('isFinished').rejectBy('state', 'passed');
-
-    if (relevantJobs.length > 0) {
-      let jobList;
-
-      if (relevantJobs.length == 1) {
-        jobList = `job ${relevantJobs.mapBy('number')[0]}`;
-      } else if (relevantJobs.length == 2) {
-        jobList = `jobs ${relevantJobs.mapBy('number').join(' and ')}`;
-      } else if (relevantJobs.length > 5) {
-        jobList = 'multiple jobs';
-      } else {
-        const firstJobs = relevantJobs.slice(0, relevantJobs.length - 1);
-        const lastJob = relevantJobs[relevantJobs.length - 1];
-        jobList = `jobs ${firstJobs.mapBy('number').join(', ')}, ` +
-          `and ${get(lastJob, ('number'))}`;
-      }
-
-      let continuationText = '';
-
-      if (!stageIsLast && failedJobsNotAllowedToFail.length === 0) {
-        continuationText = ' so we continued this build to the next stage';
-      }
-
-      return 'Your build matrix was set to allow the failure of ' +
-              `${jobList}${continuationText}.`;
-    }
-    return false;
-  },
-
-  @computed('stages', 'stage')
-  stageIsLast(stages, stage) {
+  stageIsLast: computed('stages', 'stage', function () {
+    let stages = this.get('stages');
+    let stage = this.get('stage');
     return stage && stages && stages.indexOf(stage) == stages.length - 1;
-  },
+  }),
 });
