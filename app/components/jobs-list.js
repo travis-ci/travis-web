@@ -24,9 +24,8 @@ export default Component.extend({
     let stage = this.get('stage');
 
     if (stage) {
-      // FIXME why is this needed? Without it, the stage ids are undefined.
-      // eslint-disable-next-line
-      let jobStageIds = this.get('jobStages').mapBy('id');
+      // Without this, the stage ids are undefined, despite the dependent key. 🤔
+      let jobStageIds = this.get('jobStages').mapBy('id'); // eslint-disable-line
       return buildJobs.filterBy('stage.id', stage.get('id'));
     }
     return jobs;
