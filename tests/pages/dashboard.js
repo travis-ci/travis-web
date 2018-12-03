@@ -62,6 +62,7 @@ export default create({
 
       branch: {
         scope: '[data-test-branch-name]',
+        text: text('.label-align'),
         href: attribute('href')
       },
 
