@@ -38,10 +38,6 @@ module.exports = function () {
     },
     babel: {
       blacklist: ['regenerator'],
-      plugins: [
-        'transform-decorators-legacy',
-        'transform-class-properties',
-      ]
     },
     fingerprint: fingerprint,
     sourcemaps: {
@@ -49,8 +45,7 @@ module.exports = function () {
       extensions: ['js']
     },
     'ember-prism': {
-      'components': ['scss', 'javascript', 'json'], // needs to be an array, or undefined.
-      'plugins': ['line-highlight']
+      'components': ['yaml'],
     },
     sassOptions: {
       implementation: Sass

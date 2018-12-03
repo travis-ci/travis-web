@@ -97,3 +97,30 @@
   </section>
 {{/if}}
 </div>
+
+{{#if displaySettingsDisabledAfterMigrationModal}}
+  {{#modal-dialog
+     targetAttachment="center"
+     translucentOverlay=true}}
+     <div data-test-settings-disabled-after-migration-modal>
+      <h3 class="h3--teal">Your repository has been migrated to travis-ci.com</h3>
+      <p>As a result, your repository is now in a read-only state.
+      </p>
+      <p>
+        If you wish to configure your repository, you can do so by visiting the
+        Settings page on travis-ci.com.
+        Read-only historical data, such as Requests, Build History and Branches can still be viewed.
+      </p>
+      <p>
+        <br />
+        <br />
+        {{#link-to 'builds' repo class="button--white-and-teal"}}
+          Return to Build History
+        {{/link-to}}
+        {{#external-link-to class="button--white-and-teal" href=migratedRepositorySettingsLink}}
+          Edit Settings (travis-ci.com)
+        {{/external-link-to}}
+      </p>
+     </div>
+  {{/modal-dialog}}
+{{/if}}

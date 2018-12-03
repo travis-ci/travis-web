@@ -1,7 +1,7 @@
 import Model from 'ember-data/model';
-import { attr } from 'ember-decorators/data';
+import attr from 'ember-data/attr';
 
 export default Model.extend({
-  @attr('string') name: '',
-  @attr() value: ''
+  name: attr('string'),
+  value: attr()
 });

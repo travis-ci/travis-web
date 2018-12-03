@@ -1,11 +1,11 @@
 import Controller from '@ember/controller';
 import Ember from 'ember';
 import Visibility from 'visibilityjs';
-import { service } from 'ember-decorators/service';
+import { inject as service } from '@ember/service';
 import config from 'travis/config/environment';
 
 export default Controller.extend({
-  @service('updateTimes') updateTimesService: null,
+  updateTimesService: service('updateTimes'),
 
   init() {
     this._super(...arguments);

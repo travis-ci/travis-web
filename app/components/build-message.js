@@ -1,20 +1,22 @@
 /* eslint-disable max-len */
 import Component from '@ember/component';
-import { computed } from 'ember-decorators/object';
+import { computed } from '@ember/object';
 import { htmlSafe } from '@ember/string';
 import Ember from 'ember';
 
 const { escapeExpression: escape } = Ember.Handlebars.Utils;
 
 export default Component.extend({
-  @computed('message.code', 'message.args')
-  readableMessage(code, args) {
+  readableMessage: computed('message.code', 'message.args', function () {
+    let code = this.get('message.code');
+    let args = this.get('message.args');
+
     if (this[code]) {
       return htmlSafe(this[code](args));
     } else {
       return htmlSafe(`unrecognised message code <code>${escape(code)}</code>`);
     }
-  },
+  }),
 
   alert() {
     return 'using a plain string as a secure';
@@ -132,18 +134,18 @@ export default Component.extend({
     return `unable to parse condition (<code>${escape(args.value)}</code>)`;
   },
 
-  @computed('message.level')
-  iconClass(level) {
+  iconClass: computed('message.level', function () {
+    let level = this.get('message.level');
     return `icon icon-${level}`;
-  },
+  }),
 
-  @computed('message.level')
-  tooltipText(level) {
+  tooltipText: computed('message.level', function () {
+    let level = this.get('message.level');
     return {
       info: 'information',
       warn: 'warning',
       error: 'error'
     }[level];
-  }
+  })
 });
 /* eslint-enable max-len */

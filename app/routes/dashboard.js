@@ -1,12 +1,12 @@
 import { hash } from 'rsvp';
 import TravisRoute from 'travis/routes/basic';
-import { service } from 'ember-decorators/service';
+import { inject as service } from '@ember/service';
 
 export default TravisRoute.extend({
   needsAuth: true,
 
-  @service features: null,
-  @service accounts: null,
+  features: service(),
+  accounts: service(),
 
   model(params) {
     return hash({

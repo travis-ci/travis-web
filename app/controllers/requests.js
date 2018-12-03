@@ -1,14 +1,13 @@
-import Controller from '@ember/controller';
-import { controller } from 'ember-decorators/controller';
-import { computed } from 'ember-decorators/object';
+import Controller, { inject as controller } from '@ember/controller';
+import { computed } from '@ember/object';
 
 export default Controller.extend({
-  @controller('repo') repoController: null,
+  repoController: controller('repo'),
 
   queryParams: ['requestId'],
 
-  @computed('repoController.repo.slug')
-  lintUrl(slug) {
+  lintUrl: computed('repoController.repo.slug', function () {
+    let slug = this.get('repoController.repo.slug');
     return `https://lint.travis-ci.org/${slug}`;
-  }
+  })
 });

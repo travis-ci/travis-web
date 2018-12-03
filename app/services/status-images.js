@@ -1,10 +1,9 @@
-import Service from '@ember/service';
+import Service, { inject as service } from '@ember/service';
 import config from 'travis/config/environment';
-import { service } from 'ember-decorators/service';
 
 export default Service.extend({
-  @service auth: null,
-  @service features: null,
+  auth: service(),
+  features: service(),
 
   imageUrl(repo, branch) {
     let prefix = `${location.protocol}//${location.host}`;

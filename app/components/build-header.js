@@ -1,21 +1,23 @@
 import Component from '@ember/component';
-import { computed } from 'ember-decorators/object';
-import { service } from 'ember-decorators/service';
+import { computed } from '@ember/object';
+import { inject as service } from '@ember/service';
 import jobConfigLanguage from 'travis/utils/job-config-language';
-import { not } from 'ember-decorators/object/computed';
+import { not } from '@ember/object/computed';
 
 const commitMessageLimit = 72;
 
 export default Component.extend({
-  @service externalLinks: null,
+  externalLinks: service(),
 
   tagName: 'section',
   classNames: ['build-header'],
   classNameBindings: ['item.state'],
   attributeBindings: ['jobId:data-job-id'],
 
-  @computed('item.{build,id,jobs}')
-  jobId(build, id, jobs) {
+  jobId: computed('item.{build,id,jobs}', function () {
+    let build = this.get('item.build');
+    let id = this.get('item.id');
+    let jobs = this.get('item.jobs');
     if (build) {
       return id;
     } else {
@@ -24,81 +26,86 @@ export default Component.extend({
       jobs.forEach(item => { ids.push(item.id); });
       return ids.join(' ');
     }
-  },
+  }),
 
-  @computed('item.build')
-  isJob(build) {
+  isJob: computed('item.build', function () {
+    let build = this.get('item.build');
     if (build) {
       return true;
     }
     return false;
-  },
+  }),
 
-  @computed('isJob')
-  build(isJob) {
+  build: computed('isJob', function () {
+    let isJob = this.get('isJob');
     if (isJob) {
       return this.get('item.build');
     } else {
       return this.get('item');
     }
-  },
+  }),
 
-  @computed('isJob', 'item.config', 'item.jobs.firstObject.config')
-  jobsConfig(isJob) {
+  jobsConfig: computed('isJob', 'item.config', 'item.jobs.firstObject.config', function () {
+    let isJob = this.get('isJob');
     if (isJob) {
       return this.get('item.config');
     } else {
       return this.get('item.jobs.firstObject.config');
     }
-  },
+  }),
 
-  @computed('item.eventType')
-  displayCompare(eventType) {
+  displayCompare: computed('item.eventType', function () {
+    let eventType = this.get('item.eventType');
     return !['api', 'cron'].includes(eventType);
-  },
+  }),
 
-  @computed('item.repo.slug', 'build.branchName')
-  urlGitHubBranch(slug, branchName) {
+  urlGitHubBranch: computed('item.repo.slug', 'build.branchName', function () {
+    let slug = this.get('item.repo.slug');
+    let branchName = this.get('build.branchName');
     return this.get('externalLinks').githubBranch(slug, branchName);
-  },
+  }),
 
-  @computed('item.repo.slug', 'build.tag.name')
-  urlGitHubTag(slug, tag) {
+  urlGitHubTag: computed('item.repo.slug', 'build.tag.name', function () {
+    let slug = this.get('item.repo.slug');
+    let tag = this.get('build.tag.name');
     return this.get('externalLinks').githubTag(slug, tag);
-  },
+  }),
 
-  @computed('item.jobs.firstObject.state', 'item.state', 'item.isMatrix')
-  buildState(jobState, buildState, isMatrix) {
+  buildState: computed('item.jobs.firstObject.state', 'item.state', 'item.isMatrix', function () {
+    let jobState = this.get('item.jobs.firstObject.state');
+    let buildState = this.get('item.state');
+    let isMatrix = this.get('item.isMatrix');
     if (isMatrix) {
       return buildState;
     } else {
       return jobState || buildState;
     }
-  },
+  }),
 
-  @computed('jobsConfig.content')
-  languages(config) {
+  languages: computed('jobsConfig.content', function () {
+    let config = this.get('jobsConfig.content');
     return jobConfigLanguage(config);
-  },
+  }),
 
-  @computed('jobsConfig.content.name')
-  name(name) {
+  name: computed('jobsConfig.content.name', function () {
+    let name = this.get('jobsConfig.content.name');
     if (name) {
       return name;
     }
-  },
+  }),
 
-  @computed('jobsConfig.content.{env,gemfile}')
-  environment(env, gemfile) {
+  environment: computed('jobsConfig.content.{env,gemfile}', function () {
+    let env = this.get('jobsConfig.content.env');
+    let gemfile = this.get('jobsConfig.content.gemfile');
     if (env) {
       return env;
     } else if (gemfile) {
       return `Gemfile: ${gemfile}`;
     }
-  },
+  }),
 
-  @computed('jobsConfig.content.os')
-  os(os) {
+  os: computed('jobsConfig.content.os', function () {
+    let os = this.get('jobsConfig.content.os');
     if (os === 'linux' || os === 'linux-ppc64le') {
       return 'linux';
     } else if (os === 'osx') {
@@ -108,10 +115,10 @@ export default Component.extend({
     } else {
       return 'unknown';
     }
-  },
+  }),
 
-  @computed('os')
-  osIcon(os) {
+  osIcon: computed('os', function () {
+    let os = this.get('os');
     if (os === 'linux') {
       return 'icon-linux';
     } else if (os === 'osx') {
@@ -121,18 +128,18 @@ export default Component.extend({
     }  else {
       return 'help';
     }
-  },
+  }),
 
-  @computed('item.commit.body')
-  commitBody(body) {
+  commitBody: computed('item.commit.body', function () {
+    let body = this.get('item.commit.body');
     this.$('commit-description').remove('fade-commit-message');
 
     if (body.length > commitMessageLimit) {
       this.$('.commit-description').addClass('fade-commit-message');
     }
-  },
+  }),
 
-  @not('item.isMatrix') isNotMatrix: null,
+  isNotMatrix: not('item.isMatrix'),
 
   actions: {
     expandEnv() {

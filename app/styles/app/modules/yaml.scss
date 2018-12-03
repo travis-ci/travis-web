@@ -1,0 +1,43 @@
+.paper-block + .inner-yaml-container {
+  margin-top: 1.2em;
+}
+
+.inner-yaml-container {
+  position: relative;
+  border: 1px solid $pebble-grey;
+
+  button {
+    display: none;
+    position: absolute;
+    right: 1em;
+    top: 1em;
+    border: 1px solid $pebble-grey;
+    border-radius: 2px;
+  }
+
+  &:hover button {
+    display: block;
+
+    &:hover {
+      border-color: $oxide-blue;
+      color: $oxide-blue;
+
+      @include colorSVG($oxide-blue);
+    }
+  }
+}
+
+pre.codedisplay[class*='language-'] {
+  white-space: pre-wrap;
+  background-color: white !important;
+  font-size: 12px;
+  line-height: 17px;
+}
+
+.codedisplay code {
+  font-family: cousine, monospace;
+}
+
+.job-tabs .paper-block {
+  padding: 1em;
+}

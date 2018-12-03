@@ -1,6 +1,6 @@
 /* global Travis */
 
-import { observer } from '@ember/object';
+import { observer, computed } from '@ember/object';
 import { Promise as EmberPromise } from 'rsvp';
 import { isEqual } from '@ember/utils';
 import { getOwner } from '@ember/application';
@@ -11,18 +11,17 @@ import DurationCalculations from 'travis/mixins/duration-calculations';
 import DurationAttributes from 'travis/mixins/duration-attributes';
 import attr from 'ember-data/attr';
 import { belongsTo } from 'ember-data/relationships';
-import { computed } from 'ember-decorators/object';
-import { alias, and, not, reads } from 'ember-decorators/object/computed';
-import { service } from 'ember-decorators/service';
+import { alias, and, not, reads } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
 import promiseObject from 'travis/utils/promise-object';
 
 import moment from 'moment';
 
 export default Model.extend(DurationCalculations, DurationAttributes, {
-  @service api: null,
-  @service ajax: null,
-  @service jobConfigFetcher: null,
-  @service features: null,
+  api: service(),
+  ajax: service(),
+  jobConfigFetcher: service(),
+  features: service(),
 
   logId: attr(),
   queue: attr(),
@@ -40,61 +39,58 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
   commit: belongsTo('commit', { async: true }),
   stage: belongsTo('stage', { async: true }),
 
-  @alias('build.isPullRequest') isPullRequest: null,
-  @alias('build.pullRequestNumber') pullRequestNumber: null,
-  @alias('build.pullRequestTitle') pullRequestTitle: null,
-  @alias('build.branch') branch: null,
-  @alias('build.branchName') branchName: null,
-  @alias('build.isTag') isTag: null,
-  @alias('build.tag') tag: null,
-  @alias('build.eventType') eventType: null,
+  isPullRequest: alias('build.isPullRequest'),
+  pullRequestNumber: alias('build.pullRequestNumber'),
+  pullRequestTitle: alias('build.pullRequestTitle'),
+  branch: alias('build.branch'),
+  branchName: alias('build.branchName'),
+  isTag: alias('build.isTag'),
+  tag: alias('build.tag'),
+  eventType: alias('build.eventType'),
 
   // TODO: DO NOT SET OTHER PROPERTIES WITHIN A COMPUTED PROPERTY!
-  @computed()
-  log() {
+  log: computed(function () {
     this.set('isLogAccessed', true);
     return Log.create({
       job: this,
       api: this.get('api'),
       container: getOwner(this)
     });
-  },
+  }),
 
-  @computed()
-  config() {
+  config: computed(function () {
     return promiseObject(this.jobConfigFetcher.fetch(this));
-  },
+  }),
 
-  @reads('config.isFulfilled')
-  isConfigLoaded: false,
+  isConfigLoaded: reads('config.isFulfilled'),
 
   getCurrentState() {
     return this.get('currentState.stateName');
   },
 
-  @computed('state')
-  isFinished(state) {
+  isFinished: computed('state', function () {
+    let state = this.get('state');
     let finishedStates = ['passed', 'failed', 'errored', 'canceled'];
     return finishedStates.includes(state);
-  },
+  }),
 
-  @computed('state')
-  toBeQueued(state) {
+  toBeQueued: computed('state', function () {
+    let state = this.get('state');
     let queuedState = 'created';
     return isEqual(state, queuedState);
-  },
+  }),
 
-  @computed('state')
-  toBeStarted(state) {
+  toBeStarted: computed('state', function () {
+    let state = this.get('state');
     let waitingStates = ['queued', 'received'];
     return waitingStates.includes(state);
-  },
+  }),
 
-  @computed('state')
-  notStarted(state) {
+  notStarted: computed('state', function () {
+    let state = this.get('state');
     let waitingStates = ['queued', 'created', 'received'];
     return waitingStates.includes(state);
-  },
+  }),
 
   clearLog() {
     if (this.get('isLogAccessed')) {
@@ -102,14 +98,15 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
     }
   },
 
-  @computed('isFinished', 'state')
-  canCancel(isFinished, state) {
+  canCancel: computed('isFinished', 'state', function () {
+    let isFinished = this.get('isFinished');
+    let state = this.get('state');
     // not(isFinished) is insufficient since it will be true when state is undefined.
     return !isFinished && !!state;
-  },
+  }),
 
-  @alias('isFinished') canRestart: null,
-  @and('isFinished', 'repo.private') canDebug: null,
+  canRestart: alias('isFinished'),
+  canDebug: and('isFinished', 'repo.private'),
 
   cancel() {
     const url = `/job/${this.get('id')}/cancel`;
@@ -175,13 +172,22 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
     });
   },
 
-  @computed('repo.private', 'id', 'features.enterpriseVersion', 'features.proVersion')
-  channelName(isRepoPrivate, id, enterprise, pro) {
-    // Currently always using private channels on Enterprise
-    const usePrivateChannel = enterprise || isRepoPrivate || pro;
-    const prefix = usePrivateChannel ? 'private-job' : 'job';
-    return `${prefix}-${id}`;
-  },
+  channelName: computed(
+    'repo.private',
+    'id',
+    'features.enterpriseVersion',
+    'features.proVersion',
+    function () {
+      let isRepoPrivate = this.get('repo.private');
+      let id = this.get('id');
+      let enterprise = this.get('features.enterpriseVersion');
+      let pro = this.get('features.proVersion');
+      // Currently always using private channels on Enterprise
+      const usePrivateChannel = enterprise || isRepoPrivate || pro;
+      const prefix = usePrivateChannel ? 'private-job' : 'job';
+      return `${prefix}-${id}`;
+    }
+  ),
 
   unsubscribe() {
     this.whenLoaded(() => {
@@ -202,18 +208,19 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
     }
   }),
 
-  @computed('finishedAt')
-  formattedFinishedAt(finishedAt) {
+  formattedFinishedAt: computed('finishedAt', function () {
+    let finishedAt = this.get('finishedAt');
     if (finishedAt) {
       let m = moment(finishedAt);
       return m.isValid() ? m.format('lll') : 'not finished yet';
     }
-  },
+  }),
 
-  @not('log.removed') canRemoveLog: null,
+  canRemoveLog: not('log.removed'),
 
-  @computed('repo.slug', 'number')
-  slug(slug, number) {
+  slug: computed('repo.slug', 'number', function () {
+    let slug = this.get('repo.slug');
+    let number = this.get('number');
     return `${slug} #${number}`;
-  },
+  }),
 });

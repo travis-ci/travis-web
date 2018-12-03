@@ -375,6 +375,16 @@ test('the SSH key section is hidden for public repositories', function (assert) 
   });
 });
 
+test('shows disabled modal message for migrated repository on .org', function (assert) {
+  this.repository.update('migration_status', 'migrated');
+  settingsPage.visit({ organization: 'org-login', repo: 'repository-name' });
+
+  andThen(() => {
+    assert.dom('[data-test-settings-disabled-after-migration-modal]').exists();
+  });
+});
+
+
 test('on a repository with auto-cancellation', function (assert) {
   this.repository.createSetting({ name: 'auto_cancel_pushes', value: true });
   this.repository.createSetting({ name: 'auto_cancel_pull_requests', value: false });

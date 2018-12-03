@@ -1,6 +1,6 @@
 import Component from '@ember/component';
-import { computed } from 'ember-decorators/object';
-import { equal, empty } from 'ember-decorators/object/computed';
+import { computed } from '@ember/object';
+import { equal, empty } from '@ember/object/computed';
 
 export default Component.extend({
   tagName: 'span',
@@ -8,30 +8,25 @@ export default Component.extend({
   classNameBindings: ['status'],
   attributeBindings: ['label:aria-label', 'label:title'],
 
-  @computed('status')
-  label(status) {
-    return `Job ${status}`;
-  },
+  label: computed('status', function () {
+    return `Job ${this.get('status')}`;
+  }),
 
-  @computed('status')
-  hasPassed(status) {
-    return ['passed', 'approved'].includes(status);
-  },
+  hasPassed: computed('status', function () {
+    return ['passed', 'approved'].includes(this.get('status'));
+  }),
 
-  @computed('status')
-  hasFailed(status) {
-    return ['failed', 'rejected'].includes(status);
-  },
+  hasFailed: computed('status', function () {
+    return ['failed', 'rejected'].includes(this.get('status'));
+  }),
 
-  @equal('status', 'errored') hasErrored: null,
+  hasErrored: equal('status', 'errored'),
+  wasCanceled: equal('status', 'canceled'),
 
-  @equal('status', 'canceled') wasCanceled: null,
-
-  @computed('status')
-  isRunning(status) {
+  isRunning: computed('status', function () {
     let runningStates = ['started', 'queued', 'booting', 'received', 'created', 'pending'];
-    return runningStates.includes(status);
-  },
+    return runningStates.includes(this.get('status'));
+  }),
 
-  @empty('status') isEmpty: null,
+  isEmpty: empty('status')
 });

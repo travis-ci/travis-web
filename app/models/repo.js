@@ -7,14 +7,14 @@ import ExpandableRecordArray from 'travis/utils/expandable-record-array';
 import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
 import { hasMany, belongsTo } from 'ember-data/relationships';
-import { service } from 'ember-decorators/service';
-import { computed } from 'ember-decorators/object';
-import { oneWay } from 'ember-decorators/object/computed';
+import { inject as service } from '@ember/service';
+import { computed } from '@ember/object';
+import { oneWay } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
 
 const Repo = Model.extend({
-  @service api: null,
-  @service auth: null,
+  api: service(),
+  auth: service(),
   permissions: attr(),
   slug: attr(),
   description: attr(),
@@ -27,13 +27,13 @@ const Repo = Model.extend({
   starred: attr('boolean'),
   active_on_org: attr('boolean'),
   emailSubscribed: attr('boolean'),
-  migrate: attr(),
+  migrationStatus: attr(),
 
-  @oneWay('owner.@type') ownerType: null,
+  ownerType: oneWay('owner.@type'),
 
-  @oneWay('currentBuild.finishedAt') currentBuildFinishedAt: null,
-  @oneWay('currentBuild.state') currentBuildState: null,
-  @oneWay('currentBuild.id') currentBuildId: null,
+  currentBuildFinishedAt: oneWay('currentBuild.finishedAt'),
+  currentBuildState: oneWay('currentBuild.state'),
+  currentBuildId: oneWay('currentBuild.id'),
 
   defaultBranch: belongsTo('branch', {
     async: false
@@ -43,41 +43,33 @@ const Repo = Model.extend({
   }),
   _branches: hasMany('branch'),
 
-  @computed('migrate')
-  migrationStatus(status) {
-    if (['requested', 'migrating'].includes(status)) {
-      return 'migrating';
-    }
-    return status;
-  },
+  isCurrentUserACollaborator: computed('auth.currentUser.permissions.[]', function () {
+    let permissions = this.get('auth.currentUser.permissions');
 
-  // TODO: this is a hack, we should remove it once @is_collaborator property is
-  // added to a response with the repo
-  @computed('auth.currentUser.permissions.[]')
-  isCurrentUserACollaborator(permissions) {
     if (permissions) {
       let id = parseInt(this.get('id'));
 
       return permissions.includes(id);
     }
-  },
+  }),
 
-  @computed('owner.login', 'name')
-  formattedSlug(login, name) {
+  formattedSlug: computed('owner.login', 'name', function () {
+    let login = this.get('owner.login');
+    let name = this.get('name');
     return `${login} / ${name}`;
-  },
+  }),
 
   sshKey: function () {
     this.store.find('ssh_key', this.get('id'));
     return this.store.recordForId('ssh_key', this.get('id'));
   },
 
-  @computed('id')
-  envVars(id) {
+  envVars: computed('id', function () {
+    let id = this.get('id');
     return this.store.filter('env_var', {
       repository_id: id
     }, (v) => v.get('repo.id') === id);
-  },
+  }),
 
   _buildRepoMatches(build, id) {
     // TODO: I don't understand why we need to compare string id's here
@@ -94,8 +86,8 @@ const Repo = Model.extend({
     return array;
   },
 
-  @computed('id')
-  builds(id) {
+  builds: computed('id', function () {
+    let id = this.get('id');
     const builds = this.store.filter('build', {
       event_type: ['push', 'api', 'cron'],
       repository_id: id,
@@ -104,10 +96,10 @@ const Repo = Model.extend({
       return this._buildRepoMatches(b, id) && eventTypes.includes(b.get('eventType'));
     });
     return this._buildObservableArray(builds);
-  },
+  }),
 
-  @computed('id')
-  pullRequests(id) {
+  pullRequests: computed('id', function () {
+    let id = this.get('id');
     const builds = this.store.filter('build', {
       event_type: 'pull_request',
       repository_id: id,
@@ -116,33 +108,35 @@ const Repo = Model.extend({
       return this._buildRepoMatches(b, id) && isPullRequest;
     });
     return this._buildObservableArray(builds);
-  },
+  }),
 
-  @computed('id')
-  branches(id) {
+  branches: computed('id', function () {
+    let id = this.get('id');
     return this.store.filter('branch', {
       repository_id: id
     }, (b) => b.get('repoId') === id);
-  },
+  }),
 
-  @computed('id')
-  cronJobs(id) {
+  cronJobs: computed('id', function () {
+    let id = this.get('id');
     return this.store.filter('cron', {
       repository_id: id
     }, (cron) => cron.get('branch.repoId') === id);
-  },
+  }),
 
   // TODO: Stop performing a `set` as part of the cp!
   // TODO: Is this even used?
-  @computed('slug', '_stats')
-  stats(slug, stats) {
+  stats: computed('slug', '_stats', function () {
+    let slug = this.get('slug');
+    let stats = this.get('_stats');
+
     if (slug) {
       return stats || $.get(`https://api.github.com/repos/${slug}`, (data) => {
         this.set('_stats', data);
         return this.notifyPropertyChange('stats');
       }) && {};
     }
-  },
+  }),
 
   updateTimes() {
     let currentBuild = this.get('currentBuild');
@@ -194,10 +188,10 @@ const Repo = Model.extend({
     return promise;
   },
 
-  @computed('id')
-  emailSubscriptionUrl(id) {
+  emailSubscriptionUrl: computed('id', function () {
+    let id = this.get('id');
     return `/repo/${id}/email_subscription`;
-  },
+  }),
 
   subscribe: task(function* () {
     yield this.api.post(this.emailSubscriptionUrl);

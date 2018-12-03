@@ -1,8 +1,8 @@
 import TravisRoute from 'travis/routes/basic';
-import { service } from 'ember-decorators/service';
+import { inject as service } from '@ember/service';
 
 export default TravisRoute.extend({
-  @service tabStates: null,
+  tabStates: service(),
 
   titleToken(model) {
     return `Build #${model.get('number')}`;
@@ -36,7 +36,7 @@ export default TravisRoute.extend({
   afterModel(model) {
     const slug = this.modelFor('repo').get('slug');
     this.ensureBuildOwnership(model, slug);
-    return this._super(...arguments);
+    return model.get('request');
   },
 
   ensureBuildOwnership(build, urlSlug) {

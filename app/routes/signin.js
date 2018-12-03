@@ -1,8 +1,8 @@
 import Route from '@ember/routing/route';
-import { service } from 'ember-decorators/service';
+import { inject as service } from '@ember/service';
 
 export default Route.extend({
-  @service auth: null,
+  auth: service(),
   needsAuth: false,
 
   beforeModel() {

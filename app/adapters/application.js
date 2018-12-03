@@ -1,10 +1,10 @@
 import config from 'travis/config/environment';
 import ActiveModelAdapter from 'active-model-adapter';
-import { service } from 'ember-decorators/service';
+import { inject as service } from '@ember/service';
 
 export default ActiveModelAdapter.extend({
-  @service auth: null,
-  @service features: null,
+  auth: service(),
+  features: service(),
 
   host: config.apiEndpoint,
   coalesceFindRequests: true,

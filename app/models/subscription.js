@@ -1,8 +1,8 @@
 import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
 import { belongsTo, hasMany } from 'ember-data/relationships';
-import { computed } from 'ember-decorators/object';
-import { and, equal, or } from 'ember-decorators/object/computed';
+import { computed } from '@ember/object';
+import { and, equal, or } from '@ember/object/computed';
 import config from 'travis/config/environment';
 
 let sourceToWords = {
@@ -22,22 +22,23 @@ export default Model.extend({
   status: attr(),
   validTo: attr(),
 
-  @equal('status', 'subscribed') isSubscribed: null,
-  @equal('status', 'canceled') isCanceled: null,
-  @equal('status', 'expired') isExpired: null,
-  @equal('source', 'stripe') isStripe: null,
-  @equal('source', 'github') isGithub: null,
-  @equal('source', 'manual') isManual: null,
+  isSubscribed: equal('status', 'subscribed'),
+  isCanceled: equal('status', 'canceled'),
+  isExpired: equal('status', 'expired'),
+  isStripe: equal('source', 'stripe'),
+  isGithub: equal('source', 'github'),
+  isManual: equal('source', 'manual'),
 
-  @or('isCanceled', 'isExpired') isNotSubscribed: null,
-  @or('isStripe', 'isGithub') managedSubscription: null,
+  isNotSubscribed: or('isCanceled', 'isExpired'),
+  managedSubscription: or('isStripe', 'isGithub'),
+  isResubscribable: and('isStripe', 'isNotSubscribed'),
+  isGithubResubscribable: and('isGithub', 'isNotSubscribed'),
 
-  @and('isStripe', 'isNotSubscribed') isResubscribable: null,
-  @and('isGithub', 'isNotSubscribed') isGithubResubscribable: null,
+  billingUrl: computed('owner.{type,login}', 'isGithub', 'isResubscribable', function () {
+    let type = this.get('owner.type');
+    let login = this.get('owner.login');
+    let isGithub = this.get('isGithub');
 
-
-  @computed('owner.{type,login}', 'isGithub', 'isResubscribable')
-  billingUrl(type, login, isGithub, isResubscribable) {
     const id = type === 'user' ? 'user' : login;
 
     if (isGithub) {
@@ -45,23 +46,26 @@ export default Model.extend({
     } else {
       return `${config.billingEndpoint}/subscriptions/${id}`;
     }
-  },
+  }),
 
-  @computed('isStripe', 'isGithub', 'isSubscribed')
-  activeManagedSubscription(isStripe, isGithub, isSubscribed) {
+  activeManagedSubscription: computed('isStripe', 'isGithub', 'isSubscribed', function () {
+    let isStripe = this.get('isStripe');
+    let isGithub = this.get('isGithub');
+    let isSubscribed = this.get('isSubscribed');
     return ((isStripe || isGithub) && isSubscribed);
-  },
+  }),
 
-  @computed('source')
-  sourceWords(source) {
+  sourceWords: computed('source', function () {
+    let source = this.get('source');
     return sourceToWords[source];
-  },
+  }),
 
-  @computed('isManual', 'validTo')
-  manualSubscriptionExpired(isManual, validTo) {
+  manualSubscriptionExpired: computed('isManual', 'validTo', function () {
+    let isManual = this.get('isManual');
+    let validTo = this.get('validTo');
     let today = new Date().toISOString();
     let date = Date.parse(today);
     let validToDate = Date.parse(validTo);
     return (isManual && (date > validToDate));
-  },
+  }),
 });

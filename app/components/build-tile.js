@@ -1,17 +1,19 @@
 import Component from '@ember/component';
-import { computed } from 'ember-decorators/object';
+import { computed } from '@ember/object';
 
 export default Component.extend({
   tagName: 'li',
   classNameBindings: ['build.state'],
   attributeBindings: ['title'],
 
-  @computed('build.{number,state}')
-  title(number, state) {
+  title: computed('build.{number,state}', function () {
+    let number = this.get('build.number');
+    let state = this.get('build.state');
+
     if (number) {
       return `Build #${number} ${state}`;
     } else {
       return '';
     }
-  },
+  })
 });

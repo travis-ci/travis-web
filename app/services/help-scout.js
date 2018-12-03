@@ -1,10 +1,9 @@
 /* global HS */
 
-import Service from '@ember/service';
-import { service } from 'ember-decorators/service';
+import Service, { inject as service } from '@ember/service';
 
 export default Service.extend({
-  @service store: null,
+  store: service(),
 
   openHelpScout() {
     if (typeof HS.beacon.open === 'function') {

@@ -1,27 +1,19 @@
 import Component from '@ember/component';
-import { computed } from 'ember-decorators/object';
-import { alias } from 'ember-decorators/object/computed';
-import { service } from 'ember-decorators/service';
+import { computed } from '@ember/object';
+import { alias } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
 
 export default Component.extend({
   tagName: 'li',
   classNames: ['rows', 'my-build'],
   classNameBindings: ['state'],
 
-  @service externalLinks: null,
+  externalLinks: service(),
+  state: alias('build.state'),
 
-  @alias('build.state') state: null,
-
-  @computed('build.repo.slug', 'build.branchName')
-  urlGitHubBranch(slug, branchName) {
+  urlGitHubBranch: computed('build.repo.slug', 'build.branchName', function () {
+    let slug = this.get('build.repo.slug');
+    let branchName = this.get('build.branchName');
     return this.get('externalLinks').githubBranch(slug, branchName);
-  },
-
-  popperOptions: {
-    modifiers: {
-      preventOverflow: {
-        escapeWithReference: false
-      }
-    }
-  },
+  }),
 });

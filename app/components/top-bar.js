@@ -1,33 +1,37 @@
 import Component from '@ember/component';
 import Ember from 'ember';
-import { computed } from 'ember-decorators/object';
-import { alias } from 'ember-decorators/object/computed';
-import { service } from 'ember-decorators/service';
+import { computed } from '@ember/object';
+import { alias } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
 
 import InViewportMixin from 'ember-in-viewport';
 
 export default Component.extend(InViewportMixin, {
-  @service auth: null,
-  @service store: null,
-  @service externalLinks: null,
-  @service features: null,
-  @service flashes: null,
+  auth: service(),
+  store: service(),
+  externalLinks: service(),
+  features: service(),
+  flashes: service(),
 
   tagName: 'header',
   classNames: ['top'],
   landingPage: false,
 
-  @alias('auth.currentUser') user: null,
+  user: alias('auth.currentUser'),
 
-  @computed('user.{login,name}')
-  userName(login, name) {
+  userName: computed('user.{login,name}', function () {
+    let login = this.get('user.login');
+    let name = this.get('user.name');
     return name || login;
-  },
+  }),
 
-  @computed('auth.signedIn', 'landingPage', 'features.landingPageCta')
-  showCta(signedIn, landingPage, ctaEnabled) {
+  showCta: computed('auth.signedIn', 'landingPage', 'features.landingPageCta', function () {
+    let signedIn = this.get('auth.signedIn');
+    let landingPage = this.get('landingPage');
+    let ctaEnabled = this.get('features.landingPageCta');
+
     return !signedIn && !landingPage && ctaEnabled;
-  },
+  }),
 
   didInsertElement() {
     if (Ember.testing) {
