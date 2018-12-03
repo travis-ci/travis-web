@@ -7,6 +7,7 @@ export const MAX_ELEVATION = 4;
 export default Component.extend({
   classNames: ['paper-block'],
   classNameBindings: ['elevationClass', 'padding::no-padding'],
+
   title: '',
   elevation: 1,
   padding: true,

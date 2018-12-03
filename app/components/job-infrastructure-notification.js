@@ -11,8 +11,10 @@ const LATEST_TRUSTY_RELEASE = '2017-12-12T17:25:00-00:00';
 export default Component.extend({
   auth: service(),
   features: service(),
+
   queue: alias('job.queue'),
   jobConfig: alias('job.config'),
+
   isWindows: equal('jobConfig.os', 'windows'),
 
   conjugatedRun: computed('job.isFinished', function () {
