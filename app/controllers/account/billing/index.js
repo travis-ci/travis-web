@@ -1,45 +1,48 @@
 /* global HS */
 
-import Controller from '@ember/controller';
-import { service } from 'ember-decorators/service';
-import { controller } from 'ember-decorators/controller';
-import { action, computed } from 'ember-decorators/object';
-import { alias } from 'ember-decorators/object/computed';
+import Controller, { inject as controller } from '@ember/controller';
+import { inject as service } from '@ember/service';
+import { computed } from '@ember/object';
+import { alias } from '@ember/object/computed';
 import config from 'travis/config/environment';
 
 export default Controller.extend({
-  @service store: null,
+  store: service(),
+
   config,
 
-  @controller('account') accountController: null,
-  @alias('accountController.model') account: null,
+  accountController: controller('account'),
+  account: alias('accountController.model'),
 
-  @computed('model.subscriptions.id')
-  invoices(subscriptionId) {
+  invoices: computed('model.subscriptions.id', function () {
+    let subscriptionId = this.get('model.subscriptions.id');
     if (subscriptionId) {
       return this.get('store').query('invoice', { subscription_id: subscriptionId });
     } else {
       return [];
     }
-  },
+  }),
 
-  @computed('model', 'account')
-  isEducation(model, account) {
+  isEducation: computed('model', 'account', function () {
+    let model = this.get('model');
+    let account = this.get('account');
     if (!model.subscriptions) {
       return !model.subscriptions && account.education;
     }
-  },
+  }),
 
-  @computed('model', 'account')
-  isTrial(model, account) {
+  isTrial: computed('model', 'account', function () {
+    let model = this.get('model');
+    let account = this.get('account');
     if (!model.subscriptions) {
       return !model.subscriptions && !account.education;
     }
-  },
+  }),
 
-  @action
-  helpscoutTrigger() {
-    HS.beacon.open();
-    return false;
-  },
+  actions: {
+    helpscoutTrigger() {
+      HS.beacon.open();
+      return false;
+    }
+  }
 });

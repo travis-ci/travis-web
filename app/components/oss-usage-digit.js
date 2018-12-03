@@ -1,11 +1,10 @@
 import Component from '@ember/component';
-import { computed } from 'ember-decorators/object';
+import { computed } from '@ember/object';
 
 export default Component.extend({
   tagName: '',
 
-  @computed('digit')
-  digitClass(digit) {
-    return `oss-num-${digit}`;
-  },
+  digitClass: computed('digit', function () {
+    return `oss-num-${this.get('digit')}`;
+  }),
 });

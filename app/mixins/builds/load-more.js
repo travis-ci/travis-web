@@ -1,9 +1,9 @@
 import Mixin from '@ember/object/mixin';
-import { service } from 'ember-decorators/service';
+import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
 
 export default Mixin.create({
-  @service tabStates: null,
+  tabStates: service(),
 
   loadMoreBuilds: task(function* () {
     let number = this.get('builds.lastObject.number');

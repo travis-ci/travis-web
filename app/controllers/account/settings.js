@@ -1,8 +1,8 @@
 import Controller from '@ember/controller';
 import { reads, equal, and } from '@ember/object/computed';
-import { service } from 'ember-decorators/service';
+import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
-import { computed } from 'ember-decorators/object';
+import { computed } from '@ember/object';
 import fetchAll from 'travis/utils/fetch-all';
 
 export const SECTION = {
@@ -11,9 +11,9 @@ export const SECTION = {
 };
 
 export default Controller.extend({
-  @service features: null,
-  @service preferences: null,
-  @service flashes: null,
+  features: service(),
+  preferences: service(),
+  flashes: service(),
 
   queryParams: ['section'],
   section: SECTION.NONE,
@@ -26,10 +26,10 @@ export default Controller.extend({
   buildEmails: reads('preferences.buildEmails'),
   showResubscribeList: and('buildEmails', 'unsubscribedRepos.length'),
 
-  @computed('repositories.@each.emailSubscribed')
-  unsubscribedRepos(repositories = []) {
+  unsubscribedRepos: computed('repositories.@each.emailSubscribed', function () {
+    let repositories = this.get('repositories') || [];
     return repositories.filter(repo => !repo.emailSubscribed);
-  },
+  }),
 
   fetchRepositories: task(function* () {
     yield fetchAll(this.store, 'repo', {});

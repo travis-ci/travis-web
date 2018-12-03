@@ -1,9 +1,9 @@
 import TravisRoute from 'travis/routes/basic';
-import { service } from 'ember-decorators/service';
+import { inject as service } from '@ember/service';
 import { hash } from 'rsvp';
 
 export default TravisRoute.extend({
-  @service featureFlags: null,
+  featureFlags: service(),
 
   model() {
     const featureFlags = this.featureFlags.fetchTask.perform({ forceServerRequest: true });

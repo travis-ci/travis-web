@@ -1,22 +1,22 @@
 import Component from '@ember/component';
-import { service } from 'ember-decorators/service';
-import { computed } from 'ember-decorators/object';
+import { inject as service } from '@ember/service';
+import { computed } from '@ember/object';
 import { task } from 'ember-concurrency';
 
 export default Component.extend({
-  @service store: null,
+  store: service(),
 
   tagName: 'li',
   classNames: ['settings-cron'],
   actionType: 'Save',
 
-  @computed('cron.dont_run_if_recent_build_exists')
-  dontRunIfRecentBuildExists(dontRun) {
+  dontRunIfRecentBuildExists: computed('cron.dont_run_if_recent_build_exists', function () {
+    let dontRun = this.get('cron.dont_run_if_recent_build_exists');
     if (dontRun) {
       return 'Do not run if there has been a build in the last 24h';
     }
     return 'Always run';
-  },
+  }),
 
   delete: task(function* () {
     yield this.get('cron').destroyRecord();

@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { computed } from 'ember-decorators/object';
+import { computed } from '@ember/object';
 import abstractMethod from 'travis/utils/abstract-method';
 
 export default Component.extend({
@@ -14,10 +14,9 @@ export default Component.extend({
   active: false,
   disabled: false,
 
-  @computed('active')
-  'aria-checked'(active) {
-    return active ? 'true' : 'false';
-  },
+  'aria-checked': computed('active', function () {
+    return this.get('active') ? 'true' : 'false';
+  }),
 
   onToggle: abstractMethod('onToggle'),
 

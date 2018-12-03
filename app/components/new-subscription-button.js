@@ -1,9 +1,8 @@
 import Component from '@ember/component';
-import { computed } from 'ember-decorators/object';
+import { computed } from '@ember/object';
 
 export default Component.extend({
-  @computed('subscription')
-  isNew(subscription) {
-    return !subscription;
-  }
+  isNew: computed('subscription', function () {
+    return !this.get('subscription');
+  })
 });

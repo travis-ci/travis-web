@@ -3,11 +3,11 @@ import Ember from 'ember';
 import Polling from 'travis/mixins/polling';
 import config from 'travis/config/environment';
 import Visibility from 'visibilityjs';
-import { service } from 'ember-decorators/service';
+import { inject as service } from '@ember/service';
 
 export default Component.extend(Polling, {
-  @service store: null,
-  @service('updateTimes') updateTimesService: null,
+  store: service(),
+  updateTimesService: service('updateTimes'),
 
   pollHook() {
     return this.get('store').find('job', {});

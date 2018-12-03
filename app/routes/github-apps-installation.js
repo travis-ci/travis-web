@@ -1,9 +1,9 @@
 import SimpleLayoutRoute from 'travis/routes/simple-layout';
-import { service } from 'ember-decorators/service';
+import { inject as service } from '@ember/service';
 import { reject } from 'rsvp';
 
 export default SimpleLayoutRoute.extend({
-  @service auth: null,
+  auth: service(),
 
   beforeModel(transition) {
     if (!this.signedIn()) {

@@ -1,17 +1,18 @@
 import Component from '@ember/component';
-import { computed } from 'ember-decorators/object';
+import { computed } from '@ember/object';
 
 export default Component.extend({
   tagName: '',
 
-  @computed('user.name', 'user.login')
-  nameOrLogin(name, login) {
+  nameOrLogin: computed('user.name', 'user.login', function () {
+    let name = this.get('user.name');
+    let login = this.get('user.login');
     return name || login;
-  },
+  }),
 
-  // TODO remove this once crons have the proper createdBy
-  @computed('nameOrLogin', 'eventType')
-  showUser(nameOrLogin, eventType) {
+  showUser: computed('nameOrLogin', 'eventType', function () {
+    let nameOrLogin = this.get('nameOrLogin');
+    let eventType = this.get('eventType');
     return nameOrLogin && eventType !== 'cron';
-  }
+  })
 });

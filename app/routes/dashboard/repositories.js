@@ -2,11 +2,11 @@ import { hash } from 'rsvp';
 import TravisRoute from 'travis/routes/basic';
 import dashboardRepositoriesSort from 'travis/utils/dashboard-repositories-sort';
 import config from 'travis/config/environment';
-import { service } from 'ember-decorators/service';
+import { inject as service } from '@ember/service';
 
 export default TravisRoute.extend({
-  @service features: null,
-  @service accounts: null,
+  features: service(),
+  accounts: service(),
 
   queryParams: {
     page: {

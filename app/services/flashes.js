@@ -1,8 +1,7 @@
 import { run } from '@ember/runloop';
-import Service from '@ember/service';
-import { computed } from 'ember-decorators/object';
-import { alias } from 'ember-decorators/object/computed';
-import { service } from 'ember-decorators/service';
+import Service, { inject as service } from '@ember/service';
+import { computed } from '@ember/object';
+import { alias } from '@ember/object/computed';
 
 const messageTypeToIcon = {
   notice: 'icon-flag',
@@ -23,10 +22,10 @@ const messageTypeToCloseButton = {
 };
 
 export default Service.extend({
-  @service auth: null,
-  @service store: null,
+  auth: service(),
+  store: service(),
 
-  @alias('auth.currentUser') currentUser: null,
+  currentUser: alias('auth.currentUser'),
 
   // This changes when scrolling to adjust flash messages to fixed
   topBarVisible: true,
@@ -41,14 +40,14 @@ export default Service.extend({
     this.set('flashes', []);
   },
 
-  @computed('flashes.[]')
-  messages(flashes) {
+  messages: computed('flashes.[]', function () {
+    let flashes = this.get('flashes');
     let model = [];
     if (flashes.length) {
       model.pushObjects(flashes.toArray());
     }
     return model.uniq();
-  },
+  }),
 
   // TODO: when we rewrite all of the place where we use `loadFlashes` we could
   // rewrite this class and make the implementation better, because right now

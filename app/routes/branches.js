@@ -2,12 +2,12 @@ import $ from 'jquery';
 import ArrayProxy from '@ember/array/proxy';
 import TravisRoute from 'travis/routes/basic';
 import config from 'travis/config/environment';
-import { service } from 'ember-decorators/service';
+import { inject as service } from '@ember/service';
 
 export default TravisRoute.extend({
-  @service repositories: null,
-  @service tabStates: null,
-  @service auth: null,
+  repositories: service(),
+  tabStates: service(),
+  auth: service(),
 
   model(/* params*/) {
     let allTheBranches, apiEndpoint, options, repoId;

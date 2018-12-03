@@ -4,17 +4,17 @@ import $ from 'jquery';
 import TravisRoute from 'travis/routes/basic';
 import config from 'travis/config/environment';
 import BuildFaviconMixin from 'travis/mixins/build-favicon';
-import { service } from 'ember-decorators/service';
+import { inject as service } from '@ember/service';
 
 import KeyboardShortcuts from 'ember-keyboard-shortcuts/mixins/route';
 
 export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
-  @service auth: null,
-  @service features: null,
-  @service featureFlags: null,
-  @service flashes: null,
-  @service helpScout: null,
-  @service repositories: null,
+  auth: service(),
+  features: service(),
+  featureFlags: service(),
+  flashes: service(),
+  helpScout: service(),
+  repositories: service(),
 
   needsAuth: false,
 

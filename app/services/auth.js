@@ -1,26 +1,24 @@
 /* global Travis */
-import { get, observer } from '@ember/object';
+import { get, observer, computed } from '@ember/object';
 
 import { isEmpty } from '@ember/utils';
 import { Promise as EmberPromise } from 'rsvp';
-import Service from '@ember/service';
+import Service, { inject as service } from '@ember/service';
 import config from 'travis/config/environment';
-import { computed } from 'ember-decorators/object';
-import { alias } from 'ember-decorators/object/computed';
-import { service } from 'ember-decorators/service';
+import { alias } from '@ember/object/computed';
 
 import URLPolyfill from 'travis/utils/url';
 
 const proVersion = config.featureFlags['pro-version'];
 
 export default Service.extend({
-  @service router: null,
-  @service flashes: null,
-  @service intercom: null,
-  @service store: null,
-  @service storage: null,
-  @service sessionStorage: null,
-  @service ajax: null,
+  router: service(),
+  flashes: service(),
+  intercom: service(),
+  store: service(),
+  storage: service(),
+  sessionStorage: service(),
+  ajax: service(),
 
   state: 'signed-out',
   receivingEnd: `${location.protocol}//${location.host}`,
@@ -31,10 +29,9 @@ export default Service.extend({
     return this._super(...arguments);
   },
 
-  @computed()
-  get token() {
+  token: computed(function () {
     return this.get('sessionStorage').getItem('travis.token');
-  },
+  }),
 
   assetToken() {
     return JSON.parse(this.get('sessionStorage').getItem('travis.user'))['token'];
@@ -205,20 +202,20 @@ export default Service.extend({
     }
   },
 
-  @computed('state')
-  signedIn(state) {
+  signedIn: computed('state', function () {
+    let state = this.get('state');
     return state === 'signed-in';
-  },
+  }),
 
-  @computed('state')
-  signedOut(state) {
+  signedOut: computed('state', function () {
+    let state = this.get('state');
     return state === 'signed-out';
-  },
+  }),
 
-  @computed('state')
-  signingIn(state) {
+  signingIn: computed('state', function () {
+    let state = this.get('state');
     return state === 'signing-in';
-  },
+  }),
 
   storeData(data, storage) {
     if (data.token) {
@@ -276,16 +273,16 @@ export default Service.extend({
     }
   }),
 
-  @computed('currentUser.{login,name}')
-  userName(login, name) {
+  userName: computed('currentUser.{login,name}', function () {
+    let login = this.get('currentUser.login');
+    let name = this.get('currentUser.name');
     return name || login;
-  },
+  }),
 
-  @computed('currentUser.gravatarId')
-  gravatarUrl(gravatarId) {
+  gravatarUrl: computed('currentUser.gravatarId', function () {
+    let gravatarId = this.get('currentUser.gravatarId');
     return `${location.protocol}//www.gravatar.com/avatar/${gravatarId}?s=48&d=mm`;
-  },
+  }),
 
-  // eslint-ignore-next-line
-  @alias('currentUser.permissions') permissions: null,
+  permissions: alias('currentUser.permissions'),
 });

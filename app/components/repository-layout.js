@@ -1,48 +1,58 @@
 import Component from '@ember/component';
-import { computed } from 'ember-decorators/object';
-import { service } from 'ember-decorators/service';
+import { computed } from '@ember/object';
+import { inject as service } from '@ember/service';
 
 export default Component.extend({
-  @service statusImages: null,
-  @service externalLinks: null,
-  @service features: null,
+  statusImages: service(),
+  externalLinks: service(),
+  features: service(),
 
   isShowingTriggerBuildModal: false,
   isShowingStatusBadgeModal: false,
 
-  @computed('repo.slug', 'repo.private', 'repo.defaultBranch.name')
-  statusImageUrl(slug, repoPrivate, branchName) {
+  statusImageUrl: computed('repo.slug', 'repo.private', 'repo.defaultBranch.name', function () {
+    let branchName = this.get('repo.defaultBranch.name');
     return this.get('statusImages').imageUrl(this.get('repo'), branchName);
-  },
+  }),
 
-  @computed('repo.slug')
-  urlGithub(slug) {
+  urlGithub: computed('repo.slug', function () {
+    let slug = this.get('repo.slug');
     return this.get('externalLinks').githubRepo(slug);
-  },
+  }),
 
-  @computed('repo.slug')
-  orgBuildHistoryLink(slug) {
+  orgBuildHistoryLink: computed('repo.slug', function () {
+    let slug = this.get('repo.slug');
     return this.get('externalLinks').orgBuildHistoryLink(slug);
-  },
+  }),
 
-  @computed('repo.slug')
-  comBuildHistoryLink(slug) {
+  comBuildHistoryLink: computed('repo.slug', function () {
+    let slug = this.get('repo.slug');
     return this.get('externalLinks').comBuildHistoryLink(slug);
-  },
+  }),
 
-  // this is shown on .com
-  @computed('features.{proVersion,enterpriseVersion}', 'repo.migrationStatus')
-  showMigratedFromOrgRepositoryLink(pro, enterprise, migrationStatus) {
-    const comHosted = pro && !enterprise;
-    return comHosted && migrationStatus === 'migrated';
-  },
+  showMigratedFromOrgRepositoryLink: computed(
+    'features.{proVersion,enterpriseVersion}',
+    'repo.migrationStatus',
+    function () {
+      let pro = this.get('features.proVersion');
+      let enterprise = this.get('features.enterpriseVersion');
+      let migrationStatus = this.get('repo.migrationStatus');
+      const comHosted = pro && !enterprise;
+      return comHosted && migrationStatus === 'migrated';
+    }
+  ),
 
-  // this is shown on .org
-  @computed('features.{proVersion,enterpriseVersion}', 'repo.migrationStatus')
-  showMigratedToComRepositoryLink(pro, enterprise, migrationStatus) {
-    const orgHosted = !pro && !enterprise;
-    return orgHosted && migrationStatus === 'migrated';
-  },
+  showMigratedToComRepositoryLink: computed(
+    'features.{proVersion,enterpriseVersion}',
+    'repo.migrationStatus',
+    function () {
+      let pro = this.get('features.proVersion');
+      let enterprise = this.get('features.enterpriseVersion');
+      let migrationStatus = this.get('repo.migrationStatus');
+      const orgHosted = !pro && !enterprise;
+      return orgHosted && migrationStatus === 'migrated';
+    }
+  ),
 
   actions: {
     toggleStatusBadgeModal() {

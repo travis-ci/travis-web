@@ -1,12 +1,12 @@
 import Component from '@ember/component';
 import { task } from 'ember-concurrency';
-import { service } from 'ember-decorators/service';
+import { inject as service } from '@ember/service';
 
 export default Component.extend({
-  @service features: null,
-  @service flashes: null,
-  @service raven: null,
-  @service storage: null,
+  features: service(),
+  flashes: service(),
+  raven: service(),
+  storage: service(),
 
   save: task(function* (state) {
     try {
