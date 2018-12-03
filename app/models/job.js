@@ -1,3 +1,4 @@
+
 /* global Travis */
 
 import { observer, computed } from '@ember/object';
@@ -86,7 +87,7 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
 
   notStarted: computed('state', function () {
     let state = this.get('state');
-    let waitingStates = ['queued', 'created', 'received'];
+    let waitingStates = ['created', 'queued', 'received', 'requeued'];
     return waitingStates.includes(state);
   }),
 
