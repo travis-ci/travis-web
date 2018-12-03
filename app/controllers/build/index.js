@@ -5,6 +5,7 @@ import { alias } from '@ember/object/computed';
 
 export default Controller.extend({
   repositories: service(),
+
   latestCurrentBuild: alias('repositories.accessible.firstObject.currentBuild'),
 
   build: computed('model', 'latestCurrentBuild', function () {

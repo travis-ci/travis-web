@@ -5,6 +5,7 @@ import { alias } from '@ember/object/computed';
 
 export default Controller.extend({
   auth: service(),
+
   repoController: controller('repo'),
   repo: alias('repoController.repo'),
   currentUser: alias('auth.currentUser'),

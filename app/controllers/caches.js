@@ -8,6 +8,7 @@ import { task } from 'ember-concurrency';
 export default Controller.extend({
   ajax: service(),
   flashes: service(),
+
   repo: alias('model.repo'),
 
   config,

@@ -28,6 +28,7 @@ export default Model.extend({
   isStripe: equal('source', 'stripe'),
   isGithub: equal('source', 'github'),
   isManual: equal('source', 'manual'),
+
   isNotSubscribed: or('isCanceled', 'isExpired'),
   managedSubscription: or('isStripe', 'isGithub'),
   isResubscribable: and('isStripe', 'isNotSubscribed'),

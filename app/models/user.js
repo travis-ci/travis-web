@@ -11,12 +11,14 @@ import { inject as service } from '@ember/service';
 
 export default Owner.extend({
   ajax: service(),
+  // TODO: this totally not should be needed here
   sessionStorage: service(),
 
   email: attr(),
   token: attr(),
   gravatarId: attr(),
   allowMigration: attr(),
+
 
   type: 'user',
   isUser: true,

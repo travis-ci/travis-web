@@ -9,6 +9,7 @@ export default Controller.extend({
 
   flashes: service(),
   api: service(),
+
   dashboardController: controller('dashboard'),
 
   starredRepos: computed(

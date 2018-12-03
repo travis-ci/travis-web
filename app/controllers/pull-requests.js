@@ -10,6 +10,7 @@ export default Controller.extend(...mixins, {
 
   buildsSorting: ['number:desc'],
   builds: sort('model', 'buildsSorting'),
+
   repo: alias('repoController.repo'),
   tab: alias('repoController.tab'),
   isLoaded: alias('model.isLoaded'),

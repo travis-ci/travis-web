@@ -44,6 +44,7 @@ export default Model.extend(DurationCalculations, {
   sortedStages: sort('stages', 'stagesSort'),
 
   createdBy: belongsTo('user'),
+
   stagesAreLoaded: alias('stages.isSettled'),
 
   config: computed('_config', 'currentState.stateName', function () {

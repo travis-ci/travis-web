@@ -12,6 +12,7 @@ import { observer } from '@ember/object';
 export default Controller.extend(GithubUrlProperties, Polling, {
   auth: service(),
   updateTimesService: service('updateTimes'),
+
   repoController: controller('repo'),
 
   config,

@@ -30,6 +30,7 @@ const Repo = Model.extend({
   migrationStatus: attr(),
 
   ownerType: oneWay('owner.@type'),
+
   currentBuildFinishedAt: oneWay('currentBuild.finishedAt'),
   currentBuildState: oneWay('currentBuild.state'),
   currentBuildId: oneWay('currentBuild.id'),
@@ -37,11 +38,9 @@ const Repo = Model.extend({
   defaultBranch: belongsTo('branch', {
     async: false
   }),
-
   currentBuild: belongsTo('build', {
     async: true, inverse: 'repoCurrentBuild'
   }),
-
   _branches: hasMany('branch'),
 
   isCurrentUserACollaborator: computed('auth.currentUser.permissions.[]', function () {
@@ -125,6 +124,8 @@ const Repo = Model.extend({
     }, (cron) => cron.get('branch.repoId') === id);
   }),
 
+  // TODO: Stop performing a `set` as part of the cp!
+  // TODO: Is this even used?
   stats: computed('slug', '_stats', function () {
     let slug = this.get('slug');
     let stats = this.get('_stats');

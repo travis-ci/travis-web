@@ -16,6 +16,7 @@ export default Controller.extend({
   }),
 
   config,
+
   unsortedEnvVars: filterBy('model.envVars', 'isNew', false),
   cronJobs: alias('model.cronJobs.jobs.[]'),
 

@@ -29,6 +29,7 @@ export default EmberObject.extend({
     return parts.set('content', []);
   },
 
+
   fetchTask: task(function* () {
     this.debug('log model: fetching log');
     this.clearParts();
