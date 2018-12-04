@@ -48,7 +48,7 @@
   <div class="row-commit">
     <div class="row-item">
       {{#external-link-to href=branch.last_build.commit.githubUrl}}
-        {{tooltip-on-element text='View commit on GitHub'}}
+        {{ember-tooltip text='View commit on GitHub'}}
         {{svg-jar 'icon-commit' class="icon"}}
         <span class="inner-underline monospace">
           {{#if branch.last_build}}
