@@ -5,13 +5,13 @@
 
   <div class="form-elem">
     <label for="trigger-build-branches" class="form-label">Select a branch</label>
-    {{#x-select id="trigger-build-branches" value=triggerBuildBranch on-change=(action (mut triggerBuildBranch)) autofocus=true as |xs|}}
+    <XSelect id="trigger-build-branches" @value={{triggerBuildBranch}} @onChange={{action (mut triggerBuildBranch)}} autofocus=true as |xs|>
       {{#each repo.branches as |branch|}}
         {{#if branch.exists_on_github}}
-          {{#xs.option value=branch.name}}{{branch.name}}{{/xs.option}}
+          <xs.option @value={{branch.name}}>{{branch.name}}</xs.option>
         {{/if}}
       {{/each}}
-    {{/x-select}}
+    </XSelect>
   </div>
 
   <div class="form-elem">
