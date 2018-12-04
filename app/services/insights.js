@@ -50,7 +50,6 @@ const endpoints = {
 
 export default Service.extend({
   api: service(),
-  features: service(),
 
   getIntervalSettings(customIntervalSettings = {}) {
     return $.extend(true, {}, defaultIntervalSettings, customIntervalSettings);
