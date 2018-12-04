@@ -5,6 +5,7 @@ import { computed } from '@ember/object';
 import { reads } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import config from 'travis/config/environment';
+import Ember from 'ember';
 
 export default Model.extend({
   accounts: service(),
@@ -74,7 +75,9 @@ export default Model.extend({
   }),
 
   logMultipleSubscriptionsError() {
-    const exception = new Error(`Account ${this.login} has more than one active subscription!`);
-    this.raven.logException(exception, true);
+    if (!Ember.testing) {
+      const exception = new Error(`Account ${this.login} has more than one active subscription!`);
+      this.raven.logException(exception, true);
+    }
   }
 });
