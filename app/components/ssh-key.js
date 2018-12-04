@@ -11,6 +11,6 @@ export default Component.extend({
       yield key.save();
     } catch (e) {}
 
-    this.sendAction('sshKeyDeleted');
+    this.sshKeyDeleted();
   }).drop()
 });

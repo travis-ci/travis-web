@@ -54,8 +54,8 @@ module('Integration | Component | ssh-key', function (hooks) {
     });
 
     this.set('key', key);
-    await render(hbs`{{ssh-key key=key sshKeyDeleted="sshKeyDeleted" pushAccess=true}}`);
-    this.actions.sshKeyDeleted = function () {};
+    this.set('sshKeyDeleted', () => {});
+    await render(hbs`{{ssh-key key=key sshKeyDeleted=(action sshKeyDeleted) pushAccess=true}}`);
 
     await click('.ssh-key-action button');
 

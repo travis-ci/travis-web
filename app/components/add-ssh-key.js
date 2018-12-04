@@ -65,7 +65,7 @@ export default Component.extend({
       try {
         yield sshKey.save();
         this.reset();
-        return this.sendAction('sshKeyAdded', sshKey);
+        return this.sshKeyAdded();
       } catch ({ errors }) {
         return this.addErrorsFromResponse(errors);
       }
