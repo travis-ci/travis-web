@@ -22,7 +22,7 @@ module('Integration | Component | queue-times', function (hooks) {
 
     assert.dom('.insights-glance').doesNotHaveClass('insights-glance--loading');
     assert.dom('.insights-glance__title').hasText('Average Queue Time');
-    assert.dom('.insights-glance__stat').hasText('0.63 mins');
+    assert.dom('.insights-glance__stat').hasText('0.58 mins');
     assert.dom('.insights-glance__chart .highcharts-wrapper').exists();
   });
 
