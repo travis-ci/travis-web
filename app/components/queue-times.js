@@ -57,7 +57,14 @@ export default Component.extend({
       'jobs',
       'avg',
       ['times_waiting'],
-      { calcTotal: true, calcAvg: true, customTransform: (key, val) => [key, Math.round(val / 60)] }
+      {
+        calcTotal: true,
+        calcAvg: true,
+        customTransform: (key, val) => [
+          key,
+          (Math.round((val / 60) * 100) / 100)
+        ],
+      }
     );
   }),
 

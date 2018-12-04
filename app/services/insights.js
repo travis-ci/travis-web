@@ -67,7 +67,6 @@ export default Service.extend({
     currentOptions.aggregator = currentOptions.aggregator || func;
     currentOptions.transformer = currentOptions.transformer || func;
     const intervalSettings = this.getIntervalSettings(currentOptions.intervalSettings);
-    const requestPrivateData = true; // this.get('features.proVersion') === true;
 
     const startTime = moment.utc().add(currentOptions.startInterval, interval);
     const endTime = moment.utc().add(currentOptions.endInterval, interval);
@@ -83,7 +82,6 @@ export default Service.extend({
         owner_id: owner.id,
         end_time: endTime.format(apiTimeRequestFormat),
         start_time: startTime.format(apiTimeRequestFormat),
-        private: requestPrivateData,
       }
     };
     const defaultTimesMap = metrics.reduce((map, metric) => {
