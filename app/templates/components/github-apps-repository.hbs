@@ -19,7 +19,7 @@
         data-test-migration-status={{repository.migrationStatus}}
         class="migration-status {{repository.migrationStatus}}"
       >
-      {{#if (eq repository.migrationStatus "migrating")}}
+      {{#if migrationInProgress}}
         {{loading-indicator
           data-test-repository-migration-loading-animation
           inline=true

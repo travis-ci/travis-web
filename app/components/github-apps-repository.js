@@ -14,5 +14,9 @@ export default Component.extend({
     }
   }),
 
-  migratable: and('migrationEnabled', 'repository.permissions.migrate')
+  migratable: and('migrationEnabled', 'repository.permissions.migrate'),
+
+  migrationInProgress: computed('repository.migrationStatus', function () {
+    return ['migrating', 'queued'].includes(this.get('repository.migrationStatus'));
+  }),
 });
