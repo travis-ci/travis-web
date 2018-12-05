@@ -154,7 +154,7 @@ const Repo = Model.extend({
   startMigration() {
     const url = `/repo/${this.get('id')}/migrate`;
     return this.get('api').post(url).then(() => {
-      this.set('migrationStatus', 'migrating');
+      this.set('migrationStatus', 'queued');
     });
   },
 

@@ -96,6 +96,7 @@ module('Acceptance | config/yaml', function (hooks) {
     test('shows yaml', async function (assert) {
       server.create('message', {
         request: this.request,
+        level: 'warn',
         key: 'jortle'
       });
 

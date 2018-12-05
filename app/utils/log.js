@@ -660,7 +660,9 @@ Object.defineProperty(Log.Fold.prototype, 'data', {
 Log.prototype = Log.extend(new Log.Node, {
   set: function (num, string) {
     if (this.parts[num]) {
-      return console.log(`part ${num} exists`);
+      if (Log.DEBUG) {
+        console.log(`part ${num} exists`);
+      }
     } else {
       this.parts[num] = true;
       return Log.Part.create(this, num, string);

@@ -114,7 +114,7 @@ module('Acceptance | profile/migration', function (hooks) {
 
     await click('[data-test-repository-migration-modal-confirm-migration-button]');
     assert.dom('[data-test-repository-migration-modal]').doesNotExist();
-    assert.dom('[data-test-migration-status="migrating"]').exists();
+    assert.dom('[data-test-migration-status="queued"]').exists();
 
     let { owner } = getContext();
     let pusherService = owner.lookup('service:pusher');
@@ -192,7 +192,7 @@ module('Acceptance | profile/migration', function (hooks) {
 
     await click('[data-test-repository-migration-modal-confirm-migration-button]');
     assert.dom('[data-test-repository-migration-modal]').doesNotExist();
-    assert.dom('[data-test-migration-status="migrating"]').exists();
+    assert.dom('[data-test-migration-status="queued"]').exists();
 
     let { owner } = getContext();
     let pusherService = owner.lookup('service:pusher');
