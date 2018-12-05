@@ -240,3 +240,58 @@
   vertical-align: baseline;
   line-height: 1.5;
 }
+
+.job-waiting-container {
+  height: 100px;
+  border: 2px solid #f1f1f1;
+  font-size: 16px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0px 50px;
+
+  .stage-message {
+    font-size: 14px;
+  }
+}
+.loading-ring {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  position: relative;
+  background-color: transparent;
+  border: 3px solid #3eaaaf;;
+
+}
+
+.loading-line {
+  height: 10px;
+  width: 75px;
+  @media #{$medium-only} {
+    width: 50px;
+  }
+  position: relative;
+  bottom: 2px;
+  border-bottom: 5px solid #f1f1f1;
+}
+
+#num1 {
+  position: relative;
+  bottom: 17px;
+  left: 8px;
+  color: $pebble-grey;
+}
+
+#num2 {
+  position: relative;
+  bottom: 17px;
+  left: 8px;
+  color: $pebble-grey;
+}
+
+#num3 {
+  position: relative;
+  bottom: 17px;
+  left: 8px;
+  color: $pebble-grey;
+}

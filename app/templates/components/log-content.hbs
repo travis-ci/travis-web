@@ -7,7 +7,18 @@
   <!-- For queued and received states-->
   <!-- Booting state in Travis is recevied state in Travis Web -->
   {{#if job.notStarted}}
-    <div class="log-notice">Starting a new build environment...</div>
+  <div class="job-waiting-container">
+    <span class="loading-ring"><p id="num1">1</p></span>
+    <span class="stage-message">Job Received</span>
+    <span class="loading-line"></span>
+    <span class="loading-ring"><p id="num2">2</p></span>
+    <span class="stage-message">Waiting for concurrency</span>
+    <span class="loading-line"></span>
+    <span class="loading-ring"><p id="num3">3</p></span>
+    <span class="stage-message">Booting</span>
+    <span class="loading-line"></span>
+    <span class="loading-ring"></span>
+  </div>
   {{/if}}
 
   {{#if job.reQueue}}
