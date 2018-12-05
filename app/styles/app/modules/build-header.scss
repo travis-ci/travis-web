@@ -265,6 +265,7 @@
 }
 
 .loading-line {
+  display: inline-block;
   height: 10px;
   width: 75px;
   @media #{$medium-only} {
@@ -277,21 +278,62 @@
 
 #num1 {
   position: relative;
-  bottom: 17px;
-  left: 8px;
+  bottom: 2px;
+  right: 4px;
   color: $pebble-grey;
 }
 
 #num2 {
   position: relative;
-  bottom: 17px;
-  left: 8px;
+  bottom: 2px;
+  right: 4px;
   color: $pebble-grey;
 }
 
 #num3 {
   position: relative;
-  bottom: 17px;
-  left: 8px;
+  bottom: 2px;
+  right: 4px;
   color: $pebble-grey;
+}
+
+@keyframes spinner {
+  to {transform: rotate(360deg);}
+}
+
+.spinner:before {
+  content: '';
+  display: inline-block;
+  box-sizing: border-box;
+  position: relative;
+  top: 8px;
+  left: 50%;
+  width: 30px;
+  height: 30px;
+  margin-top: -10px;
+  margin-left: -10px;
+  border-radius: 50%;
+  border-top: 2px solid #3EAAAF;
+  border-right: 2px solid transparent;
+  // border-left: 3px solid transparent;
+  animation: spinner 1s linear infinite;
+}
+
+.loading-line {
+  display: inline-block;
+  height:0px;
+  width:1px;
+  border-bottom:3px solid #000;
+
+  -webkit-animation: increase 3s;
+  -moz-animation:    increase 3s;
+  -o-animation:      increase 3s;
+  animation:         increase 3s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes increase {
+    100% {
+        width: 50px;
+    }
 }

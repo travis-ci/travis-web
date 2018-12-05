@@ -26,7 +26,12 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
 
   logId: attr(),
   queue: attr(),
+<<<<<<< HEAD
   state: attr(),
+=======
+  state: 'created',
+  // state: attr(),
+>>>>>>> Animating circles
   number: attr(),
   allowFailure: attr('boolean'),
   tags: attr(),
@@ -206,18 +211,26 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
   onStateChange: observer('state', function () {
     let currentState = this.get('state');
     console.log('hello');
-    if (currentState === 'created') {
+    if (currentState === 'created' || currentState === 'queued') {
+      // $('span.loading-ring-1').addClass('spinner');
       $('#num1').css('color', '#3EAAAF');
     }
 
     if (currentState === 'queued') {
+      $('.loading-line-1').css('border-bottom-color', '#3EAAAF');
       $('#num2').css('color', '#3EAAAF');
     }
 
     if (currentState === 'received') {
-      $('#num3').css('color', '#3EAAAF');
+      $('.loading-ring-3').addClass('spinner');
+      $('.loading-line-2').css('border-bottom-color', '#3EAAAF');
+      // $('#num3').css('color', '#3EAAAF');
     }
 
+    if (!currentState.include(notStarted) || currentState !== undefined) {
+      $('.loading-line-3').css('border-bottom-color', '#3EAAAF');
+      $('#num3').css('color', '#3EAAAF');
+    }
     if (this.get('state') === 'finished' && Travis.pusher) {
       return this.unsubscribe();
     }
