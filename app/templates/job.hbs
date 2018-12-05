@@ -1,3 +1,10 @@
+<section style='position: fixed; top: 1em; right: 1em; background: rgba(255,255,255,0.6)'>
+  Job state:<br>
+  <button onclick={{action (mut job.state) 'queued'}}>Queued</button><br>
+  <button onclick={{action (mut job.state) 'received'}}>Received</button><br>
+  <button onclick={{action (mut job.state) 'created'}}>Created</button><br>
+  <button onclick={{action (mut job.state) 'started'}}>Started</button><br>
+</section>
 {{#job-wrapper repo=repo job=job}}
 {{#if job.isLoaded}}
 
