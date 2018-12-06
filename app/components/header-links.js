@@ -60,33 +60,23 @@ export default Component.extend({
     return classes.join(' ');
   }),
 
-<<<<<<< HEAD
-  @action
-  signIn() {
-    return this.get('auth').signIn();
-  },
-=======
   actions: {
-    helpscoutTrigger() {
-      this.helpScout.openHelpScout();
-    },
 
     signIn() {
       return this.get('auth').signIn();
     },
->>>>>>> master
 
     signOut() {
       return this.get('auth').signOut();
     },
-  },
 
-  @action
-  goToHelp() {
-    if (this.router.currentRouteName !== 'help') {
-      const page = encodeURI(window.location.href);
-      this.router.transitionTo('help', { queryParams: { page } });
+    goToHelp() {
+      if (this.router.currentRouteName !== 'help') {
+        const page = encodeURI(window.location.href);
+        this.router.transitionTo('help', { queryParams: { page } });
+      }
     }
+
   }
 
 });
