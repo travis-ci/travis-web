@@ -1,19 +1,21 @@
 import Controller from '@ember/controller';
-import { service } from 'ember-decorators/service';
-import { computed } from 'ember-decorators/object';
-import { alias } from 'ember-decorators/object/computed';
+import { inject as service } from '@ember/service';
+import { computed } from '@ember/object';
+import { alias } from '@ember/object/computed';
 
 export default Controller.extend({
-  @service repositories: null,
+  repositories: service(),
 
-  @alias('repositories.accessible.firstObject.currentBuild') latestCurrentBuild: null,
+  latestCurrentBuild: alias('repositories.accessible.firstObject.currentBuild'),
 
-  @computed('model', 'latestCurrentBuild')
-  build(model, latestCurrentBuild) {
+  build: computed('model', 'latestCurrentBuild', function () {
+    let model = this.get('model');
+    let latestCurrentBuild = this.get('latestCurrentBuild');
+
     if (model) {
       return model;
     } else {
       return latestCurrentBuild;
     }
-  },
+  })
 });

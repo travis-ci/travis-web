@@ -1,7 +1,6 @@
-import Service from '@ember/service';
+import Service, { inject as service } from '@ember/service';
 import { task, timeout } from 'ember-concurrency';
 import config from 'travis/config/environment';
-import { service } from 'ember-decorators/service';
 
 /*
  * travis-live doesn't always send full payload. In such a situation we need to
@@ -11,7 +10,7 @@ import { service } from 'ember-decorators/service';
  * are sent one after another, we will still send only one query.
  */
 export default Service.extend({
-  @service store: null,
+  store: service(),
 
   init() {
     this.recordsToFetch = [];

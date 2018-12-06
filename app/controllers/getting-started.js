@@ -1,7 +1,7 @@
 import Controller from '@ember/controller';
-import { service } from 'ember-decorators/service';
+import { inject as service } from '@ember/service';
 
 export default Controller.extend({
-  @service auth: null,
-  @service features: null,
+  auth: service(),
+  features: service(),
 });

@@ -1,19 +1,19 @@
 import Component from '@ember/component';
-import { computed } from 'ember-decorators/object';
+import { computed } from '@ember/object';
 
 export default Component.extend({
   tagName: '',
 
   copied: false,
 
-  @computed('copied')
-  buttonLabel(copied) {
+  buttonLabel: computed('copied', function () {
+    let copied = this.get('copied');
     if (copied) {
       return 'Copied!';
     } else {
       return 'Copy .travis.yml';
     }
-  },
+  }),
 
   actions: {
     copied() {

@@ -1,26 +1,28 @@
 import Component from '@ember/component';
-import { service } from 'ember-decorators/service';
-import { computed } from 'ember-decorators/object';
-import { alias } from 'ember-decorators/object/computed';
+import { inject as service } from '@ember/service';
+import { computed } from '@ember/object';
+import { alias } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
 
 export default Component.extend({
-  @service flashes: null,
+  flashes: service(),
 
   tagName: 'li',
   classNames: ['settings-envvar'],
   classNameBindings: ['envVar.public:is-public', 'envVar.newlyCreated:newly-created'],
   validates: { name: ['presence'] },
   actionType: 'Save',
-  @alias('public') showValueField: null,
+  showValueField: alias('public'),
 
-  @computed('envVar.{value,public}')
-  value(value, isPublic) {
+  value: computed('envVar.{value,public}', function () {
+    let value = this.get('envVar.value');
+    let isPublic = this.get('envVar.public');
+
     if (isPublic) {
       return value;
     }
     return '••••••••••••••••';
-  },
+  }),
 
   delete: task(function* () {
     yield this.get('envVar').destroyRecord().catch(({ errors }) => {

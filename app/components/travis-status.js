@@ -1,12 +1,12 @@
 import Component from '@ember/component';
-import { service } from 'ember-decorators/service';
+import { inject as service } from '@ember/service';
 import { reads, notEmpty, not, and } from '@ember/object/computed';
 
 export default Component.extend({
   classNames: ['travis-status'],
   classNameBindings: ['indicator', 'colorizeText:colorize-text'],
 
-  @service appLoading: null,
+  appLoading: service(),
 
   colorizeText: false,
 

@@ -1,10 +1,10 @@
 import Route from '@ember/routing/route';
-import { service } from 'ember-decorators/service';
+import { inject as service } from '@ember/service';
 
 export default Route.extend({
-  @service tabStates: null,
-  @service auth: null,
-  @service repositories: null,
+  tabStates: service(),
+  auth: service(),
+  repositories: service(),
 
   redirect() {
     if (!this.get('auth.signedIn')) {

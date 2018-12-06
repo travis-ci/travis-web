@@ -1,10 +1,10 @@
 import { reject } from 'rsvp';
 import Route from '@ember/routing/route';
-import { service } from 'ember-decorators/service';
+import { inject as service } from '@ember/service';
 
 export default Route.extend({
-  @service auth: null,
-  @service featureFlags: null,
+  auth: service(),
+  featureFlags: service(),
 
   activate() {
     if (this.routeName !== 'error') {

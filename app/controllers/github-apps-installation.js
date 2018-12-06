@@ -1,7 +1,7 @@
 import Controller from '@ember/controller';
 
 import { fetch, Headers } from 'fetch';
-import { service } from 'ember-decorators/service';
+import { inject as service } from '@ember/service';
 import config from 'travis/config/environment';
 import { later } from '@ember/runloop';
 import { Promise as EmberPromise } from 'rsvp';
@@ -9,8 +9,8 @@ import { Promise as EmberPromise } from 'rsvp';
 const interval = config.intervals.githubAppsInstallationPolling;
 
 export default Controller.extend({
-  @service auth: null,
-  @service raven: null,
+  auth: service(),
+  raven: service(),
 
   queryParams: ['installation_id'],
 

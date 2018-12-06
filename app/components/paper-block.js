@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { computed } from 'ember-decorators/object';
+import { computed } from '@ember/object';
 
 export const MIN_ELEVATION = 0;
 export const MAX_ELEVATION = 4;
@@ -12,15 +12,15 @@ export default Component.extend({
   elevation: 1,
   padding: true,
 
-  @computed('elevation')
-  normalizedElevation(elevation) {
+  normalizedElevation: computed('elevation', function () {
+    let elevation = this.get('elevation');
     elevation = elevation < MIN_ELEVATION ? MIN_ELEVATION : elevation;
     elevation = elevation > MAX_ELEVATION ? MAX_ELEVATION : elevation;
     return elevation;
-  },
+  }),
 
-  @computed('normalizedElevation')
-  elevationClass(normalizedElevation) {
+  elevationClass: computed('normalizedElevation', function () {
+    let normalizedElevation = this.get('normalizedElevation');
     return `elevation-x${normalizedElevation}`;
-  }
+  })
 });

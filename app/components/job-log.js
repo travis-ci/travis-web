@@ -1,9 +1,9 @@
 import Component from '@ember/component';
-import { alias } from 'ember-decorators/object/computed';
+import { alias } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
 
 export default Component.extend({
-  @alias('job.log') log: null,
+  log: alias('job.log'),
 
   classNames: ['job-log'],
 

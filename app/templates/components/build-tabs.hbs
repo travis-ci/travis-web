@@ -4,7 +4,7 @@
     <li>
       {{#link-to 'build.config' build.repo build data-test-build-yaml-tab title="Look at this build's config" disabled=build.request.noYaml}}
         {{#if build.request.noYaml}}
-          {{tooltip-on-element text='Try a more recent build to see the config'}}
+          {{ember-tooltip text='Try a more recent build to see the config'}}
         {{/if}}
         View config
       {{/link-to}}

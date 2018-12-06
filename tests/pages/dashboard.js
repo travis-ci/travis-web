@@ -62,6 +62,7 @@ export default create({
 
       branch: {
         scope: '[data-test-branch-name]',
+        text: text('.label-align'),
         href: attribute('href')
       },
 
@@ -74,6 +75,7 @@ export default create({
 
       sha: {
         scope: '[data-test-commit-sha]',
+        text: text('.label-align'),
         href: attribute('href')
       },
 

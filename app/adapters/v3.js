@@ -4,10 +4,10 @@ import { pluralize } from 'ember-inflector';
 import { get } from '@ember/object';
 import config from 'travis/config/environment';
 import RESTAdapter from 'ember-data/adapters/rest';
-import { service } from 'ember-decorators/service';
+import { inject as service } from '@ember/service';
 
 export default RESTAdapter.extend({
-  @service auth: null,
+  auth: service(),
 
   host: config.apiEndpoint,
 

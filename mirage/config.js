@@ -160,7 +160,13 @@ export default function () {
 
   this.get('/repo/:slug_or_id', function (schema, request) {
     if (request.params.slug_or_id.match(/^\d+$/)) {
-      return schema.repositories.find(request.params.slug_or_id);
+      let repo = schema.repositories.find(request.params.slug_or_id);
+
+      if (repo) {
+        return repo;
+      } else {
+        return new Response(404, {});
+      }
     } else {
       let slug = request.params.slug_or_id;
       let repos = schema.repositories.where({ slug: decodeURIComponent(slug) });

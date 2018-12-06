@@ -3,9 +3,8 @@ import { isNone } from '@ember/utils';
 import { Promise as EmberPromise } from 'rsvp';
 import $ from 'jquery';
 import { get } from '@ember/object';
-import Service from '@ember/service';
+import Service, { inject as service } from '@ember/service';
 import config from 'travis/config/environment';
-import { service } from 'ember-decorators/service';
 
 $.support.cors = true;
 
@@ -16,8 +15,8 @@ let defaultOptions = {
 };
 
 export default Service.extend({
-  @service auth: null,
-  @service features: null,
+  auth: service(),
+  features: service(),
 
   get(url, callback, errorCallback) {
     return this.ajax(url, 'get', {

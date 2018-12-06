@@ -1,8 +1,8 @@
 import V3Adapter from 'travis/adapters/v3';
-import { service } from 'ember-decorators/service';
+import { inject as service } from '@ember/service';
 
 export default V3Adapter.extend({
-  @service auth: null,
+  auth: service(),
 
   buildURL(modelName, id, snapshot, requestType) {
     let url = this._super(...arguments);

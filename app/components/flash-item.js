@@ -1,24 +1,24 @@
 import Component from '@ember/component';
-import { computed } from 'ember-decorators/object';
-import { alias } from 'ember-decorators/object/computed';
-import { service } from 'ember-decorators/service';
+import { computed } from '@ember/object';
+import { alias } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
 
 export default Component.extend({
   tagName: 'li',
   classNameBindings: ['type', 'topBarVisible:below-top-bar:fixed'],
 
-  @service flashes: null,
+  flashes: service(),
 
-  @computed('flash.type')
-  type(type) {
+  type: computed('flash.type', function () {
+    let type = this.get('flash.type');
     return type || 'broadcast';
-  },
+  }),
 
-  @alias('flashes.topBarVisible') topBarVisible: null,
+  topBarVisible: alias('flashes.topBarVisible'),
 
   actions: {
     close() {
       return this.attrs.close(this.get('flash'));
     }
-  },
+  }
 });

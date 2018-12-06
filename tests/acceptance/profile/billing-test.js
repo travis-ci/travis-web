@@ -10,7 +10,7 @@ moduleForAcceptance('Acceptance | profile/billing', {
       type: 'user',
       login: 'user-login',
       github_id: 1974,
-      avatar_url: 'http://example.com/jorty',
+      avatar_url: '/images/tiny.gif',
       permissions: {
         createSubscription: true
       }

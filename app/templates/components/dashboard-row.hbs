@@ -41,16 +41,16 @@
     </section>
     <section class="dash-commit">
       <h3 class="label">Commit</h3>
-      <p class="row-content row-item commit-sha">
-        {{tooltip-on-element text='View commit on GitHub'}}
+      <div class="row-content row-item commit-sha">
         {{svg-jar 'icon-commit' class="icon"}}
         {{#external-link-to href=repo.currentBuild.commit.githubUrl}}
+          {{ember-tooltip text='View commit on GitHub'}}
           <span class="label-align monospace">
             {{format-sha repo.currentBuild.commit.sha}}
           </span>
         {{/external-link-to}}
         {{svg-jar 'icon-external-link' class="icon"}}
-      </p>
+      </div>
     </section>
     <section class="fade-out dash-finished">
       <h3 class="label">Finished</h3>
