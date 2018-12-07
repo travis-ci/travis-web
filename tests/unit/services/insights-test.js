@@ -6,11 +6,10 @@ module('Unit | Service | insights', function (hooks) {
 
   hooks.beforeEach(function () {
     this.userData = this.server.create('user');
-    this.metricData = this.server.createList('insight-metric', 30);
+    // this.metricData = this.server.createList('insight-metric', 10);
     this.insightsService = this.owner.lookup('service:insights');
   });
 
-  // Replace this with your real tests.
   test('default interval settings', function (assert) {
     const intervalSettings = this.insightsService.getIntervalSettings({ day: {subInterval: '1min'} });
     const intervalSettings2 = this.insightsService.getIntervalSettings();

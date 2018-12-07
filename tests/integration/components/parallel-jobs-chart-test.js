@@ -17,6 +17,9 @@ module('Integration | Component | parallel-jobs-chart', function (hooks) {
       id: 1,
     });
 
+    // Right now just this one test uses this data. If more tests need it in the future, move to hooks.beforeEach
+    this.metricData = this.server.createList('insight-metric', 5);
+
     await render(hbs`{{parallel-jobs-chart interval=interval owner=ownerData}}`);
     await settled();
 

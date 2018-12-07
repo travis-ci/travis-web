@@ -594,7 +594,7 @@ export default function () {
     queryParams.owner_id = parseInt(queryParams.owner_id);
     queryParams.name = queryParams.name.split(',');
     const owner = schema.users.find(queryParams.owner_id);
-    const currentDate = new Date();
+    // const currentDate = new Date();
 
     if (owner) {
       const response = {
@@ -605,18 +605,13 @@ export default function () {
       response.data.values = [];
 
       if (queryParams.owner_id !== 2) {
-        let d;
-
         queryParams.name.map(name => {
-          for (let i = 7; i >= 0; i--) {
-            d = new Date(currentDate.getTime() - (i * 24 * 60 * 60 * 1000));
-            response.data.values.push({
-              time: `${d.toISOString().split('.')[0].replace('T', ' ')} UTC`,
-              interval: queryParams.interval,
-              name: name,
-              value: (i * 10),
-            });
-          }
+          response.data.values = schema.insightMetrics.all().models.map(metric => ({
+            name,
+            interval: queryParams.interval,
+            time: `${metric.time.toISOString().split('.')[0].replace('T', ' ')} UTC`,
+            value: metric.value,
+          }));
         });
       }
 
