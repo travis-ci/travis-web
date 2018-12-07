@@ -1,4 +1,4 @@
-import { merge } from '@ember/polyfills';
+import { assign } from '@ember/polyfills';
 
 let configKeys, configKeysMap, languageConfigKeys;
 
@@ -56,7 +56,7 @@ configKeys = {
   os: 'OS'
 };
 
-configKeysMap = merge(configKeys, languageConfigKeys);
+configKeysMap = assign(configKeys, languageConfigKeys);
 
 export default configKeysMap;
 
