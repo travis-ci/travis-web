@@ -5,17 +5,18 @@ module('Unit | Service | insights', function (hooks) {
   setupTest(hooks);
 
   hooks.beforeEach(function () {
-    this.server.create('user');
+    this.userData = this.server.create('user');
+    this.metricData = this.server.createList('insight-metric', 30);
+    this.insightsService = this.owner.lookup('service:insights');
   });
 
   // Replace this with your real tests.
   test('default interval settings', function (assert) {
-    const service = this.owner.lookup('service:insights');
-    const intervalSettings = service.getIntervalSettings({ day: {subInterval: '1min'} });
-    const intervalSettings2 = service.getIntervalSettings();
+    const intervalSettings = this.insightsService.getIntervalSettings({ day: {subInterval: '1min'} });
+    const intervalSettings2 = this.insightsService.getIntervalSettings();
     intervalSettings2.day.subInterval = '1min';
 
-    assert.ok(service);
+    assert.ok(this.insightsService);
     assert.deepEqual(intervalSettings, intervalSettings2);
   });
 });
