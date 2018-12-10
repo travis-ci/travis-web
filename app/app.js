@@ -1,4 +1,4 @@
-/* global Travis, HS */
+/* global Travis */
 import Evented from '@ember/object/evented';
 
 import Application from '@ember/application';
@@ -8,7 +8,6 @@ import config from './config/environment';
 
 // This can be set per environment in config/environment.js
 const debuggingEnabled = config.featureFlags['debug-logging'];
-const proVersion = config.featureFlags['pro-version'];
 
 const App = Application.extend(Evented, {
   modulePrefix: config.modulePrefix,
