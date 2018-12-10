@@ -141,7 +141,6 @@ module.exports = function (environment) {
         caches: true
       };
       ENV.userlike = true;
-      ENV.beacon = true;
 
       if (process.env.GITHUB_APPS_APP_NAME) {
         ENV.githubApps = {

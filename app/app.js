@@ -33,10 +33,6 @@ const App = Application.extend(Evented, {
   },
 
   onUserUpdate(user) {
-    if (proVersion && config.beacon) {
-      this.setupBeacon();
-      this.identifyHSBeacon(user);
-    }
     return this.subscribePusher(user);
   },
 
@@ -45,22 +41,8 @@ const App = Application.extend(Evented, {
       return;
     }
     Travis.pusher.subscribeAll(user.channels);
-  },
-
-  identifyHSBeacon(user) {
-    if (HS && HS.beacon) {
-      HS.beacon.ready(() => {
-        const { name, email, login, synced_at: syncedAt } = user;
-        const userParams = {
-          name,
-          email,
-          login,
-          last_synced_at: syncedAt,
-        };
-        return HS.beacon.identify(userParams);
-      });
-    }
   }
+
 });
 
 loadInitializers(App, config.modulePrefix);
