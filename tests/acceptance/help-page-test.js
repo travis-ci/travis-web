@@ -22,7 +22,7 @@ module('Acceptance | help page', function (hooks) {
       assert.ok(header.isPresent);
       assert.ok(navigationLinks.isPresent);
       assert.ok(status.isPresent);
-      assert.ok(!username.isPresent);
+      assert.notOk(username.isPresent);
 
       assert.ok(supportSection.isPresent);
     });
