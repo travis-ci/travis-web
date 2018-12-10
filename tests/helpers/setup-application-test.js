@@ -3,7 +3,7 @@ import { setupApplicationTest as _super } from 'ember-qunit';
 export function setupApplicationTest() {
   let clearStorage = (storage) => {
     storage.removeItem('travis.token');
-    storage.removeItem('trvais.user');
+    storage.removeItem('travis.user');
   };
 
   clearStorage(localStorage);
