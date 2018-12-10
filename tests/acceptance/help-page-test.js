@@ -12,7 +12,9 @@ module('Acceptance | help page', function (hooks) {
     });
 
     test('it has correct structure', function (assert) {
+      const { greetingSection } = helpPage;
 
+      assert.ok(greetingSection.isPresent);
     });
   });
 
@@ -24,7 +26,9 @@ module('Acceptance | help page', function (hooks) {
     });
 
     test('it has correct structure', function (assert) {
+      const { greetingSection } = helpPage;
 
+      assert.ok(greetingSection.isPresent);
     });
   });
 });
