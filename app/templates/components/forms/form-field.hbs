@@ -1,6 +1,6 @@
 <label for={{fieldElementId}} class='travis-form__label'>
   {{label}}
-  {{#if required}}
+  {{#if showRequiredMark}}
     <span class='travis-form__required-mark'>
       *
       {{ember-tooltip text='This field is required' delay=300 }}

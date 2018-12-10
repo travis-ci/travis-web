@@ -28,6 +28,7 @@ export default Component.extend({
   placeholder: '',
   helperText: '',
   disabled: false,
+  showRequiredMark: false,
 
   validator: () => true,
   required: equal('validator.kind', presense),
