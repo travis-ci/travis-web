@@ -6,9 +6,6 @@ import helpPage from 'travis/tests/pages/help';
 module('Acceptance | help page', function (hooks) {
   setupApplicationTest(hooks);
 
-  hooks.beforeEach(function () {
-  });
-
   module('for unauthorised user', function (hooks) {
     hooks.beforeEach(async function () {
       await helpPage.visit();

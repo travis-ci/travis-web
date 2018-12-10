@@ -3,6 +3,7 @@ import config from '../../config/environment';
 import registerClipboardHelpers from '../helpers/ember-cli-clipboard';
 import { merge } from '@ember/polyfills';
 import { run } from '@ember/runloop';
+import signOutUser from 'travis/tests/helpers/sign-out-user';
 
 import './sign-in-user';
 import './wait-for-element';
@@ -14,13 +15,7 @@ export default function startApp(attrs) {
   attributes.autoboot = true;
   attributes = merge(attributes, attrs); // use defaults, but you can override;
 
-  let clearStorage = (storage) => {
-    storage.removeItem('travis.token');
-    storage.removeItem('travis.user');
-  };
-
-  clearStorage(localStorage);
-  clearStorage(sessionStorage);
+  signOutUser();
 
   return run(() => {
     let application = Application.create(attributes);
