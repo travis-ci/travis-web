@@ -1,12 +1,12 @@
 {{#if toTop}}{{scroll-here}}{{/if}}
 {{#travis-layout layoutName="layouts/striped" class="help-page" as |layout| }}
 
-  {{#layout.section class="help-page__top"}}
-    <h1 class="header-main align-center">
-      How can we help{{#if isLoggedIn}}, <strong>{{auth.userName}}</strong>{{/if}}?
+  {{#layout.section class="help-page__top" data-test-help-page-greeting-section=true }}
+    <h1 class="header-main align-center" data-test-help-page-greeting-header>
+      How can we help{{#if isLoggedIn}}, <strong data-test-help-page-greeting-username>{{auth.userName}}</strong>{{/if}}?
     </h1>
 
-    <div class="subheading align-center">
+    <div class="subheading align-center" data-test-help-page-navigation-links>
       Find our most
       <a href={{docsUrl}} target="_blank" ref="noopener noreferrer">used resources</a>,
       popular topics in our
@@ -15,12 +15,12 @@
       <a class="pointer" onclick={{action 'setAnchor' 'form'}}>talk with us!</a>
     </div>
 
-    <div class="status align-center">
+    <div class="status align-center" data-test-help-page-status>
       {{travis-status colorizeText=true }}
     </div>
   {{/layout.section}}
 
-  {{#layout.section class="help-page__support" hasBackground=(not isLoggedIn) }}
+  {{#layout.section class="help-page__support" hasBackground=(not isLoggedIn) data-test-help-page-support-section=true }}
     {{#if toForm}}{{scroll-here}}{{/if}}
 
     {{#if isLoggedIn}}
