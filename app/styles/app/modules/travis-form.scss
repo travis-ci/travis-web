@@ -34,6 +34,10 @@ $travis-form-badge-radius: 7px;
         color: $brick-red;
       }
 
+      .tooltip {
+        text-transform: none;
+      }
+
     }
 
     .travis-form__helper-text {
