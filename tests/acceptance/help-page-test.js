@@ -1,10 +1,13 @@
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'ember-qunit';
+import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import helpPage from 'travis/tests/pages/help';
 
 module('Acceptance | help page', function (hooks) {
   setupApplicationTest(hooks);
+
+  hooks.beforeEach(function () {
+  });
 
   module('for unauthorised user', function (hooks) {
     hooks.beforeEach(async function () {
@@ -12,9 +15,23 @@ module('Acceptance | help page', function (hooks) {
     });
 
     test('it has correct structure', function (assert) {
-      const { greetingSection } = helpPage;
+      const { greetingSection, supportSection } = helpPage;
+      const { username, header, navigationLinks, status } = greetingSection;
 
       assert.ok(greetingSection.isPresent);
+      assert.ok(header.isPresent);
+      assert.ok(navigationLinks.isPresent);
+      assert.ok(status.isPresent);
+      assert.ok(!username.isPresent);
+
+      assert.ok(supportSection.isPresent);
+    });
+
+    test('it shows log in stub', function (assert) {
+      const { logInImage, logInButton } = helpPage.supportSection;
+
+      assert.ok(logInImage.isPresent);
+      assert.ok(logInButton.isPresent);
     });
   });
 
@@ -26,9 +43,23 @@ module('Acceptance | help page', function (hooks) {
     });
 
     test('it has correct structure', function (assert) {
-      const { greetingSection } = helpPage;
+      const { greetingSection, supportSection } = helpPage;
+      const { username, header, navigationLinks, status } = greetingSection;
 
       assert.ok(greetingSection.isPresent);
+      assert.ok(header.isPresent);
+      assert.ok(navigationLinks.isPresent);
+      assert.ok(status.isPresent);
+      assert.ok(username.isPresent);
+      assert.equal(username.text, this.user.name);
+
+      assert.ok(supportSection.isPresent);
+    });
+
+    test('it shows request form', function (assert) {
+      const { form } = helpPage.supportSection;
+
+      assert.ok(form.isPresent);
     });
   });
 });

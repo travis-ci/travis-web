@@ -13,60 +13,61 @@
   </div>
 
   {{#if isLoggedIn}}
+    <div data-test-zendesk-form-container>
 
-    {{#travis-form
-      onSubmit=(action 'handleSubmit')
-      data-test-zendesk-form-container=true
-      as |form|
-    }}
-
-      {{form.input
-        label='Email'
-        value=email
-        validator=(form-validator form.validators.email)
-        required=true
-        disabled=true
-        data-test-zendesk-form-email=true
+      {{#travis-form
+        onSubmit=(action 'handleSubmit')
+        as |form|
       }}
 
-      {{form.input
-        label='Subject'
-        value=subject
-        required=true
-        disabled=isSubmitting
-        onChange=(action (mut subject))
-        data-test-zendesk-form-subject=true
-      }}
+        {{form.input
+          label='Email'
+          value=email
+          validator=(form-validator form.validators.email)
+          required=true
+          disabled=true
+          data-test-zendesk-form-email=true
+        }}
 
-      {{#form.textarea
-        label='Description'
-        value=description
-        helperText="Let us know what's happening and how this is affecting you. Tip: Include any links to failing Travis CI build"
-        rows=5
-        disabled=isSubmitting
-        validator=(form-validator form.validators.difference descriptionTemplate "Make sure to add some details on what you'd like to talk with us about")
-        required=true
-        autoValidate=false
-        onChange=(action (mut description))
-        data-test-zendesk-form-description=true
-      }}{{description}}{{/form.textarea}}
+        {{form.input
+          label='Subject'
+          value=subject
+          required=true
+          disabled=isSubmitting
+          onChange=(action (mut subject))
+          data-test-zendesk-form-subject=true
+        }}
 
-      <div class="align-center">
-        <button
-          onclick={{form.submit}}
-          class='submit-button button--blue button--large'
-          data-test-zendesk-form-submit
-        >
-          {{#if isSubmitting}}
-            {{loading-indicator white=true }}
-          {{else}}
-            Submit
-          {{/if}}
-        </button>
-      </div>
+        {{#form.textarea
+          label='Description'
+          value=description
+          helperText="Let us know what's happening and how this is affecting you. Tip: Include any links to failing Travis CI build"
+          rows=5
+          disabled=isSubmitting
+          validator=(form-validator form.validators.difference descriptionTemplate "Make sure to add some details on what you'd like to talk with us about")
+          required=true
+          autoValidate=false
+          onChange=(action (mut description))
+          data-test-zendesk-form-description=true
+        }}{{description}}{{/form.textarea}}
 
-    {{/travis-form}}
+        <div class="align-center">
+          <button
+            onclick={{form.submit}}
+            class='submit-button button--blue button--large'
+            data-test-zendesk-form-submit
+          >
+            {{#if isSubmitting}}
+              {{loading-indicator white=true }}
+            {{else}}
+              Submit
+            {{/if}}
+          </button>
+        </div>
 
+      {{/travis-form}}
+
+    </div>
   {{else}}
 
     <div class="sign-in-image align-center" data-test-zendesk-form-log-in-image>
