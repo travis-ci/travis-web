@@ -15,6 +15,7 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
   flashes: service(),
   helpScout: service(),
   repositories: service(),
+  router: service(),
 
   needsAuth: false,
 
