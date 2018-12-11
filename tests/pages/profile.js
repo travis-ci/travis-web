@@ -197,6 +197,10 @@ export default create({
       name: text('[data-test-education-message]'),
     },
 
+    informationSection: {
+      scope: '[data-test-billing-information]'
+    },
+
     address: {
       scope: '.contact .address',
     },

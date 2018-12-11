@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { reads, and } from '@ember/object/computed';
+import { and, equal, reads } from '@ember/object/computed';
 
 export default Component.extend({
   account: null,
@@ -7,5 +7,7 @@ export default Component.extend({
   subscription: reads('account.subscription'),
   trial: reads('account.trial'),
 
-  isGithubTrial: and('subscription.isGithub', 'trial.hasActiveTrial')
+  isGithubTrial: and('subscription.isGithub', 'trial.hasActiveTrial'),
+
+  isFreePlan: equal('account.subscription.plan.id', 'free-plan')
 });

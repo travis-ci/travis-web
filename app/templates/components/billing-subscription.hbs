@@ -16,19 +16,21 @@
     <p>Renewing on {{moment-format subscription.validTo 'MMMM D, YYYY'}}</p>
   </section>
 
-  <h2>Billing Information</h2>
-  <section class='row'>
-    {{#if subscription.isStripe}}
-      <section class='contact'>
-        <h3>Billing Contact</h3>
-        {{billing-address billingInfo=subscription.billingInfo}}
+  {{#unless isFreePlan}}
+    <h2>Billing Information</h2>
+    <section class='row' data-test-billing-information>
+      {{#if subscription.isStripe}}
+        <section class='contact'>
+          <h3>Billing Contact</h3>
+          {{billing-address billingInfo=subscription.billingInfo}}
+        </section>
+      {{/if}}
+      <section class='payment'>
+        <h3>Payment details</h3>
+        {{payment-details subscription=subscription}}
       </section>
-    {{/if}}
-    <section class='payment'>
-      <h3>Payment details</h3>
-      {{payment-details subscription=subscription}}
     </section>
-  </section>
+  {{/unless}}
 
 {{/if}}
 {{#if subscription.isExpired}}

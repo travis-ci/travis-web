@@ -108,6 +108,8 @@ test('view billing information with invoices', function (assert) {
     assert.equal(profilePage.billing.plan.name, 'Small Business Plan');
     assert.equal(profilePage.billing.plan.concurrency, '5 concurrent jobs');
 
+    assert.ok(profilePage.billing.informationSection.isVisible),
+
     assert.equal(profilePage.billing.address.text, 'User Name Travis CI GmbH Rigaerstraße 8 Address 2 Berlin, Berlin 10987 Germany VAT: 12345');
     assert.equal(profilePage.billing.source, 'This plan is paid through Stripe.');
     assert.equal(profilePage.billing.creditCardNumber.text, '•••• •••• •••• 1919');
@@ -123,6 +125,19 @@ test('view billing information with invoices', function (assert) {
     });
 
     assert.equal(profilePage.billing.invoices.items[0].text, '2010 February 2010');
+  });
+});
+
+test('view billing with a free plan', function (assert) {
+  let plan = server.create('plan', { id: 'free-plan', name: 'AM', builds: 1, price: 6900, currency: 'USD' });
+  this.subscription.plan = plan;
+  this.subscription.save();
+
+  profilePage.visit();
+  profilePage.billing.visit();
+
+  andThen(() => {
+    assert.ok(profilePage.billing.informationSection.isHidden);
   });
 });
 
