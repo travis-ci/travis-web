@@ -1,0 +1,10 @@
+<form onsubmit={{action 'submit' }} class="travis-form">
+  {{yield (hash
+    validators=validators
+    hasErrors=hasErrors
+    isValid=isValid
+    submit=(action 'submit')
+    input=(component 'forms/form-field' form=this fieldComponentName='forms/form-input')
+    textarea=(component 'forms/form-field' form=this fieldComponentName='forms/form-textarea')
+  )}}
+</form>

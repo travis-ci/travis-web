@@ -1,0 +1,85 @@
+$none-status-color: $turf-green;
+$unknown-status-color: $cement-grey;
+$maintenance-status-color: $dozer-yellow;
+$degraded-status-color: $dozer-yellow;
+$minor-status-color: mix($brick-red, $dozer-yellow);
+$major-status-color: $brick-red;
+$default-status-color: $unknown-status-color;
+
+@mixin travis-status-color($color) {
+  color: $color;
+
+  .status-link {
+    border-color: $color;
+  }
+}
+
+.travis-status {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  color: $default-status-color;
+
+  &.none {
+    @include travis-status-color($none-status-color);
+  }
+
+  &.unknown {
+    @include travis-status-color($unknown-status-color);
+  }
+
+  &.maintenance {
+    @include travis-status-color($maintenance-status-color);
+  }
+
+  &.degraded {
+    @include travis-status-color($degraded-status-color);
+  }
+
+  &.minor {
+    @include travis-status-color($minor-status-color);
+  }
+
+  &.major {
+    @include travis-status-color($major-status-color);
+  }
+
+  &.colorize-text {
+    .status-link {
+      color: inherit;
+    }
+  }
+
+  .status-circle {
+    font-size: 1.8em;
+    line-height: 0;
+    position: relative;
+    top: -1px;
+    margin-right: 2px;
+  }
+
+  .status-link {
+    border-width: 0;
+    white-space: nowrap;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .status-description {
+    display: none;
+
+    @media #{$medium-up} {
+      &.status-description--visible {
+        display: inline;
+      }
+    }
+  }
+
+}
+
+.align-center .travis-status {
+  justify-content: center;
+}
+

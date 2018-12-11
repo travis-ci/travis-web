@@ -14,9 +14,9 @@ export default Component.extend({
   config,
 
   auth: service(),
+  router: service(),
   features: service(),
   externalLinks: service(),
-  helpScout: service(),
   user: alias('auth.currentUser'),
 
   userName: computed('user.{login,name}', function () {
@@ -60,9 +60,6 @@ export default Component.extend({
   }),
 
   actions: {
-    helpscoutTrigger() {
-      this.helpScout.openHelpScout();
-    },
 
     signIn() {
       return this.get('auth').signIn();
@@ -71,5 +68,14 @@ export default Component.extend({
     signOut() {
       return this.get('auth').signOut();
     },
-  },
+
+    goToHelp() {
+      if (this.router.currentRouteName !== 'help') {
+        const page = encodeURI(window.location.href);
+        this.router.transitionTo('help', { queryParams: { page } });
+      }
+    }
+
+  }
+
 });

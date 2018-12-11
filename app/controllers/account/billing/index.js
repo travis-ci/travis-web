@@ -1,5 +1,3 @@
-/* global HS */
-
 import Controller, { inject as controller } from '@ember/controller';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
@@ -15,34 +13,24 @@ export default Controller.extend({
   account: alias('accountController.model'),
 
   invoices: computed('model.subscriptions.id', function () {
-    let subscriptionId = this.get('model.subscriptions.id');
+    const subscriptionId = this.model.subscriptions.id;
     if (subscriptionId) {
-      return this.get('store').query('invoice', { subscription_id: subscriptionId });
+      return this.store.query('invoice', { subscription_id: subscriptionId });
     } else {
       return [];
     }
   }),
 
   isEducation: computed('model', 'account', function () {
-    let model = this.get('model');
-    let account = this.get('account');
-    if (!model.subscriptions) {
-      return !model.subscriptions && account.education;
+    if (!this.model.subscriptions) {
+      return !this.model.subscriptions && this.account.education;
     }
   }),
 
   isTrial: computed('model', 'account', function () {
-    let model = this.get('model');
-    let account = this.get('account');
-    if (!model.subscriptions) {
-      return !model.subscriptions && !account.education;
+    if (!this.model.subscriptions) {
+      return !this.model.subscriptions && !this.account.education;
     }
-  }),
+  })
 
-  actions: {
-    helpscoutTrigger() {
-      HS.beacon.open();
-      return false;
-    }
-  }
 });

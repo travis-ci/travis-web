@@ -1,0 +1,17 @@
+.layout-striped {
+
+  .layout-striped-section {
+
+    &.layout-striped-section--with-bg {
+      background-color: #fafafc;
+    }
+
+    .layout-striped-section__inner {
+      max-width: $max-width;
+      margin: 0 auto;
+      padding: $column-gutter/2;
+    }
+
+  }
+
+}
