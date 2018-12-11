@@ -66,7 +66,7 @@ export default Component.extend({
       if (query === '' || query === this.get('repositories.searchQuery')) { return; }
       this.set('repositories.searchQuery', query);
       this.get('repositories.showSearchResults').perform();
-    },
+    }
   },
 
   startedJobsCount: alias('runningJobs.length'),
