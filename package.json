@@ -73,7 +73,6 @@
     "ember-qunit": "^4.0.0",
     "ember-qunit-nice-errors": "1.2.0",
     "ember-resolver": "^5.0.1",
-    "ember-route-action-helper": "^2.0.3",
     "ember-sinon": "^3.0.0",
     "ember-source": "~3.5.1",
     "ember-svg-jar": "^1.2.1",

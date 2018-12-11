@@ -78,7 +78,7 @@
       <button
         title="Sign into Travis CI"
         class="hero-button"
-        {{action (route-action 'signIn' false)}}
+        {{action (action 'signIn' false target=auth)}}
         data-test-zendesk-form-log-in-button
       >
         {{svg-jar 'icon-repooctocat' }} Sign in with GitHub
