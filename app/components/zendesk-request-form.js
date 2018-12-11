@@ -9,9 +9,9 @@ import config from 'travis/config/environment';
 
 const { apiHost, createRequestEndpoint } = config.zendesk;
 
-const UTC_START_TIME = moment.utc({ h: 9, m: 0, s: 0 });
-const UTC_END_TIME = moment.utc({ h: 23, m: 0, s: 0 });
-const DATE_FORMAT = 'LT';
+export const UTC_START_TIME = moment.utc({ h: 9, m: 0, s: 0 });
+export const UTC_END_TIME = moment.utc({ h: 23, m: 0, s: 0 });
+export const DATE_FORMAT = 'LT';
 
 export default Component.extend({
   classNames: ['zendesk-request-form'],
@@ -46,12 +46,17 @@ export default Component.extend({
     const { subject, description: body } = this;
 
     try {
-      return yield $.post(`${apiHost}/${createRequestEndpoint}`, {
-        request: {
-          requester: { name, email },
-          subject,
-          comment: { body }
-        }
+      return yield $.ajax({
+        type: 'POST',
+        url: `${apiHost}${createRequestEndpoint}`,
+        data: JSON.stringify({
+          request: {
+            requester: { name, email },
+            subject,
+            comment: { body }
+          }
+        }),
+        contentType: 'application/json'
       });
     } catch (error) {
       if (error.readyState === 0) { // Network error

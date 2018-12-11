@@ -86,13 +86,13 @@ export default create({
       subject: {
         scope: ZENDESK_FORM_SUBJECT,
         isPresent: isPresent(),
-        fill: fillable()
+        fill: fillable('input')
       },
 
       description: {
         scope: ZENDESK_FORM_DESCRIPTION,
         isPresent: isPresent(),
-        fill: fillable()
+        fill: fillable('textarea')
       },
 
       submit: {
