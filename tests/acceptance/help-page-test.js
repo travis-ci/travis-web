@@ -93,9 +93,9 @@ module('Acceptance | help page', function (hooks) {
       };
 
       hooks.beforeEach(function () {
-        this.handler = (request) => JSON.parse(request.requestBody);
+        this.requestHandler = (request) => JSON.parse(request.requestBody);
         server.post(`${apiHost}${createRequestEndpoint}`, (schema, request) => {
-          return this.handler(request);
+          return this.requestHandler(request);
         });
       });
 
@@ -111,6 +111,41 @@ module('Acceptance | help page', function (hooks) {
         assert.ok(successHeader.isPresent);
         assert.ok(successImage.isPresent);
         assert.ok(successMessage.isPresent);
+      });
+
+      test('contains all necessary data', async function (assert) {
+        const { subject, description, submit } = helpPage.supportSection.form;
+        let data = {};
+
+        this.requestHandler = (request) => {
+          data = JSON.parse(request.requestBody).request;
+          return data;
+        };
+
+        await subject.fill(mockData.subject);
+        await description.fill(mockData.description);
+        await submit.click();
+        await settled();
+
+        assert.equal(data.requester.email, this.user.email);
+        assert.equal(data.requester.name, this.user.name);
+        assert.equal(data.subject, mockData.subject);
+        assert.ok(~data.comment.body.indexOf(mockData.description));
+      });
+
+      test('doesn\'t get sent if form is invalid', async function (assert) {
+        const { submit } = helpPage.supportSection.form;
+        let requestIsSent = false;
+
+        this.requestHandler = (request) => {
+          requestIsSent = true;
+          return JSON.parse(request.requestBody);
+        };
+
+        await submit.click();
+        await settled();
+
+        assert.equal(requestIsSent, false);
       });
     });
   });
