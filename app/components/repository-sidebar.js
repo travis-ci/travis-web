@@ -67,10 +67,6 @@ export default Component.extend({
       this.set('repositories.searchQuery', query);
       this.get('repositories.showSearchResults').perform();
     },
-
-    viewSearchResults(query) {
-      this.router.transitionTo('search', query);
-    },
   },
 
   startedJobsCount: alias('runningJobs.length'),
