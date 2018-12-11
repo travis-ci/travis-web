@@ -59,14 +59,22 @@ export default Component.extend({
 
     showMyRepositories: function () {
       this.set('tabStates.sidebarTab', 'owned');
-      this.attrs.showRepositories();
+      this.actions.showRepositories();
     },
 
     onQueryChange(query) {
       if (query === '' || query === this.get('repositories.searchQuery')) { return; }
       this.set('repositories.searchQuery', query);
       this.get('repositories.showSearchResults').perform();
-    }
+    },
+
+    showRepositories() {
+      this.router.transitionTo('index');
+    },
+
+    viewSearchResults(query) {
+      this.router.transitionTo('search', query);
+    },
   },
 
   startedJobsCount: alias('runningJobs.length'),
