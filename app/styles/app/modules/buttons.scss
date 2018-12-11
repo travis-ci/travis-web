@@ -1,6 +1,6 @@
 %button {
   display: inline-block;
-  padding: 0.7em 0.8rem 0.6em;
+  padding: 0.7em 0.8rem;
   cursor: pointer;
   white-space: nowrap;
   border-radius: 2px;
@@ -183,6 +183,12 @@
 
 .button--compact {
   padding: 3px 7px;
+}
+
+.button--large {
+  font-size: 1.2em;
+  padding: 18px 30px;
+  border-radius: 3px;
 }
 
 .inactive {

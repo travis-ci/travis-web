@@ -1,0 +1,110 @@
+.help-page {
+
+  .help-page__top {
+    margin-bottom: 30px;
+
+    .header-main {
+      margin: 30px 0 35px;
+    }
+
+    .subheading {
+      margin-bottom: 30px;
+    }
+
+    .status {
+      font-size: 1.8rem;
+      font-weight: 100;
+
+      .status-link {
+        &:hover {
+          text-decoration: none;
+          color: inherit;
+          border-color: inherit;
+        }
+      }
+    }
+
+    a {
+      display: inline-block;
+      border-bottom: 1px solid #dcdcdc;
+      white-space: nowrap;
+
+      &:hover {
+        color: $asphalt-grey;
+        border-color: $asphalt-grey;
+      }
+    }
+
+  }
+
+  .help-page__support {
+    padding-top: 20px;
+
+    .header-main {
+      margin: 20px 0 10px;
+    }
+
+    .subheading {
+      margin-bottom: 10px;
+    }
+
+    .sign-in {
+      margin-bottom: 50px;
+
+      button {
+        font-weight: 300;
+      }
+
+      svg {
+        fill: white;
+      }
+    }
+
+    .sign-in-image {
+      margin: 30px 0 60px;
+    }
+
+    .success-image {
+      margin: 30px 0 40px;
+    }
+
+    .zendesk-request-form {
+
+      .travis-form {
+
+        max-width: 730px;
+        margin: 50px auto 0;
+
+        .travis-form__field {
+          margin-bottom: 10px;
+        }
+
+      }
+
+      .submit-button {
+        margin-top: 20px;
+        min-width: 160px;
+        outline: none;
+      }
+
+    }
+
+    .back-link {
+      margin-top: 30px;
+
+      a {
+        font-size: 1.1em;
+      }
+    }
+
+  }
+
+  .section-divider {
+    margin: 0 auto;
+    width: 140px;
+    height: 4px;
+    border-radius: 4px;
+    background-color: $dry-cement;
+  }
+
+}
