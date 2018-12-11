@@ -288,6 +288,8 @@
 }
 
 .num-loaded {
+  position: relative;
+  bottom: 1px;
   color: $oxide-blue;
 }
 
@@ -395,4 +397,32 @@
   100% {
     opacity: 0;
   }
+}
+
+
+.loading-line-container {
+  height: 10px;
+  background-color: #F1F1F1;
+  width: 75px;
+  display: inline-block;
+}
+.loading-line {
+  position: relative;
+  bottom: 7.5px;
+  display: inline-block;
+  height:0px;
+  width:1px;
+  border-bottom:10px solid #3EAAAF;
+
+  -webkit-animation: increase .5s;
+  -moz-animation:    increase .5s;
+  -o-animation:      increase .5s;
+  animation:         increase .5s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes increase {
+    100% {
+        width: 75px;
+    }
 }

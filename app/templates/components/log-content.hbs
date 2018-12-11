@@ -17,14 +17,12 @@
     <div class="job-stages">
       <span class="loading-num loading-ring-1"><span id="num1" class="num-waiting">1</span></span>
       <span class="stage-message">Job Received</span>
-      <span class="loading-line-1 loading-line"></span>
+      <span class="loading-line-1 loading-line-container"><span id="loading-line-1"></span></span>
       <span class="loading-num loading-ring-2"><span id="num2" class="num-waiting">2</span></span>
       <span class="stage-message">Waiting for concurrency</span>
-      <span class="loading-line-2 loading-line"></span>
+      <span class="loading-line-2 loading-line-container"><span id="loading-line-2"></span></span>
       <span class="loading-num loading-ring-3"><span id="num3" class="num-waiting">3</span></span>
       <span class="stage-message">Booting</span>
-      <span class="loading-line-3 loading-line"></span>
-      <span class="loading-ring-4 waiting-checkmark-gray">{{svg-jar 'waiting-checkmark'}}</span>
     </div>
     <div class="pre-log">
       <span>Booting Done!</span>
