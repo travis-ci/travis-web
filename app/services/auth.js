@@ -285,4 +285,10 @@ export default Service.extend({
   }),
 
   permissions: alias('currentUser.permissions'),
+
+  actions: {
+    signOut() {
+      this.signOut();
+    }
+  }
 });

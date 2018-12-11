@@ -25,6 +25,6 @@
   <div class='wrapper centered'>
     {{component landingPage
       signIn=(route-action 'signIn')
-      signOut=(route-action 'signOut')}}
+      signOut=(action 'signOut' target=auth)}}
   </div>
 {{/if}}
