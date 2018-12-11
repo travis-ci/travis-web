@@ -143,15 +143,6 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
         return true;
       }
     },
-
-    showRepositories() {
-      this.transitionTo('index');
-    },
-
-    viewSearchResults(query) {
-      this.transitionTo('search', query);
-    }
-
   },
 
   afterSignIn() {
