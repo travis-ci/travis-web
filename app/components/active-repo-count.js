@@ -82,7 +82,7 @@ export default Component.extend({
 
   avgRepos: computed('aggregateData', function () {
     if (this.aggregateData) {
-      return Math.round(this.aggregateData.avgerage);
+      return Math.round(this.aggregateData.average);
     }
   }),
 
