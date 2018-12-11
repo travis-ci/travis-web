@@ -24,7 +24,7 @@
 {{else}}
   <div class='wrapper centered'>
     {{component landingPage
-      signIn=(route-action 'signIn')
+      signIn=(action 'signIn' target=auth)
       signOut=(action 'signOut' target=auth)}}
   </div>
 {{/if}}

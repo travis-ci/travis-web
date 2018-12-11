@@ -6,6 +6,7 @@ import { Promise as EmberPromise } from 'rsvp';
 import Service, { inject as service } from '@ember/service';
 import config from 'travis/config/environment';
 import { alias } from '@ember/object/computed';
+import { getOwner } from '@ember/application';
 
 import URLPolyfill from 'travis/utils/url';
 
@@ -287,6 +288,11 @@ export default Service.extend({
   permissions: alias('currentUser.permissions'),
 
   actions: {
+    signIn(runAfterSignIn) {
+      let applicationRoute = getOwner(this).lookup('route:application');
+      applicationRoute.send('signIn', runAfterSignIn);
+    },
+
     signOut() {
       this.signOut();
     }
