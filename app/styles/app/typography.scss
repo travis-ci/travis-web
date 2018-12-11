@@ -1,0 +1,29 @@
+// HEADERS
+
+.header-main {
+  font-weight: 100;
+  font-size: 3.7rem;
+  letter-spacing: -0.5px;
+  color: $oxide-blue;
+
+  strong {
+    font-weight: 400;
+  }
+}
+
+.subheading {
+  font-weight: 300;
+  font-size: 1.8rem;
+  letter-spacing: -0.5px;
+  color: $asphalt-grey;
+}
+
+// ALIGNMENT
+
+.align-center {
+  text-align: center;
+}
+
+.nowrap {
+  white-space: nowrap;
+}

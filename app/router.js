@@ -24,6 +24,7 @@ Router.map(function () {
   this.route('plans', { path: '/plans' });
   this.route('team', { path: '/about' });
   this.route('logo', { path: '/logo' });
+  this.route('help');
 
   this.route('account', function () {
     this.route('repositories');

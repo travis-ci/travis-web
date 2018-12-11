@@ -38,12 +38,24 @@
         {{/unless}}
       {{/if}}
 
-      {{#if deploymentVersion}}<li><span class='deployment-version'>{{deploymentVersion}}</span></li>{{/if}}
-      {{else}}
-        {{#if auth.signedIn}}
-          <li><a class="navigation-anchor" title="Documentation" href="{{ config.urls.docs }}">Docs</a></li>
-        {{/if}}
+      <li>
+        <a class="navigation-anchor pointer" title="Help" {{action 'goToHelp'}}>
+          Help
+        </a>
+      </li>
+
+      {{#if deploymentVersion}}
+        <li><span class='deployment-version'>{{deploymentVersion}}</span></li>
+      {{/if}}
+
+    {{else}}
+
+      {{#if auth.signedIn}}
+        <li><a class="navigation-anchor" title="Documentation" href="{{ config.urls.docs }}">Docs</a></li>
+      {{/if}}
+
     {{/unless}}
+
     <li id="profile-menu-link" class="{{classProfile}}">
       {{#if auth.signedOut}}
         <button class="auth-button signed-out" type="button" {{action 'signIn'}}>Sign in with GitHub</button>
@@ -68,23 +80,12 @@
             </li>
            {{/link-to}}
           <div class="nav-nested"></div>
-          {{#if features.proVersion}}
-            <div class="nav-nested"></div>
-            <a href="{{ config.urls.support }}" title="Email the support team" class="topbar-menu-item" {{action 'helpscoutTrigger'}}>
-              <li>
-                {{svg-jar 'icon-encircled-help' class="icon"}}
-                Help
-              </li>
-            </a>
-            <div class="nav-nested"></div>
-          {{/if}}
-            <div class="nav-nested"></div>
-            <a data-test-signout-link href="/" title="Sign out of Travis CI" class="topbar-menu-item" {{action 'signOut'}}>
-              <li>
-                {{svg-jar 'icon-sign-out' class="icon"}}
-                Sign Out
-              </li>
-            </a>
+          <a data-test-signout-link href="/" title="Sign out of Travis CI" class="topbar-menu-item" {{action 'signOut'}}>
+            <li>
+              {{svg-jar 'icon-sign-out' class="icon"}}
+              Sign Out
+            </li>
+          </a>
         </ul>
       {{/if}}
     </li>
