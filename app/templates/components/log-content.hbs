@@ -1,23 +1,34 @@
 <section id="log-container" class="log">
-
-  <!-- {{#if job.notStarted}}
+    <!-- {{#if job.notStarted}}
     <div class="log-notice">Hang tight, the log cannot be shown until the job has started.</div>
   {{/if}} -->
 
   <!-- For queued and received states-->
   <!-- Booting state in Travis is recevied state in Travis Web -->
+  <section style='background: rgba(255,255,255,0.6); margin-bottom: 20px;'>
+    Job state:
+    <button style='border: 2px solid #3EAAAF; cursor: pointer; margin-right: 10px;' onclick={{action (mut job.state) 'created'}}>Created(1)</button>
+    <button style='border: 2px solid #3EAAAF; cursor: pointer; margin-right: 10px;' onclick={{action (mut job.state) 'queued'}}>Queued(2)</button>
+    <button style='border: 2px solid #3EAAAF; cursor: pointer; margin-right: 10px;' onclick={{action (mut job.state) 'received'}}>Received(3)</button>
+    <button style='border: 2px solid #3EAAAF; cursor: pointer; margin-right: 10px;' onclick={{action (mut job.state) 'started'}}>Started(Show log)</button>
+  </section>
   {{#if job.notStarted}}
   <div class="job-waiting-container">
-    <span class="spinner"><span id="num1">1</span></span>
-    <span class="stage-message">Job Received</span>
-    <span class="loading-line-1 loading-line"></span>
-    <span class="loading-ring-2 spinner"><span id="num2">2</span></span>
-    <span class="stage-message">Waiting for concurrency</span>
-    <span class="loading-line-2 loading-line"></span>
-    <span class="loading-ring-3 spinner"><span id="num3">3</span></span>
-    <span class="stage-message">Booting</span>
-    <span class="loading-line-3 loading-line"></span>
-    <span class="loading-ring-4"></span>
+    <div class="job-stages">
+      <span class="loading-num loading-ring-1"><span id="num1" class="num-waiting">1</span></span>
+      <span class="stage-message">Job Received</span>
+      <span class="loading-line-1 loading-line"></span>
+      <span class="loading-num loading-ring-2"><span id="num2" class="num-waiting">2</span></span>
+      <span class="stage-message">Waiting for concurrency</span>
+      <span class="loading-line-2 loading-line"></span>
+      <span class="loading-num loading-ring-3"><span id="num3" class="num-waiting">3</span></span>
+      <span class="stage-message">Booting</span>
+      <span class="loading-line-3 loading-line"></span>
+      <span class="loading-ring-4 waiting-checkmark-gray">{{svg-jar 'waiting-checkmark'}}</span>
+    </div>
+    <div class="pre-log">
+      <span>Booting Done!</span>
+    </div>
   </div>
   {{/if}}
 

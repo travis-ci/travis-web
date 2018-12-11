@@ -241,7 +241,7 @@
   line-height: 1.5;
 }
 
-.job-waiting-container {
+.job-stages {
   height: 100px;
   border: 2px solid #f1f1f1;
   font-size: 16px;
@@ -253,6 +253,11 @@
   .stage-message {
     font-size: 14px;
   }
+}
+.loading-num {
+  width: 30px;
+  text-align: center;
+  color: $pebble-grey;
 }
 .loading-ring {
   width: 30px;
@@ -276,25 +281,14 @@
   border-bottom: 5px solid #f1f1f1;
 }
 
-#num1 {
+.num-loading {
   position: relative;
-  bottom: 2px;
-  right: 4px;
+  bottom: 20px;
   color: $pebble-grey;
 }
 
-#num2 {
-  position: relative;
-  bottom: 2px;
-  right: 4px;
-  color: $pebble-grey;
-}
-
-#num3 {
-  position: relative;
-  bottom: 2px;
-  right: 4px;
-  color: $pebble-grey;
+.num-loaded {
+  color: $oxide-blue;
 }
 
 @keyframes spinner {
@@ -306,12 +300,9 @@
   display: inline-block;
   box-sizing: border-box;
   position: relative;
-  top: 8px;
-  left: 50%;
   width: 30px;
   height: 30px;
-  margin-top: -10px;
-  margin-left: -10px;
+  top: 12px;
   border-radius: 50%;
   border-top: 2px solid #3EAAAF;
   border-right: 2px solid transparent;
@@ -319,7 +310,7 @@
   animation: spinner 1s linear infinite;
 }
 
-.loading-line {
+.loading-line-load {
   display: inline-block;
   height:0px;
   width:1px;
@@ -336,4 +327,72 @@
     100% {
         width: 50px;
     }
+}
+
+.waiting-checkmark-gray {
+  display: inline-block;
+  width: 30px;
+}
+
+
+.waiting-checkmark {
+  display: inline-block;
+  width: 30px;
+
+  svg {
+    circle {
+      stroke: $oxide-blue;
+    }
+    path {
+      stroke: $oxide-blue;
+    }
+  }
+}
+
+.path {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 0;
+  animation: dash 1s ease-in-out;
+  -webkit-animation: dash 1s ease-in-out;
+}
+
+@-webkit-keyframes dash {
+ 0% {
+   stroke-dashoffset: 1000;
+ }
+ 100% {
+   stroke-dashoffset: 0;
+ }
+}
+
+@keyframes dash {
+ 0% {
+   stroke-dashoffset: 1000;
+ }
+ 100% {
+   stroke-dashoffset: 0;
+ }
+}
+
+.pre-log {
+  display: none;
+}
+
+.fade-it {
+  animation-name: fadeInOut;
+  animation-duration: 2s;
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 0;
+  }
 }
