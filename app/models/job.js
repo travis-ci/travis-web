@@ -16,7 +16,6 @@ import { alias, and, not, reads } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import promiseObject from 'travis/utils/promise-object';
 import moment from 'moment';
-import $ from 'jquery';
 
 export default Model.extend(DurationCalculations, DurationAttributes, {
   api: service(),
@@ -83,6 +82,24 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
     let state = this.get('state');
     let finishedStates = ['passed', 'failed', 'errored', 'canceled'];
     return finishedStates.includes(state);
+  }),
+
+  created: computed('state', function () {
+    let state = this.get('state');
+    let waitingState = 'created';
+    return isEqual(state, waitingState);
+  }),
+
+  queued: computed('state', function () {
+    let state = this.get('state');
+    let waitingState = 'queued';
+    return isEqual(state, waitingState);
+  }),
+
+  received: computed('state', function () {
+    let state = this.get('state');
+    let waitingState = 'received';
+    return isEqual(state, waitingState);
   }),
 
   toBeQueued: computed('state', function () {
@@ -214,50 +231,6 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
   },
 
   onStateChange: observer('state', function () {
-    let currentState = this.get('state');
-    if (currentState === 'created') {
-      $('span.loading-ring-1').ready(() => {
-        $('.loading-ring-1').addClass('spinner');
-        $('#num1').addClass('num-loading');
-      });
-    }
-
-    if (currentState === 'queued') {
-      $('.loading-ring-1').removeClass('spinner');
-      $('.loading-ring-1').addClass('loading-ring');
-      $('#num1').removeClass('num-loading');
-      $('#num1').addClass('num-loaded');
-      $('#loading-line-1').addClass('loading-line');
-      $('span.loading-ring-2').addClass('spinner');
-      $('#num2').addClass('num-loading');
-    }
-
-    if (currentState === 'received') {
-      $('span.loading-ring-3').ready(() => {
-        $('.loading-ring-1').removeClass('spinner');
-        $('.loading-ring-1').addClass('loading-ring');
-        $('#loading-line-1').addClass('loading-line');
-        $('.loading-ring-2').removeClass('spinner');
-        $('.loading-ring-2').addClass('loading-ring');
-        $('#loading-line-2').addClass('loading-line');
-        $('#num1').removeClass('num-loading');
-        $('#num1').addClass('num-loaded');
-        $('.loading-ring-2').removeClass('spinner');
-        $('.loading-ring-2').addClass('loading-ring');
-        $('#num2').removeClass('num-loading');
-        $('#num2').addClass('num-loaded');
-        $('.loading-ring-3').addClass('spinner');
-        $('#num3').addClass('num-loading');
-      });
-    }
-
-    if (currentState === 'started') {
-      $('.loading-ring-3').removeClass('spinner');
-      $('.loading-ring-3').addClass('loading-ring');
-      $('.loading-line-3').css('border-bottom-color', '#3EAAAF');
-      $('.loading-line-4').removeClass('waiting-checkmark-gray');
-      $('.loading-line-4').addClass('waiting-checkmark');
-    }
     if (this.get('state') === 'finished' && Travis.pusher) {
       return this.unsubscribe();
     }

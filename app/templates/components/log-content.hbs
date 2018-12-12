@@ -15,13 +15,13 @@
   {{#if job.notStarted}}
   <div class="job-waiting-container">
     <div class="job-stages">
-      <span class="loading-num loading-ring-1"><span id="num1" class="num-waiting">1</span></span>
+      <span class="loading-num {{if job.created 'spinner'}} {{if job.toBeStarted 'loading-ring'}}"><span id="num1" class="{{if job.created 'num-loading'}} {{if job.toBeStarted 'num-loaded'}}">1</span></span>
       <span class="stage-message">Job Received</span>
-      <span class="loading-line-1 loading-line-container"><span id="loading-line-1"></span></span>
-      <span class="loading-num loading-ring-2"><span id="num2" class="num-waiting">2</span></span>
+      <span class="loading-line-container"><span id="loading-line-1" class="{{if job.toBeStarted 'loading-line'}}"></span></span>
+      <span class="loading-num {{if job.queued 'spinner'}} {{if job.received 'loading-ring'}}"><span id="num2" class="{{if job.queued 'num-loading'}} {{if job.received 'num-loaded'}}">2</span></span>
       <span class="stage-message">Waiting for concurrency</span>
-      <span class="loading-line-2 loading-line-container"><span id="loading-line-2"></span></span>
-      <span class="loading-num loading-ring-3"><span id="num3" class="num-waiting">3</span></span>
+      <span class="loading-line-container"><span id="loading-line-2" class="{{if job.received 'loading-line'}}"></span></span>
+      <span class="loading-num {{if job.received 'spinner'}} {{if job.started 'loading-ring'}}"><span id="num3" class="{{if job.received 'num-loading'}} {{if job.started 'num-loaded'}}">3</span></span>
       <span class="stage-message">Booting</span>
     </div>
     <div class="pre-log">
