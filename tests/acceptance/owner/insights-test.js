@@ -17,6 +17,7 @@ moduleForAcceptance('Acceptance | owner insights', {
 
 test('the owner insights page shows insights components', (assert) => {
   let metricData = server.createList('insight-metric', 5);
+
   let metricTotal = metricData.reduce((acc, metric) => acc + metric.value, 0);
   let metricMinutes = (metricData.reduce((acc, metric) => acc + Math.round(metric.value / 60), 0));
   let queueTotal = (metricData.reduce((acc, metric) => acc + (Math.round((metric.value / 60) * 100) / 100), 0));

@@ -32,8 +32,6 @@ const defaultIntervalSettings = {
 
 const defaultOptions = {
   intervalSettings: {},
-  startInterval: -1,
-  endInterval: 0,
   calcTotal: false,
   calcAvg: false,
 };
@@ -55,6 +53,16 @@ export default Service.extend({
     return $.extend(true, {}, defaultIntervalSettings, customIntervalSettings);
   },
 
+  getDatesFromInterval(interval, startInterval, endInterval = 0) {
+    // Have startInterval default to 1 less than endInterval
+    startInterval = typeof startInterval !== 'number' ? endInterval - 1 : startInterval;
+
+    return [
+      moment.utc().add(startInterval, interval),
+      moment.utc().add(endInterval, interval)
+    ];
+  },
+
   getMetric(owner,
     interval,
     subject,
@@ -67,8 +75,11 @@ export default Service.extend({
     currentOptions.transformer = currentOptions.transformer || func;
     const intervalSettings = this.getIntervalSettings(currentOptions.intervalSettings);
 
-    const startTime = moment.utc().add(currentOptions.startInterval, interval);
-    const endTime = moment.utc().add(currentOptions.endInterval, interval);
+    const [startTime, endTime] = this.getDatesFromInterval(
+      interval,
+      currentOptions.startInterval,
+      currentOptions.endInterval
+    );
 
     const apiSettings = {
       stringifyData: false,

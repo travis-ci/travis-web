@@ -117,7 +117,7 @@ export default Component.extend({
       'builds',
       'sum',
       ['count_started'],
-      { startInterval: -2, endInterval: -1, calcTotal: true, calcAvg: true }
+      { endInterval: -1, calcTotal: true, calcAvg: true }
     );
   }),
 
