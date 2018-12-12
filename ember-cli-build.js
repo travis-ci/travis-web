@@ -36,10 +36,6 @@ module.exports = function () {
     'ember-cli-babel': {
       includePolyfill: true,
     },
-    babel: {
-      // FIXME this is causing builds to fail… is it still needed?
-      // blacklist: ['regenerator'],
-    },
     fingerprint: fingerprint,
     sourcemaps: {
       enabled: true,
