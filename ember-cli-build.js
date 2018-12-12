@@ -37,7 +37,8 @@ module.exports = function () {
       includePolyfill: true,
     },
     babel: {
-      blacklist: ['regenerator'],
+      // FIXME this is causing builds to fail… is it still needed?
+      // blacklist: ['regenerator'],
     },
     fingerprint: fingerprint,
     sourcemaps: {
