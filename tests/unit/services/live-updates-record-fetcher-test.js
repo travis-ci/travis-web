@@ -1,23 +1,29 @@
 import Service from '@ember/service';
 import { moduleFor, test } from 'ember-qunit';
-import sinon from 'sinon';
 
 moduleFor('service:live-updates-record-fetcher', 'Unit | Service | live updates record fetcher', {
   needs: [],
   beforeEach() {
+    this.calls = {
+      queryRecord: [],
+      findRecord: []
+    };
+    let calls = this.calls;
+
     this.register('service:store', Service.extend({
-      queryRecord() {},
-      findRecord() {},
+      queryRecord() {
+        calls.queryRecord.push([...arguments]);
+      },
+      findRecord() {
+        calls.findRecord.push([...arguments]);
+      },
     }));
   }
 });
 
 test('it fetches single job records when requests can not be grouped', function (assert) {
   let service = this.subject({ interval: 5 }),
-    store = service.get('store'),
-    done  = assert.async(),
-    findRecordSpy = sinon.spy(store, 'findRecord'),
-    queryRecordSpy = sinon.spy(store, 'queryRecord');
+    done = assert.async();
 
   service.fetch('job', 1, { build_id: 1 });
   service.fetch('job', 2, { build_id: 2 });
@@ -25,19 +31,16 @@ test('it fetches single job records when requests can not be grouped', function 
   setTimeout(() => {
     done();
 
-    assert.equal(0, queryRecordSpy.getCalls().length, 'queryRecord should not have been called');
-    assert.equal(2, findRecordSpy.getCalls().length, 'findRecord should have been called 2 times');
-    assert.deepEqual(['job', 1, { reload: true }], findRecordSpy.getCall(0).args);
-    assert.deepEqual(['job', 2, { reload: true }], findRecordSpy.getCall(1).args);
+    assert.equal(0, this.calls.queryRecord.length, 'queryRecord should not have been called');
+    assert.equal(2, this.calls.findRecord.length, 'findRecord should have been called 2 times');
+    assert.deepEqual(['job', 1, { reload: true }], this.calls.findRecord[0]);
+    assert.deepEqual(['job', 2, { reload: true }], this.calls.findRecord[1]);
   }, 10);
 });
 
 test('it fetches build records and not job records when builds need to be fetched anyway', function (assert) {
   let service = this.subject({ interval: 5 }),
-    store = service.get('store'),
-    done  = assert.async(),
-    findRecordSpy = sinon.spy(store, 'findRecord'),
-    queryRecordSpy = sinon.spy(store, 'queryRecord');
+    done = assert.async();
 
   service.fetch('job', 1, { build_id: 1 });
   service.fetch('build', 1);
@@ -46,19 +49,16 @@ test('it fetches build records and not job records when builds need to be fetche
   setTimeout(() => {
     done();
 
-    assert.equal(1, queryRecordSpy.getCalls().length, 'queryRecord should have been called 1 time');
-    assert.equal(1, findRecordSpy.getCalls().length, 'findRecord should have been called 1 time');
-    assert.deepEqual(['job', 2, { reload: true }], findRecordSpy.getCall(0).args);
-    assert.deepEqual(['build', { id: 1, include: 'build.jobs' }], queryRecordSpy.getCall(0).args);
+    assert.equal(1, this.calls.queryRecord.length, 'queryRecord should have been called 1 time');
+    assert.equal(1, this.calls.findRecord.length, 'findRecord should have been called 1 time');
+    assert.deepEqual(['job', 2, { reload: true }], this.calls.findRecord[0]);
+    assert.deepEqual(['build', { id: 1, include: 'build.jobs' }], this.calls.queryRecord[0]);
   }, 10);
 });
 
 test('it groups job records when there are at leat 2 for one build', function (assert) {
   let service = this.subject({ interval: 5 }),
-    store = service.get('store'),
-    done  = assert.async(),
-    findRecordSpy = sinon.spy(store, 'findRecord'),
-    queryRecordSpy = sinon.spy(store, 'queryRecord');
+    done = assert.async();
 
   service.fetch('job', 1, { build_id: 1 });
   service.fetch('job', 2, { build_id: 1 });
@@ -66,18 +66,15 @@ test('it groups job records when there are at leat 2 for one build', function (a
   setTimeout(() => {
     done();
 
-    assert.equal(1, queryRecordSpy.getCalls().length, 'queryRecord should have been called 1 time');
-    assert.equal(0, findRecordSpy.getCalls().length, 'findRecord should not have been called');
-    assert.deepEqual(['build', { id: 1, include: 'build.jobs' }], queryRecordSpy.getCall(0).args);
+    assert.equal(1, this.calls.queryRecord.length, 'queryRecord should have been called 1 time');
+    assert.equal(0, this.calls.findRecord.length, 'findRecord should not have been called');
+    assert.deepEqual(['build', { id: 1, include: 'build.jobs' }], this.calls.queryRecord[0]);
   }, 10);
 });
 
 test('it ignores duplicated calls', function (assert) {
   let service = this.subject({ interval: 5 }),
-    store = service.get('store'),
-    done  = assert.async(),
-    findRecordSpy = sinon.spy(store, 'findRecord'),
-    queryRecordSpy = sinon.spy(store, 'queryRecord');
+    done = assert.async();
 
   service.fetch('build', 1);
   service.fetch('build', 1);
@@ -87,18 +84,15 @@ test('it ignores duplicated calls', function (assert) {
   setTimeout(() => {
     done();
 
-    assert.equal(0, queryRecordSpy.getCalls().length, 'queryRecord should not have been called');
-    assert.equal(1, findRecordSpy.getCalls().length, 'findRecord should have been called 1 time');
-    assert.deepEqual(['build', 1, { reload: true }], findRecordSpy.getCall(0).args);
+    assert.equal(0, this.calls.queryRecord.length, 'queryRecord should not have been called');
+    assert.equal(1, this.calls.findRecord.length, 'findRecord should have been called 1 time');
+    assert.deepEqual(['build', 1, { reload: true }], this.calls.findRecord[0]);
   }, 10);
 });
 
 test('it throttles with given interval', function (assert) {
-  let service = this.subject({ interval: 20 }),
-    store = service.get('store'),
-    done  = assert.async(),
-    findRecordSpy = sinon.spy(store, 'findRecord'),
-    queryRecordSpy = sinon.spy(store, 'queryRecord');
+  let service = this.subject({ interval: 5 }),
+    done = assert.async();
 
   service.fetch('build', 1);
 
@@ -108,9 +102,9 @@ test('it throttles with given interval', function (assert) {
     setTimeout(() => {
       done();
 
-      assert.equal(0, queryRecordSpy.getCalls().length, 'queryRecord should not have been called');
-      assert.equal(2, findRecordSpy.getCalls().length, 'findRecord should have been called 2 times');
-      assert.deepEqual(['build', 1, { reload: true }], findRecordSpy.getCall(0).args);
+      assert.equal(0, this.calls.queryRecord.length, 'queryRecord should not have been called');
+      assert.equal(2, this.calls.findRecord.length, 'findRecord should have been called 2 times');
+      assert.deepEqual(['build', 1, { reload: true }], this.calls.findRecord[0]);
     }, 30);
   }, 30);
 });
