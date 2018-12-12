@@ -22,7 +22,8 @@ moduleFor('service:live-updates-record-fetcher', 'Unit | Service | live updates 
 });
 
 test('it fetches single job records when requests can not be grouped', function (assert) {
-  let service = this.subject({ interval: 5 }), done  = assert.async();
+  let service = this.subject({ interval: 5 }),
+    done = assert.async();
 
   service.fetch('job', 1, { build_id: 1 });
   service.fetch('job', 2, { build_id: 2 });
@@ -38,7 +39,8 @@ test('it fetches single job records when requests can not be grouped', function 
 });
 
 test('it fetches build records and not job records when builds need to be fetched anyway', function (assert) {
-  let service = this.subject({ interval: 5 }), done  = assert.async();
+  let service = this.subject({ interval: 5 }),
+    done = assert.async();
 
   service.fetch('job', 1, { build_id: 1 });
   service.fetch('build', 1);
@@ -55,7 +57,8 @@ test('it fetches build records and not job records when builds need to be fetche
 });
 
 test('it groups job records when there are at leat 2 for one build', function (assert) {
-  let service = this.subject({ interval: 5 }), done  = assert.async();
+  let service = this.subject({ interval: 5 }),
+    done = assert.async();
 
   service.fetch('job', 1, { build_id: 1 });
   service.fetch('job', 2, { build_id: 1 });
@@ -70,7 +73,8 @@ test('it groups job records when there are at leat 2 for one build', function (a
 });
 
 test('it ignores duplicated calls', function (assert) {
-  let service = this.subject({ interval: 5 }), done  = assert.async();
+  let service = this.subject({ interval: 5 }),
+    done = assert.async();
 
   service.fetch('build', 1);
   service.fetch('build', 1);
@@ -87,7 +91,8 @@ test('it ignores duplicated calls', function (assert) {
 });
 
 test('it throttles with given interval', function (assert) {
-  let service = this.subject({ interval: 5 }), done  = assert.async();
+  let service = this.subject({ interval: 5 }),
+    done = assert.async();
 
   service.fetch('build', 1);
 
