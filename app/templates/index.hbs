@@ -16,9 +16,7 @@
     {{#if auth.signedIn}}
     {{#unless features.dashboard}}
       <aside id="left" class="{{unless auth.signedIn 'hidden'}}">
-        {{repository-sidebar
-          showRepositories=(route-action 'showRepositories')
-          viewSearchResults=(route-action 'viewSearchResults')}}
+        {{repository-sidebar}}
       </aside>
     {{/unless}}
     {{/if}}
@@ -26,7 +24,7 @@
 {{else}}
   <div class='wrapper centered'>
     {{component landingPage
-      signIn=(route-action 'signIn')
-      signOut=(route-action 'signOut')}}
+      signIn=(action 'signIn' target=auth)
+      signOut=(action 'signOut' target=auth)}}
   </div>
 {{/if}}

@@ -59,7 +59,7 @@ export default Component.extend({
 
     showMyRepositories: function () {
       this.set('tabStates.sidebarTab', 'owned');
-      this.attrs.showRepositories();
+      this.router.transitionTo('index');
     },
 
     onQueryChange(query) {
