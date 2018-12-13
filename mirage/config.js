@@ -595,8 +595,8 @@ export default function () {
     queryParams.name = queryParams.name.split(',');
     const owner = schema.users.find(queryParams.owner_id);
 
-    // const start = new Date(queryParams.start_time);
-    // const end = new Date(queryParams.end_time);
+    const start = new Date(queryParams.start_time);
+    const end = new Date(queryParams.end_time);
 
     if (owner) {
       const response = {
@@ -609,14 +609,13 @@ export default function () {
       if (queryParams.owner_id !== 2) {
         queryParams.name.map(name => {
           response.data.values = schema.insightMetrics
-            .all()
-            // .where(m => m.time > start && m.time < end)
+            // .all()
+            .where(m => m.time > start && m.time < end)
             .models
             // It's easier to generate dates in descending order,
             // but they're expected in ascending order, so reverse!
             .reverse()
             .map(metric => {
-              // console.log('TT', start, metric.time, end);
               return {
                 name,
                 interval: queryParams.interval,

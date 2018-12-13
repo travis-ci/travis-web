@@ -17,16 +17,14 @@ module('Integration | Component | build-minutes', function (hooks) {
       id: 1,
     });
 
-    // Right now just this one test uses this data. If more tests need it in the future, move to hooks.beforeEach
-    this.metricData = this.server.createList('insight-metric', 5);
-    this.metricTotal = (this.metricData.reduce((acc, metric) => acc + Math.round(metric.value / 60), 0));
+    this.server.createList('insight-metric', 5);
 
     await render(hbs`{{build-minutes interval=interval owner=ownerData}}`);
     await settled();
 
     assert.dom('.insights-glance').doesNotHaveClass('insights-glance--loading');
     assert.dom('.insights-glance__title').hasText('Total Build Minutes');
-    assert.dom('.insights-glance__stat').hasText(`${this.metricTotal} mins`);
+    assert.dom('.insights-glance__stat').hasText('2 mins');
     assert.dom('.insights-glance__chart .highcharts-wrapper').exists();
   });
 

@@ -3,12 +3,12 @@
   <div class="insights-glance__stat">{{avgWaitText}}</div>
   {{#if percentageChange}}
     <div
-      class="insights-glance__change-stat"
+      class="insights-glance-delta"
       data-dir="{{if (gte percentageChange 0) '+' '-'}}"
       title="{{percentChangeTitle}}"
     >
       {{svg-jar 'icon-dropdown-arrow' class="icon"}}
-      <span>{{percentageChangeText}}</span>
+      <span class="insights-glance-delta__stat">{{percentageChangeText}}</span>
     </div>
   {{/if}}
 </div>
