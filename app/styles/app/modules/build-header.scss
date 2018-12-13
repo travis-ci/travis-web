@@ -242,6 +242,9 @@
 }
 
 .job-waiting-stages-container {
+  @media #{$small-only} {
+    display: none;
+  }
   height: 100px;
   border: 2px solid #f1f1f1;
   font-size: 16px;
