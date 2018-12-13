@@ -152,6 +152,8 @@ test('view billing on an expired stripe plan', function (assert) {
     assert.equal(profilePage.billing.manageButton.text, 'Resubscribe');
     assert.equal(profilePage.billing.manageButton.href, 'https://billing.travis-ci.com/subscriptions/user');
 
+    assert.ok(profilePage.billing.newFreeSubscriptionButton.isVisible);
+
     assert.ok(profilePage.billing.marketplaceButton.isHidden);
     assert.ok(profilePage.billing.address.isHidden);
     assert.ok(profilePage.billing.creditCardNumber.isHidden);
@@ -169,6 +171,8 @@ test('view billing on a canceled stripe plan', function (assert) {
     assert.equal(profilePage.billing.expiryMessage.text, 'This subscription has been canceled by you and is valid through June 19, 2018.');
     assert.equal(profilePage.billing.manageButton.href, 'https://billing.travis-ci.com/subscriptions/user');
     assert.equal(profilePage.billing.manageButton.text, 'Resubscribe');
+
+    assert.ok(profilePage.billing.newFreeSubscriptionButton.isVisible);
 
     assert.ok(profilePage.billing.marketplaceButton.isHidden);
     assert.ok(profilePage.billing.address.isHidden);
