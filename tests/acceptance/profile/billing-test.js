@@ -193,6 +193,9 @@ test('view billing on a manual plan with no invoices', function (assert) {
     assert.equal(profilePage.billing.source, 'This is a manual subscription.');
     assert.ok(profilePage.billing.annualInvitation.isHidden);
 
+    // FIXME does this show…?
+    // assert.ok(profilePage.billing.newFreeSubscriptionButton.isVisible);
+
     assert.ok(profilePage.billing.invoices.isHidden);
   });
 });
@@ -245,6 +248,7 @@ test('view billing on an canceled marketplace plan', function (assert) {
     assert.equal(profilePage.billing.marketplaceButton.href, 'https://github.com/marketplace/travis-ci/');
     assert.equal(profilePage.billing.manageButton.text, 'New subscription');
     assert.equal(profilePage.billing.manageButton.href, 'https://billing.travis-ci.com/subscriptions/new?id=user');
+    assert.ok(profilePage.billing.newFreeSubscriptionButton.isVisible);
 
     assert.ok(profilePage.billing.address.isHidden);
     assert.ok(profilePage.billing.creditCardNumber.isHidden);
@@ -265,6 +269,7 @@ test('view billing on an expired marketplace plan', function (assert) {
     assert.equal(profilePage.billing.marketplaceButton.href, 'https://github.com/marketplace/travis-ci/');
     assert.equal(profilePage.billing.manageButton.text, 'New subscription');
     assert.equal(profilePage.billing.manageButton.href, 'https://billing.travis-ci.com/subscriptions/new?id=user');
+    assert.ok(profilePage.billing.newFreeSubscriptionButton.isVisible);
 
     assert.ok(profilePage.billing.address.isHidden);
     assert.ok(profilePage.billing.creditCardNumber.isHidden);
@@ -345,6 +350,8 @@ test('view billing tab when trial has not started', function (assert) {
     assert.equal(profilePage.billing.trial.name, 'Your trial includes 100 trial builds and 2-concurrent-jobs, no credit card required. Need help? Check our getting started guide.');
     assert.equal(profilePage.billing.trial.link.href, 'https://docs.travis-ci.com/user/getting-started/#to-get-started-with-travis-ci');
     assert.equal(profilePage.billing.manageButton.text, 'New subscription');
+
+    assert.ok(profilePage.billing.newFreeSubscriptionButton.isHidden, 'expected the free plan button to not show for an organisation');
   });
 });
 

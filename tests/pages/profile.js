@@ -171,6 +171,10 @@ export default create({
       isDisabled: hasClass('disabled'),
     },
 
+    newFreeSubscriptionButton: {
+      scope: '.new-free-subscription'
+    },
+
     marketplaceButton: {
       scope: '.marketplace-button',
       href: attribute('href')
