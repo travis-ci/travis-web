@@ -19,3 +19,31 @@
 {{#if invoices}}
   {{billing-invoices invoices=invoices}}
 {{/if}}
+
+<section style='position: fixed; top: 1em; right: 1em; background: rgba(255, 255, 255, 0.75)'>
+  <h3>Subscription properties</h3>
+
+  <h4>Status</h4>
+  <button onclick={{action 'overrideStatus' 'subscribed'}}>Subscribed</button><br>
+  <button onclick={{action 'overrideStatus' 'canceled'}}>Canceled</button><br>
+  <button onclick={{action 'overrideStatus' 'expired'}}>Expired</button><br>
+  <button onclick={{action 'overrideStatus' false}}>Not found</button><br>
+
+  {{#if subscription}}
+    <h4>Source</h4>
+    <button onclick={{action (mut subscription.source) 'stripe'}}>Stripe</button><br>
+    <button onclick={{action (mut subscription.source) 'manual'}}>Manual</button><br>
+    <button onclick={{action (mut subscription.source) 'github'}}>GitHub</button><br>
+
+    <h4>Plan</h4>
+    <button onclick={{action 'overrideToFree'}}>Free plan</button><br>
+    <button onclick={{action 'overrideToTwoBuilds'}}>travis-ci-two-builds</button><br>
+    <button onclick={{action (mut subscription.plan.annual) true}}>Annual</button><br>
+    <button onclick={{action (mut subscription.plan.annual) false}}>Not annual</button><br>
+
+    <h4>Permissions</h4>
+    <button onclick={{action (mut subscription.permissions) (hash write=true)}}>Write</button><br>
+    <button onclick={{action (mut subscription.permissions) (hash write=false)}}>No write</button><br>
+  {{/if}}
+
+</section>

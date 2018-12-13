@@ -26,5 +26,46 @@ export default Component.extend({
     } else {
       return [];
     }
-  })
+  }),
+
+  actions: {
+    // These are for debugging
+    overrideStatus(status) {
+      let subscription = this.get('subscription');
+
+      if (!subscription && status) {
+        subscription = this.store.createRecord('subscription', {
+          source: 'stripe',
+          plan: this.findOrCreatePlan('free-plan'),
+          permissions: {
+            write: true
+          }
+        });
+        this.set('account.subscription', subscription);
+      }
+
+      if (status) {
+        this.set('subscription.status', status);
+      } else {
+        this.set('account.subscription', undefined);
+      }
+    },
+
+    overrideToFree() {
+      this.set('subscription.plan', this.findOrCreatePlan('free-plan'));
+    },
+
+    overrideToTwoBuilds() {
+      this.set('subscription.plan', this.findOrCreatePlan('travis-ci-two-builds'));
+    },
+  },
+
+  findOrCreatePlan(id) {
+    return this.store.peekRecord('plan', id) ||
+      this.store.createRecord('plan', {
+        id,
+        builds: 1,
+        price: 1919
+      });
+  },
 });
