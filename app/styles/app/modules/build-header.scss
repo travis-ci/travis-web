@@ -267,6 +267,7 @@
   height: 30px;
   border-radius: 50%;
   position: relative;
+  bottom: 2px;
   background-color: transparent;
   border: 3px solid #3eaaaf;;
 
@@ -291,8 +292,6 @@
 }
 
 .num-loaded {
-  position: relative;
-  bottom: 1px;
   color: $oxide-blue;
 }
 
