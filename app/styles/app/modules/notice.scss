@@ -78,6 +78,11 @@
 
     display: flex;
     align-items: center;
+
+    &:hover {
+      color: $bg;
+      background-color: $color;
+    }
   }
 }
 
