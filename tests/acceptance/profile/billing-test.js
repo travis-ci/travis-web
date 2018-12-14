@@ -4,6 +4,8 @@ import profilePage from 'travis/tests/pages/profile';
 import topPage from 'travis/tests/pages/top';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 
+import { Response } from 'ember-cli-mirage';
+
 moduleForAcceptance('Acceptance | profile/billing', {
   beforeEach() {
     this.user = server.create('user', {
@@ -554,5 +556,24 @@ test('clicking the free subscription button creates a subscription and displays 
 
   andThen(() => {
     assert.equal(topPage.flashMessage.text, 'Success FIXME');
+    assert.ok(topPage.flashMessage.isSuccess);
+  });
+});
+
+test('a failure to create a free subscription displays an error message', function (assert) {
+  server.post('/FIXME', ({schema}) => {
+    return new Response(401, {}, {});
+  });
+
+  this.subscription.status = 'canceled';
+
+  profilePage.visit();
+  profilePage.billing.visit();
+
+  profilePage.billing.newFreeSubscriptionBanner.button.click();
+
+  andThen(() => {
+    assert.equal(topPage.flashMessage.text, 'Error FIXME');
+    assert.ok(topPage.flashMessage.isError);
   });
 });

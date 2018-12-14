@@ -9,6 +9,8 @@ export default Component.extend({
     createFreeSubscription() {
       this.ajax.postV3('/FIXME').then(() => {
         this.flashes.success('Success FIXME');
+      }).catch(() => {
+        this.flashes.error('Error FIXME');
       });
     }
   }
