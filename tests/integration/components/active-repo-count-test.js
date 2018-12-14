@@ -17,7 +17,7 @@ module('Integration | Component | active-repo-count', function (hooks) {
       id: 1,
     });
 
-    server.createList('insight-metric', 15);
+    server.createList('insight-metric', 1);
 
     await render(hbs`{{active-repo-count interval=interval owner=ownerData}}`);
     await settled();

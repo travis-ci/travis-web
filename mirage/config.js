@@ -606,14 +606,10 @@ export default function () {
       };
       response.data.values = [];
 
-      // Return nothing for owner 2 to test an owner
-      // that has no insights data
-      // Might not be necessary?
-      // if (queryParams.owner_id !== 2) {
       queryParams.name.map(name => {
         response.data.values = schema.insightMetrics
           // Filter by time period. Allows testing percent change widgets
-          .where(m => m.time > start && m.time < end)
+          .where(m => m.time >= start && m.time <= end)
           // It's easier to generate dates in descending order,
           // but they're expected in ascending order, so reverse!
           .models.reverse().map(metric => {
@@ -625,7 +621,6 @@ export default function () {
             };
           });
       });
-      // }
 
       return response;
     } else {
