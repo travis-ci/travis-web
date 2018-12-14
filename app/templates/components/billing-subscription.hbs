@@ -35,20 +35,22 @@
 {{/if}}
 {{#if subscription.isExpired}}
 
+  {{new-free-subscription-banner account=account}}
+
   <h2>Plan Overview</h2>
   <span data-test-expiry-message>
     You had a {{subscription.sourceWords}} subscription that expired on {{moment-format subscription.validTo 'MMMM D, YYYY'}}.
   </span>
-  {{new-free-subscription-button account=account}}
 
 {{/if}}
 {{#if subscription.isCanceled}}
+
+  {{new-free-subscription-banner account=account}}
 
   <h2>Plan Overview</h2>
   <span data-test-expiry-message>
     This subscription has been canceled by you and is valid through {{moment-format subscription.validTo 'MMMM D, YYYY'}}.
   </span>
-  {{new-free-subscription-button account=account}}
 
 {{/if}}
 {{#if subscription.isResubscribable}}

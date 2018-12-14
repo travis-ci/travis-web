@@ -152,7 +152,7 @@ test('view billing on an expired stripe plan', function (assert) {
     assert.equal(profilePage.billing.manageButton.text, 'Resubscribe');
     assert.equal(profilePage.billing.manageButton.href, 'https://billing.travis-ci.com/subscriptions/user');
 
-    assert.ok(profilePage.billing.newFreeSubscriptionButton.isVisible);
+    assert.ok(profilePage.billing.newFreeSubscriptionBanner.isVisible);
 
     assert.ok(profilePage.billing.marketplaceButton.isHidden);
     assert.ok(profilePage.billing.address.isHidden);
@@ -172,7 +172,7 @@ test('view billing on a canceled stripe plan', function (assert) {
     assert.equal(profilePage.billing.manageButton.href, 'https://billing.travis-ci.com/subscriptions/user');
     assert.equal(profilePage.billing.manageButton.text, 'Resubscribe');
 
-    assert.ok(profilePage.billing.newFreeSubscriptionButton.isVisible);
+    assert.ok(profilePage.billing.newFreeSubscriptionBanner.isVisible);
 
     assert.ok(profilePage.billing.marketplaceButton.isHidden);
     assert.ok(profilePage.billing.address.isHidden);
@@ -198,7 +198,7 @@ test('view billing on a manual plan with no invoices', function (assert) {
     assert.ok(profilePage.billing.annualInvitation.isHidden);
 
     // FIXME does this show…?
-    // assert.ok(profilePage.billing.newFreeSubscriptionButton.isVisible);
+    // assert.ok(profilePage.billing.newFreeSubscriptionBanner.isVisible);
 
     assert.ok(profilePage.billing.invoices.isHidden);
   });
@@ -252,7 +252,7 @@ test('view billing on an canceled marketplace plan', function (assert) {
     assert.equal(profilePage.billing.marketplaceButton.href, 'https://github.com/marketplace/travis-ci/');
     assert.equal(profilePage.billing.manageButton.text, 'New subscription');
     assert.equal(profilePage.billing.manageButton.href, 'https://billing.travis-ci.com/subscriptions/new?id=user');
-    assert.ok(profilePage.billing.newFreeSubscriptionButton.isVisible);
+    assert.ok(profilePage.billing.newFreeSubscriptionBanner.isVisible);
 
     assert.ok(profilePage.billing.address.isHidden);
     assert.ok(profilePage.billing.creditCardNumber.isHidden);
@@ -273,7 +273,7 @@ test('view billing on an expired marketplace plan', function (assert) {
     assert.equal(profilePage.billing.marketplaceButton.href, 'https://github.com/marketplace/travis-ci/');
     assert.equal(profilePage.billing.manageButton.text, 'New subscription');
     assert.equal(profilePage.billing.manageButton.href, 'https://billing.travis-ci.com/subscriptions/new?id=user');
-    assert.ok(profilePage.billing.newFreeSubscriptionButton.isVisible);
+    assert.ok(profilePage.billing.newFreeSubscriptionBanner.isVisible);
 
     assert.ok(profilePage.billing.address.isHidden);
     assert.ok(profilePage.billing.creditCardNumber.isHidden);
@@ -355,7 +355,7 @@ test('view billing tab when trial has not started', function (assert) {
     assert.equal(profilePage.billing.trial.link.href, 'https://docs.travis-ci.com/user/getting-started/#to-get-started-with-travis-ci');
     assert.equal(profilePage.billing.manageButton.text, 'New subscription');
 
-    assert.ok(profilePage.billing.newFreeSubscriptionButton.isHidden, 'expected the free plan button to not show for an organisation');
+    assert.ok(profilePage.billing.newFreeSubscriptionBanner.isHidden, 'expected the free plan button to not show for an organisation');
   });
 });
 

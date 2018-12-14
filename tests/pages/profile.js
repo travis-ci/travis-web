@@ -171,7 +171,7 @@ export default create({
       isDisabled: hasClass('disabled'),
     },
 
-    newFreeSubscriptionButton: {
+    newFreeSubscriptionBanner: {
       scope: '.new-free-subscription'
     },
 

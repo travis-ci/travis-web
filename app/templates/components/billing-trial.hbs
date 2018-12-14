@@ -1,3 +1,7 @@
+{{#unless subscription.isGithub}}
+  {{new-free-subscription-banner account=account}}
+{{/unless}}
+
 <h2>Plan Overview</h2>
 
 {{#if trial.hasActiveTrial}}
@@ -31,6 +35,5 @@
 {{else}}
 
   {{new-subscription-button trial=trial account=account}}
-  {{new-free-subscription-button account=account}}
 
 {{/if}}
