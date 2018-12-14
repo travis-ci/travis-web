@@ -606,25 +606,26 @@ export default function () {
       };
       response.data.values = [];
 
-      if (queryParams.owner_id !== 2) {
-        queryParams.name.map(name => {
-          response.data.values = schema.insightMetrics
-            // .all()
-            .where(m => m.time > start && m.time < end)
-            .models
-            // It's easier to generate dates in descending order,
-            // but they're expected in ascending order, so reverse!
-            .reverse()
-            .map(metric => {
-              return {
-                name,
-                interval: queryParams.interval,
-                time: `${metric.time.toISOString().split('.')[0].replace('T', ' ')} UTC`,
-                value: metric.value,
-              };
-            });
-        });
-      }
+      // Return nothing for owner 2 to test an owner
+      // that has no insights data
+      // Might not be necessary?
+      // if (queryParams.owner_id !== 2) {
+      queryParams.name.map(name => {
+        response.data.values = schema.insightMetrics
+          // Filter by time period. Allows testing percent change widgets
+          .where(m => m.time > start && m.time < end)
+          // It's easier to generate dates in descending order,
+          // but they're expected in ascending order, so reverse!
+          .models.reverse().map(metric => {
+            return {
+              name,
+              interval: queryParams.interval,
+              time: `${metric.time.toISOString().split('.')[0].replace('T', ' ')} UTC`,
+              value: metric.value,
+            };
+          });
+      });
+      // }
 
       return response;
     } else {
@@ -641,7 +642,7 @@ export default function () {
         '@representation': 'standard',
         'data': queryParams
       };
-      response.data.count = 75;
+      response.data.count = schema.insightMetrics.all().models.length > 0 ? 75 : 0;
 
       return response;
     } else {
