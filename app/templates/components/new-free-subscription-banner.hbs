@@ -2,9 +2,9 @@
   <section class='new-free-subscription'>
     {{#notice-banner}}
       Get a free 1-job subscription, no credit card required!
-      <a href='#' class='button'>
+      <button onclick={{action 'createFreeSubscription'}} class='button'>
         Do nothing
-      </a>
+      </button>
     {{/notice-banner}}
   </section>
 {{/if}}

@@ -1,6 +1,7 @@
 import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import profilePage from 'travis/tests/pages/profile';
+import topPage from 'travis/tests/pages/top';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 
 moduleForAcceptance('Acceptance | profile/billing', {
@@ -536,5 +537,22 @@ test('view billing tab on education account', function (assert) {
     percySnapshot(assert);
     assert.equal(profilePage.billing.education.name, 'This is an educational account and includes a single build plan. Need help? Check our getting started guide');
     assert.equal(profilePage.billing.manageButton.text, 'New subscription');
+  });
+});
+
+test('clicking the free subscription button creates a subscription and displays a flash message', function (assert) {
+  server.post('/FIXME', ({schema}) => {
+    return [];
+  });
+
+  this.subscription.status = 'canceled';
+
+  profilePage.visit();
+  profilePage.billing.visit();
+
+  profilePage.billing.newFreeSubscriptionBanner.button.click();
+
+  andThen(() => {
+    assert.equal(topPage.flashMessage.text, 'Success FIXME');
   });
 });

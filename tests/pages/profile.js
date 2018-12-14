@@ -172,7 +172,11 @@ export default create({
     },
 
     newFreeSubscriptionBanner: {
-      scope: '.new-free-subscription'
+      scope: '.new-free-subscription',
+
+      button: {
+        scope: '.button'
+      }
     },
 
     marketplaceButton: {
