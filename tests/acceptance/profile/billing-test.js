@@ -2,6 +2,7 @@ import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import profilePage from 'travis/tests/pages/profile';
 import signInUser from 'travis/tests/helpers/sign-in-user';
+import Service from '@ember/service';
 
 moduleForAcceptance('Acceptance | profile/billing', {
   beforeEach() {
@@ -511,4 +512,23 @@ test('view billing tab on education account', function (assert) {
     assert.equal(profilePage.billing.education.name, 'This is an educational account and includes a single build plan. Need help? Check our getting started guide');
     assert.equal(profilePage.billing.manageButton.text, 'New subscription');
   });
+});
+
+test('logs an exception when there is a subscription without a plan', function (assert) {
+  assert.expect(1);
+
+  this.subscription.plan = null;
+  this.subscription.save();
+
+  let mockSentry = Service.extend({
+    logException(error) {
+      assert.equal(error.message, 'User user-login has a subscription with no plan!');
+    },
+  });
+
+  const instance = this.application.__deprecatedInstance__;
+  const registry = instance.register ? instance : instance.registry;
+  registry.register('service:raven', mockSentry);
+
+  profilePage.visit();
 });

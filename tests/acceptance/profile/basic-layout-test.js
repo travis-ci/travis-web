@@ -260,25 +260,6 @@ test('displays an error banner when subscription status cannot be determined', f
   });
 });
 
-test('logs an exception when there is a subscription without a plan', function (assert) {
-  assert.expect(1);
-
-  this.subscription.plan = null;
-  this.subscription.save();
-
-  let mockSentry = Service.extend({
-    logException(error) {
-      assert.equal(error.message, 'User user-login has a subscription with no plan!');
-    },
-  });
-
-  const instance = this.application.__deprecatedInstance__;
-  const registry = instance.register ? instance : instance.registry;
-  registry.register('service:raven', mockSentry);
-
-  profilePage.visit();
-});
-
 test('logs an exception when there is more than one active subscription', function (assert) {
   assert.expect(1);
 
