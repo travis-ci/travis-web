@@ -19,12 +19,6 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
 
     signInUser(this.user);
 
-    server.create('subscription', {
-      owner: this.user,
-      status: 'subscribed',
-      valid_to: new Date(new Date().getTime() + 10000)
-    });
-
     server.create('installation', {
       owner: this.user,
       github_id: 2691
@@ -273,6 +267,25 @@ test('displays an error banner when subscription status cannot be determined', f
   andThen(() => {
     assert.equal(profilePage.subscriptionStatus.text, 'There was an error determining your subscription status.');
   });
+});
+
+test('logs an exception when there is a subscription without a plan', function (assert) {
+  assert.expect(1);
+
+  this.subscription.plan = null;
+  this.subscription.save();
+
+  let mockSentry = Service.extend({
+    logException(error) {
+      assert.equal(error.message, 'User user-login has a subscription with no plan!');
+    },
+  });
+
+  const instance = this.application.__deprecatedInstance__;
+  const registry = instance.register ? instance : instance.registry;
+  registry.register('service:raven', mockSentry);
+
+  profilePage.visit();
 });
 
 test('logs an exception when there is more than one active subscription', function (assert) {
