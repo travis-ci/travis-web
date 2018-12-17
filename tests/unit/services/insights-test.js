@@ -90,11 +90,44 @@ module('Unit | Service | insights', function (hooks) {
   test('active repos', async function (assert) {
     this.server.create('user');
 
-    let result = await this.insightsService.getActiveRepos({id: 1});
+    let result = await this.insightsService.getActiveRepos({id: 1, '@type': 'user'});
     assert.equal(result.data.count, 0);
 
     server.createList('insight-metric', 1);
-    result = await this.insightsService.getActiveRepos({id: 1});
+    result = await this.insightsService.getActiveRepos({id: 1, '@type': 'user'});
     assert.equal(result.data.count, 75);
+  });
+
+  test('metrics', async function (assert) {
+    this.server.create('user');
+    let expected = {
+      data: {
+        count_started: {
+          chartData: [],
+        },
+      },
+    };
+
+    let result = await this.insightsService.getMetric(
+      {id: 1, '@type': 'user'},
+      'week',
+      'builds',
+      'sum',
+      ['count_started']
+    );
+    assert.deepEqual(result, expected);
+
+    server.createList('insight-metric', 5);
+    result = await this.insightsService.getMetric(
+      {id: 1, '@type': 'user'},
+      'week',
+      'builds',
+      'sum',
+      ['count_started']
+    );
+    assert.equal(result.data.hasOwnProperty('count_started'), true);
+    assert.equal(result.data.count_started.chartData.length, 2);
+    let total = result.data.count_started.chartData.reduce((acc, val) => acc + val[1], 0);
+    assert.equal(total, 100);
   });
 });

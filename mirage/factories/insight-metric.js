@@ -8,6 +8,6 @@ export default Factory.extend({
     // Generate times increasingly further into the past, by 3 days for each record
     return moment.utc().subtract((i * 3), 'day').toDate();
   },
-  // Generate random numbers 0 - 100
-  value: i => valuePool[i % valuePool.length], // (i + 10) * 3, // Math.round(Math.random() * 100),
+  // Generate value from pool and index, to make test values predictable
+  value: i => valuePool[i % valuePool.length],
 });
