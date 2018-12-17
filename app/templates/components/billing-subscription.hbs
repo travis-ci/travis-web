@@ -11,8 +11,14 @@
         You're trialing Travis CI via your <a href={{config-get 'marketplaceEndpoint'}} class="billing-section-link">Github Marketplace subscription</a>.
       </p>
     {{/if}}
-    <h3 data-test-plan-name>{{subscription.plan.name}}</h3>
-    <p data-test-plan-concurrency>{{pluralize subscription.plan.builds 'concurrent job'}}</p>
+    <h3 data-test-plan-name>{{if subscription.plan subscription.plan.name 'Unknown plan'}}</h3>
+    <p data-test-plan-concurrency>
+      {{#if subscription.plan}}
+        {{pluralize subscription.plan.builds 'concurrent job'}}
+      {{else}}
+        Unknown concurrent jobs
+      {{/if}}
+    </p>
     <p>Renewing on {{moment-format subscription.validTo 'MMMM D, YYYY'}}</p>
   </section>
 
@@ -24,10 +30,12 @@
         {{billing-address billingInfo=subscription.billingInfo}}
       </section>
     {{/if}}
-    <section class='payment'>
-      <h3>Payment details</h3>
-      {{payment-details subscription=subscription}}
-    </section>
+    {{#if subscription.plan}}
+      <section class='payment'>
+        <h3>Payment details</h3>
+        {{payment-details subscription=subscription}}
+      </section>
+    {{/if}}
   </section>
 
 {{/if}}

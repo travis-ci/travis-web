@@ -514,8 +514,8 @@ test('view billing tab on education account', function (assert) {
   });
 });
 
-test('logs an exception when there is a subscription without a plan', function (assert) {
-  assert.expect(1);
+test('logs an exception when there is a subscription without a plan and handles unknowns', function (assert) {
+  let async = assert.async();
 
   this.subscription.plan = null;
   this.subscription.save();
@@ -523,6 +523,7 @@ test('logs an exception when there is a subscription without a plan', function (
   let mockSentry = Service.extend({
     logException(error) {
       assert.equal(error.message, 'User user-login has a subscription with no plan!');
+      async();
     },
   });
 
@@ -531,4 +532,12 @@ test('logs an exception when there is a subscription without a plan', function (
   registry.register('service:raven', mockSentry);
 
   profilePage.visit();
+  profilePage.billing.visit();
+
+  andThen(() => {
+    assert.equal(profilePage.billing.plan.name, 'Unknown plan');
+    assert.equal(profilePage.billing.plan.concurrency, 'Unknown concurrent jobs');
+    assert.ok(profilePage.billing.price.isHidden);
+    assert.ok(profilePage.billing.annualInvitation.isHidden);
+  });
 });
