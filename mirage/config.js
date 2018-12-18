@@ -607,7 +607,7 @@ export default function () {
       response.data.values = [];
 
       queryParams.name.map(name => {
-        response.data.values = schema.insightMetrics
+        response.data.values.push(...schema.insightMetrics
           // Filter by time period. Allows testing percent change widgets
           .where(m => m.time >= start && m.time <= end)
           // It's easier to generate dates in descending order,
@@ -619,7 +619,8 @@ export default function () {
               time: `${metric.time.toISOString().split('.')[0].replace('T', ' ')} UTC`,
               value: metric.value,
             };
-          });
+          })
+        );
       });
 
       return response;

@@ -197,4 +197,35 @@ module('Unit | Service | insights', function (hooks) {
     let total = result.data[metricName].chartData.reduce((acc, val) => acc + val[1], 0);
     assert.equal(total, 5);
   });
+
+  test('metric options', async function (assert) {
+    this.server.create('user');
+    server.createList('insight-metric', 10);
+    const metricNames = ['test', 'example'];
+
+    let result = await this.insightsService.getMetric(
+      {id: 1, '@type': 'user'},
+      'week',
+      'builds',
+      'sum',
+      metricNames,
+      {
+        calcTotal: true,
+        calcAvg: true,
+        // A common custom transform is to convert seconds to minutes
+        customTransform: (key, val) => [key, Math.round(val / 60)],
+      }
+    );
+
+    metricNames.map(metric => {
+      assert.equal(result.data.hasOwnProperty(metric), true);
+      assert.equal(result.data[metric].chartData.length, 4);
+      let total = result.data[metric].chartData.reduce((acc, val) => acc + val[1], 0);
+      let avg = Math.round((total / result.data[metric].chartData.length) * 100) / 100;
+      assert.equal(total, result.data[metric].total);
+      assert.equal(avg, result.data[metric].average);
+    });
+    assert.equal(result.data['test'].total, 5);
+    assert.equal(result.data['test'].average, 1.25);
+  });
 });
