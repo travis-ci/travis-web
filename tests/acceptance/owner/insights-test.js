@@ -22,13 +22,13 @@ test('the owner insights page shows insights components', async function (assert
   // Build count component
   insightsPage.glances[0].as(glance => {
     assert.equal(glance.name, 'Builds');
-    assert.equal(glance.keyStat, 359);
+    assert.equal(glance.keyStat, 448);
   });
 
   // Build minutes component
   insightsPage.glances[1].as(glance => {
     assert.equal(glance.name, 'Total Build Minutes');
-    assert.equal(glance.keyStat, '5 mins');
+    assert.equal(glance.keyStat, '6 mins');
   });
 
   // Queue times component

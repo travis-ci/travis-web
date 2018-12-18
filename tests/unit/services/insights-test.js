@@ -87,22 +87,28 @@ module('Unit | Service | insights', function (hooks) {
     assert.deepEqual(result, [10, 4]);
   });
 
-  test('active repos', async function (assert) {
+  test('active repos with no metric data', async function (assert) {
     this.server.create('user');
 
     let result = await this.insightsService.getActiveRepos({id: 1, '@type': 'user'});
     assert.equal(result.data.count, 0);
+  });
 
+  test('active repos', async function (assert) {
+    this.server.create('user');
     server.createList('insight-metric', 1);
-    result = await this.insightsService.getActiveRepos({id: 1, '@type': 'user'});
+
+    let result = await this.insightsService.getActiveRepos({id: 1, '@type': 'user'});
     assert.equal(result.data.count, 75);
   });
 
-  test('metrics', async function (assert) {
+  test('getMetric with no metric data', async function (assert) {
     this.server.create('user');
-    let expected = {
+
+    // Test no metric data scenario
+    let empty = {
       data: {
-        count_started: {
+        count_created: {
           chartData: [],
         },
       },
@@ -111,23 +117,84 @@ module('Unit | Service | insights', function (hooks) {
     let result = await this.insightsService.getMetric(
       {id: 1, '@type': 'user'},
       'week',
-      'builds',
+      'jobs',
       'sum',
-      ['count_started']
+      ['count_created']
     );
-    assert.deepEqual(result, expected);
+    assert.deepEqual(result, empty);
+  });
 
+  test('metric sum', async function (assert) {
+    this.server.create('user');
     server.createList('insight-metric', 5);
-    result = await this.insightsService.getMetric(
+    const metricName = 'count_started';
+
+    let result = await this.insightsService.getMetric(
       {id: 1, '@type': 'user'},
       'week',
       'builds',
       'sum',
-      ['count_started']
+      [metricName]
     );
-    assert.equal(result.data.hasOwnProperty('count_started'), true);
-    assert.equal(result.data.count_started.chartData.length, 2);
-    let total = result.data.count_started.chartData.reduce((acc, val) => acc + val[1], 0);
-    assert.equal(total, 100);
+    assert.equal(result.data.hasOwnProperty(metricName), true);
+    assert.equal(result.data[metricName].chartData.length, 4);
+    let total = result.data[metricName].chartData.reduce((acc, val) => acc + val[1], 0);
+    assert.equal(total, 300);
+  });
+
+  test('metric max', async function (assert) {
+    this.server.create('user');
+    server.createList('insight-metric', 10);
+    const metricName = 'count_finished';
+
+    let result = await this.insightsService.getMetric(
+      {id: 1, '@type': 'user'},
+      'week',
+      'builds',
+      'max',
+      [metricName]
+    );
+    assert.equal(result.data.hasOwnProperty(metricName), true);
+    assert.equal(result.data[metricName].chartData.length, 4);
+    let total = result.data[metricName].chartData.reduce((acc, val) => acc + val[1], 0);
+    assert.equal(total, 260);
+  });
+
+  test('metric avg', async function (assert) {
+    this.server.create('user');
+    server.createList('insight-metric', 10);
+    const metricName = 'count_passed';
+
+    let result = await this.insightsService.getMetric(
+      {id: 1, '@type': 'user'},
+      'week',
+      'builds',
+      'avg',
+      [metricName]
+    );
+    assert.equal(result.data.hasOwnProperty(metricName), true);
+    assert.equal(result.data[metricName].chartData.length, 4);
+    let total = result.data[metricName].chartData.reduce((acc, val) => acc + val[1], 0);
+    let avg = Math.round((total / result.data[metricName].chartData.length) * 100) / 100;
+    assert.equal(total, 250);
+    assert.equal(avg, 62.5);
+  });
+
+  test('metric count', async function (assert) {
+    this.server.create('user');
+    server.createList('insight-metric', 10);
+    const metricName = 'count_failed';
+
+    let result = await this.insightsService.getMetric(
+      {id: 1, '@type': 'user'},
+      'week',
+      'builds',
+      'count',
+      [metricName]
+    );
+    assert.equal(result.data.hasOwnProperty(metricName), true);
+    assert.equal(result.data[metricName].chartData.length, 4);
+    let total = result.data[metricName].chartData.reduce((acc, val) => acc + val[1], 0);
+    assert.equal(total, 5);
   });
 });

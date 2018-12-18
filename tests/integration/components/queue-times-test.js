@@ -11,23 +11,23 @@ module('Integration | Component | queue-times', function (hooks) {
   });
 
   test('stats exist', async function (assert) {
-    this.set('interval', 'week');
+    this.set('interval', 'month');
     this.set('ownerData', {
       '@type': 'User',
       id: 1,
     });
 
-    this.server.createList('insight-metric', 5);
+    this.server.createList('insight-metric', 15);
 
     await render(hbs`{{queue-times interval=interval owner=ownerData}}`);
     await settled();
 
     assert.dom('.insights-glance').doesNotHaveClass('insights-glance--loading');
     assert.dom('.insights-glance__title').hasText('Average Queue Time');
-    assert.dom('.insights-glance__stat').hasText('0.84 mins');
+    assert.dom('.insights-glance__stat').hasText('0.6 mins');
     assert.dom('.insights-glance-delta').hasAttribute('data-dir', '-');
-    assert.dom('.insights-glance-delta').hasAttribute('title', 'Averaged 1.5 mins the previous week');
-    assert.dom('.insights-glance-delta__stat').hasText('44%');
+    assert.dom('.insights-glance-delta').hasAttribute('title', 'Averaged 0.67 mins the previous month');
+    assert.dom('.insights-glance-delta__stat').hasText('10.4%');
     assert.dom('.insights-glance__chart .highcharts-wrapper').exists();
   });
 
