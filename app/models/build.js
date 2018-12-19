@@ -159,7 +159,7 @@ export default Model.extend(DurationCalculations, {
   formattedFinishedAt: computed('finishedAt', function () {
     let finishedAt = this.get('finishedAt');
     if (finishedAt) {
-      let m = moment.unix(finishedAt);
+      let m = moment(finishedAt);
       return m.isValid() ? m.format('lll') : 'not finished yet';
     }
   }),
