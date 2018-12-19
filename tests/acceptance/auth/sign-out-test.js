@@ -1,21 +1,22 @@
-import { test } from 'qunit';
-import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
+import { currentURL, visit } from '@ember/test-helpers';
+import { module, test } from 'qunit';
+import { setupApplicationTest } from 'ember-qunit';
 import topPage from 'travis/tests/pages/top';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 
-moduleForAcceptance('Acceptance | auth/sign out', {
-  beforeEach() {
+module('Acceptance | auth/sign out', function (hooks) {
+  setupApplicationTest(hooks);
+
+  hooks.beforeEach(function () {
     const currentUser = server.create('user');
     signInUser(currentUser);
-  }
-});
+  });
 
-test('signing out clears flash messages', function (assert) {
-  visit('/');
-  this.application.__container__.lookup('service:flashes').success('TOTAL SUCCESS');
-  topPage.clickSignOutLink();
+  test('signing out clears flash messages', async function (assert) {
+    await visit('/');
+    this.owner.lookup('service:flashes').success('TOTAL SUCCESS');
+    await topPage.clickSignOutLink();
 
-  andThen(() => {
     assert.equal(currentURL(), '/');
     assert.ok(topPage.flashMessage.isHidden, 'Does not display a flash message');
   });
