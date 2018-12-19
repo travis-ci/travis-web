@@ -415,10 +415,26 @@
     position: relative;
     top: -3px;
     background-color: transparent;
-    border: 2px solid #3eaaaf;;
+    border: 2px solid $oxide-blue;
 
     svg {
       display: none;
+    }
+  }
+
+  .not-loaded-ring {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    position: relative;
+    top: -3px;
+    background-color: transparent;
+    border: 2px solid $pebble-grey;
+
+    .stage-text {
+      position: relative;
+      top: 4px;
     }
   }
 

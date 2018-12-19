@@ -24,7 +24,7 @@
     <span class="loading-line-container loading-line-container-1">
       <span id="loading-line-1" class="{{if job.toBeStarted 'loading-line'}}"></span>
     </span>
-   <div class="stage-loading stage-2-container {{if job.queued 'spinner-container'}} {{if job.received 'stage-loaded-ring'}}">
+   <div class="stage-loading stage-2-container {{if job.created 'not-loaded-ring'}} {{if job.queued 'spinner-container'}} {{if job.received 'stage-loaded-ring'}}">
      <svg class="{{if job.queued 'spinner'}}" x="0px" y="0px" viewBox="0 0 150 150">
        <circle id="loading-inner" cx="75" cy="75" r="68"/>
      </svg>
@@ -34,7 +34,7 @@
     <div class="loading-line-container loading-line-container-2">
       <span id="loading-line-2" class="{{if job.received 'loading-line'}}"></span>
     </div>
-    <div class="stage-loading stage-3-container {{if job.received 'spinner-container'}} {{if job.started 'stage-loaded-ring'}}">
+    <div class="stage-loading stage-3-container {{if job.queued 'not-loaded-ring'}} {{if job.created 'not-loaded-ring'}} {{if job.received 'spinner-container'}} {{if job.started 'stage-loaded-ring'}}">
       <svg class="{{if job.received 'spinner'}}" x="0px" y="0px" viewBox="0 0 150 150">
         <circle id="loading-inner" cx="75" cy="75" r="68"/>
       </svg>
