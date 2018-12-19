@@ -242,196 +242,173 @@
 }
 
 .job-waiting-stages-container {
-  @media #{$small-only} {
-    display: none;
-  }
-  height: 100px;
+  display: grid;
+  grid-template-columns: 30px 100px 75px 30px 165px 75px 30px 65px;
+  grid-template-rows: 1fr;
+  grid-template-areas: "stage-1 stage-1-message loading-line-1 stage-2 stage-2-message loading-line-2 stage-3 stage-3-message";
+  grid-column-gap: 5%;
+  justify-content: center;
   border: 2px solid #f1f1f1;
   font-size: 16px;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding: 0px 50px;
+  height: 100px;
+  padding-top: 35px;
+
+  @media #{$small-only} {
+    grid-template-columns: 30px 50px 30px 50px 30px;
+    grid-template-rows: 1fr 1fr;
+    grid-column-gap: 15px;
+    grid-template-areas:
+    "stage-1 loading-line-1 stage-2 loading-line-2 stage-3"
+    "stage-message stage-message stage-message stage-message stage-message";
+    padding: 10px 0px;
+  }
+
+  @media #{$medium-only} {
+    grid-column-gap: 3%;
+  }
+
+  @media #{$large-only} {
+    grid-column-gap: 3%;
+  }
+
+  .stage-loading {
+    position: relative;
+    top: 5px;
+    width: 30px;
+    font-size: 12px;
+    color: $pebble-grey;
+    text-align: center;
+  }
+
+  .stage-1-container {
+    grid-area: stage-1;
+  }
+
+  .stage-2-container {
+    grid-area: stage-2;
+  }
+
+  .stage-3-container {
+    grid-area: stage-3;
+  }
+
+  .stage-1-message {
+    grid-area: stage-1-message;
+  }
+
+  .stage-2-message {
+    grid-area: stage-2-message;
+  }
+
+  .stage-3-message {
+    grid-area: stage-3-message;
+  }
 
   .stage-message {
-    font-size: 14px;
-    color: $asphalt-grey;
-    margin-right: 13px;
-  }
-}
-.loading-num {
-  width: 30px;
-  font-size: 12px;
-  text-align: center;
-  color: $pebble-grey;
-}
-.loading-ring {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  position: relative;
-  bottom: 0px;
-  background-color: transparent;
-  border: 2px solid #3eaaaf;;
+    text-align: center;
 
-}
-
-.loading-line {
-  display: inline-block;
-  height: 10px;
-  width: 75px;
-  @media #{$medium-only} {
-    width: 50px;
-  }
-  position: relative;
-  bottom: 2px;
-  border-bottom: 5px solid #f1f1f1;
-}
-
-.num-loading {
-  font-size: 12px;
-  color: $pebble-grey;
-  position: relative;
-  bottom: 16px;
-}
-
-.num-loaded {
-  font-size: 12px;
-  color: $oxide-blue;
-  position: relative;
-  top: 4px;
-}
-
-@keyframes spinner {
-  to {transform: rotate(360deg);}
-}
-
-.spinner:before {
-  content: '';
-  display: inline-block;
-  box-sizing: border-box;
-  position: relative;
-  width: 30px;
-  height: 30px;
-  top: 12px;
-  border-radius: 50%;
-  border-top: 2px solid #3EAAAF;
-  border-right: 2px solid transparent;
-  // border-left: 3px solid transparent;
-  animation: spinner 1s linear infinite;
-}
-
-.loading-line-load {
-  display: inline-block;
-  height:0px;
-  width:1px;
-  border-bottom:3px solid #000;
-
-  -webkit-animation: increase 3s;
-  -moz-animation:    increase 3s;
-  -o-animation:      increase 3s;
-  animation:         increase 3s;
-  animation-fill-mode: forwards;
-}
-
-@keyframes increase {
-    100% {
-        width: 50px;
+    @media #{$small-only} {
+      grid-area: stage-message;
+      align-self: end;
     }
-}
 
-.waiting-checkmark-gray {
-  display: inline-block;
-  width: 30px;
-}
+  }
+
+  .loading-line-container {
+    grid-area: loading-line;
+    position: relative;
+    top: 14px;
+    width: 100%;
+    height: 3px;
+    background-color: #F1F1F1;
+  }
+
+  .loading-line-container-1 {
+    grid-area: loading-line-1;
+  }
+
+  .loading-line-container-2 {
+    grid-area: loading-line-2;
+  }
+
+  @keyframes increase {
+      100% {
+        width: 100%;
+      }
+  }
+
+  .loading-line {
+    position: relative;
+    bottom: 14.5px;
+    display: inline-block;
+    height:0px;
+    width:1px;
+    border-bottom:3px solid #3EAAAF;
+
+    -webkit-animation: increase .5s;
+    -moz-animation:    increase .5s;
+    -o-animation:      increase .5s;
+    animation:         increase .5s;
+    animation-fill-mode: forwards;
+  }
 
 
-.waiting-checkmark {
-  display: inline-block;
-  width: 30px;
+  @keyframes spinner {
+    to {transform: rotate(360deg);}
+  }
 
-  svg {
-    circle {
-      stroke: $oxide-blue;
-    }
-    path {
-      stroke: $oxide-blue;
+  .spinner {
+    position: relative;
+    top: -12px;
+
+    .loading-num-text {
+      position: relative;
+      bottom: 16px;
     }
   }
-}
 
-.path {
-  stroke-dasharray: 1000;
-  stroke-dashoffset: 0;
-  animation: dash 1s ease-in-out;
-  -webkit-animation: dash 1s ease-in-out;
-}
-
-@-webkit-keyframes dash {
- 0% {
-   stroke-dashoffset: 1000;
- }
- 100% {
-   stroke-dashoffset: 0;
- }
-}
-
-@keyframes dash {
- 0% {
-   stroke-dashoffset: 1000;
- }
- 100% {
-   stroke-dashoffset: 0;
- }
-}
-
-.pre-log {
-  display: none;
-}
-
-.fade-it {
-  animation-name: fadeInOut;
-  animation-duration: 2s;
-}
-
-@keyframes fadeInOut {
-  0% {
-    opacity: 1;
+  .spinner:before {
+    content: '';
+    display: inline-block;
+    box-sizing: border-box;
+    position: relative;
+    width: 30px;
+    height: 30px;
+    top: 12px;
+    border-radius: 50%;
+    border-top: 2px solid #3EAAAF;
+    border-right: 2px solid transparent;
+    animation: spinner 1s linear infinite;
   }
 
-  50% {
-    opacity: 0;
+  .stage-loaded-ring {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    position: relative;
+    top: 0px;
+    background-color: transparent;
+    border: 2px solid #3eaaaf;;
   }
 
-  100% {
-    opacity: 0;
+  .stage-loaded-text {
+    position: relative;
+    top: 4px;
+    font-size: 12px;
+    color: $oxide-blue;
   }
-}
 
-.loading-line-container {
-  height: 3px;
-  background-color: #F1F1F1;
-  width: 75px;
-  display: inline-block;
-}
 
-.loading-line {
-  position: relative;
-  bottom: 14.5px;
-  display: inline-block;
-  height:0px;
-  width:1px;
-  border-bottom:3px solid #3EAAAF;
-
-  -webkit-animation: increase .5s;
-  -moz-animation:    increase .5s;
-  -o-animation:      increase .5s;
-  animation:         increase .5s;
-  animation-fill-mode: forwards;
-}
-
-@keyframes increase {
-    100% {
-        width: 75px;
+  .show-stage-message {
+    @media #{$small-only} {
+      display: block;
     }
+  }
+
+  .hide-stage-message {
+    @media #{$small-only} {
+      display: none;
+    }
+  }
 }

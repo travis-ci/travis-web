@@ -14,14 +14,24 @@
   </section>
   {{#if job.notStarted}}
   <div class="job-waiting-stages-container">
-    <span class="loading-num {{if job.created 'spinner'}} {{if job.toBeStarted 'loading-ring'}}"><span id="num1" class="{{if job.created 'num-loading'}} {{if job.toBeStarted 'num-loaded'}}">1</span></span>
-    <span class="stage-message">Job Received</span>
-    <span class="loading-line-container"><span id="loading-line-1" class="{{if job.toBeStarted 'loading-line'}}"></span></span>
-    <span class="loading-num {{if job.queued 'spinner'}} {{if job.received 'loading-ring'}}"><span id="num2" class="{{if job.queued 'num-loading'}} {{if job.received 'num-loaded'}}">2</span></span>
-    <span class="stage-message">Waiting for concurrency</span>
-    <span class="loading-line-container"><span id="loading-line-2" class="{{if job.received 'loading-line'}}"></span></span>
-    <span class="loading-num {{if job.received 'spinner'}} {{if job.started 'loading-ring'}}"><span id="num3" class="{{if job.received 'num-loading'}} {{if job.started 'num-loaded'}}">3</span></span>
-    <span class="stage-message">Booting</span>
+    <div class="stage-loading stage-1-container {{if job.created 'spinner'}} {{if job.toBeStarted 'stage-loaded-ring'}}">
+      <span id="stage-1" class="{{if job.created 'loading-num-text'}} {{if job.toBeStarted 'stage-loaded-text'}}">1</span>
+    </div>
+    <div class="stage-message stage-1-message {{if job.created 'show-stage-message'}} {{if job.toBeStarted 'hide-stage-message'}}">Job Received</div>
+    <span class="loading-line-container loading-line-container-1">
+      <span id="loading-line-1" class="{{if job.toBeStarted 'loading-line'}}"></span>
+    </span>
+   <div class="stage-loading stage-2-container {{if job.queued 'spinner'}} {{if job.received 'stage-loaded-ring'}}">
+      <span id="stage-2" class="{{if job.queued 'loading-num-text'}} {{if job.received 'stage-loaded-text'}}">2</span>
+    </div>
+    <div class="stage-message stage-2-message {{if job.queued 'show-stage-message'}} {{if job.created 'hide-stage-message'}} {{if job.received 'hide-stage-message'}}">Waiting for concurrency</div>
+    <div class="loading-line-container loading-line-container-2">
+      <span id="loading-line-2" class="{{if job.received 'loading-line'}}"></span>
+    </div>
+    <div class="stage-loading stage-3-container {{if job.received 'spinner'}} {{if job.started 'stage-loaded-ring'}}">
+      <span id="stage-3" class="{{if job.received 'loading-num-text'}} {{if job.started 'stage-loaded-text'}}">3</span>
+    </div>
+    <div class="stage-message stage-3-message {{if job.received 'show-stage-message'}} {{if job.created 'hide-stage-message'}} {{if job.queued 'hide-stage-message'}} {{if job.started 'hide-stage-message'}}">Booting</div>
   </div>
   {{/if}}
 
