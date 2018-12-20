@@ -2,7 +2,6 @@ import { currentURL, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { Response } from 'ember-cli-mirage';
-import Service from '@ember/service';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 
 module('Acceptance | feature flags/app boots', function (hooks) {
