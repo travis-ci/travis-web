@@ -1,17 +1,4 @@
 <section id="log-container" class="log">
-    <!-- {{#if job.notStarted}}
-    <div class="log-notice">Hang tight, the log cannot be shown until the job has started.</div>
-  {{/if}} -->
-
-  <!-- For queued and received states-->
-  <!-- Booting state in Travis is recevied state in Travis Web -->
-  <section style='background: rgba(255,255,255,0.6); margin-bottom: 20px;'>
-    Job state:
-    <button style='border: 2px solid #3EAAAF; cursor: pointer; margin-right: 10px;' onclick={{action (mut job.state) 'created'}}>Created(1)</button>
-    <button style='border: 2px solid #3EAAAF; cursor: pointer; margin-right: 10px;' onclick={{action (mut job.state) 'queued'}}>Queued(2)</button>
-    <button style='border: 2px solid #3EAAAF; cursor: pointer; margin-right: 10px;' onclick={{action (mut job.state) 'received'}}>Received(3)</button>
-    <button style='border: 2px solid #3EAAAF; cursor: pointer; margin-right: 10px;' onclick={{action (mut job.state) 'started'}}>Started(Show log)</button>
-  </section>
   {{#if job.notStarted}}
   <div class="job-waiting-stages-container">
     <div class="stage-loading stage-1-container {{if job.created 'spinner-container'}} {{if job.toBeStarted 'stage-loaded-ring'}}">
@@ -30,7 +17,7 @@
      </svg>
       <span id="stage-2" class="stage-text {{if job.queued 'loading-num-text'}} {{if job.received 'stage-loaded-text'}}">2</span>
     </div>
-    <div class="stage-message stage-2-message {{if job.queued 'show-stage-message'}} {{if job.created 'hide-stage-message'}} {{if job.received 'hide-stage-message'}}">Waiting for concurrency</div>
+    <div class="stage-message stage-2-message {{if job.queued 'show-stage-message'}} {{if job.created 'hide-stage-message'}} {{if job.received 'hide-stage-message'}}">Queued</div>
     <div class="loading-line-container loading-line-container-2">
       <span id="loading-line-2" class="{{if job.received 'loading-line'}}"></span>
     </div>
@@ -40,7 +27,7 @@
       </svg>
       <span id="stage-3" class="stage-text {{if job.received 'loading-num-text'}} {{if job.started 'stage-loaded-text'}}">3</span>
     </div>
-    <div class="stage-message stage-3-message {{if job.received 'show-stage-message'}} {{if job.created 'hide-stage-message'}} {{if job.queued 'hide-stage-message'}} {{if job.started 'hide-stage-message'}}">Booting</div>
+    <div class="stage-message stage-3-message {{if job.received 'show-stage-message'}} {{if job.created 'hide-stage-message'}} {{if job.queued 'hide-stage-message'}} {{if job.started 'hide-stage-message'}}">Booting virtual machine</div>
   </div>
   {{/if}}
 
