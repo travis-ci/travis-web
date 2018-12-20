@@ -260,7 +260,8 @@
     grid-template-areas:
     "stage-1 loading-line-1 stage-2 loading-line-2 stage-3"
     "stage-message stage-message stage-message stage-message stage-message";
-    padding: 10px 0px;
+    padding-top: 16px;
+    padding-bottom: 10px;
   }
 
   @media #{$medium-only} {
