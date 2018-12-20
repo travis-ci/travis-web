@@ -7,6 +7,9 @@ module('Acceptance | enterprise/navigation', function (hooks) {
   setupApplicationTest(hooks);
 
   hooks.beforeEach(function () {
+    window.localStorage.clear();
+    window.sessionStorage.clear();
+
     server.get('/v3/enterprise_license', (schema, response) => {
       return {
         'license_id': 'ad12345',
