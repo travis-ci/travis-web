@@ -1,0 +1,5 @@
+#!/bin/sh
+
+npx ember-qunit-codemod convert-module-for-to-setup-test $1
+npx ember-test-helpers-codemod acceptance $1
+./node_modules/eslint/bin/eslint.js --fix $1
