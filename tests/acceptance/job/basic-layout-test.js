@@ -1,6 +1,8 @@
 import $ from 'jquery';
 import { test } from 'qunit';
+import { percySnapshot } from 'ember-percy';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
+import generatePusherPayload from 'travis/tests/helpers/generate-pusher-payload';
 
 import jobPage from 'travis/tests/pages/job';
 import getFaviconUri from 'travis/utils/favicon-data-uris';
@@ -64,12 +66,15 @@ test('visiting job-view', function (assert) {
 });
 
 
-test('visiting a job in created(received) state', function (assert) {
-  let repo = server.create('repository', { slug: 'travis-ci/travis-web' }),
-    branch = server.create('branch', { name: 'acceptance-tests' });
-
-  let  gitUser = server.create('git-user', { name: 'Mr T' });
-  let commit = server.create('commit', { author: gitUser, committer: gitUser, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
+test('visiting a job in created(received) state', async function (assert) {
+  let branch = server.create('branch', { name: 'acceptance-tests' });
+  let repo = server.create('repository', { slug: 'travis-ci/travis-web', defaultBranch: branch });
+  let commit = server.create('commit', {
+    id: 100,
+    sha: 'abcd',
+    branch: 'acceptance-tests',
+    message: 'This is a message',
+  });
 
   let request = server.create('request');
   server.create('message', {
@@ -87,184 +92,105 @@ test('visiting a job in created(received) state', function (assert) {
     avatar_url: '/images/favicon-gray.png'
   });
 
-  let build = server.create('build', { repository: repo, state: 'created', createdBy: user, commit, branch, request });
-  let job = server.create('job', { number: '1234.1', repository: repo, state: 'created', build, commit });
-  commit.job = job;
+  let build = server.create('build', {
+    id: 100,
+    number: 15,
+    repository: repo,
+    commit: commit,
+    pull_request: false,
+    event_type: 'push',
+    state: 'created',
+    started_at: new Date(),
+    createdBy: user
+  });
 
-  job.save();
-  commit.save();
+  let job = server.create('job', {
+    id: 100,
+    number: '1234.1',
+    repository: repo,
+    state: 'created',
+    build,
+    commit
+  });
 
   server.create('log', { id: job.id });
 
-  visit('/travis-ci/travis-web/jobs/' + job.id);
-  waitForElement('#log > .log-line');
+  await visit('/travis-ci/travis-web/jobs/' + job.id);
+
+  const createdState = {
+    build: generatePusherPayload(build, { state: 'created' }),
+    job: generatePusherPayload(job, { state: 'created' }),
+    commit: generatePusherPayload(commit),
+    repository: generatePusherPayload(repo, { current_build_id: build.id })
+  };
+
+  this.application.pusher.receive('job:created', createdState);
+
   andThen(() => {
-    assert.equal(document.title, 'Job #1234.1 - travis-ci/travis-web - Travis CI');
-
-    assert.equal($('head link[rel=icon]').attr('href'), getFaviconUri('yellow'), 'expected the favicon data URI to match the one for created');
-
-    assert.equal(jobPage.branch, 'acceptance-tests', 'displays the branch');
-    assert.equal(jobPage.message, 'Running acceptance-tests This is a message', 'displays message');
     assert.equal(jobPage.state, '#1234.1 received', 'displays build number');
 
-    assert.equal(jobPage.createdBy.href, '/testuser');
-    assert.equal(jobPage.createdBy.text, 'Mr T');
-    assert.ok(jobPage.createdBy.avatarSrc.startsWith('/images/favicon-gray.png'));
-
     assert.notOk(jobPage.hasTruncatedLog);
-    assert.ok(jobPage.hasWaitingStates);
-    assert.equal(jobPage.stageOneText, 'Job received');
-    assert.equal(jobPage.stageTwoText, 'Queued');
-    assert.equal(jobPage.stageThreeText, 'Booting virtual machine');
-    assert.equal(jobPage.stageOneWaitingText, '1');
-    assert.equal(jobPage.stageTwoWaitingText, '2');
-    assert.equal(jobPage.stageThreeWaitingText, '3');
-    assert.ok(jobPage.stageOneLoading);
-    assert.notOk(jobPage.stageTwoLoading);
-    assert.notOk(jobPage.stageThreeLoading);
-    assert.notOk(jobPage.stageOneLoaded);
-    assert.notOk(jobPage.stageTwoLoaded);
-    assert.notOk(jobPage.stageThreeLoaded);
-    assert.ok(jobPage.stageOneLoadingLineInactive);
-    assert.ok(jobPage.stageTwoLoadingLineInactive);
-    assert.notOk(jobPage.stageOneLoadingLineActive);
-    assert.notOk(jobPage.stageTwoLoadingLineActive);
-  });
-});
+    assert.ok(jobPage.waitingStates.isVisible);
 
-test('visiting a job in queued waiting state', function (assert) {
-  let repo = server.create('repository', { slug: 'travis-ci/travis-web' }),
-    branch = server.create('branch', { name: 'acceptance-tests' });
+    assert.ok(jobPage.waitingStates.one.isLoading);
+    assert.ok(jobPage.waitingStates.firstLoadingLine.isInactive);
+    assert.ok(jobPage.waitingStates.two.isInactive);
+    assert.ok(jobPage.waitingStates.secondLoadingLine.isInactive);
+    assert.ok(jobPage.waitingStates.three.isInactive);
 
-  let  gitUser = server.create('git-user', { name: 'Mr T' });
-  let commit = server.create('commit', { author: gitUser, committer: gitUser, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
+    assert.equal(jobPage.waitingStates.firstMessage.text, 'Job received');
+    assert.equal(jobPage.waitingStates.secondMessage.text, 'Queued');
+    assert.equal(jobPage.waitingStates.thirdMessage.text, 'Booting virtual machine');
 
-  let request = server.create('request');
-  server.create('message', {
-    request,
-    level: 'info',
-    key: 'group',
-    code: 'flagged',
-    args: {
-      given: 'group'
-    }
+    const queuedState = {
+      build: generatePusherPayload(build, { state: 'queued' }),
+      job: generatePusherPayload(job, { state: 'queued' }),
+      commit: generatePusherPayload(commit),
+      repository: generatePusherPayload(repo, { current_build_id: build.id })
+    };
+
+    this.application.pusher.receive('job:queued', queuedState);
   });
 
-  let user = server.create('user', {
-    name: 'Mr T',
-    avatar_url: '/images/favicon-gray.png'
-  });
-
-  let build = server.create('build', { repository: repo, state: 'queued', createdBy: user, commit, branch, request });
-  let job = server.create('job', { number: '1234.1', repository: repo, state: 'queued', build, commit });
-  commit.job = job;
-
-  job.save();
-  commit.save();
-
-  server.create('log', { id: job.id });
-
-  visit('/travis-ci/travis-web/jobs/' + job.id);
-  waitForElement('#log > .log-line');
   andThen(() => {
-    assert.equal(document.title, 'Job #1234.1 - travis-ci/travis-web - Travis CI');
-
-    assert.equal($('head link[rel=icon]').attr('href'), getFaviconUri('yellow'), 'expected the favicon data URI to match the one for created');
-
-    assert.equal(jobPage.branch, 'acceptance-tests', 'displays the branch');
-    assert.equal(jobPage.message, 'Running acceptance-tests This is a message', 'displays message');
     assert.equal(jobPage.state, '#1234.1 queued', 'displays build number');
 
-    assert.equal(jobPage.createdBy.href, '/testuser');
-    assert.equal(jobPage.createdBy.text, 'Mr T');
-    assert.ok(jobPage.createdBy.avatarSrc.startsWith('/images/favicon-gray.png'));
+    assert.ok(jobPage.waitingStates.isVisible);
 
-    assert.notOk(jobPage.hasTruncatedLog);
-    assert.ok(jobPage.hasWaitingStates);
-    assert.equal(jobPage.stageOneText, 'Job received');
-    assert.equal(jobPage.stageTwoText, 'Queued');
-    assert.equal(jobPage.stageThreeText, 'Booting virtual machine');
-    assert.equal(jobPage.stageOneWaitingText, '1');
-    assert.equal(jobPage.stageTwoWaitingText, '2');
-    assert.equal(jobPage.stageThreeWaitingText, '3');
-    assert.notOk(jobPage.stageOneLoading);
-    assert.ok(jobPage.stageTwoLoading);
-    assert.notOk(jobPage.stageThreeLoading);
-    assert.ok(jobPage.stageOneLoaded);
-    assert.notOk(jobPage.stageTwoLoaded);
-    assert.notOk(jobPage.stageThreeLoaded);
-    assert.notOk(jobPage.stageOneLoadingLineInactive);
-    assert.ok(jobPage.stageTwoLoadingLineInactive);
-    assert.ok(jobPage.stageOneLoadingLineActive);
-    assert.notOk(jobPage.stageTwoLoadingLineActive);
-  });
-});
+    assert.ok(jobPage.waitingStates.one.isLoaded);
+    assert.ok(jobPage.waitingStates.firstLoadingLine.isActive);
+    assert.ok(jobPage.waitingStates.two.isLoading);
+    assert.ok(jobPage.waitingStates.secondLoadingLine.isInactive);
+    assert.ok(jobPage.waitingStates.three.isInactive);
 
-test('visiting a job in received(booting) waiting state', function (assert) {
-  let repo = server.create('repository', { slug: 'travis-ci/travis-web' }),
-    branch = server.create('branch', { name: 'acceptance-tests' });
+    assert.equal(jobPage.waitingStates.firstMessage.text, 'Job received');
+    assert.equal(jobPage.waitingStates.secondMessage.text, 'Queued');
+    assert.equal(jobPage.waitingStates.thirdMessage.text, 'Booting virtual machine');
 
-  let  gitUser = server.create('git-user', { name: 'Mr T' });
-  let commit = server.create('commit', { author: gitUser, committer: gitUser, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
+    const receivedState = {
+      build: generatePusherPayload(build, { state: 'received' }),
+      job: generatePusherPayload(job, { state: 'received' }),
+      commit: generatePusherPayload(commit),
+      repository: generatePusherPayload(repo, { current_build_id: build.id })
+    };
 
-  let request = server.create('request');
-  server.create('message', {
-    request,
-    level: 'info',
-    key: 'group',
-    code: 'flagged',
-    args: {
-      given: 'group'
-    }
+    this.application.pusher.receive('job:received', receivedState);
   });
 
-  let user = server.create('user', {
-    name: 'Mr T',
-    avatar_url: '/images/favicon-gray.png'
-  });
-
-  let build = server.create('build', { repository: repo, state: 'received', createdBy: user, commit, branch, request });
-  let job = server.create('job', { number: '1234.1', repository: repo, state: 'received', build, commit });
-  commit.job = job;
-
-  job.save();
-  commit.save();
-
-  server.create('log', { id: job.id });
-
-  visit('/travis-ci/travis-web/jobs/' + job.id);
-  waitForElement('#log > .log-line');
   andThen(() => {
-    assert.equal(document.title, 'Job #1234.1 - travis-ci/travis-web - Travis CI');
-
-    assert.equal($('head link[rel=icon]').attr('href'), getFaviconUri('yellow'), 'expected the favicon data URI to match the one for created');
-
-    assert.equal(jobPage.branch, 'acceptance-tests', 'displays the branch');
-    assert.equal(jobPage.message, 'Running acceptance-tests This is a message', 'displays message');
     assert.equal(jobPage.state, '#1234.1 booting', 'displays build number');
 
-    assert.equal(jobPage.createdBy.href, '/testuser');
-    assert.equal(jobPage.createdBy.text, 'Mr T');
-    assert.ok(jobPage.createdBy.avatarSrc.startsWith('/images/favicon-gray.png'));
+    assert.ok(jobPage.waitingStates.isVisible);
 
-    assert.notOk(jobPage.hasTruncatedLog);
-    assert.ok(jobPage.hasWaitingStates);
-    assert.equal(jobPage.stageOneText, 'Job received');
-    assert.equal(jobPage.stageTwoText, 'Queued');
-    assert.equal(jobPage.stageThreeText, 'Booting virtual machine');
-    assert.equal(jobPage.stageOneWaitingText, '1');
-    assert.equal(jobPage.stageTwoWaitingText, '2');
-    assert.equal(jobPage.stageThreeWaitingText, '3');
-    assert.notOk(jobPage.stageOneLoading);
-    assert.notOk(jobPage.stageTwoLoading);
-    assert.ok(jobPage.stageThreeLoading);
-    assert.ok(jobPage.stageOneLoaded);
-    assert.ok(jobPage.stageTwoLoaded);
-    assert.notOk(jobPage.stageThreeLoaded);
-    assert.notOk(jobPage.stageOneLoadingLineInactive);
-    assert.notOk(jobPage.stageTwoLoadingLineInactive);
-    assert.ok(jobPage.stageOneLoadingLineActive);
-    assert.ok(jobPage.stageTwoLoadingLineActive);
+    assert.ok(jobPage.waitingStates.one.isLoaded);
+    assert.ok(jobPage.waitingStates.firstLoadingLine.isActive);
+    assert.ok(jobPage.waitingStates.two.isLoaded);
+    assert.ok(jobPage.waitingStates.secondLoadingLine.isActive);
+    assert.ok(jobPage.waitingStates.three.isLoading);
+
+    assert.equal(jobPage.waitingStates.firstMessage.text, 'Job received');
+    assert.equal(jobPage.waitingStates.secondMessage.text, 'Queued');
+    assert.equal(jobPage.waitingStates.thirdMessage.text, 'Booting virtual machine');
   });
 });
 
@@ -351,6 +277,8 @@ ${ESCAPE}(B[m[32m+},
   jobPage.toggleLog();
 
   andThen(function () {
+    assert.notOk(jobPage.hasWaitingStates);
+
     assert.equal(jobPage.logLines[0].text, 'I am the first line.');
 
     assert.equal(jobPage.logFolds[0].name, 'afold');
