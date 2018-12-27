@@ -171,6 +171,65 @@ module('Acceptance | dashboard/repositories', function (hooks) {
     assert.dom('[data-test-dashboard-active-repositories] [data-test-dashboard-repository-star]').exists({ count: 6 }, 'lists other repos on the 2nd page');
   });
 
+  test('displays the correct job state for active repos', async function (assert) {
+    enableFeature('dashboard');
+
+    const commit = server.create('commit', {
+      id: 100,
+      sha: 'acab',
+      branch: 'primary',
+      message: 'Add new chapter',
+      committed_at: '2016-12-02T22:02:34Z',
+    });
+
+    let build = this.branch.createBuild({
+      id: 100,
+      number: 15,
+      repository: this.repository,
+      pull_request: false,
+      event_type: 'push',
+      state: 'passed',
+      started_at: new Date(),
+      createdBy: this.currentUser
+    });
+
+    let job = build.createJob({
+      id: 100,
+      repository: this.repository,
+      build: build,
+      commit,
+      number: '15.1',
+      state: 'created',
+    });
+
+    let createBuild = server.create('build', {
+      branch: server.create('branch', { name: 'some-branch-2' }),
+      event_type: 'push',
+      number: 3,
+      state: 'created',
+      started_at: '2018-11-10T14:32:44Z',
+      finishedAt: '2018-11-10T14:37:44Z',
+      createdBy: this.currentUser
+    });
+
+    server.create('repository', {
+      owner: {
+        login: 'travis-repos',
+        type: 'organization'
+      },
+      name: 'repo-superman',
+      currentBuild: createBuild,
+    });
+
+
+    await visit('/dashboard');
+
+    assert.equal(page.activeRepos.repos[1].lastBuild, '#3 received');
+
+    percySnapshot(assert);
+  });
+
+
   test('listing my builds', async function (assert) {
     enableFeature('dashboard');
 
@@ -257,6 +316,11 @@ module('Acceptance | dashboard/repositories', function (hooks) {
       commit: generatePusherPayload(commit),
       repository: generatePusherPayload(this.repository, { current_build_id: build.id })
     });
+
+    page.myBuilds.builds[3].as(build => {
+      assert.equal(build.stateAndNumber.text, 'received');
+    });
+
 
     let otherUser = server.create('user');
     let otherBranch = server.create('branch', {
