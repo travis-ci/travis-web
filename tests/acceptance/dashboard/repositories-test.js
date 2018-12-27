@@ -174,25 +174,6 @@ module('Acceptance | dashboard/repositories', function (hooks) {
   test('displays the correct job state for active repos', async function (assert) {
     enableFeature('dashboard');
 
-    const commit = server.create('commit', {
-      id: 100,
-      sha: 'acab',
-      branch: 'primary',
-      message: 'Add new chapter',
-      committed_at: '2016-12-02T22:02:34Z',
-    });
-
-    let build = this.branch.createBuild({
-      id: 100,
-      number: 15,
-      repository: this.repository,
-      pull_request: false,
-      event_type: 'push',
-      state: 'passed',
-      started_at: new Date(),
-      createdBy: this.currentUser
-    });
-
     let createBuild = server.create('build', {
       branch: server.create('branch', { name: 'some-branch-2' }),
       event_type: 'push',
