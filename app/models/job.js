@@ -14,6 +14,7 @@ import { belongsTo } from 'ember-data/relationships';
 import { alias, and, equal, not, reads } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import promiseObject from 'travis/utils/promise-object';
+
 import moment from 'moment';
 
 export default Model.extend(DurationCalculations, DurationAttributes, {
@@ -23,20 +24,7 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
   features: service(),
   logId: attr(),
   queue: attr(),
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
   state: attr(),
-=======
-  state: 'created',
-  // state: attr(),
->>>>>>> Animating circles
-=======
-  // state: 'created',
-=======
->>>>>>> Recommended changes and cleanup
-  state: attr(),
->>>>>>> Alignment and spinner logic
   number: attr(),
   allowFailure: attr('boolean'),
   tags: attr(),
@@ -222,6 +210,14 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
   onStateChange: observer('state', function () {
     if (this.get('state') === 'finished' && Travis.pusher) {
       return this.unsubscribe();
+    }
+  }),
+
+  formattedFinishedAt: computed('finishedAt', function () {
+    let finishedAt = this.get('finishedAt');
+    if (finishedAt) {
+      let m = moment(finishedAt);
+      return m.isValid() ? m.format('lll') : 'not finished yet';
     }
   }),
 
