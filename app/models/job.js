@@ -213,14 +213,6 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
     }
   }),
 
-  formattedFinishedAt: computed('finishedAt', function () {
-    let finishedAt = this.get('finishedAt');
-    if (finishedAt) {
-      let m = moment(finishedAt);
-      return m.isValid() ? m.format('lll') : 'not finished yet';
-    }
-  }),
-
   canRemoveLog: not('log.removed'),
 
   slug: computed('repo.slug', 'number', function () {
