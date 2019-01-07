@@ -27,7 +27,13 @@ export default create({
 
     commitSha: text('.row-commit .label-align'),
     committer: text('.row-committer .label-align'),
-    commitDate: text('.row-calendar .label-align'),
+
+    commitDate: {
+      scope: '.row-calendar div',
+      title: attribute('title'),
+      text: text('.label-align')
+    },
+
     requestIconTitle: attribute('title', '.row-item.request span[title]'),
     duration: text('.row-duration .label-align'),
     message: text('.row-message'),

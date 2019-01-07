@@ -5,6 +5,8 @@ import page from 'travis/tests/pages/build-list';
 import generatePusherPayload from 'travis/tests/helpers/generate-pusher-payload';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 
+import moment from 'moment';
+
 moduleForAcceptance('Acceptance | repo build list routes', {
   beforeEach() {
     const currentUser = server.create('user', {
@@ -29,6 +31,7 @@ moduleForAcceptance('Acceptance | repo build list routes', {
 
     const oneYearAgo = new Date();
     oneYearAgo.setYear(oneYearAgo.getFullYear() - 1);
+    this.oneYearAgo = oneYearAgo;
 
     const beforeOneYearAgo = new Date(oneYearAgo.getTime() - 1000 * 60 * 5);
 
@@ -123,7 +126,7 @@ moduleForAcceptance('Acceptance | repo build list routes', {
 });
 
 test('build history shows, more can be loaded, and a created build gets added and can be cancelled', function (assert) {
-  assert.expect(23);
+  assert.expect(24);
 
   page.visitBuildHistory({ organization: 'org-login', repo: 'repository-name' });
 
@@ -135,7 +138,10 @@ test('build history shows, more can be loaded, and a created build gets added an
       assert.equal(build.name, 'successful-cron-branch');
       assert.equal(build.committer, 'Other User Name', 'expected to ignore createdBy for a cron');
       assert.equal(build.commitSha, '1234567');
-      assert.equal(build.commitDate, 'about a year ago');
+
+      assert.equal(build.commitDate.text, 'about a year ago');
+      assert.equal(build.commitDate.title, `Finished ${moment(this.oneYearAgo).format('lll')}`);
+
       assert.equal(build.requestIconTitle, 'Triggered by a cron job');
       assert.equal(build.duration, '5 min');
       assert.equal(build.message, 'cron A generic cron commit message', 'expected a prefixed cron marker');
