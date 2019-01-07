@@ -10,6 +10,7 @@ const { billingEndpoint } = config;
 export default Service.extend({
   store: service(),
   auth: service(),
+  raven: service(),
 
   user: reads('auth.currentUser'),
   organizations: reads('fetchOrganizations.lastSuccessful.value'),
@@ -34,6 +35,11 @@ export default Service.extend({
     this.set('subscriptionError', false);
     try {
       const subscriptions = yield this.store.findAll('subscription') || [];
+
+      if (subscriptions.any(s => s.isSubscribed && !s.belongsTo('plan').id())) {
+        this.logMissingPlanException();
+      }
+
       return subscriptions.sortBy('validTo');
     } catch (e) {
       this.set('subscriptionError', true);
@@ -55,6 +61,10 @@ export default Service.extend({
 
   fetch() {
     return this.fetchOrganizations.perform().then(() => this.all);
-  }
+  },
 
+  logMissingPlanException() {
+    const exception = new Error(`User ${this.user.login} has a subscription with no plan!`);
+    this.raven.logException(exception, true);
+  },
 });
