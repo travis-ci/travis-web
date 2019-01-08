@@ -1,6 +1,5 @@
 import $ from 'jquery';
 import { test } from 'qunit';
-import { percySnapshot } from 'ember-percy';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import generatePusherPayload from 'travis/tests/helpers/generate-pusher-payload';
 
