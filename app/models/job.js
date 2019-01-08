@@ -11,18 +11,15 @@ import DurationCalculations from 'travis/mixins/duration-calculations';
 import DurationAttributes from 'travis/mixins/duration-attributes';
 import attr from 'ember-data/attr';
 import { belongsTo } from 'ember-data/relationships';
-import { alias, and, not, reads } from '@ember/object/computed';
+import { alias, and, equal, not, reads } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import promiseObject from 'travis/utils/promise-object';
-
-import moment from 'moment';
 
 export default Model.extend(DurationCalculations, DurationAttributes, {
   api: service(),
   ajax: service(),
   jobConfigFetcher: service(),
   features: service(),
-
   logId: attr(),
   queue: attr(),
   state: attr(),
@@ -74,6 +71,12 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
     return finishedStates.includes(state);
   }),
 
+  isCreated: equal('state', 'created'),
+
+  isQueued: equal('state', 'queued'),
+
+  isReceived: equal('state', 'received'),
+
   toBeQueued: computed('state', function () {
     let state = this.get('state');
     let queuedState = 'created';
@@ -88,7 +91,7 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
 
   notStarted: computed('state', function () {
     let state = this.get('state');
-    let waitingStates = ['queued', 'created', 'received'];
+    let waitingStates = ['created', 'queued', 'received'];
     return waitingStates.includes(state);
   }),
 
@@ -205,14 +208,6 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
   onStateChange: observer('state', function () {
     if (this.get('state') === 'finished' && Travis.pusher) {
       return this.unsubscribe();
-    }
-  }),
-
-  formattedFinishedAt: computed('finishedAt', function () {
-    let finishedAt = this.get('finishedAt');
-    if (finishedAt) {
-      let m = moment.unix(finishedAt);
-      return m.isValid() ? m.format('lll') : 'not finished yet';
     }
   }),
 

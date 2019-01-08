@@ -35,7 +35,7 @@
       <div>
         {{#link-to 'build' build.repo.owner.login build.repo.name build.id data-test-state-number class='row-content color'}}
           {{request-icon event=build.eventType state=build.state}}
-          <span class='inner-underline'>#{{build.number}} {{build.state}}</span>
+          <span class='inner-underline'>#{{build.number}} {{humanize-state build.state}}</span>
         {{/link-to}}
       </div>
       <div>
