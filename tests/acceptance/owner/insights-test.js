@@ -16,13 +16,14 @@ test('the owner insights page shows insights components', async function (assert
 
   await insightsPage.visit({ username: 'user-login' });
 
+
   assert.equal(insightsPage.glances.length, 4);
   assert.equal(insightsPage.odysseys.length, 1);
 
   // Build count component
   insightsPage.glances[0].as(glance => {
     assert.equal(glance.name, 'Builds');
-    assert.equal(glance.keyStat, 448);
+    assert.equal(glance.keyStat, 468);
   });
 
   // Build minutes component
@@ -34,7 +35,7 @@ test('the owner insights page shows insights components', async function (assert
   // Queue times component
   insightsPage.glances[2].as(glance => {
     assert.equal(glance.name, 'Average Queue Time');
-    assert.equal(glance.keyStat, '0.6 mins');
+    assert.equal(glance.keyStat, '0.58 mins');
   });
 
   // Active repos component
