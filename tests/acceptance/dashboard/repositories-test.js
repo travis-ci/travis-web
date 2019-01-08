@@ -4,6 +4,7 @@ import { setupApplicationTest } from 'ember-qunit';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { waitForElement } from 'travis/tests/helpers/wait-for-element';
 import { enableFeature } from 'ember-feature-flags/test-support';
+import { percySnapshot } from 'ember-percy';
 import page from 'travis/tests/pages/dashboard';
 import topPage from 'travis/tests/pages/top';
 import generatePusherPayload from 'travis/tests/helpers/generate-pusher-payload';
