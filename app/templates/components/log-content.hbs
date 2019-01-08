@@ -1,4 +1,11 @@
 <section id="log-container" class="log">
+  <section style='background: rgba(255,255,255,0.6); margin-bottom: 20px;'>
+   Job state:
+   <button style='border: 2px solid #3EAAAF; cursor: pointer; margin-right: 10px;' onclick={{action (mut job.state) 'created'}}>Created(1)</button>
+   <button style='border: 2px solid #3EAAAF; cursor: pointer; margin-right: 10px;' onclick={{action (mut job.state) 'queued'}}>Queued(2)</button>
+   <button style='border: 2px solid #3EAAAF; cursor: pointer; margin-right: 10px;' onclick={{action (mut job.state) 'received'}}>Received(3)</button>
+   <button style='border: 2px solid #3EAAAF; cursor: pointer; margin-right: 10px;' onclick={{action (mut job.state) 'started'}}>Started(Show log)</button>
+ </section>
   {{#if job.notStarted}}
   <div class="job-waiting-stages-container">
     <div class="stage-loading stage-1-container {{if job.isCreated 'spinner-container'}} {{if job.toBeStarted 'stage-loaded-ring'}}">
