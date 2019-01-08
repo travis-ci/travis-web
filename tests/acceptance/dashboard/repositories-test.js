@@ -171,37 +171,6 @@ module('Acceptance | dashboard/repositories', function (hooks) {
     assert.dom('[data-test-dashboard-active-repositories] [data-test-dashboard-repository-star]').exists({ count: 6 }, 'lists other repos on the 2nd page');
   });
 
-  test('displays the correct job state for active repos', async function (assert) {
-    enableFeature('dashboard');
-
-    let createBuild = server.create('build', {
-      branch: server.create('branch', { name: 'some-branch-2' }),
-      event_type: 'push',
-      number: 3,
-      state: 'created',
-      started_at: '2018-11-10T14:32:44Z',
-      finishedAt: '2018-11-10T14:37:44Z',
-      createdBy: this.currentUser
-    });
-
-    server.create('repository', {
-      owner: {
-        login: 'travis-repos',
-        type: 'organization'
-      },
-      name: 'repo-superman',
-      currentBuild: createBuild,
-    });
-
-
-    await visit('/dashboard');
-
-    assert.equal(page.activeRepos.repos[1].lastBuild, '#3 received');
-
-    percySnapshot(assert);
-  });
-
-
   test('listing my builds', async function (assert) {
     enableFeature('dashboard');
 
