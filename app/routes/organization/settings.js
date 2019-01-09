@@ -1,7 +1,15 @@
-import Route from '@ember/routing/route';
+import TravisRoute from 'travis/routes/basic';
+import { hash } from 'rsvp';
 
-export default Route.extend({
-  beforeModel() {
-    this.transitionTo('organization.repositories', this.modelFor('organization'));
-  }
+export default TravisRoute.extend({
+
+  model() {
+    const organization = this.modelFor('organization');
+    return hash({ organization });
+  },
+
+  // setupController(controller, model) {
+  //   this._super(...arguments);
+  //   controller.fetchRepositories.perform();
+  // }
 });
