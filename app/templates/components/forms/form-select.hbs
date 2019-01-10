@@ -1,0 +1,27 @@
+{{#x-select
+  value=value
+  disabled=disabled
+  multiple=multiple
+  placeholder=placeholder
+  action=(action 'handleChange')
+  on-blur=(action 'handleBlur')
+  on-click=(action 'handleClick')
+  class='travis-form__field-select'
+  as |xs|
+}}
+  {{#if hasBlock}}
+
+    {{yield (hash
+      option=xs.option class='travis-form__field-select-option'
+    )}}
+
+  {{else}}
+
+    {{#each options as |option| }}
+      {{#xs.option value=option class='travis-form__field-select-option' }}
+        {{option}}
+      {{/xs.option}}
+    {{/each}}
+
+  {{/if}}
+{{/x-select}}

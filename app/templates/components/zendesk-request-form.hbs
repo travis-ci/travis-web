@@ -20,14 +20,24 @@
         as |form|
       }}
 
-        {{form.input
-          label='Email'
-          value=email
-          validator=(form-validator form.validators.email)
-          required=true
-          disabled=true
-          data-test-zendesk-form-email=true
-        }}
+        {{#if emails.length }}
+          {{form.select
+            label='Email'
+            value=email
+            options=emails
+            required=true
+            onChange=(action (mut email))
+          }}
+        {{else}}
+          {{form.input
+            label='Email'
+            value=email
+            validator=(form-validator form.validators.email)
+            required=true
+            disabled=true
+            data-test-zendesk-form-email=true
+          }}
+        {{/if}}
 
         {{form.input
           label='Subject'

@@ -23,6 +23,7 @@ export default Component.extend({
   page: '',
 
   email: reads('auth.currentUser.email'),
+  emails: reads('auth.currentUser.emails'),
 
   subject: '',
 
