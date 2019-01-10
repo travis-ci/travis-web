@@ -79,24 +79,27 @@
   <section class="active-visiblity-settings" data-test-active-visiblity-settings>
     <h3>Active Visibility Settings</h3>
     <div class="insights-settings">
+      <div class="name" data-test-insights-settings-title>
+        Insights
+      </div>
+      <p class="description" data-test-insights-settings-description1>
+        Get better information and make more informed decisions about your development workflow by
+        understanding how you build code. Check out the Travis CI Insights Tab to see an overview.
+        Insights about your open-source contributions are visible to the world, and you can optionally
+        show aggregate information about your private contributions as well.
+      </p>
       <div class="row">
-        <div class="name" data-test-insights-settings-title>
-          Insights
+        <div class="description" data-test-insights-settings-description2>
+          Publicly share insights about your private builds
         </div>
-        <div class="description" data-test-insights-settings-description>
-          Get better information and make more informed decisions about your development workflow by
-          understanding how you build code. Check out the Travis CI Insights Tab to see an overview.
-          Insights about your open-source contributions are visible to the world, and you can optionally
-          show aggregate information about your private contributions as well.
-        </div>
-        {{!-- <div class="controls">
+        <div class="controls">
           {{travis-switch
             active=publicInsights
             disabled=togglePublicInsights.isRunning
             onToggle=(perform togglePublicInsights)
             data-test-insights-settings-toggle=true
           }}
-        </div> --}}
+        </div>
       </div>
     </div>
   </section>

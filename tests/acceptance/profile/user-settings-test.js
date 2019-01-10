@@ -91,7 +91,7 @@ test('no settings for org', function (assert) {
   visit('/organizations/org-login/preferences');
 
   andThen(() => {
-    assert.equal(currentURL(), '/organizations/org-login/repositories');
+    assert.equal(currentURL(), '/organizations/org-login/preferences');
   });
 });
 
