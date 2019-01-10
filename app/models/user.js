@@ -15,6 +15,7 @@ export default Owner.extend({
   sessionStorage: service(),
 
   email: attr(),
+  emails: attr(), // list of all known user emails
   token: attr(),
   gravatarId: attr(),
   allowMigration: attr(),
