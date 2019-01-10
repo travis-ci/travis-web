@@ -883,6 +883,17 @@ header.space-between {
       }
     }
   }
+
+  .insights-settings {
+    .description p {
+      width: 80%;
+      margin-bottom: 0;
+    }
+
+    .controls {
+      align-self: flex-end;
+    }
+  }
 }
 
 .repository-migration-modal {
