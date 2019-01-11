@@ -10,6 +10,7 @@ export default Controller.extend({
 
   // repositories: reads('fetchRepositories.lastSuccessful.value'),
   publicInsights: reads('preferences.publicInsights'),
+  membersInsights: reads('preferences.hash.members_insights.value'),
 
   // fetchRepositories: task(function* () {
   //   yield fetchAll(this.store, 'repo', {});

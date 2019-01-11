@@ -766,7 +766,7 @@ header.space-between {
   }
 }
 
-.user-settings {
+.user-settings, .organization-settings {
   @include linkStyle;
 
   h3 {
@@ -899,5 +899,47 @@ header.space-between {
 .repository-migration-modal {
   .migration-modal-cancel {
     margin-left: 6px;
+  }
+}
+
+.travis-radio-list {
+  list-style: none;
+  padding: 0;
+  font-style: italic;
+  color: $cement-grey;
+
+  label { cursor: pointer; }
+
+  &__item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: .5rem 0;
+  }
+
+  .travis-radio-input {
+    display: none;
+
+    &:checked + .travis-radio-label::before {
+      background-color: $oxide-blue;
+    }
+  }
+
+  .travis-radio-label {
+    display: inline-block;
+    border: 1px solid $oxide-blue;
+    border-radius: 50%;
+    padding: 2px;
+    line-height: 0;
+    margin: 0 .5rem;
+
+    &::before {
+      content: '';
+      display: inline-block;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background-color: transparent;
+    }
   }
 }
