@@ -920,8 +920,12 @@ header.space-between {
   .travis-radio-input {
     display: none;
 
-    &:checked + .travis-radio-label::before {
-      background-color: $oxide-blue;
+    &:checked + .travis-radio-label {
+      // border-color: $oxide-blue;
+
+      &::before {
+        background-color: $oxide-blue;
+      }
     }
   }
 
@@ -931,13 +935,12 @@ header.space-between {
     border-radius: 50%;
     padding: 2px;
     line-height: 0;
-    margin: 0 .5rem;
 
     &::before {
       content: '';
       display: inline-block;
-      width: 9px;
-      height: 9px;
+      width: 10px;
+      height: 10px;
       border-radius: 50%;
       background-color: transparent;
     }
