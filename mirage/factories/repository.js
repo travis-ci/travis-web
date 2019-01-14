@@ -46,7 +46,7 @@ export default Mirage.Factory.extend({
       // TODO: I'd like to remove it at some point as this is unexpected
       // we should set up permissions as needed. Possibly whenever we fully
       // switch to permissions from V3
-      const user = server.schema.users.all().models[0];
+      const user = server.schema.users.all().models[0] || null;
       server.create('permissions', { user, repository });
     }
   }
