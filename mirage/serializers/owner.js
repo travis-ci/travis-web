@@ -5,7 +5,7 @@ export default Serializer.extend({
     const user = Object.assign({}, object.attrs);
     user['@type'] = 'user';
 
-    user.repositories = object.schema.repositories.where(repo => {
+    user.repositories = object._schema.repositories.where(repo => {
       return repo.slug.indexOf(user.login) === 0;
     }).models.map(repo => {
       const data = Object.assign({}, repo.attrs);
