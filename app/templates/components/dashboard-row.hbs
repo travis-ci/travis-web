@@ -35,7 +35,7 @@
       <p class="row-content color">
         {{status-icon status=repo.currentBuild.state}}
         {{#link-to "build" repo.owner.login repo.name repo.currentBuild.id title="Last build on the repo"}}
-        <span class="label-align">#{{repo.currentBuild.number}} {{repo.currentBuild.state}}</span>
+        <span class="label-align">#{{repo.currentBuild.number}} {{humanize-state repo.currentBuild.state}}</span>
         {{/link-to}}
       </p>
     </section>
