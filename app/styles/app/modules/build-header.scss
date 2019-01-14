@@ -240,3 +240,223 @@
   vertical-align: baseline;
   line-height: 1.5;
 }
+
+.job-waiting-stages-container {
+  display: grid;
+  grid-template-columns: 30px 90px 75px 30px 60px 75px 30px 165px;
+  grid-template-rows: 1fr;
+  grid-template-areas: "stage-1 stage-1-message loading-line-1 stage-2 stage-2-message loading-line-2 stage-3 stage-3-message";
+  grid-column-gap: 20px;
+  justify-content: center;
+  border: 2px solid #f1f1f1;
+  font-size: 16px;
+  height: 100px;
+  padding-top: 35px;
+
+  @media #{$small-only} {
+    grid-template-columns: 30px 50px 30px 50px 30px;
+    grid-template-rows: 1fr 1fr;
+    grid-column-gap: 15px;
+    grid-template-areas:
+    "stage-1 loading-line-1 stage-2 loading-line-2 stage-3"
+    "stage-message stage-message stage-message stage-message stage-message";
+    padding-top: 16px;
+    padding-bottom: 10px;
+  }
+
+  @media #{$medium-only} {
+    grid-column-gap: 3%;
+  }
+
+  @media #{$large-only} {
+    grid-column-gap: 3%;
+  }
+
+  .stage-loading {
+    position: relative;
+    top: 4px;
+    width: 30px;
+    font-size: 12px;
+    color: $pebble-grey;
+    text-align: center;
+
+    .loading-num-text {
+      position: relative;
+      bottom: 28px;
+    }
+
+
+    svg {
+      display: none;
+    }
+
+    svg.spinner {
+      display: inline-block;
+    }
+  }
+
+  .spinner-container {
+    top: -3px;
+    bottom: 0px;
+  }
+
+
+  .stage-1-container {
+    grid-area: stage-1;
+  }
+
+  .stage-2-container {
+    grid-area: stage-2;
+  }
+
+  .stage-3-container {
+    grid-area: stage-3;
+  }
+
+  .stage-1-message {
+    grid-area: stage-1-message;
+  }
+
+  .stage-2-message {
+    grid-area: stage-2-message;
+  }
+
+  .stage-3-message {
+    grid-area: stage-3-message;
+  }
+
+  .stage-message {
+    font-size: 15px;
+    text-align: center;
+
+    @media #{$small-only} {
+      grid-area: stage-message;
+      align-self: end;
+    }
+
+  }
+
+  .loading-line-container {
+    grid-area: loading-line;
+    position: relative;
+    top: 10.8px;
+    width: 100%;
+    height: 3px;
+    background-color: #F1F1F1;
+  }
+
+  .loading-line-container-1 {
+    grid-area: loading-line-1;
+  }
+
+  .loading-line-container-2 {
+    grid-area: loading-line-2;
+  }
+
+  @keyframes increase {
+      100% {
+        width: 100%;
+      }
+  }
+
+  .loading-line {
+    position: relative;
+    bottom: 14px;
+    display: inline-block;
+    height:0px;
+    width:1px;
+    border-bottom:3px solid #3EAAAF;
+
+    -webkit-animation: increase .5s;
+    -moz-animation:    increase .5s;
+    -o-animation:      increase .5s;
+    animation:         increase .5s;
+    animation-fill-mode: forwards;
+  }
+
+  .spinner {
+		width: 30px;
+    animation: loading 3s linear infinite;
+
+    #loading-inner {
+		  stroke: {
+        dashoffset: 0;
+        dasharray: 300;
+        width: 10;
+        miterlimit: 10;
+        linecap: round;
+      }
+      animation: loading-circle 2s linear infinite;
+      stroke: $oxide-blue;
+      fill: transparent;
+    }
+	}
+
+@keyframes loading {
+		0% {
+      transform: rotate(0);
+    }
+		100% {
+      transform: rotate(360deg);
+    }
+}
+@keyframes loading-circle {
+		0% {
+      stroke-dashoffset: 0
+    }
+		100% {
+      stroke-dashoffset: -600;
+    }
+}
+
+  .stage-loaded-ring {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    position: relative;
+    top: -3px;
+    background-color: transparent;
+    border: 2px solid $oxide-blue;
+
+    svg {
+      display: none;
+    }
+  }
+
+  .not-loaded-ring {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    position: relative;
+    top: -3px;
+    background-color: transparent;
+    border: 2px solid $pebble-grey;
+
+    .stage-text {
+      position: relative;
+      top: 4px;
+    }
+  }
+
+  .stage-loaded-text {
+    position: relative;
+    top: 4px;
+    font-size: 12px;
+    color: $oxide-blue;
+  }
+
+
+  .show-stage-message {
+    @media #{$small-only} {
+      display: block;
+    }
+  }
+
+  .hide-stage-message {
+    @media #{$small-only} {
+      display: none;
+    }
+  }
+}
