@@ -76,6 +76,15 @@ module.exports = function (environment) {
     logLimit: 10000,
     emojiPrepend: '',
     statusPageStatusUrl: 'https://pnpcptp8xh9k.statuspage.io/api/v2/status.json',
+
+    zendesk: {
+      apiHost: 'https://travisci.zendesk.com',
+      createRequestEndpoint: '/api/v2/requests.json'
+    },
+
+    moment: {
+      includeTimezone: 'subset'
+    }
   };
 
   ENV.featureFlags = {
@@ -132,7 +141,6 @@ module.exports = function (environment) {
         caches: true
       };
       ENV.userlike = true;
-      ENV.beacon = true;
 
       if (process.env.GITHUB_APPS_APP_NAME) {
         ENV.githubApps = {

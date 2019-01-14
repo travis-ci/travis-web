@@ -101,36 +101,3 @@ $styleguide-medium: 800px;
   color: $styleguide-color-grey-dark;
 }
 
-.status-circle {
-  display: inline-block;
-  height: 11px;
-  width: 11px;
-  text-indent: -9999px;
-  margin-right: 2px;
-  border-radius: 100px;
-  vertical-align: middle;
-
-  &.none {
-    background: $turf-green;
-  }
-
-  &.unknown {
-    background: $cement-grey;
-  }
-
-  &.maintenance {
-    background: $dozer-yellow;
-  }
-
-  &.degraded {
-    background: $dozer-yellow;
-  }
-
-  &.minor {
-    background: mix($brick-red, $dozer-yellow);
-  }
-
-  &.major {
-    background: $brick-red;
-  }
-}

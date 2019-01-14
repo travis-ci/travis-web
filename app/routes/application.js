@@ -13,7 +13,6 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
   features: service(),
   featureFlags: service(),
   flashes: service(),
-  helpScout: service(),
   repositories: service(),
 
   needsAuth: false,
@@ -105,10 +104,12 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
   },
 
   actions: {
-    signIn() {
+    signIn(runAfterSignIn = true) {
       let authParams = this.modelFor('auth');
       this.get('auth').signIn(null, authParams);
-      this.afterSignIn();
+      if (runAfterSignIn) {
+        this.afterSignIn();
+      }
     },
 
     signOut() {
@@ -134,18 +135,6 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
         return true;
       }
     },
-
-    showRepositories() {
-      this.transitionTo('index');
-    },
-
-    viewSearchResults(query) {
-      this.transitionTo('search', query);
-    },
-
-    helpscoutTrigger() {
-      this.helpScout.openHelpScout();
-    }
   },
 
   afterSignIn() {

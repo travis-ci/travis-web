@@ -1,0 +1,110 @@
+{{#unless isSuccess}}
+
+  <h1 class="header-main align-center" data-test-zendesk-form-header >
+    Get help from our support engineers
+  </h1>
+
+  <div class="subheading align-center">
+    <span class="nowrap">Our support hours are between</span>
+    <span class="nowrap" data-test-zendesk-form-support-hours>
+      {{startTime}} {{timezone}} – {{endTime}} {{timezone}}
+    </span>
+    <span class="nowrap">Monday through Friday</span>
+  </div>
+
+  {{#if isLoggedIn}}
+    <div data-test-zendesk-form-container>
+
+      {{#travis-form
+        onSubmit=(action 'handleSubmit')
+        as |form|
+      }}
+
+        {{form.input
+          label='Email'
+          value=email
+          validator=(form-validator form.validators.email)
+          required=true
+          disabled=true
+          data-test-zendesk-form-email=true
+        }}
+
+        {{form.input
+          label='Subject'
+          value=subject
+          required=true
+          disabled=isSubmitting
+          onChange=(action (mut subject))
+          data-test-zendesk-form-subject=true
+        }}
+
+        {{#form.textarea
+          label='Description'
+          value=description
+          helperText="Let us know what's happening and how this is affecting you. Tip: Include any links to failing Travis CI build"
+          rows=10
+          disabled=isSubmitting
+          validator=(form-validator form.validators.difference descriptionTemplate "Make sure to add some details on what you'd like to talk with us about")
+          required=true
+          autoValidate=false
+          onChange=(action (mut description))
+          data-test-zendesk-form-description=true
+        }}{{description}}{{/form.textarea}}
+
+        <div class="align-center">
+          <button
+            onclick={{form.submit}}
+            class='submit-button button--blue button--large'
+            data-test-zendesk-form-submit
+          >
+            {{#if isSubmitting}}
+              {{loading-indicator white=true }}
+            {{else}}
+              Submit
+            {{/if}}
+          </button>
+        </div>
+
+      {{/travis-form}}
+
+    </div>
+  {{else}}
+
+    <div class="sign-in-image align-center" data-test-zendesk-form-log-in-image>
+      {{svg-jar 'hard-hat'}}
+    </div>
+
+    <div class="sign-in align-center">
+      <button
+        title="Sign into Travis CI"
+        class="hero-button"
+        {{action (action 'signIn' false target=auth)}}
+        data-test-zendesk-form-log-in-button
+      >
+        {{svg-jar 'icon-repooctocat' }} Sign in with GitHub
+      </button>
+    </div>
+
+  {{/if}}
+
+{{else}}
+
+  <h1 class="header-main align-center" data-test-zendesk-form-success-header>
+    Thank you!
+  </h1>
+
+  <div class="success-image align-center" data-test-zendesk-form-success-image>
+    {{svg-jar 'hard-hat-success'}}
+  </div>
+
+  <div class="subheading align-center" data-test-zendesk-form-success-message>
+    One of our support engineers will get back to you as soon as possible.
+  </div>
+
+  <div class="back-link align-center">
+    <a class="button--blue" href={{page}} data-test-zendesk-form-back-link>
+      Head back
+    </a>
+  </div>
+
+{{/unless}}
