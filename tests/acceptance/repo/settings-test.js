@@ -1,6 +1,7 @@
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { Response } from 'ember-cli-mirage';
+import { percySnapshot } from 'ember-percy';
 
 import settingsPage from 'travis/tests/pages/settings';
 import topPage from 'travis/tests/pages/top';
@@ -11,13 +12,13 @@ import moment from 'moment';
 module('Acceptance | repo settings', function (hooks) {
   setupApplicationTest(hooks);
 
-  hooks.beforeEach(function () {
+  hooks.beforeEach(async function () {
     const currentUser = server.create('user', {
       name: 'User Name',
       login: 'user-login',
     });
 
-    signInUser(currentUser);
+    await signInUser(currentUser);
 
     // create organization
     server.create('organization', {
@@ -88,8 +89,8 @@ module('Acceptance | repo settings', function (hooks) {
     });
   });
 
-  test('view settings', function (assert) {
-    settingsPage.visit({ organization: 'org-login', repo: 'repository-name' });
+  test('view settings', async function (assert) {
+    await settingsPage.visit({ organization: 'org-login', repo: 'repository-name' });
 
     assert.ok(settingsPage.buildPushes.isActive, 'expected builds for pushes');
     assert.equal(settingsPage.buildPushes.ariaChecked, 'true', 'expected the build pushes switch to have aria-checked=true');
@@ -137,8 +138,8 @@ module('Acceptance | repo settings', function (hooks) {
     assert.notOk(settingsPage.autoCancelPullRequests.exists, 'expected no auto-cancel pull requests switch when flag not present in API response');
   });
 
-  test('change general settings', function (assert) {
-    settingsPage.visit({ organization: 'org-login', repo: 'repository-name' });
+  test('change general settings', async function (assert) {
+    await settingsPage.visit({ organization: 'org-login', repo: 'repository-name' });
 
     const settingToRequestBody = {};
 
@@ -146,30 +147,30 @@ module('Acceptance | repo settings', function (hooks) {
       settingToRequestBody[request.params.setting] = JSON.parse(request.requestBody);
     });
 
-    settingsPage.buildPushes.toggle();
+    await settingsPage.buildPushes.toggle();
 
     assert.notOk(settingsPage.buildPushes.isActive, 'expected no builds for pushes');
     assert.equal(settingsPage.buildPushes.ariaChecked, 'false', 'expected the build pushes switch to have aria-checked=false');
     assert.deepEqual(settingToRequestBody.build_pushes, { 'setting.value': false });
 
-    settingsPage.buildPullRequests.toggle();
+    await settingsPage.buildPullRequests.toggle();
 
     assert.notOk(settingsPage.buildPullRequests.isActive, 'expected no builds for pull requests');
     assert.deepEqual(settingToRequestBody.build_pull_requests, { 'setting.value': false });
 
-    settingsPage.limitConcurrentBuilds.fill('2010');
+    await settingsPage.limitConcurrentBuilds.fill('2010');
 
     assert.equal(settingsPage.limitConcurrentBuilds.value, '2010');
     assert.deepEqual(settingToRequestBody.maximum_number_of_builds, { 'setting.value': 2010 });
 
-    settingsPage.limitConcurrentBuilds.toggle();
+    await settingsPage.limitConcurrentBuilds.toggle();
 
     assert.notOk(settingsPage.limitConcurrentBuilds.isActive, 'expected unlimited concurrent builds');
     assert.deepEqual(settingToRequestBody.maximum_number_of_builds, { 'setting.value': 0 });
   });
 
-  test('delete and create environment variables', function (assert) {
-    settingsPage.visit({ organization: 'org-login', repo: 'repository-name' });
+  test('delete and create environment variables', async function (assert) {
+    await settingsPage.visit({ organization: 'org-login', repo: 'repository-name' });
 
     const deletedIds = [];
 
@@ -177,7 +178,7 @@ module('Acceptance | repo settings', function (hooks) {
       deletedIds.push(request.params.id);
     });
 
-    settingsPage.environmentVariables[0].delete();
+    await settingsPage.environmentVariables[0].delete();
 
     assert.equal(deletedIds.pop(), 'a', 'expected the server to have received a deletion request for the first environment variable');
     assert.equal(settingsPage.environmentVariables.length, 1, 'expected only one environment variable to remain');
@@ -192,10 +193,10 @@ module('Acceptance | repo settings', function (hooks) {
       return parsedRequestBody;
     });
 
-    settingsPage.environmentVariableForm.fillName('  drafted');
-    settingsPage.environmentVariableForm.fillValue('  true');
-    settingsPage.environmentVariableForm.makePublic();
-    settingsPage.environmentVariableForm.add();
+    await settingsPage.environmentVariableForm.fillName('  drafted');
+    await settingsPage.environmentVariableForm.fillValue('  true');
+    await settingsPage.environmentVariableForm.makePublic();
+    await settingsPage.environmentVariableForm.add();
 
     settingsPage.environmentVariables[0].as(environmentVariable => {
       assert.equal(environmentVariable.name, 'drafted', 'expected leading whitespace to be trimmed');
@@ -215,32 +216,32 @@ module('Acceptance | repo settings', function (hooks) {
     // This will trigger a client-side error
     server.post('/settings/env_vars', () => new Response(403, {}, {}));
 
-    settingsPage.environmentVariableForm.fillName('willFail');
-    settingsPage.environmentVariableForm.fillValue('true');
-    settingsPage.environmentVariableForm.add();
+    await settingsPage.environmentVariableForm.fillName('willFail');
+    await settingsPage.environmentVariableForm.fillValue('true');
+    await settingsPage.environmentVariableForm.add();
 
     assert.equal(topPage.flashMessage.text, 'There was an error saving this environment variable.');
 
     // This will cause deletions to fail
     server.delete('/settings/env_vars/:id', () => new Response(500, {}, {}));
 
-    settingsPage.environmentVariables[1].delete();
+    await settingsPage.environmentVariables[1].delete();
 
     assert.equal(settingsPage.environmentVariables.length, 2, 'expected the environment variable to remain');
     assert.equal(topPage.flashMessage.text, 'There was an error deleting this environment variable.');
 
     server.delete('/settings/env_vars/:id', () => new Response(404, {}, {}));
 
-    settingsPage.environmentVariables[1].delete();
+    await settingsPage.environmentVariables[1].delete();
 
     assert.equal(settingsPage.environmentVariables.length, 2, 'expected the environment variable to remain');
     assert.equal(topPage.flashMessage.text, 'This environment variable has already been deleted. Try refreshing.');
   });
 
-  test('delete and create crons', function (assert) {
+  test('delete and create crons', async function (assert) {
     const done = assert.async();
 
-    settingsPage.visit({ organization: 'org-login', repo: 'repository-name' });
+    await settingsPage.visit({ organization: 'org-login', repo: 'repository-name' });
 
     const deletedIds = [];
 
@@ -250,14 +251,14 @@ module('Acceptance | repo settings', function (hooks) {
       return {};
     });
 
-    settingsPage.crons[0].delete();
+    await settingsPage.crons[0].delete();
 
     assert.equal(deletedIds.pop(), this.dailyCron.id, 'expected the server to have received a deletion request for the first cron');
     assert.equal(settingsPage.crons.length, 1, 'expected only one cron to remain');
     done();
   });
 
-  test('reload cron branches on branch:created', function (assert) {
+  test('reload cron branches on branch:created', async function (assert) {
     const done = assert.async();
 
     server.create('branch', {
@@ -267,7 +268,7 @@ module('Acceptance | repo settings', function (hooks) {
       repository: this.repository,
     });
 
-    settingsPage.visit({ organization: 'org-login', repo: 'repository-name' });
+    await settingsPage.visit({ organization: 'org-login', repo: 'repository-name' });
 
     assert.equal(settingsPage.cronBranches.length, 1, 'expected only one branch');
 
@@ -278,7 +279,7 @@ module('Acceptance | repo settings', function (hooks) {
       repository: this.repository,
     });
 
-    this.application.pusher.receive('branch:created', {
+    await this.owner.application.pusher.receive('branch:created', {
       repository_id: this.repository.id,
       branch: 'bar',
     });
@@ -286,8 +287,8 @@ module('Acceptance | repo settings', function (hooks) {
     done();
   });
 
-  test('delete SSH key', function (assert) {
-    settingsPage.visit({ organization: 'org-login', repo: 'repository-name' });
+  test('delete SSH key', async function (assert) {
+    await settingsPage.visit({ organization: 'org-login', repo: 'repository-name' });
 
     const deletedIds = [];
 
@@ -295,7 +296,7 @@ module('Acceptance | repo settings', function (hooks) {
       deletedIds.push(request.params.id);
     });
 
-    settingsPage.sshKey.delete();
+    await settingsPage.sshKey.delete();
 
     assert.equal(deletedIds.pop(), this.repository.id, 'expected the server to have received a deletion request for the SSH key');
 
@@ -304,7 +305,7 @@ module('Acceptance | repo settings', function (hooks) {
     assert.ok(settingsPage.sshKey.cannotBeDeleted, 'expected default SSH key not to be deletable');
   });
 
-  test('add SSH key', function (assert) {
+  test('add SSH key', async function (assert) {
     server.schema.db.sshKeys.remove();
 
     const requestBodies = [];
@@ -323,11 +324,11 @@ module('Acceptance | repo settings', function (hooks) {
       };
     });
 
-    settingsPage.visit({ organization: 'org-login', repo: 'repository-name' });
+    await settingsPage.visit({ organization: 'org-login', repo: 'repository-name' });
 
-    settingsPage.sshKeyForm.fillDescription('hey');
-    settingsPage.sshKeyForm.fillKey('hello');
-    settingsPage.sshKeyForm.add();
+    await settingsPage.sshKeyForm.fillDescription('hey');
+    await settingsPage.sshKeyForm.fillKey('hello');
+    await settingsPage.sshKeyForm.add();
 
     assert.deepEqual(requestBodies.pop().ssh_key, {
       id: this.repository.id,
@@ -336,26 +337,26 @@ module('Acceptance | repo settings', function (hooks) {
     });
   });
 
-  test('the SSH key section is hidden for public repositories', function (assert) {
+  test('the SSH key section is hidden for public repositories', async function (assert) {
     this.repository.private = false;
-    settingsPage.visit({ organization: 'org-login', repo: 'repository-name' });
+    await settingsPage.visit({ organization: 'org-login', repo: 'repository-name' });
 
     assert.dom('[data-test-ssh-key-section]').doesNotExist();
   });
 
-  test('shows disabled modal message for migrated repository on .org', function (assert) {
+  test('shows disabled modal message for migrated repository on .org', async function (assert) {
     this.repository.update('migration_status', 'migrated');
-    settingsPage.visit({ organization: 'org-login', repo: 'repository-name' });
+    await settingsPage.visit({ organization: 'org-login', repo: 'repository-name' });
 
     assert.dom('[data-test-settings-disabled-after-migration-modal]').exists();
   });
 
 
-  test('on a repository with auto-cancellation', function (assert) {
+  test('on a repository with auto-cancellation', async function (assert) {
     this.repository.createSetting({ name: 'auto_cancel_pushes', value: true });
     this.repository.createSetting({ name: 'auto_cancel_pull_requests', value: false });
 
-    settingsPage.visit({ organization: 'org-login', repo: 'repository-name' });
+    await settingsPage.visit({ organization: 'org-login', repo: 'repository-name' });
 
     assert.ok(settingsPage.autoCancellationSection.exists, 'expected auto-cancellation section to exist');
     assert.ok(settingsPage.autoCancelPushes.isActive, 'expected auto-cancel pushes to be present and enabled');
@@ -367,12 +368,12 @@ module('Acceptance | repo settings', function (hooks) {
       settingToRequestBody[request.params.setting] = JSON.parse(request.requestBody);
     });
 
-    settingsPage.autoCancelPullRequests.toggle();
+    await settingsPage.autoCancelPullRequests.toggle();
 
     assert.ok(settingsPage.autoCancelPullRequests.isActive, 'expected auto-cancel pull requests to be enabled');
     assert.deepEqual(settingToRequestBody.auto_cancel_pull_requests, { 'setting.value': true });
 
-    settingsPage.autoCancelPushes.toggle();
+    await settingsPage.autoCancelPushes.toggle();
 
     assert.notOk(settingsPage.autoCancelPushes.isActive, 'expected auto-cancel pushes to be disabled');
     assert.deepEqual(settingToRequestBody.auto_cancel_pushes, { 'setting.value': false });
