@@ -47,7 +47,7 @@
     "ember-cli-moment-shim": "^3.5.0",
     "ember-cli-page-object": "^1.15.0-beta.3",
     "ember-cli-sass": "^9.0.0",
-    "ember-cli-sentry": "^3.0.0",
+    "ember-cli-sentry": "^4.0.0",
     "ember-cli-sri": "^2.1.1",
     "ember-cli-test-loader": "^2.1.0",
     "ember-cli-uglify": "^2.1.0",
