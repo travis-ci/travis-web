@@ -40,7 +40,7 @@ export default Component.extend({
   }).drop(),
 
   searchBranches: task(function* (term) {
-    // FIXME why? When I originally had the yield instead of the return, nothing showed in the results.
+    // FIXME why? When I originally had yield instead of the return, nothing showed in the results.
     yield timeout(1);
     const store = this.get('store');
     const repoId = this.get('branches.firstObject.repoId');
