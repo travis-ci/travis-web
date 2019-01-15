@@ -8,10 +8,10 @@ import signInUser from 'travis/tests/helpers/sign-in-user';
 
 import moment from 'moment';
 
-module('Acceptance | repo settings', function(hooks) {
+module('Acceptance | repo settings', function (hooks) {
   setupApplicationTest(hooks);
 
-  hooks.beforeEach(function() {
+  hooks.beforeEach(function () {
     const currentUser = server.create('user', {
       name: 'User Name',
       login: 'user-login',
