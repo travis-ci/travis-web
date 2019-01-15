@@ -1,15 +1,17 @@
-import { test } from 'qunit';
+import { module, test } from 'qunit';
+import { setupApplicationTest } from 'ember-qunit';
 import { Response } from 'ember-cli-mirage';
 
-import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import settingsPage from 'travis/tests/pages/settings';
 import topPage from 'travis/tests/pages/top';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 
 import moment from 'moment';
 
-moduleForAcceptance('Acceptance | repo settings', {
-  beforeEach() {
+module('Acceptance | repo settings', function(hooks) {
+  setupApplicationTest(hooks);
+
+  hooks.beforeEach(function() {
     const currentUser = server.create('user', {
       name: 'User Name',
       login: 'user-login',
@@ -84,13 +86,11 @@ moduleForAcceptance('Acceptance | repo settings', {
       branchId: weeklyBranch.id,
       repository
     });
-  }
-});
+  });
 
-test('view settings', function (assert) {
-  settingsPage.visit({ organization: 'org-login', repo: 'repository-name' });
+  test('view settings', function (assert) {
+    settingsPage.visit({ organization: 'org-login', repo: 'repository-name' });
 
-  andThen(function () {
     assert.ok(settingsPage.buildPushes.isActive, 'expected builds for pushes');
     assert.equal(settingsPage.buildPushes.ariaChecked, 'true', 'expected the build pushes switch to have aria-checked=true');
     assert.equal(settingsPage.buildPushes.role, 'switch', 'expected the build pushes switch to be marked as such');
@@ -136,79 +136,67 @@ test('view settings', function (assert) {
     assert.notOk(settingsPage.autoCancelPushes.exists, 'expected no auto-cancel pushes switch when flag not present in API response');
     assert.notOk(settingsPage.autoCancelPullRequests.exists, 'expected no auto-cancel pull requests switch when flag not present in API response');
   });
-});
 
-test('change general settings', function (assert) {
-  settingsPage.visit({ organization: 'org-login', repo: 'repository-name' });
+  test('change general settings', function (assert) {
+    settingsPage.visit({ organization: 'org-login', repo: 'repository-name' });
 
-  const settingToRequestBody = {};
+    const settingToRequestBody = {};
 
-  server.patch(`/repo/${this.repository.id}/setting/:setting`, function (schema, request) {
-    settingToRequestBody[request.params.setting] = JSON.parse(request.requestBody);
-  });
+    server.patch(`/repo/${this.repository.id}/setting/:setting`, function (schema, request) {
+      settingToRequestBody[request.params.setting] = JSON.parse(request.requestBody);
+    });
 
-  settingsPage.buildPushes.toggle();
+    settingsPage.buildPushes.toggle();
 
-  andThen(() => {
     assert.notOk(settingsPage.buildPushes.isActive, 'expected no builds for pushes');
     assert.equal(settingsPage.buildPushes.ariaChecked, 'false', 'expected the build pushes switch to have aria-checked=false');
     assert.deepEqual(settingToRequestBody.build_pushes, { 'setting.value': false });
-  });
 
-  settingsPage.buildPullRequests.toggle();
+    settingsPage.buildPullRequests.toggle();
 
-  andThen(() => {
     assert.notOk(settingsPage.buildPullRequests.isActive, 'expected no builds for pull requests');
     assert.deepEqual(settingToRequestBody.build_pull_requests, { 'setting.value': false });
-  });
 
-  settingsPage.limitConcurrentBuilds.fill('2010');
+    settingsPage.limitConcurrentBuilds.fill('2010');
 
-  andThen(() => {
     assert.equal(settingsPage.limitConcurrentBuilds.value, '2010');
     assert.deepEqual(settingToRequestBody.maximum_number_of_builds, { 'setting.value': 2010 });
-  });
 
-  settingsPage.limitConcurrentBuilds.toggle();
+    settingsPage.limitConcurrentBuilds.toggle();
 
-  andThen(() => {
     assert.notOk(settingsPage.limitConcurrentBuilds.isActive, 'expected unlimited concurrent builds');
     assert.deepEqual(settingToRequestBody.maximum_number_of_builds, { 'setting.value': 0 });
   });
-});
 
-test('delete and create environment variables', function (assert) {
-  settingsPage.visit({ organization: 'org-login', repo: 'repository-name' });
+  test('delete and create environment variables', function (assert) {
+    settingsPage.visit({ organization: 'org-login', repo: 'repository-name' });
 
-  const deletedIds = [];
+    const deletedIds = [];
 
-  server.delete('/settings/env_vars/:id', function (schema, request) {
-    deletedIds.push(request.params.id);
-  });
+    server.delete('/settings/env_vars/:id', function (schema, request) {
+      deletedIds.push(request.params.id);
+    });
 
-  settingsPage.environmentVariables[0].delete();
+    settingsPage.environmentVariables[0].delete();
 
-  andThen(() => {
     assert.equal(deletedIds.pop(), 'a', 'expected the server to have received a deletion request for the first environment variable');
     assert.equal(settingsPage.environmentVariables.length, 1, 'expected only one environment variable to remain');
     assert.equal(settingsPage.environmentVariables[0].name, 'published', 'expected the formerly-second variable to be first');
-  });
 
-  const requestBodies = [];
+    const requestBodies = [];
 
-  server.post('/settings/env_vars', function (schema, request) {
-    const parsedRequestBody = JSON.parse(request.requestBody);
-    parsedRequestBody.env_var.id = '1919';
-    requestBodies.push(parsedRequestBody);
-    return parsedRequestBody;
-  });
+    server.post('/settings/env_vars', function (schema, request) {
+      const parsedRequestBody = JSON.parse(request.requestBody);
+      parsedRequestBody.env_var.id = '1919';
+      requestBodies.push(parsedRequestBody);
+      return parsedRequestBody;
+    });
 
-  settingsPage.environmentVariableForm.fillName('  drafted');
-  settingsPage.environmentVariableForm.fillValue('  true');
-  settingsPage.environmentVariableForm.makePublic();
-  settingsPage.environmentVariableForm.add();
+    settingsPage.environmentVariableForm.fillName('  drafted');
+    settingsPage.environmentVariableForm.fillValue('  true');
+    settingsPage.environmentVariableForm.makePublic();
+    settingsPage.environmentVariableForm.add();
 
-  andThen(() => {
     settingsPage.environmentVariables[0].as(environmentVariable => {
       assert.equal(environmentVariable.name, 'drafted', 'expected leading whitespace to be trimmed');
       assert.ok(environmentVariable.isPublic, 'expected environment variable to be public');
@@ -226,71 +214,61 @@ test('delete and create environment variables', function (assert) {
 
     // This will trigger a client-side error
     server.post('/settings/env_vars', () => new Response(403, {}, {}));
-  });
 
-  settingsPage.environmentVariableForm.fillName('willFail');
-  settingsPage.environmentVariableForm.fillValue('true');
-  settingsPage.environmentVariableForm.add();
+    settingsPage.environmentVariableForm.fillName('willFail');
+    settingsPage.environmentVariableForm.fillValue('true');
+    settingsPage.environmentVariableForm.add();
 
-  andThen(() => {
     assert.equal(topPage.flashMessage.text, 'There was an error saving this environment variable.');
 
     // This will cause deletions to fail
     server.delete('/settings/env_vars/:id', () => new Response(500, {}, {}));
-  });
 
-  settingsPage.environmentVariables[1].delete();
+    settingsPage.environmentVariables[1].delete();
 
-  andThen(() => {
     assert.equal(settingsPage.environmentVariables.length, 2, 'expected the environment variable to remain');
     assert.equal(topPage.flashMessage.text, 'There was an error deleting this environment variable.');
 
     server.delete('/settings/env_vars/:id', () => new Response(404, {}, {}));
-  });
 
-  settingsPage.environmentVariables[1].delete();
+    settingsPage.environmentVariables[1].delete();
 
-  andThen(() => {
     assert.equal(settingsPage.environmentVariables.length, 2, 'expected the environment variable to remain');
     assert.equal(topPage.flashMessage.text, 'This environment variable has already been deleted. Try refreshing.');
   });
-});
 
-test('delete and create crons', function (assert) {
-  const done = assert.async();
+  test('delete and create crons', function (assert) {
+    const done = assert.async();
 
-  settingsPage.visit({ organization: 'org-login', repo: 'repository-name' });
+    settingsPage.visit({ organization: 'org-login', repo: 'repository-name' });
 
-  const deletedIds = [];
+    const deletedIds = [];
 
-  server.delete('/cron/:id', function (schema, request) {
-    deletedIds.push(request.params.id);
-    schema.db.crons.remove(request.params.id);
-    return {};
-  });
+    server.delete('/cron/:id', function (schema, request) {
+      deletedIds.push(request.params.id);
+      schema.db.crons.remove(request.params.id);
+      return {};
+    });
 
-  settingsPage.crons[0].delete();
+    settingsPage.crons[0].delete();
 
-  andThen(() => {
     assert.equal(deletedIds.pop(), this.dailyCron.id, 'expected the server to have received a deletion request for the first cron');
     assert.equal(settingsPage.crons.length, 1, 'expected only one cron to remain');
     done();
   });
-});
 
-test('reload cron branches on branch:created', function (assert) {
-  const done = assert.async();
+  test('reload cron branches on branch:created', function (assert) {
+    const done = assert.async();
 
-  server.create('branch', {
-    name: 'food',
-    id: `/v3/repo/${this.repository.id}/branch/food`,
-    exists_on_github: true,
-    repository: this.repository,
-  });
+    server.create('branch', {
+      name: 'food',
+      id: `/v3/repo/${this.repository.id}/branch/food`,
+      exists_on_github: true,
+      repository: this.repository,
+    });
 
-  settingsPage.visit({ organization: 'org-login', repo: 'repository-name' });
+    settingsPage.visit({ organization: 'org-login', repo: 'repository-name' });
 
-  andThen(() => {
     assert.equal(settingsPage.cronBranches.length, 1, 'expected only one branch');
 
     server.create('branch', {
@@ -304,118 +282,101 @@ test('reload cron branches on branch:created', function (assert) {
       repository_id: this.repository.id,
       branch: 'bar',
     });
-  });
-
-  andThen(() => {
     assert.equal(settingsPage.cronBranches.length, 2, 'expected two branches after event');
     done();
   });
-});
 
-test('delete SSH key', function (assert) {
-  settingsPage.visit({ organization: 'org-login', repo: 'repository-name' });
+  test('delete SSH key', function (assert) {
+    settingsPage.visit({ organization: 'org-login', repo: 'repository-name' });
 
-  const deletedIds = [];
+    const deletedIds = [];
 
-  server.delete('/settings/ssh_key/:id', function (schema, request) {
-    deletedIds.push(request.params.id);
-  });
+    server.delete('/settings/ssh_key/:id', function (schema, request) {
+      deletedIds.push(request.params.id);
+    });
 
-  settingsPage.sshKey.delete();
+    settingsPage.sshKey.delete();
 
-  andThen(() => {
     assert.equal(deletedIds.pop(), this.repository.id, 'expected the server to have received a deletion request for the SSH key');
 
     assert.equal(settingsPage.sshKey.name, 'Default');
     assert.equal(settingsPage.sshKey.fingerprint, 'aa:bb:cc:dd');
     assert.ok(settingsPage.sshKey.cannotBeDeleted, 'expected default SSH key not to be deletable');
   });
-});
 
-test('add SSH key', function (assert) {
-  server.schema.db.sshKeys.remove();
+  test('add SSH key', function (assert) {
+    server.schema.db.sshKeys.remove();
 
-  const requestBodies = [];
+    const requestBodies = [];
 
-  server.get(`/settings/ssh_key/${this.repository.id}`, function (schema, request) {
-    return new Response(429, {}, {});
-  });
+    server.get(`/settings/ssh_key/${this.repository.id}`, function (schema, request) {
+      return new Response(429, {}, {});
+    });
 
-  server.patch(`/settings/ssh_key/${this.repository.id}`, (schema, request) => {
-    const newKey = JSON.parse(request.requestBody);
-    requestBodies.push(newKey);
-    newKey.id = this.repository.id;
+    server.patch(`/settings/ssh_key/${this.repository.id}`, (schema, request) => {
+      const newKey = JSON.parse(request.requestBody);
+      requestBodies.push(newKey);
+      newKey.id = this.repository.id;
 
-    return {
-      ssh_key: newKey
-    };
-  });
+      return {
+        ssh_key: newKey
+      };
+    });
 
-  settingsPage.visit({ organization: 'org-login', repo: 'repository-name' });
+    settingsPage.visit({ organization: 'org-login', repo: 'repository-name' });
 
-  settingsPage.sshKeyForm.fillDescription('hey');
-  settingsPage.sshKeyForm.fillKey('hello');
-  settingsPage.sshKeyForm.add();
+    settingsPage.sshKeyForm.fillDescription('hey');
+    settingsPage.sshKeyForm.fillKey('hello');
+    settingsPage.sshKeyForm.add();
 
-  andThen(() => {
     assert.deepEqual(requestBodies.pop().ssh_key, {
       id: this.repository.id,
       description: 'hey',
       value: 'hello'
     });
   });
-});
 
-test('the SSH key section is hidden for public repositories', function (assert) {
-  this.repository.private = false;
-  settingsPage.visit({ organization: 'org-login', repo: 'repository-name' });
+  test('the SSH key section is hidden for public repositories', function (assert) {
+    this.repository.private = false;
+    settingsPage.visit({ organization: 'org-login', repo: 'repository-name' });
 
-  andThen(() => {
     assert.dom('[data-test-ssh-key-section]').doesNotExist();
   });
-});
 
-test('shows disabled modal message for migrated repository on .org', function (assert) {
-  this.repository.update('migration_status', 'migrated');
-  settingsPage.visit({ organization: 'org-login', repo: 'repository-name' });
+  test('shows disabled modal message for migrated repository on .org', function (assert) {
+    this.repository.update('migration_status', 'migrated');
+    settingsPage.visit({ organization: 'org-login', repo: 'repository-name' });
 
-  andThen(() => {
     assert.dom('[data-test-settings-disabled-after-migration-modal]').exists();
   });
-});
 
 
-test('on a repository with auto-cancellation', function (assert) {
-  this.repository.createSetting({ name: 'auto_cancel_pushes', value: true });
-  this.repository.createSetting({ name: 'auto_cancel_pull_requests', value: false });
+  test('on a repository with auto-cancellation', function (assert) {
+    this.repository.createSetting({ name: 'auto_cancel_pushes', value: true });
+    this.repository.createSetting({ name: 'auto_cancel_pull_requests', value: false });
 
-  settingsPage.visit({ organization: 'org-login', repo: 'repository-name' });
+    settingsPage.visit({ organization: 'org-login', repo: 'repository-name' });
 
-  andThen(() => {
     assert.ok(settingsPage.autoCancellationSection.exists, 'expected auto-cancellation section to exist');
     assert.ok(settingsPage.autoCancelPushes.isActive, 'expected auto-cancel pushes to be present and enabled');
     assert.notOk(settingsPage.autoCancelPullRequests.isActive, 'expected auto-cancel pull requests to be present but disabled');
-  });
 
-  const settingToRequestBody = {};
+    const settingToRequestBody = {};
 
-  server.patch(`/repo/${this.repository.id}/setting/:setting`, function (schema, request) {
-    settingToRequestBody[request.params.setting] = JSON.parse(request.requestBody);
-  });
+    server.patch(`/repo/${this.repository.id}/setting/:setting`, function (schema, request) {
+      settingToRequestBody[request.params.setting] = JSON.parse(request.requestBody);
+    });
 
-  settingsPage.autoCancelPullRequests.toggle();
+    settingsPage.autoCancelPullRequests.toggle();
 
-  andThen(() => {
     assert.ok(settingsPage.autoCancelPullRequests.isActive, 'expected auto-cancel pull requests to be enabled');
     assert.deepEqual(settingToRequestBody.auto_cancel_pull_requests, { 'setting.value': true });
-  });
 
-  settingsPage.autoCancelPushes.toggle();
+    settingsPage.autoCancelPushes.toggle();
 
-  andThen(() => {
     assert.notOk(settingsPage.autoCancelPushes.isActive, 'expected auto-cancel pushes to be disabled');
     assert.deepEqual(settingToRequestBody.auto_cancel_pushes, { 'setting.value': false });
-  });
 
-  percySnapshot(assert);
+    percySnapshot(assert);
+  });
 });
