@@ -1,18 +1,19 @@
 import $ from 'jquery';
 import Route from '@ember/routing/route';
-import { service } from 'ember-decorators/service';
+import { inject as service } from '@ember/service';
 
 export default Route.extend({
-  @service auth: null,
-  @service tabStates: null,
-  @service repositories: null,
+  auth: service(),
+  tabStates: service(),
+  repositories: service(),
+  features: service(),
 
   redirect() {
     if (this.get('auth.signedIn')) {
       if (this.get('features.dashboard')) {
         this.transitionTo('dashboard');
       }
-    } else if (this.get('features.enterprise')) {
+    } else if (this.get('features.enterpriseVersion')) {
       this.transitionTo('auth');
     }
   },
@@ -21,7 +22,8 @@ export default Route.extend({
     if (this.get('auth.signedIn')) {
       $('body').attr('id', 'home');
     }
-    return this._super(args);
+    this._super(args);
+    this.render('build/index', {into: 'index', controller: 'build/index'});
   },
 
   activate(...args) {

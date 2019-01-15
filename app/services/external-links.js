@@ -2,10 +2,6 @@ import Service from '@ember/service';
 import config from 'travis/config/environment';
 
 export default Service.extend({
-  plainTextLog(id) {
-    return `${config.apiEndpoint}/jobs/${id}/log.txt?deansi=true`;
-  },
-
   githubPullRequest(slug, pullRequestNumber) {
     return `${config.sourceEndpoint}/${slug}/pull/${pullRequestNumber}`;
   },
@@ -37,5 +33,29 @@ export default Service.extend({
 
   githubTag(slug, tag) {
     return `${config.sourceEndpoint}/${slug}/releases/tag/${tag}`;
-  }
+  },
+
+  openSourceMigrationDocs: 'https://docs.travis-ci.com/user/open-source-on-travis-ci-com/#existing-open-source-repositories-on-travis-ciorg',
+
+  betaMigrationDocs: 'https://docs.travis-ci.com/user/open-source-repository-migration/',
+
+  platformLink(platform, rest) {
+    return `https://travis-ci.${platform}/${rest}`;
+  },
+
+  migratedToComLink(slug) {
+    return this.platformLink('com', slug);
+  },
+
+  migratedToComSettingsLink(slug) {
+    return this.platformLink('com', `${slug}/settings`);
+  },
+
+  orgBuildHistoryLink(slug) {
+    return this.platformLink('org', `${slug}/builds`);
+  },
+
+  comBuildHistoryLink(slug) {
+    return this.platformLink('com', `${slug}/builds`);
+  },
 });

@@ -1,0 +1,254 @@
+$light-blue: #FCFDFD;
+
+@mixin planBtn($color) {
+  display: inline-block;
+  padding: 0.5em 1em;
+  border: 1px solid $color;
+  border-radius: 3px;
+  font-size: 20px;
+  color: $color;
+  background: white;
+  transition: background-color 200ms ease;
+  cursor: pointer;
+
+  &:hover,
+  &:active {
+    background-color: $color;
+    color: white;
+  }
+}
+
+$plan-buttons: (green: $turf-green, blue: $oxide-blue, grey: $cement-grey, red: $brick-red);
+
+@each $ident, $color in $plan-buttons {
+  .plans-button--#{$ident} {
+    @include planBtn($color);
+  }
+}
+
+.plans-hero {
+  padding-top: 60px;
+  padding-bottom: 55px;
+}
+
+.list--plans {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  .plan,
+  .plan--important {
+    flex: 0 0 25%;
+    align-self: center;
+    padding: 0.5em 1.5em 0;
+    margin-bottom: 2em;
+    background-color: $light-blue;
+    border: {
+      width: 1px;
+      color: $agate-blue;
+      style: solid;
+    };
+  }
+
+  .plan--important {
+    padding: 0.5em 2em 3em;
+
+    @include z-index(above);
+
+    box-shadow: $oxide-blue 0px 0px 9px 0px;
+
+    .plans-price,
+    .plans-name,
+    .plans-name + .plans-label {
+      color: $oxide-blue;
+    }
+
+    .plan-icon {
+      @include colorSVG($oxide-blue);
+    }
+  }
+
+  @media screen and (min-width: 50em) {
+    .plan:nth-of-type(1), .plan:nth-of-type(3) {
+      border-right: none;
+    }
+
+    .plan:nth-of-type(3) {
+      border-left: none;
+    }
+  }
+
+  @media screen and (max-width: 50em) {
+    justify-content: space-around;
+
+    .plan--important {
+      order: 0;
+    }
+
+    .plan {
+      order: 1;
+    }
+
+    .plan,
+    .plan--important {
+      flex: 0 1 240px;
+    }
+  }
+
+  .list {
+    padding: 0;
+    list-style: none;
+    margin: 3em 0;
+    font-size: 16px;
+
+    li {
+      line-height: 2;
+    }
+  }
+
+  .list-em {
+    display: inline-block;
+    width: 1.3em;
+    font-weight: 600;
+    font-size: 18px;
+  }
+
+  .plan-icon {
+    @extend %icon;
+
+    @include colorSVG($cement-grey);
+
+    width: 13px;
+    height: 14px;
+    margin-right: 8px;
+  }
+}
+
+.plans-label {
+  margin-top: 0;
+  font-size: 13px;
+  color: $cement-grey;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.plans-name {
+  font-size: 30px;
+  font-weight: 300;
+  margin-bottom: 0;
+}
+
+.plans-timeframe {
+  margin-bottom: 4em;
+  text-align: center;
+}
+
+.plans-price {
+  margin: 2rem 0 0;
+  font-size: 50px;
+  text-align: center;
+}
+
+.plans-prices {
+  @media #{$medium} {
+    margin-top: -4em;
+    margin-bottom: 4em;
+  }
+}
+
+.section-headline {
+  margin-bottom: 0;
+}
+
+.section--two {
+  display: flex;
+  flex-flow: column nowrap;
+
+  [class^="plans-button"] {
+    margin-top: 1em;
+  }
+
+  > div {
+    margin-bottom: 5em;
+  }
+
+  svg {
+    width: 100%;
+  }
+
+  @media #{$medium} {
+    flex-flow: row nowrap;
+    justify-content: space-around;
+
+    > div {
+      display: flex;
+      flex-flow: column;
+      justify-content: space-between;
+      flex: 0 0 48%;
+      align-items: flex-start;
+      margin-bottom: 0;
+    }
+  }
+
+  &.section--os {
+    padding-top: 6em;
+    padding-bottom: 6em;
+  }
+
+  &.section--enterprise {
+    margin: 3em 1em 9em;
+    padding-top: 3em;
+    padding-bottom: 4em;
+    background-color: $light-blue;
+    border: 1px solid $oxide-blue;
+
+    @media #{$medium} {
+      margin: 3em auto 9em;
+
+      > div {
+        justify-content: center;
+        flex: 0 0 45%;
+      }
+    }
+  }
+}
+
+.inner.section--faq {
+  margin-bottom: 6em;
+}
+
+.landing-pro {
+  .list--faq {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    padding: 0;
+    margin: 3em 0 0;
+    list-style: none;
+
+    li {
+      flex: 0 0 100%;
+      padding: 1em 1.5em 1.7em;
+      margin-bottom: 2em;
+      border: solid 1px rgba($cement-grey, 0.2);
+
+      @media #{$medium-up} {
+        flex: 0 0 48%;
+      }
+    }
+  }
+
+  .faq-text {
+    @include linkStyle;
+
+    margin: 0;
+    font-size: 16px;
+
+    a {
+      display: inline-block;
+    }
+  }
+}

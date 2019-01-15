@@ -1,9 +1,10 @@
 import config from 'travis/config/environment';
 import ActiveModelAdapter from 'active-model-adapter';
-import { service } from 'ember-decorators/service';
+import { inject as service } from '@ember/service';
 
 export default ActiveModelAdapter.extend({
-  @service auth: null,
+  auth: service(),
+  features: service(),
 
   host: config.apiEndpoint,
   coalesceFindRequests: true,
@@ -22,8 +23,9 @@ export default ActiveModelAdapter.extend({
     let hash = this._super(...arguments);
     hash.headers = hash.headers || {};
     hash.headers['accept'] = 'application/json; version=2';
+    hash.headers['X-Client-Release'] = config.release;
 
-    let token = this.get('auth').token();
+    let token = this.get('auth.token');
     if (token) {
       if (!hash.headers['Authorization']) {
         hash.headers['Authorization'] = `token ${token}`;

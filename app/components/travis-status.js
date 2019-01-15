@@ -1,28 +1,26 @@
-import $ from 'jquery';
 import Component from '@ember/component';
-import config from 'travis/config/environment';
-import { computed } from 'ember-decorators/object';
+import { inject as service } from '@ember/service';
+import { reads, notEmpty, not, and } from '@ember/object/computed';
 
 export default Component.extend({
-  status: null,
+  classNames: ['travis-status'],
+  classNameBindings: ['indicator', 'colorizeText:colorize-text'],
 
-  @computed()
-  statusPageStatusUrl() {
-    return config.statusPageStatusUrl;
-  },
+  appLoading: service(),
+
+  colorizeText: false,
+
+  indicator: reads('appLoading.indicator'),
+  description: reads('appLoading.description'),
+
+  showDescription: notEmpty('description'),
+  notShowDescription: not('showDescription'),
+
+  // there is description but it's hidden from outside
+  showTooltip: and('notShowDescription', 'description'),
 
   didInsertElement() {
-    let url = this.get('statusPageStatusUrl');
-    if (url) {
-      return this.getStatus(url).then((response) => {
-        if (response.status && response.status.indicator) {
-          return this.set('status', response.status.indicator);
-        }
-      });
-    }
-  },
-
-  getStatus(url) {
-    return $.ajax(url);
+    this._super(...arguments);
+    this.appLoading.fetchTravisStatus.perform();
   }
 });

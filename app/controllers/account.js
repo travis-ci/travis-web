@@ -1,51 +1,26 @@
 import Controller from '@ember/controller';
-import { service } from 'ember-decorators/service';
-import { computed, action } from 'ember-decorators/object';
-import { alias } from 'ember-decorators/object/computed';
+import { inject as service } from '@ember/service';
+import { reads, not, or } from '@ember/object/computed';
 
 export default Controller.extend({
-  @service auth: null,
-  @service externalLinks: null,
+  auth: service(),
+  externalLinks: service(),
+  features: service(),
 
-  @alias('auth.currentUser') user: null,
+  user: reads('auth.currentUser'),
+  account: reads('model'),
+  subscription: reads('account.subscription'),
 
-  @action
-  sync() {
-    return this.get('user').sync();
-  },
+  isSubscribed: or('subscription.isSubscribed', 'account.education'),
+  isNotSubscribed: not('isSubscribed'),
 
-  @action
-  toggle(hook) {
-    return hook.toggle();
-  },
+  actions: {
+    sync() {
+      return this.user.sync();
+    },
 
-  @computed('model.{name,login}')
-  accountName(name, login) {
-    return name || login;
-  },
-
-  @computed()
-  showPrivateReposHint() {
-    return this.config.show_repos_hint === 'private';
-  },
-
-  @computed()
-  showPublicReposHint() {
-    return this.config.show_repos_hint === 'public';
-  },
-
-  @computed('model.{type,login}')
-  billingUrl(type, login) {
-    const id = type === 'user' ? 'user' : login;
-    return `${this.config.billingEndpoint}/subscriptions/${id}`;
-  },
-
-  @computed('model.{subscribed,education}', 'billingUrl')
-  subscribeButtonInfo(subscribed, education, billingUrl) {
-    return {
-      billingUrl,
-      subscribed,
-      education,
-    };
-  },
+    toggle(hook) {
+      return hook.toggle();
+    }
+  }
 });

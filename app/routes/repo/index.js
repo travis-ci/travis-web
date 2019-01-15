@@ -1,8 +1,9 @@
 import TravisRoute from 'travis/routes/basic';
-import { service } from 'ember-decorators/service';
+import { inject as service } from '@ember/service';
 
 export default TravisRoute.extend({
-  @service tabStates: null,
+  features: service(),
+  tabStates: service(),
 
   setupController(controller, model) {
     this._super(...arguments);
@@ -13,6 +14,7 @@ export default TravisRoute.extend({
   deactivate() {
     this.controllerFor('build').set('build', null);
     this.controllerFor('job').set('job', null);
+    this.controllerFor('repo').set('migrationStatus', null);
     this.stopObservingRepoStatus();
     return this._super(...arguments);
   },
@@ -38,12 +40,17 @@ export default TravisRoute.extend({
   renderTemplate() {
     let controller = this.controllerFor('repo');
 
-    if (!controller.get('repo.active')) {
+    if (this.get('features.github-apps') &&
+      controller.get('repo.active_on_org') &&
+      controller.get('migrationStatus') !== 'success') {
+      this.render('repo/active-on-org');
+    } else if (!controller.get('repo.active')) {
       this.render('repo/not-active');
     } else if (!controller.get('repo.currentBuildId')) {
       this.render('repo/no-build');
     } else {
       this.render('build');
+      this.render('build/index', { into: 'build', controller: 'build' });
     }
   }
 });

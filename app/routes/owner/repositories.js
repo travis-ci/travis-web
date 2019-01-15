@@ -1,30 +1,31 @@
-import $ from 'jquery';
 import TravisRoute from 'travis/routes/basic';
 import config from 'travis/config/environment';
+import { inject as service } from '@ember/service';
 
 export default TravisRoute.extend({
+  features: service(),
+
   needsAuth: false,
 
-  titleToken(model) {
-    let name = model.name || model.login;
-    return name;
+  queryParams: {
+    page: {
+      refreshModel: true
+    },
   },
 
-  model(params, transition) {
-    let options = {
-      headers: {
-        'Travis-API-Version': '3'
-      }
-    };
+  model({ page }, transition) {
+    const limit = config.pagination.profileReposPerPage;
+    const offset = (page - 1) * limit;
+    const owner = transition.params.owner.owner;
+    const type = 'byOwner';
+    const sort_by = 'default_branch.last_build:desc'; // eslint-disable-line
 
-    if (this.get('auth.signedIn')) {
-      options.headers.Authorization = `token ${this.auth.token()}`;
+    const queryParams = { offset, limit, sort_by, custom: { owner, type, }};
+
+    if (this.features.get('github-apps')) {
+      queryParams['repository.active'] = true;
     }
 
-    // eslint-disable-next-line
-    let includes = `?include=owner.repositories,repository.default_branch,build.commit,repository.current_build`;
-    let { owner } = transition.params.owner;
-    let url = `${config.apiEndpoint}/owner/${owner}${includes}`;
-    return $.ajax(url, options);
+    return this.store.paginated('repo', queryParams, { live: false });
   }
 });

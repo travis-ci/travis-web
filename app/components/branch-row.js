@@ -1,16 +1,17 @@
 import { run } from '@ember/runloop';
-import EmberObject from '@ember/object';
+import EmberObject, { computed } from '@ember/object';
 import $ from 'jquery';
 import ArrayProxy from '@ember/array/proxy';
 import Component from '@ember/component';
 import config from 'travis/config/environment';
-import { computed } from 'ember-decorators/object';
-import { service } from 'ember-decorators/service';
+import { alias } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
 
 export default Component.extend({
-  @service router: null,
-  @service permissions: null,
-  @service externalLinks: null,
+  auth: service(),
+  router: service(),
+  permissions: service(),
+  externalLinks: service(),
 
   tagName: 'li',
   classNameBindings: ['branch.last_build.state'],
@@ -19,13 +20,56 @@ export default Component.extend({
   isTriggering: false,
   hasTriggered: false,
 
-  @computed('branch.repository.slug', 'branch.last_build.commit.sha')
-  urlGithubCommit(slug, sha) {
+  urlGithubCommit: computed('branch.repository.slug', 'branch.last_build.commit.sha', function () {
+    let slug = this.get('branch.repository.slug');
+    let sha = this.get('branch.last_build.commit.sha');
     return this.get('externalLinks').githubCommit(slug, sha);
-  },
+  }),
 
-  @computed()
-  getLast5Builds() {
+  rawCreatedBy: alias('branch.last_build.created_by'),
+
+  createdBy: computed(
+    'rawCreatedBy.name',
+    'rawCreatedBy.login',
+    'rawCreatedBy.avatar_url',
+    function () {
+      let name = this.get('rawCreatedBy.name');
+      let login = this.get('rawCreatedBy.login');
+      let avatarUrl = this.get('rawCreatedBy.avatar_url');
+      return {
+        name,
+        login,
+        avatarUrl
+      };
+    }
+  ),
+
+  rawCommit: alias('branch.last_build.commit'),
+
+  commit: computed(
+    'rawCommit.author.name',
+    'rawCommit.author.avatar_url',
+    'rawCommit.committer.name',
+    'rawCommit.committer.avatar_url',
+    function () {
+      let authorName = this.get('rawCommit.author.name');
+      let authorAvatarUrl = this.get('rawCommit.author.avatar_url');
+      let committerName = this.get('rawCommit.committer.name');
+      let committerAvatarUrl = this.get('rawCommit.committer.avatar_url');
+      let authorIsCommitter =
+        authorName === committerName && authorAvatarUrl === committerAvatarUrl;
+
+      return {
+        authorIsCommitter,
+        authorName,
+        authorAvatarUrl,
+        committerName,
+        committerAvatarUrl
+      };
+    }
+  ),
+
+  getLast5Builds: computed(function () {
     let apiEndpoint, branchName, lastBuilds, options, repoId;
     lastBuilds = ArrayProxy.create({
       content: [{}, {}, {}, {}, {}],
@@ -37,26 +81,26 @@ export default Component.extend({
     } else {
       apiEndpoint = config.apiEndpoint;
       repoId = this.get('branch.repository.id');
-      branchName = this.get('branch.name');
+      branchName = encodeURIComponent(this.get('branch.name'));
       options = {
         headers: {
           'Travis-API-Version': '3'
         }
       };
       if (this.get('auth.signedIn')) {
-        options.headers.Authorization = `token ${this.auth.token()}`;
+        options.headers.Authorization = `token ${this.get('auth.token')}`;
       }
       let path = `${apiEndpoint}/repo/${repoId}/builds`;
       let params = `?branch.name=${branchName}&limit=5&build.event_type=push,api,cron`;
       let url = `${path}${params}`;
 
       $.ajax(url, options).then(response => {
-        let array, i, ref;
+        let array, i, trueLength;
         array = response.builds.map(build => EmberObject.create(build));
-        // TODO: Clean this up, all we want to do is have 5 elements no matter
-        // what. This code doesn't express that very well.
+        // We need exactly 5 elements in array
         if (array.length < 5) {
-          for (i = 1, ref = 5 - array.length; i <= ref; i += 1) {
+          trueLength = array.length;
+          for (i = trueLength; i < 5; i++) {
             array.push({});
           }
         }
@@ -69,7 +113,7 @@ export default Component.extend({
       });
     }
     return lastBuilds;
-  },
+  }),
 
   actions: {
     viewAllBuilds() {

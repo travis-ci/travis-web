@@ -1,0 +1,34 @@
+.missing-notice {
+  text-align: center;
+
+  .button {
+    font-size: 16px;
+  }
+}
+
+.page-title {
+  font-size: 36px;
+  font-weight: 200;
+  line-height: 1;
+  margin-bottom: 0.5em;
+}
+
+.page-notice {
+  font-size: $font-size-m;
+
+  @include linkStyle;
+}
+
+.page-graphic {
+  height: 180px;
+  width: 310px;
+  margin: 5.75rem auto 0;
+  padding: 0 2em;
+  line-height: 0;
+  border-bottom: 1px solid #DEDCDB;
+
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+}

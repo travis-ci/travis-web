@@ -1,7 +1,16 @@
-<div class="wrapper {{if auth.signedOut 'centered'}} {{if features.dashboard 'centered'}}">
-  {{top-bar
-    signIn=(route-action 'signIn')
-    signOut=(route-action 'signOut')}}
+<div class="wrapper {{if isCentered 'centered'}}">
+
+  {{#if showGitHubAppsCTA}}
+    {{#top-bar}}
+      <div class='cta'>
+        <p class='row'>
+          Join over 500,000 developers testing and building on Travis CI
+        </p>
+      </div>
+    {{/top-bar}}
+  {{else}}
+    {{top-bar}}
+  {{/if}}
 
   {{flash-display}}
 
@@ -18,16 +27,8 @@
   {{#if auth.signedIn}}
   {{#unless features.dashboard}}
     <aside id="left" class="{{unless auth.signedIn 'hidden'}}">
-      {{repository-sidebar
-        showRepositories=(route-action 'showRepositories')
-        viewSearchResults=(route-action 'viewSearchResults')}}
+      {{repository-sidebar}}
     </aside>
   {{/unless}}
-  {{/if}}
-
-  {{#if auth.signedOut}}
-    {{page-footer}}
-  {{else if features.dashboard}}
-    {{page-footer}}
   {{/if}}
 </div>

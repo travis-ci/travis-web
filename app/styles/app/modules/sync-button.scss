@@ -1,0 +1,62 @@
+.sync-button {
+  vertical-align: middle;
+  display: flex;
+  position: relative;
+
+  margin-top: 1rem;
+
+  .button {
+    position: relative;
+
+    @include z-index(above-above);
+
+    height: 2.6rem;
+    padding: 0.6em 0.8em;
+    background-color: $oxide-blue;
+    border: none;
+    border-radius: 2px;
+
+    margin-right: 0.5rem;
+
+    &:hover {
+      background-color: #229191;
+    }
+  }
+
+  .sync-last {
+    position: absolute;
+
+    @include z-index(under);
+
+    transition: transform 150ms ease, opacity 250ms ease;
+    transform: translateX(-100%);
+    opacity: 0;
+    background: white;
+  }
+
+  .button:hover ~ .sync-last-container .sync-last {
+    transform: translateX(0);
+    opacity: 1;
+
+    @include z-index(above);
+  }
+
+  .is-syncing {
+    background-color: $oxide-blue;
+  }
+
+  .loading-indicator--white {
+    vertical-align: middle;
+    margin-right: 0.5em;
+  }
+}
+
+.sync-last-container {
+  display: flex;
+  align-items: center;
+}
+
+.sync-last {
+  color: $asphalt-grey;
+  font-size: 0.9rem;
+}

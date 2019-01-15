@@ -1,13 +1,13 @@
 import { merge } from '@ember/polyfills';
 import { underscore } from '@ember/string';
+import { pluralize } from 'ember-inflector';
 import { get } from '@ember/object';
-import Ember from 'ember';
 import config from 'travis/config/environment';
 import RESTAdapter from 'ember-data/adapters/rest';
-import { service } from 'ember-decorators/service';
+import { inject as service } from '@ember/service';
 
 export default RESTAdapter.extend({
-  @service auth: null,
+  auth: service(),
 
   host: config.apiEndpoint,
 
@@ -16,7 +16,8 @@ export default RESTAdapter.extend({
   headers: {
     'Travis-API-Version': '3',
     'Accept': 'application/json',
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
+    'X-Client-Release': config.release
   },
 
   ajaxOptions: function (url, type = 'GET', options) {
@@ -49,7 +50,7 @@ export default RESTAdapter.extend({
 
     hash.headers = hash.headers || {};
 
-    let token = this.get('auth').token();
+    let token = this.get('auth.token');
     if (token) {
       hash.headers['Authorization'] = `token ${token}`;
     }
@@ -87,7 +88,7 @@ export default RESTAdapter.extend({
 
   pathForType: function (modelName, id) {
     const underscored = underscore(modelName);
-    return id ? underscored :  Ember.String.pluralize(underscored);
+    return id ? underscored : pluralize(underscored);
   },
 
   // Get the host alone, without a path

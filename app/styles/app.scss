@@ -7,8 +7,10 @@
 @import "app/mixins";
 @import "app/base";
 @import "app/z-index";
+@import "app/typography";
 
 @import "app/modules/logo";
+@import "app/modules/travis-status";
 @import "app/modules/tofuburger";
 @import "app/modules/navigation";
 @import "app/modules/row";
@@ -26,18 +28,24 @@
 @import "app/modules/forms";
 @import "app/modules/notice";
 @import "app/modules/build-header";
+@import "app/modules/build-messages";
 @import "app/modules/avatar";
 @import "app/modules/popup";
 @import "app/modules/lastbuild";
 @import "app/modules/sync-button";
-@import "app/modules/beta-features-button";
 @import "app/modules/loading-indicator";
 @import "app/modules/build-tile";
 @import "app/modules/status-icon";
-@import "app/modules/codedisplay";
 @import "app/modules/badge";
 @import "app/modules/dashboard-row";
 @import "app/modules/pagination";
+@import "app/modules/tracer";
+@import "app/modules/enterprise-banner";
+@import "app/modules/email-unsubscribe";
+@import "app/modules/loading-screen";
+@import "app/modules/paper-block";
+@import "app/modules/travis-form";
+@import "app/modules/yaml";
 
 @import "app/animation/tractor";
 @import "app/animation/barricade";
@@ -63,11 +71,13 @@
 @import "app/layouts/settings";
 @import "app/layouts/dashboard";
 @import "app/layouts/features";
+@import "app/layouts/striped";
 
 @import "app/pages/landing";
 @import "app/pages/home-pro";
 @import "app/pages/getting-started";
 @import "app/pages/plans";
 @import "app/pages/logo";
+@import "app/pages/help";
 
 @import "ember-power-select";

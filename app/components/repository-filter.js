@@ -1,27 +1,32 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { isBlank, isEmpty } from '@ember/utils';
 import { task, timeout } from 'ember-concurrency';
 import config from 'travis/config/environment';
-import { service } from 'ember-decorators/service';
-import { computed, action } from 'ember-decorators/object';
+import { inject as service } from '@ember/service';
+import { computed } from '@ember/object';
+import { htmlSafe } from '@ember/string';
 import fuzzyMatch from 'travis/utils/fuzzy-match';
 
-export default Ember.Component.extend({
+export default Component.extend({
   tagName: '',
-  @service store: null,
+  store: service(),
 
-  @computed('repositories', 'filteredRepositories')
-  repositoriesResult(repositories, filteredRepositories) {
+  repositoriesResult: computed('repositories', 'filteredRepositories', function () {
+    let repositories = this.get('repositories');
+    let filteredRepositories = this.get('filteredRepositories');
     return filteredRepositories || repositories;
-  },
+  }),
 
-  @computed('search.isRunning', 'lastQuery')
-  isFiltering(isRunning, lastQuery) {
-    return isRunning || !Ember.isEmpty(lastQuery);
-  },
+  isFiltering: computed('search.isRunning', 'lastQuery', function () {
+    let isRunning = this.get('search.isRunning');
+    let lastQuery = this.get('lastQuery');
+    return isRunning || !isEmpty(lastQuery);
+  }),
 
-  @action
-  onSearch(query) {
-    this.get('search').perform(query);
+  actions: {
+    onSearch(query) {
+      this.get('search').perform(query);
+    }
   },
 
   search: task(function* (query) {
@@ -31,7 +36,7 @@ export default Ember.Component.extend({
 
     this.set('lastQuery', query);
 
-    if (Ember.isBlank(query)) {
+    if (isBlank(query)) {
       this.set('filteredRepositories', null);
       return;
     }
@@ -43,11 +48,11 @@ export default Ember.Component.extend({
     this.set('filteredRepositories', repositories);
   }).restartable(),
 
-  computeSlug(slug, isFiltering, query) {
+  computeName(name, isFiltering, query) {
     if (isFiltering) {
-      return Ember.String.htmlSafe(fuzzyMatch(slug, query));
+      return htmlSafe(fuzzyMatch(name, query));
     } else {
-      return slug;
+      return name;
     }
   },
 });

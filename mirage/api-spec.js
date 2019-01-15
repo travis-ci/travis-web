@@ -3,23 +3,29 @@ export default {
   "@type": "home",
   "@href": "/v3/",
   "config": {
-    "host": "travis-ci.org",
+    "host": "travis-ci.com",
     "github": {
       "api_url": "https://api.github.com",
       "web_url": "https://github.com",
       "scopes": [
-        "read:org",
         "user:email",
-        "repo_deployment",
-        "repo:status",
-        "write:repo_hook"
+        "repo",
+        "read:org"
       ]
     },
     "pusher": {
-      "key": "5df8ac576dcccf4fd076"
+      "key": "59236bc0716a551eab40",
+      "private": true
     }
   },
   "errors": {
+    "admin_access_required": {
+      "status": 403,
+      "default_message": "admin access to this repo required",
+      "additional_attributes": [
+
+      ]
+    },
     "already_syncing": {
       "status": 409,
       "default_message": "sync already in progress",
@@ -126,6 +132,13 @@ export default {
 
       ]
     },
+    "repository_inactive": {
+      "status": 406,
+      "default_message": "cannot create requests on an inactive repository",
+      "additional_attributes": [
+
+      ]
+    },
     "request_limit_reached": {
       "status": 429,
       "default_message": "request limit reached for resource",
@@ -196,9 +209,13 @@ export default {
           }
         ]
       },
-      "attributes": ["builds"],
+      "attributes": [
+        "builds"
+      ],
       "representations": {
-        "standard": ["builds"]
+        "standard": [
+          "builds"
+        ]
       }
     },
     "beta_feature": {
@@ -223,7 +240,13 @@ export default {
           }
         ]
       },
-      "attributes": ["id","name","description","enabled","feedback_url"],
+      "attributes": [
+        "id",
+        "name",
+        "description",
+        "enabled",
+        "feedback_url"
+      ],
       "representations": {
         "standard": [
           "id",
@@ -245,9 +268,23 @@ export default {
           }
         ]
       },
-      "attributes": ["beta_features"],
+      "attributes": [
+        "beta_features"
+      ],
       "representations": {
-        "standard": ["beta_features"]
+        "standard": [
+          "beta_features"
+        ]
+      }
+    },
+    // Why is this and `credit-card-info` dashed and not underscored? 🤔
+    "billing-info": {
+      "@type":            "resource",
+      "actions":          { },
+      "attributes":       ["id", "address", "address2", "billing_email", "city", "company", "country", "first_name", "last_name", "state", "vat_id", "zip_code"],
+      "representations":  {
+        "standard":       ["id", "address", "address2", "billing_email", "city", "company", "country", "first_name", "last_name", "state", "vat_id", "zip_code"],
+        "minimal":       ["id", "address", "address2", "billing_email", "city", "company", "country", "first_name", "last_name", "state", "vat_id", "zip_code"],
       }
     },
     "branch": {
@@ -266,7 +303,14 @@ export default {
           }
         ]
       },
-      "attributes": ["name","repository","default_branch","exists_on_github","last_build","recent_builds"],
+      "attributes": [
+        "name",
+        "repository",
+        "default_branch",
+        "exists_on_github",
+        "last_build",
+        "recent_builds"
+      ],
       "representations": {
         "minimal": [
           "name"
@@ -299,9 +343,13 @@ export default {
           }
         ]
       },
-      "attributes": ["branches"],
+      "attributes": [
+        "branches"
+      ],
       "representations": {
-        "standard": ["branches"]
+        "standard": [
+          "branches"
+        ]
       },
       "sortable_by": [
         "name",
@@ -315,7 +363,14 @@ export default {
       "@type": "resource",
       "actions": {
       },
-      "attributes": ["id","message","created_at","category","active","recipient"],
+      "attributes": [
+        "id",
+        "message",
+        "created_at",
+        "category",
+        "active",
+        "recipient"
+      ],
       "representations": {
         "minimal": [
           "id",
@@ -346,9 +401,13 @@ export default {
           }
         ]
       },
-      "attributes": ["broadcasts"],
+      "attributes": [
+        "broadcasts"
+      ],
       "representations": {
-        "standard": ["broadcasts"]
+        "standard": [
+          "broadcasts"
+        ]
       }
     },
     "build": {
@@ -382,7 +441,29 @@ export default {
           }
         ]
       },
-      "attributes": ["id","number","state","duration","event_type","previous_state","pull_request_title","pull_request_number","started_at","finished_at","repository","branch","commit","jobs","stages","created_by"],
+      "attributes": [
+        "id",
+        "number",
+        "state",
+        "duration",
+        "event_type",
+        "previous_state",
+        "pull_request_title",
+        "pull_request_number",
+        "started_at",
+        "finished_at",
+        "private",
+        "repository",
+        "branch",
+        "tag",
+        "commit",
+        "jobs",
+        "stages",
+        "created_by",
+        "updated_at",
+        "request",
+        "yaml"
+      ],
       "representations": {
         "minimal": [
           "id",
@@ -394,7 +475,8 @@ export default {
           "pull_request_title",
           "pull_request_number",
           "started_at",
-          "finished_at"
+          "finished_at",
+          "private"
         ],
         "standard": [
           "id",
@@ -407,12 +489,16 @@ export default {
           "pull_request_number",
           "started_at",
           "finished_at",
+          "private",
           "repository",
           "branch",
+          "tag",
           "commit",
           "jobs",
           "stages",
-          "created_by"
+          "created_by",
+          "updated_at",
+          "yaml"
         ]
       },
       "permissions": [
@@ -428,7 +514,7 @@ export default {
           {
             "@type": "template",
             "request_method": "GET",
-            "uri_template": "/v3/builds{?include,limit,offset,sort_by}"
+            "uri_template": "/v3/builds{?include,limit,limit,offset,offset,sort_by,sort_by}"
           }
         ],
         "find": [
@@ -444,9 +530,13 @@ export default {
           }
         ]
       },
-      "attributes": ["builds"],
+      "attributes": [
+        "builds"
+      ],
       "representations": {
-        "standard": ["builds"]
+        "standard": [
+          "builds"
+        ]
       },
       "sortable_by": [
         "id",
@@ -497,7 +587,16 @@ export default {
       "@type": "resource",
       "actions": {
       },
-      "attributes": ["id","sha","ref","message","compare_url","committed_at","committer","author"],
+      "attributes": [
+        "id",
+        "sha",
+        "ref",
+        "message",
+        "compare_url",
+        "committed_at",
+        "committer",
+        "author"
+      ],
       "representations": {
         "minimal": [
           "id",
@@ -517,6 +616,15 @@ export default {
           "committer",
           "author"
         ]
+      }
+    },
+    "credit-card-info":            {
+      "@type":            "resource",
+      "actions":          { },
+      "attributes":       ["id", "card_owner", "expiration_date", "last_digits"],
+      "representations":  {
+        "standard":       ["id", "card_owner", "expiration_date", "last_digits"],
+        "minimal":        ["id", "card_owner", "expiration_date", "last_digits"],
       }
     },
     "cron": {
@@ -573,7 +681,17 @@ export default {
           }
         ]
       },
-      "attributes": ["id","repository","branch","interval","dont_run_if_recent_build_exists","last_run","next_run","created_at"],
+      "attributes": [
+        "id",
+        "repository",
+        "branch",
+        "interval",
+        "dont_run_if_recent_build_exists",
+        "last_run",
+        "next_run",
+        "created_at",
+        "active"
+      ],
       "representations": {
         "minimal": [
           "id"
@@ -586,13 +704,14 @@ export default {
           "dont_run_if_recent_build_exists",
           "last_run",
           "next_run",
-          "created_at"
+          "created_at",
+          "active"
         ]
       },
       "permissions": [
         "read",
-        "delete",
-        "start"
+        "start",
+        "delete"
       ]
     },
     "crons": {
@@ -611,9 +730,48 @@ export default {
           }
         ]
       },
-      "attributes": ["crons"],
+      "attributes": [
+        "crons"
+      ],
       "representations": {
-        "standard": ["crons"]
+        "standard": [
+          "crons"
+        ]
+      }
+    },
+    "email_subscription": {
+      "@type": "resource",
+      "actions": {
+        "unsubscribe": [
+          {
+            "@type": "template",
+            "request_method": "DELETE",
+            "uri_template": "/v3/repo/{repository.id}/email_subscription"
+          },
+          {
+            "@type": "template",
+            "request_method": "DELETE",
+            "uri_template": "/v3/repo/{repository.slug}/email_subscription"
+          }
+        ],
+        "resubscribe": [
+          {
+            "@type": "template",
+            "request_method": "POST",
+            "uri_template": "/v3/repo/{repository.id}/email_subscription",
+            "accepted_params": [
+
+            ]
+          },
+          {
+            "@type": "template",
+            "request_method": "POST",
+            "uri_template": "/v3/repo/{repository.slug}/email_subscription",
+            "accepted_params": [
+
+            ]
+          }
+        ]
       }
     },
     "env_var": {
@@ -666,7 +824,12 @@ export default {
           }
         ]
       },
-      "attributes": ["id","name","value","public"],
+      "attributes": [
+        "id",
+        "name",
+        "value",
+        "public"
+      ],
       "representations": {
         "standard": [
           "id",
@@ -723,9 +886,13 @@ export default {
           }
         ]
       },
-      "attributes": ["env_vars"],
+      "attributes": [
+        "env_vars"
+      ],
       "representations": {
-        "standard": ["env_vars"]
+        "standard": [
+          "env_vars"
+        ]
       }
     },
     "error": {
@@ -755,6 +922,51 @@ export default {
         "errors",
         "resources"
       ]
+    },
+    "installation": {
+      "@type": "resource",
+      "actions": {
+        "find": [
+          {
+            "@type": "template",
+            "request_method": "GET",
+            "uri_template": "/v3/installation/{installation.github_id}{?include}"
+          }
+        ]
+      },
+      "attributes": [
+        "id",
+        "github_id",
+        "owner"
+      ],
+      "representations": {
+        "minimal": [
+          "id",
+          "github_id"
+        ],
+        "standard": [
+          "id",
+          "github_id",
+          "owner"
+        ]
+      }
+    },
+    "invoice":            {
+      "@type":            "resource",
+      "actions":          { },
+      "attributes":       ["id", "created_at", "url"],
+      "representations":  {
+        "standard":       ["id", "created_at", "url"],
+        "minimal":        ["id", "created_at", "url"],
+      }
+    },
+    "invoices": {
+      "@type": "resource",
+      "attributes":       ["id", "created_at", "url"],
+      "representations":  {
+        "standard":       ["id", "created_at", "url"],
+        "minimal":        ["id", "created_at", "url"],
+      }
     },
     "job": {
       "@type": "resource",
@@ -797,13 +1009,31 @@ export default {
           }
         ]
       },
-      "attributes": ["id","number","state","started_at","finished_at","build","queue","repository","commit","owner","stage"],
+      "attributes": [
+        "id",
+        "allow_failure",
+        "number",
+        "state",
+        "started_at",
+        "finished_at",
+        "build",
+        "queue",
+        "repository",
+        "commit",
+        "owner",
+        "stage",
+        "created_at",
+        "updated_at",
+        "private",
+        "config"
+      ],
       "representations": {
         "minimal": [
           "id"
         ],
         "standard": [
           "id",
+          "allow_failure",
           "number",
           "state",
           "started_at",
@@ -814,15 +1044,17 @@ export default {
           "commit",
           "owner",
           "stage",
-          "allow_failure"
+          "created_at",
+          "updated_at",
+          "private"
         ]
       },
       "permissions": [
         "read",
-        "debug",
+        "delete_log",
         "cancel",
         "restart",
-        "delete_log"
+        "debug"
       ]
     },
     "jobs": {
@@ -834,12 +1066,27 @@ export default {
             "request_method": "GET",
             "uri_template": "/v3/build/{build.id}/jobs{?include}"
           }
+        ],
+        "for_current_user": [
+          {
+            "@type": "template",
+            "request_method": "GET",
+            "uri_template": "/v3/jobs{?active,created_by,include,job.active,job.created_by,job.state,limit,offset,sort_by,state}"
+          }
         ]
       },
-      "attributes": ["jobs"],
+      "attributes": [
+        "jobs"
+      ],
       "representations": {
-        "standard": ["jobs"]
-      }
+        "standard": [
+          "jobs"
+        ]
+      },
+      "sortable_by": [
+        "id"
+      ],
+      "default_sort": "id:desc"
     },
     "key_pair": {
       "@type": "resource",
@@ -966,7 +1213,11 @@ export default {
           }
         ]
       },
-      "attributes": ["description","public_key","fingerprint"],
+      "attributes": [
+        "description",
+        "public_key",
+        "fingerprint"
+      ],
       "representations": {
         "standard": [
           "description",
@@ -1005,7 +1256,12 @@ export default {
           {
             "@type": "template",
             "request_method": "GET",
-            "uri_template": "/v3/job/{job.id}/log{?include}"
+            "uri_template": "/v3/job/{job.id}/log{?include,log.token}"
+          },
+          {
+            "@type": "template",
+            "request_method": "GET",
+            "uri_template": "/v3/job/{job.id}/log.txt{?include,log.token}"
           }
         ],
         "delete": [
@@ -1016,7 +1272,11 @@ export default {
           }
         ]
       },
-      "attributes": ["id","content","log_parts"],
+      "attributes": [
+        "id",
+        "content",
+        "log_parts"
+      ],
       "representations": {
         "minimal": [
           "id"
@@ -1029,11 +1289,57 @@ export default {
       },
       "permissions": [
         "read",
-        "debug",
+        "delete_log",
         "cancel",
         "restart",
-        "delete_log"
+        "debug"
       ]
+    },
+    "message": {
+      "@type": "resource",
+      "actions": {
+      },
+      "attributes": [
+        "id",
+        "level",
+        "key",
+        "code",
+        "args"
+      ],
+      "representations": {
+        "standard": [
+          "id",
+          "level",
+          "key",
+          "code",
+          "args"
+        ]
+      }
+    },
+    "messages": {
+      "@type": "resource",
+      "actions": {
+        "for_request": [
+          {
+            "@type": "template",
+            "request_method": "GET",
+            "uri_template": "/v3/repo/{repository.id}/request/{request.id}/messages{?include,limit,offset}"
+          },
+          {
+            "@type": "template",
+            "request_method": "GET",
+            "uri_template": "/v3/repo/{repository.slug}/request/{request.id}/messages{?include,limit,offset}"
+          }
+        ]
+      },
+      "attributes": [
+        "messages"
+      ],
+      "representations": {
+        "standard": [
+          "messages"
+        ]
+      }
     },
     "organization": {
       "@type": "resource",
@@ -1046,7 +1352,17 @@ export default {
           }
         ]
       },
-      "attributes": ["id","login","name","github_id","avatar_url","repositories"],
+      "attributes": [
+        "id",
+        "login",
+        "name",
+        "github_id",
+        "avatar_url",
+        "education",
+        "allow_migration",
+        "repositories",
+        "installation"
+      ],
       "representations": {
         "minimal": [
           "id",
@@ -1057,10 +1373,13 @@ export default {
           "login",
           "name",
           "github_id",
-          "avatar_url"
+          "avatar_url",
+          "education",
+          "allow_migration"
         ],
         "additional": [
-          "repositories"
+          "repositories",
+          "installation"
         ]
       },
       "permissions": [
@@ -1075,13 +1394,17 @@ export default {
           {
             "@type": "template",
             "request_method": "GET",
-            "uri_template": "/v3/orgs{?include,limit,offset,sort_by}"
+            "uri_template": "/v3/orgs{?include,limit,offset,organization.role,role,sort_by}"
           }
         ]
       },
-      "attributes": ["organizations"],
+      "attributes": [
+        "organizations"
+      ],
       "representations": {
-        "standard": ["organizations"]
+        "standard": [
+          "organizations"
+        ]
       },
       "sortable_by": [
         "id",
@@ -1116,7 +1439,17 @@ export default {
           }
         ]
       },
-      "attributes": ["id","login","name","github_id","avatar_url","repositories"],
+      "attributes": [
+        "id",
+        "login",
+        "name",
+        "github_id",
+        "avatar_url",
+        "education",
+        "allow_migration",
+        "repositories",
+        "installation"
+      ],
       "representations": {
         "minimal": [
           "id",
@@ -1127,12 +1460,84 @@ export default {
           "login",
           "name",
           "github_id",
-          "avatar_url"
+          "avatar_url",
+          "education",
+          "allow_migration"
         ],
         "additional": [
-          "repositories"
+          "repositories",
+          "installation"
         ]
       }
+    },
+    "plan":            {
+      "@type":            "resource",
+      "actions":          { },
+      "attributes":       ["id", "name", "price", "currency", "builds", "annual"],
+      "representations":  {
+        "standard":       ["id", "name", "price", "currency", "builds", "annual"],
+        "minimal":        ["id", "name", "price", "currency", "builds", "annual"],
+      }
+    },
+    "preference": {
+      "@type": "resource",
+      "actions": {
+        "find": [
+          {
+            "@type": "template",
+            "request_method": "GET",
+            "uri_template": "/v3/preference/{preference.name}{?include}"
+          }
+        ],
+        "update": [
+          {
+            "@type": "template",
+            "request_method": "PATCH",
+            "uri_template": "/v3/preference/{preference.name}",
+            "accepted_params": [
+              "preference.value"
+            ]
+          }
+        ]
+      },
+      "attributes": [
+        "name",
+        "value"
+      ],
+      "representations": {
+        "standard": [
+          "name",
+          "value"
+        ],
+        "minimal": [
+          "name",
+          "value"
+        ]
+      }
+    },
+    "preferences": {
+      "@type": "resource",
+      "actions": {
+        "for_user": [
+          {
+            "@type": "template",
+            "request_method": "GET",
+            "uri_template": "/v3/preferences{?include}"
+          }
+        ]
+      },
+      "attributes": [
+        "preferences"
+      ],
+      "representations": {
+        "standard": [
+          "preferences"
+        ]
+      },
+      "permissions": [
+        "read",
+        "write"
+      ]
     },
     "repositories": {
       "@type": "resource",
@@ -1141,35 +1546,39 @@ export default {
           {
             "@type": "template",
             "request_method": "GET",
-            "uri_template": "/v3/owner/{owner.login}/repos{?active,include,limit,offset,private,repository.active,repository.private,repository.starred,sort_by,starred}"
+            "uri_template": "/v3/owner/{owner.login}/repos{?active,active_on_org,include,limit,managed_by_installation,offset,private,repository.active,repository.active_on_org,repository.managed_by_installation,repository.private,repository.starred,sort_by,starred}"
           },
           {
             "@type": "template",
             "request_method": "GET",
-            "uri_template": "/v3/owner/{user.login}/repos{?active,include,limit,offset,private,repository.active,repository.private,repository.starred,sort_by,starred}"
+            "uri_template": "/v3/owner/{user.login}/repos{?active,active_on_org,include,limit,managed_by_installation,offset,private,repository.active,repository.active_on_org,repository.managed_by_installation,repository.private,repository.starred,sort_by,starred}"
           },
           {
             "@type": "template",
             "request_method": "GET",
-            "uri_template": "/v3/owner/{organization.login}/repos{?active,include,limit,offset,private,repository.active,repository.private,repository.starred,sort_by,starred}"
+            "uri_template": "/v3/owner/{organization.login}/repos{?active,active_on_org,include,limit,managed_by_installation,offset,private,repository.active,repository.active_on_org,repository.managed_by_installation,repository.private,repository.starred,sort_by,starred}"
           },
           {
             "@type": "template",
             "request_method": "GET",
-            "uri_template": "/v3/owner/github_id/{owner.github_id}/repos{?active,include,limit,offset,private,repository.active,repository.private,repository.starred,sort_by,starred}"
+            "uri_template": "/v3/owner/github_id/{owner.github_id}/repos{?active,active_on_org,include,limit,managed_by_installation,offset,private,repository.active,repository.active_on_org,repository.managed_by_installation,repository.private,repository.starred,sort_by,starred}"
           }
         ],
         "for_current_user": [
           {
             "@type": "template",
             "request_method": "GET",
-            "uri_template": "/v3/repos{?active,include,limit,offset,private,repository.active,repository.private,repository.starred,sort_by,starred}"
+            "uri_template": "/v3/repos{?active,active_on_org,include,limit,managed_by_installation,offset,private,repository.active,repository.active_on_org,repository.managed_by_installation,repository.private,repository.starred,sort_by,starred}"
           }
         ]
       },
-      "attributes": ["repositories"],
+      "attributes": [
+        "repositories"
+      ],
       "representations": {
-        "standard": ["repositories"]
+        "standard": [
+          "repositories"
+        ]
       },
       "sortable_by": [
         "id",
@@ -1231,6 +1640,24 @@ export default {
             ]
           }
         ],
+        "migrate": [
+          {
+            "@type": "template",
+            "request_method": "POST",
+            "uri_template": "/v3/repo/{repository.id}/migrate",
+            "accepted_params": [
+
+            ]
+          },
+          {
+            "@type": "template",
+            "request_method": "POST",
+            "uri_template": "/v3/repo/{repository.slug}/migrate",
+            "accepted_params": [
+
+            ]
+          }
+        ],
         "star": [
           {
             "@type": "template",
@@ -1268,7 +1695,27 @@ export default {
           }
         ]
       },
-      "attributes": ["id","name","slug","description","github_language","active","private","owner","default_branch","starred","current_build"],
+      "attributes": [
+        "id",
+        "name",
+        "slug",
+        "description",
+        "github_id",
+        "github_language",
+        "active",
+        "private",
+        "owner",
+        "default_branch",
+        "starred",
+        "managed_by_installation",
+        "active_on_org",
+        "migration_status",
+        "current_build",
+        "last_started_build",
+        "next_build_number",
+        "allow_migration",
+        "email_subscribed"
+      ],
       "representations": {
         "minimal": [
           "id",
@@ -1280,26 +1727,34 @@ export default {
           "name",
           "slug",
           "description",
+          "github_id",
           "github_language",
           "active",
           "private",
           "owner",
           "default_branch",
-          "starred"
+          "starred",
+          "managed_by_installation",
+          "active_on_org",
+          "migration_status"
+        ],
+        "additional": [
+          "allow_migration"
         ]
       },
       "permissions": [
         "read",
-        "admin",
         "activate",
         "deactivate",
+        "migrate",
         "star",
         "unstar",
         "create_cron",
         "create_env_var",
         "create_key_pair",
         "delete_key_pair",
-        "create_request"
+        "create_request",
+        "admin"
       ]
     },
     "request": {
@@ -1318,7 +1773,22 @@ export default {
           }
         ]
       },
-      "attributes": ["id","state","result","message","repository","branch_name","commit","builds","owner","created_at","event_type"],
+      "attributes": [
+        "id",
+        "state",
+        "result",
+        "message",
+        "repository",
+        "branch_name",
+        "commit",
+        "builds",
+        "owner",
+        "created_at",
+        "event_type",
+        "base_commit",
+        "head_commit",
+        "yaml_config"
+      ],
       "representations": {
         "minimal": [
           "id",
@@ -1337,7 +1807,10 @@ export default {
           "builds",
           "owner",
           "created_at",
-          "event_type"
+          "event_type",
+          "base_commit",
+          "head_commit",
+          "yaml_config"
         ]
       }
     },
@@ -1381,9 +1854,13 @@ export default {
           }
         ]
       },
-      "attributes": ["requests"],
+      "attributes": [
+        "requests"
+      ],
       "representations": {
-        "standard": ["requests"]
+        "standard": [
+          "requests"
+        ]
       }
     },
     "resource": {
@@ -1431,7 +1908,10 @@ export default {
           }
         ]
       },
-      "attributes": ["name","value"],
+      "attributes": [
+        "name",
+        "value"
+      ],
       "representations": {
         "standard": [
           "name",
@@ -1459,16 +1939,28 @@ export default {
           }
         ]
       },
-      "attributes": ["settings"],
+      "attributes": [
+        "settings"
+      ],
       "representations": {
-        "standard": ["settings"]
+        "standard": [
+          "settings"
+        ]
       }
     },
     "stage": {
       "@type": "resource",
       "actions": {
       },
-      "attributes": ["id","number","name","state","started_at","finished_at","jobs"],
+      "attributes": [
+        "id",
+        "number",
+        "name",
+        "state",
+        "started_at",
+        "finished_at",
+        "jobs"
+      ],
       "representations": {
         "minimal": [
           "id",
@@ -1500,10 +1992,47 @@ export default {
           }
         ]
       },
-      "attributes": ["stages"],
+      "attributes": [
+        "stages"
+      ],
       "representations": {
-        "standard": ["stages"]
+        "standard": [
+          "stages"
+        ]
       }
+    },
+    "subscription": {
+      "@type":            "resource",
+      "actions":          { },
+      "attributes":       [
+        "id",
+        "plan",
+        "billing_info",
+        "credit_card_info",
+        "owner",
+        "status",
+        "valid_to",
+        "source",
+      ],
+      "representations":  {
+        "standard":       [
+          "id",
+          "plan",
+          "billing_info",
+          "credit_card_info",
+          "owner",
+          "status",
+          "valid_to",
+          "source"
+        ],
+        "minimal":       [
+          "id",
+          "owner",
+          "status",
+          "valid_to",
+          "source"
+        ],
+      },
     },
     "template": {
       "@type": "resource",
@@ -1513,6 +2042,26 @@ export default {
         "request_method",
         "uri_template"
       ]
+    },
+    "trial": {
+      "@type": "resource",
+      "actions": {},
+      "attributes": [
+        "builds_remaining",
+        "created_at",
+        "id",
+        "owner",
+        "status",
+      ],
+      "representations": {
+        "standard": [
+          "builds_remaining",
+          "created_at",
+          "id",
+          "owner",
+          "status",
+        ],
+      }
     },
     "user": {
       "@type": "resource",
@@ -1542,7 +2091,19 @@ export default {
           }
         ]
       },
-      "attributes": ["id","login","name","github_id","avatar_url","repositories","is_syncing","synced_at"],
+      "attributes": [
+        "id",
+        "login",
+        "name",
+        "github_id",
+        "avatar_url",
+        "education",
+        "allow_migration",
+        "repositories",
+        "installation",
+        "is_syncing",
+        "synced_at"
+      ],
       "representations": {
         "minimal": [
           "id",
@@ -1554,11 +2115,14 @@ export default {
           "name",
           "github_id",
           "avatar_url",
+          "education",
+          "allow_migration",
           "is_syncing",
           "synced_at"
         ],
         "additional": [
-          "repositories"
+          "repositories",
+          "installation"
         ]
       },
       "permissions": [

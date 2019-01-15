@@ -1,26 +1,27 @@
-/* global signInUser */
 import { assign } from '@ember/polyfills';
 import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import page from 'travis/tests/pages/build-list';
-import topPage from 'travis/tests/pages/top';
 import generatePusherPayload from 'travis/tests/helpers/generate-pusher-payload';
+import signInUser from 'travis/tests/helpers/sign-in-user';
+
+import moment from 'moment';
 
 moduleForAcceptance('Acceptance | repo build list routes', {
   beforeEach() {
     const currentUser = server.create('user', {
-      name: 'Sara Ahmed',
-      login: 'feministkilljoy'
+      name: 'User Name',
+      login: 'user-login'
     });
 
     signInUser(currentUser);
 
     const gitUser = server.create('git-user', {
-      name: 'Sara Ahmed'
+      name: 'Other User Name'
     });
 
     const repository = server.create('repository', {
-      slug: 'killjoys/living-a-feminist-life'
+      slug: 'org-login/repository-name'
     });
     this.repository = repository;
 
@@ -30,6 +31,7 @@ moduleForAcceptance('Acceptance | repo build list routes', {
 
     const oneYearAgo = new Date();
     oneYearAgo.setYear(oneYearAgo.getFullYear() - 1);
+    this.oneYearAgo = oneYearAgo;
 
     const beforeOneYearAgo = new Date(oneYearAgo.getTime() - 1000 * 60 * 5);
 
@@ -43,6 +45,7 @@ moduleForAcceptance('Acceptance | repo build list routes', {
       event_type: 'cron',
       repository,
       branch: cronBranch,
+      createdBy: currentUser,
     });
 
     const commitAttributes = {
@@ -123,30 +126,35 @@ moduleForAcceptance('Acceptance | repo build list routes', {
 });
 
 test('build history shows, more can be loaded, and a created build gets added and can be cancelled', function (assert) {
-  assert.expect(22);
+  assert.expect(24);
 
-  page.visitBuildHistory({ organization: 'killjoys', repo: 'living-a-feminist-life' });
+  page.visitBuildHistory({ organization: 'org-login', repo: 'repository-name' });
 
   andThen(() => {
-    assert.equal(page.builds().count, 4, 'expected four non-PR builds');
+    assert.equal(page.builds.length, 4, 'expected four non-PR builds');
 
-    page.builds(0).as(build => {
+    page.builds[0].as(build => {
       assert.ok(build.passed, 'expected the first build to have passed');
       assert.equal(build.name, 'successful-cron-branch');
-      assert.equal(build.committer, 'Sara Ahmed');
+      assert.equal(build.committer, 'Other User Name', 'expected to ignore createdBy for a cron');
       assert.equal(build.commitSha, '1234567');
-      assert.equal(build.commitDate, 'about a year ago');
+
+      assert.equal(build.commitDate.text, 'about a year ago');
+      assert.equal(build.commitDate.title, `Finished ${moment(this.oneYearAgo).format('lll')}`);
+
       assert.equal(build.requestIconTitle, 'Triggered by a cron job');
       assert.equal(build.duration, '5 min');
       assert.equal(build.message, 'cron A generic cron commit message', 'expected a prefixed cron marker');
     });
 
-    assert.ok(page.builds(1).failed, 'expected the second build to have failed');
-    assert.ok(page.builds(2).errored, 'expected the third build to have errored');
+    assert.ok(page.builds[1].failed, 'expected the second build to have failed');
+    assert.equal(page.builds[1].committer, 'Other User Name', 'expected a fallback to committer when no createdBy');
+
+    assert.ok(page.builds[2].errored, 'expected the third build to have errored');
 
     assert.ok(page.showMoreButton.exists, 'expected the Show More button to exist');
 
-    assert.equal(page.builds(2).name, 'rarely-used', 'expected the old default branch to show');
+    assert.equal(page.builds[2].name, 'rarely-used', 'expected the old default branch to show');
 
     const sevenOaksBranch = server.create('branch', {
       name: 'oldest-build-branch'
@@ -174,8 +182,8 @@ test('build history shows, more can be loaded, and a created build gets added an
   page.showMoreButton.click();
 
   andThen(() => {
-    assert.equal(page.builds().count, 5, 'expected five builds');
-    assert.equal(page.builds(4).name, 'oldest-build-branch', 'expected an earlier build to have been added');
+    assert.equal(page.builds.length, 5, 'expected five builds');
+    assert.equal(page.builds[4].name, 'oldest-build-branch', 'expected an earlier build to have been added');
   });
 
   let build, commit;
@@ -196,6 +204,9 @@ test('build history shows, more can be loaded, and a created build gets added an
       event_type: 'push',
     });
 
+    branch.lastBuild = build;
+    branch.save();
+
     commit = build.createCommit({
       id: 1920,
       sha: 'acab',
@@ -214,9 +225,9 @@ test('build history shows, more can be loaded, and a created build gets added an
 
 
   andThen(() => {
-    assert.equal(page.builds().count, 6, 'expected another build');
+    assert.equal(page.builds.length, 6, 'expected another build');
 
-    page.builds(0).as(newBuild => {
+    page.builds[0].as(newBuild => {
       assert.ok(newBuild.created, 'expected the new build to show as created');
       assert.equal(newBuild.name, 'no-dapl');
       assert.equal(newBuild.message, 'Standing with Standing Rock');
@@ -232,7 +243,7 @@ test('build history shows, more can be loaded, and a created build gets added an
   });
 
   andThen(() => {
-    assert.ok(page.builds(0).started, 'expected the new build to show as started');
+    assert.ok(page.builds[0].started, 'expected the new build to show as started');
 
     const finishedData = {
       build: generatePusherPayload(build, { state: 'passed' }),
@@ -243,35 +254,7 @@ test('build history shows, more can be loaded, and a created build gets added an
   });
 
   andThen(() => {
-    assert.ok(page.builds(0).passed, 'expected the newly-finished build to have passed');
-  });
-});
-
-test('view and cancel pull requests', function (assert) {
-  assert.expect(10);
-  page.visitPullRequests({ organization: 'killjoys', repo: 'living-a-feminist-life' });
-
-  andThen(() => {
-    assert.equal(page.builds().count, 1, 'expected one pull request build');
-
-    page.builds(0).as(pullRequest => {
-      assert.ok(pullRequest.started, 'expected the pull request to have started');
-      assert.equal(pullRequest.name, 'PR #2010');
-      assert.equal(pullRequest.message, 'A pull request');
-      assert.equal(pullRequest.committer, 'Sara Ahmed');
-      assert.equal(pullRequest.commitSha, '1234567');
-      assert.equal(pullRequest.commitDate, 'about a year ago');
-      assert.equal(pullRequest.duration, '5 min');
-
-      assert.ok(pullRequest.cancelButton.visible, 'expected the cancel button to be visible');
-    });
-  });
-  percySnapshot(assert);
-
-  page.builds(0).cancelButton.click();
-
-  andThen(() => {
-    assert.equal(topPage.flashMessage.text, 'Build has been successfully cancelled.');
+    assert.ok(page.builds[0].passed, 'expected the newly-finished build to have passed');
   });
 });
 

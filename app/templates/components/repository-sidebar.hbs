@@ -4,7 +4,7 @@
       id="travis-search"
       value=(readonly repositories.searchQuery)
       placeholder="Search all repositories"
-      key-up="onQueryChange"
+      key-up=(action 'onQueryChange')
     }}
     <label for="travis-search">{{svg-jar 'icon-search' class="icon"}}</label>
   </div>

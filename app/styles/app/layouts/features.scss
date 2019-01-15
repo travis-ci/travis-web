@@ -1,0 +1,78 @@
+.layout-features {
+  background: white;
+}
+
+.features-hero {
+  padding-top: 2em;
+  margin-bottom: 3em;
+}
+
+.travis-pride {
+  .top {
+    background: linear-gradient(to bottom, #e2453c 0, #e2453c 16%, #e07e39 16%, #e07e39 32%, #e5d667 32%, #e5d667 48%, #51b95b 48%, #51b95b 66%, #1e72b7 66%, #1e72b7 86%, #6f5ba7 86%) no-repeat;
+  }
+
+  .navigation-anchor {
+    color: white;
+  }
+
+  .navigation-nested {
+    background: linear-gradient(to top, #e2453c 0, #e2453c 16%, #e07e39 16%, #e07e39 32%, #e5d667 32%, #e5d667 48%, #51b95b 48%, #51b95b 66%, #1e72b7 66%, #1e72b7 86%, #6f5ba7 86%) no-repeat;
+    
+    a {
+      color: white;
+
+      &:hover,
+      &:active {
+        color: #3eaaaf;
+        background-color: rgba(255, 255, 255, 0.3);
+      }
+    }
+  }
+
+  .icon-broadcast:not(.warning):not(.announcement) {
+    @include colorSVG(white);
+  }
+
+  .broadcasts {
+    @media #{$small-only} {
+      &:after {
+        left: 107px;
+      }
+    }
+
+    @media #{$medium-up} {
+      left: 115px;
+    }
+  }
+
+  .logo {
+    width: 70px;
+
+    a {
+      background: {
+        image: url(/images/logos/TravisCI-Mascot-pride.svg);
+        repeat: no-repeat;
+        size: 50px;
+        position: center;
+        color: transparent;
+      };
+      transition: transform 200ms ease;
+
+      &:hover,
+      &:active {
+        transform: rotateY(180deg);
+        background: {
+          image: url(/images/logos/Tessa-pride.svg);
+        };
+      }
+    }
+  }
+}
+
+.travis-comicsans {
+  * {
+    font-family: Comic Sans, Comic Sans MS, sans-serif !important;
+    letter-spacing: -1.1px;
+  }
+}

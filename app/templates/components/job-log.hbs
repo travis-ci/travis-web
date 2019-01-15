@@ -1,9 +1,9 @@
 {{#if error}}
   <p class="notice-banner--red">There was an error while trying to fetch the log.</p>
 {{else}}
-  {{#if log.isLoaded}}
-    {{log-content job=job log=log}}
-  {{else}}
+  {{#if log.fetchTask.isRunning}}
     {{loading-indicator}}
+  {{else}}
+    {{log-content data-test-job-log-content log=log job=job}}
   {{/if}}
 {{/if}}

@@ -17,10 +17,36 @@ const Router = EmberRouter.extend({
 Router.map(function () {
   this.route('dashboard', { resetNamespace: true }, function () {
     this.route('repositories', { path: '/' });
+    this.route('builds', { path: '/builds' });
   });
-  this.route('features', { resetNamespace: true });
+  this.route('features-tracing', { path: '/features/tracing', resetNamespace: true });
 
   this.route('getting_started');
+
+  this.route('search', { path: '/search/:phrase' });
+
+  this.route('first_sync');
+  this.route('insufficient_oauth_permissions');
+  this.route('auth');
+  this.route('github_apps_installation', { path: '/settings/github-apps-installations/redirect' });
+  this.route('plans', { path: '/plans' });
+  this.route('team', { path: '/about' });
+  this.route('logo', { path: '/logo' });
+  this.route('help');
+
+  this.route('account', function () {
+    this.route('repositories');
+    this.route('settings', { path: '/preferences' });
+    this.route('billing', { path: '/subscription' });
+  });
+  this.route('organization', { path: '/organizations/:login' }, function () {
+    this.route('repositories');
+    this.route('settings', { path: '/preferences' });
+    this.route('billing', { path: '/subscription' });
+  });
+  this.route('unsubscribe', { path: '/account/preferences/unsubscribe' });
+  this.route('profile', { path: '/profile/:login' });
+  this.route('profile', { path: '/profile/:login/:section' });
 
   this.route('repo', { path: '/:owner/:name' }, function () {
     this.route('index', { path: '/' });
@@ -41,27 +67,13 @@ Router.map(function () {
       this.route('index', { path: '/' });
     });
   });
-
-  this.route('search', { path: '/search/:phrase' });
-
-  this.route('first_sync');
-  this.route('insufficient_oauth_permissions');
-  this.route('auth');
-  this.route('plans', { path: '/plans' });
-  this.route('team', { path: '/about' });
-  this.route('logo', { path: '/logo' });
-  this.route('profile', { path: '/profile', resetNamespace: true }, function () {
-    this.route('accounts', { path: '/', resetNamespace: true }, function () {
-      this.route('account', { path: '/:login', resetNamespace: true }, function () {
-        this.route('repositories', { path: '/' });
-      });
-    });
-  });
   this.route('owner', { path: '/:owner', resetNamespace: true }, function () {
     this.route('repositories', { path: '/' });
   });
+
   this.route('error404', { path: '/404' });
   this.route('page-not-found', { path: '/*wildcard' });
+  this.route('signin');
 });
 
 export default Router;

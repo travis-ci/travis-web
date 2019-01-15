@@ -25,7 +25,7 @@ export default (function () {
 
   LinesSelector.prototype.last_selected_line = null;
 
-  function LinesSelector(element1, scroll, folder, location) {
+  function LinesSelector(element1, scroll, folder, location, onLogLineClick) {
     this.element = element1;
     this.scroll = scroll;
     this.folder = folder;
@@ -35,15 +35,20 @@ export default (function () {
       this.last_selected_line = (ref = this.getSelectedLines()) != null ? ref.first : void 0;
       return this.highlightLines();
     });
-    this.element.on('click', 'a', (function (_this) {
-      return function (event) {
-        let element;
-        element = $(event.target).parent('p');
-        _this.loadLineNumbers(element, event.shiftKey);
-        event.preventDefault();
-        return false;
+    this.element.on('click', 'a', (event) => {
+      let callback = () => {
+        let element = $(event.target).parent('.log-line');
+        this.loadLineNumbers(element, event.shiftKey);
       };
-    })(this));
+
+      if (onLogLineClick) {
+        onLogLineClick().then(callback);
+      } else {
+        callback();
+      }
+      event.preventDefault();
+      return false;
+    });
   }
 
   LinesSelector.prototype.willDestroy = function () {
@@ -60,9 +65,14 @@ export default (function () {
     this.removeAllHighlights();
     let lines = this.getSelectedLines();
     if (lines) {
-      let elements = this.element.find('p:visible').slice(lines.first - 1, lines.last);
+      let elements = this.element.find('.log-line:visible').slice(lines.first - 1, lines.last);
       if (elements.length) {
         elements.addClass('highlight');
+
+        let focusElement = elements[0];
+        focusElement.setAttribute('tabindex', '0');
+        focusElement.focus();
+        focusElement.removeAttribute('tabindex');
       } else if (tries < 4) {
         later(this, (function () {
           if (!this.destroyed) {
@@ -83,7 +93,7 @@ export default (function () {
       results = [];
       for (index in lines) {
         l = lines[index];
-        line = this.element.find('p:visible').slice(l - 1, l);
+        line = this.element.find('.log-line:visible').slice(l - 1, l);
         results.push(this.folder.unfold(line));
       }
       return results;
@@ -105,13 +115,13 @@ export default (function () {
 
   LinesSelector.prototype.getLineNumberFromElement = function (element) {
     if (this && this.element) {
-      return this.element.find('p:visible').index(element) + 1;
+      return this.element.find('.log-line:visible').index(element) + 1;
     }
   };
 
   LinesSelector.prototype.removeAllHighlights = function () {
     if (this && this.element) {
-      return this.element.find('p.highlight').removeClass('highlight');
+      return this.element.find('.log-line.highlight').removeClass('highlight');
     }
   };
 

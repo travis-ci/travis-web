@@ -1,18 +1,19 @@
 import Controller from '@ember/controller';
-import { alias } from 'ember-decorators/object/computed';
-import { service } from 'ember-decorators/service';
+import { alias } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
 
 export default Controller.extend({
-  @service auth: null,
-  @service tabStates: null,
-  @service statusImages: null,
-  @service repositories: null,
+  auth: service(),
+  features: service(),
+  tabStates: service(),
+  statusImages: service(),
+  repositories: service(),
 
-  @alias('repositories.searchResults.firstObject') repo: null,
+  repo: alias('repositories.searchResults.firstObject'),
 
-  @alias('tabStates.mainTab') tab: null,
+  tab: alias('tabStates.mainTab'),
 
-  @alias('repo.currentBuild') build: null,
+  build: alias('repo.currentBuild'),
 
-  @alias('repo.currentBuild.jobs.firstObject') job: null,
+  job: alias('repo.currentBuild.jobs.firstObject'),
 });

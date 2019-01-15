@@ -1,35 +1,27 @@
 import Component from '@ember/component';
-import { computed } from 'ember-decorators/object';
-import { alias } from 'ember-decorators/object/computed';
+import { computed } from '@ember/object';
+import { reads, or } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
 
 export default Component.extend({
-  classNames: ['media', 'account'],
+  router: service(),
+
   tagName: 'li',
+  classNames: ['media', 'account'],
   classNameBindings: ['type', 'selected'],
 
-  tokenIsVisible: false,
+  account: null,
 
-  @alias('account.type') type: null,
-  @alias('account.selected') selected: null,
+  selected: reads('account.selected'),
+  name: or('account.name', 'account.login'),
 
-  @computed('account.{name,login}')
-  name(name, login) {
-    return name || login;
-  },
+  routeName: computed('account.isOrganization', function () {
+    let isOrganization = this.get('account.isOrganization');
+    return isOrganization ? 'organization' : 'account';
+  }),
 
-  @computed('account.avatarUrl')
-  avatarUrl(url) {
-    return url || false;
-  },
-
-  @computed('account.type')
-  isUser(type) {
-    return type === 'user';
-  },
-
-  actions: {
-    tokenVisibility() {
-      this.toggleProperty('tokenIsVisible');
-    }
-  },
+  routeModel: computed('account.isOrganization', function () {
+    let isOrganization = this.get('account.isOrganization');
+    if (isOrganization) return this.account.login;
+  })
 });

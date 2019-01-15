@@ -1,24 +1,29 @@
-import { test } from 'qunit';
-import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
-import sidebarPage from 'travis/tests/pages/sidebar';
+import { module, test } from 'qunit';
+import { setupApplicationTest } from 'ember-qunit';
+import { visit, click } from '@ember/test-helpers';
+import signInUser from 'travis/tests/helpers/sign-in-user';
+import { enableFeature } from 'ember-feature-flags/test-support';
+import { percySnapshot } from 'ember-percy';
 
-moduleForAcceptance('Acceptance | home/sidebar tabs', {
-  beforeEach() {
+module('Acceptance | home/sidebar tabs', function (hooks) {
+  setupApplicationTest(hooks);
+
+  hooks.beforeEach(function () {
     const currentUser = server.create('user', {
-      name: 'Sara Ahmed',
-      login: 'feministkilljoy'
+      name: 'User Name',
+      login: 'user-login'
     });
 
     signInUser(currentUser);
 
     // create active repo
     server.create('repository', {
-      slug: 'killjoys/living-a-feminist-life'
+      slug: 'org-login/repository-name'
     });
 
     // create active repo
     let testRepo = server.create('repository', {
-      slug: 'killjoys/willful-subjects'
+      slug: 'org-login/yet-another-repository-name'
     });
     this.repo = testRepo;
 
@@ -60,50 +65,42 @@ moduleForAcceptance('Acceptance | home/sidebar tabs', {
 
     job.save();
     commit.save();
-  }
-});
-
-test('the home page shows running tab in pro version', (assert) => {
-  withFeature('pro-version');
-
-  sidebarPage
-    .visit()
-    .clickSidebarRunningTab();
-
-  andThen(() => {
-    assert.equal(sidebarPage.sidebarRunningTabText, 'Running (0/1)', 'running tab correctly shows number of started/queued jobs');
-    assert.equal(sidebarPage.sidebarRunningRepositories().count, 1, 'expected one running repositories');
   });
-  percySnapshot(assert);
-});
 
-test('we query the API for all the jobs', function (assert) {
-  withFeature('pro-version');
+  test('the home page shows running tab when feature flag enabled', async function (assert) {
+    enableFeature('show-running-jobs-in-sidebar');
 
-  // the default mirage limit is 10, so if we create 15 jobs for each queued and
-  // started lists, the app code will have to do 2 queries
-  server.createList('job', 15, { state: 'created', repository: this.repo, commit: this.commit, build: this.build });
-  server.createList('job', 15, { state: 'started', repository: this.repo, commit: this.commit, build: this.build });
+    await visit('/');
+    await click('[data-test-sidebar-running-tab] a');
 
-  sidebarPage
-    .visit()
-    .clickSidebarRunningTab();
-
-  andThen(() => {
-    assert.equal(sidebarPage.sidebarRunningTabText, 'Running (15/31)', 'running tab correctly shows number of started/queued jobs');
-    assert.equal(sidebarPage.sidebarRunningRepositories().count, 31, 'expected one running repositories');
+    assert.dom('[data-test-sidebar-running-tab]').hasText('Running (0/1)', 'running tab correctly shows number of started/queued jobs');
+    assert.dom('[data-test-sidebar-queued-job]').exists('expected one queued job');
+    percySnapshot(assert);
   });
-});
 
-test('maintains sidebar tab state when viewing running job in pro version', (assert) => {
-  withFeature('pro-version');
+  test('we query the API for all the jobs', async function (assert) {
+    enableFeature('show-running-jobs-in-sidebar');
 
-  sidebarPage
-    .visit()
-    .clickSidebarRunningTab()
-    .viewRunningJob();
+    // the default mirage limit is 10, so if we create 15 jobs for each queued and
+    // started lists, the app code will have to do 2 queries
+    server.createList('job', 15, { state: 'created', repository: this.repo, commit: this.commit, build: this.build });
+    server.createList('job', 15, { state: 'started', repository: this.repo, commit: this.commit, build: this.build });
 
-  andThen(() => {
-    assert.ok(sidebarPage.runningTabIsActive, 'running tab state should persist across route transitions');
+    await visit('/');
+    await click('[data-test-sidebar-running-tab] a');
+
+    assert.dom('[data-test-sidebar-running-tab]').hasText('Running (15/31)', 'running tab correctly shows number of started/queued jobs');
+    assert.dom('[data-test-sidebar-running-job]').exists({ count: 15 });
+    assert.dom('[data-test-sidebar-queued-job]').exists({ count: 16 });
+  });
+
+  test('maintains sidebar tab state when viewing running job', async function (assert) {
+    enableFeature('show-running-jobs-in-sidebar');
+
+    await visit('/');
+    await click('[data-test-sidebar-running-tab] a');
+    await click('[data-test-sidebar-queued-job]');
+
+    assert.dom('[data-test-sidebar-running-tab]').hasClass('active', 'running tab state should persist across route transitions');
   });
 });

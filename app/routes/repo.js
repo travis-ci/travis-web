@@ -1,19 +1,27 @@
-import { getWithDefault } from '@ember/object';
+import { getWithDefault, computed } from '@ember/object';
 import TravisRoute from 'travis/routes/basic';
 import Repo from 'travis/models/repo';
 import ScrollResetMixin from 'travis/mixins/scroll-reset';
-import { service } from 'ember-decorators/service';
+import { inject as service } from '@ember/service';
 
 export default TravisRoute.extend(ScrollResetMixin, {
-  @service store: null,
-  @service tabStates: null,
-  @service repositories: null,
+  store: service(),
+  tabStates: service(),
+  repositories: service(),
+  auth: service(),
+  features: service(),
+
+  onRunningTab: computed('features.showRunningJobsInSidebar', 'tabStates.sidebarTab', function () {
+    let showRunningJobsInSidebar = this.get('features.showRunningJobsInSidebar');
+    let sidebarTab = this.get('tabStates.sidebarTab');
+    return showRunningJobsInSidebar && sidebarTab === 'running';
+  }),
 
   activate(...args) {
     this._super(args);
 
     if (this.get('auth.signedIn')) {
-      if (this.get('features.proVersion') && this.get('tabStates.sidebarTab') === 'running') {
+      if (this.get('onRunningTab')) {
         return;
       }
       if (!this.get('tabStates.sidebarTab', 'search')) {

@@ -1,5 +1,7 @@
-<div id="config_pre">
-{{#code-block language='json' class="codedisplay"}}
-{{format-config model}}
-{{/code-block}}
-</div>
+{{#if model.build.isMatrix}}
+  <PaperBlock data-test-job-yaml-note @elevation=2>
+    {{svg-jar 'icon-megaphone' class='icon icon-megaphone'}}
+    This is the configuration for all of build #{{model.build.number}}, including this job
+  </PaperBlock>
+{{/if}}
+<AnnotatedYaml @request={{model}} />

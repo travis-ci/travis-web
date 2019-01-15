@@ -1,17 +1,18 @@
-/* global Travis, HS */
+/* global Travis */
 import $ from 'jquery';
 
-import { inject as service } from '@ember/service';
 import TravisRoute from 'travis/routes/basic';
 import config from 'travis/config/environment';
 import BuildFaviconMixin from 'travis/mixins/build-favicon';
+import { inject as service } from '@ember/service';
 
 import KeyboardShortcuts from 'ember-keyboard-shortcuts/mixins/route';
 
 export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
-  flashes: service(),
   auth: service(),
+  features: service(),
   featureFlags: service(),
+  flashes: service(),
   repositories: service(),
 
   needsAuth: false,
@@ -24,7 +25,7 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
   },
 
   renderTemplate: function () {
-    if (this.get('config').pro) {
+    if (this.get('features.proVersion')) {
       $('body').addClass('pro');
     }
     return this._super(...arguments);
@@ -70,7 +71,7 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
   },
 
   unsubscribeFromRepo: function (repo) {
-    if (this.pusher) {
+    if (this.pusher && repo) {
       this.pusher.unsubscribe(`repo-${repo.get('id')}`);
     }
   },
@@ -103,9 +104,12 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
   },
 
   actions: {
-    signIn() {
-      this.get('auth').signIn();
-      this.afterSignIn();
+    signIn(runAfterSignIn = true) {
+      let authParams = this.modelFor('auth');
+      this.get('auth').signIn(null, authParams);
+      if (runAfterSignIn) {
+        this.afterSignIn();
+      }
     },
 
     signOut() {
@@ -123,31 +127,21 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
     error(error) {
       if (error === 'needs-auth') {
         this.set('auth.redirected', true);
-        return this.transitionTo('auth');
+        let currentURL = new URL(window.location.href),
+          routerURL = `${currentURL.origin}${this.get('router.url')}`;
+
+        return this.transitionTo('auth', { queryParams: { redirectUri: routerURL }});
       } else {
         return true;
       }
     },
-
-    showRepositories() {
-      this.transitionTo('index');
-    },
-
-    viewSearchResults(query) {
-      this.transitionTo('search', query);
-    },
-
-    helpscoutTrigger() {
-      HS.beacon.open();
-      return false;
-    }
   },
 
   afterSignIn() {
     this.get('flashes').clear();
-    let transition = this.auth.get('afterSignInTransition');
+    let transition = this.get('auth.afterSignInTransition');
     if (transition) {
-      this.auth.set('afterSignInTransition', null);
+      this.set('auth.afterSignInTransition', null);
       return transition.retry();
     } else {
       return this.transitionTo('index');
@@ -158,7 +152,7 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
     this.get('featureFlags').reset();
     this.set('repositories.accessible', []);
     this.setDefault();
-    if (this.get('config.enterprise')) {
+    if (this.get('features.enterpriseVersion')) {
       return this.transitionTo('auth');
     }
     return this.transitionTo('index');

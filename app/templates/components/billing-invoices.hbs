@@ -1,0 +1,19 @@
+<section class='invoices'>
+  <h2>Invoice History</h2>
+  <p>
+    {{svg-jar 'icon-help' class='icon-help' alt=''}} Having trouble with your invoices?
+    {{#link-to 'help' (query-params anchor='form')}}
+      We’re happy to help
+    {{/link-to}}
+  </p>
+  <ul>
+    {{#each (sort-by 'createdAt:desc' invoices) as |invoice|}}
+      <li>
+        <a data-test-invoice href={{invoice.url}}>
+          {{svg-jar 'icon-invoice' class='icon'}}
+          {{invoice.id}} {{moment-format invoice.createdAt 'MMMM YYYY'}}
+        </a>
+      </li>
+    {{/each}}
+  </ul>
+</section>

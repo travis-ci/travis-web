@@ -1,16 +1,20 @@
 import Controller from '@ember/controller';
-import { computed } from 'ember-decorators/object';
+import { computed } from '@ember/object';
+import config from 'travis/config/environment';
 
 export default Controller.extend({
   isLoading: false,
 
-  @computed('config.sourceEndpoint', 'model.login')
-  githubProfile(endpoint, login) {
-    return `${endpoint}/${login}`;
-  },
+  config,
 
-  @computed('model')
-  owner(model) {
+  githubProfile: computed('model.login', function () {
+    let login = this.get('model.login');
+    const { sourceEndpoint } = config;
+    return `${sourceEndpoint}/${login}`;
+  }),
+
+  owner: computed('model', function () {
+    let model = this.get('model');
     return {
       login: model.login,
       name: model.name,
@@ -19,5 +23,5 @@ export default Controller.extend({
       avatarUrl: model.avatar_url,
       syncedAt: model.synced_at
     };
-  },
+  })
 });

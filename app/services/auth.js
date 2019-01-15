@@ -1,21 +1,25 @@
 /* global Travis */
-import { observer } from '@ember/object';
+import { get, observer, computed } from '@ember/object';
 
 import { isEmpty } from '@ember/utils';
 import { Promise as EmberPromise } from 'rsvp';
-import Service from '@ember/service';
+import Service, { inject as service } from '@ember/service';
 import config from 'travis/config/environment';
-import { computed } from 'ember-decorators/object';
-import { alias } from 'ember-decorators/object/computed';
-import { service } from 'ember-decorators/service';
+import { alias } from '@ember/object/computed';
+import { getOwner } from '@ember/application';
+
+import URLPolyfill from 'travis/utils/url';
+
+const proVersion = config.featureFlags['pro-version'];
 
 export default Service.extend({
-  @service router: null,
-  @service flashes: null,
-  @service store: null,
-  @service storage: null,
-  @service sessionStorage: null,
-  @service ajax: null,
+  router: service(),
+  flashes: service(),
+  intercom: service(),
+  store: service(),
+  storage: service(),
+  sessionStorage: service(),
+  ajax: service(),
 
   state: 'signed-out',
   receivingEnd: `${location.protocol}//${location.host}`,
@@ -26,9 +30,9 @@ export default Service.extend({
     return this._super(...arguments);
   },
 
-  token() {
+  token: computed(function () {
     return this.get('sessionStorage').getItem('travis.token');
-  },
+  }),
 
   assetToken() {
     return JSON.parse(this.get('sessionStorage').getItem('travis.user'))['token'];
@@ -47,13 +51,14 @@ export default Service.extend({
     this.get('store').unloadAll();
   },
 
-  signIn(data) {
+  signIn(data, options = {}) {
     if (data) {
       this.autoSignIn(data);
     } else {
       this.set('state', 'signing-in');
 
-      let url = new URL(window.location.href);
+      let uri = options.redirectUri || window.location.href,
+        url = new URLPolyfill(uri);
 
       if (url.pathname === '/plans') {
         url.pathname = '/';
@@ -147,7 +152,18 @@ export default Service.extend({
     user = this.loadUser(data.user);
     this.set('currentUser', user);
     this.set('state', 'signed-in');
-    Travis.trigger('user:signed_in', data.user);
+    this.userSignedIn(data.user);
+  },
+
+  userSignedIn(user) {
+    if (proVersion && get(config, 'intercom.enabled')) {
+      this.get('intercom').set('user.id', user.id);
+      this.get('intercom').set('user.name', user.name);
+      this.get('intercom').set('user.email', user.email);
+      this.get('intercom').set('user.createdAt', user.first_logged_in_at);
+      this.get('intercom').set('user.hash', user.secure_user_hash);
+    }
+    Travis.trigger('user:signed_in', user);
   },
 
   refreshUserData(user) {
@@ -159,40 +175,48 @@ export default Service.extend({
       }
     }
     if (user) {
-      return this.get('ajax').get(`/users/${user.id}`).then((data) => {
-        let userRecord;
-        if (data.user.correct_scopes) {
-          userRecord = this.loadUser(data.user);
-          userRecord.get('permissions');
-          if (this.get('signedIn')) {
-            data.user.token = user.token;
-            this.storeData(data, this.get('sessionStorage'));
-            this.storeData(data, this.get('storage'));
-            Travis.trigger('user:refreshed', data.user);
+      return this.ajax.get(`/users/${user.id}`)
+        .then(data => {
+          let userRecord;
+          if (data.user.correct_scopes) {
+            userRecord = this.loadUser(data.user);
+            userRecord.get('permissions');
+            if (this.signedIn) {
+              data.user.token = user.token;
+              this.storeData(data, this.sessionStorage);
+              this.storeData(data, this.storage);
+              Travis.trigger('user:refreshed', data.user);
+            }
+            return this.store.queryRecord('user', {
+              current: true,
+              included: 'owner.installation'
+            });
+          } else {
+            return EmberPromise.reject();
           }
-        } else {
-          return EmberPromise.reject();
-        }
-      });
+        })
+        .then(({ installation = null }) => {
+          this.currentUser.setProperties({ installation });
+        });
     } else {
       return EmberPromise.resolve();
     }
   },
 
-  @computed('state')
-  signedIn(state) {
+  signedIn: computed('state', function () {
+    let state = this.get('state');
     return state === 'signed-in';
-  },
+  }),
 
-  @computed('state')
-  signedOut(state) {
+  signedOut: computed('state', function () {
+    let state = this.get('state');
     return state === 'signed-out';
-  },
+  }),
 
-  @computed('state')
-  signingIn(state) {
+  signingIn: computed('state', function () {
+    let state = this.get('state');
     return state === 'signing-in';
-  },
+  }),
 
   storeData(data, storage) {
     if (data.token) {
@@ -208,7 +232,10 @@ export default Service.extend({
       normalized = serializer.normalizeResponse(store, userClass, user, null, 'findRecord');
 
     store.push(normalized);
-    return store.recordForId('user', user.id);
+    const record =  store.recordForId('user', user.id);
+    const installation = store.peekAll('installation').findBy('owner.id', user.id) || null;
+    record.setProperties({ installation });
+    return record;
   },
 
   expectedOrigin() {
@@ -224,7 +251,7 @@ export default Service.extend({
   },
 
   clearNonAuthFlashes() {
-    const flashMessages = this.get('flashes.flashes.content') || [];
+    const flashMessages = this.get('flashes.flashes') || [];
     const errorMessages = flashMessages.filterBy('type', 'error');
     if (!isEmpty(errorMessages)) {
       const errMsg = errorMessages.get('firstObject.message');
@@ -247,16 +274,27 @@ export default Service.extend({
     }
   }),
 
-  @computed('currentUser.{login,name}')
-  userName(login, name) {
+  userName: computed('currentUser.{login,name}', function () {
+    let login = this.get('currentUser.login');
+    let name = this.get('currentUser.name');
     return name || login;
-  },
+  }),
 
-  @computed('currentUser.gravatarId')
-  gravatarUrl(gravatarId) {
+  gravatarUrl: computed('currentUser.gravatarId', function () {
+    let gravatarId = this.get('currentUser.gravatarId');
     return `${location.protocol}//www.gravatar.com/avatar/${gravatarId}?s=48&d=mm`;
-  },
+  }),
 
-  // eslint-ignore-next-line
-  @alias('currentUser.permissions') permissions: null,
+  permissions: alias('currentUser.permissions'),
+
+  actions: {
+    signIn(runAfterSignIn) {
+      let applicationRoute = getOwner(this).lookup('route:application');
+      applicationRoute.send('signIn', runAfterSignIn);
+    },
+
+    signOut() {
+      this.signOut();
+    }
+  }
 });

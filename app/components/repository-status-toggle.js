@@ -1,18 +1,36 @@
 import Component from '@ember/component';
 import config from 'travis/config/environment';
 import { task } from 'ember-concurrency';
-import { computed } from 'ember-decorators/object';
+import { computed } from '@ember/object';
+import { inject as service } from '@ember/service';
 
 export default Component.extend({
+  externalLinks: service(),
+
   tagName: 'li',
   classNames: ['profile-repolist-item'],
   classNameBindings: ['repository.active:active'],
   githubOrgsOauthAccessSettingsUrl: config.githubOrgsOauthAccessSettingsUrl,
 
+  admin: computed('repository.permissions', function () {
+    let permissions = this.get('repository.permissions');
+    if (permissions) {
+      return permissions.admin;
+    }
+  }),
+
+  comLink: computed('repository.slug', function () {
+    let slug = this.get('repository.slug');
+    return this.get('externalLinks').migratedToComLink(slug);
+  }),
+
+  onDotOrg: computed('features.{proVersion,enterpriseVersion}', function () {
+    let com = this.get('features.proVersion');
+    let enterprise = this.get('features.enterpriseVersion');
+    return !(com || enterprise);
+  }),
+
   actions: {
-    handleToggleError() {
-      return this.set('showError', true);
-    },
 
     close() {
       return this.send('resetErrors');
@@ -21,28 +39,17 @@ export default Component.extend({
     resetErrors() {
       return this.set('showError', false);
     }
-  },
 
-  @computed('repository.permissions')
-  admin(permissions) {
-    if (permissions) {
-      return permissions.admin;
-    }
   },
 
   toggleRepositoryTask: task(function* () {
-    if (!this.get('disabled')) {
-      this.sendAction('onToggle');
-
-      let repository = this.get('repository');
-
-      let pusher = this.get('pusher'),
-        repoId = repository.get('id');
-
-      yield repository.toggle().then(() => {
-        pusher.subscribe(`repo-${repoId}`);
-        this.toggleProperty('repository.active');
-      }, () => { this.sendAction('onToggleError', repository); });
+    const repository = this.repository;
+    try {
+      yield repository.toggle();
+      yield repository.reload();
+      this.pusher.subscribe(`repo-${repository.id}`);
+    } catch (error) {
+      this.set('showError', true);
     }
   }),
 });

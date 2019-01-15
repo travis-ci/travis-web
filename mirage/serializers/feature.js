@@ -1,9 +1,10 @@
-import Ember from 'ember';
 import { Serializer } from 'ember-cli-mirage';
+import { isArray } from '@ember/array';
+import { merge } from '@ember/polyfills';
 
 export default Serializer.extend({
   serialize(object) {
-    if (Ember.isArray(object.models)) {
+    if (isArray(object.models)) {
       return {
         '@type': 'features',
         '@href': '/features',
@@ -16,7 +17,7 @@ export default Serializer.extend({
         '@href': '/features',
         '@representation': 'standard'
       };
-      return Ember.merge(metadata, object.attrs);
+      return merge(metadata, object.attrs);
     }
   }
 });

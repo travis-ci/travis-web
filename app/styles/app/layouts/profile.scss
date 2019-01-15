@@ -1,0 +1,892 @@
+$profile-breakpoint: 600px;
+
+.profile-page {
+  display: flex;
+  padding-top: 20px;
+
+  @media (max-width: $profile-breakpoint) {
+    flex-flow: column-reverse;
+  }
+
+  nav.travistab-nav {
+    border-bottom: 2px #f1f1f1 solid;
+    margin-bottom: 1.5em;
+  }
+
+  // FIXME there’s a naked h2 down there, it seems to me it needs scoping…?
+  h2 {
+    color: $oxide-blue;
+    font-weight: 300;
+  }
+
+  .profile-aside {
+    flex: 0 0 180px;
+    margin-right: 55px;
+
+    @media #{$medium-up} {
+      flex: 0 0 290px;
+    }
+
+    @media (max-width: $profile-breakpoint) {
+      margin-top: 55px;
+    }
+
+    @media (min-width: $profile-breakpoint) {
+      display: flex;
+      flex-flow: column wrap;
+    }
+
+    ul {
+      padding: 0;
+      margin: 0;
+      list-style-type: none;
+    }
+
+    h2 {
+      font-size: $font-size-sm;
+      text-transform: uppercase;
+      font-weight: bold;
+      color: $cement-grey;
+      margin-bottom: 0;
+    }
+
+    section {
+      padding-bottom: 1rem;
+      border-bottom: solid 2px $pebble-grey;
+
+      &.no-divider {
+        padding-bottom: 0;
+        border-bottom-width: 0;
+      }
+    }
+  }
+}
+
+.profile-main {
+  flex-grow: 1;
+}
+
+.profile-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 2rem;
+
+  .left {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+
+  .avatar-wrapper {
+    margin-right: 1rem;
+    margin-top: 1rem;
+  }
+
+  h1 {
+    margin-bottom: 0;
+    white-space: nowrap;
+    max-width: 8.99em;
+    overflow: hidden;
+    position: relative;
+
+    &:after {
+      content: "";
+
+      @include fadeOut(right, -90deg, white);
+
+      // I couldn’t get it to work without changing how it was positioned
+      right: auto;
+      left: 7em;
+    }
+
+  }
+
+  .login {
+    color: $cement-grey;
+    font-size: $font-size-m;
+  }
+
+  .badge {
+    transform: translateY(-1.5px);
+  }
+}
+
+.profile-repositorylist {
+  @include resetul;
+
+  font-size: $font-size-m;
+
+  li {
+    display: flex;
+    flex-flow: row wrap;
+    margin-bottom: 0.8em;
+    align-items: center;
+
+    .icon {
+      &.private, &.public {
+        width: 18px;
+        height: 18px;
+        margin-right: 0;
+      }
+
+      &.private {
+        transform: translateY(-1px);
+      }
+    }
+
+    &.empty {
+      border: 1px dashed $pebble-grey;
+      padding: 0 1em;
+
+      p + p {
+        margin-top: 0;
+      }
+    }
+  }
+}
+
+.profile-settings {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  border: 1px solid $pebble-grey;
+  font-size: $font-size-s;
+  color: $asphalt-grey;
+  padding: 0.3rem 0.4rem;
+  margin: 0.3rem 0;
+  transform: translateY(1px);
+
+  .icon {
+    width: 12px;
+    height: 12px;
+  }
+
+  &:hover {
+    color: white;
+
+    .icon {
+      @include colorSVG(white);
+    }
+  }
+
+  &.disabled {
+    opacity: 0.4;
+    color: inherit;
+    background: inherit;
+    cursor: default;
+
+    &:hover {
+      color: inherit;
+      background: inherit;
+
+      .icon {
+        @include colorSVG($cement-grey);
+      }
+    }
+  }
+}
+
+.profile-settings .icon-disabled {
+  @include colorSVG(rgba(black, 0.2));
+}
+
+.profile-repo {
+  position: relative;
+  flex: 1;
+  padding: 0.25em 0.5em 0.3em;
+  white-space: nowrap;
+  overflow: hidden;
+  border-radius: 2px;
+  margin-right: 1rem;
+
+  .sync-spinner {
+    vertical-align: top;
+  }
+}
+
+.profile-text,
+.profile-additional,
+.profile-betafeatures {
+  @include linkStyle;
+}
+
+.repositories-error {
+  width: 100%;
+
+  p {
+    position: relative;
+    padding: 0.7em 2em 0.7em 0.5em;
+    color: $brick-red;
+    background-color: $quartz-red;
+
+    a {
+      color: $brick-red;
+      text-decoration: underline;
+    }
+
+    &:after {
+      content: "";
+      position: absolute;
+      top: -0.5em;
+      left: 1.5em;
+      width: 1.2em;
+      height: 1.2em;
+      background: $quartz-red;
+      transform: rotate(45deg);
+    }
+  }
+
+  .close {
+    position: absolute;
+    top: 0.5em;
+    right: 0;
+    line-height: 1;
+  }
+}
+
+.profile-repositories-filter, .not-locked-profile-repositories-filter {
+  margin-bottom: 1.5em;
+
+  .search {
+    padding: 0 0.5em 0 2.1em;
+    border: 1px solid $pebble-grey;
+    width: 40%;
+    border-radius: 2px;
+    width: 100%;
+    max-width: 400px;
+    background: url(/images/stroke-icons/icon-filter.svg) no-repeat scroll;
+    background-size: auto 50%;
+    background-position: 0.5em center;
+    height: 2.1em;
+    box-sizing: content-box;
+    font-size: $font-size-sm;
+    -webkit-appearance: none;
+    -webkit-appearance: textfield;
+
+    &::-webkit-search-decoration {
+      -webkit-appearance: none;
+    }
+
+    &::placeholder {
+      color: rgba($cement-grey, 0.6);
+      padding: 0;
+      text-indent: 0;
+    }
+  }
+}
+
+.account-token {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+
+  .label-and-token {
+    display: flex;
+    flex-grow: 1;
+    margin-right: 1.5em;
+  }
+
+  .label {
+    margin-right: 0.5em;
+    align-self: center;
+  }
+
+  .token-field {
+    flex-grow: 1;
+
+    background-color: $pebble-grey;
+    border-radius: 2px;
+
+    font-size: 14px;
+    letter-spacing: 0.3em;
+  }
+
+  .token-copied-text {
+    margin-left: 8px;
+    font-style: italic;
+    color: #9d9d9d;
+    letter-spacing: normal;
+  }
+
+  .auth-token {
+    margin-left: 6px;
+  }
+}
+
+.token-actions {
+  width: 15em;
+  display: flex;
+  justify-content: space-between;
+}
+
+.obfuscated-chars {
+  padding-left: 0.4em;
+}
+
+.token-actions button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 10px;
+  background-color: transparent;
+  border-radius: 0.25em;
+  width: calc(1/2*100% - (1 - 1/2)*0.5em);
+  padding: 4px 0;
+  cursor: pointer;
+
+  & svg {
+    margin-right: 4px;
+    height: 12px;
+  }
+
+  &.copy-button {
+    border: 0.09em solid lighten($oxide-blue, 20%);
+    box-shadow: 0 .15px 0 $oxide-blue;
+    color: $oxide-blue;
+    svg {
+      @include colorSVG($oxide-blue);
+    }
+
+    &:hover {
+      border-color: #229191;
+      color: #229191;
+
+      svg {
+        @include colorSVG(#229191);
+      }
+    }
+  }
+
+  &.show-token {
+    border: 0.09em solid lighten($cement-grey, 20%);
+    box-shadow: 0 .15px 0 $cement-grey;
+    color: $cement-grey;
+
+    &:hover {
+      border-color: #707070;
+      color: #707070;
+
+      svg {
+        @include colorSVG(#707070);
+      }
+    }
+  }
+}
+
+header.legacy-services-integration {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .badge {
+    transform: translateY(-3px);
+  }
+
+  // FIXME this is copied from sync-button.scss
+  .button {
+    height: 2.6rem;
+    padding: 0.6em 0.8em;
+    background-color: $oxide-blue;
+    border: none;
+    border-radius: 2px;
+
+    margin-right: 0.5rem;
+
+    // FIXME this is here for the loading indicator but all is misaligned
+    display: flex;
+
+    .icon {
+      @include colorSVG(white);
+    }
+
+    &:hover {
+      background-color: #229191;
+    }
+  }
+}
+section.billing {
+  font-size: $font-size-m;
+
+  .plan-status-message {
+    color: $asphalt-grey;
+    font-size: 16px;
+  }
+
+  .billing-section-link {
+    text-decoration: underline;
+
+    &:hover, &:active {
+      color: $cement-grey;
+      text-decoration: none;
+    }
+  }
+
+  .plan {
+    p {
+      margin: 0.3em 0 0.3em 0;
+    }
+    h3 {
+      font-size: $font-size-xl;
+      font-weight: $font-weight-light;
+      margin-bottom: 0.2em;
+    }
+  }
+
+  .plan + h2 {
+    margin-bottom: 0;
+  }
+
+  .row {
+    @media #{$medium-up} {
+      display: flex;
+      flex-wrap: wrap;
+
+      section {
+        flex: 1;
+      }
+    }
+
+    h3 {
+      text-transform: uppercase;
+      font-size: $font-size-s;
+      font-weight: $font-weight-bold;
+      color: $cement-grey;
+    }
+  }
+
+  section.payment {
+    h3 {
+      margin: 20px 0 12px 0;
+    }
+
+    p.alert-status-message {
+      color: $brick-red;
+      font-size: 16px;
+    }
+
+    @media #{$medium-up} {
+      h3 {
+        margin: 12px 0;
+      }
+    }
+
+    .source {
+      font-size: $font-size-s;
+      font-style: italic;
+      color: $cement-grey;
+    }
+  }
+
+  section.contact, section.payment {
+    p {
+      margin-top: 0;
+      margin-bottom: 0.3em;
+    }
+
+    p.manual-help {
+      @include linkStyle;
+      margin-top: 1rem;
+    }
+  }
+
+  .manual-help {
+    @include linkStyle;
+    margin-top: 1rem;
+  }
+
+  .marketplace-button {
+    margin-top: 1rem;
+  }
+
+
+  .notice-banner--yellow {
+    display: block;
+    margin-top: 1rem;
+    padding: 0.5rem 0.9rem 0.6rem;
+    font-size: $font-size-sm;
+  }
+}
+
+section.invoices {
+  font-size: $font-size-m;
+  padding-top: 1rem;
+
+  ul {
+    list-style-type: none;
+    padding-left: 0;
+  }
+
+  li {
+    padding-bottom: 0.4em;
+  }
+
+  p {
+    @include linkStyle;
+  }
+
+  .icon-help {
+    margin-right: 3px;
+    transform: translateY(-2px);
+
+    &:hover {
+      border-color: $pebble-grey;
+      @include colorSVG($cement-grey);
+    }
+  }
+
+  a svg {
+    @include colorSVG(black);
+    transform: translateY(-2px);
+  }
+}
+
+#github-apps-invitation {
+  box-shadow: 0 0 15px 3px $pebble-grey;
+  padding: 0.1em 1.25em .2em 1.25em;
+
+  // FIXME this is copied from above!
+  .button {
+    height: 2.6rem;
+    padding: 0.6em 0.8em;
+    background-color: $oxide-blue;
+    border: none;
+    border-radius: 2px;
+    margin-right: 0.5rem;
+
+    svg {
+      vertical-align: sub;
+    }
+
+    .icon {
+      @include colorSVG(white);
+    }
+
+    &:hover {
+      background-color: #229191;
+    }
+  }
+
+  &.expanded {
+    h2 {
+      font-size: $font-size-xl;
+      margin-top: 0.5em;
+    }
+
+    p {
+      font-size: $font-size-ml;
+    }
+
+    .button {
+      margin-top: 1em;
+    }
+  }
+
+  & + .legacy-services-integration {
+    margin-top: 1em;
+  }
+
+  p {
+    @include linkStyle;
+  }
+}
+
+.loading-indicator--white.migrate span {
+  padding-right: 5px;
+  vertical-align: bottom;
+}
+
+header.space-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  // FIXME this is copied from linkStyle but I only want it on .inner-underline
+  .inner-underline {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px solid $cement-grey;
+    padding-bottom: 0.1rem;
+    transition: color 200ms ease, border 200ms ease;
+
+    &:hover,
+    &:active {
+      color: $cement-grey;
+      text-decoration: none;
+      border-color: transparent;
+    }
+  }
+}
+
+#locked-github-apps-repositories {
+  box-shadow: 0 0 15px 3px $pebble-grey;
+
+  padding: 1em 1em 0 1em;
+  margin-top: 1rem;
+
+  p {
+    display: flex;
+    align-items: flex-start;
+
+    margin: 0 0 1rem;
+
+    color: $cement-grey;
+    font-size: $font-size-sm;
+
+    svg {
+      width: 22px;
+      height: 22px;
+
+      flex-shrink: 0;
+
+      margin-right: 9px;
+
+      stroke-width: 5px;
+
+      @include colorSVG($asphalt-grey);
+    }
+
+    @include linkStyle;
+
+    a {
+      padding-bottom: 0.07rem;
+    }
+  }
+
+  li {
+    opacity: 0.5;
+
+    .button:hover {
+      background-color: inherit;
+      color: inherit;
+
+      .icon {
+        @include colorSVG($cement-grey);
+      }
+    }
+
+    &.migratable {
+      opacity: 1.0;
+
+      .migration-status {
+        width: 66.5156px;
+        border: none;
+        text-align: center;
+      }
+
+      .button:hover {
+        background-color: $cement-grey;
+        color: white;
+
+        .icon {
+          @include colorSVG(white);
+        }
+      }
+
+      .success {
+        .icon {
+          @include colorSVG($turf-green);
+        }
+      }
+
+      .failed {
+        .icon {
+          @include colorSVG($brick-red);
+        }
+      }
+    }
+
+    &:last-child {
+      padding-bottom: 0.6em;
+    }
+  }
+}
+
+.button--white.migrate {
+  border-radius: 4px;
+  padding: 0.5em 0.9em 0.4em 0.7em;
+
+  svg {
+    @extend .icon--m;
+    @include colorSVGFill(rgba(black, 0.2));
+
+    width: 16px;
+    height: 16px;
+    transform: translateY(-2px);
+    padding-right: 2px;
+  }
+
+  &:hover {
+    background-color: $pebble-grey;
+  }
+}
+
+.migrate-or-activate {
+  margin-top: 1em;
+  padding-bottom: 0.8em;
+
+  .icon--github {
+    @include colorSVGFill(white);
+
+    width: 14px;
+    height: 14px;
+    margin-right: 4px;
+    transform: translateY(2px);
+  }
+}
+
+.link-button {
+  color: #FFFFFF;
+  height: 2.6rem;
+  padding: 0.6em 0.8em;
+  background-color: #3EAAAF;
+  border: none;
+  border-radius: 2px;
+}
+
+.subscription-divider {
+  margin: 40px 0;
+  height: 2px;
+  border-top: 2px $pebble-grey solid;
+}
+
+.manage-subscription {
+  float: right;
+
+  &.new {
+    float: none;
+  }
+
+  &.resubscribe {
+    float: none;
+    margin-top: 1rem;
+  }
+}
+
+.user-settings {
+  @include linkStyle;
+
+  h3 {
+    color: $oxide-blue;
+    font-weight: 300;
+    font-size: $font-size-ml;
+  }
+
+  > section {
+    border-bottom: 2px #f1f1f1 solid;
+    padding-bottom: 2em;
+    margin-bottom: 2em;
+
+    &:last-child {
+      border-bottom: 0;
+    }
+  }
+
+  .features-list {
+    list-style-type: none;
+    padding: 0;
+
+    .feature {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+
+      margin-bottom: 1em;
+
+      .description {
+        width: 80%;
+        font-style: italic;
+        color: $cement-grey;
+      }
+    }
+
+    button {
+      transform: translateY(-2px);
+      padding: 0;
+
+      .switch-inner {
+        margin-right: 0;
+      }
+    }
+  }
+
+  .email-settings {
+
+    .row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .name {
+      flex: 1;
+      white-space: nowrap;
+      padding-right: 20px;
+
+      a {
+        border-bottom: none;
+      }
+    }
+
+    .description {
+      flex: 1 1 100%;
+      font-style: italic;
+      color: $cement-grey;
+    }
+
+    .controls {
+      flex: 1;
+
+      .switch {
+        padding: 0;
+
+        .switch-inner {
+          margin-right: 0;
+        }
+      }
+    }
+
+    .build-emails {
+      margin-bottom: 2em;
+    }
+
+    .unsubscribed-emails {
+      .row {
+        padding: 0 20px;
+
+        &:hover {
+          background-color: #fbfbfb;
+        }
+      }
+    }
+
+    .unsubscribe-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 5px 0;
+      color: $cement-grey;
+      border-width: 1px;
+      border-color: $dry-cement;
+      width: 115px;
+
+      &:hover {
+        border-color: $cement-grey;
+        color: $asphalt-grey;
+      }
+
+      .icon {
+        margin-right: 5px;
+      }
+    }
+  }
+}
+
+.repository-migration-modal {
+  .migration-modal-cancel {
+    margin-left: 6px;
+  }
+}

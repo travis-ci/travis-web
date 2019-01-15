@@ -1,8 +1,8 @@
 import TravisRoute from 'travis/routes/basic';
-import { service } from 'ember-decorators/service';
+import { inject as service } from '@ember/service';
 
 export default TravisRoute.extend({
-  @service ajax: service(),
+  ajax: service(),
 
   needsAuth: true,
 
@@ -13,40 +13,42 @@ export default TravisRoute.extend({
 
   model() {
     const repo = this.modelFor('repo');
-    const url = `/repos/${repo.get('id')}/caches`;
-    return this.get('ajax').get(url).then((data) => {
-      let branch, cache, caches, pullRequests, pushes;
-      caches = {};
-      data['caches'].forEach((cacheData) => {
-        let branch, cache;
-        branch = cacheData.branch;
-        cache = caches[branch];
-        if (cache) {
-          cache.size += cacheData.size;
-          if (cache.last_modified < cacheData.last_modified) {
-            return cache.last_modified = cacheData.last_modified;
-          }
-        } else {
-          return caches[branch] = cacheData;
-        }
-      });
-      pushes = [];
-      pullRequests = [];
-      for (branch in caches) {
-        cache = caches[branch];
-        if (/PR./.test(branch)) {
-          cache.type = 'pull_request';
-          pullRequests.push(cache);
-        } else {
-          cache.type = 'push';
-          pushes.push(cache);
-        }
-      }
-      return {
-        repo,
-        pushes,
-        pullRequests,
-      };
-    });
+    const url = `/repo/${repo.get('id')}/caches`;
+
+    return this.get('ajax').getV3(url).then((data) => consolidateCaches(repo, data));
   },
 });
+
+function consolidateCaches(repo, data) {
+  let consolidatedCaches = {};
+  let pushes = [], pullRequests = [];
+
+  data['caches'].forEach((cacheData) => {
+    let branch = cacheData.branch;
+    let consolidatedCache = consolidatedCaches[branch];
+
+    if (consolidatedCache) {
+      consolidatedCache.size += cacheData.size;
+
+      if (consolidatedCache.last_modified < cacheData.last_modified) {
+        consolidatedCache.last_modified = cacheData.last_modified;
+      }
+    } else {
+      consolidatedCaches[branch] = cacheData;
+
+      if (/PR./.test(branch)) {
+        cacheData.type = 'pull_request';
+        pullRequests.push(cacheData);
+      } else {
+        cacheData.type = 'push';
+        pushes.push(cacheData);
+      }
+    }
+  });
+
+  return {
+    repo,
+    pushes,
+    pullRequests,
+  };
+}

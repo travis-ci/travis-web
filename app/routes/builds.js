@@ -1,16 +1,17 @@
 import TravisRoute from 'travis/routes/basic';
-import { service } from 'ember-decorators/service';
+import { inject as service } from '@ember/service';
 
 export default TravisRoute.extend({
-  @service tabStates: null,
+  tabStates: service(),
+  auth: service(),
 
   activate(...args) {
     this._super(args);
 
     if (this.get('auth.signedIn')) {
       this.set('tabStates.sidebarTab', 'owned');
-      this.set('tabStates.mainTab', 'builds');
     }
+    this.set('tabStates.mainTab', 'builds');
   },
 
   titleToken() {

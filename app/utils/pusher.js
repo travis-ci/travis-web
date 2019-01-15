@@ -1,6 +1,6 @@
-/* global Pusher */
+import Pusher from 'pusher-js';
+
 import { next } from '@ember/runloop';
-import ENV from 'travis/config/environment';
 
 let TravisPusher = function (config, ajaxService) {
   this.active_channels = [];
@@ -15,18 +15,16 @@ TravisPusher.prototype.init = function (config, ajaxService) {
     return this.pusher = {
       subscribe() {
         return {
-          bind_all() {}
+          bind_global() {}
         };
       },
+      unsubscribe() {},
       channel() {}
     };
   }
 
   this.ajaxService = ajaxService;
   Pusher.warn = this.warn.bind(this);
-  if (config.host) {
-    Pusher.host = config.host;
-  }
 
   if (config.debug) {
     Pusher.log = function (message) {
@@ -36,10 +34,32 @@ TravisPusher.prototype.init = function (config, ajaxService) {
     };
   }
 
-  return this.pusher = new Pusher(config.key, {
+  let pusherConfig = {
     encrypted: config.encrypted,
-    disableStats: true
-  });
+    disableStats: true,
+    wsHost: config.host,
+
+    authorizer: function (channel, options) {
+      return {
+        authorize: function (socketId, callback) {
+          let channelName = channel.name;
+
+          TravisPusher.ajaxService.post('/pusher/auth', {
+            socket_id: socketId,
+            channels: [channelName]
+          }).then((data) => {
+            callback(false, { auth: data['channels'][channelName] });
+          });
+        }
+      };
+    }
+  };
+
+  if (config.path) {
+    pusherConfig.wsPath = `/${config.path}`;
+  }
+
+  return this.pusher = new Pusher(config.key, pusherConfig);
 };
 
 TravisPusher.prototype.subscribeAll = function (channels) {
@@ -65,7 +85,7 @@ TravisPusher.prototype.unsubscribeAll = function (channels) {
 TravisPusher.prototype.subscribe = function (channelName) {
   if (channelName && this.pusher && !this.pusher.channel(channelName)) {
     this.active_channels.push(channelName);
-    return this.pusher.subscribe(channelName).bind_all((event, data) => {
+    return this.pusher.subscribe(channelName).bind_global((event, data) => {
       this.receive(event, data);
     });
   }
@@ -154,59 +174,6 @@ TravisPusher.prototype.ignoreMessage = function (message) {
   let existingSubscription = message.indexOf('Existing subscription') === 0;
   let noSubscription = message.indexOf('No current subscription') === 0;
   return existingSubscription || noSubscription;
-};
-
-Pusher.SockJSTransport.isSupported = function () {
-  if (ENV.pusher.host !== 'ws.pusherapp.com') {
-    return false;
-  }
-};
-
-Pusher.channel_auth_transport = 'travis_ajax';
-Pusher.authorizers.travis_ajax = function (socketId, callback) {
-  let channelName = this.channel.name;
-  TravisPusher.ajaxService.post(Pusher.channel_auth_endpoint, {
-    socket_id: socketId,
-    channels: [channelName]
-  }).then((data) => {
-    callback(false, { auth: data['channels'][channelName] });
-  });
-};
-
-Pusher.getDefaultStrategy = function (config) {
-  let pusherPath = ENV.pusher.path || '';
-  if (pusherPath) {
-    pusherPath = `/${pusherPath}`;
-  }
-  return [
-    [
-      ':def', 'ws_options', {
-        hostUnencrypted: `${config.wsHost}:${config.wsPort}${pusherPath}`,
-        hostEncrypted: `${config.wsHost}:${config.wssPort}${pusherPath}`,
-        path: config.path
-      }
-    ], [
-      ':def', 'sockjs_options', {
-        hostUnencrypted: `${config.httpHost}:${config.httpPort}`,
-        hostEncrypted: `${config.httpHost}:${config.httpsPort}`
-      }
-    ], [
-      ':def', 'timeouts', {
-        loop: true,
-        timeout: 15000,
-        timeoutLimit: 60000
-      }
-    ], [
-      ':def', 'ws_manager', [
-        ':transport_manager', {
-          lives: 2,
-          minPingDelay: 10000,
-          maxPingDelay: config.activity_timeout
-        }
-      ]
-    // eslint-disable-next-line
-    ], [':def_transport', 'ws', 'ws', 3, ':ws_options', ':ws_manager'], [':def_transport', 'flash', 'flash', 2, ':ws_options', ':ws_manager'], [':def_transport', 'sockjs', 'sockjs', 1, ':sockjs_options'], [':def', 'ws_loop', [':sequential', ':timeouts', ':ws']], [':def', 'flash_loop', [':sequential', ':timeouts', ':flash']], [':def', 'sockjs_loop', [':sequential', ':timeouts', ':sockjs']], [':def', 'strategy', [':cached', 1800000, [':first_connected', [':if', [':is_supported', ':ws'], [':best_connected_ever', ':ws_loop', [':delayed', 2000, [':sockjs_loop']]], [':if', [':is_supported', ':flash'], [':best_connected_ever', ':flash_loop', [':delayed', 2000, [':sockjs_loop']]], [':sockjs_loop']]]]]]
-  ];
 };
 
 export default TravisPusher;

@@ -19,15 +19,15 @@ test('visiting build matrix', function (assert) {
   commit.save();
 
   server.create('job', { number: '1234.2', repository: repo, state: 'passed', config: { env: 'JANTS', os: 'osx', language: 'ruby', rvm: 2.2 }, commit, build });
-  server.create('job', { allow_failure: true, number: '1234.999', repository: repo, state: 'failed', config: { language: 'ruby' }, commit, build });
+  server.create('job', { allow_failure: true, number: '1234.999', repository: repo, state: 'failed', config: { language: 'ruby', os: 'jorts' }, commit, build });
 
   visit(`/travis-ci/travis-web/builds/${build.id}`);
 
   andThen(() => {});
   andThen(function () {
-    assert.equal(buildPage.requiredJobs().count, 2, 'expected two required jobs in the matrix');
+    assert.equal(buildPage.requiredJobs.length, 2, 'expected two required jobs in the matrix');
 
-    buildPage.requiredJobs(0).as(firstJobRow => {
+    buildPage.requiredJobs[0].as(firstJobRow => {
       assert.ok(firstJobRow.state.isPassed, 'expected the first job to have passed');
       assert.equal(firstJobRow.number, '1234.1');
       assert.equal(firstJobRow.env, 'JORTS');
@@ -35,18 +35,19 @@ test('visiting build matrix', function (assert) {
       assert.equal(firstJobRow.language, 'Node.js: 5');
     });
 
-    buildPage.requiredJobs(1).as(secondJobRow => {
+    buildPage.requiredJobs[1].as(secondJobRow => {
       assert.equal(secondJobRow.number, '1234.2');
       assert.equal(secondJobRow.env, 'JANTS');
       assert.ok(secondJobRow.os.isMacOS, 'expect MacOS');
       assert.equal(secondJobRow.language, 'Ruby: 2.2');
     });
 
-    assert.equal(buildPage.allowedFailureJobs().count, 1, 'expected one allowed failure job');
+    assert.equal(buildPage.allowedFailureJobs.length, 1, 'expected one allowed failure job');
 
-    buildPage.allowedFailureJobs(0).as(failedJobRow => {
+    buildPage.allowedFailureJobs[0].as(failedJobRow => {
       assert.ok(failedJobRow.state.isFailed, 'expected the allowed failure job to have failed');
       assert.equal(failedJobRow.language, 'Ruby');
+      assert.ok(failedJobRow.os.isUnknown, 'expected the job OS to be unknown');
     });
   });
   percySnapshot(assert);

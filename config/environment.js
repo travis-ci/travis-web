@@ -14,7 +14,7 @@ module.exports = function (environment) {
         // e.g. 'with-controller': true
       },
       EXTEND_PROTOTYPES: {
-        // Prevent Ember Data from overriding `Date.parse`.
+        // Prevent Ember Data from overriding Date.parse.
         Date: false
       }
     },
@@ -32,18 +32,34 @@ module.exports = function (environment) {
       host: 'ws.pusherapp.com',
       debug: false
     },
+    intercom: {
+      appId: 'placeholder',
+      enabled: false
+    },
     urls: {
       about: 'https://about.travis-ci.com',
       blog: 'https://blog.travis-ci.com',
+      changelog: 'https://changelog.travis-ci.com',
+      community: 'https://travis-ci.community',
+      dashboard: 'https://travis-ci.com/dashboard',
       docs: 'https://docs.travis-ci.com',
-      status: 'https://www.traviscistatus.com/',
-      imprint: 'https://docs.travis-ci.com/imprint.html',
+      gettingStarted: 'https://docs.travis-ci.com/user/getting-started/#to-get-started-with-travis-ci',
       enterprise: 'https://enterprise.travis-ci.com',
+      imprint: 'https://docs.travis-ci.com/imprint.html',
+      jobs: 'https://travisci.workable.com/',
+      plans: 'https://travis-ci.com/plans',
+      privacy: 'https://docs.travis-ci.com/legal/privacy-policy',
+      security: 'https://docs.travis-ci.com/legal/security',
+      status: 'https://www.traviscistatus.com/',
+      support: 'mailto:support@travis-ci.com',
+      terms: 'https://docs.travis-ci.com/legal/terms-of-service/',
       twitter: 'https://twitter.com/travisci',
-      jobs:'https://travisci.workable.com/',
-      support: 'mailto:support@travis-ci.com'
     },
     endpoints: {},
+    githubApps: false,
+    timing: {
+      syncingPageRedirectionTime: 5000,
+    },
     intervals: {
       updateTimes: 1000,
       branchCreatedSyncDelay: 2000,
@@ -51,20 +67,53 @@ module.exports = function (environment) {
       triggerBuildRequestDelay: 3000,
       fetchRecordsForPusherUpdatesThrottle: 1000,
       repositoryFilteringDebounceRate: 200,
+      syncingPolling: 3000,
+      githubAppsInstallationPolling: 4000,
     },
     githubOrgsOauthAccessSettingsUrl: 'https://github.com/settings/connections/applications/f244293c729d5066cf27',
+    apiTraceEndpoint: 'https://papertrailapp.com/systems/travis-org-api-production/events?q=program%3Aapp%2Fweb%20log-tracing%20',
     ajaxPolling: false,
     logLimit: 10000,
     emojiPrepend: '',
     statusPageStatusUrl: 'https://pnpcptp8xh9k.statuspage.io/api/v2/status.json',
-    randomiseTeam: process.env.PERCY_ENABLE !== '1'
+
+    zendesk: {
+      apiHost: 'https://travisci.zendesk.com',
+      createRequestEndpoint: '/api/v2/requests.json'
+    },
+
+    moment: {
+      includeTimezone: 'subset'
+    }
   };
 
   ENV.featureFlags = {
     'repository-filtering': true,
     'debug-logging': false,
-    'pro-version': !!process.env.TRAVIS_PRO || false,
-    'enterprise-version': !!process.env.TRAVIS_ENTERPRISE || false
+    'landing-page-cta': true,
+    'show-running-jobs-in-sidebar': false,
+    'debug-builds': false,
+    'broadcasts': true,
+    'beta-features': true,
+    'github-apps': false,
+  };
+
+  const { TRAVIS_PRO, TRAVIS_ENTERPRISE } = process.env;
+
+  if (TRAVIS_PRO) {
+    ENV.featureFlags['pro-version'] = true;
+    ENV.featureFlags['github-apps'] = true;
+    ENV.pro = true;
+  }
+
+  if (TRAVIS_ENTERPRISE) {
+    ENV.featureFlags['enterprise-version'] = true;
+    ENV.enterprise = true;
+  }
+
+  ENV.pagination = {
+    dashboardReposPerPage: 25,
+    profileReposPerPage: 25,
   };
 
   ENV.sentry = {
@@ -73,8 +122,6 @@ module.exports = function (environment) {
       /https:\/\/cdn\.travis-ci\.(org|com)\/assets\/(vendor|travis)-.+.js/
     ]
   };
-
-  ENV.enterprise = ENV.featureFlags['enterprise-version'];
 
   if (typeof process !== 'undefined') {
     if (ENV.featureFlags['pro-version'] && !ENV.featureFlags['enterprise-version']) {
@@ -88,16 +135,19 @@ module.exports = function (environment) {
       ENV.pusher.channelPrefix = 'private-';
       ENV.pagesEndpoint = 'https://billing.travis-ci.com';
       ENV.billingEndpoint = 'https://billing.travis-ci.com';
+      ENV.marketplaceEndpoint = 'https://github.com/marketplace/travis-ci/';
       ENV.endpoints = {
         sshKey: true,
         caches: true
       };
       ENV.userlike = true;
-      ENV.beacon = true;
-      ENV.urls.legal = ENV.billingEndpoint + '/pages/legal';
-      ENV.urls.imprint = ENV.billingEndpoint + '/pages/imprint';
-      ENV.urls.security = ENV.billingEndpoint + '/pages/security';
-      ENV.urls.terms = ENV.billingEndpoint + '/pages/terms';
+
+      if (process.env.GITHUB_APPS_APP_NAME) {
+        ENV.githubApps = {
+          appName: process.env.GITHUB_APPS_APP_NAME,
+          migrationRepositoryCountLimit: 50
+        };
+      }
     }
 
     if (process.env.API_ENDPOINT) {
@@ -109,11 +159,33 @@ module.exports = function (environment) {
 
       if (ENV.apiEndpoint === 'https://api-staging.travis-ci.com') {
         ENV.pusher.key = '87d0723b25c51e36def8';
+        ENV.billingEndpoint = 'https://billing-staging.travis-ci.com';
       }
+    }
+
+    if (process.env.BILLING_ENDPOINT) {
+      ENV.billingEndpoint = process.env.BILLING_ENDPOINT;
+    }
+
+    if (process.env.PUBLIC_MODE == 'false') {
+      ENV.publicMode = false;
+    } else {
+      ENV.publicMode = true;
     }
 
     if (process.env.AUTH_ENDPOINT) {
       ENV.authEndpoint = process.env.AUTH_ENDPOINT;
+    }
+
+    if (process.env.API_TRACE_ENDPOINT) {
+      ENV.apiTraceEndpoint = process.env.API_TRACE_ENDPOINT;
+    }
+
+    if (process.env.INTERCOM_APP_ID) {
+      ENV.intercom = {
+        appId: process.env.INTERCOM_APP_ID,
+        enabled: true
+      };
     }
   }
 
@@ -128,15 +200,28 @@ module.exports = function (environment) {
   }
 
   if (environment === 'test') {
+    ENV['ember-cli-mirage'] = {
+      autostart: true,
+    };
+
     // Testem prefers this...
     ENV.locationType = 'none';
+
+    ENV.validAuthToken = 'testUserToken';
 
     ENV.intervals.searchDebounceRate = 0;
     ENV.intervals.branchCreatedSyncDelay = 0;
     ENV.intervals.triggerBuildRequestDelay = 0;
     ENV.intervals.fetchRecordsForPusherUpdatesThrottle = 0;
+    ENV.intervals.syncingPolling = 10;
+    ENV.intervals.githubAppsInstallationPolling = 10;
+    ENV.timing.syncingPageRedirectionTime = 30;
+
+    ENV.pagination.dashboardReposPerPage = 10;
+    ENV.pagination.profileReposPerPage = 10;
 
     ENV.APP.rootElement = '#ember-testing';
+    ENV.APP.autoboot = false;
 
     ENV.sentry = {
       development: true
@@ -149,6 +234,11 @@ module.exports = function (environment) {
 
     ENV.pusher = {};
 
+    ENV.githubApps = {
+      appName: 'travis-ci-testing',
+      migrationRepositoryCountLimit: 20
+    };
+
     ENV.skipConfirmations = true;
 
     ENV.logLimit = 100;
@@ -156,23 +246,25 @@ module.exports = function (environment) {
     ENV.percy = {
       breakpointsConfig: {
         mobile: 375,
-        tablet: 768,
         desktop: 1280
       },
-      defaultBreakpoints: ['mobile', 'tablet', 'desktop']
+      defaultBreakpoints: ['mobile', 'desktop']
     };
 
     ENV.featureFlags['debug-logging'] = false;
     ENV.featureFlags['dashboard'] = false;
     ENV.featureFlags['pro-version'] = false;
-
-    ENV.billingEndpoint = 'https://billing.travis-ci.com';
+    ENV.featureFlags['github-apps'] = false;
 
     ENV.statusPageStatusUrl = undefined;
+
+    ENV.billingEndpoint = 'https://billing.travis-ci.com';
+    ENV.apiEndpoint = '';
+    ENV.marketplaceEndpoint = 'https://github.com/marketplace/travis-ci/';
   }
 
   if (environment === 'production') {
-    ENV.release = process.env.SOURCE_VERSION || '-';
+    ENV.release = process.env.SOURCE_VERSION || process.env.TRAVIS_COMMIT || '-';
     if (process.env.DISABLE_SENTRY) {
       ENV.sentry = {
         development: true
@@ -184,38 +276,5 @@ module.exports = function (environment) {
     var s3Bucket = require('./deploy')(process.env.DEPLOY_TARGET).s3.bucket;
     ENV.emojiPrepend = '//' + s3Bucket + '.s3.amazonaws.com';
   }
-
-  // We want CSP settings to be available during development (via ember addon)
-  // and in production (by returning the actual header with a Ruby server)
-  // The problem is that we host travis-web on multiple hosts. Because of that
-  // if we add an api host to CSP rules here, we won't be able to set it up
-  // properly in a Ruby server (because this file will be compiled on deploy,
-  // where host info is not available).
-  // That's why I create a contentSecurityPolicyRaw hash first and then I add
-  // API host to any sections listed in cspSectionsWithApiHost. That way I can
-  // do it in the same way on the Ruby server.
-  ENV.contentSecurityPolicyRaw = {
-    'default-src': "'none'",
-    'script-src': "'self' https://ssl.google-analytics.com https://djtflbt20bdde.cloudfront.net/ https://js.pusher.com",
-    'font-src': "'self' https://fonts.googleapis.com/css https://fonts.gstatic.com",
-    'connect-src': "'self' ws://ws.pusherapp.com wss://ws.pusherapp.com https://*.pusher.com https://s3.amazonaws.com/archive.travis-ci.com/ https://s3.amazonaws.com/archive.travis-ci.org/ app.getsentry.com https://pnpcptp8xh9k.statuspage.io/ https://ssl.google-analytics.com",
-    'img-src': "'self' data: https://www.gravatar.com http://www.gravatar.com app.getsentry.com https://*.githubusercontent.com https://0.gravatar.com https://ssl.google-analytics.com",
-    'style-src': "'self' https://fonts.googleapis.com 'unsafe-inline' https://djtflbt20bdde.cloudfront.net",
-    'media-src': "'self'",
-    'frame-src': "'self' https://djtflbt20bdde.cloudfront.net",
-    'report-uri': 'https://65f53bfdfd3d7855b8bb3bf31c0d1b7c.report-uri.io/r/default/csp/reportOnly',
-    'block-all-mixed-content': '',
-    'form-action': "'self'", // probably doesn't matter, but let's have it anyways
-    'frame-ancestors': "'none'",
-    'object-src': 'https://djtflbt20bdde.cloudfront.net'
-  };
-  ENV.cspSectionsWithApiHost = ['connect-src', 'img-src'];
-  ENV.contentSecurityPolicy = JSON.parse(JSON.stringify(ENV.contentSecurityPolicyRaw));
-  ENV.contentSecurityPolicyMeta = false;
-
-  ENV.cspSectionsWithApiHost.forEach((section) => {
-    ENV.contentSecurityPolicy[section] += ' ' + ENV.apiEndpoint;
-  });
-
   return ENV;
 };

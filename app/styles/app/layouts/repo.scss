@@ -1,0 +1,86 @@
+.repo-header {
+  header.name {
+    @media #{$medium-up} {
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: flex-start;
+      align-items: center;
+    }
+
+    .icon {
+      width: 26px;
+      height: 26px;
+
+      @include colorSVG($cement-grey);
+
+      &.private {
+        transform: translateY(1px);
+      }
+
+      &.public {
+        transform: translateY(4px);
+      }
+
+      margin-right: 10px;
+    }
+  }
+
+  .repo-title {
+    margin: 0;
+    font-size: 36px;
+    font-weight: $font-weight-normal;
+
+    a {
+      color: $asphalt-grey;
+      border-bottom: 2px solid transparent;
+      transition: border-color 100ms ease;
+
+      &:hover,
+      &:active {
+        border-color: $asphalt-grey;
+      }
+    }
+  }
+}
+
+.repo-gh {
+  @extend .icon--l;
+
+  flex: 0 0 30px;
+  margin: 0 1.2em;
+
+  @include colorSVGFill(rgba(black, 0.2));
+}
+
+.repo-navigation {
+  margin: 1.9em 0 1.2em;
+  display: flex;
+
+  @media #{$small-only} {
+    flex-flow: column-reverse;
+  }
+
+  @media #{$medium-up} {
+    flex-flow: row wrap;
+    justify-content: space-between;
+    border-bottom: 2px $pebble-grey solid;
+  }
+
+  .option-button {
+    width: 10em;
+
+    .option-dropdown a {
+      padding-left: 2.4em;
+    }
+  }
+}
+
+.button--repo-activate-gh svg {
+  @extend .icon--m;
+  @include colorSVGFill(white);
+
+  width: 16px;
+  height: 16px;
+  transform: translateY(-2px);
+  padding-right: 2px;
+}

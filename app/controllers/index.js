@@ -1,17 +1,20 @@
 import Controller from '@ember/controller';
 import Ember from 'ember';
-import { computed } from 'ember-decorators/object';
-import { alias } from 'ember-decorators/object/computed';
-import Visibility from 'npm:visibilityjs';
+import { computed } from '@ember/object';
+import { alias } from '@ember/object/computed';
+import Visibility from 'visibilityjs';
 import config from 'travis/config/environment';
-import { service } from 'ember-decorators/service';
+import { inject as service } from '@ember/service';
 
 export default Controller.extend({
-  @service auth: null,
-  @service tabStates: null,
-  @service('updateTimes') updateTimesService: null,
-  @service statusImages: null,
-  @service repositories: null,
+  auth: service(),
+  tabStates: service(),
+  updateTimesService: service('updateTimes'),
+  statusImages: service(),
+  repositories: service(),
+  features: service(),
+
+  config,
 
   init() {
     this._super(...arguments);
@@ -25,18 +28,15 @@ export default Controller.extend({
     this.get('updateTimesService').push(this.get('build.jobs'));
   },
 
-  @computed('features.proVersion')
-  landingPage(pro) {
+  landingPage: computed('features.proVersion', function () {
+    let pro = this.get('features.proVersion');
     let version = pro ? 'pro' : 'default';
 
     return `landing-${version}-page`;
-  },
+  }),
 
-  @alias('repositories.accessible.firstObject') repo: null,
-
-  @alias('tabStates.mainTab') tab: null,
-
-  @alias('repo.currentBuild') build: null,
-
-  @alias('build.jobs.firstObject') job: null,
+  repo: alias('repositories.accessible.firstObject'),
+  tab: alias('tabStates.mainTab'),
+  build: alias('repo.currentBuild'),
+  job: alias('build.jobs.firstObject')
 });

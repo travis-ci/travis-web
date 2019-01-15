@@ -1,0 +1,181 @@
+.owner-header {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 3rem;
+
+  .owner-title {
+    margin: 0 0 0.2em;
+    font-size: 36px;
+    font-weight: 300;
+    line-height: 0.9;
+
+    @media #{$medium-up} {
+      white-space: nowrap;
+    }
+  }
+
+  .owner-handle {
+    margin: 0;
+    font-size: $font-size-ml;
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    svg {
+      @include colorSVGFill(rgba(black, 0.2));
+    }
+  }
+
+  img {
+    border-radius: 50%;
+    background-color: $pebble-grey;
+  }
+}
+
+.owner-avatar {
+  flex: 0 0 calc(75px + 3%);
+
+  .avatar {
+    width: 74px;
+    height: 74px;
+  }
+}
+
+.owner-info {
+  flex: 1 1 auto;
+
+  position: relative;
+  overflow: hidden;
+
+  &:after {
+    content: "";
+
+    @include fadeOut(right, -90deg, white);
+  }
+}
+
+.owner-tiles {
+  padding: 0;
+  list-style-type: none;
+
+  .build-status {
+    text-transform: capitalize;
+  }
+}
+
+.rows--owner .row-content {
+  white-space: normal;
+  @media #{$medium-up} {
+    white-space: nowrap;
+  }
+}
+
+.owner-tile-head {
+  display: flex;
+  padding: 5px 10px 0 10px;
+  justify-content: flex-start;
+  align-items: center;
+
+  @media #{$medium-up} {
+    flex: 0 0 4em;
+    flex-direction: column;
+    justify-content: center;
+    height: 55px;
+    padding: 0.3em 0;
+    border-right: 1px solid rgba($asphalt-grey, 0.2);
+  }
+}
+
+.owner-tile-body {
+  flex-grow: 1;
+  position: relative;
+
+  @media #{$medium-up} {
+    padding: 0 1.5rem;
+    height: 5rem;
+  }
+}
+
+.owner-tile-main {
+
+  @media #{$small-only} {
+    padding: 0 10px 5px 10px;
+  }
+
+  @media #{$medium-up} {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+  }
+}
+
+.owner-tile {
+  background: linear-gradient(to right, $pebble-grey 0%, $pebble-grey 10px, white 10px, white 100%) no-repeat;
+  padding-left: 10px;
+
+  @each $key, $value in $stateMap {
+    &.#{$key} {
+      background: linear-gradient(to right, map-get($value, color) 0%, map-get($value, color) 10px, white 10px, white 100%) no-repeat;
+    }
+  }
+
+  .label {
+    font-size: 12px;
+    font-weight: 700;
+  }
+}
+
+.owner-tile-section {
+  position: relative;
+}
+
+.owner-tile-repo {
+
+  @media #{$medium-up} {
+    flex: 0 0 27.5%;
+  }
+
+  .repo-title {
+    font-size: 18px;
+    margin: 0;
+  }
+}
+
+.owner-tile-build {
+  @media #{$medium-up} {
+    flex: 0 0 11%;
+  }
+}
+
+.owner-tile-branch {
+  @media #{$medium-up} {
+    flex: 0 0 15%;
+  }
+}
+
+.owner-tile-commit {
+  @media #{$medium-up} {
+    flex: 0 0 17%;
+  }
+
+  .commit-compare {
+    font-size: 14px;
+  }
+}
+
+.owner-tile-date {
+  @media #{$medium-up} {
+    flex: 0 0 27.5%;
+  }
+}
+
+.owner-tile-no-build {
+  @media #{$medium-up} {
+    flex: 0 0 72.5%;
+  }
+}

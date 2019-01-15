@@ -1,30 +1,30 @@
-import { test } from 'qunit';
-import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
+import { module, test } from 'qunit';
+import { setupApplicationTest } from 'ember-qunit';
+import signInUser from 'travis/tests/helpers/sign-in-user';
 import profilePage from 'travis/tests/pages/profile';
 
-moduleForAcceptance('Acceptance | profile/update-repositories', {
-  beforeEach() {
+module('Acceptance | profile/update-repositories', function (hooks) {
+  setupApplicationTest(hooks);
+
+  hooks.beforeEach(function () {
     const currentUser = server.create('user', {
-      name: 'Sara Ahmed',
-      login: 'feministkilljoy',
-      repos_count: 3,
+      name: 'User Name',
+      login: 'user-login',
     });
 
     signInUser(currentUser);
 
     // create organization
-    server.create('account', {
-      name: 'Feminist Killjoys',
-      type: 'organization',
-      login: 'killjoys',
-      repos_count: 30,
+    server.create('organization', {
+      name: 'Org Name',
+      login: 'org-login',
     });
 
     // create active repository
     server.create('repository', {
-      name: 'living-a-feminist-life',
+      name: 'repository-name',
       owner: {
-        login: 'feministkilljoy',
+        login: 'user-login',
       },
       active: true,
       permissions: {
@@ -34,9 +34,9 @@ moduleForAcceptance('Acceptance | profile/update-repositories', {
 
     // create inactive repository
     server.create('repository', {
-      name: 'willful-subjects',
+      name: 'yet-another-repository-name',
       owner: {
-        login: 'feministkilljoy',
+        login: 'user-login',
       },
       active: false,
       permissions: {
@@ -46,9 +46,9 @@ moduleForAcceptance('Acceptance | profile/update-repositories', {
 
     // create repository without admin permissions
     server.create('repository', {
-      name: 'affect-theory-reader',
+      name: 'other-repository-name',
       owner: {
-        login: 'feministkilljoy',
+        login: 'user-login',
       },
       active: true,
       permissions: {
@@ -67,21 +67,32 @@ moduleForAcceptance('Acceptance | profile/update-repositories', {
         admin: false,
       },
     });
-  }
-});
 
-test('updating repository', function (assert) {
-  profilePage.visit({ username: 'feministkilljoy' });
-
-  andThen(() => {
-    profilePage.administerableRepositories(0).toggle();
-    profilePage.administerableRepositories(1).toggle();
-    profilePage.administerableRepositories(2).toggle();
+    // create migrated repository
+    server.create('repository', {
+      name: 'already-migrated-repository',
+      owner: {
+        login: 'user-login',
+      },
+      active: false,
+      migration_status: 'migrated',
+      permissions: {
+        admin: true,
+        migrate: true,
+      },
+    });
   });
 
-  andThen(() => {
-    assert.ok(profilePage.administerableRepositories(0).isActive, 'expected unadministerable repository to be unchanged');
-    assert.notOk(profilePage.administerableRepositories(1).isActive, 'expected previously enabled repository to be disabled');
-    assert.ok(profilePage.administerableRepositories(2).isActive, 'expected previously disabled job to be enabled');
+  test('updating repository', async function (assert) {
+    await profilePage.visit();
+
+    await profilePage.administerableRepositories[1].toggle();
+    await profilePage.administerableRepositories[2].toggle();
+    await profilePage.administerableRepositories[3].toggle();
+
+    assert.ok(profilePage.administerableRepositories[0].isMigrated, 'expected migrated repository to show migrated link');
+    assert.ok(profilePage.administerableRepositories[1].isActive, 'expected unadministerable repository to be unchanged');
+    assert.notOk(profilePage.administerableRepositories[2].isActive, 'expected previously enabled repository to be disabled');
+    assert.ok(profilePage.administerableRepositories[3].isActive, 'expected previously disabled job to be enabled');
   });
 });

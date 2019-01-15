@@ -1,12 +1,12 @@
 import Component from '@ember/component';
 import Ember from 'ember';
 import config from 'travis/config/environment';
-import Visibility from 'npm:visibilityjs';
-import { service } from 'ember-decorators/service';
+import Visibility from 'visibilityjs';
+import { inject as service } from '@ember/service';
 
 export default Component.extend({
-  @service store: null,
-  @service('updateTimes') updateTimesService: null,
+  store: service(),
+  updateTimesService: service('updateTimes'),
 
   init() {
     this._super(...arguments);

@@ -1,0 +1,250 @@
+$nav-line-height: 35px;
+
+.navigation-toggle {
+  float: right;
+
+  @media #{$medium-up} {
+    display: none;
+  }
+}
+
+.navigation {
+  height: 0;
+  will-change: height;
+  transition: height 200ms ease;
+  overflow: hidden;
+
+  > ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  li {
+    display: block;
+  }
+
+  &.is-open {
+    height: 100%;
+  }
+
+  @media #{$medium-up} {
+    overflow: visible;
+
+    > ul > li {
+      display: inline-block;
+      margin-left: -0.5em;
+      white-space: nowrap;
+
+      &:first-of-type {
+        a {
+          margin-left: -0.5em;
+        }
+      }
+    }
+  }
+
+  .profile {
+    @media #{$medium-up} {
+      line-height: $top-height;
+      float: right;
+      margin-right: 0;
+
+      > a {
+        text-decoration: none;
+        padding-right: 0;
+      }
+    }
+
+    .avatar {
+      margin-right: 10px;
+    }
+
+    .navigation-profile-link{
+      display: none;
+
+      @media #{$medium-up} {
+        display: block;
+      }
+    }
+  }
+
+  .signed-in a {
+    text-decoration: none;
+  }
+}
+
+.navigation-anchor {
+  display: block;
+  width: 100%;
+  line-height: $nav-line-height;
+
+  &:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  @media #{$medium-up} {
+    line-height: $top-height + 1px;
+    padding: 0 1em;
+
+    &:last-child {
+      padding-bottom: 10px;
+    }
+  }
+}
+
+.deployment-version {
+  border: 1px solid $cement-grey;
+  font-size: 50%;
+  padding: 6px;
+  border-radius: 15px;
+  display: inline;
+  position: relative;
+  top: -2px;
+}
+
+.username {
+  color: $cement-grey;
+  padding-left: 20px;
+  background-color: #F7F7F7;
+  overflow: hidden;
+  white-space: nowrap;
+  @media #{$medium-up} {
+    span {
+      &:after {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 4.75em;
+        height: 30px;
+        background: linear-gradient(-90deg, #F7F7F7 20%, rgba(255, 255, 255, 0) 100%);
+      }
+    }
+  }
+}
+.menu-separator {
+  border-bottom: 1px #666666 solid;
+  padding-top: 10px;
+
+  @media #{$medium-up} {
+    display: none;
+  }
+}
+.navigation-nested {
+  padding: 10px 0px 0px 0px;
+
+  svg {
+    display: none;
+  }
+
+  a {
+    &:not(:first-child) {
+      line-height: 35px;
+    }
+  }
+
+  .topbar-menu-item:hover {
+    text-decoration: underline;
+  }
+
+  @media #{$medium-up} {
+    width: 200px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    line-height: $nav-line-height;
+    background-color: #FFFFFF;
+    border: 1px solid #F7F7F7;
+    border-radius:2px;
+    box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.15);
+
+    svg {
+      display: inline-block;
+      margin-left: 20px;
+      vertical-align: sub;
+    }
+
+    a {
+      display: block;
+      text-align: left;
+      &:not(:first-child) {
+        line-height: 55px;
+      }
+      svg.icon path {
+        stroke: #686B6E;
+      }
+      li {
+        &:hover {
+          background-color: lighten($oxide-blue, 50%);
+        }
+        &.active:hover {
+          background-color: lighten($oxide-blue, 50%);
+        }
+      }
+      &:hover {
+        text-decoration: none;
+        color: $oxide-blue;
+        svg {
+          @include colorSVG($oxide-blue);
+        }
+      }
+      &.active:hover {
+        text-decoration: none;
+        background-color: lighten($oxide-blue, 50%);
+        a {
+          color: $oxide-blue;
+        }
+        svg {
+          @include colorSVG($oxide-blue);
+        }
+      }
+    }
+
+    .topbar-menu-item:hover {
+      text-decoration: none;
+    }
+  }
+
+  .username {
+    display: none;
+
+    @media #{$medium-up} {
+      display: block;
+    }
+  }
+
+  .nav-nested {
+    display: none;
+
+    @media #{$medium-up} {
+      display: block;
+      height: 1px;
+      background-color: $cream-dark;
+      margin: 0 20px;
+    }
+  }
+
+
+
+  @media #{$medium-up} {
+    display: none;
+    position: absolute;
+    padding: 0 0 0 0;
+    margin: (-1px) 0 0 (-103px);
+
+    @include z-index(above-flashes)
+  }
+}
+
+ul #profile-menu-link:hover > ul,
+ul #profile-menu-link:focus-within > ul,
+ul #profile-menu-link ul:hover {
+  display: block;
+}
+
+nav.navigation-anchor:hover {
+  text-decoration: underline;
+}

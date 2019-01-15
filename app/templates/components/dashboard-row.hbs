@@ -1,5 +1,5 @@
 <div class="dash-head">
-  <button {{action "starRepo"}} class="dash-star {{if repo.starred 'is-starred'}}" title="{{if repo.starred 'un'}}star this repo">
+  <button data-test-dashboard-repository-star={{idx}} {{action "starRepo"}} class="dash-star {{if repo.starred 'is-starred'}}" title="{{if repo.starred 'un'}}star this repo">
     {{svg-jar 'icon-star' class="icon--m"}}
   </button>
   {{#if repo.private}}
@@ -35,22 +35,22 @@
       <p class="row-content color">
         {{status-icon status=repo.currentBuild.state}}
         {{#link-to "build" repo.owner.login repo.name repo.currentBuild.id title="Last build on the repo"}}
-        <span class="label-align">#{{repo.currentBuild.number}} {{repo.currentBuild.state}}</span>
+        <span class="label-align">#{{repo.currentBuild.number}} {{humanize-state repo.currentBuild.state}}</span>
         {{/link-to}}
       </p>
     </section>
     <section class="dash-commit">
       <h3 class="label">Commit</h3>
-      <p class="row-content row-item commit-sha">
-        {{tooltip-on-element text='View commit on GitHub'}}
+      <div class="row-content row-item commit-sha">
         {{svg-jar 'icon-commit' class="icon"}}
-        {{#external-link-to href=urlGitHubCommit}}
-          <span class="label-align">
+        {{#external-link-to href=repo.currentBuild.commit.githubUrl}}
+          {{ember-tooltip text='View commit on GitHub'}}
+          <span class="label-align monospace">
             {{format-sha repo.currentBuild.commit.sha}}
           </span>
         {{/external-link-to}}
         {{svg-jar 'icon-external-link' class="icon"}}
-      </p>
+      </div>
     </section>
     <section class="fade-out dash-finished">
       <h3 class="label">Finished</h3>
@@ -63,13 +63,13 @@
       </p>
     </section>
 
-    <div class="dash-menu">
+    <div data-test-dashboard-repository-menu={{idx}} class="dash-menu">
       {{#if displayMenuTofu}}
         {{#if isTriggering}}
           {{loading-indicator}}
         {{else}}
         <div class="dropup {{if dropupIsOpen "is-open"}}">
-          <button type="button" class="dropup-tofu" {{action "openDropup"}}>
+          <button data-test-tofu-menu={{idx}} type="button" class="dropup-tofu" {{action "openDropup"}}>
             {{svg-jar 'icon-tofuburger' class="icon-tofu"}}
           </button>
           <ul class="dropup-list">

@@ -23,12 +23,12 @@ module('Integration | Mirage Serializer | V2Serializer', {
       blogPost: Model.extend()
     });
 
-    const author = this.schema.authors.create({ name: 'Sara Ahmed' });
+    const author = this.schema.authors.create({ name: 'User Name' });
 
-    author.createBook({ title: 'Willful Subjects' });
-    author.createBook({ title: 'On Being Included' });
+    author.createBook({ title: 'A Book' });
+    author.createBook({ title: 'A Different Book' });
 
-    this.schema.blogPosts.create({ title: 'Equality Credentials' });
+    this.schema.blogPosts.create({ title: 'A Blog Post' });
 
     this.registry = new SerializerRegistry(this.schema, {
       application: V2Serializer
@@ -48,11 +48,11 @@ test('it serialises with underscored property keys', function (assert) {
     books: [{
       id: '1',
       author_id: '1',
-      title: 'Willful Subjects'
+      title: 'A Book'
     }, {
       id: '2',
       author_id: '1',
-      title: 'On Being Included'
+      title: 'A Different Book'
     }]
   });
 });
@@ -61,7 +61,7 @@ test('it sideloads included resources', function (assert) {
   const registryWithInclusion = new SerializerRegistry(this.schema, {
     application: V2Serializer,
     author: V2Serializer.extend({
-      include: ['books']
+      include: Object.freeze(['books'])
     })
   });
 
@@ -72,16 +72,16 @@ test('it sideloads included resources', function (assert) {
     authors: [{
       id: '1',
       book_ids: ['1', '2'],
-      name: 'Sara Ahmed'
+      name: 'User Name'
     }],
     books: [{
       id: '1',
       author_id: '1',
-      title: 'Willful Subjects'
+      title: 'A Book'
     }, {
       id: '2',
       author_id: '1',
-      title: 'On Being Included'
+      title: 'A Different Book'
     }]
   });
 });
@@ -93,7 +93,7 @@ test('it uses an underscored container key', function (assert) {
   assert.deepEqual(result, {
     blog_post: {
       id: '1',
-      title: 'Equality Credentials'
+      title: 'A Blog Post'
     }
   });
 });

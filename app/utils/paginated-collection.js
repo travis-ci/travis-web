@@ -1,15 +1,13 @@
 import ArrayProxy from '@ember/array/proxy';
-import { computed as emberComputed } from '@ember/object';
-import { computed } from 'ember-decorators/object';
-import { alias } from 'ember-decorators/object/computed';
+import { defineProperty, computed } from '@ember/object';
+import { alias } from '@ember/object/computed';
 
 export default ArrayProxy.extend({
+  arrangedContent: alias('content'),
 
-  @alias('content') arrangedContent: null,
-
-  @computed('content.meta.pagination')
-  pagination(paginationData) {
-    return {
+  pagination: computed('content.meta.pagination', function () {
+    let paginationData = this.get('content.meta.pagination');
+    let object = {
       total: paginationData.count,
       perPage: paginationData.limit,
       offset: paginationData.offset,
@@ -19,14 +17,18 @@ export default ArrayProxy.extend({
       next: paginationData.next,
       first: paginationData.first,
       last: paginationData.last,
-      currentPage: emberComputed(() => {
-        const { offset, limit } = paginationData;
-        return (offset / limit + 1);
-      }),
-      numberOfPages: emberComputed(() => {
-        const { count, limit } = paginationData;
-        return Math.ceil(count / limit);
-      })
     };
-  }
+
+    defineProperty(object, 'currentPage', computed(() => {
+      const { offset, limit } = paginationData;
+      return (offset / limit + 1);
+    }));
+
+    defineProperty(object, 'numberOfPages', computed(() => {
+      const { count, limit } = paginationData;
+      return Math.ceil(count / limit);
+    }));
+
+    return object;
+  }),
 });

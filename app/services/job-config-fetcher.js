@@ -1,44 +1,50 @@
 import { once } from '@ember/runloop';
 import { Promise as EmberPromise } from 'rsvp';
-import Service from '@ember/service';
-import { service } from 'ember-decorators/service';
-import PromiseProxyMixin from '@ember/object/promise-proxy-mixin';
-import ObjectProxy from '@ember/object/proxy';
+import Service, { inject as service } from '@ember/service';
+import { task } from 'ember-concurrency';
 
 export default Service.extend({
-  @service ajax: null,
+  store: service(),
 
   init() {
-    this.promisesByJobId = {};
-    this.resolvesByJobId = {};
+    this.toFetch = {};
     return this._super(...arguments);
   },
 
-  fetch(jobId) {
-    if (this.promisesByJobId[jobId]) {
-      return this.promisesByJobId[jobId];
+  fetch(job) {
+    if (job._config) {
+      return EmberPromise.resolve(job._config);
+    }
+    if (this.toFetch[job.id]) {
+      return this.toFetch[job.id].promise;
     } else {
+      let data = this.toFetch[job.id] = { job };
       let promise = new EmberPromise((resolve, reject) => {
-        this.resolvesByJobId[jobId] = resolve;
+        data.resolve = resolve;
       });
-      this.promisesByJobId[jobId] = promise;
+      data.promise = promise;
       once(this, 'flush');
-
-      let PromiseObject = ObjectProxy.extend(PromiseProxyMixin);
-      return PromiseObject.create({ promise });
+      return promise;
     }
   },
 
+  fetchTask: task(function* () {
+    for (let jobId in this.toFetch) {
+      const { job, resolve } = this.toFetch[jobId];
+
+      if (job._config) {
+        resolve(job._config);
+      } else {
+        const build = yield job.build;
+        yield this.store.queryRecord('build', { id: build.id, include: 'build.jobs,job.config' });
+        resolve(job._config);
+      }
+    }
+    this.toFetch = {};
+  }),
+
   flush() {
-    let resolvesByJobId = this.resolvesByJobId;
-    this.promisesByJobId = {};
-    this.resolvesByJobId = {};
-    let jobIds = Object.keys(resolvesByJobId);
-    this.get('ajax').ajax('/jobs', 'GET', { data: { ids: jobIds } }).then((data) => {
-      data.jobs.forEach((jobData) => {
-        resolvesByJobId[jobData.id.toString()](jobData.config);
-      });
-    });
+    this.fetchTask.perform();
   }
 });
 

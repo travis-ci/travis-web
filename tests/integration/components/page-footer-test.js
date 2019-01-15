@@ -1,44 +1,40 @@
-import { moduleForComponent, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import { withFeature, withoutFeature } from 'travis/tests/helpers/with-feature';
 import { stubTemplate } from 'travis/tests/helpers/stub-template';
 
-moduleForComponent('page-footer', 'Integration | Component | page footer', {
-  integration: true
-});
+module('Integration | Component | page footer', function (hooks) {
+  setupRenderingTest(hooks);
 
-test("it doesn't render Imprint, Blog or Twitter links for enterprise", function (assert) {
-  withFeature(this, 'enterpriseVersion');
-  this.render(hbs`{{page-footer}}`);
+  hooks.beforeEach(function () {
+    this.features = this.owner.lookup('service:features');
+  });
 
-  assert.equal(this.$('a:contains(Imprint)').length, 0);
-  assert.equal(this.$('a:contains(Blog)').length, 0);
-  assert.equal(this.$('a:contains(Twitter)').length, 0);
-});
+  test("it doesn't render Imprint, Blog or Twitter links for enterprise", async function (assert) {
+    this.features.enable('enterprise-version');
+    await render(hbs`{{page-footer}}`);
 
-test("it doesn't show travis-status for enteprise", function (assert) {
-  stubTemplate(this, 'components/travis-status', hbs`TRAVIS STATUS`);
+    assert.dom('[data-test-footer-imprint-link]').doesNotExist();
+    assert.dom('[data-test-footer-blog-link]').doesNotExist();
+    assert.dom('[data-test-footer-twitter-link]').doesNotExist();
+  });
 
-  // precondition
-  withoutFeature(this, 'enterpriseVersion');
-  this.render(hbs`{{page-footer}}`);
+  test("it doesn't show travis-status for enteprise", async function (assert) {
+    stubTemplate('components/travis-status', hbs`<div class="status">TRAVIS STATUS</div>`);
 
-  assert.ok(this.$().text().match(/TRAVIS STATUS/));
+    await render(hbs`{{page-footer}}`);
 
-  withFeature(this, 'enterpriseVersion');
-  this.render(hbs`{{page-footer}}`);
+    assert.dom('div.status').hasText(/TRAVIS STATUS/);
 
-  assert.notOk(this.$().text().match(/TRAVIS STATUS/));
-});
+    this.features.enable('enterprise-version');
+    await render(hbs`{{page-footer}}`);
 
-test('it shows security statement for pro version', function (assert) {
-  withoutFeature(this, 'proVersion');
-  this.render(hbs`{{page-footer}}`);
+    assert.dom('div.status').doesNotExist();
+  });
 
-  assert.equal(this.$('a:contains(Security)').length, 0);
-
-  withFeature(this, 'proVersion');
-  this.render(hbs`{{page-footer}}`);
-
-  assert.equal(this.$('a:contains(Security)').length, 1);
+  test('it shows security statement', async function (assert) {
+    await render(hbs`{{page-footer}}`);
+    assert.dom('[data-test-footer-security-link]').exists();
+  });
 });

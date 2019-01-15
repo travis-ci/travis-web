@@ -1,11 +1,24 @@
 import $ from 'jquery';
 import TravisRoute from 'travis/routes/basic';
-import { service } from 'ember-decorators/service';
+import { inject as service } from '@ember/service';
 
 export default TravisRoute.extend({
-  @service auth: null,
+  auth: service(),
+  features: service(),
+
+  queryParams: {
+    redirectUri: {
+      refreshModel: true
+    }
+  },
 
   needsAuth: false,
+
+  model(params) {
+    if (params.redirectUri) {
+      return { redirectUri: params.redirectUri };
+    }
+  },
 
   renderTemplate() {
     $('body').attr('id', 'auth');

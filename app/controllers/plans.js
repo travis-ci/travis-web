@@ -1,15 +1,20 @@
 /* global _gaq */
 import Controller from '@ember/controller';
 import config from 'travis/config/environment';
-import { action } from 'ember-decorators/object';
+import { inject as service } from '@ember/service';
 
 export default Controller.extend({
-  @action
-  gaCta(location) {
-    if (config.gaCode) {
-      const page = `/virtual/signup?${location}`;
-      _gaq.push(['_trackPageview', page]);
+  config,
+
+  auth: service(),
+
+  actions: {
+    gaCta(location) {
+      if (config.gaCode) {
+        const page = `/virtual/signup?${location}`;
+        _gaq.push(['_trackPageview', page]);
+      }
+      this.get('auth').signIn();
     }
-    this.auth.signIn();
-  },
+  }
 });

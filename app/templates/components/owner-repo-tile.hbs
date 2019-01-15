@@ -1,51 +1,70 @@
-{{!-- {{#if repo.private }}
-         <div class="tile-lock"><span class="icon icon-lock"></span></div>
-         {{/if}} --}}
-<div class="row-item fade-out">
-  <div class="one-line">
-    <h2 class="repo-title">
-      {{#link-to "repo" ownerName repoName class="label-align"}}
-        {{status-icon status=repo.default_branch.last_build.state}}
-        <span class="inner-underline">{{repoName}}</span>
-      {{/link-to}}
-    </h2>
+<div class="owner-tile-head">
+  <div class="owner-tile-visibility">
+    {{#if repo.private}}
+      {{svg-jar 'icon-lock' alt='Private repository' class='icon private'}}
+      {{ember-tooltip text='Private repository'}}
+    {{else}}
+      {{svg-jar 'icon-os' alt='Public repository' class='icon public'}}
+      {{ember-tooltip text='Public repository'}}
+    {{/if}}
   </div>
 </div>
-{{#if repo.default_branch.last_build}}
-  <div class="row-item row-color build-number">
-    <div class="one-line">
-      {{#link-to "build" ownerName repoName repo.default_branch.last_build.id}}
-        {{svg-jar 'icon-hash' class="icon"}}
-        <span class="label-align inner-underline">{{repo.default_branch.last_build.number}}</span>
-      {{/link-to}}
-    </div>
-  </div>
+<div class="owner-tile-body">
+  <div class="owner-tile-main">
 
-  <div class="row-item fade-out default-branch">
-    <div class="one-line">
-      {{request-icon event=repo.default_branch.last_build.event_type}}
-      <span class="label-align">{{repo.default_branch.name}}</span>
-    </div>
-  </div>
+    <section class="owner-tile-section owner-tile-repo fade-out">
+      <h2 class="repo-title color">
+        {{status-icon status=repo.defaultBranch.lastBuild.state}}
+        {{#link-to "repo" ownerName repoName class="label-align"}}
+          <span class="repo-title-text">{{repoName}}</span>
+        {{/link-to}}
+      </h2>
+    </section>
 
-  <div class="row-item commit-sha">
-    {{tooltip-on-element text='View diff on GitHub'}}
-    {{#external-link-to href=repo.default_branch.last_build.commit.compare_url}}
-      {{svg-jar 'icon-compare' class="icon"}}
-      <span class="label-align inner-underline commit-compare">
-        {{format-sha repo.default_branch.last_build.commit.sha}}
-      </span>
-      {{svg-jar 'icon-external-link' class="icon"}}
-    {{/external-link-to}}
-  </div>
+    {{#if repo.defaultBranch.lastBuild}}
+      <section class="owner-tile-section build-number owner-tile-build">
+        <h3 class="label">Last Build</h3>
+        <p class="row-content color">
+          {{svg-jar 'icon-hash' class="icon color-icon"}}
+          {{#link-to "build" ownerName repoName repo.defaultBranch.lastBuild.id}}
+            <span class="label-align">{{repo.defaultBranch.lastBuild.number}}</span>
+          {{/link-to}}
+        </p>
+      </section>
 
-  <div class="row-item fade-out commit-date">
-    <div class="one-line">
-      {{svg-jar 'icon-calendar' class="icon"}}
-      <span class="build-status label-align">{{repo.default_branch.last_build.state}}</span>
-      <span class="finished-at label-align">{{format-time repo.default_branch.last_build.finished_at}}</span>
-    </div>
+      <section class="owner-tile-section fade-out default-branch owner-tile-branch">
+        <h3 class="label">Default Branch</h3>
+        <p class="row-content color">
+          {{request-icon event=repo.defaultBranch.lastBuild.eventType class="label-align"}}
+          {{#link-to "build" ownerName repoName repo.defaultBranch.lastBuild.id}}
+            <span class="label-align default-branch-name">{{repo.defaultBranch.name}}</span>
+          {{/link-to}}
+        </p>
+      </section>
+
+      <section class="owner-tile-section commit-sha owner-tile-commit">
+        <h3 class="label">Commit</h3>
+        <p class="row-content">
+          {{svg-jar 'icon-compare' class="icon"}}
+          {{#external-link-to href=repo.defaultBranch.lastBuild.commit.compareUrl class="label-align"}}
+            {{ember-tooltip text='View diff on GitHub'}}
+            <span class="label-align commit-compare monospace">{{format-sha repo.defaultBranch.lastBuild.commit.sha}}</span>
+          {{/external-link-to}}
+          {{svg-jar 'icon-external-link' class="icon"}}
+        </p>
+      </section>
+
+      <section class="owner-tile-section fade-out owner-tile-date">
+        <h3 class="label">Finished</h3>
+        <p class="row-content">
+          {{svg-jar 'icon-calendar' class="icon"}}
+          <span class="build-status label-align">{{repo.defaultBranch.lastBuild.state}}</span>
+          <span class="finished-at label-align">{{format-time repo.defaultBranch.lastBuild.finishedAt}}</span>
+        </p>
+      </section>
+
+    {{else}}
+      <section class="owner-tile-section owner-tile-no-build"><p class="row-content">There is no build on the default branch yet.</p></section>
+    {{/if}}
   </div>
-{{else}}
-  <p class="row-item">There is no build on the default branch yet.</p>
-{{/if}}
+</div>

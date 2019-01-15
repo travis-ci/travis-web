@@ -1,0 +1,71 @@
+.email-unsubscribe {
+  color: $cement-grey;
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  .picture {
+    margin: 70px 0 20px;
+    width: 300px;
+  }
+
+  .title {
+    font-weight: 100;
+    font-size: 2.7em;
+    line-height: 1.2;
+    max-width: 800px;
+    margin-bottom: 15px;
+    color: $asphalt-grey;
+  }
+
+  .description {
+    margin: 0;
+    max-width: 400px;
+  }
+
+  .controls {
+    margin: 40px 0;
+
+    .control {
+      margin: 0 10px;
+
+      &.control--primary {
+        width: 165px;
+        text-align: center;
+      }
+    }
+  }
+
+  .appendix {
+    font-style: italic;
+    max-width: 350px;
+    margin: 0;
+  }
+
+  .settings-link {
+    text-decoration: underline;
+    color: $cement-grey;
+  }
+
+  .repo-link {
+    color: $oxide-blue;
+
+    &:hover {
+      color: darken($oxide-blue, 5);
+    }
+  }
+
+  .repo-slug {
+    white-space: nowrap;
+
+    &.repo-slug--bold {
+      font-weight: bold;
+    }
+  }
+}

@@ -1,0 +1,50 @@
+@mixin makeElevation($size) {
+  box-shadow: 0 0 $size 0 $dry-cement;
+}
+
+$base-elevation: 5px;
+
+.paper-block {
+  padding: 15px 20px;
+
+  &.elevation-x0 {
+    box-shadow: none;
+  }
+
+  &.elevation-x1 {
+    @include makeElevation($base-elevation);
+  }
+
+  &.elevation-x2 {
+    @include makeElevation($base-elevation * 2);
+  }
+
+  &.elevation-x3 {
+    @include makeElevation($base-elevation * 3);
+  }
+
+  &.elevation-x4 {
+    @include makeElevation($base-elevation * 4);
+  }
+
+  &.no-padding {
+    padding: 15px 0;
+
+    .title {
+      padding: 0 20px;
+    }
+  }
+
+  .title {
+    text-transform: uppercase;
+    margin: 0 0 10px 0;
+    color: $cement-grey;
+    font-weight: bold;
+    font-size: 1em;
+  }
+
+  .icon-megaphone {
+    @include colorSVG($cement-grey);
+    stroke-width: 10px;
+  }
+}

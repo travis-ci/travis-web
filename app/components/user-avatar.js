@@ -1,12 +1,12 @@
 import Component from '@ember/component';
-import { computed } from 'ember-decorators/object';
+import { computed } from '@ember/object';
 
 export default Component.extend({
   tagName: 'span',
-  classNameBindings: ['small:avatar--small:avatar'],
+  classNames: ['avatar-wrapper'],
 
-  @computed('name')
-  userInitials(name) {
+  userInitials: computed('name', function () {
+    let name = this.get('name');
     if (name) {
       let arr = name.split(' ');
       let initials = '';
@@ -18,10 +18,11 @@ export default Component.extend({
       }
       return initials;
     }
-  },
+  }),
 
-  @computed('url', 'size')
-  avatarUrl(url, size) {
+  avatarUrl: computed('url', 'size', function () {
+    let url = this.get('url');
+    let size = this.get('size');
     if (!size) {
       size = 32;
     }
@@ -31,10 +32,11 @@ export default Component.extend({
     } else {
       return `${url}?v=3&s=${size}`;
     }
-  },
+  }),
 
-  @computed('url', 'size')
-  highResAvatarUrl(url, size) {
+  highResAvatarUrl: computed('url', 'size', function () {
+    let url = this.get('url');
+    let size = this.get('size');
     if (!size) {
       size = 32;
     }
@@ -45,5 +47,22 @@ export default Component.extend({
     } else {
       return `${url}?v=3&s=${size}`;
     }
-  }
+  }),
+
+  showSubscriptionCheckmark: computed(
+    'showSubscriptionStatus',
+    'account.subscription.isSubscribed',
+    'account.education',
+    function () {
+      let showStatus = this.get('showSubscriptionStatus');
+      let isSubscribed = this.get('account.subscription.isSubscribed');
+      let education = this.get('account.education');
+      return showStatus && (isSubscribed || education);
+    }
+  ),
+
+  subscriptionTooltipText: computed('account.education', function () {
+    let education = this.get('account.education');
+    return `This account has an ${education ? 'education' : 'active'} subscription`;
+  })
 });

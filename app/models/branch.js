@@ -1,7 +1,7 @@
 import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
 import { hasMany, belongsTo } from 'ember-data/relationships';
-import { computed } from 'ember-decorators/object';
+import { computed } from '@ember/object';
 
 export default Model.extend({
   name: attr('string'),
@@ -10,13 +10,13 @@ export default Model.extend({
   exists_on_github: attr('boolean'),
 
   builds: hasMany('builds', { inverse: 'branch' }),
-  repo: belongsTo('repo', { inverse: 'defaultBranch' }),
+  repo: belongsTo('repo', { inverse: '_branches' }),
 
-  @computed('id')
-  repoId(id) {
+  repoId: computed('id', function () {
+    let id = this.get('id');
     const match = id.match(/\/repo\/(\d+)\//);
     if (match) {
       return match[1];
     }
-  },
+  })
 });

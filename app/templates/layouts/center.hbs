@@ -1,7 +1,5 @@
 <div class="wrapper centered">
-  {{top-bar
-    signIn=(route-action 'signIn')
-    signOut=(route-action 'signOut')}}
+  {{top-bar}}
 
   {{flash-display}}
   <div id="main" class="main" role="main">
@@ -9,6 +7,4 @@
       {{yield}}
     </div>
   </div>
-
-  {{page-footer}}
 </div>

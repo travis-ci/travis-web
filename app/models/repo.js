@@ -1,36 +1,39 @@
-import ArrayProxy from '@ember/array/proxy';
 import {
   Promise as EmberPromise,
-  allSettled
 } from 'rsvp';
 import $ from 'jquery';
 import { A } from '@ember/array';
 import ExpandableRecordArray from 'travis/utils/expandable-record-array';
 import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
-import { belongsTo } from 'ember-data/relationships';
-import { service } from 'ember-decorators/service';
-import { computed } from 'ember-decorators/object';
-import { oneWay } from 'ember-decorators/object/computed';
+import { hasMany, belongsTo } from 'ember-data/relationships';
+import { inject as service } from '@ember/service';
+import { computed } from '@ember/object';
+import { oneWay } from '@ember/object/computed';
+import { task } from 'ember-concurrency';
 
 const Repo = Model.extend({
-  @service ajax: null,
-  @service auth: null,
+  api: service(),
+  auth: service(),
   permissions: attr(),
   slug: attr(),
   description: attr(),
   'private': attr('boolean'),
+  githubId: attr(),
   githubLanguage: attr(),
   active: attr(),
   owner: attr(),
   name: attr(),
   starred: attr('boolean'),
+  active_on_org: attr('boolean'),
+  emailSubscribed: attr('boolean'),
+  migrationStatus: attr(),
 
-  @oneWay('owner.@type') ownerType: null,
+  ownerType: oneWay('owner.@type'),
 
-  @oneWay('currentBuild.finishedAt') currentBuildFinishedAt: null,
-  @oneWay('currentBuild.state') currentBuildState: null,
-  @oneWay('currentBuild.id') currentBuildId: null,
+  currentBuildFinishedAt: oneWay('currentBuild.finishedAt'),
+  currentBuildState: oneWay('currentBuild.state'),
+  currentBuildId: oneWay('currentBuild.id'),
 
   defaultBranch: belongsTo('branch', {
     async: false
@@ -38,29 +41,35 @@ const Repo = Model.extend({
   currentBuild: belongsTo('build', {
     async: true, inverse: 'repoCurrentBuild'
   }),
+  _branches: hasMany('branch'),
 
-  // TODO: this is a hack, we should remove it once @is_collaborator property is
-  // added to a response with the repo
-  @computed('auth.currentUser.permissions.[]')
-  isCurrentUserACollaborator(permissions) {
+  isCurrentUserACollaborator: computed('auth.currentUser.permissions.[]', function () {
+    let permissions = this.get('auth.currentUser.permissions');
+
     if (permissions) {
       let id = parseInt(this.get('id'));
 
       return permissions.includes(id);
     }
-  },
+  }),
+
+  formattedSlug: computed('owner.login', 'name', function () {
+    let login = this.get('owner.login');
+    let name = this.get('name');
+    return `${login} / ${name}`;
+  }),
 
   sshKey: function () {
     this.store.find('ssh_key', this.get('id'));
     return this.store.recordForId('ssh_key', this.get('id'));
   },
 
-  @computed('id')
-  envVars(id) {
+  envVars: computed('id', function () {
+    let id = this.get('id');
     return this.store.filter('env_var', {
       repository_id: id
     }, (v) => v.get('repo.id') === id);
-  },
+  }),
 
   _buildRepoMatches(build, id) {
     // TODO: I don't understand why we need to compare string id's here
@@ -77,55 +86,57 @@ const Repo = Model.extend({
     return array;
   },
 
-  @computed('id')
-  builds(id) {
+  builds: computed('id', function () {
+    let id = this.get('id');
     const builds = this.store.filter('build', {
       event_type: ['push', 'api', 'cron'],
-      repository_id: id
+      repository_id: id,
     }, (b) => {
       let eventTypes = ['push', 'api', 'cron'];
       return this._buildRepoMatches(b, id) && eventTypes.includes(b.get('eventType'));
     });
     return this._buildObservableArray(builds);
-  },
+  }),
 
-  @computed('id')
-  pullRequests(id) {
+  pullRequests: computed('id', function () {
+    let id = this.get('id');
     const builds = this.store.filter('build', {
       event_type: 'pull_request',
-      repository_id: id
+      repository_id: id,
     }, (b) => {
       const isPullRequest = b.get('eventType') === 'pull_request';
       return this._buildRepoMatches(b, id) && isPullRequest;
     });
     return this._buildObservableArray(builds);
-  },
+  }),
 
-  @computed('id')
-  branches(id) {
+  branches: computed('id', function () {
+    let id = this.get('id');
     return this.store.filter('branch', {
       repository_id: id
     }, (b) => b.get('repoId') === id);
-  },
+  }),
 
-  @computed('id')
-  cronJobs(id) {
+  cronJobs: computed('id', function () {
+    let id = this.get('id');
     return this.store.filter('cron', {
       repository_id: id
     }, (cron) => cron.get('branch.repoId') === id);
-  },
+  }),
 
   // TODO: Stop performing a `set` as part of the cp!
   // TODO: Is this even used?
-  @computed('slug', '_stats')
-  stats(slug, stats) {
+  stats: computed('slug', '_stats', function () {
+    let slug = this.get('slug');
+    let stats = this.get('_stats');
+
     if (slug) {
       return stats || $.get(`https://api.github.com/repos/${slug}`, (data) => {
         this.set('_stats', data);
         return this.notifyPropertyChange('stats');
       }) && {};
     }
-  },
+  }),
 
   updateTimes() {
     let currentBuild = this.get('currentBuild');
@@ -134,27 +145,23 @@ const Repo = Model.extend({
     }
   },
 
-  regenerateKey(options) {
-    const url = `/repos/${this.get('id')}/key`;
-    return this.get('ajax').ajax(url, 'post', options);
-  },
-
   fetchSettings() {
     const url = `/repo/${this.get('id')}/settings`;
-    return this.get('ajax').ajax(url, 'get', {
-      headers: {
-        'Travis-API-Version': '3'
-      },
-      forceAuth: true
-    }).then(data => this._convertV3SettingsToV2(data['settings']));
+    return this.get('api').get(url).
+      then(data => this._convertV3SettingsToV2(data['settings']));
+  },
+
+  startMigration() {
+    const url = `/repo/${this.get('id')}/migrate`;
+    return this.get('api').post(url).then(() => {
+      this.set('migrationStatus', 'queued');
+    });
   },
 
   saveSetting(name, value) {
-    return this.get('ajax').ajax(`/repo/${this.get('id')}/setting/${name}`, 'patch', {
+    return this.get('api').patch(`/repo/${this.get('id')}/setting/${name}`, {
       data: {
         'setting.value': value
-      }, headers: {
-        'Travis-API-Version': '3'
       }
     });
   },
@@ -180,6 +187,21 @@ const Repo = Model.extend({
 
     return promise;
   },
+
+  emailSubscriptionUrl: computed('id', function () {
+    let id = this.get('id');
+    return `/repo/${id}/email_subscription`;
+  }),
+
+  subscribe: task(function* () {
+    yield this.api.post(this.emailSubscriptionUrl);
+    yield this.reload();
+  }).drop(),
+
+  unsubscribe: task(function* () {
+    yield this.api.delete(this.emailSubscriptionUrl);
+    yield this.reload();
+  }).drop()
 });
 
 Repo.reopenClass({
@@ -189,7 +211,7 @@ Repo.reopenClass({
 
   accessibleBy(store, reposIdsOrlogin) {
     let repos, reposIds;
-    reposIds = reposIdsOrlogin;
+    reposIds = reposIdsOrlogin || [];
     repos = store.filter('repo', (repo) => {
       let repoId = parseInt(repo.get('id'));
       return reposIds.includes(repoId);
@@ -205,28 +227,11 @@ Repo.reopenClass({
     });
   },
 
-  search(store, ajax, query) {
-    let promise, queryString, result;
-    queryString = $.param({
-      search: query,
-      orderBy: 'name',
-      limit: 5
-    });
-    const url = `/repos?${queryString}`;
-    promise = ajax.ajax(url, 'get');
-    result = ArrayProxy.create({
-      content: []
-    });
-    return promise.then((data) => {
-      let promises = data.repos.map((repoData) => {
-        const repositoryId = repoData.id;
-        return store.findRecord('repo', repositoryId).then((record) => {
-          result.pushObject(record);
-          result.set('isLoaded', true);
-          return record;
-        });
-      });
-      return allSettled(promises).then(() => result);
+  search(store, query) {
+    return store.query('repo', {
+      name_filter: query,
+      sort_by: 'name_filter:desc',
+      limit: 10
     });
   },
 

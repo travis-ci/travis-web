@@ -1,6 +1,6 @@
 <form {{action (perform save) on='submit'}}>
   <div class="form-elem">
-    {{input value=name class="env-name" key-up="nameChanged" placeholder="Name"}}
+    {{input value=name class="env-name" key-up=(action 'nameChanged') placeholder="Name"}}
     {{#if nameIsBlank }}
       <p class="form-error-message">Name cannot be blank</p>
     {{/if}}
@@ -9,7 +9,7 @@
     {{input value=value class="env-value" placeholder="Value"}}
   </div>
   <div class="form-elem">
-    {{travis-switch active=public description="Display value in build log"}}
+    {{travis-switch active=public description="Display value in build log" onToggle=(action (mut public))}}
   </div>
   <div class="form-elem">
     {{#if save.isRunning}}

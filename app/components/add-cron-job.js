@@ -1,9 +1,9 @@
 import Component from '@ember/component';
-import { service } from 'ember-decorators/service';
+import { inject as service } from '@ember/service';
 import { task, timeout } from 'ember-concurrency';
 
 export default Component.extend({
-  @service store: null,
+  store: service(),
 
   classNames: ['form--cron'],
 

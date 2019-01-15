@@ -1,10 +1,11 @@
 import Component from '@ember/component';
 import config from 'travis/config/environment';
-import { service } from 'ember-decorators/service';
+import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
 
 export default Component.extend({
-  @service ajax: null,
+  ajax: service(),
+  flashes: service(),
 
   tagName: 'li',
   classNames: ['cache-item'],
@@ -12,13 +13,17 @@ export default Component.extend({
 
   delete: task(function* () {
     if (config.skipConfirmations || confirm('Are you sure?')) {
-      const data = {
-        branch: this.get('cache.branch')
-      };
-      const repo = this.get('repo');
+      let branch = this.get('cache.branch');
+      let repo = this.get('repo');
 
-      yield this.get('ajax').ajax(`/repos/${repo.get('id')}/caches`, 'DELETE', { data });
-      return this.get('caches').removeObject(this.get('cache'));
+      let url = `/repo/${repo.get('id')}/caches?branch=${branch}`;
+
+      try {
+        yield this.get('ajax').deleteV3(url);
+        this.get('caches').removeObject(this.get('cache'));
+      } catch (e) {
+        this.get('flashes').error('Could not delete the cache');
+      }
     }
   }).drop(),
 

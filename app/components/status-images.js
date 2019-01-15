@@ -1,24 +1,32 @@
 import Component from '@ember/component';
-import { service } from 'ember-decorators/service';
-import { computed } from 'ember-decorators/object';
+import { inject as service } from '@ember/service';
+import { computed } from '@ember/object';
+import KeyboardShortcuts from 'ember-keyboard-shortcuts/mixins/component';
 
-export default Component.extend({
-  @service auth: null,
-  @service externalLinks: null,
-  @service statusImages: null,
+export default Component.extend(KeyboardShortcuts, {
+  auth: service(),
+  externalLinks: service(),
+  statusImages: service(),
 
   id: 'status-images',
   attributeBindings: ['id'],
   classNames: ['popup', 'status-images'],
   formats: ['Image URL', 'Markdown', 'Textile', 'Rdoc', 'AsciiDoc', 'RST', 'Pod', 'CCTray'],
 
+  keyboardShortcuts: {
+    'esc': 'toggleStatusImageModal'
+  },
+
   didReceiveAttrs() {
     this._super(...arguments);
     this.set('branch', this.get('repo.defaultBranch.name'));
   },
 
-  @computed('format', 'repo.slug', 'branch', 'repo.defaultBranch.name')
-  statusString(format, slug, branch, defaultBranchName) {
+  statusString: computed('format', 'repo.slug', 'branch', 'repo.defaultBranch.name', function () {
+    let format = this.get('format');
+    let branch = this.get('branch');
+    let defaultBranchName = this.get('repo.defaultBranch.name');
+
     const repo = this.get('repo');
     if (repo) {
       const imageFormat = format || this.get('formats.firstObject');
@@ -26,7 +34,7 @@ export default Component.extend({
 
       return this.formatStatusImage(imageFormat, repo, gitBranch);
     }
-  },
+  }),
 
   formatStatusImage(format, repo, branch) {
     switch (format) {

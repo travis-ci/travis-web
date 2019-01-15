@@ -1,106 +1,80 @@
 import { isBlank, isEqual } from '@ember/utils';
-import Controller from '@ember/controller';
-import { task, taskGroup } from 'ember-concurrency';
-import { service } from 'ember-decorators/service';
-import { computed } from 'ember-decorators/object';
+import Controller, { inject as controller } from '@ember/controller';
+import { inject as service } from '@ember/service';
+import { computed } from '@ember/object';
 import dashboardRepositoriesSort from 'travis/utils/dashboard-repositories-sort';
 
 export default Controller.extend({
-  queryParams: ['account', 'offset'],
-  offset: 0,
+  page: 1,
 
-  @service flashes: null,
-  @service ajax: null,
+  flashes: service(),
+  api: service(),
 
-  starring: taskGroup().drop(),
+  dashboardController: controller('dashboard'),
 
-  @computed()
-  tasks() {
-    return [
-      this.get('star'),
-      this.get('unstar')
-    ];
-  },
-
-  star: task(function* (repo) {
-    repo.set('starred', true);
-    try {
-      yield this.get('ajax').postV3(`/repo/${repo.get('id')}/star`);
-    } catch (e) {
-      repo.set('starred', false);
-      this.get('flashes')
-        .error(`Something went wrong while trying to star  ${repo.get('slug')}.
-               Please try again.`);
-    }
-  }).group('starring'),
-
-  unstar: task(function* (repo) {
-    repo.set('starred', false);
-    try {
-      yield this.get('ajax').postV3(`/repo/${repo.get('id')}/unstar`);
-    } catch (e) {
-      repo.set('starred', true);
-      this.get('flashes')
-        .error(`Something went wrong while trying to unstar  ${repo.get('slug')}.
-               Please try again.`);
-    }
-  }).group('starring'),
-
-  @computed('model.starredRepos.[]',
+  starredRepos: computed(
+    'model.starredRepos.[]',
     'model.starredRepos.@each.currentBuildState',
-    'model.starredRepos.@each.currentBuildFinishedAt')
-  starredRepos(repositories) {
-    return repositories.toArray().sort(dashboardRepositoriesSort);
-  },
+    'model.starredRepos.@each.currentBuildFinishedAt',
+    function () {
+      let repositories = this.get('model.starredRepos');
+      return repositories.toArray().sort(dashboardRepositoriesSort);
+    }
+  ),
 
-  @computed('model.repos.[]',
+  filteredRepos: computed(
+    'model.repos.[]',
     'account',
     'model.accounts',
     'model.repos.@each.currentBuildState',
-    'model.repos.@each.currentBuildFinishedAt'
-  )
-  filteredRepos(repositories, accountParam, accounts) {
-    let account = accounts.filter((x) => {
-      if (accountParam) {
-        if (x.id === accountParam) {
-          return x;
-        }
-      } else {
-        return null;
-      }
-    });
-    let type = null;
-    if (account && account[0]) {
-      type = account[0].get('type');
-    }
-
-    const repos = repositories.filter((item) => {
-      if (!isBlank(account)) {
-        if (isEqual(type, 'user')) {
-          if (isEqual(item.get('owner.@type'), 'user')) {
-            return item;
+    'model.repos.@each.currentBuildFinishedAt',
+    function () {
+      let repositories = this.get('model.repos');
+      let accountParam = this.get('account');
+      let accounts = this.get('model.accounts');
+      let account = accounts.filter((x) => {
+        if (accountParam) {
+          if (x.id === accountParam) {
+            return x;
           }
         } else {
-          if (isEqual(item.get('owner.login'), accountParam)) {
-            return item;
-          }
+          return null;
         }
-      } else {
-        return item;
+      });
+      let type = null;
+      if (account && account[0]) {
+        type = account[0].get('type');
       }
-    }).sort(dashboardRepositoriesSort);
-    return repos;
-  },
 
-  @computed('model.accounts', 'account')
-  selectedOrg(accounts, account) {
+      const repos = repositories.filter((item) => {
+        if (!isBlank(account)) {
+          if (isEqual(type, 'user')) {
+            if (isEqual(item.get('owner.@type'), 'user')) {
+              return item;
+            }
+          } else {
+            if (isEqual(item.get('owner.login'), accountParam)) {
+              return item;
+            }
+          }
+        } else {
+          return item;
+        }
+      }).sort(dashboardRepositoriesSort);
+      return repos;
+    }
+  ),
+
+  selectedOrg: computed('model.accounts', 'account', function () {
+    let accounts = this.get('model.accounts');
+    let account = this.get('account');
     let filteredAccount = accounts.filter((item) => {
       if (item.get('login') === account) {
         return item;
       }
     });
     return filteredAccount[0];
-  },
+  }),
 
   actions: {
     selectOrg(org) {

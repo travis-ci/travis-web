@@ -2,6 +2,7 @@ import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import buildPage from 'travis/tests/pages/build';
 import topPage from 'travis/tests/pages/top';
+import signInUser from 'travis/tests/helpers/sign-in-user';
 
 moduleForAcceptance('Acceptance | builds/restart', {
   beforeEach() {
@@ -21,10 +22,10 @@ test('restarting build', function (assert) {
   server.create('log', { id: job.id });
 
   buildPage
-    .visit({ slug: 'travis-ci/travis-web', build_id: build.id })
+    .visit({ owner: 'travis-ci', repo: 'travis-web', build_id: build.id })
     .restartBuild();
 
-  andThen(function () {
+  andThen(() => {
     assert.equal(topPage.flashMessage.text, 'The build was successfully restarted.', 'restarted notification should display proper build restarted text');
     assert.equal(buildPage.singleJobLogText, 'Hello log', 'shows log text of single build job');
   });

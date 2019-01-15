@@ -1,32 +1,37 @@
 /* global Travis */
+import Owner from 'travis/models/owner';
+
 import ArrayProxy from '@ember/array/proxy';
 
-import { next } from '@ember/runloop';
-import { observer } from '@ember/object';
-import Model from 'ember-data/model';
+import { next, run, later } from '@ember/runloop';
+import { observer, computed } from '@ember/object';
 import config from 'travis/config/environment';
 import attr from 'ember-data/attr';
-import { service } from 'ember-decorators/service';
-import { computed } from 'ember-decorators/object';
+import { inject as service } from '@ember/service';
 
-export default Model.extend({
-  @service ajax: null,
+export default Owner.extend({
+  ajax: service(),
   // TODO: this totally not should be needed here
-  @service sessionStorage: null,
+  sessionStorage: service(),
 
-  name: attr(),
   email: attr(),
-  login: attr(),
   token: attr(),
   gravatarId: attr(),
-  isSyncing: attr('boolean'),
-  syncedAt: attr(),
-  repoCount: attr('number'),
-  avatarUrl: attr(),
+  allowMigration: attr(),
 
-  @computed('name', 'login')
-  fullName(name, login) {
+
+  type: 'user',
+  isUser: true,
+
+  fullName: computed('name', 'login', function () {
+    let name = this.get('name');
+    let login = this.get('login');
     return name || login;
+  }),
+
+  init() {
+    this.isSyncingDidChange();
+    return this._super(...arguments);
   },
 
   isSyncingDidChange: observer('isSyncing', function () {
@@ -37,56 +42,55 @@ export default Model.extend({
     });
   }),
 
-  @computed('login')
-  urlGithub(login) {
+  urlGithub: computed('login', function () {
+    let login = this.get('login');
     return `${config.sourceEndpoint}/${login}`;
-  },
+  }),
 
-  @computed()
-  _rawPermissions() {
+  _rawPermissions: computed(function () {
     return this.get('ajax').get('/users/permissions');
-  },
+  }),
 
-  @computed('_rawPermissions')
-  permissions(_rawPermissions) {
+  permissions: computed('_rawPermissions', function () {
+    let _rawPermissions = this.get('_rawPermissions');
     let permissions = ArrayProxy.create({
       content: []
     });
     _rawPermissions.then(data => permissions.set('content', data.permissions));
     return permissions;
-  },
+  }),
 
-  @computed('_rawPermissions')
-  adminPermissions(_rawPermissions) {
+  adminPermissions: computed('_rawPermissions', function () {
+    let _rawPermissions = this.get('_rawPermissions');
     let permissions = ArrayProxy.create({
       content: []
     });
     _rawPermissions.then(data => permissions.set('content', data.admin));
     return permissions;
-  },
+  }),
 
-  @computed('_rawPermissions')
-  pullPermissions(_rawPermissions) {
+  pullPermissions: computed('_rawPermissions', function () {
+    let _rawPermissions = this.get('_rawPermissions');
     const permissions = ArrayProxy.create({
       content: []
     });
     _rawPermissions.then(data => permissions.set('content', data.pull));
     return permissions;
-  },
+  }),
 
-  @computed('_rawPermissions')
-  pushPermissions(_rawPermissions) {
+  pushPermissions: computed('_rawPermissions', function () {
+    let _rawPermissions = this.get('_rawPermissions');
     const permissions = ArrayProxy.create({
       content: []
     });
     _rawPermissions.then(data => permissions.set('content', data.push));
     return permissions;
-  },
+  }),
 
-  @computed('_rawPermissions')
-  pushPermissionsPromise(_rawPermissions) {
+  pushPermissionsPromise: computed('_rawPermissions', function () {
+    let _rawPermissions = this.get('_rawPermissions');
     return _rawPermissions.then(data => data.pull);
-  },
+  }),
 
   hasAccessToRepo(repo) {
     let id = repo.get ? repo.get('id') : repo;
@@ -112,22 +116,22 @@ export default Model.extend({
     }
   },
 
-  type: 'user',
-
   sync() {
-    const callback = () => { this.setWithSession('isSyncing', true); };
-    return this.get('ajax').post('/users/sync', {}, callback);
+    const callback = run(() => { this.setWithSession('isSyncing', true); });
+    return this.get('ajax').postV3(`/user/${this.id}/sync`, {}, callback);
   },
 
   poll() {
-    return this.get('ajax').get('/users', (data) => {
-      if (data.user.is_syncing) {
-        return setTimeout(() => { this.poll(); }, 3000);
+    return this.get('ajax').getV3('/user', (data) => {
+      if (data.is_syncing) {
+        return later(() => { this.poll(); }, config.intervals.syncingPolling);
       } else {
-        this.set('isSyncing', false);
-        this.setWithSession('syncedAt', data.user.synced_at);
-        Travis.trigger('user:synced', data.user);
-        return this.store.query('account', {});
+        run(() => {
+          this.set('isSyncing', false);
+          this.setWithSession('syncedAt', data.synced_at);
+          Travis.trigger('user:synced', data);
+          this.store.queryRecord('user', { current: true });
+        });
       }
     });
   },

@@ -1,0 +1,91 @@
+.caches-header {
+  .small-title {
+    margin-top: 0.5em;
+
+    small {
+      color: $cement-grey;
+      font-size: 14px;
+    }
+
+    a:hover,
+    a:active {
+      border-bottom: 1px solid $cement-grey;
+    }
+  }
+
+  @media #{$medium-up} {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.caches-list {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.cache-item {
+  border: 1px solid rgba($cement-grey, 0.2);
+  margin-bottom: 5px;
+  font-size: 15px;
+  padding: 0 1em;
+
+  &:hover,
+  &:active {
+    background-color: $pebble-grey;
+  }
+
+  @media #{$medium-up} {
+    display: flex;
+    justify-content: space-between;
+    flex-flow: row nowrap;
+    align-items: center;
+    padding: 0.3em 0;
+    white-space: nowrap;
+
+    .row-item:first-of-type {
+      flex: 1 0 30%;
+      padding-left: 1em;
+      overflow: hidden;
+    }
+
+    .row-item:nth-of-type(2) {
+      flex: 1 0 30%;
+    }
+
+    .row-item:nth-of-type(3) {
+      flex: 1 0 30%;
+    }
+
+    .row-item:last-of-type {
+      flex: 0 0 50px;
+      margin-right: 1em;
+
+      a {
+        display: flex;
+        justify-content: center;
+      }
+    }
+  }
+}
+
+.delete-cache-button {
+  .icon-trash {
+    margin-left: 4px;
+  }
+
+  &:hover,
+  &:active {
+    color: $brick-red;
+
+    @include colorSVG($brick-red);
+  }
+}
+
+.delete-cache-icon {
+  position: relative;
+  display: block;
+}

@@ -1,14 +1,12 @@
-/* global jQuery */
 import { isNone } from '@ember/utils';
 
 import { Promise as EmberPromise } from 'rsvp';
 import $ from 'jquery';
 import { get } from '@ember/object';
-import Service from '@ember/service';
+import Service, { inject as service } from '@ember/service';
 import config from 'travis/config/environment';
-import { service } from 'ember-decorators/service';
 
-jQuery.support.cors = true;
+$.support.cors = true;
 
 let defaultOptions = {
   accepts: {
@@ -17,13 +15,23 @@ let defaultOptions = {
 };
 
 export default Service.extend({
-  @service auth: null,
-  @service features: null,
+  auth: service(),
+  features: service(),
 
   get(url, callback, errorCallback) {
     return this.ajax(url, 'get', {
       success: callback,
       error: errorCallback
+    });
+  },
+
+  getV3(url, callback, errorCallback) {
+    return this.ajax(url, 'get', {
+      success: callback,
+      error: errorCallback,
+      headers: {
+        'Travis-API-Version': '3'
+      }
     });
   },
 
@@ -51,6 +59,16 @@ export default Service.extend({
     });
   },
 
+  deleteV3(url, data, callback) {
+    return this.ajax(url, 'delete', {
+      data,
+      success: callback,
+      headers: {
+        'Travis-API-Version': '3'
+      }
+    });
+  },
+
   needsAuth() {
     return true;
   },
@@ -61,13 +79,17 @@ export default Service.extend({
     method = (method || 'GET').toUpperCase();
     endpoint = config.apiEndpoint || '';
     options = options || {};
-    token = get(this, 'auth').token();
+    token = get(this, 'auth.token');
+
+    options.headers = options.headers || {};
+
     if (token && (this.needsAuth(method, url) || options.forceAuth)) {
-      options.headers = options.headers || {};
       if (!options.headers['Authorization']) {
         options.headers['Authorization'] = `token ${token}`;
       }
     }
+
+    options.headers['X-Client-Release'] = config.release;
     options.url = url = `${endpoint}${url}`;
     options.type = method;
     options.dataType = options.dataType || 'json';
@@ -94,7 +116,7 @@ export default Service.extend({
     options = $.extend(options, defaultOptions);
 
     if (options.data && (method === 'GET' || method === 'HEAD')) {
-      params = jQuery.param(options.data);
+      params = $.param(options.data);
       delimeter = url.indexOf('?') === -1 ? '?' : '&';
       url = url + delimeter + params;
     }
@@ -132,7 +154,7 @@ export default Service.extend({
         data = (() => {
           if (contentType && contentType.match(/application\/json/)) {
             try {
-              return jQuery.parseJSON(xhr.responseText);
+              return $.parseJSON(xhr.responseText);
             } catch (error1) {
               if (get(this, 'features').get('debugLogging')) {
                 // eslint-disable-next-line

@@ -1,24 +1,25 @@
 import { hash } from 'rsvp';
 import TravisRoute from 'travis/routes/basic';
 import dashboardRepositoriesSort from 'travis/utils/dashboard-repositories-sort';
+import config from 'travis/config/environment';
+import { inject as service } from '@ember/service';
 
 export default TravisRoute.extend({
+  features: service(),
+  accounts: service(),
+
   queryParams: {
-    filter: {
-      replace: true
-    },
-    offset: {
+    page: {
       refreshModel: true
     }
   },
 
-  redirect() {
-    if (!this.get('features.dashboard')) {
-      return this.transitionTo('index');
-    }
+  get recordsPerPage() {
+    return config.pagination.dashboardReposPerPage;
   },
 
   model(params) {
+    const offset = (params.page - 1) * this.recordsPerPage;
     return hash({
       starredRepos: this.store.filter('repo', {
         active: true,
@@ -28,26 +29,24 @@ export default TravisRoute.extend({
       repos: this.store.paginated('repo', {
         active: true,
         sort_by: 'current_build:desc',
-        offset: params.offset
+        offset,
+        limit: this.recordsPerPage,
       }, {
         filter: (repo) => repo.get('active') && repo.get('isCurrentUserACollaborator'),
         sort: dashboardRepositoriesSort,
         dependencies: ['active', 'isCurrentUserACollaborator'],
         forceReload: true
       }),
-      accounts: this.store.filter('account', {
-        all: true
-      }, () => true, [], true)
+      accounts: this.accounts.fetch()
     });
   },
 
   afterModel(model) {
-    const repos = model.repos;
+    const { repos } = model;
+    const currentBuilds = repos.mapBy('currentBuild');
+    const defaultBranches = repos.mapBy('defaultBranch');
 
     // This preloads related models to prevent a backtracking rerender error.
-    return hash({
-      currentBuilds: repos.map(repo => repo.get('currentBuild')),
-      defaultBranches: repos.map(repo => repo.get('defaultBranch'))
-    });
+    return { currentBuilds, defaultBranches };
   }
 });

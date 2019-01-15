@@ -1,36 +1,40 @@
 import Component from '@ember/component';
-import { computed } from 'ember-decorators/object';
-import { alias } from 'ember-decorators/object/computed';
+import { computed } from '@ember/object';
+import { alias } from '@ember/object/computed';
 
 export default Component.extend({
   classNames: ['request-item'],
   classNameBindings: ['requestClass', 'highlightedClass'],
   tagName: 'li',
 
-  @alias('request.result') requestClass: null,
+  requestClass: alias('request.result'),
 
-  @computed('request.isPullRequest')
-  type(isPullRequest) {
+  build: alias('request.build'),
+
+  type: computed('request.isPullRequest', function () {
+    let isPullRequest = this.get('request.isPullRequest');
     return isPullRequest ? 'pull_request' : 'push';
-  },
+  }),
 
-  @computed('highlightedRequestId', 'request.id')
-  highlightedClass(paramId, currentId) {
+  highlightedClass: computed('highlightedRequestId', 'request.id', function () {
+    let paramId = this.get('highlightedRequestId');
+    let currentId = this.get('request.id');
     return (paramId === currentId) ? 'highlighted' : '';
-  },
+  }),
 
-  @computed('request.result')
-  status(result) {
+  status: computed('request.result', function () {
+    let result = this.get('request.result');
     return result.capitalize();
-  },
+  }),
 
-  @computed('features.proVersion', 'request.message')
-  message(proVersion, message) {
+  message: computed('features.proVersion', 'request.message', function () {
+    let proVersion = this.get('features.proVersion');
+    let message = this.get('request.message');
     if (proVersion && message === 'private repository') {
       return '';
     } else if (!message) {
       return 'Build created successfully ';
     }
     return message;
-  },
+  }),
 });

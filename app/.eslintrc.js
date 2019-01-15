@@ -1,3 +1,5 @@
+/* eslint-env node */
+
 module.exports = {
   root: true,
   parserOptions: {
@@ -7,11 +9,12 @@ module.exports = {
   parser: 'babel-eslint',
   extends: 'eslint:recommended',
   env: {
-    'browser': true
+    'browser': true,
+    es6: true
   },
   rules: {
     // TODO: Remove this to ensure we handle errors properly in UI
-    "no-empty": ["error", { "allowEmptyCatch": true }],
+    'no-empty': ['error', { 'allowEmptyCatch': true }],
 
     // enforce spacing inside array brackets
     'array-bracket-spacing': [2, 'never'],
@@ -214,7 +217,7 @@ module.exports = {
     'no-whitespace-before-property': 2,
 
     // require padding inside curly braces
-    'object-curly-spacing': [2, 'always'],
+    'object-curly-spacing': 0,
 
     // enforce line breaks between braces
     // http://eslint.org/docs/rules/object-curly-newline
@@ -433,7 +436,9 @@ module.exports = {
     'yield-star-spacing': [2, 'after'],
 
     // Don't allow unused vars, but allow unused arguments
-    "no-unused-vars": ["error", { "vars": "all", "args": "none", "ignoreRestSiblings": false, "varsIgnorePattern": "^_$" }],
+    'no-unused-vars': ['error',
+      { 'vars': 'all', 'args': 'none', 'ignoreRestSiblings': false, 'varsIgnorePattern': '^_$' }
+    ],
 
     // Don't allow "useless" escape characters. Disabling due to regex false
     // positives

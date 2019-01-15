@@ -1,4 +1,4 @@
-{{#unless config.enterprise}}
+{{#unless features.enterpriseVersion}}
   {{#if auth.signedIn}}
     {{#if isDeprecatedOrRetiredMacImage}}
       {{#notice-banner}}
@@ -12,3 +12,14 @@
     {{/if}}
   {{/if}}
 {{/unless}}
+
+{{#if isWindows}}
+  {{#notice-banner}}
+    Windows builds are in early access stage. Please head to the
+    {{external-link-to
+      content='Travis CI Community'
+      href='https://travis-ci.community/c/windows'
+    }}
+    forum to get help or post ideas.
+  {{/notice-banner}}
+{{/if}}

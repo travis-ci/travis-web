@@ -1,14 +1,12 @@
 import { later } from '@ember/runloop';
 import Component from '@ember/component';
-import { service } from 'ember-decorators/service';
-import { computed } from 'ember-decorators/object';
-import { alias } from 'ember-decorators/object/computed';
+import { inject as service } from '@ember/service';
+import { alias } from '@ember/object/computed';
 
 export default Component.extend({
-  @service('permissions') permissionsService: null,
-  @service externalLinks: null,
-  @service ajax: null,
-  @service flashes: null,
+  permissionsService: service('permissions'),
+  api: service(),
+  flashes: service(),
 
   tagName: 'li',
   classNameBindings: ['repo.active:is-active'],
@@ -17,14 +15,9 @@ export default Component.extend({
   isTriggering: false,
   dropupIsOpen: false,
 
-  @alias('repo.currentBuild') currentBuild: null,
+  currentBuild: alias('repo.currentBuild'),
 
-  @computed('repo.slug', 'currentBuild.commit.sha')
-  urlGitHubCommit(slug, sha) {
-    return this.get('externalLinks').githubCommit(slug, sha);
-  },
-
-  @alias('repo.permissions.create_request') displayMenuTofu: null,
+  displayMenuTofu: alias('repo.permissions.create_request'),
 
   openDropup() {
     this.toggleProperty('dropupIsOpen');
@@ -40,7 +33,7 @@ export default Component.extend({
     let data = {};
     data.request = `{ 'branch': '${this.get('repo.defaultBranch.name')}' }`;
 
-    this.get('ajax').postV3(`/repo/${this.get('repo.id')}/requests`, data)
+    this.get('api').post(`/repo/${this.get('repo.id')}/requests`, { data: data })
       .then(() => {
         self.set('isTriggering', false);
         self.get('flashes')

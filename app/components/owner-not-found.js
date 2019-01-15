@@ -1,9 +1,7 @@
 import Component from '@ember/component';
+import { inject as service } from '@ember/service';
 
 export default Component.extend({
-  actions: {
-    signIn() {
-      this.get('signIn')();
-    }
-  }
+  auth: service(),
+  features: service(),
 });

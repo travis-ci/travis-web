@@ -1,12 +1,13 @@
 import { hash } from 'rsvp';
-import $ from 'jquery';
 import EmberObject from '@ember/object';
 import TravisRoute from 'travis/routes/basic';
 import config from 'travis/config/environment';
-import { service } from 'ember-decorators/service';
+import { inject as service } from '@ember/service';
 
 export default TravisRoute.extend({
-  @service ajax: null,
+  ajax: service(),
+  api: service(),
+  auth: service(),
 
   needsAuth: true,
 
@@ -74,18 +75,12 @@ export default TravisRoute.extend({
 
   fetchRepositoryActiveFlag() {
     const repoId = this.modelFor('repo').get('id');
-    const url = `${config.apiEndpoint}/repo/${repoId}`;
-    return $.ajax(url, {
-      headers: {
-        Authorization: `token ${this.auth.token()}`,
-        'Travis-API-Version': '3'
-      }
-    }).then(response => response.active);
+    return this.get('api').get(`/repo/${repoId}`).then(response => response.active);
   },
 
   hasPushAccess() {
     const repoId = parseInt(this.modelFor('repo').get('id'));
-    return this.auth.get('currentUser').get('pushPermissionsPromise').then((permissions) => {
+    return this.get('auth.currentUser').get('pushPermissionsPromise').then((permissions) => {
       const hasPushAccess = permissions.filter(p => p === repoId);
       return hasPushAccess;
     });

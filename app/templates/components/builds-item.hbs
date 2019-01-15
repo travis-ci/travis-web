@@ -29,8 +29,7 @@
     {{/if}}
   </div>
   <div class="row-item row-committer">
-    {{user-avatar url=build.commit.authorAvatarUrl name=build.commit.authorName small=true size=18}}
-    <span class="label-align">{{build.commit.authorName}}</span>
+    {{created-by user=build.createdBy commit=build.commit committerOnly=true eventType=build.eventType}}
   </div>
 </div>
 
@@ -48,10 +47,10 @@
     {{/if}}
   </h3>
   <div class="row-item row-commit">
-    {{#external-link-to href=urlGithubCommit}}
-      {{tooltip-on-element text='View commit on GitHub'}}
+    {{#external-link-to href=build.commit.githubUrl}}
+      {{ember-tooltip text='View commit on GitHub'}}
       {{svg-jar 'icon-commit' class="icon"}}
-      <span class="label-align inner-underline">{{format-sha build.commit.sha}}</span>
+      <span class="label-align inner-underline monospace">{{format-sha build.commit.sha}}</span>
       {{svg-jar 'icon-external-link' class="icon"}}
     {{/external-link-to}}
   </div>
@@ -59,13 +58,13 @@
 
 <div class="two-line">
   <div class="row-item row-duration">
-    <div title="{{format-duration build.duration}}">
+    <div>
       {{svg-jar 'icon-clock' class="icon"}}
       <time class="label-align" datetime="PT{{build.duration}}S">{{format-duration build.duration}}</time>
     </div>
   </div>
   <div class="row-item row-calendar">
-    <div title="{{pretty-date build.formattedFinishedAt}}">
+    <div title="{{if build.finishedAt (concat "Finished " build.formattedFinishedAt)}}">
       {{svg-jar 'icon-calendar' class="icon"}}
       <time class="label-align" datetime={{build.finishedAt}}>{{format-time build.finishedAt}}</time>
     </div>

@@ -1,10 +1,10 @@
 import Component from '@ember/component';
-import { service } from 'ember-decorators/service';
+import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
-import { computed } from 'ember-decorators/object';
+import { computed } from '@ember/object';
 
 export default Component.extend({
-  @service flashes: null,
+  flashes: service(),
 
   tagName: 'button',
   classNames: ['switch'],
@@ -14,14 +14,13 @@ export default Component.extend({
 
   role: 'switch',
 
-  @computed('active')
-  'aria-checked'(active) {
-    if (active) {
+  'aria-checked': computed('active', function () {
+    if (this.get('active')) {
       return 'true';
     } else {
       return 'false';
     }
-  },
+  }),
 
   save: task(function* () {
     try {

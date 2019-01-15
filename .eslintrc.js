@@ -1,20 +1,28 @@
+/* eslint-env node */
+
 module.exports = {
   root: true,
   parserOptions: {
     ecmaVersion: 2017,
     sourceType: 'module'
   },
-  parser: 'babel-eslint',
-  extends: 'eslint:recommended',
+  plugins: [
+    'ember'
+  ],
+  extends: [
+    'eslint:recommended',
+    'plugin:ember/recommended'
+  ],
   env: {
-    browser: true
+    browser: true,
+    es6: true
   },
   rules: {
     // Don't allow unused vars, but allow unused arguments
-    "no-unused-vars": ["error", { "vars": "all", "args": "none", "ignoreRestSiblings": false }],
+    'no-unused-vars': ['error', { 'vars': 'all', 'args': 'none', 'ignoreRestSiblings': false }],
 
     // TODO: Remove this to ensure we handle errors properly in UI
-    "no-empty": ["error", { "allowEmptyCatch": true }],
+    'no-empty': ['error', { 'allowEmptyCatch': true }],
 
     // enforce spacing inside array brackets
     'array-bracket-spacing': [2, 'never'],
@@ -217,7 +225,7 @@ module.exports = {
     'no-whitespace-before-property': 2,
 
     // require padding inside curly braces
-    'object-curly-spacing': [2, 'always'],
+    'object-curly-spacing': 0,
 
     // enforce line breaks between braces
     // http://eslint.org/docs/rules/object-curly-newline
@@ -305,6 +313,47 @@ module.exports = {
     // require regex literals to be wrapped in parentheses
     'wrap-regex': 0
   },
-  globals: {
-  }
+  overrides: [
+    // node files
+    {
+      files: [
+        '.template-lintrc.js',
+        'ember-cli-build.js',
+        'testem.js',
+        'blueprints/*/index.js',
+        'config/**/*.js',
+        'lib/*/index.js'
+      ],
+      parserOptions: {
+        sourceType: 'script',
+        ecmaVersion: 2015
+      },
+      env: {
+        browser: false,
+        node: true
+      }
+    },
+
+    // test files
+    {
+      files: ['tests/**/*.js'],
+      excludedFiles: ['tests/dummy/**/*.js'],
+      env: {
+        embertest: true
+      },
+      globals: {
+        server: true,
+        triggerCopySuccess: true,
+        triggerCopyError: true,
+        signInUser: true,
+        withFeature: true,
+        percySnapshot: true,
+        waitForElement: true
+      },
+      rules: {
+        'max-len': 0,
+        'no-useless-escape': 0,
+      }
+    }
+  ]
 };

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 22.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="icon-currency-dollar_1_" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+	 x="0px" y="0px" viewBox="0 0 20 20" style="enable-background:new 0 0 20 20;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#AAA9A9;}
+	.st1{fill:none;stroke:#FFFFFF;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+</style>
+<g id="icon-currency-dollar">
+	<circle id="background_1_" class="st0" cx="10" cy="10" r="10"/>
+	<g id="dollar-symbol">
+		<path class="st1" d="M8.083,12.876C8.611,13.605,9.36,13.833,10,13.833c1.059,0,1.917-0.858,1.917-1.917S11.485,10.046,10,9.841
+			c-1.448-0.2-1.917-0.976-1.917-1.917c0-1.059,0.858-1.757,1.917-1.757c0.64,0,1.208,0.314,1.556,0.797"/>
+		<line class="st1" x1="10" y1="4.333" x2="10" y2="6.167"/>
+		<line class="st1" x1="10" y1="13.833" x2="10" y2="15.667"/>
+	</g>
+</g>
+</svg>

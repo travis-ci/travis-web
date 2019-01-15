@@ -1,26 +1,28 @@
 import Component from '@ember/component';
-import { service } from 'ember-decorators/service';
-import { computed } from 'ember-decorators/object';
-import { alias } from 'ember-decorators/object/computed';
+import { inject as service } from '@ember/service';
+import { computed } from '@ember/object';
+import { alias } from '@ember/object/computed';
 
 export default Component.extend({
-  @service auth: null,
-  @service tabStates: null,
+  auth: service(),
+  features: service(),
+  tabStates: service(),
 
   tagName: 'nav',
   classNames: ['travistab-nav', 'travistab-nav--underline', 'travistab-nav--sidebar'],
 
-  @alias('tabStates.sidebarTab') tab: null,
+  tab: alias('tabStates.sidebarTab'),
 
-  @alias('auth.currentUser') currentUser: null,
+  currentUser: alias('auth.currentUser'),
 
-  @computed('tab')
-  classRunning(tab) {
+  classRunning: computed('tab', function () {
+    let tab = this.get('tab');
     return tab === 'running' ? 'active' : '';
-  },
+  }),
 
-  @computed('tab', 'currentUser')
-  classOwned(tab, currentUser) {
+  classOwned: computed('tab', 'currentUser', function () {
+    let tab = this.get('tab');
+    let currentUser = this.get('currentUser');
     let classes = [];
     if (tab === 'owned') {
       classes.push('active');
@@ -29,12 +31,12 @@ export default Component.extend({
       classes.push('display-inline');
     }
     return classes.join(' ');
-  },
+  }),
 
-  @computed('currentUser')
-  classNew(currentUser) {
+  classNew: computed('currentUser', function () {
+    let currentUser = this.get('currentUser');
     if (currentUser) {
       return 'display-inline';
     }
-  },
+  }),
 });

@@ -1,7 +1,10 @@
 import Controller from '@ember/controller';
-import { alias } from 'ember-decorators/object/computed';
+import { alias } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
 
 export default Controller.extend({
-  @alias('auth.currentUser') user: null,
-  @alias('user.isSyncing') isSyncing: null,
+  auth: service(),
+
+  user: alias('auth.currentUser'),
+  isSyncing: alias('user.isSyncing'),
 });

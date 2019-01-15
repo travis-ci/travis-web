@@ -1,7 +1,15 @@
 import V3Adapter from 'travis/adapters/v3';
+import Ember from 'ember';
+
+let includes = 'build.commit,build.branch,build.request,build.created_by';
+
+// TODO this is a workaround for an infinite loop in Mirage serialising 😞
+if (!Ember.testing) {
+  includes += ',build.repository';
+}
 
 export default V3Adapter.extend({
-  includes: 'build.commit,build.branch',
+  includes,
 
   pathPrefix(modelName, id, snapshot, type, query) {
     if (type === 'query' && query.repository_id) {
@@ -15,6 +23,10 @@ export default V3Adapter.extend({
       delete query.id;
       return this._super(modelName, id, snapshot, 'findRecord', query);
     } else {
+      // This tells the API to skip page count for pagination, speeding up queries.
+      if (query) {
+        query.skip_count = true;
+      }
       return this._super(...arguments);
     }
   }

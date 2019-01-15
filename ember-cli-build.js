@@ -1,8 +1,9 @@
-/* eslint-env node */
 'use strict';
 
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 const Funnel = require('broccoli-funnel');
+const SVGO = require('svgo');
+const Sass = require('node-sass');
 
 module.exports = function () {
   let fingerprint;
@@ -11,8 +12,7 @@ module.exports = function () {
     fingerprint = false;
   } else {
     fingerprint = {
-      // FIXME this is probably not desired
-      exclude: ['images/emoji', 'images/logos', 'images/pro-landing/flag*', 'images/team'],
+      exclude: ['images/emoji', 'images/logos'],
       extensions: ['js', 'css', 'png', 'jpg', 'gif', 'map', 'svg']
     };
 
@@ -38,10 +38,6 @@ module.exports = function () {
     },
     babel: {
       blacklist: ['regenerator'],
-      plugins: [
-        'transform-decorators-legacy',
-        'transform-class-properties',
-      ]
     },
     fingerprint: fingerprint,
     sourcemaps: {
@@ -49,8 +45,10 @@ module.exports = function () {
       extensions: ['js']
     },
     'ember-prism': {
-      'components': ['scss', 'javascript', 'json'], // needs to be an array, or undefined.
-      'plugins': ['line-highlight']
+      'components': ['yaml'],
+    },
+    sassOptions: {
+      implementation: Sass
     },
     svg: {
       optimize: false,
@@ -59,20 +57,43 @@ module.exports = function () {
         'public/images/svg'
       ]
     },
-    sassOptions: {
-      extensions: 'sass'
+    svgJar: {
+      optimizer: {
+        svgoModule: SVGO,
+        plugins: [
+          { removeViewBox: false },
+          { removeTitle: false },
+          { removeDesc: false },
+          {
+            inlineStyles: {
+              onlyMatchedOnce: false,
+              removeMatchedSelectors: true
+            }
+          }
+        ]
+      }
+    },
+    'ember-composable-helpers': {
+      only: ['sort-by', 'compute']
     }
   });
 
-  app.import('bower_components/pusher/dist/pusher.js');
-  app.import('node_modules/timeago/jquery.timeago.js');
-
-  app.import('bower_components/waypoints/lib/jquery.waypoints.js');
-  app.import('bower_components/waypoints/lib/shortcuts/inview.js');
-
   const emojiAssets = new Funnel('node_modules/emoji-datasource-apple/img/apple/64', {
-    destDir: '/images/emoji'
+    destDir: '/public/images/emoji'
   });
+
+  importNpmDependency(app, 'node_modules/fuzzysort/fuzzysort.js');
+  importNpmDependency(app, 'node_modules/pusher-js/dist/web/pusher.js');
+  importNpmDependency(app, 'node_modules/raven-js/dist/raven.js');
+  importNpmDependency(app, 'node_modules/emoji-js/lib/emoji.js');
+  importNpmDependency(app, 'node_modules/visibilityjs/index.js');
+  importNpmDependency(app, 'node_modules/ansiparse/lib/ansiparse.js', 'amd');
+  importNpmDependency(app, 'node_modules/yamljs/index.js');
 
   return app.toTree(emojiAssets);
 };
+
+function importNpmDependency(app, path, transformation = 'cjs', alias) {
+  const as = alias || path.split('/')[1];
+  app.import(path, { using: [{ transformation, as }] });
+}

@@ -1,1 +1,19 @@
-{{loading-indicator}}
+<div class="loading-page">
+  <header class="top">
+    {{top-bar}}
+  </header>
+
+  {{#if showCta}}
+    <div class="cta">
+      <p class="row">
+        Help make Open Source a better place and start building better software today!
+      </p>
+    </div>
+  {{/if}}
+
+  <div class="main">
+    <div class="content-page">
+      {{loading-screen}}
+    </div>
+  </div>
+</div>

@@ -1,6 +1,6 @@
 /* global Travis */
 
-import { observer } from '@ember/object';
+import { observer, computed } from '@ember/object';
 import { Promise as EmberPromise } from 'rsvp';
 import { isEqual } from '@ember/utils';
 import { getOwner } from '@ember/application';
@@ -11,16 +11,15 @@ import DurationCalculations from 'travis/mixins/duration-calculations';
 import DurationAttributes from 'travis/mixins/duration-attributes';
 import attr from 'ember-data/attr';
 import { belongsTo } from 'ember-data/relationships';
-import { computed } from 'ember-decorators/object';
-import { alias, not } from 'ember-decorators/object/computed';
-import { service } from 'ember-decorators/service';
-
-import moment from 'moment';
+import { alias, and, equal, not, reads } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
+import promiseObject from 'travis/utils/promise-object';
 
 export default Model.extend(DurationCalculations, DurationAttributes, {
-  @service ajax: null,
-  @service jobConfigFetcher: null,
-
+  api: service(),
+  ajax: service(),
+  jobConfigFetcher: service(),
+  features: service(),
   logId: attr(),
   queue: attr(),
   state: attr(),
@@ -30,66 +29,71 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
   repositoryPrivate: attr(),
   repositorySlug: attr(),
   updatedAt: attr('date'),
+  _config: attr(),
 
   repo: belongsTo('repo'),
   build: belongsTo('build', { async: true }),
   commit: belongsTo('commit', { async: true }),
   stage: belongsTo('stage', { async: true }),
 
-  @alias('build.isPullRequest') isPullRequest: null,
-  @alias('build.pullRequestNumber') pullRequestNumber: null,
-  @alias('build.pullRequestTitle') pullRequestTitle: null,
-  @alias('build.branch') branch: null,
-  @alias('build.branchName') branchName: null,
-  @alias('build.isTag') isTag: null,
-  @alias('build.tag') tag: null,
-  @alias('build.eventType') eventType: null,
+  isPullRequest: alias('build.isPullRequest'),
+  pullRequestNumber: alias('build.pullRequestNumber'),
+  pullRequestTitle: alias('build.pullRequestTitle'),
+  branch: alias('build.branch'),
+  branchName: alias('build.branchName'),
+  isTag: alias('build.isTag'),
+  tag: alias('build.tag'),
+  eventType: alias('build.eventType'),
 
   // TODO: DO NOT SET OTHER PROPERTIES WITHIN A COMPUTED PROPERTY!
-  @computed()
-  log() {
+  log: computed(function () {
     this.set('isLogAccessed', true);
     return Log.create({
       job: this,
-      ajax: this.get('ajax'),
+      api: this.get('api'),
       container: getOwner(this)
     });
-  },
+  }),
 
-  @alias('config.content') configLoaded: null,
+  config: computed(function () {
+    return promiseObject(this.jobConfigFetcher.fetch(this));
+  }),
 
-  @computed()
-  config() {
-    return this.get('jobConfigFetcher').fetch(this.get('id'));
-  },
+  isConfigLoaded: reads('config.isFulfilled'),
 
   getCurrentState() {
     return this.get('currentState.stateName');
   },
 
-  @computed('state')
-  isFinished(state) {
+  isFinished: computed('state', function () {
+    let state = this.get('state');
     let finishedStates = ['passed', 'failed', 'errored', 'canceled'];
     return finishedStates.includes(state);
-  },
+  }),
 
-  @computed('state')
-  toBeQueued(state) {
+  isCreated: equal('state', 'created'),
+
+  isQueued: equal('state', 'queued'),
+
+  isReceived: equal('state', 'received'),
+
+  toBeQueued: computed('state', function () {
+    let state = this.get('state');
     let queuedState = 'created';
     return isEqual(state, queuedState);
-  },
+  }),
 
-  @computed('state')
-  toBeStarted(state) {
+  toBeStarted: computed('state', function () {
+    let state = this.get('state');
     let waitingStates = ['queued', 'received'];
     return waitingStates.includes(state);
-  },
+  }),
 
-  @computed('state')
-  notStarted(state) {
-    let waitingStates = ['queued', 'created', 'received'];
+  notStarted: computed('state', function () {
+    let state = this.get('state');
+    let waitingStates = ['created', 'queued', 'received'];
     return waitingStates.includes(state);
-  },
+  }),
 
   clearLog() {
     if (this.get('isLogAccessed')) {
@@ -97,38 +101,39 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
     }
   },
 
-  @computed('isFinished', 'state')
-  canCancel(isFinished, state) {
+  canCancel: computed('isFinished', 'state', function () {
+    let isFinished = this.get('isFinished');
+    let state = this.get('state');
     // not(isFinished) is insufficient since it will be true when state is undefined.
     return !isFinished && !!state;
-  },
+  }),
 
-  @alias('isFinished') canRestart: null,
-  @alias('isFinished') canDebug: null,
+  canRestart: alias('isFinished'),
+  canDebug: and('isFinished', 'repo.private'),
 
   cancel() {
     const url = `/job/${this.get('id')}/cancel`;
-    return this.get('ajax').postV3(url);
+    return this.get('api').post(url);
   },
 
   removeLog() {
-    const url = `/jobs/${this.get('id')}/log`;
-    return this.get('ajax').patch(url).then(() => this.reloadLog());
+    const url = `/job/${this.get('id')}/log`;
+    return this.get('ajax').deleteV3(url).then(() => this.reloadLog());
   },
 
   reloadLog() {
     this.clearLog();
-    return this.get('log').fetch();
+    return this.get('log.fetchTask').perform();
   },
 
   restart() {
     const url = `/job/${this.get('id')}/restart`;
-    return this.get('ajax').postV3(url);
+    return this.get('api').post(url);
   },
 
   debug() {
     const url = `/job/${this.get('id')}/debug`;
-    return this.get('ajax').postV3(url, { quiet: true });
+    return this.get('api').post(url, { data: { quiet: true } });
   },
 
   appendLog(part) {
@@ -170,13 +175,22 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
     });
   },
 
-  @computed('repo.private', 'id', 'features.enterpriseVersion')
-  channelName(isRepoPrivate, id, enterprise) {
-    // Currently always using private channels on Enterprise
-    const usePrivateChannel = enterprise || isRepoPrivate;
-    const prefix = usePrivateChannel ? 'private-job' : 'job';
-    return `${prefix}-${id}`;
-  },
+  channelName: computed(
+    'repo.private',
+    'id',
+    'features.enterpriseVersion',
+    'features.proVersion',
+    function () {
+      let isRepoPrivate = this.get('repo.private');
+      let id = this.get('id');
+      let enterprise = this.get('features.enterpriseVersion');
+      let pro = this.get('features.proVersion');
+      // Currently always using private channels on Enterprise
+      const usePrivateChannel = enterprise || isRepoPrivate || pro;
+      const prefix = usePrivateChannel ? 'private-job' : 'job';
+      return `${prefix}-${id}`;
+    }
+  ),
 
   unsubscribe() {
     this.whenLoaded(() => {
@@ -197,18 +211,11 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
     }
   }),
 
-  @computed('finishedAt')
-  formattedFinishedAt(finishedAt) {
-    if (finishedAt) {
-      let m = moment(finishedAt);
-      return m.isValid() ? m.format('lll') : 'not finished yet';
-    }
-  },
+  canRemoveLog: not('log.removed'),
 
-  @not('log.removed') canRemoveLog: null,
-
-  @computed('repo.slug', 'number')
-  slug(slug, number) {
+  slug: computed('repo.slug', 'number', function () {
+    let slug = this.get('repo.slug');
+    let number = this.get('number');
     return `${slug} #${number}`;
-  },
+  }),
 });

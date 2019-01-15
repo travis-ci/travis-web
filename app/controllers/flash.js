@@ -1,9 +1,9 @@
 import Controller from '@ember/controller';
 
-import { service } from 'ember-decorators/service';
+import { inject as service } from '@ember/service';
 
 export default Controller.extend({
-  @service flashes: null,
+  flashes: service(),
 
   loadFlashes() {
     return this.get('flashes').loadFlashes(...arguments);

@@ -1,6 +1,6 @@
-import Ember from 'ember';
 import { JSONAPISerializer } from 'ember-cli-mirage';
 import { singularize, pluralize } from 'ember-inflector';
+import { camelize } from '@ember/string';
 import apiSpec from '../api-spec';
 
 export default JSONAPISerializer.extend({
@@ -105,7 +105,7 @@ export default JSONAPISerializer.extend({
     }
 
     this.getAttributes(type, representation, request).forEach((attributeName) => {
-      let relationship = model[Ember.String.camelize(attributeName)];
+      let relationship = model[camelize(attributeName)];
 
       if (attributeName === 'id') {
         result['id'] = this.normalizeId(model, model.attrs.id);
@@ -139,13 +139,22 @@ export default JSONAPISerializer.extend({
   },
 
   getAttributes(type, representation, request) {
-    let attributes = apiSpec.resources[type].representations[representation],
+    let resource = apiSpec.resources[type];
+
+    if (!resource) {
+      throw new Error(`Unable to find API spec for resource ${type}`);
+    }
+
+    let attributes = resource.representations[representation],
       include = request.queryParams.include;
 
     if (include) {
       include.split(',').forEach((includeSegment) => {
         let [includeType, includeAttribute] = includeSegment.split('.');
-        if (includeType === type && !attributes.includes(includeAttribute)) {
+        let includeTypeIsThis = (includeType === type) ||
+          (includeType === 'owner' && (type === 'user' || type === 'organization'));
+
+        if (includeTypeIsThis && !attributes.includes(includeAttribute)) {
           attributes.push(includeAttribute);
         }
       });
@@ -156,6 +165,12 @@ export default JSONAPISerializer.extend({
 
   isIncluded(type, key, request) {
     let include = request.queryParams.include;
+    let ownerAliases = ['user', 'organization'];
+    let subscriptionInclusions = ['billing_info', 'credit_card_info', 'plan'];
+
+    if (ownerAliases.includes(type)) {
+      type = 'owner';
+    }
 
     if (include) {
       return !!include
@@ -164,6 +179,9 @@ export default JSONAPISerializer.extend({
           return includeType === type && includeAttribute === key;
         })
         .length;
+    } else if (type === 'subscription' && subscriptionInclusions.includes(key)) {
+      // The true API always returns these as standard representations.
+      return true;
     }
   },
 
@@ -198,8 +216,13 @@ export default JSONAPISerializer.extend({
     return request._processedRecords.find(findFn);
   },
 
-  normalizeId(_model, id) {
-    return parseInt(id);
+  normalizeId({modelName}, id) {
+    // plan IDs can be strings
+    if (modelName === 'plan') {
+      return id;
+    } else {
+      return parseInt(id);
+    }
   },
 
   representation(model, request, options) {

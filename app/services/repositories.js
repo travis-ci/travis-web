@@ -1,42 +1,44 @@
 import { isArray } from '@ember/array';
 import { isEmpty } from '@ember/utils';
-import Service from '@ember/service';
+import Service, { inject as service } from '@ember/service';
 import config from 'travis/config/environment';
 import Repo from 'travis/models/repo';
 import { task, timeout } from 'ember-concurrency';
-import { computed } from 'ember-decorators/object';
-import { service } from 'ember-decorators/service';
+import { computed } from '@ember/object';
 
 export default Service.extend({
-  @service auth: null,
-  @service store: null,
-  @service tabStates: null,
-  @service ajax: null,
-  @service router: null,
+  auth: service(),
+  store: service(),
+  tabStates: service(),
+  api: service(),
+  router: service(),
 
-  @computed('requestOwnedRepositories', 'performSearchRequest', 'showSearchResults')
-  tasks(accessible, performSearch, showSearch) {
-    return [
-      accessible,
-      performSearch,
-      showSearch,
-    ];
-  },
+  tasks: computed(
+    'requestOwnedRepositories',
+    'performSearchRequest',
+    'showSearchResults',
+    function () {
+      return [
+        this.get('requestOwnedRepositories'),
+        this.get('performSearchRequest'),
+        this.get('showSearchResults'),
+      ];
+    }
+  ),
 
-  @computed('tasks.@each.isRunning')
-  loadingData(tasks) {
+  loadingData: computed('tasks.@each.isRunning', function () {
+    let tasks = this.get('tasks');
     return tasks.any(task => task.get('isRunning'));
-  },
+  }),
 
   performSearchRequest: task(function* () {
     const store = this.get('store');
-    const ajax = this.get('ajax');
     const query = this.get('searchQuery');
 
     const urlQuery = this.get('router._router.currentURL').split('/')[2];
 
     if (!this.get('_searchResults.length') || urlQuery !== query) {
-      const searchResults = yield Repo.search(store, ajax, query);
+      const searchResults = yield Repo.search(store, query);
       this.set('_searchResults', searchResults);
     }
   }).drop(),
@@ -67,15 +69,23 @@ export default Service.extend({
     }
   }).drop(),
 
-  @computed('_repos.[]', '_repos.@each.{currentBuildFinishedAt,currentBuildId}')
-  accessible(repos) {
-    return this.sortData(repos);
-  },
+  accessible: computed(
+    '_repos.[]',
+    '_repos.@each.{currentBuildFinishedAt,currentBuildId}',
+    function () {
+      let repos = this.get('_repos');
+      return this.sortData(repos);
+    }
+  ),
 
-  @computed('_searchResults.[]', '_searchResults.@each.{currentBuildFinishedAt,currentBuildId}')
-  searchResults(repos) {
-    return this.sortData(repos);
-  },
+  searchResults: computed(
+    '_searchResults.[]',
+    '_searchResults.@each.{currentBuildFinishedAt,currentBuildId}',
+    function () {
+      let repos = this.get('_searchResults');
+      return this.sortData(repos);
+    }
+  ),
 
   sortData(repos) {
     if (repos && repos.toArray) {

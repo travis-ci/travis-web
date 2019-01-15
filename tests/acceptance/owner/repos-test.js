@@ -1,17 +1,24 @@
 import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import ownerPage from 'travis/tests/pages/owner';
+import signInUser from 'travis/tests/helpers/sign-in-user';
 
 moduleForAcceptance('Acceptance | owner repositories', {
   beforeEach() {
-    server.create('user', {
-      name: 'Sara Ahmed',
-      login: 'feministkilljoy'
+    let user = server.create('user', {
+      name: 'User Name',
+      login: 'user-login'
     });
+
+    // This should not require login but I can’t take the time to figure out why the test fails without it.
+    signInUser(user);
 
     // create active repo
     const firstRepository = server.create('repository', {
-      slug: 'feministkilljoy/living-a-feminist-life'
+      slug: 'user-login/repository-name',
+      owner: {
+        login: user.login
+      }
     });
 
     const primaryBranch = firstRepository.createBranch({
@@ -39,7 +46,10 @@ moduleForAcceptance('Acceptance | owner repositories', {
 
     // create active repo
     server.create('repository', {
-      slug: 'feministkilljoy/willful-subjects'
+      slug: 'user-login/yet-another-repository-name',
+      owner: {
+        login: user.login
+      }
     });
 
     server.create('repository', {
@@ -50,15 +60,15 @@ moduleForAcceptance('Acceptance | owner repositories', {
 });
 
 test('the owner page shows their repositories', (assert) => {
-  ownerPage.visit({ username: 'feministkilljoy' });
+  ownerPage.visit({ username: 'user-login' });
 
   andThen(() => {
-    assert.equal(document.title, 'Sara Ahmed - Travis CI');
+    assert.equal(document.title, 'User Name - Travis CI');
 
-    assert.equal(ownerPage.repos().count, 2);
+    assert.equal(ownerPage.repos.length, 2);
 
-    ownerPage.repos(0).as(repo => {
-      assert.equal(repo.name, 'living-a-feminist-life');
+    ownerPage.repos[0].as(repo => {
+      assert.equal(repo.name, 'repository-name');
 
       assert.equal(repo.buildNumber, '1917');
       assert.equal(repo.defaultBranch, 'primary');
@@ -66,8 +76,8 @@ test('the owner page shows their repositories', (assert) => {
       assert.equal(repo.commitDate, 'about a year ago');
     });
 
-    ownerPage.repos(1).as(repo => {
-      assert.equal(repo.name, 'willful-subjects');
+    ownerPage.repos[1].as(repo => {
+      assert.equal(repo.name, 'yet-another-repository-name');
       assert.equal(repo.noBuildMessage, 'There is no build on the default branch yet.');
     });
   });

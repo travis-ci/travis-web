@@ -1,27 +1,22 @@
+'use strict';
+
 module.exports = {
   scenarios: [
     {
-      name: 'default',
-      dependencies: {}
-    },
-    {
-      name: "release",
-      dependencies: {
-        "ember": "release"
+      name: 'ember-beta',
+      npm: {
+        devDependencies: {
+          'ember-source': 'beta'
+        }
       }
     },
     {
-      name: "beta",
-      dependencies: {
-        "ember": "beta"
-      }
-    },
-    {
-      name: "canary",
-      dependencies: {
-        "ember": "canary"
+      name: 'ember-data-beta',
+      npm: {
+        devDependencies: {
+          'ember-data': 'beta'
+        }
       }
     }
   ],
-  bowerOptions: ['--quiet'],
-}
+};

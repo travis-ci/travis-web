@@ -1,9 +1,9 @@
 import { isArray } from '@ember/array';
 import Mixin from '@ember/object/mixin';
-import { service } from 'ember-decorators/service';
+import { inject as service } from '@ember/service';
 
 export default Mixin.create({
-  @service polling: null,
+  polling: service(),
 
   init() {
     this.set('currentPollModels', {});

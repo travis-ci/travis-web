@@ -1,10 +1,10 @@
 import { reject } from 'rsvp';
 import Route from '@ember/routing/route';
-import { service } from 'ember-decorators/service';
+import { inject as service } from '@ember/service';
 
 export default Route.extend({
-  @service auth: null,
-  @service featureFlags: null,
+  auth: service(),
+  featureFlags: service(),
 
   activate() {
     if (this.routeName !== 'error') {
@@ -15,13 +15,13 @@ export default Route.extend({
 
   beforeModel(transition) {
     if (!this.signedIn()) {
-      this.auth.autoSignIn();
+      this.get('auth').autoSignIn();
     }
     if (!this.signedIn() && this.get('needsAuth')) {
-      this.auth.set('afterSignInTransition', transition);
+      this.set('auth.afterSignInTransition', transition);
       return reject('needs-auth');
     } else if (this.redirectToProfile(transition)) {
-      return this.transitionTo('profile', this.get('auth.currentUser.login'));
+      return this.transitionTo('account');
     } else {
       return this._super(...arguments);
     }
@@ -39,7 +39,7 @@ export default Route.extend({
       params.owner &&
       params.owner.owner &&
       params.owner.owner === 'profile') {
-      this.transitionTo('account', this.get('auth.currentUser.login'), {
+      this.transitionTo('account', {
         queryParams: { offset: 0 }
       });
     }

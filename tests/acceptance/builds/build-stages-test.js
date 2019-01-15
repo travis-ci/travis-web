@@ -11,7 +11,6 @@ function futureTime(secondsAhead) {
 }
 
 test('visiting build with one stage', function (assert) {
-  server.logging = true;
   let repo =  server.create('repository', { slug: 'travis-ci/travis-web' });
 
   let branch = server.create('branch', { name: 'acceptance-tests' });
@@ -35,9 +34,9 @@ test('visiting build with one stage', function (assert) {
   waitForElement('.jobs.stage .stage-header.passed');
 
   andThen(function () {
-    assert.equal(buildPage.stages().count, 1, 'expected one build stage');
+    assert.equal(buildPage.stages.length, 1, 'expected one build stage');
 
-    buildPage.stages(0).as(stage => {
+    buildPage.stages[0].as(stage => {
       assert.ok(stage.isPassed);
     });
   });
@@ -51,7 +50,10 @@ test('visiting build with stages', function (assert) {
 
   let  gitUser = server.create('git-user', { name: 'Mr T' });
   let commit = server.create('commit', { author: gitUser, committer: gitUser, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
-  let build = server.create('build', { repository: repo, state: 'passed', commit_id: commit.id, commit });
+
+  let request = server.create('request');
+
+  let build = server.create('build', { repository: repo, state: 'passed', commit_id: commit.id, commit, request });
 
   let secondStage = build.createStage({ number: 2, name: 'second', state: 'failed', started_at: jobTime, finished_at: futureTime(11) });
   let firstStage = build.createStage({ number: 1, name: 'first :two_men_holding_hands:', state: 'passed', started_at: jobTime, finished_at: futureTime(71), allow_failure: true });
@@ -71,25 +73,25 @@ test('visiting build with stages', function (assert) {
   waitForElement('.jobs.stage .stage-header.passed');
 
   andThen(function () {
-    assert.equal(buildPage.stages().count, 2, 'expected two build stages');
+    assert.equal(buildPage.stages.length, 2, 'expected two build stages');
 
-    buildPage.stages(0).as(stage => {
+    buildPage.stages[0].as(stage => {
       assert.equal(stage.name, 'first', 'expected the stages to be numerically sorted');
       assert.equal(stage.nameEmojiTitle, 'two_men_holding_hands');
       assert.ok(stage.isPassed);
       assert.equal(stage.stateTitle, 'Stage passed');
       assert.equal(stage.duration, '1 min 11 sec');
-      assert.equal(stage.jobs(0).number, '1234.1');
-      assert.equal(stage.jobs(1).number, '1234.2');
+      assert.equal(stage.jobs[0].number, '1234.1');
+      assert.equal(stage.jobs[1].number, '1234.2');
       assert.equal(stage.allowFailures.text, 'Your build matrix was set to allow the failure of job 1234.2 so we continued this build to the next stage.');
     });
 
-    buildPage.stages(1).as(stage => {
+    buildPage.stages[1].as(stage => {
       assert.equal(stage.name, 'second');
       assert.ok(stage.isFailed);
       assert.equal(stage.stateTitle, 'Stage failed');
       assert.equal(stage.duration, '11 sec');
-      assert.equal(stage.jobs(0).number, '1234.999');
+      assert.equal(stage.jobs[0].number, '1234.999');
       assert.ok(stage.allowFailures.isHidden, 'expected no allowed failures text');
     });
   });

@@ -1,30 +1,20 @@
-import { test } from 'qunit';
+import { test, skip } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import triggerBuildPage from 'travis/tests/pages/trigger-build';
 import topPage from 'travis/tests/pages/top';
-import Mirage from 'ember-cli-mirage';
+import { Response } from 'ember-cli-mirage';
+import signInUser from 'travis/tests/helpers/sign-in-user';
 
 moduleForAcceptance('Acceptance | repo/trigger build');
-
-test('trigger link is not visible to not logged in users', function (assert) {
-  const repo = server.create('repository', {
-    name: 'difference-engine',
-    slug: 'adal/difference-engine'
-  });
-
-  triggerBuildPage.visit({ slug: repo.slug });
-  assert.ok(triggerBuildPage.popupTriggerLinkIsHidden, 'cannot see trigger build link');
-});
 
 moduleForAcceptance('Acceptance | repo/trigger build', {
   beforeEach() {
     this.currentUser = server.create('user', {
       name: 'Ada Lovelace',
       login: 'adal',
-      repos_count: 1
     });
 
-    const repo = server.create('repository', {
+    this.repo = server.create('repository', {
       name: 'difference-engine',
       slug: 'adal/difference-engine',
       permissions: {
@@ -32,22 +22,20 @@ moduleForAcceptance('Acceptance | repo/trigger build', {
       }
     });
 
-    this.repo = repo;
-
-    const repoId = parseInt(repo.id);
+    const repoId = parseInt(this.repo.id);
 
     const defaultBranch = server.create('branch', {
       name: 'master',
       id: `/v3/repo/${repoId}/branch/master`,
       default_branch: true,
       exists_on_github: true,
-      repository: repo
+      repository: this.repo
     });
 
     const latestBuild = defaultBranch.createBuild({
       state: 'passed',
       number: '1234',
-      repository: repo
+      repository: this.repo
     });
 
     latestBuild.createCommit({
@@ -59,16 +47,59 @@ moduleForAcceptance('Acceptance | repo/trigger build', {
       id: `/v3/repo/${repoId}/branch/deleted`,
       default_branch: false,
       exists_on_github: false,
-      repository: repo
+      repository: this.repo
     });
 
-    repo.currentBuild = latestBuild;
-    repo.save();
+    this.repo.currentBuild = latestBuild;
+    this.repo.save();
   }
 });
 
+test('trigger link is not visible to users without proper permissions', function (assert) {
+  this.repo.update('permissions', { create_request: false });
+  triggerBuildPage.visit({ owner: 'adal', repo: 'difference-engine' });
+
+  andThen(() => {
+    assert.notOk(triggerBuildPage.popupTriggerLinkIsPresent, 'trigger build link is not rendered');
+  });
+});
+
+test('trigger link is present when user has the proper permissions and has been migrated on com', function (assert) {
+  this.repo.update('migration_status', 'migrated');
+
+  withFeature('proVersion');
+  signInUser(this.currentUser);
+
+  triggerBuildPage.visit({ owner: 'adal', repo: 'difference-engine' });
+
+  andThen(() => {
+    assert.ok(triggerBuildPage.popupTriggerLinkIsPresent, 'trigger build link is rendered');
+  });
+});
+
+// We currently get an error related to /v3/enterprise_license returning a 404 from mirage.
+// I'm not sure what our desired behavior is, so leaving this alone to be able to progress on the migration work.
+skip('trigger link is present when user has the proper permissions and has been migrated on enterprise', function (assert) {
+  this.repo.update('migration_status', 'migrated');
+  withFeature('enterpriseVersion');
+  signInUser(this.currentUser);
+
+  triggerBuildPage.visit({ owner: 'adal', repo: 'difference-engine' });
+
+  andThen(() => {
+    assert.ok(triggerBuildPage.popupTriggerLinkIsPresent, 'trigger build link is rendered');
+  });
+});
+
+test('trigger link is not visible on org if repository has already been migrated', function (assert) {
+  this.repo.update('migration_status', 'migrated');
+  signInUser(this.currentUser);
+  triggerBuildPage.visit({ owner: 'adal', repo: 'difference-engine' });
+  assert.notOk(triggerBuildPage.popupTriggerLinkIsPresent, 'trigger build link is not rendered');
+});
+
 test('triggering a custom build via the dropdown', function (assert) {
-  triggerBuildPage.visit({ slug: this.repo.slug });
+  triggerBuildPage.visit({ owner: 'adal', repo: 'difference-engine' });
 
   andThen(() => {
     assert.equal(currentURL(), 'adal/difference-engine', 'we are on the repo page');
@@ -80,8 +111,8 @@ test('triggering a custom build via the dropdown', function (assert) {
   andThen(() => {
     assert.ok(triggerBuildPage.popupIsVisible, 'modal is visible after click');
 
-    assert.equal(triggerBuildPage.branches().count, 1, 'expected the not-on-GitHub branch to be hidden');
-    assert.equal(triggerBuildPage.branches(0).value, 'master');
+    assert.equal(triggerBuildPage.branches.length, 1, 'expected the not-on-GitHub branch to be hidden');
+    assert.equal(triggerBuildPage.branches[0].value, 'master');
   });
 
   triggerBuildPage.selectBranch('master');
@@ -100,10 +131,10 @@ test('triggering a custom build via the dropdown', function (assert) {
 
 test('an error triggering a build is displayed', function (assert) {
   server.post('/repo/:repo_id/requests', function (schema, request) {
-    return new Mirage.Response(500, {}, {});
+    return new Response(500, {}, {});
   });
 
-  triggerBuildPage.visit({ slug: this.repo.slug });
+  triggerBuildPage.visit({ owner: 'adal', repo: 'difference-engine' });
   triggerBuildPage.openPopup();
   triggerBuildPage.selectBranch('master');
   triggerBuildPage.clickSubmit();
@@ -115,10 +146,10 @@ test('an error triggering a build is displayed', function (assert) {
 
 test('a 429 shows a specific error message', function (assert) {
   server.post('/repo/:repo_id/requests', function (schema, request) {
-    return new Mirage.Response(429, {}, {});
+    return new Response(429, {}, {});
   });
 
-  triggerBuildPage.visit({ slug: this.repo.slug });
+  triggerBuildPage.visit({ owner: 'adal', repo: 'difference-engine' });
   triggerBuildPage.openPopup();
   triggerBuildPage.selectBranch('master');
   triggerBuildPage.clickSubmit();

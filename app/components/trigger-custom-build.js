@@ -1,32 +1,42 @@
 import Component from '@ember/component';
 import { task, timeout } from 'ember-concurrency';
-import YAML from 'npm:yamljs';
+import YAML from 'yamljs';
 import config from 'travis/config/environment';
-import { service } from 'ember-decorators/service';
-import { filterBy, notEmpty } from 'ember-decorators/object/computed';
+import { inject as service } from '@ember/service';
+import { filterBy, notEmpty } from '@ember/object/computed';
+import KeyboardShortcuts from 'ember-keyboard-shortcuts/mixins/component';
 
-export default Component.extend({
-  @service ajax: null,
-  @service flashes: null,
-  @service router: null,
+export default Component.extend(KeyboardShortcuts, {
+  api: service(),
+  flashes: service(),
+  router: service(),
 
   classNames: ['trigger-build-modal'],
   triggerBuildBranch: '',
   triggerBuildMessage: '',
   triggerBuildConfig: '',
 
-  @filterBy('repo.branches', 'exists_on_github', true) branches: null,
-  @notEmpty('triggerBuildMessage') triggerBuildMessagePresent: null,
+  branches: filterBy('repo.branches', 'exists_on_github', true),
+  triggerBuildMessagePresent: notEmpty('triggerBuildMessage'),
+
+  keyboardShortcuts: {
+    'esc': 'toggleTriggerBuildModal'
+  },
 
   didReceiveAttrs() {
     this._super(...arguments);
     this.set('triggerBuildBranch', this.get('repo.defaultBranch.name'));
   },
 
+  didInsertElement() {
+    this._super(...arguments);
+    this.$('[autofocus]').focus();
+  },
+
   createBuild: task(function* () {
     try {
       const body = this.buildTriggerRequestBody();
-      return yield this.get('ajax').postV3(`/repo/${this.get('repo.id')}/requests`, body);
+      return yield this.get('api').post(`/repo/${this.get('repo.id')}/requests`, { data: body });
     } catch (e) {
       this.displayError(e);
     }
@@ -48,10 +58,7 @@ export default Component.extend({
   fetchBuildStatus: task(function* (repoId, requestId) {
     try {
       const url = `/repo/${repoId}/request/${requestId}`;
-      const headers = {
-        'Travis-API-Version': '3'
-      };
-      return yield this.get('ajax').ajax(url, 'GET', { headers });
+      return yield this.get('api').get(url);
     } catch (e) {
       this.displayError(e);
     }

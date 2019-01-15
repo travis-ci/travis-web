@@ -18,7 +18,7 @@
     {{loading-indicator}}
   {{else}}
     <button {{action (perform delete) on="click"}} type="button" class="cron-job-delete no-button">
-      {{tooltip-on-element text='Delete'}}
+      {{ember-tooltip text='Delete'}}
       {{svg-jar 'icon-trash' class="icon"}}
     </button>
   {{/if}}

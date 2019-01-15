@@ -1,10 +1,9 @@
-import Service from '@ember/service';
+import Service, { inject as service } from '@ember/service';
 import config from 'travis/config/environment';
-import { service } from 'ember-decorators/service';
 
 export default Service.extend({
-  @service auth: null,
-  @service features: null,
+  auth: service(),
+  features: service(),
 
   imageUrl(repo, branch) {
     let prefix = `${location.protocol}//${location.host}`;
@@ -18,7 +17,9 @@ export default Service.extend({
 
     let slug = repo.get('slug');
 
-    if (repo.get('private')) {
+    // In Enterprise you can toggle public mode, where even "public" repositories are hidden
+    // in which cases we need to generate a token for all images
+    if (!config.publicMode || repo.get('private')) {
       const token = this.get('auth').assetToken();
       return `${prefix}/${slug}.svg?token=${token}${branch ? `&branch=${branch}` : ''}`;
     } else {

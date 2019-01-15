@@ -1,7 +1,10 @@
 import RavenLogger from 'ember-cli-sentry/services/raven';
 import config from 'travis/config/environment';
+import { inject as service } from '@ember/service';
 
 export default RavenLogger.extend({
+  features: service(),
+
   benignErrors: [
     'TransitionAborted',
     'TaskInstance',
@@ -20,11 +23,11 @@ export default RavenLogger.extend({
     this._super(...arguments);
   },
 
-  logException(e) {
+  logException(e, forceSampling = false) {
     // eslint-disable-next-line
     console.log('Caught an exception:', e);
 
-    if (!this.ignoreError(e)) {
+    if (!this.ignoreError(e, forceSampling)) {
       this.captureException(e);
     }
   },
@@ -37,8 +40,8 @@ export default RavenLogger.extend({
     return this._super(...arguments);
   },
 
-  ignoreError(error) {
-    if (!this.shouldReportError()) {
+  ignoreError(error, forceSampling = false) {
+    if (!this.shouldReportError(forceSampling)) {
       return true;
     } else {
       const message = error.message;
@@ -54,14 +57,20 @@ export default RavenLogger.extend({
     return this._super(...arguments);
   },
 
-  shouldReportError() {
+  shouldReportError(forceSampling) {
     // Sentry recommends only reporting a small subset of the actual
     // frontend errors. This can get *very* noisy otherwise.
-    if (config.enterprise || config.sentry.development) {
+    if (this.get('features.enterpriseVersion') || config.sentry.development) {
       return false;
+    } else if (forceSampling) {
+      return true;
     } else {
-      let sampleRate = 10;
-      return (Math.random() * 100 <= sampleRate);
+      return this.sampleError();
     }
+  },
+
+  sampleError() {
+    let sampleRate = 10;
+    return (Math.random() * 100 <= sampleRate);
   }
 });

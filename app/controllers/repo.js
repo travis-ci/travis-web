@@ -1,28 +1,50 @@
 import { scheduleOnce } from '@ember/runloop';
 import { isEmpty } from '@ember/utils';
-import Controller from '@ember/controller';
+import Controller, { inject as controller } from '@ember/controller';
 import Ember from 'ember';
 import eventually from 'travis/utils/eventually';
-import Visibility from 'npm:visibilityjs';
-import { service } from 'ember-decorators/service';
-import { controller } from 'ember-decorators/controller';
-import { computed } from 'ember-decorators/object';
-import { alias } from 'ember-decorators/object/computed';
+import Visibility from 'visibilityjs';
+import { inject as service } from '@ember/service';
+import { computed } from '@ember/object';
+import { alias } from '@ember/object/computed';
+import config from 'travis/config/environment';
 
 export default Controller.extend({
-  @service repositories: null,
-  @service tabStates: null,
-  @service('updateTimes') updateTimesService: null,
+  auth: service(),
+  repositories: service(),
+  tabStates: service(),
+  features: service(),
+  updateTimesService: service('updateTimes'),
 
-  @controller('job') jobController: null,
-  @controller('build') buildController: null,
-  @controller('builds') buildsController: null,
+  queryParams: ['migrationStatus'],
+  migrationStatus: null,
 
-  @alias('repositories.accessible') repos: null,
-  @alias('auth.currentUser') currentUser: null,
-  @alias('buildController.build') build: null,
-  @alias('buildsController.model') builds: null,
-  @alias('jobController.job') job: null,
+  jobController: controller('job'),
+  buildController: controller('build'),
+  buildsController: controller('builds'),
+
+  repos: alias('repositories.accessible'),
+  currentUser: alias('auth.currentUser'),
+  build: alias('buildController.build'),
+  builds: alias('buildsController.model'),
+  job: alias('jobController.job'),
+
+  showGitHubApps: alias('features.github-apps'),
+
+  showGitHubAppsCTA: computed('showGitHubApps', 'repo.private', 'currentUser', function () {
+    let showGitHubApps = this.get('showGitHubApps');
+    let isPrivate = this.get('repo.private');
+    let currentUser = this.get('currentUser');
+    return showGitHubApps && !isPrivate && !currentUser;
+  }),
+
+  isCentered: computed('auth.signedIn', 'features.dashboard', function () {
+    let isSignedIn = this.get('auth.signedIn');
+    let isDashboard = this.get('features.dashboard');
+    return !isSignedIn || isDashboard;
+  }),
+
+  config,
 
   classNames: ['repo'],
 
@@ -30,15 +52,16 @@ export default Controller.extend({
     this.set('repo', null);
   },
 
-  @computed('repos.isLoaded', 'repos.[]')
-  isEmpty(loaded, repos) {
+  isEmpty: computed('repos.isLoaded', 'repos.[]', function () {
+    let loaded = this.get('repos.isLoaded');
+    let repos = this.get('repos');
     return loaded && isEmpty(repos);
-  },
+  }),
 
   init() {
     this._super(...arguments);
     if (!Ember.testing) {
-      Visibility.every(this.config.intervals.updateTimes, this.updateTimes.bind(this));
+      Visibility.every(config.intervals.updateTimes, this.updateTimes.bind(this));
     }
   },
 
