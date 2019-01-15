@@ -2,6 +2,7 @@ import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { Response } from 'ember-cli-mirage';
 import { percySnapshot } from 'ember-percy';
+import { waitForElement } from 'travis/tests/helpers/wait-for-element';
 
 import settingsPage from 'travis/tests/pages/settings';
 import topPage from 'travis/tests/pages/top';
@@ -259,8 +260,6 @@ module('Acceptance | repo settings', function (hooks) {
   });
 
   test('reload cron branches on branch:created', async function (assert) {
-    const done = assert.async();
-
     server.create('branch', {
       name: 'food',
       id: `/v3/repo/${this.repository.id}/branch/food`,
@@ -283,8 +282,10 @@ module('Acceptance | repo settings', function (hooks) {
       repository_id: this.repository.id,
       branch: 'bar',
     });
+
+    await waitForElement(`${settingsPage.cronBranches.scope}:eq(1)`);
+
     assert.equal(settingsPage.cronBranches.length, 2, 'expected two branches after event');
-    done();
   });
 
   test('delete SSH key', async function (assert) {
