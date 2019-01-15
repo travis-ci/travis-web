@@ -239,9 +239,7 @@ module('Acceptance | repo settings', function (hooks) {
     assert.equal(topPage.flashMessage.text, 'This environment variable has already been deleted. Try refreshing.');
   });
 
-  test('delete and create crons', async function (assert) {
-    const done = assert.async();
-
+  test('delete and create crons using branch search', async function (assert) {
     await settingsPage.visit({ organization: 'org-login', repo: 'repository-name' });
 
     const deletedIds = [];
@@ -256,7 +254,44 @@ module('Acceptance | repo settings', function (hooks) {
 
     assert.equal(deletedIds.pop(), this.dailyCron.id, 'expected the server to have received a deletion request for the first cron');
     assert.equal(settingsPage.crons.length, 1, 'expected only one cron to remain');
-    done();
+
+    server.get(`/repo/${this.repository.id}/branches`, ({branches}, {params: { id }, queryParams: { name_filter: nameFilter }}) => {
+      if (nameFilter) {
+        return branches.all().filter(branch => branch.name.includes(nameFilter));
+      } else {
+        return branches.all();
+      }
+    });
+
+    let requestBodies = [];
+
+    server.post(`/repo/${this.repository.id}/branch/weekly-branch/cron`, (schema, request) => {
+      let newCron = server.create('cron', {
+        interval: 'daily',
+        dont_run_if_recent_build_exists: false,
+        repository: this.repository
+      });
+
+      let parsedRequestBody = JSON.parse(request.requestBody);
+      requestBodies.push(parsedRequestBody);
+
+      return newCron;
+    });
+
+    await settingsPage.cronForm.branch.search('anch');
+
+    assert.equal(settingsPage.cronForm.branch.options.length, 2);
+
+    await settingsPage.cronForm.branch.choose('weekly-branch');
+
+    await settingsPage.cronForm.add();
+
+    assert.equal(settingsPage.crons.length, 2, 'expected the new cron to be shown');
+    assert.deepEqual(requestBodies, [{
+      dont_run_if_recent_build_exists: false, // FIXME change to true
+      include: 'cron.branch',
+      interval: 'monthly'
+    }]);
   });
 
   test('reload cron branches on branch:created', async function (assert) {

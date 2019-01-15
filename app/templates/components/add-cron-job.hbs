@@ -10,6 +10,8 @@
       search=(perform searchBranches)
       selected=selectedBranch
       onchange=(action (mut selectedBranch))
+      class='cron-branch-select'
+      tagName='div'
       as |branch|
     }}
       {{branch.name}}

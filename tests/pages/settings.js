@@ -11,6 +11,8 @@ import {
   visitable
 } from 'ember-cli-page-object';
 
+import { selectChoose, selectSearch } from 'ember-power-select/test-support';
+
 export default create({
   visit: visitable(':organization/:repo/settings'),
 
@@ -87,6 +89,32 @@ export default create({
     delete: clickable('.cron-job-delete')
   }),
 
+  cronForm: {
+    scope: '.form--cron',
+
+    branch: {
+      scope: '.cron-branch-select',
+
+      async search(text) {
+        await selectSearch('.cron-branch-select', text);
+        return this;
+      },
+
+      async choose(text) {
+        await selectChoose('.cron-branch-select', text);
+        return this;
+      },
+
+      options: collection('.ember-power-select-option', {
+        testContainer: '.ember-power-select-options',
+        resetScope: true,
+      }),
+    },
+
+    add: clickable('input[type=submit]')
+  },
+
+  // FIXME this should go away
   cronBranches: collection('.form--cron form select:nth(0) option'),
 
   sshKey: {
