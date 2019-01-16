@@ -4,6 +4,7 @@ import {
   clickable,
   collection,
   hasClass,
+  notHasClass,
   isVisible,
   text,
   attribute
@@ -25,6 +26,58 @@ export default create({
     href: attribute('href', 'a'),
     text: text('.label-align', { multiple: true }),
     avatarSrc: attribute('src', 'img'),
+  },
+
+  waitingStates: {
+    scope: '.job-waiting-stages-container',
+
+    one: {
+      scope: '.stage-1-container',
+      isInactive: hasClass('not-loaded-ring'),
+      isLoading: hasClass('spinner', 'svg'),
+      isLoaded: hasClass('stage-loaded-ring'),
+      text: text('.stage-1-message'),
+    },
+
+    two: {
+      scope: '.stage-2-container',
+      isInactive: hasClass('not-loaded-ring'),
+      isLoading: hasClass('spinner', 'svg'),
+      isLoaded: hasClass('stage-loaded-ring'),
+      text: text('.stage-2-message'),
+    },
+
+    three: {
+      scope: '.stage-3-container',
+      isInactive: hasClass('not-loaded-ring'),
+      isLoading: hasClass('spinner', 'svg'),
+      isLoaded: hasClass('stage-loaded-ring'),
+      text: text('.stage-3-message'),
+    },
+
+    firstMessage: {
+      text: text('.stage-1-message')
+    },
+
+    secondMessage: {
+      text: text('.stage-2-message')
+    },
+
+    thirdMessage: {
+      text: text('.stage-3-message')
+    },
+
+    firstLoadingLine: {
+      scope: '.loading-line-container-1 span',
+      isInactive: notHasClass('loading-line'),
+      isActive: hasClass('loading-line'),
+    },
+
+    secondLoadingLine: {
+      scope: '.loading-line-container-2 span',
+      isInactive: notHasClass('loading-line'),
+      isActive: hasClass('loading-line'),
+    }
   },
 
   hasTruncatedLog: isVisible('.log-container p.warning'),

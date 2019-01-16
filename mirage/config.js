@@ -205,13 +205,13 @@ export default function () {
   this.post('/repo/:repositoryId/email_subscription', function ({ repositories }, request) {
     const repo = repositories.find(request.params.repositoryId);
     repo.update({ email_subscribed: true });
-    return new Response(204, {}, {});
+    return new Response(204);
   });
 
   this.delete('/repo/:repositoryId/email_subscription', function ({ repositories }, request) {
     const repo = repositories.find(request.params.repositoryId);
     repo.update({ email_subscribed: false });
-    return new Response(204, {}, {});
+    return new Response(204);
   });
 
   this.get('/v3/preferences', function (schema) {
@@ -375,7 +375,7 @@ export default function () {
       .models
       .map(sshKey => sshKey.destroyRecord());
 
-    return new Response(204, {}, {});
+    return new Response(204);
   });
 
   this.get('/settings/ssh_key/:repo_id', function (schema, request) {
@@ -444,7 +444,7 @@ export default function () {
   this.post('/build/:id/cancel', (schema, request) => {
     let build = schema.builds.find(request.params.id);
     if (build) {
-      return new Response(204, {}, {});
+      return new Response(204);
     } else {
       return new Response(404, {}, {});
     }
@@ -465,7 +465,7 @@ export default function () {
   this.post('/job/:id/cancel', (schema, request) => {
     let job = schema.jobs.find(request.params.id);
     if (job) {
-      return new Response(204, {}, {});
+      return new Response(204);
     } else {
       return new Response(404, {}, {});
     }
