@@ -25,7 +25,7 @@ export default Controller.extend({
   repositories: reads('fetchRepositories.lastSuccessful.value'),
   buildEmails: reads('preferences.buildEmails'),
   showResubscribeList: and('buildEmails', 'unsubscribedRepos.length'),
-  publicInsights: reads('preferences.publicInsights'),
+  privateInsightsVisibility: reads('preferences.privateInsightsVisibility'),
 
   unsubscribedRepos: computed('repositories.@each.emailSubscribed', function () {
     let repositories = this.get('repositories') || [];
@@ -46,9 +46,9 @@ export default Controller.extend({
     }
   }).restartable(),
 
-  togglePublicInsights: task(function* (value) {
+  setPrivateInsights: task(function* (value) {
     try {
-      yield this.preferences.set('public_insights', value);
+      yield this.preferences.set('private_insights_visibility', value);
     } catch (err) {
       this.flashes.clear();
       this.flashes.error('Something went wrong and your insights settings were not saved.');
