@@ -17,7 +17,6 @@ export default Component.extend({
     'isFocused:travis-form__field--focused'
   ],
 
-  fieldComponentName: 'forms/form-input',
   fieldElementId: null,
   form: null,
 

@@ -1,8 +1,13 @@
 $travis-form-border-width: 4px;
-$travis-form-badge-radius: 7px;
+$travis-form-badge-radius: 9px;
 
 @mixin makeFieldBorder($color) {
   box-shadow: inset 0 0 1px 1px $color;
+}
+
+@mixin makeFocused() {
+  outline: none;
+  border-color: rgba($oxide-blue, 0.2);
 }
 
 .travis-form {
@@ -48,6 +53,8 @@ $travis-form-badge-radius: 7px;
     .travis-form__field-component {
       display: block;
       width: calc(100% + #{$travis-form-border-width * 2});
+      height: auto;
+      line-height: normal;
       font-size: 1em;
       padding: 8px 10px 9px;
       border-radius: $travis-form-border-width * 2;
@@ -60,11 +67,11 @@ $travis-form-badge-radius: 7px;
 
       &:focus,
       &:active {
-        outline: none;
-        border-color: rgba($oxide-blue, 0.2);
+        @include makeFocused();
       }
 
-      &[disabled] {
+      &[disabled],
+      &.travis-form__field-component--disabled {
         opacity: 0.5;
         background-color: transparent;
       }
@@ -77,6 +84,14 @@ $travis-form-badge-radius: 7px;
       opacity: 0;
 
       transition: opacity 0.2s ease-in;
+    }
+
+    &.travis-form__field--focused {
+
+      .travis-form__field-component {
+        @include makeFocused();
+      }
+
     }
 
     &.travis-form__field--error {
@@ -134,4 +149,85 @@ $travis-form-badge-radius: 7px;
     }
 
   }
+
 }
+
+.ember-power-select-selected-item {
+  margin-left: 0;
+  margin-right: 8px;
+}
+
+.ember-power-select-status-icon {
+  right: 10px;
+}
+
+.ember-power-select-search {
+  padding: 5px 10px;
+}
+
+.ember-power-select-search-input {
+  padding: 2px 10px;
+  border: none;
+  border-radius: 4px;
+  @include makeFieldBorder(lighten($cement-grey, 20%));
+
+  &:focus {
+    outline: none;
+    border: none;
+    border-radius: 4px;
+    @include makeFieldBorder(lighten($cement-grey, 20%));
+  }
+
+  &::placeholder {
+    color: #cccccc;
+    font-weight: 100;
+  }
+
+}
+
+.ember-power-select-dropdown {
+  border-radius: $travis-form-border-width * 2;
+  border: $travis-form-border-width solid transparent !important;
+  border-top: 1px solid $pebble-grey !important;
+  margin: -$travis-form-border-width;
+  transform: translate(4px, -10px);
+  opacity: 0;
+
+  transition: all 0.2s ease-in;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    pointer-events: none;
+    border-radius: 0 0 4px 4px;
+    box-shadow:
+      inset 0px -2px 1px -1px lighten($cement-grey, 20%),
+      inset 2px 0px 1px -1px lighten($cement-grey, 20%),
+      inset -2px 0px 1px -1px lighten($cement-grey, 20%);
+  }
+
+  &.ember-basic-dropdown--transitioned-in {
+    border-color: rgba($oxide-blue, 0.2) !important;
+    opacity: 1;
+    transform: translate(4px, -3px);
+  }
+
+}
+
+.ember-power-select-option {
+  line-height: normal;
+  padding: 5px 10px;
+
+  &[aria-selected="true"] {
+    background-color: $pebble-grey;
+  }
+
+  &[aria-current="true"] {
+    background-color: $oxide-blue;
+  }
+}
+

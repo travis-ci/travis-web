@@ -1,38 +1,49 @@
-import Component from '@ember/component';
+import EmberPowerSelect from 'ember-power-select/components/power-select';
+import { computed } from '@ember/object';
+import { gte } from '@ember/object/computed';
 
-export default Component.extend({
+const OPTIONS_FOR_SEARCH = 5;
+
+const CSS_CLASSES = {
+  DISABLED: 'travis-form__field-component--disabled',
+  FIELD_COMPONENT: 'travis-form__field-component',
+  FIELD_SELECT: 'travis-form__field-select'
+};
+
+export default EmberPowerSelect.extend({
   disabled: false,
-  value: '',
   placeholder: '',
-  autocomplete: 'off',
-  autofocus: false,
-  multiple: false,
-  options: null,
+
+  searchEnabled: gte('options.length', OPTIONS_FOR_SEARCH),
+  searchPlaceholder: 'Type to filter options...',
+
+  allowClear: false,
+  horizontalPosition: 'auto',
+  verticalPosition: 'below',
+
+  triggerClass: computed('disabled', function () {
+    const classes = [CSS_CLASSES.FIELD_COMPONENT, CSS_CLASSES.FIELD_SELECT];
+    if (this.disabled) {
+      classes.push(CSS_CLASSES.DISABLED);
+    }
+    return classes.join(' ');
+  }),
 
   onChange() {},
   onFocus() {},
   onBlur() {},
   onInit() {},
 
-  didInsertElement() {
-    this._super(...arguments);
-    this.onInit(this.elementId);
-  },
+  onchange: computed(function () {
+    return (selected) => this.onChange(selected);
+  }),
 
-  actions: {
+  onopen: computed(function () {
+    return () => this.onFocus();
+  }),
 
-    handleBlur() {
-      this.onBlur();
-    },
-
-    handleClick() {
-      this.onFocus();
-    },
-
-    handleChange(value) {
-      this.onChange(value);
-    }
-
-  }
+  onclose: computed(function () {
+    return () => this.onBlur();
+  }),
 
 });

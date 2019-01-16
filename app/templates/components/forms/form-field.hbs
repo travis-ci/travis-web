@@ -14,40 +14,44 @@
   </div>
 {{/if}}
 
-{{#if hasBlock}}
-  {{#component fieldComponentName
-    type=type
+{{yield (hash
+  isValid=isValid
+  isError=isError
+  errorMessage=errorMessage
+  input=(component 'forms/form-input'
+    form=form
     value=value
-    placeholder=placeholder
     disabled=disabled
-    rows=rows
-    options=options
-    multiple=multiple
     onFocus=(action 'handleFocus')
     onBlur=(action 'handleBlur')
     onChange=(action 'handleChange')
     onInit=(action 'setFieldElementId')
     class='travis-form__field-component'
-  }}{{yield}}{{/component}}
-{{else}}
-  {{component fieldComponentName
-    type=type
+  )
+  textarea=(component 'forms/form-textarea'
+    form=form
     value=value
-    placeholder=placeholder
     disabled=disabled
-    options=options
-    multiple=multiple
     onFocus=(action 'handleFocus')
     onBlur=(action 'handleBlur')
     onChange=(action 'handleChange')
     onInit=(action 'setFieldElementId')
     class='travis-form__field-component'
-  }}
-{{/if}}
+  )
+  select=(component 'forms/form-select'
+    form=form
+    selected=value
+    disabled=disabled
+    onFocus=(action 'handleFocus')
+    onBlur=(action 'handleBlur')
+    onChange=(action 'handleChange')
+    onInit=(action 'setFieldElementId')
+  )
+)}}
 
 <div class="travis-form__field-badge travis-form__field-badge--error">
-    {{svg-jar 'form-error-icon' width=14 height=14}}
-  </div>
+  {{svg-jar 'form-error-icon' width=14 height=14}}
+</div>
 
 <div class="travis-form__field-badge travis-form__field-badge--valid">
   {{svg-jar 'form-valid-icon' width=14 height=14}}
