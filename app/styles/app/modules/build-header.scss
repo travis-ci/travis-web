@@ -277,12 +277,12 @@
     top: 4px;
     width: 30px;
     font-size: 12px;
-    color: $pebble-grey;
+    color: $asphalt-grey;
     text-align: center;
 
     .loading-num-text {
       position: relative;
-      bottom: 28px;
+      bottom: 29px;
     }
 
 
@@ -433,6 +433,7 @@
     top: -3px;
     background-color: transparent;
     border: 2px solid $pebble-grey;
+    color: $asphalt-grey;
 
     .stage-text {
       position: relative;
@@ -442,7 +443,7 @@
 
   .stage-loaded-text {
     position: relative;
-    top: 4px;
+    top: 4.2px;
     font-size: 12px;
     color: $oxide-blue;
   }
