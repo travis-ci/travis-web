@@ -92,7 +92,7 @@ export default create({
       description: {
         scope: ZENDESK_FORM_DESCRIPTION,
         isPresent: isPresent(),
-        fill: fillable('textarea')
+        fill: fillable()
       },
 
       submit: {
