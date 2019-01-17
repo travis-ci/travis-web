@@ -12,6 +12,8 @@ import URLPolyfill from 'travis/utils/url';
 
 const proVersion = config.featureFlags['pro-version'];
 
+// Collects the list of includes from all requests
+// and ensures the future fetches don't override previously loaded includes
 let includes = [];
 
 export default Service.extend({

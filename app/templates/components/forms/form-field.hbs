@@ -42,10 +42,11 @@
     form=form
     selected=value
     disabled=disabled
-    onFocus=(action 'handleFocus')
-    onBlur=(action 'handleBlur')
-    onChange=(action 'handleChange')
-    onInit=(action 'setFieldElementId')
+    onfocus=(action 'handleFocus')
+    onopen=(action 'handleFocus')
+    onblur=(action 'handleSelectBlur')
+    onclose=(action 'handleSelectBlur')
+    onchange=(action 'handleChange')
   )
 )}}
 

@@ -29,21 +29,4 @@ export default EmberPowerSelect.extend({
     return classes.join(' ');
   }),
 
-  onChange() {},
-  onFocus() {},
-  onBlur() {},
-  onInit() {},
-
-  onchange: computed(function () {
-    return (selected) => this.onChange(selected);
-  }),
-
-  onopen: computed(function () {
-    return () => this.onFocus();
-  }),
-
-  onclose: computed(function () {
-    return () => this.onBlur();
-  }),
-
 });
