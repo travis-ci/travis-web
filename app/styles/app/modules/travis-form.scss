@@ -23,6 +23,7 @@ $travis-form-badge-radius: 9px;
       right: 0;
       width: $travis-form-badge-radius * 2;
       height: $travis-form-badge-radius * 2;
+      pointer-events: none;
 
       transition: all 0.2s ease-in;
     }
