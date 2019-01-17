@@ -1,5 +1,11 @@
 <h3 class="insights-glance__title">Total Build Minutes</h3>
-<div class="insights-glance__stat">{{totalBuildText}}</div>
+<div class="insights-glance__stat">
+  {{#if isLoading}}
+    {{loading-indicator}}
+  {{else}}
+    {{totalBuildText}}
+  {{/if}}
+</div>
 <div class="insights-glance__chart">
   {{#if (or isLoading (is-empty aggregateData))}}
     <hr class="insights-glance__chart-placeholder" />

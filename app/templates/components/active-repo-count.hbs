@@ -1,7 +1,7 @@
 <h3 class="insights-glance__title">Active Repositories</h3>
 <div class="insights-glance__stat">
-  {{#if activeTotalIsLoading}}
-    &nbsp;
+  {{#if (or isLoading activeTotalIsLoading)}}
+    {{loading-indicator}}
   {{else}}
     {{activeTotal}}
   {{/if}}

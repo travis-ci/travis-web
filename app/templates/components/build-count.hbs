@@ -1,6 +1,12 @@
 <h3 class="insights-glance__title">Builds</h3>
 <div class="insights-glance__center">
-  <div class="insights-glance__stat">{{totalBuildText}}</div>
+  <div class="insights-glance__stat">
+    {{#if isLoading}}
+      {{loading-indicator}}
+    {{else}}
+      {{totalBuildText}}
+    {{/if}}
+  </div>
   {{#if percentageChange}}
     <div
       class="insights-glance-delta"

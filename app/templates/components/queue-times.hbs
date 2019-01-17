@@ -1,6 +1,12 @@
 <h3 class="insights-glance__title">Average Queue Time</h3>
 <div class="insights-glance__center">
-  <div class="insights-glance__stat">{{avgWaitText}}</div>
+  <div class="insights-glance__stat">
+    {{#if isLoading}}
+      {{loading-indicator}}
+    {{else}}
+      {{avgWaitText}}
+    {{/if}}
+  </div>
   {{#if percentageChange}}
     <div
       class="insights-glance-delta"

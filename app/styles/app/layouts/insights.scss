@@ -70,6 +70,10 @@
     .insights-glance__center & {
       margin-right: 8px;
     }
+
+    .loading-indicator {
+      font-size: 9px;
+    }
   }
 
   &-delta {
@@ -115,6 +119,7 @@
 .insights-odyssey {
   grid-column: span 4;
   overflow: hidden;
+  position: relative;
 
   @media #{$medium-up} {
     grid-column: span 4;
@@ -132,5 +137,21 @@
     background-image: linear-gradient(to bottom, rgba($dry-cement, 1) 0px,rgba($dry-cement, 0) 1px,rgba($dry-cement, 0) 60px);
     background-size: 100% 60px;
     background-repeat: repeat;
+  }
+
+  .insights-odyssey__loading-indicator {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .loading-indicator i {
+      width: 20px;
+      height: 20px;
+    }
   }
 }

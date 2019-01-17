@@ -40,7 +40,7 @@ module('Integration | Component | active-repo-count', function (hooks) {
 
     assert.dom('.insights-glance').hasClass('insights-glance--loading');
     assert.dom('.insights-glance__title').hasText('Active Repositories');
-    assert.dom('.insights-glance__stat').hasText('\xa0');
+    assert.dom('.insights-glance__stat').hasText('');
     assert.dom('.insights-glance__chart .highcharts-wrapper').doesNotExist();
     assert.dom('.insights-glance__chart-placeholder').exists();
   });

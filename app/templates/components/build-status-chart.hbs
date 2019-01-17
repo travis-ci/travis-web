@@ -1,7 +1,7 @@
 <h3 class="insights-odyssey__title">Build Statuses</h3>
 <div class="insights-odyssey__chart">
   {{#if isLoading}}
-    {{!-- Placeholder? --}}
+    <div class="insights-odyssey__loading-indicator">{{loading-indicator}}</div>
   {{else if isEmpty}}
     No builds {{currentIntervalLabel}}.
   {{else}}

@@ -43,7 +43,7 @@ module('Integration | Component | queue-times', function (hooks) {
 
     assert.dom('.insights-glance').hasClass('insights-glance--loading');
     assert.dom('.insights-glance__title').hasText('Average Queue Time');
-    assert.dom('.insights-glance__stat').hasText('\xa0');
+    assert.dom('.insights-glance__stat').hasText('');
     assert.dom('.insights-glance__chart .highcharts-wrapper').doesNotExist();
     assert.dom('.insights-glance__chart-placeholder').exists();
   });
