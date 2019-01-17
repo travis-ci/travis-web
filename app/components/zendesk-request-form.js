@@ -50,8 +50,8 @@ export default Component.extend({
   isSuccess: bool('zendeskRequest.lastSuccessful.value'),
 
   zendeskRequest: task(function* () {
-    const { fullName: name, email } = this.auth.currentUser;
-    const { subject, description: body } = this;
+    const { fullName: name } = this.auth.currentUser;
+    const { email, subject, description: body } = this;
 
     try {
       return yield $.ajax({

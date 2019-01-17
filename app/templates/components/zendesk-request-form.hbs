@@ -26,6 +26,7 @@
           required=true
           validator=(form-validator form.validators.email)
           onChange=(action (mut email))
+          data-test-zendesk-form-email=true
           as |field|
         }}
           {{#if emails.length }}
@@ -38,7 +39,6 @@
           {{else}}
             {{field.input
               disabled=true
-              data-test-zendesk-form-email=true
             }}
           {{/if}}
         {{/form.field}}
