@@ -100,7 +100,7 @@
             id="user_insight_private"
             value="private"
             checked={{eq privateInsightsVisibility 'private'}}
-            onchange={{action (perform setPrivateInsights 'private')}}
+            onchange={{action (mut privateInsightsVisibility) 'private'}}
           />
           <label for="user_insight_private" class="travis-radio-label"></label>
         </li>
@@ -113,11 +113,51 @@
             id="user_insight_public"
             value="public"
             checked={{eq privateInsightsVisibility 'public'}}
-            onchange={{action (perform setPrivateInsights 'public')}}
+            onchange={{action (mut privateInsightsVisibility) 'public'}}
           />
           <label for="user_insight_public" class="travis-radio-label"></label>
+        </li>
+        <li class='travis-radio-list__item travis-radio-list__item--save'>
+          <button class="settings-button" {{action 'toggleInsightsVisibilityModal'}}>Save</button>
         </li>
       </ul>
     </div>
   </section>
 </section>
+
+{{#if isShowingInsightsVisibilityModal}}
+  {{#modal-dialog
+    toggleInsightsVisibilityModal=(action 'toggleInsightsVisibilityModal')
+    targetAttachment="center"
+    translucentOverlay=true
+  }}
+    <button
+      type="button"
+      title="Close modal"
+      class="modal-close pointer"
+      {{action 'toggleInsightsVisibilityModal'}}
+    >{{svg-jar 'icon-failed' class="icon"}}</button>
+
+    <h3>Change visibility on your private build insights</h3>
+    <p>
+      This change will make your private build insights
+      <em>{{if (eq privateInsightsVisibility 'public') 'public to everyone' 'visible only to you'}}</em>.
+    </p>
+
+    <a
+      data-test-insights-visibility-modal-cancel-button
+      href="#"
+      role="button"
+      class="button button--red"
+      {{action 'toggleInsightsVisibilityModal'}}
+    >Cancel</a>
+
+    <a
+      data-test-insights-visibility-modal-confirm-button
+      href="#"
+      role="button"
+      class="button button--blue"
+      {{action (perform setPrivateInsights)}}
+    >Confirm</a>
+  {{/modal-dialog}}
+{{/if}}

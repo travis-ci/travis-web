@@ -26,6 +26,7 @@ export default Controller.extend({
   buildEmails: reads('preferences.buildEmails'),
   showResubscribeList: and('buildEmails', 'unsubscribedRepos.length'),
   privateInsightsVisibility: reads('preferences.privateInsightsVisibility'),
+  isShowingInsightsVisibilityModal: false,
 
   unsubscribedRepos: computed('repositories.@each.emailSubscribed', function () {
     let repositories = this.get('repositories') || [];
@@ -46,12 +47,22 @@ export default Controller.extend({
     }
   }).restartable(),
 
-  setPrivateInsights: task(function* (value) {
+  setPrivateInsights: task(function* () {
+    let val = this.get('privateInsightsVisibility');
     try {
-      yield this.preferences.set('private_insights_visibility', value);
+      yield this.preferences.set('private_insights_visibility', val);
+      this.flashes.clear();
+      this.flashes.success(`Your private build insights are now ${val}.`);
     } catch (err) {
       this.flashes.clear();
       this.flashes.error('Something went wrong and your insights settings were not saved.');
     }
-  }).restartable()
+    this.set('isShowingInsightsVisibilityModal', false);
+  }).restartable(),
+
+  actions: {
+    toggleInsightsVisibilityModal() {
+      this.toggleProperty('isShowingInsightsVisibilityModal');
+    },
+  }
 });

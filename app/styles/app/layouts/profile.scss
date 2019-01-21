@@ -904,9 +904,10 @@ header.space-between {
 
 .travis-radio-list {
   list-style: none;
-  padding: 0;
+  padding: .5rem 1rem;
   font-style: italic;
   color: $cement-grey;
+  background-color: #f5fbfb;
 
   label { cursor: pointer; }
 
@@ -943,6 +944,23 @@ header.space-between {
       height: 10px;
       border-radius: 50%;
       background-color: transparent;
+    }
+  }
+}
+
+.settings-button {
+  margin-top: .5rem;
+  border: 0.09em solid lighten($cement-grey, 20%);
+  box-shadow: 0 .15px 0 $cement-grey;
+  color: $cement-grey;
+  border-radius: 0.25em;
+
+  &:hover {
+    border-color: #707070;
+    color: #707070;
+
+    svg {
+      @include colorSVG(#707070);
     }
   }
 }
