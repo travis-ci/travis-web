@@ -284,13 +284,16 @@ module('Acceptance | repo settings', function (hooks) {
 
     await settingsPage.cronForm.branch.choose('weekly-branch');
 
+    await settingsPage.cronForm.interval.choose('weekly');
+    await settingsPage.cronForm.options.choose('Do not run if there has been a build in the last 24h');
+
     await settingsPage.cronForm.add();
 
     assert.equal(settingsPage.crons.length, 2, 'expected the new cron to be shown');
     assert.deepEqual(requestBodies, [{
-      dont_run_if_recent_build_exists: false, // FIXME change to true
+      dont_run_if_recent_build_exists: true,
       include: 'cron.branch',
-      interval: 'monthly'
+      interval: 'weekly'
     }]);
   });
 

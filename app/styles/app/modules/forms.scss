@@ -14,7 +14,8 @@ input[type="text"],
 input[type="email"],
 input[type="number"],
 input[type="password"],
-select {
+select,
+.ember-power-select-trigger {
   @extend %input-base;
 
   height: 32px;
@@ -133,7 +134,7 @@ textarea {
   padding: 0.4em 0;
 
   .form-elem {
-    select {
+    select, .power-select {
       width: 70%;
     }
   }

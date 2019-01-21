@@ -13,6 +13,27 @@ import {
 
 import { selectChoose, selectSearch } from 'ember-power-select/test-support';
 
+function powerSelect(scope) {
+  return {
+    scope,
+
+    async search(text) {
+      await selectSearch(this.scope, text);
+      return this;
+    },
+
+    async choose(text) {
+      await selectChoose(this.scope, text);
+      return this;
+    },
+
+    options: collection('.ember-power-select-option', {
+      testContainer: '.ember-power-select-options',
+      resetScope: true,
+    }),
+  };
+}
+
 export default create({
   visit: visitable(':organization/:repo/settings'),
 
@@ -92,24 +113,9 @@ export default create({
   cronForm: {
     scope: '.form--cron',
 
-    branch: {
-      scope: '.cron-branch-select',
-
-      async search(text) {
-        await selectSearch('.cron-branch-select', text);
-        return this;
-      },
-
-      async choose(text) {
-        await selectChoose('.cron-branch-select', text);
-        return this;
-      },
-
-      options: collection('.ember-power-select-option', {
-        testContainer: '.ember-power-select-options',
-        resetScope: true,
-      }),
-    },
+    branch: powerSelect('.cron-branch-select'),
+    interval: powerSelect('.cron-interval-select'),
+    options: powerSelect('.cron-options-select'),
 
     add: clickable('input[type=submit]')
   },

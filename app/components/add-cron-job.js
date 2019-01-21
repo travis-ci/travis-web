@@ -7,10 +7,17 @@ export default Component.extend({
 
   classNames: ['form--cron'],
 
+  init() {
+    this._super(...arguments);
+
+    this.reset();
+  },
+
   reset() {
     this.setProperties({
       selectedBranch: null,
-      selectedInterval: null,
+      selectedInterval: this.intervals[0],
+      selectedOption: this.options[0],
       disable: null
     });
   },
@@ -31,7 +38,7 @@ export default Component.extend({
     const cron = store.createRecord('cron', {
       branch,
       interval: this.get('selectedInterval') || 'monthly',
-      dont_run_if_recent_build_exists: this.get('selectedOption') || false
+      dont_run_if_recent_build_exists: this.get('selectedOption').value || false
     });
 
     this.reset();
@@ -50,5 +57,8 @@ export default Component.extend({
 
   intervals: ['monthly', 'weekly', 'daily'],
 
-  options: ['Always run', 'Do not run if there has been a build in the last 24h']
+  options: [
+    {label: 'Always run', value: false},
+    {label: 'Do not run if there has been a build in the last 24h', value: true}
+  ]
 });
