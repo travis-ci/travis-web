@@ -62,7 +62,7 @@
     "ember-fetch": "^6.0.0",
     "ember-in-viewport": "^3.0.0",
     "ember-inflector": "^2.3.0",
-    "ember-intercom-io": "backspace/ember-intercom-io#babel-7-object-rest-spread",
+    "ember-intercom-io": "^1.2.0",
     "ember-keyboard-shortcuts": "^1.0.2",
     "ember-load-initializers": "^2.0.0",
     "ember-modal-dialog": "^2.4.0",
