@@ -61,6 +61,12 @@ module('Integration | Component | dashboard row', function (hooks) {
     this.set('repo', repo);
     await render(hbs`{{dashboard-row repo=repo}}`);
 
+    assert.dom('.dash-header .row-label a').hasText('travis-ci');
+    assert.dom('.dash-header .row-label a').hasAttribute('title', 'travis-ci');
+
+    assert.dom('.dash-header .row-content a').hasText('travis-web');
+    assert.dom('.dash-header .row-content a').hasAttribute('title', 'travis-web');
+
     assert.dom('.dash-default').hasClass('passed', 'Indicates right state of default branch last build');
     assert.dom('.dash-last').hasClass('failed', 'Indicates right state of current build');
 
