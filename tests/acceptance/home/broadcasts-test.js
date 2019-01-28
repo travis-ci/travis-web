@@ -27,7 +27,7 @@ test('the broadcast tower shows a warning even when an announcement exists, broa
 
   server.create('broadcast', {
     category: 'warning',
-    message: 'A warning',
+    message: 'A warning'
   });
 
   server.create('broadcast', {
