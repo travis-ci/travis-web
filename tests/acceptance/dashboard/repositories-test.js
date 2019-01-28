@@ -237,7 +237,7 @@ module('Acceptance | dashboard/repositories', function (hooks) {
       repository: this.repository,
       pull_request: false,
       event_type: 'push',
-      state: 'passed',
+      state: 'created',
       started_at: new Date(),
       createdBy: this.currentUser
     });
@@ -248,7 +248,7 @@ module('Acceptance | dashboard/repositories', function (hooks) {
       build,
       commit,
       number: '15.1',
-      state: 'passed',
+      state: 'created',
     });
 
     await this.owner.application.pusher.receive('job:created', generatePusherPayload(job));
@@ -257,6 +257,13 @@ module('Acceptance | dashboard/repositories', function (hooks) {
       commit: generatePusherPayload(commit),
       repository: generatePusherPayload(this.repository, { current_build_id: build.id })
     });
+
+    await waitForElement('.my-build:nth-child(1)');
+
+    page.myBuilds.builds[0].as(build => {
+      assert.equal(build.stateAndNumber.text, '#15 received');
+    });
+
 
     let otherUser = server.create('user');
     let otherBranch = server.create('branch', {

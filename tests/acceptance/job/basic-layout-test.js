@@ -1,6 +1,7 @@
 import $ from 'jquery';
 import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
+import generatePusherPayload from 'travis/tests/helpers/generate-pusher-payload';
 
 import jobPage from 'travis/tests/pages/job';
 import getFaviconUri from 'travis/utils/favicon-data-uris';
@@ -60,6 +61,135 @@ test('visiting job-view', function (assert) {
     assert.equal(jobPage.log, 'Hello log');
     assert.notOk(jobPage.hasTruncatedLog);
     assert.equal(jobPage.rawLogUrl, `${config.apiEndpoint}/v3/job/${job.id}/log.txt`);
+  });
+});
+
+
+test('visiting a job in created(received) state', async function (assert) {
+  let branch = server.create('branch', { name: 'acceptance-tests' });
+  let repo = server.create('repository', { slug: 'travis-ci/travis-web', defaultBranch: branch });
+  let commit = server.create('commit', {
+    id: 100,
+    sha: 'abcd',
+    branch: 'acceptance-tests',
+    message: 'This is a message',
+  });
+
+  let request = server.create('request');
+  server.create('message', {
+    request,
+    level: 'info',
+    key: 'group',
+    code: 'flagged',
+    args: {
+      given: 'group'
+    }
+  });
+
+  let user = server.create('user', {
+    name: 'Mr T',
+    avatar_url: '/images/favicon-gray.png'
+  });
+
+  let build = server.create('build', {
+    id: 100,
+    number: 15,
+    repository: repo,
+    commit: commit,
+    pull_request: false,
+    event_type: 'push',
+    state: 'created',
+    started_at: new Date(),
+    createdBy: user
+  });
+
+  let job = server.create('job', {
+    id: 100,
+    number: '1234.1',
+    repository: repo,
+    state: 'created',
+    build,
+    commit
+  });
+
+  server.create('log', { id: job.id });
+
+  await visit('/travis-ci/travis-web/jobs/' + job.id);
+
+  const createdState = {
+    build: generatePusherPayload(build, { state: 'created' }),
+    job: generatePusherPayload(job, { state: 'created' }),
+    commit: generatePusherPayload(commit),
+    repository: generatePusherPayload(repo, { current_build_id: build.id })
+  };
+
+  this.application.pusher.receive('job:created', createdState);
+
+  andThen(() => {
+    assert.equal(jobPage.state, '#1234.1 received', 'displays build number');
+
+    assert.notOk(jobPage.hasTruncatedLog);
+    assert.ok(jobPage.waitingStates.isVisible);
+
+    assert.ok(jobPage.waitingStates.one.isLoading);
+    assert.ok(jobPage.waitingStates.firstLoadingLine.isInactive);
+    assert.ok(jobPage.waitingStates.two.isInactive);
+    assert.ok(jobPage.waitingStates.secondLoadingLine.isInactive);
+    assert.ok(jobPage.waitingStates.three.isInactive);
+
+    assert.equal(jobPage.waitingStates.firstMessage.text, 'Job received');
+    assert.equal(jobPage.waitingStates.secondMessage.text, 'Queued');
+    assert.equal(jobPage.waitingStates.thirdMessage.text, 'Booting virtual machine');
+
+    const queuedState = {
+      build: generatePusherPayload(build, { state: 'queued' }),
+      job: generatePusherPayload(job, { state: 'queued' }),
+      commit: generatePusherPayload(commit),
+      repository: generatePusherPayload(repo, { current_build_id: build.id })
+    };
+
+    this.application.pusher.receive('job:queued', queuedState);
+  });
+
+  andThen(() => {
+    assert.equal(jobPage.state, '#1234.1 queued', 'displays build number');
+
+    assert.ok(jobPage.waitingStates.isVisible);
+
+    assert.ok(jobPage.waitingStates.one.isLoaded);
+    assert.ok(jobPage.waitingStates.firstLoadingLine.isActive);
+    assert.ok(jobPage.waitingStates.two.isLoading);
+    assert.ok(jobPage.waitingStates.secondLoadingLine.isInactive);
+    assert.ok(jobPage.waitingStates.three.isInactive);
+
+    assert.equal(jobPage.waitingStates.firstMessage.text, 'Job received');
+    assert.equal(jobPage.waitingStates.secondMessage.text, 'Queued');
+    assert.equal(jobPage.waitingStates.thirdMessage.text, 'Booting virtual machine');
+
+    const receivedState = {
+      build: generatePusherPayload(build, { state: 'received' }),
+      job: generatePusherPayload(job, { state: 'received' }),
+      commit: generatePusherPayload(commit),
+      repository: generatePusherPayload(repo, { current_build_id: build.id })
+    };
+
+    this.application.pusher.receive('job:received', receivedState);
+  });
+
+  andThen(() => {
+    assert.equal(jobPage.state, '#1234.1 booting', 'displays build number');
+
+    assert.ok(jobPage.waitingStates.isVisible);
+
+    assert.ok(jobPage.waitingStates.one.isLoaded);
+    assert.ok(jobPage.waitingStates.firstLoadingLine.isActive);
+    assert.ok(jobPage.waitingStates.two.isLoaded);
+    assert.ok(jobPage.waitingStates.secondLoadingLine.isActive);
+    assert.ok(jobPage.waitingStates.three.isLoading);
+
+    assert.equal(jobPage.waitingStates.firstMessage.text, 'Job received');
+    assert.equal(jobPage.waitingStates.secondMessage.text, 'Queued');
+    assert.equal(jobPage.waitingStates.thirdMessage.text, 'Booting virtual machine');
   });
 });
 
@@ -146,6 +276,8 @@ ${ESCAPE}(B[m[32m+},
   jobPage.toggleLog();
 
   andThen(function () {
+    assert.notOk(jobPage.hasWaitingStates);
+
     assert.equal(jobPage.logLines[0].text, 'I am the first line.');
 
     assert.equal(jobPage.logFolds[0].name, 'afold');

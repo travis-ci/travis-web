@@ -11,6 +11,8 @@ moduleForAcceptance('Acceptance | builds/pull requests', {
       login: 'travisci',
     });
 
+    this.branch = server.create('branch', { name: 'wetsuwetenstrong' });
+
     signInUser(this.currentUser);
   },
 });
