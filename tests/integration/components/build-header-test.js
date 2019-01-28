@@ -55,13 +55,18 @@ module('Integration | Component | build header', function (hooks) {
       status: 'passed',
       number: '1234',
       commit: commit,
-      branchName: 'feature-2'
+      branchName: 'feature-2',
+      branch: {
+        name: 'feature-2'
+      }
     };
 
     this.set('build', build);
     await render(hbs`{{build-header item=build}}`);
 
     assert.dom('.build-status svg title').hasText('Push event', 'displays push icon');
+    assert.dom('.commit-branch').hasText('feature-2');
+    assert.dom('.commit-branch').hasAttribute('title', 'feature-2');
     assert.dom('.commit-compare').exists('does display compare link element');
     assert.dom('.commit-compare').hasText('Compare 3d86ee9..a82f6ba', 'does display compare link label for push builds');
   });
@@ -103,6 +108,7 @@ module('Integration | Component | build header', function (hooks) {
 
     assert.dom('.build-status svg title').hasText('Tag');
     assert.dom('.build-title .commit-branch').hasText('v1.0.0', 'displays tag name in title');
+    assert.dom('.build-title .commit-branch').hasAttribute('title', 'v1.0.0');
     assert.dom('.commit-branch-url').hasText(/Tag v1.0.0/, 'displays link to tag on GH');
     assert.dom('.commit-branch-url').hasAttribute('href', /releases\/tag\/v1.0.0/, 'url is correct');
   });
