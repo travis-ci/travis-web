@@ -32,13 +32,10 @@ export default Route.extend({
   },
 
   redirectToProfile(transition) {
-    // make this hack the least invasive it can be
     let { targetName } = transition;
-    let { params } = transition;
+    let { owner } = this.paramsFor('owner');
     if (targetName === 'owner.repositories' &&
-      params.owner &&
-      params.owner.owner &&
-      params.owner.owner === 'profile') {
+      owner === 'profile') {
       this.transitionTo('account', {
         queryParams: { offset: 0 }
       });

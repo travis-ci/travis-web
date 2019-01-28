@@ -9,8 +9,8 @@ const SECTION_ROUTE_MAP = {
 export default TravisRoute.extend({
   accounts: service(),
 
-  beforeModel({ params, targetName }) {
-    const { section, login } = params[targetName] || {};
+  beforeModel({ targetName }) {
+    const { section, login } = this.paramsFor('profile') || {};
     const isUserAccount = this.accounts.user.login === login;
     const root = isUserAccount ? 'account' : 'organization';
 
