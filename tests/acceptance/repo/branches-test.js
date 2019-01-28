@@ -2,6 +2,7 @@ import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import branchesPage from 'travis/tests/pages/branches';
 import signInUser from 'travis/tests/helpers/sign-in-user';
+import { prettyDate } from 'travis/helpers/pretty-date';
 
 moduleForAcceptance('Acceptance | repo branches', {
   beforeEach() {
@@ -83,6 +84,7 @@ moduleForAcceptance('Acceptance | repo branches', {
       committer: gitUser
     });
     lastBuild.save();
+    this.lastBuild = lastBuild;
 
     const activeCreatedBranch = server.create('branch', {
       name: 'created',
@@ -186,7 +188,9 @@ test('view branches', function (assert) {
     assert.equal(branchesPage.defaultBranch.request, '1919 passed');
     assert.equal(branchesPage.defaultBranch.commitSha, '1234567');
     assert.equal(branchesPage.defaultBranch.committer, 'User Name');
-    assert.equal(branchesPage.defaultBranch.commitDate, 'about a year ago');
+
+    assert.equal(branchesPage.defaultBranch.commitDate.text, 'about a year ago');
+    assert.equal(branchesPage.defaultBranch.commitDate.title, `Finished ${prettyDate([this.lastBuild.finished_at])}`);
 
     const buildTiles = branchesPage.defaultBranch.buildTiles;
 
