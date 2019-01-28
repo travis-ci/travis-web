@@ -34,7 +34,11 @@ export default create({
 
   singleJobLogText: text('.log-body pre'),
 
-  branchName: text('.build-header .commit-branch'),
+  branchName: {
+    scope: '.build-header .commit-branch',
+    title: attribute('title'),
+  },
+
   commitSha: text('.build-header .commit-commit'),
   compare: text('.build-header .commit-compare'),
   commitBranch: text('.build-header .commit-branch-url .label-align'),
