@@ -217,7 +217,8 @@ module('Acceptance | dashboard/repositories', function (hooks) {
       assert.equal(build.branch.text, 'another-branch');
       assert.ok(build.branch.href.endsWith('travis-ci/travis-lol-a-very-long-repository/tree/another-branch'));
 
-      assert.equal(build.message, 'get used to it');
+      assert.equal(build.message.text, 'get used to it');
+      assert.equal(build.message.title, 'get used to it');
 
       assert.equal(build.stateAndNumber.text, '#44 passed');
       assert.ok(build.stateAndNumber.href.endsWith('/travis-ci/travis-lol-a-very-long-repository/builds/1919'));

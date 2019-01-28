@@ -69,7 +69,11 @@ export default create({
         href: attribute('href')
       },
 
-      message: text('[data-test-commit-message]'),
+      message: {
+        scope: '[data-test-commit-message]',
+        title: attribute('title'),
+      },
+
       stateAndNumber: {
         scope: '[data-test-state-number]',
         href: attribute('href'),
