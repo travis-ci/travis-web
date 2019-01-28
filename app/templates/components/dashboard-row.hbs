@@ -96,23 +96,6 @@
           <button class="button--blue" {{action 'triggerBuild'}} title="Trigger a build on the default branch">Trigger a build</button>  {{/if}}
       </div>
     {{/if}}
-
-  {{else}}
-    <!--<div class="dash-button">
-        {{#if displayActivateLink}}
-        <button type="button" class="activate-repo-button is-active" {{action 'activateRepo'}}>Activate repository</button>
-        {{else}}
-        <p class="activate-repo-button">Actiavte repository</p>
-        {{/if}}
-    </div>-->
   {{/if}}
   </div>
-
-  <!--<aside class="dash-aside">
-      <ul class="lastbuilds">
-        {{#each repo.lastBuilds as |build|}}
-        {{lastbuild-tile repo=repo build=build}}
-        {{/each}}
-      </ul>
-  </aside>-->
 </div>
