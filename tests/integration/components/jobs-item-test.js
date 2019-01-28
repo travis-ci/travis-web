@@ -23,7 +23,7 @@ module('Integration | Component | jobs item', function (hooks) {
         },
       },
       duration: 100,
-      startedAt
+      startedAt,
     };
     this.job = job;
     await render(hbs`{{jobs-item job=job}}`);

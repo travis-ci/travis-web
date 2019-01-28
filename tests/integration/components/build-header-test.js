@@ -58,7 +58,7 @@ module('Integration | Component | build header', function (hooks) {
       branchName: 'feature-2',
       branch: {
         name: 'feature-2'
-      }
+      },
     };
 
     this.set('build', build);

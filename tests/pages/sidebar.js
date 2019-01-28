@@ -15,12 +15,12 @@ let repositoryObject = {
 
   duration: {
     scope: '.duration',
-    title: attribute('title')
+    title: attribute('title'),
   },
 
   finished: {
     scope: '.finished_at',
-    title: attribute('title')
+    title: attribute('title'),
   }
 };
 

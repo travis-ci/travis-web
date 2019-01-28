@@ -11,7 +11,7 @@ export default create({
 
   avatar: {
     scope: '.avatar',
-    src: attribute('src', 'img')
+    src: attribute('src', 'img'),
   },
 
   title: text('.owner-title'),

@@ -25,7 +25,7 @@ let dashboardRowObject = {
   starButton: {
     scope: '.dash-star',
     title: attribute('title')
-  }
+  },
 };
 
 export default create({
@@ -89,13 +89,13 @@ export default create({
       duration: {
         scope: '[data-test-duration]',
         title: attribute('title'),
-        text: text('.label-align')
+        text: text('.label-align'),
       },
 
       finished: {
         scope: '[data-test-finished]',
         title: attribute('title'),
-        text: text('.label-align')
+        text: text('.label-align'),
       },
 
       isPublic: isVisible('.icon.public'),

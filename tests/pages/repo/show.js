@@ -19,6 +19,6 @@ export default create({
   gitHubLink: {
     scope: '.repo-gh',
     href: attribute('href'),
-    title: attribute('title')
+    title: attribute('title'),
   },
 });

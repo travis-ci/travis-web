@@ -32,7 +32,7 @@ export default create({
     createdAt: {
       scope: '[data-requests-item-created-at]',
       text: text('.label-align'),
-      title: attribute('title')
+      title: attribute('title'),
     },
 
     buildNumber: {
@@ -41,7 +41,7 @@ export default create({
 
     requestMessage: {
       scope: '[data-requests-item-message]',
-      title: attribute('title', '.label-align')
+      title: attribute('title', '.label-align'),
     }
   }),
 
