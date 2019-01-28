@@ -41,6 +41,13 @@ export default create({
   buildTabLinkIsActive: hasClass('active', '#tab_build'),
   buildTabLinkText: text('#tab_build'),
 
+  commitDescription: {
+    scope: '.commit-description',
+    isFaded: hasClass('fade-commit-message'),
+
+    title: attribute('title'),
+  },
+
   hasNoDebugButton: isHidden('.action-button--debug', { multiple: true }),
 
   requiredJobs: collection('.jobs-list:eq(0) .jobs-item', jobComponent),
