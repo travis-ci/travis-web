@@ -13,4 +13,9 @@ export default create({
 
   owner: text('[data-test-repo-header-title] a:first-of-type'),
   name: text('[data-test-repo-header-title] a:last-of-type'),
+  gitHubLink: {
+    scope: '.repo-gh',
+    href: attribute('href'),
+    title: attribute('title')
+  },
 });

@@ -98,12 +98,15 @@ test('loading branches doesnt update the default branch on the repo', function (
   });
 });
 
-test('repository owner and name are rendered', function (assert) {
+test('repository header is rendered', function (assert) {
   page.visit({ organization: 'org-login', repo: 'repository-name' });
 
   andThen(() => {
     assert.equal(page.owner, 'org-login');
     assert.equal(page.name, 'repository-name');
+
+    assert.equal(page.gitHubLink.href, 'https://github.com/org-login/repository-name');
+    assert.equal(page.gitHubLink.title, 'repository-name on GitHub');
   });
 });
 
