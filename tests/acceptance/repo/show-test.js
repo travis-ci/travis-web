@@ -13,7 +13,7 @@ moduleForAcceptance('Acceptance | show repo page', {
       name: 'repository-name',
       slug: 'org-login/repository-name',
       owner: {
-        login: 'user-login'
+        login: 'org-login'
       },
     });
 
@@ -95,6 +95,15 @@ test('loading branches doesnt update the default branch on the repo', function (
     const url = new URL(page.statusBadgeImageSrc);
     const expectedPath = `${url.pathname}?${url.searchParams}`;
     assert.equal(expectedPath, '/org-login/repository-name.svg?branch=feminist%23yes');
+  });
+});
+
+test('repository owner and name are rendered', function (assert) {
+  page.visit({ organization: 'org-login', repo: 'repository-name' });
+
+  andThen(() => {
+    assert.equal(page.owner, 'org-login');
+    assert.equal(page.name, 'repository-name');
   });
 });
 
