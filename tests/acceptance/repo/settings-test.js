@@ -128,7 +128,7 @@ module('Acceptance | repo settings', function (hooks) {
       assert.equal(cron.nextRun.title, this.dailyCron.next_run.toISOString());
 
       assert.ok(cron.dontRunIfRecentBuildExists.text.indexOf('Always run') === 0, 'expected cron to run even if there is a build in the last 24h');
-      assert.ok(cron.dontRunIfRecentBuildExists.title, 'ueahunoetuhotne');
+      assert.equal(cron.dontRunIfRecentBuildExists.title, 'Always run');
     });
 
     settingsPage.crons[1].as(cron => {
