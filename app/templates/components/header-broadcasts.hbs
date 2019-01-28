@@ -5,9 +5,9 @@
 
     <ul class="broadcasts {{if showBroadcasts 'is-open'}}">
       {{#each broadcasts.content as |broadcast|}}
-        <li>
+        <li title="Transmitted on {{broadcast.updated_at}}">
           <p>
-            <span class="broadcast-status {{broadcast.category}}" title="Transmitted on {{broadcast.updated_at}}"></span>
+            <span class="broadcast-status {{broadcast.category}}"></span>
             <span class='message'>{{{broadcast.message}}}</span>
             <button {{action 'markBroadcastAsSeen' broadcast}} title="hide this broadcast" class="broadcast-close no-button" type="button">
               {{svg-jar 'icon-failed' class="icon"}}
