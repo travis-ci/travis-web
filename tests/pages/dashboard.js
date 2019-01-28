@@ -26,7 +26,12 @@ export default create({
       lastBuild: text('.dash-last a .label-align'),
       triggerBuild: clickable('.dash-menu .dropup-list li:first-of-type a'),
       clickStarButton: clickable('.dash-head .dash-star'),
-      hasTofuButton: isVisible('.dash-menu .dropup')
+      hasTofuButton: isVisible('.dash-menu .dropup'),
+
+      starButton: {
+        scope: '.dash-star',
+        title: attribute('title')
+      }
     })
   },
 
@@ -37,7 +42,12 @@ export default create({
     lastBuild: text('.dash-last a .label-align'),
     triggerBuild: clickable('.dash-menu .dropup-list li:first-of-type a'),
     clickUnStarButton: clickable('.dash-head .dash-star'),
-    hasTofuButton: isVisible('.dash-menu .dropup')
+    hasTofuButton: isVisible('.dash-menu .dropup'),
+
+    starButton: {
+      scope: '.dash-star',
+      title: attribute('title')
+    }
   }),
   paginationIsVisible: isVisible('.pagination-navigation'),
   paginationLinks: collection('.pagination-navigation li', {

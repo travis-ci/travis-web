@@ -139,15 +139,18 @@ module('Acceptance | dashboard/repositories', function (hooks) {
 
     await visit('/dashboard');
 
-    assert.dom('[data-test-dashboard-starred-repositories] [data-test-dashboard-repository-star]').exists({ count: 1 });
-    assert.dom('[data-test-dashboard-repository-menu="0"] [data-test-tofu-menu]').exists();
+    assert.equal(page.starredRepos.length, 1);
 
+    assert.ok(page.starredRepos[0].hasTofuButton);
+    assert.equal(page.starredRepos[0].starButton.title, 'unstar this repo');
 
-    await click('[data-test-dashboard-repository-star="3"]');
-    assert.dom('[data-test-dashboard-starred-repositories] [data-test-dashboard-repository-star]').exists({ count: 2 });
+    assert.equal(page.activeRepos.repos[2].starButton.title, 'star this repo');
+    await page.activeRepos.repos[2].starButton.click();
 
-    await click('[data-test-dashboard-repository-star="3"]');
-    assert.dom('[data-test-dashboard-starred-repositories] [data-test-dashboard-repository-star]').exists({ count: 1 });
+    assert.equal(page.starredRepos.length, 2);
+
+    await page.starredRepos[1].starButton.click();
+    assert.equal(page.starredRepos.length, 1);
   });
 
   test('Dashboard pagination works', async function (assert) {
