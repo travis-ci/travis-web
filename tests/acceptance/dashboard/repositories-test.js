@@ -5,6 +5,7 @@ import signInUser from 'travis/tests/helpers/sign-in-user';
 import { waitForElement } from 'travis/tests/helpers/wait-for-element';
 import { enableFeature } from 'ember-feature-flags/test-support';
 import { percySnapshot } from 'ember-percy';
+import { prettyDate } from 'travis/helpers/pretty-date';
 import page from 'travis/tests/pages/dashboard';
 import topPage from 'travis/tests/pages/top';
 import generatePusherPayload from 'travis/tests/helpers/generate-pusher-payload';
@@ -69,6 +70,8 @@ module('Acceptance | dashboard/repositories', function (hooks) {
       }),
       createdBy: currentUser
     });
+    this.permissionBuild = permissionBuild;
+
     let permissionBranch = server.create('branch', {
       name: 'primary',
       lastBuild: server.create('build', {
@@ -222,12 +225,15 @@ module('Acceptance | dashboard/repositories', function (hooks) {
       assert.equal(build.sha.text, 'acab');
       assert.ok(build.sha.href.endsWith('/travis-ci/travis-lol-a-very-long-repository/commit/acab'));
 
-      assert.equal(build.duration, '19 min 19 sec');
-      assert.equal(build.finished, 'about a year ago');
+      assert.equal(build.duration.text, '19 min 19 sec');
+      assert.equal(build.duration.title, `Started ${prettyDate([this.permissionBuild.started_at])}`);
+
+      assert.equal(build.finished.text, 'about a year ago');
+      assert.equal(build.finished.title, this.permissionBuild.finished_at.toISOString());
     });
 
     page.myBuilds.builds[3].as(build => {
-      assert.equal(build.finished, 'still running');
+      assert.equal(build.finished.text, 'still running');
     });
 
     page.myBuilds.builds[1].as(build => {

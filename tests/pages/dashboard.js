@@ -82,8 +82,17 @@ export default create({
         href: attribute('href')
       },
 
-      duration: text('[data-test-duration]'),
-      finished: text('[data-test-finished]'),
+      duration: {
+        scope: '[data-test-duration]',
+        title: attribute('title'),
+        text: text('.label-align')
+      },
+
+      finished: {
+        scope: '[data-test-finished]',
+        title: attribute('title'),
+        text: text('.label-align')
+      },
 
       isPublic: isVisible('.icon.public'),
       isPrivate: isVisible('.icon.private'),
