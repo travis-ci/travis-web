@@ -21,6 +21,8 @@ module('Integration | Component | dashboard row', function (hooks) {
   });
 
   test('it renders data correctly', async function (assert) {
+    let oneYearAgo = new Date(new Date() - 1000 * 60 * 60 * 24 * 365);
+
     const repo = EmberObject.create({
       active: true,
       currentBuild: {
@@ -29,7 +31,7 @@ module('Integration | Component | dashboard row', function (hooks) {
           sha: 'alsoshalolol',
           compareUrl: 'https://githubz.com/alsolol'
         },
-        finishedAt: '2016-09-01T15:22:21Z',
+        finishedAt: oneYearAgo.toISOString(),
         eventType: 'cron',
         number: 2,
         state: 'failed'
@@ -60,6 +62,9 @@ module('Integration | Component | dashboard row', function (hooks) {
 
     assert.dom('.dash-default').hasClass('passed', 'Indicates right state of default branch last build');
     assert.dom('.dash-last').hasClass('failed', 'Indicates right state of current build');
+
+    assert.dom('.dash-finished .row-content').hasAttribute('title', oneYearAgo.toISOString());
+    assert.dom('.dash-finished .label-align').hasText('about a year ago');
     // TODO: Remove this
     // assert.dom('.dash-default .row-content a').text().trim(), 'master passed', 'Displays the default branch name and state');
     assert.dom('.dash-last .row-content a').hasText('#2 failed', 'Displays the number and state of the current build');
