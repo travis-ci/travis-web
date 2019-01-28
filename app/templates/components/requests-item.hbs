@@ -19,9 +19,9 @@
   </span>
 </div>
 
-<div class="row-item fade-out" title="{{pretty-date request.created_at}}">
+<div class="row-item fade-out" title="{{pretty-date request.created_at}}" data-requests-item-created-at>
   {{svg-jar 'icon-calendar' class="icon"}}
-  <span class="label-align" data-requests-item-created-at>{{format-time request.created_at}}</span></div>
+  <span class="label-align">{{format-time request.created_at}}</span></div>
 
 <div class="row-item fade-out" data-requests-item-commit-message>
   {{{format-message request.commit.message short="true" repo=build.repo}}}
