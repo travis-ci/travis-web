@@ -9,6 +9,21 @@ import {
   isVisible
 } from 'ember-cli-page-object';
 
+let dashboardRowObject = {
+  owner: text('.dash-header .row-label a'),
+  repoName: text('.dash-header .row-content a'),
+  defaultBranch: text('.dash-default .row-content a'),
+  lastBuild: text('.dash-last a .label-align'),
+  triggerBuild: clickable('.dash-menu .dropup-list li:first-of-type a'),
+  clickStarButton: clickable('.dash-head .dash-star'),
+  hasTofuButton: isVisible('.dash-menu .dropup'),
+
+  starButton: {
+    scope: '.dash-star',
+    title: attribute('title')
+  }
+};
+
 export default create({
   visit: visitable('/dashboard'),
   repoTitle: text('.repo-title'),
@@ -19,36 +34,10 @@ export default create({
   activeRepos: {
     visit: clickable('[data-test-active-repos-tab]'),
 
-    repos: collection('.dashboard-active .repo-list li.rows--dashboard', {
-      owner: text('.dash-header .row-label a'),
-      repoName: text('.dash-header .row-content a'),
-      defaultBranch: text('.dash-default .row-content a'),
-      lastBuild: text('.dash-last a .label-align'),
-      triggerBuild: clickable('.dash-menu .dropup-list li:first-of-type a'),
-      clickStarButton: clickable('.dash-head .dash-star'),
-      hasTofuButton: isVisible('.dash-menu .dropup'),
-
-      starButton: {
-        scope: '.dash-star',
-        title: attribute('title')
-      }
-    })
+    repos: collection('.dashboard-active .repo-list li.rows--dashboard', dashboardRowObject)
   },
 
-  starredRepos: collection('.dashboard-starred .repo-list li.rows--dashboard', {
-    owner: text('.dash-header .row-label a'),
-    repoName: text('.dash-header .row-content a'),
-    defaultBranch: text('.dash-default .row-content a'),
-    lastBuild: text('.dash-last a .label-align'),
-    triggerBuild: clickable('.dash-menu .dropup-list li:first-of-type a'),
-    clickUnStarButton: clickable('.dash-head .dash-star'),
-    hasTofuButton: isVisible('.dash-menu .dropup'),
-
-    starButton: {
-      scope: '.dash-star',
-      title: attribute('title')
-    }
-  }),
+  starredRepos: collection('.dashboard-starred .repo-list li.rows--dashboard', dashboardRowObject),
   paginationIsVisible: isVisible('.pagination-navigation'),
   paginationLinks: collection('.pagination-navigation li', {
     label: text('a'),
