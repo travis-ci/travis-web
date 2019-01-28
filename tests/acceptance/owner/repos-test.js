@@ -65,6 +65,12 @@ test('the owner page shows their repositories', (assert) => {
   andThen(() => {
     assert.equal(document.title, 'User Name - Travis CI');
 
+    assert.equal(ownerPage.title, 'User Name');
+
+    assert.equal(ownerPage.login.text, 'user-login');
+    assert.equal(ownerPage.login.title, 'User Name on GitHub');
+    assert.equal(ownerPage.login.href, 'https://github.com/user-login');
+
     assert.equal(ownerPage.repos.length, 2);
 
     ownerPage.repos[0].as(repo => {
