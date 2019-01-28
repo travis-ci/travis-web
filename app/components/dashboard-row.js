@@ -2,6 +2,7 @@ import { later } from '@ember/runloop';
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { alias } from '@ember/object/computed';
+import Ember from 'ember';
 
 export default Component.extend({
   permissionsService: service('permissions'),
@@ -21,7 +22,10 @@ export default Component.extend({
 
   openDropup() {
     this.toggleProperty('dropupIsOpen');
-    later((() => { this.set('dropupIsOpen', false); }), 4000);
+
+    if (!Ember.testing) {
+      later((() => { this.set('dropupIsOpen', false); }), 4000);
+    }
   },
 
   mouseLeave() {

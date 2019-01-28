@@ -9,6 +9,25 @@ import {
   isVisible
 } from 'ember-cli-page-object';
 
+let dashboardRowObject = {
+  owner: text('.dash-header .row-label a'),
+  repoName: text('.dash-header .row-content a'),
+  defaultBranch: text('.dash-default .row-content a'),
+  lastBuild: text('.dash-last a .label-align'),
+  triggerBuild: clickable('.dash-menu .dropup-list li:first-of-type button'),
+  clickStarButton: clickable('.dash-head .dash-star'),
+
+  menuButton: {
+    scope: '.dash-menu .dropup',
+    click: clickable('button')
+  },
+
+  starButton: {
+    scope: '.dash-star',
+    title: attribute('title')
+  },
+};
+
 export default create({
   visit: visitable('/dashboard'),
   repoTitle: text('.repo-title'),
@@ -19,26 +38,10 @@ export default create({
   activeRepos: {
     visit: clickable('[data-test-active-repos-tab]'),
 
-    repos: collection('.dashboard-active .repo-list li.rows--dashboard', {
-      owner: text('.dash-header .row-label a'),
-      repoName: text('.dash-header .row-content a'),
-      defaultBranch: text('.dash-default .row-content a'),
-      lastBuild: text('.dash-last a .label-align'),
-      triggerBuild: clickable('.dash-menu .dropup-list li:first-of-type a'),
-      clickStarButton: clickable('.dash-head .dash-star'),
-      hasTofuButton: isVisible('.dash-menu .dropup')
-    })
+    repos: collection('.dashboard-active .repo-list li.rows--dashboard', dashboardRowObject)
   },
 
-  starredRepos: collection('.dashboard-starred .repo-list li.rows--dashboard', {
-    owner: text('.dash-header .row-label a'),
-    repoName: text('.dash-header .row-content a'),
-    defaultBranch: text('.dash-default .row-content a'),
-    lastBuild: text('.dash-last a .label-align'),
-    triggerBuild: clickable('.dash-menu .dropup-list li:first-of-type a'),
-    clickUnStarButton: clickable('.dash-head .dash-star'),
-    hasTofuButton: isVisible('.dash-menu .dropup')
-  }),
+  starredRepos: collection('.dashboard-starred .repo-list li.rows--dashboard', dashboardRowObject),
   paginationIsVisible: isVisible('.pagination-navigation'),
   paginationLinks: collection('.pagination-navigation li', {
     label: text('a'),
@@ -66,7 +69,11 @@ export default create({
         href: attribute('href')
       },
 
-      message: text('[data-test-commit-message]'),
+      message: {
+        scope: '[data-test-commit-message]',
+        title: attribute('title'),
+      },
+
       stateAndNumber: {
         scope: '[data-test-state-number]',
         href: attribute('href'),
@@ -79,8 +86,17 @@ export default create({
         href: attribute('href')
       },
 
-      duration: text('[data-test-duration]'),
-      finished: text('[data-test-finished]'),
+      duration: {
+        scope: '[data-test-duration]',
+        title: attribute('title'),
+        text: text('.label-align'),
+      },
+
+      finished: {
+        scope: '[data-test-finished]',
+        title: attribute('title'),
+        text: text('.label-align'),
+      },
 
       isPublic: isVisible('.icon.public'),
       isPrivate: isVisible('.icon.private'),

@@ -1,4 +1,5 @@
 import {
+  attribute,
   create,
   clickable,
   collection,
@@ -39,6 +40,7 @@ export default create({
       isWarning: hasClass('warning', '.broadcast-status'),
 
       message: text('.message'),
+      title: attribute('title'),
 
       dismiss: clickable('.broadcast-close')
     })
