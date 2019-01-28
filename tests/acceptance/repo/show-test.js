@@ -89,12 +89,14 @@ moduleForAcceptance('Acceptance | show repo page', {
 
 test('loading branches doesnt update the default branch on the repo', function (assert) {
   page.visit({ organization: 'org-login', repo: 'repository-name' });
-  page.openStatusImagePopup();
+  page.statusBadge.click();
 
   andThen(() => {
-    const url = new URL(page.statusBadgeImageSrc);
+    const url = new URL(page.statusBadge.src);
     const expectedPath = `${url.pathname}?${url.searchParams}`;
     assert.equal(expectedPath, '/org-login/repository-name.svg?branch=feminist%23yes');
+
+    assert.equal(page.statusBadge.title, 'Latest push build on default branch: passed');
   });
 });
 
