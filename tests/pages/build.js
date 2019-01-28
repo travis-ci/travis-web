@@ -60,7 +60,11 @@ export default create({
   stages: collection('.jobs.stage', {
     name: text('h2 .name'),
     nameEmojiTitle: attribute('title', 'h2 .emoji'),
-    duration: text('.stage-duration'),
+
+    duration: {
+      scope: '.stage-duration',
+      title: attribute('title'),
+    },
 
     isPassed: hasClass('passed', '.stage-header'),
     isFailed: hasClass('failed', '.stage-header'),
