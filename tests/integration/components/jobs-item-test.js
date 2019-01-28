@@ -2,11 +2,13 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
+import { prettyDate } from 'travis/helpers/pretty-date';
 
 module('Integration | Component | jobs item', function (hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function (assert) {
+    let startedAt = new Date();
     const job = {
       id: 10,
       state: 'passed',
@@ -20,7 +22,8 @@ module('Integration | Component | jobs item', function (hooks) {
           env: 'TESTS=unit'
         },
       },
-      duration: 100
+      duration: 100,
+      startedAt
     };
     this.job = job;
     await render(hbs`{{jobs-item job=job}}`);
@@ -31,6 +34,7 @@ module('Integration | Component | jobs item', function (hooks) {
     assert.dom('.job-env').hasText('TESTS=unit', 'env should be displayed');
     assert.dom('.job-os').hasClass('linux', 'OS class should be added for OS icon');
     assert.dom('.job-duration').hasText('1 min 40 sec', 'duration should be displayed');
+    assert.dom('.job-duration').hasAttribute('title', `Started ${prettyDate([startedAt])}`);
   });
 
   test('outputs info on not set properties', async function (assert) {
