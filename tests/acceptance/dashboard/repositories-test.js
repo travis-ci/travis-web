@@ -148,8 +148,8 @@ module('Acceptance | dashboard/repositories', function (hooks) {
     assert.equal(page.starredRepos[0].starButton.title, 'unstar this repo');
 
     assert.equal(page.activeRepos.repos[2].starButton.title, 'star this repo');
-    await page.activeRepos.repos[2].starButton.click();
 
+    await page.activeRepos.repos[2].starButton.click();
     assert.equal(page.starredRepos.length, 2);
 
     await page.starredRepos[1].starButton.click();
