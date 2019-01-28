@@ -1,6 +1,5 @@
 import {
   create,
-  clickable,
   attribute,
   text,
   visitable
