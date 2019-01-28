@@ -140,9 +140,16 @@ $travis-form-badge-radius: 9px;
       &.travis-form__field--error {
 
         .travis-form__field-badge {
-          bottom: 28px;
+          bottom: 32px;
           top: auto;
           right: 5px;
+          background-color: white;
+        }
+
+        .travis-form__error-message {
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
         }
 
       }
