@@ -59,7 +59,7 @@ test('renders a pull request', function (assert) {
     assert.equal(page.commitBranch, 'Branch acceptance-tests', 'shows the PR branch');
 
     assert.equal(page.commitDescription.text, commitBody);
-    assert.ok(page.commitDescription.title, commitBody);
+    assert.equal(page.commitDescription.title, commitBody);
     assert.ok(page.commitDescription.isFaded);
   });
 
