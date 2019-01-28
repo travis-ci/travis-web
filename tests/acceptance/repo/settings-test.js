@@ -116,19 +116,27 @@ module('Acceptance | repo settings', function (hooks) {
     });
 
     settingsPage.crons[0].as(cron => {
-      assert.equal(cron.branchName, 'Cron job event daily-branch');
+      assert.equal(cron.branchName.text, 'daily-branch');
+      assert.equal(cron.branchName.title, cron.branchName.text);
+
       assert.equal(cron.interval, 'Runs daily');
-      assert.equal(cron.lastRun, 'Ran less than a minute ago');
-      assert.equal(cron.nextRun, 'Scheduled in about 24 hours from now');
-      assert.ok(cron.dontRunIfRecentBuildExistsText.indexOf('Always run') === 0, 'expected cron to run even if there is a build in the last 24h');
+
+      assert.equal(cron.lastRun.text, 'Ran less than a minute ago');
+      assert.equal(cron.lastRun.title, this.dailyCron.last_run.toISOString());
+
+      assert.equal(cron.nextRun.text, 'Scheduled in about 24 hours from now');
+      assert.equal(cron.nextRun.title, this.dailyCron.next_run.toISOString());
+
+      assert.ok(cron.dontRunIfRecentBuildExists.text.indexOf('Always run') === 0, 'expected cron to run even if there is a build in the last 24h');
+      assert.ok(cron.dontRunIfRecentBuildExists.title, 'ueahunoetuhotne');
     });
 
     settingsPage.crons[1].as(cron => {
-      assert.equal(cron.branchName, 'Cron job event weekly-branch');
+      assert.equal(cron.branchName.text, 'weekly-branch');
       assert.equal(cron.interval, 'Runs weekly');
-      assert.equal(cron.lastRun, 'Ran less than a minute ago');
-      assert.equal(cron.nextRun, 'Scheduled in 7 days from now');
-      assert.ok(cron.dontRunIfRecentBuildExistsText.indexOf('Do not run if there has been a build in the last 24h') === 0, 'expected Do not run if there has been a build in the last 24h');
+      assert.equal(cron.lastRun.text, 'Ran less than a minute ago');
+      assert.equal(cron.nextRun.text, 'Scheduled in 7 days from now');
+      assert.ok(cron.dontRunIfRecentBuildExists.text.indexOf('Do not run if there has been a build in the last 24h') === 0, 'expected Do not run if there has been a build in the last 24h');
     });
 
     assert.equal(settingsPage.sshKey.name, 'Custom');
