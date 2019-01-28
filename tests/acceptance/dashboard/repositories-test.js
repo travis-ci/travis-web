@@ -157,11 +157,10 @@ module('Acceptance | dashboard/repositories', function (hooks) {
   });
 
   test('triggering a build', async function (assert) {
-    let done = assert.async();
+    let requestCreated = false;
 
     this.server.post(`/repo/${this.starredRepo.id}/requests`, () => {
-      assert.ok(true);
-      done();
+      requestCreated = true;
       return true;
     });
 
@@ -169,6 +168,8 @@ module('Acceptance | dashboard/repositories', function (hooks) {
 
     await page.starredRepos[0].menuButton.click();
     await page.starredRepos[0].triggerBuild();
+
+    assert.ok(requestCreated);
   });
 
   test('Dashboard pagination works', async function (assert) {
