@@ -160,8 +160,8 @@ module('Acceptance | dashboard/repositories', function (hooks) {
 
     await visit('/dashboard');
 
-    assert.dom('[data-test-dashboard-starred-repositories] [data-test-dashboard-repository-star]').exists({ count: 1 });
-    assert.dom('[data-test-dashboard-active-repositories] [data-test-dashboard-repository-star]').exists({ count: 10 });
+    assert.equal(page.starredRepos.length, 1);
+    assert.equal(page.activeRepos.repos.length, 10);
     assert.dom('[data-test-components-pagination-navigation]').exists();
     assert.dom('[data-test-page-pagination-link]').exists({ count: 2 });
     assert.dom('[data-test-next-pagination-link]').exists();
@@ -170,8 +170,8 @@ module('Acceptance | dashboard/repositories', function (hooks) {
 
     await click('[data-test-page-pagination-link="2"]');
 
-    assert.dom('[data-test-dashboard-starred-repositories] [data-test-dashboard-repository-star]').exists({ count: 1 }, 'still lists starred repos on top');
-    assert.dom('[data-test-dashboard-active-repositories] [data-test-dashboard-repository-star]').exists({ count: 6 }, 'lists other repos on the 2nd page');
+    assert.equal(page.starredRepos.length, 1, 'still lists starred repos on top');
+    assert.equal(page.activeRepos.repos.length, 6, 'lists other repos on the 2nd page');
   });
 
   test('listing my builds', async function (assert) {
