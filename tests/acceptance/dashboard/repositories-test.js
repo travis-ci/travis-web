@@ -104,7 +104,7 @@ module('Acceptance | dashboard/repositories', function (hooks) {
       currentBuild: build,
       private: true
     });
-    server.create('repository', {
+    this.starredRepo = server.create('repository', {
       owner: {
         login: 'travis-ci',
         type: 'organization'
@@ -141,7 +141,7 @@ module('Acceptance | dashboard/repositories', function (hooks) {
 
     assert.equal(page.starredRepos.length, 1);
 
-    assert.ok(page.starredRepos[0].hasTofuButton);
+    assert.ok(page.starredRepos[0].menuButton.isVisible);
     assert.equal(page.starredRepos[0].starButton.title, 'unstar this repo');
 
     assert.equal(page.activeRepos.repos[2].starButton.title, 'star this repo');
@@ -151,6 +151,21 @@ module('Acceptance | dashboard/repositories', function (hooks) {
 
     await page.starredRepos[1].starButton.click();
     assert.equal(page.starredRepos.length, 1);
+  });
+
+  test('triggering a build', async function (assert) {
+    let done = assert.async();
+
+    this.server.post(`/repo/${this.starredRepo.id}/requests`, () => {
+      assert.ok(true);
+      done();
+      return true;
+    });
+
+    await visit('/dashboard');
+
+    await page.starredRepos[0].menuButton.click();
+    await page.starredRepos[0].triggerBuild();
   });
 
   test('Dashboard pagination works', async function (assert) {

@@ -67,11 +67,6 @@ module('Integration | Component | dashboard row', function (hooks) {
     assert.dom('.dash-finished .row-content').hasAttribute('title', oneYearAgo.toISOString());
     assert.dom('.dash-finished .label-align').hasText('about a year ago');
 
-    // TODO: Clarify what coverage is missing here.
-    // this.$('.dropup-list a:first-of-type').click();
-
-    // wait().then(() => {
-    // });
     assert.dom('.dash-default .row-content a').hasText('passed', 'Displays the default branch name state');
     assert.dom('.dash-last .row-content a').hasText('#2 failed', 'Displays the number and state of the current build');
   });

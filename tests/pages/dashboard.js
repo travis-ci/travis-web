@@ -14,9 +14,13 @@ let dashboardRowObject = {
   repoName: text('.dash-header .row-content a'),
   defaultBranch: text('.dash-default .row-content a'),
   lastBuild: text('.dash-last a .label-align'),
-  triggerBuild: clickable('.dash-menu .dropup-list li:first-of-type a'),
+  triggerBuild: clickable('.dash-menu .dropup-list li:first-of-type button'),
   clickStarButton: clickable('.dash-head .dash-star'),
-  hasTofuButton: isVisible('.dash-menu .dropup'),
+
+  menuButton: {
+    scope: '.dash-menu .dropup',
+    click: clickable('button')
+  },
 
   starButton: {
     scope: '.dash-star',
