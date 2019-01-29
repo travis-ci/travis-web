@@ -2,7 +2,7 @@
 <div class="insights-odyssey__chart">
   {{#if isLoading}}
     <div class="insights-odyssey__loading-indicator">{{loading-indicator}}</div>
-  {{else if isEmpty}}
+  {{else if hasNoBuilds}}
     No builds {{currentIntervalLabel}}.
   {{else}}
     {{high-charts content=content chartOptions=options}}

@@ -19,7 +19,17 @@
       {{active-repo-count owner=model interval=dataInterval}}
       {{!-- Will reinstate the concurrency chart after initial release --}}
       {{!-- {{parallel-jobs-chart owner=model interval=dataInterval}} --}}
-      {{build-status-chart owner=model interval=dataInterval}}
+      {{build-status-chart owner=model interval=dataInterval toggleNoBuilds='toggleNoBuilds'}}
+      {{#if hasNoBuilds}}
+        <div class="insights-grid__overlay">
+          <h2>Looks like you haven't triggered any builds</h2>
+          <p>
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Commodi consequatur
+            facere possimus ad temporibus eaque aliquid eligendi laudantium modi adipisci
+            saepe explicabo eos natus expedita voluptate, nulla soluta distinctio perferendis.
+          </p>
+        </div>
+      {{/if}}
     </div>
   </div>
 {{else}}

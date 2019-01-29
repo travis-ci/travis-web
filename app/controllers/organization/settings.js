@@ -8,12 +8,11 @@ export default Controller.extend({
   flashes: service(),
   organization: reads('model.organization'),
 
-  publicInsights: reads('preferences.publicInsights'),
-  membersInsights: reads('preferences.hash.members_insights.value'),
+  privateInsightsVisibility: reads('preferences.privateInsightsVisibility'),
 
   togglePublicInsights: task(function* (value) {
     try {
-      yield this.preferences.set('public_insights', value);
+      yield this.preferences.set('private_insights_visibility', value);
     } catch (err) {
       this.flashes.clear();
       this.flashes.error('Something went wrong and your insights settings were not saved.');

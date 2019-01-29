@@ -109,6 +109,14 @@ export default Component.extend({
       this.aggregateData.count_canceled.chartData.length === 0;
   }),
 
+  hasNoBuilds: computed('isLoading', 'isEmpty', function () {
+    let noBuilds = this.isLoading === false && this.isEmpty === true;
+    if (noBuilds) {
+      this.sendAction('toggleNoBuilds');
+    }
+    return noBuilds;
+  }),
+
   content: computed('aggregateData', function () {
     if (this.aggregateData) {
       return [{

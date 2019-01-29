@@ -6,6 +6,7 @@ export default Controller.extend({
   page: 1,
   tab: null,
   dataInterval: 'month',
+  hasNoBuilds: false,
 
   isInsights: computed('tab', function () {
     return typeof this.tab === 'string' && this.tab.toLowerCase() === 'insights';
@@ -14,6 +15,9 @@ export default Controller.extend({
   actions: {
     setSubTab(selection) {
       this.set('dataInterval', selection);
+    },
+    toggleNoBuilds() {
+      this.toggleProperty('hasNoBuilds');
     }
   },
 });

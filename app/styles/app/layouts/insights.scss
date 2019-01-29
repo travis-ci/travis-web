@@ -24,12 +24,35 @@
 }
 
 .insights-grid {
+  position: relative;
   display: grid;
   grid-gap: 20px;
   grid-template-columns: repeat(4, minmax(50px, 1fr));
 
   @media #{$medium-up} {
     grid-gap: 40px 4%;
+  }
+
+  .insights-grid__overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(255, 255, 255, 0.85);
+    text-align: center;
+
+    > h2 {
+      color: $oxide-blue;
+      font-size: 40px;
+      font-weight: 300;
+      margin: 55px 0 15px 0;
+    }
+
+    > p {
+      padding: 0 10%;
+      font-size: 18px;
+    }
   }
 }
 
@@ -112,7 +135,7 @@
   &__chart-placeholder {
     margin: 33px 0 12px 0;
     border: none;
-    border-bottom: 1px solid $pebble-grey;
+    border-bottom: 1px solid transparent;
   }
 }
 
