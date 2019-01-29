@@ -8,14 +8,8 @@ export default Controller.extend({
   flashes: service(),
   organization: reads('model.organization'),
 
-  // repositories: reads('fetchRepositories.lastSuccessful.value'),
   publicInsights: reads('preferences.publicInsights'),
   membersInsights: reads('preferences.hash.members_insights.value'),
-
-  // fetchRepositories: task(function* () {
-  //   yield fetchAll(this.store, 'repo', {});
-  //   return this.store.peekAll('repo');
-  // }).drop(),
 
   togglePublicInsights: task(function* (value) {
     try {

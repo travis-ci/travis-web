@@ -7,9 +7,4 @@ export default TravisRoute.extend({
     const organization = this.modelFor('organization');
     return hash({ organization });
   },
-
-  // setupController(controller, model) {
-  //   this._super(...arguments);
-  //   controller.fetchRepositories.perform();
-  // }
 });
