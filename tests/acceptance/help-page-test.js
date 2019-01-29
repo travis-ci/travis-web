@@ -1,5 +1,6 @@
 import { module, test } from 'qunit';
 import { settled } from '@ember/test-helpers';
+import { selectChoose } from 'ember-power-select/test-support';
 import moment from 'moment';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import signInUser from 'travis/tests/helpers/sign-in-user';
@@ -146,6 +147,26 @@ module('Acceptance | help page', function (hooks) {
         await settled();
 
         assert.equal(requestIsSent, false);
+      });
+
+      test('allows to choose different emails', async function (assert) {
+        const { email, subject, description, submit } = helpPage.supportSection.form;
+        let data = {};
+
+        this.requestHandler = (request) => {
+          data = JSON.parse(request.requestBody).request;
+          return data;
+        };
+
+        await selectChoose(email.trigger.scope, this.user.emails[1]);
+
+        await subject.fill(mockData.subject);
+        await description.fill(mockData.description);
+
+        await submit.click();
+        await settled();
+
+        assert.equal(data.requester.email, this.user.emails[1]);
       });
     });
   });

@@ -17,7 +17,6 @@ export default Component.extend({
     'isFocused:travis-form__field--focused'
   ],
 
-  fieldComponentName: 'forms/form-input',
   fieldElementId: null,
   form: null,
 
@@ -34,10 +33,6 @@ export default Component.extend({
   required: equal('validator.kind', presense),
 
   autoValidate: true,
-
-  onChange() {},
-  onFocus() {},
-  onBlur() {},
 
   errorMessage: '',
   isFocused: false,
@@ -93,18 +88,22 @@ export default Component.extend({
     handleFocus() {
       this.set('isFocused', true);
       this.clearError();
-      this.onFocus();
+      this.onFocus && this.onFocus();
     },
 
     handleBlur(value) {
       this.set('isFocused', false);
       this.validate(value);
-      this.onBlur(value);
+      this.onBlur && this.onBlur(value);
+    },
+
+    handleSelectBlur(publicAPI) {
+      this.send('handleBlur', publicAPI.selected);
     },
 
     handleChange(value) {
       this.validate(value);
-      this.onChange(value);
+      this.onChange && this.onChange(value);
     },
 
     setFieldElementId(fieldElementId) {

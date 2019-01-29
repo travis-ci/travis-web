@@ -1,5 +1,6 @@
 import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
+import { prettyDate } from 'travis/helpers/pretty-date';
 
 import requestsPage from 'travis/tests/pages/requests';
 
@@ -16,6 +17,7 @@ test('list requests', function (assert) {
     created_at: new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 365),
     event_type: 'pull_request'
   });
+  this.approvedRequest = approvedRequest;
 
   let approvedCommit = server.create('commit', {
     branch: 'acceptance-tests',
@@ -65,7 +67,7 @@ test('list requests', function (assert) {
 
   requestsPage.visit({organization: 'travis-ci', repo: 'travis-web', requestId: approvedRequest.id});
 
-  andThen(function () {
+  andThen(() => {
     requestsPage.requests[0].as(request => {
       assert.ok(request.isApproved);
       assert.ok(request.isHighlighted, 'expected the request to be highlighted because of the query param');
@@ -74,9 +76,12 @@ test('list requests', function (assert) {
       assert.equal(request.commitMessage.text, 'A commit message');
 
       assert.equal(request.createdAt.text, 'about a year ago');
+      assert.equal(request.createdAt.title, prettyDate([this.approvedRequest.created_at]));
 
       assert.equal(request.buildNumber.text, '1919');
+
       assert.equal(request.requestMessage.text, 'A request message');
+      assert.equal(request.requestMessage.title, 'A request message');
     });
 
     requestsPage.requests[1].as(request => {

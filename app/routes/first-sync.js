@@ -6,14 +6,15 @@ export default SimpleLayoutRoute.extend({
   activate() {
     let controller;
     controller = this.controllerFor('firstSync');
-    controller.addObserver('isSyncing', this, this.isSyncingDidChange);
+    controller.addObserver('isSyncing', this, 'isSyncingDidChange');
     this.isSyncingDidChange();
   },
 
   deactivate() {
     let controller;
     controller = this.controllerFor('firstSync');
-    return controller.removeObserver('controller.isSyncing', this, this.isSyncingDidChange);
+
+    return controller.removeObserver('controller.isSyncing', this, 'isSyncingDidChange');
   },
 
   isSyncingDidChange() {
