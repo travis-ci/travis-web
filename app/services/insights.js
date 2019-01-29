@@ -15,7 +15,7 @@ const defaultIntervalSettings = {
     prevInstanceLabel: 'yesterday',
   },
   week: {
-    subInterval: '1hour',
+    subInterval: '1day',
     tooltipLabelFormat: '%A, %b %e, %H:%M',
     xAxisLabelFormat: '{value:%b %e}',
     instanceLabel: 'this week',

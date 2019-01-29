@@ -15,9 +15,10 @@ export default Controller.extend({
   actions: {
     setSubTab(selection) {
       this.set('dataInterval', selection);
+      this.set('hasNoBuilds', false);
     },
-    toggleNoBuilds() {
-      this.toggleProperty('hasNoBuilds');
+    setNoBuilds(val) {
+      this.set('hasNoBuilds', val);
     }
   },
 });

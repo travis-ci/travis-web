@@ -112,7 +112,7 @@ export default Component.extend({
   hasNoBuilds: computed('isLoading', 'isEmpty', function () {
     let noBuilds = this.isLoading === false && this.isEmpty === true;
     if (noBuilds) {
-      this.sendAction('toggleNoBuilds');
+      this.sendAction('setNoBuilds', true);
     }
     return noBuilds;
   }),
