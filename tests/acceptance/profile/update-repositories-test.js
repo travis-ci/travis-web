@@ -1,7 +1,6 @@
-import { module, test } from 'qunit';
+import { module } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import signInUser from 'travis/tests/helpers/sign-in-user';
-import profilePage from 'travis/tests/pages/profile';
 
 module('Acceptance | profile/update-repositories', function (hooks) {
   setupApplicationTest(hooks);
