@@ -22,4 +22,8 @@ export default create({
     name: text('.insights-odyssey__title'),
     chart: text('.insights-odyssey__chart'),
   }),
+
+  noBuildOverlayIsVisible: isVisible('.insights-grid .insights-grid__overlay'),
+  noBuildOverlayTitle: text('.insights-grid .insights-grid__overlay h2'),
+  noBuildOverlayText: text('.insights-grid .insights-grid__overlay p'),
 });

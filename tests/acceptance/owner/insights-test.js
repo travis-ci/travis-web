@@ -50,6 +50,9 @@ test('the owner insights page shows insights components', async function (assert
     assert.notEqual(odyssey.chart.trim(), 'No builds this month.');
   });
 
+  // No Build Overlay
+  assert.equal(insightsPage.noBuildOverlayIsVisible, false);
+
   // percySnapshot(assert);
 });
 
@@ -89,5 +92,9 @@ test('the owner insights page handles a lack of data', async function (assert) {
       assert.equal(odyssey.name, 'Build Statuses');
       assert.equal(odyssey.chart.trim(), 'No builds this month.');
     });
+
+    // No Build Overlay
+    assert.equal(insightsPage.noBuildOverlayIsVisible, true);
+    assert.equal(insightsPage.noBuildOverlayTitle, 'Looks like you haven\'t triggered any builds');
   });
 });
