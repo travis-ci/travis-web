@@ -2,6 +2,7 @@ import Component from '@ember/component';
 import config from 'travis/config/environment';
 import { task } from 'ember-concurrency';
 import { computed } from '@ember/object';
+import { not } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 
 export default Component.extend({
@@ -18,6 +19,7 @@ export default Component.extend({
       return permissions.admin;
     }
   }),
+  isNotAdmin: not('admin'),
 
   comLink: computed('repository.slug', function () {
     let slug = this.get('repository.slug');

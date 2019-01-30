@@ -9,6 +9,13 @@
   {{#external-link-to data-test-already-migrated-link href=comLink class="button already-migrated" title="View this repository on travis-ci.com"}}
   {{svg-jar 'icon-external-link' class="icon white"}} TRAVIS-CI.COM
   {{/external-link-to}}
+{{else if repository.githubServiceHook}}
+  <button class='button--blue {{if isNotAdmin 'disabled disabled--light'}}' disabled={{isNotAdmin}}>
+    {{#if isNotAdmin}}
+      {{ember-tooltip text='Insufficient permissions'}}
+    {{/if}}
+    Update integration
+  </button>
 {{else}}
   {{#if admin}}
     {{travis-switch active=repository.active onToggle=(perform toggleRepositoryTask) }}
