@@ -11,7 +11,14 @@
 
 {{#if isInsights}}
   <div class="travistab-body">
-    {{insight-tabs selectedTab=dataInterval setSubTab='setSubTab'}}
+    <div class="insights-controls">
+      <div class="insights-controls-left">
+        {{insights-date-display interval=dataInterval}}
+        {{!-- <span>|</span>
+        Public builds --}}
+      </div>
+      {{insight-tabs selectedTab=dataInterval setSubTab='setSubTab'}}
+    </div>
     <div class="insights-grid">
       {{build-count owner=model interval=dataInterval}}
       {{build-minutes owner=model interval=dataInterval}}
