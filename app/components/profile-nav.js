@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
-import { reads, or, and } from '@ember/object/computed';
+import { reads, or, and, bool } from '@ember/object/computed';
 import { computed } from '@ember/object';
 import config from 'travis/config/environment';
 
@@ -10,6 +10,7 @@ export default Component.extend({
   tagName: '',
 
   accounts: service(),
+  features: service(),
 
   activeModel: null,
   model: reads('activeModel'),
@@ -22,13 +23,14 @@ export default Component.extend({
 
   showSubscriptionStatusBanner: and('checkSubscriptionStatus', 'model.subscriptionError'),
 
+  showMigrateTab: bool('features.proVersion'),
+
   get githubOrgsOauthAccessSettingsUrl() {
     return githubOrgsOauthAccessSettingsUrl;
   },
 
   checkSubscriptionStatus: computed('features.enterpriseVersion', function () {
-    let enterprise = this.get('features.enterpriseVersion');
-    return !enterprise && !!billingEndpoint;
+    return !this.features.get('enterpriseVersion') && !!billingEndpoint;
   }),
 
 });

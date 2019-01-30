@@ -30,11 +30,19 @@ Router.map(function () {
     this.route('repositories');
     this.route('settings', { path: '/preferences' });
     this.route('billing', { path: '/subscription' });
+    this.route('migrate', function () {
+      this.route('legacy-services');
+      this.route('github-apps');
+    });
   });
   this.route('organization', { path: '/organizations/:login' }, function () {
     this.route('repositories');
     this.route('settings', { path: '/preferences' });
     this.route('billing', { path: '/subscription' });
+    this.route('migrate', function () {
+      this.route('legacy-services');
+      this.route('github-apps');
+    });
   });
   this.route('unsubscribe', { path: '/account/preferences/unsubscribe' });
   this.route('profile', { path: '/profile/:login' });
