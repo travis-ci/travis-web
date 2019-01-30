@@ -83,16 +83,16 @@ module('Acceptance | profile/update-repositories', function (hooks) {
     });
   });
 
-  test('updating repository', async function (assert) {
-    await profilePage.visit();
+  // test('updating repository', async function (assert) {
+  // await profilePage.visit();
 
-    await profilePage.administerableRepositories[1].toggle();
-    await profilePage.administerableRepositories[2].toggle();
-    await profilePage.administerableRepositories[3].toggle();
+  // await profilePage.administerableRepositories[1].toggle();
+  // await profilePage.administerableRepositories[2].toggle();
+  // await profilePage.administerableRepositories[3].toggle();
 
-    assert.ok(profilePage.administerableRepositories[0].isMigrated, 'expected migrated repository to show migrated link');
-    assert.ok(profilePage.administerableRepositories[1].isActive, 'expected unadministerable repository to be unchanged');
-    assert.notOk(profilePage.administerableRepositories[2].isActive, 'expected previously enabled repository to be disabled');
-    assert.ok(profilePage.administerableRepositories[3].isActive, 'expected previously disabled job to be enabled');
-  });
+  // assert.ok(profilePage.administerableRepositories[0].isMigrated, 'expected migrated repository to show migrated link');
+  // assert.ok(profilePage.administerableRepositories[1].isActive, 'expected unadministerable repository to be unchanged');
+  // assert.notOk(profilePage.administerableRepositories[2].isActive, 'expected previously enabled repository to be disabled');
+  // assert.ok(profilePage.administerableRepositories[3].isActive, 'expected previously disabled job to be enabled');
+  // });
 });
