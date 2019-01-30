@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
-import { reads, bool } from '@ember/object/computed';
+import { reads, bool, filter } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
 import $ from 'jquery';
 import moment from 'moment';
@@ -13,6 +13,10 @@ export const UTC_START_TIME = moment.utc({ h: 9, m: 0, s: 0 });
 export const UTC_END_TIME = moment.utc({ h: 23, m: 0, s: 0 });
 export const DATE_FORMAT = 'LT';
 
+const USER_EMAIL_DOMAINS_BLACKLIST = [
+  'users.noreply.github.com'
+];
+
 export default Component.extend({
   classNames: ['zendesk-request-form'],
 
@@ -23,6 +27,10 @@ export default Component.extend({
   page: '',
 
   email: reads('auth.currentUser.email'),
+  emails: filter('auth.currentUser.emails', email => {
+    const emailDomain = email.split('@')[1];
+    return emailDomain && !USER_EMAIL_DOMAINS_BLACKLIST.includes(emailDomain);
+  }),
 
   subject: '',
 
@@ -42,8 +50,8 @@ export default Component.extend({
   isSuccess: bool('zendeskRequest.lastSuccessful.value'),
 
   zendeskRequest: task(function* () {
-    const { fullName: name, email } = this.auth.currentUser;
-    const { subject, description: body } = this;
+    const { fullName: name } = this.auth.currentUser;
+    const { email, subject, description: body } = this;
 
     try {
       return yield $.ajax({

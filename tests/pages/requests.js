@@ -1,7 +1,9 @@
 import {
+  attribute,
   create,
   collection,
   hasClass,
+  text,
   visitable
 } from 'ember-cli-page-object';
 
@@ -28,7 +30,9 @@ export default create({
     },
 
     createdAt: {
-      scope: '[data-requests-item-created-at]'
+      scope: '[data-requests-item-created-at]',
+      text: text('.label-align'),
+      title: attribute('title'),
     },
 
     buildNumber: {
@@ -36,7 +40,8 @@ export default create({
     },
 
     requestMessage: {
-      scope: '[data-requests-item-message]'
+      scope: '[data-requests-item-message]',
+      title: attribute('title', '.label-align'),
     }
   }),
 

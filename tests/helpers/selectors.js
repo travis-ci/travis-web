@@ -44,3 +44,7 @@ export const ZENDESK_FORM_SUCCESS_HEADER = '[data-test-zendesk-form-success-head
 export const ZENDESK_FORM_SUCCESS_IMAGE = '[data-test-zendesk-form-success-image]';
 export const ZENDESK_FORM_SUCCESS_MESSAGE = '[data-test-zendesk-form-success-message]';
 export const ZENDESK_FORM_BACK_LINK = '[data-test-zendesk-form-back-link]';
+
+// ember-power-select
+export const EPS_TRIGGER = '.ember-power-select-trigger';
+export const EPS_OPTION = '.ember-power-select-option';

@@ -4,6 +4,7 @@ import sidebarPage from 'travis/tests/pages/sidebar';
 import jobPage from 'travis/tests/pages/job';
 import generatePusherPayload from 'travis/tests/helpers/generate-pusher-payload';
 import signInUser from 'travis/tests/helpers/sign-in-user';
+import { prettyDate } from 'travis/helpers/pretty-date';
 
 const repoId = 100;
 
@@ -37,6 +38,12 @@ moduleForAcceptance('Acceptance | home/with repositories', {
     });
 
     // create active repo
+    let oneYearAgo = new Date(new Date() - 1000 * 60 * 60 * 24 * 365);
+    let beforeOneYearAgo = new Date(oneYearAgo.getTime() - 1000 * 60 * 19 - 1000 * 19);
+
+    this.startedAt = beforeOneYearAgo.toISOString();
+    this.finishedAt = oneYearAgo.toISOString();
+
     server.create('repository', {
       slug: 'org-login/yet-another-repository-name',
       owner: {
@@ -47,7 +54,8 @@ moduleForAcceptance('Acceptance | home/with repositories', {
       id: 99,
       number: '1',
       state: 'passed',
-      finished_at: '2017-03-27T12:00:01Z'
+      started_at: this.startedAt,
+      finished_at: this.finishedAt
     });
 
     server.create('repository', {
@@ -64,8 +72,22 @@ test('the home page shows the repositories', function (assert) {
   andThen(() => {});
   andThen(() => {
     assert.equal(sidebarPage.sidebarRepositories.length, 3, 'expected three repositories in the sidebar');
-    assert.equal(sidebarPage.sidebarRepositories[0].name, 'org-login/yet-another-repository-name');
-    assert.equal(sidebarPage.sidebarRepositories[1].name, 'org-login/some-other-repository-name');
+
+    sidebarPage.sidebarRepositories[0].as(yetAnother => {
+      assert.equal(yetAnother.name, 'org-login/yet-another-repository-name');
+      assert.equal(yetAnother.duration.text, '19 min 19 sec');
+      assert.equal(yetAnother.duration.title, `Started ${prettyDate([this.startedAt])}`);
+      assert.equal(yetAnother.finished.text, 'about a year ago');
+      assert.equal(yetAnother.finished.title, `Finished ${prettyDate([this.finishedAt])}`);
+    });
+
+    sidebarPage.sidebarRepositories[1].as(someOther => {
+      assert.equal(someOther.name, 'org-login/some-other-repository-name');
+      assert.equal(someOther.duration.text, '-');
+      assert.notOk(someOther.duration.title);
+      assert.notOk(someOther.finished.isVisible);
+    });
+
     assert.equal(sidebarPage.sidebarRepositories[2].name, 'org-login/repository-name');
   });
 });

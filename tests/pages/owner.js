@@ -1,4 +1,5 @@
 import {
+  attribute,
   create,
   collection,
   text,
@@ -7,6 +8,19 @@ import {
 
 export default create({
   visit: visitable('/:username'),
+
+  avatar: {
+    scope: '.avatar',
+    src: attribute('src', 'img'),
+  },
+
+  title: text('.owner-title'),
+  login: {
+    scope: '.owner-handle',
+    text: text('.label-align'),
+    title: attribute('title', 'a'),
+    href: attribute('href', 'a'),
+  },
 
   repos: collection('.owner-tiles .owner-tile', {
     name: text('.repo-title span.repo-title-text'),

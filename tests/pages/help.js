@@ -26,7 +26,8 @@ import {
   ZENDESK_FORM_SUCCESS_HEADER,
   ZENDESK_FORM_SUCCESS_IMAGE,
   ZENDESK_FORM_SUCCESS_MESSAGE,
-  ZENDESK_FORM_BACK_LINK
+  ZENDESK_FORM_BACK_LINK,
+  EPS_TRIGGER
 } from 'travis/tests/helpers/selectors';
 
 export default create({
@@ -80,7 +81,9 @@ export default create({
       email: {
         scope: ZENDESK_FORM_EMAIL,
         isPresent: isPresent(),
-        fill: fillable()
+        trigger: {
+          scope: EPS_TRIGGER
+        }
       },
 
       subject: {
@@ -92,7 +95,7 @@ export default create({
       description: {
         scope: ZENDESK_FORM_DESCRIPTION,
         isPresent: isPresent(),
-        fill: fillable('textarea')
+        fill: fillable()
       },
 
       submit: {

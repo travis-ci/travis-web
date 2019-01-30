@@ -1,6 +1,7 @@
 import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import buildPage from 'travis/tests/pages/build';
+import { prettyDate } from 'travis/helpers/pretty-date';
 
 moduleForAcceptance('Acceptance | build stages');
 
@@ -80,7 +81,10 @@ test('visiting build with stages', function (assert) {
       assert.equal(stage.nameEmojiTitle, 'two_men_holding_hands');
       assert.ok(stage.isPassed);
       assert.equal(stage.stateTitle, 'Stage passed');
-      assert.equal(stage.duration, '1 min 11 sec');
+
+      assert.equal(stage.duration.text, '1 min 11 sec');
+      assert.equal(stage.duration.title, `Started ${prettyDate([jobTime])}`);
+
       assert.equal(stage.jobs[0].number, '1234.1');
       assert.equal(stage.jobs[1].number, '1234.2');
       assert.equal(stage.allowFailures.text, 'Your build matrix was set to allow the failure of job 1234.2 so we continued this build to the next stage.');
@@ -90,7 +94,10 @@ test('visiting build with stages', function (assert) {
       assert.equal(stage.name, 'second');
       assert.ok(stage.isFailed);
       assert.equal(stage.stateTitle, 'Stage failed');
-      assert.equal(stage.duration, '11 sec');
+
+      assert.equal(stage.duration.text, '11 sec');
+      assert.equal(stage.duration.title, `Started ${prettyDate([jobTime])}`);
+
       assert.equal(stage.jobs[0].number, '1234.999');
       assert.ok(stage.allowFailures.isHidden, 'expected no allowed failures text');
     });

@@ -21,6 +21,8 @@ module('Integration | Component | dashboard row', function (hooks) {
   });
 
   test('it renders data correctly', async function (assert) {
+    let oneYearAgo = new Date(new Date() - 1000 * 60 * 60 * 24 * 365);
+
     const repo = EmberObject.create({
       active: true,
       currentBuild: {
@@ -29,7 +31,7 @@ module('Integration | Component | dashboard row', function (hooks) {
           sha: 'alsoshalolol',
           compareUrl: 'https://githubz.com/alsolol'
         },
-        finishedAt: '2016-09-01T15:22:21Z',
+        finishedAt: oneYearAgo.toISOString(),
         eventType: 'cron',
         number: 2,
         state: 'failed'
@@ -37,6 +39,7 @@ module('Integration | Component | dashboard row', function (hooks) {
       defaultBranch: {
         name: 'master',
         lastBuild: {
+          id: 1919,
           number: 1,
           eventType: 'api',
           state: 'passed',
@@ -58,16 +61,19 @@ module('Integration | Component | dashboard row', function (hooks) {
     this.set('repo', repo);
     await render(hbs`{{dashboard-row repo=repo}}`);
 
+    assert.dom('.dash-header .row-label a').hasText('travis-ci');
+    assert.dom('.dash-header .row-label a').hasAttribute('title', 'travis-ci');
+
+    assert.dom('.dash-header .row-content a').hasText('travis-web');
+    assert.dom('.dash-header .row-content a').hasAttribute('title', 'travis-web');
+
     assert.dom('.dash-default').hasClass('passed', 'Indicates right state of default branch last build');
     assert.dom('.dash-last').hasClass('failed', 'Indicates right state of current build');
-    // TODO: Remove this
-    // assert.dom('.dash-default .row-content a').text().trim(), 'master passed', 'Displays the default branch name and state');
+
+    assert.dom('.dash-finished .row-content').hasAttribute('title', oneYearAgo.toISOString());
+    assert.dom('.dash-finished .label-align').hasText('about a year ago');
+
+    assert.dom('.dash-default .row-content a').hasText('passed', 'Displays the default branch name state');
     assert.dom('.dash-last .row-content a').hasText('#2 failed', 'Displays the number and state of the current build');
-
-    // TODO: Clarify what coverage is missing here.
-    // this.$('.dropup-list a:first-of-type').click();
-
-    // wait().then(() => {
-    // });
   });
 });

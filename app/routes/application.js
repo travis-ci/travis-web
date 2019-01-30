@@ -1,4 +1,4 @@
-/* global Travis */
+/* global Travis, _gaq */
 import $ from 'jquery';
 
 import TravisRoute from 'travis/routes/basic';
@@ -14,6 +14,7 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
   featureFlags: service(),
   flashes: service(),
   repositories: service(),
+  router: service(),
 
   needsAuth: false,
 
@@ -21,6 +22,13 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
     this.get('auth').afterSignOut(() => {
       this.afterSignOut();
     });
+
+    this.router.on('routeDidChange', () => {
+      if (config.gaCode) {
+        _gaq.push(['_trackPageview', location.pathname]);
+      }
+    });
+
     return this._super(...arguments);
   },
 
