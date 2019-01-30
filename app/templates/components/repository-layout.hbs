@@ -1,4 +1,5 @@
 <article class="repo-header">
+
   <header class='name'>
     {{repository-visibility-icon repository=repo}}
     <h1 data-test-repo-header-title class="repo-title">
@@ -13,6 +14,7 @@
       </a>
     </div>
   </header>
+
   {{#if showMigratedFromOrgRepositoryLink}}
     {{#notice-banner data-test-recently-migrated-from-org-banner}}
       This repository was recently migrated from travis-ci.org.
@@ -20,6 +22,7 @@
       {{#external-link-to href=orgBuildHistoryLink}}here{{/external-link-to}}.
     {{/notice-banner}}
   {{/if}}
+
   {{#if showMigratedToComRepositoryLink}}
     {{#notice-banner data-test-recently-migrated-to-com-banner}}
       This repository was recently migrated to travis-ci.com and is now read-only.
@@ -27,19 +30,52 @@
       {{#external-link-to href=comBuildHistoryLink}}here{{/external-link-to}}.
     {{/notice-banner}}
   {{/if}}
+
+  {{#if showServiceHookMigrationBanner}}
+    {{#notice-banner disableIcon=true}}
+      <div class='webhooks-banner'>
+        <div class='webhooks-banner__body'>
+          This repository uses deprecated GitHub Service Hooks integration, which will become inactive on January, 31st 2019.
+          You can have more information about this in
+          {{#external-link-to href='https://developer.github.com/changes/2019-01-29-life-after-github-services/'}}
+            GitHub’s Developer blog
+          {{/external-link-to}}.
+          <br />
+          In order to keep building it on Travis CI, please
+          {{#if isAdmin }}
+            update the integration.
+          {{else}}
+            ask repository owner to update the integration.
+          {{/if}}
+        </div>
+        {{#if isAdmin }}
+          <div class='webhooks-banner__action'>
+            <button class='button--green {{if isNotAdmin 'disabled'}}' disabled={{isNotAdmin}}>
+              Update integration
+            </button>
+          </div>
+        {{/if}}
+      </div>
+    {{/notice-banner}}
+  {{/if}}
+
   <main class="repo-main">
-  <div class="repo-navigation">
-    {{repo-show-tabs repo=repo build=build job=job}}
-    {{repo-show-tools repo=repo build=build job=job tab=tab onTriggerBuild=(action "toggleTriggerBuildModal")}}
-  </div>
-  <div class="travistab-body repo-body">
-    {{#if hasBlock}}
-      {{yield}}
-    {{else}}
-      {{build-layout build=build repo=repo}}
-    {{/if}}
-  </div>
+
+    <div class="repo-navigation">
+      {{repo-show-tabs repo=repo build=build job=job}}
+      {{repo-show-tools repo=repo build=build job=job tab=tab onTriggerBuild=(action "toggleTriggerBuildModal")}}
+    </div>
+
+    <div class="travistab-body repo-body">
+      {{#if hasBlock}}
+        {{yield}}
+      {{else}}
+        {{build-layout build=build repo=repo}}
+      {{/if}}
+    </div>
+
   </main>
+
 </article>
 
 {{#if isShowingStatusBadgeModal}}

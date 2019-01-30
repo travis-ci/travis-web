@@ -84,3 +84,17 @@
   transform: translateY(-2px);
   padding-right: 2px;
 }
+
+.webhooks-banner {
+  display: flex;
+  align-items: center;
+
+  .webhooks-banner__body {
+    flex-grow: 1;
+  }
+
+  .webhooks-banner__action {
+    flex: 0 0 100px;
+    padding-left: 10px;
+  }
+}

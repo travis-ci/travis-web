@@ -28,6 +28,7 @@ const Repo = Model.extend({
   active_on_org: attr('boolean'),
   emailSubscribed: attr('boolean'),
   migrationStatus: attr(),
+  githubServiceHook: true, // TODO: Change to attr('boolean')
 
   ownerType: oneWay('owner.@type'),
 

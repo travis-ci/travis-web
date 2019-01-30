@@ -1,5 +1,7 @@
 <p class="notice-banner--yellow">
-  {{svg-jar 'icon-flag' class="icon-flag"}}
+  {{#unless disableIcon}}
+    {{svg-jar 'icon-flag' class="icon-flag"}}
+  {{/unless}}
   <span class="label-align">
     {{yield}}
   </span>

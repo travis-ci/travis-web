@@ -1,5 +1,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
+import { reads, bool, not } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 
 export default Component.extend({
@@ -53,6 +54,11 @@ export default Component.extend({
       return orgHosted && migrationStatus === 'migrated';
     }
   ),
+
+  showServiceHookMigrationBanner: reads('repo.githubServiceHook'),
+
+  isAdmin: bool('repo.permissions.admin'),
+  isNotAdmin: not('isAdmin'),
 
   actions: {
     toggleStatusBadgeModal() {
