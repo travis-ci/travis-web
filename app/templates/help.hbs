@@ -19,7 +19,21 @@
       {{travis-status colorizeText=true }}
     </div>
   {{/layout.section}}
-
+  {{#layout.section class="help-page-resources" data-test-help-page-resources-section=true}}
+  <h2>Handy Resources</h2>
+  {{svg-jar 'docs'}}
+  <ul>
+    <li><a href={{tutorialUrl}}>Travis CI Tutorial</a></li>
+    <li><a href={{dockerUrl}}>Using Docker with Travis CI</a></li>
+    <li><a href={{nodeJsUrl}}>Setting up a Node.js project</a></li>
+    <li><a href={{operatingSystemUrl}}>Adding more Operating Systems</a></li>
+    <li><a href={{buildNotRunningUrl}}>Why is my build not running</a></li>
+  </ul>
+  {{/layout.section}}
+  {{#layout.section class="help-page-community-topics" data-test-help-page-community-topics-section=true}}
+  <h2>Community Top Topics</h2>
+  {{svg-jar 'community'}}
+  {{/layout.section}}
   {{#layout.section class="help-page__support" hasBackground=(not isLoggedIn) data-test-help-page-support-section=true }}
     {{#if toForm}}{{scroll-here}}{{/if}}
 

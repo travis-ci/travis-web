@@ -36,6 +36,25 @@ export default Controller.extend({
     `${community}/top?utm_source=${UTM_SOURCE}&utm_medium=${UTM_MEDIUM}`
   ),
 
+  tutorialUrl: computed(() =>
+    `${docs}/user/tutorial?utm_source=help-page&utm_medium=travisweb`
+  ),
+
+  dockerUrl: computed(() =>
+    `${docs}/user/docker?utm_source=help-page&utm_medium=travisweb`
+  ),
+
+  nodeJsUrl: computed(() =>
+    `${docs}/user/languages/javascript-with-nodejs?utm_source=help-page&utm_medium=travisweb`
+  ),
+
+  operatingSystemUrl: computed(() =>
+    `${docs}/user/multi-os?utm_source=help-page&utm_medium=travisweb`
+  ),
+
+  buildNotRunningUrl: computed(() =>
+    `${docs}/user/common-build-problems/#i-pushed-a-commit-and-cant-find-its-corresponding-build?utm_source=help-page&utm_medium=travisweb`
+  ),
   actions: {
 
     setAnchor(anchor) {
