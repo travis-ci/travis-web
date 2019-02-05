@@ -3,7 +3,7 @@ import Route from '@ember/routing/route';
 export default Route.extend({
 
   beforeModel() {
-    return this.transitionTo('account.migrate.legacy-services');
+    return this.transitionTo('account.migrate.webhooks');
   }
 
 });

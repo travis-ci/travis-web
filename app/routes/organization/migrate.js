@@ -4,7 +4,7 @@ export default Route.extend({
 
   beforeModel() {
     const org = this.modelFor('organization');
-    return this.transitionTo('organization.migrate.legacy-services', org);
+    return this.transitionTo('organization.migrate.webhooks', org);
   }
 
 });

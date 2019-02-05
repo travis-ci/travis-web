@@ -31,7 +31,7 @@ Router.map(function () {
     this.route('settings', { path: '/preferences' });
     this.route('billing', { path: '/subscription' });
     this.route('migrate', function () {
-      this.route('legacy-services');
+      this.route('webhooks');
       this.route('github-apps');
     });
   });
@@ -40,7 +40,7 @@ Router.map(function () {
     this.route('settings', { path: '/preferences' });
     this.route('billing', { path: '/subscription' });
     this.route('migrate', function () {
-      this.route('legacy-services');
+      this.route('webhooks');
       this.route('github-apps');
     });
   });
