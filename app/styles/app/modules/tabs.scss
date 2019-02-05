@@ -82,6 +82,10 @@ $border-size: 2px;
     padding-right: 1em;
   }
 
+  .travistab-nav__arrow {
+    width: auto;
+  }
+
   a {
     border-bottom: $border-size solid $pebble-grey;
 
