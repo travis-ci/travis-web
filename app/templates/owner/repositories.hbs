@@ -14,8 +14,8 @@
     <div class="insights-controls">
       <div class="insights-controls-left">
         {{insights-date-display interval=dataInterval}}
-        {{!-- <span>|</span>
-        Public builds --}}
+        <span class="insights-control-divider">|</span>
+        {{insights-privacy-selector isPrivateInsightsViewable=isPrivateInsightsViewable}}
       </div>
       {{insight-tabs selectedTab=dataInterval setSubTab='setSubTab'}}
     </div>

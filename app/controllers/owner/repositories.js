@@ -1,4 +1,5 @@
 import Controller from '@ember/controller';
+import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 
 export default Controller.extend({
@@ -7,9 +8,15 @@ export default Controller.extend({
   tab: null,
   dataInterval: 'month',
   hasNoBuilds: false,
+  features: service(),
 
   isInsights: computed('tab', function () {
     return typeof this.tab === 'string' && this.tab.toLowerCase() === 'insights';
+  }),
+
+  isPrivateInsightsViewable: computed(function () {
+    let pro = this.get('features.proVersion');
+    return pro;
   }),
 
   actions: {

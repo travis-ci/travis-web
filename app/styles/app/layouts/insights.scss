@@ -3,9 +3,14 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  color: $oxide-blue;
 
-  .insights-dates {
-    color: $oxide-blue;
+  .insights-control-divider {
+    margin: 0 .5rem;
+  }
+
+  .insights-privacy-selector__selected {
+    font-weight: 700;
   }
 
   .travistab-nav.travistab-nav--insights {
