@@ -3,10 +3,16 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: $oxide-blue;
+
+  .insights-dates {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
 
   .insights-control-divider {
     margin: 0 .5rem;
+    color: $dry-cement;
   }
 
   .insights-privacy-selector__selected {
