@@ -11,6 +11,6 @@ module('Integration | Component | insights-privacy-selector', function (hooks) {
 
     await render(hbs`{{insights-privacy-selector isPrivateInsightsViewable=isPrivateInsightsViewable}}`);
 
-    assert.equal(this.element.textContent.trim(), 'Insights:\n  public builds');
+    assert.equal(this.element.textContent.trim(), 'Insights:\npublic builds');
   });
 });

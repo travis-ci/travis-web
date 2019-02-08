@@ -112,6 +112,7 @@ module('Unit | Service | insights', function (hooks) {
           chartData: [],
         },
       },
+      private: false,
     };
 
     let result = await this.insightsService.getMetric(
