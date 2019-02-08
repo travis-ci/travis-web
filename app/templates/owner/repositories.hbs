@@ -15,18 +15,18 @@
       <div class="insights-controls-left">
         {{insights-date-display interval=dataInterval}}
         <span class="insights-control-divider">|</span>
-        {{insights-privacy-selector isPrivateInsightsViewable=isPrivateInsightsViewable}}
+        {{insights-privacy-selector isPrivateInsightsViewable=isPrivateInsightsViewable includePrivate=includePrivate}}
       </div>
       {{insight-tabs selectedTab=dataInterval setSubTab='setSubTab'}}
     </div>
     <div class="insights-grid">
-      {{build-count owner=model interval=dataInterval}}
-      {{build-minutes owner=model interval=dataInterval}}
-      {{queue-times owner=model interval=dataInterval}}
-      {{active-repo-count owner=model interval=dataInterval}}
+      {{build-count owner=model.owner interval=dataInterval private=includePrivate}}
+      {{build-minutes owner=model.owner interval=dataInterval}}
+      {{queue-times owner=model.owner interval=dataInterval}}
+      {{active-repo-count owner=model.owner interval=dataInterval}}
       {{!-- Will reinstate the concurrency chart after initial release --}}
-      {{!-- {{parallel-jobs-chart owner=model interval=dataInterval}} --}}
-      {{build-status-chart owner=model interval=dataInterval setNoBuilds='setNoBuilds'}}
+      {{!-- {{parallel-jobs-chart owner=model.owner interval=dataInterval}} --}}
+      {{build-status-chart owner=model.owner interval=dataInterval setNoBuilds='setNoBuilds'}}
       {{#if hasNoBuilds}}
         <div class="insights-grid__overlay">
           <h2>Looks like you haven't triggered any builds</h2>

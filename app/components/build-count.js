@@ -6,6 +6,7 @@ import { pluralize } from 'ember-inflector';
 export default Component.extend({
   classNames: ['insights-glance'],
   classNameBindings: ['isLoading:insights-glance--loading'],
+  private: false,
 
   insights: service(),
 
@@ -50,14 +51,14 @@ export default Component.extend({
     };
   }),
 
-  dataRequest: computed('owner', 'interval', function () {
+  dataRequest: computed('owner', 'interval', 'private', function () {
     return this.get('insights').getMetric(
       this.owner,
       this.interval,
       'builds',
       'sum',
       ['count_started'],
-      { calcTotal: true, calcAvg: true }
+      { calcTotal: true, calcAvg: true, private: false } // this.private }
     );
   }),
 

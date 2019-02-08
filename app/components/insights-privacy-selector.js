@@ -7,17 +7,23 @@ export default Component.extend({
   classNameBindings: ['isPrivateInsightsViewable:insights-privacy-selector--selectable'],
 
   isPrivateInsightsViewable: false,
-  selectedOption: 0,
+  includePrivate: false,
 
   availableOptions: computed('isPrivateInsightsViewable', function () {
-    const options = ['public builds'];
+    const options = [];
     if (this.isPrivateInsightsViewable) {
-      options.push('public and private builds');
+      if (this.includePrivate) {
+        options.push('public builds');
+      } else {
+        options.push('public and private builds');
+      }
     }
     return options;
   }),
 
-  selectedOptionText: computed('selectedOption', 'availableOptions', function () {
-    return this.availableOptions[this.selectedOption];
+  currentState: computed('isPrivateInsightsViewable', 'includePrivate', function () {
+    return (this.isPrivateInsightsViewable && this.includePrivate) ?
+      'public and private builds' :
+      'public builds';
   })
 });

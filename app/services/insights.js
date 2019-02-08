@@ -34,6 +34,7 @@ const defaultOptions = {
   intervalSettings: {},
   calcTotal: false,
   calcAvg: false,
+  private: false,
 };
 
 const apiTimeBaseFormat = 'YYYY-MM-DD HH:mm:ss';
@@ -92,6 +93,7 @@ export default Service.extend({
         owner_id: owner.id,
         end_time: endTime.format(apiTimeRequestFormat),
         start_time: startTime.format(apiTimeRequestFormat),
+        private: currentOptions.private,
       }
     };
     const defaultTimesMap = metrics.reduce((map, metric) => {
@@ -142,7 +144,7 @@ export default Service.extend({
           }
         });
 
-        return { data: aggData };
+        return { data: aggData, private: response.data.private === 'true' };
       }).catch(response => {
         // console.log('Err', response);
       }),

@@ -9,6 +9,7 @@ export default Controller.extend({
   dataInterval: 'month',
   hasNoBuilds: false,
   features: service(),
+  requestPrivate: true,
 
   isInsights: computed('tab', function () {
     return typeof this.tab === 'string' && this.tab.toLowerCase() === 'insights';
@@ -16,7 +17,12 @@ export default Controller.extend({
 
   isPrivateInsightsViewable: computed(function () {
     let pro = this.get('features.proVersion');
-    return pro;
+    let privateResponse = this.get('model.buildInfo.private') === true;
+    return pro && privateResponse;
+  }),
+
+  includePrivate: computed('isPrivateInsightsViewable', 'requestPrivate', function () {
+    return this.isPrivateInsightsViewable && this.requestPrivate;
   }),
 
   actions: {

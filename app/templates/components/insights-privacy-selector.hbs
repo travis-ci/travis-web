@@ -1,6 +1,5 @@
 <span>Insights:</span>
-{{#if (not isPrivateInsightsViewable)}}
-  <span class="insights-privacy-selector__selected">{{selectedOptionText}}</span>
-{{else}}
-  Selector
+<span class="insights-privacy-selector__selected">{{currentState}}</span>
+{{#if isPrivateInsightsViewable}}
+  <button type="button" class="insights-privacy-selector__button">V</button>
 {{/if}}

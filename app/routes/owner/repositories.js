@@ -1,9 +1,11 @@
 import TravisRoute from 'travis/routes/basic';
 import config from 'travis/config/environment';
 import { inject as service } from '@ember/service';
+import { hash } from 'rsvp';
 
 export default TravisRoute.extend({
   features: service(),
+  insights: service(),
 
   needsAuth: false,
 
@@ -18,8 +20,16 @@ export default TravisRoute.extend({
 
   model({ page, tab }, transition) {
     if (typeof tab === 'string' && tab.toLowerCase() === 'insights') {
-      const parentModel = this.modelFor('owner');
-      return parentModel;
+      const owner = this.modelFor('owner');
+      const buildInfo = this.get('insights').getMetric(
+        owner,
+        'day',
+        'builds',
+        'sum',
+        ['count_started'],
+        { private: true }
+      );
+      return hash({ owner, buildInfo });
     } else {
       const limit = config.pagination.profileReposPerPage;
       const offset = (page - 1) * limit;
