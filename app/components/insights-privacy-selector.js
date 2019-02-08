@@ -25,5 +25,11 @@ export default Component.extend({
     return (this.isPrivateInsightsViewable && this.includePrivate) ?
       'public and private builds' :
       'public builds';
-  })
+  }),
+
+  actions: {
+    handleSubmit() {
+      // console.log('submit');
+    }
+  },
 });

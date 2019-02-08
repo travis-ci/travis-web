@@ -19,6 +19,18 @@
     font-weight: 700;
   }
 
+  .ember-power-select-trigger {
+    display: inline-block;
+    vertical-align: middle;
+    border: none;
+    padding: 0 20px 0 0;
+    line-height: 1.45;
+
+    .ember-power-select-selected-item {
+      font-weight: 700;
+    }
+  }
+
   .travistab-nav.travistab-nav--insights {
     padding: 0;
     display: flex;
