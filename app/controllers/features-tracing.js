@@ -12,7 +12,7 @@ export default Controller.extend({
       } else {
         TravisTracer.enable();
       }
-      window.location = window.location;
+      window.location = window.location; // eslint-disable-line
     }
   }
 });

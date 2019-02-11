@@ -73,7 +73,7 @@ class Tracer {
     } else {
       this.enable();
     }
-    window.location = window.location;
+    window.location = window.location; // eslint-disable-line
   }
 }
 
