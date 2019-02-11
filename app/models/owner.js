@@ -5,8 +5,12 @@ import { computed } from '@ember/object';
 import { reads } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import config from 'travis/config/environment';
+import dynamicQuery from 'travis/utils/dynamic-query';
+
+const { profileReposPerPage: limit } = config.pagination;
 
 export default Model.extend({
+  features: service(),
   accounts: service(),
   raven: service(),
 
@@ -22,6 +26,34 @@ export default Model.extend({
   subscriptionPermissions: attr(),
 
   installation: belongsTo('installation', { async: false }),
+
+  githubAppsRepositories: dynamicQuery(function* ({ page = 1, filter = '' }) {
+    return yield this.fetchRepositories({ page, filter, ghApps: true, onOrg: false });
+  }),
+
+  githubAppsRepositoriesOnOrg: dynamicQuery(function* ({ page = 1, filter = '' }) {
+    return yield this.fetchRepositories({ page, filter, ghApps: true, onOrg: true });
+  }),
+
+  webhooksRepositories: dynamicQuery(function* ({ page = 1, filter = '' }) {
+    return yield this.fetchRepositories({ page, filter, ghApps: false });
+  }),
+
+  fetchRepositories({ page, filter, ghApps, onOrg }) {
+    const offset = (page - 1) * limit;
+    const owner = this.login;
+    const type = 'byOwner';
+    const isGhAppsEnabled = !!this.features.get('github-apps');
+
+    return ghApps && !isGhAppsEnabled ? [] : this.store.paginated('repo', {
+      'repository.managed_by_installation': ghApps,
+      'repository.active_on_org': onOrg,
+      'repository.active': isGhAppsEnabled && !onOrg ? true : undefined,
+      sort_by: 'name',
+      name_filter: filter,
+      limit, offset, custom: { owner, type, },
+    }, { live: false });
+  },
 
   subscriptionError: reads('accounts.subscriptionError'),
 
