@@ -26,7 +26,7 @@
       <ul class="list-icon">
         <li>
           {{#external-link-to href=commit.githubUrl}}
-            {{tooltip-on-element text='View commit on GitHub'}}
+            {{ember-tooltip text='View commit on GitHub'}}
             {{svg-jar 'icon-commit' class="icon"}}
             <span class="label-align inner-underline commit-commit">Commit
               <span class="label-align-item monospace">{{format-sha commit.sha}}</span>
@@ -38,7 +38,7 @@
           <li>
             {{#if item.isPullRequest}}
               {{#external-link-to href=item.commit.compareUrl}}
-                {{tooltip-on-element text='View Pull Request on GitHub'}}
+                {{ember-tooltip text='View Pull Request on GitHub'}}
                 {{svg-jar 'icon-compare' class="icon"}}
                 <span class="label-align inner-underline commit-compare">#{{item.pullRequestNumber}}: {{item.pullRequestTitle}}</span>
                 {{svg-jar 'icon-external-link' class="icon"}}
@@ -46,7 +46,7 @@
             {{else}}
               {{#if item.commit.compareUrl}}
                 {{#external-link-to href=item.commit.compareUrl }}
-                  {{tooltip-on-element text='View diff on GitHub'}}
+                  {{ember-tooltip text='View diff on GitHub'}}
                   {{svg-jar 'icon-compare' class="icon"}}
                   <span class="label-align inner-underline commit-compare">Compare
                     <span class="label-align-item monospace">{{short-compare-shas item.commit.compareUrl}}</span>
@@ -60,14 +60,14 @@
         <li>
           {{#if item.isTag}}
             {{#external-link-to href=urlGitHubTag class="commit-branch-url"}}
-              {{tooltip-on-element text='View tag on GitHub'}}
+              {{ember-tooltip text='View tag on GitHub'}}
               {{svg-jar 'icon-tag' class="icon"}}
               <span class="label-align inner-underline">Tag {{build.tag.name}}</span>
               {{svg-jar 'icon-external-link' class="icon"}}
             {{/external-link-to}}
           {{else}}
             {{#external-link-to href=urlGitHubBranch class="commit-branch-url"}}
-              {{tooltip-on-element text='View branch on GitHub'}}
+              {{ember-tooltip text='View branch on GitHub'}}
               {{svg-jar 'icon-branch' class="icon"}}
               <span class="label-align inner-underline">Branch
                 <span class="label-align-item monospace">{{build.branchName}}</span>
@@ -161,7 +161,7 @@
   <div class="job-container">
     <div class="job-detail-container">
       <div class="detail-job-os {{os}}">
-        {{tooltip-on-element text=os}}
+        {{ember-tooltip text=os}}
         {{svg-jar osIcon class='icon'}}
       </div>
       {{#if name}}

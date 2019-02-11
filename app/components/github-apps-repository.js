@@ -1,18 +1,22 @@
 import Component from '@ember/component';
-import { computed } from 'ember-decorators/object';
-import { and } from 'ember-decorators/object/computed';
+import { computed } from '@ember/object';
+import { and } from '@ember/object/computed';
 
 export default Component.extend({
   tagName: 'li',
   classNames: ['profile-repolist-item'],
   classNameBindings: ['migratable'],
 
-  @computed('repository.permissions')
-  admin(permissions) {
+  admin: computed('repository.permissions', function () {
+    let permissions = this.get('repository.permissions');
     if (permissions) {
       return permissions.admin;
     }
-  },
+  }),
 
-  @and('migrationEnabled', 'repository.permissions.migrate') migratable: null,
+  migratable: and('migrationEnabled', 'repository.permissions.migrate'),
+
+  migrationInProgress: computed('repository.migrationStatus', function () {
+    return ['migrating', 'queued'].includes(this.get('repository.migrationStatus'));
+  }),
 });

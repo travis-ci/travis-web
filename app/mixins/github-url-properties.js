@@ -1,12 +1,13 @@
 import Mixin from '@ember/object/mixin';
-import { service } from 'ember-decorators/service';
-import { computed } from 'ember-decorators/object';
+import { inject as service } from '@ember/service';
+import { computed } from '@ember/object';
 
 export default Mixin.create({
-  @service externalLinks: null,
+  externalLinks: service(),
 
-  @computed('repo.slug', 'build.pullRequestNumber')
-  urlGithubPullRequest(slug, pullRequestNumber) {
+  urlGithubPullRequest: computed('repo.slug', 'build.pullRequestNumber', function () {
+    let slug = this.get('repo.slug');
+    let pullRequestNumber = this.get('build.pullRequestNumber');
     return this.get('externalLinks').githubPullRequest(slug, pullRequestNumber);
-  },
+  }),
 });

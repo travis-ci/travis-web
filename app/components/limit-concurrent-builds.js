@@ -1,19 +1,19 @@
 import { debounce } from '@ember/runloop';
 import Component from '@ember/component';
-import { computed } from 'ember-decorators/object';
+import { computed } from '@ember/object';
 import { task } from 'ember-concurrency';
 
 export default Component.extend({
   classNames: ['limit-concurrent-builds'],
 
-  @computed('enabled')
-  description(enabled) {
+  description: computed('enabled', function () {
+    let enabled = this.get('enabled');
     let description = 'Limit concurrent jobs';
     if (enabled) {
       description += '  ';
     }
     return description;
-  },
+  }),
 
   limitChanged(value) {
     let limit, repo, savingFinished;

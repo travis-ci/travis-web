@@ -1,9 +1,9 @@
 import TravisRoute from 'travis/routes/basic';
 import config from 'travis/config/environment';
-import { service } from 'ember-decorators/service';
+import { inject as service } from '@ember/service';
 
 export default TravisRoute.extend({
-  @service features: null,
+  features: service(),
 
   needsAuth: false,
 
@@ -16,7 +16,7 @@ export default TravisRoute.extend({
   model({ page }, transition) {
     const limit = config.pagination.profileReposPerPage;
     const offset = (page - 1) * limit;
-    const owner = transition.params.owner.owner;
+    const owner = this.paramsFor('owner').owner;
     const type = 'byOwner';
     const sort_by = 'default_branch.last_build:desc'; // eslint-disable-line
 

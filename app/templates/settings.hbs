@@ -6,14 +6,14 @@
       <li>{{settings-switch active=model.settings.build_pushes repo=repo description="Build pushed branches" key="build_pushes"}}
         <a href="https://docs.travis-ci.com/user/web-ui/#build-pushed-branches"
            title="about branch updates" class="settings-tooltip">
-           {{tooltip-on-element text='Read more about branch updates'}}
+           {{ember-tooltip text='Read more about branch updates'}}
            {{svg-jar 'icon-help' class="icon-help"}}</a>
       </li>
       <li>{{limit-concurrent-builds value=model.settings.maximum_number_of_builds enabled=concurrentBuildsLimit repo=repo}}</li>
       <li>{{settings-switch active=model.settings.build_pull_requests repo=repo description="Build pushed pull requests" key="build_pull_requests"}}
         <a href="https://docs.travis-ci.com/user/web-ui/#build-pushed-pull-requests"
            title="about pull request updates" class="settings-tooltip">
-           {{tooltip-on-element text='Read more about pull request updates'}}
+           {{ember-tooltip text='Read more about pull request updates'}}
            {{svg-jar 'icon-help' class="icon-help"}}</a>
       </li>
     </ul>
@@ -97,3 +97,30 @@
   </section>
 {{/if}}
 </div>
+
+{{#if displaySettingsDisabledAfterMigrationModal}}
+  {{#modal-dialog
+     targetAttachment="center"
+     translucentOverlay=true}}
+     <div data-test-settings-disabled-after-migration-modal>
+      <h3 class="h3--teal">Your repository has been migrated to travis-ci.com</h3>
+      <p>As a result, your repository is now in a read-only state.
+      </p>
+      <p>
+        If you wish to configure your repository, you can do so by visiting the
+        Settings page on travis-ci.com.
+        Read-only historical data, such as Requests, Build History and Branches can still be viewed.
+      </p>
+      <p>
+        <br />
+        <br />
+        {{#link-to 'builds' repo class="button--white-and-teal"}}
+          Return to Build History
+        {{/link-to}}
+        {{#external-link-to class="button--white-and-teal" href=migratedRepositorySettingsLink}}
+          Edit Settings (travis-ci.com)
+        {{/external-link-to}}
+      </p>
+     </div>
+  {{/modal-dialog}}
+{{/if}}

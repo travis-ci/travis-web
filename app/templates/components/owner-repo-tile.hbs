@@ -2,10 +2,10 @@
   <div class="owner-tile-visibility">
     {{#if repo.private}}
       {{svg-jar 'icon-lock' alt='Private repository' class='icon private'}}
-      {{tooltip-on-element text='Private repository'}}
+      {{ember-tooltip text='Private repository'}}
     {{else}}
       {{svg-jar 'icon-os' alt='Public repository' class='icon public'}}
-      {{tooltip-on-element text='Public repository'}}
+      {{ember-tooltip text='Public repository'}}
     {{/if}}
   </div>
 </div>
@@ -47,7 +47,7 @@
         <p class="row-content">
           {{svg-jar 'icon-compare' class="icon"}}
           {{#external-link-to href=repo.defaultBranch.lastBuild.commit.compareUrl class="label-align"}}
-            {{tooltip-on-element text='View diff on GitHub'}}
+            {{ember-tooltip text='View diff on GitHub'}}
             <span class="label-align commit-compare monospace">{{format-sha repo.defaultBranch.lastBuild.commit.sha}}</span>
           {{/external-link-to}}
           {{svg-jar 'icon-external-link' class="icon"}}

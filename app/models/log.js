@@ -1,32 +1,27 @@
 import ArrayProxy from '@ember/array/proxy';
-import EmberObject from '@ember/object';
+import EmberObject, { computed } from '@ember/object';
 import { fetch, Headers } from 'fetch';
 import config from 'travis/config/environment';
-import { service } from 'ember-decorators/service';
-import { computed } from 'ember-decorators/object';
-import { gt } from 'ember-decorators/object/computed';
+import { inject as service } from '@ember/service';
+import { gt } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
 
 export default EmberObject.extend({
-  @service features: null,
-  @service auth: null,
-  @service storage: null,
+  features: service(),
+  auth: service(),
+  storage: service(),
 
   version: 0,
   length: 0,
-  @gt('parts.length', 0) hasContent: null,
+  hasContent: gt('parts.length', 0),
 
-  @computed()
-  parts() {
-    return ArrayProxy.create({
-      content: []
-    });
-  },
+  parts: computed(() => ArrayProxy.create({
+    content: []
+  })),
 
-  @computed()
-  noRendering() {
+  noRendering: computed(function () {
     return this.get('storage').getItem('travis.logRendering') === 'false';
-  },
+  }),
 
   clearParts() {
     let parts;

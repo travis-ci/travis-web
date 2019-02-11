@@ -42,13 +42,13 @@
         {{else}}
           {{request-icon event=build.eventType state=build.state}}
         {{/if}}
-        <span class="label-align inner-underline">#{{build.number}} {{build.state}}</span>
+        <span class="label-align inner-underline">#{{build.number}} {{humanize-state build.state}}</span>
       {{/link-to}}
     {{/if}}
   </h3>
   <div class="row-item row-commit">
     {{#external-link-to href=build.commit.githubUrl}}
-      {{tooltip-on-element text='View commit on GitHub'}}
+      {{ember-tooltip text='View commit on GitHub'}}
       {{svg-jar 'icon-commit' class="icon"}}
       <span class="label-align inner-underline monospace">{{format-sha build.commit.sha}}</span>
       {{svg-jar 'icon-external-link' class="icon"}}
@@ -64,7 +64,7 @@
     </div>
   </div>
   <div class="row-item row-calendar">
-    <div title="{{if build.finishedAt (concat "Finished " (pretty-date build.formattedFinishedAt))}}">
+    <div title="{{if build.finishedAt (concat "Finished " build.formattedFinishedAt)}}">
       {{svg-jar 'icon-calendar' class="icon"}}
       <time class="label-align" datetime={{build.finishedAt}}>{{format-time build.finishedAt}}</time>
     </div>

@@ -4,18 +4,18 @@ import Owner from 'travis/models/owner';
 import ArrayProxy from '@ember/array/proxy';
 
 import { next, run, later } from '@ember/runloop';
-import { observer } from '@ember/object';
+import { observer, computed } from '@ember/object';
 import config from 'travis/config/environment';
 import attr from 'ember-data/attr';
-import { service } from 'ember-decorators/service';
-import { computed } from 'ember-decorators/object';
+import { inject as service } from '@ember/service';
 
 export default Owner.extend({
-  @service ajax: null,
+  ajax: service(),
   // TODO: this totally not should be needed here
-  @service sessionStorage: null,
+  sessionStorage: service(),
 
   email: attr(),
+  emails: attr(), // list of all known user emails
   token: attr(),
   gravatarId: attr(),
   allowMigration: attr(),
@@ -24,10 +24,11 @@ export default Owner.extend({
   type: 'user',
   isUser: true,
 
-  @computed('name', 'login')
-  fullName(name, login) {
+  fullName: computed('name', 'login', function () {
+    let name = this.get('name');
+    let login = this.get('login');
     return name || login;
-  },
+  }),
 
   init() {
     this.isSyncingDidChange();
@@ -42,56 +43,55 @@ export default Owner.extend({
     });
   }),
 
-  @computed('login')
-  urlGithub(login) {
+  urlGithub: computed('login', function () {
+    let login = this.get('login');
     return `${config.sourceEndpoint}/${login}`;
-  },
+  }),
 
-  @computed()
-  _rawPermissions() {
+  _rawPermissions: computed(function () {
     return this.get('ajax').get('/users/permissions');
-  },
+  }),
 
-  @computed('_rawPermissions')
-  permissions(_rawPermissions) {
+  permissions: computed('_rawPermissions', function () {
+    let _rawPermissions = this.get('_rawPermissions');
     let permissions = ArrayProxy.create({
       content: []
     });
     _rawPermissions.then(data => permissions.set('content', data.permissions));
     return permissions;
-  },
+  }),
 
-  @computed('_rawPermissions')
-  adminPermissions(_rawPermissions) {
+  adminPermissions: computed('_rawPermissions', function () {
+    let _rawPermissions = this.get('_rawPermissions');
     let permissions = ArrayProxy.create({
       content: []
     });
     _rawPermissions.then(data => permissions.set('content', data.admin));
     return permissions;
-  },
+  }),
 
-  @computed('_rawPermissions')
-  pullPermissions(_rawPermissions) {
+  pullPermissions: computed('_rawPermissions', function () {
+    let _rawPermissions = this.get('_rawPermissions');
     const permissions = ArrayProxy.create({
       content: []
     });
     _rawPermissions.then(data => permissions.set('content', data.pull));
     return permissions;
-  },
+  }),
 
-  @computed('_rawPermissions')
-  pushPermissions(_rawPermissions) {
+  pushPermissions: computed('_rawPermissions', function () {
+    let _rawPermissions = this.get('_rawPermissions');
     const permissions = ArrayProxy.create({
       content: []
     });
     _rawPermissions.then(data => permissions.set('content', data.push));
     return permissions;
-  },
+  }),
 
-  @computed('_rawPermissions')
-  pushPermissionsPromise(_rawPermissions) {
+  pushPermissionsPromise: computed('_rawPermissions', function () {
+    let _rawPermissions = this.get('_rawPermissions');
     return _rawPermissions.then(data => data.pull);
-  },
+  }),
 
   hasAccessToRepo(repo) {
     let id = repo.get ? repo.get('id') : repo;

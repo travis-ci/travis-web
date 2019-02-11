@@ -1,6 +1,7 @@
 import $ from 'jquery';
 import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
+import generatePusherPayload from 'travis/tests/helpers/generate-pusher-payload';
 
 import jobPage from 'travis/tests/pages/job';
 import getFaviconUri from 'travis/utils/favicon-data-uris';
@@ -63,12 +64,16 @@ test('visiting job-view', function (assert) {
   });
 });
 
-test('visiting single-job build shows config messages', function (assert) {
-  let repo = server.create('repository', { slug: 'travis-ci/travis-web' }),
-    branch = server.create('branch', { name: 'acceptance-tests' });
 
-  let  gitUser = server.create('git-user', { name: 'Mr T', avatar_url: '/assets/travis-ci/travis-web.svg' });
-  let commit = server.create('commit', { author: gitUser, committer: gitUser, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
+test('visiting a job in created(received) state', async function (assert) {
+  let branch = server.create('branch', { name: 'acceptance-tests' });
+  let repo = server.create('repository', { slug: 'travis-ci/travis-web', defaultBranch: branch });
+  let commit = server.create('commit', {
+    id: 100,
+    sha: 'abcd',
+    branch: 'acceptance-tests',
+    message: 'This is a message',
+  });
 
   let request = server.create('request');
   server.create('message', {
@@ -81,62 +86,111 @@ test('visiting single-job build shows config messages', function (assert) {
     }
   });
 
-  server.create('message', {
-    request,
-    level: 'warn',
-    key: 'language',
-    code: 'unknown_default',
-    args: {
-      value: '__garnet__',
-      default: 'ruby'
-    }
+  let user = server.create('user', {
+    name: 'Mr T',
+    avatar_url: '/images/favicon-gray.png'
   });
 
-  server.create('message', {
-    request,
-    level: 'error',
-    key: 'root',
-    code: 'unknown_key',
-    args: {
-      key: 'filter_secrets',
-      value: 'false'
-    }
+  let build = server.create('build', {
+    id: 100,
+    number: 15,
+    repository: repo,
+    commit: commit,
+    pull_request: false,
+    event_type: 'push',
+    state: 'created',
+    started_at: new Date(),
+    createdBy: user
   });
 
-  let build = server.create('build', { repository: repo, state: 'passed', commit, branch, request });
-  let job = server.create('job', { number: '1234.1', repository: repo, state: 'passed', build, commit });
-  commit.job = job;
-
-  job.save();
-  commit.save();
+  let job = server.create('job', {
+    id: 100,
+    number: '1234.1',
+    repository: repo,
+    state: 'created',
+    build,
+    commit
+  });
 
   server.create('log', { id: job.id });
 
-  visit('/travis-ci/travis-web/builds/' + build.id);
-  waitForElement('#log > .log-line');
+  await visit('/travis-ci/travis-web/jobs/' + job.id);
+
+  const createdState = {
+    build: generatePusherPayload(build, { state: 'created' }),
+    job: generatePusherPayload(job, { state: 'created' }),
+    commit: generatePusherPayload(commit),
+    repository: generatePusherPayload(repo, { current_build_id: build.id })
+  };
+
+  this.application.pusher.receive('job:created', createdState);
 
   andThen(() => {
-    assert.equal(jobPage.ymlMessages.length, 3, 'expected three yml messages');
+    assert.equal(jobPage.state, '#1234.1 received', 'displays build number');
 
-    jobPage.ymlMessages[0].as(info => {
-      assert.ok(info.icon.isInfo, 'expected the first yml message to be an info');
-      assert.equal(info.message, 'your repository must be feature flagged for group to be used');
-    });
+    assert.notOk(jobPage.hasTruncatedLog);
+    assert.ok(jobPage.waitingStates.isVisible);
 
-    jobPage.ymlMessages[1].as(warning => {
-      assert.ok(warning.icon.isWarning, 'expected the second yml message to be a warning');
-      assert.equal(warning.message, 'dropping unknown value: __garnet__, defaulting to: ruby');
-    });
+    assert.ok(jobPage.waitingStates.one.isLoading);
+    assert.ok(jobPage.waitingStates.firstLoadingLine.isInactive);
+    assert.ok(jobPage.waitingStates.two.isInactive);
+    assert.ok(jobPage.waitingStates.secondLoadingLine.isInactive);
+    assert.ok(jobPage.waitingStates.three.isInactive);
 
-    jobPage.ymlMessages[2].as(error => {
-      assert.ok(error.icon.isError, 'expected the third yml message to be an error');
-      assert.equal(error.message, 'dropping unknown key filter_secrets (false)');
-    });
+    assert.equal(jobPage.waitingStates.firstMessage.text, 'Job received');
+    assert.equal(jobPage.waitingStates.secondMessage.text, 'Queued');
+    assert.equal(jobPage.waitingStates.thirdMessage.text, 'Booting virtual machine');
 
-    assert.equal(jobPage.createdBy.text, 'Mr T authored and committed');
+    const queuedState = {
+      build: generatePusherPayload(build, { state: 'queued' }),
+      job: generatePusherPayload(job, { state: 'queued' }),
+      commit: generatePusherPayload(commit),
+      repository: generatePusherPayload(repo, { current_build_id: build.id })
+    };
+
+    this.application.pusher.receive('job:queued', queuedState);
   });
 
-  percySnapshot(assert);
+  andThen(() => {
+    assert.equal(jobPage.state, '#1234.1 queued', 'displays build number');
+
+    assert.ok(jobPage.waitingStates.isVisible);
+
+    assert.ok(jobPage.waitingStates.one.isLoaded);
+    assert.ok(jobPage.waitingStates.firstLoadingLine.isActive);
+    assert.ok(jobPage.waitingStates.two.isLoading);
+    assert.ok(jobPage.waitingStates.secondLoadingLine.isInactive);
+    assert.ok(jobPage.waitingStates.three.isInactive);
+
+    assert.equal(jobPage.waitingStates.firstMessage.text, 'Job received');
+    assert.equal(jobPage.waitingStates.secondMessage.text, 'Queued');
+    assert.equal(jobPage.waitingStates.thirdMessage.text, 'Booting virtual machine');
+
+    const receivedState = {
+      build: generatePusherPayload(build, { state: 'received' }),
+      job: generatePusherPayload(job, { state: 'received' }),
+      commit: generatePusherPayload(commit),
+      repository: generatePusherPayload(repo, { current_build_id: build.id })
+    };
+
+    this.application.pusher.receive('job:received', receivedState);
+  });
+
+  andThen(() => {
+    assert.equal(jobPage.state, '#1234.1 booting', 'displays build number');
+
+    assert.ok(jobPage.waitingStates.isVisible);
+
+    assert.ok(jobPage.waitingStates.one.isLoaded);
+    assert.ok(jobPage.waitingStates.firstLoadingLine.isActive);
+    assert.ok(jobPage.waitingStates.two.isLoaded);
+    assert.ok(jobPage.waitingStates.secondLoadingLine.isActive);
+    assert.ok(jobPage.waitingStates.three.isLoading);
+
+    assert.equal(jobPage.waitingStates.firstMessage.text, 'Job received');
+    assert.equal(jobPage.waitingStates.secondMessage.text, 'Queued');
+    assert.equal(jobPage.waitingStates.thirdMessage.text, 'Booting virtual machine');
+  });
 });
 
 test('visiting a job with a truncated log', function (assert) {
@@ -207,7 +261,7 @@ I am another line finished by a CR.\rI replace that line?\r${ESCAPE}[0mI am the 
 This should also be gone.\r This should have replaced it.
 A particular log formation is addressed here, this should remain.\r${ESCAPE}[0m\nThis should be on a separate line.
 But it must be addressed repeatedly!\r${ESCAPE}[0m\nAgain.
-I should not be blank.\r${ESCAPE}
+I should not be blank.\r${ESCAPE}[0m
 ${ESCAPE}[31m-}
 ${ESCAPE}(B[m[32m+},
 `;
@@ -222,6 +276,8 @@ ${ESCAPE}(B[m[32m+},
   jobPage.toggleLog();
 
   andThen(function () {
+    assert.notOk(jobPage.hasWaitingStates);
+
     assert.equal(jobPage.logLines[0].text, 'I am the first line.');
 
     assert.equal(jobPage.logFolds[0].name, 'afold');
@@ -278,8 +334,7 @@ ${ESCAPE}(B[m[32m+},
     assert.equal(jobPage.logLines[20].text, 'But it must be addressed repeatedly!');
     assert.equal(jobPage.logLines[21].text, 'Again.');
 
-    // TODO this is currently blank!
-    // assert.equal(jobPage.logLines[22].text, 'I should not be blank.');
+    assert.equal(jobPage.logLines[22].text, 'I should not be blank.');
 
     assert.equal(jobPage.logLines[24].text, '+},');
   });

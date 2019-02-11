@@ -1,16 +1,15 @@
 import Component from '@ember/component';
-import { computed } from 'ember-decorators/object';
-import { service } from 'ember-decorators/service';
+import { computed } from '@ember/object';
+import { inject as service } from '@ember/service';
 
 export default Component.extend({
-  @service tabStates: null,
+  tabStates: service(),
 
-  @computed('viewingOwned')
-  noReposMessage(tab) {
-    if (tab === 'owned') {
+  noReposMessage: computed('viewingOwned', function () {
+    if (this.get('viewingOwned') === 'owned') {
       return 'You don\'t have any repos set up on Travis CI';
     } else {
       return 'No repositories found';
     }
-  },
+  }),
 });

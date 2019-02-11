@@ -11,6 +11,8 @@ moduleForAcceptance('Acceptance | builds/pull requests', {
       login: 'travisci',
     });
 
+    this.branch = server.create('branch', { name: 'wetsuwetenstrong' });
+
     signInUser(this.currentUser);
   },
 });
@@ -93,7 +95,9 @@ test('view and cancel pull requests', function (assert) {
       assert.equal(pullRequest.message, 'A pull request');
       assert.equal(pullRequest.committer, 'Travis CI');
       assert.equal(pullRequest.commitSha, '1234567');
-      assert.equal(pullRequest.commitDate, 'less than a minute ago');
+
+      assert.equal(pullRequest.commitDate.text, 'less than a minute ago');
+
       assert.equal(pullRequest.duration, '-');
 
       assert.ok(pullRequest.cancelButton.visible, 'expected the cancel button to be visible');

@@ -1,6 +1,6 @@
 import { Serializer } from 'ember-cli-mirage';
 import { isArray } from '@ember/array';
-import { merge } from '@ember/polyfills';
+import { assign } from '@ember/polyfills';
 
 export default Serializer.extend({
   serialize(object) {
@@ -17,7 +17,7 @@ export default Serializer.extend({
         '@href': '/features',
         '@representation': 'standard'
       };
-      return merge(metadata, object.attrs);
+      return assign(metadata, object.attrs);
     }
   }
 });

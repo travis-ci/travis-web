@@ -7,13 +7,15 @@ import {
   isHidden,
   isVisible,
   selectable,
-  fillable
+  fillable,
+  isPresent
 } from 'ember-cli-page-object';
 
 export default create({
   visit: visitable(':owner/:repo'),
   popupIsHidden: isHidden('.trigger-build-modal'),
   popupTriggerLinkIsHidden: isHidden('.option-dropdown .trigger-build-anchor'),
+  popupTriggerLinkIsPresent: isPresent('.option-dropdown .trigger-build-anchor'),
   openPopup: clickable('.option-dropdown .trigger-build-anchor'),
   popupIsVisible: isVisible('.trigger-build-modal'),
 

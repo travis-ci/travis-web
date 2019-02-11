@@ -25,7 +25,7 @@
       {{#if branch.last_build}}
         {{#link-to "build" branch.last_build.id}}
           {{svg-jar 'icon-hash' class=(concat branch.last_build.state ' icon')}}
-          <span class="label-align inner-underline {{branch.last_build.state}}">{{branch.last_build.number}} {{branch.last_build.state}}</span>
+          <span class="label-align inner-underline {{branch.last_build.state}}">{{branch.last_build.number}} {{humanize-state branch.last_build.state}}</span>
         {{/link-to}}
       {{else}}
         {{request-icon event=branch.last_build.eventType state=branch.last_build.state}} -
@@ -48,7 +48,7 @@
   <div class="row-commit">
     <div class="row-item">
       {{#external-link-to href=branch.last_build.commit.githubUrl}}
-        {{tooltip-on-element text='View commit on GitHub'}}
+        {{ember-tooltip text='View commit on GitHub'}}
         {{svg-jar 'icon-commit' class="icon"}}
         <span class="inner-underline monospace">
           {{#if branch.last_build}}

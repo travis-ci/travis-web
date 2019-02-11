@@ -1,6 +1,6 @@
 %button {
   display: inline-block;
-  padding: 0.7em 0.8rem 0.6em;
+  padding: 0.7em 0.8rem;
   cursor: pointer;
   white-space: nowrap;
   border-radius: 2px;
@@ -30,6 +30,13 @@
   text-align: center;
   color: white;
   background-color: darken($pebble-grey, 10);
+
+  &.already-migrated {
+    background-color: $oxide-blue;
+    &:hover {
+      background-color: darken($oxide-blue, 5%);
+    }
+  }
 }
 
 .no-button {
@@ -147,6 +154,21 @@
   }
 }
 
+.button--white-and-teal {
+  @extend %button;
+
+  margin-right: 1em;
+
+  color: $oxide-blue;
+  border: 1px solid $oxide-blue;
+
+  &:hover,
+  &:active {
+    background-color: $oxide-blue;
+    color: white;
+  }
+}
+
 .button--orange {
   @extend %button;
 
@@ -161,6 +183,12 @@
 
 .button--compact {
   padding: 3px 7px;
+}
+
+.button--large {
+  font-size: 1.2em;
+  padding: 18px 30px;
+  border-radius: 3px;
 }
 
 .inactive {

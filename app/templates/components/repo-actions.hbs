@@ -4,7 +4,7 @@
   {{else}}
     <div class='action-button-container'>
       <button data-test-repo-actions-cancel-button {{action (perform cancel)}} class="action-button--cancel" type="button" aria-label="Cancel {{type}}">
-        {{#if tooltips}}{{#tooltip-on-element class=(if mobilelabels 'hidden-on-mobile')}}Cancel {{type}}{{/tooltip-on-element}}{{/if}}
+        {{#if tooltips}}{{#ember-tooltip class=(if mobilelabels 'hidden-on-mobile')}}Cancel {{type}}{{/ember-tooltip}}{{/if}}
         {{svg-jar 'icon-failed' class="icon"}}
         <span class="label-align">Cancel {{type}}</span>
       </button>
@@ -16,7 +16,7 @@
   {{else}}
     <div class='action-button-container'>
       <button {{action (perform restart)}} class="action-button--restart" aria-label="Restart {{type}}" type="button">
-        {{#if tooltips}}{{#tooltip-on-element class=(if mobilelabels 'hidden-on-mobile')}}Restart {{type}}{{/tooltip-on-element}}{{/if}}
+        {{#if tooltips}}{{#ember-tooltip class=(if mobilelabels 'hidden-on-mobile')}}Restart {{type}}{{/ember-tooltip}}{{/if}}
         {{svg-jar 'icon-restart' class="icon"}}
         <span class="label-align">Restart {{type}}</span>
       </button>
@@ -24,7 +24,7 @@
     {{#if (and features.debugBuilds canDebug)}}
       <div class='action-button-container'>
         <button data-test-repo-actions-debug-button {{action (perform debug)}} class="action-button--debug" aria-label="Restart as debug {{type}}" type="button">
-          {{#if tooltips}}{{#tooltip-on-element class=(if mobilelabels 'hidden-on-mobile')}}Restart as debug {{type}}{{/tooltip-on-element}}{{/if}}
+          {{#if tooltips}}{{#ember-tooltip class=(if mobilelabels 'hidden-on-mobile')}}Restart as debug {{type}}{{/ember-tooltip}}{{/if}}
           {{svg-jar 'icon-debug' class="icon"}}
           <span class="label-align">Debug {{type}}</span>
         </button>

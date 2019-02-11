@@ -79,11 +79,29 @@ export default create({
   },
 
   crons: collection('.settings-list--crons .settings-cron', {
-    branchName: text('.branch-name'),
+    branchName: {
+      scope: '.branch-name',
+      text: text('.label-align'),
+      title: attribute('title'),
+    },
+
     interval: text('.interval'),
-    nextRun: text('.next-run'),
-    lastRun: text('.last-run'),
-    dontRunIfRecentBuildExistsText: text('.dont-run-if-recent-build-exists'),
+
+    nextRun: {
+      scope: '.next-run',
+      title: attribute('title'),
+    },
+
+    lastRun: {
+      scope: '.last-run',
+      title: attribute('title'),
+    },
+
+    dontRunIfRecentBuildExists: {
+      scope: '.dont-run-if-recent-build-exists',
+      title: attribute('title'),
+    },
+
     delete: clickable('.cron-job-delete')
   }),
 

@@ -114,7 +114,7 @@ module('Acceptance | profile/migration', function (hooks) {
 
     await click('[data-test-repository-migration-modal-confirm-migration-button]');
     assert.dom('[data-test-repository-migration-modal]').doesNotExist();
-    assert.dom('[data-test-migration-status="migrating"]').exists();
+    assert.dom('[data-test-migration-status="queued"]').exists();
 
     let { owner } = getContext();
     let pusherService = owner.lookup('service:pusher');
@@ -192,15 +192,15 @@ module('Acceptance | profile/migration', function (hooks) {
 
     await click('[data-test-repository-migration-modal-confirm-migration-button]');
     assert.dom('[data-test-repository-migration-modal]').doesNotExist();
-    assert.dom('[data-test-migration-status="migrating"]').exists();
+    assert.dom('[data-test-migration-status="queued"]').exists();
 
     let { owner } = getContext();
     let pusherService = owner.lookup('service:pusher');
-    pusherService.receive('repository:migration', { repositoryId: this.lockedRepository.id, status: 'failed' });
+    pusherService.receive('repository:migration', { repositoryId: this.lockedRepository.id, status: 'failure' });
 
 
-    await waitFor('[data-test-migration-status="failed"]');
-    assert.dom('[data-test-migration-status="failed"]').exists();
+    await waitFor('[data-test-migration-status="failure"]');
+    assert.dom('[data-test-migration-status="failure"]').exists();
 
     percySnapshot(assert);
   });
@@ -246,6 +246,45 @@ module('Acceptance | profile/migration', function (hooks) {
 
     await click('[data-test-repository-migration-modal-cancel-migration-button]');
     assert.dom('[data-test-repository-migration-modal]').doesNotExist();
+    assert.dom('[data-test-migration-status]').doesNotExist();
+  });
+
+  test('migate button hidden if already migrated', async function (assert) {
+    enableFeature('github-apps');
+    enableFeature('pro-version');
+
+    this.user = server.create('user', {
+      allowMigration: true
+    });
+
+    // create locked GitHub repository
+    this.lockedRepository = server.create('repository', {
+      name: 'github-apps-locked-repository',
+      owner: {
+        login: this.user.login,
+      },
+      active: true,
+      managed_by_installation: true,
+      private: false,
+      active_on_org: true,
+      migrationStatus: 'migrated',
+      permissions: {
+        migrate: true
+      },
+    });
+
+    // create GitHub Apps installation
+    server.create('installation', {
+      owner: this.user,
+      github_id: 2691
+    });
+    this.user.save();
+
+    signInUser(this.user);
+
+    await visit(`/profile/${this.user.login}`);
+
+    assert.dom('[data-test-locked-github-app-repository="github-apps-locked-repository"]').exists();
     assert.dom('[data-test-migration-status]').doesNotExist();
   });
 });

@@ -23,7 +23,7 @@
       </div>
       <div class='row-content no-hover'>
         {{#external-link-to data-test-branch-name href=urlGitHubBranch}}
-          {{tooltip-on-element text='View branch on GitHub'}}
+          {{ember-tooltip text='View branch on GitHub' popperContainer='body'}}
           {{svg-jar 'icon-branch' class="icon"}}
           <span class='label-align inner-underline'>{{build.branchName}}</span>
           {{svg-jar 'icon-external-link' class="icon"}}
@@ -35,12 +35,12 @@
       <div>
         {{#link-to 'build' build.repo.owner.login build.repo.name build.id data-test-state-number class='row-content color'}}
           {{request-icon event=build.eventType state=build.state}}
-          <span class='inner-underline'>#{{build.number}} {{build.state}}</span>
+          <span class='inner-underline'>#{{build.number}} {{humanize-state build.state}}</span>
         {{/link-to}}
       </div>
       <div>
         {{#external-link-to data-test-commit-sha href=build.commit.githubUrl class='row-content monospace'}}
-          {{tooltip-on-element text='View commit on GitHub'}}
+          {{ember-tooltip text='View commit on GitHub'}}
           {{svg-jar 'icon-commit' class="icon"}}
           <span class="label-align inner-underline">{{format-sha build.commit.sha}}</span>
           {{svg-jar 'icon-external-link' class="icon"}}
@@ -49,15 +49,15 @@
     </section>
 
     <section class='times'>
-      <div title="{{if build.elapsedTime (concat "Started " (pretty-date build.startedAt))}}" class="commit-stopwatch row-content">
+      <div title="{{if build.elapsedTime (concat "Started " (pretty-date build.startedAt))}}" class="commit-stopwatch row-content" data-test-duration>
         {{svg-jar 'icon-stopwatch' class="icon"}}
-        <span class="label-align" data-test-duration>
+        <span class="label-align">
           <time datetime="PT{{build.elapsedTime}}S">{{format-duration build.elapsedTime}}</time>
         </span>
       </div>
-      <div class="row-content" title="{{build.finishedAt}}">
+      <div class="row-content" title="{{build.finishedAt}}" data-test-finished>
         {{svg-jar 'icon-calendar' class="icon"}}
-        <span class="label-align" data-test-finished>
+        <span class="label-align">
           {{#if build.finishedAt}}
           {{format-time build.finishedAt}}
           {{else}}still running{{/if}}</span>

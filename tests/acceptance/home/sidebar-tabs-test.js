@@ -4,6 +4,7 @@ import { visit, click } from '@ember/test-helpers';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { enableFeature } from 'ember-feature-flags/test-support';
 import { percySnapshot } from 'ember-percy';
+import { prettyDate } from 'travis/helpers/pretty-date';
 
 module('Acceptance | home/sidebar tabs', function (hooks) {
   setupApplicationTest(hooks);
@@ -81,16 +82,19 @@ module('Acceptance | home/sidebar tabs', function (hooks) {
   test('we query the API for all the jobs', async function (assert) {
     enableFeature('show-running-jobs-in-sidebar');
 
+    let startedAt = new Date();
+
     // the default mirage limit is 10, so if we create 15 jobs for each queued and
     // started lists, the app code will have to do 2 queries
     server.createList('job', 15, { state: 'created', repository: this.repo, commit: this.commit, build: this.build });
-    server.createList('job', 15, { state: 'started', repository: this.repo, commit: this.commit, build: this.build });
+    server.createList('job', 15, { state: 'started', repository: this.repo, commit: this.commit, build: this.build, started_at: startedAt });
 
     await visit('/');
     await click('[data-test-sidebar-running-tab] a');
 
     assert.dom('[data-test-sidebar-running-tab]').hasText('Running (15/31)', 'running tab correctly shows number of started/queued jobs');
     assert.dom('[data-test-sidebar-running-job]').exists({ count: 15 });
+    assert.dom('[data-test-sidebar-running-job]:first-of-type time.duration').hasAttribute('title', `Started ${prettyDate([startedAt])}`);
     assert.dom('[data-test-sidebar-queued-job]').exists({ count: 16 });
   });
 

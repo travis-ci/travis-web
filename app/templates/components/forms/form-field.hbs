@@ -1,0 +1,63 @@
+<label for={{fieldElementId}} class='travis-form__label'>
+  {{label}}
+  {{#if showRequiredMark}}
+    <span class='travis-form__required-mark'>
+      *
+      {{ember-tooltip text='This field is required' delay=300 }}
+    </span>
+  {{/if}}
+</label>
+
+{{#if helperText}}
+  <div class="travis-form__helper-text">
+    {{helperText}}
+  </div>
+{{/if}}
+
+{{yield (hash
+  isValid=isValid
+  isError=isError
+  errorMessage=errorMessage
+  input=(component 'forms/form-input'
+    form=form
+    value=value
+    disabled=disabled
+    onFocus=(action 'handleFocus')
+    onBlur=(action 'handleBlur')
+    onChange=(action 'handleChange')
+    onInit=(action 'setFieldElementId')
+    class='travis-form__field-component'
+  )
+  textarea=(component 'forms/form-textarea'
+    form=form
+    value=value
+    disabled=disabled
+    onFocus=(action 'handleFocus')
+    onBlur=(action 'handleBlur')
+    onChange=(action 'handleChange')
+    onInit=(action 'setFieldElementId')
+    class='travis-form__field-component'
+  )
+  select=(component 'forms/form-select'
+    form=form
+    selected=value
+    disabled=disabled
+    onfocus=(action 'handleFocus')
+    onopen=(action 'handleFocus')
+    onblur=(action 'handleSelectBlur')
+    onclose=(action 'handleSelectBlur')
+    onchange=(action 'handleChange')
+  )
+)}}
+
+<div class="travis-form__field-badge travis-form__field-badge--error">
+  {{svg-jar 'form-error-icon' width=14 height=14}}
+</div>
+
+<div class="travis-form__field-badge travis-form__field-badge--valid">
+  {{svg-jar 'form-valid-icon' width=14 height=14}}
+</div>
+
+<div class="travis-form__error-message">
+  {{errorMessage}} &nbsp;
+</div>

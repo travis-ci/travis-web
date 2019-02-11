@@ -1,5 +1,5 @@
 import TravisRoute from 'travis/routes/basic';
-import { service } from 'ember-decorators/service';
+import { inject as service } from '@ember/service';
 
 const SECTION_ROUTE_MAP = {
   preferences: 'settings',
@@ -7,10 +7,10 @@ const SECTION_ROUTE_MAP = {
 };
 
 export default TravisRoute.extend({
-  @service accounts: null,
+  accounts: service(),
 
-  beforeModel({ params, targetName }) {
-    const { section, login } = params[targetName] || {};
+  beforeModel({ targetName }) {
+    const { section, login } = this.paramsFor('profile') || {};
     const isUserAccount = this.accounts.user.login === login;
     const root = isUserAccount ? 'account' : 'organization';
 

@@ -1,13 +1,12 @@
-import Service from '@ember/service';
+import Service, { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
-import { service } from 'ember-decorators/service';
 import { isEmpty } from '@ember/utils';
 
 export default Service.extend({
-  @service store: null,
-  @service features: null,
-  @service raven: null,
-  @service storage: null,
+  store: service(),
+  features: service(),
+  raven: service(),
+  storage: service(),
 
   serverFlags: [],
 

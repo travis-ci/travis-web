@@ -1,24 +1,25 @@
-import { sort } from '@ember/object/computed';
 import Component from '@ember/component';
-import { computed } from 'ember-decorators/object';
-import { alias } from 'ember-decorators/object/computed';
+import { computed } from '@ember/object';
+import { alias } from '@ember/object/computed';
 
 export default Component.extend({
-  @alias('build.jobs.firstObject') job: null,
+  job: alias('build.jobs.firstObject'),
 
-  @computed('build.jobs.[]')
-  noJobsError(jobs) {
+  noJobsError: computed('build.jobs.[]', function () {
+    let jobs = this.get('build.jobs');
     return jobs.get('length') === 0;
-  },
+  }),
 
-  @alias('build.isLoading') loading: null,
+  loading: alias('build.isLoading'),
 
-  @computed('build.jobs.@each.{isConfigLoaded,isLoaded}', 'build.stagesAreLoaded')
-  jobsLoaded(jobs, stagesAreLoaded) {
-    jobs.forEach((j) => j.get('config'));
-    return jobs.isEvery('isLoaded') && jobs.isEvery('isConfigLoaded') && stagesAreLoaded;
-  },
-
-  buildStagesSort: ['number'],
-  sortedBuildStages: sort('build.stages', 'buildStagesSort')
+  jobsLoaded: computed(
+    'build.jobs.@each.{isConfigLoaded,isLoaded}',
+    'build.stagesAreLoaded',
+    function () {
+      let jobs = this.get('build.jobs');
+      let stagesAreLoaded = this.get('build.stagesAreLoaded');
+      jobs.forEach((j) => j.get('config'));
+      return jobs.isEvery('isLoaded') && jobs.isEvery('isConfigLoaded') && stagesAreLoaded;
+    }
+  )
 });

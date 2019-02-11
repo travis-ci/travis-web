@@ -19,7 +19,7 @@
         data-test-migration-status={{repository.migrationStatus}}
         class="migration-status {{repository.migrationStatus}}"
       >
-      {{#if (eq repository.migrationStatus "migrating")}}
+      {{#if migrationInProgress}}
         {{loading-indicator
           data-test-repository-migration-loading-animation
           inline=true
@@ -28,7 +28,7 @@
       {{#if (eq repository.migrationStatus "success")}}
         <span>{{svg-jar "stage-passed" class="icon"}}</span>
       {{/if}}
-      {{#if (eq repository.migrationStatus "failed")}}
+      {{#if (eq repository.migrationStatus "failure")}}
         <span>{{svg-jar "stage-errored" class="icon"}}</span>
       {{/if}}
       </div>
@@ -56,7 +56,7 @@
     <a class="profile-settings disabled button">
       {{svg-jar 'icon-private' class="icon"}}
       Settings
-      {{tooltip-on-element text='Requires admin permissions'}}
+      {{ember-tooltip text='Requires admin permissions'}}
     </a>
   {{/if}}
 {{/if}}

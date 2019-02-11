@@ -1,13 +1,13 @@
-import { merge } from '@ember/polyfills';
+import { assign } from '@ember/polyfills';
 import { underscore } from '@ember/string';
 import { pluralize } from 'ember-inflector';
 import { get } from '@ember/object';
 import config from 'travis/config/environment';
 import RESTAdapter from 'ember-data/adapters/rest';
-import { service } from 'ember-decorators/service';
+import { inject as service } from '@ember/service';
 
 export default RESTAdapter.extend({
-  @service auth: null,
+  auth: service(),
 
   host: config.apiEndpoint,
 
@@ -23,7 +23,7 @@ export default RESTAdapter.extend({
   ajaxOptions: function (url, type = 'GET', options) {
     options = options || {};
     options.data = options.data || {};
-    options.data = merge({}, options.data); // clone
+    options.data = assign({}, options.data); // clone
 
     for (let key in options.data) {
       let value = options.data[key];

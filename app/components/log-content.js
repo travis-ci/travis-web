@@ -10,9 +10,9 @@ import { Promise as EmberPromise } from 'rsvp';
 
 import config from 'travis/config/environment';
 
-import { service } from 'ember-decorators/service';
-import { computed } from 'ember-decorators/object';
-import { alias } from 'ember-decorators/object/computed';
+import { inject as service } from '@ember/service';
+import { computed } from '@ember/object';
+import { alias } from '@ember/object/computed';
 
 Log.LIMIT = config.logLimit;
 
@@ -72,15 +72,15 @@ Object.defineProperty(Log.Limit.prototype, 'limited', {
 });
 
 export default Component.extend({
-  @service auth: null,
-  @service permissions: null,
-  @service externalLinks: null,
-  @service router: null,
+  auth: service(),
+  permissions: service(),
+  externalLinks: service(),
+  router: service(),
 
   classNameBindings: ['logIsVisible:is-open'],
   logIsVisible: false,
 
-  @alias('auth.currentUser') currentUser: null,
+  currentUser: alias('auth.currentUser'),
 
   isShowingRemoveLogModal: false,
 
@@ -208,29 +208,32 @@ export default Component.extend({
     });
   },
 
-  @computed('log.plainTextUrl')
-  plainTextLogUrl(url) {
+  plainTextLogUrl: computed('log.plainTextUrl', function () {
+    let url = this.get('log.plainTextUrl');
     return `${config.apiEndpoint}${url}`;
-  },
+  }),
 
-  @computed('permissions.all', 'job.repo')
-  hasPermission(permissions, repo) {
+  hasPermission: computed('permissions.all', 'job.repo', function () {
+    let repo = this.get('job.repo');
     return this.get('permissions').hasPermission(repo);
-  },
+  }),
 
-  @computed('job', 'job.canRemoveLog', 'hasPermission')
-  canRemoveLog(job, canRemoveLog, hasPermission) {
+  canRemoveLog: computed('job', 'job.canRemoveLog', 'hasPermission', function () {
+    let job = this.get('job');
+    let canRemoveLog = this.get('job.canRemoveLog');
+    let hasPermission = this.get('hasPermission');
     if (job) {
       return canRemoveLog && hasPermission;
     }
-  },
+  }),
 
-  @computed('log.hasContent', 'job.canRemoveLog')
-  showToTop(hasContent, canRemoveLog) {
+  showToTop: computed('log.hasContent', 'job.canRemoveLog', function () {
+    let hasContent = this.get('log.hasContent');
+    let canRemoveLog = this.get('job.canRemoveLog');
     return hasContent && canRemoveLog;
-  },
+  }),
 
-  @alias('showToTop') showTailing: null,
+  showTailing: alias('showToTop'),
 
   actions: {
     toTop() {

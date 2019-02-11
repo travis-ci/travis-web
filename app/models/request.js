@@ -1,7 +1,16 @@
 import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
 import { belongsTo } from 'ember-data/relationships';
-import { computed } from 'ember-decorators/object';
+import { computed } from '@ember/object';
+import { inject as service } from '@ember/service';
+import { alias } from '@ember/object/computed';
+
+import ObjectProxy from '@ember/object/proxy';
+import PromiseProxyMixin from '@ember/object/promise-proxy-mixin';
+let ObjectPromiseProxy = ObjectProxy.extend(PromiseProxyMixin);
+import { Promise as EmberPromise } from 'rsvp';
+
+const missingYamlResponse = '---\nerror: No YAML found for this request.';
 
 export default Model.extend({
   created_at: attr(),
@@ -15,22 +24,55 @@ export default Model.extend({
   pullRequest: attr('boolean'),
   pullRequestTitle: attr(),
   pullRequestNumber: attr('number'),
+
+  yaml_config: attr('string'),
+
+  noYaml: computed('yaml_config', function () {
+    let config = this.get('yaml_config');
+    return config == missingYamlResponse;
+  }),
+
   repo: belongsTo('repo', { async: true }),
   commit: belongsTo('commit', { async: true }),
 
   // API models this as hasMany but serializers:request#normalize overrides it
   build: belongsTo('build', { async: true }),
 
-  @computed('result', 'build.id')
-  isAccepted(result, buildId) {
+  isAccepted: computed('result', 'build.id', function () {
     // For some reason some of the requests have a null result beside the fact that
     // the build was created. We need to look into it, but for now we can just assume
     // that if build was created, the request was accepted
-    return result === 'approved' || buildId;
-  },
 
-  @computed('event_type')
-  isPullRequest(eventType) {
+    let result = this.get('result');
+    let buildId = this.get('build.id');
+
+    return result === 'approved' || buildId;
+  }),
+
+  isPullRequest: computed('event_type', function () {
+    let eventType = this.get('event_type');
     return eventType === 'pull_request';
-  },
+  }),
+
+  ajax: service(),
+
+  messagesRequest: computed('repo.id', 'build.request.id', function () {
+    let repoId = this.get('repo.id');
+    let requestId = this.get('build.request.id');
+    if (repoId && requestId) {
+      return ObjectPromiseProxy.create({
+        promise: this.get('ajax').ajax(`/repo/${repoId}/request/${requestId}/messages`, 'get', {
+          headers: {
+            'Travis-API-Version': '3'
+          }})
+          .then(response => ({messages: response.messages}))
+      });
+    } else {
+      return ObjectPromiseProxy.create({
+        promise: EmberPromise.resolve([])
+      });
+    }
+  }),
+
+  messages: alias('messagesRequest.messages'),
 });

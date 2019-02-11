@@ -1,20 +1,34 @@
 import Component from '@ember/component';
 import config from 'travis/config/environment';
 import { task } from 'ember-concurrency';
-import { computed } from 'ember-decorators/object';
+import { computed } from '@ember/object';
+import { inject as service } from '@ember/service';
 
 export default Component.extend({
+  externalLinks: service(),
+
   tagName: 'li',
   classNames: ['profile-repolist-item'],
   classNameBindings: ['repository.active:active'],
   githubOrgsOauthAccessSettingsUrl: config.githubOrgsOauthAccessSettingsUrl,
 
-  @computed('repository.permissions')
-  admin(permissions) {
+  admin: computed('repository.permissions', function () {
+    let permissions = this.get('repository.permissions');
     if (permissions) {
       return permissions.admin;
     }
-  },
+  }),
+
+  comLink: computed('repository.slug', function () {
+    let slug = this.get('repository.slug');
+    return this.get('externalLinks').migratedToComLink(slug);
+  }),
+
+  onDotOrg: computed('features.{proVersion,enterpriseVersion}', function () {
+    let com = this.get('features.proVersion');
+    let enterprise = this.get('features.enterpriseVersion');
+    return !(com || enterprise);
+  }),
 
   actions: {
 

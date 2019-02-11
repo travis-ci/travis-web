@@ -1,12 +1,12 @@
 import Controller from '@ember/controller';
 import { task, taskGroup } from 'ember-concurrency';
-import { service } from 'ember-decorators/service';
-import { computed } from 'ember-decorators/object';
+import { inject as service } from '@ember/service';
+import { computed } from '@ember/object';
 import dashboardRepositoriesSort from 'travis/utils/dashboard-repositories-sort';
 
 export default Controller.extend({
-  @service flashes: null,
-  @service api: null,
+  flashes: service(),
+  api: service(),
 
   starring: taskGroup().drop(),
 
@@ -34,10 +34,13 @@ export default Controller.extend({
     }
   }).group('starring'),
 
-  @computed('model.starredRepos.[]',
+  starredRepos: computed(
+    'model.starredRepos.[]',
     'model.starredRepos.@each.currentBuildState',
-    'model.starredRepos.@each.currentBuildFinishedAt')
-  starredRepos(repositories) {
-    return repositories.toArray().sort(dashboardRepositoriesSort);
-  },
+    'model.starredRepos.@each.currentBuildFinishedAt',
+    function () {
+      let repositories = this.get('model.starredRepos');
+      return repositories.toArray().sort(dashboardRepositoriesSort);
+    }
+  )
 });

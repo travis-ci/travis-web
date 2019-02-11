@@ -2,12 +2,12 @@ import { hash } from 'rsvp';
 import EmberObject from '@ember/object';
 import TravisRoute from 'travis/routes/basic';
 import config from 'travis/config/environment';
-import { service } from 'ember-decorators/service';
+import { inject as service } from '@ember/service';
 
 export default TravisRoute.extend({
-  @service ajax: null,
-  @service api: null,
-  @service auth: null,
+  ajax: service(),
+  api: service(),
+  auth: service(),
 
   needsAuth: true,
 

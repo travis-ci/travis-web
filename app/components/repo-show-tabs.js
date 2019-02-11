@@ -1,49 +1,49 @@
 import Component from '@ember/component';
 import config from 'travis/config/environment';
-import { service } from 'ember-decorators/service';
-import { computed } from 'ember-decorators/object';
-import { alias } from 'ember-decorators/object/computed';
+import { inject as service } from '@ember/service';
+import { computed } from '@ember/object';
+import { alias } from '@ember/object/computed';
 
 export default Component.extend({
-  @service tabStates: null,
+  tabStates: service(),
 
   tagName: 'nav',
   classNames: ['travistab-nav'],
 
   config,
 
-  @alias('tabStates.mainTab') tab: null,
+  tab: alias('tabStates.mainTab'),
 
-  @computed('tab')
-  classCurrent(tab) {
+  classCurrent: computed('tab', function () {
+    let tab = this.get('tab');
     if (tab === 'current') {
       return 'active';
     }
-  },
+  }),
 
-  @computed('tab')
-  classBuilds(tab) {
+  classBuilds: computed('tab', function () {
+    let tab = this.get('tab');
     if (tab === 'builds') {
       return 'active';
     }
-  },
+  }),
 
-  @computed('tab')
-  classPullRequests(tab) {
+  classPullRequests: computed('tab', function () {
+    let tab = this.get('tab');
     if (tab === 'pull_requests') {
       return 'active';
     }
-  },
+  }),
 
-  @computed('tab')
-  classBranches(tab) {
+  classBranches: computed('tab', function () {
+    let tab = this.get('tab');
     if (tab === 'branches') {
       return 'active';
     }
-  },
+  }),
 
-  @computed('tab')
-  classBuild(tab) {
+  classBuild: computed('tab', function () {
+    let tab = this.get('tab');
     let classes;
     classes = [];
     if (tab === 'build') {
@@ -53,40 +53,35 @@ export default Component.extend({
       classes.push('display-inline');
     }
     return classes.join(' ');
-  },
+  }),
 
-  @computed('tab')
-  classJob(tab) {
-    if (tab === 'job') {
+  classJob: computed('tab', function () {
+    if (this.get('tab') === 'job') {
       return 'active';
     }
-  },
+  }),
 
-  @computed('tab')
-  classRequests(tab) {
-    if (tab === 'requests') {
+  classRequests: computed('tab', function () {
+    if (this.get('tab') === 'requests') {
       return 'active';
     }
-  },
+  }),
 
-  @computed('tab')
-  classCaches(tab) {
-    if (tab === 'caches') {
+  classCaches: computed('tab', function () {
+    if (this.get('tab') === 'caches') {
       return 'active';
     }
-  },
+  }),
 
-  @computed('tab')
-  classSettings(tab) {
-    if (tab === 'settings') {
+  classSettings: computed('tab', function () {
+    if (this.get('tab') === 'settings') {
       return 'active';
     }
-  },
+  }),
 
-  @computed('tab')
-  classRequest(tab) {
-    if (tab === 'request') {
+  classRequest: computed('tab', function () {
+    if (this.get('tab') === 'request') {
       return 'active';
     }
-  },
+  }),
 });

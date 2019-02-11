@@ -36,21 +36,13 @@ module.exports = function () {
     'ember-cli-babel': {
       includePolyfill: true,
     },
-    babel: {
-      blacklist: ['regenerator'],
-      plugins: [
-        'transform-decorators-legacy',
-        'transform-class-properties',
-      ]
-    },
     fingerprint: fingerprint,
     sourcemaps: {
       enabled: true,
       extensions: ['js']
     },
     'ember-prism': {
-      'components': ['scss', 'javascript', 'json'], // needs to be an array, or undefined.
-      'plugins': ['line-highlight']
+      'components': ['yaml'],
     },
     sassOptions: {
       implementation: Sass
@@ -80,11 +72,14 @@ module.exports = function () {
     },
     'ember-composable-helpers': {
       only: ['sort-by', 'compute']
+    },
+    'ember-power-select': {
+      theme: false
     }
   });
 
   const emojiAssets = new Funnel('node_modules/emoji-datasource-apple/img/apple/64', {
-    destDir: '/public/images/emoji'
+    destDir: '/images/emoji'
   });
 
   importNpmDependency(app, 'node_modules/fuzzysort/fuzzysort.js');

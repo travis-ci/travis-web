@@ -1,10 +1,10 @@
 import { reject } from 'rsvp';
 import Route from '@ember/routing/route';
-import { service } from 'ember-decorators/service';
+import { inject as service } from '@ember/service';
 
 export default Route.extend({
-  @service auth: null,
-  @service featureFlags: null,
+  auth: service(),
+  featureFlags: service(),
 
   activate() {
     if (this.routeName !== 'error') {
@@ -32,13 +32,10 @@ export default Route.extend({
   },
 
   redirectToProfile(transition) {
-    // make this hack the least invasive it can be
     let { targetName } = transition;
-    let { params } = transition;
+    let { owner } = this.paramsFor('owner');
     if (targetName === 'owner.repositories' &&
-      params.owner &&
-      params.owner.owner &&
-      params.owner.owner === 'profile') {
+      owner === 'profile') {
       this.transitionTo('account', {
         queryParams: { offset: 0 }
       });

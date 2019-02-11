@@ -7,8 +7,8 @@
       class="h2--red">{{account}}</span></h2>
   <p class="page-notice">The organization may not exist or you may not have
     sufficient permissions to view its repositories.</p>
-  <p class="page-notice">If you believe you've received this message in error, please <a
-      href="mailto:support@travis-ci.com" title="Email the Travis support team"
-      {{action (route-action 'helpscoutTrigger')}}>contact support.</a>
+  <p class="page-notice">
+    If you believe you've received this message in error, please
+    {{#link-to 'help' (query-params anchor='form')}}contact support.{{/link-to}}
   </p>
 </div>

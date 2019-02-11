@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { reads, or, and } from '@ember/object/computed';
-import { computed } from 'ember-decorators/object';
+import { computed } from '@ember/object';
 import config from 'travis/config/environment';
 
 const { billingEndpoint, githubOrgsOauthAccessSettingsUrl } = config;
@@ -26,9 +26,9 @@ export default Component.extend({
     return githubOrgsOauthAccessSettingsUrl;
   },
 
-  @computed('features.enterpriseVersion')
-  checkSubscriptionStatus(enterprise) {
+  checkSubscriptionStatus: computed('features.enterpriseVersion', function () {
+    let enterprise = this.get('features.enterpriseVersion');
     return !enterprise && !!billingEndpoint;
-  },
+  }),
 
 });

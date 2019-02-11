@@ -14,16 +14,10 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
       name: 'User Name of exceeding length',
       login: 'user-login',
       github_id: 1974,
-      avatar_url: 'http://example.com/jorty'
+      avatar_url: '/images/tiny.gif'
     });
 
     signInUser(this.user);
-
-    server.create('subscription', {
-      owner: this.user,
-      status: 'subscribed',
-      valid_to: new Date(new Date().getTime() + 10000)
-    });
 
     server.create('installation', {
       owner: this.user,
@@ -176,7 +170,7 @@ test('view repositories', function (assert) {
     assert.equal(profilePage.name, 'User Name of exceeding length');
     assert.equal(profilePage.login, '@user-login');
 
-    assert.ok(profilePage.avatar.src.startsWith('http://example.com/jorty'), 'expected avatar URL to have the same beginning');
+    assert.ok(profilePage.avatar.src.startsWith('/images/tiny.gif'), 'expected avatar URL to have the same beginning');
     assert.ok(profilePage.avatar.checkmark.isVisible, 'expected avatar to have a checkmark for active subscription');
 
     assert.ok(profilePage.subscriptionStatus.isHidden, 'expected no subscription status banner');

@@ -23,6 +23,8 @@ moduleForAcceptance('Acceptance | broadcasts', {
 test('the broadcast tower shows a warning even when an announcement exists, broadcasts are listed in reverse order, and closing a broadcast records it', (assert) => {
   withFeature('broadcasts');
 
+  let date = new Date();
+
   server.create('broadcast', {
     category: 'warning',
     message: 'A warning'
@@ -31,6 +33,7 @@ test('the broadcast tower shows a warning even when an announcement exists, broa
   server.create('broadcast', {
     category: 'announcement',
     message: 'An announcement',
+    created_at: date,
     id: 2016
   });
 
@@ -48,8 +51,11 @@ test('the broadcast tower shows a warning even when an announcement exists, broa
     assert.ok(topPage.broadcasts.isOpen, 'expected the broadcast list to be open');
     assert.equal(topPage.broadcasts.items.length, 2, 'expected there to be two broadcasts');
 
-    assert.ok(topPage.broadcasts.items[0].isAnnouncement, 'expected the first broadcast to be an announcement');
-    assert.equal(topPage.broadcasts.items[0].message, 'An announcement');
+    topPage.broadcasts.items[0].as(announcement => {
+      assert.ok(announcement.isAnnouncement, 'expected the first broadcast to be an announcement');
+      assert.equal(announcement.message, 'An announcement');
+      assert.equal(announcement.title, `Transmitted on ${date.toISOString()}`);
+    });
 
     assert.ok(topPage.broadcasts.items[1].isWarning, 'expected the second broadcast to be a warning');
     assert.equal(topPage.broadcasts.items[1].message, 'A warning');

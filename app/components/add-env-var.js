@@ -1,12 +1,12 @@
 import { isBlank } from '@ember/utils';
 import Component from '@ember/component';
-import { service } from 'ember-decorators/service';
+import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
 
 export default Component.extend({
-  @service store: null,
-  @service raven: null,
-  @service flashes: null,
+  store: service(),
+  raven: service(),
+  flashes: service(),
 
   classNames: ['form--envvar'],
   classNameBindings: ['nameIsBlank:form-error'],

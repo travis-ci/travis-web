@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { service } from 'ember-decorators/service';
+import { inject as service } from '@ember/service';
 
 export default Component.extend({
   classNames: ['loading-screen'],
@@ -8,7 +8,7 @@ export default Component.extend({
     'margin:loading-screen--with-margins'
   ],
 
-  @service randomLogo: null,
+  randomLogo: service(),
 
   center: false,
   margin: false

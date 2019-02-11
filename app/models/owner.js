@@ -1,7 +1,7 @@
 import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
 import { belongsTo } from 'ember-data/relationships';
-import { computed } from 'ember-decorators/object';
+import { computed } from '@ember/object';
 import { reads } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import config from 'travis/config/environment';
@@ -25,37 +25,53 @@ export default Model.extend({
 
   subscriptionError: reads('accounts.subscriptionError'),
 
-  @computed('accounts.subscriptions.@each.{validTo,owner,isSubscribed}', 'login')
-  subscription(subscriptions = [], login) {
-    const accountSubscriptions = subscriptions.filterBy('owner.login', login) || [];
-    const activeAccountSubscriptions = accountSubscriptions.filterBy('isSubscribed') || [];
-    if (activeAccountSubscriptions.length > 1) this.logMultipleSubscriptionsError();
-    return activeAccountSubscriptions.get('firstObject') || accountSubscriptions.get('lastObject');
-  },
+  subscription: computed(
+    'accounts.subscriptions.@each.{validTo,owner,isSubscribed}',
+    'login',
+    function () {
+      let subscriptions = this.get('accounts.subscriptions') || [];
+      let login = this.get('login');
+      const accountSubscriptions = subscriptions.filterBy('owner.login', login) || [];
+      const activeAccountSubscriptions = accountSubscriptions.filterBy('isSubscribed') || [];
+      if (activeAccountSubscriptions.length > 1) this.logMultipleSubscriptionsError();
+      return activeAccountSubscriptions.get('firstObject') ||
+        accountSubscriptions.get('lastObject');
+    }
+  ),
 
-  @computed('accounts.trials.@each.{created_at,owner,hasTrial}', 'login')
-  trial(trials = [], login) {
+  trial: computed('accounts.trials.@each.{created_at,owner,hasTrial}', 'login', function () {
+    let trials = this.get('accounts.trials') || [];
+    let login = this.get('login');
     const accountTrials = trials.filterBy('owner.login', login) || [];
     const activeAccountTrials = accountTrials.filterBy('hasTrial') || [];
     return activeAccountTrials.get('firstObject') || accountTrials.get('lastObject');
-  },
+  }),
 
-  @computed('subscription', 'subscription.permissions.write', 'subscriptionPermissions.create')
-  hasSubscriptionPermissions(subscription, writePermissions, createPermissions) {
-    return subscription ? writePermissions : createPermissions;
-  },
+  hasSubscriptionPermissions: computed(
+    'subscription',
+    'subscription.permissions.write',
+    'subscriptionPermissions.create',
+    function () {
+      let subscription = this.get('subscription');
+      let writePermissions = this.get('subscription.permissions.write');
+      let createPermissions = this.get('subscriptionPermissions.create');
+      return subscription ? writePermissions : createPermissions;
+    }
+  ),
 
-  @computed('type', 'login')
-  billingUrl(type, login) {
+  billingUrl: computed('type', 'login', function () {
+    let type = this.get('type');
+    let login = this.get('login');
     let id = type === 'user' ? 'user' : login;
     return `${config.billingEndpoint}/subscriptions/${id}`;
-  },
+  }),
 
-  @computed('isUser', 'login')
-  newSubscriptionUrl(isUser, login) {
+  newSubscriptionUrl: computed('isUser', 'login', function () {
+    let isUser = this.get('isUser');
+    let login = this.get('login');
     let id = isUser ? 'user' : login;
     return `${config.billingEndpoint}/subscriptions/new?id=${id}`;
-  },
+  }),
 
   logMultipleSubscriptionsError() {
     const exception = new Error(`Account ${this.login} has more than one active subscription!`);

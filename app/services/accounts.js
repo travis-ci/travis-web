@@ -1,6 +1,5 @@
-import Service from '@ember/service';
-import { service } from 'ember-decorators/service';
-import { computed } from 'ember-decorators/object';
+import Service, { inject as service } from '@ember/service';
+import { computed } from '@ember/object';
 import { reads } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
 import config from 'travis/config/environment';
@@ -9,8 +8,9 @@ import fetchAll from 'travis/utils/fetch-all';
 const { billingEndpoint } = config;
 
 export default Service.extend({
-  @service store: null,
-  @service auth: null,
+  store: service(),
+  auth: service(),
+  raven: service(),
 
   user: reads('auth.currentUser'),
   organizations: reads('fetchOrganizations.lastSuccessful.value'),
@@ -19,10 +19,11 @@ export default Service.extend({
   subscriptionError: false,
   trials: reads('fetchTrials.lastSuccessful.value'),
 
-  @computed('user', 'organizations.@each')
-  all(user, organizations = []) {
+  all: computed('user', 'organizations.@each', function () {
+    let user = this.get('user');
+    let organizations = this.get('organizations') || [];
     return organizations.toArray().concat([user]);
-  },
+  }),
 
   fetchOrganizations: task(function* () {
     yield fetchAll(this.store, 'organization', {});
@@ -34,6 +35,11 @@ export default Service.extend({
     this.set('subscriptionError', false);
     try {
       const subscriptions = yield this.store.findAll('subscription') || [];
+
+      if (subscriptions.any(s => s.isSubscribed && !s.belongsTo('plan').id())) {
+        this.logMissingPlanException();
+      }
+
       return subscriptions.sortBy('validTo');
     } catch (e) {
       this.set('subscriptionError', true);
@@ -55,6 +61,10 @@ export default Service.extend({
 
   fetch() {
     return this.fetchOrganizations.perform().then(() => this.all);
-  }
+  },
 
+  logMissingPlanException() {
+    const exception = new Error(`User ${this.user.login} has a subscription with no plan!`);
+    this.raven.logException(exception, true);
+  },
 });

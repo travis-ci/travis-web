@@ -12,7 +12,7 @@ export default TravisRoute.extend({
   model(params, transition) {
     let includes =
       '?include=user.repositories,organization.repositories,build.commit,repository.active';
-    let { owner } = transition.params.owner;
+    let { owner } = this.paramsFor('owner');
     return $.ajax({
       url: `${config.apiEndpoint}/owner/${owner}${includes}`,
       headers: {

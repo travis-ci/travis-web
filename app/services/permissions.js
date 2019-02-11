@@ -1,27 +1,26 @@
-import Service from '@ember/service';
-import { service } from 'ember-decorators/service';
-import { computed } from 'ember-decorators/object';
-import { alias } from 'ember-decorators/object/computed';
+import Service, { inject as service } from '@ember/service';
+import { computed } from '@ember/object';
+import { alias } from '@ember/object/computed';
 
 export default Service.extend({
-  @service auth: null,
+  auth: service(),
 
   init() {
     this.get('all');
     return this._super(...arguments);
   },
 
-  @alias('auth.currentUser') currentUser: null,
+  currentUser: alias('auth.currentUser'),
 
   // This is computed property that can be used to allow any properties that
   // use permissions service to add dependencies easier. So instead of depending
   // on each of these things separately, we can depend on all
-  @computed('currentUser.permissions.[]',
+  all: computed(
+    'currentUser.permissions.[]',
     'currentUser.pushPermissions.[]',
-    'currentUser.adminPermissions.[]')
-  all() {
-    return null;
-  },
+    'currentUser.adminPermissions.[]',
+    () => null
+  ),
 
   hasPermission(repo) {
     return this.checkPermission(repo, 'permissions');

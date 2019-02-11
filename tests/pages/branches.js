@@ -1,4 +1,5 @@
 import {
+  attribute,
   create,
   collection,
   hasClass,
@@ -21,7 +22,12 @@ const branchRowComponent = {
   request: text('.row-request .label-align'),
   commitSha: text('.row-commit span.inner-underline'),
   committer: text('.row-commiter .label-align'),
-  commitDate: text('.row-calendar .label-align'),
+
+  commitDate: {
+    scope: '.row-calendar',
+    text: text('.label-align'),
+    title: attribute('title', '.row-item'),
+  },
 
   buildTiles: collection('.build-tiles li', {
     passed: hasClass('passed'),

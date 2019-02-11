@@ -3,9 +3,9 @@
 import Ember from 'ember';
 import Component from '@ember/component';
 import { htmlSafe } from '@ember/string';
-import { service } from 'ember-decorators/service';
-import { action, computed } from 'ember-decorators/object';
-import { alias } from 'ember-decorators/object/computed';
+import { inject as service } from '@ember/service';
+import { computed } from '@ember/object';
+import { alias } from '@ember/object/computed';
 import config from 'travis/config/environment';
 
 export default Component.extend({
@@ -13,20 +13,19 @@ export default Component.extend({
 
   config,
 
-  @service auth: null,
-  @service features: null,
-  @service externalLinks: null,
-  @service helpScout: null,
+  auth: service(),
+  router: service(),
+  features: service(),
+  externalLinks: service(),
+  user: alias('auth.currentUser'),
 
-  @alias('auth.currentUser') user: null,
-
-  @computed('user.{login,name}')
-  userName(login, name) {
+  userName: computed('user.{login,name}', function () {
+    let login = this.get('user.login');
+    let name = this.get('user.name');
     return name || login;
-  },
+  }),
 
-  @computed()
-  deploymentVersion() {
+  deploymentVersion: computed(function () {
     if (window && window.location) {
       const hostname = window.location.hostname;
 
@@ -44,33 +43,39 @@ export default Component.extend({
     } else {
       return false;
     }
-  },
+  }),
 
-  @computed('tab', 'auth.state')
-  classProfile(tab, authState) {
+  classProfile: computed('tab', 'auth.state', function () {
+    let tab = this.get('tab');
+    let authState = this.get('auth.state');
     let classes = ['profile menu'];
 
-    if (this.get('tab') === 'profile') {
+    if (tab === 'profile') {
       classes.push('active');
     }
 
     classes.push(authState || 'signed-out');
 
     return classes.join(' ');
-  },
+  }),
 
-  @action
-  helpscoutTrigger() {
-    this.helpScout.openHelpScout();
-  },
+  actions: {
 
-  @action
-  signIn() {
-    return this.get('auth').signIn();
-  },
+    signIn() {
+      return this.get('auth').signIn();
+    },
 
-  @action
-  signOut() {
-    return this.get('auth').signOut();
-  },
+    signOut() {
+      return this.get('auth').signOut();
+    },
+
+    goToHelp() {
+      if (this.router.currentRouteName !== 'help') {
+        const page = encodeURI(window.location.href);
+        this.router.transitionTo('help', { queryParams: { page } });
+      }
+    }
+
+  }
+
 });

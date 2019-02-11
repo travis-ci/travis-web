@@ -1,18 +1,16 @@
 import { run } from '@ember/runloop';
-import EmberObject from '@ember/object';
+import EmberObject, { computed } from '@ember/object';
 import $ from 'jquery';
 import ArrayProxy from '@ember/array/proxy';
-import Service from '@ember/service';
+import Service, { inject as service } from '@ember/service';
 import config from 'travis/config/environment';
-import { computed } from 'ember-decorators/object';
-import { service } from 'ember-decorators/service';
 
 export default Service.extend({
-  @service auth: null,
-  @service storage: null,
+  auth: service(),
+  storage: service(),
 
-  @computed('auth.signedIn')
-  broadcasts(signedIn) {
+  broadcasts: computed('auth.signedIn', function () {
+    let signedIn = this.get('auth.signedIn');
     let apiEndpoint, broadcasts, options, seenBroadcasts;
     if (signedIn) {
       broadcasts = ArrayProxy.create({
@@ -50,7 +48,7 @@ export default Service.extend({
       });
       return broadcasts;
     }
-  },
+  }),
 
   markAsSeen(broadcast) {
     let id, seenBroadcasts;

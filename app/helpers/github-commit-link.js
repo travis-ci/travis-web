@@ -1,13 +1,13 @@
 import { htmlSafe } from '@ember/string';
 import Helper from '@ember/component/helper';
 import formatCommit from 'travis/utils/format-commit';
-import { service } from 'ember-decorators/service';
+import { inject as service } from '@ember/service';
 
 import Ember from 'ember';
 const { escapeExpression: escape } = Ember.Handlebars.Utils;
 
 export default Helper.extend({
-  @service externalLinks: null,
+  externalLinks: service(),
 
   compute([slug, commitSha]) {
     if (!commitSha) {

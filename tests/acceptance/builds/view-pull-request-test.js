@@ -13,9 +13,20 @@ moduleForAcceptance('Acceptance | builds/view pull request', {
 test('renders a pull request', function (assert) {
   let repository =  server.create('repository', { slug: 'travis-ci/travis-web' });
 
+  let commitBody =
+    'Within the organization there is a gap between words and deeds, between what organizations say they will do, ' +
+    'or what they are committed to doing, and what they are doing. – Sara Ahmed';
+
   const branch = server.create('branch', { name: 'acceptance-tests' });
   let  gitUser = server.create('git-user', { name: 'Mr T' });
-  let commit = server.create('commit', { author: gitUser, committer: gitUser, committer_name: 'Mr T', branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
+  let commit = server.create('commit', {
+    author: gitUser,
+    committer: gitUser,
+    committer_name: 'Mr T',
+    branch: 'acceptance-tests',
+    message: `This is a message\n${commitBody}`,
+    branch_is_default: true
+  });
   let build = server.create('build', {
     number: '5',
     state: 'passed',
@@ -39,10 +50,17 @@ test('renders a pull request', function (assert) {
 
     assert.ok(page.buildTabLinkIsActive, 'build tab link is active');
     assert.equal(page.buildTabLinkText, 'Build #5');
-    assert.equal(page.branchName, 'Pull Request #10');
+
+    assert.equal(page.branchName.text, 'Pull Request #10');
+    assert.equal(page.branchName.title, 'Resist');
+
     assert.equal(page.commitSha, 'Commit abc123');
     assert.equal(page.compare, '#10: Resist');
     assert.equal(page.commitBranch, 'Branch acceptance-tests', 'shows the PR branch');
+
+    assert.equal(page.commitDescription.text, commitBody);
+    assert.equal(page.commitDescription.title, commitBody);
+    assert.ok(page.commitDescription.isFaded);
   });
 
   percySnapshot(assert);

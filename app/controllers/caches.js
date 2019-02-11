@@ -1,25 +1,25 @@
-import EmberObject from '@ember/object';
+import EmberObject, { computed } from '@ember/object';
 import Controller from '@ember/controller';
 import config from 'travis/config/environment';
-import { service } from 'ember-decorators/service';
-import { computed } from 'ember-decorators/object';
-import { alias } from 'ember-decorators/object/computed';
+import { inject as service } from '@ember/service';
+import { alias } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
 
 export default Controller.extend({
-  @service ajax: null,
-  @service flashes: null,
+  ajax: service(),
+  flashes: service(),
 
-  @alias('model.repo') repo: null,
+  repo: alias('model.repo'),
 
   config,
 
-  @computed('model.pushes.[]', 'model.pullRequests.[]')
-  cachesExist(pushes, pullRequests) {
+  cachesExist: computed('model.pushes.[]', 'model.pullRequests.[]', function () {
+    let pushes = this.get('model.pushes');
+    let pullRequests = this.get('model.pullRequests');
     if (pushes || pullRequests) {
       return pushes.length || pullRequests.length;
     }
-  },
+  }),
 
   deleteRepoCache: task(function* () {
     if (config.skipConfirmations || confirm('Are you sure?')) {

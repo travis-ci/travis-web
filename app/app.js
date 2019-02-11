@@ -1,15 +1,13 @@
-/* global Travis, HS */
+/* global Travis */
 import Evented from '@ember/object/evented';
 
 import Application from '@ember/application';
 import Resolver from './resolver';
 import loadInitializers from 'ember-load-initializers';
 import config from './config/environment';
-import initHsBeacon from 'travis/utils/init-hs-beacon';
 
 // This can be set per environment in config/environment.js
 const debuggingEnabled = config.featureFlags['debug-logging'];
-const proVersion = config.featureFlags['pro-version'];
 
 const App = Application.extend(Evented, {
   modulePrefix: config.modulePrefix,
@@ -34,17 +32,7 @@ const App = Application.extend(Evented, {
   },
 
   onUserUpdate(user) {
-    if (proVersion && config.beacon) {
-      this.setupBeacon();
-      this.identifyHSBeacon(user);
-    }
     return this.subscribePusher(user);
-  },
-
-  setupBeacon() {
-    if (!window.HS) {
-      initHsBeacon();
-    }
   },
 
   subscribePusher(user) {
@@ -52,22 +40,8 @@ const App = Application.extend(Evented, {
       return;
     }
     Travis.pusher.subscribeAll(user.channels);
-  },
-
-  identifyHSBeacon(user) {
-    if (HS && HS.beacon) {
-      HS.beacon.ready(() => {
-        const { name, email, login, synced_at: syncedAt } = user;
-        const userParams = {
-          name,
-          email,
-          login,
-          last_synced_at: syncedAt,
-        };
-        return HS.beacon.identify(userParams);
-      });
-    }
   }
+
 });
 
 loadInitializers(App, config.modulePrefix);
