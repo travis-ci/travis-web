@@ -1,4 +1,4 @@
-/* global Travis */
+/* global Travis, _gaq */
 import $ from 'jquery';
 
 import TravisRoute from 'travis/routes/basic';
@@ -13,8 +13,8 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
   features: service(),
   featureFlags: service(),
   flashes: service(),
-  helpScout: service(),
   repositories: service(),
+  router: service(),
 
   needsAuth: false,
 
@@ -22,6 +22,13 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
     this.get('auth').afterSignOut(() => {
       this.afterSignOut();
     });
+
+    this.router.on('routeDidChange', () => {
+      if (config.gaCode) {
+        _gaq.push(['_trackPageview', location.pathname]);
+      }
+    });
+
     return this._super(...arguments);
   },
 
@@ -105,10 +112,12 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
   },
 
   actions: {
-    signIn() {
+    signIn(runAfterSignIn = true) {
       let authParams = this.modelFor('auth');
       this.get('auth').signIn(null, authParams);
-      this.afterSignIn();
+      if (runAfterSignIn) {
+        this.afterSignIn();
+      }
     },
 
     signOut() {
@@ -134,18 +143,6 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
         return true;
       }
     },
-
-    showRepositories() {
-      this.transitionTo('index');
-    },
-
-    viewSearchResults(query) {
-      this.transitionTo('search', query);
-    },
-
-    helpscoutTrigger() {
-      this.helpScout.openHelpScout();
-    }
   },
 
   afterSignIn() {

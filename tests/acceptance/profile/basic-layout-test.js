@@ -19,12 +19,6 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
 
     signInUser(this.user);
 
-    server.create('subscription', {
-      owner: this.user,
-      status: 'subscribed',
-      valid_to: new Date(new Date().getTime() + 10000)
-    });
-
     server.create('installation', {
       owner: this.user,
       github_id: 2691
@@ -162,15 +156,6 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
       },
       active: false
     });
-
-    // This swallows the multiple-subscription error in test logs
-    let mockSentry = Service.extend({
-      logException(error) {},
-    });
-
-    const instance = this.application.__deprecatedInstance__;
-    const registry = instance.register ? instance : instance.registry;
-    registry.register('service:raven', mockSentry);
   }
 });
 

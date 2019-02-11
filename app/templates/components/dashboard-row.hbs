@@ -1,5 +1,5 @@
 <div class="dash-head">
-  <button data-test-dashboard-repository-star={{idx}} {{action "starRepo"}} class="dash-star {{if repo.starred 'is-starred'}}" title="{{if repo.starred 'un'}}star this repo">
+  <button {{action "starRepo"}} class="dash-star {{if repo.starred 'is-starred'}}" title="{{if repo.starred 'un'}}star this repo">
     {{svg-jar 'icon-star' class="icon--m"}}
   </button>
   {{#if repo.private}}
@@ -35,7 +35,7 @@
       <p class="row-content color">
         {{status-icon status=repo.currentBuild.state}}
         {{#link-to "build" repo.owner.login repo.name repo.currentBuild.id title="Last build on the repo"}}
-        <span class="label-align">#{{repo.currentBuild.number}} {{repo.currentBuild.state}}</span>
+        <span class="label-align">#{{repo.currentBuild.number}} {{humanize-state repo.currentBuild.state}}</span>
         {{/link-to}}
       </p>
     </section>
@@ -63,13 +63,13 @@
       </p>
     </section>
 
-    <div data-test-dashboard-repository-menu={{idx}} class="dash-menu">
+    <div class="dash-menu">
       {{#if displayMenuTofu}}
         {{#if isTriggering}}
           {{loading-indicator}}
         {{else}}
         <div class="dropup {{if dropupIsOpen "is-open"}}">
-          <button data-test-tofu-menu={{idx}} type="button" class="dropup-tofu" {{action "openDropup"}}>
+          <button type="button" class="dropup-tofu" {{action "openDropup"}}>
             {{svg-jar 'icon-tofuburger' class="icon-tofu"}}
           </button>
           <ul class="dropup-list">
@@ -96,23 +96,6 @@
           <button class="button--blue" {{action 'triggerBuild'}} title="Trigger a build on the default branch">Trigger a build</button>  {{/if}}
       </div>
     {{/if}}
-
-  {{else}}
-    <!--<div class="dash-button">
-        {{#if displayActivateLink}}
-        <button type="button" class="activate-repo-button is-active" {{action 'activateRepo'}}>Activate repository</button>
-        {{else}}
-        <p class="activate-repo-button">Actiavte repository</p>
-        {{/if}}
-    </div>-->
   {{/if}}
   </div>
-
-  <!--<aside class="dash-aside">
-      <ul class="lastbuilds">
-        {{#each repo.lastBuilds as |build|}}
-        {{lastbuild-tile repo=repo build=build}}
-        {{/each}}
-      </ul>
-  </aside>-->
 </div>

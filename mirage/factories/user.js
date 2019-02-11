@@ -4,6 +4,11 @@ export default Factory.extend({
   name: 'Test User',
   type: 'user',
   email: 'test@travis-ci.com',
+  emails: [ // eslint-disable-line
+    'test@travis-ci.com',
+    'test2@travis-ci.com',
+    'test3@travis-ci.com',
+  ],
   correct_scopes: true,
   login: 'testuser',
   synced_at: '2016-01-01T23:04:31Z',

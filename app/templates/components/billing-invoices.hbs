@@ -2,12 +2,9 @@
   <h2>Invoice History</h2>
   <p>
     {{svg-jar 'icon-help' class='icon-help' alt=''}} Having trouble with your invoices?
-    <a href='{{config-get 'urls.support'}}'
-      title='Email the Travis support team'
-      {{action (route-action 'helpscoutTrigger')}}
-    >
+    {{#link-to 'help' (query-params anchor='form')}}
       We’re happy to help
-    </a>.
+    {{/link-to}}
   </p>
   <ul>
     {{#each (sort-by 'createdAt:desc' invoices) as |invoice|}}

@@ -5,6 +5,7 @@ import signInUser from 'travis/tests/helpers/sign-in-user';
 import { waitForElement } from 'travis/tests/helpers/wait-for-element';
 import { enableFeature } from 'ember-feature-flags/test-support';
 import { percySnapshot } from 'ember-percy';
+import { prettyDate } from 'travis/helpers/pretty-date';
 import page from 'travis/tests/pages/dashboard';
 import topPage from 'travis/tests/pages/top';
 import generatePusherPayload from 'travis/tests/helpers/generate-pusher-payload';
@@ -69,6 +70,8 @@ module('Acceptance | dashboard/repositories', function (hooks) {
       }),
       createdBy: currentUser
     });
+    this.permissionBuild = permissionBuild;
+
     let permissionBranch = server.create('branch', {
       name: 'primary',
       lastBuild: server.create('build', {
@@ -104,7 +107,7 @@ module('Acceptance | dashboard/repositories', function (hooks) {
       currentBuild: build,
       private: true
     });
-    server.create('repository', {
+    this.starredRepo = server.create('repository', {
       owner: {
         login: 'travis-ci',
         type: 'organization'
@@ -139,15 +142,34 @@ module('Acceptance | dashboard/repositories', function (hooks) {
 
     await visit('/dashboard');
 
-    assert.dom('[data-test-dashboard-starred-repositories] [data-test-dashboard-repository-star]').exists({ count: 1 });
-    assert.dom('[data-test-dashboard-repository-menu="0"] [data-test-tofu-menu]').exists();
+    assert.equal(page.starredRepos.length, 1);
 
+    assert.ok(page.starredRepos[0].menuButton.isVisible);
+    assert.equal(page.starredRepos[0].starButton.title, 'unstar this repo');
 
-    await click('[data-test-dashboard-repository-star="3"]');
-    assert.dom('[data-test-dashboard-starred-repositories] [data-test-dashboard-repository-star]').exists({ count: 2 });
+    assert.equal(page.activeRepos.repos[2].starButton.title, 'star this repo');
 
-    await click('[data-test-dashboard-repository-star="3"]');
-    assert.dom('[data-test-dashboard-starred-repositories] [data-test-dashboard-repository-star]').exists({ count: 1 });
+    await page.activeRepos.repos[2].starButton.click();
+    assert.equal(page.starredRepos.length, 2);
+
+    await page.starredRepos[1].starButton.click();
+    assert.equal(page.starredRepos.length, 1);
+  });
+
+  test('triggering a build', async function (assert) {
+    let requestCreated = false;
+
+    this.server.post(`/repo/${this.starredRepo.id}/requests`, () => {
+      requestCreated = true;
+      return true;
+    });
+
+    await visit('/dashboard');
+
+    await page.starredRepos[0].menuButton.click();
+    await page.starredRepos[0].triggerBuild();
+
+    assert.ok(requestCreated);
   });
 
   test('Dashboard pagination works', async function (assert) {
@@ -157,8 +179,8 @@ module('Acceptance | dashboard/repositories', function (hooks) {
 
     await visit('/dashboard');
 
-    assert.dom('[data-test-dashboard-starred-repositories] [data-test-dashboard-repository-star]').exists({ count: 1 });
-    assert.dom('[data-test-dashboard-active-repositories] [data-test-dashboard-repository-star]').exists({ count: 10 });
+    assert.equal(page.starredRepos.length, 1);
+    assert.equal(page.activeRepos.repos.length, 10);
     assert.dom('[data-test-components-pagination-navigation]').exists();
     assert.dom('[data-test-page-pagination-link]').exists({ count: 2 });
     assert.dom('[data-test-next-pagination-link]').exists();
@@ -167,8 +189,8 @@ module('Acceptance | dashboard/repositories', function (hooks) {
 
     await click('[data-test-page-pagination-link="2"]');
 
-    assert.dom('[data-test-dashboard-starred-repositories] [data-test-dashboard-repository-star]').exists({ count: 1 }, 'still lists starred repos on top');
-    assert.dom('[data-test-dashboard-active-repositories] [data-test-dashboard-repository-star]').exists({ count: 6 }, 'lists other repos on the 2nd page');
+    assert.equal(page.starredRepos.length, 1, 'still lists starred repos on top');
+    assert.equal(page.activeRepos.repos.length, 6, 'lists other repos on the 2nd page');
   });
 
   test('listing my builds', async function (assert) {
@@ -196,7 +218,8 @@ module('Acceptance | dashboard/repositories', function (hooks) {
       assert.equal(build.branch.text, 'another-branch');
       assert.ok(build.branch.href.endsWith('travis-ci/travis-lol-a-very-long-repository/tree/another-branch'));
 
-      assert.equal(build.message, 'get used to it');
+      assert.equal(build.message.text, 'get used to it');
+      assert.equal(build.message.title, 'get used to it');
 
       assert.equal(build.stateAndNumber.text, '#44 passed');
       assert.ok(build.stateAndNumber.href.endsWith('/travis-ci/travis-lol-a-very-long-repository/builds/1919'));
@@ -204,12 +227,15 @@ module('Acceptance | dashboard/repositories', function (hooks) {
       assert.equal(build.sha.text, 'acab');
       assert.ok(build.sha.href.endsWith('/travis-ci/travis-lol-a-very-long-repository/commit/acab'));
 
-      assert.equal(build.duration, '19 min 19 sec');
-      assert.equal(build.finished, 'about a year ago');
+      assert.equal(build.duration.text, '19 min 19 sec');
+      assert.equal(build.duration.title, `Started ${prettyDate([this.permissionBuild.started_at])}`);
+
+      assert.equal(build.finished.text, 'about a year ago');
+      assert.equal(build.finished.title, this.permissionBuild.finished_at.toISOString());
     });
 
     page.myBuilds.builds[3].as(build => {
-      assert.equal(build.finished, 'still running');
+      assert.equal(build.finished.text, 'still running');
     });
 
     page.myBuilds.builds[1].as(build => {
@@ -237,7 +263,7 @@ module('Acceptance | dashboard/repositories', function (hooks) {
       repository: this.repository,
       pull_request: false,
       event_type: 'push',
-      state: 'passed',
+      state: 'created',
       started_at: new Date(),
       createdBy: this.currentUser
     });
@@ -248,7 +274,7 @@ module('Acceptance | dashboard/repositories', function (hooks) {
       build,
       commit,
       number: '15.1',
-      state: 'passed',
+      state: 'created',
     });
 
     await this.owner.application.pusher.receive('job:created', generatePusherPayload(job));
@@ -257,6 +283,13 @@ module('Acceptance | dashboard/repositories', function (hooks) {
       commit: generatePusherPayload(commit),
       repository: generatePusherPayload(this.repository, { current_build_id: build.id })
     });
+
+    await waitForElement('.my-build:nth-child(1)');
+
+    page.myBuilds.builds[0].as(build => {
+      assert.equal(build.stateAndNumber.text, '#15 received');
+    });
+
 
     let otherUser = server.create('user');
     let otherBranch = server.create('branch', {

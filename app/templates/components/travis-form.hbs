@@ -1,0 +1,9 @@
+<form onsubmit={{action 'submit' }} class="travis-form">
+  {{yield (hash
+    validators=validators
+    hasErrors=hasErrors
+    isValid=isValid
+    submit=(action 'submit')
+    field=(component 'forms/form-field' form=this)
+  )}}
+</form>

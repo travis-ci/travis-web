@@ -30,6 +30,7 @@ module('Integration | Component | pagination navigation', function (hooks) {
     assert.dom('a.pagination-button').exists('on the first page should have one navigation button');
     assert.dom('a.pagination-button').hasText('next', 'should have a next button on the first page');
     assert.dom('.pagination-link').exists({ count: 4 }, 'should calculate with pages to display (here the first and last 2)');
+    assert.dom('li:nth-of-type(2) a').hasAttribute('title', 'Go to page number 2');
     assert.dom('li:nth-of-type(3)').hasText('...', 'get ... page separator right');
   });
 
