@@ -81,9 +81,11 @@
             {{#link-to 'organization.repositories' model }}Repositories{{/link-to}}
           </li>
 
-          <li data-test-org-settings-tab>
-            {{#link-to 'organization.settings'}}Settings{{/link-to}}
-          </li>
+          {{#if isOrganizationAdmin}}
+            <li data-test-org-settings-tab>
+              {{#link-to 'organization.settings'}}Settings{{/link-to}}
+            </li>
+          {{/if}}
 
           {{#if checkSubscriptionStatus}}
             <li data-test-billing-tab>

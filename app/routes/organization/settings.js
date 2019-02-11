@@ -5,7 +5,9 @@ export default TravisRoute.extend({
 
   model() {
     const organization = this.modelFor('organization');
-    // let orgPrefs = organization.store.findAll('preference');
+    if (organization.permissions.admin !== true) {
+      this.transitionTo('organization.repositories', organization);
+    }
     return hash({ organization });
   },
 });
