@@ -73,9 +73,9 @@ let URL = (function () {
     //   this._anchorElement.password = value;
     // },
 
-    // get origin() {
-    //   return this._anchorElement.origin;
-    // },
+    get origin() {
+      return this._anchorElement.origin;
+    },
 
     get host() {
       return this._anchorElement.host;
