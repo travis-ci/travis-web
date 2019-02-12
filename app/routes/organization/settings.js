@@ -8,6 +8,7 @@ export default TravisRoute.extend({
     if (organization.permissions.admin !== true) {
       this.transitionTo('organization.repositories', organization);
     }
-    return hash({ organization });
+    const preferences = this.store.query('preference', { organization_id: organization.id });
+    return hash({ organization, preferences });
   },
 });
