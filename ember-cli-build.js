@@ -89,6 +89,7 @@ module.exports = function () {
   importNpmDependency(app, 'node_modules/visibilityjs/index.js');
   importNpmDependency(app, 'node_modules/ansiparse/lib/ansiparse.js', 'amd');
   importNpmDependency(app, 'node_modules/yamljs/index.js');
+  importNpmDependency(app, 'node_modules/url-polyfill/url-polyfill.js');
 
   return app.toTree(emojiAssets);
 };

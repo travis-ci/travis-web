@@ -8,7 +8,7 @@ import config from 'travis/config/environment';
 import { alias } from '@ember/object/computed';
 import { getOwner } from '@ember/application';
 
-import URLPolyfill from 'travis/utils/url';
+// import URLPolyfill from 'url-polyfill';
 
 const proVersion = config.featureFlags['pro-version'];
 
@@ -62,7 +62,7 @@ export default Service.extend({
       this.set('state', 'signing-in');
 
       let uri = options.redirectUri || window.location.href,
-        url = new URLPolyfill(uri);
+        url = new URL(uri);
 
       if (url.pathname === '/plans') {
         url.pathname = '/';

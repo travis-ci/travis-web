@@ -7,7 +7,7 @@ import BuildFaviconMixin from 'travis/mixins/build-favicon';
 import { inject as service } from '@ember/service';
 
 import KeyboardShortcuts from 'ember-keyboard-shortcuts/mixins/route';
-import URLPolyfill from 'travis/utils/url';
+// import URLPolyfill from 'url-polyfill';
 
 export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
   auth: service(),
@@ -136,7 +136,7 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
     error(error) {
       if (error === 'needs-auth') {
         this.set('auth.redirected', true);
-        let currentURL = new URLPolyfill(window.location.href),
+        let currentURL = new URL(window.location.href),
           postRedirectURL = `${currentURL.origin}${this.get('auth.redirectPath')}`;
 
         return this.transitionTo('auth', { queryParams: { redirectUri: postRedirectURL }});
