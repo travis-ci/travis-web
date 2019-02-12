@@ -16,12 +16,6 @@ export default Mixin.create({
     }
   },
 
-  beforeModel({ targetName }) {
-    const isOrganization = targetName.indexOf('organization') > -1;
-    const accountRouteName = isOrganization ? 'organization' : 'account';
-    this.account = this.modelFor(accountRouteName);
-  },
-
   model(params) {
     const account = this.account;
     if (!account.error) {

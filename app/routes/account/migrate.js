@@ -1,23 +1,10 @@
 import Route from '@ember/routing/route';
-import { hash } from 'rsvp';
+import OwnerMigrateRouteMixin from 'travis/mixins/route/owner/migrate';
 
-export default Route.extend({
+export default Route.extend(OwnerMigrateRouteMixin, {
 
-  account: null,
-
-  beforeModel({ targetName }) {
-    const isOrganization = targetName.indexOf('organization') > -1;
-    const accountRouteName = isOrganization ? 'organization' : 'account';
-    this.account = this.modelFor(accountRouteName);
-  },
-
-  model() {
-    const { githubAppsRepositoriesOnOrg, webhooksRepositories } = this.account;
-
-    return hash({
-      orgRepos: githubAppsRepositoriesOnOrg.promise,
-      webhookRepos: webhooksRepositories.promise
-    });
+  beforeModel() {
+    this.account = this.modelFor('account');
   },
 
   redirect({ orgRepos, webhookRepos }) {

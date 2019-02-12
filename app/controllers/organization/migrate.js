@@ -4,3 +4,4 @@ export default Controller.extend({
   queryParams: ['page'],
   page: 1
 });
+

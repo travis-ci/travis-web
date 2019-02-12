@@ -1,0 +1,52 @@
+<div class='migrate'>
+  {{#paper-block class='migrate-note'}}
+    <p>
+      Here you can migrate all your repositories to build on travis-ci.com and make it a single place for all your builds.
+    </p>
+    <p>
+      The process of migration consists of two simple steps:
+    </p>
+    <ol>
+      <li data-step-label='1'>
+        Activate repositories on GitHub Apps
+      </li>
+      <li data-step-label='2'>
+        Migrate activated repositories to travis-ci.com
+      </li>
+    </ol>
+    <p>
+      Let's begin the Migration!
+    </p>
+  {{/paper-block}}
+
+  <nav class="travistab-nav--secondary">
+    <ul>
+
+      <li>
+        {{#link-to-account webhooksRouteName routeModel }}
+          <span data-step-label='1'>
+            Activate on GitHub Apps
+          </span>
+        {{/link-to-account}}
+      </li>
+
+      <li class="travistab-nav__arrow">
+        {{svg-jar 'icon-arrowtabs'}}
+      </li>
+
+      <li>
+        {{#link-to-account appsRouteName routeModel }}
+          <span data-step-label='2'>
+            Migrate to travis-ci.com
+          </span>
+        {{/link-to-account}}
+      </li>
+
+    </ul>
+  </nav>
+  <div class="travistab-body">
+
+    {{yield}}
+
+  </div>
+</div>
