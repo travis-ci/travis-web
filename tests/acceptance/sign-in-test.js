@@ -41,4 +41,10 @@ module('Acceptance | sign in', function (hooks) {
 
     assert.equal(currentURL(), '/');
   });
+
+  test('visiting an auth-requiring path forwards to the page requesting signin, with the proper redirection URL', async function (assert) {
+    await visit('/dashboard');
+
+    assert.ok(currentURL().endsWith('dashboard'), `expected current URL of ${currentURL()} to end with /dashboard`);
+  });
 });
