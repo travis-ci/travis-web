@@ -62,6 +62,10 @@ const DynamicQuery = ArrayProxy.extend({
   },
 
   load() {
+    return this.promise || this.reload();
+  },
+
+  reload() {
     const { page, filter } = this;
     this.promise = this.task.perform({ page, filter })
       .then((result = []) => {
@@ -70,6 +74,6 @@ const DynamicQuery = ArrayProxy.extend({
         return this;
       });
     return this.promise;
-  },
+  }
 
 });

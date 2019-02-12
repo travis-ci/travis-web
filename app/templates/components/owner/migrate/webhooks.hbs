@@ -1,0 +1,54 @@
+{{#repository-filter
+  repositories=repositories
+  queryFunction=(action 'filterQuery')
+  as |filter|
+}}
+
+  {{#if repositories.length}}
+    {{#component filter.form as |form|}}
+      <div class="profile-repositories-filter">
+        {{component form.searchField
+          placeholder="Filter repositories"
+          title="Filter repositories"
+        }}
+      </div>
+    {{/component}}
+  {{/if}}
+
+  <div id="administerable-repositories">
+
+    {{#if filter.isLoading}}
+      {{loading-indicator}}
+    {{else}}
+
+      <ul class="profile-repositorylist">
+        {{#each filter.repositories as |repository|}}
+
+          {{repository-status-toggle
+            repository=repository
+            name=(compute filter.computeName repository.name filter.isFiltering filter.query)
+          }}
+
+        {{else}}
+
+          {{#if filter.isFiltering}}
+            <li class="no-results">Sorry, no results found.</li>
+          {{else}}
+            <li>Sorry, it seems like we couldn't find any repositories you have access to on GitHub.</li>
+          {{/if}}
+
+        {{/each}}
+      </ul>
+
+    {{/if}}
+  </div>
+
+  {{#unless filter.isFiltering}}
+    {{#if isOrganization}}
+      {{pagination-navigation collection=repositories route="organization.migrate.webhooks" inner=6 outer=2}}
+    {{else}}
+      {{pagination-navigation collection=repositories route="account.migrate.webhooks" inner=6 outer=2}}
+    {{/if}}
+  {{/unless}}
+
+{{/repository-filter}}

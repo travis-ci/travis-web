@@ -10,8 +10,8 @@ export default Mixin.create({
 
     return hash({
       owner: this.account,
-      orgRepos: githubAppsRepositoriesOnOrg.promise,
-      webhookRepos: webhooksRepositories.promise
+      orgRepos: githubAppsRepositoriesOnOrg.load(),
+      webhookRepos: webhooksRepositories.load()
     });
   },
 
