@@ -58,7 +58,11 @@ export default Component.extend({
       'builds',
       'sum',
       ['count_started'],
-      { calcTotal: true, calcAvg: true, private: false } // this.private }
+      {
+        calcTotal: true,
+        calcAvg: true,
+        private: this.private,
+      }
     );
   }),
 

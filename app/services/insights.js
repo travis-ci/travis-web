@@ -207,7 +207,7 @@ export default Service.extend({
     }
   },
 
-  getActiveRepos(owner, interval) {
+  getActiveRepos(owner, interval, requestPrivate = false) {
     const endTime = moment.utc();
     const startTime = moment.utc().subtract(1, interval);
 
@@ -218,6 +218,7 @@ export default Service.extend({
         owner_id: owner.id,
         end_time: endTime.format(apiTimeRequestFormat),
         start_time: startTime.format(apiTimeRequestFormat),
+        private: requestPrivate,
       }
     };
 

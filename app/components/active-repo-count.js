@@ -5,6 +5,7 @@ import { computed } from '@ember/object';
 export default Component.extend({
   classNames: ['insights-glance'],
   classNameBindings: ['isLoading:insights-glance--loading'],
+  private: false,
 
   insights: service(),
 
@@ -49,14 +50,18 @@ export default Component.extend({
     };
   }),
 
-  dataRequest: computed('owner', 'interval', function () {
+  dataRequest: computed('owner', 'interval', 'private', function () {
     return this.get('insights').getMetric(
       this.owner,
       this.interval,
       'jobs',
       'sum',
       ['count_started'],
-      { aggregator: 'count', calcAvg: true }
+      {
+        aggregator: 'count',
+        calcAvg: true,
+        private: this.private,
+      }
     );
   }),
 
@@ -86,10 +91,11 @@ export default Component.extend({
     }
   }),
 
-  activeTotalRequest: computed('owner', 'interval', function () {
+  activeTotalRequest: computed('owner', 'interval', 'private', function () {
     return this.get('insights').getActiveRepos(
       this.owner,
-      this.interval
+      this.interval,
+      this.private
     );
   }),
 

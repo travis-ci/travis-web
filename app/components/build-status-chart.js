@@ -15,6 +15,7 @@ const invervalOverrides = {
 export default Component.extend({
   classNames: ['insights-odyssey'],
   classNameBindings: ['isLoading:insights-odyssey--loading'],
+  private: false,
 
   insights: service(),
 
@@ -79,14 +80,17 @@ export default Component.extend({
     };
   }),
 
-  dataRequest: computed('owner', 'interval', function () {
+  dataRequest: computed('owner', 'interval', 'private', function () {
     return this.get('insights').getMetric(
       this.owner,
       this.interval,
       'builds',
       'sum',
       ['count_passed', 'count_failed', 'count_errored', 'count_canceled'],
-      {intervalSettings: invervalOverrides}
+      {
+        intervalSettings: invervalOverrides,
+        private: this.private,
+      }
     );
   }),
 
