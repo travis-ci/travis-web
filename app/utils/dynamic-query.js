@@ -19,6 +19,7 @@ export default function dynamicQuery(taskFn, options = {}) {
 
 const DynamicQuery = ArrayProxy.extend({
   task: null,
+  promise: null,
 
   page: 1,
   filter: '',
@@ -62,12 +63,13 @@ const DynamicQuery = ArrayProxy.extend({
 
   load() {
     const { page, filter } = this;
-    return this.task.perform({ page, filter })
+    this.promise = this.task.perform({ page, filter })
       .then((result = []) => {
         this.set('pagination', result.pagination);
         this.setObjects(result.toArray());
         return this;
       });
+    return this.promise;
   },
 
 });
