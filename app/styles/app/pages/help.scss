@@ -99,6 +99,62 @@
 
   }
 
+  .help-page__resources{
+    .layout-striped-section__inner {
+      background-color: $pebble-grey;
+      @media #{$small-only} {
+        position: relative;
+
+        svg {
+          margin-top: 68px;
+        }
+
+        .call-to-action-button {
+          position: absolute;
+          display: block;
+          top: 20px;
+          text-align: center;
+        }
+      }
+    }
+  }
+
+  .help-page__community{
+    .layout-striped-section__inner {
+      @media #{$small-only} {
+        position: relative;
+
+        svg {
+          position: absolute;
+          top: 30px;
+          margin-bottom: 148px;
+          margin-top: 40px;
+        }
+
+        .call-to-action-button {
+          position: absolute;
+          display: block;
+          top: 10px;
+          text-align: center;
+        }
+
+        h2 {
+          margin-top: 57px;
+          position: relative;
+          top: 200px;
+          margin-bottom: 0px;
+        }
+
+        ul {
+          position: relative;
+          top: 200px;
+          margin-bottom: 200px;
+        }
+      }
+    }
+  }
+
+
   .section-divider {
     margin: 0 auto;
     width: 140px;
@@ -107,4 +163,49 @@
     background-color: $dry-cement;
   }
 
+  .section-columns {
+    .layout-striped-section__inner{
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      text-align: center;
+
+      svg {
+        width: 300px;
+        height: 150px;
+      }
+
+      @media #{$medium-up} {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-around;
+
+        svg {
+          max-width: 400px;
+        }
+      }
+    }
+  }
+
+  .links-list {
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      padding-bottom: 10px;
+      a {
+        border-bottom: 1px solid $asphalt-grey;
+      }
+    }
+  }
+
+  .call-to-action-button {
+    color: $oxide-blue;
+    font-weight: bold;
+    border: 1px solid $oxide-blue;
+    border-radius: 3px;
+    padding: 7px 18px;
+  }
 }
