@@ -9,7 +9,7 @@ export default Controller.extend({
   dataInterval: 'month',
   hasNoBuilds: false,
   features: service(),
-  requestPrivate: true,
+  requestPrivateInsights: true,
 
   isInsights: computed('tab', function () {
     return typeof this.tab === 'string' && this.tab.toLowerCase() === 'insights';
@@ -21,9 +21,13 @@ export default Controller.extend({
     return pro && privateResponse;
   }),
 
-  includePrivate: computed('isPrivateInsightsViewable', 'requestPrivate', function () {
-    return this.isPrivateInsightsViewable && this.requestPrivate;
-  }),
+  includePrivateInsights: computed(
+    'isPrivateInsightsViewable',
+    'requestPrivateInsights',
+    function () {
+      return this.isPrivateInsightsViewable && this.requestPrivateInsights;
+    }
+  ),
 
   actions: {
     setSubTab(selection) {
@@ -32,6 +36,9 @@ export default Controller.extend({
     },
     setNoBuilds(val) {
       this.set('hasNoBuilds', val);
-    }
+    },
+    setRequestPrivateInsights(val) {
+      this.set('requestPrivateInsights', val);
+    },
   },
 });

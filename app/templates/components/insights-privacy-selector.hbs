@@ -1,12 +1,12 @@
 <span>Insights:</span>
 {{!-- <span class="insights-privacy-selector__selected">{{currentState}}</span> --}}
-{{#if isPrivateInsightsViewable}}
+{{#if isPrivateViewable}}
   {{!-- <button type="button" class="insights-privacy-selector__button">V</button> --}}
 
   {{#power-select
     options=availableOptions
     selected=currentState
-    onchange=(action 'handleSubmit')
+    onchange=(action 'selectInsightScope')
     searchEnabled=false
     as |priv|
   }}
