@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
-import { reads, or, and, bool } from '@ember/object/computed';
+import { reads, or, and, gt } from '@ember/object/computed';
 import { computed } from '@ember/object';
 import config from 'travis/config/environment';
 
@@ -23,7 +23,11 @@ export default Component.extend({
 
   showSubscriptionStatusBanner: and('checkSubscriptionStatus', 'model.subscriptionError'),
 
-  showMigrateTab: bool('features.proVersion'),
+  hasWebhookRepos: gt('model.webhooksRepositories.length', 0),
+  hasReposOnOrg: gt('model.githubAppsRepositoriesOnOrg.length', 0),
+  hasReposToMigrate: or('hasWebhookRepos', 'hasReposOnOrg'),
+
+  showMigrateTab: and('features.proVersion', 'hasReposToMigrate'),
 
   get githubOrgsOauthAccessSettingsUrl() {
     return githubOrgsOauthAccessSettingsUrl;
