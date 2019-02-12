@@ -1,8 +1,5 @@
 <span>Insights:</span>
-{{!-- <span class="insights-privacy-selector__selected">{{currentState}}</span> --}}
 {{#if isPrivateViewable}}
-  {{!-- <button type="button" class="insights-privacy-selector__button">V</button> --}}
-
   {{#power-select
     options=availableOptions
     selected=currentState
@@ -12,4 +9,6 @@
   }}
     {{priv}}
   {{/power-select}}
+{{else}}
+  <span class="insights-privacy-selector__selected">{{currentState}}</span>
 {{/if}}
