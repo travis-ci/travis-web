@@ -1,6 +1,7 @@
 import { reject } from 'rsvp';
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
+import { get } from '@ember/object';
 
 export default Route.extend({
   auth: service(),
@@ -19,6 +20,8 @@ export default Route.extend({
     }
     if (!this.signedIn() && this.get('needsAuth')) {
       this.set('auth.afterSignInTransition', transition);
+      this.set('auth.redirectPath', get(transition, 'intent.url'));
+
       return reject('needs-auth');
     } else if (this.redirectToProfile(transition)) {
       return this.transitionTo('account');
