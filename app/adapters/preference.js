@@ -11,8 +11,7 @@ export default V3Adapter.extend({
     }
 
     if (type === 'updateRecord' &&
-      snapshot !== null &&
-      snapshot.hasOwnProperty('adapterOptions') &&
+      (typeof snapshot.adapterOptions) !== 'undefined' &&
       snapshot.adapterOptions.hasOwnProperty('organization_id')
     ) {
       prefix += `/org/${snapshot.adapterOptions.organization_id}`;
