@@ -31,4 +31,9 @@ export default Component.extend({
     return !enterprise && !!billingEndpoint;
   }),
 
+  isOrganizationAdmin: computed('model', function () {
+    let model = this.get('model');
+    return model.isOrganization && (this.get('model.permissions.admin') === true);
+  }),
+
 });
