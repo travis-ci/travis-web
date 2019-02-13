@@ -28,6 +28,26 @@ export default Controller.extend({
   privateInsightsVisibility: reads('preferences.privateInsightsVisibility'),
   isShowingInsightsVisibilityModal: false,
 
+  // This is for detecting whether visibility is being increased or restricted.
+  visibilityChange: computed(
+    'preferences.privateInsightsVisibility',
+    'privateInsightsVisibility',
+    function () {
+      const oldVis = this.preferences.privateInsightsVisibility;
+      const newVis = this.privateInsightsVisibility;
+
+      if (oldVis === newVis) {
+        return 0;
+      }
+
+      if (newVis === 'private' || oldVis === 'public') {
+        return -1;
+      }
+
+      return 1;
+    }
+  ),
+
   unsubscribedRepos: computed('repositories.@each.emailSubscribed', function () {
     let repositories = this.get('repositories') || [];
     return repositories.filter(repo => !repo.emailSubscribed);

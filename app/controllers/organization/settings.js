@@ -8,6 +8,7 @@ export default Controller.extend({
   flashes: service(),
   features: service(),
   organization: reads('model.organization'),
+  // owner: reads('organization.name'),
   preferences: computed('model.preferences.@each.{name,value}', function () {
     const list = this.model.preferences || [];
     return list.reduce((hash, record) => {
@@ -19,7 +20,6 @@ export default Controller.extend({
   isShowingInsightsVisibilityModal: false,
 
   // This is for detecting whether visibility is being increased or restricted.
-  // It works because there are 3 options, any more and you'll need more complex logic.
   visibilityChange: computed(
     'preferences.private_insights_visibility.value',
     'privateInsightsVisibility',

@@ -7,7 +7,8 @@
           Insights
         </div>
         <p class="description" data-test-insights-org-settings-description>
-          Make more informed decisions about your development workflow using your build Insights.
+          Make more informed decisions about your development workflow using your build Insights.<br />
+          {{#link-to 'owner.repositories' organization.login (query-params tab='insights')}}View {{organization.name}}'s Insights{{/link-to}}
         </p>
         <ul class='travis-radio-list'>
           <li class='travis-radio-list__item'>
