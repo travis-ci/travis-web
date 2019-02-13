@@ -1,5 +1,5 @@
 <section class='organization-settings'>
-  {{#if organization.permissions.admin}}
+  {{#if (and features.proVersion organization.permissions.admin)}}
     <section class="active-visiblity-settings" data-test-active-visiblity-settings>
       <h3>Active Visibility Settings</h3>
       <div class="insights-settings">
@@ -7,30 +7,106 @@
           Insights
         </div>
         <p class="description" data-test-insights-org-settings-description>
-          Get better information and make more informed decisions about your team's or community's
-          development workflow by understanding how you build code. Check out the Travis CI Insights
-          Tab to see an overview. Insights about open-source contributions are visible to the world,
-          and you can optionally show aggregate information about your team's private contributions as well.
+          Make more informed decisions about your development workflow using your build Insights.
         </p>
-        {{!-- Probably will want to move this out into a component or 2 --}}
         <ul class='travis-radio-list'>
           <li class='travis-radio-list__item'>
-            <label for="org_insight_admins">Organization admins only</label>
-            <input type="radio" name="org_insight_vis" class="travis-radio-input" id="org_insight_admins" />
-            <label for="org_insight_admins" class="travis-radio-label"></label>
+            <label for="organization_insight_admins">Only allow organization owners to see insights from your private builds</label>
+            <input
+              type="radio"
+              name="organization_insight_vis"
+              class="travis-radio-input"
+              id="organization_insight_admins"
+              value="admins"
+              checked={{eq privateInsightsVisibility 'admins'}}
+              onchange={{action (mut privateInsightsVisibility) 'admins'}}
+            />
+            <label for="organization_insight_admins" class="travis-radio-label"></label>
           </li>
           <li class='travis-radio-list__item'>
-            <label for="org_insight_members">Share insights about the organization's private builds with organization members</label>
-            <input type="radio" name="org_insight_vis" class="travis-radio-input" id="org_insight_members" />
-            <label for="org_insight_members" class="travis-radio-label"></label>
+            <label for="organization_insight_members">Only allow organization members to see insights from your private builds</label>
+            <input
+              type="radio"
+              name="organization_insight_vis"
+              class="travis-radio-input"
+              id="organization_insight_members"
+              value="members"
+              checked={{eq privateInsightsVisibility 'members'}}
+              onchange={{action (mut privateInsightsVisibility) 'members'}}
+            />
+            <label for="organization_insight_members" class="travis-radio-label"></label>
           </li>
           <li class='travis-radio-list__item'>
-            <label for="org_insight_public">Publicly share insights about the organization's private builds</label>
-            <input type="radio" name="org_insight_vis" class="travis-radio-input" id="org_insight_public" />
-            <label for="org_insight_public" class="travis-radio-label"></label>
+            <label for="organization_insight_public">Allow everyone to see insights from your private builds</label>
+            <input
+              type="radio"
+              name="organization_insight_vis"
+              class="travis-radio-input"
+              id="organization_insight_public"
+              value="public"
+              checked={{eq privateInsightsVisibility 'public'}}
+              onchange={{action (mut privateInsightsVisibility) 'public'}}
+            />
+            <label for="organization_insight_public" class="travis-radio-label"></label>
+          </li>
+          <li class='travis-radio-list__item travis-radio-list__item--save'>
+            <button
+              class="settings-button"
+              {{action 'toggleInsightsVisibilityModal'}}
+              disabled={{eq visibilityChange 0}}
+            >Save</button>
           </li>
         </ul>
       </div>
     </section>
   {{/if}}
 </section>
+
+{{#if (and features.proVersion isShowingInsightsVisibilityModal)}}
+  {{#modal-dialog
+    toggleInsightsVisibilityModal=(action 'toggleInsightsVisibilityModal')
+    targetAttachment="center"
+    translucentOverlay=true
+  }}
+    <button
+      type="button"
+      title="Close modal"
+      class="modal-close pointer"
+      {{action 'toggleInsightsVisibilityModal'}}
+    >{{svg-jar 'icon-failed' class="icon"}}</button>
+
+    <h3>
+      {{#if (eq visibilityChange 1)}}Increase{{else if (eq visibilityChange -1)}}Restrict{{else}}Update{{/if}}
+      visibility of your private build insights
+    </h3>
+    <p>
+      This change will make {{organization.name}}'s private build insights
+      <em>
+        {{if (eq visibilityChange -1) 'only' ''}} available to
+        {{#if (eq privateInsightsVisibility 'admins')}}
+          organization owners
+        {{else if (eq privateInsightsVisibility 'members')}}
+          organization members
+        {{else}}
+          everyone
+        {{/if}}
+      </em>
+    </p>
+
+    <a
+      data-test-insights-visibility-modal-cancel-button
+      href="#"
+      role="button"
+      class="button button--red"
+      {{action 'toggleInsightsVisibilityModal'}}
+    >Cancel</a>
+
+    <a
+      data-test-insights-visibility-modal-confirm-button
+      href="#"
+      role="button"
+      class="button button--blue"
+      {{action (perform setPrivateInsights)}}
+    >Confirm</a>
+  {{/modal-dialog}}
+{{/if}}

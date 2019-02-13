@@ -950,17 +950,23 @@ header.space-between {
 
 .settings-button {
   margin-top: .5rem;
-  border: 0.09em solid lighten($cement-grey, 20%);
-  box-shadow: 0 .15px 0 $cement-grey;
-  color: $cement-grey;
-  border-radius: 0.25em;
+  padding: .25rem 1rem;
+  border-radius: 0.25rem;
+  text-transform: uppercase;
+  background-color: $oxide-blue;
+  color: #ffffff;
+  border: 1px solid $oxide-blue;
+  cursor: pointer;
 
   &:hover {
-    border-color: #707070;
-    color: #707070;
+    background-color: darken($oxide-blue, 10);
+    border-color: darken($oxide-blue, 10);
+  }
 
-    svg {
-      @include colorSVG(#707070);
-    }
+  &[disabled] {
+    color: $cement-grey;
+    border-color: $dry-cement;
+    background-color: transparent;
+    cursor: default;
   }
 }

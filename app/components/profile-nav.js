@@ -33,10 +33,7 @@ export default Component.extend({
 
   isOrganizationAdmin: computed('model', function () {
     let model = this.get('model');
-    return model.isOrganization &&
-      model.hasOwnProperty('permissions') &&
-      model.permissions.hasOwnProperty('admin') &&
-      model.permissions.admin === true;
+    return model.isOrganization && (this.get('model.permissions.admin') === true);
   }),
 
 });
