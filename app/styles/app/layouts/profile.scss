@@ -766,7 +766,7 @@ header.space-between {
   }
 }
 
-.user-settings, .organization-settings {
+.user-settings {
   @include linkStyle;
 
   h3 {
@@ -813,7 +813,7 @@ header.space-between {
     }
   }
 
-  .email-settings, .insights-settings {
+  .email-settings {
 
     .row {
       display: flex;
@@ -883,90 +883,10 @@ header.space-between {
       }
     }
   }
-
-  .insights-settings {
-    .description p {
-      width: 80%;
-      margin-bottom: 0;
-    }
-
-    .controls {
-      align-self: flex-end;
-    }
-  }
 }
 
 .repository-migration-modal {
   .migration-modal-cancel {
     margin-left: 6px;
-  }
-}
-
-.travis-radio-list {
-  list-style: none;
-  padding: .5rem 1rem;
-  font-style: italic;
-  color: $cement-grey;
-  background-color: #f5fbfb;
-
-  label { cursor: pointer; }
-
-  &__item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: .5rem 0;
-  }
-
-  .travis-radio-input {
-    display: none;
-
-    &:checked + .travis-radio-label {
-      // border-color: $oxide-blue;
-
-      &::before {
-        background-color: $oxide-blue;
-      }
-    }
-  }
-
-  .travis-radio-label {
-    display: inline-block;
-    border: 1px solid $oxide-blue;
-    border-radius: 50%;
-    padding: 2px;
-    line-height: 0;
-
-    &::before {
-      content: '';
-      display: inline-block;
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background-color: transparent;
-    }
-  }
-}
-
-.settings-button {
-  margin-top: .5rem;
-  padding: .25rem 1rem;
-  border-radius: 0.25rem;
-  text-transform: uppercase;
-  background-color: $oxide-blue;
-  color: #ffffff;
-  border: 1px solid $oxide-blue;
-  cursor: pointer;
-
-  &:hover {
-    background-color: darken($oxide-blue, 10);
-    border-color: darken($oxide-blue, 10);
-  }
-
-  &[disabled] {
-    color: $cement-grey;
-    border-color: $dry-cement;
-    background-color: transparent;
-    cursor: default;
   }
 }

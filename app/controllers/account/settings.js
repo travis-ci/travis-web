@@ -25,28 +25,6 @@ export default Controller.extend({
   repositories: reads('fetchRepositories.lastSuccessful.value'),
   buildEmails: reads('preferences.buildEmails'),
   showResubscribeList: and('buildEmails', 'unsubscribedRepos.length'),
-  privateInsightsVisibility: reads('preferences.privateInsightsVisibility'),
-  isShowingInsightsVisibilityModal: false,
-
-  // This is for detecting whether visibility is being increased or restricted.
-  visibilityChange: computed(
-    'preferences.privateInsightsVisibility',
-    'privateInsightsVisibility',
-    function () {
-      const oldVis = this.preferences.privateInsightsVisibility;
-      const newVis = this.privateInsightsVisibility;
-
-      if (oldVis === newVis) {
-        return 0;
-      }
-
-      if (newVis === 'private' || oldVis === 'public') {
-        return -1;
-      }
-
-      return 1;
-    }
-  ),
 
   unsubscribedRepos: computed('repositories.@each.emailSubscribed', function () {
     let repositories = this.get('repositories') || [];
@@ -65,24 +43,5 @@ export default Controller.extend({
       this.flashes.clear();
       this.flashes.error('Something went wrong and your email settings were not saved.');
     }
-  }).restartable(),
-
-  setPrivateInsights: task(function* () {
-    let val = this.get('privateInsightsVisibility');
-    try {
-      yield this.preferences.set('private_insights_visibility', val);
-      this.flashes.clear();
-      this.flashes.success(`Your private build insights are now ${val}.`);
-    } catch (err) {
-      this.flashes.clear();
-      this.flashes.error('Something went wrong and your insights settings were not saved.');
-    }
-    this.set('isShowingInsightsVisibilityModal', false);
-  }).restartable(),
-
-  actions: {
-    toggleInsightsVisibilityModal() {
-      this.toggleProperty('isShowingInsightsVisibilityModal');
-    },
-  }
+  }).restartable()
 });

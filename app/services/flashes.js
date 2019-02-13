@@ -87,11 +87,11 @@ export default Service.extend({
   removeFlash(msg) {
     setTimeout(() => {
       run(this, () => {
-        if (this.get('flashes').length > 0) {
-          return this.get('flashes').removeObject(msg);
+        if (this.get('flashes.content')) {
+          return this.get('flashes.content').removeObject(msg);
         }
       });
-    }, 7000);
+    }, 15000);
   },
 
   close(msg) {

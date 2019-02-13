@@ -5,5 +5,4 @@ export default Owner.extend({
   type: 'organization',
   isOrganization: true,
   allowMigration: attr(),
-  permissions: attr(),
 });

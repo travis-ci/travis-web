@@ -181,18 +181,6 @@
   }
 }
 
-.button--red {
-  @extend %button;
-
-  border: none;
-  color: white;
-  background-color: $brick-red;
-
-  &:hover {
-    background-color: darken($brick-red, 10);
-  }
-}
-
 .button--compact {
   padding: 3px 7px;
 }

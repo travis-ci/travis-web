@@ -1,14 +1,7 @@
-import TravisRoute from 'travis/routes/basic';
-import { hash } from 'rsvp';
+import Route from '@ember/routing/route';
 
-export default TravisRoute.extend({
-
-  model() {
-    const organization = this.modelFor('organization');
-    if (organization.permissions.admin !== true) {
-      this.transitionTo('organization.repositories', organization);
-    }
-    const preferences = this.store.query('preference', { organization_id: organization.id });
-    return hash({ organization, preferences });
-  },
+export default Route.extend({
+  beforeModel() {
+    this.transitionTo('organization.repositories', this.modelFor('organization'));
+  }
 });
