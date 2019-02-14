@@ -25,28 +25,19 @@ export default Controller.extend({
   repositories: reads('fetchRepositories.lastSuccessful.value'),
   buildEmails: reads('preferences.buildEmails'),
   showResubscribeList: and('buildEmails', 'unsubscribedRepos.length'),
+
   privateInsightsVisibility: reads('preferences.privateInsightsVisibility'),
-  isShowingInsightsVisibilityModal: false,
-
-  // This is for detecting whether visibility is being increased or restricted.
-  visibilityChange: computed(
-    'preferences.privateInsightsVisibility',
-    'privateInsightsVisibility',
-    function () {
-      const oldVis = this.preferences.privateInsightsVisibility;
-      const newVis = this.privateInsightsVisibility;
-
-      if (oldVis === newVis) {
-        return 0;
-      }
-
-      if (newVis === 'private' || oldVis === 'public') {
-        return -1;
-      }
-
-      return 1;
-    }
-  ),
+  insightsVisibilityOptions: [{
+    value: 'private',
+    displayValue: 'you',
+    description: 'Do not allow everyone to see insights from your private builds',
+    modalText: 'Do not allow everyone to see my private insights',
+  }, {
+    value: 'public',
+    displayValue: 'everyone',
+    description: 'Allow everyone to see insights from your private builds',
+    modalText: 'Allow everyone to see my private build insights',
+  }],
 
   unsubscribedRepos: computed('repositories.@each.emailSubscribed', function () {
     let repositories = this.get('repositories') || [];
@@ -67,8 +58,7 @@ export default Controller.extend({
     }
   }).restartable(),
 
-  setPrivateInsights: task(function* () {
-    let val = this.get('privateInsightsVisibility');
+  setPrivateInsights: task(function* (val) {
     try {
       yield this.preferences.set('private_insights_visibility', val);
       this.flashes.clear();
@@ -77,6 +67,11 @@ export default Controller.extend({
       this.flashes.clear();
       this.flashes.error('Something went wrong and your insights settings were not saved.');
     }
-    this.set('isShowingInsightsVisibilityModal', false);
   }).restartable(),
+
+  actions: {
+    setInsightsVis(val) {
+      this.setPrivateInsights.perform(val);
+    }
+  },
 });

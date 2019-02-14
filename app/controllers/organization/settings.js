@@ -16,30 +16,22 @@ export default Controller.extend({
     }, {});
   }),
   privateInsightsVisibility: reads('preferences.private_insights_visibility.value'),
-  isShowingInsightsVisibilityModal: false,
 
-  // This is for detecting whether visibility is being increased or restricted.
-  visibilityChange: computed(
-    'preferences.private_insights_visibility.value',
-    'privateInsightsVisibility',
-    function () {
-      const oldVis = this.preferences.private_insights_visibility.value;
-      const newVis = this.privateInsightsVisibility;
+  insightsVisibilityOptions: [{
+    value: 'admins',
+    displayValue: 'organization owners',
+    description: 'Only allow organization owners to see insights from your private builds',
+  }, {
+    value: 'members',
+    displayValue: 'organization members',
+    description: 'Only allow organization members to see insights from your private builds',
+  }, {
+    value: 'public',
+    displayValue: 'everyone',
+    description: 'Allow everyone to see insights from your private builds',
+  }],
 
-      if (oldVis === newVis) {
-        return 0;
-      }
-
-      if (newVis === 'admins' || oldVis === 'public') {
-        return -1;
-      }
-
-      return 1;
-    }
-  ),
-
-  setPrivateInsights: task(function* () {
-    let val = this.get('privateInsightsVisibility');
+  setPrivateInsights: task(function* (val) {
     try {
       const record = this.preferences['private_insights_visibility'];
       record.set('value', val);
@@ -55,6 +47,11 @@ export default Controller.extend({
       this.flashes.clear();
       this.flashes.error('Something went wrong and your insights settings were not saved.');
     }
-    this.set('isShowingInsightsVisibilityModal', false);
   }).restartable(),
+
+  actions: {
+    setInsightsVis(val) {
+      this.setPrivateInsights.perform(val);
+    }
+  },
 });

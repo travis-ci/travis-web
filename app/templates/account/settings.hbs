@@ -85,81 +85,12 @@
           Make more informed decisions about your development workflow using your build Insights.<br />
           {{#link-to 'owner.repositories' account.login (query-params tab='insights')}}View {{account.name}}'s Insights{{/link-to}}
         </p>
-
-        <ul class='travis-radio-list'>
-          <li class='travis-radio-list__item'>
-            <label for="user_insight_private">Do not allow everyone to see insights from your private builds</label>
-            <input
-              type="radio"
-              name="user_insight_vis"
-              class="travis-radio-input"
-              id="user_insight_private"
-              value="private"
-              checked={{eq privateInsightsVisibility 'private'}}
-              onchange={{action (mut privateInsightsVisibility) 'private'}}
-            />
-            <label for="user_insight_private" class="travis-radio-label"></label>
-          </li>
-          <li class='travis-radio-list__item'>
-            <label for="user_insight_public">Allow everyone to see insights from your private builds</label>
-            <input
-              type="radio"
-              name="user_insight_vis"
-              class="travis-radio-input"
-              id="user_insight_public"
-              value="public"
-              checked={{eq privateInsightsVisibility 'public'}}
-              onchange={{action (mut privateInsightsVisibility) 'public'}}
-            />
-            <label for="user_insight_public" class="travis-radio-label"></label>
-          </li>
-          <li class='travis-radio-list__item travis-radio-list__item--save'>
-            <button class="settings-button" {{action (toggle 'isShowingInsightsVisibilityModal' this)}} disabled={{eq visibilityChange 0}}>Save</button>
-          </li>
-        </ul>
+        {{visibility-setting-list
+          options=insightsVisibilityOptions
+          selected=privateInsightsVisibility
+          onConfirm='setInsightsVis'
+        }}
       </div>
     </section>
   {{/if}}
 </section>
-
-{{#if (and features.proVersion isShowingInsightsVisibilityModal)}}
-  {{#modal-dialog
-    targetAttachment="center"
-    translucentOverlay=true
-  }}
-    <button
-      type="button"
-      title="Close modal"
-      class="modal-close pointer"
-      {{action (toggle 'isShowingInsightsVisibilityModal' this)}}
-    >{{svg-jar 'icon-failed' class="icon"}}</button>
-
-    <h3>
-      {{#if (eq visibilityChange 1)}}Increase{{else if (eq visibilityChange -1)}}Restrict{{else}}Change{{/if}}
-      visibility of your private build insights
-    </h3>
-    <p>
-      {{#if (eq privateInsightsVisibility 'public')}}
-        Allow everyone to see my private build insights.
-      {{else}}
-        Do not allow everyone to see my private insights.
-      {{/if}}
-    </p>
-
-    <button
-      data-test-insights-visibility-modal-cancel-button
-      href="#"
-      role="button"
-      class="button button--red"
-      {{action (toggle 'isShowingInsightsVisibilityModal' this)}}
-    >Cancel</button>
-
-    <button
-      data-test-insights-visibility-modal-confirm-button
-      href="#"
-      role="button"
-      class="button button--blue"
-      {{action (perform setPrivateInsights)}}
-    >Confirm</button>
-  {{/modal-dialog}}
-{{/if}}
