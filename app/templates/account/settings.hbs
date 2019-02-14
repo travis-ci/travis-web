@@ -114,7 +114,7 @@
             <label for="user_insight_public" class="travis-radio-label"></label>
           </li>
           <li class='travis-radio-list__item travis-radio-list__item--save'>
-            <button class="settings-button" {{action 'toggleInsightsVisibilityModal'}} disabled={{eq visibilityChange 0}}>Save</button>
+            <button class="settings-button" {{action (toggle 'isShowingInsightsVisibilityModal' this)}} disabled={{eq visibilityChange 0}}>Save</button>
           </li>
         </ul>
       </div>
@@ -124,7 +124,6 @@
 
 {{#if (and features.proVersion isShowingInsightsVisibilityModal)}}
   {{#modal-dialog
-    toggleInsightsVisibilityModal=(action 'toggleInsightsVisibilityModal')
     targetAttachment="center"
     translucentOverlay=true
   }}
@@ -132,7 +131,7 @@
       type="button"
       title="Close modal"
       class="modal-close pointer"
-      {{action 'toggleInsightsVisibilityModal'}}
+      {{action (toggle 'isShowingInsightsVisibilityModal' this)}}
     >{{svg-jar 'icon-failed' class="icon"}}</button>
 
     <h3>
@@ -147,20 +146,20 @@
       {{/if}}
     </p>
 
-    <a
+    <button
       data-test-insights-visibility-modal-cancel-button
       href="#"
       role="button"
       class="button button--red"
-      {{action 'toggleInsightsVisibilityModal'}}
-    >Cancel</a>
+      {{action (toggle 'isShowingInsightsVisibilityModal' this)}}
+    >Cancel</button>
 
-    <a
+    <button
       data-test-insights-visibility-modal-confirm-button
       href="#"
       role="button"
       class="button button--blue"
       {{action (perform setPrivateInsights)}}
-    >Confirm</a>
+    >Confirm</button>
   {{/modal-dialog}}
 {{/if}}

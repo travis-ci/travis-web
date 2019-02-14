@@ -79,10 +79,4 @@ export default Controller.extend({
     }
     this.set('isShowingInsightsVisibilityModal', false);
   }).restartable(),
-
-  actions: {
-    toggleInsightsVisibilityModal() {
-      this.toggleProperty('isShowingInsightsVisibilityModal');
-    },
-  }
 });

@@ -71,7 +71,7 @@ module.exports = function () {
       }
     },
     'ember-composable-helpers': {
-      only: ['sort-by', 'compute']
+      only: ['sort-by', 'compute', 'toggle']
     },
     'ember-power-select': {
       theme: false

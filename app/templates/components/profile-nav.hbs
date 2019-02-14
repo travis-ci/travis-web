@@ -81,7 +81,7 @@
             {{#link-to 'organization.repositories' model }}Repositories{{/link-to}}
           </li>
 
-          {{#if isOrganizationAdmin}}
+          {{#if showOrganizationSettings}}
             <li data-test-org-settings-tab>
               {{#link-to 'organization.settings'}}Settings{{/link-to}}
             </li>
