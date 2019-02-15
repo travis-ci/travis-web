@@ -58,7 +58,7 @@ const DynamicQuery = ArrayProxy.extend({
   applyFilter(filter = '') {
     const page = 1;
     this.setProperties({ filter, page });
-    return this.load();
+    return this.reload();
   },
 
   load() {

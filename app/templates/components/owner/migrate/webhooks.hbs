@@ -4,16 +4,14 @@
   as |filter|
 }}
 
-  {{#if repositories.length}}
-    {{#component filter.form as |form|}}
-      <div class="profile-repositories-filter">
-        {{component form.searchField
-          placeholder="Filter repositories"
-          title="Filter repositories"
-        }}
-      </div>
-    {{/component}}
-  {{/if}}
+  {{#component filter.form as |form|}}
+    <div class="profile-repositories-filter">
+      {{component form.searchField
+        placeholder="Filter repositories"
+        title="Filter repositories"
+      }}
+    </div>
+  {{/component}}
 
   <div>
 
