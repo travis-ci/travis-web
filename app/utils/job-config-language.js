@@ -18,6 +18,9 @@ export default function jobConfigLanguage(config) {
         if (languageName === 'Android') {
           output.push('Android');
           completedLanguageNames.push(languageName);
+        } else if (version instanceof Object) {
+          output.push(languageName);
+          completedLanguageNames.push(languageName);
         } else {
           output.push(`${languageName}: ${version}`);
           completedLanguageNames.push(languageName);
