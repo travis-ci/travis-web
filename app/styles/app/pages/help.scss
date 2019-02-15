@@ -102,17 +102,19 @@
   .help-page__resources{
     .layout-striped-section__inner {
       background-color: $pebble-grey;
+      padding-bottom: 50px;
+      
       @media #{$small-only} {
         position: relative;
 
         svg {
-          margin-top: 68px;
+          margin-top: 100px;
         }
 
         .call-to-action-button {
           position: absolute;
           display: block;
-          top: 20px;
+          top: 40px;
           text-align: center;
         }
       }
@@ -126,7 +128,7 @@
 
         svg {
           position: absolute;
-          top: 30px;
+          top: 60px;
           margin-bottom: 148px;
           margin-top: 40px;
         }
@@ -134,7 +136,7 @@
         .call-to-action-button {
           position: absolute;
           display: block;
-          top: 10px;
+          top: 30px;
           text-align: center;
         }
 
