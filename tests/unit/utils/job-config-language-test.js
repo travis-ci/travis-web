@@ -38,4 +38,8 @@ module('jobConfigLanguage', function () {
   test('a job with Android components and Android language only has Android once', (assert) => {
     assert.equal(jobConfigLanguage({ language: 'android', android: { components: ['dumont', 'riel'] } }), 'Android');
   });
+
+  test('an incorrectly-structured config doesn’t print [object Object]', assert => {
+    assert.equal(jobConfigLanguage({ osx_image: { osx_image: 'xcode10' }}), 'Xcode');
+  });
 });
