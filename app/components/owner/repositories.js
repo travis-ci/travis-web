@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { reads, sort, notEmpty, not, and } from '@ember/object/computed';
+import { reads, notEmpty, not, and } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import config from 'travis/config/environment';
 
@@ -17,26 +17,25 @@ export default Component.extend({
 
   page: 1,
   appsPage: 1,
-  appsOrgPage: 1,
 
-  login: '',
   account: null,
-  deprecated: null,
-  lockedGithubAppsRepositories: null,
-  notLockedGithubAppsRepositories: null,
 
   get migrationRepositoryCountLimit() {
     return migrationRepositoryCountLimit;
   },
 
-  deprecatedSorting: ['name'],
-  sortedRepositories: sort('deprecated', 'deprecatedSorting'),
-  showGitHubApps: reads('features.github-apps'),
+  login: reads('account.login'),
+
+  webhooksRepositories: reads('account.webhooksRepositories'),
+  githubAppsRepositories: reads('account.githubAppsRepositories'),
 
   isEnterprise: reads('features.enterpriseVersion'),
   isNotEnterprise: not('isEnterprise'),
   isPro: reads('features.proVersion'),
   isNotPro: not('isPro'),
+  hasGitHubAppsInstallation: notEmpty('account.installation'),
+
+  showGitHubApps: reads('features.github-apps'),
   showPublicReposBanner: and('isNotEnterprise', 'isNotPro'),
 
   githubAppsActivationURL: computed('account.githubId', function () {
@@ -63,8 +62,6 @@ export default Component.extend({
     }
   ),
 
-  hasGitHubAppsInstallation: notEmpty('account.installation'),
-
   canMigrate: computed('hasGitHubAppsInstallation', 'deprecated.pagination.total', function () {
     let hasGitHubAppsInstallation = this.get('hasGitHubAppsInstallation');
     let legacyRepositoryCount = this.get('deprecated.pagination.total');
@@ -74,6 +71,7 @@ export default Component.extend({
   }),
 
   actions: {
+
     filterQuery(query) {
       let params = {
         name_filter: query,
@@ -81,7 +79,7 @@ export default Component.extend({
         sort_by: 'name_filter:desc',
         limit: 10,
         custom: {
-          owner: this.login,
+          owner: this.account.login,
           type: 'byOwner',
         },
       };
@@ -106,6 +104,7 @@ export default Component.extend({
         },
       });
     }
+
   },
 
   migrate: task(function* () {
