@@ -6,17 +6,6 @@
     <p>
       The process of migration consists of two simple steps:
     </p>
-    <ol>
-      <li data-step-label='1'>
-        Activate repositories on GitHub Apps
-      </li>
-      <li data-step-label='2'>
-        Migrate activated repositories to travis-ci.com
-      </li>
-    </ol>
-    <p>
-      Let's begin the Migration!
-    </p>
   {{/paper-block}}
 
   <nav class="travistab-nav--secondary">
@@ -24,7 +13,7 @@
 
       <li>
         {{#link-to-account webhooksRouteName routeModel }}
-          <span data-step-label='1'>
+          <span>
             Activate on GitHub Apps
           </span>
         {{/link-to-account}}
@@ -36,7 +25,7 @@
 
       <li>
         {{#link-to-account appsRouteName routeModel }}
-          <span data-step-label='2'>
+          <span>
             Migrate to travis-ci.com
           </span>
         {{/link-to-account}}

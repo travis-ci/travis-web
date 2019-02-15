@@ -24,31 +24,6 @@
 
   }
 
-  [data-step-label] {
-
-    &:before {
-      content: attr(data-step-label);
-      display: inline-block;
-      position: relative;
-      left: -7px;
-      width: 18px;
-      height: 18px;
-      line-height: 15px;
-      text-align: center;
-      border: 1px solid $asphalt-grey;
-      border-radius: 50%;
-      color: $asphalt-grey;
-    }
-
-  }
-
-  .active, a:hover {
-    [data-step-label]:before {
-      color: $oxide-blue;
-      border-color: $oxide-blue;
-    }
-  }
-
   .travistab-nav--secondary {
 
     li {
