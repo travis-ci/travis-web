@@ -15,7 +15,7 @@
     {{/component}}
   {{/if}}
 
-  <div id="administerable-repositories">
+  <div>
 
     {{#if filter.isLoading}}
       {{loading-indicator}}
@@ -24,10 +24,12 @@
       <ul class="profile-repositorylist">
         {{#each filter.repositories as |repository|}}
 
-          {{repository-status-toggle
-            repository=repository
-            name=(compute filter.computeName repository.name filter.isFiltering filter.query)
-          }}
+          <li class="profile-repolist-item">
+            {{repository-visibility-icon repository=repository}}
+            <span class="profile-repo">
+              {{compute filter.computeName repository.name filter.isFiltering filter.query}}
+            </span>
+          </li>
 
         {{else}}
 
