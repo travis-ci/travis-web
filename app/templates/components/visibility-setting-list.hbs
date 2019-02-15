@@ -1,39 +1,44 @@
-<ul class="travis-radio-list">
-  {{#each this.options as |option index|}}
-    <li class="travis-radio-list__item">
-      <label for="{{elementId}}_option_{{index}}">{{option.description}}</label>
-      <input
-        type="radio"
-        name="{{elementId}}_options"
-        class="travis-radio-input"
-        id="{{elementId}}_option_{{index}}"
-        value={{index}}
-        checked={{eq currentSelection option.value}}
-        onchange={{action (mut currentSelection) option.value}}
-      />
-      <label for="{{elementId}}_option_{{index}}" class="travis-radio-label"></label>
-    </li>
-  {{/each}}
-  <li class="travis-radio-list__item travis-radio-list__item--save">
-    <button
-      class="settings-button"
-      {{action (toggle 'isShowingConfirmationModal' this)}}
-      disabled={{eq change 0}}
-    >Save</button>
-  </li>
-</ul>
+
+{{#each this.options as |option index|}}
+  <button
+    class="visibility-setting-list-item {{if (eq currentSelection option.value) 'visibility-setting-list-item--selected'}}"
+    {{action (mut currentSelection) option.value}}
+  >
+    <span class="visibility-setting-list-item__description">{{option.description}}</span>
+    <span class="visibility-setting-list-item__radio" ></span>
+    {{!-- <label for="{{elementId}}_option_{{index}}" tabindex="0">{{option.description}}</label>
+    <input
+      type="radio"
+      name="{{elementId}}_options"
+      class="visibility-setting-input"
+      id="{{elementId}}_option_{{index}}"
+      value={{index}}
+      checked={{eq currentSelection option.value}}
+      onchange={{action (mut currentSelection) option.value}}
+    />
+    <label for="{{elementId}}_option_{{index}}" class="visibility-setting-label" tabindex="0"></label> --}}
+  </button>
+{{/each}}
+<div class="visibility-setting-list-item visibility-setting-list-item--save">
+  <button
+    class="settings-button"
+    {{action 'toggleConfirmationModal'}}
+    disabled={{eq change 0}}
+  >Save</button>
+</div>
 
 {{#if isShowingConfirmationModal}}
   {{#modal-dialog
     targetAttachment="center"
     translucentOverlay=true
+    toggleConfirmationModal='toggleConfirmationModal'
   }}
     <div class="visibility-settings-modal-top">
       <button
         type="button"
         title="Close modal"
         class="modal-close pointer"
-        {{action (toggle 'isShowingConfirmationModal' this)}}
+        {{action 'toggleConfirmationModal'}}
       >{{svg-jar 'icon-failed' class="icon"}}</button>
 
       <h3>{{modalHeaderText}}</h3>
@@ -43,11 +48,12 @@
     </div>
     <div class="visibility-settings-modal-controls">
       <button
+        autofocus
         data-test-visibility-settings-modal-cancel-button
         href="#"
         role="button"
         class="button button--red"
-        {{action (toggle 'isShowingConfirmationModal' this)}}
+        {{action 'toggleConfirmationModal'}}
       >Cancel</button>
 
       <button

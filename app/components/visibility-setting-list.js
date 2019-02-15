@@ -1,9 +1,14 @@
 import Component from '@ember/component';
 import { reads } from '@ember/object/computed';
 import { computed } from '@ember/object';
+import KeyboardShortcuts from 'ember-keyboard-shortcuts/mixins/component';
 
-export default Component.extend({
+export default Component.extend(KeyboardShortcuts, {
   classNames: ['visibility-setting-list'],
+
+  keyboardShortcuts: {
+    'esc': 'closeConfirmationModal'
+  },
 
   options: [],
   selected: '',
@@ -62,10 +67,30 @@ ${selection.displayValue || selection.value}
 `;
   }),
 
+  didRender() {
+    this._super(...arguments);
+    let af = this.get('element').querySelector('[autofocus]');
+    if (this.get('isShowingConfirmationModal') === true && af !== null) {
+      af.focus();
+    }
+  },
+
   actions: {
     confirm() {
       this.set('isShowingConfirmationModal', false);
       this.sendAction('onConfirm', this.get('currentSelection'));
+    },
+    toggleConfirmationModal() {
+      this.toggleProperty('isShowingConfirmationModal');
+      if (this.get('isShowingConfirmationModal') !== true) {
+        this.get('element').querySelector('.visibility-setting-list-item--selected').focus();
+      }
+    },
+    closeConfirmationModal() {
+      if (this.get('isShowingConfirmationModal') === true) {
+        this.toggleProperty('isShowingConfirmationModal');
+        this.get('element').querySelector('.visibility-setting-list-item--selected').focus();
+      }
     }
   }
 });
