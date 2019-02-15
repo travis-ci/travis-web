@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { reads, notEmpty, not, and } from '@ember/object/computed';
+import { reads, notEmpty, or, not, and } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import config from 'travis/config/environment';
 
@@ -35,8 +35,15 @@ export default Component.extend({
   isNotPro: not('isPro'),
   hasGitHubAppsInstallation: notEmpty('account.installation'),
 
+  isFilteringWebhookRepos: notEmpty('webhooksRepositories.filter'),
+  isFilteringAppsRepos: notEmpty('githubAppsRepositories.filter'),
+  isWebhookReposFilterAllowed: and('webhooksRepositories.length', 'features.repositoryFiltering'),
+  isAppsReposFilterAllowed: and('githubAppsRepositories.length', 'features.repositoryFiltering'),
+
   showGitHubApps: reads('features.github-apps'),
   showPublicReposBanner: and('isNotEnterprise', 'isNotPro'),
+  showWebhookReposFilter: or('isWebhookReposFilterAllowed', 'isFilteringWebhookRepos'),
+  showAppsReposFilter: or('isAppsReposFilterAllowed', 'isFilteringAppsRepos'),
 
   githubAppsActivationURL: computed('account.githubId', function () {
     let githubId = this.get('account.githubId');
@@ -69,43 +76,6 @@ export default Component.extend({
     const isAllowedByLimit = legacyRepositoryCount <= migrationRepositoryCountLimit;
     return !hasGitHubAppsInstallation && isAllowedByLimit && hasLegacyRepositories;
   }),
-
-  actions: {
-
-    filterQuery(query) {
-      let params = {
-        name_filter: query,
-        'repository.managed_by_installation': false,
-        sort_by: 'name_filter:desc',
-        limit: 10,
-        custom: {
-          owner: this.account.login,
-          type: 'byOwner',
-        },
-      };
-
-      if (this.showGitHubApps) {
-        params.active = true;
-      }
-
-      return this.store.query('repo', params);
-    },
-
-    filterQueryGitHubApps(query) {
-      return this.store.query('repo', {
-        name_filter: query,
-        'repository.managed_by_installation': true,
-        'repository.active_on_org': false,
-        sort_by: 'name_filter:desc',
-        limit: 10,
-        custom: {
-          owner: this.login,
-          type: 'byOwner',
-        },
-      });
-    }
-
-  },
 
   migrate: task(function* () {
     let queryParams = {

@@ -1,6 +1,5 @@
 {{#repository-filter
   repositories=repositories
-  queryFunction=(action 'filterQuery')
   as |filter|
 }}
 
@@ -20,12 +19,12 @@
     {{else}}
 
       <ul class="profile-repositorylist">
-        {{#each filter.repositories as |repository|}}
+        {{#each filter.results as |repository|}}
 
           <li class="profile-repolist-item">
             {{repository-visibility-icon repository=repository}}
             <span class="profile-repo">
-              {{compute filter.computeName repository.name filter.isFiltering filter.query}}
+              {{compute filter.computeName repository.name filter.query}}
             </span>
           </li>
 
@@ -43,7 +42,7 @@
     {{/if}}
   </div>
 
-  {{#unless filter.isFiltering}}
+  {{#unless filter.isLoading }}
     {{#if isOrganization}}
       {{pagination-navigation collection=repositories route="organization.migrate.webhooks" inner=6 outer=2}}
     {{else}}

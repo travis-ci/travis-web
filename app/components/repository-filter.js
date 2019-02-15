@@ -1,9 +1,9 @@
 import Component from '@ember/component';
-import { isBlank, isEmpty } from '@ember/utils';
 import { task, timeout } from 'ember-concurrency';
 import config from 'travis/config/environment';
 import { inject as service } from '@ember/service';
-import { computed } from '@ember/object';
+import { or, notEmpty, reads } from '@ember/object/computed';
+import { isPresent } from '@ember/utils';
 import { htmlSafe } from '@ember/string';
 import fuzzyMatch from 'travis/utils/fuzzy-match';
 
@@ -11,48 +11,23 @@ export default Component.extend({
   tagName: '',
   store: service(),
 
-  repositoriesResult: computed('repositories', 'filteredRepositories', function () {
-    let repositories = this.get('repositories');
-    let filteredRepositories = this.get('filteredRepositories');
-    return filteredRepositories || repositories;
-  }),
+  query: '',
 
-  isFiltering: computed('search.isRunning', 'lastQuery', function () {
-    let isRunning = this.get('search.isRunning');
-    let lastQuery = this.get('lastQuery');
-    return isRunning || !isEmpty(lastQuery);
-  }),
+  hasQuery: notEmpty('query'),
+  isLoading: reads('search.isRunning'),
+  isFiltering: or('isLoading', 'hasQuery'),
 
-  actions: {
-    onSearch(query) {
-      this.get('search').perform(query);
-    }
-  },
+  search: task(function* (query = '') {
+    if (query === this.query) return;
 
-  search: task(function* (query) {
-    if (this.get('lastQuery') === query) {
-      return;
-    }
-
-    this.set('lastQuery', query);
-
-    if (isBlank(query)) {
-      this.set('filteredRepositories', null);
-      return;
-    }
+    this.set('query', query);
 
     yield timeout(config.intervals.repositoryFilteringDebounceRate);
-
-    let repositories = yield this.get('queryFunction')(query);
-
-    this.set('filteredRepositories', repositories);
+    yield this.repositories.applyFilter(query);
   }).restartable(),
 
-  computeName(name, isFiltering, query) {
-    if (isFiltering) {
-      return htmlSafe(fuzzyMatch(name, query));
-    } else {
-      return name;
-    }
-  },
+  computeName(name, query) {
+    return isPresent(query) ? htmlSafe(fuzzyMatch(name, query)) : name;
+  }
+
 });
