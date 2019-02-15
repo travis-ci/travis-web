@@ -1,13 +1,12 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
+import { reads, sort, notEmpty, not, and } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import config from 'travis/config/environment';
 
 import window from 'ember-window-mock';
 import { task } from 'ember-concurrency';
 import fetchAll from 'travis/utils/fetch-all';
-
-import { reads, sort, notEmpty } from '@ember/object/computed';
 
 const { appName, migrationRepositoryCountLimit } = config.githubApps;
 
@@ -33,6 +32,12 @@ export default Component.extend({
   deprecatedSorting: ['name'],
   sortedRepositories: sort('deprecated', 'deprecatedSorting'),
   showGitHubApps: reads('features.github-apps'),
+
+  isEnterprise: reads('features.enterpriseVersion'),
+  isNotEnterprise: not('isEnterprise'),
+  isPro: reads('features.proVersion'),
+  isNotPro: not('isPro'),
+  showPublicReposBanner: and('isNotEnterprise', 'isNotPro'),
 
   githubAppsActivationURL: computed('account.githubId', function () {
     let githubId = this.get('account.githubId');
