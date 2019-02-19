@@ -69,3 +69,22 @@
     cursor: default;
   }
 }
+
+.visibility-settings-modal {
+  padding: 1.6rem 1.8rem;
+
+  &__top {
+    display: flex;
+  }
+
+  &__header {
+    font-size: 1.6rem;
+    font-weight: 300;
+    color: $oxide-blue;
+    margin: 0 2rem 0 0;
+  }
+
+  &__controls .button:first-of-type {
+    margin-right: 1rem;
+  }
+}

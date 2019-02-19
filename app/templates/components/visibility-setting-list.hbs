@@ -32,21 +32,23 @@
     targetAttachment="center"
     translucentOverlay=true
     toggleConfirmationModal='toggleConfirmationModal'
+    containerClass="visibility-settings-modal"
   }}
-    <div class="visibility-settings-modal-top">
+    <div class="visibility-settings-modal__top">
+      <h3 class="visibility-settings-modal__header">{{modalHeaderText}}</h3>
       <button
         type="button"
         title="Close modal"
-        class="modal-close pointer"
+        class="pointer"
         {{action 'toggleConfirmationModal'}}
       >{{svg-jar 'icon-failed' class="icon"}}</button>
-
-      <h3>{{modalHeaderText}}</h3>
     </div>
-    <div class="visibility-settings-modal-body">
+
+    <div class="visibility-settings-modal__body">
       <p>{{modalBodyText}}</p>
     </div>
-    <div class="visibility-settings-modal-controls">
+
+    <div class="visibility-settings-modal__controls">
       <button
         autofocus
         data-test-visibility-settings-modal-cancel-button
