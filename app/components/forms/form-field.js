@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 import { presense } from 'travis/utils/form-validators';
 import { combineValidators } from 'travis/helpers/combine-validators';
-import { equal } from '@ember/object/computed';
+import { equal, or } from '@ember/object/computed';
 
 export const FIELD_STATE = {
   DEFAULT: 'default',
@@ -29,7 +29,7 @@ export default Component.extend({
   disabled: false,
   showRequiredMark: false,
 
-  validator: () => true,
+  validator: null,
   required: equal('validator.kind', presense),
 
   autoValidate: true,
@@ -41,12 +41,18 @@ export default Component.extend({
   isValid: equal('state', FIELD_STATE.VALID),
   isError: equal('state', FIELD_STATE.ERROR),
 
+  requiresValidation: or('required', 'validator'),
+
   validate(value) {
     let validator = this.validator;
+    if (!validator) return;
+
     if (this.required && validator.kind !== presense) {
       validator = combineValidators([validator, presense()]);
     }
+
     const validationResult = validator(value || this.value);
+
     if (validationResult === true) {
       this.setValid();
     } else {

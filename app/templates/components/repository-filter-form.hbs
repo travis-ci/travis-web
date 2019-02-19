@@ -1,4 +1,8 @@
-{{yield (hash
-    searchField=(component 'repository-filter-form-search-field' onSearch=onSearch)
-  )
-}}
+{{#travis-form as |form| }}
+  {{#form.field as |field| }}
+    {{yield (hash
+        searchField=(component field.input value=query onKeyUp=onSearch)
+      )
+    }}
+  {{/form.field}}
+{{/travis-form}}

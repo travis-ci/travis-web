@@ -28,6 +28,13 @@ export default Component.extend({
 
   computeName(name, query) {
     return isPresent(query) ? htmlSafe(fuzzyMatch(name, query)) : name;
+  },
+
+  didInsertElement() {
+    this._super(...arguments);
+    if (!this.query) {
+      this.set('query', this.get('repositories.filter'));
+    }
   }
 
 });
