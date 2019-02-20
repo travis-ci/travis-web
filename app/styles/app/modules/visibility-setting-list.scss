@@ -6,12 +6,13 @@
   font-style: italic;
   color: $cement-grey;
   background-color: #f5fbfb;
+  border-radius: 2px;
 
   label { cursor: pointer; }
 
   &-item {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
     margin: .5rem 0;
     background-color: transparent;
@@ -20,6 +21,9 @@
     .visibility-setting-list-item__description {
       background-color: transparent;
       cursor: pointer;
+      text-align: left;
+      font-style: italic;
+      color: $cement-grey;
     }
 
     .visibility-setting-list-item__radio {
@@ -30,6 +34,7 @@
       line-height: 0;
       background-color: transparent;
       cursor: pointer;
+      margin-right: 0.5rem;
 
       &::before {
         content: '';
@@ -53,6 +58,7 @@
   border-radius: 0.25rem;
   text-transform: uppercase;
   background-color: $oxide-blue;
+  font-size: 10px;
   color: #ffffff;
   border: 1px solid $oxide-blue;
   cursor: pointer;
@@ -63,8 +69,8 @@
   }
 
   &[disabled] {
-    color: $cement-grey;
-    border-color: $dry-cement;
+    color: $oxide-blue;
+    border-color: $oxide-blue;
     background-color: transparent;
     cursor: default;
   }

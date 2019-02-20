@@ -4,19 +4,8 @@
     class="visibility-setting-list-item {{if (eq currentSelection option.value) 'visibility-setting-list-item--selected'}}"
     {{action (mut currentSelection) option.value}}
   >
-    <span class="visibility-setting-list-item__description">{{option.description}}</span>
     <span class="visibility-setting-list-item__radio" ></span>
-    {{!-- <label for="{{elementId}}_option_{{index}}" tabindex="0">{{option.description}}</label>
-    <input
-      type="radio"
-      name="{{elementId}}_options"
-      class="visibility-setting-input"
-      id="{{elementId}}_option_{{index}}"
-      value={{index}}
-      checked={{eq currentSelection option.value}}
-      onchange={{action (mut currentSelection) option.value}}
-    />
-    <label for="{{elementId}}_option_{{index}}" class="visibility-setting-label" tabindex="0"></label> --}}
+    <span class="visibility-setting-list-item__description">{{option.description}}</span>
   </button>
 {{/each}}
 <div class="visibility-setting-list-item visibility-setting-list-item--save">
