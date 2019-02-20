@@ -35,6 +35,7 @@ export default Component.extend(InViewportMixin, {
 
   didInsertElement() {
     if (Ember.testing) {
+      this._super(...arguments);
       return;
     }
 
