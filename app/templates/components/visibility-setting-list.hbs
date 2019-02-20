@@ -29,6 +29,7 @@
         type="button"
         title="Close modal"
         class="pointer"
+        autofocus
         {{action 'toggleConfirmationModal'}}
       >{{svg-jar 'icon-failed' class="icon"}}</button>
     </div>
@@ -39,7 +40,6 @@
 
     <div class="visibility-settings-modal__controls">
       <button
-        autofocus
         data-test-visibility-settings-modal-cancel-button
         href="#"
         role="button"

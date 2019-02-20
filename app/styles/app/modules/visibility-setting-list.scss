@@ -16,7 +16,7 @@
     align-items: center;
     margin: .5rem 0;
     background-color: transparent;
-    width: 100%;
+    cursor: pointer;
 
     .visibility-setting-list-item__description {
       background-color: transparent;
@@ -81,6 +81,8 @@
 
   &__top {
     display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
   }
 
   &__header {
@@ -90,7 +92,7 @@
     margin: 0 2rem 0 0;
   }
 
-  &__controls .button:first-of-type {
-    margin-right: 1rem;
+  &__controls .button {
+    margin: 0 1rem 1rem 0;
   }
 }
