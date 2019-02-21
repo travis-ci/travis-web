@@ -16,6 +16,12 @@
   </div>
 {{/if}}
 
+{{#if showIcon }}
+  <div class="travis-form__icon">
+    {{svg-jar icon }}
+  </div>
+{{/if}}
+
 {{yield (hash
   isValid=isValid
   isError=isError

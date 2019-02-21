@@ -1,14 +1,13 @@
 {{#travis-form as |form| }}
   {{#form.field
+    icon='icon-filter'
     value=query
     allowClear=true
     onChange=onSearch
     as |field|
   }}
     {{yield (hash
-        searchField=(component field.input
-          onKeyUp=onSearch
-        )
+        searchField=(component field.input onKeyUp=onSearch)
       )
     }}
   {{/form.field}}

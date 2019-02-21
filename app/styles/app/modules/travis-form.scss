@@ -79,6 +79,31 @@ $travis-form-badge-radius: 9px;
 
     }
 
+    .travis-form__icon {
+      display: none;
+      position: absolute;
+      top: 50%;
+      margin-top: -8px;
+      left: 8px;
+
+      svg {
+        height: 16px;
+      }
+
+    }
+
+    &.travis-form__field--with-icon {
+
+      .travis-form__icon {
+        display: block;
+      }
+
+      .travis-form__field-component {
+        padding-left: 30px;
+      }
+
+    }
+
     .travis-form__clear {
       position: absolute;
       top: 50%;
