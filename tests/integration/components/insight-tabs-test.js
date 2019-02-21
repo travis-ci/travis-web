@@ -10,7 +10,7 @@ module('Integration | Component | insight-tabs', function (hooks) {
     await render(hbs`{{insight-tabs}}`);
 
     assert.dom('.insight-tabs').exists();
-    assert.dom('.insight-tabs .insight-tab').exists({ count: 3 });
+    assert.dom('.insight-tabs .insight-tab').exists({ count: 2 });
     assert.dom('.insight-tabs .insight-tab.active').exists({ count: 1 });
     assert.dom('.insight-tabs .insight-tab.active').hasText('Month');
   });
@@ -21,7 +21,7 @@ module('Integration | Component | insight-tabs', function (hooks) {
     await render(hbs`{{insight-tabs selectedTab=interval}}`);
 
     assert.dom('.insight-tabs').exists();
-    assert.dom('.insight-tabs .insight-tab').exists({ count: 3 });
+    assert.dom('.insight-tabs .insight-tab').exists({ count: 2 });
     assert.dom('.insight-tabs .insight-tab.active').exists({ count: 1 });
     assert.dom('.insight-tabs .insight-tab.active').hasText('Week');
   });
@@ -32,8 +32,7 @@ module('Integration | Component | insight-tabs', function (hooks) {
     await render(hbs`{{insight-tabs selectedTab=interval}}`);
 
     assert.dom('.insight-tabs').exists();
-    assert.dom('.insight-tabs .insight-tab').exists({ count: 3 });
-    assert.dom('.insight-tabs .insight-tab.active').exists({ count: 1 });
-    assert.dom('.insight-tabs .insight-tab.active').hasText('Day');
+    assert.dom('.insight-tabs .insight-tab').exists({ count: 2 });
+    assert.dom('.insight-tabs .insight-tab.active').doesNotExist();
   });
 });
