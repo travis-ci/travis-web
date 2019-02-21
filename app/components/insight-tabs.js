@@ -7,7 +7,6 @@ export default Component.extend({
   selectedTab: 'month',
 
   tabs: [
-    { slug: 'day', title: 'Day' },
     { slug: 'week', title: 'Week' },
     { slug: 'month', title: 'Month' },
   ],
