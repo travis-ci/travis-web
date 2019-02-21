@@ -43,6 +43,7 @@ export default Component.extend({
         lineWidth: 1,
         lineColor: '#f3f3f3',
         tickAmount: 6,
+        allowDecimals: false,
       },
       legend: {
         itemStyle: {
