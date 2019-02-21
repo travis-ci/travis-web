@@ -18,10 +18,7 @@ export default Component.extend({
   isFiltering: or('isLoading', 'hasQuery'),
 
   search: task(function* (query = '') {
-    if (query === this.query) return;
-
     this.set('query', query);
-
     yield timeout(config.intervals.repositoryFilteringDebounceRate);
     yield this.repositories.applyFilter(query);
   }).restartable(),

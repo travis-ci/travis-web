@@ -65,3 +65,9 @@
     {{errorMessage}} &nbsp;
   </div>
 {{/if}}
+
+{{#if showClear }}
+  <div class="travis-form__clear" onclick={{action 'handleClear'}}>
+    &times;
+  </div>
+{{/if}}

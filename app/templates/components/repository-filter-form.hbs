@@ -1,7 +1,14 @@
 {{#travis-form as |form| }}
-  {{#form.field as |field| }}
+  {{#form.field
+    value=query
+    allowClear=true
+    onChange=onSearch
+    as |field|
+  }}
     {{yield (hash
-        searchField=(component field.input value=query onKeyUp=onSearch)
+        searchField=(component field.input
+          onKeyUp=onSearch
+        )
       )
     }}
   {{/form.field}}

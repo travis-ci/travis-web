@@ -79,6 +79,23 @@ $travis-form-badge-radius: 9px;
 
     }
 
+    .travis-form__clear {
+      position: absolute;
+      top: 50%;
+      margin-top: -$travis-form-badge-radius;
+      right: $travis-form-badge-radius;
+      width: $travis-form-badge-radius * 2;
+      height: $travis-form-badge-radius * 2;
+      font-size: $travis-form-badge-radius * 2;
+      color: #ffffff;
+      background-color: $dry-cement;
+      border-radius: $travis-form-badge-radius;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
     .travis-form__error-message {
       margin-top: 5px;
       color: $brick-red;
