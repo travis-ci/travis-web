@@ -1,10 +1,10 @@
 <nav class='travistab-nav travistab-nav--underline'>
   <ul>
     <li>
-      {{#link-to 'owner.repositories' (query-params tab=null)}}Repositories{{/link-to}}
+      {{#link-to 'owner.repositories' (query-params tab=null timeInterval=null)}}Repositories{{/link-to}}
     </li>
     <li>
-      {{#link-to 'owner.repositories' (query-params tab='insights')}}Insights{{/link-to}}
+      {{#link-to 'owner.repositories' (query-params tab='insights' timeInterval='month')}}Insights{{/link-to}}
     </li>
   </ul>
 </nav>
@@ -13,18 +13,18 @@
   <div class="travistab-body">
     <div class="insights-controls">
       <div class="insights-controls-left">
-        {{insights-date-display interval=dataInterval}}
+        {{insights-date-display interval=timeInterval}}
         <span class="insights-control-divider">|</span>
         {{insights-privacy-selector isPrivateViewable=isPrivateInsightsViewable includePrivate=includePrivateInsights setRequestPrivateInsights='setRequestPrivateInsights'}}
       </div>
-      {{insight-tabs selectedTab=dataInterval setSubTab='setSubTab'}}
+      {{insight-tabs selectedTab=timeInterval setSubTab='setSubTab'}}
     </div>
     <div class="insights-grid">
-      {{build-count owner=model.owner interval=dataInterval private=includePrivateInsights}}
-      {{build-minutes owner=model.owner interval=dataInterval private=includePrivateInsights}}
-      {{queue-times owner=model.owner interval=dataInterval private=includePrivateInsights}}
-      {{active-repo-count owner=model.owner interval=dataInterval private=includePrivateInsights}}
-      {{build-status-chart owner=model.owner interval=dataInterval private=includePrivateInsights setNoBuilds='setNoBuilds'}}
+      {{build-count owner=model.owner interval=timeInterval private=includePrivateInsights}}
+      {{build-minutes owner=model.owner interval=timeInterval private=includePrivateInsights}}
+      {{queue-times owner=model.owner interval=timeInterval private=includePrivateInsights}}
+      {{active-repo-count owner=model.owner interval=timeInterval private=includePrivateInsights}}
+      {{build-status-chart owner=model.owner interval=timeInterval private=includePrivateInsights setNoBuilds='setNoBuilds'}}
       {{#if hasNoBuilds}}
         <div class="insights-grid__overlay">
           <h2>Looks like you haven't triggered any builds</h2>

@@ -3,10 +3,11 @@ import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 
 export default Controller.extend({
+  queryParams: ['tab', 'timeInterval'],
   isLoading: false,
   page: 1,
   tab: null,
-  dataInterval: 'month',
+  timeInterval: 'month',
   hasNoBuilds: false,
   features: service(),
   requestPrivateInsights: true,
@@ -31,7 +32,7 @@ export default Controller.extend({
 
   actions: {
     setSubTab(selection) {
-      this.set('dataInterval', selection);
+      this.set('timeInterval', selection);
       this.set('hasNoBuilds', false);
     },
     setNoBuilds(val) {
