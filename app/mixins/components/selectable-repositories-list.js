@@ -8,6 +8,10 @@ export default Mixin.create({
     return this.selectedRepositories.length === this.repositories.length;
   }),
 
+  showSelectAll: computed('repositories.[]', function () {
+    return this.repositories.length > 1;
+  }),
+
   init() {
     this.set('selectedRepositories', []);
     return this._super(...arguments);
