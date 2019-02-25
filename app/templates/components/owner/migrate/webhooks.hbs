@@ -19,6 +19,19 @@
     {{else}}
 
       {{#travis-form as |form| }}
+        <div class='migrate__select-all'>
+          {{#form.field
+            disableFrame=true
+            value=isAllSelected
+            onChange=(action 'toggleAll')
+            as |field|
+          }}
+            {{#field.checkbox}}
+              Select all repositories bellow
+            {{/field.checkbox}}
+          {{/form.field}}
+        </div>
+
         <ul class="profile-repositorylist">
           {{#each filter.results as |repository|}}
 
@@ -65,7 +78,7 @@
 
 <button
   disabled={{not selectedRepositories.length}}
-  class="button--blue migrate--submit {{unless selectedRepositories.length 'disabled'}}"
+  class="button--blue migrate__submit {{unless selectedRepositories.length 'disabled'}}"
 >
   Enable selected repositories on GitHub Apps
 </button>

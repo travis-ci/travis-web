@@ -49,8 +49,13 @@
     width: 100%;
   }
 
-  &--submit {
+  &__submit {
     margin-top: 15px;
+  }
+
+  &__select-all {
+    margin-bottom: 25px;
+    font-size: 16px;
   }
 
 }
