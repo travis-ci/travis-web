@@ -62,3 +62,10 @@
   {{/unless}}
 
 {{/repository-filter}}
+
+<button
+  disabled={{not selectedRepositories.length}}
+  class="button--blue migrate--submit {{unless selectedRepositories.length 'disabled'}}"
+>
+  Enable selected repositories on GitHub Apps
+</button>
