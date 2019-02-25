@@ -9,16 +9,16 @@ module('Unit | Service | insights', function (hooks) {
   });
 
   test('default interval settings', function (assert) {
-    let intervalSettings = this.insightsService.getIntervalSettings({ day: {subInterval: '1min'} });
+    let intervalSettings = this.insightsService.getIntervalSettings({ week: {subInterval: '1min'} });
     let intervalSettings2 = this.insightsService.getIntervalSettings();
-    intervalSettings2.day.subInterval = '1min';
+    intervalSettings2.week.subInterval = '1min';
 
     assert.ok(this.insightsService);
     assert.deepEqual(intervalSettings, intervalSettings2);
   });
 
   test('dates from interval', function (assert) {
-    let serviceDates = this.insightsService.getDatesFromInterval('day');
+    let serviceDates = this.insightsService.getDatesFromInterval('week');
 
     assert.equal(Array.isArray(serviceDates), true);
     assert.equal(serviceDates.length, 2);
@@ -26,9 +26,9 @@ module('Unit | Service | insights', function (hooks) {
     let [start, end] = serviceDates;
     assert.equal(start < end, true);
 
-    let day = (1000 * 60 * 60 * 24);
-    let sDay = (end - start);
-    let diff = day - sDay;
+    let week = (1000 * 60 * 60 * 24 * 7);
+    let serviceDatesDifference = (end - start);
+    let diff = week - serviceDatesDifference;
     assert.equal(diff <= 1 && diff >= -1, true);
   });
 
