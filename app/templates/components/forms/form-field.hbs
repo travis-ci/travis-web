@@ -56,6 +56,16 @@
     onclose=(action 'handleSelectBlur')
     onchange=(action 'handleChange')
   )
+  checkbox=(component 'forms/form-checkbox'
+    form=form
+    checked=value
+    disabled=disabled
+    onFocus=(action 'handleFocus')
+    onBlur=(action 'handleBlur')
+    onChange=(action 'handleChange')
+    onInit=(action 'setFieldElementId')
+    class='travis-form__field-component'
+  )
 )}}
 
 {{#if requiresValidation }}
