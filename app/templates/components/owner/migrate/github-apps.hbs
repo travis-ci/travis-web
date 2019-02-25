@@ -23,18 +23,21 @@
     {{else}}
 
       {{#travis-form as |form| }}
-        <div class='migrate__select-all'>
-          {{#form.field
-            disableFrame=true
-            value=isAllSelected
-            onChange=(action 'toggleAll')
-            as |field|
-          }}
-            {{#field.checkbox}}
-              Select all repositories bellow
-            {{/field.checkbox}}
-          {{/form.field}}
-        </div>
+
+        {{#if repositories.length }}
+          <div class='migrate__select-all'>
+            {{#form.field
+              disableFrame=true
+              value=isAllSelected
+              onChange=(action 'toggleAll')
+              as |field|
+            }}
+              {{#field.checkbox}}
+                Select all repositories bellow
+              {{/field.checkbox}}
+            {{/form.field}}
+          </div>
+        {{/if}}
 
         <ul class="profile-repositorylist">
           {{#each filter.results as |repository|}}
