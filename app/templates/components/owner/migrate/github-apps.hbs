@@ -18,26 +18,37 @@
       {{loading-indicator}}
     {{else}}
 
-      <ul class="profile-repositorylist">
-        {{#each filter.results as |repository|}}
+      {{#travis-form as |form| }}
+        <ul class="profile-repositorylist">
+          {{#each filter.results as |repository|}}
 
-          <li class="profile-repolist-item">
-            {{repository-visibility-icon repository=repository}}
-            <span class="profile-repo">
-              {{compute filter.computeName repository.name filter.query}}
-            </span>
-          </li>
+            <li class="profile-repolist-item">
+              {{#form.field
+                disableFrame=true
+                value=(contains repository selectedRepositories)
+                onChange=(action 'toggleRepository' repository)
+                as |field|
+              }}
+                {{#field.checkbox}}
+                  {{repository-visibility-icon repository=repository}}
+                  <span class="profile-repo">
+                    {{compute filter.computeName repository.name filter.query}}
+                  </span>
+                {{/field.checkbox}}
+              {{/form.field}}
+            </li>
 
-        {{else}}
-
-          {{#if filter.isFiltering}}
-            <li class="no-results">Sorry, no results found.</li>
           {{else}}
-            <li>Sorry, it seems like we couldn't find any repositories you have access to on GitHub.</li>
-          {{/if}}
 
-        {{/each}}
-      </ul>
+            {{#if filter.isFiltering}}
+              <li class="no-results">Sorry, no results found.</li>
+            {{else}}
+              <li>Sorry, it seems like we couldn't find any repositories you have access to on GitHub.</li>
+            {{/if}}
+
+          {{/each}}
+        </ul>
+      {{/travis-form}}
 
     {{/if}}
   </div>

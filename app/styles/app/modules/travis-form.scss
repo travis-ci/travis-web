@@ -57,11 +57,21 @@ $travis-form-badge-radius: 9px;
       height: auto;
       line-height: normal;
       font-size: 1em;
-      padding: 8px 10px 9px;
       border-radius: $travis-form-border-width * 2;
       border: $travis-form-border-width solid transparent;
       margin: -$travis-form-border-width;
       color: $asphalt-grey;
+
+      &[disabled],
+      &.travis-form__field-component--disabled {
+        opacity: 0.5;
+        background-color: transparent;
+      }
+
+    }
+
+    &:not(.travis-form__field--without-frame) .travis-form__field-component {
+      padding: 8px 10px 9px;
       @include makeFieldBorder(lighten($cement-grey, 20%));
 
       transition: border-color 0.2s ease-in;
@@ -69,12 +79,6 @@ $travis-form-badge-radius: 9px;
       &:focus,
       &:active {
         @include makeFocused();
-      }
-
-      &[disabled],
-      &.travis-form__field-component--disabled {
-        opacity: 0.5;
-        background-color: transparent;
       }
 
     }
@@ -106,7 +110,7 @@ $travis-form-badge-radius: 9px;
 
         svg {
           opacity: 0;
-          transition: opacity 0.2s ease-in;
+          transition: opacity 0.1s ease-in;
         }
 
       }

@@ -24,6 +24,7 @@
 
             <li class="profile-repolist-item">
               {{#form.field
+                disableFrame=true
                 value=(contains repository selectedRepositories)
                 onChange=(action 'toggleRepository' repository)
                 as |field|

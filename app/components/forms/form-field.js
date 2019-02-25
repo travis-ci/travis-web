@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 import { presense } from 'travis/utils/form-validators';
 import { combineValidators } from 'travis/helpers/combine-validators';
-import { equal, or, and, notEmpty } from '@ember/object/computed';
+import { equal, or, and, notEmpty, not } from '@ember/object/computed';
 
 export const FIELD_STATE = {
   DEFAULT: 'default',
@@ -15,7 +15,8 @@ export default Component.extend({
     'isValid:travis-form__field--valid',
     'isError:travis-form__field--error',
     'isFocused:travis-form__field--focused',
-    'showIcon:travis-form__field--with-icon'
+    'showIcon:travis-form__field--with-icon',
+    'showFrame::travis-form__field--without-frame'
   ],
 
   fieldElementId: null,
@@ -31,6 +32,7 @@ export default Component.extend({
   showRequiredMark: false,
   allowClear: false,
   icon: '',
+  disableFrame: false,
 
   validator: null,
   required: equal('validator.kind', presense),
@@ -48,6 +50,7 @@ export default Component.extend({
 
   showClear: and('allowClear', 'value'),
   showIcon: notEmpty('icon'),
+  showFrame: not('disableFrame'),
 
   validate(value) {
     let validator = this.validator;
