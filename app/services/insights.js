@@ -1,11 +1,12 @@
 import Service, { inject as service } from '@ember/service';
 import moment from 'moment';
-import $ from 'jquery';
+import { assign } from '@ember/polyfills';
 
 import ObjectProxy from '@ember/object/proxy';
 import PromiseProxyMixin from '@ember/object/promise-proxy-mixin';
 let ObjectPromiseProxy = ObjectProxy.extend(PromiseProxyMixin);
 
+const validIntervals = ['week', 'month'];
 const defaultIntervalSettings = {
   day: {
     subInterval: '10min',
@@ -51,7 +52,18 @@ export default Service.extend({
   api: service(),
 
   getIntervalSettings(customIntervalSettings = {}) {
-    return $.extend(true, {}, defaultIntervalSettings, customIntervalSettings);
+    // Merge and assign, I don't think do deep merges, but interval settings is only ever 2 levels
+    // deep so all we need to do is loop through each interval and do a shallow merge
+    const settings =  validIntervals.reduce((acc, interval) => {
+      acc[interval] = {};
+      if (customIntervalSettings.hasOwnProperty(interval)) {
+        assign(acc[interval], defaultIntervalSettings[interval], customIntervalSettings[interval]);
+      } else {
+        assign(acc[interval], defaultIntervalSettings[interval]);
+      }
+      return acc;
+    }, {});
+    return settings;
   },
 
   getDatesFromInterval(interval, startInterval, endInterval = 0) {
@@ -71,7 +83,7 @@ export default Service.extend({
     metrics = [],
     options = {}
   ) {
-    const currentOptions = $.extend(true, {}, defaultOptions, options);
+    const currentOptions = assign({}, defaultOptions, options);
     currentOptions.aggregator = currentOptions.aggregator || func;
     currentOptions.transformer = currentOptions.transformer || func;
     const intervalSettings = this.getIntervalSettings(currentOptions.intervalSettings);

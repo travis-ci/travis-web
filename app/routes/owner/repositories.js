@@ -23,7 +23,7 @@ export default TravisRoute.extend({
       const owner = this.modelFor('owner');
       const buildInfo = this.get('insights').getMetric(
         owner,
-        'day',
+        'week',
         'builds',
         'sum',
         ['count_started'],
