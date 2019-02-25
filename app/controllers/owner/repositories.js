@@ -1,34 +1,26 @@
 import Controller from '@ember/controller';
 import { inject as service } from '@ember/service';
-import { computed } from '@ember/object';
+// import { computed } from '@ember/object';
+import { and, equal, or } from '@ember/object/computed';
 
 export default Controller.extend({
   queryParams: ['tab', 'timeInterval'],
+
+  features: service(),
+
   isLoading: false,
   page: 1,
   tab: null,
-  timeInterval: 'month',
   hasNoBuilds: false,
-  features: service(),
   requestPrivateInsights: true,
 
-  isInsights: computed('tab', function () {
-    return typeof this.tab === 'string' && this.tab.toLowerCase() === 'insights';
-  }),
+  timeInterval: null,
+  defaultTimeInterval: 'month',
+  currentTimeInterval: or('timeInterval', 'defaultTimeInterval'),
 
-  isPrivateInsightsViewable: computed(function () {
-    let pro = this.get('features.proVersion');
-    let privateResponse = this.get('model.buildInfo.private') === true;
-    return pro && privateResponse;
-  }),
-
-  includePrivateInsights: computed(
-    'isPrivateInsightsViewable',
-    'requestPrivateInsights',
-    function () {
-      return this.isPrivateInsightsViewable && this.requestPrivateInsights;
-    }
-  ),
+  isInsights: equal('tab', 'insights'),
+  isPrivateInsightsViewable: and('features.proVersion', 'model.buildInfo.private'),
+  includePrivateInsights: and('isPrivateInsightsViewable', 'requestPrivateInsights'),
 
   actions: {
     setSubTab(selection) {
