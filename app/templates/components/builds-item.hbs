@@ -42,7 +42,7 @@
         {{else}}
           {{request-icon event=build.eventType state=build.state}}
         {{/if}}
-        <span class="label-align inner-underline">#{{build.number}} {{build.state}}</span>
+        <span class="label-align inner-underline">#{{build.number}} {{humanize-state build.state}}</span>
       {{/link-to}}
     {{/if}}
   </h3>
