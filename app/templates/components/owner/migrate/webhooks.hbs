@@ -1,3 +1,14 @@
+<button class="button--green migrate__activate-all">
+  {{svg-jar 'github-signin'}}
+  Activate all your repositories on GitHub Apps
+</button>
+
+<div class="migrate__separator" data-text="OR"></div>
+
+<p>
+  Select repositories that you'd like to migrate from the list below.
+</p>
+
 {{#repository-filter
   repositories=repositories
   as |filter|

@@ -5,6 +5,35 @@
     font-weight: 200;
   }
 
+  &__activate-all {
+    width: 100%;
+    margin: 25px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    svg {
+      margin-right: 10px;
+    }
+  }
+
+  &__separator {
+    width: 100%;
+    height: 0;
+    border-bottom: 1px solid $dry-cement;
+    margin: 17px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &:after {
+      content: attr(data-text);
+      padding: 0 15px;
+      background-color: #ffffff;
+      color: $cement-grey;
+    }
+  }
+
   .migrate-note {
     margin-bottom: 25px;
 
@@ -33,6 +62,7 @@
 
     li {
       font-size: 18px;
+      font-weight: 100;
 
       &.travistab-nav__arrow {
         width: 35px;
