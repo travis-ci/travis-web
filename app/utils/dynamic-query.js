@@ -5,16 +5,18 @@ import { assert } from '@ember/debug';
 import { task } from 'ember-concurrency';
 import bindGenerator from 'travis/utils/bind-generator';
 
-export default function dynamicQuery(taskFn, options = {}) {
-  assert('Task must be provided', !!taskFn);
+export default function dynamicQuery(...args) {
+  const taskFn = args.pop();
+
+  assert('Task must be provided', typeof taskFn === 'function');
   assert('Task must be a GeneratorFunction', taskFn.constructor.name === 'GeneratorFunction');
 
-  options.content = options.content || [];
-
-  return computed(function () {
+  args.push(function () {
     const taskFnBound = bindGenerator(taskFn, this);
-    return DynamicQuery.extend({ task: task(taskFnBound).keepLatest() }).create(options);
+    return DynamicQuery.extend({ task: task(taskFnBound).keepLatest() }).create({ content: [] });
   });
+
+  return computed(...args);
 }
 
 const DynamicQuery = ArrayProxy.extend({
