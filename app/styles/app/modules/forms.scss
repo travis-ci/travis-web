@@ -147,6 +147,10 @@ textarea {
       display: inline-block;
       padding-right: 5px;
     }
+
+    .ember-power-select-trigger {
+      padding: 3px;
+    }
   }
 
   @media #{$medium-up} {
