@@ -23,6 +23,7 @@
       tagName='span'
       class='cron-interval-select power-select'
       onchange=(action (mut selectedInterval))
+      searchEnabled=false
       as |interval|
     }}
       {{interval}}
@@ -37,6 +38,7 @@
       tagName='span'
       class='cron-options-select power-select'
       onchange=(action (mut selectedOption))
+      searchEnabled=false
       as |option|
     }}
       {{option.label}}
