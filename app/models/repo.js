@@ -1,7 +1,6 @@
 import {
   Promise as EmberPromise,
 } from 'rsvp';
-import $ from 'jquery';
 import { A } from '@ember/array';
 import ExpandableRecordArray from 'travis/utils/expandable-record-array';
 import Model from 'ember-data/model';
