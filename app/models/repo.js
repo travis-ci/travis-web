@@ -124,20 +124,6 @@ const Repo = Model.extend({
     }, (cron) => cron.get('branch.repoId') === id);
   }),
 
-  // TODO: Stop performing a `set` as part of the cp!
-  // TODO: Is this even used?
-  stats: computed('slug', '_stats', function () {
-    let slug = this.get('slug');
-    let stats = this.get('_stats');
-
-    if (slug) {
-      return stats || $.get(`https://api.github.com/repos/${slug}`, (data) => {
-        this.set('_stats', data);
-        return this.notifyPropertyChange('stats');
-      }) && {};
-    }
-  }),
-
   updateTimes() {
     let currentBuild = this.get('currentBuild');
     if (currentBuild) {
