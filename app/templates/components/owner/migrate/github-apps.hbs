@@ -7,14 +7,18 @@
   as |filter|
 }}
 
-  {{#component filter.form as |form|}}
-    <div class="profile-repositories-filter">
-      {{component form.searchField
-        placeholder="Filter repositories"
-        title="Filter repositories"
-      }}
-    </div>
-  {{/component}}
+  {{#if (or (gt repositories.length 1) filter.isFiltering)}}
+
+    {{#component filter.form as |form|}}
+      <div class="profile-repositories-filter">
+        {{component form.searchField
+          placeholder="Filter repositories"
+          title="Filter repositories"
+        }}
+      </div>
+    {{/component}}
+
+  {{/if}}
 
   <div>
 
@@ -81,11 +85,13 @@
     {{/if}}
   {{/unless}}
 
-{{/repository-filter}}
+  {{#if (or repositories.length filter.isFiltering)}}
+    <button
+      disabled={{not selectedRepositories.length}}
+      class="button--blue migrate__submit {{unless selectedRepositories.length 'disabled'}}"
+    >
+      Migrate selected repositories to travis-ci.com
+    </button>
+  {{/if}}
 
-<button
-  disabled={{not selectedRepositories.length}}
-  class="button--blue migrate__submit {{unless selectedRepositories.length 'disabled'}}"
->
-  Migrate selected repositories to travis-ci.com
-</button>
+{{/repository-filter}}

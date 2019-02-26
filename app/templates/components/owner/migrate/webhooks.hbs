@@ -1,27 +1,33 @@
-<button class="button--green migrate__activate-all">
-  {{svg-jar 'github-signin'}}
-  Activate all your repositories on GitHub Apps
-</button>
-
-<div class="migrate__separator" data-text="OR"></div>
-
-<p>
-  Select repositories that you'd like to migrate from the list below.
-</p>
-
 {{#repository-filter
   repositories=repositories
   as |filter|
 }}
 
-  {{#component filter.form as |form|}}
-    <div class="profile-repositories-filter">
-      {{component form.searchField
-        placeholder="Filter repositories"
-        title="Filter repositories"
-      }}
-    </div>
-  {{/component}}
+  {{#if (or repositories.length filter.isFiltering)}}
+
+    <button class="button--green migrate__activate-all">
+      {{svg-jar 'github-signin'}}
+      Activate all your repositories on GitHub Apps
+    </button>
+
+    <div class="migrate__separator" data-text="OR"></div>
+
+    <p>
+      Select repositories that you'd like to migrate from the list below.
+    </p>
+
+    {{#if (or (gt repositories.length 1) filter.isFiltering)}}
+      {{#component filter.form as |form|}}
+        <div class="profile-repositories-filter">
+          {{component form.searchField
+            placeholder="Filter repositories"
+            title="Filter repositories"
+          }}
+        </div>
+      {{/component}}
+    {{/if}}
+
+  {{/if}}
 
   <div>
 
@@ -88,11 +94,14 @@
     {{/if}}
   {{/unless}}
 
+  {{#if (or repositories.length filter.isFiltering)}}
+    <button
+      disabled={{not selectedRepositories.length}}
+      class="button--blue migrate__submit {{unless selectedRepositories.length 'disabled'}}"
+    >
+      Enable selected repositories on GitHub Apps
+    </button>
+  {{/if}}
+
 {{/repository-filter}}
 
-<button
-  disabled={{not selectedRepositories.length}}
-  class="button--blue migrate__submit {{unless selectedRepositories.length 'disabled'}}"
->
-  Enable selected repositories on GitHub Apps
-</button>
