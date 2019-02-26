@@ -75,7 +75,11 @@
 
           {{#if showMigrateTab }}
             <li>
-              {{#link-to 'account.migrate' }}Migrate{{/link-to}}
+              {{#link-to 'account.migrate' }}
+                <span data-badge={{migrateReposCount}}>
+                  Migrate
+                </span>
+              {{/link-to}}
             </li>
           {{/if}}
 
@@ -95,7 +99,11 @@
 
           {{#if showMigrateTab }}
             <li>
-              {{#link-to 'organization.migrate' model }}Migrate{{/link-to}}
+              {{#link-to 'organization.migrate' model }}
+                <span data-badge={{migrateReposCount}}>
+                  Migrate
+                </span>
+              {{/link-to}}
             </li>
           {{/if}}
 

@@ -18,7 +18,10 @@
 
       <li>
         {{#link-to-account webhooksRouteName routeModel }}
-          <span>
+          <span
+            data-badge={{owner.webhooksRepositories.length}}
+            data-badge-hidden={{not owner.webhooksRepositories.length}}
+          >
             Activate on GitHub Apps
           </span>
         {{/link-to-account}}
@@ -30,7 +33,10 @@
 
       <li>
         {{#link-to-account appsRouteName routeModel }}
-          <span>
+          <span
+            data-badge={{owner.githubAppsRepositoriesOnOrg.length}}
+            data-badge-hidden={{not owner.githubAppsRepositoriesOnOrg.length}}
+          >
             Migrate to travis-ci.com
           </span>
         {{/link-to-account}}

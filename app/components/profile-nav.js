@@ -29,6 +29,15 @@ export default Component.extend({
 
   showMigrateTab: and('features.proVersion', 'hasReposToMigrate'),
 
+  migrateReposCount: computed(
+    'model.webhooksRepositories.[]',
+    'model.githubAppsRepositoriesOnOrg.[]',
+    function () {
+      const { webhooksRepositories, githubAppsRepositoriesOnOrg } = this.model;
+      return webhooksRepositories.length + githubAppsRepositoriesOnOrg.length;
+    }
+  ),
+
   get githubOrgsOauthAccessSettingsUrl() {
     return githubOrgsOauthAccessSettingsUrl;
   },
