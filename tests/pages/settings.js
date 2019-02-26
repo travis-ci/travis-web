@@ -17,6 +17,8 @@ function powerSelect(scope) {
   return {
     scope,
 
+    click: clickable('.ember-power-select-trigger'),
+
     async search(text) {
       await selectSearch(this.scope, text);
       return this;

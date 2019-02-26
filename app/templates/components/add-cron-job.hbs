@@ -2,6 +2,7 @@
   <div class="form-elem select">
     <label>Branch</label>
     {{#power-select
+      options=branches
       search=(perform searchBranches)
       selected=selectedBranch
       onchange=(action (mut selectedBranch))
