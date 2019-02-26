@@ -1,6 +1,6 @@
 <form {{action (perform save) on="submit"}}>
   <div class="form-elem select">
-    <label class="label">Branch</label>
+    <label>Branch</label>
     {{#power-select
       search=(perform searchBranches)
       selected=selectedBranch
@@ -15,7 +15,7 @@
     {{/power-select}}
   </div>
   <div class="form-elem select">
-    <label class="label">Interval</label>
+    <label>Interval</label>
     {{#power-select
       options=intervals
       selected=selectedInterval
@@ -30,7 +30,7 @@
     {{/power-select}}
   </div>
   <div class="form-elem select">
-    <label class="label">Options</label>
+    <label>Options</label>
     {{#power-select
       options=options
       selected=selectedOption
