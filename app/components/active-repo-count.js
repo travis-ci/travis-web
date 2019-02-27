@@ -1,6 +1,7 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
+import { reads } from '@ember/object/computed';
 
 export default Component.extend({
   classNames: ['insights-glance'],
@@ -91,22 +92,11 @@ export default Component.extend({
     }
   }),
 
-  activeTotalRequest: computed('owner', 'interval', 'private', function () {
-    return this.get('insights').getActiveRepos(
-      this.owner,
-      this.interval,
-      this.private
-    );
-  }),
+  activeTotal: reads('insights.activeRepos.data.count'),
+  activeTotalIsLoading: reads('insights.activeReposLoading'),
 
-  activeTotal: computed('activeTotalRequest.data', function () {
-    const responseData = this.get('activeTotalRequest.data');
-    if (responseData) {
-      return responseData.count;
-    }
-  }),
-
-  activeTotalIsLoading: computed('activeTotal', function () {
-    return typeof this.activeTotal !== 'number';
-  }),
+  didReceiveAttrs() {
+    this._super(...arguments);
+    this.get('insights').getActiveRepos(this.owner, this.interval, this.private);
+  }
 });

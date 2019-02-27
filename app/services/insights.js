@@ -1,6 +1,8 @@
 import Service, { inject as service } from '@ember/service';
 import moment from 'moment';
 import { assign } from '@ember/polyfills';
+import { task } from 'ember-concurrency';
+import { reads } from '@ember/object/computed';
 
 import ObjectProxy from '@ember/object/proxy';
 import PromiseProxyMixin from '@ember/object/promise-proxy-mixin';
@@ -181,19 +183,28 @@ export default Service.extend({
       }
     };
 
-    return ObjectPromiseProxy.create({
-      promise: this.get('api').get(endpoints.activeRepos, apiSettings).then(response => ({
-        data: response.data
-      })).catch(e => {
-        this.get('flashes').error('There was an error while trying to load insights data.');
-        this.get('raven').logException(e);
-      }),
-    });
+    this.fetchActiveRepos.perform(apiSettings);
+
+    // return ObjectPromiseProxy.create({
+    //   promise: this.get('api').get(endpoints.activeRepos, apiSettings).then(response => ({
+    //     data: response.data
+    //   })).catch(e => {
+    //     this.get('flashes').error('There was an error while trying to load insights data.');
+    //     this.get('raven').logException(e);
+    //   }),
+    // });
   },
+
+  activeRepos: reads('fetchActiveRepos.lastSuccessful.value'),
+  activeReposLoading: reads('fetchActiveRepos.isRunning'),
+  fetchActiveRepos: task(function* (apiSettings) {
+    const activeRepos = yield this.get('api').get(endpoints.activeRepos, apiSettings) || [];
+    return activeRepos;
+  }),
 });
 
 // These aggregator functions are for aggregating data when there is a key collision, i.e. when
-// there are more than 1 values for a given time. This happens on the owner page because repos are
+// there are multiple values for a given time. This happens on the owner page because repos are
 // the main thing that the insights app aggregates data around
 function getAggregator(aggName) {
   switch (aggName) {
