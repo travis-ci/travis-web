@@ -115,8 +115,8 @@ export default Service.extend({
       return map;
     }, {});
 
-    const aggregator = this._getAggregator(currentOptions.aggregator);
-    const transformer = this._getTransformer(currentOptions.transformer);
+    const aggregator = getAggregator(currentOptions.aggregator);
+    const transformer = getTransformer(currentOptions.transformer);
 
     return ObjectPromiseProxy.create({
       promise: this.get('api').get(endpoints.metrics, apiSettings).then(response => {
@@ -166,62 +166,6 @@ export default Service.extend({
     });
   },
 
-  _getAggregator(aggName) {
-    switch (aggName) {
-      case 'sum':
-        return (map, name, time, value) => {
-          if (map[name].hasOwnProperty(time)) {
-            map[name][time] += value;
-          } else {
-            map[name][time] = value;
-          }
-          return map;
-        };
-      case 'max':
-        return (map, name, time, value) => {
-          if (map[name].hasOwnProperty(time)) {
-            if (value > map[name][time]) {
-              map[name][time] = value;
-            }
-          } else {
-            map[name][time] = value;
-          }
-          return map;
-        };
-      case 'avg':
-        return (map, name, time, value) => {
-          if (map[name].hasOwnProperty(time)) {
-            map[name][time][0]++;
-            map[name][time][1] += value;
-          } else {
-            map[name][time] = [1, value];
-          }
-          return map;
-        };
-      case 'count':
-        return (map, name, time, value) => {
-          if (map[name].hasOwnProperty(time)) {
-            map[name][time]++;
-          } else {
-            map[name][time] = 1;
-          }
-          return map;
-        };
-      // Don't know that there's a sensible default aggregator
-      default:
-        return (map, name, time, value) => map;
-    }
-  },
-
-  _getTransformer(transformerName) {
-    switch (transformerName) {
-      case 'avg':
-        return (key, val) => [Number(key), (val[1] / val[0])];
-      default:
-        return (key, val) => [Number(key), val];
-    }
-  },
-
   getActiveRepos(owner, interval, requestPrivate = false) {
     const endTime = moment.utc();
     const startTime = moment.utc().subtract(1, interval);
@@ -247,3 +191,81 @@ export default Service.extend({
     });
   },
 });
+
+// These aggregator functions are for aggregating data when there is a key collision, i.e. when
+// there are more than 1 values for a given time. This happens on the owner page because repos are
+// the main thing that the insights app aggregates data around
+function getAggregator(aggName) {
+  switch (aggName) {
+    case 'sum':
+      return sumAggregator;
+    case 'max':
+      return maxAggregator;
+    case 'avg':
+      return avgAggregator;
+    case 'count':
+      return countAggregator;
+
+    // Don't know that there's a sensible default aggregator
+    default:
+      throw new Error('An invalid insights aggregator was specified');
+  }
+}
+
+function sumAggregator(map, name, time, value) {
+  if (map[name].hasOwnProperty(time)) {
+    map[name][time] += value;
+  } else {
+    map[name][time] = value;
+  }
+  return map;
+}
+
+function maxAggregator(map, name, time, value) {
+  if (map[name].hasOwnProperty(time)) {
+    if (value > map[name][time]) {
+      map[name][time] = value;
+    }
+  } else {
+    map[name][time] = value;
+  }
+  return map;
+}
+
+function avgAggregator(map, name, time, value) {
+  if (map[name].hasOwnProperty(time)) {
+    map[name][time][0]++;
+    map[name][time][1] += value;
+  } else {
+    map[name][time] = [1, value];
+  }
+  return map;
+}
+
+function countAggregator(map, name, time, value) {
+  if (map[name].hasOwnProperty(time)) {
+    map[name][time]++;
+  } else {
+    map[name][time] = 1;
+  }
+  return map;
+}
+
+// These transformer functions are for putting point data into a format to be read by the
+// charting components
+function getTransformer(transformerName) {
+  switch (transformerName) {
+    case 'avg':
+      return avgTransformer;
+    default:
+      return defaultTransformer;
+  }
+}
+
+function avgTransformer(key, val) {
+  return [Number(key), (val[1] / val[0])];
+}
+
+function defaultTransformer(key, val) {
+  return [Number(key), val];
+}
