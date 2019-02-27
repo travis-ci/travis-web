@@ -50,6 +50,8 @@ const endpoints = {
 
 export default Service.extend({
   api: service(),
+  raven: service(),
+  flashes: service(),
 
   getIntervalSettings(customIntervalSettings = {}) {
     // Merge and assign, I don't think do deep merges, but interval settings is only ever 2 levels
@@ -122,12 +124,12 @@ export default Service.extend({
 
         // Data aggregation
         aggData = response.data.values.reduce(
-          (timesMap, value) => {
-            if (typeof value.value !== 'number' || Number.isNaN(value.value)) {
+          (timesMap, { value, time, name }) => {
+            if (typeof value !== 'number' || Number.isNaN(value)) {
               return timesMap;
             }
-            const timeKey = moment.utc(value.time, apiTimeReceivedFormat).valueOf();
-            timesMap = aggregator(timesMap, value.name, timeKey, value.value);
+            const timeKey = moment.utc(time, apiTimeReceivedFormat).valueOf();
+            timesMap = aggregator(timesMap, name, timeKey, value);
             return timesMap;
           }, defaultTimesMap
         );
@@ -157,8 +159,9 @@ export default Service.extend({
         });
 
         return { data: aggData, private: response.data.private === 'true' };
-      }).catch(response => {
-        // console.log('Err', response);
+      }).catch(e => {
+        this.get('flashes').error('There was an error while trying to load insights data.');
+        this.get('raven').logException(e);
       }),
     });
   },
@@ -237,8 +240,9 @@ export default Service.extend({
     return ObjectPromiseProxy.create({
       promise: this.get('api').get(endpoints.activeRepos, apiSettings).then(response => ({
         data: response.data
-      })).catch(response => {
-        // console.log('Err', response);
+      })).catch(e => {
+        this.get('flashes').error('There was an error while trying to load insights data.');
+        this.get('raven').logException(e);
       }),
     });
   },
