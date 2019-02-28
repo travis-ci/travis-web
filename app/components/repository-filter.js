@@ -2,7 +2,7 @@ import Component from '@ember/component';
 import { task, timeout } from 'ember-concurrency';
 import config from 'travis/config/environment';
 import { inject as service } from '@ember/service';
-import { or, notEmpty, reads } from '@ember/object/computed';
+import { or, notEmpty } from '@ember/object/computed';
 import { isPresent } from '@ember/utils';
 import { htmlSafe } from '@ember/string';
 import fuzzyMatch from 'travis/utils/fuzzy-match';
@@ -14,7 +14,7 @@ export default Component.extend({
   query: '',
 
   hasQuery: notEmpty('query'),
-  isLoading: reads('search.isRunning'),
+  isLoading: or('search.isRunning', 'repositories.isLoading'),
   isFiltering: or('isLoading', 'hasQuery'),
 
   search: task(function* (query = '') {

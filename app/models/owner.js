@@ -28,27 +28,33 @@ export default Model.extend({
   installation: belongsTo('installation', { async: false }),
 
   githubAppsRepositories: dynamicQuery(function* ({ page = 1, filter = '' }) {
-    return yield this.fetchRepositories({ page, filter, ghApps: true, onOrg: false });
+    return yield this.fetchRepositories({ page, filter, ghApps: true, activeOnOrg: false });
   }),
 
   githubAppsRepositoriesOnOrg: dynamicQuery(function* ({ page = 1, filter = '' }) {
-    return yield this.fetchRepositories({ page, filter, ghApps: true, onOrg: true });
+    return yield this.fetchRepositories({ page, filter, ghApps: true, activeOnOrg: true });
+  }),
+
+  legacyRepositories: dynamicQuery(function* ({ page = 1, filter = '' }) {
+    const isPro = this.features.get('proVersion');
+    const active = isPro ? true : undefined;
+    return yield this.fetchRepositories({ page, filter, ghApps: false, active });
   }),
 
   webhooksRepositories: dynamicQuery(function* ({ page = 1, filter = '' }) {
     return yield this.fetchRepositories({ page, filter, ghApps: false });
   }),
 
-  fetchRepositories({ page, filter, ghApps, onOrg }) {
+  fetchRepositories({ page, filter, ghApps, active, activeOnOrg }) {
     const offset = (page - 1) * limit;
     const owner = this.login;
     const type = 'byOwner';
-    const isGhAppsEnabled = !!this.features.get('github-apps');
+    const shouldSkip = ghApps && !this.features.get('github-apps');
 
-    return ghApps && !isGhAppsEnabled ? [] : this.store.paginated('repo', {
+    return shouldSkip ? [] : this.store.paginated('repo', {
       'repository.managed_by_installation': ghApps,
-      'repository.active_on_org': onOrg,
-      'repository.active': isGhAppsEnabled && !onOrg ? true : undefined,
+      'repository.active_on_org': activeOnOrg,
+      'repository.active': active,
       sort_by: 'name',
       name_filter: filter,
       limit, offset, custom: { owner, type, },

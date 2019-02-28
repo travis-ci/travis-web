@@ -28,7 +28,7 @@ const DynamicQuery = ArrayProxy.extend({
 
   pagination: null,
 
-  isLoading: reads('task.isLoading'),
+  isLoading: reads('task.isRunning'),
   isEmpty: equal('length', 0),
 
   hasNextPage: not('pagination.isLast'),
@@ -52,9 +52,10 @@ const DynamicQuery = ArrayProxy.extend({
     }
   },
 
-  switchToPage(num = 1) {
-    this.set('page', num);
-    return this.load();
+  switchToPage(page = 1) {
+    if (page === this.page) return;
+    this.set('page', page);
+    return this.reload();
   },
 
   applyFilter(filter = '') {

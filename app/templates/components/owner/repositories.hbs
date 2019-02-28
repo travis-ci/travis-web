@@ -70,7 +70,7 @@
             {{pagination-navigation
               collection=githubAppsRepositories
               route='organization.repositories'
-              queryParam='apps-page'
+              queryParam='appsPage'
               inner=6
               outer=2
             }}
@@ -78,7 +78,7 @@
             {{pagination-navigation
               collection=githubAppsRepositories
               route='account.repositories'
-              queryParam='apps-page'
+              queryParam='appsPage'
               inner=6
               outer=2
             }}
@@ -91,7 +91,7 @@
 
   {{else}}
 
-    <div id='github-apps-invitation' class='{{unless webhooksRepositories 'expanded'}}'>
+    <div id='github-apps-invitation' class='{{unless legacyRepositories 'expanded'}}'>
 
       <h2>GitHub Apps Integration</h2>
       <p>
@@ -146,7 +146,7 @@
 
 {{/if}}
 
-{{#if (or webhooksRepositories (not showGitHubApps))}}
+{{#if (or legacyRepositories.length (not showGitHubApps))}}
 
   <header class='legacy-services-integration'>
     <h2>
@@ -164,11 +164,11 @@
   </header>
 
   {{#repository-filter
-    repositories=webhooksRepositories
+    repositories=legacyRepositories
     as |filter|
   }}
 
-    {{#if showWebhookReposFilter }}
+    {{#if showLegacyReposFilter }}
       {{#component filter.form as |form|}}
         <div class="profile-repositories-filter">
           {{component form.searchField
@@ -215,6 +215,7 @@
         {{pagination-navigation
           collection=deprecated
           route="organization.repositories"
+          queryParam='legacyPage'
           inner=6
           outer=2
         }}
@@ -222,6 +223,7 @@
         {{pagination-navigation
           collection=deprecated
           route="account.repositories"
+          queryParam='legacyPage'
           inner=6
           outer=2
         }}

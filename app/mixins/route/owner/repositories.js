@@ -5,13 +5,10 @@ export default Mixin.create({
   account: null,
 
   queryParams: {
-    page: {
+    'appsPage': {
       refreshModel: true
     },
-    'apps-page': {
-      refreshModel: true
-    },
-    'apps-org-page': {
+    'legacyPage': {
       refreshModel: true
     }
   },
@@ -20,14 +17,11 @@ export default Mixin.create({
     const account = this.account;
     if (!account.error) {
       return hash({
-        deprecated: account.webhooksRepositories.switchToPage(
-          params['page']
-        ),
-        lockedGithubAppsRepositories: account.githubAppsRepositoriesOnOrg.switchToPage(
-          params['apps-org-page']
+        deprecated: account.legacyRepositories.switchToPage(
+          params['legacyPage']
         ),
         notLockedGithubAppsRepositories: account.githubAppsRepositories.switchToPage(
-          params['apps-page']
+          params['appsPage']
         )
       });
     }

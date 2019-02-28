@@ -15,7 +15,7 @@ export default Component.extend({
   store: service(),
   externalLinks: service(),
 
-  page: 1,
+  legacyPage: 1,
   appsPage: 1,
 
   account: null,
@@ -26,7 +26,7 @@ export default Component.extend({
 
   login: reads('account.login'),
 
-  webhooksRepositories: reads('account.webhooksRepositories'),
+  legacyRepositories: reads('account.legacyRepositories'),
   githubAppsRepositories: reads('account.githubAppsRepositories'),
 
   isEnterprise: reads('features.enterpriseVersion'),
@@ -35,14 +35,14 @@ export default Component.extend({
   isNotPro: not('isPro'),
   hasGitHubAppsInstallation: notEmpty('account.installation'),
 
-  isFilteringWebhookRepos: notEmpty('webhooksRepositories.filter'),
+  isFilteringLegacyRepos: notEmpty('legacyRepositories.filter'),
   isFilteringAppsRepos: notEmpty('githubAppsRepositories.filter'),
-  isWebhookReposFilterAllowed: and('webhooksRepositories.length', 'features.repositoryFiltering'),
+  isLegacyReposFilterAllowed: and('legacyRepositories.length', 'features.repositoryFiltering'),
   isAppsReposFilterAllowed: and('githubAppsRepositories.length', 'features.repositoryFiltering'),
 
   showGitHubApps: reads('features.github-apps'),
   showPublicReposBanner: and('isNotEnterprise', 'isNotPro'),
-  showWebhookReposFilter: or('isWebhookReposFilterAllowed', 'isFilteringWebhookRepos'),
+  showLegacyReposFilter: or('isLegacyReposFilterAllowed', 'isFilteringLegacyRepos'),
   showAppsReposFilter: or('isAppsReposFilterAllowed', 'isFilteringAppsRepos'),
 
   githubAppsActivationURL: computed('account.githubId', function () {
