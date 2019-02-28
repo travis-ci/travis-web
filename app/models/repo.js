@@ -1,7 +1,6 @@
 import {
   Promise as EmberPromise,
 } from 'rsvp';
-import $ from 'jquery';
 import { A } from '@ember/array';
 import ExpandableRecordArray from 'travis/utils/expandable-record-array';
 import Model from 'ember-data/model';
@@ -122,20 +121,6 @@ const Repo = Model.extend({
     return this.store.filter('cron', {
       repository_id: id
     }, (cron) => cron.get('branch.repoId') === id);
-  }),
-
-  // TODO: Stop performing a `set` as part of the cp!
-  // TODO: Is this even used?
-  stats: computed('slug', '_stats', function () {
-    let slug = this.get('slug');
-    let stats = this.get('_stats');
-
-    if (slug) {
-      return stats || $.get(`https://api.github.com/repos/${slug}`, (data) => {
-        this.set('_stats', data);
-        return this.notifyPropertyChange('stats');
-      }) && {};
-    }
   }),
 
   updateTimes() {
