@@ -169,8 +169,7 @@ export default Service.extend({
   },
 
   getActiveRepos(owner, interval, requestPrivate = false) {
-    const endTime = moment.utc();
-    const startTime = moment.utc().subtract(1, interval);
+    const [startTime, endTime] = this.getDatesFromInterval(interval);
 
     const apiSettings = {
       stringifyData: false,
@@ -183,16 +182,7 @@ export default Service.extend({
       }
     };
 
-    this.fetchActiveRepos.perform(apiSettings);
-
-    // return ObjectPromiseProxy.create({
-    //   promise: this.get('api').get(endpoints.activeRepos, apiSettings).then(response => ({
-    //     data: response.data
-    //   })).catch(e => {
-    //     this.get('flashes').error('There was an error while trying to load insights data.');
-    //     this.get('raven').logException(e);
-    //   }),
-    // });
+    return this.fetchActiveRepos.perform(apiSettings);
   },
 
   activeRepos: reads('fetchActiveRepos.lastSuccessful.value'),

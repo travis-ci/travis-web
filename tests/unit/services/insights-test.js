@@ -32,61 +32,6 @@ module('Unit | Service | insights', function (hooks) {
     assert.equal(diff <= 1 && diff >= -1, true);
   });
 
-  test('aggregators', function (assert) {
-    let aggregator, result;
-
-    // Default - (map, name, time, value)
-    aggregator = this.insightsService._getAggregator();
-    result = aggregator({test: {}}, 'test', 10, 20);
-    assert.deepEqual(result, {test: {}});
-
-    // Sum
-    aggregator = this.insightsService._getAggregator('sum');
-    result = aggregator({test: {}}, 'test', 10, 20);
-    assert.deepEqual(result, {test: {'10': 20}});
-
-    result = aggregator({test: {'10': 20}}, 'test', 10, 20);
-    assert.deepEqual(result, {test: {'10': 40}});
-
-    // Max
-    aggregator = this.insightsService._getAggregator('max');
-    result = aggregator({test: {}}, 'test', 10, 20);
-    assert.deepEqual(result, {test: {'10': 20}});
-
-    result = aggregator({test: {'10': 20}}, 'test', 10, 25);
-    assert.deepEqual(result, {test: {'10': 25}});
-
-    // Avg
-    aggregator = this.insightsService._getAggregator('avg');
-    result = aggregator({test: {}}, 'test', 10, 20);
-    assert.deepEqual(result, {test: {'10': [1, 20]}});
-
-    result = aggregator({test: {'10': [1, 20]}}, 'test', 10, 40);
-    assert.deepEqual(result, {test: {'10': [2, 60]}});
-
-    // Count
-    aggregator = this.insightsService._getAggregator('count');
-    result = aggregator({test: {}}, 'test', 10, 20);
-    assert.deepEqual(result, {test: {'10': 1}});
-
-    result = aggregator({test: {'10': 1}}, 'test', 10, 20);
-    assert.deepEqual(result, {test: {'10': 2}});
-  });
-
-  test('transformers', function (assert) {
-    let transformer, result;
-
-    // Default
-    transformer = this.insightsService._getTransformer();
-    result = transformer('10', 20);
-    assert.deepEqual(result, [10, 20]);
-
-    // Avg
-    transformer = this.insightsService._getTransformer('avg');
-    result = transformer('10', [5, 20]);
-    assert.deepEqual(result, [10, 4]);
-  });
-
   test('active repos with no metric data', async function (assert) {
     this.server.create('user');
 
