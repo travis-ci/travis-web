@@ -35,7 +35,7 @@ module('Unit | Service | insights', function (hooks) {
   test('active repos with no metric data', async function (assert) {
     this.server.create('user');
 
-    let result = await this.insightsService.getActiveRepos({id: 1, '@type': 'user'});
+    let result = await this.insightsService.getActiveRepos({id: 1, '@type': 'user'}, 'week');
     assert.equal(result.data.count, 0);
   });
 
@@ -43,7 +43,7 @@ module('Unit | Service | insights', function (hooks) {
     this.server.create('user');
     server.createList('insight-metric', 1);
 
-    let result = await this.insightsService.getActiveRepos({id: 1, '@type': 'user'});
+    let result = await this.insightsService.getActiveRepos({id: 1, '@type': 'user'}, 'week');
     assert.equal(result.data.count, 75);
   });
 
