@@ -53,14 +53,9 @@ export default Component.extend({
     }
   }),
 
-  isPHPDefault: computed('queue', 'job.config.language', function () {
-    let queue = this.get('queue');
-    let language = this.get('job.config.language');
-    if (queue === 'builds.gce') {
-      if (language !== 'php') {
-        return true;
-      }
-    }
+  isPHPDefault: computed('job.config.{language,php}', function () {
+    const { language, php } = this.get('job.config') || {};
+    return language === 'php' && !php;
   }),
 
   macOSImage: alias('jobConfig.osx_image'),
