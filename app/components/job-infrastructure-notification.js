@@ -54,7 +54,8 @@ export default Component.extend({
   }),
 
   isPHPDefault: computed('job.config.{language,php}', function () {
-    const { language, php } = this.get('job.config') || {};
+    const language = this.get('job.config.language');
+    const php = this.get('job.config.php');
     return language === 'php' && !php;
   }),
 
