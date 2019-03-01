@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
-import { reads, or, and, gt } from '@ember/object/computed';
+import { reads, or, and, gt, collect, sum } from '@ember/object/computed';
 import { computed } from '@ember/object';
 import config from 'travis/config/environment';
 
@@ -12,31 +12,30 @@ export default Component.extend({
   accounts: service(),
   features: service(),
 
+  user: reads('accounts.user'),
+  organizations: reads('accounts.organizations'),
+
   activeModel: null,
   model: reads('activeModel'),
 
-  user: reads('accounts.user'),
-  organizations: reads('accounts.organizations'),
+  webhooksRepositories: reads('model.webhooksRepositories'),
+  githubAppsRepositories: reads('model.githubAppsRepositoriesOnOrg'),
+
+  webhooksRepositoriesCount: reads('webhooksRepositories.total'),
+  githubAppsRepositoriesCount: reads('githubAppsRepositories.total'),
 
   accountName: or('model.name', 'model.login'),
   billingUrl: or('model.subscription.billingUrl', 'model.billingUrl'),
 
-  showSubscriptionStatusBanner: and('checkSubscriptionStatus', 'model.subscriptionError'),
-
-  hasWebhookRepos: gt('model.webhooksRepositories.length', 0),
-  hasReposOnOrg: gt('model.githubAppsRepositoriesOnOrg.length', 0),
+  hasWebhookRepos: gt('webhooksRepositoriesCount', 0),
+  hasReposOnOrg: gt('githubAppsRepositoriesCount', 0),
   hasReposToMigrate: or('hasWebhookRepos', 'hasReposOnOrg'),
 
   showMigrateTab: and('features.proVersion', 'hasReposToMigrate'),
+  showSubscriptionStatusBanner: and('checkSubscriptionStatus', 'model.subscriptionError'),
 
-  migrateReposCount: computed(
-    'model.webhooksRepositories.[]',
-    'model.githubAppsRepositoriesOnOrg.[]',
-    function () {
-      const { webhooksRepositories, githubAppsRepositoriesOnOrg } = this.model;
-      return webhooksRepositories.length + githubAppsRepositoriesOnOrg.length;
-    }
-  ),
+  migrateReposTotals: collect('webhooksRepositoriesCount', 'githubAppsRepositoriesCount'),
+  migrateReposCount: sum('migrateReposTotals'),
 
   get githubOrgsOauthAccessSettingsUrl() {
     return githubOrgsOauthAccessSettingsUrl;

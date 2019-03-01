@@ -34,6 +34,8 @@ const DynamicQuery = ArrayProxy.extend({
   hasNextPage: not('pagination.isLast'),
   hasPreviousPage: not('pagination.isFirst'),
 
+  total: reads('pagination.total'),
+
   init() {
     this._super(...arguments);
     this.setObjects([]);
