@@ -1,13 +1,13 @@
 <h3 class="insights-glance__title">Active Repositories</h3>
 <div class="insights-glance__stat">
-  {{#if (or isLoading activeTotalIsLoading)}}
+  {{#if isAnythingLoading}}
     {{loading-indicator}}
   {{else}}
     {{activeTotal}}
   {{/if}}
 </div>
 <div class="insights-glance__chart">
-  {{#if (or isLoading (is-empty aggregateData))}}
+  {{#if showPlaceholder}}
     <hr class="insights-glance__chart-placeholder" />
   {{else}}
     {{high-charts content=content chartOptions=options}}

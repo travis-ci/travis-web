@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
-import { reads } from '@ember/object/computed';
+import { reads, empty, or } from '@ember/object/computed';
 
 export default Component.extend({
   classNames: ['insights-glance'],
@@ -51,8 +51,30 @@ export default Component.extend({
     };
   }),
 
-  dataRequest: computed('owner', 'interval', 'private', function () {
-    return this.get('insights').getMetric(
+  chartData: reads('insights.chartData.data.count_started'),
+  isLoading: reads('insights.chartDataLoading'),
+  isEmpty: empty('chartData.plotData'),
+  showPlaceholder: or('isLoading', 'isEmpty'),
+
+  content: computed('chartData.plotData', function () {
+    return [{
+      name: 'Active Repositories',
+      data: this.chartData.plotData,
+    }];
+  }),
+
+  avgRepos: computed('chartData.average', function () {
+    return Math.round(this.chartData.average);
+  }),
+
+  activeTotal: reads('insights.activeRepos.data.count'),
+  activeTotalIsLoading: reads('insights.activeReposLoading'),
+  isAnythingLoading: or('isLoading', 'activeTotalIsLoading'),
+
+  didReceiveAttrs() {
+    this._super(...arguments);
+    this.get('insights').getActiveRepos(this.owner, this.interval, this.private);
+    this.get('insights.getChartData').perform(
       this.owner,
       this.interval,
       'jobs',
@@ -64,39 +86,5 @@ export default Component.extend({
         private: this.private,
       }
     );
-  }),
-
-  aggregateData: computed('dataRequest.data', function () {
-    const responseData = this.get('dataRequest.data');
-    if (responseData) {
-      return responseData.count_started;
-    }
-  }),
-
-  isLoading: computed('aggregateData', function () {
-    return !this.aggregateData;
-  }),
-
-  content: computed('aggregateData', function () {
-    if (this.aggregateData) {
-      return [{
-        name: 'Active Repositories',
-        data: this.aggregateData.chartData,
-      }];
-    }
-  }),
-
-  avgRepos: computed('aggregateData', function () {
-    if (this.aggregateData) {
-      return Math.round(this.aggregateData.average);
-    }
-  }),
-
-  activeTotal: reads('insights.activeRepos.data.count'),
-  activeTotalIsLoading: reads('insights.activeReposLoading'),
-
-  didReceiveAttrs() {
-    this._super(...arguments);
-    this.get('insights').getActiveRepos(this.owner, this.interval, this.private);
   }
 });

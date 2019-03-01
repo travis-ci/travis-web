@@ -118,7 +118,7 @@ export default Service.extend({
     }, {});
 
     const aggregator = getAggregator(currentOptions.aggregator);
-    const transformer = getTransformer(currentOptions.transformer);
+    const transformer = getSerializer(currentOptions.transformer);
 
     return ObjectPromiseProxy.create({
       promise: this.get('api').get(endpoints.metrics, apiSettings).then(response => {
@@ -168,6 +168,41 @@ export default Service.extend({
     });
   },
 
+  getChartData: task(function*
+  (owner, interval, subject, func, metricNames = [], options = {}) {
+    /* Prepare for API request to fetch metrics */
+    const currentOptions = mergeMetricSettings(options, func);
+    const intervalSettings = this.getIntervalSettings(currentOptions.intervalSettings);
+
+    const [startTime, endTime] = this.getDatesFromInterval(
+      interval, currentOptions.startInterval, currentOptions.endInterval
+    );
+
+    const apiSettings = getMetricAPISettings(
+      subject, func, intervalSettings[interval].subInterval, metricNames, owner, startTime, endTime,
+      currentOptions
+    );
+
+    /* Fetch metrics */
+    let metrics = yield this.get('fetchMetrics').perform(apiSettings, currentOptions);
+
+    /* Prepare fetched metric data for charts */
+    let chartData = aggregateMetrics(metricNames, metrics, currentOptions.aggregator);
+
+    serializeMetrics(chartData, currentOptions);
+
+    return { data: chartData, private: metrics.data.private === 'true' };
+  }),
+
+  fetchMetrics: task(function* (apiSettings) {
+    let metrics = yield this.get('api').get(endpoints.metrics, apiSettings) || [];
+    return metrics;
+  }),
+
+  chartData: reads('getChartData.lastSuccessful.value'),
+  chartDataLoading: reads('getChartData.isRunning'),
+
+  // Active Repo endpoint functions
   getActiveRepos(owner, interval, requestPrivate = false) {
     const [startTime, endTime] = this.getDatesFromInterval(interval);
 
@@ -188,10 +223,99 @@ export default Service.extend({
   activeRepos: reads('fetchActiveRepos.lastSuccessful.value'),
   activeReposLoading: reads('fetchActiveRepos.isRunning'),
   fetchActiveRepos: task(function* (apiSettings) {
-    const activeRepos = yield this.get('api').get(endpoints.activeRepos, apiSettings) || [];
+    let activeRepos = yield this.get('api').get(endpoints.activeRepos, apiSettings) || [];
     return activeRepos;
   }),
 });
+
+// Metric preparation functions
+function getMetricAPISettings(
+  subject, func, subInterval, metricNames, owner, startTime, endTime, options
+) {
+  return {
+    stringifyData: false,
+    data: {
+      subject,
+      interval: subInterval,
+      func,
+      name: metricNames.join(','),
+      owner_type: owner['@type'] === 'user' ? 'User' : 'Organization',
+      owner_id: owner.id,
+      end_time: endTime.format(apiTimeRequestFormat),
+      start_time: startTime.format(apiTimeRequestFormat),
+      private: options.private,
+    },
+  };
+}
+
+function mergeMetricSettings(options, func) {
+  const currentOptions = assign({}, defaultOptions, options);
+  currentOptions.aggregator = currentOptions.aggregator || func;
+  currentOptions.serializer = currentOptions.serializer || func;
+  return currentOptions;
+}
+
+function aggregateMetrics(metricNames, metrics, aggregatorName) {
+  const defaultData = metricNames.reduce((map, metric) => {
+    map[metric] = {};
+    return map;
+  }, {});
+
+  // Aggregate metric data
+  const aggregator = getAggregator(aggregatorName);
+
+  // Data aggregation
+  let aggData = metrics.data.values.reduce((timesMap, { value, time, name }) => {
+    // Continue is value is invalid
+    if (typeof value !== 'number' || Number.isNaN(value)) { return timesMap; }
+
+    // Create key for map from time
+    const timeKey = moment.utc(time, apiTimeReceivedFormat).valueOf();
+
+    // Aggregate and continue building map
+    timesMap = aggregator(timesMap, name, timeKey, value);
+    return timesMap;
+  }, defaultData);
+
+  return aggData;
+}
+
+function serializeMetrics(serData, currentOptions) {
+  const serializer = getSerializer(currentOptions.serializer);
+
+  // Loop through each metric
+  Object.entries(serData).map(([metricName, metricData]) => {
+    let currentMetric = serData[metricName];
+
+    // Run serializer on each data point
+    currentMetric.plotData = Object.entries(metricData).map(([key, val]) => {
+      // Run chosen serializer
+      let [newKey, newVal] = serializer(key, val);
+
+      // Run additional custom serializer if relevant
+      if (typeof currentOptions.customSerialize === 'function') {
+        try { [newKey, newVal] = currentOptions.customSerialize(newKey, newVal); } catch (e) {}
+      }
+
+      return [newKey, newVal];
+    });
+
+    // Calculate total if total or average is requested
+    if (currentOptions.calcTotal || currentOptions.calcAvg) {
+      currentMetric.total = currentMetric.plotData.reduce((acc, [key, val]) => acc + val, 0);
+    }
+
+    // Calculate average if requested. Uses total calculated above.
+    if (currentOptions.calcAvg) {
+      currentMetric.average = currentMetric.plotData.length === 0
+        ? 0
+        : currentMetric.total / currentMetric.plotData.length
+      ;
+    }
+
+    return serData;
+  });
+}
 
 // These aggregator functions are for aggregating data when there is a key collision, i.e. when
 // there are multiple values for a given time. This happens on the owner page because repos are
@@ -252,21 +376,21 @@ function countAggregator(map, name, time, value) {
   return map;
 }
 
-// These transformer functions are for putting point data into a format to be read by the
+// These serializer functions are for putting point data into a format to be read by the
 // charting components
-function getTransformer(transformerName) {
-  switch (transformerName) {
+function getSerializer(serializerName) {
+  switch (serializerName) {
     case 'avg':
-      return avgTransformer;
+      return avgSerializer;
     default:
-      return defaultTransformer;
+      return defaultSerializer;
   }
 }
 
-function avgTransformer(key, val) {
+function avgSerializer(key, val) {
   return [Number(key), (val[1] / val[0])];
 }
 
-function defaultTransformer(key, val) {
+function defaultSerializer(key, val) {
   return [Number(key), val];
 }
