@@ -1,8 +1,9 @@
 import Mixin from '@ember/object/mixin';
-import { hash } from 'rsvp';
 
 export default Mixin.create({
   account: null,
+  appsPage: 1,
+  legacyPage: 1,
 
   queryParams: {
     'appsPage': {
@@ -14,17 +15,14 @@ export default Mixin.create({
   },
 
   model(params) {
-    const account = this.account;
-    if (!account.error) {
-      return hash({
-        deprecated: account.legacyRepositories.switchToPage(
-          params['legacyPage']
-        ),
-        notLockedGithubAppsRepositories: account.githubAppsRepositories.switchToPage(
-          params['appsPage']
-        )
-      });
-    }
+    this.legacyPage = params['legacyPage'];
+    this.appsPage = params['appsPage'];
+  },
+
+  afterModel() {
+    const { account } = this;
+    account.legacyRepositories.switchToPage(this.legacyPage);
+    account.githubAppsRepositories.switchToPage(this.appsPage);
   },
 
   setupController(controller, model) {

@@ -1,55 +1,40 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { alias } from '@ember/object/computed';
+import { reads } from '@ember/object/computed';
 
 export default Component.extend({
   tagName: 'nav',
   classNames: ['pagination-navigation'],
 
   queryParam: 'page',
-  pagination: alias('collection.pagination'),
+  outer: 1,
+  inner: 2,
+
+  pagination: reads('collection.pagination'),
 
   prevPageNumber: computed('pagination.{currentPage,isFirst}', function () {
-    let page = this.get('pagination.currentPage');
-    let isFirst = this.get('pagination.isFirst');
-
+    const { currentPage, isFirst } = this.pagination;
     if (!isFirst) {
-      return page - 1;
+      return currentPage - 1;
     }
-    return undefined;
   }),
 
   nextPageNumber: computed('pagination.{currentPage,isLast}', function () {
-    let page = this.get('pagination.currentPage');
-    let isLast = this.get('pagination.isLast');
-
+    const { currentPage, isLast } = this.pagination;
     if (!isLast) {
-      return page + 1;
+      return currentPage + 1;
     }
-    return undefined;
-  }),
-
-  outerWindow: computed('outer', function () {
-    return this.get('outer') || 1;
-  }),
-
-  innerWindow: computed('inner', function () {
-    return this.get('inner') || 2;
   }),
 
   pages: computed(
     'pagination.{numberOfPages,perPage,currentPage,offset}',
-    'innerWindow',
-    'outerWindow',
+    'inner',
+    'outer',
     function () {
-      let numberOfPages = this.get('pagination.numberOfPages');
-      let perPage = this.get('pagination.perPage');
-      let currentPage = this.get('pagination.currentPage');
-      let offset = this.get('pagination.offset');
-      let innerWindow = this.get('innerWindow');
-      let outerWindow = this.get('outerWindow');
+      const { outer, inner, pagination } = this;
+      const { numberOfPages, perPage, currentPage, offset } = pagination;
 
-      let thresholdDisplayAll = ((outerWindow + 1) * 2) + (innerWindow + 1);
+      const thresholdDisplayAll = (outer + 1) * 2 + (inner + 1);
       let pageArray = [];
 
       // display all pages if there is only a few
@@ -62,14 +47,14 @@ export default Component.extend({
         }
         // else stack together pagination
       } else {
-        let innerHalf = Math.ceil(innerWindow / 2);
+        let innerHalf = Math.ceil(inner / 2);
         let lowerInnerBoundary = currentPage - innerHalf;
         if (lowerInnerBoundary < 0) {
           lowerInnerBoundary = 0;
         }
         let upperInnerBoundary = currentPage + innerHalf;
-        let lowerOuterBoundary = 1 + outerWindow;
-        let upperOuterBoundary = numberOfPages - outerWindow;
+        let lowerOuterBoundary = 1 + outer;
+        let upperOuterBoundary = numberOfPages - outer;
 
         pageArray.push({
           num: 1,
@@ -78,7 +63,7 @@ export default Component.extend({
 
         // outerwindow first page
         if (currentPage !== 1) {
-          for (let i = 1; i <= outerWindow; i++) {
+          for (let i = 1; i <= outer; i++) {
             if (i !== currentPage) {
               pageArray.push({
                 num: i + 1,
@@ -89,7 +74,7 @@ export default Component.extend({
         }
 
         // ... divider unit
-        if (lowerInnerBoundary - pageArray.length > outerWindow) {
+        if (lowerInnerBoundary - pageArray.length > outer) {
           pageArray.push({});
         }
 
@@ -149,4 +134,5 @@ export default Component.extend({
   showPagination: computed('pages', function () {
     return this.get('pages').length > 1;
   })
+
 });
