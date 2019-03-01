@@ -213,7 +213,7 @@
     {{#unless filter.isLoading }}
       {{#if account.isOrganization}}
         {{pagination-navigation
-          collection=deprecated
+          collection=legacyRepositories
           route="organization.repositories"
           queryParam='legacy-page'
           inner=6
@@ -221,7 +221,7 @@
         }}
       {{else}}
         {{pagination-navigation
-          collection=deprecated
+          collection=legacyRepositories
           route="account.repositories"
           queryParam='legacy-page'
           inner=6
