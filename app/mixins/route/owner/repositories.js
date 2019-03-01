@@ -6,17 +6,17 @@ export default Mixin.create({
   legacyPage: 1,
 
   queryParams: {
-    'appsPage': {
+    'apps-page': {
       refreshModel: true
     },
-    'legacyPage': {
+    'legacy-page': {
       refreshModel: true
     }
   },
 
   model(params) {
-    this.legacyPage = params['legacyPage'];
-    this.appsPage = params['appsPage'];
+    this.legacyPage = params['legacy-page'];
+    this.appsPage = params['apps-page'];
   },
 
   afterModel() {

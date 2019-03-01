@@ -15,9 +15,6 @@ export default Component.extend({
   store: service(),
   externalLinks: service(),
 
-  legacyPage: 1,
-  appsPage: 1,
-
   account: null,
 
   get migrationRepositoryCountLimit() {

@@ -32,10 +32,12 @@ export default Component.extend({
     'outer',
     function () {
       const { outer, inner, pagination } = this;
-      const { numberOfPages, perPage, currentPage, offset } = pagination;
+      const { numberOfPages, perPage, currentPage, offset } = pagination || {};
 
       const thresholdDisplayAll = (outer + 1) * 2 + (inner + 1);
       let pageArray = [];
+
+      if (!pagination) return pageArray;
 
       // display all pages if there is only a few
       if (numberOfPages <= thresholdDisplayAll) {

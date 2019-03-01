@@ -1,7 +1,7 @@
 import Controller from '@ember/controller';
 
 export default Controller.extend({
-  queryParams: ['legacyPage', 'appsPage'],
-  legacyPage: 1,
-  appsPage: 1
+  queryParams: ['legacy-page', 'apps-page'],
+  'legacy-page': 1,
+  'apps-page': 1
 });
