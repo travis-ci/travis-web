@@ -41,42 +41,50 @@ const DynamicQuery = ArrayProxy.extend({
   },
 
   switchToNextPage() {
-    if (this.hasNextPage) {
-      return this.switchToPage(this.page + 1);
-    }
+    const { hasNextPage, page, promise } = this;
+    return hasNextPage ? this.switchToPage(page + 1) : promise;
   },
 
   switchToPreviousPage() {
-    if (this.hasPreviousPage) {
-      return this.switchToPage(this.page - 1);
-    }
+    const { hasPreviousPage, page, promise } = this;
+    return hasPreviousPage ? this.switchToPage(page - 1) : promise;
   },
 
   switchToPage(page = 1) {
-    if (page === this.page) return;
-    this.set('page', page);
-    return this.reload();
+    const { page: currentPage, promise } = this;
+    return page === currentPage ? promise : this.reload({ page });
   },
 
   applyFilter(filter = '') {
     const page = 1;
-    this.setProperties({ filter, page });
-    return this.reload();
+    return this.reload({ filter, page });
   },
 
-  load() {
-    return this.promise || this.reload();
+  load(options) {
+    return this.promise || this.reload(options);
   },
 
-  reload() {
+  reload(options) {
+    this.applyOptions(options);
+
     const { page, filter } = this;
+
     this.promise = this.task.perform({ page, filter })
       .then((result = []) => {
         this.set('pagination', result.pagination);
         this.setObjects(result.toArray());
         return this;
       });
+
     return this.promise;
+  },
+
+  applyOptions({ page, filter } = {}) {
+    if (page !== undefined)
+      this.set('page', page);
+
+    if (filter !== undefined)
+      this.set('filter', filter);
   }
 
 });

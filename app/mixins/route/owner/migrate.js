@@ -2,7 +2,6 @@ import Mixin from '@ember/object/mixin';
 import { hash } from 'rsvp';
 
 export default Mixin.create({
-
   account: null,
 
   model() {

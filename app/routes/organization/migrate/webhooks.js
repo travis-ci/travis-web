@@ -2,9 +2,15 @@ import Route from '@ember/routing/route';
 
 export default Route.extend({
 
-  model() {
+  queryParams: {
+    page: {
+      refreshModel: true
+    }
+  },
+
+  model({ page }) {
     const owner = this.modelFor('organization');
-    return owner.webhooksRepositories.load();
+    return owner.webhooksRepositories.reload({ page });
   }
 
 });
