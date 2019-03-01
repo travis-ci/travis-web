@@ -35,7 +35,7 @@ export default Component.extend({
   isFilteringLegacyRepos: notEmpty('legacyRepositories.filter'),
   isFilteringAppsRepos: notEmpty('githubAppsRepositories.filter'),
   isLegacyReposFilterAllowed: and('legacyRepositories.length', 'features.repositoryFiltering'),
-  isAppsReposFilterAllowed: and('githubAppsRepositories.length', 'features.repositoryFiltering'),
+  isAppsReposFilterAllowed: reads('features.repositoryFiltering'),
 
   showGitHubApps: reads('features.github-apps'),
   showPublicReposBanner: and('isNotEnterprise', 'isNotPro'),

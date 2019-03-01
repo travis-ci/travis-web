@@ -32,10 +32,8 @@
         {{/if}}
 
         <div>
-          {{#if filter.isLoading}}
-            {{loading-indicator}}
-          {{else}}
 
+          {{#loading-overlay visible=filter.isLoading }}
             <ul class="profile-repositorylist" id='not-locked-github-apps-repositories'>
               {{#each filter.results as |repository|}}
 
@@ -50,7 +48,9 @@
 
               {{else}}
 
-                {{#if filter.isFiltering}}
+                {{#if filter.isLoading}}
+                  {{!--  show nothing  --}}
+                {{else if filter.isFiltering}}
                   <li class="no-results">Sorry, no results found.</li>
                 {{else}}
                   <li class='empty'>
@@ -61,29 +61,27 @@
 
               {{/each}}
             </ul>
+          {{/loading-overlay}}
 
-          {{/if}}
         </div>
 
-        {{#unless filter.isLoading }}
-          {{#if account.isOrganization}}
-            {{pagination-navigation
-              collection=githubAppsRepositories
-              route='organization.repositories'
-              queryParam='apps-page'
-              inner=6
-              outer=2
-            }}
-          {{else}}
-            {{pagination-navigation
-              collection=githubAppsRepositories
-              route='account.repositories'
-              queryParam='apps-page'
-              inner=6
-              outer=2
-            }}
-          {{/if}}
-        {{/unless}}
+        {{#if account.isOrganization}}
+          {{pagination-navigation
+            collection=githubAppsRepositories
+            route='organization.repositories'
+            queryParam='apps-page'
+            inner=6
+            outer=2
+          }}
+        {{else}}
+          {{pagination-navigation
+            collection=githubAppsRepositories
+            route='account.repositories'
+            queryParam='apps-page'
+            inner=6
+            outer=2
+          }}
+        {{/if}}
 
       {{/repository-filter}}
 
