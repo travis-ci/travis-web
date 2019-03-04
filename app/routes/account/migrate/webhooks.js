@@ -11,6 +11,12 @@ export default Route.extend({
   model({ page }) {
     const owner = this.modelFor('account');
     return owner.webhooksRepositories.reload({ page });
+  },
+
+  setupController(controller, model) {
+    this._super(...arguments);
+    const owner = this.modelFor('account');
+    controller.setProperties({ owner });
   }
 
 });
