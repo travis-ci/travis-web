@@ -10,6 +10,7 @@ export default Component.extend({
 
   insights: service(),
 
+  // Chart options
   intervalSettings: computed(function () {
     return this.get('insights').getIntervalSettings();
   }),
@@ -51,6 +52,7 @@ export default Component.extend({
     };
   }),
 
+  // Chart data
   chartData: reads('insights.chartData.data.count_started'),
   isLoading: reads('insights.chartDataLoading'),
   isEmpty: empty('chartData.plotData'),
@@ -59,18 +61,20 @@ export default Component.extend({
   content: computed('chartData.plotData', function () {
     return [{
       name: 'Active Repositories',
-      data: this.chartData.plotData,
+      data: this.get('chartData.plotData'),
     }];
   }),
 
   avgRepos: computed('chartData.average', function () {
-    return Math.round(this.chartData.average);
+    return Math.round(this.get('chartData.average'));
   }),
 
+  // Active Repos has its own separate endpoint for totals, its calculation is somewhat unique
   activeTotal: reads('insights.activeRepos.data.count'),
   activeTotalIsLoading: reads('insights.activeReposLoading'),
   isAnythingLoading: or('isLoading', 'activeTotalIsLoading'),
 
+  // Request chart data
   didReceiveAttrs() {
     this._super(...arguments);
     this.get('insights').getActiveRepos(this.owner, this.interval, this.private);

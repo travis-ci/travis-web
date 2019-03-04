@@ -80,13 +80,7 @@ export default Service.extend({
     ];
   },
 
-  getMetric(owner,
-    interval,
-    subject,
-    func,
-    metrics = [],
-    options = {}
-  ) {
+  getMetric(owner, interval, subject, func, metrics = [], options = {}) {
     const currentOptions = assign({}, defaultOptions, options);
     currentOptions.aggregator = currentOptions.aggregator || func;
     currentOptions.transformer = currentOptions.transformer || func;

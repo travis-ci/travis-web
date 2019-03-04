@@ -2,6 +2,8 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { pluralize } from 'ember-inflector';
+import { reads, empty, or } from '@ember/object/computed';
+import { task } from 'ember-concurrency';
 
 export default Component.extend({
   classNames: ['insights-glance'],
@@ -10,6 +12,7 @@ export default Component.extend({
 
   insights: service(),
 
+  // Chart options
   intervalSettings: computed(function () {
     return this.get('insights').getIntervalSettings();
   }),
@@ -51,67 +54,36 @@ export default Component.extend({
     };
   }),
 
-  dataRequest: computed('owner', 'interval', 'private', function () {
-    return this.get('insights').getMetric(
+  // Current Interval Chart Data
+  getPresentData: task(function* () {
+    return yield this.get('insights.getChartData').perform(
       this.owner,
       this.interval,
       'jobs',
       'avg',
       ['times_waiting'],
       {
-        calcTotal: true,
         calcAvg: true,
         private: this.private,
-        customTransform: (key, val) => [
-          key,
-          (Math.round((val / 60) * 100) / 100)
-        ],
+        customSerialize: (key, val) => [key, (Math.round((val / 60) * 100) / 100)],
       }
     );
   }),
+  chartData: reads('getPresentData.lastSuccessful.value'),
+  plotData: reads('chartData.data.times_waiting.plotData'),
+  isLoading: reads('getPresentData.isRunning'),
+  isEmpty: empty('plotData'),
+  showPlaceholder: or('isLoading', 'isEmpty'),
 
-  aggregateData: computed('dataRequest.data', function () {
-    const responseData = this.get('dataRequest.data');
-    if (responseData) {
-      return responseData.times_waiting;
-    }
+  content: computed('plotData', function () {
+    return [{
+      name: 'Minutes',
+      data: this.get('plotData'),
+    }];
   }),
 
-  isLoading: computed('aggregateData', function () {
-    return !this.aggregateData;
-  }),
-
-  content: computed('aggregateData', 'percentageChange', function () {
-    if (this.aggregateData) {
-      const chartData = this.aggregateData.chartData;
-      if (typeof this.percentageChange === 'number' && this.percentageChange !== 0) {
-        const [xVal, yVal] = chartData[chartData.length - 1];
-        chartData[chartData.length - 1] = {
-          x: xVal,
-          y: yVal,
-          marker: {
-            enabled: true,
-            fillColor: this.percentageChange > 0 ? '#39aa56' : '#db4545',
-          }
-        };
-      }
-      return [{
-        name: 'Minutes',
-        data: chartData,
-      }];
-    }
-  }),
-
-  totalWaitMins: computed('aggregateData', function () {
-    if (this.aggregateData) {
-      return this.aggregateData.total;
-    }
-  }),
-
-  avgWaitMins: computed('aggregateData', function () {
-    if (this.aggregateData) {
-      return Math.round(this.aggregateData.average * 100) / 100;
-    }
+  avgWaitMins: computed('chartData.data.times_waiting.average', function () {
+    return Math.round(this.get('chartData.data.times_waiting.average') * 100) / 100;
   }),
 
   avgWaitText: computed('isLoading', 'avgWaitMins', function () {
@@ -122,8 +94,9 @@ export default Component.extend({
     `.trim();
   }),
 
-  prevDataRequest: computed('owner', 'interval', function () {
-    return this.get('insights').getMetric(
+  // Previous interval chart data
+  getPastData: task(function* () {
+    return yield this.get('insights.getChartData').perform(
       this.owner,
       this.interval,
       'jobs',
@@ -131,32 +104,21 @@ export default Component.extend({
       ['times_waiting'],
       {
         endInterval: -1,
-        calcTotal: true,
         calcAvg: true,
-        customTransform: (key, val) => [key, Math.round(val / 60)]
+        private: this.private,
+        customSerialize: (key, val) => [key, Math.round(val / 60)]
       }
     );
   }),
+  pastIntervalData: reads('getPastData.lastSuccessful.value'),
 
-  prevAggregateData: computed('prevDataRequest.data', function () {
-    const responseData = this.get('prevDataRequest.data');
-    if (responseData) {
-      return responseData.times_waiting;
+  prevAvgWaitMins: computed('pastIntervalData.data.times_waiting.average', 'prevTotalWaitMins',
+    function () {
+      return Math.round(this.get('pastIntervalData.data.times_waiting.average') * 100) / 100;
     }
-  }),
+  ),
 
-  prevTotalWaitMins: computed('prevAggregateData', function () {
-    if (this.prevAggregateData) {
-      return this.prevAggregateData.total;
-    }
-  }),
-
-  prevAvgWaitMins: computed('prevAggregateData', 'prevTotalWaitMins', function () {
-    if (this.prevAggregateData) {
-      return Math.round(this.prevAggregateData.average * 100) / 100;
-    }
-  }),
-
+  // Percent change
   percentageChange: computed('prevAvgWaitMins', 'avgWaitMins', function () {
     if (this.prevAvgWaitMins && this.avgWaitMins) {
       const change = ((this.avgWaitMins - this.prevAvgWaitMins) / this.prevAvgWaitMins);
@@ -179,4 +141,10 @@ export default Component.extend({
       `the previous ${this.interval}`
     ].join(' ');
   }),
+
+  // Request chart data
+  didReceiveAttrs() {
+    this.get('getPresentData').perform();
+    this.get('getPastData').perform();
+  }
 });
