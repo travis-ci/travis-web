@@ -178,10 +178,7 @@
     {{/if}}
 
     <div id="administerable-repositories">
-      {{#if filter.isLoading}}
-        {{loading-indicator}}
-      {{else}}
-
+      {{#loading-overlay visible=filter.isLoading }}
         <ul class="profile-repositorylist">
           {{#each filter.results as |repository|}}
 
@@ -204,29 +201,26 @@
 
           {{/each}}
         </ul>
-
-      {{/if}}
+      {{/loading-overlay}}
     </div>
 
-    {{#unless filter.isLoading }}
-      {{#if account.isOrganization}}
-        {{pagination-navigation
-          collection=legacyRepositories
-          route="organization.repositories"
-          queryParam='legacy-page'
-          inner=6
-          outer=2
-        }}
-      {{else}}
-        {{pagination-navigation
-          collection=legacyRepositories
-          route="account.repositories"
-          queryParam='legacy-page'
-          inner=6
-          outer=2
-        }}
-      {{/if}}
-    {{/unless}}
+    {{#if account.isOrganization}}
+      {{pagination-navigation
+        collection=legacyRepositories
+        route="organization.repositories"
+        queryParam='legacy-page'
+        inner=6
+        outer=2
+      }}
+    {{else}}
+      {{pagination-navigation
+        collection=legacyRepositories
+        route="account.repositories"
+        queryParam='legacy-page'
+        inner=6
+        outer=2
+      }}
+    {{/if}}
 
   {{/repository-filter}}
 
