@@ -7,7 +7,12 @@
     {{/if}}
     {{#if isPreciseEOL}}
       {{#notice-banner}}
-        This job {{conjugatedRun}} on our <b>Precise</b> environment, which is in the process of being decommissioned.  Please read about the status of the rollout <a href="https://blog.travis-ci.com/2017-08-31-trusty-as-default-status">on the blog</a>, and take note that you can explicitly stay on Precise by specifying <code>dist: precise</code> in your .travis.yml.
+        This job {{conjugatedRun}} on our <b>Precise</b> environment, which is in the process of being decommissioned.  Please update to a newer Ubuntu version by specifying <code>dist: xenial</code> in your <em>.travis.yml</em>.
+      {{/notice-banner}}
+    {{/if}}
+    {{#if isPHPDefault}}
+      {{#notice-banner}}
+        This job {{conjugatedRun}} using the default <b>PHP</b> version, which will be updated to 7.2 on March 12th, 2019. You can explicitly stay on your current default by specifying <code>php: 5.5</code> in your <em>.travis.yml</em>.
       {{/notice-banner}}
     {{/if}}
   {{/if}}
