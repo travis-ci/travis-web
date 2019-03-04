@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { reads, notEmpty, or, not, and } from '@ember/object/computed';
+import { reads, notEmpty, or, not, and, bool } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import config from 'travis/config/environment';
 
@@ -17,37 +17,47 @@ export default Component.extend({
 
   account: null,
 
-  get migrationRepositoryCountLimit() {
-    return migrationRepositoryCountLimit;
-  },
-
   login: reads('account.login'),
 
-  legacyRepositories: reads('account.legacyRepositories'),
-  githubAppsRepositories: reads('account.githubAppsRepositories'),
+  hasGitHubAppsInstallation: notEmpty('account.installation'),
 
   isEnterprise: reads('features.enterpriseVersion'),
   isNotEnterprise: not('isEnterprise'),
   isPro: reads('features.proVersion'),
   isNotPro: not('isPro'),
-  hasGitHubAppsInstallation: notEmpty('account.installation'),
-
-  isFilteringLegacyRepos: notEmpty('legacyRepositories.filter'),
-  isFilteringAppsRepos: notEmpty('githubAppsRepositories.filter'),
-  isLegacyReposFilterAllowed: and('legacyRepositories.length', 'features.repositoryFiltering'),
+  isAppsEnabled: reads('features.github-apps'),
+  isNotAppsEnabled: not('isAppsEnabled'),
+  isLegacyReposFilterAllowed: reads('features.repositoryFiltering'),
   isAppsReposFilterAllowed: reads('features.repositoryFiltering'),
 
-  showGitHubApps: reads('features.github-apps'),
-  showPublicReposBanner: and('isNotEnterprise', 'isNotPro'),
-  showLegacyReposFilter: or('isLegacyReposFilterAllowed', 'isFilteringLegacyRepos'),
-  showAppsReposFilter: or('isAppsReposFilterAllowed', 'isFilteringAppsRepos'),
+  get migrationRepositoryCountLimit() {
+    return migrationRepositoryCountLimit;
+  },
 
-  githubAppsActivationURL: computed('account.githubId', function () {
+  legacyRepos: reads('account.legacyRepositories'),
+  legacyReposCount: reads('legacyRepos.total'),
+  isFilteringLegacyRepos: notEmpty('legacyRepos.filter'),
+  hasLegacyRepos: bool('legacyReposCount'),
+  isLoadingLegacyRepos: reads('legacyRepos.isLoading'),
+
+  appsRepos: reads('account.githubAppsRepositories'),
+  appsReposCount: reads('appsRepos.total'),
+  isFilteringAppsRepos: notEmpty('appsRepos.filter'),
+  hasAppsRepos: bool('appsReposCount'),
+  isLoadingAppsRepos: reads('appsRepos.isLoading'),
+
+  showGitHubApps: reads('isAppsEnabled'),
+  showPublicReposBanner: and('isNotEnterprise', 'isNotPro'),
+  showLegacyReposFilter: or('isLegacyReposFilterAllowed', 'isFilteringLegacyRepos', 'isLoadingLegacyRepos'),
+  showAppsReposFilter: or('isAppsReposFilterAllowed', 'isFilteringAppsRepos', 'isLoadingAppsRepos'),
+  showLegacyRepos: or('hasLegacyRepos', 'isLoadingLegacyRepos', 'isFilteringLegacyRepos', 'isNotAppsEnabled'),
+
+  appsActivationURL: computed('account.githubId', function () {
     let githubId = this.get('account.githubId');
     return `https://github.com/apps/${appName}/installations/new/permissions?suggested_target_id=${githubId}`;
   }),
 
-  githubAppsManagementURL: computed(
+  appsManagementURL: computed(
     'account.{login,isOrganization,githubId}',
     'account.installation.githubId',
     function () {
@@ -66,12 +76,12 @@ export default Component.extend({
     }
   ),
 
-  canMigrate: computed('hasGitHubAppsInstallation', 'deprecated.pagination.total', function () {
+  canMigrate: computed('hasGitHubAppsInstallation', 'legacyRepos.total', function () {
     let hasGitHubAppsInstallation = this.get('hasGitHubAppsInstallation');
-    let legacyRepositoryCount = this.get('deprecated.pagination.total');
-    const hasLegacyRepositories = legacyRepositoryCount > 0;
+    let legacyRepositoryCount = this.get('legacyRepos.total');
+    const hasLegacyRepos = legacyRepositoryCount > 0;
     const isAllowedByLimit = legacyRepositoryCount <= migrationRepositoryCountLimit;
-    return !hasGitHubAppsInstallation && isAllowedByLimit && hasLegacyRepositories;
+    return !hasGitHubAppsInstallation && isAllowedByLimit && hasLegacyRepos;
   }),
 
   migrate: task(function* () {

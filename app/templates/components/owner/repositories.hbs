@@ -10,13 +10,13 @@
       <header class='space-between' data-test-github-apps-integration-header>
         <h2>GitHub Apps Integration</h2>
 
-        {{#external-link-to href=githubAppsManagementURL class='button--white migrate'}}
+        {{#external-link-to href=appsManagementURL class='button--white migrate'}}
           {{svg-jar 'icon-repooctocat'}} Manage repositories on GitHub
         {{/external-link-to}}
       </header>
 
       {{#repository-filter
-        repositories=githubAppsRepositories
+        repositories=appsRepos
         as |filter|
       }}
 
@@ -67,7 +67,7 @@
 
         {{#if account.isOrganization}}
           {{pagination-navigation
-            collection=githubAppsRepositories
+            collection=appsRepos
             route='organization.repositories'
             queryParam='apps-page'
             inner=6
@@ -75,7 +75,7 @@
           }}
         {{else}}
           {{pagination-navigation
-            collection=githubAppsRepositories
+            collection=appsRepos
             route='account.repositories'
             queryParam='apps-page'
             inner=6
@@ -89,7 +89,7 @@
 
   {{else}}
 
-    <div id='github-apps-invitation' class='{{unless legacyRepositories 'expanded'}}'>
+    <div id='github-apps-invitation' class='{{unless legacyRepos 'expanded'}}'>
 
       <h2>GitHub Apps Integration</h2>
       <p>
@@ -121,7 +121,7 @@
 
       {{else}}
 
-        {{#external-link-to href=githubAppsActivationURL class='button--green migrate-or-activate'}}
+        {{#external-link-to href=appsActivationURL class='button--green migrate-or-activate'}}
           {{svg-jar 'icon-repooctocat' class='icon--github'}}
           Activate
         {{/external-link-to}}
@@ -144,7 +144,7 @@
 
 {{/if}}
 
-{{#if (or legacyRepositories.length (not showGitHubApps))}}
+{{#if showLegacyRepos }}
 
   <header class='legacy-services-integration'>
     <h2>
@@ -162,7 +162,7 @@
   </header>
 
   {{#repository-filter
-    repositories=legacyRepositories
+    repositories=legacyRepos
     as |filter|
   }}
 
@@ -193,7 +193,9 @@
 
           {{else}}
 
-            {{#if filter.isFiltering}}
+            {{#if filter.isLoading}}
+              {{!--  show nothing  --}}
+            {{else if filter.isFiltering}}
               <li class="no-results">Sorry, no results found.</li>
             {{else}}
               <li>Sorry, it seems like we couldn't find any repositories you have access to on GitHub.</li>
@@ -206,7 +208,7 @@
 
     {{#if account.isOrganization}}
       {{pagination-navigation
-        collection=legacyRepositories
+        collection=legacyRepos
         route="organization.repositories"
         queryParam='legacy-page'
         inner=6
@@ -214,7 +216,7 @@
       }}
     {{else}}
       {{pagination-navigation
-        collection=legacyRepositories
+        collection=legacyRepos
         route="account.repositories"
         queryParam='legacy-page'
         inner=6
