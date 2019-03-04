@@ -1,6 +1,8 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
+import { reads, empty, and } from '@ember/object/computed';
+import { task } from 'ember-concurrency';
 
 const invervalOverrides = {
   day: {
@@ -19,6 +21,7 @@ export default Component.extend({
 
   insights: service(),
 
+  // Chart Options
   intervalSettings: computed(function () {
     return this.get('insights').getIntervalSettings(invervalOverrides);
   }),
@@ -81,8 +84,9 @@ export default Component.extend({
     };
   }),
 
-  dataRequest: computed('owner', 'interval', 'private', function () {
-    return this.get('insights').getMetric(
+  // Current Interval Chart Data
+  requestData: task(function* () {
+    return yield this.get('insights.getChartData').perform(
       this.owner,
       this.interval,
       'builds',
@@ -94,53 +98,84 @@ export default Component.extend({
       }
     );
   }),
+  chartData: reads('requestData.lastSuccessful.value'),
+  isLoading: reads('requestData.isRunning'),
 
-  aggregateData: computed('dataRequest.data', function () {
-    const responseData = this.get('dataRequest.data');
-    if (responseData) {
-      return responseData;
-    }
-  }),
+  countPassed: reads('chartData.data.count_passed.plotData'),
+  countFailed: reads('chartData.data.count_failed.plotData'),
+  countErrored: reads('chartData.data.count_errored.plotData'),
+  countCanceled: reads('chartData.data.count_canceled.plotData'),
 
-  isLoading: computed('aggregateData', function () {
-    return !this.aggregateData;
-  }),
+  nonePassed: empty('countPassed'),
+  noneFailed: empty('countFailed'),
+  noneErrored: empty('countErrored'),
+  noneCanceled: empty('countCanceled'),
 
-  isEmpty: computed('aggregateData', function () {
-    return this.aggregateData &&
-      this.aggregateData.count_passed.chartData.length === 0 &&
-      this.aggregateData.count_failed.chartData.length === 0 &&
-      this.aggregateData.count_errored.chartData.length === 0 &&
-      this.aggregateData.count_canceled.chartData.length === 0;
-  }),
+  isEmpty: and('nonePassed', 'noneFailed', 'noneErrored', 'noneCanceled'),
+
+  // dataRequest: computed('owner', 'interval', 'private', function () {
+  //   return this.get('insights').getMetric(
+  //     this.owner,
+  //     this.interval,
+  //     'builds',
+  //     'sum',
+  //     ['count_passed', 'count_failed', 'count_errored', 'count_canceled'],
+  //     {
+  //       intervalSettings: invervalOverrides,
+  //       private: this.private,
+  //     }
+  //   );
+  // }),
+
+  // aggregateData: computed('dataRequest.data', function () {
+  //   const responseData = this.get('dataRequest.data');
+  //   if (responseData) {
+  //     return responseData;
+  //   }
+  // }),
+
+  // isLoading: computed('aggregateData', function () {
+  //   return !this.aggregateData;
+  // }),
+
+  // isEmpty: computed('aggregateData', function () {
+  //   return this.aggregateData &&
+  //     this.aggregateData.count_passed.chartData.length === 0 &&
+  //     this.aggregateData.count_failed.chartData.length === 0 &&
+  //     this.aggregateData.count_errored.chartData.length === 0 &&
+  //     this.aggregateData.count_canceled.chartData.length === 0;
+  // }),
 
   hasNoBuilds: computed('isLoading', 'isEmpty', function () {
     let noBuilds = this.isLoading === false && this.isEmpty === true;
-    if (noBuilds) {
-      this.sendAction('setNoBuilds', true);
-    }
+    // if (noBuilds) {
+    //   this.sendAction('setNoBuilds', true);
+    // }
     return noBuilds;
   }),
 
-  content: computed('aggregateData', function () {
-    if (this.aggregateData) {
-      return [{
-        name: 'Passing',
-        color: 'rgba(57, 170, 86, 0.8)',
-        data: this.aggregateData.count_passed.chartData,
-      }, {
-        name: 'Failing',
-        color: 'rgba(219, 69, 69, 0.8)',
-        data: this.aggregateData.count_failed.chartData,
-      }, {
-        name: 'Errored',
-        color: 'rgba(237, 222, 63, 0.8)',
-        data: this.aggregateData.count_errored.chartData,
-      }, {
-        name: 'Cancelled',
-        color: 'rgba(157, 157, 157, 0.8)',
-        data: this.aggregateData.count_canceled.chartData,
-      }];
-    }
+  content: computed('countPassed', 'countFailed', 'countErrored', 'countCanceled', function () {
+    return [{
+      name: 'Passing',
+      color: 'rgba(57, 170, 86, 0.8)',
+      data: this.get('countPassed'),
+    }, {
+      name: 'Failing',
+      color: 'rgba(219, 69, 69, 0.8)',
+      data: this.get('countFailed'),
+    }, {
+      name: 'Errored',
+      color: 'rgba(237, 222, 63, 0.8)',
+      data: this.get('countErrored'),
+    }, {
+      name: 'Cancelled',
+      color: 'rgba(157, 157, 157, 0.8)',
+      data: this.get('countCanceled'),
+    }];
   }),
+
+  // Request chart data
+  didReceiveAttrs() {
+    this.get('requestData').perform();
+  }
 });

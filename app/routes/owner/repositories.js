@@ -21,7 +21,7 @@ export default TravisRoute.extend({
   model({ page, tab }, transition) {
     if (typeof tab === 'string' && tab.toLowerCase() === 'insights') {
       const owner = this.modelFor('owner');
-      const buildInfo = this.get('insights').getMetric(
+      const buildInfo = this.get('insights').getChartData.perform(
         owner,
         'week',
         'builds',

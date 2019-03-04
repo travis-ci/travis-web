@@ -193,9 +193,6 @@ export default Service.extend({
     return metrics;
   }),
 
-  chartData: reads('getChartData.lastSuccessful.value'),
-  chartDataLoading: reads('getChartData.isRunning'),
-
   // Active Repo endpoint functions
   getActiveRepos(owner, interval, requestPrivate = false) {
     const [startTime, endTime] = this.getDatesFromInterval(interval);
@@ -214,8 +211,6 @@ export default Service.extend({
     return this.fetchActiveRepos.perform(apiSettings);
   },
 
-  activeRepos: reads('fetchActiveRepos.lastSuccessful.value'),
-  activeReposLoading: reads('fetchActiveRepos.isRunning'),
   fetchActiveRepos: task(function* (apiSettings) {
     let activeRepos = yield this.get('api').get(endpoints.activeRepos, apiSettings) || [];
     return activeRepos;

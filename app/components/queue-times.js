@@ -55,7 +55,7 @@ export default Component.extend({
   }),
 
   // Current Interval Chart Data
-  getPresentData: task(function* () {
+  requestData: task(function* () {
     return yield this.get('insights.getChartData').perform(
       this.owner,
       this.interval,
@@ -69,9 +69,9 @@ export default Component.extend({
       }
     );
   }),
-  chartData: reads('getPresentData.lastSuccessful.value'),
+  chartData: reads('requestData.lastSuccessful.value'),
   plotData: reads('chartData.data.times_waiting.plotData'),
-  isLoading: reads('getPresentData.isRunning'),
+  isLoading: reads('requestData.isRunning'),
   isEmpty: empty('plotData'),
   showPlaceholder: or('isLoading', 'isEmpty'),
 
@@ -95,7 +95,7 @@ export default Component.extend({
   }),
 
   // Previous interval chart data
-  getPastData: task(function* () {
+  requestPastData: task(function* () {
     return yield this.get('insights.getChartData').perform(
       this.owner,
       this.interval,
@@ -110,7 +110,7 @@ export default Component.extend({
       }
     );
   }),
-  pastIntervalData: reads('getPastData.lastSuccessful.value'),
+  pastIntervalData: reads('requestPastData.lastSuccessful.value'),
 
   prevAvgWaitMins: computed('pastIntervalData.data.times_waiting.average', 'prevTotalWaitMins',
     function () {
@@ -144,7 +144,7 @@ export default Component.extend({
 
   // Request chart data
   didReceiveAttrs() {
-    this.get('getPresentData').perform();
-    this.get('getPastData').perform();
+    this.get('requestData').perform();
+    this.get('requestPastData').perform();
   }
 });

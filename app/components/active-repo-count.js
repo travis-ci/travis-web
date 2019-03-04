@@ -2,6 +2,7 @@ import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 import { reads, empty, or } from '@ember/object/computed';
+import { task } from 'ember-concurrency';
 
 export default Component.extend({
   classNames: ['insights-glance'],
@@ -53,8 +54,22 @@ export default Component.extend({
   }),
 
   // Chart data
-  chartData: reads('insights.chartData.data.count_started'),
-  isLoading: reads('insights.chartDataLoading'),
+  requestData: task(function* () {
+    return yield this.get('insights.getChartData').perform(
+      this.owner,
+      this.interval,
+      'jobs',
+      'sum',
+      ['count_started'],
+      {
+        aggregator: 'count',
+        calcAvg: true,
+        private: this.private,
+      }
+    );
+  }),
+  chartData: reads('requestData.lastSuccessful.value.data.count_started'),
+  isLoading: reads('requestData.isRunning'),
   isEmpty: empty('chartData.plotData'),
   showPlaceholder: or('isLoading', 'isEmpty'),
 
@@ -70,25 +85,17 @@ export default Component.extend({
   }),
 
   // Active Repos has its own separate endpoint for totals, its calculation is somewhat unique
-  activeTotal: reads('insights.activeRepos.data.count'),
-  activeTotalIsLoading: reads('insights.activeReposLoading'),
+  requestActiveTotal: task(function* () {
+    return yield this.get('insights').getActiveRepos(this.owner, this.interval, this.private);
+  }),
+  activeTotal: reads('requestActiveTotal.lastSuccessful.value.data.count'),
+  activeTotalIsLoading: reads('requestActiveTotal.isRunning'),
   isAnythingLoading: or('isLoading', 'activeTotalIsLoading'),
 
   // Request chart data
   didReceiveAttrs() {
     this._super(...arguments);
-    this.get('insights').getActiveRepos(this.owner, this.interval, this.private);
-    this.get('insights.getChartData').perform(
-      this.owner,
-      this.interval,
-      'jobs',
-      'sum',
-      ['count_started'],
-      {
-        aggregator: 'count',
-        calcAvg: true,
-        private: this.private,
-      }
-    );
+    this.get('requestData').perform();
+    this.get('requestActiveTotal').perform();
   }
 });
