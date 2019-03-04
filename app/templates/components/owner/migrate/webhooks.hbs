@@ -31,10 +31,7 @@
 
   <div>
 
-    {{#if filter.isLoading}}
-      {{loading-indicator}}
-    {{else}}
-
+    {{#loading-overlay visible=filter.isLoading }}
       {{#travis-form as |form| }}
 
         {{#if showSelectAll }}
@@ -81,18 +78,17 @@
 
           {{/each}}
         </ul>
-      {{/travis-form}}
 
-    {{/if}}
+      {{/travis-form}}
+    {{/loading-overlay}}
+
   </div>
 
-  {{#unless filter.isLoading }}
-    {{#if isOrganization}}
-      {{pagination-navigation collection=repositories route="organization.migrate.webhooks" inner=6 outer=2}}
-    {{else}}
-      {{pagination-navigation collection=repositories route="account.migrate.webhooks" inner=6 outer=2}}
-    {{/if}}
-  {{/unless}}
+  {{#if isOrganization}}
+    {{pagination-navigation collection=repositories route="organization.migrate.webhooks" inner=6 outer=2}}
+  {{else}}
+    {{pagination-navigation collection=repositories route="account.migrate.webhooks" inner=6 outer=2}}
+  {{/if}}
 
   {{#if (or repositories.length filter.isFiltering)}}
     <button
