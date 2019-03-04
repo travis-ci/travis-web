@@ -24,10 +24,10 @@ module('Integration | Component | build-count', function (hooks) {
 
     assert.dom('.insights-glance').doesNotHaveClass('insights-glance--loading');
     assert.dom('.insights-glance__title').hasText('Builds');
-    assert.dom('.insights-glance__stat').hasText('468');
+    assert.dom('.insights-glance__stat').hasText('448');
     assert.dom('.insights-glance-delta').hasAttribute('data-dir', '+');
-    assert.dom('.insights-glance-delta').hasAttribute('title', '100 builds the previous month');
-    assert.dom('.insights-glance-delta__stat').hasText('368%');
+    assert.dom('.insights-glance-delta').hasAttribute('title', '120 builds the previous month');
+    assert.dom('.insights-glance-delta__stat').hasText('273.3%');
     assert.dom('.insights-glance__chart .highcharts-wrapper').exists();
   });
 

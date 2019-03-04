@@ -1,6 +1,7 @@
 import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import insightsPage from 'travis/tests/pages/insights-owner';
+import { settled } from '@ember/test-helpers';
 
 moduleForAcceptance('Acceptance | owner insights', {
   beforeEach() {
@@ -15,7 +16,7 @@ test('the owner insights page shows insights components', async function (assert
   server.createList('insight-metric', 15);
 
   await insightsPage.visit({ username: 'user-login' });
-
+  await settled();
 
   assert.equal(insightsPage.glances.length, 4);
   assert.equal(insightsPage.odysseys.length, 1);
@@ -23,7 +24,7 @@ test('the owner insights page shows insights components', async function (assert
   // Build count component
   insightsPage.glances[0].as(glance => {
     assert.equal(glance.name, 'Builds');
-    assert.equal(glance.keyStat, 468);
+    assert.equal(glance.keyStat, 448);
   });
 
   // Build minutes component
@@ -35,7 +36,7 @@ test('the owner insights page shows insights components', async function (assert
   // Queue times component
   insightsPage.glances[2].as(glance => {
     assert.equal(glance.name, 'Average Queue Time');
-    assert.equal(glance.keyStat, '0.58 mins');
+    assert.equal(glance.keyStat, '0.6 mins');
   });
 
   // Active repos component
