@@ -28,7 +28,7 @@ export default Component.extend(SelectableRepositoriesList, {
     activateRepos() {
       const { selectedRepositories, activateAllUrl: url } = this;
       const repos = selectedRepositories.map(repo => `repository_ids[]=${repo.githubId}`);
-      window.open(`${url}&${repos.join('&')}`);
+      window.location.href = `${url}&${repos.join('&')}`;
     }
 
   }

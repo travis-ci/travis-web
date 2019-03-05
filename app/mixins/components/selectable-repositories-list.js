@@ -27,7 +27,7 @@ export default Mixin.create({
   actions: {
 
     toggleRepository(repo) {
-      if (!this.isSelectionAllowed) return;
+      if (!this.isSelectionAllowed && !this.isAllSelected) return;
 
       const { selectedRepositories } = this;
       const isSelected = selectedRepositories.includes(repo);
@@ -43,7 +43,7 @@ export default Mixin.create({
       const { isAllSelected, repositories, selectionLimit, selectedRepositories } = this;
 
       if (isAllSelected) {
-        selectedRepositories.removeObjects(repositories);
+        selectedRepositories.removeObjects(repositories.toArray());
       } else {
         selectedRepositories.addObjects(repositories.slice(0, selectionLimit || repositories.length));
       }

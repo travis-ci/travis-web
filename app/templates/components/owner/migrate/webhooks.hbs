@@ -5,7 +5,11 @@
 
   {{#if (or repositories.length filter.isFiltering)}}
 
-    {{#external-link-to href=activateAllUrl class="button--green migrate__activate-all" }}
+    {{#external-link-to
+      href=activateAllUrl
+      target='_self'
+      class="button--green migrate__activate-all"
+    }}
       {{svg-jar 'github-signin'}}
       Activate all your repositories on GitHub Apps
     {{/external-link-to}}
