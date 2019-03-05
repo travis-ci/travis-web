@@ -2,6 +2,8 @@ import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 import { pluralize } from 'ember-inflector';
+import { reads, empty, or } from '@ember/object/computed';
+import { task } from 'ember-concurrency';
 
 export default Component.extend({
   classNames: ['insights-glance'],
@@ -10,6 +12,7 @@ export default Component.extend({
 
   insights: service(),
 
+  // Chart options
   intervalSettings: computed(function () {
     return this.get('insights').getIntervalSettings();
   }),
@@ -51,8 +54,9 @@ export default Component.extend({
     };
   }),
 
-  dataRequest: computed('owner', 'interval', 'private', function () {
-    return this.get('insights').getMetric(
+  // Current Interval Chart Data
+  requestData: task(function* () {
+    return yield this.get('insights').getChartData.perform(
       this.owner,
       this.interval,
       'builds',
@@ -65,80 +69,43 @@ export default Component.extend({
       }
     );
   }),
+  chartData: reads('requestData.lastSuccessful.value'),
+  plotData: reads('chartData.data.count_started.plotData'),
+  isLoading: reads('requestData.isRunning'),
+  isEmpty: empty('plotData'),
+  showPlaceholder: or('isLoading', 'isEmpty'),
 
-  aggregateData: computed('dataRequest.data', function () {
-    const responseData = this.get('dataRequest.data');
-    if (responseData) {
-      return responseData.count_started;
-    }
+  content: computed('plotData', function () {
+    return [{
+      name: 'Builds',
+      data: this.get('plotData'),
+    }];
   }),
 
-  content: computed('aggregateData', 'percentageChange', function () {
-    if (this.aggregateData) {
-      const chartData = this.aggregateData.chartData;
-      if (typeof this.percentageChange === 'number' && this.percentageChange !== 0) {
-        const [xVal, yVal] = chartData[chartData.length - 1];
-        chartData[chartData.length - 1] = {
-          x: xVal,
-          y: yVal,
-          marker: {
-            enabled: true,
-            fillColor: this.percentageChange > 0 ? '#39aa56' : '#db4545',
-          }
-        };
-      }
-      return [{
-        name: 'Builds',
-        data: chartData,
-      }];
-    }
-  }),
-
-  isLoading: computed('aggregateData', function () {
-    return !this.aggregateData;
-  }),
-
-  totalBuilds: computed('aggregateData', function () {
-    if (this.aggregateData) {
-      return this.aggregateData.total;
-    }
-  }),
-
-  avgBuilds: computed('aggregateData', 'totalBuilds', function () {
-    if (this.aggregateData) {
-      return this.aggregateData.average;
-    }
-  }),
+  // Total / average
+  totalBuilds: reads('chartData.data.count_started.total'),
+  avgBuilds: reads('chartData.data.count_started.average'),
 
   totalBuildText: computed('totalBuilds', function () {
     if (typeof this.totalBuilds !== 'number') { return '\xa0'; }
     return this.totalBuilds.toLocaleString();
   }),
 
-  prevDataRequest: computed('owner', 'interval', function () {
-    return this.get('insights').getMetric(
+  // Previous interval chart data
+  requestPastData: task(function* () {
+    return yield this.get('insights.getChartData').perform(
       this.owner,
       this.interval,
       'builds',
       'sum',
       ['count_started'],
-      { endInterval: -1, calcTotal: true, calcAvg: true }
+      { endInterval: -1, calcTotal: true, calcAvg: true, private: this.private }
     );
   }),
+  pastIntervalData: reads('requestPastData.lastSuccessful.value'),
+  prevTotalBuilds: reads('pastIntervalData.data.count_started.total'),
 
-  prevAggregateData: computed('prevDataRequest.data', function () {
-    const responseData = this.get('prevDataRequest.data');
-    if (responseData) {
-      return responseData.count_started;
-    }
-  }),
-
-  prevTotalBuilds: computed('prevAggregateData', function () {
-    if (this.prevAggregateData) {
-      return this.prevAggregateData.total;
-    }
-  }),
-
+  // Percent change
   percentChangeTitle: computed('prevTotalBuilds', 'interval', 'intervalSettings', function () {
     return [
       this.prevTotalBuilds.toLocaleString(),
@@ -160,4 +127,10 @@ export default Component.extend({
   percentageChangeText: computed('percentageChange', function () {
     return `${Math.abs(this.percentageChange)}%`;
   }),
+
+  // Request chart data
+  didReceiveAttrs() {
+    this.get('requestData').perform();
+    this.get('requestPastData').perform();
+  }
 });
