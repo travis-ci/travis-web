@@ -17,9 +17,6 @@ export default Component.extend({
       } else {
         options.push('public and private builds');
       }
-
-      // options.push('public builds');
-      // options.push('public and private builds');
     }
     return options;
   }),

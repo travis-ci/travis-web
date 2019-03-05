@@ -2,7 +2,6 @@ import Service, { inject as service } from '@ember/service';
 import moment from 'moment';
 import { assign } from '@ember/polyfills';
 import { task } from 'ember-concurrency';
-import { reads } from '@ember/object/computed';
 
 import ObjectProxy from '@ember/object/proxy';
 import PromiseProxyMixin from '@ember/object/promise-proxy-mixin';

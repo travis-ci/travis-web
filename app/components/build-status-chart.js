@@ -113,44 +113,8 @@ export default Component.extend({
 
   isEmpty: and('nonePassed', 'noneFailed', 'noneErrored', 'noneCanceled'),
 
-  // dataRequest: computed('owner', 'interval', 'private', function () {
-  //   return this.get('insights').getMetric(
-  //     this.owner,
-  //     this.interval,
-  //     'builds',
-  //     'sum',
-  //     ['count_passed', 'count_failed', 'count_errored', 'count_canceled'],
-  //     {
-  //       intervalSettings: invervalOverrides,
-  //       private: this.private,
-  //     }
-  //   );
-  // }),
-
-  // aggregateData: computed('dataRequest.data', function () {
-  //   const responseData = this.get('dataRequest.data');
-  //   if (responseData) {
-  //     return responseData;
-  //   }
-  // }),
-
-  // isLoading: computed('aggregateData', function () {
-  //   return !this.aggregateData;
-  // }),
-
-  // isEmpty: computed('aggregateData', function () {
-  //   return this.aggregateData &&
-  //     this.aggregateData.count_passed.chartData.length === 0 &&
-  //     this.aggregateData.count_failed.chartData.length === 0 &&
-  //     this.aggregateData.count_errored.chartData.length === 0 &&
-  //     this.aggregateData.count_canceled.chartData.length === 0;
-  // }),
-
   hasNoBuilds: computed('isLoading', 'isEmpty', function () {
     let noBuilds = this.isLoading === false && this.isEmpty === true;
-    // if (noBuilds) {
-    //   this.sendAction('setNoBuilds', true);
-    // }
     return noBuilds;
   }),
 
