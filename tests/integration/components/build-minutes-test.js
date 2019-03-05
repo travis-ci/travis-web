@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, waitFor } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | build-minutes', function (hooks) {
@@ -12,6 +12,7 @@ module('Integration | Component | build-minutes', function (hooks) {
 
   test('it renders', async function (assert) {
     this.set('interval', 'week');
+    this.set('private', true);
     this.set('ownerData', {
       '@type': 'User',
       id: 1,
@@ -19,7 +20,7 @@ module('Integration | Component | build-minutes', function (hooks) {
 
     this.server.createList('insight-metric', 5);
 
-    await render(hbs`{{build-minutes interval=interval owner=ownerData}}`);
+    await render(hbs`{{build-minutes interval=interval owner=ownerData private=private}}`);
     await settled();
 
     assert.dom('.insights-glance').doesNotHaveClass('insights-glance--loading');
@@ -28,15 +29,16 @@ module('Integration | Component | build-minutes', function (hooks) {
     assert.dom('.insights-glance__chart .highcharts-wrapper').exists();
   });
 
-  test('it renders when data is not found', async function (assert) {
+  test('loading state renders', async function (assert) {
     this.set('interval', 'week');
+    this.set('private', true);
     this.set('ownerData', {
       '@type': 'User',
-      id: -1,
+      id: 1,
     });
 
-    await render(hbs`{{build-minutes interval=interval owner=ownerData}}`);
-    await settled();
+    render(hbs`{{build-minutes interval=interval owner=ownerData private=private}}`);
+    await waitFor('.insights-glance--loading');
 
     assert.dom('.insights-glance').hasClass('insights-glance--loading');
     assert.dom('.insights-glance__title').hasText('Total Build Minutes');
