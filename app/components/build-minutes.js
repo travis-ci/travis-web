@@ -2,6 +2,8 @@ import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 import { pluralize } from 'ember-inflector';
+import { reads, empty, or } from '@ember/object/computed';
+import { task } from 'ember-concurrency';
 
 export default Component.extend({
   classNames: ['insights-glance'],
@@ -10,6 +12,7 @@ export default Component.extend({
 
   insights: service(),
 
+  // Chart options
   intervalSettings: computed(function () {
     return this.get('insights').getIntervalSettings();
   }),
@@ -51,8 +54,9 @@ export default Component.extend({
     };
   }),
 
-  dataRequest: computed('owner', 'interval', 'private', function () {
-    return this.get('insights').getMetric(
+  // Current Interval Chart Data
+  requestData: task(function* () {
+    return yield this.get('insights').getChartData.perform(
       this.owner,
       this.interval,
       'builds',
@@ -62,42 +66,26 @@ export default Component.extend({
         calcTotal: true,
         calcAvg: true,
         private: this.private,
-        customTransform: (key, val) => [key, Math.round(val / 60)],
+        customSerialize: (key, val) => [key, Math.round(val / 60)],
       }
     );
   }),
+  chartData: reads('requestData.lastSuccessful.value'),
+  plotData: reads('chartData.data.times_running.plotData'),
+  isLoading: reads('requestData.isRunning'),
+  isEmpty: empty('plotData'),
+  showPlaceholder: or('isLoading', 'isEmpty'),
 
-  aggregateData: computed('dataRequest.data', function () {
-    const responseData = this.get('dataRequest.data');
-    if (responseData) {
-      return responseData.times_running;
-    }
+  content: computed('plotData', function () {
+    return [{
+      name: 'Minutes',
+      data: this.get('plotData'),
+    }];
   }),
 
-  isLoading: computed('aggregateData', function () {
-    return !this.aggregateData;
-  }),
-
-  content: computed('aggregateData', function () {
-    if (this.aggregateData) {
-      return [{
-        name: 'Minutes',
-        data: this.aggregateData.chartData,
-      }];
-    }
-  }),
-
-  totalBuildMins: computed('aggregateData', function () {
-    if (this.aggregateData) {
-      return this.aggregateData.total;
-    }
-  }),
-
-  avgBuildMins: computed('aggregateData', 'totalBuildMins', function () {
-    if (this.aggregateData) {
-      return this.aggregateData.average;
-    }
-  }),
+  // Total / average
+  totalBuildMins: reads('chartData.data.times_running.total'),
+  avgBuildMins: reads('chartData.data.times_running.average'),
 
   totalBuildText: computed('isLoading', 'totalBuildMins', function () {
     if (this.isLoading || typeof this.totalBuildMins !== 'number') { return '\xa0'; }
@@ -106,4 +94,9 @@ export default Component.extend({
       ${pluralize(this.totalBuildMins, 'min', {withoutCount: true})}
     `.trim();
   }),
+
+  // Request chart data
+  didReceiveAttrs() {
+    this.get('requestData').perform();
+  }
 });

@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
-import { reads, empty, and } from '@ember/object/computed';
+import { reads, empty, and, not } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
 
 const invervalOverrides = {
@@ -100,6 +100,7 @@ export default Component.extend({
   }),
   chartData: reads('requestData.lastSuccessful.value'),
   isLoading: reads('requestData.isRunning'),
+  isNotLoading: not('isLoading'),
 
   countPassed: reads('chartData.data.count_passed.plotData'),
   countFailed: reads('chartData.data.count_failed.plotData'),
@@ -112,11 +113,7 @@ export default Component.extend({
   noneCanceled: empty('countCanceled'),
 
   isEmpty: and('nonePassed', 'noneFailed', 'noneErrored', 'noneCanceled'),
-
-  hasNoBuilds: computed('isLoading', 'isEmpty', function () {
-    let noBuilds = this.isLoading === false && this.isEmpty === true;
-    return noBuilds;
-  }),
+  hasNoBuilds: and('isNotLoading', 'isEmpty'),
 
   content: computed('countPassed', 'countFailed', 'countErrored', 'countCanceled', function () {
     return [{
