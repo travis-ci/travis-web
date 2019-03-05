@@ -84,9 +84,24 @@
     <button
       disabled={{not selectedRepositories.length}}
       class="button--blue migrate__submit {{unless selectedRepositories.length 'disabled'}}"
+      onclick={{action (mut isShowingRepositoryMigrationModal) true}}
     >
       Migrate selected repositories to travis-ci.com
     </button>
   {{/if}}
 
 {{/repository-filter}}
+
+{{#if isShowingRepositoryMigrationModal}}
+  {{#modal-dialog
+     onClose=(action (mut isShowingRepositoryMigrationModal) false)
+     targetAttachment="center"
+     translucentOverlay=true
+  }}
+     {{repository-migration-modal
+       data-test-repository-migration-modal
+       repositories=selectedRepositories
+       onClose=(action (mut isShowingRepositoryMigrationModal) false)
+     }}
+  {{/modal-dialog}}
+{{/if}}

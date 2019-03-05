@@ -3,6 +3,8 @@ import SelectableRepositoriesList from 'travis/mixins/components/selectable-repo
 
 export default Component.extend(SelectableRepositoriesList, {
 
+  isShowingRepositoryMigrationModal: false,
+
   init() {
     this._super(...arguments);
 
