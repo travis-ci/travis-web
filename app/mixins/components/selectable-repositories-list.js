@@ -3,13 +3,20 @@ import { computed } from '@ember/object';
 
 export default Mixin.create({
   selectedRepositories: null,
+  selectionLimit: null,
 
   isAllSelected: computed('selectedRepositories.[]', 'repositories.[]', function () {
-    return this.selectedRepositories.length === this.repositories.length;
+    const { selectedRepositories, repositories } = this;
+    return repositories.every(repo => selectedRepositories.includes(repo));
   }),
 
   showSelectAll: computed('repositories.[]', function () {
     return this.repositories.length > 1;
+  }),
+
+  isSelectionAllowed: computed('selectedRepositories.[]', 'selectionLimit', function () {
+    const { selectedRepositories, selectionLimit } = this;
+    return !selectionLimit || selectedRepositories.length < selectionLimit;
   }),
 
   init() {
@@ -20,8 +27,11 @@ export default Mixin.create({
   actions: {
 
     toggleRepository(repo) {
+      if (!this.isSelectionAllowed) return;
+
       const { selectedRepositories } = this;
       const isSelected = selectedRepositories.includes(repo);
+
       if (isSelected) {
         selectedRepositories.removeObject(repo);
       } else {
@@ -30,10 +40,12 @@ export default Mixin.create({
     },
 
     toggleAll() {
-      if (this.isAllSelected) {
-        this.selectedRepositories.clear();
+      const { isAllSelected, repositories, selectionLimit, selectedRepositories } = this;
+
+      if (isAllSelected) {
+        selectedRepositories.removeObjects(repositories);
       } else {
-        this.selectedRepositories.addObjects(this.repositories);
+        selectedRepositories.addObjects(repositories.slice(0, selectionLimit || repositories.length));
       }
     }
 

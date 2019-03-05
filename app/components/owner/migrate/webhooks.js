@@ -3,14 +3,15 @@ import { computed } from '@ember/object';
 import SelectableRepositoriesList from 'travis/mixins/components/selectable-repositories-list';
 import config from 'travis/config/environment';
 
+const SELECTION_LIMIT = 100;
 const { appName = 'travis-ci' } = config.githubApps;
 
 export default Component.extend(SelectableRepositoriesList, {
+  selectionLimit: SELECTION_LIMIT,
 
   activateAllUrl: computed('owner.githubId', function () {
     const githubId = this.owner.githubId;
-    const url = `https://github.com/apps/${appName}/installations/new/permissions?suggested_target_id=${githubId}`;
-    return url;
+    return `https://github.com/apps/${appName}/installations/new/permissions?suggested_target_id=${githubId}`;
   }),
 
   init() {
