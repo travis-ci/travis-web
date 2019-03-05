@@ -90,9 +90,14 @@
     {{pagination-navigation collection=repositories route="account.migrate.webhooks" inner=6 outer=2}}
   {{/if}}
 
+  <p>
+    Selected <b>{{selectedRepositories.length}} / {{selectionLimit}}</b> repositories.
+  </p>
+
   {{#if (or repositories.length filter.isFiltering)}}
     <button
       disabled={{not selectedRepositories.length}}
+      onclick={{action 'activateRepos'}}
       class="button--blue migrate__submit {{unless selectedRepositories.length 'disabled'}}"
     >
       Enable selected repositories on GitHub Apps

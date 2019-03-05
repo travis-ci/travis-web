@@ -21,6 +21,16 @@ export default Component.extend(SelectableRepositoriesList, {
     if (repositories.length === 1) {
       selectedRepositories.addObjects(repositories);
     }
+  },
+
+  actions: {
+
+    activateRepos() {
+      const { selectedRepositories, activateAllUrl: url } = this;
+      const repos = selectedRepositories.map(repo => `repository_ids[]=${repo.githubId}`);
+      window.open(`${url}&${repos.join('&')}`);
+    }
+
   }
 
 });
