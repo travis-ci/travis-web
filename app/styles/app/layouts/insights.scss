@@ -63,27 +63,33 @@
   @media #{$medium-up} {
     grid-gap: 40px 4%;
   }
+}
 
-  .insights-grid__overlay {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background-color: rgba(255, 255, 255, 0.85);
-    text-align: center;
+.insights-overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(255, 255, 255, 0.85);
+  text-align: center;
+  display: none;
+  font-size: 18px;
 
-    > h2 {
-      color: $oxide-blue;
-      font-size: 40px;
-      font-weight: 300;
-      margin: 55px 0 15px 0;
-    }
+  &--active {
+    display: block;
+  }
 
-    > p {
-      padding: 0 10%;
-      font-size: 18px;
-    }
+  h2, .insights-overlay__header {
+    color: $oxide-blue;
+    font-size: 40px;
+    font-weight: 300;
+    margin: 55px 0 15px 0;
+  }
+
+  p {
+    padding: 0 10%;
+    font-size: 18px;
   }
 }
 

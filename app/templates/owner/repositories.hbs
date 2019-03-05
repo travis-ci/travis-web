@@ -24,8 +24,8 @@
       {{build-minutes owner=model.owner interval=currentTimeInterval private=includePrivateInsights}}
       {{queue-times owner=model.owner interval=currentTimeInterval private=includePrivateInsights}}
       {{active-repo-count owner=model.owner interval=currentTimeInterval private=includePrivateInsights}}
-      {{build-status-chart owner=model.owner interval=currentTimeInterval private=includePrivateInsights setNoBuilds='setNoBuilds'}}
-      {{#if hasNoBuilds}}
+      {{build-status-chart owner=model.owner interval=currentTimeInterval private=includePrivateInsights}}
+      {{#insights-overlay owner=model.owner interval=currentTimeInterval private=includePrivateInsights}}
         <div class="insights-grid__overlay">
           <h2>Looks like you haven't triggered any builds</h2>
           <p>
@@ -34,7 +34,7 @@
             saepe explicabo eos natus expedita voluptate, nulla soluta distinctio perferendis.
           </p>
         </div>
-      {{/if}}
+      {{/insights-overlay}}
     </div>
   </div>
 {{else}}
