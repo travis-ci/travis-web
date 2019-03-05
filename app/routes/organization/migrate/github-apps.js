@@ -1,16 +1,11 @@
 import Route from '@ember/routing/route';
+import OwnerMigrateRepositoriesMixin from 'travis/mixins/route/owner/migrate/repositories';
 
-export default Route.extend({
+export default Route.extend(OwnerMigrateRepositoriesMixin, {
 
-  queryParams: {
-    page: {
-      refreshModel: true
-    }
-  },
-
-  model({ page }) {
-    const owner = this.modelFor('organization');
-    return owner.githubAppsRepositoriesOnOrg.reload({ page });
+  beforeModel() {
+    this.owner = this.modelFor('organization');
+    this.repositories = this.owner.githubAppsRepositoriesOnOrg;
   }
 
 });
