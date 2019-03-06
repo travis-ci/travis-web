@@ -4,7 +4,7 @@ import { computed } from '@ember/object';
 import { reads, empty, and, not } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
 
-const invervalOverrides = {
+const intervalOverrides = {
   day: {
     subInterval: '1hour',
   },
@@ -23,14 +23,14 @@ export default Component.extend({
 
   // Chart Options
   intervalSettings: computed(function () {
-    return this.get('insights').getIntervalSettings(invervalOverrides);
+    return this.get('insights').getIntervalSettings(intervalOverrides);
   }),
 
   currentIntervalLabel: computed('interval', 'intervalSettings', function () {
     return this.intervalSettings[this.interval].instanceLabel;
   }),
 
-  options: computed('interval', 'intervalSettings', function () {
+  oldOptions: computed('interval', 'intervalSettings', function () {
     return {
       title: { text: undefined },
       xAxis: {
@@ -84,6 +84,15 @@ export default Component.extend({
     };
   }),
 
+  options: computed('interval', 'intervalSettings', () => {
+    return {
+      scales: {
+        xAxes: [{type: 'time', stacked: true}],
+        yAxes: [{stacked: true}],
+      }
+    };
+  }),
+
   // Current Interval Chart Data
   requestData: task(function* () {
     return yield this.get('insights.getChartData').perform(
@@ -93,7 +102,7 @@ export default Component.extend({
       'sum',
       ['count_passed', 'count_failed', 'count_errored', 'count_canceled'],
       {
-        intervalSettings: invervalOverrides,
+        intervalSettings: intervalOverrides,
         private: this.private,
       }
     );
@@ -102,10 +111,11 @@ export default Component.extend({
   isLoading: reads('requestData.isRunning'),
   isNotLoading: not('isLoading'),
 
-  countPassed: reads('chartData.data.count_passed.plotData'),
-  countFailed: reads('chartData.data.count_failed.plotData'),
-  countErrored: reads('chartData.data.count_errored.plotData'),
-  countCanceled: reads('chartData.data.count_canceled.plotData'),
+  countPassed: reads('chartData.data.count_passed.plotValues'),
+  countFailed: reads('chartData.data.count_failed.plotValues'),
+  countErrored: reads('chartData.data.count_errored.plotValues'),
+  countCanceled: reads('chartData.data.count_canceled.plotValues'),
+  labels: reads('chartData.data.count_passed.plotLabels'),
 
   nonePassed: empty('countPassed'),
   noneFailed: empty('countFailed'),
@@ -115,24 +125,27 @@ export default Component.extend({
   isEmpty: and('nonePassed', 'noneFailed', 'noneErrored', 'noneCanceled'),
   hasNoBuilds: and('isNotLoading', 'isEmpty'),
 
-  content: computed('countPassed', 'countFailed', 'countErrored', 'countCanceled', function () {
-    return [{
-      name: 'Passing',
-      color: 'rgba(57, 170, 86, 0.8)',
-      data: this.get('countPassed'),
-    }, {
-      name: 'Failing',
-      color: 'rgba(219, 69, 69, 0.8)',
-      data: this.get('countFailed'),
-    }, {
-      name: 'Errored',
-      color: 'rgba(237, 222, 63, 0.8)',
-      data: this.get('countErrored'),
-    }, {
-      name: 'Cancelled',
-      color: 'rgba(157, 157, 157, 0.8)',
-      data: this.get('countCanceled'),
-    }];
+  content: computed('countPassed', 'countFailed', 'countErrored', 'countCanceled', 'labels', function () {
+    return {
+      datasets: [{
+        label: 'Passing',
+        backgroundColor: 'rgba(57, 170, 86, 0.8)',
+        data: this.get('countPassed'),
+      }, {
+        label: 'Failing',
+        backgroundColor: 'rgba(219, 69, 69, 0.8)',
+        data: this.get('countFailed'),
+      }, {
+        label: 'Errored',
+        backgroundColor: 'rgba(237, 222, 63, 0.8)',
+        data: this.get('countErrored'),
+      }, {
+        label: 'Cancelled',
+        backgroundColor: 'rgba(157, 157, 157, 0.8)',
+        data: this.get('countCanceled'),
+      }],
+      labels: this.get('labels'),
+    };
   }),
 
   // Request chart data

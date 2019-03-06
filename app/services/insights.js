@@ -288,6 +288,9 @@ function serializeMetrics(serData, currentOptions) {
       return [newKey, newVal];
     });
 
+    currentMetric.plotLabels = currentMetric.plotData.map(([key, val]) => key);
+    currentMetric.plotValues = currentMetric.plotData.map(([key, val]) => val);
+
     // Calculate total if total or average is requested
     if (currentOptions.calcTotal || currentOptions.calcAvg) {
       currentMetric.total = currentMetric.plotData.reduce((acc, [key, val]) => acc + val, 0);
