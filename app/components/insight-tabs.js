@@ -5,6 +5,7 @@ export default Component.extend({
   classNames: ['travistab-nav travistab-nav--insights insight-tabs'],
 
   selectedTab: 'month',
+  setTab: () => {},
 
   tabs: [
     { slug: 'week', title: 'Week' },
@@ -13,7 +14,7 @@ export default Component.extend({
 
   actions: {
     setInsightTab(selection) {
-      this.sendAction('setSubTab', selection);
+      this.setTab(selection);
     }
   }
 });

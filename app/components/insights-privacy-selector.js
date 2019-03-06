@@ -12,11 +12,8 @@ export default Component.extend({
   availableOptions: computed('isPrivateViewable', 'includePrivate', function () {
     const options = [];
     if (this.isPrivateViewable) {
-      if (this.includePrivate) {
-        options.push('public builds');
-      } else {
-        options.push('public and private builds');
-      }
+      options.push('public builds');
+      options.push('public and private builds');
     }
     return options;
   }),
@@ -26,10 +23,11 @@ export default Component.extend({
       'public and private builds' :
       'public builds';
   }),
+  setRequestPrivateInsights: () => {},
 
   actions: {
     selectInsightScope(option) {
-      this.sendAction('setRequestPrivateInsights', (option === 'public and private builds'));
+      this.setRequestPrivateInsights(option === 'public and private builds');
     }
   },
 });

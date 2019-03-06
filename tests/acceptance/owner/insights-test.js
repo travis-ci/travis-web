@@ -52,7 +52,7 @@ test('the owner insights page shows insights components', async function (assert
   });
 
   // No Build Overlay
-  assert.equal(insightsPage.noBuildOverlayIsVisible, false);
+  assert.ok(insightsPage.noBuildOverlay.isHidden);
 
   // percySnapshot(assert);
 });
@@ -95,7 +95,7 @@ test('the owner insights page handles a lack of data', async function (assert) {
     });
 
     // No Build Overlay
-    assert.equal(insightsPage.noBuildOverlayIsVisible, true);
-    assert.equal(insightsPage.noBuildOverlayTitle, 'Looks like you haven\'t triggered any builds');
+    assert.ok(insightsPage.noBuildOverlay.isVisible);
+    assert.equal(insightsPage.noBuildOverlay.title, 'Looks like you haven\'t triggered any builds');
   });
 });

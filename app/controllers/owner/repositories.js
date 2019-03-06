@@ -24,10 +24,6 @@ export default Controller.extend({
   actions: {
     setSubTab(selection) {
       this.set('timeInterval', selection);
-      this.set('hasNoBuilds', false);
-    },
-    setNoBuilds(val) {
-      this.set('hasNoBuilds', val);
     },
     setRequestPrivateInsights(val) {
       this.set('requestPrivateInsights', val);
