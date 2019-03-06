@@ -25,7 +25,8 @@ export default create({
 
   noBuildOverlay: {
     scope: '.insights-overlay',
-    title: text('h2'),
-    text: text('p'),
+    title: text('[data-test-insights-overlay-title]'),
+    text: text('[data-test-insights-overlay-text]'),
+    link: text('[data-test-insights-overlay-link]'),
   }
 });

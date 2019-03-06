@@ -25,16 +25,7 @@
       {{queue-times owner=model.owner interval=currentTimeInterval private=includePrivateInsights}}
       {{active-repo-count owner=model.owner interval=currentTimeInterval private=includePrivateInsights}}
       {{build-status-chart owner=model.owner interval=currentTimeInterval private=includePrivateInsights}}
-      {{#insights-overlay owner=model.owner interval=currentTimeInterval private=includePrivateInsights}}
-        <div class="insights-grid__overlay">
-          <h2>Looks like you haven't triggered any builds</h2>
-          <p>
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Commodi consequatur
-            facere possimus ad temporibus eaque aliquid eligendi laudantium modi adipisci
-            saepe explicabo eos natus expedita voluptate, nulla soluta distinctio perferendis.
-          </p>
-        </div>
-      {{/insights-overlay}}
+      {{insights-overlay owner=model.owner interval=currentTimeInterval private=includePrivateInsights}}
     </div>
   </div>
 {{else}}

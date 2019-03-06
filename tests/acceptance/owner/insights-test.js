@@ -96,6 +96,8 @@ test('the owner insights page handles a lack of data', async function (assert) {
 
     // No Build Overlay
     assert.ok(insightsPage.noBuildOverlay.isVisible);
-    assert.equal(insightsPage.noBuildOverlay.title, 'Looks like you haven\'t triggered any builds');
+    assert.equal(insightsPage.noBuildOverlay.title, 'Build to get monthly insights');
+    assert.equal(insightsPage.noBuildOverlay.text, 'All the build status results from the last 30 days will appear here.');
+    assert.equal(insightsPage.noBuildOverlay.link, 'Let\'s get you going');
   });
 });

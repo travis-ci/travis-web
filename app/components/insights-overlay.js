@@ -9,9 +9,11 @@ export default Component.extend({
     'isLoading:insights-overlay--loading',
     'hasNoBuilds:insights-overlay--active',
   ],
-  private: false,
 
   insights: service(),
+
+  private: false,
+  interval: 'month',
 
   // Current Interval Build Data
   requestData: task(function* () {
@@ -31,6 +33,9 @@ export default Component.extend({
   isLoading: reads('requestData.isRunning'),
   totalBuilds: reads('buildData.data.count_started.total'),
   hasNoBuilds: equal('totalBuilds', 0),
+
+  isMonth: equal('interval', 'month'),
+  isWeek: equal('interval', 'week'),
 
   // Request build data
   didReceiveAttrs() {
