@@ -44,8 +44,10 @@
           {{#each filter.results as |repository|}}
 
             <li class="profile-repolist-item">
+
               {{#form.field
                 disableFrame=true
+                disabled=(and repository.migrationStatus (not repository.isMigrationFailed))
                 value=(contains repository selectedRepositories)
                 onChange=(action 'toggleRepository' repository)
                 as |field|
@@ -57,6 +59,30 @@
                   </span>
                 {{/field.checkbox}}
               {{/form.field}}
+
+              <div
+                data-test-migration-status={{repository.migrationStatus}}
+                class="migration-status {{repository.migrationStatus}}"
+              >
+                {{#if (or repository.isMigrationQueued repository.isMigrationMigrating )}}
+                  {{loading-indicator
+                    data-test-repository-migration-loading-animation
+                    inline=true
+                  }}
+                  {{ember-tooltip text='Repository migration is in process'}}
+                {{else if repository.isMigrationSucceeded }}
+                  <span>
+                    {{svg-jar "stage-passed" class="icon"}}
+                    {{ember-tooltip text='Repository has been successfully migrated'}}
+                  </span>
+                {{else if repository.isMigrationFailed }}
+                  <span>
+                    {{svg-jar "stage-errored" class="icon"}}
+                    {{ember-tooltip text='Repository migration has failed'}}
+                  </span>
+                {{/if}}
+              </div>
+
             </li>
 
           {{else}}

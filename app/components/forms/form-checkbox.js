@@ -16,7 +16,8 @@ export default Component.extend({
   onInit() {},
 
   click() {
-    this.send('toggle');
+    if (!this.disabled)
+      this.send('toggle');
   },
 
   didInsertElement() {
@@ -27,15 +28,18 @@ export default Component.extend({
   actions: {
 
     toggle() {
-      this.onChange(!this.checked);
+      if (!this.disabled)
+        this.onChange(!this.checked);
     },
 
     focus() {
-      this.onFocus();
+      if (!this.disabled)
+        this.onFocus();
     },
 
     blur() {
-      this.onBlur();
+      if (!this.disabled)
+        this.onBlur();
     }
 
   }

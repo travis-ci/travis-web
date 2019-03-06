@@ -131,6 +131,10 @@ $travis-form-badge-radius: 9px;
         }
       }
 
+      &--disabled {
+        opacity: 0.5;
+      }
+
     }
 
     .travis-form__icon {

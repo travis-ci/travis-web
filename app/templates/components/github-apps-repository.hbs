@@ -19,16 +19,14 @@
         data-test-migration-status={{repository.migrationStatus}}
         class="migration-status {{repository.migrationStatus}}"
       >
-      {{#if migrationInProgress}}
+      {{#if (or repository.isMigrationQueued repository.isMigrationMigrating )}}
         {{loading-indicator
           data-test-repository-migration-loading-animation
           inline=true
         }}
-      {{/if}}
-      {{#if (eq repository.migrationStatus "success")}}
+      {{else if repository.isMigrationSucceeded }}
         <span>{{svg-jar "stage-passed" class="icon"}}</span>
-      {{/if}}
-      {{#if (eq repository.migrationStatus "failure")}}
+      {{else if repository.isMigrationFailed }}
         <span>{{svg-jar "stage-errored" class="icon"}}</span>
       {{/if}}
       </div>
@@ -46,6 +44,7 @@
     {{/if}}
   {{/if}}
 {{else}}
+
   {{#if admin}}
     {{#link-to "settings" repository.owner.login repository.name
     class="profile-settings button" title="Go to Travis CI repository settings"}}
@@ -59,4 +58,5 @@
       {{ember-tooltip text='Requires admin permissions'}}
     </a>
   {{/if}}
+
 {{/if}}
