@@ -1,7 +1,25 @@
 .ember-tooltip {
   padding: 3px 6px;
   font-size: 12px;
-  background-color: #666;
+  background-color: #666666;
+  text-align: center;
+
+  &[x-placement^="top"] .ember-tooltip-arrow {
+    border-top-color: #666666;
+  }
+
+  &[x-placement^="bottom"] .ember-tooltip-arrow {
+    border-bottom-color: #666666;
+  }
+
+  &[x-placement^="left"] .ember-tooltip-arrow {
+    border-left-color: #666666;
+  }
+
+  &[x-placement^="right"] .ember-tooltip-arrow {
+    border-right-color: #666666;
+  }
+
 }
 
 body > .ember-tooltip {

@@ -96,6 +96,10 @@
 
   <p>
     Selected <b>{{selectedRepositories.length}} / {{selectionLimit}}</b> repositories.
+    <span>
+      {{svg-jar 'icon-help' class='icon-help'}}
+      {{ember-tooltip text="GitHub currently limits suggested repositories amount to 100 per request"}}
+    </span>
   </p>
 
   {{#if (or repositories.length filter.isFiltering)}}
