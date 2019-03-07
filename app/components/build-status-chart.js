@@ -86,8 +86,15 @@ export default Component.extend({
 
   options: computed('interval', 'intervalSettings', () => ({
     scales: {
-      xAxes: [{type: 'time', stacked: true, barThickness: 'flex'}],
-      yAxes: [{stacked: true, barThickness: 'flex'}],
+      xAxes: [{
+        type: 'time',
+        stacked: true,
+        gridLines: { display: false },
+        categoryPercentage: 0.15,
+      }],
+      yAxes: [{
+        stacked: true,
+      }],
     }
   })),
 
