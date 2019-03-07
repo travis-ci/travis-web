@@ -84,14 +84,12 @@ export default Component.extend({
     };
   }),
 
-  options: computed('interval', 'intervalSettings', () => {
-    return {
-      scales: {
-        xAxes: [{type: 'time', stacked: true}],
-        yAxes: [{stacked: true}],
-      }
-    };
-  }),
+  options: computed('interval', 'intervalSettings', () => ({
+    scales: {
+      xAxes: [{type: 'time', stacked: true, barThickness: 'flex'}],
+      yAxes: [{stacked: true, barThickness: 'flex'}],
+    }
+  })),
 
   // Current Interval Chart Data
   requestData: task(function* () {
@@ -125,28 +123,30 @@ export default Component.extend({
   isEmpty: and('nonePassed', 'noneFailed', 'noneErrored', 'noneCanceled'),
   hasNoBuilds: and('isNotLoading', 'isEmpty'),
 
-  content: computed('countPassed', 'countFailed', 'countErrored', 'countCanceled', 'labels', function () {
-    return {
-      datasets: [{
-        label: 'Passing',
-        backgroundColor: 'rgba(57, 170, 86, 0.8)',
-        data: this.get('countPassed'),
-      }, {
-        label: 'Failing',
-        backgroundColor: 'rgba(219, 69, 69, 0.8)',
-        data: this.get('countFailed'),
-      }, {
-        label: 'Errored',
-        backgroundColor: 'rgba(237, 222, 63, 0.8)',
-        data: this.get('countErrored'),
-      }, {
-        label: 'Cancelled',
-        backgroundColor: 'rgba(157, 157, 157, 0.8)',
-        data: this.get('countCanceled'),
-      }],
-      labels: this.get('labels'),
-    };
-  }),
+  content: computed('countPassed', 'countFailed', 'countErrored', 'countCanceled', 'labels',
+    function () {
+      return {
+        datasets: [{
+          label: 'Passing',
+          backgroundColor: 'rgba(57, 170, 86, 0.8)',
+          data: this.get('countPassed'),
+        }, {
+          label: 'Failing',
+          backgroundColor: 'rgba(219, 69, 69, 0.8)',
+          data: this.get('countFailed'),
+        }, {
+          label: 'Errored',
+          backgroundColor: 'rgba(237, 222, 63, 0.8)',
+          data: this.get('countErrored'),
+        }, {
+          label: 'Cancelled',
+          backgroundColor: 'rgba(157, 157, 157, 0.8)',
+          data: this.get('countCanceled'),
+        }],
+        labels: this.get('labels'),
+      };
+    }
+  ),
 
   // Request chart data
   didReceiveAttrs() {
