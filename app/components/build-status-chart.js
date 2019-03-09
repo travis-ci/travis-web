@@ -102,38 +102,52 @@ export default Component.extend({
   isLoading: reads('requestData.isRunning'),
   isNotLoading: not('isLoading'),
 
-  countPassed: reads('chartData.data.count_passed.plotData'),
-  countFailed: reads('chartData.data.count_failed.plotData'),
-  countErrored: reads('chartData.data.count_errored.plotData'),
-  countCanceled: reads('chartData.data.count_canceled.plotData'),
+  passed: reads('chartData.data.count_passed.plotValues'),
+  failed: reads('chartData.data.count_failed.plotValues'),
+  errored: reads('chartData.data.count_errored.plotValues'),
+  cancelled: reads('chartData.data.count_canceled.plotValues'),
+  labels: reads('chartData.data.count_passed.plotLabels'),
 
-  nonePassed: empty('countPassed'),
-  noneFailed: empty('countFailed'),
-  noneErrored: empty('countErrored'),
-  noneCanceled: empty('countCanceled'),
+  nonePassed: empty('passed'),
+  noneFailed: empty('failed'),
+  noneErrored: empty('errored'),
+  noneCanceled: empty('cancelled'),
 
   isEmpty: and('nonePassed', 'noneFailed', 'noneErrored', 'noneCanceled'),
   hasNoBuilds: and('isNotLoading', 'isEmpty'),
 
-  content: computed('countPassed', 'countFailed', 'countErrored', 'countCanceled', function () {
-    return [{
-      name: 'Passing',
-      color: 'rgba(57, 170, 86, 0.8)',
-      data: this.get('countPassed'),
-    }, {
-      name: 'Failing',
-      color: 'rgba(219, 69, 69, 0.8)',
-      data: this.get('countFailed'),
-    }, {
-      name: 'Errored',
-      color: 'rgba(237, 222, 63, 0.8)',
-      data: this.get('countErrored'),
-    }, {
-      name: 'Cancelled',
-      color: 'rgba(157, 157, 157, 0.8)',
-      data: this.get('countCanceled'),
-    }];
-  }),
+  axis: computed('interval', 'intervalSettings', () => ({
+    x: {
+      type: 'timeseries',
+      tick: {
+        format: '%Y-%m-%d',
+      }
+    }
+  })),
+
+  data: computed('passed', 'failed', 'errored', 'cancelled', 'labels',
+    function () {
+      return {
+        type: 'bar',
+        x: 'x',
+        groups: [['Passing', 'Failing', 'Errored', 'Cancelled']],
+        order: 'asc',
+        columns: [
+          ['x', ...this.get('labels')],
+          ['Passing', ...this.get('passed')],
+          ['Failing', ...this.get('failed')],
+          ['Errored', ...this.get('errored')],
+          ['Cancelled', ...this.get('cancelled')],
+        ],
+        colors: {
+          Passing: 'rgba(57, 170, 86, 0.8)',
+          Failing: 'rgba(219, 69, 69, 0.8)',
+          Errored: 'rgba(237, 222, 63, 0.8)',
+          Cancelled: 'rgba(157, 157, 157, 0.8)',
+        }
+      };
+    }
+  ),
 
   // Request chart data
   didReceiveAttrs() {

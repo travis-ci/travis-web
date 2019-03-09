@@ -2,6 +2,7 @@ import Service, { inject as service } from '@ember/service';
 import moment from 'moment';
 import { assign } from '@ember/polyfills';
 import { task } from 'ember-concurrency';
+import { singularize } from 'ember-inflector';
 
 import ObjectProxy from '@ember/object/proxy';
 import PromiseProxyMixin from '@ember/object/promise-proxy-mixin';
@@ -71,7 +72,14 @@ export default Service.extend({
 
   getDatesFromInterval(interval, startInterval, endInterval = 0) {
     // Have startInterval default to 1 less than endInterval
+    endInterval = typeof endInterval !== 'number' ? 0 : endInterval;
     startInterval = typeof startInterval !== 'number' ? endInterval - 1 : startInterval;
+
+    if (startInterval > endInterval) {
+      [startInterval, endInterval] = [endInterval, startInterval];
+    } else if (startInterval === endInterval) {
+      startInterval--;
+    }
 
     return [
       moment.utc().add(startInterval, interval),
@@ -166,25 +174,31 @@ export default Service.extend({
     /* Prepare for API request to fetch metrics */
     const currentOptions = mergeMetricSettings(options, func);
     const intervalSettings = this.getIntervalSettings(currentOptions.intervalSettings);
+    const subInterval = intervalSettings[interval].subInterval;
 
     const [startTime, endTime] = this.getDatesFromInterval(
       interval, currentOptions.startInterval, currentOptions.endInterval
     );
 
     const apiSettings = getMetricAPISettings(
-      subject, func, intervalSettings[interval].subInterval, metricNames, owner, startTime, endTime,
-      currentOptions
+      subject, func, subInterval, metricNames, owner, startTime, endTime, currentOptions
     );
 
     /* Fetch metrics */
     let metrics = yield this.get('fetchMetrics').perform(apiSettings, currentOptions);
 
+    let labels = createLabels(startTime, endTime, subInterval);
+
     /* Prepare fetched metric data for charts */
-    let chartData = aggregateMetrics(metricNames, metrics, currentOptions.aggregator);
+    let data = aggregateMetrics(
+      metricNames, metrics, currentOptions.aggregator, assign({}, labels), subInterval
+    );
 
-    serializeMetrics(chartData, currentOptions);
+    serializeMetrics(data, currentOptions);
 
-    return { data: chartData, private: metrics.data.private === 'true' };
+    labels = Object.entries(labels).map(([key, val]) => key);
+
+    return { data, private: metrics.data.private === 'true', labels, metrics };
   }),
 
   fetchMetrics: task(function* (apiSettings) {
@@ -243,9 +257,49 @@ function mergeMetricSettings(options, func) {
   return currentOptions;
 }
 
-function aggregateMetrics(metricNames, metrics, aggregatorName) {
+function getSubintervalDetails(subInterval) {
+  switch (subInterval) {
+    case '1min':
+      return {step: 1, intervalName: 'minutes', keyFormat: 'YYYY-MM-DD HH:mm'};
+    case '10min':
+      return {step: 10, intervalName: 'minutes', keyFormat: 'YYYY-MM-DD HH:mm'};
+    case '1hour':
+      return {step: 1, intervalName: 'hours', keyFormat: 'YYYY-MM-DD HH'};
+    case '1day':
+      return {step: 1, intervalName: 'days', keyFormat: 'YYYY-MM-DD'};
+
+    default:
+      throw new Error('An invalid sub-interval was specified');
+  }
+}
+
+function createLabels(startTime, endTime, subInterval) {
+  const labels = {};
+  let { step, intervalName } = getSubintervalDetails(subInterval);
+
+  let current = moment.utc(startTime).startOf(singularize(intervalName));
+  if (step !== 1) {
+    let units = current[intervalName]();
+    let remainder = units % step;
+    current[intervalName](units - remainder);
+  }
+
+  while (current < endTime) {
+    labels[formatTimeKey(current, subInterval)] = 0;
+    current.add(step, intervalName);
+  }
+
+  return labels;
+}
+
+function formatTimeKey(time, subInterval) {
+  const { keyFormat } = getSubintervalDetails(subInterval);
+  return moment.utc(time).format(keyFormat);
+}
+
+function aggregateMetrics(metricNames, metrics, aggregatorName, labels, subInterval) {
   const defaultData = metricNames.reduce((map, metric) => {
-    map[metric] = {};
+    map[metric] = assign({}, labels);
     return map;
   }, {});
 
@@ -258,7 +312,7 @@ function aggregateMetrics(metricNames, metrics, aggregatorName) {
     if (typeof value !== 'number' || Number.isNaN(value)) { return timesMap; }
 
     // Create key for map from time
-    const timeKey = moment.utc(time, apiTimeReceivedFormat).valueOf();
+    const timeKey = formatTimeKey(moment.utc(time, apiTimeReceivedFormat), subInterval);
 
     // Aggregate and continue building map
     timesMap = aggregator(timesMap, name, timeKey, value);
@@ -288,16 +342,20 @@ function serializeMetrics(serData, currentOptions) {
       return [newKey, newVal];
     });
 
+    currentMetric.plotLabels = currentMetric.plotData.map(([key, val]) => key);
+    currentMetric.plotValues = currentMetric.plotData.map(([key, val]) => val);
+
     // Calculate total if total or average is requested
     if (currentOptions.calcTotal || currentOptions.calcAvg) {
-      currentMetric.total = currentMetric.plotData.reduce((acc, [key, val]) => acc + val, 0);
+      currentMetric.total = currentMetric.plotValues.reduce((acc, val) => acc + val, 0);
     }
 
     // Calculate average if requested. Uses total calculated above.
     if (currentOptions.calcAvg) {
-      currentMetric.average = currentMetric.plotData.length === 0
+      const filteredPlotValues = currentMetric.plotValues.filter(v => v !== 0);
+      currentMetric.average = filteredPlotValues.length === 0
         ? 0
-        : currentMetric.total / currentMetric.plotData.length
+        : currentMetric.total / filteredPlotValues.length
       ;
     }
 
@@ -346,7 +404,8 @@ function maxAggregator(map, name, time, value) {
 }
 
 function avgAggregator(map, name, time, value) {
-  if (map[name].hasOwnProperty(time)) {
+  // if (value === 0) { return map; }
+  if (map[name].hasOwnProperty(time) && typeof map[name][time] !== 'number') {
     map[name][time][0]++;
     map[name][time][1] += value;
   } else {
@@ -376,9 +435,10 @@ function getSerializer(serializerName) {
 }
 
 function avgSerializer(key, val) {
-  return [Number(key), (val[1] / val[0])];
+  let newVal = val === 0 || val[0] === 0 ? 0 : (val[1] / val[0]);
+  return [key, newVal];
 }
 
 function defaultSerializer(key, val) {
-  return [Number(key), val];
+  return [key, val];
 }
