@@ -2,7 +2,7 @@ import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 import { pluralize } from 'ember-inflector';
-import { reads, empty, or } from '@ember/object/computed';
+import { reads, equal, or } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
 
 export default Component.extend({
@@ -19,20 +19,13 @@ export default Component.extend({
 
   options: computed('interval', 'intervalSettings', 'avgBuilds', function () {
     return {
-      title: { text: undefined },
-      xAxis: { visible: false, type: 'datetime' },
       yAxis: {
-        visible: true,
-        title: { text: undefined },
         plotLines: [{
           value: this.avgBuilds,
           color: '#eaeaea',
           width: 1,
         }],
-        labels: [],
-        gridLineWidth: 0,
       },
-      legend: { enabled: false },
       chart: {
         type: 'spline',
         height: '25%',
@@ -63,32 +56,58 @@ export default Component.extend({
       'sum',
       ['count_started'],
       {
-        calcTotal: true,
         calcAvg: true,
         private: this.private,
       }
     );
   }),
   chartData: reads('requestData.lastSuccessful.value'),
-  plotData: reads('chartData.data.count_started.plotData'),
+  builds: reads('chartData.data.count_started.plotValues'),
+  labels: reads('chartData.labels'),
+
   isLoading: reads('requestData.isRunning'),
-  isEmpty: empty('plotData'),
+  isEmpty: equal('totalBuilds', 0),
   showPlaceholder: or('isLoading', 'isEmpty'),
 
-  content: computed('plotData', function () {
-    return [{
-      name: 'Builds',
-      data: this.get('plotData'),
-    }];
-  }),
-
   // Total / average
-  totalBuilds: reads('chartData.data.count_started.total'),
-  avgBuilds: reads('chartData.data.count_started.average'),
+  totalBuilds: reads('chartData.data.total'),
+  avgBuilds: reads('chartData.data.average'),
 
   totalBuildText: computed('totalBuilds', function () {
     if (typeof this.totalBuilds !== 'number') { return '\xa0'; }
     return this.totalBuilds.toLocaleString();
+  }),
+
+  // Chart component data
+  data: computed('builds', 'labels', function () {
+    return {
+      type: 'line',
+      x: 'x',
+      columns: [
+        ['x', ...this.get('labels')],
+        ['Builds', ...this.get('builds')],
+      ],
+    };
+  }),
+
+  // Chart component options
+  axis: {
+    x: {
+      type: 'timeseries',
+      tick: { format: '%Y-%m-%d' },
+      show: false,
+    },
+    y: { show: false }
+  },
+
+  legend: { show: false },
+
+  grid: computed('avgBuilds', function () {
+    return {
+      y: {
+        lines: [{ value: this.get('avgBuilds') }],
+      }
+    };
   }),
 
   // Previous interval chart data
