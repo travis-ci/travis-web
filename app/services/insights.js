@@ -81,10 +81,19 @@ export default Service.extend({
       startInterval--;
     }
 
-    return [
-      moment.utc().add(startInterval, interval),
-      moment.utc().add(endInterval, interval)
-    ];
+    startInterval = convertIntervalToDays(interval, startInterval);
+    endInterval = convertIntervalToDays(interval, endInterval);
+
+    let start = moment.utc().add(startInterval, 'day');
+    let end = moment.utc().add(endInterval, 'day');
+
+    if (interval === 'day') {
+      start = start.startOf('hour');
+    } else {
+      start = start.add(1, 'day').startOf('day');
+    }
+
+    return [start, end];
   },
 
   getMetric(owner, interval, subject, func, metrics = [], options = {}) {
@@ -255,6 +264,20 @@ function mergeMetricSettings(options, func) {
   currentOptions.aggregator = currentOptions.aggregator || func;
   currentOptions.serializer = currentOptions.serializer || func;
   return currentOptions;
+}
+
+function convertIntervalToDays(interval, amount) {
+  switch (interval) {
+    case 'month':
+      return 30 * amount;
+    case 'week':
+      return 7 * amount;
+    case 'day':
+      return amount;
+
+    default:
+      throw new Error('An invalid interval was specified');
+  }
 }
 
 function getSubintervalDetails(subInterval) {
