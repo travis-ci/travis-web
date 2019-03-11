@@ -69,7 +69,8 @@
       }
 
       &:not(.travistab-nav__arrow) {
-        width: 230px;
+        width: auto;
+        white-space: nowrap;
       }
 
       a {

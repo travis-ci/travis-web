@@ -43,24 +43,27 @@
   }
 }
 
+$badge-size: 1.4em;
+
 [data-badge] {
   position: relative;
 
   &::after {
     content: attr(data-badge);
-    position: absolute;
-    top: -10px;
-    right: -22px;
-    font-size: 10px;
-    background-color: $oxide-blue;
-    color: white;
-    min-width: 15px;
-    padding: 0 5px;
-    height: 15px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 8px;
+    position: relative;
+    top: -$badge-size / 7;
+    font-size: $badge-size / 2;
+    background-color: transparent;
+    color: $oxide-blue;
+    min-width: $badge-size;
+    padding: 0 $badge-size / 7;
+    height: $badge-size;
+    line-height: 1.2;
+    display: inline-block;
+    border: 1px solid $oxide-blue;
+    border-radius: $badge-size / 2;
+    margin-left: 0.3em;
+
   }
 
   &[data-badge-hidden]::after {
