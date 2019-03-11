@@ -5,19 +5,18 @@
 
   {{#if (or repositories.length filter.isFiltering)}}
 
-    {{#external-link-to
-      href=activateAllUrl
-      target='_self'
-      class="button--green migrate__activate-all"
-    }}
-      {{svg-jar 'github-signin'}}
-      Activate all your repositories on GitHub Apps
-    {{/external-link-to}}
+    <p class='migrate-webhooks-note'>
+      Select repositories you'd like to migrate from travis-ci.org to travis-ci.com from the list below or
 
-    <div class="migrate__separator" data-text="OR"></div>
+      {{#external-link-to
+        href=activateAllUrl
+        target='_self'
+        class='migrate__activate-all'
+      }}
+        Activate all your repositories on GitHub Apps
+      {{/external-link-to}}
+      {{svg-jar 'icon-repooctocat'}}
 
-    <p>
-      Select repositories that you'd like to migrate from the list below.
     </p>
 
     {{#if (or (gt repositories.length 1) filter.isFiltering)}}

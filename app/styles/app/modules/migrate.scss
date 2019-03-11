@@ -5,36 +5,7 @@
     font-weight: 200;
   }
 
-  &__activate-all {
-    width: 100%;
-    margin: 25px 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    svg {
-      margin-right: 10px;
-    }
-  }
-
-  &__separator {
-    width: 100%;
-    height: 0;
-    border-bottom: 1px solid $dry-cement;
-    margin: 17px 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    &:after {
-      content: attr(data-text);
-      padding: 0 15px;
-      background-color: #ffffff;
-      color: $cement-grey;
-    }
-  }
-
-  .migrate-note {
+  &-note {
     margin-bottom: 25px;
 
     p {
@@ -56,6 +27,28 @@
 
     }
 
+  }
+
+  &-webhooks-note {
+    margin: 25px 0;
+
+    svg {
+      width: 20px;
+      height: 20px;
+      fill: #cccccc;
+      vertical-align: text-bottom;
+      margin-left: 5px;
+    }
+  }
+
+  &__activate-all {
+    display: inline-block;
+    padding: 2px 0;
+    border-bottom: 1px solid $dry-cement;
+
+    &:hover {
+      border-color: $cement-grey;
+    }
   }
 
   .travistab-nav--secondary {
