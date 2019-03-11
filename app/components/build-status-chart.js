@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
-import { reads, empty, and, not } from '@ember/object/computed';
+import { reads, and, not, equal } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
 
 const invervalOverrides = {
@@ -93,6 +93,7 @@ export default Component.extend({
       'sum',
       ['count_passed', 'count_failed', 'count_errored', 'count_canceled'],
       {
+        calcTotal: true,
         intervalSettings: invervalOverrides,
         private: this.private,
       }
@@ -106,14 +107,11 @@ export default Component.extend({
   failed: reads('chartData.data.count_failed.plotValues'),
   errored: reads('chartData.data.count_errored.plotValues'),
   cancelled: reads('chartData.data.count_canceled.plotValues'),
-  labels: reads('chartData.data.count_passed.plotLabels'),
 
-  nonePassed: empty('passed'),
-  noneFailed: empty('failed'),
-  noneErrored: empty('errored'),
-  noneCanceled: empty('cancelled'),
+  labels: reads('chartData.labels'),
+  total: reads('chartData.data.total'),
 
-  isEmpty: and('nonePassed', 'noneFailed', 'noneErrored', 'noneCanceled'),
+  isEmpty: equal('total', 0),
   hasNoBuilds: and('isNotLoading', 'isEmpty'),
 
   axis: computed('interval', 'intervalSettings', () => ({

@@ -4,10 +4,6 @@ import { assign } from '@ember/polyfills';
 import { task } from 'ember-concurrency';
 import { singularize } from 'ember-inflector';
 
-import ObjectProxy from '@ember/object/proxy';
-import PromiseProxyMixin from '@ember/object/promise-proxy-mixin';
-let ObjectPromiseProxy = ObjectProxy.extend(PromiseProxyMixin);
-
 const validIntervals = ['week', 'month'];
 const defaultIntervalSettings = {
   day: {
@@ -35,7 +31,6 @@ const defaultIntervalSettings = {
 
 const defaultOptions = {
   intervalSettings: {},
-  calcTotal: false,
   calcAvg: false,
   private: false,
 };
@@ -96,88 +91,6 @@ export default Service.extend({
     return [start, end];
   },
 
-  getMetric(owner, interval, subject, func, metrics = [], options = {}) {
-    const currentOptions = assign({}, defaultOptions, options);
-    currentOptions.aggregator = currentOptions.aggregator || func;
-    currentOptions.transformer = currentOptions.transformer || func;
-    const intervalSettings = this.getIntervalSettings(currentOptions.intervalSettings);
-
-    const [startTime, endTime] = this.getDatesFromInterval(
-      interval,
-      currentOptions.startInterval,
-      currentOptions.endInterval
-    );
-
-    const apiSettings = {
-      stringifyData: false,
-      data: {
-        subject,
-        interval: intervalSettings[interval].subInterval,
-        func,
-        name: metrics.join(','),
-        owner_type: owner['@type'] === 'user' ? 'User' : 'Organization',
-        owner_id: owner.id,
-        end_time: endTime.format(apiTimeRequestFormat),
-        start_time: startTime.format(apiTimeRequestFormat),
-        private: currentOptions.private,
-      }
-    };
-    const defaultTimesMap = metrics.reduce((map, metric) => {
-      map[metric] = {};
-      return map;
-    }, {});
-
-    const aggregator = getAggregator(currentOptions.aggregator);
-    const transformer = getSerializer(currentOptions.transformer);
-
-    return ObjectPromiseProxy.create({
-      promise: this.get('api').get(endpoints.metrics, apiSettings).then(response => {
-        let aggData;
-
-        // Data aggregation
-        aggData = response.data.values.reduce(
-          (timesMap, { value, time, name }) => {
-            if (typeof value !== 'number' || Number.isNaN(value)) {
-              return timesMap;
-            }
-            const timeKey = moment.utc(time, apiTimeReceivedFormat).valueOf();
-            timesMap = aggregator(timesMap, name, timeKey, value);
-            return timesMap;
-          }, defaultTimesMap
-        );
-
-        // Secondary data transform - to prepare it for charts once aggregation is complete
-        Object.entries(aggData).map(([mKey, mVal]) => {
-          aggData[mKey].chartData = Object.entries(mVal).map(([key, val]) => {
-            let [newKey, newVal] = transformer(key, val);
-            if (typeof currentOptions.customTransform === 'function') {
-              try {
-                [newKey, newVal] = currentOptions.customTransform(newKey, newVal);
-              } catch (e) {}
-            }
-            return [newKey, newVal];
-          });
-
-          if (currentOptions.calcTotal || currentOptions.calcAvg) {
-            aggData[mKey].total = aggData[mKey].chartData.reduce((acc, [key, val]) => acc + val, 0);
-          }
-
-          if (currentOptions.calcAvg) {
-            aggData[mKey].average = aggData[mKey].chartData.length === 0
-              ? 0
-              : aggData[mKey].total / aggData[mKey].chartData.length
-            ;
-          }
-        });
-
-        return { data: aggData, private: response.data.private === 'true' };
-      }).catch(e => {
-        this.get('flashes').error('There was an error while trying to load insights data.');
-        this.get('raven').logException(e);
-      }),
-    });
-  },
-
   getChartData: task(function*
   (owner, interval, subject, func, metricNames = [], options = {}) {
     /* Prepare for API request to fetch metrics */
@@ -203,7 +116,7 @@ export default Service.extend({
       metricNames, metrics, currentOptions.aggregator, assign({}, labels), subInterval
     );
 
-    serializeMetrics(data, currentOptions);
+    serializeMetrics(data, metricNames, currentOptions);
 
     labels = Object.entries(labels).map(([key, val]) => key);
 
@@ -345,15 +258,16 @@ function aggregateMetrics(metricNames, metrics, aggregatorName, labels, subInter
   return aggData;
 }
 
-function serializeMetrics(serData, currentOptions) {
+function serializeMetrics(serData, metricNames, currentOptions) {
   const serializer = getSerializer(currentOptions.serializer);
+  let total = 0, avgs = [];
 
   // Loop through each metric
-  Object.entries(serData).map(([metricName, metricData]) => {
+  metricNames.map((metricName) => {
     let currentMetric = serData[metricName];
 
     // Run serializer on each data point
-    currentMetric.plotData = Object.entries(metricData).map(([key, val]) => {
+    let plotData = Object.entries(currentMetric).map(([key, val]) => {
       // Run chosen serializer
       let [newKey, newVal] = serializer(key, val);
 
@@ -364,26 +278,32 @@ function serializeMetrics(serData, currentOptions) {
 
       return [newKey, newVal];
     });
+    currentMetric.plotData = plotData;
 
+    // Split into labels and values - works better for some charting libraries
     currentMetric.plotLabels = currentMetric.plotData.map(([key, val]) => key);
     currentMetric.plotValues = currentMetric.plotData.map(([key, val]) => val);
 
-    // Calculate total if total or average is requested
-    if (currentOptions.calcTotal || currentOptions.calcAvg) {
-      currentMetric.total = currentMetric.plotValues.reduce((acc, val) => acc + val, 0);
-    }
+    // Calculate total
+    currentMetric.total = currentMetric.plotValues.reduce((acc, val) => acc + val, 0);
+    total += currentMetric.total;
 
     // Calculate average if requested. Uses total calculated above.
     if (currentOptions.calcAvg) {
-      const filteredPlotValues = currentMetric.plotValues.filter(v => v !== 0);
-      currentMetric.average = filteredPlotValues.length === 0
-        ? 0
-        : currentMetric.total / filteredPlotValues.length
-      ;
+      const filtered = currentMetric.plotValues.filter(v => v !== 0);
+      currentMetric.average = filtered.length === 0 ? 0 : currentMetric.total / filtered.length;
+      avgs.push(currentMetric.average);
     }
-
-    return serData;
   });
+
+  // Calculate grand total / average of all metrics
+  serData.total = total;
+  if (currentOptions.calcAvg) {
+    let avgsTotal = avgs.reduce((a, v) => a + v, 0);
+    serData.average = avgs.length === 0 ? 0 : avgsTotal / avgs.length;
+  }
+
+  return serData;
 }
 
 // These aggregator functions are for aggregating data when there is a key collision, i.e. when

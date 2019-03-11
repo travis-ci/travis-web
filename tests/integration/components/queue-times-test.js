@@ -27,8 +27,8 @@ module('Integration | Component | queue-times', function (hooks) {
     assert.dom('.insights-glance__title').hasText('Average Queue Time');
     assert.dom('.insights-glance__stat').hasText('0.6 mins');
     assert.dom('.insights-glance-delta').hasAttribute('data-dir', '-');
-    assert.dom('.insights-glance-delta').hasAttribute('title', 'Averaged 0.67 mins the previous month');
-    assert.dom('.insights-glance-delta__stat').hasText('10.4%');
+    assert.dom('.insights-glance-delta').hasAttribute('title', 'Averaged 1 min the previous month');
+    assert.dom('.insights-glance-delta__stat').hasText('40%');
     assert.dom('.insights-glance__chart .highcharts-wrapper').exists();
   });
 

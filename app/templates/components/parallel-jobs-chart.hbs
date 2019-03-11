@@ -1,10 +1,10 @@
 <h3 class="insights-odyssey__title">Concurrency</h3>
 <div class="insights-odyssey__chart">
   {{#if isLoading}}
-    {{!-- Placeholder? --}}
+    <div class="insights-odyssey__loading-indicator">{{loading-indicator}}</div>
   {{else if isEmpty}}
     No jobs {{currentIntervalLabel}}.
   {{else}}
-    {{high-charts content=content chartOptions=options}}
+    {{c3-chart class='chart-component' data=data}}
   {{/if}}
 </div>

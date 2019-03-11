@@ -25,7 +25,7 @@ module('Integration | Component | build-status-chart', function (hooks) {
 
     assert.dom('.insights-odyssey').doesNotHaveClass('insights-odyssey--loading');
     assert.dom('.insights-odyssey__title').hasText('Build Statuses');
-    assert.dom('.insights-odyssey__chart .highcharts-wrapper').exists();
+    assert.dom('.insights-odyssey__chart .chart-component').exists();
   });
 
   test('loading state renders', async function (assert) {
@@ -41,7 +41,7 @@ module('Integration | Component | build-status-chart', function (hooks) {
 
     assert.dom('.insights-odyssey').hasClass('insights-odyssey--loading');
     assert.dom('.insights-odyssey__title').hasText('Build Statuses');
-    assert.dom('.insights-odyssey__chart .highcharts-wrapper').doesNotExist();
+    assert.dom('.insights-odyssey__chart .chart-component').doesNotExist();
   });
 
   test('it renders empty result message', async function (assert) {
@@ -57,7 +57,7 @@ module('Integration | Component | build-status-chart', function (hooks) {
 
     assert.dom('.insights-odyssey').doesNotHaveClass('insights-odyssey--loading');
     assert.dom('.insights-odyssey__title').hasText('Build Statuses');
-    assert.dom('.insights-odyssey__chart .highcharts-wrapper').doesNotExist();
+    assert.dom('.insights-odyssey__chart .chart-component').doesNotExist();
     assert.dom('.insights-odyssey__chart').containsText('No builds this week');
   });
 });

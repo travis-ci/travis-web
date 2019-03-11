@@ -1,12 +1,8 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
-
-const invervalOverrides = {
-  day: {
-    subInterval: '1min',
-  },
-};
+import { reads, not, equal } from '@ember/object/computed';
+import { task } from 'ember-concurrency';
 
 export default Component.extend({
   classNames: ['insights-odyssey'],
@@ -15,7 +11,7 @@ export default Component.extend({
   insights: service(),
 
   intervalSettings: computed(function () {
-    return this.get('insights').getIntervalSettings(invervalOverrides);
+    return this.get('insights').getIntervalSettings();
   }),
 
   currentIntervalLabel: computed('interval', 'intervalSettings', function () {
@@ -70,59 +66,38 @@ export default Component.extend({
     };
   }),
 
-  dataRequest: computed('owner', 'interval', function () {
-    return this.get('insights').getMetric(
+  // Current Interval Chart Data
+  requestData: task(function* () {
+    return yield this.get('insights').getChartData.perform(
       this.owner,
       this.interval,
       'jobs',
       'max',
-      ['gauge_running', 'gauge_waiting'],
-      {intervalSettings: invervalOverrides}
+      ['gauge_running', 'gauge_waiting']
     );
   }),
+  chartData: reads('requestData.lastSuccessful.value'),
+  isLoading: reads('requestData.isRunning'),
+  isNotLoading: not('isLoading'),
 
-  aggregateData: computed('dataRequest.data', function () {
-    const responseData = this.get('dataRequest.data');
-    if (responseData) {
-      return responseData;
-    }
-  }),
+  running: reads('chartData.data.gauge_running.plotValues'),
+  waiting: reads('chartData.data.gauge_waiting.plotValues'),
 
-  isLoading: computed('aggregateData', function () {
-    return !this.aggregateData;
-  }),
+  labels: reads('chartData.labels'),
+  total: reads('chartData.data.total'),
+  isEmpty: equal('total', 0),
 
-  isEmpty: computed('aggregateData', function () {
-    return this.aggregateData &&
-      this.aggregateData.gauge_running.chartData.length === 0 &&
-      this.aggregateData.gauge_waiting.chartData.length === 0;
-  }),
-
-  content: computed('aggregateData', function () {
-    if (this.aggregateData) {
-      return [{
-        name: 'Running Jobs',
-        color: '#39aa56',
-        fillColor: {
-          linearGradient: [0, 0, 0, 300],
-          stops: [
-            [0, 'rgba(57, 170, 86, 0.7)'],
-            [1, 'rgba(57, 170, 86, 0)'],
-          ],
-        },
-        data: this.aggregateData.gauge_running.chartData,
-      }, {
-        name: 'Queued Jobs',
-        color: '#3eaaaf',
-        fillColor: {
-          linearGradient: [0, 0, 0, 300],
-          stops: [
-            [0, 'rgba(62, 170, 175, 0.7)'],
-            [1, 'rgba(62, 170, 175, 0)'],
-          ],
-        },
-        data: this.aggregateData.gauge_waiting.chartData,
-      }];
-    }
-  }),
+  data: computed('running', 'waiting', 'labels',
+    () => ({
+      types: { Running: 'area-step', Waiting: 'area-step' },
+      columns: [
+        ['Running', 2, 3],
+        ['Waiting', 1, 0],
+      ],
+      colors: {
+        Running: '#39aa56',
+        Waiting: '#3eaaaf',
+      }
+    })
+  ),
 });

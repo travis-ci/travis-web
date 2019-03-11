@@ -26,10 +26,11 @@ module('Unit | Service | insights', function (hooks) {
     let [start, end] = serviceDates;
     assert.equal(start < end, true);
 
-    let week = (1000 * 60 * 60 * 24 * 7);
+    let day = 1000 * 60 * 60 * 24;
+    let week = day * 7;
     let serviceDatesDifference = (end - start);
     let diff = week - serviceDatesDifference;
-    assert.equal(diff <= 1 && diff >= -1, true);
+    assert.ok(diff <= day && diff >= (day * -1));
   });
 
   test('active repos with no metric data', async function (assert) {
@@ -47,27 +48,19 @@ module('Unit | Service | insights', function (hooks) {
     assert.equal(result.data.count, 75);
   });
 
-  test('getMetric with no metric data', async function (assert) {
+  test('getChartData with no metric data', async function (assert) {
     this.server.create('user');
 
-    // Test no metric data scenario
-    let empty = {
-      data: {
-        count_created: {
-          chartData: [],
-        },
-      },
-      private: false,
-    };
-
-    let result = await this.insightsService.getMetric(
+    let result = await this.insightsService.getChartData.perform(
       {id: 1, '@type': 'user'},
       'week',
       'jobs',
       'sum',
       ['count_created']
     );
-    assert.deepEqual(result, empty);
+    assert.equal(result.data.total, 0);
+    assert.notOk(result.private);
+    assert.ok(result.data.hasOwnProperty('count_created'));
   });
 
   test('metric sum', async function (assert) {
@@ -75,17 +68,16 @@ module('Unit | Service | insights', function (hooks) {
     server.createList('insight-metric', 5);
     const metricName = 'count_started';
 
-    let result = await this.insightsService.getMetric(
+    let result = await this.insightsService.getChartData.perform(
       {id: 1, '@type': 'user'},
       'week',
       'builds',
       'sum',
       [metricName]
     );
-    assert.equal(result.data.hasOwnProperty(metricName), true);
-    assert.equal(result.data[metricName].chartData.length, 4);
-    let total = result.data[metricName].chartData.reduce((acc, val) => acc + val[1], 0);
-    assert.equal(total, 300);
+    assert.ok(result.data.hasOwnProperty(metricName));
+    assert.equal(result.data[metricName].plotData.length, 7);
+    assert.equal(result.data.total, 300);
   });
 
   test('metric max', async function (assert) {
@@ -93,17 +85,16 @@ module('Unit | Service | insights', function (hooks) {
     server.createList('insight-metric', 10);
     const metricName = 'count_finished';
 
-    let result = await this.insightsService.getMetric(
+    let result = await this.insightsService.getChartData.perform(
       {id: 1, '@type': 'user'},
       'week',
       'builds',
       'max',
       [metricName]
     );
-    assert.equal(result.data.hasOwnProperty(metricName), true);
-    assert.equal(result.data[metricName].chartData.length, 4);
-    let total = result.data[metricName].chartData.reduce((acc, val) => acc + val[1], 0);
-    assert.equal(total, 260);
+    assert.ok(result.data.hasOwnProperty(metricName));
+    assert.equal(result.data[metricName].plotData.length, 7);
+    assert.equal(result.data.total, 260);
   });
 
   test('metric avg', async function (assert) {
@@ -111,19 +102,19 @@ module('Unit | Service | insights', function (hooks) {
     server.createList('insight-metric', 10);
     const metricName = 'count_passed';
 
-    let result = await this.insightsService.getMetric(
+    let result = await this.insightsService.getChartData.perform(
       {id: 1, '@type': 'user'},
       'week',
       'builds',
       'avg',
-      [metricName]
+      [metricName],
+      { calcAvg: true }
     );
-    assert.equal(result.data.hasOwnProperty(metricName), true);
-    assert.equal(result.data[metricName].chartData.length, 4);
-    let total = result.data[metricName].chartData.reduce((acc, val) => acc + val[1], 0);
-    let avg = Math.round((total / result.data[metricName].chartData.length) * 100) / 100;
-    assert.equal(total, 250);
-    assert.equal(avg, 62.5);
+
+    assert.ok(result.data.hasOwnProperty(metricName));
+    assert.equal(result.data[metricName].plotData.length, 7);
+    assert.equal(result.data.total, 250);
+    assert.equal(result.data.average, 62.5);
   });
 
   test('metric count', async function (assert) {
@@ -131,17 +122,16 @@ module('Unit | Service | insights', function (hooks) {
     server.createList('insight-metric', 10);
     const metricName = 'count_failed';
 
-    let result = await this.insightsService.getMetric(
+    let result = await this.insightsService.getChartData.perform(
       {id: 1, '@type': 'user'},
       'week',
       'builds',
       'count',
       [metricName]
     );
-    assert.equal(result.data.hasOwnProperty(metricName), true);
-    assert.equal(result.data[metricName].chartData.length, 4);
-    let total = result.data[metricName].chartData.reduce((acc, val) => acc + val[1], 0);
-    assert.equal(total, 5);
+    assert.ok(result.data.hasOwnProperty(metricName));
+    assert.equal(result.data[metricName].plotData.length, 7);
+    assert.equal(result.data.total, 5);
   });
 
   test('metric options', async function (assert) {
@@ -149,29 +139,27 @@ module('Unit | Service | insights', function (hooks) {
     server.createList('insight-metric', 10);
     const metricNames = ['test', 'example'];
 
-    let result = await this.insightsService.getMetric(
+    let result = await this.insightsService.getChartData.perform(
       {id: 1, '@type': 'user'},
       'week',
       'builds',
       'sum',
       metricNames,
       {
-        calcTotal: true,
         calcAvg: true,
         // A common custom transform is to convert seconds to minutes
-        customTransform: (key, val) => [key, Math.round(val / 60)],
+        customSerialize: (key, val) => [key, Math.round(val / 60)],
       }
     );
 
     metricNames.map(metric => {
       assert.equal(result.data.hasOwnProperty(metric), true);
-      assert.equal(result.data[metric].chartData.length, 4);
-      let total = result.data[metric].chartData.reduce((acc, val) => acc + val[1], 0);
-      let avg = Math.round((total / result.data[metric].chartData.length) * 100) / 100;
-      assert.equal(total, result.data[metric].total);
-      assert.equal(avg, result.data[metric].average);
+      assert.equal(result.data[metric].plotData.length, 7);
+      let total = result.data[metric].plotValues.reduce((acc, val) => acc + val, 0);
+      let filtered = result.data[metric].plotValues.filter(val => val !== 0);
+      let avg = total / filtered.length;
+      assert.equal(result.data[metric].total, total);
+      assert.equal(result.data[metric].average, avg);
     });
-    assert.equal(result.data['test'].total, 5);
-    assert.equal(result.data['test'].average, 1.25);
   });
 });
