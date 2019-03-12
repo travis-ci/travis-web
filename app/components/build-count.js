@@ -12,41 +12,6 @@ export default Component.extend({
 
   insights: service(),
 
-  // Chart options
-  intervalSettings: computed(function () {
-    return this.get('insights').getIntervalSettings();
-  }),
-
-  options: computed('interval', 'intervalSettings', 'avgBuilds', function () {
-    return {
-      yAxis: {
-        plotLines: [{
-          value: this.avgBuilds,
-          color: '#eaeaea',
-          width: 1,
-        }],
-      },
-      chart: {
-        type: 'spline',
-        height: '25%',
-        spacing: [5, 5, 5, 5],
-      },
-      plotOptions: {
-        series: {
-          color: '#666',
-          lineWidth: 1,
-          states: {  hover: { lineWidth: 2, halo: { size: 8 } } },
-          marker: { enabled: false },
-        },
-      },
-      tooltip: {
-        xDateFormat: this.intervalSettings[this.interval].tooltipLabelFormat,
-        outside: true,
-        pointFormat: '<span>{series.name}: <b>{point.y}</b></span><br/>',
-      },
-    };
-  }),
-
   // Current Interval Chart Data
   requestData: task(function* () {
     return yield this.get('insights').getChartData.perform(
@@ -81,16 +46,29 @@ export default Component.extend({
   // Chart component data
   data: computed('builds', 'labels', function () {
     return {
-      type: 'line',
+      type: 'spline',
       x: 'x',
       columns: [
         ['x', ...this.get('labels')],
         ['Builds', ...this.get('builds')],
       ],
+      colors: {
+        Builds: '#666',
+      },
     };
   }),
 
   // Chart component options
+  legend: { show: false },
+  size: { height: 50 },
+
+  point: {
+    r: 0,
+    focus: {
+      expand: { r: 4 },
+    }
+  },
+
   axis: {
     x: {
       type: 'timeseries',
@@ -100,14 +78,24 @@ export default Component.extend({
     y: { show: false }
   },
 
-  legend: { show: false },
+  tooltip: {
+    position: (data, width, height, element) => ({ top: -50, left: (width / 2) })
+  },
 
   grid: computed('avgBuilds', function () {
     return {
+      lines: { front: false },
       y: {
-        lines: [{ value: this.get('avgBuilds') }],
+        lines: [{
+          value: this.get('avgBuilds'),
+          class: 'insights-glance__centerline',
+        }],
       }
     };
+  }),
+
+  intervalSettings: computed(function () {
+    return this.get('insights').getIntervalSettings();
   }),
 
   // Previous interval chart data
