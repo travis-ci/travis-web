@@ -80,7 +80,11 @@ export default Component.extend({
   },
 
   tooltip: {
-    position: (data, width, height, element) => ({ top: -50, left: (width / 2) }),
+    position: (data, width, height, element) => {
+      let top = -50;
+      let left = (element.getAttribute('width') - width) / 2;
+      return ({ top, left });
+    },
     format: {
       value: d3format(','),
     }

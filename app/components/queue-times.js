@@ -2,8 +2,9 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { pluralize } from 'ember-inflector';
-import { reads, empty, or } from '@ember/object/computed';
+import { reads, equal, or } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
+import { format as d3format } from 'd3';
 
 export default Component.extend({
   classNames: ['insights-glance'],
@@ -11,48 +12,6 @@ export default Component.extend({
   private: false,
 
   insights: service(),
-
-  // Chart options
-  intervalSettings: computed(function () {
-    return this.get('insights').getIntervalSettings();
-  }),
-
-  options: computed('interval', 'intervalSettings', 'avgWaitMins', function () {
-    return {
-      title: { text: undefined },
-      xAxis: { visible: false, type: 'datetime' },
-      yAxis: {
-        visible: true,
-        title: { text: undefined },
-        plotLines: [{
-          value: this.avgWaitMins,
-          color: '#eaeaea',
-          width: 1,
-        }],
-        labels: [],
-        gridLineWidth: 0,
-      },
-      legend: { enabled: false },
-      chart: {
-        type: 'spline',
-        height: '25%',
-        spacing: [5, 5, 5, 5],
-      },
-      plotOptions: {
-        series: {
-          color: '#666',
-          lineWidth: 1,
-          states: {  hover: { lineWidth: 2, halo: { size: 8 } } },
-          marker: { enabled: false },
-        },
-      },
-      tooltip: {
-        xDateFormat: this.intervalSettings[this.interval].tooltipLabelFormat,
-        outside: true,
-        pointFormat: '<span>{series.name}: <b>{point.y}</b></span><br/>',
-      },
-    };
-  }),
 
   // Current Interval Chart Data
   requestData: task(function* () {
@@ -70,18 +29,15 @@ export default Component.extend({
     );
   }),
   chartData: reads('requestData.lastSuccessful.value'),
-  plotData: reads('chartData.data.times_waiting.plotData'),
+  waitMins: reads('chartData.data.times_waiting.plotValues'),
+  labels: reads('chartData.labels'),
+
   isLoading: reads('requestData.isRunning'),
-  isEmpty: empty('plotData'),
+  isEmpty: equal('totalWaitMins', 0),
   showPlaceholder: or('isLoading', 'isEmpty'),
 
-  content: computed('plotData', function () {
-    return [{
-      name: 'Minutes',
-      data: this.get('plotData'),
-    }];
-  }),
-
+  // Total / average
+  totalWaitMins: reads('chartData.data.times_waiting.total'),
   avgWaitMins: computed('chartData.data.times_waiting.average', function () {
     return Math.round(this.get('chartData.data.times_waiting.average') * 100) / 100;
   }),
@@ -92,6 +48,64 @@ export default Component.extend({
       ${this.avgWaitMins.toLocaleString()}
       ${pluralize(this.avgWaitMins, 'min', {withoutCount: true})}
     `.trim();
+  }),
+
+  // Chart component data
+  data: computed('waitMins', 'labels', function () {
+    return {
+      type: 'spline',
+      x: 'x',
+      columns: [
+        ['x', ...this.get('labels')],
+        ['Minutes', ...this.get('waitMins')],
+      ],
+      colors: {
+        Minutes: '#666',
+      },
+    };
+  }),
+
+  // Chart component options
+  legend: { show: false },
+  size: { height: 50 },
+
+  point: {
+    r: 0,
+    focus: {
+      expand: { r: 4 },
+    }
+  },
+
+  axis: {
+    x: {
+      type: 'timeseries',
+      tick: { format: '%Y-%m-%d' },
+      show: false,
+    },
+    y: { show: false }
+  },
+
+  tooltip: {
+    position: (data, width, height, element) => {
+      let top = -50;
+      let left = (element.getAttribute('width') - width) / 2;
+      return ({ top, left });
+    },
+    format: {
+      value: d3format(','),
+    }
+  },
+
+  grid: computed('avgWaitMins', function () {
+    return {
+      lines: { front: false },
+      y: {
+        lines: [{
+          value: this.get('avgWaitMins'),
+          class: 'insights-glance__centerline',
+        }],
+      }
+    };
   }),
 
   // Previous interval chart data
@@ -133,7 +147,7 @@ export default Component.extend({
     return `${Math.abs(this.percentageChange)}%`;
   }),
 
-  percentChangeTitle: computed('prevAvgWaitMins', 'interval', 'intervalSettings', function () {
+  percentChangeTitle: computed('prevAvgWaitMins', 'interval', function () {
     return [
       'Averaged',
       this.prevAvgWaitMins.toLocaleString(),
