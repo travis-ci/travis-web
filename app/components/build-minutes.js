@@ -2,8 +2,10 @@ import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 import { pluralize } from 'ember-inflector';
-import { reads, empty, or } from '@ember/object/computed';
+import { reads, equal, or } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
+import { format as d3format } from 'd3';
+
 
 export default Component.extend({
   classNames: ['insights-glance'],
@@ -11,48 +13,6 @@ export default Component.extend({
   private: false,
 
   insights: service(),
-
-  // Chart options
-  intervalSettings: computed(function () {
-    return this.get('insights').getIntervalSettings();
-  }),
-
-  options: computed('interval', 'intervalSettings', 'avgBuildMins', function () {
-    return {
-      title: { text: undefined },
-      xAxis: { visible: false, type: 'datetime' },
-      yAxis: {
-        visible: true,
-        title: { text: undefined },
-        plotLines: [{
-          value: this.avgBuildMins,
-          color: '#eaeaea',
-          width: 1,
-        }],
-        labels: [],
-        gridLineWidth: 0,
-      },
-      legend: { enabled: false },
-      chart: {
-        type: 'spline',
-        height: '25%',
-        spacing: [5, 5, 5, 5],
-      },
-      plotOptions: {
-        series: {
-          color: '#666',
-          lineWidth: 1,
-          states: {  hover: { lineWidth: 2, halo: { size: 8 } } },
-          marker: { enabled: false, radius: 2 },
-        },
-      },
-      tooltip: {
-        xDateFormat: this.intervalSettings[this.interval].tooltipLabelFormat,
-        outside: true,
-        pointFormat: '<span>{series.name}: <b>{point.y}</b></span><br/>',
-      },
-    };
-  }),
 
   // Current Interval Chart Data
   requestData: task(function* () {
@@ -63,7 +23,6 @@ export default Component.extend({
       'sum',
       ['times_running'],
       {
-        calcTotal: true,
         calcAvg: true,
         private: this.private,
         customSerialize: (key, val) => [key, Math.round(val / 60)],
@@ -71,17 +30,12 @@ export default Component.extend({
     );
   }),
   chartData: reads('requestData.lastSuccessful.value'),
-  plotData: reads('chartData.data.times_running.plotData'),
-  isLoading: reads('requestData.isRunning'),
-  isEmpty: empty('plotData'),
-  showPlaceholder: or('isLoading', 'isEmpty'),
+  buildMins: reads('chartData.data.times_running.plotValues'),
+  labels: reads('chartData.labels'),
 
-  content: computed('plotData', function () {
-    return [{
-      name: 'Minutes',
-      data: this.get('plotData'),
-    }];
-  }),
+  isLoading: reads('requestData.isRunning'),
+  isEmpty: equal('totalBuildMins', 0),
+  showPlaceholder: or('isLoading', 'isEmpty'),
 
   // Total / average
   totalBuildMins: reads('chartData.data.times_running.total'),
@@ -93,6 +47,60 @@ export default Component.extend({
       ${this.totalBuildMins.toLocaleString()}
       ${pluralize(this.totalBuildMins, 'min', {withoutCount: true})}
     `.trim();
+  }),
+
+  // Chart component data
+  data: computed('buildMins', 'labels', function () {
+    return {
+      type: 'spline',
+      x: 'x',
+      columns: [
+        ['x', ...this.get('labels')],
+        ['Minutes', ...this.get('buildMins')],
+      ],
+      colors: {
+        Minutes: '#666',
+      },
+    };
+  }),
+
+  // Chart component options
+  legend: { show: false },
+  size: { height: 50 },
+
+  point: {
+    r: 0,
+    focus: {
+      expand: { r: 4 },
+    }
+  },
+
+  axis: {
+    x: {
+      type: 'timeseries',
+      tick: { format: '%Y-%m-%d' },
+      show: false,
+    },
+    y: { show: false }
+  },
+
+  tooltip: {
+    position: (data, width, height, element) => ({ top: -50, left: (width / 2) }),
+    format: {
+      value: d3format(','),
+    }
+  },
+
+  grid: computed('avgBuildMins', function () {
+    return {
+      lines: { front: false },
+      y: {
+        lines: [{
+          value: this.get('avgBuildMins'),
+          class: 'insights-glance__centerline',
+        }],
+      }
+    };
   }),
 
   // Request chart data

@@ -10,6 +10,6 @@
   {{#if showPlaceholder}}
     <hr class="insights-glance__chart-placeholder" />
   {{else}}
-    {{high-charts content=content chartOptions=options}}
+    {{c3-chart class='chart-component' data=data axis=axis legend=legend grid=grid size=size point=point tooltip=tooltip}}
   {{/if}}
 </div>

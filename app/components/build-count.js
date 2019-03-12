@@ -4,6 +4,7 @@ import { computed } from '@ember/object';
 import { pluralize } from 'ember-inflector';
 import { reads, equal, or } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
+import { format as d3format } from 'd3';
 
 export default Component.extend({
   classNames: ['insights-glance'],
@@ -79,7 +80,10 @@ export default Component.extend({
   },
 
   tooltip: {
-    position: (data, width, height, element) => ({ top: -50, left: (width / 2) })
+    position: (data, width, height, element) => ({ top: -50, left: (width / 2) }),
+    format: {
+      value: d3format(','),
+    }
   },
 
   grid: computed('avgBuilds', function () {
@@ -92,10 +96,6 @@ export default Component.extend({
         }],
       }
     };
-  }),
-
-  intervalSettings: computed(function () {
-    return this.get('insights').getIntervalSettings();
   }),
 
   // Previous interval chart data
@@ -113,7 +113,7 @@ export default Component.extend({
   prevTotalBuilds: reads('pastIntervalData.data.count_started.total'),
 
   // Percent change
-  percentChangeTitle: computed('prevTotalBuilds', 'interval', 'intervalSettings', function () {
+  percentChangeTitle: computed('prevTotalBuilds', 'interval', function () {
     return [
       this.prevTotalBuilds.toLocaleString(),
       pluralize(this.prevTotalBuilds, 'build', {withoutCount: true}),

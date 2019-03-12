@@ -26,7 +26,7 @@ module('Integration | Component | build-minutes', function (hooks) {
     assert.dom('.insights-glance').doesNotHaveClass('insights-glance--loading');
     assert.dom('.insights-glance__title').hasText('Total Build Minutes');
     assert.dom('.insights-glance__stat').hasText('5 mins');
-    assert.dom('.insights-glance__chart .highcharts-wrapper').exists();
+    assert.dom('.insights-glance__chart .chart-component').exists();
   });
 
   test('loading state renders', async function (assert) {
@@ -43,7 +43,7 @@ module('Integration | Component | build-minutes', function (hooks) {
     assert.dom('.insights-glance').hasClass('insights-glance--loading');
     assert.dom('.insights-glance__title').hasText('Total Build Minutes');
     assert.dom('.insights-glance__stat').hasText('');
-    assert.dom('.insights-glance__chart .highcharts-wrapper').doesNotExist();
+    assert.dom('.insights-glance__chart .chart-component').doesNotExist();
     assert.dom('.insights-glance__chart-placeholder').exists();
   });
 });
