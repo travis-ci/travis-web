@@ -9,5 +9,6 @@ module('Acceptance | pr deployments', function (hooks) {
     await visit('/pr-deployments');
 
     assert.equal(currentURL(), '/pr-deployments');
+    assert.ok(false);
   });
 });
