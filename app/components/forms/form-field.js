@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 import { presense } from 'travis/utils/form-validators';
 import { combineValidators } from 'travis/helpers/combine-validators';
-import { equal } from '@ember/object/computed';
+import { equal, or, and, notEmpty, not } from '@ember/object/computed';
 
 export const FIELD_STATE = {
   DEFAULT: 'default',
@@ -14,7 +14,9 @@ export default Component.extend({
   classNameBindings: [
     'isValid:travis-form__field--valid',
     'isError:travis-form__field--error',
-    'isFocused:travis-form__field--focused'
+    'isFocused:travis-form__field--focused',
+    'showIcon:travis-form__field--with-icon',
+    'showFrame::travis-form__field--without-frame'
   ],
 
   fieldElementId: null,
@@ -28,8 +30,11 @@ export default Component.extend({
   helperText: '',
   disabled: false,
   showRequiredMark: false,
+  allowClear: false,
+  icon: '',
+  disableFrame: false,
 
-  validator: () => true,
+  validator: null,
   required: equal('validator.kind', presense),
 
   autoValidate: true,
@@ -41,12 +46,28 @@ export default Component.extend({
   isValid: equal('state', FIELD_STATE.VALID),
   isError: equal('state', FIELD_STATE.ERROR),
 
+  requiresValidation: or('required', 'validator'),
+
+  showClear: and('allowClear', 'value'),
+  showIcon: notEmpty('icon'),
+  showFrame: not('disableFrame'),
+
   validate(value) {
     let validator = this.validator;
+
+    if (!validator) {
+      if (this.required)
+        validator = presense();
+      else
+        return;
+    }
+
     if (this.required && validator.kind !== presense) {
       validator = combineValidators([validator, presense()]);
     }
+
     const validationResult = validator(value || this.value);
+
     if (validationResult === true) {
       this.setValid();
     } else {
@@ -103,7 +124,12 @@ export default Component.extend({
 
     handleChange(value) {
       this.validate(value);
-      this.onChange && this.onChange(value);
+      this.onChange(value);
+    },
+
+    handleClear() {
+      if (this.allowClear)
+        this.send('handleChange', '');
     },
 
     setFieldElementId(fieldElementId) {
