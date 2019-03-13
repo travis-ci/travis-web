@@ -54,7 +54,13 @@ export default Component.extend({
 
   validate(value) {
     let validator = this.validator;
-    if (!validator) return;
+
+    if (!validator) {
+      if (this.required)
+        validator = presense();
+      else
+        return;
+    }
 
     if (this.required && validator.kind !== presense) {
       validator = combineValidators([validator, presense()]);
