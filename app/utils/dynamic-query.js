@@ -14,24 +14,30 @@ import bindGenerator from 'travis/utils/bind-generator';
  * Example:
  *
  * const obj = Ember.Object.extend({
- *   collection: dynamicQuery(function* ({ page = 1, filter = '' }) {
- *     yield this.store.query({ page, filter });
- *   })
+ *   resources: dynamicQuery(function* ({ page = 1, filter = '' }) {
+ *     yield this.store.query('resource', { page, filter });
+ *   }),
+ *
+ *   activeResources: filterBy('resources', 'active')
  * })
  *
- * obj.collection.forEach(item => console.log(item));
+ * obj.resources.forEach(resource => console.log(resource));
  *
- * obj.collection.switchToNextPage();
- * obj.collection.switchToPreviousPage();
- * obj.applyFilter('term');
+ * obj.resources.switchToNextPage();
+ * obj.resources.switchToPreviousPage();
+ * obj.resources.applyFilter('term');
  *
- * {{#unless obj.collection.isLoading }}
- *   {{each obj.collection as |item| }}
- *     {{item.name}}
+ * console.log(obj.resources.length) // 25 -> items per page
+ * console.log(obj.resources.total) // 68 -> total items
+ *
+ * {{#unless obj.resources.isLoading }}
+ *   {{#each obj.resources as |resource| }}
+ *     {{resource.name}}
  *   {{/each}}
  * {{/unless}}
- * {{#if obj.hasNextPage }}
- *   <button onclick={{action obj.switchToNextPage }}>
+ *
+ * {{#if obj.resources.hasNextPage }}
+ *   <button onclick={{action obj.resources.switchToNextPage }}>
  *     Go To Next Page
  *   </button>
  * {{/if}}

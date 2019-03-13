@@ -4,7 +4,7 @@
  * Example:
  *
  * const gen = function* (param1, param2) {
- *  yeild something();
+ *  yield something();
  * }
  *
  * const boundGenerator = bindGenerator(gen, this); // the `boundGenerator` is the generator function bound to `this` context
