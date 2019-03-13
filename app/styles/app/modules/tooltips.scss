@@ -1,23 +1,25 @@
+$tooltip-color: $asphalt-grey;
+
 .ember-tooltip {
   padding: 3px 6px;
   font-size: 12px;
-  background-color: #666666;
+  background-color: $tooltip-color;
   text-align: center;
 
   &[x-placement^="top"] .ember-tooltip-arrow {
-    border-top-color: #666666;
+    border-top-color: $tooltip-color;
   }
 
   &[x-placement^="bottom"] .ember-tooltip-arrow {
-    border-bottom-color: #666666;
+    border-bottom-color: $tooltip-color;
   }
 
   &[x-placement^="left"] .ember-tooltip-arrow {
-    border-left-color: #666666;
+    border-left-color: $tooltip-color;
   }
 
   &[x-placement^="right"] .ember-tooltip-arrow {
-    border-right-color: #666666;
+    border-right-color: $tooltip-color;
   }
 
 }
