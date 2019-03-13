@@ -3,6 +3,7 @@ import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 import { reads, and, not, equal } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
+import { format as d3format } from 'd3';
 
 const invervalOverrides = {
   day: {
@@ -93,7 +94,6 @@ export default Component.extend({
       'sum',
       ['count_passed', 'count_failed', 'count_errored', 'count_canceled'],
       {
-        calcTotal: true,
         intervalSettings: invervalOverrides,
         private: this.private,
       }
@@ -117,9 +117,10 @@ export default Component.extend({
   axis: computed('interval', 'intervalSettings', () => ({
     x: {
       type: 'timeseries',
-      tick: {
-        format: '%Y-%m-%d',
-      }
+      tick: { format: '%Y-%m-%d' },
+    },
+    y: {
+      tick: { format: d3format('d'), count: 6 }
     }
   })),
 
