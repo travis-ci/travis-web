@@ -1,16 +1,24 @@
-<label for={{fieldElementId}} class='travis-form__label'>
-  {{label}}
-  {{#if showRequiredMark}}
-    <span class='travis-form__required-mark'>
-      *
-      {{ember-tooltip text='This field is required' delay=300 }}
-    </span>
-  {{/if}}
-</label>
+{{#if label }}
+  <label for={{fieldElementId}} class='travis-form__label'>
+    {{label}}
+    {{#if showRequiredMark}}
+      <span class='travis-form__required-mark'>
+        *
+        {{ember-tooltip text='This field is required' delay=300 }}
+      </span>
+    {{/if}}
+  </label>
+{{/if}}
 
 {{#if helperText}}
   <div class="travis-form__helper-text">
     {{helperText}}
+  </div>
+{{/if}}
+
+{{#if showIcon }}
+  <div class="travis-form__icon">
+    {{svg-jar icon }}
   </div>
 {{/if}}
 
@@ -48,16 +56,34 @@
     onclose=(action 'handleSelectBlur')
     onchange=(action 'handleChange')
   )
+  checkbox=(component 'forms/form-checkbox'
+    form=form
+    checked=value
+    disabled=disabled
+    onFocus=(action 'handleFocus')
+    onBlur=(action 'handleBlur')
+    onChange=(action 'handleChange')
+    onInit=(action 'setFieldElementId')
+    class='travis-form__field-component'
+  )
 )}}
 
-<div class="travis-form__field-badge travis-form__field-badge--error">
-  {{svg-jar 'form-error-icon' width=14 height=14}}
-</div>
+{{#if requiresValidation }}
+  <div class="travis-form__field-badge travis-form__field-badge--error">
+    {{svg-jar 'form-error-icon' width=14 height=14}}
+  </div>
 
-<div class="travis-form__field-badge travis-form__field-badge--valid">
-  {{svg-jar 'form-valid-icon' width=14 height=14}}
-</div>
+  <div class="travis-form__field-badge travis-form__field-badge--valid">
+    {{svg-jar 'form-valid-icon' width=14 height=14}}
+  </div>
 
-<div class="travis-form__error-message">
-  {{errorMessage}} &nbsp;
-</div>
+  <div class="travis-form__error-message">
+    {{errorMessage}} &nbsp;
+  </div>
+{{/if}}
+
+{{#if showClear }}
+  <div class="travis-form__clear" onclick={{action 'handleClear'}}>
+    &times;
+  </div>
+  {{/if}}
