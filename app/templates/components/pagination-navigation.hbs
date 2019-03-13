@@ -1,11 +1,17 @@
 {{#if showPagination}}
   <ul role="navigation">
+
     {{#if prevPageNumber}}
-      <li>{{#link-to route (pagination-query-params queryParam prevPageNumber)
+      <li>
+        {{#link-to route (pagination-query-params queryParam prevPageNumber)
           data-test-prev-pagination-link
           rel="prev"
           class="pagination-button"
-          title="Go to previous page"}}prev{{/link-to}}</li>
+          title="Go to previous page"
+        }}
+          prev
+        {{/link-to}}
+      </li>
     {{/if}}
 
     {{#each pages as |page|}}
@@ -14,7 +20,10 @@
           {{#link-to route (pagination-query-params queryParam page.num)
             data-test-page-pagination-link=page.num
             class="pagination-link"
-            title=(concat "Go to page number " page.num)}}{{page.num}}{{/link-to}}
+            title=(concat "Go to page number " page.num)
+          }}
+            {{page.num}}
+          {{/link-to}}
         {{else}}
           ...
         {{/if}}
@@ -22,10 +31,17 @@
     {{/each}}
 
     {{#if nextPageNumber}}
-      <li>{{#link-to route (pagination-query-params queryParam nextPageNumber)
-            data-test-next-pagination-link rel="next"
-            class="pagination-button"
-            title="Go to next page"}}next{{/link-to}}</li>
+      <li>
+        {{#link-to route (pagination-query-params queryParam nextPageNumber)
+          data-test-next-pagination-link
+          rel="next"
+          class="pagination-button"
+          title="Go to next page"
+        }}
+          next
+        {{/link-to}}
+      </li>
     {{/if}}
+
   </ul>
-{{/if}}
+  {{/if}}
