@@ -5,6 +5,43 @@ import { assert } from '@ember/debug';
 import { task } from 'ember-concurrency';
 import bindGenerator from 'travis/utils/bind-generator';
 
+/*
+ * This utility creates a computed property that can be used on any Ember.Object instance
+ * to dynamically handle pagination navigation and filtering on a remote collection.
+ * The resulting property is an Ember.Array itself and can be iterated, but has some
+ * additional helper properties and methods.
+ *
+ * Example:
+ *
+ * const obj = Ember.Object.extend({
+ *   resources: dynamicQuery(function* ({ page = 1, filter = '' }) {
+ *     yield this.store.query('resource', { page, filter });
+ *   }),
+ *
+ *   activeResources: filterBy('resources', 'active')
+ * })
+ *
+ * obj.resources.forEach(resource => console.log(resource));
+ *
+ * obj.resources.switchToNextPage();
+ * obj.resources.switchToPreviousPage();
+ * obj.resources.applyFilter('term');
+ *
+ * console.log(obj.resources.length) // 25 -> items per page
+ * console.log(obj.resources.total) // 68 -> total items
+ *
+ * {{#unless obj.resources.isLoading }}
+ *   {{#each obj.resources as |resource| }}
+ *     {{resource.name}}
+ *   {{/each}}
+ * {{/unless}}
+ *
+ * {{#if obj.resources.hasNextPage }}
+ *   <button onclick={{action obj.resources.switchToNextPage }}>
+ *     Go To Next Page
+ *   </button>
+ * {{/if}}
+ */
 export default function dynamicQuery(...args) {
   const taskFn = args.pop();
 
