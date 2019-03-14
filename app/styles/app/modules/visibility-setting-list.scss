@@ -15,10 +15,11 @@
     justify-content: flex-start;
     align-items: center;
     margin: .5rem 0;
+    padding: 0;
     background-color: transparent;
     cursor: pointer;
 
-    .visibility-setting-list-item__description {
+    &__description {
       background-color: transparent;
       cursor: pointer;
       text-align: left;
@@ -26,7 +27,7 @@
       color: $cement-grey;
     }
 
-    .visibility-setting-list-item__radio {
+    &__radio {
       display: inline-block;
       border: 1px solid $oxide-blue;
       border-radius: 50%;
@@ -46,7 +47,7 @@
       }
     }
 
-    &--selected .visibility-setting-list-item__radio::before {
+    &--selected &__radio::before {
       background-color: $oxide-blue;
     }
   }
