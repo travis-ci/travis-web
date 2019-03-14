@@ -1,59 +1,60 @@
+{{#if isVisible}}
+  {{#each options as |option index|}}
+    <button
+      class="visibility-setting-list-item {{if (eq currentSelection option.value) 'visibility-setting-list-item--selected'}}"
+      {{action (mut currentSelection) option.value}}
+    >
+      <span class="visibility-setting-list-item__radio" ></span>
+      <span class="visibility-setting-list-item__description">{{option.description}}</span>
+    </button>
+  {{/each}}
+  <div class="visibility-setting-list-item visibility-setting-list-item--save">
+    <button
+      class="settings-button"
+      {{action 'toggleConfirmationModal'}}
+      disabled={{eq change 0}}
+    >Save</button>
+  </div>
 
-{{#each this.options as |option index|}}
-  <button
-    class="visibility-setting-list-item {{if (eq currentSelection option.value) 'visibility-setting-list-item--selected'}}"
-    {{action (mut currentSelection) option.value}}
-  >
-    <span class="visibility-setting-list-item__radio" ></span>
-    <span class="visibility-setting-list-item__description">{{option.description}}</span>
-  </button>
-{{/each}}
-<div class="visibility-setting-list-item visibility-setting-list-item--save">
-  <button
-    class="settings-button"
-    {{action 'toggleConfirmationModal'}}
-    disabled={{eq change 0}}
-  >Save</button>
-</div>
+  {{#if isShowingConfirmationModal}}
+    {{#modal-dialog
+      targetAttachment="center"
+      translucentOverlay=true
+      toggleConfirmationModal='toggleConfirmationModal'
+      containerClass="visibility-settings-modal"
+    }}
+      <div class="visibility-settings-modal__top">
+        <h3 class="visibility-settings-modal__header">{{modalHeaderText}}</h3>
+        <button
+          type="button"
+          title="Close modal"
+          class="pointer"
+          autofocus
+          {{action 'toggleConfirmationModal'}}
+        >{{svg-jar 'icon-failed' class="icon"}}</button>
+      </div>
 
-{{#if isShowingConfirmationModal}}
-  {{#modal-dialog
-    targetAttachment="center"
-    translucentOverlay=true
-    toggleConfirmationModal='toggleConfirmationModal'
-    containerClass="visibility-settings-modal"
-  }}
-    <div class="visibility-settings-modal__top">
-      <h3 class="visibility-settings-modal__header">{{modalHeaderText}}</h3>
-      <button
-        type="button"
-        title="Close modal"
-        class="pointer"
-        autofocus
-        {{action 'toggleConfirmationModal'}}
-      >{{svg-jar 'icon-failed' class="icon"}}</button>
-    </div>
+      <div class="visibility-settings-modal__body">
+        <p>{{modalBodyText}}</p>
+      </div>
 
-    <div class="visibility-settings-modal__body">
-      <p>{{modalBodyText}}</p>
-    </div>
+      <div class="visibility-settings-modal__controls">
+        <button
+          data-test-visibility-settings-modal-cancel-button
+          href="#"
+          role="button"
+          class="button button--red"
+          {{action 'toggleConfirmationModal'}}
+        >Cancel</button>
 
-    <div class="visibility-settings-modal__controls">
-      <button
-        data-test-visibility-settings-modal-cancel-button
-        href="#"
-        role="button"
-        class="button button--red"
-        {{action 'toggleConfirmationModal'}}
-      >Cancel</button>
-
-      <button
-        data-test-visibility-settings-modal-confirm-button
-        href="#"
-        role="button"
-        class="button button--blue"
-        {{action 'confirm'}}
-      >Confirm</button>
-    </div>
-  {{/modal-dialog}}
+        <button
+          data-test-visibility-settings-modal-confirm-button
+          href="#"
+          role="button"
+          class="button button--blue"
+          {{action 'confirm'}}
+        >Confirm</button>
+      </div>
+    {{/modal-dialog}}
+  {{/if}}
 {{/if}}

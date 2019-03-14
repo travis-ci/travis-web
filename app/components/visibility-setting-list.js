@@ -1,6 +1,6 @@
 import Component from '@ember/component';
-import { reads } from '@ember/object/computed';
 import { computed } from '@ember/object';
+import { reads, empty, not } from '@ember/object/computed';
 import KeyboardShortcuts from 'ember-keyboard-shortcuts/mixins/component';
 
 export default Component.extend(KeyboardShortcuts, {
@@ -13,6 +13,9 @@ export default Component.extend(KeyboardShortcuts, {
   options: [],
   selected: '',
   isShowingConfirmationModal: false,
+  isEmpty: empty('options'),
+  isVisible: not('isEmpty'),
+
   currentSelection: reads('selected'),
   currentSelectionIndex: computed('currentSelection', 'options',
     function () {
