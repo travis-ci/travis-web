@@ -69,7 +69,7 @@ export default Component.extend({
   axis: {
     x: {
       type: 'timeseries',
-      tick: { format: '%Y-%m-%d' },
+      tick: { format: '%A, %b %e' },
       show: false,
     },
     y: { show: false }

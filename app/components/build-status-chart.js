@@ -5,7 +5,7 @@ import { reads, and, not, equal } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
 import { format as d3format } from 'd3';
 
-const invervalOverrides = {
+const intervalOverrides = {
   day: {
     subInterval: '1hour',
   },
@@ -24,65 +24,11 @@ export default Component.extend({
 
   // Chart Options
   intervalSettings: computed(function () {
-    return this.get('insights').getIntervalSettings(invervalOverrides);
+    return this.get('insights').getIntervalSettings(intervalOverrides);
   }),
 
   currentIntervalLabel: computed('interval', 'intervalSettings', function () {
     return this.intervalSettings[this.interval].instanceLabel;
-  }),
-
-  options: computed('interval', 'intervalSettings', function () {
-    return {
-      title: { text: undefined },
-      xAxis: {
-        type: 'datetime',
-        lineColor: '#f3f3f3',
-        labels: { format: this.intervalSettings[this.interval].xAxisLabelFormat },
-      },
-      yAxis: {
-        title: { text: undefined },
-        reversedStacks: false,
-        gridLineDashStyle: 'Dash',
-        gridLineColor: '#f3f3f3',
-        lineWidth: 1,
-        lineColor: '#f3f3f3',
-        tickAmount: 6,
-        allowDecimals: false,
-      },
-      legend: {
-        itemStyle: {
-          fontWeight: 400,
-          fontSize: '10px',
-          color: '#9d9d9d',
-          textTransform: 'uppercase',
-        },
-      },
-      chart: {
-        type: 'column',
-        height: '40%',
-        plotBackgroundColor: '#fdfdfd',
-      },
-      plotOptions: {
-        column: { stacking: 'normal' },
-      },
-      tooltip: {
-        xDateFormat: this.intervalSettings[this.interval].tooltipLabelFormat,
-        useHTML: true,
-        pointFormat: `
-          <div style="margin-top: 2px;">
-            <span style="color:{point.color};">●</span> {series.name}: <b>{point.y}</b>
-          </div>
-        `,
-      },
-      responsive: {
-        rules: [{
-          condition: { maxWidth: 800 },
-          chartOptions: {
-            chart: { height: 400 },
-          },
-        }]
-      },
-    };
   }),
 
   // Current Interval Chart Data
@@ -94,7 +40,7 @@ export default Component.extend({
       'sum',
       ['count_passed', 'count_failed', 'count_errored', 'count_canceled'],
       {
-        intervalSettings: invervalOverrides,
+        intervalSettings: intervalOverrides,
         private: this.private,
       }
     );
@@ -114,16 +60,7 @@ export default Component.extend({
   isEmpty: equal('total', 0),
   hasNoBuilds: and('isNotLoading', 'isEmpty'),
 
-  axis: computed('interval', 'intervalSettings', () => ({
-    x: {
-      type: 'timeseries',
-      tick: { format: '%Y-%m-%d' },
-    },
-    y: {
-      tick: { format: d3format('d'), count: 6 }
-    }
-  })),
-
+  // Chart component data
   data: computed('passed', 'failed', 'errored', 'cancelled', 'labels',
     function () {
       return {
@@ -143,10 +80,28 @@ export default Component.extend({
           Failing: 'rgba(219, 69, 69, 0.8)',
           Errored: 'rgba(237, 222, 63, 0.8)',
           Cancelled: 'rgba(157, 157, 157, 0.8)',
-        }
+        },
       };
     }
   ),
+
+  // Chart component options
+  grid: {
+    lines: { front: false },
+    y: {
+      show: true,
+    }
+  },
+
+  axis: {
+    x: {
+      type: 'timeseries',
+      tick: { format: '%b %e' },
+    },
+    y: {
+      tick: { format: d3format('d'), count: 6 }
+    }
+  },
 
   // Request chart data
   didReceiveAttrs() {
