@@ -5,21 +5,40 @@ $axis-label-color: $asphalt-grey;
 $grid-line-color: $pebble-grey;
 $grid-background-color: #fdfdfd;
 
+$med-small-up: "only screen and (min-width: 36em)";
+
 .insights-controls {
   display: flex;
   justify-content: space-between;
   align-items: center;
 
-  .insights-dates {
-    font-size: 12px;
-    font-weight: 600;
-    text-transform: uppercase;
+  &-left {
+    display: grid;
+    grid-auto-flow: row;
+    align-items: baseline;
+    gap: 3px 0;
+
+    @media #{$med-small-up} {
+      grid-auto-flow: column;
+    }
+
+    .insights-dates {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .insights-control-divider {
+      margin: 0 .5rem;
+      color: $dry-cement;
+      display: none;
+
+      @media #{$med-small-up} {
+        display: inline;
+      }
+    }
   }
 
-  .insights-control-divider {
-    margin: 0 .5rem;
-    color: $dry-cement;
-  }
 
   .insights-privacy-selector__selected {
     font-weight: 700;
@@ -107,7 +126,7 @@ $grid-background-color: #fdfdfd;
   overflow: hidden;
   grid-column: span 4;
 
-  @media #{"only screen and (min-width: 35em)"} {
+  @media #{$med-small-up} {
     grid-column: span 2;
   }
 
