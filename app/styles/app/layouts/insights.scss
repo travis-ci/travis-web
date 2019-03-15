@@ -11,6 +11,7 @@ $med-small-up: "only screen and (min-width: 38em)";
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 10px 0 15px;
 
   &-left {
     display: grid;
@@ -43,6 +44,7 @@ $med-small-up: "only screen and (min-width: 38em)";
     display: grid;
     grid-auto-flow: column;
     align-items: baseline;
+    gap: 0 5px;
 
     .travis-form {
       display: inline-block;
@@ -62,7 +64,7 @@ $med-small-up: "only screen and (min-width: 38em)";
     padding: 0;
     display: flex;
     justify-content: flex-end;
-    margin: 0.5rem 0 1.5rem 0;
+    margin: 0;
 
     a {
       color: $cement-grey;
