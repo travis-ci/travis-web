@@ -91,8 +91,7 @@ export default Service.extend({
     return [start, end];
   },
 
-  getChartData: task(function*
-  (owner, interval, subject, func, metricNames = [], options = {}) {
+  getChartData: task(function* (owner, interval, subject, func, metricNames = [], options = {}) {
     /* Prepare for API request to fetch metrics */
     const currentOptions = mergeMetricSettings(options, func);
     const intervalSettings = this.getIntervalSettings(currentOptions.intervalSettings);
