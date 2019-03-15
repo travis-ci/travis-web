@@ -42,7 +42,7 @@ $med-small-up: "only screen and (min-width: 38em)";
 
   .insights-privacy-selector {
     display: grid;
-    grid-auto-flow: column;
+    grid-template-columns: auto 1fr;
     align-items: baseline;
     gap: 0 5px;
 
