@@ -26,7 +26,11 @@ export default Component.extend({
   },
 
   change({ target }) {
-    this.onChange(target.value);
+    this.onChange && this.onChange(target.value);
+  },
+
+  keyUp({ target }) {
+    this.onKeyUp && this.onKeyUp(target.value);
   },
 
   didInsertElement() {

@@ -1,0 +1,58 @@
+.loading-overlay {
+  position: relative;
+  min-height: 15px;
+
+  &--visible &__backdrop {
+    opacity: 1;
+    top: 0;
+    bottom: 0;
+  }
+
+  &__backdrop {
+    opacity: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 50%;
+    bottom: 50%;
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.8);
+    overflow: hidden;
+
+    transition: all 0.2s ease-in;
+  }
+
+  &__indicator {
+    width: 7%;
+    min-width: 30px;
+    position: relative;
+
+    &:before {
+      content: '';
+      display: block;
+      padding-top: 100%;
+    }
+
+    .loading-indicator {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      i {
+        width: 30%;
+        height: 30%;
+      }
+
+    }
+
+  }
+
+}

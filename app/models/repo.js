@@ -8,8 +8,15 @@ import attr from 'ember-data/attr';
 import { hasMany, belongsTo } from 'ember-data/relationships';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
-import { oneWay } from '@ember/object/computed';
+import { reads, equal } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
+
+export const MIGRATION_STATUS = {
+  QUEUED: 'queued',
+  MIGRATING: 'migrating',
+  SUCCESS: 'success',
+  FAILURE: 'failure'
+};
 
 const Repo = Model.extend({
   api: service(),
@@ -28,11 +35,16 @@ const Repo = Model.extend({
   emailSubscribed: attr('boolean'),
   migrationStatus: attr(),
 
-  ownerType: oneWay('owner.@type'),
+  ownerType: reads('owner.@type'),
 
-  currentBuildFinishedAt: oneWay('currentBuild.finishedAt'),
-  currentBuildState: oneWay('currentBuild.state'),
-  currentBuildId: oneWay('currentBuild.id'),
+  currentBuildFinishedAt: reads('currentBuild.finishedAt'),
+  currentBuildState: reads('currentBuild.state'),
+  currentBuildId: reads('currentBuild.id'),
+
+  isMigrationQueued: equal('migrationStatus', MIGRATION_STATUS.QUEUED),
+  isMigrationMigrating: equal('migrationStatus', MIGRATION_STATUS.MIGRATING),
+  isMigrationSucceeded: equal('migrationStatus', MIGRATION_STATUS.SUCCESS),
+  isMigrationFailed: equal('migrationStatus', MIGRATION_STATUS.FAILURE),
 
   defaultBranch: belongsTo('branch', {
     async: false
