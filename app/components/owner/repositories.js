@@ -1,13 +1,12 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
+import { reads, notEmpty, or, not, and, bool } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import config from 'travis/config/environment';
 
 import window from 'ember-window-mock';
 import { task } from 'ember-concurrency';
 import fetchAll from 'travis/utils/fetch-all';
-
-import { reads, sort, notEmpty } from '@ember/object/computed';
 
 const { appName, migrationRepositoryCountLimit } = config.githubApps;
 
@@ -16,30 +15,51 @@ export default Component.extend({
   store: service(),
   externalLinks: service(),
 
-  page: 1,
-  appsPage: 1,
-  appsOrgPage: 1,
-
-  login: '',
   account: null,
-  deprecated: null,
-  lockedGithubAppsRepositories: null,
-  notLockedGithubAppsRepositories: null,
+
+  login: reads('account.login'),
+
+  hasGitHubAppsInstallation: notEmpty('account.installation'),
+
+  isEnterprise: reads('features.enterpriseVersion'),
+  isNotEnterprise: not('isEnterprise'),
+  isPro: reads('features.proVersion'),
+  isNotPro: not('isPro'),
+  isAppsEnabled: reads('features.github-apps'),
+  isNotAppsEnabled: not('isAppsEnabled'),
+  isLegacyReposFilterAllowed: reads('features.repositoryFiltering'),
+  isAppsReposFilterAllowed: reads('features.repositoryFiltering'),
 
   get migrationRepositoryCountLimit() {
     return migrationRepositoryCountLimit;
   },
 
-  deprecatedSorting: ['name'],
-  sortedRepositories: sort('deprecated', 'deprecatedSorting'),
-  showGitHubApps: reads('features.github-apps'),
+  legacyRepos: reads('account.legacyRepositories'),
+  legacyReposCount: reads('legacyRepos.total'),
+  isFilteringLegacyRepos: notEmpty('legacyRepos.filter'),
+  hasLegacyRepos: bool('legacyReposCount'),
+  isLoadingLegacyRepos: reads('legacyRepos.isLoading'),
 
-  githubAppsActivationURL: computed('account.githubId', function () {
+  appsRepos: reads('account.githubAppsRepositories'),
+  appsReposCount: reads('appsRepos.total'),
+  isFilteringAppsRepos: notEmpty('appsRepos.filter'),
+  hasAppsRepos: bool('appsReposCount'),
+  isLoadingAppsRepos: reads('appsRepos.isLoading'),
+
+  appsReposOnOrg: reads('account.githubAppsRepositoriesOnOrg'),
+
+  showGitHubApps: reads('isAppsEnabled'),
+  showPublicReposBanner: and('isNotEnterprise', 'isNotPro'),
+  showLegacyReposFilter: or('isLegacyReposFilterAllowed', 'isFilteringLegacyRepos', 'isLoadingLegacyRepos'),
+  showAppsReposFilter: or('isAppsReposFilterAllowed', 'isFilteringAppsRepos', 'isLoadingAppsRepos'),
+  showLegacyRepos: or('hasLegacyRepos', 'isLoadingLegacyRepos', 'isFilteringLegacyRepos', 'isNotAppsEnabled'),
+
+  appsActivationURL: computed('account.githubId', function () {
     let githubId = this.get('account.githubId');
     return `https://github.com/apps/${appName}/installations/new/permissions?suggested_target_id=${githubId}`;
   }),
 
-  githubAppsManagementURL: computed(
+  appsManagementURL: computed(
     'account.{login,isOrganization,githubId}',
     'account.installation.githubId',
     function () {
@@ -58,50 +78,13 @@ export default Component.extend({
     }
   ),
 
-  hasGitHubAppsInstallation: notEmpty('account.installation'),
-
-  canMigrate: computed('hasGitHubAppsInstallation', 'deprecated.pagination.total', function () {
+  canMigrate: computed('hasGitHubAppsInstallation', 'legacyRepos.total', function () {
     let hasGitHubAppsInstallation = this.get('hasGitHubAppsInstallation');
-    let legacyRepositoryCount = this.get('deprecated.pagination.total');
-    const hasLegacyRepositories = legacyRepositoryCount > 0;
+    let legacyRepositoryCount = this.get('legacyRepos.total');
+    const hasLegacyRepos = legacyRepositoryCount > 0;
     const isAllowedByLimit = legacyRepositoryCount <= migrationRepositoryCountLimit;
-    return !hasGitHubAppsInstallation && isAllowedByLimit && hasLegacyRepositories;
+    return !hasGitHubAppsInstallation && isAllowedByLimit && hasLegacyRepos;
   }),
-
-  actions: {
-    filterQuery(query) {
-      let params = {
-        name_filter: query,
-        'repository.managed_by_installation': false,
-        sort_by: 'name_filter:desc',
-        limit: 10,
-        custom: {
-          owner: this.login,
-          type: 'byOwner',
-        },
-      };
-
-      if (this.showGitHubApps) {
-        params.active = true;
-      }
-
-      return this.store.query('repo', params);
-    },
-
-    filterQueryGitHubApps(query) {
-      return this.store.query('repo', {
-        name_filter: query,
-        'repository.managed_by_installation': true,
-        'repository.active_on_org': false,
-        sort_by: 'name_filter:desc',
-        limit: 10,
-        custom: {
-          owner: this.login,
-          type: 'byOwner',
-        },
-      });
-    }
-  },
 
   migrate: task(function* () {
     let queryParams = {

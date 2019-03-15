@@ -1,4 +1,10 @@
 import TravisRoute from 'travis/routes/basic';
-import AccountRepositoriesMixin from 'travis/mixins/route/account-repositories';
+import OwnerRepositoriesMixin from 'travis/mixins/route/owner/repositories';
 
-export default TravisRoute.extend(AccountRepositoriesMixin);
+export default TravisRoute.extend(OwnerRepositoriesMixin, {
+
+  beforeModel() {
+    this.account = this.modelFor('account');
+  },
+
+});
