@@ -5,7 +5,7 @@ $axis-label-color: $asphalt-grey;
 $grid-line-color: $pebble-grey;
 $grid-background-color: #fdfdfd;
 
-$med-small-up: "only screen and (min-width: 36em)";
+$med-small-up: "only screen and (min-width: 38em)";
 
 .insights-controls {
   display: flex;
@@ -39,19 +39,21 @@ $med-small-up: "only screen and (min-width: 36em)";
     }
   }
 
+  .insights-privacy-selector {
+    display: grid;
+    grid-auto-flow: column;
+    align-items: baseline;
 
-  .insights-privacy-selector__selected {
-    font-weight: 700;
-  }
+    .travis-form {
+      display: inline-block;
 
-  .ember-power-select-trigger {
-    display: inline-block;
-    vertical-align: middle;
-    border: none;
-    padding: 0 20px 0 0;
-    line-height: 1.45;
+      .travis-form__field .travis-form__field-component {
+        margin: 0;
+        font-weight: 700;
+      }
+    }
 
-    .ember-power-select-selected-item {
+    &__selected {
       font-weight: 700;
     }
   }
