@@ -34,25 +34,25 @@ module('Unit | Service | insights', function (hooks) {
   });
 
   test('active repos with no metric data', async function (assert) {
-    this.server.create('user');
+    const user = this.server.create('user');
 
-    let result = await this.insightsService.getActiveRepos({id: 1, '@type': 'user'}, 'week');
+    let result = await this.insightsService.getActiveRepos(user, 'week');
     assert.equal(result.data.count, 0);
   });
 
   test('active repos', async function (assert) {
-    this.server.create('user');
+    const user = this.server.create('user');
     server.createList('insight-metric', 1);
 
-    let result = await this.insightsService.getActiveRepos({id: 1, '@type': 'user'}, 'week');
+    let result = await this.insightsService.getActiveRepos(user, 'week');
     assert.equal(result.data.count, 75);
   });
 
   test('getChartData with no metric data', async function (assert) {
-    this.server.create('user');
+    const user = this.server.create('user');
 
     let result = await this.insightsService.getChartData.perform(
-      {id: 1, '@type': 'user'},
+      user,
       'week',
       'jobs',
       'sum',
@@ -64,12 +64,12 @@ module('Unit | Service | insights', function (hooks) {
   });
 
   test('metric sum', async function (assert) {
-    this.server.create('user');
+    const user = this.server.create('user');
     server.createList('insight-metric', 5);
     const metricName = 'count_started';
 
     let result = await this.insightsService.getChartData.perform(
-      {id: 1, '@type': 'user'},
+      user,
       'week',
       'builds',
       'sum',
@@ -81,12 +81,12 @@ module('Unit | Service | insights', function (hooks) {
   });
 
   test('metric max', async function (assert) {
-    this.server.create('user');
+    const user = this.server.create('user');
     server.createList('insight-metric', 10);
     const metricName = 'count_finished';
 
     let result = await this.insightsService.getChartData.perform(
-      {id: 1, '@type': 'user'},
+      user,
       'week',
       'builds',
       'max',
@@ -98,12 +98,12 @@ module('Unit | Service | insights', function (hooks) {
   });
 
   test('metric avg', async function (assert) {
-    this.server.create('user');
+    const user = this.server.create('user');
     server.createList('insight-metric', 10);
     const metricName = 'count_passed';
 
     let result = await this.insightsService.getChartData.perform(
-      {id: 1, '@type': 'user'},
+      user,
       'week',
       'builds',
       'avg',
@@ -118,12 +118,12 @@ module('Unit | Service | insights', function (hooks) {
   });
 
   test('metric count', async function (assert) {
-    this.server.create('user');
+    const user = this.server.create('user');
     server.createList('insight-metric', 10);
     const metricName = 'count_failed';
 
     let result = await this.insightsService.getChartData.perform(
-      {id: 1, '@type': 'user'},
+      user,
       'week',
       'builds',
       'count',
@@ -135,12 +135,12 @@ module('Unit | Service | insights', function (hooks) {
   });
 
   test('metric options', async function (assert) {
-    this.server.create('user');
+    const user = this.server.create('user');
     server.createList('insight-metric', 10);
     const metricNames = ['test', 'example'];
 
     let result = await this.insightsService.getChartData.perform(
-      {id: 1, '@type': 'user'},
+      user,
       'week',
       'builds',
       'sum',

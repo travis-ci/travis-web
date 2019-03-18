@@ -590,10 +590,10 @@ export default function () {
     return new Response(404, {}, {});
   });
 
-  this.get('/insights/metrics', function (schema, {queryParams}) {
-    queryParams.owner_id = parseInt(queryParams.owner_id);
-    queryParams.name = queryParams.name.split(',');
-    const owner = schema.users.find(queryParams.owner_id);
+  this.get('/insights/metrics', function (schema, { queryParams }) {
+    const ownerId = parseInt(queryParams.owner_id);
+    const names = queryParams.name.split(',');
+    const owner = schema.users.find(ownerId);
 
     const start = new Date(queryParams.start_time);
     const end = new Date(queryParams.end_time);
@@ -606,7 +606,7 @@ export default function () {
       };
       response.data.values = [];
 
-      queryParams.name.map(name => {
+      names.map(name => {
         response.data.values.push(...schema.insightMetrics
           // Filter by time period. Allows testing percent change widgets
           .where(m => m.time >= start && m.time <= end)
@@ -629,7 +629,7 @@ export default function () {
     }
   });
 
-  this.get('/insights/repos/active', function (schema, {queryParams}) {
+  this.get('/insights/repos/active', function (schema, { queryParams }) {
     const owner = schema.users.find(queryParams.owner_id);
 
     if (owner) {
