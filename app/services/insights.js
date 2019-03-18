@@ -155,6 +155,7 @@ function mergeMetricSettings(options, func) {
   return currentOptions;
 }
 
+// Currently, when displaying insights, we regard a "month" as a period of 30 days and a "week" as a period of 7 days.
 function convertIntervalToDays(interval, amount) {
   return {
     month: 30 * amount,
