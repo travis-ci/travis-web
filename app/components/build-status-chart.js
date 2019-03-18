@@ -67,7 +67,7 @@ export default Component.extend({
         type: 'bar',
         x: 'x',
         groups: [['Passing', 'Failing', 'Errored', 'Cancelled']],
-        order: 'asc',
+        order: null,
         columns: [
           ['x', ...this.get('labels')],
           ['Passing', ...this.get('passed')],
