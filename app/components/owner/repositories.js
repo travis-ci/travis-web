@@ -15,11 +15,11 @@ export default Component.extend({
   store: service(),
   externalLinks: service(),
 
-  account: null,
+  owner: null,
 
-  login: reads('account.login'),
+  login: reads('owner.login'),
 
-  hasGitHubAppsInstallation: notEmpty('account.installation'),
+  hasGitHubAppsInstallation: notEmpty('owner.installation'),
 
   isEnterprise: reads('features.enterpriseVersion'),
   isNotEnterprise: not('isEnterprise'),
@@ -34,19 +34,19 @@ export default Component.extend({
     return migrationRepositoryCountLimit;
   },
 
-  legacyRepos: reads('account.legacyRepositories'),
+  legacyRepos: reads('owner.legacyRepositories'),
   legacyReposCount: reads('legacyRepos.total'),
   isFilteringLegacyRepos: notEmpty('legacyRepos.filter'),
   hasLegacyRepos: bool('legacyReposCount'),
   isLoadingLegacyRepos: reads('legacyRepos.isLoading'),
 
-  appsRepos: reads('account.githubAppsRepositories'),
+  appsRepos: reads('owner.githubAppsRepositories'),
   appsReposCount: reads('appsRepos.total'),
   isFilteringAppsRepos: notEmpty('appsRepos.filter'),
   hasAppsRepos: bool('appsReposCount'),
   isLoadingAppsRepos: reads('appsRepos.isLoading'),
 
-  appsReposOnOrg: reads('account.githubAppsRepositoriesOnOrg'),
+  appsReposOnOrg: reads('owner.githubAppsRepositoriesOnOrg'),
 
   showGitHubApps: reads('isAppsEnabled'),
   showPublicReposBanner: and('isNotEnterprise', 'isNotPro'),
@@ -54,22 +54,22 @@ export default Component.extend({
   showAppsReposFilter: or('isAppsReposFilterAllowed', 'isFilteringAppsRepos', 'isLoadingAppsRepos'),
   showLegacyRepos: or('hasLegacyRepos', 'isLoadingLegacyRepos', 'isFilteringLegacyRepos', 'isNotAppsEnabled'),
 
-  appsActivationURL: computed('account.githubId', function () {
-    let githubId = this.get('account.githubId');
+  appsActivationURL: computed('owner.githubId', function () {
+    let githubId = this.get('owner.githubId');
     return `https://github.com/apps/${appName}/installations/new/permissions?suggested_target_id=${githubId}`;
   }),
 
   appsManagementURL: computed(
-    'account.{login,isOrganization,githubId}',
-    'account.installation.githubId',
+    'owner.{login,isOrganization,githubId}',
+    'owner.installation.githubId',
     function () {
-      let login = this.get('account.login');
-      let isOrganization = this.get('account.isOrganization');
-      let accountGithubId = this.get('account.githubId');
-      let installationGithubId = this.get('account.installation.githubId');
+      let login = this.get('owner.login');
+      let isOrganization = this.get('owner.isOrganization');
+      let ownerGithubId = this.get('owner.githubId');
+      let installationGithubId = this.get('owner.installation.githubId');
 
       if (appName && appName.length) {
-        return `https://github.com/apps/${appName}/installations/new/permissions?suggested_target_id=${accountGithubId}`;
+        return `https://github.com/apps/${appName}/installations/new/permissions?suggested_target_id=${ownerGithubId}`;
       } else if (isOrganization) {
         return `https://github.com/organizations/${login}/settings/installations/${installationGithubId}`;
       } else {
@@ -92,7 +92,7 @@ export default Component.extend({
       'repository.managed_by_installation': false,
       'repository.active': true,
       custom: {
-        owner: this.account.login,
+        owner: this.owner.login,
         type: 'byOwner',
       },
     };
@@ -105,6 +105,6 @@ export default Component.extend({
 
     window.location.href =
       `https://github.com/apps/${appName}/installations/new/permissions` +
-      `?suggested_target_id=${this.account.githubId}&${githubQueryParams}`;
+      `?suggested_target_id=${this.owner.githubId}&${githubQueryParams}`;
   })
 });
