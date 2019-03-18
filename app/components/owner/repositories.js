@@ -27,8 +27,7 @@ export default Component.extend({
   isNotPro: not('isPro'),
   isAppsEnabled: reads('features.github-apps'),
   isNotAppsEnabled: not('isAppsEnabled'),
-  isLegacyReposFilterAllowed: reads('features.repositoryFiltering'),
-  isAppsReposFilterAllowed: reads('features.repositoryFiltering'),
+  isFilteringEnabled: reads('features.repositoryFiltering'),
 
   get migrationRepositoryCountLimit() {
     return migrationRepositoryCountLimit;
@@ -39,19 +38,21 @@ export default Component.extend({
   isFilteringLegacyRepos: notEmpty('legacyRepos.filter'),
   hasLegacyRepos: bool('legacyReposCount'),
   isLoadingLegacyRepos: reads('legacyRepos.isLoading'),
+  shouldShowLegacyReposFilter: or('hasLegacyRepos', 'isFilteringLegacyRepos', 'isLoadingLegacyRepos'),
 
   appsRepos: reads('owner.githubAppsRepositories'),
   appsReposCount: reads('appsRepos.total'),
   isFilteringAppsRepos: notEmpty('appsRepos.filter'),
   hasAppsRepos: bool('appsReposCount'),
   isLoadingAppsRepos: reads('appsRepos.isLoading'),
+  shouldShowAppsReposFilter: or('hasAppsRepos', 'isFilteringAppsRepos', 'isLoadingAppsRepos'),
 
   appsReposOnOrg: reads('owner.githubAppsRepositoriesOnOrg'),
 
   showGitHubApps: reads('isAppsEnabled'),
   showPublicReposBanner: and('isNotEnterprise', 'isNotPro'),
-  showLegacyReposFilter: or('isLegacyReposFilterAllowed', 'isFilteringLegacyRepos', 'isLoadingLegacyRepos'),
-  showAppsReposFilter: or('isAppsReposFilterAllowed', 'isFilteringAppsRepos', 'isLoadingAppsRepos'),
+  showLegacyReposFilter: or('isFilteringEnabled', 'shouldShowLegacyReposFilter'),
+  showAppsReposFilter: and('isFilteringEnabled', 'shouldShowAppsReposFilter'),
   showLegacyRepos: or('hasLegacyRepos', 'isLoadingLegacyRepos', 'isFilteringLegacyRepos', 'isNotAppsEnabled'),
 
   appsActivationURL: computed('owner.githubId', function () {
