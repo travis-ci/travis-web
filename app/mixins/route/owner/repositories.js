@@ -21,13 +21,15 @@ export default Mixin.create({
 
   afterModel() {
     const { account } = this;
-    account.legacyRepositories.switchToPage(this.legacyPage);
-    account.githubAppsRepositories.switchToPage(this.appsPage);
+    if (account && !account.error) {
+      account.legacyRepositories.switchToPage(this.legacyPage);
+      account.githubAppsRepositories.switchToPage(this.appsPage);
+    }
   },
 
   setupController(controller, model) {
     const account = this.account;
-    if (!account.error) {
+    if (account && !account.error) {
       const { login } = account;
       controller.setProperties({ account, login });
     }
