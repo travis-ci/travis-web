@@ -1,7 +1,11 @@
 module.exports = {
   extends: '../.eslintrc.js',
 
-  // require camel case names
-  'camelcase': false,
+  rules: {
+
+    // require camel case names
+    'camelcase': 0,
+
+  }
 
 };
