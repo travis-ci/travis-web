@@ -4,11 +4,9 @@ import { computed } from '@ember/object';
 import { pluralize } from 'ember-inflector';
 import { reads, equal, or } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
-import { format as d3format } from 'd3';
 
 export default Component.extend({
-  classNames: ['insights-glance'],
-  classNameBindings: ['isLoading:insights-glance--loading'],
+  classNames: ['insights-build-count'],
   private: false,
 
   insights: service(),
@@ -44,64 +42,6 @@ export default Component.extend({
     return this.totalBuilds.toLocaleString();
   }),
 
-  // Chart component data
-  data: computed('builds', 'labels', function () {
-    return {
-      type: 'spline',
-      x: 'x',
-      columns: [
-        ['x', ...this.get('labels')],
-        ['Builds', ...this.get('builds')],
-      ],
-      colors: {
-        Builds: '#666',
-      },
-    };
-  }),
-
-  // Chart component options
-  legend: { show: false },
-  size: { height: 50 },
-
-  point: {
-    r: 0,
-    focus: {
-      expand: { r: 4 },
-    }
-  },
-
-  axis: {
-    x: {
-      type: 'timeseries',
-      tick: { format: '%A, %b %e' },
-      show: false,
-    },
-    y: { show: false }
-  },
-
-  tooltip: {
-    position: (data, width, height, element) => {
-      let top = -50;
-      let left = (element.getAttribute('width') - width) / 2;
-      return ({ top, left });
-    },
-    format: {
-      value: d3format(','),
-    }
-  },
-
-  grid: computed('avgBuilds', function () {
-    return {
-      lines: { front: false },
-      y: {
-        lines: [{
-          value: this.get('avgBuilds'),
-          class: 'insights-glance__centerline',
-        }],
-      }
-    };
-  }),
-
   // Previous interval chart data
   requestPastData: task(function* () {
     return yield this.get('insights.getChartData').perform(
@@ -118,11 +58,15 @@ export default Component.extend({
 
   // Percent change
   percentChangeTitle: computed('prevTotalBuilds', 'interval', function () {
-    return [
-      this.prevTotalBuilds.toLocaleString(),
-      pluralize(this.prevTotalBuilds, 'build', {withoutCount: true}),
-      `the previous ${this.interval}`
-    ].join(' ');
+    if (this.prevTotalBuilds) {
+      return [
+        this.prevTotalBuilds.toLocaleString(),
+        pluralize(this.prevTotalBuilds, 'build', {withoutCount: true}),
+        `the previous ${this.interval}`
+      ].join(' ');
+    }
+
+    return '';
   }),
 
   percentageChange: computed('prevTotalBuilds', 'totalBuilds', function () {

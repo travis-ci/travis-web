@@ -1,27 +1,16 @@
-<h3 class="insights-glance__title">Builds</h3>
-<div class="insights-glance__center">
-  <div class="insights-glance__stat">
-    {{#if isLoading}}
-      {{loading-indicator}}
-    {{else}}
-      {{totalBuildText}}
-    {{/if}}
-  </div>
-  {{#if percentageChange}}
-    <div
-      class="insights-glance-delta"
-      data-dir="{{if (gte percentageChange 0) '+' '-'}}"
-      title="{{percentChangeTitle}}"
-    >
-      {{svg-jar 'icon-dropdown-arrow' class="icon"}}
-      <span class="insights-glance-delta__stat">{{percentageChangeText}}</span>
-    </div>
-  {{/if}}
-</div>
-<div class="insights-glance__chart">
-  {{#if showPlaceholder}}
-    <hr class="insights-glance__chart-placeholder" />
-  {{else}}
-    {{c3-chart class='chart-component' data=data axis=axis legend=legend grid=grid size=size point=point tooltip=tooltip}}
-  {{/if}}
-</div>
+{{insights-glance
+  isLoading=isLoading
+  isEmpty=isEmpty
+
+  title='Builds'
+  statistic=totalBuildText
+
+  delta=percentageChange
+  deltaTitle=percentChangeTitle
+  deltaText=percentageChangeText
+
+  labels=labels
+  values=builds
+  datasetTitle='Builds'
+  centerline=avgBuilds
+}}
