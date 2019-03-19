@@ -66,7 +66,8 @@ const DynamicQuery = ArrayProxy.extend({
   pagination: null,
 
   isLoading: reads('task.isRunning'),
-  isEmpty: equal('length', 0),
+  isEmpty: equal('total', 0),
+  isNotEmpty: not('isEmpty'),
 
   hasNextPage: not('pagination.isLast'),
   hasPreviousPage: not('pagination.isFirst'),

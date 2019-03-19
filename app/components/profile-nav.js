@@ -10,16 +10,20 @@ export default Component.extend({
   tagName: '',
 
   accounts: service(),
-
-  activeModel: null,
-  model: reads('activeModel'),
+  features: service(),
 
   user: reads('accounts.user'),
   organizations: reads('accounts.organizations'),
 
+  activeModel: null,
+  model: reads('activeModel'),
+
   accountName: or('model.name', 'model.login'),
   billingUrl: or('model.subscription.billingUrl', 'model.billingUrl'),
 
+  reposToMigrate: reads('model.githubAppsRepositoriesOnOrg'),
+
+  showMigrateTab: and('features.proVersion', 'user.allowMigration', 'reposToMigrate.isNotEmpty'),
   showSubscriptionStatusBanner: and('checkSubscriptionStatus', 'model.subscriptionError'),
 
   get githubOrgsOauthAccessSettingsUrl() {
@@ -27,8 +31,7 @@ export default Component.extend({
   },
 
   checkSubscriptionStatus: computed('features.enterpriseVersion', function () {
-    let enterprise = this.get('features.enterpriseVersion');
-    return !enterprise && !!billingEndpoint;
+    return !this.features.get('enterpriseVersion') && !!billingEndpoint;
   }),
 
 });

@@ -73,6 +73,14 @@
             </li>
           {{/if}}
 
+          {{#if showMigrateTab }}
+            <li>
+              {{#link-to 'account.migrate' }}
+                Migrate
+              {{/link-to}}
+            </li>
+          {{/if}}
+
         {{/if}}
 
         {{#if model.isOrganization}}
@@ -83,7 +91,15 @@
 
           {{#if checkSubscriptionStatus}}
             <li data-test-billing-tab>
-              {{#link-to 'organization.billing' model}}Subscription{{/link-to}}
+              {{#link-to 'organization.billing' model }}Subscription{{/link-to}}
+            </li>
+          {{/if}}
+
+          {{#if showMigrateTab }}
+            <li>
+              {{#link-to 'organization.migrate' model }}
+                Migrate
+              {{/link-to}}
             </li>
           {{/if}}
 
