@@ -1,5 +1,6 @@
 {{#travis-form as |form| }}
   {{#form.field
+    data-test-filter-field=true
     icon='icon-filter'
     value=query
     allowClear=true
@@ -11,4 +12,4 @@
       )
     }}
   {{/form.field}}
-{{/travis-form}}
+  {{/travis-form}}

@@ -1,7 +1,7 @@
 import Mixin from '@ember/object/mixin';
 
 export default Mixin.create({
-  account: null,
+  owner: null,
   appsPage: 1,
   legacyPage: 1,
 
@@ -20,16 +20,18 @@ export default Mixin.create({
   },
 
   afterModel() {
-    const { account } = this;
-    account.legacyRepositories.switchToPage(this.legacyPage);
-    account.githubAppsRepositories.switchToPage(this.appsPage);
+    const { owner } = this;
+    if (owner && !owner.error) {
+      owner.legacyRepositories.switchToPage(this.legacyPage);
+      owner.githubAppsRepositories.switchToPage(this.appsPage);
+    }
   },
 
   setupController(controller, model) {
-    const account = this.account;
-    if (!account.error) {
-      const { login } = account;
-      controller.setProperties({ account, login });
+    const { owner } = this;
+    if (owner && !owner.error) {
+      const { login } = owner;
+      controller.setProperties({ owner, login });
     }
     return this._super(...arguments);
   }

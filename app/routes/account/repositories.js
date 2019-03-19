@@ -4,7 +4,7 @@ import OwnerRepositoriesMixin from 'travis/mixins/route/owner/repositories';
 export default TravisRoute.extend(OwnerRepositoriesMixin, {
 
   beforeModel() {
-    this.account = this.modelFor('account');
+    this.owner = this.modelFor('account');
   },
 
 });

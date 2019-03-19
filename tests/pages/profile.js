@@ -77,7 +77,7 @@ export default create({
     }
   },
 
-  filter: fillable('.profile-repositories-filter input.search'),
+  filter: fillable('[data-test-legacy-repos] [data-test-filter-field] [data-test-input-field]'),
   noRepositoriesFoundByFilter: text('#administerable-repositories .no-results'),
 
   notFoundOrgName: text('.page-title .h2--red'),
@@ -105,7 +105,7 @@ export default create({
 
   githubAppsRepositories: githubAppsRepositoryCollection('#github-apps-repositories'),
 
-  notLockedGithubAppsFilter: fillable('.not-locked-profile-repositories-filter input.search'),
+  notLockedGithubAppsFilter: fillable('[data-test-github-app-repos] [data-test-filter-field] [data-test-input-field]'),
   notLockedGithubAppsRepositories: githubAppsRepositoryCollection('#not-locked-github-apps-repositories'),
   notLockedGithubAppsPages: collection('#github-apps-repositories .pagination-navigation [data-test-page-pagination-link]', {
     visit: clickable()
