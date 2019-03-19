@@ -100,7 +100,6 @@ $med-small-up: "only screen and (min-width: 38em)";
   right: 0;
   bottom: 0;
   left: 0;
-  background-color: rgba(255, 255, 255, 0.85);
   text-align: center;
   display: none;
   font-size: 18px;
@@ -109,11 +108,18 @@ $med-small-up: "only screen and (min-width: 38em)";
     display: block;
   }
 
+  .overlay-backdrop {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-flow: column nowrap;
+  }
+
   h2, .insights-overlay__header {
     color: $oxide-blue;
     font-size: 40px;
     font-weight: 300;
-    margin: 55px 0 15px 0;
+    margin: 0 0 15px 0;
   }
 
   p {

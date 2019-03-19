@@ -1,4 +1,4 @@
-{{#if hasNoBuilds}}
+{{#overlay-backdrop visible=showOverlay}}
   {{#if isMonth}}
     <h2 data-test-insights-overlay-title>Build to get monthly insights</h2>
     <p data-test-insights-overlay-text>All the build status results from the last 30 days will appear here.</p>
@@ -10,4 +10,4 @@
   {{/if}}
 
   {{yield}}
-{{/if}}
+{{/overlay-backdrop}}

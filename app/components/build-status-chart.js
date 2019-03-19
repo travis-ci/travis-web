@@ -17,7 +17,7 @@ const intervalOverrides = {
 
 export default Component.extend({
   classNames: ['insights-odyssey'],
-  classNameBindings: ['isLoading:insights-odyssey--loading'],
+  classNameBindings: ['isLoading:insights-odyssey--loading', 'hasNoBuilds:insights-odyssey--empty'],
   private: false,
 
   insights: service(),

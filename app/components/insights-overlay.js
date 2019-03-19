@@ -1,13 +1,13 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
-import { reads, equal } from '@ember/object/computed';
+import { reads, equal, not, and } from '@ember/object/computed';
 
 export default Component.extend({
   classNames: ['insights-overlay'],
   classNameBindings: [
     'isLoading:insights-overlay--loading',
-    'hasNoBuilds:insights-overlay--active',
+    'showOverlay:insights-overlay--active',
   ],
 
   insights: service(),
@@ -31,8 +31,10 @@ export default Component.extend({
   }),
   buildData: reads('requestData.lastSuccessful.value'),
   isLoading: reads('requestData.isRunning'),
+  isNotLoading: not('isLoading'),
   totalBuilds: reads('buildData.data.count_started.total'),
   hasNoBuilds: equal('totalBuilds', 0),
+  showOverlay: and('isNotLoading', 'hasNoBuilds'),
 
   isMonth: equal('interval', 'month'),
   isWeek: equal('interval', 'week'),
