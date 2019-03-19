@@ -1,18 +1,11 @@
 import Route from '@ember/routing/route';
+import OwnerMigrateMixin from 'travis/mixins/route/owner/migrate';
 
-export default Route.extend({
+export default Route.extend(OwnerMigrateMixin, {
 
-  page: 1,
-
-  model({ page }) {
-    this.setProperties({ page });
+  model() {
+    this._super(...arguments);
     return this.modelFor('account');
-  },
-
-  afterModel(model) {
-    if (model && !model.error) {
-      model.githubAppsRepositoriesOnOrg.switchToPage(this.page);
-    }
   }
 
 });
