@@ -1,0 +1,278 @@
+$axis-line-color: $dry-cement;
+$axis-tick-color: $cement-grey;
+$axis-label-color: $asphalt-grey;
+
+$grid-line-color: $pebble-grey;
+$grid-background-color: #fdfdfd;
+
+$med-small-up: "only screen and (min-width: 38em)";
+
+.insights-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0 15px;
+
+  &-left {
+    display: grid;
+    grid-auto-flow: row;
+    align-items: baseline;
+    gap: 3px 0;
+
+    @media #{$med-small-up} {
+      grid-auto-flow: column;
+    }
+
+    .insights-dates {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .insights-control-divider {
+      margin: 0 .5rem;
+      color: $dry-cement;
+      display: none;
+
+      @media #{$med-small-up} {
+        display: inline;
+      }
+    }
+  }
+
+  .insights-privacy-selector {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: baseline;
+    gap: 0 5px;
+
+    .travis-form {
+      display: inline-block;
+
+      .travis-form__field .travis-form__field-component {
+        margin: 0;
+        font-weight: 700;
+      }
+    }
+
+    &__selected {
+      font-weight: 700;
+    }
+  }
+
+  .travistab-nav.travistab-nav--insights {
+    padding: 0;
+    display: flex;
+    justify-content: flex-end;
+    margin: 0;
+
+    a {
+      color: $cement-grey;
+      cursor: pointer;
+    }
+
+    a:hover,
+    a:active,
+    li.active a {
+      color: $asphalt-grey;
+
+      &:after {
+        background-color: $asphalt-grey;
+      }
+    }
+  }
+}
+
+.insights-grid {
+  position: relative;
+  display: grid;
+  grid-gap: 20px;
+  grid-template-columns: repeat(4, minmax(50px, 1fr));
+
+  @media #{$medium-up} {
+    grid-gap: 40px 4%;
+  }
+}
+
+.insights-overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  text-align: center;
+  display: none;
+  font-size: 18px;
+
+  &--active {
+    display: block;
+  }
+
+  .overlay-backdrop {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-flow: column nowrap;
+  }
+
+  h2, .insights-overlay__header {
+    color: $oxide-blue;
+    font-size: 40px;
+    font-weight: 300;
+    margin: 0 0 15px 0;
+  }
+
+  p {
+    padding: 0 10%;
+    font-size: 18px;
+  }
+}
+
+.insights-glance {
+  padding: 20px 20px 15px;
+  border-radius: 5px;
+  border: 1px solid $pebble-grey;
+  box-shadow: 0 0 8px 0 $dry-cement;
+  overflow: hidden;
+  grid-column: span 4;
+
+  @media #{$med-small-up} {
+    grid-column: span 2;
+  }
+
+  @media #{$medium-up} {
+    grid-column: span 1;
+  }
+
+  &__title {
+    font-size: 12px;
+    font-weight: 600;
+    margin: 0;
+    text-transform: uppercase;
+  }
+
+  &__center {
+    display: flex;
+    align-items: center;
+    flex-flow: row wrap;
+  }
+
+  &__stat {
+    font-size: 27px;
+    font-weight: 300;
+    color: $cement-grey;
+
+    .insights-glance__center & {
+      margin-right: 8px;
+    }
+
+    .loading-indicator {
+      font-size: 9px;
+    }
+  }
+
+  &-delta {
+    border-radius: 3px;
+    padding: 0 5px;
+    font-size: 12px;
+    background-color: $pebble-grey;
+    cursor: default;
+
+    svg {
+      width: 10px;
+      height: 10px;
+      margin: 0;
+    }
+
+    &[data-dir='+'] {
+      color: $turf-green;
+      background-color: $seed-green;
+      svg {
+        transform: rotate(180deg);
+        path {
+          stroke: $turf-green;
+        }
+      }
+    }
+
+    &[data-dir='-'] {
+      color: $brick-red;
+      background-color: $quartz-red;
+      svg path {
+        stroke: $brick-red;
+      }
+    }
+  }
+
+  &__chart-placeholder {
+    margin: 33px 0 12px 0;
+    border: none;
+    border-bottom: 1px solid transparent;
+  }
+
+  &__centerline line {
+    stroke: #eaeaea;
+  }
+}
+
+.insights-odyssey {
+  grid-column: span 4;
+  overflow: hidden;
+  position: relative;
+
+  @media #{$medium-up} {
+    grid-column: span 4;
+  }
+
+  &__title {
+    font-size: 15px;
+    font-weight: 400;
+    margin: 0 0 5px 0;
+  }
+
+  &--loading &__chart {
+    padding-bottom: 35%;
+    background-color: $grid-background-color;
+    background-image: linear-gradient(to bottom, rgba($dry-cement, 1) 0px,rgba($dry-cement, 0) 1px,rgba($dry-cement, 0) 60px);
+    background-size: 100% 60px;
+    background-repeat: repeat;
+  }
+
+  &__loading-indicator {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .loading-indicator i {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  // C3 customizations
+  .c3-axis {
+    .domain {
+      stroke: $axis-line-color;
+    }
+    .tick {
+      line {
+        stroke: $axis-tick-color;
+      }
+      text {
+        fill: $axis-label-color;
+      }
+    }
+  }
+
+  .c3-grid {
+    background-color: $grid-background-color;
+    line {
+      stroke: $grid-line-color;
+    }
+  }
+}
