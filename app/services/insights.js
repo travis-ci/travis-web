@@ -53,34 +53,20 @@ export default Service.extend({
   getIntervalSettings(customIntervalSettings = {}) {
     // Merge and assign, I don't think do deep merges, but interval settings is only ever 2 levels
     // deep so all we need to do is loop through each interval and do a shallow merge
-    const settings =  validIntervals.reduce((acc, interval) => {
-      acc[interval] = {};
-      if (customIntervalSettings.hasOwnProperty(interval)) {
-        assign(acc[interval], defaultIntervalSettings[interval], customIntervalSettings[interval]);
-      } else {
-        assign(acc[interval], defaultIntervalSettings[interval]);
-      }
-      return acc;
+    const settings =  validIntervals.reduce((settings, interval) => {
+      settings[interval] = {};
+      assign(settings[interval], defaultIntervalSettings[interval], customIntervalSettings[interval]);
+      return settings;
     }, {});
     return settings;
   },
 
-  getDatesFromInterval(interval, startInterval, endInterval = 0) {
-    // Have startInterval default to 1 less than endInterval
-    endInterval = typeof endInterval !== 'number' ? 0 : endInterval;
-    startInterval = typeof startInterval !== 'number' ? endInterval - 1 : startInterval;
+  getDatesFromInterval(interval, startInterval = -1, endInterval = 0) {
+    const startIntervalDays = convertIntervalToDays(interval, startInterval);
+    const endIntervalDays = convertIntervalToDays(interval, endInterval);
 
-    if (startInterval > endInterval) {
-      [startInterval, endInterval] = [endInterval, startInterval];
-    } else if (startInterval === endInterval) {
-      startInterval--;
-    }
-
-    startInterval = convertIntervalToDays(interval, startInterval);
-    endInterval = convertIntervalToDays(interval, endInterval);
-
-    let start = moment.utc().add(startInterval, 'day');
-    let end = moment.utc().add(endInterval, 'day');
+    let start = moment.utc().add(startIntervalDays, 'day');
+    let end = moment.utc().add(endIntervalDays, 'day');
 
     if (interval === 'day') {
       start = start.startOf('hour');
@@ -95,36 +81,30 @@ export default Service.extend({
     /* Prepare for API request to fetch metrics */
     const currentOptions = mergeMetricSettings(options, func);
     const intervalSettings = this.getIntervalSettings(currentOptions.intervalSettings);
-    const subInterval = intervalSettings[interval].subInterval;
-
-    const [startTime, endTime] = this.getDatesFromInterval(
-      interval, currentOptions.startInterval, currentOptions.endInterval
-    );
-
-    const apiSettings = getMetricAPISettings(
-      subject, func, subInterval, metricNames, owner, startTime, endTime, currentOptions
-    );
+    const { subInterval } = intervalSettings[interval];
+    const { startInterval, endInterval, aggregator } = currentOptions;
+    const [startTime, endTime] = this.getDatesFromInterval(interval, startInterval, endInterval);
+    const apiSettings = getMetricAPISettings(subject, func, subInterval, metricNames, owner, startTime, endTime, currentOptions);
 
     /* Fetch metrics */
-    let metrics = yield this.get('fetchMetrics').perform(apiSettings, currentOptions);
+    let metrics = yield this.fetchMetrics.perform(apiSettings, currentOptions);
+    const requestPrivate = metrics.data.private === 'true';
 
+    /* Set labels */
     let labels = createLabels(startTime, endTime, subInterval);
 
     /* Prepare fetched metric data for charts */
-    let data = aggregateMetrics(
-      metricNames, metrics, currentOptions.aggregator, assign({}, labels), subInterval
-    );
+    let data = aggregateMetrics(metricNames, metrics, aggregator, labels, subInterval);
 
     serializeMetrics(data, metricNames, currentOptions);
 
-    labels = Object.entries(labels).map(([key, val]) => key);
+    labels = Object.keys(labels);
 
-    return { data, private: metrics.data.private === 'true', labels, metrics };
+    return { data, private: requestPrivate, labels, metrics };
   }),
 
   fetchMetrics: task(function* (apiSettings) {
-    let metrics = yield this.get('api').get(endpoints.metrics, apiSettings) || [];
-    return metrics;
+    return yield this.get('api').get(endpoints.metrics, apiSettings) || [];
   }),
 
   // Active Repo endpoint functions
@@ -134,7 +114,7 @@ export default Service.extend({
     const apiSettings = {
       stringifyData: false,
       data: {
-        owner_type: owner['@type'] === 'user' ? 'User' : 'Organization',
+        owner_type: owner.isUser ? 'User' : 'Organization',
         owner_id: owner.id,
         end_time: endTime.format(apiTimeRequestFormat),
         start_time: startTime.format(apiTimeRequestFormat),
@@ -146,15 +126,12 @@ export default Service.extend({
   },
 
   fetchActiveRepos: task(function* (apiSettings) {
-    let activeRepos = yield this.get('api').get(endpoints.activeRepos, apiSettings) || [];
-    return activeRepos;
+    return yield this.get('api').get(endpoints.activeRepos, apiSettings) || [];
   }),
 });
 
 // Metric preparation functions
-function getMetricAPISettings(
-  subject, func, subInterval, metricNames, owner, startTime, endTime, options
-) {
+function getMetricAPISettings(subject, func, subInterval, metricNames, owner, startTime, endTime, options) {
   return {
     stringifyData: false,
     data: {
@@ -162,7 +139,7 @@ function getMetricAPISettings(
       interval: subInterval,
       func,
       name: metricNames.join(','),
-      owner_type: owner['@type'] === 'user' ? 'User' : 'Organization',
+      owner_type: owner.isUser ? 'User' : 'Organization',
       owner_id: owner.id,
       end_time: endTime.format(apiTimeRequestFormat),
       start_time: startTime.format(apiTimeRequestFormat),
@@ -178,34 +155,22 @@ function mergeMetricSettings(options, func) {
   return currentOptions;
 }
 
+// Currently, when displaying insights, we regard a "month" as a period of 30 days and a "week" as a period of 7 days.
 function convertIntervalToDays(interval, amount) {
-  switch (interval) {
-    case 'month':
-      return 30 * amount;
-    case 'week':
-      return 7 * amount;
-    case 'day':
-      return amount;
-
-    default:
-      throw new Error('An invalid interval was specified');
-  }
+  return {
+    month: 30 * amount,
+    week: 7 * amount,
+    day: amount,
+  }[interval];
 }
 
 function getSubintervalDetails(subInterval) {
-  switch (subInterval) {
-    case '1min':
-      return {step: 1, intervalName: 'minutes', keyFormat: 'YYYY-MM-DD HH:mm'};
-    case '10min':
-      return {step: 10, intervalName: 'minutes', keyFormat: 'YYYY-MM-DD HH:mm'};
-    case '1hour':
-      return {step: 1, intervalName: 'hours', keyFormat: 'YYYY-MM-DD HH'};
-    case '1day':
-      return {step: 1, intervalName: 'days', keyFormat: 'YYYY-MM-DD'};
-
-    default:
-      throw new Error('An invalid sub-interval was specified');
-  }
+  return {
+    '1min': {step: 1, intervalName: 'minutes', keyFormat: 'YYYY-MM-DD HH:mm'},
+    '10min': {step: 10, intervalName: 'minutes', keyFormat: 'YYYY-MM-DD HH:mm'},
+    '1hour': {step: 1, intervalName: 'hours', keyFormat: 'YYYY-MM-DD HH'},
+    '1day': {step: 1, intervalName: 'days', keyFormat: 'YYYY-MM-DD'},
+  }[subInterval];
 }
 
 function createLabels(startTime, endTime, subInterval) {
@@ -309,20 +274,12 @@ function serializeMetrics(serData, metricNames, currentOptions) {
 // there are multiple values for a given time. This happens on the owner page because repos are
 // the main thing that the insights app aggregates data around
 function getAggregator(aggName) {
-  switch (aggName) {
-    case 'sum':
-      return sumAggregator;
-    case 'max':
-      return maxAggregator;
-    case 'avg':
-      return avgAggregator;
-    case 'count':
-      return countAggregator;
-
-    // Don't know that there's a sensible default aggregator
-    default:
-      throw new Error('An invalid insights aggregator was specified');
-  }
+  return {
+    sum: sumAggregator,
+    max: maxAggregator,
+    avg: avgAggregator,
+    count: countAggregator,
+  }[aggName];
 }
 
 function sumAggregator(map, name, time, value) {
@@ -346,7 +303,6 @@ function maxAggregator(map, name, time, value) {
 }
 
 function avgAggregator(map, name, time, value) {
-  // if (value === 0) { return map; }
   if (map[name].hasOwnProperty(time) && typeof map[name][time] !== 'number') {
     map[name][time][0]++;
     map[name][time][1] += value;
@@ -368,12 +324,10 @@ function countAggregator(map, name, time, value) {
 // These serializer functions are for putting point data into a format to be read by the
 // charting components
 function getSerializer(serializerName) {
-  switch (serializerName) {
-    case 'avg':
-      return avgSerializer;
-    default:
-      return defaultSerializer;
-  }
+  const serializers = {
+    avg: avgSerializer,
+  };
+  return serializers[serializerName] || defaultSerializer;
 }
 
 function avgSerializer(key, val) {
