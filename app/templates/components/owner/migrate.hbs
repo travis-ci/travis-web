@@ -1,1 +1,35 @@
-Migrate: {{owner.type}}
+<div class="migrate">
+
+  <h1>
+    Bring on your public repositories
+  </h1>
+
+  <p>
+    Here you can migrate all your repositories to build on travis-ci.com and make it a single place for your builds.
+  </p>
+
+  {{#if showActivationStep }}
+
+    <p>
+      The first step is activating your repositories on GitHub Apps to later migrate them here.
+    </p>
+
+    <div class="migrate__activate">
+      <button class="button--blue"
+        onclick={{action 'activateAll'}}
+      >
+        Activate all repositories using GitHub Apps
+      </button>
+    </div>
+
+    <p class="migrate__activate-note">
+      *Keep in mind that you can manually select the ones you’d like to migrate too.
+    </p>
+
+  {{else}}
+
+
+
+  {{/if}}
+
+</div>

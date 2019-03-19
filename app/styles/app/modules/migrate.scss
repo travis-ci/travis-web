@@ -1,0 +1,21 @@
+.migrate {
+
+  h1 {
+    color: $oxide-blue;
+    font-weight: 200;
+  }
+
+  p {
+    margin: 0 0 10px 0;
+  }
+
+  &__activate {
+    margin: 20px 0;
+
+    &-note {
+      font-style: italic;
+    }
+
+  }
+
+}
