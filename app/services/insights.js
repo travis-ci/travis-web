@@ -61,6 +61,8 @@ export default Service.extend({
     return settings;
   },
 
+  // In this context, a negative value for startInterval or endInterval indicates a date in the past. Think of it as the number of `interval`s
+  // that should be added to the current date to arrive at the start/end of the time period you would like to look at.
   getDatesFromInterval(interval, startInterval = -1, endInterval = 0) {
     const startIntervalDays = convertIntervalToDays(interval, startInterval);
     const endIntervalDays = convertIntervalToDays(interval, endInterval);

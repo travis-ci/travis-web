@@ -110,7 +110,7 @@ export default Component.extend({
       'builds',
       'sum',
       ['count_started'],
-      { endInterval: -1, calcTotal: true, calcAvg: true, private: this.private }
+      { startInterval: -2, endInterval: -1, calcTotal: true, calcAvg: true, private: this.private }
     );
   }),
   pastIntervalData: reads('requestPastData.lastSuccessful.value'),

@@ -117,6 +117,7 @@ export default Component.extend({
       'avg',
       ['times_waiting'],
       {
+        startInterval: -2,
         endInterval: -1,
         calcAvg: true,
         private: this.private,
