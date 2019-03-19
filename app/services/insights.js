@@ -303,7 +303,6 @@ function maxAggregator(map, name, time, value) {
 }
 
 function avgAggregator(map, name, time, value) {
-  // if (value === 0) { return map; }
   if (map[name].hasOwnProperty(time) && typeof map[name][time] !== 'number') {
     map[name][time][0]++;
     map[name][time][1] += value;
@@ -327,9 +326,8 @@ function countAggregator(map, name, time, value) {
 function getSerializer(serializerName) {
   const serializers = {
     avg: avgSerializer,
-    default: defaultSerializer,
   };
-  return serializers[serializerName] || serializers['default'];
+  return serializers[serializerName] || defaultSerializer;
 }
 
 function avgSerializer(key, val) {
