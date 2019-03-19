@@ -1,15 +1,12 @@
-<h3 class="insights-glance__title">Total Build Minutes</h3>
-<div class="insights-glance__stat">
-  {{#if isLoading}}
-    {{loading-indicator}}
-  {{else}}
-    {{totalBuildText}}
-  {{/if}}
-</div>
-<div class="insights-glance__chart">
-  {{#if showPlaceholder}}
-    <hr class="insights-glance__chart-placeholder" />
-  {{else}}
-    {{c3-chart class='chart-component' data=data axis=axis legend=legend grid=grid size=size point=point tooltip=tooltip}}
-  {{/if}}
-</div>
+{{insights-glance
+  isLoading=isLoading
+  isEmpty=isEmpty
+
+  title='Total Build Minutes'
+  statistic=totalBuildText
+
+  labels=labels
+  values=buildMins
+  datasetTitle='Minutes'
+  centerline=avgBuildMins
+}}

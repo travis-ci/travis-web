@@ -4,11 +4,9 @@ import { inject as service } from '@ember/service';
 import { pluralize } from 'ember-inflector';
 import { reads, equal, or } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
-import { format as d3format } from 'd3';
 
 export default Component.extend({
-  classNames: ['insights-glance'],
-  classNameBindings: ['isLoading:insights-glance--loading'],
+  classNames: ['insights-glance-container'],
   private: false,
 
   insights: service(),
@@ -48,64 +46,6 @@ export default Component.extend({
       ${this.avgWaitMins.toLocaleString()}
       ${pluralize(this.avgWaitMins, 'min', {withoutCount: true})}
     `.trim();
-  }),
-
-  // Chart component data
-  data: computed('waitMins', 'labels', function () {
-    return {
-      type: 'spline',
-      x: 'x',
-      columns: [
-        ['x', ...this.get('labels')],
-        ['Minutes', ...this.get('waitMins')],
-      ],
-      colors: {
-        Minutes: '#666',
-      },
-    };
-  }),
-
-  // Chart component options
-  legend: { show: false },
-  size: { height: 50 },
-
-  point: {
-    r: 0,
-    focus: {
-      expand: { r: 4 },
-    }
-  },
-
-  axis: {
-    x: {
-      type: 'timeseries',
-      tick: { format: '%A, %b %e' },
-      show: false,
-    },
-    y: { show: false }
-  },
-
-  tooltip: {
-    position: (data, width, height, element) => {
-      let top = -50;
-      let left = (element.getAttribute('width') - width) / 2;
-      return ({ top, left });
-    },
-    format: {
-      value: d3format(','),
-    }
-  },
-
-  grid: computed('avgWaitMins', function () {
-    return {
-      lines: { front: false },
-      y: {
-        lines: [{
-          value: this.get('avgWaitMins'),
-          class: 'insights-glance__centerline',
-        }],
-      }
-    };
   }),
 
   // Previous interval chart data

@@ -1,15 +1,12 @@
-<h3 class="insights-glance__title">Active Repositories</h3>
-<div class="insights-glance__stat">
-  {{#if isAnythingLoading}}
-    {{loading-indicator}}
-  {{else}}
-    {{activeTotal}}
-  {{/if}}
-</div>
-<div class="insights-glance__chart">
-  {{#if showPlaceholder}}
-    <hr class="insights-glance__chart-placeholder" />
-  {{else}}
-    {{c3-chart class='chart-component' data=data axis=axis legend=legend grid=grid size=size point=point tooltip=tooltip}}
-  {{/if}}
-</div>
+{{insights-glance
+  isLoading=isAnythingLoading
+  isEmpty=isEmpty
+
+  title='Active Repositories'
+  statistic=activeTotal
+
+  labels=labels
+  values=activeRepos
+  datasetTitle='Active Repositories'
+  centerline=avgRepos
+}}
