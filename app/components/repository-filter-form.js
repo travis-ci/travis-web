@@ -1,11 +1,5 @@
-import Ember from 'ember';
+import Component from '@ember/component';
 
-export default Ember.Component.extend({
-  tagName: '',
-
-  actions: {
-    search(query) {
-      this.get('onSearch')(query);
-    }
-  }
+export default Component.extend({
+  tagName: ''
 });

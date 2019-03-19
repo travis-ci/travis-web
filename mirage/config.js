@@ -336,26 +336,28 @@ export default function () {
     }
   });
 
-  this.get('/owner/:login/repos', function (schema, request) {
-    const { login } = request.params;
-    let repositories = schema.repositories.all().filter(repo => repo.owner.login === login);
-    const { queryParams } = request;
-    if (queryParams && queryParams.sort_by) {
-      repositories.models = repositories.models.sortBy(queryParams.sort_by);
+  this.get('/owner/:login/repos', function (schema, { params, queryParams = {} }) {
+    const { login } = params;
+    const { sort_by, name_filter } = queryParams;
+
+    const repositories = schema.repositories.all().filter(repo => repo.owner.login === login);
+
+    if (sort_by) {
+      repositories.models = repositories.models.sortBy(sort_by);
     }
 
-    if (queryParams && queryParams.name_filter) {
+    if (name_filter) {
       repositories.models = repositories.models.filter((repo) => {
-        return fuzzysort.single(queryParams.name_filter, repo.name);
+        return fuzzysort.single(name_filter, repo.name);
       });
     }
 
-    let filterableProperties = ['managed_by_installation', 'active_on_org', 'active'];
+    const filterableProperties = ['managed_by_installation', 'active_on_org', 'active'];
 
     filterableProperties.forEach(property => {
       let fullParamName = `repository.${property}`;
 
-      if (queryParams && queryParams[fullParamName]) {
+      if (queryParams[fullParamName]) {
         let paramValue = queryParams[fullParamName];
 
         if (paramValue === 'true') {
