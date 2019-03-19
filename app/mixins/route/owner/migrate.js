@@ -2,13 +2,13 @@ import Mixin from '@ember/object/mixin';
 import { hash } from 'rsvp';
 
 export default Mixin.create({
-  account: null,
+  owner: null,
 
   model() {
-    const { githubAppsRepositoriesOnOrg, webhooksRepositories } = this.account;
+    const { githubAppsRepositoriesOnOrg, webhooksRepositories } = this.owner;
 
     return hash({
-      owner: this.account,
+      owner: this.owner,
       orgRepos: githubAppsRepositoriesOnOrg.load(),
       webhookRepos: webhooksRepositories.load()
     });

@@ -35,6 +35,10 @@ export default Model.extend({
     return yield this.fetchRepositories({ page, filter, ghApps: true, activeOnOrg: true });
   }),
 
+  webhooksRepositories: dynamicQuery(function* ({ page = 1, filter = '' }) {
+    return yield this.fetchRepositories({ page, filter, ghApps: false });
+  }),
+
   legacyRepositories: dynamicQuery(function* ({ page = 1, filter = '' }) {
     const isGithubAppsEnabled = this.features.get('github-apps');
     const active = isGithubAppsEnabled ? true : undefined;

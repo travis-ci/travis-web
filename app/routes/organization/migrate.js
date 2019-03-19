@@ -4,7 +4,7 @@ import OwnerMigrateRouteMixin from 'travis/mixins/route/owner/migrate';
 export default Route.extend(OwnerMigrateRouteMixin, {
 
   beforeModel() {
-    this.account = this.modelFor('organization');
+    this.owner = this.modelFor('organization');
   },
 
   redirect({ orgRepos, webhookRepos, owner }) {
