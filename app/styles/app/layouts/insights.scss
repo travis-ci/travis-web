@@ -14,13 +14,12 @@ $med-small-up: "only screen and (min-width: 38em)";
   padding: 10px 0 15px;
 
   &-left {
-    display: grid;
-    grid-auto-flow: row;
+    display: flex;
+    flex-flow: column nowrap;
     align-items: baseline;
-    gap: 3px 0;
 
     @media #{$med-small-up} {
-      grid-auto-flow: column;
+      flex-flow: row nowrap;
     }
 
     .insights-dates {
@@ -41,10 +40,13 @@ $med-small-up: "only screen and (min-width: 38em)";
   }
 
   .insights-privacy-selector {
-    display: grid;
-    grid-template-columns: auto 1fr;
+    display: flex;
+    flex-flow: row wrap;
     align-items: baseline;
-    gap: 0 5px;
+
+    &__title {
+      margin-right: 5px;
+    }
 
     .travis-form {
       display: inline-block;
@@ -85,29 +87,28 @@ $med-small-up: "only screen and (min-width: 38em)";
 
 .insights-grid {
   position: relative;
-  display: grid;
-  grid-gap: 20px;
-  grid-template-columns: repeat(4, minmax(50px, 1fr));
-
-  @media #{$medium-up} {
-    grid-gap: 40px 4%;
-  }
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
 
   .insights-build-count,
   .insights-build-minutes,
   .insights-queue-times,
   .insights-active-repo-count {
-    grid-column: span 4;
     border-radius: 5px;
     border: 1px solid $pebble-grey;
     box-shadow: 0 0 8px 0 $dry-cement;
+    margin-bottom: 20px;
+
+    width: 100%;
 
     @media #{$med-small-up} {
-      grid-column: span 2;
+      width: 47%;
     }
 
     @media #{$medium-up} {
-      grid-column: span 1;
+      width: 22%;
+      margin-bottom: 40px;
     }
   }
 }
@@ -222,13 +223,9 @@ $med-small-up: "only screen and (min-width: 38em)";
 }
 
 .insights-odyssey {
-  grid-column: span 4;
   overflow: hidden;
   position: relative;
-
-  @media #{$medium-up} {
-    grid-column: span 4;
-  }
+  width: 100%;
 
   &__title {
     font-size: 15px;
