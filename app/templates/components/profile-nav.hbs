@@ -96,7 +96,7 @@
           {{/if}}
 
           {{#if showMigrateTab }}
-            <li>
+            <li class="{{if showMigrateBadge 'dot-badge'}}">
               {{#link-to 'organization.migrate' model }}
                 Migrate
               {{/link-to}}

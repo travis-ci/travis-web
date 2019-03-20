@@ -140,11 +140,7 @@
 
         </div>
 
-        {{#if isOrganization}}
-          {{pagination-navigation collection=repositories route="organization.migrate.webhooks" inner=6 outer=2}}
-        {{else}}
-          {{pagination-navigation collection=repositories route="account.migrate.webhooks" inner=6 outer=2}}
-        {{/if}}
+        {{pagination-navigation collection=repositories route=router.currentRouteName }}
 
         {{#if (or repositories.length filter.isFiltering)}}
           <button

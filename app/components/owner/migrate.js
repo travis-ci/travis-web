@@ -7,7 +7,7 @@ import config from 'travis/config/environment';
 const { appName = 'travis-ci' } = config.githubApps;
 
 export default Component.extend({
-  router: service(), // router.currentRouteName for pagination
+  router: service(), // for pagination
 
   owner: null,
 
