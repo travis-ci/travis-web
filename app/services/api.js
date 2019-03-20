@@ -49,7 +49,7 @@ export default Service.extend({
     options.dataType = options.dataType || 'json';
     options.contentType = 'application/json';
 
-    if (options.data) {
+    if (options.data && options.stringifyData !== false) {
       options.data = JSON.stringify(options.data);
     }
 

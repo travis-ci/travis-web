@@ -336,26 +336,28 @@ export default function () {
     }
   });
 
-  this.get('/owner/:login/repos', function (schema, request) {
-    const { login } = request.params;
-    let repositories = schema.repositories.all().filter(repo => repo.owner.login === login);
-    const { queryParams } = request;
-    if (queryParams && queryParams.sort_by) {
-      repositories.models = repositories.models.sortBy(queryParams.sort_by);
+  this.get('/owner/:login/repos', function (schema, { params, queryParams = {} }) {
+    const { login } = params;
+    const { sort_by, name_filter } = queryParams;
+
+    const repositories = schema.repositories.all().filter(repo => repo.owner.login === login);
+
+    if (sort_by) {
+      repositories.models = repositories.models.sortBy(sort_by);
     }
 
-    if (queryParams && queryParams.name_filter) {
+    if (name_filter) {
       repositories.models = repositories.models.filter((repo) => {
-        return fuzzysort.single(queryParams.name_filter, repo.name);
+        return fuzzysort.single(name_filter, repo.name);
       });
     }
 
-    let filterableProperties = ['managed_by_installation', 'active_on_org', 'active'];
+    const filterableProperties = ['managed_by_installation', 'active_on_org', 'active'];
 
     filterableProperties.forEach(property => {
       let fullParamName = `repository.${property}`;
 
-      if (queryParams && queryParams[fullParamName]) {
+      if (queryParams[fullParamName]) {
         let paramValue = queryParams[fullParamName];
 
         if (paramValue === 'true') {
@@ -588,6 +590,62 @@ export default function () {
 
   this.get('/v3/enterprise_license', function (schema, request) {
     return new Response(404, {}, {});
+  });
+
+  this.get('/insights/metrics', function (schema, { queryParams }) {
+    const ownerId = parseInt(queryParams.owner_id);
+    const names = queryParams.name.split(',');
+    const owner = schema.users.find(ownerId);
+
+    const start = new Date(queryParams.start_time);
+    const end = new Date(queryParams.end_time);
+
+    if (owner) {
+      const response = {
+        '@type': 'proxy',
+        '@representation': 'standard',
+        'data': queryParams
+      };
+      response.data.values = [];
+
+      names.map(name => {
+        response.data.values.push(...schema.insightMetrics
+          // Filter by time period. Allows testing percent change widgets
+          .where(m => m.time >= start && m.time <= end)
+          // It's easier to generate dates in descending order,
+          // but they're expected in ascending order, so reverse!
+          .models.reverse().map(metric => {
+            return {
+              name,
+              interval: queryParams.interval,
+              time: `${metric.time.toISOString().split('.')[0].replace('T', ' ')} UTC`,
+              value: metric.value,
+            };
+          })
+        );
+      });
+
+      return response;
+    } else {
+      return new Response(404, {}, {});
+    }
+  });
+
+  this.get('/insights/repos/active', function (schema, { queryParams }) {
+    const owner = schema.users.find(queryParams.owner_id);
+
+    if (owner) {
+      const response = {
+        '@type': 'proxy',
+        '@representation': 'standard',
+        'data': queryParams
+      };
+      response.data.count = schema.insightMetrics.all().models.length > 0 ? 75 : 0;
+
+      return response;
+    } else {
+      return new Response(404, {}, {});
+    }
   });
 }
 
