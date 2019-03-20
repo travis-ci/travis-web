@@ -10,6 +10,18 @@ export default Component.extend(KeyboardShortcuts, {
     'esc': 'closeConfirmationModal'
   },
 
+  // An example item that might be in the options array:
+  // {
+  //   value: 'private',
+  //   displayValue: 'you',
+  //   description: 'Do not allow everyone to see insights from your private builds',
+  //   modalText: 'Do not allow everyone to see my private insights',
+  // }
+  //
+  // `value` you can think of as the slug or key associated with the object. Hmm maybe I should have called it slug or key.
+  // `displayValue` is used to generate text for the modal
+  // `description` is for the label next to the radio button
+  // `modalText` can be used to override the generated modal text
   options: [],
   selected: '',
   isShowingConfirmationModal: false,

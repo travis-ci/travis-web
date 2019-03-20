@@ -1,6 +1,7 @@
 {{#if isVisible}}
   {{#each options as |option index|}}
     <button
+      data-test-visibility-settings-list-item
       class="visibility-setting-list-item {{if (eq currentSelection option.value) 'visibility-setting-list-item--selected'}}"
       {{action (mut currentSelection) option.value}}
     >
