@@ -18,4 +18,31 @@
 
   }
 
+  &__activate-all {
+    display: inline-block;
+    padding: 2px 0;
+    border-bottom: 1px solid $dry-cement;
+
+    &:hover {
+      border-color: $cement-grey;
+    }
+  }
+
+  &__github-icon {
+    width: 18px;
+    height: 18px;
+    fill: #cccccc;
+    vertical-align: text-bottom;
+    margin-left: 5px;
+  }
+
+  &__repo-list {
+    margin-top: 20px;
+  }
+
+  &__select-all {
+    margin-bottom: 20px;
+    font-size: 15px;
+  }
+
 }

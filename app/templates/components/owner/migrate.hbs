@@ -28,7 +28,151 @@
 
   {{else}}
 
+    <p>
+      If a repository you’d like to migrate is missing, please first
+      {{#external-link-to
+        href=activateAllUrl
+        target='_self'
+        class='migrate__activate-all'
+      }}
+        activate it on Github Apps
+      {{/external-link-to}}
+      {{svg-jar 'icon-repooctocat' class='migrate__github-icon'}}
+    </p>
 
+    <div class="migrate__repo-list">
+
+      {{#repository-filter
+        repositories=repositories
+        as |filter|
+      }}
+
+        {{#if (or (gt repositories.length 1) filter.isFiltering)}}
+
+          {{#component filter.form as |form|}}
+            <div class="profile-repositories-filter">
+              {{component form.searchField
+                placeholder="Filter repositories"
+                title="Filter repositories"
+              }}
+            </div>
+          {{/component}}
+
+        {{/if}}
+
+        <div>
+
+          {{#loading-overlay visible=filter.isLoading }}
+            {{#travis-form as |form| }}
+
+              {{#if showSelectAll }}
+                <div class='migrate__select-all'>
+                  {{#form.field
+                    disableFrame=true
+                    value=isAllSelected
+                    onChange=(action 'toggleAll')
+                    as |field|
+                  }}
+                    {{#field.checkbox}}
+                      Select all repositories below
+                    {{/field.checkbox}}
+                  {{/form.field}}
+                </div>
+              {{/if}}
+
+              <ul class="profile-repositorylist">
+                {{#each filter.results as |repository|}}
+
+                  <li class="profile-repolist-item">
+
+                    {{#form.field
+                      disableFrame=true
+                      disabled=(and repository.migrationStatus (not repository.isMigrationFailed))
+                      value=(contains repository selectedRepositories)
+                      onChange=(action 'toggleRepository' repository)
+                      as |field|
+                    }}
+                      {{#field.checkbox}}
+                        {{repository-visibility-icon repository=repository}}
+                        <span class="profile-repo">
+                          {{compute filter.computeName repository.name filter.query}}
+                        </span>
+                      {{/field.checkbox}}
+                    {{/form.field}}
+
+                    <div
+                      data-test-migration-status={{repository.migrationStatus}}
+                      class="migration-status {{repository.migrationStatus}}"
+                    >
+                      {{#if (or repository.isMigrationQueued repository.isMigrationMigrating )}}
+                        {{loading-indicator
+                          data-test-repository-migration-loading-animation
+                          inline=true
+                        }}
+                        {{ember-tooltip text='Repository migration is in process'}}
+                      {{else if repository.isMigrationSucceeded }}
+                        <span>
+                          {{svg-jar "stage-passed" class="icon"}}
+                          {{ember-tooltip text='Repository has been successfully migrated'}}
+                        </span>
+                      {{else if repository.isMigrationFailed }}
+                        <span>
+                          {{svg-jar "stage-errored" class="icon"}}
+                          {{ember-tooltip text='Repository migration has failed'}}
+                        </span>
+                      {{/if}}
+                    </div>
+
+                  </li>
+
+                {{else}}
+
+                  {{#if filter.isFiltering}}
+                    <li class="no-results">Sorry, no results found.</li>
+                  {{else}}
+                    <li>Sorry, it seems like we couldn't find any repositories you have access to on GitHub.</li>
+                  {{/if}}
+
+                {{/each}}
+              </ul>
+            {{/travis-form}}
+          {{/loading-overlay}}
+
+        </div>
+
+        {{#if isOrganization}}
+          {{pagination-navigation collection=repositories route="organization.migrate.webhooks" inner=6 outer=2}}
+        {{else}}
+          {{pagination-navigation collection=repositories route="account.migrate.webhooks" inner=6 outer=2}}
+        {{/if}}
+
+        {{#if (or repositories.length filter.isFiltering)}}
+          <button
+            disabled={{not selectedRepositories.length}}
+            class="button--blue migrate__submit {{unless selectedRepositories.length 'disabled'}}"
+            onclick={{action (mut isShowingRepositoryMigrationModal) true}}
+          >
+            Migrate selected repositories to travis-ci.com
+          </button>
+        {{/if}}
+
+      {{/repository-filter}}
+
+      {{#if isShowingRepositoryMigrationModal}}
+        {{#modal-dialog
+           onClose=(action (mut isShowingRepositoryMigrationModal) false)
+           targetAttachment="center"
+           translucentOverlay=true
+        }}
+           {{repository-migration-modal
+             data-test-repository-migration-modal
+             repositories=selectedRepositories
+             onClose=(action (mut isShowingRepositoryMigrationModal) false)
+           }}
+        {{/modal-dialog}}
+      {{/if}}
+
+    </div>
 
   {{/if}}
 
