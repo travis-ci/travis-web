@@ -102,23 +102,23 @@
 
                     <div
                       data-test-migration-status={{repository.migrationStatus}}
-                      class="migration-status {{repository.migrationStatus}}"
+                      class="migrate__status {{repository.migrationStatus}}"
                     >
                       {{#if (or repository.isMigrationQueued repository.isMigrationMigrating )}}
                         {{loading-indicator
                           data-test-repository-migration-loading-animation
                           inline=true
                         }}
-                        {{ember-tooltip text='Repository migration is in process'}}
+                        {{ember-tooltip text='Migrating'}}
                       {{else if repository.isMigrationSucceeded }}
                         <span>
                           {{svg-jar "stage-passed" class="icon"}}
-                          {{ember-tooltip text='Repository has been successfully migrated'}}
+                          {{ember-tooltip text='This repository has been migrated'}}
                         </span>
                       {{else if repository.isMigrationFailed }}
                         <span>
-                          {{svg-jar "stage-errored" class="icon"}}
-                          {{ember-tooltip text='Repository migration has failed'}}
+                          {{svg-jar "stage-failed" class="icon"}}
+                          {{ember-tooltip text='This repository couldn’t be migrated, please try again'}}
                         </span>
                       {{/if}}
                     </div>

@@ -49,4 +49,36 @@
     margin-top: 15px;
   }
 
+  &__status {
+
+    .loading-indicator {
+      display: flex;
+      margin-left: 10px;
+    }
+
+    .icon {
+      width: 20px;
+      height: 20px;
+      margin: 0;
+      padding: 0;
+
+      circle {
+        display: none;
+      }
+
+    }
+
+    &.failure {
+      .icon path {
+        stroke: #db4545;
+      }
+    }
+
+  }
+
+  .profile-repo {
+    padding-right: 0;
+    margin-right: 5px;
+  }
+
 }
