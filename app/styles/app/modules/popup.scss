@@ -64,6 +64,20 @@
   position: absolute;
   top: 1em;
   right: 1em;
+  padding: 0;
+
+  .icon {
+    margin: 0;
+  }
+}
+
+.modal-controls {
+  text-align: right;
+  margin-top: 2em;
+
+  button {
+    min-width: 100px;
+  }
 }
 
 .status-images {

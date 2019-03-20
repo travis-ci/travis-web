@@ -1,0 +1,21 @@
+.repository-migration-modal {
+
+  .migration-modal-cancel {
+    margin-left: 6px;
+  }
+
+  h3 {
+    margin-top: -10px;
+  }
+
+  .profile-repolist-wrapper {
+    max-height: 200px;
+    overflow-y: auto;
+
+    li {
+      margin-bottom: 0;
+    }
+  }
+
+}
+

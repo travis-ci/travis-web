@@ -11,6 +11,8 @@ export default Component.extend({
 
   owner: null,
 
+  isShowingRepositoryMigrationModal: false,
+
   repositories: reads('owner.githubAppsRepositoriesOnOrg'),
   selectedRepositories: computed(() => []),
 
