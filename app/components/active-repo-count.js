@@ -5,7 +5,7 @@ import { reads, equal, or } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
 
 export default Component.extend({
-  classNames: ['insights-glance-container'],
+  classNames: ['insights-active-repo-count'],
   private: false,
 
   insights: service(),

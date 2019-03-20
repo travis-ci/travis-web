@@ -92,6 +92,24 @@ $med-small-up: "only screen and (min-width: 38em)";
   @media #{$medium-up} {
     grid-gap: 40px 4%;
   }
+
+  .insights-build-count,
+  .insights-build-minutes,
+  .insights-queue-times,
+  .insights-active-repo-count {
+    grid-column: span 4;
+    border-radius: 5px;
+    border: 1px solid $pebble-grey;
+    box-shadow: 0 0 8px 0 $dry-cement;
+
+    @media #{$med-small-up} {
+      grid-column: span 2;
+    }
+
+    @media #{$medium-up} {
+      grid-column: span 1;
+    }
+  }
 }
 
 .insights-overlay {
@@ -130,19 +148,7 @@ $med-small-up: "only screen and (min-width: 38em)";
 
 .insights-glance {
   padding: 20px 20px 15px;
-  border-radius: 5px;
-  border: 1px solid $pebble-grey;
-  box-shadow: 0 0 8px 0 $dry-cement;
   overflow: hidden;
-  grid-column: span 4;
-
-  @media #{$med-small-up} {
-    grid-column: span 2;
-  }
-
-  @media #{$medium-up} {
-    grid-column: span 1;
-  }
 
   &__title {
     font-size: 12px;

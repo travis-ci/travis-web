@@ -7,7 +7,7 @@ import { task } from 'ember-concurrency';
 
 
 export default Component.extend({
-  classNames: ['insights-glance-container'],
+  classNames: ['insights-build-minutes'],
   private: false,
 
   insights: service(),
