@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
-import { reads, or, and } from '@ember/object/computed';
+import { reads, or, and, gt } from '@ember/object/computed';
 import { computed } from '@ember/object';
 import config from 'travis/config/environment';
 
@@ -24,6 +24,7 @@ export default Component.extend({
   reposToMigrate: reads('model.githubAppsRepositoriesOnOrg'),
 
   showMigrateTab: and('features.proVersion', 'user.allowMigration'),
+  showMigrateBadge: gt('reposToMigrate.total', 0),
   showSubscriptionStatusBanner: and('checkSubscriptionStatus', 'model.subscriptionError'),
 
   get githubOrgsOauthAccessSettingsUrl() {
