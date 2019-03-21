@@ -23,7 +23,6 @@
       background-color: transparent;
       cursor: pointer;
       text-align: left;
-      font-style: italic;
       color: $cement-grey;
     }
 
@@ -59,7 +58,7 @@
   border-radius: 0.25rem;
   text-transform: uppercase;
   background-color: $oxide-blue;
-  font-size: 10px;
+  font-size: 12px;
   color: #ffffff;
   border: 1px solid $oxide-blue;
   cursor: pointer;
@@ -78,22 +77,27 @@
 }
 
 .visibility-settings-modal {
-  padding: 1.6rem 1.8rem;
+  padding: 16px 20px 20px;
 
   &__top {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center;
+  }
+
+  &__close-button {
+    margin: 0;
+    padding: 0
   }
 
   &__header {
-    font-size: 1.6rem;
+    font-size: 22px;
     font-weight: 300;
     color: $oxide-blue;
     margin: 0 2rem 0 0;
   }
 
   &__controls .button {
-    margin: 0 1rem 1rem 0;
+    margin: 0 1rem 0 0;
   }
 }
