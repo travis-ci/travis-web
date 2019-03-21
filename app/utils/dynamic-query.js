@@ -1,6 +1,7 @@
 import { computed } from '@ember/object';
 import { reads, equal, not } from '@ember/object/computed';
 import ArrayProxy from '@ember/array/proxy';
+import Evented from '@ember/object/evented';
 import { assert } from '@ember/debug';
 import { task } from 'ember-concurrency';
 import bindGenerator from 'travis/utils/bind-generator';
@@ -56,7 +57,12 @@ export default function dynamicQuery(...args) {
   return computed(...args);
 }
 
-const DynamicQuery = ArrayProxy.extend({
+export const EVENTS = {
+  PAGE_CHANGED: 'page-changed',
+  FILTER_CHANGED: 'filter-changed'
+};
+
+const DynamicQuery = ArrayProxy.extend(Evented, {
   task: null,
   promise: null,
 
@@ -120,11 +126,15 @@ const DynamicQuery = ArrayProxy.extend({
   },
 
   applyOptions({ page, filter } = {}) {
-    if (page !== undefined)
+    if (page !== undefined && page !== this.currentPage) {
       this.set('page', page);
+      this.trigger(EVENTS.PAGE_CHANGED, page);
+    }
 
-    if (filter !== undefined)
+    if (filter !== undefined && filter !== this.filter) {
       this.set('filter', filter);
+      this.trigger(EVENTS.FILTER_CHANGED, filter);
+    }
   }
 
 });

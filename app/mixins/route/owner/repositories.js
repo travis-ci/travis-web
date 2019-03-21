@@ -1,4 +1,5 @@
 import Mixin from '@ember/object/mixin';
+import { EVENTS } from 'travis/utils/dynamic-query';
 
 export default Mixin.create({
   owner: null,
@@ -25,6 +26,18 @@ export default Mixin.create({
       owner.legacyRepositories.switchToPage(this.legacyPage);
       owner.githubAppsRepositories.switchToPage(this.appsPage);
     }
+  },
+
+  redirect() {
+    this.owner.legacyRepositories.on(EVENTS.PAGE_CHANGED, page => {
+      const queryParams = { 'legacy-page': page };
+      this.transitionTo({ queryParams });
+    });
+
+    this.owner.githubAppsRepositories.on(EVENTS.PAGE_CHANGED, page => {
+      const queryParams = { 'apps-page': page };
+      this.transitionTo({ queryParams });
+    });
   },
 
   setupController(controller, model) {
