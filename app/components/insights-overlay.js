@@ -2,6 +2,7 @@ import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
 import { reads, equal, not, and } from '@ember/object/computed';
+import { DEFAULT_INSIGHTS_INTERVAL, INSIGHTS_INTERVALS } from 'travis/services/insights';
 
 export default Component.extend({
   classNames: ['insights-overlay'],
@@ -13,7 +14,7 @@ export default Component.extend({
   insights: service(),
 
   private: false,
-  interval: 'month',
+  interval: DEFAULT_INSIGHTS_INTERVAL,
 
   // Current Interval Build Data
   requestData: task(function* () {
@@ -36,8 +37,8 @@ export default Component.extend({
   hasNoBuilds: equal('totalBuilds', 0),
   showOverlay: and('isNotLoading', 'hasNoBuilds'),
 
-  isMonth: equal('interval', 'month'),
-  isWeek: equal('interval', 'week'),
+  isMonth: equal('interval', INSIGHTS_INTERVALS.MONTH),
+  isWeek: equal('interval', INSIGHTS_INTERVALS.WEEK),
 
   // Request build data
   didReceiveAttrs() {

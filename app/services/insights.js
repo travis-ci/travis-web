@@ -4,7 +4,12 @@ import { assign } from '@ember/polyfills';
 import { task } from 'ember-concurrency';
 import { singularize } from 'ember-inflector';
 
-const validIntervals = ['week', 'month'];
+export const INSIGHTS_INTERVALS = {
+  MONTH: 'month',
+  WEEK: 'week',
+};
+export const DEFAULT_INSIGHTS_INTERVAL = INSIGHTS_INTERVALS.MONTH;
+
 const defaultIntervalSettings = {
   day: {
     subInterval: '10min',
@@ -53,7 +58,7 @@ export default Service.extend({
   getIntervalSettings(customIntervalSettings = {}) {
     // Merge and assign, I don't think do deep merges, but interval settings is only ever 2 levels
     // deep so all we need to do is loop through each interval and do a shallow merge
-    const settings =  validIntervals.reduce((settings, interval) => {
+    const settings =  Object.values(INSIGHTS_INTERVALS).reduce((settings, interval) => {
       settings[interval] = {};
       assign(settings[interval], defaultIntervalSettings[interval], customIntervalSettings[interval]);
       return settings;
