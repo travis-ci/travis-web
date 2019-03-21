@@ -1,5 +1,5 @@
 <section class='user-settings'>
-  <section>
+  <section id="API-auth">
     <h3>API authentication</h3>
 
     <p>To learn more about using our API, please head to <a href='https://developer.travis-ci.com'>developer.travis-ci.com</a>.</p>
@@ -8,7 +8,7 @@
   </section>
 
   {{#if features.betaFeatures}}
-    <section>
+    <section id="features">
       <h3>Features</h3>
       <ul class="features-list">
         {{#each (sort-by "name" featureFlags) as |feature|}}
@@ -24,8 +24,8 @@
   {{#if scrollToEmail}}
     {{scroll-here}}
   {{/if}}
-  <section class="email-settings" data-test-email-settings>
-    <h3>Email notifications</h3>
+  <section id="email-settings" class="email-settings" data-test-email-settings>
+    <h3 id="email-notifications">Email notifications</h3>
     <div class="build-emails">
       <div class="row">
         <div class="name" data-test-email-settings-title>
@@ -77,10 +77,9 @@
     {{/if}}
   </section>
   {{#if features.proVersion}}
-    <section class="active-visiblity-settings" data-test-active-visiblity-settings>
+    <section id="insights-visibility-settings" class="insights-visibility-settings" data-test-insights-visibility-settings>
       <h3>Insights Visibility Settings</h3>
       <div class="insights-settings">
-        {{!-- <div class="name" data-test-insights-settings-title>Insights</div> --}}
         <p class="description" data-test-insights-settings-description>
           Make more informed decisions about your development workflow using your build Insights.<br />
           {{#link-to 'owner.repositories' account.login (query-params tab='insights')}}View {{account.name}}'s Insights{{/link-to}}
