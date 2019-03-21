@@ -8,6 +8,7 @@ export default Component.extend({
 
   isPrivateViewable: false,
   includePrivate: false,
+  showFrame: false,
 
   availableOptions: computed('isPrivateViewable', 'includePrivate', function () {
     const options = [];

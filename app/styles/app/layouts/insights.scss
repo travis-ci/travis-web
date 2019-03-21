@@ -11,14 +11,16 @@ $med-small-up: "only screen and (min-width: 38em)";
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 0 15px;
+  padding: 10px 0;
 
   &-left {
     display: flex;
     flex-flow: column nowrap;
     align-items: baseline;
+    padding-top: 10px;
 
     @media #{$med-small-up} {
+      padding-top: 0;
       flex-flow: row nowrap;
     }
 
@@ -51,9 +53,20 @@ $med-small-up: "only screen and (min-width: 38em)";
     .travis-form {
       display: inline-block;
 
-      .travis-form__field .travis-form__field-component {
+      .travis-form__field .travis-form__field-select {
         margin: 0;
+        min-width: 203px;
         font-weight: 700;
+        cursor: pointer;
+
+        .ember-power-select-status-icon {
+          border: none;
+          width: 16px;
+          height: 8px;
+          background-image: url(/images/svg/icon-dropdown-arrow.svg);
+          background-repeat: no-repeat;
+          background-size: contain;
+        }
       }
     }
 
