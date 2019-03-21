@@ -2,20 +2,21 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, settled } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
+import { DEFAULT_INSIGHTS_INTERVAL, INSIGHTS_INTERVALS } from 'travis/services/insights';
 
 module('Integration | Component | insights-overlay', function (hooks) {
   setupRenderingTest(hooks);
 
   hooks.beforeEach(function () {
     const user = this.server.create('user');
-    this.set('ownerData', user);
+    this.setProperties({
+      ownerData: user,
+      private: true
+    });
   });
 
   test('month version renders correctly', async function (assert) {
-    this.setProperties({
-      interval: 'month',
-      private: true,
-    });
+    this.set('interval', INSIGHTS_INTERVALS.MONTH);
 
     await render(hbs`{{insights-overlay interval=interval owner=ownerData private=private}}`);
     await settled();
@@ -27,10 +28,7 @@ module('Integration | Component | insights-overlay', function (hooks) {
   });
 
   test('week version renders correctly', async function (assert) {
-    this.setProperties({
-      interval: 'week',
-      private: true,
-    });
+    this.set('interval', INSIGHTS_INTERVALS.WEEK);
 
     await render(hbs`{{insights-overlay interval=interval owner=ownerData private=private}}`);
     await settled();
@@ -42,10 +40,7 @@ module('Integration | Component | insights-overlay', function (hooks) {
   });
 
   test('it does not show when there are builds', async function (assert) {
-    this.setProperties({
-      interval: 'month',
-      private: true,
-    });
+    this.set('interval', DEFAULT_INSIGHTS_INTERVAL);
 
     this.server.createList('insight-metric', 5);
 
