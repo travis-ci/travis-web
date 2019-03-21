@@ -1,4 +1,7 @@
 import Mixin from '@ember/object/mixin';
+import { EVENTS } from 'travis/utils/dynamic-query';
+
+const { PAGE_CHANGED } = EVENTS;
 
 export default Mixin.create({
   page: 1,
@@ -15,7 +18,12 @@ export default Mixin.create({
 
   afterModel(model) {
     if (model && !model.error) {
-      model.githubAppsRepositoriesOnOrg.switchToPage(this.page);
+      const repos = model.githubAppsRepositoriesOnOrg;
+      repos.switchToPage(this.page);
+      repos.on(PAGE_CHANGED, page => {
+        const queryParams = { 'apps-page': page };
+        this.transitionTo({ queryParams });
+      });
     }
   }
 
