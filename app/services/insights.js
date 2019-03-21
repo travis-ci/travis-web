@@ -4,7 +4,12 @@ import { assign } from '@ember/polyfills';
 import { task } from 'ember-concurrency';
 import { singularize } from 'ember-inflector';
 
-const validIntervals = ['week', 'month'];
+export const INSIGHTS_INTERVALS = {
+  MONTH: 'month',
+  WEEK: 'week',
+};
+export const DEFAULT_INSIGHTS_INTERVAL = INSIGHTS_INTERVALS.MONTH;
+
 const defaultIntervalSettings = {
   day: {
     subInterval: '10min',
@@ -53,7 +58,7 @@ export default Service.extend({
   getIntervalSettings(customIntervalSettings = {}) {
     // Merge and assign, I don't think do deep merges, but interval settings is only ever 2 levels
     // deep so all we need to do is loop through each interval and do a shallow merge
-    const settings =  validIntervals.reduce((settings, interval) => {
+    const settings =  Object.values(INSIGHTS_INTERVALS).reduce((settings, interval) => {
       settings[interval] = {};
       assign(settings[interval], defaultIntervalSettings[interval], customIntervalSettings[interval]);
       return settings;
@@ -61,6 +66,8 @@ export default Service.extend({
     return settings;
   },
 
+  // In this context, a negative value for startInterval or endInterval indicates a date in the past. Think of it as the number of `interval`s
+  // that should be added to the current date to arrive at the start/end of the time period you would like to look at.
   getDatesFromInterval(interval, startInterval = -1, endInterval = 0) {
     const startIntervalDays = convertIntervalToDays(interval, startInterval);
     const endIntervalDays = convertIntervalToDays(interval, endInterval);
