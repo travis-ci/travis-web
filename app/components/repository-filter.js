@@ -28,11 +28,11 @@ export default Component.extend({
     return isPresent(query) ? htmlSafe(fuzzyMatch(name, query)) : name;
   },
 
-  didInsertElement() {
+  didReceiveAttrs() {
     this._super(...arguments);
-    if (!this.query) {
-      this.set('query', this.get('repositories.filter'));
-    }
+
+    const filter = this.get('repositories.filter');
+    this.set('query', filter);
   }
 
 });
