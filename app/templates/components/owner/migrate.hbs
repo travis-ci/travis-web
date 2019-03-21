@@ -47,8 +47,7 @@
         as |filter|
       }}
 
-        {{#if (or (gt repositories.length 1) filter.isFiltering)}}
-
+        {{#if showFilter }}
           {{#component filter.form as |form|}}
             <div class="profile-repositories-filter">
               {{component form.searchField
@@ -57,7 +56,6 @@
               }}
             </div>
           {{/component}}
-
         {{/if}}
 
         <div>
@@ -87,7 +85,7 @@
 
                     {{#form.field
                       disableFrame=true
-                      disabled=(and repository.migrationStatus (not repository.isMigrationFailed))
+                      disabled=(not repository.isMigratable)
                       value=(contains repository selectedRepositories)
                       onChange=(action 'toggleRepository' repository)
                       as |field|
@@ -97,6 +95,9 @@
                         <span class="profile-repo">
                           {{compute filter.computeName repository.name filter.query}}
                         </span>
+                        {{#unless repository.permissions.admin }}
+                          {{ember-tooltip text="Requires admin permissions"}}
+                        {{/unless}}
                       {{/field.checkbox}}
                     {{/form.field}}
 
