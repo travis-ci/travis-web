@@ -2,11 +2,23 @@
   {{#if isMonth}}
     <h2 data-test-insights-overlay-title>Build to get monthly insights</h2>
     <p data-test-insights-overlay-text>All the build status results from the last 30 days will appear here.</p>
-    {{#external-link-to href=(config-get 'urls.gettingStarted') class='button button--blue' data-test-insights-overlay-link=''}}Let's get you going{{/external-link-to}}
+    {{#external-link-to
+      href=(config-get 'urls.gettingStarted')
+      class='button button--blue'
+      data-test-insights-overlay-link=''
+    }}
+      Let's get you going
+    {{/external-link-to}}
   {{else if isWeek}}
     <h2 data-test-insights-overlay-title>It's been a quiet week for builds</h2>
     <p data-test-insights-overlay-text>All the build status results from the last 7 days will appear here.</p>
-    {{#external-link-to href=(config-get 'urls.gettingStarted') class='button button--blue' data-test-insights-overlay-link=''}}Want help building?{{/external-link-to}}
+    {{#external-link-to
+      href=(config-get 'urls.gettingStarted')
+      class='button button--blue'
+      data-test-insights-overlay-link=''
+    }}
+      Want help building?
+    {{/external-link-to}}
   {{/if}}
 
   {{yield}}
