@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
-import { reads, gt, notEmpty, or } from '@ember/object/computed';
+import { reads, gt, notEmpty, or, filterBy } from '@ember/object/computed';
 import config from 'travis/config/environment';
 
 const { appName = 'travis-ci' } = config.githubApps;
@@ -15,17 +15,18 @@ export default Component.extend({
 
   repositories: reads('owner.githubAppsRepositoriesOnOrg'),
   selectedRepositories: computed(() => []),
+  selectableRepositories: filterBy('repositories', 'isMigratable'),
 
   hasRepos: gt('repositories.total', 0),
-  isFiltering: notEmpty('repositories.filter'),
+  isFiltering: notEmpty('repositories.filterTerm'),
 
-  isAllSelected: computed('selectedRepositories.[]', 'repositories.[]', function () {
-    const { selectedRepositories, repositories } = this;
-    return repositories.every(repo => selectedRepositories.includes(repo));
+  isAllSelected: computed('selectedRepositories.[]', 'selectableRepositories.[]', function () {
+    const { selectedRepositories, selectableRepositories } = this;
+    return selectableRepositories.every(repo => selectedRepositories.includes(repo));
   }),
 
-  showSelectAll: computed('repositories.[]', function () {
-    return this.repositories.length > 1;
+  showSelectAll: computed('selectableRepositories.[]', function () {
+    return this.selectableRepositories.length > 1;
   }),
 
   showActivationStep: reads('repositories.isEmpty'),
@@ -63,13 +64,18 @@ export default Component.extend({
     },
 
     toggleAll() {
-      const { isAllSelected, repositories, selectedRepositories } = this;
+      const { isAllSelected, selectableRepositories, selectedRepositories } = this;
 
       if (isAllSelected) {
-        selectedRepositories.removeObjects(repositories.toArray());
+        selectedRepositories.removeObjects(selectableRepositories.toArray());
       } else {
-        selectedRepositories.addObjects(repositories.toArray());
+        selectedRepositories.addObjects(selectableRepositories.toArray());
       }
+    },
+
+    closeMigrateModal() {
+      this.set('isShowingRepositoryMigrationModal', false);
+      this.selectedRepositories.clear();
     }
 
   }

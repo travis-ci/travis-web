@@ -67,7 +67,7 @@ const DynamicQuery = ArrayProxy.extend(Evented, {
   promise: null,
 
   page: 1,
-  filter: '',
+  filterTerm: '',
 
   pagination: null,
 
@@ -101,9 +101,9 @@ const DynamicQuery = ArrayProxy.extend(Evented, {
     return page === currentPage ? promise : this.reload({ page });
   },
 
-  applyFilter(filter = '') {
+  applyFilter(filterTerm = '') {
     const page = 1;
-    return this.reload({ filter, page });
+    return this.reload({ filterTerm, page });
   },
 
   load(options) {
@@ -113,9 +113,9 @@ const DynamicQuery = ArrayProxy.extend(Evented, {
   reload(options) {
     this.applyOptions(options);
 
-    const { page, filter } = this;
+    const { page, filterTerm } = this;
 
-    this.promise = this.task.perform({ page, filter })
+    this.promise = this.task.perform({ page, filter: filterTerm })
       .then((result = []) => {
         this.set('pagination', result.pagination);
         this.setObjects(result.toArray());
@@ -125,15 +125,15 @@ const DynamicQuery = ArrayProxy.extend(Evented, {
     return this.promise;
   },
 
-  applyOptions({ page, filter } = {}) {
+  applyOptions({ page, filterTerm } = {}) {
     if (page !== undefined && page !== this.currentPage) {
       this.set('page', page);
       this.trigger(EVENTS.PAGE_CHANGED, page);
     }
 
-    if (filter !== undefined && filter !== this.filter) {
-      this.set('filter', filter);
-      this.trigger(EVENTS.FILTER_CHANGED, filter);
+    if (filterTerm !== undefined && filterTerm !== this.filterTerm) {
+      this.set('filterTerm', filterTerm);
+      this.trigger(EVENTS.FILTER_CHANGED, filterTerm);
     }
   }
 

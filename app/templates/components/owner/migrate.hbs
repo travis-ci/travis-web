@@ -157,14 +157,14 @@
 
       {{#if isShowingRepositoryMigrationModal}}
         {{#modal-dialog
-           onClose=(action (mut isShowingRepositoryMigrationModal) false)
+           onClose=(action 'closeMigrateModal')
            targetAttachment="center"
            translucentOverlay=true
         }}
            {{repository-migration-modal
              data-test-repository-migration-modal
              repositories=selectedRepositories
-             onClose=(action (mut isShowingRepositoryMigrationModal) false)
+             onClose=(action 'closeMigrateModal')
            }}
         {{/modal-dialog}}
       {{/if}}

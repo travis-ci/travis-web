@@ -18,7 +18,7 @@ export default Component.extend({
   isFiltering: or('isLoading', 'hasQuery'),
 
   search: task(function* (query = '') {
-    if (query === this.get('repositories.filter')) return;
+    if (query === this.get('repositories.filterTerm')) return;
     this.set('query', query);
     yield timeout(config.intervals.repositoryFilteringDebounceRate);
     yield this.repositories.applyFilter(query);
@@ -31,7 +31,7 @@ export default Component.extend({
   didReceiveAttrs() {
     this._super(...arguments);
 
-    const filter = this.get('repositories.filter');
+    const filter = this.get('repositories.filterTerm');
     this.set('query', filter);
   }
 
