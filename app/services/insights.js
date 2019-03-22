@@ -5,8 +5,8 @@ import { task } from 'ember-concurrency';
 import { singularize } from 'ember-inflector';
 
 export const INSIGHTS_INTERVALS = {
-  MONTH: 'month',
   WEEK: 'week',
+  MONTH: 'month',
 };
 export const DEFAULT_INSIGHTS_INTERVAL = INSIGHTS_INTERVALS.MONTH;
 
