@@ -40,9 +40,9 @@ export default Component.extend({
   init() {
     this._super(...arguments);
 
-    const { selectedRepositories, repositories } = this;
-    if (repositories.length === 1) {
-      selectedRepositories.addObjects(repositories);
+    const { selectedRepositories, selectableRepositories } = this;
+    if (selectableRepositories.length === 1) {
+      selectedRepositories.addObjects(selectableRepositories);
     }
   },
 
