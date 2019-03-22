@@ -2,6 +2,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
+import { DEFAULT_INSIGHTS_INTERVAL, INSIGHTS_INTERVALS } from 'travis/services/insights';
 
 module('Integration | Component | insights-date-display', function (hooks) {
   setupRenderingTest(hooks);
@@ -10,8 +11,8 @@ module('Integration | Component | insights-date-display', function (hooks) {
     this.insightsService = this.owner.lookup('service:insights');
   });
 
-  test('month is default', async function (assert) {
-    let [start, end] = this.insightsService.getDatesFromInterval('month');
+  test('default', async function (assert) {
+    let [start, end] = this.insightsService.getDatesFromInterval(DEFAULT_INSIGHTS_INTERVAL);
 
     await render(hbs`{{insights-date-display}}`);
 
@@ -20,9 +21,9 @@ module('Integration | Component | insights-date-display', function (hooks) {
     );
   });
 
-  test('week', async function (assert) {
-    let [start, end] = this.insightsService.getDatesFromInterval('week');
-    this.set('interval', 'week');
+  test('month', async function (assert) {
+    let [start, end] = this.insightsService.getDatesFromInterval(INSIGHTS_INTERVALS.MONTH);
+    this.set('interval', INSIGHTS_INTERVALS.MONTH);
 
     await render(hbs`{{insights-date-display interval=interval}}`);
 
@@ -31,9 +32,9 @@ module('Integration | Component | insights-date-display', function (hooks) {
     );
   });
 
-  test('day', async function (assert) {
-    let [start, end] = this.insightsService.getDatesFromInterval('day');
-    this.set('interval', 'day');
+  test('week', async function (assert) {
+    let [start, end] = this.insightsService.getDatesFromInterval(INSIGHTS_INTERVALS.WEEK);
+    this.set('interval', INSIGHTS_INTERVALS.WEEK);
 
     await render(hbs`{{insights-date-display interval=interval}}`);
 

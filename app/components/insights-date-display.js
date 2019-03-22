@@ -2,6 +2,7 @@ import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 import moment from 'moment';
+import { DEFAULT_INSIGHTS_INTERVAL } from 'travis/services/insights';
 
 export default Component.extend({
   tagName: 'span',
@@ -9,10 +10,10 @@ export default Component.extend({
 
   insights: service(),
 
-  interval: 'month',
+  interval: DEFAULT_INSIGHTS_INTERVAL,
 
   dates: computed('interval', function () {
-    return this.get('insights').getDatesFromInterval(this.interval);
+    return this.insights.getDatesFromInterval(this.interval);
   }),
 
   startDate: computed('dates', function () {
