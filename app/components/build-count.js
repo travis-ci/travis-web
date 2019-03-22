@@ -4,16 +4,19 @@ import { computed } from '@ember/object';
 import { pluralize } from 'ember-inflector';
 import { reads, equal, or } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
+import { DEFAULT_INSIGHTS_INTERVAL } from 'travis/services/insights';
 
 export default Component.extend({
   classNames: ['insights-build-count'],
   private: false,
+  interval: DEFAULT_INSIGHTS_INTERVAL,
+  owner: null,
 
   insights: service(),
 
   // Current Interval Chart Data
   requestData: task(function* () {
-    return yield this.get('insights').getChartData.perform(
+    return yield this.insights.getChartData.perform(
       this.owner,
       this.interval,
       'builds',
@@ -44,7 +47,7 @@ export default Component.extend({
 
   // Previous interval chart data
   requestPastData: task(function* () {
-    return yield this.get('insights.getChartData').perform(
+    return yield this.insights.getChartData.perform(
       this.owner,
       this.interval,
       'builds',
@@ -85,7 +88,7 @@ export default Component.extend({
 
   // Request chart data
   didReceiveAttrs() {
-    this.get('requestData').perform();
-    this.get('requestPastData').perform();
+    this.requestData.perform();
+    this.requestPastData.perform();
   }
 });

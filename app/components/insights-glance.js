@@ -25,7 +25,7 @@ export default Component.extend({
   showPlaceholder: or('isLoading', 'isEmpty'),
 
   // Chart component data
-  data: computed('values', 'labels', function () {
+  data: computed('values', 'labels', 'datasetTitle', function () {
     return {
       type: 'spline',
       x: 'x',

@@ -2,21 +2,22 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, settled, waitFor } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
+import { INSIGHTS_INTERVALS } from 'travis/services/insights';
+
 
 module('Integration | Component | build-count', function (hooks) {
   setupRenderingTest(hooks);
 
   hooks.beforeEach(function () {
-    this.server.create('user');
+    const user = this.server.create('user');
+    this.setProperties({
+      ownerData: user,
+      private: true,
+    });
   });
 
   test('builds stats', async function (assert) {
-    this.set('interval', 'month');
-    this.set('ownerData', {
-      '@type': 'User',
-      id: 1,
-    });
-    this.set('private', true);
+    this.set('interval', INSIGHTS_INTERVALS.MONTH);
 
     this.server.createList('insight-metric', 15);
 
@@ -33,12 +34,7 @@ module('Integration | Component | build-count', function (hooks) {
   });
 
   test('loading state renders', async function (assert) {
-    this.set('interval', 'week');
-    this.set('ownerData', {
-      '@type': 'User',
-      id: 1,
-    });
-    this.set('private', true);
+    this.set('interval', INSIGHTS_INTERVALS.WEEK);
 
     render(hbs`{{build-count interval=interval owner=ownerData private=private}}`);
     await waitFor('.insights-glance--loading');
