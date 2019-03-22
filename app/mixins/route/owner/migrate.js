@@ -24,6 +24,9 @@ export default Mixin.create({
         const queryParams = { 'apps-page': page };
         this.transitionTo({ queryParams });
       });
+      if (repos.isAny('isMigrationSucceeded')) {
+        repos.reload();
+      }
     }
   }
 
