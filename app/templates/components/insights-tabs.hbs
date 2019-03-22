@@ -1,5 +1,5 @@
 {{#each tabs as |tab|}}
-  <li class="insight-tab {{if (eq tab.slug selectedTab) 'active'}}">
+  <li class="insights-tab {{if (eq tab.slug selectedTab) 'active'}}">
     <a data-tab={{tab.slug}} {{action 'setInsightTab' tab.slug}}>
       {{tab.title}}
     </a>

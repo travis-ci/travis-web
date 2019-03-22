@@ -17,7 +17,7 @@
         <span class="insights-control-divider">|</span>
         {{insights-privacy-selector isPrivateViewable=isPrivateInsightsViewable includePrivate=includePrivateInsights setRequestPrivateInsights=(action 'setRequestPrivateInsights')}}
       </div>
-      {{insight-tabs selectedTab=currentTimeInterval setTab=(action 'setSubTab')}}
+      {{insights-tabs selectedTab=currentTimeInterval setTab=(action 'setSubTab')}}
     </div>
     <div class="insights-grid">
       {{build-count owner=model.owner interval=currentTimeInterval private=includePrivateInsights}}

@@ -2,7 +2,7 @@ import Component from '@ember/component';
 
 export default Component.extend({
   tagName: 'ul',
-  classNames: ['travistab-nav travistab-nav--insights insight-tabs'],
+  classNames: ['travistab-nav travistab-nav--insights insights-tabs'],
 
   selectedTab: 'month',
   setTab: () => {},
