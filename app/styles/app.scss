@@ -52,6 +52,7 @@
 @import "app/modules/loading-overlay";
 @import "app/modules/migrate";
 @import "app/modules/modals";
+@import "app/modules/overlay-backdrop";
 
 @import "app/animation/tractor";
 @import "app/animation/barricade";
@@ -78,6 +79,7 @@
 @import "app/layouts/dashboard";
 @import "app/layouts/features";
 @import "app/layouts/striped";
+@import "app/layouts/insights";
 
 @import "app/pages/landing";
 @import "app/pages/home-pro";
