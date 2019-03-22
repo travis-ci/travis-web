@@ -11,7 +11,7 @@ module('Integration | Component | insights-date-display', function (hooks) {
     this.insightsService = this.owner.lookup('service:insights');
   });
 
-  test('default', async function (assert) {
+  test('display default', async function (assert) {
     let [start, end] = this.insightsService.getDatesFromInterval(DEFAULT_INSIGHTS_INTERVAL);
 
     await render(hbs`{{insights-date-display}}`);
@@ -21,7 +21,7 @@ module('Integration | Component | insights-date-display', function (hooks) {
     );
   });
 
-  test('month', async function (assert) {
+  test('display month', async function (assert) {
     let [start, end] = this.insightsService.getDatesFromInterval(INSIGHTS_INTERVALS.MONTH);
     this.set('interval', INSIGHTS_INTERVALS.MONTH);
 
@@ -32,7 +32,7 @@ module('Integration | Component | insights-date-display', function (hooks) {
     );
   });
 
-  test('week', async function (assert) {
+  test('display week', async function (assert) {
     let [start, end] = this.insightsService.getDatesFromInterval(INSIGHTS_INTERVALS.WEEK);
     this.set('interval', INSIGHTS_INTERVALS.WEEK);
 
