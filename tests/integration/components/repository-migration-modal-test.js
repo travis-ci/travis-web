@@ -7,18 +7,18 @@ module('Integration | Component | repository-migration-modal', function (hooks) 
   setupRenderingTest(hooks);
 
   test('it renders', async function (assert) {
-    this.set('repository', { slug: 'travis-ci/travis-web' });
+    this.set('repositories', [{ slug: 'travis-ci/travis-web' }]);
     this.set('fakeAction', () => {});
-    await render(hbs`{{repository-migration-modal repository=repository onClose=fakeAction}}`);
+    await render(hbs`{{repository-migration-modal repositories=repositories onClose=fakeAction}}`);
 
-    const expectedHeader = 'Migrate travis-ci/travis-web ?';
+    const expectedHeader = 'Migrate selected repositories?';
     assert.dom('[data-test-repository-migration-modal-header]').hasText(expectedHeader);
 
     // Only asserting text on those paragraphs that have interpolated content that we
     // want to be sure have the right value.
     const expectedFirstParagraph =
       `Please confirm that you would like to migrate the
-      travis-ci/travis-web repository from travis-ci.org to travis-ci.com.`.trim();
+      listed repositories from travis-ci.org to travis-ci.com:`.trim();
     assert.dom('[data-test-repository-migration-modal-text-first]').hasText(expectedFirstParagraph);
 
     assert.dom('[data-test-repository-migration-modal-text-second]').exists();
@@ -28,7 +28,8 @@ module('Integration | Component | repository-migration-modal', function (hooks) 
       This will be available shortly. Until then you can access
       the history on travis-ci.org.`.trim();
     assert.dom('[data-test-repository-migration-modal-text-third]').hasText(expectedThirdParagraph);
-    const expectedBuildHistoryLink = 'https://travis-ci.orgtravis-ci/travis-web/builds';
+
+    const expectedBuildHistoryLink = 'https://travis-ci.org';
 
     assert.dom('[data-test-repository-migration-modal-org-build-history-link]').hasAttribute('href', expectedBuildHistoryLink);
 
