@@ -27,7 +27,7 @@ export default Component.extend({
         private: this.private,
       }
     );
-  }),
+  }).drop(),
   chartData: reads('requestData.lastSuccessful.value'),
   builds: reads('chartData.data.count_started.plotValues'),
   labels: reads('chartData.labels'),
@@ -55,7 +55,7 @@ export default Component.extend({
       ['count_started'],
       { startInterval: -2, endInterval: -1, calcTotal: true, calcAvg: true, private: this.private }
     );
-  }),
+  }).drop(),
   pastIntervalData: reads('requestPastData.lastSuccessful.value'),
   prevTotalBuilds: reads('pastIntervalData.data.count_started.total'),
 

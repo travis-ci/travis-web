@@ -17,15 +17,15 @@ export default Component.extend({
   deltaTitle: '',
   deltaText: '',
 
-  labels: [],
-  values: [],
+  labels: computed(() => []),
+  values: computed(() => []),
   datasetTitle: 'Data',
   centerline: null,
 
   showPlaceholder: or('isLoading', 'isEmpty'),
 
   // Chart component data
-  data: computed('values', 'labels', 'datasetTitle', function () {
+  data: computed('values.[]', 'labels.[]', 'datasetTitle', function () {
     return {
       type: 'spline',
       x: 'x',
@@ -40,26 +40,26 @@ export default Component.extend({
   }),
 
   // Chart component options
-  legend: { show: false },
-  size: { height: 50 },
+  legend: computed(() => ({ show: false })),
+  size: computed(() => ({ height: 50 })),
 
-  point: {
+  point: computed(() => ({
     r: 0,
     focus: {
       expand: { r: 4 },
     }
-  },
+  })),
 
-  axis: {
+  axis: computed(() => ({
     x: {
       type: 'timeseries',
       tick: { format: '%A, %b %e' },
       show: false,
     },
     y: { show: false }
-  },
+  })),
 
-  tooltip: {
+  tooltip: computed(() => ({
     position: (data, width, height, element) => {
       let top = -50;
       let left = (element.getAttribute('width') - width) / 2;
@@ -68,7 +68,7 @@ export default Component.extend({
     format: {
       value: d3format(','),
     }
-  },
+  })),
 
   grid: computed('centerline', function () {
     const grid = {
