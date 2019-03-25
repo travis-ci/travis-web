@@ -1,36 +1,38 @@
-<div class="migrate">
+<div class="migrate" data-test-migrate-page>
 
-  <h1>
+  <h1 data-test-title>
     Bring on your public repositories
   </h1>
 
-  <p>
+  <p data-test-common-intro>
     Here you can migrate all your repositories to build on travis-ci.com and make it a single place for your builds.
   </p>
 
   {{#if showActivationStep }}
 
-    <p>
+    <p data-test-step1-intro>
       The first step is activating your repositories on GitHub Apps to later migrate them here.
     </p>
 
     <div class="migrate__activate">
       <button class="button--blue"
+        data-test-activate-button
         onclick={{action 'activateAll'}}
       >
         Activate all repositories using GitHub Apps
       </button>
     </div>
 
-    <p class="migrate__activate-note">
+    <p class="migrate__activate-note" data-test-manual-note>
       *Keep in mind that you can manually select the ones you’d like to migrate too.
     </p>
 
   {{else}}
 
-    <p>
+    <p data-test-step2-intro>
       If a repository you’d like to migrate is missing, please first
       {{#external-link-to
+        data-test-activate-link
         href=activateAllUrl
         target='_self'
         class='migrate__activate-all'
@@ -51,6 +53,7 @@
           {{#component filter.form as |form|}}
             <div class="profile-repositories-filter">
               {{component form.searchField
+                data-test-repo-filter=true
                 placeholder="Filter repositories"
                 title="Filter repositories"
               }}
@@ -66,6 +69,7 @@
               {{#if showSelectAll }}
                 <div class='migrate__select-all'>
                   {{#form.field
+                    data-test-select-all=true
                     disableFrame=true
                     value=isAllSelected
                     onChange=(action 'toggleAll')
@@ -78,12 +82,13 @@
                 </div>
               {{/if}}
 
-              <ul class="profile-repositorylist">
+              <ul class="profile-repositorylist" data-test-repo-list>
                 {{#each filter.results as |repository|}}
 
                   <li class="profile-repolist-item">
 
                     {{#form.field
+                      data-test-repo
                       disableFrame=true
                       disabled=(not repository.isMigratable)
                       value=(contains repository selectedRepositories)
@@ -145,6 +150,7 @@
 
         {{#if (or repositories.length filter.isFiltering)}}
           <button
+            data-test-migrate-button
             disabled={{not selectedRepositories.length}}
             class="button--blue migrate__submit {{unless selectedRepositories.length 'disabled'}}"
             onclick={{action (mut isShowingRepositoryMigrationModal) true}}

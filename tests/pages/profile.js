@@ -220,4 +220,80 @@ export default create({
       })
     },
   },
+
+  migrate: {
+    visit: clickable('li[data-test-migrate-tab] a'),
+
+    isPresent: isPresent('li[data-test-migrate-tab]'),
+    isHidden: isHidden('li[data-test-migrate-tab]'),
+
+    page: {
+      scope: '[data-test-migrate-page]',
+
+      title: {
+        scope: '[data-test-title]',
+        isPresent: isPresent()
+      },
+
+      commonIntro: {
+        scope: '[data-test-common-intro]',
+        isPresent: isPresent()
+      },
+
+      step1Intro: {
+        scope: '[data-test-step1-intro]',
+        isPresent: isPresent()
+      },
+
+      activateButton: {
+        scope: '[data-test-activate-button]',
+        isPresent: isPresent(),
+        click: clickable()
+      },
+
+      manualNote: {
+        scope: '[data-test-manual-note]',
+        isPresent: isPresent()
+      },
+
+      step2Intro: {
+        scope: '[data-test-step2-intro]',
+        isPresent: isPresent()
+      },
+
+      activateLink: {
+        scope: '[data-test-activate-link]',
+        isPresent: isPresent(),
+        href: attribute('href')
+      },
+
+      repoFilter: {
+        scope: '[data-test-repo-filter]',
+        isPresent: isPresent(),
+      },
+
+      selectAll: {
+        scope: '[data-test-select-all]',
+        isPresent: isPresent(),
+        checked: hasClass('travis-form__field-checkbox--checked', 'travis-form__field-checkbox')
+      },
+
+      repoList: {
+        scope: '[data-test-repo-list]',
+        isPresent: isPresent(),
+
+        repos: collection('[data-test-repo]', {
+          checked: hasClass('travis-form__field-checkbox--checked', 'travis-form__field-checkbox'),
+          disabled: hasClass('travis-form__field-checkbox--disabled', 'travis-form__field-checkbox'),
+        })
+      },
+
+      migrateButton: {
+        scope: '[data-test-migrate-button]',
+        isPresent: isPresent(),
+        click: clickable()
+      }
+
+    }
+  }
 });

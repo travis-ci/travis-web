@@ -258,9 +258,6 @@ module.exports = {
     // enforce operators to be placed before or after line breaks
     'operator-linebreak': 0,
 
-    // enforce padding within blocks
-    'padded-blocks': [2, 'never'],
-
     // TODO: Wait on enforcing this until we figure out a way to handle AJAX
     // Headers in a sane way. We should use unquoted always unless numbers,
     // keywords *or constants* (or things that look like them).
