@@ -4,17 +4,20 @@ import { computed } from '@ember/object';
 import { pluralize } from 'ember-inflector';
 import { reads, equal, or } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
+import { DEFAULT_INSIGHTS_INTERVAL } from 'travis/services/insights';
 
 
 export default Component.extend({
   classNames: ['insights-build-minutes'],
   private: false,
+  interval: DEFAULT_INSIGHTS_INTERVAL,
+  owner: null,
 
   insights: service(),
 
   // Current Interval Chart Data
   requestData: task(function* () {
-    return yield this.get('insights').getChartData.perform(
+    return yield this.insights.getChartData.perform(
       this.owner,
       this.interval,
       'builds',
@@ -26,7 +29,7 @@ export default Component.extend({
         customSerialize: (key, val) => [key, Math.round(val / 60)],
       }
     );
-  }),
+  }).drop(),
   chartData: reads('requestData.lastSuccessful.value'),
   buildMins: reads('chartData.data.times_running.plotValues'),
   labels: reads('chartData.labels'),
@@ -43,12 +46,12 @@ export default Component.extend({
     if (this.isLoading || typeof this.totalBuildMins !== 'number') { return '\xa0'; }
     return `
       ${this.totalBuildMins.toLocaleString()}
-      ${pluralize(this.totalBuildMins, 'min', {withoutCount: true})}
+      ${pluralize(this.totalBuildMins, 'min', { withoutCount: true })}
     `.trim();
   }),
 
   // Request chart data
   didReceiveAttrs() {
-    this.get('requestData').perform();
+    this.requestData.perform();
   }
 });

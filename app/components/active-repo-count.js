@@ -3,10 +3,13 @@ import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 import { reads, equal, or } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
+import { DEFAULT_INSIGHTS_INTERVAL } from 'travis/services/insights';
 
 export default Component.extend({
   classNames: ['insights-active-repo-count'],
   private: false,
+  interval: DEFAULT_INSIGHTS_INTERVAL,
+  owner: null,
 
   insights: service(),
 
