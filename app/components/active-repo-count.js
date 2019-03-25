@@ -37,8 +37,9 @@ export default Component.extend({
   showPlaceholder: or('isLoading', 'isEmpty'),
 
   // Average
-  avgRepos: computed('chartData.data.average', function () {
-    return Math.round(this.chartData.data.average);
+  avgRepos: reads('chartData.data.average'),
+  avgReposRounded: computed('avgRepos', function () {
+    return Math.round(this.avgRepos);
   }),
 
   // Active Repos has its own separate endpoint for totals, its calculation is somewhat unique
