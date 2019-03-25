@@ -12,7 +12,7 @@ export default Component.extend({
 
   // Chart data
   requestData: task(function* () {
-    return yield this.get('insights.getChartData').perform(
+    return yield this.insights.getChartData.perform(
       this.owner,
       this.interval,
       'jobs',
@@ -24,7 +24,7 @@ export default Component.extend({
         private: this.private,
       }
     );
-  }),
+  }).drop(),
   chartData: reads('requestData.lastSuccessful.value'),
   activeRepos: reads('chartData.data.count_started.plotValues'),
   labels: reads('chartData.labels'),
@@ -35,13 +35,13 @@ export default Component.extend({
 
   // Average
   avgRepos: computed('chartData.data.average', function () {
-    return Math.round(this.get('chartData.data.average'));
+    return Math.round(this.chartData.data.average);
   }),
 
   // Active Repos has its own separate endpoint for totals, its calculation is somewhat unique
   requestActiveTotal: task(function* () {
-    return yield this.get('insights').getActiveRepos(this.owner, this.interval, this.private);
-  }),
+    return yield this.insights.getActiveRepos(this.owner, this.interval, this.private);
+  }).drop(),
   activeTotal: reads('requestActiveTotal.lastSuccessful.value.data.count'),
   activeTotalIsLoading: reads('requestActiveTotal.isRunning'),
   isAnythingLoading: or('isLoading', 'activeTotalIsLoading'),
@@ -49,7 +49,7 @@ export default Component.extend({
   // Request chart data
   didReceiveAttrs() {
     this._super(...arguments);
-    this.get('requestData').perform();
-    this.get('requestActiveTotal').perform();
+    this.requestData.perform();
+    this.requestActiveTotal.perform();
   }
 });
