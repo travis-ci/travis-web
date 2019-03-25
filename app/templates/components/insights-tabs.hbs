@@ -1,5 +1,5 @@
 {{#each tabs as |tab|}}
-  <li class="insights-tab {{if (eq tab.slug selectedTab) 'active'}}">
+  <li class="insights-tab">
     {{#link-to (query-params timeInterval=tab.slug) }}
       {{tab.title}}
     {{/link-to}}
