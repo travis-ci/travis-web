@@ -27,6 +27,7 @@ export default Mixin.create({
       if (repos.isAny('isMigrationSucceeded')) {
         repos.reload();
       }
+      return repos.load();
     }
   }
 
