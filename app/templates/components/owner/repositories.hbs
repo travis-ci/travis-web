@@ -34,7 +34,7 @@
         <div>
 
           {{#loading-overlay visible=filter.isLoading }}
-            <ul class="profile-repositorylist" id='not-locked-github-apps-repositories'>
+            <ul class="profile-repositorylist">
               {{#each filter.results as |repository|}}
 
                 {{github-apps-repository
@@ -89,7 +89,7 @@
 
   {{else}}
 
-    <div id='github-apps-invitation' class='{{unless legacyRepos 'expanded'}}'>
+    <div id='github-apps-invitation' class='{{unless hasLegacyRepos 'expanded'}}'>
 
       <h2>GitHub Apps Integration</h2>
       <p>

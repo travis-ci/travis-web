@@ -105,13 +105,10 @@ export default create({
 
   githubAppsRepositories: githubAppsRepositoryCollection('#github-apps-repositories'),
 
-  notLockedGithubAppsFilter: fillable('[data-test-github-app-repos] [data-test-filter-field] [data-test-input-field]'),
-  notLockedGithubAppsRepositories: githubAppsRepositoryCollection('#not-locked-github-apps-repositories'),
-  notLockedGithubAppsPages: collection('#github-apps-repositories .pagination-navigation [data-test-page-pagination-link]', {
+  githubAppsFilter: fillable('[data-test-github-app-repos] [data-test-filter-field] [data-test-input-field]'),
+  githubAppsPages: collection('#github-apps-repositories .pagination-navigation [data-test-page-pagination-link]', {
     visit: clickable()
   }),
-
-  lockedGithubAppsRepositories: githubAppsRepositoryCollection('#locked-github-apps-repositories'),
 
   token: {
     show: clickable('.token-actions button.show-token'),
