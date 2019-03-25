@@ -13,7 +13,7 @@ export default Component.extend({
 
   // Current Interval Chart Data
   requestData: task(function* () {
-    return yield this.get('insights.getChartData').perform(
+    return yield this.insights.getChartData.perform(
       this.owner,
       this.interval,
       'jobs',
@@ -25,7 +25,7 @@ export default Component.extend({
         customSerialize: (key, val) => [key, (Math.round((val / 60) * 100) / 100)],
       }
     );
-  }),
+  }).drop(),
   chartData: reads('requestData.lastSuccessful.value'),
   waitMins: reads('chartData.data.times_waiting.plotValues'),
   labels: reads('chartData.labels'),
@@ -36,21 +36,25 @@ export default Component.extend({
 
   // Total / average
   totalWaitMins: reads('chartData.data.times_waiting.total'),
-  avgWaitMins: computed('chartData.data.times_waiting.average', function () {
-    return Math.round(this.get('chartData.data.times_waiting.average') * 100) / 100;
+  average: reads('chartData.data.times_waiting.average'),
+  averageRounded: computed('average', function () {
+    return Math.round(this.average * 100) / 100;
   }),
 
-  avgWaitText: computed('isLoading', 'avgWaitMins', function () {
-    if (this.isLoading || typeof this.avgWaitMins !== 'number') { return '\xa0'; }
+  avgWaitText: computed('isLoading', 'averageRounded', function () {
+    const { isLoading, averageRounded } = this;
+
+    if (isLoading || typeof averageRounded !== 'number') { return '\xa0'; }
+
     return `
-      ${this.avgWaitMins.toLocaleString()}
-      ${pluralize(this.avgWaitMins, 'min', {withoutCount: true})}
+      ${averageRounded.toLocaleString()}
+      ${pluralize(averageRounded, 'min', {withoutCount: true})}
     `.trim();
   }),
 
   // Previous interval chart data
   requestPastData: task(function* () {
-    return yield this.get('insights.getChartData').perform(
+    return yield this.insights.getChartData.perform(
       this.owner,
       this.interval,
       'jobs',
@@ -64,19 +68,20 @@ export default Component.extend({
         customSerialize: (key, val) => [key, Math.round(val / 60)]
       }
     );
-  }),
+  }).drop(),
   pastIntervalData: reads('requestPastData.lastSuccessful.value'),
 
-  prevAvgWaitMins: computed('pastIntervalData.data.times_waiting.average', 'prevTotalWaitMins',
-    function () {
-      return Math.round(this.get('pastIntervalData.data.times_waiting.average') * 100) / 100;
-    }
-  ),
+  previousAverage: reads('pastIntervalData.data.times_waiting.average'),
+  previousAverageRounded: computed('previousAverage', function () {
+    return Math.round(this.previousAverage * 100) / 100;
+  }),
 
   // Percent change
-  percentageChange: computed('prevAvgWaitMins', 'avgWaitMins', function () {
-    if (this.prevAvgWaitMins && this.avgWaitMins) {
-      const change = ((this.avgWaitMins - this.prevAvgWaitMins) / this.prevAvgWaitMins);
+  percentageChange: computed('previousAverageRounded', 'averageRounded', function () {
+    const { previousAverageRounded, averageRounded } = this;
+
+    if (previousAverageRounded && averageRounded) {
+      const change = ((averageRounded - previousAverageRounded) / previousAverageRounded);
       const percent = change * 100;
       return (Math.round(percent * 10) / 10);
     }
@@ -88,18 +93,20 @@ export default Component.extend({
     return `${Math.abs(this.percentageChange)}%`;
   }),
 
-  percentChangeTitle: computed('prevAvgWaitMins', 'interval', function () {
+  percentChangeTitle: computed('previousAverageRounded', 'interval', function () {
+    const { previousAverageRounded, interval } = this;
+
     return [
       'Averaged',
-      this.prevAvgWaitMins.toLocaleString(),
-      pluralize(this.prevAvgWaitMins, 'min', {withoutCount: true}),
-      `the previous ${this.interval}`
+      previousAverageRounded.toLocaleString(),
+      pluralize(previousAverageRounded, 'min', { withoutCount: true }),
+      `the previous ${interval}`
     ].join(' ');
   }),
 
   // Request chart data
   didReceiveAttrs() {
-    this.get('requestData').perform();
-    this.get('requestPastData').perform();
+    this.requestData.perform();
+    this.requestPastData.perform();
   }
 });
