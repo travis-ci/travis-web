@@ -3,6 +3,7 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { DEFAULT_INSIGHTS_INTERVAL, INSIGHTS_INTERVALS } from 'travis/services/insights';
+import { INSIGHTS_DATE_RANGE_FORMAT } from 'travis/components/insights-date-display';
 
 module('Integration | Component | insights-date-display', function (hooks) {
   setupRenderingTest(hooks);
@@ -17,7 +18,7 @@ module('Integration | Component | insights-date-display', function (hooks) {
     await render(hbs`{{insights-date-display}}`);
 
     assert.equal(this.element.textContent.trim(),
-      `${start.format('MMMM DD, YYYY')}\n-\n${end.format('MMMM DD, YYYY')}`
+      `${start.format(INSIGHTS_DATE_RANGE_FORMAT)}\n-\n${end.format(INSIGHTS_DATE_RANGE_FORMAT)}`
     );
   });
 
@@ -28,7 +29,7 @@ module('Integration | Component | insights-date-display', function (hooks) {
     await render(hbs`{{insights-date-display interval=interval}}`);
 
     assert.equal(this.element.textContent.trim(),
-      `${start.format('MMMM DD, YYYY')}\n-\n${end.format('MMMM DD, YYYY')}`
+      `${start.format(INSIGHTS_DATE_RANGE_FORMAT)}\n-\n${end.format(INSIGHTS_DATE_RANGE_FORMAT)}`
     );
   });
 
@@ -39,7 +40,7 @@ module('Integration | Component | insights-date-display', function (hooks) {
     await render(hbs`{{insights-date-display interval=interval}}`);
 
     assert.equal(this.element.textContent.trim(),
-      `${start.format('MMMM DD, YYYY')}\n-\n${end.format('MMMM DD, YYYY')}`
+      `${start.format(INSIGHTS_DATE_RANGE_FORMAT)}\n-\n${end.format(INSIGHTS_DATE_RANGE_FORMAT)}`
     );
   });
 });

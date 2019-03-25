@@ -4,6 +4,9 @@ import { computed } from '@ember/object';
 import moment from 'moment';
 import { DEFAULT_INSIGHTS_INTERVAL } from 'travis/services/insights';
 
+export const INSIGHTS_DATE_RANGE_FORMAT = 'MMMM DD, YYYY';
+export const INSIGHTS_DATE_RANGE_PLACEHOLDER = '...';
+
 export default Component.extend({
   tagName: 'span',
   classNames: ['insights-dates'],
@@ -16,17 +19,13 @@ export default Component.extend({
     return this.insights.getDatesFromInterval(this.interval);
   }),
 
-  startDate: computed('dates', function () {
-    if (this.dates.length === 2) {
-      return moment(this.dates[0]).format('MMMM DD, YYYY');
-    }
-    return '...';
+  startDate: computed('dates.firstObject', function () {
+    const { dates = [] } = this;
+    return dates.firstObject ? moment(dates.firstObject).format(INSIGHTS_DATE_RANGE_FORMAT) : INSIGHTS_DATE_RANGE_PLACEHOLDER;
   }),
 
-  endDate: computed('dates', function () {
-    if (this.dates.length === 2) {
-      return moment(this.dates[1]).format('MMMM DD, YYYY');
-    }
-    return '...';
+  endDate: computed('dates.lastObject', function () {
+    const { dates = [] } = this;
+    return dates.lastObject ? moment(dates.lastObject).format(INSIGHTS_DATE_RANGE_FORMAT) : INSIGHTS_DATE_RANGE_PLACEHOLDER;
   }),
 });
