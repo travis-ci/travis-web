@@ -10,8 +10,8 @@
   {{#if delta}}
     <div
       class="insights-glance-delta"
-      data-dir="{{if (gte delta 0) '+' '-'}}"
-      title="{{deltaTitle}}"
+      data-dir={{if (gte delta 0) '+' '-'}}
+      title={{deltaTitle}}
     >
       {{svg-jar 'icon-dropdown-arrow' class="icon"}}
       <span class="insights-glance-delta__stat">{{deltaText}}</span>
