@@ -31,15 +31,18 @@ export default Mixin.create({
   },
 
   redirect() {
-    this.owner.legacyRepositories.on(PAGE_CHANGED, page => {
-      const queryParams = { 'legacy-page': page };
-      this.transitionTo({ queryParams });
-    });
+    const { owner } = this;
+    if (owner && !owner.error) {
+      this.owner.legacyRepositories.on(PAGE_CHANGED, page => {
+        const queryParams = { 'legacy-page': page };
+        this.transitionTo({ queryParams });
+      });
 
-    this.owner.githubAppsRepositories.on(PAGE_CHANGED, page => {
-      const queryParams = { 'apps-page': page };
-      this.transitionTo({ queryParams });
-    });
+      this.owner.githubAppsRepositories.on(PAGE_CHANGED, page => {
+        const queryParams = { 'apps-page': page };
+        this.transitionTo({ queryParams });
+      });
+    }
   },
 
   setupController(controller, model) {
