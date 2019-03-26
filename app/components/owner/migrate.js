@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
-import { reads, gt, notEmpty, or, filterBy, not } from '@ember/object/computed';
+import { reads, gt, notEmpty, or, filterBy, and } from '@ember/object/computed';
 import config from 'travis/config/environment';
 
 const { appName = 'travis-ci' } = config.githubApps;
@@ -29,8 +29,8 @@ export default Component.extend({
     return this.selectableRepositories.length > 1;
   }),
 
-  showActivationStep: not('hasRepos'),
-  showFilter: or('hasRepos', 'isFiltering'),
+  showActivationStep: and('repositories.isEmpty', 'repositories.isNotFiltering', 'repositories.isNotLoading'),
+  showFilter: or('hasRepos', 'isFiltering', 'repositories.isLoading'),
 
   activateAllUrl: computed('owner.githubId', function () {
     const { githubId } = this.owner;

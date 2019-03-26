@@ -1,5 +1,5 @@
 import { computed } from '@ember/object';
-import { reads, equal, not } from '@ember/object/computed';
+import { reads, equal, not, notEmpty } from '@ember/object/computed';
 import ArrayProxy from '@ember/array/proxy';
 import Evented from '@ember/object/evented';
 import { assert } from '@ember/debug';
@@ -72,6 +72,11 @@ const DynamicQuery = ArrayProxy.extend(Evented, {
   pagination: null,
 
   isLoading: reads('task.isRunning'),
+  isNotLoading: not('isLoading'),
+
+  isFiltering: notEmpty('filterTerm'),
+  isNotFiltering: not('isFiltering'),
+
   isEmpty: equal('total', 0),
   isNotEmpty: not('isEmpty'),
 
