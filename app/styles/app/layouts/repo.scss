@@ -24,20 +24,31 @@
       margin-right: 10px;
     }
   }
-
+  
   .repo-title {
-    margin: 0;
-    font-size: 36px;
-    font-weight: $font-weight-normal;
+    margin-right: 1.2em;
 
-    a {
-      color: $asphalt-grey;
-      border-bottom: 2px solid transparent;
-      transition: border-color 100ms ease;
+    @media #{$small-only} {
+      margin-bottom: 0.5em;
+      h1 {
+        font-size: 24px!important;
+      }
+    }
 
-      &:hover,
-      &:active {
-        border-color: $asphalt-grey;
+    h1 {
+      margin: 0;
+      font-size: 36px;
+      font-weight: $font-weight-normal;      
+
+      a {
+        color: $asphalt-grey;
+        border-bottom: 2px solid transparent;
+        transition: border-color 100ms ease;
+
+        &:hover,
+        &:active {
+          border-color: $asphalt-grey;
+        }
       }
     }
   }
@@ -47,7 +58,7 @@
   @extend .icon--l;
 
   flex: 0 0 30px;
-  margin: 0 1.2em;
+  margin-right: 1.2em;
 
   @include colorSVGFill(rgba(black, 0.2));
 }
@@ -58,6 +69,9 @@
 
   @media #{$small-only} {
     flex-flow: column-reverse;
+    .travistab-nav li {
+      margin-right: 1em;
+    }
   }
 
   @media #{$medium-up} {
