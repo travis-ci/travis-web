@@ -2,25 +2,25 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, settled, waitFor } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
+import { INSIGHTS_INTERVALS } from 'travis/services/insights';
 
 module('Integration | Component | build-status-chart', function (hooks) {
   setupRenderingTest(hooks);
 
   hooks.beforeEach(function () {
-    this.server.createList('user', 2);
+    const [user1, user2] = this.server.createList('user', 2);
+    this.setProperties({
+      user1,
+      user2,
+      private: true,
+      interval: INSIGHTS_INTERVALS.WEEK,
+    });
   });
 
   test('it renders', async function (assert) {
-    this.set('interval', 'week');
-    this.set('private', true);
-    this.set('ownerData', {
-      '@type': 'User',
-      id: 1,
-    });
-
     this.server.createList('insight-metric', 5);
 
-    await render(hbs`{{build-status-chart interval=interval owner=ownerData private=private}}`);
+    await render(hbs`{{build-status-chart interval=interval owner=user1 private=private}}`);
     await settled();
 
     assert.dom('.insights-odyssey').doesNotHaveClass('insights-odyssey--loading');
@@ -29,14 +29,7 @@ module('Integration | Component | build-status-chart', function (hooks) {
   });
 
   test('loading state renders', async function (assert) {
-    this.set('interval', 'week');
-    this.set('private', true);
-    this.set('ownerData', {
-      '@type': 'User',
-      id: 1,
-    });
-
-    render(hbs`{{build-status-chart interval=interval owner=ownerData private=private}}`);
+    render(hbs`{{build-status-chart interval=interval owner=user1 private=private}}`);
     await waitFor('.insights-odyssey--loading');
 
     assert.dom('.insights-odyssey').hasClass('insights-odyssey--loading');
@@ -45,14 +38,7 @@ module('Integration | Component | build-status-chart', function (hooks) {
   });
 
   test('it renders empty result message', async function (assert) {
-    this.set('interval', 'week');
-    this.set('private', true);
-    this.set('ownerData', {
-      '@type': 'User',
-      id: 2,
-    });
-
-    await render(hbs`{{build-status-chart interval=interval owner=ownerData private=private}}`);
+    await render(hbs`{{build-status-chart interval=interval owner=user2 private=private}}`);
     await settled();
 
     assert.dom('.insights-odyssey').doesNotHaveClass('insights-odyssey--loading');

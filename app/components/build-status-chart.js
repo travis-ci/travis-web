@@ -4,27 +4,20 @@ import { computed } from '@ember/object';
 import { reads, and, not, equal } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
 import { format as d3format } from 'd3';
-
-const intervalOverrides = {
-  day: {
-    subInterval: '1hour',
-  },
-  week: {
-    subInterval: '1day',
-    tooltipLabelFormat: '%A, %b %e',
-  },
-};
+import { DEFAULT_INSIGHTS_INTERVAL } from 'travis/services/insights';
 
 export default Component.extend({
   classNames: ['insights-odyssey'],
   classNameBindings: ['isLoading:insights-odyssey--loading', 'hasNoBuilds:insights-odyssey--empty'],
   private: false,
+  interval: DEFAULT_INSIGHTS_INTERVAL,
+  owner: null,
 
   insights: service(),
 
   // Chart Options
   intervalSettings: computed(function () {
-    return this.get('insights').getIntervalSettings(intervalOverrides);
+    return this.insights.getIntervalSettings();
   }),
 
   currentIntervalLabel: computed('interval', 'intervalSettings', function () {
@@ -33,16 +26,13 @@ export default Component.extend({
 
   // Current Interval Chart Data
   requestData: task(function* () {
-    return yield this.get('insights.getChartData').perform(
+    return yield this.insights.getChartData.perform(
       this.owner,
       this.interval,
       'builds',
       'sum',
       ['count_passed', 'count_failed', 'count_errored', 'count_canceled'],
-      {
-        intervalSettings: intervalOverrides,
-        private: this.private,
-      }
+      { private: this.private }
     );
   }),
   chartData: reads('requestData.lastSuccessful.value'),
@@ -61,7 +51,7 @@ export default Component.extend({
   hasNoBuilds: and('isNotLoading', 'isEmpty'),
 
   // Chart component data
-  data: computed('passed', 'failed', 'errored', 'cancelled', 'labels',
+  data: computed('passed.[]', 'failed.[]', 'errored.[]', 'cancelled.[]', 'labels.[]',
     function () {
       return {
         type: 'bar',
@@ -69,11 +59,11 @@ export default Component.extend({
         groups: [['Passing', 'Failing', 'Errored', 'Cancelled']],
         order: null,
         columns: [
-          ['x', ...this.get('labels')],
-          ['Passing', ...this.get('passed')],
-          ['Failing', ...this.get('failed')],
-          ['Errored', ...this.get('errored')],
-          ['Cancelled', ...this.get('cancelled')],
+          ['x', ...this.labels],
+          ['Passing', ...this.passed],
+          ['Failing', ...this.failed],
+          ['Errored', ...this.errored],
+          ['Cancelled', ...this.cancelled],
         ],
         colors: {
           Passing: 'rgba(57, 170, 86, 0.8)',
@@ -86,14 +76,14 @@ export default Component.extend({
   ),
 
   // Chart component options
-  grid: {
+  grid: computed(() => ({
     lines: { front: false },
     y: {
       show: true,
     }
-  },
+  })),
 
-  axis: {
+  axis: computed(() => ({
     x: {
       type: 'timeseries',
       tick: { format: '%b %e' },
@@ -101,10 +91,10 @@ export default Component.extend({
     y: {
       tick: { format: d3format('d'), count: 6 }
     }
-  },
+  })),
 
   // Request chart data
   didReceiveAttrs() {
-    this.get('requestData').perform();
+    this.requestData.perform();
   }
 });
