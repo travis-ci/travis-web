@@ -34,7 +34,7 @@ export default Component.extend({
       ['count_passed', 'count_failed', 'count_errored', 'count_canceled'],
       { private: this.private }
     );
-  }),
+  }).drop(),
   chartData: reads('requestData.lastSuccessful.value'),
   isLoading: reads('requestData.isRunning'),
   isNotLoading: not('isLoading'),
