@@ -7,16 +7,17 @@ module('Integration | Component | visibility-setting-list', function (hooks) {
   setupRenderingTest(hooks);
 
   hooks.beforeEach(function () {
-    this.set('options', [{
-      value: 'private',
-      displayValue: 'you',
-      description: 'Do not allow anyone else to see insights from your private builds',
-    }, {
-      value: 'public',
-      displayValue: 'everyone',
-      description: 'Allow everyone to see insights from your private builds',
-      modalText: 'Allow everyone to see my private build insights',
-    }]);
+    this.set('options', {
+      private: {
+        displayValue: 'you',
+        description: 'Do not allow anyone else to see insights from your private builds',
+      },
+      public: {
+        displayValue: 'everyone',
+        description: 'Allow everyone to see insights from your private builds',
+        modalText: 'Allow everyone to see my private build insights',
+      }
+    });
 
     this.setProperties({
       selected: 'private',
@@ -38,12 +39,12 @@ module('Integration | Component | visibility-setting-list', function (hooks) {
   });
 
   test('options display', async function (assert) {
-    const selectedIndex = this.options.findIndex((el) => el.value === this.selected);
-    const selectedOption = this.options[selectedIndex];
+    const optionKeys = Object.keys(this.options);
+    const selectedOption = this.options[this.selected];
 
     await render(hbs`{{visibility-setting-list options=options selected=selected}}`);
 
-    assert.dom('[data-test-visibility-settings-list-item]').exists({ count: this.options.length });
+    assert.dom('[data-test-visibility-settings-list-item]').exists({ count: optionKeys.length });
     assert.dom('.visibility-setting-list-item--selected').exists({ count: 1 });
     assert.dom('.visibility-setting-list-item--selected').hasText(selectedOption.description);
   });

@@ -4,6 +4,21 @@ import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
 
+export const INSIGHTS_VIS_OPTIONS = {
+  admins: {
+    displayValue: 'organization owners',
+    description: 'Only allow organization owners to see insights from your private builds',
+  },
+  members: {
+    displayValue: 'organization members',
+    description: 'Only allow organization members to see insights from your private builds',
+  },
+  public: {
+    displayValue: 'everyone',
+    description: 'Allow everyone to see insights from your private builds',
+  }
+};
+
 export default Controller.extend({
   flashes: service(),
   features: service(),
@@ -17,19 +32,7 @@ export default Controller.extend({
   }),
   privateInsightsVisibility: reads('preferences.private_insights_visibility.value'),
 
-  insightsVisibilityOptions: [{
-    value: 'admins',
-    displayValue: 'organization owners',
-    description: 'Only allow organization owners to see insights from your private builds',
-  }, {
-    value: 'members',
-    displayValue: 'organization members',
-    description: 'Only allow organization members to see insights from your private builds',
-  }, {
-    value: 'public',
-    displayValue: 'everyone',
-    description: 'Allow everyone to see insights from your private builds',
-  }],
+  insightsVisibilityOptions: computed(() => INSIGHTS_VIS_OPTIONS),
 
   setPrivateInsights: task(function* (val) {
     try {

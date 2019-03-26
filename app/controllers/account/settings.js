@@ -10,6 +10,19 @@ export const SECTION = {
   EMAIL: 'email'
 };
 
+export const INSIGHTS_VIS_OPTIONS = {
+  private: {
+    displayValue: 'you',
+    description: 'Do not allow everyone to see insights from your private builds',
+    modalText: 'Do not allow everyone to see my private insights',
+  },
+  public: {
+    displayValue: 'everyone',
+    description: 'Allow everyone to see insights from your private builds',
+    modalText: 'Allow everyone to see my private build insights',
+  },
+};
+
 export default Controller.extend({
   features: service(),
   preferences: service(),
@@ -27,17 +40,7 @@ export default Controller.extend({
   showResubscribeList: and('buildEmails', 'unsubscribedRepos.length'),
 
   privateInsightsVisibility: reads('preferences.privateInsightsVisibility'),
-  insightsVisibilityOptions: [{
-    value: 'private',
-    displayValue: 'you',
-    description: 'Do not allow everyone to see insights from your private builds',
-    modalText: 'Do not allow everyone to see my private insights',
-  }, {
-    value: 'public',
-    displayValue: 'everyone',
-    description: 'Allow everyone to see insights from your private builds',
-    modalText: 'Allow everyone to see my private build insights',
-  }],
+  insightsVisibilityOptions: computed(() => INSIGHTS_VIS_OPTIONS),
 
   unsubscribedRepos: computed('repositories.@each.emailSubscribed', function () {
     let repositories = this.get('repositories') || [];

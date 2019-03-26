@@ -22,35 +22,34 @@ export default Component.extend(KeyboardShortcuts, {
   // `displayValue` is used to generate text for the modal
   // `description` is for the label next to the radio button
   // `modalText` can be used to override the generated modal text
-  options: [],
+  options: computed(() => ({})),
+  optionKeys: computed('options', function () { return Object.keys(this.options); }),
+  optionValues: computed('options', function () { return Object.values(this.options); }),
   selected: '',
   isShowingConfirmationModal: false,
-  isEmpty: empty('options'),
+  isEmpty: empty('optionKeys'),
   isVisible: not('isEmpty'),
 
   currentSelection: reads('selected'),
-  currentSelectionIndex: computed('currentSelection', 'options',
-    function () {
-      return this.options.findIndex((el) => el.value === this.currentSelection);
-    }
-  ),
-  currentSelectionObj: computed('currentSelectionIndex', 'options',
-    function () {
-      if (typeof this.currentSelectionIndex !== 'number' || this.currentSelectionIndex < 0) {
-        return {};
-      }
-      return this.options[this.currentSelectionIndex];
-    }
-  ),
+  currentSelectionIndex: computed('currentSelection', 'optionKeys.[]', function () {
+    return this.optionKeys.findIndex((slug) => slug === this.currentSelection);
+  }),
+  selectedIndex: computed('selected', 'optionKeys.[]', function () {
+    return this.optionKeys.findIndex((slug) => slug === this.selected);
+  }),
+  change: computed('selectedIndex', 'currentSelectionIndex', function () {
+    return this.currentSelectionIndex - this.selectedIndex;
+  }),
 
-  change: computed('selected', 'currentSelection', 'options',
-    function () {
-      const oldIndex = this.options.findIndex((el) => el.value === this.selected);
-      const newIndex = this.options.findIndex((el) => el.value === this.currentSelection);
+  selectionDetails: computed('currentSelection', 'options', function () {
+    const { options, currentSelection } = this;
 
-      return newIndex - oldIndex;
+    if (!options.hasOwnProperty(currentSelection)) {
+      return {};
     }
-  ),
+
+    return options[currentSelection];
+  }),
 
   modalHeaderText: computed('change', function () {
     let operation;
@@ -64,28 +63,28 @@ export default Component.extend(KeyboardShortcuts, {
 
     return `${operation} visibility of your private build insights`;
   }),
-  modalBodyText: computed('change', 'currentSelectionObj', function () {
-    if (this.change === 0) {
+
+  modalBodyText: computed('change', 'currentSelection', 'selectionDetails', function () {
+    const { change, currentSelection, selectionDetails } = this;
+
+    if (change === 0) {
       return 'Visibility update is in progress';
     }
-    const selection = this.currentSelectionObj;
 
-    if (selection.hasOwnProperty('modalText')) {
-      return selection.modalText;
+    const { modalText = '' } = selectionDetails;
+    if (modalText.length > 0) {
+      return modalText;
     }
 
-    return `
-This change will make your private build insights
-${this.change < 0 ? 'only' : ''}
-available to
-${selection.displayValue || selection.value}
-`;
+    const { displayValue = currentSelection } = selectionDetails;
+
+    return `This change will make your private build insights ${change < 0 ? 'only' : ''} available to ${displayValue}`;
   }),
 
   didRender() {
     this._super(...arguments);
     let af = this.get('element').querySelector('[autofocus]');
-    if (this.get('isShowingConfirmationModal') === true && af !== null) {
+    if (this.isShowingConfirmationModal === true && af !== null) {
       af.focus();
     }
   },
@@ -93,16 +92,16 @@ ${selection.displayValue || selection.value}
   actions: {
     confirm() {
       this.set('isShowingConfirmationModal', false);
-      this.sendAction('onConfirm', this.get('currentSelection'));
+      this.sendAction('onConfirm', this.currentSelection);
     },
     toggleConfirmationModal() {
       this.toggleProperty('isShowingConfirmationModal');
-      if (this.get('isShowingConfirmationModal') !== true) {
+      if (this.isShowingConfirmationModal !== true) {
         this.get('element').querySelector('.visibility-setting-list-item--selected').focus();
       }
     },
     closeConfirmationModal() {
-      if (this.get('isShowingConfirmationModal') === true) {
+      if (this.isShowingConfirmationModal === true) {
         this.toggleProperty('isShowingConfirmationModal');
         this.get('element').querySelector('.visibility-setting-list-item--selected').focus();
       }
