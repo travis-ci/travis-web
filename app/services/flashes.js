@@ -91,6 +91,8 @@ export default Service.extend({
           return this.get('flashes').removeObject(msg);
         }
       });
+      // Fadeout is currently done separatly with css, and completes at 7s. Keeping the message around longer than that can result in weird situations
+      // where reloading a page can result in a message showing again that you thought was gone.
     }, 7000);
   },
 
