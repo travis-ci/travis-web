@@ -10,26 +10,25 @@ export default Component.extend(KeyboardShortcuts, {
     'esc': 'closeConfirmationModal'
   },
 
-  // An example item that might be in the options array:
-  // {
-  //   value: 'private',
+  // An example item that might be in the options object:
+  // private: {
   //   displayValue: 'you',
   //   description: 'Do not allow everyone to see insights from your private builds',
   //   modalText: 'Do not allow everyone to see my private insights',
   // }
   //
-  // `value` you can think of as the slug or key associated with the object. Hmm maybe I should have called it slug or key.
+  // The key is used to match selected and currentSelection up with the correct details
   // `displayValue` is used to generate text for the modal
   // `description` is for the label next to the radio button
   // `modalText` can be used to override the generated modal text
   options: computed(() => ({})),
   optionKeys: computed('options', function () { return Object.keys(this.options); }),
   optionValues: computed('options', function () { return Object.values(this.options); }),
-  selected: '',
   isShowingConfirmationModal: false,
   isEmpty: empty('optionKeys'),
   isVisible: not('isEmpty'),
 
+  selected: '',
   currentSelection: reads('selected'),
   currentSelectionIndex: computed('currentSelection', 'optionKeys.[]', function () {
     return this.optionKeys.findIndex((slug) => slug === this.currentSelection);
