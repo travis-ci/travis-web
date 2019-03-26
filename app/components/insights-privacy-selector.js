@@ -1,6 +1,11 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 
+export const INSIGHTS_PRIVACY_OPTIONS = {
+  PUBLIC: 'public builds',
+  PRIVATE: 'public and private builds',
+};
+
 export default Component.extend({
   tagName: 'span',
   classNames: ['insights-privacy-selector'],
@@ -10,25 +15,22 @@ export default Component.extend({
   includePrivate: false,
   showFrame: false,
 
-  availableOptions: computed('isPrivateViewable', 'includePrivate', function () {
-    const options = [];
-    if (this.isPrivateViewable) {
-      options.push('public builds');
-      options.push('public and private builds');
+  availableOptions: computed('isPrivateViewable', function () {
+    if (!this.isPrivateViewable) {
+      return [];
     }
-    return options;
+    return Object.values(INSIGHTS_PRIVACY_OPTIONS);
   }),
 
   currentState: computed('isPrivateViewable', 'includePrivate', function () {
-    return (this.isPrivateViewable && this.includePrivate) ?
-      'public and private builds' :
-      'public builds';
+    return (this.isPrivateViewable && this.includePrivate) ? INSIGHTS_PRIVACY_OPTIONS.PRIVATE : INSIGHTS_PRIVACY_OPTIONS.PUBLIC;
   }),
+
   setRequestPrivateInsights: () => {},
 
   actions: {
     selectInsightScope(option) {
-      this.setRequestPrivateInsights(option === 'public and private builds');
+      this.setRequestPrivateInsights(option === INSIGHTS_PRIVACY_OPTIONS.PRIVATE);
     }
   },
 });
