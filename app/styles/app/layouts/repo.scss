@@ -24,20 +24,38 @@
       margin-right: 10px;
     }
   }
-
+  
   .repo-title {
-    margin: 0;
-    font-size: 36px;
-    font-weight: $font-weight-normal;
+    margin-right: 1.2em;
 
-    a {
-      color: $asphalt-grey;
-      border-bottom: 2px solid transparent;
-      transition: border-color 100ms ease;
+    h1 {
+      margin: 0;
+      font-size: 36px;
+      font-weight: $font-weight-normal;      
 
-      &:hover,
-      &:active {
-        border-color: $asphalt-grey;
+      a {
+        color: $asphalt-grey;
+        border-bottom: 2px solid transparent;
+        transition: border-color 100ms ease;
+
+        &:hover,
+        &:active {
+          border-color: $asphalt-grey;
+        }
+      }
+    }
+
+    @media #{$small-only} {
+      margin-bottom: 1em;
+      width: 100%;
+
+      h1 {
+        font-size: 20px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: inline-block;
+        width: calc(100% - 40px);
       }
     }
   }
@@ -47,7 +65,7 @@
   @extend .icon--l;
 
   flex: 0 0 30px;
-  margin: 0 1.2em;
+  margin-right: 1.2em;
 
   @include colorSVGFill(rgba(black, 0.2));
 }
@@ -57,7 +75,11 @@
   display: flex;
 
   @media #{$small-only} {
+    margin-top: 0.5em;
     flex-flow: column-reverse;
+    .travistab-nav li {
+      margin-right: 0.5em;
+    }
   }
 
   @media #{$medium-up} {
@@ -68,6 +90,12 @@
 
   .option-button {
     width: 10em;
+
+    @media #{$small-only} {
+      position: absolute;
+      top: 45px;
+      right: 0;
+    }
 
     .option-dropdown a {
       padding-left: 2.4em;
