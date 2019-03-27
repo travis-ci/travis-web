@@ -74,6 +74,12 @@
       }
     }
 
+    &.success {
+      .icon path {
+        stroke: $oxide-blue;
+      }
+    }
+
   }
 
   .profile-repo {

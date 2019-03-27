@@ -30,7 +30,7 @@
   {{else}}
 
     <p data-test-step2-intro>
-      If a repository you’d like to migrate is missing, please first
+      If there's a repository you’d like to migrate is missing, please first
       {{#external-link-to
         data-test-activate-link
         href=activateAllUrl
@@ -119,12 +119,12 @@
                       {{else if repository.isMigrationSucceeded }}
                         <span>
                           {{svg-jar "stage-passed" class="icon"}}
-                          {{ember-tooltip text='This repository has been migrated'}}
+                          {{ember-tooltip text='This repository has successfully migrated'}}
                         </span>
                       {{else if repository.isMigrationFailed }}
                         <span>
                           {{svg-jar "stage-failed" class="icon"}}
-                          {{ember-tooltip text='This repository couldn’t be migrated, please try again'}}
+                          {{ember-tooltip text='This repository has failed to migrate, please try again'}}
                         </span>
                       {{/if}}
                     </div>
