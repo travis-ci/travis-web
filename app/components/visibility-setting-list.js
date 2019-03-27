@@ -30,6 +30,7 @@ export default Component.extend(KeyboardShortcuts, {
   doAutofocus: false,
   focusOnList: and('doAutofocus', 'isNotShowingConfirmationModal'),
   focusOnModal: and('doAutofocus', 'isShowingConfirmationModal'),
+  onConfirm() {},
 
   selected: '',
   currentSelection: reads('selected'),
@@ -65,7 +66,7 @@ export default Component.extend(KeyboardShortcuts, {
   actions: {
     confirm() {
       this.set('isShowingConfirmationModal', false);
-      this.sendAction('onConfirm', this.currentSelection);
+      this.onConfirm(this.currentSelection);
     },
     toggleConfirmationModal() {
       this.toggleProperty('isShowingConfirmationModal');
