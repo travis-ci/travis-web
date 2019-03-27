@@ -2,6 +2,7 @@
   {{#each-in options as |key option|}}
     <button
       data-test-visibility-settings-list-item
+      autofocus={{focusOnList}}
       class="visibility-setting-list-item {{if (eq currentSelection key) 'visibility-setting-list-item--selected'}}"
       onclick={{action (mut currentSelection) key}}
     >
@@ -33,13 +34,13 @@
           {{else}}
             Update
           {{/if}}
-          visibility of your private build insights.
+          visibility of your private build insights
         </h3>
         <button
           type="button"
           title="Close modal"
           class="pointer visibility-settings-modal__close-button"
-          autofocus
+          autofocus={{focusOnModal}}
           onclick={{action 'toggleConfirmationModal'}}
         >{{svg-jar 'icon-failed' class="icon"}}</button>
       </div>
@@ -51,9 +52,11 @@
           {{else if selectionDetails.modalText}}
             {{selectionDetails.modalText}}
           {{else}}
-            This change will make your private build insights {{if isChangeNegative 'only'}} available to {{selectionDisplay}}
+            This change will make your private build insights
+            {{if isChangeNegative 'only'}}
+            available to
+            {{selectionDisplay}}
           {{/if}}
-        </p>
         </p>
       </div>
 

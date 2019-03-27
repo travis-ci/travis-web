@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { reads, empty, not, lt, gt, equal } from '@ember/object/computed';
+import { reads, empty, not, lt, gt, equal, and } from '@ember/object/computed';
 import KeyboardShortcuts from 'ember-keyboard-shortcuts/mixins/component';
 
 export default Component.extend(KeyboardShortcuts, {
@@ -24,8 +24,12 @@ export default Component.extend(KeyboardShortcuts, {
   options: computed(() => ({})),
   optionKeys: computed('options', function () { return Object.keys(this.options); }),
   isShowingConfirmationModal: false,
+  isNotShowingConfirmationModal: not('isShowingConfirmationModal'),
   isEmpty: empty('optionKeys'),
   isVisible: not('isEmpty'),
+  doAutofocus: false,
+  focusOnList: and('doAutofocus', 'isNotShowingConfirmationModal'),
+  focusOnModal: and('doAutofocus', 'isShowingConfirmationModal'),
 
   selected: '',
   currentSelection: reads('selected'),
@@ -52,8 +56,9 @@ export default Component.extend(KeyboardShortcuts, {
   didRender() {
     this._super(...arguments);
     let af = this.get('element').querySelector('[autofocus]');
-    if (this.isShowingConfirmationModal === true && af !== null) {
+    if (this.doAutofocus === true && af !== null) {
       af.focus();
+      this.set('doAutofocus', false);
     }
   },
 
@@ -64,15 +69,7 @@ export default Component.extend(KeyboardShortcuts, {
     },
     toggleConfirmationModal() {
       this.toggleProperty('isShowingConfirmationModal');
-      if (this.isShowingConfirmationModal !== true) {
-        this.get('element').querySelector('.visibility-setting-list-item--selected').focus();
-      }
+      this.set('doAutofocus', true);
     },
-    closeConfirmationModal() {
-      if (this.isShowingConfirmationModal === true) {
-        this.toggleProperty('isShowingConfirmationModal');
-        this.get('element').querySelector('.visibility-setting-list-item--selected').focus();
-      }
-    }
   }
 });
