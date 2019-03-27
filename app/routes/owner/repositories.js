@@ -19,9 +19,11 @@ export default TravisRoute.extend({
   },
 
   model({ page, tab }, transition) {
-    if (typeof tab === 'string' && tab.toLowerCase() === 'insights') {
-      const owner = this.modelFor('owner');
+    if (tab === 'insights') {
+      // TODO: Refactor owner route to use ember-data. Apparently owner is coming from an ajax call in the owner route.
+      let owner = { ...this.modelFor('owner') };
       owner.isUser = owner['@type'] === 'user';
+
       const buildInfo = this.get('insights').getChartData.perform(
         owner,
         'week',

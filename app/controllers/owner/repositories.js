@@ -1,6 +1,7 @@
 import Controller from '@ember/controller';
 import { inject as service } from '@ember/service';
 import { and, equal, or } from '@ember/object/computed';
+import { DEFAULT_INSIGHTS_INTERVAL } from 'travis/services/insights';
 
 export default Controller.extend({
   queryParams: ['tab', 'timeInterval'],
@@ -14,7 +15,7 @@ export default Controller.extend({
   requestPrivateInsights: true,
 
   timeInterval: null,
-  defaultTimeInterval: 'month',
+  defaultTimeInterval: DEFAULT_INSIGHTS_INTERVAL,
   currentTimeInterval: or('timeInterval', 'defaultTimeInterval'),
 
   isInsights: equal('tab', 'insights'),
@@ -22,9 +23,6 @@ export default Controller.extend({
   includePrivateInsights: and('isPrivateInsightsViewable', 'requestPrivateInsights'),
 
   actions: {
-    setSubTab(selection) {
-      this.set('timeInterval', selection);
-    },
     setRequestPrivateInsights(val) {
       this.set('requestPrivateInsights', val);
     },
