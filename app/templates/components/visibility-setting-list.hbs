@@ -3,7 +3,7 @@
     <button
       data-test-visibility-settings-list-item
       class="visibility-setting-list-item {{if (eq currentSelection key) 'visibility-setting-list-item--selected'}}"
-      {{action (mut currentSelection) key}}
+      onclick={{action (mut currentSelection) key}}
     >
       <span class="visibility-setting-list-item__radio" ></span>
       <span class="visibility-setting-list-item__description">{{option.description}}</span>
@@ -12,8 +12,8 @@
   <div class="visibility-setting-list-item visibility-setting-list-item--save">
     <button
       class="settings-button"
-      {{action 'toggleConfirmationModal'}}
-      disabled={{eq change 0}}
+      onclick={{action 'toggleConfirmationModal'}}
+      disabled={{isChangeNeutral}}
     >Save</button>
   </div>
 
@@ -25,35 +25,51 @@
       containerClass="visibility-settings-modal"
     }}
       <div class="visibility-settings-modal__top">
-        <h3 class="visibility-settings-modal__header">{{modalHeaderText}}</h3>
+        <h3 class="visibility-settings-modal__header">
+          {{#if isChangeNegative}}
+            Restrict
+          {{else if isChangePositive}}
+            Increase
+          {{else}}
+            Update
+          {{/if}}
+          visibility of your private build insights.
+        </h3>
         <button
           type="button"
           title="Close modal"
           class="pointer visibility-settings-modal__close-button"
           autofocus
-          {{action 'toggleConfirmationModal'}}
+          onclick={{action 'toggleConfirmationModal'}}
         >{{svg-jar 'icon-failed' class="icon"}}</button>
       </div>
 
       <div class="visibility-settings-modal__body">
-        <p>{{modalBodyText}}</p>
+        <p>
+          {{#if isChangeNeutral}}
+            Visibility update is in progress
+          {{else if selectionDetails.modalText}}
+            {{selectionDetails.modalText}}
+          {{else}}
+            This change will make your private build insights {{if isChangeNegative 'only'}} available to {{selectionDisplay}}
+          {{/if}}
+        </p>
+        </p>
       </div>
 
       <div class="visibility-settings-modal__controls">
         <button
           data-test-visibility-settings-modal-cancel-button
-          href="#"
           role="button"
           class="button button--red"
-          {{action 'toggleConfirmationModal'}}
+          onclick={{action 'toggleConfirmationModal'}}
         >Cancel</button>
 
         <button
           data-test-visibility-settings-modal-confirm-button
-          href="#"
           role="button"
           class="button button--blue"
-          {{action 'confirm'}}
+          onclick={{action 'confirm'}}
         >Confirm</button>
       </div>
     {{/modal-dialog}}

@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { reads, empty, not } from '@ember/object/computed';
+import { reads, empty, not, lt, gt, equal } from '@ember/object/computed';
 import KeyboardShortcuts from 'ember-keyboard-shortcuts/mixins/component';
 
 export default Component.extend(KeyboardShortcuts, {
@@ -23,7 +23,6 @@ export default Component.extend(KeyboardShortcuts, {
   // `modalText` can be used to override the generated modal text
   options: computed(() => ({})),
   optionKeys: computed('options', function () { return Object.keys(this.options); }),
-  optionValues: computed('options', function () { return Object.values(this.options); }),
   isShowingConfirmationModal: false,
   isEmpty: empty('optionKeys'),
   isVisible: not('isEmpty'),
@@ -39,45 +38,15 @@ export default Component.extend(KeyboardShortcuts, {
   change: computed('selectedIndex', 'currentSelectionIndex', function () {
     return this.currentSelectionIndex - this.selectedIndex;
   }),
+  isChangeNegative: lt('change', 0),
+  isChangeNeutral: equal('change', 0),
+  isChangePositive: gt('change', 0),
 
   selectionDetails: computed('currentSelection', 'options', function () {
-    const { options, currentSelection } = this;
-
-    if (!options.hasOwnProperty(currentSelection)) {
-      return {};
-    }
-
-    return options[currentSelection];
+    return this.options[this.currentSelection] || {};
   }),
-
-  modalHeaderText: computed('change', function () {
-    let operation;
-    if (this.change < 0) {
-      operation = 'Restrict';
-    } else if (this.change > 0) {
-      operation = 'Increase';
-    } else {
-      operation = 'Update';
-    }
-
-    return `${operation} visibility of your private build insights`;
-  }),
-
-  modalBodyText: computed('change', 'currentSelection', 'selectionDetails', function () {
-    const { change, currentSelection, selectionDetails } = this;
-
-    if (change === 0) {
-      return 'Visibility update is in progress';
-    }
-
-    const { modalText = '' } = selectionDetails;
-    if (modalText.length > 0) {
-      return modalText;
-    }
-
-    const { displayValue = currentSelection } = selectionDetails;
-
-    return `This change will make your private build insights ${change < 0 ? 'only' : ''} available to ${displayValue}`;
+  selectionDisplay: computed('currentSelection', 'selectionDetails.{displayValue}', function () {
+    return this.selectionDetails.displayValue || this.currentSelection;
   }),
 
   didRender() {
