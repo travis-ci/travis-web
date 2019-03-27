@@ -16,17 +16,14 @@ export default Component.extend({
   showFrame: false,
 
   availableOptions: computed('isPrivateViewable', function () {
-    if (!this.isPrivateViewable) {
-      return [];
-    }
-    return Object.values(INSIGHTS_PRIVACY_OPTIONS);
+    return this.isPrivateViewable ? Object.values(INSIGHTS_PRIVACY_OPTIONS) : [];
   }),
 
   currentState: computed('isPrivateViewable', 'includePrivate', function () {
     return (this.isPrivateViewable && this.includePrivate) ? INSIGHTS_PRIVACY_OPTIONS.PRIVATE : INSIGHTS_PRIVACY_OPTIONS.PUBLIC;
   }),
 
-  setRequestPrivateInsights: () => {},
+  setRequestPrivateInsights() {},
 
   actions: {
     selectInsightScope(option) {
