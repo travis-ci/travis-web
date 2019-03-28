@@ -54,7 +54,7 @@ test('the owner insights page shows insights components', async function (assert
   // No Build Overlay
   assert.ok(insightsPage.noBuildOverlay.isHidden);
 
-  // percySnapshot(assert);
+  percySnapshot(assert);
 });
 
 test('the owner insights page handles a lack of data', async function (assert) {
