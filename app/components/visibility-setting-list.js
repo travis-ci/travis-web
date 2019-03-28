@@ -18,7 +18,7 @@ export default Component.extend(KeyboardShortcuts, {
   //   modalText: 'Do not allow everyone to see my private insights',
   // }
   //
-  // The key is used to match initialKey and selectionKey up with the correct details
+  // `key` is used to match initialKey and selectionKey up with the correct details
   // `displayValue` is used to generate text for the modal
   // `description` is for the label next to the radio button
   // `modalText` can be used to override the generated modal text

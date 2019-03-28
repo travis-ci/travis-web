@@ -7,20 +7,19 @@ module('Integration | Component | visibility-setting-list', function (hooks) {
   setupRenderingTest(hooks);
 
   hooks.beforeEach(function () {
-    this.set('options', {
-      private: {
-        displayValue: 'you',
-        description: 'Do not allow anyone else to see insights from your private builds',
-      },
-      public: {
-        displayValue: 'everyone',
-        description: 'Allow everyone to see insights from your private builds',
-        modalText: 'Allow everyone to see my private build insights',
-      }
-    });
+    this.set('options', [{
+      key: 'private',
+      displayValue: 'you',
+      description: 'Do not allow anyone else to see insights from your private builds',
+    }, {
+      key: 'public',
+      displayValue: 'everyone',
+      description: 'Allow everyone to see insights from your private builds',
+      modalText: 'Allow everyone to see my private build insights',
+    }]);
 
     this.setProperties({
-      selected: 'private',
+      initialKey: 'private',
     });
   });
 
@@ -33,18 +32,17 @@ module('Integration | Component | visibility-setting-list', function (hooks) {
 
   test('it is empty when explicitly invisible', async function (assert) {
     this.set('isVisible', false);
-    await render(hbs`{{visibility-setting-list options=options selected=selected isVisible=isVisible}}`);
+    await render(hbs`{{visibility-setting-list options=options initialKey=initialKey isVisible=isVisible}}`);
 
     assert.equal(this.element.textContent.trim(), '');
   });
 
   test('options display', async function (assert) {
-    const optionKeys = Object.keys(this.options);
-    const selectedOption = this.options[this.selected];
+    const selectedOption = this.options.find((item) => item.key === this.initialKey);
 
-    await render(hbs`{{visibility-setting-list options=options selected=selected}}`);
+    await render(hbs`{{visibility-setting-list options=options initialKey=initialKey}}`);
 
-    assert.dom('[data-test-visibility-settings-list-item]').exists({ count: optionKeys.length });
+    assert.dom('[data-test-visibility-settings-list-item]').exists({ count: this.options.length });
     assert.dom('.visibility-setting-list-item--selected').exists({ count: 1 });
     assert.dom('.visibility-setting-list-item--selected').hasText(selectedOption.description);
   });
@@ -52,11 +50,11 @@ module('Integration | Component | visibility-setting-list', function (hooks) {
   test('modal display', async function (assert) {
     this.setProperties({
       showModal: true,
-      selected: 'public',
-      currentSelection: 'private',
+      initialKey: 'public',
+      selectionKey: 'private',
     });
 
-    await render(hbs`{{visibility-setting-list options=options selected=selected isShowingConfirmationModal=showModal currentSelection=currentSelection}}`);
+    await render(hbs`{{visibility-setting-list options=options initialKey=initialKey isShowingConfirmationModal=showModal selectionKey=selectionKey}}`);
 
     assert.dom('.visibility-settings-modal').exists();
     assert.dom('.visibility-settings-modal__header').hasText('Restrict visibility of your private build insights');
@@ -66,10 +64,10 @@ module('Integration | Component | visibility-setting-list', function (hooks) {
   test('modal display with custom modalText', async function (assert) {
     this.setProperties({
       showModal: true,
-      currentSelection: 'public',
+      selectionKey: 'public',
     });
 
-    await render(hbs`{{visibility-setting-list options=options selected=selected isShowingConfirmationModal=showModal currentSelection=currentSelection}}`);
+    await render(hbs`{{visibility-setting-list options=options initialKey=initialKey isShowingConfirmationModal=showModal selectionKey=selectionKey}}`);
 
     assert.dom('.visibility-settings-modal').exists();
     assert.dom('.visibility-settings-modal__header').hasText('Increase visibility of your private build insights');
