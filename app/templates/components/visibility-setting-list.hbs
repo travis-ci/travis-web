@@ -1,15 +1,15 @@
 {{#if isVisible}}
-  {{#each-in options as |key option|}}
+  {{#each options as |option|}}
     <button
       data-test-visibility-settings-list-item
-      autofocus={{focusOnList}}
-      class="visibility-setting-list-item {{if (eq currentSelection key) 'visibility-setting-list-item--selected'}}"
-      onclick={{action (mut currentSelection) key}}
+      autofocus={{and focusOnList (eq selectionKey option.key)}}
+      class="visibility-setting-list-item {{if (eq selectionKey option.key) 'visibility-setting-list-item--selected'}}"
+      onclick={{action (mut selectionKey) option.key}}
     >
       <span class="visibility-setting-list-item__radio" ></span>
       <span class="visibility-setting-list-item__description">{{option.description}}</span>
     </button>
-  {{/each-in}}
+  {{/each}}
   <div class="visibility-setting-list-item visibility-setting-list-item--save">
     <button
       class="settings-button"
@@ -49,13 +49,13 @@
         <p>
           {{#if isChangeNeutral}}
             Visibility update is in progress
-          {{else if selectionDetails.modalText}}
-            {{selectionDetails.modalText}}
+          {{else if selection.modalText}}
+            {{selection.modalText}}
           {{else}}
             This change will make your private build insights
             {{if isChangeNegative 'only'}}
             available to
-            {{selectionDisplay}}
+            {{selectionTitle}}
           {{/if}}
         </p>
       </div>

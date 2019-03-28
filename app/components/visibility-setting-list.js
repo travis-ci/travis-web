@@ -10,49 +10,56 @@ export default Component.extend(KeyboardShortcuts, {
     'esc': 'closeConfirmationModal'
   },
 
-  // An example item that might be in the options object:
-  // private: {
+  // An example item that might be in the options array:
+  // {
+  //   key: 'private',
   //   displayValue: 'you',
   //   description: 'Do not allow everyone to see insights from your private builds',
   //   modalText: 'Do not allow everyone to see my private insights',
   // }
   //
-  // The key is used to match selected and currentSelection up with the correct details
+  // `key` is used to match initialKey and selectionKey up with the correct details
   // `displayValue` is used to generate text for the modal
   // `description` is for the label next to the radio button
   // `modalText` can be used to override the generated modal text
-  options: computed(() => ({})),
-  optionKeys: computed('options', function () { return Object.keys(this.options); }),
+  options: computed(() => []),
+
+  isEmpty: empty('options'),
+  isVisible: not('isEmpty'),
+
   isShowingConfirmationModal: false,
   isNotShowingConfirmationModal: not('isShowingConfirmationModal'),
-  isEmpty: empty('optionKeys'),
-  isVisible: not('isEmpty'),
+  onConfirm() {},
+
   doAutofocus: false,
   focusOnList: and('doAutofocus', 'isNotShowingConfirmationModal'),
   focusOnModal: and('doAutofocus', 'isShowingConfirmationModal'),
-  onConfirm() {},
 
-  selected: '',
-  currentSelection: reads('selected'),
-  currentSelectionIndex: computed('currentSelection', 'optionKeys.[]', function () {
-    return this.optionKeys.findIndex((slug) => slug === this.currentSelection);
+  initialKey: '',
+  initial: computed('initialKey', 'options.@each.key', function () {
+    return this.options.findBy('key', this.initialKey);
   }),
-  selectedIndex: computed('selected', 'optionKeys.[]', function () {
-    return this.optionKeys.findIndex((slug) => slug === this.selected);
+  initialIndex: computed('initial', 'options.[]', function () {
+    return this.options.indexOf(this.initial);
   }),
-  change: computed('selectedIndex', 'currentSelectionIndex', function () {
-    return this.currentSelectionIndex - this.selectedIndex;
+
+  selectionKey: reads('initialKey'),
+  selection: computed('selectionKey', 'options.@each.key', function () {
+    return this.options.findBy('key', this.selectionKey);
+  }),
+  selectionIndex: computed('selection', 'options.[]', function () {
+    return this.options.indexOf(this.selection);
+  }),
+  selectionTitle: computed('selection.{displayValue,key}', function () {
+    return this.selection.displayValue || this.selection.key;
+  }),
+
+  change: computed('initialIndex', 'selectionIndex', function () {
+    return this.selectionIndex - this.initialIndex;
   }),
   isChangeNegative: lt('change', 0),
   isChangeNeutral: equal('change', 0),
   isChangePositive: gt('change', 0),
-
-  selectionDetails: computed('currentSelection', 'options', function () {
-    return this.options[this.currentSelection] || {};
-  }),
-  selectionDisplay: computed('currentSelection', 'selectionDetails.{displayValue}', function () {
-    return this.selectionDetails.displayValue || this.currentSelection;
-  }),
 
   didRender() {
     this._super(...arguments);
@@ -66,7 +73,7 @@ export default Component.extend(KeyboardShortcuts, {
   actions: {
     confirm() {
       this.set('isShowingConfirmationModal', false);
-      this.onConfirm(this.currentSelection);
+      this.onConfirm(this.selectionKey);
     },
     toggleConfirmationModal() {
       this.toggleProperty('isShowingConfirmationModal');
