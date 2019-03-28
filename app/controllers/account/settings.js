@@ -10,18 +10,19 @@ export const SECTION = {
   EMAIL: 'email'
 };
 
-export const INSIGHTS_VIS_OPTIONS = {
-  private: {
+export const INSIGHTS_VIS_OPTIONS = [
+  {
+    key: 'private',
     displayValue: 'you',
     description: 'Do not allow everyone to see insights from your private builds',
     modalText: 'Do not allow everyone to see my private insights',
-  },
-  public: {
+  }, {
+    key: 'public',
     displayValue: 'everyone',
     description: 'Allow everyone to see insights from your private builds',
     modalText: 'Allow everyone to see my private build insights',
-  },
-};
+  }
+];
 
 export default Controller.extend({
   features: service(),

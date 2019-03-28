@@ -4,20 +4,21 @@ import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
 
-export const INSIGHTS_VIS_OPTIONS = {
-  admins: {
+export const INSIGHTS_VIS_OPTIONS = [
+  {
+    key: 'admins',
     displayValue: 'organization owners',
     description: 'Only allow organization owners to see insights from your private builds',
-  },
-  members: {
+  }, {
+    key: 'members',
     displayValue: 'organization members',
     description: 'Only allow organization members to see insights from your private builds',
-  },
-  public: {
+  }, {
+    key: 'public',
     displayValue: 'everyone',
     description: 'Allow everyone to see insights from your private builds',
   }
-};
+];
 
 export default Controller.extend({
   flashes: service(),

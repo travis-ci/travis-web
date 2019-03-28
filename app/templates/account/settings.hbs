@@ -86,8 +86,8 @@
         </p>
         {{visibility-setting-list
           options=insightsVisibilityOptions
-          selected=privateInsightsVisibility
-          onConfirm='setInsightsVis'
+          initialKey=privateInsightsVisibility
+          onConfirm=(action 'setInsightsVis')
         }}
       </div>
     </section>

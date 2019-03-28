@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { reads, empty, not } from '@ember/object/computed';
+import { reads, empty, not, lt, gt, equal, and } from '@ember/object/computed';
 import KeyboardShortcuts from 'ember-keyboard-shortcuts/mixins/component';
 
 export default Component.extend(KeyboardShortcuts, {
@@ -10,100 +10,74 @@ export default Component.extend(KeyboardShortcuts, {
     'esc': 'closeConfirmationModal'
   },
 
-  // An example item that might be in the options object:
-  // private: {
+  // An example item that might be in the options array:
+  // {
+  //   key: 'private',
   //   displayValue: 'you',
   //   description: 'Do not allow everyone to see insights from your private builds',
   //   modalText: 'Do not allow everyone to see my private insights',
   // }
   //
-  // The key is used to match selected and currentSelection up with the correct details
+  // The key is used to match initialKey and selectionKey up with the correct details
   // `displayValue` is used to generate text for the modal
   // `description` is for the label next to the radio button
   // `modalText` can be used to override the generated modal text
-  options: computed(() => ({})),
-  optionKeys: computed('options', function () { return Object.keys(this.options); }),
-  optionValues: computed('options', function () { return Object.values(this.options); }),
-  isShowingConfirmationModal: false,
-  isEmpty: empty('optionKeys'),
+  options: computed(() => []),
+
+  isEmpty: empty('options'),
   isVisible: not('isEmpty'),
 
-  selected: '',
-  currentSelection: reads('selected'),
-  currentSelectionIndex: computed('currentSelection', 'optionKeys.[]', function () {
-    return this.optionKeys.findIndex((slug) => slug === this.currentSelection);
-  }),
-  selectedIndex: computed('selected', 'optionKeys.[]', function () {
-    return this.optionKeys.findIndex((slug) => slug === this.selected);
-  }),
-  change: computed('selectedIndex', 'currentSelectionIndex', function () {
-    return this.currentSelectionIndex - this.selectedIndex;
-  }),
+  isShowingConfirmationModal: false,
+  isNotShowingConfirmationModal: not('isShowingConfirmationModal'),
+  onConfirm() {},
 
-  selectionDetails: computed('currentSelection', 'options', function () {
-    const { options, currentSelection } = this;
+  doAutofocus: false,
+  focusOnList: and('doAutofocus', 'isNotShowingConfirmationModal'),
+  focusOnModal: and('doAutofocus', 'isShowingConfirmationModal'),
 
-    if (!options.hasOwnProperty(currentSelection)) {
-      return {};
-    }
-
-    return options[currentSelection];
+  initialKey: '',
+  initial: computed('initialKey', 'options.@each.key', function () {
+    return this.options.findBy('key', this.initialKey);
+  }),
+  initialIndex: computed('initial', 'options.[]', function () {
+    return this.options.indexOf(this.initial);
   }),
 
-  modalHeaderText: computed('change', function () {
-    let operation;
-    if (this.change < 0) {
-      operation = 'Restrict';
-    } else if (this.change > 0) {
-      operation = 'Increase';
-    } else {
-      operation = 'Update';
-    }
-
-    return `${operation} visibility of your private build insights`;
+  selectionKey: reads('initialKey'),
+  selection: computed('selectionKey', 'options.@each.key', function () {
+    return this.options.findBy('key', this.selectionKey);
+  }),
+  selectionIndex: computed('selection', 'options.[]', function () {
+    return this.options.indexOf(this.selection);
+  }),
+  selectionTitle: computed('selection.{displayValue,key}', function () {
+    return this.selection.displayValue || this.selection.key;
   }),
 
-  modalBodyText: computed('change', 'currentSelection', 'selectionDetails', function () {
-    const { change, currentSelection, selectionDetails } = this;
-
-    if (change === 0) {
-      return 'Visibility update is in progress';
-    }
-
-    const { modalText = '' } = selectionDetails;
-    if (modalText.length > 0) {
-      return modalText;
-    }
-
-    const { displayValue = currentSelection } = selectionDetails;
-
-    return `This change will make your private build insights ${change < 0 ? 'only' : ''} available to ${displayValue}`;
+  change: computed('initialIndex', 'selectionIndex', function () {
+    return this.selectionIndex - this.initialIndex;
   }),
+  isChangeNegative: lt('change', 0),
+  isChangeNeutral: equal('change', 0),
+  isChangePositive: gt('change', 0),
 
   didRender() {
     this._super(...arguments);
     let af = this.get('element').querySelector('[autofocus]');
-    if (this.isShowingConfirmationModal === true && af !== null) {
+    if (this.doAutofocus === true && af !== null) {
       af.focus();
+      this.set('doAutofocus', false);
     }
   },
 
   actions: {
     confirm() {
       this.set('isShowingConfirmationModal', false);
-      this.sendAction('onConfirm', this.currentSelection);
+      this.onConfirm(this.selectionKey);
     },
     toggleConfirmationModal() {
       this.toggleProperty('isShowingConfirmationModal');
-      if (this.isShowingConfirmationModal !== true) {
-        this.get('element').querySelector('.visibility-setting-list-item--selected').focus();
-      }
+      this.set('doAutofocus', true);
     },
-    closeConfirmationModal() {
-      if (this.isShowingConfirmationModal === true) {
-        this.toggleProperty('isShowingConfirmationModal');
-        this.get('element').querySelector('.visibility-setting-list-item--selected').focus();
-      }
-    }
   }
 });
