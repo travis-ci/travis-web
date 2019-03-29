@@ -148,3 +148,14 @@ test('User can resubscribe to repository', async function (assert) {
   assert.ok(!emailSettings.resubscribeList.isPresent);
 });
 
+test('Insights settings are listed', async function (assert) {
+  await profilePage.visit({ username: 'testuser' });
+  await profilePage.settings.visit();
+
+  const { insightsSettings } = profilePage.settings;
+
+  assert.ok(insightsSettings.isVisible);
+  assert.ok(insightsSettings.title.length > 0);
+  assert.ok(insightsSettings.description.length > 0);
+  assert.ok(insightsSettings.visibilityList.isVisible);
+});

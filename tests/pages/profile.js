@@ -4,7 +4,6 @@ import {
   clickable,
   collection,
   hasClass,
-  hasAttribute,
   isHidden,
   isPresent,
   text,
@@ -184,7 +183,7 @@ export default create({
         scope: INSIGHTS_SETTINGS_LIST,
         items: collection(INSIGHTS_SETTINGS_LIST_ITEM, {
           click: clickable(),
-          isSelected: hasAttribute(INSIGHTS_SETTINGS_LIST_ITEM_SELECTED),
+          isSelected: hasClass(INSIGHTS_SETTINGS_LIST_ITEM_SELECTED),
         }),
       },
       submit: clickable(INSIGHTS_SETTINGS_SUBMIT),
@@ -194,7 +193,7 @@ export default create({
         description: text(INSIGHTS_SETTINGS_MODAL_DESCRIPTION),
         closeButton: clickable(INSIGHTS_SETTINGS_MODAL_CLOSE),
         cancelButton: clickable(INSIGHTS_SETTINGS_MODAL_CANCEL),
-        confirmButton: clickable(INSIGHTS_SETTINGS_MODAL_CANCEL),
+        confirmButton: clickable(INSIGHTS_SETTINGS_MODAL_CONFIRM),
       }
     }
   },
