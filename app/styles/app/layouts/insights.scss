@@ -53,19 +53,26 @@ $med-small-up: "only screen and (min-width: 38em)";
     .travis-form {
       display: inline-block;
 
-      .travis-form__field .travis-form__field-select {
-        margin: 0;
-        min-width: 203px;
-        font-weight: 700;
-        cursor: pointer;
+      .travis-form__field {
 
-        .ember-power-select-status-icon {
-          border: none;
-          width: 16px;
-          height: 8px;
-          background-image: url(/images/svg/icon-dropdown-arrow.svg);
-          background-repeat: no-repeat;
-          background-size: contain;
+        &-select {
+          margin: 0;
+          min-width: 203px;
+          font-weight: 700;
+          cursor: pointer;
+
+          .ember-power-select-status-icon {
+            border: none;
+            width: 16px;
+            height: 8px;
+            background-image: url(/images/svg/icon-dropdown-arrow.svg);
+            background-repeat: no-repeat;
+            background-size: contain;
+          }
+        }
+
+        &--focused .travis-form__field-select {
+          @include makeFieldBorder(lighten($cement-grey, 20%));
         }
       }
     }
