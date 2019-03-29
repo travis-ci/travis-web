@@ -1,20 +1,26 @@
 {{#if isVisible}}
-  {{#each options as |option|}}
-    <button
-      data-test-visibility-settings-list-item
-      autofocus={{and focusOnList (eq selectionKey option.key)}}
-      class="visibility-setting-list-item {{if (eq selectionKey option.key) 'visibility-setting-list-item--selected'}}"
-      onclick={{action (mut selectionKey) option.key}}
-    >
-      <span class="visibility-setting-list-item__radio" ></span>
-      <span class="visibility-setting-list-item__description">{{option.description}}</span>
-    </button>
-  {{/each}}
+  <div data-test-visibility-settings-list>
+    {{#each options as |option|}}
+      {{#let (eq selectionKey option.key) as |selected|}}
+        <button
+          data-test-visibility-settings-list-item
+          data-test-visibility-settings-list-item-selected={{selected}}
+          autofocus={{and focusOnList selected}}
+          class="visibility-setting-list-item {{if selected 'visibility-setting-list-item--selected'}}"
+          onclick={{action (mut selectionKey) option.key}}
+        >
+          <span class="visibility-setting-list-item__radio" ></span>
+          <span class="visibility-setting-list-item__description">{{option.description}}</span>
+        </button>
+      {{/let}}
+    {{/each}}
+  </div>
   <div class="visibility-setting-list-item visibility-setting-list-item--save">
     <button
       class="settings-button"
       onclick={{action 'toggleConfirmationModal'}}
       disabled={{isChangeNeutral}}
+      data-test-visibility-settings-submit
     >Save</button>
   </div>
 
@@ -24,9 +30,10 @@
       translucentOverlay=true
       toggleConfirmationModal='toggleConfirmationModal'
       containerClass="visibility-settings-modal"
+      data-test-visibility-settings-modal=''
     }}
       <div class="visibility-settings-modal__top">
-        <h3 class="visibility-settings-modal__header">
+        <h3 class="visibility-settings-modal__header" data-test-visibility-settings-modal-title>
           {{#if isChangeNegative}}
             Restrict
           {{else if isChangePositive}}
@@ -42,11 +49,12 @@
           class="pointer visibility-settings-modal__close-button"
           autofocus={{focusOnModal}}
           onclick={{action 'toggleConfirmationModal'}}
+          data-test-visibility-settings-modal-close-button
         >{{svg-jar 'icon-failed' class="icon"}}</button>
       </div>
 
       <div class="visibility-settings-modal__body">
-        <p>
+        <p data-test-visibility-settings-modal-description>
           {{#if isChangeNeutral}}
             Visibility update is in progress
           {{else if selection.modalText}}

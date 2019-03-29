@@ -4,6 +4,7 @@ import {
   clickable,
   collection,
   hasClass,
+  hasAttribute,
   isHidden,
   isPresent,
   text,
@@ -18,7 +19,21 @@ import {
   EMAIL_SETTINGS_TOGGLE,
   EMAIL_SETTINGS_RESUBSCRIBE_LIST,
   EMAIL_SETTINGS_RESUBSCRIBE_ITEM,
-  EMAIL_SETTINGS_RESUBSCRIBE_BUTTON
+  EMAIL_SETTINGS_RESUBSCRIBE_BUTTON,
+
+  INSIGHTS_SETTINGS,
+  INSIGHTS_SETTINGS_TITLE,
+  INSIGHTS_SETTINGS_DESCRIPTION,
+  INSIGHTS_SETTINGS_LIST,
+  INSIGHTS_SETTINGS_LIST_ITEM,
+  INSIGHTS_SETTINGS_LIST_ITEM_SELECTED,
+  INSIGHTS_SETTINGS_SUBMIT,
+  INSIGHTS_SETTINGS_MODAL,
+  INSIGHTS_SETTINGS_MODAL_TITLE,
+  INSIGHTS_SETTINGS_MODAL_DESCRIPTION,
+  INSIGHTS_SETTINGS_MODAL_CLOSE,
+  INSIGHTS_SETTINGS_MODAL_CANCEL,
+  INSIGHTS_SETTINGS_MODAL_CONFIRM,
 } from '../helpers/selectors';
 
 function existingRepositoriesCollection(scope) {
@@ -158,6 +173,28 @@ export default create({
         items: collection(EMAIL_SETTINGS_RESUBSCRIBE_ITEM, {
           click: clickable(EMAIL_SETTINGS_RESUBSCRIBE_BUTTON)
         })
+      }
+    },
+
+    insightsSettings: {
+      scope: INSIGHTS_SETTINGS,
+      title: text(INSIGHTS_SETTINGS_TITLE),
+      description: text(INSIGHTS_SETTINGS_DESCRIPTION),
+      visibilityList: {
+        scope: INSIGHTS_SETTINGS_LIST,
+        items: collection(INSIGHTS_SETTINGS_LIST_ITEM, {
+          click: clickable(),
+          isSelected: hasAttribute(INSIGHTS_SETTINGS_LIST_ITEM_SELECTED),
+        }),
+      },
+      submit: clickable(INSIGHTS_SETTINGS_SUBMIT),
+      modal: {
+        scope: INSIGHTS_SETTINGS_MODAL,
+        title: text(INSIGHTS_SETTINGS_MODAL_TITLE),
+        description: text(INSIGHTS_SETTINGS_MODAL_DESCRIPTION),
+        closeButton: clickable(INSIGHTS_SETTINGS_MODAL_CLOSE),
+        cancelButton: clickable(INSIGHTS_SETTINGS_MODAL_CANCEL),
+        confirmButton: clickable(INSIGHTS_SETTINGS_MODAL_CANCEL),
       }
     }
   },
