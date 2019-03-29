@@ -270,7 +270,7 @@ $med-small-up: "only screen and (min-width: 38em)";
     }
   }
 
-  // C3 customizations
+  // Odyssey C3 customizations
   .c3-axis {
     .domain {
       stroke: $axis-line-color;
@@ -289,6 +289,30 @@ $med-small-up: "only screen and (min-width: 38em)";
     background-color: $grid-background-color;
     line {
       stroke: $grid-line-color;
+    }
+  }
+}
+
+// C3 customizations
+.c3-tooltip-container {
+  border: 1px solid $oxide-blue;
+  // border-radius: 0.3125rem;
+  border-radius: 4px;
+  overflow: hidden;
+
+  .c3-tooltip {
+    opacity: 1;
+
+    tr {
+      border: none;
+    }
+
+    th {
+      background-color: $oxide-blue;
+    }
+
+    td {
+      border: none;
     }
   }
 }
