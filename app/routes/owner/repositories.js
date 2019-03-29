@@ -2,6 +2,7 @@ import TravisRoute from 'travis/routes/basic';
 import config from 'travis/config/environment';
 import { inject as service } from '@ember/service';
 import { hash } from 'rsvp';
+import { OWNER_TABS } from 'travis/controllers/owner/repositories';
 
 export default TravisRoute.extend({
   features: service(),
@@ -19,7 +20,7 @@ export default TravisRoute.extend({
   },
 
   model({ page, tab }, transition) {
-    if (tab === 'insights') {
+    if (tab === OWNER_TABS.INSIGHTS) {
       // TODO: Refactor owner route to use ember-data. Apparently owner is coming from an ajax call in the owner route.
       let owner = { ...this.modelFor('owner') };
       owner.isUser = owner['@type'] === 'user';

@@ -3,6 +3,11 @@ import { inject as service } from '@ember/service';
 import { and, equal } from '@ember/object/computed';
 import { DEFAULT_INSIGHTS_INTERVAL } from 'travis/services/insights';
 
+export const OWNER_TABS = {
+  REPOSITORIES: 'repositories',
+  INSIGHTS: 'insights',
+};
+
 export default Controller.extend({
   queryParams: ['tab', 'timeInterval'],
 
@@ -10,13 +15,13 @@ export default Controller.extend({
 
   isLoading: false,
   page: 1,
-  tab: null,
+  tab: OWNER_TABS.REPOSITORIES,
   requestPrivateInsights: true,
 
   timeInterval: DEFAULT_INSIGHTS_INTERVAL,
   defaultTimeInterval: DEFAULT_INSIGHTS_INTERVAL,
 
-  isInsights: equal('tab', 'insights'),
+  isInsights: equal('tab', OWNER_TABS.INSIGHTS),
   isPrivateInsightsViewable: and('features.proVersion', 'model.buildInfo.private'),
   includePrivateInsights: and('isPrivateInsightsViewable', 'requestPrivateInsights'),
 
