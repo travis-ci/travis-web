@@ -9,22 +9,22 @@ import {
 export default create({
   visit: visitable('/:username/?tab=insights'),
 
-  glances: collection('.insights-grid .insights-glance', {
-    name: text('.insights-glance__title'),
-    keyStat: text('.insights-glance__stat'),
-    percentChange: text('.insights-glance__change-stat > span'),
+  glances: collection('[data-test-insights-glance]', {
+    name: text('[data-test-insights-glance-title]'),
+    keyStat: text('[data-test-insights-glance-stat]'),
+    percentChange: text('[data-test-insights-glance-delta-stat]'),
 
-    chartIsVisible: isVisible('.insights-glance__chart'),
-    chartPlaceholderIsVisible: isVisible('.insights-glance__chart-placeholder'),
+    chartIsVisible: isVisible('[data-test-insights-glance-chart]'),
+    chartPlaceholderIsVisible: isVisible('[data-test-insights-glance-chart-placeholder]'),
   }),
 
-  odysseys: collection('.insights-grid .insights-odyssey', {
-    name: text('.insights-odyssey__title'),
-    chart: text('.insights-odyssey__chart'),
+  odysseys: collection('[data-test-insights-odyssey]', {
+    name: text('[data-test-insights-odyssey-title]'),
+    chart: text('[data-test-insights-odyssey-chart]'),
   }),
 
   noBuildOverlay: {
-    scope: '.insights-overlay',
+    scope: '[data-test-insights-overlay]',
     title: text('[data-test-insights-overlay-title]'),
     text: text('[data-test-insights-overlay-text]'),
     link: text('[data-test-insights-overlay-link]'),
