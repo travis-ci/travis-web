@@ -8,6 +8,21 @@
     {{sync-button}}
   </section>
 
+  {{#if showMigrationBetaBanner }}
+    <section class="migrate-beta">
+      <h2>A single place for all your builds</h2>
+      <p>
+        You can now have all your public and private repositories together.
+      </p>
+      <p>
+        Start migrating your public repositories to travis-ci.com
+      </p>
+      <button class="button--blue">
+        Sing me up for beta
+      </button>
+    </section>
+  {{/if}}
+
   <section class="profile-orgs">
     <h2>Organizations</h2>
     <ul class="profile-orgs-list">
