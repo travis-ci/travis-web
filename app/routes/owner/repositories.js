@@ -1,7 +1,6 @@
 import TravisRoute from 'travis/routes/basic';
 import config from 'travis/config/environment';
 import { inject as service } from '@ember/service';
-import { hash } from 'rsvp';
 import { OWNER_TABS } from 'travis/controllers/owner/repositories';
 
 export default TravisRoute.extend({
@@ -19,35 +18,58 @@ export default TravisRoute.extend({
     },
   },
 
+  page: null,
+  tab: null,
+  owner: null,
+
   model({ page, tab }, transition) {
-    if (tab === OWNER_TABS.INSIGHTS) {
-      // TODO: Refactor owner route to use ember-data. Apparently owner is coming from an ajax call in the owner route.
-      let owner = { ...this.modelFor('owner') };
-      owner.isUser = owner['@type'] === 'user';
+    let owner = { ...this.modelFor('owner') };
+    owner.isUser = owner['@type'] === 'user';
 
-      const buildInfo = this.get('insights').getChartData.perform(
-        owner,
-        'week',
-        'builds',
-        'sum',
-        ['count_started'],
-        { private: true }
-      );
-      return hash({ owner, buildInfo });
-    } else {
-      const limit = config.pagination.profileReposPerPage;
-      const offset = (page - 1) * limit;
-      const owner = this.paramsFor('owner').owner;
-      const type = 'byOwner';
-      const sort_by = 'default_branch.last_build:desc'; // eslint-disable-line
+    this.setProperties({ tab, page, owner });
 
-      const queryParams = { offset, limit, sort_by, custom: { owner, type, }};
+    return { owner };
+  },
 
-      if (this.features.get('github-apps')) {
-        queryParams['repository.active'] = true;
-      }
+  loadRepositories() {
+    const limit = config.pagination.profileReposPerPage;
+    const page = this.page || 1;
+    const offset = (page - 1) * limit;
+    const owner = this.paramsFor('owner').owner;
+    const type = 'byOwner';
+    const sort_by = 'default_branch.last_build:desc'; // eslint-disable-line
 
-      return this.store.paginated('repo', queryParams, { live: false });
+    const queryParams = { offset, limit, sort_by, custom: { owner, type, }};
+
+    if (this.features.get('github-apps')) {
+      queryParams['repository.active'] = true;
     }
+    return this.store.paginated('repo', queryParams, { live: false });
+  },
+
+  loadInsights() {
+    return this.get('insights').getChartData.perform(
+      this.owner,
+      'week',
+      'builds',
+      'sum',
+      ['count_started'],
+      { private: true }
+    );
+  },
+
+  loadData(controller) {
+    controller.setProperties({ builds: null, repos: null });
+
+    if (this.tab === OWNER_TABS.INSIGHTS) {
+      controller.set('builds', this.loadInsights());
+    } else {
+      this.loadRepositories().then(data => controller.set('repos', data));
+    }
+  },
+
+  setupController(controller, model) {
+    this._super(...arguments);
+    this.loadData(controller);
   }
 });

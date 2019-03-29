@@ -4,42 +4,52 @@
       {{#link-to (query-params tab='repositories' timeInterval=defaultTimeInterval)}}Repositories{{/link-to}}
     </li>
     <li>
-      {{#link-to (query-params tab='insights' timeInterval=timeInterval)}}Insights{{/link-to}}
+      {{#link-to (query-params tab='insights' timeInterval=timeInterval page=1)}}Insights{{/link-to}}
     </li>
   </ul>
 </nav>
 
-{{#if isInsights}}
-  <div class="travistab-body">
-    <div class="insights-controls">
-      <div class="insights-controls-left">
-        {{insights-date-display interval=timeInterval}}
-        <span class="insights-control-divider">|</span>
-        {{insights-privacy-selector
-          isPrivateViewable=isPrivateInsightsViewable
-          includePrivate=includePrivateInsights
-          setRequestPrivateInsights=(action 'setRequestPrivateInsights')
-        }}
+<div class="owner-repo">
+  {{#if isInsights}}
+    {{#unless buildsLoading}}
+      <div class="travistab-body">
+        <div class="insights-controls">
+          <div class="insights-controls-left">
+            {{insights-date-display interval=timeInterval}}
+            <span class="insights-control-divider">|</span>
+            {{insights-privacy-selector
+              isPrivateViewable=isPrivateInsightsViewable
+              includePrivate=includePrivateInsights
+              setRequestPrivateInsights=(action 'setRequestPrivateInsights')
+            }}
+          </div>
+          {{insights-tabs selectedTab=timeInterval}}
+        </div>
+        <div class="insights-grid">
+          {{build-count owner=model.owner interval=timeInterval private=includePrivateInsights}}
+          {{build-minutes owner=model.owner interval=timeInterval private=includePrivateInsights}}
+          {{queue-times owner=model.owner interval=timeInterval private=includePrivateInsights}}
+          {{active-repo-count owner=model.owner interval=timeInterval private=includePrivateInsights}}
+          {{build-status-chart owner=model.owner interval=timeInterval private=includePrivateInsights}}
+          {{insights-overlay owner=model.owner interval=timeInterval private=includePrivateInsights}}
+        </div>
       </div>
-      {{insights-tabs selectedTab=timeInterval}}
-    </div>
-    <div class="insights-grid">
-      {{build-count owner=model.owner interval=timeInterval private=includePrivateInsights}}
-      {{build-minutes owner=model.owner interval=timeInterval private=includePrivateInsights}}
-      {{queue-times owner=model.owner interval=timeInterval private=includePrivateInsights}}
-      {{active-repo-count owner=model.owner interval=timeInterval private=includePrivateInsights}}
-      {{build-status-chart owner=model.owner interval=timeInterval private=includePrivateInsights}}
-      {{insights-overlay owner=model.owner interval=timeInterval private=includePrivateInsights}}
-    </div>
-  </div>
-{{else}}
-  <ul class="owner-tiles">
-    {{#each model as |repo|}}
-      {{owner-repo-tile repo=repo}}
     {{else}}
-      {{no-repos}}
-    {{/each}}
-  </ul>
+      {{loading-screen center=true margin=true}}
+    {{/unless}}
+  {{else}}
+    {{#unless reposLoading}}
+      <ul class="owner-tiles">
+        {{#each repos as |repo|}}
+          {{owner-repo-tile repo=repo}}
+        {{else}}
+          {{no-repos}}
+        {{/each}}
+      </ul>
 
-  {{pagination-navigation collection=model route="owner.repositories" inner=6 outer=2}}
-{{/if}}
+      {{pagination-navigation collection=repos route="owner.repositories" inner=6 outer=2}}
+    {{else}}
+      {{loading-screen center=true margin=true}}
+    {{/unless}}
+  {{/if}}
+</div>

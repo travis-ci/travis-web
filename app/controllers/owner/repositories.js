@@ -9,7 +9,7 @@ export const OWNER_TABS = {
 };
 
 export default Controller.extend({
-  queryParams: ['tab', 'timeInterval'],
+  queryParams: ['page', 'tab', 'timeInterval'],
 
   features: service(),
 
@@ -24,6 +24,12 @@ export default Controller.extend({
   isInsights: equal('tab', OWNER_TABS.INSIGHTS),
   isPrivateInsightsViewable: and('features.proVersion', 'model.buildInfo.private'),
   includePrivateInsights: and('isPrivateInsightsViewable', 'requestPrivateInsights'),
+
+  repos: null,
+  reposLoading: equal('repos', null),
+
+  builds: null,
+  buildsLoading: equal('builds', null),
 
   actions: {
     setRequestPrivateInsights(val) {
