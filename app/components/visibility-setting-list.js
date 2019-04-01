@@ -4,6 +4,7 @@ import { reads, empty, not, lt, gt, equal, and } from '@ember/object/computed';
 import KeyboardShortcuts from 'ember-keyboard-shortcuts/mixins/component';
 
 export default Component.extend(KeyboardShortcuts, {
+  tagName: 'div',
   classNames: ['visibility-setting-list'],
 
   keyboardShortcuts: {
