@@ -148,7 +148,17 @@ test('User can resubscribe to repository', async function (assert) {
   assert.ok(!emailSettings.resubscribeList.isPresent);
 });
 
-test('Insights settings are listed', async function (assert) {
+test('Insights settings are not listed in non-PRO version', async function (assert) {
+  await profilePage.visit({ username: 'testuser' });
+  await profilePage.settings.visit();
+
+  const { insightsSettings } = profilePage.settings;
+
+  assert.ok(!insightsSettings.isVisible);
+});
+
+test('Insights settings are listed in PRO version', async function (assert) {
+  withFeature('proVersion');
   await profilePage.visit({ username: 'testuser' });
   await profilePage.settings.visit();
 
