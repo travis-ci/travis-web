@@ -1,5 +1,5 @@
 import Controller from '@ember/controller';
-import { reads } from '@ember/object/computed';
+import { reads, and } from '@ember/object/computed';
 import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
@@ -32,6 +32,7 @@ export default Controller.extend({
     }, {});
   }),
   privateInsightsVisibility: reads('preferences.private_insights_visibility.value'),
+  showOrganizationSettings: and('features.proVersion', 'organization.permissions.admin'),
 
   insightsVisibilityOptions: computed(() => INSIGHTS_VIS_OPTIONS),
 

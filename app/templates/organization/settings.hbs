@@ -1,11 +1,17 @@
 <section class='organization-settings'>
-  {{#if (and features.proVersion organization.permissions.admin)}}
+  {{#if showOrganizationSettings}}
     <section id="insights-visibility-settings" class="insights-visibility-settings" data-test-insights-settings>
       <h3 data-test-insights-settings-title>Insights Visibility Settings</h3>
       <div class="insights-settings">
         <p class="description" data-test-insights-settings-description>
           Make more informed decisions about your development workflow using your build Insights.<br />
-          {{#link-to 'owner.repositories' organization.login (query-params tab='insights')}}View {{organization.name}}'s Insights{{/link-to}}
+          {{#link-to
+            'owner.repositories'
+            organization.login
+            (query-params tab='insights')
+          }}
+            View {{organization.name}}'s Insights
+          {{/link-to}}
         </p>
         {{visibility-setting-list
           options=insightsVisibilityOptions

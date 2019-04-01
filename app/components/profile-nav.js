@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
-import { reads, or, and, alias } from '@ember/object/computed';
+import { reads, or, and } from '@ember/object/computed';
 import { computed } from '@ember/object';
 import config from 'travis/config/environment';
 
@@ -23,10 +23,10 @@ export default Component.extend({
 
   showSubscriptionStatusBanner: and('checkSubscriptionStatus', 'model.subscriptionError'),
 
-  isOrganization: alias('model.isOrganization'),
-  hasAdminPermissions: alias('model.permissions.admin'),
+  isOrganization: reads('model.isOrganization'),
+  hasAdminPermissions: reads('model.permissions.admin'),
   isOrganizationAdmin: and('isOrganization', 'hasAdminPermissions'),
-  isProVersion: alias('features.proVersion'),
+  isProVersion: reads('features.proVersion'),
   showOrganizationSettings: and('isOrganizationAdmin', 'isProVersion'),
 
   get githubOrgsOauthAccessSettingsUrl() {

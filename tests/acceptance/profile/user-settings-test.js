@@ -177,7 +177,7 @@ test('User can select a different privacy setting', async function (assert) {
   await profilePage.visit({ username: 'testuser' });
   await profilePage.settings.visit();
 
-  const { modal, submit, visibilityList } = profilePage.settings.insightsSettings;
+  const { submit, visibilityList } = profilePage.settings.insightsSettings;
   const [privateOption, publicOption] = visibilityList.items;
 
   assert.equal(visibilityList.items.length, INSIGHTS_VIS_OPTIONS.length);
