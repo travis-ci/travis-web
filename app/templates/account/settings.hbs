@@ -82,7 +82,13 @@
       <div class="insights-settings">
         <p class="description" data-test-insights-settings-description>
           Make more informed decisions about your development workflow using your build Insights.<br />
-          {{#link-to 'owner.repositories' account.login (query-params tab='insights')}}View {{account.name}}'s Insights{{/link-to}}
+          {{#link-to
+            'owner.repositories'
+            account.login
+            (query-params tab='insights')
+          }}
+            View {{account.name}}'s Insights
+          {{/link-to}}
         </p>
         {{visibility-setting-list
           options=insightsVisibilityOptions
