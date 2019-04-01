@@ -10,7 +10,7 @@
           onclick={{action (mut selectionKey) option.key}}
         >
           <span class="visibility-setting-list-item__radio" ></span>
-          <span class="visibility-setting-list-item__description">{{option.description}}</span>
+          <span class="visibility-setting-list-item__description" data-test-visibility-settings-list-item-description>{{option.description}}</span>
         </button>
       {{/let}}
     {{/each}}

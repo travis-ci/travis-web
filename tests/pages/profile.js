@@ -4,6 +4,7 @@ import {
   clickable,
   collection,
   hasClass,
+  is,
   isHidden,
   isPresent,
   text,
@@ -25,6 +26,7 @@ import {
   INSIGHTS_SETTINGS_DESCRIPTION,
   INSIGHTS_SETTINGS_LIST,
   INSIGHTS_SETTINGS_LIST_ITEM,
+  INSIGHTS_SETTINGS_LIST_ITEM_DESCRIPTION,
   INSIGHTS_SETTINGS_LIST_ITEM_SELECTED,
   INSIGHTS_SETTINGS_SUBMIT,
   INSIGHTS_SETTINGS_MODAL,
@@ -183,10 +185,15 @@ export default create({
         scope: INSIGHTS_SETTINGS_LIST,
         items: collection(INSIGHTS_SETTINGS_LIST_ITEM, {
           click: clickable(),
-          isSelected: hasClass(INSIGHTS_SETTINGS_LIST_ITEM_SELECTED),
+          description: text(INSIGHTS_SETTINGS_LIST_ITEM_DESCRIPTION),
+          isSelected: is(INSIGHTS_SETTINGS_LIST_ITEM_SELECTED),
         }),
       },
-      submit: clickable(INSIGHTS_SETTINGS_SUBMIT),
+      submit: {
+        scope: INSIGHTS_SETTINGS_SUBMIT,
+        click: clickable(),
+        isDisabled: attribute('disabled'),
+      },
       modal: {
         scope: INSIGHTS_SETTINGS_MODAL,
         title: text(INSIGHTS_SETTINGS_MODAL_TITLE),
