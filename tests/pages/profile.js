@@ -194,14 +194,24 @@ export default create({
         click: clickable(),
         isDisabled: attribute('disabled'),
       },
-      modal: {
-        scope: INSIGHTS_SETTINGS_MODAL,
-        title: text(INSIGHTS_SETTINGS_MODAL_TITLE),
-        description: text(INSIGHTS_SETTINGS_MODAL_DESCRIPTION),
-        closeButton: clickable(INSIGHTS_SETTINGS_MODAL_CLOSE),
-        cancelButton: clickable(INSIGHTS_SETTINGS_MODAL_CANCEL),
-        confirmButton: clickable(INSIGHTS_SETTINGS_MODAL_CONFIRM),
-      }
+    },
+
+    insightsSettingsModal: {
+      scope: INSIGHTS_SETTINGS_MODAL,
+      title: text(INSIGHTS_SETTINGS_MODAL_TITLE),
+      description: text(INSIGHTS_SETTINGS_MODAL_DESCRIPTION),
+      closeButton: {
+        scope: INSIGHTS_SETTINGS_MODAL_CLOSE,
+        click: clickable(),
+      },
+      cancelButton: {
+        scope: INSIGHTS_SETTINGS_MODAL_CANCEL,
+        click: clickable(),
+      },
+      confirmButton: {
+        scope: INSIGHTS_SETTINGS_MODAL_CONFIRM,
+        click: clickable(),
+      },
     }
   },
 

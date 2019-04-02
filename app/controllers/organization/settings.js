@@ -34,7 +34,6 @@ export default Controller.extend({
   scrollToInsights: equal('section', SECTION.INSIGHTS),
 
   organization: reads('model.organization'),
-  organizationName: or('organization.name', 'organization.login'),
 
   preferences: computed('model.preferences.@each.{name,value}', function () {
     const list = this.model.preferences || [];

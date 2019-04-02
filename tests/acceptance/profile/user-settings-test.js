@@ -2,7 +2,6 @@ import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import profilePage from 'travis/tests/pages/profile';
 import signInUser from 'travis/tests/helpers/sign-in-user';
-import { settled } from '@ember/test-helpers';
 import { INSIGHTS_VIS_OPTIONS } from 'travis/controllers/account/settings';
 
 moduleForAcceptance('Acceptance | user settings', {
@@ -151,7 +150,7 @@ test('User can resubscribe to repository', async function (assert) {
 });
 
 test('Insights settings are not listed in non-PRO version', async function (assert) {
-  await profilePage.visit({ username: 'testuser' });
+  await profilePage.visit({ username: this.user.login });
   await profilePage.settings.visit();
 
   const { insightsSettings } = profilePage.settings;
@@ -161,7 +160,7 @@ test('Insights settings are not listed in non-PRO version', async function (asse
 
 test('Insights settings are listed in PRO version', async function (assert) {
   withFeature('proVersion');
-  await profilePage.visit({ username: 'testuser' });
+  await profilePage.visit({ username: this.user.login });
   await profilePage.settings.visit();
 
   const { insightsSettings } = profilePage.settings;
@@ -169,15 +168,19 @@ test('Insights settings are listed in PRO version', async function (assert) {
   assert.ok(insightsSettings.isVisible);
   assert.ok(insightsSettings.title.length > 0);
   assert.ok(insightsSettings.description.length > 0);
+  assert.equal(insightsSettings.description,
+    `Make more informed decisions about your development workflow using your build Insights. View ${this.user.name}'s Insights`
+  );
   assert.ok(insightsSettings.visibilityList.isVisible);
 });
 
 test('User can select a different privacy setting', async function (assert) {
   withFeature('proVersion');
-  await profilePage.visit({ username: 'testuser' });
+  await profilePage.visit({ username: this.user.login });
   await profilePage.settings.visit();
 
   const { submit, visibilityList } = profilePage.settings.insightsSettings;
+  const { insightsSettingsModal } = profilePage.settings;
   const [privateOption, publicOption] = visibilityList.items;
 
   assert.equal(visibilityList.items.length, INSIGHTS_VIS_OPTIONS.length);
@@ -187,21 +190,39 @@ test('User can select a different privacy setting', async function (assert) {
   // Default state
   assert.equal(privateOption.description, expectedPrivate.description);
   assert.notOk(privateOption.isSelected);
-
   assert.equal(publicOption.description, expectedPublic.description);
   assert.ok(publicOption.isSelected);
-
   assert.ok(submit.isDisabled);
+  assert.notOk(insightsSettingsModal.isVisible);
 
   // Select option
   await privateOption.click();
-
   assert.ok(privateOption.isSelected);
   assert.notOk(submit.isDisabled);
 
-  // Click save
+  // Click save, modal should show
   await submit.click();
-  await settled();
+  assert.ok(insightsSettingsModal.isVisible);
+  assert.equal(insightsSettingsModal.title, 'Restrict visibility of your private build insights');
+  assert.equal(insightsSettingsModal.description, expectedPrivate.modalText);
 
-  // Modal should show
+  // Close modal with close button
+  await insightsSettingsModal.closeButton.click();
+  assert.notOk(insightsSettingsModal.isVisible);
+
+  // Reopen modal
+  await submit.click();
+  assert.ok(insightsSettingsModal.isVisible);
+
+  // Close modal with cancel button
+  await insightsSettingsModal.cancelButton.click();
+  assert.notOk(insightsSettingsModal.isVisible);
+
+  // Reopen modal
+  await submit.click();
+  assert.ok(insightsSettingsModal.isVisible);
+
+  // Confirm save
+  await insightsSettingsModal.confirmButton.click();
+  assert.notOk(insightsSettingsModal.isVisible);
 });
