@@ -1,5 +1,5 @@
 import Controller from '@ember/controller';
-import { reads, and, or, equal } from '@ember/object/computed';
+import { reads, and, equal } from '@ember/object/computed';
 import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
