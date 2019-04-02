@@ -9,6 +9,12 @@ import {
 export default create({
   visit: visitable('/:username/?tab=insights'),
 
+  privacySelector: {
+    scope: '[data-test-insights-privacy-selector]',
+    selected: text('[data-test-insights-privacy-selector-selected]'),
+    mainField: text('[data-test-insights-privacy-selector-main-field]'),
+  },
+
   glances: collection('[data-test-insights-glance]', {
     name: text('[data-test-insights-glance-title]'),
     keyStat: text('[data-test-insights-glance-stat]'),

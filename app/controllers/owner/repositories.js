@@ -22,7 +22,7 @@ export default Controller.extend({
   defaultTimeInterval: DEFAULT_INSIGHTS_INTERVAL,
 
   isInsights: equal('tab', OWNER_TABS.INSIGHTS),
-  isPrivateInsightsViewable: and('features.proVersion', 'model.buildInfo.private'),
+  isPrivateInsightsViewable: and('features.proVersion', 'builds.value.private'),
   includePrivateInsights: and('isPrivateInsightsViewable', 'requestPrivateInsights'),
 
   repos: null,
