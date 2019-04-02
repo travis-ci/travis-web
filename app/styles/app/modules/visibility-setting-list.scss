@@ -16,6 +16,7 @@
     padding: 0;
     background-color: transparent;
     cursor: pointer;
+    outline: none;
 
     &__description {
       background-color: transparent;
@@ -85,7 +86,8 @@
 
   &__close-button {
     margin: 0;
-    padding: 0
+    padding: 0;
+    outline: none;
   }
 
   &__header {
