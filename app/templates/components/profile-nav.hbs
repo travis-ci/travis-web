@@ -17,7 +17,7 @@
       <p>
         Start migrating your public repositories to travis-ci.com
       </p>
-      <button class="button--blue">
+      <button class="button--blue" onclick={{action (mut isShowingMigrateBetaDialog) true }}>
         Sing me up for beta
       </button>
     </section>
@@ -116,3 +116,15 @@
   {{/unless}}
 
 </article>
+
+{{#if isShowingMigrateBetaDialog}}
+  {{#modal-dialog
+      onClose=(action (mut isShowingMigrateBetaDialog) false)
+      translucentOverlay=true
+      overlayPosition='sibling'
+      clickOutsideToClose=true
+      animatable=true
+  }}
+    Migrate modal
+  {{/modal-dialog}}
+{{/if}}
