@@ -119,10 +119,9 @@
 
 {{#if isShowingMigrateBetaDialog}}
   {{#modal-dialog
-      onClose=(action (mut isShowingMigrateBetaDialog) false)
       translucentOverlay=true
       overlayPosition='sibling'
-      clickOutsideToClose=true
+      clickOutsideToClose=false
       animatable=true
   }}
     {{component 'dialogs/migrate-beta'

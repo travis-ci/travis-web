@@ -14,5 +14,12 @@
     opacity: 0.5;
   }
 
+  button {
+    &:focus,
+    &:active {
+      outline: none;
+    }
+  }
+
 
 }

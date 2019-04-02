@@ -40,7 +40,11 @@
   </p>
 
   <div class='modal-controls'>
-    <button class='button--blue'>
+    <button
+      class='button--blue {{if cantSubmit 'disabled'}}'
+      disabled={{cantSubmit}}
+      onclick={{action 'register'}}
+    >
       Register accounts
     </button>
   </div>
