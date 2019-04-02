@@ -2,7 +2,7 @@ import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
 import { belongsTo } from 'ember-data/relationships';
 import { computed } from '@ember/object';
-import { reads } from '@ember/object/computed';
+import { reads, or } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import config from 'travis/config/environment';
 import dynamicQuery from 'travis/utils/dynamic-query';
@@ -26,6 +26,8 @@ export default Model.extend({
   subscriptionPermissions: attr(),
 
   installation: belongsTo('installation', { async: false }),
+
+  title: or('name', 'login'),
 
   githubAppsRepositories: dynamicQuery(function* ({ page = 1, filter = '' }) {
     return yield this.fetchRepositories({ page, filter, ghApps: true, activeOnOrg: false });

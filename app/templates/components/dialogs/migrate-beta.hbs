@@ -1,0 +1,56 @@
+<div class='migrate-beta-dialog'>
+
+  <div class='migrate-beta-dialog__image'>
+    {{svg-jar 'migrate-beta' width='270px'}}
+  </div>
+
+  <h3 class='h3--teal align-center'>
+    Register for beta
+  </h3>
+
+  <p>
+    Gain access to have all your public and private repositories together.
+  </p>
+
+  <p>
+    {{#travis-form as |form| }}
+      {{#form.field
+        label='Select your accounts'
+        value=selectedAccounts
+        onChange=(action 'toggleAccount')
+        as |field|
+      }}
+        {{#field.select
+          placeholder='Select accounts from dropdown'
+          options=selectableAccounts
+          searchField='title'
+          as |option|
+        }}
+          {{option.title}}
+        {{/field.select}}
+      {{/form.field}}
+    {{/travis-form}}
+  </p>
+
+  <p class='subtle'>
+    Once you've picked accounts you will be placed on the waitlist for beta!
+    Make sure to check the accounts' pages for any updates &dash;
+    we'll notify you there when we've enabled beta.
+  </p>
+
+  <div class='modal-controls'>
+    <button class='button--blue'>
+      Register accounts
+    </button>
+  </div>
+
+  <button
+    type="button"
+    title="Close modal"
+    class="modal-close pointer"
+    onclick={{action 'onClose'}}
+  >
+    {{svg-jar 'icon-failed' class="icon"}}
+  </button>
+
+</div>

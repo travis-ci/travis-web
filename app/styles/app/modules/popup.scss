@@ -64,6 +64,21 @@
   position: absolute;
   top: 1em;
   right: 1em;
+  margin: 0;
+  padding: 0;
+
+  &:focus,
+  &:active {
+    outline: none;
+  }
+}
+
+.modal-controls {
+  margin-top: 2rem;
+
+   button {
+    min-width: 100px;
+  }
 }
 
 .status-images {

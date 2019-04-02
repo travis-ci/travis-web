@@ -125,6 +125,8 @@
       clickOutsideToClose=true
       animatable=true
   }}
-    Migrate modal
+    {{component 'dialogs/migrate-beta'
+      onClose=(action (mut isShowingMigrateBetaDialog) false)
+    }}
   {{/modal-dialog}}
 {{/if}}

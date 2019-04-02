@@ -68,4 +68,7 @@ $ember-power-select-multiple-option-padding: 0 4px !default;
 $ember-power-select-multiple-option-line-height: 1.45 !default;
 
 // ember-basic-dropdown
-$ember-basic-dropdown-content-background-color: $ember-power-select-background-color;
+$ember-basic-dropdown-content-background-color: $ember-power-select-background-color !default;
+$ember-basic-dropdown-content-z-index: 10000 !default;
+$ember-basic-dropdown-overlay-background: rgba(0,0,0, 0.5) !default;
+$ember-basic-dropdown-overlay-pointer-events: none !default;
