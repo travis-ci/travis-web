@@ -7,7 +7,10 @@ import fetchAll from 'travis/utils/fetch-all';
 
 export const SECTION = {
   NONE: '',
-  EMAIL: 'email'
+  AUTH: 'api-auth',
+  FEATURES: 'features',
+  EMAIL: 'email',
+  INSIGHTS: 'insights',
 };
 
 export const INSIGHTS_VIS_OPTIONS = [
@@ -35,7 +38,11 @@ export default Controller.extend({
   featureFlags: reads('model.featureFlags'),
   account: reads('model.account'),
 
+  scrollToAuth: equal('section', SECTION.AUTH),
+  scrollToFeatures: equal('section', SECTION.FEATURES),
   scrollToEmail: equal('section', SECTION.EMAIL),
+  scrollToInsights: equal('section', SECTION.INSIGHTS),
+
   repositories: reads('fetchRepositories.lastSuccessful.value'),
   buildEmails: reads('preferences.buildEmails'),
   showResubscribeList: and('buildEmails', 'unsubscribedRepos.length'),

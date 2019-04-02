@@ -1,6 +1,9 @@
 <section class='organization-settings'>
   {{#if showOrganizationSettings}}
-    <section id="insights-visibility-settings" class="insights-visibility-settings" data-test-insights-settings>
+    {{#if scrollToInsights}}
+      {{scroll-here}}
+    {{/if}}
+    <section class="insights-visibility-settings" data-test-insights-settings>
       <h3 data-test-insights-settings-title>Insights Visibility Settings</h3>
       <div class="insights-settings">
         <p class="description" data-test-insights-settings-description>
@@ -10,7 +13,7 @@
             organization.login
             (query-params tab='insights')
           }}
-            View {{organization.name}}'s Insights
+            View {{organizationName}}'s Insights
           {{/link-to}}
         </p>
         {{visibility-setting-list

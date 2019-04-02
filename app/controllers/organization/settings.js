@@ -1,5 +1,5 @@
 import Controller from '@ember/controller';
-import { reads, and } from '@ember/object/computed';
+import { reads, and, or, equal } from '@ember/object/computed';
 import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
@@ -20,10 +20,22 @@ export const INSIGHTS_VIS_OPTIONS = [
   }
 ];
 
+export const SECTION = {
+  NONE: '',
+  INSIGHTS: 'insights',
+};
+
 export default Controller.extend({
   flashes: service(),
   features: service(),
+
+  queryParams: ['section'],
+  section: SECTION.NONE,
+  scrollToInsights: equal('section', SECTION.INSIGHTS),
+
   organization: reads('model.organization'),
+  organizationName: or('organization.name', 'organization.login'),
+
   preferences: computed('model.preferences.@each.{name,value}', function () {
     const list = this.model.preferences || [];
     return list.reduce((hash, record) => {

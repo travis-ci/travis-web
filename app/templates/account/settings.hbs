@@ -1,5 +1,8 @@
 <section class='user-settings'>
-  <section id="API-auth">
+    {{#if scrollToAuth}}
+      {{scroll-here}}
+    {{/if}}
+  <section>
     <h3>API authentication</h3>
 
     <p>To learn more about using our API, please head to <a href='https://developer.travis-ci.com'>developer.travis-ci.com</a>.</p>
@@ -8,7 +11,10 @@
   </section>
 
   {{#if features.betaFeatures}}
-    <section id="features">
+    {{#if scrollToFeatures}}
+      {{scroll-here}}
+    {{/if}}
+    <section>
       <h3>Features</h3>
       <ul class="features-list">
         {{#each (sort-by "name" featureFlags) as |feature|}}
@@ -24,8 +30,8 @@
   {{#if scrollToEmail}}
     {{scroll-here}}
   {{/if}}
-  <section id="email-settings" class="email-settings" data-test-email-settings>
-    <h3 id="email-notifications">Email notifications</h3>
+  <section class="email-settings" data-test-email-settings>
+    <h3>Email notifications</h3>
     <div class="build-emails">
       <div class="row">
         <div class="name" data-test-email-settings-title>
@@ -77,7 +83,10 @@
     {{/if}}
   </section>
   {{#if features.proVersion}}
-    <section id="insights-visibility-settings" class="insights-visibility-settings" data-test-insights-settings>
+    {{#if scrollToInsights}}
+      {{scroll-here}}
+    {{/if}}
+    <section class="insights-visibility-settings" data-test-insights-settings>
       <h3 data-test-insights-settings-title>Insights Visibility Settings</h3>
       <div class="insights-settings">
         <p class="description" data-test-insights-settings-description>
