@@ -2,6 +2,7 @@ import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import profilePage from 'travis/tests/pages/profile';
 import signInUser from 'travis/tests/helpers/sign-in-user';
+import topPage from 'travis/tests/pages/top';
 import { INSIGHTS_VIS_OPTIONS } from 'travis/controllers/account/settings';
 
 moduleForAcceptance('Acceptance | user settings', {
@@ -225,4 +226,5 @@ test('User can select a different privacy setting', async function (assert) {
   // Confirm save
   await insightsSettingsModal.confirmButton.click();
   assert.notOk(insightsSettingsModal.isVisible);
+  assert.equal(topPage.flashMessage.text, 'Your private build insights are now private.');
 });
