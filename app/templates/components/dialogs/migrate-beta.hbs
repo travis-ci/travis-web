@@ -17,11 +17,12 @@
       {{#form.field
         label='Select your accounts'
         value=selectedAccounts
-        onChange=(action 'toggleAccount')
+        multiple=true
+        onChange=(action (mut selectedAccounts))
         as |field|
       }}
         {{#field.select
-          placeholder='Select accounts from dropdown'
+          placeholder='Search accounts'
           options=selectableAccounts
           searchField='title'
           as |option|
