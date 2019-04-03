@@ -31,7 +31,7 @@ test('the owner insights page shows insights components', async function (assert
 
   // Build minutes component
   insightsPage.glances[1].as(glance => {
-    assert.equal(glance.name, 'Total Build Minutes');
+    assert.equal(glance.name, 'Total Job Minutes');
     assert.equal(glance.keyStat, '6 mins');
   });
 
