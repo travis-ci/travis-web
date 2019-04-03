@@ -74,7 +74,7 @@ test('the owner insights page handles a lack of data', async function (assert) {
 
   // Build minutes component
   insightsPage.glances[1].as(glance => {
-    assert.equal(glance.name, 'Total Build Minutes');
+    assert.equal(glance.name, 'Total Job Minutes');
     assert.equal(glance.keyStat, '0 mins');
   });
 

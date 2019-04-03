@@ -10,8 +10,8 @@ export default Component.extend({
   tagName: 'span',
   classNames: ['insights-privacy-selector'],
   classNameBindings: ['isPrivateViewable:insights-privacy-selector--selectable'],
-  attributeBindings: ['testSelector:data-test-insights-privacy-selector'],
-  testSelector: true,
+
+  'data-test-insights-privacy-selector': '',
 
   isPrivateViewable: false,
   includePrivate: false,
