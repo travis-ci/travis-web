@@ -2,6 +2,8 @@ $axis-line-color: $dry-cement;
 $axis-tick-color: $cement-grey;
 $axis-label-color: $asphalt-grey;
 
+$tooltip-background-color: $cement-grey;
+
 $grid-line-color: $pebble-grey;
 $grid-background-color: #fdfdfd;
 
@@ -11,14 +13,16 @@ $med-small-up: "only screen and (min-width: 38em)";
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 0 15px;
+  padding: 10px 0;
 
   &-left {
     display: flex;
     flex-flow: column nowrap;
     align-items: baseline;
+    padding-top: 10px;
 
     @media #{$med-small-up} {
+      padding-top: 0;
       flex-flow: row nowrap;
     }
 
@@ -51,9 +55,27 @@ $med-small-up: "only screen and (min-width: 38em)";
     .travis-form {
       display: inline-block;
 
-      .travis-form__field .travis-form__field-component {
-        margin: 0;
-        font-weight: 700;
+      .travis-form__field {
+
+        &-select {
+          margin: 0;
+          min-width: 203px;
+          font-weight: 700;
+          cursor: pointer;
+
+          .ember-power-select-status-icon {
+            border: none;
+            width: 16px;
+            height: 8px;
+            background-image: url(/images/svg/icon-dropdown-arrow.svg);
+            background-repeat: no-repeat;
+            background-size: contain;
+          }
+        }
+
+        &--focused .travis-form__field-select {
+          @include makeFieldBorder(lighten($cement-grey, 20%));
+        }
       }
     }
 
@@ -104,6 +126,8 @@ $med-small-up: "only screen and (min-width: 38em)";
 
     @media #{$med-small-up} {
       width: 47%;
+      display: flex;
+      align-items: stretch;
     }
 
     @media #{$medium-up} {
@@ -150,6 +174,13 @@ $med-small-up: "only screen and (min-width: 38em)";
 .insights-glance {
   padding: 20px 20px 15px;
   overflow: hidden;
+  width: 100%;
+
+  // This use of grid is just to make some things align better in certain cases. Nonessential and should look fine without it.
+  display: grid;
+  align-items: start;
+  grid-template-columns: 100%;
+  grid-template-rows: auto auto 1fr;
 
   &__title {
     font-size: 12px;
@@ -217,6 +248,10 @@ $med-small-up: "only screen and (min-width: 38em)";
     border-bottom: 1px solid transparent;
   }
 
+  &__chart {
+    align-self: end;
+  }
+
   &__centerline line {
     stroke: #eaeaea;
   }
@@ -257,7 +292,7 @@ $med-small-up: "only screen and (min-width: 38em)";
     }
   }
 
-  // C3 customizations
+  // Odyssey C3 customizations
   .c3-axis {
     .domain {
       stroke: $axis-line-color;
@@ -276,6 +311,29 @@ $med-small-up: "only screen and (min-width: 38em)";
     background-color: $grid-background-color;
     line {
       stroke: $grid-line-color;
+    }
+  }
+}
+
+// C3 customizations
+.c3-tooltip-container {
+  border: 1px solid $tooltip-background-color;
+  border-radius: 0.125rem;
+  overflow: hidden;
+
+  .c3-tooltip {
+    opacity: 1;
+
+    tr {
+      border: none;
+    }
+
+    th {
+      background-color: $tooltip-background-color;
+    }
+
+    td {
+      border: none;
     }
   }
 }
