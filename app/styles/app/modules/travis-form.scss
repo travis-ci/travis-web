@@ -83,7 +83,7 @@ $select-multiple-spacing: 5px;
       }
 
       &.travis-form__field-select--multiple {
-        padding: $select-multiple-spacing;
+        padding: $select-multiple-spacing 25px 0 $select-multiple-spacing;
       }
 
     }
@@ -347,17 +347,13 @@ $select-multiple-spacing: 5px;
 .ember-power-select-multiple {
 
   &-option {
-    margin: 0 $select-multiple-spacing 0 0;
+    margin: 0 $select-multiple-spacing $select-multiple-spacing 0;
     border: none;
     color: $oxide-blue;
     background-color: lighten($oxide-blue, 45%);
     font-size: 1.1em;
     border-radius: 2px;
     padding: 3px 6px;
-
-    &:last-of-type {
-      margin: 0;
-    }
 
   }
 

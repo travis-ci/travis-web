@@ -1,5 +1,5 @@
 .migrate-beta-dialog {
-  width: 500px;
+  max-width: 500px;
 
   h3 {
     font-size: 24px;
@@ -7,7 +7,6 @@
 
   &__image {
     text-align: center;
-    margin: -20px 0;
   }
 
   .subtle {

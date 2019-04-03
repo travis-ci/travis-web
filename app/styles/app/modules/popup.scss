@@ -62,8 +62,8 @@
 
 .modal-close {
   position: absolute;
-  top: 1em;
-  right: 1em;
+  top: 2em;
+  right: 2em;
   margin: 0;
   padding: 0;
 
@@ -71,6 +71,12 @@
   &:active {
     outline: none;
   }
+
+  .icon {
+    margin: 0;
+    vertical-align: top;
+  }
+
 }
 
 .modal-controls {
