@@ -13,6 +13,10 @@
   </p>
 
   <p>
+    Your account will be registered automatically once you apply. Also you can add any organizations.
+  </p>
+
+  <p>
     {{#travis-form as |form| }}
       {{#form.field
         label='Select your accounts'
@@ -22,7 +26,7 @@
         as |field|
       }}
         {{#field.select
-          placeholder='Search accounts'
+          placeholder='Search organizations'
           options=selectableAccounts
           searchField='title'
           as |option|
@@ -35,17 +39,17 @@
 
   <p class='subtle'>
     Once you've picked accounts you will be placed on the waitlist for beta!
-    Make sure to check the accounts' pages for any updates &dash;
+    Make sure to check your organization pages for any updates &dash;
     we'll notify you there when we've enabled beta.
   </p>
 
   <div class='modal-controls'>
     <button
-      class='button--blue {{if cantSubmit 'disabled'}}'
-      disabled={{cantSubmit}}
-      onclick={{action 'register'}}
+      class='button--blue'
+      onclick={{perform register}}
     >
-      Register accounts
+      Register account
+      {{if (gt selectedAccounts.length 1) 'and organizations'}}
     </button>
   </div>
 

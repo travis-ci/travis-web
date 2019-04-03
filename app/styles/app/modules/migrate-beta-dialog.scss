@@ -21,5 +21,10 @@
     }
   }
 
+  .ember-power-select-multiple-option:first-child {
+    .ember-power-select-multiple-remove-btn {
+      display: none;
+    }
+  }
 
 }
