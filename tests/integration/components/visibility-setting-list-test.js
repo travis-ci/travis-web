@@ -3,6 +3,14 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
+import {
+  INSIGHTS_SETTINGS_LIST_ITEM,
+  INSIGHTS_SETTINGS_LIST_ITEM_SELECTED,
+  INSIGHTS_SETTINGS_MODAL,
+  INSIGHTS_SETTINGS_MODAL_TITLE,
+  INSIGHTS_SETTINGS_MODAL_DESCRIPTION,
+} from '../../helpers/selectors';
+
 module('Integration | Component | visibility-setting-list', function (hooks) {
   setupRenderingTest(hooks);
 
@@ -42,9 +50,9 @@ module('Integration | Component | visibility-setting-list', function (hooks) {
 
     await render(hbs`{{visibility-setting-list options=options initialKey=initialKey}}`);
 
-    assert.dom('[data-test-visibility-settings-list-item]').exists({ count: this.options.length });
-    assert.dom('.visibility-setting-list-item--selected').exists({ count: 1 });
-    assert.dom('.visibility-setting-list-item--selected').hasText(selectedOption.description);
+    assert.dom(INSIGHTS_SETTINGS_LIST_ITEM).exists({ count: this.options.length });
+    assert.dom(INSIGHTS_SETTINGS_LIST_ITEM_SELECTED).exists({ count: 1 });
+    assert.dom(INSIGHTS_SETTINGS_LIST_ITEM_SELECTED).hasText(selectedOption.description);
   });
 
   test('modal display', async function (assert) {
@@ -56,9 +64,9 @@ module('Integration | Component | visibility-setting-list', function (hooks) {
 
     await render(hbs`{{visibility-setting-list options=options initialKey=initialKey isShowingConfirmationModal=showModal selectionKey=selectionKey}}`);
 
-    assert.dom('.visibility-settings-modal').exists();
-    assert.dom('.visibility-settings-modal__header').hasText('Restrict visibility of your private build insights');
-    assert.dom('.visibility-settings-modal__body').hasText('This change will make your private build insights only available to you');
+    assert.dom(INSIGHTS_SETTINGS_MODAL).exists();
+    assert.dom(INSIGHTS_SETTINGS_MODAL_TITLE).hasText('Restrict visibility of your private build insights');
+    assert.dom(INSIGHTS_SETTINGS_MODAL_DESCRIPTION).hasText('This change will make your private build insights only available to you');
   });
 
   test('modal display with custom modalText', async function (assert) {
@@ -69,8 +77,8 @@ module('Integration | Component | visibility-setting-list', function (hooks) {
 
     await render(hbs`{{visibility-setting-list options=options initialKey=initialKey isShowingConfirmationModal=showModal selectionKey=selectionKey}}`);
 
-    assert.dom('.visibility-settings-modal').exists();
-    assert.dom('.visibility-settings-modal__header').hasText('Increase visibility of your private build insights');
-    assert.dom('.visibility-settings-modal__body').hasText('Allow everyone to see my private build insights');
+    assert.dom(INSIGHTS_SETTINGS_MODAL).exists();
+    assert.dom(INSIGHTS_SETTINGS_MODAL_TITLE).hasText('Increase visibility of your private build insights');
+    assert.dom(INSIGHTS_SETTINGS_MODAL_DESCRIPTION).hasText('Allow everyone to see my private build insights');
   });
 });

@@ -4,6 +4,7 @@ import {
   clickable,
   collection,
   hasClass,
+  is,
   isHidden,
   isPresent,
   text,
@@ -18,7 +19,22 @@ import {
   EMAIL_SETTINGS_TOGGLE,
   EMAIL_SETTINGS_RESUBSCRIBE_LIST,
   EMAIL_SETTINGS_RESUBSCRIBE_ITEM,
-  EMAIL_SETTINGS_RESUBSCRIBE_BUTTON
+  EMAIL_SETTINGS_RESUBSCRIBE_BUTTON,
+
+  INSIGHTS_SETTINGS,
+  INSIGHTS_SETTINGS_TITLE,
+  INSIGHTS_SETTINGS_DESCRIPTION,
+  INSIGHTS_SETTINGS_LIST,
+  INSIGHTS_SETTINGS_LIST_ITEM,
+  INSIGHTS_SETTINGS_LIST_ITEM_DESCRIPTION,
+  INSIGHTS_SETTINGS_LIST_ITEM_SELECTED,
+  INSIGHTS_SETTINGS_SUBMIT,
+  INSIGHTS_SETTINGS_MODAL,
+  INSIGHTS_SETTINGS_MODAL_TITLE,
+  INSIGHTS_SETTINGS_MODAL_DESCRIPTION,
+  INSIGHTS_SETTINGS_MODAL_CLOSE,
+  INSIGHTS_SETTINGS_MODAL_CANCEL,
+  INSIGHTS_SETTINGS_MODAL_CONFIRM,
 } from '../helpers/selectors';
 
 function existingRepositoriesCollection(scope) {
@@ -159,6 +175,43 @@ export default create({
           click: clickable(EMAIL_SETTINGS_RESUBSCRIBE_BUTTON)
         })
       }
+    },
+
+    insightsSettings: {
+      scope: INSIGHTS_SETTINGS,
+      title: text(INSIGHTS_SETTINGS_TITLE),
+      description: text(INSIGHTS_SETTINGS_DESCRIPTION),
+      visibilityList: {
+        scope: INSIGHTS_SETTINGS_LIST,
+        items: collection(INSIGHTS_SETTINGS_LIST_ITEM, {
+          click: clickable(),
+          description: text(INSIGHTS_SETTINGS_LIST_ITEM_DESCRIPTION),
+          isSelected: is(INSIGHTS_SETTINGS_LIST_ITEM_SELECTED),
+        }),
+      },
+      submit: {
+        scope: INSIGHTS_SETTINGS_SUBMIT,
+        click: clickable(),
+        isDisabled: attribute('disabled'),
+      },
+    },
+
+    insightsSettingsModal: {
+      scope: INSIGHTS_SETTINGS_MODAL,
+      title: text(INSIGHTS_SETTINGS_MODAL_TITLE),
+      description: text(INSIGHTS_SETTINGS_MODAL_DESCRIPTION),
+      closeButton: {
+        scope: INSIGHTS_SETTINGS_MODAL_CLOSE,
+        click: clickable(),
+      },
+      cancelButton: {
+        scope: INSIGHTS_SETTINGS_MODAL_CANCEL,
+        click: clickable(),
+      },
+      confirmButton: {
+        scope: INSIGHTS_SETTINGS_MODAL_CONFIRM,
+        click: clickable(),
+      },
     }
   },
 
