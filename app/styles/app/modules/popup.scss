@@ -84,6 +84,12 @@
 
    button {
     min-width: 100px;
+    white-space: nowrap;
+
+    .loading-indicator {
+      vertical-align: baseline;
+      margin-right: 0.5rem;
+    }
   }
 }
 

@@ -45,11 +45,16 @@
 
   <div class='modal-controls'>
     <button
-      class='button--blue'
+      class='button--blue {{if register.isRunning 'disabled'}}'
+      disabled={{register.isRunning}}
       onclick={{perform register}}
     >
-      Register account
-      {{if (gt selectedAccounts.length 1) 'and organizations'}}
+      {{#if register.isRunning }}
+        {{loading-indicator white=true inline=true }} Registering...
+      {{else}}
+        Register account
+        {{if (gt selectedAccounts.length 1) 'and organizations'}}
+      {{/if}}
     </button>
   </div>
 
