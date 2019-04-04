@@ -9,7 +9,7 @@ export const INSIGHTS_DATE_RANGE_PLACEHOLDER = '...';
 
 export default Component.extend({
   tagName: 'span',
-  classNames: ['insights-dates'],
+  classNames: ['insights-dates', 'snapshot-hide'],
 
   insights: service(),
 

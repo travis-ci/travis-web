@@ -298,6 +298,8 @@ $med-small-up: "only screen and (min-width: 38em)";
       stroke: $axis-line-color;
     }
     .tick {
+      @include snapshotHide;
+
       line {
         stroke: $axis-tick-color;
       }
