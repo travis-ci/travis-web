@@ -34,6 +34,10 @@ export default Component.extend({
 
     onClose() {
       this.onClose();
+    },
+
+    preventErase(select, { keyCode, target }) {
+      return keyCode !== 8 || !!target.value;
     }
 
   }

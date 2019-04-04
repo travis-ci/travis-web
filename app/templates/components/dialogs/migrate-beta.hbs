@@ -29,6 +29,7 @@
           placeholder='Search organizations'
           options=selectableAccounts
           searchField='title'
+          onkeydown=(action 'preventErase')
           as |option|
         }}
           {{option.title}}
