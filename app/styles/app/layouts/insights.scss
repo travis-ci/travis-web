@@ -294,12 +294,12 @@ $med-small-up: "only screen and (min-width: 38em)";
 
   // Odyssey C3 customizations
   .c3-axis {
-    @include snapshotHide;
-
     .domain {
       stroke: $axis-line-color;
     }
     .tick {
+      @include snapshotHide;
+
       line {
         stroke: $axis-tick-color;
       }
