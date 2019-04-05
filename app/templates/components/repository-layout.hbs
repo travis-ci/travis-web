@@ -50,18 +50,24 @@
 
 {{#if isShowingStatusBadgeModal}}
   {{#modal-dialog
-     onClose="toggleStatusBadgeModal"
-     targetAttachment="center"
-     translucentOverlay=true}}
+    onClose="toggleStatusBadgeModal"
+    targetAttachment="center"
+    translucentOverlay=true
+    overlayPosition='sibling'
+    animatable=true
+  }}
     {{status-images repo=repo onClose=(action 'toggleStatusBadgeModal')}}
   {{/modal-dialog}}
 {{/if}}
 
 {{#if isShowingTriggerBuildModal}}
   {{#modal-dialog
-     onClose="toggleTriggerBuildModal"
-     targetAttachment="center"
-     translucentOverlay=true}}
+    onClose="toggleTriggerBuildModal"
+    targetAttachment="center"
+    translucentOverlay=true
+    overlayPosition='sibling'
+    animatable=true
+  }}
     {{trigger-custom-build repo=repo onClose=(action 'toggleTriggerBuildModal')}}
   {{/modal-dialog}}
 {{/if}}
