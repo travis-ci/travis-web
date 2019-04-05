@@ -81,9 +81,12 @@
 
 {{#if isShowingRemoveLogModal}}
   {{#modal-dialog
-     onClose="toggleRemoveLogModal"
-     targetAttachment="center"
-     translucentOverlay=true}}
+    onClose="toggleRemoveLogModal"
+    targetAttachment="center"
+    translucentOverlay=true
+    overlayPosition='sibling'
+    animatable=true
+  }}
     {{remove-log-popup job=job onCloseModal=(action 'toggleRemoveLogModal')}}
   {{/modal-dialog}}
 {{/if}}
