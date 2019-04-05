@@ -3,7 +3,7 @@ import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 import { reads, and, not, equal } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
-import { format as d3format } from 'd3';
+import { format as d3format, timeFormat as d3timeFormat } from 'd3';
 import { DEFAULT_INSIGHTS_INTERVAL } from 'travis/services/insights';
 
 export default Component.extend({
@@ -86,10 +86,16 @@ export default Component.extend({
   axis: computed(() => ({
     x: {
       type: 'timeseries',
-      tick: { format: '%A, %b %e' },
+      tick: { format: '%b %e' },
     },
     y: {
       tick: { format: d3format('d'), count: 6 }
+    }
+  })),
+
+  tooltip: computed(() => ({
+    format: {
+      title: d3timeFormat('%A, %b %e'),
     }
   })),
 
