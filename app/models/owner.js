@@ -21,6 +21,7 @@ export default Model.extend({
   avatarUrl: attr('string'),
   githubId: attr('string'),
   education: attr('boolean'),
+  fullName: or('name', 'login'),
 
   // This is set by serializers:subscription
   subscriptionPermissions: attr(),

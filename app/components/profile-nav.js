@@ -24,6 +24,12 @@ export default Component.extend({
   showSubscriptionStatusBanner: and('checkSubscriptionStatus', 'model.subscriptionError'),
   showMigrationBetaBanner: not('features.proVersion'),
 
+  isOrganization: reads('model.isOrganization'),
+  hasAdminPermissions: reads('model.permissions.admin'),
+  isOrganizationAdmin: and('isOrganization', 'hasAdminPermissions'),
+  isProVersion: reads('features.proVersion'),
+  showOrganizationSettings: and('isOrganizationAdmin', 'isProVersion'),
+
   get githubOrgsOauthAccessSettingsUrl() {
     return githubOrgsOauthAccessSettingsUrl;
   },

@@ -13,22 +13,16 @@ export const DEFAULT_INSIGHTS_INTERVAL = INSIGHTS_INTERVALS.MONTH;
 const defaultIntervalSettings = {
   day: {
     subInterval: '10min',
-    tooltipLabelFormat: '%A, %b %e, %H:%M',
-    xAxisLabelFormat: '{value:%H:%M}',
     instanceLabel: 'today',
     prevInstanceLabel: 'yesterday',
   },
   week: {
     subInterval: '1day',
-    tooltipLabelFormat: '%A, %b %e, %H:%M',
-    xAxisLabelFormat: '{value:%b %e}',
     instanceLabel: 'this week',
     prevInstanceLabel: 'last week',
   },
   month: {
     subInterval: '1day',
-    tooltipLabelFormat: '%A, %b %e',
-    xAxisLabelFormat: '{value:%b %e}',
     instanceLabel: 'this month',
     prevInstanceLabel: 'last month',
   },

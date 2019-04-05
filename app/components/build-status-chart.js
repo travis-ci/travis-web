@@ -86,7 +86,7 @@ export default Component.extend({
   axis: computed(() => ({
     x: {
       type: 'timeseries',
-      tick: { format: '%b %e' },
+      tick: { format: '%A, %b %e' },
     },
     y: {
       tick: { format: d3format('d'), count: 6 }

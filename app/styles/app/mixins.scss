@@ -170,3 +170,9 @@
     @include colorStatusIcons(map-get($colorMap, color), $state);
   }
 }
+
+@mixin snapshotHide {
+  @media only percy {
+    visibility: hidden;
+  }
+}

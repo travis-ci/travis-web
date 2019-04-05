@@ -14,5 +14,8 @@
     {{/form.field}}
   {{/travis-form}}
 {{else}}
-  <span class="insights-privacy-selector__selected">{{currentState}}</span>
+  <span
+    class="insights-privacy-selector__selected"
+    data-test-insights-privacy-selector-selected
+  >{{currentState}}</span>
 {{/if}}
