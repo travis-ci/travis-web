@@ -1,6 +1,7 @@
 import Component from '@ember/component';
 import { presense } from 'travis/utils/form-validators';
 import { combineValidators } from 'travis/helpers/combine-validators';
+import { computed } from '@ember/object';
 import { equal, or, and, notEmpty, not } from '@ember/object/computed';
 
 export const FIELD_STATE = {
@@ -33,6 +34,7 @@ export default Component.extend({
   allowClear: false,
   icon: '',
   disableFrame: false,
+  multiple: false,
 
   validator: null,
   required: equal('validator.kind', presense),
@@ -51,6 +53,10 @@ export default Component.extend({
   showClear: and('allowClear', 'value'),
   showIcon: notEmpty('icon'),
   showFrame: not('disableFrame'),
+
+  selectComponent: computed('multiple', function () {
+    return this.multiple ? 'forms/form-select-multiple' : 'forms/form-select';
+  }),
 
   validate(value) {
     let validator = this.validator;
