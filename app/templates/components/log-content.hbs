@@ -85,7 +85,7 @@
     targetAttachment="center"
     translucentOverlay=true
     overlayPosition='sibling'
-    animatable=true
+    animatable=(config-get 'liquidFire.enabled')
   }}
     {{remove-log-popup job=job onCloseModal=(action 'toggleRemoveLogModal')}}
   {{/modal-dialog}}

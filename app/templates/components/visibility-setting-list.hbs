@@ -31,7 +31,7 @@
       toggleConfirmationModal='toggleConfirmationModal'
       containerClass="visibility-settings-modal"
       overlayPosition='sibling'
-      animatable=true
+      animatable=(config-get 'liquidFire.enabled')
     }}
       <div class="visibility-settings-modal__top">
         <h3 class="visibility-settings-modal__header" data-test-visibility-settings-modal-title>

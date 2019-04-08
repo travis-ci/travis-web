@@ -67,7 +67,7 @@
     targetAttachment="center"
     translucentOverlay=true
     overlayPosition='sibling'
-    animatable=true
+    animatable=(config-get 'liquidFire.enabled')
   }}
     {{repository-migration-modal
      data-test-repository-migration-modal
