@@ -87,7 +87,7 @@ module.exports = function (environment) {
     },
 
     liquidFire: {
-      duration: 100
+      enabled: true
     }
   };
 
@@ -227,7 +227,7 @@ module.exports = function (environment) {
     ENV.APP.rootElement = '#ember-testing';
     ENV.APP.autoboot = false;
 
-    ENV.liquidFire.duration = 0;
+    ENV.liquidFire.enabled = false;
 
     ENV.sentry = {
       development: true

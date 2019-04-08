@@ -1,6 +1,4 @@
-import config from 'travis/config/environment';
-
-const { duration } = config.liquidFire;
+const duration = 200;
 
 export default function () {
   this.transition(
