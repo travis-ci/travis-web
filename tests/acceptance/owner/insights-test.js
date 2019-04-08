@@ -25,7 +25,7 @@ test('the owner insights page shows insights components', async function (assert
 
   // Build count component
   insightsPage.glances[0].as(glance => {
-    assert.equal(glance.name, 'Builds');
+    assert.equal(glance.name, 'Total Builds');
     assert.equal(glance.keyStat, 448);
   });
 
@@ -68,7 +68,7 @@ test('the owner insights page handles a lack of data', async function (assert) {
 
   // Build count component
   insightsPage.glances[0].as(glance => {
-    assert.equal(glance.name, 'Builds');
+    assert.equal(glance.name, 'Total Builds');
     assert.equal(glance.keyStat, '0');
   });
 
