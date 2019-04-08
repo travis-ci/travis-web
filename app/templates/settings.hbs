@@ -103,7 +103,7 @@
     targetAttachment="center"
     translucentOverlay=true
     overlayPosition='sibling'
-    animatable=true
+    animatable=(config-get 'liquidFire.enabled')
   }}
     <div data-test-settings-disabled-after-migration-modal>
       <h3 class="h3--teal">Your repository has been migrated to travis-ci.com</h3>
