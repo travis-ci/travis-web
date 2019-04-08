@@ -54,7 +54,7 @@
     targetAttachment="center"
     translucentOverlay=true
     overlayPosition='sibling'
-    animatable=true
+    animatable=(config-get 'liquidFire.enabled')
   }}
     {{status-images repo=repo onClose=(action 'toggleStatusBadgeModal')}}
   {{/modal-dialog}}
