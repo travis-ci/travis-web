@@ -228,7 +228,7 @@ $med-small-up: "only screen and (min-width: 38em)";
       svg {
         transform: rotate(180deg);
         path {
-          stroke: $turf-green;
+          stroke: currentColor;
         }
       }
     }
@@ -237,8 +237,18 @@ $med-small-up: "only screen and (min-width: 38em)";
       color: $brick-red;
       background-color: $quartz-red;
       svg path {
-        stroke: $brick-red;
+        stroke: currentColor;
       }
+    }
+  }
+  &--reverse-delta-colors &-delta {
+    &[data-dir='+'] {
+      color: $brick-red;
+      background-color: $quartz-red;
+    }
+    &[data-dir='-'] {
+      color: $turf-green;
+      background-color: $seed-green;
     }
   }
 
