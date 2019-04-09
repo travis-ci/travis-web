@@ -240,8 +240,11 @@ $nav-line-height: 35px;
 }
 
 ul #profile-menu-link:hover > ul,
-ul #profile-menu-link:focus-within > ul,
 ul #profile-menu-link ul:hover {
+  display: block;
+}
+
+ul #profile-menu-link:focus-within > ul {
   display: block;
 }
 
