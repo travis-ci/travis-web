@@ -60,17 +60,15 @@
       {{#if auth.signedOut}}
         <button class="auth-button signed-out" type="button" {{action 'signIn'}}>Sign in with GitHub</button>
       {{/if}}
+      {{#if auth.signingIn}}
+        <button class="auth-button signing-in" type="button">Signing In {{loading-indicator inline=true}}</button>
+      {{/if}}
       {{#if auth.signedIn}}
         {{#link-to "account" data-test-header-account-link class="navigation-anchor navigation-profile-link signed-in"}}
           {{user-avatar url=user.avatarUrl name=user.fullName size=40}}
           {{svg-jar 'icon-dropdown-arrow' class="icon"}}
         {{/link-to}}
-      {{/if}}
-      {{#if auth.signingIn}}
-        <button class="auth-button signing-in" type="button">Signing In {{loading-indicator inline=true}}</button>
-      {{/if}}
-      {{#if auth.signedIn}}
-      <div class="menu-separator"></div>
+        <div class="menu-separator"></div>
         <ul class="navigation-nested">
           <li class="username"><span>{{userName}}</span></li>
            {{#link-to "account" class="signed-in topbar-menu-item" title="Your profile"}}
