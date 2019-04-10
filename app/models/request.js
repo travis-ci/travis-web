@@ -3,14 +3,11 @@ import attr from 'ember-data/attr';
 import { belongsTo } from 'ember-data/relationships';
 import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
-import { alias } from '@ember/object/computed';
-
+import { alias, empty } from '@ember/object/computed';
 import ObjectProxy from '@ember/object/proxy';
 import PromiseProxyMixin from '@ember/object/promise-proxy-mixin';
 let ObjectPromiseProxy = ObjectProxy.extend(PromiseProxyMixin);
 import { Promise as EmberPromise } from 'rsvp';
-
-const missingYamlResponse = '---\nerror: No YAML found for this request.';
 
 export default Model.extend({
   created_at: attr(),
@@ -24,14 +21,8 @@ export default Model.extend({
   pullRequest: attr('boolean'),
   pullRequestTitle: attr(),
   pullRequestNumber: attr('number'),
-
-  yaml_config: attr('string'),
-
-  noYaml: computed('yaml_config', function () {
-    let config = this.get('yaml_config');
-    return config == missingYamlResponse;
-  }),
-
+  raw_configs: attr(),
+  noYaml: empty('raw_configs'),
   repo: belongsTo('repo', { async: true }),
   commit: belongsTo('commit', { async: true }),
 
@@ -52,6 +43,11 @@ export default Model.extend({
   isPullRequest: computed('event_type', function () {
     let eventType = this.get('event_type');
     return eventType === 'pull_request';
+  }),
+
+  uniqRawConfigs: computed('raw_configs', function () {
+    let rawConfigs = this.get('raw_configs');
+    return rawConfigs.uniqBy('source');
   }),
 
   ajax: service(),

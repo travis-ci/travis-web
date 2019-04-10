@@ -5,10 +5,28 @@ import { percySnapshot } from 'ember-percy';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import page from 'travis/tests/pages/build';
 
-let yaml = `
+let config = `
 language: jortle
 sudo: tortle
 `;
+
+let source = 'travis-ci/travis-project/.travis.yml@7e0d8414106de345';
+let source2 = 'travis-ci/travis-project/.travis.yml@7e0d8414106de346';
+
+let rawConfigs = [
+  {
+    config: config,
+    source: source
+  },
+  {
+    config: config,
+    source: source
+  },
+  {
+    config: config,
+    source: source2
+  }
+];
 
 module('Acceptance | config/yaml', function (hooks) {
   setupApplicationTest(hooks);
@@ -21,7 +39,7 @@ module('Acceptance | config/yaml', function (hooks) {
     this.repository =  server.create('repository', { slug: 'travis-ci/travis-web' });
 
     let branch = server.create('branch', { name: 'acceptance-tests' });
-    this.request = server.create('request', { repository: this.repository, yaml_config: yaml });
+    this.request = server.create('request', { repository: this.repository, raw_configs: rawConfigs });
     this.build = server.create('build', { number: '5', state: 'started', repository: this.repository, branch, request: this.request });
     this.job = server.create('job', { number: '1234.1', state: 'received', build: this.build, repository: this.repository, config: { language: 'Hello' } });
   });
@@ -38,7 +56,8 @@ module('Acceptance | config/yaml', function (hooks) {
       await page.yamlTab.click();
 
       assert.equal(document.title, `Config - Build #${this.build.number} - travis-ci/travis-web - Travis CI`);
-      assert.equal(page.yaml, 'language: jortle sudo: tortle');
+      assert.equal(page.yaml[0].text, 'language: jortle sudo: tortle');
+      assert.equal(page.yaml[0].source, source);
     });
 
     test('shows build messages when they exist', async function (assert) {
@@ -79,7 +98,7 @@ module('Acceptance | config/yaml', function (hooks) {
     });
 
     test('hides the tab when no yaml is found', async function (assert) {
-      this.request.yaml_config = '---\nerror: No YAML found for this request.';
+      this.request.raw_configs = [];
 
       await visit(`/travis-ci/travis-web/builds/${this.build.id}`);
       assert.ok(page.yamlTab.isDisabled, 'expected the config tab to be disabled when there’s no .travis.yml');
@@ -89,6 +108,12 @@ module('Acceptance | config/yaml', function (hooks) {
       await visit(`/travis-ci/travis-web/jobs/${this.job.id}/config`);
 
       assert.ok(page.jobYamlNote.text, 'This is the configuration for all of build #5, including this job');
+    });
+
+    test('shows all unique raw configs', async function (assert) {
+      await visit(`/travis-ci/travis-web/builds/${this.build.id}`);
+      await page.yamlTab.click();
+      assert.equal(page.yaml.length, 2, 'expected two yaml code block');
     });
   });
 
@@ -104,11 +129,12 @@ module('Acceptance | config/yaml', function (hooks) {
       await page.yamlTab.click();
 
       assert.ok(page.jobYamlNote.isHidden, 'expected the job note to be hidden for a single-job build');
-      assert.equal(page.yaml, 'language: jortle sudo: tortle');
+      assert.equal(page.yaml[0].text, 'language: jortle sudo: tortle');
+      assert.equal(page.yaml[0].source, source);
     });
 
     test('hides the tab when no yaml is found', async function (assert) {
-      this.request.yaml_config = '---\nerror: No YAML found for this request.';
+      this.request.raw_configs = [];
 
       await visit(`/travis-ci/travis-web/jobs/${this.job.id}`);
       assert.ok(page.yamlTab.isDisabled, 'expected the config tab to be disabled when there’s no .travis.yml');

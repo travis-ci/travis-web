@@ -5,6 +5,7 @@
 .inner-yaml-container {
   position: relative;
   border: 1px solid $pebble-grey;
+  margin-bottom: 1.2em;
 
   button {
     display: none;
@@ -41,3 +42,9 @@ pre.codedisplay[class*='language-'] {
 .job-tabs .paper-block {
   padding: 1em;
 }
+
+.file-name {
+  padding: 1em;
+  border-bottom: 1px solid $pebble-grey;
+}
+

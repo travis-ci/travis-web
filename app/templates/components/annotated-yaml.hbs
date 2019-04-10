@@ -1,12 +1,7 @@
 {{build-messages-list request=@request viewMessage=(action (mut viewingMessage))}}
 
-<div class='inner-yaml-container'>
-  {{#code-block data-test-yaml language='yaml' class='codedisplay'}}{{@request.yaml_config}}{{/code-block}}
-  {{#copy-button
-    clipboardText=@request.yaml_config
-    title="Copy to clipboard"
-    success=(action 'copied')}}
-    {{svg-jar 'icon-copy' class="icon"}} <span>{{buttonLabel}}</span>
-  {{/copy-button}}
+<div class='raw-configs'>
+  {{#each @request.uniqRawConfigs as |rawConfig|}}
+    {{raw-config rawConfig=rawConfig}}
+  {{/each}}
 </div>
-
