@@ -245,7 +245,7 @@ ul #profile-menu-link ul:hover {
 }
 
 ul #profile-menu-link:focus-within > ul {
-  opacity: 1;
+  opacity: 1; // Prevents this rule from being merged with the one above during minification. For IE support.
   display: block;
 }
 
