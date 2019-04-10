@@ -59,6 +59,12 @@ export default Component.extend({
     return language === 'php' && !php;
   }),
 
+  isPythonDefault: computed('job.config.{language,python}', function () {
+    const language = this.get('job.config.language');
+    const python = this.get('job.config.python');
+    return language === 'python' && !python;
+  }),
+
   macOSImage: alias('jobConfig.osx_image'),
   deprecatedXcodeImages: ['xcode8.1', 'xcode8.2', 'xcode6.4'],
 
