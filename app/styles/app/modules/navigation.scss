@@ -245,6 +245,7 @@ ul #profile-menu-link ul:hover {
 }
 
 ul #profile-menu-link:focus-within > ul {
+  opacity: 1;
   display: block;
 }
 
