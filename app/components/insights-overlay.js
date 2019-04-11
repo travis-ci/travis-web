@@ -11,6 +11,7 @@ export default Component.extend({
     'showOverlay:insights-overlay--active',
   ],
 
+  auth: service(),
   insights: service(),
 
   private: false,
@@ -18,7 +19,7 @@ export default Component.extend({
 
   // Current Interval Build Data
   requestData: task(function* () {
-    return yield this.get('insights').getChartData.perform(
+    return yield this.insights.getChartData.perform(
       this.owner,
       this.interval,
       'builds',
@@ -40,8 +41,14 @@ export default Component.extend({
   isMonth: equal('interval', INSIGHTS_INTERVALS.MONTH),
   isWeek: equal('interval', INSIGHTS_INTERVALS.WEEK),
 
+  actions: {
+    signIn() {
+      return this.auth.signIn();
+    },
+  },
+
   // Request build data
   didReceiveAttrs() {
-    this.get('requestData').perform();
+    this.requestData.perform();
   }
 });

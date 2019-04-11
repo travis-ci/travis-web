@@ -169,6 +169,10 @@ $med-small-up: "only screen and (min-width: 38em)";
     padding: 0 10%;
     font-size: 18px;
   }
+
+  .hero-button svg {
+    @include colorSVGFill(white);
+  }
 }
 
 .insights-glance {

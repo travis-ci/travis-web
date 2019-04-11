@@ -1,23 +1,46 @@
 {{#overlay-backdrop visible=showOverlay}}
-  {{#if isMonth}}
-    <h2 data-test-insights-overlay-title>Build to get monthly insights</h2>
-    <p data-test-insights-overlay-text>All the build status results from the last 30 days will appear here.</p>
+
+  {{!-- Title --}}
+  <h2 data-test-insights-overlay-title>
+    {{#if isMonth}}
+      Build to get monthly insights
+    {{else if isWeek}}
+      It's been a quiet week for builds
+    {{/if}}
+  </h2>
+
+  {{!-- Body Text --}}
+  <p data-test-insights-overlay-text>
+    All the build status results from the last
+    {{#if isMonth}}30{{else if isWeek}}7{{/if}}
+    days will appear here.
+
+    {{#if auth.signedOut}}Have you tried logging in?{{/if}}
+  </p>
+
+  {{!-- CTA --}}
+  {{#if auth.signedOut}}
+    <button class="hero-button" onclick={{action 'signIn'}} data-test-insights-overlay-link>
+      {{svg-jar 'icon-repooctocat'}} Sign in with GitHub
+    </button>
+
+  {{else if auth.signingIn}}
+    <button class="hero-button" data-test-insights-overlay-link>
+      <span>Signing In</span>
+      {{loading-indicator white=true inline=true}}
+    </button>
+
+  {{else}}
     {{#external-link-to
       href=(config-get 'urls.gettingStarted')
       class='button button--blue'
       data-test-insights-overlay-link=''
     }}
-      Let's get you going
-    {{/external-link-to}}
-  {{else if isWeek}}
-    <h2 data-test-insights-overlay-title>It's been a quiet week for builds</h2>
-    <p data-test-insights-overlay-text>All the build status results from the last 7 days will appear here.</p>
-    {{#external-link-to
-      href=(config-get 'urls.gettingStarted')
-      class='button button--blue'
-      data-test-insights-overlay-link=''
-    }}
-      Want help building?
+      {{#if isMonth}}
+        Let's get you going
+      {{else if isWeek}}
+        Want help building?
+      {{/if}}
     {{/external-link-to}}
   {{/if}}
 
