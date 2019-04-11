@@ -146,9 +146,17 @@ $med-small-up: "only screen and (min-width: 38em)";
   text-align: center;
   display: none;
   font-size: 18px;
+  @include z-index(above);
 
   &--active {
     display: block;
+
+    ~ .insights-build-count,
+    ~ .insights-build-minutes,
+    ~ .insights-queue-times,
+    ~ .insights-active-repo-count {
+      box-shadow: none;
+    }
   }
 
   .overlay-backdrop {
@@ -156,6 +164,7 @@ $med-small-up: "only screen and (min-width: 38em)";
     align-items: center;
     justify-content: center;
     flex-flow: column nowrap;
+    background-color: #fff;
   }
 
   h2, .insights-overlay__header {
