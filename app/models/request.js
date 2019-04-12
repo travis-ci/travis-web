@@ -3,7 +3,7 @@ import attr from 'ember-data/attr';
 import { belongsTo } from 'ember-data/relationships';
 import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
-import { alias, empty } from '@ember/object/computed';
+import { alias, empty, uniqBy } from '@ember/object/computed';
 import ObjectProxy from '@ember/object/proxy';
 import PromiseProxyMixin from '@ember/object/promise-proxy-mixin';
 let ObjectPromiseProxy = ObjectProxy.extend(PromiseProxyMixin);
@@ -22,6 +22,7 @@ export default Model.extend({
   pullRequestTitle: attr(),
   pullRequestNumber: attr('number'),
   raw_configs: attr(),
+  uniqRawConfigs: uniqBy('raw_configs', 'source'),
   noYaml: empty('raw_configs'),
   repo: belongsTo('repo', { async: true }),
   commit: belongsTo('commit', { async: true }),
@@ -43,11 +44,6 @@ export default Model.extend({
   isPullRequest: computed('event_type', function () {
     let eventType = this.get('event_type');
     return eventType === 'pull_request';
-  }),
-
-  uniqRawConfigs: computed('raw_configs', function () {
-    let rawConfigs = this.get('raw_configs');
-    return rawConfigs.uniqBy('source');
   }),
 
   ajax: service(),
