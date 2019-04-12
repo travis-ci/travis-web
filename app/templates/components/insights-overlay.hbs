@@ -30,7 +30,7 @@
       {{loading-indicator white=true inline=true}}
     </button>
 
-  {{else}}
+  {{else if canSync}}
     {{#external-link-to
       href=(config-get 'urls.gettingStarted')
       class='button button--blue'
