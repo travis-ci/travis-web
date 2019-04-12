@@ -1,6 +1,5 @@
 import $ from 'jquery';
 import TravisRoute from 'travis/routes/basic';
-import config from 'travis/config/environment';
 import { inject as service } from '@ember/service';
 
 export default TravisRoute.extend({
@@ -15,18 +14,8 @@ export default TravisRoute.extend({
   },
 
   model(params) {
-    let options = {
-      headers: {
-        'Travis-API-Version': '3'
-      }
-    };
-    if (this.get('auth.signedIn')) {
-      options.headers.Authorization = `token ${this.get('auth.token')}`;
-    }
-    let { owner } = params;
-    let { apiEndpoint } = config;
-    let url = `${apiEndpoint}/owner/${owner}`;
-    return $.ajax(url, options);
+    const { owner } = params;
+    return this.store.queryRecord('owner', { login: owner });
   },
 
   renderTemplate() {
