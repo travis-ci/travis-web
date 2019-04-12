@@ -52,7 +52,7 @@
     "ember-cli-sentry": "^4.0.0",
     "ember-cli-sri": "^2.1.1",
     "ember-cli-test-loader": "^2.1.0",
-    "ember-cli-uglify": "^2.1.0",
+    "ember-cli-uglify": "^3.0.0",
     "ember-composable-helpers": "^2.1.0",
     "ember-concurrency": "^0.8.22",
     "ember-concurrency-scroll": "^0.6.2",
