@@ -25,7 +25,7 @@ export default TravisRoute.extend({
 
   actions: {
     error(error, /* transition, originRoute*/) {
-      let is404 = error.status === 404;
+      const is404 = error.status === 404 || error.errors.firstObject.status === '404';
 
       if (!is404) {
         let message = 'There was an error while loading data, please try again.';
