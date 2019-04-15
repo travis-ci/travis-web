@@ -18,9 +18,6 @@ export default Component.extend({
   user: reads('accounts.user'),
   organizations: reads('accounts.organizations'),
 
-  activeModel: null,
-  model: reads('activeModel'),
-
   accountName: or('model.name', 'model.login'),
   billingUrl: or('model.subscription.billingUrl', 'model.billingUrl'),
 
