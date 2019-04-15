@@ -13,6 +13,8 @@ export default Model.extend({
   features: service(),
   accounts: service(),
   raven: service(),
+  ajax: service(),
+  store: service(),
 
   name: attr('string'),
   login: attr('string'),
@@ -59,6 +61,27 @@ export default Model.extend({
       limit, offset, custom: { owner, type, },
     }, { live: false });
   },
+
+  fetchBetaMigrationRequests() {
+    return this.ajax.getV3(`/user/${this.accounts.user.id}/beta_migration_requests`).then(data => {
+      this.store.pushPayload('beta-migration-request', data);
+      return this.store.peekAll('beta-migration-request');
+    });
+  },
+
+  migrationBetaRequests: computed(function () {
+    return this.store.peekAll('beta-migration-request').filter(request =>
+      request.owner === this || request.organizations.includes(this)
+    );
+  }).volatile(),
+
+  isMigrationBetaRequested: computed(function () {
+    return this.migrationBetaRequests.length > 0;
+  }).volatile(),
+
+  isMigrationBetaAccepted: computed(function () {
+    return this.migrationBetaRequests.isAny('acceptedAt');
+  }).volatile(),
 
   subscriptionError: reads('accounts.subscriptionError'),
 
