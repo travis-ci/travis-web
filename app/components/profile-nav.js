@@ -12,6 +12,9 @@ export default Component.extend({
   accounts: service(),
   features: service(),
 
+  activeModel: null,
+  model: reads('activeModel'),
+
   user: reads('accounts.user'),
   organizations: reads('accounts.organizations'),
 
@@ -26,6 +29,12 @@ export default Component.extend({
   showMigrateTab: and('features.proVersion', 'user.allowMigration'),
   showMigrateBadge: or('reposToMigrate.isNotEmpty', 'reposToMigrate.isFiltering'),
   showSubscriptionStatusBanner: and('checkSubscriptionStatus', 'model.subscriptionError'),
+
+  isOrganization: reads('model.isOrganization'),
+  hasAdminPermissions: reads('model.permissions.admin'),
+  isOrganizationAdmin: and('isOrganization', 'hasAdminPermissions'),
+  isProVersion: reads('features.proVersion'),
+  showOrganizationSettings: and('isOrganizationAdmin', 'isProVersion'),
 
   get githubOrgsOauthAccessSettingsUrl() {
     return githubOrgsOauthAccessSettingsUrl;

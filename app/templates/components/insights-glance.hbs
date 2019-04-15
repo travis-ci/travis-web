@@ -1,6 +1,6 @@
-<h3 class="insights-glance__title">{{title}}</h3>
+<h3 class="insights-glance__title" data-test-insights-glance-title>{{title}}</h3>
 <div class="insights-glance__center">
-  <div class="insights-glance__stat">
+  <div class="insights-glance__stat" data-test-insights-glance-stat>
     {{#if isLoading}}
       {{loading-indicator}}
     {{else}}
@@ -14,14 +14,14 @@
       title={{deltaTitle}}
     >
       {{svg-jar 'icon-dropdown-arrow' class="icon"}}
-      <span class="insights-glance-delta__stat">{{deltaText}}</span>
+      <span class="insights-glance-delta__stat" data-test-insights-glance-delta-stat>{{deltaText}}</span>
     </div>
   {{/if}}
 </div>
-<div class="insights-glance__chart">
+<div class="insights-glance__chart" data-test-insights-glance-chart>
   {{#if showPlaceholder}}
-    <hr class="insights-glance__chart-placeholder" />
+    <hr class="insights-glance__chart-placeholder" data-test-insights-glance-chart-placeholder />
   {{else}}
-    {{c3-chart class='chart-component' data=data axis=axis legend=legend grid=grid size=size point=point tooltip=tooltip}}
+    {{c3-chart class='chart-component snapshot-hide' data=data axis=axis legend=legend grid=grid size=size point=point tooltip=tooltip}}
   {{/if}}
 </div>

@@ -11,6 +11,8 @@ export default Component.extend({
   classNames: ['insights-privacy-selector'],
   classNameBindings: ['isPrivateViewable:insights-privacy-selector--selectable'],
 
+  'data-test-insights-privacy-selector': '',
+
   isPrivateViewable: false,
   includePrivate: false,
   showFrame: false,

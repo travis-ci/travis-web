@@ -25,7 +25,7 @@ module('Integration | Component | build-count', function (hooks) {
     await settled();
 
     assert.dom('.insights-glance').doesNotHaveClass('insights-glance--loading');
-    assert.dom('.insights-glance__title').hasText('Builds');
+    assert.dom('.insights-glance__title').hasText('Total Builds');
     assert.dom('.insights-glance__stat').hasText('448');
     assert.dom('.insights-glance-delta').hasAttribute('data-dir', '+');
     assert.dom('.insights-glance-delta').hasAttribute('title', '120 builds the previous month');
@@ -40,7 +40,7 @@ module('Integration | Component | build-count', function (hooks) {
     await waitFor('.insights-glance--loading');
 
     assert.dom('.insights-glance').hasClass('insights-glance--loading');
-    assert.dom('.insights-glance__title').hasText('Builds');
+    assert.dom('.insights-glance__title').hasText('Total Builds');
     assert.dom('.insights-glance__stat').hasText('');
     assert.dom('.insights-glance-delta').doesNotExist();
     assert.dom('.insights-glance__chart .chart-component').doesNotExist();

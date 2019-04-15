@@ -1,4 +1,7 @@
 <section class='user-settings'>
+    {{#if scrollToAuth}}
+      {{scroll-here}}
+    {{/if}}
   <section>
     <h3>API authentication</h3>
 
@@ -8,6 +11,9 @@
   </section>
 
   {{#if features.betaFeatures}}
+    {{#if scrollToFeatures}}
+      {{scroll-here}}
+    {{/if}}
     <section>
       <h3>Features</h3>
       <ul class="features-list">
@@ -76,4 +82,29 @@
       {{loading-indicator}}
     {{/if}}
   </section>
+  {{#if features.proVersion}}
+    {{#if scrollToInsights}}
+      {{scroll-here}}
+    {{/if}}
+    <section class="insights-visibility-settings" data-test-insights-settings>
+      <h3 data-test-insights-settings-title>Insights Visibility Settings</h3>
+      <div class="insights-settings">
+        <p class="description" data-test-insights-settings-description>
+          Make more informed decisions about your development workflow using your build Insights.<br />
+          {{#link-to
+            'owner.repositories'
+            account.login
+            (query-params tab='insights')
+          }}
+            View {{account.fullName}}'s Insights
+          {{/link-to}}
+        </p>
+        {{visibility-setting-list
+          options=insightsVisibilityOptions
+          initialKey=privateInsightsVisibility
+          onConfirm=(action 'setInsightsVis')
+        }}
+      </div>
+    </section>
+  {{/if}}
 </section>

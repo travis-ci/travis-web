@@ -143,3 +143,7 @@ span.emoji.emoji-sizer {
 .vertical-align {
   vertical-align: middle;
 }
+
+.snapshot-hide {
+  @include snapshotHide;
+}
