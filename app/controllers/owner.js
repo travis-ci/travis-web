@@ -1,5 +1,6 @@
 import Controller from '@ember/controller';
 import { computed } from '@ember/object';
+import { reads } from '@ember/object/computed';
 import config from 'travis/config/environment';
 
 export default Controller.extend({
@@ -13,15 +14,5 @@ export default Controller.extend({
     return `${sourceEndpoint}/${login}`;
   }),
 
-  owner: computed('model', function () {
-    let model = this.get('model');
-    return {
-      login: model.login,
-      name: model.name,
-      avatar: model.avatar_url,
-      isSyncing: model.is_syncing,
-      avatarUrl: model.avatar_url,
-      syncedAt: model.synced_at
-    };
-  })
+  owner: reads('model'),
 });
