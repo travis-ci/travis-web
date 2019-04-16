@@ -50,7 +50,7 @@ export default Component.extend({
   appsReposOnOrg: reads('owner.githubAppsRepositoriesOnOrg'),
 
   showGitHubApps: reads('isAppsEnabled'),
-  showPublicReposBanner: and('isNotEnterprise', 'isNotPro'),
+  showMigrationStatusBanner: and('isNotEnterprise', 'isNotPro'),
   showLegacyReposFilter: or('isFilteringEnabled', 'shouldShowLegacyReposFilter'),
   showAppsReposFilter: and('isFilteringEnabled', 'shouldShowAppsReposFilter'),
   showLegacyRepos: or('hasLegacyRepos', 'isLoadingLegacyRepos', 'isFilteringLegacyRepos', 'isNotAppsEnabled'),
