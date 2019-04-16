@@ -11,7 +11,7 @@
 
 <div class="owner-repo">
   {{#if isInsights}}
-    {{#unless buildsLoading}}
+    {{#if buildsReady}}
       <div class="travistab-body">
         <div class="insights-controls">
           <div class="insights-controls-left">
@@ -38,7 +38,7 @@
       </div>
     {{else}}
       {{loading-screen center=true margin=true}}
-    {{/unless}}
+    {{/if}}
   {{else}}
     {{#unless reposLoading}}
       <ul class="owner-tiles">
