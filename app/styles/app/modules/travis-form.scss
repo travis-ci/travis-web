@@ -82,7 +82,7 @@ $select-multiple-spacing: 5px;
         @include makeFocused();
       }
 
-      &.travis-form__field-select--multiple {
+      &.ember-power-select-multiple-trigger {
         padding: $select-multiple-spacing 25px 0 $select-multiple-spacing;
       }
 
