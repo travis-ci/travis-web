@@ -100,9 +100,12 @@
 
 {{#if displaySettingsDisabledAfterMigrationModal}}
   {{#modal-dialog
-     targetAttachment="center"
-     translucentOverlay=true}}
-     <div data-test-settings-disabled-after-migration-modal>
+    targetAttachment="center"
+    translucentOverlay=true
+    overlayPosition='sibling'
+    animatable=(config-get 'liquidFire.enabled')
+  }}
+    <div data-test-settings-disabled-after-migration-modal>
       <h3 class="h3--teal">Your repository has been migrated to travis-ci.com</h3>
       <p>As a result, your repository is now in a read-only state.
       </p>
@@ -121,6 +124,6 @@
           Edit Settings (travis-ci.com)
         {{/external-link-to}}
       </p>
-     </div>
+    </div>
   {{/modal-dialog}}
 {{/if}}

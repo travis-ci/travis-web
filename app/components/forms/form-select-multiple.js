@@ -1,32 +1,5 @@
 import EmberPowerSelectMultiple from 'ember-power-select/components/power-select-multiple';
-import { computed } from '@ember/object';
-import { gte } from '@ember/object/computed';
+import FormSelectMixin from 'travis/mixins/components/form-select';
 
-const OPTIONS_FOR_SEARCH = 2;
-
-const CSS_CLASSES = {
-  DISABLED: 'travis-form__field-component--disabled',
-  FIELD_COMPONENT: 'travis-form__field-component',
-  FIELD_SELECT: 'travis-form__field-select travis-form__field-select--multiple'
-};
-
-export default EmberPowerSelectMultiple.extend({
-  disabled: false,
-  placeholder: '',
-
-  searchEnabled: gte('options.length', OPTIONS_FOR_SEARCH),
-  searchPlaceholder: 'Type to filter options...',
-
-  allowClear: false,
-  horizontalPosition: 'auto',
-  verticalPosition: 'below',
-
-  triggerClass: computed('disabled', function () {
-    const classes = [CSS_CLASSES.FIELD_COMPONENT, CSS_CLASSES.FIELD_SELECT];
-    if (this.disabled) {
-      classes.push(CSS_CLASSES.DISABLED);
-    }
-    return classes.join(' ');
-  }),
-
+export default EmberPowerSelectMultiple.extend(FormSelectMixin, {
 });

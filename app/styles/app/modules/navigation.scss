@@ -240,8 +240,12 @@ $nav-line-height: 35px;
 }
 
 ul #profile-menu-link:hover > ul,
-ul #profile-menu-link:focus-within > ul,
 ul #profile-menu-link ul:hover {
+  display: block;
+}
+
+ul #profile-menu-link:focus-within > ul {
+  opacity: 1; // Prevents this rule from being merged with the one above during minification. For IE support.
   display: block;
 }
 
