@@ -55,6 +55,12 @@ export default Component.extend({
   showAppsReposFilter: and('isFilteringEnabled', 'shouldShowAppsReposFilter'),
   showLegacyRepos: or('hasLegacyRepos', 'isLoadingLegacyRepos', 'isFilteringLegacyRepos', 'isNotAppsEnabled'),
 
+  migrateURL: computed('owner.type', 'owner.login', function () {
+    const { login, isUser } = this.owner;
+    const path = isUser ? 'account/migrate' : `organizations/${login}/migrate`;
+    return `https://travis-ci.com/${path}`;
+  }),
+
   appsActivationURL: computed('owner.githubId', function () {
     let githubId = this.get('owner.githubId');
     return `https://github.com/apps/${appName}/installations/new/permissions?suggested_target_id=${githubId}`;
