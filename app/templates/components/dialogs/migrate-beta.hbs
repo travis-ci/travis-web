@@ -20,19 +20,21 @@
     {{#travis-form as |form| }}
       {{#form.field
         label='Select your accounts'
-        value=selectedAccounts
+        value=selectedOptions
         multiple=true
-        onChange=(action (mut selectedAccounts))
+        onChange=(action 'selectOptions')
         as |field|
       }}
         {{#field.select
           placeholder='Search organizations'
-          options=selectableAccounts
+          options=selectableOptions
           searchField='title'
           onkeydown=(action 'preventErase')
           as |option|
         }}
-          {{option.title}}
+          <div class='migrate-beta-dialog__option' data-state={{option.state}} >
+            {{option.title}}
+          </div>
         {{/field.select}}
       {{/form.field}}
     {{/travis-form}}

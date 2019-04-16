@@ -20,6 +20,26 @@
     }
   }
 
+  &__option {
+    display: inline-block;
+  }
+
+  .ember-power-select-dropdown &__option {
+    display: block;
+    position: relative;
+
+    &[data-state]:after {
+      content: attr(data-state);
+      position: absolute;
+      right: 0;
+      top: 50%;
+      margin-top: -10px;
+      font-style: italic;
+      color: $cement-grey;
+    }
+
+  }
+
   .ember-power-select-multiple-option:first-child {
     .ember-power-select-multiple-remove-btn {
       display: none;

@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
-import { reads } from '@ember/object/computed';
+import { reads, map } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
 
 export default Component.extend({
@@ -9,8 +9,19 @@ export default Component.extend({
   flashes: service(),
 
   user: reads('accounts.user'),
+
+  selectedAccounts: null,
+
   selectableAccounts: reads('accounts.organizations'),
-  selectedAccounts: computed(() => []),
+
+  selectableOptions: map('selectableAccounts', makeOptionFromAccount),
+
+  selectedOptions: computed('selectableOptions', 'selectedAccounts', function () {
+    const { selectableOptions, selectedAccounts } = this;
+    const accountOption = makeOptionFromAccount(this.user);
+    const selectedOptions = selectableOptions.filter(option => selectedAccounts.mapBy('id').includes(option.id));
+    return [accountOption, ...selectedOptions];
+  }),
 
   onClose() {},
 
@@ -26,8 +37,14 @@ export default Component.extend({
     }
   }).drop(),
 
-  didRender() {
-    this.selectedAccounts.addObject(this.user);
+  init() {
+    this._super(...arguments);
+    this.selectOptions([]);
+  },
+
+  selectOptions(options = []) {
+    const selectedAccounts = this.selectableAccounts.filter(acc => options.mapBy('id').includes(acc.id));
+    this.set('selectedAccounts', [this.user, ...selectedAccounts]);
   },
 
   actions: {
@@ -38,8 +55,22 @@ export default Component.extend({
 
     preventErase(select, { keyCode, target }) {
       return keyCode !== 8 || !!target.value;
+    },
+
+    selectOptions(options) {
+      this.selectOptions(options);
     }
 
   }
 
 });
+
+function makeOptionFromAccount(account) {
+  const { id, title, isMigrationBetaAccepted, isMigrationBetaRequested, isOrganization } = account;
+  return {
+    id,
+    title,
+    state: isMigrationBetaAccepted ? 'subscribed' : isMigrationBetaRequested ? 'waitlisted' : '',
+    disabled: isOrganization && (isMigrationBetaAccepted || isMigrationBetaRequested)
+  };
+}
