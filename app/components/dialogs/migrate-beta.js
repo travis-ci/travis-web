@@ -11,17 +11,13 @@ export default Component.extend({
   user: reads('accounts.user'),
 
   selectedAccounts: null,
+  selectedOptions: map('selectedAccounts', makeOptionFromAccount),
 
-  selectableAccounts: reads('accounts.organizations'),
-
-  selectableOptions: map('selectableAccounts', makeOptionFromAccount),
-
-  selectedOptions: computed('selectableOptions', 'selectedAccounts', function () {
-    const { selectableOptions, selectedAccounts } = this;
-    const accountOption = makeOptionFromAccount(this.user);
-    const selectedOptions = selectableOptions.filter(option => selectedAccounts.mapBy('id').includes(option.id));
-    return [accountOption, ...selectedOptions];
+  selectableAccounts: computed('accounts.organizations', 'user', function () {
+    const organizations = this.accounts.organizations.toArray() || [];
+    return [this.user, ...organizations]; // user account must be first item, so that it couldn't be removed from selected options
   }),
+  selectableOptions: map('selectableAccounts', makeOptionFromAccount),
 
   onClose() {},
 
@@ -39,12 +35,15 @@ export default Component.extend({
 
   init() {
     this._super(...arguments);
-    this.selectOptions([]);
+    this.selectOptions([this.user]);
   },
 
   selectOptions(options = []) {
-    const selectedAccounts = this.selectableAccounts.filter(acc => options.mapBy('id').includes(acc.id));
-    this.set('selectedAccounts', [this.user, ...selectedAccounts]);
+    const optionIds = options.mapBy('id');
+    const selectedAccounts = this.selectableAccounts.filter(
+      acc => optionIds.includes(acc.id)
+    );
+    this.set('selectedAccounts', selectedAccounts);
   },
 
   actions: {
@@ -66,11 +65,11 @@ export default Component.extend({
 });
 
 function makeOptionFromAccount(account) {
-  const { id, title, isMigrationBetaAccepted, isMigrationBetaRequested, isOrganization } = account;
+  const { id, title, isMigrationBetaAccepted, isMigrationBetaRequested, isOrganization, isUser } = account;
   return {
     id,
     title,
     state: isMigrationBetaAccepted ? 'subscribed' : isMigrationBetaRequested ? 'waitlisted' : '',
-    disabled: isOrganization && (isMigrationBetaAccepted || isMigrationBetaRequested)
+    disabled: isOrganization && (isMigrationBetaAccepted || isMigrationBetaRequested) || isUser
   };
 }
