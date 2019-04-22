@@ -578,6 +578,17 @@ export default function () {
     return this.serialize(feature);
   });
 
+  this.get('/user/:id/beta_migration_requests', function ({ users }, request) {
+    return {
+      '@type': 'beta_migration_requests',
+      beta_migration_requests: []
+    };
+  });
+
+  this.post('/user/:id/beta_migration_request', function ({ users }, request) {
+    return {};
+  });
+
   this.post('/repo/:repo_id/star', function (schema, request) {
     let repo = schema.repositories.find(request.params.repo_id);
     repo.update('starred', true);
