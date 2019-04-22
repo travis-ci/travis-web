@@ -9,12 +9,16 @@
   </section>
 
   {{#if showMigrationBetaBanner }}
-    <section class="migrate-beta">
+    <section class="migrate-beta" data-test-sidebar-migrate>
       <h2>A single place for all your builds</h2>
       <p>
         You can now have all your public and private repositories together.
       </p>
-      <button class="button--blue" onclick={{action (mut isShowingMigrateBetaDialog) true }}>
+      <button
+        class="button--blue"
+        onclick={{action (mut isShowingMigrateBetaDialog) true }}
+        data-test-migrate-signup="true"
+      >
         Sign up for the beta
       </button>
     </section>
@@ -129,6 +133,7 @@
   }}
     {{component 'dialogs/migrate-beta'
       onClose=(action (mut isShowingMigrateBetaDialog) false)
+      data-test-migrate-dialog=true
     }}
   {{/modal-dialog}}
 {{/if}}

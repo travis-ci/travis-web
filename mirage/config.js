@@ -578,15 +578,17 @@ export default function () {
     return this.serialize(feature);
   });
 
-  this.get('/user/:id/beta_migration_requests', function ({ users }, request) {
-    return {
-      '@type': 'beta_migration_requests',
-      beta_migration_requests: []
-    };
+  this.get('/user/:id/beta_migration_requests', function ({ betaMigrationRequests }, request) {
+    return betaMigrationRequests.where({ owner_id: request.params.id });
   });
 
-  this.post('/user/:id/beta_migration_request', function ({ users }, request) {
-    return {};
+  this.post('/user/:id/beta_migration_request', function ({ betaMigrationRequests }, request) {
+    const { organizations } = JSON.parse(request.requestBody) || {};
+    const betaRequest = betaMigrationRequests.create({
+      owner_id: request.params.id,
+      organizations
+    });
+    return betaRequest;
   });
 
   this.post('/repo/:repo_id/star', function (schema, request) {

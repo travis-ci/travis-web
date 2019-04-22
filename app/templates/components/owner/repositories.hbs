@@ -1,6 +1,6 @@
 {{#if showMigrationStatusBanner}}
   {{#if owner.isMigrationBetaAccepted }}
-    {{#paper-block elevation=2 class='text-medium no-margin'}}
+    {{#paper-block elevation=2 class='text-medium no-margin' data-test-migrate-banner-accepted=true }}
       {{#if owner.isOrganization}}
         The {{owner.title}} organization
       {{else}}
@@ -12,7 +12,7 @@
       {{#external-link-to href='https://travis-ci.com'}}travis-ci.com{{/external-link-to}}
     {{/paper-block}}
   {{else if owner.isMigrationBetaRequested }}
-    {{#paper-block elevation=2 class='text-medium no-margin'}}
+    {{#paper-block elevation=2 class='text-medium no-margin' data-test-migrate-banner-requested=true }}
       The request for
       {{#if owner.isOrganization}}
         {{owner.title}}

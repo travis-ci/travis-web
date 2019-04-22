@@ -23,6 +23,7 @@
         value=selectedOptions
         multiple=true
         onChange=(action 'selectOptions')
+        data-test-migrate-accounts-select=true
         as |field|
       }}
         {{#field.select
@@ -32,7 +33,11 @@
           onkeydown=(action 'preventErase')
           as |option|
         }}
-          <div class='migrate-beta-dialog__option' data-state={{option.state}} >
+          <div
+            class='migrate-beta-dialog__option'
+            data-state={{option.state}}
+            data-test-account-option=true
+          >
             {{option.title}}
           </div>
         {{/field.select}}
@@ -51,6 +56,7 @@
       class='button--blue {{if register.isRunning 'disabled'}}'
       disabled={{register.isRunning}}
       onclick={{perform register}}
+      data-test-migrate-submit="true"
     >
       {{#if register.isRunning }}
         {{loading-indicator white=true inline=true }} Registering...
