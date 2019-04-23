@@ -27,6 +27,6 @@ export default TravisRoute.extend({
 
   afterModel(model) {
     if (model && !model.error)
-      return model.fetchBetaMigrationRequests();
+      model.fetchBetaMigrationRequests();
   }
 });

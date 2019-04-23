@@ -2,10 +2,11 @@ import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
 import { belongsTo } from 'ember-data/relationships';
 import { computed } from '@ember/object';
-import { reads, or } from '@ember/object/computed';
+import { reads, or, notEmpty } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import config from 'travis/config/environment';
 import dynamicQuery from 'travis/utils/dynamic-query';
+import { task } from 'ember-concurrency';
 
 const { profileReposPerPage: limit } = config.pagination;
 
@@ -63,25 +64,23 @@ export default Model.extend({
   },
 
   fetchBetaMigrationRequests() {
-    return this.ajax.getV3(`/user/${this.accounts.user.id}/beta_migration_requests`).then(data => {
-      this.store.pushPayload('beta-migration-request', data);
-      return this.store.peekAll('beta-migration-request');
-    });
+    return this.fetchBetaMigrationRequestsTask.perform();
   },
 
-  migrationBetaRequests: computed(function () {
-    return this.store.peekAll('beta-migration-request').filter(request =>
-      request.owner === this || request.organizations.includes(this)
-    );
-  }).volatile(),
+  fetchBetaMigrationRequestsTask: task(function* () {
+    const data = yield this.ajax.getV3(`/user/${this.accounts.user.id}/beta_migration_requests`);
+    this.store.pushPayload('beta-migration-request', data);
+    return this.store.peekAll('beta-migration-request');
+  }),
 
-  isMigrationBetaRequested: computed(function () {
-    return this.migrationBetaRequests.length > 0;
-  }).volatile(),
+  migrationBetaRequests: reads('fetchBetaMigrationRequestsTask.lastSuccessful.value'),
 
-  isMigrationBetaAccepted: computed(function () {
-    return this.migrationBetaRequests.isAny('acceptedAt');
-  }).volatile(),
+  isMigrationBetaRequested: notEmpty('migrationBetaRequests'),
+
+  isMigrationBetaAccepted: computed('migrationBetaRequests.@each.acceptedAt', function () {
+    const migrationBetaRequests = this.migrationBetaRequests || [];
+    return migrationBetaRequests.isAny('acceptedAt');
+  }),
 
   subscriptionError: reads('accounts.subscriptionError'),
 

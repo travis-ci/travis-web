@@ -28,6 +28,8 @@ export default Component.extend({
   isAppsEnabled: reads('features.github-apps'),
   isNotAppsEnabled: not('isAppsEnabled'),
   isFilteringEnabled: reads('features.repositoryFiltering'),
+  isLoadingBetaRequests: reads('owner.fetchBetaMigrationRequestsTask.isRunning'),
+  isNotLoadingBetaRequests: not('isLoadingBetaRequests'),
 
   get migrationRepositoryCountLimit() {
     return migrationRepositoryCountLimit;
@@ -50,7 +52,7 @@ export default Component.extend({
   appsReposOnOrg: reads('owner.githubAppsRepositoriesOnOrg'),
 
   showGitHubApps: reads('isAppsEnabled'),
-  showMigrationStatusBanner: and('isNotEnterprise', 'isNotPro'),
+  showMigrationStatusBanner: and('isNotEnterprise', 'isNotPro', 'isNotLoadingBetaRequests'),
   showLegacyReposFilter: or('isFilteringEnabled', 'shouldShowLegacyReposFilter'),
   showAppsReposFilter: and('isFilteringEnabled', 'shouldShowAppsReposFilter'),
   showLegacyRepos: or('hasLegacyRepos', 'isLoadingLegacyRepos', 'isFilteringLegacyRepos', 'isNotAppsEnabled'),
