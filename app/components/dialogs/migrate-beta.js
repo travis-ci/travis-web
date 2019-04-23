@@ -66,10 +66,8 @@ export default Component.extend({
 
 function makeOptionFromAccount(account) {
   const { id, title, isMigrationBetaAccepted, isMigrationBetaRequested, isOrganization, isUser } = account;
-  return {
-    id,
-    title,
-    state: isMigrationBetaAccepted ? 'subscribed' : isMigrationBetaRequested ? 'waitlisted' : '',
-    disabled: isOrganization && (isMigrationBetaAccepted || isMigrationBetaRequested) || isUser
-  };
+  const isNotAdmin = isOrganization && !account.get('permissions.admin');
+  const state = isMigrationBetaAccepted ? 'subscribed' : isMigrationBetaRequested ? 'waitlisted' : isNotAdmin ? 'not admin' : '';
+  const disabled = isOrganization && (isMigrationBetaAccepted || isMigrationBetaRequested) || isUser || isNotAdmin;
+  return { id, title, state, disabled };
 }
