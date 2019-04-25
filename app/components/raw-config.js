@@ -6,7 +6,15 @@ export default Component.extend({
   copied: false,
 
   buttonLabel: computed('copied', function () {
-    return this.get('copied') ? 'Copied!' : 'Copy to clipboard';
+    return this.get('copied') ? 'Copied!' : `Copy ${this.fileName}`;
+  }),
+
+  fileName: computed('rawConfig', function () {
+    let sourcePath = this.get('rawConfig').source;
+    let versionedSourceName = sourcePath.substring(sourcePath.lastIndexOf('/') + 1);
+    if (!versionedSourceName.length) { return sourcePath; }
+    let sourceName = versionedSourceName.substring(0, versionedSourceName.lastIndexOf('@'));
+    return sourceName.length ? sourceName : versionedSourceName;
   }),
 
   actions: {
