@@ -1,6 +1,6 @@
 import formatSha from 'travis/utils/format-sha';
 
-const slugRe = (slug) => (new RegExp(`^${slug}`));
+const slugRe = (slug) => (new RegExp(`^${slug}/`));
 
 const fileName = (source) => (source.match(/([^\/]*)(@\w{16})?$/)[1]);
 

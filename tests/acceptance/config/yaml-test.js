@@ -148,7 +148,7 @@ module('Acceptance | config/yaml', function (hooks) {
       }];
       await visit(`/travis-ci/travis-web/builds/${this.build.id}`);
       await page.yamlTab.click();
-      assert.equal(page.yaml[0].source, '/some_path/config.yml@7e0d841');
+      assert.equal(page.yaml[0].source, 'some_path/config.yml@7e0d841');
     });
   });
 
