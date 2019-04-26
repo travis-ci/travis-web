@@ -73,17 +73,31 @@
         {{/form.field}}
 
         <div class="align-center">
-          <button
-            onclick={{form.submit}}
-            class='submit-button button--blue button--large'
-            data-test-zendesk-form-submit
-          >
-            {{#if isSubmitting}}
-              {{loading-indicator white=true }}
-            {{else}}
-              Submit
-            {{/if}}
-          </button>
+          {{#if isPro}}
+            <button
+              onclick={{form.submit}}
+              class='submit-button button--blue button--large'
+              data-test-zendesk-form-submit
+            >
+              {{#if isSubmitting}}
+                {{loading-indicator white=true }}
+              {{else}}
+                Submit
+              {{/if}}
+            </button>
+          {{else}}
+            <a
+              href={{newTopicURL}}
+              class='submit-button button--blue button--large'
+              data-test-zendesk-form-submit
+            >
+              {{#if isSubmitting}}
+                {{loading-indicator white=true }}
+              {{else}}
+                Submit
+              {{/if}}
+            </a>
+          {{/if}}
         </div>
 
       {{/travis-form}}

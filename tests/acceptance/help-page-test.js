@@ -1,6 +1,7 @@
 import { module, test } from 'qunit';
 import { settled } from '@ember/test-helpers';
 import { selectChoose } from 'ember-power-select/test-support';
+import { enableFeature } from 'ember-feature-flags/test-support';
 import moment from 'moment';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import signInUser from 'travis/tests/helpers/sign-in-user';
@@ -47,6 +48,7 @@ module('Acceptance | help page', function (hooks) {
   module('for authorised user', function (hooks) {
     hooks.beforeEach(async function () {
       this.user = server.create('user');
+      enableFeature('proVersion');
       await signInUser(this.user);
       await helpPage.visit();
     });

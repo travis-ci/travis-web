@@ -8,6 +8,7 @@ import moment from 'moment';
 import config from 'travis/config/environment';
 
 const { apiHost, createRequestEndpoint } = config.zendesk;
+const { community } = config.urls;
 
 export const UTC_START_TIME = moment.utc({ h: 9, m: 0, s: 0 });
 export const UTC_END_TIME = moment.utc({ h: 23, m: 0, s: 0 });
@@ -23,6 +24,7 @@ export default Component.extend({
   auth: service(),
   flashes: service(),
   raven: service(),
+  features: service(),
 
   page: '',
 
@@ -40,7 +42,12 @@ export default Component.extend({
     return buildDescriptionTemplate(this.page);
   }),
 
+  newTopicURL: computed('subject', 'description', function () {
+    return `${community}/new-topic?title=${encodeURIComponent(this.subject)}&body=${encodeURIComponent(this.description)}`;
+  }),
+
   isLoggedIn: reads('auth.signedIn'),
+  isPro: reads('features.proVersion'),
 
   startTime: UTC_START_TIME.local().format(DATE_FORMAT),
   endTime: UTC_END_TIME.local().format(DATE_FORMAT),
