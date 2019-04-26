@@ -9,10 +9,15 @@
     <div class="subheading align-center" data-test-help-page-navigation-links>
       View our most read
       <a href={{docsUrl}} target="_blank" ref="noopener noreferrer">documentation</a>,
-      popular topics in our
-      <a href={{communityUrl}} target="_blank" ref="noopener noreferrer">Community forum</a>,
-      or
-      <a class="pointer" onclick={{action 'setAnchor' 'form'}}>talk with us!</a>
+      {{#if isPro}}
+        popular topics in our
+        <a href={{communityUrl}} target="_blank" ref="noopener noreferrer">Community forum</a>,
+        or
+        <a class="pointer" onclick={{action 'setAnchor' 'form'}}>talk with us!</a>
+      {{else}}
+        or talk with us in our
+        <a href={{communityUrl}} target="_blank" ref="noopener noreferrer">Community forum</a>!
+      {{/if}}
     </div>
 
     <div class="status align-center" data-test-help-page-status>
@@ -20,15 +25,17 @@
     </div>
   {{/layout.section}}
 
-  {{#layout.section class="help-page__support" hasBackground=(not isLoggedIn) data-test-help-page-support-section=true }}
-    {{#if toForm}}{{scroll-here}}{{/if}}
+  {{#if isPro}}
+    {{#layout.section class="help-page__support" hasBackground=(not isLoggedIn) data-test-help-page-support-section=true }}
+      {{#if toForm}}{{scroll-here}}{{/if}}
 
-    {{#if isLoggedIn}}
-      <div class="section-divider"></div>
-    {{/if}}
+      {{#if isLoggedIn}}
+        <div class="section-divider"></div>
+      {{/if}}
 
-    {{zendesk-request-form page=page }}
+      {{zendesk-request-form page=page }}
 
-  {{/layout.section}}
+    {{/layout.section}}
+  {{/if}}
 
 {{/travis-layout}}
