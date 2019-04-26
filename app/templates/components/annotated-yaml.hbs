@@ -2,6 +2,6 @@
 
 <div class='raw-configs'>
   {{#each @request.uniqRawConfigs as |rawConfig|}}
-    {{raw-config rawConfig=rawConfig}}
+    {{raw-config rawConfig=rawConfig build=@request.build slug=@request.repo.slug}}
   {{/each}}
 </div>

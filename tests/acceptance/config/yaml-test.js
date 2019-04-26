@@ -5,13 +5,15 @@ import { percySnapshot } from 'ember-percy';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import page from 'travis/tests/pages/build';
 
+let slug = 'travis-ci/travis-web';
+
 let config = `
 language: jortle
 sudo: tortle
 `;
 
-let source = 'travis-ci/travis-project/.travis.yml@7e0d8414106de345';
-let source2 = 'travis-ci/travis-project/.travis.yml@7e0d8414106de346';
+let source = `${slug}/.travis.yml@7e0d8414106de345`;
+let source2 = `${slug}/.travis.yml@7e0d8414106de346`;
 
 let rawConfigs = [
   {
@@ -36,7 +38,7 @@ module('Acceptance | config/yaml', function (hooks) {
     const currentUser = server.create('user');
     signInUser(currentUser);
 
-    this.repository =  server.create('repository', { slug: 'travis-ci/travis-web' });
+    this.repository =  server.create('repository', { slug: slug });
 
     let branch = server.create('branch', { name: 'acceptance-tests' });
     this.request = server.create('request', { repository: this.repository, raw_configs: rawConfigs });
@@ -57,7 +59,7 @@ module('Acceptance | config/yaml', function (hooks) {
 
       assert.equal(document.title, `Config - Build #${this.build.number} - travis-ci/travis-web - Travis CI`);
       assert.equal(page.yaml[0].text, 'language: jortle sudo: tortle');
-      assert.equal(page.yaml[0].source, source);
+      assert.equal(page.yaml[0].source, '.travis.yml');
     });
 
     test('shows build messages when they exist', async function (assert) {
@@ -115,6 +117,39 @@ module('Acceptance | config/yaml', function (hooks) {
       await page.yamlTab.click();
       assert.equal(page.yaml.length, 2, 'expected two yaml code block');
     });
+
+    test('shows only file name for travis yml', async function (assert) {
+      let source = 'travis-ci/travis-project/.travis.yml@7e0d8414106de345';
+      this.request.raw_configs = [{
+        config: config,
+        source: source
+      }];
+      await visit(`/travis-ci/travis-web/builds/${this.build.id}`);
+      await page.yamlTab.click();
+      assert.equal(page.yaml[0].source, '.travis.yml');
+    });
+
+    test('shows internal path with sha', async function (assert) {
+      let source = './internal/config.yml@7e0d8414106de345';
+      this.request.raw_configs = [{
+        config: config,
+        source: source
+      }];
+      await visit(`/travis-ci/travis-web/builds/${this.build.id}`);
+      await page.yamlTab.click();
+      assert.equal(page.yaml[0].source, './internal/config.yml@7e0d841');
+    });
+
+    test('shows external path with formatted sha', async function (assert) {
+      let source = `${slug}/some_path/config.yml@7e0d8414106de345`;
+      this.request.raw_configs = [{
+        config: config,
+        source: source
+      }];
+      await visit(`/travis-ci/travis-web/builds/${this.build.id}`);
+      await page.yamlTab.click();
+      assert.equal(page.yaml[0].source, '/some_path/config.yml@7e0d841');
+    });
   });
 
   module('with a single-job build', function () {
@@ -130,7 +165,7 @@ module('Acceptance | config/yaml', function (hooks) {
 
       assert.ok(page.jobYamlNote.isHidden, 'expected the job note to be hidden for a single-job build');
       assert.equal(page.yaml[0].text, 'language: jortle sudo: tortle');
-      assert.equal(page.yaml[0].source, source);
+      assert.equal(page.yaml[0].source, '.travis.yml');
     });
 
     test('hides the tab when no yaml is found', async function (assert) {

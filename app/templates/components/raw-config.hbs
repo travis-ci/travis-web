@@ -1,14 +1,20 @@
 <div class='inner-yaml-container'>
   <div class='file-name'>
-    {{svg-jar 'job-name-icon' class='icon' width=14 height=14}} <span class='vertical-align'>{{rawConfig.source}}</span>
+    {{#if filePath}}
+      {{#external-link-to href=fileUrl}}
+        {{svg-jar 'job-name-icon' class='icon' width=14 height=14}} <span class='vertical-align'>{{filePath}}</span>
+      {{/external-link-to}}
+    {{else}}
+      {{svg-jar 'job-name-icon' class='icon' width=14 height=14}} <span class='vertical-align'>{{filePath}}</span>
+    {{/if}}
   </div>
   <div class='position-relative'>
     {{#code-block data-test-yaml language='yaml' class='codedisplay'}}{{rawConfig.config}}{{/code-block}}
     {{#copy-button
       clipboardText=rawConfig.config
-      title="Copy to clipboard"
+      title=buttonLabel
       success=(action 'copied' rawConfig.source)}}
-      {{svg-jar 'icon-copy' class="icon"}} <span>{{buttonLabel}}</span>
+      {{svg-jar 'icon-copy' class='icon'}} <span>{{buttonLabel}}</span>
     {{/copy-button}}
   </div>
 </div>
