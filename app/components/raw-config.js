@@ -9,7 +9,7 @@ export default Component.extend({
   baseYmlName: '.travis.yml',
   externalLinks: service(),
 
-  buttonLabel: computed('copied', function () {
+  buttonLabel: computed('copied', 'rawConfig.source', function () {
     let source = this.get('rawConfig.source');
     return this.get('copied') ? 'Copied!' : `Copy ${fileNameWithoutSha(source)}`;
   }),
@@ -22,7 +22,7 @@ export default Component.extend({
     return presentedPath(source, this.get('slug'));
   }),
 
-  fileUrl: computed('rawConfig.source', 'slug', 'build.branchName', function () {
+  fileUrl: computed('rawConfig.source', 'slug', 'build.branchName', 'externalLinks', function () {
     let source = this.get('rawConfig.source');
     let slug = this.get('slug');
     if (isInternal(source, slug)) { return null; }
