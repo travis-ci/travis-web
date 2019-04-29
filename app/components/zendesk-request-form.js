@@ -42,8 +42,12 @@ export default Component.extend({
     return buildDescriptionTemplate(this.page);
   }),
 
-  newTopicURL: computed('subject', 'description', function () {
-    return `${community}/new-topic?title=${encodeURIComponent(this.subject)}&body=${encodeURIComponent(this.description)}`;
+  newTopicURL: computed(() => `${community}/new-topic`),
+  encodedSubject: computed('subject', function () {
+    return encodeURIComponent(this.subject);
+  }),
+  encodedDescription: computed('description', function () {
+    return encodeURIComponent(this.description);
   }),
 
   isLoggedIn: reads('auth.signedIn'),

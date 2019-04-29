@@ -87,7 +87,7 @@
             </button>
           {{else}}
             <a
-              href={{newTopicURL}}
+              href='{{newTopicURL}}?title={{encodedSubject}}&body={{encodedDescription}}'
               class='submit-button button--blue button--large'
               data-test-zendesk-form-submit
             >
