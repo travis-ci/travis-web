@@ -3,5 +3,9 @@
 <div class='raw-configs'>
   {{#each @request.uniqRawConfigs as |rawConfig|}}
     {{raw-config rawConfig=rawConfig build=@request.build slug=@request.repo.slug}}
+  {{else}}
+    <div class='starred-empty'>
+      The .travis.yml file used for this job is not available
+    </div>
   {{/each}}
 </div>
