@@ -26,6 +26,10 @@ export default Service.extend({
     return `${config.sourceEndpoint}/${slug}/tree/${branch}`;
   },
 
+  githubFile(slug, branch, file) {
+    return `${config.sourceEndpoint}/${slug}/blob/${branch}/${file}`;
+  },
+
   billingUrl(accountType, login) {
     const id = accountType === 'user' ? 'user' : login;
     return `${config.billingEndpoint}/subscriptions/${id}`;

@@ -1787,7 +1787,7 @@ export default {
         "event_type",
         "base_commit",
         "head_commit",
-        "yaml_config"
+        "raw_configs"
       ],
       "representations": {
         "minimal": [
@@ -1810,7 +1810,7 @@ export default {
           "event_type",
           "base_commit",
           "head_commit",
-          "yaml_config"
+          "raw_configs"
         ]
       }
     },
