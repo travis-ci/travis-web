@@ -5,10 +5,11 @@ import { format as d3format } from 'd3';
 
 export default Component.extend({
   classNames: ['insights-glance'],
-  classNameBindings: ['isLoading:insights-glance--loading'],
+  classNameBindings: ['isLoading:insights-glance--loading', 'isReverseDeltaColors:insights-glance--reverse-delta-colors'],
 
   isLoading: true,
   isEmpty: false,
+  isReverseDeltaColors: false,
 
   title: '',
   statistic: '',
