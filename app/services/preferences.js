@@ -16,6 +16,7 @@ export default Service.extend({
   }),
 
   buildEmails: reads('hash.build_emails.value'),
+  privateInsightsVisibility: reads('hash.private_insights_visibility.value'),
 
   fetchPreferences: task(function* () {
     return yield this.store.findAll('preference');

@@ -97,7 +97,11 @@ export default create({
     message: text('.message'),
   }),
 
-  yaml: text('[data-test-yaml]'),
+  yaml: collection('.inner-yaml-container', {
+    text: text('[data-test-yaml]'),
+    source: text('.file-name')
+  }),
+
   jobYamlNote: {
     scope: '[data-test-job-yaml-note]'
   },

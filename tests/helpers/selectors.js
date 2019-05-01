@@ -22,6 +22,21 @@ export const EMAIL_SETTINGS_RESUBSCRIBE_LIST = '[data-test-email-settings-resubs
 export const EMAIL_SETTINGS_RESUBSCRIBE_ITEM = '[data-test-email-settings-resubscribe-item]';
 export const EMAIL_SETTINGS_RESUBSCRIBE_BUTTON = '[data-test-email-settings-resubscribe-button]';
 
+export const INSIGHTS_SETTINGS = '[data-test-insights-settings]';
+export const INSIGHTS_SETTINGS_TITLE = '[data-test-insights-settings-title]';
+export const INSIGHTS_SETTINGS_DESCRIPTION = '[data-test-insights-settings-description]';
+export const INSIGHTS_SETTINGS_LIST = '[data-test-visibility-settings-list]';
+export const INSIGHTS_SETTINGS_LIST_ITEM = '[data-test-visibility-settings-list-item]';
+export const INSIGHTS_SETTINGS_LIST_ITEM_DESCRIPTION = '[data-test-visibility-settings-list-item-description]';
+export const INSIGHTS_SETTINGS_LIST_ITEM_SELECTED = '[data-test-visibility-settings-list-item-selected]';
+export const INSIGHTS_SETTINGS_SUBMIT = '[data-test-visibility-settings-submit]';
+export const INSIGHTS_SETTINGS_MODAL = '.visibility-settings-modal';
+export const INSIGHTS_SETTINGS_MODAL_TITLE = '[data-test-visibility-settings-modal-title]';
+export const INSIGHTS_SETTINGS_MODAL_DESCRIPTION = '[data-test-visibility-settings-modal-description]';
+export const INSIGHTS_SETTINGS_MODAL_CLOSE = '[data-test-visibility-settings-modal-close-button]';
+export const INSIGHTS_SETTINGS_MODAL_CANCEL = '[data-test-visibility-settings-modal-cancel-button]';
+export const INSIGHTS_SETTINGS_MODAL_CONFIRM = '[data-test-visibility-settings-modal-confirm-button]';
+
 // travis/help
 export const HELP_PAGE_GREETING_SECTION = '[data-test-help-page-greeting-section]';
 export const HELP_PAGE_GREETING_HEADER = '[data-test-help-page-greeting-header]';

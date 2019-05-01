@@ -63,13 +63,16 @@
 
 {{#if isShowingRepositoryMigrationModal}}
   {{#modal-dialog
+    onClose=(action (mut isShowingRepositoryMigrationModal) false)
+    targetAttachment="center"
+    translucentOverlay=true
+    overlayPosition='sibling'
+    animatable=(config-get 'liquidFire.enabled')
+  }}
+    {{repository-migration-modal
+     data-test-repository-migration-modal
+     repository=repository
      onClose=(action (mut isShowingRepositoryMigrationModal) false)
-     targetAttachment="center"
-     translucentOverlay=true}}
-     {{repository-migration-modal
-       data-test-repository-migration-modal
-       repository=repository
-       onClose=(action (mut isShowingRepositoryMigrationModal) false)
-     }}
+    }}
   {{/modal-dialog}}
 {{/if}}

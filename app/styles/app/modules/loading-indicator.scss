@@ -42,15 +42,12 @@
 .loading-container {
   text-align: center;
   padding: 1.5em 1em;
+  overflow: hidden;
 }
 
 .button .loading-container {
   margin: 0 auto;
   padding: 0;
-}
-
-.inline-block {
-  display: inline-block;
 }
 
 .loading-indicator--white {

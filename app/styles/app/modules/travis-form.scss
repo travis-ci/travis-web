@@ -1,5 +1,6 @@
 $travis-form-border-width: 4px;
 $travis-form-badge-radius: 9px;
+$select-multiple-spacing: 5px;
 
 @mixin makeFieldBorder($color) {
   box-shadow: inset 0 0 1px 1px $color;
@@ -57,11 +58,21 @@ $travis-form-badge-radius: 9px;
       height: auto;
       line-height: normal;
       font-size: 1em;
-      padding: 8px 10px 9px;
       border-radius: $travis-form-border-width * 2;
       border: $travis-form-border-width solid transparent;
       margin: -$travis-form-border-width;
       color: $asphalt-grey;
+
+      &[disabled],
+      &.travis-form__field-component--disabled {
+        opacity: 0.5;
+        background-color: transparent;
+      }
+
+    }
+
+    &:not(.travis-form__field--without-frame) .travis-form__field-component {
+      padding: 8px 10px 9px;
       @include makeFieldBorder(lighten($cement-grey, 20%));
 
       transition: border-color 0.2s ease-in;
@@ -71,12 +82,106 @@ $travis-form-badge-radius: 9px;
         @include makeFocused();
       }
 
-      &[disabled],
-      &.travis-form__field-component--disabled {
-        opacity: 0.5;
-        background-color: transparent;
+      &.travis-form__field-select--multiple {
+        padding: $select-multiple-spacing 25px 0 $select-multiple-spacing;
       }
 
+    }
+
+    .travis-form__field-checkbox {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      cursor: pointer;
+
+      input[type=checkbox] {
+        visibility: hidden;
+      }
+
+      .travis-form__field-checkbox-wrapper {
+        width: 16px;
+        height: 16px;
+        position: relative;
+        top: 1px;
+        margin-right: 12px;
+
+        input, svg {
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          left: 0;
+          right: 0;
+        }
+
+        svg {
+          opacity: 0;
+          transition: opacity 0.1s ease-in;
+        }
+
+      }
+
+      &--checked {
+        .travis-form__field-checkbox-wrapper {
+          .travis-form__field-checkbox-image--checked {
+            opacity: 1;
+          }
+        }
+      }
+
+      &--unchecked {
+        .travis-form__field-checkbox-wrapper {
+          .travis-form__field-checkbox-image--unchecked {
+            opacity: 1;
+          }
+        }
+      }
+
+      &--disabled {
+        opacity: 0.5;
+      }
+
+    }
+
+    .travis-form__icon {
+      display: none;
+      position: absolute;
+      top: 50%;
+      margin-top: -8px;
+      left: 8px;
+
+      svg {
+        height: 16px;
+      }
+
+    }
+
+    &.travis-form__field--with-icon {
+
+      .travis-form__icon {
+        display: block;
+      }
+
+      .travis-form__field-component {
+        padding-left: 30px;
+      }
+
+    }
+
+    .travis-form__clear {
+      position: absolute;
+      top: 50%;
+      margin-top: -$travis-form-badge-radius;
+      right: $travis-form-badge-radius;
+      width: $travis-form-badge-radius * 2;
+      height: $travis-form-badge-radius * 2;
+      font-size: $travis-form-badge-radius * 2;
+      color: #ffffff;
+      background-color: $dry-cement;
+      border-radius: $travis-form-badge-radius;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     .travis-form__error-message {
@@ -237,5 +342,39 @@ $travis-form-badge-radius: 9px;
   &[aria-current="true"] {
     background-color: $oxide-blue;
   }
+}
+
+.ember-power-select-multiple {
+
+  &-option {
+    margin: 0 $select-multiple-spacing $select-multiple-spacing 0;
+    border: none;
+    color: $oxide-blue;
+    background-color: lighten($oxide-blue, 45%);
+    font-size: 1.1em;
+    border-radius: 2px;
+    padding: 3px 6px;
+
+  }
+
+  &-remove-btn {
+    font-size: 1.2em;
+    padding: 0;
+    margin: 0;
+    line-height: 0;
+    vertical-align: middle;
+
+    &:not(:hover) {
+      opacity: 1;
+    }
+
+  }
+
+}
+
+.ember-power-select-trigger-multiple-input {
+  margin: 5px 3px 4px 3px;
+  font-size: 1.1em;
+  max-width: calc(100% - 25px);
 }
 

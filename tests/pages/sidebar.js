@@ -26,7 +26,7 @@ let repositoryObject = {
 
 export default create({
   visit: visitable('/'),
-  repoTitle: text('.repo-header h1.repo-title'),
+  repoTitle: text('.repo-header .repo-title h1'),
   clickSidebarMyReposTab: clickable('#tab_owned a'),
   clickSidebarRunningTab: clickable('#tab_running a'),
   runningTabIsActive: hasClass('active', '#tab_running'),

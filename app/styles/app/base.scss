@@ -135,3 +135,19 @@ span.emoji.emoji-sizer {
 .margin-left-s {
   margin-left: 10px;
 }
+
+.inline-block {
+  display: inline-block;
+}
+
+.vertical-align {
+  vertical-align: middle;
+}
+
+.snapshot-hide {
+  @include snapshotHide;
+}
+
+.position-relative {
+  position: relative;
+}

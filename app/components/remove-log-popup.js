@@ -3,6 +3,8 @@ import { inject as service } from '@ember/service';
 import KeyboardShortcuts from 'ember-keyboard-shortcuts/mixins/component';
 
 export default Component.extend(KeyboardShortcuts, {
+  classNames: ['remove-log-popup'],
+
   flashes: service(),
 
   keyboardShortcuts: {

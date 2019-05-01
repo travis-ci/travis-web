@@ -766,7 +766,7 @@ header.space-between {
   }
 }
 
-.user-settings {
+.user-settings, .organization-settings {
   @include linkStyle;
 
   h3 {
@@ -813,7 +813,7 @@ header.space-between {
     }
   }
 
-  .email-settings {
+  .email-settings, .insights-settings {
 
     .row {
       display: flex;
@@ -881,6 +881,17 @@ header.space-between {
       .icon {
         margin-right: 5px;
       }
+    }
+  }
+
+  .insights-settings {
+    .description p {
+      width: 80%;
+      margin-bottom: 0;
+    }
+
+    .controls {
+      align-self: flex-end;
     }
   }
 }

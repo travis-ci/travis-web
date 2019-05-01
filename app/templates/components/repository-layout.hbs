@@ -1,16 +1,22 @@
 <article class="repo-header">
   <header class='name'>
-    {{repository-visibility-icon repository=repo}}
-    <h1 data-test-repo-header-title class="repo-title">
-      {{#link-to "owner" repo.owner.login}}{{repo.owner.login}}{{/link-to}} / {{#link-to "repo" repo}}{{repo.name}}{{/link-to}}
-    </h1>
-    {{#external-link-to href=urlGithub class="repo-gh" title=(concat repo.name " on GitHub")}}
-      {{svg-jar 'icon-repooctocat'}}
-    {{/external-link-to}}
-    <div class="repo-badge">
-      <a href="#" id="status-image-popup" title="Latest push build on default branch: {{repo.defaultBranch.lastBuild.state}}" name="status-images" class="open-popup" {{action "toggleStatusBadgeModal"}}>
-        <img src={{statusImageUrl}} alt="build:{{repo.defaultBranch.lastBuild.state}}"/>
-      </a>
+    <div class="inline-block repo-title">
+      <div class='inline-block'>
+        {{repository-visibility-icon repository=repo}}
+      </div>
+      <h1 data-test-repo-header-title class="inline-block vertical-align">
+        {{#link-to "owner" repo.owner.login}}{{repo.owner.login}}{{/link-to}} / {{#link-to "repo" repo}}{{repo.name}}{{/link-to}}
+      </h1>
+    </div>
+    <div>
+      {{#external-link-to href=urlGithub class="repo-gh inline-block" title=(concat repo.name " on GitHub")}}
+        {{svg-jar 'icon-repooctocat'}}
+      {{/external-link-to}}
+      <div class="repo-badge inline-block vertical-align">
+        <a href="#" id="status-image-popup" title="Latest push build on default branch: {{repo.defaultBranch.lastBuild.state}}" name="status-images" class="open-popup" {{action "toggleStatusBadgeModal"}}>
+          <img src={{statusImageUrl}} alt="build:{{repo.defaultBranch.lastBuild.state}}"/>
+        </a>
+      </div>
     </div>
   </header>
   {{#if showMigratedFromOrgRepositoryLink}}
@@ -44,18 +50,24 @@
 
 {{#if isShowingStatusBadgeModal}}
   {{#modal-dialog
-     onClose="toggleStatusBadgeModal"
-     targetAttachment="center"
-     translucentOverlay=true}}
+    onClose="toggleStatusBadgeModal"
+    targetAttachment="center"
+    translucentOverlay=true
+    overlayPosition='sibling'
+    animatable=(config-get 'liquidFire.enabled')
+  }}
     {{status-images repo=repo onClose=(action 'toggleStatusBadgeModal')}}
   {{/modal-dialog}}
 {{/if}}
 
 {{#if isShowingTriggerBuildModal}}
   {{#modal-dialog
-     onClose="toggleTriggerBuildModal"
-     targetAttachment="center"
-     translucentOverlay=true}}
+    onClose="toggleTriggerBuildModal"
+    targetAttachment="center"
+    translucentOverlay=true
+    overlayPosition='sibling'
+    animatable=(config-get 'liquidFire.enabled')
+  }}
     {{trigger-custom-build repo=repo onClose=(action 'toggleTriggerBuildModal')}}
   {{/modal-dialog}}
 {{/if}}

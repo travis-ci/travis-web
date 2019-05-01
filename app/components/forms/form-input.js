@@ -3,7 +3,16 @@ import Component from '@ember/component';
 export default Component.extend({
   tagName: 'input',
   classNames: ['travis-form__field-input'],
-  attributeBindings: ['disabled', 'type', 'value', 'placeholder', 'autocomplete', 'autofocus'],
+  attributeBindings: [
+    'disabled',
+    'type',
+    'value',
+    'placeholder',
+    'autocomplete',
+    'autofocus',
+    'input:data-test-input-field'
+  ],
+  input: true,
 
   disabled: false,
   type: 'text',
@@ -26,7 +35,11 @@ export default Component.extend({
   },
 
   change({ target }) {
-    this.onChange(target.value);
+    this.onChange && this.onChange(target.value);
+  },
+
+  keyUp({ target }) {
+    this.onKeyUp && this.onKeyUp(target.value);
   },
 
   didInsertElement() {

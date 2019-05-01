@@ -10,6 +10,7 @@ export default Component.extend({
   tagName: '',
 
   accounts: service(),
+  features: service(),
 
   activeModel: null,
   model: reads('activeModel'),
@@ -21,6 +22,12 @@ export default Component.extend({
   billingUrl: or('model.subscription.billingUrl', 'model.billingUrl'),
 
   showSubscriptionStatusBanner: and('checkSubscriptionStatus', 'model.subscriptionError'),
+
+  isOrganization: reads('model.isOrganization'),
+  hasAdminPermissions: reads('model.permissions.admin'),
+  isOrganizationAdmin: and('isOrganization', 'hasAdminPermissions'),
+  isProVersion: reads('features.proVersion'),
+  showOrganizationSettings: and('isOrganizationAdmin', 'isProVersion'),
 
   get githubOrgsOauthAccessSettingsUrl() {
     return githubOrgsOauthAccessSettingsUrl;
