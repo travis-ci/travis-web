@@ -20,6 +20,16 @@
     </div>
   {{/layout.section}}
 
+  {{#layout.section class="help-page__resources" hasBackground=true data-test-help-page-resources-section=true}}
+    <div>{{svg-jar 'docs'}}</div>
+    <div class="help-links">
+      <h1 class="header-main" data-test-help-page-resources-header>Handy Resources</h1>
+      <ul>
+        <li>{{#external-link-to href=docsUrl}}Check Our Documentation{{/external-link-to}}</li>
+      </ul>
+    </div>
+  {{/layout.section}}
+
   {{#layout.section class="help-page__support" hasBackground=(not isLoggedIn) data-test-help-page-support-section=true }}
     {{#if toForm}}{{scroll-here}}{{/if}}
 

@@ -13,6 +13,7 @@ export const ANCHOR = {
 
 const UTM_SOURCE = 'help-page';
 const UTM_MEDIUM = 'travisweb';
+const UTM_PARAMS = `?utm_source=${UTM_SOURCE}&utm_medium=${UTM_MEDIUM}`;
 
 const { docs, community } = config.urls;
 
@@ -30,7 +31,7 @@ export default Controller.extend({
   toCommunity: equal('anchor', ANCHOR.COMMUNITY),
   toForm: equal('anchor', ANCHOR.FORM),
 
-  docsUrl: computed(() => `${docs}?utm_source=help-page&utm_medium=travisweb`),
+  docsUrl: computed(() => `${docs}${UTM_PARAMS}`),
 
   communityUrl: computed(() =>
     `${community}/top?utm_source=${UTM_SOURCE}&utm_medium=${UTM_MEDIUM}`
