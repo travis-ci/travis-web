@@ -64,6 +64,6 @@ export default Service.extend({
   },
 
   communityTopicLink(slug, id) {
-    return `${config.community}/t/${slug}/${id}`;
+    return `${config.urls.community}/t/${slug}/${id}`;
   },
 });

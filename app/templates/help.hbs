@@ -37,6 +37,16 @@
     </div>
   {{/layout.section}}
 
+  {{#layout.section class="help-page__topics" data-test-help-page-topics-section=true}}
+    <div class="help-topics">
+      <div class="help-topics-image">{{svg-jar 'community'}}</div>
+      <div class="help-topics-text">
+        <h1 class="header-main" data-test-help-page-topics-header>Handy topics</h1>
+        {{top-forum-post-list}}
+      </div>
+    </div>
+  {{/layout.section}}
+
   {{#layout.section class="help-page__support" hasBackground=(not isLoggedIn) data-test-help-page-support-section=true }}
     {{#if toForm}}{{scroll-here}}{{/if}}
 
