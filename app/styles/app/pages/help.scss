@@ -79,22 +79,25 @@
         a {
           display: inline-block;
           border-bottom: 1px solid #dcdcdc;
-          margin-bottom: 0.333rem;
+          margin-bottom: 0.5rem;
 
           &.button {
             color: $oxide-blue;
             background: transparent;
-            border: 2px solid currentColor;
+            border: 1px solid currentColor;
+            border-radius: 0.333rem;
 
             font-weight: 700;
+            letter-spacing: 0.5px;
             text-transform: uppercase;
 
-            margin: 1rem 0 0 0;
+            padding: 1rem;
+            margin: 1.5rem 0 0 0;
             transition: all 0.33s;
 
             &:hover,
             &:active {
-              background-color: rgba(0, 0, 0, 0.05);
+              background-color: lighten($oxide-blue, 47);
             }
           }
         }
