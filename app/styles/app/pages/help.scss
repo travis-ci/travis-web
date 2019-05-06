@@ -38,8 +38,67 @@
   }
 
   .help-page__resources {
-    .header-main {
-      color: $asphalt-grey;
+    padding: 1rem 0 2rem;
+
+    .help-resources {
+      display: flex;
+      flex-flow: column nowrap;
+      align-items: center;
+
+      @media #{$medium-up} {
+        flex-direction: row;
+      }
+    }
+
+    .help-resources-image {
+      @media #{$medium-up} {
+        width: 50%;
+      }
+
+      svg {
+        max-width: 100%;
+      }
+    }
+
+    .help-resources-text {
+      padding-left: 4rem;
+
+      .header-main {
+        color: $asphalt-grey;
+        margin: 0;
+      }
+
+      .help-resource-list {
+        padding: 0;
+        margin: 0;
+        list-style-type: none;
+
+        font-weight: 300;
+        font-size: 1.5rem;
+
+        a {
+          display: inline-block;
+          border-bottom: 1px solid #dcdcdc;
+          margin-bottom: 0.333rem;
+
+          &.button {
+            color: $oxide-blue;
+            background: transparent;
+            border: 2px solid currentColor;
+
+            font-weight: 700;
+            text-transform: uppercase;
+
+            margin: 1rem 0 0 0;
+            transition: all 0.33s;
+
+            &:hover,
+            &:active {
+              background-color: rgba(0, 0, 0, 0.05);
+            }
+          }
+        }
+      }
     }
   }
 
