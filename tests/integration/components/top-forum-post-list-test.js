@@ -7,18 +7,8 @@ module('Integration | Component | top-forum-post-list', function (hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function (assert) {
-
     await render(hbs`{{top-forum-post-list}}`);
 
     assert.equal(this.element.textContent.trim(), '');
-
-    // Template block usage:
-    await render(hbs`
-      {{#top-forum-post-list}}
-        template block text
-      {{/top-forum-post-list}}
-    `);
-
-    assert.equal(this.element.textContent.trim(), 'template block text');
   });
 });

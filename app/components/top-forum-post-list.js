@@ -26,6 +26,6 @@ export default Component.extend({
 
   // Request topic data
   didReceiveAttrs() {
-    this.fetchTopics.perform();
+    // this.fetchTopics.perform();
   }
 });
