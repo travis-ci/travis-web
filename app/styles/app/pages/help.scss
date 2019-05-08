@@ -37,74 +37,6 @@
 
   }
 
-  .help-page__resources {
-    padding: 1rem 0 2rem;
-
-    .help-resources {
-      display: flex;
-      flex-flow: column nowrap;
-      align-items: center;
-
-      @media #{$medium-up} {
-        flex-direction: row;
-      }
-    }
-
-    .help-resources-image {
-      @media #{$medium-up} {
-        width: 50%;
-      }
-
-      svg {
-        max-width: 100%;
-      }
-    }
-
-    .help-resources-text {
-      padding-left: 4rem;
-
-      .header-main {
-        color: $asphalt-grey;
-        margin: 0;
-      }
-
-      .help-resource-list {
-        padding: 0;
-        margin: 0;
-        list-style-type: none;
-
-        font-weight: 300;
-        font-size: 1.5rem;
-
-        a {
-          display: inline-block;
-          border-bottom: 1px solid #dcdcdc;
-          margin-bottom: 0.5rem;
-
-          &.button {
-            color: $oxide-blue;
-            background: transparent;
-            border: 1px solid currentColor;
-            border-radius: 0.333rem;
-
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-
-            padding: 1rem;
-            margin: 1.5rem 0 0 0;
-            transition: all 0.33s;
-
-            &:hover,
-            &:active {
-              background-color: lighten($oxide-blue, 47);
-            }
-          }
-        }
-      }
-    }
-  }
-
   .help-page__support {
     padding-top: 20px;
 
@@ -165,6 +97,96 @@
       }
     }
 
+  }
+
+}
+
+.help-page__resources, .help-page__topics {
+  padding: 1rem 0 2rem;
+}
+
+.help-duo {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: space-between;
+
+  @media #{$medium-up} {
+    flex-direction: row;
+    align-items: stretch;
+  }
+
+  .help-duo-image {
+    @media #{$medium-up} {
+      width: 50%;
+    }
+
+    svg {
+      max-width: 100%;
+    }
+
+    + .help-duo-text {
+      @media #{$medium-up} {
+        padding: 0 0 0 4rem;
+      }
+    }
+  }
+
+  .help-duo-text {
+    text-align: center;
+
+    @media #{$medium-up} {
+      padding-right: 4rem;
+      text-align: left;
+    }
+
+    .header-main {
+      color: $asphalt-grey;
+      margin: 0;
+    }
+
+    .help-duo-list {
+      padding: 0;
+      margin: 0 0 1.5rem 0;
+      list-style-type: none;
+
+      font-weight: 300;
+      font-size: 1.5rem;
+
+      a {
+        display: inline-block;
+        border-bottom: 1px solid #dcdcdc;
+        margin-bottom: 0.5rem;
+      }
+    }
+
+    .button {
+      color: $oxide-blue;
+      background: transparent;
+      border: 1px solid currentColor;
+      border-radius: 0.333rem;
+
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+
+      padding: 1rem;
+      transition: all 0.33s;
+
+      &:hover,
+      &:active {
+        background-color: lighten($oxide-blue, 45);
+      }
+
+      .help-page__topics & {
+        color: $turf-green;
+
+        &:hover,
+        &:active {
+          background-color: lighten($turf-green, 50);
+        }
+      }
+    }
   }
 
   .section-divider {

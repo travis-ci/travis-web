@@ -1,1 +1,6 @@
-{{yield}}
+
+{{#loading-overlay visible=isLoading }}
+  {{#each topicsToShow as |topic|}}
+    <li>{{#external-link-to href=topic.url }}{{topic.title}}{{/external-link-to}}</li>
+  {{/each}}
+{{/loading-overlay}}
