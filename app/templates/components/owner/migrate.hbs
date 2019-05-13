@@ -1,11 +1,11 @@
 <div class="migrate" data-test-migrate-page>
 
   <h1 data-test-title>
-    Bring on your public repositories
+    Bring your public repositories here
   </h1>
 
   <p data-test-common-intro>
-    Here you can migrate all your repositories to build on travis-ci.com and make it a single place for your builds.
+    Below you can migrate all your repositories to build on travis-ci.com and view all of your builds in one place.
   </p>
 
   {{#if showActivationStep }}
@@ -24,13 +24,13 @@
     </div>
 
     <p class="migrate__activate-note" data-test-manual-note>
-      *Keep in mind that you can manually select the ones you’d like to migrate too.
+      *Keep in mind that you can also select the specific repositories you’d like to migrate.
     </p>
 
   {{else}}
 
     <p data-test-step2-intro>
-      If there's a repository you’d like to migrate is missing, please first
+      If a repository you’d like to migrate is missing, please first
       {{#external-link-to
         data-test-activate-link
         href=activateAllUrl
