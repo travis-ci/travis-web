@@ -119,12 +119,12 @@
                       {{else if repository.isMigrationSucceeded }}
                         <span>
                           {{svg-jar "stage-passed" class="icon"}}
-                          {{ember-tooltip text='This repository has successfully migrated'}}
+                          {{ember-tooltip text='This repository has been migrated'}}
                         </span>
                       {{else if repository.isMigrationFailed }}
                         <span>
                           {{svg-jar "stage-failed" class="icon"}}
-                          {{ember-tooltip text='This repository has failed to migrate, please try again'}}
+                          {{ember-tooltip text='This repository couldn’t be migrated, please try again'}}
                         </span>
                       {{/if}}
                     </div>
