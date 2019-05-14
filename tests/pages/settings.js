@@ -19,6 +19,11 @@ export default create({
     exists: isVisible()
   },
 
+  configImportsSection: {
+    scope: 'section.config-import',
+    exists: isVisible()
+  },
+
   autoCancelPushes: {
     scope: 'section.settings-section .auto_cancel_pushes.switch',
 
@@ -29,6 +34,14 @@ export default create({
 
   autoCancelPullRequests: {
     scope: 'section.settings-section .auto_cancel_pull_requests.switch',
+
+    exists: isVisible(),
+    isActive: hasClass('active'),
+    toggle: clickable()
+  },
+
+  allowConfigImports: {
+    scope: 'section.settings-section .allow_config_imports.switch',
 
     exists: isVisible(),
     isActive: hasClass('active'),
