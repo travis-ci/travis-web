@@ -24,7 +24,6 @@ export default Component.extend({
   reposToMigrate: reads('model.githubAppsRepositoriesOnOrg'),
 
   showMigrateTab: and('features.proVersion', 'user.allowMigration'),
-  showMigrateBadge: or('reposToMigrate.isNotEmpty', 'reposToMigrate.isFiltering'),
   showSubscriptionStatusBanner: and('checkSubscriptionStatus', 'model.subscriptionError'),
 
   isOrganization: reads('model.isOrganization'),

@@ -74,7 +74,7 @@
           {{/if}}
 
           {{#if showMigrateTab }}
-            <li class="{{if showMigrateBadge 'dot-badge'}}" data-test-migrate-tab>
+            <li data-test-migrate-tab>
               {{#link-to 'account.migrate' }}
                 Migrate
               {{/link-to}}
@@ -102,7 +102,7 @@
           {{/if}}
 
           {{#if showMigrateTab }}
-            <li class="{{if showMigrateBadge 'dot-badge'}}">
+            <li>
               {{#link-to 'organization.migrate' model }}
                 Migrate
               {{/link-to}}
