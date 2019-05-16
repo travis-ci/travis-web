@@ -19,12 +19,14 @@ const { docs, community, docker, node, multiOS, noRun, tutorial } = config.urls;
 
 export default Controller.extend({
   auth: service(),
+  features: service(),
 
   queryParams: ['anchor', 'page'],
   anchor: ANCHOR.TOP,
   page: '',
 
   isLoggedIn: reads('auth.signedIn'),
+  isPro: reads('features.proVersion'),
 
   toTop: equal('anchor', ANCHOR.TOP),
   toDocs: equal('anchor', ANCHOR.DOCS),

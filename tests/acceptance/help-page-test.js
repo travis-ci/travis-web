@@ -3,6 +3,7 @@ import { settled } from '@ember/test-helpers';
 import { selectChoose } from 'ember-power-select/test-support';
 import moment from 'moment';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
+import { enableFeature } from 'ember-feature-flags/test-support';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import helpPage from 'travis/tests/pages/help';
 import config from 'travis/config/environment';
@@ -18,8 +19,28 @@ const { apiHost, createRequestEndpoint } = config.zendesk;
 module('Acceptance | help page', function (hooks) {
   setupApplicationTest(hooks);
 
-  module('for unauthorised user', function (hooks) {
+  module('for .org users', function (hooks) {
     hooks.beforeEach(async function () {
+      await helpPage.visit();
+    });
+
+    test('it has correct structure', function (assert) {
+      const { greetingSection, supportSection } = helpPage;
+      const { username, header, navigationLinks, status } = greetingSection;
+
+      assert.ok(greetingSection.isPresent);
+      assert.ok(header.isPresent);
+      assert.ok(navigationLinks.isPresent);
+      assert.ok(status.isPresent);
+      assert.notOk(username.isPresent);
+
+      assert.notOk(supportSection.isPresent);
+    });
+  });
+
+  module('for .com unauthorised user', function (hooks) {
+    hooks.beforeEach(async function () {
+      enableFeature('proVersion');
       await helpPage.visit();
     });
 
@@ -44,9 +65,10 @@ module('Acceptance | help page', function (hooks) {
     });
   });
 
-  module('for authorised user', function (hooks) {
+  module('for .com authorised user', function (hooks) {
     hooks.beforeEach(async function () {
       this.user = server.create('user');
+      enableFeature('proVersion');
       await signInUser(this.user);
       await helpPage.visit();
     });
