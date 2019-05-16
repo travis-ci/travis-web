@@ -47,6 +47,12 @@ export default Controller.extend({
       || settings.hasOwnProperty('auto_cancel_pull_requests');
   }),
 
+  showAllowConfigImportsSwitch: computed('model.settings', 'repo.private', function () {
+    let settings = this.get('model.settings');
+    let isPrivate = this.get('repo.private');
+    return isPrivate && settings.hasOwnProperty('allow_config_imports');
+  }),
+
   migratedRepositorySettingsLink: computed('repo.slug', function () {
     let slug = this.get('repo.slug');
     return this.get('externalLinks').migratedToComSettingsLink(slug);
