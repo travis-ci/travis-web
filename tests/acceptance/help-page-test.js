@@ -25,7 +25,7 @@ module('Acceptance | help page', function (hooks) {
     });
 
     test('it has correct structure', function (assert) {
-      const { greetingSection, supportSection } = helpPage;
+      const { greetingSection, resourceSection, supportSection, topicSection } = helpPage;
       const { username, header, navigationLinks, status } = greetingSection;
 
       assert.ok(greetingSection.isPresent);
@@ -33,6 +33,20 @@ module('Acceptance | help page', function (hooks) {
       assert.ok(navigationLinks.isPresent);
       assert.ok(status.isPresent);
       assert.notOk(username.isPresent);
+
+      assert.ok(resourceSection.isPresent);
+      assert.ok(resourceSection.image.isPresent);
+      assert.ok(resourceSection.header.isPresent);
+      assert.ok(resourceSection.list.isPresent);
+      assert.equal(resourceSection.list.items.length, 5);
+      assert.ok(resourceSection.button.isPresent);
+
+      assert.ok(topicSection.isPresent);
+      assert.ok(topicSection.image.isPresent);
+      assert.ok(topicSection.header.isPresent);
+      assert.ok(topicSection.list.isPresent);
+      assert.equal(topicSection.list.items.length, 5);
+      assert.ok(topicSection.button.isPresent);
 
       assert.notOk(supportSection.isPresent);
     });
@@ -45,7 +59,7 @@ module('Acceptance | help page', function (hooks) {
     });
 
     test('it has correct structure', function (assert) {
-      const { greetingSection, supportSection } = helpPage;
+      const { greetingSection, resourceSection, supportSection, topicSection } = helpPage;
       const { username, header, navigationLinks, status } = greetingSection;
 
       assert.ok(greetingSection.isPresent);
@@ -53,6 +67,20 @@ module('Acceptance | help page', function (hooks) {
       assert.ok(navigationLinks.isPresent);
       assert.ok(status.isPresent);
       assert.notOk(username.isPresent);
+
+      assert.ok(resourceSection.isPresent);
+      assert.ok(resourceSection.image.isPresent);
+      assert.ok(resourceSection.header.isPresent);
+      assert.ok(resourceSection.list.isPresent);
+      assert.equal(resourceSection.list.items.length, 5);
+      assert.ok(resourceSection.button.isPresent);
+
+      assert.ok(topicSection.isPresent);
+      assert.ok(topicSection.image.isPresent);
+      assert.ok(topicSection.header.isPresent);
+      assert.ok(topicSection.list.isPresent);
+      assert.equal(topicSection.list.items.length, 5);
+      assert.ok(topicSection.button.isPresent);
 
       assert.ok(supportSection.isPresent);
     });
@@ -74,7 +102,7 @@ module('Acceptance | help page', function (hooks) {
     });
 
     test('it has correct structure', function (assert) {
-      const { greetingSection, supportSection } = helpPage;
+      const { greetingSection, resourceSection, supportSection, topicSection } = helpPage;
       const { username, header, navigationLinks, status } = greetingSection;
 
       assert.ok(greetingSection.isPresent);
@@ -83,6 +111,20 @@ module('Acceptance | help page', function (hooks) {
       assert.ok(status.isPresent);
       assert.ok(username.isPresent);
       assert.equal(username.text, this.user.name);
+
+      assert.ok(resourceSection.isPresent);
+      assert.ok(resourceSection.image.isPresent);
+      assert.ok(resourceSection.header.isPresent);
+      assert.ok(resourceSection.list.isPresent);
+      assert.equal(resourceSection.list.items.length, 5);
+      assert.ok(resourceSection.button.isPresent);
+
+      assert.ok(topicSection.isPresent);
+      assert.ok(topicSection.image.isPresent);
+      assert.ok(topicSection.header.isPresent);
+      assert.ok(topicSection.list.isPresent);
+      assert.equal(topicSection.list.items.length, 5);
+      assert.ok(topicSection.button.isPresent);
 
       assert.ok(supportSection.isPresent);
     });

@@ -28,17 +28,17 @@
   {{#layout.section class="help-page__resources" hasBackground=true data-test-help-page-resources-section=true}}
     {{#if toDocs}}{{scroll-here}}{{/if}}
     <div class="help-duo">
-      <div class="help-duo-image">{{svg-jar 'docs'}}</div>
+      <div class="help-duo-image" data-test-help-page-resources-image>{{svg-jar 'docs'}}</div>
       <div class="help-duo-text">
         <h1 class="header-main" data-test-help-page-resources-header>Handy Resources</h1>
-        <ul class="help-duo-list">
+        <ul class="help-duo-list" data-test-help-page-resources-list>
           <li>{{#external-link-to href=tutorialUrl }}Travis CI Tutorial{{/external-link-to}}</li>
           <li>{{#external-link-to href=dockerUrl }}Using Docker with Travis CI{{/external-link-to}}</li>
           <li>{{#external-link-to href=nodeUrl }}Setting up a Node.js project{{/external-link-to}}</li>
           <li>{{#external-link-to href=multiOsUrl }}Adding more Operating Systems{{/external-link-to}}</li>
           <li>{{#external-link-to href=noRunUrl }}Why is my build not running?{{/external-link-to}}</li>
         </ul>
-        {{#external-link-to href=docsUrl class="button"}}Check Our Documentation{{/external-link-to}}
+        {{#external-link-to href=docsUrl class="button" data-test-help-page-resources-button=true}}Check Our Documentation{{/external-link-to}}
       </div>
     </div>
   {{/layout.section}}
@@ -48,10 +48,10 @@
     <div class="help-duo">
       <div class="help-duo-text">
         <h1 class="header-main" data-test-help-page-topics-header>Popular Topics</h1>
-        {{top-forum-post-list class="help-duo-list"}}
-        {{#external-link-to href=communityUrl class="button"}}Ask the Travis Community{{/external-link-to}}
+        {{top-forum-post-list class="help-duo-list" data-test-help-page-topics-list=true}}
+        {{#external-link-to href=communityUrl class="button" data-test-help-page-topics-button=true}}Ask the Travis Community{{/external-link-to}}
       </div>
-      <div class="help-duo-image">{{svg-jar 'community'}}</div>
+      <div class="help-duo-image" data-test-help-page-topics-image>{{svg-jar 'community'}}</div>
     </div>
   {{/layout.section}}
 
