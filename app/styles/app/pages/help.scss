@@ -12,8 +12,12 @@
     }
 
     .status {
-      font-size: 1.8rem;
+      font-size: 1.5rem;
       font-weight: 100;
+
+      .status-circle {
+        font-size: 1.5em;
+      }
 
       .status-link {
         &:hover {
@@ -135,8 +139,10 @@
 
   .help-duo-text {
     text-align: center;
+    max-width: 100%;
 
     @media #{$medium-up} {
+      max-width: 50%;
       padding-right: 4rem;
       text-align: left;
     }
@@ -156,8 +162,11 @@
 
       a {
         display: inline-block;
-        border-bottom: 1px solid #dcdcdc;
-        margin-bottom: 0.5rem;
+        border-bottom: 1px solid $asphalt-grey;
+        max-width: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
     }
 
