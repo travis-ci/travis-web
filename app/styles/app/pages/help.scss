@@ -161,11 +161,15 @@
 
       a {
         display: inline-block;
-        border-bottom: 1px solid $asphalt-grey;
+        border-bottom: 1px solid #dcdcdc;
         max-width: 100%;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+
+        &:hover {
+          border-color: $asphalt-grey;
+        }
       }
     }
 
