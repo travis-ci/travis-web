@@ -36,11 +36,11 @@ export default function () {
       topic_list: {
         topics: [
           { id: 4, slug: 'we-are-the-rats', title: 'MICHAEL its your birthday today!'},
-          { id: 8, slug: 'snow-halation', title: 'This is sad. Alexa play Snow Halation'},
-          { id: 15, slug: 'touhou-time', title: 'Clownpiece?!'},
+          { id: 8, slug: 'snow-halation', title: 'What is snow halation? Is it snow *inhalation*?'},
+          { id: 15, slug: 'time-333', title: 'Time for 3 at 33'},
           { id: 16, slug: 'waypoint-forever', title: 'Be good, and be good at it'},
           { id: 23, slug: 'big-boy-season', title: 'Congrats! You will be missed, best of luck'},
-          { id: 42, slug: 'p-miku-k', title: 'Simple and clean'},
+          { id: 42, slug: 'riku-shows-up', title: 'Simple and clean'},
         ]
       }
     };
