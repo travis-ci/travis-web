@@ -29,7 +29,7 @@ export default Component.extend({
       this.flashes.success('You have been successfully placed on the waitlist for beta!');
     } catch (error) {
       this.flashes.clear();
-      this.flashes.error('There was some error. Please try again later.');
+      this.flashes.error('There was an error. Please try again later.', undefined, true);
     }
   }).drop(),
 
