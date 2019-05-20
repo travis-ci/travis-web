@@ -58,7 +58,7 @@ export default Service.extend({
   loadFlashes(flashes = []) {
     flashes.forEach(flash => {
       const type = Object.keys(flash)[0];
-      const { message, preamble, aboveOverlay } = flash[type];
+      const { message, preamble = messageTypeToPreamble[type], aboveOverlay } = flash[type];
       const icon = messageTypeToIcon[type];
       const closeButton = messageTypeToCloseButton[type];
       const item = { type, message, icon, preamble, closeButton, aboveOverlay };
@@ -94,6 +94,7 @@ export default Service.extend({
       // eslint-disable-next-line
       console.warn("WARNING: <service:flashes> display(type, message) function can only handle 'error', 'notice' and 'success' types");
     }
+
     this.loadFlashes([{ [type]: { message, preamble, aboveOverlay } }]);
   },
 
