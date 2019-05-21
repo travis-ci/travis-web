@@ -167,7 +167,7 @@
     <rect x="475.4" y="203.5" class="st10" width="36.2" height="185.8"/>
     <rect x="412.4" y="204.1" class="st10" width="18.6" height="185.2"/>
     <line class="st11" x1="421.7" y1="310.7" x2="421.7" y2="322.4"/>
-    <line class="st12" x1="449.1" y1="251.4" x2="449.1" y2="288.3"/>
+    <line class="st12" x1="449.1" y1="249.4" x2="449.1" y2="282.613"/>
     <rect x="467.1" y="236.4" class="st13" width="8.3" height="153"/>
     <pattern id="SVGID_3_" patternTransform="matrix(1 0 0 -1 1434.0537 -17193.459)" xlink:href="#SVGID_2_"/>
     <rect x="433.2" y="218.8" class="st14" width="31.7" height="21.8"/>
@@ -208,10 +208,13 @@
       <stop offset="1" style="stop-color:#F5C144"/>
     </linearGradient>
     <polygon class="st21" points="239.4,335.8 311.8,335.8 305,389.3 246.2,389.3 &#9;"/>
-    <text transform="matrix(1 0 0 1 421.6906 221.3382)" class="st22 st17 st23" style="white-space: pre;">JAVA</text>
     <rect x="475.6" y="227.2" class="st8" width="36.2" height="106"/>
-    <text transform="matrix(1 0 0 1 493.5041 229.6976)" class="st16 st17 st24 st25" style="white-space: pre;">PHP</text>
     <pattern id="SVGID_7_" patternTransform="matrix(1 0 0 -1 1434.0537 -17293.2773)" xlink:href="#SVGID_5_"/>
     <rect x="432.5" y="374.5" class="st26" width="33.1" height="13.3"/>
+    <text transform="matrix(1, 0, 0, 1, 0.438614, 19.490631)" style="fill: rgb(255, 255, 255); font-size: 30px; stroke: rgb(255, 255, 255); white-space: pre;">
+      <tspan x="484.029" y="241.368">P</tspan><tspan x="484.029" dy="1em">​</tspan><tspan>H</tspan><tspan x="484.029" dy="1em">​</tspan><tspan>P</tspan>
+    </text>
+    <text transform="matrix(1, 0, 0, 1, -4.561386, 15.100006)" style="fill: rgb(245, 193, 68); font-size: 20px; stroke: rgb(245, 193, 68); white-space: pre;">
+    <tspan x="420.524" y="222.931">J</tspan><tspan x="420.524" dy="1em">​</tspan><tspan>A</tspan><tspan x="420.524" dy="1em">​</tspan><tspan>V</tspan><tspan x="420.524" dy="1em">​</tspan><tspan>A</tspan></text>
   </g>
 </svg>
