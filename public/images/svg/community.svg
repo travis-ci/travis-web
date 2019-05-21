@@ -208,10 +208,19 @@
       <stop offset="1" style="stop-color:#F5C144"/>
     </linearGradient>
     <polygon class="st21" points="239.4,335.8 311.8,335.8 305,389.3 246.2,389.3 &#9;"/>
-    <text transform="matrix(1 0 0 1 421.6906 221.3382)" class="st22 st17 st23" style="white-space: pre;">JAVA</text>
     <rect x="475.6" y="227.2" class="st8" width="36.2" height="106"/>
-    <text transform="matrix(1 0 0 1 493.5041 229.6976)" class="st16 st17 st24 st25" style="white-space: pre;">PHP</text>
     <pattern id="SVGID_7_" patternTransform="matrix(1 0 0 -1 1434.0537 -17293.2773)" xlink:href="#SVGID_5_"/>
     <rect x="432.5" y="374.5" class="st26" width="33.1" height="13.3"/>
+    <text transform="matrix(1, 0, 0, 1, 0.438614, 19.490631)" class="st16" style="font-size: 30px; stroke: #FFFFFF;">
+      <tspan x="484.029" y="241.368">P</tspan>
+      <tspan x="484.029" dy="1em">H</tspan>
+      <tspan x="484.029" dy="1em">P</tspan>
+    </text>
+    <text transform="matrix(1, 0, 0, 1, -4.561386, 15.100006)" class="st19 st22" style="stroke: #F5C144;">
+      <tspan x="421.524" y="222.931">J</tspan>
+      <tspan x="421.524" dy="1em">A</tspan>
+      <tspan x="421.524" dy="1em">V</tspan>
+      <tspan x="421.524" dy="1em">A</tspan>
+    </text>
   </g>
 </svg>
