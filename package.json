@@ -95,7 +95,7 @@
     "node-sass": "^4.9.3",
     "pusher-js": "^4.2.2",
     "qunit-dom": "^0.8.0",
-    "raven-js": "^3.15.0",
+    "raven-js": "^3.27.1",
     "svgo": "^1.0.5",
     "url-polyfill": "^1.0.11",
     "visibilityjs": "^2.0.0",
