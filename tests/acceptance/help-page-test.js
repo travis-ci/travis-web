@@ -3,6 +3,7 @@ import { settled } from '@ember/test-helpers';
 import { selectChoose } from 'ember-power-select/test-support';
 import moment from 'moment';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
+import { enableFeature } from 'ember-feature-flags/test-support';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import helpPage from 'travis/tests/pages/help';
 import config from 'travis/config/environment';
@@ -18,13 +19,13 @@ const { apiHost, createRequestEndpoint } = config.zendesk;
 module('Acceptance | help page', function (hooks) {
   setupApplicationTest(hooks);
 
-  module('for unauthorised user', function (hooks) {
+  module('for .org users', function (hooks) {
     hooks.beforeEach(async function () {
       await helpPage.visit();
     });
 
     test('it has correct structure', function (assert) {
-      const { greetingSection, supportSection } = helpPage;
+      const { greetingSection, resourceSection, supportSection, topicSection } = helpPage;
       const { username, header, navigationLinks, status } = greetingSection;
 
       assert.ok(greetingSection.isPresent);
@@ -32,6 +33,54 @@ module('Acceptance | help page', function (hooks) {
       assert.ok(navigationLinks.isPresent);
       assert.ok(status.isPresent);
       assert.notOk(username.isPresent);
+
+      assert.ok(resourceSection.isPresent);
+      assert.ok(resourceSection.image.isPresent);
+      assert.ok(resourceSection.header.isPresent);
+      assert.ok(resourceSection.list.isPresent);
+      assert.equal(resourceSection.list.items.length, 5);
+      assert.ok(resourceSection.button.isPresent);
+
+      assert.ok(topicSection.isPresent);
+      assert.ok(topicSection.image.isPresent);
+      assert.ok(topicSection.header.isPresent);
+      assert.ok(topicSection.list.isPresent);
+      assert.equal(topicSection.list.items.length, 5);
+      assert.ok(topicSection.button.isPresent);
+
+      assert.notOk(supportSection.isPresent);
+    });
+  });
+
+  module('for .com unauthorised user', function (hooks) {
+    hooks.beforeEach(async function () {
+      enableFeature('proVersion');
+      await helpPage.visit();
+    });
+
+    test('it has correct structure', function (assert) {
+      const { greetingSection, resourceSection, supportSection, topicSection } = helpPage;
+      const { username, header, navigationLinks, status } = greetingSection;
+
+      assert.ok(greetingSection.isPresent);
+      assert.ok(header.isPresent);
+      assert.ok(navigationLinks.isPresent);
+      assert.ok(status.isPresent);
+      assert.notOk(username.isPresent);
+
+      assert.ok(resourceSection.isPresent);
+      assert.ok(resourceSection.image.isPresent);
+      assert.ok(resourceSection.header.isPresent);
+      assert.ok(resourceSection.list.isPresent);
+      assert.equal(resourceSection.list.items.length, 5);
+      assert.ok(resourceSection.button.isPresent);
+
+      assert.ok(topicSection.isPresent);
+      assert.ok(topicSection.image.isPresent);
+      assert.ok(topicSection.header.isPresent);
+      assert.ok(topicSection.list.isPresent);
+      assert.equal(topicSection.list.items.length, 5);
+      assert.ok(topicSection.button.isPresent);
 
       assert.ok(supportSection.isPresent);
     });
@@ -44,15 +93,16 @@ module('Acceptance | help page', function (hooks) {
     });
   });
 
-  module('for authorised user', function (hooks) {
+  module('for .com authorised user', function (hooks) {
     hooks.beforeEach(async function () {
       this.user = server.create('user');
+      enableFeature('proVersion');
       await signInUser(this.user);
       await helpPage.visit();
     });
 
     test('it has correct structure', function (assert) {
-      const { greetingSection, supportSection } = helpPage;
+      const { greetingSection, resourceSection, supportSection, topicSection } = helpPage;
       const { username, header, navigationLinks, status } = greetingSection;
 
       assert.ok(greetingSection.isPresent);
@@ -61,6 +111,20 @@ module('Acceptance | help page', function (hooks) {
       assert.ok(status.isPresent);
       assert.ok(username.isPresent);
       assert.equal(username.text, this.user.name);
+
+      assert.ok(resourceSection.isPresent);
+      assert.ok(resourceSection.image.isPresent);
+      assert.ok(resourceSection.header.isPresent);
+      assert.ok(resourceSection.list.isPresent);
+      assert.equal(resourceSection.list.items.length, 5);
+      assert.ok(resourceSection.button.isPresent);
+
+      assert.ok(topicSection.isPresent);
+      assert.ok(topicSection.image.isPresent);
+      assert.ok(topicSection.header.isPresent);
+      assert.ok(topicSection.list.isPresent);
+      assert.equal(topicSection.list.items.length, 5);
+      assert.ok(topicSection.button.isPresent);
 
       assert.ok(supportSection.isPresent);
     });
