@@ -19,14 +19,14 @@ export default Component.extend({
   fetchTopics: task(function* () {
     const url = `${community}/top.json`;
 
-    return yield fetch(url).then(response => {
-      if (response.ok) {
-        return response.json();
-      } else {
-        let exception = new Error('Error retrieving top community topics');
-        this.get('raven').logException(exception, true);
-      }
-    });
+    try {
+      const response = yield fetch(url);
+      if (!response.ok)
+        throw new Error('Error retrieving top community topics');
+      return yield response.json();
+    } catch (error) {
+      this.raven.logException(error, true);
+    }
   }).drop(),
 
   isLoading: reads('fetchTopics.isRunning'),
@@ -35,7 +35,7 @@ export default Component.extend({
   topicsToShow: computed('topics.[]', 'numberOfTopics', function () {
     const { topics = [], numberOfTopics } = this;
     return topics
-      .filter((item, index, self) => index < numberOfTopics)
+      .slice(0, numberOfTopics)
       .map(topic => {
         topic.url = this.externalLinks.communityTopicLink(topic.slug, topic.id);
         return topic;
