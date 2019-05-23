@@ -54,6 +54,6 @@ export default Component.extend({
   }),
 
   is409error: computed('apiError', function () {
-    return hasErrorWithStatus(this.get('apiError'), 409);
+    return hasErrorWithStatus(this.apiError, '409');
   })
 });

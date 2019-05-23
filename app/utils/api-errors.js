@@ -3,7 +3,7 @@
  *
  */
 export default function hasErrorWithStatus(errorResponse, status) {
-  if (!errorResponse) { return false; }
+  if (!errorResponse || !errorResponse.errors || !errorResponse.errors.length) { return false; }
 
-  return !!errorResponse.errors.find(error => (error.status == status));
+  return errorResponse.errors && errorResponse.errors.isAny('status', status);
 }
