@@ -3,7 +3,7 @@
  *
  */
 export default function hasErrorWithStatus(errorResponse, status) {
-  if (!errorResponse || !errorResponse.errors || !errorResponse.errors.length) { return false; }
+  const { errors = [] } = errorResponse || {};
 
-  return errorResponse.errors && errorResponse.errors.isAny('status', status);
+  return errors.isAny('status', status);
 }
