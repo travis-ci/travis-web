@@ -3,6 +3,7 @@ import config from 'travis/config/environment';
 import { task } from 'ember-concurrency';
 import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
+import hasErrorWithStatus from 'travis/utils/api-errors';
 
 export default Component.extend({
   externalLinks: service(),
@@ -37,9 +38,8 @@ export default Component.extend({
     },
 
     resetErrors() {
-      return this.set('showError', false);
+      return this.set('apiError', null);
     }
-
   },
 
   toggleRepositoryTask: task(function* () {
@@ -49,7 +49,11 @@ export default Component.extend({
       yield repository.reload();
       this.pusher.subscribe(`repo-${repository.id}`);
     } catch (error) {
-      this.set('showError', true);
+      this.set('apiError', error);
     }
   }),
+
+  is409error: computed('apiError', function () {
+    return hasErrorWithStatus(this.get('apiError'), 409);
+  })
 });
