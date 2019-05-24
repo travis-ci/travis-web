@@ -2,6 +2,7 @@ import { computed } from '@ember/object';
 import { reads, equal, not, notEmpty } from '@ember/object/computed';
 import ArrayProxy from '@ember/array/proxy';
 import Evented from '@ember/object/evented';
+import { next } from '@ember/runloop';
 import { assert } from '@ember/debug';
 import { task } from 'ember-concurrency';
 import bindGenerator from 'travis/utils/bind-generator';
@@ -84,6 +85,7 @@ const DynamicQuery = ArrayProxy.extend(Evented, {
   hasPreviousPage: not('pagination.isFirst'),
 
   total: reads('pagination.total'),
+  totalPages: reads('pagination.numberOfPages'),
 
   init() {
     this._super(...arguments);
@@ -106,6 +108,10 @@ const DynamicQuery = ArrayProxy.extend(Evented, {
     return page === currentPage ? promise : this.reload({ page });
   },
 
+  hasPage(page = 1) {
+    return page <= this.totalPages && page > 0;
+  },
+
   applyFilter(filterTerm = '') {
     const page = 1;
     return this.reload({ filterTerm, page });
@@ -124,6 +130,9 @@ const DynamicQuery = ArrayProxy.extend(Evented, {
       .then((result = []) => {
         this.set('pagination', result.pagination);
         this.setObjects(result.toArray());
+        if (!this.hasPage(page)) {
+          next(() => this.switchToPage(1));
+        }
         return this;
       });
 

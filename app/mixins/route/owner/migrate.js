@@ -21,7 +21,7 @@ export default Mixin.create({
       const repos = model.githubAppsRepositoriesOnOrg;
       repos.switchToPage(this.page);
       repos.on(PAGE_CHANGED, page => {
-        const queryParams = { 'apps-page': page };
+        const queryParams = { page };
         this.transitionTo({ queryParams });
       });
       if (repos.isAny('isMigrationSucceeded')) {

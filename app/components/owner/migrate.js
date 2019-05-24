@@ -76,6 +76,7 @@ export default Component.extend({
     closeMigrateModal() {
       this.set('isShowingRepositoryMigrationModal', false);
       this.selectedRepositories.clear();
+      this.repositories.switchToPage(1);
     }
 
   }
