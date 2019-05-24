@@ -62,4 +62,8 @@ export default Service.extend({
   comBuildHistoryLink(slug) {
     return this.platformLink('com', `${slug}/builds`);
   },
+
+  communityTopicLink(slug, id) {
+    return `${config.urls.community}/t/${slug}/${id}`;
+  },
 });
