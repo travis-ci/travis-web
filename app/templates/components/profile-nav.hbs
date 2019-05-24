@@ -19,7 +19,11 @@
         onclick={{action (mut isShowingMigrateBetaDialog) true }}
         data-test-migrate-signup="true"
       >
-        Sign up for the beta
+        {{#if user.isMigrationBetaRequested}}
+          Add organizations to the beta
+        {{else}}
+          Sign up for the beta
+        {{/if}}
       </button>
     </section>
   {{/if}}
