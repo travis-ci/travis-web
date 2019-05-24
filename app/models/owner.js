@@ -2,15 +2,15 @@ import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
 import { belongsTo } from 'ember-data/relationships';
 import { computed } from '@ember/object';
-import { reads, or, notEmpty } from '@ember/object/computed';
+import { reads, or } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import config from 'travis/config/environment';
 import dynamicQuery from 'travis/utils/dynamic-query';
-import { task } from 'ember-concurrency';
+import withBetaMigrationRequests from 'travis/mixins/model/owner/with-beta-migration-requests';
 
 const { profileReposPerPage: limit } = config.pagination;
 
-export default Model.extend({
+export default Model.extend(withBetaMigrationRequests, {
   features: service(),
   accounts: service(),
   raven: service(),
@@ -62,25 +62,6 @@ export default Model.extend({
       limit, offset, custom: { owner, type, },
     }, { live: false });
   },
-
-  fetchBetaMigrationRequests() {
-    return this.fetchBetaMigrationRequestsTask.perform();
-  },
-
-  fetchBetaMigrationRequestsTask: task(function* () {
-    const data = yield this.ajax.getV3(`/user/${this.accounts.user.id}/beta_migration_requests`);
-    this.store.pushPayload('beta-migration-request', data);
-    return this.store.peekAll('beta-migration-request');
-  }),
-
-  migrationBetaRequests: reads('fetchBetaMigrationRequestsTask.lastSuccessful.value'),
-
-  isMigrationBetaRequested: notEmpty('migrationBetaRequests'),
-
-  isMigrationBetaAccepted: computed('migrationBetaRequests.@each.acceptedAt', function () {
-    const migrationBetaRequests = this.migrationBetaRequests || [];
-    return migrationBetaRequests.isAny('acceptedAt');
-  }),
 
   subscriptionError: reads('accounts.subscriptionError'),
 
