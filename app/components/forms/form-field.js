@@ -23,7 +23,7 @@ export default Component.extend({
   fieldElementId: null,
   form: null,
 
-  state: FIELD_STATE.DEFAULT,
+  validationState: FIELD_STATE.DEFAULT,
 
   label: '',
   value: '',
@@ -34,7 +34,6 @@ export default Component.extend({
   allowClear: false,
   icon: '',
   disableFrame: false,
-  multiple: false,
 
   validator: null,
   required: equal('validator.kind', presense),
@@ -44,9 +43,9 @@ export default Component.extend({
   errorMessage: '',
   isFocused: false,
 
-  isDefault: equal('state', FIELD_STATE.DEFAULT),
-  isValid: equal('state', FIELD_STATE.VALID),
-  isError: equal('state', FIELD_STATE.ERROR),
+  isDefault: equal('validationState', FIELD_STATE.DEFAULT),
+  isValid: equal('validationState', FIELD_STATE.VALID),
+  isError: equal('validationState', FIELD_STATE.ERROR),
 
   requiresValidation: or('required', 'validator'),
 
@@ -82,18 +81,18 @@ export default Component.extend({
   },
 
   setValid() {
-    this.set('state', FIELD_STATE.VALID);
+    this.set('validationState', FIELD_STATE.VALID);
   },
 
   setError(errorMessage) {
-    const state = FIELD_STATE.ERROR;
-    this.setProperties({ state, errorMessage });
+    const validationState = FIELD_STATE.ERROR;
+    this.setProperties({ validationState, errorMessage });
   },
 
   clearError() {
-    if (this.state === FIELD_STATE.ERROR) {
-      const state = FIELD_STATE.DEFAULT;
-      this.setProperties({ state, errorMessage: '' });
+    if (this.validationState === FIELD_STATE.ERROR) {
+      const validationState = FIELD_STATE.DEFAULT;
+      this.setProperties({ validationState, errorMessage: '' });
     }
   },
 
