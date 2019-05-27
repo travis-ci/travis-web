@@ -7,16 +7,20 @@
     {{#form.field
       class='branch-selector'
       label='Branch'
+      placeholder='Select branch'
       value=selectedBranch
       required=true
+      enableValidationStatusIcons=false
+      validator=(action 'validateBranch')
       as |field|
     }}
       {{#field.select
-        searchField='name'
-        placeholder='Type branch name'
-        selected=selectedBranch
+        searchPlaceholder=''
+        searchMessage='Type to search branches...'
+        loadingMessage='Loading branches...'
+        noMatchesMessage='No branches found for your request'
         onchange=(action (mut selectedBranch))
-        search=(perform performSearchRequest)
+        search=(perform searchBranches)
         as |branch|
       }}
         {{branch.name}}
@@ -26,9 +30,11 @@
   <div class='form-elem select'>
     {{#form.field
       label='Interval'
-      required=true
       value=selectedInterval
+      placeholder='Select interval'
+      enableValidationStatusIcons=false
       onChange=(action (mut selectedInterval))
+      required=true
       as |field|
     }}
       {{#field.select options=intervals as |interval|}}
@@ -39,25 +45,25 @@
   <div class='form-elem select'>
     {{#form.field
       label='Options'
-      required=true
       value=selectedOption
       onChange=(action (mut selectedOption))
       as |field|
     }}
       {{#field.select options=options as |option|}}
-        {{option}}
+        {{option.title}}
       {{/field.select}}
     {{/form.field}}
   </div>
   <div class='form-elem'>
-     {{#if saveCron.isRunning}}
-      {{loading-indicator}}
-    {{else}}
-      <button
-        onclick={{form.submit}}
-        class='cron-form-submit form-submit'>
+    <button
+      onclick={{action form.submit}}
+      class='cron-form-submit form-submit'
+    >
+      {{#if saveCron.isRunning}}
+        {{loading-indicator white=true inline=true }}
+      {{else}}
         Add
-      </button>
-    {{/if}}
+      {{/if}}
+    </button>
   </div>
 {{/travis-form}}
