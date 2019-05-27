@@ -271,14 +271,15 @@ module('Acceptance | repo settings', function (hooks) {
 
     server.create('branch', {
       name: branchName,
-      id: `/v3/repo/${this.repository.id}/branch/food`,
+      id: `/v3/repo/${this.repository.id}/branch/foo`,
       exists_on_github: true,
       repository: this.repository,
     });
 
     await settingsPage.visit({ organization: 'org-login', repo: 'repository-name' });
-    await selectSearch(settingsPage.cronBrancheSelect.scope, branchName);
-    await selectChoose(settingsPage.cronBrancheSelect.scope, branchName);
+    await selectSearch(settingsPage.cronBranchSelect.scope, branchName);
+    await selectChoose(settingsPage.cronBranchSelect.scope, branchName);
+    await selectChoose(settingsPage.cronIntervalSelect.scope, '.ember-power-select-option', 0);
     await settingsPage.addCronSubmit.click();
 
     assert.equal(settingsPage.crons.length, 3, 'expected to load all existed crons');
