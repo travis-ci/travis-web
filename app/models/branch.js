@@ -3,7 +3,7 @@ import attr from 'ember-data/attr';
 import { hasMany, belongsTo } from 'ember-data/relationships';
 import { computed } from '@ember/object';
 
-export default Model.extend({
+const Branch = Model.extend({
   name: attr('string'),
   defaultBranch: attr('boolean'),
   lastBuild: belongsTo('build'),
@@ -20,3 +20,18 @@ export default Model.extend({
     }
   })
 });
+
+Branch.reopenClass({
+  search(store, name, repositoryId) {
+    return store.query('branch', {
+      repository_id: repositoryId,
+      data: {
+        name: name,
+        sort_by: 'repository.name',
+        limit: 10
+      }
+    });
+  },
+});
+
+export default Branch;

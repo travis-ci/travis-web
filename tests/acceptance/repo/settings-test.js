@@ -2,11 +2,10 @@ import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { Response } from 'ember-cli-mirage';
 import { percySnapshot } from 'ember-percy';
-import { waitForElement } from 'travis/tests/helpers/wait-for-element';
-
 import settingsPage from 'travis/tests/pages/settings';
 import topPage from 'travis/tests/pages/top';
 import signInUser from 'travis/tests/helpers/sign-in-user';
+import { selectChoose, selectSearch } from 'ember-power-select/test-support';
 
 import moment from 'moment';
 
@@ -267,33 +266,22 @@ module('Acceptance | repo settings', function (hooks) {
     done();
   });
 
-  test('reload cron branches on branch:created', async function (assert) {
+  test('create a new cron', async function (assert) {
+    let branchName = 'foo';
+
     server.create('branch', {
-      name: 'food',
+      name: branchName,
       id: `/v3/repo/${this.repository.id}/branch/food`,
       exists_on_github: true,
       repository: this.repository,
     });
 
     await settingsPage.visit({ organization: 'org-login', repo: 'repository-name' });
+    await selectSearch(settingsPage.cronBrancheSelect.scope, branchName);
+    await selectChoose(settingsPage.cronBrancheSelect.scope, branchName);
+    await settingsPage.addCronSubmit.click();
 
-    assert.equal(settingsPage.cronBranches.length, 1, 'expected only one branch');
-
-    server.create('branch', {
-      name: 'bar',
-      id: `/v3/repo/${this.repository.id}/branch/bar`,
-      exists_on_github: true,
-      repository: this.repository,
-    });
-
-    await this.owner.application.pusher.receive('branch:created', {
-      repository_id: this.repository.id,
-      branch: 'bar',
-    });
-
-    await waitForElement(`${settingsPage.cronBranches.scope}:eq(1)`);
-
-    assert.equal(settingsPage.cronBranches.length, 2, 'expected two branches after event');
+    assert.equal(settingsPage.crons.length, 3, 'expected to load all existed crons');
   });
 
   test('delete SSH key', async function (assert) {

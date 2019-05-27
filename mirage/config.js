@@ -180,6 +180,11 @@ export default function () {
     return this.serialize(schema.crons.where({ repositoryId }), 'cron');
   });
 
+  this.post('/repo/:repositoryId/branch/:branchName/cron', function (schema, request) {
+    const { repositoryId } = request.params;
+    return this.serialize(schema.crons.where({ repositoryId }), 'cron');
+  });
+
   this.post('/repo/:repositoryId/activate', function (schema, request) {
     const { repositoryId } = request.params;
     const repository = schema.repositories.find(repositoryId);

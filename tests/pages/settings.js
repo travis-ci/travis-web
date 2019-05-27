@@ -105,7 +105,14 @@ export default create({
     delete: clickable('.cron-job-delete')
   }),
 
-  cronBranches: collection('.form--cron form select:nth(0) option'),
+  cronBrancheSelect: {
+    scope: '.branch-selector'
+  },
+
+  addCronSubmit: {
+    scope: '.cron-form-submit',
+    click: clickable()
+  },
 
   sshKey: {
     scope: '.settings-sshkey',
