@@ -193,6 +193,19 @@
   }
 }
 
+.button--dark-grey {
+  @extend %button;
+
+  border: none;
+  color: white;
+  background-color: $asphalt-grey;
+
+  &:hover,
+  &:active {
+    background-color: darken($asphalt-grey, 10);
+  }
+}
+
 .button--compact {
   padding: 3px 7px;
 }
