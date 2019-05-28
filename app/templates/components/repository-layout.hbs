@@ -27,11 +27,12 @@
     {{/notice-banner}}
   {{/if}}
   {{#if showMigratedToComRepositoryLink}}
-    {{#notice-banner data-test-recently-migrated-to-com-banner}}
-      This repository was recently migrated to travis-ci.com and is now read-only.
-      To view your current builds, please click
-      {{#external-link-to href=comBuildHistoryLink}}here{{/external-link-to}}.
-    {{/notice-banner}}
+    <div class="repo-header__subheader" data-test-recently-migrated-to-com-banner>
+      [Migrated] Check out recent builds at
+      {{#external-link-to href=orgBuildHistoryLink}}
+        travis-ci.com
+      {{/external-link-to}}.
+    </div>
   {{/if}}
   <main class="repo-main">
   <div class="repo-navigation">

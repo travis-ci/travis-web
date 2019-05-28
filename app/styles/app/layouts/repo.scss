@@ -24,14 +24,14 @@
       margin-right: 10px;
     }
   }
-  
+
   .repo-title {
     margin-right: 1.2em;
 
     h1 {
       margin: 0;
       font-size: 36px;
-      font-weight: $font-weight-normal;      
+      font-weight: $font-weight-normal;
 
       a {
         color: $asphalt-grey;
@@ -59,6 +59,12 @@
       }
     }
   }
+
+  &__subheader {
+    @extend .text-big;
+    margin: 0.5rem auto -0.9rem;
+  }
+
 }
 
 .repo-gh {
