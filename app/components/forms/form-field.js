@@ -34,6 +34,8 @@ export default Component.extend({
   allowClear: false,
   icon: '',
   disableFrame: false,
+  enableValidationStatusIcons: true,
+  enableValidationStatusMessage: true,
 
   validator: null,
   required: equal('validator.kind', presense),
@@ -52,6 +54,8 @@ export default Component.extend({
   showClear: and('allowClear', 'value'),
   showIcon: notEmpty('icon'),
   showFrame: not('disableFrame'),
+  showValidationStatusIcons: and('enableValidationStatusIcons', 'requiresValidation'),
+  showValidationStatusMessage: and('enableValidationStatusMessage', 'requiresValidation'),
 
   selectComponent: computed('multiple', function () {
     return this.multiple ? 'forms/form-select-multiple' : 'forms/form-select';
