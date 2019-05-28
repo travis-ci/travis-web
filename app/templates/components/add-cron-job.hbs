@@ -1,32 +1,63 @@
-<form {{action (perform save) on="submit"}}>
-  <div class="form-elem select">
-    <span class="label">Branch</span>
-    {{#x-select value=selectedBranch required="true" on-change=(action (mut selectedBranch)) as |xs|}}
-      {{#each branches as |branch|}}
-        {{#xs.option value=branch}}{{branch.name}}{{/xs.option}}
-      {{/each}}
-    {{/x-select}}
+{{#travis-form
+  class='form--cron'
+  onSubmit=(perform saveCron)
+  as |form|
+}}
+  <div class='form-elem select'>
+    {{#form.field
+      class='branch-selector'
+      label='Branch'
+      value=selectedBranch
+      required=true
+      as |field|
+    }}
+      {{#field.select
+        searchField='name'
+        placeholder='Type branch name'
+        selected=selectedBranch
+        onchange=(action (mut selectedBranch))
+        search=(perform performSearchRequest)
+        as |branch|
+      }}
+        {{branch.name}}
+      {{/field.select}}
+    {{/form.field}}
   </div>
-  <div class="form-elem select">
-    <span class="label">Interval</span>
-    {{#x-select value=selectedInterval required="true" on-change=(action (mut selectedInterval)) as |xs|}}
-      {{#each intervals as |interval|}}
-        {{#xs.option value=interval}}{{interval}}{{/xs.option}}
-      {{/each}}
-    {{/x-select}}
+  <div class='form-elem select'>
+    {{#form.field
+      label='Interval'
+      required=true
+      value=selectedInterval
+      onChange=(action (mut selectedInterval))
+      as |field|
+    }}
+      {{#field.select options=intervals as |interval|}}
+        {{interval}}
+      {{/field.select}}
+    {{/form.field}}
   </div>
-  <div class="form-elem select">
-    <span class="label">Options</span>
-    {{#x-select value=selectedOption required="false" on-change=(action (mut selectedOption)) as |xs|}}
-      {{#xs.option value=false}}{{options.[0]}}{{/xs.option}}
-      {{#xs.option value=true}}{{options.[1]}}{{/xs.option}}
-    {{/x-select}}
+  <div class='form-elem select'>
+    {{#form.field
+      label='Options'
+      required=true
+      value=selectedOption
+      onChange=(action (mut selectedOption))
+      as |field|
+    }}
+      {{#field.select options=options as |option|}}
+        {{option}}
+      {{/field.select}}
+    {{/form.field}}
   </div>
-  <div class="form-elem">
-    {{#if save.isRunning}}
+  <div class='form-elem'>
+     {{#if saveCron.isRunning}}
       {{loading-indicator}}
     {{else}}
-      <input type="submit" value="Add" class="form-submit" />
+      <button
+        onclick={{form.submit}}
+        class='cron-form-submit form-submit'>
+        Add
+      </button>
     {{/if}}
   </div>
-</form>
+{{/travis-form}}

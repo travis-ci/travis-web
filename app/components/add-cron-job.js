@@ -1,45 +1,48 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
-import { task } from 'ember-concurrency';
+import { task, timeout } from 'ember-concurrency';
+import { mapBy } from '@ember/object/computed';
+import Branch from 'travis/models/branch';
+import config from 'travis/config/environment';
 
 export default Component.extend({
   store: service(),
 
   classNames: ['form--cron'],
 
+  intervals: ['monthly', 'weekly', 'daily'],
+
+  options: ['Always run', 'Do not run if there has been a build in the last 24h'],
+
+  currentCronJobsBranches: mapBy('repository.cronJobs', 'branch.name'),
+
+  init() {
+    this.reset();
+    this._super(...arguments);
+  },
+
   reset() {
     this.setProperties({
       selectedBranch: null,
-      selectedInterval: null,
-      disable: null
+      selectedInterval: this.intervals.firstObject,
+      selectedOption: this.options[0]
     });
   },
 
-  save: task(function* () {
-    const store = this.get('store');
-    const repoId = this.get('branches.firstObject.repoId');
-    const branch = this.get('selectedBranch') || this.get('branches.firstObject');
+  performSearchRequest: task(function* (query) {
+    yield timeout(config.intervals.searchDebounceRate);
+    let branchNames = this.get('currentCronJobsBranches');
+    let branches = yield Branch.search(this.store, query, this.repository.id);
+    return branches.reject(branch => (branchNames.indexOf(branch.name) > -1));
+  }).restartable(),
 
-    const existingCrons = yield store.filter('cron', { repository_id: repoId }, (c) => {
-      c.get('branch.repoId') === repoId && c.get('branch.name') === branch.get('name');
+  saveCron: task(function* () {
+    const cron = this.store.createRecord('cron', {
+      branch: this.selectedBranch,
+      interval: this.selectedInterval,
+      dont_run_if_recent_build_exists: this.selectedOption
     });
-
-    if (existingCrons.get('firstObject')) {
-      store.unloadRecord(existingCrons.get('firstObject'));
-    }
-
-    const cron = store.createRecord('cron', {
-      branch,
-      interval: this.get('selectedInterval') || 'monthly',
-      dont_run_if_recent_build_exists: this.get('selectedOption') || false
-    });
-
-    this.reset();
-
     yield cron.save();
-  }).drop(),
-
-  intervals: ['monthly', 'weekly', 'daily'],
-
-  options: ['Always run', 'Do not run if there has been a build in the last 24h']
+    this.reset();
+  }).drop()
 });

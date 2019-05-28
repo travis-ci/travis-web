@@ -69,7 +69,7 @@ module.exports = function (environment) {
     intervals: {
       updateTimes: 1000,
       branchCreatedSyncDelay: 2000,
-      repositorySearchDebounceRate: 500,
+      searchDebounceRate: 500,
       triggerBuildRequestDelay: 3000,
       fetchRecordsForPusherUpdatesThrottle: 1000,
       repositoryFilteringDebounceRate: 200,

@@ -80,12 +80,7 @@
       {{/each}}
     </ul>
 
-    {{#if sortedBranchesWithoutCron.length}}
-        {{add-cron-job branches=sortedBranchesWithoutCron}}
-    {{else}}
-        <p class="text-medium">There are no branches you can currently add crons to.</p>
-    {{/if}}
-
+    {{add-cron-job repository=model.repository}}
   </section>
 
 {{#if (and config.endpoints.sshKey repo.private)}}
