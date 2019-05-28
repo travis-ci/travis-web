@@ -13,7 +13,10 @@
       {{/external-link-to}}
     </p>
 
-    {{#external-link-to href=comRepositoryLink class="button button--blue"}}
+    {{#external-link-to href=comRepositoryLink
+      class="button button--blue"
+      data-test-not-active-migrated-button=true
+    }}
       Take me there!
     {{/external-link-to}}
 
