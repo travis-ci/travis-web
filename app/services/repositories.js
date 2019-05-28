@@ -46,7 +46,7 @@ export default Service.extend({
   showSearchResults: task(function* () {
     let query = this.get('searchQuery');
 
-    yield timeout(config.intervals.repositorySearchDebounceRate);
+    yield timeout(config.intervals.searchDebounceRate);
 
     yield this.get('performSearchRequest').perform(query);
 
