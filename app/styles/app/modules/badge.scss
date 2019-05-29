@@ -42,3 +42,23 @@
     letter-spacing: 0.05em;
   }
 }
+
+$badge-size: 10px;
+
+.dot-badge {
+  position: relative;
+
+  &::after {
+    opacity: 0.5;
+    content: '';
+    position: absolute;
+    left: 100%;
+    top: $badge-size / 10;
+    margin-left: $badge-size / 5;
+    height: $badge-size;
+    width: $badge-size;
+    border-radius: $badge-size / 2;
+    background-color: $oxide-blue;
+  }
+
+}

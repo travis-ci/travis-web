@@ -10,69 +10,16 @@
   {{name}}
 {{/link-to}}
 
-
-
-{{#if repository.active_on_org}}
-  {{#if migrationEnabled}}
-    {{#if repository.migrationStatus}}
-      <div
-        data-test-migration-status={{repository.migrationStatus}}
-        class="migration-status {{repository.migrationStatus}}"
-      >
-      {{#if migrationInProgress}}
-        {{loading-indicator
-          data-test-repository-migration-loading-animation
-          inline=true
-        }}
-      {{/if}}
-      {{#if (eq repository.migrationStatus "success")}}
-        <span>{{svg-jar "stage-passed" class="icon"}}</span>
-      {{/if}}
-      {{#if (eq repository.migrationStatus "failure")}}
-        <span>{{svg-jar "stage-errored" class="icon"}}</span>
-      {{/if}}
-      </div>
-    {{else}}
-      <a
-        data-test-migrate-repository-button={{repository.name}}
-        href="#"
-        role="button"
-        class="profile-settings button"
-        {{action (mut isShowingRepositoryMigrationModal) true}}
-      >
-        {{svg-jar "icon-migrate" class="icon"}}
-        Migrate
-      </a>
-    {{/if}}
-  {{/if}}
+{{#if admin}}
+  {{#link-to "settings" repository.owner.login repository.name
+  class="profile-settings button" title="Go to Travis CI repository settings"}}
+    {{svg-jar 'icon-settings' class="icon icon-hover"}}
+    Settings
+  {{/link-to}}
 {{else}}
-  {{#if admin}}
-    {{#link-to "settings" repository.owner.login repository.name
-    class="profile-settings button" title="Go to Travis CI repository settings"}}
-      {{svg-jar 'icon-settings' class="icon icon-hover"}}
-      Settings
-    {{/link-to}}
-  {{else}}
-    <a class="profile-settings disabled button">
-      {{svg-jar 'icon-private' class="icon"}}
-      Settings
-      {{ember-tooltip text='Requires admin permissions'}}
-    </a>
-  {{/if}}
-{{/if}}
-
-{{#if isShowingRepositoryMigrationModal}}
-  {{#modal-dialog
-    onClose=(action (mut isShowingRepositoryMigrationModal) false)
-    targetAttachment="center"
-    translucentOverlay=true
-    overlayPosition='sibling'
-    animatable=(config-get 'liquidFire.enabled')
-  }}
-    {{repository-migration-modal
-     data-test-repository-migration-modal
-     repository=repository
-     onClose=(action (mut isShowingRepositoryMigrationModal) false)
-    }}
-  {{/modal-dialog}}
+  <a class="profile-settings disabled button">
+    {{svg-jar 'icon-private' class="icon"}}
+    Settings
+    {{ember-tooltip text='Requires admin permissions'}}
+  </a>
 {{/if}}

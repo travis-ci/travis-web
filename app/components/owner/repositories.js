@@ -35,14 +35,14 @@ export default Component.extend({
 
   legacyRepos: reads('owner.legacyRepositories'),
   legacyReposCount: reads('legacyRepos.total'),
-  isFilteringLegacyRepos: notEmpty('legacyRepos.filter'),
+  isFilteringLegacyRepos: notEmpty('legacyRepos.filterTerm'),
   hasLegacyRepos: bool('legacyReposCount'),
   isLoadingLegacyRepos: reads('legacyRepos.isLoading'),
   shouldShowLegacyReposFilter: or('hasLegacyRepos', 'isFilteringLegacyRepos', 'isLoadingLegacyRepos'),
 
   appsRepos: reads('owner.githubAppsRepositories'),
   appsReposCount: reads('appsRepos.total'),
-  isFilteringAppsRepos: notEmpty('appsRepos.filter'),
+  isFilteringAppsRepos: notEmpty('appsRepos.filterTerm'),
   hasAppsRepos: bool('appsReposCount'),
   isLoadingAppsRepos: reads('appsRepos.isLoading'),
   shouldShowAppsReposFilter: or('hasAppsRepos', 'isFilteringAppsRepos', 'isLoadingAppsRepos'),
