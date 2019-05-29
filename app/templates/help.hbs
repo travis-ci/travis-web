@@ -9,7 +9,7 @@
     <div class="subheading align-center" data-test-help-page-navigation-links>
       View our most read
       <a class="pointer" onclick={{action 'setAnchor' 'docs'}}>documentation</a>,
-      {{#if isPro}}
+      {{#if showSupportForm}}
         popular topics in our
         <a class="pointer" onclick={{action 'setAnchor' 'community'}}>Community forum</a>,
         or
@@ -59,7 +59,7 @@
     </div>
   {{/layout.section}}
 
-  {{#if isPro}}
+  {{#if showSupportForm}}
     {{#layout.section class="help-page__support" hasBackground=(not isLoggedIn) data-test-help-page-support-section=true }}
       {{#if toForm}}{{scroll-here}}{{/if}}
 

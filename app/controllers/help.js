@@ -1,7 +1,7 @@
 import Controller from '@ember/controller';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
-import { reads, equal } from '@ember/object/computed';
+import { reads, equal, filterBy, notEmpty, or, and } from '@ember/object/computed';
 import config from 'travis/config/environment';
 
 export const ANCHOR = {
@@ -18,6 +18,7 @@ const UTM_PARAMS = `?utm_source=${UTM_SOURCE}&utm_medium=${UTM_MEDIUM}`;
 const { docs, community, docker, node, multiOS, noRun, tutorial } = config.urls;
 
 export default Controller.extend({
+  accounts: service(),
   auth: service(),
   features: service(),
 
@@ -27,6 +28,13 @@ export default Controller.extend({
 
   isLoggedIn: reads('auth.signedIn'),
   isPro: reads('features.proVersion'),
+
+  subscriptions: reads('accounts.subscriptions'),
+  activeSubscriptions: filterBy('subscriptions', 'isSubscribed', true),
+  isSubscribed: notEmpty('activeSubscriptions'),
+  isEducation: reads('accounts.user.education'),
+  isPremium: or('isSubscribed', 'isEducation'),
+  showSupportForm: and('isPro', 'isPremium'),
 
   toTop: equal('anchor', ANCHOR.TOP),
   toDocs: equal('anchor', ANCHOR.DOCS),
