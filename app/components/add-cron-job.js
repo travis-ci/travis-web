@@ -2,7 +2,6 @@ import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { task, timeout } from 'ember-concurrency';
 import { mapBy } from '@ember/object/computed';
-import Branch from 'travis/models/branch';
 import config from 'travis/config/environment';
 
 export default Component.extend({
@@ -47,7 +46,7 @@ export default Component.extend({
         exists_on_github: true
       }
     });
-    return branches.reject(branch => (branchNames.indexOf(branch.name) > -1));
+    return branches.reject(branch => (branchNames.includes(branch.name)));
   }).restartable(),
 
   save: task(function* () {
@@ -56,21 +55,12 @@ export default Component.extend({
       interval: this.selectedInterval.toLowerCase(),
       dont_run_if_recent_build_exists: this.selectedOption.value
     });
-    yield cron.save();
-    this.reset();
+    try {
+      yield cron.save();
+      this.reset();
+    } catch (error) {
+      cron.unloadRecord();
+      this.flashes.error('There was an error saving the cron task. Please try again.');
+    }
   }).drop()
-});
-
-Branch.reopenClass({
-  search(store, name, repositoryId, existsOnGithub) {
-    return store.query('branch', {
-      repository_id: repositoryId,
-      data: {
-        name: name,
-        sort_by: 'repository.name',
-        limit: 10,
-        exists_on_github: existsOnGithub
-      }
-    });
-  },
 });

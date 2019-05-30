@@ -8,9 +8,10 @@
       value=name
       required=true
       showValidationStatusIcons=false
+      onChange=(action (mut name))
       as |field|
     }}
-      {{field.input class='env-name' placeholder='Name' onChange=(action (mut name))}}
+      {{field.input class='env-name' placeholder='Name'}}
     {{/form.field}}
   </div>
   <div class='form-elem'>
@@ -18,20 +19,23 @@
       label='Value'
       value=value
       required=true
+      onChange=(action (mut value))
       showValidationStatusIcons=false
       as |field|
     }}
-      {{field.input  class='env-value' placeholder='Value' onChange=(action (mut value))}}
+      {{field.input  class='env-value' placeholder='Value'}}
     {{/form.field}}
   </div>
   <div class='form-elem'>
     {{#form.field
       label='Display value in build log'
-      class='travis-form__field--without-frame travis-form__field--switch'
+      class='travis-form__field--switch'
+      showFrame=false
       value=public
+      onChange=(action (mut public))
       as |field|
     }}
-      {{field.switch onChange=(action (mut public))}}
+      {{field.switch}}
     {{/form.field}}
   </div>
   <div class='form-elem'>
