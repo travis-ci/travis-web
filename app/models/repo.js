@@ -46,12 +46,16 @@ const Repo = Model.extend({
   isMigrationSucceeded: equal('migrationStatus', MIGRATION_STATUS.SUCCESS),
   isMigrationFailed: equal('migrationStatus', MIGRATION_STATUS.FAILURE),
 
-  defaultBranch: belongsTo('branch', {
-    async: false
+  isMigratable: computed('migrationStatus', 'permissions.admin', function () {
+    const isMigrated = !!this.migrationStatus;
+    const isFailed = this.isMigrationFailed;
+    const isAdmin = this.get('permissions.admin');
+    return isAdmin && (!isMigrated || isFailed);
   }),
-  currentBuild: belongsTo('build', {
-    async: true, inverse: 'repoCurrentBuild'
-  }),
+
+  defaultBranch: belongsTo('branch', { async: false }),
+  currentBuild: belongsTo('build', { async: true, inverse: 'repoCurrentBuild' }),
+
   _branches: hasMany('branch'),
 
   isCurrentUserACollaborator: computed('auth.currentUser.permissions.[]', function () {
