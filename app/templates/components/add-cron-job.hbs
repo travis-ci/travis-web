@@ -1,14 +1,14 @@
 {{#travis-form
-  class='form--cron'
-  onSubmit=(perform saveCron)
+  onSubmit=(perform save)
   as |form|
 }}
   <div class='form-elem select'>
     {{#form.field
-      class='branch-selector'
       label='Branch'
       value=selectedBranch
       required=true
+      class='branch-selector'
+      showValidationStatusIcons=false
       as |field|
     }}
       {{#field.select
@@ -16,7 +16,7 @@
         placeholder='Type branch name'
         selected=selectedBranch
         onchange=(action (mut selectedBranch))
-        search=(perform performSearchRequest)
+        search=(perform search)
         as |branch|
       }}
         {{branch.name}}
@@ -29,6 +29,7 @@
       required=true
       value=selectedInterval
       onChange=(action (mut selectedInterval))
+      showValidationStatusIcons=false
       as |field|
     }}
       {{#field.select options=intervals as |interval|}}
@@ -42,15 +43,16 @@
       required=true
       value=selectedOption
       onChange=(action (mut selectedOption))
+      showValidationStatusIcons=false
       as |field|
     }}
       {{#field.select options=options as |option|}}
-        {{option}}
+        {{option.name}}
       {{/field.select}}
     {{/form.field}}
   </div>
   <div class='form-elem'>
-     {{#if saveCron.isRunning}}
+     {{#if save.isRunning}}
       {{loading-indicator}}
     {{else}}
       <button

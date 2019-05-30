@@ -10,9 +10,15 @@ export default Component.extend({
 
   classNames: ['form--cron'],
 
-  intervals: ['monthly', 'weekly', 'daily'],
+  intervals: ['Monthly', 'Weekly', 'Daily'],
 
-  options: ['Always run', 'Do not run if there has been a build in the last 24h'],
+  options: [{
+    name: 'Always run',
+    value: false
+  }, {
+    name: 'Do not run if there has been a build in the last 24h',
+    value: true
+  }],
 
   currentCronJobsBranches: mapBy('repository.cronJobs', 'branch.name'),
 
@@ -29,20 +35,42 @@ export default Component.extend({
     });
   },
 
-  performSearchRequest: task(function* (query) {
+  search: task(function* (query) {
     yield timeout(config.intervals.searchDebounceRate);
     let branchNames = this.get('currentCronJobsBranches');
-    let branches = yield Branch.search(this.store, query, this.repository.id);
+    let branches = yield this.store.query('branch', {
+      repository_id: this.repository.id,
+      data: {
+        name: query,
+        sort_by: 'name',
+        limit: 10,
+        exists_on_github: true
+      }
+    });
     return branches.reject(branch => (branchNames.indexOf(branch.name) > -1));
   }).restartable(),
 
-  saveCron: task(function* () {
+  save: task(function* () {
     const cron = this.store.createRecord('cron', {
       branch: this.selectedBranch,
-      interval: this.selectedInterval,
-      dont_run_if_recent_build_exists: this.selectedOption
+      interval: this.selectedInterval.toLowerCase(),
+      dont_run_if_recent_build_exists: this.selectedOption.value
     });
     yield cron.save();
     this.reset();
   }).drop()
+});
+
+Branch.reopenClass({
+  search(store, name, repositoryId, existsOnGithub) {
+    return store.query('branch', {
+      repository_id: repositoryId,
+      data: {
+        name: name,
+        sort_by: 'repository.name',
+        limit: 10,
+        exists_on_github: existsOnGithub
+      }
+    });
+  },
 });
