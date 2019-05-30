@@ -5,11 +5,11 @@
   </div>
 
   <h3 class='h3--teal align-center'>
-    Register for beta
+    Register for the beta
   </h3>
 
   <p>
-    Gain access to have all your public and private repositories together.
+    Migrate all of your public repositories to travis-ci.com
   </p>
 
   <p>
@@ -19,7 +19,7 @@
   <p>
     {{#travis-form as |form| }}
       {{#form.field
-        label='Select your accounts'
+        label='Add Organizations'
         value=selectedOptions
         multiple=true
         onChange=(action 'selectOptions')
@@ -46,9 +46,7 @@
   </p>
 
   <p class='subtle'>
-    Once you've picked accounts you will be placed on the waitlist for beta!
-    Make sure to check your organization pages for any updates &dash;
-    we'll notify you there when we've enabled beta.
+    We’ll email you and update your organization page once you can start migrating.
   </p>
 
   <div class='modal-controls'>
@@ -59,10 +57,9 @@
       data-test-migrate-submit="true"
     >
       {{#if register.isRunning }}
-        {{loading-indicator white=true inline=true }} Registering...
+        {{loading-indicator white=true inline=true }} Joining...
       {{else}}
-        Register account
-        {{if (gt selectedAccounts.length 1) 'and organizations'}}
+        Join the waitlist
       {{/if}}
     </button>
   </div>
