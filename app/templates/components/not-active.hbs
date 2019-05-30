@@ -1,10 +1,8 @@
 <div class="missing-notice">
 
-  <figure class="page-graphic">
-    {{svg-jar 'wheelbarrow'}}
-  </figure>
-
   {{#if migratedOnOrg}}
+
+    {{svg-jar 'migrated' class="page-graphic"}}
 
     <p data-test-not-active-migrated-subtext class="page-notice spacious">
       This repository was migrated and is now building on
@@ -21,6 +19,10 @@
     {{/external-link-to}}
 
   {{else}}
+
+    <figure class="page-graphic">
+      {{svg-jar 'wheelbarrow'}}
+    </figure>
 
     <h2 class="page-title">This is not an active repository</h2>
 
