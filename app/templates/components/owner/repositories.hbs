@@ -65,7 +65,7 @@
         <div>
 
           {{#loading-overlay visible=filter.isLoading }}
-            <ul class="profile-repositorylist" id='not-locked-github-apps-repositories'>
+            <ul class="profile-repositorylist">
               {{#each filter.results as |repository|}}
 
                 {{github-apps-repository
@@ -116,48 +116,11 @@
 
       {{/repository-filter}}
 
-      {{#if appsReposOnOrg }}
-        <div id='locked-github-apps-repositories'>
-          <p>
-            {{svg-jar 'icon-megaphone' class='icon icon-megaphone'}}
-            <span data-test-locked-github-apps-repositories-notice class="label-align">
-              {{#if owner.allowMigration}}
-                Authorized users can now migrate the following repositories
-                currently active on our legacy platform travis-ci.org to travis-ci.com.
-                Please
-                {{#external-link-to href=externalLinks.betaMigrationDocs}}
-                  read our docs on open source migration
-                {{/external-link-to}}
-                to learn more.
-              {{else}}
-                The following repositories cannot be migrated to travis-ci.com at this time because they are
-                currently active on our legacy platform travis-ci.org. This feature will be available shortly.
-                Please
-                {{#external-link-to href=externalLinks.openSourceMigrationDocs}}
-                  read our docs on open source migration
-                {{/external-link-to}}
-                to learn more.
-              {{/if}}
-            </span>
-          </p>
-          <ul class="profile-repositorylist">
-            {{#each appsReposOnOrg as |repository|}}
-              {{github-apps-repository
-                data-test-locked-github-app-repository=repository.name
-                repository=repository
-                migrationEnabled=owner.allowMigration
-                name=repository.name
-              }}
-            {{/each}}
-          </ul>
-        </div>
-      {{/if}}
-
     </div>
 
   {{else}}
 
-    <div id='github-apps-invitation' class='{{unless legacyRepos 'expanded'}}'>
+    <div id='github-apps-invitation' class='{{unless hasLegacyRepos 'expanded'}}'>
 
       <h2>GitHub Apps Integration</h2>
       <p>

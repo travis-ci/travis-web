@@ -30,11 +30,13 @@ Router.map(function () {
     this.route('repositories');
     this.route('settings', { path: '/preferences' });
     this.route('billing', { path: '/subscription' });
+    this.route('migrate');
   });
   this.route('organization', { path: '/organizations/:login' }, function () {
     this.route('repositories');
     this.route('settings', { path: '/preferences' });
     this.route('billing', { path: '/subscription' });
+    this.route('migrate');
   });
   this.route('unsubscribe', { path: '/account/preferences/unsubscribe' });
   this.route('profile', { path: '/profile/:login' });

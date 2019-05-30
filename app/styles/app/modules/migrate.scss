@@ -1,0 +1,95 @@
+.migrate {
+
+  h1 {
+    color: $oxide-blue;
+    font-weight: 200;
+  }
+
+  p {
+    margin: 0 0 10px 0;
+  }
+
+  &__activate {
+    margin: 20px 0;
+
+    &-note {
+      font-style: italic;
+    }
+
+    .migrate__github-icon {
+      fill: white;
+      margin-right: 8px;
+    }
+
+  }
+
+  &__activate-all {
+    display: inline-block;
+    padding: 2px 0;
+    border-bottom: 1px solid $dry-cement;
+
+    &:hover {
+      border-color: $cement-grey;
+    }
+  }
+
+  &__github-icon {
+    width: 18px;
+    height: 18px;
+    fill: #cccccc;
+    vertical-align: text-bottom;
+    margin-left: 5px;
+  }
+
+  &__repo-list {
+    margin-top: 20px;
+  }
+
+  &__select-all {
+    margin-bottom: 20px;
+    font-size: 15px;
+  }
+
+  &__submit {
+    margin-top: 15px;
+  }
+
+  &__status {
+
+    .loading-indicator {
+      display: flex;
+      margin-left: 10px;
+    }
+
+    .icon {
+      width: 20px;
+      height: 20px;
+      margin: 0;
+      padding: 0;
+
+      circle {
+        display: none;
+      }
+
+    }
+
+    &.failure {
+      .icon path {
+        stroke: #db4545;
+      }
+    }
+
+    &.success {
+      .icon path {
+        stroke: $oxide-blue;
+      }
+    }
+
+  }
+
+  .profile-repo {
+    padding-right: 0;
+    margin-right: 5px;
+  }
+
+}

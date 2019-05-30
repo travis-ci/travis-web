@@ -27,6 +27,9 @@ export default Component.extend({
   accountName: or('model.name', 'model.login'),
   billingUrl: or('model.subscription.billingUrl', 'model.billingUrl'),
 
+  reposToMigrate: reads('model.githubAppsRepositoriesOnOrg'),
+
+  showMigrateTab: and('features.proVersion', 'model.allowMigration'),
   showSubscriptionStatusBanner: and('checkSubscriptionStatus', 'model.subscriptionError'),
   showMigrationBetaBanner: and('isNotProVersion', 'hasAccountsForBeta'),
 
@@ -40,8 +43,7 @@ export default Component.extend({
   },
 
   checkSubscriptionStatus: computed('features.enterpriseVersion', function () {
-    let enterprise = this.get('features.enterpriseVersion');
-    return !enterprise && !!billingEndpoint;
+    return !this.features.get('enterpriseVersion') && !!billingEndpoint;
   }),
 
 });
