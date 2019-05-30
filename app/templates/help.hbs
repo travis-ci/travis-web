@@ -9,15 +9,10 @@
     <div class="subheading align-center" data-test-help-page-navigation-links>
       View our most read
       <a class="pointer" onclick={{action 'setAnchor' 'docs'}}>documentation</a>,
-      {{#if showSupportForm}}
-        popular topics in our
-        <a class="pointer" onclick={{action 'setAnchor' 'community'}}>Community forum</a>,
-        or
-        <a class="pointer" onclick={{action 'setAnchor' 'form'}}>talk with us!</a>
-      {{else}}
-        or talk with us in our
-        <a class="pointer" onclick={{action 'setAnchor' 'community'}}>Community forum</a>!
-      {{/if}}
+      popular topics in our
+      <a class="pointer" onclick={{action 'setAnchor' 'community'}}>Community forum</a>,
+      or
+      <a class="pointer" onclick={{action 'setAnchor' 'form'}}>talk with us</a>!
     </div>
 
     <div class="status align-center" data-test-help-page-status>
@@ -59,17 +54,46 @@
     </div>
   {{/layout.section}}
 
-  {{#if showSupportForm}}
-    {{#layout.section class="help-page__support" hasBackground=(not isLoggedIn) data-test-help-page-support-section=true }}
-      {{#if toForm}}{{scroll-here}}{{/if}}
+  {{#layout.section class="help-page__support" hasBackground=(not showSupportForm) data-test-help-page-support-section=true }}
+    {{#if toForm}}{{scroll-here}}{{/if}}
 
-      {{#if isLoggedIn}}
-        <div class="section-divider"></div>
-      {{/if}}
-
+    {{#if showSupportForm}}
       {{zendesk-request-form page=page }}
+    {{else if showLoginPrompt}}
+      <h1 class="header-main align-center">
+        Get help
+      </h1>
 
-    {{/layout.section}}
-  {{/if}}
+      <div class="sign-in-image align-center" data-test-zendesk-form-log-in-image>
+        {{svg-jar 'hard-hat'}}
+      </div>
+
+      <div class="sign-in align-center">
+        <button
+          title="Sign into Travis CI"
+          class="hero-button"
+          {{action (action 'signIn' false target=auth)}}
+          data-test-zendesk-form-log-in-button
+        >
+          {{svg-jar 'icon-repooctocat' }} Sign in with GitHub
+        </button>
+      </div>
+    {{else}}
+      <h1 class="header-main align-center">
+        Get help in our Community forum
+      </h1>
+
+      <div class="subheading align-center">
+        Talk with developers and experts,
+        submit {{#external-link-to href=featureRequestUrl}}feature requests{{/external-link-to}},
+        and more in our {{#external-link-to href=communityUrl}}Community forum{{/external-link-to}}
+      </div>
+
+      <div class="sign-in-image align-center" data-test-zendesk-form-log-in-image>
+        {{svg-jar 'hard-hat'}}
+      </div>
+    {{/if}}
+
+  {{/layout.section}}
 
 {{/travis-layout}}

@@ -1,7 +1,7 @@
 import Controller from '@ember/controller';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
-import { reads, equal, filterBy, notEmpty, or, and } from '@ember/object/computed';
+import { reads, equal, filterBy, notEmpty, or, and, not } from '@ember/object/computed';
 import config from 'travis/config/environment';
 
 export const ANCHOR = {
@@ -27,6 +27,7 @@ export default Controller.extend({
   page: '',
 
   isLoggedIn: reads('auth.signedIn'),
+  isNotLoggedIn: not('isLoggedIn'),
   isPro: reads('features.proVersion'),
 
   subscriptions: reads('accounts.subscriptions'),
@@ -34,7 +35,8 @@ export default Controller.extend({
   isSubscribed: notEmpty('activeSubscriptions'),
   isEducation: reads('accounts.user.education'),
   isPremium: or('isSubscribed', 'isEducation'),
-  showSupportForm: and('isPro', 'isPremium'),
+  showSupportForm: and('isPro', 'isLoggedIn', 'isPremium'),
+  showLoginPrompt: and('isPro', 'isNotLoggedIn'),
 
   toTop: equal('anchor', ANCHOR.TOP),
   toDocs: equal('anchor', ANCHOR.DOCS),
@@ -48,9 +50,8 @@ export default Controller.extend({
   noRunUrl: computed(() => `${noRun}${UTM_PARAMS}`),
   tutorialUrl: computed(() => `${tutorial}${UTM_PARAMS}`),
 
-  communityUrl: computed(() =>
-    `${community}/top?utm_source=${UTM_SOURCE}&utm_medium=${UTM_MEDIUM}`
-  ),
+  communityUrl: computed(() => `${community}/top${UTM_PARAMS}`),
+  featureRequestUrl: computed(() => `${community}/c/product/feature-requests${UTM_PARAMS}`),
 
   actions: {
 
