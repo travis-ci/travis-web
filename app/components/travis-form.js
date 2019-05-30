@@ -1,5 +1,4 @@
 import Component from '@ember/component';
-import { computed } from '@ember/object';
 import { gt, filterBy, not } from '@ember/object/computed';
 import * as validators from 'travis/utils/form-validators';
 
@@ -13,11 +12,7 @@ export default Component.extend({
 
   hasErrors: gt('erroredFields.length', 0),
 
-  isValid: computed('fields.length', 'validFields.length', function () {
-    return this.validFields.length === this.fields.length;
-  }),
-
-  isNotValid: not('isValid'),
+  isValid: not('hasErrors'),
 
   onSubmit() {},
 

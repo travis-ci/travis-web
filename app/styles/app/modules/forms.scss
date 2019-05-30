@@ -101,6 +101,11 @@ textarea {
       vertical-align: bottom;
       margin-bottom: 2px;
     }
+
+    .form-elem:last-of-type {
+      width: 6%;
+      margin-bottom: 27px;
+    }
   }
 }
 
@@ -144,11 +149,6 @@ textarea {
       width: grid-calc(3, 10);
       margin-right: 0em;
       padding-right: 5px;
-    }
-
-    .form-elem:last-of-type {
-      width: 6%;
-      margin-bottom: 27px;
     }
   }
 }

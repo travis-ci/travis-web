@@ -88,7 +88,7 @@ export default create({
     fillName: fillable('input[placeholder=Name]'),
     fillValue: fillable('input[placeholder=Value]'),
     makePublic: clickable('.switch'),
-    add: clickable('input[type=submit]')
+    add: clickable('.add-env-form-submit')
   },
 
   crons: collection('.settings-list--crons .settings-cron', {
