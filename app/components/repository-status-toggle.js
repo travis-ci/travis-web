@@ -1,9 +1,7 @@
 import Component from '@ember/component';
 import config from 'travis/config/environment';
 import { task } from 'ember-concurrency';
-import { computed } from '@ember/object';
-import { inject as service } from '@ember/service';
-import hasErrorWithStatus from 'travis/utils/api-errors';
+import { computed } from 'ember-decorators/object';
 
 export default Component.extend({
   tagName: 'li',
@@ -21,22 +19,30 @@ export default Component.extend({
     },
 
     resetErrors() {
-      return this.set('apiError', null);
+      return this.set('showError', false);
+    }
+  },
+
+  @computed('repository.permissions')
+  admin(permissions) {
+    if (permissions) {
+      return permissions.admin;
     }
   },
 
   toggleRepositoryTask: task(function* () {
-    const repository = this.repository;
-    try {
-      yield repository.toggle();
-      yield repository.reload();
-      this.pusher.subscribe(`repo-${repository.id}`);
-    } catch (error) {
-      this.set('apiError', error);
+    if (!this.get('disabled')) {
+      this.sendAction('onToggle');
+
+      let repository = this.get('repository');
+
+      let pusher = this.get('pusher'),
+        repoId = repository.get('id');
+
+      yield repository.toggle().then(() => {
+        pusher.subscribe(`repo-${repoId}`);
+        this.toggleProperty('repository.active');
+      }, () => { this.sendAction('onToggleError', repository); });
     }
   }),
-
-  is409error: computed('apiError', function () {
-    return hasErrorWithStatus(this.apiError, '409');
-  })
 });
