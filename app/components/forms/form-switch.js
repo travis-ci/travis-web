@@ -4,7 +4,7 @@ import abstractMethod from 'travis/utils/abstract-method';
 
 export default Component.extend({
   tagName: 'button',
-  classNames: ['travis-switch', 'switch', 'inline-block'],
+  classNames: ['switch', 'inline-block', 'travis-form__field--switch'],
   classNameBindings: ['checked:active', 'disabled:disabled'],
   attributeBindings: ['ariaChecked:aria-checked', 'role', 'type'],
 
