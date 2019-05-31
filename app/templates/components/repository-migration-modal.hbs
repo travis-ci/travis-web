@@ -1,51 +1,62 @@
-<h3 data-test-repository-migration-modal-header class="h3--teal">Migrate {{repository.slug}} ?</h3>
+<h3 data-test-repository-migration-modal-header
+  class="h3--teal"
+>
+  Migrate selected repositories
+</h3>
+
 <p data-test-repository-migration-modal-text-first>
-  Please confirm that you would like to migrate the <b>{{repository.slug}}</b>
-  repository from travis-ci.org to travis-ci.com.
+  Please confirm that you would like to migrate the following repositories
+  from travis-ci.org to travis-ci.com:
 </p>
 
+{{#paper-block class='profile-repolist-wrapper'}}
+  <ul class="profile-repositorylist">
+    {{#each repositories as |repository| }}
+      <li class="profile-repolist-item">
+        {{repository-visibility-icon repository=repository}}
+        <span class="profile-repo">
+          {{repository.name}}
+        </span>
+      </li>
+    {{/each}}
+  </ul>
+{{/paper-block}}
+
 <p data-test-repository-migration-modal-text-second>
-  We will migrate all the critical information needed to initiate builds to get
-  you back up and running quickly.
+  We will migrate all the critical information needed to get you back up and running as soon as possible.
 </p>
 
 <p data-test-repository-migration-modal-text-third>
-  Please note that your build history will not be migrated. This will be
-  available shortly. Until then you can access the history on <a
-   data-test-repository-migration-modal-org-build-history-link href={{concat
-  'https://travis-ci.org' repository.slug '/builds'}}>travis-ci.org</a>.
+  Please note that your build history will not be migrated at this time. Until then, you can access the existing build history at
+  <a data-test-repository-migration-modal-org-build-history-link
+     target='_blank'
+     href='https://travis-ci.org'
+  >travis-ci.org</a>.
 </p>
 
-<p data-test-repository-migration-modal-text-fourth>
-  If you have any questions or concerns about this process, please click CANCEL
-  and contact our <a data-test-repository-migration-modal-support-mailto-link href="mailto:support@travis-ci.com" title="Email the Travis CI support team">Customer Support Team</a>.
-</p>
+<div class="modal-controls">
+  <button
+    data-test-repository-migration-modal-cancel-migration-button
+    class="migration-modal-cancel button"
+    onclick={{action onClose}}
+  >
+    Cancel
+  </button>
 
-<a
-  data-test-repository-migration-modal-confirm-migration-button
-  href="#"
-  role="button"
-  class="button button--blue"
-  {{action "startMigration"}}
->
-  Migrate
-</a>
-
-<a
-  data-test-repository-migration-modal-cancel-migration-button
-  href="#"
-  role="button"
-  class="migration-modal-cancel button button--blue"
-  {{action onClose}}
->
-  Cancel
-</a>
+  <button
+    data-test-repository-migration-modal-confirm-migration-button
+    class="button button--blue"
+    onclick={{action "startMigration"}}
+  >
+    Migrate
+  </button>
+</div>
 
 <button
   type="button"
   title="Close modal"
   class="modal-close pointer"
-  {{action onClose}}
+  onclick={{action onClose}}
 >
   {{svg-jar 'icon-failed' class="icon"}}
 </button>
