@@ -29,8 +29,8 @@
   <div class='form-elem'>
     {{#form.field
       label='Display value in build log'
-      class='travis-form__field--switch'
-      showFrame=false
+      disableFrame=true
+      class='display-value-switch'
       value=public
       onChange=(action (mut public))
       as |field|
