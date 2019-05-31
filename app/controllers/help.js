@@ -1,7 +1,7 @@
 import Controller from '@ember/controller';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
-import { reads, equal, filterBy, notEmpty, or, and, not } from '@ember/object/computed';
+import { reads, equal, filterBy, empty, notEmpty, or, and, not } from '@ember/object/computed';
 import config from 'travis/config/environment';
 
 export const ANCHOR = {
@@ -30,11 +30,18 @@ export default Controller.extend({
   isNotLoggedIn: not('isLoggedIn'),
   isPro: reads('features.proVersion'),
 
+  user: reads('accounts.user'),
   subscriptions: reads('accounts.subscriptions'),
   activeSubscriptions: filterBy('subscriptions', 'isSubscribed', true),
   isSubscribed: notEmpty('activeSubscriptions'),
-  isEducation: reads('accounts.user.education'),
-  isPremium: or('isSubscribed', 'isEducation'),
+  isEducation: reads('user.education'),
+
+  trial: reads('user.trial'),
+  trialBuildsRemaining: reads('trial.buildsRemaining'),
+  noTrialYet: empty('trial'),
+
+  isPremium: or('isSubscribed', 'isEducation', 'trialBuildsRemaining', 'noTrialYet'),
+
   showSupportForm: and('isPro', 'isLoggedIn', 'isPremium'),
   showLoginPrompt: and('isPro', 'isNotLoggedIn'),
 
