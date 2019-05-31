@@ -1,8 +1,8 @@
-<nav class="travistab-nav--secondary">
+<nav class='travistab-nav--secondary'>
   <ul>
-    <li>{{link-to 'Job log' 'job.index' repo job data-test-job-log-tab id="tab_log" title="Look at this job's log"}}</li>
+    <li>{{link-to 'Job log' 'job.index' repo job data-test-job-log-tab id='tab_log' title="Look at this job's log"}}</li>
     <li>
-      {{#link-to 'job.config' repo job data-test-build-yaml-tab title="Look at this job’s config" disabled=job.build.request.noYaml}}
+      {{#link-to 'job.config' repo job data-test-build-yaml-tab title=tabTitle disabled=job.build.request.noYaml}}
         {{#if job.build.request.noYaml}}
           {{ember-tooltip text='Try a more recent job to see the config'}}
         {{/if}}
@@ -11,7 +11,6 @@
     </li>
   </ul>
 </nav>
-<div class="travistab-body job-tabs">
-
+<div class='travistab-body job-tabs'>
   {{outlet}}
 </div>

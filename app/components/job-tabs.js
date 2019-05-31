@@ -1,5 +1,6 @@
 import { isEmpty } from '@ember/utils';
 import Component from '@ember/component';
+import { computed } from '@ember/object';
 
 export default Component.extend({
 
@@ -11,5 +12,11 @@ export default Component.extend({
     if (isEmpty(this.$('.travistab-nav--secondary').find('.active'))) {
       this.$('#tab_log').addClass('active');
     }
-  }
+  },
+
+  tabTitle: computed('job.build.request.noYaml', function () {
+    if (this.get('job.build.request.noYaml')) { return null; }
+
+    return 'Look at this job’s config';
+  })
 });
