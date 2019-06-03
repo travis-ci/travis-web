@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
-import { reads, bool, filter } from '@ember/object/computed';
+import { reads, bool, filter, filterBy, not, or, and, empty, notEmpty } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
 import $ from 'jquery';
 import moment from 'moment';
@@ -20,7 +20,9 @@ const USER_EMAIL_DOMAINS_BLACKLIST = [
 export default Component.extend({
   classNames: ['zendesk-request-form'],
 
+  accounts: service(),
   auth: service(),
+  features: service(),
   flashes: service(),
   raven: service(),
 
@@ -41,6 +43,22 @@ export default Component.extend({
   }),
 
   isLoggedIn: reads('auth.signedIn'),
+  isNotLoggedIn: not('isLoggedIn'),
+  isPro: reads('features.proVersion'),
+
+  subscriptions: reads('accounts.subscriptions'),
+  activeSubscriptions: filterBy('subscriptions', 'isSubscribed', true),
+  isSubscribed: notEmpty('activeSubscriptions'),
+  isEducation: reads('auth.currentUser.education'),
+
+  trial: reads('auth.currentUser.trial'),
+  trialBuildsRemaining: reads('trial.buildsRemaining'),
+  noTrialYet: empty('trial'),
+
+  isPremium: or('isSubscribed', 'isEducation', 'trialBuildsRemaining', 'noTrialYet'),
+
+  showSupportForm: and('isPro', 'isLoggedIn', 'isPremium'),
+  showLoginPrompt: and('isPro', 'isNotLoggedIn'),
 
   startTime: UTC_START_TIME.local().format(DATE_FORMAT),
   endTime: UTC_END_TIME.local().format(DATE_FORMAT),

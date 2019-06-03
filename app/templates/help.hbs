@@ -54,48 +54,10 @@
     </div>
   {{/layout.section}}
 
-  {{#layout.section class="help-page__support" hasBackground=(not showSupportForm) data-test-help-page-support-section=true }}
+  {{#layout.section class="help-page__support" hasBackground=true data-test-help-page-support-section=true }}
     {{#if toForm}}{{scroll-here}}{{/if}}
 
-    {{#if showSupportForm}}
-      {{zendesk-request-form page=page }}
-    {{else if showLoginPrompt}}
-      <h1 class="header-main align-center">
-        Get help from the experts
-      </h1>
-      <div class="subheading align-center">
-        Logging into your account and finding an example of your problem will speed up getting an answer
-      </div>
-
-      <div class="sign-in-image align-center" data-test-zendesk-form-log-in-image>
-        {{svg-jar 'hard-hat'}}
-      </div>
-
-      <div class="sign-in align-center">
-        <button
-          title="Sign into Travis CI"
-          class="hero-button"
-          {{action (action 'signIn' false target=auth)}}
-          data-test-zendesk-form-log-in-button
-        >
-          {{svg-jar 'icon-repooctocat' }} Sign in with GitHub
-        </button>
-      </div>
-    {{else}}
-      <h1 class="header-main align-center">
-        Get help in our Community forum
-      </h1>
-
-      <div class="subheading align-center">
-        Talk with developers and experts,
-        submit {{#external-link-to href=featureRequestUrl}}feature requests{{/external-link-to}},
-        and more in our {{#external-link-to href=communityUrl}}Community forum{{/external-link-to}}
-      </div>
-
-      <div class="sign-in-image align-center" data-test-zendesk-form-log-in-image>
-        {{svg-jar 'hard-hat'}}
-      </div>
-    {{/if}}
+    {{zendesk-request-form page=page }}
 
   {{/layout.section}}
 
