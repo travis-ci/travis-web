@@ -1,139 +1,147 @@
 <div class="settings">
 
-  <section class="settings-section">
-    <h2 class="small-title">General</h2>
-    <ul class="settings-list--columns">
-      <li>{{settings-switch active=model.settings.build_pushes repo=repo description="Build pushed branches" key="build_pushes"}}
-        <a href="https://docs.travis-ci.com/user/web-ui/#build-pushed-branches"
-           title="about branch updates" class="settings-tooltip">
-           {{ember-tooltip text='Read more about branch updates'}}
-           {{svg-jar 'icon-help' class="icon-help"}}</a>
-      </li>
-      <li>{{limit-concurrent-builds value=model.settings.maximum_number_of_builds enabled=concurrentBuildsLimit repo=repo}}</li>
-      <li>{{settings-switch active=model.settings.build_pull_requests repo=repo description="Build pushed pull requests" key="build_pull_requests"}}
-        <a href="https://docs.travis-ci.com/user/web-ui/#build-pushed-pull-requests"
-           title="about pull request updates" class="settings-tooltip">
-           {{ember-tooltip text='Read more about pull request updates'}}
-           {{svg-jar 'icon-help' class="icon-help"}}</a>
-      </li>
-    </ul>
-  </section>
+	<section class="settings-section">
+		<h2 class="small-title">General</h2>
+		<ul class="settings-list--columns">
+			<li>{{settings-switch active=model.settings.build_pushes repo=repo description="Build pushed branches" key="build_pushes"}}
+				<a href="https://docs.travis-ci.com/user/web-ui/#build-pushed-branches" title="about branch updates"
+					class="settings-tooltip">
+					{{ember-tooltip text='Read more about branch updates'}}
+					{{svg-jar 'icon-help' class="icon-help"}}</a>
+			</li>
+			<li>{{limit-concurrent-builds value=model.settings.maximum_number_of_builds enabled=concurrentBuildsLimit repo=repo}}
+			</li>
+			<li>{{settings-switch active=model.settings.build_pull_requests repo=repo description="Build pushed pull requests" key="build_pull_requests"}}
+				<a href="https://docs.travis-ci.com/user/web-ui/#build-pushed-pull-requests"
+					title="about pull request updates" class="settings-tooltip">
+					{{ember-tooltip text='Read more about pull request updates'}}
+					{{svg-jar 'icon-help' class="icon-help"}}</a>
+			</li>
+		</ul>
+	</section>
 
-  {{#if showAutoCancellationSwitches}}
-    <section class="settings-section auto-cancellation">
-      <h2 class="small-title display-inline">Auto Cancellation</h2>
+	{{#if showAutoCancellationSwitches}}
+	<section class="settings-section auto-cancellation">
+		<h2 class="small-title display-inline">Auto Cancellation</h2>
 
-      <p>Auto Cancellation allows you to only run builds for the latest commits in the queue. This setting can be applied to builds for Branch builds and Pull Request builds separately. Builds will only be canceled if they are waiting to run, allowing for any running jobs to finish.</p>
+		<p>Auto Cancellation allows you to only run builds for the latest commits in the queue. This setting can be
+			applied to builds for Branch builds and Pull Request builds separately. Builds will only be canceled if they
+			are waiting to run, allowing for any running jobs to finish.</p>
 
-      <ul class="settings-list--columns">
-        <li>{{settings-switch active=model.settings.auto_cancel_pushes repo=repo description="Auto cancel branch builds" key="auto_cancel_pushes"}}</li>
-        <li>{{settings-switch active=model.settings.auto_cancel_pull_requests repo=repo description="Auto cancel pull request builds" key="auto_cancel_pull_requests"}}</li>
-      </ul>
-    </section>
-  {{/if}}
+		<ul class="settings-list--columns">
+			<li>{{settings-switch active=model.settings.auto_cancel_pushes repo=repo description="Auto cancel branch builds" key="auto_cancel_pushes"}}
+			</li>
+			<li>{{settings-switch active=model.settings.auto_cancel_pull_requests repo=repo description="Auto cancel pull request builds" key="auto_cancel_pull_requests"}}
+			</li>
+		</ul>
+	</section>
+	{{/if}}
 
-  {{#if showAllowConfigImportsSwitch}}
-    <section class="settings-section config-import">
-      <h2 class="small-title display-inline">Config Import</h2>
+	{{#if showAllowConfigImportsSwitch}}
+	<section class="settings-section config-import">
+		<h2 class="small-title display-inline">Config Import</h2>
 
-      <ul class="settings-list--columns">
-        <li>{{settings-switch active=model.settings.allow_config_imports repo=repo description="Allow importing config files from this repository" key="allow_config_imports"}}</li>
-      </ul>
-    </section>
-  {{/if}}
+		<ul class="settings-list--columns">
+			<li>{{settings-switch active=model.settings.allow_config_imports repo=repo description="Allow importing config files from this repository" key="allow_config_imports"}}
+			</li>
+		</ul>
+	</section>
+	{{/if}}
 
-  <section class="settings-section">
-    <h2 class="small-title">Environment Variables</h2>
+	<section class="settings-section">
+		<h2 class="small-title">Environment Variables</h2>
 
-    <p>Notice that the values are not escaped when your builds are executed. Special characters (for bash) should be escaped accordingly.</p>
+		<p>Customize your build using environment variables. For secure tips on generating private keys
+			<a
+				href='https://docs.travis-ci.com/user/best-practices-security#recommendations-on-how-to-avoid-leaking-secrets-to-build-logs'>
+				read our documentation
+			</a>.</p>
 
-    <ul class="settings-list--envvars">
-      {{#each envVars as |envVar|}}
-        {{env-var envVar=envVar}}
-      {{/each}}
-    </ul>
+		<ul class="settings-list--envvars">
+			{{#each envVars as |envVar|}}
+			{{env-var envVar=envVar}}
+			{{/each}}
+		</ul>
 
-    <div id='env-var-secrecy'>
-      <p>
-        {{svg-jar 'icon-megaphone' class='icon icon-megaphone'}}
-        <span class="label-align">
-          Please make sure your secret key is never related to the repository, branch name, or any other guessable string.
-          For more tips on generating keys
-          <a href='https://docs.travis-ci.com/user/best-practices-security/#Steps-Travis-CI-takes-to-secure-your-data'>
-          read our documentation</a>.
-        </span>
-      </p>
-    </div>
+		<div id='env-var-secrecy'>
+			<p>
+				{{svg-jar 'icon-megaphone' class='icon icon-megaphone'}}
+				<span class="label-align">
+					If your secret variable has especial characters like &, escape it by adding \ in front of it. For
+					example ma&w!doc would be typed as ma\&w\!doc.
+				</span>
+			</p>
+		</div>
 
-    {{add-env-var repo=repo}}
+		{{add-env-var repo=repo}}
 
-  </section>
+	</section>
 
-  <section class="settings-section">
-      <h2 class="small-title display-inline">Cron Jobs</h2>
+	<section class="settings-section">
+		<h2 class="small-title display-inline">Cron Jobs</h2>
 
-    <ul class="settings-list--crons">
-      {{#each cronJobs as |cron|}}
-        {{cron-job cron=cron}}
-      {{/each}}
-    </ul>
+		<ul class="settings-list--crons">
+			{{#each cronJobs as |cron|}}
+			{{cron-job cron=cron}}
+			{{/each}}
+		</ul>
 
-    {{#if sortedBranchesWithoutCron.length}}
-        {{add-cron-job branches=sortedBranchesWithoutCron}}
-    {{else}}
-        <p class="text-medium">There are no branches you can currently add crons to.</p>
-    {{/if}}
+		{{#if sortedBranchesWithoutCron.length}}
+		{{add-cron-job branches=sortedBranchesWithoutCron}}
+		{{else}}
+		<p class="text-medium">There are no branches you can currently add crons to.</p>
+		{{/if}}
 
-  </section>
+	</section>
 
-{{#if (and config.endpoints.sshKey repo.private)}}
-  <section class="settings-section" data-test-ssh-key-section>
-    <h2 class="small-title">SSH Key</h2>
+	{{#if (and config.endpoints.sshKey repo.private)}}
+	<section class="settings-section" data-test-ssh-key-section>
+		<h2 class="small-title">SSH Key</h2>
 
-    {{#if model.customSshKey}}
-      {{ssh-key key=model.customSshKey sshKeyDeleted="sshKeyDeleted" pushAccess=model.hasPushAccess}}
-    {{else}}
-      {{ssh-key key=model.sshKey}}
+		{{#if model.customSshKey}}
+		{{ssh-key key=model.customSshKey sshKeyDeleted="sshKeyDeleted" pushAccess=model.hasPushAccess}}
+		{{else}}
+		{{ssh-key key=model.sshKey}}
 
-      {{#if model.hasPushAccess}}
-        {{add-ssh-key repo=repo sshKeyAdded="sshKeyAdded"}}
-      {{/if}}
-    {{/if}}
+		{{#if model.hasPushAccess}}
+		{{add-ssh-key repo=repo sshKeyAdded="sshKeyAdded"}}
+		{{/if}}
+		{{/if}}
 
-    {{#unless model.hasPushAccess}}
-      <p>You don't have sufficient permissons to add or remove ssh keys on this repository.</p>
-    {{/unless}}
+		{{#unless model.hasPushAccess}}
+		<p>You don't have sufficient permissons to add or remove ssh keys on this repository.</p>
+		{{/unless}}
 
-  </section>
-{{/if}}
+	</section>
+	{{/if}}
 </div>
 
 {{#if displaySettingsDisabledAfterMigrationModal}}
-  {{#modal-dialog
+{{#modal-dialog
     targetAttachment="center"
     translucentOverlay=true
     overlayPosition='sibling'
     animatable=(config-get 'liquidFire.enabled')
   }}
-    <div data-test-settings-disabled-after-migration-modal>
-      <h3 class="h3--teal">Your repository has been migrated to travis-ci.com</h3>
-      <p>As a result, your repository is now in a read-only state.
-      </p>
-      <p>
-        If you wish to configure your repository, you can do so by visiting the
-        Settings page on travis-ci.com.
-        Read-only historical data, such as Requests, Build History and Branches can still be viewed.
-      </p>
-      <p>
-        <br />
-        <br />
-        {{#link-to 'builds' repo class="button--white-and-teal"}}
-          Return to Build History
-        {{/link-to}}
-        {{#external-link-to class="button--white-and-teal" href=migratedRepositorySettingsLink}}
-          Edit Settings (travis-ci.com)
-        {{/external-link-to}}
-      </p>
-    </div>
-  {{/modal-dialog}}
+<div data-test-settings-disabled-after-migration-modal>
+	<h3 class="h3--teal">Your repository has been migrated to travis-ci.com</h3>
+	<p>As a result, your repository is now in a read-only state.
+	</p>
+	<p>
+		If you wish to configure your repository, you can do so by visiting the
+		Settings page on travis-ci.com.
+		Read-only historical data, such as Requests, Build History and Branches can still be viewed.
+	</p>
+	<p>
+		<br />
+		<br />
+		{{#link-to 'builds' repo class="button--white-and-teal"}}
+		Return to Build History
+		{{/link-to}}
+		{{#external-link-to class="button--white-and-teal" href=migratedRepositorySettingsLink}}
+		Edit Settings (travis-ci.com)
+		{{/external-link-to}}
+	</p>
+</div>
+{{/modal-dialog}}
 {{/if}}
