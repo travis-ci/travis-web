@@ -42,8 +42,8 @@ export default Component.extend({
     return buildDescriptionTemplate(this.page);
   }),
 
-  isLoggedIn: reads('auth.signedIn'),
-  isNotLoggedIn: not('isLoggedIn'),
+  isSignedIn: reads('auth.signedIn'),
+  isNotSignedIn: not('isSignedIn'),
   isPro: reads('features.proVersion'),
 
   subscriptions: reads('accounts.subscriptions'),
@@ -57,8 +57,8 @@ export default Component.extend({
 
   isPremium: or('isSubscribed', 'isEducation', 'trialBuildsRemaining', 'noTrialYet'),
 
-  showSupportForm: and('isPro', 'isLoggedIn', 'isPremium'),
-  showLoginPrompt: and('isPro', 'isNotLoggedIn'),
+  showSupportForm: and('isPro', 'isSignedIn', 'isPremium'),
+  showLoginPrompt: and('isPro', 'isNotSignedIn'),
 
   startTime: UTC_START_TIME.local().format(DATE_FORMAT),
   endTime: UTC_END_TIME.local().format(DATE_FORMAT),

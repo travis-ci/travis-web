@@ -26,7 +26,7 @@ export default Controller.extend({
   anchor: ANCHOR.TOP,
   page: '',
 
-  isLoggedIn: reads('auth.signedIn'),
+  isSignedIn: reads('auth.signedIn'),
 
   toTop: equal('anchor', ANCHOR.TOP),
   toDocs: equal('anchor', ANCHOR.DOCS),
