@@ -3,17 +3,20 @@
 	<section class="settings-section">
 		<h2 class="small-title">General</h2>
 		<ul class="settings-list--columns">
-			<li>{{settings-switch active=model.settings.build_pushes repo=repo description="Build pushed branches" key="build_pushes"}}
+			<li>
+				{{settings-switch active=model.settings.build_pushes repo=repo description="Build pushed branches" key="build_pushes"}}
 				<a href="https://docs.travis-ci.com/user/web-ui/#build-pushed-branches" title="about branch updates"
 					class="settings-tooltip">
 					{{ember-tooltip text='Read more about branch updates'}}
 					{{svg-jar 'icon-help' class="icon-help"}}</a>
 			</li>
-			<li>{{limit-concurrent-builds value=model.settings.maximum_number_of_builds enabled=concurrentBuildsLimit repo=repo}}
+			<li>
+				{{limit-concurrent-builds value=model.settings.maximum_number_of_builds enabled=concurrentBuildsLimit repo=repo}}
 			</li>
-			<li>{{settings-switch active=model.settings.build_pull_requests repo=repo description="Build pushed pull requests" key="build_pull_requests"}}
-				<a href="https://docs.travis-ci.com/user/web-ui/#build-pushed-pull-requests"
-					title="about pull request updates" class="settings-tooltip">
+			<li>
+				{{settings-switch active=model.settings.build_pull_requests repo=repo description="Build pushed pull requests" key="build_pull_requests"}}
+				<a href="https://docs.travis-ci.com/user/web-ui/#build-pushed-pull-requests" title="about pull request updates"
+					class="settings-tooltip">
 					{{ember-tooltip text='Read more about pull request updates'}}
 					{{svg-jar 'icon-help' class="icon-help"}}</a>
 			</li>
@@ -29,9 +32,11 @@
 			are waiting to run, allowing for any running jobs to finish.</p>
 
 		<ul class="settings-list--columns">
-			<li>{{settings-switch active=model.settings.auto_cancel_pushes repo=repo description="Auto cancel branch builds" key="auto_cancel_pushes"}}
+			<li>
+				{{settings-switch active=model.settings.auto_cancel_pushes repo=repo description="Auto cancel branch builds" key="auto_cancel_pushes"}}
 			</li>
-			<li>{{settings-switch active=model.settings.auto_cancel_pull_requests repo=repo description="Auto cancel pull request builds" key="auto_cancel_pull_requests"}}
+			<li>
+				{{settings-switch active=model.settings.auto_cancel_pull_requests repo=repo description="Auto cancel pull request builds" key="auto_cancel_pull_requests"}}
 			</li>
 		</ul>
 	</section>
@@ -42,7 +47,8 @@
 		<h2 class="small-title display-inline">Config Import</h2>
 
 		<ul class="settings-list--columns">
-			<li>{{settings-switch active=model.settings.allow_config_imports repo=repo description="Allow importing config files from this repository" key="allow_config_imports"}}
+			<li>
+				{{settings-switch active=model.settings.allow_config_imports repo=repo description="Allow importing config files from this repository" key="allow_config_imports"}}
 			</li>
 		</ul>
 	</section>
