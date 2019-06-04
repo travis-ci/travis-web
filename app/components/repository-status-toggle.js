@@ -20,7 +20,7 @@ export default Component.extend({
     },
 
     resetErrors() {
-      return this.set('apiError', false);
+      return this.set('apiError', null);
     }
   },
 
