@@ -35,19 +35,18 @@ export default Component.extend({
     if (!this.get('disabled')) {
       this.sendAction('onToggle');
 
-        let repository = this.get('repository');
+      let repository = this.get('repository');
 
-        let pusher = this.get('pusher'),
-          repoId = repository.get('id');
+      let pusher = this.get('pusher'),
+        repoId = repository.get('id');
 
-        yield repository.toggle().then(() => {
-          pusher.subscribe(`repo-${repoId}`);
-          this.toggleProperty('repository.active');
-        }, (error) => {
-          this.set('apiError', error);
-          this.sendAction('onToggleError', repository);
-        });
-
+      yield repository.toggle().then(() => {
+        pusher.subscribe(`repo-${repoId}`);
+        this.toggleProperty('repository.active');
+      }, (error) => {
+        this.set('apiError', error);
+        this.sendAction('onToggleError', repository);
+      });
     }
   }),
 
