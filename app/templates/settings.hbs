@@ -47,9 +47,9 @@
 
     <p>
       Customize your build using environment variables. For secure tips on generating private keys
-      <a href="https://docs.travis-ci.com/user/best-practices-security#recommendations-on-how-to-avoid-leaking-secrets-to-build-logs">
-        read our documentation.
-      </a>
+      {{#external-link-to href=(config-get 'urls.bestpracticessecurity')}}
+        read our documentation
+      {{/external-link-to}}
     </p>
 
     <ul class="settings-list--envvars">
