@@ -1,6 +1,5 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { and } from '@ember/object/computed';
 
 export default Component.extend({
   tagName: 'li',
@@ -12,11 +11,6 @@ export default Component.extend({
     if (permissions) {
       return permissions.admin;
     }
-  }),
+  })
 
-  migratable: and('migrationEnabled', 'repository.permissions.migrate'),
-
-  migrationInProgress: computed('repository.migrationStatus', function () {
-    return ['migrating', 'queued'].includes(this.get('repository.migrationStatus'));
-  }),
 });
