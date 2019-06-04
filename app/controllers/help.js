@@ -18,7 +18,6 @@ const UTM_PARAMS = `?utm_source=${UTM_SOURCE}&utm_medium=${UTM_MEDIUM}`;
 const { docs, community, docker, node, multiOS, noRun, tutorial } = config.urls;
 
 export default Controller.extend({
-  accounts: service(),
   auth: service(),
   features: service(),
 
