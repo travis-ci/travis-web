@@ -33,8 +33,7 @@ export default Component.extend({
 
   toggleRepositoryTask: task(function* () {
     if (!this.get('disabled')) {
-      try {
-        this.sendAction('onToggle');
+      this.sendAction('onToggle');
 
         let repository = this.get('repository');
 
@@ -44,10 +43,11 @@ export default Component.extend({
         yield repository.toggle().then(() => {
           pusher.subscribe(`repo-${repoId}`);
           this.toggleProperty('repository.active');
-        }, () => { this.sendAction('onToggleError', repository); });
-      } catch (error) {
-        this.set('apiError', error);
-      }
+        }, (error) => {
+          this.set('apiError', error);
+          this.sendAction('onToggleError', repository);
+        });
+
     }
   }),
 
