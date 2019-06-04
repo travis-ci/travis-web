@@ -108,7 +108,9 @@ module('Acceptance | help page', function (hooks) {
     hooks.beforeEach(async function () {
       this.user = server.create('user');
       enableFeature('proVersion');
+    });
 
+    test('it has correct structure', async function (assert) {
       this.trial = server.create('trial', {
         has_active_trial: true,
         builds_remaining: 100,
@@ -123,19 +125,87 @@ module('Acceptance | help page', function (hooks) {
 
       await signInUser(this.user);
       await helpPage.visit();
+
+      checkBasicStructure(assert, true);
+      assert.ok(helpPage.supportSection.form.isPresent);
     });
 
-    test('it has correct structure', function (assert) {
-      checkBasicStructure(assert, true);
+    test('form not present after trial', async function (assert) {
+      this.trial = server.create('trial', {
+        has_active_trial: true,
+        builds_remaining: 0,
+        owner: this.user,
+        status: 'ended',
+        created_at: new Date(2018, 7, 16),
+        permissions: {
+          read: true,
+          write: true
+        }
+      });
 
-      const { form } = helpPage.supportSection;
-      const { email, subject, description, submit } = form;
+      await signInUser(this.user);
+      await helpPage.visit();
 
-      assert.ok(form.isPresent);
-      assert.ok(email.isPresent);
-      assert.ok(subject.isPresent);
-      assert.ok(description.isPresent);
-      assert.ok(submit.isPresent);
+      assert.notOk(helpPage.supportSection.form.isPresent);
+    });
+
+    test('form present when subscribed after trial', async function (assert) {
+      this.trial = server.create('trial', {
+        has_active_trial: true,
+        builds_remaining: 0,
+        owner: this.user,
+        status: 'ended',
+        created_at: new Date(2018, 7, 16),
+        permissions: {
+          read: true,
+          write: true
+        }
+      });
+
+      this.subscription = server.create('subscription', {
+        owner: this.user,
+        status: 'subscribed',
+        valid_to: new Date(),
+      });
+
+      await signInUser(this.user);
+      await helpPage.visit();
+
+      assert.ok(helpPage.supportSection.form.isPresent);
+    });
+
+    test('form present when org subscribed after trial', async function (assert) {
+      this.trial = server.create('trial', {
+        has_active_trial: true,
+        builds_remaining: 0,
+        owner: this.user,
+        status: 'ended',
+        created_at: new Date(2018, 7, 16),
+        permissions: {
+          read: true,
+          write: true
+        }
+      });
+
+      this.organization = server.create('organization', {
+        name: 'Org Name',
+        type: 'organization',
+        login: 'org-login',
+        permissions: {
+          createSubscription: false
+        }
+      });
+
+      this.subscription = server.create('subscription', {
+        owner: this.organization,
+        status: 'subscribed',
+        valid_to: new Date(),
+      });
+
+      await signInUser(this.user);
+      await helpPage.visit();
+
+      assert.ok(helpPage.supportSection.form.isPresent);
     });
   });
 
