@@ -135,6 +135,7 @@
 .build-info {
   font-size: 15px;
   padding-left: 43px;
+  overflow-x: hidden;
 
   @media #{$medium-up} {
     flex: 0 1 37%;

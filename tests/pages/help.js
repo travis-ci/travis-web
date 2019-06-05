@@ -1,6 +1,8 @@
 import {
+  attribute,
   create,
   clickable,
+  collection,
   fillable,
   isPresent,
   text,
@@ -13,6 +15,16 @@ import {
   HELP_PAGE_GREETING_USERNAME,
   HELP_PAGE_NAVIGATION_LINKS,
   HELP_PAGE_STATUS,
+  HELP_PAGE_RESOURCES_SECTION,
+  HELP_PAGE_RESOURCES_IMAGE,
+  HELP_PAGE_RESOURCES_HEADER,
+  HELP_PAGE_RESOURCES_LIST,
+  HELP_PAGE_RESOURCES_BUTTON,
+  HELP_PAGE_TOPICS_SECTION,
+  HELP_PAGE_TOPICS_IMAGE,
+  HELP_PAGE_TOPICS_HEADER,
+  HELP_PAGE_TOPICS_LIST,
+  HELP_PAGE_TOPICS_BUTTON,
   HELP_PAGE_SUPPORT_SECTION,
   ZENDESK_FORM_HEADER,
   ZENDESK_FORM_SUPPORT_HOURS,
@@ -56,6 +68,72 @@ export default create({
     status: {
       scope: HELP_PAGE_STATUS,
       isPresent: isPresent()
+    }
+  },
+
+  resourceSection: {
+    scope: HELP_PAGE_RESOURCES_SECTION,
+    isPresent: isPresent(),
+
+    image: {
+      scope: HELP_PAGE_RESOURCES_IMAGE,
+      isPresent: isPresent()
+    },
+
+    header: {
+      scope: HELP_PAGE_RESOURCES_HEADER,
+      isPresent: isPresent(),
+      text: text()
+    },
+
+    list: {
+      scope: HELP_PAGE_RESOURCES_LIST,
+      isPresent: isPresent(),
+      items: collection('li', {
+        isPresent: isPresent(),
+        text: text(),
+        href: attribute('href')
+      })
+    },
+
+    button: {
+      scope: HELP_PAGE_RESOURCES_BUTTON,
+      isPresent: isPresent(),
+      text: text(),
+      href: attribute('href')
+    }
+  },
+
+  topicSection: {
+    scope: HELP_PAGE_TOPICS_SECTION,
+    isPresent: isPresent(),
+
+    image: {
+      scope: HELP_PAGE_TOPICS_IMAGE,
+      isPresent: isPresent()
+    },
+
+    header: {
+      scope: HELP_PAGE_TOPICS_HEADER,
+      isPresent: isPresent(),
+      text: text()
+    },
+
+    list: {
+      scope: HELP_PAGE_TOPICS_LIST,
+      isPresent: isPresent(),
+      items: collection('li', {
+        isPresent: isPresent(),
+        text: text(),
+        href: attribute('href')
+      })
+    },
+
+    button: {
+      scope: HELP_PAGE_TOPICS_BUTTON,
+      isPresent: isPresent(),
+      text: text(),
+      href: attribute('href')
     }
   },
 
