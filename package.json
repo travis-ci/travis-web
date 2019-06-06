@@ -19,7 +19,7 @@
     "deploy": "bash ./config/deployment/deploy-local.sh"
   },
   "devDependencies": {
-    "@ember/jquery": "^0.5.2",
+    "@ember/jquery": "^0.6.1",
     "@ember/optional-features": "^0.6.3",
     "active-model-adapter": "2.2.0",
     "ansiparse": "artursmirnov/ansiparse",
