@@ -14,9 +14,9 @@ export default Component.extend({
     return this.get('copied') ? 'Copied!' : `Copy ${fileNameWithoutSha(source)}`;
   }),
 
-  formattedConfig: computed('rawConfig.config', 'slug', function() {
+  formattedConfig: computed('rawConfig.config', 'slug', function () {
     let config = this.get('rawConfig.config');
-    if(config && config.charAt(0) == '{') {
+    if (config && config.charAt(0) == '{') {
       config = JSON.stringify(JSON.parse(config), null, 2);
     }
     return config;
