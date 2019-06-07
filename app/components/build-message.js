@@ -20,35 +20,35 @@ export default Component.extend({
   }),
 
   alias(key, args) {
-    return `<code>${escape(key)}</code>: <code>${escape(key, args.alias)}</code> is an alias for <code>${escape(args.obj)}</code> (<code>${escape(args.type)}</code>), using <code>${escape(args.obj)}</code>`;
+    return `<code>${escape(key)}</code>: <code>${escape(args.alias)}</code> is an alias for <code>${escape(args.obj)}</code> (<code>${escape(args.type)}</code>), using <code>${escape(args.obj)}</code>`;
   },
 
   cast(key, args) {
-    return `<code>${escape(key)}</code>: casting value <code>${escape(key, args.given_value)}</code> (<code>${escape(args.given_type)}</code>) to <code>${escape(args.value)}</code> (<code>${escape(args.type)}</code>)`;
+    return `<code>${escape(key)}</code>: casting value <code>${escape(args.given_value)}</code> (<code>${escape(args.given_type)}</code>) to <code>${escape(args.value)}</code> (<code>${escape(args.type)}</code>)`;
   },
 
   default(key, args) {
-    return `<code>${escape(key)}</code>: missing <code>${escape(key, args.key)}</code>, defaulting to: <code>${escape(args.default)}</code>`;
+    return `<code>${escape(key)}</code>: missing <code>${escape(args.key)}</code>, defaulting to: <code>${escape(args.default)}</code>`;
   },
 
   deprecated(key, args) {
-    return `<code>${escape(key)}</code> is deprecated: <code>${escape(key, args.info)}</code>`;
+    return `<code>${escape(key)}</code> is deprecated: <code>${escape(args.info)}</code>`;
   },
 
   deprecated_key(key, args) {
-    return `<code>${escape(key)}</code> deprecated key <code>${escape(key, args.key)}</code> (${escape(args.info)})`;
+    return `<code>${escape(key)}</code> deprecated key <code>${escape(args.key)}</code> (${escape(args.info)})`;
   },
 
   deprecated_value(key, args) {
-    return `<code>${escape(key)}</code>: deprecated value <code>${escape(key, args.value)}</code> (${escape(args.info)})`;
+    return `<code>${escape(key)}</code>: deprecated value <code>${escape(args.value)}</code> (${escape(args.info)})`;
   },
 
   downcase(key, args) {
-    return `<code>${escape(key)}</code>: downcasing <code>${escape(key, args.value)}</code>`;
+    return `<code>${escape(key)}</code>: downcasing <code>${escape(args.value)}</code>`;
   },
 
   duplicate(key, args) {
-    return `<code>${escape(key)}</code>: duplicate values: <code>${escape(key, args.values)}</code>`;
+    return `<code>${escape(key)}</code>: duplicate values: <code>${escape(args.values)}</code>`;
   },
 
   edge(key, args) {
@@ -56,11 +56,11 @@ export default Component.extend({
   },
 
   flagged(key, args) {
-    return `<code>${escape(key)}</code> your repository must be feature flagged for <code>${escape(key, args.key)}</code> to be used`;
+    return `<code>${escape(key)}</code> your repository must be feature flagged for <code>${escape(args.key)}</code> to be used`;
   },
 
   required(key, args) {
-    return `<code>${escape(key)}</code> missing required key <code>${escape(key, args.key)}</code>`;
+    return `<code>${escape(key)}</code> missing required key <code>${escape(args.key)}</code>`;
   },
 
   secure(key, args) {
@@ -72,67 +72,67 @@ export default Component.extend({
   },
 
   find_key(key, args) {
-    return `<code>${escape(key)}</code> key <code>${escape(key, args.original)}</code> is not known, but <code>${escape(args.key)}</code> is, using <code>${escape(args.key)}</code>`;
+    return `<code>${escape(key)}</code> key <code>${escape(args.original)}</code> is not known, but <code>${escape(args.key)}</code> is, using <code>${escape(args.key)}</code>`;
   },
 
   find_value(key, args) {
-    return `<code>${escape(key)}</code> value <code>${escape(key, args.original)}</code> is not known, but <code>${escape(args.value)}</code> is, using <code>${escape(args.value)}</code>`;
+    return `<code>${escape(key)}</code> value <code>${escape(args.original)}</code> is not known, but <code>${escape(args.value)}</code> is, using <code>${escape(args.value)}</code>`;
   },
 
   clean_key(key, args) {
-    return `<code>${escape(key)}</code> key <code>${escape(key, args.original)}</code> contains special characters, using <code>${escape(args.key)}</code>`;
+    return `<code>${escape(key)}</code> key <code>${escape(args.original)}</code> contains special characters, using <code>${escape(args.key)}</code>`;
   },
 
   clean_value(key, args) {
-    return `<code>${escape(key)}</code> value <code>${escape(key, args.original)}</code> is not known, but <code>${escape(args.value)}</code> is, using <code>${escape(args.value)}</code>`;
+    return `<code>${escape(key)}</code> value <code>${escape(args.original)}</code> is not known, but <code>${escape(args.value)}</code> is, using <code>${escape(args.value)}</code>`;
   },
 
   strip_key(key, args) {
-    return `<code>${escape(key)}</code> key <code>${escape(key, args.original)}</code> contains whitespace, using <code>${escape(args.key)}</code>`;
+    return `<code>${escape(key)}</code> key <code>${escape(args.original)}</code> contains whitespace, using <code>${escape(args.key)}</code>`;
   },
 
   underscore_key(key, args) {
-    return `<code>${escape(key)}</code> key <code>${escape(key, args.original)}</code> is not underscored, using <code>${escape(args.key)}</code>`;
+    return `<code>${escape(key)}</code> key <code>${escape(args.original)}</code> is not underscored, using <code>${escape(args.key)}</code>`;
   },
 
   unexpected_seq(key, args) {
-    return `<code>${escape(key)}</code> <code>${escape(key, args.key)}</code> unexpected sequence, using the first value (<code>${escape(args.value)}</code>)`;
+    return `<code>${escape(key)}</code> <code>${escape(args.key)}</code> unexpected sequence, using the first value (<code>${escape(args.value)}</code>)`;
   },
 
   unknown_key(key, args) {
-    return `<code>${escape(key)}</code> unknown key <code>${escape(key, args.key)}</code> (<code>${escape(args.value)}</code>)`;
+    return `<code>${escape(key)}</code> unknown key <code>${escape(args.key)}</code> (<code>${escape(args.value)}</code>)`;
   },
 
   unknown_value(key, args) {
-    return `<code>${escape(key)}</code> dropping unknown value: <code>${escape(key, args.value)}</code>`;
+    return `<code>${escape(key)}</code> dropping unknown value: <code>${escape(args.value)}</code>`;
   },
 
   unknown_default(key, args) {
-    return `<code>${escape(key)}</code> dropping unknown value: <code>${escape(key, args.value)}</code>, defaulting to: <code>${escape(args.default)}</code>`;
+    return `<code>${escape(key)}</code> dropping unknown value: <code>${escape(args.value)}</code>, defaulting to: <code>${escape(args.default)}</code>`;
   },
 
   unknown_var(key, args) {
-    return `<code>${escape(key)}</code> unknown template variable <code>${escape(key, args.var)}</code>`;
+    return `<code>${escape(key)}</code> unknown template variable <code>${escape(args.var)}</code>`;
   },
 
   unsupported(key, args) {
-    return `<code>${escape(key)}</code> the key <code>${escape(key, args.key)}</code> (<code>${escape(args.value)}</code>) is not supported on the <code>${escape(args.on_key)}</code> <code>${escape(args.on_value)}</code>`;
+    return `<code>${escape(key)}</code> the key <code>${escape(args.key)}</code> (<code>${escape(args.value)}</code>) is not supported on the <code>${escape(args.on_key)}</code> <code>${escape(args.on_value)}</code>`;
   },
 
   invalid_type(key, args) {
-    return `<code>${escape(key)}</code> dropping unexpected <code>${escape(key, args.actual)}</code>, expected <code>${escape(args.expected)}</code> (<code>${escape(args.value)}</code>)`;
+    return `<code>${escape(key)}</code> dropping unexpected <code>${escape(args.actual)}</code>, expected <code>${escape(args.expected)}</code> (<code>${escape(args.value)}</code>)`;
   },
 
   invalid_format(key, args) {
-    return `<code>${escape(key)}</code> dropping invalid format: <code>${escape(key, args.value)}</code>`;
+    return `<code>${escape(key)}</code> dropping invalid format: <code>${escape(args.value)}</code>`;
   },
 
   invalid_condition(key, args) {
-    return `<code>${escape(key)}</code> invalid condition: <code>${escape(key, args.condition)}</code>`;
+    return `<code>${escape(key)}</code> invalid condition: <code>${escape(args.condition)}</code>`;
   },
 
   invalid_env_var(key, args) {
-    return `<code>${escape(key)}</code> invalid env var: <code>${escape(key, args.var)}</code>`;
+    return `<code>${escape(key)}</code> invalid env var: <code>${escape(args.var)}</code>`;
   },
 
   iconClass: computed('message.level', function () {
