@@ -32,6 +32,7 @@ export default Controller.extend({
   toCommunity: equal('anchor', ANCHOR.COMMUNITY),
   toForm: equal('anchor', ANCHOR.FORM),
 
+  utmSource: computed(() => UTM_SOURCE),
   docsUrl: computed(() => `${docs}${UTM_PARAMS}`),
   dockerUrl: computed(() => `${docker}${UTM_PARAMS}`),
   nodeUrl: computed(() => `${node}${UTM_PARAMS}`),
@@ -40,7 +41,6 @@ export default Controller.extend({
   tutorialUrl: computed(() => `${tutorial}${UTM_PARAMS}`),
 
   communityUrl: computed(() => `${community}/top${UTM_PARAMS}`),
-  featureRequestUrl: computed(() => `${community}/c/product/feature-requests${UTM_PARAMS}`),
 
   actions: {
 

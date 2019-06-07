@@ -8,6 +8,7 @@ import moment from 'moment';
 import config from 'travis/config/environment';
 
 const { apiHost, createRequestEndpoint } = config.zendesk;
+const { community } = config.urls;
 
 export const UTC_START_TIME = moment.utc({ h: 9, m: 0, s: 0 });
 export const UTC_END_TIME = moment.utc({ h: 23, m: 0, s: 0 });
@@ -16,6 +17,8 @@ export const DATE_FORMAT = 'LT';
 const USER_EMAIL_DOMAINS_BLACKLIST = [
   'users.noreply.github.com'
 ];
+
+const UTM_MEDIUM = 'travisweb';
 
 export default Component.extend({
   classNames: ['zendesk-request-form'],
@@ -59,6 +62,17 @@ export default Component.extend({
 
   showSupportForm: and('isPro', 'isSignedIn', 'isPremium'),
   showLoginPrompt: and('isPro', 'isNotSignedIn'),
+
+  utmSource: 'zendesk-form',
+  utmParams: computed('utmSource', function () {
+    return `?utm_source=${this.utmSource}&utm_medium=${UTM_MEDIUM}`;
+  }),
+  communityUrl: computed('utmParams', function () {
+    return `${community}/top${this.utmParams}`;
+  }),
+  featureRequestUrl: computed('utmParams', function () {
+    return `${community}/c/product/feature-requests${this.utmParams}`;
+  }),
 
   startTime: UTC_START_TIME.local().format(DATE_FORMAT),
   endTime: UTC_END_TIME.local().format(DATE_FORMAT),
