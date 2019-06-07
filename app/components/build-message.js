@@ -7,10 +7,8 @@ import Ember from 'ember';
 const { escapeExpression: escape } = Ember.Handlebars.Utils;
 
 export default Component.extend({
-  readableMessage: computed('message.code', 'message.args', function () {
-    let code = this.get('message.code');
-    let key  = this.get('message.key');
-    let args = this.get('message.args');
+  readableMessage: computed('message.code', 'message.key', 'message.args', function () {
+    const { code, key, args } = this.message;
 
     if (this[code]) {
       return htmlSafe(this[code](key, args));
