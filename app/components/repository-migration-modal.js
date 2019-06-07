@@ -4,9 +4,12 @@ export default Component.extend({
   classNames: ['repository-migration-modal'],
 
   actions: {
+
     startMigration() {
-      this.get('repository').startMigration();
-      return this.get('onClose')();
-    },
-  },
+      this.repositories.forEach(repo => repo.startMigration());
+      return this.onClose();
+    }
+
+  }
+
 });
