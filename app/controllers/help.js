@@ -32,7 +32,7 @@ export default Controller.extend({
   toCommunity: equal('anchor', ANCHOR.COMMUNITY),
   toForm: equal('anchor', ANCHOR.FORM),
 
-  utmSource: computed(() => UTM_SOURCE),
+  utmParams: computed(() => UTM_PARAMS),
   docsUrl: computed(() => `${docs}${UTM_PARAMS}`),
   dockerUrl: computed(() => `${docker}${UTM_PARAMS}`),
   nodeUrl: computed(() => `${node}${UTM_PARAMS}`),

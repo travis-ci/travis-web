@@ -18,8 +18,6 @@ const USER_EMAIL_DOMAINS_BLACKLIST = [
   'users.noreply.github.com'
 ];
 
-const UTM_MEDIUM = 'travisweb';
-
 export default Component.extend({
   classNames: ['zendesk-request-form'],
 
@@ -63,10 +61,7 @@ export default Component.extend({
   showSupportForm: and('isPro', 'isSignedIn', 'isPremium'),
   showLoginPrompt: and('isPro', 'isNotSignedIn'),
 
-  utmSource: 'zendesk-form',
-  utmParams: computed('utmSource', function () {
-    return `?utm_source=${this.utmSource}&utm_medium=${UTM_MEDIUM}`;
-  }),
+  utmParams: '',
   communityUrl: computed('utmParams', function () {
     return `${community}/top${this.utmParams}`;
   }),
