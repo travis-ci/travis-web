@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-   viewBox="0 0 330.55 186.41" style="enable-background:new 0 0 330.55 186.41;" xml:space="preserve">
+   viewBox="89 12 150 160" style="enable-background:new 0 0 330.55 186.41;" xml:space="preserve">
    <defs>
     <style type="text/css">
       .st0{fill:#FAFAFA;}
@@ -77,7 +77,7 @@
               from="0"
               to="1"
               dur="0.1s"
-              begin="anim3.begin+1s;anim2.end+0.8s"
+              begin="anim3.begin+0.5s;anim2.end+0.8s"
               fill="freeze"
             />
             <animate

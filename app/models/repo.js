@@ -8,7 +8,7 @@ import attr from 'ember-data/attr';
 import { hasMany, belongsTo } from 'ember-data/relationships';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
-import { reads, equal } from '@ember/object/computed';
+import { reads, equal, or } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
 
 export const MIGRATION_STATUS = {
@@ -45,6 +45,7 @@ const Repo = Model.extend({
   isMigrationMigrating: equal('migrationStatus', MIGRATION_STATUS.MIGRATING),
   isMigrationSucceeded: equal('migrationStatus', MIGRATION_STATUS.SUCCESS),
   isMigrationFailed: equal('migrationStatus', MIGRATION_STATUS.FAILURE),
+  isMigrationInProgress: or('isMigrationQueued', 'isMigrationMigrating'),
 
   isMigratable: computed('migrationStatus', 'permissions.admin', function () {
     const isMigrated = !!this.migrationStatus;
