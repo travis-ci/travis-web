@@ -89,7 +89,7 @@
     "emoji-js": "^3.4.0",
     "eslint-plugin-ember": "^5.2.0",
     "fuzzysort": "^1.0.1",
-    "liquid-fire": "^0.29.5",
+    "liquid-fire": "^0.30.0",
     "liquid-wormhole": "^2.1.5",
     "loader.js": "^4.7.0",
     "node-sass": "^4.9.3",
