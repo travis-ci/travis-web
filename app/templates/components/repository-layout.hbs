@@ -26,14 +26,6 @@
       {{#external-link-to href=orgBuildHistoryLink}}here{{/external-link-to}}.
     {{/notice-banner}}
   {{/if}}
-  {{#if showMigratedToComRepositoryLink}}
-    <div class="repo-header__subheader" data-test-recently-migrated-to-com-banner>
-      [Migrated] Check out recent builds at
-      {{#external-link-to href=orgBuildHistoryLink}}
-        travis-ci.com
-      {{/external-link-to}}.
-    </div>
-  {{/if}}
   <main class="repo-main">
   <div class="repo-navigation">
     {{repo-show-tabs repo=repo build=build job=job}}
