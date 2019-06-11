@@ -9,12 +9,12 @@
   <button
     disabled={{isMigrateButtonDisabled}}
     onclick={{action 'migrate'}}
-    class='button button--blue migrate {{if isMigrateButtonDisabled 'disabled'}}'
+    class='button button--flex button--blue {{if isMigrateButtonDisabled 'disabled'}}'
   >
     {{#if repo.isMigrationInProgress}}
       Migrating...
     {{else if repo.isMigratable}}
-      Migrate {{svg-jar 'icon-migrate' class="icon icon--color white icon--right"}}
+      Migrate {{svg-jar 'icon-migrate' class="icon icon--m white icon--right"}}
     {{else if repo.isMigrationSucceeded}}
       Done!
     {{/if}}

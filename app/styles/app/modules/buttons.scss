@@ -37,6 +37,10 @@
       background-color: darken($oxide-blue, 5%);
     }
   }
+
+  &--flex {
+    display: inline-flex;
+  }
 }
 
 .no-button {
