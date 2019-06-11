@@ -11,7 +11,9 @@ export default Controller.extend({
   actions: {
 
     migrate() {
-      this.repo.startMigration();
+      // TODO use actual migration in release version
+      this.set('migrationStatus', 'queued');
+      // this.repo.startMigration();
     }
 
   }
