@@ -16,10 +16,11 @@ export default Component.extend({
 
   formattedConfig: computed('rawConfig.config', 'slug', function () {
     let config = this.get('rawConfig.config');
-    if (config && config.charAt(0) == '{') {
-      config = JSON.stringify(JSON.parse(config), null, 2);
+    try {
+      return JSON.stringify(JSON.parse(config), null, 2);
+    } catch() {
+      return config;
     }
-    return config;
   }),
 
   filePath: computed('rawConfig.source', 'slug', function () {
