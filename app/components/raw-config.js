@@ -18,7 +18,7 @@ export default Component.extend({
     let config = this.get('rawConfig.config');
     try {
       return JSON.stringify(JSON.parse(config), null, 2);
-    } catch(e) {
+    } catch (e) {
       return config;
     }
   }),
