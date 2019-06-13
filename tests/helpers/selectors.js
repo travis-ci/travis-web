@@ -44,6 +44,16 @@ export const HELP_PAGE_GREETING_USERNAME = '[data-test-help-page-greeting-userna
 export const HELP_PAGE_NAVIGATION_LINKS = '[data-test-help-page-navigation-links]';
 export const HELP_PAGE_STATUS = '[data-test-help-page-status]';
 export const HELP_PAGE_SUPPORT_SECTION = '[data-test-help-page-support-section]';
+export const HELP_PAGE_RESOURCES_SECTION = '[data-test-help-page-resources-section]';
+export const HELP_PAGE_RESOURCES_IMAGE = '[data-test-help-page-resources-image]';
+export const HELP_PAGE_RESOURCES_HEADER = '[data-test-help-page-resources-header]';
+export const HELP_PAGE_RESOURCES_LIST = '[data-test-help-page-resources-list]';
+export const HELP_PAGE_RESOURCES_BUTTON = '[data-test-help-page-resources-button]';
+export const HELP_PAGE_TOPICS_SECTION = '[data-test-help-page-topics-section]';
+export const HELP_PAGE_TOPICS_IMAGE = '[data-test-help-page-topics-image]';
+export const HELP_PAGE_TOPICS_HEADER = '[data-test-help-page-topics-header]';
+export const HELP_PAGE_TOPICS_LIST = '[data-test-help-page-topics-list]';
+export const HELP_PAGE_TOPICS_BUTTON = '[data-test-help-page-topics-button]';
 
 // travis/components/zendesk-request-form
 export const ZENDESK_FORM_HEADER = '[data-test-zendesk-form-header]';
