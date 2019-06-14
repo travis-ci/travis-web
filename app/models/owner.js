@@ -2,7 +2,7 @@ import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
 import { belongsTo } from 'ember-data/relationships';
 import { computed } from '@ember/object';
-import { reads, or } from '@ember/object/computed';
+import { reads, or, equal } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import config from 'travis/config/environment';
 import dynamicQuery from 'travis/utils/dynamic-query';
@@ -22,6 +22,10 @@ export default Model.extend({
   githubId: attr('string'),
   education: attr('boolean'),
   fullName: or('name', 'login'),
+  permissions: attr(),
+  type: attr('string'),
+  isUser: equal('type', 'user'),
+  isOrganization: equal('type', 'organization'),
 
   // This is set by serializers:subscription
   subscriptionPermissions: attr(),
