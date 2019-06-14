@@ -8,8 +8,19 @@ import { INSIGHTS_PRIVACY_OPTIONS } from 'travis/components/insights-privacy-sel
 moduleForAcceptance('Acceptance | owner insights', {
   beforeEach() {
     this.currentUser = server.create('user', {
-      name: 'User Name',
-      login: 'user-login'
+      name: 'Aria',
+      login: 'bellsareringing',
+      permissions: {
+        sync: true,
+      },
+    });
+
+    this.otherUser = server.create('user', {
+      name: 'Mako',
+      login: 'keepitwavy',
+      permissions: {
+        sync: false,
+      },
     });
   }
 });
@@ -17,7 +28,7 @@ moduleForAcceptance('Acceptance | owner insights', {
 test('the owner insights page shows insights components', async function (assert) {
   server.createList('insight-metric', 15);
 
-  await insightsPage.visit({ username: 'user-login' });
+  await insightsPage.visit({ username: this.currentUser.login });
   await settled();
 
   assert.equal(insightsPage.glances.length, 4);
@@ -60,7 +71,7 @@ test('the owner insights page shows insights components', async function (assert
 });
 
 test('the owner insights page handles a lack of data', async function (assert) {
-  await insightsPage.visit({ username: 'user-login' });
+  await insightsPage.visit({ username: this.currentUser.login });
   await settled();
 
   assert.equal(insightsPage.glances.length, 4);
@@ -103,7 +114,7 @@ test('the owner insights page handles a lack of data', async function (assert) {
 test('the owner insights page shows insights components', async function (assert) {
   server.createList('insight-metric', 15);
 
-  await insightsPage.visit({ username: 'user-login' });
+  await insightsPage.visit({ username: this.currentUser.login });
   await settled();
 
   assert.equal(insightsPage.glances.length, 4);
@@ -160,11 +171,59 @@ test('the owner insights page displays privacy selector on PRO version', async f
 
 // No-build overlay states
 test('No-build overlay displays correctly when not logged in', async function (assert) {
-  await insightsPage.visit({ username: 'user-login' });
+  await insightsPage.visit({ username: this.currentUser.login });
   await settled();
 
   assert.ok(insightsPage.noBuildOverlay.isVisible);
   assert.equal(insightsPage.noBuildOverlay.title, 'Build to get monthly insights');
   assert.equal(insightsPage.noBuildOverlay.text, 'All the build status results from the last 30 days will appear here. Have you tried logging in?');
-  assert.equal(insightsPage.noBuildOverlay.link, 'Sign in with GitHub');
+  assert.equal(insightsPage.noBuildOverlay.link.text, 'Sign in with GitHub');
+
+  await insightsPage.visitWeek({ username: this.currentUser.login });
+  await settled();
+
+  assert.ok(insightsPage.noBuildOverlay.isVisible);
+  assert.equal(insightsPage.noBuildOverlay.title, 'It\'s been a quiet week for builds');
+  assert.equal(insightsPage.noBuildOverlay.text, 'All the build status results from the last 7 days will appear here. Have you tried logging in?');
+  assert.equal(insightsPage.noBuildOverlay.link.text, 'Sign in with GitHub');
+});
+
+test('No-build overlay for current user displays correctly when logged in', async function (assert) {
+  signInUser(this.currentUser);
+
+  await insightsPage.visit({ username: this.currentUser.login });
+  await settled();
+
+  assert.ok(insightsPage.noBuildOverlay.isVisible);
+  assert.equal(insightsPage.noBuildOverlay.title, 'Build to get monthly insights');
+  assert.equal(insightsPage.noBuildOverlay.text, 'All the build status results from the last 30 days will appear here.');
+  assert.equal(insightsPage.noBuildOverlay.link.text, 'Let\'s get you going');
+
+  await insightsPage.visitWeek({ username: this.currentUser.login });
+  await settled();
+
+  assert.ok(insightsPage.noBuildOverlay.isVisible);
+  assert.equal(insightsPage.noBuildOverlay.title, 'It\'s been a quiet week for builds');
+  assert.equal(insightsPage.noBuildOverlay.text, 'All the build status results from the last 7 days will appear here.');
+  assert.equal(insightsPage.noBuildOverlay.link.text, 'Want help building?');
+});
+
+test('No-build overlay for other user displays correctly when logged in', async function (assert) {
+  signInUser(this.currentUser);
+
+  await insightsPage.visit({ username: this.otherUser.login });
+  await settled();
+
+  assert.ok(insightsPage.noBuildOverlay.isVisible);
+  assert.equal(insightsPage.noBuildOverlay.title, 'Build to get monthly insights');
+  assert.equal(insightsPage.noBuildOverlay.text, 'All the build status results from the last 30 days will appear here.');
+  assert.notOk(insightsPage.noBuildOverlay.link.isPresent);
+
+  await insightsPage.visitWeek({ username: this.otherUser.login });
+  await settled();
+
+  assert.ok(insightsPage.noBuildOverlay.isVisible);
+  assert.equal(insightsPage.noBuildOverlay.title, 'It\'s been a quiet week for builds');
+  assert.equal(insightsPage.noBuildOverlay.text, 'All the build status results from the last 7 days will appear here.');
+  assert.notOk(insightsPage.noBuildOverlay.link.isPresent);
 });
