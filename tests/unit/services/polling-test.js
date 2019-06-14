@@ -97,6 +97,7 @@ module('PollingService', function (hooks) {
     return setTimeout(function () {
       service.stopPolling(model2);
       return setTimeout(function () {
+        service.stopPolling(model1);
         run(function () {
           return service.destroy();
         });

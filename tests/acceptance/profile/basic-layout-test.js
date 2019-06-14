@@ -195,24 +195,19 @@ test('view repositories', function (assert) {
     assert.equal(profilePage.administerableRepositories[1].name, 'repository-name');
     assert.ok(profilePage.administerableRepositories[1].isActive, 'expected active repository to appear active');
 
-    assert.equal(profilePage.githubAppsRepositories.length, 3, 'expected three GitHub Apps-managed repositories');
+    assert.equal(profilePage.githubAppsRepositories.length, 2, 'expected two GitHub Apps-managed repositories');
 
-    assert.equal(profilePage.notLockedGithubAppsRepositories.length, 2, 'expected two not-locked GitHub Apps-managed repositories');
-
-    profilePage.notLockedGithubAppsRepositories[0].as(repository => {
+    profilePage.githubAppsRepositories[0].as(repository => {
       assert.equal(repository.name, 'github-apps-private-repository');
       assert.ok(repository.isPrivate);
       assert.ok(repository.settings.isDisabled);
     });
 
-    profilePage.notLockedGithubAppsRepositories[1].as(repository => {
+    profilePage.githubAppsRepositories[1].as(repository => {
       assert.equal(repository.name, 'github-apps-public-repository');
       assert.ok(repository.isPublic);
       assert.notOk(repository.settings.isDisabled);
     });
-
-    assert.equal(profilePage.lockedGithubAppsRepositories.length, 1, 'expected one locked GitHub Apps-managed repository');
-    assert.equal(profilePage.lockedGithubAppsRepositories[0].name, 'github-apps-locked-repository');
   });
 });
 
