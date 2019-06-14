@@ -4,6 +4,9 @@
       {{status-icon status=item.state}}
       {{#if item.isPullRequest}}
         <small class="commit-branch" title={{item.pullRequestTitle}}>Pull Request #{{item.pullRequestNumber}}</small>
+        {{#if build.request.isDraft}}
+          <span class="message-label badge">draft</span>
+        {{/if}}
         {{item.pullRequestTitle}}
       {{else}}
         {{#if item.isTag}}
