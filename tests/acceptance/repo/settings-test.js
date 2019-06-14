@@ -360,6 +360,31 @@ module('Acceptance | repo settings', function (hooks) {
     assert.dom('[data-test-settings-disabled-after-migration-modal]').exists();
   });
 
+  test('when repository is private and allow_config_imports setting is present', async function (assert) {
+    this.repository.private = true;
+    this.repository.createSetting({ name: 'allow_config_imports', value: true });
+
+    await settingsPage.visit({ organization: 'org-login', repo: 'repository-name' });
+
+    assert.ok(settingsPage.configImportsSection.exists, 'expected auto-cancellation section to exist');
+    assert.ok(settingsPage.allowConfigImports.isActive, 'expected allow_config_imports pushes to be present and enabled');
+
+    const settingToRequestBody = {};
+
+    server.patch(`/repo/${this.repository.id}/setting/:setting`, function (schema, request) {
+      settingToRequestBody[request.params.setting] = JSON.parse(request.requestBody);
+    });
+
+    await settingsPage.allowConfigImports.toggle();
+    assert.notOk(settingsPage.allowConfigImports.isActive, 'expected  allow_config_imports to be disabled');
+  });
+
+  test('when repository is private and allow_config_imports setting is not present', async function (assert) {
+    this.repository.private = true;
+    await settingsPage.visit({ organization: 'org-login', repo: 'repository-name' });
+
+    assert.notOk(settingsPage.configImportsSection.exists, 'expected auto-cancellation section to exist');
+  });
 
   test('on a repository with auto-cancellation', async function (assert) {
     this.repository.createSetting({ name: 'auto_cancel_pushes', value: true });
