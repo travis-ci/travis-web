@@ -17,6 +17,7 @@ export default Model.extend({
   headCommit: attr(),
   baseCommit: attr(),
   branchName: attr(),
+  pullRequestMergeable: attr(),
   tagName: attr(),
   pullRequest: attr('boolean'),
   pullRequestTitle: attr(),
@@ -44,6 +45,11 @@ export default Model.extend({
   isPullRequest: computed('event_type', function () {
     let eventType = this.get('event_type');
     return eventType === 'pull_request';
+  }),
+
+  isDraft: computed('pullRequestMergeable', function () {
+    let mergeableState = this.get('pullRequestMergeable');
+    return mergeableState === 'draft';
   }),
 
   ajax: service(),
