@@ -3,21 +3,23 @@
   {{svg-jar 'hammer' class="page-graphic"}}
 
   <h2 class="text-big">
-    You can now start building this repository on travis-ci.com!
+    You can now start building this repository, right here at travis-ci.com!
   </h2>
 
-  <button
-    disabled={{isMigrateButtonDisabled}}
-    onclick={{action 'migrate'}}
-    class='button button--flex button--blue {{if isMigrateButtonDisabled 'disabled'}}'
-  >
-    {{#if repo.isMigrationInProgress}}
-      Migrating...
-    {{else if repo.isMigratable}}
-      Migrate {{svg-jar 'icon-migrate' class="icon icon--m white icon--right"}}
-    {{else if repo.isMigrationSucceeded}}
-      Done!
-    {{/if}}
-  </button>
+  {{#if auth.signedIn}}
+    <button
+      disabled={{isMigrateButtonDisabled}}
+      onclick={{action 'migrate'}}
+      class='button button--flex button--blue {{if isMigrateButtonDisabled 'disabled'}}'
+    >
+      {{#if repo.isMigrationInProgress}}
+        Migrating...
+      {{else if repo.isMigratable}}
+        Migrate {{svg-jar 'icon-migrate' class="icon icon--m white icon--right"}}
+      {{else if repo.isMigrationSucceeded}}
+        Done!
+      {{/if}}
+    </button>
+  {{/if}}
 
 </div>
