@@ -22,7 +22,6 @@ export default Owner.extend({
 
 
   type: 'user',
-  isUser: true,
 
   fullName: computed('name', 'login', function () {
     let name = this.get('name');

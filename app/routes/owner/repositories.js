@@ -23,8 +23,7 @@ export default TravisRoute.extend({
   owner: null,
 
   model({ page, tab }, transition) {
-    let owner = { ...this.modelFor('owner') };
-    owner.isUser = owner['@type'] === 'user';
+    const owner = this.modelFor('owner');
 
     this.setProperties({ tab, page, owner });
 
