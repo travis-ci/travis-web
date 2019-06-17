@@ -1,13 +1,14 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
-import { reads, bool, filter } from '@ember/object/computed';
+import { reads, bool, filter, filterBy, not, or, and, empty, notEmpty } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
 import $ from 'jquery';
 import moment from 'moment';
 import config from 'travis/config/environment';
 
 const { apiHost, createRequestEndpoint } = config.zendesk;
+const { community } = config.urls;
 
 export const UTC_START_TIME = moment.utc({ h: 9, m: 0, s: 0 });
 export const UTC_END_TIME = moment.utc({ h: 23, m: 0, s: 0 });
@@ -20,7 +21,9 @@ const USER_EMAIL_DOMAINS_BLACKLIST = [
 export default Component.extend({
   classNames: ['zendesk-request-form'],
 
+  accounts: service(),
   auth: service(),
+  features: service(),
   flashes: service(),
   raven: service(),
 
@@ -40,7 +43,31 @@ export default Component.extend({
     return buildDescriptionTemplate(this.page);
   }),
 
-  isLoggedIn: reads('auth.signedIn'),
+  isSignedIn: reads('auth.signedIn'),
+  isNotSignedIn: not('isSignedIn'),
+  isPro: reads('features.proVersion'),
+
+  subscriptions: reads('accounts.subscriptions'),
+  activeSubscriptions: filterBy('subscriptions', 'isSubscribed', true),
+  isSubscribed: notEmpty('activeSubscriptions'),
+  isEducation: reads('auth.currentUser.education'),
+
+  trial: reads('auth.currentUser.trial'),
+  trialBuildsRemaining: reads('trial.buildsRemaining'),
+  noTrialYet: empty('trial'),
+
+  isPremium: or('isSubscribed', 'isEducation', 'trialBuildsRemaining', 'noTrialYet'),
+
+  showSupportForm: and('isPro', 'isSignedIn', 'isPremium'),
+  showLoginPrompt: and('isPro', 'isNotSignedIn'),
+
+  utmParams: '',
+  communityUrl: computed('utmParams', function () {
+    return `${community}/top${this.utmParams}`;
+  }),
+  featureRequestUrl: computed('utmParams', function () {
+    return `${community}/c/product/feature-requests${this.utmParams}`;
+  }),
 
   startTime: UTC_START_TIME.local().format(DATE_FORMAT),
   endTime: UTC_END_TIME.local().format(DATE_FORMAT),
