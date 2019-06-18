@@ -33,12 +33,15 @@ import {
   ZENDESK_FORM_SUBJECT,
   ZENDESK_FORM_DESCRIPTION,
   ZENDESK_FORM_SUBMIT,
+  ZENDESK_FORM_LOG_IN_HEADER,
   ZENDESK_FORM_LOG_IN_IMAGE,
   ZENDESK_FORM_LOG_IN_BUTTON,
   ZENDESK_FORM_SUCCESS_HEADER,
   ZENDESK_FORM_SUCCESS_IMAGE,
   ZENDESK_FORM_SUCCESS_MESSAGE,
   ZENDESK_FORM_BACK_LINK,
+  ZENDESK_FORM_COMMUNITY_HEADER,
+  ZENDESK_FORM_COMMUNITY_IMAGE,
   EPS_TRIGGER
 } from 'travis/tests/helpers/selectors';
 
@@ -183,6 +186,11 @@ export default create({
       }
     },
 
+    logInHeader: {
+      scope: ZENDESK_FORM_LOG_IN_HEADER,
+      isPresent: isPresent()
+    },
+
     logInImage: {
       scope: ZENDESK_FORM_LOG_IN_IMAGE,
       isPresent: isPresent()
@@ -213,6 +221,16 @@ export default create({
       scope: ZENDESK_FORM_BACK_LINK,
       isPresent: isPresent(),
       click: clickable()
+    },
+
+    communityHeader: {
+      scope: ZENDESK_FORM_COMMUNITY_HEADER,
+      isPresent: isPresent()
+    },
+
+    communityImage: {
+      scope: ZENDESK_FORM_COMMUNITY_IMAGE,
+      isPresent: isPresent()
     }
   }
 });

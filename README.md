@@ -8,7 +8,7 @@ with npm installed.
 
 In order to run the app you need to install dependencies with:
 
-    npm install
+    npm ci
 
 And then install ember-cli globally in order to have access to the `ember` command:
 

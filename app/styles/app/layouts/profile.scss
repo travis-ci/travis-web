@@ -790,8 +790,13 @@ header.space-between {
   }
 }
 
-.user-settings, .organization-settings {
+.user-settings, .organization-settings, .settings-section {
   @include linkStyle;
+
+  a.settings-tooltip {
+    padding-bottom: 3px;
+    border-bottom: none;
+  }
 
   h3 {
     color: $oxide-blue;
