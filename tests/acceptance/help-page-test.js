@@ -16,6 +16,33 @@ import {
 
 const { apiHost, createRequestEndpoint } = config.zendesk;
 
+const checkBasicStructure = (assert, isSignedIn) => {
+  const { greetingSection, resourceSection, supportSection, topicSection } = helpPage;
+  const { username, header, navigationLinks, status } = greetingSection;
+
+  assert.ok(greetingSection.isPresent);
+  assert.ok(header.isPresent);
+  assert.ok(navigationLinks.isPresent);
+  assert.ok(status.isPresent);
+  assert.equal(username.isPresent, isSignedIn);
+
+  assert.ok(resourceSection.isPresent);
+  assert.ok(resourceSection.image.isPresent);
+  assert.ok(resourceSection.header.isPresent);
+  assert.ok(resourceSection.list.isPresent);
+  assert.equal(resourceSection.list.items.length, 5);
+  assert.ok(resourceSection.button.isPresent);
+
+  assert.ok(topicSection.isPresent);
+  assert.ok(topicSection.image.isPresent);
+  assert.ok(topicSection.header.isPresent);
+  assert.ok(topicSection.list.isPresent);
+  assert.equal(topicSection.list.items.length, 5);
+  assert.ok(topicSection.button.isPresent);
+
+  assert.ok(supportSection.isPresent);
+};
+
 module('Acceptance | help page', function (hooks) {
   setupApplicationTest(hooks);
 
@@ -25,30 +52,12 @@ module('Acceptance | help page', function (hooks) {
     });
 
     test('it has correct structure', function (assert) {
-      const { greetingSection, resourceSection, supportSection, topicSection } = helpPage;
-      const { username, header, navigationLinks, status } = greetingSection;
+      checkBasicStructure(assert, false);
 
-      assert.ok(greetingSection.isPresent);
-      assert.ok(header.isPresent);
-      assert.ok(navigationLinks.isPresent);
-      assert.ok(status.isPresent);
-      assert.notOk(username.isPresent);
+      const { supportSection } = helpPage;
 
-      assert.ok(resourceSection.isPresent);
-      assert.ok(resourceSection.image.isPresent);
-      assert.ok(resourceSection.header.isPresent);
-      assert.ok(resourceSection.list.isPresent);
-      assert.equal(resourceSection.list.items.length, 5);
-      assert.ok(resourceSection.button.isPresent);
-
-      assert.ok(topicSection.isPresent);
-      assert.ok(topicSection.image.isPresent);
-      assert.ok(topicSection.header.isPresent);
-      assert.ok(topicSection.list.isPresent);
-      assert.equal(topicSection.list.items.length, 5);
-      assert.ok(topicSection.button.isPresent);
-
-      assert.notOk(supportSection.isPresent);
+      assert.ok(supportSection.communityHeader.isPresent);
+      assert.ok(supportSection.communityImage.isPresent);
     });
   });
 
@@ -59,37 +68,144 @@ module('Acceptance | help page', function (hooks) {
     });
 
     test('it has correct structure', function (assert) {
-      const { greetingSection, resourceSection, supportSection, topicSection } = helpPage;
-      const { username, header, navigationLinks, status } = greetingSection;
-
-      assert.ok(greetingSection.isPresent);
-      assert.ok(header.isPresent);
-      assert.ok(navigationLinks.isPresent);
-      assert.ok(status.isPresent);
-      assert.notOk(username.isPresent);
-
-      assert.ok(resourceSection.isPresent);
-      assert.ok(resourceSection.image.isPresent);
-      assert.ok(resourceSection.header.isPresent);
-      assert.ok(resourceSection.list.isPresent);
-      assert.equal(resourceSection.list.items.length, 5);
-      assert.ok(resourceSection.button.isPresent);
-
-      assert.ok(topicSection.isPresent);
-      assert.ok(topicSection.image.isPresent);
-      assert.ok(topicSection.header.isPresent);
-      assert.ok(topicSection.list.isPresent);
-      assert.equal(topicSection.list.items.length, 5);
-      assert.ok(topicSection.button.isPresent);
-
-      assert.ok(supportSection.isPresent);
+      checkBasicStructure(assert, false);
     });
 
     test('it shows log in stub', function (assert) {
-      const { logInImage, logInButton } = helpPage.supportSection;
+      const { logInHeader, logInImage, logInButton } = helpPage.supportSection;
 
+      assert.ok(logInHeader.isPresent);
       assert.ok(logInImage.isPresent);
       assert.ok(logInButton.isPresent);
+    });
+  });
+
+  module('for .com education user', function (hooks) {
+    hooks.beforeEach(async function () {
+      this.user = server.create('user', {
+        education: true,
+      });
+      enableFeature('proVersion');
+      await signInUser(this.user);
+      await helpPage.visit();
+    });
+
+    test('it has correct structure', function (assert) {
+      checkBasicStructure(assert, true);
+
+      const { form } = helpPage.supportSection;
+      const { email, subject, description, submit } = form;
+
+      assert.ok(form.isPresent);
+      assert.ok(email.isPresent);
+      assert.ok(subject.isPresent);
+      assert.ok(description.isPresent);
+      assert.ok(submit.isPresent);
+    });
+  });
+
+  module('for .com trial user', function (hooks) {
+    hooks.beforeEach(async function () {
+      this.user = server.create('user');
+      enableFeature('proVersion');
+    });
+
+    test('it has correct structure', async function (assert) {
+      this.trial = server.create('trial', {
+        has_active_trial: true,
+        builds_remaining: 100,
+        owner: this.user,
+        status: 'new',
+        created_at: new Date(2018, 7, 16),
+        permissions: {
+          read: true,
+          write: true
+        }
+      });
+
+      await signInUser(this.user);
+      await helpPage.visit();
+
+      checkBasicStructure(assert, true);
+      assert.ok(helpPage.supportSection.form.isPresent);
+    });
+
+    test('form not present after trial', async function (assert) {
+      this.trial = server.create('trial', {
+        has_active_trial: true,
+        builds_remaining: 0,
+        owner: this.user,
+        status: 'ended',
+        created_at: new Date(2018, 7, 16),
+        permissions: {
+          read: true,
+          write: true
+        }
+      });
+
+      await signInUser(this.user);
+      await helpPage.visit();
+
+      assert.notOk(helpPage.supportSection.form.isPresent);
+    });
+
+    test('form present when subscribed after trial', async function (assert) {
+      this.trial = server.create('trial', {
+        has_active_trial: true,
+        builds_remaining: 0,
+        owner: this.user,
+        status: 'ended',
+        created_at: new Date(2018, 7, 16),
+        permissions: {
+          read: true,
+          write: true
+        }
+      });
+
+      this.subscription = server.create('subscription', {
+        owner: this.user,
+        status: 'subscribed',
+        valid_to: new Date(),
+      });
+
+      await signInUser(this.user);
+      await helpPage.visit();
+
+      assert.ok(helpPage.supportSection.form.isPresent);
+    });
+
+    test('form present when org subscribed after trial', async function (assert) {
+      this.trial = server.create('trial', {
+        has_active_trial: true,
+        builds_remaining: 0,
+        owner: this.user,
+        status: 'ended',
+        created_at: new Date(2018, 7, 16),
+        permissions: {
+          read: true,
+          write: true
+        }
+      });
+
+      this.organization = server.create('organization', {
+        name: 'Org Name',
+        type: 'organization',
+        login: 'org-login',
+        permissions: {
+          createSubscription: false
+        }
+      });
+
+      this.subscription = server.create('subscription', {
+        owner: this.organization,
+        status: 'subscribed',
+        valid_to: new Date(),
+      });
+
+      await signInUser(this.user);
+      await helpPage.visit();
+
+      assert.ok(helpPage.supportSection.form.isPresent);
     });
   });
 
@@ -102,31 +218,7 @@ module('Acceptance | help page', function (hooks) {
     });
 
     test('it has correct structure', function (assert) {
-      const { greetingSection, resourceSection, supportSection, topicSection } = helpPage;
-      const { username, header, navigationLinks, status } = greetingSection;
-
-      assert.ok(greetingSection.isPresent);
-      assert.ok(header.isPresent);
-      assert.ok(navigationLinks.isPresent);
-      assert.ok(status.isPresent);
-      assert.ok(username.isPresent);
-      assert.equal(username.text, this.user.name);
-
-      assert.ok(resourceSection.isPresent);
-      assert.ok(resourceSection.image.isPresent);
-      assert.ok(resourceSection.header.isPresent);
-      assert.ok(resourceSection.list.isPresent);
-      assert.equal(resourceSection.list.items.length, 5);
-      assert.ok(resourceSection.button.isPresent);
-
-      assert.ok(topicSection.isPresent);
-      assert.ok(topicSection.image.isPresent);
-      assert.ok(topicSection.header.isPresent);
-      assert.ok(topicSection.list.isPresent);
-      assert.equal(topicSection.list.items.length, 5);
-      assert.ok(topicSection.button.isPresent);
-
-      assert.ok(supportSection.isPresent);
+      checkBasicStructure(assert, true);
     });
 
     test('it shows correct support hours', function (assert) {
