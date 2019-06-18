@@ -3,7 +3,6 @@ import durationFrom from 'travis/utils/duration-from';
 import { computed } from '@ember/object';
 
 export default Mixin.create({
-  useDurationDirectly: true,
   duration: computed('_duration', 'finishedAt', 'startedAt', 'notStarted', function () {
     let duration = this.get('_duration');
     let finishedAt = this.get('finishedAt');
@@ -11,7 +10,7 @@ export default Mixin.create({
     let notStarted = this.get('notStarted');
     if (notStarted) {
       return null;
-    } else if (duration && this.get('useDurationDirectly')) {
+    } else if (duration) {
       return duration;
     } else {
       return durationFrom(startedAt, finishedAt);
