@@ -30,6 +30,8 @@ export default Model.extend(DurationCalculations, {
   _config: attr(),
   updatedAt: attr('date'),
 
+  useDurationDirectly: false,
+
   repo: belongsTo('repo'),
   branch: belongsTo('branch', { async: false, inverse: 'builds' }),
   repoCurrentBuild: belongsTo('repo', { async: true, inverse: 'currentBuild' }),
