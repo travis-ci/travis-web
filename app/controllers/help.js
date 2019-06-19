@@ -25,14 +25,14 @@ export default Controller.extend({
   anchor: ANCHOR.TOP,
   page: '',
 
-  isLoggedIn: reads('auth.signedIn'),
-  isPro: reads('features.proVersion'),
+  isSignedIn: reads('auth.signedIn'),
 
   toTop: equal('anchor', ANCHOR.TOP),
   toDocs: equal('anchor', ANCHOR.DOCS),
   toCommunity: equal('anchor', ANCHOR.COMMUNITY),
   toForm: equal('anchor', ANCHOR.FORM),
 
+  utmParams: computed(() => UTM_PARAMS),
   docsUrl: computed(() => `${docs}${UTM_PARAMS}`),
   dockerUrl: computed(() => `${docker}${UTM_PARAMS}`),
   nodeUrl: computed(() => `${node}${UTM_PARAMS}`),
@@ -40,9 +40,7 @@ export default Controller.extend({
   noRunUrl: computed(() => `${noRun}${UTM_PARAMS}`),
   tutorialUrl: computed(() => `${tutorial}${UTM_PARAMS}`),
 
-  communityUrl: computed(() =>
-    `${community}/top?utm_source=${UTM_SOURCE}&utm_medium=${UTM_MEDIUM}`
-  ),
+  communityUrl: computed(() => `${community}/top${UTM_PARAMS}`),
 
   actions: {
 

@@ -3,21 +3,16 @@
 
   {{#layout.section class="help-page__top" data-test-help-page-greeting-section=true }}
     <h1 class="header-main align-center" data-test-help-page-greeting-header>
-      How can we help{{#if isLoggedIn}}, <strong data-test-help-page-greeting-username>{{auth.userName}}</strong>{{/if}}?
+      How can we help{{#if isSignedIn}}, <strong data-test-help-page-greeting-username>{{auth.userName}}</strong>{{/if}}?
     </h1>
 
     <div class="subheading align-center" data-test-help-page-navigation-links>
       View our most read
       <a class="pointer" onclick={{action 'setAnchor' 'docs'}}>documentation</a>,
-      {{#if isPro}}
-        popular topics in our
-        <a class="pointer" onclick={{action 'setAnchor' 'community'}}>Community forum</a>,
-        or
-        <a class="pointer" onclick={{action 'setAnchor' 'form'}}>talk with us!</a>
-      {{else}}
-        or talk with us in our
-        <a class="pointer" onclick={{action 'setAnchor' 'community'}}>Community forum</a>!
-      {{/if}}
+      popular topics in our
+      <a class="pointer" onclick={{action 'setAnchor' 'community'}}>Community forum</a>,
+      or
+      <a class="pointer" onclick={{action 'setAnchor' 'form'}}>talk with us</a>!
     </div>
 
     <div class="status align-center" data-test-help-page-status>
@@ -59,17 +54,11 @@
     </div>
   {{/layout.section}}
 
-  {{#if isPro}}
-    {{#layout.section class="help-page__support" hasBackground=(not isLoggedIn) data-test-help-page-support-section=true }}
-      {{#if toForm}}{{scroll-here}}{{/if}}
+  {{#layout.section class="help-page__support" hasBackground=false data-test-help-page-support-section=true }}
+    {{#if toForm}}{{scroll-here}}{{/if}}
 
-      {{#if isLoggedIn}}
-        <div class="section-divider"></div>
-      {{/if}}
+    {{zendesk-request-form page=page utmParams=utmParams }}
 
-      {{zendesk-request-form page=page }}
-
-    {{/layout.section}}
-  {{/if}}
+  {{/layout.section}}
 
 {{/travis-layout}}
