@@ -61,9 +61,18 @@ $styleguide-medium: 800px;
     flex-flow: row wrap;
     justify-content: space-between;
     align-items: flex-start;
-    max-width: $styleguide-layout-max-width;
-    margin: auto;
-    padding: 0 $styleguide-layout-gutter/2;
+    margin-left: 30px;
+    margin-right: 30px;
+  }
+}
+
+.dashboard, .profile-view, .wrapper.centered, .landing-pro, .help-page {
+  & + .footer {
+    .layout-inner {
+      max-width: $styleguide-layout-max-width;
+      margin: auto;
+      padding: 0 $styleguide-layout-gutter/2;
+    }
   }
 }
 

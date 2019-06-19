@@ -61,8 +61,6 @@
 
 .topbar {
   height: $top-height;
-  max-width: $max-width;
-  margin: auto;
   padding: 0 $column-gutter/2 20px $column-gutter/2;
   clear: both;
   overflow: hidden;
@@ -78,6 +76,11 @@
 
   &.has-autoheight {
     height: auto;
+  }
+
+  .layout-striped & {
+    max-width: $layout-max-width;
+    margin: auto;
   }
 
   @media #{$medium-up} {
