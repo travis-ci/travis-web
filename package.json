@@ -81,7 +81,7 @@
     "ember-test-selectors": "^2.0.0",
     "ember-tooltips": "^3.1.1",
     "ember-truth-helpers": "^2.0.0",
-    "ember-try": "^0.2.23",
+    "ember-try": "^1.2.0",
     "ember-web-app": "^2.3.0",
     "ember-window-mock": "^0.5.0",
     "emberx-select": "~3.1.1",
