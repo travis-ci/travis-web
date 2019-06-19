@@ -17,6 +17,7 @@ export default create({
 
   builds: collection('.build-list .pr-row', {
     name: text('.build-info a'),
+    badge: text('.badge'),
 
     created: hasClass('created'),
     started: hasClass('started'),

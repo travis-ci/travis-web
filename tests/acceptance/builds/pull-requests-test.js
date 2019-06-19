@@ -29,6 +29,7 @@ test('renders no pull requests messaging when none present', function (assert) {
 
 test('view and cancel pull requests', function (assert) {
   const repository = server.create('repository');
+  const request = server.create('request', { pull_request_mergeable: 'draft' });
 
   const pullRequestBuild = server.create('build', {
     state: 'started',
@@ -41,6 +42,7 @@ test('view and cancel pull requests', function (assert) {
     repository: repository,
     branch: this.branch,
     createdBy: this.currentUser,
+    request
   });
 
   const gitUser = server.create('git-user', {
@@ -92,6 +94,7 @@ test('view and cancel pull requests', function (assert) {
     page.builds[0].as(pullRequest => {
       assert.ok(pullRequest.started, 'expected the pull request to have started');
       assert.equal(pullRequest.name, 'PR #2010');
+      assert.equal(pullRequest.badge, 'draft');
       assert.equal(pullRequest.message, 'A pull request');
       assert.equal(pullRequest.committer, 'Travis CI');
       assert.equal(pullRequest.commitSha, '1234567');

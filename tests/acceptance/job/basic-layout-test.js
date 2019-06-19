@@ -64,6 +64,60 @@ test('visiting job-view', function (assert) {
   });
 });
 
+test('visiting pull request job-view', function (assert) {
+  let repo = server.create('repository', { slug: 'travis-ci/travis-web' }),
+    branch = server.create('branch', { name: 'acceptance-tests' });
+
+  let  gitUser = server.create('git-user', { name: 'Mr T' });
+  let commit = server.create('commit', { author: gitUser, committer: gitUser, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
+
+  let request = server.create('request', { isDraft: true, pull_request_mergeable: 'draft', pullRequestMergeable: 'draft' });
+  server.create('message', {
+    request,
+    level: 'info',
+    key: 'group',
+    code: 'flagged',
+    args: {
+      given: 'group'
+    }
+  });
+
+  let user = server.create('user', {
+    name: 'Mr T',
+    avatar_url: '/images/favicon-gray.png'
+  });
+
+  let build = server.create('build', { repository: repo, state: 'passed', createdBy: user, commit, branch, event_type: 'pull_request', pull_request_number: 1, request });
+  let job = server.create('job', { number: '1234.1', repository: repo, state: 'passed', build, commit });
+  commit.job = job;
+
+  job.save();
+  commit.save();
+
+  server.create('log', { id: job.id });
+
+  visit('/travis-ci/travis-web/jobs/' + job.id);
+  waitForElement('#log > .log-line');
+
+  andThen(() => {
+    assert.equal(document.title, 'Job #1234.1 - travis-ci/travis-web - Travis CI');
+
+    assert.equal($('head link[rel=icon]').attr('href'), getFaviconUri('green'), 'expected the favicon data URI to match the one for passing');
+
+    assert.equal(jobPage.message, 'Pull Request #1', 'displays message');
+    assert.equal(jobPage.state, '#1234.1 passed', 'displays build number');
+    assert.equal(jobPage.badge, 'draft', 'displays badge');
+
+    assert.equal(jobPage.createdBy.href, '/testuser');
+    assert.equal(jobPage.createdBy.text, 'Mr T');
+    assert.ok(jobPage.createdBy.avatarSrc.startsWith('/images/favicon-gray.png'));
+
+    assert.equal(jobPage.log, 'Hello log');
+    assert.notOk(jobPage.hasTruncatedLog);
+    assert.equal(jobPage.rawLogUrl, `${config.apiEndpoint}/v3/job/${job.id}/log.txt`);
+  });
+});
+
 
 test('visiting a job in created(received) state', async function (assert) {
   let branch = server.create('branch', { name: 'acceptance-tests' });
