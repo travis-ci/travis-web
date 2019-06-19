@@ -1,7 +1,6 @@
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { visit } from '@ember/test-helpers';
-import dashboardPage from 'travis/tests/pages/dashboard';
 import topPage from 'travis/tests/pages/top';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { enableFeature } from 'ember-feature-flags/test-support';
