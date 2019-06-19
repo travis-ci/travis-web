@@ -6,7 +6,7 @@
         {{#link-to "build" build.repo build title=(concat "PR #" build.pullRequestNumber " " build.pullRequestTitle)}}
           <small>PR #{{build.pullRequestNumber}}</small>
           {{#if build.request.isDraft}}
-            <span class="message-label badge">draft</span>
+            <span data-test-build-list-draft-badge class="message-label badge">draft</span>
           {{/if}}
         {{/link-to}}
       {{else}}

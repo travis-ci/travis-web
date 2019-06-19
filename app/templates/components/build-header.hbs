@@ -5,7 +5,7 @@
       {{#if item.isPullRequest}}
         <small class="commit-branch" title={{item.pullRequestTitle}}>Pull Request #{{item.pullRequestNumber}}</small>
         {{#if build.request.isDraft}}
-          <span class="message-label badge">draft</span>
+          <span data-test-build-header-draft-badge class="message-label badge">draft</span>
         {{/if}}
         {{item.pullRequestTitle}}
       {{else}}

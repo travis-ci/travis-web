@@ -16,7 +16,7 @@ export default create({
   branch: text('.commit-branch'),
   message: text('.build-title'),
   state: text('.build-status .inner-underline'),
-  badge: text('.build-title .badge'),
+  badge: text('[data-test-build-header-draft-badge]'),
   log: text('#log'),
   logError: text('.job-log .notice-banner--red'),
   rawLogUrl: attribute('href', '.download-log-button'),
