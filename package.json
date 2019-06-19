@@ -58,7 +58,7 @@
     "ember-concurrency-scroll": "^0.6.2",
     "ember-data": "~3.7.0",
     "ember-data-filter": "ember-data/ember-data-filter#v2.0.0",
-    "ember-exam": "^2.0.1",
+    "ember-exam": "^3.0.0",
     "ember-export-application-global": "^2.0.0",
     "ember-feature-flags": "^5.0.0",
     "ember-fetch": "^6.0.0",
