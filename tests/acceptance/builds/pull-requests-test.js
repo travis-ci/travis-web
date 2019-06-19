@@ -93,7 +93,7 @@ test('view and cancel pull requests', function (assert) {
     assert.equal(page.builds.length, 10, 'expected a page of pull request builds');
     page.builds[0].as(pullRequest => {
       assert.ok(pullRequest.started, 'expected the pull request to have started');
-      assert.equal(pullRequest.name, 'PR #2010');
+      assert.equal(pullRequest.name, 'PR #2010 draft');
       assert.equal(pullRequest.badge, 'draft');
       assert.equal(pullRequest.message, 'A pull request');
       assert.equal(pullRequest.committer, 'Travis CI');

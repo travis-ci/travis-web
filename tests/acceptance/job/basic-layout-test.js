@@ -71,7 +71,7 @@ test('visiting pull request job-view', function (assert) {
   let  gitUser = server.create('git-user', { name: 'Mr T' });
   let commit = server.create('commit', { author: gitUser, committer: gitUser, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
 
-  let request = server.create('request', { isDraft: true, pull_request_mergeable: 'draft', pullRequestMergeable: 'draft' });
+  let request = server.create('request', { pull_request_mergeable: 'draft' });
   server.create('message', {
     request,
     level: 'info',
@@ -104,9 +104,9 @@ test('visiting pull request job-view', function (assert) {
 
     assert.equal($('head link[rel=icon]').attr('href'), getFaviconUri('green'), 'expected the favicon data URI to match the one for passing');
 
-    assert.equal(jobPage.message, 'Pull Request #1', 'displays message');
-    assert.equal(jobPage.state, '#1234.1 passed', 'displays build number');
+    assert.equal(jobPage.message, 'Pull Request #1 draft', 'displays message');
     assert.equal(jobPage.badge, 'draft', 'displays badge');
+    assert.equal(jobPage.state, '#1234.1 passed', 'displays build number');
 
     assert.equal(jobPage.createdBy.href, '/testuser');
     assert.equal(jobPage.createdBy.text, 'Mr T');

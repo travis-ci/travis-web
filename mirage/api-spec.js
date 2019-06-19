@@ -1787,14 +1787,16 @@ export default {
         "event_type",
         "base_commit",
         "head_commit",
-        "raw_configs"
+        "raw_configs",
+        "pull_request_mergeable"
       ],
       "representations": {
         "minimal": [
           "id",
           "state",
           "result",
-          "message"
+          "message",
+          "pull_request_mergeable"
         ],
         "standard": [
           "id",
@@ -1810,7 +1812,8 @@ export default {
           "event_type",
           "base_commit",
           "head_commit",
-          "raw_configs"
+          "raw_configs",
+          "pull_request_mergeable"
         ]
       }
     },
