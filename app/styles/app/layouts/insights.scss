@@ -171,12 +171,13 @@ $med-small-up: "only screen and (min-width: 38em)";
     color: $oxide-blue;
     font-size: 40px;
     font-weight: 300;
-    margin: 0 0 15px 0;
+    margin: 0 0 1rem 0;
   }
 
   p {
     padding: 0 10%;
-    font-size: 18px;
+    font-size: 1.1429rem;
+    margin-top: 0;
   }
 
   .hero-button svg {
