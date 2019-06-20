@@ -403,10 +403,10 @@
 }
 @keyframes loading-circle {
 		0% {
-      stroke-dashoffset: 0
+      stroke-dashoffset: 600
     }
 		100% {
-      stroke-dashoffset: -600;
+      stroke-dashoffset: 0;
     }
 }
 
