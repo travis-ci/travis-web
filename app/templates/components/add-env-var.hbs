@@ -26,6 +26,29 @@
       {{field.input  class='env-value' placeholder='Value'}}
     {{/form.field}}
   </div>
+   <div class="form-elem">
+    {{#form.field
+      label='Branch'
+      value=branch
+      required=false
+      class='branch-selector'
+      showValidationStatusIcons=false
+      as |field|
+    }}
+      {{#field.select
+        searchField='name'
+        placeholder='all branches'
+        allowClear=true
+        selected=branch
+        onchange=(action (mut branch))
+        search=(perform search)
+        as |branch|
+      }}
+        {{branch.name}}
+      {{/field.select}}
+    {{/form.field}}
+
+  </div>
   <div class='form-elem'>
     {{#form.field
       label='Display value in build log'

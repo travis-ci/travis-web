@@ -144,7 +144,7 @@
   margin-bottom: 1em;
 
   @media #{$medium-up} {
-    width: grid-calc(6, 12);
+    width: grid-calc(3, 12);
     margin-bottom: 0;
   }
 }
@@ -192,6 +192,26 @@ $env-var-value-background: lighten($cement-grey, 20);
 .env-var-value {
   @media #{$medium-up} {
     width: grid-calc(3, 12);
+  }
+}
+
+.env-var-branch {
+  @extend %settings-value-section;
+
+  width: 76%;
+  padding: 0.3em 0.7em;
+  @media #{$medium-up} {
+    width: grid-calc(3, 12);
+  }
+
+  code {
+    font-family: cousine, monospace;
+    font-size: 0.9em;
+    color: $asphalt-grey;
+    padding: 0.1em 0.3em;
+    border-radius: 2px;
+    border: 1px solid $asphalt-grey;
+    background-color: $dry-cement;
   }
 }
 

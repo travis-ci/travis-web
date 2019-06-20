@@ -88,9 +88,10 @@ textarea {
     .display-value-switch {
       display: flex;
       justify-content: left;
-      width: 195px;
+      width: auto;
       height: 80px;
       align-items: center;
+      overflow-x: hidden;
 
       button {
         order: 1;
@@ -145,12 +146,13 @@ textarea {
 
   @media #{$medium-up} {
     .form-elem:first-of-type,
-    .form-elem:nth-of-type(2) {
-      width: 31.5%;
+    .form-elem:nth-of-type(2),
+    .form-elem:nth-of-type(3) {
+      width: 25%;
     }
 
-    .form-elem:nth-of-type(3) {
-      width: 24%;
+    .form-elem:nth-of-type(4) {
+      width: 13%;
     }
 
     .form-elem:last-of-type {
