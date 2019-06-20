@@ -63,12 +63,15 @@ export const ZENDESK_FORM_EMAIL = '[data-test-zendesk-form-email]';
 export const ZENDESK_FORM_SUBJECT = '[data-test-zendesk-form-subject]';
 export const ZENDESK_FORM_DESCRIPTION = '[data-test-zendesk-form-description]';
 export const ZENDESK_FORM_SUBMIT = '[data-test-zendesk-form-submit]';
+export const ZENDESK_FORM_LOG_IN_HEADER = '[data-test-zendesk-form-log-in-header]';
 export const ZENDESK_FORM_LOG_IN_IMAGE = '[data-test-zendesk-form-log-in-image]';
 export const ZENDESK_FORM_LOG_IN_BUTTON = '[data-test-zendesk-form-log-in-button]';
 export const ZENDESK_FORM_SUCCESS_HEADER = '[data-test-zendesk-form-success-header]';
 export const ZENDESK_FORM_SUCCESS_IMAGE = '[data-test-zendesk-form-success-image]';
 export const ZENDESK_FORM_SUCCESS_MESSAGE = '[data-test-zendesk-form-success-message]';
 export const ZENDESK_FORM_BACK_LINK = '[data-test-zendesk-form-back-link]';
+export const ZENDESK_FORM_COMMUNITY_HEADER = '[data-test-zendesk-form-community-header]';
+export const ZENDESK_FORM_COMMUNITY_IMAGE = '[data-test-zendesk-form-community-image]';
 
 // ember-power-select
 export const EPS_TRIGGER = '.ember-power-select-trigger';
