@@ -91,10 +91,6 @@ module.exports = function (environment) {
     moment: {
       includeTimezone: 'subset'
     },
-
-    liquidFire: {
-      enabled: true
-    }
   };
 
   ENV.featureFlags = {
@@ -232,8 +228,6 @@ module.exports = function (environment) {
 
     ENV.APP.rootElement = '#ember-testing';
     ENV.APP.autoboot = false;
-
-    ENV.liquidFire.enabled = false;
 
     ENV.sentry = {
       development: true

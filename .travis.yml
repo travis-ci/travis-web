@@ -19,15 +19,13 @@ matrix:
     - env: TRY_CONFIG=ember-beta
     - env: TRY_CONFIG=ember-data-beta
 
-sudo: required
 dist: trusty
 
 addons:
   chrome: stable
 
 cache:
-  directories:
-    - node_modules
+  npm: true
 
 env:
   global:
@@ -41,7 +39,7 @@ before_install:
   - npm install -g greenkeeper-lockfile@1
 
 install:
-  - npm install
+  - npm ci
 
 before_script:
   - if [ $TRAVIS_PULL_REQUEST = 'false' ] && [ $TRAVIS_EVENT_TYPE != 'cron' ]; then echo "Enabling Percy on push with default Ember" && export PERCY_ENABLE=1; else export PERCY_ENABLE=0; fi

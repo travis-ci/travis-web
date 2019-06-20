@@ -1,4 +1,12 @@
-const duration = 200;
+import ENV from 'travis/config/environment';
+
+let duration;
+
+if (ENV.environment === 'test') {
+  duration = 0;
+} else {
+  duration = 200;
+}
 
 export default function () {
   this.transition(
