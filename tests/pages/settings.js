@@ -88,7 +88,7 @@ export default create({
     fillName: fillable('input[placeholder=Name]'),
     fillValue: fillable('input[placeholder=Value]'),
     makePublic: clickable('.switch'),
-    add: clickable('input[type=submit]')
+    add: clickable('.add-env-form-submit')
   },
 
   crons: collection('.settings-list--crons .settings-cron', {
@@ -118,7 +118,14 @@ export default create({
     delete: clickable('.cron-job-delete')
   }),
 
-  cronBranches: collection('.form--cron form select:nth(0) option'),
+  cronBrancheSelect: {
+    scope: '.branch-selector'
+  },
+
+  addCronSubmit: {
+    scope: '.cron-form-submit',
+    click: clickable()
+  },
 
   sshKey: {
     scope: '.settings-sshkey',
