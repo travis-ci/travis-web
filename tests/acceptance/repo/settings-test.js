@@ -218,6 +218,7 @@ module('Acceptance | repo settings', function (hooks) {
       name: 'drafted',
       value: 'true',
       public: true,
+      branch: null,
       repository_id: this.repository.id
     } });
 
