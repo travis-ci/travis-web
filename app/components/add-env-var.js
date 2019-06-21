@@ -39,7 +39,7 @@ export default Component.extend({
       value: this.value.trim(),
       'public': this.public,
       repo: this.repo,
-      'branch': this.branch ? this.branch.name : null
+      branch: this.branch ? this.branch.name : null
     });
 
     try {

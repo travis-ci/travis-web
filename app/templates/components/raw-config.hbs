@@ -9,7 +9,7 @@
     {{/if}}
   </div>
   <div class='position-relative'>
-    {{#code-block data-test-yaml language='yaml' class='codedisplay'}}{{rawConfig.config}}{{/code-block}}
+    {{#code-block data-test-yaml language='yaml' class='codedisplay'}}{{formattedConfig}}{{/code-block}}
     {{#copy-button
       clipboardText=rawConfig.config
       title=buttonLabel
