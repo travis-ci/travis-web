@@ -135,6 +135,7 @@
 .build-info {
   font-size: 15px;
   padding-left: 43px;
+  overflow-x: hidden;
 
   @media #{$medium-up} {
     flex: 0 1 37%;
@@ -402,10 +403,10 @@
 }
 @keyframes loading-circle {
 		0% {
-      stroke-dashoffset: 0
+      stroke-dashoffset: 600
     }
 		100% {
-      stroke-dashoffset: -600;
+      stroke-dashoffset: 0;
     }
 }
 

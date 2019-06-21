@@ -1,4 +1,4 @@
-$max-width: 1024px;
+$max-width: $layout-max-width;
 $padding-top: 24px;
 
 .main {
@@ -96,7 +96,6 @@ $padding-top: 24px;
   }
 }
 
-.feature-wrapper.dashboard,
 .centered,
 .centered.wrapper {
   #left {

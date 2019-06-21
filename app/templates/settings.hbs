@@ -45,7 +45,12 @@
   <section class="settings-section">
     <h2 class="small-title">Environment Variables</h2>
 
-    <p>Notice that the values are not escaped when your builds are executed. Special characters (for bash) should be escaped accordingly.</p>
+    <p>
+      Customize your build using environment variables. For secure tips on generating private keys
+      {{#external-link-to href=(config-get 'urls.bestpracticessecurity')}}
+        read our documentation
+      {{/external-link-to}}
+    </p>
 
     <ul class="settings-list--envvars">
       {{#each envVars as |envVar|}}
@@ -57,10 +62,7 @@
       <p>
         {{svg-jar 'icon-megaphone' class='icon icon-megaphone'}}
         <span class="label-align">
-          Please make sure your secret key is never related to the repository, branch name, or any other guessable string.
-          For more tips on generating keys
-          <a href='https://docs.travis-ci.com/user/best-practices-security/#Steps-Travis-CI-takes-to-secure-your-data'>
-          read our documentation</a>.
+          If your secret variable has especial characters like <code>&amp;</code>, escape it by adding <code>\</code> in front of it. For example <code>ma&amp;w!doc</code> would be typed as <code>ma\&amp;w\!doc</code>.
         </span>
       </p>
     </div>
@@ -108,7 +110,7 @@
     targetAttachment="center"
     translucentOverlay=true
     overlayPosition='sibling'
-    animatable=(config-get 'liquidFire.enabled')
+    animatable=true
   }}
     <div data-test-settings-disabled-after-migration-modal>
       <h3 class="h3--teal">Your repository has been migrated to travis-ci.com</h3>

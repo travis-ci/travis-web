@@ -38,6 +38,7 @@ module.exports = function (environment) {
     },
     urls: {
       about: 'https://about.travis-ci.com',
+      bestpracticessecurity: 'https://docs.travis-ci.com/user/best-practices-security#recommendations-on-how-to-avoid-leaking-secrets-to-build-logs',
       blog: 'https://blog.travis-ci.com',
       changelog: 'https://changelog.travis-ci.com',
       community: 'https://travis-ci.community',
@@ -90,10 +91,6 @@ module.exports = function (environment) {
     moment: {
       includeTimezone: 'subset'
     },
-
-    liquidFire: {
-      enabled: true
-    }
   };
 
   ENV.featureFlags = {
@@ -231,8 +228,6 @@ module.exports = function (environment) {
 
     ENV.APP.rootElement = '#ember-testing';
     ENV.APP.autoboot = false;
-
-    ENV.liquidFire.enabled = false;
 
     ENV.sentry = {
       development: true

@@ -50,6 +50,17 @@
 
     .subheading {
       margin-bottom: 10px;
+
+      a {
+        display: inline-block;
+        border-bottom: 1px solid #dcdcdc;
+        white-space: nowrap;
+
+        &:hover {
+          color: $asphalt-grey;
+          border-color: $asphalt-grey;
+        }
+      }
     }
 
     .sign-in {

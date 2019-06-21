@@ -229,6 +229,16 @@ $env-var-value-background: lighten($cement-grey, 20);
     a {
       padding-bottom: 0.07rem;
     }
+
+    code {
+      font-family: cousine, monospace;
+      font-size: 0.9em;
+      color: $asphalt-grey;
+      padding: 0.1em 0.3em;
+      border-radius: 2px;
+      border: 1px solid $dry-cement;
+      background-color: $pebble-grey;
+    }
   }
 }
 
