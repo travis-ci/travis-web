@@ -66,24 +66,35 @@
     onInit=(action 'setFieldElementId')
     class='travis-form__field-component'
   )
+  switch=(component 'forms/form-switch'
+    form=form
+    checked=value
+    disabled=disabled
+    onChange=(action 'handleChange')
+    onInit=(action 'setFieldElementId')
+    class='travis-form__field-component'
+  )
 )}}
 
 {{#if requiresValidation }}
-  <div class="travis-form__field-badge travis-form__field-badge--error">
-    {{svg-jar 'form-error-icon' width=14 height=14}}
-  </div>
+  {{#if showValidationStatusIcons}}
+    <div class="travis-form__field-badge travis-form__field-badge--error">
+      {{svg-jar 'form-error-icon' width=14 height=14}}
+    </div>
 
-  <div class="travis-form__field-badge travis-form__field-badge--valid">
-    {{svg-jar 'form-valid-icon' width=14 height=14}}
-  </div>
-
-  <div class="travis-form__error-message">
-    {{errorMessage}} &nbsp;
-  </div>
+    <div class="travis-form__field-badge travis-form__field-badge--valid">
+      {{svg-jar 'form-valid-icon' width=14 height=14}}
+    </div>
+  {{/if}}
+  {{#if showValidationStatusMessage}}
+    <div class="travis-form__error-message">
+      {{errorMessage}} &nbsp;
+    </div>
+  {{/if}}
 {{/if}}
 
 {{#if showClear }}
   <div class="travis-form__clear" onclick={{action 'handleClear'}}>
     &times;
   </div>
-  {{/if}}
+{{/if}}

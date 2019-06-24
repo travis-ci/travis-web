@@ -1,24 +1,13 @@
-import { isBlank } from '@ember/utils';
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
 
 export default Component.extend({
+  classNames: ['form--envvar'],
+
   store: service(),
   raven: service(),
   flashes: service(),
-
-  classNames: ['form--envvar'],
-  classNameBindings: ['nameIsBlank:form-error'],
-
-  isValid() {
-    if (isBlank(this.get('name'))) {
-      this.set('nameIsBlank', true);
-      return false;
-    } else {
-      return true;
-    }
-  },
 
   reset() {
     return this.setProperties({
@@ -29,28 +18,20 @@ export default Component.extend({
   },
 
   save: task(function* () {
-    if (this.isValid()) {
-      const envVar = this.get('store').createRecord('env_var', {
-        name: this.get('name').trim(),
-        value: this.get('value').trim(),
-        'public': this.get('public'),
-        repo: this.get('repo')
-      });
+    const envVar = this.get('store').createRecord('env_var', {
+      name: this.name.trim(),
+      value: this.value.trim(),
+      'public': this.public,
+      repo: this.repo
+    });
 
-      try {
-        yield envVar.save().then(saved => saved.set('newlyCreated', true));
-        this.reset();
-      } catch (e) {
-        // eslint-disable-next-line
-        this.get('flashes').error('There was an error saving this environment variable.');
-        this.get('raven').logException(e);
-      }
+    try {
+      yield envVar.save().then(saved => saved.set('newlyCreated', true));
+      this.reset();
+    } catch (e) {
+      // eslint-disable-next-line
+      this.get('flashes').error('There was an error saving this environment variable.');
+      this.get('raven').logException(e);
     }
-  }).drop(),
-
-  actions: {
-    nameChanged() {
-      return this.set('nameIsBlank', false);
-    }
-  }
+  }).drop()
 });
