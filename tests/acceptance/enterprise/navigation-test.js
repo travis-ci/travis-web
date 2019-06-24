@@ -1,8 +1,12 @@
-import { test } from 'qunit';
-import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
+import { currentURL, visit } from '@ember/test-helpers';
+import { module, test } from 'qunit';
+import { setupApplicationTest } from 'ember-qunit';
+import { enableFeature } from 'ember-feature-flags/test-support';
 
-moduleForAcceptance('Acceptance | enterprise/navigation', {
-  beforeEach() {
+module('Acceptance | enterprise/navigation', function (hooks) {
+  setupApplicationTest(hooks);
+
+  hooks.beforeEach(function () {
     server.get('/v3/enterprise_license', (schema, response) => {
       return {
         'license_id': 'ad12345',
@@ -12,15 +16,13 @@ moduleForAcceptance('Acceptance | enterprise/navigation', {
         'expiration_time': new Date(new Date().getTime() + 1000).toISOString()
       };
     });
-  },
-});
+  });
 
-test('visiting `/` without being authenticated redirects to `/auth`', function (assert) {
-  withFeature('enterpriseVersion');
+  test('visiting `/` without being authenticated redirects to `/auth`', async function (assert) {
+    enableFeature('enterpriseVersion');
 
-  visit('/');
+    await visit('/');
 
-  andThen(function () {
     assert.equal(currentURL(), '/auth');
   });
 });
