@@ -1,48 +1,51 @@
+import {
+  currentURL,
+  visit,
+} from '@ember/test-helpers';
 import Ember from 'ember';
-import { test } from 'qunit';
-import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
+import { module, test } from 'qunit';
+import { setupApplicationTest } from 'ember-qunit';
 import nonExistentOwnerPage from 'travis/tests/pages/owner/non-existent';
 import { percySnapshot } from 'ember-percy';
+import { enableFeature } from 'ember-feature-flags/test-support';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 
 let adapterException;
 let loggerError;
 
-moduleForAcceptance('Acceptance | owner/not found', {
-  beforeEach() {
+module('Acceptance | owner/not found', function (hooks) {
+  setupApplicationTest(hooks);
+
+  hooks.beforeEach(function () {
     // Ignore promise rejection.
     // Original exception will fail test on promise rejection.
     adapterException = Ember.Test.adapter.exception;
     loggerError = Ember.Logger.error;
     Ember.Test.adapter.exception = () => null;
     Ember.Logger.error = () => null;
-  },
+  });
 
-  afterEach() {
+  hooks.afterEach(function () {
     Ember.Test.adapter.exception = adapterException;
     Ember.Logger.error = loggerError;
-  }
-});
+  });
 
-test('visiting /non-existent-owner shows error message when authenticated', function (assert) {
-  const user = server.create('user');
-  signInUser(user);
+  test('visiting /non-existent-owner shows error message when authenticated', async function (assert) {
+    const user = server.create('user');
+    await signInUser(user);
 
-  nonExistentOwnerPage.visit();
+    await visit('/non-existent-owner');
 
-  andThen(function () {
     assert.equal(currentURL(), '/non-existent-owner');
     assert.ok(nonExistentOwnerPage.showsBarricadeIllustration, 'Shows image for aesthetics');
     assert.equal(nonExistentOwnerPage.errorMessage, 'We couldn\'t find the owner non-existent-owner', 'Shows message that repository was not found');
     assert.ok(nonExistentOwnerPage.errorMessageProisHidden, 'does not show .com authenticated message');
   });
-});
 
-test('visiting /non-existent-owner shows error message when unauthenticated', function (assert) {
-  withFeature('proVersion');
-  nonExistentOwnerPage.visit();
+  test('visiting /non-existent-owner shows error message when unauthenticated', async function (assert) {
+    enableFeature('proVersion');
+    await visit('/non-existent-owner');
 
-  andThen(function () {
     percySnapshot(assert);
     assert.equal(currentURL(), '/non-existent-owner');
     assert.ok(nonExistentOwnerPage.showsBarricadeIllustration, 'Shows image for aesthetics');
