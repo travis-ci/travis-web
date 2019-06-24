@@ -71,6 +71,24 @@ module('Integration | Component | builds item', function (hooks) {
     assert.dom('.row-branch a').hasAttribute('title', 'Strike!');
   });
 
+  test('it renders a draft label', async function (assert) {
+    const build = {
+      id: 10000,
+      state: 'failed',
+      message: void 0,
+      isPullRequest: true,
+      pullRequestNumber: 1919,
+      pullRequestTitle: 'Strike!',
+      request: {
+        isDraft: true
+      }
+    };
+
+    this.build = build;
+    await render(hbs`{{builds-item build=build}}`);
+    assert.dom('.row-branch .badge').hasText('draft');
+  });
+
   test('it renders a cron build with a prefix', async function (assert) {
     const build = {
       eventType: 'cron',
