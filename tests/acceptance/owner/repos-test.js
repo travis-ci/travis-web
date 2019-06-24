@@ -1,10 +1,12 @@
-import { test } from 'qunit';
-import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
+import { module, test } from 'qunit';
+import { setupApplicationTest } from 'ember-qunit';
 import ownerPage from 'travis/tests/pages/owner';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 
-moduleForAcceptance('Acceptance | owner repositories', {
-  beforeEach() {
+module('Acceptance | owner repositories', function (hooks) {
+  setupApplicationTest(hooks);
+
+  hooks.beforeEach(function () {
     let user = server.create('user', {
       name: 'User Name',
       login: 'user-login'
@@ -56,13 +58,11 @@ moduleForAcceptance('Acceptance | owner repositories', {
       slug: 'other/other',
       skipPermissions: true
     });
-  }
-});
+  });
 
-test('the owner page shows their repositories', (assert) => {
-  ownerPage.visit({ username: 'user-login' });
+  test('the owner page shows their repositories', async function (assert) {
+    await ownerPage.visit({ username: 'user-login' });
 
-  andThen(() => {
     assert.equal(document.title, 'User Name - Travis CI');
 
     assert.equal(ownerPage.title, 'User Name');
