@@ -1,10 +1,14 @@
-import { test } from 'qunit';
-import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
+import { visit } from '@ember/test-helpers';
+import { module, test } from 'qunit';
+import { setupApplicationTest } from 'ember-qunit';
 import { enterpriseBanners } from 'travis/tests/pages/enterprise-banner';
 import signInUser from 'travis/tests/helpers/sign-in-user';
+import { enableFeature } from 'ember-feature-flags/test-support';
 
-moduleForAcceptance('Acceptance | enterprise/banner', {
-  beforeEach() {
+module('Acceptance | enterprise/banner', function (hooks) {
+  setupApplicationTest(hooks);
+
+  hooks.beforeEach(function () {
     const currentUser = server.create('user');
     signInUser(currentUser);
 
@@ -17,16 +21,12 @@ moduleForAcceptance('Acceptance | enterprise/banner', {
         'expiration_time': '2019-01-01T00:00:00Z'
       };
     });
-  }
-});
+  });
 
-test('banner is rendered in enterprise mode', function (assert) {
-  withFeature('enterpriseVersion');
-  visit('/');
+  test('banner is rendered in enterprise mode', async function (assert) {
+    enableFeature('enterpriseVersion');
+    await visit('/');
 
-  andThen(() => {});
-
-  andThen(function () {
     assert.ok(enterpriseBanners.trialBanner.isVisible);
   });
 });
