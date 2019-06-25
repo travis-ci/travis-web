@@ -1,9 +1,9 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
-import { task, timeout } from 'ember-concurrency';
-import config from 'travis/config/environment';
+import { task } from 'ember-concurrency';
+import BranchSearching from 'travis/mixins/branch-searching';
 
-export default Component.extend({
+export default Component.extend(BranchSearching, {
   classNames: ['form--envvar'],
 
   store: service(),
@@ -19,18 +19,8 @@ export default Component.extend({
     });
   },
 
-  search: task(function* (query) {
-    yield timeout(config.intervals.searchDebounceRate);
-    let branches = yield this.store.query('branch', {
-      repository_id: this.repo.id,
-      data: {
-        name: query,
-        sort_by: 'name',
-        limit: 10,
-        exists_on_github: true
-      }
-    });
-    return branches;
+  search: task(function (query) {
+    return this.searchBranch(this.repo.id, query);
   }).restartable(),
 
   save: task(function* () {

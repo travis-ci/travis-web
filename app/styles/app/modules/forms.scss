@@ -116,7 +116,8 @@ textarea {
     }
 
     .form-elem:first-of-type,
-    .form-elem:nth-of-type(2) {
+    .form-elem:nth-of-type(2),
+    .form-elem:nth-of-type(3) {
       margin-right: 1em;
     }
 
@@ -148,11 +149,11 @@ textarea {
     .form-elem:first-of-type,
     .form-elem:nth-of-type(2),
     .form-elem:nth-of-type(3) {
-      width: 25%;
+      width: 22%;
     }
 
     .form-elem:nth-of-type(4) {
-      width: 13%;
+      width: 18%;
     }
 
     .form-elem:last-of-type {

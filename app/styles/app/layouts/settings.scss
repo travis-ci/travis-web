@@ -199,9 +199,9 @@ $env-var-value-background: lighten($cement-grey, 20);
   @extend %settings-value-section;
 
   width: 76%;
-  padding: 0.3em 0.7em;
+  padding: 0.3em 1em;
   @media #{$medium-up} {
-    width: grid-calc(3, 12);
+    width: grid-calc(4, 12);
   }
 
   code {
@@ -210,7 +210,7 @@ $env-var-value-background: lighten($cement-grey, 20);
     color: $asphalt-grey;
     padding: 0.1em 0.3em;
     border-radius: 2px;
-    border: 1px solid $asphalt-grey;
+    border: 1px solid lighten($cement-grey, 20);
     background-color: $dry-cement;
   }
 }
@@ -303,11 +303,11 @@ $env-var-value-background: lighten($cement-grey, 20);
   text-align: center;
 
   @media #{$medium-up} {
-    width: grid-calc(4, 24);
+    width: grid-calc(3, 24);
   }
 
   @media #{$xlarge-up} {
-    width: grid-calc(4, 36);
+    width: grid-calc(3, 36);
   }
 
   button {
