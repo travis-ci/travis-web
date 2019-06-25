@@ -75,6 +75,18 @@ module.exports = function () {
     },
     'ember-power-select': {
       theme: false
+    },
+    postcssOptions: {
+      compile: {
+        enabled: false
+      },
+      filter: {
+        enabled: true,
+        exclude: ['vendor/**/*'],
+        plugins: [
+          require('tailwindcss')('./app/tailwind/config.js')
+        ]
+      }
     }
   });
 

@@ -1,3 +1,7 @@
+// Skipping import of tailwind base, because it causes visual regressions on many pages
+@tailwind components;
+@tailwind utilities;
+
 @import "app/power-select-vars";
 @import "ember-power-select";
 
