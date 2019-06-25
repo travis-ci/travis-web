@@ -1,21 +1,52 @@
-<form {{action (perform save) on='submit'}}>
-  <div class="form-elem">
-    {{input value=name class="env-name" key-up=(action 'nameChanged') placeholder="Name"}}
-    {{#if nameIsBlank }}
-      <p class="form-error-message">Name cannot be blank</p>
-    {{/if}}
+{{#travis-form
+  onSubmit=(perform save)
+  as |form|
+}}
+  <div class='form-elem'>
+    {{#form.field
+      label='Name'
+      value=name
+      required=true
+      showValidationStatusIcons=false
+      onChange=(action (mut name))
+      as |field|
+    }}
+      {{field.input class='env-name' placeholder='Name'}}
+    {{/form.field}}
   </div>
-  <div class="form-elem">
-    {{input value=value class="env-value" placeholder="Value"}}
+  <div class='form-elem'>
+   {{#form.field
+      label='Value'
+      value=value
+      required=true
+      onChange=(action (mut value))
+      showValidationStatusIcons=false
+      as |field|
+    }}
+      {{field.input  class='env-value' placeholder='Value'}}
+    {{/form.field}}
   </div>
-  <div class="form-elem">
-    {{travis-switch active=public description="Display value in build log" onToggle=(action (mut public))}}
+  <div class='form-elem'>
+    {{#form.field
+      label='Display value in build log'
+      disableFrame=true
+      class='display-value-switch'
+      value=public
+      onChange=(action (mut public))
+      as |field|
+    }}
+      {{field.switch}}
+    {{/form.field}}
   </div>
-  <div class="form-elem">
+  <div class='form-elem'>
     {{#if save.isRunning}}
       {{loading-indicator}}
     {{else}}
-      <input type="submit" value="Add" class="form-submit" />
+      <button
+        onclick={{form.submit}}
+        class='add-env-form-submit form-submit'>
+        Add
+      </button>
     {{/if}}
   </div>
-</form>
+{{/travis-form}}

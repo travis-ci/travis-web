@@ -2,7 +2,7 @@ import Component from '@ember/component';
 
 export default Component.extend({
   tagName: 'input',
-  classNames: ['travis-form__field-input'],
+  classNames: ['travis-form__field-input', 'travis-form__field-component'],
   attributeBindings: [
     'disabled',
     'type',

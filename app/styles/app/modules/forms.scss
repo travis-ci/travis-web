@@ -84,6 +84,29 @@ textarea {
     vertical-align: top;
     width: 100%;
     margin-bottom: 1em;
+
+    .display-value-switch {
+      display: flex;
+      justify-content: left;
+      width: 195px;
+      height: 80px;
+      align-items: center;
+
+      button {
+        order: 1;
+        align-self: center;
+      }
+
+      label {
+        order: 2;
+        text-align: left;
+        position: relative;
+        top: 4px;
+        cursor: pointer;
+      }
+
+    }
+
   }
 
   @media #{$medium-up} {
@@ -97,9 +120,16 @@ textarea {
     }
 
     .form-elem:last-of-type {
-      float: right;
       text-align: right;
+      vertical-align: bottom;
+      margin-bottom: 2px;
     }
+
+    .form-elem:last-of-type {
+      width: 6%;
+      margin-bottom: 27px;
+    }
+
   }
 }
 
@@ -124,7 +154,7 @@ textarea {
     }
 
     .form-elem:last-of-type {
-      width: 6%;
+      width: 7%;
     }
   }
 }
@@ -132,20 +162,8 @@ textarea {
 .form--cron {
   padding: 0.4em 0;
 
-  .form-elem {
-    select {
-      width: 70%;
-    }
-  }
-
-  .select {
-    span {
-      vertical-align: middle;
-      font-size: 16px;
-      color: #8d8d8d;
-      display: inline-block;
-      padding-right: 5px;
-    }
+  .ember-power-select-selected-item {
+    white-space: nowrap;
   }
 
   @media #{$medium-up} {
@@ -155,10 +173,6 @@ textarea {
       width: grid-calc(3, 10);
       margin-right: 0em;
       padding-right: 5px;
-    }
-
-    .form-elem:last-of-type {
-      width: 6%;
     }
   }
 }
