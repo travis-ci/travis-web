@@ -1,17 +1,18 @@
-import { test } from 'qunit';
-import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
+import { currentURL, visit } from '@ember/test-helpers';
+import { module, test } from 'qunit';
+import { setupApplicationTest } from 'ember-qunit';
 import sidebarPage from 'travis/tests/pages/sidebar';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 
-moduleForAcceptance('Acceptance | search/no results');
+module('Acceptance | search/no results', function (hooks) {
+  setupApplicationTest(hooks);
 
-test('visiting /search/no-results', function (assert) {
-  const currentUser = server.create('user');
-  signInUser(currentUser);
+  test('visiting /search/no-results', async function (assert) {
+    const currentUser = server.create('user');
+    signInUser(currentUser);
 
-  visit('/search/no-results');
+    await visit('/search/no-results');
 
-  andThen(function () {
     assert.equal(currentURL(), '/search/no-results');
     assert.equal(sidebarPage.missingReposMessage, 'No repositories found', 'Shows no search results message');
   });
