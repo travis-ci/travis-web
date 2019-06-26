@@ -78,6 +78,11 @@
     height: auto;
   }
 
+  .layout-striped & {
+    max-width: $layout-max-width;
+    margin: auto;
+  }
+
   @media #{$medium-up} {
     &,
     &.has-autoheight {

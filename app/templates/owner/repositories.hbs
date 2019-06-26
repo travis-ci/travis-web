@@ -26,14 +26,14 @@
           {{insights-tabs selectedTab=timeInterval}}
         </div>
         <div class="insights-grid">
+          {{insights-overlay owner=model.owner interval=timeInterval private=includePrivateInsights data-test-insights-overlay=''}}
+
           {{build-count owner=model.owner interval=timeInterval private=includePrivateInsights data-test-insights-glance=''}}
           {{build-minutes owner=model.owner interval=timeInterval private=includePrivateInsights data-test-insights-glance=''}}
           {{queue-times owner=model.owner interval=timeInterval private=includePrivateInsights data-test-insights-glance=''}}
           {{active-repo-count owner=model.owner interval=timeInterval private=includePrivateInsights data-test-insights-glance=''}}
 
           {{build-status-chart owner=model.owner interval=timeInterval private=includePrivateInsights data-test-insights-odyssey=''}}
-
-          {{insights-overlay owner=model.owner interval=timeInterval private=includePrivateInsights data-test-insights-overlay=''}}
         </div>
       </div>
     {{else}}

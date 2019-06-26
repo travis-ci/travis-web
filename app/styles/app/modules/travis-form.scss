@@ -54,7 +54,6 @@ $select-multiple-spacing: 5px;
 
     .travis-form__field-component {
       display: block;
-      width: calc(100% + #{$travis-form-border-width * 2});
       height: auto;
       line-height: normal;
       font-size: 1em;
@@ -63,12 +62,19 @@ $select-multiple-spacing: 5px;
       margin: -$travis-form-border-width;
       color: $asphalt-grey;
 
+      &:not(.switch) {
+        width: calc(100% + #{$travis-form-border-width * 2});
+      }
+
       &[disabled],
       &.travis-form__field-component--disabled {
         opacity: 0.5;
         background-color: transparent;
       }
 
+      .switch-inner {
+        margin-top: 5px;
+      }
     }
 
     &:not(.travis-form__field--without-frame) .travis-form__field-component {
@@ -85,7 +91,6 @@ $select-multiple-spacing: 5px;
       &.ember-power-select-multiple-trigger {
         padding: $select-multiple-spacing 25px 0 $select-multiple-spacing;
       }
-
     }
 
     .travis-form__field-checkbox {
@@ -342,6 +347,15 @@ $select-multiple-spacing: 5px;
   &[aria-current="true"] {
     background-color: $oxide-blue;
   }
+
+  &--search-message,
+  &--loading-message,
+  &--no-matches-message {
+    margin-bottom: 7px;
+    margin-left: 8px;
+    color: $cement-grey;
+    cursor: default;
+  }
 }
 
 .ember-power-select-multiple {
@@ -377,4 +391,3 @@ $select-multiple-spacing: 5px;
   font-size: 1.1em;
   max-width: calc(100% - 25px);
 }
-
