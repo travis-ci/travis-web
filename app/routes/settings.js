@@ -40,11 +40,6 @@ export default TravisRoute.extend({
     }
   },
 
-  fetchBranches() {
-    const repo = this.modelFor('repo');
-    return repo.get('branches.promise');
-  },
-
   fetchCustomSshKey() {
     if (config.endpoints.sshKey) {
       const repo = this.modelFor('repo');
@@ -89,9 +84,9 @@ export default TravisRoute.extend({
   model() {
     return hash({
       settings: this.modelFor('repo').fetchSettings(),
+      repository: this.modelFor('repo'),
       envVars: this.fetchEnvVars(),
       cronJobs: this.fetchCronJobs(),
-      branches: this.fetchBranches(),
       sshKey: this.fetchSshKey(),
       customSshKey: this.fetchCustomSshKey(),
       hasPushAccess: this.hasPushAccess(),

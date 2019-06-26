@@ -69,7 +69,7 @@ module.exports = function (environment) {
     intervals: {
       updateTimes: 1000,
       branchCreatedSyncDelay: 2000,
-      repositorySearchDebounceRate: 500,
+      searchDebounceRate: 500,
       triggerBuildRequestDelay: 3000,
       fetchRecordsForPusherUpdatesThrottle: 1000,
       repositoryFilteringDebounceRate: 200,
@@ -91,10 +91,6 @@ module.exports = function (environment) {
     moment: {
       includeTimezone: 'subset'
     },
-
-    liquidFire: {
-      enabled: true
-    }
   };
 
   ENV.featureFlags = {
@@ -232,8 +228,6 @@ module.exports = function (environment) {
 
     ENV.APP.rootElement = '#ember-testing';
     ENV.APP.autoboot = false;
-
-    ENV.liquidFire.enabled = false;
 
     ENV.sentry = {
       development: true

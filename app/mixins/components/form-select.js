@@ -1,6 +1,5 @@
 import Mixin from '@ember/object/mixin';
 import { computed } from '@ember/object';
-import { gte } from '@ember/object/computed';
 
 const OPTIONS_FOR_SEARCH = 5;
 
@@ -14,7 +13,9 @@ export default Mixin.create({
   disabled: false,
   placeholder: '',
 
-  searchEnabled: gte('options.length', OPTIONS_FOR_SEARCH),
+  searchEnabled: computed('options.length', 'oninput', function () {
+    return this.get('options.length') >= OPTIONS_FOR_SEARCH || !!this.search;
+  }),
   searchPlaceholder: 'Type to filter options...',
 
   allowClear: false,
