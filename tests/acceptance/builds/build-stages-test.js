@@ -1,79 +1,79 @@
-import { test } from 'qunit';
-import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
+import { visit, waitFor } from '@ember/test-helpers';
+import { module, test } from 'qunit';
+import { setupApplicationTest } from 'ember-qunit';
 import buildPage from 'travis/tests/pages/build';
 import { prettyDate } from 'travis/helpers/pretty-date';
+import { percySnapshot } from 'ember-percy';
 
-moduleForAcceptance('Acceptance | build stages');
+module('Acceptance | build stages', function (hooks) {
+  setupApplicationTest(hooks);
 
-const jobTime = new Date();
+  const jobTime = new Date();
 
-function futureTime(secondsAhead) {
-  return new Date(jobTime.getTime() + secondsAhead * 1000);
-}
+  function futureTime(secondsAhead) {
+    return new Date(jobTime.getTime() + secondsAhead * 1000);
+  }
 
-test('visiting build with one stage', function (assert) {
-  let repo =  server.create('repository', { slug: 'travis-ci/travis-web' });
+  test('visiting build with one stage', async function (assert) {
+    let repo =  server.create('repository', { slug: 'travis-ci/travis-web' });
 
-  let branch = server.create('branch', { name: 'acceptance-tests' });
-  let  gitUser = server.create('git-user', { name: 'Mr T' });
-  let commit = server.create('commit', { author: gitUser, committer: gitUser, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
-  let build = server.create('build', { repository: repo, state: 'passed', commit, branch });
+    let branch = server.create('branch', { name: 'acceptance-tests' });
+    let  gitUser = server.create('git-user', { name: 'Mr T' });
+    let commit = server.create('commit', { author: gitUser, committer: gitUser, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
+    let build = server.create('build', { repository: repo, state: 'passed', commit, branch });
 
-  let firstStage = build.createStage({ number: 1, name: 'first :two_men_holding_hands:', state: 'passed', started_at: jobTime, finished_at: futureTime(71), allow_failure: true });
+    let firstStage = build.createStage({ number: 1, name: 'first :two_men_holding_hands:', state: 'passed', started_at: jobTime, finished_at: futureTime(71), allow_failure: true });
 
-  let firstJob = server.create('job', { number: '1234.1', repository: repo, state: 'passed', config: { env: 'JORTS', os: 'linux', language: 'node_js', node_js: 5 }, commit, build, stage: firstStage, started_at: jobTime, finished_at: futureTime(30) });
-  commit.job = firstJob;
+    let firstJob = server.create('job', { number: '1234.1', repository: repo, state: 'passed', config: { env: 'JORTS', os: 'linux', language: 'node_js', node_js: 5 }, commit, build, stage: firstStage, started_at: jobTime, finished_at: futureTime(30) });
+    commit.job = firstJob;
 
-  firstJob.save();
-  commit.save();
+    firstJob.save();
+    commit.save();
 
-  server.create('job', { number: '1234.2', repository: repo, state: 'failed', allow_failure: true, config: { env: 'JANTS', os: 'osx', language: 'ruby', rvm: 2.2 }, commit, build, stage: firstStage, started_at: jobTime, finished_at: futureTime(40) });
+    server.create('job', { number: '1234.2', repository: repo, state: 'failed', allow_failure: true, config: { env: 'JANTS', os: 'osx', language: 'ruby', rvm: 2.2 }, commit, build, stage: firstStage, started_at: jobTime, finished_at: futureTime(40) });
 
-  visit(`/travis-ci/travis-web/builds/${build.id}`);
+    await visit(`/travis-ci/travis-web/builds/${build.id}`);
 
-  // TODO: I'm not sure why it's needed now
-  waitForElement('.jobs.stage .stage-header.passed');
+    // TODO: I'm not sure why it's needed now
+    await waitFor('.jobs.stage .stage-header.passed');
 
-  andThen(function () {
     assert.equal(buildPage.stages.length, 1, 'expected one build stage');
 
     buildPage.stages[0].as(stage => {
       assert.ok(stage.isPassed);
     });
+
+    percySnapshot(assert);
   });
 
-  percySnapshot(assert);
-});
+  test('visiting build with stages', async function (assert) {
+    let repo =  server.create('repository', { slug: 'travis-ci/travis-web' });
+    server.create('branch', {});
 
-test('visiting build with stages', function (assert) {
-  let repo =  server.create('repository', { slug: 'travis-ci/travis-web' });
-  server.create('branch', {});
+    let  gitUser = server.create('git-user', { name: 'Mr T' });
+    let commit = server.create('commit', { author: gitUser, committer: gitUser, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
 
-  let  gitUser = server.create('git-user', { name: 'Mr T' });
-  let commit = server.create('commit', { author: gitUser, committer: gitUser, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
+    let request = server.create('request');
 
-  let request = server.create('request');
+    let build = server.create('build', { repository: repo, state: 'passed', commit_id: commit.id, commit, request });
 
-  let build = server.create('build', { repository: repo, state: 'passed', commit_id: commit.id, commit, request });
+    let secondStage = build.createStage({ number: 2, name: 'second', state: 'failed', started_at: jobTime, finished_at: futureTime(11) });
+    let firstStage = build.createStage({ number: 1, name: 'first :two_men_holding_hands:', state: 'passed', started_at: jobTime, finished_at: futureTime(71), allow_failure: true });
 
-  let secondStage = build.createStage({ number: 2, name: 'second', state: 'failed', started_at: jobTime, finished_at: futureTime(11) });
-  let firstStage = build.createStage({ number: 1, name: 'first :two_men_holding_hands:', state: 'passed', started_at: jobTime, finished_at: futureTime(71), allow_failure: true });
+    let firstJob = server.create('job', { number: '1234.1', repository: repo, state: 'passed', config: { env: 'JORTS', os: 'linux', language: 'node_js', node_js: 5 }, commit, build, stage: firstStage, started_at: jobTime, finished_at: futureTime(30) });
+    commit.job = firstJob;
 
-  let firstJob = server.create('job', { number: '1234.1', repository: repo, state: 'passed', config: { env: 'JORTS', os: 'linux', language: 'node_js', node_js: 5 }, commit, build, stage: firstStage, started_at: jobTime, finished_at: futureTime(30) });
-  commit.job = firstJob;
+    firstJob.save();
+    commit.save();
 
-  firstJob.save();
-  commit.save();
+    server.create('job', { number: '1234.2', repository: repo, state: 'failed', allow_failure: true, config: { env: 'JANTS', os: 'osx', language: 'ruby', rvm: 2.2 }, commit, build, stage: firstStage, started_at: jobTime, finished_at: futureTime(40) });
+    server.create('job', { number: '1234.999', repository: repo, state: 'failed', config: { language: 'ruby' }, commit, build, stage: secondStage, started_at: jobTime, finished_at: futureTime(10) });
 
-  server.create('job', { number: '1234.2', repository: repo, state: 'failed', allow_failure: true, config: { env: 'JANTS', os: 'osx', language: 'ruby', rvm: 2.2 }, commit, build, stage: firstStage, started_at: jobTime, finished_at: futureTime(40) });
-  server.create('job', { number: '1234.999', repository: repo, state: 'failed', config: { language: 'ruby' }, commit, build, stage: secondStage, started_at: jobTime, finished_at: futureTime(10) });
+    await visit(`/travis-ci/travis-web/builds/${build.id}`);
 
-  visit(`/travis-ci/travis-web/builds/${build.id}`);
+    // TODO: I'm not sure why it's needed now
+    await waitFor('.jobs.stage .stage-header.passed');
 
-  // TODO: I'm not sure why it's needed now
-  waitForElement('.jobs.stage .stage-header.passed');
-
-  andThen(function () {
     assert.equal(buildPage.stages.length, 2, 'expected two build stages');
 
     buildPage.stages[0].as(stage => {
@@ -101,6 +101,6 @@ test('visiting build with stages', function (assert) {
       assert.equal(stage.jobs[0].number, '1234.999');
       assert.ok(stage.allowFailures.isHidden, 'expected no allowed failures text');
     });
+    percySnapshot(assert);
   });
-  percySnapshot(assert);
 });
