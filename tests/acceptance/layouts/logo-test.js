@@ -1,14 +1,19 @@
-import { test } from 'qunit';
-import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
+import { currentURL, visit } from '@ember/test-helpers';
+import { module, test } from 'qunit';
+import { setupApplicationTest } from 'ember-qunit';
 import defaultHeader from 'travis/tests/pages/header/default';
 import footer from 'travis/tests/pages/footer';
+import signOutUser from 'travis/tests/helpers/sign-out-user';
 
-moduleForAcceptance('Acceptance | layouts/logo page');
+module('Acceptance | layouts/logo page', function (hooks) {
+  setupApplicationTest(hooks);
 
-test('logo page renders correct header/footer', function (assert) {
-  visit('/logo');
+  test('logo page renders correct header/footer', async function (assert) {
+    const currentUser = server.create('user');
+    signOutUser(currentUser);
 
-  andThen(function () {
+    await visit('/logo');
+
     assert.equal(currentURL(), '/logo');
 
     assert.ok(defaultHeader.logoPresent, 'Default header has logo');
