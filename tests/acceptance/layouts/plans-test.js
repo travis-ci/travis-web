@@ -1,16 +1,20 @@
-import { test } from 'qunit';
-import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
+import { currentURL, visit } from '@ember/test-helpers';
+import { module, test } from 'qunit';
+import { setupApplicationTest } from 'ember-qunit';
 import proHeader from 'travis/tests/pages/header/pro';
 import footer from 'travis/tests/pages/footer';
+import { enableFeature } from 'ember-feature-flags/test-support';
+import signOutUser from 'travis/tests/helpers/sign-out-user';
 
-moduleForAcceptance('Acceptance | layouts/plans page');
+module('Acceptance | layouts/plans page', function (hooks) {
+  setupApplicationTest(hooks);
 
-test('plans page renders correct header/footer', function (assert) {
-  withFeature('proVersion');
+  test('plans page renders correct header/footer', async function (assert) {
+    signOutUser();
+    enableFeature('proVersion');
 
-  visit('/plans');
+    await visit('/plans');
 
-  andThen(function () {
     assert.equal(currentURL(), '/plans');
 
     assert.ok(proHeader.logoPresent, 'Pro header has logo');
@@ -24,12 +28,10 @@ test('plans page renders correct header/footer', function (assert) {
     assert.equal(footer.sections[3].title, 'Help', 'Shows help info section');
     assert.equal(footer.sections[4].title, 'Legal', 'Shows legal info section');
   });
-});
 
-test('plans page redirects unless pro enabled', function (assert) {
-  visit('/plans');
+  test('plans page redirects unless pro enabled', async function (assert) {
+    await visit('/plans');
 
-  andThen(function () {
     assert.equal(currentURL(), '/');
   });
 });
