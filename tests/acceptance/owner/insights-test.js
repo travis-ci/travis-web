@@ -114,51 +114,6 @@ module('Acceptance | owner insights', function (hooks) {
     assert.ok(insightsPage.noBuildOverlay.isVisible);
   });
 
-  test('the owner insights page shows insights components', async function (assert) {
-    server.createList('insight-metric', 15);
-
-    await insightsPage.visit({ username: this.currentUser.login });
-    await settled();
-
-    assert.equal(insightsPage.glances.length, 4);
-    assert.equal(insightsPage.odysseys.length, 1);
-
-    // Build count component
-    insightsPage.glances[0].as(glance => {
-      assert.equal(glance.name, 'Total Builds');
-      assert.equal(glance.keyStat, 448);
-    });
-
-    // Build minutes component
-    insightsPage.glances[1].as(glance => {
-      assert.equal(glance.name, 'Total Job Minutes');
-      assert.equal(glance.keyStat, '6 mins');
-    });
-
-    // Queue times component
-    insightsPage.glances[2].as(glance => {
-      assert.equal(glance.name, 'Average Queue Time');
-      assert.equal(glance.keyStat, '0.6 mins');
-    });
-
-    // Active repos component
-    insightsPage.glances[3].as(glance => {
-      assert.equal(glance.name, 'Active Repositories');
-      assert.equal(glance.keyStat, '75');
-    });
-
-    // Build statuses component
-    insightsPage.odysseys[0].as(odyssey => {
-      assert.equal(odyssey.name, 'Build Statuses');
-      assert.notEqual(odyssey.chart.trim(), 'No builds this month.');
-    });
-
-    // No Build Overlay
-    assert.ok(insightsPage.noBuildOverlay.isHidden);
-
-    percySnapshot(assert);
-  });
-
   test('the owner insights page displays privacy selector on PRO version', async function (assert) {
     enableFeature('proVersion');
     signInUser(this.currentUser);
