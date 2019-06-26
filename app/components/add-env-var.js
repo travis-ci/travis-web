@@ -19,9 +19,10 @@ export default Component.extend(BranchSearching, {
     });
   },
 
-  search: task(function (query) {
-    return this.searchBranch(this.repo.id, query);
-  }).restartable(),
+  search: task(function* (query) {
+    const searchResults = yield this.searchBranch.perform(this.repo.id, query);
+    return searchResults;
+  }),
 
   save: task(function* () {
     const envVar = this.get('store').createRecord('env_var', {

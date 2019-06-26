@@ -34,10 +34,11 @@ export default Component.extend(BranchSearching, {
     });
   },
 
-  search: task(function (query) {
-    const branchNames = this.get('currentCronJobsBranches');
-    return this.searchBranch(this.repository.id, query, branchNames);
-  }).restartable(),
+  search: task(function* (query) {
+    const branchNames = this.currentCronJobsBranches;
+    const searchResults = yield this.searchBranch.perform(this.repository.id, query, branchNames);
+    return searchResults;
+  }),
 
   save: task(function* () {
     const cron = this.store.createRecord('cron', {
