@@ -1,30 +1,31 @@
-import { test } from 'qunit';
-import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
+import { visit } from '@ember/test-helpers';
+import { module, test } from 'qunit';
+import { setupApplicationTest } from 'ember-qunit';
 import buildPage from 'travis/tests/pages/build';
+import { percySnapshot } from 'ember-percy';
 
-moduleForAcceptance('Acceptance | job/build matrix');
+module('Acceptance | job/build matrix', function (hooks) {
+  setupApplicationTest(hooks);
 
-test('visiting build matrix', function (assert) {
-  let repo =  server.create('repository', { slug: 'travis-ci/travis-web' });
-  let branch = server.create('branch', { name: 'acceptance-tests' });
+  test('visiting build matrix', async function (assert) {
+    let repo =  server.create('repository', { slug: 'travis-ci/travis-web' });
+    let branch = server.create('branch', { name: 'acceptance-tests' });
 
-  let  gitUser = server.create('git-user', { name: 'Mr T' });
-  let commit = server.create('commit', { author: gitUser, committer: gitUser, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
-  let build = server.create('build', { repository: repo, state: 'passed', commit_id: commit.id, commit, branch });
+    let  gitUser = server.create('git-user', { name: 'Mr T' });
+    let commit = server.create('commit', { author: gitUser, committer: gitUser, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
+    let build = server.create('build', { repository: repo, state: 'passed', commit_id: commit.id, commit, branch });
 
-  let firstJob = server.create('job', { number: '1234.1', repository: repo, state: 'passed', config: { env: 'JORTS', os: 'linux', language: 'node_js', node_js: 5 }, commit, build });
-  commit.job = firstJob;
+    let firstJob = server.create('job', { number: '1234.1', repository: repo, state: 'passed', config: { env: 'JORTS', os: 'linux', language: 'node_js', node_js: 5 }, commit, build });
+    commit.job = firstJob;
 
-  firstJob.save();
-  commit.save();
+    firstJob.save();
+    commit.save();
 
-  server.create('job', { number: '1234.2', repository: repo, state: 'passed', config: { env: 'JANTS', os: 'osx', language: 'ruby', rvm: 2.2 }, commit, build });
-  server.create('job', { allow_failure: true, number: '1234.999', repository: repo, state: 'failed', config: { language: 'ruby', os: 'jorts' }, commit, build });
+    server.create('job', { number: '1234.2', repository: repo, state: 'passed', config: { env: 'JANTS', os: 'osx', language: 'ruby', rvm: 2.2 }, commit, build });
+    server.create('job', { allow_failure: true, number: '1234.999', repository: repo, state: 'failed', config: { language: 'ruby', os: 'jorts' }, commit, build });
 
-  visit(`/travis-ci/travis-web/builds/${build.id}`);
+    await visit(`/travis-ci/travis-web/builds/${build.id}`);
 
-  andThen(() => {});
-  andThen(function () {
     assert.equal(buildPage.requiredJobs.length, 2, 'expected two required jobs in the matrix');
 
     buildPage.requiredJobs[0].as(firstJobRow => {
@@ -49,6 +50,6 @@ test('visiting build matrix', function (assert) {
       assert.equal(failedJobRow.language, 'Ruby');
       assert.ok(failedJobRow.os.isUnknown, 'expected the job OS to be unknown');
     });
+    percySnapshot(assert);
   });
-  percySnapshot(assert);
 });
