@@ -47,7 +47,7 @@
     targetAttachment="center"
     translucentOverlay=true
     overlayPosition='sibling'
-    animatable=(config-get 'liquidFire.enabled')
+    animatable=true
   }}
     {{status-images repo=repo onClose=(action 'toggleStatusBadgeModal')}}
   {{/modal-dialog}}
@@ -59,7 +59,7 @@
     targetAttachment="center"
     translucentOverlay=true
     overlayPosition='sibling'
-    animatable=(config-get 'liquidFire.enabled')
+    animatable=true
   }}
     {{trigger-custom-build repo=repo onClose=(action 'toggleTriggerBuildModal')}}
   {{/modal-dialog}}

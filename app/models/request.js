@@ -3,11 +3,16 @@ import attr from 'ember-data/attr';
 import { belongsTo } from 'ember-data/relationships';
 import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
-import { alias, empty, uniqBy } from '@ember/object/computed';
+import { alias, empty, uniqBy, equal } from '@ember/object/computed';
 import ObjectProxy from '@ember/object/proxy';
 import PromiseProxyMixin from '@ember/object/promise-proxy-mixin';
 let ObjectPromiseProxy = ObjectProxy.extend(PromiseProxyMixin);
 import { Promise as EmberPromise } from 'rsvp';
+
+export const PULL_REQUEST_MERGEABLE = {
+  DRAFT: 'draft',
+  CLEAN: 'clean'
+};
 
 export default Model.extend({
   created_at: attr(),
@@ -17,6 +22,7 @@ export default Model.extend({
   headCommit: attr(),
   baseCommit: attr(),
   branchName: attr(),
+  pullRequestMergeable: attr('string'),
   tagName: attr(),
   pullRequest: attr('boolean'),
   pullRequestTitle: attr(),
@@ -45,6 +51,8 @@ export default Model.extend({
     let eventType = this.get('event_type');
     return eventType === 'pull_request';
   }),
+
+  isDraft: equal('pullRequestMergeable', PULL_REQUEST_MERGEABLE.DRAFT),
 
   ajax: service(),
 
