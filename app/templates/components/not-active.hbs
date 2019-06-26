@@ -2,21 +2,23 @@
 
   {{#if migratedOnOrg}}
 
-    {{svg-jar 'migrated' class="page-graphic"}}
+    <div data-test-recently-migrated-to-com-banner>
+      {{svg-jar 'migrated' class="page-graphic"}}
 
-    <h2 data-test-not-active-migrated-subtext class="text-big">
-      This repository was migrated and is now building on
-      {{#external-link-to href=comRepositoryLink}}
-        travis-ci.com
+      <h2 data-test-not-active-migrated-subtext class="text-big">
+        This repository was migrated and is now building on
+        {{#external-link-to href=comRepositoryLink}}
+          travis-ci.com
+        {{/external-link-to}}
+      </h2>
+
+      {{#external-link-to href=comRepositoryLink
+        class="button button--blue"
+        data-test-not-active-migrated-button=true
+      }}
+        Take me there!
       {{/external-link-to}}
-    </h2>
-
-    {{#external-link-to href=comRepositoryLink
-      class="button button--blue"
-      data-test-not-active-migrated-button=true
-    }}
-      Take me there!
-    {{/external-link-to}}
+    </div>
 
   {{else}}
 

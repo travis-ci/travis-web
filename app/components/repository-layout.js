@@ -30,15 +30,15 @@ export default Component.extend({
     return this.get('externalLinks').comBuildHistoryLink(slug);
   }),
 
-  showMigratedToComRepositoryLink: computed(
+  showMigratedFromOrgRepositoryLink: computed(
     'features.{proVersion,enterpriseVersion}',
     'repo.migrationStatus',
     function () {
       let pro = this.get('features.proVersion');
       let enterprise = this.get('features.enterpriseVersion');
       let migrationStatus = this.get('repo.migrationStatus');
-      const orgHosted = !pro && !enterprise;
-      return orgHosted && migrationStatus === 'migrated';
+      const comHosted = pro && !enterprise;
+      return comHosted && migrationStatus === 'migrated';
     }
   ),
 

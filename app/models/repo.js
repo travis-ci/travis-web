@@ -47,6 +47,8 @@ const Repo = Model.extend({
   isMigrationFailed: equal('migrationStatus', MIGRATION_STATUS.FAILURE),
   isMigrationInProgress: or('isMigrationQueued', 'isMigrationMigrating'),
 
+  isMigrated: reads('isMigrationSucceeded'),
+
   isMigratable: computed('migrationStatus', 'permissions.admin', function () {
     const isMigrated = !!this.migrationStatus;
     const isFailed = this.isMigrationFailed;
