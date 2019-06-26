@@ -114,19 +114,6 @@ module('Acceptance | owner insights', function (hooks) {
     assert.ok(insightsPage.noBuildOverlay.isVisible);
   });
 
-  test('the owner insights page displays privacy selector on PRO version', async function (assert) {
-    enableFeature('proVersion');
-    signInUser(this.currentUser);
-
-    await insightsPage.visit({ username: this.currentUser.login });
-    await settled();
-
-    const { privacySelector } = insightsPage;
-
-    assert.ok(privacySelector.isVisible);
-    assert.equal(privacySelector.mainField, INSIGHTS_PRIVACY_OPTIONS.PRIVATE);
-  });
-
   // No-build overlay states
   test('No-build overlay displays correctly when not logged in', async function (assert) {
     await insightsPage.visit({ username: this.currentUser.login });
@@ -184,5 +171,19 @@ module('Acceptance | owner insights', function (hooks) {
     assert.equal(insightsPage.noBuildOverlay.title, 'It\'s been a quiet week for builds');
     assert.equal(insightsPage.noBuildOverlay.text, 'All the build status results from the last 7 days will appear here.');
     assert.notOk(insightsPage.noBuildOverlay.link.isPresent);
+  });
+
+  // Privacy selector
+  test('the owner insights page displays privacy selector on PRO version', async function (assert) {
+    enableFeature('proVersion');
+    signInUser(this.currentUser);
+
+    await insightsPage.visit({ username: this.currentUser.login });
+    await settled();
+
+    const { privacySelector } = insightsPage;
+
+    assert.ok(privacySelector.isVisible);
+    assert.equal(privacySelector.mainField, INSIGHTS_PRIVACY_OPTIONS.PRIVATE);
   });
 });
