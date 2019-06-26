@@ -27,15 +27,16 @@
       {{/unless}}
 
       {{#if features.proVersion}}
-        {{#unless auth.signedIn}}
-          <li><a href="{{ config.urls.about }}" title="Travis CI team" class="navigation-anchor">About Us</a></li>
-          <li><a href="/plans" title="Plans and Pricing" class="navigation-anchor">Plans & Pricing</a></li>
-          <li><a href="{{ config.urls.enterprise }}" title="Travis CI for Enterprise" class="navigation-anchor">Enterprise</a></li>
-        {{else}}
+        {{#if auth.signedIn}}
           <li>{{#link-to 'dashboard' class='navigation-anchor'}}Dashboard{{/link-to}}</li>
           <li><a href="{{ config.urls.changelog }}" title="Travis CI Changelog" class="navigation-anchor">Changelog</a></li>
           <li><a href="{{ config.urls.docs }}" title="Travis CI Documentation" class="navigation-anchor">Documentation</a></li>
-        {{/unless}}
+        {{else}}
+          {{log "should see stuff"}}
+          <li><a href="{{ config.urls.about }}" title="Travis CI team" class="navigation-anchor">About Us</a></li>
+          <li><a href="/plans" title="Plans and Pricing" class="navigation-anchor">Plans & Pricing</a></li>
+          <li><a href="{{ config.urls.enterprise }}" title="Travis CI for Enterprise" class="navigation-anchor">Enterprise</a></li>
+        {{/if}}
       {{/if}}
 
       <li>

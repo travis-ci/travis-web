@@ -1,17 +1,23 @@
-import { test } from 'qunit';
-import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
+import { module, test } from 'qunit';
+import { setupApplicationTest } from 'ember-qunit';
+import { visit } from '@ember/test-helpers';
 import proHeader from 'travis/tests/pages/header/pro';
 import proLayout from 'travis/tests/pages/layouts/pro';
 import signInUser from 'travis/tests/helpers/sign-in-user';
+import signOutUser from 'travis/tests/helpers/sign-out-user';
+import { enableFeature } from 'ember-feature-flags/test-support';
 
-moduleForAcceptance('Acceptance | layouts/pro');
+module('Acceptance | layouts/pro', function (hooks) {
+  setupApplicationTest(hooks);
 
-test('header layout when unauthenticated', function (assert) {
-  withFeature('proVersion');
+  test('header layout when unauthenticated', async function (assert) {
+    const currentUser = server.create('user');
+    signOutUser(currentUser);
 
-  proHeader.visit();
+    enableFeature('proVersion');
 
-  andThen(function () {
+    await visit('/');
+
     assert.ok(proLayout.headerWrapperWhenUnauthenticated, 'Header is wrapped within proper DOM');
     assert.ok(proHeader.logoPresent, 'Pro header has logo');
 
@@ -21,17 +27,15 @@ test('header layout when unauthenticated', function (assert) {
 
     assert.ok(proHeader.loginLinkPresent, 'Pro header has login button');
   });
-});
 
-test('header layout when authenticated', function (assert) {
-  withFeature('proVersion');
+  test('header layout when authenticated', async function (assert) {
+    enableFeature('proVersion');
 
-  const currentUser = server.create('user');
-  signInUser(currentUser);
+    const currentUser = server.create('user');
+    signInUser(currentUser);
 
-  proHeader.visit();
+    await visit('/');
 
-  andThen(function () {
     assert.ok(proLayout.headerWrapperWhenAuthenticated, 'Header is wrapped within proper DOM');
     assert.ok(proHeader.logoPresent, 'Pro header has logo');
     assert.ok(proHeader.broadcastsPresent, 'Pro header shows broadcasts tower');
