@@ -1,13 +1,18 @@
-import { test } from 'qunit';
-import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
+import { module, test } from 'qunit';
+import { setupApplicationTest } from 'ember-qunit';
 import profilePage from 'travis/tests/pages/profile';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { default as mockWindow, reset as resetWindow } from 'ember-window-mock';
 import Service from '@ember/service';
 import config from 'travis/config/environment';
+import { enableFeature } from 'ember-feature-flags/test-support';
+import { percySnapshot } from 'ember-percy';
+import { stubService } from 'travis/tests/helpers/stub-service';
 
-moduleForAcceptance('Acceptance | profile/basic layout', {
-  beforeEach() {
+module('Acceptance | profile/basic layout', function (hooks) {
+  setupApplicationTest(hooks);
+
+  hooks.beforeEach(function () {
     resetWindow();
 
     this.user = server.create('user', {
@@ -156,14 +161,12 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
       },
       active: false
     });
-  }
-});
+  });
 
-test('view repositories', function (assert) {
-  withFeature('github-apps');
-  profilePage.visit();
+  test('view repositories', async function (assert) {
+    enableFeature('github-apps');
+    await profilePage.visit();
 
-  andThen(() => {
     percySnapshot(assert);
     assert.equal(document.title, 'User Name of exceeding length - Profile - Travis CI');
 
@@ -209,104 +212,88 @@ test('view repositories', function (assert) {
       assert.notOk(repository.settings.isDisabled);
     });
   });
-});
 
-test('view profile that has an expired subscription', function (assert) {
-  this.organization.attrs.permissions = { createSubscription: true };
-  this.organization.save();
+  test('view profile that has an expired subscription', async function (assert) {
+    this.organization.attrs.permissions = { createSubscription: true };
+    this.organization.save();
 
-  profilePage.visitOrganization({ name: 'org-login' });
+    await profilePage.visitOrganization({ name: 'org-login' });
 
-  andThen(() => {
     assert.ok(profilePage.avatar.checkmark.isHidden, 'expected avatar to not have a checkmark for active subscription');
   });
-});
 
-test('view profile that has an expired subscription and no create permissions', function (assert) {
-  profilePage.visitOrganization({ name: 'org-login' });
+  test('view profile that has an expired subscription and no create permissions', async function (assert) {
+    await profilePage.visitOrganization({ name: 'org-login' });
 
-  andThen(() => {
     assert.ok(profilePage.avatar.checkmark.isHidden, 'expected avatar to not have a checkmark for active subscription');
   });
-});
 
-test('view profile that has education status', function (assert) {
-  this.organization.attrs.education = true;
-  this.organization.save();
+  test('view profile that has education status', async function (assert) {
+    this.organization.attrs.education = true;
+    this.organization.save();
 
-  profilePage.visitOrganization({ name: 'org-login' });
+    await profilePage.visitOrganization({ name: 'org-login' });
 
-  andThen(() => {
     assert.equal(profilePage.nameBadge.text, 'Education');
     assert.ok(profilePage.avatar.checkmark.isVisible, 'expected avatar to have a checkmark for education subscription');
     assert.ok(profilePage.subscriptionStatus.isHidden, 'expected no subscription status banner');
   });
-});
 
-test('displays an error banner when subscription status cannot be determined', function (assert) {
-  server.get('/subscriptions', function (schema) {
-    return new Response(500, {}, {});
-  });
+  test('displays an error banner when subscription status cannot be determined', async function (assert) {
+    server.get('/subscriptions', function (schema) {
+      return new Response(500, {}, {});
+    });
 
-  profilePage.visit();
+    await profilePage.visit();
 
-  andThen(() => {
     assert.equal(profilePage.subscriptionStatus.text, 'There was an error determining your subscription status.');
   });
-});
 
-test('logs an exception when there is more than one active subscription', function (assert) {
-  assert.expect(1);
+  test('logs an exception when there is more than one active subscription', async function (assert) {
+    assert.expect(1);
 
-  server.create('subscription', {
-    owner: this.user,
-    status: 'subscribed'
+    server.create('subscription', {
+      owner: this.user,
+      status: 'subscribed'
+    });
+
+    let mockSentry = Service.extend({
+      logException(error) {
+        assert.equal(error.message, 'Account user-login has more than one active subscription!');
+      },
+    });
+
+    stubService('raven', mockSentry);
+
+    await profilePage.visit();
   });
 
-  let mockSentry = Service.extend({
-    logException(error) {
-      assert.equal(error.message, 'Account user-login has more than one active subscription!');
-    },
-  });
+  test('view profiles for organizations that do not and do have GitHub Apps installations', async function (assert) {
+    server.create('repository', {
+      name: 'extra-repository',
+      owner: {
+        login: 'org0',
+      },
+      active: true,
+      permissions: {
+        admin: true
+      },
+    });
 
-  const instance = this.application.__deprecatedInstance__;
-  const registry = instance.register ? instance : instance.registry;
-  registry.register('service:raven', mockSentry);
+    enableFeature('github-apps');
+    await profilePage.visitOrganization({ name: 'org0' });
 
-  profilePage.visit();
-});
-
-test('view profiles for organizations that do not and do have GitHub Apps installations', function (assert) {
-  server.create('repository', {
-    name: 'extra-repository',
-    owner: {
-      login: 'org0',
-    },
-    active: true,
-    permissions: {
-      admin: true
-    },
-  });
-
-  withFeature('github-apps');
-  profilePage.visitOrganization({ name: 'org0' });
-
-  andThen(function () {
     assert.ok(profilePage.githubAppsInvitation.isVisible, 'expected GitHub Apps invitation to be visible');
     assert.ok(profilePage.githubAppsInvitation.migrateButton.isVisible, 'expected the invitation to have a migrate button when there are legacy repositories');
-  });
 
-  profilePage.visitOrganization({ name: 'org1' });
+    await profilePage.visitOrganization({ name: 'org1' });
 
-  andThen(function () {
     assert.ok(profilePage.githubAppsInvitation.isVisible, 'expected GitHub Apps invitation to be visible');
     assert.ok(profilePage.githubAppsInvitation.migrateButton.isHidden, 'expected the invitation to not have a migrate button when no legacy repositories are present');
     assert.equal(profilePage.githubAppsInvitation.link.href, 'https://github.com/apps/travis-ci-testing/installations/new/permissions?suggested_target_id=1001', 'expected the management link to be organisation-scoped');
-  });
 
-  profilePage.visitOrganization({ name: 'org-login' });
+    await profilePage.visitOrganization({ name: 'org-login' });
 
-  andThen(function () {
     assert.notOk(profilePage.githubAppsInvitation.isVisible, 'expected GitHub Apps invitation to not be visible');
     if (typeof config.githubApps.appName === 'string' && config.githubApps.appName.length > 0) {
       assert.equal(profilePage.manageGithubAppsLink.href, 'https://github.com/apps/travis-ci-testing/installations/new/permissions?suggested_target_id=1983', 'expected the management link to be organisation-scoped');
@@ -314,19 +301,15 @@ test('view profiles for organizations that do not and do have GitHub Apps instal
       assert.equal(profilePage.manageGithubAppsLink.href, 'https://github.com/organizations/org-login/settings/installations/1962', 'expected the management link to be organisation-scoped');
     }
   });
-});
 
-test('view profiles when GitHub Apps is not present', function (assert) {
-  profilePage.visitOrganization({ name: 'org0' });
+  test('view profiles when GitHub Apps is not present', async function (assert) {
+    await profilePage.visitOrganization({ name: 'org0' });
 
-  andThen(() => {
     assert.notOk(profilePage.githubAppsInvitation.isVisible, 'expected GitHub Apps invitation to not be visible');
     assert.notOk(profilePage.deprecatedBadge.isVisible, 'expected deprecated badge to not be visible');
-  });
 
-  profilePage.visit();
+    await profilePage.visit();
 
-  andThen(() => {
     assert.equal(profilePage.administerableRepositories.length, 3, 'expected inactive repositories to also show');
 
     assert.equal(profilePage.administerableRepositories[0].name, 'other-repository-name');
@@ -334,87 +317,79 @@ test('view profiles when GitHub Apps is not present', function (assert) {
     assert.equal(profilePage.administerableRepositories[2].name, 'yet-another-repository-name');
     assert.notOk(profilePage.administerableRepositories[2].isActive, 'expected inactive repository to appear inactive');
   });
-});
 
-test('view profile when GitHub Apps is present and no legacy repositories exist', function (assert) {
-  withFeature('github-apps');
-  profilePage.visitOrganization({ name: 'org0' });
+  test('view profile when GitHub Apps is present and no legacy repositories exist', async function (assert) {
+    enableFeature('github-apps');
+    await profilePage.visitOrganization({ name: 'org0' });
 
-  andThen(() => {
     percySnapshot(assert);
     assert.dom('#administerable-repositories').doesNotExist();
     assert.ok(profilePage.githubAppsInvitation.isExpanded, 'expected the invitation to be expanded in the absence of legacy repositories');
   });
-});
 
-test('clicking the button to migrate to GitHub Apps sends the IDs of all legacy active repositories', function (assert) {
-  withFeature('github-apps');
+  test('clicking the button to migrate to GitHub Apps sends the IDs of all legacy active repositories', async function (assert) {
+    enableFeature('github-apps');
 
-  // FIXME not sure why the first repository isn’t being included in the query parameters
-  // let repositoryIds = [this.activeAdminRepository.id];
-  let repositoryIds = [];
+    // FIXME not sure why the first repository isn’t being included in the query parameters
+    // let repositoryIds = [this.activeAdminRepository.id];
+    let repositoryIds = [];
 
-  for (let index = 0; index < 5; index++) {
-    server.create('repository', {
-      name: `extra-repository-${index}`,
-      owner: {
-        login: 'org0',
-      },
-      active: true,
-      permissions: {
-        admin: true
-      },
-      github_id: 10000 + index
-    });
+    for (let index = 0; index < 5; index++) {
+      server.create('repository', {
+        name: `extra-repository-${index}`,
+        owner: {
+          login: 'org0',
+        },
+        active: true,
+        permissions: {
+          admin: true
+        },
+        github_id: 10000 + index
+      });
 
-    server.create('repository', {
-      name: `extra-inactive-repository-${index}`,
-      owner: {
-        login: 'org0',
-      },
-      active: false,
-      permissions: {
-        admin: true
-      },
-      github_id: 20000 + index
-    });
+      server.create('repository', {
+        name: `extra-inactive-repository-${index}`,
+        owner: {
+          login: 'org0',
+        },
+        active: false,
+        permissions: {
+          admin: true
+        },
+        github_id: 20000 + index
+      });
 
-    repositoryIds.push(10000 + index);
-  }
+      repositoryIds.push(10000 + index);
+    }
 
-  profilePage.visitOrganization({ name: 'org0' });
+    await profilePage.visitOrganization({ name: 'org0' });
 
-  andThen(() => {
     assert.ok(profilePage.githubAppsInvitation.migrateButton.isVisible, 'expected the invitation to have a migrate button');
-  });
 
-  profilePage.githubAppsInvitation.migrateButton.click();
+    await profilePage.githubAppsInvitation.migrateButton.click();
 
-  andThen(() => {
     let idParams = repositoryIds.map(id => `repository_ids[]=${id}`).join('&');
     assert.equal(mockWindow.location.href,
       `https://github.com/apps/travis-ci-testing/installations/new/permissions?suggested_target_id=1000&${idParams}`);
   });
-});
 
-test('the migration button is not present when the owner has over 20 active legacy repositories', function (assert) {
-  for (let index = 0; index < config.githubApps.migrationRepositoryCountLimit + 1; index++) {
-    server.create('repository', {
-      name: `extra-repository-${index}`,
-      owner: {
-        login: 'org0',
-      },
-      active: true,
-      permissions: {
-        admin: true
-      },
-      github_id: 10000 + index
-    });
-  }
+  test('the migration button is not present when the owner has over 20 active legacy repositories', async function (assert) {
+    for (let index = 0; index < config.githubApps.migrationRepositoryCountLimit + 1; index++) {
+      server.create('repository', {
+        name: `extra-repository-${index}`,
+        owner: {
+          login: 'org0',
+        },
+        active: true,
+        permissions: {
+          admin: true
+        },
+        github_id: 10000 + index
+      });
+    }
 
-  profilePage.visitOrganization({ name: 'org0' });
+    await profilePage.visitOrganization({ name: 'org0' });
 
-  andThen(() => {
     assert.ok(profilePage.githubAppsInvitation.migrateButton.isHidden, 'expected migration button to be hidden when owner has too many repositories');
   });
 });
