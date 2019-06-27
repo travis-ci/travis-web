@@ -1,13 +1,15 @@
 import {
   create,
   collection,
-  text,
+  isPresent,
   isVisible,
+  text,
   visitable
 } from 'ember-cli-page-object';
 
 export default create({
   visit: visitable('/:username/?tab=insights'),
+  visitWeek: visitable('/:username/?tab=insights&timeInterval=week'),
 
   privacySelector: {
     scope: '[data-test-insights-privacy-selector]',
@@ -33,6 +35,10 @@ export default create({
     scope: '[data-test-insights-overlay]',
     title: text('[data-test-insights-overlay-title]'),
     text: text('[data-test-insights-overlay-text]'),
-    link: text('[data-test-insights-overlay-link]'),
+    link: {
+      scope: '[data-test-insights-overlay-link]',
+      text: text(),
+      isPresent: isPresent(),
+    }
   }
 });
