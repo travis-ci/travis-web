@@ -1,6 +1,10 @@
 {{#if repo.isMigrated}}
 
-  {{#missing-notice title="Trigger a build" image="commandline"}}
+  {{#missing-notice
+    title="Trigger a build"
+    image="commandline"
+    data-test-recently-migrated-from-org-banner="true"
+  }}
     <p data-test-not-active-migrated-subtext class="text-big">
       Push a commit to keep building
     </p>
