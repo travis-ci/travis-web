@@ -14,6 +14,7 @@ import { task } from 'ember-concurrency';
 export const MIGRATION_STATUS = {
   QUEUED: 'queued',
   MIGRATING: 'migrating',
+  MIGRATED: 'migrated',
   SUCCESS: 'success',
   FAILURE: 'failure'
 };
@@ -43,11 +44,12 @@ const Repo = Model.extend({
 
   isMigrationQueued: equal('migrationStatus', MIGRATION_STATUS.QUEUED),
   isMigrationMigrating: equal('migrationStatus', MIGRATION_STATUS.MIGRATING),
+  isMigrationMigrated: equal('migrationStatus', MIGRATION_STATUS.MIGRATED),
   isMigrationSucceeded: equal('migrationStatus', MIGRATION_STATUS.SUCCESS),
   isMigrationFailed: equal('migrationStatus', MIGRATION_STATUS.FAILURE),
   isMigrationInProgress: or('isMigrationQueued', 'isMigrationMigrating'),
 
-  isMigrated: reads('isMigrationSucceeded'),
+  isMigrated: or('isMigrationSucceeded', 'isMigrationMigrated'),
 
   isMigratable: computed('migrationStatus', 'permissions.admin', function () {
     const isMigrated = !!this.migrationStatus;

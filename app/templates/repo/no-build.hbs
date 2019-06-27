@@ -1,13 +1,13 @@
 {{#if repo.isMigrated}}
-  {{svg-jar 'commandline' class="page-graphic"}}
 
-  <h2 class="h2--grey">
-    Trigger a build
-  </h2>
+  {{#missing-notice title="Trigger a build" image="commandline"}}
+    <p data-test-not-active-migrated-subtext class="text-big">
+      Push a commit to keep building
+    </p>
+  {{/missing-notice}}
 
-  <p data-test-not-active-migrated-subtext class="text-big">
-    Push a commit to keep building
-  </p>
 {{else}}
+
   {{no-builds}}
+
 {{/if}}
