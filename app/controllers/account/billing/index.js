@@ -11,7 +11,7 @@ export default Controller.extend({
 
   accountController: controller('account'),
   account: alias('accountController.model'),
-  
+
   plans: alias('model.plans'),
 
   invoices: computed('model.subscriptions.id', function () {
@@ -35,7 +35,7 @@ export default Controller.extend({
     }
   })
 
-  // availablePlans: 
+  // availablePlans:
   // getPlans() {
   //   this.get('store').findAll('plan').then(function (allPlans) {
   //     return allPlans.filter(plan => plans.includes(plan.name) && plan.build <= 10 && !plan.annual);
