@@ -84,7 +84,7 @@ module.exports = function () {
         enabled: true,
         exclude: ['vendor/**/*'],
         plugins: [
-          require('tailwindcss')('./app/tailwind/config.js')
+          require('tailwindcss')('./app/styles/app/tailwind/config.js')
         ]
       }
     }

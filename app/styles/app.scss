@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+@import "app/tailwind/components";
+@import "app/tailwind/utilities";
+
 @import "app/power-select-vars";
 @import "ember-power-select";
 
