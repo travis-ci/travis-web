@@ -16,7 +16,7 @@
           <small class="commit-branch"
                  title={{item.branch.name}}>{{item.branch.name}}</small>
         {{/if}}
-        {{format-message commit.subject repo=item.repo eventType=build.eventType}}
+        {{format-message commit.subject repo=item.repo eventType=build.eventType maxLength=60}}
       {{/if}}
     </h2>
     <div class="commit-info">

@@ -14,6 +14,11 @@ emojiConvertor.allow_native = false;
 
 function formatMessage(message, options) {
   message = message || '';
+
+  if (options.maxLength) {
+    message = message.slice(0, options.maxLength);
+  }
+
   if (options.short) {
     message = message.split(/\n/)[0];
   }
