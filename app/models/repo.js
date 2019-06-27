@@ -19,6 +19,10 @@ export const MIGRATION_STATUS = {
   FAILURE: 'failure'
 };
 
+export const HISTORY_MIGRATION_STATUS = {
+  MIGRATED: 'migrated'
+};
+
 const Repo = Model.extend({
   api: service(),
   auth: service(),
@@ -34,7 +38,8 @@ const Repo = Model.extend({
   starred: attr('boolean'),
   active_on_org: attr('boolean'),
   emailSubscribed: attr('boolean'),
-  migrationStatus: attr(),
+  migrationStatus: attr('string'),
+  historyMigrationStatus: attr('string'),
 
   ownerType: reads('owner.@type'),
 
@@ -50,6 +55,8 @@ const Repo = Model.extend({
   isMigrationInProgress: or('isMigrationQueued', 'isMigrationMigrating'),
 
   isMigrated: or('isMigrationSucceeded', 'isMigrationMigrated'),
+
+  isHistoryMigrated: equal('historyMigrationStatus', HISTORY_MIGRATION_STATUS.MIGRATED),
 
   isMigratable: computed('migrationStatus', 'permissions.admin', function () {
     const isMigrated = !!this.migrationStatus;
