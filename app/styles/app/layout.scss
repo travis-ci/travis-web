@@ -61,6 +61,9 @@ $padding-top: 24px;
     margin-left: grid-calc(6, 24);
     overflow: visible;
   }
+  .flex-md-row {
+    flex-direction: row;
+  }
 }
 
 @media #{$xlarge-up} {

@@ -66,6 +66,12 @@ textarea {
   color: $cement-grey;
 }
 
+.form--billing-info {
+  .form-elem {
+    margin-right: 1rem;
+  }
+}
+
 .form--sshkey {
   .form-elem {
     margin-bottom: 0.5rem;

@@ -183,6 +183,21 @@ span.emoji.emoji-sizer {
   position: relative;
 }
 
+.d-flex {
+  display: flex;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.full-width {
+  width: 100%;
+}
 .link {
   cursor: pointer;
   display: inline-block;

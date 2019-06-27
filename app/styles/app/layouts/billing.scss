@@ -1,0 +1,34 @@
+.billing-plans {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  grid-gap: 10px;
+  background-color: #fff;
+
+  &__box {
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 10px;
+    border: 1px solid $pebble-grey;
+
+		&--jobs {
+			color: $cement-grey;
+			text-transform: uppercase;
+			font-weight: 600;
+			font-size: 0.7em;
+		}
+		&--price {
+			color: $cement-grey;
+			font-size: 0.7em;
+		}
+		&:hover{
+			background: rgba(181, 214, 217, 0.9);
+			color: $oxide-blue;
+			cursor: pointer;
+		}
+	}
+}
+
+.selected-billing-plan{
+	border-radius: 5px;
+	background: #f1f1f1;
+}

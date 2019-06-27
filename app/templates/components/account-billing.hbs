@@ -3,7 +3,7 @@
     <BillingEducation @account={{this.account}} />
   {{/if}}
   {{#if this.isTrial}}
-    <BillingTrial @account={{this.account}} />
+    <BillingTrial @account={{this.account}} @monthlyPlans={{monthlyPlan}} />
   {{/if}}
   {{#if this.isManual}}
     <BillingManual @subscription={{this.subscription}} />

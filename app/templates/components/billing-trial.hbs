@@ -33,4 +33,6 @@
   </ExternalLinkTo>
 {{else}}
   <NewSubscriptionButton @trial={{this.trial}} @account={{this.account}} />
+  <BillingInformation @trial={{trial}} @account={{account}} @monthlyPlans={{monthlyPlans}}/>
 {{/if}}
+

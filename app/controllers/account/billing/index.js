@@ -11,6 +11,8 @@ export default Controller.extend({
 
   accountController: controller('account'),
   account: alias('accountController.model'),
+  
+  plans: alias('model.plans'),
 
   invoices: computed('model.subscriptions.id', function () {
     const subscriptionId = this.model.subscriptions.id;
@@ -32,5 +34,12 @@ export default Controller.extend({
       return !this.model.subscriptions && !this.account.education;
     }
   })
+
+  // availablePlans: 
+  // getPlans() {
+  //   this.get('store').findAll('plan').then(function (allPlans) {
+  //     return allPlans.filter(plan => plans.includes(plan.name) && plan.build <= 10 && !plan.annual);
+  //   });
+  // },
 
 });
