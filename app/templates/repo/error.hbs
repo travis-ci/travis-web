@@ -1,4 +1,4 @@
-{{#if isForbidden}}
+{{#if (eq model.status 403)}}
   Your permissions are insufficient to access this content.
 {{else}}
   There was an error while loading data.

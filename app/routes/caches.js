@@ -17,15 +17,6 @@ export default TravisRoute.extend({
 
     return this.get('ajax').getV3(url).then((data) => consolidateCaches(repo, data));
   },
-
-  actions: {
-    error(error) {
-      if (error.status == 403) {
-        this.controllerFor('repo/error').set('isForbidden', true);
-      }
-      return true
-    }
-  }
 });
 
 function consolidateCaches(repo, data) {
