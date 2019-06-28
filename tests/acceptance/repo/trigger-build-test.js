@@ -59,7 +59,7 @@ module('Acceptance | repo/trigger build', function (hooks) {
   });
 
   test('trigger link is not visible to users without proper permissions', async function (assert) {
-    signOutUser()
+    signOutUser();
     this.repo.update('permissions', { create_request: false });
     await triggerBuildPage.visit({ owner: 'adal', repo: 'difference-engine' });
 

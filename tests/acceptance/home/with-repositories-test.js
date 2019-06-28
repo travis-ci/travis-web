@@ -146,7 +146,7 @@ module('Acceptance | home/with repositories', function (hooks) {
     app.pusher.receive('job:received', generatePusherPayload(job, { state: 'received' }));
 
     // This is necessary to have the log fetch not fail and put the log in an error state.
-    server.create('log', { id: job.id });
+    server.create('log', { id: job.id, content: ''});
 
     build.state = 'started';
     build.finished_at = null;
@@ -178,7 +178,7 @@ module('Acceptance | home/with repositories', function (hooks) {
     });
 
     await settled();
-    assert.equal(jobPage.logLines[0].text, 'The first line');
+    assert.equal(jobPage.logLines[0].entireLineText, 'The first line');
     assert.ok(jobPage.logLines[0].isYellow, 'expected the first line to be yellow');
   });
 });
