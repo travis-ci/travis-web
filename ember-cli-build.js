@@ -3,7 +3,6 @@
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 const Funnel = require('broccoli-funnel');
 const SVGO = require('svgo');
-const Sass = require('node-sass');
 
 module.exports = function () {
   let fingerprint;
@@ -44,9 +43,6 @@ module.exports = function () {
     'ember-prism': {
       'components': ['yaml'],
     },
-    sassOptions: {
-      implementation: Sass
-    },
     svg: {
       optimize: false,
       paths: [
@@ -78,13 +74,12 @@ module.exports = function () {
     },
     postcssOptions: {
       compile: {
-        enabled: false
-      },
-      filter: {
         enabled: true,
-        exclude: ['vendor/**/*'],
+        extension: 'scss',
+        parser: require('postcss-scss'),
         plugins: [
-          require('tailwindcss')('./app/styles/app/tailwind/config.js')
+          require('@csstools/postcss-sass'),
+          require('tailwindcss')('./app/styles/tailwind/config.js')
         ]
       }
     }
