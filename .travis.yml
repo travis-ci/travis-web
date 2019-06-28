@@ -34,8 +34,6 @@ env:
 
 before_install:
   - npm config set spin false
-  - npm install -g npm@6
-  - npm --version
   - npm install -g greenkeeper-lockfile@1
 
 install:
