@@ -21,7 +21,7 @@ $light-blue: #FCFDFD;
 $plan-buttons: (green: $turf-green, blue: $oxide-blue, grey: $cement-grey, red: $brick-red);
 
 @each $ident, $color in $plan-buttons {
-  .plans-button--#{$ident} {
+  .plans-button--#{"" + $ident} {
     @include planBtn($color);
   }
 }

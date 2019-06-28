@@ -19,6 +19,7 @@
     "deploy": "bash ./config/deployment/deploy-local.sh"
   },
   "devDependencies": {
+    "@csstools/postcss-sass": "^4.0.0",
     "@ember/jquery": "^0.5.2",
     "@ember/optional-features": "^0.6.3",
     "active-model-adapter": "2.2.0",
@@ -48,7 +49,7 @@
     "ember-cli-mirage": "^0.4.12",
     "ember-cli-moment-shim": "^3.5.0",
     "ember-cli-page-object": "^1.15.0-beta.3",
-    "ember-cli-sass": "^9.0.0",
+    "ember-cli-postcss": "^4.2.1",
     "ember-cli-sentry": "^4.0.0",
     "ember-cli-sri": "^2.1.1",
     "ember-cli-test-loader": "^2.1.0",
@@ -92,11 +93,12 @@
     "liquid-fire": "^0.30.0",
     "liquid-wormhole": "^2.1.5",
     "loader.js": "^4.7.0",
-    "node-sass": "^4.9.3",
+    "postcss-scss": "^2.0.0",
     "pusher-js": "^4.2.2",
     "qunit-dom": "^0.9.0",
     "raven-js": "^3.15.0",
     "svgo": "^1.0.5",
+    "tailwindcss": "^1.0.4",
     "url-polyfill": "^1.0.11",
     "visibilityjs": "^2.0.0",
     "yamljs": "^0.3.0"
