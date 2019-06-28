@@ -15,24 +15,18 @@ export default TravisRoute.extend({
     const repo = this.modelFor('repo');
     const url = `/repo/${repo.get('id')}/caches`;
 
-    return this.get('ajax').getV3(url)
-      .then((data) => {
-        resetTemplate.call(this)
-        consolidateCaches.bind(this)(repo, data)
-      })
-      .catch((error) => {
-        const template = error.status == 403 ? 'repo/unauthorized' : 'repo/error'
-        this.set('templateName', template)
-      });
+    return this.get('ajax').getV3(url).then((data) => consolidateCaches(repo, data));
   },
-});
 
-function resetTemplate() {
-  // We set a different template when API respond with an error.
-  // We need to reset the template so that the correct template
-  // is rendered when a user goes to another repo's cache page.
-  this.set('templateName', 'caches')
-}
+  actions: {
+    error(error) {
+      if (error.status == 403) {
+        this.controllerFor('repo/error').set('isForbidden', true);
+      }
+      return true
+    }
+  }
+});
 
 function consolidateCaches(repo, data) {
   let consolidatedCaches = {};
