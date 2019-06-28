@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
-import { reads, or, and } from '@ember/object/computed';
+import { reads, or, and, not, filterBy, notEmpty } from '@ember/object/computed';
 import { computed } from '@ember/object';
 import config from 'travis/config/environment';
 
@@ -18,6 +18,12 @@ export default Component.extend({
   user: reads('accounts.user'),
   organizations: reads('accounts.organizations'),
 
+  isProVersion: reads('features.proVersion'),
+  isNotProVersion: not('isProVersion'),
+
+  accountsForBeta: filterBy('accounts.all', 'isMigrationBetaRequested', false),
+  hasAccountsForBeta: notEmpty('accountsForBeta'),
+
   accountName: or('model.name', 'model.login'),
   billingUrl: or('model.subscription.billingUrl', 'model.billingUrl'),
 
@@ -25,11 +31,11 @@ export default Component.extend({
 
   showMigrateTab: and('features.proVersion', 'model.allowMigration'),
   showSubscriptionStatusBanner: and('checkSubscriptionStatus', 'model.subscriptionError'),
+  showMigrationBetaBanner: and('isNotProVersion', 'hasAccountsForBeta'),
 
   isOrganization: reads('model.isOrganization'),
   hasAdminPermissions: reads('model.permissions.admin'),
   isOrganizationAdmin: and('isOrganization', 'hasAdminPermissions'),
-  isProVersion: reads('features.proVersion'),
   showOrganizationSettings: and('isOrganizationAdmin', 'isProVersion'),
 
   get githubOrgsOauthAccessSettingsUrl() {

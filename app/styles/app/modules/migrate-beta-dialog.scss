@@ -1,0 +1,49 @@
+.migrate-beta-dialog {
+  max-width: 500px;
+
+  h3 {
+    font-size: 24px;
+  }
+
+  &__image {
+    text-align: center;
+  }
+
+  .subtle {
+    opacity: 0.5;
+  }
+
+  button {
+    &:focus,
+    &:active {
+      outline: none;
+    }
+  }
+
+  &__option {
+    display: inline-block;
+  }
+
+  .ember-power-select-dropdown &__option {
+    display: block;
+    position: relative;
+
+    &[data-state]:after {
+      content: attr(data-state);
+      position: absolute;
+      right: 0;
+      top: 50%;
+      margin-top: -10px;
+      font-style: italic;
+      color: $cement-grey;
+    }
+
+  }
+
+  .ember-power-select-multiple-option:first-child {
+    .ember-power-select-multiple-remove-btn {
+      display: none;
+    }
+  }
+
+}

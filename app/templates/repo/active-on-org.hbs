@@ -1,23 +1,25 @@
 <div data-test-active_on_org-display class="missing-notice">
-  <figure class="page-graphic">
-    {{svg-jar 'wheelbarrow'}}
-  </figure>
 
-  <h2 class="page-title">This project hasn’t been migrated</h2>
+  {{svg-jar 'hammer' class="page-graphic"}}
 
-  <p class="page-notice">
-    You can view this build and build history on our legacy platform travis-ci.org.<br>
-    To learn more about migrating this project to travis-ci.com, please
-    {{#external-link-to
-      href="https://docs.travis-ci.com/user/open-source-on-travis-ci-com/#existing-open-source-repositories-on-travis-ciorg"
-    }}
-      read our docs<br> on open source migration
-    {{/external-link-to}}
-    to our new joint platform.
-  </p>
+  <h2 class="text-big">
+    You can now start building this repository, right here at travis-ci.com!
+  </h2>
 
-  {{!FIXME what about linking to staging?}}
-  {{#external-link-to href=(concat 'https://travis-ci.org/' repo.slug) class='button button--blue migrate'}}
-    View this build
-  {{/external-link-to}}
+  {{#if auth.signedIn}}
+    <button
+      disabled={{isMigrateButtonDisabled}}
+      onclick={{action 'migrate'}}
+      class='button button--flex button--blue {{if isMigrateButtonDisabled 'disabled'}}'
+    >
+      {{#if repo.isMigrationInProgress}}
+        Migrating...
+      {{else if repo.isMigratable}}
+        Migrate {{svg-jar 'icon-migrate' class="icon icon--m white icon--right"}}
+      {{else if repo.isMigrationSucceeded}}
+        Done!
+      {{/if}}
+    </button>
+  {{/if}}
+
 </div>

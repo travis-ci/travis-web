@@ -23,5 +23,10 @@ export default TravisRoute.extend({
   model({ login }) {
     const org = this.accounts.organizations.findBy('login', login);
     return org || { login, error: true };
+  },
+
+  afterModel(model) {
+    if (model && !model.error)
+      model.fetchBetaMigrationRequests();
   }
 });

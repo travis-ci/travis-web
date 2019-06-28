@@ -45,6 +45,11 @@ import bindGenerator from 'travis/utils/bind-generator';
  * {{/if}}
  */
 export default function dynamicQuery(...args) {
+  if (typeof args.lastObject === 'function') {
+    args.push({});
+  }
+
+  const initialState = Object.assign({}, args.pop(), { content: [] });
   const taskFn = args.pop();
 
   assert('Task must be provided', typeof taskFn === 'function');
@@ -52,7 +57,7 @@ export default function dynamicQuery(...args) {
 
   args.push(function () {
     const taskFnBound = bindGenerator(taskFn, this);
-    return DynamicQuery.extend({ task: task(taskFnBound).keepLatest() }).create({ content: [] });
+    return DynamicQuery.extend({ task: task(taskFnBound).keepLatest() }).create(initialState);
   });
 
   return computed(...args);
@@ -69,6 +74,8 @@ const DynamicQuery = ArrayProxy.extend(Evented, {
 
   page: 1,
   filterTerm: '',
+
+  appendResults: false,
 
   pagination: null,
 
@@ -129,7 +136,12 @@ const DynamicQuery = ArrayProxy.extend(Evented, {
     this.promise = this.task.perform({ page, filter: filterTerm })
       .then((result = []) => {
         this.set('pagination', result.pagination);
-        this.setObjects(result.toArray());
+        const results = result.toArray();
+        if (this.appendResults) {
+          this.addObjects(results);
+        } else {
+          this.setObjects(results);
+        }
         if (!this.hasPage(page)) {
           next(() => this.switchToPage(1));
         }

@@ -277,6 +277,66 @@ export default {
         ]
       }
     },
+    "beta-migration-request": {
+      "@type": "resource",
+      "actions": {
+        "create": [
+          {
+            "@type": "template",
+            "request_method": "POST",
+            "uri_template": "/v3/user/{user.id}/beta_migration_request"
+          }
+        ]
+      },
+      "attributes": [
+        "id",
+        "owner_id",
+        "owner_type",
+        "owner_name",
+        "organizations",
+        "accepted_at"
+      ],
+      "representations": {
+        "standard": [
+          "id",
+          "owner_id",
+          "owner_type",
+          "owner_name",
+          "organizations",
+          "accepted_at"
+        ]
+      }
+    },
+    "beta-migration-requests": {
+      "@type": "resource",
+      "actions": {
+        "find": [
+          {
+            "@type": "template",
+            "request_method": "GET",
+            "uri_template": "/v3/user/{user.id}/beta_migration_requests"
+          }
+        ]
+      },
+      "attributes": [
+        "id",
+        "owner_id",
+        "owner_type",
+        "owner_name",
+        "organizations",
+        "accepted_at"
+      ],
+      "representations": {
+        "standard": [
+          "id",
+          "owner_id",
+          "owner_type",
+          "owner_name",
+          "organizations",
+          "accepted_at"
+        ]
+      }
+    },
     // Why is this and `credit-card-info` dashed and not underscored? 🤔
     "billing-info": {
       "@type":            "resource",

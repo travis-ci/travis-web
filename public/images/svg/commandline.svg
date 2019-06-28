@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg version="1.1" x="0px" y="0px" viewBox="58 10 205 160" style="enable-background:new 0 0 330.55 186.41;" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style type="text/css">
+      .st0{fill:#FAFAFA;}
+      .st1{fill:#F4F4F4;}
+      .st2{fill:none;stroke:#F0F0F1;stroke-width:2;stroke-miterlimit:10;}
+      .st3{opacity:0.87;}
+      .st4{fill:#404041;}
+      .st5{fill:none;stroke:#F0F0F1;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+      .st6{fill:none;stroke:#39AA56;stroke-width:2.1734;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+      .st7{fill:#383838;}
+      .st8{fill:none;stroke:#F4F4F4;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+      .st9{opacity:0.17;}
+      .st10{fill:none;stroke:#39AA56;stroke-width:2;stroke-miterlimit:10;}
+      .st11{fill:none;}
+      .st12{fill:#F1F1F1;}
+      .st13{font-family:'Cousine-Regular';}
+      .st14{font-size:13px;}
+    </style>
+    <clipPath id="external-mask">
+      <path d="M 213.97 149.72 C 213.97 152.28 213.848 152.511 211.288 152.511 L 102.786 152.783 C 100.226 152.783 99.389 151.889 99.389 149.329 L 99.391 89.687 C 99.391 87.127 99.686 80.109 99.686 80.109 L 99.479 64.604 C 99.479 62.044 100.44 61.527 103 61.527 L 210.591 61.126 C 213.151 61.126 214.585 61.89 214.585 64.45 L 213.97 149.72 Z"/>
+    </clipPath>
+  </defs>
+  <g>
+    <g>
+      <g>
+        <path class="st0" d="M262.05,111.97c0-56.55-45.84-102.39-102.39-102.39S57.27,55.42,57.27,111.97c0,0.31,0.02,0.61,0.02,0.92 h204.75C262.04,112.58,262.05,112.27,262.05,111.97z"/>
+        <path class="st1" d="M243.58,170.63c11.47-16.38,18.26-36.28,18.45-57.75H57.29c0.19,21.47,6.98,41.37,18.45,57.75H243.58z"/>
+      </g>
+      <line class="st2" x1="8.27" y1="170.63" x2="314.93" y2="170.63"/>
+    </g>
+    <g class="st3" clip-path="url(#external-mask)">
+      <g>
+        <path class="st4" d="M215.72,149.79c0,2.56-2.1,4.66-4.66,4.66h-108.8c-2.56,0-4.66-2.1-4.66-4.66V89.22c0-2.56,0-6.76,0-9.33 v-16c0-2.56,2.1-4.66,4.66-4.66h108.8c2.56,0,4.66,2.1,4.66,4.66V149.79z"/>
+        <path class="st5" d="M215.72,149.79c0,2.56-2.1,4.66-4.66,4.66h-108.8c-2.56,0-4.66-2.1-4.66-4.66V89.22c0-2.56,0-6.76,0-9.33 v-16c0-2.56,2.1-4.66,4.66-4.66h108.8c2.56,0,4.66,2.1,4.66,4.66V149.79z"/>
+      </g>
+      <g>
+        <animateTransform
+          id="anim4"
+          type="translate"
+          begin="0s"
+          dur="5s"
+          attributeName="transform"
+          values="0 0; 0 -10; 0 -10; 0 -20; 0 -20; 0 -30; 0 -30; 0 -40; 0 -40; 0 -50; 0 -50; 0 -60; 0 -60; 0 -70; 0 -70; 0 -80; 0 -80"
+          keySplines="0 0 1 1; 0 0 1 1; 0 0 1 1; 0 0 1 1; 0 0 1 1; 0 0 1 1; 0 0 1 1; 0 0 1 1; 0 0 1 1; 0 0 1 1; 0 0 1 1; 0 0 1 1; 0 0 1 1; 0 0 1 1; 0 0 1 1; 0 0 1 1; "
+          keyTimes="0; 0.01; 0.125; 0.135; 0.25; 0.26; 0.385; 0.395; 0.5; 0.51; 0.625; 0.635; 0.75; 0.76; 0.875; 0.885; 1"
+          calcMode="spline"
+          repeatCount="indefinite"
+          attributeType="XML"
+        />
+        <line class="st6" x1="112" y1="85" x2="154" y2="85"/>
+        <line class="st6" x1="112" y1="95" x2="170" y2="95"/>
+        <line class="st6" x1="112" y1="105" x2="129" y2="105"/>
+        <line class="st6" x1="112" y1="115" x2="202" y2="115"/>
+        <line class="st6" x1="112" y1="125" x2="154" y2="125"/>
+        <line class="st6" x1="112" y1="135" x2="170" y2="135"/>
+        <line class="st6" x1="112" y1="145" x2="132" y2="145"/>
+        <line class="st6" x1="112" y1="155" x2="125" y2="155"/>
+
+        <line class="st6" x1="112" y1="165" x2="154" y2="165"/>
+        <line class="st6" x1="112" y1="175" x2="170" y2="175"/>
+        <line class="st6" x1="112" y1="185" x2="129" y2="185"/>
+        <line class="st6" x1="112" y1="195" x2="202" y2="195"/>
+        <line class="st6" x1="112" y1="205" x2="154" y2="205"/>
+        <line class="st6" x1="112" y1="215" x2="170" y2="215"/>
+        <line class="st6" x1="112" y1="225" x2="132" y2="225"/>
+        <line class="st6" x1="112" y1="235" x2="125" y2="235"/>
+      </g>
+      <g>
+        <path class="st7" d="M108.19,154.46h-5.93c-2.56,0-4.66-2.1-4.66-4.66V89.22c0-2.56,0-6.76,0-9.33v-16c0-2.56,2.1-4.66,4.66-4.66 h6.23"/>
+        <path class="st8" d="M108.19,154.46h-5.93c-2.56,0-4.66-2.1-4.66-4.66V89.22c0-2.56,0-6.76,0-9.33v-16c0-2.56,2.1-4.66,4.66-4.66 h6.23"/>
+      </g>
+      <g>
+        <rect x="110" y="143" width="120" height="10" fill="#404041" />
+        <animateTransform
+          id="anim5"
+          type="translate"
+          begin="0.01s"
+          dur="0.625s"
+          attributeName="transform"
+          values="0 0; 100 0"
+          keySplines="0 0 1 1"
+          keyTimes="0;1"
+          calcMode="spline"
+          repeatCount="indefinite"
+          attributeType="XML"
+        />
+      </g>
+    </g>
+    <g>
+      <g class="st9">
+        <animate
+          id="anim1"
+          attributeName="opacity"
+          from="0"
+          to="0.4"
+          dur="0.5s"
+          begin="0s;anim2.end"
+          fill="freeze"
+        />
+        <animate
+          id="anim2"
+          attributeName="opacity"
+          from="0.4"
+          to="0"
+          dur="0.5s"
+          begin="anim1.end"
+          fill="freeze"
+        />
+        <path class="st4" d="M237.12,121.61H81.26c-3.38,0-6.15-2.77-6.15-6.15V97.23c0-3.38,0-8.92,0-12.3v-7.32 c0-3.38,2.77-6.15,6.15-6.15h155.86c3.93,0,7.12,3.19,7.12,7.12v35.92C244.23,118.42,241.05,121.61,237.12,121.61z" style=""/>
+      </g>
+      <g>
+        <g>
+          <path class="st4" d="M239.82,111.38c0,3.47-2.84,6.31-6.31,6.31H86.36c-3.47,0-6.31-2.84-6.31-6.31v-11.35 c0-3.47,0-9.15,0-12.61V82c0-3.47,2.84-6.31,6.31-6.31h147.16c3.47,0,6.31,2.84,6.31,6.31V111.38z"/>
+          <path class="st10" d="M239.82,111.38c0,3.47-2.84,6.31-6.31,6.31H86.36c-3.47,0-6.31-2.84-6.31-6.31v-11.35 c0-3.47,0-9.15,0-12.61V82c0-3.47,2.84-6.31,6.31-6.31h147.16c3.47,0,6.31,2.84,6.31,6.31V111.38z"/>
+        </g>
+        <rect x="80.85" y="91.08" class="st11" width="158.18" height="14.15"/>
+        <text transform="matrix(1 0 0 1 93.5359 100.4145)" class="st12 st13 st14" style="white-space: pre;">$ git push origin</text>
+      </g>
+    </g>
+  </g>
+</svg>

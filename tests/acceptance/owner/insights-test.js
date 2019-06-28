@@ -12,6 +12,8 @@ module('Acceptance | owner insights', function (hooks) {
   setupApplicationTest(hooks);
 
   hooks.beforeEach(function () {
+    signOutUser();
+
     this.currentUser = server.create('user', {
       name: 'Aria',
       login: 'bellsareringing',

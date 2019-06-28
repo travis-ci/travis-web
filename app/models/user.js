@@ -136,6 +136,12 @@ export default Owner.extend({
     });
   },
 
+  joinMigrateBeta(orgs = []) {
+    const organizations = orgs.mapBy('id');
+    return this.ajax.postV3(`/user/${this.id}/beta_migration_request`, { organizations })
+      .then(() => this.fetchBetaMigrationRequests());
+  },
+
   setWithSession(name, value) {
     let user;
     this.set(name, value);

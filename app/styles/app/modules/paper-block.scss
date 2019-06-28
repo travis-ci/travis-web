@@ -35,6 +35,10 @@ $base-elevation: 5px;
     }
   }
 
+  &.no-margin {
+    margin: 0;
+  }
+
   .title {
     text-transform: uppercase;
     margin: 0 0 10px 0;

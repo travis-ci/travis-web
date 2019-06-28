@@ -8,6 +8,26 @@
     {{sync-button}}
   </section>
 
+  {{#if showMigrationBetaBanner }}
+    <section class="migrate-beta" data-test-sidebar-migrate>
+      <h2>A single place for all your builds</h2>
+      <p>
+        You can now have all your public and private repositories together at travis-ci.com
+      </p>
+      <button
+        class="button--blue"
+        onclick={{action (mut isShowingMigrateBetaDialog) true }}
+        data-test-migrate-signup="true"
+      >
+        {{#if user.isMigrationBetaRequested}}
+          Add organizations to the beta
+        {{else}}
+          Sign up for the beta
+        {{/if}}
+      </button>
+    </section>
+  {{/if}}
+
   <section class="profile-orgs">
     <h2>Organizations</h2>
     <ul class="profile-orgs-list">
@@ -123,3 +143,17 @@
   {{/unless}}
 
 </article>
+
+{{#if isShowingMigrateBetaDialog}}
+  {{#modal-dialog
+      translucentOverlay=true
+      overlayPosition='sibling'
+      clickOutsideToClose=false
+      animatable=true
+  }}
+    {{component 'dialogs/migrate-beta'
+      onClose=(action (mut isShowingMigrateBetaDialog) false)
+      data-test-migrate-dialog=true
+    }}
+  {{/modal-dialog}}
+{{/if}}
