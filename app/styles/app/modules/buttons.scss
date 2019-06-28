@@ -37,6 +37,10 @@
       background-color: darken($oxide-blue, 5%);
     }
   }
+
+  &--flex {
+    display: inline-flex;
+  }
 }
 
 .no-button {
@@ -190,6 +194,19 @@
 
   &:hover {
     background-color: darken($brick-red, 10);
+  }
+}
+
+.button--dark-grey {
+  @extend %button;
+
+  border: none;
+  color: white;
+  background-color: $asphalt-grey;
+
+  &:hover,
+  &:active {
+    background-color: darken($asphalt-grey, 10);
   }
 }
 
