@@ -59,7 +59,31 @@ $profile-breakpoint: 600px;
         border-bottom-width: 0;
       }
     }
+
+    .migrate-beta {
+
+      h2 {
+        color: $oxide-blue;
+      }
+
+      p {
+        margin: 0.5rem 0;
+      }
+
+      button {
+        padding: 0.5rem 1rem;
+        margin: 0.5rem 0;
+
+        &:focus,
+        &:active {
+          outline: none;
+        }
+      }
+
+    }
+
   }
+
 }
 
 .profile-main {

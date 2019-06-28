@@ -24,6 +24,7 @@
     &.fixed {
       position: fixed;
       top: 0;
+      z-index: z-index(flashes) * 1000;
     }
   }
 

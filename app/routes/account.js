@@ -13,5 +13,10 @@ export default TravisRoute.extend({
 
   model() {
     return this.accounts.user;
+  },
+
+  afterModel(model) {
+    if (model && !model.error)
+      model.fetchBetaMigrationRequests();
   }
 });
