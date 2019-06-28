@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+   viewBox="89 12 150 160" style="enable-background:new 0 0 330.55 186.41;" xml:space="preserve">
+   <defs>
+    <style type="text/css">
+      .st0{fill:#FAFAFA;}
+      .st1{fill:#F4F4F4;}
+      .st2{fill:none;stroke:#404041;stroke-width:2.578;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+      .st3{fill:#FFFFFF;}
+      .st4{fill:#D8D8D8;}
+      .st5{fill:none;stroke:#404041;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+      .st6{fill:#15B75E;}
+      .st7{fill:#FFFFFF;stroke:#404041;stroke-width:2.7666;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+      .st8{fill:none;stroke:#F0F0F1;stroke-width:2;stroke-miterlimit:10;}
+      .st9{fill:none;stroke:#9D9D9D;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+    </style>
+    <clipPath id="round-mask">
+      <circle cy="115" r="102" cx="163"/>
+    </clipPath>
+    <clipPath id="square-mask">
+      <rect x="61" y="13" width="204" height="160" fill="#fff" />
+    </clipPath>
+   </defs>
+  <g clip-path="url(#round-mask)">
+    <g clip-path="url(#square-mask)">
+      <g>
+        <path class="st0" d="M265.56,114.9c0-56.55-45.84-102.39-102.39-102.39S60.78,58.35,60.78,114.9c0,0.31,0.02,0.61,0.02,0.92h204.75C265.55,115.51,265.56,115.21,265.56,114.9z"/>
+        <path class="st1" d="M247.09,173.57c11.47-16.38,18.26-36.28,18.45-57.75H60.8c0.19,21.47,6.98,41.37,18.45,57.75H247.09z"/>
+      </g>
+      <g transform="translate(20 0)">
+        <g transform="translate(15)">
+          <line class="st2" x1="93.36" y1="172.96" x2="97.22" y2="160.74"/>
+          <line class="st2" x1="95.78" y1="159.82" x2="99.02" y2="161.07"/>
+        </g>
+        <g id="hammer">
+          <animateTransform
+            id="anim4"
+            attributeType="XML"
+            attributeName="transform"
+            type="translate"
+            begin="0s"
+            dur="1s"
+            from="0 -43"
+            to="0 -43"
+            repeatCount="indefinite"
+            additive="sum"
+          />
+          <animateTransform
+            id="anim3"
+            attributeType="XML"
+            attributeName="transform"
+            type="rotate"
+            begin="0s"
+            dur="1s"
+            values="-21 380 195; -1 380 195; -1 380 195; -21 380 195;"
+            keySplines=" 0 0 1 1; 0 0 1 1; 0.68 0.14 0.72 0.25;"
+            keyTimes="0; 0.5; 0.6; 1"
+            calcMode="spline"
+            repeatCount="indefinite"
+            additive="sum"
+          />
+          <g>
+            <g>
+              <path class="st3" d="M187.63,65.04c-20.68-7.25-45.9,5.84-46.05,18.57c-0.08,6.38-3.42,9.15-6.74,10.33l-4.9-5.73l-8.39,7.17l18.88,22.09l8.39-7.17c-0.02-0.15-8.56-8.16-1.61-13.13c7.77-5.55,19.94,12.84,22.57,15.94l10.52-8.99c0,0-10.23-11.98-12.98-15.19c-2.75-3.2-2.85-9.01,5.84-12.99C180.66,72.51,208.47,72.34,187.63,65.04z"/>
+            </g>
+            <path class="st4" d="M173.16,75.94c4.27-1.96,15.11-2.85,19.82-4.61c-20.47-7.76-40.5,7.11-46.02,18.58c-4.61,9.59-13.65,14.24-15.39,15.42l9.73,11.38l7.31-6.25c-0.45-0.57-0.9-1.22-1.31-1.93c-2.09-2.66-5.1-7.8-0.1-11.37c4.45-3.18,10.35,1.5,15.07,6.66c3.35,2.9,6.34,6.39,8.22,8.66l9.79-8.37c0,0-10.23-11.98-12.98-15.19C164.57,85.72,164.47,79.92,173.16,75.94z"/>
+            <path class="st5" d="M187.63,65.04c-20.68-7.25-45.9,5.84-46.05,18.57c-0.08,6.38-3.42,9.15-6.74,10.33l-4.9-5.73l-8.39,7.17l18.88,22.09l8.39-7.17c-0.02-0.15-8.56-8.16-1.61-13.13c7.77-5.55,19.94,12.84,22.57,15.94l10.52-8.99c0,0-10.23-11.98-12.98-15.19c-2.75-3.2-2.85-9.01,5.84-12.99C180.66,72.51,208.47,72.34,187.63,65.04z"/>
+          </g>
+          <path class="st3" d="M249.62,189.27l-6.41,5.48c-1.69,1.44-4.23,1.25-5.67-0.44l-70.49-82.45l12.53-10.71l70.49,82.45C251.51,185.29,251.31,187.83,249.62,189.27z"/>
+          <path class="st6" d="M249.52,189.36c1.74-1.49,1.95-4.11,0.46-5.85l-67.91-79.42c-0.07,0.04-0.14,0.07-0.2,0.12l-2.25,1.92c-2.34,2-2.81,5.28-1.06,7.33l67.46,78.9L249.52,189.36z"/>
+          <path class="st5" d="M249.62,189.27l-6.41,5.48c-1.69,1.44-4.23,1.25-5.67-0.44l-70.49-82.45l12.53-10.71l70.49,82.45C251.51,185.29,251.31,187.83,249.62,189.27z"/>
+          <line class="st7" x1="188.46" y1="124.24" x2="236.52" y2="181.24"/>
+          <g opacity="0">
+            <animate
+              id="anim1"
+              attributeName="opacity"
+              from="0"
+              to="1"
+              dur="0.1s"
+              begin="anim3.begin+0.5s;anim2.end+0.8s"
+              fill="freeze"
+            />
+            <animate
+              id="anim2"
+              attributeName="opacity"
+              from="1"
+              to="0"
+              dur="0.1s"
+              begin="anim1.end"
+              fill="freeze"
+            />
+            <line class="st9" x1="197.52" y1="55.47" x2="217.22" y2="38.48"/>
+            <line class="st9" x1="202.32" y1="62.96" x2="236.52" y2="49.14"/>
+          </g>
+        </g>
+        <line class="st8" x1="11.78" y1="173.57" x2="318.45" y2="173.57"/>
+        <rect x="215.56" y="174.57" class="st3" width="48.31" height="23.68"/>
+      </g>
+    </g>
+  </g>
+</svg>

@@ -1,4 +1,5 @@
 {{#if model.isLoaded}}
+
   <ul class="build-list">
     {{#each builds as |build|}}
       {{builds-item build=build}}
@@ -6,15 +7,27 @@
       {{no-builds}}
     {{/each}}
   </ul>
-  {{#if displayShowMoreButton}}
-    <p>
-      {{#if loadMoreBuilds.isRunning}}
-        {{loading-indicator}}
-      {{else}}
-        {{show-more-button click=(perform loadMoreBuilds)}}
-      {{/if}}
-    </p>
-  {{/if}}
+
+  <div class="flex flex--center flex--space-between flex--v-center">
+    {{#if showBuildHistoryLink}}
+      <div>
+        Previous build runs are available at
+        {{#external-link-to href=buildHistoryLink class="link link--underline link--teal"}}
+          travis-ci.org
+        {{/external-link-to}}
+      </div>
+    {{/if}}
+
+    {{#if displayShowMoreButton}}
+      <p>
+        {{#if loadMoreBuilds.isRunning}}
+          {{loading-indicator}}
+        {{else}}
+          {{show-more-button click=(perform loadMoreBuilds)}}
+        {{/if}}
+      </p>
+    {{/if}}
+  </div>
 
 {{else}}
   {{loading-indicator}}

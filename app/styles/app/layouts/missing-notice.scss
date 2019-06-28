@@ -17,6 +17,11 @@
   font-size: $font-size-m;
 
   @include linkStyle;
+
+  &.spacious {
+    margin: 2.5rem auto;
+  }
+
 }
 
 .page-graphic {
