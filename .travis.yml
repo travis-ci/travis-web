@@ -34,8 +34,6 @@ env:
 
 before_install:
   - npm config set spin false
-  - npm install -g npm@6
-  - npm --version
   - npm install -g greenkeeper-lockfile@1
 
 install:
@@ -60,6 +58,7 @@ after_script:
 jobs:
   include:
     - stage: "testing time"
+      node_js: 10.7
     - stage: ":ship: it to Quay.io"
       sudo: required
       dist: trusty
