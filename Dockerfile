@@ -23,7 +23,7 @@ RUN set -ex \
   done
 
 ENV NPM_CONFIG_LOGLEVEL info
-ENV NODE_VERSION 6.10.2
+ENV NODE_VERSION 8.12.0
 
 RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.xz" \
   && curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/SHASUMS256.txt.asc" \
@@ -65,10 +65,11 @@ RUN bundle install --without assets development test
 COPY package.json /usr/src/app
 COPY package-lock.json /usr/src/app
 
-RUN npm ci --production
+RUN npm install -g ember-cli
 
 COPY . /usr/src/app
 
-RUN ./node_modules/.bin/ember build --environment=production
+RUN npm ci
+RUN ember build --environment=production
 
 CMD bundle exec je puma -I lib -p ${PORT:-4000} -t ${PUMA_MIN_THREADS:-8}:${PUMA_MAX_THREADS:-12} -w ${PUMA_WORKERS:-2} --preload waiter/config.ru
