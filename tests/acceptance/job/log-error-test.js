@@ -1,30 +1,34 @@
-import { test } from 'qunit';
-import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
+import {
+  visit,
+  waitFor,
+} from '@ember/test-helpers';
+import { module, test } from 'qunit';
+import { setupApplicationTest } from 'ember-qunit';
 import jobPage from 'travis/tests/pages/job';
 
-moduleForAcceptance('Acceptance | job/log error');
+module('Acceptance | job/log error', function (hooks) {
+  setupApplicationTest(hooks);
 
-test('handling log error', function (assert) {
-  assert.expect(5);
+  test('handling log error', async function (assert) {
+    assert.expect(5);
 
-  let createdBy = server.create('user', { login: 'srivera', name: null });
+    let createdBy = server.create('user', { login: 'srivera', name: null });
 
-  let repository =  server.create('repository', { slug: 'travis-ci/travis-web' }),
-    branch = server.create('branch', { name: 'acceptance-tests' });
+    let repository =  server.create('repository', { slug: 'travis-ci/travis-web' }),
+      branch = server.create('branch', { name: 'acceptance-tests' });
 
-  let commit = server.create('commit', { branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
-  let build = server.create('build', { repository, branch, commit, state: 'passed', createdBy });
-  let job = server.create('job', { repository, commit, build, number: '1234.1', state: 'passed' });
+    let commit = server.create('commit', { branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
+    let build = server.create('build', { repository, branch, commit, state: 'passed', createdBy });
+    let job = server.create('job', { repository, commit, build, number: '1234.1', state: 'passed' });
 
-  commit.job = job;
+    commit.job = job;
 
-  job.save();
-  commit.save();
+    job.save();
+    commit.save();
 
-  visit('/travis-ci/travis-web/jobs/' + job.id);
+    await visit('/travis-ci/travis-web/jobs/' + job.id);
 
-  waitForElement('.job-log > p');
-  andThen(function () {
+    await waitFor('.job-log > p');
     assert.equal(jobPage.branch, 'acceptance-tests');
     assert.equal(jobPage.message, 'acceptance-tests This is a message');
     assert.equal(jobPage.state, '#1234.1 passed');
