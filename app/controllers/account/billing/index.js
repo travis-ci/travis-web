@@ -34,12 +34,4 @@ export default Controller.extend({
       return !this.model.subscriptions && !this.account.education;
     }
   })
-
-  // availablePlans:
-  // getPlans() {
-  //   this.get('store').findAll('plan').then(function (allPlans) {
-  //     return allPlans.filter(plan => plans.includes(plan.name) && plan.build <= 10 && !plan.annual);
-  //   });
-  // },
-
 });

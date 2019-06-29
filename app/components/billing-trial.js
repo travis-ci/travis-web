@@ -7,3 +7,4 @@ export default Component.extend({
   subscription: reads('account.subscription'),
   trial: reads('account.trial')
 });
+

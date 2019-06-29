@@ -14,11 +14,19 @@
 			color: $cement-grey;
 			text-transform: uppercase;
 			font-weight: 600;
-			font-size: 0.7em;
+			font-size: 0.8em;
 		}
 		&--price {
-			color: $cement-grey;
-			font-size: 0.7em;
+			margin: 0;
+
+			span{
+				font-size: .4em;
+				color: $asphalt-grey;
+				font-style: italic;
+			}
+		}
+		&--name {
+			margin: 0;
 		}
 		&:hover{
 			background: rgba(181, 214, 217, 0.9);
@@ -28,7 +36,50 @@
 	}
 }
 
-.selected-billing-plan{
+.selected-plan{
 	border-radius: 5px;
+	margin-top: 25px;
 	background: #f1f1f1;
+	padding: 1em 1.4em;
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+
+	&__details {
+		&--plan {
+			text-transform: uppercase;
+			color: $ansi-black;
+			font-weight: 700;
+			font-size: .8em;
+			margin: 0;
+		}	
+		&--name {
+			margin: 0;
+			font-weight: 300;
+			font-size: 1.8em;
+		}	
+		&--jobs {
+			margin: 0;
+		}	
+		&--free-jobs {
+			margin: 0;
+		}
+	}
+	&__price {
+		display: flex;
+		align-items: flex-end;
+		
+		&--total {
+			margin: 0;
+		}
+
+		&--large {
+			font-size: 2.5em;
+			margin: 0;
+			color: $oxide-blue;
+		}
+	}
+}
+.country-selector {
+	height: 45px;
 }
