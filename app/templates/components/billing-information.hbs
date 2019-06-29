@@ -5,16 +5,16 @@
       {{#form.field
         disableFrame=true
         class='display-value-switch'
-        value=annual
-        onChange=(action (mut public))
+        value=showAnnual
+        onChange=(action (mut showAnnual))
         as |field|
       }}
-        {{field.switchPlan}}
+        {{field.switch}}
       {{/form.field}}
     </div>
   <h2>Choose your plan</h2>
   <div class="billing-plans">
-    {{#each monthlyPlans as |plan|}}
+    {{#each displayedPlans as |plan|}}
       <div class="billing-plans__box" onclick={{action "selectPlan" plan.id}}>
         <h2 class="billing-plans__box--price">{{format-currency plan.price}} <span>/month</span></h2>
         <p class="billing-plans__box--name">{{plan.name}}</p>

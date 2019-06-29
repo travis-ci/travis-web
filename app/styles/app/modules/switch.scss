@@ -1,16 +1,11 @@
 .switch {
   $switch-height: 20px;
   $switch-width: 40px;
-  $switch-plan-width: 219px;
-  $switch-plan-height: 35px;
 
   $switch-gap: 1px;
 
   $switch-inner-height: $switch-height - $switch-gap*2;
   $switch-inner-width: $switch-inner-height;
-
-  $switch-inner-plan-height: $switch-plan-height - $switch-gap*2;
-  $switch-inner-plan-width: $switch-inner-plan-height * 3;
 
   padding-bottom: 3px;
   outline: none;
@@ -37,34 +32,6 @@
       font-size: 12px;
       line-height: 2.2;
       padding-left: 1px;
-    }
-  }
-  .switch-inner-plan {
-    display: inline-block;
-    width: $switch-plan-width;
-    height: $switch-plan-height;
-    margin-right: 1em;
-    vertical-align: middle;
-    overflow: visible;
-    background-color: darken($pebble-grey, 10);
-    border-radius: $switch-inner-width;
-    border: none;
-    cursor: pointer;
-
-    span {
-      width: $switch-inner-plan-width;
-      height: $switch-inner-plan-height;
-      border-radius: $switch-inner-plan-width;
-      background-color: white;
-      color: white;
-      font-weight: 300;
-      font-size: 12px;
-      line-height: 2.2;
-      padding-left: 1px;
-    }
-
-    .switch-plan{
-      color: black;
     }
   }
 
