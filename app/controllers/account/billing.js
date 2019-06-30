@@ -3,4 +3,5 @@ import { alias } from '@ember/object/computed';
 
 export default Controller.extend({
   plans: alias('model.plans'),
+  account: alias('model.account'),
 });

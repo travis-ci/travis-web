@@ -12,8 +12,6 @@ export default Controller.extend({
   accountController: controller('account'),
   account: alias('accountController.model'),
 
-  plans: alias('model.plans'),
-
   invoices: computed('model.subscriptions.id', function () {
     const subscriptionId = this.model.subscriptions.id;
     if (subscriptionId) {
@@ -34,4 +32,5 @@ export default Controller.extend({
       return !this.model.subscriptions && !this.account.education;
     }
   })
+  
 });

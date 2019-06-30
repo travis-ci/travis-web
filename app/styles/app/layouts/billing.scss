@@ -1,46 +1,57 @@
-.billing-plans {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  grid-gap: 10px;
-  background-color: #fff;
 
-  &__box {
-    background-color: #fff;
-    border-radius: 5px;
-    padding: 10px;
-    border: 1px solid $pebble-grey;
+.billing-form{
+	 h3 {
+		color: $oxide-blue;
+		font-weight: 300;
+		font-size: 18px;
+	}
+}
+
+.billing-plans {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+	grid-gap: 10px;
+	background-color: #fff;
+
+	&__box {
+		background-color: #fff;
+		border-radius: 5px;
+		padding: 3px 13px;
+		border: 1px solid $pebble-grey;
 
 		&--jobs {
 			color: $cement-grey;
 			text-transform: uppercase;
 			font-weight: 600;
 			font-size: 0.8em;
+			margin: 5px 0 5px 0;
 		}
 		&--price {
 			margin: 0;
+			font-weight: 500;
+			font-size: 1.7em;
+			color: $oxide-blue;
 
 			span{
 				font-size: .4em;
-				color: $asphalt-grey;
 				font-style: italic;
 			}
 		}
 		&--name {
-			margin: 0;
+			margin: 8px 0 0 0;
+			font-size: 1.2em;
 		}
 		&:hover{
 			background: rgba(181, 214, 217, 0.9);
-			color: $oxide-blue;
 			cursor: pointer;
 		}
 	}
 }
-
 .selected-plan{
 	border-radius: 5px;
-	margin-top: 25px;
+	margin: 25px 0 40px 0;
 	background: #f1f1f1;
-	padding: 1em 1.4em;
+	padding: 1em;
 	display: flex;
 	justify-content: space-between;
 	align-items: flex-end;
@@ -71,15 +82,54 @@
 		
 		&--total {
 			margin: 0;
+			margin-right: 15px;
+			text-transform: uppercase;
+			font-size: 12px;
+			font-weight: 700;
 		}
 
 		&--large {
-			font-size: 2.5em;
+			font-size: 2.8em;
 			margin: 0;
 			color: $oxide-blue;
+			margin-bottom: -13px;
+
+			span{
+				font-size: .3em;
+				color: $asphalt-grey;
+				font-style: italic;
+				font-weight: 300;
+			}
 		}
 	}
 }
-.country-selector {
-	height: 45px;
+
+.billing-form-message{
+	margin: 0 0 30px 0;
+	font-weight: 700;
+}
+
+.billing-optional-field{
+	margin-bottom: 45px;
+}
+
+.billing-italize {
+	font-style: italic;
+}
+
+.billing-plan-switch {
+	h5 {
+		margin: 0;
+		text-transform: uppercase;
+		font-weight: 700;
+		color: $cement-grey;
+	}
+	p {
+		margin: 0;
+	}
+}
+
+.highlight-plan {
+	color: $oxide-blue;
+	background: rgba(181, 214, 217, 0.9);
 }

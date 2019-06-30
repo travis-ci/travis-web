@@ -32,6 +32,12 @@
       font-size: 12px;
       line-height: 2.2;
       padding-left: 1px;
+      
+      span {
+        color: $ansi-black;
+        font-size: 1.2em;
+        font-weight: 500;
+      }
     }
   }
 

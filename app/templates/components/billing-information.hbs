@@ -1,187 +1,180 @@
 {{#travis-form onSubmit=(perform save) as |form|
 }}
-  <h2>Billing Cycle</h2>
+  <div class="billing-form">
+    <h3>Billing Cycle</h3>
+      <div class="flex flex-wrap billing-plan-switch">
+        <div class="form-elem">
+          {{#form.field
+            disableFrame=true
+            class='display-value-switch'
+            value=showAnnual
+            onChange=(action (mut showAnnual))
+            as |field|
+          }}
+            {{field.switch
+              offText="Monthly"
+              onText="Yearly"
+            }}
+          {{/form.field}}
+        </div>
+        <div class="billing-plan-switch m-l-s">
+          {{#if showMonthly}}
+            <h5>Recommendation:</h5>
+            <p>
+              Switch to annual billing to recieve <span class="font--italic font--bolder">one month free!</span>
+            </p>
+          {{/if}}
+        </div>
+      </div>
+    <h3>Choose your plan</h3>
+      {{billing-select-plan 
+        displayedPlans=displayedPlans
+        selectPlan=(action "selectPlan")
+        selectedPlan=selectedPlan
+      }}
+    <h3>Contact details</h3>
+    <p class="billing-form-message">All fields are required unless marked as optional.</p>
+    <div class="flex flex--col flex-md-row">
+      <div class="full-width form-elem inline-form-elem">
+        {{#form.field
+          label='First Name'
+          value=firstName
+          required=true
+          showValidationStatusIcons=false
+          onChange=(action (mut firstName))
+          as |field|
+        }}
+          {{field.input}}
+        {{/form.field}}
+      </div>
+      <div class="full-width form-elem">
+        {{#form.field
+          label='Last Name'
+          value=lastName
+          required=true
+          onChange=(action (mut lastName))
+          showValidationStatusIcons=false
+          as |field|
+        }}
+          {{field.input}}
+        {{/form.field}}
+      </div>
+    </div>
+    <div class="form-elem billing-optional-field">
+      {{#form.field
+          label='Company Name'
+          value=companyName
+          showOptionalMark=true
+          onChange=(action (mut companyName))
+          showValidationStatusIcons=false
+          as |field|
+        }}
+        {{field.input}}
+      {{/form.field}}
+    </div>
     <div class="form-elem">
       {{#form.field
-        disableFrame=true
-        class='display-value-switch'
-        value=showAnnual
-        onChange=(action (mut showAnnual))
-        as |field|
-      }}
-        {{field.switch}}
+          label='Billing Email Address'
+          value=billingEmail
+          required=true
+          onChange=(action (mut billingEmail))
+          showValidationStatusIcons=false
+          as |field|
+        }}
+        {{field.input}}
       {{/form.field}}
     </div>
-  <h2>Choose your plan</h2>
-  <div class="billing-plans">
-    {{#each displayedPlans as |plan|}}
-      <div class="billing-plans__box" onclick={{action "selectPlan" plan.id}}>
-        <h2 class="billing-plans__box--price">{{format-currency plan.price}} <span>/month</span></h2>
-        <p class="billing-plans__box--name">{{plan.name}}</p>
-        <p class="billing-plans__box--jobs">
-          {{plan.builds}} concurrent {{pluralize-word plan.builds 'job' 'jobs'}}
-        </p>
+    <h3>Billing address</h3>
+    <p class="billing-form-message">All fields are required unless marked as optional.</p>
+    <div class="flex flex--col flex-md-row">
+      <div class="full-width form-elem inline-form-elem">
+        {{#form.field
+          label='Street Address'
+          value=billingStreet
+          required=true
+          showValidationStatusIcons=false
+          onChange=(action (mut billingStreet))
+          as |field|
+        }}
+          {{field.input}}
+        {{/form.field}}
       </div>
-    {{/each}}
-  </div>
-  <div class="selected-plan">
-    <div class="selected-plan__details">
-      <p class="selected-plan__details--plan">Your plan details</p>
-      <p class="selected-plan__details--name">{{selectedPlan.name}} plan</p>
-      <p class="selected-plan__details--jobs">
-        {{selectedPlan.builds}} concurrent {{pluralize-word selectedPlan.builds 'job' 'jobs'}}
-      </p>
-      <p class="selected-plan__details--free-jobs">3 free concurrent jobs.</p>
-    </div>
-    <div>
-      <div class="selected-plan__price">
-        <p class="selected-plan__price--total">Total</p>
-        <p class="selected-plan__price--large">{{format-currency selectedPlan.price}}</p>
+      <div class="full-width form-elem">
+        {{#form.field
+          label='Suite,Apt'
+          value=billingSuite
+          required=true
+          onChange=(action (mut billingSuite))
+          showValidationStatusIcons=false
+          as |field|
+        }}
+          {{field.input}}
+        {{/form.field}}
       </div>
     </div>
-  </div>
-  <h2>Contact details</h2>
-  <p>All fields are required unless marked as optional.</p>
-  <div class="d-flex flex-col flex-md-row">
-    <div class="full-width form-elem inline-form-elem">
+    <div class="flex flex--col flex-md-row">
+      <div class="full-width form-elem inline-form-elem">
+        {{#form.field
+          label='City'
+          value=billingCity
+          required=true
+          onChange=(action (mut billingCity))
+          showValidationStatusIcons=false
+          as |field|
+        }}
+          {{field.input}}
+        {{/form.field}}
+      </div>
+      <div class="full-width form-elem">
+        {{#form.field
+          label='Zip Code'
+          value=billingZipCode
+          required=true
+          onChange=(action (mut billingZipCode))
+          showValidationStatusIcons=false
+          as |field|
+        }}
+          {{field.input}}
+        {{/form.field}}
+      </div>
+    </div>
+    <div class="form-elem select">
       {{#form.field
-        label='First Name'
-        value=firstName
+        label='Country'
+        value=country
         required=true
+        onChange=(action (mut country))
         showValidationStatusIcons=false
-        onChange=(action (mut name))
         as |field|
       }}
-        {{field.input}}
+        {{#field.select 
+          placeholder='Select a country'
+          options=countries as |country|
+        }}
+          {{country}}
+        {{/field.select}}
       {{/form.field}}
     </div>
-    <div class="full-width form-elem">
+    <div class="form-elem">
       {{#form.field
-        label='Last Name'
-        value=lastName
+        label='Vat Id'
+        value=vatId
         required=true
-        onChange=(action (mut value))
-        showValidationStatusIcons=false
-        as |field|
-      }}
-        {{field.input}}
-      {{/form.field}}
-    </div>
-  </div>
-  <div class="form-elem">
-    {{#form.field
-        label='Company Name'
-        value=companyName
-        required=true
-        onChange=(action (mut value))
-        showValidationStatusIcons=false
-        as |field|
-      }}
-      {{field.input}}
-    {{/form.field}}
-  </div>
-  <div class="form-elem">
-    {{#form.field
-        label='Billing Email Address'
-        value=billingEmail
-        required=true
-        onChange=(action (mut value))
-        showValidationStatusIcons=false
-        as |field|
-      }}
-      {{field.input}}
-    {{/form.field}}
-  </div>
-  <h2>Billing address</h2>
-  <p>All fields are required unless marked as optional.</p>
-  <div class="d-flex flex-col flex-md-row">
-    <div class="full-width form-elem inline-form-elem">
-      {{#form.field
-        label='Street Address'
-        value=billingStreet
-        required=true
-        showValidationStatusIcons=false
-        onChange=(action (mut name))
-        as |field|
-      }}
-        {{field.input}}
-      {{/form.field}}
-    </div>
-    <div class="full-width form-elem">
-      {{#form.field
-        label='Suite,Apt'
-        value=billingSuite
-        required=true
-        onChange=(action (mut value))
+        onChange=(action (mut vatId))
         showValidationStatusIcons=false
         as |field|
       }}
         {{field.input}}
       {{/form.field}}
     </div>
-  </div>
-  <div class="d-flex flex-col flex-md-row">
-    <div class="full-width form-elem inline-form-elem">
-      {{#form.field
-        label='City'
-        value=billingCity
-        required=true
-        onChange=(action (mut value))
-        showValidationStatusIcons=false
-        as |field|
-      }}
-        {{field.input}}
-      {{/form.field}}
+    <div class='form-elem'>
+      {{#if save.isRunning}}
+        {{loading-indicator}}
+      {{else}}
+        <button onclick={{form.submit}} class='button--blue'>
+          Proceed to Payment
+        </button>
+      {{/if}}
     </div>
-    <div class="full-width form-elem">
-      {{#form.field
-        label='Zip Code'
-        value=billingZipCode
-        required=true
-        onChange=(action (mut value))
-        showValidationStatusIcons=false
-        as |field|
-      }}
-        {{field.input}}
-      {{/form.field}}
-    </div>
-  </div>
-  <div class="form-elem select">
-    {{#form.field
-      label='Country'
-      value=country
-      required=true
-      onChange=(action (mut country))
-      showValidationStatusIcons=false
-      as |field|
-    }}
-      {{#field.select 
-        placeholder='Select a country'
-        options=countries as |country|
-      }}
-        {{country}}
-      {{/field.select}}
-    {{/form.field}}
-  </div>
-  <div class="form-elem">
-    {{#form.field
-      label='Vat Id'
-      value=vatId
-      required=true
-      onChange=(action (mut value))
-      showValidationStatusIcons=false
-      as |field|
-    }}
-      {{field.input}}
-    {{/form.field}}
-  </div>
-  <div class='form-elem'>
-    {{#if save.isRunning}}
-      {{loading-indicator}}
-    {{else}}
-      <button onclick={{form.submit}} class='button--blue'>
-        Proceed to Payment
-      </button>
-    {{/if}}
   </div>
 {{/travis-form}}

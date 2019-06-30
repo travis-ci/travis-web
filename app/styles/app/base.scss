@@ -102,10 +102,20 @@ a {
   &--v-center {
     align-items: center;
   }
+<<<<<<< HEAD
 
   &--wrap {
     flex-wrap: wrap;
   }
+=======
+  &--wrap {
+    flex-wrap: wrap;
+  }
+  
+  &--col {
+    flex-direction: column;
+  }
+>>>>>>> Implement select plan functionality
 }
 
 .pointer {
@@ -181,18 +191,6 @@ span.emoji.emoji-sizer {
 
 .position-relative {
   position: relative;
-}
-
-.d-flex {
-  display: flex;
-}
-
-.flex-wrap {
-  flex-wrap: wrap;
-}
-
-.flex-col {
-  flex-direction: column;
 }
 
 .full-width {

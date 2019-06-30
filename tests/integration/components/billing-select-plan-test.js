@@ -3,22 +3,22 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | forms/form-switch-plan', function (hooks) {
+module('Integration | Component | billing-select-plan', function (hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function (assert) {
     // Set any properties with this.set('myProperty', 'value');
     // Handle any actions with this.set('myAction', function(val) { ... });
 
-    await render(hbs`{{forms/form-switch-plan}}`);
+    await render(hbs`{{billing-select-plan}}`);
 
     assert.equal(this.element.textContent.trim(), '');
 
     // Template block usage:
     await render(hbs`
-      {{#forms/form-switch-plan}}
+      {{#billing-select-plan}}
         template block text
-      {{/forms/form-switch-plan}}
+      {{/billing-select-plan}}
     `);
 
     assert.equal(this.element.textContent.trim(), 'template block text');
