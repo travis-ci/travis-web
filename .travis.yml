@@ -57,8 +57,6 @@ after_script:
 
 jobs:
   include:
-    - stage: "testing time"
-      node_js: 10.7
     - stage: ":ship: it to Quay.io"
       sudo: required
       dist: trusty
