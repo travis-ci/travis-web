@@ -81,6 +81,21 @@ a {
   display: none;
 }
 
+.flex {
+  display: flex;
+
+  &--center {
+    justify-content: center;
+  }
+  &--space-between {
+    justify-content: space-between;
+  }
+
+  &--v-center {
+    align-items: center;
+  }
+}
+
 .pointer {
   cursor: pointer;
 }
@@ -150,4 +165,22 @@ span.emoji.emoji-sizer {
 
 .position-relative {
   position: relative;
+}
+
+.link {
+  cursor: pointer;
+  display: inline-block;
+  border-bottom: 1px solid transparent;
+  color: $asphalt-grey;
+  margin: auto 1px;
+
+  &:hover,
+  &--teal {
+    color: $oxide-blue;
+    border-bottom-color: $oxide-blue;
+  }
+
+  &--underline:not(&--teal) {
+    border-bottom-color: $asphalt-grey;
+  }
 }

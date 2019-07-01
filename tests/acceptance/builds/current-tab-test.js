@@ -84,7 +84,7 @@ module('Acceptance | builds/current tab', function (hooks) {
     server.create('repository', { slug: 'travis-ci/travis-web', active: false, migration_status: 'migrated'});
     await visit('/travis-ci/travis-web');
 
-    assert.dom('[data-test-not-active-migrated-header]').exists();
     assert.dom('[data-test-not-active-migrated-subtext]').exists();
+    assert.dom('[data-test-not-active-migrated-button]').exists();
   });
 });

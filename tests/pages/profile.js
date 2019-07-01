@@ -143,6 +143,44 @@ export default create({
     },
   }),
 
+  sidebarMigrate: {
+    scope: '[data-test-sidebar-migrate]',
+    isPresent: isPresent(),
+
+    signUpButton: {
+      scope: '[data-test-migrate-signup]',
+      click: clickable()
+    }
+  },
+
+  migrateDialog: {
+    scope: '[data-test-migrate-dialog]',
+    isPresent: isPresent(),
+
+    accountsSelect: {
+      scope: '[data-test-migrate-accounts-select]',
+      click: clickable(),
+
+      options: collection('[data-test-account-option]')
+    },
+
+    submit: {
+      scope: '[data-test-migrate-submit]',
+      isPresent: isPresent(),
+      click: clickable()
+    }
+  },
+
+  migrateBannerAccepted: {
+    scope: '[data-test-migrate-banner-accepted]',
+    isPresent: isPresent()
+  },
+
+  migrateBannerRequested: {
+    scope: '[data-test-migrate-banner-requested]',
+    isPresent: isPresent()
+  },
+
   settings: {
     visit: clickable('li[data-test-settings-tab] a'),
 

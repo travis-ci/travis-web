@@ -1,35 +1,63 @@
 <div class="missing-notice">
-  <figure class="page-graphic">
-    {{svg-jar 'wheelbarrow'}}
-  </figure>
 
-{{#if migratedOnOrg}}
-  <h2 data-test-not-active-migrated-header class="page-title">This repository has been migrated to travis-ci.com</h2>
-  <p data-test-not-active-migrated-subtext class="page-notice">To view current and future builds, please visit {{#external-link-to href=comRepositoryLink}}travis-ci.com{{/external-link-to}}.<br/>
-  Historical data is still available on travis-ci.org and can be found by navigating the tabs above.</p>
+  {{#if migratedOnOrg}}
 
-{{else}}
-  <h2 class="page-title">This is not an active repository</h2>
+    <div data-test-recently-migrated-to-com-banner>
+      {{svg-jar 'migrated' class="page-graphic"}}
 
-  {{#if canActivate}}
+      <h2 data-test-not-active-migrated-subtext class="text-big">
+        This repository was migrated and is now building on
+        {{#external-link-to href=comRepositoryLink}}
+          travis-ci.com
+        {{/external-link-to}}
+      </h2>
 
-    {{#if (and config.githubApps repo.owner.installation)}}
-      {{#external-link-to href=githubAppsActivationURL class='button button--blue button--repo-activate-gh'}}
-        {{svg-jar 'icon-repooctocat' class='icon--github'}}
-        <span>Activate repository on GitHub</span>
+      {{#external-link-to href=comRepositoryLink
+        class="button button--blue"
+        data-test-not-active-migrated-button=true
+      }}
+        Take me there!
       {{/external-link-to}}
-    {{else}}
-      <p class="page-notice">You can activate the repository on {{#link-to "account"}}your profile{{/link-to}},<br/>
-      or by clicking the button below</p>
+    </div>
 
-      <button {{action (perform activate)}} class="button button--blue">Activate repository</button>
-    {{/if}}
-
-    {{#if activate.isRunning}}
-      {{loading-indicator}}
-    {{/if}}
   {{else}}
-    <p class="page-notice">You don't have sufficient rights to enable this repo on Travis. <br>Please contact the admin to enable it or to receive admin rights yourself.</p>
+
+    <figure class="page-graphic">
+      {{svg-jar 'wheelbarrow'}}
+    </figure>
+
+    <h2 class="page-title">This is not an active repository</h2>
+
+    {{#if canActivate}}
+
+      {{#if (and config.githubApps repo.owner.installation)}}
+        {{#external-link-to href=githubAppsActivationURL class='button button--blue button--repo-activate-gh'}}
+          {{svg-jar 'icon-repooctocat' class='icon--github'}}
+          <span>Activate repository on GitHub</span>
+        {{/external-link-to}}
+      {{else}}
+        <p class="page-notice">
+          You can activate the repository on {{#link-to "account"}}your profile{{/link-to}},<br/>
+          or by clicking the button below
+        </p>
+        <button {{action (perform activate)}} class="button button--blue">
+          Activate repository
+        </button>
+      {{/if}}
+
+      {{#if activate.isRunning}}
+        {{loading-indicator}}
+      {{/if}}
+
+    {{else}}
+
+      <p class="page-notice">
+        You don't have sufficient rights to enable this repo on Travis. <br>
+        Please contact the admin to enable it or to receive admin rights yourself.
+      </p>
+
+    {{/if}}
+
   {{/if}}
-  {{/if}}
+
 </div>

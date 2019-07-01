@@ -1,11 +1,11 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { alias } from '@ember/object/computed';
+import { or, not } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 
 export default Component.extend({
   tagName: 'li',
-  classNameBindings: ['type', 'topBarVisible:below-top-bar:fixed'],
+  classNameBindings: ['type', 'isFixed:fixed:below-top-bar'],
 
   flashes: service(),
 
@@ -14,7 +14,8 @@ export default Component.extend({
     return type || 'broadcast';
   }),
 
-  topBarVisible: alias('flashes.topBarVisible'),
+  topBarNotVisible: not('flashes.topBarVisible'),
+  isFixed: or('topBarNotVisible', 'flash.aboveOverlay'),
 
   actions: {
     close() {

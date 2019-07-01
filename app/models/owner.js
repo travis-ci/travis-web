@@ -2,7 +2,7 @@ import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
 import { belongsTo } from 'ember-data/relationships';
 import { computed } from '@ember/object';
-import { reads, or, equal } from '@ember/object/computed';
+import { reads, or, equal, notEmpty } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import config from 'travis/config/environment';
 import dynamicQuery from 'travis/utils/dynamic-query';
@@ -13,6 +13,8 @@ export default Model.extend({
   features: service(),
   accounts: service(),
   raven: service(),
+  store: service(),
+  tasks: service(),
 
   name: attr('string'),
   login: attr('string'),
@@ -31,6 +33,8 @@ export default Model.extend({
   subscriptionPermissions: attr(),
 
   installation: belongsTo('installation', { async: false }),
+
+  title: or('name', 'login'),
 
   githubAppsRepositories: dynamicQuery(function* ({ page = 1, filter = '' }) {
     return yield this.fetchRepositories({ page, filter, ghApps: true, activeOnOrg: false });
@@ -61,6 +65,24 @@ export default Model.extend({
       limit, offset, custom: { owner, type, },
     }, { live: false });
   },
+
+  fetchBetaMigrationRequests() {
+    return this.tasks.fetchBetaMigrationRequestsTask.perform();
+  },
+
+  migrationBetaRequests: computed('tasks.fetchBetaMigrationRequestsTask.lastSuccessful.value.[]', 'id', function () {
+    const requests = this.tasks.fetchBetaMigrationRequestsTask.get('lastSuccessful.value') || [];
+    return requests.filter(request =>
+      this.isUser && request.ownerId == this.id || request.organizations.mapBy('id').includes(this.id)
+    );
+  }),
+
+  isMigrationBetaRequested: notEmpty('migrationBetaRequests'),
+
+  isMigrationBetaAccepted: computed('migrationBetaRequests.@each.acceptedAt', function () {
+    const migrationBetaRequests = this.migrationBetaRequests || [];
+    return migrationBetaRequests.isAny('acceptedAt');
+  }),
 
   subscriptionError: reads('accounts.subscriptionError'),
 

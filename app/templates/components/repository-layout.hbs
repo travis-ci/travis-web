@@ -19,32 +19,18 @@
       </div>
     </div>
   </header>
-  {{#if showMigratedFromOrgRepositoryLink}}
-    {{#notice-banner data-test-recently-migrated-from-org-banner}}
-      This repository was recently migrated from travis-ci.org.
-      To view your previous build history until it is migrated, please click
-      {{#external-link-to href=orgBuildHistoryLink}}here{{/external-link-to}}.
-    {{/notice-banner}}
-  {{/if}}
-  {{#if showMigratedToComRepositoryLink}}
-    {{#notice-banner data-test-recently-migrated-to-com-banner}}
-      This repository was recently migrated to travis-ci.com and is now read-only.
-      To view your current builds, please click
-      {{#external-link-to href=comBuildHistoryLink}}here{{/external-link-to}}.
-    {{/notice-banner}}
-  {{/if}}
   <main class="repo-main">
-  <div class="repo-navigation">
-    {{repo-show-tabs repo=repo build=build job=job}}
-    {{repo-show-tools repo=repo build=build job=job tab=tab onTriggerBuild=(action "toggleTriggerBuildModal")}}
-  </div>
-  <div class="travistab-body repo-body">
-    {{#if hasBlock}}
-      {{yield}}
-    {{else}}
-      {{build-layout build=build repo=repo}}
-    {{/if}}
-  </div>
+    <div class="repo-navigation">
+      {{repo-show-tabs repo=repo build=build job=job}}
+      {{repo-show-tools repo=repo build=build job=job tab=tab onTriggerBuild=(action "toggleTriggerBuildModal")}}
+    </div>
+    <div class="travistab-body repo-body">
+      {{#if hasBlock}}
+        {{yield}}
+      {{else}}
+        {{build-layout build=build repo=repo}}
+      {{/if}}
+    </div>
   </main>
 </article>
 

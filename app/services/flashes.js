@@ -55,33 +55,18 @@ export default Service.extend({
   // that we show only one at the moment anyway). We still get some error
   // messages from API responses in V2 that way, so I think that cleaning this
   // up once we're using V3 would be a good point.
-  loadFlashes(msgs) {
-    let i, len, msg, results, type;
+  loadFlashes(flashes = []) {
+    flashes.forEach(flash => {
+      const type = Object.keys(flash)[0];
+      const { message, preamble = messageTypeToPreamble[type], aboveOverlay } = flash[type];
+      const icon = messageTypeToIcon[type];
+      const closeButton = messageTypeToCloseButton[type];
+      const item = { type, message, icon, preamble, closeButton, aboveOverlay };
 
-    results = [];
-    for (i = 0, len = msgs.length; i < len; i++) {
-      msg = msgs[i];
-      type = Object.keys(msg)[0];
+      this.flashes.unshiftObject(item);
 
-      let messageText, preamble;
-
-      messageText = msg[type].message;
-      preamble = msg[type].preamble || messageTypeToPreamble[type];
-
-      msg = {
-        type,
-        message: messageText,
-        icon: messageTypeToIcon[type],
-        preamble,
-        closeButton: messageTypeToCloseButton[type]
-      };
-      this.get('flashes').unshiftObject(msg);
-
-      if (!messageTypeToCloseButton[type]) {
-        this.removeFlash(msg);
-      }
-    }
-    return results;
+      if (!closeButton) this.removeFlash(item);
+    });
   },
 
   removeFlash(msg) {
@@ -104,23 +89,24 @@ export default Service.extend({
     this.setup();
   },
 
-  display(type, message, preamble) {
+  display(type, message, preamble, aboveOverlay = false) {
     if (!['error', 'notice', 'success'].includes(type)) {
       // eslint-disable-next-line
       console.warn("WARNING: <service:flashes> display(type, message) function can only handle 'error', 'notice' and 'success' types");
     }
-    this.loadFlashes([{ [type]: { message, preamble } }]);
+
+    this.loadFlashes([{ [type]: { message, preamble, aboveOverlay } }]);
   },
 
-  success(message, preamble = messageTypeToPreamble['success']) {
-    this.display('success', message, preamble);
+  success(message, preamble = messageTypeToPreamble['success'], aboveOverlay = false) {
+    this.display('success', message, preamble, aboveOverlay);
   },
 
-  error(message, preamble = messageTypeToPreamble['error']) {
-    this.display('error', message, preamble);
+  error(message, preamble = messageTypeToPreamble['error'], aboveOverlay = false) {
+    this.display('error', message, preamble, aboveOverlay);
   },
 
-  notice(message, preamble = messageTypeToPreamble['notice']) {
-    this.display('notice', message, preamble);
+  notice(message, preamble = messageTypeToPreamble['notice'], aboveOverlay = false) {
+    this.display('notice', message, preamble, aboveOverlay);
   }
 });

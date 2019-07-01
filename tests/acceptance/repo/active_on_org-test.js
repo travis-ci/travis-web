@@ -29,6 +29,5 @@ test('view an active_on_org repository when GitHub Apps is present', function (a
   andThen(() => {
     percySnapshot(assert);
     assert.dom('[data-test-active_on_org-display]').exists();
-    assert.dom('a.button').hasAttribute('href', 'https://travis-ci.org/musterfrau/a-repo');
   });
 });
