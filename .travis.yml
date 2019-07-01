@@ -55,19 +55,19 @@ after_script:
   - greenkeeper-lockfile-upload
   - "test $TRAVIS_PULL_REQUEST && test $TRAVIS_PULL_REQUEST != 'false' && $TRAVIS_SECURE_ENV_VARS == 'true' && ./config/deployment/deploy-pull-request.sh"
 
-# jobs:
-#   include:
-#     - stage: ":ship: it to Quay.io"
-#       sudo: required
-#       dist: trusty
-#       ruby:
-#       services:
-#       addons:
-#       before_install: skip
-#       install: skip
-#       before_script:
-#         - curl -L https://github.com/docker/compose/releases/download/1.13.0/docker-compose-`uname -s`-`uname -m` > ./docker-compose
-#         - sudo mv ./docker-compose /usr/local/bin/docker-compose
-#         - sudo chmod +x /usr/local/bin/docker-compose
-#       script: ./script/docker-build-and-push
-#       after_script: skip
+jobs:
+  include:
+    - stage: ":ship: it to Quay.io"
+      sudo: required
+      dist: trusty
+      # ruby:
+      # services:
+      # addons:
+      before_install: skip
+      install: skip
+      before_script:
+        - curl -L https://github.com/docker/compose/releases/download/1.13.0/docker-compose-`uname -s`-`uname -m` > ./docker-compose
+        - sudo mv ./docker-compose /usr/local/bin/docker-compose
+        - sudo chmod +x /usr/local/bin/docker-compose
+      script: ./script/docker-build-and-push
+      after_script: skip
