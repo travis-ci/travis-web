@@ -32,5 +32,5 @@ export default Controller.extend({
       return !this.model.subscriptions && !this.account.education;
     }
   })
-  
+
 });
