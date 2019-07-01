@@ -66,7 +66,7 @@ RUN bundle install --without assets development test
 COPY package.json /usr/src/app
 COPY package-lock.json /usr/src/app
 
-RUN npm install -g ember-cli
+RUN npm install --silent -g ember-cli
 
 COPY . /usr/src/app
 
