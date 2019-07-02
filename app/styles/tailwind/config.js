@@ -2,6 +2,7 @@
 
 module.exports = {
   theme: {
+    // Override
     colors: {
       transparent: 'transparent',
       black: '#000',
@@ -17,7 +18,16 @@ module.exports = {
         default: '#14b65e'
       }
     },
-    extend: {}
+
+    // Extend
+    extend: {
+      fill: {
+        transparent: 'transparent'
+      },
+      stroke: {
+        transparent: 'transparent'
+      },
+    }
   },
   variants: {},
   plugins: []
