@@ -86,7 +86,7 @@ module.exports = function () {
     outputPaths: {
       app: {
         css: {
-          'tailwind/main': '/assets/travis-tailwind.css'
+          'tailwind/base': '/assets/tailwind-base.css'
         }
       }
     }

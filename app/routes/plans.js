@@ -1,8 +1,8 @@
 import BasicRoute from 'travis/routes/basic';
 import { inject as service } from '@ember/service';
-import UseTailwindMixin from 'travis/mixins/use-tailwind';
+import TailwindBaseMixin from 'travis/mixins/tailwind-base';
 
-export default BasicRoute.extend(UseTailwindMixin, {
+export default BasicRoute.extend(TailwindBaseMixin, {
   needsAuth: false,
 
   features: service(),
