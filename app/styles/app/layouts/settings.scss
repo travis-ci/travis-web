@@ -384,3 +384,16 @@ $env-var-value-background: lighten($cement-grey, 20);
     }
   }
 }
+
+.migrated-repo-settings-modal {
+  max-width: 32rem;
+
+  & &__header {
+    margin: -0.5rem auto 1.3rem;
+  }
+
+  &__button {
+    margin: 1rem 0.5rem 0 0;
+  }
+
+}

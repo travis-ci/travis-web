@@ -8,14 +8,19 @@ import attr from 'ember-data/attr';
 import { hasMany, belongsTo } from 'ember-data/relationships';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
-import { reads, equal } from '@ember/object/computed';
+import { reads, equal, or } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
 
 export const MIGRATION_STATUS = {
   QUEUED: 'queued',
   MIGRATING: 'migrating',
+  MIGRATED: 'migrated',
   SUCCESS: 'success',
   FAILURE: 'failure'
+};
+
+export const HISTORY_MIGRATION_STATUS = {
+  MIGRATED: 'migrated'
 };
 
 const Repo = Model.extend({
@@ -33,7 +38,8 @@ const Repo = Model.extend({
   starred: attr('boolean'),
   active_on_org: attr('boolean'),
   emailSubscribed: attr('boolean'),
-  migrationStatus: attr(),
+  migrationStatus: attr('string'),
+  historyMigrationStatus: attr('string'),
 
   ownerType: reads('owner.@type'),
 
@@ -43,8 +49,14 @@ const Repo = Model.extend({
 
   isMigrationQueued: equal('migrationStatus', MIGRATION_STATUS.QUEUED),
   isMigrationMigrating: equal('migrationStatus', MIGRATION_STATUS.MIGRATING),
+  isMigrationMigrated: equal('migrationStatus', MIGRATION_STATUS.MIGRATED),
   isMigrationSucceeded: equal('migrationStatus', MIGRATION_STATUS.SUCCESS),
   isMigrationFailed: equal('migrationStatus', MIGRATION_STATUS.FAILURE),
+  isMigrationInProgress: or('isMigrationQueued', 'isMigrationMigrating'),
+
+  isMigrated: or('isMigrationSucceeded', 'isMigrationMigrated'),
+
+  isHistoryMigrated: equal('historyMigrationStatus', HISTORY_MIGRATION_STATUS.MIGRATED),
 
   isMigratable: computed('migrationStatus', 'permissions.admin', function () {
     const isMigrated = !!this.migrationStatus;

@@ -62,7 +62,7 @@
       <p>
         {{svg-jar 'icon-megaphone' class='icon icon-megaphone'}}
         <span class="label-align">
-          If your secret variable has especial characters like <code>&amp;</code>, escape it by adding <code>\</code> in front of it. For example <code>ma&amp;w!doc</code> would be typed as <code>ma\&amp;w\!doc</code>.
+          If your secret variable has special characters like <code>&amp;</code>, escape them by adding <code>\</code> in front of each special character. For example, <code>ma&amp;w!doc</code> would be entered as <code>ma\&amp;w\!doc</code>.
         </span>
       </p>
     </div>
@@ -112,25 +112,45 @@
     overlayPosition='sibling'
     animatable=true
   }}
-    <div data-test-settings-disabled-after-migration-modal>
-      <h3 class="h3--teal">Your repository has been migrated to travis-ci.com</h3>
-      <p>As a result, your repository is now in a read-only state.
+    <div data-test-settings-disabled-after-migration-modal
+      class="migrated-repo-settings-modal"
+    >
+
+      <h3 class="migrated-repo-settings-modal__header h3--teal">
+        Your repository has been migrated to <br />
+        travis-ci.com
+      </h3>
+
+      <p>
+        As a result, your repository is now in a <b>read-only</b> state.
       </p>
       <p>
         If you wish to configure your repository, you can do so by visiting the
-        Settings page on travis-ci.com.
+        settings page on travis-ci.com.
         Read-only historical data, such as Requests, Build History and Branches can still be viewed.
       </p>
-      <p>
-        <br />
-        <br />
-        {{#link-to 'builds' repo class="button--white-and-teal"}}
-          Return to Build History
+      <div>
+
+        {{#link-to 'builds' repo
+          class="migrated-repo-settings-modal__button button--blue"
+        }}
+          View Build History
         {{/link-to}}
-        {{#external-link-to class="button--white-and-teal" href=migratedRepositorySettingsLink}}
-          Edit Settings (travis-ci.com)
+
+        {{#external-link-to
+          class="migrated-repo-settings-modal__button button--dark-grey"
+          href=migratedRepositorySettingsLink
+        }}
+          Edit settings on .com
         {{/external-link-to}}
-      </p>
+
+        {{#link-to 'repo.index' repo
+          class="modal-close pointer"
+        }}
+          {{svg-jar 'icon-failed' class="icon"}}
+        {{/link-to}}
+
+      </div>
     </div>
   {{/modal-dialog}}
 {{/if}}

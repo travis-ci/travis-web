@@ -11,14 +11,16 @@ export default Component.extend({
     'showOverlay:insights-overlay--active',
   ],
 
+  auth: service(),
   insights: service(),
 
+  owner: null,
   private: false,
   interval: DEFAULT_INSIGHTS_INTERVAL,
 
   // Current Interval Build Data
   requestData: task(function* () {
-    return yield this.get('insights').getChartData.perform(
+    return yield this.insights.getChartData.perform(
       this.owner,
       this.interval,
       'builds',
@@ -36,12 +38,19 @@ export default Component.extend({
   totalBuilds: reads('buildData.data.count_started.total'),
   hasNoBuilds: equal('totalBuilds', 0),
   showOverlay: and('isNotLoading', 'hasNoBuilds'),
+  canSync: reads('owner.permissions.sync'),
 
   isMonth: equal('interval', INSIGHTS_INTERVALS.MONTH),
   isWeek: equal('interval', INSIGHTS_INTERVALS.WEEK),
 
+  actions: {
+    signIn() {
+      return this.auth.signIn();
+    },
+  },
+
   // Request build data
   didReceiveAttrs() {
-    this.get('requestData').perform();
+    this.requestData.perform();
   }
 });

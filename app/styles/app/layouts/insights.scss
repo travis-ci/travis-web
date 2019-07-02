@@ -146,9 +146,17 @@ $med-small-up: "only screen and (min-width: 38em)";
   text-align: center;
   display: none;
   font-size: 18px;
+  @include z-index(above);
 
   &--active {
     display: block;
+
+    ~ .insights-build-count,
+    ~ .insights-build-minutes,
+    ~ .insights-queue-times,
+    ~ .insights-active-repo-count {
+      box-shadow: none;
+    }
   }
 
   .overlay-backdrop {
@@ -156,18 +164,24 @@ $med-small-up: "only screen and (min-width: 38em)";
     align-items: center;
     justify-content: center;
     flex-flow: column nowrap;
+    background-color: #fff;
   }
 
   h2, .insights-overlay__header {
     color: $oxide-blue;
     font-size: 40px;
     font-weight: 300;
-    margin: 0 0 15px 0;
+    margin: 0 0 1rem 0;
   }
 
   p {
     padding: 0 10%;
-    font-size: 18px;
+    font-size: 1.1429rem;
+    margin-top: 0;
+  }
+
+  .hero-button svg {
+    @include colorSVGFill(white);
   }
 }
 

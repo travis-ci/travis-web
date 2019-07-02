@@ -28,6 +28,8 @@ export default Component.extend({
   isAppsEnabled: reads('features.github-apps'),
   isNotAppsEnabled: not('isAppsEnabled'),
   isFilteringEnabled: reads('features.repositoryFiltering'),
+  isLoadingBetaRequests: reads('owner.fetchBetaMigrationRequestsTask.isRunning'),
+  isNotLoadingBetaRequests: not('isLoadingBetaRequests'),
 
   get migrationRepositoryCountLimit() {
     return migrationRepositoryCountLimit;
@@ -50,10 +52,16 @@ export default Component.extend({
   appsReposOnOrg: reads('owner.githubAppsRepositoriesOnOrg'),
 
   showGitHubApps: reads('isAppsEnabled'),
-  showPublicReposBanner: and('isNotEnterprise', 'isNotPro'),
+  showMigrationStatusBanner: and('isNotEnterprise', 'isNotPro', 'isNotLoadingBetaRequests'),
   showLegacyReposFilter: or('isFilteringEnabled', 'shouldShowLegacyReposFilter'),
   showAppsReposFilter: and('isFilteringEnabled', 'shouldShowAppsReposFilter'),
   showLegacyRepos: or('hasLegacyRepos', 'isLoadingLegacyRepos', 'isFilteringLegacyRepos', 'isNotAppsEnabled'),
+
+  migrateURL: computed('owner.type', 'owner.login', function () {
+    const { login, isUser } = this.owner;
+    const path = isUser ? 'account/migrate' : `organizations/${login}/migrate`;
+    return `https://travis-ci.com/${path}`;
+  }),
 
   appsActivationURL: computed('owner.githubId', function () {
     let githubId = this.get('owner.githubId');

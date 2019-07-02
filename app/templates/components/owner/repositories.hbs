@@ -1,5 +1,36 @@
-{{#if showPublicReposBanner }}
-  <p class="text-medium">We're only showing your public repositories. You can find your private projects on <a href="https://travis-ci.com" title="travis-ci.com">travis-ci.com</a>.</p>
+{{#if showMigrationStatusBanner}}
+  {{#if owner.isMigrationBetaAccepted }}
+    {{#paper-block elevation=2 class='text-medium no-margin' data-test-migrate-banner-accepted=true }}
+      {{#if owner.isOrganization}}
+        The {{owner.title}} organization
+      {{else}}
+        Your account
+      {{/if}}
+      is signed up for the beta! Now you can
+      {{#external-link-to href=migrateURL}}start migrating{{/external-link-to}}
+      your open source repositories to
+      {{#external-link-to href='https://travis-ci.com'}}travis-ci.com{{/external-link-to}}
+    {{/paper-block}}
+  {{else if owner.isMigrationBetaRequested }}
+    {{#paper-block elevation=2 class='text-medium no-margin' data-test-migrate-banner-requested=true }}
+      The request for
+      {{#if owner.isOrganization}}
+        {{owner.title}}
+      {{else}}
+        your account
+      {{/if}}
+      to participate in Migration Beta is pending.
+      We'll let you know, when it's accepted!
+    {{/paper-block}}
+  {{else}}
+    <p class="text-medium">
+      We're only showing your public repositories.
+      You can find your private projects on
+      {{#external-link-to href='https://travis-ci.com'}}
+        travis-ci.com
+      {{/external-link-to}}.
+    </p>
+  {{/if}}
 {{/if}}
 
 {{#if showGitHubApps}}

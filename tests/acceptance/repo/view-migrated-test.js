@@ -42,7 +42,7 @@ module('Acceptance | repo/view migrated', function (hooks) {
 
     const repository = server.create('repository', {
       slug: 'musterfrau/a-repo',
-      active: true,
+      active: false,
       active_on_org: false,
       permissions: {
         admin: true

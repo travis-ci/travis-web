@@ -30,30 +30,6 @@ export default Component.extend({
     return this.get('externalLinks').comBuildHistoryLink(slug);
   }),
 
-  showMigratedFromOrgRepositoryLink: computed(
-    'features.{proVersion,enterpriseVersion}',
-    'repo.migrationStatus',
-    function () {
-      let pro = this.get('features.proVersion');
-      let enterprise = this.get('features.enterpriseVersion');
-      let migrationStatus = this.get('repo.migrationStatus');
-      const comHosted = pro && !enterprise;
-      return comHosted && migrationStatus === 'migrated';
-    }
-  ),
-
-  showMigratedToComRepositoryLink: computed(
-    'features.{proVersion,enterpriseVersion}',
-    'repo.migrationStatus',
-    function () {
-      let pro = this.get('features.proVersion');
-      let enterprise = this.get('features.enterpriseVersion');
-      let migrationStatus = this.get('repo.migrationStatus');
-      const orgHosted = !pro && !enterprise;
-      return orgHosted && migrationStatus === 'migrated';
-    }
-  ),
-
   actions: {
     toggleStatusBadgeModal() {
       this.toggleProperty('isShowingStatusBadgeModal');

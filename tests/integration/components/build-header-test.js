@@ -89,6 +89,31 @@ module('Integration | Component | build header', function (hooks) {
     assert.dom('.build-title').hasText(/cron Just complete and utter joy/, 'displays cron before commit message');
   });
 
+  test('render draft pull request', async function (assert) {
+    let commit = {
+      subject: 'Just complete and utter joy',
+      branch: 'a-cron-branch-of-utter-joy'
+    };
+
+    let build = {
+      id: 10000,
+      state: 'failed',
+      message: void 0,
+      isPullRequest: true,
+      pullRequestNumber: 1919,
+      pullRequestTitle: 'Strike!',
+      commit,
+      request: {
+        isDraft: true
+      }
+    };
+
+    this.set('build', build);
+    await render(hbs`{{build-header item=build commit=build.commit}}`);
+
+    assert.dom('.build-title .message-label').hasText('draft');
+  });
+
 
   test('render tag build', async function (assert) {
     let commit = {
