@@ -259,6 +259,14 @@ export default create({
       isDisabled: hasClass('disabled'),
     },
 
+    noPermissionMessage: {
+      scope: '[data-test-no-permission-message]'
+    },
+
+    subscribeButton: {
+      scope: '[data-test-subscribe-button]',
+    },
+
     marketplaceButton: {
       scope: '.marketplace-button',
       href: attribute('href')

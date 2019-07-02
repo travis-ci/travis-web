@@ -7,20 +7,24 @@ module('Integration | Component | billing-information', function (hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function (assert) {
-    // Set any properties with this.set('myProperty', 'value');
-    // Handle any actions with this.set('myAction', function(val) { ... });
+    this.set('plans', [{
+      id: 1,
+      name: 'A',
+      builds: 5,
+      amount: 20000,
+      annual: false
+    }, {
+      id: 1,
+      name: 'B',
+      builds: 10,
+      amount: 30000,
+      annual: true
+    }]);
+    this.set('showMonthly', true);
+    this.set('account', { hasSubscriptionPermissions: true });
 
-    await render(hbs`{{billing-information}}`);
+    await render(hbs`{{billing-information plans=plans account=account}}`);
 
-    assert.equal(this.element.textContent.trim(), '');
-
-    // Template block usage:
-    await render(hbs`
-      {{#billing-information}}
-        template block text
-      {{/billing-information}}
-    `);
-
-    assert.equal(this.element.textContent.trim(), 'template block text');
+    assert.equal(this.element.querySelector('h5').textContent.trim(), 'Recommendation:');
   });
 });

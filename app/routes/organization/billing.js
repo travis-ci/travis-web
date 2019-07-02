@@ -1,7 +1,14 @@
 import TravisRoute from 'travis/routes/basic';
+import { inject as service } from '@ember/service';
+import { hash } from 'rsvp';
 
 export default TravisRoute.extend({
+  store: service(),
+
   model() {
-    return this.modelFor('organization');
+    return hash({
+      account: this.modelFor('organization'),
+      plans: this.get('store').findAll('plan'),
+    });
   }
 });

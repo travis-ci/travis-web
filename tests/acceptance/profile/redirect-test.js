@@ -9,6 +9,7 @@ module('Acceptance | profile/redirect', function (hooks) {
   hooks.beforeEach(function () {
     this.user = server.create('user', { login: 'test-user' });
     this.org = server.create('organization', { login: 'test-org' });
+    server.create('plan', { id: 'travis-ci-one-build', name: 'AM', builds: 1, price: 6900, currency: 'USD' });
     signInUser(this.user);
   });
 

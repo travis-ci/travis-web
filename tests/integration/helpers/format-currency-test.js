@@ -6,14 +6,8 @@ import hbs from 'htmlbars-inline-precompile';
 module('Integration | Helper | format-currency', function (hooks) {
   setupRenderingTest(hooks);
 
-<<<<<<< HEAD
   test('it formats 100cents to $1.00', async function (assert) {
     this.set('inputValue', 100);
-=======
-  // Replace this with your real tests.
-  test('it renders', async function (assert) {
-    this.set('inputValue', '1234');
->>>>>>> Implement select plan functionality
 
     await render(hbs`{{format-currency inputValue}}`);
 

@@ -85,6 +85,7 @@ module('Acceptance | profile/billing', function (hooks) {
   });
 
   test('view billing information with invoices', async function (assert) {
+
     this.subscription.createInvoice({
       id: '1919',
       created_at: new Date(1919, 4, 15),
@@ -127,8 +128,6 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.price.text, '$69 per month');
 
     assert.ok(profilePage.billing.annualInvitation.isVisible, 'expected the invitation to switch to annual billing to be visible');
-
-    assert.equal(profilePage.billing.invoices.items.length, 2);
 
     profilePage.billing.invoices.items[0].as(march2010 => {
       assert.equal(march2010.invoiceUrl.href, 'https://example.com/20102.pdf');
@@ -204,6 +203,8 @@ module('Acceptance | profile/billing', function (hooks) {
       assert.equal(march2010.invoiceCardDigits, '•••• •••• •••• 1919');
       assert.equal(march2010.invoiceCardPrice, '$69.00');
     });
+
+    assert.equal(profilePage.billing.invoices.items[0].text, '2010 February 2010');
   });
 
   test('view billing on an expired stripe plan', async function (assert) {
@@ -355,8 +356,7 @@ module('Acceptance | profile/billing', function (hooks) {
     percySnapshot(assert);
     assert.ok(profilePage.billing.expiryMessage.isHidden);
 
-    assert.ok(profilePage.billing.manageButton.isDisabled, 'expected no subscription management button when lacking permissions');
-    assert.equal(profilePage.billing.manageButton.text, 'New subscription');
+    assert.equal(profilePage.billing.noPermissionMessage.text, 'You do not have permission to create a subscription');
   });
 
   test('switching to another account’s billing tab loads the subscription properly', async function (assert) {
@@ -370,8 +370,7 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.accounts[1].visit();
     await profilePage.billing.visit();
 
-    assert.equal(profilePage.billing.manageButton.text, 'New subscription');
-    assert.equal(profilePage.billing.manageButton.href, 'https://billing.travis-ci.com/subscriptions/new?id=org-login');
+    assert.equal(profilePage.billing.subscribeButton.text, 'Proceed to Payment');
   });
 
   test('view billing tab when trial has not started', async function (assert) {
@@ -386,8 +385,7 @@ module('Acceptance | profile/billing', function (hooks) {
     percySnapshot(assert);
 
     assert.equal(profilePage.billing.trial.name, 'Your trial includes 100 trial builds and 2-concurrent-jobs, no credit card required. Need help? Check our getting started guide.');
-    assert.equal(profilePage.billing.trial.link.href, 'https://docs.travis-ci.com/user/getting-started/#to-get-started-with-travis-ci');
-    assert.equal(profilePage.billing.manageButton.text, 'New subscription');
+    assert.equal(profilePage.billing.subscribeButton.text, 'Proceed to Payment');
   });
 
   test('view billing tab with no create subscription permissions', async function (assert) {
@@ -400,8 +398,7 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.billing.visit();
 
     assert.equal(profilePage.billing.trial.name, 'Your trial includes 100 trial builds and 2-concurrent-jobs, no credit card required. Need help? Check our getting started guide.');
-    assert.equal(profilePage.billing.manageButton.text, 'New subscription');
-    assert.ok(profilePage.billing.manageButton.isDisabled);
+    assert.equal(profilePage.billing.noPermissionMessage.text, 'You do not have permission to create a subscription');
   });
 
   test('view billing tab when there is a new trial', async function (assert) {
@@ -428,7 +425,7 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.billing.visit();
 
     assert.equal(profilePage.billing.trial.name, "You've got 100 trial builds left. Ensure unlimited builds by setting up a plan before it runs out!");
-    assert.equal(profilePage.billing.manageButton.text, 'New subscription');
+    assert.equal(profilePage.billing.subscribeButton.text, 'Proceed to Payment');
   });
 
   test('view billing tab when trial has started', async function (assert) {
@@ -456,7 +453,7 @@ module('Acceptance | profile/billing', function (hooks) {
     percySnapshot(assert);
 
     assert.equal(profilePage.billing.trial.name, "You've got 25 trial builds left. Ensure unlimited builds by setting up a plan before it runs out!");
-    assert.equal(profilePage.billing.manageButton.text, 'New subscription');
+    assert.equal(profilePage.billing.subscribeButton.text, 'Proceed to Payment');
   });
 
   test('view billing tab when trial has ended', async function (assert) {
@@ -482,7 +479,7 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.billing.visit();
 
     assert.equal(profilePage.billing.trial.name, 'Your trial has just ended. To get the most out of Travis CI, set up a plan below!');
-    assert.equal(profilePage.billing.manageButton.text, 'New subscription');
+    assert.equal(profilePage.billing.subscribeButton.text, 'Proceed to Payment');
   });
 
   test('view billing tab with Github trial subscription', async function (assert) {
