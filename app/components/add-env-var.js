@@ -41,5 +41,18 @@ export default Component.extend(BranchSearching, {
       this.get('flashes').error('There was an error saving this environment variable.');
       this.get('raven').logException(e);
     }
-  }).drop()
+  }).drop(),
+
+  actions: {
+    validateEnvName() {
+      const branch = this.branch ? this.branch.name : null;
+      const envAlreadyDefined = !!this.store.peekAll('env_var').filter(env =>
+        env.get('name') == this.name.trim() && env.get('branch') == branch
+      ).length;
+      if (envAlreadyDefined) {
+        return `Environment variable ${this.get('name')} for ${branch || 'all'} branch${branch ? '' : 'es'} is already defined.`;
+      }
+      return true;
+    }
+  }
 });

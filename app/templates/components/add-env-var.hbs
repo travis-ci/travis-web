@@ -7,8 +7,10 @@
       label='Name'
       value=name
       required=true
+      validateOnField=false
       showValidationStatusIcons=false
       onChange=(action (mut name))
+      validator=(action 'validateEnvName')
       as |field|
     }}
       {{field.input class='env-name' placeholder='Name'}}
