@@ -2,23 +2,6 @@
 language: node_js
 node_js: 10.7
 
-env:
-  global:
-    - PERCY_ENABLE=0
-
-matrix:
-  include:
-    - if: type = cron
-      node_js: 10.7
-      env: TRY_CONFIG=ember-beta
-    - if: type = cron
-      node_js: 10.7
-      env: TRY_CONFIG=ember-data-beta
-    - node_js: 10.7
-  allow_failures:
-    - env: TRY_CONFIG=ember-beta
-    - env: TRY_CONFIG=ember-data-beta
-
 dist: trusty
 
 addons:
@@ -29,13 +12,12 @@ cache:
 
 env:
   global:
+    - PERCY_ENABLE=0
     # See https://git.io/vdao3 for details.
     - JOBS=1
 
 before_install:
   - npm config set spin false
-  - npm install -g npm@6
-  - npm --version
   - npm install -g greenkeeper-lockfile@1
 
 install:
@@ -56,3 +38,27 @@ script:
 after_script:
   - greenkeeper-lockfile-upload
   - "test $TRAVIS_PULL_REQUEST && test $TRAVIS_PULL_REQUEST != 'false' && $TRAVIS_SECURE_ENV_VARS == 'true' && ./config/deployment/deploy-pull-request.sh"
+
+jobs:
+  include:
+    - if: type = cron
+      node_js: 10.7
+      env: TRY_CONFIG=ember-beta
+    - if: type = cron
+      node_js: 10.7
+      env: TRY_CONFIG=ember-data-beta
+    - node_js: 10.7
+    - stage: ":ship: it to Quay.io"
+      sudo: required
+      dist: trusty
+      before_install: skip
+      install: skip
+      before_script:
+        - curl -L https://github.com/docker/compose/releases/download/1.13.0/docker-compose-`uname -s`-`uname -m` > ./docker-compose
+        - sudo mv ./docker-compose /usr/local/bin/docker-compose
+        - sudo chmod +x /usr/local/bin/docker-compose
+      script: ./script/docker-build-and-push
+      after_script: skip
+  allow_failures:
+    - env: TRY_CONFIG=ember-beta
+    - env: TRY_CONFIG=ember-data-beta
