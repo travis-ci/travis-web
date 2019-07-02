@@ -11,6 +11,7 @@ GEM
     foreman (0.82.0)
       thor (~> 0.19.1)
     hashr (2.0.0)
+    jemalloc (1.0.1)
     multi_json (1.12.1)
     power_assert (0.4.1)
     puma (3.7.1)
@@ -54,6 +55,7 @@ PLATFORMS
 DEPENDENCIES
   foreman
   hashr
+  jemalloc
   puma (~> 3.7.1)
   rack-mobile-detect
   rack-protection (~> 1.4)
