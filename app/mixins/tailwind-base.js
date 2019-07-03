@@ -1,22 +1,16 @@
 import Mixin from '@ember/object/mixin';
-
-export const ASSET_NAME = 'tailwind-base';
-const elementId = `${ASSET_NAME}-css`;
+import { inject as service } from '@ember/service';
 
 export default Mixin.create({
-  beforeModel: function () {
-    const link = document.createElement('link');
-    link.href = `assets/${ASSET_NAME}.css`;
-    link.rel = 'stylesheet';
-    link.id = elementId;
+  headData: service(),
 
-    if (!document.getElementById(elementId)) {
-      document.getElementsByTagName('head')[0].appendChild(link);
-    }
+  beforeModel: function () {
+    this.set('headData.useTailwindBase', true);
     return this._super(...arguments);
   },
 
   deactivate() {
-    document.getElementById(elementId).remove();
+    this.set('headData.useTailwindBase', false);
+    return this._super(...arguments);
   },
 });
