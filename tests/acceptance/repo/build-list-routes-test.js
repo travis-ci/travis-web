@@ -254,10 +254,10 @@ module('Acceptance | repo build list routes', function (hooks) {
     assert.ok(page.builds[0].passed, 'expected the newly-finished build to have passed');
   });
 
-  test('renders no builds messaging when none present', function (assert) {
+  test('renders no builds messaging when none present', async function (assert) {
     server.create('repository');
 
-    page.visitBuildHistory({ organization: 'travis-ci', repo: 'travis-web' });
+    await page.visitBuildHistory({ organization: 'travis-ci', repo: 'travis-web' });
 
     assert.equal(page.showsNoBuildsMessaging, 'No builds for this repository', 'Build History tab shows no builds message');
   });
