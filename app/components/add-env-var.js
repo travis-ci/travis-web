@@ -21,7 +21,7 @@ export default Component.extend(BranchSearching, {
 
   search: task(function* (query) {
     const searchResults = yield this.searchBranch.perform(this.repo.id, query);
-    return searchResults;
+    return searchResults.mapBy('name');
   }),
 
   save: task(function* () {
