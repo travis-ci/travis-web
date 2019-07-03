@@ -11,6 +11,11 @@ export default Component.extend(BranchSearching, {
   raven: service(),
   flashes: service(),
 
+  init() {
+    this.reset();
+    this._super(...arguments);
+  },
+
   reset() {
     return this.setProperties({
       name: null,
