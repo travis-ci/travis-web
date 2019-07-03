@@ -1,48 +1,47 @@
-import { skip } from 'qunit';
-import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
+import { currentURL, visit } from '@ember/test-helpers';
+import { module, skip } from 'qunit';
+import { setupApplicationTest } from 'ember-qunit';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { Response } from 'ember-cli-mirage';
 
-moduleForAcceptance('Acceptance | auth/GitHub Apps installation redirect', {
-  beforeEach() {
+module('Acceptance | auth/GitHub Apps installation redirect', function (hooks) {
+  setupApplicationTest(hooks);
+
+  hooks.beforeEach(function () {
     this.currentUser = server.create('user');
     signInUser(this.currentUser);
-  }
-});
-
-// FIXME turning this off due to intermittent failure, for now.
-skip('it polls until the GitHub installation ID resolves to an owner', function (assert) {
-  let done = assert.async();
-  let repetition = 0;
-
-  let installation = server.create('installation');
-
-  installation.createOwner('organization', {
-    login: 'the-org'
   });
 
-  server.get('/installation/:id', (schema, {params: {id}}) => {
-    if (repetition < 2) {
-      repetition++;
-      return new Response(404, {}, {});
-    } else {
-      assert.equal(id, installation.id, 'expected the API request to include the correct installation ID');
-      return schema.installations.find(id);
-    }
-  });
+  // FIXME turning this off due to intermittent failure, for now.
+  skip('it polls until the GitHub installation ID resolves to an owner', async function (assert) {
+    let done = assert.async();
+    let repetition = 0;
 
-  visit(`/settings/github-apps-installations/redirect?installation_id=${installation.id}`);
+    let installation = server.create('installation');
 
-  andThen(() => {
-    assert.dom('[data-test-github-apps-polling]').exists();
-  });
-
-  setTimeout(() => {
-    done();
-
-    andThen(() => {
-      assert.equal(currentURL(), '/profile/the-org');
+    installation.createOwner('organization', {
+      login: 'the-org'
     });
-  }, 10000);
-  // FIXME huuuuuge timeout
+
+    server.get('/installation/:id', (schema, {params: {id}}) => {
+      if (repetition < 2) {
+        repetition++;
+        return new Response(404, {}, {});
+      } else {
+        assert.equal(id, installation.id, 'expected the API request to include the correct installation ID');
+        return schema.installations.find(id);
+      }
+    });
+
+    await visit(`/settings/github-apps-installations/redirect?installation_id=${installation.id}`);
+
+    assert.dom('[data-test-github-apps-polling]').exists();
+
+    setTimeout(() => {
+      done();
+
+      assert.equal(currentURL(), '/profile/the-org');
+    }, 10000);
+    // FIXME huuuuuge timeout
+  });
 });
