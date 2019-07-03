@@ -1,10 +1,14 @@
-import { test } from 'qunit';
-import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
+import { module, test } from 'qunit';
+import { setupApplicationTest } from 'ember-qunit';
+import { settled } from '@ember/test-helpers';
 import page from 'travis/tests/pages/caches';
 import signInUser from 'travis/tests/helpers/sign-in-user';
+import { percySnapshot } from 'ember-percy';
 
-moduleForAcceptance('Acceptance | repo caches', {
-  beforeEach() {
+module('Acceptance | repo caches', function (hooks) {
+  setupApplicationTest(hooks);
+
+  hooks.beforeEach(function () {
     const currentUser = server.create('user', {
       name: 'User Name',
       login: 'user-login'
@@ -40,13 +44,11 @@ moduleForAcceptance('Acceptance | repo caches', {
       lastModified: threeDaysAgo,
       size: 10061086
     });
-  }
-});
+  });
 
-test('view and delete caches', function (assert) {
-  page.visit({ organization: 'org-login', repo: 'repository-name' });
+  test('view and delete caches', async function (assert) {
+    await page.visit({ organization: 'org-login', repo: 'repository-name' });
 
-  andThen(() => {
     assert.equal(page.pushCaches.length, 1, 'expected one push cache');
     assert.ok(page.tabIsActive, 'expected the caches tab to be active');
 
@@ -65,26 +67,24 @@ test('view and delete caches', function (assert) {
     });
 
     assert.notOk(page.noCachesExist, 'expected the message that no caches exist to not be present');
-  });
-  percySnapshot(assert);
+    percySnapshot(assert);
 
-  const branchQueryParams = [];
+    const branchQueryParams = [];
 
-  server.delete(`/repo/${this.repository.id}/caches`, function (schema, {queryParams}) {
-    branchQueryParams.push(queryParams.branch || 'empty');
-  });
+    server.delete(`/repo/${this.repository.id}/caches`, function (schema, {queryParams}) {
+      branchQueryParams.push(queryParams.branch || 'empty');
+    });
 
-  page.pushCaches[0].delete();
+    await page.pushCaches[0].delete();
+    await settled();
 
-  andThen(() => {
     assert.deepEqual(branchQueryParams.pop(), 'a-branch-name');
 
     assert.equal(page.pushCaches.length, 0);
-  });
 
-  page.deleteAllCaches();
+    await page.deleteAllCaches();
+    await settled();
 
-  andThen(() => {
     assert.equal(branchQueryParams.pop(), 'empty', 'expected the delete all request to have no body');
     assert.ok(page.noCachesExist, 'expected the message that no caches exist to be displayed');
   });
