@@ -1,9 +1,9 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { reads, empty, not, lt, gt, equal, and } from '@ember/object/computed';
-import KeyboardShortcuts from 'ember-keyboard-shortcuts/mixins/component';
+import { bindKeyboardShortcuts, unbindKeyboardShortcuts } from 'ember-keyboard-shortcuts';
 
-export default Component.extend(KeyboardShortcuts, {
+export default Component.extend({
   classNames: ['visibility-setting-list'],
 
   keyboardShortcuts: {
@@ -68,6 +68,16 @@ export default Component.extend(KeyboardShortcuts, {
       af.focus();
       this.set('doAutofocus', false);
     }
+  },
+
+  didInsertElement() {
+    this._super(...arguments);
+    bindKeyboardShortcuts(this);
+  },
+
+  willDestroyElement() {
+    this._super(...arguments);
+    unbindKeyboardShortcuts(this);
   },
 
   actions: {

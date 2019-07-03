@@ -1,8 +1,8 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
-import KeyboardShortcuts from 'ember-keyboard-shortcuts/mixins/component';
+import { bindKeyboardShortcuts, unbindKeyboardShortcuts } from 'ember-keyboard-shortcuts';
 
-export default Component.extend(KeyboardShortcuts, {
+export default Component.extend({
   classNames: ['remove-log-popup'],
 
   flashes: service(),
@@ -11,7 +11,18 @@ export default Component.extend(KeyboardShortcuts, {
     'esc': 'toggleRemoveLogModal'
   },
 
+  didInsertElement() {
+    this._super(...arguments);
+    bindKeyboardShortcuts(this);
+  },
+
+  willDestroyElement() {
+    this._super(...arguments);
+    unbindKeyboardShortcuts(this);
+  },
+
   actions: {
+
     removeLog() {
       let job = this.get('job');
 
@@ -29,8 +40,11 @@ export default Component.extend(KeyboardShortcuts, {
         }
       });
     },
+
     toggleRemoveLogModal() {
       this.get('onCloseModal')();
     }
+
   }
+
 });

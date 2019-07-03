@@ -1,9 +1,9 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
-import KeyboardShortcuts from 'ember-keyboard-shortcuts/mixins/component';
+import { bindKeyboardShortcuts, unbindKeyboardShortcuts } from 'ember-keyboard-shortcuts';
 
-export default Component.extend(KeyboardShortcuts, {
+export default Component.extend({
   auth: service(),
   externalLinks: service(),
   statusImages: service(),
@@ -20,6 +20,16 @@ export default Component.extend(KeyboardShortcuts, {
   didReceiveAttrs() {
     this._super(...arguments);
     this.set('branch', this.get('repo.defaultBranch.name'));
+  },
+
+  didInsertElement() {
+    this._super(...arguments);
+    bindKeyboardShortcuts(this);
+  },
+
+  willDestroyElement() {
+    this._super(...arguments);
+    unbindKeyboardShortcuts(this);
   },
 
   statusString: computed('format', 'repo.slug', 'branch', 'repo.defaultBranch.name', function () {
@@ -58,8 +68,11 @@ export default Component.extend(KeyboardShortcuts, {
   },
 
   actions: {
+
     toggleStatusImageModal() {
       this.get('onClose')();
     }
+
   }
+
 });

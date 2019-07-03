@@ -4,9 +4,9 @@ import YAML from 'yamljs';
 import config from 'travis/config/environment';
 import { inject as service } from '@ember/service';
 import { filterBy, notEmpty } from '@ember/object/computed';
-import KeyboardShortcuts from 'ember-keyboard-shortcuts/mixins/component';
+import { bindKeyboardShortcuts, unbindKeyboardShortcuts } from 'ember-keyboard-shortcuts';
 
-export default Component.extend(KeyboardShortcuts, {
+export default Component.extend({
   api: service(),
   flashes: service(),
   router: service(),
@@ -30,7 +30,13 @@ export default Component.extend(KeyboardShortcuts, {
 
   didInsertElement() {
     this._super(...arguments);
+    bindKeyboardShortcuts(this);
     this.$('[autofocus]').focus();
+  },
+
+  willDestroyElement() {
+    this._super(...arguments);
+    unbindKeyboardShortcuts(this);
   },
 
   createBuild: task(function* () {

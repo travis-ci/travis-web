@@ -1,14 +1,12 @@
 /* global Travis, _gaq */
 import $ from 'jquery';
-
 import TravisRoute from 'travis/routes/basic';
 import config from 'travis/config/environment';
 import BuildFaviconMixin from 'travis/mixins/build-favicon';
 import { inject as service } from '@ember/service';
+import { bindKeyboardShortcuts, unbindKeyboardShortcuts } from 'ember-keyboard-shortcuts';
 
-import KeyboardShortcuts from 'ember-keyboard-shortcuts/mixins/route';
-
-export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
+export default TravisRoute.extend(BuildFaviconMixin, {
   auth: service(),
   features: service(),
   featureFlags: service(),
@@ -47,6 +45,11 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
 
   activate() {
     this.setupRepoSubscriptions();
+    bindKeyboardShortcuts(this);
+  },
+
+  deactivate() {
+    unbindKeyboardShortcuts(this);
   },
 
   // We send pusher updates through user channels now and this means that if a
