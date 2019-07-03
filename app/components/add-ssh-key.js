@@ -11,6 +11,8 @@ export default Component.extend({
   classNameBindings: ['valueError:form-error'],
   isSaving: false,
 
+  sshKeyAdded() {},
+
   didInsertElement() {
     let id = this.get('repo.id');
     let store = this.get('store');
@@ -65,7 +67,7 @@ export default Component.extend({
       try {
         yield sshKey.save();
         this.reset();
-        return this.sendAction('sshKeyAdded', sshKey);
+        return this.sshKeyAdded(sshKey);
       } catch ({ errors }) {
         return this.addErrorsFromResponse(errors);
       }
