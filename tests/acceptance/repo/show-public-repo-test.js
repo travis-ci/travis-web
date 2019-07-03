@@ -1,62 +1,65 @@
-import { test } from 'qunit';
-import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
+import { module, test } from 'qunit';
+import { setupApplicationTest } from 'ember-qunit';
+import { settled, getContext } from '@ember/test-helpers';
 import page from 'travis/tests/pages/repo-not-active';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 
-moduleForAcceptance('Acceptance | subscribing pusher to public repo');
+module('Acceptance | subscribing pusher to public repo', function (hooks) {
+  setupApplicationTest(hooks);
 
-test('viewing public repo results in a repo pusher channel', function (assert) {
-  const repo = server.create('repository', {
-    slug: 'musterfrau/a-repo',
-    private: false
-  });
+  test('viewing public repo results in a repo pusher channel', async function (assert) {
+    const repo = server.create('repository', {
+      slug: 'musterfrau/a-repo',
+      private: false
+    });
 
-  page.visit({ organization: 'musterfrau', repo: 'a-repo' });
+    await page.visit({ organization: 'musterfrau', repo: 'a-repo' });
 
-  andThen(() => {
-    let subscribed = this.application.resolveRegistration('pusher:main').active_channels.includes(`repo-${repo.id}`);
+    const { owner } = getContext();
+    let subscribed = owner.lookup('pusher:main').active_channels.includes(`repo-${repo.id}`);
     assert.ok(subscribed, 'user is subscribed to a repo channel');
   });
-});
 
-test('viewing public repo as a signed in collaborator does not trigger subscription', function (assert) {
-  const user = server.create('user', {
-    name: 'Travis CI',
-    login: 'travisci',
-  });
-  const repository = server.create('repository', {
-    slug: 'musterfrau/a-repo',
-    private: false
-  });
-  server.create('permission', { user, repository, push: true });
+  test('viewing public repo as a signed in collaborator does not trigger subscription', async function (assert) {
+    const user = server.create('user', {
+      name: 'Travis CI',
+      login: 'travisci',
+    });
+    const repository = server.create('repository', {
+      slug: 'musterfrau/a-repo',
+      private: false
+    });
+    server.create('permission', { user, repository, push: true });
 
-  signInUser(user);
+    signInUser(user);
 
-  page.visit({ organization: 'musterfrau', repo: 'a-repo' });
+    await page.visit({ organization: 'musterfrau', repo: 'a-repo' });
+    await settled():
 
-  andThen(() => {
-    let subscribed = this.application.resolveRegistration('pusher:main').active_channels.includes(`repo-${repository.id}`);
+    const { owner } = getContext();
+    let subscribed = owner.lookup('pusher:main').active_channels.includes(`repo-${repository.id}`);
+
     assert.ok(!subscribed, 'user is not subscribed to a repo channel');
   });
-});
 
-test('viewing public repo as a signed in user triggers subscription', function (assert) {
-  const user = server.create('user', {
-    name: 'Travis CI',
-    login: 'travisci',
-  });
-  const repository = server.create('repository', {
-    slug: 'musterfrau/a-repo',
-    private: false
-  });
-  server.schema.permissions.all().destroy();
+  test('viewing public repo as a signed in user triggers subscription', async function (assert) {
+    const user = server.create('user', {
+      name: 'Travis CI',
+      login: 'travisci',
+    });
+    const repository = server.create('repository', {
+      slug: 'musterfrau/a-repo',
+      private: false
+    });
+    server.schema.permissions.all().destroy();
 
-  signInUser(user);
+    signInUser(user);
 
-  page.visit({ organization: 'musterfrau', repo: 'a-repo' });
+    await page.visit({ organization: 'musterfrau', repo: 'a-repo' });
 
-  andThen(() => {
-    let subscribed = this.application.resolveRegistration('pusher:main').active_channels.includes(`repo-${repository.id}`);
+    const { owner } = getContext();
+    let subscribed = owner.lookup('pusher:main').active_channels.includes(`repo-${repository.id}`);
+
     assert.ok(subscribed, 'user is subscribed to a repo channel');
   });
 });
