@@ -5,7 +5,6 @@ import { not } from '@ember/object/computed';
 
 export default Component.extend({
   plans: null,
-  selectedPlan: null,
   showAnnual: false,
   countries: getCountries(),
   plansToShow: ['Bootstrap', 'Startup', 'Small Business', 'Premium'],
@@ -33,18 +32,23 @@ export default Component.extend({
   }),
 
   displayedPlans: computed('showAnnual', 'monthlyPlans', 'yearlyPlans', function () {
-    const { yearlyPlans, showAnnual, monthlyPlans, defaultPlan } = this;
-    let displayedPlans = monthlyPlans;
-    if (showAnnual) {
-      const startUpPlan = yearlyPlans.findBy('name', defaultPlan);
-      this.set('selectedPlan', startUpPlan);
-      displayedPlans = yearlyPlans;
-    } else {
-      const startUpPlan = monthlyPlans.findBy('name', defaultPlan);
-      this.set('selectedPlan', startUpPlan);
-    }
-    return displayedPlans;
+    const { yearlyPlans, showAnnual, monthlyPlans } = this;
+    return showAnnual ? yearlyPlans : monthlyPlans;
   }),
+
+  selectedPlan: computed('displayedPlans', {
+    get() {
+      const { displayedPlans, defaultPlan } = this;
+      return displayedPlans.findBy('name', defaultPlan);
+    },
+    set(key, value) {
+      return value;
+    }
+  }),
+
+  reset() {
+    this.setProperties({});
+  },
 
   actions: {
     selectPlan(planId) {
