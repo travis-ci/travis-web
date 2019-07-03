@@ -66,6 +66,7 @@
     "ember-inflector": "^2.3.0",
     "ember-intercom-io": "^1.2.0",
     "ember-keyboard-shortcuts": "^1.0.2",
+    "ember-lifeline": "^4.1.5",
     "ember-load-initializers": "^2.0.0",
     "ember-modal-dialog": "^2.4.0",
     "ember-moment": "^7.7.0",
