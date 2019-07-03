@@ -1,5 +1,6 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
+import { isPresent } from '@ember/utils';
 import { task } from 'ember-concurrency';
 import BranchSearching from 'travis/mixins/branch-searching';
 
@@ -45,12 +46,14 @@ export default Component.extend(BranchSearching, {
 
   actions: {
     validateEnvName(name) {
-      const { branch } = this;
-      const envAlreadyDefined = !!this.store.peekAll('env_var').filter(env =>
-        env.get('name') == this.name.trim() && env.get('branch') == branch
-      ).length;
+      const { branch, repo } = this;
+      const existingEnvVars = this.store.peekAll('env-var')
+        .filterBy('repo.id', repo.id)
+        .filterBy('name', name)
+        .filterBy('branch', branch);
+      const envAlreadyDefined = isPresent(existingEnvVars);
       if (envAlreadyDefined) {
-        return `Environment variable ${this.get('name')} for ${branch || 'all'} branch${branch ? '' : 'es'} is already defined.`;
+        return `Variable with this name ${branch ? 'for selected branch ' : ''}is already defined.`;
       }
       return true;
     }
