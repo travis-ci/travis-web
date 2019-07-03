@@ -1,10 +1,8 @@
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
-import { waitFor, settled } from '@ember/test-helpers';
+import { waitFor } from '@ember/test-helpers';
 import profilePage from 'travis/tests/pages/profile';
 import signInUser from 'travis/tests/helpers/sign-in-user';
-import config from 'travis/config/environment';
-import { run } from '@ember/runloop';
 
 async function finishSyncingUser(user) {
   user.is_syncing = false;
