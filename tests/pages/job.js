@@ -10,7 +10,7 @@ import {
   attribute
 } from 'ember-cli-page-object';
 
-import joinTexts from './helpers/join-texts';
+import joinTexts from 'travis/tests/pages/helpers/join-texts';
 
 export default create({
   visit: visitable('travis-ci/travis-web/jobs/1'),
