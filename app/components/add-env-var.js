@@ -44,7 +44,7 @@ export default Component.extend(BranchSearching, {
   }).drop(),
 
   actions: {
-    validateEnvName() {
+    validateEnvName(name) {
       const { branch } = this;
       const envAlreadyDefined = !!this.store.peekAll('env_var').filter(env =>
         env.get('name') == this.name.trim() && env.get('branch') == branch
