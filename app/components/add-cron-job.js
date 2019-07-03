@@ -1,7 +1,6 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { task, timeout } from 'ember-concurrency';
-import { mapBy } from '@ember/object/computed';
 import config from 'travis/config/environment';
 
 export default Component.extend({
@@ -19,8 +18,6 @@ export default Component.extend({
     value: true
   }],
 
-  currentCronJobsBranches: mapBy('repository.cronJobs', 'branch.name'),
-
   init() {
     this.reset();
     this._super(...arguments);
@@ -36,8 +33,8 @@ export default Component.extend({
 
   search: task(function* (query) {
     yield timeout(config.intervals.searchDebounceRate);
-    let branchNames = this.get('currentCronJobsBranches');
-    let branches = yield this.store.query('branch', {
+    const branchNames = this.repository.cronJobs.mapBy('branch.name') || [];
+    const branches = yield this.store.query('branch', {
       repository_id: this.repository.id,
       data: {
         name: query,
