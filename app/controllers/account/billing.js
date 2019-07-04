@@ -1,7 +1,7 @@
 import Controller from '@ember/controller';
-import { alias } from '@ember/object/computed';
+import { reads } from '@ember/object/computed';
 
 export default Controller.extend({
-  plans: alias('model.plans'),
-  account: alias('model.account'),
+  plans: reads('model.plans'),
+  account: reads('model.account'),
 });

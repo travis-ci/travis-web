@@ -1,7 +1,7 @@
-<h2>
-  Plan Overview
-</h2>
-{{#if this.trial.hasActiveTrial}}
+<h3 class="color-asphalt-blue font--light">Plan Overview</h3>
+
+{{#if trial.hasActiveTrial}}
+
   <p data-test-trial-message class="source plan-status-message">
     You've got {{pluralize this.trial.buildsRemaining "trial build"}} left.<br />
     Ensure unlimited builds by setting up a plan before it runs out!

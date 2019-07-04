@@ -1,9 +1,8 @@
 import Component from '@ember/component';
 
 export default Component.extend({
-  actions: {
-    selectPlan(planId) {
-      this.selectPlan(planId);
-    }
-  }
+  didUpdateAttrs() {
+    this._super(...arguments);
+    this.set('plans', this.plans);
+  },
 });

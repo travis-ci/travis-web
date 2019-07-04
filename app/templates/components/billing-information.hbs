@@ -7,7 +7,7 @@
       <div class="flex flex-wrap billing-plan-switch">
         <div class="form-elem">
           {{#form.field
-            disableFrzame=true
+            disableFrame=true
             class="display-value-switch"
             value=showAnnual
             onChange=(action (mut showAnnual)) as |field|
@@ -34,21 +34,18 @@
       </h3>
       {{billing-select-plan
         displayedPlans=displayedPlans
-        selectPlan=(action "selectPlan")
         selectedPlan=selectedPlan
       }}
       <h3>
         Contact details
       </h3>
-      <p class="billing-form-message">
-        All fields are required unless marked as optional.
-      </p>
       <div class="flex flex--col flex-md-row">
         <div class="full-width form-elem inline-form-elem">
           {{#form.field
             label="First Name"
             value=firstName
             required=true
+            showRequiredMark=true
             showValidationStatusIcons=false
             onChange=(action (mut firstName)) as |field|
           }}
@@ -60,6 +57,7 @@
             label="Last Name"
             value=lastName
             required=true
+            showRequiredMark=true
             onChange=(action (mut lastName))
             showValidationStatusIcons=false as |field|
           }}
@@ -71,7 +69,6 @@
         {{#form.field
           label="Company Name"
           value=companyName
-          showOptionalMark=true
           onChange=(action (mut companyName))
           showValidationStatusIcons=false as |field|
         }}
@@ -83,6 +80,7 @@
           label="Billing Email Address"
           value=billingEmail
           required=true
+          showRequiredMark=true
           onChange=(action (mut billingEmail))
           showValidationStatusIcons=false as |field|
         }}
@@ -92,14 +90,12 @@
       <h3>
         Billing address
       </h3>
-      <p class="billing-form-message">
-        All fields are required unless marked as optional.
-      </p>
       <div class="flex flex--col flex-md-row">
         <div class="full-width form-elem inline-form-elem">
           {{#form.field
             label="Street Address"
             value=billingStreet
+            showRequiredMark=true
             required=true
             showValidationStatusIcons=false
             onChange=(action (mut billingStreet)) as |field|
@@ -111,6 +107,7 @@
           {{#form.field
             label="Suite,Apt"
             value=billingSuite
+            showRequiredMark=true
             required=true
             onChange=(action (mut billingSuite))
             showValidationStatusIcons=false as |field|
@@ -124,6 +121,7 @@
           {{#form.field
             label="City"
             value=billingCity
+            showRequiredMark=true
             required=true
             onChange=(action (mut billingCity))
             showValidationStatusIcons=false as |field|
@@ -135,6 +133,7 @@
           {{#form.field
             label="Zip Code"
             value=billingZipCode
+            showRequiredMark=true
             required=true
             onChange=(action (mut billingZipCode))
             showValidationStatusIcons=false as |field|
@@ -147,6 +146,7 @@
         {{#form.field
           label="Country"
           value=country
+          showRequiredMark=true
           required=true
           onChange=(action (mut country))
           showValidationStatusIcons=false as |field|
@@ -163,6 +163,7 @@
         {{#form.field
           label="Vat Id"
           value=vatId
+          showRequiredMark=true
           required=true
           onChange=(action (mut vatId))
           showValidationStatusIcons=false as |field|

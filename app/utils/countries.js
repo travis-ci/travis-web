@@ -246,4 +246,4 @@ const countries = {
   ZW: 'Zimbabwe'
 };
 
-export const getCountries = () => Object.values(countries);
+export const getCountries = Object.values(countries);

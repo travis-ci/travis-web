@@ -1,60 +1,71 @@
 import Component from '@ember/component';
+// import config from 'travis/config/environment';
 import { getCountries } from '../utils/countries';
 import { computed } from '@ember/object';
-import { not } from '@ember/object/computed';
+import { not, filterBy, mapBy } from '@ember/object/computed';
+
 
 export default Component.extend({
   plans: null,
   showAnnual: false,
-  countries: getCountries(),
-  plansToShow: ['Bootstrap', 'Startup', 'Small Business', 'Premium'],
-  defaultPlan: 'Startup',
+  availablePlans: [
+    {
+      name: 'Bootstrap',
+      enabled: true
+    },
+    {
+      name: 'Startup',
+      enabled: true,
+      isDefault: true
+    },
+    {
+      name: 'Small Business',
+      enabled: true
+    },
+    {
+      name: 'Premium',
+      enabled: true
+    }
+  ],
+  countries: getCountries,
+
   showMonthly: not('showAnnual'),
+  defaultPlan: filterBy('availablePlans', 'isDefault'),
+  availablePlanNames: mapBy('availablePlans', 'name'),
 
   monthlyPlans: computed('plans', function () {
-    const { plans, plansToShow } = this;
+    const { plans, availablePlanNames } = this;
     const filteredMonthlyPlans = plans.filter(plan => {
       const { annual, builds, name } = plan;
-      return !annual && builds <= 10 && plansToShow.includes(name);
+      return !annual && builds <= 10 && availablePlanNames.includes(name);
     });
     const sortedMonthlyPlans = filteredMonthlyPlans.sort((a, b) => a.builds - b.builds);
     return sortedMonthlyPlans;
   }),
 
-  yearlyPlans: computed('plans', function () {
-    const { plans, plansToShow } = this;
-    const filteredYearlyPlans = plans.filter(plan => {
+  annualPlans: computed('plans', function () {
+    const { plans, availablePlanNames } = this;
+    const filteredAnnualPlans = plans.filter(plan => {
       const { annual, builds, name } = plan;
-      return annual && builds <= 10 && plansToShow.includes(name);
+      return annual && builds <= 10 && availablePlanNames.includes(name);
     });
-    const sortedYearlyPlans = filteredYearlyPlans.sort((a, b) => a.builds - b.builds);
-    return sortedYearlyPlans;
+    const sortedAnnualPlans = filteredAnnualPlans.sort((a, b) => a.builds - b.builds);
+    return sortedAnnualPlans;
   }),
 
-  displayedPlans: computed('showAnnual', 'monthlyPlans', 'yearlyPlans', function () {
-    const { yearlyPlans, showAnnual, monthlyPlans } = this;
-    return showAnnual ? yearlyPlans : monthlyPlans;
+  displayedPlans: computed('showAnnual', 'monthlyPlans', 'annualPlans', function () {
+    const { annualPlans, showAnnual, monthlyPlans } = this;
+    return showAnnual ? annualPlans : monthlyPlans;
   }),
 
   selectedPlan: computed('displayedPlans', {
     get() {
       const { displayedPlans, defaultPlan } = this;
-      return displayedPlans.findBy('name', defaultPlan);
+      const plan = defaultPlan.get('firstObject');
+      return displayedPlans.findBy('name', plan.name);
     },
     set(key, value) {
       return value;
     }
   }),
-
-  reset() {
-    this.setProperties({});
-  },
-
-  actions: {
-    selectPlan(planId) {
-      const displayedPlans = this.get('displayedPlans');
-      const selectedPlan = displayedPlans.findBy('id', planId);
-      this.set('selectedPlan', selectedPlan);
-    }
-  }
 });

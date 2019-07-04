@@ -30,7 +30,12 @@ body {
   overflow-x: hidden;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-weight: $font-weight-normal;
 }
 
@@ -95,6 +100,7 @@ a {
   &--center {
     justify-content: center;
   }
+
   &--space-between {
     justify-content: space-between;
   }
@@ -103,20 +109,31 @@ a {
     align-items: center;
   }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
   &--wrap {
     flex-wrap: wrap;
   }
 =======
+=======
+
+>>>>>>> Refactor billing-information to remove side effect in computed property
   &--wrap {
     flex-wrap: wrap;
   }
-  
+
   &--col {
     flex-direction: column;
   }
 >>>>>>> Implement select plan functionality
 }
+
+@media #{$large-up} {
+  .flex-md-row {
+    flex-direction: row;
+  }
+}
+
 
 .pointer {
   cursor: pointer;
@@ -196,6 +213,7 @@ span.emoji.emoji-sizer {
 .full-width {
   width: 100%;
 }
+
 .link {
   cursor: pointer;
   display: inline-block;

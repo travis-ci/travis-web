@@ -31,7 +31,6 @@ export default Component.extend({
   helperText: '',
   disabled: false,
   showRequiredMark: false,
-  showOptionalMark: false,
   allowClear: false,
   icon: '',
   disableFrame: false,

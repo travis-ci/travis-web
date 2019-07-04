@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 const description = {
   bootstrap: 'Ideal for hobby projects',
   startup: 'Best for small teams',
@@ -107,3 +108,27 @@ plans.forEach(plan => {
 });
 
 module.exports = { plans };
+=======
+const plans = [
+  {
+    name: 'Bootstrap',
+    enabled: true
+  },
+  {
+    name: 'Startup',
+    enabled: true,
+    isDefault: true
+  },
+  {
+    name: 'Small Business',
+    enabled: true
+  },
+  {
+    name: 'Premium',
+    enabled: true
+  }
+];
+
+
+module.exports = plans;
+>>>>>>> Refactor billing-information to remove side effect in computed property
