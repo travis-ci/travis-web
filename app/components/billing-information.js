@@ -58,7 +58,7 @@ export default Component.extend({
     return showAnnual ? annualPlans : monthlyPlans;
   }),
 
-  selectedPlan: computed('displayedPlans', function () {
+  selectedPlan: computed('displayedPlans', 'defaultPlan', function () {
     const { displayedPlans, defaultPlan } = this;
     const plan = defaultPlan.get('firstObject');
     return displayedPlans.findBy('name', plan.name);
