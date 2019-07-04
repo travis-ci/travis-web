@@ -70,6 +70,24 @@ module.exports = {
       },
     },
 
+    fontFamily: {
+      sans: [
+        '"Source Sans Pro"',
+        'Helvetica',
+        'sans-serif'
+      ],
+      mono: [
+        'Cousine',
+        'monospace'
+      ],
+    },
+    fontWeight: {
+      light: '300',
+      normal: '400',
+      semibold: '600',
+      bold: '700',
+    },
+
     // Extend
     extend: {
       fill: {
