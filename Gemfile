@@ -9,7 +9,6 @@ gem 'rack-protection', '~> 1.4'
 gem 'rack-mobile-detect'
 gem 'sinatra'
 gem 'hashr'
-gem 'jemalloc'
 
 group :development, :test do
   gem 'rake'
