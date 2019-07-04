@@ -58,14 +58,9 @@ export default Component.extend({
     return showAnnual ? annualPlans : monthlyPlans;
   }),
 
-  selectedPlan: computed('displayedPlans', {
-    get() {
-      const { displayedPlans, defaultPlan } = this;
-      const plan = defaultPlan.get('firstObject');
-      return displayedPlans.findBy('name', plan.name);
-    },
-    set(key, value) {
-      return value;
-    }
+  selectedPlan: computed('displayedPlans', function () {
+    const { displayedPlans, defaultPlan } = this;
+    const plan = defaultPlan.get('firstObject');
+    return displayedPlans.findBy('name', plan.name);
   }),
 });
