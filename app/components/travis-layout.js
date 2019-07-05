@@ -6,7 +6,7 @@ export default Component.extend({
 
   layoutName: '',
 
-  layoutClass: computed(function () {
+  layoutClass: computed('layoutName', function () {
     return this.layoutName.replace('layouts/', 'layout--');
   })
 });
