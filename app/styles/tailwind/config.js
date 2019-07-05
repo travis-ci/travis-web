@@ -2,7 +2,9 @@
 
 module.exports = {
   theme: {
-    // Override
+    /* ~~ Override ~~ */
+
+    // Colors //
     colors: {
       transparent: 'transparent',
       black: '#000',
@@ -70,6 +72,7 @@ module.exports = {
       },
     },
 
+    // Fonts //
     fontFamily: {
       sans: [
         '"Source Sans Pro"',
@@ -87,8 +90,20 @@ module.exports = {
       semibold: '600',
       bold: '700',
     },
+    fontSize: {
+      xs: '0.75rem',
+      sm: '0.875rem',
+      base: '1rem',
+      lg: '1.125rem',
+      xl: '1.25rem',
+      '2xl': '1.5rem',
+      '3xl': '1.875rem',
+      '4xl': '2.25rem',
+      '5xl': '3rem',
+      '6xl': '4rem',
+    },
 
-    // Extend
+    /* ~~ Extend ~~ */
     extend: {
       fill: {
         transparent: 'transparent'
