@@ -58,7 +58,7 @@ test('visiting job-view', function (assert) {
     assert.equal(jobPage.createdBy.text, 'Mr T');
     assert.ok(jobPage.createdBy.avatarSrc.startsWith('/images/favicon-gray.png'));
 
-    assert.equal(jobPage.log, 'Hello log');
+    assert.equal(jobPage.log, '1Hello log');
     assert.notOk(jobPage.hasTruncatedLog);
     assert.equal(jobPage.rawLogUrl, `${config.apiEndpoint}/v3/job/${job.id}/log.txt`);
   });
@@ -112,7 +112,7 @@ test('visiting pull request job-view', function (assert) {
     assert.equal(jobPage.createdBy.text, 'Mr T');
     assert.ok(jobPage.createdBy.avatarSrc.startsWith('/images/favicon-gray.png'));
 
-    assert.equal(jobPage.log, 'Hello log');
+    assert.equal(jobPage.log, '1Hello log');
     assert.notOk(jobPage.hasTruncatedLog);
     assert.equal(jobPage.rawLogUrl, `${config.apiEndpoint}/v3/job/${job.id}/log.txt`);
   });
