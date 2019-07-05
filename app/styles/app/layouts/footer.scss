@@ -66,7 +66,12 @@ $styleguide-medium: 800px;
   }
 }
 
-.dashboard, .profile-view, .wrapper.centered, .landing-pro, .help-page {
+.dashboard,
+.profile-view,
+.wrapper.centered,
+.landing-pro,
+.layout--center,
+.help-page {
   & + .footer {
     .layout-inner {
       max-width: $styleguide-layout-max-width;
