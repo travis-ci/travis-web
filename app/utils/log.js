@@ -1014,7 +1014,7 @@ Log.extend(Log.Renderer.prototype, {
   renderParagraph: function (data) {
     let node, para, type, _i, _len, _ref;
     para = this.para.cloneNode(true);
-    para.getElementsByTagName("a")[0].innerHTML = this.currentLineNumber++;
+    para.getElementsByTagName('a')[0].innerHTML = this.currentLineNumber++;
     if (data.id) {
       para.setAttribute('id', data.id);
     }
