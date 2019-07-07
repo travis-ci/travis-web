@@ -3,9 +3,11 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | billing-information', function (hooks) {
+module('Integration | Component | billing-process', function (hooks) {
   setupRenderingTest(hooks);
+
   hooks.beforeEach(function () {
+
     const plans = [{
       id: 1,
       name: 'A',
@@ -34,22 +36,39 @@ module('Integration | Component | billing-information', function (hooks) {
     };
 
     this.setProperties({
-      displayedPlans: plans,
+      account: { hasSubscriptionPermissions: true},
+      plans: plans,
       selectedPlan: plans[0],
       showAnnual: false,
-      billingInfo
+      billingInfo,
+      steps: ['stepOne', 'stepTwo'],
     });
   });
 
-  test('it renders billing information form correctly', async function (assert) {
+  test('renders billing payment form correctly', async function (assert) {
 
-    await render(hbs`
-    {{billing-information 
-      selectedPlan=selectedPlan 
-      displayedPlans=displayedPlans 
-      showAnnual=showAnnual
+    this.set('currentStep', 'stepTwo');
+
+    await render(hbs`{{billing-process 
+      account=account
+      plans=plans
+      currentStep=currentStep
     }}`);
 
-    assert.dom('[data-test-billing-info-title]').hasText('Billing Cycle');
+    assert.dom('h3').hasText('Credit card details');
+  });
+
+  test('deny subscription when user has no permission', async function (assert) {
+
+    this.set('currentStep', 'stepTwo');
+    this.set('account', { hasSubscriptionPermissions: false});
+
+    await render(hbs`
+    {{billing-process 
+      account=account
+      plans=plans
+    }}`);
+
+    assert.dom('p').hasText('You do not have permission to create a subscription');
   });
 });

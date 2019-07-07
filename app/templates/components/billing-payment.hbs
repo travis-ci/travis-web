@@ -1,0 +1,118 @@
+{{#travis-form onSubmit=(perform save) as |form|}}
+  <div class="billing-form" data-billing-form>
+    {{billing-select-plan
+      displayedPlans=displayedPlans
+      selectedPlan=selectedPlan
+      showAnnual=showAnnual
+    }}
+    <h3>
+      Credit card details
+    </h3>
+    <p data-test-payment-info>
+      Your credit card details are never stored or even reach our servers.
+      Payment and credit card details are handled by Stripe.
+    </p>
+    <div class="flex flex--col flex-md-row">
+      <div class="full-width form-elem inline-form-elem">
+        {{#form.field
+          label="Card Number"
+          value=paymentInfo.cardNumber
+          required=true
+          showRequiredMark=true
+          showValidationStatusIcons=false
+          onChange=(action (mut paymentInfo.cardNumber)) as |field|
+        }}
+          {{field.input}}
+        {{/form.field}}
+      </div>
+      <div class="full-width form-elem">
+        {{#form.field
+          label="Name on Card"
+          value=paymentInfo.cardName
+          required=true
+          showRequiredMark=true
+          onChange=(action (mut paymentInfo.cardName))
+          showValidationStatusIcons=false as |field|
+        }}
+          {{field.input}}
+        {{/form.field}}
+      </div>
+    </div>
+    <div class="flex flex--col flex-md-row">
+      <div class="flex full-width flex--col flex-md-row">
+        <div class="form-elem inline-form-elem">
+          {{#form.field
+            label="Expiry Date on card"
+            value=paymentInfo.expiryDateMonth
+            showRequiredMark=true
+            required=true
+            onChange=(action (mut paymentInfo.expiryDateMonth))
+            showValidationStatusIcons=false as |field|
+          }}
+            {{#field.select placeholder="Month" options=months as |month|}}
+              {{month}}
+            {{/field.select}}
+          {{/form.field}}
+        </div>
+        <div class="form-elem billing-select-year">
+          {{#form.field
+            value=paymentInfo.expiryDateYear
+            required=true
+            showRequiredMark=true
+            onChange=(action (mut paymentInfo.expiryDateYear))
+            showValidationStatusIcons=false as |field|
+          }}
+            {{#field.select placeholder="Year" options=years as |year|}}
+              {{year}}
+            {{/field.select}}
+          {{/form.field}}
+        </div>
+      </div>
+      <div class="full-width form-elem billing-ccv">
+        {{#form.field
+          label="cvc"
+          value=paymentInfo.cvc
+          required=true
+          showRequiredMark=true
+          onChange=(action (mut paymentInfo.cvc))
+          showValidationStatusIcons=false as |field|
+        }}
+          {{field.input}}
+        {{/form.field}}
+      </div>
+    </div>
+    <h3>
+      Discount Code
+    </h3>
+    <div class="flex flex--col flex-md-row">
+      <div class="full-width form-elem inline-form-elem">
+        {{#form.field
+          label=""
+          value=paymentInfo.discountCode
+          showRequiredMark=true
+          required=true
+          showValidationStatusIcons=false
+          onChange=(action (mut paymentInfo.discountCode)) as |field|
+        }}
+          {{field.input}}
+        {{/form.field}}
+      </div>
+    </div>
+    <div class="form-elem">
+      {{#if save.isRunning}}
+        {{loading-indicator}}
+      {{else}}
+        <button
+          onclick={{form.submit}}
+          class="button--blue"
+          data-test-subscribe-button
+        >
+          Complete sign up
+        </button>
+        <span onclick={{action back}} class="billing-process-cancel link">
+          Cancel
+        </span>
+      {{/if}}
+    </div>
+  </div>
+{{/travis-form}}

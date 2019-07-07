@@ -32,7 +32,6 @@
     Manage on GitHub Marketplace
   </ExternalLinkTo>
 {{else}}
-  <NewSubscriptionButton @trial={{this.trial}} @account={{this.account}} />
-  <BillingInformation @trial={{trial}} @account={{account}} @monthlyPlans={{monthlyPlans}}/>
+  <BillingProcess @trial={{trial}} @account={{account}} @plans={{plans}}/>
 {{/if}}
 

@@ -142,3 +142,18 @@
   color: $oxide-blue;
   background: rgba(181, 214, 217, 0.9);
 }
+
+.billing-ccv {
+  margin-left: 19px;
+}
+
+.billing-process-cancel{
+  margin-left: 10px;
+}
+
+@media #{$large-up} {
+  .billing-select-year {
+    width: 45%;
+    margin-top: 24.8px;
+  }
+}

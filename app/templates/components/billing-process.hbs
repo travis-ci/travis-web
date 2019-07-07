@@ -1,0 +1,22 @@
+{{#if account.hasSubscriptionPermissions}}
+  {{#if isStepOne}}
+    {{billing-information
+      displayedPlans=displayedPlans
+      selectedPlan=selectedPlan
+      showAnnual=showAnnual
+      billingInfo=billingInfo
+      next=(action "next")
+    }}
+  {{/if}}
+  {{#if isStepTwo}}
+    {{billing-payment
+      selectedPlan=selectedPlan
+      paymentInfo=paymentInfo
+      back=(action "back")
+    }}
+  {{/if}}
+{{else}}
+  <p data-test-no-permission-message>
+    You do not have permission to create a subscription
+  </p>
+{{/if}}
