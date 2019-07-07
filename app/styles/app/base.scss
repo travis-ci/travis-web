@@ -105,6 +105,10 @@ a {
     justify-content: space-between;
   }
 
+  &--flex-start {
+    justify-content: flex-start;
+  }
+
   &--v-center {
     align-items: center;
   }

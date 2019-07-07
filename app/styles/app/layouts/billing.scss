@@ -7,9 +7,6 @@
 }
 
 .billing-plans {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  grid-gap: 10px;
   background-color: #fff;
 
   &__box {
@@ -17,6 +14,8 @@
     border-radius: 5px;
     padding: 3px 13px;
     border: 1px solid $pebble-grey;
+    margin-bottom: 10px;
+    flex-basis: 100%;
 
     &--jobs {
       color: $cement-grey;
@@ -50,9 +49,33 @@
   }
 }
 
+@media #{$medium-up} {
+  .billing-plans {
+    &__box {
+      flex-basis: 48%;
+    }
+  }
+}
+
+@media #{$large-up} {
+  .billing-plans {
+    &__box {
+      flex-basis: 32%;
+    }
+  }
+}
+
+@media #{$xlarge-up} {
+  .billing-plans {
+    &__box {
+      flex-basis: 24%;
+    }
+  }
+}
+
 .selected-plan {
   border-radius: 5px;
-  margin: 25px 0 40px 0;
+  margin: 20px 0 40px 0;
   background: #f1f1f1;
   padding: 1em;
   display: flex;
