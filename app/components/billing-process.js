@@ -56,6 +56,7 @@ export default Component.extend({
   plans: null,
   showAnnual: false,
   steps: [...Object.values(STEPS)],
+
   currentStep: computed('steps.[]', {
     get() {
       return this.steps.get('firstObject');
@@ -64,7 +65,6 @@ export default Component.extend({
       return value;
     }
   }),
-
   isStepOne: equal('currentStep', STEPS.stepOne),
   isStepTwo: equal('currentStep', STEPS.stepTwo),
 
@@ -116,11 +116,18 @@ export default Component.extend({
       return showAnnual ? annualPlans : monthlyPlans;
     }),
 
-  selectedPlan: computed('displayedPlans', 'defaultPlan', function () {
-    const { displayedPlans, defaultPlan } = this;
-    const plan = defaultPlan.get('firstObject');
-    return displayedPlans.findBy('name', plan.name);
-  }),
+  selectedPlan: computed(
+    'displayedPlans.@each.{name,price,annual,builds}',
+    'defaultPlan', {
+      get() {
+        const { displayedPlans, defaultPlan } = this;
+        const plan = defaultPlan.get('firstObject');
+        return displayedPlans.findBy('name', plan.name);
+      },
+      set(key, value) {
+        return value;
+      }
+    }),
 
   save: task(function* () {
     const subscription = this.store.createRecord('subscription', {
