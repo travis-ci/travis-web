@@ -68,8 +68,8 @@
     <div class="form-elem billing-optional-field">
       {{#form.field
         label="Company Name"
-        value=billingInfo.companyName
-        onChange=(action (mut billingInfo.companyName))
+        value=billingInfo.company
+        onChange=(action (mut billingInfo.company))
         showValidationStatusIcons=false as |field|
       }}
         {{field.input}}
@@ -132,10 +132,10 @@
       <div class="full-width form-elem">
         {{#form.field
           label="Zip Code"
-          value=billingInfo.billingZipCode
+          value=billingInfo.zipCode
           showRequiredMark=true
           required=true
-          onChange=(action (mut billingInfo.billingZipCode))
+          onChange=(action (mut billingInfo.zipCode))
           showValidationStatusIcons=false as |field|
         }}
           {{field.input}}

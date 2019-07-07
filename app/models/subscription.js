@@ -14,6 +14,7 @@ export default Model.extend({
   status: attr(),
   validTo: attr(),
   permissions: attr(),
+  organizationId: attr(),
 
   billingInfo: belongsTo({ async: false }),
   creditCardInfo: belongsTo({ async: false }),

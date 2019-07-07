@@ -6,7 +6,8 @@ import hbs from 'htmlbars-inline-precompile';
 module('Integration | Component | billing-payment', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders', async function (assert) {
+  hooks.beforeEach(function () {
+
     const selectedPlan = {
       id: 1,
       name: 'A',
@@ -25,15 +26,22 @@ module('Integration | Component | billing-payment', function (hooks) {
     };
 
     this['actions'] = {
-      back: () => { }
+      back: () => { },
+      cancel: () => { }
     };
 
-    this.set('paymentInfo', paymentInfo);
-    this.set('selectedPlan', selectedPlan);
+    this.setProperties({
+      selectedPlan,
+      paymentInfo
+    });
+  });
+
+  test('it renders', async function (assert) {
 
     await render(hbs`{{billing-payment 
       paymentInfo=paymentInfo 
       back=(action 'back')
+      cancel=(action 'cancel')
       selectedPlan=selectedPlan}}`);
 
     assert.dom('h3').hasText('Credit card details');

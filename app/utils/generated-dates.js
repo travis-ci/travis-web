@@ -4,10 +4,7 @@ export const generateYearsFromCurrent = length => {
 };
 
 export const generateMonthNumber = () => {
-  const months = Array(12).fill(0).map((month, index) => {
-    let currentMonth = index < 9 ? `0${index + 1}` : `${index + 1}`;
-    return currentMonth;
-  });
+  const months = Array(12).fill(0).map((month, index) => (index < 9 ? `0${index + 1}` : `${index + 1}`));
   return months;
 };
 
