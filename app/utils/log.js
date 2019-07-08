@@ -1066,8 +1066,7 @@ Log.extend(Log.Renderer.prototype, {
     // `createSpan` function and I'm not into biggger refactoring at the moment
     para = document.createElement('div');
     para.classList.add('log-line');
-    let a = document.createElement('a');
-    para.appendChild(a);
+    para.appendChild(document.createElement('a'));
     return para;
   },
   createFold: function () {

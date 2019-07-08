@@ -256,6 +256,7 @@
 
     &.open {
       height: auto;
+
       .log-line {
         display: block;
       }
@@ -263,6 +264,7 @@
 
     .log-line {
       display: none;
+
       &:first-of-type {
         display: block;
       }
