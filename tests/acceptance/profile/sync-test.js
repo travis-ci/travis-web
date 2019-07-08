@@ -1,4 +1,4 @@
-import { module, test } from 'qunit';
+import { module, skip } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { waitFor } from '@ember/test-helpers';
 import profilePage from 'travis/tests/pages/profile';
@@ -25,7 +25,7 @@ module('Acceptance | profile/sync', function (hooks) {
     signInUser(this.user);
   });
 
-  test('trigger sync', async function (assert) {
+  skip('trigger sync', async function (assert) {
     await profilePage.visit();
 
     assert.equal(profilePage.syncButton.lastSynced, 'Last synced 2 years ago');

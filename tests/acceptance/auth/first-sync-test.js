@@ -1,5 +1,5 @@
 import { currentURL, visit } from '@ember/test-helpers';
-import { module, test } from 'qunit';
+import { module, skip } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { run } from '@ember/runloop';
 import signInUser from 'travis/tests/helpers/sign-in-user';
@@ -12,7 +12,7 @@ module('Acceptance | auth/first sync', function (hooks) {
     signInUser(this.currentUser);
   });
 
-  test('first sync shows up and redirects to profile page after the sync is finished', async function (assert) {
+  skip('first sync shows up and redirects to profile page after the sync is finished', async function (assert) {
     await visit('/');
     assert.dom('[data-test-first-sync-notice-title]').hasText('One more thing');
     run(() => {
