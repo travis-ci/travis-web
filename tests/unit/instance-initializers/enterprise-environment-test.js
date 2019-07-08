@@ -1,28 +1,31 @@
 import Application from '@ember/application';
-import { run } from '@ember/runloop';
+
 import { initialize } from 'travis/instance-initializers/enterprise-environment';
 import { module, test } from 'qunit';
-import destroyApp from '../../helpers/destroy-app';
+import { run } from '@ember/runloop';
+
 import EmberObject from '@ember/object';
 
 module('Unit | Instance Initializer | enterprise environment', function (hooks) {
   hooks.beforeEach(function () {
-    run(() => {
-      this.application = Application.create();
-      this.application.register('config:environment', EmberObject.create({ featureFlags: { 'enterprise-version': true }}));
-      this.appInstance = this.application.buildInstance();
+    this.TestApplication = Application.extend();
+    this.TestApplication.instanceInitializer({
+      name: 'initializer under test',
+      initialize
     });
+    this.application = this.TestApplication.create({ autoboot: false });
+    this.application.register('config:environment', EmberObject.create({ featureFlags: { 'enterprise-version': true }}));
+    this.instance = this.application.buildInstance();
   });
-
   hooks.afterEach(function () {
-    run(this.appInstance, 'destroy');
-    destroyApp(this.application);
+    run(this.application, 'destroy');
+    run(this.instance, 'destroy');
   });
 
-  test('it sets flags appropriately', function (assert) {
-    initialize(this.appInstance);
+  test('it sets flags appropriately', async function (assert) {
+    await this.instance.boot();
 
-    const { featureFlags } = this.appInstance.resolveRegistration('config:environment');
+    const { featureFlags } = this.instance.resolveRegistration('config:environment');
 
     assert.equal(featureFlags['repository-filtering'], true);
     assert.equal(featureFlags['debug-logging'], false);
