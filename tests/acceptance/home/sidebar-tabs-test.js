@@ -84,6 +84,9 @@ module('Acceptance | home/sidebar tabs', function (hooks) {
 
     let startedAt = new Date();
 
+    // TODO: Currently, we make the same request *30* times, which slows the test down
+    // significantly. Need to investigate why.
+
     // the default mirage limit is 10, so if we create 15 jobs for each queued and
     // started lists, the app code will have to do 2 queries
     server.createList('job', 15, { state: 'created', repository: this.repo, commit: this.commit, build: this.build });
