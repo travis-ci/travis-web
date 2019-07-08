@@ -17,6 +17,7 @@ module('Unit | Instance Initializer | enterprise environment', function (hooks) 
     this.application.register('config:environment', EmberObject.create({ featureFlags: { 'enterprise-version': true }}));
     this.instance = this.application.buildInstance();
   });
+
   hooks.afterEach(function () {
     run(this.application, 'destroy');
     run(this.instance, 'destroy');
