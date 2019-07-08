@@ -1,5 +1,5 @@
 import Controller from '@ember/controller';
-import { or, not } from '@ember/object/computed';
+import { reads, and, or, not } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 
 export default Controller.extend({
@@ -8,15 +8,18 @@ export default Controller.extend({
 
   repo: null,
 
-  isNotMigratable: not('repo.isMigratable'),
-  isMigrateButtonDisabled: or('isMigrationInProgress', 'isNotMigratable'),
+  permissions: reads('repo.permissions'),
+
+  isMigrationAllowed: and('permissions.migrate', 'repo.isMigratable'),
+  isMigrationNotAllowed: not('isMigrationAllowed'),
+
+  isMigrateButtonDisabled: or('repo.isMigrationInProgress', 'isMigrationNotAllowed'),
 
   actions: {
 
     migrate() {
-      // TODO use actual migration in release version
       this.repo.set('migrationStatus', 'queued');
-      // this.repo.startMigration();
+      this.repo.startMigration();
     }
 
   }
