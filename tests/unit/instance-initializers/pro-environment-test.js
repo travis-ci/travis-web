@@ -1,6 +1,6 @@
 import Application from '@ember/application';
 
-import { initialize } from 'travis/instance-initializers/enterprise-environment';
+import { initialize } from 'travis/instance-initializers/pro-environment';
 import { module, test } from 'qunit';
 import { run } from '@ember/runloop';
 
