@@ -392,86 +392,86 @@ module('Acceptance | profile/basic layout', function (hooks) {
 
     assert.ok(profilePage.githubAppsInvitation.migrateButton.isHidden, 'expected migration button to be hidden when owner has too many repositories');
   });
-});
 
-test('Migration beta section is present on sidebar', async function (assert) {
-  await profilePage.visit();
-  assert.ok(profilePage.sidebarMigrate.isPresent);
-});
-
-test('Migration beta dialog renders properly', async function (assert) {
-  await profilePage.visit();
-  await profilePage.sidebarMigrate.signUpButton.click();
-
-  const { isPresent, accountsSelect, submit } = profilePage.migrateDialog;
-  assert.ok(isPresent);
-  assert.ok(accountsSelect.isPresent);
-
-  await accountsSelect.click();
-  assert.ok(accountsSelect.options.length > 0);
-
-  assert.ok(submit.isPresent);
-});
-
-test('Migration beta dialog sends request', async function (assert) {
-  let isRequested = false;
-  let requestUserId = null;
-  let organizations = [];
-
-  server.post('/user/:id/beta_migration_request', function (schema, request) {
-    let requestBody = JSON.parse(request.requestBody);
-
-    isRequested = true;
-    requestUserId = request.params.id;
-    organizations = requestBody.organizations;
+  test('Migration beta section is present on sidebar', async function (assert) {
+    await profilePage.visit();
+    assert.ok(profilePage.sidebarMigrate.isPresent);
   });
 
-  await profilePage.visit();
-  await profilePage.sidebarMigrate.signUpButton.click();
-  await profilePage.migrateDialog.submit.click();
+  test('Migration beta dialog renders properly', async function (assert) {
+    await profilePage.visit();
+    await profilePage.sidebarMigrate.signUpButton.click();
 
-  assert.ok(isRequested);
-  assert.equal(requestUserId, this.user.id);
-  assert.ok(organizations);
-  assert.ok(organizations.length > 0);
-});
+    const { isPresent, accountsSelect, submit } = profilePage.migrateDialog;
+    assert.ok(isPresent);
+    assert.ok(accountsSelect.isPresent);
 
-test('Migration beta status message is present when apllied', async function (assert) {
-  server.create('beta-migration-request', {
-    owner_id: this.user.id
+    await accountsSelect.click();
+    assert.ok(accountsSelect.options.length > 0);
+
+    assert.ok(submit.isPresent);
   });
 
-  await profilePage.visit();
-  assert.ok(profilePage.migrateBannerRequested.isPresent);
-});
+  test('Migration beta dialog sends request', async function (assert) {
+    let isRequested = false;
+    let requestUserId = null;
+    let organizations = [];
 
-test('Migration beta status message is present on organization when apllied', async function (assert) {
-  server.create('beta-migration-request', {
-    owner_id: this.user.id,
-    organizations: [this.organization]
+    server.post('/user/:id/beta_migration_request', function (schema, request) {
+      let requestBody = JSON.parse(request.requestBody);
+
+      isRequested = true;
+      requestUserId = request.params.id;
+      organizations = requestBody.organizations;
+    });
+
+    await profilePage.visit();
+    await profilePage.sidebarMigrate.signUpButton.click();
+    await profilePage.migrateDialog.submit.click();
+
+    assert.ok(isRequested);
+    assert.equal(requestUserId, this.user.id);
+    assert.ok(organizations);
+    assert.ok(organizations.length > 0);
   });
 
-  await profilePage.visitOrganization({ name: this.organization.login });
-  assert.ok(profilePage.migrateBannerRequested.isPresent);
-});
+  test('Migration beta status message is present when apllied', async function (assert) {
+    server.create('beta-migration-request', {
+      owner_id: this.user.id
+    });
 
-test('Migration beta success status message is present when request is accepted', async function (assert) {
-  server.create('beta-migration-request', {
-    owner_id: this.user.id,
-    accepted_at: new Date().toString()
+    await profilePage.visit();
+    assert.ok(profilePage.migrateBannerRequested.isPresent);
   });
 
-  await profilePage.visit();
-  assert.ok(profilePage.migrateBannerAccepted.isPresent);
-});
+  test('Migration beta status message is present on organization when apllied', async function (assert) {
+    server.create('beta-migration-request', {
+      owner_id: this.user.id,
+      organizations: [this.organization]
+    });
 
-test('Migration beta success status message is present on organization when request is accepted', async function (assert) {
-  server.create('beta-migration-request', {
-    owner_id: this.user.id,
-    accepted_at: new Date().toString(),
-    organizations: [this.organization]
+    await profilePage.visitOrganization({ name: this.organization.login });
+    assert.ok(profilePage.migrateBannerRequested.isPresent);
   });
 
-  await profilePage.visitOrganization({ name: this.organization.login });
-  assert.ok(profilePage.migrateBannerAccepted.isPresent);
+  test('Migration beta success status message is present when request is accepted', async function (assert) {
+    server.create('beta-migration-request', {
+      owner_id: this.user.id,
+      accepted_at: new Date().toString()
+    });
+
+    await profilePage.visit();
+    assert.ok(profilePage.migrateBannerAccepted.isPresent);
+  });
+
+  test('Migration beta success status message is present on organization when request is accepted', async function (assert) {
+    server.create('beta-migration-request', {
+      owner_id: this.user.id,
+      accepted_at: new Date().toString(),
+      organizations: [this.organization]
+    });
+
+    await profilePage.visitOrganization({ name: this.organization.login });
+    assert.ok(profilePage.migrateBannerAccepted.isPresent);
+  });
 });
