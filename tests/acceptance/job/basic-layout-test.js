@@ -58,7 +58,13 @@ test('visiting job-view', function (assert) {
     assert.equal(jobPage.createdBy.text, 'Mr T');
     assert.ok(jobPage.createdBy.avatarSrc.startsWith('/images/favicon-gray.png'));
 
-    assert.equal(jobPage.log, '1Hello log');
+    const logNumbers = jobPage.log.match(/\d+/g);
+    const logContent = jobPage.log.split(/\d+/g).filter(Boolean);
+
+    assert.equal(logNumbers[0], '1');
+    assert.equal(logNumbers[1], '2');
+    assert.equal(logContent[0], 'Hello log');
+    assert.equal(logContent[1], 'Second line');
     assert.notOk(jobPage.hasTruncatedLog);
     assert.equal(jobPage.rawLogUrl, `${config.apiEndpoint}/v3/job/${job.id}/log.txt`);
   });
@@ -112,7 +118,13 @@ test('visiting pull request job-view', function (assert) {
     assert.equal(jobPage.createdBy.text, 'Mr T');
     assert.ok(jobPage.createdBy.avatarSrc.startsWith('/images/favicon-gray.png'));
 
-    assert.equal(jobPage.log, '1Hello log');
+    const logNumbers = jobPage.log.match(/\d+/g);
+    const logContent = jobPage.log.split(/\d+/g).filter(Boolean);
+
+    assert.equal(logNumbers[0], '1');
+    assert.equal(logNumbers[1], '2');
+    assert.equal(logContent[0], 'Hello log');
+    assert.equal(logContent[1], 'Second line');
     assert.notOk(jobPage.hasTruncatedLog);
     assert.equal(jobPage.rawLogUrl, `${config.apiEndpoint}/v3/job/${job.id}/log.txt`);
   });
