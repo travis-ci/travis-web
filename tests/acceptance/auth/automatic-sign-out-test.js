@@ -1,7 +1,7 @@
 import { currentURL } from '@ember/test-helpers';
 import { visitWithAbortedTransition } from 'travis/tests/helpers/visit-with-aborted-transition';
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'ember-qunit';
+import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import topPage from 'travis/tests/pages/top';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { percySnapshot } from 'ember-percy';

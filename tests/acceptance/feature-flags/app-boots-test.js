@@ -3,7 +3,7 @@ import {
   visit,
 } from '@ember/test-helpers';
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'ember-qunit';
+import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import { Response } from 'ember-cli-mirage';
 import Service from '@ember/service';
 import signInUser from 'travis/tests/helpers/sign-in-user';

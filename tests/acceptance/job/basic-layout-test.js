@@ -6,7 +6,7 @@ import {
 } from '@ember/test-helpers';
 import $ from 'jquery';
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'ember-qunit';
+import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import generatePusherPayload from 'travis/tests/helpers/generate-pusher-payload';
 import { percySnapshot } from 'ember-percy';
 

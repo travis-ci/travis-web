@@ -3,7 +3,7 @@ import {
   waitFor,
 } from '@ember/test-helpers';
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'ember-qunit';
+import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import jobPage from 'travis/tests/pages/job';
 
 module('Acceptance | job/log error', function (hooks) {

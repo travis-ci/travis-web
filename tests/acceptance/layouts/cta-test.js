@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'ember-qunit';
+import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import existingRepoPage from 'travis/tests/pages/repo-tabs/current';
 import defaultHeader from 'travis/tests/pages/header/default';
 import signInUser from 'travis/tests/helpers/sign-in-user';

@@ -4,7 +4,7 @@ import {
 } from '@ember/test-helpers';
 import Ember from 'ember';
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'ember-qunit';
+import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import nonExistentOwnerPage from 'travis/tests/pages/owner/non-existent';
 import { percySnapshot } from 'ember-percy';
 import { enableFeature } from 'ember-feature-flags/test-support';

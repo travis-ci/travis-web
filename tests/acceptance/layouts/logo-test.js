@@ -1,6 +1,6 @@
 import { currentURL, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'ember-qunit';
+import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import defaultHeader from 'travis/tests/pages/header/default';
 import footer from 'travis/tests/pages/footer';
 import signOutUser from 'travis/tests/helpers/sign-out-user';

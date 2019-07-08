@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'ember-qunit';
+import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import { visit } from '@ember/test-helpers';
 import proHeader from 'travis/tests/pages/header/pro';
 import proLayout from 'travis/tests/pages/layouts/pro';

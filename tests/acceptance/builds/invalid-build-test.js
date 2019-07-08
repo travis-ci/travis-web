@@ -1,7 +1,7 @@
 import { visit } from '@ember/test-helpers';
 import Ember from 'ember';
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'ember-qunit';
+import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import buildPage from 'travis/tests/pages/build';
 
 let adapterException;

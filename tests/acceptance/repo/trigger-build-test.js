@@ -1,6 +1,6 @@
 import { currentURL } from '@ember/test-helpers';
 import { module, skip, test } from 'qunit';
-import { setupApplicationTest } from 'ember-qunit';
+import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import triggerBuildPage from 'travis/tests/pages/trigger-build';
 import topPage from 'travis/tests/pages/top';
 import { Response } from 'ember-cli-mirage';

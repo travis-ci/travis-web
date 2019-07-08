@@ -2,7 +2,7 @@ import {
   visit,
 } from '@ember/test-helpers';
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'ember-qunit';
+import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import page from 'travis/tests/pages/repo/show';
 import buildPage from 'travis/tests/pages/build';
 import signInUser from 'travis/tests/helpers/sign-in-user';
