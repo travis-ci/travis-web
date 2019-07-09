@@ -12,63 +12,65 @@ module.exports = {
 
       // Accent Color
       blue: {
+        100: '#deefff',
+        200: '#cce1ff',
+        300: '#66a4ff',
+        400: '#0068ff',
         default: '#0068ff',
-        hover: '#0558dd',
-        medium: '#66a4ff',
-        light: '#cce1ff',
-        'light-2': '#deefff',
+        500: '#0558dd',
       },
 
       // Passing Color
       green: {
+        100: '#e6faf0',
+        200: '#adedcd',
+        300: '#32d282',
         default: '#32d282',
-        hover: '#049661',
-        text: '#15b75e',
-        medium: '#adedcd',
-        light: '#e6faf0',
+        400: '#15b75e',
+        500: '#049661',
       },
 
       // Failing Color
       red: {
+        100: '#ffdcdc',
+        200: '#ffabab',
+        300: '#ff5050',
         default: '#ff5050',
-        hover: '#e23a3c',
-        medium: '#ffabab',
-        light: '#ffdcdc',
+        400: '#e23a3c',
       },
 
       // Errored Color
       orange: {
+        100: '#ffe8d8',
+        200: '#ffba8b',
+        300: '#ff8c3e',
         default: '#ff8c3e',
-        hover: '#f27520',
-        medium: '#ffba8b',
-        light: '#ffe8d8',
+        400: '#f27520',
       },
 
       // Running Color
       yellow: {
+        100: '#fcf5cd',
+        200: '#f9f3a5',
+        300: '#ffe000',
         default: '#ffe000',
-        hover: '#efcc03',
-        text: '#dcc800',
-        medium: '#f9f3a5',
-        light: '#fcf5cd',
+        400: '#efcc03',
+        500: '#dcc800',
       },
 
-      // Cacelled Color
+      // Cancelled / Neutral Color
       grey: {
+        100: '#f6f7fa',
+        150: '#eef0f4',
+        200: '#dcdfe2',
+        250: '#d5e0ea',
+        300: '#b4bfca',
+        400: '#9ea3a8',
+        500: '#8794a0',
         default: '#8794a0',
-        hover: '#7b868e',
-        medium: '#b4bfca',
-        light: '#d5e0ea',
-      },
-
-      // Neutrals
-      neutral: {
-        '1': '#333333',
-        '2': '#686b6e',
-        '3': '#9ea3a8',
-        '4': '#dcdfe2',
-        '5': '#eef0f4',
-        '6': '#f6f7fa',
+        600: '#7b868e',
+        700: '#686b6e',
+        800: '#333333',
       },
     },
 
