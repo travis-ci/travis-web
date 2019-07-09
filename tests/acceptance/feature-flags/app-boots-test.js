@@ -12,11 +12,6 @@ import { stubService } from 'travis/tests/helpers/stub-service';
 module('Acceptance | feature flags/app boots', function (hooks) {
   setupApplicationTest(hooks);
 
-  hooks.beforeEach(() => {
-    localStorage.clear();
-    sessionStorage.clear();
-  });
-
   test('app boots even if call to `/beta_features` fails', async function (assert) {
     assert.expect(2);
     server.get('/user/:user_id/beta_features', function (schema) {

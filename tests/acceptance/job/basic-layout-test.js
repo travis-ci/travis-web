@@ -19,9 +19,6 @@ module('Acceptance | job/basic layout', function (hooks) {
   setupApplicationTest(hooks);
 
   hooks.beforeEach(function () {
-    localStorage.clear();
-    sessionStorage.clear();
-
     const { owner } = getContext();
     this.pusher = owner.lookup('service:pusher');
   });

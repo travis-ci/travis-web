@@ -10,9 +10,6 @@ module('Acceptance | broadcasts', function (hooks) {
   setupApplicationTest(hooks);
 
   hooks.beforeEach(function () {
-    localStorage.clear();
-    sessionStorage.clear();
-
     const currentUser = server.create('user', {
       name: 'User Name',
       login: 'user-login'
