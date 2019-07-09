@@ -82,6 +82,13 @@ module.exports = function () {
           require('tailwindcss')('./app/styles/tailwind/config.js')
         ]
       }
+    },
+    outputPaths: {
+      app: {
+        css: {
+          'tailwind/base': '/assets/tailwind-base.css'
+        }
+      }
     }
   });
 
