@@ -52,15 +52,6 @@ export default Component.extend({
   defaultPlan: filterBy('availablePlans', 'isDefault'),
   availablePlanNames: mapBy('availablePlans', 'name'),
 
-  init() {
-    // this.reset();
-    this._super(...arguments);
-  },
-
-  reset() {
-    // this.newSubscription.unloadRecord();
-  },
-
   monthlyPlans: computed('plans.@each.{name,annual,builds}', function () {
     const { plans, availablePlanNames } = this;
     const filteredMonthlyPlans = plans.filter(plan => {
@@ -106,9 +97,7 @@ export default Component.extend({
   save: task(function* () {
     try {
       yield this.newSubscription.save();
-      // this.reset();
     } catch (error) {
-      // this.newSubscription.unloadRecord();
       this.flashes.error('There was an error saving the subscription task. Please try again.');
     }
   }).drop(),
@@ -130,10 +119,6 @@ export default Component.extend({
     cancel() {
       this.reset();
       this.set('currentStep', STEPS.stepOne);
-    },
-
-    setStripeToken(token) {
-      this.set('stripeToken', token);
     },
 
     handleSubmit(token, lastDigits) {

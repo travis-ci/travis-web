@@ -7,7 +7,6 @@ export default Component.extend({
   flashes: service(),
   months: generateMonthNumber(),
   years: generateYearsFromCurrent(11),
-  stripeToken: '',
   stripe: service(),
 
   makeStripePayment: task(function* () {
