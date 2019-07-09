@@ -16,8 +16,8 @@ export default Model.extend({
   permissions: attr(),
   organizationId: attr(),
 
-  billingInfo: belongsTo({ async: false }),
-  creditCardInfo: belongsTo({ async: false }),
+  billingInfo: belongsTo('billing-info', { async: false }),
+  creditCardInfo: belongsTo('credit-card-info', { async: false }),
   invoices: hasMany('invoice'),
   owner: belongsTo('owner', {polymorphic: true}),
   plan: belongsTo(),

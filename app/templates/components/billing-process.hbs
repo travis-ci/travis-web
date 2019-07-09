@@ -4,6 +4,7 @@
       displayedPlans=displayedPlans
       selectedPlan=selectedPlan
       showAnnual=showAnnual
+      newSubscription=newSubscription
       showMonthly=showMonthly
       billingInfo=billingInfo
       next=(action "next")
@@ -12,8 +13,8 @@
   {{#if isStepTwo}}
     {{billing-payment
       selectedPlan=selectedPlan
-      paymentInfo=paymentInfo
       showAnnual=showAnnual
+      handleSubmit=(action "handleSubmit")
       back=(action "back")
       cancel=(action "cancel")
     }}

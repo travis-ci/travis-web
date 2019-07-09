@@ -43,11 +43,11 @@
       <div class="full-width form-elem inline-form-elem">
         {{#form.field
           label="First Name"
-          value=billingInfo.firstName
+          value=newSubscription.billingInfo.firstName
           required=true
           showRequiredMark=true
           showValidationStatusIcons=false
-          onChange=(action (mut billingInfo.firstName)) as |field|
+          onChange=(action (mut newSubscription.billingInfo.firstName)) as |field|
         }}
           {{field.input}}
         {{/form.field}}
@@ -55,10 +55,10 @@
       <div class="full-width form-elem">
         {{#form.field
           label="Last Name"
-          value=billingInfo.lastName
+          value=newSubscription.billingInfo.lastName
           required=true
           showRequiredMark=true
-          onChange=(action (mut billingInfo.lastName))
+          onChange=(action (mut newSubscription.billingInfo.lastName))
           showValidationStatusIcons=false as |field|
         }}
           {{field.input}}
@@ -68,8 +68,8 @@
     <div class="form-elem billing-optional-field">
       {{#form.field
         label="Company Name"
-        value=billingInfo.company
-        onChange=(action (mut billingInfo.company))
+        value=newSubscription.billingInfo.company
+        onChange=(action (mut newSubscription.billingInfo.company))
         showValidationStatusIcons=false as |field|
       }}
         {{field.input}}
@@ -78,10 +78,10 @@
     <div class="form-elem">
       {{#form.field
         label="Billing Email Address"
-        value=billingInfo.billingEmail
+        value=newSubscription.billingInfo.billingEmail
         required=true
         showRequiredMark=true
-        onChange=(action (mut billingInfo.billingEmail))
+        onChange=(action (mut newSubscription.billingInfo.billingEmail))
         showValidationStatusIcons=false as |field|
       }}
         {{field.input}}
@@ -94,11 +94,11 @@
       <div class="full-width form-elem inline-form-elem">
         {{#form.field
           label="Street Address"
-          value=billingInfo.billingStreet
+          value=newSubscription.billingInfo.address
           showRequiredMark=true
           required=true
           showValidationStatusIcons=false
-          onChange=(action (mut billingInfo.billingStreet)) as |field|
+          onChange=(action (mut newSubscription.billingInfo.address)) as |field|
         }}
           {{field.input}}
         {{/form.field}}
@@ -106,10 +106,10 @@
       <div class="full-width form-elem">
         {{#form.field
           label="Suite,Apt"
-          value=billingInfo.billingSuite
+          value=newSubscription.billingInfo.address2
           showRequiredMark=true
           required=true
-          onChange=(action (mut billingInfo.billingSuite))
+          onChange=(action (mut newSubscription.billingInfo.address2))
           showValidationStatusIcons=false as |field|
         }}
           {{field.input}}
@@ -120,10 +120,10 @@
       <div class="full-width form-elem inline-form-elem">
         {{#form.field
           label="City"
-          value=billingInfo.billingCity
+          value=newSubscription.billingInfo.city
           showRequiredMark=true
           required=true
-          onChange=(action (mut billingInfo.billingCity))
+          onChange=(action (mut newSubscription.billingInfo.city))
           showValidationStatusIcons=false as |field|
         }}
           {{field.input}}
@@ -132,10 +132,10 @@
       <div class="full-width form-elem">
         {{#form.field
           label="Zip Code"
-          value=billingInfo.zipCode
+          value=newSubscription.billingInfo.zipCode
           showRequiredMark=true
           required=true
-          onChange=(action (mut billingInfo.zipCode))
+          onChange=(action (mut newSubscription.billingInfo.zipCode))
           showValidationStatusIcons=false as |field|
         }}
           {{field.input}}
@@ -145,10 +145,10 @@
     <div class="form-elem select">
       {{#form.field
         label="Country"
-        value=billingInfo.country
+        value=newSubscription.billingInfo.country
         showRequiredMark=true
         required=true
-        onChange=(action (mut billingInfo.country))
+        onChange=(action (mut newSubscription.billingInfo.country))
         showValidationStatusIcons=false as |field|
       }}
         {{#field.select
@@ -162,10 +162,10 @@
     <div class="form-elem">
       {{#form.field
         label="Vat Id"
-        value=billingInfo.vatId
+        value=newSubscription.billingInfo.vatId
         showRequiredMark=true
         required=true
-        onChange=(action (mut billingInfo.vatId))
+        onChange=(action (mut newSubscription.billingInfo.vatId))
         showValidationStatusIcons=false as |field|
       }}
         {{field.input}}

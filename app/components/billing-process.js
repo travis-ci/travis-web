@@ -1,5 +1,6 @@
 import Component from '@ember/component';
-import { computed } from '@ember/object';
+import { computed, set } from '@ember/object';
+import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
 import { not, filterBy, mapBy, equal } from '@ember/object/computed';
 
@@ -28,31 +29,8 @@ let availablePlans = [
   }
 ];
 
-let defaultFormValues = {
-  billingInfo: {
-    firstName: '',
-    lastName: '',
-    company: '',
-    billingEmail: '',
-    street: '',
-    billingSuite: '',
-    billingCity: '',
-    zipCode: '',
-    country: '',
-    vatId: ''
-  },
-
-  paymentInfo: {
-    cardNumber: null,
-    cardName: '',
-    expiryDateMonth: '',
-    expiryDateYear: '',
-    cvc: '',
-    discountCode: ''
-  }
-};
-
 export default Component.extend({
+  store: service(),
   plans: null,
   showAnnual: false,
   steps: [...Object.values(STEPS)],
@@ -75,16 +53,12 @@ export default Component.extend({
   availablePlanNames: mapBy('availablePlans', 'name'),
 
   init() {
-    this.reset();
+    // this.reset();
     this._super(...arguments);
   },
 
   reset() {
-    const { billingInfo, paymentInfo } = defaultFormValues;
-    this.setProperties({
-      billingInfo,
-      paymentInfo
-    });
+    // this.newSubscription.unloadRecord();
   },
 
   monthlyPlans: computed('plans.@each.{name,annual,builds}', function () {
@@ -130,30 +104,11 @@ export default Component.extend({
     }),
 
   save: task(function* () {
-    const subscription = this.store.createRecord('subscription', {
-      plan: this.selectedPlan.id,
-      organizationId: this.account.type === 'organization' && this.account.id,
-      billingInfo: {
-        firstName: this.billingInfo.firstName,
-        lastName: this.billingInfo.lastName,
-        company: this.billingInfo.company,
-        address: this.billingInfo.street,
-        address2: this.billingInfo.suite,
-        city: this.billingInfo.billingCity,
-        country: this.billingInfo.country,
-        zipCode: this.billingInfo.zipCode,
-        vatId: this.billingInfo.vatId,
-        billingEmail: this.billingInfo.billingEmail,
-        // creditCardInfo {
-        //   // token: set token after connecting to Stripe.
-        // }
-      }
-    });
     try {
-      yield subscription.save();
-      this.reset();
+      yield this.newSubscription.save();
+      // this.reset();
     } catch (error) {
-      subscription.unloadRecord();
+      // this.newSubscription.unloadRecord();
       this.flashes.error('There was an error saving the subscription task. Please try again.');
     }
   }).drop(),
@@ -177,7 +132,17 @@ export default Component.extend({
       this.set('currentStep', STEPS.stepOne);
     },
 
-    handleSubmit() {
+    setStripeToken(token) {
+      this.set('stripeToken', token);
+    },
+
+    handleSubmit(token, lastDigits) {
+      const { newSubscription, account } = this;
+      const organizationId = account.type === 'organization' ? account.id : null;
+      set(newSubscription, 'organizationId', organizationId);
+      set(newSubscription, 'plan', this.selectedPlan);
+      set(newSubscription.creditCardInfo, 'token', token);
+      set(newSubscription.creditCardInfo, 'lastDigits', lastDigits);
       this.save.perform();
     }
   }

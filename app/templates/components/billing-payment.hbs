@@ -1,4 +1,4 @@
-{{#travis-form onSubmit=(perform save) as |form|}}
+{{#travis-form onSubmit=(perform makeStripePayment) as |form|}}
   <div class="billing-form" data-billing-form>
     {{billing-select-plan
       selectedPlan=selectedPlan
@@ -15,11 +15,11 @@
       <div class="full-width form-elem inline-form-elem">
         {{#form.field
           label="Card Number"
-          value=paymentInfo.cardNumber
+          value=cardNumber
           required=true
           showRequiredMark=true
           showValidationStatusIcons=false
-          onChange=(action (mut paymentInfo.cardNumber)) as |field|
+          onChange=(action (mut cardNumber)) as |field|
         }}
           {{field.input}}
         {{/form.field}}
@@ -27,10 +27,10 @@
       <div class="full-width form-elem">
         {{#form.field
           label="Name on Card"
-          value=paymentInfo.cardName
+          value=cardName
           required=true
           showRequiredMark=true
-          onChange=(action (mut paymentInfo.cardName))
+          onChange=(action (mut cardName))
           showValidationStatusIcons=false as |field|
         }}
           {{field.input}}
@@ -42,10 +42,10 @@
         <div class="form-elem inline-form-elem">
           {{#form.field
             label="Expiry Date on card"
-            value=paymentInfo.expiryDateMonth
+            value=expiryDateMonth
             showRequiredMark=true
             required=true
-            onChange=(action (mut paymentInfo.expiryDateMonth))
+            onChange=(action (mut expiryDateMonth))
             showValidationStatusIcons=false as |field|
           }}
             {{#field.select placeholder="Month" options=months as |month|}}
@@ -55,10 +55,10 @@
         </div>
         <div class="form-elem billing-select-year">
           {{#form.field
-            value=paymentInfo.expiryDateYear
+            value=expiryDateYear
             required=true
             showRequiredMark=true
-            onChange=(action (mut paymentInfo.expiryDateYear))
+            onChange=(action (mut expiryDateYear))
             showValidationStatusIcons=false as |field|
           }}
             {{#field.select placeholder="Year" options=years as |year|}}
@@ -70,10 +70,10 @@
       <div class="full-width form-elem billing-ccv">
         {{#form.field
           label="cvc"
-          value=paymentInfo.cvc
+          value=cvc
           required=true
           showRequiredMark=true
-          onChange=(action (mut paymentInfo.cvc))
+          onChange=(action (mut cvc))
           showValidationStatusIcons=false as |field|
         }}
           {{field.input}}
@@ -87,18 +87,18 @@
       <div class="full-width form-elem inline-form-elem">
         {{#form.field
           label=""
-          value=paymentInfo.discountCode
+          value=discountCode
           showRequiredMark=true
           required=true
           showValidationStatusIcons=false
-          onChange=(action (mut paymentInfo.discountCode)) as |field|
+          onChange=(action (mut discountCode)) as |field|
         }}
           {{field.input}}
         {{/form.field}}
       </div>
     </div>
     <div class="form-elem">
-      {{#if save.isRunning}}
+      {{#if makeStripePayment.isRunning}}
         {{loading-indicator}}
       {{else}}
         <button

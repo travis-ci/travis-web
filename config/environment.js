@@ -146,6 +146,11 @@ module.exports = function (environment) {
     profileReposPerPage: 25,
   };
 
+  ENV.stripe = {
+    publishableKey: 'pk_test_5i2Bx5nJACluilHLb25d3P6N',
+    lazyLoad: true
+  };
+
   ENV.sentry = {
     dsn: 'https://e775f26d043843bdb7ae391dc0f2487a@app.getsentry.com/75334',
     whitelistUrls: [
