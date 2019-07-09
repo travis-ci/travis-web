@@ -4,7 +4,7 @@ import { inject as service } from '@ember/service';
 export default Mixin.create({
   headData: service(),
 
-  beforeModel: function () {
+  activate: function () {
     this.set('headData.useTailwindBase', true);
     return this._super(...arguments);
   },
