@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { currentRouteName } from '@ember/test-helpers';
-import { setupApplicationTest } from 'ember-qunit';
+import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import { percySnapshot } from 'ember-percy';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import unsubscribePage from 'travis/tests/pages/unsubscribe';

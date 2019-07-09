@@ -1,12 +1,14 @@
-import { test } from 'qunit';
-import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
+import { module, test } from 'qunit';
+import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import jobPage from 'travis/tests/pages/job';
 import topPage from 'travis/tests/pages/top';
 import { Response } from 'ember-cli-mirage';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 
-moduleForAcceptance('Acceptance | job/delete log', {
-  beforeEach() {
+module('Acceptance | job/delete log', function (hooks) {
+  setupApplicationTest(hooks);
+
+  hooks.beforeEach(function () {
     const currentUser = server.create('user');
     signInUser(currentUser);
 
@@ -23,46 +25,40 @@ moduleForAcceptance('Acceptance | job/delete log', {
     commit.save();
 
     server.create('log', { id: job.id });
-  }
-});
-
-test('deleting job log when successful', function (assert) {
-  assert.expect(2);
-
-  server.delete('/job/:id/log', (schema, request) => {
-    const job = schema.jobs.find(request.params.id);
-    if (job) {
-      job.destroy();
-      assert.ok(true);
-    }
   });
 
-  jobPage
-    .visit()
-    .deleteLog();
+  test('deleting job log when successful', async function (assert) {
+    assert.expect(2);
 
-  andThen(() => {
+    server.delete('/job/:id/log', (schema, request) => {
+      const job = schema.jobs.find(request.params.id);
+      if (job) {
+        job.destroy();
+        assert.ok(true);
+      }
+    });
+
+    await jobPage
+      .visit()
+      .deleteLog();
+
     assert.ok(jobPage.deleteModalAppears, 'Delete modal is shown');
-    jobPage.confirmDeleteLog();
-  });
-});
-
-test('deleting job log when error occurs', function (assert) {
-  server.delete('/job/:id/log', (schema, request) => {
-    return new Response(500, {}, {});
+    await jobPage.confirmDeleteLog();
   });
 
-  jobPage
-    .visit()
-    .deleteLog();
+  test('deleting job log when error occurs', async function (assert) {
+    server.delete('/job/:id/log', (schema, request) => {
+      return new Response(500, {}, {});
+    });
 
-  andThen(() => {
+    await jobPage
+      .visit()
+      .deleteLog();
+
     assert.ok(jobPage.deleteModalAppears, 'Delete modal is shown');
-  });
 
-  jobPage.confirmDeleteLog();
+    await jobPage.confirmDeleteLog();
 
-  andThen(() => {
     assert.ok(topPage.flashMessage.isError, 'Flashes error message');
   });
 });

@@ -1,11 +1,19 @@
-import { test } from 'qunit';
-import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
+import { module, skip } from 'qunit';
+import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
+import { waitFor } from '@ember/test-helpers';
 import profilePage from 'travis/tests/pages/profile';
 import signInUser from 'travis/tests/helpers/sign-in-user';
-import config from 'travis/config/environment';
 
-moduleForAcceptance('Acceptance | profile/sync', {
-  beforeEach() {
+async function finishSyncingUser(user) {
+  user.is_syncing = false;
+  user.synced_at = new Date();
+  await user.save();
+}
+
+module('Acceptance | profile/sync', function (hooks) {
+  setupApplicationTest(hooks);
+
+  hooks.beforeEach(function () {
     let twoYearsAgo = new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 365 * 2);
 
     this.user = server.create('user', {
@@ -15,44 +23,31 @@ moduleForAcceptance('Acceptance | profile/sync', {
     });
 
     signInUser(this.user);
-  }
-});
+  });
 
-test('trigger sync', function (assert) {
-  let done = assert.async();
+  skip('trigger sync', async function (assert) {
+    await profilePage.visit();
 
-  profilePage.visit();
-
-  andThen(() => {
     assert.equal(profilePage.syncButton.lastSynced, 'Last synced 2 years ago');
     assert.equal(profilePage.syncButton.text, 'Sync account');
-  });
 
-  let syncCalled = false;
+    let syncCalled = false;
 
-  server.post(`/user/${this.user.id}/sync`, () => {
-    this.user.is_syncing = true;
-    this.user.save();
-    syncCalled = true;
-  });
+    server.post(`/user/${this.user.id}/sync`, () => {
+      this.user.is_syncing = true;
+      syncCalled = true;
+      return this.user.save();
+    });
 
-  profilePage.syncButton.click();
+    await profilePage.syncButton.click();
 
-  andThen(() => {
     assert.equal(profilePage.syncButton.text, 'Syncing from GitHub');
     assert.ok(syncCalled, 'expected sync endpoint to have been posted to');
 
-    this.user.is_syncing = false;
-    this.user.synced_at = new Date();
-    this.user.save();
-  });
+    await finishSyncingUser(this.user);
+    await waitFor('[data-test-start-sync-button]');
 
-  andThen(() => {
-    setTimeout(() => {
-      assert.equal(profilePage.syncButton.text, 'Sync account');
-      assert.equal(profilePage.syncButton.lastSynced, 'Last synced less than a minute ago');
-
-      done();
-    }, config.intervals.syncingPolling);
+    assert.equal(profilePage.syncButton.text, 'Sync account');
+    assert.equal(profilePage.syncButton.lastSynced, 'Last synced less than a minute ago');
   });
 });

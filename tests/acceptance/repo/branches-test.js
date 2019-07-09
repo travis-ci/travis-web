@@ -1,11 +1,15 @@
-import { test } from 'qunit';
-import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
+import { module, test } from 'qunit';
+import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
+import { settled } from '@ember/test-helpers';
 import branchesPage from 'travis/tests/pages/branches';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { prettyDate } from 'travis/helpers/pretty-date';
+import { percySnapshot } from 'ember-percy';
 
-moduleForAcceptance('Acceptance | repo branches', {
-  beforeEach() {
+module('Acceptance | repo branches', function (hooks) {
+  setupApplicationTest(hooks);
+
+  hooks.beforeEach(function () {
     this.currentUser = server.create('user', {
       name: 'User Name',
       login: 'user-login',
@@ -170,18 +174,15 @@ moduleForAcceptance('Acceptance | repo branches', {
       sha: 'abc134',
       committer: gitUser
     });
-  }
-});
-
-test('view branches', function (assert) {
-  branchesPage.visit({ organization: 'org-login', repo: 'repository-name' });
-
-  andThen(() => {
-    assert.equal(document.title, 'org-login/repository-name - Travis CI');
-    assert.ok(branchesPage.branchesTabActive, 'Branches tab is active when visiting /org/repo/branches');
   });
 
-  andThen(() => {
+  test('view branches', async function (assert) {
+    await branchesPage.visit({ organization: 'org-login', repo: 'repository-name' });
+
+    await settled();
+
+    assert.equal(document.title, 'org-login/repository-name - Travis CI');
+    assert.ok(branchesPage.branchesTabActive, 'Branches tab is active when visiting /org/repo/branches');
     assert.equal(branchesPage.defaultBranch.name, 'primary#yes');
     assert.ok(branchesPage.defaultBranch.passed, 'expected default branch last build to have passed');
     assert.equal(branchesPage.defaultBranch.buildCount, '3 builds');
@@ -223,21 +224,19 @@ test('view branches', function (assert) {
     assert.equal(branchesPage.inactiveBranches[0].name, 'old-edits');
     assert.ok(branchesPage.inactiveBranches[0].errored, 'expected first inactive branch to have errored');
     assert.equal(branchesPage.inactiveBranches[1].name, 'older-edits');
+    percySnapshot(assert);
   });
-  percySnapshot(assert);
-});
 
-test('view branches tab when no branches present', function (assert) {
-  // destroy state from previous tests
-  server.db.branches.remove();
-  server.db.repositories.remove();
-  server.db.builds.remove();
+  test('view branches tab when no branches present', async function (assert) {
+    // destroy state from previous tests
+    server.db.branches.remove();
+    server.db.repositories.remove();
+    server.db.builds.remove();
 
-  server.create('repository');
+    server.create('repository');
 
-  branchesPage.visit({ organization: 'travis-ci', repo: 'travis-web' });
+    await branchesPage.visit({ organization: 'travis-ci', repo: 'travis-web' });
 
-  andThen(() => {
     assert.equal(branchesPage.showsNoBranchesMessaging, 'No other branches for this repository', 'Branches tab shows no branches message');
   });
 });
