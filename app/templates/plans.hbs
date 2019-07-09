@@ -1,69 +1,36 @@
 {{#travis-layout layoutName="layouts/center" class="text-grey-800 font-sans"}}
+  {{!-- Header section --}}
   <section class="px-4 py-3 mb-16">
-    {{!-- Header section --}}
     <header class="text-center mb-16">
       <h1 class="text-6xl font-bold">Built for every team</h1>
       <p>Set up your first project in just one minute.<br>
         Your first 100 builds are free! No credit card required.
       </p>
     </header>
-
-    <ul class="list--plans">
-      <li class="plan">
-        <p class="plans-price">$69</p>
-        <p class="plans-label plans-timeframe">per month</p>
-        <h2 class="plans-name">Bootstrap</h2>
-        <h3 class="plans-label">Ideal for hobby projects</h3>
-        <ul class="list">
-          <li><span class="list-em">1</span>Concurrent job</li>
-          <li>{{svg-jar 'icon-passed' class="w-4 fill-transparent stroke-current text-green"}} Unlimited build minutes</li>
-          <li>{{svg-jar 'icon-passed' class="w-4"}} Unlimited repositories</li>
-          <li>{{svg-jar 'icon-passed' class="w-4"}} Unlimited collaborators</li>
-        </ul>
-      </li>
-      <li class="plan--important">
-        <p class="plans-price">$129</p>
-        <p class="plans-label plans-timeframe">per month</p>
-        <h2 class="plans-name">Startup</h2>
-        <h3 class="plans-label">Best for small teams</h3>
-        <ul class="list">
-          <li><span class="list-em">2</span>Concurrent jobs</li>
-          <li>{{svg-jar 'icon-passed' class="w-4"}} Unlimited build minutes</li>
-          <li>{{svg-jar 'icon-passed' class="w-4"}} Unlimited repositories</li>
-          <li>{{svg-jar 'icon-passed' class="w-4"}} Unlimited collaborators</li>
-        </ul>
-        <div class="align-center">
-          <a href="https://travis-ci.com/signin" class="plans-button--blue" {{action 'gaCta' 'plans-table'}}>Start Trial</a>
-        </div>
-      </li>
-
-      <li class="plan">
-        <p class="plans-price">$249</p>
-        <p class="plans-label plans-timeframe">per month</p>
-        <h2 class="plans-name">Small Business</h2>
-        <h3 class="plans-label">Great for growing teams</h3>
-        <ul class="list">
-          <li><span class="list-em">5</span>Concurrent jobs</li>
-          <li>{{svg-jar 'icon-passed' class="w-4"}} Unlimited build minutes</li>
-          <li>{{svg-jar 'icon-passed' class="w-4"}} Unlimited repositories</li>
-          <li>{{svg-jar 'icon-passed' class="w-4"}} Unlimited collaborators</li>
-        </ul>
-      </li>
-      <li class="plan">
-        <p class="plans-price">$489</p>
-        <p class="plans-label plans-timeframe">per month</p>
-        <h2 class="plans-name">Premium</h2>
-        <h3 class="plans-label">Perfect for larger teams</h3>
-        <ul class="list">
-          <li><span class="list-em">10</span>Concurrent jobs</li>
-          <li>{{svg-jar 'icon-passed' class="w-4"}} Unlimited build minutes</li>
-          <li>{{svg-jar 'icon-passed' class="w-4"}} Unlimited repositories</li>
-          <li>{{svg-jar 'icon-passed' class="w-4"}} Unlimited collaborators</li>
-        </ul>
-      </li>
-    </ul>
-    <p class="plans-label align-right plans-prices">All prices shown in USD</p>
   </section>
+
+  {{!-- Product section --}}
+  <section class="px-4 py-3 mb-16">
+    <div class="flex shadow-md rounded">
+      <div class="w-1/4">
+        a
+        {{svg-jar 'feature-check' class="w-4 text-green stroke-current"}}
+      </div>
+      <div class="w-1/4">
+        b
+        {{svg-jar 'feature-check' class="w-4"}}
+      </div>
+      <div class="w-1/4">
+        c
+        {{svg-jar 'feature-check' class="w-4"}}
+      </div>
+      <div class="w-1/4">
+        d
+        {{svg-jar 'feature-check' class="w-4"}}
+      </div>
+    </div>
+  </section>
+
   <section class="inner section--two section--os">
     <div>
       <h2 class="h2--grey section-headline">Always <span class="em--yellow">free</span> for open source projects</h2>
