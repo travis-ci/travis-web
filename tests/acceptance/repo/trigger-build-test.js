@@ -5,7 +5,6 @@ import triggerBuildPage from 'travis/tests/pages/trigger-build';
 import topPage from 'travis/tests/pages/top';
 import { Response } from 'ember-cli-mirage';
 import signInUser from 'travis/tests/helpers/sign-in-user';
-import signOutUser from 'travis/tests/helpers/sign-out-user';
 import { enableFeature } from 'ember-feature-flags/test-support';
 import { percySnapshot } from 'ember-percy';
 
@@ -59,7 +58,6 @@ module('Acceptance | repo/trigger build', function (hooks) {
   });
 
   test('trigger link is not visible to users without proper permissions', async function (assert) {
-    signOutUser();
     this.repo.update('permissions', { create_request: false });
     await triggerBuildPage.visit({ owner: 'adal', repo: 'difference-engine' });
 

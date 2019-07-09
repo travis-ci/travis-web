@@ -4,13 +4,11 @@ import { setupApplicationTest } from 'travis/tests/helpers/setup-application-tes
 import proHeader from 'travis/tests/pages/header/pro';
 import footer from 'travis/tests/pages/footer';
 import { enableFeature } from 'ember-feature-flags/test-support';
-import signOutUser from 'travis/tests/helpers/sign-out-user';
 
 module('Acceptance | layouts/plans page', function (hooks) {
   setupApplicationTest(hooks);
 
   test('plans page renders correct header/footer', async function (assert) {
-    signOutUser();
     enableFeature('proVersion');
 
     await visit('/plans');

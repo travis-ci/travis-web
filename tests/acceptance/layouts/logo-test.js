@@ -3,15 +3,11 @@ import { module, test } from 'qunit';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import defaultHeader from 'travis/tests/pages/header/default';
 import footer from 'travis/tests/pages/footer';
-import signOutUser from 'travis/tests/helpers/sign-out-user';
 
 module('Acceptance | layouts/logo page', function (hooks) {
   setupApplicationTest(hooks);
 
   test('logo page renders correct header/footer', async function (assert) {
-    const currentUser = server.create('user');
-    signOutUser(currentUser);
-
     await visit('/logo');
 
     assert.equal(currentURL(), '/logo');

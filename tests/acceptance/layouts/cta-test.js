@@ -3,7 +3,6 @@ import { setupApplicationTest } from 'travis/tests/helpers/setup-application-tes
 import existingRepoPage from 'travis/tests/pages/repo-tabs/current';
 import defaultHeader from 'travis/tests/pages/header/default';
 import signInUser from 'travis/tests/helpers/sign-in-user';
-import signOutUser from 'travis/tests/helpers/sign-out-user';
 import { enableFeature } from 'ember-feature-flags/test-support';
 
 module('Acceptance | layouts/cta', function (hooks) {
@@ -11,8 +10,6 @@ module('Acceptance | layouts/cta', function (hooks) {
 
   test('cta is shown on .org when not on landing page and unauthenticated', async function (assert) {
     enableFeature('landingPageCta');
-    const currentUser = server.create('user');
-    signOutUser(currentUser);
     server.create('repository');
     await existingRepoPage.visit();
 

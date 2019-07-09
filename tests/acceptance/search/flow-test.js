@@ -3,7 +3,6 @@ import { module, test } from 'qunit';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import sidebarPage from 'travis/tests/pages/sidebar';
 import signInUser from 'travis/tests/helpers/sign-in-user';
-import signOutUser from 'travis/tests/helpers/sign-out-user';
 
 module('Acceptance | search/flow', function (hooks) {
   setupApplicationTest(hooks);
@@ -24,8 +23,6 @@ module('Acceptance | search/flow', function (hooks) {
   });
 
   test('searching while unauthenticated redirects to landing page', async function (assert) {
-    const currentUser = server.create('user');
-    signOutUser(currentUser);
     await visit('/search/foo');
 
     assert.equal(currentURL(), '/');

@@ -2,13 +2,11 @@ import { currentURL, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import { enableFeature } from 'ember-feature-flags/test-support';
-import signOutUser from 'travis/tests/helpers/sign-out-user';
 
 module('Acceptance | enterprise/navigation', function (hooks) {
   setupApplicationTest(hooks);
 
   hooks.beforeEach(function () {
-    signOutUser();
     server.get('/v3/enterprise_license', (schema, response) => {
       return {
         'license_id': 'ad12345',

@@ -3,15 +3,11 @@ import { setupApplicationTest } from 'travis/tests/helpers/setup-application-tes
 import defaultHeader from 'travis/tests/pages/header/default';
 import defaultLayout from 'travis/tests/pages/layouts/default';
 import signInUser from 'travis/tests/helpers/sign-in-user';
-import signOutUser from 'travis/tests/helpers/sign-out-user';
 
 module('Acceptance | layouts/default', function (hooks) {
   setupApplicationTest(hooks);
 
   test('header layout when unauthenticated', async function (assert) {
-    const currentUser = server.create('user');
-    signOutUser(currentUser);
-
     await defaultHeader.visit();
 
     assert.ok(defaultLayout.headerWrapperWhenUnauthenticated, 'Header is wrapped within proper DOM');
