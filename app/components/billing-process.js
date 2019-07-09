@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { computed, set } from '@ember/object';
+import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
 import { not, filterBy, mapBy, equal } from '@ember/object/computed';
@@ -104,10 +104,11 @@ export default Component.extend({
 
   actions: {
 
-    next() {
+    next(newSubscription) {
       const { steps, currentStep } = this;
-      const index = steps.indexOf(currentStep);
-      this.set('currentStep', steps[index + 1]);
+      this.set('newSubscription', newSubscription);
+      const currentIndex = steps.indexOf(currentStep);
+      this.set('currentStep', steps[currentIndex + 1]);
     },
 
     back() {
@@ -117,17 +118,15 @@ export default Component.extend({
     },
 
     cancel() {
-      this.reset();
       this.set('currentStep', STEPS.stepOne);
     },
 
     handleSubmit(token, lastDigits) {
-      const { newSubscription, account } = this;
+      const { account } = this;
       const organizationId = account.type === 'organization' ? account.id : null;
-      set(newSubscription, 'organizationId', organizationId);
-      set(newSubscription, 'plan', this.selectedPlan);
-      set(newSubscription.creditCardInfo, 'token', token);
-      set(newSubscription.creditCardInfo, 'lastDigits', lastDigits);
+      this.newSubscription.set('organizationId', organizationId);
+      this.newSubscription.set('plan', this.selectedPlan);
+      this.newSubscription.creditCardInfo.setProperties({token, lastDigits});
       this.save.perform();
     }
   }

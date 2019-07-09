@@ -9,6 +9,12 @@ export default Component.extend({
   years: generateYearsFromCurrent(11),
   stripe: service(),
 
+  cardName: 'Patrick',
+  cardNumber: '4242424242424242',
+  expiryDateMonth: '04',
+  cvc: '893',
+  expiryDateYear: '2020',
+
   makeStripePayment: task(function* () {
     try {
       const response = yield this.stripe.card.createToken({
