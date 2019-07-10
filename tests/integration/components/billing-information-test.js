@@ -33,6 +33,10 @@ module('Integration | Component | billing-information', function (hooks) {
       vatId: ''
     };
 
+    this['actions'] = {
+      next: () => { },
+    };
+
     this.setProperties({
       displayedPlans: plans,
       selectedPlan: plans[0],
@@ -48,6 +52,7 @@ module('Integration | Component | billing-information', function (hooks) {
       selectedPlan=selectedPlan 
       displayedPlans=displayedPlans 
       showAnnual=showAnnual
+      next=(action 'next')
     }}`);
 
     assert.dom('[data-test-billing-info-title]').hasText('Billing Cycle');
