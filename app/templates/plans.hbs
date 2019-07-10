@@ -12,10 +12,14 @@
   {{!-- Product section --}}
   <section class="px-4 py-3 mb-16">
     <div class="shadow-even-md rounded flex flex-wrap">
-      <div class="w-1/2 sm:w-1/4 p-4 border-b border-r border-grey-150">
-        {{svg-jar 'features-check' class="w-4"}}
-      </div>
-      <div class="w-1/2 sm:w-1/4 p-4 border-b border-r border-grey-150">
+      {{#each filteredPlans as |plan|}}
+        <div class="w-1/2 sm:w-1/4 p-4 border-b border-r border-grey-150">
+          <h3>{{plan.name}}</h3>
+          <h4>{{plan.price}}</h4>
+          {{svg-jar 'features-check' class="w-4"}}
+        </div>
+      {{/each}}
+      {{!-- <div class="w-1/2 sm:w-1/4 p-4 border-b sm:border-r border-grey-150">
         {{svg-jar 'features-check' class="w-4"}}
       </div>
       <div class="w-1/2 sm:w-1/4 p-4 border-b border-r border-grey-150">
@@ -23,8 +27,8 @@
       </div>
       <div class="w-1/2 sm:w-1/4 p-4 border-b border-grey-150">
         {{svg-jar 'features-check' class="w-4"}}
-      </div>
-      <div class="text-center p-4 w-full">
+      </div> --}}
+      <div class="w-full text-center p-4">
         <button>Start Your Free Trial</button>
       </div>
     </div>
