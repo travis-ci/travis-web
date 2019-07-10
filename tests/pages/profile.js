@@ -111,7 +111,7 @@ export default create({
       href: attribute('href')
     },
 
-    migrateButton: { scope: '[data-test-migrate-github-apps] '},
+    migrateButton: { scope: '[data-test-migrate-github-apps] ' },
   },
 
   manageGithubAppsLink: {
@@ -260,11 +260,30 @@ export default create({
     },
 
     noPermissionMessage: {
-      scope: '[data-test-no-permission-message]'
+      scope: '[data-test-no-permission-message]',
+    },
+
+    billingFormHeading: {
+      scope: '[data-test-billing-info-title]',
+    },
+
+    billingForm: {
+      scope: '[data-test-billing-form]',
+      isPresent: isPresent(),
+    },
+
+    billingFormInputs: {
+      scope: '[data-test-billing-form] input',
+      isPresent: isPresent(),
+    },
+
+    billingFormSelects: {
+      scope: '[data-test-billing-form] [data-billing-form-select]',
+      isPresent: isPresent(),
     },
 
     subscribeButton: {
-      scope: '[data-test-subscribe-button]',
+      scope: '[data-test-proceed-to-payment-button]',
     },
 
     marketplaceButton: {

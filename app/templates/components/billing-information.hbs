@@ -1,5 +1,5 @@
 {{#travis-form onSubmit=(action next newSubscription) as |form|}}
-  <div class="billing-form" data-billing-form>
+  <div class="billing-form" data-test-billing-form>
     <h3 data-test-billing-info-title>
       Billing Cycle
     </h3>
@@ -142,7 +142,7 @@
         {{/form.field}}
       </div>
     </div>
-    <div class="form-elem select">
+    <div class="form-elem select" data-billing-form-select>
       {{#form.field
         label="Country"
         value=newSubscription.billingInfo.country
@@ -175,7 +175,7 @@
       <button
         onclick={{form.submit}}
         class="button--blue"
-        data-test-subscribe-button
+        data-test-proceed-to-payment-button
       >
         Proceed to Payment
       </button>

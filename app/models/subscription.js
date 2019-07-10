@@ -25,6 +25,7 @@ export default Model.extend({
   isSubscribed: equal('status', 'subscribed'),
   isCanceled: equal('status', 'canceled'),
   isExpired: equal('status', 'expired'),
+  isPending: equal('status', 'pending'),
   isStripe: equal('source', 'stripe'),
   isGithub: equal('source', 'github'),
   isManual: equal('source', 'manual'),
