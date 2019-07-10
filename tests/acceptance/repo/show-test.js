@@ -6,6 +6,7 @@ import { setupApplicationTest } from 'travis/tests/helpers/setup-application-tes
 import page from 'travis/tests/pages/repo/show';
 import buildPage from 'travis/tests/pages/build';
 import signInUser from 'travis/tests/helpers/sign-in-user';
+import config from 'travis/config/environment';
 
 module('Acceptance | show repo page', function (hooks) {
   setupApplicationTest(hooks);
@@ -95,7 +96,8 @@ module('Acceptance | show repo page', function (hooks) {
     await page.visit({ organization: 'org-login', repo: 'repository-name' });
     await page.statusBadge.click();
 
-    const url = new URL(page.statusBadge.src);
+    const endpoint = config.apiEndpoint === '' ? 'https://api.travis-ci.org' : config.apiEndpoint;
+    const url = new URL(`${endpoint}${page.statusBadge.src}`);
     const expectedPath = `${url.pathname}?${url.searchParams}`;
     assert.equal(expectedPath, '/org-login/repository-name.svg?branch=feminist%23yes');
 
