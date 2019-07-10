@@ -124,9 +124,8 @@ export default Component.extend({
     handleSubmit(token, lastDigits) {
       const { account } = this;
       const organizationId = account.type === 'organization' ? account.id : null;
-      this.newSubscription.set('organizationId', organizationId);
-      this.newSubscription.set('plan', this.selectedPlan);
-      this.newSubscription.creditCardInfo.setProperties({token, lastDigits});
+      this.newSubscription.setProperties({ organizationId, plan: this.selectedPlan });
+      this.newSubscription.creditCardInfo.setProperties({ token, lastDigits });
       this.save.perform();
     }
   }

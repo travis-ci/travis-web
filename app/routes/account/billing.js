@@ -22,7 +22,7 @@ export default TravisRoute.extend({
       state: 'Lagos',
       zipCode: '43434',
       country: 'Nigeria',
-      vatId: ' DE999999999',
+      vatId: ' DE282002648',
       billingEmail: 'inem@gmail.org',
     });
     const plan = this.store.createRecord('plan');
