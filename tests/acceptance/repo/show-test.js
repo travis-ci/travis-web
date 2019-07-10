@@ -99,7 +99,7 @@ module('Acceptance | show repo page', function (hooks) {
     const endpoint = config.apiEndpoint === '' ? 'https://api.travis-ci.org' : config.apiEndpoint;
     const url = new URL(`${endpoint}${page.statusBadge.src}`);
     const expectedPath = `${url.pathname}?${url.searchParams}`;
-    assert.equal(expectedPath, '/org-login/repository-name.svg?branch=feminist%23yes');
+    assert.equal(expectedPath, '//api.travis-ci.org/org-login/repository-name.svg?branch=feminist%23yes');
 
     assert.equal(page.statusBadge.title, 'Latest push build on default branch: passed');
   });
