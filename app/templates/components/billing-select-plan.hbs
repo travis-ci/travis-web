@@ -1,6 +1,7 @@
-<div class="billing-plans flex flex--wrap flex--space-between">
+<div class="billing-plans flex flex--wrap flex--space-between" data-test-billing-plan-choices>
   {{#each displayedPlans as |plan|}}
     <div
+      data-test-plan-box
       class="billing-plans__box pointer
         {{if (eq plan.id selectedPlan.id) "highlight-plan"}}"
       onclick={{action (mut selectedPlan) plan}}

@@ -33,10 +33,10 @@ module('Acceptance | profile/billing', function (hooks) {
     });
     this.plan = plan;
 
-    server.create('plan', { id: 'travis-ci-one-build', name: 'AM', builds: 1, price: 6900, currency: 'USD' });
-    server.create('plan', { id: 'travis-ci-two-builds', name: 'BM', builds: 2, price: 12900, currency: 'USD' });
-    server.create('plan', { id: 'travis-ci-five-builds', name: 'CM', builds: 5, price: 24900, currency: 'USD' });
-    server.create('plan', { id: 'travis-ci-ten-builds', name: 'DM', builds: 10, price: 48900, currency: 'USD' });
+    server.create('plan', { id: 'travis-ci-one-build', name: 'Bootstrap', builds: 1, price: 6900, currency: 'USD' });
+    server.create('plan', { id: 'travis-ci-two-builds', name: 'Startup', builds: 2, price: 12900, currency: 'USD' });
+    server.create('plan', { id: 'travis-ci-five-builds', name: 'Premium', builds: 5, price: 24900, currency: 'USD' });
+    server.create('plan', { id: 'travis-ci-ten-builds', name: 'Small Business', builds: 10, price: 48900, currency: 'USD' });
 
     server.create('plan', { id: 'travis-ci-one-build-annual', name: 'AA', builds: 1, price: 75900, currency: 'USD', annual: true });
     server.create('plan', { id: 'travis-ci-two-builds-annual', name: 'BA', builds: 2, price: 141900, currency: 'USD', annual: true });
@@ -335,7 +335,22 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.ok(profilePage.billing.annualInvitation.isHidden, 'expected the invitation to switch to annual billing to be hidden');
   });
 
-  test('view billing tab when no subscription write permissions', async function (assert) {
+
+  test('view billing tab when not subscribed and has subscription write permissions', async function (assert) {
+    this.subscription.destroy();
+
+    await profilePage.visit();
+    await profilePage.billing.visit();
+
+    assert.ok(profilePage.billing.billingForm.isPresent);
+    assert.ok(profilePage.billing.billingPlanChoices.isPresent);
+    assert.equal(profilePage.billing.subscribeButton.text, 'Proceed to Payment');
+    assert.dom(profilePage.billing.billingForm.input.scope).exists({ count: 9 });
+    assert.dom(profilePage.billing.billingForm.select.scope).exists({ count: 1 });
+    assert.dom(profilePage.billing.billingPlanChoices.boxes.scope).exists({ count: 4 });
+  });
+
+  test('view billing tab when subscribed and no subscription write permissions', async function (assert) {
     this.subscription.permissions.write = false;
     this.subscription.save();
 
@@ -370,7 +385,12 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.accounts[1].visit();
     await profilePage.billing.visit();
 
+    assert.ok(profilePage.billing.billingForm.isPresent);
+    assert.ok(profilePage.billing.billingPlanChoices.isPresent);
     assert.equal(profilePage.billing.subscribeButton.text, 'Proceed to Payment');
+    assert.dom(profilePage.billing.billingForm.input.scope).exists({ count: 9 });
+    assert.dom(profilePage.billing.billingForm.select.scope).exists({ count: 1 });
+    assert.dom(profilePage.billing.billingPlanChoices.boxes.scope).exists({ count: 4 });
   });
 
   test('view billing tab when trial has not started', async function (assert) {

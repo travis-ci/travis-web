@@ -270,16 +270,25 @@ export default create({
     billingForm: {
       scope: '[data-test-billing-form]',
       isPresent: isPresent(),
+
+      input: {
+        scope: '[data-test-billing-form] input',
+        isPresent: isPresent(),
+      },
+
+      select: {
+        scope: '[data-test-billing-form] [data-billing-form-select]',
+        isPresent: isPresent(),
+      }
     },
 
-    billingFormInputs: {
-      scope: '[data-test-billing-form] input',
+    billingPlanChoices: {
+      scope: '[data-test-billing-plan-choices]',
       isPresent: isPresent(),
-    },
 
-    billingFormSelects: {
-      scope: '[data-test-billing-form] [data-billing-form-select]',
-      isPresent: isPresent(),
+      boxes: {
+        scope: '[data-test-plan-box]',
+      }
     },
 
     subscribeButton: {
