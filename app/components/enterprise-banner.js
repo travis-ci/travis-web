@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 
 import { computed } from '@ember/object';
-import { alias } from '@ember/object/computed';
+import { and, alias } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import { htmlSafe } from '@ember/string';
 import { task } from 'ember-concurrency';
@@ -112,17 +112,9 @@ export default Component.extend({
 
   showTrialBanner: alias('isTrial'),
 
-  showLicenseBanner: computed('isPaid', 'checkLicenseBanner', function () {
-    let isPaid = this.get('isPaid');
-    let check = this.get('checkLicenseBanner');
-    return (isPaid && check);
-  }),
+  showLicenseBanner: and('isPaid', 'checkLicenseBanner'),
 
-  showSeatsBanner: computed('isPaid', 'checkSeatsBanner', function () {
-    let isPaid = this.get('isPaid');
-    let check = this.get('checkSeatsBanner');
-    return (isPaid && check);
-  }),
+  showSeatsBanner: and('isPaid', 'checkSeatsBanner'),
 
   checkSeatsBanner: computed('almostExceedingSeats', 'exceedingSeats', function () {
     let almostExceeding = this.get('almostExceedingSeats');

@@ -12,7 +12,7 @@ import config from 'travis/config/environment';
 
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
-import { alias } from '@ember/object/computed';
+import { alias, and } from '@ember/object/computed';
 
 Log.LIMIT = config.logLimit;
 
@@ -227,11 +227,7 @@ export default Component.extend({
     }
   }),
 
-  showToTop: computed('log.hasContent', 'job.canRemoveLog', function () {
-    let hasContent = this.get('log.hasContent');
-    let canRemoveLog = this.get('job.canRemoveLog');
-    return hasContent && canRemoveLog;
-  }),
+  showToTop: and('log.hasContent', 'job.canRemoveLog'),
 
   showTailing: alias('showToTop'),
 
