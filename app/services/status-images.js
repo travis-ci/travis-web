@@ -6,29 +6,22 @@ export default Service.extend({
   features: service(),
 
   imageUrl(repo, branch) {
-    let prefix = `${location.protocol}//${location.host}`;
-
-    // the ruby app (waiter) does an indirect, internal redirect to api on build status images
-    // but that does not work if you only run `ember serve`
-    // so in development we use the api endpoint directly
-    if (config.environment === 'development') {
-      prefix = config.apiEndpoint;
-    }
-
-    let slug = repo.get('slug');
+    const { apiEndpoint } = config;
+    const slug = repo.get('slug');
 
     // In Enterprise you can toggle public mode, where even "public" repositories are hidden
     // in which cases we need to generate a token for all images
     if (!config.publicMode || repo.get('private')) {
       const token = this.get('auth').assetToken();
-      return `${prefix}/${slug}.svg?token=${token}${branch ? `&branch=${branch}` : ''}`;
+      return `${apiEndpoint}/${slug}.svg?token=${token}${branch ? `&branch=${branch}` : ''}`;
     } else {
-      return `${prefix}/${slug}.svg${branch ? `?branch=${encodeURIComponent(branch)}` : ''}`;
+      return `${apiEndpoint}/${slug}.svg${branch ? `?branch=${encodeURIComponent(branch)}` : ''}`;
     }
   },
 
   repositoryUrl(repo) {
-    return `https://${location.host}/${repo.get('slug')}`;
+    const { apiEndpoint } = config;
+    return `${apiEndpoint}/${repo.get('slug')}`;
   },
 
   markdownImageString(repo, branch) {

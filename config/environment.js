@@ -264,7 +264,6 @@ module.exports = function (environment) {
     ENV.statusPageStatusUrl = undefined;
 
     ENV.billingEndpoint = 'https://billing.travis-ci.com';
-    ENV.apiEndpoint = '';
     ENV.marketplaceEndpoint = 'https://github.com/marketplace/travis-ci/';
   }
 
