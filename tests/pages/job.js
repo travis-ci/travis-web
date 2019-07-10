@@ -10,6 +10,8 @@ import {
   attribute
 } from 'ember-cli-page-object';
 
+import joinTexts from 'travis/tests/pages/helpers/join-texts';
+
 export default create({
   visit: visitable('travis-ci/travis-web/jobs/1'),
 
@@ -85,32 +87,31 @@ export default create({
 
   toggleLog: clickable('.toggle-log-button'),
 
-  logLines: collection('pre#log .log-line span:first-of-type', {
-    text: text(),
-    nextText: text('+ span'),
+  logLines: collection('pre#log .log-line', {
+    entireLineText: joinTexts('span'),
 
-    isBlack: hasClass('black'),
-    isRed: hasClass('red'),
-    isGreen: hasClass('green'),
-    isYellow: hasClass('yellow'),
-    isBlue: hasClass('blue'),
-    isMagenta: hasClass('magenta'),
-    isCyan: hasClass('cyan'),
-    isWhite: hasClass('white'),
-    isGrey: hasClass('grey'),
+    isBlack: hasClass('black', 'span:last-of-type'),
+    isRed: hasClass('red', 'span:last-of-type'),
+    isGreen: hasClass('green', 'span:last-of-type'),
+    isYellow: hasClass('yellow', 'span:last-of-type'),
+    isBlue: hasClass('blue', 'span:last-of-type'),
+    isMagenta: hasClass('magenta', 'span:last-of-type'),
+    isCyan: hasClass('cyan', 'span:last-of-type'),
+    isWhite: hasClass('white', 'span:last-of-type'),
+    isGrey: hasClass('grey', 'span:last-of-type'),
 
-    hasBlackBackground: hasClass('bg-black'),
-    hasRedBackground: hasClass('bg-red'),
-    hasGreenBackground: hasClass('bg-green'),
-    hasYellowBackground: hasClass('bg-yellow'),
-    hasBlueBackground: hasClass('bg-blue'),
-    hasMagentaBackground: hasClass('bg-magenta'),
-    hasCyanBackground: hasClass('bg-cyan'),
-    hasWhiteBackground: hasClass('bg-white'),
+    hasBlackBackground: hasClass('bg-black', 'span:last-of-type'),
+    hasRedBackground: hasClass('bg-red', 'span:last-of-type'),
+    hasGreenBackground: hasClass('bg-green', 'span:last-of-type'),
+    hasYellowBackground: hasClass('bg-yellow', 'span:last-of-type'),
+    hasBlueBackground: hasClass('bg-blue', 'span:last-of-type'),
+    hasMagentaBackground: hasClass('bg-magenta', 'span:last-of-type'),
+    hasCyanBackground: hasClass('bg-cyan', 'span:last-of-type'),
+    hasWhiteBackground: hasClass('bg-white', 'span:last-of-type'),
 
-    isBolded: hasClass('bold'),
-    isItalicised: hasClass('italic'),
-    isUnderlined: hasClass('underline')
+    isBolded: hasClass('bold', 'span:last-of-type'),
+    isItalicised: hasClass('italic', 'span:last-of-type'),
+    isUnderlined: hasClass('underline', 'span:last-of-type')
   }),
 
   logFolds: collection('pre#log .fold-start', {

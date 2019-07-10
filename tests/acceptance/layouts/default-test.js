@@ -1,15 +1,15 @@
-import { test } from 'qunit';
-import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
+import { module, test } from 'qunit';
+import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import defaultHeader from 'travis/tests/pages/header/default';
 import defaultLayout from 'travis/tests/pages/layouts/default';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 
-moduleForAcceptance('Acceptance | layouts/default');
+module('Acceptance | layouts/default', function (hooks) {
+  setupApplicationTest(hooks);
 
-test('header layout when unauthenticated', function (assert) {
-  defaultHeader.visit();
+  test('header layout when unauthenticated', async function (assert) {
+    await defaultHeader.visit();
 
-  andThen(function () {
     assert.ok(defaultLayout.headerWrapperWhenUnauthenticated, 'Header is wrapped within proper DOM');
     assert.ok(defaultHeader.logoPresent, 'Default header has logo');
     assert.equal(defaultHeader.navigationLinks[0].title, 'About Us', 'Shows link to About Us');
@@ -19,15 +19,13 @@ test('header layout when unauthenticated', function (assert) {
 
     assert.ok(defaultHeader.loginLinkPresent, 'Default header has login button');
   });
-});
 
-test('header layout when authenticated', function (assert) {
-  const currentUser = server.create('user');
-  signInUser(currentUser);
+  test('header layout when authenticated', async function (assert) {
+    const currentUser = server.create('user');
+    signInUser(currentUser);
 
-  defaultHeader.visit();
+    await defaultHeader.visit();
 
-  andThen(function () {
     assert.ok(defaultLayout.headerWrapperWhenAuthenticated, 'Header is wrapped within proper DOM');
     assert.ok(defaultHeader.logoPresent, 'Default header has logo');
     assert.ok(defaultHeader.broadcastsPresent, 'Default header shows broadcasts tower');
