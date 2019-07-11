@@ -34,7 +34,7 @@ module('Acceptance | profile/billing', function (hooks) {
     this.plan = plan;
 
     server.create('plan', { id: 'travis-ci-one-build', name: 'Bootstrap', builds: 1, price: 6900, currency: 'USD' });
-    server.create('plan', { id: 'travis-ci-two-builds', name: 'Startup', builds: 2, price: 12900, currency: 'USD' });
+    this.defaultPlan = server.create('plan', { id: 'travis-ci-two-builds', name: 'Startup', builds: 2, price: 12900, currency: 'USD' });
     server.create('plan', { id: 'travis-ci-five-builds', name: 'Premium', builds: 5, price: 24900, currency: 'USD' });
     server.create('plan', { id: 'travis-ci-ten-builds', name: 'Small Business', builds: 10, price: 48900, currency: 'USD' });
 
@@ -346,10 +346,10 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.ok(profilePage.billing.billingPlanChoices.isPresent);
 
     assert.ok(profilePage.billing.selectedBillingPlan.isPresent);
-    assert.dom(profilePage.billing.selectedBillingPlan.name.scope).hasTextContaining('Startup plan');
-    assert.dom(profilePage.billing.selectedBillingPlan.jobs.scope).hasTextContaining('2 concurrent jobs');
+    assert.dom(profilePage.billing.selectedBillingPlan.name.scope).hasTextContaining(`${this.defaultPlan.name} plan`);
+    assert.dom(profilePage.billing.selectedBillingPlan.jobs.scope).hasTextContaining(`${this.defaultPlan.builds} concurrent jobs`);
     assert.dom(profilePage.billing.selectedBillingPlan.freeJobs.scope).hasTextContaining('3 free concurrent jobs');
-    assert.dom(profilePage.billing.selectedBillingPlan.price.scope).hasTextContaining('$129 /month');
+    assert.dom(profilePage.billing.selectedBillingPlan.price.scope).hasTextContaining(`$${this.defaultPlan.price / 100} /month`);
 
     assert.dom(profilePage.billing.billingForm.input.scope).exists({ count: 9 });
     assert.dom(profilePage.billing.billingForm.select.scope).exists({ count: 1 });
@@ -396,10 +396,10 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.ok(profilePage.billing.billingPlanChoices.isPresent);
 
     assert.ok(profilePage.billing.selectedBillingPlan.isPresent);
-    assert.dom(profilePage.billing.selectedBillingPlan.name.scope).hasTextContaining('Startup plan');
-    assert.dom(profilePage.billing.selectedBillingPlan.jobs.scope).hasTextContaining('2 concurrent jobs');
+    assert.dom(profilePage.billing.selectedBillingPlan.name.scope).hasTextContaining(`${this.defaultPlan.name} plan`);
+    assert.dom(profilePage.billing.selectedBillingPlan.jobs.scope).hasTextContaining(`${this.defaultPlan.builds} concurrent jobs`);
     assert.dom(profilePage.billing.selectedBillingPlan.freeJobs.scope).hasTextContaining('3 free concurrent jobs');
-    assert.dom(profilePage.billing.selectedBillingPlan.price.scope).hasTextContaining('$129 /month');
+    assert.dom(profilePage.billing.selectedBillingPlan.price.scope).hasTextContaining(`$${this.defaultPlan.price / 100} /month`);
 
     assert.dom(profilePage.billing.billingForm.input.scope).exists({ count: 9 });
     assert.dom(profilePage.billing.billingForm.select.scope).exists({ count: 1 });
