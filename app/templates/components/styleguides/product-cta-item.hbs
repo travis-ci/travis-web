@@ -1,0 +1,16 @@
+<h3>{{product.name}}</h3>
+<h4>{{product.description}}</h4>
+
+<div>
+  {{product.builds}}
+  {{pluralize product.builds 'Concurrent job' without-count=true}}
+</div>
+<div>{{svg-jar 'features-check' class="w-4 inline-block"}} Unlimited build minutes</div>
+<div>{{svg-jar 'features-check' class="w-4 inline-block"}} Unlimited repositories</div>
+<div>{{svg-jar 'features-check' class="w-4 inline-block"}} Unlimited collaborators</div>
+
+<div>
+  {{product.currencySymbol}}{{product.displayPrice}}
+  {{product.currency}}
+  {{product.interval}}
+</div>

@@ -11,18 +11,7 @@
 
   {{!-- Product section --}}
   <section class="mb-16">
-    <div class="shadow-even-md rounded flex flex-wrap overflow-hidden">
-      {{#each filteredPlans as |plan|}}
-        <div class="w-1/2 sm:w-1/4 p-4 border-grey-150 border ">
-          <h3>{{plan.name}}</h3>
-          <h4>{{plan.price}}</h4>
-          {{svg-jar 'features-check' class="w-4"}}
-        </div>
-      {{/each}}
-      <div class="w-full text-center p-4 border-grey-150 border">
-        <button>Start Your Free Trial</button>
-      </div>
-    </div>
+    {{styleguides/product-cta products=filteredPlans}}
   </section>
 
   <section class="inner section--two section--os">
