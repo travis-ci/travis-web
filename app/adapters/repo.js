@@ -15,7 +15,9 @@ export default V3Adapter.extend({
     'repository.current_build',
     'owner.installation',
     'owner.github_id',
-    'repository.email_subscribed'
+    'repository.email_subscribed',
+    'repository.vcs_id',
+    'repository.vcs_type',
   ].join(','),
 
   buildURL(modelName, id, snapshot, requestType, query) {

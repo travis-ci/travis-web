@@ -40,6 +40,8 @@ const Repo = Model.extend({
   emailSubscribed: attr('boolean'),
   migrationStatus: attr('string'),
   historyMigrationStatus: attr('string'),
+  vcsId: attr('number'),
+  vcsType: attr('string'),
 
   ownerType: reads('owner.@type'),
 
