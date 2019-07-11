@@ -1,7 +1,7 @@
 {{#travis-layout layoutName="layouts/center" class="text-grey-800 font-sans"}}
   {{!-- Header section --}}
-  <section class="px-4 py-3 mb-16">
-    <header class="text-center mb-16">
+  <section class="mt-3 mb-16">
+    <header class="text-center">
       <h1 class="text-6xl font-bold">Built for every team</h1>
       <p>Set up your first project in just one minute.<br>
         Your first 100 builds are free! No credit card required.
@@ -10,25 +10,16 @@
   </section>
 
   {{!-- Product section --}}
-  <section class="px-4 py-3 mb-16">
-    <div class="shadow-even-md rounded flex flex-wrap">
+  <section class="mb-16">
+    <div class="shadow-even-md rounded flex flex-wrap overflow-hidden">
       {{#each filteredPlans as |plan|}}
-        <div class="w-1/2 sm:w-1/4 p-4 border-b border-r border-grey-150">
+        <div class="w-1/2 sm:w-1/4 p-4 border-grey-150 border ">
           <h3>{{plan.name}}</h3>
           <h4>{{plan.price}}</h4>
           {{svg-jar 'features-check' class="w-4"}}
         </div>
       {{/each}}
-      {{!-- <div class="w-1/2 sm:w-1/4 p-4 border-b sm:border-r border-grey-150">
-        {{svg-jar 'features-check' class="w-4"}}
-      </div>
-      <div class="w-1/2 sm:w-1/4 p-4 border-b border-r border-grey-150">
-        {{svg-jar 'features-check' class="w-4"}}
-      </div>
-      <div class="w-1/2 sm:w-1/4 p-4 border-b border-grey-150">
-        {{svg-jar 'features-check' class="w-4"}}
-      </div> --}}
-      <div class="w-full text-center p-4">
+      <div class="w-full text-center p-4 border-grey-150 border">
         <button>Start Your Free Trial</button>
       </div>
     </div>
