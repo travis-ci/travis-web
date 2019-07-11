@@ -270,6 +270,7 @@ export default create({
     billingForm: {
       scope: '[data-test-billing-form]',
       isPresent: isPresent(),
+      fillIn: fillable(''),
 
       input: {
         scope: '[data-test-billing-form] input',
@@ -279,7 +280,17 @@ export default create({
       select: {
         scope: '[data-test-billing-form] [data-billing-form-select]',
         isPresent: isPresent(),
-      }
+      },
+
+    },
+
+    // billingSelectCountry: {
+    //   scope: '.billing-country'
+    // },
+
+    billingPaymentForm: {
+      score: '[data-test-payment-form]',
+      isPresent: isPresent(),
     },
 
     billingPlanChoices: {

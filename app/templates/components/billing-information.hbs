@@ -1,27 +1,27 @@
 {{#travis-form onSubmit=(action next newSubscription) as |form|}}
-  <div class="billing-form" data-test-billing-form>
+  <div class='billing-form' data-test-billing-form>
     <h3 data-test-billing-info-title>
       Billing Cycle
     </h3>
-    <div class="flex flex-wrap billing-plan-switch">
-      <div class="form-elem">
+    <div class='flex flex-wrap billing-plan-switch'>
+      <div class='form-elem'>
         {{#form.field
           disableFrame=true
-          class="display-value-switch"
+          class='display-value-switch'
           value=showAnnual
           onChange=(action (mut showAnnual)) as |field|
         }}
-          {{field.switch offText="Monthly" onText="Yearly"}}
+          {{field.switch offText='Monthly' onText='Yearly'}}
         {{/form.field}}
       </div>
-      <div class="billing-plan-switch m-l-s">
+      <div class='billing-plan-switch m-l-s'>
         {{#if showMonthly}}
           <h5>
             Recommendation:
           </h5>
           <p>
             Switch to annual billing to recieve
-            <span class="font--italic font--bolder">
+            <span class='font--italic font--bolder'>
               one month free!
             </span>
           </p>
@@ -39,142 +39,144 @@
     <h3>
       Contact details
     </h3>
-    <div class="flex flex--col flex-md-row">
-      <div class="full-width form-elem inline-form-elem">
+    <div class='flex flex--col flex-md-row'>
+      <div class='full-width form-elem inline-form-elem'>
         {{#form.field
-          label="First Name"
+          label='First Name'
           value=newSubscription.billingInfo.firstName
           required=true
           showRequiredMark=true
           showValidationStatusIcons=false
           onChange=(action (mut newSubscription.billingInfo.firstName)) as |field|
         }}
-          {{field.input}}
+          {{field.input name='firstname'}}
         {{/form.field}}
       </div>
-      <div class="full-width form-elem">
+      <div class='full-width form-elem'>
         {{#form.field
-          label="Last Name"
+          label='Last Name'
           value=newSubscription.billingInfo.lastName
           required=true
           showRequiredMark=true
           onChange=(action (mut newSubscription.billingInfo.lastName))
           showValidationStatusIcons=false as |field|
         }}
-          {{field.input}}
+          {{field.input name='lastname'}}
         {{/form.field}}
       </div>
     </div>
-    <div class="form-elem billing-optional-field">
+    <div class='form-elem billing-optional-field'>
       {{#form.field
-        label="Company Name"
+        label='Company Name'
         value=newSubscription.billingInfo.company
         onChange=(action (mut newSubscription.billingInfo.company))
         showValidationStatusIcons=false as |field|
       }}
-        {{field.input}}
+        {{field.input name='companyName'}}
       {{/form.field}}
     </div>
-    <div class="form-elem">
+    <div class='form-elem'>
       {{#form.field
-        label="Billing Email Address"
+        label='Billing Email Address'
         value=newSubscription.billingInfo.billingEmail
         required=true
         showRequiredMark=true
         onChange=(action (mut newSubscription.billingInfo.billingEmail))
         showValidationStatusIcons=false as |field|
       }}
-        {{field.input}}
+        {{field.input name='email'}}
       {{/form.field}}
     </div>
     <h3>
       Billing address
     </h3>
-    <div class="flex flex--col flex-md-row">
-      <div class="full-width form-elem inline-form-elem">
+    <div class='flex flex--col flex-md-row'>
+      <div class='full-width form-elem inline-form-elem'>
         {{#form.field
-          label="Street Address"
+          label='Street Address'
           value=newSubscription.billingInfo.address
           showRequiredMark=true
           required=true
           showValidationStatusIcons=false
           onChange=(action (mut newSubscription.billingInfo.address)) as |field|
         }}
-          {{field.input}}
+          {{field.input name='address'}}
         {{/form.field}}
       </div>
-      <div class="full-width form-elem">
+      <div class='full-width form-elem'>
         {{#form.field
-          label="Suite,Apt"
+          label='Suite,Apt'
           value=newSubscription.billingInfo.address2
           showRequiredMark=true
           required=true
           onChange=(action (mut newSubscription.billingInfo.address2))
           showValidationStatusIcons=false as |field|
         }}
-          {{field.input}}
+          {{field.input name='suite'}}
         {{/form.field}}
       </div>
     </div>
-    <div class="flex flex--col flex-md-row">
-      <div class="full-width form-elem inline-form-elem">
+    <div class='flex flex--col flex-md-row'>
+      <div class='full-width form-elem inline-form-elem'>
         {{#form.field
-          label="City"
+          label='City'
           value=newSubscription.billingInfo.city
           showRequiredMark=true
           required=true
           onChange=(action (mut newSubscription.billingInfo.city))
           showValidationStatusIcons=false as |field|
         }}
-          {{field.input}}
+          {{field.input name='city'}}
         {{/form.field}}
       </div>
-      <div class="full-width form-elem">
+      <div class='full-width form-elem'>
         {{#form.field
-          label="Zip Code"
+          label='Zip Code'
           value=newSubscription.billingInfo.zipCode
           showRequiredMark=true
           required=true
           onChange=(action (mut newSubscription.billingInfo.zipCode))
           showValidationStatusIcons=false as |field|
         }}
-          {{field.input}}
+          {{field.input name='zip'}}
         {{/form.field}}
       </div>
     </div>
-    <div class="form-elem select" data-billing-form-select>
+    <div class='form-elem select' data-billing-form-select>
       {{#form.field
-        label="Country"
+        label='Country'
         value=newSubscription.billingInfo.country
         showRequiredMark=true
+        class='billing-country'
         required=true
         onChange=(action (mut newSubscription.billingInfo.country))
         showValidationStatusIcons=false as |field|
       }}
         {{#field.select
-          placeholder="Select a country"
+          placeholder='Select country'
+          class='billing-country'
           options=countries as |country|
         }}
           {{country}}
         {{/field.select}}
       {{/form.field}}
     </div>
-    <div class="form-elem">
+    <div class='form-elem'>
       {{#form.field
-        label="Vat Id"
+        label='Vat Id'
         value=newSubscription.billingInfo.vatId
         showRequiredMark=true
         required=true
         onChange=(action (mut newSubscription.billingInfo.vatId))
         showValidationStatusIcons=false as |field|
       }}
-        {{field.input}}
+        {{field.input name='vat'}}
       {{/form.field}}
     </div>
-    <div class="form-elem">
+    <div class='form-elem'>
       <button
         onclick={{form.submit}}
-        class="button--blue"
+        class='button--blue'
         data-test-proceed-to-payment-button
       >
         Proceed to Payment

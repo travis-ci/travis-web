@@ -625,3 +625,33 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.ok(profilePage.billing.annualInvitation.isHidden);
   });
 });
+
+test('view billing tab when no subscription should fill form at transition to payment', function (assert) {
+  this.subscription.destroy();
+
+  profilePage.visit();
+  profilePage.billing.visit();
+
+  const { billingForm, subscribeButton, billingPaymentForm } = profilePage.billing;
+
+  // selectChoose('.billing-country', 'Germany');
+
+  billingForm
+    .fillIn('firstname', 'John')
+    .fillIn('lastname', 'Doe')
+    .fillIn('companyName', 'Travis')
+    .fillIn('email', 'john@doe.com')
+    .fillIn('address', '15 Olalubi street')
+    .fillIn('suite', '23 Grace')
+    .fillIn('city', 'Berlin')
+    .fillIn('zip', '353564')
+    .fillIn('vat', '356463');
+
+  subscribeButton.click();
+
+  andThen(() => {
+    percySnapshot(assert);
+
+    assert.ok(billingPaymentForm.isPresent);
+  });
+});

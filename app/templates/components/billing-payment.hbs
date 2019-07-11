@@ -1,5 +1,5 @@
 {{#travis-form onSubmit=(perform makeStripePayment) as |form|}}
-  <div class="billing-form" data-billing-form>
+  <div class="billing-form" data-test-payment-form>
     {{billing-select-plan
       selectedPlan=selectedPlan
       showAnnual=showAnnual
