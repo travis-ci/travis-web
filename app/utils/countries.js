@@ -1,4 +1,4 @@
-const countries = {
+const countriesMap = {
   AF: 'Afghanistan',
   AX: 'Aland Islands',
   AL: 'Albania',
@@ -246,4 +246,4 @@ const countries = {
   ZW: 'Zimbabwe'
 };
 
-export const getCountries = Object.values(countries);
+export const countries = Object.values(countriesMap);

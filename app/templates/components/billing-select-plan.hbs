@@ -27,18 +27,18 @@
     </div>
   {{/each}}
 </div>
-<div class="selected-plan">
+<div class="selected-plan" data-test-selected-plan>
   <div class="selected-plan__details">
     <p class="selected-plan__details--plan">
       Your plan details
     </p>
-    <p class="selected-plan__details--name">
+    <p class="selected-plan__details--name" data-test-selected-plan-name>
       {{selectedPlan.name}} plan
     </p>
-    <p class="selected-plan__details--jobs">
+    <p class="selected-plan__details--jobs" data-test-selected-plan-jobs>
       {{selectedPlan.builds}} concurrent {{pluralize-word selectedPlan.builds "job" "jobs"}}
     </p>
-    <p class="selected-plan__details--free-jobs">
+    <p class="selected-plan__details--free-jobs" data-test-selected-plan-free-jobs>
       3
       <span class="font--italic">
         free
@@ -51,7 +51,7 @@
       <p class="selected-plan__price--total">
         Total:
       </p>
-      <p class="selected-plan__price--large">
+      <p class="selected-plan__price--large" data-test-selected-plan-price>
         {{format-currency selectedPlan.price}}
         <span>
           {{if showAnnual "/year" "/month"}}

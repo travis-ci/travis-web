@@ -291,6 +291,27 @@ export default create({
       }
     },
 
+    selectedBillingPlan: {
+      scope: '[data-test-selected-plan]',
+      isPresent: isPresent(),
+
+      name: {
+        scope: '[data-test-selected-plan-name]'
+      },
+
+      jobs: {
+        scope: '[data-test-selected-plan-jobs]'
+      },
+
+      freeJobs: {
+        scope: '[data-test-selected-plan-free-jobs]'
+      },
+
+      price: {
+        scope: '[data-test-selected-plan-price]'
+      }
+    },
+
     subscribeButton: {
       scope: '[data-test-proceed-to-payment-button]',
     },

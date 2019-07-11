@@ -1,6 +1,6 @@
 import Component from '@ember/component';
-import { getCountries } from '../utils/countries';
+import { countries } from '../utils/countries';
 
 export default Component.extend({
-  countries: getCountries,
+  countries
 });

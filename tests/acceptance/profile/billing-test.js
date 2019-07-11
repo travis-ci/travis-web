@@ -344,10 +344,17 @@ module('Acceptance | profile/billing', function (hooks) {
 
     assert.ok(profilePage.billing.billingForm.isPresent);
     assert.ok(profilePage.billing.billingPlanChoices.isPresent);
-    assert.equal(profilePage.billing.subscribeButton.text, 'Proceed to Payment');
+
+    assert.ok(profilePage.billing.selectedBillingPlan.isPresent);
+    assert.dom(profilePage.billing.selectedBillingPlan.name.scope).hasTextContaining('Startup plan');
+    assert.dom(profilePage.billing.selectedBillingPlan.jobs.scope).hasTextContaining('2 concurrent jobs');
+    assert.dom(profilePage.billing.selectedBillingPlan.freeJobs.scope).hasTextContaining('3 free concurrent jobs');
+    assert.dom(profilePage.billing.selectedBillingPlan.price.scope).hasTextContaining('$129 /month');
+
     assert.dom(profilePage.billing.billingForm.input.scope).exists({ count: 9 });
     assert.dom(profilePage.billing.billingForm.select.scope).exists({ count: 1 });
     assert.dom(profilePage.billing.billingPlanChoices.boxes.scope).exists({ count: 4 });
+    assert.equal(profilePage.billing.subscribeButton.text, 'Proceed to Payment');
   });
 
   test('view billing tab when subscribed and no subscription write permissions', async function (assert) {
@@ -387,10 +394,17 @@ module('Acceptance | profile/billing', function (hooks) {
 
     assert.ok(profilePage.billing.billingForm.isPresent);
     assert.ok(profilePage.billing.billingPlanChoices.isPresent);
-    assert.equal(profilePage.billing.subscribeButton.text, 'Proceed to Payment');
+
+    assert.ok(profilePage.billing.selectedBillingPlan.isPresent);
+    assert.dom(profilePage.billing.selectedBillingPlan.name.scope).hasTextContaining('Startup plan');
+    assert.dom(profilePage.billing.selectedBillingPlan.jobs.scope).hasTextContaining('2 concurrent jobs');
+    assert.dom(profilePage.billing.selectedBillingPlan.freeJobs.scope).hasTextContaining('3 free concurrent jobs');
+    assert.dom(profilePage.billing.selectedBillingPlan.price.scope).hasTextContaining('$129 /month');
+
     assert.dom(profilePage.billing.billingForm.input.scope).exists({ count: 9 });
     assert.dom(profilePage.billing.billingForm.select.scope).exists({ count: 1 });
     assert.dom(profilePage.billing.billingPlanChoices.boxes.scope).exists({ count: 4 });
+    assert.equal(profilePage.billing.subscribeButton.text, 'Proceed to Payment');
   });
 
   test('view billing tab when trial has not started', async function (assert) {
