@@ -288,6 +288,10 @@ export default create({
 
       boxes: {
         scope: '[data-test-plan-box]',
+      },
+
+      lastBox: {
+        visit: clickable('[data-test-plan-box]:last-child'),
       }
     },
 
