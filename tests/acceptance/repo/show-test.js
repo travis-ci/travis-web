@@ -1,11 +1,16 @@
-import { test } from 'qunit';
-import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
+import {
+  visit,
+} from '@ember/test-helpers';
+import { module, test } from 'qunit';
+import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import page from 'travis/tests/pages/repo/show';
 import buildPage from 'travis/tests/pages/build';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 
-moduleForAcceptance('Acceptance | show repo page', {
-  beforeEach() {
+module('Acceptance | show repo page', function (hooks) {
+  setupApplicationTest(hooks);
+
+  hooks.beforeEach(function () {
     const currentUser = server.create('user', {login: 'user-login'});
     signInUser(currentUser);
 
@@ -84,38 +89,32 @@ moduleForAcceptance('Acceptance | show repo page', {
     otherCommit.job = otherJob;
     otherJob.save();
     otherCommit.save();
-  }
-});
+  });
 
-test('loading branches doesnt update the default branch on the repo', function (assert) {
-  page.visit({ organization: 'org-login', repo: 'repository-name' });
-  page.statusBadge.click();
+  test('loading branches doesnt update the default branch on the repo', async function (assert) {
+    await page.visit({ organization: 'org-login', repo: 'repository-name' });
+    await page.statusBadge.click();
 
-  andThen(() => {
     const url = new URL(page.statusBadge.src);
     const expectedPath = `${url.pathname}?${url.searchParams}`;
     assert.equal(expectedPath, '/org-login/repository-name.svg?branch=feminist%23yes');
 
     assert.equal(page.statusBadge.title, 'Latest push build on default branch: passed');
   });
-});
 
-test('repository header is rendered', function (assert) {
-  page.visit({ organization: 'org-login', repo: 'repository-name' });
+  test('repository header is rendered', async function (assert) {
+    await page.visit({ organization: 'org-login', repo: 'repository-name' });
 
-  andThen(() => {
     assert.equal(page.owner, 'org-login');
     assert.equal(page.name, 'repository-name');
 
     assert.equal(page.gitHubLink.href, 'https://github.com/org-login/repository-name');
     assert.equal(page.gitHubLink.title, 'repository-name on GitHub');
   });
-});
 
-test('visiting the root shows the most recent current build', function (assert) {
-  visit('/');
+  test('visiting the root shows the most recent current build', async function (assert) {
+    await visit('/');
 
-  andThen(() => {
     assert.equal(buildPage.requiredJobs.length, 2, 'expected two required jobs in the matrix');
     assert.equal(buildPage.allowedFailureJobs.length, 1, 'expected one allowed failure job');
   });

@@ -1,14 +1,21 @@
 import { assign } from '@ember/polyfills';
-import { test } from 'qunit';
-import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
+import { module, test } from 'qunit';
+import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
+import {
+  getContext,
+  settled,
+} from '@ember/test-helpers';
 import page from 'travis/tests/pages/build-list';
 import generatePusherPayload from 'travis/tests/helpers/generate-pusher-payload';
 import signInUser from 'travis/tests/helpers/sign-in-user';
+import { percySnapshot } from 'ember-percy';
 
 import moment from 'moment';
 
-moduleForAcceptance('Acceptance | repo build list routes', {
-  beforeEach() {
+module('Acceptance | repo build list routes', function (hooks) {
+  setupApplicationTest(hooks);
+
+  hooks.beforeEach(function () {
     const currentUser = server.create('user', {
       name: 'User Name',
       login: 'user-login'
@@ -122,16 +129,17 @@ moduleForAcceptance('Acceptance | repo build list routes', {
     });
 
     pullRequestBuild.save();
-  }
-});
+  });
 
-test('build history shows, more can be loaded, and a created build gets added and can be cancelled', function (assert) {
-  assert.expect(24);
+  test('build history shows, more can be loaded, and a created build gets added and can be cancelled', async function (assert) {
+    assert.expect(24);
 
-  page.visitBuildHistory({ organization: 'org-login', repo: 'repository-name' });
+    await page.visitBuildHistory({ organization: 'org-login', repo: 'repository-name' });
 
-  andThen(() => {
     assert.equal(page.builds.length, 4, 'expected four non-PR builds');
+
+    const { owner } = getContext();
+    const app = owner.application;
 
     page.builds[0].as(build => {
       assert.ok(build.passed, 'expected the first build to have passed');
@@ -175,20 +183,16 @@ test('build history shows, more can be loaded, and a created build gets added an
       author: us
     });
     olderBuild.save();
-  });
 
-  percySnapshot(assert);
+    percySnapshot(assert);
 
-  page.showMoreButton.click();
+    await page.showMoreButton.click();
 
-  andThen(() => {
     assert.equal(page.builds.length, 5, 'expected five builds');
     assert.equal(page.builds[4].name, 'oldest-build-branch', 'expected an earlier build to have been added');
-  });
 
-  let build, commit;
+    let build, commit;
 
-  andThen(() => {
     const branch = server.create('branch', {
       name: 'no-dapl'
     });
@@ -220,11 +224,8 @@ test('build history shows, more can be loaded, and a created build gets added an
       repository: generatePusherPayload(this.repository)
     };
     createdData.build.state = 'created';
-    this.application.pusher.receive('build:created', createdData);
-  });
-
-
-  andThen(() => {
+    await app.pusher.receive('build:created', createdData);
+    await settled();
     assert.equal(page.builds.length, 6, 'expected another build');
 
     page.builds[0].as(newBuild => {
@@ -239,10 +240,8 @@ test('build history shows, more can be loaded, and a created build gets added an
       commit: generatePusherPayload(commit),
       repository: generatePusherPayload(this.repository)
     };
-    this.application.pusher.receive('build:started', startedData);
-  });
-
-  andThen(() => {
+    await app.pusher.receive('build:started', startedData);
+    await settled();
     assert.ok(page.builds[0].started, 'expected the new build to show as started');
 
     const finishedData = {
@@ -250,20 +249,16 @@ test('build history shows, more can be loaded, and a created build gets added an
       commit: generatePusherPayload(commit),
       repository: generatePusherPayload(this.repository)
     };
-    this.application.pusher.receive('build:finished', finishedData);
-  });
-
-  andThen(() => {
+    await app.pusher.receive('build:finished', finishedData);
+    await settled();
     assert.ok(page.builds[0].passed, 'expected the newly-finished build to have passed');
   });
-});
 
-test('renders no builds messaging when none present', function (assert) {
-  server.create('repository');
+  test('renders no builds messaging when none present', async function (assert) {
+    server.create('repository');
 
-  page.visitBuildHistory({ organization: 'travis-ci', repo: 'travis-web' });
+    await page.visitBuildHistory({ organization: 'travis-ci', repo: 'travis-web' });
 
-  andThen(() => {
     assert.equal(page.showsNoBuildsMessaging, 'No builds for this repository', 'Build History tab shows no builds message');
   });
 });

@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'ember-qunit';
+import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import { visit, click } from '@ember/test-helpers';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { enableFeature } from 'ember-feature-flags/test-support';
@@ -83,6 +83,9 @@ module('Acceptance | home/sidebar tabs', function (hooks) {
     enableFeature('show-running-jobs-in-sidebar');
 
     let startedAt = new Date();
+
+    // TODO: Currently, we make the same request *30* times, which slows the test down
+    // significantly. Need to investigate why.
 
     // the default mirage limit is 10, so if we create 15 jobs for each queued and
     // started lists, the app code will have to do 2 queries

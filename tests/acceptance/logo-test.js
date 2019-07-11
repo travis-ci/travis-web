@@ -1,6 +1,6 @@
 import { currentURL, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'ember-qunit';
+import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import { percySnapshot } from 'ember-percy';
 
 module('Acceptance | logo', function (hooks) {

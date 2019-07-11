@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'ember-qunit';
+import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import config from 'travis/config/environment';
 
 module('Acceptance | config/oss feature flags', function (hooks) {
