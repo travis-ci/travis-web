@@ -282,11 +282,11 @@ export default create({
         isPresent: isPresent(),
       },
 
+      billingSelectCountry: {
+        scope: '.billing-country'
+      },
     },
 
-    // billingSelectCountry: {
-    //   scope: '.billing-country'
-    // },
 
     billingPaymentForm: {
       score: '[data-test-payment-form]',

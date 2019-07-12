@@ -82,6 +82,13 @@ module('Acceptance | profile/billing', function (hooks) {
       }
     });
     this.organization = organization;
+
+    let mockStripe = Service.extend({
+      load() { }
+    });
+
+    stubService('stripe', mockStripe);
+
   });
 
   test('view billing information with invoices', async function (assert) {
@@ -635,7 +642,7 @@ module('Acceptance | profile/billing', function (hooks) {
 
     const { billingForm, subscribeButton, billingPaymentForm } = profilePage.billing;
 
-    await selectChoose('.billing-country', 'Germany');
+    await selectChoose(billingForm.billingSelectCountry.scope, 'Germany');
 
     await billingForm
       .fillIn('firstname', 'John')

@@ -2,6 +2,8 @@ import { currentURL, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import signInUser from 'travis/tests/helpers/sign-in-user';
+import Service from '@ember/service';
+import { stubService } from 'travis/tests/helpers/stub-service';
 
 module('Acceptance | profile/redirect', function (hooks) {
   setupApplicationTest(hooks);
@@ -11,6 +13,12 @@ module('Acceptance | profile/redirect', function (hooks) {
     this.org = server.create('organization', { login: 'test-org' });
     server.create('plan', { id: 'travis-ci-one-build', name: 'AM', builds: 1, price: 6900, currency: 'USD' });
     signInUser(this.user);
+
+    let mockStripe = Service.extend({
+      load() { }
+    });
+
+    stubService('stripe', mockStripe);
   });
 
   test('visiting /profile redirects to /account/repositories', async function (assert) {
