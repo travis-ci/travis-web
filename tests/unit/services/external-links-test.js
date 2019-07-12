@@ -11,18 +11,12 @@ module('Unit | Service | external-links', function (hooks) {
     };
 
     this.build = {
-      pullRequestNumber: '999',
       branch: 'new-pr',
     };
 
     this.commit = {
       sha: '123abc',
     };
-  });
-
-  test('githubPullRequest', function (assert) {
-    const service = this.owner.lookup('service:external-links');
-    assert.equal(service.githubPullRequest(this.repo.slug, this.build.pullRequestNumber), 'https://github.com/travis-ci/travis-web/pull/999');
   });
 
   test('githubCommit', function (assert) {

@@ -12,4 +12,8 @@ export default Service.extend({
   repoUrl(vcsType, slug) {
     return `${this.endpoint(vcsType)}/${slug}`;
   },
+
+  pullRequestUrl(vcsType, slug, pullRequestNumber) {
+    return `${this.endpoint(vcsType)}/${slug}/pull/${pullRequestNumber}`;
+  },
 });

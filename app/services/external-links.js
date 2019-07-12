@@ -2,10 +2,6 @@ import Service from '@ember/service';
 import config from 'travis/config/environment';
 
 export default Service.extend({
-  githubPullRequest(slug, pullRequestNumber) {
-    return `${config.sourceEndpoint}/${slug}/pull/${pullRequestNumber}`;
-  },
-
   githubCommit(slug, sha) {
     return `${config.sourceEndpoint}/${slug}/commit/${sha}`;
   },
