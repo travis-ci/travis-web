@@ -1,5 +1,22 @@
 {{#each products as |product|}}
-  {{styleguides/product-cta-item product=product}}
+  <div class="w-1/2 sm:w-1/4 p-4 border-grey-150 border">
+    <h3>{{product.name}}</h3>
+    <h4>{{product.description}}</h4>
+
+    <div>
+      {{product.builds}}
+      {{pluralize product.builds 'Concurrent job' without-count=true}}
+    </div>
+    <div>{{svg-jar 'features-check' class="w-4 inline-block"}} Unlimited build minutes</div>
+    <div>{{svg-jar 'features-check' class="w-4 inline-block"}} Unlimited repositories</div>
+    <div>{{svg-jar 'features-check' class="w-4 inline-block"}} Unlimited collaborators</div>
+
+    <div>
+      {{product.currencySymbol}}{{product.displayPrice}}
+      {{product.currency}}
+      {{product.interval}}
+    </div>
+  </div>
 {{/each}}
 <div class="w-full text-center p-4 border-grey-150 border">
   <button>Start Your Free Trial</button>
