@@ -17,6 +17,6 @@ export default Component.extend({
   tabTitle: computed('job.build.request.noYaml', function () {
     if (this.get('job.build.request.noYaml')) { return null; }
 
-    return 'Look at this job’s config';
+    return "View this job's config";
   })
 });

@@ -99,7 +99,8 @@ export default create({
 
   yaml: collection('.inner-yaml-container', {
     text: text('[data-test-yaml]'),
-    source: text('.file-name')
+    source: text('.file-name'),
+    toggle: clickable('.AccordionToggle')
   }),
 
   jobYamlNote: {

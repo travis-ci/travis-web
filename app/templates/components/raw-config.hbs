@@ -1,20 +1,26 @@
-<div class='inner-yaml-container'>
-  <div class='file-name'>
-    {{#if fileUrl}}
-      {{#external-link-to href=fileUrl}}
-        {{svg-jar 'job-name-icon' class='icon' width=14 height=14}} <span class='vertical-align'>{{filePath}}</span>
-      {{/external-link-to}}
-    {{else}}
-      {{svg-jar 'job-name-icon' class='icon' width=14 height=14}} <span class='vertical-align'>{{filePath}}</span>
-    {{/if}}
+{{#accordion.item as |accordionItem|}}
+  <div class='inner-yaml-container'>
+    <div class='file-name'>
+      <span class='vertical-align'>{{filePath}}</span>
+      {{#if fileUrl}}
+        {{#external-link-to href=fileUrl}}
+          {{svg-jar 'icon-external-link' class='icon-link'}}
+        {{/external-link-to}}
+      {{/if}}
+      {{#accordionItem.toggle}}
+        {{svg-jar 'icon-dropdown-arrow' class='icon-arrow'}}
+      {{/accordionItem.toggle}}
+    </div>
+    {{#accordionItem.panel openOnInit=true}}
+      <div class='position-relative'>
+        {{#code-block data-test-yaml language='yaml' class='codedisplay'}}{{rawConfig.config}}{{/code-block}}
+        {{#copy-button
+          clipboardText=rawConfig.config
+          title=buttonLabel
+          success=(action 'copied' rawConfig.source)}}
+          {{svg-jar 'icon-copy' class='icon'}} <span>{{buttonLabel}}</span>
+        {{/copy-button}}
+      </div>
+    {{/accordionItem.panel}}
   </div>
-  <div class='position-relative'>
-    {{#code-block data-test-yaml language='yaml' class='codedisplay'}}{{formattedConfig}}{{/code-block}}
-    {{#copy-button
-      clipboardText=rawConfig.config
-      title=buttonLabel
-      success=(action 'copied' rawConfig.source)}}
-      {{svg-jar 'icon-copy' class='icon'}} <span>{{buttonLabel}}</span>
-    {{/copy-button}}
-  </div>
-</div>
+{{/accordion.item}}

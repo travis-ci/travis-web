@@ -26,6 +26,18 @@
       @include colorSVG($oxide-blue);
     }
   }
+
+  .icon-link {
+    width: $font-size-sm;
+    margin-left: 5px;
+    vertical-align: middle;
+  }
+
+  .is-active {
+    .icon-arrow {
+      transform: rotate(180deg);
+    }
+  }
 }
 
 pre.codedisplay[class*='language-'] {
@@ -44,7 +56,15 @@ pre.codedisplay[class*='language-'] {
 }
 
 .file-name {
-  padding: 1em;
+  padding: 0.3em;
   border-bottom: 1px solid $pebble-grey;
-}
+  color: $oxide-blue;
+  background: $pebble-grey;
+  font-size: $font-size-sm;
 
+  .icon-arrow {
+    width: $font-size-sm;
+    float: right;
+    margin-top: -13px;
+  }
+}
