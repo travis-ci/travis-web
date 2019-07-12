@@ -8,12 +8,14 @@ export default Component.extend({
   classNames: ['rows', 'my-build'],
   classNameBindings: ['state'],
 
-  externalLinks: service(),
+  vcsLinks: service(),
   state: alias('build.state'),
 
-  urlGitHubBranch: computed('build.repo.slug', 'build.branchName', function () {
-    let slug = this.get('build.repo.slug');
-    let branchName = this.get('build.branchName');
-    return this.get('externalLinks').githubBranch(slug, branchName);
+  urlGitHubBranch: computed('build.repo.slug', 'build.branchName', 'build.repo.vcsType', function () {
+    const slug = this.get('build.repo.slug');
+    const branchName = this.get('build.branchName');
+    const vcsType = this.get('build.repo.vcsType');
+
+    return this.get('vcsLinks').branchUrl(vcsType, slug, branchName);
   }),
 });

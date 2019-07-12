@@ -8,6 +8,7 @@ const commitMessageLimit = 72;
 
 export default Component.extend({
   externalLinks: service(),
+  vcsLinks: service(),
 
   tagName: 'section',
   classNames: ['build-header'],
@@ -60,9 +61,11 @@ export default Component.extend({
   }),
 
   urlGitHubBranch: computed('item.repo.slug', 'build.branchName', function () {
-    let slug = this.get('item.repo.slug');
-    let branchName = this.get('build.branchName');
-    return this.get('externalLinks').githubBranch(slug, branchName);
+    const slug = this.get('item.repo.slug');
+    const branchName = this.get('build.branchName');
+    const vcsType = this.get('item.repo.vcsType');
+
+    return this.get('vcsLinks').branchUrl(vcsType, slug, branchName);
   }),
 
   urlGitHubTag: computed('item.repo.slug', 'build.tag.name', function () {

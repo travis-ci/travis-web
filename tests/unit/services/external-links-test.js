@@ -10,10 +10,6 @@ module('Unit | Service | external-links', function (hooks) {
       slug: 'travis-ci/travis-web',
     };
 
-    this.build = {
-      branch: 'new-pr',
-    };
-
     this.commit = {
       sha: '123abc',
     };
@@ -35,11 +31,6 @@ module('Unit | Service | external-links', function (hooks) {
     const branchName = 'bd-no-justice-no-peace';
 
     assert.equal(service.travisWebBranch(branchName), 'https://github.com/travis-ci/travis-web/tree/bd-no-justice-no-peace');
-  });
-
-  test('githubBranch', function (assert) {
-    const service = this.owner.lookup('service:external-links');
-    assert.equal(service.githubBranch(this.repo.slug, this.build.branch), 'https://github.com/travis-ci/travis-web/tree/new-pr');
   });
 
   test('billingUrl as organization', function (assert) {

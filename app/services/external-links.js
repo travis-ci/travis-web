@@ -14,10 +14,6 @@ export default Service.extend({
     return `https://github.com/travis-ci/travis-web/tree/${branchName}`;
   },
 
-  githubBranch(slug, branch) {
-    return `${config.sourceEndpoint}/${slug}/tree/${branch}`;
-  },
-
   githubFile(slug, branch, file) {
     return `${config.sourceEndpoint}/${slug}/blob/${branch}/${file}`;
   },
