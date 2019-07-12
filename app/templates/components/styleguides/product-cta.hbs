@@ -1,3 +1,4 @@
+<div class="flex flex-wrap">
 {{#each products as |product|}}
   <div class="w-1/2 sm:w-1/4 p-4 border-grey-150 border">
     <h3>{{product.name}}</h3>
@@ -21,3 +22,15 @@
 <div class="w-full text-center p-4 border-grey-150 border">
   <button>Start Your Free Trial</button>
 </div>
+</div>
+
+{{#styleguides/grid-container sm-wrap='wrap-reverse' }}
+  <div class="text-xl">THIS IS A TEST</div>
+  <div class="text-xl">THIS IS A TEST</div>
+  <div class="text-xl">THIS IS A TEST</div>
+  <div class="text-xl">THIS IS A TEST</div>
+  <div class="text-xl">THIS IS A TEST</div>
+  <div class="text-xl">THIS IS A TEST</div>
+  <div class="text-xl">THIS IS A TEST</div>
+  <div class="text-xl">THIS IS A TEST</div>
+{{/styleguides/grid-container}}
