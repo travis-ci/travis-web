@@ -1,0 +1,15 @@
+import Service from '@ember/service';
+
+export default Service.extend({
+  endpoint(vcsType) {
+    switch (vcsType) {
+      case 'GithubRepository':
+      default:
+        return 'https://github.com';
+    }
+  },
+
+  repoUrl(vcsType, slug) {
+    return `${this.endpoint(vcsType)}/${slug}`;
+  },
+});

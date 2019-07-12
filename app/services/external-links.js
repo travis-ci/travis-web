@@ -10,10 +10,6 @@ export default Service.extend({
     return `${config.sourceEndpoint}/${slug}/commit/${sha}`;
   },
 
-  githubRepo(slug) {
-    return `${config.sourceEndpoint}/${slug}`;
-  },
-
   email(email) {
     return `mailto:${email}`;
   },
