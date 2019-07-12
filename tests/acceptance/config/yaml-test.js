@@ -56,7 +56,6 @@ module('Acceptance | config/yaml', function (hooks) {
 
       assert.equal(document.title, `Build #${this.build.number} - travis-ci/travis-web - Travis CI`);
       await page.yamlTab.click();
-      await page.yaml[0].toggle();
       assert.equal(document.title, `Config - Build #${this.build.number} - travis-ci/travis-web - Travis CI`);
       assert.equal(page.yaml[0].text, 'language: jortle sudo: tortle');
       assert.equal(page.yaml[0].source, '.travis.yml');
@@ -126,7 +125,6 @@ module('Acceptance | config/yaml', function (hooks) {
       }];
       await visit(`/travis-ci/travis-web/builds/${this.build.id}`);
       await page.yamlTab.click();
-      await page.yaml[0].toggle();
       assert.equal(page.yaml[0].source, '.travis.yml');
     });
 
@@ -138,7 +136,6 @@ module('Acceptance | config/yaml', function (hooks) {
       }];
       await visit(`/travis-ci/travis-web/builds/${this.build.id}`);
       await page.yamlTab.click();
-      await page.yaml[0].toggle();
       assert.equal(page.yaml[0].source, './internal/config.yml@7e0d841');
     });
 
@@ -150,7 +147,6 @@ module('Acceptance | config/yaml', function (hooks) {
       }];
       await visit(`/travis-ci/travis-web/builds/${this.build.id}`);
       await page.yamlTab.click();
-      await page.yaml[0].toggle();
       assert.equal(page.yaml[0].source, 'some_path/config.yml@7e0d841');
     });
   });
@@ -165,7 +161,6 @@ module('Acceptance | config/yaml', function (hooks) {
 
       await visit(`/travis-ci/travis-web/jobs/${this.job.id}`);
       await page.yamlTab.click();
-      await page.yaml[0].toggle();
       assert.ok(page.jobYamlNote.isHidden, 'expected the job note to be hidden for a single-job build');
       assert.equal(page.yaml[0].text, 'language: jortle sudo: tortle');
       assert.equal(page.yaml[0].source, '.travis.yml');
