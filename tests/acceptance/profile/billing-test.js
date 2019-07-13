@@ -39,10 +39,10 @@ module('Acceptance | profile/billing', function (hooks) {
     server.create('plan', { id: 'travis-ci-five-builds', name: 'Premium', builds: 5, price: 24900, currency: 'USD' });
     this.lastPlan = server.create('plan', { id: 'travis-ci-ten-builds', name: 'Small Business', builds: 10, price: 48900, currency: 'USD' });
 
-    server.create('plan', { id: 'travis-ci-one-build-annual', name: 'AA', builds: 1, price: 75900, currency: 'USD', annual: true });
-    server.create('plan', { id: 'travis-ci-two-builds-annual', name: 'BA', builds: 2, price: 141900, currency: 'USD', annual: true });
-    server.create('plan', { id: 'travis-ci-five-builds-annual', name: 'CA', builds: 5, price: 273900, currency: 'USD', annual: true });
-    server.create('plan', { id: 'travis-ci-ten-builds-annual', name: 'DA', builds: 10, price: 537900, currency: 'USD', annual: true });
+    server.create('plan', { id: 'travis-ci-one-build-annual', name: 'Bootstrap', builds: 1, price: 75900, currency: 'USD', annual: true });
+    this.defaultAnnualPlan = server.create('plan', { id: 'travis-ci-two-builds-annual', name: 'Startup', builds: 2, price: 141900, currency: 'USD', annual: true });
+    server.create('plan', { id: 'travis-ci-five-builds-annual', name: 'Premium', builds: 5, price: 273900, currency: 'USD', annual: true });
+    server.create('plan', { id: 'travis-ci-ten-builds-annual', name: 'Small Business', builds: 10, price: 537900, currency: 'USD', annual: true });
 
     let subscription = server.create('subscription', {
       plan,
@@ -343,7 +343,6 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.ok(profilePage.billing.annualInvitation.isHidden, 'expected the invitation to switch to annual billing to be hidden');
   });
 
-
   test('view billing tab when not subscribed and has subscription write permissions', async function (assert) {
     this.subscription.destroy();
 
@@ -363,6 +362,26 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.dom(profilePage.billing.billingForm.select.scope).exists({ count: 1 });
     assert.dom(profilePage.billing.billingPlanChoices.boxes.scope).exists({ count: 4 });
     assert.equal(profilePage.billing.subscribeButton.text, 'Proceed to Payment');
+  });
+
+  test('view billing tab when switch is clicked on plan changes correctly', async function (assert) {
+    this.subscription.destroy();
+
+    await profilePage.visit();
+    await profilePage.billing.visit();
+    await profilePage.billing.billingForm.switchPlan.click();
+
+    assert.dom(profilePage.billing.selectedBillingPlan.name.scope).hasTextContaining(`${this.defaultAnnualPlan.name} plan`);
+    assert.dom(profilePage.billing.selectedBillingPlan.jobs.scope).hasTextContaining(`${this.defaultAnnualPlan.builds} concurrent jobs`);
+    assert.dom(profilePage.billing.selectedBillingPlan.freeJobs.scope).hasTextContaining('3 free concurrent jobs');
+    assert.dom(profilePage.billing.selectedBillingPlan.price.scope).hasTextContaining(`$${this.defaultAnnualPlan.price / 100} /year`);
+
+    await profilePage.billing.billingForm.switchPlan.click();
+
+    assert.dom(profilePage.billing.selectedBillingPlan.name.scope).hasTextContaining(`${this.defaultPlan.name} plan`);
+    assert.dom(profilePage.billing.selectedBillingPlan.jobs.scope).hasTextContaining(`${this.defaultPlan.builds} concurrent jobs`);
+    assert.dom(profilePage.billing.selectedBillingPlan.freeJobs.scope).hasTextContaining('3 free concurrent jobs');
+    assert.dom(profilePage.billing.selectedBillingPlan.price.scope).hasTextContaining(`$${this.defaultPlan.price / 100} /month`);
   });
 
   test('view billing tab when not subscribed select different plan changes correctly', async function (assert) {

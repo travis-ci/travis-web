@@ -285,6 +285,11 @@ export default create({
       billingSelectCountry: {
         scope: '.billing-country'
       },
+
+      switchPlan: {
+        scope: '.travis-form__field--switch',
+        isPresent: isPresent(),
+      }
     },
 
     billingPaymentForm: {

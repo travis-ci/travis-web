@@ -44,6 +44,6 @@ module('Integration | Component | billing-payment', function (hooks) {
       cancel=(action 'cancel')
       selectedPlan=selectedPlan}}`);
 
-    assert.dom('h3').hasText('Credit card details');
+    assert.dom('h2').hasText('Credit card details');
   });
 });
