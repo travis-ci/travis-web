@@ -1,4 +1,5 @@
 import { module, test } from 'qunit';
+import { settled } from '@ember/test-helpers';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import profilePage from 'travis/tests/pages/profile';
 import signInUser from 'travis/tests/helpers/sign-in-user';
@@ -634,13 +635,15 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.ok(profilePage.billing.annualInvitation.isHidden);
   });
 
-  test('view billing tab when no subscription should fill form at transition to payment', async function (assert) {
+  test('view billing tab when no subscription should fill form and transition to payment', async function (assert) {
     this.subscription.destroy();
 
     await profilePage.visit();
     await profilePage.billing.visit();
 
     const { billingForm, subscribeButton, billingPaymentForm } = profilePage.billing;
+
+    percySnapshot(assert);
 
     await selectChoose(billingForm.billingSelectCountry.scope, 'Germany');
 
@@ -655,10 +658,29 @@ module('Acceptance | profile/billing', function (hooks) {
       .fillIn('zip', '353564')
       .fillIn('vat', '356463');
 
-    subscribeButton.click();
+    await subscribeButton.click();
 
-    percySnapshot(assert);
+    assert.ok(billingPaymentForm.isPresent);
+    assert.dom(billingPaymentForm.input.scope).exists({ count: 4 });
+    assert.ok(billingPaymentForm.completeButton.isPresent);
+    assert.ok(billingPaymentForm.cardMonthSelect.isPresent);
+    assert.ok(billingPaymentForm.cardYearSelect.isPresent);
 
+    let year = new Date().getFullYear() + 3;
+    await selectChoose('.billing-card-year', `${year}`);
+    await selectChoose('.billing-card-month', '09');
+
+    await billingPaymentForm
+      .fillIn('cardNumber', '4141414141414141')
+      .fillIn('cardName', 'John Doe')
+      .fillIn('cardCvc', '897')
+      .fillIn('discountCode', '0000');
+
+    await billingPaymentForm.completeButton.click();
+    await settled();
+
+    // debugger;
+    // assert.dom('[data-test-header]').containsText('Test');
     assert.ok(billingPaymentForm.isPresent);
   });
 });

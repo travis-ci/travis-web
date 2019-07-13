@@ -49,36 +49,13 @@
   }
 }
 
-@media #{$medium-up} {
-  .billing-plans {
-    &__box {
-      flex-basis: 48%;
-    }
-  }
-}
-
-@media #{$large-up} {
-  .billing-plans {
-    &__box {
-      flex-basis: 32%;
-    }
-  }
-}
-
-@media #{$xlarge-up} {
-  .billing-plans {
-    &__box {
-      flex-basis: 24%;
-    }
-  }
-}
-
 .selected-plan {
   border-radius: 5px;
   margin: 20px 0 40px 0;
   background: #f1f1f1;
   padding: 1em;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: flex-end;
 
@@ -124,12 +101,15 @@
       margin: 0;
       color: $oxide-blue;
       margin-bottom: -13px;
+      display: flex;
+      align-items: flex-end;
 
       span {
         font-size: .3em;
         color: $asphalt-grey;
         font-style: italic;
         font-weight: 300;
+        margin-bottom: 14px;
       }
     }
   }
@@ -161,13 +141,13 @@
   }
 }
 
+.discount-code-header{
+  margin-top: -5px;
+}
+
 .highlight-plan {
   color: $oxide-blue;
   background: rgba(181, 214, 217, 0.9);
-}
-
-.billing-ccv {
-  margin-left: 19px;
 }
 
 .billing-process-cancel{
@@ -176,7 +156,39 @@
 
 @media #{$large-up} {
   .billing-select-year {
-    width: 45%;
+    width: 46%;
     margin-top: 24.8px;
+  }
+
+  .billing-cvc {
+    margin-left: 20px;
+  }
+
+  .billing-expiry-month {
+    margin-right: 20px;
+  }
+}
+
+@media #{$medium-up} {
+  .billing-plans {
+    &__box {
+      flex-basis: 48%;
+    }
+  }
+}
+
+@media #{$large-up} {
+  .billing-plans {
+    &__box {
+      flex-basis: 32%;
+    }
+  }
+}
+
+@media #{$xlarge-up} {
+  .billing-plans {
+    &__box {
+      flex-basis: 24%;
+    }
   }
 }

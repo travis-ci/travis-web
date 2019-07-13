@@ -287,10 +287,29 @@ export default create({
       },
     },
 
-
     billingPaymentForm: {
-      score: '[data-test-payment-form]',
+      scope: '[data-test-payment-form]',
       isPresent: isPresent(),
+      fillIn: fillable(''),
+
+      input: {
+        scope: '[data-test-payment-form] input',
+        isPresent: isPresent(),
+      },
+
+      cardMonthSelect: {
+        scope: '[data-test-select-card-month]',
+        isPresent: isPresent(),
+      },
+
+      cardYearSelect: {
+        scope: '[data-test-select-card-year]',
+        isPresent: isPresent(),
+      },
+
+      completeButton: {
+        scope: '[data-test-complete-button]'
+      }
     },
 
     billingPlanChoices: {

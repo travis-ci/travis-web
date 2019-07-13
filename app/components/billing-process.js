@@ -31,6 +31,7 @@ let availablePlans = [
 
 export default Component.extend({
   store: service(),
+  router: service(),
   plans: null,
   showAnnual: false,
   steps: [...Object.values(STEPS)],
@@ -96,7 +97,12 @@ export default Component.extend({
 
   save: task(function* () {
     try {
-      yield this.newSubscription.save();
+      let savedSubscription = yield this.newSubscription.save();
+      this.router.transitionTo('account.billing', {
+        account: this.account,
+        plans: this.plans,
+        subscription: savedSubscription
+      });
     } catch (error) {
       this.flashes.error('There was an error saving the subscription task. Please try again.');
     }

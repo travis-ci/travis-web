@@ -9,12 +9,6 @@ export default Component.extend({
   years: generateYearsFromCurrent(11),
   stripe: service(),
 
-  cardName: 'Patrick',
-  cardNumber: '4242424242424242',
-  expiryDateMonth: '04',
-  cvc: '893',
-  expiryDateYear: '2020',
-
   makeStripePayment: task(function* () {
     try {
       const response = yield this.stripe.card.createToken({
@@ -24,7 +18,8 @@ export default Component.extend({
         exp_year: this.expiryDateYear,
         cvc: this.cvc
       });
-      this.handleSubmit(response.id, this.cardNumber.slice(-4));
+      const token = response.id;
+      this.handleSubmit(token, this.cardNumber.slice(-4));
     } catch (error) {
       this.flashes.error('There was an error connecting to stripe. Please try again.');
     }

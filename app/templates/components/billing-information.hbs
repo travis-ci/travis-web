@@ -1,8 +1,8 @@
 {{#travis-form onSubmit=(action next newSubscription) as |form|}}
   <div class='billing-form' data-test-billing-form>
-    <h3 data-test-billing-info-title>
+    <h2 data-test-billing-info-title>
       Billing Cycle
-    </h3>
+    </h2>
     <div class='flex flex-wrap billing-plan-switch'>
       <div class='form-elem'>
         {{#form.field
@@ -28,17 +28,17 @@
         {{/if}}
       </div>
     </div>
-    <h3 data-test-choose-plan-heading>
+    <h2 data-test-choose-plan-heading>
       Choose your plan
-    </h3>
+    </h2>
     {{billing-select-plan
       displayedPlans=displayedPlans
       selectedPlan=selectedPlan
       showAnnual=showAnnual
     }}
-    <h3>
+    <h2>
       Contact details
-    </h3>
+    </h2>
     <div class='flex flex--col flex-md-row'>
       <div class='full-width form-elem inline-form-elem'>
         {{#form.field
@@ -87,9 +87,9 @@
         {{field.input name='email'}}
       {{/form.field}}
     </div>
-    <h3>
+    <h2>
       Billing address
-    </h3>
+    </h2>
     <div class='flex flex--col flex-md-row'>
       <div class='full-width form-elem inline-form-elem'>
         {{#form.field
@@ -154,7 +154,6 @@
       }}
         {{#field.select
           placeholder='Select country'
-          class='billing-country'
           options=countries as |country|
         }}
           {{country}}

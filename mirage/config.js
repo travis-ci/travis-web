@@ -113,6 +113,8 @@ export default function () {
     return response;
   });
 
+  this.post('/subscriptions');
+
   this.get('/subscriptions', function (schema, params) {
     let response = this.serialize(schema.subscriptions.all());
 
