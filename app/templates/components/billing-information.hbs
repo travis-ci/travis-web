@@ -11,7 +11,11 @@
           value=showAnnual
           onChange=(action (mut showAnnual)) as |field|
         }}
-          {{field.switch offText='Monthly' onText='Yearly'}}
+          {{field.switch 
+            text=true 
+            offText='Monthly' 
+            onText='Yearly'
+          }}
         {{/form.field}}
       </div>
       <div class='billing-plan-switch m-l-s'>

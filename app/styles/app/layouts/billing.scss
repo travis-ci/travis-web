@@ -4,6 +4,21 @@
     font-weight: 300;
     font-size: 18px;
   }
+
+  .switch-inner {
+    width: 138px;
+    height: 32px;
+    margin-left: -5px;
+
+    span {
+      width: 65px;
+      height: 29px;
+
+      span {
+        font-weight: 700;
+      }
+    }
+  }
 }
 
 .billing-plans {

@@ -1,60 +1,60 @@
-<div class="billing-plans flex flex--wrap flex--space-between" data-test-billing-plan-choices>
+<div class='billing-plans flex flex--wrap flex--space-between' data-test-billing-plan-choices>
   {{#each displayedPlans as |plan|}}
     <div
       data-test-plan-box
-      class="billing-plans__box pointer
-        {{if (eq plan.id selectedPlan.id) "highlight-plan"}}"
+      class='billing-plans__box pointer
+        {{if (eq plan.id selectedPlan.id) 'highlight-plan'}}'
       onclick={{action (mut selectedPlan) plan}}
     >
-      <p class="billing-plans__box--price">
+      <p class='billing-plans__box--price'>
         {{format-currency plan.price}}
         <span
-          class="color-asphalt-grey
-            {{if (eq plan.id selectedPlan.id) "highlight-plan"}}"
+          class='color-asphalt-grey
+            {{if (eq plan.id selectedPlan.id) 'highlight-plan'}}'
         >
-          {{if showAnnual "/year" "/month"}}
+          {{if showAnnual '/year' '/month'}}
         </span>
       </p>
-      <p class="billing-plans__box--name">
+      <p class='billing-plans__box--name'>
         {{plan.name}}
       </p>
       <p
-        class="billing-plans__box--jobs
-          {{if (eq plan.id selectedPlan.id) "highlight-plan"}}"
+        class='billing-plans__box--jobs
+          {{if (eq plan.id selectedPlan.id) 'highlight-plan'}}'
       >
-        {{plan.builds}} concurrent {{pluralize-word plan.builds "job" "jobs"}}
+        {{plan.builds}} concurrent {{pluralize-word plan.builds 'job' 'jobs'}}
       </p>
     </div>
   {{/each}}
 </div>
-<div class="selected-plan" data-test-selected-plan>
-  <div class="selected-plan__details">
-    <p class="selected-plan__details--plan">
+<div class='selected-plan' data-test-selected-plan>
+  <div class='selected-plan__details'>
+    <p class='selected-plan__details--plan'>
       Your plan details
     </p>
-    <p class="selected-plan__details--name" data-test-selected-plan-name>
+    <p class='selected-plan__details--name' data-test-selected-plan-name>
       {{selectedPlan.name}} plan
     </p>
-    <p class="selected-plan__details--jobs" data-test-selected-plan-jobs>
-      {{selectedPlan.builds}} concurrent {{pluralize-word selectedPlan.builds "job" "jobs"}}
+    <p class='selected-plan__details--jobs' data-test-selected-plan-jobs>
+      {{selectedPlan.builds}} concurrent {{pluralize-word selectedPlan.builds 'job' 'jobs'}}
     </p>
-    <p class="selected-plan__details--free-jobs" data-test-selected-plan-free-jobs>
+    <p class='selected-plan__details--free-jobs' data-test-selected-plan-free-jobs>
       3
-      <span class="font--italic">
+      <span class='font--italic'>
         free
       </span>
       concurrent jobs
     </p>
   </div>
   <div>
-    <div class="selected-plan__price">
-      <p class="selected-plan__price--total">
+    <div class='selected-plan__price'>
+      <p class='selected-plan__price--total'>
         Total:
       </p>
-      <p class="selected-plan__price--large" data-test-selected-plan-price>
+      <p class='selected-plan__price--large' data-test-selected-plan-price>
         {{format-currency selectedPlan.price}}
         <span>
-          {{if showAnnual "/year" "/month"}}
+          {{if showAnnual '/year' '/month'}}
         </span>
       </p>
     </div>
