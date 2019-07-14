@@ -97,12 +97,7 @@ export default Component.extend({
 
   save: task(function* () {
     try {
-      let savedSubscription = yield this.newSubscription.save();
-      this.router.transitionTo('account.billing', {
-        account: this.account,
-        plans: this.plans,
-        subscription: savedSubscription
-      });
+      yield this.newSubscription.save();
     } catch (error) {
       this.flashes.error('There was an error saving the subscription task. Please try again.');
     }

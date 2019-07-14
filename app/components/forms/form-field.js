@@ -140,7 +140,7 @@ export default Component.extend({
     },
 
     handleKeyUp(value) {
-      this.onBlur && this.onKeyUp(value);
+      this.onKeyUp && this.onKeyUp(value);
     },
 
     handleClear() {

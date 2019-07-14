@@ -4,7 +4,7 @@ import { hash } from 'rsvp';
 
 export default TravisRoute.extend({
 
-  stripe: service('stripe'),
+  stripe: service(),
 
   beforeModel() {
     return this.stripe.load();
