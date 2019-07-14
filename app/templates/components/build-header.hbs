@@ -29,7 +29,7 @@
       <ul class="list-icon">
         <li>
           {{#external-link-to href=commit.githubUrl}}
-            {{ember-tooltip text='View commit on GitHub'}}
+            {{ember-tooltip text=(concat 'View commit on' (vcs-name item.repo.vcsType))}}
             {{svg-jar 'icon-commit' class="icon"}}
             <span class="label-align inner-underline commit-commit">Commit
               <span class="label-align-item monospace">{{format-sha commit.sha}}</span>
@@ -41,7 +41,7 @@
           <li>
             {{#if item.isPullRequest}}
               {{#external-link-to href=item.commit.compareUrl}}
-                {{ember-tooltip text='View Pull Request on GitHub'}}
+                {{ember-tooltip text=(concat 'View Pull Request on' (vcs-name item.repo.vcsType))}}
                 {{svg-jar 'icon-compare' class="icon"}}
                 <span class="label-align inner-underline commit-compare">#{{item.pullRequestNumber}}: {{item.pullRequestTitle}}</span>
                 {{svg-jar 'icon-external-link' class="icon"}}
@@ -49,7 +49,7 @@
             {{else}}
               {{#if item.commit.compareUrl}}
                 {{#external-link-to href=item.commit.compareUrl }}
-                  {{ember-tooltip text='View diff on GitHub'}}
+                  {{ember-tooltip text=(concat 'View diff on' (vcs-name item.repo.vcsType))}}
                   {{svg-jar 'icon-compare' class="icon"}}
                   <span class="label-align inner-underline commit-compare">Compare
                     <span class="label-align-item monospace">{{short-compare-shas item.commit.compareUrl}}</span>
@@ -62,15 +62,15 @@
         {{/if}}
         <li>
           {{#if item.isTag}}
-            {{#external-link-to href=urlGitHubTag class="commit-branch-url"}}
-              {{ember-tooltip text='View tag on GitHub'}}
+            {{#external-link-to href=vcsTagUrl class="commit-branch-url"}}
+              {{ember-tooltip text=(concat 'View tag on' (vcs-name item.repo.vcsType))}}
               {{svg-jar 'icon-tag' class="icon"}}
               <span class="label-align inner-underline">Tag {{build.tag.name}}</span>
               {{svg-jar 'icon-external-link' class="icon"}}
             {{/external-link-to}}
           {{else}}
-            {{#external-link-to href=urlGitHubBranch class="commit-branch-url"}}
-              {{ember-tooltip text='View branch on GitHub'}}
+            {{#external-link-to href=vcsBranchUrl class="commit-branch-url"}}
+              {{ember-tooltip text=(concat 'View branch on' (vcs-name item.repo.vcsType))}}
               {{svg-jar 'icon-branch' class="icon"}}
               <span class="label-align inner-underline">Branch
                 <span class="label-align-item monospace">{{build.branchName}}</span>

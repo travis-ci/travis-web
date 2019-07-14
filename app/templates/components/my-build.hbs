@@ -22,8 +22,8 @@
         {{{format-message build.commit.message short='true' repo=build.repo eventType=build.eventType}}}
       </div>
       <div class='row-content no-hover'>
-        {{#external-link-to data-test-branch-name href=urlGitHubBranch}}
-          {{ember-tooltip text='View branch on GitHub' popperContainer='body'}}
+        {{#external-link-to data-test-branch-name href=vcsBranchUrl}}
+          {{ember-tooltip text=(concat "View branch on " (vcs-name buid.repo.vcsType)) popperContainer='body'}}
           {{svg-jar 'icon-branch' class="icon"}}
           <span class='label-align inner-underline'>{{build.branchName}}</span>
           {{svg-jar 'icon-external-link' class="icon"}}
@@ -40,7 +40,7 @@
       </div>
       <div>
         {{#external-link-to data-test-commit-sha href=build.commit.githubUrl class='row-content monospace'}}
-          {{ember-tooltip text='View commit on GitHub'}}
+          {{ember-tooltip text=(concat "View commit on " (vcs-name buid.repo.vcsType))}}
           {{svg-jar 'icon-commit' class="icon"}}
           <span class="label-align inner-underline">{{format-sha build.commit.sha}}</span>
           {{svg-jar 'icon-external-link' class="icon"}}
