@@ -85,6 +85,7 @@
         value=newSubscription.billingInfo.billingEmail
         required=true
         showRequiredMark=true
+        validator=(form-validator form.validators.email)
         onChange=(action (mut newSubscription.billingInfo.billingEmail))
         showValidationStatusIcons=false as |field|
       }}

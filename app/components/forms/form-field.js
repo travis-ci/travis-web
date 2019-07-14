@@ -139,6 +139,10 @@ export default Component.extend({
       this.onChange(value);
     },
 
+    handleKeyUp(value) {
+      this.onBlur && this.onKeyUp(value);
+    },
+
     handleClear() {
       if (this.allowClear)
         this.send('handleChange', '');

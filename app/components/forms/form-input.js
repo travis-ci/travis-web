@@ -27,6 +27,7 @@ export default Component.extend({
   onFocus() {},
   onBlur() {},
   onInit() {},
+  onKeyUp() {},
 
   focusIn() {
     this.onFocus();

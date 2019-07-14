@@ -24,4 +24,13 @@ export default Component.extend({
       this.flashes.error('There was an error connecting to stripe. Please try again.');
     }
   }).drop(),
+
+  actions: {
+
+    handleKeyUp(value) {
+      let spacedCardNumber = value.replace(/[^\dA-Z]/g, '').replace(/(.{4})/g, '$1 ').trim();
+      this.set('cardNumber', spacedCardNumber);
+    }
+
+  }
 });

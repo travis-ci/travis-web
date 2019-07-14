@@ -18,7 +18,9 @@
           value=cardNumber
           required=true
           showRequiredMark=true
+          validator=(form-validator form.validators.creditCard)
           showValidationStatusIcons=false
+          onKeyUp=(action 'handleKeyUp')
           onChange=(action (mut cardNumber)) as |field|
         }}
           {{field.input name='cardNumber'}}
@@ -75,6 +77,7 @@
           value=cvc
           required=true
           showRequiredMark=true
+          validator=(form-validator form.validators.equal 3)
           onChange=(action (mut cvc))
           showValidationStatusIcons=false as |field|
         }}
