@@ -23,10 +23,6 @@ export default Service.extend({
     return `${config.billingEndpoint}/subscriptions/${id}`;
   },
 
-  githubTag(slug, tag) {
-    return `${config.sourceEndpoint}/${slug}/releases/tag/${tag}`;
-  },
-
   openSourceMigrationDocs: 'https://docs.travis-ci.com/user/open-source-on-travis-ci-com/#existing-open-source-repositories-on-travis-ciorg',
 
   betaMigrationDocs: 'https://docs.travis-ci.com/user/open-source-repository-migration/',

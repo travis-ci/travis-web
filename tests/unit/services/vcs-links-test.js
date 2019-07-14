@@ -42,4 +42,11 @@ module('Unit | Service | vcs-links', function (hooks) {
 
     assert.equal(service.branchUrl(vcsType, slug, this.build.branch), 'https://github.com/travis-ci/travis-web/tree/new-pr');
   });
+
+  test('tagUrl', function (assert) {
+    const service = this.owner.lookup('service:vcs-links');
+    const { vcsType, slug } = this.repo;
+
+    assert.equal(service.tagUrl(vcsType, slug, '2.0.0'), 'https://github.com/travis-ci/travis-web/releases/tag/2.0.0');
+  });
 });

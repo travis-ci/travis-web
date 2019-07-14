@@ -20,4 +20,8 @@ export default Service.extend({
   branchUrl(vcsType, slug, branch) {
     return `${this.endpoint(vcsType)}/${slug}/tree/${branch}`;
   },
+
+  tagUrl(vcsType, slug, tag) {
+    return `${this.endpoint(vcsType)}/${slug}/releases/tag/${tag}`;
+  },
 });

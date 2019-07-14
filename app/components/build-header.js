@@ -7,7 +7,6 @@ import { not } from '@ember/object/computed';
 const commitMessageLimit = 72;
 
 export default Component.extend({
-  externalLinks: service(),
   vcsLinks: service(),
 
   tagName: 'section',
@@ -60,7 +59,7 @@ export default Component.extend({
     return !['api', 'cron'].includes(eventType);
   }),
 
-  urlGitHubBranch: computed('item.repo.slug', 'build.branchName', function () {
+  vcsBranchUrl: computed('item.repo.{slug,vcsType}', 'build.branchName', function () {
     const slug = this.get('item.repo.slug');
     const branchName = this.get('build.branchName');
     const vcsType = this.get('item.repo.vcsType');
@@ -68,10 +67,12 @@ export default Component.extend({
     return this.get('vcsLinks').branchUrl(vcsType, slug, branchName);
   }),
 
-  urlGitHubTag: computed('item.repo.slug', 'build.tag.name', function () {
-    let slug = this.get('item.repo.slug');
-    let tag = this.get('build.tag.name');
-    return this.get('externalLinks').githubTag(slug, tag);
+  vcsTagUrl: computed('item.repo.{slug,vcsType}', 'build.tag.name', function () {
+    const slug = this.get('item.repo.slug');
+    const tag = this.get('build.tag.name');
+    const vcsType = this.get('item.repo.vcsType');
+
+    return this.get('vcsLinks').tagUrl(vcsType, slug, tag);
   }),
 
   buildState: computed('item.jobs.firstObject.state', 'item.state', 'item.isMatrix', function () {
