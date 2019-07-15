@@ -7,7 +7,7 @@ import { later } from '@ember/runloop';
 export default Component.extend({
   copied: false,
   baseYmlName: '.travis.yml',
-  vcsLinks: sersvice(),
+  vcsLinks: service(),
 
   buttonLabel: computed('copied', 'rawConfig.source', function () {
     let source = this.get('rawConfig.source');
@@ -32,7 +32,6 @@ export default Component.extend({
   }),
 
   fileUrl: computed('rawConfig.source', 'slug', 'build.branchName', 'vcsLinks', function () {
-    debugger
     let source = this.get('rawConfig.source');
     let slug = this.get('slug');
     if (isInternal(source, slug)) { return null; }
