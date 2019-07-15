@@ -1,6 +1,7 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
+import config from 'travis/config/environment';
 import { task } from 'ember-concurrency';
 import { not, filterBy, mapBy, equal } from '@ember/object/computed';
 
@@ -9,30 +10,11 @@ const STEPS = {
   stepTwo: 'stepTwo'
 };
 
-let availablePlans = [
-  {
-    name: 'Bootstrap',
-    enabled: true
-  },
-  {
-    name: 'Startup',
-    enabled: true,
-    isDefault: true
-  },
-  {
-    name: 'Small Business',
-    enabled: true
-  },
-  {
-    name: 'Premium',
-    enabled: true
-  }
-];
-
 export default Component.extend({
   store: service(),
   plans: null,
   showAnnual: false,
+  availablePlans: config.plans,
   steps: [...Object.values(STEPS)],
 
   currentStep: computed('steps.[]', {
@@ -45,9 +27,6 @@ export default Component.extend({
   }),
   isStepOne: equal('currentStep', STEPS.stepOne),
   isStepTwo: equal('currentStep', STEPS.stepTwo),
-
-  availablePlans,
-
   showMonthly: not('showAnnual'),
   defaultPlan: filterBy('availablePlans', 'isDefault'),
   availablePlanNames: mapBy('availablePlans', 'name'),
