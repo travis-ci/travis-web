@@ -7,9 +7,9 @@ import Ember from 'ember';
 const { escapeExpression: escape } = Ember.Handlebars.Utils;
 
 export default Helper.extend({
-  externalLinks: service(),
+  vcsLinks: service(),
 
-  compute([slug, commitSha]) {
+  compute([vcsType, slug, commitSha]) {
     if (!commitSha) {
       return '';
     }
@@ -20,7 +20,7 @@ export default Helper.extend({
       return sha;
     }
 
-    const commitUrl = this.get('externalLinks').githubCommit(slug, sha);
+    const commitUrl = this.get('vcsLinks').commitUrl(vcsType, slug, sha);
     const url = escape(commitUrl);
     const string = `<a class="github-link only-on-hover" href="${url}">${sha}</a>`;
     return new htmlSafe(string);

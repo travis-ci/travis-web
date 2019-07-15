@@ -5,7 +5,7 @@ import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 
 export default Model.extend({
-  externalLinks: service(),
+  vcsLinks: service(),
 
   sha: attr(),
   branch: attr(),
@@ -51,9 +51,11 @@ export default Model.extend({
     }
   ),
 
-  githubUrl: computed('build.repo.slug', 'sha', function () {
-    let slug = this.get('build.repo.slug');
-    let sha = this.get('sha');
-    return this.get('externalLinks').githubCommit(slug, sha);
+  githubUrl: computed('build.repo.{slug,vcsType}', 'sha', function () {
+    const slug = this.get('build.repo.slug');
+    const sha = this.get('sha');
+    const vcsType = this.get('build.repo.vcsType');
+
+    return this.get('vcsLinks').commitUrl(vcsType, slug, sha);
   }),
 });

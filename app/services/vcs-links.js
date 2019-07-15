@@ -24,4 +24,8 @@ export default Service.extend({
   tagUrl(vcsType, slug, tag) {
     return `${this.endpoint(vcsType)}/${slug}/releases/tag/${tag}`;
   },
+
+  commitUrl(vcsType, slug, sha) {
+    return `${this.endpoint(vcsType)}/${slug}/commit/${sha}`;
+  },
 });

@@ -2,10 +2,6 @@ import Service from '@ember/service';
 import config from 'travis/config/environment';
 
 export default Service.extend({
-  githubCommit(slug, sha) {
-    return `${config.sourceEndpoint}/${slug}/commit/${sha}`;
-  },
-
   email(email) {
     return `mailto:${email}`;
   },

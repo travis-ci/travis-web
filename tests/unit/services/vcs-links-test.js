@@ -14,6 +14,10 @@ module('Unit | Service | vcs-links', function (hooks) {
       pullRequestNumber: '999',
       branch: 'new-pr',
     };
+
+    this.commit = {
+      sha: '123abc',
+    };
   });
 
   test('endpoint', function (assert) {
@@ -48,5 +52,12 @@ module('Unit | Service | vcs-links', function (hooks) {
     const { vcsType, slug } = this.repo;
 
     assert.equal(service.tagUrl(vcsType, slug, '2.0.0'), 'https://github.com/travis-ci/travis-web/releases/tag/2.0.0');
+  });
+
+  test('commitUrl', function (assert) {
+    const service = this.owner.lookup('service:vcs-links');
+    const { vcsType, slug } = this.repo;
+
+    assert.equal(service.commitUrl(vcsType, slug, this.commit.sha), 'https://github.com/travis-ci/travis-web/commit/123abc');
   });
 });

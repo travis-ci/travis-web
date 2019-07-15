@@ -4,22 +4,6 @@ import { setupTest } from 'ember-qunit';
 module('Unit | Service | external-links', function (hooks) {
   setupTest(hooks);
 
-  hooks.beforeEach(function () {
-    this.repo = {
-      id: '1',
-      slug: 'travis-ci/travis-web',
-    };
-
-    this.commit = {
-      sha: '123abc',
-    };
-  });
-
-  test('githubCommit', function (assert) {
-    const service = this.owner.lookup('service:external-links');
-    assert.equal(service.githubCommit(this.repo.slug, this.commit.sha), 'https://github.com/travis-ci/travis-web/commit/123abc');
-  });
-
   test('email', function (assert) {
     const service = this.owner.lookup('service:external-links');
     const email = 'builder@travis-ci.com';

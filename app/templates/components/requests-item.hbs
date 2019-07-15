@@ -12,7 +12,7 @@
       <strong>{{request.branchName}}</strong>
     {{/if}}
     {{#if request.commit}}
-      {{github-commit-link request.repo.slug request.commit.sha}}
+      {{vcs-commit-link request.repo.vcsType request.repo.slug request.commit.sha}}
     {{else}}
       <em data-requests-item-commit-missing>No commit available</em>
     {{/if}}
