@@ -1,6 +1,17 @@
 import Service, { inject as service } from '@ember/service';
 import config from 'travis/config/environment';
 
+export const IMAGE_FORMATS = {
+  'Image URL': 'imageUrl',
+  'Markdown': 'markdownImageString',
+  'Textile': 'textileImageString',
+  'Rdoc': 'rdocImageString',
+  'AsciiDoc': 'asciidocImageString',
+  'RST': 'rstImageString',
+  'Pod': 'podImageString',
+  'CCTray': 'ccXml'
+};
+
 export default Service.extend({
   auth: service(),
   features: service(),
