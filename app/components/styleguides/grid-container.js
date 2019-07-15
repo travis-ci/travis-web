@@ -1,6 +1,5 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { reads } from '@ember/object/computed';
 
 export const BREAKPOINTS = ['sm', 'md', 'lg', 'xl'];
 

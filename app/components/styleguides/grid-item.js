@@ -1,15 +1,17 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { or } from '@ember/object/computed';
+import { reads } from '@ember/object/computed';
 import { BREAKPOINTS } from 'travis/components/styleguides/grid-container';
 
 const breakpointClasses = BREAKPOINTS.map((val) => `${val}Class`);
 
 const generateBreakpointClassFunc = function (breakpoint) {
   return function () {
+    if (this[breakpoint] === null) {
+      return null;
+    }
     const { sizePrefix } = this;
-    const bpVal = this[breakpoint];
-    const size = bpVal === 1 ? 'full' : `1/${bpVal}`;
+    const size = this[`${breakpoint}Size`].replace('1/1', 'full');
     const bpPrefix = breakpoint === 'base' ? '' : `${breakpoint}:`;
     return `${bpPrefix}${sizePrefix}-${size}`;
   };
@@ -24,20 +26,23 @@ export default Component.extend({
     return this.grid.dir.includes('col') ? 'h' : 'w';
   }),
 
-  defaultSize: 1,
+  base: reads('grid.base'),
+  baseSize: computed('base', function () { return `1/${this.base}`; }),
+  baseClass: computed('baseSize', 'sizePrefix', generateBreakpointClassFunc('base')),
 
-  base: or('grid.base', 'defaultSize'),
-  baseClass: computed('base', 'sizePrefix', generateBreakpointClassFunc('base')),
+  sm: reads('grid.sm'),
+  smSize: computed('sm', function () { return `1/${this.sm}`; }),
+  smClass: computed('smSize', 'sizePrefix', generateBreakpointClassFunc('sm')),
 
-  sm: or('grid.sm', 'base'),
-  smClass: computed('sm', 'sizePrefix', generateBreakpointClassFunc('sm')),
+  md: reads('grid.md'),
+  mdSize: computed('md', function () { return `1/${this.md}`; }),
+  mdClass: computed('mdSize', 'sizePrefix', generateBreakpointClassFunc('md')),
 
-  md: or('grid.md', 'sm'),
-  mdClass: computed('md', 'sizePrefix', generateBreakpointClassFunc('md')),
+  lg: reads('grid.lg'),
+  lgSize: computed('lg', function () { return `1/${this.lg}`; }),
+  lgClass: computed('lgSize', 'sizePrefix', generateBreakpointClassFunc('lg')),
 
-  lg: or('grid.lg', 'md'),
-  lgClass: computed('lg', 'sizePrefix', generateBreakpointClassFunc('lg')),
-
-  xl: or('grid.xl', 'lg'),
-  xlClass: computed('xl', 'sizePrefix', generateBreakpointClassFunc('xl')),
+  xl: reads('grid.xl'),
+  xlSize: computed('xl', function () { return `1/${this.xl}`; }),
+  xlClass: computed('xlSize', 'sizePrefix', generateBreakpointClassFunc('xl')),
 });
