@@ -110,6 +110,7 @@ export default Component.extend({
       this.set('newSubscription', newSubscription);
       const currentIndex = steps.indexOf(currentStep);
       this.set('currentStep', steps[currentIndex + 1]);
+      window.scrollTo(0, 0);
     },
 
     back() {
