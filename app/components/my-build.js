@@ -11,7 +11,7 @@ export default Component.extend({
   vcsLinks: service(),
   state: alias('build.state'),
 
-  vcsBranchUrl: computed('build.repo.slug', 'build.branchName', 'build.repo.vcsType', function () {
+  vcsBranchUrl: computed('build.repo.{slug,vcsType}', 'build.branchName', function () {
     const slug = this.get('build.repo.slug');
     const branchName = this.get('build.branchName');
     const vcsType = this.get('build.repo.vcsType');

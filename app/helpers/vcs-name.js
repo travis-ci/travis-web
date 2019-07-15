@@ -4,7 +4,7 @@ export function vcsName([vcsType]) {
   switch (vcsType) {
     case 'GithubRepository':
     default:
-      return 'Github';
+      return 'GitHub';
   }
 }
 
