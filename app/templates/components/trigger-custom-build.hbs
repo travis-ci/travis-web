@@ -18,6 +18,7 @@
 
   <div class="form-elem">
     {{#form.field
+      data-test-trigger-build-branch
       label='Branch'
       placeholder='Select a branch'
       value=triggerBuildBranch
@@ -36,9 +37,10 @@
 
   <div class="form-elem">
     {{#form.field
+      data-test-trigger-build-message
       value=triggerBuildMessage
       label="Custom commit message"
-      onChange=(mut triggerBuildMessage)
+      onChange=(action (mut triggerBuildMessage))
       placeholder="Commit message"
       as |field|
     }}
@@ -48,10 +50,11 @@
 
   <div class="form-elem">
     {{#form.field
+      data-test-trigger-build-config
       value=triggerBuildConfig
       label="Custom config"
       placeholder="Enter config as YAML"
-      onChange=(mut triggerBuildConfig)
+      onChange=(action (mut triggerBuildConfig))
       as |field|
     }}
       {{field.textarea}}
@@ -63,6 +66,7 @@
       {{loading-indicator}}
     {{else}}
       <button
+        data-test-trigger-build-submit="true"
         onclick={{form.submit}}
         type="button"
         class="trigger-build-submit {{if jsonError 'button inactive' 'button--blue'}}"
