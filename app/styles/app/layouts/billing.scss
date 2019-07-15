@@ -59,7 +59,7 @@
     }
 
     &:hover {
-      background: rgba(181, 214, 217, 0.9);
+      background: rgba(181, 214, 217, 1);
       cursor: pointer;
     }
   }
@@ -163,7 +163,7 @@
 
 .highlight-plan {
   color: $oxide-blue;
-  background: rgba(181, 214, 217, 0.9);
+  background: rgba(181, 214, 217, 1);
 }
 
 .billing-process-cancel{
