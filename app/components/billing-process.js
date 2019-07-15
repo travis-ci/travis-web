@@ -31,7 +31,6 @@ let availablePlans = [
 
 export default Component.extend({
   store: service(),
-  router: service(),
   plans: null,
   showAnnual: false,
   steps: [...Object.values(STEPS)],

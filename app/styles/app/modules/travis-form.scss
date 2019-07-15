@@ -73,12 +73,6 @@ $select-multiple-spacing: 5px;
       .travis-form__required-mark {
         color: $brick-red;
       }
-      .travis-form__optional-mark {
-        font-weight: 300;
-        font-style: italic;
-        text-transform: capitalize;
-        margin-left: 5px;
-      }
 
       .tooltip {
         text-transform: none;
