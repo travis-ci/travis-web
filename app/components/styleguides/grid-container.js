@@ -31,14 +31,9 @@ export default Component.extend({
     return classes.join(' ');
   }),
 
-  auto: 1,
   base: 1,
-  sm: computed('auto', function () {
-    return Math.ceil(this.auto / 3);
-  }),
-  md: computed('auto', function () {
-    return Math.ceil(this.auto / 2);
-  }),
-  lg: reads('auto'),
-  xl: reads('auto'),
+  sm: null,
+  md: null,
+  lg: null,
+  xl: null,
 });

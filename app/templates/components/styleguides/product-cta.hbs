@@ -1,5 +1,6 @@
 {{#styleguides/grid-container
-  auto=4
+  base=2
+  md=4
   as |grid|
 }}
   {{#each products as |product|}}
@@ -22,7 +23,7 @@
       </div>
     {{/grid.item}}
   {{/each}}
-  {{#grid.item class="text-center p-4 border-grey-150 border" sm='1/1' md='1/1' lg='full' xl='full'}}
-    <button>Start Your Free Trial</button>
-  {{/grid.item}}
 {{/styleguides/grid-container}}
+<div class="text-center p-4 border-grey-150 border">
+  <button>Start Your Free Trial</button>
+</div>
