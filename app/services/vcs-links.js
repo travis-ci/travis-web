@@ -28,4 +28,11 @@ export default Service.extend({
   commitUrl(vcsType, slug, sha) {
     return `${this.endpoint(vcsType)}/${slug}/commit/${sha}`;
   },
+
+  // This function is here to as part of VCS work.
+  // I belive this function is not used anymore, it should be removed
+  // or updated to be aware of `vcsType`.
+  fileUrl(slug, branch, file) {
+    return `${this.endpoint('GithubRepository')}/${slug}/blob/${branch}/${file}`;
+  },
 });

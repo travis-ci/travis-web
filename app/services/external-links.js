@@ -10,10 +10,6 @@ export default Service.extend({
     return `https://github.com/travis-ci/travis-web/tree/${branchName}`;
   },
 
-  githubFile(slug, branch, file) {
-    return `${config.sourceEndpoint}/${slug}/blob/${branch}/${file}`;
-  },
-
   billingUrl(accountType, login) {
     const id = accountType === 'user' ? 'user' : login;
     return `${config.billingEndpoint}/subscriptions/${id}`;
