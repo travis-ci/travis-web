@@ -1,36 +1,28 @@
-<div class="flex flex-wrap">
-{{#each products as |product|}}
-  <div class="w-1/2 sm:w-1/4 p-4 border-grey-150 border">
-    <h3>{{product.name}}</h3>
-    <h4>{{product.description}}</h4>
+{{#styleguides/grid-container
+  auto=4
+  as |grid|
+}}
+  {{#each products as |product|}}
+    {{#grid.item class="p-4 border-grey-150 border"}}
+      <h3>{{product.name}}</h3>
+      <h4>{{product.description}}</h4>
 
-    <div>
-      {{product.builds}}
-      {{pluralize product.builds 'Concurrent job' without-count=true}}
-    </div>
-    <div>{{svg-jar 'features-check' class="w-4 inline-block"}} Unlimited build minutes</div>
-    <div>{{svg-jar 'features-check' class="w-4 inline-block"}} Unlimited repositories</div>
-    <div>{{svg-jar 'features-check' class="w-4 inline-block"}} Unlimited collaborators</div>
+      <div>
+        {{product.builds}}
+        {{pluralize product.builds 'Concurrent job' without-count=true}}
+      </div>
+      <div>{{svg-jar 'features-check' class="w-4 inline-block"}} Unlimited build minutes</div>
+      <div>{{svg-jar 'features-check' class="w-4 inline-block"}} Unlimited repositories</div>
+      <div>{{svg-jar 'features-check' class="w-4 inline-block"}} Unlimited collaborators</div>
 
-    <div>
-      {{product.currencySymbol}}{{product.displayPrice}}
-      {{product.currency}}
-      {{product.interval}}
-    </div>
-  </div>
-{{/each}}
-<div class="w-full text-center p-4 border-grey-150 border">
-  <button>Start Your Free Trial</button>
-</div>
-</div>
-
-{{#styleguides/grid-container sm-wrap='wrap-reverse' }}
-  <div class="text-xl">THIS IS A TEST</div>
-  <div class="text-xl">THIS IS A TEST</div>
-  <div class="text-xl">THIS IS A TEST</div>
-  <div class="text-xl">THIS IS A TEST</div>
-  <div class="text-xl">THIS IS A TEST</div>
-  <div class="text-xl">THIS IS A TEST</div>
-  <div class="text-xl">THIS IS A TEST</div>
-  <div class="text-xl">THIS IS A TEST</div>
+      <div>
+        {{product.currencySymbol}}{{product.displayPrice}}
+        {{product.currency}}
+        {{product.interval}}
+      </div>
+    {{/grid.item}}
+  {{/each}}
+  {{#grid.item class="text-center p-4 border-grey-150 border" sm='1/1' md='1/1' lg='full' xl='full'}}
+    <button>Start Your Free Trial</button>
+  {{/grid.item}}
 {{/styleguides/grid-container}}

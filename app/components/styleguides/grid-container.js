@@ -1,19 +1,25 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
+import { reads } from '@ember/object/computed';
 
+export const BREAKPOINTS = ['sm', 'md', 'lg', 'xl'];
+
+const flexify = (val) => `flex-${val}`;
 const props = {
-  wrap: (val) => `flex-${val}`,
+  dir: flexify,
+  wrap: flexify,
   inline: (val) => (val ? 'inline-flex' : 'flex'),
 };
 const propNames = Object.keys(props);
 
 export default Component.extend({
-  classNameBindings: ['baseClasses'],
+  classNameBindings: ['defaultClasses'],
 
+  dir: 'row',
   wrap: 'wrap',
   inline: false,
 
-  baseClasses: computed(...propNames, function () {
+  defaultClasses: computed(...propNames, function () {
     const classes = propNames.reduce((classes, name) => {
       if (typeof this[name] !== 'undefined' && props.hasOwnProperty(name)) {
         const newClass = props[name](this[name]);
@@ -24,4 +30,15 @@ export default Component.extend({
 
     return classes.join(' ');
   }),
+
+  auto: 1,
+  base: 1,
+  sm: computed('auto', function () {
+    return Math.ceil(this.auto / 3);
+  }),
+  md: computed('auto', function () {
+    return Math.ceil(this.auto / 2);
+  }),
+  lg: reads('auto'),
+  xl: reads('auto'),
 });
