@@ -21,7 +21,11 @@ export default Component.extend({
       const token = response.id;
       this.handleSubmit(token, this.cardNumber.slice(-4));
     } catch (error) {
-      this.flashes.error('There was an error connecting to stripe. Please try again.');
+      let message = 'There was an error connecting to stripe. Please try again.';
+      if (error.error.type === 'card_error') {
+        message = 'Invalid card details';
+      }
+      this.flashes.error(message);
     }
   }).drop(),
 

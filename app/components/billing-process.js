@@ -99,6 +99,7 @@ export default Component.extend({
     try {
       yield this.newSubscription.save();
     } catch (error) {
+      this.newSubscription.unloadRecord();
       this.flashes.error('There was an error saving the subscription task. Please try again.');
     }
   }).drop(),
