@@ -1,9 +1,11 @@
 import Mixin from '@ember/object/mixin';
+import { inject as service } from '@ember/service';
 import { EVENTS } from 'travis/utils/dynamic-query';
 
 const { PAGE_CHANGED } = EVENTS;
 
 export default Mixin.create({
+  features: service(),
   page: 1,
 
   queryParams: {
@@ -28,6 +30,13 @@ export default Mixin.create({
         repos.reload();
       }
       return repos.load();
+    }
+  },
+
+  redirect(model, transition) {
+    if (!this.get('features.proVersion')) {
+      transition.abort();
+      this.transitionTo(`${model.isUser ? 'account' : 'organization'}.repositories`);
     }
   }
 

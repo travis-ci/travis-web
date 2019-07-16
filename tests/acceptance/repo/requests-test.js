@@ -1,73 +1,74 @@
-import { test } from 'qunit';
-import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
+import { module, test } from 'qunit';
+import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import { prettyDate } from 'travis/helpers/pretty-date';
+import { percySnapshot } from 'ember-percy';
 
 import requestsPage from 'travis/tests/pages/requests';
 
-moduleForAcceptance('Acceptance | repo | requests', {
-  beforeEach() {
+module('Acceptance | repo | requests', function (hooks) {
+  setupApplicationTest(hooks);
+
+  hooks.beforeEach(function () {
     this.repo = server.create('repository', { slug: 'travis-ci/travis-web' });
-  }
-});
-
-test('list requests', function (assert) {
-  let approvedRequest = this.repo.createRequest({
-    result: 'approved',
-    message: 'A request message',
-    created_at: new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 365),
-    event_type: 'pull_request'
-  });
-  this.approvedRequest = approvedRequest;
-
-  let approvedCommit = server.create('commit', {
-    branch: 'acceptance-tests',
-    message: 'A commit message',
-    request: approvedRequest
   });
 
-  server.create('build', {
-    repository: this.repo,
-    state: 'passed',
-    commit_id: approvedCommit.id,
-    commit: approvedCommit,
-    request: approvedRequest,
-    number: '1919'
-  });
+  test('list requests', async function (assert) {
+    let approvedRequest = this.repo.createRequest({
+      result: 'approved',
+      message: 'A request message',
+      created_at: new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 365),
+      event_type: 'pull_request'
+    });
+    this.approvedRequest = approvedRequest;
 
-  this.repo.createRequest({
-    result: 'rejected',
-    event_type: 'cron'
-  });
+    let approvedCommit = server.create('commit', {
+      branch: 'acceptance-tests',
+      message: 'A commit message',
+      request: approvedRequest
+    });
 
-  this.repo.createRequest({
-    result: 'pending',
-    event_type: 'api'
-  });
+    server.create('build', {
+      repository: this.repo,
+      state: 'passed',
+      commit_id: approvedCommit.id,
+      commit: approvedCommit,
+      request: approvedRequest,
+      number: '1919'
+    });
 
-  let olderApprovedRequest = this.repo.createRequest({
-    result: 'approved',
-    message: 'An old request message',
-    created_at: new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 365 * 2),
-    event_type: 'pull_request'
-  });
+    this.repo.createRequest({
+      result: 'rejected',
+      event_type: 'cron'
+    });
 
-  let olderApprovedCommit = server.create('commit', {
-    branch: 'acceptance-tests',
-    message: 'An older commit message',
-    request: olderApprovedRequest
-  });
+    this.repo.createRequest({
+      result: 'pending',
+      event_type: 'api'
+    });
 
-  server.create('build', {
-    repository: this.repo,
-    state: 'passed',
-    commit_id: olderApprovedCommit.id,
-    request: olderApprovedRequest,
-    number: '1871'
-  });
+    let olderApprovedRequest = this.repo.createRequest({
+      result: 'approved',
+      message: 'An old request message',
+      created_at: new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 365 * 2),
+      event_type: 'pull_request'
+    });
 
-  requestsPage.visit({organization: 'travis-ci', repo: 'travis-web', requestId: approvedRequest.id});
+    let olderApprovedCommit = server.create('commit', {
+      branch: 'acceptance-tests',
+      message: 'An older commit message',
+      request: olderApprovedRequest
+    });
 
-  andThen(() => {
+    server.create('build', {
+      repository: this.repo,
+      state: 'passed',
+      commit_id: olderApprovedCommit.id,
+      request: olderApprovedRequest,
+      number: '1871'
+    });
+
+    await requestsPage.visit({organization: 'travis-ci', repo: 'travis-web', requestId: approvedRequest.id});
+
     requestsPage.requests[0].as(request => {
       assert.ok(request.isApproved);
       assert.ok(request.isHighlighted, 'expected the request to be highlighted because of the query param');
@@ -103,15 +104,13 @@ test('list requests', function (assert) {
     });
 
     assert.ok(requestsPage.missingNotice.isHidden);
+
+    percySnapshot(assert);
   });
 
-  percySnapshot(assert);
-});
+  test('a placeholder shows when there are no requests', async function (assert) {
+    await requestsPage.visit({organization: 'travis-ci', repo: 'travis-web'});
 
-test('a placeholder shows when there are no requests', function (assert) {
-  requestsPage.visit({organization: 'travis-ci', repo: 'travis-web'});
-
-  andThen(() => {
     assert.equal(requestsPage.requests.length, 0);
     assert.ok(requestsPage.missingNotice.isVisible);
   });

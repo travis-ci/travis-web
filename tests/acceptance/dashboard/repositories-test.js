@@ -1,8 +1,13 @@
-import { currentURL, currentRouteName, visit, click } from '@ember/test-helpers';
+import {
+  click,
+  currentURL,
+  currentRouteName,
+  visit,
+  waitFor,
+} from '@ember/test-helpers';
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'ember-qunit';
+import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import signInUser from 'travis/tests/helpers/sign-in-user';
-import { waitForElement } from 'travis/tests/helpers/wait-for-element';
 import { enableFeature } from 'ember-feature-flags/test-support';
 import { percySnapshot } from 'ember-percy';
 import { prettyDate } from 'travis/helpers/pretty-date';
@@ -284,7 +289,7 @@ module('Acceptance | dashboard/repositories', function (hooks) {
       repository: generatePusherPayload(this.repository, { current_build_id: build.id })
     });
 
-    await waitForElement('.my-build:nth-child(1)');
+    await waitFor('.my-build:nth-child(1)');
 
     page.myBuilds.builds[0].as(build => {
       assert.equal(build.stateAndNumber.text, '#15 received');
@@ -325,7 +330,7 @@ module('Acceptance | dashboard/repositories', function (hooks) {
       repository: generatePusherPayload(otherRepository, { current_build_id: otherBuild.id })
     });
 
-    await waitForElement('.my-build:nth-child(5)');
+    await waitFor('.my-build:nth-child(5)');
 
     assert.equal(page.myBuilds.builds.length, 5, 'expected the user’s new build to show but not the other user’s');
 

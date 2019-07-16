@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { currentRouteName, settled } from '@ember/test-helpers';
-import { setupApplicationTest } from 'ember-qunit';
+import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import { enableFeature } from 'ember-feature-flags/test-support';
 import profilePage from 'travis/tests/pages/profile';
 import signInUser from 'travis/tests/helpers/sign-in-user';

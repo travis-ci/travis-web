@@ -1,12 +1,13 @@
 <div data-test-active_on_org-display class="missing-notice">
 
-  {{svg-jar 'hammer' class="page-graphic"}}
+  {{svg-jar 'hammer' class="page-graphic snapshot-hide"}}
 
   <h2 class="text-big">
     You can now start building this repository, right here at travis-ci.com!
   </h2>
 
   {{#if auth.signedIn}}
+
     <button
       disabled={{isMigrateButtonDisabled}}
       onclick={{action 'migrate'}}
@@ -14,12 +15,29 @@
     >
       {{#if repo.isMigrationInProgress}}
         Migrating...
-      {{else if repo.isMigratable}}
-        Migrate {{svg-jar 'icon-migrate' class="icon icon--m white icon--right"}}
       {{else if repo.isMigrationSucceeded}}
         Done!
+      {{else}}
+        Migrate {{svg-jar 'icon-migrate' class="icon icon--m white icon--right"}}
       {{/if}}
     </button>
+
+    {{#if isMigrationNotAllowed}}
+      <p>
+        {{#if (not permissions.admin)}}
+          Migration requires admin permissions.
+        {{else if (not permissions.migrate)}}
+          This repository cannot be migrated. Most likely migration feature is not enabled for your account.
+        {{else}}
+          This repository cannot be migrated yet.
+        {{/if}}
+      </p>
+    {{/if}}
+
+  {{else}}
+
+    <button class="auth-button signed-out" type="button" {{action 'signIn'}}>Sign in with GitHub</button>
+
   {{/if}}
 
 </div>
