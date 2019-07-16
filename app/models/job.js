@@ -50,7 +50,7 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
     this.set('isLogAccessed', true);
     return Log.create({
       job: this,
-      api: this.get('api'),
+      api: this.api,
       container: getOwner(this)
     });
   }),
@@ -66,7 +66,7 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
   },
 
   isFinished: computed('state', function () {
-    let state = this.get('state');
+    let state = this.state;
     let finishedStates = ['passed', 'failed', 'errored', 'canceled'];
     return finishedStates.includes(state);
   }),
@@ -78,32 +78,32 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
   isReceived: equal('state', 'received'),
 
   toBeQueued: computed('state', function () {
-    let state = this.get('state');
+    let state = this.state;
     let queuedState = 'created';
     return isEqual(state, queuedState);
   }),
 
   toBeStarted: computed('state', function () {
-    let state = this.get('state');
+    let state = this.state;
     let waitingStates = ['queued', 'received'];
     return waitingStates.includes(state);
   }),
 
   notStarted: computed('state', function () {
-    let state = this.get('state');
+    let state = this.state;
     let waitingStates = ['created', 'queued', 'received'];
     return waitingStates.includes(state);
   }),
 
   clearLog() {
-    if (this.get('isLogAccessed')) {
-      return this.get('log').clear();
+    if (this.isLogAccessed) {
+      return this.log.clear();
     }
   },
 
   canCancel: computed('isFinished', 'state', function () {
-    let isFinished = this.get('isFinished');
-    let state = this.get('state');
+    let isFinished = this.isFinished;
+    let state = this.state;
     // not(isFinished) is insufficient since it will be true when state is undefined.
     return !isFinished && !!state;
   }),
@@ -112,13 +112,13 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
   canDebug: and('isFinished', 'repo.private'),
 
   cancel() {
-    const url = `/job/${this.get('id')}/cancel`;
-    return this.get('api').post(url);
+    const url = `/job/${this.id}/cancel`;
+    return this.api.post(url);
   },
 
   removeLog() {
-    const url = `/job/${this.get('id')}/log`;
-    return this.get('ajax').deleteV3(url).then(() => this.reloadLog());
+    const url = `/job/${this.id}/log`;
+    return this.ajax.deleteV3(url).then(() => this.reloadLog());
   },
 
   reloadLog() {
@@ -127,23 +127,23 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
   },
 
   restart() {
-    const url = `/job/${this.get('id')}/restart`;
-    return this.get('api').post(url);
+    const url = `/job/${this.id}/restart`;
+    return this.api.post(url);
   },
 
   debug() {
-    const url = `/job/${this.get('id')}/debug`;
-    return this.get('api').post(url, { data: { quiet: true } });
+    const url = `/job/${this.id}/debug`;
+    return this.api.post(url, { data: { quiet: true } });
   },
 
   appendLog(part) {
-    return this.get('log').append(part);
+    return this.log.append(part);
   },
 
   whenLoaded(callback) {
     new EmberPromise((resolve, reject) => {
       this.whenLoadedCallbacks = this.whenLoadedCallbacks || [];
-      if (this.get('isLoaded')) {
+      if (this.isLoaded) {
         resolve();
       } else {
         this.whenLoadedCallbacks.push(resolve);
@@ -163,14 +163,14 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
     //       we call subscribe only when the job is loaded, but I think that
     //       would require a bigger refactoring.
     this.whenLoaded(() => {
-      if (this.get('subscribed')) {
+      if (this.subscribed) {
         return;
       }
 
       this.set('subscribed', true);
 
-      this.get('repo').then((repo) =>
-        Travis.pusher.subscribe(this.get('channelName'))
+      this.repo.then((repo) =>
+        Travis.pusher.subscribe(this.channelName)
       );
     });
   },
@@ -182,7 +182,7 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
     'features.proVersion',
     function () {
       let isRepoPrivate = this.get('repo.private');
-      let id = this.get('id');
+      let id = this.id;
       let enterprise = this.get('features.enterpriseVersion');
       let pro = this.get('features.proVersion');
       // Currently always using private channels on Enterprise
@@ -194,19 +194,19 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
 
   unsubscribe() {
     this.whenLoaded(() => {
-      if (!this.get('subscribed')) {
+      if (!this.subscribed) {
         return;
       }
       this.set('subscribed', false);
       if (Travis.pusher) {
-        const channel = `job-${this.get('id')}`;
+        const channel = `job-${this.id}`;
         return Travis.pusher.unsubscribe(channel);
       }
     });
   },
 
   onStateChange: observer('state', function () {
-    if (this.get('state') === 'finished' && Travis.pusher) {
+    if (this.state === 'finished' && Travis.pusher) {
       return this.unsubscribe();
     }
   }),
@@ -215,7 +215,7 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
 
   slug: computed('repo.slug', 'number', function () {
     let slug = this.get('repo.slug');
-    let number = this.get('number');
+    let number = this.number;
     return `${slug} #${number}`;
   }),
 });

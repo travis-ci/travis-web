@@ -10,11 +10,11 @@ export default DS.Model.extend({
   feedbackUrl: attr('string'),
 
   dasherizedName: computed('name', function () {
-    return dasherize(this.get('name'));
+    return dasherize(this.name);
   }),
 
   displayName: computed('dasherizedName', function () {
-    return this.get('dasherizedName')
+    return this.dasherizedName
       .split('-')
       .map(x => x.capitalize())
       .join(' ');

@@ -16,9 +16,9 @@ export default Component.extend({
   user: alias('auth.currentUser'),
 
   item: computed('type', 'job', 'build', function () {
-    let type = this.get('type');
-    let job = this.get('job');
-    let build = this.get('build');
+    let type = this.type;
+    let job = this.job;
+    let build = this.build;
     if (type === 'job') {
       return job;
     } else {
@@ -27,7 +27,7 @@ export default Component.extend({
   }),
 
   type: computed('job', 'build', function () {
-    let job = this.get('job');
+    let job = this.job;
     if (job) {
       return 'job';
     } else {
@@ -36,24 +36,24 @@ export default Component.extend({
   }),
 
   userHasPermissionForRepo: computed('repo', 'user', 'user.permissions.[]', function () {
-    let repo = this.get('repo');
-    let user = this.get('user');
+    let repo = this.repo;
+    let user = this.user;
     if (user && repo) {
       return user.hasAccessToRepo(repo);
     }
   }),
 
   userHasPullPermissionForRepo: computed('repo', 'user', 'user.pullPermissions.[]', function () {
-    let repo = this.get('repo');
-    let user = this.get('user');
+    let repo = this.repo;
+    let user = this.user;
     if (user && repo) {
       return user.hasPullAccessToRepo(repo);
     }
   }),
 
   userHasPushPermissionForRepo: computed('repo', 'user', 'user.pushPermissions.[]', function () {
-    let repo = this.get('repo');
-    let user = this.get('user');
+    let repo = this.repo;
+    let user = this.user;
     if (user && repo) {
       return user.hasPushAccessToRepo(repo);
     }
@@ -66,11 +66,11 @@ export default Component.extend({
   tooltips: or('labelless', 'mobilelabels'),
 
   cancel: task(function* () {
-    let type = this.get('type');
+    let type = this.type;
 
-    yield eventually(this.get('item'), (record) => {
+    yield eventually(this.item, (record) => {
       record.cancel().then(() => {
-        this.get('flashes').success(`${type.capitalize()} has been successfully cancelled.`);
+        this.flashes.success(`${type.capitalize()} has been successfully cancelled.`);
       }, (xhr) => {
         this.displayFlashError(xhr.status, 'cancel');
       });
@@ -80,43 +80,43 @@ export default Component.extend({
   restarters: taskGroup().drop(),
 
   restart: task(function* () {
-    let type = this.get('type');
+    let type = this.type;
 
-    yield eventually(this.get('item'), (record) => {
+    yield eventually(this.item, (record) => {
       record.restart().then(() => {
-        this.get('flashes').success(`The ${type} was successfully restarted.`);
+        this.flashes.success(`The ${type} was successfully restarted.`);
       }, () => {
-        this.get('flashes').error(`An error occurred. The ${type} could not be restarted.`);
+        this.flashes.error(`An error occurred. The ${type} could not be restarted.`);
       });
     });
   }).group('restarters'),
 
   debug: task(function* () {
-    let type = this.get('type');
+    let type = this.type;
 
-    yield eventually(this.get('item'), (record) => {
+    yield eventually(this.item, (record) => {
       record.debug().then(() => {
-        this.get('flashes')
+        this.flashes
           .notice(`The ${type} was successfully restarted in debug mode
             but make sure to watch the log for a host to connect to.`);
       }, () => {
-        this.get('flashes')
+        this.flashes
           .error(`An error occurred. The ${type} could not be restarted in debug mode.`);
       });
     });
   }).group('restarters'),
 
   displayFlashError(status, action) {
-    let type = this.get('type');
+    let type = this.type;
     if (status === 422 || status === 400) {
       let actionTerm = action === 'restart' ? 'restarted' : 'canceled';
-      this.get('flashes').error(`This ${type} can’t be ${actionTerm}`);
+      this.flashes.error(`This ${type} can’t be ${actionTerm}`);
     } else if (status === 403) {
       let actionTerm = action === 'restart' ? 'restart' : 'cancel';
-      this.get('flashes').error(`You don’t have sufficient access to ${actionTerm} this ${type}`);
+      this.flashes.error(`You don’t have sufficient access to ${actionTerm} this ${type}`);
     } else {
       let actionTerm = action === 'restart' ? 'restarting' : 'canceling';
-      this.get('flashes').error(`An error occurred when ${actionTerm} the ${type}`);
+      this.flashes.error(`An error occurred when ${actionTerm} the ${type}`);
     }
   }
 });

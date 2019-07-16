@@ -6,11 +6,11 @@ export default Component.extend({
 
   actions: {
     signIn() {
-      return this.get('signIn')();
+      return this.signIn();
     },
 
     signOut() {
-      return this.get('signOut')();
+      return this.signOut();
     },
   },
 });

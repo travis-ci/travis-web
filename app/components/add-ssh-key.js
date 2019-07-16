@@ -15,7 +15,7 @@ export default Component.extend({
 
   didInsertElement() {
     let id = this.get('repo.id');
-    let store = this.get('store');
+    let store = this.store;
     const model = store.peekRecord('ssh_key', id)
       || store.createRecord('ssh_key', { id });
 
@@ -23,7 +23,7 @@ export default Component.extend({
   },
 
   isValid() {
-    if (isBlank(this.get('value'))) {
+    if (isBlank(this.value)) {
       this.set('valueError', 'Value can\'t be blank.');
       return false;
     } else {
@@ -58,10 +58,10 @@ export default Component.extend({
     this.set('valueError', false);
 
     if (this.isValid()) {
-      const sshKey = this.get('model');
+      const sshKey = this.model;
       sshKey.setProperties({
-        description: this.get('description'),
-        value: this.get('value')
+        description: this.description,
+        value: this.value
       });
 
       try {

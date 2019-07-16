@@ -20,7 +20,7 @@ export default Component.extend({
     }
 
     TravisTracer.onRequest = req => {
-      this.get('requests').pushObject(req);
+      this.requests.pushObject(req);
       this.ensurePanelScrolledToBottom();
     };
   },
@@ -41,7 +41,7 @@ export default Component.extend({
   },
 
   rememberPanelOpenState() {
-    if (this.get('panelIsOpen')) {
+    if (this.panelIsOpen) {
       window.localStorage.TravisTracerIsOpen = 'true';
     } else {
       delete window.localStorage.TravisTracerIsOpen;

@@ -91,7 +91,7 @@ export default Model.extend({
     'login',
     function () {
       let subscriptions = this.get('accounts.subscriptions') || [];
-      let login = this.get('login');
+      let login = this.login;
       const accountSubscriptions = subscriptions.filterBy('owner.login', login) || [];
       const activeAccountSubscriptions = accountSubscriptions.filterBy('isSubscribed') || [];
       if (activeAccountSubscriptions.length > 1) this.logMultipleSubscriptionsError();
@@ -102,7 +102,7 @@ export default Model.extend({
 
   trial: computed('accounts.trials.@each.{created_at,owner,hasTrial}', 'login', function () {
     let trials = this.get('accounts.trials') || [];
-    let login = this.get('login');
+    let login = this.login;
     const accountTrials = trials.filterBy('owner.login', login) || [];
     const activeAccountTrials = accountTrials.filterBy('hasTrial') || [];
     return activeAccountTrials.get('firstObject') || accountTrials.get('lastObject');
@@ -113,7 +113,7 @@ export default Model.extend({
     'subscription.permissions.write',
     'subscriptionPermissions.create',
     function () {
-      let subscription = this.get('subscription');
+      let subscription = this.subscription;
       let writePermissions = this.get('subscription.permissions.write');
       let createPermissions = this.get('subscriptionPermissions.create');
       return subscription ? writePermissions : createPermissions;
@@ -121,15 +121,15 @@ export default Model.extend({
   ),
 
   billingUrl: computed('type', 'login', function () {
-    let type = this.get('type');
-    let login = this.get('login');
+    let type = this.type;
+    let login = this.login;
     let id = type === 'user' ? 'user' : login;
     return `${config.billingEndpoint}/subscriptions/${id}`;
   }),
 
   newSubscriptionUrl: computed('isUser', 'login', function () {
-    let isUser = this.get('isUser');
-    let login = this.get('login');
+    let isUser = this.isUser;
+    let login = this.login;
     let id = isUser ? 'user' : login;
     return `${config.billingEndpoint}/subscriptions/new?id=${id}`;
   }),

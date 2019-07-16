@@ -134,7 +134,7 @@ export default Component.extend({
   ),
 
   showPagination: computed('pages', function () {
-    return this.get('pages').length > 1;
+    return this.pages.length > 1;
   })
 
 });

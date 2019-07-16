@@ -42,7 +42,7 @@ export default TravisRoute.extend({
 
     if (this.get('features.github-apps') &&
       controller.get('repo.active_on_org') &&
-      controller.get('migrationStatus') !== 'success') {
+      controller.migrationStatus !== 'success') {
       this.render('repo/active-on-org');
     } else if (!controller.get('repo.active')) {
       this.render('repo/not-active');

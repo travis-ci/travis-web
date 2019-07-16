@@ -37,7 +37,7 @@ export default Component.extend({
     let data = {};
     data.request = `{ 'branch': '${this.get('repo.defaultBranch.name')}' }`;
 
-    this.get('api').post(`/repo/${this.get('repo.id')}/requests`, { data: data })
+    this.api.post(`/repo/${this.get('repo.id')}/requests`, { data: data })
       .then(() => {
         self.set('isTriggering', false);
         self.get('flashes')
@@ -59,9 +59,9 @@ export default Component.extend({
 
     starRepo() {
       if (this.get('repo.starred')) {
-        this.get('unstar').perform(this.get('repo'));
+        this.unstar.perform(this.repo);
       } else {
-        this.get('star').perform(this.get('repo'));
+        this.star.perform(this.repo);
       }
     }
   }

@@ -20,7 +20,7 @@ export default TravisRoute.extend(BuildFaviconMixin, {
   needsAuth: false,
 
   init() {
-    this.get('auth').afterSignOut(() => {
+    this.auth.afterSignOut(() => {
       this.afterSignOut();
     });
 
@@ -62,7 +62,7 @@ export default TravisRoute.extend(BuildFaviconMixin, {
   // they're not a collaborator. It also sets up an observer to subscribe to any
   // new repo that enters the store.
   setupRepoSubscriptions() {
-    this.get('store').filter('repo', null,
+    this.store.filter('repo', null,
       (repo) => !repo.get('private') && !repo.get('isCurrentUserACollaborator'),
       ['private', 'isCurrentUserACollaborator']
     ).then((repos) => {
@@ -120,14 +120,14 @@ export default TravisRoute.extend(BuildFaviconMixin, {
   actions: {
     signIn(runAfterSignIn = true) {
       let authParams = this.modelFor('auth');
-      this.get('auth').signIn(null, authParams);
+      this.auth.signIn(null, authParams);
       if (runAfterSignIn) {
         this.afterSignIn();
       }
     },
 
     signOut() {
-      this.get('auth').signOut();
+      this.auth.signOut();
     },
 
     disableTailing() {
@@ -151,7 +151,7 @@ export default TravisRoute.extend(BuildFaviconMixin, {
   },
 
   afterSignIn() {
-    this.get('flashes').clear();
+    this.flashes.clear();
     let transition = this.get('auth.afterSignInTransition');
     if (transition) {
       this.set('auth.afterSignInTransition', null);
@@ -162,7 +162,7 @@ export default TravisRoute.extend(BuildFaviconMixin, {
   },
 
   afterSignOut() {
-    this.get('featureFlags').reset();
+    this.featureFlags.reset();
     this.set('repositories.accessible', []);
     this.setDefault();
     if (this.get('features.enterpriseVersion')) {

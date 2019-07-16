@@ -41,14 +41,14 @@ export default Model.extend({
     // the build was created. We need to look into it, but for now we can just assume
     // that if build was created, the request was accepted
 
-    let result = this.get('result');
+    let result = this.result;
     let buildId = this.get('build.id');
 
     return result === 'approved' || buildId;
   }),
 
   isPullRequest: computed('event_type', function () {
-    let eventType = this.get('event_type');
+    let eventType = this.event_type;
     return eventType === 'pull_request';
   }),
 
@@ -61,7 +61,7 @@ export default Model.extend({
     let requestId = this.get('build.request.id');
     if (repoId && requestId) {
       return ObjectPromiseProxy.create({
-        promise: this.get('ajax').ajax(`/repo/${repoId}/request/${requestId}/messages`, 'get', {
+        promise: this.ajax.ajax(`/repo/${repoId}/request/${requestId}/messages`, 'get', {
           headers: {
             'Travis-API-Version': '3'
           }})

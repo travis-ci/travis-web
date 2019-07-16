@@ -8,7 +8,7 @@ export default Component.extend({
 
   delete: task(function* () {
     try {
-      const key = this.get('key');
+      const key = this.key;
       key.deleteRecord();
       yield key.save();
     } catch (e) {}

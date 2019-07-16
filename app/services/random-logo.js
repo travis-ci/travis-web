@@ -22,7 +22,7 @@ export default Service.extend({
   },
 
   randomLogo() {
-    const logos = this.get('logoVariants');
+    const logos = this.logoVariants;
     return logos[Math.floor(Math.random() * logos.length)];
   },
 });

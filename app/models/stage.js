@@ -13,7 +13,7 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
   build: belongsTo({ async: true }),
 
   notStarted: computed('state', function () {
-    let state = this.get('state');
+    let state = this.state;
     let waitingStates = ['queued', 'created', 'received'];
     return waitingStates.includes(state);
   }),

@@ -28,7 +28,7 @@ export default Component.extend(InViewportMixin, {
 
   showCta: computed('auth.signedIn', 'landingPage', 'features.landingPageCta', function () {
     let signedIn = this.get('auth.signedIn');
-    let landingPage = this.get('landingPage');
+    let landingPage = this.landingPage;
     let ctaEnabled = this.get('features.landingPageCta');
 
     return !signedIn && !landingPage && ctaEnabled;
@@ -50,10 +50,10 @@ export default Component.extend(InViewportMixin, {
   },
 
   didEnterViewport() {
-    this.get('flashes').set('topBarVisible', true);
+    this.flashes.set('topBarVisible', true);
   },
 
   didExitViewport() {
-    this.get('flashes').set('topBarVisible', false);
+    this.flashes.set('topBarVisible', false);
   },
 });

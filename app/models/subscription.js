@@ -37,7 +37,7 @@ export default Model.extend({
   billingUrl: computed('owner.{type,login}', 'isGithub', 'isResubscribable', function () {
     let type = this.get('owner.type');
     let login = this.get('owner.login');
-    let isGithub = this.get('isGithub');
+    let isGithub = this.isGithub;
 
     const id = type === 'user' ? 'user' : login;
 
@@ -49,20 +49,20 @@ export default Model.extend({
   }),
 
   activeManagedSubscription: computed('isStripe', 'isGithub', 'isSubscribed', function () {
-    let isStripe = this.get('isStripe');
-    let isGithub = this.get('isGithub');
-    let isSubscribed = this.get('isSubscribed');
+    let isStripe = this.isStripe;
+    let isGithub = this.isGithub;
+    let isSubscribed = this.isSubscribed;
     return ((isStripe || isGithub) && isSubscribed);
   }),
 
   sourceWords: computed('source', function () {
-    let source = this.get('source');
+    let source = this.source;
     return sourceToWords[source];
   }),
 
   manualSubscriptionExpired: computed('isManual', 'validTo', function () {
-    let isManual = this.get('isManual');
-    let validTo = this.get('validTo');
+    let isManual = this.isManual;
+    let validTo = this.validTo;
     let today = new Date().toISOString();
     let date = Date.parse(today);
     let validToDate = Date.parse(validTo);

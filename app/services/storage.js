@@ -14,15 +14,15 @@ export default Service.extend({
     return this.set('storage', storage);
   },
   getItem(key) {
-    return this.get('storage').getItem(key);
+    return this.storage.getItem(key);
   },
   setItem(key, value) {
-    return this.get('storage').setItem(key, value);
+    return this.storage.setItem(key, value);
   },
   removeItem(key) {
-    return this.get('storage').removeItem(key);
+    return this.storage.removeItem(key);
   },
   clear() {
-    return this.get('storage').clear();
+    return this.storage.clear();
   }
 });

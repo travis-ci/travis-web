@@ -15,35 +15,35 @@ export default Component.extend({
   tab: alias('tabStates.mainTab'),
 
   classCurrent: computed('tab', function () {
-    let tab = this.get('tab');
+    let tab = this.tab;
     if (tab === 'current') {
       return 'active';
     }
   }),
 
   classBuilds: computed('tab', function () {
-    let tab = this.get('tab');
+    let tab = this.tab;
     if (tab === 'builds') {
       return 'active';
     }
   }),
 
   classPullRequests: computed('tab', function () {
-    let tab = this.get('tab');
+    let tab = this.tab;
     if (tab === 'pull_requests') {
       return 'active';
     }
   }),
 
   classBranches: computed('tab', function () {
-    let tab = this.get('tab');
+    let tab = this.tab;
     if (tab === 'branches') {
       return 'active';
     }
   }),
 
   classBuild: computed('tab', function () {
-    let tab = this.get('tab');
+    let tab = this.tab;
     let classes;
     classes = [];
     if (tab === 'build') {
@@ -56,31 +56,31 @@ export default Component.extend({
   }),
 
   classJob: computed('tab', function () {
-    if (this.get('tab') === 'job') {
+    if (this.tab === 'job') {
       return 'active';
     }
   }),
 
   classRequests: computed('tab', function () {
-    if (this.get('tab') === 'requests') {
+    if (this.tab === 'requests') {
       return 'active';
     }
   }),
 
   classCaches: computed('tab', function () {
-    if (this.get('tab') === 'caches') {
+    if (this.tab === 'caches') {
       return 'active';
     }
   }),
 
   classSettings: computed('tab', function () {
-    if (this.get('tab') === 'settings') {
+    if (this.tab === 'settings') {
       return 'active';
     }
   }),
 
   classRequest: computed('tab', function () {
-    if (this.get('tab') === 'request') {
+    if (this.tab === 'request') {
       return 'active';
     }
   }),

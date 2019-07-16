@@ -18,7 +18,7 @@ export default Component.extend({
   },
 
   save: task(function* () {
-    const envVar = this.get('store').createRecord('env_var', {
+    const envVar = this.store.createRecord('env_var', {
       name: this.name.trim(),
       value: this.value.trim(),
       'public': this.public,
@@ -30,8 +30,8 @@ export default Component.extend({
       this.reset();
     } catch (e) {
       // eslint-disable-next-line
-      this.get('flashes').error('There was an error saving this environment variable.');
-      this.get('raven').logException(e);
+      this.flashes.error('There was an error saving this environment variable.');
+      this.raven.logException(e);
     }
   }).drop()
 });

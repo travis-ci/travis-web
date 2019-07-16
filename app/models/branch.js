@@ -13,7 +13,7 @@ export default Model.extend({
   repo: belongsTo('repo', { inverse: '_branches' }),
 
   repoId: computed('id', function () {
-    let id = this.get('id');
+    let id = this.id;
     const match = id.match(/\/repo\/(\d+)\//);
     if (match) {
       return match[1];

@@ -27,25 +27,25 @@ export default Component.extend({
   actions: {
 
     removeLog() {
-      let job = this.get('job');
+      let job = this.job;
 
-      this.get('onCloseModal')();
+      this.onCloseModal();
 
       return job.removeLog().then(() => {
-        this.get('flashes').success('Log has been successfully removed.');
+        this.flashes.success('Log has been successfully removed.');
       }, (xhr) => {
         if (xhr.status === 409) {
-          return this.get('flashes').error('Log can’t be removed');
+          return this.flashes.error('Log can’t be removed');
         } else if (xhr.status === 401) {
-          return this.get('flashes').error('You don’t have sufficient access to remove the log');
+          return this.flashes.error('You don’t have sufficient access to remove the log');
         } else {
-          return this.get('flashes').error('An error occurred when removing the log');
+          return this.flashes.error('An error occurred when removing the log');
         }
       });
     },
 
     toggleRemoveLogModal() {
-      this.get('onCloseModal')();
+      this.onCloseModal();
     }
 
   }

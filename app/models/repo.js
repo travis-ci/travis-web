@@ -74,7 +74,7 @@ const Repo = Model.extend({
     let permissions = this.get('auth.currentUser.permissions');
 
     if (permissions) {
-      let id = parseInt(this.get('id'));
+      let id = parseInt(this.id);
 
       return permissions.includes(id);
     }
@@ -82,17 +82,17 @@ const Repo = Model.extend({
 
   formattedSlug: computed('owner.login', 'name', function () {
     let login = this.get('owner.login');
-    let name = this.get('name');
+    let name = this.name;
     return `${login} / ${name}`;
   }),
 
   sshKey: function () {
-    this.store.find('ssh_key', this.get('id'));
-    return this.store.recordForId('ssh_key', this.get('id'));
+    this.store.find('ssh_key', this.id);
+    return this.store.recordForId('ssh_key', this.id);
   },
 
   envVars: computed('id', function () {
-    let id = this.get('id');
+    let id = this.id;
     return this.store.filter('env_var', {
       repository_id: id
     }, (v) => v.get('repo.id') === id);
@@ -114,7 +114,7 @@ const Repo = Model.extend({
   },
 
   builds: computed('id', function () {
-    let id = this.get('id');
+    let id = this.id;
     const builds = this.store.filter('build', {
       event_type: ['push', 'api', 'cron'],
       repository_id: id,
@@ -126,7 +126,7 @@ const Repo = Model.extend({
   }),
 
   pullRequests: computed('id', function () {
-    let id = this.get('id');
+    let id = this.id;
     const builds = this.store.filter('build', {
       event_type: 'pull_request',
       repository_id: id,
@@ -138,41 +138,41 @@ const Repo = Model.extend({
   }),
 
   branches: computed('id', function () {
-    let id = this.get('id');
+    let id = this.id;
     return this.store.filter('branch', {
       repository_id: id
     }, (b) => b.get('repoId') === id);
   }),
 
   cronJobs: computed('id', function () {
-    let id = this.get('id');
+    let id = this.id;
     return this.store.filter('cron', {
       repository_id: id
     }, (cron) => cron.get('branch.repoId') === id);
   }),
 
   updateTimes() {
-    let currentBuild = this.get('currentBuild');
+    let currentBuild = this.currentBuild;
     if (currentBuild) {
       return currentBuild.updateTimes();
     }
   },
 
   fetchSettings() {
-    const url = `/repo/${this.get('id')}/settings`;
-    return this.get('api').get(url).
+    const url = `/repo/${this.id}/settings`;
+    return this.api.get(url).
       then(data => this._convertV3SettingsToV2(data['settings']));
   },
 
   startMigration() {
-    const url = `/repo/${this.get('id')}/migrate`;
-    return this.get('api').post(url).then(() => {
+    const url = `/repo/${this.id}/migrate`;
+    return this.api.post(url).then(() => {
       this.set('migrationStatus', 'queued');
     });
   },
 
   saveSetting(name, value) {
-    return this.get('api').patch(`/repo/${this.get('id')}/setting/${name}`, {
+    return this.api.patch(`/repo/${this.id}/setting/${name}`, {
       data: {
         'setting.value': value
       }
@@ -190,9 +190,9 @@ const Repo = Model.extend({
 
   toggle() {
     const adapter = this.store.adapterFor('repo');
-    const id = this.get('id');
+    const id = this.id;
     let promise;
-    if (this.get('active')) {
+    if (this.active) {
       promise = adapter.deactivate(id);
     } else {
       promise = adapter.activate(id);
@@ -202,7 +202,7 @@ const Repo = Model.extend({
   },
 
   emailSubscriptionUrl: computed('id', function () {
-    let id = this.get('id');
+    let id = this.id;
     return `/repo/${id}/email_subscription`;
   }),
 

@@ -24,8 +24,8 @@ export default Service.extend({
   },
 
   willDestroy() {
-    Visibility.stop(this.get('visibilityId'));
-    clearInterval(this.get('intervalId'));
+    Visibility.stop(this.visibilityId);
+    clearInterval(this.intervalId);
     this._super(...arguments);
   },
 
@@ -34,9 +34,9 @@ export default Service.extend({
   },
 
   updateTimes() {
-    let records = this.get('records');
+    let records = this.records;
 
-    records.filter(record => this.get('allowFinishedBuilds') || !record.get('isFinished'))
+    records.filter(record => this.allowFinishedBuilds || !record.get('isFinished'))
       .forEach((record) => {
         eventually(record, resolvedRecord => {
           if (resolvedRecord) {
@@ -47,13 +47,13 @@ export default Service.extend({
 
     this.set('records', []);
 
-    if (this.get('allowFinishedBuilds')) {
+    if (this.allowFinishedBuilds) {
       this.set('allowFinishedBuilds', false);
     }
   },
 
   pushObject(record) {
-    let records = this.get('records');
+    let records = this.records;
 
     if (!records.includes(record)) {
       records.pushObject(record);

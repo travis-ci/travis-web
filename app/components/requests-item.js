@@ -17,7 +17,7 @@ export default Component.extend({
   }),
 
   highlightedClass: computed('highlightedRequestId', 'request.id', function () {
-    let paramId = this.get('highlightedRequestId');
+    let paramId = this.highlightedRequestId;
     let currentId = this.get('request.id');
     return (paramId === currentId) ? 'highlighted' : '';
   }),

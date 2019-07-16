@@ -106,7 +106,7 @@ export default Service.extend({
     };
     error = options.error || (() => {});
     options.error = (data, status, xhr) => {
-      if (get(this, 'features').get('debugLogging')) {
+      if (this.features.get('debugLogging')) {
         // eslint-disable-next-line
         console.log(`[ERROR] API responded with an error (${status}): ${JSON.stringify(data)}`);
       }
@@ -156,7 +156,7 @@ export default Service.extend({
             try {
               return $.parseJSON(xhr.responseText);
             } catch (error1) {
-              if (get(this, 'features').get('debugLogging')) {
+              if (this.features.get('debugLogging')) {
                 // eslint-disable-next-line
                 console.log('error while parsing a response', method, options.url, xhr.responseText);
               }

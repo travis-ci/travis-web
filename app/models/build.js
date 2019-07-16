@@ -48,7 +48,7 @@ export default Model.extend(DurationCalculations, {
   stagesAreLoaded: alias('stages.isSettled'),
 
   config: computed('_config', 'currentState.stateName', function () {
-    let config = this.get('_config');
+    let config = this._config;
     let stateName = this.get('currentState.stateName');
 
     if (config) {
@@ -58,7 +58,7 @@ export default Model.extend(DurationCalculations, {
         return compact;
       });
     } else if (stateName !== 'root.loading') {
-      if (this.get('isFetchingConfig')) {
+      if (this.isFetchingConfig) {
         return;
       }
       this.set('isFetchingConfig', true);
@@ -67,44 +67,44 @@ export default Model.extend(DurationCalculations, {
   }),
 
   isPullRequest: computed('eventType', function () {
-    let eventType = this.get('eventType');
+    let eventType = this.eventType;
     return eventType === 'pull_request';
   }),
 
   isMatrix: computed('jobs.[]', function () {
-    let jobs = this.get('jobs');
+    let jobs = this.jobs;
     return jobs.get('length') > 1;
   }),
 
   isTag: computed('tag', function () {
-    let tag = this.get('tag');
+    let tag = this.tag;
     return (tag && tag.name);
   }),
 
   isFinished: computed('state', function () {
-    let state = this.get('state');
+    let state = this.state;
     let finishedStates = ['passed', 'failed', 'errored', 'canceled'];
     return finishedStates.includes(state);
   }),
 
   notStarted: computed('state', function () {
-    let state = this.get('state');
+    let state = this.state;
     let waitingStates = ['queued', 'created', 'received'];
     return waitingStates.includes(state);
   }),
 
   requiredJobs: computed('jobs.@each.allowFailure', function () {
-    let jobs = this.get('jobs');
+    let jobs = this.jobs;
     return jobs.filter(job => !job.get('allowFailure'));
   }),
 
   allowedFailureJobs: computed('jobs.@each.allowFailure', function () {
-    let jobs = this.get('jobs');
+    let jobs = this.jobs;
     return jobs.filter(job => job.get('allowFailure'));
   }),
 
   rawConfigKeys: computed('jobs.@each.config', function () {
-    let jobs = this.get('jobs');
+    let jobs = this.jobs;
     const keys = [];
     jobs.forEach(job => {
       const configKeys = job.config || [];
@@ -118,7 +118,7 @@ export default Model.extend(DurationCalculations, {
   }),
 
   configKeys: computed('rawConfigKeys.[]', function () {
-    let keys = this.get('rawConfigKeys');
+    let keys = this.rawConfigKeys;
     const headers = ['Job', 'Duration', 'Finished'];
     return headers.concat(keys).map((key) => {
       if (configKeysMap.hasOwnProperty(key)) {
@@ -130,34 +130,34 @@ export default Model.extend(DurationCalculations, {
   }),
 
   canCancel: computed('jobs.@each.canCancel', function () {
-    let jobs = this.get('jobs');
+    let jobs = this.jobs;
     return !isEmpty(jobs.filterBy('canCancel'));
   }),
 
   canRestart: alias('isFinished'),
 
   cancel() {
-    const url = `/build/${this.get('id')}/cancel`;
-    return this.get('api').post(url);
+    const url = `/build/${this.id}/cancel`;
+    return this.api.post(url);
   },
 
   restart() {
-    const url = `/build/${this.get('id')}/restart`;
-    return this.get('api').post(url);
+    const url = `/build/${this.id}/restart`;
+    return this.api.post(url);
   },
 
   canDebug: computed('jobs.[]', 'repo.private', function () {
-    let jobs = this.get('jobs');
+    let jobs = this.jobs;
     let repoPrivate = this.get('repo.private');
     return jobs.get('length') === 1 && repoPrivate;
   }),
 
   debug() {
-    return all(this.get('jobs').map(job => job.debug()));
+    return all(this.jobs.map(job => job.debug()));
   },
 
   formattedFinishedAt: computed('finishedAt', function () {
-    let finishedAt = this.get('finishedAt');
+    let finishedAt = this.finishedAt;
     if (finishedAt) {
       let m = moment(finishedAt);
       return m.isValid() ? m.format('lll') : 'not finished yet';

@@ -74,7 +74,7 @@ export default Component.extend({
 
   didRender() {
     this._super(...arguments);
-    let af = this.get('element').querySelector('[autofocus]');
+    let af = this.element.querySelector('[autofocus]');
     if (this.doAutofocus === true && af !== null) {
       af.focus();
       this.set('doAutofocus', false);
