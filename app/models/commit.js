@@ -1,7 +1,6 @@
 import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
 import { belongsTo } from 'ember-data/relationships';
-import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 
 import vcsLinks from 'travis/utils/vcs-links';

@@ -1,6 +1,5 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { inject as service } from '@ember/service';
 import { isInternal, presentedPath, fileNameWithoutSha } from 'travis/utils/format-config';
 import { later } from '@ember/runloop';
 

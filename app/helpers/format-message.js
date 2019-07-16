@@ -44,8 +44,9 @@ function handleRepo(message, repo) {
     const owner = get(repo, 'owner');
     const login = typeof owner === 'object' ? owner.login : owner;
     const repoName = get(repo, 'name');
+    const vcsType = get(repo, 'vcsType');
 
-    return githubify(message, login, repoName);
+    return githubify(message, login, repoName, vcsType);
   }
 
   return message;
@@ -67,9 +68,7 @@ const refRegexp = new RegExp('([\\w-]+)?\\/?([\\w-]+)?(?:#|gh-)(\\d+)', 'g');
 const userRegexp = new RegExp('\\B@([\\w-]+)', 'g');
 const commitRegexp = new RegExp('([\\w-]+)?\\/([\\w-]+)?@([0-9A-Fa-f]+)', 'g');
 
-function githubify(text, owner, repo) {
-  const vcsType = repo.vcsType;
-
+function githubify(text, owner, repo, vcsType) {
   text = text.replace(refRegexp, (ref, matchedOwner, matchedRepo, matchedNumber) => {
     const current = { owner, repo };
     const matched = {
