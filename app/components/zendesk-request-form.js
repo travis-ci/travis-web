@@ -1,7 +1,17 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
-import { reads, bool, filter, filterBy, not, or, and, empty, notEmpty } from '@ember/object/computed';
+import {
+  reads,
+  bool,
+  filter,
+  filterBy,
+  not,
+  or,
+  and,
+  empty,
+  notEmpty
+} from '@ember/object/computed';
 import { task } from 'ember-concurrency';
 import $ from 'jquery';
 import moment from 'moment';

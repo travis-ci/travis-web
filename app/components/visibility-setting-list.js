@@ -1,7 +1,18 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { reads, empty, not, lt, gt, equal, and } from '@ember/object/computed';
-import { bindKeyboardShortcuts, unbindKeyboardShortcuts } from 'ember-keyboard-shortcuts';
+import {
+  reads,
+  empty,
+  not,
+  lt,
+  gt,
+  equal,
+  and
+} from '@ember/object/computed';
+import {
+  bindKeyboardShortcuts,
+  unbindKeyboardShortcuts
+} from 'ember-keyboard-shortcuts';
 
 export default Component.extend({
   classNames: ['visibility-setting-list'],

@@ -1,6 +1,6 @@
 /* eslint no-unused-vars: ["error", { "varsIgnorePattern": "config" }]*/
 
-import Ember from 'ember';
+import { VERSION } from '@ember/version';
 import Component from '@ember/component';
 import { htmlSafe } from '@ember/string';
 import { inject as service } from '@ember/service';
@@ -30,7 +30,7 @@ export default Component.extend({
       const hostname = window.location.hostname;
 
       if (hostname.indexOf('ember-beta') === 0 || hostname.indexOf('ember-canary') === 0) {
-        return `Ember ${Ember.VERSION}`;
+        return `Ember ${VERSION}`;
       } else if (hostname.indexOf('test-deployments') > 0) {
         const branchName = hostname.split('.')[0];
         const branchURL = this.get('externalLinks').travisWebBranch(branchName);

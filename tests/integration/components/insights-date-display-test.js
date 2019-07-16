@@ -2,7 +2,10 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import { DEFAULT_INSIGHTS_INTERVAL, INSIGHTS_INTERVALS } from 'travis/services/insights';
+import {
+  DEFAULT_INSIGHTS_INTERVAL,
+  INSIGHTS_INTERVALS
+} from 'travis/services/insights';
 import { INSIGHTS_DATE_RANGE_FORMAT } from 'travis/components/insights-date-display';
 
 module('Integration | Component | insights-date-display', function (hooks) {

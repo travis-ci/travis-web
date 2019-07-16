@@ -3,7 +3,10 @@ import { task, timeout } from 'ember-concurrency';
 import YAML from 'yamljs';
 import config from 'travis/config/environment';
 import { inject as service } from '@ember/service';
-import { bindKeyboardShortcuts, unbindKeyboardShortcuts } from 'ember-keyboard-shortcuts';
+import {
+  bindKeyboardShortcuts,
+  unbindKeyboardShortcuts
+} from 'ember-keyboard-shortcuts';
 import BranchSearching from 'travis/mixins/branch-searching';
 
 export default Component.extend(BranchSearching, {

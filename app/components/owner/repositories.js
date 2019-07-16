@@ -1,6 +1,13 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { reads, notEmpty, or, not, and, bool } from '@ember/object/computed';
+import {
+  reads,
+  notEmpty,
+  or,
+  not,
+  and,
+  bool
+} from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import config from 'travis/config/environment';
 

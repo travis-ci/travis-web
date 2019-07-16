@@ -1,7 +1,7 @@
 /* global TravisTracer, window */
 /* eslint no-unused-vars: ["error", { "varsIgnorePattern": "config" }]*/
 
-import Ember from 'ember';
+import { next } from '@ember/runloop';
 import Component from '@ember/component';
 import config from 'travis/config/environment';
 
@@ -34,7 +34,7 @@ export default Component.extend({
   },
 
   ensurePanelScrolledToBottom() {
-    Ember.run.next(() => {
+    next(() => {
       let panel = document.getElementById('tracer-panel');
       panel.scrollTop = panel.scrollHeight + 20;
     });

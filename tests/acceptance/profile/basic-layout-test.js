@@ -2,7 +2,10 @@ import { module, test } from 'qunit';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import profilePage from 'travis/tests/pages/profile';
 import signInUser from 'travis/tests/helpers/sign-in-user';
-import { default as mockWindow, reset as resetWindow } from 'ember-window-mock';
+import {
+  default as mockWindow,
+  reset as resetWindow
+} from 'ember-window-mock';
 import Service from '@ember/service';
 import config from 'travis/config/environment';
 import { enableFeature } from 'ember-feature-flags/test-support';

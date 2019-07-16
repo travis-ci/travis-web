@@ -1,6 +1,7 @@
+import { scheduleOnce } from '@ember/runloop';
 import Component from '@ember/component';
 import Ember from 'ember';
-import { computed } from '@ember/object';
+import { computed, setProperties, set } from '@ember/object';
 import { alias } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 
@@ -39,12 +40,12 @@ export default Component.extend(InViewportMixin, {
       return;
     }
 
-    Ember.setProperties(this, {
+    setProperties(this, {
       viewportSpy: true
     });
     this._super(...arguments);
-    Ember.run.scheduleOnce('afterRender', this, () => {
-      Ember.set(this, 'viewportTolerance.top', this.$().height());
+    scheduleOnce('afterRender', this, () => {
+      set(this, 'viewportTolerance.top', this.$().height());
     });
   },
 

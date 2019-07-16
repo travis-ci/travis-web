@@ -1,6 +1,9 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
-import { bindKeyboardShortcuts, unbindKeyboardShortcuts } from 'ember-keyboard-shortcuts';
+import {
+  bindKeyboardShortcuts,
+  unbindKeyboardShortcuts
+} from 'ember-keyboard-shortcuts';
 
 export default Component.extend({
   classNames: ['remove-log-popup'],
