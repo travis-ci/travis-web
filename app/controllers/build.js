@@ -1,7 +1,6 @@
 import Controller, { inject as controller } from '@ember/controller';
 import Ember from 'ember';
 import Polling from 'travis/mixins/polling';
-import GithubUrlProperties from 'travis/mixins/github-url-properties';
 import Visibility from 'visibilityjs';
 import config from 'travis/config/environment';
 
@@ -9,7 +8,7 @@ import { inject as service } from '@ember/service';
 import { alias } from '@ember/object/computed';
 import { observer } from '@ember/object';
 
-export default Controller.extend(GithubUrlProperties, Polling, {
+export default Controller.extend(Polling, {
   auth: service(),
   updateTimesService: service('updateTimes'),
 
