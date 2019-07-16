@@ -11,7 +11,6 @@ module('Unit | Service | vcs-links', function (hooks) {
     };
 
     this.build = {
-      pullRequestNumber: '999',
       branch: 'new-pr',
     };
 
@@ -31,13 +30,6 @@ module('Unit | Service | vcs-links', function (hooks) {
     const service = this.owner.lookup('service:vcs-links');
 
     assert.equal(service.repoUrl(this.repo.vcsType, this.repo.slug), 'https://github.com/travis-ci/travis-web');
-  });
-
-  test('pullRequestUrl', function (assert) {
-    const service = this.owner.lookup('service:vcs-links');
-    const { vcsType, slug } = this.repo;
-
-    assert.equal(service.pullRequestUrl(vcsType, slug, this.build.pullRequestNumber), 'https://github.com/travis-ci/travis-web/pull/999');
   });
 
   test('branchUrl', function (assert) {

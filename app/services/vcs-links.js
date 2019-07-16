@@ -13,10 +13,6 @@ export default Service.extend({
     return `${this.endpoint(vcsType)}/${slug}`;
   },
 
-  pullRequestUrl(vcsType, slug, pullRequestNumber) {
-    return `${this.endpoint(vcsType)}/${slug}/pull/${pullRequestNumber}`;
-  },
-
   branchUrl(vcsType, slug, branch) {
     return `${this.endpoint(vcsType)}/${slug}/tree/${branch}`;
   },
