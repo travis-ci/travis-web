@@ -20,4 +20,3 @@ export default Mixin.create({
     return branches.reject(branch => (filter.includes(branch.name)));
   }).restartable()
 });
-

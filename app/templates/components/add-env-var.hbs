@@ -7,8 +7,10 @@
       label='Name'
       value=name
       required=true
+      validateOnField=false
       showValidationStatusIcons=false
       onChange=(action (mut name))
+      validator=(action 'validateEnvName')
       as |field|
     }}
       {{field.input class='env-name' placeholder='Name'}}
@@ -23,7 +25,27 @@
       showValidationStatusIcons=false
       as |field|
     }}
-      {{field.input  class='env-value' placeholder='Value'}}
+      {{field.input class='env-value' placeholder='Value'}}
+    {{/form.field}}
+  </div>
+  <div class="form-elem">
+    {{#form.field
+      label='Branch'
+      value=branch
+      required=false
+      class='env-branch-selector'
+      showValidationStatusIcons=false
+      as |field|
+    }}
+      {{#field.select
+        placeholder='All branches'
+        allowClear=true
+        onchange=(action (mut branch))
+        search=(perform search)
+        as |branch|
+      }}
+        {{branch}}
+      {{/field.select}}
     {{/form.field}}
   </div>
   <div class='form-elem'>
