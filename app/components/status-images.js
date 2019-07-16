@@ -2,10 +2,7 @@ import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 import { reads } from '@ember/object/computed';
-import {
-  bindKeyboardShortcuts,
-  unbindKeyboardShortcuts
-} from 'ember-keyboard-shortcuts';
+import { bindKeyboardShortcuts, unbindKeyboardShortcuts } from 'ember-keyboard-shortcuts';
 import { task } from 'ember-concurrency';
 import { IMAGE_FORMATS } from 'travis/services/status-images';
 import BranchSearching from 'travis/mixins/branch-searching';
