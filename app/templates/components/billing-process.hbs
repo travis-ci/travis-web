@@ -7,16 +7,16 @@
       newSubscription=newSubscription
       showMonthly=showMonthly
       billingInfo=billingInfo
-      next=(action "next")
+      next=(action 'next')
     }}
   {{/if}}
   {{#if isStepTwo}}
     {{billing-payment
       selectedPlan=selectedPlan
       showAnnual=showAnnual
-      handleSubmit=(action "handleSubmit")
-      back=(action "back")
-      cancel=(action "cancel")
+      isSavingSubscription=isSavingSubscription
+      handleSubmit=(action 'handleSubmit')
+      cancel=(action 'cancel')
     }}
   {{/if}}
 {{else}}

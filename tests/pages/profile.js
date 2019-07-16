@@ -314,7 +314,7 @@ export default create({
 
       completeButton: {
         scope: '[data-test-complete-button]'
-      }
+      },
     },
 
     billingPlanChoices: {

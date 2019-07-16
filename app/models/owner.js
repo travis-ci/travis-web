@@ -86,15 +86,19 @@ export default VcsEntity.extend({
   subscriptionError: reads('accounts.subscriptionError'),
 
   subscription: computed(
-    'accounts.subscriptions.@each.{validTo,owner,isSubscribed}',
+    'accounts.subscriptions.@each.{validTo,owner,isSubscribed,isPending}',
     'login',
     function () {
       let subscriptions = this.get('accounts.subscriptions') || [];
       let login = this.login;
       const accountSubscriptions = subscriptions.filterBy('owner.login', login) || [];
       const activeAccountSubscriptions = accountSubscriptions.filterBy('isSubscribed') || [];
-      if (activeAccountSubscriptions.length > 1) this.logMultipleSubscriptionsError();
+      const pendingAccountSubscriptions = accountSubscriptions.filterBy('isPending') || [];
+      if (activeAccountSubscriptions.length > 1 || pendingAccountSubscriptions.length > 1) {
+        this.logMultipleSubscriptionsError();
+      }
       return activeAccountSubscriptions.get('firstObject') ||
+        pendingAccountSubscriptions.get('firstObject') ||
         accountSubscriptions.get('lastObject');
     }
   ),

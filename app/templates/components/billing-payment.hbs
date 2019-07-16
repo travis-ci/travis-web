@@ -1,4 +1,4 @@
-{{#travis-form onSubmit=(perform makeStripePayment) as |form|}}
+{{#travis-form onSubmit=(perform createStripeToken) as |form|}}
   <div class='billing-form' data-test-payment-form>
     {{billing-select-plan
       selectedPlan=selectedPlan
@@ -103,7 +103,7 @@
       </div>
     </div>
     <div class='form-elem'>
-      {{#if makeStripePayment.isRunning}}
+      {{#if isLoading}}
         {{loading-indicator}}
       {{else}}
         <button

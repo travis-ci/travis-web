@@ -1,6 +1,7 @@
 import Component from '@ember/component';
 import { task } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
+import { or } from '@ember/object/computed';
 import { generateYearsFromCurrent, generateMonthNumber } from '../utils/generated-dates';
 
 export default Component.extend({
@@ -8,27 +9,38 @@ export default Component.extend({
   months: generateMonthNumber(),
   years: generateYearsFromCurrent(11),
   stripe: service(),
+  isLoading: or('createStripeToken.isRunning', 'isSavingSubscription'),
 
-  makeStripePayment: task(function* () {
+  createStripeToken: task(function* () {
     try {
-      const response = yield this.stripe.card.createToken({
+      const data =  yield this.stripe.card.createToken({
         name: this.cardName,
         number: this.cardNumber,
         exp_month: this.expiryDateMonth,
         exp_year: this.expiryDateYear,
         cvc: this.cvc
       });
-      const token = response.id;
-      this.handleSubmit(token, this.cardNumber.slice(-4));
+      const stripeToken = data.id;
+      this.handleSubmit(stripeToken, this.cardNumber.slice(-4));
     } catch (error) {
-      const stripeError = error.error;
-      let message = 'There was an error connecting to stripe. Please try again.';
-      if (stripeError && stripeError.type === 'card_error') {
-        message = 'Invalid card details';
-      }
-      this.flashes.error(message);
+      this.displayError(error);
     }
   }).drop(),
+
+  cardName: 'Patrick',
+  cardNumber: '4242424242424242',
+  expiryDateMonth: '04',
+  cvc: '893',
+  expiryDateYear: '2020',
+
+  displayError(error) {
+    let message = 'There was an error connecting to stripe. Please try again.';
+    const stripeError = error && error.error;
+    if (stripeError && stripeError.type === 'card_error') {
+      message = 'Invalid card details';
+    }
+    this.flashes.error(message);
+  },
 
   actions: {
 
