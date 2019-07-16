@@ -31,13 +31,16 @@ export default Component.extend({
     return presentedPath(source, this.get('slug'));
   }),
 
-  fileUrl: computed('rawConfig.source', 'slug', 'build.branchName', 'vcsLinks', function () {
-    let source = this.get('rawConfig.source');
-    let slug = this.get('slug');
-    if (isInternal(source, slug)) { return null; }
+  fileUrl: computed('rawConfig.source', 'slug', 'build.branchName', 'build.repo.vcsType', function () {
+    const source = this.get('rawConfig.source');
+    const slug = this.get('slug');
+    const branchName = this.get('build.branchName');
+    const vcsType = this.get('build.repo.vcsType');
 
-    let branchName = this.get('build.branchName');
-    return this.get('vcsLinks').fileUrl(slug, branchName, fileNameWithoutSha(source));
+    if (isInternal(source, slug)) { 
+      return null;
+    }
+    return this.get('vcsLinks').fileUrl(vcsType, slug, branchName, fileNameWithoutSha(source));
   }),
 
   actions: {

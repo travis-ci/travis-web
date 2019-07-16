@@ -52,4 +52,11 @@ module('Unit | Service | vcs-links', function (hooks) {
 
     assert.equal(service.commitUrl(vcsType, slug, this.commit.sha), 'https://github.com/travis-ci/travis-web/commit/123abc');
   });
+
+  test('fileUrl', function (assert) {
+    const service = this.owner.lookup('service:vcs-links');
+    const { vcsType, slug } = this.repo;
+
+    assert.equal(service.fileUrl(vcsType, slug, this.build.branch, 'file'), 'https://github.com/travis-ci/travis-web/blob/new-pr/file');
+  });
 });
