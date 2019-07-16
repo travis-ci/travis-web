@@ -1,43 +1,65 @@
 import { helper } from '@ember/component/helper';
-
 import { htmlSafe } from '@ember/string';
 import { get } from '@ember/object';
-import config from 'travis/config/environment';
 
 import EmojiConvertor from 'emoji-js';
 
-const emojiConvertor = new EmojiConvertor();
+import config from 'travis/config/environment';
+import vcsLinks from 'travis/utils/vcs-links';
 
+const emojiConvertor = new EmojiConvertor();
 emojiConvertor.img_sets.apple.path = `${config.emojiPrepend}/images/emoji/`;
 emojiConvertor.include_title = true;
 emojiConvertor.allow_native = false;
 
-function formatMessage(message, options) {
-  message = message || '';
+function escape(text) {
+  return text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
 
-  if (options.maxLength) {
-    message = message.slice(0, options.maxLength);
+function handleMaxLength(message, maxLength) {
+  return maxLength ? message.slice(0, maxLength) : message;
+}
+
+function handleShort(message, short) {
+  return short ? message.split(/\n/)[0] : message;
+}
+
+function handlePre(message, pre) {
+  return pre ? message.replace(/\n/g, '<br/>') : message;
+}
+
+function handleEventType(message, eventType) {
+  if (eventType == 'cron') {
+    return `<span class='message-label badge'>cron</span> ${message}`;
   }
+  return message;
+}
 
-  if (options.short) {
-    message = message.split(/\n/)[0];
-  }
-  message = emojiConvertor.replace_colons(_escape(message));
-
+function handleRepo(message, repo) {
   // TODO: Figure out more permanent fix for teal #1885
-  if (options.repo) {
-    let owner = get(options.repo, 'owner');
-    if (typeof owner === 'object') {
-      owner = owner.login;
-    }
-    message = githubify(message, owner, get(options.repo, 'name'));
+  if (repo) {
+    const owner = get(repo, 'owner');
+    const login = typeof owner === 'object' ? owner.login : owner;
+    const repoName = get(repo, 'name');
+
+    return githubify(message, login, repoName);
   }
-  if (options.pre) {
-    message = message.replace(/\n/g, '<br/>');
-  }
-  if (options.eventType && options.eventType == 'cron') {
-    message = htmlSafe(`<span class='message-label badge'>cron</span> ${message}`);
-  }
+
+  return message;
+}
+
+function formatMessage(message, options) {
+  message = escape(message);
+  message = handleMaxLength(message, options.maxLength);
+  message = handleShort(message, options.short);
+  message = handleRepo(message, options.repo);
+  message = handlePre(message, options.pre);
+  message = handleEventType(message, options.eventType);
+  message = emojiConvertor.replace_colons(message);
+
   return message;
 }
 
@@ -46,6 +68,8 @@ const userRegexp = new RegExp('\\B@([\\w-]+)', 'g');
 const commitRegexp = new RegExp('([\\w-]+)?\\/([\\w-]+)?@([0-9A-Fa-f]+)', 'g');
 
 function githubify(text, owner, repo) {
+  const vcsType = repo.vcsType;
+
   text = text.replace(refRegexp, (ref, matchedOwner, matchedRepo, matchedNumber) => {
     const current = { owner, repo };
     const matched = {
@@ -53,10 +77,10 @@ function githubify(text, owner, repo) {
       repo: matchedRepo,
       number: matchedNumber,
     };
-    return _githubReferenceLink(ref, current, matched);
+    return _issueLink(ref, current, matched, vcsType);
   });
 
-  text = text.replace(userRegexp, (reference, username) => _githubUserLink(reference, username));
+  text = text.replace(userRegexp, (reference, username) => _userLink(reference, username, vcsType));
 
   text = text.replace(commitRegexp, (reference, matchedOwner, matchedRepo, matchedSHA) => {
     const current = { owner, repo };
@@ -65,42 +89,39 @@ function githubify(text, owner, repo) {
       repo: matchedRepo,
       sha: matchedSHA
     };
-    return _githubCommitReferenceLink(reference, current, matched);
+    return _commitLink(reference, current, matched, vcsType);
   });
   return text;
 }
 
-function _githubReferenceLink(reference, current, matched) {
-  let owner, repo;
-  owner = matched.owner || current.owner;
-  repo = matched.repo || current.repo;
+function _issueLink(reference, current, matched, vcsType) {
+  const owner = matched.owner || current.owner;
+  const repo = matched.repo || current.repo;
+  const slug = `${owner}/${repo}`;
+  const issueNumber = matched.number;
+  const href = vcsLinks.issueUrl(vcsType, slug, issueNumber);
 
-  const href = `${config.sourceEndpoint}/${owner}/${repo}/issues/${matched.number}`;
   return `<a href="${href}">${reference}</a>`;
 }
 
-function _githubUserLink(reference, username) {
-  return `<a href="${config.sourceEndpoint}/${username}">${reference}</a>`;
+function _userLink(reference, username, vcsType) {
+  const href = vcsLinks.userUrl(vcsType, username);
+  return `<a href="${href}">${reference}</a>`;
 }
 
-function _githubCommitReferenceLink(reference, current, matched) {
-  let owner, repo, url;
-  owner = matched.owner || current.owner;
-  repo = matched.repo || current.repo;
-  let slug = `${owner}/${repo}`;
-  // TODO: this duplicated the implementation of the githubCommit method
-  // in the urls service, but I didn't want to try and rewrite this entire file
-  url = `${config.sourceEndpoint}/${slug}/commit/${matched.sha}`;
-  return `<a href="${url}">${reference}</a>`;
+function _commitLink(reference, current, matched, vcsType) {
+  const owner = matched.owner || current.owner;
+  const repo = matched.repo || current.repo;
+  const slug = `${owner}/${repo}`;
+  const commitSha = matched.sha;
+  const href = vcsLinks.commitUrl(vcsType, slug, commitSha);
+
+  return `<a href="${href}">${reference}</a>`;
 }
 
-function _escape(text) {
-  return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-}
+export default helper((params, options) => {
+  const message = params[0] || '';
+  const formattedMessage = formatMessage(message, options);
 
-
-export default helper((params, hash) => {
-  const [message] = params;
-  const formatted = formatMessage(message, hash);
-  return new htmlSafe(formatted);
+  return new htmlSafe(formattedMessage);
 });

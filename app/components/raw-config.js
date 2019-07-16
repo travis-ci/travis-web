@@ -37,7 +37,7 @@ export default Component.extend({
     const branchName = this.get('build.branchName');
     const vcsType = this.get('build.repo.vcsType');
 
-    if (isInternal(source, slug)) { 
+    if (isInternal(source, slug)) {
       return null;
     }
     return this.get('vcsLinks').fileUrl(vcsType, slug, branchName, fileNameWithoutSha(source));
