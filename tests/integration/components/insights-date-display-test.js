@@ -20,7 +20,7 @@ module('Integration | Component | insights-date-display', function (hooks) {
 
     await render(hbs`{{insights-date-display}}`);
 
-    assert.equal(this.element.textContent.trim(),
+    assert.dom(this.element).hasText(
       `${start.format(INSIGHTS_DATE_RANGE_FORMAT)}\n-\n${end.format(INSIGHTS_DATE_RANGE_FORMAT)}`
     );
   });
@@ -31,7 +31,7 @@ module('Integration | Component | insights-date-display', function (hooks) {
 
     await render(hbs`{{insights-date-display interval=interval}}`);
 
-    assert.equal(this.element.textContent.trim(),
+    assert.dom(this.element).hasText(
       `${start.format(INSIGHTS_DATE_RANGE_FORMAT)}\n-\n${end.format(INSIGHTS_DATE_RANGE_FORMAT)}`
     );
   });
@@ -42,7 +42,7 @@ module('Integration | Component | insights-date-display', function (hooks) {
 
     await render(hbs`{{insights-date-display interval=interval}}`);
 
-    assert.equal(this.element.textContent.trim(),
+    assert.dom(this.element).hasText(
       `${start.format(INSIGHTS_DATE_RANGE_FORMAT)}\n-\n${end.format(INSIGHTS_DATE_RANGE_FORMAT)}`
     );
   });
