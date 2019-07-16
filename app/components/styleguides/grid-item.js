@@ -1,9 +1,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { reads } from '@ember/object/computed';
-import { BREAKPOINTS } from 'travis/components/styleguides/grid-container';
-
-const breakpointClasses = BREAKPOINTS.map((val) => `${val}Class`);
 
 const generateBreakpointClassFunc = function (breakpoint) {
   return function () {
@@ -18,7 +15,7 @@ const generateBreakpointClassFunc = function (breakpoint) {
 };
 
 export default Component.extend({
-  classNameBindings: ['baseClass', ...breakpointClasses],
+  classNameBindings: ['baseClass', 'smClass', 'mdClass', 'lgClass', 'xlClass'],
 
   grid: null,
 

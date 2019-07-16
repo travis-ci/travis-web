@@ -1,8 +1,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 
-export const BREAKPOINTS = ['sm', 'md', 'lg', 'xl'];
-
 const flexify = (val) => `flex-${val}`;
 const props = {
   dir: flexify,
