@@ -79,7 +79,7 @@ module.exports = function () {
         parser: require('postcss-scss'),
         plugins: [
           require('@csstools/postcss-sass'),
-          require('tailwindcss')('./app/styles/tailwind/config.js')
+          require('tailwindcss')('./config/tailwind.js')
         ]
       }
     },

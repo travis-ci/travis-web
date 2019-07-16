@@ -1,6 +1,8 @@
 /* eslint-env node */
 'use strict';
 
+const screens = require('./screens.js')();
+
 module.exports = function (environment) {
   let ENV = {
     modulePrefix: 'travis',
@@ -91,6 +93,8 @@ module.exports = function (environment) {
     moment: {
       includeTimezone: 'subset'
     },
+
+    screens,
   };
 
   ENV.featureFlags = {

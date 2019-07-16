@@ -1,8 +1,22 @@
 /* eslint-env node */
 
+const screenInfo = require('./screens.js')();
+const screens = Object.keys(screenInfo).reduce((screenMap, key) => {
+  const { min, units } = screenInfo[key];
+  if (min === 0) {
+    return screenMap;
+  }
+
+  screenMap[key] = `${min}${units}`;
+
+  return screenMap;
+}, {});
+
 module.exports = {
   theme: {
     /* ~~ Override ~~ */
+
+    screens,
 
     // Colors //
     colors: {
