@@ -5,6 +5,13 @@
   {{/unless}}
   <input type="pw" value="{{value}}" readonly="readonly">
 </div>
+<div class="env-var-branch">
+  {{#if envVar.branch}}
+    Only available to the <code>{{envVar.branch}}</code> branch
+  {{else}}
+    Available to all branches
+  {{/if}}
+</div>
 <div class="env-var-action">
   {{#if delete.isRunning}}
     {{loading-indicator}}
