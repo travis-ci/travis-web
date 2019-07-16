@@ -3,12 +3,13 @@ import { computed } from '@ember/object';
 import { alias } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 
+import vcsLinks from 'travis/utils/vcs-links';
+
 export default Component.extend({
   tagName: 'li',
   classNames: ['rows', 'my-build'],
   classNameBindings: ['state'],
 
-  vcsLinks: service(),
   state: alias('build.state'),
 
   vcsBranchUrl: computed('build.repo.{slug,vcsType}', 'build.branchName', function () {
@@ -16,6 +17,6 @@ export default Component.extend({
     const branchName = this.get('build.branchName');
     const vcsType = this.get('build.repo.vcsType');
 
-    return this.get('vcsLinks').branchUrl(vcsType, slug, branchName);
+    return vcsLinks.branchUrl(vcsType, slug, branchName);
   }),
 });

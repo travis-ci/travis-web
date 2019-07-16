@@ -7,11 +7,12 @@ import config from 'travis/config/environment';
 import { alias } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 
+import vcsLinks from 'travis/utils/vcs-links';
+
 export default Component.extend({
   auth: service(),
   router: service(),
   permissions: service(),
-  vcsLinks: service(),
 
   tagName: 'li',
   classNameBindings: ['branch.last_build.state'],
@@ -25,7 +26,7 @@ export default Component.extend({
     const sha = this.get('branch.last_build.commit.sha');
     const vcsType = this.get('branch.repository.vcsType');
 
-    return this.get('vcsLinks').commitUrl(vcsType, slug, sha);
+    return vcsLinks.commitUrl(vcsType, slug, sha);
   }),
 
   rawCreatedBy: alias('branch.last_build.created_by'),

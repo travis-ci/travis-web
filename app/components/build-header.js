@@ -4,11 +4,11 @@ import { inject as service } from '@ember/service';
 import jobConfigLanguage from 'travis/utils/job-config-language';
 import { not } from '@ember/object/computed';
 
+import vcsLinks from 'travis/utils/vcs-links';
+
 const commitMessageLimit = 72;
 
 export default Component.extend({
-  vcsLinks: service(),
-
   tagName: 'section',
   classNames: ['build-header'],
   classNameBindings: ['item.state'],
@@ -64,7 +64,7 @@ export default Component.extend({
     const branchName = this.get('build.branchName');
     const vcsType = this.get('item.repo.vcsType');
 
-    return this.get('vcsLinks').branchUrl(vcsType, slug, branchName);
+    return vcsLinks.branchUrl(vcsType, slug, branchName);
   }),
 
   vcsTagUrl: computed('item.repo.{slug,vcsType}', 'build.tag.name', function () {
@@ -72,7 +72,7 @@ export default Component.extend({
     const tag = this.get('build.tag.name');
     const vcsType = this.get('item.repo.vcsType');
 
-    return this.get('vcsLinks').tagUrl(vcsType, slug, tag);
+    return vcsLinks.tagUrl(vcsType, slug, tag);
   }),
 
   buildState: computed('item.jobs.firstObject.state', 'item.state', 'item.isMatrix', function () {

@@ -4,10 +4,11 @@ import { inject as service } from '@ember/service';
 import { isInternal, presentedPath, fileNameWithoutSha } from 'travis/utils/format-config';
 import { later } from '@ember/runloop';
 
+import vcsLinks from 'travis/utils/vcs-links';
+
 export default Component.extend({
   copied: false,
   baseYmlName: '.travis.yml',
-  vcsLinks: service(),
 
   buttonLabel: computed('copied', 'rawConfig.source', function () {
     let source = this.get('rawConfig.source');
@@ -40,7 +41,7 @@ export default Component.extend({
     if (isInternal(source, slug)) {
       return null;
     }
-    return this.get('vcsLinks').fileUrl(vcsType, slug, branchName, fileNameWithoutSha(source));
+    return vcsLinks.fileUrl(vcsType, slug, branchName, fileNameWithoutSha(source));
   }),
 
   actions: {

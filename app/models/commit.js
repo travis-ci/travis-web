@@ -4,9 +4,9 @@ import { belongsTo } from 'ember-data/relationships';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 
-export default Model.extend({
-  vcsLinks: service(),
+import vcsLinks from 'travis/utils/vcs-links';
 
+export default Model.extend({
   sha: attr(),
   branch: attr(),
   message: attr(),
@@ -56,6 +56,6 @@ export default Model.extend({
     const sha = this.get('sha');
     const vcsType = this.get('build.repo.vcsType');
 
-    return this.get('vcsLinks').commitUrl(vcsType, slug, sha);
+    return vcsLinks.commitUrl(vcsType, slug, sha);
   }),
 });
