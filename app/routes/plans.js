@@ -14,23 +14,23 @@ export default BasicRoute.extend(TailwindBaseMixin, {
   },
 
   model() {
-    let plans;
+    let model;
+    const planIds = [
+      'travis-ci-one-build',
+      'travis-ci-two-builds',
+      'travis-ci-five-builds',
+      'travis-ci-ten-builds',
+      'travis-ci-one-build-annual',
+      'travis-ci-two-builds-annual',
+      'travis-ci-five-builds-annual',
+      'travis-ci-ten-builds-annual',
+    ];
     try {
-      plans = this.store.filter('plan',
-        {},
-        (plan) => [
-          'travis-ci-one-build',
-          'travis-ci-two-builds',
-          'travis-ci-five-builds',
-          'travis-ci-ten-builds',
-          'travis-ci-one-build-annual',
-          'travis-ci-two-builds-annual',
-          'travis-ci-five-builds-annual',
-          'travis-ci-ten-builds-annual',
-        ].includes(plan.id)
-      );
+      model = this.store.findAll('plan').then((plans) => {
+        return plans.filter((val) => planIds.includes(val.id));
+      });
     } catch (e) {
-      plans = [
+      model = [
         {name: 'Bootstrap', builds: 1, price: 6900, annual: false, currency: 'USD'},
         {name: 'Startup', builds: 2, price: 12900, annual: false, currency: 'USD'},
         {name: 'Premium', builds: 10, price: 48900, annual: false, currency: 'USD'},
@@ -41,6 +41,6 @@ export default BasicRoute.extend(TailwindBaseMixin, {
         {name: 'Startup', builds: 2, price: 141900, annual: true, currency: 'USD'}
       ];
     }
-    return plans;
+    return model;
   }
 });
