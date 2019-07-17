@@ -6,9 +6,11 @@ import { task } from 'ember-concurrency';
 import { not, filterBy, or, mapBy, equal } from '@ember/object/computed';
 
 const STEPS = {
-  stepOne: 'stepOne',
-  stepTwo: 'stepTwo'
+  ONE: 'stepOne',
+  TWO: 'stepTwo'
 };
+
+const steps = [...Object.values(STEPS)];
 
 export default Component.extend({
   store: service(),
@@ -17,7 +19,7 @@ export default Component.extend({
   plans: null,
   showAnnual: false,
   availablePlans: config.plans,
-  steps: [...Object.values(STEPS)],
+  steps,
 
   currentStep: computed('steps.[]', {
     get() {
@@ -27,8 +29,9 @@ export default Component.extend({
       return value;
     }
   }),
-  isStepOne: equal('currentStep', STEPS.stepOne),
-  isStepTwo: equal('currentStep', STEPS.stepTwo),
+
+  isStepOne: equal('currentStep', STEPS.ONE),
+  isStepTwo: equal('currentStep', STEPS.TWO),
   showMonthly: not('showAnnual'),
   defaultPlan: filterBy('availablePlans', 'isDefault'),
   availablePlanNames: mapBy('availablePlans', 'name'),
@@ -107,22 +110,15 @@ export default Component.extend({
 
   actions: {
 
-    next(newSubscription) {
+    next() {
       const { steps, currentStep } = this;
-      this.set('newSubscription', newSubscription);
       const currentIndex = steps.indexOf(currentStep);
       this.set('currentStep', steps[currentIndex + 1]);
       window.scrollTo(0, 269);
     },
 
-    back() {
-      const { steps, currentStep } = this;
-      const index = steps.indexOf(currentStep);
-      this.set('currentStep', steps.get(index - 1));
-    },
-
     cancel() {
-      this.set('currentStep', STEPS.stepOne);
+      this.set('currentStep', STEPS.ONE);
       this.reset();
     },
 

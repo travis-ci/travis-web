@@ -107,7 +107,6 @@
     "npm": "6.2.0"
   },
   "dependencies": {
-    "ember-stripe-service": "^7.1.0",
     "watchman": "^1.0.0"
   },
   "greenkeeper": {

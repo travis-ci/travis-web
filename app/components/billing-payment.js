@@ -27,17 +27,11 @@ export default Component.extend({
     }
   }).drop(),
 
-  cardName: 'Patrick',
-  cardNumber: '4242424242424242',
-  expiryDateMonth: '04',
-  cvc: '893',
-  expiryDateYear: '2020',
-
   displayError(error) {
-    let message = 'There was an error connecting to stripe. Please try again.';
+    let message = 'There was an error connecting to stripe. Please confirm your details and try again.';
     const stripeError = error && error.error;
     if (stripeError && stripeError.type === 'card_error') {
-      message = 'Invalid card details';
+      message = 'Invalid card details. Please enter valid card details and try again.';
     }
     this.flashes.error(message);
   },
