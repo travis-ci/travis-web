@@ -35,12 +35,12 @@ export default function () {
     return {
       topic_list: {
         topics: [
-          { id: 4, slug: 'we-are-the-rats', title: 'MICHAEL its your birthday today!'},
-          { id: 8, slug: 'snow-halation', title: 'What is snow halation? Is it snow *inhalation*?'},
-          { id: 15, slug: 'time-333', title: 'Time for 3 at 33'},
-          { id: 16, slug: 'waypoint-forever', title: 'Be good, and be good at it'},
-          { id: 23, slug: 'big-boy-season', title: 'Congrats! You will be missed, best of luck'},
-          { id: 42, slug: 'riku-shows-up', title: 'Simple and clean'},
+          { id: 4, slug: 'we-are-the-rats', title: 'MICHAEL its your birthday today!' },
+          { id: 8, slug: 'snow-halation', title: 'What is snow halation? Is it snow *inhalation*?' },
+          { id: 15, slug: 'time-333', title: 'Time for 3 at 33' },
+          { id: 16, slug: 'waypoint-forever', title: 'Be good, and be good at it' },
+          { id: 23, slug: 'big-boy-season', title: 'Congrats! You will be missed, best of luck' },
+          { id: 42, slug: 'riku-shows-up', title: 'Simple and clean' },
         ]
       }
     };
@@ -54,7 +54,7 @@ export default function () {
   this.namespace = '';
   this.logging = window.location.search.includes('mirage-logging=true');
 
-  this.get('/users', function ({ users }, request)  {
+  this.get('/users', function ({ users }, request) {
     let userData = JSON.parse(localStorage.getItem('travis.user')),
       id = userData.id;
     return this.serialize(users.find(id), 'v2');
@@ -113,7 +113,22 @@ export default function () {
     return response;
   });
 
-  this.post('/subscriptions');
+  this.post('/subscriptions', function (schema, request) {
+    const attrs = JSON.parse(request.requestBody);
+
+    const updatedAttrs = {
+      ...attrs,
+      plan: schema.plans.find(attrs.plan),
+      owner: schema.users.first(),
+      source: 'stripe',
+      status: 'pending',
+      valid_to: new Date(2018, 5, 19),
+    };
+
+    const savedSubscription = schema.subscriptions.create(updatedAttrs);
+
+    return this.serialize(savedSubscription);
+  });
 
   this.get('/subscriptions', function (schema, params) {
     let response = this.serialize(schema.subscriptions.all());
@@ -135,7 +150,7 @@ export default function () {
     return response;
   });
 
-  this.get('/subscription/:subscription_id/invoices', function (schema, {params}) {
+  this.get('/subscription/:subscription_id/invoices', function (schema, { params }) {
     return schema.subscriptions.find(params.subscription_id).invoices;
   });
 
@@ -145,7 +160,7 @@ export default function () {
     return schema.broadcasts.all();
   });
 
-  this.get('/repos', function (schema, {queryParams}) {
+  this.get('/repos', function (schema, { queryParams }) {
     // search apparently still uses v2, so different response necessary
     const query = queryParams.search;
     if (query) {
@@ -495,7 +510,7 @@ export default function () {
     }
   });
 
-  this.get('/builds', (schema, {queryParams: {event_type: eventType}}) => {
+  this.get('/builds', (schema, { queryParams: { event_type: eventType } }) => {
     return schema.builds.all().filter(build => eventType.includes(build.eventType));
   });
 
@@ -533,7 +548,7 @@ export default function () {
     return this.serialize(builds, 'build');
   });
 
-  this.get('/repo/:repo_id/requests', function (schema, {params: {repo_id: repoId}}) {
+  this.get('/repo/:repo_id/requests', function (schema, { params: { repo_id: repoId } }) {
     let requests = schema.requests.where({ repositoryId: repoId });
 
     return requests;
@@ -543,7 +558,7 @@ export default function () {
     const requestBody = JSON.parse(request.requestBody);
     const fakeRequestId = 5678;
     let repository = schema.find('repository', request.params.repo_id);
-    server.create('build', { number: '2', id: 9999,  repository, state: 'started' });
+    server.create('build', { number: '2', id: 9999, repository, state: 'started' });
 
     return new Response(200, {}, {
       request: {
@@ -567,7 +582,7 @@ export default function () {
   });
 
   this.get('/repo/:repo_id/request/:request_id/messages',
-    function ({ messages }, { params: { request_id: requestId }}) {
+    function ({ messages }, { params: { request_id: requestId } }) {
       return this.serialize(messages.where({ requestId }));
     });
 
