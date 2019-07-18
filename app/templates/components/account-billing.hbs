@@ -5,8 +5,8 @@
   {{#if this.isTrial}}
     <BillingTrial 
       @account={{this.account}} 
-      @plans={{plans}} 
-      @newSubscription={{newSubscription}}
+      @plans={{this.plans}} 
+      @newSubscription={{this.newSubscription}}
     />
   {{/if}}
   {{#if this.isManual}}
