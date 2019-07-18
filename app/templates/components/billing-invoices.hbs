@@ -9,14 +9,45 @@
       We’re happy to help
     </LinkTo>
   </p>
-  <ul>
-    {{#each (sort-by "createdAt:desc" this.invoices) as |invoice|}}
-      <li>
-        <a data-test-invoice href={{invoice.url}}>
-          <SvgImage @name="icon-invoice" @class="icon" />
-          {{invoice.id}} {{moment-format invoice.createdAt "MMMM YYYY"}}
-        </a>
-      </li>
-    {{/each}}
-  </ul>
+  <table>
+    <thead>
+      <tr>
+        <th>
+          invoice date
+        </th>
+        <th>
+          payment card
+        </th>
+        <th>
+          total
+        </th>
+        <th>
+          download
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each (sort-by 'createdAt:desc' invoices) as |invoice|}}
+      <tr>
+        <td>
+          <p>
+            {{svg-jar 'icon-invoice' class='icon'}}
+            {{invoice.id}} {{moment-format invoice.createdAt 'MMMM YYYY'}}
+          </p>
+        </td>
+        <td>
+          <p>•••• •••• •••• {{subscription.creditCardInfo.lastDigits}}</p>
+        </td>
+        <td>
+          <p> ${{subscription.plan.price }}</p>
+        </td>
+        <td>
+          <a data-test-invoice href={{invoice.url}}>
+            Download {{svg-jar 'icon-invoice' class='icon'}}
+          </a>
+        </td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
 </section>

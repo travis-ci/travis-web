@@ -539,6 +539,18 @@ section.invoices {
   font-size: $font-size-m;
   padding-top: 1rem;
 
+  table {
+    width: 100%;
+    margin-top: 1.8em;
+  }
+
+  th {
+    text-align: left;
+    text-transform: uppercase;
+    color: $cement-grey;
+    font-size:  $font-size-sm;
+  }
+
   ul {
     list-style-type: none;
     padding-left: 0;
