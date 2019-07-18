@@ -9,7 +9,25 @@
       We’re happy to help
     </LinkTo>
   </p>
-  <div class="invoice-table">
+    {{#travis-form as |form|}}      
+      <div class='form-elem select invoice-select-year'>
+        {{#form.field
+          value=year
+          class='margin-top-0'
+          showRequiredMark=true
+          onChange=(action (mut year))
+          showValidationStatusIcons=false as |field|
+        }}
+          {{#field.select
+            options=invoiceYears as |year|
+          }}
+            {{year}}
+          {{/field.select}}
+        {{/form.field}}
+      </div>
+    {{/travis-form}}
+  </div>
+  <div class='invoice-table'>
     <table>
       <thead>
         <tr>
@@ -28,10 +46,10 @@
         </tr>
       </thead>
       <tbody>
-        {{#each (sort-by 'createdAt:desc' invoices) as |invoice|}}
+        {{#each (sort-by 'createdAt:desc' selectedInvoices) as |invoice|}}
           <tr>
             <td>
-              {{svg-jar 'icon-invoice' class='icon'}}{{invoice.id}} {{moment-format invoice.createdAt 'MMMM YYYY'}}
+              {{svg-jar 'icon-invoice' class='icon'}}{{moment-format invoice.createdAt 'MMMM DD, YYYY'}}
             </td>
             <td>
               •••• •••• •••• {{subscription.creditCardInfo.lastDigits}}
@@ -41,7 +59,7 @@
             </td>
             <td>
               <a data-test-invoice href={{invoice.url}}>
-                Download {{svg-jar 'icon-invoice' class='icon'}}
+                {{svg-jar 'icon-invoice' class='icon'}}
               </a>
             </td>
           </tr>

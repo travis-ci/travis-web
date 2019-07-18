@@ -149,7 +149,9 @@ $profile-breakpoint: 600px;
     align-items: center;
 
     .icon {
-      &.private, &.public {
+
+      &.private,
+      &.public {
         width: 18px;
         height: 18px;
         margin-right: 0;
@@ -164,7 +166,7 @@ $profile-breakpoint: 600px;
       border: 1px dashed $pebble-grey;
       padding: 0 1em;
 
-      p + p {
+      p+p {
         margin-top: 0;
       }
     }
@@ -270,7 +272,8 @@ $profile-breakpoint: 600px;
   }
 }
 
-.profile-repositories-filter, .not-locked-profile-repositories-filter {
+.profile-repositories-filter,
+.not-locked-profile-repositories-filter {
   margin-bottom: 1.5em;
 
   .search {
@@ -371,6 +374,7 @@ $profile-breakpoint: 600px;
     border: 0.09em solid lighten($oxide-blue, 20%);
     box-shadow: 0 .15px 0 $oxide-blue;
     color: $oxide-blue;
+
     svg {
       @include colorSVG($oxide-blue);
     }
@@ -432,6 +436,7 @@ header.legacy-services-integration {
     }
   }
 }
+
 section.billing {
   font-size: $font-size-m;
 
@@ -443,7 +448,8 @@ section.billing {
   .billing-section-link {
     text-decoration: underline;
 
-    &:hover, &:active {
+    &:hover,
+    &:active {
       color: $cement-grey;
       text-decoration: none;
     }
@@ -453,6 +459,7 @@ section.billing {
     p {
       margin: 0.3em 0 0.3em 0;
     }
+
     h3 {
       font-size: $font-size-xl;
       font-weight: $font-weight-light;
@@ -460,7 +467,7 @@ section.billing {
     }
   }
 
-  .plan + h2 {
+  .plan+h2 {
     margin-bottom: 0;
   }
 
@@ -505,7 +512,8 @@ section.billing {
     }
   }
 
-  section.contact, section.payment {
+  section.contact,
+  section.payment {
     p {
       margin-top: 0;
       margin-bottom: 0.3em;
@@ -543,22 +551,31 @@ section.invoices {
     overflow-x: auto;
   }
 
+  .invoice-select-year .ember-power-select-selected-item{
+    margin-right: 22px;
+    margin-left: 12px;
+  }
+
   table {
     width: 100%;
     margin-top: .6em;
-    display: block;
   }
 
   th {
     text-transform: uppercase;
     color: $cement-grey;
-    font-size:  $font-size-sm;
+    font-size: $font-size-sm;
   }
 
-  td, th{
+  td,
+  th {
     text-align: left;
-    white-space:nowrap;
+    white-space: nowrap;
     padding: .5em .8em .5em 0;
+  }
+
+  tr td:last-child, th:last-child {
+    text-align: right;
   }
 
   p {
@@ -578,14 +595,6 @@ section.invoices {
   a svg {
     @include colorSVG(black);
     transform: translateY(-2px);
-  }
-}
-
-@media #{$xlarge-up} {
-  section.invoices {
-    table {
-      display: table;
-    }
   }
 }
 
@@ -630,7 +639,7 @@ section.invoices {
     }
   }
 
-  & + .legacy-services-integration {
+  &+.legacy-services-integration {
     margin-top: 1em;
   }
 
@@ -811,7 +820,9 @@ header.space-between {
   }
 }
 
-.user-settings, .organization-settings, .settings-section {
+.user-settings,
+.organization-settings,
+.settings-section {
   @include linkStyle;
 
   a.settings-tooltip {
@@ -825,7 +836,7 @@ header.space-between {
     font-size: $font-size-ml;
   }
 
-  > section {
+  >section {
     border-bottom: 2px #f1f1f1 solid;
     padding-bottom: 2em;
     margin-bottom: 2em;
@@ -863,7 +874,8 @@ header.space-between {
     }
   }
 
-  .email-settings, .insights-settings {
+  .email-settings,
+  .insights-settings {
 
     .row {
       display: flex;
