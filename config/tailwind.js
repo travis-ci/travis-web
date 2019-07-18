@@ -3,11 +3,10 @@
 const screenInfo = require('./screens.js')();
 const screens = Object.keys(screenInfo).reduce((screenMap, key) => {
   const { min, units } = screenInfo[key];
-  if (min === 0) {
-    return screenMap;
-  }
 
-  screenMap[key] = `${min}${units}`;
+  if (min !== 0) {
+    screenMap[key] = `${min}${units}`;
+  }
 
   return screenMap;
 }, {});

@@ -26,9 +26,9 @@ export default BasicRoute.extend(TailwindBaseMixin, {
       'travis-ci-ten-builds-annual',
     ];
     try {
-      model = this.store.findAll('plan').then((plans) => {
-        return plans.filter((val) => planIds.includes(val.id));
-      });
+      model = this.store.findAll('plan').then((plans) =>
+        plans.filter((val) => planIds.includes(val.id))
+      );
     } catch (e) {
       model = [
         {name: 'Bootstrap', builds: 1, price: 6900, annual: false, currency: 'USD'},
