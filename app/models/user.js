@@ -42,11 +42,6 @@ export default Owner.extend({
     });
   }),
 
-  urlGithub: computed('login', function () {
-    let login = this.get('login');
-    return `${config.sourceEndpoint}/${login}`;
-  }),
-
   _rawPermissions: computed(function () {
     return this.get('ajax').get('/users/permissions');
   }),
