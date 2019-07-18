@@ -570,6 +570,11 @@ section.invoices {
     margin-right: 10px;
   }
 
+  .invoice-select-year .ember-power-select-selected-item{
+    margin-right: 22px;
+    margin-left: 12px;
+  }
+
   table {
     width: 100%;
     margin-top: .6em;
@@ -595,6 +600,7 @@ section.invoices {
     padding: .5em .8em .5em 0;
   }
 
+<<<<<<< HEAD
   td .icon {
     @include colorSVG(black);
     margin-right: 0;
@@ -610,6 +616,9 @@ section.invoices {
     &:hover {
       @include colorSVG($oxide-blue);
     }
+=======
+  tr td:last-child, th:last-child {
+>>>>>>> Implement sorting invoices by year
     text-align: right;
   }
 
@@ -642,14 +651,6 @@ section.invoices {
     width: 26px;
     transform: translate(-6px, 6px);
     @include colorSVG(black);
-  }
-}
-
-@media #{$xlarge-up} {
-  section.invoices {
-    table {
-      display: table;
-    }
   }
 }
 
