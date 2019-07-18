@@ -645,6 +645,14 @@ section.invoices {
   }
 }
 
+@media #{$xlarge-up} {
+  section.invoices {
+    table {
+      display: table;
+    }
+  }
+}
+
 #github-apps-invitation {
   box-shadow: 0 0 15px 3px $pebble-grey;
   padding: 0.1em 1.25em .2em 1.25em;
