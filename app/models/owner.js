@@ -28,6 +28,8 @@ export default Model.extend({
   type: attr('string'),
   isUser: equal('type', 'user'),
   isOrganization: equal('type', 'organization'),
+  vcsId: attr('number'),
+  vcsType: attr('string'),
 
   // This is set by serializers:subscription
   subscriptionPermissions: attr(),

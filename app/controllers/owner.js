@@ -1,17 +1,17 @@
 import Controller from '@ember/controller';
 import { computed } from '@ember/object';
 import { reads } from '@ember/object/computed';
-import config from 'travis/config/environment';
+
+import vcsLinks from 'travis/utils/vcs-links';
 
 export default Controller.extend({
   isLoading: false,
 
-  config,
+  vcsProfileUrl: computed('model.{login,vcsType}', function () {
+    const login = this.get('model.login');
+    const vcsType = this.get('model.vcsType');
 
-  githubProfile: computed('model.login', function () {
-    let login = this.get('model.login');
-    const { sourceEndpoint } = config;
-    return `${sourceEndpoint}/${login}`;
+    return vcsLinks.profileUrl(vcsType, login);
   }),
 
   owner: reads('model'),

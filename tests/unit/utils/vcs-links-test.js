@@ -47,4 +47,14 @@ module('Unit | Utility | vcs-links', function (hooks) {
 
     assert.equal(vcsLinks.fileUrl(vcsType, slug, this.build.branch, 'file'), 'https://github.com/travis-ci/travis-web/blob/new-pr/file');
   });
+
+  test('issueUrl', function (assert) {
+    const { vcsType, slug } = this.repo;
+
+    assert.equal(vcsLinks.issueUrl(vcsType, slug, '123'), 'https://github.com/travis-ci/travis-web/issues/123');
+  });
+
+  test('profileUrl', function (assert) {
+    assert.equal(vcsLinks.profileUrl('GithubUser', 'username'), 'https://github.com/username');
+  });
 });

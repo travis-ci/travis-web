@@ -1,6 +1,7 @@
 function endpoint(vcsType) {
   switch (vcsType) {
     case 'GithubRepository':
+    case 'GithubUser':
     default:
       return 'https://github.com';
   }
@@ -31,7 +32,7 @@ const links = {
     `${endpoint(vcsType)}/${slug}/issues/${issueNumber}`
   ),
 
-  userUrl: (vcsType, username) => (
+  profileUrl: (vcsType, username) => (
     `${endpoint(vcsType)}/${username}`
   ),
 };

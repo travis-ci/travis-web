@@ -104,7 +104,7 @@ function _issueLink(reference, current, matched, vcsType) {
 }
 
 function _userLink(reference, username, vcsType) {
-  const href = vcsLinks.userUrl(vcsType, username);
+  const href = vcsLinks.profileUrl(vcsType, username);
   return `<a href="${href}">${reference}</a>`;
 }
 
