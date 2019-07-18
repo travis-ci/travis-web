@@ -14,6 +14,7 @@ import { belongsTo } from 'ember-data/relationships';
 import { alias, and, equal, not, reads } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import promiseObject from 'travis/utils/promise-object';
+import { on } from '@ember/object/evented';
 
 export default Model.extend(DurationCalculations, DurationAttributes, {
   api: service(),
@@ -151,11 +152,11 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
     }).then(() => callback(this));
   },
 
-  didLoad: function () {
+  didLoad: on('didLoad', function () {
     (this.whenLoadedCallbacks || []).forEach((callback) => {
       callback(this);
     });
-  }.on('didLoad'),
+  }),
 
   subscribe() {
     // TODO: this is needed only because we may reach this place with a job that

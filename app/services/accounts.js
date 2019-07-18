@@ -51,6 +51,7 @@ export default Service.extend({
   }),
 
   init() {
+    this._super(...arguments);
     this.fetchOrganizations.perform();
     if (billingEndpoint) {
       this.fetchSubscriptions.perform();

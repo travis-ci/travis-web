@@ -1,8 +1,6 @@
-import { later } from '@ember/runloop';
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { alias } from '@ember/object/computed';
-import Ember from 'ember';
 
 export default Component.extend({
   permissionsService: service('permissions'),
@@ -21,11 +19,7 @@ export default Component.extend({
   displayMenuTofu: alias('repo.permissions.create_request'),
 
   openDropup() {
-    this.toggleProperty('dropupIsOpen');
-
-    if (!Ember.testing) {
-      later((() => { this.set('dropupIsOpen', false); }), 4000);
-    }
+    this.set('dropupIsOpen', true);
   },
 
   mouseLeave() {

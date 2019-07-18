@@ -48,7 +48,7 @@ export default Component.extend(BranchSearching, {
 
   actions: {
 
-    toggleStatusImageModal() {
+    closeModal() {
       this.onClose();
     }
 
