@@ -539,25 +539,26 @@ section.invoices {
   font-size: $font-size-m;
   padding-top: 1rem;
 
+  .invoice-table {
+    overflow-x: auto;
+  }
+
   table {
     width: 100%;
-    margin-top: 1.8em;
+    margin-top: .6em;
+    display: block;
   }
 
   th {
-    text-align: left;
     text-transform: uppercase;
     color: $cement-grey;
     font-size:  $font-size-sm;
   }
 
-  ul {
-    list-style-type: none;
-    padding-left: 0;
-  }
-
-  li {
-    padding-bottom: 0.4em;
+  td, th{
+    text-align: left;
+    white-space:nowrap;
+    padding: .5em .8em .5em 0;
   }
 
   p {
@@ -577,6 +578,14 @@ section.invoices {
   a svg {
     @include colorSVG(black);
     transform: translateY(-2px);
+  }
+}
+
+@media #{$xlarge-up} {
+  section.invoices {
+    table {
+      display: table;
+    }
   }
 }
 
