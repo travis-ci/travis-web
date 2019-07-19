@@ -7,8 +7,10 @@
     <h1 class="owner-title">{{owner.name}}</h1>
     <p class="owner-handle">
       {{svg-jar 'icon-repooctocat' class="icon--l"}}
-      <a href={{vcsProfileUrl}} title=(concat owner.name " on " (vcs-name owner.vcsType))>
-        <span class="label-align">{{owner.login}}</span></a></p>
+      <a href={{vcsProfileUrl}} title="{{concat owner.name " on " (vcs-name owner.vcsType)}}">
+        <span class="label-align">{{owner.login}}</span>
+      </a>
+    </p>
     {{!-- {{owner-sync-button owner=owner}} --}}
   </div>
 </header>
