@@ -25,5 +25,7 @@
   {{/each}}
 {{/styleguides/grid-container}}
 <div class="text-center p-4 border-grey-150 border">
-  {{#styleguides/travis-button}}Start Your Free Trial{{/styleguides/travis-button}}
+  {{!-- {{#link-to 'signin' class='inline-block'}} --}}
+    {{#styleguides/travis-button onToggle=(action ctaAction)}}Start Your Free Trial{{/styleguides/travis-button}}
+  {{!-- {{/link-to}} --}}
 </div>
