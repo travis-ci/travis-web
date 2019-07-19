@@ -3,7 +3,7 @@ import {
 } from 'rsvp';
 import { A } from '@ember/array';
 import ExpandableRecordArray from 'travis/utils/expandable-record-array';
-import Model from 'ember-data/model';
+import VcsEntity from 'travis/models/vcs-entity';
 import attr from 'ember-data/attr';
 import { hasMany, belongsTo } from 'ember-data/relationships';
 import { inject as service } from '@ember/service';
@@ -23,7 +23,7 @@ export const HISTORY_MIGRATION_STATUS = {
   MIGRATED: 'migrated'
 };
 
-const Repo = Model.extend({
+const Repo = VcsEntity.extend({
   api: service(),
   auth: service(),
   permissions: attr(),
@@ -40,8 +40,6 @@ const Repo = Model.extend({
   emailSubscribed: attr('boolean'),
   migrationStatus: attr('string'),
   historyMigrationStatus: attr('string'),
-  vcsId: attr('number'),
-  vcsType: attr('string'),
 
   ownerType: reads('owner.@type'),
 

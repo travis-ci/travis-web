@@ -1,4 +1,4 @@
-import Model from 'ember-data/model';
+import VcsEntity from 'travis/models/vcs-entity';
 import attr from 'ember-data/attr';
 import { belongsTo } from 'ember-data/relationships';
 import { computed } from '@ember/object';
@@ -9,7 +9,7 @@ import dynamicQuery from 'travis/utils/dynamic-query';
 
 const { profileReposPerPage: limit } = config.pagination;
 
-export default Model.extend({
+export default VcsEntity.extend({
   features: service(),
   accounts: service(),
   raven: service(),
@@ -28,8 +28,6 @@ export default Model.extend({
   type: attr('string'),
   isUser: equal('type', 'user'),
   isOrganization: equal('type', 'organization'),
-  vcsId: attr('number'),
-  vcsType: attr('string'),
 
   // This is set by serializers:subscription
   subscriptionPermissions: attr(),
