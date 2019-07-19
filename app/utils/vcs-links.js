@@ -36,6 +36,10 @@ const links = {
   profileUrl: (vcsType, username) => (
     `${endpoint(vcsType)}/${username}`
   ),
+
+  appsActivationUrl: (vcsType, appName, vcsId) => (
+    `${endpoint(vcsType)}/apps/${appName}/installations/new/permissions?suggested_target_id=${vcsId}`
+  )
 };
 
 export default links;

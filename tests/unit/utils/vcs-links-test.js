@@ -34,4 +34,8 @@ module('Unit | Utility | vcs-links', function () {
   test('profileUrl', function (assert) {
     assert.equal(vcsLinks.profileUrl('GithubUser', 'username'), 'https://github.com/username');
   });
+
+  test('appsActivationUrl', function (assert) {
+    assert.equal(vcsLinks.appsActivationUrl('Github', 'appName', 'vcsId'), 'https://github.com/apps/appName/installations/new/permissions?suggested_target_id=vcsId');
+  });
 });

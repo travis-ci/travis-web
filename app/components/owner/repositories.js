@@ -7,6 +7,7 @@ import config from 'travis/config/environment';
 import window from 'ember-window-mock';
 import { task } from 'ember-concurrency';
 import fetchAll from 'travis/utils/fetch-all';
+import vcsLinks from 'travis/utils/vcs-links';
 
 const { appName, migrationRepositoryCountLimit } = config.githubApps;
 
@@ -62,9 +63,11 @@ export default Component.extend({
     return `https://travis-ci.com/${path}`;
   }),
 
-  appsActivationURL: computed('owner.githubId', function () {
-    let githubId = this.get('owner.githubId');
-    return `https://github.com/apps/${appName}/installations/new/permissions?suggested_target_id=${githubId}`;
+  appsActivationURL: computed('owner.{githubId,vcsType,vcsId}', function () {
+    const vcsId = this.get('owner.vcsId') || this.get('owner.githubId');
+    const vcsType = this.get('owner.vcsType');
+
+    return vcsLinks.appsActivationUrl(vcsType, appName, vcsId);
   }),
 
   appsManagementURL: computed(
