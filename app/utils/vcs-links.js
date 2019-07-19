@@ -1,6 +1,6 @@
 import { vcsName } from 'travis/helpers/vcs-name';
 
-function endpoint(vcsType) {
+export function endpoint(vcsType) {
   switch (vcsName(vcsType).toLowerCase()) {
     case 'github':
     default:
