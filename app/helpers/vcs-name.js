@@ -5,6 +5,8 @@ export function vcsName(vcsType) {
 
   if (vcsTypeLower == '' || vcsTypeLower.startsWith('github')) {
     return 'GitHub';
+  } else if (vcsTypeLower.startsWith('bitbucket')) {
+    return 'Bitbucket';
   }
 }
 
