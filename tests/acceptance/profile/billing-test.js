@@ -170,6 +170,7 @@ module('Acceptance | profile/billing', function (hooks) {
 
   test('view billing information with invoices year changes correctly', async function (assert) {
 
+<<<<<<< HEAD
     this.subscription.createInvoice({
       id: '2009',
       created_at: new Date(2009, 4, 15),
@@ -196,10 +197,13 @@ module('Acceptance | profile/billing', function (hooks) {
 
     percySnapshot(assert);
 
+=======
+>>>>>>> Test billing invoices function correctly
     profilePage.billing.invoices.items[0].as(march2010 => {
       assert.equal(march2010.invoiceUrl.href, 'https://example.com/20102.pdf');
       assert.equal(march2010.invoiceDate, 'March 14, 2010');
       assert.equal(march2010.invoiceCardDigits, '•••• •••• •••• 1919');
+<<<<<<< HEAD
       assert.equal(march2010.invoiceCardPrice, '$69.00');
     });
 
@@ -226,10 +230,75 @@ module('Acceptance | profile/billing', function (hooks) {
       assert.equal(march2010.invoiceDate, 'March 14, 2010');
       assert.equal(march2010.invoiceCardDigits, '•••• •••• •••• 1919');
       assert.equal(march2010.invoiceCardPrice, '$69.00');
+=======
+      assert.equal(march2010.invoiceCardPrice, '$69');
+>>>>>>> Test billing invoices function correctly
     });
 
-    // Write more test cases.
-    // assert.equal(profilePage.billing.invoices.items[0].text, '20102 February 20102');
+    profilePage.billing.invoices.items[1].as(february2010 => {
+      assert.equal(february2010.invoiceUrl.href, 'https://example.com/2010.pdf');
+      assert.equal(february2010.invoiceDate, 'February 14, 2010');
+      assert.equal(february2010.invoiceCardDigits, '•••• •••• •••• 1919');
+      assert.equal(february2010.invoiceCardPrice, '$69');
+    });
+  });
+
+  test('view billing information with invoices year changes correctly', async function (assert) {
+
+    this.subscription.createInvoice({
+      id: '2009',
+      created_at: new Date(2009, 4, 15),
+      url: 'https://example.com/2009.pdf'
+    });
+
+    this.subscription.createInvoice({
+      id: '2010',
+      created_at: new Date(2010, 1, 14),
+      url: 'https://example.com/2010.pdf'
+    });
+
+    this.subscription.createInvoice({
+      id: '20102',
+      created_at: new Date(2010, 2, 14),
+      url: 'https://example.com/20102.pdf'
+    });
+
+    await profilePage.visit();
+    await profilePage.billing.visit();
+
+    percySnapshot(assert);
+
+    profilePage.billing.invoices.items[0].as(march2010 => {
+      assert.equal(march2010.invoiceUrl.href, 'https://example.com/20102.pdf');
+      assert.equal(march2010.invoiceDate, 'March 14, 2010');
+      assert.equal(march2010.invoiceCardDigits, '•••• •••• •••• 1919');
+      assert.equal(march2010.invoiceCardPrice, '$69');
+    });
+
+    profilePage.billing.invoices.items[1].as(february2010 => {
+      assert.equal(february2010.invoiceUrl.href, 'https://example.com/2010.pdf');
+      assert.equal(february2010.invoiceDate, 'February 14, 2010');
+      assert.equal(february2010.invoiceCardDigits, '•••• •••• •••• 1919');
+      assert.equal(february2010.invoiceCardPrice, '$69');
+    });
+
+    await selectChoose(profilePage.billing.invoices.invoiceSelectYear.scope, '2009');
+
+    profilePage.billing.invoices.items[0].as(may152009 => {
+      assert.equal(may152009.invoiceUrl.href, 'https://example.com/2009.pdf');
+      assert.equal(may152009.invoiceDate, 'May 15, 2009');
+      assert.equal(may152009.invoiceCardDigits, '•••• •••• •••• 1919');
+      assert.equal(may152009.invoiceCardPrice, '$69');
+    });
+
+    await selectChoose(profilePage.billing.invoices.invoiceSelectYear.scope, '2010');
+
+    profilePage.billing.invoices.items[0].as(march2010 => {
+      assert.equal(march2010.invoiceUrl.href, 'https://example.com/20102.pdf');
+      assert.equal(march2010.invoiceDate, 'March 14, 2010');
+      assert.equal(march2010.invoiceCardDigits, '•••• •••• •••• 1919');
+      assert.equal(march2010.invoiceCardPrice, '$69');
+    });
   });
 
   test('view billing on an expired stripe plan', async function (assert) {
