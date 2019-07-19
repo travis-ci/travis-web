@@ -1,6 +1,11 @@
 import Component from '@ember/component';
+import { computed } from '@ember/object';
 import abstractMethod from 'travis/utils/abstract-method';
 import twProps from 'travis/mixins/styleguides/tailwind-props';
+import generatePropVariants from 'travis/utils/tailwind-variants';
+
+const styleProps = ['bg', 'font', 'px', 'py', 'rounded', 'text'];
+const generatedProps = generatePropVariants(styleProps);
 
 export default Component.extend(twProps, {
   tagName: 'button',
@@ -8,7 +13,9 @@ export default Component.extend(twProps, {
   classNameBindings: ['disabled'],
   attributeBindings: ['role', 'type'],
 
-  tailwindProps: ['bg', 'font', 'px', 'py', 'rounded', 'text'],
+  tailwindProps: computed(...generatedProps, function () {
+    return generatedProps.filter(prop => typeof this[prop] !== 'undefined');
+  }),
   bg: 'grey-700',
   font: 'bold',
   px: 3,
