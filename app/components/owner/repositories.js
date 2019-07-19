@@ -71,16 +71,17 @@ export default Component.extend({
   }),
 
   appsManagementURL: computed(
-    'owner.{login,isOrganization,githubId}',
+    'owner.{login,isOrganization,githubId,vcsType,vcsId}',
     'owner.installation.githubId',
     function () {
-      let login = this.get('owner.login');
-      let isOrganization = this.get('owner.isOrganization');
-      let ownerGithubId = this.get('owner.githubId');
-      let installationGithubId = this.get('owner.installation.githubId');
+      const login = this.get('owner.login');
+      const isOrganization = this.get('owner.isOrganization');
+      const vcsType = this.get('owner.vcsType');
+      const vcsId = this.get('owner.vcsId') || this.get('owner.githubId');
+      const installationGithubId = this.get('owner.installation.githubId');
 
       if (appName && appName.length) {
-        return `https://github.com/apps/${appName}/installations/new/permissions?suggested_target_id=${ownerGithubId}`;
+        return vcsLinks.appsActivationUrl(vcsType, appName, vcsId);
       } else if (isOrganization) {
         return `https://github.com/organizations/${login}/settings/installations/${installationGithubId}`;
       } else {
@@ -98,7 +99,7 @@ export default Component.extend({
   }),
 
   migrate: task(function* () {
-    let queryParams = {
+    const queryParams = {
       sort_by: 'name',
       'repository.managed_by_installation': false,
       'repository.active': true,
@@ -108,14 +109,14 @@ export default Component.extend({
       },
     };
 
-    let repositories = yield this.store.paginated('repo', queryParams, { live: false }) || [];
+    const repositories = yield this.store.paginated('repo', queryParams, { live: false }) || [];
 
     yield fetchAll(this.store, 'repo', queryParams);
 
-    let githubQueryParams = repositories.map(repo => `repository_ids[]=${repo.githubId}`).join('&');
+    const githubQueryParams = repositories.map(repo => `repository_ids[]=${repo.githubId}`).join('&');
+    const vcsId = this.owner.vcsId || this.owner.githubId;
+    const vcsType = this.owner.vcsType;
 
-    window.location.href =
-      `https://github.com/apps/${appName}/installations/new/permissions` +
-      `?suggested_target_id=${this.owner.githubId}&${githubQueryParams}`;
+    window.location.href = `${vcsLinks.appsActivationUrl(vcsType, appName, vcsId)}&${githubQueryParams}`;
   })
 });

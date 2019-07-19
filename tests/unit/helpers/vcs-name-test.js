@@ -6,6 +6,8 @@ const vcsName = vcsNameHelper.compute;
 module('Unit | Helper | vcs name', function () {
   test('it defaults to github vcs name', function (assert) {
     assert.equal(vcsName([]), 'GitHub');
+    assert.equal(vcsName([null]), 'GitHub');
+    assert.equal(vcsName(['']), 'GitHub');
   });
 
   test('it handles github vcs types', function (assert) {
