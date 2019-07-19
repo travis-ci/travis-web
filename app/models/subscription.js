@@ -1,6 +1,4 @@
-import Model from 'ember-data/model';
-import attr from 'ember-data/attr';
-import { belongsTo, hasMany } from 'ember-data/relationships';
+import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
 import { computed } from '@ember/object';
 import { and, equal, or } from '@ember/object/computed';
 import config from 'travis/config/environment';
@@ -12,15 +10,16 @@ let sourceToWords = {
 };
 
 export default Model.extend({
+  source: attr(),
+  status: attr(),
+  validTo: attr(),
+  permissions: attr(),
+
   billingInfo: belongsTo({ async: false }),
   creditCardInfo: belongsTo({ async: false }),
   invoices: hasMany('invoice'),
   owner: belongsTo('owner', {polymorphic: true}),
-  permissions: attr(),
   plan: belongsTo(),
-  source: attr(),
-  status: attr(),
-  validTo: attr(),
 
   isSubscribed: equal('status', 'subscribed'),
   isCanceled: equal('status', 'canceled'),

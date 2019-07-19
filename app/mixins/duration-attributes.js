@@ -1,5 +1,5 @@
 import Mixin from '@ember/object/mixin';
-import attr from 'ember-data/attr';
+import { attr } from '@ember-data/model';
 import { computed } from '@ember/object';
 
 export default Mixin.create({

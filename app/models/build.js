@@ -1,16 +1,12 @@
-import { all } from 'rsvp';
-
-import { isEmpty, isPresent } from '@ember/utils';
-import configKeysMap from 'travis/utils/keys-map';
-import Model from 'ember-data/model';
-import DurationCalculations from 'travis/mixins/duration-calculations';
-import attr from 'ember-data/attr';
-import { hasMany, belongsTo } from 'ember-data/relationships';
+import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 import { alias, sort } from '@ember/object/computed';
-
+import { isEmpty, isPresent } from '@ember/utils';
+import { all } from 'rsvp';
 import moment from 'moment';
+import configKeysMap from 'travis/utils/keys-map';
+import DurationCalculations from 'travis/mixins/duration-calculations';
 
 export default Model.extend(DurationCalculations, {
   api: service(),

@@ -1,15 +1,10 @@
-import {
-  Promise as EmberPromise,
-} from 'rsvp';
-import { A } from '@ember/array';
-import ExpandableRecordArray from 'travis/utils/expandable-record-array';
-import Model from 'ember-data/model';
-import attr from 'ember-data/attr';
-import { hasMany, belongsTo } from 'ember-data/relationships';
+import Model, { attr, hasMany, belongsTo } from '@ember-data/model';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 import { reads, equal, or } from '@ember/object/computed';
+import { Promise as EmberPromise, } from 'rsvp';
 import { task } from 'ember-concurrency';
+import ExpandableRecordArray from 'travis/utils/expandable-record-array';
 
 export const MIGRATION_STATUS = {
   QUEUED: 'queued',
@@ -26,15 +21,16 @@ export const HISTORY_MIGRATION_STATUS = {
 const Repo = Model.extend({
   api: service(),
   auth: service(),
+
   permissions: attr(),
-  slug: attr(),
-  description: attr(),
+  slug: attr('string'),
+  description: attr('string'),
   'private': attr('boolean'),
   githubId: attr(),
   githubLanguage: attr(),
   active: attr(),
   owner: attr(),
-  name: attr(),
+  name: attr('string'),
   starred: attr('boolean'),
   active_on_org: attr('boolean'),
   emailSubscribed: attr('boolean'),
@@ -106,7 +102,7 @@ const Repo = Model.extend({
   _buildObservableArray(builds) {
     const array = ExpandableRecordArray.create({
       type: 'build',
-      content: A([])
+      content: []
     });
     array.load(builds);
     array.observe(builds);

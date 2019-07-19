@@ -1,9 +1,7 @@
-import Model from 'ember-data/model';
-import attr from 'ember-data/attr';
-import { belongsTo } from 'ember-data/relationships';
+import Model, { attr, belongsTo } from '@ember-data/model';
+import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 import { reads, or, equal, notEmpty } from '@ember/object/computed';
-import { inject as service } from '@ember/service';
 import config from 'travis/config/environment';
 import dynamicQuery from 'travis/utils/dynamic-query';
 

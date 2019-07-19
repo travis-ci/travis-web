@@ -1,24 +1,22 @@
 /* global Travis */
-import Owner from 'travis/models/owner';
-
-import ArrayProxy from '@ember/array/proxy';
-
-import { next, run, later } from '@ember/runloop';
+import { attr } from '@ember-data/model';
 import { observer, computed } from '@ember/object';
-import config from 'travis/config/environment';
-import attr from 'ember-data/attr';
+import { next, run, later } from '@ember/runloop';
 import { inject as service } from '@ember/service';
+import ArrayProxy from '@ember/array/proxy';
+import Owner from 'travis/models/owner';
+import config from 'travis/config/environment';
 
 export default Owner.extend({
   ajax: service(),
   // TODO: this totally not should be needed here
   sessionStorage: service(),
 
-  email: attr(),
+  email: attr('string'),
   emails: attr(), // list of all known user emails
   token: attr(),
   gravatarId: attr(),
-  allowMigration: attr(),
+  allowMigration: attr('boolean'),
 
 
   type: 'user',

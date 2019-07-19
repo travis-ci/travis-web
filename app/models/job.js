@@ -1,20 +1,17 @@
 /* global Travis */
 
+import Model, { attr, belongsTo } from '@ember-data/model';
 import { observer, computed } from '@ember/object';
-import { Promise as EmberPromise } from 'rsvp';
+import { alias, and, equal, not, reads } from '@ember/object/computed';
+import { on } from '@ember/object/evented';
+import { inject as service } from '@ember/service';
 import { isEqual } from '@ember/utils';
 import { getOwner } from '@ember/application';
-
-import Model from 'ember-data/model';
+import { Promise as EmberPromise } from 'rsvp';
 import Log from 'travis/models/log';
 import DurationCalculations from 'travis/mixins/duration-calculations';
 import DurationAttributes from 'travis/mixins/duration-attributes';
-import attr from 'ember-data/attr';
-import { belongsTo } from 'ember-data/relationships';
-import { alias, and, equal, not, reads } from '@ember/object/computed';
-import { inject as service } from '@ember/service';
 import promiseObject from 'travis/utils/promise-object';
-import { on } from '@ember/object/evented';
 
 export default Model.extend(DurationCalculations, DurationAttributes, {
   api: service(),

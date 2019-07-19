@@ -1,11 +1,10 @@
-import Model from 'ember-data/model';
-import attr from 'ember-data/attr';
-import { belongsTo } from 'ember-data/relationships';
+import Model, { attr, belongsTo } from '@ember-data/model';
 
 export default Model.extend({
-  name: attr(),
-  value: attr(),
+  name: attr('string'),
+  value: attr('string'),
   'public': attr('boolean'),
-  repo: belongsTo('repo', { async: true }),
-  branch: attr('string')
+  branch: attr('string'),
+
+  repo: belongsTo('repo', { async: true })
 });

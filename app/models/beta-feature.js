@@ -1,9 +1,8 @@
+import Model, { attr } from '@ember-data/model';
 import { dasherize } from '@ember/string';
-import DS from 'ember-data';
-import attr from 'ember-data/attr';
 import { computed } from '@ember/object';
 
-export default DS.Model.extend({
+export default Model.extend({
   name: attr('string'),
   description: attr('string'),
   enabled: attr('boolean'),
