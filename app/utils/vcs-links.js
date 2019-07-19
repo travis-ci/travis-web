@@ -1,4 +1,4 @@
-import { vcsName } from 'travis/helpers/vcs-name'
+import { vcsName } from 'travis/helpers/vcs-name';
 
 function endpoint(vcsType) {
   switch (vcsName(vcsType).toLowerCase()) {
