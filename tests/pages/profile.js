@@ -315,6 +315,10 @@ export default create({
       completeButton: {
         scope: '[data-test-complete-button]'
       },
+
+      paymentInfo: {
+        scope: '[data-test-payment-info]'
+      }
     },
 
     billingPlanChoices: {
