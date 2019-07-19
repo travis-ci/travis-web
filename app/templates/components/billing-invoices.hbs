@@ -1,17 +1,17 @@
-<section class="invoices">
-  <h2>
-    Invoice History
-  </h2>
-  <p>
-    <SvgImage @name="icon-help" @class="icon-help" />
-    Having trouble with your invoices?
-    <LinkTo @route="help" @query={{hash anchor="form"}}>
-      We’re happy to help
-    </LinkTo>
-  </p>
+<section class='invoices' data-test-invoices>
+  <h2>Invoice History</h2>
+  <div class='flex flex--wrap flex--space-between'>
+    <p class='margin-top-0' data-test-help-text>
+      <SvgImage @name="icon-help" @class="icon-help" />
+      Having trouble with your invoices?
+      <LinkTo @route="help" @query={{hash anchor="form"}}>
+        We’re happy to help
+      </LinkTo>
+    </p>
     {{#travis-form as |form|}}      
       <div class='form-elem select invoice-select-year'>
         {{#form.field
+          data-test-invoice-select-year
           value=year
           class='margin-top-0'
           showRequiredMark=true
@@ -30,35 +30,21 @@
   <div class='invoice-table'>
     <table>
       <thead>
-        <tr>
-          <th>
-            invoice date
-          </th>
-          <th>
-            payment card
-          </th>
-          <th>
-            total
-          </th>
-          <th>
-            download
-          </th>
+        <tr data-test-table-header-row>
+          <th> invoice date </th>
+          <th> payment card </th>
+          <th> total </th>
+          <th> download </th>
         </tr>
       </thead>
       <tbody>
         {{#each (sort-by 'createdAt:desc' selectedInvoices) as |invoice|}}
-          <tr>
+          <tr data-test-invoice>
+            <td> {{moment-format invoice.createdAt 'MMMM DD, YYYY'}} </td>
+            <td> •••• •••• •••• {{subscription.creditCardInfo.lastDigits}} </td>
+            <td> {{format-currency subscription.plan.price }} </td>
             <td>
-              {{svg-jar 'icon-invoice' class='icon'}}{{moment-format invoice.createdAt 'MMMM DD, YYYY'}}
-            </td>
-            <td>
-              •••• •••• •••• {{subscription.creditCardInfo.lastDigits}}
-            </td>
-            <td>
-              {{format-currency subscription.plan.price }}
-            </td>
-            <td>
-              <a data-test-invoice href={{invoice.url}}>
+              <a data-test-invoice-url href={{invoice.url}}>
                 {{svg-jar 'icon-invoice' class='icon'}}
               </a>
             </td>
