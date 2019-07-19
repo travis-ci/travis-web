@@ -8,6 +8,4 @@ export function vcsName(vcsType) {
   }
 }
 
-export default helper(function ([vcsType]) {
-  return vcsName(vcsType);
-});
+export default helper(([vcsType]) => vcsName(vcsType));
