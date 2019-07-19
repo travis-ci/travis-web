@@ -1,7 +1,8 @@
+import { vcsName } from 'travis/helpers/vcs-name'
+
 function endpoint(vcsType) {
-  switch (vcsType) {
-    case 'GithubRepository':
-    case 'GithubUser':
+  switch (vcsName(vcsType).toLowerCase()) {
+    case 'github':
     default:
       return 'https://github.com';
   }

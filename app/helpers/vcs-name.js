@@ -1,11 +1,13 @@
 import { helper } from '@ember/component/helper';
 
-export function vcsName([vcsType]) {
-  switch (vcsType) {
-    case 'GithubRepository':
-    default:
-      return 'GitHub';
+export function vcsName(vcsType) {
+  const vcsTypeLower = (vcsType || '').toLowerCase();
+
+  if (vcsTypeLower == '' || vcsTypeLower.startsWith('github')) {
+    return 'GitHub';
   }
 }
 
-export default helper(vcsName);
+export default helper(function ([vcsType]) {
+  return vcsName(vcsType);
+});
