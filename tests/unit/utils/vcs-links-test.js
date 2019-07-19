@@ -1,10 +1,21 @@
 import { module, test } from 'qunit';
-import vcsLinks, { endpoint as vcsEndpoint } from 'travis/utils/vcs-links';
+import vcsLinks, { endpoints, vcsUrl } from 'travis/utils/vcs-links';
 
 module('Unit | Utility | vcs-links', function () {
-  test('endpoint', function (assert) {
-    assert.equal(vcsEndpoint(), 'https://github.com');
-    assert.equal(vcsEndpoint('GithubRepository'), 'https://github.com');
+  test('endpoints', function (assert) {
+    assert.equal(endpoints.github, 'https://github.com');
+  });
+
+  test('vcsUrl', function (assert) {
+    const paths = {
+      github: '/somepath',
+    };
+
+    assert.throws(vcsUrl, 'Throws if cannot find vcs');
+    assert.throws(() => vcsUrl('Github'), 'Throws if cannot find path');
+
+    assert.equal(vcsUrl(null, paths), 'https://github.com/somepath', 'Defaults to Github');
+    assert.equal(vcsUrl('GithubRepository', paths), 'https://github.com/somepath');
   });
 
   test('repoUrl', function (assert) {
