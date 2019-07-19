@@ -5,20 +5,14 @@ import eventually from 'travis/utils/eventually';
 import Visibility from 'visibilityjs';
 
 export default Service.extend({
-  records: [],
   allowFinishedBuilds: false,
 
   init() {
-    let visibilityId = Visibility.every(
-      config.intervals.updateTimes,
-      bind(this, 'updateTimes')
-    );
-    this.set('visibilityId', visibilityId);
-    let intervalId = setInterval(
-      this.resetAllowFinishedBuilds.bind(this),
-      60000
-    );
-    this.set('intervalId', intervalId);
+    const visibilityId = Visibility.every(config.intervals.updateTimes, bind(this, 'updateTimes'));
+    const intervalId = setInterval(this.resetAllowFinishedBuilds.bind(this), 60000);
+    const records = [];
+
+    this.setProperties({ visibilityId, intervalId, records });
 
     return this._super(...arguments);
   },

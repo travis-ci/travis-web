@@ -8,8 +8,6 @@ import config from 'travis/config/environment';
 export default Component.extend({
   tagName: 'div',
   panelIsOpen: false,
-  requests: [],
-
   config,
 
   init() {
@@ -23,6 +21,7 @@ export default Component.extend({
       this.requests.pushObject(req);
       this.ensurePanelScrolledToBottom();
     };
+    this.requests = [];
   },
 
   actions: {
