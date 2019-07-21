@@ -15,6 +15,8 @@ module('Integration | Component | builds item', function (hooks) {
       message: void 0,
       pullRequest: false,
       eventType: 'push',
+      duration: 500,
+      elapsedTime: 100,
       commit: {
         sha: 'a5e8093098f9c0fb46856b753fb8943c7fbf26f3',
         branch: 'foobarbranch',
@@ -33,6 +35,7 @@ module('Integration | Component | builds item', function (hooks) {
     assert.dom('.row-branch a').hasText('foobarbranch', 'component renders branch if event is push');
     assert.dom('.row-branch a').hasAttribute('title', 'foobarbranch');
     assert.dom('.row-commit a').hasAttribute('href', 'a-url', 'component uses commit github url');
+    assert.dom('.row-duration time').hasText('1 min 40 sec');
     assert.dom('.row-message').hasText('Generic test author commit message');
   });
 
