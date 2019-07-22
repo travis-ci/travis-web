@@ -5,6 +5,7 @@ node_js: 10
 env:
   global:
     - PERCY_ENABLE=0
+    - GLOBAL_JOB=true
 
 stages:
   - test
@@ -23,6 +24,8 @@ jobs:
 #       env: TRY_CONFIG=ember-data-beta
     - name: "Test"
       node_js: 10
+  exclude:
+    - env: GLOBAL_JOB=true
 #   allow_failures:
 #     - env: TRY_CONFIG=ember-beta
 #     - env: TRY_CONFIG=ember-data-beta
