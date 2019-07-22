@@ -14,13 +14,14 @@ stages:
 jobs:
   include:
     - name: lint
+      node_js: 10
       if: (NOT branch = master) AND (NOT type = cron)
       script: npm run lint:js
 #     - if: type = cron
 #       env: TRY_CONFIG=ember-beta
 #     - if: type = cron
 #       env: TRY_CONFIG=ember-data-beta
-    - node_js: 10
+    # - node_js: 10
 #   allow_failures:
 #     - env: TRY_CONFIG=ember-beta
 #     - env: TRY_CONFIG=ember-data-beta
