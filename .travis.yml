@@ -19,10 +19,11 @@ matrix:
     - env: TRY_CONFIG=ember-beta
     - env: TRY_CONFIG=ember-data-beta
 
-dist: trusty
+dist: xenial
 
 addons:
-  chrome: stable
+  apt:
+    packages: google-chrome
 
 cache:
   npm: true
