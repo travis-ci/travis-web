@@ -2,6 +2,7 @@ import { module, test } from 'qunit';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import profilePage from 'travis/tests/pages/profile';
 import signInUser from 'travis/tests/helpers/sign-in-user';
+import { selectChoose } from 'ember-power-select/test-support';
 import Service from '@ember/service';
 import { percySnapshot } from 'ember-percy';
 import { stubService } from 'travis/tests/helpers/stub-service';
