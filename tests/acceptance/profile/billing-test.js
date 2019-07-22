@@ -86,9 +86,7 @@ module('Acceptance | profile/billing', function (hooks) {
     const createMockCard = () => {
       return {
         createToken: function (data) {
-          return new Promise(resolve => {
-            resolve({ id: 'stripeToken' });
-          });
+          return Promise.resolve({ id: 'stripeToken' });
         }
       };
     };
@@ -666,6 +664,7 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.billing.visit();
 
     percySnapshot(assert);
+
     assert.equal(profilePage.billing.trial.name, "You're trialing Travis CI via your Github Marketplace subscription.");
     assert.equal(profilePage.billing.manageButton.text, 'Edit subscription');
     assert.ok(profilePage.billing.address.isHidden);
@@ -712,6 +711,7 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.billing.visit();
 
     percySnapshot(assert);
+
     assert.equal(profilePage.billing.education.name, 'This is an educational account and includes a single build plan. Need help? Check our getting started guide');
     assert.equal(profilePage.billing.manageButton.text, 'New subscription');
   });
@@ -785,5 +785,117 @@ module('Acceptance | profile/billing', function (hooks) {
 
     assert.dom('[data-test-pending-message]')
       .containsText('This subscription is pending verification from Stripe, and should be approved in a few minutes.');
+  });
+
+  test('view billing shows error when card is invalid', async function (assert) {
+    const createMockCard = () => {
+      return {
+        createToken: function () {
+          return Promise.reject({ error: { type: 'card_error' } });
+        }
+      };
+    };
+
+    let mockStripe = Service.extend({
+      load() { },
+      card: createMockCard(),
+    });
+
+    stubService('stripe', mockStripe);
+
+    this.subscription.destroy();
+
+    await profilePage.visit();
+    await profilePage.billing.visit();
+
+    const { billingForm, subscribeButton, billingPaymentForm } = profilePage.billing;
+
+    percySnapshot(assert);
+
+    await selectChoose(billingForm.billingSelectCountry.scope, 'Germany');
+
+    await billingForm
+      .fillIn('firstname', 'John')
+      .fillIn('lastname', 'Doe')
+      .fillIn('companyName', 'Travis')
+      .fillIn('email', 'john@doe.com')
+      .fillIn('address', '15 Olalubi street')
+      .fillIn('suite', '23 Grace')
+      .fillIn('city', 'Berlin')
+      .fillIn('zip', '353564')
+      .fillIn('vat', '356463');
+
+    await subscribeButton.click();
+
+    let year = new Date().getFullYear() + 3;
+    await selectChoose('.billing-card-year', `${year}`);
+    await selectChoose('.billing-card-month', '09');
+
+    await billingPaymentForm
+      .fillIn('cardNumber', '4141414141414141')
+      .fillIn('cardName', 'John Doe')
+      .fillIn('cardCvc', '897')
+      .fillIn('discountCode', '0000');
+
+    await billingPaymentForm.completeButton.click();
+
+    assert.dom(billingPaymentForm.flashErrorMessage.scope)
+      .containsText('Invalid card details. Please enter valid card details and try again.');
+  });
+
+  test('view billing shows error when creating token from stripe', async function (assert) {
+    const createMockCard = () => {
+      return {
+        createToken: function () {
+          return Promise.reject({ error: '' });
+        }
+      };
+    };
+
+    let mockStripe = Service.extend({
+      load() { },
+      card: createMockCard(),
+    });
+
+    stubService('stripe', mockStripe);
+
+    this.subscription.destroy();
+
+    await profilePage.visit();
+    await profilePage.billing.visit();
+
+    const { billingForm, subscribeButton, billingPaymentForm } = profilePage.billing;
+
+    percySnapshot(assert);
+
+    await selectChoose(billingForm.billingSelectCountry.scope, 'Germany');
+
+    await billingForm
+      .fillIn('firstname', 'John')
+      .fillIn('lastname', 'Doe')
+      .fillIn('companyName', 'Travis')
+      .fillIn('email', 'john@doe.com')
+      .fillIn('address', '15 Olalubi street')
+      .fillIn('suite', '23 Grace')
+      .fillIn('city', 'Berlin')
+      .fillIn('zip', '353564')
+      .fillIn('vat', '356463');
+
+    await subscribeButton.click();
+
+    let year = new Date().getFullYear() + 3;
+    await selectChoose('.billing-card-year', `${year}`);
+    await selectChoose('.billing-card-month', '09');
+
+    await billingPaymentForm
+      .fillIn('cardNumber', '4141414141414141')
+      .fillIn('cardName', 'John Doe')
+      .fillIn('cardCvc', '897')
+      .fillIn('discountCode', '0000');
+
+    await billingPaymentForm.completeButton.click();
+
+    assert.dom(billingPaymentForm.flashErrorMessage.scope)
+      .containsText('There was an error connecting to stripe. Please confirm your card details and try again.');
   });
 });

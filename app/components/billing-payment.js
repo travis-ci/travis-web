@@ -28,7 +28,7 @@ export default Component.extend({
   }).drop(),
 
   displayError(error) {
-    let message = 'There was an error connecting to stripe. Please confirm your details and try again.';
+    let message = 'There was an error connecting to stripe. Please confirm your card details and try again.';
     const stripeError = error && error.error;
     if (stripeError && stripeError.type === 'card_error') {
       message = 'Invalid card details. Please enter valid card details and try again.';

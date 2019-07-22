@@ -318,6 +318,10 @@ export default create({
 
       paymentInfo: {
         scope: '[data-test-payment-info]'
+      },
+
+      flashErrorMessage: {
+        scope: '.flash-message .message'
       }
     },
 
