@@ -16,6 +16,7 @@ jobs:
     - stage: build
       script: "ember build"
       node_js: 10
+    - stage: test
     - name: "Lint"
       if: (NOT branch = master) AND (NOT type = cron)
       node_js: 10
