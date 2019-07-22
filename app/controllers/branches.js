@@ -8,7 +8,7 @@ export default Controller.extend({
   tab: alias('repoController.tab'),
 
   defaultBranch: computed('model', function () {
-    let model = this.get('model');
+    let model = this.model;
     return model.filterBy('default_branch')[0];
   }),
 
@@ -16,13 +16,13 @@ export default Controller.extend({
   nonDefaultBranches: filter('model', (branch) => !branch.default_branch),
 
   activeBranches: computed('nonDefaultBranches', function () {
-    let nonDefaultBranches = this.get('nonDefaultBranches');
+    let nonDefaultBranches = this.nonDefaultBranches;
     const activeBranches = nonDefaultBranches.filterBy('exists_on_github');
     return this._sortBranchesByFinished(activeBranches);
   }),
 
   inactiveBranches: computed('nonDefaultBranches', function () {
-    let nonDefaultBranches = this.get('nonDefaultBranches');
+    let nonDefaultBranches = this.nonDefaultBranches;
     const inactiveBranches = nonDefaultBranches.filterBy('exists_on_github', false);
     return this._sortBranchesByFinished(inactiveBranches);
   }),

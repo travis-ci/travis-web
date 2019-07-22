@@ -6,6 +6,11 @@ import hbs from 'htmlbars-inline-precompile';
 module('Integration | Component | pagination navigation', function (hooks) {
   setupRenderingTest(hooks);
 
+  hooks.beforeEach(function () {
+    this.owner.lookup('router:main').startRouting(true);
+    this.route = 'dashboard';
+  });
+
   test('it renders list of pages', async function (assert) {
     let pageData = {
       pagination: {
@@ -25,7 +30,7 @@ module('Integration | Component | pagination navigation', function (hooks) {
     };
 
     this.set('pagination', pageData);
-    await render(hbs`{{pagination-navigation collection=pagination route="someroute"}}`);
+    await render(hbs`{{pagination-navigation collection=pagination route=route}}`);
 
     assert.dom('a.pagination-button').exists('on the first page should have one navigation button');
     assert.dom('a.pagination-button').hasText('next', 'should have a next button on the first page');
@@ -54,7 +59,7 @@ module('Integration | Component | pagination navigation', function (hooks) {
     };
 
     this.set('pagination', pageData);
-    await render(hbs`{{pagination-navigation collection=pagination inner=6 outer=2 route="someroute"}}`);
+    await render(hbs`{{pagination-navigation collection=pagination inner=6 outer=2 route=route}}`);
     assert.dom('.pagination-link').exists({ count: 7 }, 'should calculate with pages to display');
   });
 
@@ -78,7 +83,7 @@ module('Integration | Component | pagination navigation', function (hooks) {
     };
 
     this.set('pagination', pageData);
-    await render(hbs`{{pagination-navigation collection=pagination inner=6 outer=2 route="someroute"}}`);
+    await render(hbs`{{pagination-navigation collection=pagination inner=6 outer=2 route=route}}`);
     assert.dom('.pagination-navigation li:nth-of-type(4) a').hasText('3', 'should display page number 3');
   });
 });

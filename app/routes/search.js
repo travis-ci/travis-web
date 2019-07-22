@@ -13,7 +13,7 @@ export default Route.extend({
   },
 
   activate() {
-    this.get('tabStates').set('sidebarTab', 'search');
+    this.tabStates.set('sidebarTab', 'search');
     this._super(...arguments);
   },
 

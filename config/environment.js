@@ -13,7 +13,7 @@ module.exports = function (environment) {
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
-        // e.g. 'with-controller': true
+        // e.g. EMBER_NATIVE_DECORATOR_SUPPORT: true
       },
       EXTEND_PROTOTYPES: {
         // Prevent Ember Data from overriding Date.parse.
@@ -223,7 +223,6 @@ module.exports = function (environment) {
     ENV.intervals.branchCreatedSyncDelay = 0;
     ENV.intervals.triggerBuildRequestDelay = 0;
     ENV.intervals.fetchRecordsForPusherUpdatesThrottle = 0;
-    ENV.intervals.syncingPolling = 10;
     ENV.intervals.githubAppsInstallationPolling = 10;
     ENV.timing.syncingPageRedirectionTime = 30;
 

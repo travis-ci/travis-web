@@ -11,14 +11,14 @@ export default Component.extend({
 
   actions: {
     tokenVisibility() {
-      if (this.get('showCopySuccess')) {
+      if (this.showCopySuccess) {
         this.toggleProperty('showCopySuccess');
       }
       this.toggleProperty('tokenIsVisible');
     },
 
     copyTokenSuccessful() {
-      if (!this.get('showCopySuccess')) {
+      if (!this.showCopySuccess) {
         this.toggleProperty('showCopySuccess');
       }
     },

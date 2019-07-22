@@ -1,5 +1,5 @@
 import Mixin from '@ember/object/mixin';
-import attr from 'ember-data/attr';
+import { attr } from '@ember-data/model';
 import { computed } from '@ember/object';
 
 export default Mixin.create({
@@ -7,16 +7,16 @@ export default Mixin.create({
   _finishedAt: attr(),
 
   startedAt: computed('_startedAt', 'notStarted', function () {
-    let startedAt = this.get('_startedAt');
-    let notStarted = this.get('notStarted');
+    let startedAt = this._startedAt;
+    let notStarted = this.notStarted;
     if (!notStarted) {
       return startedAt;
     }
   }),
 
   finishedAt: computed('_finishedAt', 'notStarted', function () {
-    let finishedAt = this.get('_finishedAt');
-    let notStarted = this.get('notStarted');
+    let finishedAt = this._finishedAt;
+    let notStarted = this.notStarted;
     if (!notStarted) {
       return finishedAt;
     }

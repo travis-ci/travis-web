@@ -1,9 +1,8 @@
-import Model from 'ember-data/model';
-import attr from 'ember-data/attr';
+import Model, { attr } from '@ember-data/model';
 import { computed } from '@ember/object';
 
 export default Model.extend({
-  name: attr(),
+  name: attr('string'),
   builds: attr(),
   price: attr(),
   annual: attr('boolean'),

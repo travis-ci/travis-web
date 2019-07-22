@@ -8,7 +8,7 @@ export default Service.extend({
 
   receive(event, data) {
     let build, commit, job;
-    let store = this.get('store');
+    let store = this.store;
     let [name, type] = event.split(':');
 
     if (name === 'repository' && type === 'migration') {
@@ -59,7 +59,7 @@ export default Service.extend({
     }
 
     if (event === 'job:log') {
-      data = data.job;
+      data = data.job ? data.job : data;
       job = store.recordForId('job', data.id);
       return job.appendLog({
         number: parseInt(data.number),
@@ -75,7 +75,7 @@ export default Service.extend({
         if (name === 'job') {
           payload['build_id'] = data.job.build_id;
         }
-        this.get('liveUpdatesRecordFetcher').fetch(name, data[name].id, payload);
+        this.liveUpdatesRecordFetcher.fetch(name, data[name].id, payload);
       } else {
         return this.loadOne(name, data);
       }
@@ -88,7 +88,7 @@ export default Service.extend({
 
   loadOne(type, json) {
     let data, defaultBranch, lastBuildId;
-    let store = this.get('store');
+    let store = this.store;
 
     store.push(store.normalize(type, json));
 

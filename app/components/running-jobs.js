@@ -10,7 +10,7 @@ export default Component.extend(Polling, {
   updateTimesService: service('updateTimes'),
 
   pollHook() {
-    return this.get('store').find('job', {});
+    return this.store.find('job', {});
   },
 
   init() {
@@ -21,6 +21,6 @@ export default Component.extend(Polling, {
   },
 
   updateTimes() {
-    this.get('updateTimesService').push(this.get('jobs'));
+    this.updateTimesService.push(this.jobs);
   }
 });

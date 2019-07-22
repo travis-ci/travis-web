@@ -9,6 +9,6 @@ module('Integration | Component | top-forum-post-list', function (hooks) {
   test('it renders', async function (assert) {
     await render(hbs`{{top-forum-post-list}}`);
 
-    assert.equal(this.element.textContent.trim(), '');
+    assert.dom(this.element).hasText('');
   });
 });

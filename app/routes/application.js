@@ -1,14 +1,15 @@
 /* global Travis, _gaq */
 import $ from 'jquery';
-
 import TravisRoute from 'travis/routes/basic';
 import config from 'travis/config/environment';
 import BuildFaviconMixin from 'travis/mixins/build-favicon';
 import { inject as service } from '@ember/service';
+import {
+  bindKeyboardShortcuts,
+  unbindKeyboardShortcuts
+} from 'ember-keyboard-shortcuts';
 
-import KeyboardShortcuts from 'ember-keyboard-shortcuts/mixins/route';
-
-export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
+export default TravisRoute.extend(BuildFaviconMixin, {
   auth: service(),
   features: service(),
   featureFlags: service(),
@@ -19,7 +20,7 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
   needsAuth: false,
 
   init() {
-    this.get('auth').afterSignOut(() => {
+    this.auth.afterSignOut(() => {
       this.afterSignOut();
     });
 
@@ -47,6 +48,11 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
 
   activate() {
     this.setupRepoSubscriptions();
+    bindKeyboardShortcuts(this);
+  },
+
+  deactivate() {
+    unbindKeyboardShortcuts(this);
   },
 
   // We send pusher updates through user channels now and this means that if a
@@ -56,7 +62,7 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
   // they're not a collaborator. It also sets up an observer to subscribe to any
   // new repo that enters the store.
   setupRepoSubscriptions() {
-    this.get('store').filter('repo', null,
+    this.store.filter('repo', null,
       (repo) => !repo.get('private') && !repo.get('isCurrentUserACollaborator'),
       ['private', 'isCurrentUserACollaborator']
     ).then((repos) => {
@@ -114,14 +120,14 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
   actions: {
     signIn(runAfterSignIn = true) {
       let authParams = this.modelFor('auth');
-      this.get('auth').signIn(null, authParams);
+      this.auth.signIn(null, authParams);
       if (runAfterSignIn) {
         this.afterSignIn();
       }
     },
 
     signOut() {
-      this.get('auth').signOut();
+      this.auth.signOut();
     },
 
     disableTailing() {
@@ -145,7 +151,7 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
   },
 
   afterSignIn() {
-    this.get('flashes').clear();
+    this.flashes.clear();
     let transition = this.get('auth.afterSignInTransition');
     if (transition) {
       this.set('auth.afterSignInTransition', null);
@@ -156,7 +162,7 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
   },
 
   afterSignOut() {
-    this.get('featureFlags').reset();
+    this.featureFlags.reset();
     this.set('repositories.accessible', []);
     this.setDefault();
     if (this.get('features.enterpriseVersion')) {

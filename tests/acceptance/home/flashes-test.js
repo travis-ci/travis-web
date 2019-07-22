@@ -1,6 +1,6 @@
 import { visit, click } from '@ember/test-helpers';
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'ember-qunit';
+import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 
 module('Acceptance | home/flashes', function (hooks) {
   setupApplicationTest(hooks);

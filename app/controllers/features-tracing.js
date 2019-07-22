@@ -1,4 +1,4 @@
-/* global TravisTracer, window */
+/* global TravisTracer */
 
 import Controller from '@ember/controller';
 
@@ -12,7 +12,6 @@ export default Controller.extend({
       } else {
         TravisTracer.enable();
       }
-      window.location = window.location;
     }
   }
 });

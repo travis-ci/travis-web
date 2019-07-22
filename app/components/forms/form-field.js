@@ -37,6 +37,7 @@ export default Component.extend({
   multiple: false,
   enableValidationStatusIcons: true,
   enableValidationStatusMessage: true,
+  validateOnField: true,
 
   validator: null,
   required: equal('validator.kind', presense),
@@ -62,7 +63,8 @@ export default Component.extend({
     return this.multiple ? 'forms/form-select-multiple' : 'forms/form-select';
   }),
 
-  validate(value) {
+  validate(value, isFormValidation = false) {
+    if (!this.validateOnField && !isFormValidation) return true;
     let validator = this.validator;
 
     if (!validator) {

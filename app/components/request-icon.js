@@ -23,13 +23,13 @@ export default Component.extend({
   attributeBindings: ['title'],
 
   icon: computed('event', function () {
-    let event = this.get('event');
+    let event = this.event;
     const iconName = eventToIcon[event] || eventToIcon.default;
     return `icon-${iconName}`;
   }),
 
   title: computed('event', function () {
-    let event = this.get('event');
+    let event = this.event;
     return eventToTitle[event] || eventToTitle.default;
   })
 });

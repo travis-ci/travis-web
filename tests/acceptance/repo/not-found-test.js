@@ -1,48 +1,48 @@
+import { currentURL } from '@ember/test-helpers';
 import Ember from 'ember';
-import { test } from 'qunit';
-import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
+import { module, test } from 'qunit';
+import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import nonExistentRepoPage from 'travis/tests/pages/repo/non-existent';
 import { percySnapshot } from 'ember-percy';
+import { enableFeature } from 'ember-feature-flags/test-support';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 
 let adapterException;
 let loggerError;
 
-moduleForAcceptance('Acceptance | repo/not found', {
-  beforeEach() {
+module('Acceptance | repo/not found', function (hooks) {
+  setupApplicationTest(hooks);
+
+  hooks.beforeEach(function () {
     // Ignore promise rejection.
     // Original exception will fail test on promise rejection.
     adapterException = Ember.Test.adapter.exception;
     loggerError = Ember.Logger.error;
     Ember.Test.adapter.exception = () => null;
     Ember.Logger.error = () => null;
-  },
+  });
 
-  afterEach() {
+  hooks.afterEach(function () {
     Ember.Test.adapter.exception = adapterException;
     Ember.Logger.error = loggerError;
-  }
-});
+  });
 
-test('visiting /non-existent/repository shows error message when authenticated', function (assert) {
-  const user = server.create('user');
-  signInUser(user);
+  test('visiting /non-existent/repository shows error message when authenticated', async function (assert) {
+    const user = server.create('user');
+    signInUser(user);
 
-  nonExistentRepoPage.visit();
+    await nonExistentRepoPage.visit();
 
-  andThen(function () {
     assert.equal(currentURL(), '/non-existent/repository');
     assert.ok(nonExistentRepoPage.showsBarricadeIllustration, 'Shows image for aesthetics');
     assert.equal(nonExistentRepoPage.errorMessage, 'We couldn\'t find the repository non-existent/repository', 'Shows message that repository was not found');
     assert.ok(nonExistentRepoPage.errorMessageProisHidden, 'does not show .com authenticated message');
   });
-});
 
-test('visiting /non-existent/repository shows error message when unauthenticated', function (assert) {
-  withFeature('proVersion');
-  nonExistentRepoPage.visit();
+  test('visiting /non-existent/repository shows error message when unauthenticated', async function (assert) {
+    enableFeature('proVersion');
+    await nonExistentRepoPage.visit();
 
-  andThen(function () {
     percySnapshot(assert);
     assert.equal(currentURL(), '/non-existent/repository');
     assert.ok(nonExistentRepoPage.showsBarricadeIllustration, 'Shows image for aesthetics');

@@ -27,14 +27,14 @@ export default Mixin.create({
 
   pollModel(property) {
     let model = this.get(property),
-      currentPollModels = this.get('currentPollModels');
+      currentPollModels = this.currentPollModels;
 
     if (currentPollModels[property]) {
-      this.get('polling').stopPolling(currentPollModels[property]);
+      this.polling.stopPolling(currentPollModels[property]);
     }
     currentPollModels[property] = model;
 
-    const addToPolling = () => this.get('polling').startPolling(model);
+    const addToPolling = () => this.polling.startPolling(model);
 
     if (model) {
       if (model.then) {
@@ -48,13 +48,13 @@ export default Mixin.create({
   stopPollingModel(property) {
     const model = this.get(property);
     if (model) {
-      return this.get('polling').stopPolling(model);
+      return this.polling.stopPolling(model);
     }
   },
 
   startPolling() {
     let pollModels;
-    pollModels = this.get('pollModels');
+    pollModels = this.pollModels;
     if (pollModels) {
       if (!isArray(pollModels)) {
         pollModels = [pollModels];
@@ -65,12 +65,12 @@ export default Mixin.create({
       });
     }
     if (this.pollHook) {
-      return this.get('polling').startPollingHook(this);
+      return this.polling.startPollingHook(this);
     }
   },
 
   stopPolling() {
-    let pollModels = this.get('pollModels');
+    let pollModels = this.pollModels;
 
     if (pollModels) {
       if (!isArray(pollModels)) {
@@ -81,6 +81,6 @@ export default Mixin.create({
         this.removeObserver(property, this, 'pollModelDidChange');
       });
     }
-    return this.get('polling').stopPollingHook(this);
+    return this.polling.stopPollingHook(this);
   }
 });

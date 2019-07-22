@@ -1,32 +1,30 @@
-import { test } from 'qunit';
-import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
+import { settled, currentURL, visit } from '@ember/test-helpers';
+import { module, test } from 'qunit';
+import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import sidebarPage from 'travis/tests/pages/sidebar';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 
-moduleForAcceptance('Acceptance | search/flow');
+module('Acceptance | search/flow', function (hooks) {
+  setupApplicationTest(hooks);
 
-test('searching from index page transitions to search page', function (assert) {
-  const currentUser = server.create('user');
-  signInUser(currentUser);
+  test('searching from index page transitions to search page', async function (assert) {
+    const currentUser = server.create('user');
+    signInUser(currentUser);
 
-  server.create('repository');
+    server.create('repository');
 
-  sidebarPage
-    .visit()
-    .enterSearchQuery('foo')
-    .pressEnter();
+    await sidebarPage
+      .visit()
+      .enterSearchQuery('foo')
+      .pressEnter();
 
-  andThen(() => {});
-
-  andThen(function () {
+    await settled();
     assert.equal(currentURL(), '/search/foo');
   });
-});
 
-test('searching while unauthenticated redirects to landing page', function (assert) {
-  visit('/search/foo');
+  test('searching while unauthenticated redirects to landing page', async function (assert) {
+    await visit('/search/foo');
 
-  andThen(() => {
     assert.equal(currentURL(), '/');
   });
 });

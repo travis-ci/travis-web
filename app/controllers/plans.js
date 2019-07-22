@@ -66,7 +66,7 @@ export default Controller.extend({
         const page = `/virtual/signup?${location}`;
         _gaq.push(['_trackPageview', page]);
       }
-      this.get('auth').signIn();
+      this.auth.signIn();
     }
   }
 });
