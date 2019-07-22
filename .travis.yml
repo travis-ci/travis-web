@@ -8,13 +8,13 @@ env:
 
 stages:
   - lint
-  - test
-  - deploy
+  # - test
+  # - deploy
 
 jobs:
   include:
     - name: lint
-      if: (NOT branch = master) AND (type = cron)
+      if: (NOT branch = master) AND (NOT type = cron)
       script: npm run lint:js
 #     - if: type = cron
 #       env: TRY_CONFIG=ember-beta
