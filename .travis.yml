@@ -20,9 +20,15 @@ jobs:
 #       env: TRY_CONFIG=ember-beta
 #     - if: type = cron
 #       env: TRY_CONFIG=ember-data-beta
-    - name: "Test"
+    - name: "Test Group 1"
       node_js: 10
-      script: ember exam --parallel=3 --load-balance
+      script: ember exam split=3 partition=1
+    - name: "Test Group 2"
+      node_js: 10
+      script: ember exam split=3 partition=2
+    - name: "Test Group 3"
+      node_js: 10
+      script: ember exam split=3 partition=3
 #   allow_failures:
 #     - env: TRY_CONFIG=ember-beta
 #     - env: TRY_CONFIG=ember-data-beta
