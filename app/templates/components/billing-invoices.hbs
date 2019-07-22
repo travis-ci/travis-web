@@ -42,7 +42,7 @@
           <tr data-test-invoice>
             <td> {{moment-format invoice.createdAt 'MMMM DD, YYYY'}} </td>
             <td> •••• •••• •••• {{subscription.creditCardInfo.lastDigits}} </td>
-            <td> {{format-currency subscription.plan.price }} </td>
+            <td> {{ price }} </td>
             <td>
               <a data-test-invoice-url href={{invoice.url}}>
                 {{svg-jar 'icon-invoice' class='icon'}}

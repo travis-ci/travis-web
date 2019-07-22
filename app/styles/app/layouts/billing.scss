@@ -1,0 +1,240 @@
+.billing-form {
+
+  margin-top: 2.7em;
+
+  h3 {
+    color: $oxide-blue;
+    font-weight: 300;
+    font-size: 18px;
+  }
+
+  .switch-inner {
+    width: 138px;
+    height: 28px;
+    margin-left: -5px;
+
+    span {
+      width: 65px;
+      height: 25px;
+      line-height: 1.7;
+
+      span {
+        font-weight: 700;
+      }
+    }
+  }
+}
+
+.billing-plans {
+  background-color: #fff;
+
+  &__box {
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 3px 13px;
+    border: 1px solid $pebble-grey;
+    margin-bottom: 10px;
+    flex-basis: 100%;
+
+    &--jobs {
+      color: $cement-grey;
+      text-transform: uppercase;
+      font-weight: 600;
+      font-size: 0.8em;
+      margin: 5px 0 5px 0;
+    }
+
+    &--price {
+      margin: 0;
+      font-weight: 500;
+      font-size: 1.7em;
+      color: $oxide-blue;
+
+      span {
+        font-size: .4em;
+        font-style: italic;
+      }
+    }
+
+    &--name {
+      margin: 8px 0 0 0;
+      font-size: 1.2em;
+    }
+
+    &:hover {
+      background: rgba(181, 214, 217, 1);
+      cursor: pointer;
+    }
+  }
+}
+
+.selected-plan {
+  border-radius: 5px;
+  margin: 20px 0 40px 0;
+  background: #f1f1f1;
+  padding: 1em;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-end;
+
+  &__details {
+
+    &--plan {
+      text-transform: uppercase;
+      color: $ansi-black;
+      font-weight: 700;
+      font-size: .8em;
+      margin: 0;
+    }
+
+    &--name {
+      margin: 0;
+      font-weight: 300;
+      font-size: 1.8em;
+    }
+
+    &--jobs {
+      margin: 0;
+    }
+
+    &--free-jobs {
+      margin: 0;
+    }
+  }
+
+  &__price {
+    display: flex;
+    align-items: flex-end;
+
+    &--total {
+      margin: 0;
+      margin-right: 15px;
+      text-transform: uppercase;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    &--large {
+      font-size: 2.8em;
+      margin: 0;
+      color: $oxide-blue;
+      margin-bottom: -13px;
+      display: flex;
+      align-items: flex-end;
+
+      span {
+        font-size: .3em;
+        color: $asphalt-grey;
+        font-style: italic;
+        font-weight: 300;
+        margin-bottom: 14px;
+      }
+    }
+  }
+}
+
+.billing-form-message {
+  margin: 0 0 30px 0;
+  font-weight: 700;
+}
+
+.billing-optional-field {
+  margin-bottom: 45px;
+}
+
+.billing-italize {
+  font-style: italic;
+}
+
+.billing-plan-switch {
+  h5 {
+    margin: 0;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: $cement-grey;
+  }
+
+  p {
+    margin: 0;
+  }
+}
+
+.discount-code-header{
+  margin-top: -5px;
+}
+
+.highlight-plan {
+  color: $oxide-blue;
+  background: rgba(181, 214, 217, 1);
+}
+
+.billing-process-cancel{
+  margin-left: 10px;
+}
+
+@media #{$large-up} {
+  .billing-select-year {
+    width: 46%;
+    margin-top: 24.8px;
+  }
+
+  .billing-cvc {
+    margin-left: 20px;
+  }
+
+  .billing-expiry-month {
+    margin-right: 20px;
+  }
+}
+
+@media #{$medium-up} {
+  .billing-plans {
+    &__box {
+      flex-basis: 48%;
+    }
+  }
+}
+
+@media #{$large-up} {
+  .billing-plans {
+    &__box {
+      flex-basis: 32%;
+    }
+  }
+}
+
+@media #{$xlarge-up} {
+  .billing-plans {
+    &__box {
+      flex-basis: 24%;
+    }
+  }
+}
+
+.billing-trial-info-box {
+  border: 1px solid $pebble-grey;
+  padding: 10px;
+  border-radius: 7px;
+}
+
+.billing-trial-table {
+  overflow-x: auto;
+
+  table {
+    width: 100%;
+  }
+
+  th {
+    text-transform: uppercase;
+    color: $cement-grey;
+    font-size: $font-size-sm;
+  }
+
+  td,
+  th {
+    text-align: left;
+    white-space: nowrap;
+    padding: .5em .8em .5em 0;
+  }
+}
