@@ -1,31 +1,39 @@
-{{#styleguides/grid-container
-  base=2
-  md=4
-  as |grid|
-}}
+<Styleguides::GridContainer @base={{2}} @md={{4}} as |Grid|>
   {{#each products as |product|}}
-    {{#grid.item class="p-4 border-grey-150 border"}}
-      <h3>{{product.name}}</h3>
-      <h4>{{product.description}}</h4>
-
+    <Grid.item class="p-4 border-grey-150 border">
+      <h3>
+        {{product.name}}
+      </h3>
+      <h4>
+        {{product.description}}
+      </h4>
       <div>
         {{product.builds}}
-        {{pluralize product.builds 'Concurrent job' without-count=true}}
+        {{pluralize product.builds "Concurrent job" without-count=true}}
       </div>
-      <div>{{svg-jar 'features-check' class="w-4 inline-block"}} Unlimited build minutes</div>
-      <div>{{svg-jar 'features-check' class="w-4 inline-block"}} Unlimited repositories</div>
-      <div>{{svg-jar 'features-check' class="w-4 inline-block"}} Unlimited collaborators</div>
-
       <div>
-        {{product.currencySymbol}}{{product.displayPrice}}
+        {{svg-jar "features-check" class="w-4 inline-block"}}
+        Unlimited build minutes
+      </div>
+      <div>
+        {{svg-jar "features-check" class="w-4 inline-block"}}
+        Unlimited repositories
+      </div>
+      <div>
+        {{svg-jar "features-check" class="w-4 inline-block"}}
+        Unlimited collaborators
+      </div>
+      <div>
+        {{product.currencySymbol}}
+        {{product.displayPrice}}
         {{product.currency}}
         {{product.interval}}
       </div>
-    {{/grid.item}}
+    </Grid.item>
   {{/each}}
-{{/styleguides/grid-container}}
+</Styleguides::GridContainer>
 <div class="text-center p-4 border-grey-150 border">
-  {{!-- {{#link-to 'signin' class='inline-block'}} --}}
-    {{#styleguides/travis-button onToggle=(action ctaAction)}}Start Your Free Trial{{/styleguides/travis-button}}
-  {{!-- {{/link-to}} --}}
+  <Styleguides::TravisButton @onToggle={{action ctaAction}}>
+    Start Your Free Trial
+  </Styleguides::TravisButton>
 </div>
