@@ -23,8 +23,6 @@ jobs:
 #       env: TRY_CONFIG=ember-data-beta
     - name: "Test"
       node_js: 10
-  exclude:
-    - node_js: 10
 #   allow_failures:
 #     - env: TRY_CONFIG=ember-beta
 #     - env: TRY_CONFIG=ember-data-beta
