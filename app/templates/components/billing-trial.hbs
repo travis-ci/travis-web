@@ -1,4 +1,4 @@
-<h2 class="color-asphalt-blue font--light">Plan Overview</h2>
+<h2 class="color-asphalt-blue font--light">Overview</h2>
 
 {{#if trial.hasActiveTrial}}
 
@@ -12,6 +12,45 @@
     To get the most out of Travis CI, set up a plan below!
   </p>
 {{else}}
+
+  <p>There is currently no activity on your account. Let's get you started!</p>
+  <div class="flex billing-trial-info-box">
+    {{!-- <div>
+      icon
+    </div> --}}
+    <div>
+      <p class="margin-top-0">For your public projects you always get 3 concurrent jobs for free on all build environments.</p>
+      <p class="margin-bottom-0 margin-top-0">
+        <a data-test-trial-link href={{config-get 'urls.gettingStarted'}} target="_blank" class="billing-section-link">Trigger and build</a> and you will be on your way!
+      </p>
+    </div>
+  </div>
+
+  <h2 class="color-asphalt-blue font--light">Trial</h2>
+  <p>Test private repositories and get extra concurrency for your open source projects.</p>
+  <div class="billing-trial-table">
+    <table>
+      <thead>
+        <tr data-test-table-header-row>
+          <th> invoice date </th>
+          <th> payment card </th>
+          <th> total </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td> Private repositories </td>
+          <td> 2 concurrent jobs </td>
+          <td> 100 builds </td>
+        </tr>
+        <tr>
+          <td> Private repositories </td>
+          <td> 2 concurrent jobs </td>
+          <td> 100 builds </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
   <p data-test-trial-message class="source plan-status-message">
     Your trial includes 100 trial builds and 2-concurrent-jobs, no credit card required.<br />
     Need help?
