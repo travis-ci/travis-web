@@ -1,6 +1,6 @@
 module.exports = {
   test_page: 'tests/index.html?hidepassed&dockcontainer',
-  parallel: -1,
+  parallel: process.env.EMBER_EXAM_SPLIT_COUNT,
   disable_watching: true,
   launch_in_ci: [
     'Chrome'
