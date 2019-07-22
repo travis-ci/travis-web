@@ -13,7 +13,7 @@ stages:
 
 jobs:
   include:
-    - name: build
+    - stage: build
       script: "ember build"
       node_js: 10
     - name: "Lint"
