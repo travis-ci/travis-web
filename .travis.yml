@@ -7,22 +7,22 @@ env:
     - PERCY_ENABLE=0
 
 stages:
-  - lint
   - test
   # - deploy
 
 jobs:
   include:
-    - stage: lint
-      node_js: 10
-      if: (NOT branch = master) AND (NOT type = cron)
-      script: npm run lint:js
+    - stage: test
+      - name: "Lint"
+        node_js: 10
+        if: (NOT branch = master) AND (NOT type = cron)
+        script: npm run lint:js
 #     - if: type = cron
 #       env: TRY_CONFIG=ember-beta
 #     - if: type = cron
 #       env: TRY_CONFIG=ember-data-beta
-    - stage: test
-      node_js: 10
+      - name: "Test"
+        node_js: 10
 #   allow_failures:
 #     - env: TRY_CONFIG=ember-beta
 #     - env: TRY_CONFIG=ember-data-beta
