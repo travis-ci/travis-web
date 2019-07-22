@@ -7,11 +7,15 @@ env:
     - PERCY_ENABLE=0
 
 stages:
+  - build
   - test
   # - deploy
 
 jobs:
   include:
+    - name: build
+      script: "ember build"
+      node_js: 10
     - name: "Lint"
       if: (NOT branch = master) AND (NOT type = cron)
       node_js: 10
