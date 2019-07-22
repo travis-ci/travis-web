@@ -1,6 +1,5 @@
-{{#overlay-backdrop visible=showOverlay}}
-
-  {{!-- Title --}}
+<OverlayBackdrop @visible={{showOverlay}}>
+  {{! Title }}
   <h2 data-test-insights-overlay-title>
     {{#if isMonth}}
       Build to get monthly insights
@@ -8,41 +7,48 @@
       It's been a quiet week for builds
     {{/if}}
   </h2>
-
-  {{!-- Body Text --}}
+  {{! Body Text }}
   <p data-test-insights-overlay-text>
     All the build status results from the last
-    {{#if isMonth}}30{{else if isWeek}}7{{/if}}
+    {{#if isMonth}}
+      30
+    {{else if isWeek}}
+      7
+    {{/if}}
     days will appear here.
-
-    {{#if auth.signedOut}}Have you tried logging in?{{/if}}
+    {{#if auth.signedOut}}
+      Have you tried logging in?
+    {{/if}}
   </p>
-
-  {{!-- CTA --}}
+  {{! CTA }}
   {{#if auth.signedOut}}
-    <button class="hero-button" onclick={{action 'signIn'}} data-test-insights-overlay-link>
-      {{svg-jar 'icon-repooctocat'}} Sign in with GitHub
+    <button
+      class="hero-button"
+      onclick={{action "signIn"}}
+      data-test-insights-overlay-link
+    >
+      {{svg-jar "icon-repooctocat"}}
+      Sign in with GitHub
     </button>
-
   {{else if auth.signingIn}}
     <button class="hero-button" data-test-insights-overlay-link>
-      <span>Signing In</span>
-      {{loading-indicator white=true inline=true}}
+      <span>
+        Signing In
+      </span>
+      <LoadingIndicator @white={{true}} @inline={{true}} />
     </button>
-
   {{else if canSync}}
-    {{#external-link-to
-      href=(config-get 'urls.gettingStarted')
-      class='button button--blue'
-      data-test-insights-overlay-link=''
-    }}
+    <ExternalLinkTo
+      @href={{config-get "urls.gettingStarted"}}
+      class="button button--blue"
+      data-test-insights-overlay-link
+    >
       {{#if isMonth}}
         Let's get you going
       {{else if isWeek}}
         Want help building?
       {{/if}}
-    {{/external-link-to}}
+    </ExternalLinkTo>
   {{/if}}
-
   {{yield}}
-{{/overlay-backdrop}}
+</OverlayBackdrop>

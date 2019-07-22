@@ -1,12 +1,22 @@
 <div class="missing-notice">
   <figure class="page-graphic">
-    {{svg-jar 'barricade'}}
+    {{svg-jar "barricade"}}
   </figure>
-
-  <h2 class="page-title">We couldn't find the repository <br><span class="h2--red">{{slug}}</span></h2>
+  <h2 class="page-title">
+    We couldn't find the repository
+    <br />
+    <span class="h2--red">
+      {{slug}}
+    </span>
+  </h2>
   {{#if features.proVersion}}
     {{#unless auth.signedIn}}
-      <p class="page-notice">This repository may not exist or you may need to <button class="auth-button--white m-l-s" {{action "signIn"}}>Sign in with GitHub</button></p>
+      <p class="page-notice">
+        This repository may not exist or you may need to
+        <button class="auth-button--white m-l-s" {{action "signIn"}}>
+          Sign in with GitHub
+        </button>
+      </p>
     {{/unless}}
   {{/if}}
 </div>

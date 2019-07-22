@@ -1,9 +1,12 @@
-{{yield (hash
+{{yield
+  (hash
     isFiltering=isFiltering
     isLoading=isLoading
-    form=(component 'repository-filter-form' query=query onSearch=(perform search))
+    form=(component
+      "repository-filter-form" query=query onSearch=(perform search)
+    )
     query=query
     results=repositories
     computeName=computeName
   )
-  }}
+}}

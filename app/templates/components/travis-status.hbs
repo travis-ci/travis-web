@@ -1,11 +1,16 @@
 <div class="status-circle">
-  &#9679;
+  ●
 </div>
-{{#external-link-to href="http://www.traviscistatus.com/" class="status-link"}}
-  Travis CI Status<span class="status-description {{if showDescription 'status-description--visible'}}">:
+<ExternalLinkTo @href="http://www.traviscistatus.com/" class="status-link">
+  Travis CI Status
+  <span
+    class="status-description
+      {{if showDescription "status-description--visible"}}"
+  >
+    :
     {{description}}
   </span>
-{{/external-link-to}}
+</ExternalLinkTo>
 {{#if showTooltip}}
-  {{ember-tooltip text=description side='left' }}
+  <EmberTooltip @text={{description}} @side="left" />
 {{/if}}

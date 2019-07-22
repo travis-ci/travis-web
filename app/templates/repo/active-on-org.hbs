@@ -1,27 +1,23 @@
 <div data-test-active_on_org-display class="missing-notice">
-
-  {{svg-jar 'hammer' class="page-graphic snapshot-hide"}}
-
+  {{svg-jar "hammer" class="page-graphic snapshot-hide"}}
   <h2 class="text-big">
     You can now start building this repository, right here at travis-ci.com!
   </h2>
-
   {{#if auth.signedIn}}
-
     <button
       disabled={{isMigrateButtonDisabled}}
-      onclick={{action 'migrate'}}
-      class='button button--flex button--blue {{if isMigrateButtonDisabled 'disabled'}}'
+      onclick={{action "migrate"}}
+      class="button button--flex button--blue
+        {{if isMigrateButtonDisabled "disabled"}}"
     >
       {{#if repo.isMigrationInProgress}}
         Migrating...
       {{else if repo.isMigrationSucceeded}}
         Done!
       {{else}}
-        Migrate {{svg-jar 'icon-migrate' class="icon icon--m white icon--right"}}
+        Migrate{{svg-jar "icon-migrate" class="icon icon--m white icon--right"}}
       {{/if}}
     </button>
-
     {{#if isMigrationNotAllowed}}
       <p>
         {{#if (not permissions.admin)}}
@@ -33,11 +29,9 @@
         {{/if}}
       </p>
     {{/if}}
-
   {{else}}
-
-    <button class="auth-button signed-out" type="button" {{action 'signIn'}}>Sign in with GitHub</button>
-
+    <button class="auth-button signed-out" type="button" {{action "signIn"}}>
+      Sign in with GitHub
+    </button>
   {{/if}}
-
 </div>

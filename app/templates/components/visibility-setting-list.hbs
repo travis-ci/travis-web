@@ -6,11 +6,17 @@
           data-test-visibility-settings-list-item
           data-test-visibility-settings-list-item-selected={{selected}}
           autofocus={{and focusOnList selected}}
-          class="visibility-setting-list-item {{if selected 'visibility-setting-list-item--selected'}}"
+          class="visibility-setting-list-item
+            {{if selected "visibility-setting-list-item--selected"}}"
           onclick={{action (mut selectionKey) option.key}}
         >
-          <span class="visibility-setting-list-item__radio" ></span>
-          <span class="visibility-setting-list-item__description" data-test-visibility-settings-list-item-description>{{option.description}}</span>
+          <span class="visibility-setting-list-item__radio"></span>
+          <span
+            class="visibility-setting-list-item__description"
+            data-test-visibility-settings-list-item-description
+          >
+            {{option.description}}
+          </span>
         </button>
       {{/let}}
     {{/each}}
@@ -18,24 +24,28 @@
   <div class="visibility-setting-list-item visibility-setting-list-item--save">
     <button
       class="settings-button"
-      onclick={{action 'toggleConfirmationModal'}}
+      onclick={{action "toggleConfirmationModal"}}
       disabled={{isChangeNeutral}}
       data-test-visibility-settings-submit
-    >Save</button>
+    >
+      Save
+    </button>
   </div>
-
   {{#if isShowingConfirmationModal}}
-    {{#modal-dialog
-      targetAttachment="center"
-      translucentOverlay=true
-      toggleConfirmationModal=(action 'toggleConfirmationModal')
-      onClickOverlay=(action 'toggleConfirmationModal')
-      containerClass="visibility-settings-modal"
-      overlayPosition='sibling'
-      animatable=true
-    }}
+    <ModalDialog
+      @targetAttachment="center"
+      @translucentOverlay={{true}}
+      @toggleConfirmationModal={{action "toggleConfirmationModal"}}
+      @onClickOverlay={{action "toggleConfirmationModal"}}
+      @containerClass="visibility-settings-modal"
+      @overlayPosition="sibling"
+      @animatable={{true}}
+    >
       <div class="visibility-settings-modal__top">
-        <h3 class="visibility-settings-modal__header" data-test-visibility-settings-modal-title>
+        <h3
+          class="visibility-settings-modal__header"
+          data-test-visibility-settings-modal-title
+        >
           {{#if isChangeNegative}}
             Restrict
           {{else if isChangePositive}}
@@ -50,11 +60,12 @@
           title="Close modal"
           class="pointer visibility-settings-modal__close-button"
           autofocus={{focusOnModal}}
-          onclick={{action 'toggleConfirmationModal'}}
+          onclick={{action "toggleConfirmationModal"}}
           data-test-visibility-settings-modal-close-button
-        >{{svg-jar 'icon-failed' class="icon"}}</button>
+        >
+          {{svg-jar "icon-failed" class="icon"}}
+        </button>
       </div>
-
       <div class="visibility-settings-modal__body">
         <p data-test-visibility-settings-modal-description>
           {{#if isChangeNeutral}}
@@ -63,28 +74,30 @@
             {{selection.modalText}}
           {{else}}
             This change will make your private build insights
-            {{if isChangeNegative 'only'}}
+            {{if isChangeNegative "only"}}
             available to
             {{selectionTitle}}
           {{/if}}
         </p>
       </div>
-
       <div class="visibility-settings-modal__controls">
         <button
           data-test-visibility-settings-modal-cancel-button
           role="button"
           class="button button--red"
-          onclick={{action 'toggleConfirmationModal'}}
-        >Cancel</button>
-
+          onclick={{action "toggleConfirmationModal"}}
+        >
+          Cancel
+        </button>
         <button
           data-test-visibility-settings-modal-confirm-button
           role="button"
           class="button button--blue"
-          onclick={{action 'confirm'}}
-        >Confirm</button>
+          onclick={{action "confirm"}}
+        >
+          Confirm
+        </button>
       </div>
-    {{/modal-dialog}}
+    </ModalDialog>
   {{/if}}
 {{/if}}

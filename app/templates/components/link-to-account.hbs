@@ -1,9 +1,9 @@
 {{#if routeModel}}
-  {{#link-to routeName routeModel class=class}}
+  <LinkTo @route={{routeName}} @model={{routeModel}} class={{class}}>
     {{yield}}
-  {{/link-to}}
+  </LinkTo>
 {{else}}
-  {{#link-to routeName class=class}}
+  <LinkTo @route={{routeName}} class={{class}}>
     {{yield}}
-  {{/link-to}}
+  </LinkTo>
 {{/if}}

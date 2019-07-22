@@ -1,152 +1,147 @@
 {{#unless isSuccess}}
-
   {{#if showSupportForm}}
-    <h1 class="header-main align-center" data-test-zendesk-form-header >
+    <h1 class="header-main align-center" data-test-zendesk-form-header>
       Get help from our support engineers
     </h1>
-
     <div class="subheading align-center">
-      <span class="nowrap">Our support hours are between</span>
-      <span class="nowrap" data-test-zendesk-form-support-hours>
-        {{startTime}} {{timezone}} – {{endTime}} {{timezone}}
+      <span class="nowrap">
+        Our support hours are between
       </span>
-      <span class="nowrap">Monday through Friday</span>
+      <span class="nowrap" data-test-zendesk-form-support-hours>
+        {{startTime}}
+        {{timezone}}
+        –
+        {{endTime}}
+        {{timezone}}
+      </span>
+      <span class="nowrap">
+        Monday through Friday
+      </span>
     </div>
     <div data-test-zendesk-form-container>
-
-      {{#travis-form
-        onSubmit=(action 'handleSubmit')
-        as |form|
-      }}
-
-        {{#form.field
-          label='Email'
-          value=email
-          required=true
-          validator=(form-validator form.validators.email)
-          onChange=(action (mut email))
-          data-test-zendesk-form-email=true
-          as |field|
-        }}
-          {{#if emails.length }}
-            {{#field.select
-              options=emails
-              as |email|
-            }}
+      <TravisForm @onSubmit={{action "handleSubmit"}} as |form|>
+        <form.field
+          @label="Email"
+          @value={{email}}
+          required={{true}}
+          @validator={{form-validator form.validators.email}}
+          @onChange={{action (mut email)}}
+          data-test-zendesk-form-email={{true}} as |field|
+        >
+          {{#if emails.length}}
+            <field.select @options={{emails}} as |email|>
               {{email}}
-            {{/field.select}}
+            </field.select>
           {{else}}
-            {{field.input
-              disabled=true
-            }}
+            <field.input @disabled={{true}} />
           {{/if}}
-        {{/form.field}}
-
-        {{#form.field
-          label='Subject'
-          value=subject
-          required=true
-          disabled=isSubmitting
-          onChange=(action (mut subject))
-          data-test-zendesk-form-subject=true
-          as |field|
-        }}
-          {{field.input type='text'}}
-        {{/form.field}}
-
-        {{#form.field
-          label='Description'
-          value=description
-          disabled=isSubmitting
-          required=true
-          validator=(form-validator form.validators.difference descriptionTemplate "Make sure to add some details on what you'd like to talk with us about")
-          autoValidate=false
-          helperText="Let us know what's happening and how this is affecting you. Tip: Include any links to failing Travis CI build"
-          onChange=(action (mut description))
-          as |field|
-        }}
-          {{#field.textarea
-            rows=10
-            data-test-zendesk-form-description=true
-          }}{{description}}{{/field.textarea}}
-        {{/form.field}}
-
+        </form.field>
+        <form.field
+          @label="Subject"
+          @value={{subject}}
+          required={{true}}
+          @disabled={{isSubmitting}}
+          @onChange={{action (mut subject)}}
+          data-test-zendesk-form-subject={{true}} as |field|
+        >
+          <field.input @type="text" />
+        </form.field>
+        <form.field
+          @label="Description"
+          @value={{description}}
+          @disabled={{isSubmitting}}
+          required={{true}}
+          @validator={{form-validator
+            form.validators.difference
+            descriptionTemplate
+            "Make sure to add some details on what you'd like to talk with us about"
+          }}
+          @autoValidate={{false}}
+          @helperText="Let us know what's happening and how this is affecting you. Tip: Include any links to failing Travis CI build"
+          @onChange={{action (mut description)}} as |field|
+        >
+          <field.textarea
+            @rows={{10}}
+            data-test-zendesk-form-description={{true}}
+          >
+            {{description}}
+          </field.textarea>
+        </form.field>
         <div class="align-center">
           <button
             onclick={{form.submit}}
-            class='submit-button button--blue button--large'
+            class="submit-button button--blue button--large"
             data-test-zendesk-form-submit
           >
             {{#if isSubmitting}}
-              {{loading-indicator white=true }}
+              <LoadingIndicator @white={{true}} />
             {{else}}
               Submit
             {{/if}}
           </button>
         </div>
-
-      {{/travis-form}}
-
+      </TravisForm>
     </div>
   {{else if showLoginPrompt}}
-
     <h1 class="header-main align-center" data-test-zendesk-form-log-in-header>
       Get help from the experts
     </h1>
     <div class="subheading align-center">
       Logging into your account and sending an example of your problem will speed up getting an answer
     </div>
-
     <div class="sign-in-image align-center" data-test-zendesk-form-log-in-image>
-      {{svg-jar 'hard-hat'}}
+      {{svg-jar "hard-hat"}}
     </div>
-
     <div class="sign-in align-center">
       <button
         title="Sign into Travis CI"
         class="hero-button"
-        {{action (action 'signIn' false target=auth)}}
         data-test-zendesk-form-log-in-button
+        {{action (action "signIn" false target=auth)}}
       >
-        {{svg-jar 'icon-repooctocat' }} Sign in with GitHub
+        {{svg-jar "icon-repooctocat"}}
+        Sign in with GitHub
       </button>
     </div>
   {{else}}
-
-    <h1 class="header-main align-center" data-test-zendesk-form-community-header>
+    <h1
+      class="header-main align-center"
+      data-test-zendesk-form-community-header
+    >
       Get help in our Community forum
     </h1>
-
     <div class="subheading align-center">
       Talk with developers and experts,
-      submit {{#external-link-to href=featureRequestUrl}}feature requests{{/external-link-to}},
-      and more in our {{#external-link-to href=communityUrl}}Community forum{{/external-link-to}}
+      submit
+      <ExternalLinkTo @href={{featureRequestUrl}}>
+        feature requests
+      </ExternalLinkTo>
+      ,
+      and more in our
+      <ExternalLinkTo @href={{communityUrl}}>
+        Community forum
+      </ExternalLinkTo>
     </div>
-
-    <div class="sign-in-image align-center" data-test-zendesk-form-community-image>
-      {{svg-jar 'hard-hat'}}
+    <div
+      class="sign-in-image align-center"
+      data-test-zendesk-form-community-image
+    >
+      {{svg-jar "hard-hat"}}
     </div>
-
   {{/if}}
-
 {{else}}
-
   <h1 class="header-main align-center" data-test-zendesk-form-success-header>
     Thank you!
   </h1>
-
   <div class="success-image align-center" data-test-zendesk-form-success-image>
-    {{svg-jar 'hard-hat-success'}}
+    {{svg-jar "hard-hat-success"}}
   </div>
-
   <div class="subheading align-center" data-test-zendesk-form-success-message>
     One of our support engineers will get back to you as soon as possible.
   </div>
-
   <div class="back-link align-center">
     <a class="button--blue" href={{page}} data-test-zendesk-form-back-link>
       Head back
     </a>
   </div>
-
 {{/unless}}

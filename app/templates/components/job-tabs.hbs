@@ -1,17 +1,32 @@
 <nav class="travistab-nav--secondary">
   <ul>
-    <li>{{link-to 'Job log' 'job.index' repo job data-test-job-log-tab id="tab_log" title="Look at this job's log"}}</li>
     <li>
-      {{#link-to 'job.config' repo job data-test-build-yaml-tab title="Look at this job’s config" disabled=job.build.request.noYaml}}
+      <LinkTo
+        @route="job.index"
+        @models={{array repo job}}
+        data-test-job-log-tab
+        @id="tab_log"
+        @title="Look at this job's log"
+      >
+        Job log
+      </LinkTo>
+    </li>
+    <li>
+      <LinkTo
+        @route="job.config"
+        @models={{array repo job}}
+        data-test-build-yaml-tab
+        @title="Look at this job’s config"
+        @disabled={{job.build.request.noYaml}}
+      >
         {{#if job.build.request.noYaml}}
-          {{ember-tooltip text='Try a more recent job to see the config'}}
+          <EmberTooltip @text="Try a more recent job to see the config" />
         {{/if}}
         View config
-      {{/link-to}}
+      </LinkTo>
     </li>
   </ul>
 </nav>
 <div class="travistab-body job-tabs">
-
   {{outlet}}
 </div>

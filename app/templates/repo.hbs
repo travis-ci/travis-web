@@ -1,34 +1,35 @@
-<div class="wrapper {{if isCentered 'centered'}}">
-
+<div class="wrapper {{if isCentered "centered"}}">
   {{#if showGitHubAppsCTA}}
-    {{#top-bar}}
-      <div class='cta'>
-        <p class='row'>
+    <TopBar>
+      <div class="cta">
+        <p class="row">
           Join over 500,000 developers testing and building on Travis CI
         </p>
       </div>
-    {{/top-bar}}
+    </TopBar>
   {{else}}
-    {{top-bar}}
+    <TopBar />
   {{/if}}
-
-  {{flash-display}}
-
+  <FlashDisplay />
   <div class="wrapper-main">
     <div id="main" class="main" role="main">
       {{#if repo.isLoaded}}
-        {{#repository-layout repo=repo build=build job=job tab=tab}}
+        <RepositoryLayout
+          @repo={{repo}}
+          @build={{build}}
+          @job={{job}}
+          @tab={{tab}}
+        >
           {{outlet}}
-        {{/repository-layout}}
+        </RepositoryLayout>
       {{/if}}
     </div>
   </div>
-
   {{#if auth.signedIn}}
-  {{#unless features.dashboard}}
-    <aside id="left" class="{{unless auth.signedIn 'hidden'}}">
-      {{repository-sidebar}}
-    </aside>
-  {{/unless}}
+    {{#unless features.dashboard}}
+      <aside id="left" class="{{unless auth.signedIn "hidden"}}">
+        <RepositorySidebar />
+      </aside>
+    {{/unless}}
   {{/if}}
 </div>

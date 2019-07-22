@@ -1,38 +1,58 @@
 <div class="tile {{repo.currentBuild.state}}">
   <h2 class="tile-title {{repo.currentBuild.state}}">
     {{#if repo.slug}}
-      {{#link-to "repo" repo}}
-        {{status-icon status=repo.currentBuild.state}}
-        <span data-test-repos-list-item-slug class="label-align inner-underline">{{repo.slug}}</span>
-      {{/link-to}}
+      <LinkTo @route="repo" @model={{repo}}>
+        <StatusIcon @status={{repo.currentBuild.state}} />
+        <span
+          data-test-repos-list-item-slug
+          class="label-align inner-underline"
+        >
+          {{repo.slug}}
+        </span>
+      </LinkTo>
     {{/if}}
   </h2>
-
   {{#if repo.slug}}
     {{#if repo.currentBuild.id}}
       <p class="tile-title float-right {{repo.currentBuild.state}}">
-        {{svg-jar 'icon-hash' class="icon"}}
-        {{#link-to "build" repo repo.currentBuild.id}}
-          <span class="label-align inner-underline">{{repo.currentBuild.number}}</span>
-        {{/link-to}}
+        {{svg-jar "icon-hash" class="icon"}}
+        <LinkTo @route="build" @models={{array repo repo.currentBuild.id}}>
+          <span class="label-align inner-underline">
+            {{repo.currentBuild.number}}
+          </span>
+        </LinkTo>
       </p>
     {{/if}}
   {{/if}}
-
   <p>
-    {{svg-jar 'icon-clock' class="icon"}}
-    <span class="label-align">Duration:
-       <time class="duration" datetime="PT{{repo.currentBuild.duration}}S" title="{{if repo.currentBuild.duration (concat "Started " (pretty-date repo.currentBuild.startedAt))}}">{{format-duration repo.currentBuild.duration}}</time>
+    {{svg-jar "icon-clock" class="icon"}}
+    <span class="label-align">
+      Duration:
+      <time
+        class="duration"
+        datetime="PT{{repo.currentBuild.duration}}S"
+        title="{{if
+            repo.currentBuild.duration
+            (concat "Started " (pretty-date repo.currentBuild.startedAt))
+          }}"
+      >
+        {{format-duration repo.currentBuild.duration}}
+      </time>
     </span>
   </p>
-
   {{#if repo.currentBuild.isFinished}}
     <p>
-      {{svg-jar 'icon-calendar' class="icon"}}
-      <span class="label-align">Finished:
-        <time class="finished_at timeago" datetime={{repo.currentBuild.finishedAt}} title="Finished {{pretty-date repo.currentBuild.finishedAt}}">
+      {{svg-jar "icon-calendar" class="icon"}}
+      <span class="label-align">
+        Finished:
+        <time
+          class="finished_at timeago"
+          datetime={{repo.currentBuild.finishedAt}}
+          title="Finished {{pretty-date repo.currentBuild.finishedAt}}"
+        >
           {{format-time repo.currentBuild.finishedAt}}
-        </time></span>
+        </time>
+      </span>
     </p>
   {{/if}}
 </div>

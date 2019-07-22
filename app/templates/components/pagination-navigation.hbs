@@ -1,6 +1,5 @@
 {{#if showPagination}}
   <ul role="navigation">
-
     {{#if prevPage}}
       <li>
         <a
@@ -9,22 +8,21 @@
           rel="prev"
           class="pagination-button"
           title="Go to previous page"
-          onclick={{action 'switchToPage' prevPage}}
+          onclick={{action "switchToPage" prevPage}}
         >
           prev
         </a>
       </li>
     {{/if}}
-
     {{#each pages as |page|}}
       <li>
         {{#if page.num}}
           <a
             href={{page.url}}
             data-test-page-pagination-link="{{page.num}}"
-            class="pagination-link {{if page.isCurrent 'active'}}"
+            class="pagination-link {{if page.isCurrent "active"}}"
             title="Go to page number {{page.num}}"
-            onclick={{action 'switchToPage' page}}
+            onclick={{action "switchToPage" page}}
           >
             {{page.num}}
           </a>
@@ -33,7 +31,6 @@
         {{/if}}
       </li>
     {{/each}}
-
     {{#if nextPage}}
       <li>
         <a
@@ -42,12 +39,11 @@
           rel="next"
           class="pagination-button"
           title="Go to next page"
-          onclick={{action 'switchToPage' nextPage}}
+          onclick={{action "switchToPage" nextPage}}
         >
           next
         </a>
       </li>
     {{/if}}
-
   </ul>
-  {{/if}}
+{{/if}}

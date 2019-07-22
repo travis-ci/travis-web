@@ -1,17 +1,27 @@
 <ul>
   <li id="tab_owned" class={{classOwned}}>
-    <a href="#" {{action showMyRepositories}}>My Repositories</a>
+    <a href="#" {{action showMyRepositories}}>
+      My Repositories
+    </a>
   </li>
-
   {{#if features.showRunningJobsInSidebar}}
     <li data-test-sidebar-running-tab id="tab_running" class={{classRunning}}>
-      <a href="#" {{action showRunningJobs}}>Running ({{startedJobsCount}}/{{allJobsCount}})</a>
+      <a href="#" {{action showRunningJobs}}>
+        Running (
+        {{startedJobsCount}}
+        /
+        {{allJobsCount}}
+        )
+      </a>
     </li>
   {{/if}}
-
   <li id="tab_new" class={{classNew}}>
-    {{#link-to "account" trackEvent="add-repository-from-list" title="Add New Repository"}}
-    <span class="icon icon--plus"></span>
-    {{/link-to}}
+    <LinkTo
+      @route="account"
+      @trackEvent="add-repository-from-list"
+      @title="Add New Repository"
+    >
+      <span class="icon icon--plus"></span>
+    </LinkTo>
   </li>
 </ul>

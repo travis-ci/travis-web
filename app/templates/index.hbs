@@ -1,30 +1,35 @@
 {{#if auth.signedIn}}
-  <div class="wrapper {{if auth.signedOut 'centered'}}">
-    {{top-bar}}
-    {{flash-display}}
-
+  <div class="wrapper {{if auth.signedOut "centered"}}">
+    <TopBar />
+    <FlashDisplay />
     <div class="wrapper-main">
       <div id="main" role="main" class="main">
         {{#if repo.isLoaded}}
-          {{repository-layout repo=repo build=build job=job tab=tab}}
+          <RepositoryLayout
+            @repo={{repo}}
+            @build={{build}}
+            @job={{job}}
+            @tab={{tab}}
+          />
         {{else}}
-          {{loading-indicator}}
+          <LoadingIndicator />
         {{/if}}
       </div>
     </div>
-
     {{#if auth.signedIn}}
-    {{#unless features.dashboard}}
-      <aside id="left" class="{{unless auth.signedIn 'hidden'}}">
-        {{repository-sidebar}}
-      </aside>
-    {{/unless}}
+      {{#unless features.dashboard}}
+        <aside id="left" class="{{unless auth.signedIn "hidden"}}">
+          <RepositorySidebar />
+        </aside>
+      {{/unless}}
     {{/if}}
   </div>
 {{else}}
-  <div class='wrapper centered'>
-    {{component landingPage
-      signIn=(action 'signIn' target=auth)
-      signOut=(action 'signOut' target=auth)}}
+  <div class="wrapper centered">
+    {{component
+      landingPage
+      signIn=(action "signIn" target=auth)
+      signOut=(action "signOut" target=auth)
+    }}
   </div>
 {{/if}}

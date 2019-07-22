@@ -1,39 +1,36 @@
-<h3 data-test-repository-migration-modal-header
-  class="h3--teal"
->
+<h3 data-test-repository-migration-modal-header class="h3--teal">
   Migrate selected repositories
 </h3>
-
 <p data-test-repository-migration-modal-text-first>
   Please confirm that you would like to migrate the following repositories
   from travis-ci.org to travis-ci.com:
 </p>
-
-{{#paper-block class='profile-repolist-wrapper'}}
+<PaperBlock class="profile-repolist-wrapper">
   <ul class="profile-repositorylist">
-    {{#each repositories as |repository| }}
+    {{#each repositories as |repository|}}
       <li class="profile-repolist-item">
-        {{repository-visibility-icon repository=repository}}
+        <RepositoryVisibilityIcon @repository={{repository}} />
         <span class="profile-repo">
           {{repository.name}}
         </span>
       </li>
     {{/each}}
   </ul>
-{{/paper-block}}
-
+</PaperBlock>
 <p data-test-repository-migration-modal-text-second>
   We will migrate all the critical information needed to get you back up and running as soon as possible.
 </p>
-
 <p data-test-repository-migration-modal-text-third>
   Please note that your build history will not be migrated at this time. Until then, you can access the existing build history at
-  <a data-test-repository-migration-modal-org-build-history-link
-     target='_blank'
-     href='https://travis-ci.org'
-  >travis-ci.org</a>.
+  <a
+    data-test-repository-migration-modal-org-build-history-link
+    target="_blank"
+    href="https://travis-ci.org"
+  >
+    travis-ci.org
+  </a>
+  .
 </p>
-
 <div class="modal-controls">
   <button
     data-test-repository-migration-modal-cancel-migration-button
@@ -42,7 +39,6 @@
   >
     Cancel
   </button>
-
   <button
     data-test-repository-migration-modal-confirm-migration-button
     class="button button--blue"
@@ -51,12 +47,11 @@
     Migrate
   </button>
 </div>
-
 <button
   type="button"
   title="Close modal"
   class="modal-close pointer"
   onclick={{action onClose}}
 >
-  {{svg-jar 'icon-failed' class="icon"}}
+  {{svg-jar "icon-failed" class="icon"}}
 </button>

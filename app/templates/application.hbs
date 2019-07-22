@@ -1,10 +1,15 @@
-<div class="feature-wrapper {{if features.dashboard 'dashboard'}} {{if features.pride 'travis-pride'}} {{if features.comicSans 'travis-comicsans'}}">
+<div
+  class="feature-wrapper
+    {{if features.dashboard "dashboard"}}
+
+    {{if features.pride "travis-pride"}}
+
+    {{if features.comicSans "travis-comicsans"}}"
+>
   {{outlet}}
-  {{page-footer}}
+  <PageFooter />
 </div>
-
 {{#if features.tracer}}
-  {{x-tracer}}
+  <XTracer />
 {{/if}}
-
-{{intercom-io}}
+<IntercomIo />

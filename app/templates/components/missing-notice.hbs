@@ -1,12 +1,12 @@
 <div class="missing-notice">
   <figure class="page-graphic">
-    {{svg-jar (or image  'icon-cones') class="snapshot-hide"}}
+    {{svg-jar (or image "icon-cones") class="snapshot-hide"}}
   </figure>
-
   {{#if title}}
-    <h2 data-test-missing-notice-header class="page-title">{{title}}</h2>
+    <h2 data-test-missing-notice-header class="page-title">
+      {{title}}
+    </h2>
   {{/if}}
-
   {{#if hasBlock}}
     {{yield}}
   {{/if}}

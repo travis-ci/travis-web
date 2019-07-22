@@ -1,57 +1,96 @@
-<nav class='travistab-nav travistab-nav--underline'>
+<nav class="travistab-nav travistab-nav--underline">
   <ul>
     <li>
-      {{#link-to (query-params tab='repositories' timeInterval=defaultTimeInterval)}}Repositories{{/link-to}}
+      <LinkTo
+        @query={{hash tab="repositories" timeInterval=defaultTimeInterval}}
+      >
+        Repositories
+      </LinkTo>
     </li>
     <li>
-      {{#link-to (query-params tab='insights' timeInterval=timeInterval page=1)}}Insights{{/link-to}}
+      <LinkTo @query={{hash tab="insights" timeInterval=timeInterval page=1}}>
+        Insights
+      </LinkTo>
     </li>
   </ul>
 </nav>
-
 <div class="owner-repo">
   {{#if isInsights}}
     {{#if buildsReady}}
       <div class="travistab-body">
         <div class="insights-controls">
           <div class="insights-controls-left snapshot-hide">
-            {{insights-date-display interval=timeInterval}}
-            <span class="insights-control-divider">|</span>
-            {{insights-privacy-selector
-              isPrivateViewable=isPrivateInsightsViewable
-              includePrivate=includePrivateInsights
-              setRequestPrivateInsights=(action 'setRequestPrivateInsights')
-            }}
+            <InsightsDateDisplay @interval={{timeInterval}} />
+            <span class="insights-control-divider">
+              |
+            </span>
+            <InsightsPrivacySelector
+              @isPrivateViewable={{isPrivateInsightsViewable}}
+              @includePrivate={{includePrivateInsights}}
+              @setRequestPrivateInsights={{action "setRequestPrivateInsights"}}
+            />
           </div>
-          {{insights-tabs selectedTab=timeInterval}}
+          <InsightsTabs @selectedTab={{timeInterval}} />
         </div>
         <div class="insights-grid">
-          {{insights-overlay owner=model.owner interval=timeInterval private=includePrivateInsights data-test-insights-overlay=''}}
-
-          {{build-count owner=model.owner interval=timeInterval private=includePrivateInsights data-test-insights-glance=''}}
-          {{build-minutes owner=model.owner interval=timeInterval private=includePrivateInsights data-test-insights-glance=''}}
-          {{queue-times owner=model.owner interval=timeInterval private=includePrivateInsights data-test-insights-glance=''}}
-          {{active-repo-count owner=model.owner interval=timeInterval private=includePrivateInsights data-test-insights-glance=''}}
-
-          {{build-status-chart owner=model.owner interval=timeInterval private=includePrivateInsights data-test-insights-odyssey=''}}
+          <InsightsOverlay
+            @owner={{model.owner}}
+            @interval={{timeInterval}}
+            @private={{includePrivateInsights}}
+            data-test-insights-overlay
+          />
+          <BuildCount
+            @owner={{model.owner}}
+            @interval={{timeInterval}}
+            @private={{includePrivateInsights}}
+            data-test-insights-glance
+          />
+          <BuildMinutes
+            @owner={{model.owner}}
+            @interval={{timeInterval}}
+            @private={{includePrivateInsights}}
+            data-test-insights-glance
+          />
+          <QueueTimes
+            @owner={{model.owner}}
+            @interval={{timeInterval}}
+            @private={{includePrivateInsights}}
+            data-test-insights-glance
+          />
+          <ActiveRepoCount
+            @owner={{model.owner}}
+            @interval={{timeInterval}}
+            @private={{includePrivateInsights}}
+            data-test-insights-glance
+          />
+          <BuildStatusChart
+            @owner={{model.owner}}
+            @interval={{timeInterval}}
+            @private={{includePrivateInsights}}
+            data-test-insights-odyssey
+          />
         </div>
       </div>
     {{else}}
-      {{loading-screen center=true margin=true}}
+      <LoadingScreen @center={{true}} @margin={{true}} />
     {{/if}}
   {{else}}
     {{#unless reposLoading}}
       <ul class="owner-tiles">
         {{#each repos as |repo|}}
-          {{owner-repo-tile repo=repo}}
+          <OwnerRepoTile @repo={{repo}} />
         {{else}}
-          {{no-repos}}
+          <NoRepos />
         {{/each}}
       </ul>
-
-      {{pagination-navigation collection=repos route="owner.repositories" inner=6 outer=2}}
+      <PaginationNavigation
+        @collection={{repos}}
+        @route="owner.repositories"
+        @inner={{6}}
+        @outer={{2}}
+      />
     {{else}}
-      {{loading-screen center=true margin=true}}
+      <LoadingScreen @center={{true}} @margin={{true}} />
     {{/unless}}
   {{/if}}
 </div>

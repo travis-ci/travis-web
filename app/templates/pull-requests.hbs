@@ -1,20 +1,20 @@
 {{#if isLoaded}}
   <ul class="build-list">
     {{#each builds as |build|}}
-      {{builds-item build=build}}
+      <BuildsItem @build={{build}} />
     {{else}}
-      {{missing-notice title="No pull request builds for this repository"}}
+      <MissingNotice @title="No pull request builds for this repository" />
     {{/each}}
   </ul>
   {{#if displayShowMoreButton}}
     <p>
       {{#if loadMoreBuilds.isRunning}}
-        {{loading-indicator}}
+        <LoadingIndicator />
       {{else}}
-        {{show-more-button click=(perform loadMoreBuilds)}}
+        <ShowMoreButton @click={{perform loadMoreBuilds}} />
       {{/if}}
     </p>
   {{/if}}
 {{else}}
-  {{loading-indicator}}
+  <LoadingIndicator />
 {{/if}}

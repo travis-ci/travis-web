@@ -1,21 +1,24 @@
-<span class="insights-privacy-selector__title">View:</span>
+<span class="insights-privacy-selector__title">
+  View:
+</span>
 {{#if isPrivateViewable}}
-  {{#travis-form as |form|}}
-    {{#form.field
-      value=currentState
-      onChange=(action 'selectInsightScope')
-      showFrame=showFrame
-      data-test-insights-privacy-selector-main-field=true
-      as |field|
-    }}
-      {{#field.select options=availableOptions as |option|}}
+  <TravisForm as |form|>
+    <form.field
+      @value={{currentState}}
+      @onChange={{action "selectInsightScope"}}
+      @showFrame={{showFrame}}
+      data-test-insights-privacy-selector-main-field={{true}} as |field|
+    >
+      <field.select @options={{availableOptions}} as |option|>
         {{option}}
-      {{/field.select}}
-    {{/form.field}}
-  {{/travis-form}}
+      </field.select>
+    </form.field>
+  </TravisForm>
 {{else}}
   <span
     class="insights-privacy-selector__selected"
     data-test-insights-privacy-selector-selected
-  >{{currentState}}</span>
+  >
+    {{currentState}}
+  </span>
 {{/if}}

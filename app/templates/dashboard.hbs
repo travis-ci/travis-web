@@ -1,23 +1,35 @@
-{{#travis-layout layoutName="layouts/center" class="dashboard"}}
-<div class="dashboard-repos">
-  <section data-test-dashboard-starred-repositories class="dashboard-section dashboard-starred">
-    <h2 class="small-title">Starred repositories</h2>
-    <ul class="repo-list">
-      {{#each starredRepos as |repo|}}
-        {{dashboard-row repo=repo star=star unstar=unstar}}
-      {{else}}
-        <div class="starred-empty">
-          {{svg-jar 'icon-star' class="icon--m"}} You can keep track of your favorite repositories here once you start starring!
-        </div>
-      {{/each}}
-    </ul>
-  </section>
-</div>
-
-<header class='dashboard tabs'>
-  <h2 class='small-title'>{{link-to 'Active repositories' 'dashboard.repositories' data-test-active-repos-tab}}</h2>
-  <h2 class='small-title'>{{link-to 'My builds' 'dashboard.builds' data-test-my-builds-tab}}</h2>
-</header>
-
-{{outlet}}
-{{/travis-layout}}
+<TravisLayout @layoutName="layouts/center" class="dashboard">
+  <div class="dashboard-repos">
+    <section
+      data-test-dashboard-starred-repositories
+      class="dashboard-section dashboard-starred"
+    >
+      <h2 class="small-title">
+        Starred repositories
+      </h2>
+      <ul class="repo-list">
+        {{#each starredRepos as |repo|}}
+          <DashboardRow @repo={{repo}} @star={{star}} @unstar={{unstar}} />
+        {{else}}
+          <div class="starred-empty">
+            {{svg-jar "icon-star" class="icon--m"}}
+            You can keep track of your favorite repositories here once you start starring!
+          </div>
+        {{/each}}
+      </ul>
+    </section>
+  </div>
+  <header class="dashboard tabs">
+    <h2 class="small-title">
+      <LinkTo @route="dashboard.repositories" data-test-active-repos-tab>
+        Active repositories
+      </LinkTo>
+    </h2>
+    <h2 class="small-title">
+      <LinkTo @route="dashboard.builds" data-test-my-builds-tab>
+        My builds
+      </LinkTo>
+    </h2>
+  </header>
+  {{outlet}}
+</TravisLayout>

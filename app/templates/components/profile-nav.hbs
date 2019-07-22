@@ -1,22 +1,26 @@
 <aside class="profile-aside">
-
   <section>
-    <h2>My Account</h2>
+    <h2>
+      My Account
+    </h2>
     <ul class="profile-user">
-      <li>{{org-item account=user}}</li>
+      <li>
+        <OrgItem @account={{user}} />
+      </li>
     </ul>
-    {{sync-button}}
+    <SyncButton />
   </section>
-
-  {{#if showMigrationBetaBanner }}
+  {{#if showMigrationBetaBanner}}
     <section class="migrate-beta" data-test-sidebar-migrate>
-      <h2>A single place for all your builds</h2>
+      <h2>
+        A single place for all your builds
+      </h2>
       <p>
         You can now have all your public and private repositories together at travis-ci.com
       </p>
       <button
         class="button--blue"
-        onclick={{action (mut isShowingMigrateBetaDialog) true }}
+        onclick={{action (mut isShowingMigrateBetaDialog) true}}
         data-test-migrate-signup="true"
       >
         {{#if user.isMigrationBetaRequested}}
@@ -27,133 +31,151 @@
       </button>
     </section>
   {{/if}}
-
   <section class="profile-orgs">
-    <h2>Organizations</h2>
+    <h2>
+      Organizations
+    </h2>
     <ul class="profile-orgs-list">
       {{#each organizations as |organization|}}
-        <li>{{org-item account=organization}}</li>
+        <li>
+          <OrgItem @account={{organization}} />
+        </li>
       {{else}}
-        <li class="profile-text">You are not currently a member of <br> any organization.</li>
+        <li class="profile-text">
+          You are not currently a member of
+          <br />
+          any organization.
+        </li>
       {{/each}}
     </ul>
   </section>
-
   {{#if githubOrgsOauthAccessSettingsUrl}}
     <section class="profile-additional no-divider">
-      <h2>Missing an organization?</h2>
-      <a href={{githubOrgsOauthAccessSettingsUrl}} title="Organizations Oauth Access Settings on GitHub">Review and add</a> your authorized organizations.
+      <h2>
+        Missing an organization?
+      </h2>
+      <a
+        href={{githubOrgsOauthAccessSettingsUrl}}
+        title="Organizations Oauth Access Settings on GitHub"
+      >
+        Review and add
+      </a>
+      your authorized organizations.
     </section>
   {{/if}}
-
 </aside>
 <article class="profile-main">
-
   {{#unless model.error}}
-
     <header class="profile-header">
-      <div class='left'>
-        {{user-avatar account=model url=model.avatarUrl name=model.name size=96 showSubscriptionStatus=true}}
-        <div class='account-details'>
-          <h1 class="h2--grey">{{accountName}}</h1>
-          <div class='addenda'>
-            <span class='login'>@{{model.login}}</span>
-            {{#if model.education}}<span class='badge square grey'>Education</span>{{/if}}
+      <div class="left">
+        <UserAvatar
+          @account={{model}}
+          @url={{model.avatarUrl}}
+          @name={{model.name}}
+          @size={{96}}
+          @showSubscriptionStatus={{true}}
+        />
+        <div class="account-details">
+          <h1 class="h2--grey">
+            {{accountName}}
+          </h1>
+          <div class="addenda">
+            <span class="login">
+              @
+              {{model.login}}
+            </span>
+            {{#if model.education}}
+              <span class="badge square grey">
+                Education
+              </span>
+            {{/if}}
           </div>
         </div>
       </div>
     </header>
-
     {{#if showSubscriptionStatusBanner}}
-      {{subscription-status-banner
-        color="yellow"
-        message="There was an error determining your subscription status."
-        billingLinkText="Visit billing"
-        billingUrl=billingUrl
-        showLink=model.subscriptionPermissions.create
-      }}
+      <SubscriptionStatusBanner
+        @color="yellow"
+        @message="There was an error determining your subscription status."
+        @billingLinkText="Visit billing"
+        @billingUrl={{billingUrl}}
+        @showLink={{model.subscriptionPermissions.create}}
+      />
     {{/if}}
-
-    <nav class='travistab-nav'>
+    <nav class="travistab-nav">
       <ul>
-
         {{#if model.isUser}}
-
           <li>
-            {{#link-to 'account.repositories'}}Repositories{{/link-to}}
+            <LinkTo @route="account.repositories">
+              Repositories
+            </LinkTo>
           </li>
-
           <li data-test-settings-tab>
-            {{#link-to 'account.settings'}}Settings{{/link-to}}
+            <LinkTo @route="account.settings">
+              Settings
+            </LinkTo>
           </li>
-
           {{#if checkSubscriptionStatus}}
             <li data-test-billing-tab>
-              {{#link-to 'account.billing'}}Subscription{{/link-to}}
+              <LinkTo @route="account.billing">
+                Subscription
+              </LinkTo>
             </li>
           {{/if}}
-
-          {{#if showMigrateTab }}
+          {{#if showMigrateTab}}
             <li data-test-migrate-tab>
-              {{#link-to 'account.migrate' }}
+              <LinkTo @route="account.migrate">
                 Migrate
-              {{/link-to}}
+              </LinkTo>
             </li>
           {{/if}}
-
         {{/if}}
-
         {{#if model.isOrganization}}
-
           <li>
-            {{#link-to 'organization.repositories' model }}Repositories{{/link-to}}
+            <LinkTo @route="organization.repositories" @model={{model}}>
+              Repositories
+            </LinkTo>
           </li>
-
           {{#if showOrganizationSettings}}
             <li data-test-org-settings-tab>
-              {{#link-to 'organization.settings' model}}Settings{{/link-to}}
+              <LinkTo @route="organization.settings" @model={{model}}>
+                Settings
+              </LinkTo>
             </li>
           {{/if}}
-
           {{#if checkSubscriptionStatus}}
             <li data-test-billing-tab>
-              {{#link-to 'organization.billing' model }}Subscription{{/link-to}}
+              <LinkTo @route="organization.billing" @model={{model}}>
+                Subscription
+              </LinkTo>
             </li>
           {{/if}}
-
-          {{#if showMigrateTab }}
+          {{#if showMigrateTab}}
             <li>
-              {{#link-to 'organization.migrate' model }}
+              <LinkTo @route="organization.migrate" @model={{model}}>
                 Migrate
-              {{/link-to}}
+              </LinkTo>
             </li>
           {{/if}}
-
         {{/if}}
-
       </ul>
     </nav>
-
     {{yield}}
-
   {{else}}
-
-    {{no-account name=model.login}}
-
+    <NoAccount @name={{model.login}} />
   {{/unless}}
-
 </article>
-
 {{#if isShowingMigrateBetaDialog}}
-  {{#modal-dialog
-    translucentOverlay=true
-    overlayPosition='sibling'
-    clickOutsideToClose=false
-    animatable=true
-  }}
-    {{component 'dialogs/migrate-beta'
+  <ModalDialog
+    @translucentOverlay={{true}}
+    @overlayPosition="sibling"
+    @clickOutsideToClose={{false}}
+    @animatable={{true}}
+  >
+    {{component
+      "dialogs/migrate-beta"
       onClose=(action (mut isShowingMigrateBetaDialog) false)
       data-test-migrate-dialog=true
     }}
-  {{/modal-dialog}}
+  </ModalDialog>
 {{/if}}

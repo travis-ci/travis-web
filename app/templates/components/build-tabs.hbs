@@ -1,18 +1,31 @@
 <nav class="travistab-nav--secondary">
   <ul>
-    <li>{{link-to 'Build jobs' 'build.index' build.repo build data-test-build-matrix-tab title="Look at this build’s jobs"}}</li>
     <li>
-      {{#link-to 'build.config' build.repo build data-test-build-yaml-tab title="Look at this build's config" disabled=build.request.noYaml}}
+      <LinkTo
+        @route="build.index"
+        @models={{array build.repo build}}
+        data-test-build-matrix-tab
+        @title="Look at this build’s jobs"
+      >
+        Build jobs
+      </LinkTo>
+    </li>
+    <li>
+      <LinkTo
+        @route="build.config"
+        @models={{array build.repo build}}
+        data-test-build-yaml-tab
+        @title="Look at this build's config"
+        @disabled={{build.request.noYaml}}
+      >
         {{#if build.request.noYaml}}
-          {{ember-tooltip text='Try a more recent build to see the config'}}
+          <EmberTooltip @text="Try a more recent build to see the config" />
         {{/if}}
         View config
-      {{/link-to}}
+      </LinkTo>
     </li>
   </ul>
 </nav>
 <div class="travistab-body">
-
   {{outlet}}
-
 </div>

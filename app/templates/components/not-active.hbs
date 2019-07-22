@@ -1,63 +1,62 @@
 <div class="missing-notice">
-
   {{#if migratedOnOrg}}
-
     <div data-test-recently-migrated-to-com-banner>
-      {{svg-jar 'migrated' class="page-graphic snapshot-hide"}}
-
+      {{svg-jar "migrated" class="page-graphic snapshot-hide"}}
       <h2 data-test-not-active-migrated-subtext class="text-big">
         This repository was migrated and is now building on
-        {{#external-link-to href=comRepositoryLink}}
+        <ExternalLinkTo @href={{comRepositoryLink}}>
           travis-ci.com
-        {{/external-link-to}}
+        </ExternalLinkTo>
       </h2>
-
-      {{#external-link-to href=comRepositoryLink
+      <ExternalLinkTo
+        @href={{comRepositoryLink}}
         class="button button--blue"
-        data-test-not-active-migrated-button=true
-      }}
+        data-test-not-active-migrated-button={{true}}
+      >
         Take me there!
-      {{/external-link-to}}
+      </ExternalLinkTo>
     </div>
-
   {{else}}
-
     <figure class="page-graphic">
-      {{svg-jar 'wheelbarrow'}}
+      {{svg-jar "wheelbarrow"}}
     </figure>
-
-    <h2 class="page-title">This is not an active repository</h2>
-
+    <h2 class="page-title">
+      This is not an active repository
+    </h2>
     {{#if canActivate}}
-
       {{#if (and config.githubApps repo.owner.installation)}}
-        {{#external-link-to href=githubAppsActivationURL class='button button--blue button--repo-activate-gh'}}
-          {{svg-jar 'icon-repooctocat' class='icon--github'}}
-          <span>Activate repository on GitHub</span>
-        {{/external-link-to}}
+        <ExternalLinkTo
+          @href={{githubAppsActivationURL}}
+          class="button button--blue button--repo-activate-gh"
+        >
+          {{svg-jar "icon-repooctocat" class="icon--github"}}
+          <span>
+            Activate repository on GitHub
+          </span>
+        </ExternalLinkTo>
       {{else}}
         <p class="page-notice">
-          You can activate the repository on {{#link-to "account"}}your profile{{/link-to}},<br/>
+          You can activate the repository on
+          <LinkTo @route="account">
+            your profile
+          </LinkTo>
+          ,
+          <br />
           or by clicking the button below
         </p>
-        <button {{action (perform activate)}} class="button button--blue">
+        <button class="button button--blue" {{action (perform activate)}}>
           Activate repository
         </button>
       {{/if}}
-
       {{#if activate.isRunning}}
-        {{loading-indicator}}
+        <LoadingIndicator />
       {{/if}}
-
     {{else}}
-
       <p class="page-notice">
-        You don't have sufficient rights to enable this repo on Travis. <br>
+        You don't have sufficient rights to enable this repo on Travis.
+        <br />
         Please contact the admin to enable it or to receive admin rights yourself.
       </p>
-
     {{/if}}
-
   {{/if}}
-
 </div>

@@ -1,8 +1,7 @@
 <div class="loading-page">
   <header class="top">
-    {{top-bar}}
+    <TopBar />
   </header>
-
   {{#if showCta}}
     <div class="cta">
       <p class="row">
@@ -10,10 +9,9 @@
       </p>
     </div>
   {{/if}}
-
   <div class="main">
     <div class="content-page">
-      {{loading-screen}}
+      <LoadingScreen />
     </div>
   </div>
 </div>

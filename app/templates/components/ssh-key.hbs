@@ -1,31 +1,36 @@
 <div class="ssh-key-name">
-  {{svg-jar 'icon-key' class="icon"}}
-  <span>{{if key.isCustom key.description 'Default'}}</span>
+  {{svg-jar "icon-key" class="icon"}}
+  <span>
+    {{if key.isCustom key.description "Default"}}
+  </span>
 </div>
 <div class="ssh-key-value">
-  {{svg-jar 'icon-fingerprint' class="icon"}}
-  <span>{{key.fingerprint}}</span>
+  {{svg-jar "icon-fingerprint" class="icon"}}
+  <span>
+    {{key.fingerprint}}
+  </span>
 </div>
-
 {{#if key.isCustom}}
   <div class="ssh-key-action">
     {{#if delete.isRunning}}
-      {{loading-indicator}}
+      <LoadingIndicator />
+    {{else if pushAccess}}
+      <button
+        type="button"
+        class="no-button ssh-delete"
+        {{action (perform delete)}}
+      >
+        {{svg-jar "icon-trash" class="icon"}}
+      </button>
+      <EmberTooltip @text="Delete" />
     {{else}}
-      {{#if pushAccess}}
-        <button {{action (perform delete)}} type="button" class="no-button ssh-delete">
-          {{svg-jar 'icon-trash' class="icon"}}
-        </button>
-        {{ember-tooltip text='Delete'}}
-      {{else}}
-        {{svg-jar 'icon-trash-disabled' class="icon ssh-no-delete"}}
-        {{ember-tooltip text='You can’t delete keys'}}
-      {{/if}}
+      {{svg-jar "icon-trash-disabled" class="icon ssh-no-delete"}}
+      <EmberTooltip @text="You can’t delete keys" />
     {{/if}}
   </div>
 {{else}}
   <div class="ssh-key-action">
-    {{svg-jar 'icon-trash-disabled' class="icon ssh-no-delete"}}
-    {{ember-tooltip text='Default key cannot be deleted'}}
+    {{svg-jar "icon-trash-disabled" class="icon ssh-no-delete"}}
+    <EmberTooltip @text="Default key cannot be deleted" />
   </div>
 {{/if}}

@@ -1,17 +1,14 @@
-{{insights-glance
-  isLoading=isLoading
-  isEmpty=isEmpty
-
-  title='Average Queue Time'
-  statistic=avgWaitText
-
-  delta=percentageChange
-  deltaTitle=percentChangeTitle
-  deltaText=percentageChangeText
-  isReverseDeltaColors=true
-
-  labels=labels
-  values=waitMins
-  datasetTitle='Minutes'
-  centerline=averageRounded
-}}
+<InsightsGlance
+  @isLoading={{isLoading}}
+  @isEmpty={{isEmpty}}
+  @title="Average Queue Time"
+  @statistic={{avgWaitText}}
+  @delta={{percentageChange}}
+  @deltaTitle={{percentChangeTitle}}
+  @deltaText={{percentageChangeText}}
+  @isReverseDeltaColors={{true}}
+  @labels={{labels}}
+  @values={{waitMins}}
+  @datasetTitle="Minutes"
+  @centerline={{averageRounded}}
+/>

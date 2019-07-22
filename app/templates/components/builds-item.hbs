@@ -1,24 +1,44 @@
 <div class="two-line fade-out">
   <div class="row-item build-info">
     <h2 class="row-branch {{build.state}}">
-      {{status-icon status=build.state}}
+      <StatusIcon @status={{build.state}} />
       {{#if build.isPullRequest}}
-        {{#link-to "build" build.repo build title=(concat "PR #" build.pullRequestNumber " " build.pullRequestTitle)}}
-          <small>PR #{{build.pullRequestNumber}}</small>
+        <LinkTo
+          @route="build"
+          @models={{array build.repo build}}
+          @title={{concat
+            "PR #"
+            build.pullRequestNumber
+            " "
+            build.pullRequestTitle
+          }}
+        >
+          <small>
+            PR #
+            {{build.pullRequestNumber}}
+          </small>
           {{#if build.request.isDraft}}
-            <span data-test-build-list-draft-badge class="message-label badge">draft</span>
+            <span data-test-build-list-draft-badge class="message-label badge">
+              draft
+            </span>
           {{/if}}
-        {{/link-to}}
+        </LinkTo>
+      {{else if build.isTag}}
+        <LinkTo
+          @route="build"
+          @models={{array build.repo build}}
+          @title={{build.tag.name}}
+        >
+          {{build.tag.name}}
+        </LinkTo>
       {{else}}
-        {{#if build.isTag}}
-          {{#link-to "build" build.repo build title=build.tag.name}}
-            {{build.tag.name}}
-          {{/link-to}}
-        {{else}}
-          {{#link-to "build" build.repo build title=build.branchName}}
-            {{build.branchName}}
-          {{/link-to}}
-        {{/if}}
+        <LinkTo
+          @route="build"
+          @models={{array build.repo build}}
+          @title={{build.branchName}}
+        >
+          {{build.branchName}}
+        </LinkTo>
       {{/if}}
     </h2>
     {{#if build.isPullRequest}}
@@ -27,56 +47,85 @@
       </div>
     {{else}}
       <div class="row-message">
-        {{{format-message build.commit.message short="true" repo=build.repo eventType=build.eventType maxLength=50}}}
+        {{{format-message
+          build.commit.message
+          short="true"
+          repo=build.repo
+          eventType=build.eventType
+          maxLength=50
+        }}}
       </div>
     {{/if}}
   </div>
   <div class="row-item row-committer">
-    {{created-by user=build.createdBy commit=build.commit committerOnly=true eventType=build.eventType}}
+    <CreatedBy
+      @user={{build.createdBy}}
+      @commit={{build.commit}}
+      @committerOnly={{true}}
+      @eventType={{build.eventType}}
+    />
   </div>
 </div>
-
 <div class="two-line">
   <h3 class="row-item request {{build.state}}">
     {{#if build.id}}
-      {{#link-to "build" build.repo build class="inner-underline"}}
+      <LinkTo
+        @route="build"
+        @models={{array build.repo build}}
+        class="inner-underline"
+      >
         {{#if build.isTag}}
-          {{svg-jar 'icon-tag' class=(concat build.state ' icon')}}
+          {{svg-jar "icon-tag" class=(concat build.state " icon")}}
         {{else}}
-          {{request-icon event=build.eventType state=build.state}}
+          <RequestIcon @event={{build.eventType}} @state={{build.state}} />
         {{/if}}
-        <span class="label-align inner-underline">#{{build.number}} {{humanize-state build.state}}</span>
-      {{/link-to}}
+        <span class="label-align inner-underline">
+          #
+          {{build.number}}
+          {{humanize-state build.state}}
+        </span>
+      </LinkTo>
     {{/if}}
   </h3>
   <div class="row-item row-commit">
-    {{#external-link-to href=build.commit.githubUrl}}
-      {{ember-tooltip text='View commit on GitHub'}}
-      {{svg-jar 'icon-commit' class="icon"}}
-      <span class="label-align inner-underline monospace">{{format-sha build.commit.sha}}</span>
-      {{svg-jar 'icon-external-link' class="icon"}}
-    {{/external-link-to}}
+    <ExternalLinkTo @href={{build.commit.githubUrl}}>
+      <EmberTooltip @text="View commit on GitHub" />
+      {{svg-jar "icon-commit" class="icon"}}
+      <span class="label-align inner-underline monospace">
+        {{format-sha build.commit.sha}}
+      </span>
+      {{svg-jar "icon-external-link" class="icon"}}
+    </ExternalLinkTo>
   </div>
 </div>
-
 <div class="two-line">
   <div class="row-item row-duration">
     <div>
-      {{svg-jar 'icon-clock' class="icon"}}
-      <time class="label-align" datetime="PT{{build.duration}}S">{{format-duration build.duration}}</time>
+      {{svg-jar "icon-clock" class="icon"}}
+      <time class="label-align" datetime="PT{{build.duration}}S">
+        {{format-duration build.duration}}
+      </time>
     </div>
   </div>
   <div class="row-item row-calendar">
-    <div title="{{if build.finishedAt (concat "Finished " build.formattedFinishedAt)}}">
-      {{svg-jar 'icon-calendar' class="icon"}}
-      <time class="label-align" datetime={{build.finishedAt}}>{{format-time build.finishedAt}}</time>
+    <div
+      title="{{if
+          build.finishedAt
+          (concat "Finished " build.formattedFinishedAt)
+        }}"
+    >
+      {{svg-jar "icon-calendar" class="icon"}}
+      <time class="label-align" datetime={{build.finishedAt}}>
+        {{format-time build.finishedAt}}
+      </time>
     </div>
   </div>
 </div>
-
 <div class="two-line actions">
   <div class="row-item actions">
-    {{repo-actions build=build repo=build.repo labelless=true}}
+    <RepoActions @build={{build}} @repo={{build.repo}} @labelless={{true}} />
   </div>
-  <div class="row-item">&nbsp;</div>
+  <div class="row-item">
+    &nbsp;
+  </div>
 </div>

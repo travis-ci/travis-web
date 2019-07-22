@@ -1,9 +1,12 @@
 {{#if account.hasSubscriptionPermissions}}
-  <a href={{subscription.billingUrl}} class='button--green manage-subscription'>
+  <a href={{subscription.billingUrl}} class="button--green manage-subscription">
     Edit subscription
   </a>
 {{else}}
-  <div class='button--green manage-subscription disabled'>
-    Edit subscription {{ember-tooltip text='You do not have permission to edit this subscription'}}
+  <div class="button--green manage-subscription disabled">
+    Edit subscription
+    <EmberTooltip
+      @text="You do not have permission to edit this subscription"
+    />
   </div>
 {{/if}}

@@ -1,7 +1,7 @@
 {{#if repository.private}}
-  {{svg-jar 'icon-lock' alt='Private repository' class='icon private'}}
-  {{ember-tooltip text='Private repository'}}
+  {{svg-jar "icon-lock" alt="Private repository" class="icon private"}}
+  <EmberTooltip @text="Private repository" />
 {{else}}
-  {{svg-jar 'icon-os' alt='Public repository' class='icon public'}}
-  {{ember-tooltip text='Public repository'}}
+  {{svg-jar "icon-os" alt="Public repository" class="icon public"}}
+  <EmberTooltip @text="Public repository" />
 {{/if}}

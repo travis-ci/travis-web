@@ -1,5 +1,11 @@
-{{svg-jar 'icon-alert' class='icon'}}
+{{svg-jar "icon-alert" class="icon"}}
 <span>
-  <span data-test-message>{{message}}</span>
-  {{#if showLink}}<a href={{billingUrl}} title="Go to Travis CI Billing" class="right">{{billingLinkText}}</a>{{/if}}
+  <span data-test-message>
+    {{message}}
+  </span>
+  {{#if showLink}}
+    <a href={{billingUrl}} title="Go to Travis CI Billing" class="right">
+      {{billingLinkText}}
+    </a>
+  {{/if}}
 </span>

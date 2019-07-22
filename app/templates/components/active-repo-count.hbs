@@ -1,12 +1,10 @@
-{{insights-glance
-  isLoading=isAnythingLoading
-  isEmpty=isEmpty
-
-  title='Active Repositories'
-  statistic=activeTotal
-
-  labels=labels
-  values=activeRepos
-  datasetTitle='Active Repositories'
-  centerline=avgReposRounded
-}}
+<InsightsGlance
+  @isLoading={{isAnythingLoading}}
+  @isEmpty={{isEmpty}}
+  @title="Active Repositories"
+  @statistic={{activeTotal}}
+  @labels={{labels}}
+  @values={{activeRepos}}
+  @datasetTitle="Active Repositories"
+  @centerline={{avgReposRounded}}
+/>

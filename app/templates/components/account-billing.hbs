@@ -1,21 +1,17 @@
-<section class='billing'>
+<section class="billing">
   {{#if isEducation}}
-    {{billing-education account=account}}
+    <BillingEducation @account={{account}} />
   {{/if}}
-
   {{#if isTrial}}
-    {{billing-trial account=account}}
+    <BillingTrial @account={{account}} />
   {{/if}}
-
   {{#if isManual}}
-    {{billing-manual subscription=subscription}}
+    <BillingManual @subscription={{subscription}} />
   {{/if}}
-
   {{#if isManaged}}
-    {{billing-subscription account=account}}
+    <BillingSubscription @account={{account}} />
   {{/if}}
 </section>
-
 {{#if invoices}}
-  {{billing-invoices invoices=invoices}}
+  <BillingInvoices @invoices={{invoices}} />
 {{/if}}

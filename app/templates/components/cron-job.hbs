@@ -1,25 +1,50 @@
 <div class="cron-job-text branch-name" title="{{cron.branch.name}}">
-    {{request-icon event='cron'}}
-    <span class="label-align">{{cron.branch.name}}</span></div>
+  <RequestIcon @event="cron" />
+  <span class="label-align">
+    {{cron.branch.name}}
+  </span>
+</div>
 <div class="cron-job-text interval">
-    {{svg-jar 'icon-calendar' class="icon"}}
-    <span class="label-align">Runs {{cron.interval}}</span></div>
+  {{svg-jar "icon-calendar" class="icon"}}
+  <span class="label-align">
+    Runs
+    {{cron.interval}}
+  </span>
+</div>
 <div class="cron-job-text last-run" title="{{cron.last_run}}">
-    {{svg-jar 'icon-clock' class="icon"}}
-    <time class="label-align" datetime="{{cron.last_run}}">Ran {{format-time cron.last_run}}</time></div>
+  {{svg-jar "icon-clock" class="icon"}}
+  <time class="label-align" datetime="{{cron.last_run}}">
+    Ran
+    {{format-time cron.last_run}}
+  </time>
+</div>
 <div class="cron-job-text next-run" title="{{cron.next_run}}">
-    {{svg-jar 'icon-nextcron' class="icon"}}
-    <time class="label-align" datetime="{{cron.next_run}}">Scheduled in {{format-time cron.next_run}}</time></div>
-<div class="cron-job-text dont-run-if-recent-build-exists" title="{{dontRunIfRecentBuildExists}}">
-    {{svg-jar 'icon-settings' class="icon"}}
-    <span class="label-align">{{dontRunIfRecentBuildExists}}</span></div>
+  {{svg-jar "icon-nextcron" class="icon"}}
+  <time class="label-align" datetime="{{cron.next_run}}">
+    Scheduled in
+    {{format-time cron.next_run}}
+  </time>
+</div>
+<div
+  class="cron-job-text dont-run-if-recent-build-exists"
+  title="{{dontRunIfRecentBuildExists}}"
+>
+  {{svg-jar "icon-settings" class="icon"}}
+  <span class="label-align">
+    {{dontRunIfRecentBuildExists}}
+  </span>
+</div>
 <div class="cron-job-action">
   {{#if delete.isRunning}}
-    {{loading-indicator}}
+    <LoadingIndicator />
   {{else}}
-    <button {{action (perform delete) on="click"}} type="button" class="cron-job-delete no-button">
-      {{ember-tooltip text='Delete'}}
-      {{svg-jar 'icon-trash' class="icon"}}
+    <button
+      type="button"
+      class="cron-job-delete no-button"
+      {{action (perform delete) on="click"}}
+    >
+      <EmberTooltip @text="Delete" />
+      {{svg-jar "icon-trash" class="icon"}}
     </button>
   {{/if}}
 </div>

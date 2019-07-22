@@ -1,36 +1,55 @@
 {{#if filteredJobs.length}}
-
   {{#unless required}}
     {{#if stage}}
       <header data-test-stage-header class="stage-header {{stageState}}">
         <h2 class="section-title">
-          {{#if stageStateIcon}}<span class='state-icon-container' title='{{stageStateTitle}}'>{{svg-jar stageStateIcon class='icon'}}</span>{{/if}}
-          <span class='name'>{{format-message stage.name}}</span>
+          {{#if stageStateIcon}}
+            <span class="state-icon-container" title="{{stageStateTitle}}">
+              {{svg-jar stageStateIcon class="icon"}}
+            </span>
+          {{/if}}
+          <span class="name">
+            {{format-message stage.name}}
+          </span>
         </h2>
         {{#if stage.duration}}
-          <div class="stage-duration" title="Started {{pretty-date stage.startedAt}}">
-            {{svg-jar 'icon-clock' class="icon"}}
-            <time class="label-align" aria-label="Stage duration" datetime="PT{{stage.duration}}S">{{format-duration stage.duration}}</time>
+          <div
+            class="stage-duration"
+            title="Started {{pretty-date stage.startedAt}}"
+          >
+            {{svg-jar "icon-clock" class="icon"}}
+            <time
+              class="label-align"
+              aria-label="Stage duration"
+              datetime="PT{{stage.duration}}S"
+            >
+              {{format-duration stage.duration}}
+            </time>
           </div>
         {{/if}}
       </header>
     {{else}}
-      <h2 class="section-title"><span class="label-align">Allowed Failures</span>
+      <h2 class="section-title">
+        <span class="label-align">
+          Allowed Failures
+        </span>
         <span>
-          {{svg-jar 'icon-help' class='icon-help'}}
-          {{ember-tooltip text='These are jobs you can allow to fail without failing your entire build'}}
+          {{svg-jar "icon-help" class="icon-help"}}
+          <EmberTooltip
+            @text="These are jobs you can allow to fail without failing your entire build"
+          />
         </span>
       </h2>
     {{/if}}
   {{/unless}}
-
-    <ul class="jobs-list">
+  <ul class="jobs-list">
     {{#each filteredJobs as |job|}}
-      {{jobs-item job=job repo=repo}}
+      <JobsItem @job={{job}} @repo={{repo}} />
     {{/each}}
-    </ul>
-
+  </ul>
   {{#if stageAllowFailuresText}}
-    <aside>{{stageAllowFailuresText}}</aside>
+    <aside>
+      {{stageAllowFailuresText}}
+    </aside>
   {{/if}}
 {{/if}}

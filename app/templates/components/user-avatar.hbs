@@ -1,10 +1,19 @@
-<span class='{{if small 'avatar--small' 'avatar'}}'>
-  <span class="pseudo-avatar" aria-hidden="true" data-initials="{{userInitials}}"></span>
+<span class="{{if small "avatar--small" "avatar"}}">
+  <span
+    class="pseudo-avatar"
+    aria-hidden="true"
+    data-initials="{{userInitials}}"
+  ></span>
   {{#if url}}
-    <img class="real-avatar" src="{{avatarUrl}}" srcset="{{avatarUrl}} 1x, {{highResAvatarUrl}} 2x" alt="{{name}} avatar">
+    <img
+      class="real-avatar"
+      src="{{avatarUrl}}"
+      srcset="{{avatarUrl}} 1x, {{highResAvatarUrl}} 2x"
+      alt="{{name}} avatar"
+    />
   {{/if}}
 </span>
 {{#if showSubscriptionCheckmark}}
-  {{svg-jar 'avatar-checkmark' class='checkmark'}}
-  {{ember-tooltip text=subscriptionTooltipText}}
+  {{svg-jar "avatar-checkmark" class="checkmark"}}
+  <EmberTooltip @text={{subscriptionTooltipText}} />
 {{/if}}

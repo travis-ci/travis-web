@@ -1,12 +1,16 @@
-{{#travis-layout layoutName="layouts/error" class="error error404"}}
-<div class="error-bg error-full-size">
-  <div class="hill-left error-full-size"></div>
-  <div class="hill-right error-full-size"></div>
-</div>
-<div class="error-excavator error-full-size"></div>
-<div class="error-travis error-full-size"></div>
-<div class="error-text">
-  <h1 data-test-error-404-header>404: Something's Missing</h1>
-  <p data-test-error-404-subheader>We're sorry! It seems like this page cannot be found.</p>
-</div>
-{{/travis-layout}}
+<TravisLayout @layoutName="layouts/error" class="error error404">
+  <div class="error-bg error-full-size">
+    <div class="hill-left error-full-size"></div>
+    <div class="hill-right error-full-size"></div>
+  </div>
+  <div class="error-excavator error-full-size"></div>
+  <div class="error-travis error-full-size"></div>
+  <div class="error-text">
+    <h1 data-test-error-404-header>
+      404: Something's Missing
+    </h1>
+    <p data-test-error-404-subheader>
+      We're sorry! It seems like this page cannot be found.
+    </p>
+  </div>
+</TravisLayout>

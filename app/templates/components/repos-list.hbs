@@ -1,9 +1,11 @@
 {{#if repos}}
   <ul class="repos-list">
     {{#each repos as |repo|}}
-      {{repos-list-item data-test-components-repos-list-item repo=repo}}
+      <ReposListItem data-test-components-repos-list-item @repo={{repo}} />
     {{/each}}
   </ul>
-  {{else}}
-    <div class="loading-container">{{noReposMessage}}</div>
+{{else}}
+  <div class="loading-container">
+    {{noReposMessage}}
+  </div>
 {{/if}}

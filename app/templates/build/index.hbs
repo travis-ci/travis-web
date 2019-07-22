@@ -1,10 +1,19 @@
 {{#if build.isMatrix}}
   {{#if build.stages}}
     {{#each build.sortedStages as |stage|}}
-      {{jobs-list stage=stage build=build repo=build.repo stages=sortedBuildStages}}
+      <JobsList
+        @stage={{stage}}
+        @build={{build}}
+        @repo={{build.repo}}
+        @stages={{sortedBuildStages}}
+      />
     {{/each}}
   {{else}}
-    {{jobs-list jobs=build.requiredJobs repo=build.repo required="true"}}
-    {{jobs-list jobs=build.allowedFailureJobs repo=build.repo}}
+    <JobsList
+      @jobs={{build.requiredJobs}}
+      @repo={{build.repo}}
+      required="true"
+    />
+    <JobsList @jobs={{build.allowedFailureJobs}} @repo={{build.repo}} />
   {{/if}}
 {{/if}}

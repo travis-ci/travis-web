@@ -1,10 +1,18 @@
 <ul class="requests">
-  {{#each model as |request| }}
-    {{requests-item request=request highlightedRequestId=requestId}}
+  {{#each model as |request|}}
+    <RequestsItem @request={{request}} @highlightedRequestId={{requestId}} />
   {{else}}
-    {{#missing-notice title="No requests for this repository"}}
-      <p class="page-notice">Want to start testing this project on Travis CI?</p>
-      <a href="http://docs.travis-ci.com/user/getting-started/" class="button" title="Travis documentation on getting set up">Read the Docs on Getting Started</a>
-    {{/missing-notice}}
+    <MissingNotice @title="No requests for this repository">
+      <p class="page-notice">
+        Want to start testing this project on Travis CI?
+      </p>
+      <a
+        href="http://docs.travis-ci.com/user/getting-started/"
+        class="button"
+        title="Travis documentation on getting set up"
+      >
+        Read the Docs on Getting Started
+      </a>
+    </MissingNotice>
   {{/each}}
 </ul>

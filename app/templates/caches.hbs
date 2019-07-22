@@ -1,29 +1,63 @@
 {{#if cachesExist}}
   <div class="caches-header">
-    <h1 class="small-title">All caches <small>(<a href="http://docs.travis-ci.com/user/caching/" title="Read about caching">Read the docs</a>)</small></h1>
-    <button {{action (perform deleteRepoCache)}} class="{{if deleteRepoCache.isRunning 'deleting'}} delete-cache-button no-button" title="Delete all repository caches">
+    <h1 class="small-title">
+      All caches
+      <small>
+        (
+        <a
+          href="http://docs.travis-ci.com/user/caching/"
+          title="Read about caching"
+        >
+          Read the docs
+        </a>
+        )
+      </small>
+    </h1>
+    <button
+      class="{{if deleteRepoCache.isRunning "deleting"}}
+         delete-cache-button no-button"
+      title="Delete all repository caches"
+      {{action (perform deleteRepoCache)}}
+    >
       Delete all repository caches
-      {{svg-jar 'icon-trash' class="icon"}}
+      {{svg-jar "icon-trash" class="icon"}}
     </button>
   </div>
   {{#if model.pushes.length}}
-    <h2 class="small-title">Pushes</h2>
+    <h2 class="small-title">
+      Pushes
+    </h2>
     <ul class="caches-list push-caches">
-      {{#each  model.pushes as |cache|}}
-        {{caches-item cache=cache repo=repo caches=model.pushes}}
+      {{#each model.pushes as |cache|}}
+        <CachesItem @cache={{cache}} @repo={{repo}} @caches={{model.pushes}} />
       {{/each}}
     </ul>
   {{/if}}
-
   {{#if model.pullRequests.length}}
-    <h2 class="small-title">Pull Requests</h2>
+    <h2 class="small-title">
+      Pull Requests
+    </h2>
     <ul class="caches-list pull-request-caches">
       {{#each model.pullRequests as |cache|}}
-        {{caches-item cache=cache repo=repo caches=model.pullRequests}}
+        <CachesItem
+          @cache={{cache}}
+          @repo={{repo}}
+          @caches={{model.pullRequests}}
+        />
       {{/each}}
     </ul>
   {{/if}}
-
 {{else}}
-  <p class="helptext no-caches">No caches have been created yet,<br>read more on <a href="http://docs.travis-ci.com/user/caching/" title="Documentation on caching">how to setup caching with your build</a>.</p>
+  <p class="helptext no-caches">
+    No caches have been created yet,
+    <br />
+    read more on
+    <a
+      href="http://docs.travis-ci.com/user/caching/"
+      title="Documentation on caching"
+    >
+      how to setup caching with your build
+    </a>
+    .
+  </p>
 {{/if}}

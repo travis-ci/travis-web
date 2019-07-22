@@ -1,24 +1,31 @@
-<section class='user-settings'>
-    {{#if scrollToAuth}}
-      {{scroll-here}}
-    {{/if}}
+<section class="user-settings">
+  {{#if scrollToAuth}}
+    <ScrollHere />
+  {{/if}}
   <section>
-    <h3>API authentication</h3>
-
-    <p>To learn more about using our API, please head to <a href='https://developer.travis-ci.com'>developer.travis-ci.com</a>.</p>
-
-    {{account-token account=model}}
+    <h3>
+      API authentication
+    </h3>
+    <p>
+      To learn more about using our API, please head to
+      <a href="https://developer.travis-ci.com">
+        developer.travis-ci.com
+      </a>
+      .
+    </p>
+    <AccountToken @account={{model}} />
   </section>
-
   {{#if features.betaFeatures}}
     {{#if scrollToFeatures}}
-      {{scroll-here}}
+      <ScrollHere />
     {{/if}}
     <section>
-      <h3>Features</h3>
+      <h3>
+        Features
+      </h3>
       <ul class="features-list">
         {{#each (sort-by "name" featureFlags) as |feature|}}
-          {{beta-feature feature=feature}}
+          <BetaFeature @feature={{feature}} />
         {{else}}
           Oops! It looks like we don't have any experimental features for you
           to try yet.
@@ -26,12 +33,13 @@
       </ul>
     </section>
   {{/if}}
-
   {{#if scrollToEmail}}
-    {{scroll-here}}
+    <ScrollHere />
   {{/if}}
   <section class="email-settings" data-test-email-settings>
-    <h3>Email notifications</h3>
+    <h3>
+      Email notifications
+    </h3>
     <div class="build-emails">
       <div class="row">
         <div class="name" data-test-email-settings-title>
@@ -41,22 +49,31 @@
           The status of your builds straight to your inbox
         </div>
         <div class="controls">
-          {{travis-switch
-            active=buildEmails
-            disabled=toggleBuildEmails.isRunning
-            onToggle=(perform toggleBuildEmails)
-            data-test-email-settings-toggle=true
-          }}
+          <TravisSwitch
+            @active={{buildEmails}}
+            @disabled={{toggleBuildEmails.isRunning}}
+            @onToggle={{perform toggleBuildEmails}}
+            data-test-email-settings-toggle={{true}}
+          />
         </div>
       </div>
     </div>
     {{#if showResubscribeList}}
-      <div class="unsubscribed-emails" data-test-email-settings-resubscribe-list>
-        {{#paper-block title="Email notifications you've unsubscribed from" elevation=2 padding=false}}
+      <div
+        class="unsubscribed-emails"
+        data-test-email-settings-resubscribe-list
+      >
+        <PaperBlock
+          @title="Email notifications you've unsubscribed from"
+          @elevation={{2}}
+          @padding={{false}}
+        >
           {{#each unsubscribedRepos as |repo|}}
             <div class="row" data-test-email-settings-resubscribe-item>
               <div class="name">
-                {{#link-to 'repo' repo}}{{repo.formattedSlug}}{{/link-to}}
+                <LinkTo @route="repo" @model={{repo}}>
+                  {{repo.formattedSlug}}
+                </LinkTo>
               </div>
               <div class="description"></div>
               <div class="controls">
@@ -66,44 +83,50 @@
                   data-test-email-settings-resubscribe-button
                 >
                   {{#if repo.subscribe.isRunning}}
-                    {{loading-indicator inline=true}}
+                    <LoadingIndicator @inline={{true}} />
                   {{else if repo.subscribe.last.error}}
                     Error! Try again.
                   {{else}}
-                    {{svg-jar 'icon-email' class="icon" width="15px"}} Re-subscribe
+                    {{svg-jar "icon-email" class="icon" width="15px"}}
+                    Re-subscribe
                   {{/if}}
                 </button>
               </div>
             </div>
           {{/each}}
-        {{/paper-block}}
+        </PaperBlock>
       </div>
     {{else if fetchRepositories.isRunning}}
-      {{loading-indicator}}
+      <LoadingIndicator />
     {{/if}}
   </section>
   {{#if features.proVersion}}
     {{#if scrollToInsights}}
-      {{scroll-here}}
+      <ScrollHere />
     {{/if}}
     <section class="insights-visibility-settings" data-test-insights-settings>
-      <h3 data-test-insights-settings-title>Insights Visibility Settings</h3>
+      <h3 data-test-insights-settings-title>
+        Insights Visibility Settings
+      </h3>
       <div class="insights-settings">
         <p class="description" data-test-insights-settings-description>
-          Make more informed decisions about your development workflow using your build Insights.<br />
-          {{#link-to
-            'owner.repositories'
-            account.login
-            (query-params tab='insights')
-          }}
-            View {{account.fullName}}'s Insights
-          {{/link-to}}
+          Make more informed decisions about your development workflow using your build Insights.
+          <br />
+          <LinkTo
+            @route="owner.repositories"
+            @model={{account.login}}
+            @query={{hash tab="insights"}}
+          >
+            View
+            {{account.fullName}}
+            's Insights
+          </LinkTo>
         </p>
-        {{visibility-setting-list
-          options=insightsVisibilityOptions
-          initialKey=privateInsightsVisibility
-          onConfirm=(action 'setInsightsVis')
-        }}
+        <VisibilitySettingList
+          @options={{insightsVisibilityOptions}}
+          @initialKey={{privateInsightsVisibility}}
+          @onConfirm={{action "setInsightsVis"}}
+        />
       </div>
     </section>
   {{/if}}

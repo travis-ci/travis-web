@@ -1,36 +1,40 @@
 {{#if branchesExist}}
   <div class="branches">
     {{#if defaultBranch}}
-      <section class='default-branch'>
-        <h2 class="small-title">Default Branch</h2>
+      <section class="default-branch">
+        <h2 class="small-title">
+          Default Branch
+        </h2>
         <ul class="blank-list">
-          {{branch-row branch=defaultBranch}}
+          <BranchRow @branch={{defaultBranch}} />
         </ul>
       </section>
     {{/if}}
-
     {{#if activeBranches.length}}
-      <section class='active-branches'>
-        <h2 class="small-title">Active Branches</h2>
+      <section class="active-branches">
+        <h2 class="small-title">
+          Active Branches
+        </h2>
         <ul class="blank-list">
           {{#each activeBranches as |branch|}}
-            {{branch-row branch=branch}}
+            <BranchRow @branch={{branch}} />
           {{/each}}
         </ul>
       </section>
     {{/if}}
-
     {{#if inactiveBranches.length}}
-      <section class='inactive-branches'>
-        <h2 class="small-title">Inactive Branches</h2>
+      <section class="inactive-branches">
+        <h2 class="small-title">
+          Inactive Branches
+        </h2>
         <ul class="blank-list">
           {{#each inactiveBranches as |branch|}}
-            {{branch-row branch=branch inactive=true}}
+            <BranchRow @branch={{branch}} @inactive={{true}} />
           {{/each}}
         </ul>
       </section>
     {{/if}}
   </div>
 {{else}}
-  {{missing-notice title="No other branches for this repository"}}
+  <MissingNotice @title="No other branches for this repository" />
 {{/if}}

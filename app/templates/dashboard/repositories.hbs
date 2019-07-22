@@ -1,11 +1,21 @@
-<section data-test-dashboard-active-repositories class="dashboard-section dashboard-active">
+<section
+  data-test-dashboard-active-repositories
+  class="dashboard-section dashboard-active"
+>
   <ul class="repo-list">
     {{#each filteredRepos as |repo|}}
-      {{dashboard-row repo=repo star=dashboardController.star unstar=dashboardController.unstar}}
+      <DashboardRow
+        @repo={{repo}}
+        @star={{dashboardController.star}}
+        @unstar={{dashboardController.unstar}}
+      />
     {{else}}
-      {{no-repos}}
+      <NoRepos />
     {{/each}}
   </ul>
-
-  {{pagination-navigation data-test-components-pagination-navigation collection=model.repos route="dashboard.repositories"}}
+  <PaginationNavigation
+    data-test-components-pagination-navigation
+    @collection={{model.repos}}
+    @route="dashboard.repositories"
+  />
 </section>

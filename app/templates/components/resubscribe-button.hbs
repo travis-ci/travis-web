@@ -1,9 +1,13 @@
 {{#if account.hasSubscriptionPermissions}}
-<a href={{subscription.billingUrl}} class='button--green manage-subscription resubscribe'>
-  Resubscribe
-</a>
+  <a
+    href={{subscription.billingUrl}}
+    class="button--green manage-subscription resubscribe"
+  >
+    Resubscribe
+  </a>
 {{else}}
-<div class='button--green manage-subscription disabled resubscribe'>
-  Resubscribe{{ember-tooltip text='You do not have permission to resubscribe'}}
-</div>
+  <div class="button--green manage-subscription disabled resubscribe">
+    Resubscribe
+    <EmberTooltip @text="You do not have permission to resubscribe" />
+  </div>
 {{/if}}

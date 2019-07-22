@@ -1,22 +1,18 @@
 {{#if fetchRepo.isRunning}}
-
-  {{loading-screen center=true margin=true}}
-
+  <LoadingScreen @center={{true}} @margin={{true}} />
 {{else}}
   <div class="container">
-
-    {{svg-jar "sadmail" class="picture" data-test-email-unsubscribe-sadmail=true}}
-
+    {{svg-jar "sadmail" class="picture" data-test-email-unsubscribe-sadmail=true
+    }}
     {{#if isError}}
-
       <h1 class="title" data-test-email-unsubscribe-title>
-        We didn't find the repository <br /> that you wanted to unsubscribe from
+        We didn't find the repository
+        <br />
+        that you wanted to unsubscribe from
       </h1>
-
       <p class="description" data-test-email-unsubscribe-description>
         Please make sure you have access to the repository and try again.
       </p>
-
       <div class="controls">
         <button
           class="button--white button--hover"
@@ -26,35 +22,48 @@
           Try again
         </button>
       </div>
-
     {{else}}
-
       <h1 class="title" data-test-email-unsubscribe-title>
-        Unsubscribe from {{#link-to 'repo' repo target="_blank" class="repo-link repo-slug"}}
+        Unsubscribe from
+        <LinkTo
+          @route="repo"
+          @model={{repo}}
+          @target="_blank"
+          class="repo-link repo-slug"
+        >
           {{repo.formattedSlug}}
-        {{/link-to}}
+        </LinkTo>
       </h1>
-
       <p class="description" data-test-email-unsubscribe-description>
         {{#if isSubscribed}}
           Please confirm that you would like to unsubscribe from build emails for the
         {{else}}
           You are unsubscribed from build emails for the
         {{/if}}
-        <span class="repo-slug repo-slug--bold">{{repo.formattedSlug}}</span>
+        <span class="repo-slug repo-slug--bold">
+          {{repo.formattedSlug}}
+        </span>
         repository.
-
         {{#if showConfigNote}}
           If you’re still receiving emails after unsubscribing, please check your
-          <a target="_blank" href="https://github.com/{{repo.slug}}/blob/{{repo.defaultBranch.name}}/.travis.yml">.travis.yml</a>
+          <a
+            target="_blank"
+            href="https://github.com/
+              {{repo.slug}}
+              /blob/
+              {{repo.defaultBranch.name}}
+              /.travis.yml"
+          >
+            .travis.yml
+          </a>
         {{/if}}
       </p>
-
       <div class="controls">
         <button
-          class="{{if isSubscribed 'button--orange' 'button--white'}} button--hover control control--primary"
+          class="{{if isSubscribed "button--orange" "button--white"}}
+             button--hover control control--primary"
           disabled={{task.isRunning}}
-          onclick={{action 'processTask'}}
+          onclick={{action "processTask"}}
           data-test-email-unsubscribe-primary-button
         >
           {{#if isUnsubscribing}}
@@ -67,29 +76,28 @@
             Re-subscribe
           {{/if}}
         </button>
-        {{#link-to 'repo' repo
-          tagName="button"
-          disabled=task.isRunning
+        <LinkTo
+          @route="repo"
+          @model={{repo}}
+          @tagName="button"
+          @disabled={{task.isRunning}}
           class="no-button control"
-          data-test-email-unsubscribe-secondary-button=true
-        }}
+          data-test-email-unsubscribe-secondary-button={{true}}
+        >
           {{#if isSubscribed}}
             Cancel
           {{else}}
             Go to repository
           {{/if}}
-        {{/link-to}}
+        </LinkTo>
       </div>
-
       <p class="appendix" data-test-email-unsubscribe-appendix>
         You can always opt-in to receive emails for this repository
         again anytime by updating your
-        {{#link-to 'account.settings' class="settings-link"}}
+        <LinkTo @route="account.settings" class="settings-link">
           email notification settings
-        {{/link-to}}
+        </LinkTo>
       </p>
-
     {{/if}}
-
   </div>
 {{/if}}

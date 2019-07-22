@@ -1,14 +1,30 @@
-{{#if user.isSyncing }}
-   <div data-test-is-syncing-button class="button is-syncing">
-     <span class="loading-indicator--white label-align"><i></i><i></i><i></i></span>
-     <span class="label-align">Syncing from GitHub</span>
+{{#if user.isSyncing}}
+  <div data-test-is-syncing-button class="button is-syncing">
+    <span class="loading-indicator--white label-align">
+      <i></i>
+      <i></i>
+      <i></i>
+    </span>
+    <span class="label-align">
+      Syncing from GitHub
+    </span>
   </div>
 {{else}}
-  <button {{action 'sync'}} data-test-start-sync-button class="button" type="button">
-    {{svg-jar 'icon-restart' class="icon white"}}
-    <span class="label-align">Sync account</span>
+  <button
+    data-test-start-sync-button
+    class="button"
+    type="button"
+    {{action "sync"}}
+  >
+    {{svg-jar "icon-restart" class="icon white"}}
+    <span class="label-align">
+      Sync account
+    </span>
   </button>
-  <div class='sync-last-container'>
-    <span class="sync-last">Last synced {{format-time user.syncedAt}}</span>
+  <div class="sync-last-container">
+    <span class="sync-last">
+      Last synced
+      {{format-time user.syncedAt}}
+    </span>
   </div>
 {{/if}}

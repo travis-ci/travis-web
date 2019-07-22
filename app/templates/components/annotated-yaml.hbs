@@ -1,10 +1,16 @@
-{{build-messages-list request=@request viewMessage=(action (mut viewingMessage))}}
-
-<div class='raw-configs'>
+<BuildMessagesList
+  @request={{@request}}
+  @viewMessage={{action (mut viewingMessage)}}
+/>
+<div class="raw-configs">
   {{#each @request.uniqRawConfigs as |rawConfig|}}
-    {{raw-config rawConfig=rawConfig build=@request.build slug=@request.repo.slug}}
+    <RawConfig
+      @rawConfig={{rawConfig}}
+      @build={{@request.build}}
+      @slug={{@request.repo.slug}}
+    />
   {{else}}
-    <div class='starred-empty'>
+    <div class="starred-empty">
       The .travis.yml file used for this job is not available
     </div>
   {{/each}}
