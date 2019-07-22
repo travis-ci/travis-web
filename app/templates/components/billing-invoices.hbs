@@ -9,12 +9,11 @@
       </LinkTo>
     </p>
     {{#travis-form as |form|}}      
-      <div class='form-elem select invoice-select-year'>
+      <div class='form-elem invoice-select-year'>
         {{#form.field
           data-test-invoice-select-year
           value=year
           class='margin-top-0'
-          showRequiredMark=true
           onChange=(action (mut year))
           showValidationStatusIcons=false as |field|
         }}
@@ -40,7 +39,7 @@
       <tbody>
         {{#each (sort-by 'createdAt:desc' selectedInvoices) as |invoice|}}
           <tr data-test-invoice>
-            <td> {{moment-format invoice.createdAt 'MMMM DD, YYYY'}} </td>
+            <td> {{svg-jar 'icon-invoice' class='icon'}}{{moment-format invoice.createdAt 'MMMM DD, YYYY'}} </td>
             <td> •••• •••• •••• {{subscription.creditCardInfo.lastDigits}} </td>
             <td> {{ price }} </td>
             <td>
