@@ -35,7 +35,6 @@ export default Controller.extend({
         annual,
         builds,
         currency,
-        currencySymbol: '$',
         description: PLAN_DESCRIPTIONS[builds] || PLAN_DESCRIPTIONS['default'],
         displayPrice: Math.round(monthlyPrice / 100),
         interval: `per month ${(annual ? 'billed annually' : '')}`,
