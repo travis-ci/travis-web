@@ -12,6 +12,7 @@ matrix:
       env: TRY_CONFIG=ember-beta
     - if: type = cron
       env: TRY_CONFIG=ember-data-beta
+    - node_js: 10
   allow_failures:
     - env: TRY_CONFIG=ember-beta
     - env: TRY_CONFIG=ember-data-beta
