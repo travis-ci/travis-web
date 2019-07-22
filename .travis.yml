@@ -6,16 +6,21 @@ env:
   global:
     - PERCY_ENABLE=0
 
-matrix:
-  include:
-    - if: type = cron
-      env: TRY_CONFIG=ember-beta
-    - if: type = cron
-      env: TRY_CONFIG=ember-data-beta
-    - node_js: 10
-  allow_failures:
-    - env: TRY_CONFIG=ember-beta
-    - env: TRY_CONFIG=ember-data-beta
+stages:
+  - name: lint
+    if: (NOT branch = master) AND (type = cron)
+    script: npm run lint:js
+
+# matrix:
+#   include:
+#     - if: type = cron
+#       env: TRY_CONFIG=ember-beta
+#     - if: type = cron
+#       env: TRY_CONFIG=ember-data-beta
+#     - node_js: 10
+#   allow_failures:
+#     - env: TRY_CONFIG=ember-beta
+#     - env: TRY_CONFIG=ember-data-beta
 
 dist: xenial
 
@@ -45,7 +50,6 @@ before_script:
   - greenkeeper-lockfile-update
 
 script:
-  - if [ -z "$TRY_CONFIG" ]; then npm run lint:js; fi
   - if [ -z "$TRY_CONFIG" ]; then ember exam --reporter dot $RANDOMISE; fi
   - if [[ ! -z "$TRY_CONFIG" ]]; then ember try:one $TRY_CONFIG --skip-cleanup; fi
 
