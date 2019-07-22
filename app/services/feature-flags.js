@@ -11,7 +11,7 @@ export default Service.extend({
   serverFlags: [],
 
   _setFlagState(flag) {
-    const features = this.get('features');
+    const features = this.features;
 
     for (let flagName in flag) {
       return flag[flagName] ? features.enable(flagName) : features.disable(flagName);
@@ -29,7 +29,7 @@ export default Service.extend({
       return obj;
     });
 
-    this.get('storage').setItem('travis.features', JSON.stringify(state));
+    this.storage.setItem('travis.features', JSON.stringify(state));
 
     return state;
   },
@@ -37,12 +37,12 @@ export default Service.extend({
   fetchTask: task(function* ({forceServerRequest} = false) {
     try {
       // try to read from local storage first, fall back to API
-      const localFlags = yield JSON.parse(this.get('storage').getItem('travis.features'));
+      const localFlags = yield JSON.parse(this.storage.getItem('travis.features'));
 
       if (!forceServerRequest && !isEmpty(localFlags)) {
         this._setFlagStateFromStorage(localFlags);
       } else {
-        const featureSet = yield this.get('store').findAll('beta-feature');
+        const featureSet = yield this.store.findAll('beta-feature');
         this.set('serverFlags', featureSet);
         const persisted = this._storeRemoteFlagState(featureSet);
         this._setFlagStateFromStorage(persisted);
@@ -52,13 +52,13 @@ export default Service.extend({
       // TODO:
       // We are still thinking about how to handle a failure from a UX perspective.
       // For instance, we might want to show the user a flash message etc.
-      this.get('raven').logException(e);
+      this.raven.logException(e);
     }
   }).drop(),
 
   reset() {
-    this.get('serverFlags').map(flag => {
-      this.get('features').disable(flag.get('name').dasherize());
+    this.serverFlags.map(flag => {
+      this.features.disable(flag.get('name').dasherize());
     });
   },
 });

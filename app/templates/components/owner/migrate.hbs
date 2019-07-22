@@ -166,6 +166,7 @@
         {{#if isShowingRepositoryMigrationModal}}
           {{#modal-dialog
              onClose=(action 'closeMigrateModal')
+             onClickOverlay=(action 'closeMigrateModal')
              targetAttachment="center"
              translucentOverlay=true
           }}

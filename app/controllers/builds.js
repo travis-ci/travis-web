@@ -30,7 +30,7 @@ export default Controller.extend(...mixins, {
   }),
 
   displayShowMoreButton: computed('tab', 'builds.lastObject.number', function () {
-    let tab = this.get('tab');
+    let tab = this.tab;
     let lastBuildNumber = this.get('builds.lastObject.number');
     return tab !== 'branches' && parseInt(lastBuildNumber) > 1;
   })

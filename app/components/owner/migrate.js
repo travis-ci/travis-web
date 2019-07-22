@@ -1,7 +1,14 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
-import { reads, gt, notEmpty, or, filterBy, and } from '@ember/object/computed';
+import {
+  reads,
+  gt,
+  notEmpty,
+  or,
+  filterBy,
+  and
+} from '@ember/object/computed';
 import config from 'travis/config/environment';
 
 const { appName = 'travis-ci' } = config.githubApps;

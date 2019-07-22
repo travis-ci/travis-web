@@ -11,15 +11,15 @@ export default Component.extend({
       if (config.gaCode) {
         _gaq.push(['_trackPageview', `/virtual/signup?${location}`]);
       }
-      this.get('auth').signIn();
+      this.auth.signIn();
     },
 
     signIn() {
-      return this.get('signIn')();
+      return this.signIn();
     },
 
     signOut() {
-      return this.get('signOut')();
+      return this.signOut();
     },
   },
 });

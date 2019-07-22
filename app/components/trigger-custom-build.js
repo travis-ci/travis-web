@@ -3,10 +3,13 @@ import { task, timeout } from 'ember-concurrency';
 import YAML from 'yamljs';
 import config from 'travis/config/environment';
 import { inject as service } from '@ember/service';
-import KeyboardShortcuts from 'ember-keyboard-shortcuts/mixins/component';
+import {
+  bindKeyboardShortcuts,
+  unbindKeyboardShortcuts
+} from 'ember-keyboard-shortcuts';
 import BranchSearching from 'travis/mixins/branch-searching';
 
-export default Component.extend(KeyboardShortcuts, BranchSearching, {
+export default Component.extend(BranchSearching, {
   classNames: ['trigger-build-modal'],
 
   api: service(),
@@ -26,6 +29,12 @@ export default Component.extend(KeyboardShortcuts, BranchSearching, {
   didInsertElement() {
     this._super(...arguments);
     this.set('triggerBuildBranch', this.repo.defaultBranch.name);
+    bindKeyboardShortcuts(this);
+  },
+
+  willDestroyElement() {
+    this._super(...arguments);
+    unbindKeyboardShortcuts(this);
   },
 
   createBuild: task(function* () {

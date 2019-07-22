@@ -36,7 +36,8 @@
 
 {{#if isShowingStatusBadgeModal}}
   {{#modal-dialog
-    onClose="toggleStatusBadgeModal"
+    onClose=(action "toggleStatusBadgeModal")
+    onClickOverlay=(action "toggleStatusBadgeModal")
     targetAttachment="center"
     translucentOverlay=true
     overlayPosition='sibling'
@@ -48,7 +49,8 @@
 
 {{#if isShowingTriggerBuildModal}}
   {{#modal-dialog
-    onClose="toggleTriggerBuildModal"
+    onClose=(action "toggleTriggerBuildModal")
+    onClickOverlay=(action "toggleTriggerBuildModal")
     targetAttachment="center"
     translucentOverlay=true
     overlayPosition='sibling'

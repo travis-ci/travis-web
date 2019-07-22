@@ -103,7 +103,7 @@ export default Component.extend({
 
   teardownLog(log) {
     let parts, ref;
-    if (log || (log = this.get('log'))) {
+    if (log || (log = this.log)) {
       parts = log.get('parts');
       parts.removeArrayObserver(this, {
         didChange: 'partsDidChange',
@@ -126,7 +126,7 @@ export default Component.extend({
   },
 
   createEngine(log) {
-    if (log || (log = this.get('log'))) {
+    if (log || (log = this.log)) {
       this.set('limited', false);
       this.clearLogElement();
       log.onClear(() => {
@@ -151,7 +151,7 @@ export default Component.extend({
       this.engine.limit = this.limit;
       this.logFolder = new LogFolder(this.$('#log'));
       let onLogLineClick = () => {
-        let router = this.get('router'),
+        let router = this.router,
           currentRouteName = router.get('currentRouteName');
         if (currentRouteName === 'build.index' || currentRouteName === 'job.index') {
           return EmberPromise.resolve();
@@ -172,7 +172,7 @@ export default Component.extend({
 
   observeParts(log) {
     let parts;
-    if (log || (log = this.get('log'))) {
+    if (log || (log = this.log)) {
       parts = log.get('parts');
       parts.addArrayObserver(this, {
         didChange: 'partsDidChange',
@@ -190,7 +190,7 @@ export default Component.extend({
         // eslint-disable-next-line
         console.log('log view: parts did change');
       }
-      if (this.get('_state') !== 'inDOM') {
+      if (this._state !== 'inDOM') {
         return;
       }
       ref = parts.slice(start, start + added);
@@ -215,13 +215,13 @@ export default Component.extend({
 
   hasPermission: computed('permissions.all', 'job.repo', function () {
     let repo = this.get('job.repo');
-    return this.get('permissions').hasPermission(repo);
+    return this.permissions.hasPermission(repo);
   }),
 
   canRemoveLog: computed('job', 'job.canRemoveLog', 'hasPermission', function () {
-    let job = this.get('job');
+    let job = this.job;
     let canRemoveLog = this.get('job.canRemoveLog');
-    let hasPermission = this.get('hasPermission');
+    let hasPermission = this.hasPermission;
     if (job) {
       return canRemoveLog && hasPermission;
     }

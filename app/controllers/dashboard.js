@@ -13,10 +13,10 @@ export default Controller.extend({
   star: task(function* (repo) {
     repo.set('starred', true);
     try {
-      yield this.get('api').post(`/repo/${repo.get('id')}/star`);
+      yield this.api.post(`/repo/${repo.get('id')}/star`);
     } catch (e) {
       repo.set('starred', false);
-      this.get('flashes')
+      this.flashes
         .error(`Something went wrong while trying to star  ${repo.get('slug')}.
                Please try again.`);
     }
@@ -25,10 +25,10 @@ export default Controller.extend({
   unstar: task(function* (repo) {
     repo.set('starred', false);
     try {
-      yield this.get('api').post(`/repo/${repo.get('id')}/unstar`);
+      yield this.api.post(`/repo/${repo.get('id')}/unstar`);
     } catch (e) {
       repo.set('starred', true);
-      this.get('flashes')
+      this.flashes
         .error(`Something went wrong while trying to unstar  ${repo.get('slug')}.
                Please try again.`);
     }

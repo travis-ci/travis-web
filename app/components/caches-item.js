@@ -14,22 +14,22 @@ export default Component.extend({
   delete: task(function* () {
     if (config.skipConfirmations || confirm('Are you sure?')) {
       let branch = this.get('cache.branch');
-      let repo = this.get('repo');
+      let repo = this.repo;
 
       let url = `/repo/${repo.get('id')}/caches?branch=${branch}`;
 
       try {
-        yield this.get('ajax').deleteV3(url);
-        this.get('caches').removeObject(this.get('cache'));
+        yield this.ajax.deleteV3(url);
+        this.caches.removeObject(this.cache);
       } catch (e) {
-        this.get('flashes').error('Could not delete the cache');
+        this.flashes.error('Could not delete the cache');
       }
     }
   }).drop(),
 
   actions: {
     performDelete() {
-      this.get('delete').perform();
+      this['delete'].perform();
     }
   }
 });

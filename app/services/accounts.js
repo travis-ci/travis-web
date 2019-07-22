@@ -20,8 +20,8 @@ export default Service.extend({
   trials: reads('fetchTrials.lastSuccessful.value'),
 
   all: computed('user', 'organizations.@each', function () {
-    let user = this.get('user');
-    let organizations = this.get('organizations') || [];
+    let user = this.user;
+    let organizations = this.organizations || [];
     return organizations.toArray().concat([user]);
   }),
 
@@ -51,6 +51,7 @@ export default Service.extend({
   }),
 
   init() {
+    this._super(...arguments);
     this.fetchOrganizations.perform();
     if (billingEndpoint) {
       this.fetchSubscriptions.perform();
