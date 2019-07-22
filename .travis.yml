@@ -7,12 +7,15 @@ env:
     - PERCY_ENABLE=0
 
 stages:
-  - name: lint
-    if: (NOT branch = master) AND (type = cron)
-    script: npm run lint:js
+  - lint
+  - test
+  - deploy
 
-# matrix:
-#   include:
+jobs:
+  include:
+    - name: lint
+      if: (NOT branch = master) AND (type = cron)
+      script: npm run lint:js
 #     - if: type = cron
 #       env: TRY_CONFIG=ember-beta
 #     - if: type = cron
