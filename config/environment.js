@@ -1,7 +1,7 @@
 /* eslint-env node */
 'use strict';
 
-const screens = require('./screens.js')();
+const { screens } = require('./screens.js');
 
 module.exports = function (environment) {
   let ENV = {

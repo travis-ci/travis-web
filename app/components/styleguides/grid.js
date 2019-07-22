@@ -1,10 +1,12 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 
-const flexify = (val) => `flex-${val}`;
+const prefix = (prefix, val) => ((val) => `${prefix}-${val}`);
 const props = {
-  dir: flexify,
-  wrap: flexify,
+  dir: prefix('flex'),
+  wrap: prefix('flex'),
+  items: prefix('items'),
+  justify: prefix('justify'),
   inline: (val) => (val ? 'inline-flex' : 'flex'),
 };
 const propNames = Object.keys(props);
@@ -12,8 +14,10 @@ const propNames = Object.keys(props);
 export default Component.extend({
   classNameBindings: ['defaultClasses'],
 
+  module: 'flex',
   dir: 'row',
   wrap: 'wrap',
+  justify: 'between',
   inline: false,
 
   defaultClasses: computed(...propNames, function () {
@@ -29,8 +33,4 @@ export default Component.extend({
   }),
 
   base: 1,
-  sm: null,
-  md: null,
-  lg: null,
-  xl: null,
 });

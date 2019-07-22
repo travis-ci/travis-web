@@ -1,21 +1,18 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { reads } from '@ember/object/computed';
+import config from 'travis/config/environment';
 
-const generateBreakpointClassFunc = function (breakpoint) {
-  return function () {
-    if (this[breakpoint] === null) {
-      return null;
-    }
-    const { sizePrefix } = this;
-    const size = this[`${breakpoint}Size`].replace('1/1', 'full');
-    const bpPrefix = breakpoint === 'base' ? '' : `${breakpoint}:`;
-    return `${bpPrefix}${sizePrefix}-${size}`;
-  };
-};
+const { screens } = config;
+const screenNames = Object.keys(screens);
+const gridClassDependencies = [
+  'grid.module',
+  'sizePrefix',
+  ...screenNames,
+  ...screenNames.map(name => `grid.${name}`),
+];
 
 export default Component.extend({
-  classNameBindings: ['baseClass', 'smClass', 'mdClass', 'lgClass', 'xlClass'],
+  classNameBindings: ['gridClassNames'],
 
   grid: null,
 
@@ -23,23 +20,35 @@ export default Component.extend({
     return this.grid.dir.includes('col') ? 'h' : 'w';
   }),
 
-  base: reads('grid.base'),
-  baseSize: computed('base', function () { return `1/${this.base}`; }),
-  baseClass: computed('baseSize', 'sizePrefix', generateBreakpointClassFunc('base')),
+  gridClasses: computed(...gridClassDependencies, function () {
+    const { grid, sizePrefix } = this;
 
-  sm: reads('grid.sm'),
-  smSize: computed('sm', function () { return `1/${this.sm}`; }),
-  smClass: computed('smSize', 'sizePrefix', generateBreakpointClassFunc('sm')),
+    const classes = screenNames.reduce((classes, name) => {
+      const screenVal = this[name] || grid[name];
+      const screenValType = typeof screenVal;
+      let size = '';
 
-  md: reads('grid.md'),
-  mdSize: computed('md', function () { return `1/${this.md}`; }),
-  mdClass: computed('mdSize', 'sizePrefix', generateBreakpointClassFunc('md')),
+      if (screenValType === 'string') {
+        size = `${grid.module}-${screenVal}`;
+      } else if (screenValType === 'number') {
+        size = `${sizePrefix}-1/${screenVal}`.replace('1/1', 'full');
+      } else {
+        return classes;
+      }
 
-  lg: reads('grid.lg'),
-  lgSize: computed('lg', function () { return `1/${this.lg}`; }),
-  lgClass: computed('lgSize', 'sizePrefix', generateBreakpointClassFunc('lg')),
+      const screen = screens[name];
+      const { prefix } = screen;
+      const screenPrefix = prefix.length === 0 ? '' : `${prefix}:`;
+      const newClass = `${screenPrefix}${size}`;
+      classes.push(newClass);
 
-  xl: reads('grid.xl'),
-  xlSize: computed('xl', function () { return `1/${this.xl}`; }),
-  xlClass: computed('xlSize', 'sizePrefix', generateBreakpointClassFunc('xl')),
+      return classes;
+    }, []);
+
+    return classes;
+  }),
+
+  gridClassNames: computed('gridClasses', function () {
+    return this.gridClasses.join(' ');
+  }),
 });

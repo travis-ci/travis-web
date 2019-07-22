@@ -1,21 +1,11 @@
 /* eslint-env node */
-
-const screenInfo = require('./screens.js')();
-const screens = Object.keys(screenInfo).reduce((screenMap, key) => {
-  const { min, units } = screenInfo[key];
-
-  if (min !== 0) {
-    screenMap[key] = `${min}${units}`;
-  }
-
-  return screenMap;
-}, {});
+const { tailwindScreenConfig } = require('./screens.js');
 
 module.exports = {
   theme: {
     /* ~~ Override ~~ */
 
-    screens,
+    screens: tailwindScreenConfig,
 
     // Colors //
     colors: {
