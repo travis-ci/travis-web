@@ -22,6 +22,7 @@ jobs:
 #       env: TRY_CONFIG=ember-data-beta
     - name: "Test"
       node_js: 10
+      script: ember exam --parallel=3 --load-balance
 #   allow_failures:
 #     - env: TRY_CONFIG=ember-beta
 #     - env: TRY_CONFIG=ember-data-beta
@@ -53,9 +54,9 @@ before_script:
   - echo $RANDOMISE
   - greenkeeper-lockfile-update
 
-script:
-  - if [ -z "$TRY_CONFIG" ]; then ember exam --reporter dot $RANDOMISE; fi
-  - if [[ ! -z "$TRY_CONFIG" ]]; then ember try:one $TRY_CONFIG --skip-cleanup; fi
+# script:
+#   - if [ -z "$TRY_CONFIG" ]; then ember exam --reporter dot $RANDOMISE; fi
+#   - if [[ ! -z "$TRY_CONFIG" ]]; then ember try:one $TRY_CONFIG --skip-cleanup; fi
 
 after_script:
   - greenkeeper-lockfile-upload
