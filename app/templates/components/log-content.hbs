@@ -81,7 +81,8 @@
 
 {{#if isShowingRemoveLogModal}}
   {{#modal-dialog
-    onClose="toggleRemoveLogModal"
+    onClose=(action "toggleRemoveLogModal")
+    onClickOverlay=(action "toggleRemoveLogModal")
     targetAttachment="center"
     translucentOverlay=true
     overlayPosition='sibling'

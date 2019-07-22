@@ -2,7 +2,10 @@ import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
 import { reads, equal, not, and } from '@ember/object/computed';
-import { DEFAULT_INSIGHTS_INTERVAL, INSIGHTS_INTERVALS } from 'travis/services/insights';
+import {
+  DEFAULT_INSIGHTS_INTERVAL,
+  INSIGHTS_INTERVALS
+} from 'travis/services/insights';
 
 export default Component.extend({
   classNames: ['insights-overlay'],

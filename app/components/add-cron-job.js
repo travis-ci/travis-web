@@ -1,7 +1,6 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
-import { mapBy } from '@ember/object/computed';
 import BranchSearching from 'travis/mixins/branch-searching';
 
 export default Component.extend(BranchSearching, {
@@ -18,8 +17,6 @@ export default Component.extend(BranchSearching, {
     name: 'Do not run if there has been a build in the last 24h',
     value: true
   }],
-
-  currentCronJobsBranches: mapBy('repository.cronJobs', 'branch.name'),
 
   init() {
     this.reset();

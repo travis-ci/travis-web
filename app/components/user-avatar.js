@@ -6,7 +6,7 @@ export default Component.extend({
   classNames: ['avatar-wrapper'],
 
   userInitials: computed('name', function () {
-    let name = this.get('name');
+    let name = this.name;
     if (name) {
       let arr = name.split(' ');
       let initials = '';
@@ -21,8 +21,8 @@ export default Component.extend({
   }),
 
   avatarUrl: computed('url', 'size', function () {
-    let url = this.get('url');
-    let size = this.get('size');
+    let url = this.url;
+    let size = this.size;
     if (!size) {
       size = 32;
     }
@@ -35,8 +35,8 @@ export default Component.extend({
   }),
 
   highResAvatarUrl: computed('url', 'size', function () {
-    let url = this.get('url');
-    let size = this.get('size');
+    let url = this.url;
+    let size = this.size;
     if (!size) {
       size = 32;
     }
@@ -54,7 +54,7 @@ export default Component.extend({
     'account.subscription.isSubscribed',
     'account.education',
     function () {
-      let showStatus = this.get('showSubscriptionStatus');
+      let showStatus = this.showSubscriptionStatus;
       let isSubscribed = this.get('account.subscription.isSubscribed');
       let education = this.get('account.education');
       return showStatus && (isSubscribed || education);

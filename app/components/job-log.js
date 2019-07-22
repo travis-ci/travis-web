@@ -8,8 +8,8 @@ export default Component.extend({
   classNames: ['job-log'],
 
   didReceiveAttrs() {
-    let oldJob = this.get('_oldJob');
-    let newJob = this.get('job');
+    let oldJob = this._oldJob;
+    let newJob = this.job;
 
     if (newJob !== oldJob) {
       if (oldJob) {
@@ -17,11 +17,11 @@ export default Component.extend({
       }
 
       if (newJob) {
-        this.get('setupLog').perform(newJob);
+        this.setupLog.perform(newJob);
       }
     }
 
-    this.set('_oldJob', this.get('job'));
+    this.set('_oldJob', this.job);
   },
 
   teardownLog(job) {

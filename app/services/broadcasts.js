@@ -26,7 +26,7 @@ export default Service.extend({
         Authorization: `token ${this.get('auth.token')}`,
         'Travis-API-Version': '3'
       };
-      seenBroadcasts = this.get('storage').getItem('travis.seen_broadcasts');
+      seenBroadcasts = this.storage.getItem('travis.seen_broadcasts');
       if (seenBroadcasts) {
         seenBroadcasts = JSON.parse(seenBroadcasts);
       } else {
@@ -53,14 +53,14 @@ export default Service.extend({
   markAsSeen(broadcast) {
     let id, seenBroadcasts;
     id = broadcast.get('id').toString();
-    seenBroadcasts = this.get('storage').getItem('travis.seen_broadcasts');
+    seenBroadcasts = this.storage.getItem('travis.seen_broadcasts');
     if (seenBroadcasts) {
       seenBroadcasts = JSON.parse(seenBroadcasts);
     } else {
       seenBroadcasts = [];
     }
     seenBroadcasts.push(id);
-    this.get('storage').setItem('travis.seen_broadcasts', JSON.stringify(seenBroadcasts));
+    this.storage.setItem('travis.seen_broadcasts', JSON.stringify(seenBroadcasts));
     this.get('broadcasts.content').removeObject(broadcast);
     let status = this.getStatus(this.get('broadcasts.content'));
     this.set('broadcasts.lastBroadcastStatus', status);

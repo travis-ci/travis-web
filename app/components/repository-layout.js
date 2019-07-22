@@ -12,22 +12,22 @@ export default Component.extend({
 
   statusImageUrl: computed('repo.slug', 'repo.private', 'repo.defaultBranch.name', function () {
     let branchName = this.get('repo.defaultBranch.name');
-    return this.get('statusImages').imageUrl(this.get('repo'), branchName);
+    return this.statusImages.imageUrl(this.repo, branchName);
   }),
 
   urlGithub: computed('repo.slug', function () {
     let slug = this.get('repo.slug');
-    return this.get('externalLinks').githubRepo(slug);
+    return this.externalLinks.githubRepo(slug);
   }),
 
   orgBuildHistoryLink: computed('repo.slug', function () {
     let slug = this.get('repo.slug');
-    return this.get('externalLinks').orgBuildHistoryLink(slug);
+    return this.externalLinks.orgBuildHistoryLink(slug);
   }),
 
   comBuildHistoryLink: computed('repo.slug', function () {
     let slug = this.get('repo.slug');
-    return this.get('externalLinks').comBuildHistoryLink(slug);
+    return this.externalLinks.comBuildHistoryLink(slug);
   }),
 
   actions: {
