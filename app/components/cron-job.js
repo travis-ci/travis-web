@@ -19,6 +19,6 @@ export default Component.extend({
   }),
 
   delete: task(function* () {
-    yield this.get('cron').destroyRecord();
+    yield this.cron.destroyRecord();
   }).drop()
 });

@@ -45,7 +45,7 @@ export default Component.extend({
   }),
 
   osIcon: computed('os', function () {
-    let os = this.get('os');
+    let os = this.os;
 
     if (os === 'linux') {
       return 'icon-linux';

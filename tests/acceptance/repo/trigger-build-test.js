@@ -104,10 +104,6 @@ module('Acceptance | repo/trigger build', function (hooks) {
 
     assert.ok(triggerBuildPage.popupIsVisible, 'modal is visible after click');
 
-    assert.equal(triggerBuildPage.branches.length, 1, 'expected the not-on-GitHub branch to be hidden');
-    assert.equal(triggerBuildPage.branches[0].value, 'master');
-
-    await triggerBuildPage.selectBranch('master');
     await triggerBuildPage.writeMessage('This is a demo build');
     await triggerBuildPage.writeConfig('script: echo "Hello World"');
     percySnapshot(assert);
@@ -124,7 +120,6 @@ module('Acceptance | repo/trigger build', function (hooks) {
 
     await triggerBuildPage.visit({ owner: 'adal', repo: 'difference-engine' });
     await triggerBuildPage.openPopup();
-    await triggerBuildPage.selectBranch('master');
     await triggerBuildPage.clickSubmit();
 
     assert.equal(topPage.flashMessage.text, 'Oops, something went wrong, please try again.');
@@ -137,7 +132,6 @@ module('Acceptance | repo/trigger build', function (hooks) {
 
     await triggerBuildPage.visit({ owner: 'adal', repo: 'difference-engine' });
     await triggerBuildPage.openPopup();
-    await triggerBuildPage.selectBranch('master');
     await triggerBuildPage.clickSubmit();
 
     assert.equal(topPage.flashMessage.text, 'You’ve exceeded the limit for triggering builds, please wait a while before trying again.');

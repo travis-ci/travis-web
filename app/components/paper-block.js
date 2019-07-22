@@ -13,14 +13,14 @@ export default Component.extend({
   padding: true,
 
   normalizedElevation: computed('elevation', function () {
-    let elevation = this.get('elevation');
+    let elevation = this.elevation;
     elevation = elevation < MIN_ELEVATION ? MIN_ELEVATION : elevation;
     elevation = elevation > MAX_ELEVATION ? MAX_ELEVATION : elevation;
     return elevation;
   }),
 
   elevationClass: computed('normalizedElevation', function () {
-    let normalizedElevation = this.get('normalizedElevation');
+    let normalizedElevation = this.normalizedElevation;
     return `elevation-x${normalizedElevation}`;
   })
 });

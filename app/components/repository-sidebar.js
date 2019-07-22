@@ -26,7 +26,7 @@ export default Component.extend({
     // But I'm otherwise unable to reference that state within two separate
     // templates...
     schedule('afterRender', () => {
-      this.get('fetchRepositoryData').perform();
+      this.fetchRepositoryData.perform();
       if (this.get('features.showRunningJobsInSidebar')) {
         this.get('jobState.fetchRunningJobs').perform();
         this.get('jobState.fetchQueuedJobs').perform();
@@ -39,22 +39,22 @@ export default Component.extend({
       yield this.get('repositories.performSearchRequest').perform();
       this.set('_data', this.get('repositories.searchResults'));
     } else {
-      yield this.get('viewOwned').perform();
+      yield this.viewOwned.perform();
       this.set('_data', this.get('repositories.accessible'));
     }
 
     if (!Ember.testing) {
       Visibility.every(config.intervals.updateTimes, () => {
         const callback = (record) => record.get('currentBuild');
-        const withCurrentBuild = this.get('_data').filter(callback).map(callback);
-        this.get('updateTimesService').push(withCurrentBuild);
+        const withCurrentBuild = this._data.filter(callback).map(callback);
+        this.updateTimesService.push(withCurrentBuild);
       });
     }
   }),
 
   actions: {
     showRunningJobs: function () {
-      this.get('tabStates').set('sidebarTab', 'running');
+      this.tabStates.set('sidebarTab', 'running');
     },
 
     showMyRepositories: function () {
@@ -104,14 +104,14 @@ export default Component.extend({
     const onIndexPage = this.get('router.currentRouteName') === 'index';
 
     if (this.get('auth.signedIn') && isEmpty(ownedRepositories) && onIndexPage) {
-      this.get('router').transitionTo('getting_started');
+      this.router.transitionTo('getting_started');
     }
   }),
 
   tab: alias('tabStates.sidebarTab'),
 
   repositoryResults: computed('tab', 'repositories.{searchResults.[],accessible.[]}', function () {
-    let tab = this.get('tab');
+    let tab = this.tab;
     let searchResults = this.get('repositories.searchResults.[]');
     let accessible = this.get('repositories.accessible.[]');
     let results = accessible;
@@ -124,7 +124,7 @@ export default Component.extend({
   }),
 
   showRunningJobs: computed('tab', 'features.showRunningJobsInSidebar', function () {
-    let tab = this.get('tab');
+    let tab = this.tab;
     let featureEnabled = this.get('features.showRunningJobsInSidebar');
     return featureEnabled && tab === 'running';
   }),

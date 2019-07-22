@@ -1,15 +1,13 @@
 /* global TravisTracer, window */
 /* eslint no-unused-vars: ["error", { "varsIgnorePattern": "config" }]*/
 
-import Ember from 'ember';
+import { next } from '@ember/runloop';
 import Component from '@ember/component';
 import config from 'travis/config/environment';
 
 export default Component.extend({
   tagName: 'div',
   panelIsOpen: false,
-  requests: [],
-
   config,
 
   init() {
@@ -20,9 +18,10 @@ export default Component.extend({
     }
 
     TravisTracer.onRequest = req => {
-      this.get('requests').pushObject(req);
+      this.requests.pushObject(req);
       this.ensurePanelScrolledToBottom();
     };
+    this.requests = [];
   },
 
   actions: {
@@ -34,14 +33,14 @@ export default Component.extend({
   },
 
   ensurePanelScrolledToBottom() {
-    Ember.run.next(() => {
+    next(() => {
       let panel = document.getElementById('tracer-panel');
       panel.scrollTop = panel.scrollHeight + 20;
     });
   },
 
   rememberPanelOpenState() {
-    if (this.get('panelIsOpen')) {
+    if (this.panelIsOpen) {
       window.localStorage.TravisTracerIsOpen = 'true';
     } else {
       delete window.localStorage.TravisTracerIsOpen;

@@ -11,8 +11,8 @@ export default Component.extend({
   }),
 
   showUser: computed('nameOrLogin', 'eventType', function () {
-    let nameOrLogin = this.get('nameOrLogin');
-    let eventType = this.get('eventType');
+    let nameOrLogin = this.nameOrLogin;
+    let eventType = this.eventType;
     return nameOrLogin && eventType !== 'cron';
   })
 });

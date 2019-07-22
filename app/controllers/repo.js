@@ -32,9 +32,9 @@ export default Controller.extend({
   showGitHubApps: alias('features.github-apps'),
 
   showGitHubAppsCTA: computed('showGitHubApps', 'repo.private', 'currentUser', function () {
-    let showGitHubApps = this.get('showGitHubApps');
+    let showGitHubApps = this.showGitHubApps;
     let isPrivate = this.get('repo.private');
-    let currentUser = this.get('currentUser');
+    let currentUser = this.currentUser;
     return showGitHubApps && !isPrivate && !currentUser;
   }),
 
@@ -54,7 +54,7 @@ export default Controller.extend({
 
   isEmpty: computed('repos.isLoaded', 'repos.[]', function () {
     let loaded = this.get('repos.isLoaded');
-    let repos = this.get('repos');
+    let repos = this.repos;
     return loaded && isEmpty(repos);
   }),
 
@@ -66,10 +66,10 @@ export default Controller.extend({
   },
 
   updateTimes() {
-    let updateTimesService = this.get('updateTimesService');
+    let updateTimesService = this.updateTimesService;
 
-    updateTimesService.push(this.get('build'));
-    updateTimesService.push(this.get('builds'));
+    updateTimesService.push(this.build);
+    updateTimesService.push(this.builds);
     updateTimesService.push(this.get('build.jobs'));
   },
 

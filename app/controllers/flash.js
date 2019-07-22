@@ -6,6 +6,6 @@ export default Controller.extend({
   flashes: service(),
 
   loadFlashes() {
-    return this.get('flashes').loadFlashes(...arguments);
+    return this.flashes.loadFlashes(...arguments);
   }
 });

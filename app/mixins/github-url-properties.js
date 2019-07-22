@@ -8,6 +8,6 @@ export default Mixin.create({
   urlGithubPullRequest: computed('repo.slug', 'build.pullRequestNumber', function () {
     let slug = this.get('repo.slug');
     let pullRequestNumber = this.get('build.pullRequestNumber');
-    return this.get('externalLinks').githubPullRequest(slug, pullRequestNumber);
+    return this.externalLinks.githubPullRequest(slug, pullRequestNumber);
   }),
 });

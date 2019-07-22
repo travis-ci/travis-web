@@ -16,6 +16,6 @@ export default Component.extend({
   },
 
   updateTimes() {
-    this.get('updateTimesService').push(this.get('jobs'));
+    this.updateTimesService.push(this.jobs);
   }
 });

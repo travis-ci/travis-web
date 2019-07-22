@@ -51,7 +51,7 @@ export default Controller.extend({
   insightsVisibilityOptions: computed(() => INSIGHTS_VIS_OPTIONS),
 
   unsubscribedRepos: computed('repositories.@each.emailSubscribed', function () {
-    let repositories = this.get('repositories') || [];
+    let repositories = this.repositories || [];
     return repositories.filter(repo => !repo.emailSubscribed);
   }),
 

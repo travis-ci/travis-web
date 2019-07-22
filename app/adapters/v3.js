@@ -1,7 +1,6 @@
 import { assign } from '@ember/polyfills';
 import { underscore } from '@ember/string';
 import { pluralize } from 'ember-inflector';
-import { get } from '@ember/object';
 import config from 'travis/config/environment';
 import RESTAdapter from 'ember-data/adapters/rest';
 import { inject as service } from '@ember/service';
@@ -32,7 +31,7 @@ export default RESTAdapter.extend({
       }
     }
 
-    const includes = this.get('includes');
+    const includes = this.includes;
     if (includes) {
       if (options.data.include) {
         options.data.include += `,${includes}`;
@@ -60,7 +59,7 @@ export default RESTAdapter.extend({
 
   buildURL: function (modelName, id, snapshot, requestType, query) {
     let url = [];
-    const host = get(this, 'host');
+    const host = this.host;
     const prefix = this.urlPrefix();
     const pathPrefix = this.pathPrefix(...arguments);
 

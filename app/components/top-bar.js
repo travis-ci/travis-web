@@ -1,6 +1,7 @@
+import { scheduleOnce } from '@ember/runloop';
 import Component from '@ember/component';
 import Ember from 'ember';
-import { computed } from '@ember/object';
+import { computed, setProperties, set } from '@ember/object';
 import { alias } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 
@@ -27,7 +28,7 @@ export default Component.extend(InViewportMixin, {
 
   showCta: computed('auth.signedIn', 'landingPage', 'features.landingPageCta', function () {
     let signedIn = this.get('auth.signedIn');
-    let landingPage = this.get('landingPage');
+    let landingPage = this.landingPage;
     let ctaEnabled = this.get('features.landingPageCta');
 
     return !signedIn && !landingPage && ctaEnabled;
@@ -39,20 +40,20 @@ export default Component.extend(InViewportMixin, {
       return;
     }
 
-    Ember.setProperties(this, {
+    setProperties(this, {
       viewportSpy: true
     });
     this._super(...arguments);
-    Ember.run.scheduleOnce('afterRender', this, () => {
-      Ember.set(this, 'viewportTolerance.top', this.$().height());
+    scheduleOnce('afterRender', this, () => {
+      set(this, 'viewportTolerance.top', this.$().height());
     });
   },
 
   didEnterViewport() {
-    this.get('flashes').set('topBarVisible', true);
+    this.flashes.set('topBarVisible', true);
   },
 
   didExitViewport() {
-    this.get('flashes').set('topBarVisible', false);
+    this.flashes.set('topBarVisible', false);
   },
 });

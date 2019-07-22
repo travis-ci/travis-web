@@ -6,10 +6,10 @@ import {
   collection,
   isHidden,
   isVisible,
-  selectable,
   fillable,
   isPresent
 } from 'ember-cli-page-object';
+import { selectChoose } from 'ember-power-select/test-support';
 
 export default create({
   visit: visitable(':owner/:repo'),
@@ -19,12 +19,15 @@ export default create({
   openPopup: clickable('.option-dropdown .trigger-build-anchor'),
   popupIsVisible: isVisible('.trigger-build-modal'),
 
-  selectBranch: selectable('#trigger-build-branches'),
+  selectBranch(branch) {
+    selectChoose('[data-test-trigger-build-branch]', branch);
+  },
+
   branches: collection('#trigger-build-branches option', {
     value: attribute('value')
   }),
 
-  writeMessage: fillable('#trigger-build-message'),
-  writeConfig: fillable('#trigger-build-config'),
-  clickSubmit: clickable('.trigger-build-submit')
+  writeMessage: fillable('[data-test-trigger-build-message] input'),
+  writeConfig: fillable('[data-test-trigger-build-config] textarea'),
+  clickSubmit: clickable('[data-test-trigger-build-submit]')
 });

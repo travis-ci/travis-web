@@ -4,7 +4,6 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import { select } from 'travis/tests/helpers/x-select';
 
 module('Integration | Component | status images', function (hooks) {
   setupRenderingTest(hooks);
@@ -27,13 +26,8 @@ module('Integration | Component | status images', function (hooks) {
 
     percySnapshot(assert);
 
-    let selectBranch = this.element.querySelector('.form-pair:first-of-type select');
-    let outputTextarea = this.element.querySelector('.form-pair textarea');
     assert.dom('h3').hasText('Status Image');
-    assert.equal(selectBranch.value, 'not-actually-master');
-    assert.ok(outputTextarea.value.match(/branch=not-actually-master/));
-
-    await select(selectBranch, 'foo');
-    assert.ok(outputTextarea.value.match(/branch=foo/));
+    assert.dom('[data-test-status-image-branch]').containsText('not-actually-master');
+    assert.dom('[data-test-status-image-result]').containsText('branch=not-actually-master');
   });
 });

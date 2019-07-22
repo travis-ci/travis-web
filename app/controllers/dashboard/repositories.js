@@ -30,7 +30,7 @@ export default Controller.extend({
     'model.repos.@each.currentBuildFinishedAt',
     function () {
       let repositories = this.get('model.repos');
-      let accountParam = this.get('account');
+      let accountParam = this.account;
       let accounts = this.get('model.accounts');
       let account = accounts.filter((x) => {
         if (accountParam) {
@@ -67,7 +67,7 @@ export default Controller.extend({
 
   selectedOrg: computed('model.accounts', 'account', function () {
     let accounts = this.get('model.accounts');
-    let account = this.get('account');
+    let account = this.account;
     let filteredAccount = accounts.filter((item) => {
       if (item.get('login') === account) {
         return item;
