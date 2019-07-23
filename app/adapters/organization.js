@@ -5,7 +5,7 @@ export default V3Adapter.extend({
     'owner.installation',
     'owner.vcsId',
     'owner.vcsType',
-  ],
+  ].join(','),
 
   pathForType: function () {
     return 'orgs';
