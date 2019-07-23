@@ -26,5 +26,5 @@ export default Component.extend({
 
   selectedInvoices: computed('invoices.@each.{createdAt}', 'year', function () {
     return this.invoices.filter(invoice => invoice.createdAt.getFullYear() === this.year);
-  })
+  }),
 });

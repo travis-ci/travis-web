@@ -39,7 +39,7 @@
       </thead>
       <tbody>
         {{#each (sort-by 'createdAt:desc' selectedInvoices) as |invoice|}}
-          <tr data-test-invoice>
+          <tr data-test-invoice class="fade-in">
             <td> {{svg-jar 'icon-invoice' class='icon'}}{{moment-format invoice.createdAt 'MMMM DD, YYYY'}} </td>
             <td> •••• •••• •••• {{subscription.creditCardInfo.lastDigits}} </td>
             <td> {{ price }} </td>
