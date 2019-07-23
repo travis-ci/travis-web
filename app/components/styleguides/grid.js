@@ -14,7 +14,6 @@ const propNames = Object.keys(props);
 export default Component.extend({
   classNameBindings: ['defaultClasses'],
 
-  module: 'flex',
   dir: 'row',
   wrap: 'wrap',
   justify: 'between',

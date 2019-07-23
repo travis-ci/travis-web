@@ -5,7 +5,6 @@ import config from 'travis/config/environment';
 const { screens } = config;
 const screenNames = Object.keys(screens);
 const gridClassDependencies = [
-  'grid.module',
   'sizePrefix',
   ...screenNames,
   ...screenNames.map(name => `grid.${name}`),
@@ -29,7 +28,7 @@ export default Component.extend({
       let size = '';
 
       if (screenValType === 'string') {
-        size = `${grid.module}-${screenVal}`;
+        size = `flex-${screenVal}`;
       } else if (screenValType === 'number') {
         size = `${sizePrefix}-1/${screenVal}`.replace('1/1', 'full');
       } else {
@@ -48,7 +47,7 @@ export default Component.extend({
     return classes;
   }),
 
-  gridClassNames: computed('gridClasses', function () {
+  gridClassNames: computed('gridClasses.[]', function () {
     return this.gridClasses.join(' ');
   }),
 });
