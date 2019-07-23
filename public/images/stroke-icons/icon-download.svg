@@ -8,12 +8,12 @@
 <g id="icon-download">
 	<g>
 		<g>
-			<circle class="st0" cx="11.53" cy="11.26" r="11"/>
+			<circle class="st0" cx="11.53" cy="11.26" r="11" stroke-width="2"/>
 		</g>
 	</g>
 	<g id="downloadlogs_21_">
-		<line class="st0" x1="11.53" y1="7.53" x2="11.53" y2="14.27"/>
-		<polyline class="st0" points="14.48,12.03 11.53,14.98 8.58,12.03 		"/>
+		<line class="st0" x1="11.53" y1="7.53" x2="11.53" y2="14.27" stroke-width="2"/>
+		<polyline class="st0" points="14.48,12.03 11.53,14.98 8.58,12.03" stroke-width="2"/>
 	</g>
 </g>
 </svg>
