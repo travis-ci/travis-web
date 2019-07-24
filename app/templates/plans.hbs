@@ -16,7 +16,14 @@
 
   {{! Product section }}
   <section class="mb-16">
-    <Styleguides::Switch @onToggle={{fn (mut showAnnual)}} @active={{showAnnual}} />
+    <div class="flex flex-wrap items-center mb-3">
+      <span class="uppercase font-bold mr-2">Monthly</span>
+      <Styleguides::Switch @onToggle={{fn (mut showAnnual)}} @active={{showAnnual}} />
+      <span class="text-blue ml-2">
+        <span class="uppercase font-bold">Annual</span>
+        (Get 2 months free!)
+      </span>
+    </div>
     <Styleguides::Grid @base={{2}} @md={{4}} as |grid|>
       {{#each filteredPlans as |plan|}}
         <grid.item class="p-4 border-grey-150 border">
