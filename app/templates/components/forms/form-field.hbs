@@ -76,9 +76,60 @@
       class="travis-form__field-component"
     )
   )
-}}
-{{#if this.requiresValidation}}
-  {{#if this.showValidationStatusIcons}}
+  textarea=(component 'forms/form-textarea'
+    form=form
+    value=value
+    disabled=disabled
+    placeholder=placeholder
+    onFocus=(action 'handleFocus')
+    onBlur=(action 'handleBlur')
+    onChange=(action 'handleChange')
+    onInit=(action 'setFieldElementId')
+    class='travis-form__field-component'
+  )
+  select=(component selectComponent
+    form=form
+    selected=value
+    disabled=disabled
+    placeholder=placeholder
+    onfocus=(action 'handleFocus')
+    onopen=(action 'handleFocus')
+    onblur=(action 'handleSelectBlur')
+    onclose=(action 'handleSelectBlur')
+    onchange=(action 'handleChange')
+  )
+  checkbox=(component 'forms/form-checkbox'
+    form=form
+    checked=value
+    disabled=disabled
+    onFocus=(action 'handleFocus')
+    onBlur=(action 'handleBlur')
+    onChange=(action 'handleChange')
+    onInit=(action 'setFieldElementId')
+    class='travis-form__field-component'
+  )
+  switch=(component 'forms/form-switch'
+    form=form
+    checked=value
+    disabled=disabled
+    onChange=(action 'handleChange')
+    onInit=(action 'setFieldElementId')
+    class='travis-form__field-component'
+  )
+  slider=(component 'forms/form-slider'
+    form=form
+    value=value
+    max=max
+    min=min
+    step=step
+    onChange=(action 'handleChange')
+    onInit=(action 'setFieldElementId')
+    class='travis-form__field-component'
+  )
+)}}
+
+{{#if requiresValidation }}
+  {{#if showValidationStatusIcons}}
     <div class="travis-form__field-badge travis-form__field-badge--error">
       <SvgImage @name="form-error-icon" @width=14 @height=14 />
     </div>

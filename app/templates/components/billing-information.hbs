@@ -3,8 +3,8 @@
     <h2 data-test-billing-info-title>
       Billing Cycle
     </h2>
-    <div class='flex flex-wrap billing-plan-switch'>
-      <div class='form-elem'>
+    <div class='flex form-elem flex--v-center flex-wrap billing-plan-switch'>
+      <div>
         {{#form.field
           disableFrame=true
           class='display-value-switch'
@@ -20,9 +20,6 @@
       </div>
       <div class='billing-plan-switch m-l-s'>
         {{#if showMonthly}}
-          <h5>
-            Recommendation:
-          </h5>
           <p>
             Switch to annual billing to recieve
             <span class='font--italic font--bolder'>
@@ -31,6 +28,19 @@
           </p>
         {{/if}}
       </div>
+    </div>
+    <div class='form-elem'>
+      {{#form.field
+        disableFrame=true
+        value=customBuild
+        onChange=(action (mut customBuild)) as |field|
+      }}
+        {{field.slider 
+          value='50'
+          max='100'
+          min='1'
+        }}
+      {{/form.field}}
     </div>
     <h2 data-test-choose-plan-heading>
       Choose your plan

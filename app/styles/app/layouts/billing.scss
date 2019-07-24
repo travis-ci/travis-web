@@ -217,24 +217,3 @@
   padding: 10px;
   border-radius: 7px;
 }
-
-.billing-trial-table {
-  overflow-x: auto;
-
-  table {
-    width: 100%;
-  }
-
-  th {
-    text-transform: uppercase;
-    color: $cement-grey;
-    font-size: $font-size-sm;
-  }
-
-  td,
-  th {
-    text-align: left;
-    white-space: nowrap;
-    padding: .5em .8em .5em 0;
-  }
-}

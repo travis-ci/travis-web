@@ -265,3 +265,9 @@ span.emoji.emoji-sizer {
 .color-asphalt-blue {
   color: $oxide-blue;
 }
+
+@for $i from 1 through 100 {
+  .height-#{$i} {
+    height: $i + 0%;
+  }
+}
