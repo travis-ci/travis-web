@@ -1,0 +1,8 @@
+<div class="bg-white rounded-full h-{{dotSize}} w-{{dotSize}} p-1">
+  {{#if active}}
+      {{svg-jar 'icon-passed' class='w-full' alt='on'}}
+  {{else}}
+      {{svg-jar 'icon-failed' class='w-full' alt='off'}}
+  {{/if}}
+</div>
+{{yield}}

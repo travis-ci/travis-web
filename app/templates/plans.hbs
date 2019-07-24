@@ -16,6 +16,7 @@
 
   {{! Product section }}
   <section class="mb-16">
+    <Styleguides::Switch @onToggle={{fn (mut showAnnual)}} @active={{showAnnual}} />
     <Styleguides::Grid @base={{2}} @md={{4}} as |grid|>
       {{#each filteredPlans as |plan|}}
         <grid.item class="p-4 border-grey-150 border">

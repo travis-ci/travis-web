@@ -52,7 +52,7 @@ export default Component.extend({
 
   click() {
     if (!this.disabled) {
-      this.onToggle(!this.active);
+      this.onToggle();
     }
   }
 });
