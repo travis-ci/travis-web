@@ -29,19 +29,6 @@
         {{/if}}
       </div>
     </div>
-    <div class='form-elem'>
-      {{#form.field
-        disableFrame=true
-        value=customBuild
-        onChange=(action (mut customBuild)) as |field|
-      }}
-        {{field.slider 
-          value='50'
-          max='100'
-          min='1'
-        }}
-      {{/form.field}}
-    </div>
     <h2 data-test-choose-plan-heading>
       Choose your plan
     </h2>

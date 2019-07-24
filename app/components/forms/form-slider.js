@@ -8,6 +8,9 @@ export default Component.extend({
   value: '',
   step: 1,
 
+  onInit() {},
+  onChange() {},
+
   input({ target }) {
     this.set('value', target.value);
     this.onChange(this.value);
