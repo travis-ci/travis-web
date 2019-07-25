@@ -5,5 +5,5 @@ export default Model.extend({
   builds: attr(),
   price: attr(),
   annual: attr('boolean'),
-  currency: attr()
+  currency: attr(),
 });

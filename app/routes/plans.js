@@ -11,5 +11,5 @@ export default BasicRoute.extend(TailwindBaseMixin, {
     if (!this.get('features.proVersion')) {
       return this.transitionTo('/');
     }
-  },
+  }
 });
