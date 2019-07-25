@@ -21,7 +21,7 @@
       <Styleguides::Switch @onToggle={{fn (mut showAnnual)}} @active={{showAnnual}} />
       <span class="text-blue ml-2">
         <span class="uppercase font-bold">Annual</span>
-        (Get 2 months free!)
+        (Get 1 month free!)
       </span>
     </div>
     <div class="relative">
@@ -30,32 +30,34 @@
         <Styleguides::Grid @base={{2}} @md={{4}} as |grid|>
           {{#each filteredPlans as |plan|}}
             <grid.item class="p-4 border-grey-150 border">
-              <h3>
+              <h3 class="font-bold text-3xl">
                 {{plan.name}}
               </h3>
-              <h4>
+              <h4 class="font-bold text-lg uppercase text-grey-400 mb-6">
                 {{plan.description}}
               </h4>
               <div>
-                {{plan.builds}}
+                <span class="text-green-400 font-bold">{{plan.builds}}</span>
                 {{pluralize plan.builds "Concurrent job" without-count=true}}
               </div>
               <div>
-                {{svg-jar "features-check" class="w-4 inline-block"}}
+                {{svg-jar "features-check" class="w-3 inline-block"}}
                 Unlimited build minutes
               </div>
               <div>
-                {{svg-jar "features-check" class="w-4 inline-block"}}
+                {{svg-jar "features-check" class="w-3 inline-block"}}
                 Unlimited repositories
               </div>
-              <div>
-                {{svg-jar "features-check" class="w-4 inline-block"}}
+              <div class="mb-6">
+                {{svg-jar "features-check" class="w-3 inline-block"}}
                 Unlimited collaborators
               </div>
-              <div>
-                ${{plan.displayPrice}}
-                {{plan.currency}}
-                {{plan.interval}}
+              <div class="mb-6">
+                <span class="text-xl text-green-400 font-bold">${{plan.displayPrice}}</span>
+                <span class="text-sm">
+                  {{plan.currency}}
+                  {{plan.interval}}
+                </span>
               </div>
             </grid.item>
           {{/each}}
