@@ -583,10 +583,16 @@ section.invoices {
     padding: .5em .8em .5em 0;
   }
 
-  tr td:last-child,
+  td:last-child,
   th:last-child {
-    text-align: right;
+    text-align: center;
     padding-right: 0;
+  }
+
+  td:last-child {
+    &:hover {
+      @include colorSVG($oxide-blue);
+    }
   }
 
   p {
@@ -612,6 +618,11 @@ section.invoices {
   .icon-download {
     height: 24px;
     width: 24px;
+  }
+
+  .icon-invoice {
+    height: 26px;
+    width: 26px;
   }
 }
 
