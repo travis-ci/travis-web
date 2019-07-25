@@ -2,6 +2,7 @@
 'use strict';
 
 const { screens } = require('./screens.js');
+const plans = require('./plans.js');
 
 module.exports = function (environment) {
   let ENV = {
@@ -94,6 +95,7 @@ module.exports = function (environment) {
       includeTimezone: 'subset'
     },
 
+    plans,
     screens,
   };
 

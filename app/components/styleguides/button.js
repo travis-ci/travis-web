@@ -59,7 +59,7 @@ export default Component.extend({
     return this.disabled ? COLORSETS['disabled'] : this.shades;
   }),
 
-  variantClasses: computed('currentColor', 'currentShades', 'variant', 'variantSet', function () {
+  variantClasses: computed('currentColor', 'currentShades.{light,main,dark}', 'variant', 'variantSet', function () {
     const { currentColor, currentShades, variant: variantName, variantSet } = this;
     const getVariantClasses = variantSet[variantName] || VARIANTS[DEFAULT_VARIANT];
 

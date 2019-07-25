@@ -28,7 +28,7 @@
       {{svg-jar "grey-blob" class="absolute h-64 top-0 right-0 -mt-16 -mr-10"}}
       <div class="relative bg-white border border-grey-150 rounded shadow-even z-10">
         <Styleguides::Grid @base={{2}} @md={{4}} as |grid|>
-          {{#each filteredPlans as |plan|}}
+          {{#each plansToDisplay as |plan|}}
             <grid.item class="p-4 border-grey-150 border">
               <h3 class="font-bold text-3xl">
                 {{plan.name}}
@@ -53,10 +53,11 @@
                 Unlimited collaborators
               </div>
               <div class="mb-6">
-                <span class="text-xl text-green-400 font-bold">${{plan.displayPrice}}</span>
+                <span class="text-xl text-green-400 font-bold">${{plan.monthlyPriceRounded}}</span>
                 <span class="text-sm">
                   {{plan.currency}}
-                  {{plan.interval}}
+                  per month
+                  {{if showAnnual 'billed annually'}}
                 </span>
               </div>
             </grid.item>
