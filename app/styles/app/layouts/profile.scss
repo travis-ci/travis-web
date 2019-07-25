@@ -606,6 +606,7 @@ section.invoices {
   td .icon {
     transform: translateY(-2px);
     @include colorSVG(black);
+    margin-right: 0;
   }
 
   .icon-download {
