@@ -10,11 +10,6 @@ export default Component.extend({
     return sortedDistinctInvoiceYears;
   }),
 
-  price: computed('subscription.plan.price', function () {
-    const price = this.get('subscription.plan.price');
-    return `$${price / 100}`;
-  }),
-
   year: computed('invoiceYears.[]', {
     get() {
       return this.invoiceYears.get('firstObject');
@@ -26,5 +21,5 @@ export default Component.extend({
 
   selectedInvoices: computed('invoices.@each.{createdAt}', 'year', function () {
     return this.invoices.filter(invoice => invoice.createdAt.getFullYear() === this.year);
-  })
+  }),
 });

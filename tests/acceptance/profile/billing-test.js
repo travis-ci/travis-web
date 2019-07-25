@@ -88,19 +88,22 @@ module('Acceptance | profile/billing', function (hooks) {
     this.subscription.createInvoice({
       id: '1919',
       created_at: new Date(1919, 4, 15),
-      url: 'https://example.com/1919.pdf'
+      url: 'https://example.com/1919.pdf',
+      amount_due: 6900
     });
 
     this.subscription.createInvoice({
       id: '2010',
       created_at: new Date(2010, 1, 14),
-      url: 'https://example.com/2010.pdf'
+      url: 'https://example.com/2010.pdf',
+      amount_due: 6900
     });
 
     this.subscription.createInvoice({
       id: '20102',
       created_at: new Date(2010, 2, 14),
-      url: 'https://example.com/20102.pdf'
+      url: 'https://example.com/20102.pdf',
+      amount_due: 6900
     });
 
     await profilePage.visit();
@@ -147,19 +150,22 @@ module('Acceptance | profile/billing', function (hooks) {
     this.subscription.createInvoice({
       id: '2009',
       created_at: new Date(2009, 4, 15),
-      url: 'https://example.com/2009.pdf'
+      url: 'https://example.com/2009.pdf',
+      amount_due: 6900
     });
 
     this.subscription.createInvoice({
       id: '2010',
       created_at: new Date(2010, 1, 14),
-      url: 'https://example.com/2010.pdf'
+      url: 'https://example.com/2010.pdf',
+      amount_due: 6900
     });
 
     this.subscription.createInvoice({
       id: '20102',
       created_at: new Date(2010, 2, 14),
-      url: 'https://example.com/20102.pdf'
+      url: 'https://example.com/20102.pdf',
+      amount_due: 6900
     });
 
     await profilePage.visit();

@@ -46,15 +46,18 @@ module('Integration | Component | billing-invoices', function (hooks) {
     const invoices = [{
       id: '1919',
       createdAt: new Date(1919, 4, 15),
-      url: 'https://example.com/1919.pdf'
+      url: 'https://example.com/1919.pdf',
+      amountDue: 6900
     }, {
       id: '20102',
       createdAt: new Date(2010, 2, 14),
-      url: 'https://example.com/20102.pdf'
+      url: 'https://example.com/20102.pdf',
+      amountDue: 6900
     }, {
       id: '2010',
       createdAt: new Date(2010, 1, 14),
-      url: 'https://example.com/2010.pdf'
+      url: 'https://example.com/2010.pdf',
+      amountDue: 6900
     }];
 
     this.setProperties({ subscription, invoices });

@@ -40,12 +40,18 @@
       <tbody>
         {{#each (sort-by 'createdAt:desc' selectedInvoices) as |invoice|}}
           <tr data-test-invoice class="fade-in">
-            <td> {{svg-jar 'icon-invoice' class='icon'}}{{moment-format invoice.createdAt 'MMMM DD, YYYY'}} </td>
+            <td>
+              {{svg-jar 'icon-invoice' class='icon'}}
+              {{moment-format invoice.createdAt 'MMMM DD, YYYY'}}
+            </td>
             <td> •••• •••• •••• {{subscription.creditCardInfo.lastDigits}} </td>
-            <td> {{ price }} </td>
+            <td> {{format-currency invoice.amountDue }} </td>
             <td>
               <a data-test-invoice-url href={{invoice.url}}>
-                {{svg-jar 'icon-download' class='icon'}}
+                <EmberTooltip>
+                  {{moment-format invoice.createdAt 'MMMM'}} invoice
+                </EmberTooltip>
+                {{svg-jar 'icon-download' class='icon icon-download'}}
               </a>
             </td>
           </tr>

@@ -551,7 +551,11 @@ section.invoices {
     overflow-x: auto;
   }
 
-  .invoice-select-year .ember-power-select-selected-item{
+  .invoice-select-year {
+    margin-top: 5px;
+  }
+
+  .invoice-select-year .ember-power-select-selected-item {
     margin-right: 22px;
     margin-left: 12px;
   }
@@ -564,7 +568,12 @@ section.invoices {
   th {
     text-transform: uppercase;
     color: $cement-grey;
-    font-size: $font-size-sm;
+    font-size: 12px;
+    margin-top: 5px;
+  }
+
+  td a {
+    display: block;
   }
 
   td,
@@ -574,7 +583,8 @@ section.invoices {
     padding: .5em .8em .5em 0;
   }
 
-  tr td:last-child, th:last-child {
+  tr td:last-child,
+  th:last-child {
     text-align: right;
     padding-right: 0;
   }
@@ -593,9 +603,14 @@ section.invoices {
     }
   }
 
-  td svg {
-    @include colorSVG(black);
+  td .icon {
     transform: translateY(-2px);
+    @include colorSVG(black);
+  }
+
+  .icon-download {
+    height: 24px;
+    width: 24px;
   }
 }
 
