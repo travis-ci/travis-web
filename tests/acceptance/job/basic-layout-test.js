@@ -472,7 +472,9 @@ module('Acceptance | job/basic layout', function (hooks) {
     // eslint-disable-next-line
     await waitFor('.log-container .log-line');
 
-    assert.equal(jobPage.logLines[0].text, "Log rendering is off because localStorage['travis.logRendering'] is `false`.");
+    const logContent = jobPage.logLines[0].text.split(/\d+/g).filter(Boolean);
+
+    assert.equal(logContent, "Log rendering is off because localStorage['travis.logRendering'] is `false`.");
 
     this.pusher.receive('job:log', {
       id: job.id,
