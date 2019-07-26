@@ -5,7 +5,7 @@
   {{#unless this.envVar.public}}
     <SvgImage @name="icon-private" @class="icon" />
   {{/unless}}
-  <input type="password" value={{this.value}} readonly="readonly" />
+  <input type="pw" value={{this.value}} readonly="readonly" />
 </div>
 <div class="env-var-branch">
   {{#if this.envVar.branch}}
