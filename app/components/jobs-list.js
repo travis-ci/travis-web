@@ -8,7 +8,7 @@ export default Component.extend({
   classNameBindings: ['stage:stage'],
 
   jobTableId: computed('required', function () {
-    let required = this.get('required');
+    let required = this.required;
     if (required) {
       return 'jobs';
     }
@@ -19,13 +19,13 @@ export default Component.extend({
   jobStages: mapBy('buildJobs', 'stage'),
 
   filteredJobs: computed('jobs.[]', 'build.jobs.[]', 'stage', 'jobStages.@each.id', function () {
-    let jobs = this.get('jobs');
-    let buildJobs = this.get('buildJobs');
-    let stage = this.get('stage');
+    let jobs = this.jobs;
+    let buildJobs = this.buildJobs;
+    let stage = this.stage;
 
     if (stage) {
       // Without this, the stage ids are undefined, despite the dependent key. 🤔
-      let jobStageIds = this.get('jobStages').mapBy('id'); // eslint-disable-line
+      let jobStageIds = this.jobStages.mapBy('id'); // eslint-disable-line
       return buildJobs.filterBy('stage.id', stage.get('id'));
     }
     return jobs;
@@ -34,7 +34,7 @@ export default Component.extend({
   stageState: alias('stage.state'),
 
   stageStateIcon: computed('stageState', function () {
-    let stageState = this.get('stageState');
+    let stageState = this.stageState;
     const icon = {
       'passed': 'passed',
       'failed': 'failed',
@@ -50,7 +50,7 @@ export default Component.extend({
   }),
 
   stageStateTitle: computed('stageState', function () {
-    return `Stage ${this.get('stageState')}`;
+    return `Stage ${this.stageState}`;
   }),
 
   stageAllowFailuresText: computed(
@@ -58,9 +58,9 @@ export default Component.extend({
     'stageIsLast',
     'filteredJobs.@each.{state,allowFailure}',
     function () {
-      let stage = this.get('stage');
-      let stageIsLast = this.get('stageIsLast');
-      let filteredJobs = this.get('filteredJobs');
+      let stage = this.stage;
+      let stageIsLast = this.stageIsLast;
+      let filteredJobs = this.filteredJobs;
       if (!stage) {
         return false;
       }
@@ -68,7 +68,7 @@ export default Component.extend({
       const jobsAllowedToFail = filteredJobs.filterBy('allowFailure');
       const relevantJobs = jobsAllowedToFail.filterBy('isFinished').rejectBy('state', 'passed');
 
-      const failedJobsNotAllowedToFail = this.get('filteredJobs').rejectBy('allowFailure')
+      const failedJobsNotAllowedToFail = this.filteredJobs.rejectBy('allowFailure')
         .filterBy('isFinished').rejectBy('state', 'passed');
 
       if (relevantJobs.length > 0) {
@@ -101,8 +101,8 @@ export default Component.extend({
   ),
 
   stageIsLast: computed('stages', 'stage', function () {
-    let stages = this.get('stages');
-    let stage = this.get('stage');
+    let stages = this.stages;
+    let stage = this.stage;
     return stage && stages && stages.indexOf(stage) == stages.length - 1;
   }),
 });

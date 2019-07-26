@@ -7,6 +7,6 @@ export default Component.extend({
   classNameBindings: ['bannerColor'],
 
   bannerColor: computed('color', function () {
-    return `notice-banner--${this.get('color')}`;
+    return `notice-banner--${this.color}`;
   })
 });

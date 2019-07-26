@@ -105,7 +105,7 @@ export default Service.extend({
   }),
 
   fetchMetrics: task(function* (apiSettings) {
-    return yield this.get('api').get(endpoints.metrics, apiSettings) || [];
+    return yield this.api.get(endpoints.metrics, apiSettings) || [];
   }),
 
   // Active Repo endpoint functions
@@ -127,7 +127,7 @@ export default Service.extend({
   },
 
   fetchActiveRepos: task(function* (apiSettings) {
-    return yield this.get('api').get(endpoints.activeRepos, apiSettings) || [];
+    return yield this.api.get(endpoints.activeRepos, apiSettings) || [];
   }),
 });
 

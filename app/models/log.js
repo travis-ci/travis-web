@@ -20,12 +20,12 @@ export default EmberObject.extend({
   })),
 
   noRendering: computed(function () {
-    return this.get('storage').getItem('travis.logRendering') === 'false';
+    return this.storage.getItem('travis.logRendering') === 'false';
   }),
 
   clearParts() {
     let parts;
-    parts = this.get('parts');
+    parts = this.parts;
     return parts.set('content', []);
   },
 
@@ -58,9 +58,9 @@ export default EmberObject.extend({
       throw 'error';
     }
 
-    if (this.get('noRendering')) {
+    if (this.noRendering) {
       let text = "Log rendering is off because localStorage['travis.logRendering'] is `false`.";
-      this.get('parts').pushObject({content: `${text}\r\n`, number: 0, final: true});
+      this.parts.pushObject({content: `${text}\r\n`, number: 0, final: true});
     } else {
       this.loadParts(json['log_parts']);
     }
@@ -73,7 +73,7 @@ export default EmberObject.extend({
   },
 
   runOnClear() {
-    let callback = this.get('onClearCallback');
+    let callback = this.onClearCallback;
     if (callback) {
       return callback();
     }
@@ -84,12 +84,12 @@ export default EmberObject.extend({
   },
 
   append(part) {
-    if (this.get('parts').isDestroying ||
-        this.get('parts').isDestroyed ||
-        this.get('noRendering')) {
+    if (this.parts.isDestroying ||
+        this.parts.isDestroyed ||
+        this.noRendering) {
       return;
     }
-    return this.get('parts').pushObject(part);
+    return this.parts.pushObject(part);
   },
 
   loadParts(parts) {

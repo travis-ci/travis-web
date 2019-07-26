@@ -88,12 +88,12 @@
     <h2 class="small-title">SSH Key</h2>
 
     {{#if model.customSshKey}}
-      {{ssh-key key=model.customSshKey sshKeyDeleted="sshKeyDeleted" pushAccess=model.hasPushAccess}}
+      {{ssh-key key=model.customSshKey sshKeyDeleted=(action "sshKeyDeleted") pushAccess=model.hasPushAccess}}
     {{else}}
       {{ssh-key key=model.sshKey}}
+      {{add-ssh-key repo=repo sshKeyAdded=(action "sshKeyAdded")}}
 
       {{#if model.hasPushAccess}}
-        {{add-ssh-key repo=repo sshKeyAdded="sshKeyAdded"}}
       {{/if}}
     {{/if}}
 

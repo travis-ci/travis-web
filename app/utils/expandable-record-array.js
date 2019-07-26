@@ -9,7 +9,7 @@ export default ArrayProxy.extend({
   promise: computed(function () {
     return new EmberPromise((resolve) => {
       let observer = () => {
-        if (this.get('isLoaded')) {
+        if (this.isLoaded) {
           resolve(this);
           this.removeObserver('isLoaded', observer);
           return true;
@@ -74,7 +74,7 @@ export default ArrayProxy.extend({
   },
 
   pushObject(record) {
-    let content = this.get('content');
+    let content = this.content;
     if (content) {
       if (!content.includes(record)) {
         return content.pushObject(record);

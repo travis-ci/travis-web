@@ -10,14 +10,14 @@ export default Service.extend({
   queuedJobs: [],
 
   fetchRunningJobs: task(function* () {
-    const runningJobs = this.get('runningJobs');
+    const runningJobs = this.runningJobs;
 
     if (!isEmpty(runningJobs)) {
       return runningJobs;
     }
 
     const runningStates = ['started', 'received'];
-    const result = yield this.get('store').filter(
+    const result = yield this.store.filter(
       'job',
       job => runningStates.includes(job.get('state'))
     );
@@ -25,7 +25,7 @@ export default Service.extend({
     // we don't run a query in filter above, because we want to get *all*
     // of the running jobs, so if there's more than a page size, we need to
     // paginate
-    fetchAll(this.get('store'), 'job', { state: runningStates });
+    fetchAll(this.store, 'job', { state: runningStates });
 
     result.set('isLoaded', true);
     this.set('runningJobs', result);
@@ -34,14 +34,14 @@ export default Service.extend({
   }),
 
   fetchQueuedJobs: task(function* () {
-    const queuedJobs = this.get('queuedJobs');
+    const queuedJobs = this.queuedJobs;
 
     if (!isEmpty(queuedJobs)) {
       return queuedJobs;
     }
 
     const queuedStates = ['created', 'queued'];
-    const result = yield this.get('store').filter(
+    const result = yield this.store.filter(
       'job',
       job => queuedStates.includes(job.get('state'))
     );
@@ -49,7 +49,7 @@ export default Service.extend({
     // we don't run a query in filter above, because we want to get *all*
     // of the queued jobs, so if there's more than a page size, we need to
     // paginate
-    fetchAll(this.get('store'), 'job', { state: queuedStates });
+    fetchAll(this.store, 'job', { state: queuedStates });
 
     result.set('isLoaded', true);
     this.set('queuedJobs', result);

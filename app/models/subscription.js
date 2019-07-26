@@ -1,6 +1,4 @@
-import Model from 'ember-data/model';
-import attr from 'ember-data/attr';
-import { belongsTo, hasMany } from 'ember-data/relationships';
+import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
 import { computed } from '@ember/object';
 import { and, equal, or } from '@ember/object/computed';
 import config from 'travis/config/environment';
@@ -12,15 +10,16 @@ let sourceToWords = {
 };
 
 export default Model.extend({
+  source: attr(),
+  status: attr(),
+  validTo: attr(),
+  permissions: attr(),
+
   billingInfo: belongsTo({ async: false }),
   creditCardInfo: belongsTo({ async: false }),
   invoices: hasMany('invoice'),
   owner: belongsTo('owner', {polymorphic: true}),
-  permissions: attr(),
   plan: belongsTo(),
-  source: attr(),
-  status: attr(),
-  validTo: attr(),
 
   isSubscribed: equal('status', 'subscribed'),
   isCanceled: equal('status', 'canceled'),
@@ -37,7 +36,7 @@ export default Model.extend({
   billingUrl: computed('owner.{type,login}', 'isGithub', 'isResubscribable', function () {
     let type = this.get('owner.type');
     let login = this.get('owner.login');
-    let isGithub = this.get('isGithub');
+    let isGithub = this.isGithub;
 
     const id = type === 'user' ? 'user' : login;
 
@@ -49,20 +48,20 @@ export default Model.extend({
   }),
 
   activeManagedSubscription: computed('isStripe', 'isGithub', 'isSubscribed', function () {
-    let isStripe = this.get('isStripe');
-    let isGithub = this.get('isGithub');
-    let isSubscribed = this.get('isSubscribed');
+    let isStripe = this.isStripe;
+    let isGithub = this.isGithub;
+    let isSubscribed = this.isSubscribed;
     return ((isStripe || isGithub) && isSubscribed);
   }),
 
   sourceWords: computed('source', function () {
-    let source = this.get('source');
+    let source = this.source;
     return sourceToWords[source];
   }),
 
   manualSubscriptionExpired: computed('isManual', 'validTo', function () {
-    let isManual = this.get('isManual');
-    let validTo = this.get('validTo');
+    let isManual = this.isManual;
+    let validTo = this.validTo;
     let today = new Date().toISOString();
     let date = Date.parse(today);
     let validToDate = Date.parse(validTo);

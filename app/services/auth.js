@@ -35,24 +35,24 @@ export default Service.extend({
   },
 
   token: computed(function () {
-    return this.get('sessionStorage').getItem('travis.token');
+    return this.sessionStorage.getItem('travis.token');
   }),
 
   assetToken() {
-    return JSON.parse(this.get('sessionStorage').getItem('travis.user'))['token'];
+    return JSON.parse(this.sessionStorage.getItem('travis.user'))['token'];
   },
 
   endpoint: config.authEndpoint || config.apiEndpoint,
 
   signOut() {
-    this.get('sessionStorage').clear();
-    this.get('storage').clear();
+    this.sessionStorage.clear();
+    this.storage.clear();
     this.set('state', 'signed-out');
     this.set('user', null);
     this.set('currentUser', null);
     this.clearNonAuthFlashes();
     this.runAfterSignOutCallbacks();
-    this.get('store').unloadAll();
+    this.store.unloadAll();
   },
 
   signIn(data, options = {}) {
@@ -68,14 +68,14 @@ export default Service.extend({
         url.pathname = '/';
       }
 
-      window.location = `${this.get('endpoint')}/auth/handshake?redirect_uri=${url}`;
+      window.location = `${this.endpoint}/auth/handshake?redirect_uri=${url}`;
     }
   },
 
   autoSignIn(data) {
     if (!data) {
-      data = this.userDataFrom(this.get('sessionStorage')) ||
-             this.userDataFrom(this.get('storage'));
+      data = this.userDataFrom(this.sessionStorage) ||
+             this.userDataFrom(this.storage);
     }
 
     if (data) {
@@ -86,7 +86,7 @@ export default Service.extend({
         // so log the user out. Also log the user out if the response is 401
         // or 403
         if (!xhr || (xhr.status === 401 || xhr.status === 403)) {
-          this.get('flashes').error(this.get('tokenExpiredMsg'));
+          this.flashes.error(this.tokenExpiredMsg);
           this.signOut();
         }
       });
@@ -128,7 +128,7 @@ export default Service.extend({
   validateUser(user) {
     let fieldsToValidate, isTravisBecome;
     fieldsToValidate = ['id', 'login', 'token'];
-    isTravisBecome = this.get('sessionStorage').getItem('travis.become');
+    isTravisBecome = this.sessionStorage.getItem('travis.become');
     if (!isTravisBecome) {
       fieldsToValidate.push('correct_scopes');
     }
@@ -149,9 +149,9 @@ export default Service.extend({
 
   setData(data) {
     let user;
-    this.storeData(data, this.get('sessionStorage'));
-    if (!this.userDataFrom(this.get('storage'))) {
-      this.storeData(data, this.get('storage'));
+    this.storeData(data, this.sessionStorage);
+    if (!this.userDataFrom(this.storage)) {
+      this.storeData(data, this.storage);
     }
     user = this.loadUser(data.user);
     this.set('currentUser', user);
@@ -161,11 +161,11 @@ export default Service.extend({
 
   userSignedIn(user) {
     if (proVersion && get(config, 'intercom.enabled')) {
-      this.get('intercom').set('user.id', user.id);
-      this.get('intercom').set('user.name', user.name);
-      this.get('intercom').set('user.email', user.email);
-      this.get('intercom').set('user.createdAt', user.first_logged_in_at);
-      this.get('intercom').set('user.hash', user.secure_user_hash);
+      this.intercom.set('user.id', user.id);
+      this.intercom.set('user.name', user.name);
+      this.intercom.set('user.email', user.email);
+      this.intercom.set('user.createdAt', user.first_logged_in_at);
+      this.intercom.set('user.hash', user.secure_user_hash);
     }
     Travis.trigger('user:signed_in', user);
   },
@@ -173,8 +173,8 @@ export default Service.extend({
   refreshUserData(user, include = []) {
     includes = includes.concat(include, ['owner.installation']).uniq();
     if (!user) {
-      let data = this.userDataFrom(this.get('sessionStorage')) ||
-                 this.userDataFrom(this.get('storage'));
+      let data = this.userDataFrom(this.sessionStorage) ||
+                 this.userDataFrom(this.storage);
       if (data) {
         user = data.user;
       }
@@ -209,17 +209,17 @@ export default Service.extend({
   },
 
   signedIn: computed('state', function () {
-    let state = this.get('state');
+    let state = this.state;
     return state === 'signed-in';
   }),
 
   signedOut: computed('state', function () {
-    let state = this.get('state');
+    let state = this.state;
     return state === 'signed-out';
   }),
 
   signingIn: computed('state', function () {
-    let state = this.get('state');
+    let state = this.state;
     return state === 'signing-in';
   }),
 
@@ -231,7 +231,7 @@ export default Service.extend({
   },
 
   loadUser(user) {
-    let store = this.get('store'),
+    let store = this.store,
       userClass = store.modelFor('user'),
       serializer = store.serializerFor('user'),
       normalized = serializer.normalizeResponse(store, userClass, user, null, 'findRecord');
@@ -244,7 +244,7 @@ export default Service.extend({
   },
 
   expectedOrigin() {
-    let endpoint = this.get('endpoint');
+    let endpoint = this.endpoint;
     if (endpoint && endpoint[0] === '/') {
       return this.receivingEnd;
     } else {
@@ -260,22 +260,22 @@ export default Service.extend({
     const errorMessages = flashMessages.filterBy('type', 'error');
     if (!isEmpty(errorMessages)) {
       const errMsg = errorMessages.get('firstObject.message');
-      if (errMsg !== this.get('tokenExpiredMsg')) {
-        return this.get('flashes').clear();
+      if (errMsg !== this.tokenExpiredMsg) {
+        return this.flashes.clear();
       }
     } else {
-      return this.get('flashes').clear();
+      return this.flashes.clear();
     }
   },
 
   sync() {
-    return this.get('currentUser').sync();
+    return this.currentUser.sync();
   },
 
   syncingDidChange: observer('isSyncing', 'currentUser', function () {
-    const user = this.get('currentUser');
+    const user = this.currentUser;
     if (user && user.get('isSyncing') && !user.get('syncedAt')) {
-      return this.get('router').transitionTo('first_sync');
+      return this.router.transitionTo('first_sync');
     }
   }),
 

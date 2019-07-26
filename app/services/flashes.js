@@ -41,7 +41,7 @@ export default Service.extend({
   },
 
   messages: computed('flashes.[]', function () {
-    let flashes = this.get('flashes');
+    let flashes = this.flashes;
     let model = [];
     if (flashes.length) {
       model.pushObjects(flashes.toArray());
@@ -72,8 +72,8 @@ export default Service.extend({
   removeFlash(msg) {
     setTimeout(() => {
       run(this, () => {
-        if (this.get('flashes').length > 0) {
-          return this.get('flashes').removeObject(msg);
+        if (this.flashes.length > 0) {
+          return this.flashes.removeObject(msg);
         }
       });
       // Fadeout is currently done separatly with css, and completes at 7s. Keeping the message around longer than that can result in weird situations
@@ -82,7 +82,7 @@ export default Service.extend({
   },
 
   close(msg) {
-    return this.get('flashes').removeObject(msg);
+    return this.flashes.removeObject(msg);
   },
 
   clear() {
