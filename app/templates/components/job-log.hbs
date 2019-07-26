@@ -1,9 +1,13 @@
-{{#if error}}
+{{#if this.error}}
   <p class="notice-banner--red">
     There was an error while trying to fetch the log.
   </p>
-{{else if log.fetchTask.isRunning}}
+{{else if this.log.fetchTask.isRunning}}
   <LoadingIndicator />
 {{else}}
-  <LogContent data-test-job-log-content @log={{log}} @job={{job}} />
+  <LogContent
+    data-test-job-log-content="true"
+    @log={{this.log}}
+    @job={{this.job}}
+  />
 {{/if}}

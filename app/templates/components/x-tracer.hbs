@@ -1,13 +1,11 @@
 <div id="tracer-button">
-  <a {{action "toggleOpen" preventDefault=true}}>
-    ✨ tracing (
-    {{requests.length}}
-    ) ✨
+  <a class="pointer" onclick={{action "toggleOpen" preventDefault=true}}>
+    ✨ tracing ({{this.requests.length}}) ✨
   </a>
 </div>
-<div id="tracer-panel" class="{{if panelIsOpen "open"}}">
+<div id="tracer-panel" class="{{if panelIsOpen 'open'}}">
   <table class="requests">
-    {{#each requests as |req|}}
+    {{#each this.requests as |req|}}
       <tr>
         <td class="method">
           {{req.method}}
@@ -15,17 +13,16 @@
         <td class="url">
           {{req.url}}
         </td>
-        <td class="status {{if req.error "err"}}">
+        <td class="status {{if req.error 'err'}}">
           {{req.status}}
         </td>
         <td class="duration">
-          {{req.duration}}
-          ms
+          {{req.duration}}ms
         </td>
         <td class="request-id">
           {{#if req.requestId}}
-            {{#if config.apiTraceEndpoint}}
-              <a href="{{config.apiTraceEndpoint}}{{req.requestId}}">
+            {{#if this.config.apiTraceEndpoint}}
+              <a href="{{this.config.apiTraceEndpoint}}{{req.requestId}}">
                 {{req.requestIdShort}}
               </a>
             {{else}}

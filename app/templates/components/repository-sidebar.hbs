@@ -2,37 +2,37 @@
   <div class="search-inner">
     <Input
       @id="travis-search"
-      @value={{readonly repositories.searchQuery}}
-      placeholder="Search all repositories"
+      @value={{readonly this.repositories.searchQuery}}
       @key-up={{action "onQueryChange"}}
+      @placeholder="Search all repositories"
     />
     <label for="travis-search">
-      {{svg-jar "icon-search" class="icon"}}
+      <SvgImage @name="icon-search" class="icon" />
     </label>
   </div>
 </div>
 <ReposListTabs
-  @startedJobsCount={{startedJobsCount}}
-  @allJobsCount={{allJobsCount}}
+  @startedJobsCount={{this.startedJobsCount}}
+  @allJobsCount={{this.allJobsCount}}
   @showMyRepositories={{action "showMyRepositories"}}
   @showRunningJobs={{action "showRunningJobs"}}
 />
-{{#if showRunningJobs}}
+{{#if this.showRunningJobs}}
   <div class="travistab-body sidebar-list">
     <div>
-      <RunningJobs @jobs={{runningJobs}} />
+      <RunningJobs @jobs={{this.runningJobs}} />
     </div>
     <hr class="sidebar-seperator" />
     <div>
-      <QueuedJobs @jobs={{queuedJobs}} />
+      <QueuedJobs @jobs={{this.queuedJobs}} />
     </div>
   </div>
 {{else}}
   <div class="travistab-body sidebar-list">
-    {{#if repositories.loadingData}}
+    {{#if this.repositories.loadingData}}
       <LoadingIndicator @center={{true}} />
     {{else}}
-      <ReposList @repos={{repositoryResults}} />
+      <ReposList @repos={{this.repositoryResults}} />
     {{/if}}
   </div>
 {{/if}}

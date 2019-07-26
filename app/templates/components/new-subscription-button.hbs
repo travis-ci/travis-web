@@ -1,8 +1,5 @@
-{{#if account.hasSubscriptionPermissions}}
-  <a
-    href={{account.newSubscriptionUrl}}
-    class="button--green manage-subscription new"
-  >
+{{#if this.account.hasSubscriptionPermissions}}
+  <a href={{this.account.newSubscriptionUrl}} class="button--green manage-subscription new">
     New subscription
   </a>
 {{else}}

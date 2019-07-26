@@ -6,7 +6,7 @@
       width="200"
       height="200"
     />
-    {{#if auth.signedOut}}
+    {{#if this.auth.signedOut}}
       <h1 class="content-title auth">
         We're so glad you're here!
       </h1>
@@ -18,13 +18,13 @@
           type="button"
           title="Sign into Travis CI"
           class="content-button"
-          {{action (action "signIn" target=auth)}}
+          onclick={{action "signIn" target=this.auth}}
         >
           Sign in with GitHub
         </button>
       </p>
     {{/if}}
-    {{#if auth.signingIn}}
+    {{#if this.auth.signingIn}}
       <h1 class="content-title auth">
         We're so glad you're here!
       </h1>

@@ -3,35 +3,35 @@
     More options
   </span>
   <span class="option-tofu">
-    {{svg-jar "icon-tofuburger" class="icon-tofu"}}
+    <SvgImage @name="icon-tofuburger" class="icon-tofu" />
   </span>
 </button>
 <ul class="option-dropdown">
-  {{#if displaySettingsLink}}
+  {{#if this.displaySettingsLink}}
     <li>
-      <LinkTo @route="settings" @model={{repo}}>
+      <LinkTo @route="settings" @model={{this.repo}}>
         Settings
       </LinkTo>
     </li>
   {{/if}}
   <li>
-    <LinkTo @route="requests" @model={{repo}}>
+    <LinkTo @route="requests" @model={{this.repo}}>
       Requests
     </LinkTo>
   </li>
-  {{#if displayCachesLink}}
+  {{#if this.displayCachesLink}}
     <li>
-      <LinkTo @route="caches" @model={{repo}}>
+      <LinkTo @route="caches" @model={{this.repo}}>
         Caches
       </LinkTo>
     </li>
   {{/if}}
-  {{#if displayTriggerBuildLink}}
+  {{#if this.displayTriggerBuildLink}}
     <li>
       <button
         type="button"
         class="trigger-build-anchor"
-        {{action "triggerBuildModal"}}
+        onclick={{action "triggerBuildModal"}}
       >
         Trigger build
       </button>

@@ -2,52 +2,47 @@
   <header class="name">
     <div class="inline-block repo-title">
       <div class="inline-block">
-        <RepositoryVisibilityIcon @repository={{repo}} />
+        <RepositoryVisibilityIcon @repository={{this.repo}} />
       </div>
       <h1 data-test-repo-header-title class="inline-block vertical-align">
-        <LinkTo @route="owner" @model={{repo.owner.login}}>
-          {{repo.owner.login}}
+        <LinkTo @route="owner" @model={{this.repo.owner.login}}>
+          {{this.repo.owner.login}}
         </LinkTo>
         /
-        <LinkTo @route="repo" @model={{repo}}>
-          {{repo.name}}
+        <LinkTo @route="repo" @model={{this.repo}}>
+          {{this.repo.name}}
         </LinkTo>
       </h1>
     </div>
     <div>
       <ExternalLinkTo
-        @href={{urlGithub}}
+        @href={{this.urlGithub}}
         class="repo-gh inline-block"
-        @title={{concat repo.name " on GitHub"}}
+        @title={{concat this.repo.name " on GitHub"}}
       >
-        {{svg-jar "icon-repooctocat"}}
+        SvgImage @name="icon-repooctocat" />
       </ExternalLinkTo>
       <div class="repo-badge inline-block vertical-align">
         <a
-          href="#"
           id="status-image-popup"
-          title="Latest push build on default branch:
-            {{repo.defaultBranch.lastBuild.state}}"
+          title="Latest push build on default branch: {{this.repo.defaultBranch.lastBuild.state}}"
           name="status-images"
-          class="open-popup"
-          {{action "toggleStatusBadgeModal"}}
+          class="pointer open-popup"
+          onclick={{action "toggleStatusBadgeModal"}}
         >
-          <img
-            src={{statusImageUrl}}
-            alt="build:{{repo.defaultBranch.lastBuild.state}}"
-          />
+          <img src={{this.statusImageUrl}} alt="build:{{this.repo.defaultBranch.lastBuild.state}}" />
         </a>
       </div>
     </div>
   </header>
   <main class="repo-main">
     <div class="repo-navigation">
-      <RepoShowTabs @repo={{repo}} @build={{build}} @job={{job}} />
+      <RepoShowTabs @repo={{this.repo}} @build={{this.build}} @job={{this.job}} />
       <RepoShowTools
-        @repo={{repo}}
-        @build={{build}}
-        @job={{job}}
-        @tab={{tab}}
+        @repo={{this.repo}}
+        @build={{this.build}}
+        @job={{this.job}}
+        @tab={{this.tab}}
         @onTriggerBuild={{action "toggleTriggerBuildModal"}}
       />
     </div>
@@ -55,12 +50,12 @@
       {{#if hasBlock}}
         {{yield}}
       {{else}}
-        <BuildLayout @build={{build}} @repo={{repo}} />
+        <BuildLayout @build={{this.build}} @repo={{this.repo}} />
       {{/if}}
     </div>
   </main>
 </article>
-{{#if isShowingStatusBadgeModal}}
+{{#if this.isShowingStatusBadgeModal}}
   <ModalDialog
     @onClose={{action "toggleStatusBadgeModal"}}
     @onClickOverlay={{action "toggleStatusBadgeModal"}}
@@ -69,10 +64,13 @@
     @overlayPosition="sibling"
     @animatable={{true}}
   >
-    <StatusImages @repo={{repo}} @onClose={{action "toggleStatusBadgeModal"}} />
+    <StatusImages
+      @repo={{this.repo}}
+      @onClose={{action "toggleStatusBadgeModal"}}
+    />
   </ModalDialog>
 {{/if}}
-{{#if isShowingTriggerBuildModal}}
+{{#if this.isShowingTriggerBuildModal}}
   <ModalDialog
     @onClose={{action "toggleTriggerBuildModal"}}
     @onClickOverlay={{action "toggleTriggerBuildModal"}}
@@ -82,7 +80,7 @@
     @animatable={{true}}
   >
     <TriggerCustomBuild
-      @repo={{repo}}
+      @repo={{this.repo}}
       @onClose={{action "toggleTriggerBuildModal"}}
     />
   </ModalDialog>

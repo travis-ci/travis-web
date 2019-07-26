@@ -1,13 +1,17 @@
-<TravisForm @onSubmit={{perform save}} as |form|>
+<TravisForm
+  @onSubmit={{perform this.save}}
+  as |form|
+>
   <div class="form-elem">
     <form.field
       @label="Name"
-      @value={{name}}
-      required={{true}}
+      @value={{this.name}}
+      @required={{true}}
       @validateOnField={{false}}
       @showValidationStatusIcons={{false}}
-      @onChange={{action (mut name)}}
-      @validator={{action "validateEnvName"}} as |field|
+      @onChange={{action (mut this.name)}}
+      @validator={{action "validateEnvName"}}
+      as |field|
     >
       <field.input class="env-name" placeholder="Name" />
     </form.field>
@@ -15,10 +19,11 @@
   <div class="form-elem">
     <form.field
       @label="Value"
-      @value={{value}}
-      required={{true}}
-      @onChange={{action (mut value)}}
-      @showValidationStatusIcons={{false}} as |field|
+      @value={{this.value}}
+      @required={{true}}
+      @onChange={{action (mut this.value)}}
+      @showValidationStatusIcons={{false}}
+      as |field|
     >
       <field.input class="env-value" placeholder="Value" />
     </form.field>
@@ -26,16 +31,18 @@
   <div class="form-elem">
     <form.field
       @label="Branch"
-      @value={{branch}}
-      required={{false}}
+      @value={{this.branch}}
+      @required={{false}}
       class="env-branch-selector"
-      @showValidationStatusIcons={{false}} as |field|
+      @showValidationStatusIcons={{false}}
+      as |field|
     >
       <field.select
-        placeholder="All branches"
+        @placeholder="All branches"
         @allowClear={{true}}
-        @onchange={{action (mut branch)}}
-        @search={{perform search}} as |branch|
+        @onchange={{action (mut this.branch)}}
+        @search={{perform this.search}}
+        as |branch|
       >
         {{branch}}
       </field.select>
@@ -46,14 +53,15 @@
       @label="Display value in build log"
       @disableFrame={{true}}
       class="display-value-switch"
-      @value={{public}}
-      @onChange={{action (mut public)}} as |field|
+      @value={{this.public}}
+      @onChange={{action (mut this.public)}}
+      as |field|
     >
       {{field.switch}}
     </form.field>
   </div>
   <div class="form-elem">
-    {{#if save.isRunning}}
+    {{#if this.save.isRunning}}
       <LoadingIndicator />
     {{else}}
       <button onclick={{form.submit}} class="add-env-form-submit form-submit">

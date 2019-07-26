@@ -1,7 +1,7 @@
-{{#if messages.firstObject}}
+{{#if this.messages.firstObject}}
   <FlashItem
-    data-test-components-flash-item
-    @flash={{messages.firstObject}}
+    data-test-components-flash-item="true"
+    @flash={{this.messages.firstObject}}
     @close={{action "closeMessage"}}
   />
 {{/if}}

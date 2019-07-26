@@ -1,31 +1,35 @@
 <div class="inner-yaml-container">
   <div class="file-name">
-    {{#if fileUrl}}
-      <ExternalLinkTo @href={{fileUrl}}>
-        {{svg-jar "job-name-icon" class="icon" width=14 height=14}}
+    {{#if this.fileUrl}}
+      <ExternalLinkTo @href={{this.fileUrl}}>
+        <SvgImage @name="job-name-icon" class="icon" @width=14 @height=14 />
         <span class="vertical-align">
-          {{filePath}}
+          {{this.filePath}}
         </span>
       </ExternalLinkTo>
     {{else}}
-      {{svg-jar "job-name-icon" class="icon" width=14 height=14}}
+      <SvgImage @name="job-name-icon" class="icon" @width=14 @height=14 />
       <span class="vertical-align">
-        {{filePath}}
+        {{this.filePath}}
       </span>
     {{/if}}
   </div>
   <div class="position-relative">
-    <CodeBlock data-test-yaml @language="yaml" class="codedisplay">
-      {{formattedConfig}}
+    <CodeBlock
+      data-test-yaml="true"
+      @language="yaml"
+      class="codedisplay"
+    >
+      {{this.formattedConfig}}
     </CodeBlock>
     <CopyButton
-      @clipboardText={{rawConfig.config}}
-      @title={{buttonLabel}}
-      @success={{action "copied" rawConfig.source}}
+      @clipboardText={{this.rawConfig.config}}
+      @title={{this.buttonLabel}}
+      @success={{action "copied" this.rawConfig.source}}
     >
-      {{svg-jar "icon-copy" class="icon"}}
+      <SvgImage @name="icon-copy" class="icon" />
       <span>
-        {{buttonLabel}}
+        {{this.buttonLabel}}
       </span>
     </CopyButton>
   </div>

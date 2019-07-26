@@ -3,19 +3,19 @@
   class="dashboard-section dashboard-active"
 >
   <ul class="repo-list">
-    {{#each filteredRepos as |repo|}}
+    {{#each this.filteredRepos as |repo|}}
       <DashboardRow
         @repo={{repo}}
-        @star={{dashboardController.star}}
-        @unstar={{dashboardController.unstar}}
+        @star={{this.dashboardController.star}}
+        @unstar={{this.dashboardController.unstar}}
       />
     {{else}}
       <NoRepos />
     {{/each}}
   </ul>
   <PaginationNavigation
-    data-test-components-pagination-navigation
-    @collection={{model.repos}}
+    data-test-components-pagination-navigation="true"
+    @collection={{this.model.repos}}
     @route="dashboard.repositories"
   />
 </section>

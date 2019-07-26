@@ -1,56 +1,50 @@
-<div class="tile {{repo.currentBuild.state}}">
-  <h2 class="tile-title {{repo.currentBuild.state}}">
-    {{#if repo.slug}}
-      <LinkTo @route="repo" @model={{repo}}>
-        <StatusIcon @status={{repo.currentBuild.state}} />
-        <span
-          data-test-repos-list-item-slug
-          class="label-align inner-underline"
-        >
-          {{repo.slug}}
+<div class="tile {{this.repo.currentBuild.state}}">
+  <h2 class="tile-title {{this.repo.currentBuild.state}}">
+    {{#if this.repo.slug}}
+      <LinkTo @route="repo" @model={{this.repo}}>
+        <StatusIcon @status={{this.repo.currentBuild.state}} />
+        <span data-test-repos-list-item-slug class="label-align inner-underline">
+          {{this.repo.slug}}
         </span>
       </LinkTo>
     {{/if}}
   </h2>
-  {{#if repo.slug}}
-    {{#if repo.currentBuild.id}}
-      <p class="tile-title float-right {{repo.currentBuild.state}}">
-        {{svg-jar "icon-hash" class="icon"}}
-        <LinkTo @route="build" @models={{array repo repo.currentBuild.id}}>
+  {{#if this.repo.slug}}
+    {{#if this.repo.currentBuild.id}}
+      <p class="tile-title float-right {{this.repo.currentBuild.state}}">
+        <SvgImage @name="icon-hash" class="icon" />
+        <LinkTo @route="build" @models={{array this.repo repo.currentBuild.id}}>
           <span class="label-align inner-underline">
-            {{repo.currentBuild.number}}
+            {{this.repo.currentBuild.number}}
           </span>
         </LinkTo>
       </p>
     {{/if}}
   {{/if}}
   <p>
-    {{svg-jar "icon-clock" class="icon"}}
+    <SvgImage @name="icon-clock" class="icon" />
     <span class="label-align">
       Duration:
       <time
         class="duration"
-        datetime="PT{{repo.currentBuild.duration}}S"
-        title="{{if
-            repo.currentBuild.duration
-            (concat "Started " (pretty-date repo.currentBuild.startedAt))
-          }}"
+        datetime="PT{{this.repo.currentBuild.duration}}S"
+        title="{{if this.repo.currentBuild.duration (concat "Started " (pretty-date this.repo.currentBuild.startedAt))}}"
       >
-        {{format-duration repo.currentBuild.duration}}
+        {{format-duration this.repo.currentBuild.duration}}
       </time>
     </span>
   </p>
-  {{#if repo.currentBuild.isFinished}}
+  {{#if this.repo.currentBuild.isFinished}}
     <p>
-      {{svg-jar "icon-calendar" class="icon"}}
+      <SvgImage @name="icon-calendar" class="icon" />
       <span class="label-align">
         Finished:
         <time
           class="finished_at timeago"
-          datetime={{repo.currentBuild.finishedAt}}
-          title="Finished {{pretty-date repo.currentBuild.finishedAt}}"
+          datetime={{this.repo.currentBuild.finishedAt}}
+          title="Finished {{pretty-date this.repo.currentBuild.finishedAt}}"
         >
-          {{format-time repo.currentBuild.finishedAt}}
+          {{format-time this.repo.currentBuild.finishedAt}}
         </time>
       </span>
     </p>

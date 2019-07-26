@@ -1,5 +1,5 @@
 <section class="user-settings">
-  {{#if scrollToAuth}}
+  {{#if this.scrollToAuth}}
     <ScrollHere />
   {{/if}}
   <section>
@@ -8,15 +8,14 @@
     </h3>
     <p>
       To learn more about using our API, please head to
-      <a href="https://developer.travis-ci.com">
+      <ExternalLinkTo href="https://developer.travis-ci.com">
         developer.travis-ci.com
-      </a>
-      .
+      </ExternalLinkTo>.
     </p>
-    <AccountToken @account={{model}} />
+    <AccountToken @account={{this.model}} />
   </section>
-  {{#if features.betaFeatures}}
-    {{#if scrollToFeatures}}
+  {{#if this.features.betaFeatures}}
+    {{#if this.scrollToFeatures}}
       <ScrollHere />
     {{/if}}
     <section>
@@ -24,16 +23,15 @@
         Features
       </h3>
       <ul class="features-list">
-        {{#each (sort-by "name" featureFlags) as |feature|}}
+        {{#each (sort-by "name" this.featureFlags) as |feature|}}
           <BetaFeature @feature={{feature}} />
         {{else}}
-          Oops! It looks like we don't have any experimental features for you
-          to try yet.
+          Oops! It looks like we don't have any experimental features for you to try yet.
         {{/each}}
       </ul>
     </section>
   {{/if}}
-  {{#if scrollToEmail}}
+  {{#if this.scrollToEmail}}
     <ScrollHere />
   {{/if}}
   <section class="email-settings" data-test-email-settings>
@@ -50,15 +48,15 @@
         </div>
         <div class="controls">
           <TravisSwitch
-            @active={{buildEmails}}
-            @disabled={{toggleBuildEmails.isRunning}}
-            @onToggle={{perform toggleBuildEmails}}
-            data-test-email-settings-toggle={{true}}
+            @active={{this.buildEmails}}
+            @disabled={{this.toggleBuildEmails.isRunning}}
+            @onToggle={{perform this.toggleBuildEmails}}
+            data-test-email-settings-toggle="true"
           />
         </div>
       </div>
     </div>
-    {{#if showResubscribeList}}
+    {{#if this.showResubscribeList}}
       <div
         class="unsubscribed-emails"
         data-test-email-settings-resubscribe-list
@@ -68,7 +66,7 @@
           @elevation={{2}}
           @padding={{false}}
         >
-          {{#each unsubscribedRepos as |repo|}}
+          {{#each this.unsubscribedRepos as |repo|}}
             <div class="row" data-test-email-settings-resubscribe-item>
               <div class="name">
                 <LinkTo @route="repo" @model={{repo}}>
@@ -87,7 +85,7 @@
                   {{else if repo.subscribe.last.error}}
                     Error! Try again.
                   {{else}}
-                    {{svg-jar "icon-email" class="icon" width="15px"}}
+                    <SvgImage @name="icon-email" @width="15px" class="icon" />
                     Re-subscribe
                   {{/if}}
                 </button>
@@ -96,12 +94,12 @@
           {{/each}}
         </PaperBlock>
       </div>
-    {{else if fetchRepositories.isRunning}}
+    {{else if this.fetchRepositories.isRunning}}
       <LoadingIndicator />
     {{/if}}
   </section>
-  {{#if features.proVersion}}
-    {{#if scrollToInsights}}
+  {{#if this.features.proVersion}}
+    {{#if this.scrollToInsights}}
       <ScrollHere />
     {{/if}}
     <section class="insights-visibility-settings" data-test-insights-settings>
@@ -110,21 +108,18 @@
       </h3>
       <div class="insights-settings">
         <p class="description" data-test-insights-settings-description>
-          Make more informed decisions about your development workflow using your build Insights.
-          <br />
+          Make more informed decisions about your development workflow using your build Insights. <br />
           <LinkTo
             @route="owner.repositories"
-            @model={{account.login}}
+            @model={{this.account.login}}
             @query={{hash tab="insights"}}
           >
-            View
-            {{account.fullName}}
-            's Insights
+            View {{this.account.fullName}}'s Insights
           </LinkTo>
         </p>
         <VisibilitySettingList
-          @options={{insightsVisibilityOptions}}
-          @initialKey={{privateInsightsVisibility}}
+          @options={{this.insightsVisibilityOptions}}
+          @initialKey={{this.privateInsightsVisibility}}
           @onConfirm={{action "setInsightsVis"}}
         />
       </div>

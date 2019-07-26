@@ -1,6 +1,6 @@
-{{#if jobs.isLoaded}}
-  {{#if jobs.length}}
-    {{#each jobs as |job|}}
+{{#if this.jobs.isLoaded}}
+  {{#if this.jobs.length}}
+    {{#each this.jobs as |job|}}
       <div
         data-test-sidebar-running-job
         class="tile tile--sidebar {{job.state}}"
@@ -14,7 +14,7 @@
           </LinkTo>
         {{/if}}
         <p class="tile-title float-right">
-          {{svg-jar "icon-hash" class="icon"}}
+          <SvgImage @name="icon-hash" class="icon" />
           {{#if job.repo.slug}}
             <LinkTo @route="job" @models={{array job.repo job}}>
               <span data-test-running-job-title class="label-align">
@@ -24,7 +24,7 @@
           {{/if}}
         </p>
         <p>
-          {{svg-jar "icon-clock" class="icon"}}
+          <SvgImage @name="icon-clock" class="icon" />
           <span class="label-align">
             Duration:
             <time

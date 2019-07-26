@@ -1,5 +1,5 @@
-{{#if canCancel}}
-  {{#if cancel.isRunning}}
+{{#if this.canCancel}}
+  {{#if this.cancel.isRunning}}
     <LoadingIndicator @height={{true}} />
   {{else}}
     <div class="action-button-container">
@@ -7,66 +7,60 @@
         data-test-repo-actions-cancel-button
         class="action-button--cancel"
         type="button"
-        aria-label="Cancel {{type}}"
-        {{action (perform cancel)}}
+        aria-label="Cancel {{this.type}}"
+        {{action (perform this.cancel)}}
       >
-        {{#if tooltips}}
-          <EmberTooltip class={{if mobilelabels "hidden-on-mobile"}}>
-            Cancel
-            {{type}}
+        {{#if this.tooltips}}
+          <EmberTooltip class={{if this.mobilelabels "hidden-on-mobile"}}>
+            Cancel {{this.type}}
           </EmberTooltip>
         {{/if}}
-        {{svg-jar "icon-failed" class="icon"}}
+        <SvgImage @name="icon-failed" class="icon" />
         <span class="label-align">
-          Cancel
-          {{type}}
+          Cancel {{this.type}}
         </span>
       </button>
     </div>
   {{/if}}
-{{else if canRestart}}
-  {{#if restarters.isRunning}}
+{{else if this.canRestart}}
+  {{#if this.restarters.isRunning}}
     <LoadingIndicator @height={{true}} />
   {{else}}
     <div class="action-button-container">
       <button
         class="action-button--restart"
-        aria-label="Restart {{type}}"
+        aria-label="Restart {{this.type}}"
         type="button"
-        {{action (perform restart)}}
+        {{action (perform this.restart)}}
       >
-        {{#if tooltips}}
-          <EmberTooltip class={{if mobilelabels "hidden-on-mobile"}}>
-            Restart
-            {{type}}
+        {{#if this.tooltips}}
+          <EmberTooltip class={{if this.mobilelabels "hidden-on-mobile"}}>
+            Restart {{this.type}}
           </EmberTooltip>
         {{/if}}
-        {{svg-jar "icon-restart" class="icon"}}
+        <SvgImage @name="icon-restart" class="icon" />
         <span class="label-align">
-          Restart
-          {{type}}
+          Restart {{this.type}}
         </span>
       </button>
     </div>
-    {{#if (and features.debugBuilds canDebug)}}
+    {{#if (and this.features.debugBuilds this.canDebug)}}
       <div class="action-button-container">
         <button
           data-test-repo-actions-debug-button
           class="action-button--debug"
           aria-label="Restart as debug {{type}}"
           type="button"
-          {{action (perform debug)}}
+          {{action (perform this.debug)}}
         >
-          {{#if tooltips}}
-            <EmberTooltip class={{if mobilelabels "hidden-on-mobile"}}>
-              Restart as debug
-              {{type}}
+          {{#if this.tooltips}}
+            <EmberTooltip class={{if this.mobilelabels "hidden-on-mobile"}}>
+              Restart as debug {{this.type}}
             </EmberTooltip>
           {{/if}}
-          {{svg-jar "icon-debug" class="icon"}}
+          <SvgImage @name="icon-debug" class="icon" />
           <span class="label-align">
-            Debug
-            {{type}}
+            Debug {{this.type}}
           </span>
         </button>
       </div>

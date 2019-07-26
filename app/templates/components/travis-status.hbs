@@ -3,14 +3,10 @@
 </div>
 <ExternalLinkTo @href="http://www.traviscistatus.com/" class="status-link">
   Travis CI Status
-  <span
-    class="status-description
-      {{if showDescription "status-description--visible"}}"
-  >
-    :
-    {{description}}
+  <span class="status-description {{if this.showDescription 'status-description--visible'}}">:
+    {{this.description}}
   </span>
 </ExternalLinkTo>
-{{#if showTooltip}}
-  <EmberTooltip @text={{description}} @side="left" />
+{{#if this.showTooltip}}
+  <EmberTooltip @text={{this.description}} @side="left" />
 {{/if}}

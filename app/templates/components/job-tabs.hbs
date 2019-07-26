@@ -4,9 +4,9 @@
       <LinkTo
         @route="job.index"
         @models={{array repo job}}
-        data-test-job-log-tab
         @id="tab_log"
         @title="Look at this job's log"
+        data-test-job-log-tab="true"
       >
         Job log
       </LinkTo>
@@ -14,12 +14,12 @@
     <li>
       <LinkTo
         @route="job.config"
-        @models={{array repo job}}
-        data-test-build-yaml-tab
+        @models={{array this.repo this.job}}
         @title="Look at this job’s config"
-        @disabled={{job.build.request.noYaml}}
+        @disabled={{this.job.build.request.noYaml}}
+        data-test-build-yaml-tab="true"
       >
-        {{#if job.build.request.noYaml}}
+        {{#if this.job.build.request.noYaml}}
           <EmberTooltip @text="Try a more recent job to see the config" />
         {{/if}}
         View config

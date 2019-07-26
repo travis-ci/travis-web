@@ -2,19 +2,19 @@
   Build Statuses
 </h3>
 <div class="insights-odyssey__chart" data-test-insights-odyssey-chart>
-  {{#if isLoading}}
+  {{#if this.isLoading}}
     <div class="insights-odyssey__loading-indicator">
       <LoadingIndicator />
     </div>
-  {{else if hasNoBuilds}}
-    No builds{{currentIntervalLabel}}.
+  {{else if this.hasNoBuilds}}
+    No builds {{this.currentIntervalLabel}}.
   {{else}}
     <C3Chart
+      @data={{this.data}}
+      @axis={{this.axis}}
+      @grid={{this.grid}}
+      @tooltip={{this.tooltip}}
       class="chart-component"
-      @data={{data}}
-      @axis={{axis}}
-      @grid={{grid}}
-      @tooltip={{tooltip}}
     />
   {{/if}}
 </div>

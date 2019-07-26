@@ -1,19 +1,19 @@
-{{#if isEmpty}}
-  {{svg-jar "icon-nobuilds"}}
+{{#if this.isEmpty}}
+  <SvgImage @name="icon-nobuilds" />
 {{else}}
-  {{#if hasPassed}}
-    {{svg-jar "icon-passed"}}
+  {{#if this.hasPassed}}
+    <SvgImage @name="icon-passed" />
   {{/if}}
-  {{#if hasFailed}}
-    {{svg-jar "icon-failed"}}
+  {{#if this.hasFailed}}
+    <SvgImage @name="icon-failed" />
   {{/if}}
-  {{#if wasCanceled}}
-    {{svg-jar "icon-canceled"}}
+  {{#if this.wasCanceled}}
+    <SvgImage @name="icon-canceled" />
   {{/if}}
-  {{#if hasErrored}}
-    {{svg-jar "icon-errored"}}
+  {{#if this.hasErrored}}
+    <SvgImage @name="icon-errored" />
   {{/if}}
-  {{#if isRunning}}
-    {{svg-jar "icon-running"}}
+  {{#if this.isRunning}}
+    <SvgImage @name="icon-running" />
   {{/if}}
 {{/if}}

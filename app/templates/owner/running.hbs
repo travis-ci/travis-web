@@ -1,5 +1,5 @@
 <ul class="owner-tiles">
-  {{#each running as |repo|}}
+  {{#each this.running as |repo|}}
     <OwnerRepoTile @repo={{repo}} />
   {{else}}
     <li>

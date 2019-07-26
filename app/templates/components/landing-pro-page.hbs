@@ -19,14 +19,14 @@
             title="Sign up with GitHub"
             {{action "gaCta" "index"}}
           >
-            {{svg-jar "github-signin"}}
+            <SvgImage @name="github-signin" />
             <span>
               Sign up with GitHub
             </span>
           </a>
         </div>
         <div class="landing-hero-image">
-          <img src="../images/pro-landing/hero-header.png" alt="" />
+          <img src="../images/pro-landing/hero-header.png" />
         </div>
       </div>
     </section>
@@ -37,53 +37,29 @@
         </h3>
         <ul class="list--customers">
           <li>
-            <a href="https://www.zendesk.com/" title="Zendesk" class="customer">
-              <img
-                src="../images/svg/zendesk.svg"
-                alt=""
-                class="customer-zendesk"
-              />
-            </a>
+            <ExternalLinkTo @href="https://www.zendesk.com/" @title="Zendesk" class="customer">
+              <img src="../images/svg/zendesk.svg" class="customer-zendesk" />
+            </ExternalLinkTo>
           </li>
           <li>
-            <a
-              href="https://www.engineyard.com/"
-              title="Engine Yard"
-              class="customer"
-            >
-              <img
-                src="../images/svg/engineyard.svg"
-                alt=""
-                class="customer-engineyard"
-              />
-            </a>
+            <ExternalLinkTo @href="https://www.engineyard.com/" @title="Engine Yard" class="customer">
+              <img src="../images/svg/engineyard.svg" class="customer-engineyard" />
+            </ExternalLinkTo>
           </li>
           <li>
-            <a href="http://www.heroku.com/" title="Heroku" class="customer">
-              <img
-                src="../images/svg/customer-logos-heroku.svg"
-                alt=""
-                class="customer-heroku"
-              />
-            </a>
+            <ExternalLinkTo @href="http://www.heroku.com/" @title="Heroku" class="customer">
+              <img src="../images/svg/customer-logos-heroku.svg" class="customer-heroku" />
+            </ExternalLinkTo>
           </li>
           <li>
-            <a
-              href="http://www.bittorrent.com/"
-              title="BitTorrent"
-              class="customer"
-            >
-              <img
-                src="../images/svg/customer-logos-bittorrent.svg"
-                alt=""
-                class="customer-bittorrent"
-              />
-            </a>
+            <ExternalLinkTo @href="http://www.bittorrent.com/" @title="BitTorrent" class="customer">
+              <img src="../images/svg/customer-logos-bittorrent.svg" class="customer-bittorrent" />
+            </ExternalLinkTo>
           </li>
           <li>
-            <a href="https://moz.com/" title="moz" class="customer">
-              <img src="../images/svg/moz.svg" alt="" class="customer-moz" />
-            </a>
+            <ExternalLinkTo @href="https://moz.com/" @title="moz" class="customer">
+              <img src="../images/svg/moz.svg" class="customer-moz" />
+            </ExternalLinkTo>
           </li>
         </ul>
       </div>
@@ -145,60 +121,25 @@
         <div class="list-check-container">
           <ul class="list-check">
             <li>
-              <img
-                src="../images/svg/stage-passed.svg"
-                alt=""
-                class="checkmark"
-              />
-              Quick setup
+              <img src="../images/svg/stage-passed.svg" class="checkmark" /> Quick setup
             </li>
             <li>
-              <img
-                src="../images/svg/stage-passed.svg"
-                alt=""
-                class="checkmark"
-              />
-              Live build views
+              <img src="../images/svg/stage-passed.svg" class="checkmark" /> Live build views
             </li>
             <li>
-              <img
-                src="../images/svg/stage-passed.svg"
-                alt=""
-                class="checkmark"
-              />
-              Pull request support
+              <img src="../images/svg/stage-passed.svg" class="checkmark" /> Pull request support
             </li>
             <li>
-              <img
-                src="../images/svg/stage-passed.svg"
-                alt=""
-                class="checkmark"
-              />
-              Pre-installed database services
+              <img src="../images/svg/stage-passed.svg" class="checkmark" /> Pre-installed database services
             </li>
             <li>
-              <img
-                src="../images/svg/stage-passed.svg"
-                alt=""
-                class="checkmark"
-              />
-              Auto deployments on passing builds
+              <img src="../images/svg/stage-passed.svg" class="checkmark" /> Auto deployments on passing builds
             </li>
             <li>
-              <img
-                src="../images/svg/stage-passed.svg"
-                alt=""
-                class="checkmark"
-              />
-              Clean VMs for every build
+              <img src="../images/svg/stage-passed.svg" class="checkmark" /> Clean VMs for every build
             </li>
             <li>
-              <img
-                src="../images/svg/stage-passed.svg"
-                alt=""
-                class="checkmark"
-              />
-              Mac, Linux, and iOS support
+              <img src="../images/svg/stage-passed.svg" class="checkmark" /> Mac, Linux, and iOS support
             </li>
           </ul>
         </div>
@@ -207,16 +148,12 @@
     <div class="spacer"></div>
     <section class="section-opensource section--white section--center">
       <h2>
-        Testing your open source
-        <br />
+        Testing your open source<br />
         projects will always be free!
       </h2>
       <p>
-        <em>
-          Seriously. Always.
-        </em>
-        We like to think of it as our way of giving
-        <br />
+        <em>Seriously. Always.</em>
+        We like to think of it as our way of giving<br />
         back to a community that connects so many people.
       </p>
     </section>
@@ -228,28 +165,23 @@
         <div class="build-flow-image"></div>
         <div class="build-steps-container">
           <p class="build-step-1 build-steps">
-            You push your
-            <br />
+            You push your<br />
             code to GitHub
           </p>
           <p class="build-step-2 build-steps">
-            GitHub triggers
-            <br />
+            GitHub triggers<br />
             Travis CI to build
           </p>
           <p class="build-step-3 build-steps">
-            Hooray!
-            <br />
+            Hooray!<br />
             Your build passes!
           </p>
           <p class="build-step-4 build-steps">
-            Travis CI deploys
-            <br />
+            Travis CI deploys<br />
             to Heroku
           </p>
           <p class="build-step-5 build-steps">
-            Travis CI tells your
-            <br />
+            Travis CI tells your<br />
             team all is well
           </p>
         </div>
@@ -261,28 +193,23 @@
         <div class="build-pr-image"></div>
         <div class="build-steps-container">
           <p class="build-step-6 build-steps">
-            A pull request
-            <br />
+            A pull request<br />
             is created
           </p>
           <p class="build-step-7 build-steps">
-            GitHub tells Travis CI
-            <br />
+            GitHub tells Travis CI<br />
             the build is mergeable
           </p>
           <p class="build-step-8 build-steps">
-            Hooray!
-            <br />
+            Hooray!<br />
             Your build passes!
           </p>
           <p class="build-step-9 build-steps">
-            Travis CI updates
-            <br />
+            Travis CI updates<br />
             the PR that it passed
           </p>
           <p class="build-step-10 build-steps">
-            You merge in
-            <br />
+            You merge in<br />
             the PR goodness
           </p>
         </div>
@@ -292,165 +219,105 @@
       <div class="inner">
         <div class="section-languages-text-container">
           <h2>
-            We support over
-            <br />
+            We support over<br />
             30 different languages.
           </h2>
           <p>
             These are just a few of our most popular languages,
-            <a
-              href="http://docs.travis-ci.com/user/languages/"
-              title="Supported languages"
-            >
+            <ExternalLinkTo @href="http://docs.travis-ci.com/user/languages/" @title="Supported languages">
               check out the full list in our docs
-            </a>
-            .
+            </ExternalLinkTo>.
           </p>
         </div>
         <div class="section-languages-container">
           <ul class="list--languages">
             <li style="padding-bottom: 20px;">
-              <a
-                href="http://docs.travis-ci.com/user/languages/clojure/"
-                title="Read about Clojure at Travis CI"
+              <ExternalLinkTo
+                @href="http://docs.travis-ci.com/user/languages/clojure/"
+                @title="Read about Clojure at Travis CI"
               >
-                <img
-                  src="../images/landing-page/lang-clojure.svg"
-                  alt="clojure logo"
-                  class="language"
-                />
-                Clojure
-              </a>
+                <img src="../images/landing-page/lang-clojure.svg" alt="clojure logo" class="language" /> Clojure
+              </ExternalLinkTo>
             </li>
             <li>
-              <a
-                href="http://docs.travis-ci.com/user/languages/javascript-with-nodejs/"
-                title="Read about NodeJS at Travis CI"
+              <ExternalLinkTo
+                @href="http://docs.travis-ci.com/user/languages/javascript-with-nodejs/"
+                @title="Read about NodeJS at Travis CI"
               >
-                <img
-                  src="../images/landing-page/lang-node.svg"
-                  alt="node logo"
-                  class="lang-node language"
-                />
-                Node
-              </a>
+                <img src="../images/landing-page/lang-node.svg" alt="node logo" class="lang-node language" /> Node
+              </ExternalLinkTo>
             </li>
             <li>
-              <a
-                href="http://docs.travis-ci.com/user/languages/php/"
-                title="Read about PHP at Travis CI"
+              <ExternalLinkTo
+                @href="http://docs.travis-ci.com/user/languages/php/"
+                @title="Read about PHP at Travis CI"
               >
-                <img
-                  src="../images/landing-page/lang-php.svg"
-                  alt="php logo"
-                  class="lang-php language"
-                />
-                PHP
-              </a>
+                <img src="../images/landing-page/lang-php.svg" alt="php logo" class="lang-php language" /> PHP
+              </ExternalLinkTo>
             </li>
             <li>
-              <a
-                href="http://docs.travis-ci.com/user/languages/objective-c/"
-                title="Read about ObjectiveC at Travis CI"
+              <ExternalLinkTo
+                @href="http://docs.travis-ci.com/user/languages/objective-c/"
+                @title="Read about ObjectiveC at Travis CI"
               >
-                <img
-                  src="../images/landing-page/lang-xcode.svg"
-                  alt="xcode logo"
-                  class="lang-xcode language"
-                />
-                Xcode
-              </a>
+                <img src="../images/landing-page/lang-xcode.svg" alt="xcode logo" class="lang-xcode language" /> Xcode
+              </ExternalLinkTo>
             </li>
             <li style="padding-bottom: 20px;">
-              <a
-                href="http://docs.travis-ci.com/user/languages/ruby/"
-                title="Read about Ruby at Travis CI"
+              <ExternalLinkTo
+                @href="http://docs.travis-ci.com/user/languages/ruby/"
+                @title="Read about Ruby at Travis CI"
               >
-                <img
-                  src="../images/landing-page/lang-ruby.svg"
-                  alt="ruby logo"
-                  class="lang-ruby language"
-                />
-                Ruby
-              </a>
+                <img src="../images/landing-page/lang-ruby.svg" alt="ruby logo" class="lang-ruby language" /> Ruby
+              </ExternalLinkTo>
             </li>
             <li>
-              <a
-                href="http://docs.travis-ci.com/user/languages/python/"
-                title="Read about Python at Travis CI"
+              <ExternalLinkTo
+                @href="http://docs.travis-ci.com/user/languages/python/"
+                @title="Read about Python at Travis CI"
               >
-                <img
-                  src="../images/landing-page/lang-python.svg"
-                  alt="python logo"
-                  class="lang-python language"
-                />
-                Python
-              </a>
+                <img src="../images/landing-page/lang-python.svg" alt="python logo" class="lang-python language" /> Python
+              </ExternalLinkTo>
             </li>
             <li style="padding-bottom: 20px;">
-              <a
-                href="http://docs.travis-ci.com/user/languages/java/"
-                title="Read about Java at Travis CI"
+              <ExternalLinkTo
+                @href="http://docs.travis-ci.com/user/languages/java/"
+                @title="Read about Java at Travis CI"
               >
-                <img
-                  src="../images/landing-page/lang-java.svg"
-                  alt="java logo"
-                  class="lang-java language"
-                />
-                Java
-              </a>
+                <img src="../images/landing-page/lang-java.svg" alt="java logo" class="lang-java language" /> Java
+              </ExternalLinkTo>
             </li>
             <li>
-              <a
-                href="http://docs.travis-ci.com/user/languages/erlang/"
-                title="Read about Erlang at Travis CI"
+              <ExternalLinkTo
+                @href="http://docs.travis-ci.com/user/languages/erlang/"
+                @title="Read about Erlang at Travis CI"
               >
-                <img
-                  src="../images/landing-page/lang-erlang.svg"
-                  alt="erlang logo"
-                  class="lang-erlang language"
-                />
-                Erlang
-              </a>
+                <img src="../images/landing-page/lang-erlang.svg" alt="erlang logo" class="lang-erlang language" /> Erlang
+              </ExternalLinkTo>
             </li>
             <li>
-              <a
-                href="http://docs.travis-ci.com/user/languages/go/"
-                title="Read about Go at Travis CI"
+              <ExternalLinkTo
+                @href="http://docs.travis-ci.com/user/languages/go/"
+                @title="Read about Go at Travis CI"
               >
-                <img
-                  src="../images/landing-page/lang-go.svg"
-                  alt="go logo"
-                  class="lang-go language"
-                />
-                Go
-              </a>
+                <img src="../images/landing-page/lang-go.svg" alt="go logo" class="lang-go language" /> Go
+              </ExternalLinkTo>
             </li>
             <li>
-              <a
-                href="http://docs.travis-ci.com/user/languages/scala/"
-                title="Read about Scala at Travis CI"
+              <ExternalLinkTo
+                @href="http://docs.travis-ci.com/user/languages/scala/"
+                @title="Read about Scala at Travis CI"
               >
-                <img
-                  src="../images/landing-page/lang-scala.svg"
-                  alt="scala logo"
-                  class="lang-scala language"
-                />
-                Scala
-              </a>
+                <img src="../images/landing-page/lang-scala.svg" alt="scala logo" class="lang-scala language" /> Scala
+              </ExternalLinkTo>
             </li>
             <li>
-              <a
-                href="http://docs.travis-ci.com/user/languages/perl/"
-                title="Read about Perl at Travis CI"
+              <ExternalLinkTo
+                @href="http://docs.travis-ci.com/user/languages/perl/"
+                @title="Read about Perl at Travis CI"
               >
-                <img
-                  src="../images/landing-page/lang-perl.svg"
-                  alt="perl logo"
-                  class="lang-perl language"
-                />
-                Perl
-              </a>
+                <img src="../images/landing-page/lang-perl.svg" alt="perl logo" class="lang-perl language" /> Perl
+              </ExternalLinkTo>
             </li>
           </ul>
         </div>
@@ -463,13 +330,10 @@
       </h2>
       <div class="inner">
         <div class="quote-container">
-          <img
-            src="../images/landing-page/rails.svg"
-            alt="ruby on rails logo"
-            class="rails-logo"
-          />
+          <img src="../images/landing-page/rails.svg" alt="ruby on rails logo" class="rails-logo" />
           <p>
-            Travis CI makes it so much easier for us to coordinate the thousands of commits and contributors that flow through the Rails code base. The test suite for such a large project is vast, and we wouldn't be catching issues as quickly or smoothly without the help of Travis.
+            Travis CI makes it so much easier for us to coordinate the thousands of commits and contributors that flow through the Rails code base.
+            The test suite for such a large project is vast, and we wouldn't be catching issues as quickly or smoothly without the help of Travis.
           </p>
           <p class="quote-author quote-signature">
             David Heinemeier Hansson
@@ -478,22 +342,19 @@
             Creator of Ruby on Rails
           </p>
           <span>
-            {{svg-jar "twitter"}}
+            <SvgImage @name="twitter" />
           </span>
           <span>
-            <a href="https://twitter.com/dhh">
+            <ExternalLinkTo @href="https://twitter.com/dhh">
               dhh
-            </a>
+            </ExternalLinkTo>
           </span>
         </div>
         <div class="quote-container">
-          <img
-            src="../images/landing-page/twitter-quote.svg"
-            alt="twitter logo"
-            class="twitter-logo"
-          />
+          <img src="../images/landing-page/twitter-quote.svg" alt="twitter logo" class="twitter-logo" />
           <p>
-            We love Travis CI at @TwitterOSS and we use it for the majority of our open source projects on GitHub. Travis CI is simple to use, we love their API to build tooling and adore the new container infrastructure for speedier builds.
+            We love Travis CI at @TwitterOSS and we use it for the majority of our open source projects on GitHub.
+            Travis CI is simple to use, we love their API to build tooling and adore the new container infrastructure for speedier builds.
           </p>
           <p class="quote-author quote-signature second-signature">
             Chris Aniszczyk
@@ -502,25 +363,17 @@
             Former Head of Open Source at Twitter
           </p>
           <span>
-            {{svg-jar "twitter"}}
+            <SvgImage @name="twitter" />
           </span>
           <span>
-            <a href="https://twitter.com/cra">
+            <ExternalLinkTo @href="https://twitter.com/cra">
               cra
-            </a>
+            </ExternalLinkTo>
           </span>
         </div>
         <div class="quote-container">
-          <img
-            src="../images/landing-page/pypy.png"
-            alt="pypy logo"
-            class="quote-pypy-logo"
-          />
-          <img
-            src="../images/landing-page/lang-python.svg"
-            alt="python programming language logo"
-            class="quote-python-logo"
-          />
+          <img src="../images/landing-page/pypy.png" alt="pypy logo" class="quote-pypy-logo" />
+          <img src="../images/landing-page/lang-python.svg" alt="python programming language logo" class="quote-python-logo" />
           <p class="quote-python">
             Not only is Travis CI the best way to test your software, it is the right way. rm -rf jenkins&amp;&amp;touch .travis.yml
           </p>
@@ -531,12 +384,12 @@
             PyPy and Python Core Team Member
           </p>
           <span>
-            {{svg-jar "github"}}
+            <SvgImage @name="github" />
           </span>
           <span>
-            <a href="https://github.com/alex">
+            <ExternalLinkTo @href="https://github.com/alex">
               alex
-            </a>
+            </ExternalLinkTo>
           </span>
         </div>
       </div>

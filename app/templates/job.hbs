@@ -1,13 +1,13 @@
-<JobWrapper @repo={{repo}} @job={{job}}>
-  {{#if job.isLoaded}}
+<JobWrapper @repo={{this.repo}} @job={{this.job}}>
+  {{#if this.job.isLoaded}}
     <BuildHeader
       data-test-build-header
-      @item={{job}}
-      @commit={{job.commit}}
-      @repo={{repo}}
+      @item={{this.job}}
+      @commit={{this.job.commit}}
+      @repo={{this.repo}}
     />
-    <JobInfrastructureNotification @job={{job}} />
-    <JobTabs @job={{job}} @repo={{repo}} />
+    <JobInfrastructureNotification @job={{this.job}} />
+    <JobTabs @job={{this.job}} @repo={{this.repo}} />
   {{else}}
     <div id="job">
       <LoadingIndicator />

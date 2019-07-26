@@ -1,6 +1,6 @@
 <section class="organization-settings">
-  {{#if showOrganizationSettings}}
-    {{#if scrollToInsights}}
+  {{#if this.showOrganizationSettings}}
+    {{#if this.scrollToInsights}}
       <ScrollHere />
     {{/if}}
     <section class="insights-visibility-settings" data-test-insights-settings>
@@ -9,21 +9,18 @@
       </h3>
       <div class="insights-settings">
         <p class="description" data-test-insights-settings-description>
-          Make more informed decisions about your development workflow using your build Insights.
-          <br />
+          Make more informed decisions about your development workflow using your build Insights. <br />
           <LinkTo
             @route="owner.repositories"
-            @model={{organization.login}}
+            @model={{this.organization.login}}
             @query={{hash tab="insights"}}
           >
-            View
-            {{organization.fullName}}
-            's Insights
+            View {{this.organization.fullName}}'s Insights
           </LinkTo>
         </p>
         <VisibilitySettingList
-          @options={{insightsVisibilityOptions}}
-          @initialKey={{privateInsightsVisibility}}
+          @options={{this.insightsVisibilityOptions}}
+          @initialKey={{this.privateInsightsVisibility}}
           @onConfirm={{action "setInsightsVis"}}
         />
       </div>

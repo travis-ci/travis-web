@@ -1,25 +1,29 @@
 <section class="billing">
-  {{#if isEducation}}
+  {{#if this.isEducation}}
     <BillingEducation
-      @model={{model}}
-      @account={{account}}
-      @config={{config}}
+      @model={{this.model}}
+      @account={{this.account}}
+      @config={{this.config}}
     />
   {{/if}}
-  {{#if isTrial}}
-    <BillingTrial @model={{model}} @account={{account}} @config={{config}} />
+  {{#if this.isTrial}}
+    <BillingTrial
+      @model={{this.model}}
+      @account={{this.account}}
+      @config={{this.config}}
+    />
   {{/if}}
-  {{#if model.subscriptions.isManual}}
-    <BillingManual @model={{model}} />
+  {{#if this.model.subscriptions.isManual}}
+    <BillingManual @model={{this.model}} />
   {{/if}}
-  {{#if model.subscriptions.managedSubscription}}
+  {{#if this.model.subscriptions.managedSubscription}}
     <BillingSubscription
-      @model={{model}}
-      @account={{account}}
-      @config={{config}}
+      @model={{this.model}}
+      @account={{this.account}}
+      @config={{this.config}}
     />
   {{/if}}
 </section>
-{{#if invoices}}
-  <BillingInvoices @invoices={{invoices}} />
+{{#if this.invoices}}
+  <BillingInvoices @invoices={{this.invoices}} />
 {{/if}}

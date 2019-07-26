@@ -1,15 +1,15 @@
-{{#link-to-account routeName routeModel class="org-info"}}
+<LinkToAccount @routeName={{this.routeName}} @routeModel={{this.routeModel}} class="org-info">
   <span class="account-avatar">
     <UserAvatar
-      @account={{account}}
-      @url={{account.avatarUrl}}
-      @name={{name}}
+      @account={{this.account}}
+      @url={{this.account.avatarUrl}}
+      @name={{this.name}}
       @showSubscriptionStatus={{true}}
     />
   </span>
   <span class="account-info">
     <h3 class="account-name">
-      {{name}}
+      {{this.name}}
     </h3>
   </span>
-{{/link-to-account}}
+</LinkToAccount>

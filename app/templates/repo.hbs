@@ -1,5 +1,5 @@
-<div class="wrapper {{if isCentered "centered"}}">
-  {{#if showGitHubAppsCTA}}
+<div class="wrapper {{if this.isCentered 'centered'}}">
+  {{#if this.showGitHubAppsCTA}}
     <TopBar>
       <div class="cta">
         <p class="row">
@@ -13,21 +13,21 @@
   <FlashDisplay />
   <div class="wrapper-main">
     <div id="main" class="main" role="main">
-      {{#if repo.isLoaded}}
+      {{#if this.repo.isLoaded}}
         <RepositoryLayout
-          @repo={{repo}}
-          @build={{build}}
-          @job={{job}}
-          @tab={{tab}}
+          @repo={{this.repo}}
+          @build={{this.build}}
+          @job={{this.job}}
+          @tab={{this.tab}}
         >
           {{outlet}}
         </RepositoryLayout>
       {{/if}}
     </div>
   </div>
-  {{#if auth.signedIn}}
-    {{#unless features.dashboard}}
-      <aside id="left" class="{{unless auth.signedIn "hidden"}}">
+  {{#if this.auth.signedIn}}
+    {{#unless this.features.dashboard}}
+      <aside id="left" class="{{unless this.auth.signedIn 'hidden'}}">
         <RepositorySidebar />
       </aside>
     {{/unless}}

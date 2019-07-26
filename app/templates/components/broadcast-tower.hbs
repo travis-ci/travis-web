@@ -1,13 +1,13 @@
 <span
-  class="icon-broadcast {{status}} {{if isOpen "is-open"}}"
+  class="icon-broadcast {{this.status}} {{if this.isOpen 'is-open'}}"
   title="broadcasts"
-  {{action (perform toggle)}}
+  onclick={{action (perform toggle)}}
 >
-  {{svg-jar "icon-broadcast"}}
-  {{#if count}}
+  <SvgImage @name="icon-broadcast" />
+  {{#if this.count}}
     <div class="count-wrapper">
       <div class="count">
-        {{count}}
+        {{this.count}}
       </div>
     </div>
   {{/if}}

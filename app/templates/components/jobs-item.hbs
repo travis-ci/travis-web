@@ -1,60 +1,64 @@
-<LinkTo @route="job" @models={{array repo job}}>
-  <div class="job-state {{job.state}}">
-    <StatusIcon @status={{job.state}} />
+<LinkTo @route="job" @models={{array this.repo this.job}}>
+  <div class="job-state {{this.job.state}}">
+    <StatusIcon @status={{this.job.state}} />
   </div>
-  <div class="job-number {{job.state}}">
-    {{svg-jar "icon-hash" class="icon"}}
+  <div class="job-number {{this.job.state}}">
+    <SvgImage @name="icon-hash" class="icon" />
     <span class="label-align" aria-label="Job number">
-      {{job.number}}
+      {{this.job.number}}
     </span>
   </div>
-  <div class="job-os {{os}}">
-    <EmberTooltip @text={{job.config.content.os}} />
-    {{svg-jar osIcon class="icon"}}
+  <div class="job-os {{this.os}}">
+    <EmberTooltip @text={{this.job.config.content.os}} />
+    <SvgImage @name={{osIcon}} class="icon" />
   </div>
-  {{#if name}}
+  {{#if this.name}}
     <div class="job-name">
-      {{svg-jar "job-name-icon" class="icon"}}
+      <SvgImage @name="job-name-icon" class="icon" />
       <span class="label-align" aria-label="Title">
-        {{name}}
+        {{this.name}}
       </span>
     </div>
   {{else}}
     <div class="job-lang">
-      {{svg-jar "icon-language" class="icon"}}
+      <SvgImage @name="icon-language" class="icon" />
       <span class="label-align" aria-label="Language">
-        {{#if languages}}
-          {{languages}}
+        {{#if this.languages}}
+          {{this.languages}}
         {{else}}
           no language set
         {{/if}}
       </span>
     </div>
-    {{#if environment}}
+    {{#if this.environment}}
       <div class="job-env">
-        {{svg-jar "icon-environment" class="icon"}}
+        <SvgImage @name="icon-environment" class="icon" />
         <span class="label-align" aria-label="Environment variables">
-          {{environment}}
+          {{this.environment}}
         </span>
       </div>
     {{else}}
       <div class="job-env is-empty">
-        {{svg-jar "icon-environment" class="icon"}}
+        <SvgImage @name="icon-environment" class="icon" />
         <span class="label-align" aria-label="Environment variables">
           no environment variables set
         </span>
       </div>
     {{/if}}
   {{/if}}
-  <div class="job-duration" title="Started {{pretty-date job.startedAt}}">
-    {{svg-jar "icon-clock" class="icon"}}
+  <div class="job-duration" title="Started {{pretty-date this.job.startedAt}}">
+    <SvgImage @name="icon-clock" class="icon" />
     <time
       class="label-align"
       aria-label="Job duration"
-      datetime="PT{{job.duration}}S"
+      datetime="PT{{this.job.duration}}S"
     >
-      {{format-duration job.duration}}
+      {{format-duration this.job.duration}}
     </time>
   </div>
 </LinkTo>
-<RepoActions @job={{job}} @repo={{job.repo}} @labelless={{true}} />
+<RepoActions
+  @job={{this.job}}
+  @repo={{this.job.repo}}
+  @labelless={{true}}
+/>

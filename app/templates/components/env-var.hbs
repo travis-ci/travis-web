@@ -1,34 +1,30 @@
 <div class="env-var-name">
-  {{envVar.name}}
+  {{this.envVar.name}}
 </div>
 <div class="env-var-value">
-  {{#unless envVar.public}}
-    {{svg-jar "icon-private" class="icon"}}
+  {{#unless this.envVar.public}}
+    <SvgImage @name="icon-private" class="icon" />
   {{/unless}}
-  <input type="pw" value="{{value}}" readonly="readonly" />
+  <input type="password" value={{this.value}} readonly="readonly" />
 </div>
 <div class="env-var-branch">
-  {{#if envVar.branch}}
-    Only available to the
-    <code>
-      {{envVar.branch}}
-    </code>
-    branch
+  {{#if this.envVar.branch}}
+    Only available to the <code>{{this.envVar.branch}}</code> branch
   {{else}}
     Available to all branches
   {{/if}}
 </div>
 <div class="env-var-action">
-  {{#if delete.isRunning}}
+  {{#if this.delete.isRunning}}
     <LoadingIndicator />
   {{else}}
     <button
       type="button"
       class="no-button env-var-delete"
-      {{action (perform delete) on="click"}}
+      onclick={{action (perform delete)}}
     >
+      <SvgImage @name="icon-trash" class="icon" />
       <EmberTooltip @text="Delete" />
-      {{svg-jar "icon-trash" class="icon"}}
     </button>
   {{/if}}
 </div>

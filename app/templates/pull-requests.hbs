@@ -1,17 +1,17 @@
-{{#if isLoaded}}
+{{#if this.isLoaded}}
   <ul class="build-list">
-    {{#each builds as |build|}}
+    {{#each this.builds as |build|}}
       <BuildsItem @build={{build}} />
     {{else}}
       <MissingNotice @title="No pull request builds for this repository" />
     {{/each}}
   </ul>
-  {{#if displayShowMoreButton}}
+  {{#if this.displayShowMoreButton}}
     <p>
-      {{#if loadMoreBuilds.isRunning}}
+      {{#if this.loadMoreBuilds.isRunning}}
         <LoadingIndicator />
       {{else}}
-        <ShowMoreButton @click={{perform loadMoreBuilds}} />
+        <ShowMoreButton @click={{perform this.loadMoreBuilds}} />
       {{/if}}
     </p>
   {{/if}}

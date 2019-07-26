@@ -1,73 +1,69 @@
 <nav class="travistab-nav travistab-nav--underline">
   <ul>
     <li>
-      <LinkTo
-        @query={{hash tab="repositories" timeInterval=defaultTimeInterval}}
-      >
+      <LinkTo @query={{hash tab="repositories" timeInterval=this.defaultTimeInterval}} >
         Repositories
       </LinkTo>
     </li>
     <li>
-      <LinkTo @query={{hash tab="insights" timeInterval=timeInterval page=1}}>
+      <LinkTo @query={{hash tab="insights" timeInterval=this.timeInterval page=1}}>
         Insights
       </LinkTo>
     </li>
   </ul>
 </nav>
 <div class="owner-repo">
-  {{#if isInsights}}
-    {{#if buildsReady}}
+  {{#if this.isInsights}}
+    {{#if this.buildsReady}}
       <div class="travistab-body">
         <div class="insights-controls">
           <div class="insights-controls-left snapshot-hide">
-            <InsightsDateDisplay @interval={{timeInterval}} />
-            <span class="insights-control-divider">
-              |
-            </span>
+            <InsightsDateDisplay @interval={{this.timeInterval}} />
+            <span class="insights-control-divider">|</span>
             <InsightsPrivacySelector
-              @isPrivateViewable={{isPrivateInsightsViewable}}
-              @includePrivate={{includePrivateInsights}}
+              @isPrivateViewable={{this.isPrivateInsightsViewable}}
+              @includePrivate={{this.includePrivateInsights}}
               @setRequestPrivateInsights={{action "setRequestPrivateInsights"}}
             />
           </div>
-          <InsightsTabs @selectedTab={{timeInterval}} />
+          <InsightsTabs @selectedTab={{this.timeInterval}} />
         </div>
         <div class="insights-grid">
           <InsightsOverlay
-            @owner={{model.owner}}
-            @interval={{timeInterval}}
-            @private={{includePrivateInsights}}
-            data-test-insights-overlay
+            @owner={{this.model.owner}}
+            @interval={{this.timeInterval}}
+            @private={{this.includePrivateInsights}}
+            data-test-insights-overlay="true"
           />
           <BuildCount
-            @owner={{model.owner}}
-            @interval={{timeInterval}}
-            @private={{includePrivateInsights}}
-            data-test-insights-glance
+            @owner={{this.model.owner}}
+            @interval={{this.timeInterval}}
+            @private={{this.includePrivateInsights}}
+            data-test-insights-glance="true"
           />
           <BuildMinutes
-            @owner={{model.owner}}
-            @interval={{timeInterval}}
-            @private={{includePrivateInsights}}
-            data-test-insights-glance
+            @owner={{this.model.owner}}
+            @interval={{this.timeInterval}}
+            @private={{this.includePrivateInsights}}
+            data-test-insights-glance="true"
           />
           <QueueTimes
-            @owner={{model.owner}}
-            @interval={{timeInterval}}
-            @private={{includePrivateInsights}}
-            data-test-insights-glance
+            @owner={{this.model.owner}}
+            @interval={{this.timeInterval}}
+            @private={{this.includePrivateInsights}}
+            data-test-insights-glance="true"
           />
           <ActiveRepoCount
-            @owner={{model.owner}}
-            @interval={{timeInterval}}
-            @private={{includePrivateInsights}}
-            data-test-insights-glance
+            @owner={{this.model.owner}}
+            @interval={{this.timeInterval}}
+            @private={{this.includePrivateInsights}}
+            data-test-insights-glance="true"
           />
           <BuildStatusChart
-            @owner={{model.owner}}
-            @interval={{timeInterval}}
-            @private={{includePrivateInsights}}
-            data-test-insights-odyssey
+            @owner={{this.model.owner}}
+            @interval={{this.timeInterval}}
+            @private={{this.includePrivateInsights}}
+            data-test-insights-odyssey="true"
           />
         </div>
       </div>
@@ -75,16 +71,16 @@
       <LoadingScreen @center={{true}} @margin={{true}} />
     {{/if}}
   {{else}}
-    {{#unless reposLoading}}
+    {{#unless this.reposLoading}}
       <ul class="owner-tiles">
-        {{#each repos as |repo|}}
+        {{#each this.repos as |repo|}}
           <OwnerRepoTile @repo={{repo}} />
         {{else}}
           <NoRepos />
         {{/each}}
       </ul>
       <PaginationNavigation
-        @collection={{repos}}
+        @collection={{this.repos}}
         @route="owner.repositories"
         @inner={{6}}
         @outer={{2}}

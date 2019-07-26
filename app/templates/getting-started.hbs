@@ -1,4 +1,4 @@
-<div class="wrapper {{if auth.signedOut "centered"}}">
+<div class="wrapper {{if this.auth.signedOut 'centered'}}">
   <TopBar />
   <FlashDisplay />
   <div class="wrapper-main">
@@ -21,8 +21,7 @@
                 Once you're signed in, go to your profile page where you'll see all the organizations you're a member of.
               </p>
               <p>
-                You can install the GitHub App integration by clicking the Activate button for each organization you would like to use with
-              Travis CI.
+                You can install the GitHub App integration by clicking the Activate button for each organization you would like to use with Travis CI.
               </p>
               <p>
                 Please note: You need to be an admin for any repositories you want to setup on Travis CI.
@@ -39,21 +38,19 @@
                 Add a .travis.yml file to your repository
               </h2>
               <p>
-                In order for Travis CI to build your project, you'll need to add a .travis.yml configuration file to the root directory
-              of your repository.
+                In order for Travis CI to build your project, you'll need to add a .travis.yml configuration file to the root directory of your repository.
               </p>
               <p>
                 If a .travis.yml is not in your repository, or is not valid YAML, Travis CI will ignore it.
               </p>
               <p>
                 Here you can find some of our basic
-                <a
+                <ExternalLinkTo
                   href="http://docs.travis-ci.com/user/language-specific/"
                   title="Progamming languages that Travis CI supports"
                 >
                   language examples
-                </a>
-                .
+                </ExternalLinkTo>.
               </p>
             </div>
           </li>
@@ -67,8 +64,8 @@
                 Trigger your first build
               </h2>
               <p>
-                You've configured the GitHub App integration, and added a .travis.yml file to your repository, all you need to do now is
-              commit it to your local git history and git push it to GitHub!
+                You've configured the GitHub App integration, and added a .travis.yml file to your repository,
+                all you need to do now is commit it to your local git history and git push it to GitHub!
               </p>
             </div>
           </li>
@@ -78,17 +75,16 @@
         </h2>
         <p>
           Want to read more? Head to our
-          <a href="http://docs.travis-ci.com" title="Browse our docs">
+          <ExternalLinkTo href="http://docs.travis-ci.com" title="Browse our docs">
             docs
-          </a>
-          .
+          </ExternalLinkTo>.
         </p>
       </div>
     </div>
   </div>
-  {{#if auth.signedIn}}
-    {{#unless features.dashboard}}
-      <aside id="left" class="{{unless auth.signedIn "hidden"}}">
+  {{#if this.auth.signedIn}}
+    {{#unless this.features.dashboard}}
+      <aside id="left" class="{{unless this.auth.signedIn 'hidden'}}">
         <RepositorySidebar />
       </aside>
     {{/unless}}

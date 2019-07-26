@@ -1,255 +1,231 @@
 <div class="build-header-container">
   <div class="build-commit">
-    <h2 class="build-title {{item.state}}">
-      <StatusIcon @status={{item.state}} />
-      {{#if item.isPullRequest}}
-        <small class="commit-branch" title={{item.pullRequestTitle}}>
-          Pull Request #
-          {{item.pullRequestNumber}}
+    <h2 class="build-title {{this.item.state}}">
+      <StatusIcon @status={{this.item.state}} />
+      {{#if this.item.isPullRequest}}
+        <small class="commit-branch" title={{this.item.pullRequestTitle}}>
+          Pull Request #{{this.item.pullRequestNumber}}
         </small>
-        {{#if build.request.isDraft}}
+        {{#if this.build.request.isDraft}}
           <span data-test-build-header-draft-badge class="message-label badge">
             draft
           </span>
         {{/if}}
-        {{item.pullRequestTitle}}
+        {{this.item.pullRequestTitle}}
       {{else}}
-        {{#if item.isTag}}
-          <small class="commit-branch" title={{item.tag.name}}>
-            {{item.tag.name}}
+        {{#if this.item.isTag}}
+          <small class="commit-branch" title={{this.item.tag.name}}>
+            {{this.item.tag.name}}
           </small>
         {{else}}
-          <small class="commit-branch" title={{item.branch.name}}>
-            {{item.branch.name}}
+          <small class="commit-branch" title={{this.item.branch.name}}>
+            {{this.item.branch.name}}
           </small>
         {{/if}}
-        {{format-message
-          commit.subject
-          repo=item.repo
-          eventType=build.eventType
-          maxLength=60
-        }}
+        {{format-message this.commit.subject repo=this.item.repo eventType=this.build.eventType maxLength=60}}
       {{/if}}
     </h2>
     <div class="commit-info">
-      {{#if commit.body}}
-        <p class="commit-description" title="{{commit.body}}">
-          <span class="monospace {{commitBody}}">
-            {{format-message commit.body repo=item.repo pre=true}}
+      {{#if this.commit.body}}
+        <p class="commit-description" title="{{this.commit.body}}">
+          <span class="monospace {{this.commitBody}}">
+            {{format-message this.commit.body repo=this.item.repo pre=true}}
           </span>
         </p>
       {{/if}}
       <ul class="list-icon">
         <li>
-          <ExternalLinkTo @href={{commit.githubUrl}}>
+          <ExternalLinkTo @href={{this.commit.githubUrl}}>
             <EmberTooltip @text="View commit on GitHub" />
-            {{svg-jar "icon-commit" class="icon"}}
+            <SvgImage @name="icon-commit" class="icon" />
             <span class="label-align inner-underline commit-commit">
               Commit
               <span class="label-align-item monospace">
-                {{format-sha commit.sha}}
+                {{format-sha this.commit.sha}}
               </span>
             </span>
-            {{svg-jar "icon-external-link" class="icon"}}
+            <SvgImage @name="icon-external-link" class="icon" />
           </ExternalLinkTo>
         </li>
-        {{#if displayCompare}}
+        {{#if this.displayCompare}}
           <li>
-            {{#if item.isPullRequest}}
-              <ExternalLinkTo @href={{item.commit.compareUrl}}>
+            {{#if this.item.isPullRequest}}
+              <ExternalLinkTo @href={{this.item.commit.compareUrl}}>
                 <EmberTooltip @text="View Pull Request on GitHub" />
-                {{svg-jar "icon-compare" class="icon"}}
+                <SvgImage @name="icon-compare" class="icon" />
                 <span class="label-align inner-underline commit-compare">
-                  #
-                  {{item.pullRequestNumber}}
-                  :
-                  {{item.pullRequestTitle}}
+                  #{{this.item.pullRequestNumber}}: {{this.item.pullRequestTitle}}
                 </span>
-                {{svg-jar "icon-external-link" class="icon"}}
+                <SvgImage @name="icon-external-link" class="icon" />
               </ExternalLinkTo>
-            {{else if item.commit.compareUrl}}
-              <ExternalLinkTo @href={{item.commit.compareUrl}}>
+            {{else if this.item.commit.compareUrl}}
+              <ExternalLinkTo @href={{this.item.commit.compareUrl}}>
                 <EmberTooltip @text="View diff on GitHub" />
-                {{svg-jar "icon-compare" class="icon"}}
+                <SvgImage @name="icon-compare" class="icon" />
                 <span class="label-align inner-underline commit-compare">
                   Compare
                   <span class="label-align-item monospace">
-                    {{short-compare-shas item.commit.compareUrl}}
+                    {{short-compare-shas this.item.commit.compareUrl}}
                   </span>
                 </span>
-                {{svg-jar "icon-external-link" class="icon"}}
+                <SvgImage @name="icon-external-link" class="icon" />
               </ExternalLinkTo>
             {{/if}}
           </li>
         {{/if}}
         <li>
-          {{#if item.isTag}}
-            <ExternalLinkTo @href={{urlGitHubTag}} class="commit-branch-url">
+          {{#if this.item.isTag}}
+            <ExternalLinkTo @href={{this.urlGitHubTag}} class="commit-branch-url">
               <EmberTooltip @text="View tag on GitHub" />
-              {{svg-jar "icon-tag" class="icon"}}
+              <SvgImage @name="icon-tag" class="icon" />
               <span class="label-align inner-underline">
-                Tag
-                {{build.tag.name}}
+                Tag {{this.build.tag.name}}
               </span>
-              {{svg-jar "icon-external-link" class="icon"}}
+              <SvgImage @name="icon-external-link" class="icon" />
             </ExternalLinkTo>
           {{else}}
-            <ExternalLinkTo @href={{urlGitHubBranch}} class="commit-branch-url">
+            <ExternalLinkTo @href={{this.urlGitHubBranch}} class="commit-branch-url">
               <EmberTooltip @text="View branch on GitHub" />
-              {{svg-jar "icon-branch" class="icon"}}
+              <SvgImage @name="icon-branch" class="icon" />
               <span class="label-align inner-underline">
                 Branch
                 <span class="label-align-item monospace">
-                  {{build.branchName}}
+                  {{this.build.branchName}}
                 </span>
               </span>
-              {{svg-jar "icon-external-link" class="icon"}}
+              <SvgImage @name="icon-external-link" class="icon" />
             </ExternalLinkTo>
           {{/if}}
         </li>
       </ul>
       <p class="commit-author">
         <CreatedBy
-          @user={{build.createdBy}}
-          @commit={{commit}}
-          @eventType={{build.eventType}}
+          @user={{this.build.createdBy}}
+          @commit={{this.commit}}
+          @eventType={{this.build.eventType}}
         />
       </p>
     </div>
   </div>
   <div class="build-info">
-    <h3 class="build-status {{item.state}}">
-      {{#if isJob}}
-        <LinkTo @route="job" @models={{array repo item}}>
-          {{#if item.isTag}}
-            {{svg-jar "icon-tag" class=(concat item.state " icon")}}
+    <h3 class="build-status {{this.item.state}}">
+      {{#if this.isJob}}
+        <LinkTo @route="job" @models={{array this.repo this.item}}>
+          {{#if this.item.isTag}}
+            <SvgImage @name="icon-tag" class="{{this.item.state}} icon" />
           {{else}}
-            <RequestIcon @event={{item.eventType}} @state={{item.state}} />
+            <RequestIcon @event={{this.item.eventType}} @state={{item.state}} />
           {{/if}}
           <span data-test-build-header-build-state class="inner-underline">
-            #
-            {{item.number}}
-            {{humanize-state item.state}}
+            #{{this.item.number}} {{humanize-state this.item.state}}
           </span>
         </LinkTo>
       {{else}}
-        <LinkTo @route="build" @models={{array repo item}}>
-          {{#if item.isTag}}
-            {{svg-jar "icon-tag" class=(concat item.state " icon")}}
+        <LinkTo @route="build" @models={{array this.repo this.item}}>
+          {{#if this.item.isTag}}
+            <SvgImage @name="icon-tag" class="{{this.item.state}} icon" />
           {{else}}
-            <RequestIcon @event={{item.eventType}} @state={{item.state}} />
+            <RequestIcon @event={{this.item.eventType}} @state={{item.state}} />
           {{/if}}
           <span data-test-build-header-build-state class="inner-underline">
-            #
-            {{item.number}}
-            {{humanize-state buildState}}
+            #{{this.item.number}} {{humanize-state this.buildState}}
           </span>
         </LinkTo>
       {{/if}}
     </h3>
     <ul class="list-icon">
-      {{#if isJob}}
+      {{#if this.isJob}}
         <li class="commit-stopwatch">
-          {{svg-jar "icon-stopwatch" class="icon--m"}}
+          <SvgImage @name="icon-stopwatch" class="icon--m" />
           <span class="label-align">
-            {{#if item.toBeQueued}}
+            {{#if this.item.toBeQueued}}
               Waiting to be queued
-            {{else if item.toBeStarted}}
+            {{else if this.item.toBeStarted}}
               Waiting to start
             {{else}}
-              {{if item.isFinished "Ran for" "Running for"}}
-              <time datetime="PT{{item.elapsedTime}}S">
-                {{format-duration item.elapsedTime}}
+              {{if this.item.isFinished "Ran for" "Running for"}}
+              <time datetime="PT{{this.item.elapsedTime}}S">
+                {{format-duration this.item.elapsedTime}}
               </time>
             {{/if}}
           </span>
         </li>
       {{else}}
-        <li
-          title="{{if
-              item.elapsedTime
-              (concat "Started " (pretty-date item.startedAt))
-            }}"
-          class="commit-stopwatch"
-        >
-          {{svg-jar "icon-stopwatch" class="icon--m"}}
+        <li title="{{if this.item.elapsedTime (concat "Started " (pretty-date this.item.startedAt))}}" class="commit-stopwatch">
+          <SvgImage @name="icon-stopwatch" class="icon--m" />
           <span class="label-align">
-            {{if item.isFinished "Ran for" "Running for"}}
-            <time datetime="PT{{item.elapsedTime}}S">
-              {{format-duration item.elapsedTime}}
+            {{if this.item.isFinished "Ran for" "Running for"}}
+            <time datetime="PT{{this.item.elapsedTime}}S">
+              {{format-duration this.item.elapsedTime}}
             </time>
           </span>
         </li>
       {{/if}}
-      {{#if item.isFinished}}
-        {{#if item.isMatrix}}
+      {{#if this.item.isFinished}}
+        {{#if this.item.isMatrix}}
           <li class="commit-clock">
-            {{svg-jar "icon-clock" class="icon"}}
+            <SvgImage @name="icon-clock" class="icon" />
             <span class="label-align">
               Total time
-              <time datetime="PT{{item.duration}}S">
-                {{format-duration item.duration}}
+              <time datetime="PT{{this.item.duration}}S">
+                {{format-duration this.item.duration}}
               </time>
             </span>
           </li>
         {{/if}}
-        <li
-          title="Finished {{pretty-date item.finishedAt}}"
-          class="commit-calendar"
-        >
-          {{svg-jar "icon-calendar" class="icon"}}
-          <time class="label-align" datetime={{pretty-date item.finishedAt}}>
-            {{format-time item.finishedAt}}
+        <li title="Finished {{pretty-date this.item.finishedAt}}" class="commit-calendar">
+          <SvgImage @name="icon-calendar" class="icon" />
+          <time class="label-align" datetime={{pretty-date this.item.finishedAt}}>
+            {{format-time this.item.finishedAt}}
           </time>
         </li>
       {{/if}}
     </ul>
   </div>
   <div class="build-tools">
-    {{#if isJob}}
-      <RepoActions @job={{item}} @repo={{item.repo}} />
+    {{#if this.isJob}}
+      <RepoActions @job={{this.item}} @repo={{this.item.repo}} />
     {{else}}
-      <RepoActions @build={{item}} @repo={{item.repo}} />
+      <RepoActions @build={{this.item}} @repo={{this.item.repo}} />
     {{/if}}
   </div>
 </div>
-{{#if isNotMatrix}}
+{{#if this.isNotMatrix}}
   <div class="job-matrix-name-separator"></div>
   <div class="job-container">
     <div class="job-detail-container">
-      <div class="detail-job-os {{os}}">
-        <EmberTooltip @text={{os}} />
-        {{svg-jar osIcon class="icon"}}
+      <div class="detail-job-os {{this.os}}">
+        <EmberTooltip @text={{this.os}} />
+        <SvgImage @name={{osIcon}} class="icon" />
       </div>
-      {{#if name}}
+      {{#if this.name}}
         <div class="detail-job-name">
-          {{svg-jar "job-name-icon" class="icon"}}
+          <SvgImage @name="job-name-icon" class="icon" />
           <span class="label-align" aria-label="Title">
-            {{name}}
+            {{this.name}}
           </span>
         </div>
       {{/if}}
       <div class="detail-job-lang">
-        {{svg-jar "icon-language" class="icon"}}
+        <SvgImage @name="icon-language" class="icon" />
         <span class="label-align" aria-label="Language">
-          {{#if languages}}
-            {{languages}}
+          {{#if this.languages}}
+            {{this.languages}}
           {{else}}
             no language set
           {{/if}}
         </span>
       </div>
     </div>
-    {{#if environment}}
-      <div
-        class="detail-job-env"
+    {{#if this.environment}}
+      <div class="detail-job-env"
         {{action "expandEnv" on="click"}}
         {{action "expandEnv" on="mouseEnter"}}
         {{action "expandEnv" on="mouseLeave"}}
       >
-        {{svg-jar "icon-environment" class="icon"}}
+        <SvgImage @name="icon-environment" class="icon" />
         <span class="label-align" aria-label="Environment variables">
-          {{environment}}
+          {{this.environment}}
         </span>
       </div>
     {{/if}}

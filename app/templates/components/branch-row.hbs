@@ -1,21 +1,21 @@
 <div class="two-line fade-out">
   <div class="row-name">
     <h2 class="row-item">
-      <StatusIcon @status={{branch.last_build.state}} />
-      <span class="label-align {{branch.last_build.state}}">
-        {{branch.name}}
+      <StatusIcon @status={{this.branch.last_build.state}} />
+      <span class="label-align {{this.branch.last_build.state}}">
+        {{this.branch.name}}
       </span>
     </h2>
   </div>
   <div class="row-builds">
     <div class="row-item">
-      {{svg-jar "icon-builds" class="icon"}}
+      <SvgImage @name="icon-builds" class="icon" />
       <span class="label-align">
-        {{#if branch.last_build}}
-          {{#if getLast5Builds.isLoading}}
+        {{#if this.branch.last_build}}
+          {{#if this.getLast5Builds.isLoading}}
             <LoadingIndicator @inline={{true}} />
           {{else}}
-            {{pluralize getLast5Builds.count "build"}}
+            {{pluralize this.getLast5Builds.count "build"}}
           {{/if}}
         {{else}}
           0 builds
@@ -27,18 +27,18 @@
 <div class="two-line row-last-build fade-out">
   <div class="row-request">
     <div class="row-item">
-      {{#if branch.last_build}}
-        <LinkTo @route="build" @model={{branch.last_build.id}}>
-          {{svg-jar "icon-hash" class=(concat branch.last_build.state " icon")}}
-          <span class="label-align inner-underline {{branch.last_build.state}}">
-            {{branch.last_build.number}}
-            {{humanize-state branch.last_build.state}}
+      {{#if this.branch.last_build}}
+        <LinkTo @route="build" @model={{this.branch.last_build.id}}>
+        <SvgImage @name="icon-hash" class={{concat this.branch.last_build.state " icon"}} />
+          <span class="label-align inner-underline {{this.branch.last_build.state}}">
+            {{this.branch.last_build.number}}
+            {{humanize-state this.branch.last_build.state}}
           </span>
         </LinkTo>
       {{else}}
         <RequestIcon
-          @event={{branch.last_build.eventType}}
-          @state={{branch.last_build.state}}
+          @event={{this.branch.last_build.eventType}}
+          @state={{this.branch.last_build.state}}
         />
         -
       {{/if}}
@@ -47,12 +47,12 @@
   <div class="row-calendar">
     <div
       class="row-item"
-      title="Finished {{pretty-date branch.last_build.finished_at}}"
+      title="Finished {{pretty-date this.branch.last_build.finished_at}}"
     >
-      {{svg-jar "icon-calendar" class="icon"}}
+      <SvgImage @name="icon-calendar" class="icon" />
       <span class="label-align">
-        {{#if branch.last_build}}
-          {{format-time branch.last_build.finished_at}}
+        {{#if this.branch.last_build}}
+          {{format-time this.branch.last_build.finished_at}}
         {{else}}
           -
         {{/if}}
@@ -63,28 +63,28 @@
 <div class="two-line">
   <div class="row-commit">
     <div class="row-item">
-      <ExternalLinkTo @href={{branch.last_build.commit.githubUrl}}>
+      <ExternalLinkTo @href={{this.branch.last_build.commit.githubUrl}}>
         <EmberTooltip @text="View commit on GitHub" />
-        {{svg-jar "icon-commit" class="icon"}}
+        <SvgImage @name="icon-commit" class="icon" />
         <span class="inner-underline monospace">
-          {{#if branch.last_build}}
-            {{format-sha branch.last_build.commit.sha}}
+          {{#if this.branch.last_build}}
+            {{format-sha this.branch.last_build.commit.sha}}
           {{else}}
             -
           {{/if}}
         </span>
-        {{svg-jar "icon-external-link" class="icon"}}
+        <SvgImage @name="icon-external-link" class="icon" />
       </ExternalLinkTo>
     </div>
   </div>
   <div class="row-commiter">
     <div class="row-item">
-      {{#if branch.last_build}}
+      {{#if this.branch.last_build}}
         <CreatedBy
-          @user={{createdBy}}
-          @commit={{commit}}
+          @user={{this.createdBy}}
+          @commit={{this.commit}}
           @committerOnly={{true}}
-          @eventType={{branch.last_build.event_type}}
+          @eventType={{this.branch.last_build.event_type}}
         />
       {{else}}
         <div class="avatar--small"></div>
@@ -97,10 +97,10 @@
 </div>
 <div class="one-line is-relative">
   <ul class="build-tiles">
-    {{#if getLast5Builds.isLoading}}
+    {{#if this.getLast5Builds.isLoading}}
       <LoadingIndicator @center={{true}} />
     {{else}}
-      {{#each getLast5Builds.content as |buildTile|}}
+      {{#each this.getLast5Builds.content as |buildTile|}}
         <BuildTile @build={{buildTile}} />
       {{/each}}
     {{/if}}

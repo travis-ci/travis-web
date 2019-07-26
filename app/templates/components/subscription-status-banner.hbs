@@ -1,11 +1,11 @@
-{{svg-jar "icon-alert" class="icon"}}
+<SvgImage @name="icon-alert" class="icon" />
 <span>
   <span data-test-message>
-    {{message}}
+    {{this.message}}
   </span>
-  {{#if showLink}}
-    <a href={{billingUrl}} title="Go to Travis CI Billing" class="right">
-      {{billingLinkText}}
+  {{#if this.showLink}}
+    <a href={{this.billingUrl}} title="Go to Travis CI Billing" class="right">
+      {{this.billingLinkText}}
     </a>
   {{/if}}
 </span>

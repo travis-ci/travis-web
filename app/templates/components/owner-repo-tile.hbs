@@ -1,10 +1,10 @@
 <div class="owner-tile-head">
   <div class="owner-tile-visibility">
-    {{#if repo.private}}
-      {{svg-jar "icon-lock" alt="Private repository" class="icon private"}}
+    {{#if this.repo.private}}
+      <SvgImage @name="icon-lock" alt="Private repository" class="icon private" />
       <EmberTooltip @text="Private repository" />
     {{else}}
-      {{svg-jar "icon-os" alt="Public repository" class="icon public"}}
+      <SvgImage @name="icon-os" alt="Public repository" class="icon public" />
       <EmberTooltip @text="Public repository" />
     {{/if}}
   </div>
@@ -13,31 +13,35 @@
   <div class="owner-tile-main">
     <section class="owner-tile-section owner-tile-repo fade-out">
       <h2 class="repo-title color">
-        <StatusIcon @status={{repo.defaultBranch.lastBuild.state}} />
+        <StatusIcon @status={{this.repo.defaultBranch.lastBuild.state}} />
         <LinkTo
           @route="repo"
-          @models={{array ownerName repoName}}
+          @models={{array this.ownerName this.repoName}}
           class="label-align"
         >
           <span class="repo-title-text">
-            {{repoName}}
+            {{this.repoName}}
           </span>
         </LinkTo>
       </h2>
     </section>
-    {{#if repo.defaultBranch.lastBuild}}
+    {{#if this.repo.defaultBranch.lastBuild}}
       <section class="owner-tile-section build-number owner-tile-build">
         <h3 class="label">
           Last Build
         </h3>
         <p class="row-content color">
-          {{svg-jar "icon-hash" class="icon color-icon"}}
+          <SvgImage @name="icon-hash" class="icon color-icon" />
           <LinkTo
             @route="build"
-            @models={{array ownerName repoName repo.defaultBranch.lastBuild.id}}
+            @models={{array
+              this.ownerName
+              this.repoName
+              this.repo.defaultBranch.lastBuild.id
+            }}
           >
             <span class="label-align">
-              {{repo.defaultBranch.lastBuild.number}}
+              {{this.repo.defaultBranch.lastBuild.number}}
             </span>
           </LinkTo>
         </p>
@@ -50,15 +54,19 @@
         </h3>
         <p class="row-content color">
           <RequestIcon
-            @event={{repo.defaultBranch.lastBuild.eventType}}
+            @event={{this.repo.defaultBranch.lastBuild.eventType}}
             class="label-align"
           />
           <LinkTo
             @route="build"
-            @models={{array ownerName repoName repo.defaultBranch.lastBuild.id}}
+            @models={{array
+              this.ownerName
+              this.repoName
+              this.repo.defaultBranch.lastBuild.id
+            }}
           >
             <span class="label-align default-branch-name">
-              {{repo.defaultBranch.name}}
+              {{this.repo.defaultBranch.name}}
             </span>
           </LinkTo>
         </p>
@@ -68,17 +76,17 @@
           Commit
         </h3>
         <p class="row-content">
-          {{svg-jar "icon-compare" class="icon"}}
+          <SvgImage @name="icon-compare" class="icon" />
           <ExternalLinkTo
-            @href={{repo.defaultBranch.lastBuild.commit.compareUrl}}
+            @href={{this.repo.defaultBranch.lastBuild.commit.compareUrl}}
             class="label-align"
           >
             <EmberTooltip @text="View diff on GitHub" />
             <span class="label-align commit-compare monospace">
-              {{format-sha repo.defaultBranch.lastBuild.commit.sha}}
+              {{format-sha this.repo.defaultBranch.lastBuild.commit.sha}}
             </span>
           </ExternalLinkTo>
-          {{svg-jar "icon-external-link" class="icon"}}
+          <SvgImage @name="icon-external-link" class="icon" />
         </p>
       </section>
       <section class="owner-tile-section fade-out owner-tile-date">
@@ -86,12 +94,12 @@
           Finished
         </h3>
         <p class="row-content">
-          {{svg-jar "icon-calendar" class="icon"}}
+          <SvgImage @name="icon-calendar" class="icon" />
           <span class="build-status label-align">
-            {{repo.defaultBranch.lastBuild.state}}
+            {{this.repo.defaultBranch.lastBuild.state}}
           </span>
           <span class="finished-at label-align">
-            {{format-time repo.defaultBranch.lastBuild.finishedAt}}
+            {{format-time this.repo.defaultBranch.lastBuild.finishedAt}}
           </span>
         </p>
       </section>

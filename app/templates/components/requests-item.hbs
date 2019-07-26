@@ -1,22 +1,21 @@
 <div class="row-item">
-  <StatusIcon @status={{requestClass}} />
+  <StatusIcon @status={{this.requestClass}} />
 </div>
-<div class="row-item fade-out {{requestClass}}">
-  <RequestIcon @event={{request.event_type}} @state={{requestClass}} />
+<div class="row-item fade-out {{this.requestClass}}">
+  <RequestIcon @event={{this.request.event_type}} @state={{this.requestClass}} />
   <span class="label-align m-l-s" data-requests-item-related-model>
-    {{#if request.isPullRequest}}
+    {{#if this.request.isPullRequest}}
       <strong>
-        #
-        {{build.pullRequestNumber}}
+        #{{this.build.pullRequestNumber}}
       </strong>
     {{/if}}
-    {{#if request.branchName}}
+    {{#if this.request.branchName}}
       <strong>
-        {{request.branchName}}
+        {{this.request.branchName}}
       </strong>
     {{/if}}
-    {{#if request.commit}}
-      {{github-commit-link request.repo.slug request.commit.sha}}
+    {{#if this.request.commit}}
+      {{github-commit-link this.request.repo.slug this.request.commit.sha}}
     {{else}}
       <em data-requests-item-commit-missing>
         No commit available
@@ -26,27 +25,27 @@
 </div>
 <div
   class="row-item fade-out"
-  title="{{pretty-date request.created_at}}"
+  title="{{pretty-date this.request.created_at}}"
   data-requests-item-created-at
 >
-  {{svg-jar "icon-calendar" class="icon"}}
+  <SvgImage @name="icon-calendar" class="icon" />
   <span class="label-align">
-    {{format-time request.created_at}}
+    {{format-time this.request.created_at}}
   </span>
 </div>
 <div class="row-item fade-out" data-requests-item-commit-message>
-  {{{format-message request.commit.message short="true" repo=build.repo}}}
+  {{{format-message this.request.commit.message short="true" repo=this.build.repo}}}
 </div>
 <div class="row-item" data-requests-item-build>
-  {{#if build}}
-    {{svg-jar "icon-hash" class="icon"}}
+  {{#if this.build}}
+    <SvgImage @name="icon-hash" class="icon" />
     <LinkTo
       @route="build"
-      @model={{build}}
+      @model={{this.build}}
       @title="Go to the build this request triggered"
     >
       <span class="label-align inner-underline">
-        {{build.number}}
+        {{this.build.number}}
       </span>
     </LinkTo>
   {{else}}
@@ -54,7 +53,7 @@
   {{/if}}
 </div>
 <div class="row-item fade-out" data-requests-item-message>
-  <span class="label-align" title="{{message}}">
-    {{message}}
+  <span class="label-align" title="{{this.message}}">
+    {{this.message}}
   </span>
 </div>

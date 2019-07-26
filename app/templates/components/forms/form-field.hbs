@@ -1,7 +1,7 @@
-{{#if label}}
-  <label for={{fieldElementId}} class="travis-form__label">
-    {{label}}
-    {{#if showRequiredMark}}
+{{#if this.label}}
+  <label for={{this.fieldElementId}} class="travis-form__label">
+    {{this.label}}
+    {{#if this.showRequiredMark}}
       <span class="travis-form__required-mark">
         *
         <EmberTooltip @text="This field is required" @delay={{300}} />
@@ -9,96 +9,90 @@
     {{/if}}
   </label>
 {{/if}}
-{{#if helperText}}
+{{#if this.helperText}}
   <div class="travis-form__helper-text">
-    {{helperText}}
+    {{this.helperText}}
   </div>
 {{/if}}
-{{#if showIcon}}
+{{#if this.showIcon}}
   <div class="travis-form__icon">
-    {{svg-jar icon}}
+    <SvgImage @name={{icon}} />
   </div>
 {{/if}}
 {{yield
   (hash
-    isValid=isValid
-    isError=isError
-    errorMessage=errorMessage
-    input=(component
-      "forms/form-input"
-      form=form
-      value=value
-      disabled=disabled
-      placeholder=placeholder
+    isValid=this.isValid
+    isError=this.isError
+    errorMessage=this.errorMessage
+    input=(component "forms/form-input"
+      form=this.form
+      value=this.value
+      disabled=this.disabled
+      placeholder=this.placeholder
       onFocus=(action "handleFocus")
       onBlur=(action "handleBlur")
       onChange=(action "handleChange")
       onInit=(action "setFieldElementId")
       class="travis-form__field-component"
     )
-    textarea=(component
-      "forms/form-textarea"
-      form=form
-      value=value
-      disabled=disabled
-      placeholder=placeholder
+    textarea=(component "forms/form-textarea"
+      form=this.form
+      value=this.value
+      disabled=this.disabled
+      placeholder=this.placeholder
       onFocus=(action "handleFocus")
       onBlur=(action "handleBlur")
       onChange=(action "handleChange")
       onInit=(action "setFieldElementId")
       class="travis-form__field-component"
     )
-    select=(component
-      selectComponent
-      form=form
-      selected=value
-      disabled=disabled
-      placeholder=placeholder
+    select=(component selectComponent
+      form=this.form
+      selected=this.value
+      disabled=this.disabled
+      placeholder=this.placeholder
       onfocus=(action "handleFocus")
       onopen=(action "handleFocus")
       onblur=(action "handleSelectBlur")
       onclose=(action "handleSelectBlur")
       onchange=(action "handleChange")
     )
-    checkbox=(component
-      "forms/form-checkbox"
-      form=form
-      checked=value
-      disabled=disabled
+    checkbox=(component "forms/form-checkbox"
+      form=this.form
+      checked=this.value
+      disabled=this.disabled
       onFocus=(action "handleFocus")
       onBlur=(action "handleBlur")
       onChange=(action "handleChange")
       onInit=(action "setFieldElementId")
       class="travis-form__field-component"
     )
-    switch=(component
-      "forms/form-switch"
-      form=form
-      checked=value
-      disabled=disabled
+    switch=(component "forms/form-switch"
+      form=this.form
+      checked=this.value
+      disabled=this.disabled
       onChange=(action "handleChange")
       onInit=(action "setFieldElementId")
       class="travis-form__field-component"
     )
   )
 }}
-{{#if requiresValidation}}
-  {{#if showValidationStatusIcons}}
+{{#if this.requiresValidation}}
+  {{#if this.showValidationStatusIcons}}
     <div class="travis-form__field-badge travis-form__field-badge--error">
-      {{svg-jar "form-error-icon" width=14 height=14}}
+      <SvgImage @name="form-error-icon" @width=14 @height=14 />
     </div>
     <div class="travis-form__field-badge travis-form__field-badge--valid">
-      {{svg-jar "form-valid-icon" width=14 height=14}}
+      <SvgImage @name="form-valid-icon" @width=14 @height=14 />
     </div>
   {{/if}}
-  {{#if showValidationStatusMessage}}
+  {{#if this.showValidationStatusMessage}}
     <div class="travis-form__error-message">
-      {{errorMessage}}
-      &nbsp;
+      {{this.errorMessage}}&nbsp;
     </div>
   {{/if}}
 {{/if}}
-{{#if showClear}}
+{{#if this.showClear}}
   <div class="travis-form__clear" onclick={{action "handleClear"}}>
     &times;
   </div>

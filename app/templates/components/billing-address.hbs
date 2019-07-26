@@ -1,39 +1,36 @@
-<p>
-  {{billingInfo.firstName}}
-  {{billingInfo.lastName}}
-</p>
-{{#if billingInfo.company}}
+{{#let this.billingInfo as |info|}}
   <p>
-    {{billingInfo.company}}
+    {{info.firstName}}
+    {{info.lastName}}
   </p>
-{{/if}}
-<p>
-  {{billingInfo.address}}
-</p>
-{{#if billingInfo.address2}}
+  {{#if info.company}}
+    <p>
+      {{info.company}}
+    </p>
+  {{/if}}
   <p>
-    {{billingInfo.address2}}
+    {{info.address}}
   </p>
-{{/if}}
-{{#if billingInfo.state}}
+  {{#if info.address2}}
+    <p>
+      {{info.address2}}
+    </p>
+  {{/if}}
+  {{#if info.state}}
+    <p>
+      {{info.city}}, {{info.state}} {{info.zipCode}}
+    </p>
+  {{else}}
+    <p>
+      {{info.city}} {{info.zipCode}}
+    </p>
+  {{/if}}
   <p>
-    {{billingInfo.city}}
-    ,
-    {{billingInfo.state}}
-    {{billingInfo.zipCode}}
+    {{info.country}}
   </p>
-{{else}}
-  <p>
-    {{billingInfo.city}}
-    {{billingInfo.zipCode}}
-  </p>
-{{/if}}
-<p>
-  {{billingInfo.country}}
-</p>
-{{#if billingInfo.vatId}}
-  <p>
-    VAT:
-    {{billingInfo.vatId}}
-  </p>
-{{/if}}
+  {{#if info.vatId}}
+    <p>
+      VAT: {{info.vatId}}
+    </p>
+  {{/if}}
+{{/let}}

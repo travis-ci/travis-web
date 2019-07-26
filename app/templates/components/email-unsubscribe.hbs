@@ -1,10 +1,9 @@
-{{#if fetchRepo.isRunning}}
+{{#if this.fetchRepo.isRunning}}
   <LoadingScreen @center={{true}} @margin={{true}} />
 {{else}}
   <div class="container">
-    {{svg-jar "sadmail" class="picture" data-test-email-unsubscribe-sadmail=true
-    }}
-    {{#if isError}}
+    <SvgImage @name="sadmail" class="picture" data-test-email-unsubscribe-sadmail="true" />
+    {{#if this.isError}}
       <h1 class="title" data-test-email-unsubscribe-title>
         We didn't find the repository
         <br />
@@ -16,7 +15,7 @@
       <div class="controls">
         <button
           class="button--white button--hover"
-          onclick={{perform fetchRepo}}
+          onclick={{perform this.fetchRepo}}
           data-test-email-unsubscribe-primary-button
         >
           Try again
@@ -27,64 +26,56 @@
         Unsubscribe from
         <LinkTo
           @route="repo"
-          @model={{repo}}
+          @model={{this.repo}}
           @target="_blank"
           class="repo-link repo-slug"
         >
-          {{repo.formattedSlug}}
+          {{this.repo.formattedSlug}}
         </LinkTo>
       </h1>
       <p class="description" data-test-email-unsubscribe-description>
-        {{#if isSubscribed}}
+        {{#if this.isSubscribed}}
           Please confirm that you would like to unsubscribe from build emails for the
         {{else}}
           You are unsubscribed from build emails for the
         {{/if}}
         <span class="repo-slug repo-slug--bold">
-          {{repo.formattedSlug}}
+          {{this.repo.formattedSlug}}
         </span>
         repository.
-        {{#if showConfigNote}}
+        {{#if this.showConfigNote}}
           If you’re still receiving emails after unsubscribing, please check your
-          <a
-            target="_blank"
-            href="https://github.com/
-              {{repo.slug}}
-              /blob/
-              {{repo.defaultBranch.name}}
-              /.travis.yml"
-          >
+          <ExternalLinkTo @href="https://github.com/{{this.repo.slug}}/blob/{{this.repo.defaultBranch.name}}/.travis.yml">
             .travis.yml
-          </a>
+          </ExternalLinkTo>
         {{/if}}
       </p>
       <div class="controls">
         <button
-          class="{{if isSubscribed "button--orange" "button--white"}}
-             button--hover control control--primary"
-          disabled={{task.isRunning}}
+          class="{{if this.isSubscribed 'button--orange' 'button--white'}} button--hover control control--primary"
+          disabled={{this.task.isRunning}}
           onclick={{action "processTask"}}
           data-test-email-unsubscribe-primary-button
         >
-          {{#if isUnsubscribing}}
+          {{#if this.isUnsubscribing}}
             Unsubscribing...
-          {{else if isSubscribing}}
+          {{else if this.isSubscribing}}
             Subscribing...
-          {{else if isSubscribed}}
+          {{else if this.isSubscribed}}
             Confirm unsubscription
-          {{else if isUnsubscribed}}
+          {{else if this.isUnsubscribed}}
             Re-subscribe
           {{/if}}
         </button>
         <LinkTo
           @route="repo"
-          @model={{repo}}
+          @model={{this.repo}}
           @tagName="button"
-          @disabled={{task.isRunning}}
+          @disabled={{this.task.isRunning}}
           class="no-button control"
-          data-test-email-unsubscribe-secondary-button={{true}}
+          data-test-email-unsubscribe-secondary-button="true"
         >
-          {{#if isSubscribed}}
+          {{#if this.isSubscribed}}
             Cancel
           {{else}}
             Go to repository

@@ -1,41 +1,31 @@
 <p
-  class="source {{if subscription.isManual "alert-status-message"}}"
+  class="source {{if this.subscription.isManual 'alert-status-message'}}"
   data-test-source
 >
-  {{source}}
+  {{this.source}}
 </p>
-{{#if subscription.isStripe}}
+{{#if this.subscription.isStripe}}
   <p data-test-credit-card>
-    {{svg-jar "icon-credit-card" class="icon--color" alt=""}}
+    <SvgImage @name="icon-credit-card" class="icon--color" />
     •••• •••• ••••
-    {{subscription.creditCardInfo.lastDigits}}
+    {{this.subscription.creditCardInfo.lastDigits}}
   </p>
 {{/if}}
-{{#if subscription.isManual}}
+{{#if this.subscription.isManual}}
   <ManualSubscriptionHelp />
 {{else}}
   <p data-test-price>
-    {{svg-jar "icon-currency-USD" class="icon--color" alt=""}}
-    {{price}}
+  <SvgImage @name="icon-currency-USD" class="icon--color" />
+    {{this.price}}
   </p>
 {{/if}}
-{{#if
-  (and
-    subscription.isStripe
-    monthly
-    subscription.permissions.write
-    subscription.plan
-  )
-}}
+{{#if (and this.subscription.isStripe this.monthly this.subscription.permissions.write this.subscription.plan)}}
   <span class="notice-banner--yellow" data-test-annual-invitation>
     Get one month for free with
-    <a
-      href={{concat
-        subscription.billingUrl
-        "/edit?switch_annual=true?utm_source=web&utm_campaign=switch_to_annual"
-      }}
+    <ExternalLinkTo
+      @href={{concat subscription.billingUrl "/edit?switch_annual=true?utm_source=web&utm_campaign=switch_to_annual"}}
     >
       annual billing
-    </a>
+    </ExternalLinkTo>
   </span>
 {{/if}}

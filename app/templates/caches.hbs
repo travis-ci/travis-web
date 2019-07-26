@@ -1,48 +1,46 @@
-{{#if cachesExist}}
+{{#if this.cachesExist}}
   <div class="caches-header">
     <h1 class="small-title">
       All caches
       <small>
-        (
-        <a
-          href="http://docs.travis-ci.com/user/caching/"
-          title="Read about caching"
-        >
+        (<ExternalLinkTo @href="http://docs.travis-ci.com/user/caching/" @title="Read about caching" >
           Read the docs
-        </a>
-        )
+        </ExternalLinkTo>)
       </small>
     </h1>
     <button
-      class="{{if deleteRepoCache.isRunning "deleting"}}
-         delete-cache-button no-button"
+      class="{{if this.deleteRepoCache.isRunning 'deleting'}} delete-cache-button no-button"
       title="Delete all repository caches"
-      {{action (perform deleteRepoCache)}}
+      onclick={{action (perform this.deleteRepoCache)}}
     >
       Delete all repository caches
-      {{svg-jar "icon-trash" class="icon"}}
+      <SvgImage @name="icon-trash" class="icon" />
     </button>
   </div>
-  {{#if model.pushes.length}}
+  {{#if this.model.pushes.length}}
     <h2 class="small-title">
       Pushes
     </h2>
     <ul class="caches-list push-caches">
-      {{#each model.pushes as |cache|}}
-        <CachesItem @cache={{cache}} @repo={{repo}} @caches={{model.pushes}} />
+      {{#each this.model.pushes as |cache|}}
+        <CachesItem
+          @cache={{cache}}
+          @repo={{this.repo}}
+          @caches={{this.model.pushes}}
+        />
       {{/each}}
     </ul>
   {{/if}}
-  {{#if model.pullRequests.length}}
+  {{#if this.model.pullRequests.length}}
     <h2 class="small-title">
       Pull Requests
     </h2>
     <ul class="caches-list pull-request-caches">
-      {{#each model.pullRequests as |cache|}}
+      {{#each this.model.pullRequests as |cache|}}
         <CachesItem
           @cache={{cache}}
-          @repo={{repo}}
-          @caches={{model.pullRequests}}
+          @repo={{this.repo}}
+          @caches={{this.model.pullRequests}}
         />
       {{/each}}
     </ul>
@@ -52,12 +50,12 @@
     No caches have been created yet,
     <br />
     read more on
-    <a
-      href="http://docs.travis-ci.com/user/caching/"
-      title="Documentation on caching"
+    <ExternalLinkTo
+      @href="http://docs.travis-ci.com/user/caching/"
+      @title="Documentation on caching"
     >
       how to setup caching with your build
-    </a>
+    </ExternalLinkTo>
     .
   </p>
 {{/if}}

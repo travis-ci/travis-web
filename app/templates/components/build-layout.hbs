@@ -1,28 +1,28 @@
-<BuildWrapper @build={{build}}>
-  {{#if loading}}
+<BuildWrapper @build={{this.build}}>
+  {{#if this.loading}}
     <LoadingIndicator />
-  {{else if build}}
+  {{else if this.build}}
     <BuildHeader
-      data-test-build-header
-      @item={{build}}
-      @commit={{build.commit}}
-      @repo={{repo}}
+      data-test-build-header="true"
+      @item={{this.build}}
+      @commit={{this.build.commit}}
+      @repo={{this.repo}}
     />
-    {{#if noJobsError}}
+    {{#if this.noJobsError}}
       <p data-test-no-jobs-error-message class="notice-banner--red">
         Sorry, we're having troubles fetching jobs. Please try again later.
       </p>
-    {{else if build.isMatrix}}
-      <BuildTabs @build={{build}} />
-      {{#if jobsLoaded}}
+    {{else if this.build.isMatrix}}
+      <BuildTabs @build={{this.build}} />
+      {{#if this.jobsLoaded}}
         {{! ?? moved to index?? }}
       {{else}}
         <LoadingIndicator @center={{true}} />
       {{/if}}
     {{else}}
-      <JobInfrastructureNotification @job={{job}} />
-      <JobTabs @job={{job}} @repo={{repo}} />
-      <JobLog data-test-job-log @job={{job}} />
+      <JobInfrastructureNotification @job={{this.job}} />
+      <JobTabs @job={{this.job}} @repo={{this.repo}} />
+      <JobLog data-test-job-log="true" @job={{this.job}} />
     {{/if}}
   {{else}}
     <NoBuilds />

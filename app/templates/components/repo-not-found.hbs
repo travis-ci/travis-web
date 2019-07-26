@@ -1,16 +1,15 @@
 <div class="missing-notice">
   <figure class="page-graphic">
-    {{svg-jar "barricade"}}
+    <SvgImage @name="barricade" />
   </figure>
   <h2 class="page-title">
-    We couldn't find the repository
-    <br />
+    We couldn't find the repository<br />
     <span class="h2--red">
-      {{slug}}
+      {{this.slug}}
     </span>
   </h2>
-  {{#if features.proVersion}}
-    {{#unless auth.signedIn}}
+  {{#if this.features.proVersion}}
+    {{#unless this.auth.signedIn}}
       <p class="page-notice">
         This repository may not exist or you may need to
         <button class="auth-button--white m-l-s" {{action "signIn"}}>

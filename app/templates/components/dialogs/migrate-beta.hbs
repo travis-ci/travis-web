@@ -1,6 +1,6 @@
 <div class="migrate-beta-dialog">
   <div class="migrate-beta-dialog__image">
-    {{svg-jar "migrate-beta" width="311px"}}
+    <SvgImage @name="migrate-beta" @width="311px" />
   </div>
   <h3 class="h3--teal align-center">
     Register for the beta
@@ -15,16 +15,18 @@
     <TravisForm as |form|>
       <form.field
         @label="Add Organizations"
-        @value={{selectedOptions}}
+        @value={{this.selectedOptions}}
         @multiple={{true}}
         @onChange={{action "selectOptions"}}
-        data-test-migrate-accounts-select={{true}} as |field|
+        data-test-migrate-accounts-select="true"
+        as |field|
       >
         <field.select
-          placeholder="Search organizations"
-          @options={{selectableOptions}}
+          @placeholder="Search organizations"
+          @options={{this.selectableOptions}}
           @searchField="title"
-          @onkeydown={{action "preventErase"}} as |option|
+          @onkeydown={{action "preventErase"}}
+          as |option|
         >
           <div
             class="migrate-beta-dialog__option"
@@ -42,13 +44,13 @@
   </p>
   <div class="modal-controls">
     <button
-      class="button--blue {{if register.isRunning "disabled"}}"
-      disabled={{register.isRunning}}
-      onclick={{perform register}}
+      class="button--blue {{if this.register.isRunning 'disabled'}}"
+      disabled={{this.register.isRunning}}
+      onclick={{perform this.register}}
       data-test-migrate-submit="true"
     >
-      {{#if register.isRunning}}
-        <LoadingIndicator @white={{true}} @inline={{true}} />Joining...
+      {{#if this.register.isRunning}}
+        <LoadingIndicator @white={{true}} @inline={{true}} /> Joining...
       {{else}}
         Join the waitlist
       {{/if}}
@@ -60,6 +62,6 @@
     class="modal-close pointer"
     onclick={{action "onClose"}}
   >
-    {{svg-jar "icon-failed" class="icon"}}
+    <SvgImage @name="icon-failed" class="icon" />
   </button>
 </div>

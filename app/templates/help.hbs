@@ -1,53 +1,44 @@
-{{#if toTop}}
+{{#if this.toTop}}
   <ScrollHere />
 {{/if}}
 <TravisLayout @layoutName="layouts/striped" class="help-page" as |layout|>
-  <layout.section
-    class="help-page__top"
-    data-test-help-page-greeting-section={{true}}
-  >
+  <layout.section class="help-page__top" data-test-help-page-greeting-section="true">
     <h1 class="header-main align-center" data-test-help-page-greeting-header>
-      How can we help
-      {{#if isSignedIn}}
-        ,
+      How can we help{{#if this.isSignedIn}},
         <strong data-test-help-page-greeting-username>
-          {{auth.userName}}
+          {{this.auth.userName}}
         </strong>
-      {{/if}}
-      ?
+      {{/if}}?
     </h1>
     <div class="subheading align-center" data-test-help-page-navigation-links>
       View our most read
       <a class="pointer" onclick={{action "setAnchor" "docs"}}>
         documentation
-      </a>
-      ,
+      </a>,
       popular topics in our
       <a class="pointer" onclick={{action "setAnchor" "community"}}>
         Community forum
-      </a>
-      ,
+      </a>,
       or
       <a class="pointer" onclick={{action "setAnchor" "form"}}>
         talk with us
-      </a>
-      !
+      </a>!
     </div>
     <div class="status align-center" data-test-help-page-status>
       <TravisStatus @colorizeText={{true}} />
     </div>
   </layout.section>
   <layout.section
-    class="help-page__resources"
     @hasBackground={{true}}
-    data-test-help-page-resources-section={{true}}
+    class="help-page__resources"
+    data-test-help-page-resources-section="true"
   >
-    {{#if toDocs}}
+    {{#if this.toDocs}}
       <ScrollHere />
     {{/if}}
     <div class="help-duo">
       <div class="help-duo-image" data-test-help-page-resources-image>
-        {{svg-jar "docs"}}
+        <SvgImage @name="docs" />
       </div>
       <div class="help-duo-text">
         <h1 class="header-main" data-test-help-page-resources-header>
@@ -55,35 +46,35 @@
         </h1>
         <ul class="help-duo-list" data-test-help-page-resources-list>
           <li>
-            <ExternalLinkTo @href={{tutorialUrl}}>
+            <ExternalLinkTo @href={{this.tutorialUrl}}>
               Travis CI Tutorial
             </ExternalLinkTo>
           </li>
           <li>
-            <ExternalLinkTo @href={{dockerUrl}}>
+            <ExternalLinkTo @href={{this.dockerUrl}}>
               Using Docker with Travis CI
             </ExternalLinkTo>
           </li>
           <li>
-            <ExternalLinkTo @href={{nodeUrl}}>
+            <ExternalLinkTo @href={{this.nodeUrl}}>
               Setting up a Node.js project
             </ExternalLinkTo>
           </li>
           <li>
-            <ExternalLinkTo @href={{multiOsUrl}}>
+            <ExternalLinkTo @href={{this.multiOsUrl}}>
               Adding more Operating Systems
             </ExternalLinkTo>
           </li>
           <li>
-            <ExternalLinkTo @href={{noRunUrl}}>
+            <ExternalLinkTo @href={{this.noRunUrl}}>
               Why is my build not running?
             </ExternalLinkTo>
           </li>
         </ul>
         <ExternalLinkTo
-          @href={{docsUrl}}
+          @href={{this.docsUrl}}
           class="button"
-          data-test-help-page-resources-button={{true}}
+          data-test-help-page-resources-button="true"
         >
           Check Our Documentation
         </ExternalLinkTo>
@@ -92,9 +83,9 @@
   </layout.section>
   <layout.section
     class="help-page__topics"
-    data-test-help-page-topics-section={{true}}
+    data-test-help-page-topics-section="true"
   >
-    {{#if toCommunity}}
+    {{#if this.toCommunity}}
       <ScrollHere />
     {{/if}}
     <div class="help-duo">
@@ -104,29 +95,29 @@
         </h1>
         <TopForumPostList
           class="help-duo-list"
-          data-test-help-page-topics-list={{true}}
+          data-test-help-page-topics-list="true"
         />
         <ExternalLinkTo
-          @href={{communityUrl}}
+          @href={{this.communityUrl}}
           class="button"
-          data-test-help-page-topics-button={{true}}
+          data-test-help-page-topics-button="true"
         >
           Ask the Travis Community
         </ExternalLinkTo>
       </div>
       <div class="help-duo-image" data-test-help-page-topics-image>
-        {{svg-jar "community"}}
+        <SvgImage @name="community" />
       </div>
     </div>
   </layout.section>
   <layout.section
-    class="help-page__support"
     @hasBackground={{false}}
-    data-test-help-page-support-section={{true}}
+    class="help-page__support"
+    data-test-help-page-support-section="true"
   >
-    {{#if toForm}}
+    {{#if this.toForm}}
       <ScrollHere />
     {{/if}}
-    <ZendeskRequestForm @page={{page}} @utmParams={{utmParams}} />
+    <ZendeskRequestForm @page={{this.page}} @utmParams={{this.utmParams}} />
   </layout.section>
 </TravisLayout>

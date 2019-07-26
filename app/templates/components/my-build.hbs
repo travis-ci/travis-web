@@ -1,56 +1,59 @@
-<section class="dash-head {{build.state}}">
+<section class="dash-head {{this.build.state}}">
   <div class="row-content">
-    <RepositoryVisibilityIcon @repository={{build.repo}} />
+    <RepositoryVisibilityIcon @repository={{this.build.repo}} />
   </div>
 </section>
 <section class="dash-body">
   <section class="dash-main">
-    <section class="state {{build.state}}">
+    <section class="state {{this.build.state}}">
       <div class="row-content">
-        <StatusIcon @status={{build.state}} />
+        <StatusIcon @status={{this.build.state}} />
       </div>
     </section>
     <section class="repo color">
       <div class="row-content" data-test-owner>
         <LinkTo
           @route="owner"
-          @model={{build.repo.owner.login}}
+          @model={{this.build.repo.owner.login}}
           class="inner-underline"
         >
-          {{build.repo.owner.login}}
+          {{this.build.repo.owner.login}}
         </LinkTo>
       </div>
       <div class="row-content" data-test-repo-name>
         <LinkTo
           @route="repo"
-          @models={{array build.repo.owner.login build.repo.name}}
+          @models={{array this.build.repo.owner.login this.build.repo.name}}
           class="inner-underline"
         >
-          {{build.repo.name}}
+          {{this.build.repo.name}}
         </LinkTo>
       </div>
     </section>
     <section class="message-and-branch">
       <div
         class="message row-content"
-        title={{build.commit.message}}
+        title={{this.build.commit.message}}
         data-test-commit-message
       >
-        {{{format-message
-          build.commit.message
-          short="true"
-          repo=build.repo
-          eventType=build.eventType
-        }}}
+        {{format-message
+          this.build.commit.message
+          short=true
+          repo=this.build.repo
+          eventType=this.build.eventType
+        }}
       </div>
       <div class="row-content no-hover">
-        <ExternalLinkTo data-test-branch-name @href={{urlGitHubBranch}}>
+        <ExternalLinkTo
+          data-test-branch-name="true"
+          @href={{this.urlGitHubBranch}}
+        >
           <EmberTooltip @text="View branch on GitHub" @popperContainer="body" />
-          {{svg-jar "icon-branch" class="icon"}}
+          <SvgImage @name="icon-branch" class="icon" />
           <span class="label-align inner-underline">
-            {{build.branchName}}
+            {{this.build.branchName}}
           </span>
-          {{svg-jar "icon-external-link" class="icon"}}
+          <SvgImage @name="icon-external-link" class="icon" />
         </ExternalLinkTo>
       </div>
     </section>
@@ -58,54 +61,49 @@
       <div>
         <LinkTo
           @route="build"
-          @models={{array build.repo.owner.login build.repo.name build.id}}
-          data-test-state-number
+          @models={{array this.build.repo.owner.login this.build.repo.name this.build.id}}
+          data-test-state-number="true"
           class="row-content color"
         >
-          <RequestIcon @event={{build.eventType}} @state={{build.state}} />
+          <RequestIcon @event={{this.build.eventType}} @state={{this.build.state}} />
           <span class="inner-underline">
-            #
-            {{build.number}}
-            {{humanize-state build.state}}
+            #{{this.build.number}} {{humanize-state this.build.state}}
           </span>
         </LinkTo>
       </div>
       <div>
         <ExternalLinkTo
-          data-test-commit-sha
-          @href={{build.commit.githubUrl}}
+          data-test-commit-sha="true"
+          @href={{this.build.commit.githubUrl}}
           class="row-content monospace"
         >
           <EmberTooltip @text="View commit on GitHub" />
-          {{svg-jar "icon-commit" class="icon"}}
+          <SvgImage @name="icon-commit" class="icon" />
           <span class="label-align inner-underline">
-            {{format-sha build.commit.sha}}
+            {{format-sha this.build.commit.sha}}
           </span>
-          {{svg-jar "icon-external-link" class="icon"}}
+          <SvgImage @name="icon-external-link" class="icon" />
         </ExternalLinkTo>
       </div>
     </section>
     <section class="times">
       <div
-        title="{{if
-            build.elapsedTime
-            (concat "Started " (pretty-date build.startedAt))
-          }}"
-        class="commit-stopwatch row-content"
         data-test-duration
+        title={{if this.build.elapsedTime (concat "Started " (pretty-date this.build.startedAt)) }}
+        class="commit-stopwatch row-content"
       >
-        {{svg-jar "icon-stopwatch" class="icon"}}
+        <SvgImage @name="icon-stopwatch" class="icon" />
         <span class="label-align">
-          <time datetime="PT{{build.elapsedTime}}S">
-            {{format-duration build.elapsedTime}}
+          <time datetime="PT{{this.build.elapsedTime}}S">
+            {{format-duration this.build.elapsedTime}}
           </time>
         </span>
       </div>
-      <div class="row-content" title="{{build.finishedAt}}" data-test-finished>
-        {{svg-jar "icon-calendar" class="icon"}}
+      <div class="row-content" title={{this.build.finishedAt}} data-test-finished>
+        <SvgImage @name="icon-calendar" class="icon" />
         <span class="label-align">
-          {{#if build.finishedAt}}
-            {{format-time build.finishedAt}}
+          {{#if this.build.finishedAt}}
+            {{format-time this.build.finishedAt}}
           {{else}}
             still running
           {{/if}}
@@ -115,8 +113,8 @@
     <section class="restart">
       <div class="row-content">
         <RepoActions
-          @build={{build}}
-          @repo={{build.repo}}
+          @build={{this.build}}
+          @repo={{this.build.repo}}
           @mobilelabels={{true}}
         />
       </div>

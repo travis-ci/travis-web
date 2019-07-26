@@ -1,11 +1,11 @@
 {{! Product thinks that referencing Job Minutes in the title will be easier for people to understand than Build Minutes. }}
 <InsightsGlance
-  @isLoading={{isLoading}}
-  @isEmpty={{isEmpty}}
+  @isLoading={{this.isLoading}}
+  @isEmpty={{this.isEmpty}}
   @title="Total Job Minutes"
-  @statistic={{totalBuildText}}
-  @labels={{labels}}
-  @values={{buildMins}}
+  @statistic={{this.totalBuildText}}
+  @labels={{this.labels}}
+  @values={{this.buildMins}}
   @datasetTitle="Minutes"
-  @centerline={{avgBuildMins}}
+  @centerline={{this.avgBuildMins}}
 />

@@ -3,13 +3,13 @@
     Token
   </span>
   <span class="token-field">
-    {{#if showCopySuccess}}
+    {{#if this.showCopySuccess}}
       <span class="token-copied-text">
         Token copied!
       </span>
-    {{else if tokenIsVisible}}
+    {{else if this.tokenIsVisible}}
       <span class="auth-token">
-        {{auth.token}}
+        {{this.auth.token}}
       </span>
     {{else}}
       <span class="obfuscated-chars">
@@ -21,19 +21,17 @@
 <div class="token-actions">
   <CopyButton
     class="copy-button"
-    @clipboardText={{auth.token}}
+    @clipboardText={{this.auth.token}}
     @title="Copy to clipboard"
     @success={{action "copyTokenSuccessful"}}
   >
-    {{svg-jar "icon-copy" class="icon"}}
-    <span>
-      Copy token
-    </span>
+    <SvgImage @name="icon-copy" class="icon" />
+    <span>Copy token</span>
   </CopyButton>
-  <button class="show-token" {{action "tokenVisibility" bubbles=false}}>
-    {{svg-jar "icon-seemore" class="icon"}}
+  <button class="show-token" onclick={{action "tokenVisibility"}}>
+    <SvgImage @name="icon-seemore" class="icon" />
     <span>
-      {{if tokenIsVisible "Hide token" "View token"}}
+      {{if this.tokenIsVisible "Hide token" "View token"}}
     </span>
   </button>
 </div>

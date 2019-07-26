@@ -1,24 +1,24 @@
-{{#if auth.signedIn}}
-  <div class="wrapper {{if auth.signedOut "centered"}}">
+{{#if this.auth.signedIn}}
+  <div class="wrapper {{if this.auth.signedOut 'centered'}}">
     <TopBar />
     <FlashDisplay />
     <div class="wrapper-main">
       <div id="main" role="main" class="main">
-        {{#if repo.isLoaded}}
+        {{#if this.repo.isLoaded}}
           <RepositoryLayout
-            @repo={{repo}}
-            @build={{build}}
-            @job={{job}}
-            @tab={{tab}}
+            @repo={{this.repo}}
+            @build={{this.build}}
+            @job={{this.job}}
+            @tab={{this.tab}}
           />
         {{else}}
           <LoadingIndicator />
         {{/if}}
       </div>
     </div>
-    {{#if auth.signedIn}}
-      {{#unless features.dashboard}}
-        <aside id="left" class="{{unless auth.signedIn "hidden"}}">
+    {{#if this.auth.signedIn}}
+      {{#unless this.features.dashboard}}
+        <aside id="left" class="{{unless this.auth.signedIn 'hidden'}}">
           <RepositorySidebar />
         </aside>
       {{/unless}}
@@ -26,10 +26,9 @@
   </div>
 {{else}}
   <div class="wrapper centered">
-    {{component
-      landingPage
-      signIn=(action "signIn" target=auth)
-      signOut=(action "signOut" target=auth)
+    {{component this.landingPage
+      signIn=(action "signIn" target=this.auth)
+      signOut=(action "signOut" target=this.auth)
     }}
   </div>
 {{/if}}

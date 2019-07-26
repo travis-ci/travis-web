@@ -1,5 +1,5 @@
 <div class="sync-button">
-  {{#if owner.isSyncing}}
+  {{#if this.owner.isSyncing}}
     <p>
       <button class="button" disabled="disabled">
         <span class="lading-indicator--white">
@@ -12,14 +12,12 @@
     </p>
   {{else}}
     <p>
-      <button class="button" {{action sync}}>
-        <span class="icon icon-sync"></span>
-        Sync account
+      <button class="button" {{action this.sync}}>
+        <span class="icon icon-sync"></span> Sync account
       </button>
     </p>
     <p class="sync-last">
-      last synced
-      {{format-time owner.syncedAt}}
+      last synced {{format-time this.owner.syncedAt}}
     </p>
   {{/if}}
 </div>

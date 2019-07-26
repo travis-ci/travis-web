@@ -1,6 +1,6 @@
 <BuildMessagesList
   @request={{@request}}
-  @viewMessage={{action (mut viewingMessage)}}
+  @viewMessage={{action (mut this.viewingMessage)}}
 />
 <div class="raw-configs">
   {{#each @request.uniqRawConfigs as |rawConfig|}}

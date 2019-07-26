@@ -1,29 +1,29 @@
-{{#if model.isLoaded}}
+{{#if this.model.isLoaded}}
   <ul class="build-list">
-    {{#each builds as |build|}}
+    {{#each this.builds as |build|}}
       <BuildsItem @build={{build}} />
     {{else}}
       <NoBuilds />
     {{/each}}
   </ul>
   <div class="flex flex--center flex--space-between flex--v-center">
-    {{#if showBuildHistoryLink}}
+    {{#if this.showBuildHistoryLink}}
       <div>
         Previous build runs are available at
         <ExternalLinkTo
-          @href={{buildHistoryLink}}
+          @href={{this.buildHistoryLink}}
           class="link link--underline link--teal"
         >
           travis-ci.org
         </ExternalLinkTo>
       </div>
     {{/if}}
-    {{#if displayShowMoreButton}}
+    {{#if this.displayShowMoreButton}}
       <p>
-        {{#if loadMoreBuilds.isRunning}}
+        {{#if this.loadMoreBuilds.isRunning}}
           <LoadingIndicator />
         {{else}}
-          <ShowMoreButton @click={{perform loadMoreBuilds}} />
+          <ShowMoreButton @click={{perform this.loadMoreBuilds}} />
         {{/if}}
       </p>
     {{/if}}

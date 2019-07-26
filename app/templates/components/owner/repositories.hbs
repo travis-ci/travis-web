@@ -1,17 +1,17 @@
-{{#if showMigrationStatusBanner}}
-  {{#if owner.isMigrationBetaAccepted}}
+{{#if this.showMigrationStatusBanner}}
+  {{#if this.owner.isMigrationBetaAccepted}}
     <PaperBlock
       @elevation={{2}}
       class="text-medium no-margin"
-      data-test-migrate-banner-accepted={{true}}
+      data-test-migrate-banner-accepted="true"
     >
-      {{#if owner.isOrganization}}
-        The{{owner.title}}organization
+      {{#if this.owner.isOrganization}}
+        The {{this.owner.title}} organization
       {{else}}
         Your account
       {{/if}}
       is signed up for the beta! Now you can
-      <ExternalLinkTo @href={{migrateURL}}>
+      <ExternalLinkTo @href={{this.migrateURL}}>
         start migrating
       </ExternalLinkTo>
       your open source repositories to
@@ -19,15 +19,15 @@
         travis-ci.com
       </ExternalLinkTo>
     </PaperBlock>
-  {{else if owner.isMigrationBetaRequested}}
+  {{else if this.owner.isMigrationBetaRequested}}
     <PaperBlock
       @elevation={{2}}
       class="text-medium no-margin"
-      data-test-migrate-banner-requested={{true}}
+      data-test-migrate-banner-requested="true"
     >
       The request for
-      {{#if owner.isOrganization}}
-        {{owner.title}}
+      {{#if this.owner.isOrganization}}
+        {{this.owner.title}}
       {{else}}
         your account
       {{/if}}
@@ -40,37 +40,35 @@
       You can find your private projects on
       <ExternalLinkTo @href="https://travis-ci.com">
         travis-ci.com
-      </ExternalLinkTo>
-      .
+      </ExternalLinkTo>.
     </p>
   {{/if}}
 {{/if}}
-{{#if showGitHubApps}}
-  {{#if hasGitHubAppsInstallation}}
+{{#if this.showGitHubApps}}
+  {{#if this.hasGitHubAppsInstallation}}
     <div id="github-apps-repositories" data-test-github-app-repos>
       <header class="space-between" data-test-github-apps-integration-header>
         <h2>
           GitHub Apps Integration
         </h2>
         <ExternalLinkTo
-          @href={{appsManagementURL}}
+          @href={{this.appsManagementURL}}
           class="button--white migrate"
         >
-          {{svg-jar "icon-repooctocat"}}
+          <SvgImage @name="icon-repooctocat" />
           Manage repositories on GitHub
         </ExternalLinkTo>
       </header>
-      <RepositoryFilter @repositories={{appsRepos}} as |filter|>
-        {{#if showAppsReposFilter}}
-          {{#component filter.form as |form|}}
+      <RepositoryFilter @repositories={{this.appsRepos}} as |filter|>
+        {{#if this.showAppsReposFilter}}
+          <filter.form as |form|>
             <div class="not-locked-profile-repositories-filter">
-              {{component
-                form.searchField
-                placeholder="Filter GitHub Apps repositories"
-                title="Filter GitHub Apps repositories"
-              }}
+              <form.searchField
+                @placeholder="Filter GitHub Apps repositories"
+                @title="Filter GitHub Apps repositories"
+              />
             </div>
-          {{/component}}
+          </filter.form>
         {{/if}}
         <div>
           <LoadingOverlay @visible={{filter.isLoading}}>
@@ -78,11 +76,7 @@
               {{#each filter.results as |repository|}}
                 <GithubAppsRepository
                   @repository={{repository}}
-                  @name={{compute
-                    filter.computeName
-                    repository.name
-                    filter.query
-                  }}
+                  @name={{compute filter.computeName repository.name filter.query}}
                 />
               {{else if filter.isLoading}}
                 {{!  show nothing  }}
@@ -103,9 +97,9 @@
             </ul>
           </LoadingOverlay>
         </div>
-        {{#if owner.isOrganization}}
+        {{#if this.owner.isOrganization}}
           <PaginationNavigation
-            @collection={{appsRepos}}
+            @collection={{this.appsRepos}}
             @route="organization.repositories"
             @queryParam="apps-page"
             @inner={{6}}
@@ -113,7 +107,7 @@
           />
         {{else}}
           <PaginationNavigation
-            @collection={{appsRepos}}
+            @collection={{this.appsRepos}}
             @route="account.repositories"
             @queryParam="apps-page"
             @inner={{6}}
@@ -123,10 +117,7 @@
       </RepositoryFilter>
     </div>
   {{else}}
-    <div
-      id="github-apps-invitation"
-      class="{{unless hasLegacyRepos "expanded"}}"
-    >
+    <div id="github-apps-invitation" class="{{unless this.hasLegacyRepos 'expanded'}}">
       <h2>
         GitHub Apps Integration
       </h2>
@@ -137,17 +128,17 @@
         The GitHub Apps integration supports both private and open source repositories,
         while providing enhanced security when interacting with GitHub.
       </p>
-      {{#if canMigrate}}
+      {{#if this.canMigrate}}
         <button
           class="button--green migrate-or-activate"
           type="button"
-          onclick={{perform migrate}}
+          onclick={{perform this.migrate}}
           data-test-migrate-github-apps
         >
-          {{#if migrate.isRunning}}
+          {{#if this.migrate.isRunning}}
             <LoadingIndicator class="loading-indicator--white migrate" />
           {{else}}
-            {{svg-jar "icon-repooctocat" class="icon--github"}}
+            <SvgImage @name="icon-repooctocat" class="icon--github" />
           {{/if}}
           Activate &amp; Migrate
         </button>
@@ -156,54 +147,50 @@
         </p>
       {{else}}
         <ExternalLinkTo
-          @href={{appsActivationURL}}
+          @href={{this.appsActivationURL}}
           class="button--green migrate-or-activate"
         >
-          {{svg-jar "icon-repooctocat" class="icon--github"}}
+          <SvgImage @name="icon-repooctocat" class="icon--github" />
           Activate
         </ExternalLinkTo>
         <p>
-          We are only able to migrate accounts that have
-          {{migrationRepositoryCountLimit}}
+          We are only able to migrate accounts that have {{this.migrationRepositoryCountLimit}}
           or fewer repositories using the Legacy Services Integration. Please
-          <a
-            href="https://docs.travis-ci.com/user/travis-migrate-to-apps-gem-guide/"
-          >
+          <ExternalLinkTo @href="https://docs.travis-ci.com/user/travis-migrate-to-apps-gem-guide/">
             refer to our documentation
-          </a>
+          </ExternalLinkTo>
           on how to migrate your account.
         </p>
       {{/if}}
     </div>
   {{/if}}
 {{/if}}
-{{#if showLegacyRepos}}
+{{#if this.showLegacyRepos}}
   <div data-test-legacy-repos>
     <header class="legacy-services-integration">
       <h2>
         Legacy Services Integration
-        {{#if showGitHubApps}}
+        {{#if this.showGitHubApps}}
           <ExternalLinkTo
             @href="https://docs.travis-ci.com/user/open-source-on-travis-ci-com/"
-            class="badge deprecated square"
             @title="Read our documentation on open source migration"
+            class="badge deprecated square"
           >
             Deprecated
           </ExternalLinkTo>
         {{/if}}
       </h2>
     </header>
-    <RepositoryFilter @repositories={{legacyRepos}} as |filter|>
-      {{#if showLegacyReposFilter}}
-        {{#component filter.form as |form|}}
+    <RepositoryFilter @repositories={{this.legacyRepos}} as |filter|>
+      {{#if this.showLegacyReposFilter}}
+        <filter.form as |form|>
           <div class="profile-repositories-filter">
-            {{component
-              form.searchField
-              placeholder="Filter repositories"
-              title="Filter repositories"
-            }}
+            <form.searchField
+              @placeholder="Filter repositories"
+              @title="Filter repositories"
+            />
           </div>
-        {{/component}}
+        </filter.form>
       {{/if}}
       <div id="administerable-repositories">
         <LoadingOverlay @visible={{filter.isLoading}}>
@@ -211,8 +198,7 @@
             {{#each filter.results as |repository|}}
               <RepositoryStatusToggle
                 @repository={{repository}}
-                @name={{compute filter.computeName repository.name filter.query
-                }}
+                @name={{compute filter.computeName repository.name filter.query}}
               />
             {{else if filter.isLoading}}
               {{!  show nothing  }}
@@ -228,9 +214,9 @@
           </ul>
         </LoadingOverlay>
       </div>
-      {{#if owner.isOrganization}}
+      {{#if this.owner.isOrganization}}
         <PaginationNavigation
-          @collection={{legacyRepos}}
+          @collection={{this.legacyRepos}}
           @route="organization.repositories"
           @queryParam="legacy-page"
           @inner={{6}}
@@ -238,7 +224,7 @@
         />
       {{else}}
         <PaginationNavigation
-          @collection={{legacyRepos}}
+          @collection={{this.legacyRepos}}
           @route="account.repositories"
           @queryParam="legacy-page"
           @inner={{6}}

@@ -1,19 +1,19 @@
 <span class="travis-form__field-checkbox-wrapper">
   <input
     type="checkbox"
-    checked={{checked}}
-    disabled={{disabled}}
+    checked={{this.checked}}
+    disabled={{this.disabled}}
     onchange={{action "toggle"}}
     onfocus={{action "focus"}}
     onblur={{action "blur"}}
   />
-  {{svg-jar
-    "checkbox-checked"
+  <SvgImage
+    @name="checkbox-checked"
     class="travis-form__field-checkbox-image--checked"
-  }}
-  {{svg-jar
-    "checkbox-unchecked"
+  />
+  <SvgImage
+    @name="checkbox-unchecked"
     class="travis-form__field-checkbox-image--unchecked"
-  }}
+  />
 </span>
 {{yield}}

@@ -1,12 +1,12 @@
-{{#unless features.enterpriseVersion}}
-  {{#if auth.signedIn}}
+{{#unless this.features.enterpriseVersion}}
+  {{#if this.auth.signedIn}}
     <BroadcastTower
+      @status={{this.broadcasts.lastBroadcastStatus}}
+      @count={{this.broadcasts.length}}
       @toggleBroadcasts={{action "toggleBroadcasts"}}
-      @status={{broadcasts.lastBroadcastStatus}}
-      @count={{broadcasts.length}}
     />
-    <ul class="broadcasts {{if showBroadcasts "is-open"}}">
-      {{#each broadcasts.content as |broadcast|}}
+    <ul class="broadcasts {{if this.showBroadcasts 'is-open'}}">
+      {{#each this.broadcasts.content as |broadcast|}}
         <li title="Transmitted on {{broadcast.created_at}}">
           <p>
             <span class="broadcast-status {{broadcast.category}}"></span>
@@ -17,9 +17,9 @@
               title="hide this broadcast"
               class="broadcast-close no-button"
               type="button"
-              {{action "markBroadcastAsSeen" broadcast}}
+              onclick={{action "markBroadcastAsSeen" broadcast}}
             >
-              {{svg-jar "icon-failed" class="icon"}}
+              <SvgImage @name="icon-failed" class="icon" />
             </button>
           </p>
         </li>

@@ -3,7 +3,7 @@ import Component from '@ember/component';
 export default Component.extend({
   actions: {
     toggleBurgerMenu() {
-      this.toggleProperty('is-open');
+      this.toggleProperty('isOpen');
       return false;
     },
   },

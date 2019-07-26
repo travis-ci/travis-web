@@ -1,26 +1,26 @@
-<RepositoryVisibilityIcon @repository={{repository}} />
+<RepositoryVisibilityIcon @repository={{this.repository}} />
 <LinkTo
   @route="repo"
-  @model={{repository.owner.login}}
-  @query={{hash}}
+  @model={{this.repository.owner.login}}
+  @query={{this.hash}}
   class="profile-repo"
 >
-  {{name}}
+  {{this.name}}
 </LinkTo>
-{{#if admin}}
+{{#if this.admin}}
   <LinkTo
     @route="settings"
-    @models={{array repository.owner.login repository.name}}
-    class="profile-settings button"
+    @models={{array this.repository.owner.login this.repository.name}}
     @title="Go to Travis CI repository settings"
+    class="profile-settings button"
   >
-    {{svg-jar "icon-settings" class="icon icon-hover"}}
+    <SvgImage @name="icon-settings" class="icon icon-hover" />
     Settings
   </LinkTo>
 {{else}}
   <a class="profile-settings disabled button">
-    {{svg-jar "icon-private" class="icon"}}
-    Settings
     <EmberTooltip @text="Requires admin permissions" />
+    <SvgImage @name="icon-private" class="icon" />
+    Settings
   </a>
 {{/if}}

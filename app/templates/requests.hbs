@@ -1,18 +1,18 @@
 <ul class="requests">
-  {{#each model as |request|}}
-    <RequestsItem @request={{request}} @highlightedRequestId={{requestId}} />
+  {{#each this.model as |request|}}
+    <RequestsItem @request={{request}} @highlightedRequestId={{this.requestId}} />
   {{else}}
     <MissingNotice @title="No requests for this repository">
       <p class="page-notice">
         Want to start testing this project on Travis CI?
       </p>
-      <a
+      <ExternalLinkTo
         href="http://docs.travis-ci.com/user/getting-started/"
         class="button"
         title="Travis documentation on getting set up"
       >
         Read the Docs on Getting Started
-      </a>
+      </ExternalLinkTo>
     </MissingNotice>
   {{/each}}
 </ul>

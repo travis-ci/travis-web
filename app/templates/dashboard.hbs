@@ -8,11 +8,11 @@
         Starred repositories
       </h2>
       <ul class="repo-list">
-        {{#each starredRepos as |repo|}}
-          <DashboardRow @repo={{repo}} @star={{star}} @unstar={{unstar}} />
+        {{#each this.starredRepos as |repo|}}
+          <DashboardRow @repo={{repo}} @star={{this.star}} @unstar={{this.unstar}} />
         {{else}}
           <div class="starred-empty">
-            {{svg-jar "icon-star" class="icon--m"}}
+            <SvgImage @name="icon-star" class="icon--m" />
             You can keep track of your favorite repositories here once you start starring!
           </div>
         {{/each}}
@@ -21,12 +21,12 @@
   </div>
   <header class="dashboard tabs">
     <h2 class="small-title">
-      <LinkTo @route="dashboard.repositories" data-test-active-repos-tab>
+      <LinkTo @route="dashboard.repositories" data-test-active-repos-tab="true">
         Active repositories
       </LinkTo>
     </h2>
     <h2 class="small-title">
-      <LinkTo @route="dashboard.builds" data-test-my-builds-tab>
+      <LinkTo @route="dashboard.builds" data-test-my-builds-tab="true">
         My builds
       </LinkTo>
     </h2>

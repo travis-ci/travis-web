@@ -3,8 +3,8 @@
     <li>
       <LinkTo
         @route="build.index"
-        @models={{array build.repo build}}
-        data-test-build-matrix-tab
+        @models={{array this.build.repo build}}
+        data-test-build-matrix-tab="true"
         @title="Look at this build’s jobs"
       >
         Build jobs
@@ -13,12 +13,12 @@
     <li>
       <LinkTo
         @route="build.config"
-        @models={{array build.repo build}}
+        @models={{array this.build.repo this.build}}
         data-test-build-yaml-tab
         @title="Look at this build's config"
-        @disabled={{build.request.noYaml}}
+        @disabled={{this.build.request.noYaml}}
       >
-        {{#if build.request.noYaml}}
+        {{#if this.build.request.noYaml}}
           <EmberTooltip @text="Try a more recent build to see the config" />
         {{/if}}
         View config

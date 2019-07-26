@@ -1,23 +1,23 @@
 <TravisSwitch
-  @active={{enabled}}
-  @description={{description}}
-  @onToggle={{perform toggle}}
+  @active={{this.enabled}}
+  @description={{this.description}}
+  @onToggle={{perform this.toggle}}
 />
-<a
-  href="https://docs.travis-ci.com/user/customizing-the-build/#limiting-concurrent-jobs"
-  title="about the concurrency setting"
+<ExternalLinkTo
+  @href="https://docs.travis-ci.com/user/customizing-the-build/#limiting-concurrent-jobs"
+  @title="about the concurrency setting"
   class="settings-tooltip"
 >
   <EmberTooltip @text="Read more about concurrent jobs" />
-  {{svg-jar "icon-help" class="icon-help"}}
-</a>
-{{#if enabled}}
+  <SvgImage @name="icon-help" class="icon-help" />
+</ExternalLinkTo>
+{{#if this.enabled}}
   <input
-    value={{value}}
-    onchange={{action limitChanged value="target.value"}}
+    value={{this.value}}
+    onchange={{action this.limitChanged value="target.value"}}
     pattern="/^[0-9]+$/"
   />
 {{/if}}
-{{#if toggle.isRunning}}
+{{#if this.toggle.isRunning}}
   <LoadingIndicator @inline={{true}} />
 {{/if}}

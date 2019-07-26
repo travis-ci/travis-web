@@ -14,15 +14,15 @@
           <br class="mobile-break" />
           and you’ll be testing your code in minutes!
         </p>
-        {{#if auth.signedOut}}
+        {{#if this.auth.signedOut}}
           <button class="hero-button org" {{action "signIn"}}>
-            {{svg-jar "sign-in-mascot" class=""}}
+            <SvgImage @name="sign-in-mascot" />
             <span class="label-align">
               Sign Up
             </span>
           </button>
         {{/if}}
-        {{#if auth.signingIn}}
+        {{#if this.auth.signingIn}}
           <button class="hero-button org">
             <span class="loading-indicator--white">
               <i></i>
@@ -37,10 +37,7 @@
       </div>
       <div class="large-12 columns laptop-wrapper">
         <div id="laptop">
-          <img
-            src="../images/landing-page/laptop.png"
-            alt="Travis CI screenshot"
-          />
+          <img src="../images/landing-page/laptop.png" alt="Travis CI screenshot" />
         </div>
       </div>
     </section>
@@ -70,53 +67,49 @@
         </h3>
         <ul class="list--customers">
           <li>
-            <a href="https://www.zendesk.com/" title="Zendesk" class="customer">
-              <img
-                src="../images/svg/zendesk.svg"
-                alt=""
-                class="customer-zendesk"
-              />
-            </a>
-          </li>
-          <li>
-            <a
-              href="https://www.engineyard.com/"
-              title="Engine Yard"
+            <ExternalLinkTo
+              @href="https://www.zendesk.com/"
+              @title="Zendesk"
               class="customer"
             >
-              <img
-                src="../images/svg/engineyard.svg"
-                alt=""
-                class="customer-engineyard"
-              />
-            </a>
+              <img src="../images/svg/zendesk.svg" class="customer-zendesk" />
+            </ExternalLinkTo>
           </li>
           <li>
-            <a href="http://www.heroku.com/" title="Heroku" class="customer">
-              <img
-                src="../images/svg/customer-logos-heroku.svg"
-                alt=""
-                class="customer-heroku"
-              />
-            </a>
-          </li>
-          <li>
-            <a
-              href="http://www.bittorrent.com/"
-              title="BitTorrent"
+            <ExternalLinkTo
+              @href="https://www.engineyard.com/"
+              @title="Engine Yard"
               class="customer"
             >
-              <img
-                src="../images/svg/customer-logos-bittorrent.svg"
-                alt=""
-                class="customer-bittorrent"
-              />
-            </a>
+              <img src="../images/svg/engineyard.svg" class="customer-engineyard" />
+            </ExternalLinkTo>
           </li>
           <li>
-            <a href="https://moz.com/" title="moz" class="customer">
-              <img src="../images/svg/moz.svg" alt="" class="customer-moz" />
-            </a>
+            <ExternalLinkTo
+              @href="http://www.heroku.com/"
+              @title="Heroku"
+              class="customer"
+            >
+              <img src="../images/svg/customer-logos-heroku.svg" class="customer-heroku" />
+            </ExternalLinkTo>
+          </li>
+          <li>
+            <ExternalLinkTo
+              @href="http://www.bittorrent.com/"
+              @title="BitTorrent"
+              class="customer"
+            >
+              <img src="../images/svg/customer-logos-bittorrent.svg" class="customer-bittorrent" />
+            </ExternalLinkTo>
+          </li>
+          <li>
+            <ExternalLinkTo
+              @href="https://moz.com/"
+              @title="moz"
+              class="customer"
+            >
+              <img src="../images/svg/moz.svg" alt class="customer-moz" />
+            </ExternalLinkTo>
           </li>
         </ul>
       </div>
@@ -131,9 +124,7 @@
           projects will always be free!
         </h2>
         <p>
-          <em>
-            Seriously. Always.
-          </em>
+          <em>Seriously. Always.</em>
           We like to think of it as our way of giving
           <br class="mobile-no-break" />
           back to a community that connects so many people.
@@ -198,60 +189,25 @@
       <div class="list-check-container">
         <ul class="list-check">
           <li>
-            <img
-              src="../images/svg/stage-passed.svg"
-              alt=""
-              class="checkmark"
-            />
-            Quick setup
+            <img src="../images/svg/stage-passed.svg" alt="" class="checkmark" /> Quick setup
           </li>
           <li>
-            <img
-              src="../images/svg/stage-passed.svg"
-              alt=""
-              class="checkmark"
-            />
-            Live build views
+            <img src="../images/svg/stage-passed.svg" alt="" class="checkmark" /> Live build views
           </li>
           <li>
-            <img
-              src="../images/svg/stage-passed.svg"
-              alt=""
-              class="checkmark"
-            />
-            Pull request support
+            <img src="../images/svg/stage-passed.svg" alt="" class="checkmark" /> Pull request support
           </li>
           <li>
-            <img
-              src="../images/svg/stage-passed.svg"
-              alt=""
-              class="checkmark"
-            />
-            Pre-installed database services
+            <img src="../images/svg/stage-passed.svg" alt="" class="checkmark" /> Pre-installed database services
           </li>
           <li>
-            <img
-              src="../images/svg/stage-passed.svg"
-              alt=""
-              class="checkmark"
-            />
-            Auto deployments on passing builds
+            <img src="../images/svg/stage-passed.svg" alt="" class="checkmark" /> Auto deployments on passing builds
           </li>
           <li>
-            <img
-              src="../images/svg/stage-passed.svg"
-              alt=""
-              class="checkmark"
-            />
-            Clean VMs for every build
+            <img src="../images/svg/stage-passed.svg" alt="" class="checkmark" /> Clean VMs for every build
           </li>
           <li>
-            <img
-              src="../images/svg/stage-passed.svg"
-              alt=""
-              class="checkmark"
-            />
-            Mac, Linux, and iOS support
+            <img src="../images/svg/stage-passed.svg" alt="" class="checkmark" /> Mac, Linux, and iOS support
           </li>
         </ul>
       </div>
@@ -266,28 +222,23 @@
         <div class="build-flow-image"></div>
         <div class="build-steps-container">
           <p class="build-step-1 build-steps">
-            You push your
-            <br />
+            You push your <br />
             code to GitHub
           </p>
           <p class="build-step-2 build-steps">
-            GitHub triggers
-            <br />
+            GitHub triggers <br />
             Travis CI to build
           </p>
           <p class="build-step-3 build-steps">
-            Hooray!
-            <br />
+            Hooray! <br />
             Your build passes!
           </p>
           <p class="build-step-4 build-steps">
-            Travis CI deploys
-            <br />
+            Travis CI deploys <br />
             to Heroku
           </p>
           <p class="build-step-5 build-steps">
-            Travis CI tells your
-            <br />
+            Travis CI tells your <br />
             team all is well
           </p>
         </div>
@@ -299,28 +250,23 @@
         <div class="build-pr-image"></div>
         <div class="build-steps-container">
           <p class="build-step-6 build-steps">
-            A pull request
-            <br />
+            A pull request <br />
             is created
           </p>
           <p class="build-step-7 build-steps">
-            GitHub tells Travis CI
-            <br />
+            GitHub tells Travis CI <br />
             the build is mergeable
           </p>
           <p class="build-step-8 build-steps">
-            Hooray!
-            <br />
+            Hooray! <br />
             Your build passes!
           </p>
           <p class="build-step-9 build-steps">
-            Travis CI updates
-            <br />
+            Travis CI updates <br />
             the PR that it passed
           </p>
           <p class="build-step-10 build-steps">
-            You merge in
-            <br />
+            You merge in <br />
             the PR goodness
           </p>
         </div>
@@ -334,11 +280,7 @@
       </h2>
       <div class="inner">
         <div class="quote-container">
-          <img
-            src="../images/landing-page/rails.svg"
-            alt="ruby on rails logo"
-            class="rails-logo"
-          />
+          <img src="../images/landing-page/rails.svg" alt="ruby on rails logo" class="rails-logo" />
           <p>
             Travis CI makes it so much easier for us to coordinate the thousands of commits and contributors that flow through
             the Rails code base. The test suite for such a large project is vast, and we wouldn't be catching issues as quickly
@@ -351,20 +293,16 @@
             Creator of Ruby on Rails
           </p>
           <span>
-            {{svg-jar "twitter"}}
+            <SvgImage @name="twitter" />
           </span>
           <span>
-            <a href="https://twitter.com/dhh">
+            <ExternalLinkTo @href="https://twitter.com/dhh">
               dhh
-            </a>
+            </ExternalLinkTo>
           </span>
         </div>
         <div class="quote-container">
-          <img
-            src="../images/landing-page/twitter-quote.svg"
-            alt="twitter logo"
-            class="twitter-logo"
-          />
+          <img src="../images/landing-page/twitter-quote.svg" alt="twitter logo" class="twitter-logo" />
           <p>
             We love Travis CI at @TwitterOSS and we use it for the majority of our open source projects on GitHub. Travis CI is
             simple to use, we love their API to build tooling and adore the new container infrastructure for speedier builds.
@@ -376,25 +314,17 @@
             Former Head of Open Source at Twitter
           </p>
           <span>
-            {{svg-jar "twitter"}}
+            <SvgImage @name="twitter" />
           </span>
           <span>
-            <a href="https://twitter.com/cra">
+            <ExternalLinkTo @href="https://twitter.com/cra">
               cra
-            </a>
+            </ExternalLinkTo>
           </span>
         </div>
         <div class="quote-container">
-          <img
-            src="../images/landing-page/pypy.png"
-            alt="pypy logo"
-            class="quote-pypy-logo"
-          />
-          <img
-            src="../images/landing-page/lang-python.svg"
-            alt="python programming language logo"
-            class="quote-python-logo"
-          />
+          <img src="../images/landing-page/pypy.png" alt="pypy logo" class="quote-pypy-logo" />
+          <img src="../images/landing-page/lang-python.svg" alt="python programming language logo" class="quote-python-logo" />
           <p class="quote-python">
             Not only is Travis CI the best way to test your software, it is the right way. rm -rf jenkins&amp;&amp;touch .travis.yml
           </p>
@@ -405,12 +335,12 @@
             PyPy and Python Core Team Member
           </p>
           <span>
-            {{svg-jar "github"}}
+            <SvgImage @name="github" />
           </span>
           <span>
-            <a href="https://github.com/alex">
+            <ExternalLinkTo @href="https://github.com/alex">
               alex
-            </a>
+            </ExternalLinkTo>
           </span>
         </div>
       </div>

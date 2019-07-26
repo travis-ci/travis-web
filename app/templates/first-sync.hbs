@@ -1,6 +1,6 @@
 <TravisLayout @layoutName="layouts/center">
   <div class="content-page">
-    {{#if isSyncing}}
+    {{#if this.isSyncing}}
       <img
         src="/images/logos/TravisCI-Mascot-1.svg"
         class="mascot-spin"
@@ -22,8 +22,7 @@
           If you're not part of any existing organizations yet, we'll take you to a handy getting started guide to get you off the ground quickly.
         </p>
       </div>
-    {{/if}}
-    {{#unless isSyncing}}
+    {{else}}
       <img
         src="/images/logos/TravisCI-Mascot-1.svg"
         alt="Travis CI mascot"
@@ -34,10 +33,9 @@
         Great news!
       </h1>
       <p class="content-subtitle">
-        We've successfully synchronized your details from GitHub.
-        <br />
+        We've successfully synchronized your details from GitHub. <br />
         We will redirect you to your profile in a few seconds.
       </p>
-    {{/unless}}
+    {{/if}}
   </div>
 </TravisLayout>

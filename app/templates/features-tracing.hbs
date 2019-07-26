@@ -8,8 +8,8 @@
     </p>
     <p class="text-big">
       ➡️&nbsp;
-      <a href="#" {{action "toggle" preventDefault=true}}>
-        {{if tracingEnabled "Disable tracing" "Enable tracing"}}
+      <a class="pointer" onclick={{action "toggle" preventDefault=true}}>
+        {{if this.tracingEnabled "Disable" "Enable"}} tracing
       </a>
     </p>
     <p class="text-big">
@@ -17,22 +17,14 @@
     </p>
     <p class="text-big">
       ➡️&nbsp;
-      <a
-        href="javascript:window.TravisTracer&amp;&amp;TravisTracer.bookmarklet()"
-      >
+      <a href="javascript:window.TravisTracer&amp;&amp;TravisTracer.bookmarklet()" >
         Toggle tracing ✨
       </a>
     </p>
     <p class="text-big">
       The tracing panel color theme adapted from
-      <a href="http://twitter.com/sailorhg">
-        sailorhg
-      </a>
-      's
-      <a href="http://sailorhg.github.io/fairyfloss/">
-        fairyfloss
-      </a>
-      theme.
+      <a href="http://twitter.com/sailorhg">sailorhg</a>'s
+      <a href="http://sailorhg.github.io/fairyfloss/">fairyfloss</a> theme.
     </p>
   </header>
 </TravisLayout>
