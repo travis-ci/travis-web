@@ -609,8 +609,11 @@ section.invoices {
     }
   }
 
+  .invoice-date {
+    margin-left: -5px;
+  }
+
   td .icon {
-    transform: translateY(-2px);
     @include colorSVG(black);
     margin-right: 0;
   }
@@ -618,11 +621,14 @@ section.invoices {
   .icon-download {
     height: 24px;
     width: 24px;
+    transform: translateY(-2px);
   }
 
   .icon-invoice {
     height: 26px;
     width: 26px;
+    transform: translate(-6px, 6px);
+    @include colorSVG(black);
   }
 }
 
