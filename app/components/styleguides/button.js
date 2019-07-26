@@ -11,9 +11,12 @@ const DEFAULT_SHADES = {
 const DEFAULT_COLOR = 'blue';
 const COLORSETS = {
   disabled: {
-    light: 100,
-    main: 300,
-    dark: 300,
+    color: 'grey',
+    shades: {
+      light: 100,
+      main: 300,
+      dark: 300,
+    }
   }
 };
 
@@ -44,27 +47,28 @@ export default Component.extend({
   disabled: false,
   defaultClasses: 'rounded uppercase px-3 py-2 font-bold',
 
-  variantSet: computed(() => VARIANTS),
+  defaultShades: computed(() => DEFAULT_SHADES),
+  colorSetDefs: computed(() => COLORSETS),
+  variantDefs: computed(() => VARIANTS),
   variant: DEFAULT_VARIANT,
   color: DEFAULT_COLOR,
-  shades: computed('currentColor', function () {
-    const { currentColor } = this;
-    return COLORSETS[currentColor] || DEFAULT_SHADES;
+
+  colorSet: computed('disabled', 'color', 'colorSetDefs', 'defaultShades', function () {
+    const { color, colorSetDefs, defaultShades, disabled } = this;
+    return disabled ?
+      colorSetDefs['disabled'] :
+      colorSetDefs[color] || { color, shades: defaultShades };
+  }),
+  currentVariant: computed('variant', 'variantDefs', function () {
+    const { variant: variantName, variantDefs } = this;
+    return variantDefs[variantName] || VARIANTS[DEFAULT_VARIANT];
   }),
 
-  currentColor: computed('color', 'disabled', function () {
-    return this.disabled ? 'grey' : this.color;
-  }),
-  currentShades: computed('disabled', 'shades', function () {
-    return this.disabled ? COLORSETS['disabled'] : this.shades;
-  }),
+  variantClasses: computed('colorSet.color', 'colorSet.shades.{light,main,dark}', 'currentVariant', function () {
+    const { currentVariant } = this;
+    const { color, shades } = this.colorSet;
 
-  variantClasses: computed('currentColor', 'currentShades.{light,main,dark}', 'variant', 'variantSet', function () {
-    const { currentColor, currentShades, variant: variantName, variantSet } = this;
-    const getVariantClasses = variantSet[variantName] || VARIANTS[DEFAULT_VARIANT];
-
-    const classes = getVariantClasses(currentColor, currentShades);
-
+    const classes = currentVariant(color, shades);
     return classes.join(' ');
   }),
 

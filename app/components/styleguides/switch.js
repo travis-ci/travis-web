@@ -19,15 +19,10 @@ export default Button.extend({
     return this.dotSize + 1;
   }),
   active: false,
-  description: '',
 
-  variantSet: computed(() => VARIANTS),
+  variantDefs: computed(() => VARIANTS),
   variant: DEFAULT_VARIANT,
-  shades: computed(() => ({main: 300})),
-
-  currentColor: computed('color', 'disabled', 'active', function () {
-    return this.disabled || !this.active ? 'grey' : this.color;
-  }),
+  defaultShades: computed(() => ({main: 300})),
 
   spaceClass: computed('spaceSize', 'active', function () {
     const { spaceSize, active } = this;
