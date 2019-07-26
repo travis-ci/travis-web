@@ -8,24 +8,24 @@
         We’re happy to help
       </LinkTo>
     </p>
-    {{#travis-form as |form|}}      
+    <TravisForm as |Form|>
       <div class='form-elem invoice-select-year'>
-        {{#form.field
+        <Form.field
           data-test-invoice-select-year
-          value=year
+          @value={{year}}
           class='margin-top-0'
-          onChange=(action (mut year))
-          showValidationStatusIcons=false as |field|
-        }}
-          {{#field.select
-            searchEnabled=false
-            options=invoiceYears as |year|
-          }}
+          @onChange={{action (mut year)}}
+          @showValidationStatusIcons=false as |Field|
+        >
+          <Field.select
+            @searchEnabled={{false}}
+            @options={{invoiceYears}} as |year|
+          >
             {{year}}
-          {{/field.select}}
-        {{/form.field}}
+          </Field.select>
+        </Form.field>
       </div>
-    {{/travis-form}}
+    </TravisForm>      
   </div>
   <div class='invoice-table'>
     <table>

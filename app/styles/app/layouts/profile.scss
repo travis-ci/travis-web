@@ -583,6 +583,11 @@ section.invoices {
     padding: .5em .8em .5em 0;
   }
 
+  td .icon {
+    @include colorSVG(black);
+    margin-right: 0;
+  }
+
   td:last-child,
   th:last-child {
     text-align: center;
@@ -611,11 +616,6 @@ section.invoices {
 
   .invoice-date {
     margin-left: -5px;
-  }
-
-  td .icon {
-    @include colorSVG(black);
-    margin-right: 0;
   }
 
   .icon-download {
