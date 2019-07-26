@@ -22,7 +22,7 @@ const COLORSETS = {
   grey: {
     color: 'grey',
     shades: {
-      light: 200,
+      light: 150,
       main: 700,
       dark: 800,
     }

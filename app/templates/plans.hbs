@@ -87,19 +87,17 @@
 
   {{!-- Enterprise section --}}
   <section class="mb-16">
-    <Styleguides::Grid  @sm={{2}} as |grid|>
+    <Styleguides::Grid  @sm={{2}} @items='center' as |grid|>
         <grid.item>
           {{svg-jar 'enterprise-servers'}}
         </grid.item>
         <grid.item>
-          <h2>Travis CI Enterprise</h2>
-          <p>
+          <h2 class="text-5xl font-bold">Travis CI Enterprise</h2>
+          <p class="mb-6">
             Our on-premises product is perfect for companies who
             want to keep using the same features of Travis CI with
             additional on-site security needs.
           </p>
-
-          <p>{{config.urls.enterprise}}</p>
 
           <Styleguides::ButtonLink @href={{config.urls.enterprise}} @variant='outline' @color='grey'>
             Learn more about Travis CI Enterprise
