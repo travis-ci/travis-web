@@ -1,4 +1,4 @@
-{{#if thos.showUser}}
+{{#if this.showUser}}
   <LinkTo @route="owner" @model={{this.user.login}}>
     <EmberTooltip @text={{concat "View repositories for " this.nameOrLogin}} />
     <UserAvatar
