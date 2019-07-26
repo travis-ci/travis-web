@@ -84,17 +84,28 @@
       <a href="mailto:sales@travis-ci.com" title="Email the Travis CI sales team" class="plans-button--green">Contact Travis CI sales</a>
     </div>
   </section>
-  <section class="inner section--enterprise section--two">
-    <div>
-      <h2 class="h2--teal">Travis CI Enterprise</h2>
-      <p class="text-big">
-        Our on-premises product is perfect for companies who want to keep using the same features of Travis CI with additional on-site security needs.
-      </p>
-      <a href="https://enterprise.travis-ci.com" title="learn more about Travis CI" class="plans-button--blue">Learn more about Travis CI Enterprise</a>
-    </div>
-    <div>
-      {{svg-jar 'enterprise-servers'}}
-    </div>
+
+  {{!-- Enterprise section --}}
+  <section class="mb-16">
+    <Styleguides::Grid  @sm={{2}} as |grid|>
+        <grid.item>
+          {{svg-jar 'enterprise-servers'}}
+        </grid.item>
+        <grid.item>
+          <h2>Travis CI Enterprise</h2>
+          <p>
+            Our on-premises product is perfect for companies who
+            want to keep using the same features of Travis CI with
+            additional on-site security needs.
+          </p>
+
+          <p>{{config.urls.enterprise}}</p>
+
+          <Styleguides::ButtonLink @href={{config.urls.enterprise}} @variant='outline' @color='grey'>
+            Learn more about Travis CI Enterprise
+          </Styleguides::ButtonLink>
+        </grid.item>
+    </Styleguides::Grid>
   </section>
 
   <section class="inner section--faq">

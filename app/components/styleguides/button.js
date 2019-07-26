@@ -17,6 +17,15 @@ const COLORSETS = {
       main: 300,
       dark: 300,
     }
+  },
+
+  grey: {
+    color: 'grey',
+    shades: {
+      light: 200,
+      main: 700,
+      dark: 800,
+    }
   }
 };
 
@@ -45,7 +54,7 @@ export default Component.extend({
   type: 'button',
   role: 'button',
   disabled: false,
-  defaultClasses: 'rounded uppercase px-3 py-2 font-bold',
+  defaultClasses: 'inline-block rounded uppercase px-3 py-2 font-bold',
 
   defaultShades: computed(() => DEFAULT_SHADES),
   colorSetDefs: computed(() => COLORSETS),
