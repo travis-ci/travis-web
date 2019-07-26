@@ -6,7 +6,7 @@ export default Component.extend({
   tabStates: service(),
 
   noReposMessage: computed('viewingOwned', function () {
-    if (this.get('viewingOwned') === 'owned') {
+    if (this.viewingOwned === 'owned') {
       return 'You don\'t have any repos set up on Travis CI';
     } else {
       return 'No repositories found';

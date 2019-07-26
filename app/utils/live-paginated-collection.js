@@ -7,7 +7,7 @@ import limit from 'travis/utils/computed-limit';
 // results.
 let LivePaginatedCollection = ArrayProxy.extend({
   pagination: computed('paginationData', function () {
-    let paginationData = this.get('paginationData');
+    let paginationData = this.paginationData;
     if (!paginationData) return;
 
     return {
@@ -93,7 +93,7 @@ LivePaginatedCollection.reopenClass({
     sortDependencies.push('content.[]');
 
     defineProperty(instance, 'sorted', computed(...sortDependencies, function () {
-      return this.get('content').toArray().sort(sortByFunction);
+      return this.content.toArray().sort(sortByFunction);
     }));
 
     defineProperty(instance, 'limited', limit('sorted', 'pagination.perPage'));

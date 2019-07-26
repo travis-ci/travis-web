@@ -6,12 +6,23 @@ import { fillInWithKeyEvent } from 'travis/tests/helpers/extra-test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import DS from 'ember-data';
 import { percySnapshot } from 'ember-percy';
+import { selectChoose, selectSearch } from 'ember-power-select/test-support';
 
 module('Integration | Component | add env-var', function (hooks) {
   setupRenderingTest(hooks);
 
+  hooks.beforeEach(async function () {
+    const repository = server.create('repository', {
+      name: 'repository-name',
+      slug: 'org-login/repository-name',
+      private: true
+    });
+
+    this.repository = repository;
+  });
+
   test('it adds an env var on submit', async function (assert) {
-    assert.expect(6);
+    assert.expect(7);
 
     var store = this.owner.lookup('service:store');
     assert.equal(store.peekAll('envVar').get('length'), 0, 'precond: store should be empty');
@@ -34,6 +45,7 @@ module('Integration | Component | add env-var', function (hooks) {
 
     assert.equal(envVar.get('name'), 'FOO', 'name should be set for the env var');
     assert.equal(envVar.get('value'), 'bar', 'value should be set for the env var');
+    assert.equal(envVar.get('branch'), null, 'branch should be empty');
     assert.equal(envVar.get('repo.slug'), 'travis-ci/travis-web', 'repo should be set for the env var');
     assert.ok(!envVar.get('public'), 'env var should be private');
 
@@ -101,6 +113,140 @@ module('Integration | Component | add env-var', function (hooks) {
     assert.equal(envVar.get('value'), 'bar', 'value should be set for the env var');
     assert.equal(envVar.get('repo.slug'), 'travis-ci/travis-web', 'repo should be set for the env var');
     assert.ok(envVar.get('public'), 'env var should be public');
+
+    var done = assert.async();
+    done();
+  });
+
+  test('it adds an env var with branch on submit', async function (assert) {
+    assert.expect(7);
+
+    this.owner.register('transform:boolean', DS.BooleanTransform);
+    var store = this.owner.lookup('service:store');
+    assert.equal(store.peekAll('envVar').get('length'), 0, 'precond: store should be empty');
+
+    var repo;
+    run(function () {
+      repo  = store.push({ data: { id: 1, type: 'repo', attributes: { slug: 'travis-ci/travis-web' } } });
+    });
+
+    this.set('repo', repo);
+
+    let branchName = 'foo';
+
+    server.create('branch', {
+      name: branchName,
+      id: `/v3/repo/${this.repository.id}/branch/food`,
+      exists_on_github: true,
+      repository: this.repository,
+    });
+
+    await render(hbs`{{add-env-var repo=repo}}`);
+
+    await fillInWithKeyEvent('.env-name', 'FOO');
+    await fillInWithKeyEvent('.env-value', 'bar');
+
+    await selectSearch('.env-branch-selector', branchName);
+    await selectChoose('.env-branch-selector', branchName);
+
+    await click('.form-submit');
+
+    assert.equal(store.peekAll('envVar').get('length'), 1, 'env var should be added to store');
+
+    var envVar = store.peekAll('envVar').objectAt(0);
+
+    assert.equal(envVar.get('name'), 'FOO', 'name should be set for the env var');
+    assert.equal(envVar.get('value'), 'bar', 'value should be set for the env var');
+    assert.equal(envVar.get('branch'), 'foo', 'branch should be set for the env var');
+    assert.equal(envVar.get('repo.slug'), 'travis-ci/travis-web', 'repo should be set for the env var');
+    assert.ok(!envVar.get('public'), 'env var should be private');
+
+    var done = assert.async();
+    done();
+  });
+
+  test('it adds two env var with same name & branch on submit', async function (assert) {
+    assert.expect(3);
+
+    this.owner.register('transform:boolean', DS.BooleanTransform);
+    var store = this.owner.lookup('service:store');
+    assert.equal(store.peekAll('envVar').get('length'), 0, 'precond: store should be empty');
+
+    var repo;
+    run(function () {
+      repo  = store.push({ data: { id: 1, type: 'repo', attributes: { slug: 'travis-ci/travis-web' } } });
+    });
+
+    this.set('repo', repo);
+
+    let branchName = 'foo';
+
+    server.create('branch', {
+      name: branchName,
+      id: `/v3/repo/${this.repository.id}/branch/food`,
+      exists_on_github: true,
+      repository: this.repository,
+    });
+
+    await render(hbs`{{add-env-var repo=repo}}`);
+
+    await fillInWithKeyEvent('.env-name', 'FOO');
+    await fillInWithKeyEvent('.env-value', 'bar');
+
+    await selectSearch('.env-branch-selector', branchName);
+    await selectChoose('.env-branch-selector', branchName);
+
+    await click('.form-submit');
+
+    assert.equal(store.peekAll('envVar').get('length'), 1, 'env var with branch should be added to store');
+
+    await render(hbs`{{add-env-var repo=repo}}`);
+
+    await fillInWithKeyEvent('.env-name', 'FOO');
+    await fillInWithKeyEvent('.env-value', 'bar');
+
+    await selectSearch('.env-branch-selector', branchName);
+    await selectChoose('.env-branch-selector', branchName);
+
+    await click('.form-submit');
+
+    assert.equal(store.peekAll('envVar').get('length'), 1, 'second env var with same name & branch should not be added to store');
+
+    var done = assert.async();
+    done();
+  });
+
+  test('it adds two env var with same name (without branch) on submit', async function (assert) {
+    assert.expect(3);
+
+    this.owner.register('transform:boolean', DS.BooleanTransform);
+    var store = this.owner.lookup('service:store');
+    assert.equal(store.peekAll('envVar').get('length'), 0, 'precond: store should be empty');
+
+    var repo;
+    run(function () {
+      repo  = store.push({ data: { id: 1, type: 'repo', attributes: { slug: 'travis-ci/travis-web' } } });
+    });
+
+    this.set('repo', repo);
+
+    await render(hbs`{{add-env-var repo=repo}}`);
+
+    await fillInWithKeyEvent('.env-name', 'FOO');
+    await fillInWithKeyEvent('.env-value', 'bar');
+
+    await click('.form-submit');
+
+    assert.equal(store.peekAll('envVar').get('length'), 1, 'env var without branch should be added to store');
+
+    await render(hbs`{{add-env-var repo=repo}}`);
+
+    await fillInWithKeyEvent('.env-name', 'FOO');
+    await fillInWithKeyEvent('.env-value', 'bar');
+
+    await click('.form-submit');
+
+    assert.equal(store.peekAll('envVar').get('length'), 1, 'second env var with same name (without branch) should not be added to store');
 
     var done = assert.async();
     done();

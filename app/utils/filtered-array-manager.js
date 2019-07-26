@@ -15,17 +15,17 @@ let FilteredArray = ArrayProxy.extend({
   // returns falsey value, it will be removed. In other cases, it will be
   // ignored.
   tryRecord(record) {
-    if (!this.get('content').includes(record) && this.fits(record)) {
-      this.get('content').pushObject(record);
-    } else if (this.get('content').includes(record) && !this.fits(record)) {
-      this.get('content').removeObject(record);
+    if (!this.content.includes(record) && this.fits(record)) {
+      this.content.pushObject(record);
+    } else if (this.content.includes(record) && !this.fits(record)) {
+      this.content.removeObject(record);
     }
   },
 
   // checks if a record should be a part of an array by running filterFunction
   // with a record as an argument
   fits(record) {
-    return this.get('filterFunction')(record);
+    return this.filterFunction(record);
   }
 });
 
@@ -59,8 +59,8 @@ let FilteredArray = ArrayProxy.extend({
 let FilteredArrayManagerForType = EmberObject.extend({
   init() {
     this.arrays = {};
-    let store = this.get('store'),
-      modelName = this.get('modelName');
+    let store = this.store,
+      modelName = this.modelName;
     this.allRecords = store.peekAll(modelName);
     this.allRecords.addArrayObserver(this, {
       willChange: 'allRecordsWillChange',
@@ -164,7 +164,7 @@ let FilteredArrayManagerForType = EmberObject.extend({
   // queryParams passed as an argument.
   fetchQuery(queryParams) {
     if (queryParams) {
-      return this.get('store').query(this.get('modelName'), queryParams);
+      return this.store.query(this.modelName, queryParams);
     } else {
       return resolve([]);
     }
@@ -251,7 +251,7 @@ let FilteredArrayManager = EmberObject.extend({
     let manager = this.filteredArrayManagersByType[modelName];
 
     if (!manager) {
-      manager = this.filteredArrayManagersByType[modelName] = FilteredArrayManagerForType.create({ store: this.get('store'), modelName: modelName });
+      manager = this.filteredArrayManagersByType[modelName] = FilteredArrayManagerForType.create({ store: this.store, modelName: modelName });
     }
 
     return manager;

@@ -6,7 +6,7 @@ export default Service.extend({
   auth: service(),
 
   init() {
-    this.get('all');
+    this.all;
     return this._super(...arguments);
   },
 
@@ -36,7 +36,7 @@ export default Service.extend({
 
   checkPermission(repo, permissionsType) {
     let id = isNaN(repo) ? repo.get('id') : repo;
-    let currentUser = this.get('currentUser');
+    let currentUser = this.currentUser;
     if (currentUser) {
       return currentUser.get(permissionsType).includes(parseInt(id));
     } else {

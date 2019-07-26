@@ -5,7 +5,7 @@ export default Controller.extend({
   isLoading: false,
 
   running: computed('model', function () {
-    let data = this.get('model');
+    let data = this.model;
     let repos;
     repos = data.repositories.filter((repo) => {
       const { currentBuild } = repo;

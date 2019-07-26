@@ -19,7 +19,7 @@ export default SimpleLayoutRoute.extend({
 
   isSyncingDidChange() {
     let controller = this.controllerFor('firstSync');
-    if (!controller.get('isSyncing')) {
+    if (!controller.isSyncing) {
       return later(this, function () {
         return this.transitionTo('account');
       }, config.timing.syncingPageRedirectionTime);

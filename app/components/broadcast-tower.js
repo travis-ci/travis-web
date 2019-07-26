@@ -9,16 +9,18 @@ export default Component.extend({
   isOpen: false,
   timeoutId: '',
 
+  toggleBroadcasts() {},
+
   toggle: task(function* () {
     this.toggleProperty('isOpen');
-    this.sendAction('toggleBroadcasts');
+    this.toggleBroadcasts();
 
     // Acceptance tests will wait for the promise to resolve, so skip in tests
-    if (this.get('isOpen') && !Ember.testing) {
+    if (this.isOpen && !Ember.testing) {
       yield new EmberPromise(resolve => later(resolve, 10000));
 
       this.toggleProperty('isOpen');
-      this.sendAction('toggleBroadcasts');
+      this.toggleBroadcasts();
     }
   }).restartable()
 });

@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'ember-qunit';
+import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import { Response } from 'ember-cli-mirage';
 import { percySnapshot } from 'ember-percy';
 import settingsPage from 'travis/tests/pages/settings';
@@ -192,7 +192,7 @@ module('Acceptance | repo settings', function (hooks) {
     assert.equal(settingsPage.environmentVariables.length, 1, 'expected only one environment variable to remain');
     assert.equal(settingsPage.environmentVariables[0].name, 'published', 'expected the formerly-second variable to be first');
 
-    const requestBodies = [];
+    let requestBodies = [];
 
     server.post('/settings/env_vars', function (schema, request) {
       const parsedRequestBody = JSON.parse(request.requestBody);
@@ -218,6 +218,46 @@ module('Acceptance | repo settings', function (hooks) {
       name: 'drafted',
       value: 'true',
       public: true,
+      branch: null,
+      repository_id: this.repository.id
+    } });
+
+    // This will save env var with branch
+    requestBodies = [];
+
+    server.post('/settings/env_vars', function (schema, request) {
+      const parsedRequestBody = JSON.parse(request.requestBody);
+      parsedRequestBody.env_var.id = '1920';
+      requestBodies.push(parsedRequestBody);
+      return parsedRequestBody;
+    });
+
+    let branchName = 'foo';
+
+    server.create('branch', {
+      name: branchName,
+      id: `/v3/repo/${this.repository.id}/branch/food`,
+      exists_on_github: true,
+      repository: this.repository,
+    });
+
+    await settingsPage.environmentVariableForm.fillName('envname');
+    await settingsPage.environmentVariableForm.fillValue('envvalue');
+    await selectSearch('.env-branch-selector', branchName);
+    await selectChoose('.env-branch-selector', branchName);
+    await settingsPage.environmentVariableForm.makePublic();
+    await settingsPage.environmentVariableForm.add();
+
+    settingsPage.environmentVariables[0].as(environmentVariable => {
+      assert.ok(environmentVariable.isNewlyCreated, 'expected environment variable to be newly created');
+    });
+
+    assert.deepEqual(requestBodies.pop(), { env_var: {
+      id: '1920',
+      name: 'envname',
+      value: 'envvalue',
+      public: true,
+      branch: branchName,
       repository_id: this.repository.id
     } });
 
@@ -235,14 +275,14 @@ module('Acceptance | repo settings', function (hooks) {
 
     await settingsPage.environmentVariables[1].delete();
 
-    assert.equal(settingsPage.environmentVariables.length, 2, 'expected the environment variable to remain');
+    assert.equal(settingsPage.environmentVariables.length, 3, 'expected the environment variable to remain');
     assert.equal(topPage.flashMessage.text, 'There was an error deleting this environment variable.');
 
     server.delete('/settings/env_vars/:id', () => new Response(404, {}, {}));
 
     await settingsPage.environmentVariables[1].delete();
 
-    assert.equal(settingsPage.environmentVariables.length, 2, 'expected the environment variable to remain');
+    assert.equal(settingsPage.environmentVariables.length, 3, 'expected the environment variable to remain');
     assert.equal(topPage.flashMessage.text, 'This environment variable has already been deleted. Try refreshing.');
   });
 

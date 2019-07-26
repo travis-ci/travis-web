@@ -1,9 +1,8 @@
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'ember-qunit';
+import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import insightsPage from 'travis/tests/pages/insights-owner';
 import { settled } from '@ember/test-helpers';
 import signInUser from 'travis/tests/helpers/sign-in-user';
-import signOutUser from 'travis/tests/helpers/sign-out-user';
 import { INSIGHTS_PRIVACY_OPTIONS } from 'travis/components/insights-privacy-selector';
 import { percySnapshot } from 'ember-percy';
 import { enableFeature } from 'ember-feature-flags/test-support';
@@ -12,8 +11,6 @@ module('Acceptance | owner insights', function (hooks) {
   setupApplicationTest(hooks);
 
   hooks.beforeEach(function () {
-    signOutUser();
-
     this.currentUser = server.create('user', {
       name: 'Aria',
       login: 'bellsareringing',
@@ -189,6 +186,4 @@ module('Acceptance | owner insights', function (hooks) {
     assert.ok(privacySelector.isVisible);
     assert.equal(privacySelector.mainField, INSIGHTS_PRIVACY_OPTIONS.PRIVATE);
   });
-
-  signOutUser();
 });

@@ -24,7 +24,7 @@ export default Component.extend({
   },
 
   'aria-checked': computed('checked', function () {
-    return this.get('checked') ? 'true' : 'false';
+    return this.checked ? 'true' : 'false';
   }),
 
   click() {

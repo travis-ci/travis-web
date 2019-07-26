@@ -1,7 +1,11 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
-import { isInternal, presentedPath, fileNameWithoutSha } from 'travis/utils/format-config';
+import {
+  isInternal,
+  presentedPath,
+  fileNameWithoutSha
+} from 'travis/utils/format-config';
 import { later } from '@ember/runloop';
 
 export default Component.extend({
@@ -11,7 +15,7 @@ export default Component.extend({
 
   buttonLabel: computed('copied', 'rawConfig.source', function () {
     let source = this.get('rawConfig.source');
-    return this.get('copied') ? 'Copied!' : `Copy ${fileNameWithoutSha(source)}`;
+    return this.copied ? 'Copied!' : `Copy ${fileNameWithoutSha(source)}`;
   }),
 
   formattedConfig: computed('rawConfig.config', 'slug', function () {
@@ -28,16 +32,16 @@ export default Component.extend({
     let name = fileNameWithoutSha(source);
     if (name === this.baseYmlName) { return name; }
 
-    return presentedPath(source, this.get('slug'));
+    return presentedPath(source, this.slug);
   }),
 
   fileUrl: computed('rawConfig.source', 'slug', 'build.branchName', 'externalLinks', function () {
     let source = this.get('rawConfig.source');
-    let slug = this.get('slug');
+    let slug = this.slug;
     if (isInternal(source, slug)) { return null; }
 
     let branchName = this.get('build.branchName');
-    return this.get('externalLinks').githubFile(slug, branchName, fileNameWithoutSha(source));
+    return this.externalLinks.githubFile(slug, branchName, fileNameWithoutSha(source));
   }),
 
   actions: {

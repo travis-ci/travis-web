@@ -5,6 +5,6 @@ export default Component.extend({
   tagName: '',
 
   digitClass: computed('digit', function () {
-    return `oss-num-${this.get('digit')}`;
+    return `oss-num-${this.digit}`;
   }),
 });

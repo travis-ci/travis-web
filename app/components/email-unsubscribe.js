@@ -35,8 +35,8 @@ export default Component.extend({
   showConfigNote: and('isUnsubscribed', 'isFirstAction'),
 
   task: computed('isSubscribed', 'repo', function () {
-    let isSubscribed = this.get('isSubscribed');
-    let repo = this.get('repo');
+    let isSubscribed = this.isSubscribed;
+    let repo = this.repo;
     if (repo) {
       return isSubscribed ? repo.unsubscribe : repo.subscribe;
     }

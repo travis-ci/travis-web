@@ -26,7 +26,7 @@ export default TravisRoute.extend({
   },
 
   deactivate() {
-    return this.get('auth').set('redirected', false);
+    return this.auth.set('redirected', false);
   },
 
   actions: {

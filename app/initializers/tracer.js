@@ -73,7 +73,6 @@ class Tracer {
     } else {
       this.enable();
     }
-    window.location = window.location;
   }
 }
 
