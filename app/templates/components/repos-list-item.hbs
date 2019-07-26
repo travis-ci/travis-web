@@ -12,7 +12,7 @@
   {{#if this.repo.slug}}
     {{#if this.repo.currentBuild.id}}
       <p class="tile-title float-right {{this.repo.currentBuild.state}}">
-        <SvgImage @name="icon-hash" class="icon" />
+        <SvgImage @name="icon-hash" @class="icon" />
         <LinkTo @route="build" @models={{array this.repo repo.currentBuild.id}}>
           <span class="label-align inner-underline">
             {{this.repo.currentBuild.number}}
@@ -22,7 +22,7 @@
     {{/if}}
   {{/if}}
   <p>
-    <SvgImage @name="icon-clock" class="icon" />
+    <SvgImage @name="icon-clock" @class="icon" />
     <span class="label-align">
       Duration:
       <time
@@ -36,7 +36,7 @@
   </p>
   {{#if this.repo.currentBuild.isFinished}}
     <p>
-      <SvgImage @name="icon-calendar" class="icon" />
+      <SvgImage @name="icon-calendar" @class="icon" />
       <span class="label-align">
         Finished:
         <time

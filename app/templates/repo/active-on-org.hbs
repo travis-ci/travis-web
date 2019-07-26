@@ -1,5 +1,5 @@
 <div data-test-active_on_org-display class="missing-notice">
-  <SvgImage @name="hammer" class="page-graphic snapshot-hide" />
+  <SvgImage @name="hammer" @class="page-graphic snapshot-hide" />
   <h2 class="text-big">
     You can now start building this repository, right here at travis-ci.com!
   </h2>
@@ -14,7 +14,7 @@
       {{else if this.repo.isMigrationSucceeded}}
         Done!
       {{else}}
-        Migrate <SvgImage @name="icon-migrate" class="icon icon--m white icon--right" />
+        Migrate <SvgImage @name="icon-migrate" @class="icon icon--m white icon--right" />
       {{/if}}
     </button>
     {{#if this.isMigrationNotAllowed}}

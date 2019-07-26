@@ -3,7 +3,7 @@
     Invoice History
   </h2>
   <p>
-    <SvgImage @name="icon-help" class="icon-help" />
+    <SvgImage @name="icon-help" @class="icon-help" />
     Having trouble with your invoices?
     <LinkTo @route="help" @query={{hash anchor="form"}}>
       We’re happy to help
@@ -13,7 +13,7 @@
     {{#each (sort-by "createdAt:desc" this.invoices) as |invoice|}}
       <li>
         <a data-test-invoice href={{invoice.url}}>
-          <SvgImage @name="icon-invoice" class="icon" />
+          <SvgImage @name="icon-invoice" @class="icon" />
           {{invoice.id}} {{moment-format invoice.createdAt "MMMM YYYY"}}
         </a>
       </li>

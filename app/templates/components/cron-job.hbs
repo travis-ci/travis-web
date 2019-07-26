@@ -5,19 +5,19 @@
   </span>
 </div>
 <div class="cron-job-text interval">
-  <SvgImage @name="icon-calendar" class="icon" />
+  <SvgImage @name="icon-calendar" @class="icon" />
   <span class="label-align">
     Runs {{this.cron.interval}}
   </span>
 </div>
 <div class="cron-job-text last-run" title="{{this.cron.last_run}}">
-  <SvgImage @name="icon-clock" class="icon" />
+  <SvgImage @name="icon-clock" @class="icon" />
   <time class="label-align" datetime="{{this.cron.last_run}}">
     Ran {{format-time this.cron.last_run}}
   </time>
 </div>
 <div class="cron-job-text next-run" title={{this.cron.next_run}}>
-  <SvgImage @name="icon-nextcron" class="icon" />
+  <SvgImage @name="icon-nextcron" @class="icon" />
   <time class="label-align" datetime="{{this.cron.next_run}}">
     Scheduled in {{format-time this.cron.next_run}}
   </time>
@@ -26,7 +26,7 @@
   class="cron-job-text dont-run-if-recent-build-exists"
   title="{{this.dontRunIfRecentBuildExists}}"
 >
-  <SvgImage @name="icon-settings" class="icon" />
+  <SvgImage @name="icon-settings" @class="icon" />
   <span class="label-align">
     {{this.dontRunIfRecentBuildExists}}
   </span>
@@ -40,7 +40,7 @@
       class="cron-job-delete no-button"
       onclick={{action (perform this.delete)}}
     >
-      <SvgImage @name="icon-trash" class="icon" />
+      <SvgImage @name="icon-trash" @class="icon" />
       <EmberTooltip @text="Delete" />
     </button>
   {{/if}}

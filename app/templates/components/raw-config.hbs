@@ -2,13 +2,13 @@
   <div class="file-name">
     {{#if this.fileUrl}}
       <ExternalLinkTo @href={{this.fileUrl}}>
-        <SvgImage @name="job-name-icon" class="icon" @width=14 @height=14 />
+        <SvgImage @name="job-name-icon" @class="icon" @width=14 @height=14 />
         <span class="vertical-align">
           {{this.filePath}}
         </span>
       </ExternalLinkTo>
     {{else}}
-      <SvgImage @name="job-name-icon" class="icon" @width=14 @height=14 />
+      <SvgImage @name="job-name-icon" @class="icon" @width=14 @height=14 />
       <span class="vertical-align">
         {{this.filePath}}
       </span>
@@ -27,7 +27,7 @@
       @title={{this.buttonLabel}}
       @success={{action "copied" this.rawConfig.source}}
     >
-      <SvgImage @name="icon-copy" class="icon" />
+      <SvgImage @name="icon-copy" @class="icon" />
       <span>
         {{this.buttonLabel}}
       </span>

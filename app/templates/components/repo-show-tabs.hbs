@@ -30,7 +30,7 @@
   <li id="tab_build" class={{this.classBuild}}>
     {{#if this.build.id}}
       {{#if this.repo.slug}}
-        <SvgImage @name="icon-arrowtabs" class="tab-arrow" />
+        <SvgImage @name="icon-arrowtabs" @class="tab-arrow" />
         <LinkTo @route="build" @models={{array this.repo this.build}}>
           Build #{{this.build.number}}
         </LinkTo>

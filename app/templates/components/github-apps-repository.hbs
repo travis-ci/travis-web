@@ -14,13 +14,13 @@
     @title="Go to Travis CI repository settings"
     class="profile-settings button"
   >
-    <SvgImage @name="icon-settings" class="icon icon-hover" />
+    <SvgImage @name="icon-settings" @class="icon icon-hover" />
     Settings
   </LinkTo>
 {{else}}
   <a class="profile-settings disabled button">
     <EmberTooltip @text="Requires admin permissions" />
-    <SvgImage @name="icon-private" class="icon" />
+    <SvgImage @name="icon-private" @class="icon" />
     Settings
   </a>
 {{/if}}

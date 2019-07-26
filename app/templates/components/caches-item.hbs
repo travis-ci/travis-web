@@ -5,7 +5,7 @@
   </span>
 </div>
 <div class="row-item row-calendar">
-  <SvgImage @name="icon-calendar" class="icon" />
+  <SvgImage @name="icon-calendar" @class="icon" />
   <span class="label-align">
     {{format-time this.cache.last_modified}}
   </span>
@@ -23,6 +23,6 @@
     onclick={{action "performDelete"}}
   >
     <EmberTooltip @text="Delete" />
-    <SvgImage @name="icon-trash" class="icon" />
+    <SvgImage @name="icon-trash" @class="icon" />
   </a>
 </div>

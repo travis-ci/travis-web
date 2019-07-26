@@ -14,7 +14,7 @@
           </LinkTo>
         {{/if}}
         <p class="tile-title float-right">
-          <SvgImage @name="icon-hash" class="icon" />
+          <SvgImage @name="icon-hash" @class="icon" />
           {{#if job.repo.slug}}
             <LinkTo @route="job" @models={{array job.repo job}}>
               <span data-test-running-job-title class="label-align">
@@ -24,7 +24,7 @@
           {{/if}}
         </p>
         <p>
-          <SvgImage @name="icon-clock" class="icon" />
+          <SvgImage @name="icon-clock" @class="icon" />
           <span class="label-align">
             Duration:
             <time

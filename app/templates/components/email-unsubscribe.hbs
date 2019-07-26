@@ -2,7 +2,7 @@
   <LoadingScreen @center={{true}} @margin={{true}} />
 {{else}}
   <div class="container">
-    <SvgImage @name="sadmail" class="picture" data-test-email-unsubscribe-sadmail="true" />
+    <SvgImage @name="sadmail" @class="picture" data-test-email-unsubscribe-sadmail="true" />
     {{#if this.isError}}
       <h1 class="title" data-test-email-unsubscribe-title>
         We didn't find the repository

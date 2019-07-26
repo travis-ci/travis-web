@@ -16,7 +16,7 @@
           data-test-activate-button
           onclick={{action "activateAll"}}
         >
-          <SvgImage @name="icon-repooctocat" class="migrate__github-icon" />
+          <SvgImage @name="icon-repooctocat" @class="migrate__github-icon" />
           Activate all repositories using GitHub Apps
         </button>
       </div>
@@ -34,7 +34,7 @@
         >
           activate it on Github Apps
         </ExternalLinkTo>
-        <SvgImage @name="icon-repooctocat" class="migrate__github-icon" />
+        <SvgImage @name="icon-repooctocat" @class="migrate__github-icon" />
       </p>
       <div class="migrate__repo-list">
         <RepositoryFilter @repositories={{this.repositories}} as |filter|>
@@ -99,12 +99,12 @@
                           <EmberTooltip @text="Migrating" />
                         {{else if repository.isMigrationSucceeded}}
                           <span>
-                            <SvgImage @name="stage-passed" class="icon" />
+                            <SvgImage @name="stage-passed" @class="icon" />
                             <EmberTooltip @text="This repository has been migrated" />
                           </span>
                         {{else if repository.isMigrationFailed}}
                           <span>
-                            <SvgImage @name="stage-failed" class="icon" />
+                            <SvgImage @name="stage-failed" @class="icon" />
                             <EmberTooltip @text="This repository couldn’t be migrated, please try again" />
                           </span>
                         {{/if}}

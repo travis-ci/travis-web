@@ -9,7 +9,7 @@
   </div>
   <div class="row-builds">
     <div class="row-item">
-      <SvgImage @name="icon-builds" class="icon" />
+      <SvgImage @name="icon-builds" @class="icon" />
       <span class="label-align">
         {{#if this.branch.last_build}}
           {{#if this.getLast5Builds.isLoading}}
@@ -29,7 +29,7 @@
     <div class="row-item">
       {{#if this.branch.last_build}}
         <LinkTo @route="build" @model={{this.branch.last_build.id}}>
-        <SvgImage @name="icon-hash" class={{concat this.branch.last_build.state " icon"}} />
+        <SvgImage @name="icon-hash" @class={{concat this.branch.last_build.state " icon"}} />
           <span class="label-align inner-underline {{this.branch.last_build.state}}">
             {{this.branch.last_build.number}}
             {{humanize-state this.branch.last_build.state}}
@@ -49,7 +49,7 @@
       class="row-item"
       title="Finished {{pretty-date this.branch.last_build.finished_at}}"
     >
-      <SvgImage @name="icon-calendar" class="icon" />
+      <SvgImage @name="icon-calendar" @class="icon" />
       <span class="label-align">
         {{#if this.branch.last_build}}
           {{format-time this.branch.last_build.finished_at}}
@@ -65,7 +65,7 @@
     <div class="row-item">
       <ExternalLinkTo @href={{this.branch.last_build.commit.githubUrl}}>
         <EmberTooltip @text="View commit on GitHub" />
-        <SvgImage @name="icon-commit" class="icon" />
+        <SvgImage @name="icon-commit" @class="icon" />
         <span class="inner-underline monospace">
           {{#if this.branch.last_build}}
             {{format-sha this.branch.last_build.commit.sha}}
@@ -73,7 +73,7 @@
             -
           {{/if}}
         </span>
-        <SvgImage @name="icon-external-link" class="icon" />
+        <SvgImage @name="icon-external-link" @class="icon" />
       </ExternalLinkTo>
     </div>
   </div>

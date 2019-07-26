@@ -1,7 +1,7 @@
 {{#if this.repository.private}}
-  <SvgImage @name="icon-lock" @alt="Private repository" class="icon private" />
+  <SvgImage @name="icon-lock" @alt="Private repository" @class="icon private" />
   <EmberTooltip @text="Private repository" />
 {{else}}
-  <SvgImage @name="icon-os" @alt="Public repository" class="icon public" />
+  <SvgImage @name="icon-os" @alt="Public repository" @class="icon public" />
   <EmberTooltip @text="Public repository" />
 {{/if}}

@@ -4,11 +4,11 @@
     title="{{if this.repo.starred 'un'}}star this repo"
     onclick={{action "starRepo"}}
   >
-    <SvgImage @name="icon-star" class="icon--m" />
+    <SvgImage @name="icon-star" @class="icon--m" />
   </button>
   {{#if this.repo.private}}
     <span class="dash-private" title="private repository">
-      <SvgImage @name="icon-private" class="icon" />
+      <SvgImage @name="icon-private" @class="icon" />
     </span>
   {{/if}}
 </div>
@@ -92,14 +92,14 @@
             Commit
           </h3>
           <div class="row-content row-item commit-sha">
-            <SvgImage @name="icon-commit" class="icon" />
+            <SvgImage @name="icon-commit" @class="icon" />
             <ExternalLinkTo @href={{this.repo.currentBuild.commit.githubUrl}}>
               <EmberTooltip @text="View commit on GitHub" />
               <span class="label-align monospace">
                 {{format-sha this.repo.currentBuild.commit.sha}}
               </span>
             </ExternalLinkTo>
-            <SvgImage @name="icon-external-link" class="icon" />
+            <SvgImage @name="icon-external-link" @class="icon" />
           </div>
         </section>
         <section class="fade-out dash-finished">
@@ -107,7 +107,7 @@
             Finished
           </h3>
           <p class="row-content" title="{{this.repo.currentBuild.finishedAt}}">
-            <SvgImage @name="icon-calendar" class="icon" />
+            <SvgImage @name="icon-calendar" @class="icon" />
             <span class="label-align">
               {{#if this.repo.currentBuild.finishedAt}}
                 {{format-time this.repo.currentBuild.finishedAt}}
@@ -128,7 +128,7 @@
                   class="dropup-tofu"
                   onclick={{action "openDropup"}}
                 >
-                <SvgImage @name="icon-tofuburger" class="icon-tofu" />
+                <SvgImage @name="icon-tofuburger" @class="icon-tofu" />
                 </button>
                 <ul class="dropup-list">
                   <li>
@@ -136,7 +136,7 @@
                       title="Trigger a build on the default branch"
                       onclick={{action "triggerBuild"}}
                     >
-                      <SvgImage @name="icon-restart" class="icon" />
+                      <SvgImage @name="icon-restart" @class="icon" />
                       <span class="label-align">
                         Trigger a build
                       </span>
@@ -148,7 +148,7 @@
                       @model={{this.repo}}
                       @title="Settings for this repository"
                     >
-                      <SvgImage @name="icon-settings" class="icon" />
+                      <SvgImage @name="icon-settings" @class="icon" />
                       <span class="label-align">
                         Settings
                       </span>

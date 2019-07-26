@@ -3,7 +3,7 @@
     <div class="inner">
       {{#if this.isExpired}}
         <p>
-          <SvgImage @name="icon-flag" class="icon" />
+          <SvgImage @name="icon-flag" @class="icon" />
           Your trial license has <strong>expired</strong>, please contact
           <a href="mailto:enterprise@travis-ci.com">
             enterprise@travis-ci.com
@@ -11,7 +11,7 @@
         </p>
       {{else if this.expiresSoon}}
         <p>
-          <SvgImage @name="icon-flag" class="icon" />
+          <SvgImage @name="icon-flag" @class="icon" />
           Your trial license <strong>expires {{this.expirationTimeFromNow}}</strong>, please contact
           <a href="mailto:enterprise@travis-ci.com">
             enterprise@travis-ci.com
@@ -19,7 +19,7 @@
         </p>
       {{else}}
         <p>
-          <SvgImage @name="icon-flag" class="icon" />
+          <SvgImage @name="icon-flag" @class="icon" />
           Your trial license <strong>expires {{this.expirationTimeFromNow}}</strong>
         </p>
       {{/if}}
@@ -31,7 +31,7 @@
     <div class="inner">
       {{#if this.isExpired}}
         <p>
-          <SvgImage @name="icon-flag" class="icon" />
+          <SvgImage @name="icon-flag" @class="icon" />
           Your license has <strong>expired</strong>, please contact
           <a href="mailto:enterprise@travis-ci.com">
             enterprise@travis-ci.com
@@ -39,14 +39,14 @@
         </p>
       {{else if this.expiring}}
         <p>
-          <SvgImage @name="icon-flag" class="icon" />
+          <SvgImage @name="icon-flag" @class="icon" />
           Your license <strong>expires {{this.expirationTimeFromNow}}</strong>, please contact
           <a href="mailto:enterprise@travis-ci.com">
             enterprise@travis-ci.com
           </a>
           {{#unless this.expiringSoon}}
             <button class="close-btn" {{action "closeLicenseBanner"}}>
-              <SvgImage @name="flash-close" class="close-icon" />
+              <SvgImage @name="flash-close" @class="close-icon" />
             </button>
           {{/unless}}
         </p>
@@ -59,7 +59,7 @@
     <div class="inner">
       {{#if this.exceedingSeats}}
         <p>
-          <SvgImage @name="icon-flag" class="icon" />
+          <SvgImage @name="icon-flag" @class="icon" />
           You’ve exceeded the <strong>maximum seats</strong> that your license permits, please contact
           <a href="mailto:enterprise@travis-ci.com">
             enterprise@travis-ci.com
@@ -68,14 +68,14 @@
         </p>
       {{else if this.almostExceedingSeats}}
         <p>
-          <SvgImage @name="icon-flag" class="icon" />
+          <SvgImage @name="icon-flag" @class="icon" />
           You’re approaching the <strong>maximum seats</strong> that your license permits, please contact
           <a href="mailto:enterprise@travis-ci.com">
             enterprise@travis-ci.com
           </a>
           if you need more seats.
           <button class="close-btn" {{action "closeSeatsBanner"}}>
-            <SvgImage @name="flash-close" class="close-icon" />
+            <SvgImage @name="flash-close" @class="close-icon" />
           </button>
         </p>
       {{/if}}

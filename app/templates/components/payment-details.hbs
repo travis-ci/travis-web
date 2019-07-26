@@ -6,7 +6,7 @@
 </p>
 {{#if this.subscription.isStripe}}
   <p data-test-credit-card>
-    <SvgImage @name="icon-credit-card" class="icon--color" />
+    <SvgImage @name="icon-credit-card" @class="icon--color" />
     •••• •••• ••••
     {{this.subscription.creditCardInfo.lastDigits}}
   </p>
@@ -15,7 +15,7 @@
   <ManualSubscriptionHelp />
 {{else}}
   <p data-test-price>
-  <SvgImage @name="icon-currency-USD" class="icon--color" />
+  <SvgImage @name="icon-currency-USD" @class="icon--color" />
     {{this.price}}
   </p>
 {{/if}}

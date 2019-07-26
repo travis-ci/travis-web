@@ -1,10 +1,10 @@
 <div class="owner-tile-head">
   <div class="owner-tile-visibility">
     {{#if this.repo.private}}
-      <SvgImage @name="icon-lock" alt="Private repository" class="icon private" />
+      <SvgImage @name="icon-lock" @alt="Private repository" @class="icon private" />
       <EmberTooltip @text="Private repository" />
     {{else}}
-      <SvgImage @name="icon-os" alt="Public repository" class="icon public" />
+      <SvgImage @name="icon-os" @alt="Public repository" @class="icon public" />
       <EmberTooltip @text="Public repository" />
     {{/if}}
   </div>
@@ -31,7 +31,7 @@
           Last Build
         </h3>
         <p class="row-content color">
-          <SvgImage @name="icon-hash" class="icon color-icon" />
+          <SvgImage @name="icon-hash" @class="icon color-icon" />
           <LinkTo
             @route="build"
             @models={{array
@@ -76,7 +76,7 @@
           Commit
         </h3>
         <p class="row-content">
-          <SvgImage @name="icon-compare" class="icon" />
+          <SvgImage @name="icon-compare" @class="icon" />
           <ExternalLinkTo
             @href={{this.repo.defaultBranch.lastBuild.commit.compareUrl}}
             class="label-align"
@@ -86,7 +86,7 @@
               {{format-sha this.repo.defaultBranch.lastBuild.commit.sha}}
             </span>
           </ExternalLinkTo>
-          <SvgImage @name="icon-external-link" class="icon" />
+          <SvgImage @name="icon-external-link" @class="icon" />
         </p>
       </section>
       <section class="owner-tile-section fade-out owner-tile-date">
@@ -94,7 +94,7 @@
           Finished
         </h3>
         <p class="row-content">
-          <SvgImage @name="icon-calendar" class="icon" />
+          <SvgImage @name="icon-calendar" @class="icon" />
           <span class="build-status label-align">
             {{this.repo.defaultBranch.lastBuild.state}}
           </span>

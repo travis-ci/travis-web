@@ -64,7 +64,7 @@
       title="Display the log"
       onclick={{action "toggleLog"}}
     >
-      <SvgImage @name="icon-seemore" class="icon" />
+      <SvgImage @name="icon-seemore" @class="icon" />
       <span class="label-align">
         View log
       </span>
@@ -77,7 +77,7 @@
           title="Display the log"
           onclick={{action "toggleLog"}}
         >
-          <SvgImage @name="icon-seemore" class="icon" />
+          <SvgImage @name="icon-seemore" @class="icon" />
           <span class="label-align">
             Hide log
           </span>
@@ -89,7 +89,7 @@
             type="button"
             onclick={{action "toggleRemoveLogModal"}}
           >
-            <SvgImage @name="icon-deletelogs" class="icon" />
+            <SvgImage @name="icon-deletelogs" @class="icon" />
             Remove log
           </button>
         {{/if}}
@@ -98,7 +98,7 @@
           @href={{this.plainTextLogUrl}}
           @title="Display the log in plaintext"
         >
-          <SvgImage @name="icon-downloadlogs" class="icon" />
+          <SvgImage @name="icon-downloadlogs" @class="icon" />
           Raw log
         </ExternalLinkTo>
       </div>
@@ -107,7 +107,7 @@
           <a id="tail" class="log-tail pointer" onclick={{action "toggleTailing"}}>
             <span class="tail-status"></span>
             <span class="tail-label">
-              <SvgImage @name="icon-arrowdown" class="icon-arrow" />
+              <SvgImage @name="icon-arrowdown" @class="icon-arrow" />
               {{#if this.job.isFinished}}
                 Scroll to End of Log
               {{else}}

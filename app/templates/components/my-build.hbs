@@ -49,11 +49,11 @@
           @href={{this.urlGitHubBranch}}
         >
           <EmberTooltip @text="View branch on GitHub" @popperContainer="body" />
-          <SvgImage @name="icon-branch" class="icon" />
+          <SvgImage @name="icon-branch" @class="icon" />
           <span class="label-align inner-underline">
             {{this.build.branchName}}
           </span>
-          <SvgImage @name="icon-external-link" class="icon" />
+          <SvgImage @name="icon-external-link" @class="icon" />
         </ExternalLinkTo>
       </div>
     </section>
@@ -78,11 +78,11 @@
           class="row-content monospace"
         >
           <EmberTooltip @text="View commit on GitHub" />
-          <SvgImage @name="icon-commit" class="icon" />
+          <SvgImage @name="icon-commit" @class="icon" />
           <span class="label-align inner-underline">
             {{format-sha this.build.commit.sha}}
           </span>
-          <SvgImage @name="icon-external-link" class="icon" />
+          <SvgImage @name="icon-external-link" @class="icon" />
         </ExternalLinkTo>
       </div>
     </section>
@@ -92,7 +92,7 @@
         title={{if this.build.elapsedTime (concat "Started " (pretty-date this.build.startedAt)) }}
         class="commit-stopwatch row-content"
       >
-        <SvgImage @name="icon-stopwatch" class="icon" />
+        <SvgImage @name="icon-stopwatch" @class="icon" />
         <span class="label-align">
           <time datetime="PT{{this.build.elapsedTime}}S">
             {{format-duration this.build.elapsedTime}}
@@ -100,7 +100,7 @@
         </span>
       </div>
       <div class="row-content" title={{this.build.finishedAt}} data-test-finished>
-        <SvgImage @name="icon-calendar" class="icon" />
+        <SvgImage @name="icon-calendar" @class="icon" />
         <span class="label-align">
           {{#if this.build.finishedAt}}
             {{format-time this.build.finishedAt}}

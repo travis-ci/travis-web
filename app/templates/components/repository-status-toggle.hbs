@@ -14,7 +14,7 @@
     class="button already-migrated"
     data-test-already-migrated-link="true"
   >
-    <SvgImage @name="icon-external-link" class="icon white" />
+    <SvgImage @name="icon-external-link" @class="icon white" />
     TRAVIS-CI.COM
   </ExternalLinkTo>
 {{else if this.admin}}
@@ -32,7 +32,7 @@
       @title="Go to Travis CI repository settings"
       class="button profile-settings"
     >
-      <SvgImage @name="icon-settings" class="icon icon-hover" />
+      <SvgImage @name="icon-settings" @class="icon icon-hover" />
       Settings
     </LinkTo>
   {{/if}}
@@ -40,7 +40,7 @@
   <TravisSwitch @active={{this.repository.active}} @disabled={{true}} />
   <a class="profile-settings disabled button">
     <EmberTooltip @text="Insufficient permissions" />
-    <SvgImage @name="icon-settings" class="icon" />
+    <SvgImage @name="icon-settings" @class="icon" />
     Settings
   </a>
 {{/if}}
@@ -63,7 +63,7 @@
           your authorized Orgs.
         {{/if}}
         <button type="button" class="no-button close" onclick={{action "close"}}>
-          <SvgImage @name="icon-failed" class="icon red" />
+          <SvgImage @name="icon-failed" @class="icon red" />
         </button>
       {{/if}}
     </p>

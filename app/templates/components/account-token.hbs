@@ -25,11 +25,11 @@
     @title="Copy to clipboard"
     @success={{action "copyTokenSuccessful"}}
   >
-    <SvgImage @name="icon-copy" class="icon" />
+    <SvgImage @name="icon-copy" @class="icon" />
     <span>Copy token</span>
   </CopyButton>
   <button class="show-token" onclick={{action "tokenVisibility"}}>
-    <SvgImage @name="icon-seemore" class="icon" />
+    <SvgImage @name="icon-seemore" @class="icon" />
     <span>
       {{if this.tokenIsVisible "Hide token" "View token"}}
     </span>

@@ -37,14 +37,14 @@
         <li>
           <ExternalLinkTo @href={{this.commit.githubUrl}}>
             <EmberTooltip @text="View commit on GitHub" />
-            <SvgImage @name="icon-commit" class="icon" />
+            <SvgImage @name="icon-commit" @class="icon" />
             <span class="label-align inner-underline commit-commit">
               Commit
               <span class="label-align-item monospace">
                 {{format-sha this.commit.sha}}
               </span>
             </span>
-            <SvgImage @name="icon-external-link" class="icon" />
+            <SvgImage @name="icon-external-link" @class="icon" />
           </ExternalLinkTo>
         </li>
         {{#if this.displayCompare}}
@@ -52,23 +52,23 @@
             {{#if this.item.isPullRequest}}
               <ExternalLinkTo @href={{this.item.commit.compareUrl}}>
                 <EmberTooltip @text="View Pull Request on GitHub" />
-                <SvgImage @name="icon-compare" class="icon" />
+                <SvgImage @name="icon-compare" @class="icon" />
                 <span class="label-align inner-underline commit-compare">
                   #{{this.item.pullRequestNumber}}: {{this.item.pullRequestTitle}}
                 </span>
-                <SvgImage @name="icon-external-link" class="icon" />
+                <SvgImage @name="icon-external-link" @class="icon" />
               </ExternalLinkTo>
             {{else if this.item.commit.compareUrl}}
               <ExternalLinkTo @href={{this.item.commit.compareUrl}}>
                 <EmberTooltip @text="View diff on GitHub" />
-                <SvgImage @name="icon-compare" class="icon" />
+                <SvgImage @name="icon-compare" @class="icon" />
                 <span class="label-align inner-underline commit-compare">
                   Compare
                   <span class="label-align-item monospace">
                     {{short-compare-shas this.item.commit.compareUrl}}
                   </span>
                 </span>
-                <SvgImage @name="icon-external-link" class="icon" />
+                <SvgImage @name="icon-external-link" @class="icon" />
               </ExternalLinkTo>
             {{/if}}
           </li>
@@ -77,23 +77,23 @@
           {{#if this.item.isTag}}
             <ExternalLinkTo @href={{this.urlGitHubTag}} class="commit-branch-url">
               <EmberTooltip @text="View tag on GitHub" />
-              <SvgImage @name="icon-tag" class="icon" />
+              <SvgImage @name="icon-tag" @class="icon" />
               <span class="label-align inner-underline">
                 Tag {{this.build.tag.name}}
               </span>
-              <SvgImage @name="icon-external-link" class="icon" />
+              <SvgImage @name="icon-external-link" @class="icon" />
             </ExternalLinkTo>
           {{else}}
             <ExternalLinkTo @href={{this.urlGitHubBranch}} class="commit-branch-url">
               <EmberTooltip @text="View branch on GitHub" />
-              <SvgImage @name="icon-branch" class="icon" />
+              <SvgImage @name="icon-branch" @class="icon" />
               <span class="label-align inner-underline">
                 Branch
                 <span class="label-align-item monospace">
                   {{this.build.branchName}}
                 </span>
               </span>
-              <SvgImage @name="icon-external-link" class="icon" />
+              <SvgImage @name="icon-external-link" @class="icon" />
             </ExternalLinkTo>
           {{/if}}
         </li>
@@ -112,7 +112,7 @@
       {{#if this.isJob}}
         <LinkTo @route="job" @models={{array this.repo this.item}}>
           {{#if this.item.isTag}}
-            <SvgImage @name="icon-tag" class="{{this.item.state}} icon" />
+            <SvgImage @name="icon-tag" @class="{{this.item.state}} icon" />
           {{else}}
             <RequestIcon @event={{this.item.eventType}} @state={{item.state}} />
           {{/if}}
@@ -123,7 +123,7 @@
       {{else}}
         <LinkTo @route="build" @models={{array this.repo this.item}}>
           {{#if this.item.isTag}}
-            <SvgImage @name="icon-tag" class="{{this.item.state}} icon" />
+            <SvgImage @name="icon-tag" @class="{{this.item.state}} icon" />
           {{else}}
             <RequestIcon @event={{this.item.eventType}} @state={{item.state}} />
           {{/if}}
@@ -136,7 +136,7 @@
     <ul class="list-icon">
       {{#if this.isJob}}
         <li class="commit-stopwatch">
-          <SvgImage @name="icon-stopwatch" class="icon--m" />
+          <SvgImage @name="icon-stopwatch" @class="icon--m" />
           <span class="label-align">
             {{#if this.item.toBeQueued}}
               Waiting to be queued
@@ -152,7 +152,7 @@
         </li>
       {{else}}
         <li title="{{if this.item.elapsedTime (concat "Started " (pretty-date this.item.startedAt))}}" class="commit-stopwatch">
-          <SvgImage @name="icon-stopwatch" class="icon--m" />
+          <SvgImage @name="icon-stopwatch" @class="icon--m" />
           <span class="label-align">
             {{if this.item.isFinished "Ran for" "Running for"}}
             <time datetime="PT{{this.item.elapsedTime}}S">
@@ -164,7 +164,7 @@
       {{#if this.item.isFinished}}
         {{#if this.item.isMatrix}}
           <li class="commit-clock">
-            <SvgImage @name="icon-clock" class="icon" />
+            <SvgImage @name="icon-clock" @class="icon" />
             <span class="label-align">
               Total time
               <time datetime="PT{{this.item.duration}}S">
@@ -174,7 +174,7 @@
           </li>
         {{/if}}
         <li title="Finished {{pretty-date this.item.finishedAt}}" class="commit-calendar">
-          <SvgImage @name="icon-calendar" class="icon" />
+          <SvgImage @name="icon-calendar" @class="icon" />
           <time class="label-align" datetime={{pretty-date this.item.finishedAt}}>
             {{format-time this.item.finishedAt}}
           </time>
@@ -196,18 +196,18 @@
     <div class="job-detail-container">
       <div class="detail-job-os {{this.os}}">
         <EmberTooltip @text={{this.os}} />
-        <SvgImage @name={{osIcon}} class="icon" />
+        <SvgImage @name={{osIcon}} @class="icon" />
       </div>
       {{#if this.name}}
         <div class="detail-job-name">
-          <SvgImage @name="job-name-icon" class="icon" />
+          <SvgImage @name="job-name-icon" @class="icon" />
           <span class="label-align" aria-label="Title">
             {{this.name}}
           </span>
         </div>
       {{/if}}
       <div class="detail-job-lang">
-        <SvgImage @name="icon-language" class="icon" />
+        <SvgImage @name="icon-language" @class="icon" />
         <span class="label-align" aria-label="Language">
           {{#if this.languages}}
             {{this.languages}}
@@ -223,7 +223,7 @@
         {{action "expandEnv" on="mouseEnter"}}
         {{action "expandEnv" on="mouseLeave"}}
       >
-        <SvgImage @name="icon-environment" class="icon" />
+        <SvgImage @name="icon-environment" @class="icon" />
         <span class="label-align" aria-label="Environment variables">
           {{this.environment}}
         </span>

@@ -14,7 +14,7 @@
       onclick={{action (perform this.deleteRepoCache)}}
     >
       Delete all repository caches
-      <SvgImage @name="icon-trash" class="icon" />
+      <SvgImage @name="icon-trash" @class="icon" />
     </button>
   </div>
   {{#if this.model.pushes.length}}

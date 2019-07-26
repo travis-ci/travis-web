@@ -28,7 +28,7 @@
   title="{{pretty-date this.request.created_at}}"
   data-requests-item-created-at
 >
-  <SvgImage @name="icon-calendar" class="icon" />
+  <SvgImage @name="icon-calendar" @class="icon" />
   <span class="label-align">
     {{format-time this.request.created_at}}
   </span>
@@ -38,7 +38,7 @@
 </div>
 <div class="row-item" data-requests-item-build>
   {{#if this.build}}
-    <SvgImage @name="icon-hash" class="icon" />
+    <SvgImage @name="icon-hash" @class="icon" />
     <LinkTo
       @route="build"
       @model={{this.build}}

@@ -3,7 +3,7 @@
 </div>
 <div class="env-var-value">
   {{#unless this.envVar.public}}
-    <SvgImage @name="icon-private" class="icon" />
+    <SvgImage @name="icon-private" @class="icon" />
   {{/unless}}
   <input type="password" value={{this.value}} readonly="readonly" />
 </div>
@@ -23,7 +23,7 @@
       class="no-button env-var-delete"
       onclick={{action (perform delete)}}
     >
-      <SvgImage @name="icon-trash" class="icon" />
+      <SvgImage @name="icon-trash" @class="icon" />
       <EmberTooltip @text="Delete" />
     </button>
   {{/if}}

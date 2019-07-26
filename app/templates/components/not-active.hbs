@@ -1,7 +1,7 @@
 <div class="missing-notice">
   {{#if this.migratedOnOrg}}
     <div data-test-recently-migrated-to-com-banner>
-      <SvgImage @name="migrated" class="page-graphic snapshot-hide" />
+      <SvgImage @name="migrated" @class="page-graphic snapshot-hide" />
       <h2 data-test-not-active-migrated-subtext class="text-big">
         This repository was migrated and is now building on
         <ExternalLinkTo @href={{this.comRepositoryLink}}>
@@ -29,7 +29,7 @@
           @href={{this.githubAppsActivationURL}}
           class="button button--blue button--repo-activate-gh"
         >
-          <SvgImage @name="icon-repooctocat" class="icon--github" />
+          <SvgImage @name="icon-repooctocat" @class="icon--github" />
           <span>
             Activate repository on GitHub
           </span>

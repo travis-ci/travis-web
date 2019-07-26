@@ -17,7 +17,7 @@
           class="settings-tooltip"
         >
           <EmberTooltip @text="Read more about branch updates" />
-          <SvgImage @name="icon-help" class="icon-help" />
+          <SvgImage @name="icon-help" @class="icon-help" />
         </ExternalLinkTo>
       </li>
       <li>
@@ -40,7 +40,7 @@
           class="settings-tooltip"
         >
           <EmberTooltip @text="Read more about pull request updates" />
-          <SvgImage @name="icon-help" class="icon-help" />
+          <SvgImage @name="icon-help" @class="icon-help" />
         </ExternalLinkTo>
       </li>
     </ul>
@@ -109,7 +109,7 @@
     </ul>
     <div id="env-var-secrecy">
       <p>
-        <SvgImage @name="icon-megaphone" class="icon icon-megaphone" />
+        <SvgImage @name="icon-megaphone" @class="icon icon-megaphone" />
         <span class="label-align">
           If your secret variable has special characters like <code>&amp;</code>,
           escape them by adding <code>\</code> in front of each special character.
@@ -190,7 +190,7 @@
           Edit settings on .com
         </ExternalLinkTo>
         <LinkTo @route="repo.index" @model={{repo}} class="modal-close pointer">
-          <SvgImage @name="icon-failed" class="icon" />
+          <SvgImage @name="icon-failed" @class="icon" />
         </LinkTo>
       </div>
     </div>

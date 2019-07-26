@@ -5,7 +5,7 @@
         <h2 class="section-title">
           {{#if this.stageStateIcon}}
             <span class="state-icon-container" title="{{this.stageStateTitle}}">
-              <SvgImage @name={{stageStateIcon}} class="icon" />
+              <SvgImage @name={{stageStateIcon}} @class="icon" />
             </span>
           {{/if}}
           <span class="name">
@@ -17,7 +17,7 @@
             class="stage-duration"
             title="Started {{pretty-date this.stage.startedAt}}"
           >
-            <SvgImage @name="icon-clock" class="icon" />
+            <SvgImage @name="icon-clock" @class="icon" />
             <time
               class="label-align"
               aria-label="Stage duration"
@@ -34,7 +34,7 @@
           Allowed Failures
         </span>
         <span>
-          <SvgImage @name="icon-help" class="icon-help" />
+          <SvgImage @name="icon-help" @class="icon-help" />
           <EmberTooltip @text="These are jobs you can allow to fail without failing your entire build" />
         </span>
       </h2>
