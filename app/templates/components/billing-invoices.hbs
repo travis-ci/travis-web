@@ -15,7 +15,7 @@
           @value={{year}}
           class='margin-top-0'
           @onChange={{action (mut year)}}
-          @showValidationStatusIcons=false as |Field|
+          @showValidationStatusIcons={{false}} as |Field|
         >
           <Field.select
             @searchEnabled={{false}}
