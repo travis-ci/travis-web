@@ -1,7 +1,7 @@
 <RepositoryVisibilityIcon @repository={{this.repository}} />
 <LinkTo
   @route="repo"
-  @model={{this.repository.owner.login}}
+  @models={{array this.repository.owner.login this.repository.name}}
   @query={{this.hash}}
   class="profile-repo"
 >
