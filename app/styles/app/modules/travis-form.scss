@@ -16,6 +16,27 @@ $select-multiple-spacing: 5px;
   .travis-form__field {
     position: relative;
 
+    &.env-branch-selector {
+      .ember-power-select-selected-item {
+        margin-right: 0;
+        border: 1px solid $pebble-grey;
+        border-right: none;
+        border-radius: 3px 0 0 3px;
+        padding-left: 3px;
+      }
+      .ember-power-select-clear-btn {
+        right: auto;
+        top: 7px;
+        font-size: 20px;
+        line-height: 18px;
+        border: 1px solid $pebble-grey;
+        border-left: none;
+        border-radius: 0 3px 3px 0;
+        padding-right: 3px;
+        padding-left: 8px;
+      }
+    }
+
     .travis-form__field-badge {
       opacity: 0;
       position: absolute;
