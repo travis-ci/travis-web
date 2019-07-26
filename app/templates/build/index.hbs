@@ -13,7 +13,7 @@
       <JobsList
         @jobs={{build.requiredJobs}}
         @repo={{build.repo}}
-        required={{true}}
+        @required={{true}}
       />
       <JobsList @jobs={{build.allowedFailureJobs}} @repo={{build.repo}} />
     {{/if}}
