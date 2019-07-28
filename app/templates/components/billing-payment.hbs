@@ -1,8 +1,8 @@
 <div>
-  {{billing-select-plan
-    selectedPlan=selectedPlan
-    showAnnual=showAnnual
-  }}
+  <BillingSelectPlan
+    @selectedPlan={{selectedPlan}}
+    @showAnnual={{showAnnual}}
+  />
   <h2>
     Credit card details
   </h2>
