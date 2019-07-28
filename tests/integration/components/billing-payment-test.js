@@ -1,8 +1,10 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import profilePage from 'travis/tests/pages/profile';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
+import StripeMock from 'travis/tests/helpers/stripe-mock';
+import { stubConfig } from 'travis/tests/helpers/stub-service';
+import { getContext } from '@ember/test-helpers';
 
 module('Integration | Component | billing-payment', function (hooks) {
   setupRenderingTest(hooks);
@@ -34,17 +36,25 @@ module('Integration | Component | billing-payment', function (hooks) {
       selectedPlan,
       paymentInfo
     });
+
+
+    window.Stripe = StripeMock;
+    let config = {
+      mock: true,
+      publishableKey: 'mock'
+    };
+    stubConfig('stripe', config, { instantiate: false });
+    const { owner } = getContext();
+    owner.inject('service:stripev3', 'config', 'config:stripe');
   });
 
   test('billing-payment renders correctly', async function (assert) {
 
-    await render(hbs`{{billing-payment 
-      paymentInfo=paymentInfo 
-      cancel=(action 'cancel')
-      selectedPlan=selectedPlan}}`);
+    await render(hbs`<BillingPayment 
+      @paymentInfo={{paymentInfo}}
+      @cancel={{action 'cancel'}}
+      @selectedPlan={{selectedPlan}}/>`);
 
-    assert.dom(profilePage.billing.billingPaymentForm.paymentInfo.scope)
-      .containsText('Your credit card details are never stored or even reach our servers. Payment and credit card details are handled by Stripe.');
     assert.dom('h2').hasText('Credit card details');
   });
 });

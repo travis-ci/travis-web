@@ -2,6 +2,9 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
+import StripeMock from 'travis/tests/helpers/stripe-mock';
+import { stubConfig } from 'travis/tests/helpers/stub-service';
+import { getContext } from '@ember/test-helpers';
 
 module('Integration | Component | billing-process', function (hooks) {
   setupRenderingTest(hooks);
@@ -43,17 +46,26 @@ module('Integration | Component | billing-process', function (hooks) {
       billingInfo,
       steps: ['stepOne', 'stepTwo'],
     });
+
+    window.Stripe = StripeMock;
+    let config = {
+      mock: true,
+      publishableKey: 'mock'
+    };
+    stubConfig('stripe', config, { instantiate: false });
+    const { owner } = getContext();
+    owner.inject('service:stripe', 'config', 'config:stripe');
   });
 
   test('renders billing payment form correctly', async function (assert) {
 
     this.set('currentStep', 'stepTwo');
 
-    await render(hbs`{{billing-process 
-      account=account
-      plans=plans
-      currentStep=currentStep
-    }}`);
+    await render(hbs`<BillingProcess 
+      @account={{account}}
+      @plans={{plans}}
+      @currentStep={{currentStep}}
+    />`);
 
     assert.dom('h2').hasText('Credit card details');
   });
@@ -64,10 +76,10 @@ module('Integration | Component | billing-process', function (hooks) {
     this.set('account', { hasSubscriptionPermissions: false});
 
     await render(hbs`
-    {{billing-process 
-      account=account
-      plans=plans
-    }}`);
+    <BillingProcess 
+      @account={{account}}
+      @plans={{plans}}
+    />`);
 
     assert.dom('p').hasText('You do not have permission to create a subscription');
   });

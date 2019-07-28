@@ -1,122 +1,37 @@
-{{#travis-form onSubmit=(perform createStripeToken) as |form|}}
-  <div class='billing-form' data-test-payment-form>
-    {{billing-select-plan
-      selectedPlan=selectedPlan
-      showAnnual=showAnnual
-    }}
-    <h2>
-      Credit card details
-    </h2>
-    <p data-test-payment-info>
-      Your credit card details are never stored or even reach our servers.
-      Payment and credit card details are handled by Stripe.
-    </p>
-    <div class='flex flex--col flex-md-row'>
-      <div class='full-width form-elem inline-form-elem'>
-        {{#form.field
-          label='Card Number'
-          value=cardNumber
-          required=true
-          showRequiredMark=true
-          validator=(form-validator form.validators.creditCard)
-          showValidationStatusIcons=false
-          onKeyUp=(action 'handleKeyUp')
-          onChange=(action (mut cardNumber)) as |field|
-        }}
-          {{field.input name='cardNumber'}}
-        {{/form.field}}
-      </div>
-      <div class='full-width form-elem'>
-        {{#form.field
-          label='Name on Card'
-          value=cardName
-          required=true
-          showRequiredMark=true
-          onChange=(action (mut cardName))
-          showValidationStatusIcons=false as |field|
-        }}
-          {{field.input name='cardName'}}
-        {{/form.field}}
-      </div>
-    </div>
-    <div class='flex flex--col flex-md-row'>
-      <div class='flex full-width flex--col flex-md-row'>
-        <div class='form-elem billing-expiry-month' data-test-select-card-month>
-          {{#form.field
-            label='Expiry Date on card'
-            value=expiryDateMonth
-            showRequiredMark=true
-            class='billing-card-month'
-            required=true
-            onChange=(action (mut expiryDateMonth))
-            showValidationStatusIcons=false as |field|
-          }}
-            {{#field.select placeholder='Month' options=months as |month|}}
-              {{month}}
-            {{/field.select}}
-          {{/form.field}}
-        </div>
-        <div class='form-elem billing-select-year' data-test-select-card-year>
-          {{#form.field
-            value=expiryDateYear
-            required=true
-            class='billing-card-year'
-            showRequiredMark=true
-            onChange=(action (mut expiryDateYear))
-            showValidationStatusIcons=false as |field|
-          }}
-            {{#field.select placeholder='Year' options=years as |year|}}
-              {{year}}
-            {{/field.select}}
-          {{/form.field}}
-        </div>
-      </div>
-      <div class='full-width form-elem billing-cvc'>
-        {{#form.field
-          label='cvc'
-          value=cvc
-          required=true
-          showRequiredMark=true
-          validator=(form-validator form.validators.equal 3)
-          onChange=(action (mut cvc))
-          showValidationStatusIcons=false as |field|
-        }}
-          {{field.input name='cardCvc'}}
-        {{/form.field}}
-      </div>
-    </div>
-    <h2 class="discount-code-header">
-      Discount Code
-    </h2>
-    <div class='flex flex--col flex-md-row'>
-      <div class='full-width form-elem inline-form-elem'>
-        {{#form.field
-          label=''
-          value=discountCode
-          showRequiredMark=true
-          required=true
-          showValidationStatusIcons=false
-          onChange=(action (mut discountCode)) as |field|
-        }}
-          {{field.input name='discountCode'}}
-        {{/form.field}}
-      </div>
-    </div>
-    <div class='form-elem'>
-      {{#if isLoading}}
-        {{loading-indicator}}
-      {{else}}
-        <button
-          onclick={{form.submit}}
-          class='button--blue'
-          data-test-complete-button
-        >
-          Complete sign up
-        </button>
-        <span onclick={{action cancel}} class='billing-process-cancel link'>
-          Cancel
-        </span>
+<div>
+  {{billing-select-plan
+    selectedPlan=selectedPlan
+    showAnnual=showAnnual
+  }}
+  <h2>
+    Credit card details
+  </h2>
+  <p data-test-payment-info>
+    Your credit card details are never stored or even reach our servers.
+    Payment and credit card details are handled by Stripe.
+  </p>
+
+  <form data-test-payment-form>
+    <StripeCardNumber @complete={{action "complete"}} @options={{options}} as |stripeError|>
+      {{#if stripeError}}
+        <p>{{stripeError.message}}</p>
       {{/if}}
-    </div>
-  </div>
-{{/travis-form}}
+    </StripeCardNumber>
+    {{input name="cardName"}}
+    <StripeCardExpiry @options={{options}} as |stripeError|>
+      {{#if stripeError}}
+        <p>{{stripeError.message}}</p>
+      {{/if}}
+    </StripeCardExpiry>
+    <StripeCardCvc @options={{options}} as |stripeError|>
+      {{#if stripeError}}
+        <p>{{stripeError.message}}</p>
+      {{/if}}
+    </StripeCardCvc>
+    {{input name="discountCode"}}
+    {{#if isLoading}}
+      {{loading-indicator}}
+    {{/if}}
+    <button {{action "submit"}}>Submit</button>
+  </form>
+</div>
