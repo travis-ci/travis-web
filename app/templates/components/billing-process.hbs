@@ -1,23 +1,23 @@
 {{#if account.hasSubscriptionPermissions}}
   {{#if isStepOne}}
-    {{billing-information
-      displayedPlans=displayedPlans
-      selectedPlan=selectedPlan
-      showAnnual=showAnnual
-      newSubscription=newSubscription
-      showMonthly=showMonthly
-      billingInfo=billingInfo
-      next=(action 'next')
-    }}
+    <BillingInformation
+      @displayedPlans={{displayedPlans}}
+      @selectedPlan={{selectedPlan}}
+      @showAnnual={{showAnnual}}
+      @newSubscription={{newSubscription}}
+      @showMonthly={{showMonthly}}
+      @billingInfo={{billingInfo}}
+      @next={{action 'next'}}
+    />
   {{/if}}
   {{#if isStepTwo}}
-    {{billing-payment
-      selectedPlan=selectedPlan
-      showAnnual=showAnnual
-      isSavingSubscription=isSavingSubscription
-      handleSubmit=(action 'handleSubmit')
-      cancel=(action 'cancel')
-    }}
+    <BillingPayment
+      @selectedPlan={{selectedPlan}}
+      @showAnnual={{showAnnual}}
+      @isSavingSubscription={{isSavingSubscription}}
+      @handleSubmit={{action 'handleSubmit'}}
+      @cancel={{action 'cancel'}}
+    />
   {{/if}}
 {{else}}
   <p data-test-no-permission-message>

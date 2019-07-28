@@ -1,4 +1,5 @@
 import Component from '@ember/component';
+import { task } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
 import { or } from '@ember/object/computed';
 
@@ -7,7 +8,25 @@ export default Component.extend({
   stripe: service('stripev3'),
   stripeElement: null,
   stripeLoading: false,
-  isLoading: or('stripeLoading', 'isSavingSubscription'),
+  isLoading: or('createStripeToken.isRunning', 'isSavingSubscription'),
+
+  createStripeToken: task(function* () {
+    try {
+      const { token } = yield this.stripe.createToken(this.stripeElement);
+      this.handleSubmit(token.id, token.card.last4);
+    } catch (error) {
+      this.displayError(error);
+    }
+  }).drop(),
+
+  displayError(error) {
+    let message = 'There was an error connecting to stripe. Please confirm your card details and try again.';
+    const stripeError = error && error.error;
+    if (stripeError && stripeError.type === 'card_error') {
+      message = 'Invalid card details. Please enter valid card details and try again.';
+    }
+    this.flashes.error(message);
+  },
 
   options: {
     style: {
@@ -28,15 +47,8 @@ export default Component.extend({
 
   actions: {
 
-    async submit() {
-      this.set('stripeLoading', true);
-      const { token, error } = await this.stripe.createToken(this.stripeElement);
-      this.set('stripeLoading', false);
-      if (token && !error) {
-        this.handleSubmit(token.id, token.card.last4);
-      } else {
-        this.flashes(error);
-      }
+    submit() {
+      this.createStripeToken.perform();
     },
 
     complete(stripeElement) {

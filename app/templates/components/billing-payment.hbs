@@ -31,7 +31,9 @@
     {{input name="discountCode"}}
     {{#if isLoading}}
       {{loading-indicator}}
+    {{else}}
+      <button {{action "submit"}}>Submit</button>
+      <span onclick={{action cancel}} class='billing-process-cancel link'>Cancel</span>
     {{/if}}
-    <button {{action "submit"}}>Submit</button>
   </form>
 </div>
