@@ -1,27 +1,46 @@
-<h3 class="insights-glance__title" data-test-insights-glance-title>{{title}}</h3>
+<h3 class="insights-glance__title" data-test-insights-glance-title>
+  {{this.title}}
+</h3>
 <div class="insights-glance__center">
   <div class="insights-glance__stat" data-test-insights-glance-stat>
-    {{#if isLoading}}
-      {{loading-indicator}}
+    {{#if this.isLoading}}
+      <LoadingIndicator />
     {{else}}
-      {{statistic}}
+      {{this.statistic}}
     {{/if}}
   </div>
-  {{#if delta}}
+  {{#if this.delta}}
     <div
       class="insights-glance-delta"
-      data-dir={{if (gte delta 0) '+' '-'}}
-      title={{deltaTitle}}
+      data-dir={{if (gte this.delta 0) "+" "-"}}
+      title={{this.deltaTitle}}
     >
-      {{svg-jar 'icon-dropdown-arrow' class="icon"}}
-      <span class="insights-glance-delta__stat" data-test-insights-glance-delta-stat>{{deltaText}}</span>
+      <SvgImage @name="icon-dropdown-arrow" @class="icon" />
+      <span
+        class="insights-glance-delta__stat"
+        data-test-insights-glance-delta-stat
+      >
+        {{this.deltaText}}
+      </span>
     </div>
   {{/if}}
 </div>
 <div class="insights-glance__chart" data-test-insights-glance-chart>
-  {{#if showPlaceholder}}
-    <hr class="insights-glance__chart-placeholder" data-test-insights-glance-chart-placeholder />
+  {{#if this.showPlaceholder}}
+    <hr
+      class="insights-glance__chart-placeholder"
+      data-test-insights-glance-chart-placeholder
+    />
   {{else}}
-    {{c3-chart class='chart-component snapshot-hide' data=data axis=axis legend=legend grid=grid size=size point=point tooltip=tooltip}}
+    <C3Chart
+      class="chart-component snapshot-hide"
+      @data={{this.data}}
+      @axis={{this.axis}}
+      @legend={{this.legend}}
+      @grid={{this.grid}}
+      @size={{this.size}}
+      @point={{this.point}}
+      @tooltip={{this.tooltip}}
+    />
   {{/if}}
 </div>

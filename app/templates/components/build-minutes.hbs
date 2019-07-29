@@ -1,13 +1,11 @@
-{{!-- Product thinks that referencing Job Minutes in the title will be easier for people to understand than Build Minutes. --}}
-{{insights-glance
-  isLoading=isLoading
-  isEmpty=isEmpty
-
-  title='Total Job Minutes'
-  statistic=totalBuildText
-
-  labels=labels
-  values=buildMins
-  datasetTitle='Minutes'
-  centerline=avgBuildMins
-}}
+{{! Product thinks that referencing Job Minutes in the title will be easier for people to understand than Build Minutes. }}
+<InsightsGlance
+  @isLoading={{this.isLoading}}
+  @isEmpty={{this.isEmpty}}
+  @title="Total Job Minutes"
+  @statistic={{this.totalBuildText}}
+  @labels={{this.labels}}
+  @values={{this.buildMins}}
+  @datasetTitle="Minutes"
+  @centerline={{this.avgBuildMins}}
+/>

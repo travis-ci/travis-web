@@ -1,41 +1,43 @@
-{{#unless features.enterpriseVersion}}
-  {{#if auth.signedIn}}
-    {{#if isDeprecatedOrRetiredMacImage}}
-      {{#notice-banner}}
-        {{{deprecatedOrRetiredMacImageMessage}}}
-      {{/notice-banner}}
+{{#unless this.features.enterpriseVersion}}
+  {{#if this.auth.signedIn}}
+    {{#if this.isDeprecatedOrRetiredMacImage}}
+      <NoticeBanner>
+        {{{this.deprecatedOrRetiredMacImageMessage}}}
+      </NoticeBanner>
     {{/if}}
-    {{#if isPreciseEOL}}
-      {{#notice-banner}}
-        This job {{conjugatedRun}} on our <b>Precise</b> environment, 
-        which is in the process of being decommissioned.  
-        Please update to a newer Ubuntu version by specifying <code>dist: xenial</code> in your <em>.travis.yml</em>.
-      {{/notice-banner}}
+    {{#if this.isPreciseEOL}}
+      <NoticeBanner>
+        This job {{this.conjugatedRun}} on our <b>Precise</b> environment,
+        which is in the process of being decommissioned.
+        Please update to a newer Ubuntu version by specifying
+        <code>dist: xenial</code> in your <em>.travis.yml</em>.
+      </NoticeBanner>
     {{/if}}
-    {{#if isPHPDefault}}
-      {{#notice-banner}}
-        This job {{conjugatedRun}} using the default <b>PHP</b> version, 
-        which was updated to 7.2 on March 12th, 2019. 
-        You can explicitly stay on the previous version by specifying <code>php: 5.5</code> in your <em>.travis.yml</em>.
-      {{/notice-banner}}
+    {{#if this.isPHPDefault}}
+      <NoticeBanner>
+        This job {{this.conjugatedRun}} using the default <b>PHP</b> version,
+        which was updated to 7.2 on March 12th, 2019.
+        You can explicitly stay on the previous version by specifying
+        <code>php: 5.5</code> in your <em>.travis.yml</em>.
+      </NoticeBanner>
     {{/if}}
-    {{#if isPythonDefault}}
-      {{#notice-banner}}
-        This job {{conjugatedRun}} using the default <b>Python</b> version, 
-        which was updated to 3.6 on April 16th, 2019. 
-        You can explicitly stay on the previous version by specifying <code>python: 2.7</code> in your <em>.travis.yml</em>.
-      {{/notice-banner}}
+    {{#if this.isPythonDefault}}
+      <NoticeBanner>
+        This job {{this.conjugatedRun}} using the default <b>Python</b> version,
+        which was updated to 3.6 on April 16th, 2019.
+        You can explicitly stay on the previous version by specifying
+        <code>python: 2.7</code> in your <em>.travis.yml</em>.
+      </NoticeBanner>
     {{/if}}
   {{/if}}
 {{/unless}}
-
-{{#if isWindows}}
-  {{#notice-banner}}
+{{#if this.isWindows}}
+  <NoticeBanner>
     Windows builds are in early access stage. Please head to the
-    {{external-link-to
-      content='Travis CI Community'
-      href='https://travis-ci.community/c/windows'
-    }}
+    <ExternalLinkTo
+      @content="Travis CI Community"
+      @href="https://travis-ci.community/c/windows"
+    />
     forum to get help or post ideas.
-  {{/notice-banner}}
+  </NoticeBanner>
 {{/if}}

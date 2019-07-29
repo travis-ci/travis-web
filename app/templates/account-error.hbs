@@ -1,14 +1,21 @@
 <div class="missing-notice">
   <figure class="page-graphic">
-    {{svg-jar 'barricade'}}
+    <SvgImage @name="barricade" />
   </figure>
-
-  <h2 class="page-title">No repositories found for organization<br><span
-      class="h2--red">{{account}}</span></h2>
-  <p class="page-notice">The organization may not exist or you may not have
-    sufficient permissions to view its repositories.</p>
+  <h2 class="page-title">
+    No repositories found for organization<br />
+    <span class="h2--red">
+      {{this.account}}
+    </span>
+  </h2>
+  <p class="page-notice">
+    The organization may not exist or you may not have
+    sufficient permissions to view its repositories.
+  </p>
   <p class="page-notice">
     If you believe you've received this message in error, please
-    {{#link-to 'help' (query-params anchor='form')}}contact support.{{/link-to}}
+    <LinkTo @route="help" @query={{hash anchor="form"}}>
+      contact support.
+    </LinkTo>
   </p>
 </div>

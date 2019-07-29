@@ -1,11 +1,14 @@
 import Component from '@ember/component';
-import { alias } from '@ember/object/computed';
+import { reads } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
 
 export default Component.extend({
-  log: alias('job.log'),
-
   classNames: ['job-log'],
+
+  _oldJob: null,
+
+  job: null,
+  log: reads('job.log'),
 
   didReceiveAttrs() {
     let oldJob = this._oldJob;

@@ -1,44 +1,83 @@
-{{#if showTrialBanner}}
-  <div class="enterprise-banner enterprise-banner-trial {{trialClass}}">
+{{#if this.showTrialBanner}}
+  <div class="enterprise-banner enterprise-banner-trial {{this.trialClass}}">
     <div class="inner">
-      {{#if isExpired}}
-        <p>{{svg-jar 'icon-flag' class="icon"}} Your trial license has <strong>expired</strong>, please contact enterprise@travis-ci.com</p>
-      {{else if expiresSoon}}
-        <p>{{svg-jar 'icon-flag' class="icon"}} Your trial license <strong>expires {{expirationTimeFromNow}}</strong>, please contact enterprise@travis-ci.com</p>
+      {{#if this.isExpired}}
+        <p>
+          <SvgImage @name="icon-flag" @class="icon" />
+          Your trial license has <strong>expired</strong>, please contact
+          <a href="mailto:enterprise@travis-ci.com">
+            enterprise@travis-ci.com
+          </a>
+        </p>
+      {{else if this.expiresSoon}}
+        <p>
+          <SvgImage @name="icon-flag" @class="icon" />
+          Your trial license <strong>expires {{this.expirationTimeFromNow}}</strong>, please contact
+          <a href="mailto:enterprise@travis-ci.com">
+            enterprise@travis-ci.com
+          </a>
+        </p>
       {{else}}
-        <p>{{svg-jar 'icon-flag' class="icon"}} Your trial license <strong>expires {{expirationTimeFromNow}}</strong>.</p>
+        <p>
+          <SvgImage @name="icon-flag" @class="icon" />
+          Your trial license <strong>expires {{this.expirationTimeFromNow}}</strong>
+        </p>
       {{/if}}
     </div>
   </div>
 {{/if}}
-
-{{#if showLicenseBanner}}
-  <div class="enterprise-banner enterprise-banner-license {{paidClass}}">
+{{#if this.showLicenseBanner}}
+  <div class="enterprise-banner enterprise-banner-license {{this.paidClass}}">
     <div class="inner">
-      {{#if isExpired}}
-        <p>{{svg-jar 'icon-flag' class="icon"}} Your license has <strong>expired</strong>, please contact <a href="mailto:enterprise@travis-ci.com">enterprise@travis-ci.com</a>.</p>
-      {{else if expiring}}
+      {{#if this.isExpired}}
         <p>
-          {{svg-jar 'icon-flag' class="icon"}}
-          Your license <strong>expires {{expirationTimeFromNow}}</strong>, please contact <a href="mailto:enterprise@travis-ci.com">enterprise@travis-ci.com</a>.
-          {{#unless expiringSoon}}
-            <button class="close-btn" {{action "closeLicenseBanner"}}>{{svg-jar 'flash-close' class="close-icon"}}</button>
+          <SvgImage @name="icon-flag" @class="icon" />
+          Your license has <strong>expired</strong>, please contact
+          <a href="mailto:enterprise@travis-ci.com">
+            enterprise@travis-ci.com
+          </a>
+        </p>
+      {{else if this.expiring}}
+        <p>
+          <SvgImage @name="icon-flag" @class="icon" />
+          Your license <strong>expires {{this.expirationTimeFromNow}}</strong>, please contact
+          <a href="mailto:enterprise@travis-ci.com">
+            enterprise@travis-ci.com
+          </a>
+          {{#unless this.expiringSoon}}
+            <button class="close-btn" {{action "closeLicenseBanner"}}>
+              <SvgImage @name="flash-close" @class="close-icon" />
+            </button>
           {{/unless}}
         </p>
       {{/if}}
     </div>
   </div>
 {{/if}}
-
-{{#if showSeatsBanner}}
-  <div class="enterprise-banner enterprise-banner-seats {{seatsClass}}">
+{{#if this.showSeatsBanner}}
+  <div class="enterprise-banner enterprise-banner-seats {{this.seatsClass}}">
     <div class="inner">
-      {{#if exceedingSeats}}
-        <p>{{svg-jar 'icon-flag' class="icon"}} You’ve exceeded the <strong>maximum seats</strong> that your license permits, please contact <a href="mailto:enterprise@travis-ci.com">enterprise@travis-ci.com</a> if you need more seats.</p>
-      {{else if almostExceedingSeats}}
-        <p>{{svg-jar 'icon-flag' class="icon"}} You’re approaching the <strong>maximum seats</strong> that your license permits, please contact <a href="mailto:enterprise@travis-ci.com">enterprise@travis-ci.com</a> if you need more seats.
-            <button class="close-btn" {{action "closeSeatsBanner"}}>{{svg-jar 'flash-close' class="close-icon"}}</button>
-          </p>
+      {{#if this.exceedingSeats}}
+        <p>
+          <SvgImage @name="icon-flag" @class="icon" />
+          You’ve exceeded the <strong>maximum seats</strong> that your license permits, please contact
+          <a href="mailto:enterprise@travis-ci.com">
+            enterprise@travis-ci.com
+          </a>
+          if you need more seats.
+        </p>
+      {{else if this.almostExceedingSeats}}
+        <p>
+          <SvgImage @name="icon-flag" @class="icon" />
+          You’re approaching the <strong>maximum seats</strong> that your license permits, please contact
+          <a href="mailto:enterprise@travis-ci.com">
+            enterprise@travis-ci.com
+          </a>
+          if you need more seats.
+          <button class="close-btn" {{action "closeSeatsBanner"}}>
+            <SvgImage @name="flash-close" @class="close-icon" />
+          </button>
+        </p>
       {{/if}}
     </div>
   </div>

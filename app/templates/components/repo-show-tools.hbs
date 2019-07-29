@@ -1,24 +1,40 @@
 <button class="option-display" type="button" title="Show more options">
-  <span class="label-align">More options</span>
-  <span class="option-tofu">{{svg-jar 'icon-tofuburger' class="icon-tofu"}}</span>
+  <span class="label-align">
+    More options
+  </span>
+  <span class="option-tofu">
+    <SvgImage @name="icon-tofuburger" @class="icon-tofu" />
+  </span>
 </button>
 <ul class="option-dropdown">
-  {{#if displaySettingsLink}}
+  {{#if this.displaySettingsLink}}
     <li>
-      {{#link-to "settings" repo}}Settings{{/link-to}}
+      <LinkTo @route="settings" @model={{this.repo}}>
+        Settings
+      </LinkTo>
     </li>
   {{/if}}
   <li>
-    {{#link-to "requests" repo}}Requests{{/link-to}}
+    <LinkTo @route="requests" @model={{this.repo}}>
+      Requests
+    </LinkTo>
   </li>
-  {{#if displayCachesLink}}
+  {{#if this.displayCachesLink}}
     <li>
-      {{#link-to "caches" repo}}Caches{{/link-to}}
+      <LinkTo @route="caches" @model={{this.repo}}>
+        Caches
+      </LinkTo>
     </li>
   {{/if}}
-  {{#if displayTriggerBuildLink}}
+  {{#if this.displayTriggerBuildLink}}
     <li>
-      <button type="button" class="trigger-build-anchor" {{action "triggerBuildModal"}}>Trigger build</button>
+      <button
+        type="button"
+        class="trigger-build-anchor"
+        onclick={{action "triggerBuildModal"}}
+      >
+        Trigger build
+      </button>
     </li>
   {{/if}}
 </ul>

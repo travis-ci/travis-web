@@ -1,193 +1,159 @@
 <div class="migrate" data-test-migrate-page>
-  {{#if owner.allowMigration}}
-
+  {{#if this.owner.allowMigration}}
     <h1 data-test-title>
       Bring your public repositories here
     </h1>
-
     <p data-test-common-intro>
       Below you can migrate all your repositories to build on travis-ci.com and view all of your builds in one place.
     </p>
-
-    {{#if showActivationStep }}
-
+    {{#if this.showActivationStep}}
       <p data-test-step1-intro>
         The first step is activating your repositories on GitHub Apps to later migrate them here.
       </p>
-
       <div class="migrate__activate">
-        <button class="button--blue"
+        <button
+          class="button--blue"
           data-test-activate-button
-          onclick={{action 'activateAll'}}
+          onclick={{action "activateAll"}}
         >
-          {{svg-jar 'icon-repooctocat' class='migrate__github-icon'}}
+          <SvgImage @name="icon-repooctocat" @class="migrate__github-icon" />
           Activate all repositories using GitHub Apps
         </button>
       </div>
-
       <p class="migrate__activate-note" data-test-manual-note>
         *Keep in mind that you can also select the specific repositories you’d like to migrate.
       </p>
-
     {{else}}
-
       <p data-test-step2-intro>
         If a repository you’d like to migrate is missing, please first
-        {{#external-link-to
-          data-test-activate-link
-          href=activateAllUrl
-          target='_self'
-          class='migrate__activate-all'
-        }}
+        <ExternalLinkTo
+          data-test-activate-link="true"
+          @href={{this.activateAllUrl}}
+          @target="_self"
+          class="migrate__activate-all"
+        >
           activate it on Github Apps
-        {{/external-link-to}}
-        {{svg-jar 'icon-repooctocat' class='migrate__github-icon'}}
+        </ExternalLinkTo>
+        <SvgImage @name="icon-repooctocat" @class="migrate__github-icon" />
       </p>
-
       <div class="migrate__repo-list">
-
-        {{#repository-filter
-          repositories=repositories
-          as |filter|
-        }}
-
-          {{#if showFilter }}
-            {{#component filter.form as |form|}}
+        <RepositoryFilter @repositories={{this.repositories}} as |filter|>
+          {{#if this.showFilter}}
+            <filter.form as |form|>
               <div class="profile-repositories-filter">
-                {{component form.searchField
-                  data-test-repo-filter=true
-                  placeholder="Filter repositories"
-                  title="Filter repositories"
-                }}
+                <form.searchField
+                  data-test-repo-filter="true"
+                  @placeholder="Filter repositories"
+                  @title="Filter repositories"
+                />
               </div>
-            {{/component}}
+            </filter.form>
           {{/if}}
-
           <div>
-
-            {{#loading-overlay visible=filter.isLoading }}
-              {{#travis-form as |form| }}
-
-                {{#if showSelectAll }}
-                  <div class='migrate__select-all'>
-                    {{#form.field
-                      data-test-select-all=true
-                      disableFrame=true
-                      value=isAllSelected
-                      onChange=(action 'toggleAll')
+            <LoadingOverlay @visible={{filter.isLoading}}>
+              <TravisForm as |form|>
+                {{#if this.showSelectAll}}
+                  <div class="migrate__select-all">
+                    <form.field
+                      data-test-select-all="true"
+                      @disableFrame={{true}}
+                      @value={{this.isAllSelected}}
+                      @onChange={{action "toggleAll"}}
                       as |field|
-                    }}
-                      {{#field.checkbox}}
+                    >
+                      <field.checkbox>
                         Select all repositories below
-                      {{/field.checkbox}}
-                    {{/form.field}}
+                      </field.checkbox>
+                    </form.field>
                   </div>
                 {{/if}}
-
                 <ul class="profile-repositorylist" data-test-repo-list>
                   {{#each filter.results as |repository|}}
-
                     <li class="profile-repolist-item">
-
-                      {{#form.field
-                        data-test-repo
-                        disableFrame=true
-                        disabled=(not repository.isMigratable)
-                        value=(contains repository selectedRepositories)
-                        onChange=(action 'toggleRepository' repository)
+                      <form.field
+                        data-test-repo="true"
+                        @disableFrame={{true}}
+                        @disabled={{not repository.isMigratable}}
+                        @value={{contains repository this.selectedRepositories}}
+                        @onChange={{action "toggleRepository" repository}}
                         as |field|
-                      }}
-                        {{#field.checkbox}}
-                          {{repository-visibility-icon repository=repository}}
+                      >
+                        <field.checkbox>
+                          <RepositoryVisibilityIcon
+                            @repository={{repository}}
+                          />
                           <span class="profile-repo">
                             {{compute filter.computeName repository.name filter.query}}
                           </span>
-                          {{#unless repository.permissions.admin }}
-                            {{ember-tooltip text="Requires admin permissions"}}
+                          {{#unless repository.permissions.admin}}
+                            <EmberTooltip @text="Requires admin permissions" />
                           {{/unless}}
-                        {{/field.checkbox}}
-                      {{/form.field}}
-
-                      <div
-                        data-test-migration-status={{repository.migrationStatus}}
-                        class="migrate__status {{repository.migrationStatus}}"
-                      >
-                        {{#if (or repository.isMigrationQueued repository.isMigrationMigrating )}}
-                          {{loading-indicator
-                            data-test-repository-migration-loading-animation
-                            inline=true
-                          }}
-                          {{ember-tooltip text='Migrating'}}
-                        {{else if repository.isMigrationSucceeded }}
+                        </field.checkbox>
+                      </form.field>
+                      <div data-test-migration-status={{repository.migrationStatus}} class="migrate__status {{repository.migrationStatus}}">
+                        {{#if (or repository.isMigrationQueued repository.isMigrationMigrating)}}
+                          <LoadingIndicator
+                            data-test-repository-migration-loading-animation="true"
+                            @inline={{true}}
+                          />
+                          <EmberTooltip @text="Migrating" />
+                        {{else if repository.isMigrationSucceeded}}
                           <span>
-                            {{svg-jar "stage-passed" class="icon"}}
-                            {{ember-tooltip text='This repository has been migrated'}}
+                            <SvgImage @name="stage-passed" @class="icon" />
+                            <EmberTooltip @text="This repository has been migrated" />
                           </span>
-                        {{else if repository.isMigrationFailed }}
+                        {{else if repository.isMigrationFailed}}
                           <span>
-                            {{svg-jar "stage-failed" class="icon"}}
-                            {{ember-tooltip text='This repository couldn’t be migrated, please try again'}}
+                            <SvgImage @name="stage-failed" @class="icon" />
+                            <EmberTooltip @text="This repository couldn’t be migrated, please try again" />
                           </span>
                         {{/if}}
                       </div>
-
                     </li>
-
-                  {{else}}
-
-                    {{#if filter.isFiltering}}
-                      <li class="no-results">
-                        Sorry, no repositories fit the criteria.
-                      </li>
-                    {{/if}}
-
+                  {{else if filter.isFiltering}}
+                    <li class="no-results">
+                      Sorry, no repositories fit the criteria.
+                    </li>
                   {{/each}}
                 </ul>
-              {{/travis-form}}
-            {{/loading-overlay}}
-
+              </TravisForm>
+            </LoadingOverlay>
           </div>
-
-          {{pagination-navigation collection=repositories route=router.currentRouteName }}
-
-          {{#if (or repositories.length filter.isFiltering)}}
+          <PaginationNavigation
+            @collection={{this.repositories}}
+            @route={{this.router.currentRouteName}}
+          />
+          {{#if (or this.repositories.length filter.isFiltering)}}
             <button
               data-test-migrate-button
-              disabled={{not selectedRepositories.length}}
-              class="button--blue migrate__submit {{unless selectedRepositories.length 'disabled'}}"
-              onclick={{action (mut isShowingRepositoryMigrationModal) true}}
+              disabled={{not this.selectedRepositories.length}}
+              class="button--blue migrate__submit {{unless this.selectedRepositories.length 'disabled'}}"
+              onclick={{action (mut this.isShowingRepositoryMigrationModal) true}}
             >
               Migrate selected repositories to travis-ci.com
             </button>
           {{/if}}
-
-        {{/repository-filter}}
-
-        {{#if isShowingRepositoryMigrationModal}}
-          {{#modal-dialog
-             onClose=(action 'closeMigrateModal')
-             onClickOverlay=(action 'closeMigrateModal')
-             targetAttachment="center"
-             translucentOverlay=true
-          }}
-             {{repository-migration-modal
-               data-test-repository-migration-modal
-               repositories=selectedRepositories
-               onClose=(action 'closeMigrateModal')
-             }}
-          {{/modal-dialog}}
+        </RepositoryFilter>
+        {{#if this.isShowingRepositoryMigrationModal}}
+          <ModalDialog
+            @onClose={{action "closeMigrateModal"}}
+            @onClickOverlay={{action "closeMigrateModal"}}
+            @targetAttachment="center"
+            @translucentOverlay={{true}}
+          >
+            <RepositoryMigrationModal
+              data-test-repository-migration-modal="true"
+              @repositories={{this.selectedRepositories}}
+              @onClose={{action "closeMigrateModal"}}
+            />
+          </ModalDialog>
         {{/if}}
-
       </div>
-
     {{/if}}
-
   {{else}}
-
     The migration feature is not enabled on your account. You can subscribe to the beta at
-    {{#external-link-to href="https://travis-ci.org/account" class="link link--teal link--underline"}}
+    <ExternalLinkTo @href="https://travis-ci.org/account" class="link link--teal link--underline">
       travis-ci.org
-    {{/external-link-to}}
-
+    </ExternalLinkTo>
   {{/if}}
 </div>
