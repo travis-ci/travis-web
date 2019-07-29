@@ -1,16 +1,13 @@
-{{insights-glance
-  isLoading=isLoading
-  isEmpty=isEmpty
-
-  title='Total Builds'
-  statistic=totalBuildText
-
-  delta=percentageChange
-  deltaTitle=percentChangeTitle
-  deltaText=percentageChangeText
-
-  labels=labels
-  values=builds
-  datasetTitle='Builds'
-  centerline=avgBuilds
-}}
+<InsightsGlance
+  @isLoading={{this.isLoading}}
+  @isEmpty={{this.isEmpty}}
+  @title="Total Builds"
+  @statistic={{this.totalBuildText}}
+  @delta={{this.percentageChange}}
+  @deltaTitle={{this.percentChangeTitle}}
+  @deltaText={{this.percentageChangeText}}
+  @labels={{this.labels}}
+  @values={{this.builds}}
+  @datasetTitle="Builds"
+  @centerline={{this.avgBuilds}}
+/>

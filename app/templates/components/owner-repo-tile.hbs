@@ -1,70 +1,114 @@
 <div class="owner-tile-head">
   <div class="owner-tile-visibility">
-    {{#if repo.private}}
-      {{svg-jar 'icon-lock' alt='Private repository' class='icon private'}}
-      {{ember-tooltip text='Private repository'}}
+    {{#if this.repo.private}}
+      <SvgImage @name="icon-lock" @alt="Private repository" @class="icon private" />
+      <EmberTooltip @text="Private repository" />
     {{else}}
-      {{svg-jar 'icon-os' alt='Public repository' class='icon public'}}
-      {{ember-tooltip text='Public repository'}}
+      <SvgImage @name="icon-os" @alt="Public repository" @class="icon public" />
+      <EmberTooltip @text="Public repository" />
     {{/if}}
   </div>
 </div>
 <div class="owner-tile-body">
   <div class="owner-tile-main">
-
     <section class="owner-tile-section owner-tile-repo fade-out">
       <h2 class="repo-title color">
-        {{status-icon status=repo.defaultBranch.lastBuild.state}}
-        {{#link-to "repo" ownerName repoName class="label-align"}}
-          <span class="repo-title-text">{{repoName}}</span>
-        {{/link-to}}
+        <StatusIcon @status={{this.repo.defaultBranch.lastBuild.state}} />
+        <LinkTo
+          @route="repo"
+          @models={{array this.ownerName this.repoName}}
+          class="label-align"
+        >
+          <span class="repo-title-text">
+            {{this.repoName}}
+          </span>
+        </LinkTo>
       </h2>
     </section>
-
-    {{#if repo.defaultBranch.lastBuild}}
+    {{#if this.repo.defaultBranch.lastBuild}}
       <section class="owner-tile-section build-number owner-tile-build">
-        <h3 class="label">Last Build</h3>
+        <h3 class="label">
+          Last Build
+        </h3>
         <p class="row-content color">
-          {{svg-jar 'icon-hash' class="icon color-icon"}}
-          {{#link-to "build" ownerName repoName repo.defaultBranch.lastBuild.id}}
-            <span class="label-align">{{repo.defaultBranch.lastBuild.number}}</span>
-          {{/link-to}}
+          <SvgImage @name="icon-hash" @class="icon color-icon" />
+          <LinkTo
+            @route="build"
+            @models={{array
+              this.ownerName
+              this.repoName
+              this.repo.defaultBranch.lastBuild.id
+            }}
+          >
+            <span class="label-align">
+              {{this.repo.defaultBranch.lastBuild.number}}
+            </span>
+          </LinkTo>
         </p>
       </section>
-
-      <section class="owner-tile-section fade-out default-branch owner-tile-branch">
-        <h3 class="label">Default Branch</h3>
+      <section
+        class="owner-tile-section fade-out default-branch owner-tile-branch"
+      >
+        <h3 class="label">
+          Default Branch
+        </h3>
         <p class="row-content color">
-          {{request-icon event=repo.defaultBranch.lastBuild.eventType class="label-align"}}
-          {{#link-to "build" ownerName repoName repo.defaultBranch.lastBuild.id}}
-            <span class="label-align default-branch-name">{{repo.defaultBranch.name}}</span>
-          {{/link-to}}
+          <RequestIcon
+            @event={{this.repo.defaultBranch.lastBuild.eventType}}
+            class="label-align"
+          />
+          <LinkTo
+            @route="build"
+            @models={{array
+              this.ownerName
+              this.repoName
+              this.repo.defaultBranch.lastBuild.id
+            }}
+          >
+            <span class="label-align default-branch-name">
+              {{this.repo.defaultBranch.name}}
+            </span>
+          </LinkTo>
         </p>
       </section>
-
       <section class="owner-tile-section commit-sha owner-tile-commit">
-        <h3 class="label">Commit</h3>
+        <h3 class="label">
+          Commit
+        </h3>
         <p class="row-content">
-          {{svg-jar 'icon-compare' class="icon"}}
-          {{#external-link-to href=repo.defaultBranch.lastBuild.commit.compareUrl class="label-align"}}
-            {{ember-tooltip text='View diff on GitHub'}}
-            <span class="label-align commit-compare monospace">{{format-sha repo.defaultBranch.lastBuild.commit.sha}}</span>
-          {{/external-link-to}}
-          {{svg-jar 'icon-external-link' class="icon"}}
+          <SvgImage @name="icon-compare" @class="icon" />
+          <ExternalLinkTo
+            @href={{this.repo.defaultBranch.lastBuild.commit.compareUrl}}
+            class="label-align"
+          >
+            <EmberTooltip @text="View diff on GitHub" />
+            <span class="label-align commit-compare monospace">
+              {{format-sha this.repo.defaultBranch.lastBuild.commit.sha}}
+            </span>
+          </ExternalLinkTo>
+          <SvgImage @name="icon-external-link" @class="icon" />
         </p>
       </section>
-
       <section class="owner-tile-section fade-out owner-tile-date">
-        <h3 class="label">Finished</h3>
+        <h3 class="label">
+          Finished
+        </h3>
         <p class="row-content">
-          {{svg-jar 'icon-calendar' class="icon"}}
-          <span class="build-status label-align">{{repo.defaultBranch.lastBuild.state}}</span>
-          <span class="finished-at label-align">{{format-time repo.defaultBranch.lastBuild.finishedAt}}</span>
+          <SvgImage @name="icon-calendar" @class="icon" />
+          <span class="build-status label-align">
+            {{this.repo.defaultBranch.lastBuild.state}}
+          </span>
+          <span class="finished-at label-align">
+            {{format-time this.repo.defaultBranch.lastBuild.finishedAt}}
+          </span>
         </p>
       </section>
-
     {{else}}
-      <section class="owner-tile-section owner-tile-no-build"><p class="row-content">There is no build on the default branch yet.</p></section>
+      <section class="owner-tile-section owner-tile-no-build">
+        <p class="row-content">
+          There is no build on the default branch yet.
+        </p>
+      </section>
     {{/if}}
   </div>
 </div>

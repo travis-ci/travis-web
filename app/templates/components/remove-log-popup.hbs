@@ -1,7 +1,24 @@
-<h3 class="h3--red">This action will remove the log permanently!</h3>
-<p class="text-big">Do you want to continue?</p>
+<h3 class="h3--red">
+  This action will remove the log permanently!
+</h3>
+<p class="text-big">
+  Do you want to continue?
+</p>
 <div class="buttons">
-  <button type="button" class="button-delete plans-button--red" {{action "removeLog"}} title="Permanently remove this log">Yes, remove log</button>
+  <button
+    type="button"
+    class="button-delete plans-button--red"
+    title="Permanently remove this log"
+    onclick={{action "removeLog"}}
+  >
+    Yes, remove log
+  </button>
 </div>
-
-<button trype="button" title="Close modal" class="modal-close pointer" {{action 'toggleRemoveLogModal'}}>{{svg-jar 'icon-failed' class="icon"}}</button>
+<button
+  trype="button"
+  title="Close modal"
+  class="modal-close pointer"
+  onclick={{action "toggleRemoveLogModal"}}
+>
+  <SvgImage @name="icon-failed" @class="icon" />
+</button>

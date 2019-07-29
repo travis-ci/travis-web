@@ -1,7 +1,7 @@
-{{#each tabs as |tab|}}
+{{#each this.tabs as |tab|}}
   <li class="insights-tab">
-    {{#link-to (query-params timeInterval=tab.slug) }}
+    <LinkTo @query={{hash timeInterval=tab.slug}}>
       {{tab.title}}
-    {{/link-to}}
+    </LinkTo>
   </li>
 {{/each}}
