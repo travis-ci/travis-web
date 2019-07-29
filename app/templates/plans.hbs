@@ -73,16 +73,25 @@
     </div>
   </section>
 
-  <section class="inner section--two section--os">
-    <div>
-      <h2 class="h2--grey section-headline">Always <span class="em--yellow">free</span> for open source projects</h2>
-      <a href="https://travis-ci.com/signin" class="plans-button--grey" title="Open Source projects on Travis CI" {{action 'gaCta' 'plans-table'}}>Set up your open source project now</a>
-    </div>
-    <div>
-      <h2 class="h2--grey section-headline">In need of a bigger plan?</h2>
-      <p class="text-big">We can customize a plan based on the needs of your team. We'll work with you to get you started.</p>
-      <a href="mailto:sales@travis-ci.com" title="Email the Travis CI sales team" class="plans-button--green">Contact Travis CI sales</a>
-    </div>
+  {{!-- Open Source Section --}}
+  <section class="mb-16">
+    <Styleguides::Grid  @sm={{2}} @items='center' as |grid|>
+      <grid.item>
+        <SvgImage @name='enterprise-servers'/>
+      </grid.item>
+      <grid.item>
+        <h2 class="text-5xl font-bold">Free plan for Open Source</h2>
+        <p class="mb-6">
+          We love Open Source and offer a free plan for your projects.
+          You will receive 2 concurrent jobs for free and all the other
+          features you've come to love from Travis CI.
+        </p>
+
+        <Styleguides::Button @onToggle={{action 'gaCta'}} @variant='outline' @color='grey'>
+          Set up your open source project now
+        </Styleguides::Button>
+      </grid.item>
+    </Styleguides::Grid>
   </section>
 
   {{!-- Enterprise section --}}
