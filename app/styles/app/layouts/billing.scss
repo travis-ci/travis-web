@@ -1,11 +1,31 @@
 .billing-form {
 
-  margin-top: 2.7em;
+  margin-top: .9em;
 
   h3 {
     color: $oxide-blue;
     font-weight: 300;
     font-size: 18px;
+  }
+
+  .subscribe-message {
+    span {
+      font-weight: bold;
+    }
+  }
+
+  .get-plan {
+    p {
+      text-transform: uppercase;
+      color: $oxide-blue;
+      font-weight: 700;
+      font-size: 18px;
+      margin: 0;
+    }
+
+    .icon {
+      @include colorSVG($oxide-blue);
+    }
   }
 
   .switch-inner {
@@ -160,7 +180,7 @@
   }
 }
 
-.discount-code-header{
+.discount-code-header {
   margin-top: -5px;
 }
 
@@ -169,7 +189,7 @@
   background: rgba(181, 214, 217, 1);
 }
 
-.billing-process-cancel{
+.billing-process-cancel {
   margin-left: 10px;
 }
 
@@ -220,7 +240,7 @@
   }
 
   .get-started {
-    margin-right: -2px;
+    margin-right: -25px;
 
     &__builds {
       font-weight: 300;
@@ -228,7 +248,7 @@
       color: $asphalt-grey;
       border-bottom: 2px $pebble-grey solid;
       margin-bottom: 1.5em;
-      margin: 0 20px 0 0;
+      margin: 0 33px 0 0;
     }
 
     &__start-trial {
