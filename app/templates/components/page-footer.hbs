@@ -1,53 +1,154 @@
 <div class="layout-inner">
   <div class="footer-elem">
     <div class="travis-footer">
-      {{svg-jar 'travisci-logo-grayscale' class="travis-logo"}}
+      <SvgImage @name="travisci-logo-grayscale" @class="travis-logo" />
     </div>
   </div>
-
   <div class="footer-elem"></div>
-
-  {{#unless features.enterpriseVersion}}
+  {{#unless this.features.enterpriseVersion}}
     <div class="footer-elem">
-      <h3 class="footer-title">&copy;Travis CI, GmbH</h3>
-      <address>Rigaer Straße 8<br>10247 Berlin, Germany</address>
+      <h3 class="footer-title">
+        &copy;Travis CI, GmbH
+      </h3>
+      <address>
+        Rigaer Straße 8<br />
+        10247 Berlin, Germany
+      </address>
       <ul>
-        <li><a data-test-footer-jobs-link href="{{ config.urls.jobs }}" title="Jobs at Travis CI">Work with Travis CI</a></li>
-        <li><a data-test-footer-blog-link href="{{ config.urls.blog }}" title="Travis CI Blog">Blog</a></li>
-        <li><a data-test-footer-support-link href="{{ config.urls.support }}" title="Email Travis CI support">Email</a></li>
-        <li><a data-test-footer-twitter-link href="{{ config.urls.twitter }}" title="Travis CI on Twitter">Twitter</a></li>
+        <li>
+          <ExternalLinkTo
+            data-test-footer-jobs-link="true"
+            @href={{this.config.urls.jobs}}
+            @title="Jobs at Travis CI"
+          >
+            Work with Travis CI
+          </ExternalLinkTo>
+        </li>
+        <li>
+          <ExternalLinkTo
+            data-test-footer-blog-link="true"
+            @href={{this.config.urls.blog}}
+            @title="Travis CI Blog"
+          >
+            Blog
+          </ExternalLinkTo>
+        </li>
+        <li>
+          <ExternalLinkTo
+            data-test-footer-support-link="true"
+            @href={{this.config.urls.support}}
+            @title="Email Travis CI support"
+          >
+            Email
+          </ExternalLinkTo>
+        </li>
+        <li>
+          <ExternalLinkTo
+            data-test-footer-twitter-link="true"
+            @href={{this.config.urls.twitter}}
+            @title="Travis CI on Twitter"
+          >
+            Twitter
+          </ExternalLinkTo>
+        </li>
       </ul>
     </div>
   {{/unless}}
   <div class="footer-elem">
-    <h3 class="footer-title">Help</h3>
+    <h3 class="footer-title">
+      Help
+    </h3>
     <ul>
-      <li><a href="{{ config.urls.docs }}" title="Travis CI Docs">Documentation</a></li>
-      {{#unless features.enterpriseVersion}}
-        <li><a data-test-footer-community-link href="{{ config.urls.community }}" title="Travis CI Community">Community</a></li>
-        <li><a data-test-footer-changelog-link href="{{ config.urls.changelog }}" title="Travis CI Changelog">Changelog</a></li>
-        {{#if features.proVersion}}
-          <li><a data-test-footer-plans-link href="{{ config.urls.plans }}" title="Travis CI Plans">Plans and Pricing</a></li>
+      <li>
+        <ExternalLinkTo
+          @href={{this.config.urls.docs}}
+          @title="Travis CI Docs"
+        >
+          Documentation
+        </ExternalLinkTo>
+      </li>
+      {{#unless this.features.enterpriseVersion}}
+        <li>
+          <ExternalLinkTo
+            data-test-footer-community-link="true"
+            @href={{this.config.urls.community}}
+            @title="Travis CI Community"
+          >
+            Community
+          </ExternalLinkTo>
+        </li>
+        <li>
+          <ExternalLinkTo
+            data-test-footer-changelog-link="true"
+            @href={{this.config.urls.changelog}}
+            @title="Travis CI Changelog"
+          >
+            Changelog
+          </ExternalLinkTo>
+        </li>
+        {{#if this.features.proVersion}}
+          <li>
+            <ExternalLinkTo
+              data-test-footer-plans-link="true"
+              @href={{this.config.urls.plans}}
+              @title="Travis CI Plans"
+            >
+              Plans and Pricing
+            </ExternalLinkTo>
+          </li>
         {{/if}}
       {{/unless}}
     </ul>
   </div>
-  {{#unless features.enterpriseVersion}}
+  {{#unless this.features.enterpriseVersion}}
     <div class="footer-elem">
-      <h3 class="footer-title">Legal</h3>
-      <ul>
-        <li><a data-test-footer-imprint-link href="{{ config.urls.imprint }}" title="Imprint">Imprint</a></li>
-        <li><a data-test-footer-tos-link href="{{ config.urls.terms }}" title="Terms of Service">Terms of Service</a></li>
-        <li><a href="{{ config.urls.privacy }}">Privacy Policy</a></li>
-        <li><a data-test-footer-security-link href="{{ config.urls.security }}" title="Security Statement">Security Statement</a></li>
-      </ul>
-    </div>
-
-    <div class="footer-elem">
-      <h3 class="footer-title">Travis CI Status</h3>
+      <h3 class="footer-title">
+        Legal
+      </h3>
       <ul>
         <li>
-          {{travis-status showDescription=false }}
+          <ExternalLinkTo
+            data-test-footer-imprint-link="true"
+            @href={{this.config.urls.imprint}}
+            @title="Imprint"
+          >
+            Imprint
+          </ExternalLinkTo>
+        </li>
+        <li>
+          <ExternalLinkTo
+            data-test-footer-tos-link=""
+            @href={{this.config.urls.terms}}
+            @title="Terms of Service"
+          >
+            Terms of Service
+          </ExternalLinkTo>
+        </li>
+        <li>
+          <ExternalLinkTo
+            @href={{this.config.urls.privacy}}
+          >
+            Privacy Policy
+          </ExternalLinkTo>
+        </li>
+        <li>
+          <ExternalLinkTo
+            data-test-footer-security-link="true"
+            @href={{this.config.urls.security}}
+            @title="Security Statement"
+          >
+            Security Statement
+          </ExternalLinkTo>
+        </li>
+      </ul>
+    </div>
+    <div class="footer-elem">
+      <h3 class="footer-title">
+        Travis CI Status
+      </h3>
+      <ul>
+        <li>
+          <TravisStatus @showDescription={{false}} />
         </li>
       </ul>
     </div>

@@ -2,7 +2,7 @@ import { scheduleOnce } from '@ember/runloop';
 import Component from '@ember/component';
 import Ember from 'ember';
 import { computed, setProperties, set } from '@ember/object';
-import { alias } from '@ember/object/computed';
+import { reads } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 
 import InViewportMixin from 'ember-in-viewport';
@@ -17,8 +17,9 @@ export default Component.extend(InViewportMixin, {
   tagName: 'header',
   classNames: ['top'],
   landingPage: false,
+  isOpen: reads('is-open'),
 
-  user: alias('auth.currentUser'),
+  user: reads('auth.currentUser'),
 
   userName: computed('user.{login,name}', function () {
     let login = this.get('user.login');

@@ -82,7 +82,7 @@ module.exports = function (environment) {
     githubOrgsOauthAccessSettingsUrl: 'https://github.com/settings/connections/applications/f244293c729d5066cf27',
     apiTraceEndpoint: 'https://papertrailapp.com/systems/travis-org-api-production/events?q=program%3Aapp%2Fweb%20log-tracing%20',
     ajaxPolling: false,
-    logLimit: 10000,
+    logLimit: 100000,
     emojiPrepend: '',
     statusPageStatusUrl: 'https://pnpcptp8xh9k.statuspage.io/api/v2/status.json',
 

@@ -1,95 +1,96 @@
-{{#if fetchRepo.isRunning}}
-
-  {{loading-screen center=true margin=true}}
-
+{{#if this.fetchRepo.isRunning}}
+  <LoadingScreen @center={{true}} @margin={{true}} />
 {{else}}
   <div class="container">
-
-    {{svg-jar "sadmail" class="picture" data-test-email-unsubscribe-sadmail=true}}
-
-    {{#if isError}}
-
+    <div data-test-email-unsubscribe-sadmail="true">
+      <SvgImage @name="sadmail" @class="picture" />
+    </div>
+    {{#if this.isError}}
       <h1 class="title" data-test-email-unsubscribe-title>
-        We didn't find the repository <br /> that you wanted to unsubscribe from
+        We didn't find the repository
+        <br />
+        that you wanted to unsubscribe from
       </h1>
-
       <p class="description" data-test-email-unsubscribe-description>
         Please make sure you have access to the repository and try again.
       </p>
-
       <div class="controls">
         <button
           class="button--white button--hover"
-          onclick={{perform fetchRepo}}
+          onclick={{perform this.fetchRepo}}
           data-test-email-unsubscribe-primary-button
         >
           Try again
         </button>
       </div>
-
     {{else}}
-
       <h1 class="title" data-test-email-unsubscribe-title>
-        Unsubscribe from {{#link-to 'repo' repo target="_blank" class="repo-link repo-slug"}}
-          {{repo.formattedSlug}}
-        {{/link-to}}
+        Unsubscribe from
+        <LinkTo
+          @route="repo"
+          @model={{this.repo}}
+          @target="_blank"
+          class="repo-link repo-slug"
+        >
+          {{this.repo.formattedSlug}}
+        </LinkTo>
       </h1>
-
       <p class="description" data-test-email-unsubscribe-description>
-        {{#if isSubscribed}}
+        {{#if this.isSubscribed}}
           Please confirm that you would like to unsubscribe from build emails for the
         {{else}}
           You are unsubscribed from build emails for the
         {{/if}}
-        <span class="repo-slug repo-slug--bold">{{repo.formattedSlug}}</span>
+        <span class="repo-slug repo-slug--bold">
+          {{this.repo.formattedSlug}}
+        </span>
         repository.
-
-        {{#if showConfigNote}}
+        {{#if this.showConfigNote}}
           If you’re still receiving emails after unsubscribing, please check your
-          <a target="_blank" href="https://github.com/{{repo.slug}}/blob/{{repo.defaultBranch.name}}/.travis.yml">.travis.yml</a>
+          <ExternalLinkTo @href="https://github.com/{{this.repo.slug}}/blob/{{this.repo.defaultBranch.name}}/.travis.yml">
+            .travis.yml
+          </ExternalLinkTo>
         {{/if}}
       </p>
-
       <div class="controls">
         <button
-          class="{{if isSubscribed 'button--orange' 'button--white'}} button--hover control control--primary"
-          disabled={{task.isRunning}}
-          onclick={{action 'processTask'}}
+          class="{{if this.isSubscribed 'button--orange' 'button--white'}} button--hover control control--primary"
+          disabled={{this.task.isRunning}}
+          onclick={{action "processTask"}}
           data-test-email-unsubscribe-primary-button
         >
-          {{#if isUnsubscribing}}
+          {{#if this.isUnsubscribing}}
             Unsubscribing...
-          {{else if isSubscribing}}
+          {{else if this.isSubscribing}}
             Subscribing...
-          {{else if isSubscribed}}
+          {{else if this.isSubscribed}}
             Confirm unsubscription
-          {{else if isUnsubscribed}}
+          {{else if this.isUnsubscribed}}
             Re-subscribe
           {{/if}}
         </button>
-        {{#link-to 'repo' repo
-          tagName="button"
-          disabled=task.isRunning
+        <LinkTo
+          @route="repo"
+          @model={{this.repo}}
+          @tagName="button"
+          @disabled={{this.task.isRunning}}
           class="no-button control"
-          data-test-email-unsubscribe-secondary-button=true
-        }}
-          {{#if isSubscribed}}
+          data-test-email-unsubscribe-secondary-button="true"
+        >
+          {{#if this.isSubscribed}}
             Cancel
           {{else}}
             Go to repository
           {{/if}}
-        {{/link-to}}
+        </LinkTo>
       </div>
-
       <p class="appendix" data-test-email-unsubscribe-appendix>
         You can always opt-in to receive emails for this repository
         again anytime by updating your
-        {{#link-to 'account.settings' class="settings-link"}}
+        <LinkTo @route="account.settings" class="settings-link">
           email notification settings
-        {{/link-to}}
+        </LinkTo>
       </p>
-
     {{/if}}
-
   </div>
 {{/if}}

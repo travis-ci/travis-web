@@ -1,10 +1,20 @@
-<h3 class="insights-odyssey__title" data-test-insights-odyssey-title>Build Statuses</h3>
+<h3 class="insights-odyssey__title" data-test-insights-odyssey-title>
+  Build Statuses
+</h3>
 <div class="insights-odyssey__chart" data-test-insights-odyssey-chart>
-  {{#if isLoading}}
-    <div class="insights-odyssey__loading-indicator">{{loading-indicator}}</div>
-  {{else if hasNoBuilds}}
-    No builds {{currentIntervalLabel}}.
+  {{#if this.isLoading}}
+    <div class="insights-odyssey__loading-indicator">
+      <LoadingIndicator />
+    </div>
+  {{else if this.hasNoBuilds}}
+    No builds {{this.currentIntervalLabel}}.
   {{else}}
-    {{c3-chart class='chart-component' data=data axis=axis grid=grid tooltip=tooltip}}
+    <C3Chart
+      @data={{this.data}}
+      @axis={{this.axis}}
+      @grid={{this.grid}}
+      @tooltip={{this.tooltip}}
+      class="chart-component"
+    />
   {{/if}}
 </div>

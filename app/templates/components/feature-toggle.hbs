@@ -1,1 +1,5 @@
-{{travis-switch active=feature.enabled disabled=disabled onToggle=(perform save)}}
+<TravisSwitch
+  @active={{this.feature.enabled}}
+  @disabled={{this.disabled}}
+  @onToggle={{perform this.save}}
+/>
