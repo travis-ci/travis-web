@@ -84,7 +84,7 @@
       width: 0;
       margin-right: 0;
       margin-bottom: 45px;
-      
+
       .tail-status, .tail-label {
         position: absolute;
         right: 10px;
@@ -210,7 +210,6 @@
     white-space: pre-wrap;
     word-wrap: break-word;
     background-color: $color-bg-log-fold;
-    counter-reset: line-numbering;
     margin-top: 0;
     margin-bottom: -45px;
   }
@@ -245,12 +244,7 @@
       cursor: pointer;
       text-decoration: none;
       position: absolute;
-
-      &::before {
-        content: counter(line-numbering);
-        counter-increment: line-numbering;
-        padding-right: 1em;
-      }
+      padding-right: 1em;
     }
   }
 
@@ -262,6 +256,18 @@
 
     &.open {
       height: auto;
+
+      .log-line {
+        display: block;
+      }
+    }
+
+    .log-line {
+      display: none;
+
+      &:first-of-type {
+        display: block;
+      }
     }
 
     .log-line:first-of-type {
