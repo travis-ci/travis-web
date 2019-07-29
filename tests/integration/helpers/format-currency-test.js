@@ -8,35 +8,33 @@ module('Integration | Helper | format-currency', function (hooks) {
 
   test('it formats 100cents to $1', async function (assert) {
     this.set('inputValue', 100);
-    this.set('fixed', true);
 
-    await render(hbs`{{format-currency inputValue fixed=fixed}}`);
+    await render(hbs`{{format-currency inputValue}}`);
 
     assert.equal(this.element.textContent.trim(), '$1.00');
   });
 
   test('it formats 0cents to $0', async function (assert) {
     this.set('inputValue', 0);
-    this.set('fixed', true);
 
-    await render(hbs`{{format-currency inputValue fixed=fixed}}`);
+    await render(hbs`{{format-currency inputValue}}`);
 
     assert.equal(this.element.textContent.trim(), '$0.00');
   });
 
   test('it formats 154cents to $1.54', async function (assert) {
     this.set('inputValue', 154);
-    this.set('fixed', true);
 
-    await render(hbs`{{format-currency inputValue fixed=fixed}}`);
+    await render(hbs`{{format-currency inputValue}}`);
 
     assert.equal(this.element.textContent.trim(), '$1.54');
   });
 
   test('it formats 100cents to $1', async function (assert) {
     this.set('inputValue', 1500);
+    this.set('floor', true);
 
-    await render(hbs`{{format-currency inputValue}}`);
+    await render(hbs`{{format-currency inputValue floor=floor}}`);
 
     assert.equal(this.element.textContent.trim(), '$15');
   });

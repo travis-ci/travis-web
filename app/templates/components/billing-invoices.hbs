@@ -12,14 +12,14 @@
       <div class='form-elem invoice-select-year'>
         <Form.field
           data-test-invoice-select-year
-          @value={{year}}
+          @value={{this.year}}
           class='margin-top-0'
-          @onChange={{action (mut year)}}
+          @onChange={{action (mut this.year)}}
           @showValidationStatusIcons={{false}} as |Field|
         >
           <Field.select
             @searchEnabled={{false}}
-            @options={{invoiceYears}} as |year|
+            @options={{this.invoiceYears}} as |year|
           >
             {{year}}
           </Field.select>
@@ -38,7 +38,7 @@
         </tr>
       </thead>
       <tbody>
-        {{#each (sort-by 'createdAt:desc' selectedInvoices) as |invoice|}}
+        {{#each (sort-by 'createdAt:desc' this.selectedInvoices) as |invoice|}}
           <tr data-test-invoice class='fade-in'>
             <td>
               <SvgImage @name='icon-invoice' @class='icon-invoice' />
@@ -47,7 +47,7 @@
               </span>
             </td>
             <td> •••• •••• •••• {{subscription.creditCardInfo.lastDigits}} </td>
-            <td> {{format-currency invoice.amountDue fixed=true}} </td>
+            <td> {{format-currency invoice.amountDue }} </td>
             <td>
               <a data-test-invoice-url href={{invoice.url}}>
                 <EmberTooltip>
