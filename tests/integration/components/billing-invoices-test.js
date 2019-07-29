@@ -86,14 +86,14 @@ module('Integration | Component | billing-invoices', function (hooks) {
       assert.equal(march2010.invoiceUrl.href, 'https://example.com/20102.pdf');
       assert.equal(march2010.invoiceDate, 'March 14, 2010');
       assert.equal(march2010.invoiceCardDigits, '•••• •••• •••• 1919');
-      assert.equal(march2010.invoiceCardPrice, '$69');
+      assert.equal(march2010.invoiceCardPrice, '$69.00');
     });
 
     profilePage.billing.invoices.items[1].as(february2010 => {
       assert.equal(february2010.invoiceUrl.href, 'https://example.com/2010.pdf');
       assert.equal(february2010.invoiceDate, 'February 14, 2010');
       assert.equal(february2010.invoiceCardDigits, '•••• •••• •••• 1919');
-      assert.equal(february2010.invoiceCardPrice, '$69');
+      assert.equal(february2010.invoiceCardPrice, '$69.00');
     });
   });
 });

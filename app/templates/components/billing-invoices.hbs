@@ -47,7 +47,7 @@
               </span>
             </td>
             <td> •••• •••• •••• {{subscription.creditCardInfo.lastDigits}} </td>
-            <td> {{format-currency invoice.amountDue }} </td>
+            <td> {{format-currency invoice.amountDue fixed=true}} </td>
             <td>
               <a data-test-invoice-url href={{invoice.url}}>
                 <EmberTooltip>
