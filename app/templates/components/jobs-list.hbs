@@ -1,36 +1,53 @@
-{{#if filteredJobs.length}}
-
-  {{#unless required}}
-    {{#if stage}}
-      <header data-test-stage-header class="stage-header {{stageState}}">
+{{#if this.filteredJobs.length}}
+  {{#unless this.required}}
+    {{#if this.stage}}
+      <header data-test-stage-header class="stage-header {{this.stageState}}">
         <h2 class="section-title">
-          {{#if stageStateIcon}}<span class='state-icon-container' title='{{stageStateTitle}}'>{{svg-jar stageStateIcon class='icon'}}</span>{{/if}}
-          <span class='name'>{{format-message stage.name}}</span>
+          {{#if this.stageStateIcon}}
+            <span class="state-icon-container" title="{{this.stageStateTitle}}">
+              <SvgImage @name={{stageStateIcon}} @class="icon" />
+            </span>
+          {{/if}}
+          <span class="name">
+            {{format-message this.stage.name}}
+          </span>
         </h2>
-        {{#if stage.duration}}
-          <div class="stage-duration" title="Started {{pretty-date stage.startedAt}}">
-            {{svg-jar 'icon-clock' class="icon"}}
-            <time class="label-align" aria-label="Stage duration" datetime="PT{{stage.duration}}S">{{format-duration stage.duration}}</time>
+        {{#if this.stage.duration}}
+          <div
+            class="stage-duration"
+            title="Started {{pretty-date this.stage.startedAt}}"
+          >
+            <SvgImage @name="icon-clock" @class="icon" />
+            <time
+              class="label-align"
+              aria-label="Stage duration"
+              datetime="PT{{this.stage.duration}}S"
+            >
+              {{format-duration this.stage.duration}}
+            </time>
           </div>
         {{/if}}
       </header>
     {{else}}
-      <h2 class="section-title"><span class="label-align">Allowed Failures</span>
+      <h2 class="section-title">
+        <span class="label-align">
+          Allowed Failures
+        </span>
         <span>
-          {{svg-jar 'icon-help' class='icon-help'}}
-          {{ember-tooltip text='These are jobs you can allow to fail without failing your entire build'}}
+          <SvgImage @name="icon-help" @class="icon-help" />
+          <EmberTooltip @text="These are jobs you can allow to fail without failing your entire build" />
         </span>
       </h2>
     {{/if}}
   {{/unless}}
-
-    <ul class="jobs-list">
-    {{#each filteredJobs as |job|}}
-      {{jobs-item job=job repo=repo}}
+  <ul class="jobs-list">
+    {{#each this.filteredJobs as |job|}}
+      <JobsItem @job={{job}} @repo={{this.repo}} />
     {{/each}}
-    </ul>
-
-  {{#if stageAllowFailuresText}}
-    <aside>{{stageAllowFailuresText}}</aside>
+  </ul>
+  {{#if this.stageAllowFailuresText}}
+    <aside>
+      {{this.stageAllowFailuresText}}
+    </aside>
   {{/if}}
 {{/if}}

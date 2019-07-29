@@ -1,11 +1,13 @@
 <div class="switch-inner">
   <span class="on">
-    {{svg-jar 'icon-passed' class='icon-on' alt='on'}}
+    <SvgImage @name="icon-passed" @class="icon-on" @alt="on" />
   </span>
   <span class="off">
-    {{svg-jar 'icon-failed' class='icon-off' alt='off'}}
+    <SvgImage @name="icon-failed" @class="icon-off" @alt="off" />
   </span>
 </div>
-{{#if description}}
-  <span class="label">{{description}}</span>
+{{#if this.description}}
+  <span class="label">
+    {{this.description}}
+  </span>
 {{/if}}

@@ -1,6 +1,6 @@
-<TravisLayout @layoutName="layouts/center" class="text-grey-800 font-sans">
+<TravisLayout @layoutName="layouts/center" @class="text-grey-800 font-sans">
 
-  {{! Header section }}
+  {{!-- Header section --}}
   <section class="mt-3 mb-16">
     <header class="text-center">
       <h1 class="text-6xl font-bold">
@@ -14,7 +14,7 @@
     </header>
   </section>
 
-  {{! Product section }}
+  {{!-- Product section --}}
   <section class="mb-16">
     <div class="flex flex-wrap items-center mb-3">
       <span class="uppercase font-bold mr-2">Monthly</span>
@@ -25,11 +25,11 @@
       </span>
     </div>
     <div class="relative">
-      {{svg-jar "grey-blob" class="absolute h-64 top-0 right-0 -mt-16 -mr-10"}}
+      <SvgImage @name="grey-blob" @class="absolute h-64 top-0 right-0 -mt-16 -mr-10"/>
       <div class="relative bg-white border border-grey-150 rounded shadow-even z-10">
         <Styleguides::Grid @base={{2}} @md={{4}} as |grid|>
           {{#each plansToDisplay as |plan|}}
-            <grid.item class="p-4 border-grey-150 border">
+            <grid.item @class="p-4 border-grey-150 border">
               <h3 class="font-bold text-3xl">
                 {{plan.name}}
               </h3>
@@ -41,15 +41,15 @@
                 {{pluralize plan.builds "Concurrent job" without-count=true}}
               </div>
               <div>
-                {{svg-jar "features-check" class="w-3 inline-block"}}
+                <SvgImage @name="features-check" @class="w-3 inline-block"/>
                 Unlimited build minutes
               </div>
               <div>
-                {{svg-jar "features-check" class="w-3 inline-block"}}
+                <SvgImage @name="features-check" @class="w-3 inline-block"/>
                 Unlimited repositories
               </div>
               <div class="mb-6">
-                {{svg-jar "features-check" class="w-3 inline-block"}}
+                <SvgImage @name="features-check" @class="w-3 inline-block"/>
                 Unlimited collaborators
               </div>
               <div class="mb-6">
@@ -69,7 +69,7 @@
           </Styleguides::Button>
         </div>
       </div>
-      {{svg-jar "yellow-waves" class="absolute w-56 bottom-0 left-0 -mb-10 -ml-10 z-0"}}
+      <SvgImage @name="yellow-waves" @class="absolute w-56 bottom-0 left-0 -mb-10 -ml-10 z-0"/>
     </div>
   </section>
 
@@ -89,7 +89,7 @@
   <section class="mb-16">
     <Styleguides::Grid  @sm={{2}} @items='center' as |grid|>
         <grid.item>
-          {{svg-jar 'enterprise-servers'}}
+          <SvgImage @name='enterprise-servers'/>
         </grid.item>
         <grid.item>
           <h2 class="text-5xl font-bold">Travis CI Enterprise</h2>

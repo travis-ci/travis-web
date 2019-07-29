@@ -1,6 +1,9 @@
-
-{{#loading-overlay visible=isLoading }}
-  {{#each topicsToShow as |topic|}}
-    <li>{{#external-link-to href=topic.url }}{{topic.title}}{{/external-link-to}}</li>
+<LoadingOverlay @visible={{this.isLoading}}>
+  {{#each this.topicsToShow as |topic|}}
+    <li>
+      <ExternalLinkTo @href={{topic.url}}>
+        {{topic.title}}
+      </ExternalLinkTo>
+    </li>
   {{/each}}
-{{/loading-overlay}}
+</LoadingOverlay>

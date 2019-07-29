@@ -1,6 +1,9 @@
 <div>
-  <span class='name'>{{feature.displayName}}</span>
-  <p class='description'>{{feature.description}}</p>
+  <span class="name">
+    {{this.feature.displayName}}
+  </span>
+  <p class="description">
+    {{this.feature.description}}
+  </p>
 </div>
-
-{{feature-toggle feature=feature}}
+<FeatureToggle @feature={{this.feature}} />

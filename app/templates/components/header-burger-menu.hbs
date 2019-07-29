@@ -1,5 +1,9 @@
-  <div class="navigation-toggle">
-    <button type="button" class="tofuburger no-button" {{action 'toggleBurgerMenu'}}>
-      {{svg-jar 'icon-tofuburger'}}
-    </button>
-  </div>
+<div class="navigation-toggle">
+  <button
+    type="button"
+    class="tofuburger no-button"
+    onclick={{action "toggleBurgerMenu"}}
+  >
+    <SvgImage @name="icon-tofuburger" />
+  </button>
+</div>

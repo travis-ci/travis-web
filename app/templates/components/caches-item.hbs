@@ -1,18 +1,28 @@
 <div class="row-item row-branch">
-  {{request-icon event=cache.type}}
-  <span class="label-align">{{cache.branch}}</span>
+  <RequestIcon @event={{this.cache.type}} />
+  <span class="label-align">
+    {{this.cache.branch}}
+  </span>
 </div>
 <div class="row-item row-calendar">
-  {{svg-jar 'icon-calendar' class="icon"}}
-  <span class="label-align">{{format-time cache.last_modified}}</span>
+  <SvgImage @name="icon-calendar" @class="icon" />
+  <span class="label-align">
+    {{format-time this.cache.last_modified}}
+  </span>
 </div>
 <div class="row-item row-size">
-  {{svg-jar 'icon-scales' class="icon"}}
-  <span class="label-align">{{travis-mb cache.size}}MB</span>
+  {{svg-jar "icon-scales" class="icon"}}
+  <span class="label-align">
+    {{travis-mb this.cache.size}}MB
+  </span>
 </div>
 <div class="row-item">
-  <a {{action 'performDelete'}} href="#" class="{{if delete.isRunning 'deleting'}} delete-cache-icon" title="Delete this cache">
-    {{ember-tooltip text='Delete'}}
-    {{svg-jar 'icon-trash' class="icon"}}
+  <a
+    class="{{if this.delete.isRunning "deleting"}} pointer delete-cache-icon"
+    title="Delete this cache"
+    onclick={{action "performDelete"}}
+  >
+    <EmberTooltip @text="Delete" />
+    <SvgImage @name="icon-trash" @class="icon" />
   </a>
 </div>
