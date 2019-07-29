@@ -13,4 +13,12 @@ module('Integration | Helper | format-currency', function (hooks) {
 
     assert.equal(this.element.textContent.trim(), '$1');
   });
+
+  test('it formats 0cents to $0', async function (assert) {
+    this.set('inputValue', 0);
+
+    await render(hbs`{{format-currency inputValue}}`);
+
+    assert.equal(this.element.textContent.trim(), '$0');
+  });
 });
