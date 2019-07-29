@@ -212,8 +212,62 @@
   }
 }
 
-.billing-trial-info-box {
-  border: 1px solid $pebble-grey;
-  padding: 10px;
-  border-radius: 7px;
+.initial-billing-view {
+
+  hr {
+    margin-top: 2.5em;
+    border: 1px $pebble-grey solid;
+  }
+
+  .get-started {
+    margin-right: -2px;
+
+    &__builds {
+      font-weight: 300;
+      font-size: 24px;
+      color: $asphalt-grey;
+      border-bottom: 2px $pebble-grey solid;
+      margin-bottom: 1.5em;
+      margin: 0 20px 0 0;
+    }
+
+    &__start-trial {
+      font-weight: 300;
+      font-size: 15px;
+    }
+  }
+
+  .billing-trial-info {
+    border: 1px solid $pebble-grey;
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: 300;
+    font-size: 15px;
+
+    &__box {
+
+      &--open-source {
+        font-size: 20px;
+        margin: 0;
+      }
+
+      &--jobs {
+        margin: 5px 0;
+      }
+    }
+  }
+
+  .icon-wrapper {
+    margin: 0 20px;
+
+    &__plus {
+      @include colorSVG($oxide-blue);
+      width: 18px;
+      height: 18px;
+    }
+  }
+
+  .activate-button {
+    margin-top: 15px;
+  }
 }

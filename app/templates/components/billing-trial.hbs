@@ -1,4 +1,4 @@
-<h2 class="color-asphalt-blue font--light">Overview</h2>
+<h2 class="color-oxide-blue font--light">Overview</h2>
 
 {{#if trial.hasActiveTrial}}
 
@@ -13,32 +13,34 @@
   </p>
 {{else}}
 
-  <p>There is currently no activity on your account. Let's get you started!</p>
-  <div class="flex billing-trial-info-box">
-    {{!-- <div>
-      icon
-    </div> --}}
-    <div>
-      <p class="margin-top-0">For your public projects you always get 3 concurrent jobs for free on all build environments.</p>
-      <p class="margin-bottom-0 margin-top-0">
-        <a data-test-trial-link href={{config-get 'urls.gettingStarted'}} target="_blank" class="billing-section-link">Trigger and build</a> and you will be on your way!
-      </p>
+  <div class="initial-billing-view">
+    <div class="flex">
+      <div class="get-started">
+        <p class="get-started__builds">
+          100 free builds to get you started
+        </p>
+        <p class="get-started__start-trial">
+          Start your trial to get 100 free builds and 2 concurrent jobs for both public and private projects.
+        </p>
+      </div>
+      <div class="icon-wrapper flex flex--v-center">
+        {{svg-jar "icon-plus" class="icon icon-wrapper__plus"}}
+      </div>
+      <div class="flex billing-trial-info">
+        <div class="billing-trial-info__box">
+          <p class="billing-trial-info__box--open-source">We &lt;3 open source.</p>
+          <p class="billing-trial-info__box--jobs">
+            3 concurrent jobs for your open source projects are always free.
+          </p>
+        </div>
+      </div>
     </div>
+    <button class='button--blue activate-button'>
+      Activate trial
+    </button>
+    <hr/>
   </div>
 
-  <h2 class="color-asphalt-blue font--light">Trial</h2>
-  <p>Test private repositories and get extra concurrency for your open source projects.</p>
-  <p data-test-trial-message class="source plan-status-message">
-    Your trial includes 100 trial builds and 2-concurrent-jobs, no credit card required.<br />
-    Need help?
-    <ExternalLinkTo
-      data-test-trial-link="true"
-      @href={{config-get "urls.gettingStarted"}}
-      class="billing-section-link"
-    >
-      Check our getting started guide.
-    </ExternalLinkTo>
-  </p>
 {{/if}}
 {{#if this.subscription.isGithub}}
   <ExternalLinkTo
