@@ -2,9 +2,9 @@
   <h2>Invoice History</h2>
   <div class='flex flex--wrap flex--space-between'>
     <p class='margin-top-0' data-test-help-text>
-      <SvgImage @name="icon-help" @class="icon-help" />
+      <SvgImage @name='icon-help' @class='icon-help' />
       Having trouble with your invoices?
-      <LinkTo @route="help" @query={{hash anchor="form"}}>
+      <LinkTo @route='help' @query={{hash anchor='form'}}>
         We’re happy to help
       </LinkTo>
     </p>
@@ -39,10 +39,10 @@
       </thead>
       <tbody>
         {{#each (sort-by 'createdAt:desc' selectedInvoices) as |invoice|}}
-          <tr data-test-invoice class="fade-in">
+          <tr data-test-invoice class='fade-in'>
             <td>
-              {{svg-jar 'icon-invoice' class='icon-invoice'}}
-              <span class="invoice-date">
+              <SvgImage @name='icon-invoice' @class='icon-invoice' />
+              <span class='invoice-date'>
                 {{moment-format invoice.createdAt 'MMMM DD, YYYY'}}
               </span>
             </td>
@@ -53,7 +53,7 @@
                 <EmberTooltip>
                   {{moment-format invoice.createdAt 'MMMM'}} invoice
                 </EmberTooltip>
-                {{svg-jar 'icon-download' class='icon icon-download'}}
+                <SvgImage @name='icon-download' @class='icon icon-download' />
               </a>
             </td>
           </tr>
