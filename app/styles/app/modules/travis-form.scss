@@ -17,23 +17,30 @@ $select-multiple-spacing: 5px;
     position: relative;
 
     &.env-branch-selector {
+      .ember-power-select-trigger {
+        padding-right: 64px !important;
+      }
       .ember-power-select-selected-item {
-        margin-right: 0;
-        border: 1px solid $pebble-grey;
+        margin-right: 8px;
         border-right: none;
-        border-radius: 3px 0 0 3px;
         padding-left: 3px;
       }
       .ember-power-select-clear-btn {
-        right: auto;
+        right: 25px;
         top: 7px;
-        font-size: 20px;
-        line-height: 18px;
-        border: 1px solid $pebble-grey;
-        border-left: none;
-        border-radius: 0 3px 3px 0;
-        padding-right: 3px;
-        padding-left: 8px;
+        font-size: 0;
+        border-radius: 3px;
+        padding: 1px 4px;
+        background: $cement-grey;
+        color: #fff;
+        &:before {
+          content: 'clear';
+          font-size: 14px;
+          font-weight: 300;
+        }
+        &:hover {
+          background: $oxide-blue;
+        }
       }
     }
 
