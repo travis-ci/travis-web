@@ -2,7 +2,10 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, settled } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import { DEFAULT_INSIGHTS_INTERVAL, INSIGHTS_INTERVALS } from 'travis/services/insights';
+import {
+  DEFAULT_INSIGHTS_INTERVAL,
+  INSIGHTS_INTERVALS
+} from 'travis/services/insights';
 
 module('Integration | Component | insights-overlay', function (hooks) {
   setupRenderingTest(hooks);

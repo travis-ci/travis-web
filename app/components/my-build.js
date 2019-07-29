@@ -14,6 +14,6 @@ export default Component.extend({
   urlGitHubBranch: computed('build.repo.slug', 'build.branchName', function () {
     let slug = this.get('build.repo.slug');
     let branchName = this.get('build.branchName');
-    return this.get('externalLinks').githubBranch(slug, branchName);
+    return this.externalLinks.githubBranch(slug, branchName);
   }),
 });

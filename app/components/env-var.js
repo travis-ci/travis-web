@@ -25,12 +25,12 @@ export default Component.extend({
   }),
 
   delete: task(function* () {
-    yield this.get('envVar').destroyRecord().catch(({ errors }) => {
+    yield this.envVar.destroyRecord().catch(({ errors }) => {
       if (errors.any(error => error.status == '404')) {
-        this.get('flashes').error('This environment variable has already been deleted.' +
+        this.flashes.error('This environment variable has already been deleted.' +
           ' Try refreshing.');
       } else {
-        this.get('flashes').error('There was an error deleting this environment variable.');
+        this.flashes.error('There was an error deleting this environment variable.');
       }
     });
   }).drop()

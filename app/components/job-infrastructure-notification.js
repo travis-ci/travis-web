@@ -27,7 +27,7 @@ export default Component.extend({
 
   isTrustySudoRequired: computed('job.startedAt', 'queue', 'job.config.dist', function () {
     let startedAt = this.get('job.startedAt');
-    let queue = this.get('queue');
+    let queue = this.queue;
     let dist = this.get('job.config.dist');
 
     if (queue === 'builds.gce' && dist === 'trusty') {
@@ -43,7 +43,7 @@ export default Component.extend({
   isMacStadium6: equal('queue', 'builds.macstadium6'),
 
   isPreciseEOL: computed('queue', 'job.config.dist', 'job.config.language', function () {
-    let queue = this.get('queue');
+    let queue = this.queue;
     let dist = this.get('job.config.dist');
     let language = this.get('job.config.language');
     if (queue === 'builds.gce' && dist === 'precise') {
@@ -85,9 +85,9 @@ export default Component.extend({
   },
 
   isDeprecatedOrRetiredMacImage: computed('isMacStadium6', 'macOSImage', function () {
-    let isMacStadium6 = this.get('isMacStadium6');
-    let macOSImage = this.get('macOSImage');
-    return isMacStadium6 && this.get('deprecatedXcodeImages').includes(macOSImage);
+    let isMacStadium6 = this.isMacStadium6;
+    let macOSImage = this.macOSImage;
+    return isMacStadium6 && this.deprecatedXcodeImages.includes(macOSImage);
   }),
 
   deprecatedOrRetiredMacImageMessage: computed(
@@ -98,9 +98,9 @@ export default Component.extend({
     'isDeprecatedOrRetiredMacImage',
     function () {
       let startedAt = this.get('job.startedAt');
-      let image = this.get('macOSImage');
+      let image = this.macOSImage;
       let isFinished = this.get('job.isFinished');
-      let conjugatedRun = this.get('conjugatedRun');
+      let conjugatedRun = this.conjugatedRun;
 
       if (image === 'xcode6.4') {
         return `Running builds with Xcode 6.4 in Travis CI is deprecated and will be
@@ -108,10 +108,10 @@ export default Component.extend({
   at <a href="mailto:support@travis-ci.com">support@travis-ci.com</a> to discuss options.`;
       }
 
-      const retirementDate = Date.parse(this.get('imageToRetirementDate')[image]);
+      const retirementDate = Date.parse(this.imageToRetirementDate[image]);
 
-      const newImage = this.get('imageToNewImage')[image];
-      const newImageString = this.get('newImageStrings')[newImage];
+      const newImage = this.imageToNewImage[image];
+      const newImageString = this.newImageStrings[newImage];
       const newImageAnchor = newImageString.replace(' ', '-');
       const newImageURLString = `<a href='https://docs.travis-ci.com/user/reference/osx/#${newImageAnchor}'>${newImageString}</a>`;
       const imageRetirementAnnouncementURL = 'https://blog.travis-ci.com/2017-11-21-xcode8-3-default-image-announce';

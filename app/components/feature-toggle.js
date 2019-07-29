@@ -22,18 +22,18 @@ export default Component.extend({
   }).drop(),
 
   _persistToLocalStorage(feature, status) {
-    const featureState = JSON.parse(this.get('storage').getItem('travis.features'));
+    const featureState = JSON.parse(this.storage.getItem('travis.features'));
     const idx = featureState.findIndex(f => Object.keys(f)[0] === feature);
     if (idx !== -1) {
       featureState.splice(idx, 1);
     }
     featureState.pushObject({ [feature]: status });
-    this.get('storage').setItem('travis.features', JSON.stringify(featureState));
+    this.storage.setItem('travis.features', JSON.stringify(featureState));
   },
 
   applyFeatureState(feature) {
-    const features = this.get('features');
-    let { name, enabled } = feature.getProperties('name', 'enabled');
+    const features = this.features;
+    let { name, enabled } = feature;
 
     enabled ? features.enable(name) : features.disable(name);
     this._persistToLocalStorage(name, enabled);

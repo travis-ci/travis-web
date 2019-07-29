@@ -24,8 +24,8 @@ export default Controller.extend({
   },
 
   updateTimes() {
-    this.get('updateTimesService').push(this.get('build.stages'));
-    this.get('updateTimesService').push(this.get('build.jobs'));
+    this.updateTimesService.push(this.get('build.stages'));
+    this.updateTimesService.push(this.get('build.jobs'));
   },
 
   landingPage: computed('features.proVersion', function () {

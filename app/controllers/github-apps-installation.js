@@ -36,22 +36,22 @@ export default Controller.extend({
     });
 
     let url = `${config.apiEndpoint}/installation/` +
-      `${this.get('installation_id')}?include=installation.owner`;
+      `${this.installation_id}?include=installation.owner`;
 
     return fetch(url, {headers}).then(response => {
       if (response.ok) {
         return response.json();
       } else {
-        let repetitions = this.get('repetitions');
-        let maxRepetitions = this.get('maxRepetitions');
+        let repetitions = this.repetitions;
+        let maxRepetitions = this.maxRepetitions;
 
         if (repetitions < maxRepetitions) {
           this.set('repetitions', repetitions + 1);
           return new EmberPromise(resolve => later(() => resolve(this.fetchPromise()), interval));
         } else {
           let exception =
-            new Error(`Timed out looking for owner of installation ${this.get('installation_id')}`);
-          this.get('raven').logException(exception, true);
+            new Error(`Timed out looking for owner of installation ${this.installation_id}`);
+          this.raven.logException(exception, true);
         }
       }
     });

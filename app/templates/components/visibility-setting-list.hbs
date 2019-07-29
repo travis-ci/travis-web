@@ -28,7 +28,8 @@
     {{#modal-dialog
       targetAttachment="center"
       translucentOverlay=true
-      toggleConfirmationModal='toggleConfirmationModal'
+      toggleConfirmationModal=(action 'toggleConfirmationModal')
+      onClickOverlay=(action 'toggleConfirmationModal')
       containerClass="visibility-settings-modal"
       overlayPosition='sibling'
       animatable=true

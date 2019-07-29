@@ -1,6 +1,6 @@
 /* eslint no-unused-vars: ["error", { "varsIgnorePattern": "config" }]*/
 
-import Ember from 'ember';
+import { VERSION } from '@ember/version';
 import Component from '@ember/component';
 import { htmlSafe } from '@ember/string';
 import { inject as service } from '@ember/service';
@@ -30,10 +30,10 @@ export default Component.extend({
       const hostname = window.location.hostname;
 
       if (hostname.indexOf('ember-beta') === 0 || hostname.indexOf('ember-canary') === 0) {
-        return `Ember ${Ember.VERSION}`;
+        return `Ember ${VERSION}`;
       } else if (hostname.indexOf('test-deployments') > 0) {
         const branchName = hostname.split('.')[0];
-        const branchURL = this.get('externalLinks').travisWebBranch(branchName);
+        const branchURL = this.externalLinks.travisWebBranch(branchName);
         const branchLink = `<a href='${branchURL}'><code>${branchName}</code></a>`;
 
         return htmlSafe(`Test deployment ${branchLink}`);
@@ -46,7 +46,7 @@ export default Component.extend({
   }),
 
   classProfile: computed('tab', 'auth.state', function () {
-    let tab = this.get('tab');
+    let tab = this.tab;
     let authState = this.get('auth.state');
     let classes = ['profile menu'];
 
@@ -62,11 +62,11 @@ export default Component.extend({
   actions: {
 
     signIn() {
-      return this.get('auth').signIn();
+      return this.auth.signIn();
     },
 
     signOut() {
-      return this.get('auth').signOut();
+      return this.auth.signOut();
     },
 
     goToHelp() {

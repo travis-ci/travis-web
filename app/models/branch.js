@@ -1,6 +1,4 @@
-import Model from 'ember-data/model';
-import attr from 'ember-data/attr';
-import { hasMany, belongsTo } from 'ember-data/relationships';
+import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
 import { computed } from '@ember/object';
 
 export default Model.extend({
@@ -13,7 +11,7 @@ export default Model.extend({
   repo: belongsTo('repo', { inverse: '_branches' }),
 
   repoId: computed('id', function () {
-    let id = this.get('id');
+    let id = this.id;
     const match = id.match(/\/repo\/(\d+)\//);
     if (match) {
       return match[1];

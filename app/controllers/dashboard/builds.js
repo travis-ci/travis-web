@@ -15,8 +15,8 @@ export default Controller.extend({
   },
 
   updateTimes() {
-    let updateTimesService = this.get('updateTimesService');
+    let updateTimesService = this.updateTimesService;
 
-    updateTimesService.push(this.get('model'));
+    updateTimesService.push(this.model);
   },
 });

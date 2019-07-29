@@ -21,11 +21,11 @@ export default TravisRoute.extend(ScrollResetMixin, {
     this._super(args);
 
     if (this.get('auth.signedIn')) {
-      if (this.get('onRunningTab')) {
+      if (this.onRunningTab) {
         return;
       }
       if (!this.get('tabStates.sidebarTab', 'search')) {
-        this.get('tabStates').set('sidebarTab', 'owned');
+        this.tabStates.set('sidebarTab', 'owned');
       }
       this.set('tabStates.mainTab', null);
     }
@@ -37,7 +37,7 @@ export default TravisRoute.extend(ScrollResetMixin, {
 
   setupController(controller, model) {
     if (model && !model.get) {
-      model = this.get('store').find('repo', model.id);
+      model = this.store.find('repo', model.id);
     }
     return controller.set('repo', model);
   },
@@ -56,6 +56,6 @@ export default TravisRoute.extend(ScrollResetMixin, {
   model(params) {
     const { name, owner } = params;
     const slug = `${owner}/${name}`;
-    return Repo.fetchBySlug(this.get('store'), slug);
+    return Repo.fetchBySlug(this.store, slug);
   },
 });
