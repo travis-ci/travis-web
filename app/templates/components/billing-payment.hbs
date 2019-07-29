@@ -1,8 +1,5 @@
 <div>
-  <BillingSelectPlan
-    @selectedPlan={{selectedPlan}}
-    @showAnnual={{showAnnual}}
-  />
+  <BillingSelectPlan @selectedPlan={{selectedPlan}} @showAnnual={{showAnnual}} />
   <h2>
     Credit card details
   </h2>
@@ -12,28 +9,18 @@
   </p>
 
   <form data-test-payment-form>
-    <StripeCardNumber @complete={{action "complete"}} @options={{options}} as |stripeError|>
+    <Input name="cardName" />
+    <Input name="discountCode" />
+    <StripeCard @complete={{action "complete"}} @options={{options}} as |stripeError|>
       {{#if stripeError}}
-        <p>{{stripeError.message}}</p>
+      <p>{{stripeError.message}}</p>
       {{/if}}
-    </StripeCardNumber>
-    {{input name="cardName"}}
-    <StripeCardExpiry @options={{options}} as |stripeError|>
-      {{#if stripeError}}
-        <p>{{stripeError.message}}</p>
-      {{/if}}
-    </StripeCardExpiry>
-    <StripeCardCvc @options={{options}} as |stripeError|>
-      {{#if stripeError}}
-        <p>{{stripeError.message}}</p>
-      {{/if}}
-    </StripeCardCvc>
-    {{input name="discountCode"}}
+    </StripeCard>
     {{#if isLoading}}
-      {{loading-indicator}}
+    {{loading-indicator}}
     {{else}}
-      <button {{action "submit"}}>Submit</button>
-      <span onclick={{action cancel}} class='billing-process-cancel link'>Cancel</span>
+    <button {{action "submit"}}>Submit</button>
+    <span onclick={{action cancel}} class='billing-process-cancel link'>Cancel</span>
     {{/if}}
   </form>
 </div>
