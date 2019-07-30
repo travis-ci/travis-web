@@ -18,7 +18,7 @@
   <section class="mb-16">
     <div class="flex flex-wrap items-center mb-3">
       <span class="uppercase font-bold mr-2">Monthly</span>
-      <UiKit::Switch @onToggle={{fn (mut showAnnual)}} @active={{showAnnual}} />
+      {{!-- <UiKit::Switch @onToggle={{fn (mut showAnnual)}} @active={{showAnnual}} /> --}}
       <span class="text-blue ml-2">
         <span class="uppercase font-bold">Annual</span>
         (Get 1 month free!)
@@ -64,7 +64,7 @@
           {{/each}}
         </UiKit::Grid>
         <div class="text-center p-4 border-grey-150 border">
-          <UiKit::Button @onToggle={{action 'gaCta'}}>
+          <UiKit::Button onClick={{action 'gaCta'}}>
             Start Your Free Trial
           </UiKit::Button>
         </div>

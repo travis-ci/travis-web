@@ -1,82 +1,67 @@
 import Component from '@ember/component';
-import abstractMethod from 'travis/utils/abstract-method';
 import { computed } from '@ember/object';
+import { reads } from '@ember/object/computed';
 
-const DEFAULT_SHADES = {
-  light: 100,
-  main: 400,
-  dark: 500,
+const SHADES = {
+  LITE: 100,
+  MAIN: 400,
+  DARK: 500,
 };
+const DEFAULT_SHADE = SHADES.MAIN;
 
-const DEFAULT_COLOR = 'blue';
-const COLORSETS = {
-  disabled: {
-    color: 'grey',
-    shades: {
-      light: 100,
-      main: 300,
-      dark: 300,
-    }
+const COLORS = {
+  BLUE: 'blue',
+  GREY: 'grey',
+};
+const DEFAULT_COLOR = COLORS.BLUE;
+
+const VARIANTS = {
+  FILL: 'fill',
+  OUTLINE: 'outline',
+};
+const DEFAULT_VARIANT = VARIANTS.FILL;
+
+function getVariantProps(variant, color, shade) {
+  // Fill Variant definition
+  if (variant === 'fill') {
+    return {
+      bg: `bg-${color}-${shade} hover:bg-${color}-${shade + 100}`,
+      text: 'text-white',
+    };
+
+  // Outline variant definition
+  } else if (variant === 'outline') {
+    return {
+      bg: `hover:bg-${color}-100`,
+      text: `text-${color}-${shade}`,
+      border: `border border-solid border-${color}-${shade}`,
+    };
   }
-};
-
-export const DEFAULT_VARIANT = 'fill';
-export const VARIANTS = {
-  fill: (color, shades) => [
-    `bg-${color}-${shades['main']}`,
-    'text-white',
-    `hover:bg-${color}-${shades['dark']}`,
-  ],
-
-  outline: (color, shades) => [
-    `text-${color}-${shades['main']}`,
-    'border',
-    'border-solid',
-    `border-${color}-${shades['main']}`,
-    `hover:bg-${color}-${shades['light']}`,
-  ],
-};
+}
 
 export default Component.extend({
-  tagName: 'button',
-  classNameBindings: ['defaultClasses', 'variantClasses'],
-  attributeBindings: ['role', 'type', 'disabled'],
-
+  tagName: '',
   type: 'button',
   role: 'button',
-  disabled: false,
-  defaultClasses: 'rounded uppercase px-3 py-2 font-bold',
 
-  defaultShades: computed(() => DEFAULT_SHADES),
-  colorSetDefs: computed(() => COLORSETS),
-  variantDefs: computed(() => VARIANTS),
   variant: DEFAULT_VARIANT,
   color: DEFAULT_COLOR,
+  shade: DEFAULT_SHADE,
 
-  colorSet: computed('disabled', 'color', 'colorSetDefs', 'defaultShades', function () {
-    const { color, colorSetDefs, defaultShades, disabled } = this;
-    return disabled ?
-      colorSetDefs['disabled'] :
-      colorSetDefs[color] || { color, shades: defaultShades };
-  }),
-  currentVariant: computed('variant', 'variantDefs', function () {
-    const { variant: variantName, variantDefs } = this;
-    return variantDefs[variantName] || VARIANTS[DEFAULT_VARIANT];
+  variantProps: computed('variant', 'color', 'shade', function () {
+    const { variant, color, shade } = this;
+    return getVariantProps(variant, color, shade);
   }),
 
-  variantClasses: computed('colorSet.color', 'colorSet.shades.{light,main,dark}', 'currentVariant', function () {
-    const { currentVariant } = this;
-    const { color, shades } = this.colorSet;
+  bg: reads('variantProps.bg'),
+  text: reads('variantProps.text'),
+  border: reads('variantProps.border'),
 
-    const classes = currentVariant(color, shades);
-    return classes.join(' ');
+  generatedClasses: computed('bg', 'text', 'border', function () {
+    const { bg, text, border } = this;
+    return `
+      rounded uppercase px-3 py-2 font-bold
+      ${bg || ''} ${text || ''} ${border || ''}
+    `;
   }),
-
-  onToggle: abstractMethod('onToggle'),
-
-  click() {
-    if (!this.disabled) {
-      this.onToggle();
-    }
-  }
 });
