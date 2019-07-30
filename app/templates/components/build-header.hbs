@@ -51,7 +51,7 @@
           <li>
             {{#if this.item.isPullRequest}}
               <ExternalLinkTo @href={{this.item.commit.compareUrl}}>
-                <EmberTooltip @text="{{concat "View Pull Request on " (vcs-name this.item.repo.vcsType))}}" />
+                <EmberTooltip @text="{{concat "View Pull Request on " (vcs-name this.item.repo.vcsType)}}" />
                 <SvgImage @name="icon-compare" @class="icon" />
                 <span class="label-align inner-underline commit-compare">
                   #{{this.item.pullRequestNumber}}: {{this.item.pullRequestTitle}}
