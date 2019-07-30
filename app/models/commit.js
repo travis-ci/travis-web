@@ -1,4 +1,4 @@
-import Model from 'ember-data/model';
+import Model, { attr, belongsTo } from 'ember-data/model';
 import attr from 'ember-data/attr';
 import { belongsTo } from 'ember-data/relationships';
 import { computed } from '@ember/object';
@@ -21,14 +21,14 @@ export default Model.extend({
   build: belongsTo('build'),
 
   subject: computed('message', function () {
-    let message = this.get('message');
+    let message = this.message;
     if (message) {
       return message.split('\n', 1)[0];
     }
   }),
 
   body: computed('message', function () {
-    let message = this.get('message');
+    let message = this.message;
     if (message && message.indexOf('\n') > 0) {
       return message.substr(message.indexOf('\n') + 1).trim();
     } else {
@@ -42,10 +42,10 @@ export default Model.extend({
     'committerName',
     'committerEmail',
     function () {
-      let authorName = this.get('authorName');
-      let authorEmail = this.get('authorEmail');
-      let committerName = this.get('committerName');
-      let committerEmail = this.get('committerEmail');
+      let authorName = this.authorName;
+      let authorEmail = this.authorEmail;
+      let committerName = this.committerName;
+      let committerEmail = this.committerEmail;
       return authorName === committerName && authorEmail === committerEmail;
     }
   ),

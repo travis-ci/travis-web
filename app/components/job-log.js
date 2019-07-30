@@ -1,15 +1,18 @@
 import Component from '@ember/component';
-import { alias } from '@ember/object/computed';
+import { reads } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
 
 export default Component.extend({
-  log: alias('job.log'),
-
   classNames: ['job-log'],
 
+  _oldJob: null,
+
+  job: null,
+  log: reads('job.log'),
+
   didReceiveAttrs() {
-    let oldJob = this.get('_oldJob');
-    let newJob = this.get('job');
+    let oldJob = this._oldJob;
+    let newJob = this.job;
 
     if (newJob !== oldJob) {
       if (oldJob) {
@@ -17,11 +20,11 @@ export default Component.extend({
       }
 
       if (newJob) {
-        this.get('setupLog').perform(newJob);
+        this.setupLog.perform(newJob);
       }
     }
 
-    this.set('_oldJob', this.get('job'));
+    this.set('_oldJob', this.job);
   },
 
   teardownLog(job) {

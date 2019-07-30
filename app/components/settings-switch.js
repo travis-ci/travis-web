@@ -15,7 +15,7 @@ export default Component.extend({
   role: 'switch',
 
   'aria-checked': computed('active', function () {
-    if (this.get('active')) {
+    if (this.active) {
       return 'true';
     } else {
       return 'false';
@@ -25,15 +25,15 @@ export default Component.extend({
   save: task(function* () {
     try {
       // try saving with the new state, only change local state if successful
-      const futureState = !this.get('active');
-      yield this.get('repo').saveSetting(this.get('key'), futureState);
+      const futureState = !this.active;
+      yield this.repo.saveSetting(this.key, futureState);
       this.toggleProperty('active');
     } catch (e) {
-      this.get('flashes').error('There was an error while saving your settings. Please try again.');
+      this.flashes.error('There was an error while saving your settings. Please try again.');
     }
   }).drop(),
 
   click() {
-    this.get('save').perform();
+    this.save.perform();
   }
 });

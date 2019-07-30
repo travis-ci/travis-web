@@ -1,15 +1,11 @@
-import {
-  Promise as EmberPromise,
-} from 'rsvp';
-import { A } from '@ember/array';
-import ExpandableRecordArray from 'travis/utils/expandable-record-array';
 import VcsEntity from 'travis/models/vcs-entity';
-import attr from 'ember-data/attr';
-import { hasMany, belongsTo } from 'ember-data/relationships';
+import { attr, hasMany, belongsTo } from '@ember-data/model';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 import { reads, equal, or } from '@ember/object/computed';
+import { Promise as EmberPromise, } from 'rsvp';
 import { task } from 'ember-concurrency';
+import ExpandableRecordArray from 'travis/utils/expandable-record-array';
 
 export const MIGRATION_STATUS = {
   QUEUED: 'queued',
@@ -26,15 +22,16 @@ export const HISTORY_MIGRATION_STATUS = {
 const Repo = VcsEntity.extend({
   api: service(),
   auth: service(),
+
   permissions: attr(),
-  slug: attr(),
-  description: attr(),
+  slug: attr('string'),
+  description: attr('string'),
   'private': attr('boolean'),
   githubId: attr(),
   githubLanguage: attr(),
   active: attr(),
   owner: attr(),
-  name: attr(),
+  name: attr('string'),
   starred: attr('boolean'),
   active_on_org: attr('boolean'),
   emailSubscribed: attr('boolean'),
@@ -74,7 +71,7 @@ const Repo = VcsEntity.extend({
     let permissions = this.get('auth.currentUser.permissions');
 
     if (permissions) {
-      let id = parseInt(this.get('id'));
+      let id = parseInt(this.id);
 
       return permissions.includes(id);
     }
@@ -82,17 +79,17 @@ const Repo = VcsEntity.extend({
 
   formattedSlug: computed('owner.login', 'name', function () {
     let login = this.get('owner.login');
-    let name = this.get('name');
+    let name = this.name;
     return `${login} / ${name}`;
   }),
 
   sshKey: function () {
-    this.store.find('ssh_key', this.get('id'));
-    return this.store.recordForId('ssh_key', this.get('id'));
+    this.store.find('ssh_key', this.id);
+    return this.store.recordForId('ssh_key', this.id);
   },
 
   envVars: computed('id', function () {
-    let id = this.get('id');
+    let id = this.id;
     return this.store.filter('env_var', {
       repository_id: id
     }, (v) => v.get('repo.id') === id);
@@ -106,7 +103,7 @@ const Repo = VcsEntity.extend({
   _buildObservableArray(builds) {
     const array = ExpandableRecordArray.create({
       type: 'build',
-      content: A([])
+      content: []
     });
     array.load(builds);
     array.observe(builds);
@@ -114,7 +111,7 @@ const Repo = VcsEntity.extend({
   },
 
   builds: computed('id', function () {
-    let id = this.get('id');
+    let id = this.id;
     const builds = this.store.filter('build', {
       event_type: ['push', 'api', 'cron'],
       repository_id: id,
@@ -126,7 +123,7 @@ const Repo = VcsEntity.extend({
   }),
 
   pullRequests: computed('id', function () {
-    let id = this.get('id');
+    let id = this.id;
     const builds = this.store.filter('build', {
       event_type: 'pull_request',
       repository_id: id,
@@ -138,41 +135,41 @@ const Repo = VcsEntity.extend({
   }),
 
   branches: computed('id', function () {
-    let id = this.get('id');
+    let id = this.id;
     return this.store.filter('branch', {
       repository_id: id
     }, (b) => b.get('repoId') === id);
   }),
 
   cronJobs: computed('id', function () {
-    let id = this.get('id');
+    let id = this.id;
     return this.store.filter('cron', {
       repository_id: id
     }, (cron) => cron.get('branch.repoId') === id);
   }),
 
   updateTimes() {
-    let currentBuild = this.get('currentBuild');
+    let currentBuild = this.currentBuild;
     if (currentBuild) {
       return currentBuild.updateTimes();
     }
   },
 
   fetchSettings() {
-    const url = `/repo/${this.get('id')}/settings`;
-    return this.get('api').get(url).
+    const url = `/repo/${this.id}/settings`;
+    return this.api.get(url).
       then(data => this._convertV3SettingsToV2(data['settings']));
   },
 
   startMigration() {
-    const url = `/repo/${this.get('id')}/migrate`;
-    return this.get('api').post(url).then(() => {
+    const url = `/repo/${this.id}/migrate`;
+    return this.api.post(url).then(() => {
       this.set('migrationStatus', 'queued');
     });
   },
 
   saveSetting(name, value) {
-    return this.get('api').patch(`/repo/${this.get('id')}/setting/${name}`, {
+    return this.api.patch(`/repo/${this.id}/setting/${name}`, {
       data: {
         'setting.value': value
       }
@@ -190,9 +187,9 @@ const Repo = VcsEntity.extend({
 
   toggle() {
     const adapter = this.store.adapterFor('repo');
-    const id = this.get('id');
+    const id = this.id;
     let promise;
-    if (this.get('active')) {
+    if (this.active) {
       promise = adapter.deactivate(id);
     } else {
       promise = adapter.activate(id);
@@ -202,7 +199,7 @@ const Repo = VcsEntity.extend({
   },
 
   emailSubscriptionUrl: computed('id', function () {
-    let id = this.get('id');
+    let id = this.id;
     return `/repo/${id}/email_subscription`;
   }),
 

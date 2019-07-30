@@ -1,6 +1,13 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { reads, notEmpty, or, not, and, bool } from '@ember/object/computed';
+import {
+  reads,
+  notEmpty,
+  or,
+  not,
+  and,
+  bool
+} from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import config from 'travis/config/environment';
 
@@ -91,7 +98,7 @@ export default Component.extend({
   ),
 
   canMigrate: computed('hasGitHubAppsInstallation', 'legacyRepos.total', function () {
-    let hasGitHubAppsInstallation = this.get('hasGitHubAppsInstallation');
+    let hasGitHubAppsInstallation = this.hasGitHubAppsInstallation;
     let legacyRepositoryCount = this.get('legacyRepos.total');
     const hasLegacyRepos = legacyRepositoryCount > 0;
     const isAllowedByLimit = legacyRepositoryCount <= migrationRepositoryCountLimit;

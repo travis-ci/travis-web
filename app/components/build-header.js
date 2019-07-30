@@ -36,16 +36,16 @@ export default Component.extend({
   }),
 
   build: computed('isJob', function () {
-    let isJob = this.get('isJob');
+    let isJob = this.isJob;
     if (isJob) {
       return this.get('item.build');
     } else {
-      return this.get('item');
+      return this.item;
     }
   }),
 
   jobsConfig: computed('isJob', 'item.config', 'item.jobs.firstObject.config', function () {
-    let isJob = this.get('isJob');
+    let isJob = this.isJob;
     if (isJob) {
       return this.get('item.config');
     } else {
@@ -56,6 +56,14 @@ export default Component.extend({
   displayCompare: computed('item.eventType', function () {
     let eventType = this.get('item.eventType');
     return !['api', 'cron'].includes(eventType);
+  }),
+
+  vcsCommitUrl: computed('item.repo.{slug,vcsType}', 'commit.sha', function () {
+    const slug = this.get('item.repo.slug');
+    const sha = this.get('commit.sha');
+    const vcsType = this.get('item.repo.vcsType');
+
+    return vcsLinks.commitUrl(vcsType, slug, sha);
   }),
 
   vcsBranchUrl: computed('item.repo.{slug,vcsType}', 'build.branchName', function () {
@@ -121,7 +129,7 @@ export default Component.extend({
   }),
 
   osIcon: computed('os', function () {
-    let os = this.get('os');
+    let os = this.os;
     if (os === 'linux') {
       return 'icon-linux';
     } else if (os === 'osx') {

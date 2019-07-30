@@ -1,4 +1,12 @@
-{{#link-to "build" repo.owner.login repo.name build.id}}
-  {{status-icon status=build.state}}
-  <span class="label-align">#{{build.number}}</span>
-{{/link-to}}
+<LinkTo
+  @route="build"
+  @models={{array
+    this.repo.owner.login
+    this.repo.name build.id
+  }}
+>
+  <StatusIcon @status={{this.build.state}} />
+  <span class="label-align">
+    #{{this.build.number}}
+  </span>
+</LinkTo>

@@ -4,10 +4,10 @@ import { computed } from '@ember/object';
 
 export default Mixin.create({
   duration: computed('_duration', 'finishedAt', 'startedAt', 'notStarted', function () {
-    let duration = this.get('_duration');
-    let finishedAt = this.get('finishedAt');
-    let startedAt = this.get('startedAt');
-    let notStarted = this.get('notStarted');
+    let duration = this._duration;
+    let finishedAt = this.finishedAt;
+    let startedAt = this.startedAt;
+    let notStarted = this.notStarted;
     if (notStarted) {
       return null;
     } else if (duration) {
@@ -23,8 +23,8 @@ export default Mixin.create({
   },
 
   elapsedTime: computed('startedAt', 'finishedAt', function () {
-    let startedAt = this.get('startedAt');
-    let finishedAt = this.get('finishedAt');
+    let startedAt = this.startedAt;
+    let finishedAt = this.finishedAt;
     return durationFrom(startedAt, finishedAt);
   }),
 });

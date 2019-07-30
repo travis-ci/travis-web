@@ -1,6 +1,10 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { isInternal, presentedPath, fileNameWithoutSha } from 'travis/utils/format-config';
+import {
+  isInternal,
+  presentedPath,
+  fileNameWithoutSha
+} from 'travis/utils/format-config';
 import { later } from '@ember/runloop';
 
 import vcsLinks from 'travis/utils/vcs-links';
@@ -11,7 +15,7 @@ export default Component.extend({
 
   buttonLabel: computed('copied', 'rawConfig.source', function () {
     let source = this.get('rawConfig.source');
-    return this.get('copied') ? 'Copied!' : `Copy ${fileNameWithoutSha(source)}`;
+    return this.copied ? 'Copied!' : `Copy ${fileNameWithoutSha(source)}`;
   }),
 
   formattedConfig: computed('rawConfig.config', 'slug', function () {
@@ -28,7 +32,7 @@ export default Component.extend({
     let name = fileNameWithoutSha(source);
     if (name === this.baseYmlName) { return name; }
 
-    return presentedPath(source, this.get('slug'));
+    return presentedPath(source, this.slug);
   }),
 
   fileUrl: computed('rawConfig.source', 'slug', 'build.branchName', 'build.repo.vcsType', function () {

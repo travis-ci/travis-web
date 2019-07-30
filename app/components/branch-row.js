@@ -120,7 +120,7 @@ export default Component.extend({
 
   actions: {
     viewAllBuilds() {
-      return this.get('router').transitionTo('builds');
+      return this.router.transitionTo('builds');
     }
   }
 });

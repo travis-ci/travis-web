@@ -19,21 +19,21 @@ export default Service.extend({
     'showSearchResults',
     function () {
       return [
-        this.get('requestOwnedRepositories'),
-        this.get('performSearchRequest'),
-        this.get('showSearchResults'),
+        this.requestOwnedRepositories,
+        this.performSearchRequest,
+        this.showSearchResults,
       ];
     }
   ),
 
   loadingData: computed('tasks.@each.isRunning', function () {
-    let tasks = this.get('tasks');
+    let tasks = this.tasks;
     return tasks.any(task => task.get('isRunning'));
   }),
 
   performSearchRequest: task(function* () {
-    const store = this.get('store');
-    const query = this.get('searchQuery');
+    const store = this.store;
+    const query = this.searchQuery;
 
     const urlQuery = this.get('router._router.currentURL').split('/')[2];
 
@@ -44,24 +44,24 @@ export default Service.extend({
   }).drop(),
 
   showSearchResults: task(function* () {
-    let query = this.get('searchQuery');
+    let query = this.searchQuery;
 
     yield timeout(config.intervals.searchDebounceRate);
 
-    yield this.get('performSearchRequest').perform(query);
+    yield this.performSearchRequest.perform(query);
 
     query = query.replace(/\//g, '%2F');
-    this.get('router').transitionTo('search', query);
+    this.router.transitionTo('search', query);
   }).restartable(),
 
   requestOwnedRepositories: task(function* () {
-    if (!isEmpty(this.get('ownedRepos'))) {
-      return this.set('_repos', this.get('ownedRepos'));
+    if (!isEmpty(this.ownedRepos)) {
+      return this.set('_repos', this.ownedRepos);
     } else {
       let user = this.get('auth.currentUser');
       if (user) {
         const permissions = yield user.get('_rawPermissions');
-        const repositories = yield Repo.accessibleBy(this.get('store'), permissions.pull);
+        const repositories = yield Repo.accessibleBy(this.store, permissions.pull);
         this.set('_repos', repositories);
         this.set('ownedRepos', repositories);
         return repositories;
@@ -73,7 +73,7 @@ export default Service.extend({
     '_repos.[]',
     '_repos.@each.{currentBuildFinishedAt,currentBuildId}',
     function () {
-      let repos = this.get('_repos');
+      let repos = this._repos;
       return this.sortData(repos);
     }
   ),
@@ -82,7 +82,7 @@ export default Service.extend({
     '_searchResults.[]',
     '_searchResults.@each.{currentBuildFinishedAt,currentBuildId}',
     function () {
-      let repos = this.get('_searchResults');
+      let repos = this._searchResults;
       return this.sortData(repos);
     }
   ),

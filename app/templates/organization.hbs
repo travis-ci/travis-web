@@ -1,8 +1,6 @@
-{{#travis-layout layoutName="layouts/profile" class="profile-view"}}
+<TravisLayout @layoutName="layouts/profile" class="profile-view">
   <div data-test-account-page></div>
-
-  {{#profile-nav activeModel=model }}
+  <ProfileNav @activeModel={{this.model}}>
     {{outlet}}
-  {{/profile-nav}}
-
-{{/travis-layout}}
+  </ProfileNav>
+</TravisLayout>

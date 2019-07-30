@@ -23,7 +23,7 @@ export default Controller.extend(Polling, {
   sendFaviconStateChanges: true,
 
   updateTimes() {
-    this.get('updateTimesService').push(this.get('build.stages'));
+    this.updateTimesService.push(this.get('build.stages'));
   },
 
   init() {
@@ -34,7 +34,7 @@ export default Controller.extend(Polling, {
   },
 
   buildStateDidChange: observer('build.state', function () {
-    if (this.get('sendFaviconStateChanges')) {
+    if (this.sendFaviconStateChanges) {
       this.send('faviconStateDidChange', this.get('build.state'));
     }
   })

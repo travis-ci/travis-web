@@ -1,7 +1,5 @@
 /* eslint-disable */
-import Ember from 'ember';
-
-let jQuery = Ember.$;
+import jQuery from 'jquery';
 
 /**
  * This is now inline because my previous solution, including it in

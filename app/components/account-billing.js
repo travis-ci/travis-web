@@ -22,7 +22,7 @@ export default Component.extend({
   invoices: computed('subscription.id', function () {
     let subscriptionId = this.get('subscription.id');
     if (subscriptionId) {
-      return this.get('store').query('invoice', { subscription_id: subscriptionId });
+      return this.store.query('invoice', { subscription_id: subscriptionId });
     } else {
       return [];
     }

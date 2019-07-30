@@ -15,7 +15,7 @@ export default TravisRoute.extend({
     const repo = this.modelFor('repo');
     const url = `/repo/${repo.get('id')}/caches`;
 
-    return this.get('ajax').getV3(url).then((data) => consolidateCaches(repo, data));
+    return this.ajax.getV3(url).then((data) => consolidateCaches(repo, data));
   },
 });
 

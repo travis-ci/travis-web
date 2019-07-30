@@ -1,42 +1,59 @@
 <div class="row-item">
-  {{status-icon status=requestClass}}
+  <StatusIcon @status={{this.requestClass}} />
 </div>
-
-<div class="row-item fade-out {{requestClass}}">
-  {{request-icon event=request.event_type state=requestClass}}
+<div class="row-item fade-out {{this.requestClass}}">
+  <RequestIcon @event={{this.request.event_type}} @state={{this.requestClass}} />
   <span class="label-align m-l-s" data-requests-item-related-model>
-    {{#if request.isPullRequest}}
-      <strong>#{{build.pullRequestNumber}}</strong>
+    {{#if this.request.isPullRequest}}
+      <strong>
+        #{{this.build.pullRequestNumber}}
+      </strong>
     {{/if}}
-    {{#if request.branchName}}
-      <strong>{{request.branchName}}</strong>
+    {{#if this.request.branchName}}
+      <strong>
+        {{this.request.branchName}}
+      </strong>
     {{/if}}
-    {{#if request.commit}}
-      {{vcs-commit-link request.repo.vcsType request.repo.slug request.commit.sha}}
+    {{#if this.request.commit}}
+      {{vcs-commit-link this.request.repo.vcsType this.request.repo.slug this.request.commit.sha}}
     {{else}}
-      <em data-requests-item-commit-missing>No commit available</em>
+      <em data-requests-item-commit-missing>
+        No commit available
+      </em>
     {{/if}}
   </span>
 </div>
-
-<div class="row-item fade-out" title="{{pretty-date request.created_at}}" data-requests-item-created-at>
-  {{svg-jar 'icon-calendar' class="icon"}}
-  <span class="label-align">{{format-time request.created_at}}</span></div>
-
-<div class="row-item fade-out" data-requests-item-commit-message>
-  {{{format-message request.commit.message short="true" repo=build.repo}}}
+<div
+  class="row-item fade-out"
+  title="{{pretty-date this.request.created_at}}"
+  data-requests-item-created-at
+>
+  <SvgImage @name="icon-calendar" @class="icon" />
+  <span class="label-align">
+    {{format-time this.request.created_at}}
+  </span>
 </div>
-
+<div class="row-item fade-out" data-requests-item-commit-message>
+  {{{format-message this.request.commit.message short="true" repo=this.build.repo}}}
+</div>
 <div class="row-item" data-requests-item-build>
-  {{#if build}}
-    {{svg-jar 'icon-hash' class="icon"}}
-    {{#link-to "build" build title="Go to the build this request triggered"}}
-      <span class="label-align inner-underline">{{build.number}}</span>{{/link-to}}
+  {{#if this.build}}
+    <SvgImage @name="icon-hash" @class="icon" />
+    <LinkTo
+      @route="build"
+      @model={{this.build}}
+      @title="Go to the build this request triggered"
+    >
+      <span class="label-align inner-underline">
+        {{this.build.number}}
+      </span>
+    </LinkTo>
   {{else}}
-      -
+    -
   {{/if}}
 </div>
-
 <div class="row-item fade-out" data-requests-item-message>
-  <span class="label-align" title="{{message}}">{{message}}</span>
+  <span class="label-align" title="{{this.message}}">
+    {{this.message}}
+  </span>
 </div>

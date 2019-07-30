@@ -18,4 +18,12 @@ export default Component.extend({
 
     return vcsLinks.branchUrl(vcsType, slug, branchName);
   }),
+
+  vcsCommitUrl: computed('build.repo.{slug,vcsType}', 'build.commit.sha', function () {
+    const slug = this.get('build.repo.slug');
+    const sha = this.get('build.commit.sha');
+    const vcsType = this.get('build.repo.vcsType');
+
+    return vcsLinks.commitUrl(vcsType, slug, sha);
+  }),
 });

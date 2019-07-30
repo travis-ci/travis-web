@@ -10,7 +10,7 @@ export default Component.extend({
 
   actions: {
     sync() {
-      return this.get('user').sync();
+      return this.user.sync();
     }
   }
 });

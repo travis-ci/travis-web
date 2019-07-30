@@ -1,10 +1,9 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
-import { task, timeout } from 'ember-concurrency';
-import { mapBy } from '@ember/object/computed';
-import config from 'travis/config/environment';
+import { task } from 'ember-concurrency';
+import BranchSearching from 'travis/mixins/branch-searching';
 
-export default Component.extend({
+export default Component.extend(BranchSearching, {
   store: service(),
 
   classNames: ['form--cron'],
@@ -18,8 +17,6 @@ export default Component.extend({
     name: 'Do not run if there has been a build in the last 24h',
     value: true
   }],
-
-  currentCronJobsBranches: mapBy('repository.cronJobs', 'branch.name'),
 
   init() {
     this.reset();
@@ -35,19 +32,10 @@ export default Component.extend({
   },
 
   search: task(function* (query) {
-    yield timeout(config.intervals.searchDebounceRate);
-    let branchNames = this.get('currentCronJobsBranches');
-    let branches = yield this.store.query('branch', {
-      repository_id: this.repository.id,
-      data: {
-        name: query,
-        sort_by: 'name',
-        limit: 10,
-        exists_on_github: true
-      }
-    });
-    return branches.reject(branch => (branchNames.includes(branch.name)));
-  }).restartable(),
+    const branchNames = this.currentCronJobsBranches;
+    const searchResults = yield this.searchBranch.perform(this.repository.id, query, branchNames);
+    return searchResults;
+  }),
 
   save: task(function* () {
     const cron = this.store.createRecord('cron', {
