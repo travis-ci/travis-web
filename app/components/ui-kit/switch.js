@@ -1,4 +1,4 @@
-import Button from 'travis/components/styleguides/button';
+import Button from 'travis/components/ui-kit/button';
 import { computed } from '@ember/object';
 
 export const DEFAULT_VARIANT = 'switch';
