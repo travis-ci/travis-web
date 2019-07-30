@@ -1,8 +1,9 @@
-<div class='yml-message' tabindex=0>
-  <div class='tooltip-wrapper'>
-    {{svg-jar message.level class=iconClass}}
-    {{ember-tooltip text=tooltipText}}
+<div class="yml-message" tabindex="0">
+  <div class="tooltip-wrapper">
+    <SvgImage @name={{this.message.level}} @class={{this.iconClass}} />
+    <EmberTooltip @text={{this.tooltipText}} />
   </div>
-
-  <div class='message'>{{readableMessage}}</div>
+  <div class="message">
+    {{this.readableMessage}}
+  </div>
 </div>

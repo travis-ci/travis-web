@@ -952,6 +952,7 @@ Log.Renderer = function () {
 };
 
 Log.extend(Log.Renderer.prototype, {
+  currentLineNumber: 1,
   insert: function (data, pos) {
     let after, before, into, node;
     node = this.render(data);
@@ -1013,6 +1014,7 @@ Log.extend(Log.Renderer.prototype, {
   renderParagraph: function (data) {
     let node, para, type, _i, _len, _ref;
     para = this.para.cloneNode(true);
+    para.getElementsByTagName('a')[0].innerHTML = this.currentLineNumber++;
     if (data.id) {
       para.setAttribute('id', data.id);
     }

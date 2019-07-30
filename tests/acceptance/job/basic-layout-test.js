@@ -70,7 +70,13 @@ module('Acceptance | job/basic layout', function (hooks) {
     assert.equal(jobPage.createdBy.text, 'Mr T');
     assert.ok(jobPage.createdBy.avatarSrc.startsWith('/images/favicon-gray.png'));
 
-    assert.equal(jobPage.log, 'Hello log');
+    const logNumbers = jobPage.log.match(/\d+/g);
+    const logContent = jobPage.log.split(/\d+/g).filter(Boolean);
+
+    assert.equal(logNumbers[0], '1');
+    assert.equal(logNumbers[1], '2');
+    assert.equal(logContent[0], 'Hello log');
+    assert.equal(logContent[1], 'Second line');
     assert.notOk(jobPage.hasTruncatedLog);
     assert.equal(jobPage.rawLogUrl, `${config.apiEndpoint}/v3/job/${job.id}/log.txt`);
   });
@@ -122,7 +128,13 @@ module('Acceptance | job/basic layout', function (hooks) {
     assert.equal(jobPage.createdBy.text, 'Mr T');
     assert.ok(jobPage.createdBy.avatarSrc.startsWith('/images/favicon-gray.png'));
 
-    assert.equal(jobPage.log, 'Hello log');
+    const logNumbers = jobPage.log.match(/\d+/g);
+    const logContent = jobPage.log.split(/\d+/g).filter(Boolean);
+
+    assert.equal(logNumbers[0], '1');
+    assert.equal(logNumbers[1], '2');
+    assert.equal(logContent[0], 'Hello log');
+    assert.equal(logContent[1], 'Second line');
     assert.notOk(jobPage.hasTruncatedLog);
     assert.equal(jobPage.rawLogUrl, `${config.apiEndpoint}/v3/job/${job.id}/log.txt`);
   });
@@ -460,7 +472,9 @@ module('Acceptance | job/basic layout', function (hooks) {
     // eslint-disable-next-line
     await waitFor('.log-container .log-line');
 
-    assert.equal(jobPage.logLines[0].text, "Log rendering is off because localStorage['travis.logRendering'] is `false`.");
+    const logContent = jobPage.logLines[0].text.split(/\d+/g).filter(Boolean);
+
+    assert.equal(logContent, "Log rendering is off because localStorage['travis.logRendering'] is `false`.");
 
     this.pusher.receive('job:log', {
       id: job.id,

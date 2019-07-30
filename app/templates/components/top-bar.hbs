@@ -1,22 +1,22 @@
-<div class="topbar {{if is-open 'has-autoheight'}} {{if showBroadcasts 'has-autoheight'}}">
-  <h1 id="logo" class="logo">{{#link-to "index"}}Travis CI{{/link-to}}</h1>
-  {{header-burger-menu is-open=is-open}}
-  {{header-broadcasts showBroadcasts=showBroadcasts}}
-  {{header-links is-open=is-open}}
+<div class="topbar {{if this.isOpen 'has-autoheight'}} {{if this.showBroadcasts 'has-autoheight'}}" >
+  <h1 id="logo" class="logo">
+    <LinkTo @route="index">
+      Travis CI
+    </LinkTo>
+  </h1>
+  <HeaderBurgerMenu @isOpen={{this.isOpen}} />
+  <HeaderBroadcasts @showBroadcasts={{this.showBroadcasts}} />
+  <HeaderLinks @isOpen={{this.isOpen}} />
 </div>
-
-{{#if features.enterpriseVersion}}
-  {{enterprise-banner}}
+{{#if this.features.enterpriseVersion}}
+  <EnterpriseBanner />
 {{/if}}
-
 {{#if hasBlock}}
   {{yield}}
-{{else}}
-  {{#if showCta}}
-    <div class="cta">
-      <p class="row">
-        Help make Open Source a better place and start building better software today!
-      </p>
-    </div>
-  {{/if}}
+{{else if this.showCta}}
+  <div class="cta">
+    <p class="row">
+      Help make Open Source a better place and start building better software today!
+    </p>
+  </div>
 {{/if}}

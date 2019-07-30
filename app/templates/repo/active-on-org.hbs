@@ -1,43 +1,36 @@
 <div data-test-active_on_org-display class="missing-notice">
-
-  {{svg-jar 'hammer' class="page-graphic snapshot-hide"}}
-
+  <SvgImage @name="hammer" @class="page-graphic snapshot-hide" />
   <h2 class="text-big">
     You can now start building this repository, right here at travis-ci.com!
   </h2>
-
-  {{#if auth.signedIn}}
-
+  {{#if this.auth.signedIn}}
     <button
-      disabled={{isMigrateButtonDisabled}}
-      onclick={{action 'migrate'}}
-      class='button button--flex button--blue {{if isMigrateButtonDisabled 'disabled'}}'
+      disabled={{this.isMigrateButtonDisabled}}
+      onclick={{action "migrate"}}
+      class="button button--flex button--blue {{if isMigrateButtonDisabled 'disabled'}}"
     >
-      {{#if repo.isMigrationInProgress}}
+      {{#if this.repo.isMigrationInProgress}}
         Migrating...
-      {{else if repo.isMigrationSucceeded}}
+      {{else if this.repo.isMigrationSucceeded}}
         Done!
       {{else}}
-        Migrate {{svg-jar 'icon-migrate' class="icon icon--m white icon--right"}}
+        Migrate <SvgImage @name="icon-migrate" @class="icon icon--m white icon--right" />
       {{/if}}
     </button>
-
-    {{#if isMigrationNotAllowed}}
+    {{#if this.isMigrationNotAllowed}}
       <p>
-        {{#if (not permissions.admin)}}
+        {{#if (not this.permissions.admin)}}
           Migration requires admin permissions.
-        {{else if (not permissions.migrate)}}
+        {{else if (not this.permissions.migrate)}}
           This repository cannot be migrated. Most likely migration feature is not enabled for your account.
         {{else}}
           This repository cannot be migrated yet.
         {{/if}}
       </p>
     {{/if}}
-
   {{else}}
-
-    <button class="auth-button signed-out" type="button" {{action 'signIn'}}>Sign in with GitHub</button>
-
+    <button class="auth-button signed-out" type="button" onclick={{action "signIn"}}>
+      Sign in with GitHub
+    </button>
   {{/if}}
-
 </div>

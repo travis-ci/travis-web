@@ -1,6 +1,8 @@
-{{#if build.number}}
-  {{#link-to "build" build.id}}
-    {{status-icon status=build.state}}
-    <span class="build-tile-number">#{{build.number}}</span>
-  {{/link-to}}
+{{#if this.build.number}}
+  <LinkTo @route="build" @model={{this.build.id}}>
+    <StatusIcon @status={{this.build.state}} />
+    <span class="build-tile-number">
+      #{{this.build.number}}
+    </span>
+  </LinkTo>
 {{/if}}

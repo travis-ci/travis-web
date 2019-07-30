@@ -1,65 +1,63 @@
-{{#travis-form
-  onSubmit=(perform save)
+<TravisForm
+  @onSubmit={{perform this.save}}
   as |form|
-}}
-  <div class='form-elem select'>
-    {{#form.field
-      label='Branch'
-      value=selectedBranch
-      required=true
-      class='branch-selector'
-      showValidationStatusIcons=false
+>
+  <div class="form-elem select">
+    <form.field
+      @label="Branch"
+      @value={{this.selectedBranch}}
+      required={{true}}
+      class="branch-selector"
+      @showValidationStatusIcons={{false}}
       as |field|
-    }}
-      {{#field.select
-        searchField='name'
-        placeholder='Select branch'
-        selected=selectedBranch
-        onchange=(action (mut selectedBranch))
-        search=(perform search)
+    >
+      <field.select
+        @searchField="name"
+        @placeholder="Select branch"
+        @selected={{this.selectedBranch}}
+        @onchange={{action (mut this.selectedBranch)}}
+        @search={{perform this.search}}
         as |branch|
-      }}
+      >
         {{branch.name}}
-      {{/field.select}}
-    {{/form.field}}
+      </field.select>
+    </form.field>
   </div>
-  <div class='form-elem select'>
-    {{#form.field
-      label='Interval'
-      required=true
-      value=selectedInterval
-      onChange=(action (mut selectedInterval))
-      showValidationStatusIcons=false
+  <div class="form-elem select">
+    <form.field
+      @label="Interval"
+      @required={{true}}
+      @value={{this.selectedInterval}}
+      @onChange={{action (mut this.selectedInterval)}}
+      @showValidationStatusIcons={{false}}
       as |field|
-    }}
-      {{#field.select options=intervals as |interval|}}
+    >
+      <field.select @options={{this.intervals}} as |interval|>
         {{interval}}
-      {{/field.select}}
-    {{/form.field}}
+      </field.select>
+    </form.field>
   </div>
-  <div class='form-elem select'>
-    {{#form.field
-      label='Options'
-      required=true
-      value=selectedOption
-      onChange=(action (mut selectedOption))
-      showValidationStatusIcons=false
+  <div class="form-elem select">
+    <form.field
+      @label="Options"
+      @required={{true}}
+      @value={{this.selectedOption}}
+      @onChange={{action (mut this.selectedOption)}}
+      @showValidationStatusIcons={{false}}
       as |field|
-    }}
-      {{#field.select options=options as |option|}}
+    >
+      <field.select @options={{this.options}} as |option|>
         {{option.name}}
-      {{/field.select}}
-    {{/form.field}}
+      </field.select>
+    </form.field>
   </div>
-  <div class='form-elem'>
-     {{#if save.isRunning}}
-      {{loading-indicator}}
+  <div class="form-elem">
+    {{#if this.save.isRunning}}
+      <LoadingIndicator />
     {{else}}
-      <button
-        onclick={{form.submit}}
-        class='cron-form-submit form-submit'>
+      <button onclick={{action form.submit}} class="cron-form-submit form-submit">
         Add
       </button>
     {{/if}}
   </div>
-{{/travis-form}}
+</TravisForm>

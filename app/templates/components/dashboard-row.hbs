@@ -1,101 +1,182 @@
 <div class="dash-head">
-  <button {{action "starRepo"}} class="dash-star {{if repo.starred 'is-starred'}}" title="{{if repo.starred 'un'}}star this repo">
-    {{svg-jar 'icon-star' class="icon--m"}}
+  <button
+    class="dash-star {{if this.repo.starred 'is-starred'}}"
+    title="{{if this.repo.starred 'un'}}star this repo"
+    onclick={{action "starRepo"}}
+  >
+    <SvgImage @name="icon-star" @class="icon--m" />
   </button>
-  {{#if repo.private}}
+  {{#if this.repo.private}}
     <span class="dash-private" title="private repository">
-    {{svg-jar 'icon-private' class="icon"}}</span>
+      <SvgImage @name="icon-private" @class="icon" />
+    </span>
   {{/if}}
 </div>
 <div class="dash-body">
   <div class="dash-main">
     <header class="fade-out dash-header">
-      <h2 class="row-label">{{#link-to "owner" repo.owner.login title=repo.owner.login}}{{repo.owner.login}}{{/link-to}}</h2>
-      <h1 class="row-content">{{#link-to "repo" repo.owner.login repo.name title=repo.name}}{{repo.name}}{{/link-to}}</h1>
+      <h2 class="row-label">
+        <LinkTo
+          @route="owner"
+          @model={{this.repo.owner.login}}
+          @title={{this.repo.owner.login}}
+        >
+          {{this.repo.owner.login}}
+        </LinkTo>
+      </h2>
+      <h1 class="row-content">
+        <LinkTo
+          @route="repo"
+          @models={{array this.repo.owner.login this.repo.name}}
+          @title={{this.repo.name}}
+        >
+          {{this.repo.name}}
+        </LinkTo>
+      </h1>
     </header>
-
-  {{#if repo.active}}
-    <section class="dash-default {{repo.defaultBranch.lastBuild.state}} fade-out">
-      <h3 class="label">Default branch</h3>
-      <p class="row-content color">
-        {{request-icon event=repo.defaultBranch.lastBuild.eventType state=repo.defaultBranch.lastBuild.state}}
-        {{#if repo.defaultBranch.lastBuild.id}}
-          {{#link-to "build" repo.owner.login repo.name repo.defaultBranch.lastBuild.id title="Last build on the default branch"}}
-            {{repo.defaultBranch.lastBuild.branch.name}} {{repo.defaultBranch.lastBuild.state}}
-        {{/link-to}}
-        {{else}}
-          <span title="Default branch has never been built">{{repo.defaultBranch.name}}</span>
-        {{/if}}
-      </p>
-    </section>
-
-    {{#if repo.currentBuild}}
-    <section class="dash-last {{repo.currentBuild.state}}">
-      <h3 class="label">Last build</h3>
-      <p class="row-content color">
-        {{status-icon status=repo.currentBuild.state}}
-        {{#link-to "build" repo.owner.login repo.name repo.currentBuild.id title="Last build on the repo"}}
-        <span class="label-align">#{{repo.currentBuild.number}} {{humanize-state repo.currentBuild.state}}</span>
-        {{/link-to}}
-      </p>
-    </section>
-    <section class="dash-commit">
-      <h3 class="label">Commit</h3>
-      <div class="row-content row-item commit-sha">
-        {{svg-jar 'icon-commit' class="icon"}}
-        {{#external-link-to href=repo.currentBuild.commit.githubUrl}}
-          {{ember-tooltip text='View commit on GitHub'}}
-          <span class="label-align monospace">
-            {{format-sha repo.currentBuild.commit.sha}}
-          </span>
-        {{/external-link-to}}
-        {{svg-jar 'icon-external-link' class="icon"}}
-      </div>
-    </section>
-    <section class="fade-out dash-finished">
-      <h3 class="label">Finished</h3>
-      <p class="row-content" title="{{repo.currentBuild.finishedAt}}">
-        {{svg-jar 'icon-calendar' class="icon"}}
-        <span class="label-align">
-          {{#if repo.currentBuild.finishedAt}}
-          {{format-time repo.currentBuild.finishedAt}}
-          {{else}}still running{{/if}}</span>
-      </p>
-    </section>
-
-    <div class="dash-menu">
-      {{#if displayMenuTofu}}
-        {{#if isTriggering}}
-          {{loading-indicator}}
-        {{else}}
-        <div class="dropup {{if dropupIsOpen "is-open"}}">
-          <button type="button" class="dropup-tofu" {{action "openDropup"}}>
-            {{svg-jar 'icon-tofuburger' class="icon-tofu"}}
-          </button>
-          <ul class="dropup-list">
-            <li><button title="Trigger a build on the default branch" {{action 'triggerBuild'}}>
-                {{svg-jar 'icon-restart' class="icon"}}
-                <span class="label-align">Trigger a build</span></button></li>
-            <li>
-              {{#link-to 'settings' repo title="Settings for this repository"}}
-              {{svg-jar 'icon-settings' class="icon"}}
-              <span class="label-align">Settings</span>
-              {{/link-to}}</li>
-          </ul>
+    {{#if this.repo.active}}
+      <section class="dash-default {{this.repo.defaultBranch.lastBuild.state}} fade-out">
+        <h3 class="label">
+          Default branch
+        </h3>
+        <p class="row-content color">
+          <RequestIcon
+            @event={{this.repo.defaultBranch.lastBuild.eventType}}
+            @state={{this.repo.defaultBranch.lastBuild.state}}
+          />
+          {{#if this.repo.defaultBranch.lastBuild.id}}
+            <LinkTo
+              @route="build"
+              @models={{array
+                this.repo.owner.login
+                this.repo.name
+                this.repo.defaultBranch.lastBuild.id
+              }}
+              @title="Last build on the default branch"
+            >
+              {{this.repo.defaultBranch.lastBuild.branch.name}}
+              {{this.repo.defaultBranch.lastBuild.state}}
+            </LinkTo>
+          {{else}}
+            <span title="Default branch has never been built">
+              {{this.repo.defaultBranch.name}}
+            </span>
+          {{/if}}
+        </p>
+      </section>
+      {{#if this.repo.currentBuild}}
+        <section class="dash-last {{this.repo.currentBuild.state}}">
+          <h3 class="label">
+            Last build
+          </h3>
+          <p class="row-content color">
+            <StatusIcon @status={{this.repo.currentBuild.state}} />
+            <LinkTo
+              @route="build"
+              @models={{array
+                this.repo.owner.login
+                this.repo.name
+                this.repo.currentBuild.id
+              }}
+              @title="Last build on the repo"
+            >
+              <span class="label-align">
+                #{{this.repo.currentBuild.number}}
+                {{humanize-state this.repo.currentBuild.state}}
+              </span>
+            </LinkTo>
+          </p>
+        </section>
+        <section class="dash-commit">
+          <h3 class="label">
+            Commit
+          </h3>
+          <div class="row-content row-item commit-sha">
+            <SvgImage @name="icon-commit" @class="icon" />
+            <ExternalLinkTo @href={{this.repo.currentBuild.commit.githubUrl}}>
+              <EmberTooltip @text="View commit on GitHub" />
+              <span class="label-align monospace">
+                {{format-sha this.repo.currentBuild.commit.sha}}
+              </span>
+            </ExternalLinkTo>
+            <SvgImage @name="icon-external-link" @class="icon" />
+          </div>
+        </section>
+        <section class="fade-out dash-finished">
+          <h3 class="label">
+            Finished
+          </h3>
+          <p class="row-content" title="{{this.repo.currentBuild.finishedAt}}">
+            <SvgImage @name="icon-calendar" @class="icon" />
+            <span class="label-align">
+              {{#if this.repo.currentBuild.finishedAt}}
+                {{format-time this.repo.currentBuild.finishedAt}}
+              {{else}}
+                still running
+              {{/if}}
+            </span>
+          </p>
+        </section>
+        <div class="dash-menu">
+          {{#if this.displayMenuTofu}}
+            {{#if this.isTriggering}}
+              <LoadingIndicator />
+            {{else}}
+              <div class="dropup {{if dropupIsOpen 'is-open'}}">
+                <button
+                  type="button"
+                  class="dropup-tofu"
+                  onclick={{action "openDropup"}}
+                >
+                <SvgImage @name="icon-tofuburger" @class="icon-tofu" />
+                </button>
+                <ul class="dropup-list">
+                  <li>
+                    <button
+                      title="Trigger a build on the default branch"
+                      onclick={{action "triggerBuild"}}
+                    >
+                      <SvgImage @name="icon-restart" @class="icon" />
+                      <span class="label-align">
+                        Trigger a build
+                      </span>
+                    </button>
+                  </li>
+                  <li>
+                    <LinkTo
+                      @route="settings"
+                      @model={{this.repo}}
+                      @title="Settings for this repository"
+                    >
+                      <SvgImage @name="icon-settings" @class="icon" />
+                      <span class="label-align">
+                        Settings
+                      </span>
+                    </LinkTo>
+                  </li>
+                </ul>
+              </div>
+            {{/if}}
+          {{/if}}
         </div>
-        {{/if}}
+      {{else}}
+        <div class="dash-no-build">
+          <p class="dash-helptext helptext">
+            There are no builds for this repo yet
+          </p>
+          {{#if this.isTriggering}}
+            <LoadingIndicator />
+          {{else}}
+            <button
+              class="button--blue"
+              title="Trigger a build on the default branch"
+              onclick={{action "triggerBuild"}}
+            >
+              Trigger a build
+            </button>
+          {{/if}}
+        </div>
       {{/if}}
-    </div>
-
-    {{else}}
-      <div class="dash-no-build">
-        <p class="dash-helptext helptext">There are no builds for this repo yet</p>
-        {{#if isTriggering}}
-          {{loading-indicator}}
-        {{else}}
-          <button class="button--blue" {{action 'triggerBuild'}} title="Trigger a build on the default branch">Trigger a build</button>  {{/if}}
-      </div>
     {{/if}}
-  {{/if}}
   </div>
 </div>
