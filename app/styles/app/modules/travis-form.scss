@@ -16,6 +16,10 @@ $select-multiple-spacing: 5px;
   .travis-form__field {
     position: relative;
 
+    .ember-power-select-selected-item {
+      white-space: nowrap;
+    }
+
     &.env-branch-selector {
       .ember-power-select-trigger {
         padding-right: 64px !important;
@@ -23,20 +27,21 @@ $select-multiple-spacing: 5px;
       .ember-power-select-selected-item {
         margin-right: 8px;
         border-right: none;
-        padding-left: 3px;
       }
       .ember-power-select-clear-btn {
         right: 25px;
-        top: 7px;
+        top: 50%;
         font-size: 0;
         border-radius: 3px;
-        padding: 1px 4px;
+        padding: 3px 4px;
+        transform: translate(0, -50%);
         background: $cement-grey;
         color: #fff;
         &:before {
           content: 'clear';
           font-size: 14px;
           font-weight: 300;
+          line-height: 14px;
         }
         &:hover {
           background: $oxide-blue;
