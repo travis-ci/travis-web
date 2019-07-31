@@ -35,6 +35,8 @@ module('Integration | Component | billing-information', function (hooks) {
 
     this['actions'] = {
       next: () => { },
+      back: () => { },
+      goToFirstStep: () => { }
     };
 
     this.setProperties({
@@ -46,13 +48,14 @@ module('Integration | Component | billing-information', function (hooks) {
   });
 
   test('it renders billing information form correctly', async function (assert) {
-
     await render(hbs`
     {{billing-information 
       selectedPlan=selectedPlan 
       displayedPlans=displayedPlans 
       showAnnual=showAnnual
       next=(action 'next')
+      back=(action 'back')
+      goToFirstStep=(action 'goToFirstStep')
     }}`);
 
     assert.dom('[data-test-billing-info-title]').hasText('Billing Cycle');

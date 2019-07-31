@@ -433,19 +433,12 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.visit();
     await profilePage.billing.visit();
 
-    assert.ok(profilePage.billing.billingForm.isPresent);
-    assert.ok(profilePage.billing.billingPlanChoices.isPresent);
+    assert.ok(profilePage.billing.getPlanButton.isPresent);
 
-    assert.ok(profilePage.billing.selectedBillingPlan.isPresent);
-    assert.dom(profilePage.billing.selectedBillingPlan.name.scope).hasTextContaining(`${this.defaultPlan.name} plan`);
-    assert.dom(profilePage.billing.selectedBillingPlan.jobs.scope).hasTextContaining(`${this.defaultPlan.builds} concurrent jobs`);
-    assert.dom(profilePage.billing.selectedBillingPlan.freeJobs.scope).hasTextContaining('3 free concurrent jobs');
-    assert.dom(profilePage.billing.selectedBillingPlan.price.scope).hasTextContaining(`$${this.defaultPlan.price / 100} /month`);
+    await profilePage.billing.getPlanButton.click();
 
-    assert.dom(profilePage.billing.billingForm.input.scope).exists({ count: 9 });
-    assert.dom(profilePage.billing.billingForm.select.scope).exists({ count: 1 });
     assert.dom(profilePage.billing.billingPlanChoices.boxes.scope).exists({ count: 4 });
-    assert.equal(profilePage.billing.subscribeButton.text, 'Proceed to Payment');
+    assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe');
   });
 
   test('view billing tab when switch is clicked on plan changes correctly', async function (assert) {
@@ -453,19 +446,18 @@ module('Acceptance | profile/billing', function (hooks) {
 
     await profilePage.visit();
     await profilePage.billing.visit();
-    await profilePage.billing.billingForm.switchPlan.click();
+    await profilePage.billing.getPlanButton.click();
+    await profilePage.billing.switchPlan.click();
 
-    assert.dom(profilePage.billing.selectedBillingPlan.name.scope).hasTextContaining(`${this.defaultAnnualPlan.name} plan`);
-    assert.dom(profilePage.billing.selectedBillingPlan.jobs.scope).hasTextContaining(`${this.defaultAnnualPlan.builds} concurrent jobs`);
-    assert.dom(profilePage.billing.selectedBillingPlan.freeJobs.scope).hasTextContaining('3 free concurrent jobs');
-    assert.dom(profilePage.billing.selectedBillingPlan.price.scope).hasTextContaining(`$${this.defaultAnnualPlan.price / 100} /year`);
+    assert.dom(profilePage.billing.selectedPlan.name.scope).hasTextContaining(`${this.defaultAnnualPlan.name}`);
+    assert.dom(profilePage.billing.selectedPlan.jobs.scope).hasTextContaining(`${this.defaultAnnualPlan.builds} concurrent jobs`);
+    assert.dom(profilePage.billing.selectedPlan.price.scope).hasTextContaining(`$${this.defaultAnnualPlan.price / 100} /year`);
 
-    await profilePage.billing.billingForm.switchPlan.click();
+    await profilePage.billing.switchPlan.click();
 
-    assert.dom(profilePage.billing.selectedBillingPlan.name.scope).hasTextContaining(`${this.defaultPlan.name} plan`);
-    assert.dom(profilePage.billing.selectedBillingPlan.jobs.scope).hasTextContaining(`${this.defaultPlan.builds} concurrent jobs`);
-    assert.dom(profilePage.billing.selectedBillingPlan.freeJobs.scope).hasTextContaining('3 free concurrent jobs');
-    assert.dom(profilePage.billing.selectedBillingPlan.price.scope).hasTextContaining(`$${this.defaultPlan.price / 100} /month`);
+    assert.dom(profilePage.billing.selectedPlan.name.scope).hasTextContaining(`${this.defaultPlan.name}`);
+    assert.dom(profilePage.billing.selectedPlan.jobs.scope).hasTextContaining(`${this.defaultPlan.builds} concurrent jobs`);
+    assert.dom(profilePage.billing.selectedPlan.price.scope).hasTextContaining(`$${this.defaultPlan.price / 100} /month`);
   });
 
   test('view billing tab when not subscribed select different plan changes correctly', async function (assert) {
@@ -473,12 +465,12 @@ module('Acceptance | profile/billing', function (hooks) {
 
     await profilePage.visit();
     await profilePage.billing.visit();
+    await profilePage.billing.getPlanButton.click();
     await profilePage.billing.billingPlanChoices.lastBox.visit();
 
-    assert.dom(profilePage.billing.selectedBillingPlan.name.scope).hasTextContaining(`${this.lastPlan.name} plan`);
-    assert.dom(profilePage.billing.selectedBillingPlan.jobs.scope).hasTextContaining(`${this.lastPlan.builds} concurrent jobs`);
-    assert.dom(profilePage.billing.selectedBillingPlan.freeJobs.scope).hasTextContaining('3 free concurrent jobs');
-    assert.dom(profilePage.billing.selectedBillingPlan.price.scope).hasTextContaining(`$${this.lastPlan.price / 100} /month`);
+    assert.dom(profilePage.billing.selectedPlan.name.scope).hasTextContaining(`${this.lastPlan.name}`);
+    assert.dom(profilePage.billing.selectedPlan.jobs.scope).hasTextContaining(`${this.lastPlan.builds} concurrent jobs`);
+    assert.dom(profilePage.billing.selectedPlan.price.scope).hasTextContaining(`$${this.lastPlan.price / 100} /month`);
   });
 
   test('view billing tab when subscribed and no subscription write permissions', async function (assert) {
@@ -501,8 +493,7 @@ module('Acceptance | profile/billing', function (hooks) {
 
     percySnapshot(assert);
 
-    assert.ok(profilePage.billing.expiryMessage.isHidden);
-    assert.equal(profilePage.billing.noPermissionMessage.text, 'You do not have permission to create a subscription');
+    assert.ok(profilePage.billing.getPlanButton.isDisabled);
   });
 
   test('switching to another account’s billing tab loads the subscription form properly', async function (assert) {
@@ -515,22 +506,16 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.billing.visit();
     await profilePage.accounts[1].visit();
     await profilePage.billing.visit();
+    await profilePage.billing.getPlanButton.click();
 
     percySnapshot(assert);
 
-    assert.ok(profilePage.billing.billingForm.isPresent);
-    assert.ok(profilePage.billing.billingPlanChoices.isPresent);
+    assert.dom(profilePage.billing.selectedPlan.name.scope).hasTextContaining(`${this.lastPlan.name}`);
+    assert.dom(profilePage.billing.selectedPlan.jobs.scope).hasTextContaining(`${this.lastPlan.builds} concurrent jobs`);
+    assert.dom(profilePage.billing.selectedPlan.price.scope).hasTextContaining(`$${this.lastPlan.price / 100} /month`);
 
-    assert.ok(profilePage.billing.selectedBillingPlan.isPresent);
-    assert.dom(profilePage.billing.selectedBillingPlan.name.scope).hasTextContaining(`${this.defaultPlan.name} plan`);
-    assert.dom(profilePage.billing.selectedBillingPlan.jobs.scope).hasTextContaining(`${this.defaultPlan.builds} concurrent jobs`);
-    assert.dom(profilePage.billing.selectedBillingPlan.freeJobs.scope).hasTextContaining('3 free concurrent jobs');
-    assert.dom(profilePage.billing.selectedBillingPlan.price.scope).hasTextContaining(`$${this.defaultPlan.price / 100} /month`);
-
-    assert.dom(profilePage.billing.billingForm.input.scope).exists({ count: 9 });
-    assert.dom(profilePage.billing.billingForm.select.scope).exists({ count: 1 });
     assert.dom(profilePage.billing.billingPlanChoices.boxes.scope).exists({ count: 4 });
-    assert.equal(profilePage.billing.subscribeButton.text, 'Proceed to Payment');
+    assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe');
   });
 
   test('view billing tab when trial has not started', async function (assert) {
@@ -544,8 +529,7 @@ module('Acceptance | profile/billing', function (hooks) {
 
     percySnapshot(assert);
 
-    assert.equal(profilePage.billing.trial.name, 'Your trial includes 100 trial builds and 2-concurrent-jobs, no credit card required. Need help? Check our getting started guide.');
-    assert.equal(profilePage.billing.subscribeButton.text, 'Proceed to Payment');
+    assert.ok(profilePage.billing.getPlanButton.isPresent);
   });
 
   test('view billing tab with no create subscription permissions', async function (assert) {
@@ -557,8 +541,7 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.visitOrganization({ name: 'org-login' });
     await profilePage.billing.visit();
 
-    assert.equal(profilePage.billing.trial.name, 'Your trial includes 100 trial builds and 2-concurrent-jobs, no credit card required. Need help? Check our getting started guide.');
-    assert.equal(profilePage.billing.noPermissionMessage.text, 'You do not have permission to create a subscription');
+    assert.ok(profilePage.billing.getPlanButton.isDisabled);
   });
 
   test('view billing tab when there is a new trial', async function (assert) {
@@ -583,9 +566,9 @@ module('Acceptance | profile/billing', function (hooks) {
 
     await profilePage.visitOrganization({ name: 'org-login' });
     await profilePage.billing.visit();
+    await profilePage.billing.getPlanButton.click();
 
-    assert.equal(profilePage.billing.trial.name, "You've got 100 trial builds left. Ensure unlimited builds by setting up a plan before it runs out!");
-    assert.equal(profilePage.billing.subscribeButton.text, 'Proceed to Payment');
+    assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe');
   });
 
   test('view billing tab when trial has started', async function (assert) {
@@ -609,11 +592,11 @@ module('Acceptance | profile/billing', function (hooks) {
 
     await profilePage.visitOrganization({ name: 'org-login' });
     await profilePage.billing.visit();
+    await profilePage.billing.getPlanButton.click();
 
     percySnapshot(assert);
 
-    assert.equal(profilePage.billing.trial.name, "You've got 25 trial builds left. Ensure unlimited builds by setting up a plan before it runs out!");
-    assert.equal(profilePage.billing.subscribeButton.text, 'Proceed to Payment');
+    assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe');
   });
 
   test('view billing tab when trial has ended', async function (assert) {
@@ -637,9 +620,9 @@ module('Acceptance | profile/billing', function (hooks) {
 
     await profilePage.visitOrganization({ name: 'org-login' });
     await profilePage.billing.visit();
+    await profilePage.billing.getPlanButton.click();
 
-    assert.equal(profilePage.billing.trial.name, 'Your trial has just ended. To get the most out of Travis CI, set up a plan below!');
-    assert.equal(profilePage.billing.subscribeButton.text, 'Proceed to Payment');
+    assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe');
   });
 
   test('view billing tab with Github trial subscription', async function (assert) {

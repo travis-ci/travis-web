@@ -67,7 +67,7 @@ module('Integration | Component | billing-process', function (hooks) {
       @currentStep={{currentStep}}
     />`);
 
-    assert.dom('h2').hasText('Credit card details');
+    assert.dom('h2').hasText('Contact details');
   });
 
   test('deny subscription when user has no permission', async function (assert) {

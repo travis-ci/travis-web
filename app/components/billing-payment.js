@@ -1,6 +1,7 @@
 import Component from '@ember/component';
 import { task } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
+import { computed } from '@ember/object';
 import { or } from '@ember/object/computed';
 
 export default Component.extend({
@@ -8,6 +9,15 @@ export default Component.extend({
   stripe: service('stripev3'),
   stripeElement: null,
   stripeLoading: false,
+
+  fullName: computed(
+    'newSubscription.billingInfo.firstName',
+    'newSubscription.billingInfo.lastName',
+    function () {
+      return `${this.newSubscription.billingInfo.firstName} ${this.newSubscription.billingInfo.lastName}`;
+    }
+  ),
+
   isLoading: or('createStripeToken.isRunning', 'isSavingSubscription'),
 
   createStripeToken: task(function* () {
@@ -29,10 +39,12 @@ export default Component.extend({
   },
 
   options: {
+    hidePostalCode: true,
     style: {
       base: {
+        fontStyle: 'Source Sans Pro',
         color: '#333',
-        fontSize: '14px',
+        fontSize: '15px',
         '::placeholder': {
           color: '#666'
         },
@@ -46,11 +58,6 @@ export default Component.extend({
   },
 
   actions: {
-
-    submit() {
-      this.createStripeToken.perform();
-    },
-
     complete(stripeElement) {
       this.set('stripeElement', stripeElement);
     }

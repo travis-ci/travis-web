@@ -1,63 +1,75 @@
-<div class='billing-plans flex flex--wrap flex--space-between' data-test-billing-plan-choices>
-  {{#each displayedPlans as |plan|}}
-    <div
-      data-test-plan-box
-      class='billing-plans__box pointer
-        {{if (eq plan.id selectedPlan.id) 'highlight-plan'}}'
-      onclick={{action (mut selectedPlan) plan}}
-    >
-      <p class='billing-plans__box--price'>
-        {{format-currency plan.price}}
-        <span
-          class='color-asphalt-grey
-            {{if (eq plan.id selectedPlan.id) 'highlight-plan'}}'
+<section class='billing-select-plan'>
+  <TravisForm @onSubmit={{action next}} as |form|>
+    <h3 data-test-billing-info-title>
+      Billing Cycle
+    </h3>
+    <div class='flex form-elem flex--v-center flex-wrap billing-plan-switch'>
+      <div>
+        <form.field
+          @disableFrame={{true}}
+          class='display-value-switch'
+          @value={{this.showAnnual}}
+          @onChange={{action (mut this.showAnnual)}} as |Field|
         >
-          {{if showAnnual '/year' '/month'}}
-        </span>
-      </p>
-      <p class='billing-plans__box--name'>
-        {{plan.name}}
-      </p>
-      <p
-        class='billing-plans__box--jobs
-          {{if (eq plan.id selectedPlan.id) 'highlight-plan'}}'
+          <Field.switch 
+            @text={{true}} 
+            @offText='Monthly'
+            @onText='Yearly'
+          />
+        </form.field>
+      </div>
+      <div class='billing-plan-switch m-l-s'>
+        {{#if showMonthly}}
+          <h5>
+            Recommendation:
+          </h5>
+          <p>
+            Switch to annual billing to recieve
+            <span class='font--italic font--bolder'>
+              one month free!
+            </span>
+          </p>
+        {{/if}}
+      </div>
+    </div>
+    <div class='plan-selector'>
+      <h3 data-test-choose-plan-heading>
+        Choose a plan for you or your team!
+      </h3>
+      <div class='billing-plans flex flex--wrap flex--space-between' data-test-billing-plan-choices>
+        {{#each displayedPlans as |plan|}}
+          <div
+            data-test-plan-box
+            class='billing-plans__box pointer
+              {{if (eq plan.id selectedPlan.id) 'highlight-plan'}}'
+            onclick={{action (mut this.selectedPlan) plan}}
+          >
+            <p class='billing-plans__box--price' data-test-selected-plan-price>
+              {{format-currency plan.price}}
+              <span class='color-asphalt-grey {{if (eq plan.id selectedPlan.id) 'highlight-plan'}}'>
+                {{if this.showAnnual '/year' '/month'}}
+              </span>
+            </p>
+            <p class='billing-plans__box--name' data-test-selected-plan-name>
+              {{plan.name}}
+            </p>
+            <p data-test-selected-plan-jobs
+              class='billing-plans__box--jobs
+                {{if (eq plan.id selectedPlan.id) 'highlight-plan'}}'
+            >
+              {{pluralize plan.builds 'concurrent job'}}
+            </p>
+          </div>
+        {{/each}}
+      </div>
+    </div>
+    <div class='flex flex--v-center flex--center'>
+      <button data-test-subscribe-button
+        onclick={{action form.submit}}
+        class='button--blue'
       >
-        {{pluralize plan.builds 'concurrent job'}}
-      </p>
+        Subscribe
+      </button>
     </div>
-  {{/each}}
-</div>
-<div class='selected-plan' data-test-selected-plan>
-  <div class='selected-plan__details'>
-    <p class='selected-plan__details--plan'>
-      Your plan details
-    </p>
-    <p class='selected-plan__details--name' data-test-selected-plan-name>
-      {{selectedPlan.name}} plan
-    </p>
-    <p class='selected-plan__details--jobs' data-test-selected-plan-jobs>
-      {{pluralize selectedPlan.builds 'concurrent job'}}
-    </p>
-    <p class='selected-plan__details--free-jobs' data-test-selected-plan-free-jobs>
-      3
-      <span class='font--italic'>
-        free
-      </span>
-      concurrent jobs
-    </p>
-  </div>
-  <div>
-    <div class='selected-plan__price'>
-      <p class='selected-plan__price--total'>
-        Total:
-      </p>
-      <p class='selected-plan__price--large' data-test-selected-plan-price>
-        {{format-currency selectedPlan.price}}
-        <span>
-          {{if showAnnual '/year' '/month'}}
-        </span>
-      </p>
-    </div>
-  </div>
-</div>
-{{yield}}
+  </TravisForm>
+</section>

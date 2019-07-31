@@ -1,29 +1,91 @@
-<h2 class="color-oxide-blue font--light">Overview</h2>
-
-{{#if trial.hasActiveTrial}}
-
-  <p data-test-trial-message class="source plan-status-message">
-    You've got {{pluralize this.trial.buildsRemaining "trial build"}} left.<br />
-    Ensure unlimited builds by setting up a plan before it runs out!
-  </p>
-{{else if this.trial}}
-  <p data-test-trial-message class="source plan-status-message">
-    Your trial has just ended.<br />
-    To get the most out of Travis CI, set up a plan below!
-  </p>
-{{else}}
-
-  <TrialActivity @trial=trial @account=account/>
-
-{{/if}}
-{{#if this.subscription.isGithub}}
-  <ExternalLinkTo
-    @href={{config-get "marketplaceEndpoint"}}
-    class="button--blue marketplace-button"
-  >
-    Manage on GitHub Marketplace
-  </ExternalLinkTo>
-{{else}}
-  <BillingProcess @trial={{trial}} @account={{account}} @plans={{plans}} @newSubscription={{newSubscription}}/>
-{{/if}}
-
+<div class="billing-trial">
+  <h3>Overview</h3>
+  <div class="initial-billing-view">
+    <div class="flex">
+      <div class="get-started">
+        {{#if this.trial.hasActiveTrial}}
+          <p class="get-started__message">
+            Your trial is active!
+          </p>
+          <p>
+            You've got {{pluralize trial.buildsRemaining 'trial build'}} left.<br />
+            Start building by or check out <a data-test-trial-link href={{config-get 'urls.gettingStarted'}} target="_blank"
+              class="billing-section-link"> our docs</a> for more info.
+          </p>
+          <p class="get-started__start-trial">
+            Start your trial to get 100 free builds and 2 concurrent jobs for both public and private projects.
+          </p>
+        {{else if this.trial}}
+          <p data-test-trial-message class="source plan-status-message">
+            Your trial has just ended.<br />
+            To get the most out of Travis CI, set up a plan below!
+          </p>
+        {{else}}
+          <p class="get-started__message">
+            100 free builds to get you started
+          </p>
+          <p class="get-started__start-trial">
+            Start your trial to get 100 free builds and 2 concurrent jobs for both public and private projects.
+          </p>
+        {{/if}}
+      </div>
+      <div class="icon-wrapper flex flex--v-center">
+        {{svg-jar "icon-plus" class="icon icon-wrapper__plus"}}
+      </div>
+      <div class="flex billing-trial-info">
+        <div class="billing-trial-info__box">
+          <p class="billing-trial-info__box--open-source">We &lt;3 open source.</p>
+          <p class="billing-trial-info__box--jobs">
+            3 concurrent jobs for your open source projects are always free.
+          </p>
+        </div>
+      </div>
+    </div>
+    <button class='button--blue activate-button {{if this.hasNoSubscriptionPermissions 'disabled'}}'>
+      Activate trial
+      {{#if this.hasNoSubscriptionPermissions}}
+        <EmberTooltip>
+          You don't have permission to start a trial
+        </EmberTooltip>
+      {{/if}}
+    </button>
+    <hr /> 
+    {{#if (not this.startBillingProcess)}} 
+      <div class='flex flex--col flex--v-center flex--center'>
+        <p class='subscribe-message'>
+          <span>
+            Looking for a plan that meet your needs?
+          </span>
+          Subscribe now!
+        </p>
+        <button onClick={{action 'startBillingProcess'}} data-test-get-a-plan
+          class='pointer button get-plan flex flex--col flex--v-center flex--justify-center {{if this.hasNoSubscriptionPermissions 'get-plan--disabled disabled'}}'
+        >
+          <p>get a plan</p>
+          {{svg-jar 'icon-arrow-down' class='icon icon-get-plan'}}
+          {{#if this.hasNoSubscriptionPermissions}}
+            <EmberTooltip>
+              You don't have permission to create a subscription
+            </EmberTooltip>
+          {{/if}}
+        </button>
+      </div>
+    {{else}}
+      {{#if this.subscription.isGithub}}
+        <ExternalLinkTo
+          @href={{config-get "marketplaceEndpoint"}}
+          class="button--blue marketplace-button"
+        >
+          Manage on GitHub Marketplace
+        </ExternalLinkTo>
+      {{else}}
+        <BillingProcess 
+          @trial={{this.trial}} 
+          @account={{this.account}} 
+          @plans={{this.plans}} 
+          @newSubscription={{this.newSubscription}}
+        />
+      {{/if}}
+    {{/if}}
+  </div>
+</div>

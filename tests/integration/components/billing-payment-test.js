@@ -29,7 +29,9 @@ module('Integration | Component | billing-payment', function (hooks) {
     };
 
     this['actions'] = {
-      cancel: () => { }
+      handleSubmit: () => { },
+      goToFirstStep: () => { },
+      back: () => { }
     };
 
     this.setProperties({
@@ -53,6 +55,8 @@ module('Integration | Component | billing-payment', function (hooks) {
     await render(hbs`<BillingPayment 
       @paymentInfo={{paymentInfo}}
       @cancel={{action 'cancel'}}
+      @goToFirstStep={{action 'goToFirstStep'}}
+      @back={{action 'back'}}
       @selectedPlan={{selectedPlan}}/>`);
 
     assert.dom('h2').hasText('Credit card details');

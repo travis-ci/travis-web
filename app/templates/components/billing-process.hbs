@@ -1,22 +1,39 @@
-{{#if account.hasSubscriptionPermissions}}
-  {{#if isStepOne}}
-    <BillingInformation
-      @displayedPlans={{displayedPlans}}
-      @selectedPlan={{selectedPlan}}
-      @showAnnual={{showAnnual}}
-      @newSubscription={{newSubscription}}
-      @showMonthly={{showMonthly}}
-      @billingInfo={{billingInfo}}
+{{#if this.account.hasSubscriptionPermissions}}
+  <div class='flex flex--col flex--v-center flex--center'>
+    <p class='subscribe-message'>
+      <span>
+        Choose a plan before you run out of free builds.
+      </span>
+    </p>
+    {{svg-jar 'icon-arrow-down' class='icon icon-get-plan'}}
+  </div>
+  {{#if this.isStepOne}}
+    <BillingSelectPlan
+      @displayedPlans={{this.displayedPlans}}
+      @selectedPlan={{this.selectedPlan}}
+      @showMonthly={{this.showMonthly}}
+      @showAnnual={{this.showAnnual}}
       @next={{action 'next'}}
     />
-  {{/if}}
-  {{#if isStepTwo}}
+  {{else if this.isStepTwo}}
+    <BillingInformation
+      @displayedPlans={{this.displayedPlans}}
+      @selectedPlan={{this.selectedPlan}}
+      @newSubscription={{this.newSubscription}}
+      @billingInfo={{this.billingInfo}}
+      @next={{action 'next'}}
+      @back={{action 'back'}}
+      @goToFirstStep={{action 'goToFirstStep'}}
+    />
+  {{else if this.isStepThree}}
     <BillingPayment
-      @selectedPlan={{selectedPlan}}
-      @showAnnual={{showAnnual}}
-      @isSavingSubscription={{isSavingSubscription}}
+      @selectedPlan={{this.selectedPlan}}
+      @showAnnual={{this.showAnnual}}
+      @newSubscription={{this.newSubscription}}
+      @isSavingSubscription={{this.isSavingSubscription}}
       @handleSubmit={{action 'handleSubmit'}}
-      @cancel={{action 'cancel'}}
+      @goToFirstStep={{action 'goToFirstStep'}}
+      @back={{action 'back'}}
     />
   {{/if}}
 {{else}}

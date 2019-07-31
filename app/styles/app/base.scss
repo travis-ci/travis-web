@@ -112,16 +112,7 @@ a {
   &--v-center {
     align-items: center;
   }
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-  &--wrap {
-    flex-wrap: wrap;
-  }
-=======
-=======
-
->>>>>>> Refactor billing-information to remove side effect in computed property
   &--wrap {
     flex-wrap: wrap;
   }
@@ -129,7 +120,10 @@ a {
   &--col {
     flex-direction: column;
   }
->>>>>>> Implement select plan functionality
+
+  &--col-3 {
+    flex-basis: 33.33%;
+  }
 }
 
 @media #{$large-up} {

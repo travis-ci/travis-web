@@ -7,10 +7,9 @@ import { not, filterBy, or, mapBy, equal } from '@ember/object/computed';
 
 const STEPS = {
   ONE: 'stepOne',
-  TWO: 'stepTwo'
+  TWO: 'stepTwo',
+  THREE: 'stepThree'
 };
-
-const steps = [...Object.values(STEPS)];
 
 export default Component.extend({
   store: service(),
@@ -19,7 +18,7 @@ export default Component.extend({
   plans: null,
   showAnnual: false,
   availablePlans: config.plans,
-  steps,
+  steps: [...Object.values(STEPS)],
 
   currentStep: computed('steps.[]', {
     get() {
@@ -32,6 +31,7 @@ export default Component.extend({
 
   isStepOne: equal('currentStep', STEPS.ONE),
   isStepTwo: equal('currentStep', STEPS.TWO),
+  isStepThree: equal('currentStep', STEPS.THREE),
   showMonthly: not('showAnnual'),
   defaultPlan: filterBy('availablePlans', 'isDefault'),
   availablePlanNames: mapBy('availablePlans', 'name'),
@@ -59,8 +59,8 @@ export default Component.extend({
 
   displayedPlans: computed(
     'showAnnual',
-    'monthlyPlans.@each.{name,annual,builds}',
-    'annualPlans.@each.{name,annual,builds}',
+    'monthlyPlans.@each.{annual}',
+    'annualPlans.@each.{annual}',
     function () {
       const { annualPlans, showAnnual, monthlyPlans } = this;
       return showAnnual ? annualPlans : monthlyPlans;
@@ -110,11 +110,23 @@ export default Component.extend({
 
   actions: {
 
+    goToFirstStep() {
+      this.set('currentStep', this.steps[0]);
+    },
+
     next() {
-      const { steps, currentStep } = this;
-      const currentIndex = steps.indexOf(currentStep);
-      this.set('currentStep', steps[currentIndex + 1]);
-      window.scrollTo(0, 269);
+      if (this.selectedPlan) {
+        const currentIndex = this.steps.indexOf(this.currentStep);
+        const lastIndex = this.steps.length - 1;
+        const nextIndex = Math.min(lastIndex, currentIndex + 1);
+        this.set('currentStep', this.steps[nextIndex]);
+      }
+    },
+
+    back() {
+      const currentIndex = this.steps.indexOf(this.currentStep);
+      const prevIndex = Math.max(0, currentIndex - 1);
+      this.set('currentStep', this.steps[prevIndex]);
     },
 
     cancel() {

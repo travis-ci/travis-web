@@ -259,6 +259,11 @@ export default create({
       isDisabled: hasClass('disabled'),
     },
 
+    getPlanButton: {
+      scope: '[data-test-get-a-plan]',
+      isDisabled: hasClass('disabled'),
+    },
+
     noPermissionMessage: {
       scope: '[data-test-no-permission-message]',
     },
@@ -285,11 +290,11 @@ export default create({
       billingSelectCountry: {
         scope: '.billing-country'
       },
+    },
 
-      switchPlan: {
-        scope: '.travis-form__field--switch',
-        isPresent: isPresent(),
-      }
+    switchPlan: {
+      scope: '.travis-form__field--switch',
+      isPresent: isPresent(),
     },
 
     billingPaymentForm: {
@@ -335,12 +340,11 @@ export default create({
 
       lastBox: {
         visit: clickable('[data-test-plan-box]:last-child'),
-      }
+      },
     },
 
-    selectedBillingPlan: {
-      scope: '[data-test-selected-plan]',
-      isPresent: isPresent(),
+    selectedPlan: {
+      scope: '.highlight-plan',
 
       name: {
         scope: '[data-test-selected-plan-name]'
@@ -350,17 +354,13 @@ export default create({
         scope: '[data-test-selected-plan-jobs]'
       },
 
-      freeJobs: {
-        scope: '[data-test-selected-plan-free-jobs]'
-      },
-
       price: {
         scope: '[data-test-selected-plan-price]'
       }
     },
 
     subscribeButton: {
-      scope: '[data-test-proceed-to-payment-button]',
+      scope: '[data-test-subscribe-button]',
     },
 
     marketplaceButton: {

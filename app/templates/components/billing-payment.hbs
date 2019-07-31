@@ -1,26 +1,60 @@
-<div>
-  <BillingSelectPlan @selectedPlan={{selectedPlan}} @showAnnual={{showAnnual}} />
-  <h2>
-    Credit card details
-  </h2>
-  <p data-test-payment-info>
-    Your credit card details are never stored or even reach our servers.
-    Payment and credit card details are handled by Stripe.
-  </p>
-
-  <form data-test-payment-form>
-    <Input name="cardName" />
-    <Input name="discountCode" />
-    <StripeCard @complete={{action "complete"}} @options={{options}} as |stripeError|>
-      {{#if stripeError}}
+<div class='billing-checkout'>
+  <SelectedBillingPlan 
+    @selectedPlan={{this.selectedPlan}} 
+    @showAnnual={{this.showAnnual}} 
+    @goToFirstStep={{action this.goToFirstStep}}
+  />
+  <div class='flex billing-checkout__details'>
+    <div class='flex--col-3'>
+      <h4>contact details:</h4>
+      <p class='billing-checkout__details--info'>{{fullName}}</p>
+      <p class='billing-checkout__details--info'>{{this.newSubscription.billingInfo.company}}</p>
+      <div>
+       <p class='billing-checkout__details--email'>{{this.newSubscription.billingInfo.billingEmail}}</p>
+      </div>
+      <p class='billing-checkout__details--edit link' onClick={{action back}}>Edit</p>
+    </div>
+    <div class='flex--col-3'>
+      <h4>billing details:</h4>
+      <p class='billing-checkout__details--info'>{{this.newSubscription.billingInfo.address}}</p>
+      <p class='billing-checkout__details--info'>{{this.newSubscription.billingInfo.city}}</p>
+      <p class='billing-checkout__details--info'>{{this.newSubscription.billingInfo.country}}</p>
+      <p class='billing-checkout__details--edit link' onClick={{action back}}>Edit</p>
+    </div>
+    <div class='flex--col-3'>
+      <h4>discount</h4>
+      <p>something</p>
+    </div>
+  </div>
+  <h3>
+    Pay with card
+  </h3>
+ <TravisForm @onSubmit={{perform this.createStripeToken}} data-test-payment-form as |form|>
+   <div class='full-width form-elem inline-form-elem'>
+    <form.field
+      @label='Name'
+      @value={{this.cardName}}
+      @required={{true}}
+      @showRequiredMark={{true}}
+      @showValidationStatusIcons={{false}}
+      @onChange={{action (mut this.cardName)}} as |Field|
+    >
+      <Field.input @name='cardName' placeholder='Rose Jaime'/>
+    </form.field>
+  </div>
+  <StripeCard @complete={{action "complete"}} @options={{this.options}} as |stripeError|>
+    {{#if stripeError}}
       <p>{{stripeError.message}}</p>
-      {{/if}}
-    </StripeCard>
-    {{#if isLoading}}
-    {{loading-indicator}}
-    {{else}}
-    <button {{action "submit"}}>Submit</button>
-    <span onclick={{action cancel}} class='billing-process-cancel link'>Cancel</span>
     {{/if}}
-  </form>
+  </StripeCard>
+  {{#if this.isLoading}}
+    {{loading-indicator}}
+  {{else}}
+    <div class='billing-checkout__payment'>
+      <button class='button--blue' {{action form.submit}}>
+        Pay {{format-currency this.selectedPlan.price}}
+      </button>
+    </div>
+  {{/if}}
+ </TravisForm>
 </div>

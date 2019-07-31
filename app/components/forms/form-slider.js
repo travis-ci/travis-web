@@ -7,6 +7,7 @@ export default Component.extend({
   min: '',
   value: '',
   step: 1,
+  list: '',
 
   onInit() {},
   onChange() {},

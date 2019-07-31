@@ -1,4 +1,9 @@
-<h1 class="blue">{{value}}</h1>
-<input type='range' min={{min}} max={{max}} value={{value}} class='travis-form__field--slider-input'/>
-<span></span>
+<input 
+  type='range' 
+  min={{this.min}} 
+  max={{this.max}} 
+  step={{this.step}}
+  value={{this.value}} 
+  list={{this.list}}
+/>
 {{yield}}
