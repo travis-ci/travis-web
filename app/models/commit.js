@@ -1,4 +1,4 @@
-import Model, { attr, belongsTo } from 'ember-data/model';
+import Model, { attr, belongsTo } from '@ember-data/model';
 import { computed } from '@ember/object';
 
 import vcsLinks from 'travis/utils/vcs-links';
