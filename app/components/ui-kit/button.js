@@ -1,67 +1,67 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { reads } from '@ember/object/computed';
 
-const SHADES = {
-  LITE: 100,
-  MAIN: 400,
-  DARK: 500,
+// Public dictionaries
+export const COLORS = {
+  BLUE: 'blue-400',
 };
-const DEFAULT_SHADE = SHADES.MAIN;
 
-const COLORS = {
-  BLUE: 'blue',
-  GREY: 'grey',
-};
+// Private dictionaries
 const DEFAULT_COLOR = COLORS.BLUE;
 
-const VARIANTS = {
-  FILL: 'fill',
-  OUTLINE: 'outline',
+const BG_COLORS = {
+  [COLORS.BLUE]: COLORS.BLUE,
+  disabled: 'grey-200',
+  invert: 'transparent',
 };
-const DEFAULT_VARIANT = VARIANTS.FILL;
 
-function getVariantProps(variant, color, shade) {
-  // Fill Variant definition
-  if (variant === 'fill') {
-    return {
-      bg: `bg-${color}-${shade} hover:bg-${color}-${shade + 100}`,
-      text: 'text-white',
-    };
+const HOVER_BG_COLORS = {
+  [COLORS.BLUE]: 'blue-500',
+  [`${COLORS.BLUE}-invert`]: 'blue-100',
+};
 
-  // Outline variant definition
-  } else if (variant === 'outline') {
-    return {
-      bg: `hover:bg-${color}-100`,
-      text: `text-${color}-${shade}`,
-      border: `border border-solid border-${color}-${shade}`,
-    };
-  }
-}
+const LABEL_COLORS = {
+  [`${COLORS.BLUE}-invert`]: COLORS.BLUE,
+  disabled: 'grey-200',
+  default: 'white',
+};
 
 export default Component.extend({
+
+  // Public interface
   tagName: '',
-  type: 'button',
   role: 'button',
-
-  variant: DEFAULT_VARIANT,
   color: DEFAULT_COLOR,
-  shade: DEFAULT_SHADE,
+  invert: false,
+  disabled: false,
 
-  variantProps: computed('variant', 'color', 'shade', function () {
-    const { variant, color, shade } = this;
-    return getVariantProps(variant, color, shade);
+  onClick() {},
+
+  // Private
+  bgColor: computed('color', 'disabled', 'invert', function () {
+    return this.invert
+      ? BG_COLORS['invert']
+      : this.disabled
+        ? BG_COLORS['disabled']
+        : BG_COLORS[this.color];
+  }),
+  hoverBgColor: computed('color', 'disabled', 'invert', 'bgColor', function () {
+    return this.disabled
+      ? this.bgColor
+      : this.invert
+        ? HOVER_BG_COLORS[`${this.color}-invert`]
+        : HOVER_BG_COLORS[this.color];
   }),
 
-  bg: reads('variantProps.bg'),
-  text: reads('variantProps.text'),
-  border: reads('variantProps.border'),
+  labelColor: computed('color', 'disabled', 'invert', function () {
+    if (this.invert) {
+      return this.disabled ? LABEL_COLORS['disabled'] : LABEL_COLORS[`${this.color}-invert`];
+    } else {
+      return LABEL_COLORS['default'];
+    }
+  }),
 
-  generatedClasses: computed('bg', 'text', 'border', function () {
-    const { bg, text, border } = this;
-    return `
-      rounded uppercase px-3 py-2 font-bold
-      ${bg || ''} ${text || ''} ${border || ''}
-    `;
+  borderColor: computed('invert', 'bgColor', 'labelColor', function () {
+    return this.invert ? this.labelColor : this.bgColor;
   }),
 });

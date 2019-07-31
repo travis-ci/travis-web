@@ -1,6 +1,11 @@
 <button
-  type={{this.type}}
   role={{this.role}}
-  class={{this.generatedClasses}}
+  class="
+    rounded uppercase px-3 py-2 font-bold border border-solid
+    bg-{{this.bgColor}}
+    hover:bg-{{this.hoverBgColor}}
+    text-{{this.labelColor}}
+    border-{{this.borderColor}}
+  "
   ...attributes
 >{{yield}}</button>
