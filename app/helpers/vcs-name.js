@@ -1,9 +1,9 @@
 import { helper } from '@ember/component/helper';
 
 export function vcsName(vcsType) {
-  const vcsTypeLower = (vcsType || '').toLowerCase();
+  const vcsTypeLower = (vcsType || 'github').toLowerCase();
 
-  if (vcsTypeLower == '' || vcsTypeLower.startsWith('github')) {
+  if (vcsTypeLower.startsWith('github')) {
     return 'GitHub';
   } else if (vcsTypeLower.startsWith('bitbucket')) {
     return 'Bitbucket';
