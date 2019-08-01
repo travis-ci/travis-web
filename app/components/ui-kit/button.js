@@ -69,4 +69,10 @@ export default Component.extend({
   borderColor: computed('invert', 'bgColor', 'labelColor', function () {
     return this.invert ? this.labelColor : this.bgColor;
   }),
+
+  actions: {
+    handleClick() {
+      return this.onClick();
+    }
+  }
 });

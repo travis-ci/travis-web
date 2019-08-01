@@ -1,12 +1,14 @@
 <button
   role={{this.role}}
   class="
-    rounded uppercase px-3 py-2 font-bold border border-solid
+    rounded uppercase px-3 py-2 font-bold
     bg-{{this.bgColor}}
     hover:bg-{{this.hoverBgColor}}
     text-{{this.labelColor}}
+
+    {{if this.invert 'border border-solid'}}
     border-{{this.borderColor}}
   "
-  {{on 'click' (fn this.onClick)}}
+  {{on 'click' (action 'handleClick')}}
   ...attributes
 >{{yield}}</button>
