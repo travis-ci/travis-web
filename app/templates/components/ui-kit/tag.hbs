@@ -1,0 +1,7 @@
+{{#if (eq this.tag 'div')}}
+  <div class={{this.class}} ...attributes>{{yield}}</div>
+{{else if (eq this.tag 'section')}}
+  <section class={{this.class}} ...attributes>{{yield}}</section>
+{{else}}
+  {{yield}}
+{{/if}}

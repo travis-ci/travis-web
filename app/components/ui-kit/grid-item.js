@@ -1,19 +1,33 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
+import { or } from '@ember/object/computed';
+import { assert } from '@ember/debug';
 
 export default Component.extend({
-  classNameBindings: ['baseClass', 'smClass', 'mdClass', 'lgClass', 'xlClass'],
+  tagName: '',
 
   // Public interface
+  tag: 'div',
   grid: null,
+  base: null,
+  sm: null,
+  md: null,
+  lg: null,
+  xl: null,
 
   // Private
   sizePrefix: computed('grid.isCol', function () {
     return this.grid.isCol ? 'h' : 'w';
   }),
 
-  baseClass: computed('sizePrefix', 'base', 'grid.base', function () {
-    const val = this.base || this.grid.base;
+  currentBase: or('base', 'grid.base'),
+  currentSm: or('sm', 'grid.sm'),
+  currentMd: or('md', 'grid.md'),
+  currentLg: or('lg', 'grid.lg'),
+  currentXl: or('xl', 'grid.xl'),
+
+  baseClass: computed('sizePrefix', 'currentBase', function () {
+    const val = this.currentBase;
     if (typeof val === 'string') {
       return val;
     }
@@ -23,8 +37,8 @@ export default Component.extend({
     return '';
   }),
 
-  smClass: computed('sizePrefix', 'sm', 'grid.sm', function () {
-    const val = this.sm || this.grid.sm;
+  smClass: computed('sizePrefix', 'currentSm', function () {
+    const val = this.currentSm;
     if (typeof val === 'string') {
       return `sm:${val}`;
     }
@@ -34,8 +48,8 @@ export default Component.extend({
     return '';
   }),
 
-  mdClass: computed('sizePrefix', 'md', 'grid.md', function () {
-    const val = this.md || this.grid.md;
+  mdClass: computed('sizePrefix', 'currentMd', function () {
+    const val = this.currentMd;
     if (typeof val === 'string') {
       return `md:${val}`;
     }
@@ -45,8 +59,8 @@ export default Component.extend({
     return '';
   }),
 
-  lgClass: computed('sizePrefix', 'lg', 'grid.lg', function () {
-    const val = this.lg || this.grid.lg;
+  lgClass: computed('sizePrefix', 'currentLg', function () {
+    const val = this.currentLg;
     if (typeof val === 'string') {
       return `lg:${val}`;
     }
@@ -56,8 +70,8 @@ export default Component.extend({
     return '';
   }),
 
-  xlClass: computed('sizePrefix', 'xl', 'grid.xl', function () {
-    const val = this.xl || this.grid.xl;
+  xlClass: computed('sizePrefix', 'currentXl', function () {
+    const val = this.currentXl;
     if (typeof val === 'string') {
       return `xl:${val}`;
     }

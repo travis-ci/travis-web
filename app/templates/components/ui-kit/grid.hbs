@@ -6,6 +6,7 @@
     items-{{this.alignItems}}
     justify-{{this.justify}}
   "
+  ...attributes
 >
   {{yield (hash
     item=(component "ui-kit/grid-item" grid=this)

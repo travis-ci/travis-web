@@ -2,9 +2,9 @@ import Component from '@ember/component';
 import { match } from '@ember/object/computed';
 
 export default Component.extend({
+  tagName: '',
 
   // Public interface
-  tagName: '',
   tag: 'div',
   dir: 'row',
   wrap: 'wrap',
