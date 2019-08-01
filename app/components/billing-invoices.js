@@ -1,25 +1,18 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
+import { reads }  from '@ember/object/computed';
 
 export default Component.extend({
 
-  invoiceYears: computed('invoices.@each.{createdAt}', function () {
-    const invoiceYears = this.invoices.map(invoice => invoice.createdAt.getFullYear());
-    const distinctInvoiceYears = new Set(invoiceYears);
-    const sortedDistinctInvoiceYears = [...distinctInvoiceYears].sort((a, b) => b - a);
-    return sortedDistinctInvoiceYears;
+  invoices: null,
+
+  invoiceYears: computed('invoices.@each.createdAt', function () {
+    return this.invoices.mapBy('year').uniq().sort((a, b) => b - a);
   }),
 
-  year: computed('invoiceYears.[]', {
-    get() {
-      return this.invoiceYears.get('firstObject');
-    },
-    set(key, value) {
-      return value;
-    }
-  }),
+  year: reads('invoiceYears.firstObject'),
 
-  selectedInvoices: computed('invoices.@each.{createdAt}', 'year', function () {
-    return this.invoices.filter(invoice => invoice.createdAt.getFullYear() === this.year);
+  selectedInvoices: computed('invoices.@each.createdAt', 'year', function () {
+    return this.invoices.filterBy('year', this.year);
   }),
 });

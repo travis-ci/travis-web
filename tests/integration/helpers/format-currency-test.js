@@ -6,7 +6,7 @@ import hbs from 'htmlbars-inline-precompile';
 module('Integration | Helper | format-currency', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it formats 100cents to $1', async function (assert) {
+  test('it formats 100cents to $1.00', async function (assert) {
     this.set('inputValue', 100);
 
     await render(hbs`{{format-currency inputValue}}`);
@@ -14,7 +14,7 @@ module('Integration | Helper | format-currency', function (hooks) {
     assert.equal(this.element.textContent.trim(), '$1.00');
   });
 
-  test('it formats 0cents to $0', async function (assert) {
+  test('it formats 0cents to $0.00', async function (assert) {
     this.set('inputValue', 0);
 
     await render(hbs`{{format-currency inputValue}}`);
