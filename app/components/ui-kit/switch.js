@@ -1,5 +1,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
+import { assert } from '@ember/debug';
 
 // Size definitions
 const SIZES = {
@@ -50,6 +51,12 @@ export default Component.extend({
     return BG_COLORS[this.color];
   }),
   inactiveBgColor: computed(() => BG_COLORS['inactive']),
+
+  // Lifecycle
+  init() {
+    this._super(...arguments);
+    assert(`Size "${this.size}" is not allowed on this component`, Object.values(SIZES).includes(this.size));
+  },
 
   // Actions
   actions: {
