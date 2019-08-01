@@ -62,7 +62,7 @@ export default Component.extend({
     if (this.invert) {
       return this.disabled ? LABEL_COLORS['disabled'] : LABEL_COLORS[`${this.color}-invert`];
     } else {
-      return LABEL_COLORS['default'];
+      return LABEL_COLORS[this.color] || LABEL_COLORS['default'];
     }
   }),
 
