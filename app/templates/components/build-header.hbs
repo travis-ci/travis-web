@@ -83,7 +83,7 @@
               </span>
               <SvgImage @name="icon-external-link" @class="icon" />
             </ExternalLinkTo>
-          {{else}}
+          {{else if this.build.branchName}}
             <ExternalLinkTo @href={{vcsBranchUrl}} class="commit-branch-url">
               <EmberTooltip @text="{{concat "View branch on " (vcs-name this.item.repo.vcsType)}}" />
               <SvgImage @name="icon-branch" @class="icon" />
