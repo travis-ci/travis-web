@@ -64,26 +64,18 @@
           {{/each}}
         </UiKit::Grid>
         <div class="text-center p-4 border-grey-150 border">
-          <UiKit::Button onClick={{action 'gaCta'}}>
-            Default
-          </UiKit::Button>
-
-          <UiKit::Button @invert={{true}}>
-            Invert
-          </UiKit::Button>
-
-          <UiKit::Button @disabled={{true}}>
-            Disabled
-          </UiKit::Button>
-
-          <UiKit::Button @disabled={{true}} @invert={{true}}>
-            Disabled &amp; Invert
+          <UiKit::Button @onClick={{action 'gaCta' 'plans-table'}}>
+            Start Your Free Trial
           </UiKit::Button>
         </div>
       </div>
       <SvgImage @name="yellow-waves" @class="absolute w-56 bottom-0 left-0 -mb-10 -ml-10 z-0"/>
     </div>
   </section>
+
+  <UiKit::Button @onClick={{action 'gaCta' 'plans-oss'}} @color='grey-700' @invert={{true}}>
+    Set up your Open Source project now
+  </UiKit::Button>
 
   <section class="inner section--two section--os">
     <div>

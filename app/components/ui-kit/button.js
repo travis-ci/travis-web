@@ -4,6 +4,7 @@ import { computed } from '@ember/object';
 // Public dictionaries
 export const COLORS = {
   BLUE: 'blue-400',
+  GREY: 'grey-700',
 };
 
 // Private dictionaries
@@ -11,6 +12,7 @@ const DEFAULT_COLOR = COLORS.BLUE;
 
 const BG_COLORS = {
   [COLORS.BLUE]: COLORS.BLUE,
+  [COLORS.GREY]: COLORS.GREY,
   disabled: 'grey-200',
   invert: 'transparent',
 };
@@ -18,10 +20,13 @@ const BG_COLORS = {
 const HOVER_BG_COLORS = {
   [COLORS.BLUE]: 'blue-500',
   [`${COLORS.BLUE}-invert`]: 'blue-100',
+  [COLORS.GREY]: 'grey-800',
+  [`${COLORS.GREY}-invert`]: 'grey-150',
 };
 
 const LABEL_COLORS = {
   [`${COLORS.BLUE}-invert`]: COLORS.BLUE,
+  [`${COLORS.GREY}-invert`]: COLORS.GREY,
   disabled: 'grey-200',
   default: 'white',
 };

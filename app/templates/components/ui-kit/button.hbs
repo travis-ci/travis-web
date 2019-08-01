@@ -7,5 +7,6 @@
     text-{{this.labelColor}}
     border-{{this.borderColor}}
   "
+  {{on 'click' (fn this.onClick)}}
   ...attributes
 >{{yield}}</button>
