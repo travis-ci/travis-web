@@ -1,42 +1,60 @@
-import Button from 'travis/components/ui-kit/button';
+import Component from '@ember/component';
 import { computed } from '@ember/object';
 
-export const DEFAULT_VARIANT = 'switch';
-export const VARIANTS = {
-  switch: (color, shades) => [
-    `bg-${color}-${shades['main']}`,
-    `text-${color}-${shades['main']}`,
-  ],
+// Size definitions
+const SIZES = {
+  MD: 'md',
+};
+const DEFAULT_SIZE = SIZES.MD;
+
+const DOT_SIZES = {
+  [SIZES.MD]: 4,
 };
 
-export default Button.extend({
-  classNameBindings: ['active:active', 'widthClass', 'spaceClass'],
+const SPACE_SIZES = {
+  [SIZES.MD]: 5,
+};
 
-  defaultClasses: 'rounded-full p-px',
+// Color definitions
+const COLORS = {
+  BLUE: 'blue-300',
+};
+const DEFAULT_COLOR = COLORS.BLUE;
 
-  dotSize: 4,
-  spaceSize: computed('dotSize', function () {
-    return this.dotSize + 1;
-  }),
+const BG_COLORS = {
+  [COLORS.BLUE]: COLORS.BLUE,
+  inactive: 'grey-300',
+};
+
+// Component definition
+export default Component.extend({
+
+  // Public interface
+  tagName: '',
   active: false,
+  disabled: false,
+  size: DEFAULT_SIZE,
+  color: DEFAULT_COLOR,
 
-  variantDefs: computed(() => VARIANTS),
-  variant: DEFAULT_VARIANT,
-  defaultShades: computed(() => ({main: 300})),
+  onClick() {},
 
-  spaceClass: computed('spaceSize', 'active', function () {
-    const { spaceSize, active } = this;
-    const prefix = active ? 'pl' : 'pr';
-    return `${prefix}-${spaceSize}`;
+  // Private
+  dotSize: computed('size', function () {
+    return DOT_SIZES[this.size];
+  }),
+  spaceSize: computed('size', function () {
+    return SPACE_SIZES[this.size];
   }),
 
-  'aria-checked': computed('active', function () {
-    return this.active ? 'true' : 'false';
+  activeBgColor: computed('color', function () {
+    return BG_COLORS[this.color];
   }),
+  inactiveBgColor: computed(() => BG_COLORS['inactive']),
 
-  click() {
-    if (!this.disabled) {
-      this.onToggle(!this.active);
+  // Actions
+  actions: {
+    handleClick() {
+      return this.onClick(!this.active);
     }
   }
 });
