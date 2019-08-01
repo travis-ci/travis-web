@@ -347,15 +347,15 @@ export default create({
       scope: '.highlight-plan',
 
       name: {
-        scope: '[data-test-selected-plan-name]'
+        scope: '.highlight-plan [data-test-selected-plan-name]'
       },
 
       jobs: {
-        scope: '[data-test-selected-plan-jobs]'
+        scope: '.highlight-plan [data-test-selected-plan-jobs]'
       },
 
       price: {
-        scope: '[data-test-selected-plan-price]'
+        scope: '.highlight-plan [data-test-selected-plan-price]'
       }
     },
 

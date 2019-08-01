@@ -10,17 +10,24 @@ module('Integration | Component | selected-billing-plan', function (hooks) {
     // Set any properties with this.set('myProperty', 'value');
     // Handle any actions with this.set('myAction', function(val) { ... });
 
-    await render(hbs`<SelectedBillingPlan />`);
+    this['actions'] = {
+      goToFirstStep: () => { }
+    };
 
-    assert.equal(this.element.textContent.trim(), '');
+    const plan1 = {
+      id: 1,
+      name: 'Startup',
+      builds: 5,
+      price: 20000,
+      annual: false
+    };
+    this.set('selectedPlan', plan1);
 
-    // Template block usage:
-    await render(hbs`
-      <SelectedBillingPlan>
-        template block text
-      </SelectedBillingPlan>
-    `);
+    await render(hbs`<SelectedBillingPlan 
+      @showAnnual={{false}} 
+      @selectedPlan={{selectedPlan}} 
+      @goToFirstStep={{action 'goToFirstStep'}}/>`);
 
-    assert.equal(this.element.textContent.trim(), 'template block text');
+    assert.dom('[data-test-selected-plan-price]').hasTextContaining('$200 /month');
   });
 });

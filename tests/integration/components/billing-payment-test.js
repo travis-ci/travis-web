@@ -28,17 +28,33 @@ module('Integration | Component | billing-payment', function (hooks) {
       discountCode: ''
     };
 
+    const newSubscription = {
+      billingInfo: {
+        firstName: '',
+        lastName: '',
+        companyName: '',
+        billingEmail: '',
+        street: '',
+        billingSuite: '',
+        billingCity: '',
+        bllingZip: '',
+        country: '',
+        vatId: ''
+      }
+    };
+
     this['actions'] = {
       handleSubmit: () => { },
       goToFirstStep: () => { },
-      back: () => { }
+      back: () => { },
+      cancel: () => { }
     };
 
     this.setProperties({
       selectedPlan,
-      paymentInfo
+      paymentInfo,
+      newSubscription
     });
-
 
     window.Stripe = StripeMock;
     let config = {
@@ -54,11 +70,12 @@ module('Integration | Component | billing-payment', function (hooks) {
 
     await render(hbs`<BillingPayment 
       @paymentInfo={{paymentInfo}}
+      @newSubscription={{newSubscription}}
       @cancel={{action 'cancel'}}
       @goToFirstStep={{action 'goToFirstStep'}}
       @back={{action 'back'}}
       @selectedPlan={{selectedPlan}}/>`);
 
-    assert.dom('h2').hasText('Credit card details');
+    assert.dom('h3').hasText('Pay with card');
   });
 });

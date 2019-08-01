@@ -503,12 +503,13 @@ module('Acceptance | profile/billing', function (hooks) {
     this.organization.save();
 
     await profilePage.visit();
-    await profilePage.billing.visit();
     await profilePage.accounts[1].visit();
     await profilePage.billing.visit();
     await profilePage.billing.getPlanButton.click();
 
     percySnapshot(assert);
+
+    await profilePage.billing.billingPlanChoices.lastBox.visit();
 
     assert.dom(profilePage.billing.selectedPlan.name.scope).hasTextContaining(`${this.lastPlan.name}`);
     assert.dom(profilePage.billing.selectedPlan.jobs.scope).hasTextContaining(`${this.lastPlan.builds} concurrent jobs`);

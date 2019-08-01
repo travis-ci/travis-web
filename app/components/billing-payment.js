@@ -2,13 +2,20 @@ import Component from '@ember/component';
 import { task } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
-import { or } from '@ember/object/computed';
+import { or, reads } from '@ember/object/computed';
 
 export default Component.extend({
   flashes: service(),
   stripe: service('stripev3'),
   stripeElement: null,
   stripeLoading: false,
+  newSubscription: null,
+
+  company: reads('newSubscription.billingInfo.company'),
+  email: reads('newSubscription.billingInfo.billingEmail'),
+  address: reads('newSubscription.billingInfo.address'),
+  city: reads('newSubscription.billingInfo.city'),
+  country: reads('newSubscription.billingInfo.country'),
 
   fullName: computed(
     'newSubscription.billingInfo.firstName',

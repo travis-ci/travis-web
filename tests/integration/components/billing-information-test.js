@@ -20,17 +20,19 @@ module('Integration | Component | billing-information', function (hooks) {
       annual: true
     }];
 
-    const billingInfo = {
-      firstName: '',
-      lastName: '',
-      companyName: '',
-      billingEmail: '',
-      street: '',
-      billingSuite: '',
-      billingCity: '',
-      bllingZip: '',
-      country: '',
-      vatId: ''
+    const newSubscription = {
+      billingInfo: {
+        firstName: '',
+        lastName: '',
+        companyName: '',
+        billingEmail: '',
+        street: '',
+        billingSuite: '',
+        billingCity: '',
+        bllingZip: '',
+        country: '',
+        vatId: ''
+      }
     };
 
     this['actions'] = {
@@ -43,7 +45,7 @@ module('Integration | Component | billing-information', function (hooks) {
       displayedPlans: plans,
       selectedPlan: plans[0],
       showAnnual: false,
-      billingInfo
+      newSubscription
     });
   });
 
@@ -53,11 +55,12 @@ module('Integration | Component | billing-information', function (hooks) {
       selectedPlan=selectedPlan 
       displayedPlans=displayedPlans 
       showAnnual=showAnnual
+      newSubscription=newSubscription
       next=(action 'next')
       back=(action 'back')
       goToFirstStep=(action 'goToFirstStep')
     }}`);
 
-    assert.dom('[data-test-billing-info-title]').hasText('Billing Cycle');
+    assert.dom('[data-test-contact-details-title]').hasText('Contact details');
   });
 });

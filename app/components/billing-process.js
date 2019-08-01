@@ -3,7 +3,7 @@ import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
 import config from 'travis/config/environment';
 import { task } from 'ember-concurrency';
-import { not, filterBy, or, mapBy, equal } from '@ember/object/computed';
+import { not, filterBy, or, mapBy, equal, reads } from '@ember/object/computed';
 
 const STEPS = {
   ONE: 'stepOne',
@@ -20,14 +20,7 @@ export default Component.extend({
   availablePlans: config.plans,
   steps: [...Object.values(STEPS)],
 
-  currentStep: computed('steps.[]', {
-    get() {
-      return this.steps.get('firstObject');
-    },
-    set(key, value) {
-      return value;
-    }
-  }),
+  currentStep: reads('steps.firstObject'),
 
   isStepOne: equal('currentStep', STEPS.ONE),
   isStepTwo: equal('currentStep', STEPS.TWO),
@@ -59,8 +52,8 @@ export default Component.extend({
 
   displayedPlans: computed(
     'showAnnual',
-    'monthlyPlans.@each.{annual}',
-    'annualPlans.@each.{annual}',
+    'monthlyPlans.@each.annual',
+    'annualPlans.@each.annual',
     function () {
       const { annualPlans, showAnnual, monthlyPlans } = this;
       return showAnnual ? annualPlans : monthlyPlans;
@@ -71,9 +64,8 @@ export default Component.extend({
     'displayedPlans.@each.{name,price,annual,builds}',
     'defaultPlan', {
       get() {
-        const { displayedPlans, defaultPlan } = this;
-        const plan = defaultPlan.get('firstObject');
-        return displayedPlans.findBy('name', plan.name);
+        const plan = this.defaultPlan.get('firstObject');
+        return this.displayedPlans.findBy('name', plan.name);
       },
       set(key, value) {
         return value;
