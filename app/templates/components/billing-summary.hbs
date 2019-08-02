@@ -1,53 +1,58 @@
 <h3> Overview </h3>
-<div class="flex flex--space-between flex--wrap plan-overview">
-  <section class="plan">
-    {{#if this.isGithubTrial}}
-      <p data-test-trial-message class="source plan-status-message">
-        You're trialing Travis CI via your
-        <ExternalLinkTo
-          @href={{config-get "marketplaceEndpoint"}}
-          class="billing-section-link"
-        >
-          Github Marketplace subscription.
-        </ExternalLinkTo>
-      </p>
-    {{/if}}
-    <p class='plan__name' data-test-plan-name>
-      {{#if this.subscription.plan }}
-        {{concat this.subscription.plan.name ' plan'}} 
-      {{else}}
-        Unknown plan
-      {{/if}}
-    </p>
-    <SvgImage @name="icon-checkmark" @class="icon--color" />
-    <p data-test-plan-concurrency>
-      {{#if this.subscription.plan}}
-        {{pluralize this.subscription.plan.builds "concurrent job"}}
-      {{else}}
-        Unknown concurrent jobs
-      {{/if}}
-    </p>
-    <p data-test-plan-message='true'>
-      {{this.planMessage}} {{moment-format this.subscription.validTo "MMMM D, YYYY"}}
-    </p>
-  </section>
-  <section>
-    <div class='selected-plan__price'>
-      <p class='selected-plan__price--total' data-test-plan-total='true'>
-        Total:
-      </p>
-      {{#if this.subscription.plan }}
-        <p class='selected-plan__price--large' data-test-price>
-          {{#if this.subscription.isManual}}
-            <ManualSubscriptionHelp />
-          {{else}}
-            {{format-currency this.price}}
-            <span>
-                {{if this.subscription.plan.annual '/year' '/month'}}
-            </span>
-          {{/if}}
+<div class='plan-overview'>
+  <div class="flex flex--space-between flex--wrap">
+    <section class="plan">
+      {{#if this.isGithubTrial}}
+        <p data-test-trial-message class="source plan-status-message">
+          You're trialing Travis CI via your
+          <ExternalLinkTo
+            @href={{config-get "marketplaceEndpoint"}}
+            class="billing-section-link"
+          >
+            Github Marketplace subscription.
+          </ExternalLinkTo>
         </p>
       {{/if}}
-    </div>
-  </section>
+      <p class='plan__name' data-test-plan-name>
+        {{#if this.subscription.plan }}
+          {{concat this.subscription.plan.name ' plan'}} 
+        {{else}}
+          Unknown plan
+        {{/if}}
+      </p>
+      <SvgImage @name="icon-checkmark" @class="icon--color" />
+      <p data-test-plan-concurrency>
+        {{#if this.subscription.plan}}
+          {{pluralize this.subscription.plan.builds "concurrent job"}}
+        {{else}}
+          Unknown concurrent jobs
+        {{/if}}
+      </p>
+      <p data-test-plan-message='true'>
+        {{this.planMessage}} {{moment-format this.subscription.validTo "MMMM D, YYYY"}}
+      </p>
+    </section>
+    <section>
+      <div class='selected-plan__price'>
+        <p class='selected-plan__price--total' data-test-plan-total='true'>
+          Total:
+        </p>
+        {{#if this.subscription.plan }}
+          <p class='selected-plan__price--large' data-test-price>
+            {{#if this.subscription.isManual}}
+              <ManualSubscriptionHelp />
+            {{else}}
+              {{format-currency this.price}}
+              <span>
+                  {{if this.subscription.plan.annual '/year' '/month'}}
+              </span>
+            {{/if}}
+          </p>
+        {{/if}}
+      </div>
+    </section>
+  </div>
+  <p class='selected-plan__details--change-plan link' data-test-selected-plan-free-jobs>
+    change plan
+  </p>
 </div>

@@ -8,6 +8,17 @@
     border: 1px $pebble-grey solid;
   }
 
+  .edit {
+    text-transform: uppercase;
+    display: inline-block;
+    font-weight: 700;
+    margin-bottom: 0;
+    padding: 0;
+    margin-top: 1px;
+    font-size: .6em;
+    border-bottom: 1px solid $cement-grey;
+  }
+
   .selected-plan {
     border-radius: 5px;
     margin: 20px 0 20px 0;
@@ -389,7 +400,7 @@
 
     .plan-overview {
       margin-top: -10px;
-      margin-bottom: 18px;
+      margin-bottom: 24px;
     }
 
   }

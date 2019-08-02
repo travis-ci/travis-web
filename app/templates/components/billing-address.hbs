@@ -21,6 +21,82 @@
           </p>
         {{/if}}
       </div>
+      <button class='edit link' onClick={{action 'toggleEditContactForm'}}>Edit</button>
+      {{#if this.openEditContactForm}}
+      <div class="edit-form">
+        <TravisForm
+         class="edit-form"
+          @onSubmit={{perform this.editContact}}
+          as |form|
+        >
+          <div class="flex">
+            <div class="form-elem">
+              <form.field
+                @label="First Name"
+                @value={{info.firstName}}
+                @required={{true}}
+                @validateOnField={{false}}
+                @showValidationStatusIcons={{false}}
+                @onChange={{action (mut info.firstName)}}
+                as |field|
+              >
+                <field.input placeholder="First Name" />
+              </form.field>
+            </div>
+            <div class="form-elem">
+              <form.field
+                @label="Last Name"
+                @value={{info.lastName}}
+                @required={{true}}
+                @validateOnField={{false}}
+                @showValidationStatusIcons={{false}}
+                @onChange={{action (mut info.lastName)}}
+                as |field|
+              >
+                <field.input placeholder="Last Name" />
+              </form.field>
+            </div>
+          </div>
+          <div class="flex">
+            <div class="form-elem">
+              <form.field
+                @label="Company"
+                @value={{info.company}}
+                @required={{true}}
+                @validateOnField={{false}}
+                @showValidationStatusIcons={{false}}
+                @onChange={{action (mut info.company)}}
+                as |field|
+              >
+                <field.input placeholder="Company" />
+              </form.field>
+            </div>
+            <div class="form-elem">
+              <form.field
+                @label="Company"
+                @value={{info.billingEmail}}
+                @required={{true}}
+                @validateOnField={{false}}
+                @showValidationStatusIcons={{false}}
+                @onChange={{action (mut info.billingEmail)}}
+                as |field|
+              >
+                <field.input placeholder="Company" />
+              </form.field>
+            </div>
+          </div>
+          <div class="form-elem">
+            {{#if this.editContact.isRunning}}
+              <LoadingIndicator />
+            {{else}}
+              <button onclick={{form.submit}} class="button--blue">
+                Update
+              </button>
+            {{/if}}
+          </div>
+        </TravisForm>
+      </div>
+      {{/if}}
       <h4>
         Billing Details:
       </h4>
@@ -43,6 +119,66 @@
           </p>
         {{/if}}
       </div>
+      <button class='edit link' onClick={{action 'toggleEditBillingForm'}}>Edit</button>
+      {{#if this.openEditBillingForm}}
+      <div class="edit-form">
+        <TravisForm
+          @onSubmit={{perform this.editContact}}
+          as |form|
+        >
+          <div class="flex">
+            <div class="form-elem">
+              <form.field
+                @label="Address"
+                @value={{info.address}}
+                @required={{true}}
+                @validateOnField={{false}}
+                @showValidationStatusIcons={{false}}
+                @onChange={{action (mut info.address)}}
+                as |field|
+              >
+                <field.input placeholder="Address" />
+              </form.field>
+            </div>
+            <div class="form-elem">
+              <form.field
+                @label="City"
+                @value={{info.city}}
+                @required={{true}}
+                @validateOnField={{false}}
+                @showValidationStatusIcons={{false}}
+                @onChange={{action (mut info.city)}}
+                as |field|
+              >
+                <field.input placeholder="City" />
+              </form.field>
+            </div>
+          </div>
+          <div class="form-elem">
+            <form.field
+              @label="Country"
+              @value={{info.country}}
+              @required={{true}}
+              @validateOnField={{false}}
+              @showValidationStatusIcons={{false}}
+              @onChange={{action (mut info.country)}}
+              as |field|
+            >
+              <field.input placeholder="Country" />
+            </form.field>
+          </div>
+          <div class="form-elem">
+            {{#if this.editContact.isRunning}}
+              <LoadingIndicator />
+            {{else}}
+              <button onclick={{form.submit}} class="button--blue">
+                Update
+              </button>
+            {{/if}}
+          </div>
+        </TravisForm>
+      </div>
+      {{/if}}
     {{/let}}
   </section>
 {{/if}}

@@ -14,9 +14,9 @@ $profile-breakpoint: 600px;
   }
 
   // FIXME there’s a naked h2 down there, it seems to me it needs scoping…?
-  h2, h3 {
+  h2,
+  h3 {
     color: $oxide-blue;
-    font-weight: 300;
   }
 
   .profile-aside {
@@ -523,7 +523,7 @@ section.billing {
       margin-top: 0;
       margin-bottom: 0.3em;
       margin-right: 1.3em;
-      
+
       span {
         margin-left: 1.3em;
         color: $pebble-grey;
@@ -541,6 +541,24 @@ section.billing {
       font-size: $font-size-s;
       font-weight: $font-weight-bold;
       margin-bottom: 5px;
+    }
+
+    .edit-form {
+      margin-top: 35px;
+      margin-bottom: 35px;
+      margin-right: 80px;
+
+      .form-elem {
+        width: 100%;
+
+        &:nth-child(1) {
+          margin-right: 10px;
+        }
+
+        &:nth-child(3) {
+          margin-right: 10px;
+        }
+      }
     }
   }
 
@@ -589,7 +607,7 @@ section.invoices {
     margin-right: 10px;
   }
 
-  .invoice-select-year .ember-power-select-selected-item{
+  .invoice-select-year .ember-power-select-selected-item {
     margin-right: 22px;
     margin-left: 12px;
   }
@@ -619,7 +637,6 @@ section.invoices {
     padding: .5em .8em .5em 0;
   }
 
-<<<<<<< HEAD
   td .icon {
     @include colorSVG(black);
     margin-right: 0;
@@ -635,10 +652,6 @@ section.invoices {
     &:hover {
       @include colorSVG($oxide-blue);
     }
-=======
-  tr td:last-child, th:last-child {
->>>>>>> Implement sorting invoices by year
-    text-align: right;
   }
 
   p {
