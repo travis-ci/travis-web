@@ -29,18 +29,6 @@
     Pay with card
   </h3>
  <TravisForm @onSubmit={{perform this.createStripeToken}} data-test-payment-form as |form|>
-   <div class='full-width form-elem inline-form-elem'>
-    <form.field
-      @label='Name'
-      @value={{this.cardName}}
-      @required={{true}}
-      @showRequiredMark={{true}}
-      @showValidationStatusIcons={{false}}
-      @onChange={{action (mut this.cardName)}} as |Field|
-    >
-      <Field.input @name='cardName' placeholder='Rose Jaime'/>
-    </form.field>
-  </div>
   <StripeCard @complete={{action "complete"}} @options={{this.options}} as |stripeError|>
     {{#if stripeError}}
       <p>{{stripeError.message}}</p>

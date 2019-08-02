@@ -6,9 +6,9 @@
   />
   <TravisForm @onSubmit={{action next}} as |form|>
     <div data-test-billing-form>
-      <h2 data-test-contact-details-title='true'>
+      <h3 data-test-contact-details-title='true'>
         Contact details
-      </h2>
+      </h3>
       <div class='flex flex--col flex-md-row'>
         <div class='full-width form-elem inline-form-elem'>
           <form.field
@@ -58,9 +58,9 @@
           <Field.input @name='email'/>
         </form.field>
       </div>
-      <h2>
+      <h3>
         Billing address
-      </h2>
+      </h3>
       <div class='flex flex--col flex-md-row'>
         <div class='full-width form-elem inline-form-elem'>
           <form.field
