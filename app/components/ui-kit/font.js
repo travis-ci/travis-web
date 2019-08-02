@@ -1,4 +1,6 @@
 import Component from '@ember/component';
+import { computed } from '@ember/object';
+import { none } from '@ember/object/computed';
 import { checkDictionary } from 'travis/utils/ui-kit/assertions';
 
 const FAMILIES = {
@@ -28,6 +30,22 @@ export default Component.extend({
   family: null,
   size: null,
   color: null,
+
+  // Private
+  hasNoFamily: none('family'),
+  familyClass: computed('hasNoFamily', 'family', function () {
+    return this.hasNoFamily ? '' : `font-${this.family}`;
+  }),
+
+  hasNoSize: none('size'),
+  sizeClass: computed('hasNoSize', 'size', function () {
+    return this.hasNoSize ? '' : `text-${this.size}`;
+  }),
+
+  hasNoColor: none('color'),
+  colorClass: computed('hasNoColor', 'color', function () {
+    return this.hasNoColor ? '' : `text-${this.color}`;
+  }),
 
   // Lifecycle
   init() {
