@@ -246,6 +246,12 @@
       position: absolute;
       padding-right: 1em;
     }
+
+    span:not(.duration):not(:empty) {
+      display: inline-block;
+      cursor: default;
+      width: 100%;
+    }
   }
 
   .fold {
