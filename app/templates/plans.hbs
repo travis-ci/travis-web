@@ -17,7 +17,7 @@
 
     {{!-- Product section --}}
     <UiKit::Box @tag='section' @margin={{hash bottom=16}}>
-      <div class="flex flex-wrap items-center mb-3">
+      <UiKit::Grid @alignItems='center' @justify='start'>
         <UiKit::Font @transform='uppercase' @weight='bold' @margin={{hash right=2}}>
           Monthly
         </UiKit::Font>
@@ -26,8 +26,8 @@
           <UiKit::Font @transform='uppercase' @weight='bold'>Annual</UiKit::Font>
           (Get 1 month free!)
         </UiKit::Font>
-      </div>
-      <div class="relative">
+      </UiKit::Grid>
+      <UiKit::Box @position='relative' @margin={{hash top=3}}>
         <SvgImage @name="grey-blob" @class="absolute h-64 top-0 right-0 -mt-16 -mr-10"/>
         <div class="relative bg-white border border-grey-150 rounded shadow-even z-10">
           <UiKit::Grid @base={{2}} @md={{4}} as |grid|>
@@ -73,7 +73,7 @@
           </div>
         </div>
         <SvgImage @name="yellow-waves" @class="absolute w-56 bottom-0 left-0 -mb-10 -ml-10 z-0"/>
-      </div>
+      </UiKit::Box>
     </UiKit::Box>
 
     <UiKit::Button @onClick={{action 'gaCta' 'plans-oss'}} @color='grey-700' @invert={{true}}>
