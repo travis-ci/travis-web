@@ -14,7 +14,7 @@ $profile-breakpoint: 600px;
   }
 
   // FIXME there’s a naked h2 down there, it seems to me it needs scoping…?
-  h2 {
+  h2, h3 {
     color: $oxide-blue;
     font-weight: 300;
   }
@@ -458,6 +458,7 @@ section.billing {
   .plan {
     p {
       margin: 0.3em 0 0.3em 0;
+      font-weight: 100;
     }
 
     h3 {
@@ -512,16 +513,34 @@ section.billing {
     }
   }
 
+  section.billing-info {
+    padding: .1em 0;
+  }
+
   section.contact,
   section.payment {
     p {
       margin-top: 0;
       margin-bottom: 0.3em;
+      margin-right: 1.3em;
+      
+      span {
+        margin-left: 1.3em;
+        color: $pebble-grey;
+      }
     }
 
     p.manual-help {
       @include linkStyle;
       margin-top: 1rem;
+    }
+
+    h4 {
+      text-transform: uppercase;
+      color: $cement-grey;
+      font-size: $font-size-s;
+      font-weight: $font-weight-bold;
+      margin-bottom: 5px;
     }
   }
 
@@ -544,8 +563,8 @@ section.billing {
 }
 
 section.invoices {
+
   font-size: $font-size-m;
-  padding-top: 1rem;
 
   h2 {
     margin: 0;

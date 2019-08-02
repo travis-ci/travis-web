@@ -389,8 +389,12 @@ export default create({
       name: text('[data-test-education-message]'),
     },
 
-    address: {
-      scope: '.contact .address',
+    userDetails: {
+      scope: '[data-test-user-details]',
+    },
+
+    billingDetails: {
+      scope: '[data-test-billing-details]'
     },
 
     source: text('[data-test-source]'),
@@ -402,6 +406,10 @@ export default create({
 
     expiryMessage: {
       scope: '[data-test-expiry-message]'
+    },
+
+    planMessage: {
+      scope: '[data-test-plan-message]'
     },
 
     contactSupport: {

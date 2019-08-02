@@ -7,5 +7,6 @@ export default Component.extend({
   subscription: reads('account.subscription'),
   trial: reads('account.trial'),
 
+  price: reads('subscription.plan.price'),
   isGithubTrial: and('subscription.isGithub', 'trial.hasActiveTrial')
 });

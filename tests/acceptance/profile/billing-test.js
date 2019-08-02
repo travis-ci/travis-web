@@ -25,7 +25,7 @@ module('Acceptance | profile/billing', function (hooks) {
     signInUser(this.user);
 
     let plan = server.create('plan', {
-      name: 'Small Business Plan',
+      name: 'Small Business1',
       builds: 5,
       annual: false,
       currency: 'USD',
@@ -61,6 +61,7 @@ module('Acceptance | profile/billing', function (hooks) {
       company: 'Travis CI GmbH',
       address: 'Rigaerstraße 8',
       address2: 'Address 2',
+      billing_email: 'user@email.com',
       city: 'Berlin',
       state: 'Berlin',
       zip_code: '10987',
@@ -134,20 +135,16 @@ module('Acceptance | profile/billing', function (hooks) {
 
     percySnapshot(assert);
 
-    assert.equal(profilePage.billing.manageButton.href, 'https://billing.travis-ci.com/subscriptions/user');
-    assert.notOk(profilePage.billing.manageButton.isDisabled);
-    assert.notOk(profilePage.billing.manageButton.isNew);
-    assert.equal(profilePage.billing.manageButton.text, 'Edit subscription');
     assert.ok(profilePage.billing.expiryMessage.isHidden);
     assert.ok(profilePage.billing.marketplaceButton.isHidden);
 
-    assert.equal(profilePage.billing.plan.name, 'Small Business Plan');
+    assert.equal(profilePage.billing.plan.name, 'Small Business1 plan');
     assert.equal(profilePage.billing.plan.concurrency, '5 concurrent jobs');
 
-    assert.equal(profilePage.billing.address.text, 'User Name Travis CI GmbH Rigaerstraße 8 Address 2 Berlin, Berlin 10987 Germany VAT: 12345');
-    assert.equal(profilePage.billing.source, 'This plan is paid through Stripe.');
+    assert.equal(profilePage.billing.userDetails.text, 'User Name | Travis CI GmbH | user@email.com');
+    assert.equal(profilePage.billing.billingDetails.text, 'Rigaerstraße 8 | Berlin | Germany');
     assert.equal(profilePage.billing.creditCardNumber.text, '•••• •••• •••• 1919');
-    assert.equal(profilePage.billing.price.text, '$69 per month');
+    assert.equal(profilePage.billing.price.text, '$69 /month');
 
     assert.ok(profilePage.billing.annualInvitation.isVisible, 'expected the invitation to switch to annual billing to be visible');
 
@@ -305,12 +302,10 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.visit();
     await profilePage.billing.visit();
 
-    assert.equal(profilePage.billing.expiryMessage.text, 'You had a Stripe subscription that expired on June 19, 2018.');
-    assert.equal(profilePage.billing.manageButton.text, 'Resubscribe');
-    assert.equal(profilePage.billing.manageButton.href, 'https://billing.travis-ci.com/subscriptions/user');
+    // assert resubscribing works.
 
     assert.ok(profilePage.billing.marketplaceButton.isHidden);
-    assert.ok(profilePage.billing.address.isHidden);
+    // assert address is hidden
     assert.ok(profilePage.billing.creditCardNumber.isHidden);
     assert.ok(profilePage.billing.annualInvitation.isHidden);
   });
@@ -321,12 +316,10 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.visit();
     await profilePage.billing.visit();
 
-    assert.equal(profilePage.billing.expiryMessage.text, 'This subscription has been canceled by you and is valid through June 19, 2018.');
-    assert.equal(profilePage.billing.manageButton.href, 'https://billing.travis-ci.com/subscriptions/user');
-    assert.equal(profilePage.billing.manageButton.text, 'Resubscribe');
+    assert.equal(profilePage.billing.planMessage.text, 'Subscription has been canceled, valid until June 19, 2018');
 
     assert.ok(profilePage.billing.marketplaceButton.isHidden);
-    assert.ok(profilePage.billing.address.isHidden);
+    // assert address is hidden
     assert.ok(profilePage.billing.creditCardNumber.isHidden);
     assert.ok(profilePage.billing.annualInvitation.isHidden);
   });
@@ -340,10 +333,9 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.billing.visit();
 
     assert.ok(profilePage.billing.manageButton.isHidden);
-    assert.ok(profilePage.billing.address.isHidden);
+    // assert address is hidden
     assert.ok(profilePage.billing.creditCardNumber.isHidden);
     assert.ok(profilePage.billing.price.isHidden);
-    assert.equal(profilePage.billing.source, 'This is a manual subscription.');
     assert.ok(profilePage.billing.annualInvitation.isHidden);
 
     assert.ok(profilePage.billing.invoices.isHidden);
@@ -358,7 +350,7 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.billing.visit();
 
     assert.ok(profilePage.billing.manageButton.isHidden);
-    assert.ok(profilePage.billing.address.isHidden);
+    // assert address is hidden
     assert.ok(profilePage.billing.creditCardNumber.isHidden);
     assert.ok(profilePage.billing.price.isHidden);
     assert.ok(profilePage.billing.annualInvitation.isHidden);
@@ -372,11 +364,8 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.visit();
     await profilePage.billing.visit();
 
-    assert.equal(profilePage.billing.manageButton.href, 'https://github.com/marketplace/travis-ci/');
-
-    assert.ok(profilePage.billing.address.isHidden);
+    // assert address is hidden
     assert.ok(profilePage.billing.creditCardNumber.isHidden);
-    assert.equal(profilePage.billing.source, 'This subscription is managed by GitHub Marketplace.');
     assert.ok(profilePage.billing.annualInvitation.isHidden);
   });
 
@@ -387,13 +376,13 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.visit();
     await profilePage.billing.visit();
 
-    assert.equal(profilePage.billing.expiryMessage.text, 'This subscription has been canceled by you and is valid through June 19, 2018.');
+    assert.equal(profilePage.billing.planMessage.text, 'Subscription has been canceled, valid until June 19, 2018');
     assert.equal(profilePage.billing.marketplaceButton.text, 'Continue with GitHub Marketplace');
     assert.equal(profilePage.billing.marketplaceButton.href, 'https://github.com/marketplace/travis-ci/');
     assert.equal(profilePage.billing.manageButton.text, 'New subscription');
     assert.equal(profilePage.billing.manageButton.href, 'https://billing.travis-ci.com/subscriptions/new?id=user');
 
-    assert.ok(profilePage.billing.address.isHidden);
+    // assert address is hidden
     assert.ok(profilePage.billing.creditCardNumber.isHidden);
     assert.ok(profilePage.billing.annualInvitation.isHidden);
   });
@@ -411,7 +400,7 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.manageButton.text, 'New subscription');
     assert.equal(profilePage.billing.manageButton.href, 'https://billing.travis-ci.com/subscriptions/new?id=user');
 
-    assert.ok(profilePage.billing.address.isHidden);
+    // assert address is hidden
     assert.ok(profilePage.billing.creditCardNumber.isHidden);
     assert.ok(profilePage.billing.annualInvitation.isHidden);
   });
@@ -423,7 +412,7 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.visit();
     await profilePage.billing.visit();
 
-    assert.equal(profilePage.billing.price.text, '$100 per year');
+    assert.equal(profilePage.billing.price.text, '$100 /year');
     assert.ok(profilePage.billing.annualInvitation.isHidden, 'expected the invitation to switch to annual billing to be hidden');
   });
 
@@ -481,7 +470,7 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.billing.visit();
 
     assert.ok(profilePage.billing.annualInvitation.isHidden);
-    assert.ok(profilePage.billing.manageButton.isDisabled, 'expected disabled subscription management button when lacking permissions');
+    // assert editing was disabled.
   });
 
   test('view billing tab when there is no subscription and no write permissions', async function (assert) {
@@ -651,7 +640,6 @@ module('Acceptance | profile/billing', function (hooks) {
 
     assert.equal(profilePage.billing.trial.name, "You're trialing Travis CI via your Github Marketplace subscription.");
     assert.equal(profilePage.billing.manageButton.text, 'Edit subscription');
-    assert.ok(profilePage.billing.address.isHidden);
     assert.ok(profilePage.billing.creditCardNumber.isHidden);
     assert.equal(profilePage.billing.source, 'This subscription is managed by GitHub Marketplace.');
     assert.ok(profilePage.billing.annualInvitation.isHidden);
@@ -679,7 +667,6 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.billing.visit();
 
     assert.equal(profilePage.billing.manageButton.text, 'Edit subscription');
-    assert.ok(profilePage.billing.address.isHidden);
     assert.ok(profilePage.billing.creditCardNumber.isHidden);
     assert.equal(profilePage.billing.source, 'This subscription is managed by GitHub Marketplace.');
     assert.ok(profilePage.billing.annualInvitation.isHidden);

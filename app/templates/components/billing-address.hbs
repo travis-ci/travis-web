@@ -1,19 +1,48 @@
-{{#let this.billingInfo as |info|}}
-  <p>{{info.firstName}} {{info.lastName}}</p>
-  {{#if info.company}}
-    <p>{{info.company}}</p>
-  {{/if}}
-  <p>{{info.address}}</p>
-  {{#if info.address2}}
-    <p>{{info.address2}}</p>
-  {{/if}}
-  {{#if info.state}}
-    <p>{{info.city}}, {{info.state}} {{info.zipCode}}</p>
-  {{else}}
-    <p>{{info.city}} {{info.zipCode}}</p>
-  {{/if}}
-  <p>{{info.country}}</p>
-  {{#if info.vatId}}
-    <p>VAT: {{info.vatId}}</p>
-  {{/if}}
-{{/let}}
+{{#if this.subscription.isStripe}}
+  <section class="contact">
+    {{#let this.subscription.billingInfo as |info|}}
+      <h4>
+        Contact Details:
+      </h4>
+      <div data-test-user-details='true' class="flex flex--wrap">
+        <p>
+          {{info.firstName}} {{info.lastName}}
+          <span>|</span>
+        </p>
+        {{#if info.company}}
+          <p>
+            {{info.company}}
+            <span>|</span>
+          </p>
+        {{/if}}
+        {{#if info.billingEmail}}
+          <p>
+            {{info.billingEmail}}
+          </p>
+        {{/if}}
+      </div>
+      <h4>
+        Billing Details:
+      </h4>
+      <div data-test-billing-details='true' class="flex flex--wrap">
+        {{#if info.address}}
+          <p>
+            {{info.address}}
+            <span>|</span>
+          </p>
+        {{/if}}
+        {{#if info.city}}
+          <p>
+            {{info.city}}
+            <span>|</span>
+          </p>
+        {{/if}}
+        {{#if info.country}}
+          <p>
+            {{info.country}}
+          </p>
+        {{/if}}
+      </div>
+    {{/let}}
+  </section>
+{{/if}}

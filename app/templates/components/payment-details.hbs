@@ -1,31 +1,34 @@
-<p
-  class="source {{if this.subscription.isManual 'alert-status-message'}}"
-  data-test-source
->
-  {{this.source}}
-</p>
-{{#if this.subscription.isStripe}}
-  <p data-test-credit-card>
-    <SvgImage @name="icon-credit-card" @class="icon--color" />
-    •••• •••• ••••
-    {{this.subscription.creditCardInfo.lastDigits}}
-  </p>
-{{/if}}
-{{#if this.subscription.isManual}}
-  <ManualSubscriptionHelp />
-{{else}}
-  <p data-test-price>
-  <SvgImage @name="icon-currency-USD" @class="icon--color" />
-    {{this.price}}
-  </p>
-{{/if}}
-{{#if (and this.subscription.isStripe this.monthly this.subscription.permissions.write this.subscription.plan)}}
-  <span class="notice-banner--yellow" data-test-annual-invitation>
-    Get one month for free with
-    <ExternalLinkTo
-      @href={{concat subscription.billingUrl "/edit?switch_annual=true?utm_source=web&utm_campaign=switch_to_annual"}}
-    >
-      annual billing
-    </ExternalLinkTo>
-  </span>
+{{#if this.subscription.plan}}
+  <section class="payment">
+    <h4>
+      Payment details
+    </h4>
+    {{#if this.subscription.isStripe}}
+      <p data-test-credit-card>
+        •••• •••• ••••
+        {{this.subscription.creditCardInfo.lastDigits}}
+      </p>
+    {{/if}}
+    {{#if this.subscription.isManual}}
+      <ManualSubscriptionHelp />
+    {{/if}}
+    {{#if (not this.subscription.isStripe)}}
+      <p
+        class="source {{if this.subscription.isManual 'alert-status-message'}}"
+        data-test-source
+      >
+        {{this.source}}
+      </p>
+    {{/if}}
+    {{#if (and this.subscription.isStripe this.monthly this.subscription.permissions.write this.subscription.plan)}}
+      <span class="notice-banner--yellow" data-test-annual-invitation>
+        Get one month for free with
+        <ExternalLinkTo
+          @href={{concat subscription.billingUrl "/edit?switch_annual=true?utm_source=web&utm_campaign=switch_to_annual"}}
+        >
+          annual billing
+        </ExternalLinkTo>
+      </span>
+    {{/if}}
+  </section>
 {{/if}}
