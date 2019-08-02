@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { assert } from '@ember/debug';
+import { checkDictionary } from 'travis/utils/ui-kit/assertions';
 
 // Public dictionaries
 export const COLORS = {
@@ -74,7 +74,8 @@ export default Component.extend({
   // Lifecycle
   init() {
     this._super(...arguments);
-    assert(`Color "${this.color}" is not allowed on this component`, Object.values(COLORS).includes(this.color));
+
+    checkDictionary(this.color, COLORS, 'Color', 'Button');
   },
 
   // Actions

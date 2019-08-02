@@ -1,12 +1,12 @@
 import Component from '@ember/component';
-import { assert } from '@ember/debug';
+import { checkDictionary, requireProp } from 'travis/utils/ui-kit/assertions';
 
 export const TAGS = {
   DIV: 'div',
   SECTION: 'section',
+  SPAN: 'span',
 };
 const DEFAULT_TAG = TAGS.DIV;
-const SUPPORTED_TAGS = Object.values(TAGS);
 
 export default Component.extend({
   tagName: '',
@@ -18,6 +18,8 @@ export default Component.extend({
   // Lifecycle
   init() {
     this._super(...arguments);
-    assert(`Tag "${this.tag}" is not allowed on this component`, SUPPORTED_TAGS.includes(this.tag));
+
+    checkDictionary(this.tag, TAGS, 'Size', 'Font');
+    requireProp(this.tag, 'Tag', 'Tag');
   },
 });

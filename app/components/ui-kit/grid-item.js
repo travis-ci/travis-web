@@ -1,7 +1,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { or } from '@ember/object/computed';
-import { assert } from '@ember/debug';
 
 export default Component.extend({
   tagName: '',

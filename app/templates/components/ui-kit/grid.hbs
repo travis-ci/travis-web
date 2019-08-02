@@ -1,4 +1,5 @@
-<div
+<UiKit::Tag
+  @tag={{this.tag}}
   class="
     {{if this.inline 'inline-flex' 'flex'}}
     flex-{{this.dir}}
@@ -11,4 +12,4 @@
   {{yield (hash
     item=(component "ui-kit/grid-item" grid=this)
   )}}
-</div>
+</UiKit::Tag>
