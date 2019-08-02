@@ -1,145 +1,146 @@
 <TravisLayout @layoutName="layouts/center">
-  <UiKit::Font @color='grey-800' @family='sans' @tag='div'>
 
-    {{!-- Header section --}}
-    <UiKit::Box @tag='section' @margin={{hash top=3 bottom=16}}>
-      <UiKit::Font @tag='header' @justify='center'>
-        <UiKit::Font @tag='h1' @size='6xl' @weight='bold'>
-          Built for every team
-        </UiKit::Font>
-        <p>
-          Set up your first project in just one minute.
-          <br />
-          Your first 100 builds are free! No credit card required.
-        </p>
+  {{!-- Header section --}}
+  <UiKit::Box @tag='section' @margin={{hash top=3 bottom=16}}>
+    <UiKit::Font @tag='header' @justify='center'>
+      <UiKit::Font @tag='h1' @size='6xl' @weight='bold'>
+        Built for every team
       </UiKit::Font>
-    </UiKit::Box>
+      <p>
+        Set up your first project in just one minute.
+        <br />
+        Your first 100 builds are free! No credit card required.
+      </p>
+    </UiKit::Font>
+  </UiKit::Box>
 
-    {{!-- Product section --}}
-    <UiKit::Box @tag='section' @margin={{hash bottom=16}}>
-      <UiKit::Grid @alignItems='center' @justify='start'>
-        <UiKit::Font @transform='uppercase' @weight='bold' @margin={{hash right=2}}>
-          Monthly
-        </UiKit::Font>
-        <UiKit::Switch @onClick={{fn (mut showAnnual)}} @active={{showAnnual}} />
-        <UiKit::Font @color='blue-400' @margin={{hash left=2}}>
-          <UiKit::Font @transform='uppercase' @weight='bold'>Annual</UiKit::Font>
-          (Get 1 month free!)
-        </UiKit::Font>
-      </UiKit::Grid>
-      <UiKit::Box @position='relative' @margin={{hash top=3}}>
-        <SvgImage @name="grey-blob" @class="absolute h-64 top-0 right-0 -mt-16 -mr-10"/>
-        <div class="relative bg-white border border-grey-150 rounded shadow-even z-10">
-          <UiKit::Grid @base={{2}} @md={{4}} as |grid|>
-            {{#each plansToDisplay as |plan|}}
-              <grid.item @class="p-4 border-grey-150 border">
-                <h3 class="font-bold text-3xl">
-                  {{plan.name}}
-                </h3>
-                <h4 class="font-bold text-lg uppercase text-grey-400 mb-6">
-                  {{plan.description}}
-                </h4>
-                <div>
-                  <span class="text-green-400 font-bold">{{plan.builds}}</span>
-                  {{pluralize plan.builds "Concurrent job" without-count=true}}
-                </div>
-                <div>
-                  <SvgImage @name="features-check" @class="w-3 inline-block"/>
-                  Unlimited build minutes
-                </div>
-                <div>
-                  <SvgImage @name="features-check" @class="w-3 inline-block"/>
-                  Unlimited repositories
-                </div>
-                <div class="mb-6">
-                  <SvgImage @name="features-check" @class="w-3 inline-block"/>
-                  Unlimited collaborators
-                </div>
-                <div class="mb-6">
-                  <span class="text-xl text-green-400 font-bold">${{plan.monthlyPriceRounded}}</span>
-                  <span class="text-sm">
-                    {{plan.currency}}
-                    per month
-                    {{if showAnnual 'billed annually'}}
-                  </span>
-                </div>
-              </grid.item>
-            {{/each}}
-          </UiKit::Grid>
-          <div class="text-center p-4 border-grey-150 border">
-            <UiKit::Button @onClick={{action 'gaCta' 'plans-table'}}>
-              Start Your Free Trial
-            </UiKit::Button>
-          </div>
-        </div>
-        <SvgImage @name="yellow-waves" @class="absolute w-56 bottom-0 left-0 -mb-10 -ml-10 z-0"/>
+  {{!-- Product section --}}
+  <UiKit::Box @tag='section' @margin={{hash bottom=16}}>
+    <UiKit::Grid @alignItems='center' @justify='start'>
+      <UiKit::Font @transform='uppercase' @weight='bold' @margin={{hash right=2}}>
+        Monthly
+      </UiKit::Font>
+      <UiKit::Switch @onClick={{fn (mut showAnnual)}} @active={{showAnnual}} />
+      <UiKit::Font @color='blue-400' @margin={{hash left=2}}>
+        <UiKit::Font @transform='uppercase' @weight='bold'>Annual</UiKit::Font>
+        (Get 1 month free!)
+      </UiKit::Font>
+    </UiKit::Grid>
+    <UiKit::Box @position={{hash type='relative'}} @margin={{hash top=3}}>
+      <UiKit::Box @position={{hash type='absolute' top=0 right=0}} @margin={{hash top=-16 right=-10}} @height={{64}}>
+        <SvgImage @name="grey-blob" @height={{224}} />
       </UiKit::Box>
+
+      <div class="relative bg-white border border-grey-150 rounded shadow-even z-10">
+        <UiKit::Grid @base={{2}} @md={{4}} as |grid|>
+          {{#each plansToDisplay as |plan|}}
+            <grid.item @class="p-4 border-grey-150 border">
+              <h3 class="font-bold text-3xl">
+                {{plan.name}}
+              </h3>
+              <h4 class="font-bold text-lg uppercase text-grey-400 mb-6">
+                {{plan.description}}
+              </h4>
+              <div>
+                <span class="text-green-400 font-bold">{{plan.builds}}</span>
+                {{pluralize plan.builds "Concurrent job" without-count=true}}
+              </div>
+              <div>
+                <SvgImage @name="features-check" @class="w-3 inline-block"/>
+                Unlimited build minutes
+              </div>
+              <div>
+                <SvgImage @name="features-check" @class="w-3 inline-block"/>
+                Unlimited repositories
+              </div>
+              <div class="mb-6">
+                <SvgImage @name="features-check" @class="w-3 inline-block"/>
+                Unlimited collaborators
+              </div>
+              <div class="mb-6">
+                <span class="text-xl text-green-400 font-bold">${{plan.monthlyPriceRounded}}</span>
+                <span class="text-sm">
+                  {{plan.currency}}
+                  per month
+                  {{if showAnnual 'billed annually'}}
+                </span>
+              </div>
+            </grid.item>
+          {{/each}}
+        </UiKit::Grid>
+        <div class="text-center p-4 border-grey-150 border">
+          <UiKit::Button @onClick={{action 'gaCta' 'plans-table'}}>
+            Start Your Free Trial
+          </UiKit::Button>
+        </div>
+      </div>
+      <SvgImage @name="yellow-waves" @class="absolute w-56 bottom-0 left-0 -mb-10 -ml-10 z-0"/>
     </UiKit::Box>
+  </UiKit::Box>
 
-    <UiKit::Button @onClick={{action 'gaCta' 'plans-oss'}} @color='grey-700' @invert={{true}}>
-      Set up your Open Source project now
-    </UiKit::Button>
+  <UiKit::Button @onClick={{action 'gaCta' 'plans-oss'}} @color='grey-700' @invert={{true}}>
+    Set up your Open Source project now
+  </UiKit::Button>
 
-    <section class="inner section--two section--os">
-      <div>
-        <h2 class="h2--grey section-headline">Always <span class="em--yellow">free</span> for open source projects</h2>
-        <a href="https://travis-ci.com/signin" class="plans-button--grey" title="Open Source projects on Travis CI" {{action 'gaCta' 'plans-table'}}>Set up your open source project now</a>
-      </div>
-      <div>
-        <h2 class="h2--grey section-headline">In need of a bigger plan?</h2>
-        <p class="text-big">We can customize a plan based on the needs of your team. We'll work with you to get you started.</p>
-        <a href="mailto:sales@travis-ci.com" title="Email the Travis CI sales team" class="plans-button--green">Contact Travis CI sales</a>
-      </div>
-    </section>
-    <section class="inner section--enterprise section--two">
-      <div>
-        <h2 class="h2--teal">Travis CI Enterprise</h2>
-        <p class="text-big">
-          Our on-premises product is perfect for companies who want to keep using the same features of Travis CI with additional on-site security needs.
-        </p>
-        <a href="https://enterprise.travis-ci.com" title="learn more about Travis CI" class="plans-button--blue">Learn more about Travis CI Enterprise</a>
-      </div>
-      <div>
-        <SvgImage @name='enterprise-servers'/>
-      </div>
-    </section>
+  <section class="inner section--two section--os">
+    <div>
+      <h2 class="h2--grey section-headline">Always <span class="em--yellow">free</span> for open source projects</h2>
+      <a href="https://travis-ci.com/signin" class="plans-button--grey" title="Open Source projects on Travis CI" {{action 'gaCta' 'plans-table'}}>Set up your open source project now</a>
+    </div>
+    <div>
+      <h2 class="h2--grey section-headline">In need of a bigger plan?</h2>
+      <p class="text-big">We can customize a plan based on the needs of your team. We'll work with you to get you started.</p>
+      <a href="mailto:sales@travis-ci.com" title="Email the Travis CI sales team" class="plans-button--green">Contact Travis CI sales</a>
+    </div>
+  </section>
+  <section class="inner section--enterprise section--two">
+    <div>
+      <h2 class="h2--teal">Travis CI Enterprise</h2>
+      <p class="text-big">
+        Our on-premises product is perfect for companies who want to keep using the same features of Travis CI with additional on-site security needs.
+      </p>
+      <a href="https://enterprise.travis-ci.com" title="learn more about Travis CI" class="plans-button--blue">Learn more about Travis CI Enterprise</a>
+    </div>
+    <div>
+      <SvgImage @name='enterprise-servers'/>
+    </div>
+  </section>
 
-    <section class="inner section--faq">
-      <h3 class="h2--grey section--center">Frequently asked questions</h3>
-      <ul class="list--faq">
-        <li>
-          <h4 class="h3--green">What is a concurrent job?</h4>
-          <p class="faq-text">Every commit triggers a single job by default. If two commits have been pushed on the Startup plan, they'll be run right away. Subsequent commits have to wait until the builds finished.</p>
-        </li>
-        <li>
-          <h4 class="h3--yellow">Are there any restrictions on build time?</h4>
-          <p class="faq-text">A build has 120 minutes to run. Should your build take longer, you can split it up using a build matrix.</p>
-        </li>
-        <li>
-          <h4 class="h3--red">Can I pay annually?</h4>
-          <p class="faq-text">You most certainly can! When signing up for a subscription, simply select the annual option. You get 1 month for free &mdash; 12 months for the price of 11!</p>
-        </li>
-        <li>
-          <h4 class="h3--teal">Can I cancel anytime?</h4>
-          <p class="faq-text">Absolutely! Contact us and we'll make sure your subscription gets cancelled as you want.</p>
-        </li>
-        <li>
-          <h4 class="h3--green">Am I able to upgrade my plan?</h4>
-          <p class="faq-text">Yes, you can change your plan subscription at any time.</p>
-        </li>
-        <li>
-          <h4 class="h3--red">Do the listed prices include VAT?</h4>
-          <p class="faq-text">Prices listed are excluding VAT, which will be added depending on origin (Germany and Europe). Make sure to have your company's VAT ID ready when entering billing details to remove VAT!</p>
-        </li>
-        <li>
-          <h4 class="h3--yellow">How does the trial work?</h4>
-          <p class="faq-text">Your free trial includes 100 builds and starts as soon as you set up your first project and push a commit. The trial is limited to two concurrent jobs.</p>
-        </li>
-        <li>
-          <h4 class="h3--teal">Do you have plans for students?</h4>
-          <p class="faq-text">We most certainly do! You can find all details on <a href="https://education.travis-ci.com">education.travis-ci.com</a></p>
-        </li>
-      </ul>
-    </section>
-  </UiKit::Font>
+  <section class="inner section--faq">
+    <h3 class="h2--grey section--center">Frequently asked questions</h3>
+    <ul class="list--faq">
+      <li>
+        <h4 class="h3--green">What is a concurrent job?</h4>
+        <p class="faq-text">Every commit triggers a single job by default. If two commits have been pushed on the Startup plan, they'll be run right away. Subsequent commits have to wait until the builds finished.</p>
+      </li>
+      <li>
+        <h4 class="h3--yellow">Are there any restrictions on build time?</h4>
+        <p class="faq-text">A build has 120 minutes to run. Should your build take longer, you can split it up using a build matrix.</p>
+      </li>
+      <li>
+        <h4 class="h3--red">Can I pay annually?</h4>
+        <p class="faq-text">You most certainly can! When signing up for a subscription, simply select the annual option. You get 1 month for free &mdash; 12 months for the price of 11!</p>
+      </li>
+      <li>
+        <h4 class="h3--teal">Can I cancel anytime?</h4>
+        <p class="faq-text">Absolutely! Contact us and we'll make sure your subscription gets cancelled as you want.</p>
+      </li>
+      <li>
+        <h4 class="h3--green">Am I able to upgrade my plan?</h4>
+        <p class="faq-text">Yes, you can change your plan subscription at any time.</p>
+      </li>
+      <li>
+        <h4 class="h3--red">Do the listed prices include VAT?</h4>
+        <p class="faq-text">Prices listed are excluding VAT, which will be added depending on origin (Germany and Europe). Make sure to have your company's VAT ID ready when entering billing details to remove VAT!</p>
+      </li>
+      <li>
+        <h4 class="h3--yellow">How does the trial work?</h4>
+        <p class="faq-text">Your free trial includes 100 builds and starts as soon as you set up your first project and push a commit. The trial is limited to two concurrent jobs.</p>
+      </li>
+      <li>
+        <h4 class="h3--teal">Do you have plans for students?</h4>
+        <p class="faq-text">We most certainly do! You can find all details on <a href="https://education.travis-ci.com">education.travis-ci.com</a></p>
+      </li>
+    </ul>
+  </section>
 </TravisLayout>

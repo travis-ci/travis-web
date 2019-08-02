@@ -36,7 +36,7 @@ export default Mixin.create({
 
     const { top } = this.margin;
     const isNegative = typeof top === 'number' && top < 0;
-    return `${isNegative ? '-' : ''}mt-${top}`;
+    return isNegative ? `-mt${top}` : `mt-${top}`;
   }),
   hasNoMarginRight: none('margin.right'),
   marginRight: computed('hasNoMarginRight', 'margin.right', function () {
@@ -46,7 +46,7 @@ export default Mixin.create({
 
     const { right } = this.margin;
     const isNegative = typeof right === 'number' && right < 0;
-    return `${isNegative ? '-' : ''}mr-${right}`;
+    return isNegative ? `-mr${right}` : `mr-${right}`;
   }),
   hasNoMarginBottom: none('margin.bottom'),
   marginBottom: computed('hasNoMarginBottom', 'margin.bottom', function () {
@@ -56,7 +56,7 @@ export default Mixin.create({
 
     const { bottom } = this.margin;
     const isNegative = typeof bottom === 'number' && bottom < 0;
-    return `${isNegative ? '-' : ''}mb-${bottom}`;
+    return isNegative ? `-mb${bottom}` : `mb-${bottom}`;
   }),
   hasNoMarginLeft: none('margin.left'),
   marginLeft: computed('hasNoMarginLeft', 'margin.left', function () {
@@ -66,7 +66,7 @@ export default Mixin.create({
 
     const { left } = this.margin;
     const isNegative = typeof left === 'number' && left < 0;
-    return `${isNegative ? '-' : ''}ml-${left}`;
+    return isNegative ? `-ml${left}` : `ml-${left}`;
   }),
   hasNoMarginX: none('margin.x'),
   marginX: computed('hasNoMarginX', 'margin.x', function () {
@@ -76,7 +76,7 @@ export default Mixin.create({
 
     const { x } = this.margin;
     const isNegative = typeof x === 'number' && x < 0;
-    return `${isNegative ? '-' : ''}mx-${x}`;
+    return isNegative ? `-mx${x}` : `mx-${x}`;
   }),
   hasNoMarginY: none('margin.y'),
   marginY: computed('hasNoMarginY', 'margin.y', function () {
@@ -86,6 +86,6 @@ export default Mixin.create({
 
     const { y } = this.margin;
     const isNegative = typeof y === 'number' && y < 0;
-    return `${isNegative ? '-' : ''}mx-${y}`;
+    return isNegative ? `-my${y}` : `my-${y}`;
   }),
 });

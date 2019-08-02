@@ -8,3 +8,7 @@ button[disabled],
 button:focus {
   outline: none;
 }
+
+html, body {
+  @apply .text-grey-800 .font-sans;
+}
