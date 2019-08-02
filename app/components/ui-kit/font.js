@@ -2,6 +2,7 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { none } from '@ember/object/computed';
 import { checkDictionary } from 'travis/utils/ui-kit/assertions';
+import spacingMixin from 'travis/mixins/ui-kit/spacing';
 
 const FAMILIES = {
   SANS: 'sans',
@@ -44,7 +45,7 @@ const TRANSFORMS = {
 };
 
 // Component definition
-export default Component.extend({
+export default Component.extend(spacingMixin, {
   tagName: '',
 
   // Public interface
