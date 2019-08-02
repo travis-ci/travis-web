@@ -22,19 +22,40 @@ const SIZES = {
   XL6: '6xl',
 };
 
+const WEIGHTS = {
+  LIGHT: 'light',
+  NORMAL: 'normal',
+  SEMIBOLD: 'semibold',
+  BOLD: 'bold',
+};
+
+const JUSTIFICATIONS = {
+  LEFT: 'left',
+  CENTER: 'center',
+  RIGHT: 'right',
+  JUSTIFY: 'justify',
+};
+
 // Component definition
 export default Component.extend({
+  tagName: '',
 
   // Public interface
   tag: 'span',
   family: null,
   size: null,
   color: null,
+  weight: null,
 
   // Private
   hasNoFamily: none('family'),
   familyClass: computed('hasNoFamily', 'family', function () {
     return this.hasNoFamily ? '' : `font-${this.family}`;
+  }),
+
+  hasNoWeight: none('weight'),
+  weightClass: computed('hasNoWeight', 'weight', function () {
+    return this.hasNoWeight ? '' : `font-${this.weight}`;
   }),
 
   hasNoSize: none('size'),
@@ -47,11 +68,18 @@ export default Component.extend({
     return this.hasNoColor ? '' : `text-${this.color}`;
   }),
 
+  hasNoJustify: none('justify'),
+  justifyClass: computed('hasNoJustify', 'justify', function () {
+    return this.hasNoJustify ? '' : `text-${this.justify}`;
+  }),
+
   // Lifecycle
   init() {
     this._super(...arguments);
 
     checkDictionary(this.size, SIZES, 'Size', 'Font');
     checkDictionary(this.family, FAMILIES, 'Family', 'Font');
+    checkDictionary(this.weight, WEIGHTS, 'Weight', 'Font');
+    checkDictionary(this.justify, JUSTIFICATIONS, 'Justify', 'Font');
   },
 });

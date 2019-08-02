@@ -2,18 +2,18 @@
   <UiKit::Font @color='grey-800' @family='sans' @tag='div'>
 
     {{!-- Header section --}}
-    <section class="mt-3 mb-16">
-      <header class="text-center">
-        <h1 class="text-6xl font-bold">
+    <UiKit::Box @tag='section' @margin={{hash top=3 bottom=16}}>
+      <UiKit::Font @tag='header' @justify='center'>
+        <UiKit::Font @tag='h1' @size='6xl' @weight='bold'>
           Built for every team
-        </h1>
+        </UiKit::Font>
         <p>
           Set up your first project in just one minute.
           <br />
           Your first 100 builds are free! No credit card required.
         </p>
-      </header>
-    </section>
+      </UiKit::Font>
+    </UiKit::Box>
 
     {{!-- Product section --}}
     <section class="mb-16">
