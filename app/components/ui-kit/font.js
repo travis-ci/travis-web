@@ -36,6 +36,13 @@ const JUSTIFICATIONS = {
   JUSTIFY: 'justify',
 };
 
+const TRANSFORMS = {
+  UPPERCASE: 'uppercase',
+  LOWERCASE: 'lowercase',
+  CAPITALIZE: 'capitalize',
+  NORMAL: 'normal-case',
+};
+
 // Component definition
 export default Component.extend({
   tagName: '',
@@ -46,6 +53,7 @@ export default Component.extend({
   size: null,
   color: null,
   weight: null,
+  transform: null,
 
   // Private
   hasNoFamily: none('family'),
@@ -81,5 +89,6 @@ export default Component.extend({
     checkDictionary(this.family, FAMILIES, 'Family', 'Font');
     checkDictionary(this.weight, WEIGHTS, 'Weight', 'Font');
     checkDictionary(this.justify, JUSTIFICATIONS, 'Justify', 'Font');
+    checkDictionary(this.transform, TRANSFORMS, 'Transform', 'Font');
   },
 });

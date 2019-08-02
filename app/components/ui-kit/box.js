@@ -10,6 +10,7 @@ const DISPLAYS = {
 };
 
 export default Component.extend({
+  tagName: '',
 
   // Public interface
   tag: 'div',
@@ -56,6 +57,26 @@ export default Component.extend({
     const { left } = this.margin;
     const isNegative = typeof left === 'number' && left < 0;
     return `${isNegative ? '-' : ''}ml-${left}`;
+  }),
+  hasNoMarginX: none('margin.x'),
+  marginX: computed('hasNoMarginX', 'margin.x', function () {
+    if (this.hasNoMarginX) {
+      return '';
+    }
+
+    const { x } = this.margin;
+    const isNegative = typeof x === 'number' && x < 0;
+    return `${isNegative ? '-' : ''}mx-${x}`;
+  }),
+  hasNoMarginY: none('margin.y'),
+  marginY: computed('hasNoMarginY', 'margin.y', function () {
+    if (this.hasNoMarginY) {
+      return '';
+    }
+
+    const { y } = this.margin;
+    const isNegative = typeof y === 'number' && y < 0;
+    return `${isNegative ? '-' : ''}mx-${y}`;
   }),
 
   // Lifecycle
