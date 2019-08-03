@@ -547,17 +547,27 @@ section.invoices {
   font-size: $font-size-m;
   padding-top: 1rem;
 
+  h2 {
+    margin: 0;
+  }
+
   .invoice-table {
     overflow-x: auto;
+    padding-bottom: 20px;
+    padding-top: 20px;
   }
 
   .invoice-select-year {
-    margin-top: 5px;
+    margin: 0;
   }
 
   .invoice-select-year .ember-power-select-selected-item {
     margin-right: 22px;
     margin-left: 12px;
+  }
+
+  .select-year-label {
+    margin-right: 10px;
   }
 
   table {
@@ -573,7 +583,9 @@ section.invoices {
   }
 
   td a {
-    display: block;
+    display: inline-block;
+    width: 54px;
+    text-align: center;
   }
 
   td,
@@ -590,7 +602,7 @@ section.invoices {
 
   td:last-child,
   th:last-child {
-    text-align: center;
+    text-align: right;
     padding-right: 0;
   }
 
@@ -598,6 +610,7 @@ section.invoices {
     &:hover {
       @include colorSVG($oxide-blue);
     }
+    text-align: right;
   }
 
   p {
