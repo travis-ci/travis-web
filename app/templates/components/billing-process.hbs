@@ -5,7 +5,7 @@
         Choose a plan before you run out of free builds.
       </span>
     </p>
-    {{svg-jar 'icon-arrow-down' class='icon icon-get-plan'}}
+    <SvgImage @name='icon-arrow-down' @class='icon-get-plan' />
   </div>
   {{#if this.isStepOne}}
     <BillingSelectPlan
@@ -21,6 +21,7 @@
       @selectedPlan={{this.selectedPlan}}
       @newSubscription={{this.newSubscription}}
       @billingInfo={{this.billingInfo}}
+      @scrollSection={{this.scrollSection}}
       @next={{action 'next'}}
       @back={{action 'back'}}
       @goToFirstStep={{action 'goToFirstStep'}}

@@ -67,6 +67,6 @@ export default Component.extend({
   actions: {
     complete(stripeElement) {
       this.set('stripeElement', stripeElement);
-    }
+    },
   }
 });

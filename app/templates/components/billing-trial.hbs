@@ -5,15 +5,11 @@
       <div class="get-started">
         {{#if this.trial.hasActiveTrial}}
           <p class="get-started__message">
-            Your trial is active!
-          </p>
-          <p>
-            You've got {{pluralize trial.buildsRemaining 'trial build'}} left.<br />
+            You have {{pluralize this.trial.buildsRemaining "trial build"}} left
+          </p> 
+          <p class="get-started__start-trial">
             Start building by or check out <a data-test-trial-link href={{config-get 'urls.gettingStarted'}} target="_blank"
               class="billing-section-link"> our docs</a> for more info.
-          </p>
-          <p class="get-started__start-trial">
-            Start your trial to get 100 free builds and 2 concurrent jobs for both public and private projects.
           </p>
         {{else if this.trial}}
           <p data-test-trial-message class="source plan-status-message">
@@ -34,7 +30,7 @@
       </div>
       <div class="flex billing-trial-info">
         <div class="billing-trial-info__box">
-          <p class="billing-trial-info__box--open-source">We &lt;3 open source.</p>
+          <p class="billing-trial-info__box--open-source">We &lt;3 open source</p>
           <p class="billing-trial-info__box--jobs">
             3 concurrent jobs for your open source projects are always free.
           </p>
@@ -59,10 +55,11 @@
           Subscribe now!
         </p>
         <button onClick={{action 'startBillingProcess'}} data-test-get-a-plan
-          class='pointer button get-plan flex flex--col flex--v-center flex--justify-center {{if this.hasNoSubscriptionPermissions 'get-plan--disabled disabled'}}'
+          class='pointer button get-plan flex flex--col flex--v-center flex--justify-center 
+          {{if this.hasNoSubscriptionPermissions 'get-plan--disabled disabled'}}'
         >
           <p>get a plan</p>
-          {{svg-jar 'icon-arrow-down' class='icon icon-get-plan'}}
+          <SvgImage @name='icon-arrow-down' @class='icon-get-plan' />
           {{#if this.hasNoSubscriptionPermissions}}
             <EmberTooltip>
               You don't have permission to create a subscription
@@ -80,7 +77,6 @@
         </ExternalLinkTo>
       {{else}}
         <BillingProcess 
-          @trial={{this.trial}} 
           @account={{this.account}} 
           @plans={{this.plans}} 
           @newSubscription={{this.newSubscription}}

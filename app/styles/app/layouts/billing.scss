@@ -154,6 +154,7 @@
     .billing-plans {
       background-color: #fff;
       margin-bottom: 2em;
+      margin-top: 2em;
 
       &__box {
         background-color: #fff;
@@ -249,7 +250,7 @@
       }
 
       .plan-selector {
-        margin-top: 28px;
+        margin-top: 48px;
       }
     }
 
@@ -267,6 +268,12 @@
 
       p {
         margin: 0;
+      }
+    }
+
+    @media #{$xlarge-up} {
+      .billing-plan-switch  {
+        height: 50px;
       }
     }
 
@@ -296,6 +303,13 @@
           font-weight: 300;
           font-size: 15px;
         }
+      }
+
+      .icon-get-plan{
+        @include colorSVG($oxide-blue);
+        height: 22px;
+        width: 21px;
+        margin-top: 5px;
       }
 
       .billing-trial-info {
@@ -340,6 +354,7 @@
         font-weight: 700;
         font-size: 16px;
         background: transparent;
+        padding-top: 5px;
 
         p {
           margin: 0;
@@ -349,10 +364,6 @@
           color: $asphalt-grey;
           background: transparent;
         }
-      }
-
-      .icon {
-        @include colorSVG($oxide-blue);
       }
     }
   }

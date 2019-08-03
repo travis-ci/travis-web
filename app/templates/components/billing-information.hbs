@@ -6,6 +6,9 @@
   />
   <TravisForm @onSubmit={{action next}} as |form|>
     <div data-test-billing-form>
+      {{#if this.scrollToContactDetails}}
+        <ScrollHere/>
+      {{/if}}
       <h3 data-test-contact-details-title='true'>
         Contact details
       </h3>
@@ -61,6 +64,9 @@
       <h3>
         Billing address
       </h3>
+      {{#if this.scrollToBillingDetails}}
+        <ScrollHere/>
+      {{/if}}
       <div class='flex flex--col flex-md-row'>
         <div class='full-width form-elem inline-form-elem'>
           <form.field

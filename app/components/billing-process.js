@@ -16,6 +16,7 @@ export default Component.extend({
   flashes: service(),
   accounts: service(),
   plans: null,
+  scrollSection: null,
   showAnnual: false,
   availablePlans: config.plans,
   steps: [...Object.values(STEPS)],
@@ -115,10 +116,11 @@ export default Component.extend({
       }
     },
 
-    back() {
+    back(scrollSection) {
       const currentIndex = this.steps.indexOf(this.currentStep);
       const prevIndex = Math.max(0, currentIndex - 1);
       this.set('currentStep', this.steps[prevIndex]);
+      this.set('scrollSection', scrollSection);
     },
 
     cancel() {
