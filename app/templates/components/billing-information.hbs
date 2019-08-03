@@ -38,7 +38,7 @@
           </form.field>
         </div>
       </div>
-      <div class='form-elem billing-optional-field'>
+      <div class='form-elem form-elem-half-width billing-optional-field'>
         <form.field
           @label='Company Name'
           @value={{newSubscription.billingInfo.company}}
@@ -48,7 +48,7 @@
           <Field.input @name='companyName'/>
         </form.field>
       </div>
-      <div class='form-elem'>
+      <div class='form-elem form-elem-half-width'>
         <form.field
           @label='Billing Email Address'
           @value={{newSubscription.billingInfo.billingEmail}}
@@ -119,7 +119,7 @@
           </form.field>
         </div>
       </div>
-      <div class='form-elem select' data-billing-form-select>
+      <div class='form-elem form-elem-half-width select' data-billing-form-select>
         <form.field
           @label='Country'
           @value={{newSubscription.billingInfo.country}}
@@ -137,7 +137,7 @@
           </Field.select>
         </form.field>
       </div>
-      <div class='form-elem'>
+      <div class='form-elem form-elem-half-width'>
         <form.field
           @label='Vat Id'
           @value={{newSubscription.billingInfo.vatId}}

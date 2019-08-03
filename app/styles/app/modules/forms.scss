@@ -47,6 +47,23 @@ textarea {
   }
 }
 
+.form-elem-half-width {
+  display: flex;
+  width: 100%;
+
+  &>.travis-form__field {
+    flex-basis: 100%;
+    padding-right: 0;
+  }
+
+  @media #{$medium-up} {
+    &>.travis-form__field {
+      flex-basis: 50%;
+      padding-right: 12px;
+    }
+  }
+}
+
 .form-submit {
   display: inline-block;
   border: none;
@@ -88,7 +105,8 @@ textarea {
   }
 }
 
-.form--envvar, .form--cron {
+.form--envvar,
+.form--cron {
   .form-elem {
     display: inline-block;
     vertical-align: top;
@@ -156,6 +174,7 @@ textarea {
   }
 
   @media #{$medium-up} {
+
     .form-elem:first-of-type,
     .form-elem:nth-of-type(2),
     .form-elem:nth-of-type(3) {
@@ -180,6 +199,7 @@ textarea {
   }
 
   @media #{$medium-up} {
+
     .form-elem:first-of-type,
     .form-elem:nth-of-type(2),
     .form-elem:nth-of-type(3) {
@@ -191,6 +211,7 @@ textarea {
 }
 
 .form-error {
+
   .env-name,
   .ssh-value {
     border: $brick-red 2px solid;
