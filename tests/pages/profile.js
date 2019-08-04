@@ -262,6 +262,7 @@ export default create({
     getPlanButton: {
       scope: '[data-test-get-a-plan]',
       isDisabled: hasClass('disabled'),
+      isHidden: isHidden()
     },
 
     noPermissionMessage: {
@@ -376,11 +377,27 @@ export default create({
 
     trial: {
       scope: '.billing',
+      overviewHeading: text('[data-test-overview-heading]'),
       name: text('[data-test-trial-message]'),
-
+      subtext: text('[data-test-trial-subtext]'),
+      openSourceMessage: {
+        scope: '[data-test-open-source-box]',
+        isPresent: isPresent(),
+        heading: text('[data-test-open-source-header]'),
+        body: text('[data-test-open-source-jobs]')
+      },
       link: {
         scope: '[data-test-trial-link]',
         href: attribute('href')
+      },
+      activateButton: {
+        scope: '[data-test-activate-button]',
+        isDisabled: hasClass('disabled'),
+        text: text()
+      },
+      subscribeMessage: {
+        scope: '[data-test-subscribe-message]',
+        text: text()
       }
     },
 

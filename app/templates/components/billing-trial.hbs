@@ -1,26 +1,25 @@
 <div class="billing-trial">
-  <h3>Overview</h3>
+  <h3 data-test-overview-heading='true'>Overview</h3>
   <div class="initial-billing-view">
-    <div class="flex">
+    <div class="flex flex--v-center">
       <div class="get-started">
         {{#if this.trial.hasActiveTrial}}
-          <p class="get-started__message">
+          <p class="get-started__message" data-test-trial-message='true'>
             You have {{pluralize this.trial.buildsRemaining "trial build"}} left
           </p> 
-          <p class="get-started__start-trial">
-            Start building by or check out <a data-test-trial-link href={{config-get 'urls.gettingStarted'}} target="_blank"
-              class="billing-section-link"> our docs</a> for more info.
+          <p class="get-started__start-trial" data-test-trial-subtext='true'>
+            The trial includes 2 concurrent jobs for both public and private projects.
           </p>
         {{else if this.trial}}
-          <p data-test-trial-message class="source plan-status-message">
+          <p class="source plan-status-message"  data-test-trial-subtext='true'>
             Your trial has just ended.<br />
             To get the most out of Travis CI, set up a plan below!
           </p>
         {{else}}
-          <p class="get-started__message">
+          <p class="get-started__message" data-test-trial-message='true'>
             100 free builds to get you started
           </p>
-          <p class="get-started__start-trial">
+          <p class="get-started__start-trial" data-test-trial-subtext='true'>
             Start your trial to get 100 free builds and 2 concurrent jobs for both public and private projects.
           </p>
         {{/if}}
@@ -28,27 +27,27 @@
       <div class="icon-wrapper flex flex--v-center">
         {{svg-jar "icon-plus" class="icon icon-wrapper__plus"}}
       </div>
-      <div class="flex billing-trial-info">
+      <div class="billing-trial-info" data-test-open-source-box='true'>
         <div class="billing-trial-info__box">
-          <p class="billing-trial-info__box--open-source">We &lt;3 open source</p>
-          <p class="billing-trial-info__box--jobs">
+          <p class="billing-trial-info__box--open-source" data-test-open-source-header='true'>We &lt;3 open source</p>
+          <p class="billing-trial-info__box--jobs" data-test-open-source-jobs='true'>
             3 concurrent jobs for your open source projects are always free.
           </p>
         </div>
       </div>
     </div>
-    <button class='button--blue activate-button {{if this.hasNoSubscriptionPermissions 'disabled'}}'>
-      Activate trial
-      {{#if this.hasNoSubscriptionPermissions}}
-        <EmberTooltip>
-          You don't have permission to start a trial
-        </EmberTooltip>
-      {{/if}}
-    </button>
+      <button class='button--blue activate-button {{if this.hasNoSubscriptionPermissions 'disabled'}}' data-test-activate-button='true'>
+        Activate trial
+        {{#if this.hasNoSubscriptionPermissions}}
+          <EmberTooltip>
+            You don't have permission to start a trial
+          </EmberTooltip>
+        {{/if}}
+      </button>
     <hr /> 
     {{#if (not this.startBillingProcess)}} 
       <div class='flex flex--col flex--v-center flex--center'>
-        <p class='subscribe-message'>
+        <p class='subscribe-message' data-test-subscribe-message='true'>
           <span>
             Looking for a plan that meet your needs?
           </span>
