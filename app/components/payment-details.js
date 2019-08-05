@@ -53,16 +53,17 @@ export default Component.extend({
   createStripeToken: task(function* () {
     try {
       const { token } = yield this.stripe.createToken(this.stripeElement);
-      this.subscription.creditCardInfo.set('token', token.id);
-      this.subscription.save();
-      this.set('openCreditCardForm', false);
+      if (token) {
+        yield this.subscription.creditCardInfo.updateToken(this.subscription.id, token);
+        this.set('openCreditCardForm', false);
+      }
     } catch (error) {
       this.displayError(error);
     }
   }).drop(),
 
   displayError(error) {
-    let message = 'There was an error connecting to stripe. Please confirm your card details and try again.';
+    let message = 'There was an error updating your credit card. Please try again';
     const stripeError = error && error.error;
     if (stripeError && stripeError.type === 'card_error') {
       message = 'Invalid card details. Please enter valid card details and try again.';

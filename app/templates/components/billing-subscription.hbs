@@ -8,7 +8,8 @@
     {{/if}}
     <BillingSummary 
       @isGithubTrial={{this.isGithubTrial}} 
-      @subscription={{this.subscription}} 
+      @subscription={{this.subscription}}
+      @account={{this.account}}
       @price={{this.price}}
       @planMessage="Valid until"
     />
@@ -33,6 +34,7 @@
       @isGithubTrial={{this.isGithubTrial}} 
       @subscription={{this.subscription}} 
       @price={{this.price}}
+      @account={{this.account}}
       @planMessage="Subscription has been canceled, valid until"
     />
   {{/if}}
@@ -43,12 +45,6 @@
       This subscription is pending verification from Stripe, and should be approved in a few minutes.
     </span>
 
-  {{/if}}
-  {{#if this.subscription.isResubscribable}}
-    <ResubscribeButton
-      @subscription={{this.subscription}}
-      @account={{this.account}}
-    />
   {{/if}}
   {{#if this.subscription.isGithubResubscribable}}
     <ExternalLinkTo @href={{config-get "marketplaceEndpoint"}} class="button--blue marketplace-button">

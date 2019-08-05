@@ -1,6 +1,8 @@
 import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
 import { computed } from '@ember/object';
 import { and, equal, or } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
+import { task } from 'ember-concurrency';
 import config from 'travis/config/environment';
 
 let sourceToWords = {
@@ -10,6 +12,9 @@ let sourceToWords = {
 };
 
 export default Model.extend({
+  api: service(),
+  accounts: service(),
+
   source: attr(),
   status: attr(),
   validTo: attr(),
@@ -19,7 +24,7 @@ export default Model.extend({
   billingInfo: belongsTo('billing-info', { async: false }),
   creditCardInfo: belongsTo('credit-card-info', { async: false }),
   invoices: hasMany('invoice'),
-  owner: belongsTo('owner', {polymorphic: true}),
+  owner: belongsTo('owner', { polymorphic: true }),
   plan: belongsTo(),
 
   isSubscribed: equal('status', 'subscribed'),
@@ -69,4 +74,15 @@ export default Model.extend({
     let validToDate = Date.parse(validTo);
     return (isManual && (date > validToDate));
   }),
+
+  cancelSubscription: task(function* () {
+    yield this.api.post(`/subscription/${this.id}/cancel`);
+    this.accounts.fetchSubscriptions.perform();
+  }).drop(),
+
+  resubscribe: task(function* () {
+    yield this.api.patch(`/subscription/${this.id}/resubscribe`);
+    // does not update the store immediately after update. Why?
+    this.accounts.fetchSubscriptions.perform();
+  }).drop(),
 });

@@ -52,7 +52,27 @@
       </div>
     </section>
   </div>
-  <p class='selected-plan__details--change-plan link' data-test-selected-plan-free-jobs>
-    change plan
-  </p>
+  <div class="flex flex--space-between">
+
+    {{#if this.resubscribeLoading}}
+      <LoadingIndicator />
+    {{else if (and this.subscription.isResubscribable this.account.hasSubscriptionPermissions)}}
+      <button onClick={{action 'resubscribe'}} class='edit link' data-test-selected-plan-free-jobs>
+        resubscribe
+      </button>
+    {{else}}
+      <button class='edit link' data-test-selected-plan-free-jobs>
+        change plan
+      </button>
+    {{/if}}
+    <div>
+      {{#if this.cancelSubscriptionLoading}}
+        <LoadingIndicator />
+      {{else if (and (not this.subscription.isCanceled) this.account.hasSubscriptionPermissions)}}
+        <button onClick={{action 'cancelSubscription'}} class='edit link' data-test-selected-plan-free-jobs>
+          cancel
+        </button>
+      {{/if}}
+    </div>
+  </div>
 </div>
