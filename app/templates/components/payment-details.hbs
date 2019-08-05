@@ -17,7 +17,7 @@
               <p>{{stripeError.message}}</p>
             {{/if}}
           </StripeCard>
-          {{#if this.createStripeToken.isLoading}}
+          {{#if this.createStripeToken.isRunning}}
             <LoadingIndicator/>
           {{else}}
             <button class='button--blue' {{action form.submit}}>
