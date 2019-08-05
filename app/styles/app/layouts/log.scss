@@ -245,15 +245,14 @@
       text-decoration: none;
       position: absolute;
       padding-right: 1em;
-      user-select: none;
     }
-
   }
 
   .fold {
     position: relative;
     height: 19px;
     overflow: hidden;
+    cursor: pointer;
 
     &.open {
       height: auto;
@@ -268,7 +267,6 @@
 
       &:first-of-type {
         display: block;
-        cursor: pointer;
       }
     }
 
