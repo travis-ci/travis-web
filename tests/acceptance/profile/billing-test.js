@@ -923,5 +923,5 @@ module('Acceptance | profile/billing', function (hooks) {
       .containsText('This subscription is pending verification from Stripe, and should be approved in a few minutes.');
   });
 
-  //test edit payment billing details
+  // test edit payment billing details
 });
