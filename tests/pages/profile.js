@@ -317,7 +317,62 @@ export default create({
 
       flashErrorMessage: {
         scope: '.flash-message .message'
-      }
+      },
+
+      contactDetails: {
+        scope: '[data-test-contact-details]',
+
+        contactHeading: {
+          scope: '[data-test-contact-heading]',
+          text: text()
+        },
+
+        firstName: {
+          scope: '[data-test-contact-firstName]',
+          text: text()
+        },
+
+        company: {
+          scope: '[data-test-contact-company]',
+          text: text()
+        },
+
+        email: {
+          scope: '[data-test-contact-email]',
+          text: text()
+        },
+
+        contactEditButton: {
+          scope: '[data-test-edit-contact-button]',
+          text: text()
+        },
+
+        billingHeading: {
+          scope: '[data-test-billing-heading]',
+          text: text()
+        },
+
+        address: {
+          scope: '[data-test-billing-address]',
+          text: text()
+        },
+
+        city: {
+          scope: '[data-test-billing-city]',
+          text: text()
+        },
+
+        country: {
+          scope: '[data-test-billing-country]',
+          text: text()
+        },
+
+        billingEditButton: {
+          scope: '[data-test-edit-billing-button]',
+          text: text()
+        }
+      },
+
     },
 
     billingPlanChoices: {

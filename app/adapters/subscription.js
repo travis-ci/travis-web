@@ -22,7 +22,7 @@ export default V3Adapter.extend({
       const leftAttribute = splitAttribute[0];
       const rightAttribute = splitAttribute[1];
       if (leftAttribute === 'billing_info') {
-        accumulator[`subscription.${rightAttribute}`] = data[`billing_info.${rightAttribute}`];
+        accumulator[`${rightAttribute}`] = data[`billing_info.${rightAttribute}`];
       }
       return accumulator;
     }, {});
