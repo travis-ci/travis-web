@@ -1,6 +1,6 @@
 <div class='selected-plan' data-test-selected-plan='true'>
   <div class='selected-plan__details'>
-    <p class='selected-plan__details--plan'>
+    <p class='selected-plan__details--plan' data-test-selected-plan-heading='true'>
       summary
     </p>
     <p class='selected-plan__details--name' data-test-selected-plan-name>
@@ -9,9 +9,9 @@
     <p class='selected-plan__details--jobs' data-test-selected-plan-jobs>
       {{pluralize selectedPlan.builds 'concurrent job'}}
     </p>
-    <p onClick={{action this.goToFirstStep}} class='selected-plan__details--change-plan link' data-test-selected-plan-free-jobs>
+    <button onClick={{action this.goToFirstStep}} class='selected-plan__details--change-plan link' data-test-change-selected-plan>
       change plan
-    </p>
+    </button>
   </div>
   <div>
     <div class='selected-plan__price'>

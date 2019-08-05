@@ -832,6 +832,51 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.ok(profilePage.billing.annualInvitation.isHidden);
   });
 
+  test('view billing tab shows correct selected plan', async function (assert) {
+    this.subscription.destroy();
+
+    await profilePage.visit();
+    await profilePage.billing.visit();
+    await profilePage.billing.getPlanButton.click();
+
+    assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe');
+
+    await profilePage.billing.subscribeButton.click();
+
+    assert.equal(profilePage.billing.selectedPlanOverview.heading.text, 'summary');
+    assert.equal(profilePage.billing.selectedPlanOverview.name.text, `${this.defaultPlan.name} plan`);
+    assert.equal(profilePage.billing.selectedPlanOverview.jobs.text, `${this.defaultPlan.builds} concurrent jobs`);
+    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${this.defaultPlan.price / 100} /month`);
+    assert.equal(profilePage.billing.selectedPlanOverview.changePlan.text, 'change plan');
+  });
+
+  test('view billing tab shows plans selector when change plan button is clicked ', async function (assert) {
+    this.subscription.destroy();
+
+    await profilePage.visit();
+    await profilePage.billing.visit();
+    await profilePage.billing.getPlanButton.click();
+    await profilePage.billing.subscribeButton.click();
+
+    assert.equal(profilePage.billing.selectedPlanOverview.heading.text, 'summary');
+    assert.equal(profilePage.billing.selectedPlanOverview.name.text, `${this.defaultPlan.name} plan`);
+    assert.equal(profilePage.billing.selectedPlanOverview.jobs.text, `${this.defaultPlan.builds} concurrent jobs`);
+    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${this.defaultPlan.price / 100} /month`);
+    assert.equal(profilePage.billing.selectedPlanOverview.changePlan.text, 'change plan');
+
+    await profilePage.billing.selectedPlanOverview.changePlan.click();
+
+    assert.equal(profilePage.billing.trial.overviewHeading, 'Overview');
+    assert.equal(profilePage.billing.trial.name, 'You have 10 trial builds left');
+    assert.equal(profilePage.billing.trial.subtext, 'The trial includes 2 concurrent jobs for both public and private projects.');
+    assert.ok(profilePage.billing.trial.openSourceMessage.isPresent);
+    assert.equal(profilePage.billing.trial.openSourceMessage.heading, 'We <3 open source');
+    assert.equal(profilePage.billing.trial.openSourceMessage.body, '3 concurrent jobs for your open source projects are always free.');
+    assert.equal(profilePage.billing.trial.subscribeMessage.text, 'Choose a plan before you run out of free builds.');
+    assert.dom(profilePage.billing.billingPlanChoices.boxes.scope).exists({ count: 4 });
+    assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe');
+  });
+
   // test('view billing tab when no subscription should fill form and transition to payment', async function (assert) {
   //   this.subscription.destroy();
 

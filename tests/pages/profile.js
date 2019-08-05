@@ -347,16 +347,58 @@ export default create({
     selectedPlan: {
       scope: '.highlight-plan',
 
+      heading: {
+        scope: '.highlight-plan [data-test-selected-plan-heading]',
+        text: text()
+      },
+
       name: {
-        scope: '.highlight-plan [data-test-selected-plan-name]'
+        scope: '.highlight-plan [data-test-selected-plan-name]',
+        text: text()
       },
 
       jobs: {
-        scope: '.highlight-plan [data-test-selected-plan-jobs]'
+        scope: '.highlight-plan [data-test-selected-plan-jobs]',
+        text: text()
       },
 
       price: {
-        scope: '.highlight-plan [data-test-selected-plan-price]'
+        scope: '.highlight-plan [data-test-selected-plan-price]',
+        text: text()
+      },
+
+      changePlan: {
+        scope: '.highlight-plan [data-test-change-selected-plan]',
+        text: text()
+      }
+    },
+
+    selectedPlanOverview: {
+      scope: '.selected-plan',
+
+      heading: {
+        scope: '[data-test-selected-plan-heading]',
+        text: text()
+      },
+
+      name: {
+        scope: '[data-test-selected-plan-name]',
+        text: text()
+      },
+
+      jobs: {
+        scope: '[data-test-selected-plan-jobs]',
+        text: text()
+      },
+
+      price: {
+        scope: '[data-test-selected-plan-price]',
+        text: text()
+      },
+
+      changePlan: {
+        scope: '[data-test-change-selected-plan]',
+        text: text()
       }
     },
 
