@@ -8,6 +8,25 @@
         •••• •••• ••••
         {{this.subscription.creditCardInfo.lastDigits}}
       </p>
+      <button class='edit link' onClick={{action 'toggleEditCreditCardForm'}}>Edit</button>
+      {{#if this.openCreditCardForm}}
+        <div class="edit-form">
+        <TravisForm @onSubmit={{perform this.createStripeToken}} as |form|>
+          <StripeCard @complete={{action "complete"}} @options={{this.options}} as |stripeError|>
+            {{#if stripeError}}
+              <p>{{stripeError.message}}</p>
+            {{/if}}
+          </StripeCard>
+          {{#if this.isLoading}}
+            <LoadingIndicator/>
+          {{else}}
+            <button class='button--blue' {{action form.submit}}>
+              Update
+            </button>
+          {{/if}}
+        </TravisForm>
+        </div>
+      {{/if}}
     {{/if}}
     {{#if this.subscription.isManual}}
       <ManualSubscriptionHelp />

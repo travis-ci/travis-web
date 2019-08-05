@@ -17,16 +17,19 @@ export default V3Adapter.extend({
 
     let url = this.buildURL(type.modelName, snapshot.id, snapshot, 'updateRecord');
 
-    const updatedBillingInfo = Object.keys(data).reduce((accumulator, attribute) => {
+    const updatedSubscriptionInfo = Object.keys(data).reduce((updatedSubscriptionInfo, attribute) => {
       const splitAttribute = attribute.split('.');
       const leftAttribute = splitAttribute[0];
       const rightAttribute = splitAttribute[1];
       if (leftAttribute === 'billing_info') {
-        accumulator[`${rightAttribute}`] = data[`billing_info.${rightAttribute}`];
+        updatedSubscriptionInfo[rightAttribute] = data[`billing_info.${rightAttribute}`];
       }
-      return accumulator;
+      if (leftAttribute === 'credit_card_info') {
+        updatedSubscriptionInfo[rightAttribute] = data[`credit_card_info.${rightAttribute}`];
+      }
+      return updatedSubscriptionInfo;
     }, {});
 
-    return this.ajax(url, 'PATCH', { data: updatedBillingInfo });
+    return this.ajax(url, 'PATCH', { data: updatedSubscriptionInfo });
   }
 });
