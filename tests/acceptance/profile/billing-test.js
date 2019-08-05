@@ -5,7 +5,9 @@ import signInUser from 'travis/tests/helpers/sign-in-user';
 import { selectChoose } from 'ember-power-select/test-support';
 import { percySnapshot } from 'ember-percy';
 import Service from '@ember/service';
-import { stubService } from 'travis/tests/helpers/stub-service';
+import StripeMock from 'travis/tests/helpers/stripe-mock';
+import { stubService, stubConfig } from 'travis/tests/helpers/stub-service';
+import { getContext } from '@ember/test-helpers';
 
 module('Acceptance | profile/billing', function (hooks) {
   setupApplicationTest(hooks);
@@ -90,22 +92,6 @@ module('Acceptance | profile/billing', function (hooks) {
       }
     });
     this.organization = organization;
-
-    const createMockCard = () => {
-      return {
-        createToken: function (data) {
-          return Promise.resolve({ id: 'stripeToken', card: { last4: '3242'} });
-        }
-      };
-    };
-
-    let mockStripe = Service.extend({
-      load() { },
-      card: createMockCard(),
-    });
-
-    stubService('stripe', mockStripe);
-
   });
 
   test('view billing information with invoices', async function (assert) {
@@ -877,46 +863,46 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe');
   });
 
-  // test('view billing tab when no subscription should fill form and transition to payment', async function (assert) {
-  //   this.subscription.destroy();
+  test('view billing tab when no subscription should fill form and transition to payment', async function (assert) {
+    window.Stripe = StripeMock;
+    let config = {
+      mock: true,
+      publishableKey: 'mock'
+    };
+    stubConfig('stripe', config, { instantiate: false });
+    const { owner } = getContext();
+    owner.inject('service:stripev3', 'config', 'config:stripe');
+    this.subscription.destroy();
 
-  //   await profilePage.visit();
-  //   await profilePage.billing.visit();
+    await profilePage.visit();
+    await profilePage.billing.visit();
+    await profilePage.billing.getPlanButton.click();
 
-  //   const { billingForm, subscribeButton, billingPaymentForm } = profilePage.billing;
+    const { billingForm, subscribeButton, billingPaymentForm } = profilePage.billing;
+    await subscribeButton.click();
 
-  //   percySnapshot(assert);
+    percySnapshot(assert);
 
-  //   await selectChoose(billingForm.billingSelectCountry.scope, 'Germany');
+    await selectChoose(billingForm.billingSelectCountry.scope, 'Germany');
 
-  //   await billingForm
-  //     .fillIn('firstname', 'John')
-  //     .fillIn('lastname', 'Doe')
-  //     .fillIn('companyName', 'Travis')
-  //     .fillIn('email', 'john@doe.com')
-  //     .fillIn('address', '15 Olalubi street')
-  //     .fillIn('suite', '23 Grace')
-  //     .fillIn('city', 'Berlin')
-  //     .fillIn('zip', '353564')
-  //     .fillIn('vat', '356463');
+    await billingForm
+      .fillIn('firstname', 'John')
+      .fillIn('lastname', 'Doe')
+      .fillIn('companyName', 'Travis')
+      .fillIn('email', 'john@doe.com')
+      .fillIn('address', '15 Olalubi street')
+      .fillIn('suite', '23 Grace')
+      .fillIn('city', 'Berlin')
+      .fillIn('zip', '353564')
+      .fillIn('vat', '356463');
 
-  //   await subscribeButton.click();
+    await billingForm.proceedPayment.click();
 
-  //   assert.ok(billingPaymentForm.isPresent);
+    assert.ok(billingPaymentForm.isPresent);
 
-  //   // let year = new Date().getFullYear() + 3;
-  //   // await selectChoose('.billing-card-year', `${year}`);
-  //   // await selectChoose('.billing-card-month', '09');
+    await billingPaymentForm.completePayment.click();
 
-  //   // await billingPaymentForm
-  //   //   .fillIn('cardNumber', '4141414141414141')
-  //   //   .fillIn('cardName', 'John Doe')
-  //   //   .fillIn('cardCvc', '897')
-  //   //   .fillIn('discountCode', '0000');
-
-  //   await billingPaymentForm.completeButton.click();
-
-  //   assert.dom('[data-test-pending-message]')
-  //     .containsText('This subscription is pending verification from Stripe, and should be approved in a few minutes.');
-  // });
+    assert.dom('[data-test-pending-message]')
+      .containsText('This subscription is pending verification from Stripe, and should be approved in a few minutes.');
+  });
 });

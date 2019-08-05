@@ -291,6 +291,10 @@ export default create({
       billingSelectCountry: {
         scope: '.billing-country'
       },
+
+      proceedPayment: {
+        scope: '[data-test-proceed-to-payment-button]'
+      },
     },
 
     switchPlan: {
@@ -303,23 +307,8 @@ export default create({
       isPresent: isPresent(),
       fillIn: fillable(''),
 
-      input: {
-        scope: '[data-test-payment-form] input',
-        isPresent: isPresent(),
-      },
-
-      cardMonthSelect: {
-        scope: '[data-test-select-card-month]',
-        isPresent: isPresent(),
-      },
-
-      cardYearSelect: {
-        scope: '[data-test-select-card-year]',
-        isPresent: isPresent(),
-      },
-
-      completeButton: {
-        scope: '[data-test-complete-button]'
+      completePayment: {
+        scope: '[data-test-complete-payment]'
       },
 
       paymentInfo: {

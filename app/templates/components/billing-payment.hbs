@@ -1,4 +1,4 @@
-<div class='billing-checkout'>
+<div class='billing-checkout' data-test-payment-form='true'>
   <SelectedBillingPlan 
     @selectedPlan={{this.selectedPlan}} 
     @showAnnual={{this.showAnnual}} 
@@ -28,17 +28,17 @@
   <h3>
     Pay with card
   </h3>
- <TravisForm @onSubmit={{perform this.createStripeToken}} data-test-payment-form as |form|>
+ <TravisForm @onSubmit={{perform this.createStripeToken}} as |form|>
   <StripeCard @complete={{action "complete"}} @options={{this.options}} as |stripeError|>
     {{#if stripeError}}
       <p>{{stripeError.message}}</p>
     {{/if}}
   </StripeCard>
   {{#if this.isLoading}}
-    {{loading-indicator}}
+    <LoadingIndicator/>
   {{else}}
     <div class='billing-checkout__payment'>
-      <button class='button--blue' {{action form.submit}}>
+      <button class='button--blue' {{action form.submit}} data-test-complete-payment='true'>
         Pay {{format-currency this.selectedPlan.price}}
       </button>
     </div>
