@@ -70,12 +70,4 @@ module('Unit | Utility | vcs-links', function () {
     assert.equal(vcsLinks.profileUrl('Github', username), `${endpoints.github}/${username}`);
     assert.equal(vcsLinks.profileUrl('Bitbucket', username), `${endpoints.bitbucket}/${username}`);
   });
-
-  test('appsActivationUrl', function (assert) {
-    const vcsId = 'vcsId';
-    const appName = 'appName';
-
-    assert.equal(vcsLinks.appsActivationUrl('Github', appName, vcsId), `${endpoints.github}/apps/${appName}/installations/new/permissions?suggested_target_id=${vcsId}`);
-    assert.equal(vcsLinks.appsActivationUrl('Bitbucket', appName, vcsId), `${endpoints.bitbucket}`);
-  });
 });

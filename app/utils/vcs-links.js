@@ -55,11 +55,6 @@ const links = {
     github: `/${username}`,
     bitbucket: `/${username}`,
   }),
-
-  appsActivationUrl: (vcsType, appName, vcsId) => vcsUrl(vcsType, {
-    github: `/apps/${appName}/installations/new/permissions?suggested_target_id=${vcsId}`,
-    bitbucket: '',
-  }),
 };
 
 export default links;

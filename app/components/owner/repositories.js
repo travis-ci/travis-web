@@ -14,7 +14,6 @@ import config from 'travis/config/environment';
 import window from 'ember-window-mock';
 import { task } from 'ember-concurrency';
 import fetchAll from 'travis/utils/fetch-all';
-import vcsLinks from 'travis/utils/vcs-links';
 
 const { appName, migrationRepositoryCountLimit } = config.githubApps;
 
@@ -70,25 +69,22 @@ export default Component.extend({
     return `https://travis-ci.com/${path}`;
   }),
 
-  appsActivationURL: computed('owner.{githubId,vcsType,vcsId}', function () {
-    const vcsId = this.get('owner.vcsId') || this.get('owner.githubId');
-    const vcsType = this.get('owner.vcsType');
-
-    return vcsLinks.appsActivationUrl(vcsType, appName, vcsId);
+  appsActivationURL: computed('owner.githubId', function () {
+    let githubId = this.get('owner.githubId');
+    return `https://github.com/apps/${appName}/installations/new/permissions?suggested_target_id=${githubId}`;
   }),
 
   appsManagementURL: computed(
-    'owner.{login,isOrganization,githubId,vcsType,vcsId}',
+    'owner.{login,isOrganization,githubId}',
     'owner.installation.githubId',
     function () {
-      const login = this.get('owner.login');
-      const isOrganization = this.get('owner.isOrganization');
-      const vcsType = this.get('owner.vcsType');
-      const vcsId = this.get('owner.vcsId') || this.get('owner.githubId');
-      const installationGithubId = this.get('owner.installation.githubId');
+      let login = this.get('owner.login');
+      let isOrganization = this.get('owner.isOrganization');
+      let ownerGithubId = this.get('owner.githubId');
+      let installationGithubId = this.get('owner.installation.githubId');
 
       if (appName && appName.length) {
-        return vcsLinks.appsActivationUrl(vcsType, appName, vcsId);
+        return `https://github.com/apps/${appName}/installations/new/permissions?suggested_target_id=${ownerGithubId}`;
       } else if (isOrganization) {
         return `https://github.com/organizations/${login}/settings/installations/${installationGithubId}`;
       } else {
@@ -106,7 +102,7 @@ export default Component.extend({
   }),
 
   migrate: task(function* () {
-    const queryParams = {
+    let queryParams = {
       sort_by: 'name',
       'repository.managed_by_installation': false,
       'repository.active': true,
@@ -116,14 +112,14 @@ export default Component.extend({
       },
     };
 
-    const repositories = yield this.store.paginated('repo', queryParams, { live: false }) || [];
+    let repositories = yield this.store.paginated('repo', queryParams, { live: false }) || [];
 
     yield fetchAll(this.store, 'repo', queryParams);
 
-    const githubQueryParams = repositories.map(repo => `repository_ids[]=${repo.githubId}`).join('&');
-    const vcsId = this.owner.vcsId || this.owner.githubId;
-    const vcsType = this.owner.vcsType;
+    let githubQueryParams = repositories.map(repo => `repository_ids[]=${repo.githubId}`).join('&');
 
-    window.location.href = `${vcsLinks.appsActivationUrl(vcsType, appName, vcsId)}&${githubQueryParams}`;
+    window.location.href =
+      `https://github.com/apps/${appName}/installations/new/permissions` +
+      `?suggested_target_id=${this.owner.githubId}&${githubQueryParams}`;
   })
 });
