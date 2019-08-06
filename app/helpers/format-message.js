@@ -46,7 +46,10 @@ function handleRepo(message, repo) {
     const repoName = get(repo, 'name');
     const vcsType = get(repo, 'vcsType');
 
-    return githubify(message, login, repoName, vcsType);
+    message = includeProfileLink(message, vcsType);
+    message = includeIssueLink(message, login, repoName, vcsType);
+    message = includeCommitLink(message, login, repoName, vcsType);
+    return message;
   }
 
   return message;
@@ -64,12 +67,10 @@ function formatMessage(message, options) {
   return message;
 }
 
-const refRegexp = new RegExp('([\\w-]+)?\\/?([\\w-]+)?(?:#|gh-)(\\d+)', 'g');
-const userRegexp = new RegExp('\\B@([\\w-]+)', 'g');
-const commitRegexp = new RegExp('([\\w-]+)?\\/([\\w-]+)?@([0-9A-Fa-f]+)', 'g');
+function includeIssueLink(text, owner, repo, vcsType) {
+  const refRegexp = new RegExp('([\\w-]+)?\\/?([\\w-]+)?(?:#|gh-)(\\d+)', 'g');
 
-function githubify(text, owner, repo, vcsType) {
-  text = text.replace(refRegexp, (ref, matchedOwner, matchedRepo, matchedNumber) => {
+  return text.replace(refRegexp, (ref, matchedOwner, matchedRepo, matchedNumber) => {
     const current = { owner, repo };
     const matched = {
       owner: matchedOwner,
@@ -78,10 +79,21 @@ function githubify(text, owner, repo, vcsType) {
     };
     return _issueLink(ref, current, matched, vcsType);
   });
+}
 
-  text = text.replace(userRegexp, (reference, username) => _userLink(reference, username, vcsType));
+function includeProfileLink(text, vcsType) {
+  const userRegexp = new RegExp('\\B@([\\w-]+)', 'g');
 
-  text = text.replace(commitRegexp, (reference, matchedOwner, matchedRepo, matchedSHA) => {
+  return text.replace(userRegexp, (reference, username) => {
+    const href = vcsLinks.profileUrl(vcsType, username);
+    return `<a href="${href}">${reference}</a>`;
+  });
+}
+
+function includeCommitLink(text, owner, repo, vcsType) {
+  const commitRegexp = new RegExp('([\\w-]+)?\\/([\\w-]+)?@([0-9A-Fa-f]+)', 'g');
+
+  return text.replace(commitRegexp, (reference, matchedOwner, matchedRepo, matchedSHA) => {
     const current = { owner, repo };
     const matched = {
       owner: matchedOwner,
@@ -90,7 +102,6 @@ function githubify(text, owner, repo, vcsType) {
     };
     return _commitLink(reference, current, matched, vcsType);
   });
-  return text;
 }
 
 function _issueLink(reference, current, matched, vcsType) {
@@ -100,11 +111,6 @@ function _issueLink(reference, current, matched, vcsType) {
   const issueNumber = matched.number;
   const href = vcsLinks.issueUrl(vcsType, slug, issueNumber);
 
-  return `<a href="${href}">${reference}</a>`;
-}
-
-function _userLink(reference, username, vcsType) {
-  const href = vcsLinks.profileUrl(vcsType, username);
   return `<a href="${href}">${reference}</a>`;
 }
 
