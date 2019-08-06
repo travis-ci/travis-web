@@ -290,6 +290,27 @@ module('Acceptance | profile/billing', function (hooks) {
     });
   });
 
+  test('edit subscription information updates user billing info', async function (assert) {
+
+    await profilePage.visit();
+    await profilePage.billing.visit();
+    await profilePage.billing.editBillingAddressButton.click();
+
+    percySnapshot(assert);
+
+    assert.dom(profilePage.billing.editBillingAddressForm.inputs.scope).exists({ count: 4 });
+
+    await profilePage.billing.editBillingAddressForm
+      .fillIn('firstname', 'John')
+      .fillIn('lastname', 'Doe')
+      .fillIn('company', 'Travis')
+      .fillIn('billingEmail', 'john@doe.com');
+
+    await profilePage.billing.editBillingAddressForm.updateBillingAddressButton.click();
+
+    assert.equal(profilePage.billing.userDetails.text, 'John Doe | Travis | john@doe.com');
+  });
+
   test('view billing on an expired stripe plan', async function (assert) {
     this.subscription.status = 'expired';
 

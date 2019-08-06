@@ -158,11 +158,11 @@ export default function () {
     const attrs = JSON.parse(requestBody);
 
     const subscription = schema.subscriptions.where({ id: params.subscription_id });
-    subscription.update({
-      billingInfo: {
+    subscription.update(
+      'billing_info', {
         ...attrs
       }
-    });
+    );
   });
 
   this.get('/plans');

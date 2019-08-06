@@ -18,6 +18,11 @@
     font-size: .6em;
     background: transparent;
     border-bottom: 1px solid $cement-grey;
+
+    &:focus {
+      color: $oxide-blue;
+      outline: none;
+    }
   }
 
   .selected-plan {

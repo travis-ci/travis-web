@@ -1,6 +1,9 @@
 import Component from '@ember/component';
 import { task } from 'ember-concurrency';
+import { countries } from '../utils/countries';
+
 export default Component.extend({
+  countries,
   classNames: ['address'],
   openEditContactForm: false,
   openEditBillingForm: false,

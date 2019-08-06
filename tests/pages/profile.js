@@ -277,6 +277,30 @@ export default create({
       scope: '[data-test-cancel-subscription]'
     },
 
+    editBillingAddressButton: {
+      scope: '[data-test-edit-billing-address]'
+    },
+
+    editBillingAddressForm: {
+      scope: '[data-test-edit-billing-address-form]',
+      isPresent: isPresent(),
+      fillIn: fillable(''),
+
+      inputs: {
+        scope: 'input'
+      },
+
+      updateBillingAddressButton: {
+        scope: '[data-test-update-billing-address-button]',
+        isPresent: isPresent(),
+        fillIn: fillable(''),
+
+        inputs: {
+          scope: 'input'
+        }
+      },
+    },
+
     noPermissionMessage: {
       scope: '[data-test-no-permission-message]',
     },
