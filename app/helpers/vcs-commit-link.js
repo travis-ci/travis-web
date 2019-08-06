@@ -1,13 +1,14 @@
 import Ember from 'ember';
 import { htmlSafe } from '@ember/string';
 import Helper from '@ember/component/helper';
-
+import { inject as service } from '@ember/service';
 import formatCommit from 'travis/utils/format-commit';
-import vcsLinks from 'travis/utils/vcs-links';
 
 const { escapeExpression: escape } = Ember.Handlebars.Utils;
 
 export default Helper.extend({
+  externalLinks: service(),
+
   compute([vcsType, slug, commitSha]) {
     if (!commitSha) {
       return '';
@@ -19,7 +20,7 @@ export default Helper.extend({
       return sha;
     }
 
-    const commitUrl = vcsLinks.commitUrl(vcsType, slug, sha);
+    const commitUrl = this.externalLinks.commitUrl(vcsType, slug, sha);
     const url = escape(commitUrl);
     const string = `<a class="github-link only-on-hover" href="${url}">${sha}</a>`;
     return new htmlSafe(string);

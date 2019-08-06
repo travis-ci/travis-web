@@ -1,7 +1,6 @@
 import Model, { attr, belongsTo } from '@ember-data/model';
 import { computed } from '@ember/object';
-
-import vcsLinks from 'travis/utils/vcs-links';
+import { inject as service } from '@ember/service';
 
 export default Model.extend({
   sha: attr(),
@@ -17,6 +16,8 @@ export default Model.extend({
   authorAvatarUrl: attr(),
 
   build: belongsTo('build'),
+
+  externalLinks: service(),
 
   subject: computed('message', function () {
     let message = this.message;
@@ -53,6 +54,6 @@ export default Model.extend({
     const sha = this.get('sha');
     const vcsType = this.get('build.repo.vcsType');
 
-    return vcsLinks.commitUrl(vcsType, slug, sha);
+    return this.externalLinks.commitUrl(vcsType, slug, sha);
   }),
 });

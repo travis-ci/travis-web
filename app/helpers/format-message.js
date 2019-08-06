@@ -5,7 +5,7 @@ import { get } from '@ember/object';
 import EmojiConvertor from 'emoji-js';
 
 import config from 'travis/config/environment';
-import vcsLinks from 'travis/utils/vcs-links';
+import { vcsLinks } from 'travis/services/external-links';
 
 const emojiConvertor = new EmojiConvertor();
 emojiConvertor.img_sets.apple.path = `${config.emojiPrepend}/images/emoji/`;

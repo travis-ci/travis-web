@@ -2,8 +2,6 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
 
-import vcsLinks from 'travis/utils/vcs-links';
-
 export default Component.extend({
   statusImages: service(),
   externalLinks: service(),
@@ -23,19 +21,19 @@ export default Component.extend({
     const slug = this.get('repo.slug');
     const vcsType = this.get('repo.vcsType');
 
-    return vcsLinks.repoUrl(vcsType, slug);
+    return this.externalLinks.repoUrl(vcsType, slug);
   }),
 
   orgBuildHistoryLink: computed('repo.slug', function () {
     const slug = this.get('repo.slug');
 
-    return this.get('externalLinks').orgBuildHistoryLink(slug);
+    return this.externalLinks.orgBuildHistoryLink(slug);
   }),
 
   comBuildHistoryLink: computed('repo.slug', function () {
     const slug = this.get('repo.slug');
 
-    return this.get('externalLinks').comBuildHistoryLink(slug);
+    return this.externalLinks.comBuildHistoryLink(slug);
   }),
 
   actions: {

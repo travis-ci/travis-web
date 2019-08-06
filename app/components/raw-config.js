@@ -6,10 +6,11 @@ import {
   fileNameWithoutSha
 } from 'travis/utils/format-config';
 import { later } from '@ember/runloop';
-
-import vcsLinks from 'travis/utils/vcs-links';
+import { inject as service } from '@ember/service';
 
 export default Component.extend({
+  externalLinks: service(),
+
   copied: false,
   baseYmlName: '.travis.yml',
 
@@ -44,7 +45,7 @@ export default Component.extend({
     if (isInternal(source, slug)) {
       return null;
     }
-    return vcsLinks.fileUrl(vcsType, slug, branchName, fileNameWithoutSha(source));
+    return this.externalLinks.fileUrl(vcsType, slug, branchName, fileNameWithoutSha(source));
   }),
 
   actions: {

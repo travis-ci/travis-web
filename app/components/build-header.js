@@ -2,12 +2,13 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import jobConfigLanguage from 'travis/utils/job-config-language';
 import { not } from '@ember/object/computed';
-
-import vcsLinks from 'travis/utils/vcs-links';
+import { inject as service } from '@ember/service';
 
 const commitMessageLimit = 72;
 
 export default Component.extend({
+  externalLinks: service(),
+
   tagName: 'section',
   classNames: ['build-header'],
   classNameBindings: ['item.state'],
@@ -63,7 +64,7 @@ export default Component.extend({
     const sha = this.get('commit.sha');
     const vcsType = this.get('item.repo.vcsType');
 
-    return vcsLinks.commitUrl(vcsType, slug, sha);
+    return this.externalLinks.commitUrl(vcsType, slug, sha);
   }),
 
   vcsBranchUrl: computed('item.repo.{slug,vcsType}', 'build.branchName', function () {
@@ -71,7 +72,7 @@ export default Component.extend({
     const branchName = this.get('build.branchName');
     const vcsType = this.get('item.repo.vcsType');
 
-    return vcsLinks.branchUrl(vcsType, slug, branchName);
+    return this.externalLinks.branchUrl(vcsType, slug, branchName);
   }),
 
   vcsTagUrl: computed('item.repo.{slug,vcsType}', 'build.tag.name', function () {
@@ -79,7 +80,7 @@ export default Component.extend({
     const tag = this.get('build.tag.name');
     const vcsType = this.get('item.repo.vcsType');
 
-    return vcsLinks.tagUrl(vcsType, slug, tag);
+    return this.externalLinks.tagUrl(vcsType, slug, tag);
   }),
 
   buildState: computed('item.jobs.firstObject.state', 'item.state', 'item.isMatrix', function () {
