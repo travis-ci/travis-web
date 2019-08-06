@@ -15,6 +15,7 @@
     "lint:hbs": "ember-template-lint .",
     "lint:js": "eslint .",
     "start": "ember serve",
+    "start:pro": "TRAVIS_PRO=true ember serve",
     "test": "ember test --reporter dot",
     "deploy": "bash ./config/deployment/deploy-local.sh"
   },
