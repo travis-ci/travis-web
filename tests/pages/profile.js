@@ -277,8 +277,26 @@ export default create({
       scope: '[data-test-cancel-subscription]'
     },
 
+    editContactAddressButton: {
+      scope: '[data-test-edit-contact-address]'
+    },
+
     editBillingAddressButton: {
       scope: '[data-test-edit-billing-address]'
+    },
+
+    editContactAddressForm: {
+      scope: '[data-test-edit-contact-address-form]',
+      isPresent: isPresent(),
+      fillIn: fillable(''),
+
+      inputs: {
+        scope: 'input'
+      },
+
+      updateContactAddressButton: {
+        scope: '[data-test-update-contact-address-button]',
+      },
     },
 
     editBillingAddressForm: {
@@ -292,12 +310,6 @@ export default create({
 
       updateBillingAddressButton: {
         scope: '[data-test-update-billing-address-button]',
-        isPresent: isPresent(),
-        fillIn: fillable(''),
-
-        inputs: {
-          scope: 'input'
-        }
       },
     },
 

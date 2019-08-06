@@ -21,9 +21,9 @@
           </p>
         {{/if}}
       </div>
-      <button class='edit link' onClick={{action 'toggleEditContactForm'}} data-test-edit-billing-address='true'>Edit</button>
+      <button class='edit link' onClick={{action 'toggleEditContactForm'}} data-test-edit-contact-address='true'>Edit</button>
       {{#if this.openEditContactForm}}
-        <div data-test-edit-billing-address-form='true' class="edit-form">
+        <div data-test-edit-contact-address-form='true' class="edit-form">
           <TravisForm
             class="edit-form"
             @onSubmit={{perform this.editContact}}
@@ -89,7 +89,7 @@
               {{#if this.editContact.isRunning}}
                 <LoadingIndicator />
               {{else}}
-                <button data-test-update-billing-address-button='true' onclick={{form.submit}} class="button--blue">
+                <button data-test-update-contact-address-button='true' onclick={{form.submit}} class="button--blue">
                   Update
                 </button>
               {{/if}}
@@ -119,9 +119,9 @@
           </p>
         {{/if}}
       </div>
-      <button class='edit link' onClick={{action 'toggleEditBillingForm'}}>Edit</button>
+      <button class='edit link' onClick={{action 'toggleEditBillingForm'}} data-test-edit-billing-address='true'>Edit</button>
       {{#if this.openEditBillingForm}}
-      <div class="edit-form">
+      <div class="edit-form" data-test-edit-billing-address-form='true'>
         <TravisForm
           @onSubmit={{perform this.editContact}}
           as |form|
@@ -137,7 +137,7 @@
                 @onChange={{action (mut info.address)}}
                 as |field|
               >
-                <field.input placeholder="Address" />
+                <field.input name="address" placeholder="Address" />
               </form.field>
             </div>
             <div class="form-elem">
@@ -150,7 +150,7 @@
                 @onChange={{action (mut info.city)}}
                 as |field|
               >
-                <field.input placeholder="City" />
+                <field.input name="city" placeholder="City" />
               </form.field>
             </div>
           </div>
@@ -178,7 +178,7 @@
             {{#if this.editContact.isRunning}}
               <LoadingIndicator />
             {{else}}
-              <button onclick={{form.submit}} class="button--blue">
+              <button data-test-update-billing-address-button='true' onclick={{form.submit}} class="button--blue">
                 Update
               </button>
             {{/if}}

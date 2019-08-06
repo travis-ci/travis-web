@@ -290,7 +290,28 @@ module('Acceptance | profile/billing', function (hooks) {
     });
   });
 
-  test('edit subscription information updates user billing info', async function (assert) {
+  test('edit subscription contact updates user billing info', async function (assert) {
+
+    await profilePage.visit();
+    await profilePage.billing.visit();
+    await profilePage.billing.editContactAddressButton.click();
+
+    percySnapshot(assert);
+
+    assert.dom(profilePage.billing.editContactAddressForm.inputs.scope).exists({ count: 4 });
+
+    await profilePage.billing.editContactAddressForm
+      .fillIn('firstname', 'John')
+      .fillIn('lastname', 'Doe')
+      .fillIn('company', 'Travis')
+      .fillIn('billingEmail', 'john@doe.com');
+
+    await profilePage.billing.editContactAddressForm.updateContactAddressButton.click();
+
+    assert.equal(profilePage.billing.userDetails.text, 'John Doe | Travis | john@doe.com');
+  });
+
+  test('edit subscription billing updates user billing info', async function (assert) {
 
     await profilePage.visit();
     await profilePage.billing.visit();
@@ -298,17 +319,17 @@ module('Acceptance | profile/billing', function (hooks) {
 
     percySnapshot(assert);
 
-    assert.dom(profilePage.billing.editBillingAddressForm.inputs.scope).exists({ count: 4 });
+    assert.dom(profilePage.billing.editBillingAddressForm.inputs.scope).exists({ count: 2 });
+
+    await selectChoose('.billing-country', 'Nigeria');
 
     await profilePage.billing.editBillingAddressForm
-      .fillIn('firstname', 'John')
-      .fillIn('lastname', 'Doe')
-      .fillIn('company', 'Travis')
-      .fillIn('billingEmail', 'john@doe.com');
+      .fillIn('address', 'Olalubi')
+      .fillIn('city', 'Lagos');
 
     await profilePage.billing.editBillingAddressForm.updateBillingAddressButton.click();
 
-    assert.equal(profilePage.billing.userDetails.text, 'John Doe | Travis | john@doe.com');
+    assert.equal(profilePage.billing.billingDetails.text, 'Olalubi | Lagos | Nigeria');
   });
 
   test('view billing on an expired stripe plan', async function (assert) {
