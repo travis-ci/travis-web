@@ -49,7 +49,7 @@ export default Model.extend({
     }
   ),
 
-  githubUrl: computed('build.repo.{slug,vcsType}', 'sha', function () {
+  url: computed('build.repo.{slug,vcsType}', 'sha', function () {
     const slug = this.get('build.repo.slug');
     const sha = this.get('sha');
     const vcsType = this.get('build.repo.vcsType');
