@@ -59,7 +59,7 @@ export default Component.extend({
     return !['api', 'cron'].includes(eventType);
   }),
 
-  vcsCommitUrl: computed('item.repo.{slug,vcsType}', 'commit.sha', function () {
+  commitUrl: computed('item.repo.{slug,vcsType}', 'commit.sha', function () {
     const slug = this.get('item.repo.slug');
     const sha = this.get('commit.sha');
     const vcsType = this.get('item.repo.vcsType');
@@ -67,7 +67,7 @@ export default Component.extend({
     return this.externalLinks.commitUrl(vcsType, slug, sha);
   }),
 
-  vcsBranchUrl: computed('item.repo.{slug,vcsType}', 'build.branchName', function () {
+  branchUrl: computed('item.repo.{slug,vcsType}', 'build.branchName', function () {
     const slug = this.get('item.repo.slug');
     const branchName = this.get('build.branchName');
     const vcsType = this.get('item.repo.vcsType');
@@ -75,7 +75,7 @@ export default Component.extend({
     return this.externalLinks.branchUrl(vcsType, slug, branchName);
   }),
 
-  vcsTagUrl: computed('item.repo.{slug,vcsType}', 'build.tag.name', function () {
+  tagUrl: computed('item.repo.{slug,vcsType}', 'build.tag.name', function () {
     const slug = this.get('item.repo.slug');
     const tag = this.get('build.tag.name');
     const vcsType = this.get('item.repo.vcsType');

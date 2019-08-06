@@ -35,7 +35,7 @@
       {{/if}}
       <ul class="list-icon">
         <li>
-          <ExternalLinkTo @href={{vcsCommitUrl}}>
+          <ExternalLinkTo @href={{commitUrl}}>
             <EmberTooltip @text="{{concat "View commit on " (vcs-name this.item.repo.vcsType)}}" />
             <SvgImage @name="icon-commit" @class="icon" />
             <span class="label-align inner-underline commit-commit">
@@ -75,7 +75,7 @@
         {{/if}}
         <li>
           {{#if this.item.isTag}}
-            <ExternalLinkTo @href={{vcsTagUrl}} class="commit-branch-url">
+            <ExternalLinkTo @href={{tagUrl}} class="commit-branch-url">
               <EmberTooltip @text="{{concat "View tag on " (vcs-name this.item.repo.vcsType)}}" />
               <SvgImage @name="icon-tag" @class="icon" />
               <span class="label-align inner-underline">
@@ -84,7 +84,7 @@
               <SvgImage @name="icon-external-link" @class="icon" />
             </ExternalLinkTo>
           {{else if this.build.branchName}}
-            <ExternalLinkTo @href={{vcsBranchUrl}} class="commit-branch-url">
+            <ExternalLinkTo @href={{branchUrl}} class="commit-branch-url">
               <EmberTooltip @text="{{concat "View branch on " (vcs-name this.item.repo.vcsType)}}" />
               <SvgImage @name="icon-branch" @class="icon" />
               <span class="label-align inner-underline">

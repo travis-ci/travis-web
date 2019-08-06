@@ -8,7 +8,7 @@ export default Controller.extend({
 
   isLoading: false,
 
-  vcsProfileUrl: computed('model.{login,vcsType}', function () {
+  profileUrl: computed('model.{login,vcsType}', function () {
     const login = this.get('model.login');
     const vcsType = this.get('model.vcsType');
 

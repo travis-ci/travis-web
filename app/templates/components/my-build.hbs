@@ -46,7 +46,7 @@
       <div class="row-content no-hover">
         <ExternalLinkTo
           data-test-branch-name="true"
-          @href={{vcsBranchUrl}}
+          @href={{branchUrl}}
         >
           <EmberTooltip @text="{{concat "View branch on " (vcs-name this.build.repo.vcsType)}}" @popperContainer="body" />
           <SvgImage @name="icon-branch" @class="icon" />
