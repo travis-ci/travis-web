@@ -265,6 +265,18 @@ export default create({
       isHidden: isHidden()
     },
 
+    resubscribeSubscriptionButton: {
+      scope: '[data-test-resubscribe-subscription]'
+    },
+
+    changeSubscriptionButton: {
+      scope: '[data-test-change-subscription]'
+    },
+
+    cancelSubscriptionButton: {
+      scope: '[data-test-cancel-subscription]'
+    },
+
     noPermissionMessage: {
       scope: '[data-test-no-permission-message]',
     },

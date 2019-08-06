@@ -82,7 +82,6 @@ module('Acceptance | profile/billing', function (hooks) {
       last_digits: '1919'
     });
 
-    // create organization
     let organization = server.create('organization', {
       name: 'Org Name',
       type: 'organization',
@@ -300,7 +299,8 @@ module('Acceptance | profile/billing', function (hooks) {
     // assert resubscribing works.
 
     assert.ok(profilePage.billing.marketplaceButton.isHidden);
-    // assert address is hidden
+    assert.ok(profilePage.billing.userDetails.isHidden);
+    assert.ok(profilePage.billing.billingDetails.isHidden);
     assert.ok(profilePage.billing.creditCardNumber.isHidden);
     assert.ok(profilePage.billing.annualInvitation.isHidden);
   });
@@ -314,7 +314,8 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.planMessage.text, 'Subscription has been canceled, valid until June 19, 2018');
 
     assert.ok(profilePage.billing.marketplaceButton.isHidden);
-    // assert address is hidden
+    assert.ok(profilePage.billing.userDetails.isHidden);
+    assert.ok(profilePage.billing.billingDetails.isHidden);
     assert.ok(profilePage.billing.creditCardNumber.isHidden);
     assert.ok(profilePage.billing.annualInvitation.isHidden);
   });
@@ -328,7 +329,8 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.billing.visit();
 
     assert.ok(profilePage.billing.manageButton.isHidden);
-    // assert address is hidden
+    assert.ok(profilePage.billing.userDetails.isHidden);
+    assert.ok(profilePage.billing.billingDetails.isHidden);
     assert.ok(profilePage.billing.creditCardNumber.isHidden);
     assert.ok(profilePage.billing.price.isHidden);
     assert.ok(profilePage.billing.annualInvitation.isHidden);
@@ -345,7 +347,8 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.billing.visit();
 
     assert.ok(profilePage.billing.manageButton.isHidden);
-    // assert address is hidden
+    assert.ok(profilePage.billing.userDetails.isHidden);
+    assert.ok(profilePage.billing.billingDetails.isHidden);
     assert.ok(profilePage.billing.creditCardNumber.isHidden);
     assert.ok(profilePage.billing.price.isHidden);
     assert.ok(profilePage.billing.annualInvitation.isHidden);
@@ -359,7 +362,8 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.visit();
     await profilePage.billing.visit();
 
-    // assert address is hidden
+    assert.ok(profilePage.billing.userDetails.isHidden);
+    assert.ok(profilePage.billing.billingDetails.isHidden);
     assert.ok(profilePage.billing.creditCardNumber.isHidden);
     assert.ok(profilePage.billing.annualInvitation.isHidden);
   });
@@ -377,7 +381,8 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.manageButton.text, 'New subscription');
     assert.equal(profilePage.billing.manageButton.href, 'https://billing.travis-ci.com/subscriptions/new?id=user');
 
-    // assert address is hidden
+    assert.ok(profilePage.billing.userDetails.isHidden);
+    assert.ok(profilePage.billing.billingDetails.isHidden);
     assert.ok(profilePage.billing.creditCardNumber.isHidden);
     assert.ok(profilePage.billing.annualInvitation.isHidden);
   });
@@ -395,7 +400,8 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.manageButton.text, 'New subscription');
     assert.equal(profilePage.billing.manageButton.href, 'https://billing.travis-ci.com/subscriptions/new?id=user');
 
-    // assert address is hidden
+    assert.ok(profilePage.billing.userDetails.isHidden);
+    assert.ok(profilePage.billing.billingDetails.isHidden);
     assert.ok(profilePage.billing.creditCardNumber.isHidden);
     assert.ok(profilePage.billing.annualInvitation.isHidden);
   });

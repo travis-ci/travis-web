@@ -57,11 +57,11 @@
     {{#if this.resubscribeLoading}}
       <LoadingIndicator />
     {{else if (and this.subscription.isResubscribable this.account.hasSubscriptionPermissions)}}
-      <button onClick={{action 'resubscribe'}} class='edit link' data-test-selected-plan-free-jobs>
+      <button onClick={{action 'resubscribe'}} class='edit link' data-test-resubscribe-subscription='true'>
         resubscribe
       </button>
     {{else}}
-      <button class='edit link' data-test-selected-plan-free-jobs>
+      <button class='edit link' data-test-change-subscription='true'>
         change plan
       </button>
     {{/if}}
@@ -69,7 +69,7 @@
       {{#if this.cancelSubscriptionLoading}}
         <LoadingIndicator />
       {{else if (and (not this.subscription.isCanceled) this.account.hasSubscriptionPermissions)}}
-        <button onClick={{action 'cancelSubscription'}} class='edit link' data-test-selected-plan-free-jobs>
+        <button onClick={{action 'cancelSubscription'}} class='edit link' data-test-cancel-subscription='true'>
           cancel
         </button>
       {{/if}}
