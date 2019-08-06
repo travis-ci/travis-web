@@ -136,6 +136,8 @@ module('Acceptance | profile/billing', function (hooks) {
 
     assert.equal(profilePage.billing.userDetails.text, 'User Name | Travis CI GmbH | user@email.com');
     assert.equal(profilePage.billing.billingDetails.text, 'Rigaerstraße 8 | Berlin | Germany');
+    assert.dom(profilePage.billing.planMessage.scope).hasText('Valid until June 19, 2018');
+
     assert.equal(profilePage.billing.creditCardNumber.text, '•••• •••• •••• 1919');
     assert.equal(profilePage.billing.price.text, '$69 /month');
 
@@ -923,5 +925,4 @@ module('Acceptance | profile/billing', function (hooks) {
       .containsText('This subscription is pending verification from Stripe, and should be approved in a few minutes.');
   });
 
-  // test edit payment billing details
 });

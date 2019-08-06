@@ -24,9 +24,6 @@ export default V3Adapter.extend({
       if (leftAttribute === 'billing_info') {
         updatedSubscriptionInfo[rightAttribute] = data[`billing_info.${rightAttribute}`];
       }
-      if (leftAttribute === 'credit_card_info') {
-        updatedSubscriptionInfo[rightAttribute] = data[`credit_card_info.${rightAttribute}`];
-      }
       return updatedSubscriptionInfo;
     }, {});
 

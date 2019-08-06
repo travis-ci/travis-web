@@ -154,6 +154,17 @@ export default function () {
     return schema.subscriptions.find(params.subscription_id).invoices;
   });
 
+  this.patch('/subscription/:subscription_id/address', function (schema, { params, requestBody }) {
+    const attrs = JSON.parse(requestBody);
+
+    const subscription = schema.subscriptions.where({ id: params.subscription_id });
+    subscription.update({
+      billingInfo: {
+        ...attrs
+      }
+    });
+  });
+
   this.get('/plans');
 
   this.get('/broadcasts', schema => {
