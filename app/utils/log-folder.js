@@ -3,7 +3,7 @@ import $ from 'jquery';
 export default (function () {
   function LogFolder(element) {
     this.element = element;
-    let handlerSelector = '.fold .log-line:first-of-type';
+    let handlerSelector = '.fold .log-line:first-of-type, .fold .fold-name';
     if (this.element) {
       this.element
         .off('click', handlerSelector) // remove any previous click handlers
