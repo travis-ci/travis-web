@@ -1,5 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
+import profilePage from 'travis/tests/pages/profile';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
@@ -7,8 +8,6 @@ module('Integration | Component | selected-billing-plan', function (hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function (assert) {
-    // Set any properties with this.set('myProperty', 'value');
-    // Handle any actions with this.set('myAction', function(val) { ... });
 
     this['actions'] = {
       goToFirstStep: () => { }
@@ -21,6 +20,7 @@ module('Integration | Component | selected-billing-plan', function (hooks) {
       price: 20000,
       annual: false
     };
+    this.plan1 = plan1;
     this.set('selectedPlan', plan1);
 
     await render(hbs`<SelectedBillingPlan 
@@ -28,6 +28,10 @@ module('Integration | Component | selected-billing-plan', function (hooks) {
       @selectedPlan={{selectedPlan}} 
       @goToFirstStep={{action 'goToFirstStep'}}/>`);
 
-    assert.dom('[data-test-selected-plan-price]').hasTextContaining('$200 /month');
+    assert.equal(profilePage.billing.selectedPlanOverview.heading.text, 'summary');
+    assert.equal(profilePage.billing.selectedPlanOverview.name.text, `${this.plan1.name} plan`);
+    assert.equal(profilePage.billing.selectedPlanOverview.jobs.text, `${this.plan1.builds} concurrent jobs`);
+    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${this.plan1.price / 100} /month`);
+    assert.equal(profilePage.billing.selectedPlanOverview.changePlan.text, 'change plan');
   });
 });
