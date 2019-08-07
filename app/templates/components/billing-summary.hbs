@@ -42,7 +42,7 @@
             {{#if this.subscription.isManual}}
               <ManualSubscriptionHelp />
             {{else}}
-              {{format-currency this.price}}
+              {{format-currency this.price floor='true'}}
               <span>
                   {{if this.subscription.plan.annual '/year' '/month'}}
               </span>

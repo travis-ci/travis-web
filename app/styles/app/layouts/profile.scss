@@ -583,14 +583,13 @@ section.invoices {
 
   font-size: $font-size-m;
 
-  h2 {
-    margin: 0;
+  h3 {
+    color: $oxide-blue;
   }
 
   .invoice-table {
     overflow-x: auto;
     padding-bottom: 20px;
-    padding-top: 20px;
   }
 
   .invoice-select-year {
@@ -604,11 +603,6 @@ section.invoices {
 
   .select-year-label {
     margin-right: 10px;
-  }
-
-  .invoice-select-year .ember-power-select-selected-item {
-    margin-right: 22px;
-    margin-left: 12px;
   }
 
   table {
@@ -651,6 +645,7 @@ section.invoices {
     &:hover {
       @include colorSVG($oxide-blue);
     }
+    text-align: right;
   }
 
   p {

@@ -24,7 +24,7 @@
             Recommendation:
           </h5>
           <p>
-            Switch to annual billing to recieve
+            Switch to annual billing to receive
             <span class='font--italic font--bolder'>
               one month free!
             </span>
@@ -45,7 +45,7 @@
             onclick={{action (mut this.selectedPlan) plan}}
           >
             <p class='billing-plans__box--price' data-test-selected-plan-price>
-              {{format-currency plan.price}}
+              {{format-currency plan.price floor="true"}}
               <span class='color-asphalt-grey {{if (eq plan.id selectedPlan.id) 'highlight-plan'}}'>
                 {{if this.showAnnual '/year' '/month'}}
               </span>
