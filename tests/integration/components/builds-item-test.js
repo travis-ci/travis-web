@@ -21,7 +21,7 @@ module('Integration | Component | builds item', function (hooks) {
         authorName: 'Test Author',
         authorEmail: 'author@example.com',
         message: 'Generic test author commit message',
-        githubUrl: 'a-url'
+        url: 'a-url'
       },
       repo: {
         slug: 'foo/bar'
