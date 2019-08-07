@@ -14,7 +14,7 @@ export default Mixin.create({
   placeholder: '',
 
   searchEnabled: computed('options.length', 'oninput', function () {
-    return this.get('options.length') >= OPTIONS_FOR_SEARCH || !!this.search;
+    return this.options.length >= OPTIONS_FOR_SEARCH || !!this.search;
   }),
   searchPlaceholder: 'Type to filter options...',
 
