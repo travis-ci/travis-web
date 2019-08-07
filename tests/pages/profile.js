@@ -438,6 +438,7 @@ export default create({
 
     selectedPlan: {
       scope: '.highlight-plan',
+      isHighlighted: hasClass('highlight-plan'),
 
       heading: {
         scope: '.highlight-plan [data-test-selected-plan-heading]',
