@@ -1,12 +1,18 @@
 import { helper } from '@ember/component/helper';
+import { BITBUCKET, GITHUB } from 'travis/utils/vcs-types'
 
-export function vcsName(vcsType) {
-  const vcsTypeLower = (vcsType || 'github').toLowerCase();
+const VCS_NAMES = {
+  [BITBUCKET]: 'Bitbucket',
+  [GITHUB]: 'GitHub',
+};
 
-  if (vcsTypeLower.startsWith('github')) {
-    return 'GitHub';
-  } else if (vcsTypeLower.startsWith('bitbucket')) {
-    return 'Bitbucket';
+export function vcsName(vcsType = GITHUB) {
+  const vcsTypeLower = vcsType.toLowerCase();
+
+  if (vcsTypeLower.startsWith(GITHUB)) {
+    return VCS_NAMES[GITHUB];
+  } else if (vcsTypeLower.startsWith(BITBUCKET)) {
+    return VCS_NAMES[BITBUCKET];
   }
 }
 

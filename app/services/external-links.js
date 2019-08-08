@@ -1,14 +1,13 @@
 import Service from '@ember/service';
 import config from 'travis/config/environment';
 import { vcsName } from 'travis/helpers/vcs-name';
+import { BITBUCKET, GITHUB } from 'travis/utils/vcs-types'
 
-const lowerVcsName = (vcsType) => (
-  vcsType ? vcsName(vcsType).toLowerCase() : 'github'
-);
+const lowerVcsName = (vcsType) => vcsName(vcsType).toLowerCase();
 
 export const vcsEndpoints = {
-  github: 'https://github.com',
-  bitbucket: 'https://bitbucket.org',
+  [BITBUCKET]: 'https://bitbucket.org',
+  [GITHUB]: 'https://github.com',
 };
 
 export const vcsUrl = (vcsType, paths = {}) => {
