@@ -2,18 +2,18 @@
   {{#if this.isEducation}}
     <BillingEducation @account={{this.account}} />
   {{/if}}
+  {{#if this.isManual}}
+    <BillingManual @subscription={{this.subscription}} />
+  {{/if}}
+  {{#if this.isManaged}}
+    <BillingSubscription @account={{this.account}} />
+  {{/if}}
   {{#if this.isTrial}}
     <BillingTrial 
       @account={{this.account}} 
       @plans={{this.plans}} 
       @newSubscription={{this.newSubscription}}
     />
-  {{/if}}
-  {{#if this.isManual}}
-    <BillingManual @subscription={{this.subscription}} />
-  {{/if}}
-  {{#if this.isManaged}}
-    <BillingSubscription @account={{this.account}} />
   {{/if}}
 </section>
 {{#if this.invoices}}

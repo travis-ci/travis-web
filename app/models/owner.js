@@ -90,8 +90,7 @@ export default VcsEntity.extend({
     'login',
     function () {
       let subscriptions = this.get('accounts.subscriptions') || [];
-      let login = this.login;
-      const accountSubscriptions = subscriptions.filterBy('owner.login', login) || [];
+      const accountSubscriptions = subscriptions.filterBy('owner.login', this.login) || [];
       const activeAccountSubscriptions = accountSubscriptions.filterBy('isSubscribed') || [];
       const pendingAccountSubscriptions = accountSubscriptions.filterBy('isPending') || [];
       if (activeAccountSubscriptions.length > 1 || pendingAccountSubscriptions.length > 1) {

@@ -835,7 +835,7 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe');
   });
 
-  test('view billing tab when no subscription should fill form and transition to payment', async function (assert) {
+  test('view billing tab when no individual subscription should fill form and transition to payment', async function (assert) {
     window.Stripe = StripeMock;
     let config = {
       mock: true,
@@ -881,7 +881,6 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(billingPaymentForm.contactDetails.company.text, 'Travis');
     assert.equal(billingPaymentForm.contactDetails.email.text, 'john@doe.com');
 
-
     assert.equal(billingPaymentForm.contactDetails.billingHeading.text, 'billing details:');
     assert.equal(billingPaymentForm.contactDetails.address.text, '15 Olalubi street');
     assert.equal(billingPaymentForm.contactDetails.city.text, 'Berlin');
@@ -895,4 +894,66 @@ module('Acceptance | profile/billing', function (hooks) {
       .containsText('This subscription is pending verification from Stripe, and should be approved in a few minutes.');
   });
 
+  test('view billing tab when no organization subscription should fill form and transition to payment', async function (assert) {
+    this.subscription.destroy();
+    window.Stripe = StripeMock;
+    let config = {
+      mock: true,
+      publishableKey: 'mock'
+    };
+    stubConfig('stripe', config, { instantiate: false });
+    const { owner } = getContext();
+    owner.inject('service:stripev3', 'config', 'config:stripe');
+    this.organization.permissions = {
+      createSubscription: true
+    };
+    this.organization.save();
+
+    await profilePage.visitOrganization({ name: 'org-login' });
+    await profilePage.billing.visit();
+    await profilePage.billing.getPlanButton.click();
+
+    const { billingForm, subscribeButton, billingPaymentForm } = profilePage.billing;
+    await subscribeButton.click();
+
+    percySnapshot(assert);
+
+    await selectChoose(billingForm.billingSelectCountry.scope, 'Germany');
+
+    await billingForm
+      .fillIn('firstname', 'John')
+      .fillIn('lastname', 'Doe')
+      .fillIn('companyName', 'Travis')
+      .fillIn('email', 'john@doe.com')
+      .fillIn('address', '15 Olalubi street')
+      .fillIn('suite', '23 Grace')
+      .fillIn('city', 'Berlin')
+      .fillIn('zip', '353564')
+      .fillIn('vat', '356463');
+
+    await billingForm.proceedPayment.click();
+
+    assert.equal(profilePage.billing.selectedPlanOverview.heading.text, 'summary');
+    assert.equal(profilePage.billing.selectedPlanOverview.name.text, `${this.defaultPlan.name} plan`);
+    assert.equal(profilePage.billing.selectedPlanOverview.jobs.text, `${this.defaultPlan.builds} concurrent jobs`);
+    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${this.defaultPlan.price / 100} /month`);
+    assert.equal(profilePage.billing.selectedPlanOverview.changePlan.text, 'change plan');
+
+    assert.equal(billingPaymentForm.contactDetails.contactHeading.text, 'contact details:');
+    assert.equal(billingPaymentForm.contactDetails.firstName.text, 'John Doe');
+    assert.equal(billingPaymentForm.contactDetails.company.text, 'Travis');
+    assert.equal(billingPaymentForm.contactDetails.email.text, 'john@doe.com');
+
+    assert.equal(billingPaymentForm.contactDetails.billingHeading.text, 'billing details:');
+    assert.equal(billingPaymentForm.contactDetails.address.text, '15 Olalubi street');
+    assert.equal(billingPaymentForm.contactDetails.city.text, 'Berlin');
+    assert.equal(billingPaymentForm.contactDetails.country.text, 'Germany');
+
+    assert.ok(billingPaymentForm.isPresent);
+
+    await billingPaymentForm.completePayment.click();
+
+    assert.dom('[data-test-pending-message]')
+      .containsText('This subscription is pending verification from Stripe, and should be approved in a few minutes.');
+  });
 });

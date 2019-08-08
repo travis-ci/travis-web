@@ -115,16 +115,16 @@ export default function () {
 
   this.post('/subscriptions', function (schema, request) {
     const attrs = JSON.parse(request.requestBody);
+    const owner = attrs.organization_id ? schema.organizations.first() : schema.users.first();
 
     const updatedAttrs = {
       ...attrs,
+      owner,
       plan: schema.plans.find(attrs.plan),
-      owner: schema.users.first(),
       source: 'stripe',
       status: 'pending',
       valid_to: new Date(2018, 5, 19),
     };
-
     const savedSubscription = schema.subscriptions.create(updatedAttrs);
 
     return this.serialize(savedSubscription);
