@@ -1,7 +1,7 @@
 import Service from '@ember/service';
 import config from 'travis/config/environment';
 import { vcsName } from 'travis/helpers/vcs-name';
-import { BITBUCKET, GITHUB } from 'travis/utils/vcs-types'
+import { BITBUCKET, GITHUB } from 'travis/utils/vcs-types';
 
 const lowerVcsName = (vcsType) => vcsName(vcsType).toLowerCase();
 

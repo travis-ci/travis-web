@@ -4,21 +4,21 @@ import { module, test } from 'qunit';
 const vcsName = vcsNameHelper.compute;
 
 module('Unit | Helper | vcs name', function () {
-  test('it defaults to github vcs name', function (assert) {
+  test('it defaults to Github', function (assert) {
     assert.equal(vcsName([]), 'GitHub');
     assert.equal(vcsName([null]), 'GitHub');
     assert.equal(vcsName(['']), 'GitHub');
   });
 
-  test('it handles github vcs types', function (assert) {
+  test('it handles Github', function (assert) {
     assert.equal(vcsName(['GithubAnything']), 'GitHub');
   });
 
-  test('it handles bitbucket vcs types', function (assert) {
+  test('it handles Bitbucket', function (assert) {
     assert.equal(vcsName(['BitbucketAnything']), 'Bitbucket');
   });
 
-  test('it returns null for invalid vcs types', function (assert) {
+  test('it returns null for invalid', function (assert) {
     assert.equal(vcsName(['OtherVcs']), null);
   });
 });
