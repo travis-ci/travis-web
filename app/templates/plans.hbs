@@ -27,56 +27,95 @@
       </UiKit::Font>
     </UiKit::Grid>
     <UiKit::Box @position={{hash type='relative'}} @margin={{hash top=3}}>
-      <UiKit::Box @position={{hash type='absolute' top=0 right=0}} @margin={{hash top=-16 right=-10}} @height={{64}}>
+      <UiKit::Box
+        @position={{hash type='absolute' top=0 right=0}}
+        @margin={{hash top=-16 right=-10}}
+        @height={{64}}
+      >
         <SvgImage @name="grey-blob" @height={{224}} />
       </UiKit::Box>
 
-      <UiKit::Box @bgColor='white' @position={{hash type='relative'}} @layer='10' @shadow='base'>
-      {{!-- <div class="border border-grey-150 rounded"> --}}
+      <UiKit::Box
+        @bgColor='white'
+        @borderColor='grey-150'
+        @layer='10'
+        @position={{hash type='relative'}}
+        @radius='base'
+        @shadow='base'
+      >
         <UiKit::Grid @base={{2}} @md={{4}} as |grid|>
           {{#each plansToDisplay as |plan|}}
-            <grid.item @class="p-4 border-grey-150 border">
-              <h3 class="font-bold text-3xl">
-                {{plan.name}}
-              </h3>
-              <h4 class="font-bold text-lg uppercase text-grey-400 mb-6">
-                {{plan.description}}
-              </h4>
-              <div>
-                <span class="text-green-400 font-bold">{{plan.builds}}</span>
-                {{pluralize plan.builds "Concurrent job" without-count=true}}
-              </div>
-              <div>
-                <SvgImage @name="features-check" @class="w-3 inline-block"/>
-                Unlimited build minutes
-              </div>
-              <div>
-                <SvgImage @name="features-check" @class="w-3 inline-block"/>
-                Unlimited repositories
-              </div>
-              <div class="mb-6">
-                <SvgImage @name="features-check" @class="w-3 inline-block"/>
-                Unlimited collaborators
-              </div>
-              <div class="mb-6">
-                <span class="text-xl text-green-400 font-bold">${{plan.monthlyPriceRounded}}</span>
-                <span class="text-sm">
-                  {{plan.currency}}
-                  per month
-                  {{if showAnnual 'billed annually'}}
-                </span>
-              </div>
+            <grid.item>
+              <UiKit::Box @borderColor='grey-150' @padding={{hash all=4}}>
+                <UiKit::Font @tag='h3' @size='3xl' @weight='bold'>
+                  {{plan.name}}
+                </UiKit::Font>
+
+                <UiKit::Font
+                  @tag='h4'
+                  @color='grey-400'
+                  @margin={{hash bottom=6}}
+                  @size='lg'
+                  @transform='uppercase'
+                  @weight='bold'
+                >
+                  {{plan.description}}
+                </UiKit::Font>
+                <div>
+                  <UiKit::Font @color='green-400' @weight='bold'>
+                    {{plan.builds}}
+                  </UiKit::Font>
+                  {{pluralize plan.builds "Concurrent job" without-count=true}}
+                </div>
+                <div>
+                  <UiKit::Box @display='inline-block' @width={{3}}>
+                    <SvgImage @name="features-check" />
+                  </UiKit::Box>
+                  Unlimited build minutes
+                </div>
+                <div>
+                  <UiKit::Box @display='inline-block' @width={{3}}>
+                    <SvgImage @name="features-check" />
+                  </UiKit::Box>
+                  Unlimited repositories
+                </div>
+                <UiKit::Box @margin={{hash bottom=6}}>
+                  <UiKit::Box @display='inline-block' @width={{3}}>
+                    <SvgImage @name="features-check" />
+                  </UiKit::Box>
+                  Unlimited collaborators
+                </UiKit::Box>
+                <UiKit::Box @margin={{hash bottom=6}}>
+                  <UiKit::Font @color='green-400' @size='xl' @weight='bold'>
+                    ${{plan.monthlyPriceRounded}}
+                  </UiKit::Font>
+                  <UiKit::Font @size='sm'>
+                    {{plan.currency}}
+                    per month
+                    {{if showAnnual 'billed annually'}}
+                  </UiKit::Font>
+                </UiKit::Box>
+              </UiKit::Box>
             </grid.item>
           {{/each}}
         </UiKit::Grid>
-        <div class="text-center p-4 border-grey-150 border">
+
+        {{!-- Text center --}}
+        <UiKit::Box @borderColor='grey-150' @padding={{hash all=4}} @textAlign='center'>
           <UiKit::Button @onClick={{action 'gaCta' 'plans-table'}}>
             Start Your Free Trial
           </UiKit::Button>
-        </div>
+        </UiKit::Box>
       </UiKit::Box>
 
-      <SvgImage @name="yellow-waves" @class="absolute w-56 bottom-0 left-0 -mb-10 -ml-10 z-0"/>
+      <UiKit::Box
+        @layer='0'
+        @margin={{hash bottom=-10 left=-10}}
+        @position={{hash type='absolute' bottom=0 left=0}}
+        @width={{56}}
+      >
+        <SvgImage @name="yellow-waves" />
+      </UiKit::Box>
     </UiKit::Box>
   </UiKit::Box>
 

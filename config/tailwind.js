@@ -109,6 +109,17 @@ module.exports = {
     },
 
     // Block Props //
+    borderWidth: {
+      none: '0',
+      '1': '1px',
+    },
+    borderRadius: {
+      none: '0',
+      sm: '0.125rem',
+      base: '0.25rem',
+      lg: '0.5rem',
+      full: '9999px',
+    },
     boxShadow: {
       sm: '0 0 3px 0 rgba(0, 0, 0, 0.1), 0 0 2px 0 rgba(0, 0, 0, 0.06)',
       base: '0 0 6px -0px rgba(0, 0, 0, 0.1), 0 0 4px -0px rgba(0, 0, 0, 0.06)',

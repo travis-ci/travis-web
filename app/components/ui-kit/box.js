@@ -2,12 +2,19 @@ import Component from '@ember/component';
 import { checkDictionary } from 'travis/utils/ui-kit/assertions';
 import spacingMixin from 'travis/mixins/ui-kit/spacing';
 import { computed } from '@ember/object';
-import { none, reads } from '@ember/object/computed';
+import { none, not, reads } from '@ember/object/computed';
 
 const DISPLAYS = {
   BLOCK: 'block',
   INLINE_BLOCK: 'inline-block',
   FLEX: 'flex',
+};
+
+const TEXT_ALIGNMENTS = {
+  LEFT: 'left',
+  CENTER: 'center',
+  RIGHT: 'right',
+  JUSTIFY: 'justify',
 };
 
 const LAYERS = {
@@ -25,6 +32,20 @@ const SHADOWS = {
   BASE: 'base',
   NONE: 'none',
 };
+const RADII = {
+  NONE: 'none',
+  SM: 'sm',
+  BASE: 'base',
+  LG: 'lg',
+  FULL: 'full',
+};
+
+// Border
+const BORDER_WIDTHS = {
+  NONE: 'none',
+  ONE: '1',
+};
+const BASE_BORDER_WIDTH = BORDER_WIDTHS.ONE;
 
 // Position
 const POSITION_TYPES = {
@@ -57,16 +78,21 @@ export default Component.extend(spacingMixin, {
   bgColor: null,
   display: null,
   layer: null,
+  radius: null,
   shadow: null,
+  textAlign: null,
+
+  borderColor: null,
+  borderWidth: null,
 
   width: null,
   height: null,
 
   margin: null,
+  padding: null,
   position: null,
 
   // Private //
-
   hasNoBgColor: none('bgColor'),
   bgColorClass: computed('hasNoBgColor', 'bgColor', function () {
     return this.hasNoBgColor ? '' : `bg-${this.bgColor}`;
@@ -79,9 +105,35 @@ export default Component.extend(spacingMixin, {
     return this.hasNoLayer ? '' : `z-${this.layer}`;
   }),
 
+  hasNoRadius: none('radius'),
+  radiusClass: computed('hasNoRadius', 'radius', function () {
+    return this.hasNoRadius ? '' : `rounded-${this.radius}`;
+  }),
+
   hasNoShadow: none('shadow'),
-  shadowClass: computed('hasNoShadow', 'isBaseShadow', 'shadow', function () {
+  shadowClass: computed('hasNoShadow', 'shadow', function () {
     return this.hasNoShadow ? '' : `shadow-${this.shadow}`;
+  }),
+
+  hasNoTextAlign: none('textAlign'),
+  textAlignClass: computed('hasNoTextAlign', 'textAlign', function () {
+    return this.hasNoTextAlign ? '' : `text-${this.textAlign}`;
+  }),
+
+  // Border
+  hasNoBorderColor: none('borderColor'),
+  hasBorderColor: not('hasNoBorderColor'),
+  borderColorClass: computed('hasNoBorderColor', 'borderColor', function () {
+    return this.hasNoBorderColor ? '' : `border-${this.borderColor}`;
+  }),
+
+  hasNoBorderWidth: none('borderWidth'),
+  borderWidthClass: computed('hasNoBorderWidth', 'hasBorderColor', 'borderWidth', function () {
+    let currentBorderWidth = this.borderWidth || '';
+    if (this.hasNoBorderWidth && this.hasBorderColor) {
+      currentBorderWidth = BASE_BORDER_WIDTH;
+    }
+    return currentBorderWidth.length === 0 ? '' : `border-${currentBorderWidth}`;
   }),
 
   // Width & Height
@@ -111,9 +163,9 @@ export default Component.extend(spacingMixin, {
     return this.hasNoPositionRight ? '' : `right-${this.position.right}`;
   }),
 
-  hasNoPositionBottom: none('position.top'),
-  positionBottom: computed('hasNoPositionBottom', 'position.top', function () {
-    return this.hasNoPositionBottom ? '' : `top-${this.position.top}`;
+  hasNoPositionBottom: none('position.bottom'),
+  positionBottom: computed('hasNoPositionBottom', 'position.bottom', function () {
+    return this.hasNoPositionBottom ? '' : `bottom-${this.position.bottom}`;
   }),
 
   hasNoPositionLeft: none('position.left'),
@@ -152,7 +204,10 @@ export default Component.extend(spacingMixin, {
 
     checkDictionary(this.display, DISPLAYS, '@display', 'Box');
     checkDictionary(this.layer, LAYERS, '@layer', 'Box');
+    checkDictionary(this.radius, RADII, '@radius', 'Box');
     checkDictionary(this.shadow, SHADOWS, '@shadow', 'Box');
+    checkDictionary(this.textAlign, TEXT_ALIGNMENTS, '@textAlign', 'Box');
+    checkDictionary(this.borderWidth, BORDER_WIDTHS, '@borderWidth', 'Box');
 
     const { top, right, bottom, left, inset, type } = this.position || {};
     checkDictionary(type, POSITION_TYPES, '@position.type', 'Box');

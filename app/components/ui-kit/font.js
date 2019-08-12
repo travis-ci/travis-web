@@ -30,13 +30,6 @@ const WEIGHTS = {
   BOLD: 'bold',
 };
 
-const JUSTIFICATIONS = {
-  LEFT: 'left',
-  CENTER: 'center',
-  RIGHT: 'right',
-  JUSTIFY: 'justify',
-};
-
 const TRANSFORMS = {
   UPPERCASE: 'uppercase',
   LOWERCASE: 'lowercase',
@@ -50,11 +43,12 @@ export default Component.extend(spacingMixin, {
 
   // Public interface
   tag: 'span',
+
+  color: null,
   family: null,
   size: null,
-  color: null,
-  weight: null,
   transform: null,
+  weight: null,
 
   // Private
   hasNoFamily: none('family'),
@@ -77,11 +71,6 @@ export default Component.extend(spacingMixin, {
     return this.hasNoColor ? '' : `text-${this.color}`;
   }),
 
-  hasNoJustify: none('justify'),
-  justifyClass: computed('hasNoJustify', 'justify', function () {
-    return this.hasNoJustify ? '' : `text-${this.justify}`;
-  }),
-
   // Lifecycle
   init() {
     this._super(...arguments);
@@ -89,7 +78,6 @@ export default Component.extend(spacingMixin, {
     checkDictionary(this.size, SIZES, 'Size', 'Font');
     checkDictionary(this.family, FAMILIES, 'Family', 'Font');
     checkDictionary(this.weight, WEIGHTS, 'Weight', 'Font');
-    checkDictionary(this.justify, JUSTIFICATIONS, 'Justify', 'Font');
     checkDictionary(this.transform, TRANSFORMS, 'Transform', 'Font');
   },
 });
