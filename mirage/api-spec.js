@@ -1014,18 +1014,18 @@ export default {
     "invoice":            {
       "@type":            "resource",
       "actions":          { },
-      "attributes":       ["id", "created_at", "url"],
+      "attributes":       ["id", "created_at", "url", "amount_due"],
       "representations":  {
-        "standard":       ["id", "created_at", "url"],
-        "minimal":        ["id", "created_at", "url"],
+        "standard":       ["id", "created_at", "url", "amount_due"],
+        "minimal":        ["id", "created_at", "url", "amount_due"],
       }
     },
     "invoices": {
       "@type": "resource",
-      "attributes":       ["id", "created_at", "url"],
+      "attributes":       ["id", "created_at", "url", "amount_due"],
       "representations":  {
-        "standard":       ["id", "created_at", "url"],
-        "minimal":        ["id", "created_at", "url"],
+        "standard":       ["id", "created_at", "url", "amount_due"],
+        "minimal":        ["id", "created_at", "url", "amount_due"],
       }
     },
     "job": {
