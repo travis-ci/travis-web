@@ -10,6 +10,23 @@ const DISPLAYS = {
   FLEX: 'flex',
 };
 
+const LAYERS = {
+  AUTO: 'auto',
+  ZERO: '0',
+  TEN: '10',
+  TWENTY: '20',
+  THIRTY: '30',
+  FORTY: '40',
+  FIFTY: '50',
+};
+
+const SHADOWS = {
+  SM: 'sm',
+  BASE: 'base',
+  NONE: 'none',
+};
+
+// Position
 const POSITION_TYPES = {
   STATIC: 'static',
   FIXED: 'fixed',
@@ -30,20 +47,44 @@ const POSITION_INSETS = {
   Y_AUTO: 'y-auto',
 };
 
+// Component definition
 export default Component.extend(spacingMixin, {
   tagName: '',
 
   // Public interface //
   tag: 'div',
+
+  bgColor: null,
   display: null,
-  margin: null,
-  position: null,
+  layer: null,
+  shadow: null,
+
   width: null,
   height: null,
 
+  margin: null,
+  position: null,
+
   // Private //
+
+  hasNoBgColor: none('bgColor'),
+  bgColorClass: computed('hasNoBgColor', 'bgColor', function () {
+    return this.hasNoBgColor ? '' : `bg-${this.bgColor}`;
+  }),
+
   displayClass: reads('display'),
 
+  hasNoLayer: none('layer'),
+  layerClass: computed('hasNoLayer', 'layer', function () {
+    return this.hasNoLayer ? '' : `z-${this.layer}`;
+  }),
+
+  hasNoShadow: none('shadow'),
+  shadowClass: computed('hasNoShadow', 'isBaseShadow', 'shadow', function () {
+    return this.hasNoShadow ? '' : `shadow-${this.shadow}`;
+  }),
+
+  // Width & Height
   hasNoWidth: none('width'),
   widthClass: computed('hasNoWidth', 'width', function () {
     return this.hasNoWidth ? '' : `w-${this.width}`;
@@ -110,6 +151,8 @@ export default Component.extend(spacingMixin, {
     this._super(...arguments);
 
     checkDictionary(this.display, DISPLAYS, '@display', 'Box');
+    checkDictionary(this.layer, LAYERS, '@layer', 'Box');
+    checkDictionary(this.shadow, SHADOWS, '@shadow', 'Box');
 
     const { top, right, bottom, left, inset, type } = this.position || {};
     checkDictionary(type, POSITION_TYPES, '@position.type', 'Box');

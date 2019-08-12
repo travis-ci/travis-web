@@ -31,7 +31,8 @@
         <SvgImage @name="grey-blob" @height={{224}} />
       </UiKit::Box>
 
-      <div class="relative bg-white border border-grey-150 rounded shadow-even z-10">
+      <UiKit::Box @bgColor='white' @position={{hash type='relative'}} @layer='10' @shadow='base'>
+      {{!-- <div class="border border-grey-150 rounded"> --}}
         <UiKit::Grid @base={{2}} @md={{4}} as |grid|>
           {{#each plansToDisplay as |plan|}}
             <grid.item @class="p-4 border-grey-150 border">
@@ -73,7 +74,8 @@
             Start Your Free Trial
           </UiKit::Button>
         </div>
-      </div>
+      </UiKit::Box>
+
       <SvgImage @name="yellow-waves" @class="absolute w-56 bottom-0 left-0 -mb-10 -ml-10 z-0"/>
     </UiKit::Box>
   </UiKit::Box>
