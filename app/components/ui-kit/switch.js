@@ -1,5 +1,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
+import { reads } from '@ember/object/computed';
 import { checkDictionary } from 'travis/utils/ui-kit/assertions';
 
 // Size definitions
@@ -23,7 +24,6 @@ const COLORS = {
 const DEFAULT_COLOR = COLORS.BLUE;
 
 const BG_COLORS = {
-  [COLORS.BLUE]: COLORS.BLUE,
   inactive: 'grey-300',
 };
 
@@ -47,15 +47,14 @@ export default Component.extend({
     return SPACE_SIZES[this.size];
   }),
 
-  activeBgColor: computed('color', function () {
-    return BG_COLORS[this.color];
-  }),
+  activeBgColor: reads('color'),
   inactiveBgColor: computed(() => BG_COLORS['inactive']),
 
   // Lifecycle
   init() {
     this._super(...arguments);
 
+    checkDictionary(this.color, COLORS, '@color', 'Button');
     checkDictionary(this.size, SIZES, '@size', 'Switch');
   },
 

@@ -22,7 +22,6 @@ export default Component.extend({
 
   // Public interface
   tag: DEFAULT_TAG,
-  class: '',
 
   // Lifecycle
   init() {

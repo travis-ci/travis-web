@@ -1,17 +1,19 @@
 <TravisLayout @layoutName="layouts/center">
 
   {{!-- Header section --}}
-  <UiKit::Box @tag='section' @margin={{hash top=3 bottom=16}}>
-    <UiKit::Font @tag='header' @justify='center'>
-      <UiKit::Font @tag='h1' @size='6xl' @weight='bold'>
-        Built for every team
-      </UiKit::Font>
-      <p>
-        Set up your first project in just one minute.
-        <br />
-        Your first 100 builds are free! No credit card required.
-      </p>
+  <UiKit::Box
+    @tag='section'
+    @margin={{hash top=3 bottom=16}}
+    @textAlign='center'
+  >
+    <UiKit::Font @tag='h1' @size='6xl' @weight='bold'>
+      Built for every team
     </UiKit::Font>
+    <p>
+      Set up your first project in just one minute.
+      <br />
+      Your first 100 builds are free! No credit card required.
+    </p>
   </UiKit::Box>
 
   {{!-- Product section --}}

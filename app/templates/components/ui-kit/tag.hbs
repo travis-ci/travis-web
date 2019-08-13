@@ -1,25 +1,31 @@
 {{#if (eq this.tag 'div')}}
-  <div class={{this.class}} ...attributes>{{yield}}</div>
+  <div ...attributes>{{yield}}</div>
 {{else if (eq this.tag 'header')}}
-  <header class={{this.class}} ...attributes>{{yield}}</header>
+  <header ...attributes>{{yield}}</header>
 {{else if (eq this.tag 'section')}}
-  <section class={{this.class}} ...attributes>{{yield}}</section>
+  <section ...attributes>{{yield}}</section>
 {{else if (eq this.tag 'span')}}
-  <span class={{this.class}} ...attributes>{{yield}}</span>
+  <span ...attributes>{{yield}}</span>
 {{else if (eq this.tag 'h1')}}
-  <h1 class={{this.class}} ...attributes>{{yield}}</h1>
+  <h1 ...attributes>{{yield}}</h1>
 {{else if (eq this.tag 'h2')}}
-  <h2 class={{this.class}} ...attributes>{{yield}}</h2>
+  <h2 ...attributes>{{yield}}</h2>
 {{else if (eq this.tag 'h3')}}
-  <h3 class={{this.class}} ...attributes>{{yield}}</h3>
+  <h3 ...attributes>{{yield}}</h3>
 {{else if (eq this.tag 'h4')}}
-  <h4 class={{this.class}} ...attributes>{{yield}}</h4>
+  <h4 ...attributes>{{yield}}</h4>
 {{else if (eq this.tag 'h5')}}
-  <h5 class={{this.class}} ...attributes>{{yield}}</h5>
+  <h5 ...attributes>{{yield}}</h5>
 {{else if (eq this.tag 'h6')}}
-  <h6 class={{this.class}} ...attributes>{{yield}}</h6>
+  <h6 ...attributes>{{yield}}</h6>
 {{else if (eq this.tag 'p')}}
-  <p class={{this.class}} ...attributes>{{yield}}</p>
+  <p ...attributes>{{yield}}</p>
 {{else}}
+  {{!--
+    If all goes according to plan, it shouldn't be possible to
+    get here. But if someone adds a tag to the supported list and forgets
+    to add actual support for the tag here, then let's display an error message.
+  --}}
+  <span class="text-red-300">Error: Tag not supported</span>
   {{yield}}
 {{/if}}
