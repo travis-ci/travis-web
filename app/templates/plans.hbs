@@ -139,25 +139,29 @@
   </section>
 
   {{!-- Enterprise section --}}
-  <section class="mb-16">
-    <Styleguides::Grid  @sm={{2}} @items='center' as |grid|>
+  <UiKit::Box @tag='section' @margin={{hash bottom=16}}>
+    <UiKit::Grid  @sm={{2}} @items='center' as |grid|>
         <grid.item>
           <SvgImage @name='enterprise-servers'/>
         </grid.item>
         <grid.item>
-          <h2 class="text-5xl font-bold">Travis CI Enterprise</h2>
-          <p class="mb-6">
+          <UiKit::Font @size='5xl' @weight='bold'>
+            Travis CI Enterprise
+          </UiKit::Font>
+          <UiKit::Box @tag='p' @margin={{hash bottom=6}}>
             Our on-premises product is perfect for companies who
             want to keep using the same features of Travis CI with
             additional on-site security needs.
-          </p>
+          </UiKit::Box>
 
-          <Styleguides::ButtonLink @href={{config.urls.enterprise}} @variant='outline' @color='grey'>
-            Learn more about Travis CI Enterprise
-          </Styleguides::ButtonLink>
+          <ExternalLinkTo @href={{config.urls.enterprise}}>
+            <UiKit::Button @color='grey-700' @invert={{true}}>
+              Learn more about Travis CI Enterprise
+            </UiKit::Button>
+          </ExternalLinkTo>
         </grid.item>
-    </Styleguides::Grid>
-  </section>
+    </UiKit::Grid>
+  </UiKit::Box>
 
   <section class="inner section--faq">
     <h3 class="h2--grey section--center">Frequently asked questions</h3>
