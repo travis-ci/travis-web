@@ -122,30 +122,28 @@
     </UiKit::Box>
   </UiKit::Box>
 
-  <UiKit::Button @onClick={{action 'gaCta' 'plans-oss'}} @color='grey-700' @invert={{true}}>
-    Set up your Open Source project now
-  </UiKit::Button>
-
   {{!-- Open Source Section --}}
-  <section class="mb-16">
-    <Styleguides::Grid  @sm={{2}} @items='center' as |grid|>
+  <UiKit::Box @tag='section' @margin={{hash bottom=16}}>
+    <UiKit::Grid  @sm={{2}} @items='center' as |grid|>
       <grid.item>
         <SvgImage @name='enterprise-servers'/>
       </grid.item>
       <grid.item>
-        <h2 class="text-5xl font-bold">Free plan for Open Source</h2>
-        <p class="mb-6">
+        <UiKit::Font @size='5xl' @weight='bold'>
+          Free plan for Open Source
+        </UiKit::Font>
+        <UiKit::Box @tag='p' @margin={{hash bottom=6}}>
           We love Open Source and offer a free plan for your projects.
           You will receive 2 concurrent jobs for free and all the other
           features you've come to love from Travis CI.
-        </p>
+        </UiKit::Box>
 
-        <Styleguides::Button @onToggle={{action 'gaCta'}} @variant='outline' @color='grey'>
+        <UiKit::Button @onClick={{action 'gaCta' 'plans-oss'}} @color='grey-700' @invert={{true}}>
           Set up your open source project now
-        </Styleguides::Button>
+        </UiKit::Button>
       </grid.item>
-    </Styleguides::Grid>
-  </section>
+    </UiKit::Grid>
+  </UiKit::Box>
 
   {{!-- Enterprise section --}}
   <UiKit::Box @tag='section' @margin={{hash bottom=16}}>
