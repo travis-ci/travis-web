@@ -1,119 +1,174 @@
-<TravisLayout @layoutName="layouts/center" @class="text-grey-800 font-sans">
+<TravisLayout @layoutName="layouts/center">
 
   {{!-- Header section --}}
-  <section class="mt-3 mb-16">
-    <header class="text-center">
-      <h1 class="text-6xl font-bold">
-        Built for every team
-      </h1>
-      <p>
-        Set up your first project in just one minute.
-        <br />
-        Your first 100 builds are free! No credit card required.
-      </p>
-    </header>
-  </section>
+  <UiKit::Box
+    @tag='section'
+    @margin={{hash top=3 bottom=16}}
+    @textAlign='center'
+  >
+    <UiKit::Font @tag='h1' @size='6xl' @weight='bold'>
+      Built for every team
+    </UiKit::Font>
+    <p>
+      Set up your first project in just one minute.
+      <br />
+      Your first 100 builds are free! No credit card required.
+    </p>
+  </UiKit::Box>
 
   {{!-- Product section --}}
-  <section class="mb-16">
-    <div class="flex flex-wrap items-center mb-3">
-      <span class="uppercase font-bold mr-2">Monthly</span>
-      <Styleguides::Switch @onToggle={{fn (mut showAnnual)}} @active={{showAnnual}} />
-      <span class="text-blue ml-2">
-        <span class="uppercase font-bold">Annual</span>
+  <UiKit::Box @tag='section' @margin={{hash bottom=16}}>
+    <UiKit::Grid @alignItems='center' @justify='start'>
+      <UiKit::Font @transform='uppercase' @weight='bold' @margin={{hash right=2}}>
+        Monthly
+      </UiKit::Font>
+
+      <UiKit::Switch @onClick={{fn (mut showAnnual)}} @active={{showAnnual}} />
+
+      <UiKit::Font @color='blue-400' @margin={{hash left=2}}>
+        <UiKit::Font @transform='uppercase' @weight='bold'>Annual</UiKit::Font>
         (Get 1 month free!)
-      </span>
-    </div>
-    <div class="relative">
-      <SvgImage @name="grey-blob" @class="absolute h-64 top-0 right-0 -mt-16 -mr-10"/>
-      <div class="relative bg-white border border-grey-150 rounded shadow-even z-10">
-        <Styleguides::Grid @base={{2}} @md={{4}} as |grid|>
+      </UiKit::Font>
+    </UiKit::Grid>
+
+    <UiKit::Box @position={{hash type='relative'}} @margin={{hash top=3}}>
+      <UiKit::Box
+        @position={{hash type='absolute' top=0 right=0}}
+        @margin={{hash top=-16 right=-10}}
+        @height={{64}}
+      >
+        <SvgImage @name="grey-blob" @height={{224}} />
+      </UiKit::Box>
+
+      <UiKit::Box
+        @color='white'
+        @layer='10'
+        @position={{hash type='relative'}}
+        @radius='base'
+        @shadow='base'
+      >
+        <UiKit::Grid @base={{2}} @md={{4}} as |grid|>
           {{#each plansToDisplay as |plan|}}
-            <grid.item @class="p-4 border-grey-150 border">
-              <h3 class="font-bold text-3xl">
-                {{plan.name}}
-              </h3>
-              <h4 class="font-bold text-lg uppercase text-grey-400 mb-6">
-                {{plan.description}}
-              </h4>
-              <div>
-                <span class="text-green-400 font-bold">{{plan.builds}}</span>
-                {{pluralize plan.builds "Concurrent job" without-count=true}}
-              </div>
-              <div>
-                <SvgImage @name="features-check" @class="w-3 inline-block"/>
-                Unlimited build minutes
-              </div>
-              <div>
-                <SvgImage @name="features-check" @class="w-3 inline-block"/>
-                Unlimited repositories
-              </div>
-              <div class="mb-6">
-                <SvgImage @name="features-check" @class="w-3 inline-block"/>
-                Unlimited collaborators
-              </div>
-              <div class="mb-6">
-                <span class="text-xl text-green-400 font-bold">${{plan.monthlyPriceRounded}}</span>
-                <span class="text-sm">
-                  {{plan.currency}}
-                  per month
-                  {{if showAnnual 'billed annually'}}
-                </span>
-              </div>
+            <grid.item>
+              <UiKit::Box @borderColor='grey-150' @padding={{hash all=4}}>
+                <UiKit::Font @tag='h3' @size='3xl' @weight='bold'>
+                  {{plan.name}}
+                </UiKit::Font>
+
+                <UiKit::Font
+                  @tag='h4'
+                  @color='grey-400'
+                  @margin={{hash bottom=6}}
+                  @size='lg'
+                  @transform='uppercase'
+                  @weight='bold'
+                >
+                  {{plan.description}}
+                </UiKit::Font>
+                <div>
+                  <UiKit::Font @color='green-400' @weight='bold'>
+                    {{plan.builds}}
+                  </UiKit::Font>
+                  {{pluralize plan.builds "Concurrent job" without-count=true}}
+                </div>
+                <div>
+                  <UiKit::Box @display='inline-block' @width={{3}}>
+                    <SvgImage @name="features-check" />
+                  </UiKit::Box>
+                  Unlimited build minutes
+                </div>
+                <div>
+                  <UiKit::Box @display='inline-block' @width={{3}}>
+                    <SvgImage @name="features-check" />
+                  </UiKit::Box>
+                  Unlimited repositories
+                </div>
+                <UiKit::Box @margin={{hash bottom=6}}>
+                  <UiKit::Box @display='inline-block' @width={{3}}>
+                    <SvgImage @name="features-check" />
+                  </UiKit::Box>
+                  Unlimited collaborators
+                </UiKit::Box>
+                <UiKit::Box @margin={{hash bottom=6}}>
+                  <UiKit::Font @color='green-400' @size='xl' @weight='bold'>
+                    ${{plan.monthlyPriceRounded}}
+                  </UiKit::Font>
+                  <UiKit::Font @size='sm'>
+                    {{plan.currency}}
+                    per month
+                    {{if showAnnual 'billed annually'}}
+                  </UiKit::Font>
+                </UiKit::Box>
+              </UiKit::Box>
             </grid.item>
           {{/each}}
-        </Styleguides::Grid>
-        <div class="text-center p-4 border-grey-150 border">
-          <Styleguides::Button @onToggle={{action 'gaCta'}}>
+        </UiKit::Grid>
+
+        <UiKit::Box @borderColor='grey-150' @padding={{hash all=4}} @textAlign='center'>
+          <UiKit::Button @onClick={{action 'gaCta' 'plans-table'}}>
             Start Your Free Trial
-          </Styleguides::Button>
-        </div>
-      </div>
-      <SvgImage @name="yellow-waves" @class="absolute w-56 bottom-0 left-0 -mb-10 -ml-10 z-0"/>
-    </div>
-  </section>
+          </UiKit::Button>
+        </UiKit::Box>
+      </UiKit::Box>
+
+      <UiKit::Box
+        @layer='0'
+        @margin={{hash bottom=-10 left=-10}}
+        @position={{hash type='absolute' bottom=0 left=0}}
+        @width={{56}}
+      >
+        <SvgImage @name="yellow-waves" />
+      </UiKit::Box>
+    </UiKit::Box>
+  </UiKit::Box>
 
   {{!-- Open Source Section --}}
-  <section class="mb-16">
-    <Styleguides::Grid  @sm={{2}} @items='center' as |grid|>
+  <UiKit::Box @tag='section' @margin={{hash bottom=16}}>
+    <UiKit::Grid  @sm={{2}} @items='center' as |grid|>
       <grid.item>
         <SvgImage @name='enterprise-servers'/>
       </grid.item>
       <grid.item>
-        <h2 class="text-5xl font-bold">Free plan for Open Source</h2>
-        <p class="mb-6">
+        <UiKit::Font @size='5xl' @weight='bold'>
+          Free plan for Open Source
+        </UiKit::Font>
+        <UiKit::Box @tag='p' @margin={{hash bottom=6}}>
           We love Open Source and offer a free plan for your projects.
           You will receive 2 concurrent jobs for free and all the other
           features you've come to love from Travis CI.
-        </p>
+        </UiKit::Box>
 
-        <Styleguides::Button @onToggle={{action 'gaCta'}} @variant='outline' @color='grey'>
+        <UiKit::Button @onClick={{action 'gaCta' 'plans-oss'}} @color='grey-700' @invert={{true}}>
           Set up your open source project now
-        </Styleguides::Button>
+        </UiKit::Button>
       </grid.item>
-    </Styleguides::Grid>
-  </section>
+    </UiKit::Grid>
+  </UiKit::Box>
 
   {{!-- Enterprise section --}}
-  <section class="mb-16">
-    <Styleguides::Grid  @sm={{2}} @items='center' as |grid|>
-        <grid.item>
-          <SvgImage @name='enterprise-servers'/>
-        </grid.item>
-        <grid.item>
-          <h2 class="text-5xl font-bold">Travis CI Enterprise</h2>
-          <p class="mb-6">
-            Our on-premises product is perfect for companies who
-            want to keep using the same features of Travis CI with
-            additional on-site security needs.
-          </p>
+  <UiKit::Box @tag='section' @margin={{hash bottom=16}}>
+    <UiKit::Grid  @sm={{2}} @items='center' as |grid|>
+      <grid.item>
+        <SvgImage @name='enterprise-servers'/>
+      </grid.item>
+      <grid.item>
+        <UiKit::Font @size='5xl' @weight='bold'>
+          Travis CI Enterprise
+        </UiKit::Font>
+        <UiKit::Box @tag='p' @margin={{hash bottom=6}}>
+          Our on-premises product is perfect for companies who
+          want to keep using the same features of Travis CI with
+          additional on-site security needs.
+        </UiKit::Box>
 
-          <Styleguides::ButtonLink @href={{config.urls.enterprise}} @variant='outline' @color='grey'>
+        <ExternalLinkTo @href={{config.urls.enterprise}}>
+          <UiKit::Button @color='grey-700' @invert={{true}}>
             Learn more about Travis CI Enterprise
-          </Styleguides::ButtonLink>
-        </grid.item>
-    </Styleguides::Grid>
-  </section>
+          </UiKit::Button>
+        </ExternalLinkTo>
+      </grid.item>
+    </UiKit::Grid>
+  </UiKit::Box>
 
   <section class="inner section--faq">
     <h3 class="h2--grey section--center">Frequently asked questions</h3>

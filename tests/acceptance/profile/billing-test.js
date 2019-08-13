@@ -2,6 +2,7 @@ import { module, test } from 'qunit';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import profilePage from 'travis/tests/pages/profile';
 import signInUser from 'travis/tests/helpers/sign-in-user';
+import { selectChoose } from 'ember-power-select/test-support';
 import Service from '@ember/service';
 import { percySnapshot } from 'ember-percy';
 import { stubService } from 'travis/tests/helpers/stub-service';
@@ -87,13 +88,22 @@ module('Acceptance | profile/billing', function (hooks) {
     this.subscription.createInvoice({
       id: '1919',
       created_at: new Date(1919, 4, 15),
-      url: 'https://example.com/1919.pdf'
+      url: 'https://example.com/1919.pdf',
+      amount_due: 6900
     });
 
     this.subscription.createInvoice({
       id: '2010',
       created_at: new Date(2010, 1, 14),
-      url: 'https://example.com/2010.pdf'
+      url: 'https://example.com/2010.pdf',
+      amount_due: 6900
+    });
+
+    this.subscription.createInvoice({
+      id: '20102',
+      created_at: new Date(2010, 2, 14),
+      url: 'https://example.com/20102.pdf',
+      amount_due: 6900
     });
 
     await profilePage.visit();
@@ -120,12 +130,80 @@ module('Acceptance | profile/billing', function (hooks) {
 
     assert.equal(profilePage.billing.invoices.items.length, 2);
 
-    profilePage.billing.invoices.items[1].as(i1919 => {
-      assert.equal(i1919.text, '1919 May 1919');
-      assert.equal(i1919.href, 'https://example.com/1919.pdf');
+    profilePage.billing.invoices.items[0].as(march2010 => {
+      assert.equal(march2010.invoiceUrl.href, 'https://example.com/20102.pdf');
+      assert.equal(march2010.invoiceDate, 'March 14, 2010');
+      assert.equal(march2010.invoiceCardDigits, '•••• •••• •••• 1919');
+      assert.equal(march2010.invoiceCardPrice, '$69.00');
     });
 
-    assert.equal(profilePage.billing.invoices.items[0].text, '2010 February 2010');
+    profilePage.billing.invoices.items[1].as(february2010 => {
+      assert.equal(february2010.invoiceUrl.href, 'https://example.com/2010.pdf');
+      assert.equal(february2010.invoiceDate, 'February 14, 2010');
+      assert.equal(february2010.invoiceCardDigits, '•••• •••• •••• 1919');
+      assert.equal(february2010.invoiceCardPrice, '$69.00');
+    });
+  });
+
+  test('view billing information with invoices year changes correctly', async function (assert) {
+
+    this.subscription.createInvoice({
+      id: '2009',
+      created_at: new Date(2009, 4, 15),
+      url: 'https://example.com/2009.pdf',
+      amount_due: 6900
+    });
+
+    this.subscription.createInvoice({
+      id: '2010',
+      created_at: new Date(2010, 1, 14),
+      url: 'https://example.com/2010.pdf',
+      amount_due: 6900
+    });
+
+    this.subscription.createInvoice({
+      id: '20102',
+      created_at: new Date(2010, 2, 14),
+      url: 'https://example.com/20102.pdf',
+      amount_due: 6900
+    });
+
+    await profilePage.visit();
+    await profilePage.billing.visit();
+
+    percySnapshot(assert);
+
+    profilePage.billing.invoices.items[0].as(march2010 => {
+      assert.equal(march2010.invoiceUrl.href, 'https://example.com/20102.pdf');
+      assert.equal(march2010.invoiceDate, 'March 14, 2010');
+      assert.equal(march2010.invoiceCardDigits, '•••• •••• •••• 1919');
+      assert.equal(march2010.invoiceCardPrice, '$69.00');
+    });
+
+    profilePage.billing.invoices.items[1].as(february2010 => {
+      assert.equal(february2010.invoiceUrl.href, 'https://example.com/2010.pdf');
+      assert.equal(february2010.invoiceDate, 'February 14, 2010');
+      assert.equal(february2010.invoiceCardDigits, '•••• •••• •••• 1919');
+      assert.equal(february2010.invoiceCardPrice, '$69.00');
+    });
+
+    await selectChoose(profilePage.billing.invoices.invoiceSelectYear.scope, '2009');
+
+    profilePage.billing.invoices.items[0].as(may152009 => {
+      assert.equal(may152009.invoiceUrl.href, 'https://example.com/2009.pdf');
+      assert.equal(may152009.invoiceDate, 'May 15, 2009');
+      assert.equal(may152009.invoiceCardDigits, '•••• •••• •••• 1919');
+      assert.equal(may152009.invoiceCardPrice, '$69.00');
+    });
+
+    await selectChoose(profilePage.billing.invoices.invoiceSelectYear.scope, '2010');
+
+    profilePage.billing.invoices.items[0].as(march2010 => {
+      assert.equal(march2010.invoiceUrl.href, 'https://example.com/20102.pdf');
+      assert.equal(march2010.invoiceDate, 'March 14, 2010');
+      assert.equal(march2010.invoiceCardDigits, '•••• •••• •••• 1919');
+      assert.equal(march2010.invoiceCardPrice, '$69.00');
+    });
   });
 
   test('view billing on an expired stripe plan', async function (assert) {
@@ -306,6 +384,7 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.billing.visit();
 
     percySnapshot(assert);
+
     assert.equal(profilePage.billing.trial.name, 'Your trial includes 100 trial builds and 2-concurrent-jobs, no credit card required. Need help? Check our getting started guide.');
     assert.equal(profilePage.billing.trial.link.href, 'https://docs.travis-ci.com/user/getting-started/#to-get-started-with-travis-ci');
     assert.equal(profilePage.billing.manageButton.text, 'New subscription');
@@ -375,6 +454,7 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.billing.visit();
 
     percySnapshot(assert);
+
     assert.equal(profilePage.billing.trial.name, "You've got 25 trial builds left. Ensure unlimited builds by setting up a plan before it runs out!");
     assert.equal(profilePage.billing.manageButton.text, 'New subscription');
   });
