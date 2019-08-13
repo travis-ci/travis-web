@@ -28,7 +28,7 @@ export default Component.extend({
   init() {
     this._super(...arguments);
 
-    checkDictionary(this.tag, TAGS, 'Size', 'Font');
-    requireProp(this.tag, 'Tag', 'Tag');
+    checkDictionary(this.tag, TAGS, '@tag', 'Tag');
+    requireProp(this.tag, '@tag', 'Tag');
   },
 });

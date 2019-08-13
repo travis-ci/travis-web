@@ -75,7 +75,7 @@ export default Component.extend({
   init() {
     this._super(...arguments);
 
-    checkDictionary(this.color, COLORS, 'Color', 'Button');
+    checkDictionary(this.color, COLORS, '@color', 'Button');
   },
 
   // Actions

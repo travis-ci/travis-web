@@ -20,12 +20,15 @@
       <UiKit::Font @transform='uppercase' @weight='bold' @margin={{hash right=2}}>
         Monthly
       </UiKit::Font>
+
       <UiKit::Switch @onClick={{fn (mut showAnnual)}} @active={{showAnnual}} />
+
       <UiKit::Font @color='blue-400' @margin={{hash left=2}}>
         <UiKit::Font @transform='uppercase' @weight='bold'>Annual</UiKit::Font>
         (Get 1 month free!)
       </UiKit::Font>
     </UiKit::Grid>
+
     <UiKit::Box @position={{hash type='relative'}} @margin={{hash top=3}}>
       <UiKit::Box
         @position={{hash type='absolute' top=0 right=0}}
@@ -36,8 +39,7 @@
       </UiKit::Box>
 
       <UiKit::Box
-        @bgColor='white'
-        @borderColor='grey-150'
+        @color='white'
         @layer='10'
         @position={{hash type='relative'}}
         @radius='base'
@@ -100,7 +102,6 @@
           {{/each}}
         </UiKit::Grid>
 
-        {{!-- Text center --}}
         <UiKit::Box @borderColor='grey-150' @padding={{hash all=4}} @textAlign='center'>
           <UiKit::Button @onClick={{action 'gaCta' 'plans-table'}}>
             Start Your Free Trial

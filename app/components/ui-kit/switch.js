@@ -56,7 +56,7 @@ export default Component.extend({
   init() {
     this._super(...arguments);
 
-    checkDictionary(this.size, SIZES, 'Size', 'Switch');
+    checkDictionary(this.size, SIZES, '@size', 'Switch');
   },
 
   // Actions

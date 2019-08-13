@@ -75,7 +75,7 @@ export default Component.extend(spacingMixin, {
   // Public interface //
   tag: 'div',
 
-  bgColor: null,
+  color: null,
   display: null,
   layer: null,
   radius: null,
@@ -93,9 +93,29 @@ export default Component.extend(spacingMixin, {
   position: null,
 
   // Private //
-  hasNoBgColor: none('bgColor'),
-  bgColorClass: computed('hasNoBgColor', 'bgColor', function () {
-    return this.hasNoBgColor ? '' : `bg-${this.bgColor}`;
+  allClasses: computed(
+    function () {
+      return `
+        ${this.colorClass}
+        ${this.displayClass}
+        ${this.layerClass}
+        ${this.radiusClass}
+        ${this.shadowClass}
+        ${this.textAlignClass}
+        ${this.borderColorClass}
+        ${this.borderWidthClass}
+        ${this.widthClass}
+        ${this.heightClass}
+        ${this.marginClasses}
+        ${this.paddingClasses}
+        ${this.positionClasses}
+      `.replace(/\s\s+/g, ' ');
+    }
+  ),
+
+  hasNoColor: none('color'),
+  colorClass: computed('hasNoColor', 'color', function () {
+    return this.hasNoColor ? '' : `bg-${this.color}`;
   }),
 
   displayClass: reads('display'),
