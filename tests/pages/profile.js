@@ -305,10 +305,21 @@ export default create({
     },
 
     invoices: {
-      scope: '.invoices',
+      scope: '[data-test-invoices]',
       items: collection('[data-test-invoice]', {
-        href: attribute('href')
-      })
+        invoiceDate: text('td', { at: 0 }),
+        invoiceCardDigits: text('td', { at: 1 }),
+        invoiceCardPrice: text('td', { at: 2 }),
+        invoiceUrl: {
+          scope: '[data-test-invoice-url]',
+          href: attribute('href')
+        }
+      }),
+      invoiceTableHeaders: collection('[data-test-table-header-row] th'),
+
+      invoiceSelectYear: {
+        scope: '[data-test-invoice-select-year]'
+      }
     },
   },
 

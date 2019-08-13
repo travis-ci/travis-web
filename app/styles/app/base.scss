@@ -16,6 +16,7 @@ body {
   font-family: $font-family-sans-serif;
   line-height: 1.45;
   background-color: $pebble-grey;
+  scroll-behavior: smooth;
 }
 
 body {
@@ -94,6 +95,10 @@ a {
   &--v-center {
     align-items: center;
   }
+
+  &--wrap {
+    flex-wrap: wrap;
+  }
 }
 
 .pointer {
@@ -147,6 +152,10 @@ span.emoji.emoji-sizer {
   margin-left: 0.6rem;
 }
 
+.margin-top-0 {
+  margin-top: 0;
+}
+
 .margin-left-s {
   margin-left: 10px;
 }
@@ -183,4 +192,30 @@ span.emoji.emoji-sizer {
   &--underline:not(&--teal) {
     border-bottom-color: $asphalt-grey;
   }
+}
+
+.font {
+  &--italic {
+    font-style: italic;
+  }
+
+  &--light {
+    font-weight: 100;
+  }
+
+  &--bold {
+    font-weight: 500;
+  }
+
+  &--bolder {
+    font-weight: 700;
+  }
+}
+
+.color-asphalt-grey {
+  color: $asphalt-grey;
+}
+
+.color-asphalt-blue {
+  color: $oxide-blue;
 }
