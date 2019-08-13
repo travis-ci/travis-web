@@ -1,6 +1,7 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { or } from '@ember/object/computed';
+import { requireProp } from 'travis/utils/ui-kit/assertions';
 
 export default Component.extend({
   tagName: '',
@@ -79,4 +80,11 @@ export default Component.extend({
     }
     return '';
   }),
+
+  // Lifecycle
+  init() {
+    this._super(...arguments);
+
+    requireProp(this.grid, '@grid', 'GridItem');
+  },
 });
