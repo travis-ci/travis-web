@@ -141,25 +141,25 @@
   {{!-- Enterprise section --}}
   <UiKit::Box @tag='section' @margin={{hash bottom=16}}>
     <UiKit::Grid  @sm={{2}} @items='center' as |grid|>
-        <grid.item>
-          <SvgImage @name='enterprise-servers'/>
-        </grid.item>
-        <grid.item>
-          <UiKit::Font @size='5xl' @weight='bold'>
-            Travis CI Enterprise
-          </UiKit::Font>
-          <UiKit::Box @tag='p' @margin={{hash bottom=6}}>
-            Our on-premises product is perfect for companies who
-            want to keep using the same features of Travis CI with
-            additional on-site security needs.
-          </UiKit::Box>
+      <grid.item>
+        <SvgImage @name='enterprise-servers'/>
+      </grid.item>
+      <grid.item>
+        <UiKit::Font @size='5xl' @weight='bold'>
+          Travis CI Enterprise
+        </UiKit::Font>
+        <UiKit::Box @tag='p' @margin={{hash bottom=6}}>
+          Our on-premises product is perfect for companies who
+          want to keep using the same features of Travis CI with
+          additional on-site security needs.
+        </UiKit::Box>
 
-          <ExternalLinkTo @href={{config.urls.enterprise}}>
-            <UiKit::Button @color='grey-700' @invert={{true}}>
-              Learn more about Travis CI Enterprise
-            </UiKit::Button>
-          </ExternalLinkTo>
-        </grid.item>
+        <ExternalLinkTo @href={{config.urls.enterprise}}>
+          <UiKit::Button @color='grey-700' @invert={{true}}>
+            Learn more about Travis CI Enterprise
+          </UiKit::Button>
+        </ExternalLinkTo>
+      </grid.item>
     </UiKit::Grid>
   </UiKit::Box>
 
