@@ -5,8 +5,7 @@ import { computed } from '@ember/object';
 import { or, reads } from '@ember/object/computed';
 
 export default Component.extend({
-  flashes: service(),
-  stripe: service('stripev3'),
+  stripe: service(),
   stripeElement: null,
   stripeLoading: false,
   newSubscription: null,
@@ -28,22 +27,10 @@ export default Component.extend({
   isLoading: or('createStripeToken.isRunning', 'isSavingSubscription'),
 
   createStripeToken: task(function* () {
-    try {
-      const { token } = yield this.stripe.createToken(this.stripeElement);
-      this.handleSubmit(token.id, token.card.last4);
-    } catch (error) {
-      this.displayError(error);
-    }
+    const { token } = yield this.stripe.createStripeToken.perform(this.stripeElement);
+    const { id, card } = token;
+    this.handleSubmit(id, card.last4);
   }).drop(),
-
-  displayError(error) {
-    let message = 'There was an error connecting to stripe. Please confirm your card details and try again.';
-    const stripeError = error && error.error;
-    if (stripeError && stripeError.type === 'card_error') {
-      message = 'Invalid card details. Please enter valid card details and try again.';
-    }
-    this.flashes.error(message);
-  },
 
   options: {
     hidePostalCode: true,

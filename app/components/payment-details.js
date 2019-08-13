@@ -12,7 +12,7 @@ let sourceToSentence = {
 };
 
 export default Component.extend({
-  stripe: service('stripev3'),
+  stripe: service(),
   flashes: service(),
   config,
   openCreditCardForm: false,
@@ -51,30 +51,22 @@ export default Component.extend({
   },
 
   createStripeToken: task(function* () {
+    const { token } = yield this.stripe.createStripeToken.perform(this.stripeElement);
     try {
-      const { token } = yield this.stripe.createToken(this.stripeElement);
       if (token) {
         yield this.subscription.creditCardInfo.updateToken(this.subscription.id, token);
         this.set('openCreditCardForm', false);
       }
     } catch (error) {
-      this.displayError(error);
+      this.flashes.error('An error occurred when updating your credit card info. Please try again.');
     }
   }).drop(),
-
-  displayError(error) {
-    let message = 'There was an error updating your credit card. Please try again';
-    const stripeError = error && error.error;
-    if (stripeError && stripeError.type === 'card_error') {
-      message = 'Invalid card details. Please enter valid card details and try again.';
-    }
-    this.flashes.error(message);
-  },
 
   actions: {
     toggleEditCreditCardForm() {
       this.toggleProperty('openCreditCardForm');
     },
+
     complete(stripeElement) {
       this.set('stripeElement', stripeElement);
     },

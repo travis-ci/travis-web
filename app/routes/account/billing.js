@@ -3,8 +3,7 @@ import { inject as service } from '@ember/service';
 import { hash } from 'rsvp';
 
 export default TravisRoute.extend({
-
-  stripe: service('stripev3'),
+  stripe: service(),
 
   beforeModel() {
     return this.stripe.load();
