@@ -140,9 +140,11 @@
 
   {{!-- Enterprise section --}}
   <UiKit::Box @tag='section' @margin={{hash bottom=16}}>
-    <UiKit::Grid  @sm={{2}} @items='center' as |grid|>
+    <UiKit::Grid  @sm={{2}} @alignItems='center' as |grid|>
       <grid.item>
-        <SvgImage @name='enterprise-servers'/>
+        <UiKit::Box @padding={{hash left=8}} @width='3/5'>
+          <SvgImage @name='travis-enterprise'/>
+        </UiKit::Box>
       </grid.item>
       <grid.item>
         <UiKit::Font @size='5xl' @weight='bold'>
