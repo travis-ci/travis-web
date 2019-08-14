@@ -1,27 +1,30 @@
 {{#if this.subscription.isStripe}}
   <section class="contact">
     {{#let this.subscription.billingInfo as |info|}}
-      <h4>
-        Contact Details:
-      </h4>
-      <div data-test-user-details='true' class="flex flex--wrap">
-        <p>
-          {{info.firstName}} {{info.lastName}}
-          <span>|</span>
-        </p>
-        {{#if info.company}}
-          <p>
-            {{info.company}}
-            <span>|</span>
-          </p>
-        {{/if}}
-        {{#if info.billingEmail}}
-          <p>
-            {{info.billingEmail}}
-          </p>
-        {{/if}}
+      <h3>
+        Contact Details
+      </h3>
+      <div data-test-user-details='true' class="flex flex--space-between flex--wrap">
+        <section>
+          <h4>contact name</h4>
+          <p>{{info.firstName}} {{info.lastName}}</p>
+        </section>
+        <section>
+          <h4>company name</h4>
+          {{#if info.company}}
+            <p>{{info.company}}</p>
+          {{/if}}
+        </section>
+        <section>
+          <h4>billing email</h4>
+          {{#if info.billingEmail}}
+            <p>{{info.billingEmail}}</p>
+          {{/if}}
+        </section>
       </div>
-      <button class='edit link' onClick={{action 'toggleEditContactForm'}} data-test-edit-contact-address='true'>Edit</button>
+      <button class='button--blue manage-subscription-buttons' onClick={{action 'toggleEditContactForm'}} data-test-edit-contact-address='true'>
+        Edit contact details
+      </button>
       {{#if this.openEditContactForm}}
         <div data-test-edit-contact-address-form='true' class="edit-form">
           <TravisForm
@@ -97,94 +100,106 @@
           </TravisForm>
         </div>
       {{/if}}
-      <h4>
-        Billing Details:
-      </h4>
-      <div data-test-billing-details='true' class="flex flex--wrap">
-        {{#if info.address}}
-          <p>
-            {{info.address}}
-            <span>|</span>
-          </p>
-        {{/if}}
-        {{#if info.city}}
-          <p>
-            {{info.city}}
-            <span>|</span>
-          </p>
-        {{/if}}
-        {{#if info.country}}
-          <p>
-            {{info.country}}
-          </p>
-        {{/if}}
+      <hr />
+      <h3>
+        Billing Details
+      </h3>
+      <div data-test-billing-details='true' class="flex flex--space-between flex--wrap">
+        <section>
+          {{#if info.address}}
+            <h4>address</h4>
+            <p>
+              {{info.address}}
+            </p>
+          {{/if}}
+        </section>
+        <section>
+          {{#if info.city}}
+            <h4>city,state/territory</h4>
+            <p>{{info.city}}</p>
+          {{/if}}
+        </section>
+        <section>
+          <h4>post code</h4>
+          {{#if info.zipCode}}
+            <p>{{info.zipCode}}</p>
+          {{/if}}
+        </section>
+        <section>
+          {{#if info.country}}
+          <h4>country</h4>
+          <p>{{info.country}}</p>
+          {{/if}}
+        </section>
       </div>
-      <button class='edit link' onClick={{action 'toggleEditBillingForm'}} data-test-edit-billing-address='true'>Edit</button>
+      <button class='button--blue manage-subscription-buttons' onClick={{action 'toggleEditBillingForm'}} data-test-edit-billing-address='true'>
+        Edit billing details
+      </button>
       {{#if this.openEditBillingForm}}
-      <div class="edit-form" data-test-edit-billing-address-form='true'>
-        <TravisForm
-          @onSubmit={{perform this.editContact}}
-          as |form|
-        >
-          <div class="flex">
-            <div class="form-elem">
+        <div class="edit-form" data-test-edit-billing-address-form='true'>
+          <TravisForm
+            @onSubmit={{perform this.editContact}}
+            as |form|
+          >
+            <div class="flex">
+              <div class="form-elem">
+                <form.field
+                  @label="Address"
+                  @value={{info.address}}
+                  @required={{true}}
+                  @validateOnField={{false}}
+                  @showValidationStatusIcons={{false}}
+                  @onChange={{action (mut info.address)}}
+                  as |field|
+                >
+                  <field.input name="address" placeholder="Address" />
+                </form.field>
+              </div>
+              <div class="form-elem">
+                <form.field
+                  @label="City"
+                  @value={{info.city}}
+                  @required={{true}}
+                  @validateOnField={{false}}
+                  @showValidationStatusIcons={{false}}
+                  @onChange={{action (mut info.city)}}
+                  as |field|
+                >
+                  <field.input name="city" placeholder="City" />
+                </form.field>
+              </div>
+            </div>
+            <div class='form-elem form-elem-half-width'>
               <form.field
-                @label="Address"
-                @value={{info.address}}
+                @label='Country'
+                @value={{info.country}}
                 @required={{true}}
-                @validateOnField={{false}}
+                class='billing-country'
+                @showRequiredMark={{true}}
                 @showValidationStatusIcons={{false}}
-                @onChange={{action (mut info.address)}}
+                @onChange={{action (mut info.country)}}
                 as |field|
               >
-                <field.input name="address" placeholder="Address" />
+                <field.select
+                  @placeholder='Select country'
+                  @options={{this.countries}} 
+                  as |country|
+                >
+                  {{country}}
+                </field.select>
               </form.field>
             </div>
             <div class="form-elem">
-              <form.field
-                @label="City"
-                @value={{info.city}}
-                @required={{true}}
-                @validateOnField={{false}}
-                @showValidationStatusIcons={{false}}
-                @onChange={{action (mut info.city)}}
-                as |field|
-              >
-                <field.input name="city" placeholder="City" />
-              </form.field>
+              {{#if this.editContact.isRunning}}
+                <LoadingIndicator />
+              {{else}}
+                <button data-test-update-billing-address-button='true' onclick={{form.submit}} class="button--blue">
+                  Update
+                </button>
+              {{/if}}
             </div>
-          </div>
-          <div class='form-elem form-elem-half-width'>
-            <form.field
-              @label='Country'
-              @value={{info.country}}
-              @required={{true}}
-              class='billing-country'
-              @showRequiredMark={{true}}
-              @showValidationStatusIcons={{false}}
-              @onChange={{action (mut info.country)}}
-              as |field|
-            >
-              <field.select
-                @placeholder='Select country'
-                @options={{this.countries}} 
-                as |country|
-              >
-                {{country}}
-              </field.select>
-            </form.field>
-          </div>
-          <div class="form-elem">
-            {{#if this.editContact.isRunning}}
-              <LoadingIndicator />
-            {{else}}
-              <button data-test-update-billing-address-button='true' onclick={{form.submit}} class="button--blue">
-                Update
-              </button>
-            {{/if}}
-          </div>
-        </TravisForm>
-      </div>
+          </TravisForm>
+        </div>
       {{/if}}
     {{/let}}
   </section>

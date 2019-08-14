@@ -14,10 +14,8 @@
       @planMessage="Valid until"
     />
     <hr />
-    <section class="billing-info">
-      <BillingAddress @subscription={{this.subscription}} />
-      <PaymentDetails @subscription={{this.subscription}} />
-    </section>
+    <BillingAddress @subscription={{this.subscription}} />
+    <PaymentDetails @subscription={{this.subscription}} />
     <hr />
   {{/if}}
   {{#if this.subscription.isExpired}}

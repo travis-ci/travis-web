@@ -8,7 +8,7 @@
         •••• •••• ••••
         {{this.subscription.creditCardInfo.lastDigits}}
       </p>
-      <button class='edit link' onClick={{action 'toggleEditCreditCardForm'}}>Edit</button>
+      <button class='button--blue manage-subscription-buttons' onClick={{action 'toggleEditCreditCardForm'}}>Edit payment details</button>
       {{#if this.openCreditCardForm}}
         <div class="edit-form">
         <TravisForm @onSubmit={{perform this.createStripeToken}} as |form|>

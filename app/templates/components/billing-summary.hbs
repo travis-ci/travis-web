@@ -1,36 +1,39 @@
-<h3> Overview </h3>
 <div class='plan-overview'>
   <div class="flex flex--space-between flex--wrap">
-    <section class="plan">
-      {{#if this.isGithubTrial}}
-        <p data-test-trial-message class="source plan-status-message">
-          You're trialing Travis CI via your
-          <ExternalLinkTo
-            @href={{config-get "marketplaceEndpoint"}}
-            class="billing-section-link"
-          >
-            Github Marketplace subscription.
-          </ExternalLinkTo>
-        </p>
-      {{/if}}
-      <p class='plan__name' data-test-plan-name>
-        {{#if this.subscription.plan }}
-          {{concat this.subscription.plan.name ' plan'}} 
-        {{else}}
-          Unknown plan
+    <section>
+      <h3 class='plan-overview__header'> Overview </h3>
+      <div>
+        {{#if this.isGithubTrial}}
+          <p data-test-trial-message class="source plan-status-message">
+            You're trialing Travis CI via your
+            <ExternalLinkTo
+              @href={{config-get "marketplaceEndpoint"}}
+              class="billing-section-link"
+            >
+              Github Marketplace subscription.
+            </ExternalLinkTo>
+          </p>
         {{/if}}
-      </p>
-      <SvgImage @name="icon-checkmark" @class="icon--color" />
-      <p data-test-plan-concurrency>
-        {{#if this.subscription.plan}}
-          {{pluralize this.subscription.plan.builds "concurrent job"}}
-        {{else}}
-          Unknown concurrent jobs
-        {{/if}}
-      </p>
-      <p data-test-plan-message='true'>
-        {{this.planMessage}} {{moment-format this.subscription.validTo "MMMM D, YYYY"}}
-      </p>
+        <div>
+          <p class='plan-overview__name' data-test-plan-name>
+            {{#if this.subscription.plan }}
+              {{concat this.subscription.plan.name ' plan'}} 
+            {{else}}
+              Unknown plan
+            {{/if}}
+          </p>
+          <p  class='plan-overview__description' data-test-plan-concurrency>
+            {{#if this.subscription.plan}}
+              {{pluralize this.subscription.plan.builds "concurrent job"}}
+            {{else}}
+              Unknown concurrent jobs
+            {{/if}}
+            <span data-test-plan-message='true' class='plan-overview__description--validity'>
+              {{this.planMessage}} {{moment-format this.subscription.validTo "MMMM D, YYYY"}}
+            </span>
+          </p>
+        </div>
+      </div>
     </section>
     <section>
       <div class='selected-plan__price'>
@@ -38,33 +41,35 @@
           Total:
         </p>
         {{#if this.subscription.plan }}
-          <p class='selected-plan__price--large' data-test-price>
-            {{#if this.subscription.isManual}}
-              <ManualSubscriptionHelp />
-            {{else}}
+          {{#if this.subscription.isManual}}
+            <ManualSubscriptionHelp />
+          {{else}}
+            <p class='selected-plan__price--large' data-test-price>
               {{format-currency this.price floor='true'}}
-              <span>
-                  {{if this.subscription.plan.annual '/year' '/month'}}
-              </span>
-            {{/if}}
-          </p>
+            </p>
+          {{/if}}
         {{/if}}
+        <span class='selected-plan__period'>
+            {{if this.subscription.plan.annual '/year' '/month'}}
+        </span>
       </div>
     </section>
   </div>
-  <div class="flex">
-    {{#if this.resubscribeLoading}}
-      <LoadingIndicator />
-    {{else if (and this.subscription.isResubscribable this.account.hasSubscriptionPermissions)}}
-      <button onClick={{action 'resubscribe'}} class='button--blue' data-test-resubscribe-subscription='true'>
-        resubscribe
-      </button>
-    {{else}}
-      <button class='button--blue' data-test-change-subscription='true'>
-        Change plan
-      </button>
-    {{/if}}
+  <div class="flex manage-subscription-buttons">
     <div>
+      {{#if this.resubscribeLoading}}
+        <LoadingIndicator />
+      {{else if (and this.subscription.isResubscribable this.account.hasSubscriptionPermissions)}}
+        <button onClick={{action 'resubscribe'}} class='button--blue' data-test-resubscribe-subscription='true'>
+          resubscribe
+        </button>
+      {{else}}
+        <button class='button--blue' data-test-change-subscription='true'>
+          Change plan
+        </button>
+      {{/if}}
+    </div>
+    <div class='manage-subscription-buttons__cancel'>
       {{#if this.cancelSubscriptionLoading}}
         <LoadingIndicator />
       {{else if (and (not this.subscription.isCanceled) this.account.hasSubscriptionPermissions)}}

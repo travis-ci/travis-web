@@ -5,7 +5,7 @@
   }
 
   hr {
-    border: 1px $pebble-grey solid;
+    border: .9px $pebble-grey solid;
   }
 
   .edit {
@@ -66,31 +66,32 @@
 
     &__price {
       display: flex;
-      align-items: flex-end;
+      align-items: baseline;
+      flex-wrap: wrap;
       padding-bottom: 10px;
 
       &--total {
-        margin-right: 15px;
+        margin-right: 7px;
         text-transform: uppercase;
+        color: $cement-grey;
         font-size: 12px;
         font-weight: 700;
       }
 
       &--large {
-        font-size: 2.8em;
+        font-size: 3.5em;
         margin: 0;
+        font-weight: 300;
         color: $oxide-blue;
         display: flex;
         align-items: flex-end;
-
-        span {
-          font-size: .3em;
-          color: $asphalt-grey;
-          font-style: italic;
-          font-weight: 300;
-          margin-bottom: 14px;
-        }
       }
+
+    }
+
+    &__period {
+      font-size: .8em;
+      font-style: italic;
     }
   }
 
@@ -279,7 +280,7 @@
     }
 
     @media #{$xlarge-up} {
-      .billing-plan-switch  {
+      .billing-plan-switch {
         height: 50px;
       }
     }
@@ -311,7 +312,7 @@
         }
       }
 
-      .icon-get-plan{
+      .icon-get-plan {
         @include colorSVG($oxide-blue);
         height: 22px;
         width: 21px;
@@ -402,22 +403,51 @@
 
   .billing-subscription {
 
-    .plan {
-      &__name {
-        font-weight: 300;
-        font-size: 24px;
-        color: $asphalt-grey;
-        border-bottom: 2px $pebble-grey solid;
-        margin-bottom: 1.5em;
-        display: inline-block;
-        margin: 0;
+    h3 {
+      margin-bottom: 0;
+    }
+
+    .payment {
+
+      h4 {
+        margin-top: 0;
+      }
+
+    }
+
+    .manage-subscription-buttons {
+      margin: 20px 0 24px 0;
+
+      &__cancel {
+        margin-left: 10px;
       }
     }
 
     .plan-overview {
-      margin-top: -10px;
-      margin-bottom: 24px;
-    }
+      margin-top: 25px;
 
+      &__header {
+        margin: 0;
+      }
+
+      &__name {
+        font-weight: 300;
+        font-size: 24px;
+        margin-top: 5px;
+        margin-bottom: 0;
+      }
+
+      &__description {
+        font-weight: 300;
+        margin: 0;
+
+        &--validity {
+          font-weight: 500;
+          font-size: 12px;
+          margin-left: 1em;
+          color: $cement-grey;
+        }
+      }
+    }
   }
 }
