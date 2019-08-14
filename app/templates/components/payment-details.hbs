@@ -27,10 +27,13 @@
           </TravisForm>
         </div>
       {{else}}
-        <p data-test-credit-card> 
-          •••• •••• ••••
-          {{this.subscription.creditCardInfo.lastDigits}}
-        </p>
+        <div class="flex flex--v-center">
+          <SvgImage @name="icon-credit-card" @class="icon--color" />
+          <p data-test-credit-card> 
+            •••• •••• ••••
+            {{this.subscription.creditCardInfo.lastDigits}}
+          </p>  
+        </div>
         <button class='button--blue manage-subscription-buttons' onClick={{action 'toggleEditCreditCardForm'}}>Edit payment details</button>
       {{/if}}
     {{/if}}

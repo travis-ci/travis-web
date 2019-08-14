@@ -44,7 +44,11 @@
                 {{moment-format invoice.createdAt 'MMMM DD, YYYY'}}
               </span>
             </td>
-            <td> •••• •••• •••• {{this.subscription.creditCardInfo.lastDigits}} </td>
+            <td> 
+              <SvgImage @name="icon-credit-card" @class="icon--color" />
+              •••• •••• ••••
+              {{this.subscription.creditCardInfo.lastDigits}} 
+            </td>
             <td> {{format-currency invoice.amountDue }} </td>
             <td>
               <a data-test-invoice-url='true' href={{invoice.url}}>
