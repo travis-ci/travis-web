@@ -1,7 +1,7 @@
 /* eslint-env node */
 'use strict';
 
-const plans = require('./plans.js');
+const { plans } = require('./plans.js');
 
 module.exports = function (environment) {
   let ENV = {
