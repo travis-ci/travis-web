@@ -4,27 +4,6 @@
       <h3>
         Contact Details
       </h3>
-      <div data-test-user-details='true' class="flex flex--space-between flex--wrap">
-        <section>
-          <h4>contact name</h4>
-          <p>{{info.firstName}} {{info.lastName}}</p>
-        </section>
-        <section>
-          <h4>company name</h4>
-          {{#if info.company}}
-            <p>{{info.company}}</p>
-          {{/if}}
-        </section>
-        <section>
-          <h4>billing email</h4>
-          {{#if info.billingEmail}}
-            <p>{{info.billingEmail}}</p>
-          {{/if}}
-        </section>
-      </div>
-      <button class='button--blue manage-subscription-buttons' onClick={{action 'toggleEditContactForm'}} data-test-edit-contact-address='true'>
-        Edit contact details
-      </button>
       {{#if this.openEditContactForm}}
         <div data-test-edit-contact-address-form='true' class="edit-form">
           <TravisForm
@@ -33,7 +12,7 @@
             as |form|
           >
             <div class="flex">
-              <div class="form-elem">
+              <div class="form-elem inline-form-elem">
                 <form.field
                   @label="First Name"
                   @value={{info.firstName}}
@@ -61,7 +40,7 @@
               </div>
             </div>
             <div class="flex">
-              <div class="form-elem">
+              <div class="form-elem inline-form-elem">
                 <form.field
                   @label="Company"
                   @value={{info.company}}
@@ -92,49 +71,45 @@
               {{#if this.editContact.isRunning}}
                 <LoadingIndicator />
               {{else}}
-                <button data-test-update-contact-address-button='true' onclick={{form.submit}} class="button--blue">
-                  Update
-                </button>
+                <div class="flex flex--wrap">
+                  <button data-test-update-contact-address-button='true' onclick={{form.submit}} class="button--blue">
+                    Edit contact details
+                  </button>
+                  <a onClick={{action 'toggleEditContactForm'}} class='link cancel-link'>
+                    Cancel
+                  </a>
+                </div>
               {{/if}}
             </div>
           </TravisForm>
         </div>
+      {{else}}
+        <div data-test-user-details='true' class="flex flex--space-between flex--wrap">
+          <section>
+            <h4>contact name</h4>
+            <p>{{info.firstName}} {{info.lastName}}</p>
+          </section>
+          <section>
+            <h4>company name</h4>
+            {{#if info.company}}
+              <p>{{info.company}}</p>
+            {{/if}}
+          </section>
+          <section>
+            <h4>billing email</h4>
+            {{#if info.billingEmail}}
+              <p>{{info.billingEmail}}</p>
+            {{/if}}
+          </section>
+        </div>
+        <button class='button--blue manage-subscription-buttons' onClick={{action 'toggleEditContactForm'}} data-test-edit-contact-address='true'>
+          Edit contact details
+        </button>   
       {{/if}}
       <hr />
       <h3>
         Billing Details
       </h3>
-      <div data-test-billing-details='true' class="flex flex--space-between flex--wrap">
-        <section>
-          {{#if info.address}}
-            <h4>address</h4>
-            <p>
-              {{info.address}}
-            </p>
-          {{/if}}
-        </section>
-        <section>
-          {{#if info.city}}
-            <h4>city,state/territory</h4>
-            <p>{{info.city}}</p>
-          {{/if}}
-        </section>
-        <section>
-          <h4>post code</h4>
-          {{#if info.zipCode}}
-            <p>{{info.zipCode}}</p>
-          {{/if}}
-        </section>
-        <section>
-          {{#if info.country}}
-          <h4>country</h4>
-          <p>{{info.country}}</p>
-          {{/if}}
-        </section>
-      </div>
-      <button class='button--blue manage-subscription-buttons' onClick={{action 'toggleEditBillingForm'}} data-test-edit-billing-address='true'>
-        Edit billing details
-      </button>
       {{#if this.openEditBillingForm}}
         <div class="edit-form" data-test-edit-billing-address-form='true'>
           <TravisForm
@@ -142,9 +117,9 @@
             as |form|
           >
             <div class="flex">
-              <div class="form-elem">
+              <div class="form-elem inline-form-elem">
                 <form.field
-                  @label="Address"
+                  @label="Street Address"
                   @value={{info.address}}
                   @required={{true}}
                   @validateOnField={{false}}
@@ -155,7 +130,29 @@
                   <field.input name="address" placeholder="Address" />
                 </form.field>
               </div>
-              <div class="form-elem">
+              <div class='form-elem'>
+                <form.field
+                  @label='Country'
+                  @value={{info.country}}
+                  @required={{true}}
+                  class='billing-country'
+                  @showRequiredMark={{true}}
+                  @showValidationStatusIcons={{false}}
+                  @onChange={{action (mut info.country)}}
+                  as |field|
+                >
+                  <field.select
+                    @placeholder='Select country'
+                    @options={{this.countries}} 
+                    as |country|
+                  >
+                    {{country}}
+                  </field.select>
+                </form.field>
+              </div>
+            </div>
+            <div class="flex">
+              <div class="form-elem inline-form-elem">
                 <form.field
                   @label="City"
                   @value={{info.city}}
@@ -168,38 +165,68 @@
                   <field.input name="city" placeholder="City" />
                 </form.field>
               </div>
-            </div>
-            <div class='form-elem form-elem-half-width'>
-              <form.field
-                @label='Country'
-                @value={{info.country}}
-                @required={{true}}
-                class='billing-country'
-                @showRequiredMark={{true}}
-                @showValidationStatusIcons={{false}}
-                @onChange={{action (mut info.country)}}
-                as |field|
-              >
-                <field.select
-                  @placeholder='Select country'
-                  @options={{this.countries}} 
-                  as |country|
+              <div class="form-elem">
+                <form.field
+                  @label="Post Code"
+                  @value={{info.zipCode}}
+                  @required={{true}}
+                  @validateOnField={{false}}
+                  @showValidationStatusIcons={{false}}
+                  @onChange={{action (mut info.zipCode)}}
+                  as |field|
                 >
-                  {{country}}
-                </field.select>
-              </form.field>
+                  <field.input name="postCode" placeholder="Post Code" />
+                </form.field>
+              </div>  
             </div>
             <div class="form-elem">
               {{#if this.editContact.isRunning}}
                 <LoadingIndicator />
               {{else}}
-                <button data-test-update-billing-address-button='true' onclick={{form.submit}} class="button--blue">
-                  Update
-                </button>
+                <div class="flex flex--wrap">
+                  <button data-test-update-billing-address-button='true' onclick={{form.submit}} class="button--blue">
+                    Edit billing details
+                  </button>
+                  <a onClick={{action 'toggleEditBillingForm'}} class='link cancel-link'>
+                    Cancel
+                  </a>
+                </div>
               {{/if}}
             </div>
           </TravisForm>
         </div>
+      {{else}}
+        <div data-test-billing-details='true' class="flex flex--space-between flex--wrap">
+          <section>
+            {{#if info.address}}
+              <h4>address</h4>
+              <p>
+                {{info.address}}
+              </p>
+            {{/if}}
+          </section>
+          <section>
+            {{#if info.city}}
+              <h4>city,state/territory</h4>
+              <p>{{info.city}}</p>
+            {{/if}}
+          </section>
+          <section>
+            <h4>post code</h4>
+            {{#if info.zipCode}}
+              <p>{{info.zipCode}}</p>
+            {{/if}}
+          </section>
+          <section>
+            {{#if info.country}}
+            <h4>country</h4>
+            <p>{{info.country}}</p>
+            {{/if}}
+          </section>
+        </div>
+        <button class='button--blue manage-subscription-buttons' onClick={{action 'toggleEditBillingForm'}} data-test-edit-billing-address='true'>
+          Edit billing details
+        </button>
       {{/if}}
     {{/let}}
   </section>

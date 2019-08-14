@@ -554,6 +554,11 @@ export default create({
     creditCardNumber: { scope: '[data-test-credit-card]' },
     price: { scope: '[data-test-price]' },
 
+    period: {
+      scope: '[data-test-selected-plan-period]',
+      text: text()
+    },
+
     annualInvitation: { scope: '[data-test-annual-invitation]' },
 
     expiryMessage: {

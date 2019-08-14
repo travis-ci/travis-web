@@ -6,6 +6,12 @@
 
   hr {
     border: .9px $pebble-grey solid;
+    margin: 0;
+  }
+
+  .cancel-link {
+    display: inline-block;
+    margin-left: 15px;
   }
 
   .edit {

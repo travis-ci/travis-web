@@ -4,28 +4,34 @@
       Payment details
     </h4>
     {{#if this.subscription.isStripe}}
-      <p data-test-credit-card>
-        •••• •••• ••••
-        {{this.subscription.creditCardInfo.lastDigits}}
-      </p>
-      <button class='button--blue manage-subscription-buttons' onClick={{action 'toggleEditCreditCardForm'}}>Edit payment details</button>
       {{#if this.openCreditCardForm}}
         <div class="edit-form">
-        <TravisForm @onSubmit={{perform this.createStripeToken}} as |form|>
-          <StripeCard @complete={{action "complete"}} @options={{this.options}} as |stripeError|>
-            {{#if stripeError}}
-              <p>{{stripeError.message}}</p>
+          <TravisForm @onSubmit={{perform this.createStripeToken}} as |form|>
+            <StripeCard @complete={{action "complete"}} @options={{this.options}} as |stripeError|>
+              {{#if stripeError}}
+                <p>{{stripeError.message}}</p>
+              {{/if}}
+            </StripeCard>
+            {{#if this.createStripeToken.isRunning}}
+              <LoadingIndicator/>
+            {{else}}
+              <div class="flex flex--wrap manage-subscription-buttons">
+                <button data-test-update-contact-address-button='true' onclick={{form.submit}} class="button--blue">
+                  Edit payment details
+                </button>
+                <a onClick={{action 'toggleEditCreditCardForm'}} class='link cancel-link'>
+                  Cancel
+                </a>
+              </div>
             {{/if}}
-          </StripeCard>
-          {{#if this.createStripeToken.isRunning}}
-            <LoadingIndicator/>
-          {{else}}
-            <button class='button--blue' {{action form.submit}}>
-              Update
-            </button>
-          {{/if}}
-        </TravisForm>
+          </TravisForm>
         </div>
+      {{else}}
+        <p data-test-credit-card> 
+          •••• •••• ••••
+          {{this.subscription.creditCardInfo.lastDigits}}
+        </p>
+        <button class='button--blue manage-subscription-buttons' onClick={{action 'toggleEditCreditCardForm'}}>Edit payment details</button>
       {{/if}}
     {{/if}}
     {{#if this.subscription.isManual}}

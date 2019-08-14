@@ -25,12 +25,13 @@ module('Integration | Component | billing-address', function (hooks) {
 
     await render(hbs`{{billing-address subscription=subscription}}`);
 
-    assert.dom('[data-test-user-details] p:nth-child(1)').hasText('A B |');
-    assert.dom('[data-test-user-details] p:nth-child(2)').hasText('Company |');
-    assert.dom('[data-test-user-details] p:nth-child(3)').hasText('a@b.com');
-    assert.dom('[data-test-billing-details] p:nth-child(1)').hasText('Address |');
-    assert.dom('[data-test-billing-details] p:nth-child(2)').hasText('City |');
-    assert.dom('[data-test-billing-details] p:nth-child(3)').hasText('Country');
+    assert.dom('[data-test-user-details] section:nth-child(1)').hasText('contact name A B');
+    assert.dom('[data-test-user-details] section:nth-child(2)').hasText('company name Company');
+    assert.dom('[data-test-user-details] section:nth-child(3)').hasText('billing email a@b.com');
+    assert.dom('[data-test-billing-details] section:nth-child(1)').hasText('address Address');
+    assert.dom('[data-test-billing-details] section:nth-child(2)').hasText('city,state/territory City');
+    assert.dom('[data-test-billing-details] section:nth-child(3)').hasText('post code Zip Code');
+    assert.dom('[data-test-billing-details] section:nth-child(4)').hasText('country Country');
   });
 
   test('it renders an address with some absent components', async function (assert) {
@@ -48,10 +49,11 @@ module('Integration | Component | billing-address', function (hooks) {
 
     await render(hbs`{{billing-address subscription=subscription}}`);
 
-    assert.dom('[data-test-user-details] p:nth-child(1)').hasText('A B |');
-    assert.dom('[data-test-billing-details] p:nth-child(1)').hasText('Address |');
-    assert.dom('[data-test-billing-details] p:nth-child(2)').hasText('City |');
-    assert.dom('[data-test-billing-details] p:nth-child(3)').hasText('Country');
+    assert.dom('[data-test-user-details] section:nth-child(1)').hasText('contact name A B');
+    assert.dom('[data-test-billing-details] section:nth-child(1)').hasText('address Address');
+    assert.dom('[data-test-billing-details] section:nth-child(2)').hasText('city,state/territory City');
+    assert.dom('[data-test-billing-details] section:nth-child(3)').hasText('post code Zip Code');
+    assert.dom('[data-test-billing-details] section:nth-child(4)').hasText('country Country');
   });
 
   test('it renders nothing when not stripe payment', async function (assert) {

@@ -2,7 +2,7 @@
   <div class="flex flex--space-between flex--wrap">
     <section>
       <h3 class='plan-overview__header'> Overview </h3>
-      <div>
+      <div class='plan'>
         {{#if this.isGithubTrial}}
           <p data-test-trial-message class="source plan-status-message">
             You're trialing Travis CI via your
@@ -22,7 +22,7 @@
               Unknown plan
             {{/if}}
           </p>
-          <p  class='plan-overview__description' data-test-plan-concurrency>
+          <p class='plan-overview__description' data-test-plan-concurrency>
             {{#if this.subscription.plan}}
               {{pluralize this.subscription.plan.builds "concurrent job"}}
             {{else}}
@@ -49,8 +49,8 @@
             </p>
           {{/if}}
         {{/if}}
-        <span class='selected-plan__period'>
-            {{if this.subscription.plan.annual '/year' '/month'}}
+        <span data-test-selected-plan-period='true' class='selected-plan__period'>
+          {{if this.subscription.plan.annual '/year' '/month'}}
         </span>
       </div>
     </section>

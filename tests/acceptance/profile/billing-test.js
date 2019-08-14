@@ -125,14 +125,15 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.ok(profilePage.billing.marketplaceButton.isHidden);
 
     assert.equal(profilePage.billing.plan.name, 'Small Business1 plan');
-    assert.equal(profilePage.billing.plan.concurrency, '5 concurrent jobs');
+    assert.equal(profilePage.billing.plan.concurrency, '5 concurrent jobs Valid until June 19, 2018');
 
-    assert.equal(profilePage.billing.userDetails.text, 'User Name | Travis CI GmbH | user@email.com');
-    assert.equal(profilePage.billing.billingDetails.text, 'Rigaerstraße 8 | Berlin | Germany');
+    assert.equal(profilePage.billing.userDetails.text, 'contact name User Name company name Travis CI GmbH billing email user@email.com');
+    assert.equal(profilePage.billing.billingDetails.text, 'address Rigaerstraße 8 city,state/territory Berlin post code 10987 country Germany');
     assert.dom(profilePage.billing.planMessage.scope).hasText('Valid until June 19, 2018');
 
     assert.equal(profilePage.billing.creditCardNumber.text, '•••• •••• •••• 1919');
-    assert.equal(profilePage.billing.price.text, '$69 /month');
+    assert.equal(profilePage.billing.price.text, '$69');
+    assert.equal(profilePage.billing.period.text, '/month');
 
     assert.ok(profilePage.billing.annualInvitation.isVisible, 'expected the invitation to switch to annual billing to be visible');
 
@@ -230,7 +231,7 @@ module('Acceptance | profile/billing', function (hooks) {
 
     await profilePage.billing.editContactAddressForm.updateContactAddressButton.click();
 
-    assert.equal(profilePage.billing.userDetails.text, 'John Doe | Travis | john@doe.com');
+    assert.equal(profilePage.billing.userDetails.text, 'contact name John Doe company name Travis billing email john@doe.com');
   });
 
   test('edit subscription billing updates user billing info', async function (assert) {
@@ -241,7 +242,7 @@ module('Acceptance | profile/billing', function (hooks) {
 
     percySnapshot(assert);
 
-    assert.dom(profilePage.billing.editBillingAddressForm.inputs.scope).exists({ count: 2 });
+    assert.dom(profilePage.billing.editBillingAddressForm.inputs.scope).exists({ count: 3 });
 
     await selectChoose('.billing-country', 'Nigeria');
 
@@ -251,7 +252,7 @@ module('Acceptance | profile/billing', function (hooks) {
 
     await profilePage.billing.editBillingAddressForm.updateBillingAddressButton.click();
 
-    assert.equal(profilePage.billing.billingDetails.text, 'Olalubi | Lagos | Nigeria');
+    assert.equal(profilePage.billing.billingDetails.text, 'address Olalubi city,state/territory Lagos post code 10987 country Nigeria');
   });
 
   test('view billing on an expired stripe plan', async function (assert) {
@@ -377,7 +378,8 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.visit();
     await profilePage.billing.visit();
 
-    assert.equal(profilePage.billing.price.text, '$100 /year');
+    assert.equal(profilePage.billing.price.text, '$100');
+    assert.equal(profilePage.billing.period.text, '/year');
     assert.ok(profilePage.billing.annualInvitation.isHidden, 'expected the invitation to switch to annual billing to be hidden');
   });
 
@@ -785,7 +787,7 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.billing.visit();
 
     assert.equal(profilePage.billing.plan.name, 'Unknown plan');
-    assert.equal(profilePage.billing.plan.concurrency, 'Unknown concurrent jobs');
+    assert.equal(profilePage.billing.plan.concurrency, 'Unknown concurrent jobs Valid until June 19, 2018');
     assert.ok(profilePage.billing.price.isHidden);
     assert.ok(profilePage.billing.annualInvitation.isHidden);
   });

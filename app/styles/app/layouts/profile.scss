@@ -543,20 +543,10 @@ section.billing {
     }
 
     .edit-form {
-      margin-top: 35px;
-      margin-bottom: 35px;
-      margin-right: 80px;
+      margin-top: 20px;
 
       .form-elem {
         width: 100%;
-
-        &:nth-child(1) {
-          margin-right: 10px;
-        }
-
-        &:nth-child(3) {
-          margin-right: 10px;
-        }
       }
     }
   }
