@@ -52,25 +52,24 @@
       </div>
     </section>
   </div>
-  <div class="flex flex--space-between">
-
+  <div class="flex">
     {{#if this.resubscribeLoading}}
       <LoadingIndicator />
     {{else if (and this.subscription.isResubscribable this.account.hasSubscriptionPermissions)}}
-      <button onClick={{action 'resubscribe'}} class='edit link' data-test-resubscribe-subscription='true'>
+      <button onClick={{action 'resubscribe'}} class='button--blue' data-test-resubscribe-subscription='true'>
         resubscribe
       </button>
     {{else}}
-      <button class='edit link' data-test-change-subscription='true'>
-        change plan
+      <button class='button--blue' data-test-change-subscription='true'>
+        Change plan
       </button>
     {{/if}}
     <div>
       {{#if this.cancelSubscriptionLoading}}
         <LoadingIndicator />
       {{else if (and (not this.subscription.isCanceled) this.account.hasSubscriptionPermissions)}}
-        <button onClick={{action 'cancelSubscription'}} class='edit link' data-test-cancel-subscription='true'>
-          cancel
+        <button onClick={{action 'cancelSubscription'}} class='button--white' data-test-cancel-subscription='true'>
+          Cancel subscription
         </button>
       {{/if}}
     </div>
