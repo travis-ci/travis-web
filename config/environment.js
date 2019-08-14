@@ -2,7 +2,7 @@
 'use strict';
 
 const { screens } = require('./screens.js');
-const plans = require('./plans.js');
+const { plans } = require('./plans.js');
 
 module.exports = function (environment) {
   let ENV = {
@@ -11,6 +11,7 @@ module.exports = function (environment) {
     rootURL: '/',
     locationType: 'auto',
     defaultTitle: 'Travis CI',
+    plans,
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
