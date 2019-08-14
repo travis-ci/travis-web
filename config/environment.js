@@ -12,6 +12,7 @@ module.exports = function (environment) {
     locationType: 'auto',
     defaultTitle: 'Travis CI',
     plans,
+    screens,
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
@@ -95,9 +96,6 @@ module.exports = function (environment) {
     moment: {
       includeTimezone: 'subset'
     },
-
-    plans,
-    screens,
   };
 
   ENV.featureFlags = {
