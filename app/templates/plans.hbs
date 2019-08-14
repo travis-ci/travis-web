@@ -43,6 +43,7 @@
       <UiKit::Box
         @color='white'
         @layer='10'
+        @overflow='hidden'
         @position={{hash type='relative'}}
         @radius='base'
         @shadow='base'
@@ -50,7 +51,7 @@
         <UiKit::Grid @base={{2}} @md={{4}} as |grid|>
           {{#each plansToDisplay as |plan|}}
             <grid.item>
-              <UiKit::Box @borderColor='grey-150' @padding={{hash all=4}}>
+              <UiKit::Box @borderColor='grey-150' @borderWidth={{1}} @padding={{hash all=4}}>
                 <UiKit::Font @tag='h3' @size='3xl' @weight='bold'>
                   {{plan.name}}
                 </UiKit::Font>
@@ -104,7 +105,7 @@
           {{/each}}
         </UiKit::Grid>
 
-        <UiKit::Box @borderColor='grey-150' @padding={{hash all=4}} @textAlign='center'>
+        <UiKit::Box @borderColor='grey-150' @borderWidth={{hash all=1}} @padding={{hash all=4}} @textAlign='center'>
           <UiKit::Button @onClick={{action 'gaCta' 'plans-table'}}>
             Start Your Free Trial
           </UiKit::Button>
