@@ -25,7 +25,7 @@ module.exports = function (environment) {
     },
 
     // defaults for running travis-web
-    apiEndpoint: 'https://api.travis-ci.com',
+    apiEndpoint: 'https://api.travis-ci.org',
     sourceEndpoint: 'https://github.com',
     pusher: {
       key: '5df8ac576dcccf4fd076',
@@ -104,7 +104,8 @@ module.exports = function (environment) {
     'github-apps': false,
   };
 
-  const { TRAVIS_PRO, TRAVIS_ENTERPRISE } = process.env;
+  const {
+  , TRAVIS_ENTERPRISE } = process.env;
 
   if (TRAVIS_PRO) {
     ENV.featureFlags['pro-version'] = true;
