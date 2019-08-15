@@ -17,6 +17,14 @@ export default Service.extend({
     }
   }).drop(),
 
+  handleStripePayment: task(function* (clientSecret) {
+    try {
+      return yield this.stripev3.handleCardPayment(clientSecret);
+    } catch (error) {
+      this.flashes.error('Authorization failed for this payment. Please try again.');
+    }
+  }).drop(),
+
   displayError(error) {
     let message = 'There was an error updating your credit card. Please try again';
     const stripeError = error && error.error;

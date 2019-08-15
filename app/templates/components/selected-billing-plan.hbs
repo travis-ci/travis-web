@@ -18,12 +18,12 @@
       <p class='selected-plan__price--total' data-test-plan-total='true'>
         Total:
       </p>
-      <p class='selected-plan__price--large' data-test-selected-plan-price='true'>
+      <p class='selected-plan__price--large' data-test-selected-plan-price>
         {{format-currency selectedPlan.price floor='true'}}
-        <span>
-          {{if this.showAnnual '/year' '/month'}}
-        </span>
       </p>
+      <span data-test-selected-plan-period='true' class='selected-plan__period'>
+        {{if this.annual '/year' '/month'}}
+      </span>
     </div>
   </div>
 </div>

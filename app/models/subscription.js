@@ -20,6 +20,7 @@ export default Model.extend({
   validTo: attr(),
   permissions: attr(),
   organizationId: attr(),
+  clientSecret: attr(),
 
   billingInfo: belongsTo('billing-info', { async: false }),
   creditCardInfo: belongsTo('credit-card-info', { async: false }),

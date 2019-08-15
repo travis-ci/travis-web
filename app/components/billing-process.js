@@ -2,8 +2,7 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
 import config from 'travis/config/environment';
-import { task } from 'ember-concurrency';
-import { not, filterBy, or, mapBy, equal, reads } from '@ember/object/computed';
+import { not, filterBy, mapBy, equal, reads } from '@ember/object/computed';
 
 const STEPS = {
   ONE: 'stepOne',
@@ -13,7 +12,6 @@ const STEPS = {
 
 export default Component.extend({
   store: service(),
-  flashes: service(),
   accounts: service(),
   plans: null,
   scrollSection: null,
@@ -29,7 +27,6 @@ export default Component.extend({
   showMonthly: not('showAnnual'),
   defaultPlan: filterBy('availablePlans', 'isDefault'),
   availablePlanNames: mapBy('availablePlans', 'name'),
-  isSavingSubscription: or('saveSubscription.isRunning', 'accounts.fetchSubscriptions.isRunning'),
 
   monthlyPlans: computed('plans.@each.{name,annual,builds}', function () {
     const { plans, availablePlanNames } = this;
@@ -74,33 +71,6 @@ export default Component.extend({
     }
   ),
 
-  reset() {
-    this.newSubscription.billingInfo.setProperties({
-      firstName: '',
-      lastName: '',
-      company: '',
-      address: '',
-      address2: '',
-      city: '',
-      state: '',
-      zipCode: '',
-      country: '',
-      vatId: '',
-      billingEmail: '',
-    });
-  },
-
-  saveSubscription: task(function* () {
-    const { fetchSubscriptions } = this.accounts;
-    try {
-      yield this.newSubscription.save();
-      fetchSubscriptions.perform();
-    } catch (error) {
-      this.reset();
-      this.flashes.error('There was an error creating your subscription. Please try again.');
-    }
-  }).drop(),
-
   actions: {
 
     goToFirstStep() {
@@ -127,13 +97,5 @@ export default Component.extend({
       this.set('currentStep', STEPS.ONE);
       this.reset();
     },
-
-    handleSubmit(token, lastDigits) {
-      const { account } = this;
-      const organizationId = account.type === 'organization' ? Number(account.id) : null;
-      this.newSubscription.setProperties({ organizationId, plan: this.selectedPlan });
-      this.newSubscription.creditCardInfo.setProperties({ token, lastDigits });
-      this.saveSubscription.perform();
-    }
   }
 });

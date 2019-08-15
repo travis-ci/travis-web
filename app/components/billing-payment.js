@@ -6,6 +6,10 @@ import { or, reads } from '@ember/object/computed';
 
 export default Component.extend({
   stripe: service(),
+  accounts: service(),
+  flashes: service(),
+  account: null,
+
   stripeElement: null,
   stripeLoading: false,
   newSubscription: null,
@@ -24,13 +28,37 @@ export default Component.extend({
     }
   ),
 
-  isLoading: or('createStripeToken.isRunning', 'isSavingSubscription'),
+  isLoading: or('createSubscription.isRunning', 'accounts.fetchSubscriptions.isRunning'),
 
-  createStripeToken: task(function* () {
-    const { token } = yield this.stripe.createStripeToken.perform(this.stripeElement);
-    const { id, card } = token;
-    this.handleSubmit(id, card.last4);
+  createSubscription: task(function* () {
+    const { stripeElement, account } = this;
+    const { token: { id, card } } = yield this.stripe.createStripeToken.perform(stripeElement);
+    this.newSubscription.creditCardInfo.setProperties({ token: id, lastDigits: card.last4 });
+    const organizationId = account.type === 'organization' ? Number(account.id) : null;
+    this.newSubscription.setProperties({ organizationId, plan: this.selectedPlan });
+
+    const { clientSecret } = yield this.newSubscription.save();
+    if (clientSecret) {
+      yield this.stripe.handleStripePayment.unlinked().perform(clientSecret);
+    }
+    yield this.accounts.fetchSubscriptions.perform();
   }).drop(),
+
+  reset() {
+    this.newSubscription.billingInfo.setProperties({
+      firstName: '',
+      lastName: '',
+      company: '',
+      address: '',
+      address2: '',
+      city: '',
+      state: '',
+      zipCode: '',
+      country: '',
+      vatId: '',
+      billingEmail: '',
+    });
+  },
 
   options: {
     hidePostalCode: true,

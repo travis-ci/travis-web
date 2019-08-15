@@ -806,7 +806,8 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.selectedPlanOverview.heading.text, 'summary');
     assert.equal(profilePage.billing.selectedPlanOverview.name.text, `${this.defaultPlan.name} plan`);
     assert.equal(profilePage.billing.selectedPlanOverview.jobs.text, `${this.defaultPlan.builds} concurrent jobs`);
-    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${this.defaultPlan.price / 100} /month`);
+    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${this.defaultPlan.price / 100}`);
+    assert.equal(profilePage.billing.period.text, '/month');
     assert.equal(profilePage.billing.selectedPlanOverview.changePlan.text, 'change plan');
   });
 
@@ -821,7 +822,8 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.selectedPlanOverview.heading.text, 'summary');
     assert.equal(profilePage.billing.selectedPlanOverview.name.text, `${this.defaultPlan.name} plan`);
     assert.equal(profilePage.billing.selectedPlanOverview.jobs.text, `${this.defaultPlan.builds} concurrent jobs`);
-    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${this.defaultPlan.price / 100} /month`);
+    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${this.defaultPlan.price / 100}`);
+    assert.equal(profilePage.billing.period.text, '/month');
     assert.equal(profilePage.billing.selectedPlanOverview.changePlan.text, 'change plan');
 
     await profilePage.billing.selectedPlanOverview.changePlan.click();
@@ -875,7 +877,8 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.selectedPlanOverview.heading.text, 'summary');
     assert.equal(profilePage.billing.selectedPlanOverview.name.text, `${this.defaultPlan.name} plan`);
     assert.equal(profilePage.billing.selectedPlanOverview.jobs.text, `${this.defaultPlan.builds} concurrent jobs`);
-    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${this.defaultPlan.price / 100} /month`);
+    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${this.defaultPlan.price / 100}`);
+    assert.equal(profilePage.billing.period.text, '/month');
     assert.equal(profilePage.billing.selectedPlanOverview.changePlan.text, 'change plan');
 
     assert.equal(billingPaymentForm.contactDetails.contactHeading.text, 'contact details:');
@@ -938,7 +941,8 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.selectedPlanOverview.heading.text, 'summary');
     assert.equal(profilePage.billing.selectedPlanOverview.name.text, `${this.defaultPlan.name} plan`);
     assert.equal(profilePage.billing.selectedPlanOverview.jobs.text, `${this.defaultPlan.builds} concurrent jobs`);
-    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${this.defaultPlan.price / 100} /month`);
+    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${this.defaultPlan.price / 100}`);
+    assert.equal(profilePage.billing.period.text, '/month');
     assert.equal(profilePage.billing.selectedPlanOverview.changePlan.text, 'change plan');
 
     assert.equal(billingPaymentForm.contactDetails.contactHeading.text, 'contact details:');

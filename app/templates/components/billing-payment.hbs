@@ -28,7 +28,7 @@
   <h3>
     Pay with card
   </h3>
- <TravisForm @onSubmit={{perform this.createStripeToken}} as |form|>
+ <TravisForm @onSubmit={{perform this.createSubscription}} as |form|>
   <StripeCard @complete={{action "complete"}} @options={{this.options}} as |stripeError|>
     {{#if stripeError}}
       <p>{{stripeError.message}}</p>
