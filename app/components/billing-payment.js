@@ -70,7 +70,6 @@ export default Component.extend({
         '::placeholder': {
           color: '#666'
         },
-        lineHeight: '24px'
       },
       invalid: {
         color: '#fa755a',
