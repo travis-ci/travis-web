@@ -2,7 +2,7 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
 import config from 'travis/config/environment';
-import { not, filterBy, mapBy, equal, reads } from '@ember/object/computed';
+import { not, filterBy, equal, reads } from '@ember/object/computed';
 
 const STEPS = {
   ONE: 'stepOne',
@@ -25,8 +25,12 @@ export default Component.extend({
   isStepTwo: equal('currentStep', STEPS.TWO),
   isStepThree: equal('currentStep', STEPS.THREE),
   showMonthly: not('showAnnual'),
-  defaultPlan: filterBy('availablePlans', 'isDefault'),
-  availablePlanNames: mapBy('availablePlans', 'name'),
+  defaultPlans: filterBy('availablePlans', 'isDefault'),
+  defaultPlanName: reads('defaultPlans.firstObject.name'),
+
+  availablePlanNames: computed('availablePlans.name', function () {
+    return this.availablePlans.mapBy('name').uniq();
+  }),
 
   monthlyPlans: computed('plans.@each.{name,annual,builds}', function () {
     const { plans, availablePlanNames } = this;
@@ -60,10 +64,9 @@ export default Component.extend({
 
   selectedPlan: computed(
     'displayedPlans.@each.{name,price,annual,builds}',
-    'defaultPlan', {
+    'defaultPlanName', {
       get() {
-        const plan = this.defaultPlan.get('firstObject');
-        return this.displayedPlans.findBy('name', plan.name);
+        return this.displayedPlans.findBy('name', this.defaultPlanName);
       },
       set(key, value) {
         return value;
