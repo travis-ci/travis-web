@@ -32,16 +32,21 @@ export default Component.extend({
 
   createSubscription: task(function* () {
     const { stripeElement, account } = this;
-    const { token: { id, card } } = yield this.stripe.createStripeToken.perform(stripeElement);
-    this.newSubscription.creditCardInfo.setProperties({ token: id, lastDigits: card.last4 });
-    const organizationId = account.type === 'organization' ? Number(account.id) : null;
-    this.newSubscription.setProperties({ organizationId, plan: this.selectedPlan });
+    const { token: { id, card }, error } = yield this.stripe.createStripeToken.perform(stripeElement);
+    if (!error) {
+      this.newSubscription.creditCardInfo.setProperties({ token: id, lastDigits: card.last4 });
+      const organizationId = account.type === 'organization' ? Number(account.id) : null;
+      this.newSubscription.setProperties({ organizationId, plan: this.selectedPlan });
 
-    const { clientSecret } = yield this.newSubscription.save();
-    if (clientSecret) {
-      yield this.stripe.handleStripePayment.unlinked().perform(clientSecret);
+      const { clientSecret } = yield this.newSubscription.save();
+      if (clientSecret) {
+        const { error } = this.stripe.handleStripePayment.unlinked().perform(clientSecret);
+        if (!error) {
+          return yield this.accounts.fetchSubscriptions.perform();
+        }
+      }
+      yield this.accounts.fetchSubscriptions.perform();
     }
-    yield this.accounts.fetchSubscriptions.perform();
   }).drop(),
 
   reset() {
@@ -65,15 +70,15 @@ export default Component.extend({
     style: {
       base: {
         fontStyle: 'Source Sans Pro',
-        color: '#333',
         fontSize: '15px',
+        color: '#666',
         '::placeholder': {
           color: '#666'
         },
       },
       invalid: {
-        color: '#fa755a',
-        iconColor: '#fa755a'
+        color: 'red',
+        iconColor: 'red'
       }
     }
   },

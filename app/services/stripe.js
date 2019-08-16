@@ -10,27 +10,35 @@ export default Service.extend({
   },
 
   createStripeToken: task(function* (stripeElement) {
-    try {
-      return yield this.stripev3.createToken(stripeElement);
-    } catch (error) {
-      this.displayError(error);
+    const result = yield this.stripev3.createToken(stripeElement);
+    const { error } = result;
+    if (error) {
+      this.handleError(error);
     }
+    return result;
   }).drop(),
 
   handleStripePayment: task(function* (clientSecret) {
-    try {
-      return yield this.stripev3.handleCardPayment(clientSecret);
-    } catch (error) {
-      this.flashes.error('Authorization failed for this payment. Please try again.');
+    const result = yield this.stripev3.handleCardPayment(clientSecret);
+    const { error } = result;
+    if (error) {
+      this.handleError(error);
     }
+    return result;
   }).drop(),
 
-  displayError(error) {
-    let message = 'There was an error updating your credit card. Please try again';
-    const stripeError = error && error.error;
-    if (stripeError && stripeError.type === 'card_error') {
-      message = 'Invalid card details. Please enter valid card details and try again.';
+  handleError(stripeError) {
+    let errorMessage = '';
+    if (stripeError) {
+      const { type, message } = stripeError;
+      if (type === 'card_error' || type === 'validation_error') {
+        errorMessage = message;
+      } else if (type === 'invalid_request_error') {
+        errorMessage = 'Invalid card details. Please try again';
+      } else {
+        errorMessage = 'An error occurred connecting to Stripe. Please try again';
+      }
     }
-    this.flashes.error(message);
+    this.flashes.error(errorMessage);
   },
 });
