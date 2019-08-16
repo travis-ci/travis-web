@@ -1,9 +1,11 @@
 import Component from '@ember/component';
-import { checkDictionary } from 'travis/utils/ui-kit/assertions';
 import { computed } from '@ember/object';
-import { none, reads } from '@ember/object/computed';
+import { collect, reads } from '@ember/object/computed';
+
 import spacingMixin from 'travis/mixins/ui-kit/spacing';
 import borderMixin from 'travis/mixins/ui-kit/border';
+import { checkDictionary } from 'travis/utils/ui-kit/assertions';
+import prefix from 'travis/utils/ui-kit/prefix';
 
 const DISPLAYS = {
   BLOCK: 'block',
@@ -94,7 +96,27 @@ export default Component.extend(spacingMixin, borderMixin, {
   position: null,
 
   // Private //
-  allClasses: computed(
+  colorClass: prefix('color', 'bg'),
+  displayClass: reads('display'),
+  layerClass: prefix('layer', 'z'),
+  overflowClass: prefix('overflow', 'overflow'),
+  radiusClass: prefix('radius', 'rounded'),
+  shadowClass: prefix('shadow', 'shadow'),
+  textAlignClass: prefix('textAlign', 'text'),
+
+  widthClass: prefix('width', 'w'),
+  heightClass: prefix('height', 'h'),
+
+  // Position
+  positionType: reads('position.type'),
+  positionTop: prefix('position.top', 'top'),
+  positionRight: prefix('position.right', 'right'),
+  positionBottom: prefix('position.bottom', 'bottom'),
+  positionLeft: prefix('position.left', 'left'),
+  positionInset: prefix('position.inset', 'inset'),
+
+  // Collected classes
+  allClasses: collect(
     'colorClass',
     'displayClass',
     'layerClass',
@@ -104,127 +126,23 @@ export default Component.extend(spacingMixin, borderMixin, {
     'textAlignClass',
     'widthClass',
     'heightClass',
-    'borderColorClass',
-    'borderWidthClasses',
-    'marginClasses',
-    'paddingClasses',
-    'positionClasses',
-    function () {
-      return `
-        ${this.colorClass}
-        ${this.displayClass}
-        ${this.layerClass}
-        ${this.overflowClass}
-        ${this.radiusClass}
-        ${this.shadowClass}
-        ${this.textAlignClass}
-        ${this.widthClass}
-        ${this.heightClass}
-        ${this.borderColorClass}
-        ${this.borderWidthClasses}
-        ${this.marginClasses}
-        ${this.paddingClasses}
-        ${this.positionClasses}
-      `.replace(/\s\s+/g, ' ');
-    }
-  ),
-
-  hasNoColor: none('color'),
-  colorClass: computed('hasNoColor', 'color', function () {
-    return this.hasNoColor ? '' : `bg-${this.color}`;
-  }),
-
-  displayClass: reads('display'),
-
-  hasNoLayer: none('layer'),
-  layerClass: computed('hasNoLayer', 'layer', function () {
-    return this.hasNoLayer ? '' : `z-${this.layer}`;
-  }),
-
-  hasNoOverflow: none('overflow'),
-  overflowClass: computed('hasNoOverflow', 'overflow', function () {
-    return this.hasNoOverflow ? '' : `overflow-${this.overflow}`;
-  }),
-
-  hasNoRadius: none('radius'),
-  radiusClass: computed('hasNoRadius', 'radius', function () {
-    return this.hasNoRadius ? '' : `rounded-${this.radius}`;
-  }),
-
-  hasNoShadow: none('shadow'),
-  shadowClass: computed('hasNoShadow', 'shadow', function () {
-    return this.hasNoShadow ? '' : `shadow-${this.shadow}`;
-  }),
-
-  hasNoTextAlign: none('textAlign'),
-  textAlignClass: computed('hasNoTextAlign', 'textAlign', function () {
-    return this.hasNoTextAlign ? '' : `text-${this.textAlign}`;
-  }),
-
-  // Width & Height
-  hasNoWidth: none('width'),
-  widthClass: computed('hasNoWidth', 'width', function () {
-    return this.hasNoWidth ? '' : `w-${this.width}`;
-  }),
-
-  hasNoHeight: none('height'),
-  heightClass: computed('hasNoHeight', 'height', function () {
-    return this.hasNoHeight ? '' : `h-${this.height}`;
-  }),
-
-  // Position
-  hasNoPositionType: none('position.type'),
-  positionType: computed('hasNoPositionType', 'position.type', function () {
-    return this.hasNoPositionType ? '' : this.position.type;
-  }),
-
-  hasNoPositionTop: none('position.top'),
-  positionTop: computed('hasNoPositionTop', 'position.top', function () {
-    return this.hasNoPositionTop ? '' : `top-${this.position.top}`;
-  }),
-
-  hasNoPositionRight: none('position.right'),
-  positionRight: computed('hasNoPositionRight', 'position.right', function () {
-    return this.hasNoPositionRight ? '' : `right-${this.position.right}`;
-  }),
-
-  hasNoPositionBottom: none('position.bottom'),
-  positionBottom: computed('hasNoPositionBottom', 'position.bottom', function () {
-    return this.hasNoPositionBottom ? '' : `bottom-${this.position.bottom}`;
-  }),
-
-  hasNoPositionLeft: none('position.left'),
-  positionLeft: computed('hasNoPositionLeft', 'position.left', function () {
-    return this.hasNoPositionLeft ? '' : `left-${this.position.left}`;
-  }),
-
-  hasNoPositionInset: none('position.inset'),
-  positionInset: computed('hasNoPositionInset', 'position.inset', function () {
-    return this.hasNoPositionInset ? '' : `inset-${this.position.inset}`;
-  }),
-
-  positionClasses: computed(
     'positionType',
     'positionTop',
     'positionRight',
     'positionBottom',
     'positionLeft',
-    'positionX',
-    'positionY',
-    function () {
-      return `
-        ${this.positionType}
-        ${this.positionTop}
-        ${this.positionRight}
-        ${this.positionBottom}
-        ${this.positionLeft}
-        ${this.positionInset}
-      `;
-    }
+    'positionInset',
+    'borderColorClass',
+    'borderWidthClasses',
+    'marginClasses',
+    'paddingClassText',
   ),
+  allClassText: computed('allClasses', function () {
+    return this.allClasses.compact().join(' ');
+  }),
 
   // Lifecycle
-  init() {
+  didReceiveAttrs() {
     this._super(...arguments);
 
     checkDictionary(this.display, DISPLAYS, '@display', 'Box');
