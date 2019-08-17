@@ -1,5 +1,4 @@
 import Component from '@ember/component';
-import { computed } from '@ember/object';
 import { reads } from '@ember/object/computed';
 
 import spacingMixin from 'travis/mixins/ui-kit/spacing';

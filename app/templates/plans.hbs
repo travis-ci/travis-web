@@ -51,7 +51,7 @@
         <UiKit::Grid @base={{2}} @md={{4}} as |grid|>
           {{#each plansToDisplay as |plan|}}
             <grid.item>
-              <UiKit::Box @borderColor='grey-150' @borderWidth={{1}} @padding={{hash all=4}}>
+              <UiKit::Box @borderColor='grey-150' @borderWidth={{hash all=1}} @padding={{hash all=4}}>
                 <UiKit::Font @tag='h3' @size='3xl' @weight='bold'>
                   {{plan.name}}
                 </UiKit::Font>
