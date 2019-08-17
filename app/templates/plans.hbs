@@ -6,9 +6,9 @@
     @margin={{hash top=3 bottom=16}}
     @textAlign='center'
   >
-    <UiKit::Font @tag='h1' @size='6xl' @weight='bold'>
+    <UiKit::Text @tag='h1' @size='6xl' @weight='bold'>
       Built for every team
-    </UiKit::Font>
+    </UiKit::Text>
     <p>
       Set up your first project in just one minute.
       <br />
@@ -19,16 +19,16 @@
   {{!-- Product section --}}
   <UiKit::Box @tag='section' @margin={{hash bottom=16}}>
     <UiKit::Grid @alignItems='center' @justify='start'>
-      <UiKit::Font @transform='uppercase' @weight='bold' @margin={{hash right=2}}>
+      <UiKit::Text @transform='uppercase' @weight='bold' @margin={{hash right=2}}>
         Monthly
-      </UiKit::Font>
+      </UiKit::Text>
 
       <UiKit::Switch @onClick={{fn (mut showAnnual)}} @active={{showAnnual}} />
 
-      <UiKit::Font @color='blue-400' @margin={{hash left=2}}>
-        <UiKit::Font @transform='uppercase' @weight='bold'>Annual</UiKit::Font>
+      <UiKit::Text @color='blue-400' @margin={{hash left=2}}>
+        <UiKit::Text @transform='uppercase' @weight='bold'>Annual</UiKit::Text>
         (Get 1 month free!)
-      </UiKit::Font>
+      </UiKit::Text>
     </UiKit::Grid>
 
     <UiKit::Box @position={{hash type='relative'}} @margin={{hash top=3}}>
@@ -52,11 +52,11 @@
           {{#each plansToDisplay as |plan|}}
             <grid.item>
               <UiKit::Box @borderColor='grey-150' @borderWidth={{hash all=1}} @padding={{hash all=4}}>
-                <UiKit::Font @tag='h3' @size='3xl' @weight='bold'>
+                <UiKit::Text @tag='h3' @size='3xl' @weight='bold'>
                   {{plan.name}}
-                </UiKit::Font>
+                </UiKit::Text>
 
-                <UiKit::Font
+                <UiKit::Text
                   @tag='h4'
                   @color='grey-400'
                   @margin={{hash bottom=6}}
@@ -65,11 +65,11 @@
                   @weight='bold'
                 >
                   {{plan.description}}
-                </UiKit::Font>
+                </UiKit::Text>
                 <div>
-                  <UiKit::Font @color='green-400' @weight='bold'>
+                  <UiKit::Text @color='green-400' @weight='bold'>
                     {{plan.builds}}
-                  </UiKit::Font>
+                  </UiKit::Text>
                   {{pluralize plan.builds "Concurrent job" without-count=true}}
                 </div>
                 <div>
@@ -91,14 +91,14 @@
                   Unlimited collaborators
                 </UiKit::Box>
                 <UiKit::Box @margin={{hash bottom=6}}>
-                  <UiKit::Font @color='green-400' @size='xl' @weight='bold'>
+                  <UiKit::Text @color='green-400' @size='xl' @weight='bold'>
                     ${{plan.monthlyPriceRounded}}
-                  </UiKit::Font>
-                  <UiKit::Font @size='sm'>
+                  </UiKit::Text>
+                  <UiKit::Text @size='sm'>
                     {{plan.currency}}
                     per month
                     {{if showAnnual 'billed annually'}}
-                  </UiKit::Font>
+                  </UiKit::Text>
                 </UiKit::Box>
               </UiKit::Box>
             </grid.item>

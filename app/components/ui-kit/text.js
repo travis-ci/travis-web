@@ -72,9 +72,9 @@ export default Component.extend(spacingMixin, {
   didReceiveAttrs() {
     this._super(...arguments);
 
-    checkDictionary(this.size, SIZES, '@size', 'Font');
-    checkDictionary(this.family, FAMILIES, '@family', 'Font');
-    checkDictionary(this.weight, WEIGHTS, '@weight', 'Font');
-    checkDictionary(this.transform, TRANSFORMS, '@transform', 'Font');
+    checkDictionary(this.size, SIZES, '@size', 'Text');
+    checkDictionary(this.family, FAMILIES, '@family', 'Text');
+    checkDictionary(this.weight, WEIGHTS, '@weight', 'Text');
+    checkDictionary(this.transform, TRANSFORMS, '@transform', 'Text');
   },
 });
