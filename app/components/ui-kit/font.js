@@ -1,7 +1,8 @@
 import Component from '@ember/component';
-import { computed } from '@ember/object';
-import { none } from '@ember/object/computed';
+import { reads } from '@ember/object/computed';
 import { checkDictionary } from 'travis/utils/ui-kit/assertions';
+import prefix from 'travis/utils/ui-kit/prefix';
+import concat from 'travis/utils/ui-kit/concat';
 import spacingMixin from 'travis/mixins/ui-kit/spacing';
 
 const FAMILIES = {
@@ -51,28 +52,24 @@ export default Component.extend(spacingMixin, {
   weight: null,
 
   // Private
-  hasNoFamily: none('family'),
-  familyClass: computed('hasNoFamily', 'family', function () {
-    return this.hasNoFamily ? '' : `font-${this.family}`;
-  }),
+  colorClass: prefix('color', 'text'),
+  familyClass: prefix('family', 'font'),
+  sizeClass: prefix('size', 'text'),
+  transformClass: reads('transform'),
+  weightClass: prefix('weight', 'font'),
 
-  hasNoWeight: none('weight'),
-  weightClass: computed('hasNoWeight', 'weight', function () {
-    return this.hasNoWeight ? '' : `font-${this.weight}`;
-  }),
-
-  hasNoSize: none('size'),
-  sizeClass: computed('hasNoSize', 'size', function () {
-    return this.hasNoSize ? '' : `text-${this.size}`;
-  }),
-
-  hasNoColor: none('color'),
-  colorClass: computed('hasNoColor', 'color', function () {
-    return this.hasNoColor ? '' : `text-${this.color}`;
-  }),
+  allClasses: concat(
+    'colorClass',
+    'familyClass',
+    'sizeClass',
+    'transformClass',
+    'weightClass',
+    'marginClasses',
+    'paddingClasses',
+  ),
 
   // Lifecycle
-  init() {
+  didReceiveAttrs() {
     this._super(...arguments);
 
     checkDictionary(this.size, SIZES, '@size', 'Font');
