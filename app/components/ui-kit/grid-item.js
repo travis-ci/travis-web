@@ -2,6 +2,7 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { or } from '@ember/object/computed';
 import { requireProp } from 'travis/utils/ui-kit/assertions';
+import concat from 'travis/utils/ui-kit/concat';
 
 export default Component.extend({
   tagName: '',
@@ -81,8 +82,16 @@ export default Component.extend({
     return '';
   }),
 
+  allClasses: concat(
+    'baseClass',
+    'smClass',
+    'mdClass',
+    'lgClass',
+    'xlClass',
+  ),
+
   // Lifecycle
-  init() {
+  didReceiveAttributes() {
     this._super(...arguments);
 
     requireProp(this.grid, '@grid', 'GridItem');
