@@ -33,9 +33,9 @@ const LABEL_COLORS = {
 };
 
 export default Component.extend({
+  tagName: '',
 
   // Public interface
-  tagName: '',
   role: 'button',
   color: DEFAULT_COLOR,
   invert: false,
@@ -72,7 +72,7 @@ export default Component.extend({
   }),
 
   // Lifecycle
-  init() {
+  didReceiveAttrs() {
     this._super(...arguments);
 
     checkDictionary(this.color, COLORS, '@color', 'Button');
