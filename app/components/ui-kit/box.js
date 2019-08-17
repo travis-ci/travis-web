@@ -1,11 +1,12 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { collect, reads } from '@ember/object/computed';
+import { reads } from '@ember/object/computed';
 
 import spacingMixin from 'travis/mixins/ui-kit/spacing';
 import borderMixin from 'travis/mixins/ui-kit/border';
 import { checkDictionary } from 'travis/utils/ui-kit/assertions';
 import prefix from 'travis/utils/ui-kit/prefix';
+import concat from 'travis/utils/ui-kit/concat';
 
 const DISPLAYS = {
   BLOCK: 'block',
@@ -116,7 +117,7 @@ export default Component.extend(spacingMixin, borderMixin, {
   positionInset: prefix('position.inset', 'inset'),
 
   // Collected classes
-  allClasses: collect(
+  allClasses: concat(
     'colorClass',
     'displayClass',
     'layerClass',
@@ -135,11 +136,8 @@ export default Component.extend(spacingMixin, borderMixin, {
     'borderColorClass',
     'borderWidthClasses',
     'marginClasses',
-    'paddingClassText',
+    'paddingClasses',
   ),
-  allClassText: computed('allClasses', function () {
-    return this.allClasses.compact().join(' ');
-  }),
 
   // Lifecycle
   didReceiveAttrs() {
