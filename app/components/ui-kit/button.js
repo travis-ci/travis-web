@@ -28,7 +28,8 @@ const HOVER_BG_COLORS = {
 const LABEL_COLORS = {
   [`${COLORS.BLUE}-invert`]: 'blue-400',
   [`${COLORS.GREY}-invert`]: 'grey-700',
-  disabled: 'grey-200',
+  disabled: 'white',
+  'disabled-invert': 'grey-200',
   default: 'white',
 };
 
@@ -61,9 +62,13 @@ export default Component.extend({
 
   labelColor: computed('color', 'disabled', 'invert', function () {
     if (this.invert) {
-      return this.disabled ? LABEL_COLORS['disabled'] : LABEL_COLORS[`${this.color}-invert`];
+      return this.disabled
+        ? LABEL_COLORS['disabled-invert']
+        : LABEL_COLORS[`${this.color}-invert`];
     } else {
-      return LABEL_COLORS[this.color] || LABEL_COLORS['default'];
+      return this.disabled
+        ? LABEL_COLORS['disabled']
+        : LABEL_COLORS[this.color] || LABEL_COLORS['default'];
     }
   }),
 
