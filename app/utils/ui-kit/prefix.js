@@ -3,6 +3,7 @@ import { isPresent } from '@ember/utils';
 
 export default function prefix(key, prefix,
   {
+    dictionary = {},
     validator = isPresent,
     separator = '-',
     defaultValue = null,
@@ -10,7 +11,8 @@ export default function prefix(key, prefix,
   } = {}
 ) {
   return computed(key, function () {
-    const value = this.get(key);
+    const propVal = this.get(key);
+    const value = dictionary[propVal] || propVal;
     const isNegative = negatable && typeof value === 'number' && value < 0;
     const negator = isNegative ? '-' : '';
 

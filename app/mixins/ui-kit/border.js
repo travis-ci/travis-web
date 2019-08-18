@@ -24,9 +24,9 @@ export default Mixin.create({
   borderLeftWidth: or('borderWidth.left', 'borderWidth.x', 'borderWidth.all'),
 
   borderTopWidthClass: prefix('borderTopWidth', 'border-t'),
-  borderRightWidthClass: prefix('borderTopWidth', 'border-r'),
-  borderBottomWidthClass: prefix('borderTopWidth', 'border-b'),
-  borderLeftWidthClass: prefix('borderTopWidth', 'border-l'),
+  borderRightWidthClass: prefix('borderRightWidth', 'border-r'),
+  borderBottomWidthClass: prefix('borderBottomWidth', 'border-b'),
+  borderLeftWidthClass: prefix('borderLeftWidth', 'border-l'),
 
   borderWidthClasses: concat(
     'borderTopWidthClass',

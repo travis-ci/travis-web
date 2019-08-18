@@ -4,16 +4,16 @@ import { checkDictionary } from 'travis/utils/ui-kit/assertions';
 
 // Public dictionaries
 export const COLORS = {
-  BLUE: 'blue-400',
-  GREY: 'grey-700',
+  BLUE: 'blue',
+  GREY: 'grey',
 };
 
 // Private dictionaries
 const DEFAULT_COLOR = COLORS.BLUE;
 
 const BG_COLORS = {
-  [COLORS.BLUE]: COLORS.BLUE,
-  [COLORS.GREY]: COLORS.GREY,
+  [COLORS.BLUE]: 'blue-400',
+  [COLORS.GREY]: 'grey-700',
   disabled: 'grey-200',
   invert: 'transparent',
 };
@@ -26,8 +26,8 @@ const HOVER_BG_COLORS = {
 };
 
 const LABEL_COLORS = {
-  [`${COLORS.BLUE}-invert`]: COLORS.BLUE,
-  [`${COLORS.GREY}-invert`]: COLORS.GREY,
+  [`${COLORS.BLUE}-invert`]: 'blue-400',
+  [`${COLORS.GREY}-invert`]: 'grey-700',
   disabled: 'grey-200',
   default: 'white',
 };

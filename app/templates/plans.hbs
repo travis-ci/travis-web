@@ -9,11 +9,11 @@
     <UiKit::Text @tag='h1' @size='6xl' @weight='bold'>
       Built for every team
     </UiKit::Text>
-    <p>
+    <UiKit::Text @tag='p'>
       Set up your first project in just one minute.
       <br />
       Your first 100 builds are free! No credit card required.
-    </p>
+    </UiKit::Text>
   </UiKit::Box>
 
   {{!-- Product section --}}
@@ -25,7 +25,7 @@
 
       <UiKit::Switch @onClick={{fn (mut showAnnual)}} @active={{showAnnual}} />
 
-      <UiKit::Text @color='blue-400' @margin={{hash left=2}}>
+      <UiKit::Text @color='blue' @margin={{hash left=2}}>
         <UiKit::Text @transform='uppercase' @weight='bold'>Annual</UiKit::Text>
         (Get 1 month free!)
       </UiKit::Text>
@@ -58,7 +58,7 @@
 
                 <UiKit::Text
                   @tag='h4'
-                  @color='grey-400'
+                  @color='grey'
                   @margin={{hash bottom=6}}
                   @size='lg'
                   @transform='uppercase'
@@ -67,7 +67,7 @@
                   {{plan.description}}
                 </UiKit::Text>
                 <div>
-                  <UiKit::Text @color='green-400' @weight='bold'>
+                  <UiKit::Text @color='green' @weight='bold'>
                     {{plan.builds}}
                   </UiKit::Text>
                   {{pluralize plan.builds "Concurrent job" without-count=true}}
@@ -91,7 +91,7 @@
                   Unlimited collaborators
                 </UiKit::Box>
                 <UiKit::Box @margin={{hash bottom=6}}>
-                  <UiKit::Text @color='green-400' @size='xl' @weight='bold'>
+                  <UiKit::Text @color='green' @size='xl' @weight='bold'>
                     ${{plan.monthlyPriceRounded}}
                   </UiKit::Text>
                   <UiKit::Text @size='sm'>
@@ -123,7 +123,7 @@
     </UiKit::Box>
   </UiKit::Box>
 
-  <UiKit::Button @onClick={{action 'gaCta' 'plans-oss'}} @color='grey-700' @invert={{true}}>
+  <UiKit::Button @onClick={{action 'gaCta' 'plans-oss'}} @color='grey' @invert={{true}}>
     Set up your Open Source project now
   </UiKit::Button>
 

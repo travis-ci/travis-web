@@ -7,6 +7,14 @@ import { checkDictionary } from 'travis/utils/ui-kit/assertions';
 import prefix from 'travis/utils/ui-kit/prefix';
 import concat from 'travis/utils/ui-kit/concat';
 
+const COLORS = {
+  WHITE: 'white',
+};
+
+const BG_COLORS = {
+  [COLORS.WHITE]: 'white',
+};
+
 const DISPLAYS = {
   BLOCK: 'block',
   INLINE_BLOCK: 'inline-block',
@@ -96,7 +104,7 @@ export default Component.extend(spacingMixin, borderMixin, {
   position: null,
 
   // Private //
-  colorClass: prefix('color', 'bg'),
+  colorClass: prefix('color', 'bg', { dictionary: BG_COLORS }),
   displayClass: reads('display'),
   layerClass: prefix('layer', 'z'),
   overflowClass: prefix('overflow', 'overflow'),
@@ -142,6 +150,7 @@ export default Component.extend(spacingMixin, borderMixin, {
   didReceiveAttrs() {
     this._super(...arguments);
 
+    checkDictionary(this.color, COLORS, '@color', 'Box');
     checkDictionary(this.display, DISPLAYS, '@display', 'Box');
     checkDictionary(this.layer, LAYERS, '@layer', 'Box');
     checkDictionary(this.overflow, OVERFLOWS, '@overflow', 'Box');

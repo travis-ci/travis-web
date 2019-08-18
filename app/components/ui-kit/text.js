@@ -5,6 +5,18 @@ import prefix from 'travis/utils/ui-kit/prefix';
 import concat from 'travis/utils/ui-kit/concat';
 import spacingMixin from 'travis/mixins/ui-kit/spacing';
 
+const COLORS = {
+  BLUE: 'blue',
+  GREEN: 'green',
+  GREY: 'grey',
+};
+
+const TEXT_COLORS = {
+  [COLORS.BLUE]: 'blue-400',
+  [COLORS.GREEN]: 'green-400',
+  [COLORS.GREY]: 'grey-400',
+};
+
 const FAMILIES = {
   SANS: 'sans',
   SERIF: 'serif',
@@ -52,7 +64,7 @@ export default Component.extend(spacingMixin, {
   weight: null,
 
   // Private
-  colorClass: prefix('color', 'text'),
+  colorClass: prefix('color', 'text', { dictionary: TEXT_COLORS }),
   familyClass: prefix('family', 'font'),
   sizeClass: prefix('size', 'text'),
   transformClass: reads('transform'),
@@ -72,6 +84,7 @@ export default Component.extend(spacingMixin, {
   didReceiveAttrs() {
     this._super(...arguments);
 
+    checkDictionary(this.color, COLORS, '@color', 'Text');
     checkDictionary(this.size, SIZES, '@size', 'Text');
     checkDictionary(this.family, FAMILIES, '@family', 'Text');
     checkDictionary(this.weight, WEIGHTS, '@weight', 'Text');
