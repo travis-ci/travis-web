@@ -66,7 +66,7 @@ const POSITION_TYPES = {
   STICKY: 'sticky',
 };
 const POSITION_VALUES = {
-  ZERO: '0',
+  ZERO: 0,
   AUTO: 'auto',
 };
 const POSITION_INSETS = {

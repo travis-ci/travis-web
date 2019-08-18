@@ -1,15 +1,17 @@
 import { assert } from '@ember/debug';
 
 export function checkDictionary(value, dictionary, propertyName = '', componentName = '') {
-  if (typeof value === 'string') {
-    const found = Object.values(dictionary).includes(value);
-    assert(
-      `${propertyName} "${value}" is not allowed on this ${componentName} component`,
-      found
-    );
-    return found;
+  // Allow null/undefined values
+  if (value === null || value === undefined) {
+    return true;
   }
-  return true;
+
+  const found = Object.values(dictionary).includes(value);
+  assert(
+    `${propertyName} "${value}" is not allowed on this ${componentName} component`,
+    found
+  );
+  return found;
 }
 
 export function requireProp(value, propertyName = '', componentName = '') {

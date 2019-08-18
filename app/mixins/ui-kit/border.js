@@ -7,7 +7,7 @@ import concat from 'travis/utils/ui-kit/concat';
 // Border
 const BORDER_WIDTHS = {
   NONE: 'none',
-  ONE: '1',
+  ONE: 1,
 };
 
 export default Mixin.create({
@@ -38,8 +38,6 @@ export default Mixin.create({
   // Lifecycle
   didReceiveAttrs() {
     this._super(...arguments);
-
-    checkDictionary(this.borderWidth, BORDER_WIDTHS, '@borderWidth');
 
     const { top, right, bottom, left, x, y, all } = this.borderWidth || {};
     checkDictionary(top, BORDER_WIDTHS, '@borderWidth.top');
