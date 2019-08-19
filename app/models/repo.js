@@ -54,7 +54,7 @@ const Repo = Model.extend({
 
   isHistoryMigrated: equal('historyMigrationStatus', HISTORY_MIGRATION_STATUS.MIGRATED),
 
-  isMigratable: computed('migrationStatus', 'permissions.admin', function () {
+  isMigratable: computed('migrationStatus', 'permissions.migrate', function () {
     const isMigrated = !!this.migrationStatus;
     const isFailed = this.isMigrationFailed;
     const hasPermissions = this.permissions.migrate;
