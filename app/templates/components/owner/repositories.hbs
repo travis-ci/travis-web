@@ -55,7 +55,7 @@
           @href={{this.appsManagementURL}}
           class="button--white migrate"
         >
-          <SvgImage @name="icon-repooctocat" />
+          <SvgImage @name={{vcs-icon this.owner.vcsType}} />
           Manage repositories on GitHub
         </ExternalLinkTo>
       </header>
@@ -138,7 +138,7 @@
           {{#if this.migrate.isRunning}}
             <LoadingIndicator class="loading-indicator--white migrate" />
           {{else}}
-            <SvgImage @name="icon-repooctocat" @class="icon--github" />
+            <SvgImage @name={{vcs-icon this.owner.vcsType}} @class="icon--github" />
           {{/if}}
           Activate &amp; Migrate
         </button>
@@ -150,7 +150,7 @@
           @href={{this.appsActivationURL}}
           class="button--green migrate-or-activate"
         >
-          <SvgImage @name="icon-repooctocat" @class="icon--github" />
+          <SvgImage @name={{vcs-icon this.owner.vcsType}} @class="icon--github" />
           Activate
         </ExternalLinkTo>
         <p>
