@@ -41,8 +41,8 @@
             {{else}}
               Unknown concurrent jobs
             {{/if}}
-            {{this.planMessage}} 
             <span data-test-plan-message='true' class='plan-overview__description--validity {{if this.isCanceled 'red'}}'>
+              {{this.planMessage}} 
               {{#if (not this.isPending)}}
                 {{moment-format this.subscription.validTo "MMMM D, YYYY"}}
               {{/if}}
