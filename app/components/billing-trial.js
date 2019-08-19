@@ -10,15 +10,6 @@ export default Component.extend({
   isBuildFinished: equal('trial.buildsRemaining', 0),
   isBuildRemaining: not('isBuildFinished'),
   showBuildRunningOutBanner: and('isBuildRemaining', 'isBuildLessThanEleven'),
-  startBillingProcess: false,
   hasNoSubscriptionPermissions: not('account.hasSubscriptionPermissions'),
   hasNoActiveTrial: not('trial.hasActiveTrial'),
-
-  actions: {
-    startBillingProcess() {
-      if (this.account.hasSubscriptionPermissions) {
-        this.set('startBillingProcess', true);
-      }
-    }
-  }
 });

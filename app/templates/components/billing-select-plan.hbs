@@ -63,14 +63,13 @@
         {{/each}}
       </div>
     </div>
-    <div class='flex flex--v-center flex--center'>
+    <div>
       <button data-test-subscribe-button
         onclick={{action form.submit}}
         class='button--blue'
       >
-        Subscribe
+        Subscribe to {{selectedPlan.builds}} job plan
       </button>
-      <ScrollHere />
     </div>
   </TravisForm>
 </section>

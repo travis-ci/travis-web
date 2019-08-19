@@ -56,42 +56,19 @@
       </button>
     {{/if}}
     <hr /> 
-    {{#if (not this.startBillingProcess)}} 
-      <div class='flex flex--col flex--v-center flex--center'>
-        <p class='subscribe-message' data-test-subscribe-message='true'>
-          <span>
-            Looking for a plan that meet your needs?
-          </span>
-          Subscribe now!
-        </p>
-        <button onClick={{action 'startBillingProcess'}} data-test-get-a-plan
-          class='pointer button get-plan flex flex--col flex--v-center flex--justify-center 
-          {{if this.hasNoSubscriptionPermissions 'get-plan--disabled disabled'}}'
-        >
-          <p>get a plan</p>
-          <SvgImage @name='icon-arrow-down' @class='icon-get-plan' />
-          {{#if this.hasNoSubscriptionPermissions}}
-            <EmberTooltip>
-              You don't have permission to create a subscription
-            </EmberTooltip>
-          {{/if}}
-        </button>
-      </div>
+    {{#if this.subscription.isGithub}}
+      <ExternalLinkTo
+        @href={{config-get "marketplaceEndpoint"}}
+        class="button--blue marketplace-button"
+      >
+        Manage on GitHub Marketplace
+      </ExternalLinkTo>
     {{else}}
-      {{#if this.subscription.isGithub}}
-        <ExternalLinkTo
-          @href={{config-get "marketplaceEndpoint"}}
-          class="button--blue marketplace-button"
-        >
-          Manage on GitHub Marketplace
-        </ExternalLinkTo>
-      {{else}}
-        <BillingProcess 
-          @account={{this.account}} 
-          @plans={{this.plans}} 
-          @newSubscription={{this.newSubscription}}
-        />
-      {{/if}}
+      <BillingProcess 
+        @account={{this.account}} 
+        @plans={{this.plans}} 
+        @newSubscription={{this.newSubscription}}
+      />
     {{/if}}
   </div>
 </div>

@@ -251,13 +251,14 @@
       }
 
       .switch-inner {
-        width: 138px;
-        height: 28px;
+        width: 175px;
+        height: 29px;
         margin-left: -5px;
+        padding-top: 1px;
 
         span {
-          width: 65px;
-          height: 25px;
+          width: 82px;
+          height: 24px;
           line-height: 1.7;
 
           span {
@@ -269,10 +270,6 @@
       .highlight-plan {
         color: $oxide-blue;
         background: rgba(181, 214, 217, 1);
-      }
-
-      .plan-selector {
-        margin-top: 48px;
       }
     }
 
