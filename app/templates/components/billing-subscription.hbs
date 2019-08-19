@@ -12,13 +12,26 @@
       @account={{this.account}}
       @price={{this.price}}
       @planMessage="Valid until"
+      @isActive={{true}}
     />
-    <hr />
-    <BillingAddress @subscription={{this.subscription}} />
-    <PaymentDetails @subscription={{this.subscription}} />
-    <hr />
-  {{/if}}
-  {{#if this.subscription.isExpired}}
+  {{else if this.subscription.isCanceled}}
+    <BillingSummary 
+      @isGithubTrial={{this.isGithubTrial}} 
+      @subscription={{this.subscription}} 
+      @price={{this.price}}
+      @account={{this.account}}
+      @planMessage="Expires on"
+      @isCanceled={{true}}
+    />
+  {{else if this.isPending}}
+    <BillingSummary 
+      @isGithubTrial={{this.isGithubTrial}} 
+      @subscription={{this.subscription}}
+      @account={{this.account}}
+      @price={{this.price}}
+      @isPending={{true}}
+    />
+  {{else if this.subscription.isExpired}}
     <h3>
       Overview
     </h3>
@@ -27,23 +40,7 @@
       that expired on {{moment-format this.subscription.validTo "MMMM D, YYYY"}}.
     </span>
   {{/if}}
-  {{#if this.subscription.isCanceled}}
-    <BillingSummary 
-      @isGithubTrial={{this.isGithubTrial}} 
-      @subscription={{this.subscription}} 
-      @price={{this.price}}
-      @account={{this.account}}
-      @planMessage="Subscription has been canceled, valid until"
-    />
-  {{/if}}
-  {{#if this.isPending}}
 
-    <h3>Overview</h3>
-    <span data-test-pending-message>
-      This subscription is pending verification from Stripe, and should be approved in a few minutes.
-    </span>
-
-  {{/if}}
   {{#if this.subscription.isGithubResubscribable}}
     <ExternalLinkTo @href={{config-get "marketplaceEndpoint"}} class="button--blue marketplace-button">
       Continue with GitHub Marketplace

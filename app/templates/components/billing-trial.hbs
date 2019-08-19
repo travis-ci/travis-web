@@ -1,12 +1,14 @@
 <div class="billing-trial">
-  <h3 data-test-overview-heading='true'>Overview</h3>
   <div class="initial-billing-view">
+    <div class="overview-heading">
+      <h3 data-test-overview-heading='true'>Overview</h3>
+    </div>
     <div class="flex flex--v-center">
       <div class="get-started">
         {{#if this.trial.hasActiveTrial}}
           <p class="get-started__message {{if this.isBuildLessThanEleven 'red' 'color-asphalt-grey'}}" data-test-trial-message='true'>
             You have {{pluralize this.trial.buildsRemaining "trial build"}} left
-          </p> 
+          </p>
           <p class="get-started__start-trial color-asphalt-grey" data-test-trial-subtext='true'>
             The trial includes 2 concurrent jobs for both public and private projects.
           </p>

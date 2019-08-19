@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 import { task } from 'ember-concurrency';
 import { computed } from '@ember/object';
-import { not } from '@ember/object/computed';
+import { not, and } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import config from 'travis/config/environment';
 
@@ -17,6 +17,7 @@ export default Component.extend({
   config,
   openCreditCardForm: false,
   stripeElement: null,
+  subscription: null,
 
   price: computed('subscription.plan.price', 'subscription.plan.annual', function () {
     let price = this.get('subscription.plan.price');
@@ -30,6 +31,7 @@ export default Component.extend({
   }),
 
   monthly: not('subscription.plan.annual'),
+  showAnnualBanner: and('subscription.isStripe', 'subscription.isSubscribed', 'monthly', 'subscription.permissions.write', 'subscription.plan'),
 
   options: {
     hidePostalCode: true,

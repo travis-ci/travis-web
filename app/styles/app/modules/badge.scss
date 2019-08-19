@@ -32,6 +32,11 @@
     background-color: $pebble-grey;
   }
 
+  &.green {
+    color: $turf-green;
+    background-color: rgb(197, 226, 197);
+  }
+
   &.square {
     border-radius: 0;
     border-width: 0;

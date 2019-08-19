@@ -48,7 +48,7 @@
         {{this.source}}
       </p>
     {{/if}}
-    {{#if (and this.subscription.isStripe this.monthly this.subscription.permissions.write this.subscription.plan)}}
+    {{#if this.showAnnualBanner}}
       <span class="notice-banner--yellow" data-test-annual-invitation>
         Get one month for free with
         <ExternalLinkTo

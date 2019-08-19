@@ -15,11 +15,24 @@
           </p>
         {{/if}}
         <div>
-          <p class='plan-overview__name' data-test-plan-name>
+          <p class='plan-overview__name flex flex--v-center' data-test-plan-name>
             {{#if this.subscription.plan }}
               {{concat this.subscription.plan.name ' plan'}} 
             {{else}}
               Unknown plan
+            {{/if}}
+            {{#if this.isPending}}
+              <span class="badge square">
+                pending
+              </span>
+            {{else if this.isActive}}
+              <span class="badge green square">
+                active
+              </span>
+            {{else if this.isCanceled}}
+              <span class="badge green square">
+                canceled
+              </span>
             {{/if}}
           </p>
           <p class='plan-overview__description' data-test-plan-concurrency>
@@ -29,7 +42,10 @@
               Unknown concurrent jobs
             {{/if}}
             <span data-test-plan-message='true' class='plan-overview__description--validity'>
-              {{this.planMessage}} {{moment-format this.subscription.validTo "MMMM D, YYYY"}}
+              {{#if (not this.isPending)}}
+                {{this.planMessage}} 
+                {{moment-format this.subscription.validTo "MMMM D, YYYY"}}
+              {{/if}}
             </span>
           </p>
         </div>
@@ -55,6 +71,11 @@
       </div>
     </section>
   </div>
+    {{#if this.isPending}}
+      <span class="notice-banner--yellow" data-test-trial-running-out='true'>
+        We are currently waiting for Stripe to finish processing your order.
+      </span>
+    {{/if}}
   <div class="flex manage-subscription-buttons">
     <div>
       {{#if this.resubscribeLoading}}
@@ -80,3 +101,7 @@
     </div>
   </div>
 </div>
+<hr />
+<BillingAddress @subscription={{this.subscription}} />
+<PaymentDetails @subscription={{this.subscription}} />
+<hr />
