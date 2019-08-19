@@ -40,13 +40,9 @@ export default Component.extend({
 
       const { clientSecret } = yield newSubscription.save();
       if (clientSecret) {
-        const { error } = yield this.stripe.handleStripePayment.unlinked().perform(clientSecret);
-        if (!error) {
-          yield this.accounts.fetchSubscriptions.perform();
-        }
-      } else {
-        yield this.accounts.fetchSubscriptions.perform();
+        yield this.stripe.handleStripePayment.linked().perform(clientSecret);
       }
+      yield this.accounts.fetchSubscriptions.perform();
     }
   }).drop(),
 

@@ -30,7 +30,7 @@
                 active
               </span>
             {{else if this.isCanceled}}
-              <span class="badge green square">
+              <span class="badge grey square">
                 canceled
               </span>
             {{/if}}
@@ -41,9 +41,9 @@
             {{else}}
               Unknown concurrent jobs
             {{/if}}
-            <span data-test-plan-message='true' class='plan-overview__description--validity'>
+            {{this.planMessage}} 
+            <span data-test-plan-message='true' class='plan-overview__description--validity {{if this.isCanceled 'red'}}'>
               {{#if (not this.isPending)}}
-                {{this.planMessage}} 
                 {{moment-format this.subscription.validTo "MMMM D, YYYY"}}
               {{/if}}
             </span>
@@ -81,7 +81,7 @@
       {{#if this.resubscribeLoading}}
         <LoadingIndicator />
       {{else if (and this.subscription.isResubscribable this.account.hasSubscriptionPermissions)}}
-        <button onClick={{action 'resubscribe'}} class='button--blue' data-test-resubscribe-subscription='true'>
+        <button onClick={{action 'resubscribe'}} class='button--green' data-test-resubscribe-subscription='true'>
           resubscribe
         </button>
       {{else}}
