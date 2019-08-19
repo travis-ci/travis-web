@@ -34,14 +34,14 @@
       <p>{{stripeError.message}}</p>
     {{/if}}
   </StripeCard>
-  {{#if this.isLoading}}
-    <LoadingIndicator/>
-  {{else}}
-    <div class='billing-checkout__payment'>
+  <div class='billing-checkout__payment'>
+    {{#if this.isLoading}}
+      <LoadingIndicator/>
+    {{else}}
       <button class='button--blue' {{action form.submit}} data-test-complete-payment='true'>
         Pay {{format-currency this.selectedPlan.price}}
       </button>
+    {{/if}}
     </div>
-  {{/if}}
  </TravisForm>
 </div>

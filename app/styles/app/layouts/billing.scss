@@ -2,6 +2,7 @@
   h3 {
     color: $oxide-blue;
     font-size: 18px;
+    margin-bottom: 0;
   }
 
   hr {
@@ -242,6 +243,13 @@
     }
 
     .billing-select-plan {
+      h5 {
+        margin: 0;
+        text-transform: uppercase;
+        font-weight: 700;
+        color: $cement-grey;
+      }
+
       .switch-inner {
         width: 138px;
         height: 28px;
@@ -273,12 +281,6 @@
     }
 
     .billing-plan-switch {
-      h5 {
-        margin: 0;
-        text-transform: uppercase;
-        font-weight: 700;
-        color: $cement-grey;
-      }
 
       p {
         margin: 0;
@@ -306,15 +308,14 @@
         &__message {
           font-weight: 300;
           font-size: 24px;
-          color: $asphalt-grey;
-          border-bottom: 2px $pebble-grey solid;
-          margin-bottom: 1.5em;
           display: inline-block;
           margin: 0;
         }
 
         &__start-trial {
-          font-weight: 300;
+          font-size: 14px;
+          margin-top: 7px;
+          margin-bottom: 7px;
         }
       }
 
@@ -329,17 +330,17 @@
         border: 1px solid $pebble-grey;
         padding: 8px;
         border-radius: 5px;
-        font-weight: 300;
 
         &__box {
 
           &--open-source {
-            font-size: 20px;
+            font-size: 16px;
             margin: 0;
           }
 
           &--jobs {
             margin: 5px 0;
+            font-size: 14px;
           }
         }
       }

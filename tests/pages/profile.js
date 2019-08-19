@@ -619,6 +619,7 @@ export default create({
       activateButton: {
         scope: '[data-test-activate-button]',
         isPresent: isPresent(),
+        isHidden: isHidden(),
         click: clickable()
       },
 

@@ -31,21 +31,22 @@ export default Component.extend({
   isLoading: or('createSubscription.isRunning', 'accounts.fetchSubscriptions.isRunning'),
 
   createSubscription: task(function* () {
-    const { stripeElement, account } = this;
+    const { stripeElement, account, newSubscription, selectedPlan } = this;
     const { token: { id, card }, error } = yield this.stripe.createStripeToken.perform(stripeElement);
     if (!error) {
-      this.newSubscription.creditCardInfo.setProperties({ token: id, lastDigits: card.last4 });
+      newSubscription.creditCardInfo.setProperties({ token: id, lastDigits: card.last4 });
       const organizationId = account.type === 'organization' ? Number(account.id) : null;
-      this.newSubscription.setProperties({ organizationId, plan: this.selectedPlan });
+      newSubscription.setProperties({ organizationId, plan: selectedPlan });
 
-      const { clientSecret } = yield this.newSubscription.save();
+      const { clientSecret } = yield newSubscription.save();
       if (clientSecret) {
-        const { error } = this.stripe.handleStripePayment.unlinked().perform(clientSecret);
+        const { error } = yield this.stripe.handleStripePayment.unlinked().perform(clientSecret);
         if (!error) {
-          return yield this.accounts.fetchSubscriptions.perform();
+          yield this.accounts.fetchSubscriptions.perform();
         }
+      } else {
+        yield this.accounts.fetchSubscriptions.perform();
       }
-      yield this.accounts.fetchSubscriptions.perform();
     }
   }).drop(),
 

@@ -1,7 +1,7 @@
 <section class='billing-select-plan'>
   <TravisForm @onSubmit={{action next}} as |form|>
     <h3 data-test-billing-info-title>
-      Billing Cycle
+      Subscribe to a plan
     </h3>
     <div class='flex form-elem flex--v-center flex-wrap billing-plan-switch'>
       <div>
@@ -22,11 +22,11 @@
       <div class='m-l-s'>
         {{#if showMonthly}}
           <h5>
-            Recommendation:
+            billing cycle recommendation:
           </h5>
           <p>
             Switch to annual billing to receive
-            <span class='font--italic font--bolder'>
+            <span class='font--bolder'>
               one month free!
             </span>
           </p>
@@ -34,9 +34,9 @@
       </div>
     </div>
     <div class='plan-selector'>
-      <h3 data-test-choose-plan-heading>
-        Choose a plan for you or your team!
-      </h3>
+      <h5 data-test-choose-plan-heading>
+        Choose number of concurrent jobs
+      </h5>
       <div class='billing-plans flex flex--wrap flex--space-between' data-test-billing-plan-choices>
         {{#each displayedPlans as |plan|}}
           <div
