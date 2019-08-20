@@ -1,15 +1,8 @@
-<UiKit::Tag
-  @tag={{this.tag}}
-  class="
-    {{if this.inline 'inline-flex' 'flex'}}
-    flex-{{this.dir}}
-    flex-{{this.wrap}}
-    items-{{this.alignItems}}
-    justify-{{this.justify}}
-  "
-  ...attributes
->
-  {{yield (hash
+{{#let (element this.tag) as |Tag|}}
+  <Tag
+    class={{this.allClasses}}
+    ...attributes
+  >{{yield (hash
     item=(component "ui-kit/grid-item" grid=this)
-  )}}
-</UiKit::Tag>
+  )}}</Tag>
+{{/let}}

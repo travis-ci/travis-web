@@ -4,16 +4,16 @@ import { checkDictionary } from 'travis/utils/ui-kit/assertions';
 
 // Public dictionaries
 export const COLORS = {
-  BLUE: 'blue-400',
-  GREY: 'grey-700',
+  BLUE: 'blue',
+  GREY: 'grey',
 };
 
 // Private dictionaries
 const DEFAULT_COLOR = COLORS.BLUE;
 
 const BG_COLORS = {
-  [COLORS.BLUE]: COLORS.BLUE,
-  [COLORS.GREY]: COLORS.GREY,
+  [COLORS.BLUE]: 'blue-400',
+  [COLORS.GREY]: 'grey-700',
   disabled: 'grey-200',
   invert: 'transparent',
 };
@@ -26,16 +26,17 @@ const HOVER_BG_COLORS = {
 };
 
 const LABEL_COLORS = {
-  [`${COLORS.BLUE}-invert`]: COLORS.BLUE,
-  [`${COLORS.GREY}-invert`]: COLORS.GREY,
-  disabled: 'grey-200',
+  [`${COLORS.BLUE}-invert`]: 'blue-400',
+  [`${COLORS.GREY}-invert`]: 'grey-700',
+  disabled: 'white',
+  'disabled-invert': 'grey-200',
   default: 'white',
 };
 
 export default Component.extend({
+  tagName: '',
 
   // Public interface
-  tagName: '',
   role: 'button',
   color: DEFAULT_COLOR,
   invert: false,
@@ -61,9 +62,13 @@ export default Component.extend({
 
   labelColor: computed('color', 'disabled', 'invert', function () {
     if (this.invert) {
-      return this.disabled ? LABEL_COLORS['disabled'] : LABEL_COLORS[`${this.color}-invert`];
+      return this.disabled
+        ? LABEL_COLORS['disabled-invert']
+        : LABEL_COLORS[`${this.color}-invert`];
     } else {
-      return LABEL_COLORS[this.color] || LABEL_COLORS['default'];
+      return this.disabled
+        ? LABEL_COLORS['disabled']
+        : LABEL_COLORS[this.color] || LABEL_COLORS['default'];
     }
   }),
 
@@ -72,7 +77,7 @@ export default Component.extend({
   }),
 
   // Lifecycle
-  init() {
+  didReceiveAttrs() {
     this._super(...arguments);
 
     checkDictionary(this.color, COLORS, '@color', 'Button');

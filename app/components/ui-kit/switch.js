@@ -29,9 +29,9 @@ const BG_COLORS = {
 
 // Component definition
 export default Component.extend({
+  tagName: '',
 
   // Public interface
-  tagName: '',
   active: false,
   disabled: false,
   size: DEFAULT_SIZE,
@@ -51,10 +51,10 @@ export default Component.extend({
   inactiveBgColor: computed(() => BG_COLORS['inactive']),
 
   // Lifecycle
-  init() {
+  didReceiveAttributes() {
     this._super(...arguments);
 
-    checkDictionary(this.color, COLORS, '@color', 'Button');
+    checkDictionary(this.color, COLORS, '@color', 'Switch');
     checkDictionary(this.size, SIZES, '@size', 'Switch');
   },
 

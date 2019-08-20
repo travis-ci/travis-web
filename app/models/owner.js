@@ -68,10 +68,10 @@ export default Model.extend({
     return this.tasks.fetchBetaMigrationRequestsTask.perform();
   },
 
-  migrationBetaRequests: computed('tasks.fetchBetaMigrationRequestsTask.lastSuccessful.value.[]', 'id', function () {
+  migrationBetaRequests: computed('tasks.fetchBetaMigrationRequestsTask.lastSuccessful.value.[]', 'login', function () {
     const requests = this.tasks.fetchBetaMigrationRequestsTask.get('lastSuccessful.value') || [];
     return requests.filter(request =>
-      this.isUser && request.ownerId == this.id || request.organizations.mapBy('id').includes(this.id)
+      this.isUser && request.ownerName == this.login || request.organizations.mapBy('login').includes(this.login)
     );
   }),
 

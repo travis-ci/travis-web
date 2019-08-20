@@ -1,11 +1,6 @@
-<UiKit::Tag
-  @tag={{this.tag}}
-  class="
-    {{this.baseClass}}
-    {{this.smClass}}
-    {{this.mdClass}}
-    {{this.lgClass}}
-    {{this.xlClass}}
-  "
-  ...attributes
->{{yield}}</UiKit::Tag>
+{{#let (element this.tag) as |Tag|}}
+  <Tag
+    class={{this.allClasses}}
+    ...attributes
+  >{{yield}}</Tag>
+{{/let}}

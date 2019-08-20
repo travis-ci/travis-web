@@ -106,7 +106,8 @@ function generateRepositoriesForMigration(server, user) {
       login: user.login,
     },
     permissions: {
-      admin: true
+      admin: true,
+      migrate: true
     },
     active: true,
   });

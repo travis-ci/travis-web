@@ -1,14 +1,26 @@
 import Component from '@ember/component';
-import { checkDictionary } from 'travis/utils/ui-kit/assertions';
+import { reads } from '@ember/object/computed';
+
 import spacingMixin from 'travis/mixins/ui-kit/spacing';
-import { computed } from '@ember/object';
-import { none, not, reads } from '@ember/object/computed';
+import borderMixin from 'travis/mixins/ui-kit/border';
+import { checkDictionary } from 'travis/utils/ui-kit/assertions';
+import prefix from 'travis/utils/ui-kit/prefix';
+import concat from 'travis/utils/ui-kit/concat';
+
+const COLORS = {
+  WHITE: 'white',
+};
+
+const BG_COLORS = {
+  [COLORS.WHITE]: 'white',
+};
 
 const DISPLAYS = {
   BLOCK: 'block',
   INLINE_BLOCK: 'inline-block',
   FLEX: 'flex',
 };
+const DEFAULT_DISPLAY = DISPLAYS.BLOCK;
 
 const TEXT_ALIGNMENTS = {
   LEFT: 'left',
@@ -40,12 +52,10 @@ const RADII = {
   FULL: 'full',
 };
 
-// Border
-const BORDER_WIDTHS = {
-  NONE: 'none',
-  ONE: '1',
+const OVERFLOWS = {
+  AUTO: 'auto',
+  HIDDEN: 'hidden',
 };
-const BASE_BORDER_WIDTH = BORDER_WIDTHS.ONE;
 
 // Position
 const POSITION_TYPES = {
@@ -56,7 +66,7 @@ const POSITION_TYPES = {
   STICKY: 'sticky',
 };
 const POSITION_VALUES = {
-  ZERO: '0',
+  ZERO: 0,
   AUTO: 'auto',
 };
 const POSITION_INSETS = {
@@ -69,15 +79,16 @@ const POSITION_INSETS = {
 };
 
 // Component definition
-export default Component.extend(spacingMixin, {
+export default Component.extend(spacingMixin, borderMixin, {
   tagName: '',
 
   // Public interface //
   tag: 'div',
 
   color: null,
-  display: null,
+  display: DEFAULT_DISPLAY,
   layer: null,
+  overflow: null,
   radius: null,
   shadow: null,
   textAlign: null,
@@ -93,141 +104,59 @@ export default Component.extend(spacingMixin, {
   position: null,
 
   // Private //
-  allClasses: computed(
-    function () {
-      return `
-        ${this.colorClass}
-        ${this.displayClass}
-        ${this.layerClass}
-        ${this.radiusClass}
-        ${this.shadowClass}
-        ${this.textAlignClass}
-        ${this.borderColorClass}
-        ${this.borderWidthClass}
-        ${this.widthClass}
-        ${this.heightClass}
-        ${this.marginClasses}
-        ${this.paddingClasses}
-        ${this.positionClasses}
-      `.replace(/\s\s+/g, ' ');
-    }
-  ),
-
-  hasNoColor: none('color'),
-  colorClass: computed('hasNoColor', 'color', function () {
-    return this.hasNoColor ? '' : `bg-${this.color}`;
-  }),
-
+  colorClass: prefix('color', 'bg', { dictionary: BG_COLORS }),
   displayClass: reads('display'),
+  layerClass: prefix('layer', 'z'),
+  overflowClass: prefix('overflow', 'overflow'),
+  radiusClass: prefix('radius', 'rounded'),
+  shadowClass: prefix('shadow', 'shadow'),
+  textAlignClass: prefix('textAlign', 'text'),
 
-  hasNoLayer: none('layer'),
-  layerClass: computed('hasNoLayer', 'layer', function () {
-    return this.hasNoLayer ? '' : `z-${this.layer}`;
-  }),
-
-  hasNoRadius: none('radius'),
-  radiusClass: computed('hasNoRadius', 'radius', function () {
-    return this.hasNoRadius ? '' : `rounded-${this.radius}`;
-  }),
-
-  hasNoShadow: none('shadow'),
-  shadowClass: computed('hasNoShadow', 'shadow', function () {
-    return this.hasNoShadow ? '' : `shadow-${this.shadow}`;
-  }),
-
-  hasNoTextAlign: none('textAlign'),
-  textAlignClass: computed('hasNoTextAlign', 'textAlign', function () {
-    return this.hasNoTextAlign ? '' : `text-${this.textAlign}`;
-  }),
-
-  // Border
-  hasNoBorderColor: none('borderColor'),
-  hasBorderColor: not('hasNoBorderColor'),
-  borderColorClass: computed('hasNoBorderColor', 'borderColor', function () {
-    return this.hasNoBorderColor ? '' : `border-${this.borderColor}`;
-  }),
-
-  hasNoBorderWidth: none('borderWidth'),
-  borderWidthClass: computed('hasNoBorderWidth', 'hasBorderColor', 'borderWidth', function () {
-    let currentBorderWidth = this.borderWidth || '';
-    if (this.hasNoBorderWidth && this.hasBorderColor) {
-      currentBorderWidth = BASE_BORDER_WIDTH;
-    }
-    return currentBorderWidth.length === 0 ? '' : `border-${currentBorderWidth}`;
-  }),
-
-  // Width & Height
-  hasNoWidth: none('width'),
-  widthClass: computed('hasNoWidth', 'width', function () {
-    return this.hasNoWidth ? '' : `w-${this.width}`;
-  }),
-
-  hasNoHeight: none('height'),
-  heightClass: computed('hasNoHeight', 'height', function () {
-    return this.hasNoHeight ? '' : `h-${this.height}`;
-  }),
+  widthClass: prefix('width', 'w'),
+  heightClass: prefix('height', 'h'),
 
   // Position
-  hasNoPositionType: none('position.type'),
-  positionType: computed('hasNoPositionType', 'position.type', function () {
-    return this.hasNoPositionType ? '' : this.position.type;
-  }),
+  positionType: reads('position.type'),
+  positionTop: prefix('position.top', 'top'),
+  positionRight: prefix('position.right', 'right'),
+  positionBottom: prefix('position.bottom', 'bottom'),
+  positionLeft: prefix('position.left', 'left'),
+  positionInset: prefix('position.inset', 'inset'),
 
-  hasNoPositionTop: none('position.top'),
-  positionTop: computed('hasNoPositionTop', 'position.top', function () {
-    return this.hasNoPositionTop ? '' : `top-${this.position.top}`;
-  }),
-
-  hasNoPositionRight: none('position.right'),
-  positionRight: computed('hasNoPositionRight', 'position.right', function () {
-    return this.hasNoPositionRight ? '' : `right-${this.position.right}`;
-  }),
-
-  hasNoPositionBottom: none('position.bottom'),
-  positionBottom: computed('hasNoPositionBottom', 'position.bottom', function () {
-    return this.hasNoPositionBottom ? '' : `bottom-${this.position.bottom}`;
-  }),
-
-  hasNoPositionLeft: none('position.left'),
-  positionLeft: computed('hasNoPositionLeft', 'position.left', function () {
-    return this.hasNoPositionLeft ? '' : `left-${this.position.left}`;
-  }),
-
-  hasNoPositionInset: none('position.inset'),
-  positionInset: computed('hasNoPositionInset', 'position.inset', function () {
-    return this.hasNoPositionInset ? '' : `inset-${this.position.inset}`;
-  }),
-
-  positionClasses: computed(
+  // Collected classes
+  allClasses: concat(
+    'colorClass',
+    'displayClass',
+    'layerClass',
+    'overflowClass',
+    'radiusClass',
+    'shadowClass',
+    'textAlignClass',
+    'widthClass',
+    'heightClass',
     'positionType',
     'positionTop',
     'positionRight',
     'positionBottom',
     'positionLeft',
-    'positionX',
-    'positionY',
-    function () {
-      return `
-        ${this.positionType}
-        ${this.positionTop}
-        ${this.positionRight}
-        ${this.positionBottom}
-        ${this.positionLeft}
-        ${this.positionInset}
-      `;
-    }
+    'positionInset',
+    'borderColorClass',
+    'borderWidthClasses',
+    'marginClasses',
+    'paddingClasses',
   ),
 
   // Lifecycle
-  init() {
+  didReceiveAttrs() {
     this._super(...arguments);
 
+    checkDictionary(this.color, COLORS, '@color', 'Box');
     checkDictionary(this.display, DISPLAYS, '@display', 'Box');
     checkDictionary(this.layer, LAYERS, '@layer', 'Box');
+    checkDictionary(this.overflow, OVERFLOWS, '@overflow', 'Box');
     checkDictionary(this.radius, RADII, '@radius', 'Box');
     checkDictionary(this.shadow, SHADOWS, '@shadow', 'Box');
     checkDictionary(this.textAlign, TEXT_ALIGNMENTS, '@textAlign', 'Box');
-    checkDictionary(this.borderWidth, BORDER_WIDTHS, '@borderWidth', 'Box');
 
     const { top, right, bottom, left, inset, type } = this.position || {};
     checkDictionary(type, POSITION_TYPES, '@position.type', 'Box');

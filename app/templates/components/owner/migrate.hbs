@@ -151,9 +151,21 @@
       </div>
     {{/if}}
   {{else}}
-    The migration feature is not enabled on your account. You can subscribe to the beta at
-    <ExternalLinkTo @href="https://travis-ci.org/account" class="link link--teal link--underline">
-      travis-ci.org
-    </ExternalLinkTo>
+    <p>
+      The migration feature is not enabled on your account. To enable it you can sign up for the beta.
+    </p>
+    <div>
+      <button
+        class="button--blue"
+        {{on 'click' (fn (mut this.isShowingMigrateBetaDialog) true)}}
+      >
+        Sign up for the beta
+      </button>
+    </div>
   {{/if}}
 </div>
+
+<Dialogs::MigrateBeta
+  @isOpen={{this.isShowingMigrateBetaDialog}}
+  @onClose={{fn (mut this.isShowingMigrateBetaDialog) false}}
+/>
