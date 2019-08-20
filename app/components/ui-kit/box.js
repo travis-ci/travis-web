@@ -20,6 +20,7 @@ const DISPLAYS = {
   INLINE_BLOCK: 'inline-block',
   FLEX: 'flex',
 };
+const DEFAULT_DISPLAY = DISPLAYS.BLOCK;
 
 const TEXT_ALIGNMENTS = {
   LEFT: 'left',
@@ -86,7 +87,7 @@ export default Component.extend(spacingMixin, borderMixin, {
   tag: 'div',
 
   color: null,
-  display: null,
+  display: DEFAULT_DISPLAY,
   layer: null,
   overflow: null,
   radius: null,

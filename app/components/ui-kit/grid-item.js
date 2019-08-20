@@ -4,6 +4,23 @@ import { or } from '@ember/object/computed';
 import { requireProp } from 'travis/utils/ui-kit/assertions';
 import concat from 'travis/utils/ui-kit/concat';
 
+function screenClass(key, screen) {
+  return computed('sizePrefix', key, function () {
+    const val = this.get(key);
+    const screenPrefix = screen === 'base' ? '' : `${screen}:`;
+
+    if (typeof val === 'string') {
+      return `${screenPrefix}${val}`;
+    }
+
+    if (typeof val === 'number') {
+      return `${screenPrefix}${this.sizePrefix}-1/${val}`.replace('1/1', 'full');
+    }
+
+    return null;
+  });
+}
+
 export default Component.extend({
   tagName: '',
 
@@ -27,60 +44,11 @@ export default Component.extend({
   currentLg: or('lg', 'grid.lg'),
   currentXl: or('xl', 'grid.xl'),
 
-  baseClass: computed('sizePrefix', 'currentBase', function () {
-    const val = this.currentBase;
-    if (typeof val === 'string') {
-      return val;
-    }
-    if (typeof val === 'number') {
-      return `${this.sizePrefix}-1/${val}`.replace('1/1', 'full');
-    }
-    return '';
-  }),
-
-  smClass: computed('sizePrefix', 'currentSm', function () {
-    const val = this.currentSm;
-    if (typeof val === 'string') {
-      return `sm:${val}`;
-    }
-    if (typeof val === 'number') {
-      return `sm:${this.sizePrefix}-1/${val}`.replace('1/1', 'full');
-    }
-    return '';
-  }),
-
-  mdClass: computed('sizePrefix', 'currentMd', function () {
-    const val = this.currentMd;
-    if (typeof val === 'string') {
-      return `md:${val}`;
-    }
-    if (typeof val === 'number') {
-      return `md:${this.sizePrefix}-1/${val}`.replace('1/1', 'full');
-    }
-    return '';
-  }),
-
-  lgClass: computed('sizePrefix', 'currentLg', function () {
-    const val = this.currentLg;
-    if (typeof val === 'string') {
-      return `lg:${val}`;
-    }
-    if (typeof val === 'number') {
-      return `lg:${this.sizePrefix}-1/${val}`.replace('1/1', 'full');
-    }
-    return '';
-  }),
-
-  xlClass: computed('sizePrefix', 'currentXl', function () {
-    const val = this.currentXl;
-    if (typeof val === 'string') {
-      return `xl:${val}`;
-    }
-    if (typeof val === 'number') {
-      return `xl:${this.sizePrefix}-1/${val}`.replace('1/1', 'full');
-    }
-    return '';
-  }),
+  baseClass: screenClass('currentBase', 'base'),
+  smClass: screenClass('currentSm', 'sm'),
+  mdClass: screenClass('currentMd', 'md'),
+  lgClass: screenClass('currentLg', 'lg'),
+  xlClass: screenClass('currentXl', 'xl'),
 
   allClasses: concat(
     'baseClass',
