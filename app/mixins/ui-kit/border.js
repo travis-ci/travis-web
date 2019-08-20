@@ -5,10 +5,16 @@ import prefix from 'travis/utils/ui-kit/prefix';
 import concat from 'travis/utils/ui-kit/concat';
 
 // Border
-const BORDER_WIDTHS = {
+const WIDTHS = {
   NONE: 'none',
-  ONE: 1,
+  XS: 'xs',
 };
+
+const BORDER_WIDTHS = {
+  [WIDTHS.NONE]: 'none',
+  [WIDTHS.XS]: '1',
+};
+
 
 export default Mixin.create({
   // Public interface //
@@ -23,10 +29,10 @@ export default Mixin.create({
   borderBottomWidth: or('borderWidth.bottom', 'borderWidth.y', 'borderWidth.all'),
   borderLeftWidth: or('borderWidth.left', 'borderWidth.x', 'borderWidth.all'),
 
-  borderTopWidthClass: prefix('borderTopWidth', 'border-t'),
-  borderRightWidthClass: prefix('borderRightWidth', 'border-r'),
-  borderBottomWidthClass: prefix('borderBottomWidth', 'border-b'),
-  borderLeftWidthClass: prefix('borderLeftWidth', 'border-l'),
+  borderTopWidthClass: prefix('borderTopWidth', 'border-t', { dictionary: BORDER_WIDTHS }),
+  borderRightWidthClass: prefix('borderRightWidth', 'border-r', { dictionary: BORDER_WIDTHS }),
+  borderBottomWidthClass: prefix('borderBottomWidth', 'border-b', { dictionary: BORDER_WIDTHS }),
+  borderLeftWidthClass: prefix('borderLeftWidth', 'border-l', { dictionary: BORDER_WIDTHS }),
 
   borderWidthClasses: concat(
     'borderTopWidthClass',
@@ -40,12 +46,12 @@ export default Mixin.create({
     this._super(...arguments);
 
     const { top, right, bottom, left, x, y, all } = this.borderWidth || {};
-    checkDictionary(top, BORDER_WIDTHS, '@borderWidth.top');
-    checkDictionary(right, BORDER_WIDTHS, '@borderWidth.right');
-    checkDictionary(bottom, BORDER_WIDTHS, '@borderWidth.bottom');
-    checkDictionary(left, BORDER_WIDTHS, '@borderWidth.left');
-    checkDictionary(x, BORDER_WIDTHS, '@borderWidth.x');
-    checkDictionary(y, BORDER_WIDTHS, '@borderWidth.y');
-    checkDictionary(all, BORDER_WIDTHS, '@borderWidth.all');
+    checkDictionary(top, WIDTHS, '@borderWidth.top');
+    checkDictionary(right, WIDTHS, '@borderWidth.right');
+    checkDictionary(bottom, WIDTHS, '@borderWidth.bottom');
+    checkDictionary(left, WIDTHS, '@borderWidth.left');
+    checkDictionary(x, WIDTHS, '@borderWidth.x');
+    checkDictionary(y, WIDTHS, '@borderWidth.y');
+    checkDictionary(all, WIDTHS, '@borderWidth.all');
   },
 });
