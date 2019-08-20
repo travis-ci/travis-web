@@ -9,7 +9,7 @@
     <UiKit::Text @tag='h1' @size='6xl' @weight='bold'>
       Built for every team
     </UiKit::Text>
-    <UiKit::Text @tag='p'>
+    <UiKit::Text>
       Set up your first project in just one minute.
       <br />
       Your first 100 builds are free! No credit card required.
@@ -19,14 +19,14 @@
   {{!-- Product section --}}
   <UiKit::Box @tag='section' @margin={{hash bottom=16}}>
     <UiKit::Grid @align='center' @justify='start'>
-      <UiKit::Text @transform='uppercase' @weight='bold' @margin={{hash right=2}}>
+      <UiKit::Text @tag='span' @transform='uppercase' @weight='bold' @margin={{hash right=2}}>
         Monthly
       </UiKit::Text>
 
       <UiKit::Switch @onClick={{fn (mut showAnnual)}} @active={{showAnnual}} />
 
-      <UiKit::Text @color='blue' @margin={{hash left=2}}>
-        <UiKit::Text @transform='uppercase' @weight='bold'>Annual</UiKit::Text>
+      <UiKit::Text @tag='span' @color='blue' @margin={{hash left=2}}>
+        <UiKit::Text @tag='span' @color='blue' @transform='uppercase' @weight='bold'>Annual</UiKit::Text>
         (Get 1 month free!)
       </UiKit::Text>
     </UiKit::Grid>
@@ -67,7 +67,7 @@
                   {{plan.description}}
                 </UiKit::Text>
                 <div>
-                  <UiKit::Text @color='green' @weight='bold'>
+                  <UiKit::Text @tag='span' @color='green' @weight='bold'>
                     {{plan.builds}}
                   </UiKit::Text>
                   {{pluralize plan.builds "Concurrent job" without-count=true}}
@@ -91,10 +91,10 @@
                   Unlimited collaborators
                 </UiKit::Box>
                 <UiKit::Box @margin={{hash bottom=6}}>
-                  <UiKit::Text @color='green' @size='xl' @weight='bold'>
+                  <UiKit::Text @tag='span' @color='green' @size='xl' @weight='bold'>
                     ${{plan.monthlyPriceRounded}}
                   </UiKit::Text>
-                  <UiKit::Text @size='sm'>
+                  <UiKit::Text @tag='span' @size='sm'>
                     {{plan.currency}}
                     per month
                     {{if showAnnual 'billed annually'}}

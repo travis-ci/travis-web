@@ -9,19 +9,24 @@ const COLORS = {
   BLUE: 'blue',
   GREEN: 'green',
   GREY: 'grey',
+  GREY_DARK: 'grey-dark',
 };
+const DEFAULT_TEXT_COLOR = COLORS.GREY_DARK;
 
 const TEXT_COLORS = {
   [COLORS.BLUE]: 'blue-400',
   [COLORS.GREEN]: 'green-400',
   [COLORS.GREY]: 'grey-400',
+  [COLORS.GREY_DARK]: 'grey-800',
 };
+
 
 const FAMILIES = {
   SANS: 'sans',
   SERIF: 'serif',
   MONO: 'mono',
 };
+const DEFAULT_FAMILY = FAMILIES.SANS;
 
 const SIZES = {
   XS: 'xs',
@@ -35,13 +40,7 @@ const SIZES = {
   XL5: '5xl',
   XL6: '6xl',
 };
-
-const WEIGHTS = {
-  LIGHT: 'light',
-  NORMAL: 'normal',
-  SEMIBOLD: 'semibold',
-  BOLD: 'bold',
-};
+const DEFAULT_SIZE = SIZES.BASE;
 
 const TRANSFORMS = {
   UPPERCASE: 'uppercase',
@@ -49,19 +48,28 @@ const TRANSFORMS = {
   CAPITALIZE: 'capitalize',
   NORMAL: 'normal-case',
 };
+const DEFAULT_TRANSFORM = TRANSFORMS.NORMAL;
+
+const WEIGHTS = {
+  LIGHT: 'light',
+  NORMAL: 'normal',
+  SEMIBOLD: 'semibold',
+  BOLD: 'bold',
+};
+const DEFAULT_WEIGHT = WEIGHTS.NORMAL;
 
 // Component definition
 export default Component.extend(spacingMixin, {
   tagName: '',
 
   // Public interface
-  tag: 'span',
+  tag: 'p',
 
-  color: null,
-  family: null,
-  size: null,
-  transform: null,
-  weight: null,
+  color: DEFAULT_TEXT_COLOR,
+  family: DEFAULT_FAMILY,
+  size: DEFAULT_SIZE,
+  transform: DEFAULT_TRANSFORM,
+  weight: DEFAULT_WEIGHT,
 
   // Private
   colorClass: prefix('color', 'text', { dictionary: TEXT_COLORS }),
