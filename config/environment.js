@@ -1,6 +1,7 @@
 /* eslint-env node */
 'use strict';
 
+const { screens } = require('./screens.js');
 const { plans } = require('./plans.js');
 
 module.exports = function (environment) {
@@ -11,6 +12,7 @@ module.exports = function (environment) {
     locationType: 'auto',
     defaultTitle: 'Travis CI',
     plans,
+    screens,
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build

@@ -1,69 +1,132 @@
-{{#travis-layout layoutName="layouts/center" class="text-grey-800 font-sans"}}
-  <section class="px-4 py-3 mb-16">
-    {{!-- Header section --}}
-    <header class="text-center mb-16">
-      <h1 class="text-6xl font-bold">Built for every team</h1>
-      <p>Set up your first project in just one minute.<br>
-        Your first 100 builds are free! No credit card required.
-      </p>
-    </header>
+<TravisLayout @layoutName="layouts/center">
 
-    <ul class="list--plans">
-      <li class="plan">
-        <p class="plans-price">$69</p>
-        <p class="plans-label plans-timeframe">per month</p>
-        <h2 class="plans-name">Bootstrap</h2>
-        <h3 class="plans-label">Ideal for hobby projects</h3>
-        <ul class="list">
-          <li><span class="list-em">1</span>Concurrent job</li>
-          <li>{{svg-jar 'icon-passed' class="w-4 fill-transparent stroke-current text-green"}} Unlimited build minutes</li>
-          <li>{{svg-jar 'icon-passed' class="w-4"}} Unlimited repositories</li>
-          <li>{{svg-jar 'icon-passed' class="w-4"}} Unlimited collaborators</li>
-        </ul>
-      </li>
-      <li class="plan--important">
-        <p class="plans-price">$129</p>
-        <p class="plans-label plans-timeframe">per month</p>
-        <h2 class="plans-name">Startup</h2>
-        <h3 class="plans-label">Best for small teams</h3>
-        <ul class="list">
-          <li><span class="list-em">2</span>Concurrent jobs</li>
-          <li>{{svg-jar 'icon-passed' class="w-4"}} Unlimited build minutes</li>
-          <li>{{svg-jar 'icon-passed' class="w-4"}} Unlimited repositories</li>
-          <li>{{svg-jar 'icon-passed' class="w-4"}} Unlimited collaborators</li>
-        </ul>
-        <div class="align-center">
-          <a href="https://travis-ci.com/signin" class="plans-button--blue" {{action 'gaCta' 'plans-table'}}>Start Trial</a>
-        </div>
-      </li>
+  {{!-- Header section --}}
+  <UiKit::Box
+    @tag='section'
+    @margin={{hash top=3 bottom=16}}
+    @textAlign='center'
+  >
+    <UiKit::Text @tag='h1' @size='6xl' @weight='bold'>
+      Built for every team
+    </UiKit::Text>
+    <UiKit::Text>
+      Set up your first project in just one minute.
+      <br />
+      Your first 100 builds are free! No credit card required.
+    </UiKit::Text>
+  </UiKit::Box>
 
-      <li class="plan">
-        <p class="plans-price">$249</p>
-        <p class="plans-label plans-timeframe">per month</p>
-        <h2 class="plans-name">Small Business</h2>
-        <h3 class="plans-label">Great for growing teams</h3>
-        <ul class="list">
-          <li><span class="list-em">5</span>Concurrent jobs</li>
-          <li>{{svg-jar 'icon-passed' class="w-4"}} Unlimited build minutes</li>
-          <li>{{svg-jar 'icon-passed' class="w-4"}} Unlimited repositories</li>
-          <li>{{svg-jar 'icon-passed' class="w-4"}} Unlimited collaborators</li>
-        </ul>
-      </li>
-      <li class="plan">
-        <p class="plans-price">$489</p>
-        <p class="plans-label plans-timeframe">per month</p>
-        <h2 class="plans-name">Premium</h2>
-        <h3 class="plans-label">Perfect for larger teams</h3>
-        <ul class="list">
-          <li><span class="list-em">10</span>Concurrent jobs</li>
-          <li>{{svg-jar 'icon-passed' class="w-4"}} Unlimited build minutes</li>
-          <li>{{svg-jar 'icon-passed' class="w-4"}} Unlimited repositories</li>
-          <li>{{svg-jar 'icon-passed' class="w-4"}} Unlimited collaborators</li>
-        </ul>
-      </li>
-    </ul>
-    <p class="plans-label align-right plans-prices">All prices shown in USD</p>
-  </section>
+  {{!-- Product section --}}
+  <UiKit::Box @tag='section' @margin={{hash bottom=16}}>
+    <UiKit::Grid @align='center' @justify='start'>
+      <UiKit::Text @tag='span' @transform='uppercase' @weight='bold' @margin={{hash right=2}}>
+        Monthly
+      </UiKit::Text>
+
+      <UiKit::Switch @onClick={{fn (mut showAnnual)}} @active={{showAnnual}} />
+
+      <UiKit::Text @tag='span' @color='blue' @margin={{hash left=2}}>
+        <UiKit::Text @tag='span' @color='blue' @transform='uppercase' @weight='bold'>Annual</UiKit::Text>
+        (Get 1 month free!)
+      </UiKit::Text>
+    </UiKit::Grid>
+
+    <UiKit::Box @position={{hash type='relative'}} @margin={{hash top=3}}>
+      <UiKit::Box
+        @position={{hash type='absolute' top=0 right=0}}
+        @margin={{hash top=-16 right=-10}}
+        @height={{64}}
+      >
+        <SvgImage @name="grey-blob" @height={{224}} />
+      </UiKit::Box>
+
+      <UiKit::Box
+        @color='white'
+        @layer='10'
+        @overflow='hidden'
+        @position={{hash type='relative'}}
+        @radius='base'
+        @shadow='base'
+      >
+        <UiKit::Grid @base={{2}} @md={{4}} as |grid|>
+          {{#each plansToDisplay as |plan|}}
+            <grid.item>
+              <UiKit::Box @borderColor='grey-150' @borderWidth={{hash all='xs'}} @padding={{hash all=4}}>
+                <UiKit::Text @tag='h3' @size='3xl' @weight='bold'>
+                  {{plan.name}}
+                </UiKit::Text>
+
+                <UiKit::Text
+                  @tag='h4'
+                  @color='grey'
+                  @margin={{hash bottom=6}}
+                  @size='lg'
+                  @transform='uppercase'
+                  @weight='bold'
+                >
+                  {{plan.description}}
+                </UiKit::Text>
+                <div>
+                  <UiKit::Text @tag='span' @color='green' @weight='bold'>
+                    {{plan.builds}}
+                  </UiKit::Text>
+                  {{pluralize plan.builds "Concurrent job" without-count=true}}
+                </div>
+                <div>
+                  <UiKit::Box @display='inline-block' @width={{3}}>
+                    <SvgImage @name="features-check" />
+                  </UiKit::Box>
+                  Unlimited build minutes
+                </div>
+                <div>
+                  <UiKit::Box @display='inline-block' @width={{3}}>
+                    <SvgImage @name="features-check" />
+                  </UiKit::Box>
+                  Unlimited repositories
+                </div>
+                <UiKit::Box @margin={{hash bottom=6}}>
+                  <UiKit::Box @display='inline-block' @width={{3}}>
+                    <SvgImage @name="features-check" />
+                  </UiKit::Box>
+                  Unlimited collaborators
+                </UiKit::Box>
+                <UiKit::Box @margin={{hash bottom=6}}>
+                  <UiKit::Text @tag='span' @color='green' @size='xl' @weight='bold'>
+                    ${{plan.monthlyPriceRounded}}
+                  </UiKit::Text>
+                  <UiKit::Text @tag='span' @size='sm'>
+                    {{plan.currency}}
+                    per month
+                    {{if showAnnual 'billed annually'}}
+                  </UiKit::Text>
+                </UiKit::Box>
+              </UiKit::Box>
+            </grid.item>
+          {{/each}}
+        </UiKit::Grid>
+
+        <UiKit::Box @borderColor='grey-150' @borderWidth={{hash all='xs'}} @padding={{hash all=4}} @textAlign='center'>
+          <UiKit::Button @onClick={{action 'gaCta' 'plans-table'}}>
+            Start Your Free Trial
+          </UiKit::Button>
+        </UiKit::Box>
+      </UiKit::Box>
+
+      <UiKit::Box
+        @layer='0'
+        @margin={{hash bottom=-10 left=-10}}
+        @position={{hash type='absolute' bottom=0 left=0}}
+        @width={{56}}
+      >
+        <SvgImage @name="yellow-waves" />
+      </UiKit::Box>
+    </UiKit::Box>
+  </UiKit::Box>
+
+  <UiKit::Button @onClick={{action 'gaCta' 'plans-oss'}} @color='grey' @invert={{true}}>
+    Set up your Open Source project now
+  </UiKit::Button>
+
   <section class="inner section--two section--os">
     <div>
       <h2 class="h2--grey section-headline">Always <span class="em--yellow">free</span> for open source projects</h2>
@@ -84,7 +147,7 @@
       <a href="https://enterprise.travis-ci.com" title="learn more about Travis CI" class="plans-button--blue">Learn more about Travis CI Enterprise</a>
     </div>
     <div>
-      {{svg-jar 'enterprise-servers'}}
+      <SvgImage @name='enterprise-servers'/>
     </div>
   </section>
 
@@ -125,4 +188,4 @@
       </li>
     </ul>
   </section>
-{{/travis-layout}}
+</TravisLayout>
