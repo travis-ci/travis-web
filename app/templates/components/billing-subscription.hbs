@@ -32,7 +32,6 @@
       @isPending={{true}}
     />
   {{else if this.subscription.isExpired}}
-  
     <BillingSummary 
       @isGithubTrial={{this.isGithubTrial}} 
       @subscription={{this.subscription}}
@@ -44,13 +43,30 @@
   {{/if}}
 
   {{#if this.subscription.isGithubResubscribable}}
-    <ExternalLinkTo @href={{config-get "marketplaceEndpoint"}} class="button--blue marketplace-button">
-      Continue with GitHub Marketplace
-    </ExternalLinkTo>
-    <div class="subscription-divider"></div>
-    <p class="new-subscription-message">
-      Or subscribe directly with Travis CI
-    </p>
-    <NewSubscriptionButton @account={{this.account}} />
+    {{#if this.newSubscriptionProcess}}
+      <BillingProcess 
+        @account={{this.account}} 
+        @plans={{this.plans}} 
+        @newSubscription={{this.newSubscription}}
+      />
+    {{else}}
+      <ExternalLinkTo @href={{config-get "marketplaceEndpoint"}} class="button--blue marketplace-button">
+        Continue with GitHub Marketplace
+      </ExternalLinkTo>
+      <div class="subscription-divider"></div>
+      <p class="new-subscription-message">
+        Or subscribe directly with Travis CI
+      </p>
+      {{#if this.account.hasSubscriptionPermissions}}
+        <button onClick={{action (mut this.newSubscriptionProcess) true}} class="button--green" data-test-manage-button='true'>
+          New subscription
+        </button>
+      {{else}}
+        <div class="button--green manage-subscription disabled new" data-test-manage-button='true'>
+          New subscription
+        </div>
+        <EmberTooltip @text="You do not have permission to create a subscription" />
+      {{/if}}
+    {{/if}}
   {{/if}}
 </section>

@@ -351,9 +351,7 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining(`5 concurrent jobs Expires ${momentFromNow} on June 19`);
     assert.equal(profilePage.billing.planMessage.text, `Expires ${momentFromNow} on June 19`);
     assert.equal(profilePage.billing.marketplaceButton.text, 'Continue with GitHub Marketplace');
-    assert.equal(profilePage.billing.marketplaceButton.href, 'https://github.com/marketplace/travis-ci/');
-    assert.equal(profilePage.billing.manageButton.text, 'New subscription');
-    assert.equal(profilePage.billing.manageButton.href, 'https://billing.travis-ci.com/subscriptions/new?id=user');
+    assert.equal(profilePage.billing.newSubscriptionButton.text, 'New subscription');
 
     assert.ok(profilePage.billing.userDetails.isHidden);
     assert.ok(profilePage.billing.billingDetails.isHidden);
@@ -369,9 +367,7 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.billing.visit();
 
     assert.equal(profilePage.billing.marketplaceButton.text, 'Continue with GitHub Marketplace');
-    assert.equal(profilePage.billing.marketplaceButton.href, 'https://github.com/marketplace/travis-ci/');
-    assert.equal(profilePage.billing.manageButton.text, 'New subscription');
-    assert.equal(profilePage.billing.manageButton.href, 'https://billing.travis-ci.com/subscriptions/new?id=user');
+    assert.equal(profilePage.billing.newSubscriptionButton.text, 'New subscription');
 
     assert.ok(profilePage.billing.userDetails.isHidden);
     assert.ok(profilePage.billing.billingDetails.isHidden);
@@ -725,7 +721,7 @@ module('Acceptance | profile/billing', function (hooks) {
     percySnapshot(assert);
 
     assert.equal(profilePage.billing.education.name, 'This is an educational account and includes a single build plan. Need help? Check our getting started guide');
-    assert.equal(profilePage.billing.manageButton.text, 'New subscription');
+    assert.equal(profilePage.billing.newSubscriptionButton.text, 'New subscription');
   });
 
   test('logs an exception when there is a subscription without a plan and handles unknowns', async function (assert) {

@@ -3,6 +3,7 @@ import { reads, and, not } from '@ember/object/computed';
 
 export default Component.extend({
   account: null,
+  newSubscriptionProcess: false,
 
   subscription: reads('account.subscription'),
   trial: reads('account.trial'),
@@ -11,5 +12,4 @@ export default Component.extend({
   isGithubTrial: and('subscription.isGithub', 'trial.hasActiveTrial'),
   authenticationNotRequired: not('subscription.clientSecret'),
   isPending: and('subscription.isPending', 'authenticationNotRequired'),
-
 });

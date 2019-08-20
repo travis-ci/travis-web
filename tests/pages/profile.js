@@ -259,6 +259,11 @@ export default create({
       isDisabled: hasClass('disabled'),
     },
 
+    newSubscriptionButton: {
+      scope: '[data-test-manage-button]',
+      isDisabled: hasClass('disabled'),
+    },
+
     getPlanButton: {
       scope: '[data-test-get-a-plan]',
       isDisabled: hasClass('disabled'),
