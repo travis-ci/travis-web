@@ -107,6 +107,15 @@ module.exports = {
       '5xl': '3rem',
       '6xl': '4rem',
     },
+    lineHeight: {
+      none: '1',
+      '2xs': '1.15',
+      xs: '1.25',
+      sm: '1.375',
+      md: '1.5',
+      lg: '1.625',
+      xl: '2',
+    },
 
     // Block Props //
     borderWidth: {
