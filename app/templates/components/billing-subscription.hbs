@@ -20,7 +20,7 @@
       @subscription={{this.subscription}} 
       @price={{this.price}}
       @account={{this.account}}
-      @planMessage="Expires on"
+      @planMessage="Expires"
       @isCanceled={{true}}
     />
   {{else if this.isPending}}
@@ -32,13 +32,15 @@
       @isPending={{true}}
     />
   {{else if this.subscription.isExpired}}
-    <h3>
-      Overview
-    </h3>
-    <span data-test-expiry-message>
-      You had a {{this.subscription.sourceWords}} subscription
-      that expired on {{moment-format this.subscription.validTo "MMMM D, YYYY"}}.
-    </span>
+  
+    <BillingSummary 
+      @isGithubTrial={{this.isGithubTrial}} 
+      @subscription={{this.subscription}}
+      @account={{this.account}}
+      @price={{this.price}}
+      @isExpired={{true}}
+      @planMessage="Expired"
+    />
   {{/if}}
 
   {{#if this.subscription.isGithubResubscribable}}

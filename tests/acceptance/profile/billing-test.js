@@ -1,6 +1,7 @@
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import profilePage from 'travis/tests/pages/profile';
+import moment from 'moment';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { selectChoose } from 'ember-power-select/test-support';
 import { percySnapshot } from 'ember-percy';
@@ -125,7 +126,7 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.ok(profilePage.billing.marketplaceButton.isHidden);
 
     assert.equal(profilePage.billing.plan.name, 'Small Business1 plan active');
-    assert.equal(profilePage.billing.plan.concurrency, '5 concurrent jobs Valid until June 19, 2018');
+    assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining('5 concurrent jobs Valid until June 19, 2018');
 
     assert.equal(profilePage.billing.userDetails.text, 'contact name User Name company name Travis CI GmbH billing email user@email.com');
     assert.equal(profilePage.billing.billingDetails.text, 'address Rigaerstraße 8 city,state/territory Berlin post code 10987 country Germany');
@@ -272,16 +273,18 @@ module('Acceptance | profile/billing', function (hooks) {
 
   test('view billing on a canceled stripe plan', async function (assert) {
     this.subscription.status = 'canceled';
+    const momentFromNow = moment(this.subscription.valid_to.getTime()).fromNow();
 
     await profilePage.visit();
     await profilePage.billing.visit();
 
     assert.equal(profilePage.billing.plan.name, 'Small Business1 plan canceled');
-    assert.equal(profilePage.billing.plan.concurrency, '5 concurrent jobs Expires on June 19, 2018');
+    assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining(`5 concurrent jobs Expires ${momentFromNow} on June 19`);
+    assert.equal(profilePage.billing.planMessage.text, `Expires ${momentFromNow} on June 19`);
 
     assert.equal(profilePage.billing.userDetails.text, 'contact name User Name company name Travis CI GmbH billing email user@email.com');
     assert.equal(profilePage.billing.billingDetails.text, 'address Rigaerstraße 8 city,state/territory Berlin post code 10987 country Germany');
-    assert.dom(profilePage.billing.planMessage.scope).hasText('Expires on June 19, 2018');
+    assert.dom(profilePage.billing.planMessage.scope).hasText(`Expires ${momentFromNow} on June 19`);
 
     assert.equal(profilePage.billing.creditCardNumber.text, '•••• •••• •••• 1919');
     assert.equal(profilePage.billing.price.text, '$69');
@@ -340,10 +343,13 @@ module('Acceptance | profile/billing', function (hooks) {
     this.subscription.source = 'github';
     this.subscription.status = 'canceled';
 
+    const momentFromNow = moment(this.subscription.valid_to.getTime()).fromNow();
+
     await profilePage.visit();
     await profilePage.billing.visit();
 
-    assert.equal(profilePage.billing.planMessage.text, 'Expires on June 19, 2018');
+    assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining(`5 concurrent jobs Expires ${momentFromNow} on June 19`);
+    assert.equal(profilePage.billing.planMessage.text, `Expires ${momentFromNow} on June 19`);
     assert.equal(profilePage.billing.marketplaceButton.text, 'Continue with GitHub Marketplace');
     assert.equal(profilePage.billing.marketplaceButton.href, 'https://github.com/marketplace/travis-ci/');
     assert.equal(profilePage.billing.manageButton.text, 'New subscription');
@@ -362,7 +368,6 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.visit();
     await profilePage.billing.visit();
 
-    assert.equal(profilePage.billing.expiryMessage.text, 'You had a GitHub Marketplace subscription that expired on June 19, 2018.');
     assert.equal(profilePage.billing.marketplaceButton.text, 'Continue with GitHub Marketplace');
     assert.equal(profilePage.billing.marketplaceButton.href, 'https://github.com/marketplace/travis-ci/');
     assert.equal(profilePage.billing.manageButton.text, 'New subscription');
@@ -742,7 +747,7 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.billing.visit();
 
     assert.equal(profilePage.billing.plan.name, 'Unknown plan active');
-    assert.equal(profilePage.billing.plan.concurrency, 'Unknown concurrent jobs Valid until June 19, 2018');
+    assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining('Unknown concurrent jobs Valid until June 19, 2018');
     assert.ok(profilePage.billing.price.isHidden);
     assert.ok(profilePage.billing.annualInvitation.isHidden);
   });
@@ -847,7 +852,7 @@ module('Acceptance | profile/billing', function (hooks) {
     await billingPaymentForm.completePayment.click();
 
     assert.equal(profilePage.billing.plan.name, 'Startup plan pending');
-    assert.equal(profilePage.billing.plan.concurrency, '2 concurrent jobs');
+    assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining('2 concurrent jobs');
 
     assert.equal(profilePage.billing.userDetails.text, 'contact name John Doe company name Travis billing email john@doe.com');
     assert.equal(profilePage.billing.billingDetails.text, 'address 15 Olalubi street city,state/territory Berlin post code 353564 country Germany');
@@ -914,7 +919,7 @@ module('Acceptance | profile/billing', function (hooks) {
     await billingPaymentForm.completePayment.click();
 
     assert.equal(profilePage.billing.plan.name, 'Startup plan pending');
-    assert.equal(profilePage.billing.plan.concurrency, '2 concurrent jobs');
+    assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining('2 concurrent jobs');
 
     assert.equal(profilePage.billing.userDetails.text, 'contact name John Doe company name Travis billing email john@doe.com');
     assert.equal(profilePage.billing.billingDetails.text, 'address 15 Olalubi street city,state/territory Berlin post code 353564 country Germany');

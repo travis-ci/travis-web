@@ -507,7 +507,9 @@ export default create({
     plan: {
       scope: '.plan',
       name: text('[data-test-plan-name]'),
-      concurrency: text('[data-test-plan-concurrency]')
+      concurrency: {
+        scope: '[data-test-plan-concurrency]'
+      }
     },
 
     trial: {

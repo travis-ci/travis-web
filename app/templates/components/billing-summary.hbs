@@ -33,6 +33,13 @@
               <span class="badge grey square">
                 canceled
               </span>
+            {{else if this.isExpired}}
+              <span class="badge grey square">
+                canceled
+              </span>
+              <span class="badge red square">
+                expired
+              </span>
             {{/if}}
           </p>
           <p class='plan-overview__description' data-test-plan-concurrency>
@@ -41,10 +48,14 @@
             {{else}}
               Unknown concurrent jobs
             {{/if}}
-            <span data-test-plan-message='true' class='plan-overview__description--validity {{if this.isCanceled 'red'}}'>
+            <span data-test-plan-message='true' class='plan-overview__description--validity {{if this.canceledOrExpired 'red' 'cement-grey'}}'>
               {{this.planMessage}} 
               {{#if (not this.isPending)}}
-                {{moment-format this.subscription.validTo "MMMM D, YYYY"}}
+                {{#if this.isCanceled}}
+                  {{moment-from-now this.subscription.validTo}} on {{moment-format this.subscription.validTo "MMMM DD"}}
+                {{else}}
+                  {{moment-format this.subscription.validTo "MMMM D, YYYY"}}
+                {{/if}}
               {{/if}}
             </span>
           </p>
@@ -82,7 +93,7 @@
         <LoadingIndicator />
       {{else if (and this.subscription.isResubscribable this.account.hasSubscriptionPermissions)}}
         <button onClick={{action 'resubscribe'}} class='button--green' data-test-resubscribe-subscription='true'>
-          resubscribe
+          Resubscribe to plan
         </button>
       {{else}}
         <button class='button--blue' data-test-change-subscription='true'>
@@ -102,6 +113,8 @@
   </div>
 </div>
 <hr />
-<BillingAddress @subscription={{this.subscription}} />
-<PaymentDetails @subscription={{this.subscription}} />
-<hr />
+{{#if (not this.isExpired)}}
+  <BillingAddress @subscription={{this.subscription}} />
+  <PaymentDetails @subscription={{this.subscription}} />
+  <hr />
+{{/if}}

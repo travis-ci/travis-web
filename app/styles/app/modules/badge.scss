@@ -37,6 +37,11 @@
     background-color: rgb(197, 226, 197);
   }
 
+  &.red {
+    color: $ansi-red;
+    background-color:rgb(206, 131, 131);
+  }
+
   &.square {
     border-radius: 0;
     border-width: 0;
