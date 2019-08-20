@@ -163,16 +163,8 @@
     <NoAccount @name={{this.model.login}} />
   {{/unless}}
 </article>
-{{#if this.isShowingMigrateBetaDialog}}
-  <ModalDialog
-    @translucentOverlay={{true}}
-    @overlayPosition="sibling"
-    @clickOutsideToClose={{false}}
-    @animatable={{true}}
-  >
-    <Dialogs::MigrateBeta
-      @onClose={{action (mut isShowingMigrateBetaDialog) false}}
-      data-test-migrate-dialog="true"
-    />
-  </ModalDialog>
-{{/if}}
+
+<Dialogs::MigrateBeta
+  @isOpen={{this.isShowingMigrateBetaDialog}}
+  @onClose={{fn (mut this.isShowingMigrateBetaDialog) false}}
+/>
