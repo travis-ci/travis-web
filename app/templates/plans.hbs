@@ -137,18 +137,20 @@
         </UiKit::Box>
       </grid.item>
       <grid.item>
-        <UiKit::Text @tag='h2' @leading='xs' @margin={{hash bottom=3}} @size='5xl' @weight='bold'>
-          Free plan for Open Source
-        </UiKit::Text>
-        <UiKit::Text @margin={{hash bottom=6}}>
-          We love Open Source and offer a free plan for your projects.
-          You will receive 2 concurrent jobs for free and all the other
-          features you've come to love from Travis CI.
-        </UiKit::Text>
+        <UiKit::Box @textAlign='center' @smTextAlign='left'>
+          <UiKit::Text @tag='h2' @leading='xs' @margin={{hash bottom=3}} @size='5xl' @weight='bold'>
+            Free plan for Open Source
+          </UiKit::Text>
+          <UiKit::Text @margin={{hash bottom=6}}>
+            We love Open Source and offer a free plan for your projects.
+            You will receive 2 concurrent jobs for free and all the other
+            features you've come to love from Travis CI.
+          </UiKit::Text>
 
-         <UiKit::Button @onClick={{action 'gaCta' 'plans-oss'}} @color='grey' @invert={{true}}>
-          Set up your open source project now
-        </UiKit::Button>
+          <UiKit::Button @onClick={{action 'gaCta' 'plans-oss'}} @color='grey' @invert={{true}}>
+            Set up your open source project now
+          </UiKit::Button>
+        </UiKit::Box>
       </grid.item>
     </UiKit::Grid>
   </UiKit::Box>
