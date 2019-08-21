@@ -10,7 +10,7 @@ function screenClass(key, screen) {
     const screenPrefix = screen === 'base' ? '' : `${screen}:`;
 
     if (typeof val === 'string') {
-      return `${screenPrefix}${val}`;
+      return `${screenPrefix}${this.sizePrefix}-${val}`;
     }
 
     if (typeof val === 'number') {

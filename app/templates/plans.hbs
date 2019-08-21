@@ -123,33 +123,30 @@
     </UiKit::Box>
   </UiKit::Box>
 
-  <UiKit::Button @onClick={{action 'gaCta' 'plans-oss'}} @color='grey' @invert={{true}}>
-    Set up your Open Source project now
-  </UiKit::Button>
+  {{!-- Open Source Section --}}
+  <UiKit::Box @tag='section' @margin={{hash bottom=16}}>
+    <UiKit::Grid @sm={{2}} @align='center' @justify='around' as |grid|>
+      <grid.item @base='2/3' @sm='1/3' @lg='1/4'>
+        <UiKit::Box @padding={{hash y=4}}>
+          <SvgImage @name='always-free'/>
+        </UiKit::Box>
+      </grid.item>
+      <grid.item>
+        <UiKit::Text @tag='h2' @leading='xs' @margin={{hash bottom=3}} @size='5xl' @weight='bold'>
+          Free plan for Open Source
+        </UiKit::Text>
+        <UiKit::Text @margin={{hash bottom=6}}>
+          We love Open Source and offer a free plan for your projects.
+          You will receive 2 concurrent jobs for free and all the other
+          features you've come to love from Travis CI.
+        </UiKit::Text>
 
-  <section class="inner section--two section--os">
-    <div>
-      <h2 class="h2--grey section-headline">Always <span class="em--yellow">free</span> for open source projects</h2>
-      <a href="https://travis-ci.com/signin" class="plans-button--grey" title="Open Source projects on Travis CI" {{action 'gaCta' 'plans-table'}}>Set up your open source project now</a>
-    </div>
-    <div>
-      <h2 class="h2--grey section-headline">In need of a bigger plan?</h2>
-      <p class="text-big">We can customize a plan based on the needs of your team. We'll work with you to get you started.</p>
-      <a href="mailto:sales@travis-ci.com" title="Email the Travis CI sales team" class="plans-button--green">Contact Travis CI sales</a>
-    </div>
-  </section>
-  <section class="inner section--enterprise section--two">
-    <div>
-      <h2 class="h2--teal">Travis CI Enterprise</h2>
-      <p class="text-big">
-        Our on-premises product is perfect for companies who want to keep using the same features of Travis CI with additional on-site security needs.
-      </p>
-      <a href="https://enterprise.travis-ci.com" title="learn more about Travis CI" class="plans-button--blue">Learn more about Travis CI Enterprise</a>
-    </div>
-    <div>
-      <SvgImage @name='enterprise-servers'/>
-    </div>
-  </section>
+         <UiKit::Button @onClick={{action 'gaCta' 'plans-oss'}} @color='grey' @invert={{true}}>
+          Set up your open source project now
+        </UiKit::Button>
+      </grid.item>
+    </UiKit::Grid>
+  </UiKit::Box>
 
   <section class="inner section--faq">
     <h3 class="h2--grey section--center">Frequently asked questions</h3>
