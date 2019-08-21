@@ -162,20 +162,22 @@
         </UiKit::Box>
       </grid.item>
       <grid.item>
-        <UiKit::Text @tag='h2' @leading='xs' @margin={{hash bottom=3}} @size='5xl' @weight='bold'>
-          Travis CI Enterprise
-        </UiKit::Text>
-        <UiKit::Text @margin={{hash bottom=6}}>
-          Our on-premises product is perfect for companies who
-          want to keep using the same features of Travis CI with
-          additional on-site security needs.
-        </UiKit::Text>
+        <UiKit::Box @textAlign='center' @smTextAlign='left'>
+          <UiKit::Text @tag='h2' @leading='xs' @margin={{hash bottom=3}} @size='5xl' @weight='bold'>
+            Travis CI Enterprise
+          </UiKit::Text>
+          <UiKit::Text @margin={{hash bottom=6}}>
+            Our on-premises product is perfect for companies who
+            want to keep using the same features of Travis CI with
+            additional on-site security needs.
+          </UiKit::Text>
 
-        <ExternalLinkTo @href={{config.urls.enterprise}}>
-          <UiKit::Button @color='grey' @invert={{true}}>
-            Learn more about Travis CI Enterprise
-          </UiKit::Button>
-        </ExternalLinkTo>
+          <ExternalLinkTo @href={{config.urls.enterprise}}>
+            <UiKit::Button @color='grey' @invert={{true}}>
+              Learn more about Travis CI Enterprise
+            </UiKit::Button>
+          </ExternalLinkTo>
+        </UiKit::Box>
       </grid.item>
     </UiKit::Grid>
   </UiKit::Box>
