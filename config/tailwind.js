@@ -163,6 +163,8 @@ module.exports = {
       ...theme('spacing'),
       ...negative(theme('spacing')),
     }),
+
+    // Height & Width //
     height: theme => ({
       auto: 'auto',
       ...theme('spacing'),
@@ -201,6 +203,33 @@ module.exports = {
       full: '100%',
       screen: '100vw',
     }),
+    maxHeight: {
+      full: '100%',
+      screen: '100vh',
+    },
+    maxWidth: {
+      '2xs': '16rem',
+      xs: '20rem',
+      sm: '24rem',
+      md: '28rem',
+      lg: '32rem',
+      xl: '36rem',
+      '2xl': '42rem',
+      '3xl': '48rem',
+      '4xl': '56rem',
+      '5xl': '64rem',
+      '6xl': '72rem',
+      full: '100%',
+    },
+    minHeight: {
+      '0': '0',
+      full: '100%',
+      screen: '100vh',
+    },
+    minWidth: {
+      '0': '0',
+      full: '100%',
+    },
 
     /* ~~ Extend ~~ */
     extend: {

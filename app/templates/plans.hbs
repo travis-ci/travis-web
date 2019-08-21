@@ -126,9 +126,9 @@
   {{!-- Open Source Section --}}
   <UiKit::Box @tag='section' @margin={{hash bottom=16}}>
     <UiKit::Grid @sm={{2}} @align='center' @justify='around' as |grid|>
-      <grid.item @base='2/3' @sm='1/3' @lg='1/4'>
-        <UiKit::Box @padding={{hash y=4}}>
-          <SvgImage @name='always-free'/>
+      <grid.item  @base='initial' @sm='initial'>
+        <UiKit::Box @maxWidth='2xs' @padding={{hash y=4}}>
+          <SvgImage @name='always-free' @width='100%'/>
         </UiKit::Box>
       </grid.item>
       <grid.item>
@@ -151,9 +151,9 @@
   {{!-- Enterprise section --}}
   <UiKit::Box @tag='section' @margin={{hash bottom=16}}>
     <UiKit::Grid  @sm={{2}} @align='center' @justify='around' as |grid|>
-      <grid.item @base='2/3' @sm='1/3' @lg='1/4'>
-        <UiKit::Box @padding={{hash y=4}}>
-          <SvgImage @name='travis-enterprise'/>
+      <grid.item @base='initial' @sm='initial'>
+        <UiKit::Box @maxWidth='2xs' @padding={{hash y=4}}>
+          <SvgImage @name='travis-enterprise' @width='100%'/>
         </UiKit::Box>
       </grid.item>
       <grid.item>
