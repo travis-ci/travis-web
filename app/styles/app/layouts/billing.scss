@@ -308,9 +308,18 @@
 
     .initial-billing-view {
 
-      .overview-heading {
-        h3 {
-          margin-bottom: 0;
+      .overview {
+
+        margin-bottom: 30px;
+
+        &__heading {
+          h3 {
+            margin: 0;
+          }
+        }
+  
+        &__body {
+          margin-bottom: 15px;
         }
       }
 
@@ -365,11 +374,6 @@
           width: 18px;
           height: 18px;
         }
-      }
-
-      .activate-button {
-        margin-top: 15px;
-        margin-bottom: 2em;
       }
 
       .get-plan {
