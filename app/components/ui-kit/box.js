@@ -125,7 +125,7 @@ export default Component.extend(spacingMixin, borderMixin, {
   overflowClass: prefix('overflow', 'overflow'),
   radiusClass: prefix('radius', 'rounded'),
   shadowClass: prefix('shadow', 'shadow'),
-  textAlignClass: prefix('textAlign', 'text', { responsive: true }),
+  textAlignClass: prefix('textAlign', 'text'),
 
   widthClass: prefix('width', 'w'),
   maxWidthClass: prefix('maxWidth', 'max-w'),
