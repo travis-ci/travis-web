@@ -1,7 +1,7 @@
 import { computed } from '@ember/object';
 import { isPresent } from '@ember/utils';
 
-export default function prefixUtil(key, prefix,
+export default function prefix(key, prefix,
   {
     dictionary = {},
     validator = isPresent,
