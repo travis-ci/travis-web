@@ -183,108 +183,128 @@
 
 
   {{!-- FAQ Section --}}
-  <UiKit::Box
-    @color='white'
-    @margin={{hash bottom=16}}
-    @position={{hash type='relative'}}
-    @radius='base'
-    @shadow='base'
-  >
-    <UiKit::Text @tag='h2' @size='5xl' @weight='bold' @padding={{hash all=5}}>
-      Frequently asked questions
-    </UiKit::Text>
+  <UiKit::Box @position={{hash type='relative'}}>
+    <UiKit::Box
+      @position={{hash type='absolute' top=0 right=0}}
+      @margin={{hash top=-10 right=-16}}
+      @width={{64}}
+    >
+      <SvgImage @name="red-blob" />
+    </UiKit::Box>
 
-    <UiKit::Grid  @base={{2}} as |grid|>
-      {{!-- FAQ set 1 --}}
-      <grid.item @borderColor='grey-150' @borderWidth={{hash bottom='xs'}} @padding={{hash all=5}}>
-        <UiKit::Text @tag='h4' @size='xl' @weight='bold' @color='blue-light' @margin={{hash bottom=2}}>
-          What is a concurrent job?
-        </UiKit::Text>
-        <UiKit::Text>
-          Every commit triggers a single job by default. If two commits have been pushed on the Startup plan,
-          they'll be run right away. Subsequent commits have to wait until the builds finished.
-        </UiKit::Text>
-      </grid.item>
+    <UiKit::Box
+      @color='white'
+      @layer='10'
+      @margin={{hash bottom=16}}
+      @position={{hash type='relative'}}
+      @radius='base'
+      @shadow='base'
+    >
+      <UiKit::Text @tag='h2' @size='5xl' @weight='bold' @padding={{hash all=5}}>
+        Frequently asked questions
+      </UiKit::Text>
 
-      <grid.item @borderColor='grey-150' @borderWidth={{hash bottom='xs'}} @padding={{hash y=5}}>
-        <UiKit::Box @borderColor='grey-150' @borderWidth={{hash left='xs'}} @padding={{hash x=5}}>
+      <UiKit::Grid  @base={{2}} as |grid|>
+        {{!-- FAQ set 1 --}}
+        <grid.item @borderColor='grey-150' @borderWidth={{hash bottom='xs'}} @padding={{hash all=5}}>
           <UiKit::Text @tag='h4' @size='xl' @weight='bold' @color='blue-light' @margin={{hash bottom=2}}>
-            Are there any restrictions on build time?
+            What is a concurrent job?
           </UiKit::Text>
           <UiKit::Text>
-            A build has 120 minutes to run. Should your build take longer, you can split it up using a build matrix.
+            Every commit triggers a single job by default. If two commits have been pushed on the Startup plan,
+            they'll be run right away. Subsequent commits have to wait until the builds finished.
           </UiKit::Text>
-        </UiKit::Box>
-      </grid.item>
+        </grid.item>
 
-      {{!-- FAQ set 2 --}}
-      <grid.item @borderColor='grey-150' @borderWidth={{hash bottom='xs'}} @padding={{hash all=5}}>
-        <UiKit::Text @tag='h4' @size='xl' @weight='bold' @color='blue-light' @margin={{hash bottom=2}}>
-          Can I pay annually?
-        </UiKit::Text>
-        <UiKit::Text>
-          You most certainly can! When signing up for a subscription, simply select the annual option. You get 1 month for free &mdash;
-          12 months for the price of 11!
-        </UiKit::Text>
-      </grid.item>
+        <grid.item @borderColor='grey-150' @borderWidth={{hash bottom='xs'}} @padding={{hash y=5}}>
+          <UiKit::Box @borderColor='grey-150' @borderWidth={{hash left='xs'}} @padding={{hash x=5}}>
+            <UiKit::Text @tag='h4' @size='xl' @weight='bold' @color='blue-light' @margin={{hash bottom=2}}>
+              Are there any restrictions on build time?
+            </UiKit::Text>
+            <UiKit::Text>
+              A build has 120 minutes to run. Should your build take longer, you can split it up using a build matrix.
+            </UiKit::Text>
+          </UiKit::Box>
+        </grid.item>
 
-      <grid.item @borderColor='grey-150' @borderWidth={{hash bottom='xs'}} @padding={{hash y=5}}>
-        <UiKit::Box @borderColor='grey-150' @borderWidth={{hash left='xs'}} @padding={{hash x=5}}>
+        {{!-- FAQ set 2 --}}
+        <grid.item @borderColor='grey-150' @borderWidth={{hash bottom='xs'}} @padding={{hash all=5}}>
           <UiKit::Text @tag='h4' @size='xl' @weight='bold' @color='blue-light' @margin={{hash bottom=2}}>
-            Can I cancel anytime?
+            Can I pay annually?
           </UiKit::Text>
           <UiKit::Text>
-            Absolutely! Contact us and we'll make sure your subscription gets cancelled as you want.
+            You most certainly can! When signing up for a subscription, simply select the annual option. You get 1 month for free &mdash;
+            12 months for the price of 11!
           </UiKit::Text>
-        </UiKit::Box>
-      </grid.item>
+        </grid.item>
 
-      {{!-- FAQ set 3 --}}
-      <grid.item @borderColor='grey-150' @borderWidth={{hash bottom='xs'}} @padding={{hash all=5}}>
-        <UiKit::Text @tag='h4' @size='xl' @weight='bold' @color='blue-light' @margin={{hash bottom=2}}>
-          Am I able to upgrade my plan?
-        </UiKit::Text>
-        <UiKit::Text>
-          Yes, you can change your plan subscription at any time.
-        </UiKit::Text>
-      </grid.item>
+        <grid.item @borderColor='grey-150' @borderWidth={{hash bottom='xs'}} @padding={{hash y=5}}>
+          <UiKit::Box @borderColor='grey-150' @borderWidth={{hash left='xs'}} @padding={{hash x=5}}>
+            <UiKit::Text @tag='h4' @size='xl' @weight='bold' @color='blue-light' @margin={{hash bottom=2}}>
+              Can I cancel anytime?
+            </UiKit::Text>
+            <UiKit::Text>
+              Absolutely! Contact us and we'll make sure your subscription gets cancelled as you want.
+            </UiKit::Text>
+          </UiKit::Box>
+        </grid.item>
 
-      <grid.item @borderColor='grey-150' @borderWidth={{hash bottom='xs'}} @padding={{hash y=5}}>
-        <UiKit::Box @borderColor='grey-150' @borderWidth={{hash left='xs'}} @padding={{hash x=5}}>
+        {{!-- FAQ set 3 --}}
+        <grid.item @borderColor='grey-150' @borderWidth={{hash bottom='xs'}} @padding={{hash all=5}}>
           <UiKit::Text @tag='h4' @size='xl' @weight='bold' @color='blue-light' @margin={{hash bottom=2}}>
-            Do the listed prices include VAT?
+            Am I able to upgrade my plan?
           </UiKit::Text>
           <UiKit::Text>
-            Prices listed are excluding VAT, which will be added depending on origin (Germany and Europe). Make sure to have your company's
-            VAT ID ready when entering billing details to remove VAT!
+            Yes, you can change your plan subscription at any time.
           </UiKit::Text>
-        </UiKit::Box>
-      </grid.item>
+        </grid.item>
 
-      {{!-- FAQ set 4 --}}
-      <grid.item @padding={{hash all=5}}>
-        <UiKit::Text @tag='h4' @size='xl' @weight='bold' @color='blue-light' @margin={{hash bottom=2}}>
-          How does the trial work?
-        </UiKit::Text>
-        <UiKit::Text>
-          Your free trial includes 100 builds and starts as soon as you set up your first project and push a commit. The trial
-          is limited to two concurrent jobs.
-        </UiKit::Text>
-      </grid.item>
+        <grid.item @borderColor='grey-150' @borderWidth={{hash bottom='xs'}} @padding={{hash y=5}}>
+          <UiKit::Box @borderColor='grey-150' @borderWidth={{hash left='xs'}} @padding={{hash x=5}}>
+            <UiKit::Text @tag='h4' @size='xl' @weight='bold' @color='blue-light' @margin={{hash bottom=2}}>
+              Do the listed prices include VAT?
+            </UiKit::Text>
+            <UiKit::Text>
+              Prices listed are excluding VAT, which will be added depending on origin (Germany and Europe). Make sure to have your company's
+              VAT ID ready when entering billing details to remove VAT!
+            </UiKit::Text>
+          </UiKit::Box>
+        </grid.item>
 
-      <grid.item @padding={{hash y=5}}>
-        <UiKit::Box @borderColor='grey-150' @borderWidth={{hash left='xs'}} @padding={{hash x=5}}>
+        {{!-- FAQ set 4 --}}
+        <grid.item @padding={{hash all=5}}>
           <UiKit::Text @tag='h4' @size='xl' @weight='bold' @color='blue-light' @margin={{hash bottom=2}}>
-            Do you have plans for students?
+            How does the trial work?
           </UiKit::Text>
           <UiKit::Text>
-            We most certainly do! You can find all details on
-            <UiKit::Link @href={{config.urls.education}}>
-              {{format-domain config.urls.education}}
-            </UiKit::Link>
+            Your free trial includes 100 builds and starts as soon as you set up your first project and push a commit. The trial
+            is limited to two concurrent jobs.
           </UiKit::Text>
-        </UiKit::Box>
-      </grid.item>
-    </UiKit::Grid>
+        </grid.item>
+
+        <grid.item @padding={{hash y=5}}>
+          <UiKit::Box @borderColor='grey-150' @borderWidth={{hash left='xs'}} @padding={{hash x=5}}>
+            <UiKit::Text @tag='h4' @size='xl' @weight='bold' @color='blue-light' @margin={{hash bottom=2}}>
+              Do you have plans for students?
+            </UiKit::Text>
+            <UiKit::Text>
+              We most certainly do! You can find all details on
+              <UiKit::Link @href={{config.urls.education}}>
+                {{format-domain config.urls.education}}
+              </UiKit::Link>
+            </UiKit::Text>
+          </UiKit::Box>
+        </grid.item>
+      </UiKit::Grid>
+    </UiKit::Box>
+
+    <UiKit::Box
+      @layer='0'
+      @margin={{hash bottom=-16 left=-4}}
+      @position={{hash type='absolute' bottom=0 left=0}}
+      @width={{64}}
+    >
+      <SvgImage @name="green-gradient-circle" />
+    </UiKit::Box>
   </UiKit::Box>
 </TravisLayout>
