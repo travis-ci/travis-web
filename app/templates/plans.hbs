@@ -279,11 +279,9 @@
           </UiKit::Text>
           <UiKit::Text>
             We most certainly do! You can find all details on
-            <UiKit::Text @tag='span' @color='blue'>
-              <ExternalLinkTo @href={{config.urls.education}}>
-                {{format-domain config.urls.education}}
-              </ExternalLinkTo>
-            </UiKit::Text>
+            <UiKit::Link @href={{config.urls.education}}>
+              {{format-domain config.urls.education}}
+            </UiKit::Link>
           </UiKit::Text>
         </UiKit::Box>
       </grid.item>
