@@ -51,7 +51,12 @@
         <UiKit::Grid @base={{2}} @md={{4}} as |grid|>
           {{#each plansToDisplay as |plan|}}
             <grid.item>
-              <UiKit::Box @borderColor='grey-150' @borderWidth={{hash all='xs'}} @padding={{hash all=4}}>
+              <UiKit::Box
+                @borderColor='grey-150'
+                @borderWidth={{hash all='xs'}}
+                @height='full'
+                @padding={{hash all=4}}
+              >
                 <UiKit::Text @tag='h3' @size='3xl' @weight='bold'>
                   {{plan.name}}
                 </UiKit::Text>
@@ -126,9 +131,9 @@
   {{!-- Open Source Section --}}
   <UiKit::Box @tag='section' @margin={{hash bottom=16}}>
     <UiKit::Grid @sm={{2}} @align='center' @justify='around' as |grid|>
-      <grid.item @base='2/3' @sm='1/3' @lg='1/4'>
-        <UiKit::Box @padding={{hash y=4}}>
-          <SvgImage @name='always-free'/>
+      <grid.item  @base='initial' @sm='initial'>
+        <UiKit::Box @maxWidth='2xs' @padding={{hash y=4}}>
+          <SvgImage @name='always-free' @width='100%'/>
         </UiKit::Box>
       </grid.item>
       <grid.item>
@@ -141,9 +146,36 @@
           features you've come to love from Travis CI.
         </UiKit::Text>
 
-         <UiKit::Button @onClick={{action 'gaCta' 'plans-oss'}} @color='grey' @invert={{true}}>
+        <UiKit::Button @onClick={{action 'gaCta' 'plans-oss'}} @color='grey' @invert={{true}}>
           Set up your open source project now
         </UiKit::Button>
+      </grid.item>
+    </UiKit::Grid>
+  </UiKit::Box>
+
+  {{!-- Enterprise section --}}
+  <UiKit::Box @tag='section' @margin={{hash bottom=16}}>
+    <UiKit::Grid  @sm={{2}} @align='center' @justify='around' as |grid|>
+      <grid.item @base='initial' @sm='initial'>
+        <UiKit::Box @maxWidth='2xs' @padding={{hash y=4}}>
+          <SvgImage @name='travis-enterprise' @width='100%'/>
+        </UiKit::Box>
+      </grid.item>
+      <grid.item>
+        <UiKit::Text @tag='h2' @leading='xs' @margin={{hash bottom=3}} @size='5xl' @weight='bold'>
+          Travis CI Enterprise
+        </UiKit::Text>
+        <UiKit::Text @margin={{hash bottom=6}}>
+          Our on-premises product is perfect for companies who
+          want to keep using the same features of Travis CI with
+          additional on-site security needs.
+        </UiKit::Text>
+
+        <ExternalLinkTo @href={{config.urls.enterprise}}>
+          <UiKit::Button @color='grey' @invert={{true}}>
+            Learn more about Travis CI Enterprise
+          </UiKit::Button>
+        </ExternalLinkTo>
       </grid.item>
     </UiKit::Grid>
   </UiKit::Box>

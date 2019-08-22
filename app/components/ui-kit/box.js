@@ -79,6 +79,19 @@ const POSITION_INSETS = {
   Y_AUTO: 'y-auto',
 };
 
+// Height & Width
+const MAX_WIDTHS = {
+  XXS: '2xs',
+  XS: 'xs',
+  SM: 'sm',
+  MD: 'md',
+  LG: 'lg',
+  XL: 'xl',
+  XXL: '2xl',
+  FULL: 'full',
+};
+
+
 // Component definition
 export default Component.extend(spacingMixin, borderMixin, {
   tagName: '',
@@ -98,6 +111,7 @@ export default Component.extend(spacingMixin, borderMixin, {
   borderWidth: null,
 
   width: null,
+  maxWidth: null,
   height: null,
 
   margin: null,
@@ -114,6 +128,7 @@ export default Component.extend(spacingMixin, borderMixin, {
   textAlignClass: prefix('textAlign', 'text'),
 
   widthClass: prefix('width', 'w'),
+  maxWidthClass: prefix('maxWidth', 'max-w'),
   heightClass: prefix('height', 'h'),
 
   // Position
@@ -134,6 +149,7 @@ export default Component.extend(spacingMixin, borderMixin, {
     'shadowClass',
     'textAlignClass',
     'widthClass',
+    'maxWidthClass',
     'heightClass',
     'positionType',
     'positionTop',
@@ -158,6 +174,7 @@ export default Component.extend(spacingMixin, borderMixin, {
     checkDictionary(this.radius, RADII, '@radius', 'Box');
     checkDictionary(this.shadow, SHADOWS, '@shadow', 'Box');
     checkDictionary(this.textAlign, TEXT_ALIGNMENTS, '@textAlign', 'Box');
+    checkDictionary(this.maxWidth, MAX_WIDTHS, '@maxWidth', 'Box');
 
     const { top, right, bottom, left, inset, type } = this.position || {};
     checkDictionary(type, POSITION_TYPES, '@position.type', 'Box');

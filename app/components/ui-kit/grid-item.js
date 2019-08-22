@@ -6,20 +6,34 @@ import concat from 'travis/utils/ui-kit/concat';
 
 function screenClass(key, screen) {
   return computed('sizePrefix', key, function () {
-    const val = this.get(key);
+    const size = this.get(key);
     const screenPrefix = screen === 'base' ? '' : `${screen}:`;
 
-    if (typeof val === 'string') {
-      return `${screenPrefix}${this.sizePrefix}-${val}`;
+    if (typeof size === 'string') {
+      const value = FLEX_SIZE_VALS[size] || `${this.sizePrefix}-${size}`;
+      return `${screenPrefix}${value}`;
     }
 
-    if (typeof val === 'number') {
-      return `${screenPrefix}${this.sizePrefix}-1/${val}`.replace('1/1', 'full');
+    if (typeof size === 'number') {
+      return `${screenPrefix}${this.sizePrefix}-1/${size}`.replace('1/1', 'full');
     }
 
     return null;
   });
 }
+
+const FLEX_SIZES = {
+  INITIAL: 'initial',
+  EVEN: 'even',
+  AUTO: 'auto',
+  NONE: 'none',
+};
+const FLEX_SIZE_VALS = {
+  [FLEX_SIZES.INITIAL]: 'flex-initial',
+  [FLEX_SIZES.EVEN]: 'flex-1',
+  [FLEX_SIZES.AUTO]: 'flex-auto',
+  [FLEX_SIZES.NONE]: 'flex-none',
+};
 
 export default Component.extend({
   tagName: '',
