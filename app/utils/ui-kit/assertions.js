@@ -6,9 +6,11 @@ export function checkDictionary(value, dictionary, propertyName = '', componentN
     return true;
   }
 
-  const found = Object.values(dictionary).includes(value);
+  const baseValue = value.base || value;
+
+  const found = Object.values(dictionary).includes(baseValue);
   assert(
-    `${propertyName} "${value}" is not allowed on this ${componentName} component`,
+    `${propertyName} "${baseValue}" is not allowed on this ${componentName} component`,
     found
   );
   return found;

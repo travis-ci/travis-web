@@ -3,12 +3,9 @@ import { isPresent } from '@ember/utils';
 import config from 'travis/config/environment';
 
 const { screens } = config;
-const screenList = Object.values(screens);
-const screenPrefixes = screenList.map((screen) => screen.prefix);
-
-function getScreenKey(screen, key) {
-  return screen.length > 0 ? `${screen}${key.capitalize()}` : key;
-}
+const screenPrefixes = Object.values(screens)
+  .map((screen) => screen.prefix)
+  .filter(val => val.length > 0);
 
 export default function prefixUtil(key, prefix,
   {
@@ -17,31 +14,34 @@ export default function prefixUtil(key, prefix,
     separator = '-',
     defaultValue = null,
     negatable = false,
-    responsive = false,
   } = {}
 ) {
-  const screensToProcess = responsive ? screenPrefixes : [''];
-  const propsToWatch = screensToProcess.map((screen) => getScreenKey(screen, key));
+  const screenDetails = [
+    { key: `${key}.base`, prefix: '' },
+    ...screenPrefixes.map((screen) => ({
+      key: `${key}.${screen}`,
+      prefix: `${screen}:`,
+    })),
+  ];
+  const keysToCheck = [key, ...screenDetails.map((screen) => screen.key)];
 
-  return computed(...propsToWatch, function () {
-    const classes = screenPrefixes.reduce((classList, screen) => {
-      const screenKey = getScreenKey(screen, key);
-      const screenVal = this.get(screenKey);
-      const screenPrefix = screen.length > 0 ? `${screen}:` : '';
+  return computed(...keysToCheck, function () {
+    const classes = screenDetails.map((screen, index) => {
+      const {key: screenKey, prefix: screenPrefix } = screen;
 
-      const value = dictionary[screenVal] || screenVal;
+      const propVal = index === 0
+        ? this.get(screenKey) || this.get(key)
+        : this.get(screenKey);
+
+      const value = dictionary[propVal] || propVal;
       const isNegative = negatable && typeof value === 'number' && value < 0;
       const negator = isNegative ? '-' : '';
 
       // Removes extra dash from negative vals, for negatable props like margin etc.
       const displayVal = isNegative ? Math.abs(value) : value;
 
-      const currentValue = validator(value) ? `${screenPrefix}${negator}${prefix}${separator}${displayVal}` : defaultValue;
-
-      classList.push(currentValue);
-
-      return classList;
-    }, []);
+      return validator(value) ? `${screenPrefix}${negator}${prefix}${separator}${displayVal}` : defaultValue;
+    });
 
     return classes.compact().join(' ');
   });
