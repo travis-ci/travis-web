@@ -4,6 +4,7 @@ import config from 'travis/config/environment';
 import { filterBy } from '@ember/object/computed';
 import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
+import { task } from 'ember-concurrency';
 
 const { plans } = config;
 
@@ -26,6 +27,13 @@ export default Controller.extend({
 
   showAnnual: true,
 
+  contactName: null,
+
+  contactFormSend: task(function* () {
+    const { contactName } = this;
+    return yield contactName;
+  }),
+
   actions: {
     gaCta(location) {
       if (config.gaCode) {
@@ -33,6 +41,10 @@ export default Controller.extend({
         _gaq.push(['_trackPageview', page]);
       }
       this.auth.signIn();
+    },
+
+    contactFormSubmit() {
+      return false;
     }
   }
 });

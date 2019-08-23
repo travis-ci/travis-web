@@ -153,6 +153,38 @@
     </UiKit::Grid>
   </UiKit::Box>
 
+  {{!-- Contact form section --}}
+  <UiKit::Box @tag='section' @margin={{hash bottom=16}}>
+    <UiKit::Grid  @sm={{2}} @align='center' @justify='around' as |grid|>
+      <grid.item>
+        <UiKit::Text @tag='h2' @leading='xs' @margin={{hash bottom=3}} @size='5xl' @weight='bold'>
+          Looking for something custom or on-prem?
+        </UiKit::Text>
+        <UiKit::Text>
+          We can create a plan that's customized to your team's size and needs.
+          Just use this form to contact us!
+        </UiKit::Text>
+      </grid.item>
+      <grid.item>
+        <TravisForm
+          @onSubmit={{action "contactFormSubmit"}}
+          as |form|
+        >
+          <form.field
+            @label='Name'
+            @required={{false}}
+            @value={{this.contactName}}
+            @onChange={{action (mut this.contactName)}}
+            data-test-plans-contact-name="true"
+            as |field|
+          >
+            <field.input />
+          </form.field>
+        </TravisForm>
+      </grid.item>
+    </UiKit::Grid>
+  </UiKit::Box>
+
   {{!-- Enterprise section --}}
   <UiKit::Box @tag='section' @margin={{hash bottom=16}}>
     <UiKit::Grid  @sm={{2}} @align='center' @justify='around' as |grid|>
