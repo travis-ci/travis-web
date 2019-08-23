@@ -1,0 +1,80 @@
+<TravisForm
+  @onSubmit={{action "submit"}}
+  as |form|
+>
+  {{!-- Name --}}
+  <form.field
+    @label='Name'
+    @required={{true}}
+    @value={{this.name}}
+    @onChange={{action (mut this.name)}}
+    @requiredMark={{this.requiredMark}}
+    @showRequiredMark={{true}}
+    data-test-plans-contact-name="true"
+    as |field|
+  >
+    <field.input />
+  </form.field>
+
+  {{!-- Email --}}
+  <form.field
+    @label='Company Email Address'
+    @required={{true}}
+    @value={{this.email}}
+    @onChange={{action (mut this.email)}}
+    @validator={{form-validator form.validators.email}}
+    @requiredMark={{this.requiredMark}}
+    @showRequiredMark={{true}}
+    data-test-plans-contact-email="true"
+    as |field|
+  >
+    <field.input />
+  </form.field>
+
+  {{!-- Size --}}
+  <form.field
+    @label='Size Of Your Team'
+    @value={{this.size}}
+    @onChange={{action (mut this.size)}}
+    class="mb-8"
+    data-test-plans-contact-size="true"
+    as |field|
+  >
+    <field.input />
+  </form.field>
+
+  {{!-- Phone --}}
+  <form.field
+    @label='Contact Phone Number'
+    @value={{this.phone}}
+    @onChange={{action (mut this.phone)}}
+    class="mb-8"
+    data-test-plans-contact-phone="true"
+    as |field|
+  >
+    <field.input />
+  </form.field>
+
+  {{!-- Help --}}
+  <form.field
+    @label='How Can We Help You?'
+    @required={{true}}
+    @value={{this.help}}
+    @onChange={{action (mut this.help)}}
+    @requiredMark={{this.requiredMark}}
+    @showRequiredMark={{true}}
+    data-test-plans-contact-help="true"
+    as |field|
+  >
+    <field.textarea />
+  </form.field>
+
+  {{!-- Submit --}}
+  <UiKit::Button @disabled={{this.isSubmitting}} @onClick={{action form.submit}}>
+    {{#if this.isSubmitting}}
+      <LoadingIndicator @white={{true}} />
+    {{else}}
+      Submit
+    {{/if}}
+  </UiKit::Button>
+</TravisForm>
