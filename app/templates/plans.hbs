@@ -307,4 +307,18 @@
       <SvgImage @name="green-gradient-circle" />
     </UiKit::Box>
   </UiKit::Box>
+
+  {{!-- Final message section --}}
+  <UiKit::Box @tag='section' @textAlign='center'>
+    <UiKit::Text @margin={{hash bottom=6}}>
+      Have a question you don't see answered above?<br />
+      Our support and sales teams are very happy to help.
+    </UiKit::Text>
+
+    <UiKit::Link @href='mailto:sales@travis-ci.com'>
+      <UiKit::Button>
+        Shoot us a Message
+      </UiKit::Button>
+    </UiKit::Link>
+  </UiKit::Box>
 </TravisLayout>
