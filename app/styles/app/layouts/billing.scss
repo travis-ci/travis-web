@@ -317,7 +317,7 @@
             margin: 0;
           }
         }
-  
+
         &__body {
           margin-bottom: 15px;
         }
@@ -432,24 +432,26 @@
       margin-bottom: 0;
     }
 
+    &__buttons {
+      margin-top: 16px;
+
+      &--cancel {
+        margin-left: 10px;
+      }
+    }
+
     .payment {
 
       h4 {
         margin-top: 0;
       }
-
     }
 
-    .manage-subscription-buttons {
-      margin: 20px 0 24px 0;
-
-      &__cancel {
-        margin-left: 10px;
-      }
+    .billing-subscription-section {
+      margin-bottom: 25px;
     }
 
     .plan-overview {
-      margin-top: 25px;
 
       &__header {
         margin: 0;

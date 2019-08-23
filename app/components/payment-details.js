@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 import { task } from 'ember-concurrency';
 import { computed } from '@ember/object';
-import { not, and } from '@ember/object/computed';
+import { not } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import config from 'travis/config/environment';
 
@@ -31,27 +31,24 @@ export default Component.extend({
   }),
 
   monthly: not('subscription.plan.annual'),
-  showAnnualBanner: and('subscription.isStripe', 'subscription.isSubscribed', 'monthly', 'subscription.permissions.write', 'subscription.plan'),
 
   options: {
     hidePostalCode: true,
     style: {
       base: {
         fontStyle: 'Source Sans Pro',
-        color: '#333',
         fontSize: '15px',
+        color: '#666',
         '::placeholder': {
           color: '#666'
         },
-        lineHeight: '24px'
       },
       invalid: {
-        color: '#fa755a',
-        iconColor: '#fa755a'
+        color: 'red',
+        iconColor: 'red'
       }
     }
   },
-
   createStripeToken: task(function* () {
     const { token } = yield this.stripe.createStripeToken.perform(this.stripeElement);
     try {

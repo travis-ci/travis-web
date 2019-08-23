@@ -1,5 +1,5 @@
 {{#if this.subscription.plan}}
-  <section class="payment">
+  <section class="payment billing-subscription-section">
     <h4>
       Payment details
     </h4>
@@ -12,18 +12,18 @@
                 <p>{{stripeError.message}}</p>
               {{/if}}
             </StripeCard>
-            {{#if this.createStripeToken.isRunning}}
-              <LoadingIndicator/>
-            {{else}}
-              <div class="flex flex--wrap manage-subscription-buttons">
+            <div class="flex flex--wrap billing-subscription__buttons">
+              {{#if this.createStripeToken.isRunning}}
+                <LoadingIndicator/>
+              {{else}}
                 <button data-test-update-contact-address-button='true' onclick={{form.submit}} class="button--blue">
                   Edit payment details
                 </button>
                 <a onClick={{action 'toggleEditCreditCardForm'}} class='link cancel-link'>
                   Cancel
                 </a>
-              </div>
-            {{/if}}
+              {{/if}}
+            </div>
           </TravisForm>
         </div>
       {{else}}
@@ -34,7 +34,7 @@
             {{this.subscription.creditCardInfo.lastDigits}}
           </p>  
         </div>
-        <button class='button--blue manage-subscription-buttons' onClick={{action 'toggleEditCreditCardForm'}}>Edit payment details</button>
+        <button class='button--blue billing-subscription__buttons' onClick={{action 'toggleEditCreditCardForm'}}>Edit payment details</button>
       {{/if}}
     {{/if}}
     {{#if this.subscription.isManual}}
@@ -47,16 +47,6 @@
       >
         {{this.source}}
       </p>
-    {{/if}}
-    {{#if this.showAnnualBanner}}
-      <span class="notice-banner--yellow" data-test-annual-invitation>
-        Get one month for free with
-        <ExternalLinkTo
-          @href={{concat subscription.billingUrl "/edit?switch_annual=true?utm_source=web&utm_campaign=switch_to_annual"}}
-        >
-          annual billing
-        </ExternalLinkTo>
-      </span>
     {{/if}}
   </section>
 {{/if}}

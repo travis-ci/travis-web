@@ -1,5 +1,5 @@
-<div class='plan-overview'>
-  <div class="flex flex--space-between flex--wrap">
+<div class='billing-subscription-section plan-overview'>
+  <div class="flex flex--space-between flex--wrap plan-overview__details">
     <section>
       <h3 class='plan-overview__header'> Overview </h3>
       <div class='plan'>
@@ -15,42 +15,21 @@
           </p>
         {{/if}}
         <div>
-          <p class='plan-overview__name flex flex--v-center' data-test-plan-name>
-            {{#if this.subscription.plan }}
-              {{concat this.subscription.plan.name ' plan'}} 
-            {{else}}
-              Unknown plan
-            {{/if}}
-            {{#if this.isPending}}
-              <span class="badge square">
-                pending
-              </span>
-            {{else if this.isActive}}
-              <span class="badge green square">
-                active
-              </span>
-            {{else if this.isCanceled}}
-              <span class="badge grey square">
-                canceled
-              </span>
-            {{else if this.isExpired}}
-              <span class="badge grey square">
-                canceled
-              </span>
-              <span class="badge red square">
-                expired
-              </span>
-            {{/if}}
-          </p>
+          <BillingSummaryStatus 
+            @subscription={{this.subscription}}
+            @isPending={{this.isPending}}
+          />
           <p class='plan-overview__description' data-test-plan-concurrency>
             {{#if this.subscription.plan}}
               {{pluralize this.subscription.plan.builds "concurrent job"}}
             {{else}}
               Unknown concurrent jobs
             {{/if}}
-            <span data-test-plan-message='true' class='plan-overview__description--validity {{if this.canceledOrExpired 'red' 'cement-grey'}}'>
+            <span data-test-plan-message='true' class='plan-overview__description--validity 
+              {{if this.canceledOrExpired 'red' 'cement-grey'}}'
+            >
               {{this.planMessage}} 
-              {{#if (not this.isPending)}}
+              {{#if (and this.isComplete this.isNotPending)}}
                 {{#if this.isCanceled}}
                   {{moment-from-now this.subscription.validTo}} on {{moment-format this.subscription.validTo "MMMM DD"}}
                 {{else}}
@@ -82,17 +61,18 @@
       </div>
     </section>
   </div>
-    {{#if this.isPending}}
-      <span class="notice-banner--yellow" data-test-trial-running-out='true'>
-        We are currently waiting for Stripe to finish processing your order.
-      </span>
-    {{/if}}
-  <div class="flex manage-subscription-buttons">
-    <div>
+  {{#if this.isPending}}
+    <span class="notice-banner--yellow" data-test-trial-running-out='true'>
+      We are currently waiting for Stripe to finish processing your order.
+    </span>
+  {{/if}}
+  <div class="flex billing-subscription__buttons">
+  {{#if (and this.isComplete this.isNotPending)}}
+    <div class="billing-subscription__buttons--change">
       {{#if this.resubscribeLoading}}
         <LoadingIndicator />
-      {{else if (and this.subscription.isResubscribable this.account.hasSubscriptionPermissions)}}
-        <button onClick={{action 'resubscribe'}} class='button--green' data-test-resubscribe-subscription='true'>
+      {{else if this.canResubscribe}}
+        <button onClick={{action (perform this.resubscribe)}} class='button--green' data-test-resubscribe-subscription='true'>
           Resubscribe to plan
         </button>
       {{else}}
@@ -101,19 +81,20 @@
         </button>
       {{/if}}
     </div>
-    <div class='manage-subscription-buttons__cancel'>
+    <div class='billing-subscription__buttons--cancel'>
       {{#if this.cancelSubscriptionLoading}}
         <LoadingIndicator />
-      {{else if (and (not this.subscription.isCanceled) this.account.hasSubscriptionPermissions)}}
-        <button onClick={{action 'cancelSubscription'}} class='button--white' data-test-cancel-subscription='true'>
+      {{else if this.canCancelSubscription}}
+        <button onClick={{action (perform this.cancelSubscription)}} class='button--white' data-test-cancel-subscription='true'>
           Cancel subscription
         </button>
       {{/if}}
     </div>
+  {{/if}}
   </div>
 </div>
 <hr />
-{{#if (not this.isExpired)}}
+{{#if this.isCompleteAndNotExpired}}
   <BillingAddress @subscription={{this.subscription}} />
   <PaymentDetails @subscription={{this.subscription}} />
   <hr />
