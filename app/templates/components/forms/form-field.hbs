@@ -3,7 +3,7 @@
     {{this.label}}
     {{#if this.showRequiredMark}}
       <span class="travis-form__required-mark">
-        *
+        {{this.requiredMark}}
         <EmberTooltip @text="This field is required" @delay={{300}} />
       </span>
     {{/if}}

@@ -1,4 +1,4 @@
-<TravisLayout @layoutName="layouts/center">
+<TravisLayout @layoutName="layouts/center" class="tailwind-overrides">
 
   {{!-- Header section --}}
   <UiKit::Box
@@ -172,9 +172,12 @@
         >
           <form.field
             @label='Name'
-            @required={{false}}
+            @required={{true}}
             @value={{this.contactName}}
             @onChange={{action (mut this.contactName)}}
+            @requiredMark='Required'
+            @showRequiredMark={{true}}
+            class="text-grey-800"
             data-test-plans-contact-name="true"
             as |field|
           >

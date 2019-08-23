@@ -30,6 +30,7 @@ export default Component.extend({
   placeholder: '',
   helperText: '',
   disabled: false,
+  requiredMark: '*',
   showRequiredMark: false,
   allowClear: false,
   icon: '',
