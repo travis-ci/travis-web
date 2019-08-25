@@ -6,10 +6,10 @@ const vcsId = (vcsType) => {
   const availableProvidersRegex = Object.keys(providers).join('|');
   const match = (vcsType || 'github').match(new RegExp(availableProvidersRegex, 'i'));
 
-  if (!match || !providers[match[0]]) {
+  if (!match[0]) {
     throw new Error(`Invalid VCS Type "${vcsType}"`);
   }
-  return match[0];
+  return match[0].toLowerCase();
 };
 
 const vcsConfig = (vcsType) => (
@@ -53,7 +53,7 @@ export const vcsIcon = (vcsType) => vcsConfig(vcsType).icon;
 export const vcsVocab = (vcsType, vocabKey) => {
   const vocab = vcsConfig(vcsType).vocabulary[vocabKey];
   if (!vocab) {
-    throw new Error(`Invalid vocabulary key: ${vocabKey}`)
+    throw new Error(`Invalid vocabulary key: ${vocabKey}`);
   }
   return vocab;
 };

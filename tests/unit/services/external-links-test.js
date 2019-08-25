@@ -1,6 +1,5 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
-import { vcsEndpoints, vcsUrl } from 'travis/services/external-links';
 
 module('Unit | Service | external-links', function (hooks) {
   setupTest(hooks);
@@ -27,56 +26,39 @@ module('Unit | Service | external-links', function (hooks) {
     const service = this.owner.lookup('service:external-links');
     assert.equal(service.billingUrl('user', 'travis-ci'), 'https://billing.travis-ci.com/subscriptions/user');
   });
+});
 
-  const slug = 'user/repo';
+module('Unit | Service | external-links | VCS', function (hooks) {
+  setupTest(hooks);
 
-  test('vcsEndpoints', function (assert) {
-    assert.equal(vcsEndpoints.github, 'https://github.com');
-    assert.equal(vcsEndpoints.bitbucket, 'https://bitbucket.org');
-  });
-
-  test('vcsUrl', function (assert) {
-    const paths = {
-      github: '/somepath',
-      bitbucket: '/somepath',
-    };
-
-    assert.throws(vcsUrl, 'Throws if cannot find vcs');
-    assert.throws(() => vcsUrl('Github'), 'Throws if cannot find path');
-
-    assert.equal(vcsUrl(null, paths), 'https://github.com/somepath', 'Defaults to Github');
-    assert.equal(vcsUrl('Github', paths), 'https://github.com/somepath');
-    assert.equal(vcsUrl('Bitbucket', paths), 'https://bitbucket.org/somepath');
-  });
+  const owner = 'user';
+  const repo = 'repo';
 
   test('repoUrl', function (assert) {
     const service = this.owner.lookup('service:external-links');
-    assert.equal(service.repoUrl('Github', slug), `${vcsEndpoints.github}/${slug}`);
-    assert.equal(service.repoUrl('Bitbucket', slug), `${vcsEndpoints.bitbucket}/${slug}`);
+
+    assert.equal(service.repoUrl('GithubRepo', { owner, repo }), `https://github.com/${owner}/${repo}`);
   });
 
   test('branchUrl', function (assert) {
     const service = this.owner.lookup('service:external-links');
     const branch = 'branch';
 
-    assert.equal(service.branchUrl('Github', slug, branch), `${vcsEndpoints.github}/${slug}/tree/${branch}`);
-    assert.equal(service.branchUrl('Bitbucket', slug, branch), `${vcsEndpoints.bitbucket}/${slug}/src/${branch}`);
+    assert.equal(service.branchUrl('GithubRepo', { owner, repo, branch }), `https://github.com/${owner}/${repo}/src/${branch}`);
   });
 
   test('tagUrl', function (assert) {
     const service = this.owner.lookup('service:external-links');
     const tag = 'tag';
 
-    assert.equal(service.tagUrl('Github', slug, tag), `${vcsEndpoints.github}/${slug}/releases/tag/${tag}`);
-    assert.equal(service.tagUrl('Bitbucket', slug, tag), `${vcsEndpoints.bitbucket}/${slug}/src/${tag}`);
+    assert.equal(service.tagUrl('GithubRepo', { owner, repo, tag }), `https://github.com/${owner}/${repo}/releases/tag/${tag}`);
   });
 
   test('commitUrl', function (assert) {
     const service = this.owner.lookup('service:external-links');
-    const sha = 'sha';
+    const commit = 'sha';
 
-    assert.equal(service.commitUrl('Github', slug, sha), `${vcsEndpoints.github}/${slug}/commit/${sha}`);
-    assert.equal(service.commitUrl('Bitbucket', slug, sha), `${vcsEndpoints.bitbucket}/${slug}/commits/${sha}`);
+    assert.equal(service.commitUrl('GithubRepo', { owner, repo, commit }), `https://github.com/${owner}/${repo}/commit/${commit}`);
   });
 
   test('fileUrl', function (assert) {
@@ -84,23 +66,20 @@ module('Unit | Service | external-links', function (hooks) {
     const branch = 'branch';
     const file = 'file';
 
-    assert.equal(service.fileUrl('Github', slug, branch, file), `${vcsEndpoints.github}/${slug}/blob/${branch}/${file}`);
-    assert.equal(service.fileUrl('Bitbucket', slug, branch, file), `${vcsEndpoints.bitbucket}/${slug}/src/${branch}/${file}`);
+    assert.equal(service.fileUrl('GithubRepo', { owner, repo, branch, file }), `https://github.com/${owner}/${repo}/blob/${branch}/${file}`);
   });
 
   test('issueUrl', function (assert) {
     const service = this.owner.lookup('service:external-links');
-    const issueNumber = '123';
+    const issue = '123';
 
-    assert.equal(service.issueUrl('Github', slug, issueNumber), `${vcsEndpoints.github}/${slug}/issues/${issueNumber}`);
-    assert.equal(service.issueUrl('Bitbucket', slug, issueNumber), `${vcsEndpoints.bitbucket}/${slug}/issues/${issueNumber}`);
+    assert.equal(service.issueUrl('GithubRepo', { owner, repo, issue }), `https://github.com/${owner}/${repo}/issues/${issue}`);
   });
 
   test('profileUrl', function (assert) {
     const service = this.owner.lookup('service:external-links');
-    const username = 'username';
+    const owner = 'username';
 
-    assert.equal(service.profileUrl('Github', username), `${vcsEndpoints.github}/${username}`);
-    assert.equal(service.profileUrl('Bitbucket', username), `${vcsEndpoints.bitbucket}/${username}`);
+    assert.equal(service.profileUrl('GithubRepo', { owner }), `https://github.com/${owner}`);
   });
 });
