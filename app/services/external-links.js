@@ -1,67 +1,28 @@
 import Service from '@ember/service';
 import config from 'travis/config/environment';
-import { vcsName } from 'travis/helpers/vcs-name';
-import { BITBUCKET, GITHUB } from 'travis/utils/vcs-types';
-
-const lowerVcsName = (vcsType) => vcsName(vcsType).toLowerCase();
-
-export const vcsEndpoints = {
-  [BITBUCKET]: 'https://bitbucket.org',
-  [GITHUB]: 'https://github.com',
-};
-
-export const vcsUrl = (vcsType, paths = {}) => {
-  const vcs = lowerVcsName(vcsType);
-  const endpoint = vcsEndpoints[vcs];
-  const path = paths[vcs];
-
-  if (!endpoint) throw new Error(`No endpoint for VCS "${vcsType}"`);
-  if (!path) throw new Error(`No path for VCS "${vcsType}"`);
-
-  return endpoint + path;
-};
+import { vcsUrl } from 'travis/utils/vcs';
 
 // TODO:
-// The URLs below are used in `helpers/format-message.js`
+// The URLs below are used in `helpers/format-message.js` which needs
+// to be changed to use services.
 export const vcsLinks = {
-  commitUrl: (vcsType, slug, sha) => vcsUrl(vcsType, {
-    github: `/${slug}/commit/${sha}`,
-    bitbucket: `/${slug}/commits/${sha}`,
-  }),
+  commitUrl: (vcsType, { owner, repo, commit }) => vcsUrl('commit', vcsType, { owner, repo, commit }),
 
-  issueUrl: (vcsType, slug, issueNumber) => vcsUrl(vcsType, {
-    github: `/${slug}/issues/${issueNumber}`,
-    bitbucket: `/${slug}/issues/${issueNumber}`,
-  }),
+  issueUrl: (vcsType, { owner, repo, issue }) => vcsUrl('issue', vcsType, { owner, repo, issue }),
 
-  profileUrl: (vcsType, username) => vcsUrl(vcsType, {
-    github: `/${username}`,
-    bitbucket: `/${username}`,
-  }),
+  profileUrl: (vcsType, { owner }) => vcsUrl('profile', vcsType, { owner }),
 };
 
 export default Service.extend({
   ...vcsLinks,
 
-  repoUrl: (vcsType, slug) => vcsUrl(vcsType, {
-    github: `/${slug}`,
-    bitbucket: `/${slug}`,
-  }),
+  branchUrl: (vcsType, { owner, repo, branch }) => vcsUrl('branch', vcsType, { owner, repo, branch }),
 
-  branchUrl: (vcsType, slug, branch) => vcsUrl(vcsType, {
-    github: `/${slug}/tree/${branch}`,
-    bitbucket: `/${slug}/src/${branch}`,
-  }),
+  fileUrl: (vcsType, { owner, repo, branch, file }) => vcsUrl('file', vcsType, { owner, repo, branch, file }),
 
-  tagUrl: (vcsType, slug, tag) => vcsUrl(vcsType, {
-    github: `/${slug}/releases/tag/${tag}`,
-    bitbucket: `/${slug}/src/${tag}`,
-  }),
+  repoUrl: (vcsType, { owner, repo }) => vcsUrl('repo', vcsType, { owner, repo }),
 
-  fileUrl: (vcsType, slug, branch, file) => vcsUrl(vcsType, {
-    github: `/${slug}/blob/${branch}/${file}`,
-    bitbucket: `/${slug}/src/${branch}/${file}`,
-  }),
+  tagUrl: (vcsType, { owner, repo, tag }) => vcsUrl('tag', vcsType, { owner, repo, tag }),
 
   email(email) {
     return `mailto:${email}`;
