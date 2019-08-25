@@ -1,4 +1,4 @@
 import { helper } from '@ember/component/helper';
-import vcsConfig from 'travis/utils/vcs-config';
+import { vcsName } from 'travis/utils/vcs';
 
-export default helper(([vcsType]) => vcsConfig.get(vcsType).name);
+export default helper(([vcsType]) => vcsName(vcsType));
