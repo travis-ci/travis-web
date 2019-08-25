@@ -1,13 +1,16 @@
 /* eslint-env node */
 'use strict';
 
+const providers = require('./providers');
+
 module.exports = function (environment) {
-  let ENV = {
+  const ENV = {
     modulePrefix: 'travis',
     environment,
     rootURL: '/',
     locationType: 'auto',
     defaultTitle: 'Travis CI',
+    providers,
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
