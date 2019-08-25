@@ -36,15 +36,18 @@ export default Component.extend({
     return presentedPath(source, this.slug);
   }),
 
-  fileUrl: computed('rawConfig.source', 'slug', 'build.branchName', 'build.repo.vcsType', function () {
-    const source = this.get('rawConfig.source');
-    const slug = this.get('slug');
-    const branchName = this.get('build.branchName');
+  fileUrl: computed('rawConfig.source', 'build.branchName', 'build.repo.{slug,vcsType}', function () {
+    const slug = this.get('build.repo.slug');
     const vcsType = this.get('build.repo.vcsType');
-
-    if (!isInternal(source, slug)) {
-      return this.externalLinks.fileUrl(vcsType, slug, branchName, fileNameWithoutSha(source));
+    const source = this.get('rawConfig.source');
+    if (isInternal(source, slug)) {
+      return;
     }
+
+    const [owner, repo] = slug.split('/');
+    const branch = this.get('build.branchName');
+    const file = fileNameWithoutSha(source);
+    return this.externalLinks.fileUrl(vcsType, { owner, repo, branch, file });
   }),
 
   actions: {

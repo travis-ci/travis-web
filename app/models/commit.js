@@ -50,10 +50,10 @@ export default Model.extend({
   ),
 
   url: computed('build.repo.{slug,vcsType}', 'sha', function () {
-    const slug = this.get('build.repo.slug');
-    const sha = this.get('sha');
+    const [owner, repo] = this.get('build.repo.slug').split('/');
     const vcsType = this.get('build.repo.vcsType');
+    const commit = this.get('sha');
 
-    return this.externalLinks.commitUrl(vcsType, slug, sha);
+    return this.externalLinks.commitUrl(vcsType, { owner, repo, commit });
   }),
 });

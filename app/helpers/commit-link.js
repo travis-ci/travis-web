@@ -14,15 +14,16 @@ export default Helper.extend({
       return '';
     }
 
-    const sha = escape(formatCommit(commitSha));
+    const commit = escape(formatCommit(commitSha));
 
     if (!slug) {
-      return sha;
+      return commit;
     }
 
-    const commitUrl = this.externalLinks.commitUrl(vcsType, slug, sha);
+    const [owner, repo] = slug.split('/');
+    const commitUrl = this.externalLinks.commitUrl(vcsType, { owner, repo, commit });
     const url = escape(commitUrl);
-    const string = `<a class="github-link only-on-hover" href="${url}">${sha}</a>`;
+    const string = `<a class="github-link only-on-hover" href="${url}">${commit}</a>`;
     return new htmlSafe(string);
   }
 });

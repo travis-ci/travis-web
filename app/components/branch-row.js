@@ -21,11 +21,11 @@ export default Component.extend({
   hasTriggered: false,
 
   commitUrl: computed('branch.repository.{slug,vcsType}', 'branch.last_build.commit.sha', function () {
-    const slug = this.get('branch.repository.slug');
-    const sha = this.get('branch.last_build.commit.sha');
+    const [owner, repo] = this.get('branch.repository.slug').split('/');
     const vcsType = this.get('branch.repository.vcsType');
+    const commit = this.get('branch.last_build.commit.sha');
 
-    return this.externalLinks.commitUrl(vcsType, slug, sha);
+    return this.externalLinks.commitUrl(vcsType, { owner, repo, commit });
   }),
 
   rawCreatedBy: alias('branch.last_build.created_by'),

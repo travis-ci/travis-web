@@ -9,10 +9,10 @@ export default Controller.extend({
   isLoading: false,
 
   profileUrl: computed('model.{login,vcsType}', function () {
-    const login = this.get('model.login');
+    const owner = this.get('model.login');
     const vcsType = this.get('model.vcsType');
 
-    return this.externalLinks.profileUrl(vcsType, login);
+    return this.externalLinks.profileUrl(vcsType, { owner });
   }),
 
   owner: reads('model'),

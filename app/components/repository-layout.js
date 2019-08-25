@@ -1,7 +1,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
-import vcsConfig from 'travis/utils/vcs-config'
 
 export default Component.extend({
   statusImages: service(),
@@ -19,10 +18,10 @@ export default Component.extend({
   }),
 
   repoUrl: computed('repo.{vcsType,slug}', function () {
-    const slug = this.get('repo.slug');
+    const [owner, repo] = this.get('repo.slug').split('/');
     const vcsType = this.get('repo.vcsType');
 
-    return this.externalLinks.repoUrl(vcsType, slug);
+    return this.externalLinks.repoUrl(vcsType, { owner, repo });
   }),
 
   orgBuildHistoryLink: computed('repo.slug', function () {

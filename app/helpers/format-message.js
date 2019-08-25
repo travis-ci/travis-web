@@ -85,7 +85,7 @@ function includeProfileLink(text, vcsType) {
   const userRegexp = new RegExp('\\B@([\\w-]+)', 'g');
 
   return text.replace(userRegexp, (reference, username) => {
-    const href = vcsLinks.profileUrl(vcsType, username);
+    const href = vcsLinks.profileUrl(vcsType, { owner: username });
     return `<a href="${href}">${reference}</a>`;
   });
 }
@@ -107,9 +107,8 @@ function includeCommitLink(text, owner, repo, vcsType) {
 function _issueLink(reference, current, matched, vcsType) {
   const owner = matched.owner || current.owner;
   const repo = matched.repo || current.repo;
-  const slug = `${owner}/${repo}`;
-  const issueNumber = matched.number;
-  const href = vcsLinks.issueUrl(vcsType, slug, issueNumber);
+  const issue = matched.number;
+  const href = vcsLinks.issueUrl(vcsType, { owner, repo, issue });
 
   return `<a href="${href}">${reference}</a>`;
 }
@@ -117,9 +116,8 @@ function _issueLink(reference, current, matched, vcsType) {
 function _commitLink(reference, current, matched, vcsType) {
   const owner = matched.owner || current.owner;
   const repo = matched.repo || current.repo;
-  const slug = `${owner}/${repo}`;
-  const commitSha = matched.sha;
-  const href = vcsLinks.commitUrl(vcsType, slug, commitSha);
+  const commit = matched.sha;
+  const href = vcsLinks.commitUrl(vcsType, { owner, repo, commit });
 
   return `<a href="${href}">${reference}</a>`;
 }
