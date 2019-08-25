@@ -6,7 +6,7 @@
       data-test-migrate-banner-accepted="true"
     >
       {{#if this.owner.isOrganization}}
-        The {{this.owner.title}} organization
+        The {{this.owner.title}} {{vcs-vocab this.owner.vcsType 'organization'}}
       {{else}}
         Your account
       {{/if}}
