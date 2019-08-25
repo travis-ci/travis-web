@@ -45,7 +45,7 @@ module('Unit | Utils | vcsUrl', function () {
   test('it returns the formatted URL', function (assert) {
     assert.equal(
       vcsUrl('branch', 'GithubRepo', { owner: 'theowner', repo: 'therepo', branch: 'thebranch' }),
-      'https://github.com/theowner/therepo/src/thebranch'
+      'https://github.com/theowner/therepo/tree/thebranch'
     );
   });
 

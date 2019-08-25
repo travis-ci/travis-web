@@ -44,7 +44,7 @@ module('Unit | Service | external-links | VCS', function (hooks) {
     const service = this.owner.lookup('service:external-links');
     const branch = 'branch';
 
-    assert.equal(service.branchUrl('GithubRepo', { owner, repo, branch }), `https://github.com/${owner}/${repo}/src/${branch}`);
+    assert.equal(service.branchUrl('GithubRepo', { owner, repo, branch }), `https://github.com/${owner}/${repo}/tree/${branch}`);
   });
 
   test('tagUrl', function (assert) {

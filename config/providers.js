@@ -27,7 +27,7 @@ module.exports = {
     icon: 'icon-bitbucket',
     name: 'Bitbucket',
     paths: {
-      branch: '/:owner/:repo/tree/:branch',
+      branch: '/:owner/:repo/src/:branch',
       commit: '/:owner/:repo/commits/:commit',
       file: '/:owner/:repo/src/:branch/:file',
       issue: '/:owner/:repo/issues/:issue',
@@ -46,7 +46,7 @@ module.exports = {
     icon: 'icon-repooctocat',
     name: 'GitHub',
     paths: {
-      branch: '/:owner/:repo/src/:branch',
+      branch: '/:owner/:repo/tree/:branch',
       commit: '/:owner/:repo/commit/:commit',
       file: '/:owner/:repo/blob/:branch/:file',
       issue: '/:owner/:repo/issues/:issue',
