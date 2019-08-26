@@ -81,6 +81,6 @@ module('Integration | Component | billing-process', function (hooks) {
       @plans={{plans}}
     />`);
 
-    assert.dom('p').hasText('You do not have permission to create a subscription');
+    assert.dom('p').hasText("You don't have permission to create a subscription");
   });
 });
