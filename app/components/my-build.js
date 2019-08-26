@@ -13,7 +13,7 @@ export default Component.extend({
   state: alias('build.state'),
 
   branchUrl: computed('build.repo.{slug,vcsType}', 'build.branchName', function () {
-    const [owner, repo] = this.get('build.repo.slug').split('/');
+    const [owner, repo] = (this.get('build.repo.slug') || '').split('/');
     const vcsType = this.get('build.repo.vcsType');
     const branch = this.get('build.branchName');
 
@@ -21,10 +21,10 @@ export default Component.extend({
   }),
 
   commitUrl: computed('build.repo.{slug,vcsType}', 'build.commit.sha', function () {
-    const [owner, repo] = this.get('build.repo.slug').split('/');
+    const [owner, repo] = (this.get('build.repo.slug') || '').split('/');
     const vcsType = this.get('build.repo.vcsType');
-    const sha = this.get('build.commit.sha');
+    const commit = this.get('build.commit.sha');
 
-    return this.externalLinks.commitUrl(vcsType, { owner, repo, sha });
+    return this.externalLinks.commitUrl(vcsType, { owner, repo, commit });
   }),
 });
