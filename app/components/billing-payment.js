@@ -33,16 +33,20 @@ export default Component.extend({
   createSubscription: task(function* () {
     const { stripeElement, account, newSubscription, selectedPlan } = this;
     const { token: { id, card }, error } = yield this.stripe.createStripeToken.perform(stripeElement);
-    if (!error) {
-      newSubscription.creditCardInfo.setProperties({ token: id, lastDigits: card.last4 });
-      const organizationId = account.type === 'organization' ? Number(account.id) : null;
-      newSubscription.setProperties({ organizationId, plan: selectedPlan });
+    try {
+      if (!error) {
+        newSubscription.creditCardInfo.setProperties({ token: id, lastDigits: card.last4 });
+        const organizationId = account.type === 'organization' ? Number(account.id) : null;
+        newSubscription.setProperties({ organizationId, plan: selectedPlan });
 
-      const { clientSecret } = yield newSubscription.save();
-      if (clientSecret) {
-        yield this.stripe.handleStripePayment.linked().perform(clientSecret);
+        const { clientSecret } = yield newSubscription.save();
+        if (clientSecret) {
+          yield this.stripe.handleStripePayment.linked().perform(clientSecret);
+        }
+        yield this.accounts.fetchSubscriptions.perform();
       }
-      yield this.accounts.fetchSubscriptions.perform();
+    } catch (error) {
+      this.flashes.error('An error occurred when creating your subscription. Please try again.');
     }
   }).drop(),
 
