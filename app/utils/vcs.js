@@ -1,3 +1,4 @@
+import { assert } from '@ember/debug';
 import config from 'travis/config/environment';
 
 const { providers } = config;
@@ -6,9 +7,7 @@ const vcsId = (vcsType) => {
   const availableProvidersRegex = Object.keys(providers).join('|');
   const match = (vcsType || 'github').match(new RegExp(availableProvidersRegex, 'i'));
 
-  if (!match[0]) {
-    throw new Error(`Invalid VCS Type "${vcsType}"`);
-  }
+  assert(`Invalid VCS Type "${vcsType}"`, match[0]);
   return match[0].toLowerCase();
 };
 
@@ -33,16 +32,14 @@ const paramsValid = (template, params) => (
 );
 
 const arrayEqual = (array1, array2) => (
-  array1.sort().toString() == array2.sort().toString()
+  array1.sort().toString() === array2.sort().toString()
 );
 
-export const vcsUrl = (resource, vcsType, params) => {
+export const vcsUrl = (resource, vcsType, params = {}) => {
   const vcs = vcsConfig(vcsType);
   const url = vcs.endpoint + vcs.paths[resource];
 
-  if (!paramsValid(url, params)) {
-    throw new Error(`Missing url params. URL: ${url}, PARAMS: ${JSON.stringify(params)}`);
-  }
+  assert(`Missing url params. URL: ${url}, PARAMS: ${JSON.stringify(params)}`, paramsValid(url, params));
   return replaceParams(url, params);
 };
 
