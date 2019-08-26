@@ -1,71 +1,71 @@
 <ul>
-  <li data-test-current-tab-container id="tab_current" class={{classCurrent}}>
+  <li data-test-current-tab-container id="tab_current" class={{this.classCurrent}}>
     {{#if repo.slug}}
-      {{#link-to "repo" repo current-when="repo.index"}}
+      <LinkTo @route="repo" @model={{this.repo}} @current-when="repo.index">
         Current
-      {{/link-to}}
+      </LinkTo>
     {{/if}}
   </li>
-  <li id="tab_branches" class={{classBranches}}>
-    {{#if repo.slug}}
-      {{#link-to "branches" repo}}
+  <li id="tab_branches" class={{this.classBranches}}>
+    {{#if this.repo.slug}}
+      <LinkTo @route="branches" @model={{this.repo}}>
         Branches
-      {{/link-to}}
+      </LinkTo>
     {{/if}}
   </li>
-  <li id="tab_builds" class={{classBuilds}}>
-    {{#if repo.slug}}
-      {{#link-to "builds" repo}}
+  <li id="tab_builds" class={{this.classBuilds}}>
+    {{#if this.repo.slug}}
+      <LinkTo @route="builds" @model={{this.repo}}>
         Build History
-      {{/link-to}}
+      </LinkTo>
     {{/if}}
   </li>
-  <li id="tab_pull_requests" class={{classPullRequests}}>
-    {{#if repo.slug}}
-      {{#link-to "pullRequests" repo}}
+  <li id="tab_pull_requests" class={{this.classPullRequests}}>
+    {{#if this.repo.slug}}
+      <LinkTo @route="pullRequests" @model={{this.repo}}>
         Pull Requests
-      {{/link-to}}
+      </LinkTo>
     {{/if}}
   </li>
-  <li id="tab_build" class={{classBuild}}>
-    {{#if build.id}}
-      {{#if repo.slug}}
-        {{svg-jar 'icon-arrowtabs' class="tab-arrow"}}
-        {{#link-to "build" repo build}}
-          Build #{{build.number}}
-        {{/link-to}}
+  <li id="tab_build" class={{this.classBuild}}>
+    {{#if this.build.id}}
+      {{#if this.repo.slug}}
+        <SvgImage @name="icon-arrowtabs" @class="tab-arrow" />
+        <LinkTo @route="build" @models={{array this.repo this.build}}>
+          Build #{{this.build.number}}
+        </LinkTo>
       {{/if}}
     {{/if}}
   </li>
-  <li id="tab_job" class={{classJob}}>
-    {{#if job.id}}
-      {{#if repo.slug}}
-        {{#link-to "job" repo job}}
-          Job #{{job.number}}
-        {{/link-to}}
+  <li id="tab_job" class={{this.classJob}}>
+    {{#if this.job.id}}
+      {{#if this.repo.slug}}
+        <LinkTo @route="job" @models={{array this.repo this.job}}>
+          Job #{{this.job.number}}
+        </LinkTo>
       {{/if}}
     {{/if}}
   </li>
-  <li id="tab_settings" class={{classSettings}}>
-    {{#if repo.slug}}
-      {{#link-to "settings" repo}}
+  <li id="tab_settings" class={{this.classSettings}}>
+    {{#if this.repo.slug}}
+      <LinkTo @route="settings" @model={{this.repo}}>
         Settings
-      {{/link-to}}
+      </LinkTo>
     {{/if}}
   </li>
-  <li id="tab_requests" class="{{classRequests}}">
-    {{#if repo.slug}}
-      {{#link-to "requests" repo}}
+  <li id="tab_requests" class="{{this.classRequests}}">
+    {{#if this.repo.slug}}
+      <LinkTo @route="requests" @model={{this.repo}}>
         Requests
-      {{/link-to}}
+      </LinkTo>
     {{/if}}
   </li>
-  {{#if config.endpoints.caches}}
-    <li id="tab_caches" class={{classCaches}}>
-      {{#if repo.slug}}
-        {{#link-to "caches" repo}}
+  {{#if this.config.endpoints.caches}}
+    <li id="tab_caches" class={{this.classCaches}}>
+      {{#if this.repo.slug}}
+        <LinkTo @route="caches" @model={{this.repo}}>
           Caches
-        {{/link-to}}
+        </LinkTo>
       {{/if}}
     </li>
   {{/if}}

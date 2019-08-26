@@ -1,59 +1,114 @@
 <section id="log-container" class="log">
-  {{#if job.notStarted}}
-  <div class="job-waiting-stages-container">
-    <div class="stage-loading stage-1-container {{if job.isCreated 'spinner-container'}} {{if job.toBeStarted 'stage-loaded-ring'}}">
-      <svg class="{{if job.isCreated 'spinner'}}" x="0px" y="0px" viewBox="0 0 150 150">
-        <circle id="loading-inner" cx="75" cy="75" r="68"/>
-      </svg>
-      <span class="waiting-stage-1-text stage-text {{if job.isCreated 'loading-num-text'}} {{if job.toBeStarted 'stage-loaded-text'}}">1</span>
+  {{#if this.job.notStarted}}
+    <div class="job-waiting-stages-container">
+      <div class="stage-loading stage-1-container {{if this.job.isCreated 'spinner-container'}} {{if this.job.toBeStarted 'stage-loaded-ring'}}">
+        <svg
+          class="{{if this.job.isCreated 'spinner'}}"
+          x="0px"
+          y="0px"
+          viewBox="0 0 150 150"
+        >
+          <circle id="loading-inner" cx="75" cy="75" r="68"></circle>
+        </svg>
+        <span class="waiting-stage-1-text stage-text {{if this.job.isCreated 'loading-num-text'}} {{if this.job.toBeStarted 'stage-loaded-text'}}">
+          1
+        </span>
+      </div>
+      <div class="stage-message stage-1-message {{if this.job.isCreated 'show-stage-message'}} {{if this.job.toBeStarted 'hide-stage-message'}}">
+        Job received
+      </div>
+      <span class="loading-line-container loading-line-container-1">
+        <span class="loading-line-1 {{if this.job.toBeStarted 'loading-line'}}"></span>
+      </span>
+      <div class="stage-loading stage-2-container {{if this.job.isCreated 'not-loaded-ring'}} {{if this.job.isQueued 'spinner-container'}} {{if this.job.isReceived 'stage-loaded-ring'}}">
+        <svg
+          class="{{if this.job.isQueued "spinner"}}"
+          x="0px"
+          y="0px"
+          viewBox="0 0 150 150"
+        >
+          <circle id="loading-inner" cx="75" cy="75" r="68"></circle>
+        </svg>
+        <span class="waiting-stage-2-text stage-text {{if this.job.isQueued 'loading-num-text'}} {{if this.job.isReceived 'stage-loaded-text'}}">
+          2
+        </span>
+      </div>
+      <div class="stage-message stage-2-message {{if this.job.isQueued 'show-stage-message'}} {{if this.job.isCreated 'hide-stage-message'}} {{if this.job.isReceived 'hide-stage-message'}}">
+        Queued
+      </div>
+      <div class="loading-line-container loading-line-container-2">
+        <span class="loading-line-2 {{if this.job.isReceived 'loading-line'}}"></span>
+      </div>
+      <div class="stage-loading stage-3-container {{if this.job.isQueued 'not-loaded-ring'}} {{if this.job.isCreated 'not-loaded-ring'}} {{if this.job.isReceived 'spinner-container'}} {{if this.job.started 'stage-loaded-ring'}}">
+        <svg
+          class="{{if job.isReceived "spinner"}}"
+          x="0px"
+          y="0px"
+          viewBox="0 0 150 150"
+        >
+          <circle id="loading-inner" cx="75" cy="75" r="68"></circle>
+        </svg>
+        <span class="waiting-stage-3-text stage-text {{if this.job.isReceived 'loading-num-text'}} {{if this.job.started 'stage-loaded-text'}}">
+          3
+        </span>
+      </div>
+      <div class="stage-message stage-3-message {{if this.job.isReceived 'show-stage-message'}} {{if this.job.isCreated 'hide-stage-message'}} {{if this.job.isQueued 'hide-stage-message'}} {{if this.job.started 'hide-stage-message'}}">
+        Booting virtual machine
+      </div>
     </div>
-    <div class="stage-message stage-1-message {{if job.isCreated 'show-stage-message'}} {{if job.toBeStarted 'hide-stage-message'}}">Job received</div>
-    <span class="loading-line-container loading-line-container-1">
-      <span class="loading-line-1 {{if job.toBeStarted 'loading-line'}}"></span>
-    </span>
-   <div class="stage-loading stage-2-container {{if job.isCreated 'not-loaded-ring'}} {{if job.isQueued 'spinner-container'}} {{if job.isReceived 'stage-loaded-ring'}}">
-     <svg class="{{if job.isQueued 'spinner'}}" x="0px" y="0px" viewBox="0 0 150 150">
-       <circle id="loading-inner" cx="75" cy="75" r="68"/>
-     </svg>
-      <span class="waiting-stage-2-text stage-text {{if job.isQueued 'loading-num-text'}} {{if job.isReceived 'stage-loaded-text'}}">2</span>
-    </div>
-    <div class="stage-message stage-2-message {{if job.isQueued 'show-stage-message'}} {{if job.isCreated 'hide-stage-message'}} {{if job.isReceived 'hide-stage-message'}}">Queued</div>
-    <div class="loading-line-container loading-line-container-2">
-      <span class="loading-line-2 {{if job.isReceived 'loading-line'}}"></span>
-    </div>
-    <div class="stage-loading stage-3-container {{if job.isQueued 'not-loaded-ring'}} {{if job.isCreated 'not-loaded-ring'}} {{if job.isReceived 'spinner-container'}} {{if job.started 'stage-loaded-ring'}}">
-      <svg class="{{if job.isReceived 'spinner'}}" x="0px" y="0px" viewBox="0 0 150 150">
-        <circle id="loading-inner" cx="75" cy="75" r="68"/>
-      </svg>
-      <span class="waiting-stage-3-text stage-text {{if job.isReceived 'loading-num-text'}} {{if job.started 'stage-loaded-text'}}">3</span>
-    </div>
-    <div class="stage-message stage-3-message {{if job.isReceived 'show-stage-message'}} {{if job.isCreated 'hide-stage-message'}} {{if job.isQueued 'hide-stage-message'}} {{if job.started 'hide-stage-message'}}">Booting virtual machine</div>
-  </div>
   {{/if}}
-
-  <div class="log-container {{if job.notStarted 'hidden'}}">
-      <button type="button" class="toggle-log-button {{if logIsVisible 'hidden'}}" title="Display the log" {{action "toggleLog"}}>
-      {{svg-jar 'icon-seemore' class="icon"}}
-      <span class="label-align">View log</span></button>
-
-    <div class="log-main {{if logIsVisible 'is-visible'}} {{if job.notStarted 'hidden'}}">
+  <div class="log-container {{if this.job.notStarted 'hidden'}}">
+    <button
+      type="button"
+      class="toggle-log-button {{if this.logIsVisible 'hidden'}}"
+      title="Display the log"
+      onclick={{action "toggleLog"}}
+    >
+      <SvgImage @name="icon-seemore" @class="icon" />
+      <span class="label-align">
+        View log
+      </span>
+    </button>
+    <div class="log-main {{if this.logIsVisible 'is-visible'}} {{if this.job.notStarted 'hidden'}}">
       <div class="log-header">
-          <button type="button" class="toggle-log-button--dark {{unless logIsVisible 'hidden'}}" title="Display the log" {{action "toggleLog"}}>
-              {{svg-jar 'icon-seemore' class="icon"}}<span class="label-align">Hide log</span></button>
-        {{#if canRemoveLog}}
-          <button class="remove-log-button open-popup" {{action "toggleRemoveLogModal"}} title="Remove the log" type="button">
-            {{svg-jar 'icon-deletelogs' class="icon"}} Remove log</button>
+        <button
+          type="button"
+          class="toggle-log-button--dark {{unless this.logIsVisible 'hidden'}}"
+          title="Display the log"
+          onclick={{action "toggleLog"}}
+        >
+          <SvgImage @name="icon-seemore" @class="icon" />
+          <span class="label-align">
+            Hide log
+          </span>
+        </button>
+        {{#if this.canRemoveLog}}
+          <button
+            class="remove-log-button open-popup"
+            title="Remove the log"
+            type="button"
+            onclick={{action "toggleRemoveLogModal"}}
+          >
+            <SvgImage @name="icon-deletelogs" @class="icon" />
+            Remove log
+          </button>
         {{/if}}
-        <a class="download-log-button" href={{plainTextLogUrl}} title="Display the log in plaintext">
-          {{svg-jar 'icon-downloadlogs' class="icon"}} Raw log</a>
+        <ExternalLinkTo
+          class="download-log-button"
+          @href={{this.plainTextLogUrl}}
+          @title="Display the log in plaintext"
+        >
+          <SvgImage @name="icon-downloadlogs" @class="icon" />
+          Raw log
+        </ExternalLinkTo>
       </div>
       <div class="log-body">
-        {{#if showTailing}}
-          <a href="#" id="tail" class="log-tail" {{action "toggleTailing"}}>
+        {{#if this.showTailing}}
+          <a id="tail" class="log-tail pointer" onclick={{action "toggleTailing"}}>
             <span class="tail-status"></span>
             <span class="tail-label">
-              {{svg-jar 'icon-arrowdown' class="icon-arrow"}}
-              {{#if job.isFinished}}
+              <SvgImage @name="icon-arrowdown" @class="icon-arrow" />
+              {{#if this.job.isFinished}}
                 Scroll to End of Log
               {{else}}
                 Follow Log
@@ -61,32 +116,34 @@
             </span>
           </a>
         {{/if}}
-
         <pre id="log" class="ansi"></pre>
-
-        {{#if showToTop}}
-          <a href='#' class="to-top" {{action "toTop"}}>Top</a>
+        {{#if this.showToTop}}
+          <a class="to-top pointer" onclick={{action "toTop"}}>
+            Top
+          </a>
         {{/if}}
       </div>
     </div>
-
-    {{#if limited}}
+    {{#if this.limited}}
       <p class="warning notice-banner--red">
-        This log is too long to be displayed. Please reduce the verbosity of your
-        build or download the <a href={{plainTextLogUrl}}>raw log</a>.
+        This log is too long to be displayed. Please reduce the verbosity of your build or download the
+        <ExternalLinkTo @href={{this.plainTextLogUrl}}>raw log</ExternalLinkTo>.
       </p>
     {{/if}}
   </div>
 </section>
-
-{{#if isShowingRemoveLogModal}}
-  {{#modal-dialog
-    onClose="toggleRemoveLogModal"
-    targetAttachment="center"
-    translucentOverlay=true
-    overlayPosition='sibling'
-    animatable=true
-  }}
-    {{remove-log-popup job=job onCloseModal=(action 'toggleRemoveLogModal')}}
-  {{/modal-dialog}}
+{{#if this.isShowingRemoveLogModal}}
+  <ModalDialog
+    @onClose={{action "toggleRemoveLogModal"}}
+    @onClickOverlay={{action "toggleRemoveLogModal"}}
+    @targetAttachment="center"
+    @translucentOverlay={{true}}
+    @overlayPosition="sibling"
+    @animatable={{true}}
+  >
+    <RemoveLogPopup
+      @job={{this.job}}
+      @onCloseModal={{action "toggleRemoveLogModal"}}
+    />
+  </ModalDialog>
 {{/if}}

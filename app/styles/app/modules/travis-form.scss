@@ -16,6 +16,39 @@ $select-multiple-spacing: 5px;
   .travis-form__field {
     position: relative;
 
+    .ember-power-select-selected-item {
+      white-space: nowrap;
+    }
+
+    &.env-branch-selector {
+      .ember-power-select-trigger {
+        padding-right: 64px !important;
+      }
+      .ember-power-select-selected-item {
+        margin-right: 8px;
+        border-right: none;
+      }
+      .ember-power-select-clear-btn {
+        right: 25px;
+        top: 50%;
+        font-size: 0;
+        border-radius: 3px;
+        padding: 3px 4px;
+        transform: translate(0, -50%);
+        background: $cement-grey;
+        color: #fff;
+        &:before {
+          content: 'clear';
+          font-size: 14px;
+          font-weight: 300;
+          line-height: 14px;
+        }
+        &:hover {
+          background: $oxide-blue;
+        }
+      }
+    }
+
     .travis-form__field-badge {
       opacity: 0;
       position: absolute;
@@ -50,6 +83,7 @@ $select-multiple-spacing: 5px;
     .travis-form__helper-text {
       margin: -3px 0 6px 0;
       color: $cement-grey;
+      font-size: 0.8em;
     }
 
     .travis-form__field-component {

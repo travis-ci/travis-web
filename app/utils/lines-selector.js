@@ -65,7 +65,7 @@ export default (function () {
     this.removeAllHighlights();
     let lines = this.getSelectedLines();
     if (lines) {
-      let elements = this.element.find('.log-line:visible').slice(lines.first - 1, lines.last);
+      let elements = this.element.find('.log-line').slice(lines.first - 1, lines.last);
       if (elements.length) {
         elements.addClass('highlight');
 
@@ -93,7 +93,7 @@ export default (function () {
       results = [];
       for (index in lines) {
         l = lines[index];
-        line = this.element.find('.log-line:visible').slice(l - 1, l);
+        line = this.element.find('.log-line').slice(l - 1, l);
         results.push(this.folder.unfold(line));
       }
       return results;
@@ -115,7 +115,7 @@ export default (function () {
 
   LinesSelector.prototype.getLineNumberFromElement = function (element) {
     if (this && this.element) {
-      return this.element.find('.log-line:visible').index(element) + 1;
+      return this.element.find('.log-line').index(element) + 1;
     }
   };
 
@@ -138,4 +138,4 @@ export default (function () {
   };
 
   return LinesSelector;
-})();
+}());

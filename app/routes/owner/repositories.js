@@ -47,7 +47,7 @@ export default TravisRoute.extend({
   },
 
   loadInsights() {
-    return this.get('insights').getChartData.perform(
+    return this.insights.getChartData.perform(
       this.owner,
       'week',
       'builds',

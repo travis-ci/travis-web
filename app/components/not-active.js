@@ -18,7 +18,7 @@ export default Component.extend({
   config,
 
   canActivate: computed('repo', 'repo.permissions.admin', function () {
-    let repo = this.get('repo');
+    let repo = this.repo;
     let adminPermissions = this.get('repo.permissions.admin');
     if (repo) {
       return adminPermissions;
@@ -39,7 +39,7 @@ export default Component.extend({
 
   comRepositoryLink: computed('repo.slug', function () {
     let slug = this.get('repo.slug');
-    return this.get('externalLinks').migratedToComLink(slug);
+    return this.externalLinks.migratedToComLink(slug);
   }),
 
   githubAppsActivationURL: computed(
@@ -71,13 +71,13 @@ export default Component.extend({
       });
 
       if (response.active) {
-        this.get('pusher').subscribe(`repo-${repoId}`);
+        this.pusher.subscribe(`repo-${repoId}`);
 
-        this.get('repo').set('active', true);
-        this.get('flashes').success('Repository has been successfully activated.');
+        this.repo.set('active', true);
+        this.flashes.success('Repository has been successfully activated.');
       }
     } catch (e) {
-      this.get('flashes').error('There was an error while trying to activate the repository.');
+      this.flashes.error('There was an error while trying to activate the repository.');
     }
   }).drop()
 });

@@ -37,16 +37,16 @@ export default Component.extend({
   }),
 
   build: computed('isJob', function () {
-    let isJob = this.get('isJob');
+    let isJob = this.isJob;
     if (isJob) {
       return this.get('item.build');
     } else {
-      return this.get('item');
+      return this.item;
     }
   }),
 
   jobsConfig: computed('isJob', 'item.config', 'item.jobs.firstObject.config', function () {
-    let isJob = this.get('isJob');
+    let isJob = this.isJob;
     if (isJob) {
       return this.get('item.config');
     } else {
@@ -62,13 +62,13 @@ export default Component.extend({
   urlGitHubBranch: computed('item.repo.slug', 'build.branchName', function () {
     let slug = this.get('item.repo.slug');
     let branchName = this.get('build.branchName');
-    return this.get('externalLinks').githubBranch(slug, branchName);
+    return this.externalLinks.githubBranch(slug, branchName);
   }),
 
   urlGitHubTag: computed('item.repo.slug', 'build.tag.name', function () {
     let slug = this.get('item.repo.slug');
     let tag = this.get('build.tag.name');
-    return this.get('externalLinks').githubTag(slug, tag);
+    return this.externalLinks.githubTag(slug, tag);
   }),
 
   buildState: computed('item.jobs.firstObject.state', 'item.state', 'item.isMatrix', function () {
@@ -118,7 +118,7 @@ export default Component.extend({
   }),
 
   osIcon: computed('os', function () {
-    let os = this.get('os');
+    let os = this.os;
     if (os === 'linux') {
       return 'icon-linux';
     } else if (os === 'osx') {

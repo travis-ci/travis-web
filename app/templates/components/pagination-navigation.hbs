@@ -1,47 +1,49 @@
-{{#if showPagination}}
+{{#if this.showPagination}}
   <ul role="navigation">
-
-    {{#if prevPageNumber}}
+    {{#if this.prevPage}}
       <li>
-        {{#link-to route (pagination-query-params queryParam prevPageNumber)
+        <a
           data-test-prev-pagination-link
+          href={{this.prevPage.url}}
           rel="prev"
           class="pagination-button"
           title="Go to previous page"
-        }}
+          onclick={{action "switchToPage" this.prevPage}}
+        >
           prev
-        {{/link-to}}
+        </a>
       </li>
     {{/if}}
-
     {{#each pages as |page|}}
       <li>
         {{#if page.num}}
-          {{#link-to route (pagination-query-params queryParam page.num)
-            data-test-page-pagination-link=page.num
-            class="pagination-link"
-            title=(concat "Go to page number " page.num)
-          }}
+          <a
+            href={{page.url}}
+            data-test-page-pagination-link={{page.num}}
+            class="pagination-link {{if page.isCurrent 'active'}}"
+            title="Go to page number {{page.num}}"
+            onclick={{action "switchToPage" page}}
+          >
             {{page.num}}
-          {{/link-to}}
+          </a>
         {{else}}
           ...
         {{/if}}
       </li>
     {{/each}}
-
-    {{#if nextPageNumber}}
+    {{#if this.nextPage}}
       <li>
-        {{#link-to route (pagination-query-params queryParam nextPageNumber)
+        <a
           data-test-next-pagination-link
+          href={{this.nextPage.url}}
           rel="next"
           class="pagination-button"
           title="Go to next page"
-        }}
+          onclick={{action "switchToPage" this.nextPage}}
+        >
           next
-        {{/link-to}}
+        </a>
       </li>
     {{/if}}
-
   </ul>
-  {{/if}}
+{{/if}}

@@ -5,7 +5,7 @@ import { computed } from '@ember/object';
 
 export default PaginatedCollection.extend(PromiseProxyMixin, {
   promise: computed('content', function () {
-    let content = this.get('content');
+    let content = this.content;
     let promise = new EmberPromise((resolve, reject) => {
       content.then((value) => {
         resolve(PaginatedCollection.create({ content: value }));

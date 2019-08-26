@@ -1,59 +1,87 @@
 <article class="repo-header">
-  <header class='name'>
+  <header class="name">
     <div class="inline-block repo-title">
-      <div class='inline-block'>
-        {{repository-visibility-icon repository=repo}}
+      <div class="inline-block">
+        <RepositoryVisibilityIcon @repository={{this.repo}} />
       </div>
       <h1 data-test-repo-header-title class="inline-block vertical-align">
-        {{#link-to "owner" repo.owner.login}}{{repo.owner.login}}{{/link-to}} / {{#link-to "repo" repo}}{{repo.name}}{{/link-to}}
+        <LinkTo @route="owner" @model={{this.repo.owner.login}}>
+          {{this.repo.owner.login}}
+        </LinkTo>
+        /
+        <LinkTo @route="repo" @model={{this.repo}}>
+          {{this.repo.name}}
+        </LinkTo>
       </h1>
     </div>
     <div>
-      {{#external-link-to href=urlGithub class="repo-gh inline-block" title=(concat repo.name " on GitHub")}}
-        {{svg-jar 'icon-repooctocat'}}
-      {{/external-link-to}}
+      <ExternalLinkTo
+        @href={{this.urlGithub}}
+        class="repo-gh inline-block"
+        @title={{concat this.repo.name " on GitHub"}}
+      >
+        <SvgImage @name="icon-repooctocat" />
+      </ExternalLinkTo>
       <div class="repo-badge inline-block vertical-align">
-        <a href="#" id="status-image-popup" title="Latest push build on default branch: {{repo.defaultBranch.lastBuild.state}}" name="status-images" class="open-popup" {{action "toggleStatusBadgeModal"}}>
-          <img src={{statusImageUrl}} alt="build:{{repo.defaultBranch.lastBuild.state}}"/>
+        <a
+          id="status-image-popup"
+          title="Latest push build on default branch: {{this.repo.defaultBranch.lastBuild.state}}"
+          name="status-images"
+          class="pointer open-popup"
+          onclick={{action "toggleStatusBadgeModal"}}
+        >
+          <img src={{this.statusImageUrl}} alt="build:{{this.repo.defaultBranch.lastBuild.state}}" />
         </a>
       </div>
     </div>
   </header>
   <main class="repo-main">
     <div class="repo-navigation">
-      {{repo-show-tabs repo=repo build=build job=job}}
-      {{repo-show-tools repo=repo build=build job=job tab=tab onTriggerBuild=(action "toggleTriggerBuildModal")}}
+      <RepoShowTabs @repo={{this.repo}} @build={{this.build}} @job={{this.job}} />
+      <RepoShowTools
+        @repo={{this.repo}}
+        @build={{this.build}}
+        @job={{this.job}}
+        @tab={{this.tab}}
+        @onTriggerBuild={{action "toggleTriggerBuildModal"}}
+      />
     </div>
     <div class="travistab-body repo-body">
       {{#if hasBlock}}
         {{yield}}
       {{else}}
-        {{build-layout build=build repo=repo}}
+        <BuildLayout @build={{this.build}} @repo={{this.repo}} />
       {{/if}}
     </div>
   </main>
 </article>
-
-{{#if isShowingStatusBadgeModal}}
-  {{#modal-dialog
-    onClose="toggleStatusBadgeModal"
-    targetAttachment="center"
-    translucentOverlay=true
-    overlayPosition='sibling'
-    animatable=true
-  }}
-    {{status-images repo=repo onClose=(action 'toggleStatusBadgeModal')}}
-  {{/modal-dialog}}
+{{#if this.isShowingStatusBadgeModal}}
+  <ModalDialog
+    @onClose={{action "toggleStatusBadgeModal"}}
+    @onClickOverlay={{action "toggleStatusBadgeModal"}}
+    @targetAttachment="center"
+    @translucentOverlay={{true}}
+    @overlayPosition="sibling"
+    @animatable={{true}}
+  >
+    <StatusImages
+      @repo={{this.repo}}
+      @onClose={{action "toggleStatusBadgeModal"}}
+    />
+  </ModalDialog>
 {{/if}}
-
-{{#if isShowingTriggerBuildModal}}
-  {{#modal-dialog
-    onClose="toggleTriggerBuildModal"
-    targetAttachment="center"
-    translucentOverlay=true
-    overlayPosition='sibling'
-    animatable=true
-  }}
-    {{trigger-custom-build repo=repo onClose=(action 'toggleTriggerBuildModal')}}
-  {{/modal-dialog}}
+{{#if this.isShowingTriggerBuildModal}}
+  <ModalDialog
+    @onClose={{action "toggleTriggerBuildModal"}}
+    @onClickOverlay={{action "toggleTriggerBuildModal"}}
+    @targetAttachment="center"
+    @translucentOverlay={{true}}
+    @overlayPosition="sibling"
+    @animatable={{true}}
+  >
+    <TriggerCustomBuild
+      @repo={{this.repo}}
+      @onClose={{action "toggleTriggerBuildModal"}}
+    />
+  </ModalDialog>
 {{/if}}

@@ -84,7 +84,7 @@
       width: 0;
       margin-right: 0;
       margin-bottom: 45px;
-      
+
       .tail-status, .tail-label {
         position: absolute;
         right: 10px;
@@ -210,7 +210,6 @@
     white-space: pre-wrap;
     word-wrap: break-word;
     background-color: $color-bg-log-fold;
-    counter-reset: line-numbering;
     margin-top: 0;
     margin-bottom: -45px;
   }
@@ -245,23 +244,32 @@
       cursor: pointer;
       text-decoration: none;
       position: absolute;
-
-      &::before {
-        content: counter(line-numbering);
-        counter-increment: line-numbering;
-        padding-right: 1em;
-      }
+      padding-right: 1em;
+      user-select: none;
     }
+
   }
 
   .fold {
     position: relative;
     height: 19px;
     overflow: hidden;
-    cursor: pointer;
 
     &.open {
       height: auto;
+
+      .log-line {
+        display: block;
+      }
+    }
+
+    .log-line {
+      display: none;
+
+      &:first-of-type {
+        display: block;
+        cursor: pointer;
+      }
     }
 
     .log-line:first-of-type {
@@ -298,6 +306,7 @@
       background-color: #666;
       border-radius: 6px;
       color: #bbb;
+      cursor: pointer;
     }
   }
 

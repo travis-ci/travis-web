@@ -3,7 +3,7 @@ import $ from 'jquery';
 export default (function () {
   function LogFolder(element) {
     this.element = element;
-    let handlerSelector = '.fold';
+    let handlerSelector = '.fold .log-line:first-of-type, .fold .fold-name';
     if (this.element) {
       this.element
         .off('click', handlerSelector) // remove any previous click handlers
@@ -39,8 +39,8 @@ export default (function () {
   };
 
   LogFolder.prototype.getFolderFromLine = function (line) {
-    return line.parent('.fold');
+    return line.parents('.fold').first();
   };
 
   return LogFolder;
-})();
+}());

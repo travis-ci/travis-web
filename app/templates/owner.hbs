@@ -1,23 +1,27 @@
-{{#travis-layout layoutName="layouts/center" class="owner"}}
-<header class="owner-header row">
-  <div class="owner-avatar">
-    {{user-avatar url=owner.avatarUrl name=owner.name size=75}}
+<TravisLayout @layoutName="layouts/center" class="owner">
+  <header class="owner-header row">
+    <div class="owner-avatar">
+      <UserAvatar @url={{this.owner.avatarUrl}} @name={{this.owner.name}} @size={{75}} />
+    </div>
+    <div class="owner-info">
+      <h1 class="owner-title">
+        {{this.owner.name}}
+      </h1>
+      <p class="owner-handle">
+        <SvgImage @name="icon-repooctocat" @class="icon--l" />
+        <a href={{this.githubProfile}} title="{{this.owner.name}} on GitHub">
+          <span class="label-align">
+            {{this.owner.login}}
+          </span>
+        </a>
+      </p>
+    </div>
+  </header>
+  <div class="tabs--owner">
+    <div class="tabbody">
+      <section role="tabpanel">
+        {{outlet}}
+      </section>
+    </div>
   </div>
-  <div class="owner-info">
-    <h1 class="owner-title">{{owner.name}}</h1>
-    <p class="owner-handle">
-      {{svg-jar 'icon-repooctocat' class="icon--l"}}
-      <a href={{githubProfile}} title="{{owner.name}} on GitHub">
-        <span class="label-align">{{owner.login}}</span></a></p>
-    {{!-- {{owner-sync-button owner=owner}} --}}
-  </div>
-</header>
-
-<div class="tabs--owner">
-  <div class="tabbody">
-    <section role="tabpanel">
-      {{outlet}}
-    </section>
-  </div>
-</div>
-{{/travis-layout}}
+</TravisLayout>

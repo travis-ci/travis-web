@@ -35,14 +35,14 @@ module('Integration | Component | visibility-setting-list', function (hooks) {
   test('it is empty when no options are set', async function (assert) {
     await render(hbs`{{visibility-setting-list}}`);
 
-    assert.equal(this.element.textContent.trim(), '');
+    assert.dom(this.element).hasText('');
   });
 
   test('it is empty when explicitly invisible', async function (assert) {
     this.set('isVisible', false);
     await render(hbs`{{visibility-setting-list options=options initialKey=initialKey isVisible=isVisible}}`);
 
-    assert.equal(this.element.textContent.trim(), '');
+    assert.dom(this.element).hasText('');
   });
 
   test('options display', async function (assert) {

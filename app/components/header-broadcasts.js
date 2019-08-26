@@ -16,7 +16,7 @@ export default Component.extend({
     },
 
     markBroadcastAsSeen(broadcast) {
-      this.get('broadcastsService').markAsSeen(broadcast);
+      this.broadcastsService.markAsSeen(broadcast);
       return false;
     },
   }

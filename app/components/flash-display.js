@@ -12,7 +12,7 @@ export default Component.extend({
 
   actions: {
     closeMessage(msg) {
-      return this.get('flashes').close(msg);
+      return this.flashes.close(msg);
     }
   }
 });

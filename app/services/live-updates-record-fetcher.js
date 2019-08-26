@@ -20,11 +20,11 @@ export default Service.extend({
 
   fetch(type, id, payload = {}) {
     this.recordsToFetch.push({ type: type, id: id, payload: payload });
-    this.get('flushPusherFetches').perform();
+    this.flushPusherFetches.perform();
   },
 
   flushPusherFetches: task(function* () {
-    let interval = this.get('interval') ||
+    let interval = this.interval ||
       config.intervals.fetchRecordsForPusherUpdatesThrottle;
 
     yield timeout(interval);
@@ -62,14 +62,14 @@ export default Service.extend({
       if (needToFetchBuild || jobsData.length > 1) {
         let index = buildIds.indexOf(buildId);
         buildIds.splice(index, 1);
-        this.get('store').queryRecord('build', { id: buildId, include: 'build.jobs' });
+        this.store.queryRecord('build', { id: buildId, include: 'build.jobs' });
       } else {
-        this.get('store').findRecord('job', jobsData[0], { reload: true });
+        this.store.findRecord('job', jobsData[0], { reload: true });
       }
     });
 
     buildIds.forEach((id) => {
-      this.get('store').findRecord('build', id, { reload: true });
+      this.store.findRecord('build', id, { reload: true });
     });
   }
 });

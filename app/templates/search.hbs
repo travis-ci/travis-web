@@ -1,27 +1,27 @@
-<div class="wrapper {{if auth.signedOut 'centered'}}">
-  {{top-bar}}
-
-  {{flash-display}}
-
+<div class="wrapper {{if this.auth.signedOut 'centered'}}">
+  <TopBar />
+  <FlashDisplay />
   <div class="wrapper-main">
     <div id="main" class="main" role="main">
-      {{#if repo}}
-        {{repository-layout repo=repo build=build job=job tab=tab}}
+      {{#if this.repo}}
+        <RepositoryLayout
+          @repo={{this.repo}}
+          @build={{this.build}}
+          @job={{this.job}}
+          @tab={{this.tab}}
+        />
+      {{else if this.repositories.loadingData}}
+        <LoadingIndicator />
       {{else}}
-        {{#if repositories.loadingData}}
-          {{loading-indicator}}
-        {{else}}
-          {{missing-notice title="No repositories found"}}
-        {{/if}}
+        <MissingNotice @title="No repositories found" />
       {{/if}}
     </div>
   </div>
-
-  {{#if auth.signedIn}}
-  {{#unless features.dashboard}}
-    <aside id="left" class="{{unless auth.signedIn 'hidden'}}">
-      {{repository-sidebar}}
-    </aside>
-  {{/unless}}
+  {{#if this.auth.signedIn}}
+    {{#unless this.features.dashboard}}
+      <aside id="left" class="{{unless this.auth.signedIn 'hidden'}}">
+        <RepositorySidebar />
+      </aside>
+    {{/unless}}
   {{/if}}
 </div>

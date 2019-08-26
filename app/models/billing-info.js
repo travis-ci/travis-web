@@ -1,18 +1,16 @@
-import Model from 'ember-data/model';
-import attr from 'ember-data/attr';
-import { belongsTo } from 'ember-data/relationships';
+import Model, { attr, belongsTo } from '@ember-data/model';
 
 export default Model.extend({
-  firstName: attr(),
-  lastName: attr(),
-  company: attr(),
-  address: attr(),
-  address2: attr(),
-  city: attr(),
-  state: attr(),
-  zipCode: attr(),
-  country: attr(),
+  firstName: attr('string'),
+  lastName: attr('string'),
+  company: attr('string'),
+  address: attr('string'),
+  address2: attr('string'),
+  city: attr('string'),
+  state: attr('string'),
+  zipCode: attr('string'),
+  country: attr('string'),
   vatId: attr(),
 
-  subscription: belongsTo(),
+  subscription: belongsTo('subscription')
 });

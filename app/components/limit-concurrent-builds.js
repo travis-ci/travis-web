@@ -7,7 +7,7 @@ export default Component.extend({
   classNames: ['limit-concurrent-builds'],
 
   description: computed('enabled', function () {
-    let enabled = this.get('enabled');
+    let enabled = this.enabled;
     let description = 'Limit concurrent jobs';
     if (enabled) {
       description += '  ';
@@ -17,7 +17,7 @@ export default Component.extend({
 
   limitChanged(value) {
     let limit, repo, savingFinished;
-    repo = this.get('repo');
+    repo = this.repo;
     limit = parseInt(value);
     if (limit) {
       this.set('isSaving', true);
@@ -32,13 +32,13 @@ export default Component.extend({
 
   toggle: task(function* (value) {
     this.set('enabled', value);
-    if (!this.get('enabled') && this.get('value') !== 0) {
+    if (!this.enabled && this.value !== 0) {
       try {
-        yield this.get('repo').saveSetting('maximum_number_of_builds', 0);
+        yield this.repo.saveSetting('maximum_number_of_builds', 0);
       } catch (e) {
         // eslint-disable-next-line
-        this.get('flashes').error('There was an error disabling the concurrent jobs limit.');
-        this.get('raven').logException(e);
+        this.flashes.error('There was an error disabling the concurrent jobs limit.');
+        this.raven.logException(e);
       }
 
       this.set('value', 0);

@@ -11,7 +11,7 @@ export default Controller.extend({
   features: service(),
 
   envVars: computed('unsortedEnvVars', function () {
-    let envVars = this.get('unsortedEnvVars');
+    let envVars = this.unsortedEnvVars;
     return envVars.sortBy('name');
   }),
 
@@ -34,7 +34,7 @@ export default Controller.extend({
 
   migratedRepositorySettingsLink: computed('repo.slug', function () {
     let slug = this.get('repo.slug');
-    return this.get('externalLinks').migratedToComSettingsLink(slug);
+    return this.externalLinks.migratedToComSettingsLink(slug);
   }),
 
   displaySettingsDisabledAfterMigrationModal: computed(

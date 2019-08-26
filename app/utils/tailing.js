@@ -14,7 +14,7 @@ export default (function () {
   }
 
   Tailing.prototype.options = {
-    timeout: 200
+    timeout: 1000,
   };
 
   Tailing.prototype.tail = function () {
@@ -106,4 +106,4 @@ export default (function () {
   };
 
   return Tailing;
-})();
+}());

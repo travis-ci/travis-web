@@ -1,52 +1,72 @@
-{{#travis-form
-  onSubmit=(perform save)
+<TravisForm
+  @onSubmit={{perform this.save}}
   as |form|
-}}
-  <div class='form-elem'>
-    {{#form.field
-      label='Name'
-      value=name
-      required=true
-      showValidationStatusIcons=false
-      onChange=(action (mut name))
+>
+  <div class="form-elem">
+    <form.field
+      @label="Name"
+      @value={{this.name}}
+      @required={{true}}
+      @validateOnField={{false}}
+      @showValidationStatusIcons={{false}}
+      @onChange={{action (mut this.name)}}
+      @validator={{action "validateEnvName"}}
       as |field|
-    }}
-      {{field.input class='env-name' placeholder='Name'}}
-    {{/form.field}}
+    >
+      <field.input class="env-name" placeholder="Name" />
+    </form.field>
   </div>
-  <div class='form-elem'>
-   {{#form.field
-      label='Value'
-      value=value
-      required=true
-      onChange=(action (mut value))
-      showValidationStatusIcons=false
+  <div class="form-elem">
+    <form.field
+      @label="Value"
+      @value={{this.value}}
+      @required={{true}}
+      @onChange={{action (mut this.value)}}
+      @showValidationStatusIcons={{false}}
       as |field|
-    }}
-      {{field.input  class='env-value' placeholder='Value'}}
-    {{/form.field}}
+    >
+      <field.input class="env-value" placeholder="Value" />
+    </form.field>
   </div>
-  <div class='form-elem'>
-    {{#form.field
-      label='Display value in build log'
-      disableFrame=true
-      class='display-value-switch'
-      value=public
-      onChange=(action (mut public))
+  <div class="form-elem">
+    <form.field
+      @label="Branch"
+      @value={{this.branch}}
+      @required={{false}}
+      class="env-branch-selector"
+      @showValidationStatusIcons={{false}}
       as |field|
-    }}
+    >
+      <field.select
+        @placeholder="All branches"
+        @allowClear={{true}}
+        @onchange={{action (mut this.branch)}}
+        @search={{perform this.search}}
+        as |branch|
+      >
+        {{branch}}
+      </field.select>
+    </form.field>
+  </div>
+  <div class="form-elem">
+    <form.field
+      @label="Display value in build log"
+      @disableFrame={{true}}
+      class="display-value-switch"
+      @value={{this.public}}
+      @onChange={{action (mut this.public)}}
+      as |field|
+    >
       {{field.switch}}
-    {{/form.field}}
+    </form.field>
   </div>
-  <div class='form-elem'>
-    {{#if save.isRunning}}
-      {{loading-indicator}}
+  <div class="form-elem">
+    {{#if this.save.isRunning}}
+      <LoadingIndicator />
     {{else}}
-      <button
-        onclick={{form.submit}}
-        class='add-env-form-submit form-submit'>
+      <button onclick={{form.submit}} class="add-env-form-submit form-submit">
         Add
       </button>
     {{/if}}
   </div>
-{{/travis-form}}
+</TravisForm>

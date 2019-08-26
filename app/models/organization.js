@@ -1,7 +1,7 @@
 import Owner from 'travis/models/owner';
-import attr from 'ember-data/attr';
+import { attr } from '@ember-data/model';
 
 export default Owner.extend({
   type: 'organization',
-  allowMigration: attr(),
+  allowMigration: attr('boolean'),
 });

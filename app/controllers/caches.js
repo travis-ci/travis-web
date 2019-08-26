@@ -24,10 +24,10 @@ export default Controller.extend({
   deleteRepoCache: task(function* () {
     if (config.skipConfirmations || confirm('Are you sure?')) {
       try {
-        yield this.get('ajax').deleteV3(`/repo/${this.get('repo.id')}/caches`);
+        yield this.ajax.deleteV3(`/repo/${this.get('repo.id')}/caches`);
         this.set('model', EmberObject.create());
       } catch (e) {
-        this.get('flashes').error('Could not delete the caches');
+        this.flashes.error('Could not delete the caches');
       }
     }
   }).drop()

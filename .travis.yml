@@ -1,6 +1,6 @@
 ---
 language: node_js
-node_js: 10.7
+node_js: 10
 
 env:
   global:
@@ -9,17 +9,15 @@ env:
 matrix:
   include:
     - if: type = cron
-      node_js: 10.7
       env: TRY_CONFIG=ember-beta
     - if: type = cron
-      node_js: 10.7
       env: TRY_CONFIG=ember-data-beta
-    - node_js: 10.7
+    - node_js: 10
   allow_failures:
     - env: TRY_CONFIG=ember-beta
     - env: TRY_CONFIG=ember-data-beta
 
-dist: trusty
+dist: xenial
 
 addons:
   chrome: stable
@@ -34,8 +32,6 @@ env:
 
 before_install:
   - npm config set spin false
-  - npm install -g npm@6
-  - npm --version
   - npm install -g greenkeeper-lockfile@1
 
 install:

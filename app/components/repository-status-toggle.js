@@ -22,7 +22,7 @@ export default Component.extend({
 
   comLink: computed('repository.slug', function () {
     let slug = this.get('repository.slug');
-    return this.get('externalLinks').migratedToComLink(slug);
+    return this.externalLinks.migratedToComLink(slug);
   }),
 
   onDotOrg: computed('features.{proVersion,enterpriseVersion}', function () {

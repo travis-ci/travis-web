@@ -25,7 +25,9 @@ export default Component.extend({
   },
 
   validate() {
-    this.fields.invoke('validate');
+    this.fields.forEach(field => {
+      field.validate(field.value, true);
+    });
   },
 
   init() {
