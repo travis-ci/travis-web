@@ -137,12 +137,10 @@
           </Field.select>
         </form.field>
       </div>
-      <div class='form-elem form-elem-half-width'>
+      <div class='form-elem form-elem-half-width billing-optional-field'>
         <form.field
           @label='Vat Id'
           @value={{newSubscription.billingInfo.vatId}}
-          @required={{true}}
-          @showRequiredMark={{true}}
           @showValidationStatusIcons={{false}}
           @onChange={{action (mut newSubscription.billingInfo.vatId)}} as |Field|
         >
