@@ -16,14 +16,14 @@ export default Service.extend({
       if (config.ajaxPolling) {
         this.poll();
       }
-    }, this.get('pollingInterval'));
+    }, this.pollingInterval);
 
     this.set('interval', interval);
   },
 
   willDestroy() {
     this._super(...arguments);
-    let interval = this.get('interval');
+    let interval = this.interval;
     if (interval) {
       return clearInterval(interval);
     }
@@ -31,7 +31,7 @@ export default Service.extend({
 
   startPollingHook(source) {
     let sources;
-    sources = this.get('sources');
+    sources = this.sources;
     if (!sources.includes(source)) {
       return sources.pushObject(source);
     }
@@ -39,13 +39,13 @@ export default Service.extend({
 
   stopPollingHook(source) {
     let sources;
-    sources = this.get('sources');
+    sources = this.sources;
     return sources.removeObject(source);
   },
 
   startPolling(model) {
     let watchedModels;
-    watchedModels = this.get('watchedModels');
+    watchedModels = this.watchedModels;
     if (!watchedModels.includes(model)) {
       return watchedModels.pushObject(model);
     }
@@ -53,16 +53,16 @@ export default Service.extend({
 
   stopPolling(model) {
     let watchedModels;
-    watchedModels = this.get('watchedModels');
+    watchedModels = this.watchedModels;
     return watchedModels.removeObject(model);
   },
 
   poll() {
-    this.get('watchedModels').forEach(model => model.reload());
+    this.watchedModels.forEach(model => model.reload());
 
-    return this.get('sources').forEach((source) => {
+    return this.sources.forEach((source) => {
       if (get(source, 'isDestroyed')) {
-        return this.get('sources').removeObject(source);
+        return this.sources.removeObject(source);
       } else {
         return source.pollHook();
       }

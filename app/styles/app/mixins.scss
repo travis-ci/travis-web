@@ -144,7 +144,7 @@
 
 @mixin colorLinks($color, $status) {
   .#{$status},
-  .#{$status} a, {
+  .#{$status} a {
     color: $color;
   }
 }

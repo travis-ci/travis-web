@@ -1,6 +1,8 @@
 /* eslint-env node */
 'use strict';
 
+const { plans } = require('./plans.js');
+
 module.exports = function (environment) {
   let ENV = {
     modulePrefix: 'travis',
@@ -8,10 +10,11 @@ module.exports = function (environment) {
     rootURL: '/',
     locationType: 'auto',
     defaultTitle: 'Travis CI',
+    plans,
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
-        // e.g. 'with-controller': true
+        // e.g. EMBER_NATIVE_DECORATOR_SUPPORT: true
       },
       EXTEND_PROTOTYPES: {
         // Prevent Ember Data from overriding Date.parse.
@@ -79,7 +82,7 @@ module.exports = function (environment) {
     githubOrgsOauthAccessSettingsUrl: 'https://github.com/settings/connections/applications/f244293c729d5066cf27',
     apiTraceEndpoint: 'https://papertrailapp.com/systems/travis-org-api-production/events?q=program%3Aapp%2Fweb%20log-tracing%20',
     ajaxPolling: false,
-    logLimit: 10000,
+    logLimit: 100000,
     emojiPrepend: '',
     statusPageStatusUrl: 'https://pnpcptp8xh9k.statuspage.io/api/v2/status.json',
 

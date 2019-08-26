@@ -9,8 +9,8 @@ export default Controller.extend({
   latestCurrentBuild: alias('repositories.accessible.firstObject.currentBuild'),
 
   build: computed('model', 'latestCurrentBuild', function () {
-    let model = this.get('model');
-    let latestCurrentBuild = this.get('latestCurrentBuild');
+    let model = this.model;
+    let latestCurrentBuild = this.latestCurrentBuild;
 
     if (model) {
       return model;

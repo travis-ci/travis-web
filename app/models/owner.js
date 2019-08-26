@@ -1,9 +1,7 @@
-import Model from 'ember-data/model';
-import attr from 'ember-data/attr';
-import { belongsTo } from 'ember-data/relationships';
+import Model, { attr, belongsTo } from '@ember-data/model';
+import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 import { reads, or, equal, notEmpty } from '@ember/object/computed';
-import { inject as service } from '@ember/service';
 import config from 'travis/config/environment';
 import dynamicQuery from 'travis/utils/dynamic-query';
 
@@ -70,10 +68,10 @@ export default Model.extend({
     return this.tasks.fetchBetaMigrationRequestsTask.perform();
   },
 
-  migrationBetaRequests: computed('tasks.fetchBetaMigrationRequestsTask.lastSuccessful.value.[]', 'id', function () {
+  migrationBetaRequests: computed('tasks.fetchBetaMigrationRequestsTask.lastSuccessful.value.[]', 'login', function () {
     const requests = this.tasks.fetchBetaMigrationRequestsTask.get('lastSuccessful.value') || [];
     return requests.filter(request =>
-      this.isUser && request.ownerId == this.id || request.organizations.mapBy('id').includes(this.id)
+      this.isUser && request.ownerName == this.login || request.organizations.mapBy('login').includes(this.login)
     );
   }),
 
@@ -91,7 +89,7 @@ export default Model.extend({
     'login',
     function () {
       let subscriptions = this.get('accounts.subscriptions') || [];
-      let login = this.get('login');
+      let login = this.login;
       const accountSubscriptions = subscriptions.filterBy('owner.login', login) || [];
       const activeAccountSubscriptions = accountSubscriptions.filterBy('isSubscribed') || [];
       if (activeAccountSubscriptions.length > 1) this.logMultipleSubscriptionsError();
@@ -102,7 +100,7 @@ export default Model.extend({
 
   trial: computed('accounts.trials.@each.{created_at,owner,hasTrial}', 'login', function () {
     let trials = this.get('accounts.trials') || [];
-    let login = this.get('login');
+    let login = this.login;
     const accountTrials = trials.filterBy('owner.login', login) || [];
     const activeAccountTrials = accountTrials.filterBy('hasTrial') || [];
     return activeAccountTrials.get('firstObject') || accountTrials.get('lastObject');
@@ -113,7 +111,7 @@ export default Model.extend({
     'subscription.permissions.write',
     'subscriptionPermissions.create',
     function () {
-      let subscription = this.get('subscription');
+      let subscription = this.subscription;
       let writePermissions = this.get('subscription.permissions.write');
       let createPermissions = this.get('subscriptionPermissions.create');
       return subscription ? writePermissions : createPermissions;
@@ -121,15 +119,15 @@ export default Model.extend({
   ),
 
   billingUrl: computed('type', 'login', function () {
-    let type = this.get('type');
-    let login = this.get('login');
+    let type = this.type;
+    let login = this.login;
     let id = type === 'user' ? 'user' : login;
     return `${config.billingEndpoint}/subscriptions/${id}`;
   }),
 
   newSubscriptionUrl: computed('isUser', 'login', function () {
-    let isUser = this.get('isUser');
-    let login = this.get('login');
+    let isUser = this.isUser;
+    let login = this.login;
     let id = isUser ? 'user' : login;
     return `${config.billingEndpoint}/subscriptions/new?id=${id}`;
   }),

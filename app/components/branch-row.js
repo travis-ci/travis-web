@@ -23,7 +23,7 @@ export default Component.extend({
   urlGithubCommit: computed('branch.repository.slug', 'branch.last_build.commit.sha', function () {
     let slug = this.get('branch.repository.slug');
     let sha = this.get('branch.last_build.commit.sha');
-    return this.get('externalLinks').githubCommit(slug, sha);
+    return this.externalLinks.githubCommit(slug, sha);
   }),
 
   rawCreatedBy: alias('branch.last_build.created_by'),
@@ -117,7 +117,7 @@ export default Component.extend({
 
   actions: {
     viewAllBuilds() {
-      return this.get('router').transitionTo('builds');
+      return this.router.transitionTo('builds');
     }
   }
 });

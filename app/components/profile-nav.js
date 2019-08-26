@@ -1,6 +1,13 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
-import { reads, or, and, not, filterBy, notEmpty } from '@ember/object/computed';
+import {
+  reads,
+  or,
+  and,
+  not,
+  filterBy,
+  notEmpty
+} from '@ember/object/computed';
 import { computed } from '@ember/object';
 import config from 'travis/config/environment';
 
@@ -29,7 +36,7 @@ export default Component.extend({
 
   reposToMigrate: reads('model.githubAppsRepositoriesOnOrg'),
 
-  showMigrateTab: and('features.proVersion', 'model.allowMigration'),
+  showMigrateTab: reads('features.proVersion'),
   showSubscriptionStatusBanner: and('checkSubscriptionStatus', 'model.subscriptionError'),
   showMigrationBetaBanner: and('isNotProVersion', 'hasAccountsForBeta'),
 

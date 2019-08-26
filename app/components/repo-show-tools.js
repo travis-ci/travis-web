@@ -25,18 +25,18 @@ export default Component.extend({
   },
 
   displaySettingsLink: computed('permissions.all', 'repo', function () {
-    let repo = this.get('repo');
-    return this.get('permissions').hasPushPermission(repo);
+    let repo = this.repo;
+    return this.permissions.hasPushPermission(repo);
   }),
 
   displayCachesLink: computed('permissions.all', 'repo', function () {
-    let repo = this.get('repo');
-    return this.get('permissions').hasPushPermission(repo) && config.endpoints.caches;
+    let repo = this.repo;
+    return this.permissions.hasPushPermission(repo) && config.endpoints.caches;
   }),
 
   displayStatusImages: computed('permissions.all', 'repo', function () {
-    let repo = this.get('repo');
-    return this.get('permissions').hasPermission(repo);
+    let repo = this.repo;
+    return this.permissions.hasPermission(repo);
   }),
 
   displayTriggerBuildLink: computed(
@@ -58,7 +58,7 @@ export default Component.extend({
 
   actions: {
     triggerBuildModal() {
-      this.get('onTriggerBuild')();
+      this.onTriggerBuild();
     }
   }
 });

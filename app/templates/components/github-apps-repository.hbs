@@ -1,25 +1,26 @@
-{{repository-visibility-icon repository=repository}}
-
-{{#link-to
-  "repo"
-  repository.owner.login
-  repository.name
-  (query-params migrationStatus=repository.migrationStatus)
+<RepositoryVisibilityIcon @repository={{this.repository}} />
+<LinkTo
+  @route="repo"
+  @models={{array this.repository.owner.login this.repository.name}}
+  @query={{this.hash}}
   class="profile-repo"
-}}
-  {{name}}
-{{/link-to}}
-
-{{#if admin}}
-  {{#link-to "settings" repository.owner.login repository.name
-  class="profile-settings button" title="Go to Travis CI repository settings"}}
-    {{svg-jar 'icon-settings' class="icon icon-hover"}}
+>
+  {{this.name}}
+</LinkTo>
+{{#if this.admin}}
+  <LinkTo
+    @route="settings"
+    @models={{array this.repository.owner.login this.repository.name}}
+    @title="Go to Travis CI repository settings"
+    class="profile-settings button"
+  >
+    <SvgImage @name="icon-settings" @class="icon icon-hover" />
     Settings
-  {{/link-to}}
+  </LinkTo>
 {{else}}
   <a class="profile-settings disabled button">
-    {{svg-jar 'icon-private' class="icon"}}
+    <EmberTooltip @text="Requires admin permissions" />
+    <SvgImage @name="icon-private" @class="icon" />
     Settings
-    {{ember-tooltip text='Requires admin permissions'}}
   </a>
 {{/if}}

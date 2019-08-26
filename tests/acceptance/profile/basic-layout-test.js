@@ -2,7 +2,10 @@ import { module, test } from 'qunit';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import profilePage from 'travis/tests/pages/profile';
 import signInUser from 'travis/tests/helpers/sign-in-user';
-import { default as mockWindow, reset as resetWindow } from 'ember-window-mock';
+import {
+  default as mockWindow,
+  reset as resetWindow
+} from 'ember-window-mock';
 import Service from '@ember/service';
 import config from 'travis/config/environment';
 import { enableFeature } from 'ember-feature-flags/test-support';
@@ -432,12 +435,12 @@ module('Acceptance | profile/basic layout', function (hooks) {
     assert.ok(isRequested);
     assert.equal(requestUserId, this.user.id);
     assert.ok(organizations);
-    assert.ok(organizations.length > 0);
   });
 
   test('Migration beta status message is present when apllied', async function (assert) {
     server.create('beta-migration-request', {
-      owner_id: this.user.id
+      owner_id: this.user.id,
+      owner_name: this.user.login
     });
 
     await profilePage.visit();
@@ -447,6 +450,7 @@ module('Acceptance | profile/basic layout', function (hooks) {
   test('Migration beta status message is present on organization when apllied', async function (assert) {
     server.create('beta-migration-request', {
       owner_id: this.user.id,
+      owner_name: this.user.login,
       organizations: [this.organization]
     });
 
@@ -457,6 +461,7 @@ module('Acceptance | profile/basic layout', function (hooks) {
   test('Migration beta success status message is present when request is accepted', async function (assert) {
     server.create('beta-migration-request', {
       owner_id: this.user.id,
+      owner_name: this.user.login,
       accepted_at: new Date().toString()
     });
 
@@ -467,6 +472,7 @@ module('Acceptance | profile/basic layout', function (hooks) {
   test('Migration beta success status message is present on organization when request is accepted', async function (assert) {
     server.create('beta-migration-request', {
       owner_id: this.user.id,
+      owner_name: this.user.login,
       accepted_at: new Date().toString(),
       organizations: [this.organization]
     });

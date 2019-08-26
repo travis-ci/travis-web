@@ -7,7 +7,7 @@ export default Component.extend({
 
   actions: {
     signIn() {
-      this.get('auth').signIn();
+      this.auth.signIn();
     }
   }
 });

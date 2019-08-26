@@ -19,7 +19,7 @@ export default Component.extend({
 
   actions: {
     close() {
-      return this.attrs.close(this.get('flash'));
+      return this.attrs.close(this.flash);
     }
   }
 });

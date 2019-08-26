@@ -15,7 +15,7 @@ export default Component.extend({
   disabled: false,
 
   'aria-checked': computed('active', function () {
-    return this.get('active') ? 'true' : 'false';
+    return this.active ? 'true' : 'false';
   }),
 
   onToggle: abstractMethod('onToggle'),

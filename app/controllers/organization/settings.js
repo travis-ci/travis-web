@@ -52,7 +52,7 @@ export default Controller.extend({
       const record = this.preferences['private_insights_visibility'];
       record.set('value', val);
       yield record.save(
-        {adapterOptions: {organization_id: this.get('organization').id}}
+        {adapterOptions: {organization_id: this.organization.id}}
       ).catch((error) => {
         record.rollbackAttributes();
         throw new Error(error);

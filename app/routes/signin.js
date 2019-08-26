@@ -9,7 +9,7 @@ export default Route.extend({
     if (this.get('auth.signedIn')) {
       this.transitionTo('index');
     } else {
-      this.get('auth').signIn();
+      this.auth.signIn();
     }
   }
 });

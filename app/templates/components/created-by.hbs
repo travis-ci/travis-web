@@ -1,19 +1,32 @@
-{{#if showUser}}
-  {{#link-to 'owner' user.login}}
-    {{ember-tooltip text=(concat 'View repositories for ' nameOrLogin)}}
-    {{user-avatar url=user.avatarUrl name=user.name small=true size=18}}
-    <span class="label-align inner-underline">{{nameOrLogin}}</span>
-  {{/link-to}}
-{{else if commit}}
-  {{#if committerOnly}}
-    <span class="label-align">{{commit.committerName}}</span>
+{{#if this.showUser}}
+  <LinkTo @route="owner" @model={{this.user.login}}>
+    <EmberTooltip @text={{concat "View repositories for " this.nameOrLogin}} />
+    <UserAvatar
+      @url={{this.user.avatarUrl}}
+      @name={{this.user.name}}
+      @small={{true}}
+      @size={{18}}
+    />
+    <span class="label-align inner-underline">
+      {{this.nameOrLogin}}
+    </span>
+  </LinkTo>
+{{else if this.commit}}
+  {{#if this.committerOnly}}
+    <span class="label-align">
+      {{this.commit.committerName}}
+    </span>
   {{else}}
-    {{#if commit.authorName}}
-      <span class="label-align">{{commit.authorName}} authored{{#if commit.authorIsCommitter}} and committed{{/if}}</span>
+    {{#if this.commit.authorName}}
+      <span class="label-align">
+        {{this.commit.authorName}} authored{{if this.commit.authorIsCommitter ' and committed'}}
+      </span>
     {{/if}}
-    {{#unless commit.authorIsCommitter}}
-      {{#if commit.committerName}}
-        <span class="label-align">{{commit.committerName}} committed</span>
+    {{#unless this.commit.authorIsCommitter}}
+      {{#if this.commit.committerName}}
+        <span class="label-align">
+          {{this.commit.committerName}} committed
+        </span>
       {{/if}}
     {{/unless}}
   {{/if}}

@@ -16,13 +16,13 @@ export default Component.extend({
   currentUser: alias('auth.currentUser'),
 
   classRunning: computed('tab', function () {
-    let tab = this.get('tab');
+    let tab = this.tab;
     return tab === 'running' ? 'active' : '';
   }),
 
   classOwned: computed('tab', 'currentUser', function () {
-    let tab = this.get('tab');
-    let currentUser = this.get('currentUser');
+    let tab = this.tab;
+    let currentUser = this.currentUser;
     let classes = [];
     if (tab === 'owned') {
       classes.push('active');
@@ -34,7 +34,7 @@ export default Component.extend({
   }),
 
   classNew: computed('currentUser', function () {
-    let currentUser = this.get('currentUser');
+    let currentUser = this.currentUser;
     if (currentUser) {
       return 'display-inline';
     }

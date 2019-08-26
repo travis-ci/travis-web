@@ -9,41 +9,39 @@ module('Acceptance | repo caches', function (hooks) {
   setupApplicationTest(hooks);
 
   hooks.beforeEach(function () {
+    const oneDayAgo = new Date(new Date().getTime() - 1000 * 60 * 60 * 24);
+    const twoDaysAgo = new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 2);
+    const threeDaysAgo = new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 3);
+    const slug = 'org-login/repository-name';
+
     const currentUser = server.create('user', {
       name: 'User Name',
       login: 'user-login'
     });
 
-    signInUser(currentUser);
+    const caches = [];
 
-    const repository = server.create('repository', {
-      slug: 'org-login/repository-name'
-    });
-
-    this.repository = repository;
-
-    const oneDayAgo = new Date(new Date().getTime() - 1000 * 60 * 60 * 24);
-
-    repository.createCache({
+    caches.push(server.create('cache', {
       branch: 'a-branch-name',
       lastModified: oneDayAgo,
       size: 89407938
-    });
+    }));
 
-    const twoDaysAgo = new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 2);
-    const threeDaysAgo = new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 3);
-
-    repository.createCache({
+    caches.push(server.create('cache', {
       branch: 'PR.1919',
       lastModified: twoDaysAgo,
       size: 10061087
-    });
+    }));
 
-    repository.createCache({
+    caches.push(server.create('cache', {
       branch: 'PR.1919',
       lastModified: threeDaysAgo,
       size: 10061086
-    });
+    }));
+
+    this.repository = server.create('repository', { slug, caches });
+
+    signInUser(currentUser);
   });
 
   test('view and delete caches', async function (assert) {

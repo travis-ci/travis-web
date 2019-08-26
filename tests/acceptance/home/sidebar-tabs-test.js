@@ -1,3 +1,4 @@
+import { task } from 'ember-concurrency';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import { visit, click } from '@ember/test-helpers';
@@ -5,6 +6,15 @@ import signInUser from 'travis/tests/helpers/sign-in-user';
 import { enableFeature } from 'ember-feature-flags/test-support';
 import { percySnapshot } from 'ember-percy';
 import { prettyDate } from 'travis/helpers/pretty-date';
+import RepositoriesService from 'travis/services/repositories';
+
+const RepositoriesServiceStub = RepositoriesService.extend({
+  requestOwnedRepositories: task(function* () {
+    this.set('_repos', []);
+    this.set('ownedRepos', []);
+    return yield [];
+  })
+});
 
 module('Acceptance | home/sidebar tabs', function (hooks) {
   setupApplicationTest(hooks);
@@ -91,6 +101,8 @@ module('Acceptance | home/sidebar tabs', function (hooks) {
     // started lists, the app code will have to do 2 queries
     server.createList('job', 15, { state: 'created', repository: this.repo, commit: this.commit, build: this.build });
     server.createList('job', 15, { state: 'started', repository: this.repo, commit: this.commit, build: this.build, started_at: startedAt });
+
+    this.owner.register('service:repositories', RepositoriesServiceStub);
 
     await visit('/');
     await click('[data-test-sidebar-running-tab] a');

@@ -19,7 +19,7 @@ export default Mixin.create({
       * not load the builds within the gap.
       */
     if (number === defaultBranchLastBuildNumber) {
-      const builds = this.get('builds');
+      const builds = this.builds;
 
       if (builds.length > 2) {
         number = builds[builds.length - 2].get('number');
