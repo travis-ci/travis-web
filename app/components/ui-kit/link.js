@@ -6,7 +6,6 @@ export default Component.extend({
   tagName: '',
 
   // Public interface
-  tag: 'a',
   color: DEFAULT_TEXT_COLOR,
 
   href: null,

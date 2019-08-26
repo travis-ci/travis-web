@@ -52,7 +52,7 @@
           {{#each plansToDisplay as |plan|}}
             <grid.item>
               <UiKit::Box
-                @borderColor='grey-150'
+                @borderColor='grey-light'
                 @borderWidth={{hash all='xs'}}
                 @height='full'
                 @padding={{hash all=4}}
@@ -110,7 +110,7 @@
           {{/each}}
         </UiKit::Grid>
 
-        <UiKit::Box @borderColor='grey-150' @borderWidth={{hash all='xs'}} @padding={{hash all=4}} @textAlign='center'>
+        <UiKit::Box @borderColor='grey-light' @borderWidth={{hash all='xs'}} @padding={{hash all=4}} @textAlign='center'>
           <UiKit::Button @onClick={{action 'gaCta' 'plans-table'}}>
             Start Your Free Trial
           </UiKit::Button>
@@ -206,7 +206,7 @@
 
       <UiKit::Grid  @base={{2}} as |grid|>
         {{!-- FAQ set 1 --}}
-        <grid.item @borderColor='grey-150' @borderWidth={{hash bottom='xs'}} @padding={{hash all=5}}>
+        <grid.item @borderColor='grey-light' @borderWidth={{hash bottom='xs'}} @padding={{hash all=5}}>
           <UiKit::Text @tag='h4' @size='xl' @weight='bold' @color='blue-light' @margin={{hash bottom=2}}>
             What is a concurrent job?
           </UiKit::Text>
@@ -216,8 +216,8 @@
           </UiKit::Text>
         </grid.item>
 
-        <grid.item @borderColor='grey-150' @borderWidth={{hash bottom='xs'}} @padding={{hash y=5}}>
-          <UiKit::Box @borderColor='grey-150' @borderWidth={{hash left='xs'}} @padding={{hash x=5}}>
+        <grid.item @borderColor='grey-light' @borderWidth={{hash bottom='xs'}} @padding={{hash y=5}}>
+          <UiKit::Box @borderColor='grey-light' @borderWidth={{hash left='xs'}} @padding={{hash x=5}}>
             <UiKit::Text @tag='h4' @size='xl' @weight='bold' @color='blue-light' @margin={{hash bottom=2}}>
               Are there any restrictions on build time?
             </UiKit::Text>
@@ -228,7 +228,7 @@
         </grid.item>
 
         {{!-- FAQ set 2 --}}
-        <grid.item @borderColor='grey-150' @borderWidth={{hash bottom='xs'}} @padding={{hash all=5}}>
+        <grid.item @borderColor='grey-light' @borderWidth={{hash bottom='xs'}} @padding={{hash all=5}}>
           <UiKit::Text @tag='h4' @size='xl' @weight='bold' @color='blue-light' @margin={{hash bottom=2}}>
             Can I pay annually?
           </UiKit::Text>
@@ -238,8 +238,8 @@
           </UiKit::Text>
         </grid.item>
 
-        <grid.item @borderColor='grey-150' @borderWidth={{hash bottom='xs'}} @padding={{hash y=5}}>
-          <UiKit::Box @borderColor='grey-150' @borderWidth={{hash left='xs'}} @padding={{hash x=5}}>
+        <grid.item @borderColor='grey-light' @borderWidth={{hash bottom='xs'}} @padding={{hash y=5}}>
+          <UiKit::Box @borderColor='grey-light' @borderWidth={{hash left='xs'}} @padding={{hash x=5}}>
             <UiKit::Text @tag='h4' @size='xl' @weight='bold' @color='blue-light' @margin={{hash bottom=2}}>
               Can I cancel anytime?
             </UiKit::Text>
@@ -250,7 +250,7 @@
         </grid.item>
 
         {{!-- FAQ set 3 --}}
-        <grid.item @borderColor='grey-150' @borderWidth={{hash bottom='xs'}} @padding={{hash all=5}}>
+        <grid.item @borderColor='grey-light' @borderWidth={{hash bottom='xs'}} @padding={{hash all=5}}>
           <UiKit::Text @tag='h4' @size='xl' @weight='bold' @color='blue-light' @margin={{hash bottom=2}}>
             Am I able to upgrade my plan?
           </UiKit::Text>
@@ -259,8 +259,8 @@
           </UiKit::Text>
         </grid.item>
 
-        <grid.item @borderColor='grey-150' @borderWidth={{hash bottom='xs'}} @padding={{hash y=5}}>
-          <UiKit::Box @borderColor='grey-150' @borderWidth={{hash left='xs'}} @padding={{hash x=5}}>
+        <grid.item @borderColor='grey-light' @borderWidth={{hash bottom='xs'}} @padding={{hash y=5}}>
+          <UiKit::Box @borderColor='grey-light' @borderWidth={{hash left='xs'}} @padding={{hash x=5}}>
             <UiKit::Text @tag='h4' @size='xl' @weight='bold' @color='blue-light' @margin={{hash bottom=2}}>
               Do the listed prices include VAT?
             </UiKit::Text>
@@ -283,7 +283,7 @@
         </grid.item>
 
         <grid.item @padding={{hash y=5}}>
-          <UiKit::Box @borderColor='grey-150' @borderWidth={{hash left='xs'}} @padding={{hash x=5}}>
+          <UiKit::Box @borderColor='grey-light' @borderWidth={{hash left='xs'}} @padding={{hash x=5}}>
             <UiKit::Text @tag='h4' @size='xl' @weight='bold' @color='blue-light' @margin={{hash bottom=2}}>
               Do you have plans for students?
             </UiKit::Text>

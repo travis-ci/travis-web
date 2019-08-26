@@ -15,6 +15,13 @@ const BORDER_WIDTHS = {
   [WIDTHS.XS]: '1',
 };
 
+const COLORS = {
+  GREY_LIGHT: 'grey-light',
+};
+
+const BORDER_COLORS = {
+  [COLORS.GREY_LIGHT]: 'grey-150',
+};
 
 export default Mixin.create({
   // Public interface //
@@ -22,7 +29,7 @@ export default Mixin.create({
   borderWidth: null,
 
   // Private //
-  borderColorClass: prefix('borderColor', 'border'),
+  borderColorClass: prefix('borderColor', 'border', { dictionary: BORDER_COLORS }),
 
   borderTopWidth: or('borderWidth.top', 'borderWidth.y', 'borderWidth.all'),
   borderRightWidth: or('borderWidth.right', 'borderWidth.x', 'borderWidth.all'),
@@ -44,6 +51,8 @@ export default Mixin.create({
   // Lifecycle
   didReceiveAttrs() {
     this._super(...arguments);
+
+    checkDictionary(this.borderColor, COLORS, '@borderColor');
 
     const { top, right, bottom, left, x, y, all } = this.borderWidth || {};
     checkDictionary(top, WIDTHS, '@borderWidth.top');
