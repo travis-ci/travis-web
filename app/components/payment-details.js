@@ -5,12 +5,6 @@ import { not } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import config from 'travis/config/environment';
 
-let sourceToSentence = {
-  manual: 'This is a manual subscription.',
-  github: 'This subscription is managed by GitHub Marketplace.',
-  stripe: 'This plan is paid through Stripe.'
-};
-
 export default Component.extend({
   stripe: service(),
   flashes: service(),
@@ -23,11 +17,6 @@ export default Component.extend({
     let price = this.get('subscription.plan.price');
     let annual = this.get('subscription.plan.annual');
     return `$${price / 100} per ${annual ? 'year' : 'month'}`;
-  }),
-
-  source: computed('subscription.source', function () {
-    let source = this.get('subscription.source');
-    return `${sourceToSentence[source]}`;
   }),
 
   monthly: not('subscription.plan.annual'),

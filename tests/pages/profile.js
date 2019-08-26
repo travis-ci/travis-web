@@ -548,6 +548,13 @@ export default create({
       name: text('[data-test-education-message]'),
     },
 
+    billingSubscription: {
+      greyStatus: '[data-test-grey-status]',
+      activeStatus: '[data-test-active-status]',
+      canceledStatus: '[data-test-canceled-status]',
+      expiredStatus: '[data-test-expired-status]'
+    },
+
     userDetails: {
       scope: '[data-test-user-details]',
     },

@@ -40,13 +40,5 @@
     {{#if this.subscription.isManual}}
       <ManualSubscriptionHelp />
     {{/if}}
-    {{#if (not this.subscription.isStripe)}}
-      <p
-        class="source {{if this.subscription.isManual 'alert-status-message'}}"
-        data-test-source
-      >
-        {{this.source}}
-      </p>
-    {{/if}}
   </section>
 {{/if}}

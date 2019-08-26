@@ -1,21 +1,31 @@
 <section class="billing-subscription">
+  {{#if this.isGithubTrial}}
+    <p data-test-trial-message class="source plan-status-message">
+      You're trialing Travis CI via your
+      <ExternalLinkTo
+        @href={{config-get "marketplaceEndpoint"}}
+        class="billing-section-link"
+      >
+        Github Marketplace subscription.
+      </ExternalLinkTo>
+    </p>
+  {{/if}}
   {{#if this.subscription.isSubscribed}}
     {{#if (and (not this.subscription.isStripe) this.subscription.activeManagedSubscription)}}
       <ManageSubscriptionButton
         @subscription={{this.subscription}}
         @account={{this.account}}
       />
+    {{else}}
+      <BillingSummary
+        @subscription={{this.subscription}}
+        @account={{this.account}}
+        @price={{this.price}}
+        @planMessage="Valid until"
+      />
     {{/if}}
-    <BillingSummary 
-      @isGithubTrial={{this.isGithubTrial}} 
-      @subscription={{this.subscription}}
-      @account={{this.account}}
-      @price={{this.price}}
-      @planMessage="Valid until"
-    />
   {{else if this.subscription.isCanceled}}
     <BillingSummary 
-      @isGithubTrial={{this.isGithubTrial}} 
       @subscription={{this.subscription}} 
       @price={{this.price}}
       @account={{this.account}}
@@ -23,7 +33,6 @@
     />
   {{else if this.subscription.isIncomplete}}
      <BillingSummary 
-      @isGithubTrial={{this.isGithubTrial}} 
       @subscription={{this.subscription}} 
       @price={{this.price}}
       @account={{this.account}}
@@ -31,7 +40,6 @@
     />
   {{else if this.isPending}}
     <BillingSummary 
-      @isGithubTrial={{this.isGithubTrial}} 
       @subscription={{this.subscription}}
       @account={{this.account}}
       @price={{this.price}}
@@ -39,14 +47,20 @@
     />
   {{else if this.subscription.isExpired}}
     <BillingSummary 
-      @isGithubTrial={{this.isGithubTrial}} 
       @subscription={{this.subscription}}
       @account={{this.account}}
       @price={{this.price}}
       @planMessage="Expired"
     />
   {{/if}}
-
+  {{#if (not this.subscription.isStripe)}}
+    <p
+      class="source {{if this.subscription.isManual 'alert-status-message'}}"
+      data-test-source
+    >
+      {{this.source}}
+    </p>
+  {{/if}}
   {{#if this.subscription.isGithubResubscribable}}
     {{#if this.newSubscriptionProcess}}
       <BillingProcess 
@@ -73,5 +87,5 @@
         <EmberTooltip @text="You do not have permission to create a subscription" />
       {{/if}}
     {{/if}}
-  {{/if}}
+  {{/if}}s
 </section>

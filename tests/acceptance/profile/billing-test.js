@@ -271,6 +271,19 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.ok(profilePage.billing.annualInvitation.isHidden);
   });
 
+  test('view billing on an incomplete stripe plan', async function (assert) {
+    this.subscription.status = 'incomplete';
+
+    await profilePage.visit();
+    await profilePage.billing.visit();
+
+    assert.equal(profilePage.billing.plan.name, 'Small Business1 plan incomplete');
+    assert.ok(profilePage.billing.marketplaceButton.isHidden);
+    assert.ok(profilePage.billing.userDetails.isHidden);
+    assert.ok(profilePage.billing.billingDetails.isHidden);
+    assert.ok(profilePage.billing.creditCardNumber.isHidden);
+  });
+
   test('view billing on a canceled stripe plan', async function (assert) {
     this.subscription.status = 'canceled';
     const momentFromNow = moment(this.subscription.valid_to.getTime()).fromNow();

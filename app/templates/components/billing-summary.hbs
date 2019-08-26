@@ -3,17 +3,6 @@
     <section>
       <h3 class='plan-overview__header'> Overview </h3>
       <div class='plan'>
-        {{#if this.isGithubTrial}}
-          <p data-test-trial-message class="source plan-status-message">
-            You're trialing Travis CI via your
-            <ExternalLinkTo
-              @href={{config-get "marketplaceEndpoint"}}
-              class="billing-section-link"
-            >
-              Github Marketplace subscription.
-            </ExternalLinkTo>
-          </p>
-        {{/if}}
         <div>
           <BillingSummaryStatus 
             @subscription={{this.subscription}}
