@@ -51,6 +51,7 @@ module.exports = function (environment) {
       docker: 'https://docs.travis-ci.com/user/docker/',
       docs: 'https://docs.travis-ci.com',
       gettingStarted: 'https://docs.travis-ci.com/user/getting-started/#to-get-started-with-travis-ci',
+      education: 'https://education.travis-ci.com',
       enterprise: 'https://enterprise.travis-ci.com',
       imprint: 'https://docs.travis-ci.com/imprint.html',
       jobs: 'https://travisci.workable.com/',

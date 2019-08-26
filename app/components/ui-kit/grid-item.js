@@ -1,6 +1,9 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { or } from '@ember/object/computed';
+
+import spacingMixin from 'travis/mixins/ui-kit/spacing';
+import borderMixin from 'travis/mixins/ui-kit/border';
 import { requireProp } from 'travis/utils/ui-kit/assertions';
 import concat from 'travis/utils/ui-kit/concat';
 
@@ -35,7 +38,7 @@ const FLEX_SIZE_VALS = {
   [FLEX_SIZES.NONE]: 'flex-none',
 };
 
-export default Component.extend({
+export default Component.extend(spacingMixin, borderMixin, {
   tagName: '',
 
   // Public interface
@@ -70,6 +73,10 @@ export default Component.extend({
     'mdClass',
     'lgClass',
     'xlClass',
+    'borderColorClass',
+    'borderWidthClasses',
+    'marginClasses',
+    'paddingClasses',
   ),
 
   // Lifecycle
