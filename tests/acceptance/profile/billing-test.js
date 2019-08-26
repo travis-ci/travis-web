@@ -408,7 +408,7 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.billing.visit();
 
     assert.equal(profilePage.billing.trial.overviewHeading, 'Overview');
-    assert.equal(profilePage.billing.trial.name, '100 free builds to get you started');
+    assert.equal(profilePage.billing.trial.name.text, '100 free builds to get you started');
     assert.equal(profilePage.billing.trial.subtext, 'Start your trial to get 100 free builds and 2 concurrent jobs for both public and private projects.');
     assert.ok(profilePage.billing.trial.openSourceMessage.isPresent);
     assert.equal(profilePage.billing.trial.openSourceMessage.heading, 'We <3 open source');
@@ -424,24 +424,8 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.billing.visit();
 
     assert.equal(profilePage.billing.trial.overviewHeading, 'Overview');
-    assert.equal(profilePage.billing.trial.name, 'You have 10 trial builds left');
+    assert.equal(profilePage.billing.trial.name.text, 'You have 10 trial builds left');
     assert.equal(profilePage.billing.trial.subtext, 'The trial includes 2 concurrent jobs for both public and private projects.');
-    assert.ok(profilePage.billing.trial.openSourceMessage.isPresent);
-    assert.equal(profilePage.billing.trial.openSourceMessage.heading, 'We <3 open source');
-    assert.equal(profilePage.billing.trial.openSourceMessage.body, 'You get 3 free additional concurrent jobs for your open source projects.');
-    assert.dom(profilePage.billing.billingPlanChoices.boxes.scope).exists({ count: 4 });
-    assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe to 2 job plan');
-  });
-
-  test('view billing tab when not subscribed and has subscription write permissions with ended trial', async function (assert) {
-    this.trial.status = 'ended';
-    this.subscription.destroy();
-
-    await profilePage.visit();
-    await profilePage.billing.visit();
-
-    assert.equal(profilePage.billing.trial.overviewHeading, 'Overview');
-    assert.equal(profilePage.billing.trial.subtext, 'Your trial has just ended. To get the most out of Travis CI, set up a plan below!');
     assert.ok(profilePage.billing.trial.openSourceMessage.isPresent);
     assert.equal(profilePage.billing.trial.openSourceMessage.heading, 'We <3 open source');
     assert.equal(profilePage.billing.trial.openSourceMessage.body, 'You get 3 free additional concurrent jobs for your open source projects.');
@@ -514,7 +498,7 @@ module('Acceptance | profile/billing', function (hooks) {
     percySnapshot(assert);
 
     assert.equal(profilePage.billing.trial.overviewHeading, 'Overview');
-    assert.equal(profilePage.billing.trial.name, '100 free builds to get you started');
+    assert.equal(profilePage.billing.trial.name.text, '100 free builds to get you started');
     assert.equal(profilePage.billing.trial.subtext, 'Start your trial to get 100 free builds and 2 concurrent jobs for both public and private projects.');
     assert.ok(profilePage.billing.trial.openSourceMessage.isPresent);
     assert.equal(profilePage.billing.trial.openSourceMessage.heading, 'We <3 open source');
@@ -543,7 +527,7 @@ module('Acceptance | profile/billing', function (hooks) {
 
 
     assert.equal(profilePage.billing.trial.overviewHeading, 'Overview');
-    assert.equal(profilePage.billing.trial.name, '100 free builds to get you started');
+    assert.equal(profilePage.billing.trial.name.text, '100 free builds to get you started');
     assert.equal(profilePage.billing.trial.subtext, 'Start your trial to get 100 free builds and 2 concurrent jobs for both public and private projects.');
     assert.ok(profilePage.billing.trial.openSourceMessage.isPresent);
     assert.equal(profilePage.billing.trial.openSourceMessage.heading, 'We <3 open source');
@@ -590,7 +574,7 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.billing.visit();
 
     assert.equal(profilePage.billing.trial.overviewHeading, 'Overview');
-    assert.equal(profilePage.billing.trial.name, 'You have 100 trial builds left');
+    assert.equal(profilePage.billing.trial.name.text, 'You have 100 trial builds left');
     assert.equal(profilePage.billing.trial.subtext, 'The trial includes 2 concurrent jobs for both public and private projects.');
     assert.ok(profilePage.billing.trial.openSourceMessage.isPresent);
     assert.equal(profilePage.billing.trial.openSourceMessage.heading, 'We <3 open source');
@@ -625,7 +609,43 @@ module('Acceptance | profile/billing', function (hooks) {
     percySnapshot(assert);
 
     assert.equal(profilePage.billing.trial.overviewHeading, 'Overview');
-    assert.equal(profilePage.billing.trial.name, 'You have 25 trial builds left');
+    assert.equal(profilePage.billing.trial.name.text, 'You have 25 trial builds left');
+    assert.equal(profilePage.billing.trial.subtext, 'The trial includes 2 concurrent jobs for both public and private projects.');
+    assert.ok(profilePage.billing.trial.openSourceMessage.isPresent);
+    assert.equal(profilePage.billing.trial.openSourceMessage.heading, 'We <3 open source');
+    assert.equal(profilePage.billing.trial.openSourceMessage.body, 'You get 3 free additional concurrent jobs for your open source projects.');
+    assert.dom(profilePage.billing.billingPlanChoices.boxes.scope).exists({ count: 4 });
+    assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe to 2 job plan');
+  });
+
+  test('view billing tab when trial builds are less than 11', async function (assert) {
+    this.subscription = null;
+    this.organization.permissions = {
+      createSubscription: true
+    };
+    this.organization.save();
+    let trial = server.create('trial', {
+      builds_remaining: 10,
+      owner: this.organization,
+      status: 'started',
+      created_at: new Date(2018, 7, 16),
+      permissions: {
+        read: true,
+        write: true
+      }
+    });
+    this.trial = trial;
+    this.trial.save();
+
+    await profilePage.visitOrganization({ name: 'org-login' });
+    await profilePage.billing.visit();
+
+    percySnapshot(assert);
+
+    assert.equal(profilePage.billing.trial.overviewHeading, 'Overview');
+    assert.equal(profilePage.billing.trial.name.text, 'You have 10 trial builds left');
+    assert.ok(profilePage.billing.trial.name.hasRedText, 'Should have red text when builds are less than 11');
+    assert.equal(profilePage.billing.trial.buildsRunningOutBanner, 'Your trial is almost finished. Subscribe to a plan before your free builds run out!');
     assert.equal(profilePage.billing.trial.subtext, 'The trial includes 2 concurrent jobs for both public and private projects.');
     assert.ok(profilePage.billing.trial.openSourceMessage.isPresent);
     assert.equal(profilePage.billing.trial.openSourceMessage.heading, 'We <3 open source');
@@ -658,6 +678,7 @@ module('Acceptance | profile/billing', function (hooks) {
 
     assert.equal(profilePage.billing.trial.overviewHeading, 'Overview');
     assert.equal(profilePage.billing.trial.subtext, 'Your trial has just ended. To get the most out of Travis CI, set up a plan below!');
+    assert.equal(profilePage.billing.trial.buildsRanOutBanner, 'Your trial has ended. Subscribe to a plan to continue building your project!');
     assert.ok(profilePage.billing.trial.openSourceMessage.isPresent);
     assert.equal(profilePage.billing.trial.openSourceMessage.heading, 'We <3 open source');
     assert.equal(profilePage.billing.trial.openSourceMessage.body, 'You get 3 free additional concurrent jobs for your open source projects.');
@@ -688,7 +709,7 @@ module('Acceptance | profile/billing', function (hooks) {
 
     percySnapshot(assert);
 
-    assert.equal(profilePage.billing.trial.name, "You're trialing Travis CI via your Github Marketplace subscription.");
+    assert.equal(profilePage.billing.trial.name.text, "You're trialing Travis CI via your Github Marketplace subscription.");
     assert.equal(profilePage.billing.manageButton.text, 'Edit subscription');
     assert.ok(profilePage.billing.creditCardNumber.isHidden);
     assert.equal(profilePage.billing.source, 'This subscription is managed by GitHub Marketplace.');
@@ -796,7 +817,7 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.billing.selectedPlanOverview.changePlan.click();
 
     assert.equal(profilePage.billing.trial.overviewHeading, 'Overview');
-    assert.equal(profilePage.billing.trial.name, 'You have 10 trial builds left');
+    assert.equal(profilePage.billing.trial.name.text, 'You have 10 trial builds left');
     assert.equal(profilePage.billing.trial.subtext, 'The trial includes 2 concurrent jobs for both public and private projects.');
     assert.ok(profilePage.billing.trial.openSourceMessage.isPresent);
     assert.equal(profilePage.billing.trial.openSourceMessage.heading, 'We <3 open source');

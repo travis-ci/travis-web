@@ -520,8 +520,14 @@ export default create({
     trial: {
       scope: '.billing',
       overviewHeading: text('[data-test-overview-heading]'),
-      name: text('[data-test-trial-message]'),
+      buildsRunningOutBanner: text('[data-test-trial-running-out]'),
+      buildsRanOutBanner: text('[data-test-trial-ran-out]'),
       subtext: text('[data-test-trial-subtext]'),
+      name: {
+        scope: '[data-test-trial-message]',
+        hasRedText: hasClass('red'),
+        text: text(),
+      },
       openSourceMessage: {
         scope: '[data-test-open-source-box]',
         isPresent: isPresent(),
