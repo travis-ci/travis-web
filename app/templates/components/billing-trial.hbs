@@ -48,7 +48,7 @@
           Your trial has ended. Subscribe to a plan to continue building your project!
         </span>
       {{/if}}
-      {{#if this.hasNoActiveTrial}}
+      {{#if (not this.trial)}}
         <button class='button--blue {{if this.hasNoSubscriptionPermissions 'disabled'}}' data-test-activate-button='true'>
           Activate trial
           {{#if this.hasNoSubscriptionPermissions}}

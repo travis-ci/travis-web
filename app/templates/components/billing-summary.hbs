@@ -56,7 +56,7 @@
     </span>
   {{/if}}
   <div class="flex billing-subscription__buttons">
-  {{#if (and this.isComplete this.isNotPending)}}
+  {{#if (and this.isComplete this.isNotPending this.subscription.isStripe)}}
     <div class="billing-subscription__buttons--change">
       {{#if this.resubscribeLoading}}
         <LoadingIndicator />

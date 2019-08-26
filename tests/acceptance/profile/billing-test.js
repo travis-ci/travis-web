@@ -263,7 +263,6 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.billing.visit();
 
     // assert resubscribing works.
-
     assert.ok(profilePage.billing.marketplaceButton.isHidden);
     assert.ok(profilePage.billing.userDetails.isHidden);
     assert.ok(profilePage.billing.billingDetails.isHidden);
