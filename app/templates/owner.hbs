@@ -8,8 +8,8 @@
         {{this.owner.name}}
       </h1>
       <p class="owner-handle">
-        <SvgImage @name="icon-repooctocat" @class="icon--l" />
-        <a href={{this.githubProfile}} title="{{this.owner.name}} on GitHub">
+        <SvgImage @name={{vcs-icon this.owner.vcsType}} @class="icon--l" />
+        <a href={{this.profileUrl}} title="{{concat this.owner.name " on " (vcs-name this.owner.vcsType)}}">
           <span class="label-align">
             {{this.owner.login}}
           </span>

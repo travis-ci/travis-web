@@ -3,7 +3,7 @@
     {{#each this.builds as |build|}}
       <BuildsItem @build={{build}} />
     {{else}}
-      <MissingNotice @title="No pull request builds for this repository" />
+      <MissingNotice @title="No {{vcs-vocab this.repo.vcsType 'pullRequest' lower=true}} builds for this repository" />
     {{/each}}
   </ul>
   {{#if this.displayShowMoreButton}}

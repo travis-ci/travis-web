@@ -1,4 +1,5 @@
-import Model, { attr, hasMany, belongsTo } from '@ember-data/model';
+import VcsEntity from 'travis/models/vcs-entity';
+import { attr, hasMany, belongsTo } from '@ember-data/model';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 import { reads, equal, or } from '@ember/object/computed';
@@ -18,7 +19,7 @@ export const HISTORY_MIGRATION_STATUS = {
   MIGRATED: 'migrated'
 };
 
-const Repo = Model.extend({
+const Repo = VcsEntity.extend({
   api: service(),
   auth: service(),
 

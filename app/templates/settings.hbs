@@ -31,15 +31,15 @@
         <SettingsSwitch
           @active={{this.model.settings.build_pull_requests}}
           @repo={{this.repo}}
-          @description="Build pushed pull requests"
+          @description="Build pushed {{vcs-vocab this.repo.vcsType 'pullRequest' plural=true lower=true}}"
           @key="build_pull_requests"
         />
         <ExternalLinkTo
           href="https://docs.travis-ci.com/user/web-ui/#build-pushed-pull-requests"
-          title="about pull request updates"
+          title="about {{vcs-vocab this.repo.vcsType 'pullRequest' lower=true}} updates"
           class="settings-tooltip"
         >
-          <EmberTooltip @text="Read more about pull request updates" />
+          <EmberTooltip @text="Read more about {{vcs-vocab this.repo.vcsType 'pullRequest' lower=true}} updates" />
           <SvgImage @name="icon-help" @class="icon-help" />
         </ExternalLinkTo>
       </li>
@@ -52,7 +52,7 @@
       </h2>
       <p>
         Auto Cancellation allows you to only run builds for the latest commits in the queue.
-        This setting can be applied to builds for Branch builds and Pull Request builds separately.
+        This setting can be applied to builds for Branch builds and {{vcs-vocab this.repo.vcsType 'pullRequest'}} builds separately.
         Builds will only be canceled if they are waiting to run, allowing for any running jobs to finish.
       </p>
       <ul class="settings-list--columns">
@@ -68,7 +68,7 @@
           <SettingsSwitch
             @active={{this.model.settings.auto_cancel_pull_requests}}
             @repo={{this.repo}}
-            @description="Auto cancel pull request builds"
+            @description="Auto cancel {{vcs-vocab this.repo.vcsType 'pullRequest' lower=true}} builds"
             @key="auto_cancel_pull_requests"
           />
         </li>

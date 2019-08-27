@@ -16,11 +16,11 @@
     </div>
     <div>
       <ExternalLinkTo
-        @href={{this.urlGithub}}
+        @href={{this.repoUrl}}
         class="repo-gh inline-block"
-        @title={{concat this.repo.name " on GitHub"}}
+        @title={{concat this.repo.name " on " (vcs-name this.repo.vcsType)}}
       >
-        <SvgImage @name="icon-repooctocat" />
+        <SvgImage @name={{vcs-icon this.repo.vcsType}} />
       </ExternalLinkTo>
       <div class="repo-badge inline-block vertical-align">
         <a

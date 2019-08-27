@@ -1,10 +1,8 @@
 import Model, { attr, belongsTo } from '@ember-data/model';
-import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
+import { inject as service } from '@ember/service';
 
 export default Model.extend({
-  externalLinks: service(),
-
   sha: attr(),
   branch: attr(),
   message: attr(),
@@ -18,6 +16,8 @@ export default Model.extend({
   authorAvatarUrl: attr(),
 
   build: belongsTo('build'),
+
+  externalLinks: service(),
 
   subject: computed('message', function () {
     let message = this.message;
@@ -49,9 +49,11 @@ export default Model.extend({
     }
   ),
 
-  githubUrl: computed('build.repo.slug', 'sha', function () {
-    let slug = this.get('build.repo.slug');
-    let sha = this.sha;
-    return this.externalLinks.githubCommit(slug, sha);
+  url: computed('build.repo.{slug,vcsType}', 'sha', function () {
+    const [owner, repo] = this.get('build.repo.slug').split('/');
+    const vcsType = this.get('build.repo.vcsType');
+    const commit = this.get('sha');
+
+    return this.externalLinks.commitUrl(vcsType, { owner, repo, commit });
   }),
 });

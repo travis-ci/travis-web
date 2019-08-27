@@ -40,11 +40,6 @@ export default Owner.extend({
     });
   }),
 
-  urlGithub: computed('login', function () {
-    let login = this.login;
-    return `${config.sourceEndpoint}/${login}`;
-  }),
-
   _rawPermissions: computed(function () {
     return this.ajax.get('/users/permissions');
   }),

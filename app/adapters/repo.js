@@ -8,14 +8,14 @@ export default V3Adapter.extend({
 
   includes: [
     'build.branch',
-    'build.request',
     'build.commit',
     'build.created_by',
-    'repository.default_branch',
+    'build.request',
     'repository.current_build',
-    'owner.installation',
+    'repository.default_branch',
+    'repository.email_subscribed',
     'owner.github_id',
-    'repository.email_subscribed'
+    'owner.installation',
   ].join(','),
 
   buildURL(modelName, id, snapshot, requestType, query) {

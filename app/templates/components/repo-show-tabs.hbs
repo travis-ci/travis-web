@@ -23,7 +23,7 @@
   <li id="tab_pull_requests" class={{this.classPullRequests}}>
     {{#if this.repo.slug}}
       <LinkTo @route="pullRequests" @model={{this.repo}}>
-        Pull Requests
+        {{vcs-vocab this.repo.vcsType 'pullRequest' plural=true}}
       </LinkTo>
     {{/if}}
   </li>

@@ -24,7 +24,7 @@
         data-test-migrate-signup="true"
       >
         {{#if this.user.isMigrationBetaRequested}}
-          Add organizations to the beta
+          Add {{vcs-vocab this.model.vcsType 'organization' plural=true}} to the beta
         {{else}}
           Sign up for the beta
         {{/if}}
@@ -33,7 +33,7 @@
   {{/if}}
   <section class="profile-orgs">
     <h2>
-      Organizations
+      {{vcs-vocab this.model.vcsType 'organization' plural=true}}
     </h2>
     <ul class="profile-orgs-list">
       {{#each this.organizations as |organization|}}
@@ -43,7 +43,7 @@
       {{else}}
         <li class="profile-text">
           You are not currently a member of<br />
-          any organization.
+          any {{vcs-vocab this.model.vcsType 'organization' lower=true}}.
         </li>
       {{/each}}
     </ul>
@@ -51,7 +51,7 @@
   {{#if this.githubOrgsOauthAccessSettingsUrl}}
     <section class="profile-additional no-divider">
       <h2>
-        Missing an organization?
+        Missing an {{vcs-vocab this.model.vcsType 'organization'}}?
       </h2>
       <ExternalLinkTo
         @href={{this.githubOrgsOauthAccessSettingsUrl}}
@@ -59,7 +59,7 @@
       >
         Review and add
       </ExternalLinkTo>
-      your authorized organizations.
+      your authorized {{vcs-vocab this.model.vcsType 'organization' plural=true lower=true}}.
     </section>
   {{/if}}
 </aside>
@@ -160,7 +160,10 @@
     </nav>
     {{yield}}
   {{else}}
-    <NoAccount @name={{this.model.login}} />
+    <NoAccount
+      @name={{this.model.login}}
+      @vcsType={{this.model.vcsType}}
+    />
   {{/unless}}
 </article>
 

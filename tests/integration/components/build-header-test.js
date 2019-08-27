@@ -5,9 +5,9 @@ import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | build header', function (hooks) {
   setupRenderingTest(hooks);
+  const repo = { slug: 'travis-ci/travis-web' };
 
   test('render api build', async function (assert) {
-    let repo = { slug: 'travis-ci/travis-web' };
     let commit = {
       compareUrl: 'https://github.com/travis-repos/php-test-staging/compare/3d86ee98be2b...a82f6ba76c7b',
       subject: 'Endless joy'
@@ -59,6 +59,7 @@ module('Integration | Component | build header', function (hooks) {
       branch: {
         name: 'feature-2'
       },
+      repo,
     };
 
     this.set('build', build);
@@ -79,7 +80,8 @@ module('Integration | Component | build header', function (hooks) {
     let build = {
       eventType: 'cron',
       commit,
-      branchName: 'a-cron-branch-of-utter-joy'
+      branchName: 'a-cron-branch-of-utter-joy',
+      repo,
     };
 
     this.set('build', build);
@@ -105,7 +107,8 @@ module('Integration | Component | build header', function (hooks) {
       commit,
       request: {
         isDraft: true
-      }
+      },
+      repo,
     };
 
     this.set('build', build);
@@ -125,7 +128,8 @@ module('Integration | Component | build header', function (hooks) {
       commit,
       branch: { name: 'v1.0.0' },
       tag: { name: 'v1.0.0' },
-      isTag: true
+      isTag: true,
+      repo,
     };
 
     this.set('build', build);
@@ -142,7 +146,8 @@ module('Integration | Component | build header', function (hooks) {
     let build = {
       eventType: 'push',
       status: 'running',
-      number: '1234'
+      number: '1234',
+      repo,
     };
 
     this.set('build', build);
@@ -159,7 +164,8 @@ module('Integration | Component | build header', function (hooks) {
       number: '1234.1',
       build: {
         id: 123
-      }
+      },
+      repo,
     };
 
     this.set('job', job);
@@ -178,7 +184,8 @@ module('Integration | Component | build header', function (hooks) {
       language: 'ruby',
       build: {
         id: 123
-      }
+      },
+      repo,
     };
 
     this.set('job', job);
