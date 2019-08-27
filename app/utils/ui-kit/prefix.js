@@ -1,7 +1,12 @@
 import { computed } from '@ember/object';
 import { isPresent } from '@ember/utils';
+import config from 'travis/config/environment';
+import getResponsiveProp from 'travis/utils/ui-kit/get-responsive-prop';
 
-export default function prefix(key, prefix,
+const { screens } = config;
+const screenKeys = Object.keys(screens);
+
+export default function generatePrefix(key, propPrefix,
   {
     dictionary = {},
     validator = isPresent,
@@ -12,13 +17,24 @@ export default function prefix(key, prefix,
 ) {
   return computed(key, function () {
     const propVal = this.get(key);
-    const value = dictionary[propVal] || propVal;
-    const isNegative = negatable && typeof value === 'number' && value < 0;
-    const negator = isNegative ? '-' : '';
+    const screenVals = getResponsiveProp(propVal);
 
-    // Removes extra dash from negative vals, for negatable props like margin etc.
-    const displayVal = isNegative ? Math.abs(value) : value;
+    const classes = screenKeys.map((screen) => {
+      const screenVal = screenVals[screen];
 
-    return validator(value) ? `${negator}${prefix}${separator}${displayVal}` : defaultValue;
+      const screenInfo = screens[screen];
+      const screenPrefix = screen === 'base' ? '' : `${screenInfo.prefix}:`;
+
+      const value = dictionary[screenVal] || screenVal;
+      const isNegative = negatable && typeof value === 'number' && value < 0;
+      const negator = isNegative ? '-' : '';
+
+      // Removes extra dash from negative vals, for negatable props like margin etc.
+      const displayVal = isNegative ? Math.abs(value) : value;
+
+      return validator(value) ? `${screenPrefix}${negator}${propPrefix}${separator}${displayVal}` : defaultValue;
+    });
+
+    return classes.compact().join(' ');
   });
 }
