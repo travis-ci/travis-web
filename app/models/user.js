@@ -130,7 +130,7 @@ export default Owner.extend({
   },
 
   joinMigrateBeta(orgs = []) {
-    const organizations = orgs.mapBy('id');
+    const organizations = orgs.mapBy('login');
     return this.ajax.postV3(`/user/${this.id}/beta_migration_request`, { organizations })
       .then(() => this.fetchBetaMigrationRequests());
   },

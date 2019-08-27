@@ -13,8 +13,9 @@ export default Component.extend({
   selectedAccounts: null,
   selectedOptions: map('selectedAccounts', makeOptionFromAccount),
 
-  selectableAccounts: computed('accounts.organizations', 'user', function () {
-    const organizations = this.accounts.organizations.toArray() || [];
+  selectableAccounts: computed('accounts.organizations.[]', 'user', function () {
+    const accountOrgs = this.accounts.organizations || [];
+    const organizations = accountOrgs.toArray() || [];
     return [this.user, ...organizations]; // user account must be first item, so that it couldn't be removed from selected options
   }),
   selectableOptions: map('selectableAccounts', makeOptionFromAccount),

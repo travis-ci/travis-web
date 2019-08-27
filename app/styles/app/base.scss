@@ -19,6 +19,13 @@ body {
   scroll-behavior: smooth;
 }
 
+@-moz-document url-prefix() {
+  html,
+  body {
+    scroll-behavior: auto;
+  }
+}
+
 body {
   overflow-x: hidden;
 }
