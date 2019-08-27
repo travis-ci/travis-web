@@ -1,13 +1,15 @@
 import { isNone } from '@ember/utils';
+import config from 'travis/config/environment';
+
+export const { screens } = config;
+export const screenKeys = Object.keys(screens);
 
 export default function getResponsiveProp(value) {
-  // if (isNone(value)) {
-  //   return null;
-  // }
-  const val = value || {};
+  // Cannot destructure from null/undefined
+  const saferVal = value || {};
 
-  let { base } = val;
-  const { sm, md, lg, xl } = val;
+  let { base } = saferVal;
+  const { sm, md, lg, xl } = saferVal;
 
   if (
     isNone(base) &&

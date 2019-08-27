@@ -1,10 +1,7 @@
 import { computed } from '@ember/object';
 import { isPresent } from '@ember/utils';
-import config from 'travis/config/environment';
-import getResponsiveProp from 'travis/utils/ui-kit/get-responsive-prop';
+import getResponsiveProp, { screens, screenKeys } from 'travis/utils/ui-kit/get-responsive-prop';
 
-const { screens } = config;
-const screenKeys = Object.keys(screens);
 
 export default function generatePrefix(key, propPrefix,
   {

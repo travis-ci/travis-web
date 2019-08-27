@@ -51,7 +51,7 @@ export default Component.extend({
   inactiveBgColor: computed(() => BG_COLORS['inactive']),
 
   // Lifecycle
-  didReceiveAttributes() {
+  didReceiveAttrs() {
     this._super(...arguments);
 
     checkDictionary(this.color, COLORS, '@color', 'Switch');

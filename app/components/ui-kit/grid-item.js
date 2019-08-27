@@ -80,7 +80,7 @@ export default Component.extend(spacingMixin, borderMixin, {
   ),
 
   // Lifecycle
-  didReceiveAttributes() {
+  didReceiveAttrs() {
     this._super(...arguments);
 
     requireProp(this.grid, '@grid', 'GridItem');
