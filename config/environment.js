@@ -1,16 +1,18 @@
 /* eslint-env node */
 'use strict';
 
-const { screens } = require('./screens.js');
+const providers = require('./providers');
 const { plans } = require('./plans.js');
+const { screens } = require('./screens.js');
 
 module.exports = function (environment) {
-  let ENV = {
+  const ENV = {
     modulePrefix: 'travis',
     environment,
     rootURL: '/',
     locationType: 'auto',
     defaultTitle: 'Travis CI',
+    providers,
     plans,
     screens,
     EmberENV: {
@@ -31,7 +33,6 @@ module.exports = function (environment) {
 
     // defaults for running travis-web
     apiEndpoint: 'https://api.travis-ci.org',
-    sourceEndpoint: 'https://github.com',
     pusher: {
       key: '5df8ac576dcccf4fd076',
       host: 'ws.pusherapp.com',

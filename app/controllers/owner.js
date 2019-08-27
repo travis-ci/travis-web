@@ -1,17 +1,18 @@
 import Controller from '@ember/controller';
 import { computed } from '@ember/object';
 import { reads } from '@ember/object/computed';
-import config from 'travis/config/environment';
+import { inject as service } from '@ember/service';
 
 export default Controller.extend({
+  externalLinks: service(),
+
   isLoading: false,
 
-  config,
+  profileUrl: computed('model.{login,vcsType}', function () {
+    const owner = this.get('model.login');
+    const vcsType = this.get('model.vcsType');
 
-  githubProfile: computed('model.login', function () {
-    let login = this.get('model.login');
-    const { sourceEndpoint } = config;
-    return `${sourceEndpoint}/${login}`;
+    return this.externalLinks.profileUrl(vcsType, { owner });
   }),
 
   owner: reads('model'),

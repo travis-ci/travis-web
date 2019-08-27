@@ -11,22 +11,28 @@ export default Component.extend({
   isShowingStatusBadgeModal: false,
 
   statusImageUrl: computed('repo.slug', 'repo.private', 'repo.defaultBranch.name', function () {
-    let branchName = this.get('repo.defaultBranch.name');
-    return this.statusImages.imageUrl(this.repo, branchName);
+    const branchName = this.get('repo.defaultBranch.name');
+    const repo = this.get('repo');
+
+    return this.get('statusImages').imageUrl(repo, branchName);
   }),
 
-  urlGithub: computed('repo.slug', function () {
-    let slug = this.get('repo.slug');
-    return this.externalLinks.githubRepo(slug);
+  repoUrl: computed('repo.{vcsType,slug}', function () {
+    const [owner, repo] = this.get('repo.slug').split('/');
+    const vcsType = this.get('repo.vcsType');
+
+    return this.externalLinks.repoUrl(vcsType, { owner, repo });
   }),
 
   orgBuildHistoryLink: computed('repo.slug', function () {
-    let slug = this.get('repo.slug');
+    const slug = this.get('repo.slug');
+
     return this.externalLinks.orgBuildHistoryLink(slug);
   }),
 
   comBuildHistoryLink: computed('repo.slug', function () {
-    let slug = this.get('repo.slug');
+    const slug = this.get('repo.slug');
+
     return this.externalLinks.comBuildHistoryLink(slug);
   }),
 

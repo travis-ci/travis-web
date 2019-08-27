@@ -1,4 +1,5 @@
-import Model, { attr, belongsTo } from '@ember-data/model';
+import VcsEntity from 'travis/models/vcs-entity';
+import { attr, belongsTo } from '@ember-data/model';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 import { reads, or, equal, notEmpty } from '@ember/object/computed';
@@ -7,7 +8,7 @@ import dynamicQuery from 'travis/utils/dynamic-query';
 
 const { profileReposPerPage: limit } = config.pagination;
 
-export default Model.extend({
+export default VcsEntity.extend({
   features: service(),
   accounts: service(),
   raven: service(),

@@ -29,7 +29,7 @@
           @href={{this.githubAppsActivationURL}}
           class="button button--blue button--repo-activate-gh"
         >
-          <SvgImage @name="icon-repooctocat" @class="icon--github" />
+          <SvgImage @name={{vcs-icon this.repo.vcsType}} @class="icon--github" />
           <span>
             Activate repository on GitHub
           </span>

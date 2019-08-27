@@ -16,10 +16,10 @@
           Just a few more seconds as we talk to GitHub to find out which repositories belong to you.
         </p>
         <p>
-          If you're part of an organization that already has repositories set up on Travis CI, we'll take you to the list once we're done.
+          If you're part of an {{vcs-vocab this.user.vcsType 'organization' lower=true}} that already has repositories set up on Travis CI, we'll take you to the list once we're done.
         </p>
         <p>
-          If you're not part of any existing organizations yet, we'll take you to a handy getting started guide to get you off the ground quickly.
+          If you're not part of any existing {{vcs-vocab this.user.vcsType 'organization' lower=true plural=true}} yet, we'll take you to a handy getting started guide to get you off the ground quickly.
         </p>
       </div>
     {{else}}

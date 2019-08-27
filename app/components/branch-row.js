@@ -20,10 +20,12 @@ export default Component.extend({
   isTriggering: false,
   hasTriggered: false,
 
-  urlGithubCommit: computed('branch.repository.slug', 'branch.last_build.commit.sha', function () {
-    let slug = this.get('branch.repository.slug');
-    let sha = this.get('branch.last_build.commit.sha');
-    return this.externalLinks.githubCommit(slug, sha);
+  commitUrl: computed('branch.repository.{slug,vcsType}', 'branch.last_build.commit.sha', function () {
+    const [owner, repo] = this.get('branch.repository.slug').split('/');
+    const vcsType = this.get('branch.repository.vcsType');
+    const commit = this.get('branch.last_build.commit.sha');
+
+    return this.externalLinks.commitUrl(vcsType, { owner, repo, commit });
   }),
 
   rawCreatedBy: alias('branch.last_build.created_by'),

@@ -4,7 +4,7 @@
       <StatusIcon @status={{this.item.state}} />
       {{#if this.item.isPullRequest}}
         <small class="commit-branch" title={{this.item.pullRequestTitle}}>
-          Pull Request #{{this.item.pullRequestNumber}}
+          {{vcs-vocab this.item.repo.vcsType 'pullRequest'}} #{{this.item.pullRequestNumber}}
         </small>
         {{#if this.build.request.isDraft}}
           <span data-test-build-header-draft-badge class="message-label badge">
@@ -35,8 +35,8 @@
       {{/if}}
       <ul class="list-icon">
         <li>
-          <ExternalLinkTo @href={{this.commit.githubUrl}}>
-            <EmberTooltip @text="View commit on GitHub" />
+          <ExternalLinkTo @href={{this.commitUrl}}>
+            <EmberTooltip @text="{{concat "View commit on " (vcs-name this.item.repo.vcsType)}}" />
             <SvgImage @name="icon-commit" @class="icon" />
             <span class="label-align inner-underline commit-commit">
               Commit
@@ -51,7 +51,7 @@
           <li>
             {{#if this.item.isPullRequest}}
               <ExternalLinkTo @href={{this.item.commit.compareUrl}}>
-                <EmberTooltip @text="View Pull Request on GitHub" />
+                <EmberTooltip @text="View {{vcs-vocab this.item.repo.vcsType 'pullRequest'}} on {{vcs-name this.item.repo.vcsType}}" />
                 <SvgImage @name="icon-compare" @class="icon" />
                 <span class="label-align inner-underline commit-compare">
                   #{{this.item.pullRequestNumber}}: {{this.item.pullRequestTitle}}
@@ -60,7 +60,7 @@
               </ExternalLinkTo>
             {{else if this.item.commit.compareUrl}}
               <ExternalLinkTo @href={{this.item.commit.compareUrl}}>
-                <EmberTooltip @text="View diff on GitHub" />
+                <EmberTooltip @text="{{concat "View diff on " (vcs-name this.item.repo.vcsType)}}" />
                 <SvgImage @name="icon-compare" @class="icon" />
                 <span class="label-align inner-underline commit-compare">
                   Compare
@@ -75,17 +75,17 @@
         {{/if}}
         <li>
           {{#if this.item.isTag}}
-            <ExternalLinkTo @href={{this.urlGitHubTag}} class="commit-branch-url">
-              <EmberTooltip @text="View tag on GitHub" />
+            <ExternalLinkTo @href={{this.tagUrl}} class="commit-branch-url">
+              <EmberTooltip @text="{{concat "View tag on " (vcs-name this.item.repo.vcsType)}}" />
               <SvgImage @name="icon-tag" @class="icon" />
               <span class="label-align inner-underline">
                 Tag {{this.build.tag.name}}
               </span>
               <SvgImage @name="icon-external-link" @class="icon" />
             </ExternalLinkTo>
-          {{else}}
-            <ExternalLinkTo @href={{this.urlGitHubBranch}} class="commit-branch-url">
-              <EmberTooltip @text="View branch on GitHub" />
+          {{else if this.build.branchName}}
+            <ExternalLinkTo @href={{this.branchUrl}} class="commit-branch-url">
+              <EmberTooltip @text="{{concat "View branch on " (vcs-name this.item.repo.vcsType)}}" />
               <SvgImage @name="icon-branch" @class="icon" />
               <span class="label-align inner-underline">
                 Branch

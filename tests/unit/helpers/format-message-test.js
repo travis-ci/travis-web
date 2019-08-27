@@ -58,4 +58,8 @@ module('Unit | Helper | format message', function () {
     const formattedWithGitHubCommitLink = formatMessage(['a string with travis-ci/travis-web@acab'], { repo: fakeRepo });
     assert.equal(formattedWithGitHubCommitLink, 'a string with <a href="https://github.com/travis-ci/travis-web/commit/acab">travis-ci/travis-web@acab</a>');
   });
+
+  test('it accepts a maxLength', assert => {
+    assert.equal(formatMessage(['123456789'], { maxLength: 3 }), '123');
+  });
 });
