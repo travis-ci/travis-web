@@ -15,7 +15,7 @@
       </strong>
     {{/if}}
     {{#if this.request.commit}}
-      {{github-commit-link this.request.repo.slug this.request.commit.sha}}
+      {{commit-link this.request.repo.vcsType this.request.repo.slug this.request.commit.sha}}
     {{else}}
       <em data-requests-item-commit-missing>
         No commit available

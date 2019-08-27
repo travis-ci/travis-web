@@ -4,16 +4,27 @@ import { alias } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 
 export default Component.extend({
+  externalLinks: service(),
+
   tagName: 'li',
   classNames: ['rows', 'my-build'],
   classNameBindings: ['state'],
 
-  externalLinks: service(),
   state: alias('build.state'),
 
-  urlGitHubBranch: computed('build.repo.slug', 'build.branchName', function () {
-    let slug = this.get('build.repo.slug');
-    let branchName = this.get('build.branchName');
-    return this.externalLinks.githubBranch(slug, branchName);
+  branchUrl: computed('build.repo.{slug,vcsType}', 'build.branchName', function () {
+    const [owner, repo] = (this.get('build.repo.slug') || '').split('/');
+    const vcsType = this.get('build.repo.vcsType');
+    const branch = this.get('build.branchName');
+
+    return this.externalLinks.branchUrl(vcsType, { owner, repo, branch });
+  }),
+
+  commitUrl: computed('build.repo.{slug,vcsType}', 'build.commit.sha', function () {
+    const [owner, repo] = (this.get('build.repo.slug') || '').split('/');
+    const vcsType = this.get('build.repo.vcsType');
+    const commit = this.get('build.commit.sha');
+
+    return this.externalLinks.commitUrl(vcsType, { owner, repo, commit });
   }),
 });

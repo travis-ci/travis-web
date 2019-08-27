@@ -46,9 +46,9 @@
       <div class="row-content no-hover">
         <ExternalLinkTo
           data-test-branch-name="true"
-          @href={{this.urlGitHubBranch}}
+          @href={{this.branchUrl}}
         >
-          <EmberTooltip @text="View branch on GitHub" @popperContainer="body" />
+          <EmberTooltip @text="{{concat "View branch on " (vcs-name this.build.repo.vcsType)}}" @popperContainer="body" />
           <SvgImage @name="icon-branch" @class="icon" />
           <span class="label-align inner-underline">
             {{this.build.branchName}}
@@ -74,10 +74,10 @@
       <div>
         <ExternalLinkTo
           data-test-commit-sha="true"
-          @href={{this.build.commit.githubUrl}}
+          @href={{this.commitUrl}}
           class="row-content monospace"
         >
-          <EmberTooltip @text="View commit on GitHub" />
+          <EmberTooltip @text="{{concat "View commit on " (vcs-name this.build.repo.vcsType)}}" />
           <SvgImage @name="icon-commit" @class="icon" />
           <span class="label-align inner-underline">
             {{format-sha this.build.commit.sha}}

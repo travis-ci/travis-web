@@ -1,18 +1,28 @@
 import Service from '@ember/service';
 import config from 'travis/config/environment';
+import { vcsUrl } from 'travis/utils/vcs';
+
+// TODO:
+// The URLs below are used in `helpers/format-message.js` which needs
+// to be changed to use services.
+export const vcsLinks = {
+  commitUrl: (vcsType, { owner, repo, commit }) => vcsUrl('commit', vcsType, { owner, repo, commit }),
+
+  issueUrl: (vcsType, { owner, repo, issue }) => vcsUrl('issue', vcsType, { owner, repo, issue }),
+
+  profileUrl: (vcsType, { owner }) => vcsUrl('profile', vcsType, { owner }),
+};
 
 export default Service.extend({
-  githubPullRequest(slug, pullRequestNumber) {
-    return `${config.sourceEndpoint}/${slug}/pull/${pullRequestNumber}`;
-  },
+  ...vcsLinks,
 
-  githubCommit(slug, sha) {
-    return `${config.sourceEndpoint}/${slug}/commit/${sha}`;
-  },
+  branchUrl: (vcsType, { owner, repo, branch }) => vcsUrl('branch', vcsType, { owner, repo, branch }),
 
-  githubRepo(slug) {
-    return `${config.sourceEndpoint}/${slug}`;
-  },
+  fileUrl: (vcsType, { owner, repo, branch, file }) => vcsUrl('file', vcsType, { owner, repo, branch, file }),
+
+  repoUrl: (vcsType, { owner, repo }) => vcsUrl('repo', vcsType, { owner, repo }),
+
+  tagUrl: (vcsType, { owner, repo, tag }) => vcsUrl('tag', vcsType, { owner, repo, tag }),
 
   email(email) {
     return `mailto:${email}`;
@@ -22,21 +32,9 @@ export default Service.extend({
     return `https://github.com/travis-ci/travis-web/tree/${branchName}`;
   },
 
-  githubBranch(slug, branch) {
-    return `${config.sourceEndpoint}/${slug}/tree/${branch}`;
-  },
-
-  githubFile(slug, branch, file) {
-    return `${config.sourceEndpoint}/${slug}/blob/${branch}/${file}`;
-  },
-
   billingUrl(accountType, login) {
     const id = accountType === 'user' ? 'user' : login;
     return `${config.billingEndpoint}/subscriptions/${id}`;
-  },
-
-  githubTag(slug, tag) {
-    return `${config.sourceEndpoint}/${slug}/releases/tag/${tag}`;
   },
 
   openSourceMigrationDocs: 'https://docs.travis-ci.com/user/open-source-on-travis-ci-com/#existing-open-source-repositories-on-travis-ciorg',

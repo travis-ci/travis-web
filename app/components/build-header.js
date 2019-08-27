@@ -1,8 +1,8 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { inject as service } from '@ember/service';
 import jobConfigLanguage from 'travis/utils/job-config-language';
 import { not } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
 
 const commitMessageLimit = 72;
 
@@ -59,16 +59,28 @@ export default Component.extend({
     return !['api', 'cron'].includes(eventType);
   }),
 
-  urlGitHubBranch: computed('item.repo.slug', 'build.branchName', function () {
-    let slug = this.get('item.repo.slug');
-    let branchName = this.get('build.branchName');
-    return this.externalLinks.githubBranch(slug, branchName);
+  commitUrl: computed('item.repo.{slug,vcsType}', 'commit.sha', function () {
+    const [owner, repo] = this.get('item.repo.slug').split('/');
+    const vcsType = this.get('item.repo.vcsType');
+    const commit = this.get('commit.sha');
+
+    return this.externalLinks.commitUrl(vcsType, { owner, repo, commit });
   }),
 
-  urlGitHubTag: computed('item.repo.slug', 'build.tag.name', function () {
-    let slug = this.get('item.repo.slug');
-    let tag = this.get('build.tag.name');
-    return this.externalLinks.githubTag(slug, tag);
+  branchUrl: computed('item.repo.{slug,vcsType}', 'build.branchName', function () {
+    const [owner, repo] = this.get('item.repo.slug').split('/');
+    const vcsType = this.get('item.repo.vcsType');
+    const branch = this.get('build.branchName');
+
+    return this.externalLinks.branchUrl(vcsType, { owner, repo, branch });
+  }),
+
+  tagUrl: computed('item.repo.{slug,vcsType}', 'build.tag.name', function () {
+    const [owner, repo] = this.get('item.repo.slug').split('/');
+    const vcsType = this.get('item.repo.vcsType');
+    const tag = this.get('build.tag.name');
+
+    return this.externalLinks.tagUrl(vcsType, { owner, repo, tag });
   }),
 
   buildState: computed('item.jobs.firstObject.state', 'item.state', 'item.isMatrix', function () {

@@ -1,17 +1,18 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { inject as service } from '@ember/service';
 import {
   isInternal,
   presentedPath,
   fileNameWithoutSha
 } from 'travis/utils/format-config';
 import { later } from '@ember/runloop';
+import { inject as service } from '@ember/service';
 
 export default Component.extend({
+  externalLinks: service(),
+
   copied: false,
   baseYmlName: '.travis.yml',
-  externalLinks: service(),
 
   buttonLabel: computed('copied', 'rawConfig.source', function () {
     let source = this.get('rawConfig.source');
@@ -35,13 +36,18 @@ export default Component.extend({
     return presentedPath(source, this.slug);
   }),
 
-  fileUrl: computed('rawConfig.source', 'slug', 'build.branchName', 'externalLinks', function () {
-    let source = this.get('rawConfig.source');
-    let slug = this.slug;
-    if (isInternal(source, slug)) { return null; }
+  fileUrl: computed('rawConfig.source', 'build.branchName', 'build.repo.{slug,vcsType}', function () {
+    const slug = this.get('build.repo.slug');
+    const vcsType = this.get('build.repo.vcsType');
+    const source = this.get('rawConfig.source');
+    if (isInternal(source, slug)) {
+      return;
+    }
 
-    let branchName = this.get('build.branchName');
-    return this.externalLinks.githubFile(slug, branchName, fileNameWithoutSha(source));
+    const [owner, repo] = slug.split('/');
+    const branch = this.get('build.branchName');
+    const file = fileNameWithoutSha(source);
+    return this.externalLinks.fileUrl(vcsType, { owner, repo, branch, file });
   }),
 
   actions: {

@@ -63,8 +63,9 @@
 <div class="two-line">
   <div class="row-commit">
     <div class="row-item">
-      <ExternalLinkTo @href={{this.urlGithubCommit}}>
-        <EmberTooltip @text="View commit on GitHub" />
+
+      <ExternalLinkTo @href={{this.commitUrl}}>
+        <EmberTooltip @text="{{concat "View commit on " (vcs-name this.branch.repository.vcsType)}}" />
         <SvgImage @name="icon-commit" @class="icon" />
         <span class="inner-underline monospace">
           {{#if this.branch.last_build}}
