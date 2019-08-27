@@ -18,6 +18,7 @@ export default Component.extend({
   isIncomplete: reads('subscription.isIncomplete'),
   isComplete: not('isIncomplete'),
   isCompleteAndNotExpired: and('hasNotExpired', 'isComplete'),
+  showBillingInfo: and('subscription.isStripe', 'isCompleteAndNotExpired'),
   canCancelSubscription: and('isNotCanceled', 'account.hasSubscriptionPermissions'),
   canResubscribe: and('subscription.isResubscribable', 'account.hasSubscriptionPermissions'),
 });

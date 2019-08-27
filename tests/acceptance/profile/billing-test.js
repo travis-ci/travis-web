@@ -351,7 +351,8 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.ok(profilePage.billing.annualInvitation.isHidden);
   });
 
-  test('view billing on an canceled marketplace plan', async function (assert) {
+  test('view billing on a canceled marketplace plan', async function (assert) {
+    this.trial.destroy();
     this.subscription.source = 'github';
     this.subscription.status = 'canceled';
 
@@ -369,6 +370,11 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.ok(profilePage.billing.billingDetails.isHidden);
     assert.ok(profilePage.billing.creditCardNumber.isHidden);
     assert.ok(profilePage.billing.annualInvitation.isHidden);
+
+    await profilePage.billing.newSubscriptionButton.click();
+
+    assert.dom(profilePage.billing.billingPlanChoices.boxes.scope).exists({ count: 4 });
+    assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe to 2 job plan');
   });
 
   test('view billing on an expired marketplace plan', async function (assert) {
@@ -385,6 +391,11 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.ok(profilePage.billing.billingDetails.isHidden);
     assert.ok(profilePage.billing.creditCardNumber.isHidden);
     assert.ok(profilePage.billing.annualInvitation.isHidden);
+
+    await profilePage.billing.newSubscriptionButton.click();
+
+    assert.dom(profilePage.billing.billingPlanChoices.boxes.scope).exists({ count: 4 });
+    assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe to 2 job plan');
   });
 
   test('view billing on an annual plan', async function (assert) {
