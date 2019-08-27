@@ -37,28 +37,28 @@ module('Unit | Service | external-links | VCS', function (hooks) {
   test('repoUrl', function (assert) {
     const service = this.owner.lookup('service:external-links');
 
-    assert.equal(service.repoUrl('GithubRepo', { owner, repo }), `https://github.com/${owner}/${repo}`);
+    assert.equal(service.repoUrl('GithubRepository', { owner, repo }), `https://github.com/${owner}/${repo}`);
   });
 
   test('branchUrl', function (assert) {
     const service = this.owner.lookup('service:external-links');
     const branch = 'branch';
 
-    assert.equal(service.branchUrl('GithubRepo', { owner, repo, branch }), `https://github.com/${owner}/${repo}/tree/${branch}`);
+    assert.equal(service.branchUrl('GithubRepository', { owner, repo, branch }), `https://github.com/${owner}/${repo}/tree/${branch}`);
   });
 
   test('tagUrl', function (assert) {
     const service = this.owner.lookup('service:external-links');
     const tag = 'tag';
 
-    assert.equal(service.tagUrl('GithubRepo', { owner, repo, tag }), `https://github.com/${owner}/${repo}/releases/tag/${tag}`);
+    assert.equal(service.tagUrl('GithubRepository', { owner, repo, tag }), `https://github.com/${owner}/${repo}/releases/tag/${tag}`);
   });
 
   test('commitUrl', function (assert) {
     const service = this.owner.lookup('service:external-links');
     const commit = 'sha';
 
-    assert.equal(service.commitUrl('GithubRepo', { owner, repo, commit }), `https://github.com/${owner}/${repo}/commit/${commit}`);
+    assert.equal(service.commitUrl('GithubRepository', { owner, repo, commit }), `https://github.com/${owner}/${repo}/commit/${commit}`);
   });
 
   test('fileUrl', function (assert) {
@@ -66,20 +66,20 @@ module('Unit | Service | external-links | VCS', function (hooks) {
     const branch = 'branch';
     const file = 'file';
 
-    assert.equal(service.fileUrl('GithubRepo', { owner, repo, branch, file }), `https://github.com/${owner}/${repo}/blob/${branch}/${file}`);
+    assert.equal(service.fileUrl('GithubRepository', { owner, repo, branch, file }), `https://github.com/${owner}/${repo}/blob/${branch}/${file}`);
   });
 
   test('issueUrl', function (assert) {
     const service = this.owner.lookup('service:external-links');
     const issue = '123';
 
-    assert.equal(service.issueUrl('GithubRepo', { owner, repo, issue }), `https://github.com/${owner}/${repo}/issues/${issue}`);
+    assert.equal(service.issueUrl('GithubRepository', { owner, repo, issue }), `https://github.com/${owner}/${repo}/issues/${issue}`);
   });
 
   test('profileUrl', function (assert) {
     const service = this.owner.lookup('service:external-links');
     const owner = 'username';
 
-    assert.equal(service.profileUrl('GithubRepo', { owner }), `https://github.com/${owner}`);
+    assert.equal(service.profileUrl('GithubUser', { owner }), `https://github.com/${owner}`);
   });
 });

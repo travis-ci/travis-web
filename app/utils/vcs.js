@@ -3,12 +3,24 @@ import config from 'travis/config/environment';
 
 const { providers } = config;
 
-const vcsId = (vcsType) => {
-  const availableProvidersRegex = Object.keys(providers).join('|');
-  const match = (vcsType || 'github').match(new RegExp(availableProvidersRegex, 'i'));
+const vcsTypes = {
+  AssemblaOrganization: 'assembla',
+  AssemblaRepository: 'assembla',
+  AssemblaUser: 'assembla',
+  BitbucketOrganization: 'bitbucket',
+  BitbucketRepository: 'bitbucket',
+  BitbucketUser: 'bitbucket',
+  GithubOrganization: 'github',
+  GithubRepository: 'github',
+  GithubUser: 'github',
+};
 
-  assert(`Invalid VCS Type "${vcsType}"`, match[0]);
-  return match[0].toLowerCase();
+const vcsId = (vcsType) => {
+  if (!vcsType) {
+    return 'github';
+  }
+  assert(`Invalid VCS Type "${vcsType}"`, vcsTypes[vcsType]);
+  return vcsTypes[vcsType];
 };
 
 const vcsConfig = (vcsType) => (
