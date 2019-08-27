@@ -755,6 +755,11 @@ module('Acceptance | profile/billing', function (hooks) {
 
     assert.equal(profilePage.billing.education.name, 'This is an educational account and includes a single build plan. Need help? Check our getting started guide');
     assert.equal(profilePage.billing.newSubscriptionButton.text, 'New subscription');
+
+    await profilePage.billing.newSubscriptionButton.click();
+
+    assert.dom(profilePage.billing.billingPlanChoices.boxes.scope).exists({ count: 4 });
+    assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe to 2 job plan');
   });
 
   test('logs an exception when there is a subscription without a plan and handles unknowns', async function (assert) {
