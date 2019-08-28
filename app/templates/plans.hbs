@@ -129,45 +129,57 @@
   </UiKit::Box>
 
   {{!-- Open Source Section --}}
-  <UiKit::Box @tag='section' @margin={{hash bottom=16}}>
-    <UiKit::Grid @sm={{2}} @align='center' @justify='around' as |grid|>
+  <UiKit::Box @tag='section' @margin={{hash bottom=20}}>
+    <UiKit::Grid @sm={{2}} @align='center' @gap={{4}} @justify='around' as |grid|>
       <grid.item>
         <UiKit::Box
           @margin={{hash x='auto'}}
           @maxWidth='2xs'
-          @padding={{hash base=(hash y=4) sm=(hash right=4)}}
+          @padding={{hash base=(hash y=4)}}
         >
           <SvgImage @name='always-free' @width='100%'/>
         </UiKit::Box>
       </grid.item>
       <grid.item>
-        <UiKit::Text @tag='h2' @leading='xs' @margin={{hash bottom=3}} @size='5xl' @weight='bold'>
-          Free plan for Open Source
-        </UiKit::Text>
-        <UiKit::Text @margin={{hash bottom=6}}>
-          We love Open Source and offer a free plan for your projects.
-          You will receive 2 concurrent jobs for free and all the other
-          features you've come to love from Travis CI.
-        </UiKit::Text>
+        <UiKit::Box
+          @maxWidth={{hash base='full' sm='md'}}
+          @padding={{hash y=4}}
+          @textAlign={{hash base='center' sm='left'}}
+        >
+          <UiKit::Text @tag='h2' @leading='xs' @margin={{hash bottom=3}} @size='5xl' @weight='bold'>
+            Free plan for Open Source
+          </UiKit::Text>
+          <UiKit::Text @margin={{hash bottom=6}}>
+            We love Open Source and offer a free plan for your projects.
+            You will receive 2 concurrent jobs for free and all the other
+            features you've come to love from Travis CI.
+          </UiKit::Text>
 
-        <UiKit::Button @onClick={{action 'gaCta' 'plans-oss'}} @color='grey' @invert={{true}}>
-          Set up your open source project now
-        </UiKit::Button>
+          <UiKit::Button @onClick={{action 'gaCta' 'plans-oss'}} @color='grey' @invert={{true}}>
+            Set up your open source project now
+          </UiKit::Button>
+        </UiKit::Box>
       </grid.item>
     </UiKit::Grid>
   </UiKit::Box>
 
   {{!-- Contact form section --}}
-  <UiKit::Box @tag='section' @margin={{hash bottom=16}}>
-    <UiKit::Grid  @sm={{2}} @align='center' @justify='around' as |grid|>
+  <UiKit::Box @tag='section' @margin={{hash bottom=20}}>
+    <UiKit::Grid  @sm={{2}} @align='center' @gap={{4}} @justify='around' as |grid|>
       <grid.item>
-        <UiKit::Text @tag='h2' @leading='xs' @margin={{hash bottom=3}} @size='5xl' @weight='bold'>
-          Looking for something custom or on-prem?
-        </UiKit::Text>
-        <UiKit::Text>
-          We can create a plan that's customized to your team's size and needs.
-          Just use this form to contact us!
-        </UiKit::Text>
+        <UiKit::Box
+          @maxWidth={{hash base='full' sm='md'}}
+          @padding={{hash y=4}}
+          @textAlign={{hash base='center' sm='left'}}
+        >
+          <UiKit::Text @tag='h2' @leading='xs' @margin={{hash bottom=3}} @size='5xl' @weight='bold'>
+            Looking for something custom or on-prem?
+          </UiKit::Text>
+          <UiKit::Text>
+            We can create a plan that's customized to your team's size and needs.
+            Just use this form to contact us!
+          </UiKit::Text>
+        </UiKit::Box>
       </grid.item>
       <grid.item>
         <SalesContactForm />
@@ -176,37 +188,41 @@
   </UiKit::Box>
 
   {{!-- Enterprise section --}}
-  <UiKit::Box @tag='section' @margin={{hash bottom=16}}>
-    <UiKit::Grid  @sm={{2}} @align='center' @justify='around' as |grid|>
+  <UiKit::Box @tag='section' @margin={{hash bottom=20}}>
+    <UiKit::Grid  @sm={{2}} @align='center' @gap={{4}} @justify='around' as |grid|>
       <grid.item>
         <UiKit::Box
           @margin={{hash x='auto'}}
           @maxWidth='2xs'
-          @padding={{hash base=(hash y=4) sm=(hash right=4)}}
+          @padding={{hash base=(hash y=4)}}
         >
           <SvgImage @name='travis-enterprise' @width='100%'/>
         </UiKit::Box>
       </grid.item>
       <grid.item>
-        <UiKit::Text @tag='h2' @leading='xs' @margin={{hash bottom=3}} @size='5xl' @weight='bold'>
-          Travis CI Enterprise
-        </UiKit::Text>
-        <UiKit::Text @margin={{hash bottom=6}}>
-          Our on-premises product is perfect for companies who
-          want to keep using the same features of Travis CI with
-          additional on-site security needs.
-        </UiKit::Text>
+        <UiKit::Box
+          @maxWidth={{hash base='full' sm='md'}}
+          @padding={{hash y=4}}
+          @textAlign={{hash base='center' sm='left'}}
+        >
+          <UiKit::Text @tag='h2' @leading='xs' @margin={{hash bottom=3}} @size='5xl' @weight='bold'>
+            Travis CI Enterprise
+          </UiKit::Text>
+          <UiKit::Text @margin={{hash bottom=6}}>
+            Our on-premises product is perfect for companies who
+            want to keep using the same features of Travis CI with
+            additional on-site security needs.
+          </UiKit::Text>
 
-        <ExternalLinkTo @href={{config.urls.enterprise}}>
-          <UiKit::Button @color='grey' @invert={{true}}>
-            Learn more about Travis CI Enterprise
-          </UiKit::Button>
-        </ExternalLinkTo>
+          <ExternalLinkTo @href={{config.urls.enterprise}}>
+            <UiKit::Button @color='grey' @invert={{true}}>
+              Learn more about Travis CI Enterprise
+            </UiKit::Button>
+          </ExternalLinkTo>
+        </UiKit::Box>
       </grid.item>
     </UiKit::Grid>
   </UiKit::Box>
-
-
 
   {{!-- FAQ Section --}}
   <UiKit::Box @position={{hash type='relative'}}>

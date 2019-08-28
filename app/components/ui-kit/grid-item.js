@@ -49,6 +49,7 @@ export default Component.extend(spacingMixin, borderMixin, {
   md: null,
   lg: null,
   xl: null,
+  gap: null,
 
   // Private
   sizePrefix: computed('grid.isCol', function () {
@@ -60,12 +61,19 @@ export default Component.extend(spacingMixin, borderMixin, {
   currentMd: or('md', 'grid.md'),
   currentLg: or('lg', 'grid.lg'),
   currentXl: or('xl', 'grid.xl'),
+  currentGap: or('gap', 'grid.gap'),
 
   baseClass: screenClass('currentBase', 'base'),
   smClass: screenClass('currentSm', 'sm'),
   mdClass: screenClass('currentMd', 'md'),
   lgClass: screenClass('currentLg', 'lg'),
   xlClass: screenClass('currentXl', 'xl'),
+  gapClass: computed('currentGap', 'grid.isCol', function () {
+    const { currentGap } = this;
+    const paddingDir = this.grid.isCol ? 'y' : 'x';
+
+    return currentGap === 0 ? '' : `p${paddingDir}-${currentGap}`;
+  }),
 
   allClasses: concat(
     'baseClass',
@@ -73,6 +81,7 @@ export default Component.extend(spacingMixin, borderMixin, {
     'mdClass',
     'lgClass',
     'xlClass',
+    'gapClass',
     'borderColorClass',
     'borderWidthClasses',
     'marginClasses',
