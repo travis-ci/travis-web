@@ -132,7 +132,11 @@
   <UiKit::Box @tag='section' @margin={{hash bottom=16}}>
     <UiKit::Grid @sm={{2}} @align='center' @justify='around' as |grid|>
       <grid.item>
-        <UiKit::Box @margin={{hash x='auto'}} @maxWidth='2xs' @padding={{hash y=4}}>
+        <UiKit::Box
+          @margin={{hash x='auto'}}
+          @maxWidth='2xs'
+          @padding={{hash base=(hash y=4) sm=(hash right=4)}}
+        >
           <SvgImage @name='always-free' @width='100%'/>
         </UiKit::Box>
       </grid.item>
@@ -175,7 +179,11 @@
   <UiKit::Box @tag='section' @margin={{hash bottom=16}}>
     <UiKit::Grid  @sm={{2}} @align='center' @justify='around' as |grid|>
       <grid.item>
-        <UiKit::Box @margin={{hash x='auto'}} @maxWidth='2xs' @padding={{hash y=4}}>
+        <UiKit::Box
+          @margin={{hash x='auto'}}
+          @maxWidth='2xs'
+          @padding={{hash base=(hash y=4) sm=(hash right=4)}}
+        >
           <SvgImage @name='travis-enterprise' @width='100%'/>
         </UiKit::Box>
       </grid.item>

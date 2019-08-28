@@ -13,16 +13,20 @@ export default function generatePrefix(key, propPrefix,
   } = {}
 ) {
   return computed(key, function () {
-    const propVal = this.get(key);
+    // Helps handle complex values, like padding.top
+    const [primeKey, subKey] = key.split('.');
+
+    const propVal = this.get(primeKey);
     const screenVals = getResponsiveProp(propVal);
 
     const classes = screenKeys.map((screen) => {
       const screenVal = screenVals[screen];
+      const simpleVal = isPresent(screenVal) && isPresent(subKey) ? screenVal[subKey] : screenVal;
 
       const screenInfo = screens[screen];
       const screenPrefix = screen === 'base' ? '' : `${screenInfo.prefix}:`;
 
-      const value = dictionary[screenVal] || screenVal;
+      const value = dictionary[simpleVal] || simpleVal;
       const isNegative = negatable && typeof value === 'number' && value < 0;
       const negator = isNegative ? '-' : '';
 
