@@ -1,7 +1,7 @@
-import getResponsiveProp from 'travis/utils/ui-kit/get-responsive-prop';
+import { getResponsiveProp } from 'travis/utils/ui-kit/responsive';
 import { module, test } from 'qunit';
 
-module('Unit | Utility | ui-kit/get-responsive-prop', function () {
+module('Unit | Utility | ui-kit/responsive', function () {
 
   test('Handles null', function (assert) {
     const result = getResponsiveProp(null);

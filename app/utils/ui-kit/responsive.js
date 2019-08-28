@@ -4,7 +4,7 @@ import config from 'travis/config/environment';
 export const { screens } = config;
 export const screenKeys = Object.keys(screens);
 
-export default function getResponsiveProp(value) {
+export function getResponsiveProp(value) {
   // Cannot destructure from null/undefined
   const saferVal = value || {};
 

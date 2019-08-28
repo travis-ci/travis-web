@@ -1,6 +1,6 @@
 import { assert } from '@ember/debug';
 import { isNone, isPresent } from '@ember/utils';
-import getResponsiveProp, { screenKeys } from 'travis/utils/ui-kit/get-responsive-prop';
+import { getResponsiveProp, screenKeys } from 'travis/utils/ui-kit/responsive';
 
 export function checkDictionary(value, dictionary, propertyName = '', componentName = '') {
   // Allow null/undefined values
