@@ -140,6 +140,12 @@ a {
   }
 }
 
+@media #{$large-up} {
+  .flex-md-col {
+    flex-direction: column;
+  }
+}
+
 
 .pointer {
   cursor: pointer;

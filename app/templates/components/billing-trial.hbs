@@ -4,7 +4,7 @@
       <div class="overview__heading">
         <h3 data-test-overview-heading='true'>Overview</h3>
       </div>
-      <div class="flex flex--v-center overview__body">
+      <div class="flex flex--v-center flex--col flex-md-row overview__body">
         <div class="get-started">
           {{#if this.trial.hasActiveTrial}}
             <p class="get-started__message {{if this.isBuildLessThanEleven 'red' 'color-asphalt-grey'}}" data-test-trial-message='true'>

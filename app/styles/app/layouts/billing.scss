@@ -248,6 +248,13 @@
       padding: 8px;
       border-radius: 5px;
       box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.15);
+      margin-top: 10px;
+
+      @media #{$large-up} {
+        .billing-trial-info {
+          margin-top: 0;
+        }
+      }
 
       &__box {
 
@@ -270,6 +277,13 @@
         @include colorSVG($oxide-blue);
         width: 18px;
         height: 18px;
+        display: none;
+      }
+
+      @media #{$large-up} {
+        &__plus {
+          display: block;
+        }
       }
     }
 
