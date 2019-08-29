@@ -10,7 +10,7 @@ export default TravisRoute.extend({
     return this.stripe.load();
   },
 
-  getSubscription() {
+  newSubscription() {
     const billingInfo = this.store.createRecord('billing-info');
     const plan = this.store.createRecord('plan');
     const creditCardInfo = this.store.createRecord('credit-card-info');
@@ -25,7 +25,7 @@ export default TravisRoute.extend({
     return hash({
       account: this.modelFor('organization'),
       plans: this.store.findAll('plan'),
-      newSubscription: this.getSubscription()
+      newSubscription: this.newSubscription()
     });
   }
 });

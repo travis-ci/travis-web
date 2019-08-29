@@ -8,9 +8,8 @@ export default Model.extend({
   subscription: belongsTo('subscription'),
   token: attr(),
 
-  updateToken(subscriptionId, { id, card}) {
-    this.set('token', id);
-    this.set('lastDigits', card.last4);
+  updateToken(subscriptionId, { id, card }) {
+    this.setProperties({ token: id, lastDigits: card.last4 });
     return this.api.patch(`/subscription/${subscriptionId}/creditcard`, {
       data: {
         token: id

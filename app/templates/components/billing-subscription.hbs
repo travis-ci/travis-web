@@ -11,6 +11,7 @@
     </p>
   {{/if}}
   {{#if this.subscription.isSubscribed}}
+  {{!-- Should be exempted for Stripe and Manual subscription --}}
     {{#if (and (not this.subscription.isStripe) this.subscription.activeManagedSubscription)}}
       <ManageSubscriptionButton
         @subscription={{this.subscription}}

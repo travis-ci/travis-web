@@ -20,16 +20,21 @@ export default Component.extend({
   address: reads('newSubscription.billingInfo.address'),
   city: reads('newSubscription.billingInfo.city'),
   country: reads('newSubscription.billingInfo.country'),
-
   isLoading: or('createSubscription.isRunning', 'accounts.fetchSubscriptions.isRunning'),
 
   createSubscription: task(function* () {
     const { stripeElement, account, newSubscription, selectedPlan } = this;
-    const { token: { id, card }, error } = yield this.stripe.createStripeToken.perform(stripeElement);
+    const {
+      token: { id, card },
+      error
+    } = yield this.stripe.createStripeToken.perform(stripeElement);
     try {
       if (!error) {
-        newSubscription.creditCardInfo.setProperties({ token: id, lastDigits: card.last4 });
         const organizationId = account.type === 'organization' ? Number(account.id) : null;
+        newSubscription.creditCardInfo.setProperties({
+          token: id,
+          lastDigits: card.last4
+        });
         newSubscription.setProperties({ organizationId, plan: selectedPlan });
 
         const { clientSecret } = yield newSubscription.save();
@@ -42,22 +47,6 @@ export default Component.extend({
       this.flashes.error('An error occurred when creating your subscription. Please try again.');
     }
   }).drop(),
-
-  reset() {
-    this.newSubscription.billingInfo.setProperties({
-      firstName: '',
-      lastName: '',
-      company: '',
-      address: '',
-      address2: '',
-      city: '',
-      state: '',
-      zipCode: '',
-      country: '',
-      vatId: '',
-      billingEmail: '',
-    });
-  },
 
   options: {
     hidePostalCode: true,

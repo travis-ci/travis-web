@@ -13,6 +13,7 @@ const STEPS = {
 export default Component.extend({
   store: service(),
   accounts: service(),
+
   plans: null,
   scrollSection: null,
   showAnnual: false,
@@ -20,7 +21,6 @@ export default Component.extend({
   steps: [...Object.values(STEPS)],
 
   currentStep: reads('steps.firstObject'),
-
   isStepOne: equal('currentStep', STEPS.ONE),
   isStepTwo: equal('currentStep', STEPS.TWO),
   isStepThree: equal('currentStep', STEPS.THREE),
@@ -38,8 +38,7 @@ export default Component.extend({
       const { annual, builds, name } = plan;
       return !annual && builds <= 10 && availablePlanNames.includes(name);
     });
-    const sortedMonthlyPlans = filteredMonthlyPlans.sort((a, b) => a.builds - b.builds);
-    return sortedMonthlyPlans;
+    return filteredMonthlyPlans.sort((a, b) => a.builds - b.builds);
   }),
 
   annualPlans: computed('plans.@each.{name,annual,builds}', function () {
@@ -48,8 +47,7 @@ export default Component.extend({
       const { annual, builds, name } = plan;
       return annual && builds <= 10 && availablePlanNames.includes(name);
     });
-    const sortedAnnualPlans = filteredAnnualPlans.sort((a, b) => a.builds - b.builds);
-    return sortedAnnualPlans;
+    return filteredAnnualPlans.sort((a, b) => a.builds - b.builds);
   }),
 
   displayedPlans: computed(
@@ -77,7 +75,7 @@ export default Component.extend({
   actions: {
 
     goToFirstStep() {
-      this.set('currentStep', this.steps[0]);
+      this.set('currentStep', STEPS.ONE);
     },
 
     next() {
@@ -98,7 +96,6 @@ export default Component.extend({
 
     cancel() {
       this.set('currentStep', STEPS.ONE);
-      this.reset();
     },
   }
 });

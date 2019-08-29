@@ -227,7 +227,9 @@
               {{/if}}
             </section>
           </div>
-          <button class='button--blue billing-subscription__buttons' onClick={{action (toggle 'openEditBillingForm' this)}} data-test-edit-billing-address='true'>
+          <button class='button--blue billing-subscription__buttons' 
+            onClick={{action (toggle 'openEditBillingForm' this)}} data-test-edit-billing-address='true'
+          >
             Edit billing details
           </button>
         {{/if}}
