@@ -10,9 +10,13 @@ export default Component.extend({
 
   editContact: task(function* () {
     yield this.subscription.save();
+    this.closeEditForms();
+  }).drop(),
+
+  closeEditForms() {
     this.set('openEditContactForm', false);
     this.set('openEditBillingForm', false);
-  }).drop(),
+  },
 
   actions: {
     toggleEditContactForm() {
