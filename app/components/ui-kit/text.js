@@ -40,9 +40,11 @@ const LEADINGS = {
 const DEFAULT_LEADING = LEADINGS.MD;
 
 const SIZES = {
+  XS3: '3xs',
+  XS2: '2xs',
   XS: 'xs',
   SM: 'sm',
-  BASE: 'base',
+  MD: 'md',
   LG: 'lg',
   XL: 'xl',
   XL2: '2xl',
@@ -51,7 +53,14 @@ const SIZES = {
   XL5: '5xl',
   XL6: '6xl',
 };
-const DEFAULT_SIZE = SIZES.BASE;
+const DEFAULT_SIZE = SIZES.MD;
+
+const TRACKINGS = {
+  SM: 'sm',
+  MD: 'md',
+  LG: 'lg',
+};
+const DEFAULT_TRACKING = TRACKINGS.MD;
 
 const TRANSFORMS = {
   UPPERCASE: 'uppercase',
@@ -80,6 +89,7 @@ export default Component.extend(spacingMixin, {
   family: DEFAULT_FAMILY,
   leading: DEFAULT_LEADING,
   size: DEFAULT_SIZE,
+  tracking: DEFAULT_TRACKING,
   transform: DEFAULT_TRANSFORM,
   weight: DEFAULT_WEIGHT,
 
@@ -88,6 +98,7 @@ export default Component.extend(spacingMixin, {
   familyClass: prefix('family', 'font'),
   leadingClass: prefix('leading', 'leading'),
   sizeClass: prefix('size', 'text'),
+  trackingClass: prefix('tracking', 'tracking'),
   transformClass: reads('transform'),
   weightClass: prefix('weight', 'font'),
 
@@ -96,6 +107,7 @@ export default Component.extend(spacingMixin, {
     'familyClass',
     'leadingClass',
     'sizeClass',
+    'trackingClass',
     'transformClass',
     'weightClass',
     'marginClasses',
@@ -111,6 +123,7 @@ export default Component.extend(spacingMixin, {
     checkDictionary(this.family, FAMILIES, '@family', 'Text');
     checkDictionary(this.leading, LEADINGS, '@leading', 'Text');
     checkDictionary(this.weight, WEIGHTS, '@weight', 'Text');
+    checkDictionary(this.tracking, TRACKINGS, '@tracking', 'Text');
     checkDictionary(this.transform, TRANSFORMS, '@transform', 'Text');
   },
 });

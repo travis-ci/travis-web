@@ -19,14 +19,16 @@
   {{!-- Product section --}}
   <UiKit::Box @tag='section' @margin={{hash bottom=16}}>
     <UiKit::Grid @align='center' @justify='start'>
-      <UiKit::Text @tag='span' @transform='uppercase' @weight='bold' @margin={{hash right=2}}>
+      <UiKit::Text @tag='span' @size='3xs' @tracking='lg' @transform='uppercase' @weight='bold' @margin={{hash right=2}}>
         Monthly
       </UiKit::Text>
 
       <UiKit::Switch @onClick={{fn (mut showAnnual)}} @active={{showAnnual}} />
 
-      <UiKit::Text @tag='span' @color='blue' @margin={{hash left=2}}>
-        <UiKit::Text @tag='span' @color='blue' @transform='uppercase' @weight='bold'>Annual</UiKit::Text>
+      <UiKit::Text @tag='span' @color='blue' @margin={{hash left=2}} @size='3xs'>
+        <UiKit::Text @tag='span' @color='blue' @size='3xs' @tracking='lg' @transform='uppercase' @weight='bold'>
+          Annual
+        </UiKit::Text>
         (Get 1 month free!)
       </UiKit::Text>
     </UiKit::Grid>
@@ -65,7 +67,8 @@
                   @tag='h4'
                   @color='grey'
                   @margin={{hash bottom=6}}
-                  @size='lg'
+                  @size='3xs'
+                  @tracking='lg'
                   @transform='uppercase'
                   @weight='bold'
                 >
@@ -75,31 +78,33 @@
                   <UiKit::Text @tag='span' @color='green' @weight='bold'>
                     {{plan.builds}}
                   </UiKit::Text>
-                  {{pluralize plan.builds "Concurrent job" without-count=true}}
+                  <UiKit::Text @tag='span'>
+                    {{pluralize plan.builds "Concurrent job" without-count=true}}
+                  </UiKit::Text>
                 </div>
                 <div>
                   <UiKit::Box @display='inline-block' @width={{3}}>
                     <SvgImage @name="features-check" />
                   </UiKit::Box>
-                  Unlimited build minutes
+                  <UiKit::Text @tag='span'>Unlimited build minutes</UiKit::Text>
                 </div>
                 <div>
                   <UiKit::Box @display='inline-block' @width={{3}}>
                     <SvgImage @name="features-check" />
                   </UiKit::Box>
-                  Unlimited repositories
+                  <UiKit::Text @tag='span'>Unlimited repositories</UiKit::Text>
                 </div>
                 <UiKit::Box @margin={{hash bottom=6}}>
                   <UiKit::Box @display='inline-block' @width={{3}}>
                     <SvgImage @name="features-check" />
                   </UiKit::Box>
-                  Unlimited collaborators
+                  <UiKit::Text @tag='span'>Unlimited collaborators</UiKit::Text>
                 </UiKit::Box>
                 <UiKit::Box @margin={{hash bottom=6}}>
                   <UiKit::Text @tag='span' @color='green' @size='xl' @weight='bold'>
                     ${{plan.monthlyPriceRounded}}
                   </UiKit::Text>
-                  <UiKit::Text @tag='span' @size='sm'>
+                  <UiKit::Text @tag='span' @size='2xs'>
                     {{plan.currency}}
                     per month
                     {{if showAnnual 'billed annually'}}
