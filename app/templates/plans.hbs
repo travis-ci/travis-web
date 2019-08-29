@@ -153,6 +153,8 @@
     </UiKit::Grid>
   </UiKit::Box>
 
+  {{#if this.scrollToContact}}<ScrollHere />{{/if}}
+
   {{!-- Enterprise section --}}
   <UiKit::Box @tag='section' @margin={{hash bottom=16}}>
     <UiKit::Grid  @sm={{2}} @align='center' @justify='around' as |grid|>
@@ -211,8 +213,8 @@
             What is a concurrent job?
           </UiKit::Text>
           <UiKit::Text>
-            Every commit triggers a single job by default. If two commits have been pushed on the Startup plan,
-            they'll be run right away. Subsequent commits have to wait until the builds finished.
+            Every commit triggers a build composed of a single job by default. If two commits have been pushed while on the
+            Startup plan (2 concurrent jobs), they'll be run right away. Subsequent commits have to wait until the builds finished.
           </UiKit::Text>
         </grid.item>
 
@@ -222,7 +224,8 @@
               Are there any restrictions on build time?
             </UiKit::Text>
             <UiKit::Text>
-              A build has 120 minutes to run. Should your build take longer, you can split it up using a build matrix.
+              A build has 120 minutes to run. Should your build take longer, you can split it up using a
+              <UiKit::Link @href={{buildMatrixUrl}}>build matrix</UiKit::Link>.
             </UiKit::Text>
           </UiKit::Box>
         </grid.item>
@@ -233,8 +236,10 @@
             Can I pay annually?
           </UiKit::Text>
           <UiKit::Text>
-            You most certainly can! When signing up for a subscription, simply select the annual option. You get 1 month for free &mdash;
-            12 months for the price of 11!
+            You most certainly can! And you get 1 month for free &mdash; 12 months for the price of 11!
+            Simply select the annual option when signing up for a subscription, or go to
+            <UiKit::Link @href={{billingUrl}}>{{format-domain billingUrl}}</UiKit::Link>
+            if you want to switch your current plan to annual.
           </UiKit::Text>
         </grid.item>
 
@@ -244,7 +249,9 @@
               Can I cancel anytime?
             </UiKit::Text>
             <UiKit::Text>
-              Absolutely! Contact us and we'll make sure your subscription gets cancelled as you want.
+              Absolutely! You can manage your account on your billing page. Go to
+              <UiKit::Link @href={{billingUrl}}>{{format-domain billingUrl}}</UiKit::Link>
+              and choose the account you want to cancel.
             </UiKit::Text>
           </UiKit::Box>
         </grid.item>
@@ -255,7 +262,9 @@
             Am I able to upgrade my plan?
           </UiKit::Text>
           <UiKit::Text>
-            Yes, you can change your plan subscription at any time.
+            Yes! We have many plans available for your concurrency needs. You can change your plan subscription at any time on the billing page or
+            <UiKit::Link onclick={{fn (mut scrollToContact true)}}>contact us</UiKit::Link>
+            if you’re looking for something custom.
           </UiKit::Text>
         </grid.item>
 
