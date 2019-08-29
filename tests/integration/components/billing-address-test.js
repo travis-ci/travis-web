@@ -2,6 +2,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
+import profilePage from 'travis/tests/pages/profile';
 
 module('Integration | Component | billing-address', function (hooks) {
   setupRenderingTest(hooks);
@@ -72,6 +73,27 @@ module('Integration | Component | billing-address', function (hooks) {
     await render(hbs`{{billing-address subscription=subscription}}`);
 
     assert.dom('[data-test-user-details]').doesNotExist();
+    assert.dom('[data-test-billing-details]').doesNotExist();
+  });
+
+  test('it renders edit billing information form', async function (assert) {
+    this.set('subscription', {
+      isStripe: true,
+      billingInfo: {
+        firstName: 'A',
+        lastName: 'B',
+        address: 'Address',
+        city: 'City',
+        zipCode: 'Zip Code',
+        country: 'Country'
+      }
+    });
+
+    await render(hbs`{{billing-address subscription=subscription}}`);
+
+    await profilePage.billing.editBillingAddressButton.click();
+
+    assert.ok(profilePage.billing.editBillingAddressForm.isPresent);
     assert.dom('[data-test-billing-details]').doesNotExist();
   });
 });
