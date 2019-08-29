@@ -76,7 +76,7 @@
                     <button data-test-update-contact-address-button='true' onclick={{form.submit}} class="button--blue">
                       Edit contact details
                     </button>
-                    <a onClick={{action 'toggleEditContactForm'}} class='link cancel-link'>
+                    <a onClick={{action (toggle 'openEditContactForm' this)}} class='link cancel-link'>
                       Cancel
                     </a>
                   </div>
@@ -103,7 +103,7 @@
               {{/if}}
             </section>
           </div>
-          <button class='button--blue billing-subscription__buttons' onClick={{action 'toggleEditContactForm'}} data-test-edit-contact-address='true'>
+          <button class='button--blue billing-subscription__buttons' onClick={{action (toggle 'openEditContactForm' this)}} data-test-edit-contact-address='true'>
             Edit contact details
           </button>   
         {{/if}}
@@ -190,7 +190,7 @@
                     <button data-test-update-billing-address-button='true' onclick={{form.submit}} class="button--blue">
                       Edit billing details
                     </button>
-                    <a onClick={{action 'toggleEditBillingForm'}} class='link cancel-link'>
+                    <a onClick={{action (toggle 'openEditBillingForm' this)}} class='link cancel-link'>
                       Cancel
                     </a>
                   </div>
@@ -227,7 +227,7 @@
               {{/if}}
             </section>
           </div>
-          <button class='button--blue billing-subscription__buttons' onClick={{action 'toggleEditBillingForm'}} data-test-edit-billing-address='true'>
+          <button class='button--blue billing-subscription__buttons' onClick={{action (toggle 'openEditBillingForm' this)}} data-test-edit-billing-address='true'>
             Edit billing details
           </button>
         {{/if}}

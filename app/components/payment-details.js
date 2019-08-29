@@ -51,10 +51,6 @@ export default Component.extend({
   }).drop(),
 
   actions: {
-    toggleEditCreditCardForm() {
-      this.toggleProperty('openCreditCardForm');
-    },
-
     complete(stripeElement) {
       this.set('stripeElement', stripeElement);
     },

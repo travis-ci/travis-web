@@ -19,7 +19,7 @@
                 <button data-test-update-contact-address-button='true' onclick={{form.submit}} class="button--blue">
                   Edit payment details
                 </button>
-                <a onClick={{action 'toggleEditCreditCardForm'}} class='link cancel-link'>
+                <a onClick={{action (toggle 'openCreditCardForm' this)}} class='link cancel-link'>
                   Cancel
                 </a>
               {{/if}}
@@ -34,7 +34,7 @@
             {{this.subscription.creditCardInfo.lastDigits}}
           </p>  
         </div>
-        <button class='button--blue billing-subscription__buttons' onClick={{action 'toggleEditCreditCardForm'}}>Edit payment details</button>
+        <button class='button--blue billing-subscription__buttons' onClick={{action (toggle 'openCreditCardForm' this)}}>Edit payment details</button>
       {{/if}}
     {{/if}}
     {{#if this.subscription.isManual}}
