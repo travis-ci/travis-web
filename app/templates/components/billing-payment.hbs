@@ -7,7 +7,7 @@
   <div class='flex flex--wrap billing-checkout__details' data-test-contact-details='true'>
     <div class='flex--col-3'>
       <h4 data-test-contact-heading='true'>contact details:</h4>
-      <p data-test-contact-firstName='true' class='billing-checkout__details--info'>{{fullName}}</p>
+      <p data-test-contact-firstName='true' class='billing-checkout__details--info'>{{concat this.firstName ' ' this.lastName}}</p>
       <p data-test-contact-company='true' class='billing-checkout__details--info'>{{company}}</p>
       <div>
        <p data-test-contact-email='true' class='billing-checkout__details--email'>{{email}}</p>
