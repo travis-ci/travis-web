@@ -7,10 +7,15 @@ import { inject as service } from '@ember/service';
 
 const { plans } = config;
 
+const utmSource = '?utm_source=plans_page';
+
 export default Controller.extend({
   config,
 
   auth: service(),
+
+  billingUrl: `${config.billingEndpoint}/${utmSource}`,
+  buildMatrixUrl: `${config.urls.buildMatrix}${utmSource}`,
 
   plans: computed(() => plans),
   annualPlans: filterBy('plans', 'period', 'annual'),
@@ -25,6 +30,7 @@ export default Controller.extend({
   ),
 
   showAnnual: true,
+  scrollToContact: false,
 
   actions: {
     gaCta(location) {
