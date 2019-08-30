@@ -96,4 +96,32 @@ module('Integration | Component | billing-address', function (hooks) {
     assert.ok(profilePage.billing.editBillingAddressForm.isPresent);
     assert.dom('[data-test-billing-details]').doesNotExist();
   });
+
+  test('it closes edit billing form when canceled', async function (assert) {
+    this.set('subscription', {
+      isStripe: true,
+      billingInfo: {
+        firstName: 'A',
+        lastName: 'B',
+        address: 'Address',
+        city: 'City',
+        zipCode: 'Zip Code',
+        country: 'Country'
+      }
+    });
+
+    await render(hbs`{{billing-address subscription=subscription}}`);
+
+    await profilePage.billing.editBillingAddressButton.click();
+
+    assert.ok(profilePage.billing.editBillingAddressForm.isPresent);
+
+    await profilePage.billing.editBillingAddressForm.cancelBillingAddressButton.click();
+
+    assert.notOk(profilePage.billing.editBillingAddressForm.isPresent);
+    assert.dom('[data-test-billing-details] section:nth-child(1)').hasText('address Address');
+    assert.dom('[data-test-billing-details] section:nth-child(2)').hasText('city,state/territory City');
+    assert.dom('[data-test-billing-details] section:nth-child(3)').hasText('post code Zip Code');
+    assert.dom('[data-test-billing-details] section:nth-child(4)').hasText('country Country');
+  });
 });

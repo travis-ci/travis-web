@@ -316,6 +316,10 @@ export default create({
       updateBillingAddressButton: {
         scope: '[data-test-update-billing-address-button]',
       },
+
+      cancelBillingAddressButton: {
+        scope: '[data-test-cancel-billing-address-button]',
+      },
     },
 
     noPermissionMessage: {
