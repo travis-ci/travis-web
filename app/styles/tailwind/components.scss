@@ -8,7 +8,7 @@
   .travis-form {
     .travis-form__field {
       .travis-form__label {
-        @apply text-grey-800;
+        @apply text-grey-800 text-3xs tracking-lg;
 
         .travis-form__required-mark {
           @apply capitalize ml-2 font-normal text-red-300;
