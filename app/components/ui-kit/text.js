@@ -1,8 +1,8 @@
 import Component from '@ember/component';
-import { reads } from '@ember/object/computed';
 import { checkDictionary } from 'travis/utils/ui-kit/assertions';
 import prefix from 'travis/utils/ui-kit/prefix';
 import concat from 'travis/utils/ui-kit/concat';
+import { variantProp } from 'travis/utils/ui-kit/variant';
 import spacingMixin from 'travis/mixins/ui-kit/spacing';
 
 const COLORS = {
@@ -78,6 +78,19 @@ const WEIGHTS = {
 };
 const DEFAULT_WEIGHT = WEIGHTS.NORMAL;
 
+// Variants
+const VARIANTS = {
+  SMALLCAPS: 'smallcaps',
+};
+const VARIANT_PROPS = {
+  [VARIANTS.SMALLCAPS]: {
+    size: '3xs',
+    tracking: 'lg',
+    weight: 'bold',
+    transform: 'uppercase',
+  },
+};
+
 // Component definition
 export default Component.extend(spacingMixin, {
   tagName: '',
@@ -85,13 +98,14 @@ export default Component.extend(spacingMixin, {
   // Public interface
   tag: 'p',
 
-  color: DEFAULT_TEXT_COLOR,
-  family: DEFAULT_FAMILY,
-  leading: DEFAULT_LEADING,
-  size: DEFAULT_SIZE,
-  tracking: DEFAULT_TRACKING,
-  transform: DEFAULT_TRANSFORM,
-  weight: DEFAULT_WEIGHT,
+  color: variantProp(VARIANT_PROPS, DEFAULT_TEXT_COLOR),
+  family: variantProp(VARIANT_PROPS, DEFAULT_FAMILY),
+  leading: variantProp(VARIANT_PROPS, DEFAULT_LEADING),
+  size: variantProp(VARIANT_PROPS, DEFAULT_SIZE),
+  tracking: variantProp(VARIANT_PROPS, DEFAULT_TRACKING),
+  transform: variantProp(VARIANT_PROPS, DEFAULT_TRANSFORM),
+  weight: variantProp(VARIANT_PROPS, DEFAULT_WEIGHT),
+  variant: null,
 
   // Private
   colorClass: prefix('color', 'text', { dictionary: TEXT_COLORS }),
@@ -99,7 +113,7 @@ export default Component.extend(spacingMixin, {
   leadingClass: prefix('leading', 'leading'),
   sizeClass: prefix('size', 'text'),
   trackingClass: prefix('tracking', 'tracking'),
-  transformClass: reads('transform'),
+  transformClass: prefix('transform'),
   weightClass: prefix('weight', 'font'),
 
   allClasses: concat(
@@ -125,5 +139,6 @@ export default Component.extend(spacingMixin, {
     checkDictionary(this.weight, WEIGHTS, '@weight', 'Text');
     checkDictionary(this.tracking, TRACKINGS, '@tracking', 'Text');
     checkDictionary(this.transform, TRANSFORMS, '@transform', 'Text');
+    checkDictionary(this.variant, VARIANTS, '@variant', 'Text');
   },
 });

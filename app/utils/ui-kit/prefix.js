@@ -3,7 +3,7 @@ import { isPresent } from '@ember/utils';
 import { getResponsiveProp, screens, screenKeys } from 'travis/utils/ui-kit/responsive';
 
 
-export default function generatePrefix(key, propPrefix,
+export default function generatePrefix(key, propPrefix = '',
   {
     dictionary = {},
     validator = isPresent,
@@ -30,10 +30,12 @@ export default function generatePrefix(key, propPrefix,
       const isNegative = negatable && typeof value === 'number' && value < 0;
       const negator = isNegative ? '-' : '';
 
+      const sep = propPrefix.length > 0 ? separator : '';
+
       // Removes extra dash from negative vals, for negatable props like margin etc.
       const displayVal = isNegative ? Math.abs(value) : value;
 
-      return validator(value) ? `${screenPrefix}${negator}${propPrefix}${separator}${displayVal}` : defaultValue;
+      return validator(value) ? `${screenPrefix}${negator}${propPrefix}${sep}${displayVal}` : defaultValue;
     });
 
     return classes.compact().join(' ');
