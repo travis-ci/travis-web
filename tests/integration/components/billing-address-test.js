@@ -76,6 +76,50 @@ module('Integration | Component | billing-address', function (hooks) {
     assert.dom('[data-test-billing-details]').doesNotExist();
   });
 
+  test('it renders edit contact information form', async function (assert) {
+    this.set('subscription', {
+      isStripe: true,
+      billingInfo: {
+        firstName: 'A',
+        lastName: 'B',
+        address: 'Address',
+        city: 'City',
+        zipCode: 'Zip Code',
+        country: 'Country'
+      }
+    });
+
+    await render(hbs`{{billing-address subscription=subscription}}`);
+    await profilePage.billing.editContactAddressButton.click();
+
+    assert.ok(profilePage.billing.editContactAddressForm.isPresent);
+    assert.dom('[data-test-user-details]').doesNotExist();
+  });
+
+  test('it closes edit contact form when canceled', async function (assert) {
+    this.set('subscription', {
+      isStripe: true,
+      billingInfo: {
+        firstName: 'A',
+        lastName: 'B',
+        address: 'Address',
+        city: 'City',
+        zipCode: 'Zip Code',
+        country: 'Country'
+      }
+    });
+
+    await render(hbs`{{billing-address subscription=subscription}}`);
+    await profilePage.billing.editContactAddressButton.click();
+
+    assert.ok(profilePage.billing.editContactAddressForm.isPresent);
+
+    await profilePage.billing.editContactAddressForm.cancelContactAddressButton.click();
+
+    assert.notOk(profilePage.billing.editContactAddressForm.isPresent);
+    assert.dom('[data-test-user-details] section:nth-child(1)').hasText('contact name A B');
+  });
+
   test('it renders edit billing information form', async function (assert) {
     this.set('subscription', {
       isStripe: true,

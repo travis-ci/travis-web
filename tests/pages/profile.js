@@ -302,6 +302,10 @@ export default create({
       updateContactAddressButton: {
         scope: '[data-test-update-contact-address-button]',
       },
+
+      cancelContactAddressButton: {
+        scope: '[data-test-cancel-contact-address-button]',
+      },
     },
 
     editBillingAddressForm: {

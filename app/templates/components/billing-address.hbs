@@ -76,7 +76,9 @@
                     <button data-test-update-contact-address-button='true' onclick={{form.submit}} class="button--blue">
                       Edit contact details
                     </button>
-                    <a onClick={{action (toggle 'openEditContactForm' this)}} class='link cancel-link'>
+                    <a data-test-cancel-contact-address-button='true' 
+                      onClick={{action (toggle 'openEditContactForm' this)}} class='link cancel-link'
+                    >
                       Cancel
                     </a>
                   </div>
@@ -103,7 +105,9 @@
               {{/if}}
             </section>
           </div>
-          <button class='button--blue billing-subscription__buttons' onClick={{action (toggle 'openEditContactForm' this)}} data-test-edit-contact-address='true'>
+          <button class='button--blue billing-subscription__buttons' 
+            onClick={{action (toggle 'openEditContactForm' this)}} data-test-edit-contact-address='true'
+          >
             Edit contact details
           </button>   
         {{/if}}
