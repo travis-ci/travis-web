@@ -356,6 +356,10 @@ export default create({
       proceedPayment: {
         scope: '[data-test-proceed-to-payment-button]'
       },
+
+      backToPlans: {
+        scope: '[data-test-back-to-plans]'
+      }
     },
 
     switchPlan: {

@@ -61,7 +61,7 @@
           <Field.input @name='email'/>
         </form.field>
       </div>
-      <h3>
+      <h3 data-test-billing-details-title='true'>
         Billing address
       </h3>
       {{#if this.scrollToBillingDetails}}
@@ -155,7 +155,7 @@
         >
           Proceed to Payment
         </button>
-        <span onClick={{action back}} class='link back-button'>
+        <span data-test-back-to-plans='true' onClick={{action back}} class='link back-button'>
           Back to plans
         </span>
       </div>

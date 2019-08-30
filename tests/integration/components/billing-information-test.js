@@ -65,6 +65,7 @@ module('Integration | Component | billing-information', function (hooks) {
     );
 
     assert.dom('[data-test-contact-details-title]').hasText('Contact details');
+    assert.dom('[data-test-billing-details-title]').hasText('Billing address');
     assert.equal(profilePage.billing.selectedPlanOverview.heading.text, 'summary');
     assert.equal(profilePage.billing.selectedPlanOverview.name.text, `${this.plans[0].name} plan`);
     assert.equal(profilePage.billing.selectedPlanOverview.jobs.text, `${this.plans[0].builds} concurrent jobs`);
@@ -74,5 +75,27 @@ module('Integration | Component | billing-information', function (hooks) {
 
     assert.dom('input').isVisible({ count: 9 });
     assert.dom('.ember-power-select-trigger').isVisible({ count: 1 });
+  });
+
+  test('it renders billing information form correctly', async function (assert) {
+    assert.expect(1);
+
+    this['actions']['back'] = () => {
+      assert.ok(true);
+    };
+
+    await render(hbs`
+      {{billing-information 
+        selectedPlan=selectedPlan 
+        displayedPlans=displayedPlans 
+        showAnnual=showAnnual
+        newSubscription=newSubscription
+        next=(action 'next')
+        back=(action 'back')
+        goToFirstStep=(action 'goToFirstStep')
+      }}`
+    );
+
+    await profilePage.billing.billingForm.backToPlans.click();
   });
 });
