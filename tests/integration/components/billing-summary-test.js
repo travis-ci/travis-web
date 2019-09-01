@@ -22,6 +22,10 @@ module('Integration | Component | billing-summary', function (hooks) {
       validTo: new Date(2018, 5, 19),
       status: 'subscribed',
       isSubscribed: true,
+      isCanceled: false,
+      isExpired: false,
+      isPending: false,
+      isIncomplete: false,
       owner,
       plan,
     };
@@ -42,9 +46,7 @@ module('Integration | Component | billing-summary', function (hooks) {
     });
   });
 
-  test('it renders', async function (assert) {
-    // Set any properties with this.set('myProperty', 'value');
-    // Handle any actions with this.set('myAction', function(val) { ... });
+  test('it renders active subscription', async function (assert) {
     const date = moment(this.subscription.validTo.getTime()).format('MMMM D, YYYY');
 
     await render(hbs`<BillingSummary 
@@ -58,5 +60,29 @@ module('Integration | Component | billing-summary', function (hooks) {
     assert.equal(profilePage.billing.plan.name, 'A plan active');
     assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining(`5 concurrent jobs Valid until ${date}`);
     assert.equal(profilePage.billing.planMessage.text, `Valid until ${date}`);
+  });
+
+  test('it renders canceled subscription', async function (assert) {
+    const momentFromNow = moment(this.subscription.validTo.getTime()).fromNow();
+
+    this.set('subscription', {
+      ...this.subscription,
+      status: 'canceled',
+      isCanceled: true,
+      isSubscribed: false,
+    });
+    this.set('planMessage', 'Expires');
+
+    await render(hbs`<BillingSummary 
+      @subscription={{subscription}}
+      @account={{account}}
+      @price={{price}}
+      @planMessage={{planMessage}}
+    />`);
+
+    assert.dom('h3').hasText('Overview');
+    assert.equal(profilePage.billing.plan.name, 'A plan canceled');
+    assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining(`5 concurrent jobs Expires ${momentFromNow} on June 19`);
+    assert.equal(profilePage.billing.planMessage.text, `Expires ${momentFromNow} on June 19`);
   });
 });
