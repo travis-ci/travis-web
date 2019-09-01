@@ -89,4 +89,30 @@ module('Integration | Component | billing-summary', function (hooks) {
     assert.equal(profilePage.billing.price.text, '$129');
     assert.equal(profilePage.billing.period.text, '/month');
   });
+
+  test('it renders expired subscription', async function (assert) {
+    const date = moment(this.subscription.validTo.getTime()).format('MMMM D, YYYY');
+
+    this.set('subscription', {
+      ...this.subscription,
+      status: 'expired',
+      isExpired: true,
+      isSubscribed: false,
+    });
+    this.set('planMessage', 'Expired');
+
+    await render(hbs`<BillingSummary 
+      @subscription={{subscription}}
+      @account={{account}}
+      @price={{price}}
+      @planMessage={{planMessage}}
+    />`);
+
+    assert.dom('h3').hasText('Overview');
+    assert.equal(profilePage.billing.plan.name, 'A plan canceled expired');
+    assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining(`5 concurrent jobs Expired ${date}`);
+    assert.equal(profilePage.billing.planMessage.text, `Expired ${date}`);
+    assert.equal(profilePage.billing.price.text, '$129');
+    assert.equal(profilePage.billing.period.text, '/month');
+  });
 });
