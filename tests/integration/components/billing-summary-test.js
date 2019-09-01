@@ -34,7 +34,7 @@ module('Integration | Component | billing-summary', function (hooks) {
       hasSubscriptionPermissions: true
     };
 
-    this.price = 129;
+    this.price = 12900;
     this.subscription = subscription;
     this.planMessage = 'Valid until';
 
@@ -60,6 +60,8 @@ module('Integration | Component | billing-summary', function (hooks) {
     assert.equal(profilePage.billing.plan.name, 'A plan active');
     assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining(`5 concurrent jobs Valid until ${date}`);
     assert.equal(profilePage.billing.planMessage.text, `Valid until ${date}`);
+    assert.equal(profilePage.billing.price.text, '$129');
+    assert.equal(profilePage.billing.period.text, '/month');
   });
 
   test('it renders canceled subscription', async function (assert) {
@@ -84,5 +86,7 @@ module('Integration | Component | billing-summary', function (hooks) {
     assert.equal(profilePage.billing.plan.name, 'A plan canceled');
     assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining(`5 concurrent jobs Expires ${momentFromNow} on June 19`);
     assert.equal(profilePage.billing.planMessage.text, `Expires ${momentFromNow} on June 19`);
+    assert.equal(profilePage.billing.price.text, '$129');
+    assert.equal(profilePage.billing.period.text, '/month');
   });
 });
