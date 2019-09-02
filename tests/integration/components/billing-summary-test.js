@@ -115,4 +115,26 @@ module('Integration | Component | billing-summary', function (hooks) {
     assert.equal(profilePage.billing.price.text, '$129');
     assert.equal(profilePage.billing.period.text, '/month');
   });
+
+  test('it renders pending subscription', async function (assert) {
+    this.set('subscription', {
+      ...this.subscription,
+      status: 'pending',
+      isPending: true,
+      isSubscribed: false,
+    });
+    this.set('planMessage', 'Expired');
+
+    await render(hbs`<BillingSummary 
+      @subscription={{subscription}}
+      @account={{account}}
+      @price={{price}}
+      @isPending={{isPending}}
+    />`);
+
+    assert.dom('h3').hasText('Overview');
+    assert.equal(profilePage.billing.plan.name, 'A plan pending');
+    assert.equal(profilePage.billing.price.text, '$129');
+    assert.equal(profilePage.billing.period.text, '/month');
+  });
 });
