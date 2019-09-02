@@ -137,4 +137,28 @@ module('Integration | Component | billing-summary', function (hooks) {
     assert.equal(profilePage.billing.price.text, '$129');
     assert.equal(profilePage.billing.period.text, '/month');
   });
+
+  test('it renders incomplete subscription', async function (assert) {
+    this.set('subscription', {
+      ...this.subscription,
+      status: 'incomplete',
+      isIncomplete: true,
+      isSubscribed: false,
+    });
+    this.set('planMessage', 'Incomplete');
+
+    await render(hbs`<BillingSummary 
+      @subscription={{subscription}}
+      @account={{account}}
+      @price={{price}}
+      @planMessage={{planMessage}}
+    />`);
+
+    assert.dom('h3').hasText('Overview');
+    assert.equal(profilePage.billing.plan.name, 'A plan incomplete');
+    assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining('5 concurrent jobs Incomplete');
+    assert.equal(profilePage.billing.planMessage.text, 'Incomplete');
+    assert.equal(profilePage.billing.price.text, '$129');
+    assert.equal(profilePage.billing.period.text, '/month');
+  });
 });
