@@ -5,6 +5,7 @@ import hbs from 'htmlbars-inline-precompile';
 import StripeMock from 'travis/tests/helpers/stripe-mock';
 import { stubConfig } from 'travis/tests/helpers/stub-service';
 import { getContext } from '@ember/test-helpers';
+import profilePage from 'travis/tests/pages/profile';
 
 module('Integration | Component | billing-payment', function (hooks) {
   setupRenderingTest(hooks);
@@ -77,5 +78,6 @@ module('Integration | Component | billing-payment', function (hooks) {
       @selectedPlan={{selectedPlan}}/>`);
 
     assert.dom('h3').hasText('Pay with card');
+    assert.dom(profilePage.billing.billingPaymentForm.completePayment.scope).isVisible();
   });
 });

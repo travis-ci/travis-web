@@ -367,6 +367,10 @@ export default create({
       isPresent: isPresent(),
     },
 
+    stripeForm: {
+      scope: '[data-test-stripe-form]'
+    },
+
     billingPaymentForm: {
       scope: '[data-test-payment-form]',
       isPresent: isPresent(),
