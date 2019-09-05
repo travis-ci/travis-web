@@ -1,9 +1,9 @@
 <section class="billing">
   {{#if this.isEducation}}
     <BillingEducation 
-      @plans={{this.plans}} 
       @newSubscription={{this.newSubscription}}
       @account={{this.account}} 
+      @plans={{plans}}
     />
   {{/if}}
   {{#if this.isManual}}
@@ -11,15 +11,14 @@
   {{/if}}
   {{#if this.isManaged}}
     <BillingSubscription
-      @plans={{this.plans}} 
       @newSubscription={{this.newSubscription}}
-      @account={{this.account}} 
+      @account={{this.account}}
+      
     />
   {{/if}}
   {{#if this.isTrial}}
     <BillingTrial 
       @account={{this.account}} 
-      @plans={{this.plans}} 
       @newSubscription={{this.newSubscription}}
     />
   {{/if}}

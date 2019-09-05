@@ -24,7 +24,6 @@ export default TravisRoute.extend({
   model() {
     return hash({
       account: this.modelFor('organization'),
-      plans: this.store.findAll('plan'),
       newSubscription: this.newSubscription()
     });
   }

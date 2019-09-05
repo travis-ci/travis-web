@@ -55,32 +55,45 @@
       We are currently waiting for Stripe to finish processing your order.
     </span>
   {{/if}}
-  <div class="flex flex--wrap billing-subscription__buttons">
-  {{#if (and this.isComplete this.isNotPending this.subscription.isStripe)}}
-    <div class="billing-subscription__buttons--change">
-      {{#if this.resubscribeLoading}}
-        <LoadingIndicator />
-      {{else if this.canResubscribe}}
-        <button onClick={{action (perform this.resubscribe)}} class='button--green' data-test-resubscribe-subscription='true'>
-          Resubscribe to plan
-        </button>
-      {{else}}
-        <button class='button--blue' data-test-change-subscription='true'>
-          Change plan
-        </button>
-      {{/if}}
-    </div>
-    <div class='billing-subscription__buttons--cancel'>
-      {{#if this.cancelSubscriptionLoading}}
-        <LoadingIndicator />
-      {{else if this.canCancelSubscription}}
-        <button onClick={{action (perform this.cancelSubscription)}} class='button--white' data-test-cancel-subscription='true'>
-          Cancel subscription
-        </button>
+  {{#if this.showPlansSelector}}
+    <BillingSelectPlan
+      @title="Edit plan"
+      @displayedPlans={{this.displayedPlans}}
+      @selectedPlan={{this.selectedPlan}}
+      @showMonthly={{this.showMonthly}}
+      @showAnnual={{this.showAnnual}}
+      @showPlansSelector={{this.showPlansSelector}}
+      @submit={{this.editPlan}}
+      @showCancelButton={{true}}
+    />
+  {{else}}
+    <div class="flex flex--wrap billing-subscription__buttons">
+      {{#if (and this.isComplete this.isNotPending this.subscription.isStripe)}}
+        <div class="billing-subscription__buttons--change">
+          {{#if this.resubscribeLoading}}
+            <LoadingIndicator />
+          {{else if this.canResubscribe}}
+            <button onClick={{action (perform this.resubscribe)}} class='button--green' data-test-resubscribe-subscription='true'>
+              Resubscribe to plan
+            </button>
+          {{else}}
+            <button onClick={{action (toggle 'showPlansSelector' this)}} class='button--blue' data-test-change-subscription='true'>
+              Change plan
+            </button>
+          {{/if}}
+        </div>
+        <div class='billing-subscription__buttons--cancel'>
+          {{#if this.cancelSubscriptionLoading}}
+            <LoadingIndicator />
+          {{else if this.canCancelSubscription}}
+            <button onClick={{action (perform this.cancelSubscription)}} class='button--white' data-test-cancel-subscription='true'>
+              Cancel subscription
+            </button>
+          {{/if}}
+        </div>
       {{/if}}
     </div>
   {{/if}}
-  </div>
 </div>
 <hr />
 {{#if this.showBillingInfo}}

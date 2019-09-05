@@ -38,28 +38,30 @@
           </form.field>
         </div>
       </div>
-      <div class='form-elem form-elem-half-width billing-optional-field'>
-        <form.field
-          @label='Company Name'
-          @value={{newSubscription.billingInfo.company}}
-          @showValidationStatusIcons={{false}}
-          @onChange={{action (mut newSubscription.billingInfo.company)}} as |Field|
-        >
-          <Field.input @name='companyName'/>
-        </form.field>
-      </div>
-      <div class='form-elem form-elem-half-width'>
-        <form.field
-          @label='Billing Email Address'
-          @value={{newSubscription.billingInfo.billingEmail}}
-          @required={{true}}
-          @showRequiredMark={{true}}
-          @validator={{form-validator form.validators.email}}
-          @showValidationStatusIcons={{false}}
-          @onChange={{action (mut newSubscription.billingInfo.billingEmail)}} as |Field|
-        >
-          <Field.input @name='email'/>
-        </form.field>
+      <div class='flex flex--col flex-md-row'>
+        <div class='form-elem full-width inline-form-elem billing-optional-field'>
+          <form.field
+            @label='Company Name'
+            @value={{newSubscription.billingInfo.company}}
+            @showValidationStatusIcons={{false}}
+            @onChange={{action (mut newSubscription.billingInfo.company)}} as |Field|
+          >
+            <Field.input @name='companyName'/>
+          </form.field>
+        </div>
+        <div class='form-elem full-width'>
+          <form.field
+            @label='Billing Email Address'
+            @value={{newSubscription.billingInfo.billingEmail}}
+            @required={{true}}
+            @showRequiredMark={{true}}
+            @validator={{form-validator form.validators.email}}
+            @showValidationStatusIcons={{false}}
+            @onChange={{action (mut newSubscription.billingInfo.billingEmail)}} as |Field|
+          >
+            <Field.input @name='email'/>
+          </form.field>
+        </div>
       </div>
       <h3 data-test-billing-details-title='true'>
         Billing address
@@ -82,20 +84,6 @@
         </div>
         <div class='full-width form-elem'>
           <form.field
-            @label='Suite,Apt'
-            @value={{newSubscription.billingInfo.address2}}
-            @required={{true}}
-            @showRequiredMark={{true}}
-            @showValidationStatusIcons={{false}}
-            @onChange={{action (mut newSubscription.billingInfo.address2)}} as |Field|
-          >
-            <Field.input @name='suite'/>
-          </form.field>
-        </div>
-      </div>
-      <div class='flex flex--col flex-md-row'>
-        <div class='full-width form-elem inline-form-elem'>
-          <form.field
             @label='City'
             @value={{newSubscription.billingInfo.city}}
             @required={{true}}
@@ -106,7 +94,9 @@
             <Field.input @name='city'/>
           </form.field>
         </div>
-        <div class='full-width form-elem'>
+      </div>
+      <div class='flex flex--col flex-md-row'>
+        <div class='full-width form-elem inline-form-elem'>
           <form.field
             @label='Zip Code'
             @value={{newSubscription.billingInfo.zipCode}}
@@ -118,24 +108,24 @@
             <Field.input @name='zip'/>
           </form.field>
         </div>
-      </div>
-      <div class='form-elem form-elem-half-width select' data-billing-form-select>
-        <form.field
-          @label='Country'
-          @value={{newSubscription.billingInfo.country}}
-          @required={{true}}
-          class='billing-country'
-          @showRequiredMark={{true}}
-          @showValidationStatusIcons={{false}}
-          @onChange={{action (mut newSubscription.billingInfo.country)}} as |Field|
-        >
-          <Field.select
-            @placeholder='Select country'
-            @options={{countries}} as |country|
+        <div class='form-elem full-width select' data-billing-form-select>
+          <form.field
+            @label='Country'
+            @value={{newSubscription.billingInfo.country}}
+            @required={{true}}
+            class='billing-country'
+            @showRequiredMark={{true}}
+            @showValidationStatusIcons={{false}}
+            @onChange={{action (mut newSubscription.billingInfo.country)}} as |Field|
           >
-            {{country}}
-          </Field.select>
-        </form.field>
+            <Field.select
+              @placeholder='Select country'
+              @options={{countries}} as |country|
+            >
+              {{country}}
+            </Field.select>
+          </form.field>
+      </div>
       </div>
       <div class='form-elem form-elem-half-width billing-optional-field'>
         <form.field

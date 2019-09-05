@@ -1,9 +1,20 @@
 import Component from '@ember/component';
+import { inject as service } from '@ember/service';
 import { reads, or, not, and } from '@ember/object/computed';
+import { task } from 'ember-concurrency';
 
 export default Component.extend({
+  plan: service(),
+
   subscription: null,
   account: null,
+  showPlansSelector: false,
+
+  showMonthly: reads('plan.showMonthly'),
+  displayedPlans: reads('plan.displayedPlans'),
+  selectedPlan: reads('plan.selectedPlan'),
+  showAnnual: reads('plan.showAnnual'),
+  isEditPlanLoading: reads('subscription.changePlan.isLoading'),
 
   isCanceled: reads('subscription.isCanceled'),
   isIncomplete: reads('subscription.isIncomplete'),
@@ -22,4 +33,9 @@ export default Component.extend({
   showBillingInfo: and('subscription.isStripe', 'isCompleteAndNotExpired'),
   canCancelSubscription: and('isNotCanceled', 'account.hasSubscriptionPermissions'),
   canResubscribe: and('subscription.isResubscribable', 'account.hasSubscriptionPermissions'),
+
+  editPlan: task(function* () {
+    yield this.subscription.changePlan.perform(this.selectedPlan.id);
+  }).drop()
+
 });

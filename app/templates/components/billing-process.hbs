@@ -1,11 +1,12 @@
 {{#if this.account.hasSubscriptionPermissions}}
   {{#if this.isStepOne}}
     <BillingSelectPlan
+      @title="Subscribe to a plan"
       @displayedPlans={{this.displayedPlans}}
       @selectedPlan={{this.selectedPlan}}
       @showMonthly={{this.showMonthly}}
       @showAnnual={{this.showAnnual}}
-      @next={{action 'next'}}
+      @submit={{action 'next'}}
     />
   {{else if this.isStepTwo}}
     <BillingInformation

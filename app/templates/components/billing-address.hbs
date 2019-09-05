@@ -45,7 +45,7 @@
                   <form.field
                     @label="Company"
                     @value={{info.company}}
-                    @required={{true}}
+                    @required={{false}}
                     @validateOnField={{false}}
                     @showValidationStatusIcons={{false}}
                     @onChange={{action (mut info.company)}}
@@ -64,7 +64,7 @@
                     @onChange={{action (mut info.billingEmail)}}
                     as |field|
                   >
-                    <field.input name="billingEmail" placeholder="Company" />
+                    <field.input name="billingEmail" placeholder="Email" />
                   </form.field>
                 </div>
               </div>
