@@ -868,7 +868,6 @@ module('Acceptance | profile/billing', function (hooks) {
       .fillIn('companyName', 'Travis')
       .fillIn('email', 'john@doe.com')
       .fillIn('address', '15 Olalubi street')
-      .fillIn('suite', '23 Grace')
       .fillIn('city', 'Berlin')
       .fillIn('zip', '353564')
       .fillIn('vat', '356463');
@@ -935,7 +934,6 @@ module('Acceptance | profile/billing', function (hooks) {
       .fillIn('companyName', 'Travis')
       .fillIn('email', 'john@doe.com')
       .fillIn('address', '15 Olalubi street')
-      .fillIn('suite', '23 Grace')
       .fillIn('city', 'Berlin')
       .fillIn('zip', '353564')
       .fillIn('vat', '356463');
