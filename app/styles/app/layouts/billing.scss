@@ -489,3 +489,46 @@
     }
   }
 }
+.cancel-subscription-modal {
+
+  h2 {
+    color: $oxide-blue;
+    margin: 0;
+  }
+
+  &__message {
+    color: $asphalt-grey;
+    font-size: 1.2rem;
+  }
+
+  h4 {
+    text-transform: uppercase;
+    color: $cement-grey;
+    font-weight: 700;
+  }
+
+  &__reason-options {
+
+    div {
+      width: 120px;
+      background: $pebble-grey;
+      margin: 0 20px 0 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 35px;
+
+      p {
+        margin: 7px 0;
+        text-transform: uppercase;
+        font-weight: 700;
+        font-size: 12px;
+      }
+    }
+
+    div:last-child {
+      margin-right: 0;
+    }
+
+  }
+}

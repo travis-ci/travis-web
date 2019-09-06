@@ -57,7 +57,7 @@
   {{/if}}
   {{#if this.showPlansSelector}}
     <BillingSelectPlan
-      @title="Edit plan"
+      @title="Edit Plan"
       @displayedPlans={{this.displayedPlans}}
       @selectedPlan={{this.selectedPlan}}
       @showMonthly={{this.showMonthly}}
@@ -76,7 +76,7 @@
             <button onClick={{action (perform this.resubscribe)}} class='button--green' data-test-resubscribe-subscription='true'>
               Resubscribe to plan
             </button>
-          {{else}}
+          {{else if this.canChangePlan}}
             <button onClick={{action (toggle 'showPlansSelector' this)}} class='button--blue' data-test-change-subscription='true'>
               Change plan
             </button>
@@ -100,4 +100,63 @@
   <BillingAddress @subscription={{this.subscription}} />
   <PaymentDetails @subscription={{this.subscription}} />
   <hr />
+{{/if}}
+{{#if this.showCancelModal}}
+  <ModalDialog
+    @targetAttachment="center"
+    @translucentOverlay={{true}}
+    @overlayPosition="sibling"
+    @animatable={{true}}
+  >
+    <div class="flex flex--v-center flex--center flex--col cancel-subscription-modal">
+      <h2>We're sorry you'd like to cancel</h2>
+      <p class="cancel-subscription-modal__message">
+        To keep improving our product and how it works for our users, <br/> we'd like to hear your feedback on why you're cancelling.
+      </p>
+      <h4>reason for cancellation</h4>
+      <div class="flex cancel-subscription-modal__reason-options">
+        <div>
+          <p>price</p>
+        </div>
+        <div>
+          <p>support</p>
+        </div>
+        <div>
+          <p>build times</p>
+        </div>
+        <div>
+          <p>end of project</p>
+        </div>
+        <div>
+          <p>other</p>
+        </div>
+      </div>
+      <TravisForm
+        @onSubmit={{perform this.cancelSubscription}}
+        class="full-width"
+        as |form|
+      >
+        <div class="form-elem">
+          <form.field
+            @label=""
+            as |field|
+          >
+            <field.textarea class="" rows="5" placeholder="Could you share more information with us?">{{this.reasonDetails}}</field.textarea>
+          </form.field>
+        </div>
+        <div class="flex">
+          {{#if this.cancelSubscription.isRunning}}
+            <LoadingIndicator />
+          {{else}}
+            <button onclick={{action form.submit}} class="cron-form-submit form-submit">
+              Confirm cancellation
+            </button>
+            <a class="link">
+              I changed my mind
+            </a>
+          {{/if}}
+        </div>
+      </TravisForm>
+    </div>
+  </ModalDialog>
 {{/if}}

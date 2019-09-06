@@ -9,6 +9,7 @@ export default Component.extend({
   subscription: null,
   account: null,
   showPlansSelector: false,
+  showCancelModal: false,
 
   showMonthly: reads('plan.showMonthly'),
   displayedPlans: reads('plan.displayedPlans'),
@@ -32,6 +33,7 @@ export default Component.extend({
   isCompleteAndNotExpired: and('hasNotExpired', 'isComplete'),
   showBillingInfo: and('subscription.isStripe', 'isCompleteAndNotExpired'),
   canCancelSubscription: and('isNotCanceled', 'account.hasSubscriptionPermissions'),
+  canChangePlan: reads('account.hasSubscriptionPermissions'),
   canResubscribe: and('subscription.isResubscribable', 'account.hasSubscriptionPermissions'),
 
   editPlan: task(function* () {
