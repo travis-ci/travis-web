@@ -1,10 +1,12 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
-import { reads, or, not, and } from '@ember/object/computed';
+import { reads, or, not, and, equal } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
 
 export default Component.extend({
   plan: service(),
+  stripe: service(),
+  accounts: service(),
 
   subscription: null,
   account: null,
@@ -35,9 +37,36 @@ export default Component.extend({
   canCancelSubscription: and('isNotCanceled', 'account.hasSubscriptionPermissions'),
   canChangePlan: reads('account.hasSubscriptionPermissions'),
   canResubscribe: and('subscription.isResubscribable', 'account.hasSubscriptionPermissions'),
+  retryAuthorizationClientSecret: reads('subscription.paymentIntent.client_secret'),
+  requiresSourceAction: equal('subscription.paymentIntent.status', 'requires_source_action'),
+  requiresSource: equal('subscription.paymentIntent.status', 'requires_source'),
 
   editPlan: task(function* () {
     yield this.subscription.changePlan.perform(this.selectedPlan.id);
-  }).drop()
+  }).drop(),
 
+  retryAuthorization: task(function* () {
+    if (this.requiresSourceAction && this.retryAuthorizationClientSecret) {
+      yield this.stripe.handleStripePayment.perform(this.retryAuthorizationClientSecret);
+      yield this.accounts.fetchSubscriptions.perform();
+    }
+  }).drop(),
+
+  retryPayment: task(function* () {
+    // const {
+    //   token: { id },
+    //   error
+    // } = yield this.stripe.createStripeToken.perform(this.stripeElement);
+    // try {
+    //   if (!error) {
+    //     yield this.subscription.creditCardInfo.updateCard(id);
+    //     if (clientSecret) {
+    //       yield this.stripe.handleStripePayment.perform(clientSecret);
+    //     }
+    //     yield this.accounts.fetchSubscriptions.perform();
+    //   }
+    // } catch (error) {
+    //   this.flashes.error('An error occurred when creating your subscription. Please try again.');
+    // }
+  }).drop(),
 });

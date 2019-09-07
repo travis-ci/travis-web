@@ -491,6 +491,15 @@
 }
 .cancel-subscription-modal {
 
+  .confirm-cancellation-button{
+    margin-right: 20px;
+  }
+
+  .cancellation-information {
+    margin: 35px 0;
+    font-size: 16px;
+  }
+
   h2 {
     color: $oxide-blue;
     margin: 0;
@@ -501,10 +510,12 @@
     font-size: 1.2rem;
   }
 
-  h4 {
+  h5 {
     text-transform: uppercase;
     color: $cement-grey;
     font-weight: 700;
+    margin-top: 15px;
+    letter-spacing: 1px;
   }
 
   &__reason-options {
@@ -516,14 +527,25 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 35px;
+      cursor: pointer;
+      border-radius: 5px;
 
       p {
         margin: 7px 0;
         text-transform: uppercase;
-        font-weight: 700;
+        font-weight: 900;
         font-size: 12px;
       }
+    }
+
+    div:hover {
+      background: $cement-grey;
+      color: white;
+    }
+
+    div.selected {
+      background: $cement-grey;
+      color: white;
     }
 
     div:last-child {
