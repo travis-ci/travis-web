@@ -283,6 +283,32 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.ok(profilePage.billing.creditCardNumber.isHidden);
   });
 
+  test('cancel a stripe plan', async function (assert) {
+    this.subscription.status = 'subscribed';
+    const momentFromNow = moment(this.subscription.valid_to.getTime()).fromNow();
+
+    await profilePage.visit();
+    await profilePage.billing.visit();
+
+    await profilePage.billing.openCancelSubscriptionModal.click();
+
+    assert.ok(profilePage.billing.dataTestSubscriptionModal.isPresent);
+
+    await profilePage.billing.cancelSubscriptionButton.click();
+
+    assert.equal(profilePage.billing.plan.name, 'Small Business1 plan canceled');
+    assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining(`5 concurrent jobs Expires ${momentFromNow} on June 19`);
+    assert.equal(profilePage.billing.planMessage.text, `Expires ${momentFromNow} on June 19`);
+
+    assert.equal(profilePage.billing.userDetails.text, 'contact name User Name company name Travis CI GmbH billing email user@email.com');
+    assert.equal(profilePage.billing.billingDetails.text, 'address Rigaerstraße 8 city,state/territory Berlin post code 10987 country Germany');
+    assert.dom(profilePage.billing.planMessage.scope).hasText(`Expires ${momentFromNow} on June 19`);
+
+    assert.equal(profilePage.billing.creditCardNumber.text, '•••• •••• •••• 1919');
+    assert.equal(profilePage.billing.price.text, '$69');
+    assert.equal(profilePage.billing.period.text, '/month');
+  });
+
   test('view billing on a canceled stripe plan', async function (assert) {
     this.subscription.status = 'canceled';
     const momentFromNow = moment(this.subscription.valid_to.getTime()).fromNow();

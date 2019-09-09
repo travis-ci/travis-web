@@ -97,7 +97,7 @@
         </div>
         <div class='billing-subscription__buttons--cancel'>
           {{#if this.canCancelSubscription}}
-            <button onClick={{action (toggle 'showCancelModal' this)}} class='button--white' data-test-cancel-subscription='true'>
+            <button onClick={{action (toggle 'showCancelModal' this)}} class='button--white' data-test-open-cancel-subscription-modal='true'>
               Cancel subscription
             </button>
           {{/if}}
@@ -119,7 +119,7 @@
     @overlayPosition="sibling"
     @animatable={{true}}
   >
-    <div class="flex flex--v-center flex--center flex--col cancel-subscription-modal">
+    <div data-test-cancel-subscription-modal="true" class="flex flex--v-center flex--center flex--col cancel-subscription-modal">
       <h2>We're sorry you'd like to cancel</h2>
       <p class="cancel-subscription-modal__message">
         To keep improving our product and how it works for our users, <br/> we'd like to hear your feedback on why you're cancelling.
@@ -152,7 +152,7 @@
             {{#if this.cancelSubscription.isRunning}}
               <LoadingIndicator />
             {{else}}
-              <button onClick={{action (perform this.cancelSubscription)}} class="button--red confirm-cancellation-button">
+              <button data-test-cancel-subscription="true" {{action (perform this.cancelSubscription)}} class="button--red confirm-cancellation-button">
                 Confirm cancellation
               </button>
               <a class="link" onClick={{action (toggle 'showCancelModal' this)}}>

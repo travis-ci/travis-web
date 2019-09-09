@@ -282,6 +282,14 @@ export default create({
       scope: '[data-test-cancel-subscription]'
     },
 
+    openCancelSubscriptionModal: {
+      scope: '[data-test-open-cancel-subscription-modal]'
+    },
+
+    dataTestSubscriptionModal: {
+      scope: '[data-test-cancel-subscription-modal]'
+    },
+
     editContactAddressButton: {
       scope: '[data-test-edit-contact-address]'
     },

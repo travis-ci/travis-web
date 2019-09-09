@@ -165,6 +165,13 @@ export default function () {
     );
   });
 
+  this.post('/subscription/:subscription_id/cancel', function (schema, { params, requestBody }) {
+    const subscription = schema.subscriptions.where({ id: params.subscription_id });
+    subscription.update(
+      'status', 'canceled'
+    );
+  });
+
   this.get('/plans');
 
   this.get('/broadcasts', schema => {
