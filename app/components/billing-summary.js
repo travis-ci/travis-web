@@ -4,11 +4,11 @@ import { reads, or, not, and, equal } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
 
 const cancellationReasons = [
-  { name: 'price' },
-  { name: 'support' },
-  { name: 'build times' },
-  { name: 'end of project' },
-  { name: 'other' },
+  { name: 'Price' },
+  { name: 'Support' },
+  { name: 'Build Times' },
+  { name: 'End of Project' },
+  { name: 'Other' },
 ];
 
 export default Component.extend({
