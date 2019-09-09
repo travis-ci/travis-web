@@ -19,6 +19,7 @@ export default Component.extend({
   email: reads('newSubscription.billingInfo.billingEmail'),
   address: reads('newSubscription.billingInfo.address'),
   city: reads('newSubscription.billingInfo.city'),
+  coupon: reads('newSubscription.coupon'),
   country: reads('newSubscription.billingInfo.country'),
   isLoading: or('createSubscription.isRunning', 'accounts.fetchSubscriptions.isRunning'),
 

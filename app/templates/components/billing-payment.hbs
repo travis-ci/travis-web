@@ -8,21 +8,22 @@
     <div class='flex--col-3'>
       <h4 data-test-contact-heading='true'>contact details:</h4>
       <p data-test-contact-firstName='true' class='billing-checkout__details--info'>{{concat this.firstName ' ' this.lastName}}</p>
-      <p data-test-contact-company='true' class='billing-checkout__details--info'>{{company}}</p>
+      <p data-test-contact-company='true' class='billing-checkout__details--info'>{{this.company}}</p>
       <div>
-       <p data-test-contact-email='true' class='billing-checkout__details--email'>{{email}}</p>
+       <p data-test-contact-email='true' class='billing-checkout__details--email'>{{this.email}}</p>
       </div>
       <button data-test-edit-contact-button='true' class='edit link' onClick={{action back 'contactDetails'}}>Edit</button>
     </div>
     <div class='flex--col-3'>
       <h4 data-test-billing-heading='true'>billing details:</h4>
-      <p data-test-billing-address='true' class='billing-checkout__details--info'>{{address}}</p>
-      <p data-test-billing-city='true' class='billing-checkout__details--info'>{{city}}</p>
-      <p data-test-billing-country='true' class='billing-checkout__details--info'>{{country}}</p>
+      <p data-test-billing-address='true' class='billing-checkout__details--info'>{{this.address}}</p>
+      <p data-test-billing-city='true' class='billing-checkout__details--info'>{{this.city}}</p>
+      <p data-test-billing-country='true' class='billing-checkout__details--info'>{{this.country}}</p>
       <button data-test-edit-billing-button='true' class='edit link' onClick={{action back 'billingDetails'}}>Edit</button>
     </div>
     <div class='flex--col-3'>
       <h4>discount</h4>
+      <p data-test-billing-address='true' class='billing-checkout__details--info'>{{this.coupon}}</p>
     </div>
   </div>
   <h3>

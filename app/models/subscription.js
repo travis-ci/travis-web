@@ -20,6 +20,7 @@ export default Model.extend({
   validTo: attr(),
   permissions: attr(),
   organizationId: attr(),
+  coupon: attr(),
   clientSecret: attr(),
   paymentIntent: attr(),
 
