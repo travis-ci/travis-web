@@ -78,16 +78,16 @@ export default Model.extend({
     return (isManual && (date > validToDate));
   }),
 
-  cancelSubscription: task(function* () {
-    yield this.api.post(`/subscription/${this.id}/cancel`);
+  cancelSubscription: task(function* (data) {
+    yield this.api.post(`/subscription/${this.id}/cancel`, {
+      data
+    });
     this.accounts.fetchSubscriptions.perform();
   }).drop(),
 
-  changePlan: task(function* (plan) {
+  changePlan: task(function* (data) {
     yield this.api.patch(`/subscription/${this.id}/plan`, {
-      data: {
-        plan
-      }
+      data
     });
     this.accounts.fetchSubscriptions.perform();
   }).drop(),

@@ -96,9 +96,7 @@
           {{/if}}
         </div>
         <div class='billing-subscription__buttons--cancel'>
-          {{#if this.cancelSubscriptionLoading}}
-            <LoadingIndicator />
-          {{else if this.canCancelSubscription}}
+          {{#if this.canCancelSubscription}}
             <button onClick={{action (toggle 'showCancelModal' this)}} class='button--white' data-test-cancel-subscription='true'>
               Cancel subscription
             </button>
@@ -128,21 +126,13 @@
       </p>
       <h5>reason for cancellation</h5>
       <div class="flex cancel-subscription-modal__reason-options">
-        <div>
-          <p>price</p>
-        </div>
-        <div>
-          <p>support</p>
-        </div>
-        <div>
-          <p>build times</p>
-        </div>
-        <div>
-          <p>end of project</p>
-        </div>
-        <div>
-          <p>other</p>
-        </div>
+        {{#each this.cancellationReasons as |reason|}}
+          <div onClick={{action 'selectCancellationReason' reason}} class='{{if (eq selectedCancellationReason reason.name) 'selected'}}'>
+            <p>
+              {{reason.name}}
+            </p>
+          </div>
+        {{/each}}
       </div>
       <div class="full-width">
         <TravisForm
@@ -152,9 +142,10 @@
           <div class="form-elem cancellation-information">
             <form.field
               @label=""
+              @onChange={{action (mut this.cancellationReasonDetails)}}
               as |field|
             >
-              <field.textarea rows="4" placeholder="Could you share more information with us?">{{this.reasonDetails}}</field.textarea>
+              <field.textarea rows="4" placeholder="Could you share more information with us?">{{this.cancellationReasonDetails}}</field.textarea>
             </form.field>
           </div>
           <div class="flex flex--v-center flex--center">

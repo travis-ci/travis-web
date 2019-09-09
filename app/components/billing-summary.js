@@ -3,6 +3,14 @@ import { inject as service } from '@ember/service';
 import { reads, or, not, and, equal } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
 
+const cancellationReasons = [
+  { name: 'price' },
+  { name: 'support' },
+  { name: 'build times' },
+  { name: 'end of project' },
+  { name: 'other' },
+];
+
 export default Component.extend({
   plan: service(),
   stripe: service(),
@@ -12,6 +20,7 @@ export default Component.extend({
   account: null,
   showPlansSelector: false,
   showCancelModal: false,
+  cancellationReasons,
 
   showMonthly: reads('plan.showMonthly'),
   displayedPlans: reads('plan.displayedPlans'),
@@ -24,8 +33,6 @@ export default Component.extend({
   isExpired: reads('subscription.isExpired'),
   isPending: reads('subscription.isPending'),
   resubscribe: reads('subscription.resubscribe'),
-  cancelSubscription: reads('subscription.cancelSubscription'),
-  cancelSubscriptionLoading: reads('subscription.cancelSubscription.isRunning'),
   resubscribeLoading: reads('subscription.resubscribe.isRunning'),
   isNotCanceled: not('isCanceled'),
   isNotPending: not('isPending'),
@@ -40,9 +47,21 @@ export default Component.extend({
   retryAuthorizationClientSecret: reads('subscription.paymentIntent.client_secret'),
   requiresSourceAction: equal('subscription.paymentIntent.status', 'requires_source_action'),
   requiresSource: equal('subscription.paymentIntent.status', 'requires_source'),
+  cancelSubscriptionLoading: reads('subscription.cancelSubscription.isRunning'),
+  selectedCancellationReason: null,
+  cancellationReasonDetails: null,
 
   editPlan: task(function* () {
-    yield this.subscription.changePlan.perform(this.selectedPlan.id);
+    yield this.subscription.changePlan.perform({
+      plan: this.selectedPlan.id
+    });
+  }).drop(),
+
+  cancelSubscription: task(function* () {
+    yield this.subscription.cancelSubscription.perform({
+      reason: this.selectedCancellationReason,
+      reason_details: this.cancellationReasonDetails
+    });
   }).drop(),
 
   retryAuthorization: task(function* () {
@@ -69,4 +88,10 @@ export default Component.extend({
     //   this.flashes.error('An error occurred when creating your subscription. Please try again.');
     // }
   }).drop(),
+
+  actions: {
+    selectCancellationReason(reason) {
+      this.set('selectedCancellationReason', reason.name);
+    }
+  }
 });
