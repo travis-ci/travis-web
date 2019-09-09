@@ -165,6 +165,8 @@
     </UiKit::Grid>
   </UiKit::Box>
 
+  {{#if this.scrollToContact}}<ScrollHere />{{/if}}
+
   {{!-- Contact form section --}}
   <UiKit::Box @tag='section' @margin={{hash bottom=20}}>
     <UiKit::Grid  @sm={{2}} @align='center' @gap={{4}} @justify='around' as |grid|>
@@ -188,8 +190,6 @@
       </grid.item>
     </UiKit::Grid>
   </UiKit::Box>
-
-  {{#if this.scrollToContact}}<ScrollHere />{{/if}}
 
   {{!-- Enterprise section --}}
   <UiKit::Box @tag='section' @margin={{hash bottom=20}}>
@@ -368,7 +368,7 @@
       Our support and sales teams are very happy to help.
     </UiKit::Text>
 
-    <UiKit::Link @href='mailto:sales@travis-ci.com'>
+    <UiKit::Link onclick={{fn (mut scrollToContact true)}}>
       <UiKit::Button>
         Shoot us a Message
       </UiKit::Button>
