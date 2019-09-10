@@ -18,11 +18,13 @@ export default Service.extend({
   }).drop(),
 
   handleStripePayment: task(function* (clientSecret) {
-    const result = yield this.stripev3.handleCardPayment(clientSecret);
-    if (result && result.error) {
-      this.handleError(result.error);
+    if (clientSecret) {
+      const result = yield this.stripev3.handleCardPayment(clientSecret);
+      if (result && result.error) {
+        this.handleError(result.error);
+      }
+      return result;
     }
-    return result;
   }).drop(),
 
   handleError(stripeError) {

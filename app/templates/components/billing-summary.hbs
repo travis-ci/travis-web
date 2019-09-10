@@ -121,9 +121,16 @@
     @clickOutsideToClose={{true}}
     @animatable={{true}}
   >
-    <SvgImage @name='flash-close' @class='icon-help' />
     <div data-test-cancel-subscription-modal="true" class="flex flex--v-center flex--center flex--col cancel-subscription-modal">
       <h2>We're sorry you'd like to cancel</h2>
+      <button
+        type="button"
+        title="Close modal"
+        class="modal-close pointer"
+        onClick={{action (toggle 'showCancelModal' this)}}
+      >
+        <SvgImage @name="icon-failed" @class="icon" />
+      </button>
       <p class="cancel-subscription-modal__message">
         To keep improving our product and how it works for our users, <br/> we'd like to hear your feedback on why you're cancelling.
       </p>

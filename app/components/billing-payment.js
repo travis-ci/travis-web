@@ -38,9 +38,7 @@ export default Component.extend({
         });
         newSubscription.setProperties({ organizationId, plan: selectedPlan });
         const { clientSecret } = yield newSubscription.save();
-        if (clientSecret) {
-          yield this.stripe.handleStripePayment.perform(clientSecret);
-        }
+        yield this.stripe.handleStripePayment.perform(clientSecret);
         yield this.accounts.fetchSubscriptions.perform();
       }
     } catch (error) {

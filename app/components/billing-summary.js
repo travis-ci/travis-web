@@ -91,7 +91,11 @@ export default Component.extend({
 
   actions: {
     selectCancellationReason(reason) {
-      this.set('selectedCancellationReason', reason.name);
+      if (this.selectedCancellationReason === reason.name) {
+        this.set('selectedCancellationReason', null);
+      } else {
+        this.set('selectedCancellationReason', reason.name);
+      }
     }
   }
 });
