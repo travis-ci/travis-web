@@ -117,8 +117,11 @@
     @targetAttachment="center"
     @translucentOverlay={{true}}
     @overlayPosition="sibling"
+    @onClose={{action (toggle 'showCancelModal' this)}}
+    @clickOutsideToClose={{true}}
     @animatable={{true}}
   >
+    <SvgImage @name='flash-close' @class='icon-help' />
     <div data-test-cancel-subscription-modal="true" class="flex flex--v-center flex--center flex--col cancel-subscription-modal">
       <h2>We're sorry you'd like to cancel</h2>
       <p class="cancel-subscription-modal__message">

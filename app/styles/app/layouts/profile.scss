@@ -595,6 +595,12 @@ section.invoices {
     margin-right: 10px;
   }
 
+  .invoice-issue-banner {
+    padding: 10px;
+    box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.15);
+    border-radius: 5px;
+  }
+
   table {
     width: 100%;
     margin-top: .6em;
@@ -645,9 +651,11 @@ section.invoices {
   .icon-help {
     margin-right: 3px;
     transform: translateY(-2px);
+    width: 19px;
+    height: 19px;
 
     &:hover {
-      border-color: $pebble-grey;
+      border-color: $cement-grey;
       @include colorSVG($cement-grey);
     }
   }
@@ -663,10 +671,9 @@ section.invoices {
   }
 
   .icon-invoice {
-    height: 26px;
-    width: 26px;
-    transform: translate(-6px, 6px);
-    @include colorSVG(black);
+    height: 18px;
+    width: 28px;
+    transform: translate(-7px, 4px);
   }
 }
 
