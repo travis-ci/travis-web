@@ -81,6 +81,7 @@ const DEFAULT_WEIGHT = WEIGHTS.NORMAL;
 // Variants
 const VARIANTS = {
   SMALLCAPS: 'smallcaps',
+  H2: 'h2',
 };
 const VARIANT_PROPS = {
   [VARIANTS.SMALLCAPS]: {
@@ -88,6 +89,12 @@ const VARIANT_PROPS = {
     tracking: 'lg',
     weight: 'bold',
     transform: 'uppercase',
+  },
+  [VARIANTS.H2]: {
+    leading: 'xs',
+    margin: { bottom: 3 },
+    size: '5xl',
+    weight: 'bold',
   },
 };
 
