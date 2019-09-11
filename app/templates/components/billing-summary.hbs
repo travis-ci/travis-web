@@ -55,10 +55,11 @@
       We are currently waiting for Stripe to finish processing your order.
     </span>
   {{else if this.isIncomplete}}
-    <span class="notice-banner--yellow" data-test-payment-error='true'>
-      There was a problem authorizing your card. Please retry.
-    </span>
     {{#if this.requiresSourceAction}}
+      <span class="notice-banner--yellow" data-test-payment-error='true'>
+        <SvgImage @name='icon-help' @class='icon-help' />
+        There was a problem authorizing your card. Please retry.
+      </span>
       {{#if this.retryAuthorization.isRunning}}
         <LoadingIndicator/>
       {{else}}
@@ -68,6 +69,9 @@
       {{/if}}
     {{/if}}
     {{#if this.requiresSource}}
+      <span class="notice-banner--red" data-test-payment-error='true'>
+        There was an issue processing your payment. Please try again or use a different card.
+      </span>
       <TravisForm 
         data-test-stripe-form='true' 
         @onSubmit={{perform this.retryPayment}} 
@@ -82,11 +86,15 @@
             <p>{{stripeError.message}}</p>
           {{/if}}
         </StripeCard>
+          <span class="notice-banner--white" data-test-help-text='true'>
+            {{!-- <SvgImage @name='icon-help' @class='icon-help' /> --}}
+            Credit card details are never stored on nor reach our servers. Payment data is handled by Stripe.
+          </span>
         <div class='billing-checkout__payment'>
           {{#if this.retryPayment.isRunning}}
             <LoadingIndicator/>
           {{else}}
-            <button class='button--blue' {{action form.submit}} data-test-complete-payment='true'>
+            <button class='button--green' {{action form.submit}} data-test-complete-payment='true'>
               Pay {{format-currency this.subscription.plan.price}}
             </button>
           {{/if}}

@@ -2,7 +2,7 @@ import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { reads, or, not, and, equal } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
-// import config from 'travis/config/environment';
+import config from 'travis/config/environment';
 
 const cancellationReasons = [
   { name: 'Price' },
@@ -47,29 +47,13 @@ export default Component.extend({
   canChangePlan: reads('account.hasSubscriptionPermissions'),
   canResubscribe: and('subscription.isResubscribable', 'account.hasSubscriptionPermissions'),
   retryAuthorizationClientSecret: reads('subscription.paymentIntent.client_secret'),
+  notChargeInvoiceSubscription: not('subscription.chargeUnpaidInvoices.lastSuccessful.value'),
   requiresSourceAction: equal('subscription.paymentIntent.status', 'requires_source_action'),
   requiresSource: equal('subscription.paymentIntent.status', 'requires_source'),
   cancelSubscriptionLoading: reads('subscription.cancelSubscription.isRunning'),
   selectedCancellationReason: null,
   cancellationReasonDetails: null,
-
-  options: {
-    hidePostalCode: true,
-    style: {
-      base: {
-        fontStyle: 'Source Sans Pro',
-        fontSize: '15px',
-        color: '#666',
-        '::placeholder': {
-          color: '#666'
-        },
-      },
-      invalid: {
-        color: 'red',
-        iconColor: 'red'
-      }
-    }
-  },
+  options: config.stripeOptions,
 
   editPlan: task(function* () {
     yield this.subscription.changePlan.perform({
@@ -96,7 +80,7 @@ export default Component.extend({
     try {
       if (token) {
         yield this.subscription.creditCardInfo.updateToken(this.subscription.id, token);
-        const { clientSecret } = yield this.subscription.chargeUpdateInvoices();
+        const { client_secret: clientSecret } = yield this.subscription.chargeUnpaidInvoices.perform();
         yield this.stripe.handleStripePayment.perform(clientSecret);
         yield this.accounts.fetchSubscriptions.perform();
       }

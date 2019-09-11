@@ -3,33 +3,15 @@ import { task } from 'ember-concurrency';
 import { computed } from '@ember/object';
 import { not } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
-// import config from 'travis/config/environment';
+import config from 'travis/config/environment';
 
 export default Component.extend({
   stripe: service(),
   flashes: service(),
-  // options: config.stripeOptions,
+  options: config.stripeOptions,
   openCreditCardForm: false,
   stripeElement: null,
   subscription: null,
-
-  options: {
-    hidePostalCode: true,
-    style: {
-      base: {
-        fontStyle: 'Source Sans Pro',
-        fontSize: '15px',
-        color: '#666',
-        '::placeholder': {
-          color: '#666'
-        },
-      },
-      invalid: {
-        color: 'red',
-        iconColor: 'red'
-      }
-    }
-  },
 
   price: computed('subscription.plan.price', 'subscription.plan.annual', function () {
     let price = this.get('subscription.plan.price');
