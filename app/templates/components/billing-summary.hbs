@@ -57,8 +57,8 @@
   {{else if this.isIncomplete}}
     {{#if this.requiresSourceAction}}
       <span class="notice-banner--yellow" data-test-payment-error='true'>
-        <SvgImage @name='icon-help' @class='icon-help' />
-        {{this.stripeErrorMessage}}
+        <SvgImage @name='icon-help' @class='icon-help icon-help-yellow' />
+        There was a problem authorizing your card. Please retry.
       </span>
       {{#if this.retryAuthorization.isRunning}}
         <LoadingIndicator/>

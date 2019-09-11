@@ -1,6 +1,7 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { reads, or, not, and, equal } from '@ember/object/computed';
+import { computed } from '@ember/object';
 import { task } from 'ember-concurrency';
 import config from 'travis/config/environment';
 
@@ -30,7 +31,6 @@ export default Component.extend({
   showAnnual: reads('plan.showAnnual'),
   isEditPlanLoading: reads('subscription.changePlan.isLoading'),
 
-  stripeErrorMessage: reads('stripe.errorMessage'),
   isCanceled: reads('subscription.isCanceled'),
   isIncomplete: reads('subscription.isIncomplete'),
   isExpired: reads('subscription.isExpired'),
@@ -51,10 +51,18 @@ export default Component.extend({
   notChargeInvoiceSubscription: not('subscription.chargeUnpaidInvoices.lastSuccessful.value'),
   requiresSourceAction: equal('subscription.paymentIntent.status', 'requires_source_action'),
   requiresSource: equal('subscription.paymentIntent.status', 'requires_source'),
+  lastPaymentIntentError: reads('subscription.paymentIntent.last_payment_error'),
   cancelSubscriptionLoading: reads('subscription.cancelSubscription.isRunning'),
+  handleError: reads('stripe.handleError'),
   selectedCancellationReason: null,
   cancellationReasonDetails: null,
   options: config.stripeOptions,
+
+  stripeErrorMessage: computed('lastPaymentIntentError', function () {
+    if (this.lastPaymentIntentError) {
+      return this.handleError(this.lastPaymentIntentError);
+    }
+  }),
 
   editPlan: task(function* () {
     yield this.subscription.changePlan.perform({

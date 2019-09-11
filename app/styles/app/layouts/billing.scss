@@ -16,6 +16,11 @@
     font-size: $font-size-sm;
   }
 
+  .icon-help-yellow {
+    @include colorSVG($dozer-yellow);
+    border: 1px solid $dozer-yellow;
+  }
+
   .billing-checkout {
 
     &__payment {

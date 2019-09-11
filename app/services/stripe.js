@@ -4,7 +4,7 @@ import { task } from 'ember-concurrency';
 export default Service.extend({
   flashes: service(),
   stripev3: service('stripev3'),
-  errorMessage: null,
+  error: null,
 
   load() {
     return this.stripev3.load();
@@ -13,6 +13,7 @@ export default Service.extend({
   createStripeToken: task(function* (stripeElement) {
     const result = yield this.stripev3.createToken(stripeElement);
     if (result && result.error) {
+      this.set('error', result.error);
       this.handleError(result.error);
     }
     return result;
@@ -22,6 +23,7 @@ export default Service.extend({
     if (clientSecret) {
       const result = yield this.stripev3.handleCardPayment(clientSecret);
       if (result && result.error) {
+        this.set('error', result.error);
         this.handleError(result.error);
       }
       return result;
@@ -40,6 +42,6 @@ export default Service.extend({
         errorMessage = 'There was an issue processing your payment. Please try again or use a different card.';
       }
     }
-    this.set('errorMessage', errorMessage);
+    return errorMessage;
   },
 });
