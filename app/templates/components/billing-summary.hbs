@@ -67,6 +67,32 @@
         </button>
       {{/if}}
     {{/if}}
+    {{#if this.requiresSource}}
+      <TravisForm 
+        data-test-stripe-form='true' 
+        @onSubmit={{perform this.retryPayment}} 
+        as |form|
+      >
+        <StripeCard 
+          @complete={{action "complete"}} 
+          @options={{this.options}} 
+          as |stripeError|
+        >
+          {{#if stripeError}}
+            <p>{{stripeError.message}}</p>
+          {{/if}}
+        </StripeCard>
+        <div class='billing-checkout__payment'>
+          {{#if this.retryPayment.isRunning}}
+            <LoadingIndicator/>
+          {{else}}
+            <button class='button--blue' {{action form.submit}} data-test-complete-payment='true'>
+              Pay {{format-currency this.subscription.plan.price}}
+            </button>
+          {{/if}}
+        </div>
+      </TravisForm>
+    {{/if}}
   {{/if}}
   {{#if (and this.isComplete this.isNotPending this.subscription.isStripe)}}
     {{#if this.showPlansSelector}}

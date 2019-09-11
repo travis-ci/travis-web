@@ -79,6 +79,10 @@ export default Model.extend({
     return (isManual && (date > validToDate));
   }),
 
+  chargeUpdateInvoices: task(function* () {
+    return yield this.api.post(`/subscription/${this.id}/pay`);
+  }).drop(),
+
   cancelSubscription: task(function* (data) {
     yield this.api.post(`/subscription/${this.id}/cancel`, {
       data

@@ -2,6 +2,7 @@ import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { reads, or, not, and, equal } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
+// import config from 'travis/config/environment';
 
 const cancellationReasons = [
   { name: 'Price' },
@@ -17,6 +18,7 @@ export default Component.extend({
   accounts: service(),
 
   subscription: null,
+  stripeElement: null,
   account: null,
   showPlansSelector: false,
   showCancelModal: false,
@@ -51,6 +53,24 @@ export default Component.extend({
   selectedCancellationReason: null,
   cancellationReasonDetails: null,
 
+  options: {
+    hidePostalCode: true,
+    style: {
+      base: {
+        fontStyle: 'Source Sans Pro',
+        fontSize: '15px',
+        color: '#666',
+        '::placeholder': {
+          color: '#666'
+        },
+      },
+      invalid: {
+        color: 'red',
+        iconColor: 'red'
+      }
+    }
+  },
+
   editPlan: task(function* () {
     yield this.subscription.changePlan.perform({
       plan: this.selectedPlan.id
@@ -72,21 +92,17 @@ export default Component.extend({
   }).drop(),
 
   retryPayment: task(function* () {
-    // const {
-    //   token: { id },
-    //   error
-    // } = yield this.stripe.createStripeToken.perform(this.stripeElement);
-    // try {
-    //   if (!error) {
-    //     yield this.subscription.creditCardInfo.updateCard(id);
-    //     if (clientSecret) {
-    //       yield this.stripe.handleStripePayment.perform(clientSecret);
-    //     }
-    //     yield this.accounts.fetchSubscriptions.perform();
-    //   }
-    // } catch (error) {
-    //   this.flashes.error('An error occurred when creating your subscription. Please try again.');
-    // }
+    const { token } = yield this.stripe.createStripeToken.perform(this.stripeElement);
+    try {
+      if (token) {
+        yield this.subscription.creditCardInfo.updateToken(this.subscription.id, token);
+        const { clientSecret } = yield this.subscription.chargeUpdateInvoices();
+        yield this.stripe.handleStripePayment.perform(clientSecret);
+        yield this.accounts.fetchSubscriptions.perform();
+      }
+    } catch (error) {
+      this.flashes.error('An error occurred when creating your subscription. Please try again.');
+    }
   }).drop(),
 
   actions: {
@@ -96,6 +112,10 @@ export default Component.extend({
       } else {
         this.set('selectedCancellationReason', reason.name);
       }
-    }
+    },
+
+    complete(stripeElement) {
+      this.set('stripeElement', stripeElement);
+    },
   }
 });

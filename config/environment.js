@@ -95,6 +95,24 @@ module.exports = function (environment) {
     moment: {
       includeTimezone: 'subset'
     },
+
+    stripeOptions: {
+      hidePostalCode: true,
+      style: {
+        base: {
+          fontStyle: 'Source Sans Pro',
+          fontSize: '15px',
+          color: '#666',
+          '::placeholder': {
+            color: '#666'
+          },
+        },
+        invalid: {
+          color: 'red',
+          iconColor: 'red'
+        }
+      }
+    },
   };
 
   ENV.featureFlags = {

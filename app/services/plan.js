@@ -13,20 +13,21 @@ export default Service.extend({
   defaultPlans: filterBy('availablePlans', 'isDefault'),
   defaultPlanName: reads('defaultPlans.firstObject.name'),
   plans: reads('fetchPlans.lastSuccessful.value'),
+  enabledPlans: filterBy('availablePlans', 'isEnabled'),
 
   fetchPlans: task(function* () {
     return yield this.store.findAll('plan') || [];
   }).keepLatest(),
 
-  availablePlanNames: computed('availablePlans.name', function () {
-    return this.availablePlans.mapBy('name').uniq();
+  enabledPlanNames: computed('enabledPlans.name', function () {
+    return this.enabledPlans.mapBy('name').uniq();
   }),
 
   monthlyPlans: computed('plans.@each.{name,annual,builds}', function () {
     const plans = this.plans || [];
     const filteredMonthlyPlans = plans.filter(plan => {
       const { annual, builds, name } = plan;
-      return !annual && builds <= 10 && this.availablePlanNames.includes(name);
+      return !annual && builds <= 10 && this.enabledPlanNames.includes(name);
     });
     return filteredMonthlyPlans.sort((a, b) => a.builds - b.builds);
   }),
@@ -35,7 +36,7 @@ export default Service.extend({
     const plans = this.plans || [];
     const filteredAnnualPlans = plans.filter(plan => {
       const { annual, builds, name } = plan;
-      return annual && builds <= 10 && this.availablePlanNames.includes(name);
+      return annual && builds <= 10 && this.enabledPlanNames.includes(name);
     });
     return filteredAnnualPlans.sort((a, b) => a.builds - b.builds);
   }),

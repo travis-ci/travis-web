@@ -3,23 +3,15 @@ import { task } from 'ember-concurrency';
 import { computed } from '@ember/object';
 import { not } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
-import config from 'travis/config/environment';
+// import config from 'travis/config/environment';
 
 export default Component.extend({
   stripe: service(),
   flashes: service(),
-  config,
+  // options: config.stripeOptions,
   openCreditCardForm: false,
   stripeElement: null,
   subscription: null,
-
-  price: computed('subscription.plan.price', 'subscription.plan.annual', function () {
-    let price = this.get('subscription.plan.price');
-    let annual = this.get('subscription.plan.annual');
-    return `$${price / 100} per ${annual ? 'year' : 'month'}`;
-  }),
-
-  monthly: not('subscription.plan.annual'),
 
   options: {
     hidePostalCode: true,
@@ -38,6 +30,15 @@ export default Component.extend({
       }
     }
   },
+
+  price: computed('subscription.plan.price', 'subscription.plan.annual', function () {
+    let price = this.get('subscription.plan.price');
+    let annual = this.get('subscription.plan.annual');
+    return `$${price / 100} per ${annual ? 'year' : 'month'}`;
+  }),
+
+  monthly: not('subscription.plan.annual'),
+
   createStripeToken: task(function* () {
     const { token } = yield this.stripe.createStripeToken.perform(this.stripeElement);
     try {
