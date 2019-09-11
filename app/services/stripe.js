@@ -4,6 +4,7 @@ import { task } from 'ember-concurrency';
 export default Service.extend({
   flashes: service(),
   stripev3: service('stripev3'),
+  errorMessage: null,
 
   load() {
     return this.stripev3.load();
@@ -34,11 +35,11 @@ export default Service.extend({
       if (type === 'card_error' || type === 'validation_error') {
         errorMessage = message;
       } else if (type === 'invalid_request_error') {
-        errorMessage = 'Invalid card details. Please try again';
+        errorMessage = 'There was a problem authorizing your card. Please retry.';
       } else {
-        errorMessage = 'An error occurred connecting to Stripe. Please try again';
+        errorMessage = 'There was an issue processing your payment. Please try again or use a different card.';
       }
     }
-    this.flashes.error(errorMessage);
+    this.set('errorMessage', errorMessage);
   },
 });

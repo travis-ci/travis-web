@@ -30,6 +30,7 @@ export default Component.extend({
   showAnnual: reads('plan.showAnnual'),
   isEditPlanLoading: reads('subscription.changePlan.isLoading'),
 
+  stripeErrorMessage: reads('stripe.errorMessage'),
   isCanceled: reads('subscription.isCanceled'),
   isIncomplete: reads('subscription.isIncomplete'),
   isExpired: reads('subscription.isExpired'),

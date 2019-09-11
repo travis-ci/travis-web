@@ -58,7 +58,7 @@
     {{#if this.requiresSourceAction}}
       <span class="notice-banner--yellow" data-test-payment-error='true'>
         <SvgImage @name='icon-help' @class='icon-help' />
-        There was a problem authorizing your card. Please retry.
+        {{this.stripeErrorMessage}}
       </span>
       {{#if this.retryAuthorization.isRunning}}
         <LoadingIndicator/>
@@ -70,7 +70,7 @@
     {{/if}}
     {{#if this.requiresSource}}
       <span class="notice-banner--red" data-test-payment-error='true'>
-        There was an issue processing your payment. Please try again or use a different card.
+        {{this.stripeErrorMessage}}
       </span>
       <TravisForm 
         data-test-stripe-form='true' 
