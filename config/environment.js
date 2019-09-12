@@ -30,7 +30,7 @@ module.exports = function (environment) {
     },
 
     // defaults for running travis-web
-    apiEndpoint: 'https://api-staging.travis-ci.org',
+    apiEndpoint: 'https://api.travis-ci.org',
     pusher: {
       key: '5df8ac576dcccf4fd076',
       host: 'ws.pusherapp.com',
@@ -163,7 +163,7 @@ module.exports = function (environment) {
       //       it would be nice to move it to one place. In theory
       //       we could just remove it from ruby process and rely
       //       on things set here, but I haven't tested that yet.
-      ENV.apiEndpoint = 'https://api-staging.travis-ci.com';
+      ENV.apiEndpoint = 'https://api.travis-ci.com';
       ENV.pusher.key = '59236bc0716a551eab40';
       ENV.pusher.channelPrefix = 'private-';
       ENV.pagesEndpoint = 'https://billing.travis-ci.com';
