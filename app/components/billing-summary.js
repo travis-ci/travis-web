@@ -5,14 +5,6 @@ import { computed } from '@ember/object';
 import { task } from 'ember-concurrency';
 import config from 'travis/config/environment';
 
-const cancellationReasons = [
-  { name: 'Price' },
-  { name: 'Support' },
-  { name: 'Build Times' },
-  { name: 'End of Project' },
-  { name: 'Other' },
-];
-
 export default Component.extend({
   plan: service(),
   stripe: service(),
@@ -23,7 +15,6 @@ export default Component.extend({
   account: null,
   showPlansSelector: false,
   showCancelModal: false,
-  cancellationReasons,
 
   showMonthly: reads('plan.showMonthly'),
   displayedPlans: reads('plan.displayedPlans'),
@@ -54,8 +45,6 @@ export default Component.extend({
   lastPaymentIntentError: reads('subscription.paymentIntent.last_payment_error'),
   cancelSubscriptionLoading: reads('subscription.cancelSubscription.isRunning'),
   handleError: reads('stripe.handleError'),
-  selectedCancellationReason: null,
-  cancellationReasonDetails: null,
   options: config.stripeOptions,
 
   stripeErrorMessage: computed('lastPaymentIntentError', function () {
@@ -67,13 +56,6 @@ export default Component.extend({
   editPlan: task(function* () {
     yield this.subscription.changePlan.perform({
       plan: this.selectedPlan.id
-    });
-  }).drop(),
-
-  cancelSubscription: task(function* () {
-    yield this.subscription.cancelSubscription.perform({
-      reason: this.selectedCancellationReason,
-      reason_details: this.cancellationReasonDetails
     });
   }).drop(),
 
@@ -99,14 +81,6 @@ export default Component.extend({
   }).drop(),
 
   actions: {
-    selectCancellationReason(reason) {
-      if (this.selectedCancellationReason === reason.name) {
-        this.set('selectedCancellationReason', null);
-      } else {
-        this.set('selectedCancellationReason', reason.name);
-      }
-    },
-
     complete(stripeElement) {
       this.set('stripeElement', stripeElement);
     },
