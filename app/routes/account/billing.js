@@ -31,7 +31,6 @@ export default TravisRoute.extend({
     });
   },
 
-
   model() {
     return hash({
       account: this.modelFor('account'),

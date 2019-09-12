@@ -87,7 +87,6 @@
           {{/if}}
         </StripeCard>
           <span class="notice-banner--white" data-test-help-text='true'>
-            {{!-- <SvgImage @name='icon-help' @class='icon-help' /> --}}
             Credit card details are never stored on nor reach our servers. Payment data is handled by Stripe.
           </span>
         <div class='billing-checkout__payment'>
@@ -105,7 +104,7 @@
   {{#if (and this.isComplete this.isNotPending this.subscription.isStripe)}}
     {{#if this.showPlansSelector}}
       <BillingSelectPlan
-        @title="Edit Plan"
+        @title="Edit plan"
         @displayedPlans={{this.displayedPlans}}
         @selectedPlan={{this.selectedPlan}}
         @showMonthly={{this.showMonthly}}
@@ -131,7 +130,7 @@
         </div>
         <div class='billing-subscription__buttons--cancel'>
           {{#if this.canCancelSubscription}}
-            <button onClick={{action (toggle 'showCancelModal' this)}} class='button--white' data-test-open-cancel-subscription-modal='true'>
+            <button onClick={{action (toggle 'showCancelModal' this)}} class='button--white button--hover' data-test-open-cancel-subscription-modal='true'>
               Cancel subscription
             </button>
           {{/if}}

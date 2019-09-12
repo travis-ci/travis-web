@@ -182,10 +182,15 @@
         width: 82px;
         height: 24px;
         line-height: 1.7;
+        padding-left: 0;
 
         span {
-          font-weight: 700;
+          font-weight: 400;
         }
+      }
+
+      .on {
+        padding-left: 1px;
       }
     }
 
@@ -498,7 +503,7 @@
       }
 
       &__description {
-        font-weight: 300;
+        font-weight: 400;
         margin: 0;
 
         &--validity {
@@ -510,9 +515,10 @@
     }
   }
 }
+
 .cancel-subscription-modal {
 
-  .confirm-cancellation-button{
+  .confirm-cancellation-button {
     margin-right: 20px;
   }
 

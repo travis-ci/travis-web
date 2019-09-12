@@ -34,7 +34,7 @@
 
   &.green {
     color: $turf-green;
-    background-color: rgb(197, 226, 197);
+    background-color: rgba(197,226,197, 0.5);
   }
 
   &.red {
