@@ -32,6 +32,7 @@ export default Mixin.create({
   borderColorClass: prefix('borderColor', 'border', { dictionary: BORDER_COLORS }),
 
   borderWidthClasses: concat(
+    'borderAllWidthClass',
     'borderTopWidthClass',
     'borderRightWidthClass',
     'borderBottomWidthClass',
@@ -39,20 +40,12 @@ export default Mixin.create({
   ),
 
   // Private //
-  borderAllTop: prefix('borderWidth.all', 'border-t', { dictionary: BORDER_WIDTHS }),
-  borderAllRht: prefix('borderWidth.all', 'border-r', { dictionary: BORDER_WIDTHS }),
-  borderAllBtm: prefix('borderWidth.all', 'border-b', { dictionary: BORDER_WIDTHS }),
-  borderAllLft: prefix('borderWidth.all', 'border-l', { dictionary: BORDER_WIDTHS }),
+  borderAllWidthClass: prefix('borderWidth.all', 'border', { dictionary: BORDER_WIDTHS }),
 
-  borderTop: prefix('borderWidth.top', 'border-t', { dictionary: BORDER_WIDTHS }),
-  borderRht: prefix('borderWidth.right', 'border-r', { dictionary: BORDER_WIDTHS }),
-  borderBtm: prefix('borderWidth.bottom', 'border-b', { dictionary: BORDER_WIDTHS }),
-  borderLft: prefix('borderWidth.left', 'border-l', { dictionary: BORDER_WIDTHS }),
-
-  borderTopWidthClass: or('borderTop', 'borderAllTop'),
-  borderRightWidthClass: or('borderRht', 'borderAllRht'),
-  borderBottomWidthClass: or('borderBtm', 'borderAllBtm'),
-  borderLeftWidthClass: or('borderLft', 'borderAllLft'),
+  borderTopWidthClass: prefix('borderWidth.top', 'border-t', { dictionary: BORDER_WIDTHS }),
+  borderRightWidthClass: prefix('borderWidth.right', 'border-r', { dictionary: BORDER_WIDTHS }),
+  borderBottomWidthClass: prefix('borderWidth.bottom', 'border-b', { dictionary: BORDER_WIDTHS }),
+  borderLeftWidthClass: prefix('borderWidth.left', 'border-l', { dictionary: BORDER_WIDTHS }),
 
   // Lifecycle
   didReceiveAttrs() {
