@@ -1,5 +1,4 @@
 import Mixin from '@ember/object/mixin';
-import { or } from '@ember/object/computed';
 import { checkDictionary } from 'travis/utils/ui-kit/assertions';
 import prefix from 'travis/utils/ui-kit/prefix';
 import concat from 'travis/utils/ui-kit/concat';
