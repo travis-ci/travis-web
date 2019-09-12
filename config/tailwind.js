@@ -105,9 +105,9 @@ module.exports = {
       xl: '1.425rem',
       '2xl': '1.6rem',
       '3xl': '1.875rem',
-      '4xl': '2.25rem',
+      '4xl': '2.125rem',
       '5xl': '3rem',
-      '6xl': '4rem',
+      '6xl': '4.75rem',
     },
     letterSpacing: {
       sm: '-0.025em',
@@ -120,25 +120,29 @@ module.exports = {
       xs: '1.25',
       sm: '1.375',
       md: '1.5',
-      lg: '1.625',
+      lg: '1.7',
       xl: '2',
     },
 
     // Block Props //
+    borderColor: theme => ({
+      ...theme('colors'),
+      default: theme('colors.grey.150', 'currentColor'),
+    }),
     borderWidth: {
       none: '0',
-      '1': '1px',
+      px: '1px',
     },
     borderRadius: {
       none: '0',
-      sm: '0.125rem',
-      base: '0.25rem',
+      sm: '0.1429rem',
+      md: '0.25rem',
       lg: '0.5rem',
       full: '9999px',
     },
     boxShadow: {
       sm: '0 0 3px 0 rgba(0, 0, 0, 0.1), 0 0 2px 0 rgba(0, 0, 0, 0.06)',
-      base: '0 0 6px -0px rgba(0, 0, 0, 0.1), 0 0 4px -0px rgba(0, 0, 0, 0.06)',
+      md: '0 0 6px -0px rgba(0, 0, 0, 0.1), 0 0 4px -0px rgba(0, 0, 0, 0.06)',
       none: 'none',
     },
 
@@ -218,7 +222,7 @@ module.exports = {
       '2xs': '16rem',
       xs: '20rem',
       sm: '24rem',
-      md: '28rem',
+      md: '30rem',
       lg: '32rem',
       xl: '36rem',
       '2xl': '42rem',

@@ -81,14 +81,21 @@ const DEFAULT_WEIGHT = WEIGHTS.NORMAL;
 // Variants
 const VARIANTS = {
   SMALLCAPS: 'smallcaps',
+  H1: 'h1',
   H2: 'h2',
 };
 const VARIANT_PROPS = {
   [VARIANTS.SMALLCAPS]: {
-    size: '3xs',
+    size: 'xs',
     tracking: 'lg',
     weight: 'bold',
     transform: 'uppercase',
+  },
+  [VARIANTS.H1]: {
+    leading: { base: 'none', md: 'md'},
+    margin: { bottom: 3 },
+    size: '6xl',
+    weight: 'bold',
   },
   [VARIANTS.H2]: {
     leading: 'xs',
@@ -112,6 +119,10 @@ export default Component.extend(spacingMixin, {
   tracking: variantProp(VARIANT_PROPS, DEFAULT_TRACKING),
   transform: variantProp(VARIANT_PROPS, DEFAULT_TRANSFORM),
   weight: variantProp(VARIANT_PROPS, DEFAULT_WEIGHT),
+
+  margin: variantProp(VARIANT_PROPS, null),
+  padding: variantProp(VARIANT_PROPS, null),
+
   variant: null,
 
   // Private

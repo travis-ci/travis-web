@@ -41,14 +41,14 @@ const LAYERS = {
 
 const SHADOWS = {
   SM: 'sm',
-  BASE: 'base',
+  MD: 'md',
   NONE: 'none',
 };
 
 const RADII = {
   NONE: 'none',
   SM: 'sm',
-  BASE: 'base',
+  MD: 'md',
   LG: 'lg',
   FULL: 'full',
 };

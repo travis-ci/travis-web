@@ -12,7 +12,7 @@ const WIDTHS = {
 
 const BORDER_WIDTHS = {
   [WIDTHS.NONE]: 'none',
-  [WIDTHS.XS]: '1',
+  [WIDTHS.XS]: 'px',
 };
 
 const COLORS = {
@@ -28,18 +28,8 @@ export default Mixin.create({
   borderColor: null,
   borderWidth: null,
 
-  // Private //
+  // Public exports //
   borderColorClass: prefix('borderColor', 'border', { dictionary: BORDER_COLORS }),
-
-  borderTopWidth: or('borderWidth.top', 'borderWidth.y', 'borderWidth.all'),
-  borderRightWidth: or('borderWidth.right', 'borderWidth.x', 'borderWidth.all'),
-  borderBottomWidth: or('borderWidth.bottom', 'borderWidth.y', 'borderWidth.all'),
-  borderLeftWidth: or('borderWidth.left', 'borderWidth.x', 'borderWidth.all'),
-
-  borderTopWidthClass: prefix('borderTopWidth', 'border-t', { dictionary: BORDER_WIDTHS }),
-  borderRightWidthClass: prefix('borderRightWidth', 'border-r', { dictionary: BORDER_WIDTHS }),
-  borderBottomWidthClass: prefix('borderBottomWidth', 'border-b', { dictionary: BORDER_WIDTHS }),
-  borderLeftWidthClass: prefix('borderLeftWidth', 'border-l', { dictionary: BORDER_WIDTHS }),
 
   borderWidthClasses: concat(
     'borderTopWidthClass',
@@ -48,19 +38,33 @@ export default Mixin.create({
     'borderLeftWidthClass',
   ),
 
+  // Private //
+  borderAllTop: prefix('borderWidth.all', 'border-t', { dictionary: BORDER_WIDTHS }),
+  borderAllRht: prefix('borderWidth.all', 'border-r', { dictionary: BORDER_WIDTHS }),
+  borderAllBtm: prefix('borderWidth.all', 'border-b', { dictionary: BORDER_WIDTHS }),
+  borderAllLft: prefix('borderWidth.all', 'border-l', { dictionary: BORDER_WIDTHS }),
+
+  borderTop: prefix('borderWidth.top', 'border-t', { dictionary: BORDER_WIDTHS }),
+  borderRht: prefix('borderWidth.right', 'border-r', { dictionary: BORDER_WIDTHS }),
+  borderBtm: prefix('borderWidth.bottom', 'border-b', { dictionary: BORDER_WIDTHS }),
+  borderLft: prefix('borderWidth.left', 'border-l', { dictionary: BORDER_WIDTHS }),
+
+  borderTopWidthClass: or('borderTop', 'borderAllTop'),
+  borderRightWidthClass: or('borderRht', 'borderAllRht'),
+  borderBottomWidthClass: or('borderBtm', 'borderAllBtm'),
+  borderLeftWidthClass: or('borderLft', 'borderAllLft'),
+
   // Lifecycle
   didReceiveAttrs() {
     this._super(...arguments);
 
     checkDictionary(this.borderColor, COLORS, '@borderColor');
 
-    const { top, right, bottom, left, x, y, all } = this.borderWidth || {};
+    const { top, right, bottom, left, all } = this.borderWidth || {};
     checkDictionary(top, WIDTHS, '@borderWidth.top');
     checkDictionary(right, WIDTHS, '@borderWidth.right');
     checkDictionary(bottom, WIDTHS, '@borderWidth.bottom');
     checkDictionary(left, WIDTHS, '@borderWidth.left');
-    checkDictionary(x, WIDTHS, '@borderWidth.x');
-    checkDictionary(y, WIDTHS, '@borderWidth.y');
     checkDictionary(all, WIDTHS, '@borderWidth.all');
   },
 });

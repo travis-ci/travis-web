@@ -6,7 +6,7 @@
     @margin={{hash top=3 bottom=16}}
     @textAlign='center'
   >
-    <UiKit::Text @tag='h1' @size='6xl' @weight='bold'>
+    <UiKit::Text @tag='h1' @variant='h1'>
       Built for every team
     </UiKit::Text>
     <UiKit::Text>
@@ -25,7 +25,7 @@
 
       <UiKit::Switch @onClick={{fn (mut showAnnual)}} @active={{showAnnual}} />
 
-      <UiKit::Text @tag='span' @color='blue' @margin={{hash left=2}} @size='3xs'>
+      <UiKit::Text @tag='span' @color='blue' @margin={{hash left=2}} @size='xs'>
         <UiKit::Text @tag='span' @color='blue' @variant='smallcaps'>
           Annual
         </UiKit::Text>
@@ -47,25 +47,26 @@
         @layer='10'
         @overflow='hidden'
         @position={{hash type='relative'}}
-        @radius='base'
-        @shadow='base'
+        @radius='md'
+        @shadow='md'
       >
-        <UiKit::Grid @base={{2}} @md={{4}} as |grid|>
+        <UiKit::Grid @base={{1}} @sm={{2}} @md={{4}} as |grid|>
           {{#each plansToDisplay as |plan|}}
             <grid.item>
               <UiKit::Box
-                @borderColor='grey-light'
                 @borderWidth={{hash all='xs'}}
                 @height='full'
                 @padding={{hash all=4}}
+                @textAlign={{hash base='center' sm='left'}}
               >
-                <UiKit::Text @tag='h3' @size='3xl' @weight='bold'>
+                <UiKit::Text @tag='h3' @size='4xl' @weight='bold'>
                   {{plan.name}}
                 </UiKit::Text>
 
                 <UiKit::Text
                   @tag='h4'
                   @color='grey'
+                  @leading='lg'
                   @margin={{hash bottom=6}}
                   @variant='smallcaps'
                 >
@@ -112,7 +113,7 @@
           {{/each}}
         </UiKit::Grid>
 
-        <UiKit::Box @borderColor='grey-light' @borderWidth={{hash all='xs'}} @padding={{hash all=4}} @textAlign='center'>
+        <UiKit::Box @borderWidth={{hash all='xs'}} @padding={{hash all=4}} @textAlign='center'>
           <UiKit::Button @onClick={{action 'gaCta' 'plans-table'}}>
             Start Your Free Trial
           </UiKit::Button>
@@ -149,7 +150,7 @@
           @textAlign={{hash base='center' sm='left'}}
         >
           <UiKit::Text @tag='h2' @leading='xs' @margin={{hash bottom=3}} @size='5xl' @weight='bold'>
-            Free plan for Open Source
+            Free for Open Source
           </UiKit::Text>
           <UiKit::Text @margin={{hash bottom=6}}>
             We love Open Source and offer a free plan for your projects.
@@ -243,16 +244,16 @@
       @layer='10'
       @margin={{hash bottom=16}}
       @position={{hash type='relative'}}
-      @radius='base'
-      @shadow='base'
+      @radius='md'
+      @shadow='md'
     >
       <UiKit::Text @tag='h2' @size='5xl' @weight='bold' @padding={{hash all=5}}>
         Frequently asked questions
       </UiKit::Text>
 
-      <UiKit::Grid  @base={{2}} as |grid|>
+      <UiKit::Grid  @base={{1}} @sm={{2}} as |grid|>
         {{!-- FAQ set 1 --}}
-        <grid.item @borderColor='grey-light' @borderWidth={{hash bottom='xs'}} @padding={{hash all=5}}>
+        <grid.item @borderWidth={{hash bottom='xs'}} @padding={{hash all=5}}>
           <UiKit::Text @tag='h4' @size='xl' @weight='bold' @color='blue-light' @margin={{hash bottom=2}}>
             What is a concurrent job?
           </UiKit::Text>
@@ -262,8 +263,8 @@
           </UiKit::Text>
         </grid.item>
 
-        <grid.item @borderColor='grey-light' @borderWidth={{hash bottom='xs'}} @padding={{hash y=5}}>
-          <UiKit::Box @borderColor='grey-light' @borderWidth={{hash left='xs'}} @padding={{hash x=5}}>
+        <grid.item @borderWidth={{hash bottom='xs'}} @padding={{hash y=5}}>
+          <UiKit::Box @borderWidth={{hash sm=(hash left='xs')}} @padding={{hash x=5}}>
             <UiKit::Text @tag='h4' @size='xl' @weight='bold' @color='blue-light' @margin={{hash bottom=2}}>
               Are there any restrictions on build time?
             </UiKit::Text>
@@ -275,7 +276,7 @@
         </grid.item>
 
         {{!-- FAQ set 2 --}}
-        <grid.item @borderColor='grey-light' @borderWidth={{hash bottom='xs'}} @padding={{hash all=5}}>
+        <grid.item @borderWidth={{hash bottom='xs'}} @padding={{hash all=5}}>
           <UiKit::Text @tag='h4' @size='xl' @weight='bold' @color='blue-light' @margin={{hash bottom=2}}>
             Can I pay annually?
           </UiKit::Text>
@@ -287,8 +288,8 @@
           </UiKit::Text>
         </grid.item>
 
-        <grid.item @borderColor='grey-light' @borderWidth={{hash bottom='xs'}} @padding={{hash y=5}}>
-          <UiKit::Box @borderColor='grey-light' @borderWidth={{hash left='xs'}} @padding={{hash x=5}}>
+        <grid.item @borderWidth={{hash bottom='xs'}} @padding={{hash y=5}}>
+          <UiKit::Box @borderWidth={{hash sm=(hash left='xs')}} @padding={{hash x=5}}>
             <UiKit::Text @tag='h4' @size='xl' @weight='bold' @color='blue-light' @margin={{hash bottom=2}}>
               Can I cancel anytime?
             </UiKit::Text>
@@ -301,7 +302,7 @@
         </grid.item>
 
         {{!-- FAQ set 3 --}}
-        <grid.item @borderColor='grey-light' @borderWidth={{hash bottom='xs'}} @padding={{hash all=5}}>
+        <grid.item @borderWidth={{hash bottom='xs'}} @padding={{hash all=5}}>
           <UiKit::Text @tag='h4' @size='xl' @weight='bold' @color='blue-light' @margin={{hash bottom=2}}>
             Am I able to upgrade my plan?
           </UiKit::Text>
@@ -312,8 +313,8 @@
           </UiKit::Text>
         </grid.item>
 
-        <grid.item @borderColor='grey-light' @borderWidth={{hash bottom='xs'}} @padding={{hash y=5}}>
-          <UiKit::Box @borderColor='grey-light' @borderWidth={{hash left='xs'}} @padding={{hash x=5}}>
+        <grid.item @borderWidth={{hash bottom='xs'}} @padding={{hash y=5}}>
+          <UiKit::Box @borderWidth={{hash sm=(hash left='xs')}} @padding={{hash x=5}}>
             <UiKit::Text @tag='h4' @size='xl' @weight='bold' @color='blue-light' @margin={{hash bottom=2}}>
               Do the listed prices include VAT?
             </UiKit::Text>
@@ -336,7 +337,7 @@
         </grid.item>
 
         <grid.item @padding={{hash y=5}}>
-          <UiKit::Box @borderColor='grey-light' @borderWidth={{hash left='xs'}} @padding={{hash x=5}}>
+          <UiKit::Box @borderWidth={{hash sm=(hash left='xs')}} @padding={{hash x=5}}>
             <UiKit::Text @tag='h4' @size='xl' @weight='bold' @color='blue-light' @margin={{hash bottom=2}}>
               Do you have plans for students?
             </UiKit::Text>
