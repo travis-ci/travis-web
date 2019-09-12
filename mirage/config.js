@@ -174,6 +174,14 @@ export default function () {
 
   this.get('/plans');
 
+  this.get('/plans_for/user', function (schema) {
+    return schema.plans.all();
+  });
+
+  this.get('/plans_for/organization/:organization_id', function (schema) {
+    return schema.plans.all();
+  });
+
   this.get('/broadcasts', schema => {
     return schema.broadcasts.all();
   });

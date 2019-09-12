@@ -4,6 +4,8 @@ import { task } from 'ember-concurrency';
 export default Service.extend({
   flashes: service(),
   stripev3: service('stripev3'),
+  accounts: service(),
+
   error: null,
 
   load() {
@@ -13,7 +15,6 @@ export default Service.extend({
   createStripeToken: task(function* (stripeElement) {
     const result = yield this.stripev3.createToken(stripeElement);
     if (result && result.error) {
-      this.set('error', result.error);
       this.handleError(result.error);
     }
     return result;
@@ -21,13 +22,9 @@ export default Service.extend({
 
   handleStripePayment: task(function* (clientSecret) {
     if (clientSecret) {
-      const result = yield this.stripev3.handleCardPayment(clientSecret);
-      if (result && result.error) {
-        this.set('error', result.error);
-        this.handleError(result.error);
-      }
-      return result;
+      yield this.stripev3.handleCardPayment(clientSecret);
     }
+    yield this.accounts.fetchSubscriptions.perform();
   }).drop(),
 
   handleError(stripeError) {

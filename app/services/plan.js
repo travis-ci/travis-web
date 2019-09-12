@@ -5,6 +5,7 @@ import { task } from 'ember-concurrency';
 import { not, filterBy, reads } from '@ember/object/computed';
 
 export default Service.extend({
+  accounts: service(),
   store: service(),
 
   showAnnual: false,
@@ -12,32 +13,22 @@ export default Service.extend({
   showMonthly: not('showAnnual'),
   defaultPlans: filterBy('availablePlans', 'isDefault'),
   defaultPlanName: reads('defaultPlans.firstObject.name'),
+  account: reads('accounts.user'),
   plans: reads('fetchPlans.lastSuccessful.value'),
-  enabledPlans: filterBy('availablePlans', 'isEnabled'),
 
   fetchPlans: task(function* () {
     return yield this.store.findAll('plan') || [];
   }).keepLatest(),
 
-  enabledPlanNames: computed('enabledPlans.name', function () {
-    return this.enabledPlans.mapBy('name').uniq();
-  }),
-
   monthlyPlans: computed('plans.@each.{name,annual,builds}', function () {
     const plans = this.plans || [];
-    const filteredMonthlyPlans = plans.filter(plan => {
-      const { annual, builds, name } = plan;
-      return !annual && builds <= 10 && this.enabledPlanNames.includes(name);
-    });
+    const filteredMonthlyPlans = plans.filter(plan => !plan.annual && plan.builds);
     return filteredMonthlyPlans.sort((a, b) => a.builds - b.builds);
   }),
 
   annualPlans: computed('plans.@each.{name,annual,builds}', function () {
     const plans = this.plans || [];
-    const filteredAnnualPlans = plans.filter(plan => {
-      const { annual, builds, name } = plan;
-      return annual && builds <= 10 && this.enabledPlanNames.includes(name);
-    });
+    const filteredAnnualPlans = plans.filter(plan => plan.annual && plan.builds);
     return filteredAnnualPlans.sort((a, b) => a.builds - b.builds);
   }),
 

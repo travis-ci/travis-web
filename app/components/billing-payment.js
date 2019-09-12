@@ -41,10 +41,8 @@ export default Component.extend({
         newSubscription.setProperties({ organizationId, plan: selectedPlan });
         const { clientSecret } = yield newSubscription.save();
         yield this.stripe.handleStripePayment.perform(clientSecret);
-        yield this.accounts.fetchSubscriptions.perform();
       }
     } catch (error) {
-      // assert if status == 422 unprocessable entity -- display error message (eg: invalid vat)
       this.flashes.error('An error occurred when creating your subscription. Please try again.');
     }
   }).drop(),

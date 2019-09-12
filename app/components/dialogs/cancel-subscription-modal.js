@@ -13,12 +13,14 @@ export default Component.extend({
   cancellationReasons,
   selectedCancellationReason: null,
   cancellationReasonDetails: null,
+  isOpen: false,
 
   cancelSubscription: task(function* () {
     yield this.subscription.cancelSubscription.perform({
       reason: this.selectedCancellationReason,
       reason_details: this.cancellationReasonDetails
     });
+    this.set('isOpen', false);
   }).drop(),
 
   actions: {
