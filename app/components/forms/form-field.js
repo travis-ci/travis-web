@@ -140,6 +140,10 @@ export default Component.extend({
       this.onChange(value);
     },
 
+    handleKeyUp(value) {
+      this.onKeyUp && this.onKeyUp(value);
+    },
+
     handleClear() {
       if (this.allowClear)
         this.send('handleChange', '');

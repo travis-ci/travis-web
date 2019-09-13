@@ -317,8 +317,8 @@ module('Acceptance | repo settings', function (hooks) {
     });
 
     await settingsPage.visit({ organization: 'org-login', repo: 'repository-name' });
-    await selectSearch(settingsPage.cronBrancheSelect.scope, branchName);
-    await selectChoose(settingsPage.cronBrancheSelect.scope, branchName);
+    await selectSearch(settingsPage.cronBranchSelect.scope, branchName);
+    await selectChoose(settingsPage.cronBranchSelect.scope, branchName);
     await settingsPage.addCronSubmit.click();
 
     assert.equal(settingsPage.crons.length, 3, 'expected to load all existed crons');

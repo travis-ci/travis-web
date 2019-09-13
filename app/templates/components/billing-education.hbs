@@ -12,4 +12,21 @@
     Check our getting started guide
   </ExternalLinkTo>
 </p>
-  <NewSubscriptionButton @account={{this.account}} />
+{{#if this.newSubscriptionProcess}}
+  <BillingProcess 
+    @account={{this.account}} 
+    @plans={{this.plans}} 
+    @newSubscription={{this.newSubscription}}
+  />
+{{else}}
+  {{#if this.account.hasSubscriptionPermissions}}
+    <button onClick={{action (mut this.newSubscriptionProcess) true}} class="button--green" data-test-manage-button='true'>
+      New subscription
+    </button>
+  {{else}}
+    <div class="button--green manage-subscription disabled new" data-test-manage-button='true'>
+      New subscription
+    </div>
+    <EmberTooltip @text="You do not have permission to create a subscription" />
+  {{/if}}
+{{/if}}
