@@ -144,10 +144,18 @@ module.exports = function (environment) {
     profileReposPerPage: 25,
   };
 
-  ENV.stripe = {
-    publishableKey: 'pk_test_5i2Bx5nJACluilHLb25d3P6N',
-    lazyLoad: true
-  };
+  // temporary to make stripe tests happy.
+  if (process.env.STRIPE_PUBLISHABLE_KEY) {
+    ENV.stripe = {
+      publishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
+      lazyLoad: true,
+    };
+  } else {
+    ENV.stripe = {
+      publishableKey: 'pk_test_5i2Bx5nJACluilHLb25d3P9N',
+      lazyLoad: true,
+    };
+  }
 
   ENV.sentry = {
     dsn: 'https://e775f26d043843bdb7ae391dc0f2487a@app.getsentry.com/75334',
