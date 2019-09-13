@@ -26,12 +26,11 @@ export default Component.extend({
   lastPaymentIntentError: reads('subscription.paymentIntent.last_payment_error'),
   retryAuthorizationClientSecret: reads('subscription.paymentIntent.client_secret'),
   notChargeInvoiceSubscription: not('subscription.chargeUnpaidInvoices.lastSuccessful.value'),
-  resubscribeLoading: reads('subscription.resubscribe.isRunning'),
+  resubscribeLoading: reads('resubscribe.isRunning'),
   cancelSubscriptionLoading: reads('subscription.cancelSubscription.isRunning'),
   hasSubscriptionPermissions: reads('account.hasSubscriptionPermissions'),
   canCancelSubscription: and('isNotCanceled', 'hasSubscriptionPermissions'),
   canResubscribe: and('subscription.isResubscribable', 'hasSubscriptionPermissions'),
-  resubscribe: reads('subscription.resubscribe'),
   isCanceled: reads('subscription.isCanceled'),
   isNotCanceled: not('isCanceled'),
 
@@ -65,6 +64,12 @@ export default Component.extend({
 
   editPlan: task(function* () {
     yield this.subscription.changePlan.perform({ plan: this.selectedPlan.id });
+    yield this.accounts.fetchSubscriptions.perform();
+    yield this.retryAuthorization.perform();
+  }).drop(),
+
+  resubscribe: task(function* () {
+    yield this.subscription.resubscribe.perform();
     yield this.accounts.fetchSubscriptions.perform();
     yield this.retryAuthorization.perform();
   }).drop(),
