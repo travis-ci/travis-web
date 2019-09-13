@@ -31,6 +31,10 @@
   @include notice($brick-red, $quartz-red);
 }
 
+.notice--white {
+  @include notice(#fff, #fff);
+}
+
 @mixin notice-banner($bg, $color) {
   @include linkStyle($color);
 
@@ -114,4 +118,9 @@
 
 .notice-banner--red {
   @include notice-banner($quartz-red, $brick-red);
+}
+
+.notice-banner--white {
+  @include notice-banner(#fff, $asphalt-grey);
+  box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.15);
 }

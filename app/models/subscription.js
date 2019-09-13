@@ -1,6 +1,8 @@
 import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
 import { computed } from '@ember/object';
 import { and, equal, or } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
+import { task } from 'ember-concurrency';
 import config from 'travis/config/environment';
 
 let sourceToWords = {
@@ -10,20 +12,29 @@ let sourceToWords = {
 };
 
 export default Model.extend({
+  api: service(),
+  accounts: service(),
+
   source: attr(),
   status: attr(),
   validTo: attr(),
   permissions: attr(),
+  organizationId: attr(),
+  coupon: attr(),
+  clientSecret: attr(),
+  paymentIntent: attr(),
 
-  billingInfo: belongsTo({ async: false }),
-  creditCardInfo: belongsTo({ async: false }),
+  billingInfo: belongsTo('billing-info', { async: false }),
+  creditCardInfo: belongsTo('credit-card-info', { async: false }),
   invoices: hasMany('invoice'),
-  owner: belongsTo('owner', {polymorphic: true}),
+  owner: belongsTo('owner', { polymorphic: true }),
   plan: belongsTo(),
 
   isSubscribed: equal('status', 'subscribed'),
   isCanceled: equal('status', 'canceled'),
   isExpired: equal('status', 'expired'),
+  isPending: equal('status', 'pending'),
+  isIncomplete: equal('status', 'incomplete'),
   isStripe: equal('source', 'stripe'),
   isGithub: equal('source', 'github'),
   isManual: equal('source', 'manual'),
@@ -67,4 +78,27 @@ export default Model.extend({
     let validToDate = Date.parse(validTo);
     return (isManual && (date > validToDate));
   }),
+
+  chargeUnpaidInvoices: task(function* () {
+    return yield this.api.post(`/subscription/${this.id}/pay`);
+  }).drop(),
+
+  cancelSubscription: task(function* (data) {
+    yield this.api.post(`/subscription/${this.id}/cancel`, {
+      data
+    });
+    yield this.accounts.fetchSubscriptions.perform();
+  }).drop(),
+
+  changePlan: task(function* (data) {
+    yield this.api.patch(`/subscription/${this.id}/plan`, {
+      data
+    });
+    yield this.accounts.fetchSubscriptions.perform();
+  }).drop(),
+
+  resubscribe: task(function* () {
+    yield this.api.patch(`/subscription/${this.id}/resubscribe`);
+    yield this.accounts.fetchSubscriptions.perform();
+  }).drop(),
 });

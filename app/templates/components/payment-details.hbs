@@ -1,31 +1,44 @@
-<p
-  class="source {{if this.subscription.isManual 'alert-status-message'}}"
-  data-test-source
->
-  {{this.source}}
-</p>
-{{#if this.subscription.isStripe}}
-  <p data-test-credit-card>
-    <SvgImage @name="icon-credit-card" @class="icon--color" />
-    •••• •••• ••••
-    {{this.subscription.creditCardInfo.lastDigits}}
-  </p>
-{{/if}}
-{{#if this.subscription.isManual}}
-  <ManualSubscriptionHelp />
-{{else}}
-  <p data-test-price>
-  <SvgImage @name="icon-currency-USD" @class="icon--color" />
-    {{this.price}}
-  </p>
-{{/if}}
-{{#if (and this.subscription.isStripe this.monthly this.subscription.permissions.write this.subscription.plan)}}
-  <span class="notice-banner--yellow" data-test-annual-invitation>
-    Get one month for free with
-    <ExternalLinkTo
-      @href={{concat subscription.billingUrl "/edit?switch_annual=true?utm_source=web&utm_campaign=switch_to_annual"}}
-    >
-      annual billing
-    </ExternalLinkTo>
-  </span>
+{{#if this.subscription.plan}}
+  <section class="payment billing-subscription-section">
+    <h4>
+      Payment details
+    </h4>
+    {{#if this.subscription.isStripe}}
+      {{#if this.openCreditCardForm}}
+        <div class="edit-form">
+          <TravisForm @onSubmit={{perform this.updateCreditCard}} as |form|>
+            <StripeCard @complete={{action "complete"}} @options={{this.options}} as |stripeError|>
+              {{#if stripeError}}
+                <p>{{stripeError.message}}</p>
+              {{/if}}
+            </StripeCard>
+            <div class="flex flex--wrap billing-subscription__buttons">
+              {{#if this.updateCreditCard.isRunning}}
+                <LoadingIndicator/>
+              {{else}}
+                <button data-test-update-contact-address-button='true' onclick={{form.submit}} class="button--blue">
+                  Edit payment details
+                </button>
+                <a onClick={{action (toggle 'openCreditCardForm' this)}} class='link cancel-link'>
+                  Cancel
+                </a>
+              {{/if}}
+            </div>
+          </TravisForm>
+        </div>
+      {{else}}
+        <div class="flex flex--v-center">
+          <SvgImage @name="icon-credit-card" @class="icon--color" />
+          <p data-test-credit-card> 
+            •••• •••• ••••
+            {{this.subscription.creditCardInfo.lastDigits}}
+          </p>  
+        </div>
+        <button class='button--blue billing-subscription__buttons' onClick={{action (toggle 'openCreditCardForm' this)}}>Edit payment details</button>
+      {{/if}}
+    {{/if}}
+    {{#if this.subscription.isManual}}
+      <ManualSubscriptionHelp />
+    {{/if}}
+  </section>
 {{/if}}

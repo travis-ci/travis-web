@@ -11,6 +11,7 @@ export default Model.extend({
   zipCode: attr('string'),
   country: attr('string'),
   vatId: attr(),
+  billingEmail: attr(),
 
   subscription: belongsTo('subscription')
 });

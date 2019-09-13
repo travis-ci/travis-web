@@ -95,6 +95,24 @@ module.exports = function (environment) {
     moment: {
       includeTimezone: 'subset'
     },
+
+    stripeOptions: {
+      hidePostalCode: true,
+      style: {
+        base: {
+          fontStyle: 'Source Sans Pro',
+          fontSize: '15px',
+          color: '#666',
+          '::placeholder': {
+            color: '#666'
+          },
+        },
+        invalid: {
+          color: 'red',
+          iconColor: 'red'
+        }
+      }
+    },
   };
 
   ENV.featureFlags = {
@@ -125,6 +143,13 @@ module.exports = function (environment) {
     dashboardReposPerPage: 25,
     profileReposPerPage: 25,
   };
+
+  if (process.env.STRIPE_PUBLISHABLE_KEY) {
+    ENV.stripe = {
+      publishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
+      lazyLoad: true,
+    };
+  }
 
   ENV.sentry = {
     dsn: 'https://e775f26d043843bdb7ae391dc0f2487a@app.getsentry.com/75334',
@@ -239,6 +264,11 @@ module.exports = function (environment) {
     ENV.endpoints = {
       sshKey: true,
       caches: true
+    };
+
+    ENV.stripe = {
+      publishableKey: 'pk_test_5i2Bx5nJACluilHLb25d3P9N',
+      lazyLoad: true,
     };
 
     ENV.pusher = {};
