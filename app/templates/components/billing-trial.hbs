@@ -50,12 +50,12 @@
       {{/if}}
       {{#if (not this.trial)}}
         {{#if this.hasNoSubscriptionPermissions}}
-          <div class="button--blue activate-trial-button disabled">
+          <div class="button--blue activate-trial-button disabled" data-test-activate-button='true'>
             <EmberTooltip @text="You do not have permission to start a trial" />
             Activate trial
           </div>
         {{else}}
-          <button onclick={{perform this.activateTrial}} class="button--blue activate-trial-button">
+          <button onclick={{perform this.activateTrial}} class="button--blue activate-trial-button" data-test-activate-button='true'>
             Activate trial
           </button>
         {{/if}}

@@ -31,6 +31,7 @@ export default Component.extend({
   hasSubscriptionPermissions: reads('account.hasSubscriptionPermissions'),
   canCancelSubscription: and('isNotCanceled', 'hasSubscriptionPermissions'),
   canResubscribe: and('subscription.isResubscribable', 'hasSubscriptionPermissions'),
+  resubscribe: reads('subscription.resubscribe'),
   isCanceled: reads('subscription.isCanceled'),
   isNotCanceled: not('isCanceled'),
 

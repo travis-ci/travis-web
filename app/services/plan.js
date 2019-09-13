@@ -20,15 +20,20 @@ export default Service.extend({
     return yield this.store.findAll('plan') || [];
   }).keepLatest(),
 
-  monthlyPlans: computed('plans.@each.{name,annual,builds}', function () {
+  nonGithubPlans: computed('plans.@each.{id,name,annual,builds}', function () {
     const plans = this.plans || [];
-    const filteredMonthlyPlans = plans.filter(plan => !plan.annual && plan.builds);
+    return plans.filter(plan => plan.id && !plan.id.startsWith('github'));
+  }),
+
+  monthlyPlans: computed('nonGithubPlans.@each.{name,annual,builds}', function () {
+    const nonGithubPlans = this.nonGithubPlans || [];
+    const filteredMonthlyPlans = nonGithubPlans.filter(plan => !plan.annual && plan.builds);
     return filteredMonthlyPlans.sort((a, b) => a.builds - b.builds);
   }),
 
-  annualPlans: computed('plans.@each.{name,annual,builds}', function () {
-    const plans = this.plans || [];
-    const filteredAnnualPlans = plans.filter(plan => plan.annual && plan.builds);
+  annualPlans: computed('nonGithubPlans.@each.{name,annual,builds}', function () {
+    const nonGithubPlans = this.nonGithubPlans || [];
+    const filteredAnnualPlans = nonGithubPlans.filter(plan => plan.annual && plan.builds);
     return filteredAnnualPlans.sort((a, b) => a.builds - b.builds);
   }),
 

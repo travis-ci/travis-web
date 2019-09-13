@@ -12,7 +12,6 @@ export default Component.extend({
   isIncomplete: reads('subscription.isIncomplete'),
   isExpired: reads('subscription.isExpired'),
   isPending: reads('subscription.isPending'),
-  resubscribe: reads('subscription.resubscribe'),
   isNotCanceled: not('isCanceled'),
   isNotPending: not('isPending'),
   hasNotExpired: not('isExpired'),
