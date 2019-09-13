@@ -94,7 +94,9 @@
       padding: 8px 13px;
       border: 1px solid $pebble-grey;
       margin-bottom: 10px;
+      width: 120px;
       flex-basis: 100%;
+      margin-right: 5px;
 
       &--jobs {
         color: $cement-grey;
@@ -119,12 +121,19 @@
       &--name {
         margin: 8px 0 0 0;
         font-size: 1.2em;
+        white-space: nowrap; 
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
 
       &:hover {
         background: rgba(181, 214, 217, 1);
         cursor: pointer;
       }
+    }
+
+    &__box:last-child {
+      margin-right: 0;
     }
 
     @media #{$medium-up} {

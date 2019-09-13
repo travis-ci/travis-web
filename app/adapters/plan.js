@@ -9,7 +9,7 @@ export default V3Adapter.extend({
   buildURL(modelName, id, snapshot, requestType) {
     let url = this._super(...arguments);
     let route = '/plans_for/user';
-    if (this.account.type === 'Organization') {
+    if (this.account.type === 'organization') {
       route = `/plans_for/organization/${this.account.id}`;
     }
     url = `${url}${route}`;
