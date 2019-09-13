@@ -144,15 +144,9 @@ module.exports = function (environment) {
     profileReposPerPage: 25,
   };
 
-  // temporary to make stripe tests happy.
   if (process.env.STRIPE_PUBLISHABLE_KEY) {
     ENV.stripe = {
       publishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
-      lazyLoad: true,
-    };
-  } else {
-    ENV.stripe = {
-      publishableKey: 'pk_test_5i2Bx5nJACluilHLb25d3P9N',
       lazyLoad: true,
     };
   }
@@ -270,6 +264,11 @@ module.exports = function (environment) {
     ENV.endpoints = {
       sshKey: true,
       caches: true
+    };
+
+    ENV.stripe = {
+      publishableKey: 'pk_test_5i2Bx5nJACluilHLb25d3P9N',
+      lazyLoad: true,
     };
 
     ENV.pusher = {};
