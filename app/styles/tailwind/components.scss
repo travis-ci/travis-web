@@ -3,6 +3,7 @@
  * Here's an example:
 **/
 .tailwind-overrides {
+  @apply overflow-x-hidden;
 
   // Form styles
   .travis-form {
@@ -16,7 +17,7 @@
       }
 
       .travis-form__field-component {
-        @apply text-grey-800 rounded-sm;
+        @apply text-grey-800 rounded-sm appearance-none;
       }
 
       .travis-form__error-message {

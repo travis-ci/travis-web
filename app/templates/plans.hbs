@@ -45,7 +45,7 @@
       <UiKit::Box
         @color='white'
         @layer='10'
-        @overflow='hidden'
+        @overflow={{hash all='hidden'}}
         @position={{hash type='relative'}}
         @radius='md'
         @shadow='md'
@@ -154,8 +154,8 @@
           </UiKit::Text>
           <UiKit::Text @margin={{hash bottom=6}}>
             We love Open Source and offer a free plan for your projects.
-            You will receive 2 concurrent jobs for free and all the other
-            features you've come to love from Travis CI.
+            You will receive unlimited builds and 3 concurrent jobs for free,
+            along with all the other features you've come to love from Travis CI.
           </UiKit::Text>
 
           <UiKit::Button @onClick={{action 'gaCta' 'plans-oss'}} @color='grey' @invert={{true}}>
