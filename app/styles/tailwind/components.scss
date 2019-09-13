@@ -3,6 +3,7 @@
  * Here's an example:
 **/
 .tailwind-overrides {
+  @apply overflow-x-hidden;
 
   // Form styles
   .travis-form {
