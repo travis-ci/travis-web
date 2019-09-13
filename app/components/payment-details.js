@@ -21,7 +21,7 @@ export default Component.extend({
 
   monthly: not('subscription.plan.annual'),
 
-  createStripeToken: task(function* () {
+  updateCreditCard: task(function* () {
     const { token } = yield this.stripe.createStripeToken.perform(this.stripeElement);
     try {
       if (token) {
@@ -29,9 +29,17 @@ export default Component.extend({
         this.set('openCreditCardForm', false);
       }
     } catch (error) {
-      this.flashes.error('An error occurred when updating your credit card info. Please try again.');
+      this.handleError(error);
     }
   }).drop(),
+
+  handleError(error) {
+    let errorMessage = 'An error occurred when updating your credit card info. Please try again.';
+    if (error && error.responseJSON) {
+      errorMessage = error.responseJSON.error_message;
+    }
+    this.flashes.error(`${errorMessage}`);
+  },
 
   actions: {
     complete(stripeElement) {

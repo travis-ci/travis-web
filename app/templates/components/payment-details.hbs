@@ -6,14 +6,14 @@
     {{#if this.subscription.isStripe}}
       {{#if this.openCreditCardForm}}
         <div class="edit-form">
-          <TravisForm @onSubmit={{perform this.createStripeToken}} as |form|>
+          <TravisForm @onSubmit={{perform this.updateCreditCard}} as |form|>
             <StripeCard @complete={{action "complete"}} @options={{this.options}} as |stripeError|>
               {{#if stripeError}}
                 <p>{{stripeError.message}}</p>
               {{/if}}
             </StripeCard>
             <div class="flex flex--wrap billing-subscription__buttons">
-              {{#if this.createStripeToken.isRunning}}
+              {{#if this.updateCreditCard.isRunning}}
                 <LoadingIndicator/>
               {{else}}
                 <button data-test-update-contact-address-button='true' onclick={{form.submit}} class="button--blue">
