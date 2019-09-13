@@ -33,7 +33,7 @@ export default Component.extend({
     } = yield this.stripe.createStripeToken.perform(stripeElement);
     try {
       if (!error) {
-        const organizationId = account.type === 'organization' ? Number(account.id) : null;
+        const organizationId = account.type === 'organization' ? +(account.id) : null;
         newSubscription.creditCardInfo.setProperties({
           token: id,
           lastDigits: card.last4

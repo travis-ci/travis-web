@@ -185,15 +185,13 @@ $select-multiple-spacing: 5px;
     .travis-form__field--slider {
 
       .travis-form__field--slider-input {
-        -webkit-appearance: none;
         appearance: none;
         width: 100%;
         height: 3px;
         background: #d3d3d3;
         outline: none;
         position: relative;
-        opacity: 0.7;
-        -webkit-transition: .2s;
+        opacity: 0.7; 
         transition: opacity .2s;
 
         &:hover {

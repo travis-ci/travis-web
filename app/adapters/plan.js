@@ -7,13 +7,12 @@ export default V3Adapter.extend({
   account: reads('accounts.user'),
 
   buildURL(modelName, id, snapshot, requestType) {
-    let url = this._super(...arguments);
+    const url = this._super(...arguments);
     let route = '/plans_for/user';
     if (this.account.type === 'organization') {
       route = `/plans_for/organization/${this.account.id}`;
     }
-    url = `${url}${route}`;
-    return url;
+    return url + route;
   },
 
   findAll(store, type) {

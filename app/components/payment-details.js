@@ -38,7 +38,7 @@ export default Component.extend({
     if (error && error.responseJSON) {
       errorMessage = error.responseJSON.error_message;
     }
-    this.flashes.error(`${errorMessage}`);
+    this.flashes.error(errorMessage);
   },
 
   actions: {

@@ -6,7 +6,7 @@ export default Model.extend({
   lastDigits: attr(),
 
   subscription: belongsTo('subscription'),
-  token: attr(),
+  token: attr('string'),
 
   updateToken(subscriptionId, { id, card }) {
     this.setProperties({ token: id, lastDigits: card.last4 });

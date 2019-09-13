@@ -37,27 +37,14 @@ export default Service.extend({
     return filteredAnnualPlans.sort((a, b) => a.builds - b.builds);
   }),
 
-  displayedPlans: computed(
-    'showAnnual',
-    'monthlyPlans.@each.annual',
-    'annualPlans.@each.annual',
-    function () {
-      const { annualPlans, showAnnual, monthlyPlans } = this;
-      return showAnnual ? annualPlans : monthlyPlans;
-    }
-  ),
+  displayedPlans: computed('showAnnual', 'monthlyPlans.[]', 'annualPlans.[]', function () {
+    const { annualPlans, showAnnual, monthlyPlans } = this;
+    return showAnnual ? annualPlans : monthlyPlans;
+  }),
 
-  selectedPlan: computed(
-    'displayedPlans.@each.{name,price,annual,builds}',
-    'defaultPlanName', {
-      get() {
-        return this.displayedPlans.findBy('name', this.defaultPlanName);
-      },
-      set(key, value) {
-        return value;
-      }
-    }
-  ),
+  selectedPlan: computed('displayedPlans.[].name', 'defaultPlanName', function () {
+    return this.displayedPlans.findBy('name', this.defaultPlanName);
+  }),
 
   togglePlanPeriod() {
     this.toggleProperty('showAnnual');

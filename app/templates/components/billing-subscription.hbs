@@ -59,7 +59,13 @@
       class="source {{if this.subscription.isManual 'alert-status-message'}}"
       data-test-source
     >
-      {{this.source}}
+      {{#if (eq this.subscription.source 'manual')}}
+        This is a manual subscription.
+      {{else if (eq this.subscription.source 'github')}}
+        This subscription is managed by GitHub Marketplace.
+      {{else}}
+        This plan is paid through Stripe.
+      {{/if}}
     </p>
   {{/if}}
   {{#if this.subscription.isGithubResubscribable}}

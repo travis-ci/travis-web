@@ -1,6 +1,7 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { equal, reads } from '@ember/object/computed';
+import { computed }  from '@ember/object';
 
 const STEPS = {
   ONE: 'stepOne',
@@ -17,7 +18,7 @@ export default Component.extend({
   showAnnual: reads('plan.showAnnual'),
 
   scrollSection: null,
-  steps: [...Object.values(STEPS)],
+  steps: computed(() => [...Object.values(STEPS)]),
 
   currentStep: reads('steps.firstObject'),
   isStepOne: equal('currentStep', STEPS.ONE),

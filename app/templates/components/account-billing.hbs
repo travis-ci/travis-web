@@ -13,7 +13,6 @@
     <BillingSubscription
       @newSubscription={{this.newSubscription}}
       @account={{this.account}}
-      
     />
   {{/if}}
   {{#if this.isTrial}}
@@ -26,4 +25,3 @@
 {{#if this.invoices}}
   <BillingInvoices @invoices={{this.invoices}} @subscription={{this.subscription}}/>
 {{/if}}
-

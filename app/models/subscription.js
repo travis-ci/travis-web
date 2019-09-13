@@ -87,19 +87,18 @@ export default Model.extend({
     yield this.api.post(`/subscription/${this.id}/cancel`, {
       data
     });
-    this.accounts.fetchSubscriptions.perform();
+    yield this.accounts.fetchSubscriptions.perform();
   }).drop(),
 
   changePlan: task(function* (data) {
     yield this.api.patch(`/subscription/${this.id}/plan`, {
       data
     });
-    this.accounts.fetchSubscriptions.perform();
+    yield this.accounts.fetchSubscriptions.perform();
   }).drop(),
 
   resubscribe: task(function* () {
     yield this.api.patch(`/subscription/${this.id}/resubscribe`);
-    // does not update the store immediately after update. Why?
-    this.accounts.fetchSubscriptions.perform();
+    yield this.accounts.fetchSubscriptions.perform();
   }).drop(),
 });

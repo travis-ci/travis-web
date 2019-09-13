@@ -30,7 +30,7 @@ module('Integration | Component | billing-address', function (hooks) {
     assert.dom('[data-test-user-details] section:nth-child(2)').hasText('company name Company');
     assert.dom('[data-test-user-details] section:nth-child(3)').hasText('billing email a@b.com');
     assert.dom('[data-test-billing-details] section:nth-child(1)').hasText('address Address');
-    assert.dom('[data-test-billing-details] section:nth-child(2)').hasText('city,state/territory City');
+    assert.dom('[data-test-billing-details] section:nth-child(2)').hasText('city, state/territory City');
     assert.dom('[data-test-billing-details] section:nth-child(3)').hasText('post code Zip Code');
     assert.dom('[data-test-billing-details] section:nth-child(4)').hasText('country Country');
   });
@@ -52,7 +52,7 @@ module('Integration | Component | billing-address', function (hooks) {
 
     assert.dom('[data-test-user-details] section:nth-child(1)').hasText('contact name A B');
     assert.dom('[data-test-billing-details] section:nth-child(1)').hasText('address Address');
-    assert.dom('[data-test-billing-details] section:nth-child(2)').hasText('city,state/territory City');
+    assert.dom('[data-test-billing-details] section:nth-child(2)').hasText('city, state/territory City');
     assert.dom('[data-test-billing-details] section:nth-child(3)').hasText('post code Zip Code');
     assert.dom('[data-test-billing-details] section:nth-child(4)').hasText('country Country');
   });
@@ -164,7 +164,7 @@ module('Integration | Component | billing-address', function (hooks) {
 
     assert.notOk(profilePage.billing.editBillingAddressForm.isPresent);
     assert.dom('[data-test-billing-details] section:nth-child(1)').hasText('address Address');
-    assert.dom('[data-test-billing-details] section:nth-child(2)').hasText('city,state/territory City');
+    assert.dom('[data-test-billing-details] section:nth-child(2)').hasText('city, state/territory City');
     assert.dom('[data-test-billing-details] section:nth-child(3)').hasText('post code Zip Code');
     assert.dom('[data-test-billing-details] section:nth-child(4)').hasText('country Country');
   });

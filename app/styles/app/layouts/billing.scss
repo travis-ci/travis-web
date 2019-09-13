@@ -121,7 +121,7 @@
       &--name {
         margin: 8px 0 0 0;
         font-size: 1.2em;
-        white-space: nowrap; 
+        white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
       }
@@ -194,7 +194,9 @@
         padding-left: 0;
 
         span {
-          font-weight: 400;
+          color: $ansi-black;
+          font-size: 1.2em;
+          font-weight: 500;
         }
       }
 
