@@ -10,7 +10,18 @@ export default TravisRoute.extend({
   },
 
   newSubscription() {
-    const billingInfo = this.store.createRecord('billing-info');
+    const billingInfo = this.store.createRecord('billing-info', {
+      // for quick testing purposes. Clean up.
+      firstName: 'Emmanuel',
+      lastName: 'Patrick',
+      company: 'Travis CI',
+      address: '9 Olalubi street',
+      city: 'Lagos',
+      state: 'Lagos',
+      zipCode: '43434',
+      country: 'Nigeria',
+      billingEmail: 'inem@gmail.org',
+    });
     const plan = this.store.createRecord('plan');
     const creditCardInfo = this.store.createRecord('credit-card-info');
     return this.store.createRecord('subscription', {
@@ -19,7 +30,6 @@ export default TravisRoute.extend({
       plan
     });
   },
-
 
   model() {
     return hash({

@@ -75,11 +75,11 @@
             Subscribe to {{selectedPlan.builds}} job plan
           </button>
           {{#if this.showCancelButton}}
-            <button data-test-cancel-button
+            <a data-test-cancel-button
               onClick={{action (toggle 'showPlansSelector' this)}} class="link cancel-link"
             >
               Cancel
-            </button>
+            </a>
           {{/if}}
         {{/if}}
       </div>

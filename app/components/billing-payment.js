@@ -2,7 +2,7 @@ import Component from '@ember/component';
 import { task } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
 import { or, reads } from '@ember/object/computed';
-// import config from 'travis/config/environment';
+import config from 'travis/config/environment';
 
 export default Component.extend({
   stripe: service(),
@@ -13,24 +13,7 @@ export default Component.extend({
   stripeElement: null,
   stripeLoading: false,
   newSubscription: null,
-  // options: config.stripeOptions,
-  options: {
-    hidePostalCode: true,
-    style: {
-      base: {
-        fontStyle: 'Source Sans Pro',
-        fontSize: '15px',
-        color: '#666',
-        '::placeholder': {
-          color: '#666'
-        },
-      },
-      invalid: {
-        color: 'red',
-        iconColor: 'red'
-      }
-    }
-  },
+  options: config.stripeOptions,
 
   firstName: reads('newSubscription.billingInfo.firstName'),
   lastName: reads('newSubscription.billingInfo.lastName'),
@@ -58,10 +41,8 @@ export default Component.extend({
         newSubscription.setProperties({ organizationId, plan: selectedPlan });
         const { clientSecret } = yield newSubscription.save();
         yield this.stripe.handleStripePayment.perform(clientSecret);
-        yield this.accounts.fetchSubscriptions.perform();
       }
     } catch (error) {
-      // assert if status == 422 unprocessable entity -- display error message (eg: invalid vat)
       this.flashes.error('An error occurred when creating your subscription. Please try again.');
     }
   }).drop(),

@@ -1,9 +1,30 @@
 .billing {
 
+  .notice-banner--red {
+    display: block;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    padding: 0.5rem 0.9rem 0.6rem;
+    font-size: $font-size-sm;
+  }
+
+  .notice-banner--white {
+    display: block;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    padding: 0.5rem 0.9rem 0.6rem;
+    font-size: $font-size-sm;
+  }
+
+  .icon-help-yellow {
+    @include colorSVG($dozer-yellow);
+    border: 1px solid $dozer-yellow;
+  }
+
   .billing-checkout {
 
     &__payment {
-      padding-top: 28px;
+      padding-top: 15px;
     }
 
     &__details {
@@ -161,10 +182,15 @@
         width: 82px;
         height: 24px;
         line-height: 1.7;
+        padding-left: 0;
 
         span {
-          font-weight: 700;
+          font-weight: 400;
         }
+      }
+
+      .on {
+        padding-left: 1px;
       }
     }
 
@@ -421,7 +447,7 @@
     border-radius: 8px;
     border: 4px solid transparent;
     margin: -4px;
-    padding: 11px 9px;
+    padding: 10px 9px;
     box-shadow: inset 0 0 1px 1px #d0d0d0;
   }
 
@@ -477,7 +503,7 @@
       }
 
       &__description {
-        font-weight: 300;
+        font-weight: 400;
         margin: 0;
 
         &--validity {
@@ -489,9 +515,10 @@
     }
   }
 }
+
 .cancel-subscription-modal {
 
-  .confirm-cancellation-button{
+  .confirm-cancellation-button {
     margin-right: 20px;
   }
 

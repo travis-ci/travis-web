@@ -50,87 +50,12 @@
       </div>
     </section>
   </div>
-  {{#if this.isPending}}
-    <span class="notice-banner--yellow" data-test-trial-running-out='true'>
-      We are currently waiting for Stripe to finish processing your order.
-    </span>
-  {{else if this.isIncomplete}}
-    <span class="notice-banner--yellow" data-test-payment-error='true'>
-      There was a problem authorizing your card. Please retry.
-    </span>
-    {{#if this.requiresSourceAction}}
-      {{#if this.retryAuthorization.isRunning}}
-        <LoadingIndicator/>
-      {{else}}
-        <button class="button--green" onClick={{action (perform this.retryAuthorization)}}>
-          Retry authorization
-        </button>
-      {{/if}}
-    {{/if}}
-    {{#if this.requiresSource}}
-      <TravisForm 
-        data-test-stripe-form='true' 
-        @onSubmit={{perform this.retryPayment}} 
-        as |form|
-      >
-        <StripeCard 
-          @complete={{action "complete"}} 
-          @options={{this.options}} 
-          as |stripeError|
-        >
-          {{#if stripeError}}
-            <p>{{stripeError.message}}</p>
-          {{/if}}
-        </StripeCard>
-        <div class='billing-checkout__payment'>
-          {{#if this.retryPayment.isRunning}}
-            <LoadingIndicator/>
-          {{else}}
-            <button class='button--blue' {{action form.submit}} data-test-complete-payment='true'>
-              Pay {{format-currency this.subscription.plan.price}}
-            </button>
-          {{/if}}
-        </div>
-      </TravisForm>
-    {{/if}}
-  {{/if}}
-  {{#if (and this.isComplete this.isNotPending this.subscription.isStripe)}}
-    {{#if this.showPlansSelector}}
-      <BillingSelectPlan
-        @title="Edit Plan"
-        @displayedPlans={{this.displayedPlans}}
-        @selectedPlan={{this.selectedPlan}}
-        @showMonthly={{this.showMonthly}}
-        @showAnnual={{this.showAnnual}}
-        @showPlansSelector={{this.showPlansSelector}}
-        @submit={{this.editPlan}}
-        @showCancelButton={{true}}
-      />
-    {{else}}
-      <div class="flex flex--wrap billing-subscription__buttons">
-        <div class="billing-subscription__buttons--change">
-          {{#if this.resubscribeLoading}}
-            <LoadingIndicator />
-          {{else if this.canResubscribe}}
-            <button onClick={{action (perform this.resubscribe)}} class='button--green' data-test-resubscribe-subscription='true'>
-              Resubscribe to plan
-            </button>
-          {{else if this.canChangePlan}}
-            <button onClick={{action (toggle 'showPlansSelector' this)}} class='button--blue' data-test-change-subscription='true'>
-              Change plan
-            </button>
-          {{/if}}
-        </div>
-        <div class='billing-subscription__buttons--cancel'>
-          {{#if this.canCancelSubscription}}
-            <button onClick={{action (toggle 'showCancelModal' this)}} class='button--white' data-test-open-cancel-subscription-modal='true'>
-              Cancel subscription
-            </button>
-          {{/if}}
-        </div>
-      </div>
-    {{/if}}
-  {{/if}}
+  <BillingAuthorization 
+    @subscription={{this.subscription}} 
+    @account={{this.account}}
+    @isPending={{this.isPending}}
+    @isComplete={{this.isComplete}}
+  />
 </div>
 <hr />
 {{#if this.showBillingInfo}}
@@ -138,66 +63,4 @@
   <PaymentDetails @subscription={{this.subscription}} />
   <hr />
 {{/if}}
-{{#if this.showCancelModal}}
-  <ModalDialog
-    @targetAttachment="center"
-    @translucentOverlay={{true}}
-    @overlayPosition="sibling"
-    @onClose={{action (toggle 'showCancelModal' this)}}
-    @clickOutsideToClose={{true}}
-    @animatable={{true}}
-  >
-    <div data-test-cancel-subscription-modal="true" class="flex flex--v-center flex--center flex--col cancel-subscription-modal">
-      <h2>We're sorry you'd like to cancel</h2>
-      <button
-        type="button"
-        title="Close modal"
-        class="modal-close pointer"
-        onClick={{action (toggle 'showCancelModal' this)}}
-      >
-        <SvgImage @name="icon-failed" @class="icon" />
-      </button>
-      <p class="cancel-subscription-modal__message">
-        To keep improving our product and how it works for our users, <br/> we'd like to hear your feedback on why you're cancelling.
-      </p>
-      <h5>reason for cancellation</h5>
-      <div class="flex cancel-subscription-modal__reason-options">
-        {{#each this.cancellationReasons as |reason|}}
-          <div onClick={{action 'selectCancellationReason' reason}} class='{{if (eq selectedCancellationReason reason.name) 'selected'}}'>
-            <p>
-              {{reason.name}}
-            </p>
-          </div>
-        {{/each}}
-      </div>
-      <div class="full-width">
-        <TravisForm
-          @onSubmit={{perform this.cancelSubscription}}
-          as |form|
-        >
-          <div class="form-elem cancellation-information">
-            <form.field
-              @label=""
-              @onChange={{action (mut this.cancellationReasonDetails)}}
-              as |field|
-            >
-              <field.textarea rows="4" placeholder="Could you share more information with us?">{{this.cancellationReasonDetails}}</field.textarea>
-            </form.field>
-          </div>
-          <div class="flex flex--v-center flex--center">
-            {{#if this.cancelSubscription.isRunning}}
-              <LoadingIndicator />
-            {{else}}
-              <button data-test-cancel-subscription="true" {{action (perform this.cancelSubscription)}} class="button--red confirm-cancellation-button">
-                Confirm cancellation
-              </button>
-              <a class="link" onClick={{action (toggle 'showCancelModal' this)}}>
-                I changed my mind
-              </a>
-            {{/if}}
-          </div>
-        </TravisForm>
-      </div>
-    </div>
-  </ModalDialog>
-{{/if}}
+

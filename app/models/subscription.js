@@ -79,7 +79,7 @@ export default Model.extend({
     return (isManual && (date > validToDate));
   }),
 
-  chargeUpdateInvoices: task(function* () {
+  chargeUnpaidInvoices: task(function* () {
     return yield this.api.post(`/subscription/${this.id}/pay`);
   }).drop(),
 

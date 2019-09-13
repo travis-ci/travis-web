@@ -3,8 +3,9 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import StripeMock from 'travis/tests/helpers/stripe-mock';
-import { stubConfig } from 'travis/tests/helpers/stub-service';
+import { stubConfig, stubService } from 'travis/tests/helpers/stub-service';
 import { getContext } from '@ember/test-helpers';
+import Service from '@ember/service';
 
 module('Integration | Component | billing-process', function (hooks) {
   setupRenderingTest(hooks);
@@ -37,9 +38,9 @@ module('Integration | Component | billing-process', function (hooks) {
       country: '',
       vatId: ''
     };
-
+    const account = { id: 1, hasSubscriptionPermissions: true, type: 'Organization' };
     this.setProperties({
-      account: { hasSubscriptionPermissions: true},
+      account,
       plans: plans,
       selectedPlan: plans[0],
       showAnnual: false,
@@ -55,6 +56,12 @@ module('Integration | Component | billing-process', function (hooks) {
     stubConfig('stripe', config, { instantiate: false });
     const { owner } = getContext();
     owner.inject('service:stripe', 'config', 'config:stripe');
+
+    let mockAccounts = Service.extend({
+      user: account
+    });
+
+    stubService('accounts', mockAccounts);
   });
 
   test('renders billing payment form correctly', async function (assert) {
@@ -73,7 +80,7 @@ module('Integration | Component | billing-process', function (hooks) {
   test('deny subscription when user has no permission', async function (assert) {
 
     this.set('currentStep', 'stepTwo');
-    this.set('account', { hasSubscriptionPermissions: false});
+    this.set('account', { hasSubscriptionPermissions: false });
 
     await render(hbs`
     <BillingProcess 
