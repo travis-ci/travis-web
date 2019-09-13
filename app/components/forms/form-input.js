@@ -7,6 +7,7 @@ export default Component.extend({
     'disabled',
     'type',
     'value',
+    'name',
     'placeholder',
     'autocomplete',
     'autofocus',
@@ -14,6 +15,7 @@ export default Component.extend({
   ],
   input: true,
 
+  name: '',
   disabled: false,
   type: 'text',
   value: '',
@@ -25,6 +27,7 @@ export default Component.extend({
   onFocus() {},
   onBlur() {},
   onInit() {},
+  onKeyUp() {},
 
   focusIn() {
     this.onFocus();

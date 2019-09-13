@@ -1,36 +1,79 @@
-<h2>
-  Plan Overview
-</h2>
-{{#if this.trial.hasActiveTrial}}
-  <p data-test-trial-message class="source plan-status-message">
-    You've got {{pluralize this.trial.buildsRemaining "trial build"}} left.<br />
-    Ensure unlimited builds by setting up a plan before it runs out!
-  </p>
-{{else if this.trial}}
-  <p data-test-trial-message class="source plan-status-message">
-    Your trial has just ended.<br />
-    To get the most out of Travis CI, set up a plan below!
-  </p>
-{{else}}
-  <p data-test-trial-message class="source plan-status-message">
-    Your trial includes 100 trial builds and 2-concurrent-jobs, no credit card required.<br />
-    Need help?
-    <ExternalLinkTo
-      data-test-trial-link="true"
-      @href={{config-get "urls.gettingStarted"}}
-      class="billing-section-link"
-    >
-      Check our getting started guide.
-    </ExternalLinkTo>
-  </p>
-{{/if}}
-{{#if this.subscription.isGithub}}
-  <ExternalLinkTo
-    @href={{config-get "marketplaceEndpoint"}}
-    class="button--blue marketplace-button"
-  >
-    Manage on GitHub Marketplace
-  </ExternalLinkTo>
-{{else}}
-  <NewSubscriptionButton @trial={{this.trial}} @account={{this.account}} />
-{{/if}}
+<div class="billing-trial">
+  <div class="initial-billing-view">
+    <div class="overview">
+      <div class="overview__heading">
+        <h3 data-test-overview-heading='true'>Overview</h3>
+      </div>
+      <div class="flex flex--v-center flex--col flex-md-row overview__body">
+        <div class="get-started">
+          {{#if this.trial.hasActiveTrial}}
+            <p class="get-started__message {{if this.isBuildLessThanEleven 'red' 'color-asphalt-grey'}}" data-test-trial-message='true'>
+              You have {{pluralize this.trial.buildsRemaining "trial build"}} left
+            </p>
+            <p class="get-started__start-trial color-asphalt-grey" data-test-trial-subtext='true'>
+              The trial includes 2 concurrent jobs for both public and private projects.
+            </p>
+          {{else if this.trial}}
+            <p class="source plan-status-message color-asphalt-grey"  data-test-trial-subtext='true'>
+              Your trial has just ended.<br />
+              To get the most out of Travis CI, set up a plan below!
+            </p>
+          {{else}}
+            <p class="get-started__message color-asphalt-grey" data-test-trial-message='true'>
+              100 free builds to get you started
+            </p>
+            <p class="get-started__start-trial color-asphalt-grey" data-test-trial-subtext='true'>
+              Start your trial to get 100 free builds and 2 concurrent jobs for both public and private projects.
+            </p>
+          {{/if}}
+        </div>
+        <div class="icon-wrapper flex flex--v-center">
+          {{svg-jar "icon-plus" class="icon icon-wrapper__plus"}}
+        </div>
+        <div class="billing-trial-info" data-test-open-source-box='true'>
+          <div class="billing-trial-info__box">
+            <p class="billing-trial-info__box--open-source" data-test-open-source-header='true'>We &lt;3 open source</p>
+            <p class="billing-trial-info__box--jobs" data-test-open-source-jobs='true'>
+              You get 3 free additional concurrent jobs for your open source projects.
+            </p>
+          </div>
+        </div>
+      </div>
+      {{#if this.showBuildRunningOutBanner}}
+        <span class="notice-banner--yellow" data-test-trial-running-out='true'>
+          Your trial is almost finished. Subscribe to a plan before your free builds run out!
+        </span>
+      {{else if this.isBuildFinished}}
+        <span class="notice-banner--yellow" data-test-trial-ran-out='true'>
+          Your trial has ended. Subscribe to a plan to continue building your project!
+        </span>
+      {{/if}}
+      {{#if (not this.trial)}}
+        {{#if this.hasNoSubscriptionPermissions}}
+          <div class="button--blue activate-trial-button disabled" data-test-activate-button='true'>
+            <EmberTooltip @text="You do not have permission to start a trial" />
+            Activate trial
+          </div>
+        {{else}}
+          <button onclick={{perform this.activateTrial}} class="button--blue activate-trial-button" data-test-activate-button='true'>
+            Activate trial
+          </button>
+        {{/if}}
+      {{/if}}
+    </div>
+    <hr />
+    {{#if this.subscription.isGithub}}
+      <ExternalLinkTo
+        @href={{config-get "marketplaceEndpoint"}}
+        class="button--blue marketplace-button"
+      >
+        Manage on GitHub Marketplace
+      </ExternalLinkTo>
+    {{else}}
+      <BillingProcess
+        @account={{this.account}}
+        @newSubscription={{this.newSubscription}}
+      />
+    {{/if}}
+  </div>
+</div>

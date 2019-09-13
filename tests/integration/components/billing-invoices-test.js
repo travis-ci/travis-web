@@ -69,7 +69,7 @@ module('Integration | Component | billing-invoices', function (hooks) {
 
     await render(hbs`<BillingInvoices @invoices={{this.invoices}} @subscription={{this.subscription}}/>`);
 
-    assert.dom('h2').hasText('Invoice History');
+    assert.dom('h3').hasText('Invoice history');
     assert.dom('[data-test-help-text]').containsText('Having trouble with your invoices?');
     assert.dom('[data-test-help-text] a').containsText('We’re happy to help');
     assert.dom('[data-test-table-header-row] th').exists({ count: 4 });
