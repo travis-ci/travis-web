@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { task } from 'ember-concurrency';
-import { countries } from '../../utils/countries';
+import { countries } from 'travis/utils/countries';
 
 export default Component.extend({
   countries,
