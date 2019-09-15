@@ -16,8 +16,8 @@
               {{#if this.updateCreditCard.isRunning}}
                 <LoadingIndicator/>
               {{else}}
-                <button data-test-update-contact-address-button='true' onclick={{form.submit}} class="button--blue">
-                  Edit payment details
+                <button data-test-update-contact-address-button='true' onclick={{form.submit}} class="button--green">
+                  Update payment details
                 </button>
                 <a onClick={{action (toggle 'openCreditCardForm' this)}} class='link cancel-link'>
                   Cancel
