@@ -48,7 +48,7 @@
               <p class='billing-plans__box--price' data-test-selected-plan-price>
                 {{format-currency plan.price floor="true"}}
                 <span class='color-asphalt-grey {{if (eq plan.id selectedPlan.id) 'highlight-plan'}}'>
-                  {{if this.selectedPlan.annual '/year' '/month'}}
+                  {{if plan.annual '/year' '/month'}}
                 </span>
               </p>
               <p class='billing-plans__box--name' data-test-selected-plan-name>

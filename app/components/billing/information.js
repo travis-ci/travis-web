@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { countries } from '../utils/countries';
+import { countries } from '../../utils/countries';
 import { equal }  from '@ember/object/computed';
 
 const SCROLL = {

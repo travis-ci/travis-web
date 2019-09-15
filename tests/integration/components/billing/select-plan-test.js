@@ -41,7 +41,7 @@ module('Integration | Component | billing-select-plan', function (hooks) {
 
   test('it renders default selected plan', async function (assert) {
 
-    await render(hbs`<BillingSelectPlan 
+    await render(hbs`<Billing::SelectPlan 
       @displayedPlans={{displayedPlans}} 
       @selectedPlan={{selectedPlan}}
       @showMonthly={{this.showMonthly}}
@@ -59,7 +59,7 @@ module('Integration | Component | billing-select-plan', function (hooks) {
     this.set('showAnnual', true);
     this.set('showMonthly', false);
 
-    await render(hbs`<BillingSelectPlan 
+    await render(hbs`<Billing::SelectPlan 
       @displayedPlans={{displayedPlans}} 
       @selectedPlan={{selectedPlan}}
       @showMonthly={{this.showMonthly}}

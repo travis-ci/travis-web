@@ -18,7 +18,7 @@
         @account={{this.account}}
       />
     {{else}}
-      <BillingSummary
+      <Billing::Summary
         @subscription={{this.subscription}}
         @account={{this.account}}
         @price={{this.price}}
@@ -26,28 +26,28 @@
       />
     {{/if}}
   {{else if this.subscription.isCanceled}}
-    <BillingSummary 
+    <Billing::Summary 
       @subscription={{this.subscription}} 
       @price={{this.price}}
       @account={{this.account}}
       @planMessage="Expires"
     />
   {{else if this.subscription.isIncomplete}}
-     <BillingSummary 
+     <Billing::Summary 
       @subscription={{this.subscription}} 
       @price={{this.price}}
       @account={{this.account}}
       @planMessage="Incomplete"
     />
   {{else if this.isPending}}
-    <BillingSummary 
+    <Billing::Summary 
       @subscription={{this.subscription}}
       @account={{this.account}}
       @price={{this.price}}
       @isPending={{true}}
     />
   {{else if this.subscription.isExpired}}
-    <BillingSummary 
+    <Billing::Summary 
       @subscription={{this.subscription}}
       @account={{this.account}}
       @price={{this.price}}
@@ -70,7 +70,7 @@
   {{/if}}
   {{#if this.subscription.isGithubResubscribable}}
     {{#if this.newSubscriptionProcess}}
-      <BillingProcess 
+      <Billing::Process 
         @account={{this.account}} 
         @plans={{this.plans}} 
         @newSubscription={{this.newSubscription}}

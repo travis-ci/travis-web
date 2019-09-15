@@ -38,8 +38,7 @@ export default Service.extend({
   }),
 
   displayedPlans: computed('showAnnual', 'monthlyPlans.[]', 'annualPlans.[]', function () {
-    const { annualPlans, showAnnual, monthlyPlans } = this;
-    return showAnnual ? annualPlans : monthlyPlans;
+    return this.showAnnual ? this.annualPlans : this.monthlyPlans;
   }),
 
   selectedPlan: computed('displayedPlans.[].name', 'defaultPlanName', function () {

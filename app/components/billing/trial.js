@@ -35,7 +35,7 @@ export default Component.extend({
       saved.set('status', 'new');
       saved.set('buildsRemaining', 100);
       this.set('newTrial', saved);
-      this.accounts.fetchTrials.perform();
+      yield this.accounts.fetchTrials.perform();
     } catch (e) {
       this.flashes.error('There was an error activating trial.');
       this.raven.logException(e);

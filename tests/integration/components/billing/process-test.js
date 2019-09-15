@@ -68,7 +68,7 @@ module('Integration | Component | billing-process', function (hooks) {
 
     this.set('currentStep', 'stepTwo');
 
-    await render(hbs`<BillingProcess 
+    await render(hbs`<Billing::Process 
       @account={{account}}
       @plans={{plans}}
       @currentStep={{currentStep}}
@@ -83,7 +83,7 @@ module('Integration | Component | billing-process', function (hooks) {
     this.set('account', { hasSubscriptionPermissions: false });
 
     await render(hbs`
-    <BillingProcess 
+    <Billing::Process 
       @account={{account}}
       @plans={{plans}}
     />`);
