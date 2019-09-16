@@ -364,10 +364,14 @@
 
   {{!-- Final message section --}}
   <UiKit::Box @tag='section' @textAlign='center'>
-    <UiKit::Text @margin={{hash bottom=6}}>
-      Have a question you don't see answered above?<br />
-      Our support and sales teams are very happy to help.
-    </UiKit::Text>
+    <UiKit::Box @margin={{hash bottom=6}}>
+      <UiKit::Text>
+        Have a question you don't see answered above?
+      </UiKit::Text>
+      <UiKit::Text>
+        Our support and sales teams are very happy to help.
+      </UiKit::Text>
+    </UiKit::Box>
 
     <UiKit::Link onclick={{fn (mut scrollToContact true)}}>
       <UiKit::Button>
