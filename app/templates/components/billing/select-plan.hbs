@@ -22,22 +22,18 @@
         </div>
         <div class='m-l-s'>
           {{#if showMonthly}}
-            <h5>
-              billing cycle recommendation:
-            </h5>
+            <h4>billing cycle recommendation:</h4>
             <p>
               Switch to annual billing to receive
-              <span class='font--bolder'>
-                one month free!
-              </span>
+              <span class='font--bolder'>one month free!</span>
             </p>
+          {{else}}
+            <p><span class='font--bolder'>One month free</span> now included!</p>
           {{/if}}
         </div>
       </div>
       <div class='plan-selector'>
-        <h5 data-test-choose-plan-heading>
-          Choose number of concurrent jobs
-        </h5>
+        <h4 data-test-choose-plan-heading>Choose number of concurrent jobs</h4>
         <div class='billing-plans flex flex--wrap' data-test-billing-plan-choices>
           {{#each displayedPlans as |plan|}}
             <div

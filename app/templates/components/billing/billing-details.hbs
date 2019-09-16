@@ -89,32 +89,30 @@
     </div>
   {{else}}
     <div data-test-billing-details='true' class="flex flex--space-between flex--wrap">
-      <section>
-        {{#if info.address}}
+      {{#if info.address}}
+        <section>
           <h4>address</h4>
-          <p>
-            {{info.address}}
-          </p>
-        {{/if}}
-      </section>
-      <section>
-        {{#if info.city}}
-          <h4>city, state/territory</h4>
+          <p>{{info.address}}</p>
+        </section>
+      {{/if}}
+      {{#if info.city}}
+        <section>
+          <h4>city</h4>
           <p>{{info.city}}</p>
-        {{/if}}
-      </section>
-      <section>
-        <h4>post code</h4>
-        {{#if info.zipCode}}
+        </section>
+      {{/if}}
+      {{#if info.zipCode}}
+        <section>
+          <h4>post code</h4>
           <p>{{info.zipCode}}</p>
-        {{/if}}
-      </section>
-      <section>
-        {{#if info.country}}
-        <h4>country</h4>
-        <p>{{info.country}}</p>
-        {{/if}}
-      </section>
+        </section>
+      {{/if}}
+      {{#if info.country}}
+        <section>
+          <h4>country</h4>
+          <p>{{info.country}}</p>
+        </section>
+      {{/if}}
     </div>
     <button class='button--blue billing-subscription__buttons' 
       onClick={{action (toggle 'openEditBillingForm' this)}} data-test-edit-billing-address='true'

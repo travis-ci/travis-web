@@ -85,8 +85,8 @@
 
   .billing-plans {
     background-color: #fff;
-    margin-bottom: 2em;
-    margin-top: 2em;
+    margin-bottom: 1em;
+    margin-top: 1em;
 
     &__box {
       background-color: #fff;
@@ -169,11 +169,12 @@
   }
 
   .billing-select-plan {
-    h5 {
+    h4 {
       margin: 0;
       text-transform: uppercase;
       font-weight: 700;
       color: $cement-grey;
+      font-size: 12px;
     }
 
     h3 {
@@ -190,7 +191,7 @@
       span {
         width: 82px;
         height: 24px;
-        line-height: 1.7;
+        line-height: 1.6;
         padding-left: 0;
 
         span {
