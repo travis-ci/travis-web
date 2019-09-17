@@ -13,12 +13,13 @@
               </p>
               <p class="get-started__start-trial color-asphalt-grey" data-test-trial-subtext='true'>
                 Start building by triggering a build on
-                <LinkTo @route="dashboard">
+                <LinkTo @route="dashboard" class="get-started-link">
                   your dashboard
                 </LinkTo>
                 or head over to our docs for
                 <ExternalLinkTo
                   @href={{config-get "urls.gettingStarted"}}
+                  class="get-started-link"
                 >
                   information on running your first build</ExternalLinkTo>.
               </p>
