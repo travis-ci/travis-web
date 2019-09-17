@@ -6,44 +6,36 @@ import { inject as service } from '@ember/service';
 export default Component.extend({
   tagName: '',
 
-  api: service(),
   flashes: service(),
   raven: service(),
-
-  name: '',
-  email: '',
-  size: '',
-  phone: '',
-  message: '',
+  store: service(),
 
   requiredMark: 'Required',
 
   isSubmitting: reads('send.isRunning'),
   isSuccess: bool('send.lastSuccessful.value'),
 
+  utmSource: 'travis-web',
+
   send: task(function* () {
-    const { api, name, email, size, phone, message } = this;
+    const { name, email, teamSize, phone, message, utmSource } = this;
     const data = {
       name,
       email,
-      team_size: size,
+      team_size: teamSize,
       phone,
       message,
-      utm_source: 'web-plans-page',
+      utm_source: utmSource,
     };
 
     try {
-      const result = yield api.post('/lead', { data });
+      const lead = this.store.createRecord('lead', data);
 
-      this.setProperties({
-        name: '',
-        email: '',
-        size: '',
-        phone: '',
-        message: '',
-      });
+      yield lead.save();
+      lead.unloadRecord();
+      this.reset();
 
-      return result;
+      return true;
     } catch (error) {
       this.flashes.error(
         "Something went wrong while submitting your request. We're working to fix it!"
@@ -52,6 +44,21 @@ export default Component.extend({
       throw error;
     }
   }).drop(),
+
+  reset() {
+    this.setProperties({
+      name: '',
+      email: '',
+      teamSize: '',
+      phone: '',
+      message: '',
+    });
+  },
+
+  init() {
+    this.reset();
+    this._super(...arguments);
+  },
 
   didInsertElement() {
     this.flashes.clear();
