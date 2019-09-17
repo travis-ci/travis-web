@@ -7,12 +7,30 @@
       <div class="flex flex--v-center flex--col flex-md-row overview__body">
         <div class="get-started">
           {{#if this.trial.hasActiveTrial}}
-            <p class="get-started__message {{if this.isBuildLessThanEleven 'red' 'color-asphalt-grey'}}" data-test-trial-message='true'>
-              You have {{pluralize this.trial.buildsRemaining "trial build"}} left
-            </p>
-            <p class="get-started__start-trial color-asphalt-grey" data-test-trial-subtext='true'>
-              The trial includes 2 concurrent jobs for both public and private projects.
-            </p>
+            {{#if (eq this.trial.buildsRemaining 100)}}
+              <p class="get-started__message {{if this.isBuildLessThanEleven 'red' 'color-asphalt-grey'}}" data-test-trial-message='true'>
+                Your trial is active!
+              </p>
+              <p class="get-started__start-trial color-asphalt-grey" data-test-trial-subtext='true'>
+                Start building by triggering a build on
+                <LinkTo @route="dashboard">
+                  your dashboard
+                </LinkTo>
+                or head over to our docs for
+                <ExternalLinkTo
+                  @href={{config-get "urls.gettingStarted"}}
+                >
+                  information on running your first build
+                </ExternalLinkTo>.
+              </p>
+            {{else}}
+              <p class="get-started__message {{if this.isBuildLessThanEleven 'red' 'color-asphalt-grey'}}" data-test-trial-message='true'>
+                You have {{pluralize this.trial.buildsRemaining "trial build"}} left
+              </p>
+              <p class="get-started__start-trial color-asphalt-grey" data-test-trial-subtext='true'>
+                The trial includes 2 concurrent jobs for both public and private projects.
+              </p>
+            {{/if}}
           {{else if this.trial}}
             <p class="source plan-status-message color-asphalt-grey"  data-test-trial-subtext='true'>
               Your trial has just ended.<br />
