@@ -12,6 +12,7 @@
       @onChange={{action (mut this.name)}}
       @requiredMark={{this.requiredMark}}
       @showRequiredMark={{true}}
+      class="mb-2"
       data-test-sales-contact-name="true"
       as |field|
     >
@@ -27,6 +28,7 @@
       @validator={{form-validator form.validators.email}}
       @requiredMark={{this.requiredMark}}
       @showRequiredMark={{true}}
+      class="mb-2"
       data-test-sales-contact-email="true"
       as |field|
     >
@@ -38,7 +40,7 @@
       @label='Size Of Your Team'
       @value={{this.size}}
       @onChange={{action (mut this.size)}}
-      class="mb-8"
+      class="mb-10"
       data-test-sales-contact-size="true"
       as |field|
     >
@@ -50,7 +52,7 @@
       @label='Contact Phone Number'
       @value={{this.phone}}
       @onChange={{action (mut this.phone)}}
-      class="mb-8"
+      class="mb-10"
       data-test-sales-contact-phone="true"
       as |field|
     >
@@ -65,6 +67,7 @@
       @onChange={{action (mut this.message)}}
       @requiredMark={{this.requiredMark}}
       @showRequiredMark={{true}}
+      class="mb-4"
       data-test-sales-contact-message="true"
       as |field|
     >

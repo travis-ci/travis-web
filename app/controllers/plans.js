@@ -39,6 +39,14 @@ export default Controller.extend({
         _gaq.push(['_trackPageview', page]);
       }
       this.auth.signIn();
+    },
+
+    toggleContactScroll() {
+      this.set('scrollToContact', true);
+      setTimeout(
+        () => this.set('scrollToContact', false),
+        500
+      );
     }
   }
 });

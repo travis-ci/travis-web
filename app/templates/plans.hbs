@@ -373,7 +373,7 @@
       </UiKit::Text>
     </UiKit::Box>
 
-    <UiKit::Link onclick={{fn (mut scrollToContact true)}}>
+    <UiKit::Link {{on 'click' (action 'toggleContactScroll')}}>
       <UiKit::Button>
         Shoot us a Message
       </UiKit::Button>

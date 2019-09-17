@@ -66,7 +66,6 @@ export default Component.extend({
   actions: {
     submit() {
       this.send.perform();
-      return false;
     }
   }
 });
