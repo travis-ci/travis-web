@@ -611,7 +611,7 @@ module('Acceptance | profile/billing', function (hooks) {
 
     assert.equal(profilePage.billing.trial.overviewHeading, 'Overview');
     assert.equal(profilePage.billing.trial.name.text, 'Your trial is active!');
-    assert.equal(profilePage.billing.trial.subtext, 'Start building by triggering a build on your dashboard or head over to our docs for information on running your first build.');
+    assert.equal(profilePage.billing.trial.subtext, 'Start building by triggering a build on your dashboard or head over to our docs for information on running your first build .');
     assert.ok(profilePage.billing.trial.openSourceMessage.isPresent);
     assert.equal(profilePage.billing.trial.openSourceMessage.heading, 'We <3 open source');
     assert.equal(profilePage.billing.trial.openSourceMessage.body, 'You get 3 free additional concurrent jobs for your open source projects.');
