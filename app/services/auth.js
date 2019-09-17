@@ -69,6 +69,7 @@ export default Service.extend({
       }
 
       window.location = `${this.endpoint}/auth/handshake?redirect_uri=${url}`;
+
       // window.location = `${this.endpoint}/auth/handshake/bitbucket?redirect_uri=${url}`;
       // window.location = `${this.endpoint}/auth/handshake/assembla?redirect_uri=${url}`;
     }
