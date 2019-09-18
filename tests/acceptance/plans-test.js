@@ -14,18 +14,28 @@ module('Acceptance | plans page', function (hooks) {
   });
 
   test('location and visual test', async function (assert) {
-    assert.equal(currentURL(), '/plans');
+    assert.equal(currentURL(), 'plans');
     percySnapshot(assert);
   });
 
   test('header section structure', async function (assert) {
     const { headerSection } = plansPage;
+    const { title, body } = headerSection;
+
     assert.ok(headerSection.isPresent);
+    assert.ok(title.isPresent);
+    assert.ok(body.isPresent);
   });
 
   test('product section structure', async function (assert) {
     const { productSection } = plansPage;
+    const { intervalSwitch, list, button } = productSection;
+
     assert.ok(productSection.isPresent);
+    assert.ok(intervalSwitch.isPresent);
+    assert.ok(list.isPresent);
+    assert.equal(list.items.length, 4);
+    assert.ok(button.isPresent);
   });
 
   test('oss section structure', async function (assert) {

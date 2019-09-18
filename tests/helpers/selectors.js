@@ -74,13 +74,19 @@ export const ZENDESK_FORM_COMMUNITY_HEADER = '[data-test-zendesk-form-community-
 export const ZENDESK_FORM_COMMUNITY_IMAGE = '[data-test-zendesk-form-community-image]';
 
 // travis/plans
-export const PLANS_PAGE_SECTION_HEADER = '[data-test-plans-page-section-header]';
-export const PLANS_PAGE_SECTION_PRODUCT = '[data-test-plans-page-section-product]';
-export const PLANS_PAGE_SECTION_OSS = '[data-test-plans-page-section-oss]';
-export const PLANS_PAGE_SECTION_CONTACT = '[data-test-plans-page-section-contact]';
-export const PLANS_PAGE_SECTION_ENTERPRISE = '[data-test-plans-page-section-enterprise]';
-export const PLANS_PAGE_SECTION_FAQ = '[data-test-plans-page-section-faq]';
-export const PLANS_PAGE_SECTION_MESSAGE = '[data-test-plans-page-section-message]';
+export const PLANS_PAGE_HEADER_SECTION = '[data-test-plans-page-header-section]';
+export const PLANS_PAGE_HEADER_TITLE = '[data-test-plans-page-header-title]';
+export const PLANS_PAGE_HEADER_BODY = '[data-test-plans-page-header-body]';
+export const PLANS_PAGE_PRODUCT_SECTION = '[data-test-plans-page-product-section]';
+export const PLANS_PAGE_PRODUCT_SWITCH = '[data-test-plans-page-product-switch]';
+export const PLANS_PAGE_PRODUCT_LIST = '[data-test-plans-page-product-list]';
+export const PLANS_PAGE_PRODUCT_LIST_ITEM = '[data-test-plans-page-product-list-item]';
+export const PLANS_PAGE_PRODUCT_BUTTON = '[data-test-plans-page-product-button]';
+export const PLANS_PAGE_OSS_SECTION = '[data-test-plans-page-oss-section]';
+export const PLANS_PAGE_CONTACT_SECTION = '[data-test-plans-page-contact-section]';
+export const PLANS_PAGE_ENTERPRISE_SECTION = '[data-test-plans-page-enterprise-section]';
+export const PLANS_PAGE_FAQ_SECTION = '[data-test-plans-page-faq-section]';
+export const PLANS_PAGE_MESSAGE_SECTION = '[data-test-plans-page-message-section]';
 
 // ember-power-select
 export const EPS_TRIGGER = '.ember-power-select-trigger';

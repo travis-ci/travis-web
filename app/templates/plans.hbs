@@ -5,12 +5,12 @@
     @tag='section'
     @margin={{hash top=3 bottom=16}}
     @textAlign='center'
-    data-test-plans-page-section-header="true"
+    data-test-plans-page-header-section="true"
   >
-    <UiKit::Text @tag='h1' @variant='h1'>
+    <UiKit::Text @tag='h1' @variant='h1' data-test-plans-page-header-title="true">
       Built for every team
     </UiKit::Text>
-    <UiKit::Text>
+    <UiKit::Text data-test-plans-page-header-body="true">
       Set up your first project in just one minute.
       <br />
       Your first 100 builds are free! No credit card required.
@@ -18,13 +18,13 @@
   </UiKit::Box>
 
   {{!-- Product section --}}
-  <UiKit::Box @tag='section' @margin={{hash bottom=16}} data-test-plans-page-section-product="true">
+  <UiKit::Box @tag='section' @margin={{hash bottom=16}} data-test-plans-page-product-section="true">
     <UiKit::Grid @align='center' @justify='start'>
       <UiKit::Text @tag='span' @variant='smallcaps' @margin={{hash right=2}}>
         Monthly
       </UiKit::Text>
 
-      <UiKit::Switch @onClick={{fn (mut showAnnual)}} @active={{showAnnual}} />
+      <UiKit::Switch @onClick={{fn (mut showAnnual)}} @active={{showAnnual}} data-test-plans-page-product-switch="true" />
 
       <UiKit::Text @tag='span' @color='blue' @margin={{hash left=2}} @size='xs'>
         <UiKit::Text @tag='span' @color='blue' @variant='smallcaps'>
@@ -51,9 +51,15 @@
         @radius='md'
         @shadow='md'
       >
-        <UiKit::Grid @base={{1}} @sm={{2}} @md={{4}} as |grid|>
+        <UiKit::Grid
+          @base={{1}}
+          @sm={{2}}
+          @md={{4}}
+          data-test-plans-page-product-list="true"
+          as |grid|
+        >
           {{#each plansToDisplay as |plan|}}
-            <grid.item>
+            <grid.item data-test-plans-page-product-list-item="true">
               <UiKit::Box
                 @borderWidth={{hash all='xs'}}
                 @height='full'
@@ -115,7 +121,7 @@
         </UiKit::Grid>
 
         <UiKit::Box @borderWidth={{hash all='xs'}} @padding={{hash all=4}} @textAlign='center'>
-          <UiKit::Button @onClick={{action 'gaCta' 'plans-table'}}>
+          <UiKit::Button @onClick={{action 'gaCta' 'plans-table'}} data-test-plans-page-product-button="true">
             Start Your Free Trial
           </UiKit::Button>
         </UiKit::Box>
@@ -133,7 +139,7 @@
   </UiKit::Box>
 
   {{!-- Open Source Section --}}
-  <UiKit::Box @tag='section' @margin={{hash bottom=20}} data-test-plans-page-section-oss="true">
+  <UiKit::Box @tag='section' @margin={{hash bottom=20}} data-test-plans-page-oss-section="true">
     <UiKit::Grid @sm={{2}} @align='center' @gap={{4}} @justify='around' as |grid|>
       <grid.item>
         <UiKit::Box
@@ -170,7 +176,7 @@
   {{#if this.scrollToContact}}<ScrollHere />{{/if}}
 
   {{!-- Contact form section --}}
-  <UiKit::Box @tag='section' @margin={{hash bottom=20}} data-test-plans-page-section-contact="true">
+  <UiKit::Box @tag='section' @margin={{hash bottom=20}} data-test-plans-page-contact-section="true">
     <UiKit::Grid  @sm={{2}} @align='center' @gap={{4}} @justify='around' as |grid|>
       <grid.item>
         <UiKit::Box
@@ -194,7 +200,7 @@
   </UiKit::Box>
 
   {{!-- Enterprise section --}}
-  <UiKit::Box @tag='section' @margin={{hash bottom=20}} data-test-plans-page-section-enterprise="true">
+  <UiKit::Box @tag='section' @margin={{hash bottom=20}} data-test-plans-page-enterprise-section="true">
     <UiKit::Grid  @sm={{2}} @align='center' @gap={{4}} @justify='around' as |grid|>
       <grid.item>
         <UiKit::Box
@@ -231,7 +237,7 @@
   </UiKit::Box>
 
   {{!-- FAQ Section --}}
-  <UiKit::Box @position={{hash type='relative'}} data-test-plans-page-section-faq="true">
+  <UiKit::Box @position={{hash type='relative'}} data-test-plans-page-faq-section="true">
     <UiKit::Box
       @position={{hash type='absolute' top=0 right=0}}
       @margin={{hash top=-10 right=-16}}
@@ -364,7 +370,7 @@
   </UiKit::Box>
 
   {{!-- Final message section --}}
-  <UiKit::Box @tag='section' @textAlign='center' data-test-plans-page-section-message="true">
+  <UiKit::Box @tag='section' @textAlign='center' data-test-plans-page-message-section="true">
     <UiKit::Box @margin={{hash bottom=6}}>
       <UiKit::Text>
         Have a question you don't see answered above?
