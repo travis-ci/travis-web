@@ -1027,11 +1027,18 @@
     ~ .auth-button {
       position: relative;
       z-index: 11;
+
+      &:hover {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+      }
     }
 
     &:hover ~ .auth-button {
       color: #fff;
       background-color: #2EB459;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
     }
   }
 }
