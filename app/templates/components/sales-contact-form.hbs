@@ -1,95 +1,91 @@
 {{#unless this.isSuccess}}
-  <TravisForm
-    @onSubmit={{action "submit"}}
-    data-test-sales-contact-form="true"
-    as |form|
-  >
-    {{!-- Name --}}
-    <form.field
-      @label='Name'
-      @required={{true}}
-      @value={{this.name}}
-      @onChange={{action (mut this.name)}}
-      @requiredMark={{this.requiredMark}}
-      @showRequiredMark={{true}}
-      class="mb-2"
-      data-test-sales-contact-name="true"
-      as |field|
+  <UiKit::box data-test-sales-contact-form-container="true">
+    <TravisForm
+      @onSubmit={{perform this.send}}
+      as |form|
     >
-      <field.input />
-    </form.field>
+      {{!-- Name --}}
+      <form.field
+        @label='Name'
+        @required={{true}}
+        @value={{this.name}}
+        @onChange={{action (mut this.name)}}
+        @requiredMark={{this.requiredMark}}
+        @showRequiredMark={{true}}
+        class="mb-2"
+        as |field|
+      >
+        <field.input data-test-sales-contact-form-name="true" />
+      </form.field>
 
-    {{!-- Email --}}
-    <form.field
-      @label='Company Email Address'
-      @required={{true}}
-      @value={{this.email}}
-      @onChange={{action (mut this.email)}}
-      @validator={{form-validator form.validators.email}}
-      @requiredMark={{this.requiredMark}}
-      @showRequiredMark={{true}}
-      class="mb-2"
-      data-test-sales-contact-email="true"
-      as |field|
-    >
-      <field.input @type='email' />
-    </form.field>
+      {{!-- Email --}}
+      <form.field
+        @label='Company Email Address'
+        @required={{true}}
+        @value={{this.email}}
+        @onChange={{action (mut this.email)}}
+        @validator={{form-validator form.validators.email}}
+        @requiredMark={{this.requiredMark}}
+        @showRequiredMark={{true}}
+        class="mb-2"
+        as |field|
+      >
+        <field.input @type='email' data-test-sales-contact-form-email="true" />
+      </form.field>
 
-    {{!-- Size --}}
-    <form.field
-      @label='Size Of Your Team'
-      @value={{this.teamSize}}
-      @onChange={{action (mut this.teamSize)}}
-      class="mb-10"
-      data-test-sales-contact-size="true"
-      as |field|
-    >
-      <field.input @type='number' />
-    </form.field>
+      {{!-- Size --}}
+      <form.field
+        @label='Size Of Your Team'
+        @value={{this.teamSize}}
+        @onChange={{action (mut this.teamSize)}}
+        class="mb-10"
+        as |field|
+      >
+        <field.input @type='number' data-test-sales-contact-form-size="true" />
+      </form.field>
 
-    {{!-- Phone --}}
-    <form.field
-      @label='Contact Phone Number'
-      @value={{this.phone}}
-      @onChange={{action (mut this.phone)}}
-      class="mb-10"
-      data-test-sales-contact-phone="true"
-      as |field|
-    >
-      <field.input />
-    </form.field>
+      {{!-- Phone --}}
+      <form.field
+        @label='Contact Phone Number'
+        @value={{this.phone}}
+        @onChange={{action (mut this.phone)}}
+        class="mb-10"
+        as |field|
+      >
+        <field.input data-test-sales-contact-form-phone="true" />
+      </form.field>
 
-    {{!-- Help --}}
-    <form.field
-      @label='How Can We Help You?'
-      @required={{true}}
-      @value={{this.message}}
-      @onChange={{action (mut this.message)}}
-      @requiredMark={{this.requiredMark}}
-      @showRequiredMark={{true}}
-      class="mb-4"
-      data-test-sales-contact-message="true"
-      as |field|
-    >
-      <field.textarea />
-    </form.field>
+      {{!-- Help --}}
+      <form.field
+        @label='How Can We Help You?'
+        @required={{true}}
+        @value={{this.message}}
+        @onChange={{action (mut this.message)}}
+        @requiredMark={{this.requiredMark}}
+        @showRequiredMark={{true}}
+        class="mb-4"
+        as |field|
+      >
+        <field.textarea data-test-sales-contact-form-message="true" />
+      </form.field>
 
-    {{!-- Submit --}}
-    <UiKit::Button
-      @disabled={{this.isSubmitting}}
-      type="submit"
-      data-test-sales-contact-submit="true"
-    >
-      {{#if this.isSubmitting}}
-        <LoadingIndicator @white={{true}} />
-      {{else}}
-        Send
-      {{/if}}
-    </UiKit::Button>
-  </TravisForm>
+      {{!-- Submit --}}
+      <UiKit::Button
+        @disabled={{this.isSubmitting}}
+        type="submit"
+        data-test-sales-contact-form-submit="true"
+      >
+        {{#if this.isSubmitting}}
+          <LoadingIndicator @white={{true}} />
+        {{else}}
+          Send
+        {{/if}}
+      </UiKit::Button>
+    </TravisForm>
+  </UiKit::box>
 {{else}}
-  <UiKit::box @textAlign='center' data-test-sales-contact-success="true">
-    <UiKit::Text @tag='h2' @variant='h2' data-test-sales-contact-success-header="true">
+  <UiKit::box @textAlign='center' data-test-sales-contact-success-container="true">
+    <UiKit::Text @tag='h2' @variant='h2' data-test-sales-contact-success-title="true">
       Thank you!
     </UiKit::Text>
     <UiKit::box
@@ -99,7 +95,7 @@
     >
       <SvgImage @name="hard-hat-success" />
     </UiKit::box>
-    <UiKit::Text data-test-sales-contact-success-message="true">
+    <UiKit::Text data-test-sales-contact-success-body="true">
       We'll get back to you as soon as possible.
     </UiKit::Text>
   </UiKit::box>
