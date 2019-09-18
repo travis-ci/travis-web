@@ -444,7 +444,8 @@ section.billing {
     font-size: 16px;
   }
 
-  .billing-section-link {
+  .billing-section-link,
+  .get-started-link {
     text-decoration: underline;
 
     &:hover,
