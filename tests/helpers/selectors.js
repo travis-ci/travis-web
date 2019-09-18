@@ -80,13 +80,16 @@ export const PLANS_PAGE_HEADER_BODY = '[data-test-plans-page-header-body]';
 export const PLANS_PAGE_PRODUCT_SECTION = '[data-test-plans-page-product-section]';
 export const PLANS_PAGE_PRODUCT_SWITCH = '[data-test-plans-page-product-switch]';
 export const PLANS_PAGE_PRODUCT_LIST = '[data-test-plans-page-product-list]';
-export const PLANS_PAGE_PRODUCT_LIST_ITEM = '[data-test-plans-page-product-list-item]';
 export const PLANS_PAGE_PRODUCT_BUTTON = '[data-test-plans-page-product-button]';
 export const PLANS_PAGE_OSS_SECTION = '[data-test-plans-page-oss-section]';
+export const PLANS_PAGE_OSS_BUTTON = '[data-test-plans-page-oss-button]';
 export const PLANS_PAGE_CONTACT_SECTION = '[data-test-plans-page-contact-section]';
 export const PLANS_PAGE_ENTERPRISE_SECTION = '[data-test-plans-page-enterprise-section]';
+export const PLANS_PAGE_ENTERPRISE_BUTTON = '[data-test-plans-page-enterprise-button]';
 export const PLANS_PAGE_FAQ_SECTION = '[data-test-plans-page-faq-section]';
+export const PLANS_PAGE_FAQ_LIST = '[data-test-plans-page-faq-list]';
 export const PLANS_PAGE_MESSAGE_SECTION = '[data-test-plans-page-message-section]';
+export const PLANS_PAGE_MESSAGE_BUTTON = '[data-test-plans-page-message-button]';
 
 // ember-power-select
 export const EPS_TRIGGER = '.ember-power-select-trigger';

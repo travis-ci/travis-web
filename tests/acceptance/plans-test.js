@@ -40,26 +40,40 @@ module('Acceptance | plans page', function (hooks) {
 
   test('oss section structure', async function (assert) {
     const { ossSection } = plansPage;
+    const { button } = ossSection;
+
     assert.ok(ossSection.isPresent);
+    assert.ok(button.isPresent);
   });
 
   test('contact section structure', async function (assert) {
     const { contactSection } = plansPage;
+
     assert.ok(contactSection.isPresent);
   });
 
   test('enterprise section structure', async function (assert) {
     const { enterpriseSection } = plansPage;
+    const { button } = enterpriseSection;
+
     assert.ok(enterpriseSection.isPresent);
+    assert.ok(button.isPresent);
   });
 
   test('faq section structure', async function (assert) {
     const { faqSection } = plansPage;
+    const { list } = faqSection;
+
     assert.ok(faqSection.isPresent);
+    assert.ok(list.isPresent);
+    assert.equal(list.items.length, 8);
   });
 
   test('message section structure', async function (assert) {
     const { messageSection } = plansPage;
+    const { button } = messageSection;
+
     assert.ok(messageSection.isPresent);
+    assert.ok(button.isPresent);
   });
 });
