@@ -8,7 +8,7 @@ import { inject as service } from '@ember/service';
 const { plans } = config;
 
 const utmSourceName = 'plans-page';
-const utmSource = `?utm_source${utmSourceName}`;
+const utmSource = `?utm_source=${utmSourceName}`;
 
 export default Controller.extend({
   config,
