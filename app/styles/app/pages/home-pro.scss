@@ -141,7 +141,7 @@
 
       img {
         @media #{$small-only} {
-          margin-right: 10px; 
+          margin-right: 10px;
         }
         width: 20px;
         height: auto;
@@ -188,7 +188,7 @@
       line-height: 50px;
       margin-bottom: 41px;
     }
-    
+
     p {
       color: #666666;
       font-size: 26px;
@@ -306,7 +306,7 @@
         background-size: 57px;
         margin-top: 7px;
       }
-      
+
       @media #{$large-up} {
         background-image: url("../images/landing-page/pr-flow.png");
         background-repeat: no-repeat;
@@ -477,7 +477,7 @@
       flex-wrap: wrap;
       align-items: center;
     }
-    
+
     li {
       margin-bottom: 30px;
       @media #{$medium-up} {
@@ -603,7 +603,7 @@
 
     li {
       flex: 0 0 16em;
-    
+
       p {
         @media #{$small-only} {
           padding: 0 60px;
@@ -616,7 +616,7 @@
         @media #{$small-up} {
           margin-left: -21px;
         }
-        
+
         width: 160px;
         margin-left: 10px;
         height: auto;
@@ -948,7 +948,7 @@ main {
   a {
     text-decoration: underline;
   }
-  
+
   .inner {
     @media #{$medium-up} {
       display: grid;
@@ -974,7 +974,7 @@ main {
       padding: 0 57px;
     }
   }
-  
+
   .section-languages-container {
     max-width: 500px;
     margin: 0 auto;
@@ -1087,7 +1087,7 @@ main {
     margin-top: 10px;
     margin-bottom: 64px;
   }
-  
+
   .start-building-button {
     color: white;
     font-size: 26px;
@@ -1103,5 +1103,3 @@ main {
     }
   }
 }
-
-
