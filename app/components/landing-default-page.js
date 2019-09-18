@@ -4,9 +4,11 @@ import { inject as service } from '@ember/service';
 export default Component.extend({
   auth: service(),
 
+  enableAssemblaLogin: localStorage['enableAssemblaLogin'] == 'true',
+
   actions: {
-    signIn() {
-      return this.signIn();
+    signIn(provider) {
+      return this.auth.signInWith(provider);
     },
 
     signOut() {

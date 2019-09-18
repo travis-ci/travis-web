@@ -6,16 +6,14 @@ import { inject as service } from '@ember/service';
 export default Component.extend({
   auth: service(),
 
+  enableAssemblaLogin: localStorage['enableAssemblaLogin'] == 'true',
+
   actions: {
-    gaCta(location) {
+    gaCta(location, provider) {
       if (config.gaCode) {
         _gaq.push(['_trackPageview', `/virtual/signup?${location}`]);
       }
-      this.auth.signIn();
-    },
-
-    signIn() {
-      return this.signIn();
+      this.auth.signInWith(provider);
     },
 
     signOut() {

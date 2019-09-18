@@ -59,10 +59,12 @@ export default Component.extend({
     return classes.join(' ');
   }),
 
+  enableAssemblaLogin: localStorage['enableAssemblaLogin'] == 'true',
+
   actions: {
 
-    signIn() {
-      return this.auth.signIn();
+    signIn(provider) {
+      return this.auth.signInWith(provider);
     },
 
     signOut() {

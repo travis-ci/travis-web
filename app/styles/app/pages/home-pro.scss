@@ -662,16 +662,24 @@
 
 .hero-button {
   @extend .landing-button;
+  font-size: 18px;
 
   svg {
-    width: 30px;
-    height: 30px;
+    width: 20px;
+    height: 20px;
     vertical-align: sub;
     margin-right: 0.4em;
+    fill: #fff;
   }
 
   &.org {
     margin: 2em auto;
+  }
+}
+
+.cta-container {
+  :not(:first-child) {
+    margin-left: 5px;
   }
 }
 
@@ -850,8 +858,7 @@ main {
   .landing-hero-container {
     @media #{$medium-up} {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      grid-gap: 5rem;
+      grid-template-columns: 500px max-content;
       padding: 10px 1.07143rem;
       max-width: 1024px;
       margin: auto;
@@ -861,9 +868,9 @@ main {
 
 .landing-hero-text {
   h1 {
-    font-size: 35px;
+    font-size: 45px;
     font-weight: 300;
-    line-height: 1.35em;
+    line-height: 1.1em;
     color: #3eaaaf;
     margin-top: 1em;
     margin-bottom: 36px;
@@ -886,10 +893,7 @@ main {
   img {
     width: 450px;
     @media #{$large-up}{
-      position: relative;
-      left: 61px;
       width: 550px;
-      max-width: inherit;
     }
   }
 }

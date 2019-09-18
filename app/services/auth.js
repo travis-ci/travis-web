@@ -55,20 +55,29 @@ export default Service.extend({
     this.store.unloadAll();
   },
 
-  signIn(data, options = {}) {
+  signInWith(provider, data, options = {}) {
+    if (['github', 'assembla'].includes(provider)) {
+      this.signIn(data, options, provider);
+    } else {
+      throw new Error(`Invalid provider to authenticate ${provider}`);
+    }
+  },
+
+  signIn(data, options = {}, provider = 'github') {
     if (data) {
       this.autoSignIn(data);
     } else {
       this.set('state', 'signing-in');
 
-      let uri = options.redirectUri || window.location.href,
-        url = new URLPolyfill(uri);
+      const uri = options.redirectUri || window.location.href;
+      let url = new URLPolyfill(uri);
 
       if (url.pathname === '/plans') {
         url.pathname = '/';
       }
 
-      window.location = `${this.endpoint}/auth/handshake?redirect_uri=${url}`;
+      const path = provider == 'github' ? '/auth/handshake' : `/auth/handshake/${provider}`;
+      window.location = `${this.endpoint}${path}?redirect_uri=${url}`;
     }
   },
 

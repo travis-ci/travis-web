@@ -11,19 +11,34 @@
             The simplest way to test and deploy your projects.
           </h1>
           <p>
-            Easily sync your GitHub projects with Travis CI and you'll be testing your code in minutes.
+            Easily sync your projects with Travis CI and you'll be testing your code in minutes.
           </p>
-          <a
-            href="https://travis-ci.com/signin"
-            class="hero-button cta-index-page"
-            title="Sign up with GitHub"
-            {{action "gaCta" "index"}}
-          >
-            <SvgImage @name="github-signin" />
-            <span>
-              Sign up with GitHub
-            </span>
-          </a>
+          <div class="cta-container">
+            <a
+              href="https://travis-ci.com/signin"
+              class="hero-button cta-index-page"
+              title="Sign up with GitHub"
+              {{action "gaCta" "index" "github"}}
+            >
+              <SvgImage @name="github-signin" />
+              <span>
+                Sign up with GitHub
+              </span>
+            </a>
+            {{#if enableAssemblaLogin}}
+              <a
+                href="https://travis-ci.com/signin"
+                class="hero-button cta-index-page"
+                title="Sign up with Assembla"
+                {{action "gaCta" "index" "assembla"}}
+              >
+                <SvgImage @name="icon-assembla" />
+                <span>
+                  Sign up with Assembla
+                </span>
+              </a>
+            {{/if}}
+          </div>
         </div>
         <div class="landing-hero-image">
           <img src="../images/pro-landing/hero-header.png" />

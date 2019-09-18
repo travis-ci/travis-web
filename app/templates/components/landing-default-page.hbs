@@ -10,17 +10,25 @@
           Test and Deploy with Confidence
         </h1>
         <p>
-          Easily sync your GitHub projects with Travis CI
+          Easily sync your projects with Travis CI
           <br class="mobile-break" />
           and you’ll be testing your code in minutes!
         </p>
         {{#if this.auth.signedOut}}
-          <button class="hero-button org" {{action "signIn"}}>
-            <SvgImage @name="sign-in-mascot" />
+          <button class="hero-button org" {{action "signIn" "github"}}>
+            <SvgImage @name="icon-repooctocat" />
             <span class="label-align">
-              Sign Up
+              Sign up with Github
             </span>
           </button>
+          {{#if enableAssemblaLogin}}
+            <button class="hero-button org" {{action "signIn" "assembla"}}>
+              <SvgImage @name="icon-assembla" />
+              <span class="label-align">
+                Sign up with Assembla
+              </span>
+            </button>
+          {{/if}}
         {{/if}}
         {{#if this.auth.signingIn}}
           <button class="hero-button org">
