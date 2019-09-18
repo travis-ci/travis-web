@@ -8,7 +8,7 @@
         <div class="get-started">
           {{#if this.trial.hasActiveTrial}}
             {{#if (eq this.trial.buildsRemaining 100)}}
-              <p class="get-started__message {{if this.isBuildLessThanEleven 'red' 'color-asphalt-grey'}}" data-test-trial-message='true'>
+              <p class="get-started__message color-asphalt-grey" data-test-trial-message='true'>
                 Your trial is active!
               </p>
               <p class="get-started__start-trial color-asphalt-grey" data-test-trial-subtext='true'>
