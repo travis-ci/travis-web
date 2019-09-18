@@ -1,7 +1,9 @@
 import {
   attribute,
+  clickable,
   collection,
   create,
+  fillable,
   isPresent,
   text,
   visitable
@@ -21,6 +23,17 @@ import {
   PLANS_PAGE_OSS_BUTTON,
 
   PLANS_PAGE_CONTACT_SECTION,
+  SALES_CONTACT_FORM_CONTAINER,
+  SALES_CONTACT_FORM_NAME,
+  SALES_CONTACT_FORM_EMAIL,
+  SALES_CONTACT_FORM_SIZE,
+  SALES_CONTACT_FORM_PHONE,
+  SALES_CONTACT_FORM_MESSAGE,
+  SALES_CONTACT_FORM_SUBMIT,
+  SALES_CONTACT_SUCCESS_CONTAINER,
+  SALES_CONTACT_SUCCESS_TITLE,
+  SALES_CONTACT_SUCCESS_IMAGE,
+  SALES_CONTACT_SUCCESS_BODY,
 
   PLANS_PAGE_ENTERPRISE_SECTION,
   PLANS_PAGE_ENTERPRISE_BUTTON,
@@ -88,6 +101,62 @@ export default create({
   contactSection: {
     scope: PLANS_PAGE_CONTACT_SECTION,
     isPresent: isPresent(),
+
+    form: {
+      scope: SALES_CONTACT_FORM_CONTAINER,
+      isPresent: isPresent(),
+
+      name: {
+        scope: SALES_CONTACT_FORM_NAME,
+        isPresent: isPresent(),
+        fill: fillable(),
+      },
+      email: {
+        scope: SALES_CONTACT_FORM_EMAIL,
+        isPresent: isPresent(),
+        fill: fillable(),
+      },
+      size: {
+        scope: SALES_CONTACT_FORM_SIZE,
+        isPresent: isPresent(),
+        fill: fillable(),
+      },
+      phone: {
+        scope: SALES_CONTACT_FORM_PHONE,
+        isPresent: isPresent(),
+        fill: fillable(),
+      },
+      message: {
+        scope: SALES_CONTACT_FORM_MESSAGE,
+        isPresent: isPresent(),
+        fill: fillable(),
+      },
+      submit: {
+        scope: SALES_CONTACT_FORM_SUBMIT,
+        isPresent: isPresent(),
+        click: clickable(),
+      },
+    },
+
+    success: {
+      scope: SALES_CONTACT_SUCCESS_CONTAINER,
+      isPresent: isPresent(),
+
+      title: {
+        scope: SALES_CONTACT_SUCCESS_TITLE,
+        isPresent: isPresent(),
+        text: text(),
+      },
+      image: {
+        scope: SALES_CONTACT_SUCCESS_IMAGE,
+        isPresent: isPresent(),
+      },
+      body: {
+        scope: SALES_CONTACT_SUCCESS_BODY,
+        isPresent: isPresent(),
+        text: text(),
+      },
+    },
   },
 
   enterpriseSection: {

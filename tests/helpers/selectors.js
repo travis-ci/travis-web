@@ -91,6 +91,20 @@ export const PLANS_PAGE_FAQ_LIST = '[data-test-plans-page-faq-list]';
 export const PLANS_PAGE_MESSAGE_SECTION = '[data-test-plans-page-message-section]';
 export const PLANS_PAGE_MESSAGE_BUTTON = '[data-test-plans-page-message-button]';
 
+// travis/components/sales-contact-form
+export const SALES_CONTACT_FORM_CONTAINER = '[data-test-sales-contact-form-container]';
+export const SALES_CONTACT_FORM_NAME = '[data-test-sales-contact-form-name]';
+export const SALES_CONTACT_FORM_EMAIL = '[data-test-sales-contact-form-email]';
+export const SALES_CONTACT_FORM_SIZE = '[data-test-sales-contact-form-size]';
+export const SALES_CONTACT_FORM_PHONE = '[data-test-sales-contact-form-phone]';
+export const SALES_CONTACT_FORM_MESSAGE = '[data-test-sales-contact-form-message]';
+export const SALES_CONTACT_FORM_SUBMIT = '[data-test-sales-contact-form-submit]';
+
+export const SALES_CONTACT_SUCCESS_CONTAINER = '[data-test-sales-contact-success-container]';
+export const SALES_CONTACT_SUCCESS_TITLE = '[data-test-sales-contact-success-title]';
+export const SALES_CONTACT_SUCCESS_IMAGE = '[data-test-sales-contact-success-image]';
+export const SALES_CONTACT_SUCCESS_BODY = '[data-test-sales-contact-success-body]';
+
 // ember-power-select
 export const EPS_TRIGGER = '.ember-power-select-trigger';
 export const EPS_OPTION = '.ember-power-select-option';
