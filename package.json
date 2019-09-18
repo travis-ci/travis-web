@@ -108,6 +108,7 @@
     "npm": "6.2.0"
   },
   "dependencies": {
+    "ember-cli-dotenv": "^2.2.3",
     "watchman": "^1.0.0"
   },
   "greenkeeper": {
