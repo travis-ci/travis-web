@@ -9,6 +9,7 @@ import { alias } from '@ember/object/computed';
 import { getOwner } from '@ember/application';
 
 import URLPolyfill from 'travis/utils/url';
+import { availableProviders } from 'travis/utils/vcs';
 
 const proVersion = config.featureFlags['pro-version'];
 
@@ -56,7 +57,7 @@ export default Service.extend({
   },
 
   signInWith(provider, data, options = {}) {
-    if (['github', 'assembla'].includes(provider)) {
+    if (availableProviders.includes(provider)) {
       this.signIn(data, options, provider);
     } else {
       throw new Error(`Invalid provider to authenticate ${provider}`);
