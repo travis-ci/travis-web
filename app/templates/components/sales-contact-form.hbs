@@ -1,7 +1,7 @@
 {{#unless this.isSuccess}}
   <UiKit::box data-test-sales-contact-form-container="true">
     <TravisForm
-      @onSubmit={{action "submit"}}
+      @onSubmit={{perform this.send}}
       as |form|
     >
       {{!-- Name --}}

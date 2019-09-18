@@ -55,12 +55,8 @@ export default Component.extend({
     });
   },
 
-  init() {
-    this.reset();
-    this._super(...arguments);
-  },
-
   didInsertElement() {
+    this.reset();
     this.flashes.clear();
     return this._super(...arguments);
   },
@@ -68,11 +64,5 @@ export default Component.extend({
   willDestroyElement() {
     this.flashes.clear();
     return this._super(...arguments);
-  },
-
-  actions: {
-    submit() {
-      this.send.perform();
-    }
   }
 });
