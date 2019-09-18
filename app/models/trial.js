@@ -6,7 +6,7 @@ export default Model.extend({
   owner: belongsTo('owner', { polymorphic: true }),
   permissions: attr(),
   status: attr(),
-
+  type: attr(),
   isNew: equal('status', 'new'),
   isStarted: equal('status', 'started'),
   isEnded: equal('status', 'ended'),

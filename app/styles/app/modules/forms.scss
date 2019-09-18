@@ -32,6 +32,10 @@ textarea {
   margin-bottom: 20px;
 }
 
+.inline-form-elem {
+  margin-right: 20px;
+}
+
 .form-label {
   font-size: 1rem;
   color: $cement-grey;
@@ -40,6 +44,23 @@ textarea {
   .form-elem & {
     display: block;
     margin-bottom: 5px;
+  }
+}
+
+.form-elem-half-width {
+  display: flex;
+  width: 100%;
+
+  &>.travis-form__field {
+    flex-basis: 100%;
+    padding-right: 0;
+  }
+
+  @media #{$medium-up} {
+    &>.travis-form__field {
+      flex-basis: 50%;
+      padding-right: 12px;
+    }
   }
 }
 
@@ -66,6 +87,12 @@ textarea {
   color: $cement-grey;
 }
 
+.form--billing-info {
+  .form-elem {
+    margin-right: 1rem;
+  }
+}
+
 .form--sshkey {
   .form-elem {
     margin-bottom: 0.5rem;
@@ -78,7 +105,8 @@ textarea {
   }
 }
 
-.form--envvar, .form--cron {
+.form--envvar,
+.form--cron {
   .form-elem {
     display: inline-block;
     vertical-align: top;
@@ -146,6 +174,7 @@ textarea {
   }
 
   @media #{$medium-up} {
+
     .form-elem:first-of-type,
     .form-elem:nth-of-type(2),
     .form-elem:nth-of-type(3) {
@@ -170,6 +199,7 @@ textarea {
   }
 
   @media #{$medium-up} {
+
     .form-elem:first-of-type,
     .form-elem:nth-of-type(2),
     .form-elem:nth-of-type(3) {
@@ -181,6 +211,7 @@ textarea {
 }
 
 .form-error {
+
   .env-name,
   .ssh-value {
     border: $brick-red 2px solid;

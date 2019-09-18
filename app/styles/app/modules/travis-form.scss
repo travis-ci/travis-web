@@ -144,7 +144,8 @@ $select-multiple-spacing: 5px;
         top: 1px;
         margin-right: 12px;
 
-        input, svg {
+        input,
+        svg {
           position: absolute;
           top: 0;
           bottom: 0;
@@ -179,6 +180,55 @@ $select-multiple-spacing: 5px;
         opacity: 0.5;
       }
 
+    }
+
+    .travis-form__field--slider {
+
+      .travis-form__field--slider-input {
+        appearance: none;
+        width: 100%;
+        height: 3px;
+        background: #d3d3d3;
+        outline: none;
+        position: relative;
+        opacity: 0.7; 
+        transition: opacity .2s;
+
+        &:hover {
+          opacity: 1;
+        }
+
+        &::-webkit-slider-thumb {
+          -webkit-appearance: none;
+          appearance: none;
+          width: 15px;
+          height: 15px;
+          border-radius: 50%;
+          background: $oxide-blue;
+          cursor: pointer;
+        }
+
+        &::-moz-range-thumb {
+          width: 15px;
+          height: 15px;
+          border-radius: 50%;
+          background: $oxide-blue;
+          cursor: pointer;
+        }
+
+        span {
+          content: '';
+          left: 0;
+          top: 0;
+          bottom: 0;
+          right: 0;
+          display: block;
+          position: absolute;
+          height: 100%;
+          width: 50%;
+          background: $oxide-blue;
+        }
+      }
     }
 
     .travis-form__icon {

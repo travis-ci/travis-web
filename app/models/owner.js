@@ -84,17 +84,25 @@ export default VcsEntity.extend({
   }),
 
   subscriptionError: reads('accounts.subscriptionError'),
+  subscriptions: reads('accounts.subscriptions'),
 
   subscription: computed(
-    'accounts.subscriptions.@each.{validTo,owner,isSubscribed}',
+    'subscriptions.@each.{validTo,owner,isSubscribed,isPending,isIncomplete}',
     'login',
     function () {
-      let subscriptions = this.get('accounts.subscriptions') || [];
-      let login = this.login;
-      const accountSubscriptions = subscriptions.filterBy('owner.login', login) || [];
-      const activeAccountSubscriptions = accountSubscriptions.filterBy('isSubscribed') || [];
-      if (activeAccountSubscriptions.length > 1) this.logMultipleSubscriptionsError();
+      let subscriptions = this.subscriptions || [];
+      const accountSubscriptions = subscriptions.filterBy('owner.login', this.login);
+      const activeAccountSubscriptions = accountSubscriptions.filterBy('isSubscribed');
+      const incompleteAccountSubscriptions = accountSubscriptions.filterBy('isIncomplete');
+      const pendingAccountSubscriptions = accountSubscriptions.filterBy('isPending');
+      if (activeAccountSubscriptions.length > 1 ||
+        pendingAccountSubscriptions.length > 1 ||
+        incompleteAccountSubscriptions.length > 1) {
+        this.logMultipleSubscriptionsError();
+      }
       return activeAccountSubscriptions.get('firstObject') ||
+        pendingAccountSubscriptions.get('firstObject') ||
+        incompleteAccountSubscriptions.get('firstObject') ||
         accountSubscriptions.get('lastObject');
     }
   ),
