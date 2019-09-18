@@ -7,15 +7,18 @@ import { inject as service } from '@ember/service';
 
 const { plans } = config;
 
-const utmSource = '?utm_source=plans_page';
+const utmSourceName = 'plans-page';
+const utmSource = `?utm_source${utmSourceName}`;
 
 export default Controller.extend({
   config,
 
   auth: service(),
 
+  utmSourceName,
   billingUrl: `${config.billingEndpoint}/${utmSource}`,
   buildMatrixUrl: `${config.urls.buildMatrix}${utmSource}`,
+  enterpriseUrl: `${config.urls.enterprise}${utmSource}`,
 
   plans: computed(() => plans),
   annualPlans: filterBy('plans', 'period', 'annual'),

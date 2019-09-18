@@ -73,6 +73,15 @@ export const ZENDESK_FORM_BACK_LINK = '[data-test-zendesk-form-back-link]';
 export const ZENDESK_FORM_COMMUNITY_HEADER = '[data-test-zendesk-form-community-header]';
 export const ZENDESK_FORM_COMMUNITY_IMAGE = '[data-test-zendesk-form-community-image]';
 
+// travis/plans
+export const PLANS_PAGE_SECTION_HEADER = '[data-test-plans-page-section-header]';
+export const PLANS_PAGE_SECTION_PRODUCT = '[data-test-plans-page-section-product]';
+export const PLANS_PAGE_SECTION_OSS = '[data-test-plans-page-section-oss]';
+export const PLANS_PAGE_SECTION_CONTACT = '[data-test-plans-page-section-contact]';
+export const PLANS_PAGE_SECTION_ENTERPRISE = '[data-test-plans-page-section-enterprise]';
+export const PLANS_PAGE_SECTION_FAQ = '[data-test-plans-page-section-faq]';
+export const PLANS_PAGE_SECTION_MESSAGE = '[data-test-plans-page-section-message]';
+
 // ember-power-select
 export const EPS_TRIGGER = '.ember-power-select-trigger';
 export const EPS_OPTION = '.ember-power-select-option';

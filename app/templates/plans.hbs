@@ -5,6 +5,7 @@
     @tag='section'
     @margin={{hash top=3 bottom=16}}
     @textAlign='center'
+    data-test-plans-page-section-header="true"
   >
     <UiKit::Text @tag='h1' @variant='h1'>
       Built for every team
@@ -17,7 +18,7 @@
   </UiKit::Box>
 
   {{!-- Product section --}}
-  <UiKit::Box @tag='section' @margin={{hash bottom=16}}>
+  <UiKit::Box @tag='section' @margin={{hash bottom=16}} data-test-plans-page-section-product="true">
     <UiKit::Grid @align='center' @justify='start'>
       <UiKit::Text @tag='span' @variant='smallcaps' @margin={{hash right=2}}>
         Monthly
@@ -132,7 +133,7 @@
   </UiKit::Box>
 
   {{!-- Open Source Section --}}
-  <UiKit::Box @tag='section' @margin={{hash bottom=20}}>
+  <UiKit::Box @tag='section' @margin={{hash bottom=20}} data-test-plans-page-section-oss="true">
     <UiKit::Grid @sm={{2}} @align='center' @gap={{4}} @justify='around' as |grid|>
       <grid.item>
         <UiKit::Box
@@ -169,7 +170,7 @@
   {{#if this.scrollToContact}}<ScrollHere />{{/if}}
 
   {{!-- Contact form section --}}
-  <UiKit::Box @tag='section' @margin={{hash bottom=20}}>
+  <UiKit::Box @tag='section' @margin={{hash bottom=20}} data-test-plans-page-section-contact="true">
     <UiKit::Grid  @sm={{2}} @align='center' @gap={{4}} @justify='around' as |grid|>
       <grid.item>
         <UiKit::Box
@@ -187,13 +188,13 @@
         </UiKit::Box>
       </grid.item>
       <grid.item>
-        <SalesContactForm @utmSource='travis-web-plans-page' />
+        <SalesContactForm @utmSource={{this.utmSourceName}} />
       </grid.item>
     </UiKit::Grid>
   </UiKit::Box>
 
   {{!-- Enterprise section --}}
-  <UiKit::Box @tag='section' @margin={{hash bottom=20}}>
+  <UiKit::Box @tag='section' @margin={{hash bottom=20}} data-test-plans-page-section-enterprise="true">
     <UiKit::Grid  @sm={{2}} @align='center' @gap={{4}} @justify='around' as |grid|>
       <grid.item>
         <UiKit::Box
@@ -219,7 +220,7 @@
             additional on-site security needs.
           </UiKit::Text>
 
-          <ExternalLinkTo @href={{config.urls.enterprise}}>
+          <ExternalLinkTo @href={{this.enterpriseUrl}}>
             <UiKit::Button @color='grey' @invert={{true}}>
               Learn more about Travis CI Enterprise
             </UiKit::Button>
@@ -230,7 +231,7 @@
   </UiKit::Box>
 
   {{!-- FAQ Section --}}
-  <UiKit::Box @position={{hash type='relative'}}>
+  <UiKit::Box @position={{hash type='relative'}} data-test-plans-page-section-faq="true">
     <UiKit::Box
       @position={{hash type='absolute' top=0 right=0}}
       @margin={{hash top=-10 right=-16}}
@@ -363,7 +364,7 @@
   </UiKit::Box>
 
   {{!-- Final message section --}}
-  <UiKit::Box @tag='section' @textAlign='center'>
+  <UiKit::Box @tag='section' @textAlign='center' data-test-plans-page-section-message="true">
     <UiKit::Box @margin={{hash bottom=6}}>
       <UiKit::Text>
         Have a question you don't see answered above?
