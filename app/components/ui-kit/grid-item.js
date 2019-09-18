@@ -42,6 +42,7 @@ export default Component.extend(spacingMixin, borderMixin, {
   tagName: '',
 
   // Public interface
+  componentClass: 'grid-item',
   tag: 'div',
   grid: null,
   base: null,
@@ -76,6 +77,7 @@ export default Component.extend(spacingMixin, borderMixin, {
   }),
 
   allClasses: concat(
+    'componentClass',
     'baseClass',
     'smClass',
     'mdClass',

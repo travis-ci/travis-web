@@ -59,7 +59,7 @@
           as |grid|
         >
           {{#each plansToDisplay as |plan|}}
-            <grid.item data-test-plans-page-product-list-item="true">
+            <grid.item>
               <UiKit::Box
                 @borderWidth={{hash all='xs'}}
                 @height='full'
@@ -165,7 +165,7 @@
             along with all the other features you've come to love from Travis CI.
           </UiKit::Text>
 
-          <UiKit::Button @onClick={{action 'gaCta' 'plans-oss'}} @color='grey' @invert={{true}}>
+          <UiKit::Button @onClick={{action 'gaCta' 'plans-oss'}} @color='grey' @invert={{true}} data-test-plans-page-oss-button="true">
             Set up your open source project now
           </UiKit::Button>
         </UiKit::Box>
@@ -227,7 +227,7 @@
           </UiKit::Text>
 
           <ExternalLinkTo @href={{this.enterpriseUrl}}>
-            <UiKit::Button @color='grey' @invert={{true}}>
+            <UiKit::Button @color='grey' @invert={{true}} data-test-plans-page-enterprise-button="true">
               Learn more about Travis CI Enterprise
             </UiKit::Button>
           </ExternalLinkTo>
@@ -258,7 +258,12 @@
         Frequently asked questions
       </UiKit::Text>
 
-      <UiKit::Grid  @base={{1}} @sm={{2}} as |grid|>
+      <UiKit::Grid
+        @base={{1}}
+        @sm={{2}}
+        data-test-plans-page-faq-list="true"
+        as |grid|
+      >
         {{!-- FAQ set 1 --}}
         <grid.item @borderWidth={{hash bottom='xs'}} @padding={{hash all=5}}>
           <UiKit::Text @tag='h4' @size='xl' @weight='bold' @color='blue-light' @margin={{hash bottom=2}}>
@@ -380,10 +385,8 @@
       </UiKit::Text>
     </UiKit::Box>
 
-    <UiKit::Link {{on 'click' (action 'toggleContactScroll')}}>
-      <UiKit::Button>
-        Shoot us a Message
-      </UiKit::Button>
-    </UiKit::Link>
+    <UiKit::Button {{on 'click' (action 'toggleContactScroll')}} data-test-plans-page-message-button="true">
+      Shoot us a Message
+    </UiKit::Button>
   </UiKit::Box>
 </TravisLayout>
