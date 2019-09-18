@@ -8,8 +8,8 @@
       <form.field
         @label='Name'
         @required={{true}}
-        @value={{this.name}}
-        @onChange={{action (mut this.name)}}
+        @value={{this.lead.name}}
+        @onChange={{action (mut this.lead.name)}}
         @requiredMark={{this.requiredMark}}
         @showRequiredMark={{true}}
         class="mb-2"
@@ -22,8 +22,8 @@
       <form.field
         @label='Company Email Address'
         @required={{true}}
-        @value={{this.email}}
-        @onChange={{action (mut this.email)}}
+        @value={{this.lead.email}}
+        @onChange={{action (mut this.lead.email)}}
         @validator={{form-validator form.validators.email}}
         @requiredMark={{this.requiredMark}}
         @showRequiredMark={{true}}
@@ -36,8 +36,8 @@
       {{!-- Size --}}
       <form.field
         @label='Size Of Your Team'
-        @value={{this.teamSize}}
-        @onChange={{action (mut this.teamSize)}}
+        @value={{this.lead.team_size}}
+        @onChange={{action (mut this.lead.team_size)}}
         class="mb-10"
         as |field|
       >
@@ -47,8 +47,8 @@
       {{!-- Phone --}}
       <form.field
         @label='Contact Phone Number'
-        @value={{this.phone}}
-        @onChange={{action (mut this.phone)}}
+        @value={{this.lead.phone}}
+        @onChange={{action (mut this.lead.phone)}}
         class="mb-10"
         as |field|
       >
@@ -59,8 +59,8 @@
       <form.field
         @label='How Can We Help You?'
         @required={{true}}
-        @value={{this.message}}
-        @onChange={{action (mut this.message)}}
+        @value={{this.lead.message}}
+        @onChange={{action (mut this.lead.message)}}
         @requiredMark={{this.requiredMark}}
         @showRequiredMark={{true}}
         class="mb-4"

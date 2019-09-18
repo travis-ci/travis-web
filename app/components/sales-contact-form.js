@@ -15,26 +15,13 @@ export default Component.extend({
   isSubmitting: reads('send.isRunning'),
   isSuccess: bool('send.lastSuccessful.value'),
 
+  lead: null,
   utmSource: 'travis-web',
 
   send: task(function* () {
-    const { name, email, teamSize, phone, message, utmSource } = this;
-    const data = {
-      name,
-      email,
-      team_size: teamSize,
-      phone,
-      message,
-      utm_source: utmSource,
-    };
-
     try {
-      const lead = this.store.createRecord('lead', data);
-
-      yield lead.save();
-      lead.unloadRecord();
+      yield this.lead.save();
       this.reset();
-
       return true;
     } catch (error) {
       this.flashes.error(
@@ -46,13 +33,8 @@ export default Component.extend({
   }).drop(),
 
   reset() {
-    this.setProperties({
-      name: '',
-      email: '',
-      teamSize: '',
-      phone: '',
-      message: '',
-    });
+    if (this.lead) this.lead.unloadRecord();
+    this.set('lead', this.store.createRecord('lead', { utm_source: this.utmSource }));
   },
 
   didInsertElement() {
