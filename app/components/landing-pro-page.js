@@ -6,6 +6,7 @@ import { computed } from '@ember/object';
 
 export default Component.extend({
   auth: service(),
+  features: service(),
 
   enableAssemblaLogin: computed(function() {
     return this.features.get('enable-assembla-login');
