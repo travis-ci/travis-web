@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 23.0.3, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 274.226 274.226" style="enable-background:new 0 0 274.226 274.226;" xml:space="preserve">
+<style type="text/css">
+	.fake{fill:url(#this_fixes_gradient);}
+	.st0{fill:url(#Gradient_Circle__x2014__Large__x2014__Green_1_);}
+</style>
+<linearGradient id="Gradient_Circle__x2014__Large__x2014__Green_1_" gradientUnits="userSpaceOnUse" x1="-404.1775" y1="3893.5769" x2="-580.4503" y2="4103.6509" gradientTransform="matrix(-1 0 0 -1 -355.2011 4135.7266)">
+	<stop  offset="0" style="stop-color:#FFFFFF;stop-opacity:0"/>
+	<stop  offset="0.0886" style="stop-color:#E4F7EC;stop-opacity:0.0886"/>
+	<stop  offset="0.3406" style="stop-color:#9BE0BA;stop-opacity:0.3406"/>
+	<stop  offset="0.5667" style="stop-color:#61CF93;stop-opacity:0.5667"/>
+	<stop  offset="0.7589" style="stop-color:#38C276;stop-opacity:0.7589"/>
+	<stop  offset="0.9095" style="stop-color:#1EBA64;stop-opacity:0.9095"/>
+	<stop  offset="1" style="stop-color:#15B75E"/>
+</linearGradient>
+<circle id="Gradient_Circle__x2014__Large__x2014__Green" class="st0" cx="137.113" cy="137.113" r="137.113"/>
+</svg>

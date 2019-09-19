@@ -1,0 +1,8 @@
+{{#let (element this.tag) as |Tag|}}
+  <Tag
+    class={{this.allClasses}}
+    ...attributes
+  >{{yield (hash
+    item=(component "ui-kit/grid-item" grid=this)
+  )}}</Tag>
+{{/let}}

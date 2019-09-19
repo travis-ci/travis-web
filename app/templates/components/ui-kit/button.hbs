@@ -1,0 +1,17 @@
+<button
+  role={{this.role}}
+  disabled={{this.disabled}}
+  class="
+    rounded-md uppercase px-3 py-2 font-bold
+    bg-{{this.bgColor}}
+    hover:bg-{{this.hoverBgColor}}
+    text-{{this.labelColor}}
+    text-xs
+    tracking-lg
+
+    {{if this.invert 'border-px border-solid'}}
+    border-{{this.borderColor}}
+  "
+  {{on 'click' (action 'handleClick')}}
+  ...attributes
+>{{yield}}</button>
