@@ -1,0 +1,14 @@
+@tailwind base;
+
+button[disabled],
+[role="button"][disabled] {
+  cursor: default;
+}
+
+button:focus {
+  outline: none;
+}
+
+html, body {
+  @apply .text-grey-800 .font-sans;
+}
