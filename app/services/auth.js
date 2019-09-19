@@ -57,11 +57,8 @@ export default Service.extend({
   },
 
   signInWith(provider, data, options = {}) {
-    if (availableProviders.includes(provider)) {
-      this.signIn(data, options, provider);
-    } else {
-      throw new Error(`Invalid provider to authenticate ${provider}`);
-    }
+    assert(`Invalid provider to authenticate ${provider}`, availableProviders.includes(provider));
+    this.signIn(data, options, provider);
   },
 
   signIn(data, options = {}, provider = 'github') {
@@ -77,7 +74,7 @@ export default Service.extend({
         url.pathname = '/';
       }
 
-      const path = provider == 'github' ? '/auth/handshake' : `/auth/handshake/${provider}`;
+      const path = provider === 'github' ? '/auth/handshake' : `/auth/handshake/${provider}`;
       window.location = `${this.endpoint}${path}?redirect_uri=${url}`;
     }
   },

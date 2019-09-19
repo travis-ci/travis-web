@@ -999,13 +999,16 @@
 
 .landing-page {
   #profile-menu-link {
+    line-height: 0;
+    margin-top: 12px;
     position: relative;
+    text-align: center;
   }
 
   .navigation-nested {
     background-color: white;
     width: auto;
-    margin: 43px 0 0;
+    margin: 31px 0 0;
     box-shadow: 0 -6px 0 #fff, 0 1px 6px rgba(0,0,0, .15);
     width: 100%;
     border-top-right-radius: 0;
@@ -1025,6 +1028,8 @@
     }
 
     ~ .auth-button {
+      cursor: default;
+      padding-top: 10px;
       position: relative;
       z-index: 11;
 
