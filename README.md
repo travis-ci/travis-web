@@ -46,13 +46,10 @@ Copy `.env.example` to `.env`
 $ cp .env.example .env
 ```
 
-Set the required `env` variables to run in private mode:
+Update the `.env` file to run the app in private repos mode:
 
 ```
-API_ENDPOINT=https://api-staging.travis-ci.com
-STRIPE_PUBLISHABLE_KEY=YOUR_KEY
 TRAVIS_PRO=true
-TRAVIS_ENTERPRISE=false
 ```
 Stripe key is required to show subscriptions locally.
 
@@ -132,13 +129,11 @@ deploy from your own machine too. First, update your `.env` file with the follow
 ```
 AWS_KEY=key
 AWS_SECRET=secret
-ORG_PRODUCTION_REDIS_URL=redis
-TRAVIS_PULL_REQUEST_BRANCH=branch
 ```
 Then run:
 
 ```
-ember deploy org-production-pull-request --activate
+npm run deploy
 ```
 
 After success, your deployment will be available at branch.test-deployments.travis-ci.org.
