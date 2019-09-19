@@ -6,7 +6,7 @@ export default Component.extend({
   auth: service(),
   features: service(),
 
-  enableAssemblaLogin: computed(function() {
+  enableAssemblaLogin: computed(function () {
     return this.features.get('enable-assembla-login');
   }),
 

@@ -59,7 +59,7 @@ export default Component.extend({
     return classes.join(' ');
   }),
 
-  enableAssemblaLogin: computed(function() {
+  enableAssemblaLogin: computed(function () {
     return this.features.get('enable-assembla-login');
   }),
 
