@@ -38,11 +38,26 @@ You should then be able to run `bundle install` as usual.
 
 At the moment Travis CI is available as two separate sites - https://travis-ci.org for Open Source
 projects and https://travis-ci.com for private projects. travis-web will connect
-to the Open Source version by default. In order to connect it to the API for private projects
-you need to run:
+to the Open Source version by default. In order to connect it to the API for private projects you need to setup your `.env` file.
+
+Copy `.env.example` to `.env`
 
 ```
-TRAVIS_PRO=true ember serve --ssl --ssl-key=ssl/server.key --ssl-cert=ssl/server.crt
+$ cp .env.example .env
+```
+
+Set the required `env` variables to run in private mode:
+
+```
+API_ENDPOINT=https://api-staging.travis-ci.com
+STRIPE_PUBLISHABLE_KEY=YOUR_KEY
+TRAVIS_PRO=true
+TRAVIS_ENTERPRISE=false
+```
+After setting up environment variables, you can run the app like so:
+
+```
+ember serve --ssl --ssl-key=ssl/server.key --ssl-cert=ssl/server.crt
 ```
 
 One caveat here is that the command will start server with SSL, so the page will
