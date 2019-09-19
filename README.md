@@ -51,7 +51,6 @@ Update the `.env` file to run the app in private repos mode:
 ```
 TRAVIS_PRO=true
 ```
-Stripe key is required to show subscriptions locally.
 
 After setting up environment variables, you can run the app like so:
 
