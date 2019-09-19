@@ -41,14 +41,14 @@ const LAYERS = {
 
 const SHADOWS = {
   SM: 'sm',
-  BASE: 'base',
+  MD: 'md',
   NONE: 'none',
 };
 
 const RADII = {
   NONE: 'none',
   SM: 'sm',
-  BASE: 'base',
+  MD: 'md',
   LG: 'lg',
   FULL: 'full',
 };
@@ -122,7 +122,9 @@ export default Component.extend(spacingMixin, borderMixin, {
   colorClass: prefix('color', 'bg', { dictionary: BG_COLORS }),
   displayClass: reads('display'),
   layerClass: prefix('layer', 'z'),
-  overflowClass: prefix('overflow', 'overflow'),
+  overflowAllClass: prefix('overflow.all', 'overflow'),
+  overflowXClass: prefix('overflow.x', 'overflow'),
+  overflowYClass: prefix('overflow.y', 'overflow'),
   radiusClass: prefix('radius', 'rounded'),
   shadowClass: prefix('shadow', 'shadow'),
   textAlignClass: prefix('textAlign', 'text'),
@@ -144,7 +146,9 @@ export default Component.extend(spacingMixin, borderMixin, {
     'colorClass',
     'displayClass',
     'layerClass',
-    'overflowClass',
+    'overflowAllClass',
+    'overflowXClass',
+    'overflowYClass',
     'radiusClass',
     'shadowClass',
     'textAlignClass',
@@ -170,7 +174,6 @@ export default Component.extend(spacingMixin, borderMixin, {
     checkDictionary(this.color, COLORS, '@color', 'Box');
     checkDictionary(this.display, DISPLAYS, '@display', 'Box');
     checkDictionary(this.layer, LAYERS, '@layer', 'Box');
-    checkDictionary(this.overflow, OVERFLOWS, '@overflow', 'Box');
     checkDictionary(this.radius, RADII, '@radius', 'Box');
     checkDictionary(this.shadow, SHADOWS, '@shadow', 'Box');
     checkDictionary(this.textAlign, TEXT_ALIGNMENTS, '@textAlign', 'Box');
@@ -183,5 +186,10 @@ export default Component.extend(spacingMixin, borderMixin, {
     checkDictionary(bottom, POSITION_VALUES, '@position.bottom', 'Box');
     checkDictionary(left, POSITION_VALUES, '@position.left', 'Box');
     checkDictionary(inset, POSITION_INSETS, '@position.inset', 'Box');
+
+    const { all, x, y } = this.overflow || {};
+    checkDictionary(all, OVERFLOWS, '@overflow.all', 'Box');
+    checkDictionary(x, OVERFLOWS, '@overflow.x', 'Box');
+    checkDictionary(y, OVERFLOWS, '@overflow.y', 'Box');
   },
 });

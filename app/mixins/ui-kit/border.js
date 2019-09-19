@@ -1,5 +1,4 @@
 import Mixin from '@ember/object/mixin';
-import { or } from '@ember/object/computed';
 import { checkDictionary } from 'travis/utils/ui-kit/assertions';
 import prefix from 'travis/utils/ui-kit/prefix';
 import concat from 'travis/utils/ui-kit/concat';
@@ -12,7 +11,7 @@ const WIDTHS = {
 
 const BORDER_WIDTHS = {
   [WIDTHS.NONE]: 'none',
-  [WIDTHS.XS]: '1',
+  [WIDTHS.XS]: 'px',
 };
 
 const COLORS = {
@@ -28,25 +27,24 @@ export default Mixin.create({
   borderColor: null,
   borderWidth: null,
 
-  // Private //
+  // Public exports //
   borderColorClass: prefix('borderColor', 'border', { dictionary: BORDER_COLORS }),
 
-  borderTopWidth: or('borderWidth.top', 'borderWidth.y', 'borderWidth.all'),
-  borderRightWidth: or('borderWidth.right', 'borderWidth.x', 'borderWidth.all'),
-  borderBottomWidth: or('borderWidth.bottom', 'borderWidth.y', 'borderWidth.all'),
-  borderLeftWidth: or('borderWidth.left', 'borderWidth.x', 'borderWidth.all'),
-
-  borderTopWidthClass: prefix('borderTopWidth', 'border-t', { dictionary: BORDER_WIDTHS }),
-  borderRightWidthClass: prefix('borderRightWidth', 'border-r', { dictionary: BORDER_WIDTHS }),
-  borderBottomWidthClass: prefix('borderBottomWidth', 'border-b', { dictionary: BORDER_WIDTHS }),
-  borderLeftWidthClass: prefix('borderLeftWidth', 'border-l', { dictionary: BORDER_WIDTHS }),
-
   borderWidthClasses: concat(
+    'borderAllWidthClass',
     'borderTopWidthClass',
     'borderRightWidthClass',
     'borderBottomWidthClass',
     'borderLeftWidthClass',
   ),
+
+  // Private //
+  borderAllWidthClass: prefix('borderWidth.all', 'border', { dictionary: BORDER_WIDTHS }),
+
+  borderTopWidthClass: prefix('borderWidth.top', 'border-t', { dictionary: BORDER_WIDTHS }),
+  borderRightWidthClass: prefix('borderWidth.right', 'border-r', { dictionary: BORDER_WIDTHS }),
+  borderBottomWidthClass: prefix('borderWidth.bottom', 'border-b', { dictionary: BORDER_WIDTHS }),
+  borderLeftWidthClass: prefix('borderWidth.left', 'border-l', { dictionary: BORDER_WIDTHS }),
 
   // Lifecycle
   didReceiveAttrs() {
@@ -54,13 +52,11 @@ export default Mixin.create({
 
     checkDictionary(this.borderColor, COLORS, '@borderColor');
 
-    const { top, right, bottom, left, x, y, all } = this.borderWidth || {};
+    const { top, right, bottom, left, all } = this.borderWidth || {};
     checkDictionary(top, WIDTHS, '@borderWidth.top');
     checkDictionary(right, WIDTHS, '@borderWidth.right');
     checkDictionary(bottom, WIDTHS, '@borderWidth.bottom');
     checkDictionary(left, WIDTHS, '@borderWidth.left');
-    checkDictionary(x, WIDTHS, '@borderWidth.x');
-    checkDictionary(y, WIDTHS, '@borderWidth.y');
     checkDictionary(all, WIDTHS, '@borderWidth.all');
   },
 });

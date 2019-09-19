@@ -1,7 +1,9 @@
 import { computed } from '@ember/object';
 import { isPresent } from '@ember/utils';
+import { getResponsiveProp, screens, screenKeys } from 'travis/utils/ui-kit/responsive';
 
-export default function prefix(key, prefix,
+
+export default function generatePrefix(key, propPrefix = '',
   {
     dictionary = {},
     validator = isPresent,
@@ -11,14 +13,31 @@ export default function prefix(key, prefix,
   } = {}
 ) {
   return computed(key, function () {
-    const propVal = this.get(key);
-    const value = dictionary[propVal] || propVal;
-    const isNegative = negatable && typeof value === 'number' && value < 0;
-    const negator = isNegative ? '-' : '';
+    // Helps handle complex values, like padding.top
+    const [primeKey, subKey] = key.split('.');
 
-    // Removes extra dash from negative vals, for negatable props like margin etc.
-    const displayVal = isNegative ? Math.abs(value) : value;
+    const propVal = this.get(primeKey);
+    const screenVals = getResponsiveProp(propVal);
 
-    return validator(value) ? `${negator}${prefix}${separator}${displayVal}` : defaultValue;
+    const classes = screenKeys.map((screen) => {
+      const screenVal = screenVals[screen];
+      const simpleVal = isPresent(screenVal) && isPresent(subKey) ? screenVal[subKey] : screenVal;
+
+      const screenInfo = screens[screen];
+      const screenPrefix = screen === 'base' ? '' : `${screenInfo.prefix}:`;
+
+      const value = dictionary[simpleVal] || simpleVal;
+      const isNegative = negatable && typeof value === 'number' && value < 0;
+      const negator = isNegative ? '-' : '';
+
+      const sep = propPrefix.length > 0 ? separator : '';
+
+      // Removes extra dash from negative vals, for negatable props like margin etc.
+      const displayVal = isNegative ? Math.abs(value) : value;
+
+      return validator(value) ? `${screenPrefix}${negator}${propPrefix}${sep}${displayVal}` : defaultValue;
+    });
+
+    return classes.compact().join(' ');
   });
 }

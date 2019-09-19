@@ -1,4 +1,8 @@
-{{#let (element this.tag) as |Tag|}}<Tag
+{{#let (element this.tag) as |Tag|~}}
+  <Tag
   class={{this.allClasses}}
   ...attributes
->{{yield}}</Tag>{{/let}}
+  >
+    {{~yield~}}
+  </Tag>
+{{~/let}}

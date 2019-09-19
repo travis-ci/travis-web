@@ -42,6 +42,7 @@ export default Component.extend(spacingMixin, borderMixin, {
   tagName: '',
 
   // Public interface
+  componentClass: 'grid-item',
   tag: 'div',
   grid: null,
   base: null,
@@ -49,6 +50,7 @@ export default Component.extend(spacingMixin, borderMixin, {
   md: null,
   lg: null,
   xl: null,
+  gap: null,
 
   // Private
   sizePrefix: computed('grid.isCol', function () {
@@ -60,19 +62,28 @@ export default Component.extend(spacingMixin, borderMixin, {
   currentMd: or('md', 'grid.md'),
   currentLg: or('lg', 'grid.lg'),
   currentXl: or('xl', 'grid.xl'),
+  currentGap: or('gap', 'grid.gap'),
 
   baseClass: screenClass('currentBase', 'base'),
   smClass: screenClass('currentSm', 'sm'),
   mdClass: screenClass('currentMd', 'md'),
   lgClass: screenClass('currentLg', 'lg'),
   xlClass: screenClass('currentXl', 'xl'),
+  gapClass: computed('currentGap', 'grid.isCol', function () {
+    const { currentGap } = this;
+    const paddingDir = this.grid.isCol ? 'y' : 'x';
+
+    return currentGap === 0 ? '' : `p${paddingDir}-${currentGap}`;
+  }),
 
   allClasses: concat(
+    'componentClass',
     'baseClass',
     'smClass',
     'mdClass',
     'lgClass',
     'xlClass',
+    'gapClass',
     'borderColorClass',
     'borderWidthClasses',
     'marginClasses',
@@ -80,7 +91,7 @@ export default Component.extend(spacingMixin, borderMixin, {
   ),
 
   // Lifecycle
-  didReceiveAttributes() {
+  didReceiveAttrs() {
     this._super(...arguments);
 
     requireProp(this.grid, '@grid', 'GridItem');

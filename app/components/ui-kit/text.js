@@ -1,8 +1,8 @@
 import Component from '@ember/component';
-import { reads } from '@ember/object/computed';
 import { checkDictionary } from 'travis/utils/ui-kit/assertions';
 import prefix from 'travis/utils/ui-kit/prefix';
 import concat from 'travis/utils/ui-kit/concat';
+import { variantProp } from 'travis/utils/ui-kit/variant';
 import spacingMixin from 'travis/mixins/ui-kit/spacing';
 
 const COLORS = {
@@ -40,9 +40,11 @@ const LEADINGS = {
 const DEFAULT_LEADING = LEADINGS.MD;
 
 const SIZES = {
+  XS3: '3xs',
+  XS2: '2xs',
   XS: 'xs',
   SM: 'sm',
-  BASE: 'base',
+  MD: 'md',
   LG: 'lg',
   XL: 'xl',
   XL2: '2xl',
@@ -51,7 +53,14 @@ const SIZES = {
   XL5: '5xl',
   XL6: '6xl',
 };
-const DEFAULT_SIZE = SIZES.BASE;
+const DEFAULT_SIZE = SIZES.MD;
+
+const TRACKINGS = {
+  SM: 'sm',
+  MD: 'md',
+  LG: 'lg',
+};
+const DEFAULT_TRACKING = TRACKINGS.MD;
 
 const TRANSFORMS = {
   UPPERCASE: 'uppercase',
@@ -69,6 +78,33 @@ const WEIGHTS = {
 };
 const DEFAULT_WEIGHT = WEIGHTS.NORMAL;
 
+// Variants
+const VARIANTS = {
+  SMALLCAPS: 'smallcaps',
+  H1: 'h1',
+  H2: 'h2',
+};
+const VARIANT_PROPS = {
+  [VARIANTS.SMALLCAPS]: {
+    size: 'xs',
+    tracking: 'lg',
+    weight: 'bold',
+    transform: 'uppercase',
+  },
+  [VARIANTS.H1]: {
+    leading: { base: 'none', md: 'md'},
+    margin: { bottom: 3 },
+    size: '6xl',
+    weight: 'bold',
+  },
+  [VARIANTS.H2]: {
+    leading: 'xs',
+    margin: { bottom: 3 },
+    size: '5xl',
+    weight: 'bold',
+  },
+};
+
 // Component definition
 export default Component.extend(spacingMixin, {
   tagName: '',
@@ -76,19 +112,26 @@ export default Component.extend(spacingMixin, {
   // Public interface
   tag: 'p',
 
-  color: DEFAULT_TEXT_COLOR,
-  family: DEFAULT_FAMILY,
-  leading: DEFAULT_LEADING,
-  size: DEFAULT_SIZE,
-  transform: DEFAULT_TRANSFORM,
-  weight: DEFAULT_WEIGHT,
+  color: variantProp(VARIANT_PROPS, DEFAULT_TEXT_COLOR),
+  family: variantProp(VARIANT_PROPS, DEFAULT_FAMILY),
+  leading: variantProp(VARIANT_PROPS, DEFAULT_LEADING),
+  size: variantProp(VARIANT_PROPS, DEFAULT_SIZE),
+  tracking: variantProp(VARIANT_PROPS, DEFAULT_TRACKING),
+  transform: variantProp(VARIANT_PROPS, DEFAULT_TRANSFORM),
+  weight: variantProp(VARIANT_PROPS, DEFAULT_WEIGHT),
+
+  margin: variantProp(VARIANT_PROPS, null),
+  padding: variantProp(VARIANT_PROPS, null),
+
+  variant: null,
 
   // Private
   colorClass: prefix('color', 'text', { dictionary: TEXT_COLORS }),
   familyClass: prefix('family', 'font'),
   leadingClass: prefix('leading', 'leading'),
   sizeClass: prefix('size', 'text'),
-  transformClass: reads('transform'),
+  trackingClass: prefix('tracking', 'tracking'),
+  transformClass: prefix('transform'),
   weightClass: prefix('weight', 'font'),
 
   allClasses: concat(
@@ -96,6 +139,7 @@ export default Component.extend(spacingMixin, {
     'familyClass',
     'leadingClass',
     'sizeClass',
+    'trackingClass',
     'transformClass',
     'weightClass',
     'marginClasses',
@@ -111,6 +155,8 @@ export default Component.extend(spacingMixin, {
     checkDictionary(this.family, FAMILIES, '@family', 'Text');
     checkDictionary(this.leading, LEADINGS, '@leading', 'Text');
     checkDictionary(this.weight, WEIGHTS, '@weight', 'Text');
+    checkDictionary(this.tracking, TRACKINGS, '@tracking', 'Text');
     checkDictionary(this.transform, TRANSFORMS, '@transform', 'Text');
+    checkDictionary(this.variant, VARIANTS, '@variant', 'Text');
   },
 });
