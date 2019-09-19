@@ -34,6 +34,10 @@
       @include colorSVG($brick-red);
     }
 
+    .icon-alert {
+      @include colorSVG($brick-red);
+    }
+
     .message {
       padding-left: 7px;
       border-left: 1px solid $dry-cement;
