@@ -54,6 +54,8 @@ STRIPE_PUBLISHABLE_KEY=YOUR_KEY
 TRAVIS_PRO=true
 TRAVIS_ENTERPRISE=false
 ```
+Stripe key is required to show subscriptions locally.
+
 After setting up environment variables, you can run the app like so:
 
 ```
