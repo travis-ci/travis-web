@@ -1,0 +1,20 @@
+<button
+  disabled={{this.disabled}}
+  class="
+    rounded-full p-px
+    bg-{{if this.active this.activeBgColor this.inactiveBgColor}}
+    {{if this.active 'pl' 'pr'}}-{{this.spaceSize}}
+  "
+  {{on 'click' (action 'handleClick')}}
+  ...attributes
+>
+  <div
+    class="
+      bg-white rounded-full p-1
+      h-{{this.dotSize}}
+      w-{{this.dotSize}}
+    "
+  >
+    {{yield}}
+  </div>
+</button>
