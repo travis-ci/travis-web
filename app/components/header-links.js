@@ -59,7 +59,9 @@ export default Component.extend({
     return classes.join(' ');
   }),
 
-  enableAssemblaLogin: localStorage['enableAssemblaLogin'] == 'true',
+  enableAssemblaLogin: computed(function() {
+    return this.features.get('enable-assembla-login');
+  }),
 
   actions: {
 

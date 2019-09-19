@@ -2,11 +2,14 @@
 import Component from '@ember/component';
 import config from 'travis/config/environment';
 import { inject as service } from '@ember/service';
+import { computed } from '@ember/object';
 
 export default Component.extend({
   auth: service(),
 
-  enableAssemblaLogin: localStorage['enableAssemblaLogin'] == 'true',
+  enableAssemblaLogin: computed(function() {
+    return this.features.get('enable-assembla-login');
+  }),
 
   actions: {
     gaCta(location, provider) {

@@ -10,6 +10,16 @@ export default Service.extend({
 
   serverFlags: [],
 
+  init() {
+    this._super();
+    this._setEnableAssemblaLogin();
+  },
+
+  _setEnableAssemblaLogin() {
+    const enableAssemblaLogin = window.localStorage['enableAssemblaLogin'] == 'true';
+    enableAssemblaLogin ? this.features.enable('enable-assembla-login') : this.features.disable('enable-assembla-login');
+  },
+
   _setFlagState(flag) {
     const features = this.features;
 
