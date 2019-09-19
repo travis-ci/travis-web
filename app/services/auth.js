@@ -1,5 +1,6 @@
 /* global Travis */
 import { get, observer, computed } from '@ember/object';
+import { assert } from '@ember/debug';
 
 import { isEmpty } from '@ember/utils';
 import { Promise as EmberPromise } from 'rsvp';
