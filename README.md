@@ -127,10 +127,17 @@ flag as mentioned previously in the `Feature Flags` section.
 `ember-cli-deploy` is available for deploying pull requests. See `after_success`
 in `.travis.yaml` and associated scripts for details. It uses the “lightning
 strategy” of deploying assets to S3 and `index.html` to a Redis server. You can
-deploy from your own machine too:
+deploy from your own machine too. First, update your `.env` file with the following variables:
 
 ```
-AWS_KEY=key AWS_SECRET=secret ORG_PRODUCTION_REDIS_URL=redis TRAVIS_PULL_REQUEST_BRANCH=branch \
+AWS_KEY=key
+AWS_SECRET=secret
+ORG_PRODUCTION_REDIS_URL=redis
+TRAVIS_PULL_REQUEST_BRANCH=branch
+```
+Then run:
+
+```
 ember deploy org-production-pull-request --activate
 ```
 
