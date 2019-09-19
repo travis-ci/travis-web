@@ -8,7 +8,6 @@ export default Component.extend({
   stripe: service(),
   accounts: service(),
   flashes: service(),
-  raven: service(),
 
   account: null,
   stripeElement: null,
@@ -44,18 +43,9 @@ export default Component.extend({
         yield this.stripe.handleStripePayment.perform(clientSecret);
       }
     } catch (error) {
-      this.handleError(error);
+      this.flashes.error('An error occurred when creating your subscription. Please try again.');
     }
   }).drop(),
-
-  handleError(error) {
-    let message = 'An error occurred when creating your subscription. Please try again.';
-    const subscriptionErrors = this.newSubscription.errors;
-    if (subscriptionErrors && subscriptionErrors.get('validationErrors').length > 0) {
-      message = subscriptionErrors.get('validationErrors')[0].message;
-    }
-    this.flashes.error(message);
-  },
 
   actions: {
     complete(stripeElement) {
