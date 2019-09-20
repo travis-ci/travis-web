@@ -66,7 +66,7 @@ export default Component.extend({
   },
 
   empty(key, args) {
-    return `<code>${escape(key)}</code> dropping empty section`;
+    return `<code>${escape(key)}</code> empty section`;
   },
 
   find_key(key, args) {
@@ -102,11 +102,11 @@ export default Component.extend({
   },
 
   unknown_value(key, args) {
-    return `<code>${escape(key)}</code> dropping unknown value: <code>${escape(args.value)}</code>`;
+    return `<code>${escape(key)}</code> unknown value: <code>${escape(args.value)}</code>`;
   },
 
   unknown_default(key, args) {
-    return `<code>${escape(key)}</code> dropping unknown value: <code>${escape(args.value)}</code>, defaulting to: <code>${escape(args.default)}</code>`;
+    return `<code>${escape(key)}</code> unknown value: <code>${escape(args.value)}</code>, defaulting to: <code>${escape(args.default)}</code>`;
   },
 
   unknown_var(key, args) {
@@ -118,11 +118,11 @@ export default Component.extend({
   },
 
   invalid_type(key, args) {
-    return `<code>${escape(key)}</code> dropping unexpected <code>${escape(args.actual)}</code>, expected <code>${escape(args.expected)}</code> (<code>${escape(args.value)}</code>)`;
+    return `<code>${escape(key)}</code> unexpected <code>${escape(args.actual)}</code>, expected <code>${escape(args.expected)}</code> (<code>${escape(args.value)}</code>)`;
   },
 
   invalid_format(key, args) {
-    return `<code>${escape(key)}</code> dropping invalid format: <code>${escape(args.value)}</code>`;
+    return `<code>${escape(key)}</code> invalid format: <code>${escape(args.value)}</code>`;
   },
 
   invalid_condition(key, args) {
@@ -143,7 +143,8 @@ export default Component.extend({
     return {
       info: 'information',
       warn: 'warning',
-      error: 'error'
+      error: 'error',
+      alert: 'alert'
     }[level];
   })
 });
