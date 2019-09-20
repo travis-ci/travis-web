@@ -44,11 +44,11 @@ export default Component.extend({
         yield this.stripe.handleStripePayment.perform(clientSecret);
       }
     } catch (error) {
-      this.handleError(error);
+      this.handleError();
     }
   }).drop(),
 
-  handleError(error) {
+  handleError() {
     let message = 'An error occurred when creating your subscription. Please try again.';
     const subscriptionErrors = this.newSubscription.errors;
     if (subscriptionErrors && subscriptionErrors.get('validationErrors').length > 0) {
