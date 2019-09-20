@@ -143,7 +143,8 @@ export default Component.extend({
     return {
       info: 'information',
       warn: 'warning',
-      error: 'error'
+      error: 'error',
+      alert: 'alert'
     }[level];
   })
 });
