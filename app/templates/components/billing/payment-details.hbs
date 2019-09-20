@@ -34,7 +34,15 @@
             {{this.subscription.creditCardInfo.lastDigits}}
           </p>  
         </div>
-        <button class='button--blue billing-subscription__buttons' onClick={{action (toggle 'openCreditCardForm' this)}}>Edit payment details</button>
+        {{#if this.account.hasSubscriptionPermissions}}
+          <button class='button--blue billing-subscription__buttons' onClick={{action (toggle 'openCreditCardForm' this)}}>
+            Edit payment details
+          </button>
+        {{else}}
+          <div class='button disabled billing-subscription__buttons'>
+            Edit payment details
+          </div>
+        {{/if}}
       {{/if}}
     {{/if}}
     {{#if this.subscription.isManual}}

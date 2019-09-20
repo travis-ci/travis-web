@@ -104,11 +104,17 @@
         </section>
       {{/if}}
     </div>
-    <button class='button--blue billing-subscription__buttons' 
-      onClick={{action (toggle 'openEditContactForm' this)}} data-test-edit-contact-address='true'
-    >
-      Edit contact details
-    </button>   
+    {{#if this.account.hasSubscriptionPermissions}}
+      <button class='button--blue billing-subscription__buttons' 
+        onClick={{action (toggle 'openEditContactForm' this)}} data-test-edit-contact-address='true'
+      >
+        Edit contact details
+      </button> 
+    {{else}}
+      <div class='button disabled billing-subscription__buttons'  data-test-edit-contact-address='true'>
+        Edit contact details
+      </div> 
+    {{/if}}
   {{/if}}
 </div>
 <hr />
