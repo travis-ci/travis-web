@@ -3,6 +3,7 @@
 
 const providers = require('./providers');
 const { plans } = require('./plans.js');
+const { screens } = require('./screens.js');
 
 module.exports = function (environment) {
   const ENV = {
@@ -13,6 +14,7 @@ module.exports = function (environment) {
     defaultTitle: 'Travis CI',
     providers,
     plans,
+    screens,
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
@@ -44,12 +46,14 @@ module.exports = function (environment) {
       about: 'https://about.travis-ci.com',
       bestpracticessecurity: 'https://docs.travis-ci.com/user/best-practices-security#recommendations-on-how-to-avoid-leaking-secrets-to-build-logs',
       blog: 'https://blog.travis-ci.com',
+      buildMatrix: 'https://docs.travis-ci.com/user/build-matrix/',
       changelog: 'https://changelog.travis-ci.com',
       community: 'https://travis-ci.community',
       dashboard: 'https://travis-ci.com/dashboard',
       docker: 'https://docs.travis-ci.com/user/docker/',
       docs: 'https://docs.travis-ci.com',
       gettingStarted: 'https://docs.travis-ci.com/user/getting-started/#to-get-started-with-travis-ci',
+      education: 'https://education.travis-ci.com',
       enterprise: 'https://enterprise.travis-ci.com',
       imprint: 'https://docs.travis-ci.com/imprint.html',
       jobs: 'https://travisci.workable.com/',

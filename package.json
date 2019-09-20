@@ -20,6 +20,7 @@
     "deploy": "bash ./config/deployment/deploy-local.sh"
   },
   "devDependencies": {
+    "@csstools/postcss-sass": "^4.0.0",
     "@ember/jquery": "^0.6.1",
     "@ember/optional-features": "^0.7.0",
     "active-model-adapter": "2.2.0",
@@ -41,7 +42,9 @@
     "ember-cli-deploy-lightning-pack": "1.2.2",
     "ember-cli-deprecation-workflow": "^1.0.0",
     "ember-cli-document-title-northm": "^1.0.3",
+    "ember-cli-dotenv": "^2.2.3",
     "ember-cli-eslint": "^5.1.0",
+    "ember-cli-head": "^0.4.1",
     "ember-cli-htmlbars": "^3.0.1",
     "ember-cli-htmlbars-inline-precompile": "^2.1.0",
     "ember-cli-inject-live-reload": "^2.0.1",
@@ -49,7 +52,7 @@
     "ember-cli-mirage": "^1.1.0",
     "ember-cli-moment-shim": "^3.5.0",
     "ember-cli-page-object": "^1.15.0-beta.3",
-    "ember-cli-sass": "^10.0.1",
+    "ember-cli-postcss": "^4.2.1",
     "ember-cli-sentry": "^4.0.0",
     "ember-cli-sri": "^2.1.1",
     "ember-cli-test-loader": "^2.1.0",
@@ -59,6 +62,7 @@
     "ember-concurrency-scroll": "^1.0.0",
     "ember-data": "~3.11.1",
     "ember-data-filter": "ember-data/ember-data-filter#v2.0.0",
+    "ember-element-helper": "^0.1.1",
     "ember-exam": "^4.0.0",
     "ember-export-application-global": "^2.0.0",
     "ember-feature-flags": "^5.0.0",
@@ -94,11 +98,12 @@
     "liquid-fire": "^0.30.0",
     "liquid-wormhole": "^2.1.5",
     "loader.js": "^4.7.0",
-    "node-sass": "^4.9.3",
+    "postcss-scss": "^2.0.0",
     "pusher-js": "^5.0.0",
     "qunit-dom": "^0.9.0",
     "raven-js": "^3.15.0",
     "svgo": "^1.0.5",
+    "tailwindcss": "^1.0.4",
     "url-polyfill": "^1.0.11",
     "visibilityjs": "^2.0.0",
     "yamljs": "^0.3.0"
@@ -108,7 +113,6 @@
     "npm": "6.2.0"
   },
   "dependencies": {
-    "ember-cli-dotenv": "^2.2.3",
     "watchman": "^1.0.0"
   },
   "greenkeeper": {
