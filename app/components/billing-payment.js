@@ -51,7 +51,8 @@ export default Component.extend({
     let message = 'An error occurred when creating your subscription. Please try again.';
     const subscriptionErrors = this.newSubscription.errors;
     if (subscriptionErrors && subscriptionErrors.get('validationErrors').length > 0) {
-      message = subscriptionErrors.get('validationErrors')[0].message;
+      const validationError = subscriptionErrors.get('validationErrors')[0];
+      message = validationError.message;
     }
     this.flashes.error(message);
   },
