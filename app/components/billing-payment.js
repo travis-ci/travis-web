@@ -8,7 +8,6 @@ export default Component.extend({
   stripe: service(),
   accounts: service(),
   flashes: service(),
-  raven: service(),
 
   account: null,
   stripeElement: null,
