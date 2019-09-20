@@ -43,9 +43,19 @@ export default Component.extend({
         yield this.stripe.handleStripePayment.perform(clientSecret);
       }
     } catch (error) {
-      this.flashes.error('An error occurred when creating your subscription. Please try again.');
+      this.handleError();
     }
   }).drop(),
+
+  handleError() {
+    let message = 'An error occurred when creating your subscription. Please try again.';
+    const subscriptionErrors = this.newSubscription.errors;
+    if (subscriptionErrors && subscriptionErrors.get('validationErrors').length > 0) {
+      const validationError = subscriptionErrors.get('validationErrors')[0];
+      message = validationError.message;
+    }
+    this.flashes.error(message);
+  },
 
   actions: {
     complete(stripeElement) {
