@@ -12,11 +12,11 @@
           <div class="form-elem inline-form-elem">
             <form.field
               @label="Street Address"
-              @value={{info.address}}
+              @value={{this.info.address}}
               @required={{true}}
               @validateOnField={{false}}
               @showValidationStatusIcons={{false}}
-              @onChange={{action (mut info.address)}}
+              @onChange={{action (mut this.info.address)}}
               as |field|
             >
               <field.input name="address" placeholder="Address" />
@@ -25,12 +25,12 @@
           <div class='form-elem'>
             <form.field
               @label='Country'
-              @value={{info.country}}
+              @value={{this.info.country}}
               @required={{true}}
               class='billing-country'
               @showRequiredMark={{true}}
               @showValidationStatusIcons={{false}}
-              @onChange={{action (mut info.country)}}
+              @onChange={{action (mut this.info.country)}}
               as |field|
             >
               <field.select
@@ -47,11 +47,11 @@
           <div class="form-elem inline-form-elem">
             <form.field
               @label="City"
-              @value={{info.city}}
+              @value={{this.info.city}}
               @required={{true}}
               @validateOnField={{false}}
               @showValidationStatusIcons={{false}}
-              @onChange={{action (mut info.city)}}
+              @onChange={{action (mut this.info.city)}}
               as |field|
             >
               <field.input name="city" placeholder="City" />
@@ -60,11 +60,11 @@
           <div class="form-elem">
             <form.field
               @label="Post Code"
-              @value={{info.zipCode}}
+              @value={{this.info.zipCode}}
               @required={{true}}
               @validateOnField={{false}}
               @showValidationStatusIcons={{false}}
-              @onChange={{action (mut info.zipCode)}}
+              @onChange={{action (mut this.info.zipCode)}}
               as |field|
             >
               <field.input name="postCode" placeholder="Post Code" />
@@ -89,28 +89,28 @@
     </div>
   {{else}}
     <div data-test-billing-details='true' class="flex flex--space-between flex--wrap">
-      {{#if info.address}}
+      {{#if this.info.address}}
         <section>
           <h4>address</h4>
-          <p>{{info.address}}</p>
+          <p>{{this.info.address}}</p>
         </section>
       {{/if}}
-      {{#if info.city}}
+      {{#if this.info.city}}
         <section>
           <h4>city</h4>
-          <p>{{info.city}}</p>
+          <p>{{this.info.city}}</p>
         </section>
       {{/if}}
-      {{#if info.zipCode}}
+      {{#if this.info.zipCode}}
         <section>
           <h4>post code</h4>
-          <p>{{info.zipCode}}</p>
+          <p>{{this.info.zipCode}}</p>
         </section>
       {{/if}}
-      {{#if info.country}}
+      {{#if this.info.country}}
         <section>
           <h4>country</h4>
-          <p>{{info.country}}</p>
+          <p>{{this.info.country}}</p>
         </section>
       {{/if}}
     </div>
