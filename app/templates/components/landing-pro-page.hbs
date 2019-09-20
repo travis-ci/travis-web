@@ -16,7 +16,7 @@
           <div class="cta-container">
             <a
               href="https://travis-ci.com/signin"
-              class="hero-button cta-index-page"
+              class="hero-button cta-index-page {{if this.features.enableAssemblaLogin "multi-vcs"}}"
               title="Sign up with GitHub"
               {{action "gaCta" "index" "github"}}
             >
@@ -28,7 +28,7 @@
             {{#if this.features.enableAssemblaLogin}}
               <a
                 href="https://travis-ci.com/signin"
-                class="hero-button cta-index-page"
+                class="hero-button cta-index-page {{if this.features.enableAssemblaLogin "multi-vcs"}}"
                 title="Sign up with Assembla"
                 {{action "gaCta" "index" "assembla"}}
               >

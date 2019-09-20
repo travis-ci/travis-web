@@ -145,23 +145,33 @@
     {{/unless}}
     <li id="profile-menu-link" class="{{this.classProfile}}">
       {{#if this.auth.signedOut}}
-        <ul class="navigation-nested">
-          <li>
-            <button class="action" {{action "signIn" "github"}}>
-              Log in with GitHub
-            </button>
-          </li>
-          {{#if this.features.enableAssemblaLogin}}
+        {{#unless this.features.enableAssemblaLogin}}
+          <button
+            class="auth-button signed-out"
+            type="button"
+            {{action "signIn" "github"}}
+          >
+            Sign in with GitHub
+          </button>
+        {{/unless}}
+
+        {{#if this.features.enableAssemblaLogin}}
+          <ul class="navigation-nested">
             <li>
-              <button class="action" {{action "signIn" "assembla"}}>
-                Log in with Assembla
+              <button class="action" {{action "signIn" "github"}}>
+                Log in with GitHub
               </button>
             </li>
-          {{/if}}
-        </ul>
-        <span class="auth-button">
-          Sign in
-        </span>
+              <li>
+                <button class="action" {{action "signIn" "assembla"}}>
+                  Log in with Assembla
+                </button>
+              </li>
+          </ul>
+          <span class="auth-button">
+            Sign in
+          </span>
+        {{/if}}
       {{/if}}
       {{#if this.auth.signingIn}}
         <button class="auth-button signing-in" type="button">

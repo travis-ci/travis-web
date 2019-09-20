@@ -662,7 +662,6 @@
 
 .hero-button {
   @extend .landing-button;
-  font-size: 18px;
 
   svg {
     width: 20px;
@@ -674,6 +673,10 @@
 
   &.org {
     margin: 2em auto;
+  }
+
+  &.multi-vcs {
+    font-size: 18px;
   }
 }
 
