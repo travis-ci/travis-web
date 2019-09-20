@@ -13,11 +13,16 @@ export default Service.extend({
   showMonthly: not('showAnnual'),
   defaultPlans: filterBy('availablePlans', 'isDefault'),
   defaultPlanName: reads('defaultPlans.firstObject.name'),
-  account: reads('accounts.user'),
   plans: reads('fetchPlans.lastSuccessful.value'),
 
-  fetchPlans: task(function* () {
-    return yield this.store.findAll('plan') || [];
+  fetchPlans: task(function* (account) {
+    if (account.isOrganization) {
+      return yield this.store.findAll('plan', {
+        adapterOptions: { organizationId: account.id }
+      }) || [];
+    } else {
+      return yield this.store.findAll('plan') || [];
+    }
   }).keepLatest(),
 
   nonGithubPlans: computed('plans.@each.{id,name,annual,builds}', function () {
@@ -38,8 +43,7 @@ export default Service.extend({
   }),
 
   displayedPlans: computed('showAnnual', 'monthlyPlans.[]', 'annualPlans.[]', function () {
-    const { annualPlans, showAnnual, monthlyPlans } = this;
-    return showAnnual ? annualPlans : monthlyPlans;
+    return this.showAnnual ? this.annualPlans : this.monthlyPlans;
   }),
 
   selectedPlan: computed('displayedPlans.[].name', 'defaultPlanName', function () {
@@ -48,10 +52,5 @@ export default Service.extend({
 
   togglePlanPeriod() {
     this.toggleProperty('showAnnual');
-  },
-
-  init() {
-    this._super(...arguments);
-    this.fetchPlans.perform();
   },
 });

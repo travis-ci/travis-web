@@ -23,14 +23,17 @@ module('Integration | Component | billing-address', function (hooks) {
         country: 'Country'
       }
     });
+    this.set('account', {
+      hasSubscriptionPermissions: true
+    });
 
-    await render(hbs`{{billing-address subscription=subscription}}`);
+    await render(hbs`<Billing::Address @account={{account}} @subscription={{subscription}}/>`);
 
     assert.dom('[data-test-user-details] section:nth-child(1)').hasText('contact name A B');
     assert.dom('[data-test-user-details] section:nth-child(2)').hasText('company name Company');
     assert.dom('[data-test-user-details] section:nth-child(3)').hasText('billing email a@b.com');
     assert.dom('[data-test-billing-details] section:nth-child(1)').hasText('address Address');
-    assert.dom('[data-test-billing-details] section:nth-child(2)').hasText('city, state/territory City');
+    assert.dom('[data-test-billing-details] section:nth-child(2)').hasText('city City');
     assert.dom('[data-test-billing-details] section:nth-child(3)').hasText('post code Zip Code');
     assert.dom('[data-test-billing-details] section:nth-child(4)').hasText('country Country');
   });
@@ -48,11 +51,15 @@ module('Integration | Component | billing-address', function (hooks) {
       }
     });
 
-    await render(hbs`{{billing-address subscription=subscription}}`);
+    this.set('account', {
+      hasSubscriptionPermissions: true
+    });
+
+    await render(hbs`<Billing::Address @account={{account}} @subscription={{subscription}}/>`);
 
     assert.dom('[data-test-user-details] section:nth-child(1)').hasText('contact name A B');
     assert.dom('[data-test-billing-details] section:nth-child(1)').hasText('address Address');
-    assert.dom('[data-test-billing-details] section:nth-child(2)').hasText('city, state/territory City');
+    assert.dom('[data-test-billing-details] section:nth-child(2)').hasText('city City');
     assert.dom('[data-test-billing-details] section:nth-child(3)').hasText('post code Zip Code');
     assert.dom('[data-test-billing-details] section:nth-child(4)').hasText('country Country');
   });
@@ -70,7 +77,11 @@ module('Integration | Component | billing-address', function (hooks) {
       }
     });
 
-    await render(hbs`{{billing-address subscription=subscription}}`);
+    this.set('account', {
+      hasSubscriptionPermissions: true
+    });
+
+    await render(hbs`<Billing::Address @account={{account}} @subscription={{subscription}}/>`);
 
     assert.dom('[data-test-user-details]').doesNotExist();
     assert.dom('[data-test-billing-details]').doesNotExist();
@@ -89,7 +100,11 @@ module('Integration | Component | billing-address', function (hooks) {
       }
     });
 
-    await render(hbs`{{billing-address subscription=subscription}}`);
+    this.set('account', {
+      hasSubscriptionPermissions: true
+    });
+
+    await render(hbs`<Billing::Address @account={{account}} @subscription={{subscription}}/>`);
     await profilePage.billing.editContactAddressButton.click();
 
     assert.ok(profilePage.billing.editContactAddressForm.isPresent);
@@ -109,7 +124,11 @@ module('Integration | Component | billing-address', function (hooks) {
       }
     });
 
-    await render(hbs`{{billing-address subscription=subscription}}`);
+    this.set('account', {
+      hasSubscriptionPermissions: true
+    });
+
+    await render(hbs`<Billing::Address @account={{account}} @subscription={{subscription}}/>`);
     await profilePage.billing.editContactAddressButton.click();
 
     assert.ok(profilePage.billing.editContactAddressForm.isPresent);
@@ -133,7 +152,11 @@ module('Integration | Component | billing-address', function (hooks) {
       }
     });
 
-    await render(hbs`{{billing-address subscription=subscription}}`);
+    this.set('account', {
+      hasSubscriptionPermissions: true
+    });
+
+    await render(hbs`<Billing::Address @account={{account}} @subscription={{subscription}}/>`);
 
     await profilePage.billing.editBillingAddressButton.click();
 
@@ -154,7 +177,11 @@ module('Integration | Component | billing-address', function (hooks) {
       }
     });
 
-    await render(hbs`{{billing-address subscription=subscription}}`);
+    this.set('account', {
+      hasSubscriptionPermissions: true
+    });
+
+    await render(hbs`<Billing::Address @account={{account}} @subscription={{subscription}}/>`);
 
     await profilePage.billing.editBillingAddressButton.click();
 
@@ -164,7 +191,7 @@ module('Integration | Component | billing-address', function (hooks) {
 
     assert.notOk(profilePage.billing.editBillingAddressForm.isPresent);
     assert.dom('[data-test-billing-details] section:nth-child(1)').hasText('address Address');
-    assert.dom('[data-test-billing-details] section:nth-child(2)').hasText('city, state/territory City');
+    assert.dom('[data-test-billing-details] section:nth-child(2)').hasText('city City');
     assert.dom('[data-test-billing-details] section:nth-child(3)').hasText('post code Zip Code');
     assert.dom('[data-test-billing-details] section:nth-child(4)').hasText('country Country');
   });

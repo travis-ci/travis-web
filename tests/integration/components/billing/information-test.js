@@ -53,15 +53,15 @@ module('Integration | Component | billing-information', function (hooks) {
 
   test('it renders billing information form correctly', async function (assert) {
     await render(hbs`
-      {{billing-information 
-        selectedPlan=selectedPlan 
-        displayedPlans=displayedPlans 
-        showAnnual=showAnnual
-        newSubscription=newSubscription
-        next=(action 'next')
-        back=(action 'back')
-        goToFirstStep=(action 'goToFirstStep')
-      }}`
+      <Billing::Information 
+        @selectedPlan={{selectedPlan}} 
+        @displayedPlans={{displayedPlans}} 
+        @showAnnual={{showAnnual}}
+        @newSubscription={{newSubscription}}
+        @next={{action 'next'}}
+        @back={{action 'back'}}
+        @goToFirstStep={{action 'goToFirstStep'}}
+      />`
     );
 
     assert.dom('[data-test-contact-details-title]').hasText('Contact details');
@@ -85,15 +85,15 @@ module('Integration | Component | billing-information', function (hooks) {
     };
 
     await render(hbs`
-      {{billing-information 
-        selectedPlan=selectedPlan 
-        displayedPlans=displayedPlans 
-        showAnnual=showAnnual
-        newSubscription=newSubscription
-        next=(action 'next')
-        back=(action 'back')
-        goToFirstStep=(action 'goToFirstStep')
-      }}`
+      <Billing::Information 
+        @selectedPlan={{selectedPlan}} 
+        @displayedPlans={{displayedPlans}} 
+        @showAnnual={{showAnnual}}
+        @newSubscription={{newSubscription}}
+        @next={{action 'next'}}
+        @back={{action 'back'}}
+        @goToFirstStep={{action 'goToFirstStep'}}
+      />`
     );
 
     await profilePage.billing.billingForm.backToPlans.click();

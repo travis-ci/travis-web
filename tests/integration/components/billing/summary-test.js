@@ -49,7 +49,7 @@ module('Integration | Component | billing-summary', function (hooks) {
   test('it renders active subscription', async function (assert) {
     const date = moment(this.subscription.validTo.getTime()).format('MMMM D, YYYY');
 
-    await render(hbs`<BillingSummary 
+    await render(hbs`<Billing::Summary 
       @subscription={{subscription}}
       @account={{account}}
       @price={{price}}
@@ -75,7 +75,7 @@ module('Integration | Component | billing-summary', function (hooks) {
     });
     this.set('planMessage', 'Expires');
 
-    await render(hbs`<BillingSummary 
+    await render(hbs`<Billing::Summary 
       @subscription={{subscription}}
       @account={{account}}
       @price={{price}}
@@ -101,7 +101,7 @@ module('Integration | Component | billing-summary', function (hooks) {
     });
     this.set('planMessage', 'Expired');
 
-    await render(hbs`<BillingSummary 
+    await render(hbs`<Billing::Summary 
       @subscription={{subscription}}
       @account={{account}}
       @price={{price}}
@@ -125,7 +125,7 @@ module('Integration | Component | billing-summary', function (hooks) {
     });
     this.set('planMessage', 'Expired');
 
-    await render(hbs`<BillingSummary 
+    await render(hbs`<Billing::Summary 
       @subscription={{subscription}}
       @account={{account}}
       @price={{price}}
@@ -147,7 +147,7 @@ module('Integration | Component | billing-summary', function (hooks) {
     });
     this.set('planMessage', 'Incomplete');
 
-    await render(hbs`<BillingSummary 
+    await render(hbs`<Billing::Summary 
       @subscription={{subscription}}
       @account={{account}}
       @price={{price}}

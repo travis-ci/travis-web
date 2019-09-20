@@ -1,0 +1,21 @@
+{{#if this.hasSubscriptionPermissions}}
+  {{#if this.canResubscribe}}
+    <button onClick={{action (perform this.resubscribe)}} class='button--green' data-test-resubscribe-subscription='true'>
+      Resubscribe to plan
+    </button>
+  {{else}}
+    <button onClick={{this.openPlansSelector}} class='button--blue' data-test-change-subscription='true'>
+      Change plan
+    </button>
+  {{/if}}
+{{else}}
+  {{#if this.canResubscribe}}
+    <div class='button disabled' data-test-resubscribe-subscription='true'>
+      Resubscribe to plan
+    </div>
+  {{else}}
+    <div class='button disabled' data-test-resubscribe-subscription='true'>
+      Change plan
+    </div>
+  {{/if}}
+{{/if}}
