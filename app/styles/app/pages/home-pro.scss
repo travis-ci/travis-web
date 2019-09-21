@@ -664,8 +664,8 @@
   @extend .landing-button;
 
   svg {
-    width: 20px;
-    height: 20px;
+    width: 30px;
+    height: 30px;
     vertical-align: sub;
     margin-right: 0.4em;
     fill: #fff;
@@ -677,6 +677,11 @@
 
   &.multi-vcs {
     font-size: 18px;
+
+    svg {
+      width: 20px;
+      height: 20px;
+    }
   }
 }
 

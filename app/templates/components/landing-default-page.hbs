@@ -15,13 +15,22 @@
           and you’ll be testing your code in minutes!
         </p>
         {{#if this.auth.signedOut}}
-          <button class="hero-button org" {{action "signIn" "github"}}>
-            <SvgImage @name="icon-repooctocat" />
-            <span class="label-align">
-              Sign up with Github
-            </span>
-          </button>
+          {{#unless this.features.enableAssemblaLogin}}
+            <button class="hero-button org" {{action "signIn" "github"}}>
+              <SvgImage @name="icon-repooctocat" />
+              <span class="label-align">
+                Sign up
+              </span>
+            </button>
+          {{/unless}}
+
           {{#if this.features.enableAssemblaLogin}}
+            <button class="hero-button org" {{action "signIn" "github"}}>
+              <SvgImage @name="icon-repooctocat" />
+              <span class="label-align">
+                Sign up with Github
+              </span>
+            </button>
             <button class="hero-button org" {{action "signIn" "assembla"}}>
               <SvgImage @name="icon-assembla" />
               <span class="label-align">
