@@ -87,7 +87,7 @@
                             {{compute filter.computeName repository.name filter.query}}
                           </span>
                           {{#if (not this.owner.allowMigration)}}
-                            <EmberTooltip @text="Migration is not enabled for this account" />
+                            <EmberTooltip @text="Migration is not available for this account" />
                           {{else if (not repository.permissions.admin)}}
                             <EmberTooltip @text="Requires admin permissions" />
                           {{/if}}
