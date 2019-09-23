@@ -1,7 +1,14 @@
 <div class="yml-message" tabindex="0">
   <div class="tooltip-wrapper">
-    <SvgImage @name={{this.message.level}} @class={{this.iconClass}} />
-    <EmberTooltip @text={{this.tooltipText}} />
+    {{#if this.isLinkable}}
+      <a href="{{this.lineLink}}">
+        <SvgImage @name={{this.message.level}} @class={{this.iconClass}} />
+        <EmberTooltip @text={{this.tooltipText}} />
+      </a>
+    {{else}}
+      <SvgImage @name={{this.message.level}} @class={{this.iconClass}} />
+      <EmberTooltip @text={{this.tooltipText}} />
+    {{/if}}
   </div>
   <div class="message">
     {{this.readableMessage}}

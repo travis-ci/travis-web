@@ -1,6 +1,7 @@
 /* eslint-disable max-len */
 import Component from '@ember/component';
 import { computed } from '@ember/object';
+import { and, notEmpty } from '@ember/object/computed';
 import { htmlSafe } from '@ember/string';
 import Ember from 'ember';
 
@@ -146,6 +147,15 @@ export default Component.extend({
       error: 'error',
       alert: 'alert'
     }[level];
-  })
+  }),
+
+  hasMessageSrc: notEmpty('message.src'),
+  hasMessageLine: notEmpty('message.line'),
+  isLinkable: and('hasMessageSrc', 'hasMessageLine'),
+
+  lineLink: computed('message.src', 'message.line', function () {
+    const { src, line } = this.message;
+    return `#rccb_${src}.${line + 1}`;
+  }),
 });
 /* eslint-enable max-len */

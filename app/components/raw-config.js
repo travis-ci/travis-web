@@ -50,6 +50,10 @@ export default Component.extend({
     return this.externalLinks.fileUrl(vcsType, { owner, repo, branch, file });
   }),
 
+  codeblockId: computed('rawConfig.source', function () {
+    return `rccb_${this.rawConfig.source}`;
+  }),
+
   actions: {
     copied() {
       this.set('copied', true);
