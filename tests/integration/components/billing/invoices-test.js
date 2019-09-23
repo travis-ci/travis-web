@@ -67,7 +67,7 @@ module('Integration | Component | billing-invoices', function (hooks) {
 
   test('renders billing invoices correctly', async function (assert) {
 
-    await render(hbs`<BillingInvoices @invoices={{this.invoices}} @subscription={{this.subscription}}/>`);
+    await render(hbs`<Billing::Invoices @invoices={{this.invoices}} @subscription={{this.subscription}}/>`);
 
     assert.dom('h3').hasText('Invoice history');
     assert.dom('[data-test-help-text]').containsText('Having trouble with your invoices?');

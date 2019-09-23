@@ -69,7 +69,7 @@ module('Integration | Component | billing-payment', function (hooks) {
 
   test('billing-payment renders correctly', async function (assert) {
 
-    await render(hbs`<BillingPayment 
+    await render(hbs`<Billing::Payment 
       @paymentInfo={{paymentInfo}}
       @newSubscription={{newSubscription}}
       @cancel={{action 'cancel'}}

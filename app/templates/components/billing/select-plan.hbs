@@ -4,7 +4,7 @@
       <h3 data-test-billing-info-title>
         {{this.title}}
       </h3>
-      <div class='flex form-elem flex--v-center flex-wrap billing-plan-switch'>
+      <div class='flex form-elem flex--v-center flex--wrap billing-plan-switch'>
         <div>
           <form.field
             @disableFrame={{true}}
@@ -22,22 +22,18 @@
         </div>
         <div class='m-l-s'>
           {{#if showMonthly}}
-            <h5>
-              billing cycle recommendation:
-            </h5>
+            <h4>billing cycle recommendation:</h4>
             <p>
               Switch to annual billing to receive
-              <span class='font--bolder'>
-                one month free!
-              </span>
+              <span class='font--bolder'>one month free!</span>
             </p>
+          {{else}}
+            <p><span class='font--bolder'>One month free</span> now included!</p>
           {{/if}}
         </div>
       </div>
       <div class='plan-selector'>
-        <h5 data-test-choose-plan-heading>
-          Choose number of concurrent jobs
-        </h5>
+        <h4 data-test-choose-plan-heading>Choose number of concurrent jobs</h4>
         <div class='billing-plans flex flex--wrap' data-test-billing-plan-choices>
           {{#each displayedPlans as |plan|}}
             <div
@@ -48,7 +44,7 @@
               <p class='billing-plans__box--price' data-test-selected-plan-price>
                 {{format-currency plan.price floor="true"}}
                 <span class='color-asphalt-grey {{if (eq plan.id selectedPlan.id) 'highlight-plan'}}'>
-                  {{if this.selectedPlan.annual '/year' '/month'}}
+                  {{if plan.annual '/year' '/month'}}
                 </span>
               </p>
               <p class='billing-plans__box--name' data-test-selected-plan-name>
@@ -70,7 +66,7 @@
         {{else}}
           <button data-test-subscribe-button
             onclick={{action form.submit}}
-            class='button--blue'
+            class='{{if this.showCancelButton 'button--green' 'button--blue'}}'
           >
             Subscribe to {{selectedPlan.builds}} job plan
           </button>

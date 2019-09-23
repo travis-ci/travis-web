@@ -50,7 +50,7 @@
       </div>
     </section>
   </div>
-  <BillingAuthorization 
+  <Billing::Authorization 
     @subscription={{this.subscription}} 
     @account={{this.account}}
     @isPending={{this.isPending}}
@@ -59,8 +59,7 @@
 </div>
 <hr />
 {{#if this.showBillingInfo}}
-  <BillingAddress @subscription={{this.subscription}} />
-  <PaymentDetails @subscription={{this.subscription}} />
+  <Billing::Address @subscription={{this.subscription}} @account={{this.account}}/>
+  <Billing::PaymentDetails @subscription={{this.subscription}} @account={{this.account}}//>
   <hr />
 {{/if}}
-

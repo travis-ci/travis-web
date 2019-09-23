@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
-import { reads, not, equal, and } from '@ember/object/computed';
+import { reads, not, equal, and, or } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
 import config from 'travis/config/environment';
 import { computed } from '@ember/object';
@@ -25,14 +25,13 @@ export default Component.extend({
   requiresSource: equal('subscription.paymentIntent.status', 'requires_source'),
   lastPaymentIntentError: reads('subscription.paymentIntent.last_payment_error'),
   retryAuthorizationClientSecret: reads('subscription.paymentIntent.client_secret'),
-  notChargeInvoiceSubscription: not('subscription.chargeUnpaidInvoices.lastSuccessful.value'),
-  resubscribeLoading: reads('resubscribe.isRunning'),
-  cancelSubscriptionLoading: reads('subscription.cancelSubscription.isRunning'),
   hasSubscriptionPermissions: reads('account.hasSubscriptionPermissions'),
-  canCancelSubscription: and('isNotCanceled', 'hasSubscriptionPermissions'),
-  canResubscribe: and('subscription.isResubscribable', 'hasSubscriptionPermissions'),
+  notChargeInvoiceSubscription: not('subscription.chargeUnpaidInvoices.lastSuccessful.value'),
   isCanceled: reads('subscription.isCanceled'),
   isNotCanceled: not('isCanceled'),
+  canCancelSubscription: and('isNotCanceled', 'hasSubscriptionPermissions'),
+  cancelSubscriptionLoading: reads('subscription.cancelSubscription.isRunning'),
+  isLoading: or('cancelSubscriptionLoading', 'editPlan.isRunning', 'resubscribe.isRunning'),
 
   handleError: reads('stripe.handleError'),
   options: config.stripeOptions,

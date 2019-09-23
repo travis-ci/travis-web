@@ -1,0 +1,120 @@
+<div class="billing-subscription-section">
+  <h3>
+    Contact details
+  </h3>
+  {{#if this.openEditContactForm}}
+    <div data-test-edit-contact-address-form='true' class="edit-form">
+      <TravisForm
+        class="edit-form"
+        @onSubmit={{perform this.editContact}}
+        as |form|
+      >
+        <div class='flex flex--col flex-md-row'>
+          <div class="form-elem inline-form-elem">
+            <form.field
+              @label="First Name"
+              @value={{this.info.firstName}}
+              @required={{true}}
+              @validateOnField={{false}}
+              @showValidationStatusIcons={{false}}
+              @onChange={{action (mut this.info.firstName)}}
+              as |field|
+            >
+              <field.input name="firstname" placeholder="First Name" />
+            </form.field>
+          </div>
+          <div class="form-elem">
+            <form.field
+              @label="Last Name"
+              @value={{this.info.lastName}}
+              @required={{true}}
+              @validateOnField={{false}}
+              @showValidationStatusIcons={{false}}
+              @onChange={{action (mut this.info.lastName)}}
+              as |field|
+            >
+              <field.input name="lastname" placeholder="Last Name" />
+            </form.field>
+          </div>
+        </div>
+        <div class='flex flex--col flex-md-row'>
+          <div class="form-elem inline-form-elem">
+            <form.field
+              @label="Company"
+              @value={{this.info.company}}
+              @required={{false}}
+              @validateOnField={{false}}
+              @showValidationStatusIcons={{false}}
+              @onChange={{action (mut this.info.company)}}
+              as |field|
+            >
+              <field.input name="company" placeholder="Company" />
+            </form.field>
+          </div>
+          <div class="form-elem">
+            <form.field
+              @label="Email"
+              @value={{this.info.billingEmail}}
+              @required={{true}}
+              @validateOnField={{false}}
+              @showValidationStatusIcons={{false}}
+              @onChange={{action (mut this.info.billingEmail)}}
+              as |field|
+            >
+              <field.input name="billingEmail" placeholder="Email" />
+            </form.field>
+          </div>
+        </div>
+        <div class="form-elem">
+          {{#if this.editContact.isRunning}}
+            <LoadingIndicator />
+          {{else}}
+            <div class="flex flex--wrap">
+              <button data-test-update-contact-address-button='true' onclick={{form.submit}} class="button--green">
+                Update contact details
+              </button>
+              <a data-test-cancel-contact-address-button='true' 
+                onClick={{action (toggle 'openEditContactForm' this)}} class='link cancel-link'
+              >
+                Cancel
+              </a>
+            </div>
+          {{/if}}
+        </div>
+      </TravisForm>
+    </div>
+  {{else}}
+    <div data-test-user-details='true' class="flex flex--wrap">
+      {{#if (or this.info.firstName this.info.lastName)}}
+        <section class="flex--col-3">
+          <h4>contact name</h4>
+          <p>{{this.info.firstName}} {{this.info.lastName}}</p>
+        </section>
+      {{/if}}
+      {{#if this.info.company}}
+        <section class="flex--col-3">
+          <h4>company name</h4>
+          <p>{{this.info.company}}</p>
+        </section>
+      {{/if}}
+      {{#if this.info.billingEmail}}
+        <section class="flex--col-3">
+          <h4>billing email</h4>
+          <p>{{this.info.billingEmail}}</p>
+        </section>
+      {{/if}}
+    </div>
+    {{#if this.account.hasSubscriptionPermissions}}
+      <button class='button--blue billing-subscription__buttons' 
+        onClick={{action (toggle 'openEditContactForm' this)}} data-test-edit-contact-address='true'
+      >
+        Edit contact details
+      </button> 
+    {{else}}
+      <div class='button disabled billing-subscription__buttons'  data-test-edit-contact-address='true'>
+        Edit contact details
+      </div> 
+    {{/if}}
+  {{/if}}
+</div>
+<hr />

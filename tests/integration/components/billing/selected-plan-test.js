@@ -23,7 +23,7 @@ module('Integration | Component | selected-billing-plan', function (hooks) {
     this.plan1 = plan1;
     this.set('selectedPlan', plan1);
 
-    await render(hbs`<SelectedBillingPlan 
+    await render(hbs`<Billing::SelectedPlan 
       @showAnnual={{false}} 
       @selectedPlan={{selectedPlan}} 
       @goToFirstStep={{action 'goToFirstStep'}}/>`);
