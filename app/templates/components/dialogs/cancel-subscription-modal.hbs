@@ -20,9 +20,14 @@
         To keep improving our product and how it works for our users, <br/> we'd like to hear your feedback on why you're cancelling.
       </p>
       <h5>reason for cancellation</h5>
+      {{#if this.showCancelReasonValidation}}
+        <span class="notice-banner--red full-width" data-test-cancel-subscription-error='true'>
+          Please select a reason for cancelling
+        </span>
+      {{/if}}
       <div class="flex cancel-subscription-modal__reason-options">
         {{#each this.cancellationReasons as |reason|}}
-          <div onClick={{action 'selectCancellationReason' reason}} class='{{if (eq selectedCancellationReason reason.name) 'selected'}}'>
+          <div data-test-cancel-reason-option='true' onClick={{action 'selectCancellationReason' reason}} class='{{if (eq selectedCancellationReason reason.name) 'selected'}}'>
             <p>{{reason.name}}</p>
           </div>
         {{/each}}
