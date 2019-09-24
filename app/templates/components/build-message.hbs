@@ -1,7 +1,7 @@
 <div class="yml-message" tabindex="0">
   <div class="tooltip-wrapper">
     {{#if this.isLinkable}}
-      <a href="{{this.lineLink}}">
+      <a href={{this.lineLink}} data-test-yml-message-link="true">
         <SvgImage @name={{this.message.level}} @class={{this.iconClass}} />
         <EmberTooltip @text={{this.tooltipText}} />
       </a>
