@@ -69,7 +69,7 @@ export default Component.extend({
 
   resubscribe: task(function* () {
     const result = yield this.subscription.resubscribe.perform();
-    if (result.payment_intent.client_secret) {
+    if (result.payment_intent && result.payment_intent.client_secret) {
       yield this.stripe.handleStripePayment.perform(result.payment_intent.client_secret);
     } else {
       yield this.accounts.fetchSubscriptions.perform();
