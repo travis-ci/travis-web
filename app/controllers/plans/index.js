@@ -50,6 +50,10 @@ export default Controller.extend({
         () => this.set('scrollToContact', false),
         500
       );
-    }
+    },
+
+    contactSuccess() {
+      this.transitionToRoute('plans.thank-you');
+    },
   }
 });
