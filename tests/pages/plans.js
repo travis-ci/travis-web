@@ -48,7 +48,8 @@ import {
 } from 'travis/tests/helpers/selectors';
 
 export default create({
-  visit: visitable('plans'),
+  visit: visitable('/plans'),
+  visitThanks: visitable('/plans/thank-you'),
 
   headerSection: {
     scope: PLANS_PAGE_HEADER_SECTION,

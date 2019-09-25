@@ -14,7 +14,7 @@ module('Acceptance | plans page', function (hooks) {
   });
 
   test('location and visual test', async function (assert) {
-    assert.equal(currentURL(), 'plans');
+    assert.equal(currentURL(), '/plans');
     percySnapshot(assert);
   });
 
@@ -165,7 +165,7 @@ module('Acceptance | plans page', function (hooks) {
 
       assert.equal(requestIsSent, false);
 
-      assert.equal(currentURL(), 'plans');
+      assert.equal(currentURL(), '/plans');
       const { thanks } = plansPage;
       assert.notOk(thanks.isPresent);
       assert.notOk(thanks.title.isPresent);
@@ -173,5 +173,21 @@ module('Acceptance | plans page', function (hooks) {
       assert.notOk(thanks.body.isPresent);
       assert.notOk(thanks.button.isPresent);
     });
+  });
+
+  test('thanks page displays', async function (assert) {
+    await plansPage.visitThanks();
+    assert.equal(currentURL(), '/plans/thank-you');
+
+    const { thanks } = plansPage;
+    const { title, image, body, button } = thanks;
+
+    assert.ok(thanks.isPresent);
+    assert.ok(title.isPresent);
+    assert.ok(image.isPresent);
+    assert.ok(body.isPresent);
+    assert.ok(button.isPresent);
+
+    percySnapshot(assert);
   });
 });
