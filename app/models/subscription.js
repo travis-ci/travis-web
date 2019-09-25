@@ -98,7 +98,6 @@ export default Model.extend({
   }).drop(),
 
   resubscribe: task(function* () {
-    yield this.api.patch(`/subscription/${this.id}/resubscribe`);
-    yield this.accounts.fetchSubscriptions.perform();
+    return yield this.api.patch(`/subscription/${this.id}/resubscribe`);
   }).drop(),
 });
