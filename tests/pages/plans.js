@@ -30,10 +30,6 @@ import {
   SALES_CONTACT_FORM_PHONE,
   SALES_CONTACT_FORM_MESSAGE,
   SALES_CONTACT_FORM_SUBMIT,
-  SALES_CONTACT_SUCCESS_CONTAINER,
-  SALES_CONTACT_SUCCESS_TITLE,
-  SALES_CONTACT_SUCCESS_IMAGE,
-  SALES_CONTACT_SUCCESS_BODY,
 
   PLANS_PAGE_ENTERPRISE_SECTION,
   PLANS_PAGE_ENTERPRISE_BUTTON,
@@ -43,6 +39,12 @@ import {
 
   PLANS_PAGE_MESSAGE_SECTION,
   PLANS_PAGE_MESSAGE_BUTTON,
+
+  PLANS_THANKS_PAGE_CONTAINER,
+  PLANS_THANKS_PAGE_TITLE,
+  PLANS_THANKS_PAGE_IMAGE,
+  PLANS_THANKS_PAGE_BODY,
+  PLANS_THANKS_PAGE_BUTTON,
 } from 'travis/tests/helpers/selectors';
 
 export default create({
@@ -137,26 +139,6 @@ export default create({
         click: clickable(),
       },
     },
-
-    success: {
-      scope: SALES_CONTACT_SUCCESS_CONTAINER,
-      isPresent: isPresent(),
-
-      title: {
-        scope: SALES_CONTACT_SUCCESS_TITLE,
-        isPresent: isPresent(),
-        text: text(),
-      },
-      image: {
-        scope: SALES_CONTACT_SUCCESS_IMAGE,
-        isPresent: isPresent(),
-      },
-      body: {
-        scope: SALES_CONTACT_SUCCESS_BODY,
-        isPresent: isPresent(),
-        text: text(),
-      },
-    },
   },
 
   enterpriseSection: {
@@ -190,6 +172,31 @@ export default create({
 
     button: {
       scope: PLANS_PAGE_MESSAGE_BUTTON,
+      isPresent: isPresent(),
+      text: text(),
+    },
+  },
+
+  thanks: {
+    scope: PLANS_THANKS_PAGE_CONTAINER,
+    isPresent: isPresent(),
+
+    title: {
+      scope: PLANS_THANKS_PAGE_TITLE,
+      isPresent: isPresent(),
+      text: text(),
+    },
+    image: {
+      scope: PLANS_THANKS_PAGE_IMAGE,
+      isPresent: isPresent(),
+    },
+    body: {
+      scope: PLANS_THANKS_PAGE_BODY,
+      isPresent: isPresent(),
+      text: text(),
+    },
+    button: {
+      scope: PLANS_THANKS_PAGE_BUTTON,
       isPresent: isPresent(),
       text: text(),
     },
