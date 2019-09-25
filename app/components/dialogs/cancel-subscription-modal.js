@@ -11,25 +11,26 @@ const cancellationReasons = [
 
 export default Component.extend({
   cancellationReasons,
+  showCancelReasonValidation: false,
   selectedCancellationReason: null,
   cancellationReasonDetails: null,
   isOpen: false,
 
   cancelSubscription: task(function* () {
-    yield this.subscription.cancelSubscription.perform({
-      reason: this.selectedCancellationReason,
-      reason_details: this.cancellationReasonDetails
-    });
-    this.set('isOpen', false);
+    if (this.selectedCancellationReason) {
+      yield this.subscription.cancelSubscription.perform({
+        reason: this.selectedCancellationReason,
+        reason_details: this.cancellationReasonDetails
+      });
+      this.set('isOpen', false);
+    } else {
+      this.set('showCancelReasonValidation', true);
+    }
   }).drop(),
 
   actions: {
     selectCancellationReason(reason) {
-      if (this.selectedCancellationReason === reason.name) {
-        this.set('selectedCancellationReason', null);
-      } else {
-        this.set('selectedCancellationReason', reason.name);
-      }
+      this.set('selectedCancellationReason', reason.name);
     },
   }
 });
