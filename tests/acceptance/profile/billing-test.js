@@ -289,11 +289,16 @@ module('Acceptance | profile/billing', function (hooks) {
 
     await profilePage.visit();
     await profilePage.billing.visit();
-
     await profilePage.billing.openCancelSubscriptionModal.click();
 
-    assert.ok(profilePage.billing.dataTestSubscriptionModal.isPresent);
+    assert.ok(profilePage.billing.dataTestCancelSubscriptionModal.isPresent);
 
+    await profilePage.billing.cancelSubscriptionButton.click();
+
+    assert.ok(profilePage.billing.dataTestCancelSubscriptionModal.error.isPresent);
+    assert.equal(profilePage.billing.dataTestCancelSubscriptionModal.cancelReasonOptions.length, 5);
+
+    await profilePage.billing.dataTestCancelSubscriptionModal.cancelReasonOptions[0].click();
     await profilePage.billing.cancelSubscriptionButton.click();
 
     assert.equal(profilePage.billing.plan.name, 'Small Business1 plan canceled');
