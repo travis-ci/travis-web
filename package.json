@@ -25,7 +25,7 @@
     "@ember/optional-features": "^0.7.0",
     "active-model-adapter": "2.2.0",
     "ansiparse": "artursmirnov/ansiparse",
-    "babel-eslint": "8.2.3",
+    "babel-eslint": "10.0.3",
     "broccoli-asset-rev": "^3.0.0",
     "broccoli-funnel": "^2.0.1",
     "broccoli-merge-trees": "^3.0.0",
