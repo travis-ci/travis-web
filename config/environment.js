@@ -117,39 +117,33 @@ module.exports = function (environment) {
         }
       }
     },
+
+    metricsAdapters: [
+      {
+        name: 'GoogleAnalytics',
+        environments: ['development', 'production'],
+        config: {
+          id: process.env.GOOGLE_ANALYTICS_ID,
+          // Use `analytics_debug.js` in development
+          debug: environment === 'development',
+          // Use verbose tracing of GA events
+          trace: environment === 'development',
+          // Ensure development env hits aren't sent to GA
+          sendHitTask: environment !== 'development',
+        }
+      },
+    ]
   };
 
-  // Metrics
-  const metricsAdapters = [];
-  const { GOOGLE_ANALYTICS_ID, GOOGLE_TAGS_CONTAINER_ID, GOOGLE_TAGS_PARAMS } = process.env;
-
-  if (GOOGLE_ANALYTICS_ID) {
-    metricsAdapters.push({
-      name: 'GoogleAnalytics',
-      environments: ['development', 'production'],
-      config: {
-        id: GOOGLE_ANALYTICS_ID,
-        // Use `analytics_debug.js` in development
-        debug: environment === 'development',
-        // Use verbose tracing of GA events
-        trace: environment === 'development',
-        // Ensure development env hits aren't sent to GA
-        sendHitTask: environment !== 'development',
-      }
-    });
-  }
+  const { GOOGLE_TAGS_CONTAINER_ID, GOOGLE_TAGS_PARAMS } = process.env;
   if (GOOGLE_TAGS_CONTAINER_ID && GOOGLE_TAGS_PARAMS) {
-    metricsAdapters.push({
+    ENV.metricsAdapters.push({
       name: 'GoogleTagManager',
       config: {
         id: GOOGLE_TAGS_CONTAINER_ID,
         envParams: GOOGLE_TAGS_PARAMS,
       }
     });
-  }
-
-  if (metricsAdapters.length > 0) {
-    ENV.metricsAdapters = metricsAdapters;
   }
 
   ENV.featureFlags = {
