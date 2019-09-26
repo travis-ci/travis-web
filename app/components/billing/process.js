@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { equal, reads } from '@ember/object/computed';
-import { computed }  from '@ember/object';
+import { computed } from '@ember/object';
 
 const STEPS = {
   ONE: 'stepOne',
@@ -11,6 +11,7 @@ const STEPS = {
 
 export default Component.extend({
   plan: service(),
+  metrics: service(),
 
   showMonthly: reads('plan.showMonthly'),
   displayedPlans: reads('plan.displayedPlans'),
@@ -47,6 +48,7 @@ export default Component.extend({
 
     next() {
       if (this.selectedPlan) {
+        this.trackButtonClicks();
         const currentIndex = this.steps.indexOf(this.currentStep);
         const lastIndex = this.steps.length - 1;
         const nextIndex = Math.min(lastIndex, currentIndex + 1);
