@@ -8,6 +8,7 @@ export default Component.extend({
   stripe: service(),
   accounts: service(),
   flashes: service(),
+  metrics: service(),
 
   account: null,
   stripeElement: null,
@@ -26,6 +27,10 @@ export default Component.extend({
   isLoading: or('createSubscription.isRunning', 'accounts.fetchSubscriptions.isRunning'),
 
   createSubscription: task(function* () {
+    this.metrics.trackEvent({
+      action: 'Pay Button Clicked',
+      category: 'Subscription',
+    });
     const { stripeElement, account, newSubscription, selectedPlan } = this;
     const {
       token: { id, card },
@@ -40,6 +45,7 @@ export default Component.extend({
         });
         newSubscription.setProperties({ organizationId, plan: selectedPlan });
         const { clientSecret } = yield newSubscription.save();
+        this.metrics.trackEvent({ button: 'pay-button' });
         yield this.stripe.handleStripePayment.perform(clientSecret);
       }
     } catch (error) {
