@@ -29,11 +29,13 @@ export default Component.extend({
   trackButtonClicks() {
     if (this.currentStep === STEPS.ONE) {
       this.metrics.trackEvent({
-        button: 'plan-chosen-button',
+        category: 'Subscription',
+        action: 'Plan Chosen',
       });
     } else if (this.currentStep === STEPS.TWO) {
       this.metrics.trackEvent({
-        button: 'contact-details-added-button',
+        category: 'Subscription',
+        action: 'Contact Details Filled',
       });
     }
   },
