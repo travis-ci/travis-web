@@ -45,7 +45,7 @@
     "ember-cli-eslint": "^5.1.0",
     "ember-cli-head": "^0.4.1",
     "ember-cli-htmlbars": "^3.0.1",
-    "ember-cli-htmlbars-inline-precompile": "^2.1.0",
+    "ember-cli-htmlbars-inline-precompile": "^3.0.0",
     "ember-cli-inject-live-reload": "^2.0.1",
     "ember-cli-inline-images": "0.0.5",
     "ember-cli-mirage": "^1.1.0",
