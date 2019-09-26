@@ -37,6 +37,12 @@
                 Sign up with Assembla
               </span>
             </button>
+            <button class="hero-button org" {{action "signIn" "bitbucket"}}>
+              <SvgImage @name="icon-bitbucket" />
+              <span class="label-align">
+                Sign up with Bitbucket
+              </span>
+            </button>
           {{/if}}
         {{/if}}
         {{#if this.auth.signingIn}}
