@@ -25,6 +25,20 @@ export default Component.extend({
   isStepTwo: equal('currentStep', STEPS.TWO),
   isStepThree: equal('currentStep', STEPS.THREE),
 
+  trackButtonClicks() {
+    if (this.currentStep === STEPS.ONE) {
+      this.metrics.trackEvent({
+        category: 'Subscription',
+        action: 'Plan Chosen',
+      });
+    } else if (this.currentStep === STEPS.TWO) {
+      this.metrics.trackEvent({
+        category: 'Subscription',
+        action: 'Contact Details Filled',
+      });
+    }
+  },
+
   actions: {
 
     goToFirstStep() {

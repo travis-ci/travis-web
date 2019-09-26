@@ -26,6 +26,10 @@ export default Component.extend({
   isLoading: or('createSubscription.isRunning', 'accounts.fetchSubscriptions.isRunning'),
 
   createSubscription: task(function* () {
+    this.metrics.trackEvent({
+      action: 'Pay Button Clicked',
+      category: 'Subscription',
+    });
     const { stripeElement, account, newSubscription, selectedPlan } = this;
     const {
       token: { id, card },
