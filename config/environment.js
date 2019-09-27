@@ -117,8 +117,10 @@ module.exports = function (environment) {
         }
       }
     },
+  };
 
-    metricsAdapters: [
+  if (process.env.GOOGLE_ANALYTICS_ID) {
+    ENV.metricsAdapters = [
       {
         name: 'GoogleAnalytics',
         environments: ['development', 'production'],
@@ -132,8 +134,8 @@ module.exports = function (environment) {
           sendHitTask: environment !== 'development',
         }
       },
-    ]
-  };
+    ];
+  }
 
   ENV.featureFlags = {
     'repository-filtering': true,
