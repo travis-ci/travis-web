@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { reads } from '@ember/object/computed';
-import { task } from 'ember-concurrency';
+import { task, waitForProperty } from 'ember-concurrency';
 
 export default Component.extend({
   classNames: ['job-log'],
@@ -16,7 +16,7 @@ export default Component.extend({
 
     if (newJob !== oldJob) {
       if (oldJob) {
-        this.teardownLog(oldJob);
+        this.teardownLog.perform(oldJob);
       }
 
       if (newJob) {
@@ -27,9 +27,10 @@ export default Component.extend({
     this.set('_oldJob', this.job);
   },
 
-  teardownLog(job) {
+  teardownLog: task(function* (job) {
+    yield waitForProperty({ job }, 'job.isLoaded', v => v === true);
     job.unsubscribe();
-  },
+  }),
 
   setupLog: task(function* (job) {
     this.set('error', false);
@@ -38,6 +39,7 @@ export default Component.extend({
     } catch (e) {
       this.set('error', true);
     }
+    yield waitForProperty({ job }, 'job.isLoaded', v => v === true);
     job.subscribe();
   }),
 });

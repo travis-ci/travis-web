@@ -108,7 +108,11 @@ export default Controller.extend({
   },
 
   stopObservingLastBuild() {
-    return this.removeObserver('repo.currentBuild', this, 'currentBuildDidChange');
+    try {
+      return this.removeObserver('repo.currentBuild', this, 'currentBuildDidChange');
+    } catch (err) {
+      // Observer may not exist
+    }
   },
 
   observeLastBuild() {
