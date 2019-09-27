@@ -3,13 +3,16 @@ import { inject as service } from '@ember/service';
 import { alias } from '@ember/object/computed';
 
 export default Component.extend({
+  tagName: '',
+
   permissionsService: service('permissions'),
   api: service(),
   flashes: service(),
 
-  tagName: 'li',
-  classNameBindings: ['repo.active:is-active'],
-  classNames: ['rows', 'rows--dashboard'],
+  repo: null,
+  star: null,
+  unstar: null,
+
   isLoading: false,
   isTriggering: false,
   dropupIsOpen: false,
@@ -20,10 +23,6 @@ export default Component.extend({
 
   openDropup() {
     this.set('dropupIsOpen', true);
-  },
-
-  mouseLeave() {
-    this.set('dropupIsOpen', false);
   },
 
   triggerBuild() {
@@ -57,6 +56,10 @@ export default Component.extend({
       } else {
         this.star.perform(this.repo);
       }
-    }
+    },
+
+    closeDropup() {
+      this.set('dropupIsOpen', false);
+    },
   }
 });

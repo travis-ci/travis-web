@@ -219,9 +219,9 @@
     </div>
     {{#if this.environment}}
       <div class="detail-job-env"
-        {{action "expandEnv" on="click"}}
-        {{action "expandEnv" on="mouseEnter"}}
-        {{action "expandEnv" on="mouseLeave"}}
+        {{on 'click' (action 'expandEnv')}}
+        {{on 'mouseenter' (action 'expandEnv')}}
+        {{on 'mouseleave' (action 'expandEnv')}}
       >
         <SvgImage @name="icon-environment" @class="icon" />
         <span class="label-align" aria-label="Environment variables">

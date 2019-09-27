@@ -5,24 +5,15 @@ import { computed } from '@ember/object';
 import { alias } from '@ember/object/computed';
 
 export default Component.extend({
+  tagName: '',
+
   auth: service(),
   permissions: service(),
   features: service(),
 
-  tagName: 'nav',
-  classNames: ['option-button'],
-  classNameBindings: ['isOpen:is-open'],
   isOpen: false,
 
   currentUser: alias('auth.currentUser'),
-
-  click(e) {
-    this.toggleProperty('isOpen');
-  },
-
-  mouseLeave() {
-    this.set('isOpen', false);
-  },
 
   displaySettingsLink: computed('permissions.all', 'repo', function () {
     let repo = this.repo;
@@ -57,8 +48,16 @@ export default Component.extend({
   ),
 
   actions: {
+    close() {
+      this.set('isOpen', false);
+    },
+
+    open() {
+      this.toggleProperty('isOpen');
+    },
+
     triggerBuildModal() {
       this.onTriggerBuild();
-    }
+    },
   }
 });
