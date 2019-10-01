@@ -15,6 +15,10 @@
     <span class="badge red square" data-test-expired-status='true'>
       {{this.subscription.status}}
     </span>
+  {{else if this.subscription.isManual}}
+    <span class="badge grey square" data-test-manual-status='true'>
+      manual subscription
+    </span>
   {{else}}
     <span class="badge grey square" data-test-grey-status='true'>
       {{this.subscription.status}}

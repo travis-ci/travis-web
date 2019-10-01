@@ -9,7 +9,7 @@
   }
 
   .notice-banner--white {
-    display: block;
+    display: flex;
     margin-top: 1rem;
     margin-bottom: 1rem;
     padding: 0.5rem 0.9rem 0.6rem;
@@ -521,7 +521,6 @@
         &--validity {
           font-weight: 700;
           font-size: 12px;
-          margin-left: 1em;
         }
       }
     }
