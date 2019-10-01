@@ -677,17 +677,18 @@
 
   &.multi-vcs {
     font-size: 18px;
+    display: inline-block;
+    margin-bottom: 10px;
+    float: left;
 
     svg {
       width: 20px;
       height: 20px;
     }
-  }
-}
 
-.cta-container {
-  :not(:first-child) {
-    margin-left: 5px;
+    &:first-child {
+      margin-right: 10px;
+    }
   }
 }
 

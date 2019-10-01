@@ -17,6 +17,8 @@ export default Component.extend({
   router: service(),
   features: service(),
   externalLinks: service(),
+  multiVcs: service(),
+
   user: alias('auth.currentUser'),
 
   userName: computed('user.{login,name}', function () {

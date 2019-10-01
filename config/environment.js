@@ -129,6 +129,7 @@ module.exports = function (environment) {
     'beta-features': true,
     'github-apps': false,
     'enable-assembla-login': false,
+    'enable-bitbucket-login': false,
   };
 
   const { TRAVIS_PRO, TRAVIS_ENTERPRISE } = process.env;

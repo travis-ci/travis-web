@@ -5,7 +5,7 @@ import { inject as service } from '@ember/service';
 
 export default Component.extend({
   auth: service(),
-  features: service(),
+  multiVcs: service(),
 
   actions: {
     gaCta(location, provider) {

@@ -16,7 +16,7 @@
           <div class="cta-container">
             <a
               href="https://travis-ci.com/signin"
-              class="hero-button cta-index-page {{if this.features.enableAssemblaLogin "multi-vcs"}}"
+              class="hero-button cta-index-page {{if this.multiVcs.enabled "multi-vcs"}}"
               title="Sign up with GitHub"
               {{action "gaCta" "index" "github"}}
             >
@@ -25,16 +25,29 @@
                 Sign up with GitHub
               </span>
             </a>
-            {{#if this.features.enableAssemblaLogin}}
+            {{#if this.multiVcs.enableAssemblaLogin}}
               <a
                 href="https://travis-ci.com/signin"
-                class="hero-button cta-index-page {{if this.features.enableAssemblaLogin "multi-vcs"}}"
+                class="hero-button cta-index-page multi-vcs"
                 title="Sign up with Assembla"
                 {{action "gaCta" "index" "assembla"}}
               >
                 <SvgImage @name="icon-assembla" />
                 <span>
                   Sign up with Assembla
+                </span>
+              </a>
+            {{/if}}
+            {{#if this.multiVcs.enableBitbucketLogin}}
+              <a
+                href="https://travis-ci.com/signin"
+                class="hero-button cta-index-page multi-vcs"
+                title="Sign up with Bitbucket"
+                {{action "gaCta" "index" "bitbucket"}}
+              >
+                <SvgImage @name="icon-bitbucket" />
+                <span>
+                  Sign up with Bitbucket
                 </span>
               </a>
             {{/if}}
