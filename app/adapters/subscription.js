@@ -11,24 +11,9 @@ export default V3Adapter.extend({
   },
 
   updateRecord(store, type, snapshot) {
-    let data = {};
-    let serializer = store.serializerFor(type.modelName);
-
-    serializer.serializeIntoHash(data, type, snapshot);
-
+    const data = this.serialize(snapshot, { update: true });
     let url = this.buildURL(type.modelName, snapshot.id, snapshot, 'updateRecord');
-
-    const updatedSubscriptionInfo = Object.keys(data).reduce((updatedSubscriptionInfo, attribute) => {
-      const splitAttribute = attribute.split('.');
-      const leftAttribute = splitAttribute[0];
-      const rightAttribute = splitAttribute[1];
-      if (leftAttribute === 'billing_info') {
-        updatedSubscriptionInfo[rightAttribute] = data[`billing_info.${rightAttribute}`];
-      }
-      return updatedSubscriptionInfo;
-    }, {});
-
-    return this.ajax(url, 'PATCH', { data: updatedSubscriptionInfo });
+    return this.ajax(url, 'PATCH', { data });
   },
 
   handleResponse(status, headers, payload) {

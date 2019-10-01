@@ -1,0 +1,38 @@
+{{#if this.account.hasSubscriptionPermissions}}
+  {{#if this.isStepOne}}
+    <Billing::SelectPlan
+      @title="Subscribe to a plan"
+      @displayedPlans={{this.displayedPlans}}
+      @selectedPlan={{this.selectedPlan}}
+      @showMonthly={{this.showMonthly}}
+      @showAnnual={{this.showAnnual}}
+      @submit={{action 'next'}}
+    />
+  {{else if this.isStepTwo}}
+    <Billing::Information
+      @displayedPlans={{this.displayedPlans}}
+      @selectedPlan={{this.selectedPlan}}
+      @newSubscription={{this.newSubscription}}
+      @billingInfo={{this.billingInfo}}
+      @showAnnual={{this.showAnnual}}
+      @scrollSection={{this.scrollSection}}
+      @next={{action 'next'}}
+      @back={{action 'back'}}
+      @goToFirstStep={{action 'goToFirstStep'}}
+    />
+  {{else if this.isStepThree}}
+    <Billing::Payment
+      @selectedPlan={{this.selectedPlan}}
+      @showAnnual={{this.showAnnual}}
+      @newSubscription={{this.newSubscription}}
+      @isSavingSubscription={{this.isSavingSubscription}}
+      @account={{this.account}}
+      @goToFirstStep={{action 'goToFirstStep'}}
+      @back={{action 'back'}}
+    />
+  {{/if}}
+{{else}}
+  <p data-test-no-permission-message>
+    You don't have permission to create a subscription
+  </p>
+{{/if}}

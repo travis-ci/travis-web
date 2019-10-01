@@ -24,6 +24,9 @@ export default Component.extend({
   cast(key, args) {
     return `<code>${escape(key)}</code>: casting value <code>${escape(args.given_value)}</code> (<code>${escape(args.given_type)}</code>) to <code>${escape(args.value)}</code> (<code>${escape(args.type)}</code>)`;
   },
+  condition(key, args) {
+    return `<code>${escape(key)}</code>: condition <code>${escape(args.condition)}</code> does not match, skipping notification`;
+  },
 
   default(key, args) {
     return `<code>${escape(key)}</code>: missing <code>${escape(args.key)}</code>, defaulting to: <code>${escape(args.default)}</code>`;

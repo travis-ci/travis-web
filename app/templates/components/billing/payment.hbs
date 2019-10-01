@@ -1,0 +1,48 @@
+<div class='billing-checkout' data-test-payment-form='true'>
+  <Billing::SelectedPlan 
+    @selectedPlan={{this.selectedPlan}} 
+    @showAnnual={{this.showAnnual}} 
+    @goToFirstStep={{action this.goToFirstStep}}
+  />
+  <div class='flex flex--wrap billing-checkout__details' data-test-contact-details='true'>
+    <div class='flex--col-3'>
+      <h4 data-test-contact-heading='true'>contact details:</h4>
+      <p data-test-contact-firstName='true' class='billing-checkout__details--info'>{{concat this.firstName ' ' this.lastName}}</p>
+      <p data-test-contact-company='true' class='billing-checkout__details--info'>{{this.company}}</p>
+      <div>
+       <p data-test-contact-email='true' class='billing-checkout__details--email'>{{this.email}}</p>
+      </div>
+      <button data-test-edit-contact-button='true' class='edit link' onClick={{action back 'contactDetails'}}>Edit</button>
+    </div>
+    <div class='flex--col-3'>
+      <h4 data-test-billing-heading='true'>billing details:</h4>
+      <p data-test-billing-address='true' class='billing-checkout__details--info'>{{this.address}}</p>
+      <p data-test-billing-city='true' class='billing-checkout__details--info'>{{this.city}}</p>
+      <p data-test-billing-country='true' class='billing-checkout__details--info'>{{this.country}}</p>
+      <button data-test-edit-billing-button='true' class='edit link' onClick={{action back 'billingDetails'}}>Edit</button>
+    </div>
+    <div class='flex--col-3'>
+      <h4>discount</h4>
+      <p data-test-billing-coupon='true' class='billing-checkout__details--info'>{{this.coupon}}</p>
+    </div>
+  </div>
+  <h3>
+    Pay with card
+  </h3>
+ <TravisForm data-test-stripe-form='true' @onSubmit={{perform this.createSubscription}} as |form|>
+  <StripeCard @complete={{action "complete"}} @options={{this.options}} as |stripeError|>
+    {{#if stripeError}}
+      <p>{{stripeError.message}}</p>
+    {{/if}}
+  </StripeCard>
+  <div class='billing-checkout__payment'>
+    {{#if this.isLoading}}
+      <LoadingIndicator/>
+    {{else}}
+      <button class='button--blue' {{action form.submit}} data-test-complete-payment='true'>
+        Pay {{format-currency this.selectedPlan.price}}
+      </button>
+    {{/if}}
+    </div>
+ </TravisForm>
+</div>
