@@ -3,6 +3,7 @@ import { computed } from '@ember/object';
 import {
   isInternal,
   presentedPath,
+  codeblockName,
   fileNameWithoutSha
 } from 'travis/utils/format-config';
 import { later } from '@ember/runloop';
@@ -51,7 +52,7 @@ export default Component.extend({
   }),
 
   codeblockId: computed('rawConfig.source', function () {
-    return `rccb_${this.rawConfig.source}`;
+    return codeblockName(this.rawConfig.source);
   }),
 
   actions: {

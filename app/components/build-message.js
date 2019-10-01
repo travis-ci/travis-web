@@ -3,11 +3,14 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { and, notEmpty } from '@ember/object/computed';
 import { htmlSafe } from '@ember/string';
+import { codeblockName } from 'travis/utils/format-config';
 import Ember from 'ember';
 
 const { escapeExpression: escape } = Ember.Handlebars.Utils;
 
 export default Component.extend({
+  tagName: '',
+
   readableMessage: computed('message.code', 'message.key', 'message.args', function () {
     const { code, key, args } = this.message;
 
@@ -158,7 +161,7 @@ export default Component.extend({
 
   lineLink: computed('message.src', 'message.line', function () {
     const { src, line } = this.message;
-    return `#rccb_${src}.${line + 1}`;
+    return `#${codeblockName(src)}.${line + 1}`;
   }),
 });
 /* eslint-enable max-len */

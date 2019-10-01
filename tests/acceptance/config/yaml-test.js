@@ -4,6 +4,7 @@ import { setupApplicationTest } from 'travis/tests/helpers/setup-application-tes
 import { percySnapshot } from 'ember-percy';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import page from 'travis/tests/pages/build';
+import { codeblockName } from 'travis/utils/format-config';
 
 let slug = 'travis-ci/travis-web';
 
@@ -29,8 +30,6 @@ let rawConfigs = [
     source: source2
   }
 ];
-
-const lineLinkPrefix = 'rccb_';
 
 module('Acceptance | config/yaml', function (hooks) {
   setupApplicationTest(hooks);
@@ -62,7 +61,7 @@ module('Acceptance | config/yaml', function (hooks) {
       assert.equal(document.title, `Config - Build #${this.build.number} - travis-ci/travis-web - Travis CI`);
       assert.equal(page.yaml[0].codeblock.text, 'language: jortle sudo: tortle');
       assert.equal(page.yaml[0].source, '.travis.yml');
-      assert.equal(page.yaml[0].codeblock.id, `${lineLinkPrefix}${source}`);
+      assert.equal(page.yaml[0].codeblock.id, codeblockName(source));
     });
 
     test('shows build messages when they exist', async function (assert) {
@@ -100,8 +99,8 @@ module('Acceptance | config/yaml', function (hooks) {
       page.ymlMessages[0].as(message => {
         assert.ok(message.icon.isWarning, 'expected the yml message to be a warn');
         assert.equal(message.message, 'unrecognised message code skortleby');
-        assert.equal(page.yaml[0].codeblock.id, `${lineLinkPrefix}${msg1.src}`);
-        assert.equal(message.link.href, `#${lineLinkPrefix}${msg1.src}.${msg1.line + 1}`);
+        assert.equal(page.yaml[0].codeblock.id, codeblockName(msg1.src));
+        assert.equal(message.link.href, `#${codeblockName(msg1.src)}.${msg1.line + 1}`);
       });
 
       percySnapshot(assert);
