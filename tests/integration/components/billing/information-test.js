@@ -71,7 +71,7 @@ module('Integration | Component | billing-information', function (hooks) {
     assert.equal(profilePage.billing.selectedPlanOverview.jobs.text, `${this.plans[0].builds} concurrent jobs`);
     assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${this.plans[0].price / 100}`);
     assert.equal(profilePage.billing.period.text, '/month');
-    assert.equal(profilePage.billing.selectedPlanOverview.changePlan.text, 'change plan');
+    assert.equal(profilePage.billing.selectedPlanOverview.changePlan.text, 'Change plan');
 
     assert.dom('input').isVisible({ count: 9 });
     assert.dom('.ember-power-select-trigger').isVisible({ count: 1 });
