@@ -32,11 +32,11 @@ export default Component.extend({
       category: 'Subscription',
     });
     const { stripeElement, account, newSubscription, selectedPlan } = this;
-    const {
-      token: { id, card },
-      error
-    } = yield this.stripe.createStripeToken.perform(stripeElement);
     try {
+      const {
+        token: { id, card },
+        error
+      } = yield this.stripe.createStripeToken.perform(stripeElement);
       if (!error) {
         const organizationId = account.type === 'organization' ? +(account.id) : null;
         newSubscription.creditCardInfo.setProperties({

@@ -27,18 +27,19 @@
       padding-top: 15px;
     }
 
+    h4 {
+      text-transform: uppercase;
+      font-weight: 700;
+      margin: 0;
+      font-size: .8em;
+      color: $cement-grey;
+    }
+
     &__details {
       border: 2px $pebble-grey solid;
       border-radius: 5px;
       padding: 15px;
       color: $cement-grey;
-
-      h4 {
-        text-transform: uppercase;
-        font-weight: 700;
-        margin: 0;
-        font-size: .8em;
-      }
 
       &--info {
         margin-bottom: 0;

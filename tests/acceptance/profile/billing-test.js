@@ -913,12 +913,12 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.period.text, '/month');
     assert.equal(profilePage.billing.selectedPlanOverview.changePlan.text, 'change plan');
 
-    assert.equal(billingPaymentForm.contactDetails.contactHeading.text, 'contact details:');
+    assert.equal(billingPaymentForm.contactDetails.contactHeading.text, 'contact details');
     assert.equal(billingPaymentForm.contactDetails.firstName.text, 'John Doe');
     assert.equal(billingPaymentForm.contactDetails.company.text, 'Travis');
     assert.equal(billingPaymentForm.contactDetails.email.text, 'john@doe.com');
 
-    assert.equal(billingPaymentForm.contactDetails.billingHeading.text, 'billing details:');
+    assert.equal(billingPaymentForm.contactDetails.billingHeading.text, 'billing details');
     assert.equal(billingPaymentForm.contactDetails.address.text, '15 Olalubi street');
     assert.equal(billingPaymentForm.contactDetails.city.text, 'Berlin');
     assert.equal(billingPaymentForm.contactDetails.country.text, 'Germany');
@@ -981,12 +981,12 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.period.text, '/month');
     assert.equal(profilePage.billing.selectedPlanOverview.changePlan.text, 'change plan');
 
-    assert.equal(billingPaymentForm.contactDetails.contactHeading.text, 'contact details:');
+    assert.equal(billingPaymentForm.contactDetails.contactHeading.text, 'contact details');
     assert.equal(billingPaymentForm.contactDetails.firstName.text, 'John Doe');
     assert.equal(billingPaymentForm.contactDetails.company.text, 'Travis');
     assert.equal(billingPaymentForm.contactDetails.email.text, 'john@doe.com');
 
-    assert.equal(billingPaymentForm.contactDetails.billingHeading.text, 'billing details:');
+    assert.equal(billingPaymentForm.contactDetails.billingHeading.text, 'billing details');
     assert.equal(billingPaymentForm.contactDetails.address.text, '15 Olalubi street');
     assert.equal(billingPaymentForm.contactDetails.city.text, 'Berlin');
     assert.equal(billingPaymentForm.contactDetails.country.text, 'Germany');
