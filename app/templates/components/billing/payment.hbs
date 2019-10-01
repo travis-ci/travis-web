@@ -12,14 +12,14 @@
       <div>
        <p data-test-contact-email='true' class='billing-checkout__details--email'>{{this.email}}</p>
       </div>
-      <button data-test-edit-contact-button='true' class='edit link' onClick={{action back 'contactDetails'}}>Edit</button>
+      <button data-test-edit-contact-button='true' class='mt-3 button--white button--hover' onClick={{action back 'contactDetails'}}>Edit contact details</button>
     </div>
     <div class='flex--col-3'>
       <h4 data-test-billing-heading='true'>billing details:</h4>
       <p data-test-billing-address='true' class='billing-checkout__details--info'>{{this.address}}</p>
       <p data-test-billing-city='true' class='billing-checkout__details--info'>{{this.city}}</p>
       <p data-test-billing-country='true' class='billing-checkout__details--info'>{{this.country}}</p>
-      <button data-test-edit-billing-button='true' class='edit link' onClick={{action back 'billingDetails'}}>Edit</button>
+      <button data-test-edit-billing-button='true' class='mt-3 button--white button--hover' onClick={{action back 'billingDetails'}}>Edit billing details</button>
     </div>
     <div class='flex--col-3'>
       <h4>discount</h4>
