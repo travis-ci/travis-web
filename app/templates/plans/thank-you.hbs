@@ -1,0 +1,23 @@
+<TravisLayout @layoutName="layouts/center" class="tailwind-overrides">
+  <UiKit::box @textAlign='center' data-test-plans-contact-thanks-container="true">
+    <UiKit::Text @tag='h1' @variant='h1' data-test-plans-contact-thanks-title="true">
+      Thank you!
+    </UiKit::Text>
+    <UiKit::box
+      @maxWidth='lg'
+      @margin={{hash y=4 x='auto'}}
+      data-test-plans-contact-thanks-image="true"
+    >
+      <SvgImage @name="hard-hat-success" />
+    </UiKit::box>
+    <UiKit::Text @margin={{hash bottom=4}} data-test-plans-contact-thanks-body="true">
+      We'll get back to you as soon as possible.
+    </UiKit::Text>
+
+    <LinkTo @route='plans'>
+      <UiKit::Button data-test-plans-contact-thanks-button="true">
+        Back
+      </UiKit::Button>
+    </LinkTo>
+  </UiKit::box>
+</TravisLayout>
