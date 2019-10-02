@@ -215,10 +215,4 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
   }),
 
   canRemoveLog: not('log.removed'),
-
-  slug: computed('repo.slug', 'number', function () {
-    let slug = this.get('repo.slug');
-    let number = this.number;
-    return `${slug} #${number}`;
-  }),
 });
