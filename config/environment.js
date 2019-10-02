@@ -163,8 +163,11 @@ module.exports = function (environment) {
   };
 
   ENV['ember-meta'] = {
+    imgSrc: 'https://travis-ci.com/images/favicon.png',
     url: 'https://travis-ci.com/',
-    twitterUsername: '@travisci'
+    siteName: 'Travis CI',
+    twitterUsername: '@travisci',
+    keywords: ['travis-ci'],
   };
 
   if (typeof process !== 'undefined') {

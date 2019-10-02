@@ -47,6 +47,12 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
   url: computed(function () {
     return `/${this.get('repo.slug')}/jobs/${this.get('id')}`;
   }),
+  date: computed(function () {
+    return this.get('finishedAt') || this.get('startedAt');
+  }),
+  title: computed(function () {
+    return `Result for ${this.get('repo.slug')} job #${this.get('number')}`;
+  }),
 
   // TODO: DO NOT SET OTHER PROPERTIES WITHIN A COMPUTED PROPERTY!
   log: computed(function () {
