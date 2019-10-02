@@ -22,6 +22,7 @@ export default Component.extend({
     try {
       yield this.lead.save();
       this.reset();
+      this.onSuccess();
       return true;
     } catch (error) {
       this.flashes.error(
@@ -32,11 +33,14 @@ export default Component.extend({
     }
   }).drop(),
 
+  onSuccess() {},
+
   reset() {
     if (this.lead) this.lead.unloadRecord();
     this.set('lead', this.store.createRecord('lead', { utm_source: this.utmSource }));
   },
 
+  // Lifecycle
   didInsertElement() {
     this.reset();
     this.flashes.clear();
