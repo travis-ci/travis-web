@@ -163,6 +163,8 @@ module.exports = function (environment) {
   };
 
   ENV['ember-meta'] = {
+    url: 'https://travis-ci.com/',
+    twitterUsername: '@travisci'
   };
 
   if (typeof process !== 'undefined') {
