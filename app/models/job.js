@@ -43,6 +43,11 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
   tag: alias('build.tag'),
   eventType: alias('build.eventType'),
 
+  // meta tags
+  url: computed(function () {
+    return `/${this.get('repo.slug')}/jobs/${this.get('id')}`;
+  }),
+
   // TODO: DO NOT SET OTHER PROPERTIES WITHIN A COMPUTED PROPERTY!
   log: computed(function () {
     this.set('isLogAccessed', true);

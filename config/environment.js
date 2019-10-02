@@ -162,6 +162,9 @@ module.exports = function (environment) {
     ]
   };
 
+  ENV['ember-meta'] = {
+  };
+
   if (typeof process !== 'undefined') {
     if (ENV.featureFlags['pro-version'] && !ENV.featureFlags['enterprise-version']) {
       // set defaults for pro if it's used
