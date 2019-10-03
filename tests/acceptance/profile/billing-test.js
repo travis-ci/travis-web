@@ -312,6 +312,36 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.creditCardNumber.text, '•••• •••• •••• 1919');
     assert.equal(profilePage.billing.price.text, '$69');
     assert.equal(profilePage.billing.period.text, '/month');
+
+    assert.dom(profilePage.billing.changePlanResubscribe.scope).hasTextContaining('Subscribe to different plan');
+    assert.dom(profilePage.billing.resubscribeSubscriptionButton.scope).hasTextContaining('Resubscribe to plan');
+  });
+
+  test('resubscribe to a canceled stripe plan', async function (assert) {
+    this.subscription.status = 'canceled';
+
+    await profilePage.visit();
+    await profilePage.billing.visit();
+
+    assert.dom(profilePage.billing.changePlanResubscribe.scope).hasTextContaining('Subscribe to different plan');
+    assert.dom(profilePage.billing.resubscribeSubscriptionButton.scope).hasTextContaining('Resubscribe to plan');
+
+    await profilePage.billing.resubscribeSubscriptionButton.click();
+    assert.equal(profilePage.billing.plan.name, 'Small Business1 plan active');
+  });
+
+  test('change and resubscribe to a canceled stripe plan', async function (assert) {
+    this.subscription.status = 'canceled';
+
+    await profilePage.visit();
+    await profilePage.billing.visit();
+
+    assert.dom(profilePage.billing.changePlanResubscribe.scope).hasTextContaining('Subscribe to different plan');
+    assert.dom(profilePage.billing.resubscribeSubscriptionButton.scope).hasTextContaining('Resubscribe to plan');
+
+    await profilePage.billing.changePlanResubscribe.click();
+    assert.dom(profilePage.billing.billingPlanChoices.boxes.scope).exists({ count: 5 });
+    assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe to 2 job plan');
   });
 
   test('view billing on a canceled stripe plan', async function (assert) {
@@ -843,7 +873,7 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.selectedPlanOverview.jobs.text, `${this.defaultPlan.builds} concurrent jobs`);
     assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${this.defaultPlan.price / 100}`);
     assert.equal(profilePage.billing.period.text, '/month');
-    assert.equal(profilePage.billing.selectedPlanOverview.changePlan.text, 'change plan');
+    assert.equal(profilePage.billing.selectedPlanOverview.changePlan.text, 'Change plan');
   });
 
   test('view billing tab shows plans selector when change plan button is clicked ', async function (assert) {
@@ -858,7 +888,7 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.selectedPlanOverview.jobs.text, `${this.defaultPlan.builds} concurrent jobs`);
     assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${this.defaultPlan.price / 100}`);
     assert.equal(profilePage.billing.period.text, '/month');
-    assert.equal(profilePage.billing.selectedPlanOverview.changePlan.text, 'change plan');
+    assert.equal(profilePage.billing.selectedPlanOverview.changePlan.text, 'Change plan');
 
     await profilePage.billing.selectedPlanOverview.changePlan.click();
 
@@ -911,7 +941,7 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.selectedPlanOverview.jobs.text, `${this.defaultPlan.builds} concurrent jobs`);
     assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${this.defaultPlan.price / 100}`);
     assert.equal(profilePage.billing.period.text, '/month');
-    assert.equal(profilePage.billing.selectedPlanOverview.changePlan.text, 'change plan');
+    assert.equal(profilePage.billing.selectedPlanOverview.changePlan.text, 'Change plan');
 
     assert.equal(billingPaymentForm.contactDetails.contactHeading.text, 'contact details:');
     assert.equal(billingPaymentForm.contactDetails.firstName.text, 'John Doe');
@@ -979,7 +1009,7 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.selectedPlanOverview.jobs.text, `${this.defaultPlan.builds} concurrent jobs`);
     assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${this.defaultPlan.price / 100}`);
     assert.equal(profilePage.billing.period.text, '/month');
-    assert.equal(profilePage.billing.selectedPlanOverview.changePlan.text, 'change plan');
+    assert.equal(profilePage.billing.selectedPlanOverview.changePlan.text, 'Change plan');
 
     assert.equal(billingPaymentForm.contactDetails.contactHeading.text, 'contact details:');
     assert.equal(billingPaymentForm.contactDetails.firstName.text, 'John Doe');

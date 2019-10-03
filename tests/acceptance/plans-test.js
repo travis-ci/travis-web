@@ -14,7 +14,7 @@ module('Acceptance | plans page', function (hooks) {
   });
 
   test('location and visual test', async function (assert) {
-    assert.equal(currentURL(), 'plans');
+    assert.equal(currentURL(), '/plans');
     percySnapshot(assert);
   });
 
@@ -48,7 +48,7 @@ module('Acceptance | plans page', function (hooks) {
 
   test('contact section structure', async function (assert) {
     const { contactSection } = plansPage;
-    const { form, success } = contactSection;
+    const { form } = contactSection;
     const { name, email, size, phone, message, submit } = form;
 
     assert.ok(contactSection.isPresent);
@@ -59,8 +59,6 @@ module('Acceptance | plans page', function (hooks) {
     assert.ok(phone.isPresent);
     assert.ok(message.isPresent);
     assert.ok(submit.isPresent);
-
-    assert.notOk(success.isPresent);
   });
 
   test('enterprise section structure', async function (assert) {
@@ -98,7 +96,7 @@ module('Acceptance | plans page', function (hooks) {
       utmSource: 'plans-page',
     };
 
-    hooks.beforeEach(function () {
+    hooks.beforeEach(async function () {
       this.requestHandler = (request) => JSON.parse(request.requestBody);
       server.post('/leads', (schema, request) => {
         return this.requestHandler(request);
@@ -106,7 +104,7 @@ module('Acceptance | plans page', function (hooks) {
     });
 
     test('succeeds when all fields filled properly', async function (assert) {
-      const { form, success } = plansPage.contactSection;
+      const { form } = plansPage.contactSection;
       const { name, email, size, phone, message, submit } = form;
 
       await name.fill(mockData.name);
@@ -117,10 +115,13 @@ module('Acceptance | plans page', function (hooks) {
       await submit.click();
       await settled();
 
-      assert.ok(success.isPresent);
-      assert.ok(success.title.isPresent);
-      assert.ok(success.image.isPresent);
-      assert.ok(success.body.isPresent);
+      assert.equal(currentURL(), '/plans/thank-you');
+      const { thanks } = plansPage;
+      assert.ok(thanks.isPresent);
+      assert.ok(thanks.title.isPresent);
+      assert.ok(thanks.image.isPresent);
+      assert.ok(thanks.body.isPresent);
+      assert.ok(thanks.button.isPresent);
     });
 
     test('contains all necessary data', async function (assert) {
@@ -150,7 +151,7 @@ module('Acceptance | plans page', function (hooks) {
     });
 
     test('doesn\'t get sent if form is invalid', async function (assert) {
-      const { form, success } = plansPage.contactSection;
+      const { form } = plansPage.contactSection;
       const { submit } = form;
       let requestIsSent = false;
 
@@ -164,10 +165,29 @@ module('Acceptance | plans page', function (hooks) {
 
       assert.equal(requestIsSent, false);
 
-      assert.notOk(success.isPresent);
-      assert.notOk(success.title.isPresent);
-      assert.notOk(success.image.isPresent);
-      assert.notOk(success.body.isPresent);
+      assert.equal(currentURL(), '/plans');
+      const { thanks } = plansPage;
+      assert.notOk(thanks.isPresent);
+      assert.notOk(thanks.title.isPresent);
+      assert.notOk(thanks.image.isPresent);
+      assert.notOk(thanks.body.isPresent);
+      assert.notOk(thanks.button.isPresent);
     });
+  });
+
+  test('thanks page displays', async function (assert) {
+    await plansPage.visitThanks();
+    assert.equal(currentURL(), '/plans/thank-you');
+
+    const { thanks } = plansPage;
+    const { title, image, body, button } = thanks;
+
+    assert.ok(thanks.isPresent);
+    assert.ok(title.isPresent);
+    assert.ok(image.isPresent);
+    assert.ok(body.isPresent);
+    assert.ok(button.isPresent);
+
+    percySnapshot(assert);
   });
 });

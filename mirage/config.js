@@ -172,6 +172,18 @@ export default function () {
     );
   });
 
+  this.patch('/subscription/:subscription_id/resubscribe', function (schema, { params, requestBody }) {
+    const subscription = schema.subscriptions.where({ id: params.subscription_id });
+    subscription.update(
+      'status', 'subscribed'
+    );
+    return {
+      payment_intent: {
+        client_secret: ''
+      }
+    };
+  });
+
   this.get('/plans');
 
   this.get('/plans_for/user', function (schema) {
