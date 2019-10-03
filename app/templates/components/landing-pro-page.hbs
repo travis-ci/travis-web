@@ -13,17 +13,12 @@
           <p>
             Easily sync your GitHub projects with Travis CI and you'll be testing your code in minutes.
           </p>
-          <a
-            href="https://travis-ci.com/signin"
-            class="hero-button cta-index-page"
-            title="Sign up with GitHub"
-            {{action "gaCta" "index"}}
-          >
+          <button class="hero-button cta-index-page" {{action 'gaCta' 'index'}} title="Sign up with GitHub">
             <SvgImage @name="github-signin" />
             <span>
               Sign up with GitHub
             </span>
-          </a>
+          </button>
         </div>
         <div class="landing-hero-image">
           <img src="../images/pro-landing/hero-header.png" />
