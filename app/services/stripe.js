@@ -15,7 +15,7 @@ export default Service.extend({
   createStripeToken: task(function* (stripeElement) {
     const result = yield this.stripev3.createToken(stripeElement);
     if (result && result.error) {
-      this.handleError(result.error);
+      this.flashErrorMessage(result.error);
     }
     return result;
   }).drop(),
@@ -41,4 +41,9 @@ export default Service.extend({
     }
     return errorMessage;
   },
+
+  flashErrorMessage(stripeError) {
+    const errorMessage = this.handleError(stripeError);
+    this.flashes(errorMessage);
+  }
 });

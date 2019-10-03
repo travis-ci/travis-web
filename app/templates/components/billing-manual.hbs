@@ -1,8 +1,8 @@
 {{#unless this.subscription.manualSubscriptionExpired}}
-  <section class="plan">
-    <h2>
-      Plan Overview
-    </h2>
+  <section>
+    <h3>
+      Overview
+    </h3>
     <h3 data-test-plan-name>
       {{this.subscription.plan.name}}
     </h3>
@@ -14,15 +14,15 @@
     </p>
   </section>
   <section>
-    <h2>
+    <h3>
       Billing Information
-    </h2>
+    </h3>
     <section class="row">
       <section class="payment">
         <h3>
           Payment details
         </h3>
-        <PaymentDetails @subscription={{this.subscription}} />
+        <Billing::PaymentDetails @subscription={{this.subscription}} />
       </section>
     </section>
   </section>

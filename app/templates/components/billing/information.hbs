@@ -1,0 +1,172 @@
+<div class='billing-information-form'>
+  <Billing::SelectedPlan 
+    @selectedPlan={{this.selectedPlan}} 
+    @showAnnual={{this.showAnnual}} 
+    @goToFirstStep={{action this.goToFirstStep}}
+  />
+  <TravisForm @onSubmit={{action next}} as |form|>
+    <div data-test-billing-form>
+      {{#if this.scrollToContactDetails}}
+        <ScrollHere/>
+      {{/if}}
+      <h3 data-test-contact-details-title='true'>
+        Contact details
+      </h3>
+      <div class='flex flex--col flex-md-row'>
+        <div class='full-width form-elem inline-form-elem'>
+          <form.field
+            @label='First Name'
+            @value={{newSubscription.billingInfo.firstName}}
+            @required={{true}}
+            @showRequiredMark={{true}}
+            @showValidationStatusIcons={{false}}
+            @onChange={{action (mut newSubscription.billingInfo.firstName)}} as |Field|
+          >
+            <Field.input @name='firstname'/>
+          </form.field>
+        </div>
+        <div class='full-width form-elem'>
+          <form.field
+            @label='Last Name'
+            @value={{newSubscription.billingInfo.lastName}}
+            @required={{true}}
+            @showRequiredMark={{true}}
+            @showValidationStatusIcons={{false}}
+            @onChange={{action (mut newSubscription.billingInfo.lastName)}} as |Field|
+          >
+            <Field.input @name='lastname'/>
+          </form.field>
+        </div>
+      </div>
+      <div class='flex flex--col flex-md-row'>
+        <div class='form-elem full-width inline-form-elem'>
+          <form.field
+            @label='Company Name'
+            @value={{newSubscription.billingInfo.company}}
+            @showValidationStatusIcons={{false}}
+            @onChange={{action (mut newSubscription.billingInfo.company)}} as |Field|
+          >
+            <Field.input @name='companyName'/>
+          </form.field>
+        </div>
+        <div class='full-width'>
+          <form.field
+            @label='Billing Email Address'
+            @value={{newSubscription.billingInfo.billingEmail}}
+            @required={{true}}
+            @showRequiredMark={{true}}
+            @validator={{form-validator form.validators.email}}
+            @showValidationStatusIcons={{false}}
+            @onChange={{action (mut newSubscription.billingInfo.billingEmail)}} as |Field|
+          >
+            <Field.input @name='email'/>
+          </form.field>
+        </div>
+      </div>
+      <h3 data-test-billing-details-title='true'>
+        Billing address
+      </h3>
+      {{#if this.scrollToBillingDetails}}
+        <ScrollHere/>
+      {{/if}}
+      <div class='flex flex--col flex-md-row'>
+        <div class='full-width form-elem inline-form-elem'>
+          <form.field
+            @label='Street Address'
+            @value={{newSubscription.billingInfo.address}}
+            @required={{true}}
+            @showRequiredMark={{true}}
+            @showValidationStatusIcons={{false}}
+            @onChange={{action (mut newSubscription.billingInfo.address)}} 
+            as |Field|
+          >
+            <Field.input @name='address'/>
+          </form.field>
+        </div>
+        <div class='full-width form-elem'>
+          <form.field
+            @label='City'
+            @value={{newSubscription.billingInfo.city}}
+            @required={{true}}
+            @showRequiredMark={{true}}
+            @showValidationStatusIcons={{false}}
+            @onChange={{action (mut newSubscription.billingInfo.city)}} 
+            as |Field|
+          >
+            <Field.input @name='city'/>
+          </form.field>
+        </div>
+      </div>
+      <div class='flex flex--col flex-md-row'>
+        <div class='full-width form-elem inline-form-elem'>
+          <form.field
+            @label='Zip Code'
+            @value={{newSubscription.billingInfo.zipCode}}
+            @required={{true}}
+            @showRequiredMark={{true}}
+            @showValidationStatusIcons={{false}}
+            @onChange={{action (mut newSubscription.billingInfo.zipCode)}} 
+            as |Field|
+          >
+            <Field.input @name='zip'/>
+          </form.field>
+        </div>
+        <div class='form-elem full-width select' data-billing-form-select>
+          <form.field
+            @label='Country'
+            @value={{newSubscription.billingInfo.country}}
+            @required={{true}}
+            class='billing-country'
+            @showRequiredMark={{true}}
+            @showValidationStatusIcons={{false}}
+            @onChange={{action (mut newSubscription.billingInfo.country)}} 
+            as |Field|
+          >
+            <Field.select
+              @placeholder='Select country'
+              @options={{countries}} as |country|
+            >
+              {{country}}
+            </Field.select>
+          </form.field>
+      </div>
+      </div>
+      <div class='flex flex--col flex-md-row'>
+        <div class='form-elem full-width inline-form-elem billing-optional-field'>
+          <form.field
+            @label='Vat Id'
+            @value={{newSubscription.billingInfo.vatId}}
+            @showValidationStatusIcons={{false}}
+            @onChange={{action (mut newSubscription.billingInfo.vatId)}} 
+            as |Field|
+          >
+            <Field.input @name='vat'/>
+          </form.field>
+        </div>
+        <div class='form-elem full-width billing-optional-field'>
+          <form.field
+            @label='Coupon'
+            @value={{newSubscription.coupon}}
+            @showValidationStatusIcons={{false}}
+            @onChange={{action (mut newSubscription.coupon)}} 
+            as |Field|
+          >
+            <Field.input @name='coupon'/>
+          </form.field>
+        </div>
+      </div>
+      <div class='form-elem flex flex--wrap'>
+        <button
+          onclick={{action form.submit}}
+          class='button--blue'
+          data-test-proceed-to-payment-button
+        >
+          Proceed to Payment
+        </button>
+        <span data-test-back-to-plans='true' onClick={{action back}} class='link back-button'>
+          Back to plans
+        </span>
+      </div>
+    </div>
+  </TravisForm>
+</div>

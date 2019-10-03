@@ -7,6 +7,22 @@ export default V3Serializer.extend({
     permissions: { key: '@permissions' }
   },
 
+  serialize(snapshot, options) {
+    const json = this._super(...arguments);
+    if (options && options.update) {
+      return Object.keys(json).reduce((updatedJson, attribute) => {
+        const splitAttribute = attribute.split('.');
+        const leftAttribute = splitAttribute[0];
+        const rightAttribute = splitAttribute[1];
+        if (leftAttribute === 'billing_info') {
+          updatedJson[rightAttribute] = json[`billing_info.${rightAttribute}`];
+        }
+        return updatedJson;
+      }, {});
+    }
+    return json;
+  },
+
   serializeBelongsTo(snapshot, json, relationship) {
     let key = relationship.key;
     let belongsTo = snapshot.belongsTo(key);

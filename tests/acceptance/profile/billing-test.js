@@ -129,7 +129,7 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining('5 concurrent jobs Valid until June 19, 2018');
 
     assert.equal(profilePage.billing.userDetails.text, 'contact name User Name company name Travis CI GmbH billing email user@email.com');
-    assert.equal(profilePage.billing.billingDetails.text, 'address Rigaerstraße 8 city, state/territory Berlin post code 10987 country Germany');
+    assert.equal(profilePage.billing.billingDetails.text, 'address Rigaerstraße 8 city Berlin post code 10987 country Germany');
     assert.dom(profilePage.billing.planMessage.scope).hasText('Valid until June 19, 2018');
 
     assert.equal(profilePage.billing.creditCardNumber.text, '•••• •••• •••• 1919');
@@ -253,7 +253,7 @@ module('Acceptance | profile/billing', function (hooks) {
 
     await profilePage.billing.editBillingAddressForm.updateBillingAddressButton.click();
 
-    assert.equal(profilePage.billing.billingDetails.text, 'address Olalubi city, state/territory Lagos post code 10987 country Nigeria');
+    assert.equal(profilePage.billing.billingDetails.text, 'address Olalubi city Lagos post code 10987 country Nigeria');
   });
 
   test('view billing on an expired stripe plan', async function (assert) {
@@ -289,11 +289,16 @@ module('Acceptance | profile/billing', function (hooks) {
 
     await profilePage.visit();
     await profilePage.billing.visit();
-
     await profilePage.billing.openCancelSubscriptionModal.click();
 
-    assert.ok(profilePage.billing.dataTestSubscriptionModal.isPresent);
+    assert.ok(profilePage.billing.dataTestCancelSubscriptionModal.isPresent);
 
+    await profilePage.billing.cancelSubscriptionButton.click();
+
+    assert.ok(profilePage.billing.dataTestCancelSubscriptionModal.error.isPresent);
+    assert.equal(profilePage.billing.dataTestCancelSubscriptionModal.cancelReasonOptions.length, 5);
+
+    await profilePage.billing.dataTestCancelSubscriptionModal.cancelReasonOptions[0].click();
     await profilePage.billing.cancelSubscriptionButton.click();
 
     assert.equal(profilePage.billing.plan.name, 'Small Business1 plan canceled');
@@ -301,7 +306,7 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.planMessage.text, `Expires ${momentFromNow} on June 19`);
 
     assert.equal(profilePage.billing.userDetails.text, 'contact name User Name company name Travis CI GmbH billing email user@email.com');
-    assert.equal(profilePage.billing.billingDetails.text, 'address Rigaerstraße 8 city, state/territory Berlin post code 10987 country Germany');
+    assert.equal(profilePage.billing.billingDetails.text, 'address Rigaerstraße 8 city Berlin post code 10987 country Germany');
     assert.dom(profilePage.billing.planMessage.scope).hasText(`Expires ${momentFromNow} on June 19`);
 
     assert.equal(profilePage.billing.creditCardNumber.text, '•••• •••• •••• 1919');
@@ -321,7 +326,7 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.planMessage.text, `Expires ${momentFromNow} on June 19`);
 
     assert.equal(profilePage.billing.userDetails.text, 'contact name User Name company name Travis CI GmbH billing email user@email.com');
-    assert.equal(profilePage.billing.billingDetails.text, 'address Rigaerstraße 8 city, state/territory Berlin post code 10987 country Germany');
+    assert.equal(profilePage.billing.billingDetails.text, 'address Rigaerstraße 8 city Berlin post code 10987 country Germany');
     assert.dom(profilePage.billing.planMessage.scope).hasText(`Expires ${momentFromNow} on June 19`);
 
     assert.equal(profilePage.billing.creditCardNumber.text, '•••• •••• •••• 1919');
@@ -838,7 +843,7 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.selectedPlanOverview.jobs.text, `${this.defaultPlan.builds} concurrent jobs`);
     assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${this.defaultPlan.price / 100}`);
     assert.equal(profilePage.billing.period.text, '/month');
-    assert.equal(profilePage.billing.selectedPlanOverview.changePlan.text, 'change plan');
+    assert.equal(profilePage.billing.selectedPlanOverview.changePlan.text, 'Change plan');
   });
 
   test('view billing tab shows plans selector when change plan button is clicked ', async function (assert) {
@@ -853,7 +858,7 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.selectedPlanOverview.jobs.text, `${this.defaultPlan.builds} concurrent jobs`);
     assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${this.defaultPlan.price / 100}`);
     assert.equal(profilePage.billing.period.text, '/month');
-    assert.equal(profilePage.billing.selectedPlanOverview.changePlan.text, 'change plan');
+    assert.equal(profilePage.billing.selectedPlanOverview.changePlan.text, 'Change plan');
 
     await profilePage.billing.selectedPlanOverview.changePlan.click();
 
@@ -906,7 +911,7 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.selectedPlanOverview.jobs.text, `${this.defaultPlan.builds} concurrent jobs`);
     assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${this.defaultPlan.price / 100}`);
     assert.equal(profilePage.billing.period.text, '/month');
-    assert.equal(profilePage.billing.selectedPlanOverview.changePlan.text, 'change plan');
+    assert.equal(profilePage.billing.selectedPlanOverview.changePlan.text, 'Change plan');
 
     assert.equal(billingPaymentForm.contactDetails.contactHeading.text, 'contact details:');
     assert.equal(billingPaymentForm.contactDetails.firstName.text, 'John Doe');
@@ -926,7 +931,7 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining('2 concurrent jobs');
 
     assert.equal(profilePage.billing.userDetails.text, 'contact name John Doe company name Travis billing email john@doe.com');
-    assert.equal(profilePage.billing.billingDetails.text, 'address 15 Olalubi street city, state/territory Berlin post code 353564 country Germany');
+    assert.equal(profilePage.billing.billingDetails.text, 'address 15 Olalubi street city Berlin post code 353564 country Germany');
     assert.dom(profilePage.billing.planMessage.scope).hasText('');
   });
 
@@ -974,7 +979,7 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.selectedPlanOverview.jobs.text, `${this.defaultPlan.builds} concurrent jobs`);
     assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${this.defaultPlan.price / 100}`);
     assert.equal(profilePage.billing.period.text, '/month');
-    assert.equal(profilePage.billing.selectedPlanOverview.changePlan.text, 'change plan');
+    assert.equal(profilePage.billing.selectedPlanOverview.changePlan.text, 'Change plan');
 
     assert.equal(billingPaymentForm.contactDetails.contactHeading.text, 'contact details:');
     assert.equal(billingPaymentForm.contactDetails.firstName.text, 'John Doe');
@@ -994,7 +999,7 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining('2 concurrent jobs');
 
     assert.equal(profilePage.billing.userDetails.text, 'contact name John Doe company name Travis billing email john@doe.com');
-    assert.equal(profilePage.billing.billingDetails.text, 'address 15 Olalubi street city, state/territory Berlin post code 353564 country Germany');
+    assert.equal(profilePage.billing.billingDetails.text, 'address 15 Olalubi street city Berlin post code 353564 country Germany');
     assert.dom(profilePage.billing.planMessage.scope).hasText('');
   });
 });
