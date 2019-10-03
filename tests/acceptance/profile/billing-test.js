@@ -342,14 +342,9 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.visit();
     await profilePage.billing.visit();
 
-    assert.ok(profilePage.billing.manageButton.isHidden);
-    assert.ok(profilePage.billing.userDetails.isHidden);
-    assert.ok(profilePage.billing.billingDetails.isHidden);
-    assert.ok(profilePage.billing.creditCardNumber.isHidden);
-    assert.ok(profilePage.billing.price.isHidden);
-    assert.ok(profilePage.billing.annualInvitation.isHidden);
-
-    assert.ok(profilePage.billing.invoices.isHidden);
+    assert.equal(profilePage.billing.plan.name, 'Small Business1 plan manual subscription');
+    assert.dom(profilePage.billing.billingSubscription.manualStatus).hasText('manual subscription');
+    assert.ok(profilePage.billing.planMessage.isPresent);
   });
 
   test('view billing on an expired manual plan', async function (assert) {

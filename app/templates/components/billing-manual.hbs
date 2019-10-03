@@ -10,7 +10,7 @@
           {{pluralize this.subscription.plan.builds "concurrent job"}}
         </p>
       {{/if}}
-      <span class='plan-overview__description--validity red'>
+      <span class='plan-overview__description--validity red' data-test-plan-message='true'>
         Renews on {{moment-format this.subscription.validTo "MMMM D, YYYY"}}
       </span>
     </section>
