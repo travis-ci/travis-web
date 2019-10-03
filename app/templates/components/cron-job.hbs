@@ -38,7 +38,7 @@
     <button
       type="button"
       class="cron-job-delete no-button"
-      onclick={{action (perform this.delete)}}
+      {{on 'click' (perform this.delete)}}
     >
       <SvgImage @name="icon-trash" @class="icon" />
       <EmberTooltip @text="Delete" />
