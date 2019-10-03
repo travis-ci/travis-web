@@ -3,6 +3,7 @@ import { computed } from '@ember/object';
 import {
   isInternal,
   presentedPath,
+  codeblockName,
   fileNameWithoutSha
 } from 'travis/utils/format-config';
 import { later } from '@ember/runloop';
@@ -48,6 +49,10 @@ export default Component.extend({
     const branch = this.get('build.branchName');
     const file = fileNameWithoutSha(source);
     return this.externalLinks.fileUrl(vcsType, { owner, repo, branch, file });
+  }),
+
+  codeblockId: computed('rawConfig.source', function () {
+    return codeblockName(this.rawConfig.source);
   }),
 
   actions: {
