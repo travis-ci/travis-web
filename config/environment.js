@@ -137,7 +137,7 @@ module.exports = function (environment) {
   }
 
   const { GOOGLE_TAGS_CONTAINER_ID, GOOGLE_TAGS_PARAMS } = process.env;
-  if (GOOGLE_TAGS_CONTAINER_ID && GOOGLE_TAGS_PARAMS) {
+  if (GOOGLE_TAGS_CONTAINER_ID) {
     metricsAdapters.push({
       name: 'GoogleTagManager',
       config: {

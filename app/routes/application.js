@@ -14,6 +14,7 @@ export default TravisRoute.extend(BuildFaviconMixin, {
   features: service(),
   featureFlags: service(),
   flashes: service(),
+  metrics: service(),
   repositories: service(),
   router: service(),
 
@@ -24,9 +25,20 @@ export default TravisRoute.extend(BuildFaviconMixin, {
       this.afterSignOut();
     });
 
-    this.router.on('routeDidChange', () => {
+    const { router } = this;
+    const { metricsAdapters = [] } = config;
+    router.on('routeDidChange', () => {
       if (config.gaCode) {
         _gaq.push(['_trackPageview', location.pathname]);
+      }
+
+      if (metricsAdapters.length > 0) {
+        try {
+          const { currentURL: page } = router;
+          this.metrics.trackPage('GoogleTagManager', { page });
+        } catch (err) {
+          this.raven.logException('Metrics error');
+        }
       }
     });
 
