@@ -28,6 +28,7 @@ export default TravisRoute.extend(BuildFaviconMixin, {
     const { router } = this;
     const { metricsAdapters = [] } = config;
     router.on('routeDidChange', () => {
+      // TODO: convert stuff like this to use ember-metrics?
       if (config.gaCode) {
         _gaq.push(['_trackPageview', location.pathname]);
       }
