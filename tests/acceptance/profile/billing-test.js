@@ -345,6 +345,8 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.plan.name, 'Small Business1 plan manual subscription');
     assert.dom(profilePage.billing.billingSubscription.manualStatus).hasText('manual subscription');
     assert.ok(profilePage.billing.planMessage.isPresent);
+    assert.ok(profilePage.billing.manualSubscription.banner.isPresent);
+    assert.dom(profilePage.billing.manualSubscription.banner.scope).hasText('This manual subscription is paid to Travis CI by bank transfer. If you have any questions or would like to update your plan, contact our support team.');
   });
 
   test('view billing on an expired manual plan', async function (assert) {

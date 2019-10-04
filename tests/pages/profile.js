@@ -546,6 +546,12 @@ export default create({
       }
     },
 
+    manualSubscription: {
+      banner: {
+        scope: '[data-test-manual-subscription-banner]'
+      }
+    },
+
     trial: {
       scope: '.billing',
       overviewHeading: text('[data-test-overview-heading]'),
