@@ -15,7 +15,12 @@
     {{/if}}
   </div>
   <div class="position-relative">
-    <CodeBlock data-test-yaml="true" @language="yaml" class="codedisplay">{{this.formattedConfig}}</CodeBlock>
+    <CodeBlock
+      @language="yaml"
+      class="codedisplay line-numbers"
+      id={{this.codeblockId}}
+      data-test-yaml="true"
+    >{{this.formattedConfig}}</CodeBlock>
     <CopyButton
       @clipboardText={{this.rawConfig.config}}
       @title={{this.buttonLabel}}
