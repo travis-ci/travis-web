@@ -41,7 +41,7 @@ export default Component.extend({
 
   showMigrateTab: reads('features.proVersion'),
   showSubscriptionStatusBanner: and('checkSubscriptionStatus', 'model.subscriptionError'),
-  showMigrationBetaBanner: and('isNotProVersion', 'isNotEnterpriseVersion','hasAccountsForBeta'),
+  showMigrationBetaBanner: and('isNotProVersion', 'isNotEnterpriseVersion', 'hasAccountsForBeta'),
 
   isOrganization: reads('model.isOrganization'),
   hasAdminPermissions: reads('model.permissions.admin'),
