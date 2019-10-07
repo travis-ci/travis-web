@@ -1,4 +1,4 @@
-/* global Travis, _gaq */
+/* global Travis */
 import $ from 'jquery';
 import TravisRoute from 'travis/routes/basic';
 import config from 'travis/config/environment';
@@ -25,23 +25,17 @@ export default TravisRoute.extend(BuildFaviconMixin, {
       this.afterSignOut();
     });
 
-    const { router } = this;
-    const { metricsAdapters = [] } = config;
-    router.on('routeDidChange', () => {
-      // TODO: convert stuff like this to use ember-metrics?
-      if (config.gaCode) {
-        _gaq.push(['_trackPageview', location.pathname]);
-      }
-
-      if (metricsAdapters.length > 0) {
+    if (config.metricsAdapters.length > 0) {
+      const { metrics, raven, router } = this;
+      router.on('routeDidChange', () => {
         try {
           const { currentURL: page } = router;
-          this.metrics.trackPage('GoogleTagManager', { page });
+          metrics.trackPage({ page });
         } catch (err) {
-          this.raven.logException('Metrics error');
+          raven.logException('Metrics error');
         }
-      }
-    });
+      });
+    }
 
     return this._super(...arguments);
   },

@@ -119,9 +119,9 @@ module.exports = function (environment) {
     },
   };
 
-  const metricsAdapters = [];
+  ENV.metricsAdapters = [];
   if (process.env.GOOGLE_ANALYTICS_ID) {
-    metricsAdapters.push({
+    ENV.metricsAdapters.push({
       name: 'GoogleAnalytics',
       environments: ['development', 'production'],
       config: {
@@ -138,17 +138,13 @@ module.exports = function (environment) {
 
   const { GOOGLE_TAGS_CONTAINER_ID, GOOGLE_TAGS_PARAMS } = process.env;
   if (GOOGLE_TAGS_CONTAINER_ID) {
-    metricsAdapters.push({
+    ENV.metricsAdapters.push({
       name: 'GoogleTagManager',
       config: {
         id: GOOGLE_TAGS_CONTAINER_ID,
         envParams: GOOGLE_TAGS_PARAMS,
       }
     });
-  }
-
-  if (metricsAdapters.length > 0) {
-    ENV.metricsAdapters = metricsAdapters;
   }
 
   ENV.featureFlags = {
