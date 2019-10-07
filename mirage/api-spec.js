@@ -1364,7 +1364,9 @@ export default {
         "level",
         "key",
         "code",
-        "args"
+        "args",
+        "src",
+        "line"
       ],
       "representations": {
         "standard": [
@@ -1372,7 +1374,9 @@ export default {
           "level",
           "key",
           "code",
-          "args"
+          "args",
+          "src",
+          "line"
         ]
       }
     },
