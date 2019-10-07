@@ -26,7 +26,7 @@ export default TravisRoute.extend({
   },
 
   afterModel(model) {
-    if (model && !model.error && !this.get('features.enterpriseVersion'))
+    if (model && !model.error && !this.features.get('enterpriseVersion'))
       model.fetchBetaMigrationRequests();
   }
 });
