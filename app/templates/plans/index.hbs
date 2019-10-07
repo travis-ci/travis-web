@@ -194,7 +194,18 @@
         </UiKit::Box>
       </grid.item>
       <grid.item>
-        <SalesContactForm @utmSource={{this.utmSourceName}} @onSuccess={{action 'contactSuccess'}} />
+        <SalesContactForm
+          @leadSource={{this.leadSourceName}}
+          @utmFields={{hash
+            utm_source='Source 1'
+            utm_campaign='Campaign 1'
+            utm_medium='Medium 1'
+            utm_term='Term 1'
+            utm_content='Content 1'
+            utm_unsupported='Unsupported 1'
+          }}
+          @onSuccess={{action 'contactSuccess'}}
+        />
       </grid.item>
     </UiKit::Grid>
   </UiKit::Box>

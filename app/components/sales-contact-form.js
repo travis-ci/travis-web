@@ -16,7 +16,8 @@ export default Component.extend({
   isSuccess: bool('send.lastSuccessful.value'),
 
   lead: null,
-  utmSource: 'travis-web',
+  leadSource: 'travis-web',
+  utmFields: null,
 
   send: task(function* () {
     try {
@@ -37,7 +38,10 @@ export default Component.extend({
 
   reset() {
     if (this.lead) this.lead.unloadRecord();
-    this.set('lead', this.store.createRecord('lead', { utm_source: this.utmSource }));
+    this.set('lead', this.store.createRecord('lead', {
+      lead_source: this.leadSource,
+      utm_fields: this.utmFields,
+    }));
   },
 
   // Lifecycle
