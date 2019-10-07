@@ -28,6 +28,9 @@ export default Component.extend({
   isProVersion: reads('features.proVersion'),
   isNotProVersion: not('isProVersion'),
 
+  isEnterpriseVersion: reads('features.enterpriseVersion'),
+  isNotEnterpriseVersion: not('isEnterpriseVersion'),
+
   accountsForBeta: filterBy('accounts.all', 'isMigrationBetaRequested', false),
   hasAccountsForBeta: notEmpty('accountsForBeta'),
 
@@ -38,7 +41,7 @@ export default Component.extend({
 
   showMigrateTab: reads('features.proVersion'),
   showSubscriptionStatusBanner: and('checkSubscriptionStatus', 'model.subscriptionError'),
-  showMigrationBetaBanner: and('isNotProVersion', 'hasAccountsForBeta'),
+  showMigrationBetaBanner: and('isNotProVersion', 'isNotEnterpriseVersion','hasAccountsForBeta'),
 
   isOrganization: reads('model.isOrganization'),
   hasAdminPermissions: reads('model.permissions.admin'),
