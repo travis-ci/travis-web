@@ -4,7 +4,7 @@
   {{else}}
     Unknown plan
   {{/if}}
-  {{#if this.subscription.isSubscribed}}
+  {{#if (and this.subscription.isSubscribed (not this.subscription.isManual))}}
     <span class="badge green square" data-test-active-status='true'>
       active
     </span>
