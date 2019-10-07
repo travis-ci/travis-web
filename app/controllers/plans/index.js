@@ -4,17 +4,20 @@ import config from 'travis/config/environment';
 import { filterBy } from '@ember/object/computed';
 import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
+import { LEAD_UTM_FIELDS } from 'travis/models/lead';
 
 const { plans } = config;
 
 const leadSourceName = 'plans-page';
 const outgoingUtmSource = `?utm_source=${leadSourceName}`;
+const supportedUtmFields = Object.values(LEAD_UTM_FIELDS);
 
 export default Controller.extend({
-  config,
+  queryParams: supportedUtmFields,
 
   auth: service(),
 
+  config,
   leadSourceName,
   billingUrl: `${config.billingEndpoint}/${outgoingUtmSource}`,
   buildMatrixUrl: `${config.urls.buildMatrix}${outgoingUtmSource}`,

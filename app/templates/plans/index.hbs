@@ -196,14 +196,11 @@
       <grid.item>
         <SalesContactForm
           @leadSource={{this.leadSourceName}}
-          @utmFields={{hash
-            utm_source='Source 1'
-            utm_campaign='Campaign 1'
-            utm_medium='Medium 1'
-            utm_term='Term 1'
-            utm_content='Content 1'
-            utm_unsupported='Unsupported 1'
-          }}
+          @utm_source={{this.utm_source}}
+          @utm_campaign={{this.utm_campaign}}
+          @utm_medium={{this.utm_medium}}
+          @utm_term={{this.utm_term}}
+          @utm_content={{this.utm_content}}
           @onSuccess={{action 'contactSuccess'}}
         />
       </grid.item>

@@ -1,7 +1,11 @@
 import Component from '@ember/component';
+import { computed } from '@ember/object';
 import { bool, reads } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
+import { LEAD_UTM_FIELDS } from 'travis/models/lead';
+
+const supportedUtmFields = Object.values(LEAD_UTM_FIELDS);
 
 export default Component.extend({
   tagName: '',
@@ -17,7 +21,24 @@ export default Component.extend({
 
   lead: null,
   leadSource: 'travis-web',
-  utmFields: null,
+
+  utm_source: null,
+  utm_campaign: null,
+  utm_medium: null,
+  utm_term: null,
+  utm_content: null,
+
+  utmFields: computed(...supportedUtmFields, function () {
+    const result = supportedUtmFields.reduce((collection, field) => {
+      const item = this.get(field);
+      if (item) {
+        collection[field] = item;
+      }
+      return collection;
+    }, {});
+
+    return result;
+  }),
 
   send: task(function* () {
     try {
