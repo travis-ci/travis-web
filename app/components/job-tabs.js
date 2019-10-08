@@ -19,6 +19,11 @@ export default Component.extend({
     return `build-messages-badge icon icon-${level}`;
   }),
 
+  messagesBadgeTooltipText: computed('messagesMaxLevel', function () {
+    let level = this.get('messagesMaxLevel');
+    return `This build's config has ${level} level validation messages`;
+  }),
+
   didRender() {
     // Set the log to be default active tab unless something else is active
     if (isEmpty(this.$('.travistab-nav--secondary').find('.active'))) {

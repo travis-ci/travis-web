@@ -28,7 +28,7 @@
         {{#if this.messagesMaxLevel}}
           <span class="tooltip-wrapper">
             <SvgImage @name="circle" @class={{this.messagesBadgeIconClass}} />
-            <EmberTooltip @text={{this.tooltipText}} />
+            <EmberTooltip @text={{this.messagesBadgeTooltipText}} />
           </span>
         {{/if}}
       </LinkTo>
