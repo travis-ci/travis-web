@@ -26,13 +26,12 @@ export default TravisRoute.extend(BuildFaviconMixin, {
     });
 
     if (config.metricsAdapters.length > 0) {
-      const { metrics, raven, router } = this;
+      const { metrics, router } = this;
       router.on('routeDidChange', () => {
         try {
           const { currentURL: page } = router;
           metrics.trackPage({ page });
         } catch (err) {
-          raven.logException('Metrics error');
         }
       });
     }
