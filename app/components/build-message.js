@@ -21,8 +21,12 @@ export default Component.extend({
     }
   }),
 
-  alias(key, args) {
-    return `<code>${escape(key)}</code>: <code>${escape(args.alias)}</code> is an alias for <code>${escape(args.obj)}</code> (<code>${escape(args.type)}</code>), using <code>${escape(args.obj)}</code>`;
+  alias_key(key, args) {
+    return `<code>${escape(key)}</code>: key <code>${escape(args.alias)}</code> is an alias for <code>${escape(args.key)}</code>, using <code>${escape(args.key)}</code>`;
+  },
+
+  alias_value(key, args) {
+    return `<code>${escape(key)}</code>: value <code>${escape(args.alias)}</code> is an alias for <code>${escape(args.value)}</code>, using <code>${escape(args.value)}</code>`;
   },
 
   cast(key, args) {
