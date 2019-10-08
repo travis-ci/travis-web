@@ -1,3 +1,4 @@
+import { A } from '@ember/array';
 import { computed } from '@ember/object';
 import { isEmpty } from '@ember/utils';
 import Component from '@ember/component';
@@ -7,7 +8,7 @@ export default Component.extend({
   classNames: ['travistab'],
 
   messagesMaxLevel: computed('this.job.build.request', function () {
-    let msgs = this.get('job.build.request.messages').rejectBy('level', 'info');
+    let msgs = A(this.get('job.build.request.messages')).rejectBy('level', 'info');
     if (msgs.length > 0) {
       return msgs.sortBy('level')[0].level;
     }
