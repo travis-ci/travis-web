@@ -1,3 +1,24 @@
+.build-messages-badge {
+  position: relative;
+  top: 1px;
+  margin-left: 0.25em;
+  font-size: 1.25em;
+  line-height: 1em;
+  vertical-align: baseline;
+
+  &.level-alert {
+    color: $brick-red;
+  }
+  &.level-error {
+    color: $brick-red;
+  }
+  &.level-warn {
+    color: $canary-yellow;
+  }
+  &.level-info {
+  }
+}
+
 .yml-messages {
   @include travisBorder;
 
