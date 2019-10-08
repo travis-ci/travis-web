@@ -4,6 +4,7 @@ import { inject as service } from '@ember/service';
 export default TravisRoute.extend({
   raven: service(),
   accounts: service(),
+  features: service(),
 
   needsAuth: true,
 
@@ -16,7 +17,7 @@ export default TravisRoute.extend({
   },
 
   afterModel(model) {
-    if (model && !model.error)
+    if (model && !model.error && !this.features.get('enterpriseVersion'))
       model.fetchBetaMigrationRequests();
   }
 });
