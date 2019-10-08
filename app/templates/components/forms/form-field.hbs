@@ -51,11 +51,11 @@
       selected=this.value
       disabled=this.disabled
       placeholder=this.placeholder
-      onfocus=(action "handleFocus")
-      onopen=(action "handleFocus")
-      onblur=(action "handleSelectBlur")
-      onclose=(action "handleSelectBlur")
-      onchange=(action "handleChange")
+      onFocus=(action "handleFocus")
+      onOpen=(action "handleFocus")
+      onBlur=(action "handleSelectBlur")
+      onClose=(action "handleSelectBlur")
+      onChange=(action "handleChange")
     )
     checkbox=(component "forms/form-checkbox"
       form=this.form
