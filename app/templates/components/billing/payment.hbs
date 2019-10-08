@@ -31,20 +31,30 @@
   </h3>
   <h4 data-test-coupon-code='true' class="pb-3">coupon code</h4>
   <div class="pb-3">
-    <TravisForm data-test-coupon-form='true' as |form|>
+    <TravisForm data-test-coupon-form='true' @onSubmit={{perform this.validateCoupon}} as |form|>
       <div class="flex">
         <form.field
           class="flex-grow"
           @value={{this.coupon}}
           @showValidationStatusIcons={{false}}
-          @onChange={{action (mut coupon)}} 
+          @onChange={{action (mut this.coupon)}} 
           as |Field|
         >
           <Field.input @name='coupon' @placeholder='Coupon code'/>
         </form.field>
-        <button class='button--white ml-4' {{action form.submit}} data-test-coupon='true'>
-          Validate coupon
-        </button>
+        <div class='ml-4'>
+          {{#if this.validateCoupon.isRunning}}
+            <LoadingIndicator/>
+          {{else if this.isValidCoupon}}
+            Valid!
+          {{else if (and this.couponResult this.isInvalidCoupon)}}
+            Invalid!
+          {{else}}
+            <button class='button--white' {{action form.submit}} data-test-coupon='true'>
+              Validate coupon
+            </button>
+          {{/if}}
+        </div>
       </div>
     </TravisForm>
   </div>

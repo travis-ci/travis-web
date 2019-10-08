@@ -1,14 +1,16 @@
 import Component from '@ember/component';
 import { task } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
-import { or, reads } from '@ember/object/computed';
+import { or, reads, not } from '@ember/object/computed';
 import config from 'travis/config/environment';
 
 export default Component.extend({
   stripe: service(),
   accounts: service(),
   flashes: service(),
+  raven: service(),
   metrics: service(),
+  api: service(),
 
   account: null,
   stripeElement: null,
@@ -22,9 +24,11 @@ export default Component.extend({
   email: reads('newSubscription.billingInfo.billingEmail'),
   address: reads('newSubscription.billingInfo.address'),
   city: reads('newSubscription.billingInfo.city'),
-  coupon: reads('newSubscription.coupon'),
   country: reads('newSubscription.billingInfo.country'),
   isLoading: or('createSubscription.isRunning', 'accounts.fetchSubscriptions.isRunning'),
+  couponResult: null,
+  isValidCoupon: reads('couponResult.valid'),
+  isInvalidCoupon: not('couponResult.valid'),
 
   createSubscription: task(function* () {
     this.metrics.trackEvent({
@@ -50,6 +54,22 @@ export default Component.extend({
       }
     } catch (error) {
       this.handleError();
+    }
+  }).drop(),
+
+  validateCoupon: task(function* () {
+    try {
+      const result = yield this.api.get(`/coupons/${this.coupon}`);
+      this.set('couponResult', result);
+      this.set('isValidCoupon', result.valid);
+    } catch (error) {
+      const { error_type: errorType } = error.responseJSON;
+      if (errorType === 'not_found') {
+        this.set('couponResult', error.responseJSON);
+        this.set('isValidCoupon', false);
+      } else {
+        this.raven.logException('Coupon validation error');
+      }
     }
   }).drop(),
 
