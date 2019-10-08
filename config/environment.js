@@ -47,6 +47,7 @@ module.exports = function (environment) {
       bestpracticessecurity: 'https://docs.travis-ci.com/user/best-practices-security#recommendations-on-how-to-avoid-leaking-secrets-to-build-logs',
       blog: 'https://blog.travis-ci.com',
       buildMatrix: 'https://docs.travis-ci.com/user/build-matrix/',
+      buildConfigValidation: 'https://docs.travis-ci.com/user/build-config-validation/',
       changelog: 'https://changelog.travis-ci.com',
       community: 'https://travis-ci.community',
       communityEarlyReleases: 'https://travis-ci.community/c/early-releases',
