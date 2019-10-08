@@ -1,4 +1,3 @@
-/* global _gaq */
 import Controller from '@ember/controller';
 import config from 'travis/config/environment';
 import { filterBy } from '@ember/object/computed';
@@ -16,6 +15,7 @@ export default Controller.extend({
   queryParams: supportedUtmFields,
 
   auth: service(),
+  metrics: service(),
 
   config,
   leadSourceName,
@@ -40,10 +40,8 @@ export default Controller.extend({
 
   actions: {
     gaCta(location) {
-      if (config.gaCode) {
-        const page = `/virtual/signup?${location}`;
-        _gaq.push(['_trackPageview', page]);
-      }
+      const page = `/virtual/signup?${location}`;
+      this.metrics.trackPage({ page });
       this.auth.signIn();
     },
 

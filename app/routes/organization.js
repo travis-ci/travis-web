@@ -3,7 +3,7 @@ import { inject as service } from '@ember/service';
 
 export default TravisRoute.extend({
   accounts: service(),
-
+  features: service(),
   needsAuth: true,
 
   titleToken(org = {}) {
@@ -26,7 +26,7 @@ export default TravisRoute.extend({
   },
 
   afterModel(model) {
-    if (model && !model.error)
+    if (model && !model.error && !this.features.get('enterpriseVersion'))
       model.fetchBetaMigrationRequests();
   }
 });
