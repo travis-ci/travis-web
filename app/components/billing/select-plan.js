@@ -5,7 +5,7 @@ import { task } from 'ember-concurrency';
 export default Component.extend({
 
   plan: service(),
-
+  account: null,
   showPlansSelector: true,
   showCancelButton: false,
   title: null,
