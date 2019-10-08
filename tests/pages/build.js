@@ -90,7 +90,7 @@ export default create({
 
   ymlMessages: collection('.yml-message', {
     icon: {
-      scope: 'svg',
+      scope: '.level-icon svg',
       isInfo: hasClass('icon-info'),
       isWarning: hasClass('icon-warn'),
       isError: hasClass('icon-error')
