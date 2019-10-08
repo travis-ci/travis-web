@@ -12,6 +12,7 @@ const STEPS = {
 export default Component.extend({
   plan: service(),
   metrics: service(),
+  account: null,
 
   showMonthly: reads('plan.showMonthly'),
   displayedPlans: reads('plan.displayedPlans'),
