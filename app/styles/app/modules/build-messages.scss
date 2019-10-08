@@ -5,6 +5,51 @@
 
   font-size: $font-size-sm;
 
+  .header {
+    padding: 1em;
+
+    .icon-alert path,
+    .icon-error path {
+      stroke: $brick-red;
+    }
+    .icon-warn path {
+      stroke: $canary-yellow;
+    }
+
+    .tools {
+      float: right;
+
+      .icon-toggle {
+        height: 15px;
+        width: 15px;
+        vertical-align: middle;
+        transform: scale(0.9, 1.1);
+        path {
+          stroke: $cement-grey;
+          stroke-width: 1;
+        }
+        cursor: pointer;
+
+        &.icon-expanded {
+          transform: scaleY(-1);
+        }
+      }
+
+      .icon-help {
+        border: 0px;
+        transform: scale(0.8);
+        path {
+          stroke: $cement-grey;
+          stroke-width: 2;
+        }
+      }
+    }
+  }
+
+  .list {
+    border-top: 1px solid $pebble-grey;
+  }
+
   .yml-message-link {
     display: block;
 
@@ -50,7 +95,6 @@
     .message {
       flex-grow: 1;
       padding-left: 7px;
-      border-left: 1px solid $dry-cement;
       margin-left: 2px;
     }
 

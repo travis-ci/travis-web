@@ -1,7 +1,28 @@
 {{#if this.request.messages.length}}
   <div class="yml-messages">
-    {{#each this.request.messages as |message|}}
-      <BuildMessage @message={{message}} />
-    {{/each}}
+    <div class="header">
+      {{#if this.isCollapsed}}
+        <SvgImage @name={{this.maxLevel}} @class={{this.iconClass}} />
+      {{/if}}
+      Build config validation
+      {{#if this.isCollapsed}}
+        {{this.summary}}
+      {{/if}}
+      <div class="tools">
+        <button {{action 'toggle'}}>
+          <SvgImage @name="icon-dropdown-arrow" @class="icon-toggle icon-{{this.toggleStatusClass}}" />
+        </button>
+        <ExternalLinkTo href="{{config-get 'urls.buildConfigValidation'}}">
+          <SvgImage @name='icon-help' @class='icon-help' />
+        </ExternalLinkTo>
+      </div>
+    </div>
+    {{#if this.isExpanded}}
+      <div class="list">
+        {{#each this.request.messages as |message|}}
+          <BuildMessage @message={{message}} />
+        {{/each}}
+      </div>
+    {{/if}}
   </div>
 {{/if}}
