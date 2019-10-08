@@ -22,7 +22,7 @@
 
     svg {
       width: 18px;
-      transform: scale(1.2);
+      height: 18px;
     }
 
     .icon-info {
@@ -48,9 +48,23 @@
     }
 
     .message {
+      flex-grow: 1;
       padding-left: 7px;
       border-left: 1px solid $dry-cement;
       margin-left: 2px;
+    }
+
+    .message-help svg {
+      display: none;
+      transform: scale(0.8);
+      border-color: $oxide-blue;
+      @include colorSVG($oxide-blue);
+    }
+
+    &:hover {
+      .message-help svg {
+        display: block;
+      }
     }
 
     code {
