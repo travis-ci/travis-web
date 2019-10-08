@@ -134,7 +134,7 @@ export default Component.extend({
     if (arch) {
       return arch;
     } else {
-      return 'amd64'
+      return 'amd64';
     }
   }),
 
