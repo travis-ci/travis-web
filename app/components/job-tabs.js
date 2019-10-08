@@ -14,6 +14,11 @@ export default Component.extend({
     }
   }),
 
+  messagesBadgeIconClass: computed('messagesMaxLevel', function () {
+    let level = this.get('messagesMaxLevel');
+    return `build-messages-badge icon icon-${level}`;
+  }),
+
   didRender() {
     // Set the log to be default active tab unless something else is active
     if (isEmpty(this.$('.travistab-nav--secondary').find('.active'))) {
