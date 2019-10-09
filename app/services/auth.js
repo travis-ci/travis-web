@@ -107,7 +107,11 @@ export default Service.extend({
     let token, user, userJSON;
     userJSON = storage.getItem('travis.user');
     if (userJSON != null) {
-      user = JSON.parse(userJSON);
+      try {
+        user = JSON.parse(userJSON);
+      } catch (e) {
+        user = null;
+      }
     }
     if (user != null ? user.user : void 0) {
       user = user.user;
