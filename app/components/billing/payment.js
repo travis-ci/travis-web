@@ -68,7 +68,7 @@ export default Component.extend({
       const amountOff = Math.floor(price * percentageOff) / 100;
       return `$${price - amountOff}`;
     } {
-      return `${price}`;
+      return `$${price}`;
     }
   }),
 

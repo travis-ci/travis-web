@@ -30,12 +30,14 @@
       }
 
       &__validate-button {
-        flex: 2;
+        flex-basis: 20%;
+        font-size: 14px;
         margin-left: 10px;
         align-self: flex-end;
       }
 
       &__valid-coupon {
+        flex-basis: 80%;
         color: $ansi-green;
         margin-top: 5px;
 
