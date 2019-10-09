@@ -2,6 +2,7 @@ import Component from '@ember/component';
 import { task } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
 import { or, reads, not } from '@ember/object/computed';
+import { computed } from '@ember/object';
 import config from 'travis/config/environment';
 
 export default Component.extend({
@@ -56,6 +57,20 @@ export default Component.extend({
       this.handleError();
     }
   }).drop(),
+
+  discountedPrice: computed('couponResult.{amount_off,percent_off}', 'selectedPlan.price', function () {
+    const price = Math.floor(this.selectedPlan.price / 100);
+    if (this.couponResult && this.couponResult.amount_off) {
+      const amountOff = this.couponResult.amount_off;
+      return `$${price - Math.floor(amountOff / 100)}`;
+    } else if (this.couponResult && this.couponResult.percent_off) {
+      const percentageOff = this.couponResult.percent_off;
+      const amountOff = Math.floor(price * percentageOff) / 100;
+      return `$${price - amountOff}`;
+    } {
+      return `${price}`;
+    }
+  }),
 
   validateCoupon: task(function* () {
     try {

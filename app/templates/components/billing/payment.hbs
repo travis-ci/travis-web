@@ -3,6 +3,7 @@
     @selectedPlan={{this.selectedPlan}} 
     @showAnnual={{this.showAnnual}} 
     @goToFirstStep={{action this.goToFirstStep}}
+    @discountedPrice={{discountedPrice}}
   />
   <div class='flex flex--wrap billing-checkout__details' data-test-contact-details='true'>
     <div class='flex--col-3'>
@@ -34,7 +35,7 @@
     <TravisForm data-test-coupon-form='true' @onSubmit={{perform this.validateCoupon}} as |form|>
       <div class="coupon-validation flex flex--center flex-v-center">
         <form.field
-          class="flex-grow"
+          class="coupon-validation__input"
           @value={{this.coupon}}
           @showValidationStatusIcons={{false}}
           @onChange={{action (mut this.coupon)}} 
@@ -42,7 +43,7 @@
         >
           <Field.input @name='coupon' @placeholder='Coupon code'/>
         </form.field>
-        <div class='ml-4'>
+        <div class="coupon-validation__validate-button">
           {{#if this.validateCoupon.isRunning}}
             <LoadingIndicator/>
           {{else if this.isValidCoupon}}
@@ -80,7 +81,7 @@
         <LoadingIndicator/>
       {{else}}
         <button class='{{if this.stripeElement 'button--green' 'button disabled'}}' {{action form.submit}} data-test-complete-payment='true'>
-          Pay {{format-currency this.selectedPlan.price}} to complete subscription
+          Pay {{this.discountedPrice}} to complete subscription
         </button>
       {{/if}}
     </div>

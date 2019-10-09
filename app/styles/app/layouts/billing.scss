@@ -25,6 +25,16 @@
 
     .coupon-validation {
 
+      &__input {
+        flex: 5;
+      }
+
+      &__validate-button {
+        flex: 2;
+        margin-left: 10px;
+        align-self: flex-end;
+      }
+
       &__valid-coupon {
         color: $ansi-green;
         margin-top: 5px;
