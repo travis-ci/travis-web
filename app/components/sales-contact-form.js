@@ -2,6 +2,10 @@ import Component from '@ember/component';
 import { bool, reads } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
+import { LEAD_UTM_FIELDS } from 'travis/models/lead';
+import objectCollect from 'travis/utils/object-collect';
+
+const supportedUtmFields = Object.values(LEAD_UTM_FIELDS);
 
 export default Component.extend({
   tagName: '',
@@ -16,7 +20,15 @@ export default Component.extend({
   isSuccess: bool('send.lastSuccessful.value'),
 
   lead: null,
-  utmSource: 'travis-web',
+  leadSource: 'travis-web',
+
+  utm_source: null,
+  utm_campaign: null,
+  utm_medium: null,
+  utm_term: null,
+  utm_content: null,
+
+  utmFields: objectCollect(...supportedUtmFields),
 
   send: task(function* () {
     try {
@@ -37,7 +49,10 @@ export default Component.extend({
 
   reset() {
     if (this.lead) this.lead.unloadRecord();
-    this.set('lead', this.store.createRecord('lead', { utm_source: this.utmSource }));
+    this.set('lead', this.store.createRecord('lead', {
+      lead_source: this.leadSource,
+      utm_fields: this.utmFields,
+    }));
   },
 
   // Lifecycle
