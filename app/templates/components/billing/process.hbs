@@ -1,5 +1,5 @@
 {{#if this.account.hasSubscriptionPermissions}}
-  {{#if this.isStepOne}}
+  {{#if this.isStepThree}}
     <Billing::SelectPlan
       @title="Subscribe to a plan"
       @displayedPlans={{this.displayedPlans}}
@@ -20,7 +20,7 @@
       @back={{action 'back'}}
       @goToFirstStep={{action 'goToFirstStep'}}
     />
-  {{else if this.isStepThree}}
+  {{else if this.isStepOne}}
     <Billing::Payment
       @selectedPlan={{this.selectedPlan}}
       @showAnnual={{this.showAnnual}}

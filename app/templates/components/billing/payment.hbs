@@ -32,7 +32,7 @@
   <h4 data-test-coupon-code='true' class="pb-3">coupon code</h4>
   <div class="pb-3">
     <TravisForm data-test-coupon-form='true' @onSubmit={{perform this.validateCoupon}} as |form|>
-      <div class="flex">
+      <div class="coupon-validation flex flex--center flex-v-center">
         <form.field
           class="flex-grow"
           @value={{this.coupon}}
@@ -46,9 +46,15 @@
           {{#if this.validateCoupon.isRunning}}
             <LoadingIndicator/>
           {{else if this.isValidCoupon}}
-            Valid!
+            <p class="coupon-validation__valid-coupon">
+              <SvgImage @name="icon-passed" @class="icon icon-passed" />
+              Coupon applied
+            </p>
           {{else if (and this.couponResult this.isInvalidCoupon)}}
-            Invalid!
+            <p class="coupon-validation__invalid-coupon">
+              <SvgImage @name="warn" @class="icon icon-warn" />
+              Coupon invalid
+            </p>
           {{else}}
             <button class='button--white' {{action form.submit}} data-test-coupon='true'>
               Validate coupon

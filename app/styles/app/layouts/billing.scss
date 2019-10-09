@@ -23,6 +23,37 @@
 
   .billing-checkout {
 
+    .coupon-validation {
+
+      &__valid-coupon {
+        color: $ansi-green;
+        margin-top: 5px;
+
+        .icon-passed {
+          @include colorSVG($ansi-green);
+    
+          color: inherit;
+        }
+      }
+
+      &__invalid-coupon {
+        color:  $ansi-red;
+        margin-top: 5px;
+
+        .icon {
+          width: 20px;
+          height: 20px;
+        }
+
+        .icon-warn {
+          @include colorSVG($ansi-red);
+    
+          color: inherit;
+        }
+      }
+
+    }
+
     &__payment {
       padding-top: 15px;
     }
