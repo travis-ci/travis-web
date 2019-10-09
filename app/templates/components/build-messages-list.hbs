@@ -1,17 +1,16 @@
 {{#if this.request.messages.length}}
   <div class="yml-messages">
-    <div class="header">
-      {{#if this.isCollapsed}}
+    <div class="header" {{action 'toggle'}}>
+      <span class="tooltip-wrapper level-icon">
         <SvgImage @name={{this.maxLevel}} @class={{this.iconClass}} />
-      {{/if}}
+        <EmberTooltip @text={{this.summary}} />
+      </span>
       Build config validation
-      {{#if this.isCollapsed}}
-        {{this.summary}}
-      {{/if}}
+      {{#unless this.isExpanded}}
+        &mdash; {{this.summary}}
+      {{/unless}}
       <div class="tools">
-        <button {{action 'toggle'}}>
-          <SvgImage @name="icon-dropdown-arrow" @class="icon-toggle icon-{{this.toggleStatusClass}}" />
-        </button>
+        <SvgImage @name="icon-dropdown-arrow" @class="icon-toggle icon-{{this.toggleStatusClass}}" />
         <ExternalLinkTo href="{{config-get 'urls.buildConfigValidation'}}">
           <SvgImage @name='icon-help' @class='icon-help' />
         </ExternalLinkTo>

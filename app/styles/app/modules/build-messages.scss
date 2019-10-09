@@ -6,7 +6,14 @@
   font-size: $font-size-sm;
 
   .header {
+    position: relative;
     padding: 1em;
+    cursor: pointer;
+
+    .icon {
+      width: 18px;
+      height: 18px;
+    }
 
     .icon-alert path,
     .icon-error path {
@@ -17,7 +24,9 @@
     }
 
     .tools {
-      float: right;
+      position: absolute;
+      right: 1em;
+      top: 1em;
 
       .icon-toggle {
         height: 15px;
@@ -28,7 +37,6 @@
           stroke: $cement-grey;
           stroke-width: 1;
         }
-        cursor: pointer;
 
         &.icon-expanded {
           transform: scaleY(-1);
