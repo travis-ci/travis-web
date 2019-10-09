@@ -14,11 +14,6 @@ export default Component.extend({
     }
   }),
 
-  messagesBadgeIconClass: computed('messagesMaxLevel', function () {
-    let level = this.get('messagesMaxLevel');
-    return `build-messages-badge icon icon-${level}`;
-  }),
-
   messagesBadgeTooltipText: computed('messagesMaxLevel', function () {
     let level = this.get('messagesMaxLevel');
     return `This build's config has ${level} level validation messages`;

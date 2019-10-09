@@ -1,18 +1,16 @@
 .build-messages-badge {
-  position: relative;
+  display: inline-block;
   width: 8px;
   height: 8px;
-  bottom: 1px;
   margin-left: 0.25em;
+  border-radius: 50%;
 
-  &.icon-alert circle,
-  &.icon-error circle {
-    stroke: $brick-red;
-    fill: $brick-red;
+  &.alert,
+  &.error {
+    background-color: $brick-red;
   }
-  &.icon-warn circle {
-    stroke: $canary-yellow;
-    fill: $canary-yellow;
+  &.warn {
+    background-color: $canary-yellow;
   }
 }
 
