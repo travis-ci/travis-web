@@ -21,7 +21,7 @@
       {{/if}}
     {{else}}
       <JobInfrastructureNotification @job={{this.job}} />
-      <JobTabs @job={{this.job}} @repo={{this.repo}} />
+      <JobTabs @job={{this.job}} @request={{this.job.build.request}} @repo={{this.repo}} />
       <JobLog data-test-job-log="true" @job={{this.job}} />
     {{/if}}
   {{else}}

@@ -7,8 +7,8 @@ export default Component.extend({
   tagName: 'div',
   classNames: ['travistab'],
 
-  messagesMaxLevel: computed('this.job.build.request', function () {
-    let msgs = A(this.get('job.build.request.messages')).rejectBy('level', 'info');
+  messagesMaxLevel: computed('request.messages', function () {
+    let msgs = A(this.get('request.messages')).rejectBy('level', 'info');
     if (msgs.length > 0) {
       return msgs.sortBy('level')[0].level;
     }
