@@ -342,7 +342,7 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.visit();
     await profilePage.billing.visit();
 
-    assert.equal(profilePage.billing.plan.name, 'Small Business1 plan manual subscription');
+    assert.equal(profilePage.billing.plan.name, 'Small Business1 plan active manual subscription');
     assert.dom(profilePage.billing.billingSubscription.manualStatus).hasText('manual subscription');
     assert.ok(profilePage.billing.planMessage.isPresent);
     assert.ok(profilePage.billing.manualSubscription.banner.isPresent);

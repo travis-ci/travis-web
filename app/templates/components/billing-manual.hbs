@@ -10,7 +10,7 @@
           {{pluralize this.subscription.plan.builds "concurrent job"}}
         </p>
       {{/if}}
-      <span class='plan-overview__description--validity red' data-test-plan-message='true'>
+      <span class='plan-overview__description--validity dark-red' data-test-plan-message='true'>
         Renews on {{moment-format this.subscription.validTo "MMMM D, YYYY"}}
       </span>
     </section>
@@ -19,7 +19,7 @@
       <h3>
         Billing details
       </h3>
-      <p class="flex px-4 py-5 shadow rounded-lg items-center notice-banner--white" data-test-help-text='true'>
+      <p class="flex px-4 py-5 shadow items-center notice-banner--white" data-test-help-text='true'>
         <div class="mr-4">
           <SvgImage @name='icon-help' @class='icon-help' />
         </div>
