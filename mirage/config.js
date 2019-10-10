@@ -165,6 +165,18 @@ export default function () {
     );
   });
 
+  this.get('/coupons/:coupon/', function () {
+    return {
+      '@type': 'coupon',
+      '@representation': 'standard',
+      'id': '10_BUCKS_OFF',
+      'name': '10 bucks off!',
+      'percent_off': null,
+      'amount_off': 1000,
+      'valid': true
+    };
+  });
+
   this.post('/subscription/:subscription_id/cancel', function (schema, { params, requestBody }) {
     const subscription = schema.subscriptions.where({ id: params.subscription_id });
     subscription.update(
