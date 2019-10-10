@@ -88,6 +88,10 @@ export default create({
     isDisabled: hasClass('disabled')
   },
 
+  yamlMessagesHeader: {
+    scope: '.yml-messages .header'
+  },
+
   ymlMessages: collection('.yml-message', {
     icon: {
       scope: '.level-icon svg',

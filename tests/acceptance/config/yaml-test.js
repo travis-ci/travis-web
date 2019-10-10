@@ -93,6 +93,7 @@ module('Acceptance | config/yaml', function (hooks) {
 
       await visit(`/travis-ci/travis-web/builds/${this.build.id}`);
       await page.yamlTab.click();
+      await page.yamlMessagesHeader.click();
 
       assert.equal(page.ymlMessages.length, 2, 'expected two yml messages');
 

@@ -5,6 +5,70 @@
 
   font-size: $font-size-sm;
 
+  .header {
+    position: relative;
+    padding: 1em;
+    cursor: pointer;
+
+    .icon {
+      width: 18px;
+      height: 18px;
+      margin-bottom: 2px;
+    }
+
+    .icon-alert path,
+    .icon-error path {
+      stroke: $brick-red;
+    }
+    .icon-warn path {
+      stroke: $canary-yellow;
+    }
+    .icon-info {
+      width: 12px;
+      height: 12px;
+      margin-left: 2px;
+      margin-right: 8px;
+      path {
+        stroke: $turf-green;
+        stroke-width: 2;
+      }
+    }
+
+    .tools {
+      position: absolute;
+      right: 1em;
+      top: 1em;
+
+      .icon-toggle {
+        height: 15px;
+        width: 15px;
+        vertical-align: middle;
+        transform: scale(0.9, 1.1);
+        path {
+          stroke: $cement-grey;
+          stroke-width: 1;
+        }
+
+        &.icon-expanded {
+          transform: scaleY(-1);
+        }
+      }
+
+      .icon-help {
+        border: 0px;
+        transform: scale(0.8);
+        path {
+          stroke: $cement-grey;
+          stroke-width: 2;
+        }
+      }
+    }
+  }
+
+  .list {
+    border-top: 1px solid $pebble-grey;
+  }
+
   .yml-message-link {
     display: block;
 
@@ -17,17 +81,21 @@
     display: flex;
     align-items: flex-start;
 
-    padding: 6px;
+    padding: 6px 1em;
 
+    .icon-level {
+      width: 14px;
+      height: 14px;
+      margin-left: 2px;
+    }
 
-    svg {
+    .icon-help {
       width: 18px;
       height: 18px;
     }
 
     .icon-info {
-      @include colorSVGFull($oxide-blue, $oxide-blue);
-
+      @include colorSVGFull($turf-green, $turf-green);
       circle {
         fill: none;
       }
@@ -35,7 +103,6 @@
 
     .icon-warn {
       @include colorSVG($canary-yellow);
-
       color: inherit;
     }
 
@@ -49,9 +116,7 @@
 
     .message {
       flex-grow: 1;
-      padding-left: 7px;
-      border-left: 1px solid $dry-cement;
-      margin-left: 2px;
+      margin-left: 6px;
     }
 
     .message-help svg {
