@@ -391,10 +391,8 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.ok(profilePage.billing.userDetails.isHidden);
     assert.ok(profilePage.billing.billingDetails.isHidden);
     assert.ok(profilePage.billing.creditCardNumber.isHidden);
-    assert.ok(profilePage.billing.price.isHidden);
     assert.ok(profilePage.billing.annualInvitation.isHidden);
     assert.ok(profilePage.billing.invoices.isHidden);
-    assert.equal(profilePage.billing.expiryMessage.text, 'You had a manual subscription that expired on July 16, 2018. If you have any questions or would like to update your plan, please contact our support team.');
   });
 
   test('view billing on a marketplace plan', async function (assert) {

@@ -1,20 +1,20 @@
-{{#unless this.subscription.manualSubscriptionExpired}}
-  <section class="billing-subscription">
-    <section class='plan-overview mb-5'>
-      <h3 class='plan-overview__header'>
-        Overview
-      </h3>
-      <BillingSummaryStatus @subscription={{this.subscription}}/>
-      {{#if this.subscription.plan.builds}}
-        <p class="plan-overview__description" data-test-plan-concurrency>
-          {{pluralize this.subscription.plan.builds "concurrent job"}}
-        </p>
-      {{/if}}
-      <span class='plan-overview__description--validity dark-red' data-test-plan-message='true'>
-        Renews on {{moment-format this.subscription.validTo "MMMM D, YYYY"}}
-      </span>
-    </section>
-    <hr/>
+<section class="billing-subscription">
+  {{#if this.subscription.manualSubscriptionExpired}}
+    <Billing::Summary 
+      @subscription={{this.subscription}} 
+      @account={{this.account}}
+      @planMessage="Expired"
+    />
+    <Billing::Process 
+      @account={{this.account}} 
+      @plans={{this.plans}} 
+      @newSubscription={{this.newSubscription}}
+    />
+  {{else}}
+    <Billing::Summary 
+      @subscription={{this.subscription}} 
+      @account={{this.account}}
+    />
     <section class='mt-5'>
       <h3>
         Billing details
@@ -31,13 +31,5 @@
         </span>
       </p>
     </section>
-  </section>
-{{else}}
-  <span data-test-expiry-message>
-    {{#if this.subscription.manualSubscriptionExpired}}
-      You had a {{this.subscription.sourceWords}} subscription that expired on
-      {{moment-format this.subscription.validTo "MMMM D, YYYY"}}.
-      <ManualSubscriptionHelp />
-    {{/if}}
-  </span>
-{{/unless}}
+  {{/if}}
+</section>
