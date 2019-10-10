@@ -372,14 +372,11 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.visit();
     await profilePage.billing.visit();
 
-    assert.ok(profilePage.billing.manageButton.isHidden);
-    assert.ok(profilePage.billing.userDetails.isHidden);
-    assert.ok(profilePage.billing.billingDetails.isHidden);
-    assert.ok(profilePage.billing.creditCardNumber.isHidden);
-    assert.ok(profilePage.billing.price.isHidden);
-    assert.ok(profilePage.billing.annualInvitation.isHidden);
-
-    assert.ok(profilePage.billing.invoices.isHidden);
+    assert.equal(profilePage.billing.plan.name, 'Small Business1 plan active manual subscription');
+    assert.dom(profilePage.billing.billingSubscription.manualStatus).hasText('manual subscription');
+    assert.ok(profilePage.billing.planMessage.isPresent);
+    assert.ok(profilePage.billing.manualSubscription.banner.isPresent);
+    assert.dom(profilePage.billing.manualSubscription.banner.scope).hasText('This manual subscription is paid to Travis CI by bank transfer. If you have any questions or would like to update your plan, contact our support team.');
   });
 
   test('view billing on an expired manual plan', async function (assert) {
@@ -435,7 +432,7 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.billing.newSubscriptionButton.click();
 
     assert.dom(profilePage.billing.billingPlanChoices.boxes.scope).exists({ count: 5 });
-    assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe to 2 job plan');
+    assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe @user-login to 2 job plan');
   });
 
   test('view billing on an expired marketplace plan', async function (assert) {
@@ -456,7 +453,7 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.billing.newSubscriptionButton.click();
 
     assert.dom(profilePage.billing.billingPlanChoices.boxes.scope).exists({ count: 5 });
-    assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe to 2 job plan');
+    assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe @user-login to 2 job plan');
   });
 
   test('view billing on an annual plan', async function (assert) {
@@ -485,7 +482,7 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.trial.openSourceMessage.heading, 'We <3 open source');
     assert.equal(profilePage.billing.trial.openSourceMessage.body, 'You get 3 free additional concurrent jobs for your open source projects.');
     assert.dom(profilePage.billing.billingPlanChoices.boxes.scope).exists({ count: 5 });
-    assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe to 2 job plan');
+    assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe @user-login to 2 job plan');
   });
 
   test('view billing tab when not subscribed and has subscription write permissions with active trial', async function (assert) {
@@ -501,7 +498,7 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.trial.openSourceMessage.heading, 'We <3 open source');
     assert.equal(profilePage.billing.trial.openSourceMessage.body, 'You get 3 free additional concurrent jobs for your open source projects.');
     assert.dom(profilePage.billing.billingPlanChoices.boxes.scope).exists({ count: 5 });
-    assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe to 2 job plan');
+    assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe @user-login to 2 job plan');
   });
 
   test('view billing tab when there is no subscription and no write permissions', async function (assert) {
@@ -582,7 +579,7 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.dom(profilePage.billing.selectedPlan.price.scope).hasTextContaining(`$${this.lastPlan.price / 100} /month`);
 
     assert.dom(profilePage.billing.billingPlanChoices.boxes.scope).exists({ count: 5 });
-    assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe to 10 job plan');
+    assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe @org-login to 10 job plan');
   });
 
   test('view billing tab when trial has not started', async function (assert) {
@@ -605,7 +602,7 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.trial.openSourceMessage.body, 'You get 3 free additional concurrent jobs for your open source projects.');
 
     assert.dom(profilePage.billing.billingPlanChoices.boxes.scope).exists({ count: 5 });
-    assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe to 2 job plan');
+    assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe @org-login to 2 job plan');
   });
 
   test('view billing tab with no create subscription permissions', async function (assert) {
@@ -652,7 +649,7 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.trial.openSourceMessage.body, 'You get 3 free additional concurrent jobs for your open source projects.');
 
     assert.dom(profilePage.billing.billingPlanChoices.boxes.scope).exists({ count: 5 });
-    assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe to 2 job plan');
+    assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe @org-login to 2 job plan');
   });
 
   test('view billing tab when trial has started', async function (assert) {
@@ -686,7 +683,7 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.trial.openSourceMessage.heading, 'We <3 open source');
     assert.equal(profilePage.billing.trial.openSourceMessage.body, 'You get 3 free additional concurrent jobs for your open source projects.');
     assert.dom(profilePage.billing.billingPlanChoices.boxes.scope).exists({ count: 5 });
-    assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe to 2 job plan');
+    assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe @org-login to 2 job plan');
   });
 
   test('view billing tab when trial builds are less than 11', async function (assert) {
@@ -722,7 +719,7 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.trial.openSourceMessage.heading, 'We <3 open source');
     assert.equal(profilePage.billing.trial.openSourceMessage.body, 'You get 3 free additional concurrent jobs for your open source projects.');
     assert.dom(profilePage.billing.billingPlanChoices.boxes.scope).exists({ count: 5 });
-    assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe to 2 job plan');
+    assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe @org-login to 2 job plan');
   });
 
   test('view billing tab when trial has ended', async function (assert) {
@@ -754,7 +751,7 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.trial.openSourceMessage.heading, 'We <3 open source');
     assert.equal(profilePage.billing.trial.openSourceMessage.body, 'You get 3 free additional concurrent jobs for your open source projects.');
     assert.dom(profilePage.billing.billingPlanChoices.boxes.scope).exists({ count: 5 });
-    assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe to 2 job plan');
+    assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe @org-login to 2 job plan');
   });
 
   test('view billing tab with Github trial subscription', async function (assert) {
@@ -831,7 +828,7 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.billing.newSubscriptionButton.click();
 
     assert.dom(profilePage.billing.billingPlanChoices.boxes.scope).exists({ count: 5 });
-    assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe to 2 job plan');
+    assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe @org-login to 2 job plan');
   });
 
   test('logs an exception when there is a subscription without a plan and handles unknowns', async function (assert) {
@@ -864,7 +861,7 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.visit();
     await profilePage.billing.visit();
 
-    assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe to 2 job plan');
+    assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe @user-login to 2 job plan');
 
     await profilePage.billing.subscribeButton.click();
 
@@ -899,7 +896,7 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.trial.openSourceMessage.heading, 'We <3 open source');
     assert.equal(profilePage.billing.trial.openSourceMessage.body, 'You get 3 free additional concurrent jobs for your open source projects.');
     assert.dom(profilePage.billing.billingPlanChoices.boxes.scope).exists({ count: 5 });
-    assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe to 2 job plan');
+    assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe @user-login to 2 job plan');
   });
 
   test('view billing tab when no individual subscription should fill form and transition to payment', async function (assert) {

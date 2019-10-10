@@ -5,15 +5,24 @@
 
   font-size: $font-size-sm;
 
-  .yml-message {
+  .yml-message-link {
+    display: block;
+
+    &:hover {
+      background-color: $cream-light;
+    }
+  }
+
+  .yml-message-line {
     display: flex;
     align-items: flex-start;
 
     padding: 6px;
 
+
     svg {
       width: 18px;
-      transform: scale(1.2);
+      height: 18px;
     }
 
     .icon-info {
@@ -39,13 +48,27 @@
     }
 
     .message {
+      flex-grow: 1;
       padding-left: 7px;
       border-left: 1px solid $dry-cement;
       margin-left: 2px;
     }
 
+    .message-help svg {
+      display: none;
+      transform: scale(0.8);
+      border-color: $oxide-blue;
+      @include colorSVG($oxide-blue);
+    }
+
+    &:hover {
+      .message-help svg {
+        display: block;
+      }
+    }
+
     code {
-      background-color: #f1f1f1;
+      background-color: $pebble-grey;
       font-family: $font-family-monospace;
       font-size: $font-size-sm - 1px;
       padding: 2px;

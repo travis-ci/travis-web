@@ -1,9 +1,28 @@
-<div class="yml-message" tabindex="0">
-  <div class="tooltip-wrapper">
-    <SvgImage @name={{this.message.level}} @class={{this.iconClass}} />
-    <EmberTooltip @text={{this.tooltipText}} />
-  </div>
-  <div class="message">
-    {{this.readableMessage}}
-  </div>
+<div class="yml-message">
+  {{#if this.isLinkable}}
+    <a
+      href={{this.lineLink}}
+      class="yml-message-link"
+      tabindex="0"
+      data-test-yml-message-link="true"
+    >
+      <BuildMessageLine
+        @iconClass={{this.iconClass}}
+        @level={{this.message.level}}
+        @code={{this.message.code}}
+        @message={{this.readableMessage}}
+        @tooltipText={{this.tooltipText}}
+      />
+    </a>
+  {{else}}
+    <div tabindex="0">
+      <BuildMessageLine
+        @iconClass={{this.iconClass}}
+        @level={{this.message.level}}
+        @code={{this.message.code}}
+        @message={{this.readableMessage}}
+        @tooltipText={{this.tooltipText}}
+      />
+    </div>
+  {{/if}}
 </div>

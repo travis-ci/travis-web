@@ -8,6 +8,7 @@ export default Component.extend({
   plan: service(),
   accounts: service(),
 
+  account: null,
   showPlansSelector: true,
   showCancelButton: false,
   title: null,

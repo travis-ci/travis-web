@@ -1,24 +1,27 @@
-/* global _gaq */
 import Controller from '@ember/controller';
 import config from 'travis/config/environment';
 import { filterBy } from '@ember/object/computed';
 import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
+import { LEAD_UTM_FIELDS } from 'travis/models/lead';
 
 const { plans } = config;
 
-const utmSourceName = 'plans-page';
-const utmSource = `?utm_source=${utmSourceName}`;
+const leadSourceName = 'plans-page';
+const outgoingUtmSource = `?utm_source=${leadSourceName}`;
+const supportedUtmFields = Object.values(LEAD_UTM_FIELDS);
 
 export default Controller.extend({
-  config,
+  queryParams: supportedUtmFields,
 
   auth: service(),
+  metrics: service(),
 
-  utmSourceName,
-  billingUrl: `${config.billingEndpoint}/${utmSource}`,
-  buildMatrixUrl: `${config.urls.buildMatrix}${utmSource}`,
-  enterpriseUrl: `${config.urls.enterprise}${utmSource}`,
+  config,
+  leadSourceName,
+  billingUrl: `${config.billingEndpoint}/${outgoingUtmSource}`,
+  buildMatrixUrl: `${config.urls.buildMatrix}${outgoingUtmSource}`,
+  enterpriseUrl: `${config.urls.enterprise}${outgoingUtmSource}`,
 
   plans: computed(() => plans),
   annualPlans: filterBy('plans', 'period', 'annual'),
@@ -37,10 +40,8 @@ export default Controller.extend({
 
   actions: {
     gaCta(location) {
-      if (config.gaCode) {
-        const page = `/virtual/signup?${location}`;
-        _gaq.push(['_trackPageview', page]);
-      }
+      const page = `/virtual/signup?${location}`;
+      this.metrics.trackPage({ page });
       this.auth.signIn();
     },
 

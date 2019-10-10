@@ -28,15 +28,26 @@
   }
 }
 
+$yaml-code-font-size: 12px;
 pre.codedisplay[class*='language-'] {
   white-space: pre-wrap;
   background-color: white !important;
-  font-size: 12px;
-  line-height: 17px;
-}
+  font-size: $yaml-code-font-size;
 
-.codedisplay code {
-  font-family: cousine, monospace;
+  code {
+    font-family: $font-family-monospace;
+    font-size: $yaml-code-font-size;
+    color: $asphalt-grey;
+    line-height: 20px;
+  }
+
+  .line-numbers-rows {
+    margin-top: -1px;
+    border-right: 0px;
+    color: $dry-cement;
+    font-size: $yaml-code-font-size;
+    line-height: 17px;
+  }
 }
 
 .job-tabs .paper-block {
@@ -47,4 +58,3 @@ pre.codedisplay[class*='language-'] {
   padding: 1em;
   border-bottom: 1px solid $pebble-grey;
 }
-
