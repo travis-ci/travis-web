@@ -59,12 +59,6 @@ export default Component.extend({
   }),
 
   arch: computed('job.config.content.arch', function () {
-    let arch = this.get('job.config.content.arch');
-
-    if (arch) {
-      return arch;
-    } else {
-      return 'amd64';
-    }
+    return this.get('job.config.content.arch') || 'amd64';
   })
 });

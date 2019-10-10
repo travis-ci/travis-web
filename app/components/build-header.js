@@ -130,12 +130,7 @@ export default Component.extend({
   }),
 
   arch: computed('jobsConfig.content.arch', function () {
-    let arch = this.get('jobsConfig.content.arch');
-    if (arch) {
-      return arch;
-    } else {
-      return 'amd64';
-    }
+    return this.get('jobsConfig.content.arch') || 'amd64';
   }),
 
   osIcon: computed('os', function () {
