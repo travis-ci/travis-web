@@ -27,7 +27,7 @@
 
         {{#if this.messagesMaxLevel}}
           <span class="tooltip-wrapper">
-            <span class="build-messages-badge {{this.messagesMaxLevel}}"></span>
+            <span class="build-messages-badge badge-{{this.messagesMaxLevel}}"></span>
             <EmberTooltip @text={{this.messagesBadgeTooltipText}} />
           </span>
         {{/if}}

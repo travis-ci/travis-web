@@ -5,11 +5,11 @@
   margin-left: 0.25em;
   border-radius: 50%;
 
-  &.alert,
-  &.error {
+  &.badge-alert,
+  &.badge-error {
     background-color: $brick-red;
   }
-  &.warn {
+  &.badge-warn {
     background-color: $canary-yellow;
   }
 }
