@@ -1,29 +1,35 @@
 {{#unless this.subscription.manualSubscriptionExpired}}
-  <section>
-    <h3>
-      Overview
-    </h3>
-    <h3 data-test-plan-name>
-      {{this.subscription.plan.name}}
-    </h3>
-    <p data-test-plan-concurrency>
-      {{pluralize this.subscription.plan.builds "concurrent job"}}
-    </p>
-    <p>
-      Renewing on {{moment-format this.subscription.validTo "MMMM D, YYYY"}}
-    </p>
-  </section>
-  <section>
-    <h3>
-      Billing Information
-    </h3>
-    <section class="row">
-      <section class="payment">
-        <h3>
-          Payment details
-        </h3>
-        <Billing::PaymentDetails @subscription={{this.subscription}} />
-      </section>
+  <section class="billing-subscription">
+    <section class='plan-overview mb-5'>
+      <h3 class='plan-overview__header'>
+        Overview
+      </h3>
+      <BillingSummaryStatus @subscription={{this.subscription}}/>
+      {{#if this.subscription.plan.builds}}
+        <p class="plan-overview__description" data-test-plan-concurrency>
+          {{pluralize this.subscription.plan.builds "concurrent job"}}
+        </p>
+      {{/if}}
+      <span class='plan-overview__description--validity dark-red' data-test-plan-message='true'>
+        Renews on {{moment-format this.subscription.validTo "MMMM D, YYYY"}}
+      </span>
+    </section>
+    <hr/>
+    <section class='mt-5'>
+      <h3>
+        Billing details
+      </h3>
+      <p class="flex px-4 py-5 shadow items-center notice-banner--white" data-test-help-text='true'>
+        <div class="mr-4">
+          <SvgImage @name='icon-help' @class='icon-help' />
+        </div>
+        <span class="py-1 leading-loose" data-test-manual-subscription-banner='true'>
+          This manual subscription is paid to Travis CI by bank transfer. If you have any questions or would like to update your plan,
+          <LinkTo @route='help' @query={{hash anchor='form'}}>
+            contact our support team.
+          </LinkTo>
+        </span>
+      </p>
     </section>
   </section>
 {{else}}

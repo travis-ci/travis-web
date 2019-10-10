@@ -342,14 +342,11 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.visit();
     await profilePage.billing.visit();
 
-    assert.ok(profilePage.billing.manageButton.isHidden);
-    assert.ok(profilePage.billing.userDetails.isHidden);
-    assert.ok(profilePage.billing.billingDetails.isHidden);
-    assert.ok(profilePage.billing.creditCardNumber.isHidden);
-    assert.ok(profilePage.billing.price.isHidden);
-    assert.ok(profilePage.billing.annualInvitation.isHidden);
-
-    assert.ok(profilePage.billing.invoices.isHidden);
+    assert.equal(profilePage.billing.plan.name, 'Small Business1 plan active manual subscription');
+    assert.dom(profilePage.billing.billingSubscription.manualStatus).hasText('manual subscription');
+    assert.ok(profilePage.billing.planMessage.isPresent);
+    assert.ok(profilePage.billing.manualSubscription.banner.isPresent);
+    assert.dom(profilePage.billing.manualSubscription.banner.scope).hasText('This manual subscription is paid to Travis CI by bank transfer. If you have any questions or would like to update your plan, contact our support team.');
   });
 
   test('view billing on an expired manual plan', async function (assert) {
