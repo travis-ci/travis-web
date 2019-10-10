@@ -7,7 +7,7 @@ export default Component.extend({
   classNames: ['travistab'],
 
   messagesMaxLevel: computed('build.request.messages.@each.level', function () {
-    let msgs = this.get('build.request.messages');
+    let msgs = this.get('build.request.messages') || [];
     if (msgs.get('length') > 0) {
       return msgs.sortBy('level')[0].level;
     }
