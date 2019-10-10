@@ -81,17 +81,21 @@
     display: flex;
     align-items: flex-start;
 
-    padding: 6px;
+    padding: 6px 1em;
 
+    .icon-level {
+      width: 14px;
+      height: 14px;
+      margin-left: 2px;
+    }
 
-    svg {
+    .icon-help {
       width: 18px;
       height: 18px;
     }
 
     .icon-info {
       @include colorSVGFull($turf-green, $turf-green);
-
       circle {
         fill: none;
       }
@@ -99,7 +103,6 @@
 
     .icon-warn {
       @include colorSVG($canary-yellow);
-
       color: inherit;
     }
 
@@ -113,8 +116,7 @@
 
     .message {
       flex-grow: 1;
-      padding-left: 7px;
-      margin-left: 2px;
+      margin-left: 6px;
     }
 
     .message-help svg {
