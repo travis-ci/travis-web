@@ -13,6 +13,7 @@
     .icon {
       width: 18px;
       height: 18px;
+      margin-bottom: 2px;
     }
 
     .icon-alert path,
@@ -21,6 +22,14 @@
     }
     .icon-warn path {
       stroke: $canary-yellow;
+    }
+    .icon-info {
+      width: 12px;
+      height: 12px;
+      path {
+        stroke: $turf-green;
+        stroke-width: 2;
+      }
     }
 
     .tools {
@@ -79,7 +88,7 @@
     }
 
     .icon-info {
-      @include colorSVGFull($oxide-blue, $oxide-blue);
+      @include colorSVGFull($turf-green, $turf-green);
 
       circle {
         fill: none;

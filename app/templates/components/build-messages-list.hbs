@@ -2,7 +2,7 @@
   <div class="yml-messages">
     <div class="header" {{action 'toggle'}}>
       <span class="tooltip-wrapper level-icon">
-        <SvgImage @name={{this.maxLevel}} @class={{this.iconClass}} />
+        <SvgImage @name="msg-{{this.maxLevel}}"  @class={{this.iconClass}} />
         <EmberTooltip @text={{this.summary}} />
       </span>
       Build config validation

@@ -1,38 +1,37 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { filter, notEmpty } from '@ember/object/computed';
+import { sort } from '@ember/object/computed';
 import { pluralize } from 'ember-inflector';
 
-const READABLE_LEVELS = {
+const MSGS = {
   'alert': 'alert',
   'error': 'error',
   'warn': 'warning',
+  'info': 'info',
 };
 
 export default Component.extend({
   tagName: '',
-  toggleStatus: null,
-
-  isExpanded: notEmpty('nonInfoMessages'),
+  isExpanded: false,
 
   toggleStatusClass: computed('isExpanded', function () {
     return this.get('isExpanded') ? 'expanded' : 'collapsed';
   }),
 
-  nonInfoMessages: filter('request.messages', (message) =>
-    message.level !== 'info'
+  sortedMessages: sort('request.messages', (lft, rgt) =>
+    sortOrder(lft.level) - sortOrder(rgt.level)
   ),
 
-  maxLevel: computed('nonInfoMessages.[].level', function () {
-    return this.nonInfoMessages.sortBy('level')[0].level;
+  maxLevel: computed('sortedMessages', function () {
+    return this.get('sortedMessages')[0].level;
   }),
 
   iconClass: computed('maxLevel', function () {
     return `icon icon-${this.get('maxLevel')}`;
   }),
 
-  summary: computed('nonInfoMessages', function () {
-    let counts = countBy(this.get('nonInfoMessages'), 'level');
+  summary: computed('sortedMessages', function () {
+    let counts = countBy(this.get('sortedMessages'), 'level');
     if (Object.entries(counts).length > 0) {
       return Object.entries(counts).map((entry) => formatLevel(...entry)).join(', ');
     }
@@ -46,7 +45,11 @@ export default Component.extend({
 });
 
 function formatLevel(level, count) {
-  return pluralize(count, READABLE_LEVELS[level]);
+  return pluralize(count, MSGS[level]);
+}
+
+function sortOrder(level) {
+  return Object.keys(MSGS).indexOf(level);
 }
 
 function countBy(objs, name) {
@@ -58,3 +61,4 @@ function countBy(objs, name) {
     return counts;
   }, {});
 }
+
