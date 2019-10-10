@@ -8,7 +8,7 @@ export default Component.extend({
 
   messagesMaxLevel: computed('job.build.request.messages.@each.level', function () {
     let msgs = this.get('job.build.request.messages');
-    if (msgs instanceof Array && msgs.length > 0) {
+    if (msgs.get('length') > 0) {
       return msgs.sortBy('level')[0].level;
     }
   }),
