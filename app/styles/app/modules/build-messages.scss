@@ -12,6 +12,9 @@
   &.badge-warn {
     background-color: $canary-yellow;
   }
+  &.badge-info {
+    background-color: $turf-green;
+  }
 }
 
 .yml-messages {
