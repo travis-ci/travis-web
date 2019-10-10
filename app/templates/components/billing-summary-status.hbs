@@ -1,10 +1,10 @@
-<p class='plan-overview__name flex flex--v-center' data-test-plan-name>
+<p class='plan-overview__name flex flex--v-center' data-test-plan-name='true'>
   {{#if this.subscription.plan }}
     {{concat this.subscription.plan.name ' plan'}}
   {{else}}
     Unknown plan
   {{/if}}
-  {{#if this.subscription.isSubscribed}}
+  {{#if (and this.subscription.isSubscribed (not this.subscription.isManual))}}
     <span class="badge green square" data-test-active-status='true'>
       active
     </span>
@@ -14,6 +14,13 @@
     </span>
     <span class="badge red square" data-test-expired-status='true'>
       {{this.subscription.status}}
+    </span>
+  {{else if this.subscription.isManual}}
+    <span class="badge green square" data-test-active-status='true'>
+      active
+    </span>
+    <span class="badge square manual-badge" data-test-manual-status='true'>
+      manual subscription
     </span>
   {{else}}
     <span class="badge grey square" data-test-grey-status='true'>
