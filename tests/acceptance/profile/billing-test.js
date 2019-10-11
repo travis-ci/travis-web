@@ -943,8 +943,7 @@ module('Acceptance | profile/billing', function (hooks) {
       .fillIn('address', '15 Olalubi street')
       .fillIn('city', 'Berlin')
       .fillIn('zip', '353564')
-      .fillIn('vat', '356463')
-      .fillIn('coupon', '356463');
+      .fillIn('vat', '356463');
 
     await billingForm.proceedPayment.click();
 
@@ -1011,8 +1010,7 @@ module('Acceptance | profile/billing', function (hooks) {
       .fillIn('address', '15 Olalubi street')
       .fillIn('city', 'Berlin')
       .fillIn('zip', '353564')
-      .fillIn('vat', '356463')
-      .fillIn('coupon', '356463');
+      .fillIn('vat', '356463');
 
     await billingForm.proceedPayment.click();
 
