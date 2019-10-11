@@ -29,7 +29,7 @@ export default Component.extend({
   isLoading: or('createSubscription.isRunning', 'accounts.fetchSubscriptions.isRunning'),
   couponResult: null,
   isValidCoupon: reads('couponResult.valid'),
-  isInvalidCoupon: not('couponResult.valid'),
+  isInvalidCoupon: not('isValidCoupon'),
 
   createSubscription: task(function* () {
     this.metrics.trackEvent({
@@ -58,15 +58,17 @@ export default Component.extend({
     }
   }).drop(),
 
+  // amount_off and price are in cents
   discountedPrice: computed('couponResult.{amount_off,percent_off}', 'selectedPlan.price', function () {
     const price = Math.floor(this.selectedPlan.price / 100);
     if (this.couponResult && this.couponResult.amount_off) {
       const amountOff = this.couponResult.amount_off;
-      return `$${price - Math.floor(amountOff / 100)}`;
+      const discountedPrice = price - Math.floor(amountOff / 100);
+      return `$${discountedPrice}`;
     } else if (this.couponResult && this.couponResult.percent_off) {
       const percentageOff = this.couponResult.percent_off;
-      const amountOff = Math.floor(price * percentageOff) / 100;
-      return `$${price - amountOff}`;
+      const discountedPrice = price - (price * percentageOff) / 100;
+      return `$${discountedPrice.toFixed(2)}`;
     } {
       return `$${price}`;
     }

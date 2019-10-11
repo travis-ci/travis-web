@@ -165,7 +165,18 @@ export default function () {
     );
   });
 
-  this.get('/coupons/:coupon/', function () {
+  this.get('/coupons/:coupon/', function (schema, { params }) {
+    if (params.coupon === 'percentOff') {
+      return {
+        '@type': 'coupon',
+        '@representation': 'standard',
+        'id': '10_BUCKS_OFF',
+        'name': '10 bucks off!',
+        'percent_off': 10,
+        'amount_off': null,
+        'valid': true
+      };
+    }
     return {
       '@type': 'coupon',
       '@representation': 'standard',
