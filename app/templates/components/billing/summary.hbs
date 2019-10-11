@@ -17,7 +17,7 @@
               </span>
             {{else}}
               <span data-test-plan-message='true' class='plan-overview__description--validity ml-3
-                {{if (or this.subscription.manualSubscriptionExpired this.canceledOrExpired) 'red' 'cement-grey'}}'
+                {{if (or this.subscription.manualSubscriptionExpired this.canceledOrExpired) 'dark-red' 'cement-grey'}}'
               >
                 {{this.planMessage}} 
                 {{#if (and this.isComplete this.isNotPending)}}
