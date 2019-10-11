@@ -8,6 +8,12 @@
       {{this.job.number}}
     </span>
   </div>
+  <div class="job-arch">
+    <SvgImage @name="icon-arch" @class="icon" />
+    <span class="label-align" aria-label="CPU architecture">
+      {{this.arch}}
+    </span>
+  </div>
   <div class="job-os {{this.os}}">
     <EmberTooltip @text={{this.job.config.content.os}} />
     <SvgImage @name={{osIcon}} @class="icon" />

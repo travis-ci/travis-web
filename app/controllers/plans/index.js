@@ -7,8 +7,8 @@ import { LEAD_UTM_FIELDS } from 'travis/models/lead';
 
 const { plans } = config;
 
-const leadSourceName = 'plans-page';
-const outgoingUtmSource = `?utm_source=${leadSourceName}`;
+const referralSourceName = 'plans-page';
+const outgoingUtmSource = `?utm_source=${referralSourceName}`;
 const supportedUtmFields = Object.values(LEAD_UTM_FIELDS);
 
 export default Controller.extend({
@@ -18,7 +18,7 @@ export default Controller.extend({
   metrics: service(),
 
   config,
-  leadSourceName,
+  referralSourceName,
   billingUrl: `${config.billingEndpoint}/${outgoingUtmSource}`,
   buildMatrixUrl: `${config.urls.buildMatrix}${outgoingUtmSource}`,
   enterpriseUrl: `${config.urls.enterprise}${outgoingUtmSource}`,

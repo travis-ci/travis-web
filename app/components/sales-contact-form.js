@@ -20,7 +20,7 @@ export default Component.extend({
   isSuccess: bool('send.lastSuccessful.value'),
 
   lead: null,
-  leadSource: 'travis-web',
+  referralSource: 'travis-web',
 
   utm_source: null,
   utm_campaign: null,
@@ -50,7 +50,7 @@ export default Component.extend({
   reset() {
     if (this.lead) this.lead.unloadRecord();
     this.set('lead', this.store.createRecord('lead', {
-      lead_source: this.leadSource,
+      referral_source: this.referralSource,
       utm_fields: this.utmFields,
     }));
   },

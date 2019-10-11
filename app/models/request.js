@@ -1,7 +1,7 @@
 import Model, { attr, belongsTo } from '@ember-data/model';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
-import { alias, empty, uniqBy, equal } from '@ember/object/computed';
+import { empty, uniqBy, equal } from '@ember/object/computed';
 import ObjectProxy from '@ember/object/proxy';
 import PromiseProxyMixin from '@ember/object/promise-proxy-mixin';
 import { Promise as EmberPromise } from 'rsvp';
@@ -66,6 +66,13 @@ export default Model.extend({
           }})
           .then(response => ({messages: response.messages}))
       });
+    }
+  }),
+
+  messages: computed('messagesRequest', function () {
+    let response = this.get('messagesRequest');
+    if (response) {
+      return response.get('messages');
     } else {
       return ObjectPromiseProxy.create({
         promise: EmberPromise.resolve([])
@@ -73,5 +80,7 @@ export default Model.extend({
     }
   }),
 
-  messages: alias('messagesRequest.messages'),
+  hasMessages: computed('messagesRequest', function () {
+    return this.get('messagesRequest').get('messages') != undefined;
+  }),
 });
