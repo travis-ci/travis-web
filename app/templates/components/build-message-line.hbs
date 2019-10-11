@@ -1,0 +1,12 @@
+<div class="yml-message-line">
+  <div class="tooltip-wrapper level-icon">
+    <SvgImage @name={{this.level}} @class={{this.iconClass}} />
+    <EmberTooltip @text={{this.tooltipText}} />
+  </div>
+  <div class="message">
+    {{this.message}}
+  </div>
+  <ExternalLinkTo href="{{config-get 'urls.buildConfigValidation'}}#{{this.code}}" class="message-help">
+    <SvgImage @name='icon-help' @class='icon-help' />
+  </ExternalLinkTo>
+</div>

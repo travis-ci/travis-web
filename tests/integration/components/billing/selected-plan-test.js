@@ -33,6 +33,6 @@ module('Integration | Component | selected-billing-plan', function (hooks) {
     assert.equal(profilePage.billing.selectedPlanOverview.jobs.text, `${this.plan1.builds} concurrent jobs`);
     assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${this.plan1.price / 100}`);
     assert.equal(profilePage.billing.period.text, '/month');
-    assert.equal(profilePage.billing.selectedPlanOverview.changePlan.text, 'change plan');
+    assert.equal(profilePage.billing.selectedPlanOverview.changePlan.text, 'Change plan');
   });
 });

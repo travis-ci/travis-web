@@ -1,12 +1,16 @@
 /* eslint-disable max-len */
 import Component from '@ember/component';
 import { computed } from '@ember/object';
+import { and, notEmpty } from '@ember/object/computed';
 import { htmlSafe } from '@ember/string';
+import { codeblockName } from 'travis/utils/format-config';
 import Ember from 'ember';
 
 const { escapeExpression: escape } = Ember.Handlebars.Utils;
 
 export default Component.extend({
+  tagName: '',
+
   readableMessage: computed('message.code', 'message.key', 'message.args', function () {
     const { code, key, args } = this.message;
 
@@ -17,8 +21,12 @@ export default Component.extend({
     }
   }),
 
-  alias(key, args) {
-    return `<code>${escape(key)}</code>: <code>${escape(args.alias)}</code> is an alias for <code>${escape(args.obj)}</code> (<code>${escape(args.type)}</code>), using <code>${escape(args.obj)}</code>`;
+  alias_key(key, args) {
+    return `<code>${escape(key)}</code>: key <code>${escape(args.alias)}</code> is an alias for <code>${escape(args.key)}</code>, using <code>${escape(args.key)}</code>`;
+  },
+
+  alias_value(key, args) {
+    return `<code>${escape(key)}</code>: value <code>${escape(args.alias)}</code> is an alias for <code>${escape(args.value)}</code>, using <code>${escape(args.value)}</code>`;
   },
 
   cast(key, args) {
@@ -149,6 +157,15 @@ export default Component.extend({
       error: 'error',
       alert: 'alert'
     }[level];
-  })
+  }),
+
+  hasMessageSrc: notEmpty('message.src'),
+  hasMessageLine: notEmpty('message.line'),
+  isLinkable: and('hasMessageSrc', 'hasMessageLine'),
+
+  lineLink: computed('message.src', 'message.line', function () {
+    const { src, line } = this.message;
+    return `#${codeblockName(src)}.${line + 1}`;
+  }),
 });
 /* eslint-enable max-len */

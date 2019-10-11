@@ -4,6 +4,7 @@ import {
   clickable,
   collection,
   hasClass,
+  isPresent,
   isHidden,
   visitable,
   text
@@ -89,16 +90,26 @@ export default create({
 
   ymlMessages: collection('.yml-message', {
     icon: {
-      scope: 'svg',
+      scope: '.level-icon svg',
       isInfo: hasClass('icon-info'),
       isWarning: hasClass('icon-warn'),
       isError: hasClass('icon-error')
     },
     message: text('.message'),
+    link: {
+      scope: '[data-test-yml-message-link]',
+      isPresent: isPresent(),
+      href: attribute('href'),
+      text: text(),
+    }
   }),
 
   yaml: collection('.inner-yaml-container', {
-    text: text('[data-test-yaml]'),
+    codeblock: {
+      scope: '[data-test-yaml]',
+      text: text(),
+      id: attribute('id'),
+    },
     source: text('.file-name')
   }),
 

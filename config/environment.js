@@ -47,13 +47,16 @@ module.exports = function (environment) {
       bestpracticessecurity: 'https://docs.travis-ci.com/user/best-practices-security#recommendations-on-how-to-avoid-leaking-secrets-to-build-logs',
       blog: 'https://blog.travis-ci.com',
       buildMatrix: 'https://docs.travis-ci.com/user/build-matrix/',
+      buildConfigValidation: 'https://docs.travis-ci.com/user/build-config-validation/',
       changelog: 'https://changelog.travis-ci.com',
       community: 'https://travis-ci.community',
+      communityEarlyReleases: 'https://travis-ci.community/c/early-releases',
       dashboard: 'https://travis-ci.com/dashboard',
       docker: 'https://docs.travis-ci.com/user/docker/',
       docs: 'https://docs.travis-ci.com',
       gettingStarted: 'https://docs.travis-ci.com/user/getting-started/#to-get-started-with-travis-ci',
       education: 'https://education.travis-ci.com',
+      emailSupport: 'mailto:support@travis-ci.com',
       enterprise: 'https://enterprise.travis-ci.com',
       imprint: 'https://docs.travis-ci.com/imprint.html',
       jobs: 'https://travisci.workable.com/',
@@ -119,22 +122,32 @@ module.exports = function (environment) {
     },
   };
 
+  ENV.metricsAdapters = [];
   if (process.env.GOOGLE_ANALYTICS_ID) {
-    ENV.metricsAdapters = [
-      {
-        name: 'GoogleAnalytics',
-        environments: ['development', 'production'],
-        config: {
-          id: process.env.GOOGLE_ANALYTICS_ID,
-          // Use `analytics_debug.js` in development
-          debug: environment === 'development',
-          // Use verbose tracing of GA events
-          trace: environment === 'development',
-          // Ensure development env hits aren't sent to GA
-          sendHitTask: environment !== 'development',
-        }
-      },
-    ];
+    ENV.metricsAdapters.push({
+      name: 'GoogleAnalytics',
+      environments: ['development', 'production'],
+      config: {
+        id: process.env.GOOGLE_ANALYTICS_ID,
+        // Use `analytics_debug.js` in development
+        debug: environment === 'development',
+        // Use verbose tracing of GA events
+        trace: environment === 'development',
+        // Ensure development env hits aren't sent to GA
+        sendHitTask: environment !== 'development',
+      }
+    });
+  }
+
+  const { GOOGLE_TAGS_CONTAINER_ID, GOOGLE_TAGS_PARAMS } = process.env;
+  if (GOOGLE_TAGS_CONTAINER_ID) {
+    ENV.metricsAdapters.push({
+      name: 'GoogleTagManager',
+      config: {
+        id: GOOGLE_TAGS_CONTAINER_ID,
+        envParams: GOOGLE_TAGS_PARAMS,
+      }
+    });
   }
 
   ENV.featureFlags = {
