@@ -2,10 +2,8 @@ import Component from '@ember/component';
 import { bool, reads } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
-import { LEAD_UTM_FIELDS } from 'travis/models/lead';
+import { UTM_FIELD_LIST, UTM_STORAGE_PREFIX } from 'travis/routes/application';
 import objectCollect from 'travis/utils/object-collect';
-
-const supportedUtmFields = Object.values(LEAD_UTM_FIELDS);
 
 export default Component.extend({
   tagName: '',
@@ -13,6 +11,7 @@ export default Component.extend({
   flashes: service(),
   raven: service(),
   store: service(),
+  storage: service(),
 
   requiredMark: 'Required',
 
@@ -28,12 +27,13 @@ export default Component.extend({
   utm_term: null,
   utm_content: null,
 
-  utmFields: objectCollect(...supportedUtmFields),
+  utmFields: objectCollect(...UTM_FIELD_LIST),
 
   send: task(function* () {
     try {
       yield this.lead.save();
       this.reset();
+      this.resetStorage();
       this.onSuccess();
       return true;
     } catch (error) {
@@ -53,6 +53,12 @@ export default Component.extend({
       referral_source: this.referralSource,
       utm_fields: this.utmFields,
     }));
+  },
+
+  resetStorage() {
+    UTM_FIELD_LIST.forEach((field) => {
+      this.storage.removeItem(`${UTM_STORAGE_PREFIX}${field}`);
+    });
   },
 
   // Lifecycle

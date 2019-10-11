@@ -1,27 +1,47 @@
 import Controller from '@ember/controller';
 import config from 'travis/config/environment';
-import { filterBy } from '@ember/object/computed';
+import { filterBy, or, reads } from '@ember/object/computed';
 import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
-import { LEAD_UTM_FIELDS } from 'travis/models/lead';
+import { APP_UTM_FIELDS, UTM_STORAGE_PREFIX } from 'travis/routes/application';
 
 const { plans } = config;
 
 const referralSourceName = 'plans-page';
 const outgoingUtmSource = `?utm_source=${referralSourceName}`;
-const supportedUtmFields = Object.values(LEAD_UTM_FIELDS);
+
+function readUtmFromStorage(field) {
+  return computed(function () { return this.storage.getItem(`${UTM_STORAGE_PREFIX}${field}`); });
+}
 
 export default Controller.extend({
-  queryParams: supportedUtmFields,
-
   auth: service(),
   metrics: service(),
+  storage: service(),
 
   config,
   referralSourceName,
   billingUrl: `${config.billingEndpoint}/${outgoingUtmSource}`,
   buildMatrixUrl: `${config.urls.buildMatrix}${outgoingUtmSource}`,
   enterpriseUrl: `${config.urls.enterprise}${outgoingUtmSource}`,
+
+  qpUtmSource: reads(`model.appQueryParams.${APP_UTM_FIELDS.SOURCE}`),
+  qpUtmCampaign: reads(`model.appQueryParams.${APP_UTM_FIELDS.CAMPAIGN}`),
+  qpUtmMedium: reads(`model.appQueryParams.${APP_UTM_FIELDS.MEDIUM}`),
+  qpUtmTerm: reads(`model.appQueryParams.${APP_UTM_FIELDS.TERM}`),
+  qpUtmContent: reads(`model.appQueryParams.${APP_UTM_FIELDS.CONTENT}`),
+
+  lsUtmSource: readUtmFromStorage(APP_UTM_FIELDS.SOURCE),
+  lsUtmCampaign: readUtmFromStorage(APP_UTM_FIELDS.CAMPAIGN),
+  lsUtmMedium: readUtmFromStorage(APP_UTM_FIELDS.MEDIUM),
+  lsUtmTerm: readUtmFromStorage(APP_UTM_FIELDS.TERM),
+  lsUtmContent: readUtmFromStorage(APP_UTM_FIELDS.CONTENT),
+
+  utmSource: or('qpUtmSource', 'lsUtmSource'),
+  utmCampaign: or('qpUtmCampaign', 'lsUtmCampaign'),
+  utmMedium: or('qpUtmMedium', 'lsUtmMedium'),
+  utmTerm: or('qpUtmTerm', 'lsUtmTerm'),
+  utmContent: or('qpUtmContent', 'lsUtmContent'),
 
   plans: computed(() => plans),
   annualPlans: filterBy('plans', 'period', 'annual'),
