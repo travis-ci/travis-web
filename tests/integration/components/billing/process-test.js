@@ -66,20 +66,6 @@ module('Integration | Component | billing-process', function (hooks) {
     stubService('accounts', mockAccounts);
   });
 
-  test('renders billing payment form correctly', async function (assert) {
-
-    this.set('currentStep', 'stepTwo');
-    this.set('selectedPlan', this.selectedPlan);
-
-    await render(hbs`<Billing::Process 
-      @account={{account}}
-      @plans={{plans}}
-      @currentStep={{currentStep}}
-    />`);
-
-    assert.dom('h3').hasText('Contact details');
-  });
-
   test('deny subscription when user has no permission', async function (assert) {
 
     this.set('currentStep', 'stepTwo');
