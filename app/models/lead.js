@@ -14,6 +14,6 @@ export default Model.extend({
   team_size: attr('number'),
   phone: attr('string'),
   message: attr('string'),
-  lead_source: attr('string'),
+  referral_source: attr('string'),
   utm_fields: attr(),
 });

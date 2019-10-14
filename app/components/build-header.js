@@ -129,6 +129,10 @@ export default Component.extend({
     }
   }),
 
+  arch: computed('jobsConfig.content.arch', function () {
+    return this.get('jobsConfig.content.arch') || 'amd64';
+  }),
+
   osIcon: computed('os', function () {
     let os = this.os;
     if (os === 'linux') {
