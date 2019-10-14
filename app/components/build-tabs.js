@@ -7,15 +7,14 @@ export default Component.extend({
   classNames: ['travistab'],
 
   messagesMaxLevel: computed('build.request.messages.@each.level', function () {
-    let msgs = this.get('build.request.messages') || [];
-    if (msgs.get('length') > 0) {
-      return msgs.sortBy('level')[0].level;
+    const msgs = this.get('build.request.messages');
+    if (!isEmpty(msgs)) {
+      return msgs.sortBy('level').lastObject.level;
     }
   }),
 
   messagesBadgeTooltipText: computed('messagesMaxLevel', function () {
-    let level = this.get('messagesMaxLevel');
-    return `This build's config has ${level} level validation messages`;
+    return `This build's config has ${this.messagesMaxLevel} level validation messages`;
   }),
 
   didRender() {
