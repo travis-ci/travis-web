@@ -11,7 +11,11 @@
         We're so glad you're here!
       </h1>
       <h2 class="content-subtitle">
-        Please sign in to view your repositories.
+        {{#if this.isRedirectingToAccountPage}}
+          Please sign in to view your repositories.
+        {{else}}
+          Please sign in to view your account
+        {{/if}}
       </h2>
       <p>
         <button
