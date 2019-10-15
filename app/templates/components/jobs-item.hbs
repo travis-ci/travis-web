@@ -18,39 +18,42 @@
     <EmberTooltip @text={{this.job.config.content.os}} />
     <SvgImage @name={{osIcon}} @class="icon" />
   </div>
-  {{#if this.name}}
-    <div class="job-name">
-      <SvgImage @name="job-name-icon" @class="icon" />
+  <div class="job-name">
+    <SvgImage @name="job-name-icon" @class="icon" />
+    {{#if this.name}}
       <span class="label-align" aria-label="Title">
         {{this.name}}
       </span>
-    </div>
-  {{else}}
-    <div class="job-lang">
-      <SvgImage @name="icon-language" @class="icon" />
-      <span class="label-align" aria-label="Language">
-        {{#if this.languages}}
-          {{this.languages}}
-        {{else}}
-          no language set
-        {{/if}}
+    {{else}}
+      <span>
+        no name set
+      </span>
+    {{/if}}
+  </div>
+  <div class="job-lang">
+    <SvgImage @name="icon-language" @class="icon" />
+    <span class="label-align" aria-label="Language">
+      {{#if this.languages}}
+        {{this.languages}}
+      {{else}}
+        no language set
+      {{/if}}
+    </span>
+  </div>
+  {{#if this.environment}}
+    <div class="job-env">
+      <SvgImage @name="icon-environment" @class="icon" />
+      <span class="label-align" aria-label="Environment variables">
+        {{this.environment}}
       </span>
     </div>
-    {{#if this.environment}}
-      <div class="job-env">
-        <SvgImage @name="icon-environment" @class="icon" />
-        <span class="label-align" aria-label="Environment variables">
-          {{this.environment}}
-        </span>
-      </div>
-    {{else}}
-      <div class="job-env is-empty">
-        <SvgImage @name="icon-environment" @class="icon" />
-        <span class="label-align" aria-label="Environment variables">
-          no environment variables set
-        </span>
-      </div>
-    {{/if}}
+  {{else}}
+    <div class="job-env is-empty">
+      <SvgImage @name="icon-environment" @class="icon" />
+      <span class="label-align" aria-label="Environment variables">
+        no environment variables set
+      </span>
+    </div>
   {{/if}}
   <div class="job-duration" title="Started {{pretty-date this.job.startedAt}}">
     <SvgImage @name="icon-clock" @class="icon" />
