@@ -225,19 +225,17 @@
         </span>
       </div>
     </div>
-    <div class="detail-job-env"
-      {{action "expandEnv" on="click"}}
-      {{action "expandEnv" on="mouseEnter"}}
-      {{action "expandEnv" on="mouseLeave"}}
-    >
-      <SvgImage @name="icon-environment" @class="icon" />
-      <span class="label-align" aria-label="Environment variables">
-        {{#if this.environment}}
+    {{#if this.environment}}
+      <div class="detail-job-env"
+        {{action "expandEnv" on="click"}}
+        {{action "expandEnv" on="mouseEnter"}}
+        {{action "expandEnv" on="mouseLeave"}}
+      >
+        <SvgImage @name="icon-environment" @class="icon" />
+        <span class="label-align" aria-label="Environment variables">
           {{this.environment}}
-        {{else}}
-          none
-        {{/if}}
-      </span>
-    </div>
+        </span>
+      </div>
+    {{/if}}
   </div>
 {{/if}}
