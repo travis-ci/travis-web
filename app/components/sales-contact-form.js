@@ -2,7 +2,7 @@ import Component from '@ember/component';
 import { bool, reads } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
-import { UTM_FIELD_LIST, UTM_STORAGE_PREFIX } from 'travis/routes/application';
+import { UTM_FIELD_LIST } from 'travis/routes/application';
 import objectCollect from 'travis/utils/object-collect';
 
 export default Component.extend({
@@ -33,7 +33,6 @@ export default Component.extend({
     try {
       yield this.lead.save();
       this.reset();
-      this.resetStorage();
       this.onSuccess();
       return true;
     } catch (error) {
@@ -53,12 +52,6 @@ export default Component.extend({
       referral_source: this.referralSource,
       utm_fields: this.utmFields,
     }));
-  },
-
-  resetStorage() {
-    UTM_FIELD_LIST.forEach((field) => {
-      this.storage.removeItem(`${UTM_STORAGE_PREFIX}${field}`);
-    });
   },
 
   // Lifecycle

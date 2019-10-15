@@ -3,7 +3,7 @@ import config from 'travis/config/environment';
 import { filterBy, or, reads } from '@ember/object/computed';
 import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
-import { APP_UTM_FIELDS, UTM_STORAGE_PREFIX } from 'travis/routes/application';
+import { APP_UTM_FIELDS, UTM_FIELD_LIST, UTM_STORAGE_PREFIX } from 'travis/routes/application';
 
 const { plans } = config;
 
@@ -11,7 +11,7 @@ const referralSourceName = 'plans-page';
 const outgoingUtmSource = `?utm_source=${referralSourceName}`;
 
 function readUtmFromStorage(field) {
-  return computed(function () { return this.storage.getItem(`${UTM_STORAGE_PREFIX}${field}`); });
+  return computed('model', function () { return this.storage.getItem(`${UTM_STORAGE_PREFIX}${field}`); });
 }
 
 export default Controller.extend({
@@ -58,6 +58,12 @@ export default Controller.extend({
   showAnnual: true,
   scrollToContact: false,
 
+  clearLocalUtms() {
+    UTM_FIELD_LIST.forEach((field) => {
+      this.storage.removeItem(`${UTM_STORAGE_PREFIX}${field}`);
+    });
+  },
+
   actions: {
     gaCta(location) {
       const page = `/virtual/signup?${location}`;
@@ -74,7 +80,14 @@ export default Controller.extend({
     },
 
     contactSuccess() {
-      this.transitionToRoute('plans.thank-you');
+      this.clearLocalUtms();
+      this.transitionToRoute('plans.thank-you', { queryParams: {
+        [APP_UTM_FIELDS.SOURCE]: null,
+        [APP_UTM_FIELDS.CAMPAIGN]: null,
+        [APP_UTM_FIELDS.MEDIUM]: null,
+        [APP_UTM_FIELDS.TERM]: null,
+        [APP_UTM_FIELDS.CONTENT]: null,
+      } });
     },
   }
 });
