@@ -8,7 +8,6 @@ import { APP_UTM_FIELDS, UTM_FIELD_LIST, UTM_STORAGE_PREFIX } from 'travis/route
 const { plans } = config;
 
 const referralSourceName = 'plans-page';
-const outgoingUtmSource = `?utm_source=${referralSourceName}`;
 
 function readUtmFromStorage(field) {
   return computed('model', function () { return this.storage.getItem(`${UTM_STORAGE_PREFIX}${field}`); });
@@ -21,9 +20,9 @@ export default Controller.extend({
 
   config,
   referralSourceName,
-  billingUrl: `${config.billingEndpoint}/${outgoingUtmSource}`,
-  buildMatrixUrl: `${config.urls.buildMatrix}${outgoingUtmSource}`,
-  enterpriseUrl: `${config.urls.enterprise}${outgoingUtmSource}`,
+  billingUrl: config.billingEndpoint,
+  buildMatrixUrl: config.urls.buildMatrix,
+  enterpriseUrl: config.urls.enterprise,
 
   qpUtmSource: reads(`model.appQueryParams.${APP_UTM_FIELDS.SOURCE}`),
   qpUtmCampaign: reads(`model.appQueryParams.${APP_UTM_FIELDS.CAMPAIGN}`),
