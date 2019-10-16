@@ -96,7 +96,7 @@
     "eslint-plugin-ember": "^7.1.0",
     "eslint-plugin-node": "^10.0.0",
     "fuzzysort": "^1.0.1",
-    "liquid-fire": "^0.30.0",
+    "liquid-fire": "^0.31.0",
     "liquid-wormhole": "^2.1.5",
     "loader.js": "^4.7.0",
     "postcss-scss": "^2.0.0",
