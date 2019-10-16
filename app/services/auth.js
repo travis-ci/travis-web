@@ -206,6 +206,9 @@ export default Service.extend({
         })
         .then(({ installation = null }) => {
           this.currentUser.setProperties({ installation });
+        })
+        .catch(() => {
+          this.signOut();
         });
     } else {
       return EmberPromise.resolve();
