@@ -27,7 +27,7 @@ export default Service.extend({
 
   state: 'signed-out',
   receivingEnd: `${location.protocol}//${location.host}`,
-  tokenExpiredMsg: 'You\'ve been signed out, because your access token has expired.',
+  tokenExpiredMsg: "You've been signed out, because your access token has expired.",
 
   init() {
     this.afterSignOutCallbacks = [];
@@ -130,25 +130,11 @@ export default Service.extend({
   },
 
   validateUser(user) {
-    let fieldsToValidate, isTravisBecome;
-    fieldsToValidate = ['id', 'login', 'token'];
-    isTravisBecome = this.sessionStorage.getItem('travis.become');
-    if (!isTravisBecome) {
-      fieldsToValidate.push('correct_scopes');
-    }
+    const fieldsToValidate = ['id', 'login', 'token', 'correct_scopes'];
     if (this.get('features.proVersion')) {
       fieldsToValidate.push('channels');
     }
-    return fieldsToValidate.every(field => this.validateHas(field, user)) &&
-      (isTravisBecome || user.correct_scopes);
-  },
-
-  validateHas(field, user) {
-    if (user[field]) {
-      return true;
-    } else {
-      return false;
-    }
+    return fieldsToValidate.every(field => !!user[field]) && user.correct_scopes;
   },
 
   setData(data) {

@@ -37,8 +37,7 @@ module.exports = function (app) {
           var storage = ${storage};
           storage.setItem('travis.token', '${token}');
           storage.setItem('travis.user', ${user});
-          storage.setItem('travis.become', true);
-          window.location = '${req.path}';
+          window.location.href = '${req.path}';
         </script>
       `;
 
