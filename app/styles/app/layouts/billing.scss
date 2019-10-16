@@ -480,7 +480,8 @@
   .billing-subscription {
 
     .manual-badge {
-      font-weight: 400;
+      margin-left: 0;
+      font-weight: 600;
       border: 1px solid $pebble-grey;
       color: $asphalt-grey;
       border-radius: 3px;
