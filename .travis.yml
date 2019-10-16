@@ -50,11 +50,10 @@ jobs:
       env: TRY_CONFIG=ember-data-beta
     - node_js: 10
     - stage: ":ship: it to quay.io"
-      if: env(QUAY_ROBOT_TOKEN) IS present
       before_install: skip
       install: skip
       begore_script: skip
-      script: make ship
+      script: if [ "$TRAVIS_SECURE_ENV_VARS" == "true" ]; then make ship; fi
       after_script: skip
   allow_failures:
     - env: TRY_CONFIG=ember-beta
