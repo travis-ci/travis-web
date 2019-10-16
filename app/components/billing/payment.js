@@ -78,12 +78,10 @@ export default Component.extend({
     try {
       const result = yield this.api.get(`/coupons/${this.coupon}`);
       this.set('couponResult', result);
-      this.set('isValidCoupon', result.valid);
     } catch (error) {
       const { error_type: errorType } = error.responseJSON;
       if (errorType === 'not_found') {
         this.set('couponResult', error.responseJSON);
-        this.set('isValidCoupon', false);
       } else {
         this.raven.logException('Coupon validation error');
       }
