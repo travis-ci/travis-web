@@ -906,8 +906,7 @@ module('Acceptance | profile/billing', function (hooks) {
 
     await billingForm.proceedPayment.click();
 
-    await billingCouponForm
-      .fillIn('coupon', 'coupon');
+    await billingCouponForm.fillIn('coupon', 'coupon');
 
     await billingCouponForm.submitCoupon.click();
 
@@ -951,8 +950,7 @@ module('Acceptance | profile/billing', function (hooks) {
 
     await billingForm.proceedPayment.click();
 
-    await billingCouponForm
-      .fillIn('coupon', 'coupon');
+    await billingCouponForm.fillIn('coupon', 'coupon');
 
     await billingCouponForm.submitCoupon.click();
 
@@ -997,14 +995,14 @@ module('Acceptance | profile/billing', function (hooks) {
 
     await billingForm.proceedPayment.click();
 
-    await billingCouponForm
-      .fillIn('coupon', 'percentOff');
+    await billingCouponForm.fillIn('coupon', 'percentOff');
 
     await billingCouponForm.submitCoupon.click();
 
-    assert.equal(billingCouponForm.validCoupon.text, 'Coupon applied');
     const amountInDollars = this.defaultPlan.price / 100;
     const price = amountInDollars - (amountInDollars * 10) / 100;
+
+    assert.equal(billingCouponForm.validCoupon.text, 'Coupon applied');
     assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${price.toFixed(2)}`);
   });
 

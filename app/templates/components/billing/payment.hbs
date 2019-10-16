@@ -57,7 +57,7 @@
               Coupon invalid
             </p>
           {{else}}
-            <button class='button--white' {{action form.submit}} data-test-coupon-button='true'>
+            <button class='button--white' {{on 'click' form.submit}} data-test-coupon-button='true'>
               Validate coupon
             </button>
           {{/if}}
@@ -82,7 +82,7 @@
       {{#if this.isLoading}}
         <LoadingIndicator/>
       {{else}}
-        <button class='{{if this.stripeElement 'button--green' 'button disabled'}}' {{action form.submit}} data-test-complete-payment='true'>
+        <button class='{{if this.stripeElement 'button--green' 'button disabled'}}' {{on 'click' form.submit}} data-test-complete-payment='true'>
           Pay {{this.discountedPrice}} to complete subscription
         </button>
       {{/if}}
