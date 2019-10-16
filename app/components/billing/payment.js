@@ -76,6 +76,9 @@ export default Component.extend({
 
   validateCoupon: task(function* () {
     try {
+      yield this.store.findRecord('coupon', this.couponId, {
+        reload: true,
+      });
       const result = yield this.api.get(`/coupons/${this.coupon}`);
       this.set('couponResult', result);
     } catch (error) {

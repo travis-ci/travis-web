@@ -36,9 +36,9 @@
       <div data-test-coupon-form='true' class="coupon-validation flex flex--center flex-v-center flex--col flex-md-row">
         <form.field
           class="coupon-validation__input"
-          @value={{this.coupon}}
+          @value={{this.couponId}}
           @showValidationStatusIcons={{false}}
-          @onChange={{action (mut this.coupon)}} 
+          @onChange={{action (mut this.couponId)}} 
           as |Field|
         >
           <Field.input @name='coupon' @placeholder='Coupon code'/>
