@@ -32,7 +32,7 @@
   </h3>
   <h4 data-test-coupon-code='true' class="pb-3">coupon code</h4>
   <div class="pb-3">
-    <TravisForm @onSubmit={{perform this.validateCoupon}} as |form|>
+    <TravisForm @onSubmit={{perform this.validateCoupon this.couponId}} as |form|>
       <div data-test-coupon-form='true' class="coupon-validation flex flex--center flex-v-center flex--col flex-md-row">
         <form.field
           class="coupon-validation__input"

@@ -6,12 +6,13 @@ import { computed } from '@ember/object';
 import config from 'travis/config/environment';
 
 export default Component.extend({
-  stripe: service(),
-  accounts: service(),
-  flashes: service(),
-  raven: service(),
-  metrics: service(),
-  api: service(),
+  stripe: service('stripe'),
+  store: service('store'),
+  accounts: service('accounts'),
+  flashes: service('flashes'),
+  raven: service('raven'),
+  metrics: service('metrics'),
+  api: service('api'),
 
   account: null,
   stripeElement: null,
@@ -27,7 +28,9 @@ export default Component.extend({
   city: reads('newSubscription.billingInfo.city'),
   country: reads('newSubscription.billingInfo.country'),
   isLoading: or('createSubscription.isRunning', 'accounts.fetchSubscriptions.isRunning'),
-  couponResult: null,
+
+  validateCoupon: reads('coupon.validateCoupon'),
+  couponResult: reads('validateCoupon.lastSuccessful.value'),
   isValidCoupon: reads('couponResult.valid'),
   isInvalidCoupon: not('isValidCoupon'),
 
@@ -61,35 +64,18 @@ export default Component.extend({
   // amount_off and price are in cents
   discountedPrice: computed('couponResult.{amount_off,percent_off}', 'selectedPlan.price', function () {
     const price = Math.floor(this.selectedPlan.price / 100);
-    if (this.couponResult && this.couponResult.amount_off) {
-      const amountOff = this.couponResult.amount_off;
+    if (this.couponResult && this.couponResult.amountOff) {
+      const { amountOff } = this.couponResult;
       const discountedPrice = price - Math.floor(amountOff / 100);
       return `$${discountedPrice}`;
-    } else if (this.couponResult && this.couponResult.percent_off) {
-      const percentageOff = this.couponResult.percent_off;
+    } else if (this.couponResult && this.couponResult.percentageOff) {
+      const { percentageOff } = this.couponResult;
       const discountedPrice = price - (price * percentageOff) / 100;
       return `$${discountedPrice.toFixed(2)}`;
     } {
       return `$${price}`;
     }
   }),
-
-  validateCoupon: task(function* () {
-    try {
-      yield this.store.findRecord('coupon', this.couponId, {
-        reload: true,
-      });
-      const result = yield this.api.get(`/coupons/${this.coupon}`);
-      this.set('couponResult', result);
-    } catch (error) {
-      const { error_type: errorType } = error.responseJSON;
-      if (errorType === 'not_found') {
-        this.set('couponResult', error.responseJSON);
-      } else {
-        this.raven.logException('Coupon validation error');
-      }
-    }
-  }).drop(),
 
   handleError() {
     let message = 'An error occurred when creating your subscription. Please try again.';
