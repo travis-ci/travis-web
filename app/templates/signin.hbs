@@ -1,22 +1,33 @@
 <TravisLayout @layoutName="layouts/center">
   <div class="content-page">
-    <img
-      src="/images/logos/TravisCI-Mascot-1.svg"
-      alt="Travis CI mascot"
-      width="200"
-      height="200"
-    />
+    {{#if this.isRedirectingToAccountPage}}
+      <img
+        src="/images/billing/account-unauthorized.svg"
+        alt="Travis CI mascot"
+        width="350"
+        height="350"
+      />
+    {{else}}
+      <img
+        src="/images/logos/TravisCI-Mascot-1.svg"
+        alt="Travis CI mascot"
+        width="200"
+        height="200"
+      />
+    {{/if}}
     {{#if this.auth.signedOut}}
-      <h1 class="content-title auth">
-        We're so glad you're here!
-      </h1>
-      <h2 class="content-subtitle">
-        {{#if this.isRedirectingToAccountPage}}
-          Please sign in to view your account
-        {{else}}
+      {{#if this.isRedirectingToAccountPage}}
+        <h1 class="content-title auth account-auth ">
+          Please sign in to view your account.
+        </h1>
+      {{else}}
+        <h1 class="content-title auth">
+          We're so glad you're here!
+        </h1>
+        <h2 class="content-subtitle">
           Please sign in to view your repositories.
-        {{/if}}
-      </h2>
+        </h2>
+      {{/if}}
       <p>
         <button
           type="button"
