@@ -196,4 +196,23 @@ module('Integration | Component | build header', function (hooks) {
     assert.dom('.detail-job-os').exists('does display operating system');
     assert.dom('.detail-job-lang').exists('does display programming language');
   });
+
+  test('show cpu architecture for job', async function (assert) {
+    let job = {
+      eventType: 'push',
+      status: 'running',
+      number: '1234.1',
+      os: 'linux',
+      language: 'ruby',
+      arch: 'arm64',
+      build: {
+        id: 123
+      },
+      repo,
+    };
+
+    this.set('job', job);
+    await render(hbs`{{build-header item=job}}`);
+    assert.dom('.detail-job-arch').exists('does display CPU architecture');
+  });
 });
