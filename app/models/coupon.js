@@ -27,6 +27,7 @@ export default Model.extend({
 
   validateCoupon: task(function* (couponId) {
     try {
+      debugger;
       return yield this.store.findRecord('coupon', couponId, {
         reload: true,
       });

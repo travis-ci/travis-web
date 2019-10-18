@@ -24,7 +24,7 @@
     </div>
     <div class='flex--col-3'>
       <h4>discount</h4>
-      <p data-test-billing-coupon='true' class='billing-checkout__details--info'>{{this.coupon}}</p>
+      <p data-test-billing-coupon='true' class='billing-checkout__details--info'>{{this.couponId}}</p>
     </div>
   </div>
   <h3>
@@ -32,7 +32,7 @@
   </h3>
   <h4 data-test-coupon-code='true' class="pb-3">coupon code</h4>
   <div class="pb-3">
-    <TravisForm @onSubmit={{perform this.validateCoupon this.couponId}} as |form|>
+    <TravisForm @onSubmit={{perform this.validateCoupon}} as |form|>
       <div data-test-coupon-form='true' class="coupon-validation flex flex--center flex-v-center flex--col flex-md-row">
         <form.field
           class="coupon-validation__input"
@@ -41,7 +41,7 @@
           @onChange={{action (mut this.couponId)}} 
           as |Field|
         >
-          <Field.input @name='coupon' @placeholder='Coupon code'/>
+          <Field.input @name='couponId' @placeholder='Coupon code'/>
         </form.field>
         <div class="coupon-validation__validate-button">
           {{#if this.validateCoupon.isRunning}}

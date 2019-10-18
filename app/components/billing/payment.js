@@ -18,6 +18,7 @@ export default Component.extend({
   stripeElement: null,
   stripeLoading: false,
   newSubscription: null,
+  coupon: null,
   options: config.stripeOptions,
 
   firstName: reads('newSubscription.billingInfo.firstName'),
@@ -29,7 +30,6 @@ export default Component.extend({
   country: reads('newSubscription.billingInfo.country'),
   isLoading: or('createSubscription.isRunning', 'accounts.fetchSubscriptions.isRunning'),
 
-  validateCoupon: reads('coupon.validateCoupon'),
   couponResult: reads('validateCoupon.lastSuccessful.value'),
   isValidCoupon: reads('couponResult.valid'),
   isInvalidCoupon: not('isValidCoupon'),
@@ -76,6 +76,10 @@ export default Component.extend({
       return `$${price}`;
     }
   }),
+
+  validateCoupon: task(function* () {
+    return yield this.coupon.validateCoupon.perform(this.couponId);
+  }).drop(),
 
   handleError() {
     let message = 'An error occurred when creating your subscription. Please try again.';
