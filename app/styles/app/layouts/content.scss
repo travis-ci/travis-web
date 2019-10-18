@@ -66,6 +66,12 @@
   .loading-indicator {
     margin-left: 0.5em;
   }
+
+  &.sign-in {
+    font-size: 18px;
+    font-weight: 400;
+    padding: .7em 1.3em;
+  }
 }
 
 .mascot-spin {

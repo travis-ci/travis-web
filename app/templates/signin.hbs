@@ -3,7 +3,7 @@
     {{#if this.isRedirectingToAccountPage}}
       <img
         src="/images/billing/account-unauthorized.svg"
-        alt="Travis CI mascot"
+        alt="Account"
         width="350"
         height="350"
       />
@@ -32,7 +32,7 @@
         <button
           type="button"
           title="Sign into Travis CI"
-          class="content-button"
+          class="content-button sign-in"
           onclick={{action "signIn" target=this.auth}}
         >
           Sign in with GitHub
