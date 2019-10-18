@@ -4,17 +4,14 @@
       <h3 class='plan-overview__header'> Overview </h3>
       <div class='plan'>
         <div>
-          <BillingSummaryStatus 
-            @subscription={{this.subscription}}
-            @isPending={{this.isPending}}
-          />
+          <BillingSummaryStatus @subscription={{this.subscription}}/>
           <p class='plan-overview__description' data-test-plan-concurrency>
             {{#if this.subscription.plan}}
               {{pluralize this.subscription.plan.builds "concurrent job"}}
             {{else}}
               Unknown concurrent jobs
             {{/if}}
-            <span data-test-plan-message='true' class='plan-overview__description--validity 
+            <span data-test-plan-message='true' class='plan-overview__description--validity ml-3
               {{if this.canceledOrExpired 'red' 'cement-grey'}}'
             >
               {{this.planMessage}} 

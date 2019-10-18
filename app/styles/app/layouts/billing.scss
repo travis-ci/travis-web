@@ -9,10 +9,11 @@
   }
 
   .notice-banner--white {
-    display: block;
+    display: flex;
     margin-top: 1rem;
     margin-bottom: 1rem;
     padding: 0.5rem 0.9rem 0.6rem;
+    box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.15);
     font-size: $font-size-sm;
   }
 
@@ -302,8 +303,8 @@
         }
 
         &--jobs {
-          margin: 5px 0;
           font-size: 14px;
+          margin: 5px 0;
         }
       }
     }
@@ -478,6 +479,15 @@
 
   .billing-subscription {
 
+    .manual-badge {
+      margin-left: 0;
+      font-weight: 600;
+      border: 1px solid $pebble-grey;
+      color: $asphalt-grey;
+      border-radius: 3px;
+      background: white;
+    }
+
     h3 {
       margin-bottom: 0;
     }
@@ -515,13 +525,12 @@
       }
 
       &__description {
-        font-weight: 400;
-        margin: 0;
+        font-weight: 100;
+        margin-top: 4px;
+        margin-bottom: 4px;
 
         &--validity {
-          font-weight: 700;
-          font-size: 12px;
-          margin-left: 1em;
+          font-size: 13px;
         }
       }
     }

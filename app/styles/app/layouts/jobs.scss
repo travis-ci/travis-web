@@ -210,6 +210,20 @@
   }
 }
 
+.job-arch {
+  overflow: hidden;
+
+  @media #{$medium-up} {
+    position: relative;
+    flex-basis: 6em;
+    padding: 0.3em 0.3em 0.5em 0.7em;
+    align-self: flex-start;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
 .job-env {
   @media #{$medium-up} {
     flex: 1 0 30%;

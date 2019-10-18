@@ -19,7 +19,8 @@ module('Integration | Component | jobs item', function (hooks) {
           rvm: '2.1.2',
           jdk: 'openjdk6',
           os: 'linux-ppc64le',
-          env: 'TESTS=unit'
+          env: 'TESTS=unit',
+          arch: 'arm64'
         },
       },
       duration: 100,
@@ -33,6 +34,7 @@ module('Integration | Component | jobs item', function (hooks) {
     assert.dom('.job-lang').hasText('JDK: openjdk6 Ruby: 2.1.2', 'langauges list should be displayed');
     assert.dom('.job-env').hasText('TESTS=unit', 'env should be displayed');
     assert.dom('.job-os').hasClass('linux', 'OS class should be added for OS icon');
+    assert.dom('.job-arch').hasText('arm64', 'arch should be displayed');
     assert.dom('.job-duration').hasText('1 min 40 sec', 'duration should be displayed');
     assert.dom('.job-duration').hasAttribute('title', `Started ${prettyDate([startedAt])}`);
   });

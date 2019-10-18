@@ -56,5 +56,9 @@ export default Component.extend({
     } else {
       return 'help';
     }
+  }),
+
+  arch: computed('job.config.content.arch', function () {
+    return this.get('job.config.content.arch') || 'amd64';
   })
 });

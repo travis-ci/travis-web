@@ -540,10 +540,15 @@ export default create({
     },
 
     plan: {
-      scope: '.plan',
       name: text('[data-test-plan-name]'),
       concurrency: {
         scope: '[data-test-plan-concurrency]'
+      }
+    },
+
+    manualSubscription: {
+      banner: {
+        scope: '[data-test-manual-subscription-banner]'
       }
     },
 
@@ -588,7 +593,8 @@ export default create({
       greyStatus: '[data-test-grey-status]',
       activeStatus: '[data-test-active-status]',
       canceledStatus: '[data-test-canceled-status]',
-      expiredStatus: '[data-test-expired-status]'
+      expiredStatus: '[data-test-expired-status]',
+      manualStatus: '[data-test-manual-status]'
     },
 
     userDetails: {
