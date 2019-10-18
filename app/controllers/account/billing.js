@@ -3,6 +3,5 @@ import { reads } from '@ember/object/computed';
 
 export default Controller.extend({
   account: reads('model.account'),
-  newSubscription: reads('model.newSubscription'),
-  coupon: reads('model.coupon'),
+  newSubscription: reads('model.newSubscription')
 });

@@ -9,10 +9,6 @@ export default Mixin.create({
     return this.stripe.load();
   },
 
-  coupon() {
-    return this.store.createRecord('coupon');
-  },
-
   newSubscription() {
     const billingInfo = this.store.createRecord('billing-info');
     const plan = this.store.createRecord('plan');

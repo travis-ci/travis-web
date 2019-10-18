@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 import { task } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
-import { or, reads, not } from '@ember/object/computed';
+import { or, reads } from '@ember/object/computed';
 import { computed } from '@ember/object';
 import config from 'travis/config/environment';
 
@@ -30,9 +30,8 @@ export default Component.extend({
   country: reads('newSubscription.billingInfo.country'),
   isLoading: or('createSubscription.isRunning', 'accounts.fetchSubscriptions.isRunning'),
 
-  couponResult: reads('validateCoupon.lastSuccessful.value'),
-  isValidCoupon: reads('couponResult.valid'),
-  isInvalidCoupon: not('isValidCoupon'),
+  isValidCoupon: reads('coupon.valid'),
+  isInvalidCoupon: false,
 
   createSubscription: task(function* () {
     this.metrics.trackEvent({
@@ -62,14 +61,14 @@ export default Component.extend({
   }).drop(),
 
   // amount_off and price are in cents
-  discountedPrice: computed('couponResult.{amount_off,percent_off}', 'selectedPlan.price', function () {
+  discountedPrice: computed('coupon.{amountOff,percentOff}', 'selectedPlan.price', function () {
     const price = Math.floor(this.selectedPlan.price / 100);
-    if (this.couponResult && this.couponResult.amountOff) {
-      const { amountOff } = this.couponResult;
+    if (this.coupon && this.coupon.amountOff) {
+      const { amountOff } = this.coupon;
       const discountedPrice = price - Math.floor(amountOff / 100);
       return `$${discountedPrice}`;
-    } else if (this.couponResult && this.couponResult.percentageOff) {
-      const { percentageOff } = this.couponResult;
+    } else if (this.coupon && this.coupon.percentageOff) {
+      const { percentageOff } = this.coupon;
       const discountedPrice = price - (price * percentageOff) / 100;
       return `$${discountedPrice.toFixed(2)}`;
     } {
@@ -78,7 +77,19 @@ export default Component.extend({
   }),
 
   validateCoupon: task(function* () {
-    return yield this.coupon.validateCoupon.perform(this.couponId);
+    try {
+      const coupon = yield this.store.findRecord('coupon', this.couponId, {
+        reload: true,
+      });
+      this.set('coupon', coupon);
+    } catch (error) {
+      const containsCouponErrors = error && error.errors.length > 0;
+      if (containsCouponErrors) {
+        const couponError = error.errors[0];
+        const isInvalidCoupon = couponError.detail === `No such coupon: ${this.couponId}`;
+        this.set('isInvalidCoupon', isInvalidCoupon);
+      }
+    }
   }).drop(),
 
   handleError() {

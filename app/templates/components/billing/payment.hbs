@@ -51,9 +51,9 @@
               <SvgImage @name="icon-passed" @class="icon icon-passed" />
               Coupon applied
             </p>
-          {{else if (and this.couponResult this.isInvalidCoupon)}}
+          {{else if this.isInvalidCoupon}}
             <p data-test-invalid-coupon="true" class="coupon-validation__invalid-coupon">
-              <SvgImage @name="warn" @class="icon icon-warn" />
+              {{!-- <SvgImage @name="warn" @class="icon icon-warn" /> --}}
               Coupon invalid
             </p>
           {{else}}

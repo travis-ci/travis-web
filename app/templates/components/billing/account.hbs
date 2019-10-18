@@ -7,7 +7,6 @@
         @newSubscription={{this.newSubscription}}
         @account={{this.account}} 
         @plans={{plans}}
-        @coupon={{this.coupon}}
       />
     {{/if}}
     {{#if this.isManual}}
@@ -17,14 +16,12 @@
       <Billing::Subscription
         @newSubscription={{this.newSubscription}}
         @account={{this.account}}
-        @coupon={{this.coupon}}
       />
     {{/if}}
     {{#if this.isTrial}}
       <Billing::Trial 
         @account={{this.account}} 
         @newSubscription={{this.newSubscription}}
-        @coupon={{this.coupon}}
       />
     {{/if}}
   </section>
