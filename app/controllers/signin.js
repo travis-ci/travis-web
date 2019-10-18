@@ -13,10 +13,17 @@ export default Controller.extend({
   isRedirectingToAccountPage: computed('redirectUri', function () {
     if (this.redirectUri) {
       const redirectTo = new URL(this.redirectUri);
-      const { host, protocol, href: fullRedirectUrl } = redirectTo;
+      const { pathname } = redirectTo;
       const accountUrl = this.router.urlFor('account.billing');
-      return `${protocol}//${host}${accountUrl}` === fullRedirectUrl;
+      return this.isOrganizationUrl(pathname) || accountUrl === pathname;
     }
     return false;
   }),
+
+  isOrganizationUrl(pathname) {
+    if (pathname) {
+      return pathname.startsWith('/organizations') && pathname.endsWith('subscription');
+    }
+    return false;
+  }
 });
