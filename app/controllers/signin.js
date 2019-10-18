@@ -21,9 +21,6 @@ export default Controller.extend({
   }),
 
   isOrganizationUrl(pathname) {
-    if (pathname) {
-      return pathname.startsWith('/organizations') && pathname.endsWith('subscription');
-    }
-    return false;
+    return pathname && pathname.startsWith('/organizations') && pathname.endsWith('subscription');
   }
 });
