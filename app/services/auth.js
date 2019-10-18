@@ -206,6 +206,12 @@ export default Service.extend({
         })
         .then(({ installation = null }) => {
           this.currentUser.setProperties({ installation });
+        })
+        .catch((exception) => {
+          if (exception.status && exception.status === 500) {
+            this.signOut();
+          }
+          throw exception;
         });
     } else {
       return EmberPromise.resolve();
