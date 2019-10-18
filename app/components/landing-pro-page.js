@@ -6,14 +6,8 @@ export default Component.extend({
   metrics: service(),
 
   actions: {
-    gaCta(location) {
-      const page = `/virtual/signup?${location}`;
-      this.metrics.trackPage({ page });
-      this.auth.signIn();
-    },
-
     signIn() {
-      return this.signIn();
+      this.auth.signIn();
     },
 
     signOut() {

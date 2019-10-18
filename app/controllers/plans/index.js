@@ -39,9 +39,7 @@ export default Controller.extend({
   scrollToContact: false,
 
   actions: {
-    gaCta(location) {
-      const page = `/virtual/signup?${location}`;
-      this.metrics.trackPage({ page });
+    signIn() {
       this.auth.signIn();
     },
 
