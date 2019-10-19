@@ -92,6 +92,9 @@ module('Acceptance | profile/billing', function (hooks) {
       }
     });
     this.organization = organization;
+
+    server.create('coupon', { id: '10_BUCKS_OFF', name: '10 bucks off', valid: true, percentage_off: null, amount_off: 1000 });
+    server.create('coupon', { id: '10_PERCENT_OFF', name: '10 percent off', valid: true, percentage_off: 10, amount_off: null });
   });
 
   test('view billing information with invoices', async function (assert) {
@@ -869,50 +872,6 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe @user-login to 2 job plan');
   });
 
-  test('view billing tab when no organization subscription should fill form and transition to payment', async function (assert) {
-    this.subscription.destroy();
-
-    window.Stripe = StripeMock;
-    let config = {
-      mock: true,
-      publishableKey: 'mock'
-    };
-    stubConfig('stripe', config, { instantiate: false });
-    const { owner } = getContext();
-    owner.inject('service:stripev3', 'config', 'config:stripe');
-    this.organization.permissions = {
-      createSubscription: true
-    };
-    this.organization.save();
-
-    await profilePage.visitOrganization({ name: 'org-login' });
-    await profilePage.billing.visit();
-
-    const { billingForm, subscribeButton, billingCouponForm } = profilePage.billing;
-    await subscribeButton.click();
-
-    percySnapshot(assert);
-
-    await selectChoose(billingForm.billingSelectCountry.scope, 'Germany');
-
-    await billingForm
-      .fillIn('firstname', 'John')
-      .fillIn('lastname', 'Doe')
-      .fillIn('companyName', 'Travis')
-      .fillIn('email', 'john@doe.com')
-      .fillIn('address', '15 Olalubi street')
-      .fillIn('city', 'Berlin')
-      .fillIn('zip', '353564');
-
-    await billingForm.proceedPayment.click();
-
-    await billingCouponForm.fillIn('couponId', 'coupon');
-
-    await billingCouponForm.submitCoupon.click();
-
-    assert.equal(billingCouponForm.validCoupon.text, 'Coupon applied');
-  });
-
   test('apply 10 dollars off coupon', async function (assert) {
     this.subscription.destroy();
 
@@ -950,7 +909,7 @@ module('Acceptance | profile/billing', function (hooks) {
 
     await billingForm.proceedPayment.click();
 
-    await billingCouponForm.fillIn('couponId', 'coupon');
+    await billingCouponForm.fillIn('couponId', '10_BUCKS_OFF');
 
     await billingCouponForm.submitCoupon.click();
 
@@ -958,53 +917,53 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${(this.defaultPlan.price / 100) - 10}`);
   });
 
-  // test('apply 10% off coupon', async function (assert) {
-  //   this.subscription.destroy();
+  test('apply 10% off coupon', async function (assert) {
+    this.subscription.destroy();
 
-  //   window.Stripe = StripeMock;
-  //   let config = {
-  //     mock: true,
-  //     publishableKey: 'mock'
-  //   };
-  //   stubConfig('stripe', config, { instantiate: false });
-  //   const { owner } = getContext();
-  //   owner.inject('service:stripev3', 'config', 'config:stripe');
-  //   this.organization.permissions = {
-  //     createSubscription: true
-  //   };
-  //   this.organization.save();
+    window.Stripe = StripeMock;
+    let config = {
+      mock: true,
+      publishableKey: 'mock'
+    };
+    stubConfig('stripe', config, { instantiate: false });
+    const { owner } = getContext();
+    owner.inject('service:stripev3', 'config', 'config:stripe');
+    this.organization.permissions = {
+      createSubscription: true
+    };
+    this.organization.save();
 
-  //   await profilePage.visitOrganization({ name: 'org-login' });
-  //   await profilePage.billing.visit();
+    await profilePage.visitOrganization({ name: 'org-login' });
+    await profilePage.billing.visit();
 
-  //   const { billingForm, subscribeButton, billingCouponForm } = profilePage.billing;
-  //   await subscribeButton.click();
+    const { billingForm, subscribeButton, billingCouponForm } = profilePage.billing;
+    await subscribeButton.click();
 
-  //   percySnapshot(assert);
+    percySnapshot(assert);
 
-  //   await selectChoose(billingForm.billingSelectCountry.scope, 'Germany');
+    await selectChoose(billingForm.billingSelectCountry.scope, 'Germany');
 
-  //   await billingForm
-  //     .fillIn('firstname', 'John')
-  //     .fillIn('lastname', 'Doe')
-  //     .fillIn('companyName', 'Travis CI')
-  //     .fillIn('email', 'john@doe.com')
-  //     .fillIn('address', '15 Olalubi street')
-  //     .fillIn('city', 'Berlin')
-  //     .fillIn('zip', '353564');
+    await billingForm
+      .fillIn('firstname', 'John')
+      .fillIn('lastname', 'Doe')
+      .fillIn('companyName', 'Travis CI')
+      .fillIn('email', 'john@doe.com')
+      .fillIn('address', '15 Olalubi street')
+      .fillIn('city', 'Berlin')
+      .fillIn('zip', '353564');
 
-  //   await billingForm.proceedPayment.click();
+    await billingForm.proceedPayment.click();
 
-  //   await billingCouponForm.fillIn('couponId', 'percentOff');
+    await billingCouponForm.fillIn('couponId', '10_PERCENT_OFF');
 
-  //   await billingCouponForm.submitCoupon.click();
+    await billingCouponForm.submitCoupon.click();
 
-  //   const amountInDollars = this.defaultPlan.price / 100;
-  //   const price = amountInDollars - (amountInDollars * 10) / 100;
+    const amountInDollars = this.defaultPlan.price / 100;
+    const price = amountInDollars - (amountInDollars * 10) / 100;
 
-  //   assert.equal(billingCouponForm.validCoupon.text, 'Coupon applied');
-  //   assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${price.toFixed(2)}`);
-  // });
+    assert.equal(billingCouponForm.validCoupon.text, 'Coupon applied');
+    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${price.toFixed(2)}`);
+  });
 
   test('view billing tab when no individual subscription should fill form and transition to payment', async function (assert) {
     window.Stripe = StripeMock;

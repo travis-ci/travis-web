@@ -165,27 +165,9 @@ export default function () {
     );
   });
 
-  this.get('/coupons/:coupon/', function (schema, { params }) {
-    if (params.coupon === 'percentOff') {
-      return {
-        '@type': 'coupon',
-        '@representation': 'standard',
-        'id': '10_BUCKS_OFF',
-        'name': '10 bucks off!',
-        'percent_off': 10,
-        'amount_off': null,
-        'valid': true
-      };
-    }
-    return {
-      '@type': 'coupon',
-      '@representation': 'standard',
-      'id': '10_BUCKS_OFF',
-      'name': '10 bucks off!',
-      'percent_off': null,
-      'amount_off': 1000,
-      'valid': true
-    };
+  this.get('/coupons/:coupon', function (schema, { params }) {
+    const coupon = schema.coupons.find(params.coupon);
+    return this.serialize(coupon);
   });
 
   this.post('/subscription/:subscription_id/cancel', function (schema, { params, requestBody }) {
