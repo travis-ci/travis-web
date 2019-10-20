@@ -167,7 +167,15 @@ export default function () {
 
   this.get('/coupons/:coupon', function (schema, { params }) {
     const coupon = schema.coupons.find(params.coupon);
-    return this.serialize(coupon);
+    if (!coupon) {
+      return new Response(404, {'Content-Type': 'application/json'}, {
+        '@type': 'error',
+        'error_type': 'not_found',
+        'error_message': `No such coupon: ${params.coupon}`
+      });
+    } else {
+      return this.serialize(coupon);
+    }
   });
 
   this.post('/subscription/:subscription_id/cancel', function (schema, { params, requestBody }) {
