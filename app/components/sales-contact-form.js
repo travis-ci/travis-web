@@ -2,7 +2,7 @@ import Component from '@ember/component';
 import { bool, reads } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
-import { UTM_FIELD_LIST } from 'travis/routes/application';
+// import { UTM_FIELD_LIST } from 'travis/routes/application';
 import objectCollect from 'travis/utils/object-collect';
 
 export default Component.extend({
@@ -27,7 +27,7 @@ export default Component.extend({
   utm_term: null,
   utm_content: null,
 
-  utmFields: objectCollect(...UTM_FIELD_LIST),
+  // utmFields: objectCollect(...UTM_FIELD_LIST),
 
   send: task(function* () {
     try {

@@ -8,17 +8,16 @@ import {
   bindKeyboardShortcuts,
   unbindKeyboardShortcuts
 } from 'ember-keyboard-shortcuts';
-import { isBlank, typeOf } from '@ember/utils';
 
-export const APP_UTM_FIELDS = {
-  SOURCE: 'utm_source',
-  CAMPAIGN: 'utm_campaign',
-  MEDIUM: 'utm_medium',
-  TERM: 'utm_term',
-  CONTENT: 'utm_content',
-};
-export const UTM_FIELD_LIST = Object.values(APP_UTM_FIELDS);
-export const UTM_STORAGE_PREFIX = 'travis.utms.';
+// export const APP_UTM_FIELDS = {
+//   SOURCE: 'utm_source',
+//   CAMPAIGN: 'utm_campaign',
+//   MEDIUM: 'utm_medium',
+//   TERM: 'utm_term',
+//   CONTENT: 'utm_content',
+// };
+// export const UTM_FIELD_LIST = Object.values(APP_UTM_FIELDS);
+// export const UTM_STORAGE_PREFIX = 'travis.utms.';
 
 export default TravisRoute.extend(BuildFaviconMixin, {
   auth: service(),
@@ -28,15 +27,6 @@ export default TravisRoute.extend(BuildFaviconMixin, {
   metrics: service(),
   repositories: service(),
   router: service(),
-  storage: service(),
-
-  queryParams: {
-    [APP_UTM_FIELDS.SOURCE]: { refreshModel: false },
-    [APP_UTM_FIELDS.CAMPAIGN]: { refreshModel: false },
-    [APP_UTM_FIELDS.MEDIUM]: { refreshModel: false },
-    [APP_UTM_FIELDS.TERM]: { refreshModel: false },
-    [APP_UTM_FIELDS.CONTENT]: { refreshModel: false },
-  },
 
   needsAuth: false,
 
@@ -70,19 +60,6 @@ export default TravisRoute.extend(BuildFaviconMixin, {
     if (this.get('auth.signedIn')) {
       return this.get('featureFlags.fetchTask').perform();
     }
-  },
-
-  afterModel(resolved, transition) {
-    try {
-      const { queryParams } = transition.to;
-
-      UTM_FIELD_LIST.forEach((field) => {
-        const { [field]: value } = queryParams;
-        if (typeOf(value) === 'string' && !isBlank(value)) {
-          this.storage.setItem(`${UTM_STORAGE_PREFIX}${field}`, value);
-        }
-      });
-    } catch (err) {}
   },
 
   activate() {
