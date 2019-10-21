@@ -11,7 +11,6 @@ const referralSourceName = 'plans-page';
 export default Controller.extend({
   auth: service(),
   metrics: service(),
-  storage: service(),
 
   config,
   referralSourceName,

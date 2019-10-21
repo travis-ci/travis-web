@@ -11,7 +11,6 @@ export default Component.extend({
   flashes: service(),
   raven: service(),
   store: service(),
-  storage: service(),
   utm: service(),
 
   requiredMark: 'Required',
