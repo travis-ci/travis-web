@@ -1,11 +1,24 @@
 import Service from '@ember/service';
-import Storage from 'travis/utils/hash-storage';
 
 export default Service.extend({
 
   get storage() {
-    return window.localStorage || Storage.create();
+    return window.localStorage;
   },
+
+  get token() {
+    return this.getItem('travis.token');
+  },
+
+  get authUpdatedAt() {
+    return +this.getItem('travis.auth.updatedAt');
+  },
+
+  get user() {
+    return this.getItem('travis.user');
+  },
+
+  // method proxies
 
   getItem(key) {
     return this.storage.getItem(key);

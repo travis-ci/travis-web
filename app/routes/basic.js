@@ -14,10 +14,10 @@ export default Route.extend({
   },
 
   beforeModel(transition) {
-    if (!this.signedIn()) {
+    if (!this.auth.signedIn) {
       this.auth.autoSignIn();
     }
-    if (!this.signedIn() && this.needsAuth) {
+    if (!this.auth.signedIn && this.needsAuth) {
       this.set('auth.afterSignInTransition', transition);
       return reject('needs-auth');
     } else if (this.redirectToProfile(transition)) {
@@ -25,10 +25,6 @@ export default Route.extend({
     } else {
       return this._super(...arguments);
     }
-  },
-
-  signedIn() {
-    return this.get('auth.currentUser');
   },
 
   redirectToProfile(transition) {

@@ -6,10 +6,10 @@
       width="200"
       height="200"
     />
+    <h1 class="content-title auth">
+      We're so glad you're here!
+    </h1>
     {{#if this.auth.signedOut}}
-      <h1 class="content-title auth">
-        We're so glad you're here!
-      </h1>
       <h2 class="content-subtitle">
         Please sign in to view your repositories.
       </h2>
@@ -23,11 +23,7 @@
           Sign in with GitHub
         </button>
       </p>
-    {{/if}}
-    {{#if this.auth.signingIn}}
-      <h1 class="content-title auth">
-        We're so glad you're here!
-      </h1>
+    {{else if this.auth.signingIn}}
       <h2 class="content-subtitle">
         We're signing you in,
         <br />

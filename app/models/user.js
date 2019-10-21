@@ -1,44 +1,37 @@
 /* global Travis */
 import { attr } from '@ember-data/model';
-import { observer, computed } from '@ember/object';
-import { next, run, later } from '@ember/runloop';
+import { computed } from '@ember/object';
+import { run, later } from '@ember/runloop';
 import { inject as service } from '@ember/service';
 import ArrayProxy from '@ember/array/proxy';
 import Owner from 'travis/models/owner';
 import config from 'travis/config/environment';
+import { or } from '@ember/object/computed';
+import Evented from '@ember/object/evented';
 
-export default Owner.extend({
+export default Owner.extend(Evented, {
   ajax: service(),
-  // TODO: this totally not should be needed here
-  sessionStorage: service(),
 
   email: attr('string'),
   emails: attr(), // list of all known user emails
-  token: attr(),
-  gravatarId: attr(),
+  token: attr('string'),
+  secureUserHash: attr('string'),
+  gravatarId: attr('string'),
+  firstLoggedInAt: attr('date'),
   allowMigration: attr('boolean'),
-
 
   type: 'user',
 
-  fullName: computed('name', 'login', function () {
-    let name = this.name;
-    let login = this.login;
-    return name || login;
+  fullName: or('name', 'login'),
+
+  gravatarUrl: computed('gravatarId', function () {
+    return `https//www.gravatar.com/avatar/${this.gravatarId}?s=48&d=mm`;
   }),
 
   init() {
-    this.isSyncingDidChange();
+    if (this.isSyncing) this.poll();
     return this._super(...arguments);
   },
-
-  isSyncingDidChange: observer('isSyncing', function () {
-    return next(this, function () {
-      if (this.isSyncing) {
-        return this.poll();
-      }
-    });
-  }),
 
   _rawPermissions: computed(function () {
     return this.ajax.get('/users/permissions');
@@ -110,20 +103,22 @@ export default Owner.extend({
   },
 
   sync() {
-    const callback = run(() => { this.setWithSession('isSyncing', true); });
-    return this.ajax.postV3(`/user/${this.id}/sync`, {}, callback);
+    return this.ajax
+      .postV3(`/user/${this.id}/sync`, {})
+      .then(() => this.poll());
   },
 
   poll() {
     return this.ajax.getV3('/user', (data) => {
       if (data.is_syncing) {
-        return later(() => { this.poll(); }, config.intervals.syncingPolling);
+        later(
+          () => this.poll(),
+          config.intervals.syncingPolling
+        );
       } else {
         run(() => {
-          this.set('isSyncing', false);
-          this.setWithSession('syncedAt', data.synced_at);
           Travis.trigger('user:synced', data);
-          this.store.queryRecord('user', { current: true });
+          this.reload();
         });
       }
     });
@@ -135,11 +130,8 @@ export default Owner.extend({
       .then(() => this.fetchBetaMigrationRequests());
   },
 
-  setWithSession(name, value) {
-    let user;
-    this.set(name, value);
-    user = JSON.parse(this.sessionStorage.getItem('travis.user'));
-    user[name.underscore()] = this.get(name);
-    return this.sessionStorage.setItem('travis.user', JSON.stringify(user));
+  reload(options = {}) {
+    return this.store.queryRecord('user', Object.assign({}, options, { current: true }));
   }
+
 });

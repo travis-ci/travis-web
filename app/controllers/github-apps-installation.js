@@ -18,7 +18,7 @@ export default Controller.extend({
   maxRepetitions: 10,
 
   startPolling() {
-    this.initialDelayPromise().then(() => this.fetchPromise().then(installation => {
+    this.initialDelayPromise().then(() => this.fetchPromise().then(() => {
       this.transitionToRoute('account');
     }));
   },
