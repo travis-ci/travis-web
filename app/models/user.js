@@ -7,9 +7,8 @@ import ArrayProxy from '@ember/array/proxy';
 import Owner from 'travis/models/owner';
 import config from 'travis/config/environment';
 import { or } from '@ember/object/computed';
-import Evented from '@ember/object/evented';
 
-export default Owner.extend(Evented, {
+export default Owner.extend({
   ajax: service(),
 
   email: attr('string'),
