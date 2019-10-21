@@ -9,16 +9,6 @@ import {
   unbindKeyboardShortcuts
 } from 'ember-keyboard-shortcuts';
 
-// export const APP_UTM_FIELDS = {
-//   SOURCE: 'utm_source',
-//   CAMPAIGN: 'utm_campaign',
-//   MEDIUM: 'utm_medium',
-//   TERM: 'utm_term',
-//   CONTENT: 'utm_content',
-// };
-// export const UTM_FIELD_LIST = Object.values(APP_UTM_FIELDS);
-// export const UTM_STORAGE_PREFIX = 'travis.utms.';
-
 export default TravisRoute.extend(BuildFaviconMixin, {
   auth: service(),
   features: service(),
