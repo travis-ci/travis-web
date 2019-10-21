@@ -15,19 +15,17 @@
         height="200"
       />
     {{/if}}
+    <h1 class="content-title auth">
+      We're so glad you're here!
+    </h1>
     {{#if this.auth.signedOut}}
-      {{#if this.isRedirectingToAccountPage}}
-        <h1 class="content-title auth account-auth ">
+      <h1 class="content-subtitle">
+        {{#if this.isRedirectingToAccountPage}}
           Please sign in to view your account.
-        </h1>
-      {{else}}
-        <h1 class="content-title auth">
-          We're so glad you're here!
-        </h1>
-        <h2 class="content-subtitle">
+        {{else}}
           Please sign in to view your repositories.
-        </h2>
-      {{/if}}
+        {{/if}}
+      </h1>
       <p>
         <button
           type="button"
@@ -40,9 +38,6 @@
       </p>
     {{/if}}
     {{#if this.auth.signingIn}}
-      <h1 class="content-title auth">
-        We're so glad you're here!
-      </h1>
       <h2 class="content-subtitle">
         We're signing you in,
         <br />
