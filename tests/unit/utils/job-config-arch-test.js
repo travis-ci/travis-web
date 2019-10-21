@@ -3,10 +3,6 @@ import jobConfigArch from 'travis/utils/job-config-arch';
 import { module, test } from 'qunit';
 
 module('jobConfigArch', function () {
-  test('an empty config returns an empty string', (assert) => {
-    assert.equal(jobConfigArch({}), '', 'expected an empty config to return an empty string');
-  });
-
   test('a job with an empty arch value returns AMD64', (assert) => {
     assert.equal(jobConfigArch({ arch: null }), 'AMD64');
   });
