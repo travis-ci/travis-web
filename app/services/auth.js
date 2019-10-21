@@ -118,7 +118,7 @@ export default Service.extend({
           Travis.trigger('user:refreshed', data.user);
         })
         .catch(({ status }) => {
-          if (status === 401 || status === 403) {
+          if (status === 401 || status === 403 || status === 500) {
             this.flashes.error(TOKEN_EXPIRED_MSG);
             this.signOut();
           }
