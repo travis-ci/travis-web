@@ -20,7 +20,7 @@ const INITIAL_URL = `/?${TEST_QUERY_PARAMS.join('&')}`;
 module('Acceptance | utm capture', function (hooks) {
   setupApplicationTest(hooks);
 
-  test('signed in but without repositories', async function (assert) {
+  test('utm query params get captured', async function (assert) {
     await visit(INITIAL_URL);
     await settled();
 
