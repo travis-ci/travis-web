@@ -7,7 +7,7 @@ export default function jobConfigArch(config) {
   // We have introduced a separate `arch` config key, but many customers are still using the old one.
   // We need this hack until we deprecate `os: linux-ppc64le`.
   if (os === 'linux-ppc64le') {
-    return archConfigKeys.ppc64le;
+    return 'ppc64le';
   }
 
   return archConfigKeys[arch || 'amd64'] || arch;
