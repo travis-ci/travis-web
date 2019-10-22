@@ -10,5 +10,5 @@ export default function jobConfigArch(config) {
     return archConfigKeys.ppc64le;
   }
 
-  return archConfigKeys[arch || 'amd64'];
+  return archConfigKeys[arch || 'amd64'] || arch;
 }
