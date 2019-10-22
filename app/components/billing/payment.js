@@ -17,7 +17,6 @@ export default Component.extend({
   stripeElement: null,
   stripeLoading: false,
   newSubscription: null,
-  coupon: null,
   options: config.stripeOptions,
 
   firstName: reads('newSubscription.billingInfo.firstName'),
@@ -29,8 +28,9 @@ export default Component.extend({
   country: reads('newSubscription.billingInfo.country'),
   isLoading: or('createSubscription.isRunning', 'accounts.fetchSubscriptions.isRunning'),
 
+  coupon: reads('validateCoupon.lastSuccessful.value'),
+  couponError: reads('validateCoupon.lastErrored.error'),
   isValidCoupon: reads('coupon.valid'),
-  isInvalidCoupon: false,
 
   createSubscription: task(function* () {
     this.metrics.trackEvent({
@@ -76,17 +76,9 @@ export default Component.extend({
   }),
 
   validateCoupon: task(function* () {
-    try {
-      const coupon = yield this.store.findRecord('coupon', this.couponId, {
-        reload: true,
-      });
-      this.set('coupon', coupon);
-    } catch (error) {
-      const containsCouponErrors = error && error.errors.length > 0;
-      if (containsCouponErrors && error.errors[0].status === '404') {
-        this.set('isInvalidCoupon', true);
-      }
-    }
+    return yield this.store.findRecord('coupon', this.couponId, {
+      reload: true,
+    });
   }).drop(),
 
   handleError() {

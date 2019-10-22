@@ -3,7 +3,7 @@
     @selectedPlan={{this.selectedPlan}} 
     @showAnnual={{this.showAnnual}} 
     @goToFirstStep={{action this.goToFirstStep}}
-    @discountedPrice={{discountedPrice}}
+    @discountedPrice={{this.discountedPrice}}
   />
   <div class='flex flex--wrap billing-checkout__details' data-test-contact-details='true'>
     <div class='flex--col-3'>
@@ -51,7 +51,7 @@
               <SvgImage @name="icon-passed" @class="icon icon-passed" />
               Coupon applied
             </p>
-          {{else if this.isInvalidCoupon}}
+          {{else if this.couponError}}
             <p data-test-invalid-coupon="true" class="coupon-validation__invalid-coupon">
               Coupon invalid
             </p>
