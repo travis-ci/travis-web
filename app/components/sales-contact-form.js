@@ -2,10 +2,8 @@ import Component from '@ember/component';
 import { bool, reads } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
-import { LEAD_UTM_FIELDS } from 'travis/models/lead';
+import { UTM_FIELD_NAMES } from 'travis/services/utm';
 import objectCollect from 'travis/utils/object-collect';
-
-const supportedUtmFields = Object.values(LEAD_UTM_FIELDS);
 
 export default Component.extend({
   tagName: '',
@@ -13,6 +11,7 @@ export default Component.extend({
   flashes: service(),
   raven: service(),
   store: service(),
+  utm: service(),
 
   requiredMark: 'Required',
 
@@ -22,13 +21,13 @@ export default Component.extend({
   lead: null,
   referralSource: 'travis-web',
 
-  utm_source: null,
-  utm_campaign: null,
-  utm_medium: null,
-  utm_term: null,
-  utm_content: null,
+  utm_source: reads('utm.source'),
+  utm_campaign: reads('utm.campaign'),
+  utm_medium: reads('utm.medium'),
+  utm_term: reads('utm.term'),
+  utm_content: reads('utm.content'),
 
-  utmFields: objectCollect(...supportedUtmFields),
+  utmFields: objectCollect(...UTM_FIELD_NAMES),
 
   send: task(function* () {
     try {
