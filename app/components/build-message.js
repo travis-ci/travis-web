@@ -97,6 +97,10 @@ export default Component.extend({
     return `<code>${escape(key)}</code> value <code>${escape(args.original)}</code> is not known, but <code>${escape(args.value)}</code> is, using <code>${escape(args.value)}</code>`;
   },
 
+  overwrite(key, args) {
+    return `<code>${escape(key)}</code> both <code>${escape(args.key)}</code> and <code>${escape(args.other)}</code> given, <code>${escape(args.key)}</code> overwrites <code>${escape(args.other)}</code>`;
+  },
+
   strip_key(key, args) {
     return `<code>${escape(key)}</code> key <code>${escape(args.original)}</code> contains whitespace, using <code>${escape(args.key)}</code>`;
   },
