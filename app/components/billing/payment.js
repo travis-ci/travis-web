@@ -12,7 +12,6 @@ export default Component.extend({
   flashes: service('flashes'),
   raven: service('raven'),
   metrics: service('metrics'),
-  api: service('api'),
 
   account: null,
   stripeElement: null,
@@ -84,10 +83,8 @@ export default Component.extend({
       this.set('coupon', coupon);
     } catch (error) {
       const containsCouponErrors = error && error.errors.length > 0;
-      if (containsCouponErrors) {
-        const couponError = error.errors[0];
-        const isInvalidCoupon = couponError.detail === `No such coupon: ${this.couponId}`;
-        this.set('isInvalidCoupon', isInvalidCoupon);
+      if (containsCouponErrors && error.errors[0].status === '404') {
+        this.set('isInvalidCoupon', true);
       }
     }
   }).drop(),
