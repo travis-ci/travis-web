@@ -16,7 +16,7 @@ module('jobConfigArch', function () {
   });
 
   test('a job with any other arch value returns the original value', (assert) => {
-    assert.equal(jobConfigArch({ arch: 'ppc64le' }), 'ppc64le');
+    assert.equal(jobConfigArch({ arch: 's390x' }), 's390x');
   });
 
   test('a job with an linux-ppc64le os value returns ppc64le', (assert) => {
