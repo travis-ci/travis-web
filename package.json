@@ -22,7 +22,7 @@
   "devDependencies": {
     "@csstools/postcss-sass": "^4.0.0",
     "@ember/jquery": "^0.6.1",
-    "@ember/optional-features": "^1.0.0",
+    "@ember/optional-features": "^1.1.0",
     "active-model-adapter": "2.2.0",
     "ansiparse": "artursmirnov/ansiparse",
     "babel-eslint": "10.0.3",
