@@ -1,9 +1,9 @@
 <div class='billing-checkout' data-test-payment-form='true'>
   <Billing::SelectedPlan 
-    @selectedPlan={{this.selectedPlan}} 
+    @selectedPlan={{this.newSubscription.plan}} 
     @showAnnual={{this.showAnnual}} 
     @goToFirstStep={{action this.goToFirstStep}}
-    @discountedPrice={{this.discountedPrice}}
+    @totalPrice={{this.totalPrice}}
   />
   <div class='flex flex--wrap billing-checkout__details' data-test-contact-details='true'>
     <div class='flex--col-3'>

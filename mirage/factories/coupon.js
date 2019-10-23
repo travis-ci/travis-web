@@ -10,7 +10,6 @@ export default Factory.extend({
     return `VALID_COUPON_${i}`;
   },
 
-  // Only one of percentageOff and amountOff attributes can contain a value
   percentageOff(i) {
     return i === 0 ? 10 : null;
   },

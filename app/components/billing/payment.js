@@ -2,7 +2,6 @@ import Component from '@ember/component';
 import { task } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
 import { or, reads } from '@ember/object/computed';
-import { computed } from '@ember/object';
 import config from 'travis/config/environment';
 
 export default Component.extend({
@@ -17,6 +16,7 @@ export default Component.extend({
   stripeElement: null,
   stripeLoading: false,
   newSubscription: null,
+  couponId: null,
   options: config.stripeOptions,
 
   firstName: reads('newSubscription.billingInfo.firstName'),
@@ -28,8 +28,9 @@ export default Component.extend({
   country: reads('newSubscription.billingInfo.country'),
   isLoading: or('createSubscription.isRunning', 'accounts.fetchSubscriptions.isRunning'),
 
-  coupon: reads('validateCoupon.lastSuccessful.value'),
-  couponError: reads('validateCoupon.lastErrored.error'),
+  coupon: reads('newSubscription.validateCoupon.lastSuccessful.value'),
+  couponError: reads('newSubscription.validateCoupon.lastErrored.error'),
+  totalPrice: reads('newSubscription.totalPrice'),
   isValidCoupon: reads('coupon.valid'),
 
   createSubscription: task(function* () {
@@ -59,26 +60,8 @@ export default Component.extend({
     }
   }).drop(),
 
-  // amount_off and price are in cents
-  discountedPrice: computed('coupon.{amountOff,percentOff}', 'selectedPlan.price', function () {
-    const price = Math.floor(this.selectedPlan.price / 100);
-    if (this.coupon && this.coupon.amountOff) {
-      const { amountOff } = this.coupon;
-      const discountedPrice = price - Math.floor(amountOff / 100);
-      return `$${discountedPrice}`;
-    } else if (this.coupon && this.coupon.percentageOff) {
-      const { percentageOff } = this.coupon;
-      const discountedPrice = price - (price * percentageOff) / 100;
-      return `$${discountedPrice.toFixed(2)}`;
-    } {
-      return `$${price}`;
-    }
-  }),
-
   validateCoupon: task(function* () {
-    return yield this.store.findRecord('coupon', this.couponId, {
-      reload: true,
-    });
+    yield this.newSubscription.validateCoupon.perform(this.couponId);
   }).drop(),
 
   handleError() {

@@ -11,12 +11,10 @@ export default Mixin.create({
 
   newSubscription() {
     const billingInfo = this.store.createRecord('billing-info');
-    const plan = this.store.createRecord('plan');
     const creditCardInfo = this.store.createRecord('credit-card-info');
     return this.store.createRecord('subscription', {
       billingInfo,
       creditCardInfo,
-      plan
     });
   },
 });

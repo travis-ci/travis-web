@@ -9,11 +9,13 @@ export default Component.extend({
   showPlansSelector: true,
   showCancelButton: false,
   title: null,
+  selectedPlan: null,
 
   save: task(function* () {
     if (this.submit.perform) {
       yield this.submit.perform();
     } else {
+      this.newSubscription.set('plan', this.selectedPlan);
       this.submit();
     }
     this.set('showPlansSelector', false);
@@ -22,6 +24,6 @@ export default Component.extend({
   actions: {
     togglePlanPeriod() {
       this.plan.togglePlanPeriod();
-    }
+    },
   }
 });

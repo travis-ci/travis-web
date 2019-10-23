@@ -1,6 +1,6 @@
 import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
 import { computed } from '@ember/object';
-import { and, equal, or } from '@ember/object/computed';
+import { and, equal, or, reads } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
 import config from 'travis/config/environment';
@@ -43,6 +43,36 @@ export default Model.extend({
   managedSubscription: or('isStripe', 'isGithub'),
   isResubscribable: and('isStripe', 'isNotSubscribed'),
   isGithubResubscribable: and('isGithub', 'isNotSubscribed'),
+
+  priceInCents: reads('plan.price'),
+  validateCouponResult: reads('validateCoupon.lastSuccessful.value'),
+
+  planPrice: computed('priceInCents', function () {
+    return this.priceInCents && Math.floor(this.priceInCents / 100);
+  }),
+
+  discountByAmount: computed('validateCouponResult.amountOff', 'planPrice', function () {
+    const { amountOff } = this.validateCouponResult || {};
+    if (amountOff && this.planPrice) {
+      return this.planPrice - Math.floor(amountOff / 100);
+    }
+  }),
+
+  discountByPercentage: computed('validateCouponResult.percentageOff', 'planPrice', function () {
+    const { percentageOff } = this.validateCouponResult || {};
+    if (percentageOff && this.planPrice) {
+      const discountPrice = this.planPrice - (this.planPrice * percentageOff) / 100;
+      return discountPrice.toFixed(2);
+    }
+  }),
+
+  totalPrice: or('discountByAmount', 'discountByPercentage', 'planPrice'),
+
+  validateCoupon: task(function* (couponId) {
+    return yield this.store.findRecord('coupon', couponId, {
+      reload: true,
+    });
+  }).drop(),
 
   billingUrl: computed('owner.{type,login}', 'isGithub', 'isResubscribable', function () {
     let type = this.get('owner.type');
