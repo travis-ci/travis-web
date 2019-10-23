@@ -14,11 +14,7 @@ export default Route.extend({
   },
 
   beforeModel(transition) {
-    if (!this.auth.signedIn) {
-      this.auth.autoSignIn();
-    }
     if (!this.auth.signedIn && this.needsAuth) {
-      this.set('auth.afterSignInTransition', transition);
       return reject('needs-auth');
     } else if (this.redirectToProfile(transition)) {
       return this.transitionTo('account');

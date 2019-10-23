@@ -3,9 +3,10 @@ import URL from 'url';
 import {
   computed,
   getProperties,
-  observer
+  observer,
+  get
 } from '@ember/object';
-import { isEmpty, isPresent } from '@ember/utils';
+import { isEmpty } from '@ember/utils';
 import Service, { inject as service } from '@ember/service';
 import { equal, reads } from '@ember/object/computed';
 import { getOwner } from '@ember/application';
@@ -117,7 +118,8 @@ export default Service.extend({
           this.reportToIntercom();
           Travis.trigger('user:refreshed', data.user);
         })
-        .catch(({ status }) => {
+        .catch((error = {}) => {
+          const status = +error.status || +get(error, 'errors.firstObject.status');
           if (status === 401 || status === 403 || status === 500) {
             this.flashes.error(TOKEN_EXPIRED_MSG);
             this.signOut();
@@ -129,8 +131,8 @@ export default Service.extend({
   },
 
   validateUserData(user) {
-    const hasChannelsOnPro = field => field === 'channels' && this.isProVersion;
-    const hasAllFields = USER_FIELDS.every(field => isPresent(user[field]) || hasChannelsOnPro(field));
+    const hasChannelsOnPro = field => field === 'channels' && !this.isProVersion;
+    const hasAllFields = USER_FIELDS.every(field => !!user[field] || hasChannelsOnPro(field));
     if (!hasAllFields || !user.correct_scopes) {
       throw new Error('User validation failed');
     }
@@ -229,9 +231,7 @@ function createUserRecord(store, user) {
 }
 
 function runAfterSignOutCallbacks() {
-  afterSignOutCallbacks.forEach((callback) => {
-    callback();
-  });
+  afterSignOutCallbacks.forEach(callback => callback());
   afterSignOutCallbacks.clear();
 }
 
