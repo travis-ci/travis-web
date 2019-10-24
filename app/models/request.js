@@ -1,12 +1,13 @@
 import Model, { attr, belongsTo } from '@ember-data/model';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
-import { empty, uniqBy, equal } from '@ember/object/computed';
-import ObjectProxy from '@ember/object/proxy';
-import PromiseProxyMixin from '@ember/object/promise-proxy-mixin';
-import { Promise as EmberPromise } from 'rsvp';
-
-const ObjectPromiseProxy = ObjectProxy.extend(PromiseProxyMixin);
+import {
+  empty,
+  equal,
+  gt,
+  uniqBy
+} from '@ember/object/computed';
+import { task } from 'ember-concurrency';
 
 export const PULL_REQUEST_MERGEABLE = {
   DRAFT: 'draft',
@@ -55,32 +56,22 @@ export default Model.extend({
 
   ajax: service(),
 
-  messagesRequest: computed('repo.id', 'build.request.id', function () {
-    let repoId = this.get('repo.id');
-    let requestId = this.get('build.request.id');
+  messages: computed('repo.id', 'build.request.id', 'fetchMessages.last.value', function () {
+    const messages = this.fetchMessages.get('lastSuccessful.value');
+    if (!messages) {
+      this.fetchMessages.perform();
+    }
+    return messages || [];
+  }),
+
+  fetchMessages: task(function* () {
+    const repoId = this.get('repo.id');
+    const requestId = this.get('build.request.id');
     if (repoId && requestId) {
-      return ObjectPromiseProxy.create({
-        promise: this.ajax.ajax(`/repo/${repoId}/request/${requestId}/messages`, 'get', {
-          headers: {
-            'Travis-API-Version': '3'
-          }})
-          .then(response => ({messages: response.messages}))
-      });
+      const response = yield this.ajax.getV3(`/repo/${repoId}/request/${requestId}/messages`) || {};
+      return response.messages;
     }
-  }),
+  }).drop(),
 
-  messages: computed('messagesRequest', function () {
-    let response = this.get('messagesRequest');
-    if (response) {
-      return response.get('messages');
-    } else {
-      return ObjectPromiseProxy.create({
-        promise: EmberPromise.resolve([])
-      });
-    }
-  }),
-
-  hasMessages: computed('messagesRequest', function () {
-    return this.get('messagesRequest').get('messages') != undefined;
-  }),
+  hasMessages: gt('messages.length', 0),
 });
