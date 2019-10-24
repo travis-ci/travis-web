@@ -11,6 +11,6 @@ export default TravisRoute.extend({
   },
 
   afterModel(request) {
-    return request.get('messagesRequest');
+    return request.fetchMessages.perform();
   }
 });

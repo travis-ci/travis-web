@@ -5,6 +5,12 @@ export default TravisRoute.extend({
   features: service(),
   tabStates: service(),
 
+  afterModel(repo) {
+    try {
+      return repo.get('currentBuild.request').then(request => request && request.fetchMessages.perform());
+    } catch (error) {}
+  },
+
   setupController(controller, model) {
     this._super(...arguments);
     this.controllerFor('repo').activate('current');
