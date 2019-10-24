@@ -1,3 +1,22 @@
+.build-messages-badge {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-left: 0.25em;
+  border-radius: 50%;
+
+  &.badge-alert,
+  &.badge-error {
+    background-color: $brick-red;
+  }
+  &.badge-warn {
+    background-color: $canary-yellow;
+  }
+  &.badge-info {
+    background-color: $turf-green;
+  }
+}
+
 .yml-messages {
   @include travisBorder;
 
