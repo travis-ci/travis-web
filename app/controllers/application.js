@@ -1,5 +1,6 @@
 import Controller from '@ember/controller';
 import { inject as service } from '@ember/service';
+import { later } from '@ember/runloop';
 import QueryParams from 'ember-parachute';
 import { UTM_FIELDS, UTM_FIELD_NAMES } from 'travis/services/utm';
 
@@ -23,8 +24,8 @@ export default Controller.extend(UTM_QUERY_PARAMS.Mixin, {
   },
 
   resetUTMs() {
-    setTimeout(() => {
-      this.resetQueryParams([...UTM_FIELD_NAMES]);
+    later(() => {
+      try { this.resetQueryParams([...UTM_FIELD_NAMES]); } catch (e) {}
     }, 100);
   }
 });
