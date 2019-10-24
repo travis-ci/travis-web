@@ -39,7 +39,7 @@ export default Service.extend({
   sessionStorage: service(),
   ajax: service(),
   features: service(),
-  featureFlags: service(),
+  metrics: service(),
 
   state: STATE.SIGNED_OUT,
 
@@ -115,6 +115,7 @@ export default Service.extend({
 
       this.currentUser.reload({ included: includes.join(',') })
         .then(() => {
+          this.reportNewUser();
           this.reportToIntercom();
           Travis.trigger('user:refreshed', data.user);
         })
@@ -148,6 +149,17 @@ export default Service.extend({
         'user.createdAt': firstLoggedInAt,
         'user.hash': secureUserHash
       });
+    }
+  },
+
+  reportNewUser() {
+    const { currentUser, metrics } = this;
+    const { syncedAt, login } = currentUser;
+    const signupUsers = this.storage.signupUsers || [];
+
+    if (!syncedAt && !signupUsers.includes(login)) {
+      metrics.trackPage({ page: '/virtual/signup-success' });
+      this.storage.signupUsers = signupUsers.concat([login]);
     }
   },
 

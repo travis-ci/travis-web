@@ -3,25 +3,20 @@ import config from 'travis/config/environment';
 import { filterBy } from '@ember/object/computed';
 import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
-import { LEAD_UTM_FIELDS } from 'travis/models/lead';
 
 const { plans } = config;
 
 const referralSourceName = 'plans-page';
-const outgoingUtmSource = `?utm_source=${referralSourceName}`;
-const supportedUtmFields = Object.values(LEAD_UTM_FIELDS);
 
 export default Controller.extend({
-  queryParams: supportedUtmFields,
-
   auth: service(),
   metrics: service(),
 
   config,
   referralSourceName,
-  billingUrl: `${config.billingEndpoint}/${outgoingUtmSource}`,
-  buildMatrixUrl: `${config.urls.buildMatrix}${outgoingUtmSource}`,
-  enterpriseUrl: `${config.urls.enterprise}${outgoingUtmSource}`,
+  billingUrl: config.billingEndpoint,
+  buildMatrixUrl: config.urls.buildMatrix,
+  enterpriseUrl: config.urls.enterprise,
 
   plans: computed(() => plans),
   annualPlans: filterBy('plans', 'period', 'annual'),

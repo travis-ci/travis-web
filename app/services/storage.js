@@ -2,6 +2,13 @@ import Service from '@ember/service';
 
 export default Service.extend({
 
+  get signupUsers() {
+    return JSON.parse(this.getItem('travis.signup.users'));
+  },
+  set signupUsers(value) {
+    this.setItem('travis.signup.users', JSON.stringify(value));
+  },
+
   get storage() {
     return window.localStorage;
   },
