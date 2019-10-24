@@ -5,10 +5,10 @@ import { or, reads } from '@ember/object/computed';
 import config from 'travis/config/environment';
 
 export default Component.extend({
-  stripe: service('stripe'),
-  accounts: service('accounts'),
-  flashes: service('flashes'),
-  metrics: service('metrics'),
+  stripe: service(),
+  accounts: service(),
+  flashes: service(),
+  metrics: service(),
 
   account: null,
   stripeElement: null,
@@ -26,8 +26,8 @@ export default Component.extend({
   country: reads('newSubscription.billingInfo.country'),
   isLoading: or('createSubscription.isRunning', 'accounts.fetchSubscriptions.isRunning'),
 
-  coupon: reads('newSubscription.validateCoupon.lastSuccessful.value'),
-  couponError: reads('newSubscription.validateCoupon.lastErrored.error'),
+  coupon: reads('newSubscription.validateCoupon.last.value'),
+  couponError: reads('newSubscription.validateCoupon.last.error'),
   totalPrice: reads('newSubscription.totalPrice'),
   isValidCoupon: reads('coupon.valid'),
 

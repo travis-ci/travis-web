@@ -4,7 +4,7 @@ import { decamelize } from '@ember/string';
 export default Serializer.extend({
   serialize(object) {
 
-    const camelizedAttrs = Object.keys(object.attrs)
+    const decaamelizedAttrs = Object.keys(object.attrs)
       .reduce((attrs, key) => {
         const decamelizedKey = decamelize(key);
         attrs[decamelizedKey] = object.attrs[key];
@@ -14,7 +14,7 @@ export default Serializer.extend({
     return {
       '@type': 'coupon',
       '@representation': 'standard',
-      ...camelizedAttrs
+      ...decaamelizedAttrs
     };
   },
 });

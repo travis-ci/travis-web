@@ -45,7 +45,7 @@ export default Model.extend({
   isGithubResubscribable: and('isGithub', 'isNotSubscribed'),
 
   priceInCents: reads('plan.price'),
-  validateCouponResult: reads('validateCoupon.lastSuccessful.value'),
+  validateCouponResult: reads('validateCoupon.last.value'),
 
   planPrice: computed('priceInCents', function () {
     return this.priceInCents && Math.floor(this.priceInCents / 100);
