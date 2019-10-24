@@ -58,8 +58,7 @@ configKeys = {
 
 archConfigKeys = {
   arm64: 'Arm64',
-  amd64: 'AMD64',
-  ppc64le: 'ppc64le'
+  amd64: 'AMD64'
 };
 
 configKeysMap = assign(configKeys, languageConfigKeys);
