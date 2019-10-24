@@ -12,8 +12,7 @@ export default Controller.extend({
 
   isRedirectingToAccountPage: computed('redirectUri', function () {
     if (this.redirectUri) {
-      const redirectTo = new URL(this.redirectUri);
-      const { pathname } = redirectTo;
+      const { pathname } = new URL(this.redirectUri);
       const accountUrl = this.router.urlFor('account.billing');
       return this.isOrganizationUrl(pathname) || accountUrl === pathname;
     }
