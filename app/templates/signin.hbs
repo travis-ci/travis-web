@@ -1,11 +1,11 @@
 <TravisLayout @layoutName="layouts/center">
   <div class="content-page">
     {{#if this.isRedirectingToAccountPage}}
-      <img
-        src="/images/billing/account-unauthorized.svg"
-        alt="Account"
-        width="350"
-        height="350"
+      <SvgImage
+        @name='account-unauthorized'
+        @width={{350}}
+        @height={{300}}
+        @alt='Account'
       />
     {{else}}
       <img
