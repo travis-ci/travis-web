@@ -121,7 +121,7 @@
         </UiKit::Grid>
 
         <UiKit::Box @borderWidth={{hash all='xs'}} @padding={{hash all=4}} @textAlign='center'>
-          <UiKit::Button @onClick={{action 'gaCta' 'plans-table'}} data-test-plans-page-product-button="true">
+          <UiKit::Button @onClick={{action 'signIn'}} data-test-plans-page-product-button="true">
             Start Your Free Trial
           </UiKit::Button>
         </UiKit::Box>
@@ -165,7 +165,7 @@
             along with all the other features you've come to love from Travis CI.
           </UiKit::Text>
 
-          <UiKit::Button @onClick={{action 'gaCta' 'plans-oss'}} @color='grey' @invert={{true}} data-test-plans-page-oss-button="true">
+          <UiKit::Button @onClick={{action 'signIn'}} @color='grey' @invert={{true}} data-test-plans-page-oss-button="true">
             Set up your open source project now
           </UiKit::Button>
         </UiKit::Box>
@@ -195,12 +195,7 @@
       </grid.item>
       <grid.item>
         <SalesContactForm
-          @leadSource={{this.leadSourceName}}
-          @utm_source={{this.utm_source}}
-          @utm_campaign={{this.utm_campaign}}
-          @utm_medium={{this.utm_medium}}
-          @utm_term={{this.utm_term}}
-          @utm_content={{this.utm_content}}
+          @referralSource={{this.referralSourceName}}
           @onSuccess={{action 'contactSuccess'}}
         />
       </grid.item>

@@ -206,6 +206,14 @@
           </span>
         </div>
       {{/if}}
+
+      <div class="detail-job-arch">
+        <SvgImage @name="icon-arch" @class="icon" />
+        <span class="label-align" aria-label="CPU Architecture">
+          {{this.arch}}
+        </span>
+      </div>
+
       <div class="detail-job-lang">
         <SvgImage @name="icon-language" @class="icon" />
         <span class="label-align" aria-label="Language">
