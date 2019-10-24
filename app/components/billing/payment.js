@@ -6,10 +6,8 @@ import config from 'travis/config/environment';
 
 export default Component.extend({
   stripe: service('stripe'),
-  store: service('store'),
   accounts: service('accounts'),
   flashes: service('flashes'),
-  raven: service('raven'),
   metrics: service('metrics'),
 
   account: null,

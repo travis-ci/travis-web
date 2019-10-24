@@ -53,6 +53,7 @@
             </p>
           {{else if this.couponError}}
             <p data-test-invalid-coupon="true" class="coupon-validation__invalid-coupon">
+              <SvgImage @name="form-error-icon" @class="icon" />
               Coupon invalid
             </p>
           {{else}}

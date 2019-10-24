@@ -53,9 +53,7 @@ export default Model.extend({
 
   discountByAmount: computed('validateCouponResult.amountOff', 'planPrice', function () {
     const { amountOff } = this.validateCouponResult || {};
-    if (amountOff && this.planPrice) {
-      return this.planPrice - Math.floor(amountOff / 100);
-    }
+    return amountOff && this.planPrice && this.planPrice - Math.floor(amountOff / 100);
   }),
 
   discountByPercentage: computed('validateCouponResult.percentageOff', 'planPrice', function () {
