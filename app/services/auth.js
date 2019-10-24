@@ -24,6 +24,7 @@ export default Service.extend({
   storage: service(),
   sessionStorage: service(),
   ajax: service(),
+  metrics: service(),
 
   state: 'signed-out',
   receivingEnd: `${location.protocol}//${location.host}`,
@@ -164,6 +165,7 @@ export default Service.extend({
   },
 
   userSignedIn(user) {
+    this.reportNewUser();
     if (proVersion && get(config, 'intercom.enabled')) {
       this.intercom.set('user.id', user.id);
       this.intercom.set('user.name', user.name);
@@ -172,6 +174,17 @@ export default Service.extend({
       this.intercom.set('user.hash', user.secure_user_hash);
     }
     Travis.trigger('user:signed_in', user);
+  },
+
+  reportNewUser() {
+    const { currentUser, metrics } = this;
+    const { syncedAt, login } = currentUser;
+    const signupUsers = this.storage.signupUsers || [];
+
+    if (!syncedAt && !signupUsers.includes(login)) {
+      metrics.trackPage({ page: '/virtual/signup-success' });
+      this.storage.signupUsers = signupUsers.concat([login]);
+    }
   },
 
   refreshUserData(user, include = []) {
