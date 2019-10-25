@@ -20,9 +20,11 @@ export default TravisRoute.extend({
     }
   },
 
-  renderTemplate() {
+  renderTemplate(controller, model) {
     $('body').attr('id', 'auth');
-    return this.render('signin');
+    return this.render('signin', {
+      model
+    });
   },
 
   deactivate() {
