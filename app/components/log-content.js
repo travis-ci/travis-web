@@ -250,10 +250,6 @@ export default Component.extend({
     toggleRemoveLogModal() {
       this.toggleProperty('isShowingRemoveLogModal');
     },
-
-    doTest() {
-      this.clearLogElement();
-    }
   },
 
   // don't remove this, it's needed as an empty willChange callback
