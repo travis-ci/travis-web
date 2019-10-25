@@ -16,11 +16,4 @@ export default Component.extend({
   messagesBadgeTooltipText: computed('messagesMaxLevel', function () {
     return `This build's config has ${this.messagesMaxLevel} level validation messages`;
   }),
-
-  didRender() {
-    // Set the log to be default active tab unless something else is active
-    if (isEmpty(this.$('.travistab-nav--secondary').find('.active'))) {
-      this.$('.travistab-nav--secondary li:first-child a').addClass('active');
-    }
-  }
 });
