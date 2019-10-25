@@ -119,7 +119,7 @@ export default Component.extend({
   },
 
   clearLogElement() {
-    const logElement = this.element.querySelector(SELECTORS.CONTENT);
+    const logElement = this.element && this.element.querySelector(SELECTORS.CONTENT);
     if (logElement) {
       logElement.innerHTML = '';
     }
