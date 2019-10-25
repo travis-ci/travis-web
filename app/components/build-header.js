@@ -148,25 +148,23 @@ export default Component.extend({
     }
   }),
 
-  commitBody: computed('item.commit.body', function () {
+  commitBodyClass: computed('item.commit.body', function () {
     let body = this.get('item.commit.body');
-    this.$('commit-description').remove('fade-commit-message');
-
-    if (body.length > commitMessageLimit) {
-      this.$('.commit-description').addClass('fade-commit-message');
-    }
+    return body.length > commitMessageLimit ? 'fade-commit-message' : '';
   }),
 
   isNotMatrix: not('item.isMatrix'),
 
   actions: {
     expandEnv() {
-      if (this.$('.expandEnv').css('white-space') === 'normal') {
-        this.$('.detail-job-env').removeClass('expandEnv');
-        this.$('.detail-job-env').addClass('closeEnv');
+      const expandedStyles = getComputedStyle(this.element.querySelector('.expandEnv'));
+      const detailJobEnv = this.element.querySelector('.detail-job-env');
+      if (expandedStyles && expandedStyles['white-space'] === 'normal') {
+        detailJobEnv.classList.remove('expandEnv');
+        detailJobEnv.classList.add('closeEnv');
       } else {
-        this.$('.detail-job-env').removeClass('closeEnv');
-        this.$('.detail-job-env').addClass('expandEnv');
+        detailJobEnv.classList.remove('closeEnv');
+        detailJobEnv.classList.add('expandEnv');
       }
     }
   }

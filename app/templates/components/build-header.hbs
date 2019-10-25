@@ -27,8 +27,8 @@
     </h2>
     <div class="commit-info">
       {{#if this.commit.body}}
-        <p class="commit-description" title="{{this.commit.body}}">
-          <span class="monospace {{this.commitBody}}">
+        <p class="commit-description {{this.commitBodyClass}}" title="{{this.commit.body}}">
+          <span class="monospace">
             {{format-message this.commit.body repo=this.item.repo pre=true}}
           </span>
         </p>
