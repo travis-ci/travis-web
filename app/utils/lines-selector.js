@@ -1,5 +1,8 @@
-import $ from 'jquery';
 import { scheduleOnce, later } from '@ember/runloop';
+
+const SELECTORS = {
+  LOG_LINE: '.log-line',
+};
 
 export default (function () {
   LinesSelector.prototype.Location = {
@@ -35,19 +38,21 @@ export default (function () {
       this.last_selected_line = (ref = this.getSelectedLines()) != null ? ref.first : void 0;
       return this.highlightLines();
     });
-    this.element.on('click', 'a', (event) => {
-      let callback = () => {
-        let element = $(event.target).parent('.log-line');
-        this.loadLineNumbers(element, event.shiftKey);
-      };
+    this.element.querySelectorAll(`${SELECTORS.LOG_LINE} a`).forEach(linkEl => {
+      linkEl.addEventListener('click', (event) => {
+        let callback = () => {
+          let parentEl = linkEl.parentNode;
+          this.loadLineNumbers(parentEl, event.shiftKey);
+        };
 
-      if (onLogLineClick) {
-        onLogLineClick().then(callback);
-      } else {
-        callback();
-      }
-      event.preventDefault();
-      return false;
+        if (onLogLineClick) {
+          onLogLineClick().then(callback);
+        } else {
+          callback();
+        }
+        event.preventDefault();
+        return false;
+      });
     });
   }
 
@@ -65,9 +70,9 @@ export default (function () {
     this.removeAllHighlights();
     let lines = this.getSelectedLines();
     if (lines) {
-      let elements = this.element.find('.log-line').slice(lines.first - 1, lines.last);
+      let elements = this.element.querySelectorAll(SELECTORS.LOG_LINE).slice(lines.first - 1, lines.last);
       if (elements.length) {
-        elements.addClass('highlight');
+        elements.forEach(el => el.classList.add('highlight'));
 
         let focusElement = elements[0];
         focusElement.setAttribute('tabindex', '0');
@@ -93,7 +98,7 @@ export default (function () {
       results = [];
       for (index in lines) {
         l = lines[index];
-        line = this.element.find('.log-line').slice(l - 1, l);
+        line = this.element.querySelectorAll(SELECTORS.LOG_LINE).slice(l - 1, l);
         results.push(this.folder.unfold(line));
       }
       return results;
@@ -115,13 +120,13 @@ export default (function () {
 
   LinesSelector.prototype.getLineNumberFromElement = function (element) {
     if (this && this.element) {
-      return this.element.find('.log-line').index(element) + 1;
+      return this.element.querySelectorAll(SELECTORS.LOG_LINE).index(element) + 1;
     }
   };
 
   LinesSelector.prototype.removeAllHighlights = function () {
     if (this && this.element) {
-      return this.element.find('.log-line.highlight').removeClass('highlight');
+      return this.element.querySelectorAll('.log-line.highlight').forEach(hiElf => hiElf.classList.remove('highlight'));
     }
   };
 
