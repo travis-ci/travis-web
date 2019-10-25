@@ -4,8 +4,8 @@ import { computed } from '@ember/object';
 import { reads } from '@ember/object/computed';
 
 export default Controller.extend({
-  auth: service('auth'),
-  router: service('router'),
+  auth: service(),
+  router: service(),
   redirectUri: reads('model.redirectUri'),
 
   isRedirectingToAccountPage: computed('redirectUri', function () {
