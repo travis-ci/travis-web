@@ -387,7 +387,7 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.visit();
     await profilePage.billing.visit();
 
-    assert.equal(profilePage.billing.plan.name, 'Small Business1 plan Expired manual subscription');
+    assert.equal(profilePage.billing.plan.name, 'Small Business1 plan expired manual subscription');
     assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining('5 concurrent jobs Expired July 16, 2018');
     assert.equal(profilePage.billing.planMessage.text, 'Expired July 16, 2018');
     assert.equal(profilePage.billing.price.text, '$69');
