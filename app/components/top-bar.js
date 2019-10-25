@@ -46,7 +46,7 @@ export default Component.extend(InViewportMixin, {
     });
     this._super(...arguments);
     scheduleOnce('afterRender', this, () => {
-      set(this, 'viewportTolerance.top', this.$().height());
+      set(this, 'viewportTolerance.top', this.element.clientHeight);
     });
   },
 
