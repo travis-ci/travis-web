@@ -67,7 +67,7 @@ export default Service.extend({
 
   redirectUrl: null,
 
-  signOut() {
+  signOut(runTeardown = true) {
     this.localStorage.clear();
     this.sessionStorage.clear();
 
@@ -76,8 +76,10 @@ export default Service.extend({
       currentUser: null
     });
 
-    this.clearNonAuthFlashes();
-    runAfterSignOutCallbacks();
+    if (runTeardown) {
+      this.clearNonAuthFlashes();
+      runAfterSignOutCallbacks();
+    }
     this.store.unloadAll();
   },
 
@@ -127,7 +129,7 @@ export default Service.extend({
           }
         });
     } catch (error) {
-      this.signOut();
+      this.signOut(false);
     }
   },
 
