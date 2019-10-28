@@ -94,7 +94,6 @@
       }
 
       &--email {
-        border-bottom: 2px $pebble-grey solid;
         display: inline-block;
         margin-bottom: 0;
         margin-top: 1px;
@@ -227,25 +226,26 @@
       margin-top: 24px;
     }
 
-    .switch-inner {
-      width: 175px;
-      height: 29px;
-      margin-left: -5px;
-      padding-top: 1px;
-
-      span {
-        width: 82px;
-        height: 24px;
-        line-height: 1.7;
-        padding-left: 0;
-
+    .switch {
+      .switch-inner {
+        width: 175px;
+        height: 30px;
+        margin-left: -5px;
+        padding-top: 1px;
+  
         span {
-          color: $ansi-black;
-          font-size: 1.2em;
-          font-weight: 500;
+          width: 82px;
+          height: 25px;
+          line-height: 1.7;
+          padding-left: 0;
+  
+          span {
+            color: $ansi-black;
+            font-size: 1.2em;
+            font-weight: 500;
+          }
         }
       }
-
       .on {
         padding-left: 1px;
       }
@@ -487,7 +487,7 @@
     }
 
     &__period {
-      font-size: .8em;
+      font-size: .7em;
       font-style: italic;
     }
   }
@@ -574,7 +574,8 @@
         margin-bottom: 4px;
 
         &--validity {
-          font-size: 13px;
+          font-size: 12px;
+          font-weight: 400;
         }
       }
     }

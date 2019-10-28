@@ -21,21 +21,18 @@
       <Billing::Summary
         @subscription={{this.subscription}}
         @account={{this.account}}
-        @price={{this.price}}
         @planMessage="Valid until"
       />
     {{/if}}
   {{else if this.subscription.isCanceled}}
     <Billing::Summary 
       @subscription={{this.subscription}} 
-      @price={{this.price}}
       @account={{this.account}}
       @planMessage="Expires"
     />
   {{else if this.subscription.isIncomplete}}
      <Billing::Summary 
       @subscription={{this.subscription}} 
-      @price={{this.price}}
       @account={{this.account}}
       @planMessage="Incomplete"
     />
@@ -43,14 +40,12 @@
     <Billing::Summary 
       @subscription={{this.subscription}}
       @account={{this.account}}
-      @price={{this.price}}
       @isPending={{true}}
     />
   {{else if this.subscription.isExpired}}
     <Billing::Summary 
       @subscription={{this.subscription}}
       @account={{this.account}}
-      @price={{this.price}}
       @planMessage="Expired"
     />
   {{/if}}

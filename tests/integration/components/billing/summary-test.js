@@ -12,12 +12,17 @@ module('Integration | Component | billing-summary', function (hooks) {
       id: 1,
       name: 'A',
       builds: 5,
-      amount: 20000,
+      price: 12900,
       annual: false
     };
 
     const owner = {};
 
+    const account = {
+      hasSubscriptionPermissions: true
+    };
+
+    this.price = 12900;
     const subscription = {
       validTo: new Date(2018, 5, 19),
       status: 'subscribed',
@@ -29,19 +34,12 @@ module('Integration | Component | billing-summary', function (hooks) {
       owner,
       plan,
     };
-
-    const account = {
-      hasSubscriptionPermissions: true
-    };
-
-    this.price = 12900;
     this.subscription = subscription;
     this.planMessage = 'Valid until';
 
     this.setProperties({
       subscription,
       account,
-      price: this.price,
       planMessage: this.planMessage
     });
   });
@@ -52,7 +50,6 @@ module('Integration | Component | billing-summary', function (hooks) {
     await render(hbs`<Billing::Summary 
       @subscription={{subscription}}
       @account={{account}}
-      @price={{price}}
       @planMessage={{planMessage}}
     />`);
 
@@ -78,7 +75,6 @@ module('Integration | Component | billing-summary', function (hooks) {
     await render(hbs`<Billing::Summary 
       @subscription={{subscription}}
       @account={{account}}
-      @price={{price}}
       @planMessage={{planMessage}}
     />`);
 
@@ -104,7 +100,6 @@ module('Integration | Component | billing-summary', function (hooks) {
     await render(hbs`<Billing::Summary 
       @subscription={{subscription}}
       @account={{account}}
-      @price={{price}}
       @planMessage={{planMessage}}
     />`);
 
@@ -128,7 +123,6 @@ module('Integration | Component | billing-summary', function (hooks) {
     await render(hbs`<Billing::Summary 
       @subscription={{subscription}}
       @account={{account}}
-      @price={{price}}
       @isPending={{isPending}}
     />`);
 
@@ -150,7 +144,6 @@ module('Integration | Component | billing-summary', function (hooks) {
     await render(hbs`<Billing::Summary 
       @subscription={{subscription}}
       @account={{account}}
-      @price={{price}}
       @planMessage={{planMessage}}
     />`);
 

@@ -11,12 +11,16 @@ export default TravisRoute.extend({
   },
 
   beforeModel() {
-    const { fetchOrganizations } = this.accounts;
-    const { lastSuccessful } = fetchOrganizations;
-    if (lastSuccessful && lastSuccessful._promise) {
-      return lastSuccessful._promise;
+    if (this.signedIn()) {
+      const { fetchOrganizations } = this.accounts;
+      const { lastSuccessful } = fetchOrganizations;
+      if (lastSuccessful && lastSuccessful._promise) {
+        return lastSuccessful._promise;
+      } else {
+        return fetchOrganizations.perform();
+      }
     } else {
-      return fetchOrganizations.perform();
+      return this._super(...arguments);
     }
   },
 
