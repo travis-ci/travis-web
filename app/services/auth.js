@@ -11,7 +11,7 @@ import Service, { inject as service } from '@ember/service';
 import { equal, reads } from '@ember/object/computed';
 import { getOwner } from '@ember/application';
 import config from 'travis/config/environment';
-import { Promise } from 'rsvp';
+import { task } from 'ember-concurrency';
 
 const { authEndpoint, apiEndpoint, intercom = {} } = config;
 
@@ -115,19 +115,9 @@ export default Service.extend({
 
       Travis.trigger('user:signed_in', this.currentUser);
 
-      this.reloadCurrentUser()
-        .then(() => {
-          this.reportNewUser();
-          this.reportToIntercom();
-          Travis.trigger('user:refreshed', data.user);
-        })
-        .catch((error = {}) => {
-          const status = +error.status || +get(error, 'errors.firstObject.status');
-          if (status === 401 || status === 403 || status === 500) {
-            this.flashes.error(TOKEN_EXPIRED_MSG);
-            this.signOut();
-          }
-        });
+      this.reloadCurrentUser().then(() =>
+        Travis.trigger('user:refreshed', data.user)
+      );
     } catch (error) {
       this.signOut(false);
     }
@@ -135,10 +125,24 @@ export default Service.extend({
 
   reloadCurrentUser(include = []) {
     includes = includes.concat(include, ['owner.installation']).uniq();
-    const options = { included: includes.join(',') };
-    const { currentUser } = this;
-    return currentUser ? currentUser.reload(options) : Promise.resolve();
+    return this.fetchCurrentUser.perform();
   },
+
+  fetchCurrentUser: task(function* () {
+    try {
+      const options = { included: includes.join(',') };
+      yield this.currentUser.reload(options);
+      this.reportNewUser();
+      this.reportToIntercom();
+      return this.currentUser;
+    } catch (error) {
+      const status = +error.status || +get(error, 'errors.firstObject.status');
+      if (status === 401 || status === 403 || status === 500) {
+        this.flashes.error(TOKEN_EXPIRED_MSG);
+        this.signOut();
+      }
+    }
+  }).drop(),
 
   validateUserData(user) {
     const hasChannelsOnPro = field => field === 'channels' && !this.isProVersion;

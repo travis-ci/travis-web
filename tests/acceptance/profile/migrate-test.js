@@ -10,7 +10,7 @@ module('Acceptance | Profile | Migrate', function (hooks) {
 
   hooks.beforeEach(function () {
     this.user = server.create('user', {
-      allowMigration: true,
+      allow_migration: true,
       login: 'user-login',
       github_id: 1974,
     });
