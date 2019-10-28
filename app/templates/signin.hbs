@@ -1,29 +1,43 @@
 <TravisLayout @layoutName="layouts/center">
   <div class="content-page">
-    <img
-      src="/images/logos/TravisCI-Mascot-1.svg"
-      alt="Travis CI mascot"
-      width="200"
-      height="200"
-    />
+    {{#if this.isRedirectingToAccountPage}}
+      <SvgImage
+        @name='account-unauthorized'
+        @width={{350}}
+        @height={{300}}
+        @alt='Account'
+      />
+    {{else}}
+      <img
+        src="/images/logos/TravisCI-Mascot-1.svg"
+        alt="Travis CI mascot"
+        width="200"
+        height="200"
+      />
+    {{/if}}
     <h1 class="content-title auth">
       We're so glad you're here!
     </h1>
     {{#if this.auth.signedOut}}
-      <h2 class="content-subtitle">
-        Please sign in to view your repositories.
-      </h2>
+      <h1 class="content-subtitle">
+        {{#if this.isRedirectingToAccountPage}}
+          Please sign in to view your account.
+        {{else}}
+          Please sign in to view your repositories.
+        {{/if}}
+      </h1>
       <p>
         <button
           type="button"
           title="Sign into Travis CI"
-          class="content-button"
+          class="content-button sign-in"
           onclick={{action "signIn" target=this.auth}}
         >
           Sign in with GitHub
         </button>
       </p>
-    {{else if this.auth.signingIn}}
+    {{/if}}
+    {{#if this.auth.signingIn}}
       <h2 class="content-subtitle">
         We're signing you in,
         <br />
