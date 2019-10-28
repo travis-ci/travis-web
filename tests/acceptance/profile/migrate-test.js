@@ -35,7 +35,9 @@ module('Acceptance | Profile | Migrate', function (hooks) {
 
       hooks.beforeEach(async function () {
         await profilePage.visit();
+        await settled();
         await profilePage.migrate.visit();
+        await settled();
       });
 
       test('is visitable', function (assert) {
@@ -58,6 +60,7 @@ module('Acceptance | Profile | Migrate', function (hooks) {
       hooks.beforeEach(async function () {
         generateRepositoriesForMigration(server, this.user);
         await profilePage.visit();
+        await settled();
         await profilePage.migrate.visit();
         await settled();
       });

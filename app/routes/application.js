@@ -170,12 +170,14 @@ export default TravisRoute.extend(BuildFaviconMixin, {
   },
 
   afterSignOut() {
-    this.featureFlags.reset();
-    this.set('repositories.accessible', []);
-    this.setDefault();
-    if (this.get('features.enterpriseVersion')) {
-      return this.transitionTo('auth');
-    }
-    return this.transitionTo('index');
+    try {
+      this.featureFlags.reset();
+      this.set('repositories.accessible', []);
+      this.setDefault();
+      if (this.get('features.enterpriseVersion')) {
+        return this.transitionTo('auth');
+      }
+      return this.transitionTo('index');
+    } catch (error) {}
   },
 });

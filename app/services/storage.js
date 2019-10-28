@@ -25,6 +25,12 @@ export default Service.extend({
     return this.getItem('travis.user');
   },
 
+  clearAuthData() {
+    this.removeItem('travis.token');
+    this.removeItem('travis.user');
+    this.removeItem('travis.auth.updatedAt');
+  },
+
   // method proxies
 
   getItem(key) {

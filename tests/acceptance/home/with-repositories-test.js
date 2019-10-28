@@ -69,6 +69,7 @@ module('Acceptance | home/with repositories', function (hooks) {
 
   test('the home page shows the repositories', async function (assert) {
     await visit('/');
+    await settled();
 
     assert.equal(sidebarPage.sidebarRepositories.length, 3, 'expected three repositories in the sidebar');
 
@@ -93,6 +94,7 @@ module('Acceptance | home/with repositories', function (hooks) {
   test('Pusher events change the main display', async function (assert) {
     assert.expect(5);
     await visit('/');
+    await settled();
 
     assert.equal(sidebarPage.repoTitle, 'org-login / yet-another-repository-name', 'expected the displayed repository to be the one with a running build');
 

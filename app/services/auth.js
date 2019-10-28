@@ -11,6 +11,7 @@ import Service, { inject as service } from '@ember/service';
 import { equal, reads } from '@ember/object/computed';
 import { getOwner } from '@ember/application';
 import config from 'travis/config/environment';
+import { Promise } from 'rsvp';
 
 const { authEndpoint, apiEndpoint, intercom = {} } = config;
 
@@ -68,8 +69,7 @@ export default Service.extend({
   redirectUrl: null,
 
   signOut(runTeardown = true) {
-    this.localStorage.clear();
-    this.sessionStorage.clear();
+    this.storage.clearAuthData();
 
     this.setProperties({
       state: STATE.SIGNED_OUT,
@@ -115,7 +115,7 @@ export default Service.extend({
 
       Travis.trigger('user:signed_in', this.currentUser);
 
-      this.currentUser.reload({ included: includes.join(',') })
+      this.reloadCurrentUser()
         .then(() => {
           this.reportNewUser();
           this.reportToIntercom();
@@ -131,6 +131,13 @@ export default Service.extend({
     } catch (error) {
       this.signOut(false);
     }
+  },
+
+  reloadCurrentUser(include = []) {
+    includes = includes.concat(include, ['owner.installation']).uniq();
+    const options = { included: includes.join(',') };
+    const { currentUser } = this;
+    return currentUser ? currentUser.reload(options) : Promise.resolve();
   },
 
   validateUserData(user) {

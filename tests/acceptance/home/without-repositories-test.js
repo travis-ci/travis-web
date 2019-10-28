@@ -1,7 +1,4 @@
-import {
-  currentURL,
-  visit,
-} from '@ember/test-helpers';
+import { currentURL, settled, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import signInUser from 'travis/tests/helpers/sign-in-user';
@@ -17,6 +14,7 @@ module('Acceptance | home/without repositories', function (hooks) {
 
   test('signed in but without repositories', async function (assert) {
     await visit('/');
+    await settled();
 
     assert.equal(currentURL(), '/getting_started');
     percySnapshot(assert);
