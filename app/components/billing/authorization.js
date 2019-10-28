@@ -18,7 +18,7 @@ export default Component.extend({
   showCancelModal: false,
   showMonthly: reads('plan.showMonthly'),
   displayedPlans: reads('plan.displayedPlans'),
-  selectedPlan: reads('plan.selectedPlan'),
+  selectedPlan: reads('subscription.plan'),
   showAnnual: reads('plan.showAnnual'),
 
   requiresSourceAction: equal('subscription.paymentIntent.status', 'requires_source_action'),
