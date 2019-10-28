@@ -1,8 +1,7 @@
-import $ from 'jquery';
 import Tailing from 'travis/utils/tailing';
 
 export function initialize(app) {
-  app.tailing = new Tailing($(window), '#tail', '#log');
+  app.tailing = new Tailing(window, '#tail', '#log');
 }
 
 export default {
