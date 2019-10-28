@@ -176,42 +176,6 @@ export default Service.extend({
     }
   },
 
-  // refreshUserData(user, include = []) {
-  //   includes = includes.concat(include, ['owner.installation']).uniq();
-  //   if (!user) {
-  //     let data = this.userDataFromStorage();
-  //     if (data) {
-  //       user = data.user;
-  //     }
-  //   }
-  //   if (user) {
-  //     return this.ajax.get(`/users/${user.id}`)
-  //       .then(data => {
-  //         let userRecord;
-  //         if (data.user.correct_scopes) {
-  //           userRecord = this.loadUser(data.user);
-  //           userRecord.get('permissions');
-  //           if (this.signedIn) {
-  //             data.user.token = user.token;
-  //             Travis.trigger('user:refreshed', data.user);
-  //           }
-  //           return this.store.queryRecord('user', {
-  //             current: true,
-  //             included: includes.join(',')
-  //           });
-  //         } else {
-  //           return Promise.reject();
-  //         }
-  //       })
-  //       .then(({ installation = null }) => {
-  //         this.currentUser.setProperties({ installation });
-  //       });
-  //   } else {
-  //     return Promise.resolve();
-  //   }
-  // },
-
-
   clearNonAuthFlashes() {
     const flashMessages = this.get('flashes.flashes') || [];
     const errorMessages = flashMessages.filterBy('type', 'error');
