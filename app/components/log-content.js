@@ -234,7 +234,7 @@ export default Component.extend({
   actions: {
     toTop() {
       Travis.tailing.stop();
-      return this.scroller.scrollToElement(this.element);
+      return this.scroller.scrollToElement(this.element, { duration: 100 });
     },
 
     toggleTailing() {
