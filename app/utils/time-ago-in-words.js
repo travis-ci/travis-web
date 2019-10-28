@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-moment.locale('en', { relativeTime: {
+moment.updateLocale('en', { relativeTime: {
   future: '%s from now',
   past: '%s ago',
   s: 'less than a minute',
@@ -8,7 +8,7 @@ moment.locale('en', { relativeTime: {
   mm: '%d minutes',
   h: 'about an hour',
   hh: '%d hours',
-  d: 'about 24 hours',
+  d: 'a day',
   dd: '%d days',
   M: 'about a month',
   MM: '%d months',
