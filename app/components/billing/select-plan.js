@@ -19,7 +19,7 @@ export default Component.extend({
   defaultPlanName: reads('plan.defaultPlanName'),
   isLoading: or('save.isRunning', 'accounts.fetchSubscriptions.isRunning'),
 
-  displayedPlans: computed('showAnnual', 'annualPlans', 'monthlyPlans', function () {
+  displayedPlans: computed('showAnnual', 'annualPlans.[]', 'monthlyPlans.[]', function () {
     return this.showAnnual ? this.annualPlans : this.monthlyPlans;
   }),
 
