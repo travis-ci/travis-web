@@ -6,21 +6,14 @@ export default SimpleLayoutRoute.extend({
   auth: service(),
 
   beforeModel(transition) {
-    if (!this.signedIn()) {
+    if (!this.auth.signedIn) {
       this.set('auth.afterSignInTransition', transition);
       return reject('needs-auth');
     }
   },
 
-  signedIn() {
-    return this.get('auth.currentUser');
-  },
-
-  model() {
-    return {};
-  },
-
-  setupController(controller, model) {
+  setupController(controller) {
+    this._super(...arguments);
     controller.startPolling();
   }
 });

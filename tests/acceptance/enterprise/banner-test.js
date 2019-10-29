@@ -1,4 +1,4 @@
-import { visit } from '@ember/test-helpers';
+import { settled, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import { enterpriseBanners } from 'travis/tests/pages/enterprise-banner';
@@ -26,6 +26,7 @@ module('Acceptance | enterprise/banner', function (hooks) {
   test('banner is rendered in enterprise mode', async function (assert) {
     enableFeature('enterpriseVersion');
     await visit('/');
+    await settled();
 
     assert.ok(enterpriseBanners.trialBanner.isVisible);
   });
