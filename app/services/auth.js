@@ -1,179 +1,168 @@
 /* global Travis */
-import { get, observer, computed } from '@ember/object';
-
+import URL from 'url';
+import {
+  computed,
+  getProperties,
+  observer,
+  get
+} from '@ember/object';
 import { isEmpty } from '@ember/utils';
-import { Promise as EmberPromise } from 'rsvp';
 import Service, { inject as service } from '@ember/service';
-import config from 'travis/config/environment';
-import { alias } from '@ember/object/computed';
+import { equal, reads } from '@ember/object/computed';
 import { getOwner } from '@ember/application';
+import config from 'travis/config/environment';
+import { task } from 'ember-concurrency';
 
-import URLPolyfill from 'travis/utils/url';
-
-const proVersion = config.featureFlags['pro-version'];
+const { authEndpoint, apiEndpoint, intercom = {} } = config;
 
 // Collects the list of includes from all requests
 // and ensures the future fetches don't override previously loaded includes
 let includes = [];
+
+const afterSignOutCallbacks = [];
+
+const STATE = {
+  SIGNED_OUT: 'signed-out',
+  SIGNED_IN: 'signed-in',
+  SIGNING_IN: 'signing-in'
+};
+
+const USER_FIELDS = ['id', 'login', 'token', 'correct_scopes', 'channels'];
+
+const TOKEN_EXPIRED_MSG = "You've been signed out, because your access token has expired.";
 
 export default Service.extend({
   router: service(),
   flashes: service(),
   intercom: service(),
   store: service(),
-  storage: service(),
+  localStorage: service('storage'),
   sessionStorage: service(),
   ajax: service(),
+  features: service(),
   metrics: service(),
 
-  state: 'signed-out',
-  receivingEnd: `${location.protocol}//${location.host}`,
-  tokenExpiredMsg: 'You\'ve been signed out, because your access token has expired.',
+  state: STATE.SIGNED_OUT,
 
-  init() {
-    this.afterSignOutCallbacks = [];
-    return this._super(...arguments);
-  },
+  signedIn: equal('state', STATE.SIGNED_IN),
+  signedOut: equal('state', STATE.SIGNED_OUT),
+  signingIn: equal('state', STATE.SIGNING_IN),
 
-  token: computed(function () {
-    return this.sessionStorage.getItem('travis.token');
+  isProVersion: reads('features.proVersion'),
+
+  storage: computed('sessionStorage.authUpdatedAt', 'localStorage.authUpdatedAt', function () {
+    // primary storage for auth is the one in which auth data was updated last
+    const { sessionStorage, localStorage } = this;
+    return sessionStorage.authUpdatedAt > localStorage.authUpdatedAt ? sessionStorage : localStorage;
   }),
 
-  assetToken() {
-    return JSON.parse(this.sessionStorage.getItem('travis.user'))['token'];
-  },
+  currentUser: null,
 
-  endpoint: config.authEndpoint || config.apiEndpoint,
+  permissions: reads('currentUser.permissions'),
 
-  signOut() {
-    this.sessionStorage.clear();
-    this.storage.clear();
-    this.set('state', 'signed-out');
-    this.set('user', null);
-    this.set('currentUser', null);
-    this.clearNonAuthFlashes();
-    this.runAfterSignOutCallbacks();
+  token: reads('storage.token'),
+  assetToken: reads('currentUser.token'),
+
+  userName: reads('currentUser.fullName'),
+  gravatarUrl: reads('currentUser.gravatarUrl'),
+
+  redirectUrl: null,
+
+  signOut(runTeardown = true) {
+    this.storage.clearAuthData();
+
+    this.setProperties({
+      state: STATE.SIGNED_OUT,
+      currentUser: null
+    });
+
+    if (runTeardown) {
+      this.clearNonAuthFlashes();
+      runAfterSignOutCallbacks();
+    }
     this.store.unloadAll();
   },
 
-  signIn(data, options = {}) {
-    if (data) {
-      this.autoSignIn(data);
-    } else {
-      this.set('state', 'signing-in');
+  afterSignOut(callback) {
+    afterSignOutCallbacks.push(callback);
+  },
 
-      let uri = options.redirectUri || window.location.href,
-        url = new URLPolyfill(uri);
+  signIn() {
+    this.autoSignIn();
+    if (this.signedIn) return;
 
-      if (url.pathname === '/plans') {
-        url.pathname = '/';
-      }
+    this.set('state', STATE.SIGNING_IN);
 
-      window.location = `${this.endpoint}/auth/handshake?redirect_uri=${url}`;
+    const url = new URL(this.redirectUrl || window.location.href);
+
+    if (url.pathname === '/plans') {
+      url.pathname = '/';
+    }
+    window.location.href = `${authEndpoint || apiEndpoint}/auth/handshake?redirect_uri=${url}`;
+  },
+
+  autoSignIn() {
+    try {
+      const data = JSON.parse(this.storage.user);
+      const userData = getProperties(data.user || data, USER_FIELDS);
+
+      this.validateUserData(userData);
+
+      this.setProperties({
+        currentUser: createUserRecord(this.store, userData),
+        state: STATE.SIGNED_IN
+      });
+
+      Travis.trigger('user:signed_in', this.currentUser);
+
+      this.reloadCurrentUser().then(() =>
+        Travis.trigger('user:refreshed', data.user)
+      );
+    } catch (error) {
+      this.signOut(false);
     }
   },
 
-  autoSignIn(data) {
-    if (!data) {
-      data = this.userDataFrom(this.sessionStorage) ||
-             this.userDataFrom(this.storage);
-    }
+  reloadCurrentUser(include = []) {
+    includes = includes.concat(include, ['owner.installation']).uniq();
+    return this.fetchCurrentUser.perform();
+  },
 
-    if (data) {
-      this.setData(data);
-      this.refreshUserData().then(() => {
-      }, (xhr) => {
-        // if xhr is not defined it means that scopes are not correct,
-        // so log the user out. Also log the user out if the response is 401
-        // or 403
-        if (!xhr || (xhr.status === 401 || xhr.status === 403)) {
-          this.flashes.error(this.tokenExpiredMsg);
-          this.signOut();
-        }
+  fetchCurrentUser: task(function* () {
+    try {
+      const options = { included: includes.join(',') };
+      yield this.currentUser.reload(options);
+      this.reportNewUser();
+      this.reportToIntercom();
+      return this.currentUser;
+    } catch (error) {
+      const status = +error.status || +get(error, 'errors.firstObject.status');
+      if (status === 401 || status === 403 || status === 500) {
+        this.flashes.error(TOKEN_EXPIRED_MSG);
+        this.signOut();
+      }
+    }
+  }).drop(),
+
+  validateUserData(user) {
+    const hasChannelsOnPro = field => field === 'channels' && !this.isProVersion;
+    const hasAllFields = USER_FIELDS.every(field => !!user[field] || hasChannelsOnPro(field));
+    if (!hasAllFields || !user.correct_scopes) {
+      throw new Error('User validation failed');
+    }
+  },
+
+  reportToIntercom() {
+    if (this.isProVersion && intercom.enabled) {
+      const { id, name, email, firstLoggedInAt, secureUserHash } = this.currentUser;
+      this.intercom.setProperties({
+        'user.id': id,
+        'user.name': name,
+        'user.email': email,
+        'user.createdAt': firstLoggedInAt,
+        'user.hash': secureUserHash
       });
     }
-  },
-
-  afterSignOut(callback) {
-    this.afterSignOutCallbacks.push(callback);
-  },
-
-  runAfterSignOutCallbacks() {
-    this.afterSignOutCallbacks.forEach((callback) => {
-      callback();
-    });
-  },
-
-  userDataFrom(storage) {
-    let token, user, userJSON;
-    userJSON = storage.getItem('travis.user');
-    if (userJSON != null) {
-      try {
-        user = JSON.parse(userJSON);
-      } catch (e) {
-        user = null;
-      }
-    }
-    if (user != null ? user.user : void 0) {
-      user = user.user;
-    }
-    token = storage.getItem('travis.token');
-    if (user && token && this.validateUser(user)) {
-      return {
-        user,
-        token
-      };
-    } else {
-      storage.removeItem('travis.user');
-      storage.removeItem('travis.token');
-      return null;
-    }
-  },
-
-  validateUser(user) {
-    let fieldsToValidate, isTravisBecome;
-    fieldsToValidate = ['id', 'login', 'token'];
-    isTravisBecome = this.sessionStorage.getItem('travis.become');
-    if (!isTravisBecome) {
-      fieldsToValidate.push('correct_scopes');
-    }
-    if (this.get('features.proVersion')) {
-      fieldsToValidate.push('channels');
-    }
-    return fieldsToValidate.every(field => this.validateHas(field, user)) &&
-      (isTravisBecome || user.correct_scopes);
-  },
-
-  validateHas(field, user) {
-    if (user[field]) {
-      return true;
-    } else {
-      return false;
-    }
-  },
-
-  setData(data) {
-    let user;
-    this.storeData(data, this.sessionStorage);
-    if (!this.userDataFrom(this.storage)) {
-      this.storeData(data, this.storage);
-    }
-    user = this.loadUser(data.user);
-    this.set('currentUser', user);
-    this.set('state', 'signed-in');
-    this.userSignedIn(data.user);
-  },
-
-  userSignedIn(user) {
-    this.reportNewUser();
-    if (proVersion && get(config, 'intercom.enabled')) {
-      this.intercom.set('user.id', user.id);
-      this.intercom.set('user.name', user.name);
-      this.intercom.set('user.email', user.email);
-      this.intercom.set('user.createdAt', user.first_logged_in_at);
-      this.intercom.set('user.hash', user.secure_user_hash);
-    }
-    Travis.trigger('user:signed_in', user);
   },
 
   reportNewUser() {
@@ -187,103 +176,12 @@ export default Service.extend({
     }
   },
 
-  refreshUserData(user, include = []) {
-    includes = includes.concat(include, ['owner.installation']).uniq();
-    if (!user) {
-      let data = this.userDataFrom(this.sessionStorage) ||
-                 this.userDataFrom(this.storage);
-      if (data) {
-        user = data.user;
-      }
-    }
-    if (user) {
-      return this.ajax.get(`/users/${user.id}`)
-        .then(data => {
-          let userRecord;
-          if (data.user.correct_scopes) {
-            userRecord = this.loadUser(data.user);
-            userRecord.get('permissions');
-            if (this.signedIn) {
-              data.user.token = user.token;
-              this.storeData(data, this.sessionStorage);
-              this.storeData(data, this.storage);
-              Travis.trigger('user:refreshed', data.user);
-            }
-            return this.store.queryRecord('user', {
-              current: true,
-              included: includes.join(',')
-            });
-          } else {
-            return EmberPromise.reject();
-          }
-        })
-        .then(({ installation = null }) => {
-          this.currentUser.setProperties({ installation });
-        })
-        .catch((exception) => {
-          if (exception.status && exception.status === 500) {
-            this.signOut();
-          }
-          throw exception;
-        });
-    } else {
-      return EmberPromise.resolve();
-    }
-  },
-
-  signedIn: computed('state', function () {
-    let state = this.state;
-    return state === 'signed-in';
-  }),
-
-  signedOut: computed('state', function () {
-    let state = this.state;
-    return state === 'signed-out';
-  }),
-
-  signingIn: computed('state', function () {
-    let state = this.state;
-    return state === 'signing-in';
-  }),
-
-  storeData(data, storage) {
-    if (data.token) {
-      storage.setItem('travis.token', data.token);
-    }
-    return storage.setItem('travis.user', JSON.stringify(data.user));
-  },
-
-  loadUser(user) {
-    let store = this.store,
-      userClass = store.modelFor('user'),
-      serializer = store.serializerFor('user'),
-      normalized = serializer.normalizeResponse(store, userClass, user, null, 'findRecord');
-
-    store.push(normalized);
-    const record =  store.recordForId('user', user.id);
-    const installation = store.peekAll('installation').findBy('owner.id', user.id) || null;
-    record.setProperties({ installation });
-    return record;
-  },
-
-  expectedOrigin() {
-    let endpoint = this.endpoint;
-    if (endpoint && endpoint[0] === '/') {
-      return this.receivingEnd;
-    } else {
-      let matches = endpoint.match(/^https?:\/\/[^\/]*/);
-      if (matches && matches.length) {
-        return matches[0];
-      }
-    }
-  },
-
   clearNonAuthFlashes() {
     const flashMessages = this.get('flashes.flashes') || [];
     const errorMessages = flashMessages.filterBy('type', 'error');
     if (!isEmpty(errorMessages)) {
       const errMsg = errorMessages.get('firstObject.message');
-      if (errMsg !== this.tokenExpiredMsg) {
+      if (errMsg !== TOKEN_EXPIRED_MSG) {
         return this.flashes.clear();
       }
     } else {
@@ -302,19 +200,6 @@ export default Service.extend({
     }
   }),
 
-  userName: computed('currentUser.{login,name}', function () {
-    let login = this.get('currentUser.login');
-    let name = this.get('currentUser.name');
-    return name || login;
-  }),
-
-  gravatarUrl: computed('currentUser.gravatarId', function () {
-    let gravatarId = this.get('currentUser.gravatarId');
-    return `${location.protocol}//www.gravatar.com/avatar/${gravatarId}?s=48&d=mm`;
-  }),
-
-  permissions: alias('currentUser.permissions'),
-
   actions: {
     signIn(runAfterSignIn) {
       let applicationRoute = getOwner(this).lookup('route:application');
@@ -326,3 +211,16 @@ export default Service.extend({
     }
   }
 });
+
+function createUserRecord(store, user) {
+  const record = store.push(store.normalize('user', user));
+  const installation = store.peekAll('installation').findBy('owner.id', user.id) || null;
+  record.setProperties({ installation });
+  return record;
+}
+
+function runAfterSignOutCallbacks() {
+  afterSignOutCallbacks.forEach(callback => callback());
+  afterSignOutCallbacks.clear();
+}
+

@@ -10,7 +10,7 @@ module('Acceptance | Profile | Migrate', function (hooks) {
 
   hooks.beforeEach(function () {
     this.user = server.create('user', {
-      allowMigration: true,
+      allow_migration: true,
       login: 'user-login',
       github_id: 1974,
     });
@@ -35,7 +35,9 @@ module('Acceptance | Profile | Migrate', function (hooks) {
 
       hooks.beforeEach(async function () {
         await profilePage.visit();
+        await settled();
         await profilePage.migrate.visit();
+        await settled();
       });
 
       test('is visitable', function (assert) {
@@ -58,6 +60,7 @@ module('Acceptance | Profile | Migrate', function (hooks) {
       hooks.beforeEach(async function () {
         generateRepositoriesForMigration(server, this.user);
         await profilePage.visit();
+        await settled();
         await profilePage.migrate.visit();
         await settled();
       });

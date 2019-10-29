@@ -1,9 +1,10 @@
 import {
   click,
-  currentURL,
   currentRouteName,
+  currentURL,
+  settled,
   visit,
-  waitFor,
+  waitFor
 } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
@@ -343,8 +344,9 @@ module('Acceptance | dashboard/repositories', function (hooks) {
     enableFeature('dashboard');
 
     await visit('/dashboard');
-
+    await settled();
     await click('[data-test-signout-link]');
+    await settled();
 
     assert.equal(currentURL(), '/');
   });
