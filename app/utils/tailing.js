@@ -6,8 +6,8 @@ export default (function () {
     this.document = this.window.document;
     this.tailSelector = tailSelector;
     this.logSelector = logSelector;
-    this.position = this.document.body.scrollTop;
-    this.window.scroll(() => {
+    this.position = this._scrollPosTop();
+    this.document.addEventListener('scroll', () => {
       throttle(this, this.onScroll, [], 200, false);
     });
     return this;
@@ -63,11 +63,20 @@ export default (function () {
       return false;
     }
     const log = this.log();
-    const logBottom = this._offsetTop(log) + log.offsetHeight + 40;
-    const winBottom = this.document.body.scrollTop + this.window.innerHeight;
-    if (logBottom - winBottom > 0) {
-      const newYpos = logBottom - this.window.innerHeight;
-      this.window.scrollTo(this.document.body.scrollLeft, newYpos);
+    const logOffset = this._offsetTop(log);
+    const logHeight = log.offsetHeight;
+    const logBottom = logOffset + logHeight + 40;
+
+    const scrollPosTop = this._scrollPosTop();
+    const windowHeight = this.window.innerHeight;
+    const winBottom = scrollPosTop + windowHeight;
+
+    const logWinDifference = logBottom - winBottom;
+
+    if (logWinDifference > 0) {
+      const newYpos = logBottom - windowHeight;
+      const newXpos = this._scrollPosLeft();
+      this.window.scrollTo(newXpos, newYpos);
       return true;
     } else {
       return false;
@@ -77,7 +86,7 @@ export default (function () {
   Tailing.prototype.onScroll = function () {
     let position;
     this.positionButton();
-    position = this.document.body.scrollTop;
+    position = this._scrollPosTop();
     if (position < this.position) {
       this.stop();
     }
@@ -92,7 +101,7 @@ export default (function () {
       return;
     }
 
-    offset = this.document.body.scrollTop - this._offSetTop(log);
+    offset = this._scrollPosTop() - this._offsetTop(log);
     max = log.clientHeight - tail.clientHeight + 5;
     if (offset > max) {
       offset = max;
@@ -107,10 +116,20 @@ export default (function () {
     return newOffset;
   };
 
-  Tailing.prototype._offSetTop = function (el) {
+  Tailing.prototype._offsetTop = function (el) {
     const { top } = el.getBoundingClientRect();
-    const { scrollTop = 0 } = this.document.body || {};
+    const scrollTop = this._scrollPosTop();
     return top + scrollTop;
+  };
+
+  Tailing.prototype._scrollPosTop = function () {
+    const { document, window } = this;
+    return window.scrollY || window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || document.getElementsByTagName('html')[0].scrollTop;
+  };
+
+  Tailing.prototype._scrollPosLeft = function () {
+    const { document, window } = this;
+    return window.scrollX || window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft || document.getElementsByTagName('html')[0].scrollTop;
   };
 
   return Tailing;
