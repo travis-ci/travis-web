@@ -39,7 +39,7 @@
       <LoadingIndicator/>
     {{else}}
       <button class='button--blue' {{action form.submit}} data-test-complete-payment='true'>
-        Pay {{format-currency this.price}}
+        Pay {{format-currency this.selectedPlan.price}}
       </button>
     {{/if}}
     </div>
