@@ -14,9 +14,9 @@ export default TravisRoute.extend({
 
   needsAuth: false,
 
-  model(params) {
-    if (params.redirectUri) {
-      return { redirectUri: params.redirectUri };
+  model({ redirectUri }) {
+    if (redirectUri) {
+      this.auth.set('redirectUrl', redirectUri);
     }
   },
 
@@ -27,23 +27,8 @@ export default TravisRoute.extend({
     });
   },
 
-  deactivate() {
-    return this.auth.set('redirected', false);
-  },
-
-  actions: {
-    afterSignIn() {
-      if (this.get('features.dashboard')) {
-        this.transitionTo('dashboard');
-      } else {
-        this.transitionTo('index');
-      }
-      return true;
-    }
-  },
-
   redirect() {
-    if (this.signedIn()) {
+    if (this.auth.signedIn) {
       if (this.get('features.dashboard')) {
         return this.transitionTo('dashboard');
       } else {

@@ -1,18 +1,37 @@
 import Service from '@ember/service';
-import Storage from 'travis/utils/hash-storage';
 
 export default Service.extend({
 
   get signupUsers() {
-    return JSON.parse(this.getItem('travis.signup.users'));
+    return JSON.parse(this.getItem('travis.signup.users')) || [];
   },
   set signupUsers(value) {
-    this.setItem('travis.signup.users', JSON.stringify(value));
+    this.setItem('travis.signup.users', JSON.stringify(value || []));
   },
 
   get storage() {
-    return window.localStorage || Storage.create();
+    return window.localStorage;
   },
+
+  get token() {
+    return this.getItem('travis.token');
+  },
+
+  get authUpdatedAt() {
+    return +this.getItem('travis.auth.updatedAt');
+  },
+
+  get user() {
+    return this.getItem('travis.user');
+  },
+
+  clearAuthData() {
+    this.removeItem('travis.token');
+    this.removeItem('travis.user');
+    this.removeItem('travis.auth.updatedAt');
+  },
+
+  // method proxies
 
   getItem(key) {
     return this.storage.getItem(key);

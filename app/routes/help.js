@@ -7,7 +7,6 @@ export default Route.extend({
   title: 'Travis CI - Help Center',
 
   afterModel() {
-    const { currentUser } = this.auth;
-    return this.auth.refreshUserData(currentUser, ['user.emails']);
+    return this.auth.reloadCurrentUser(['user.emails']);
   }
 });

@@ -121,6 +121,9 @@ export default Component.extend({
 
   didInsertElement() {
     this.flashes.clear();
+    if (!this.email && this.emails && this.emails.length) {
+      this.set('email', this.emails.firstObject);
+    }
     return this._super(...arguments);
   },
 
