@@ -35,7 +35,7 @@
     {{/if}}
   </StripeCard>
   <div class='billing-checkout__payment'>
-    {{#if this.isLoadsling}}
+    {{#if this.isLoading}}
       <LoadingIndicator/>
     {{else}}
       <button class='button--blue' {{action form.submit}} data-test-complete-payment='true'>
