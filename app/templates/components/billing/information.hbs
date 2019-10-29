@@ -1,7 +1,6 @@
 <div class='billing-information-form'>
   <Billing::SelectedPlan 
     @selectedPlan={{this.selectedPlan}} 
-    @showAnnual={{this.showAnnual}} 
     @goToFirstStep={{action this.goToFirstStep}}
   />
   <TravisForm @onSubmit={{action next}} as |form|>

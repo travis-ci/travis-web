@@ -14,10 +14,18 @@ export default Component.extend({
   metrics: service(),
   account: null,
 
-  showMonthly: reads('plan.showMonthly'),
-  displayedPlans: reads('plan.displayedPlans'),
-  selectedPlan: reads('plan.selectedPlan'),
-  showAnnual: reads('plan.showAnnual'),
+  showAnnual: false,
+  defaultPlanName: reads('plan.defaultPlanName'),
+  annualPlans: reads('plan.annualPlans'),
+  monthlyPlans: reads('plan.monthlyPlans'),
+
+  displayedPlans: computed('showAnnual', 'annualPlans', 'monthlyPlans', function () {
+    return this.showAnnual ? this.annualPlans : this.monthlyPlans;
+  }),
+
+  selectedPlan: computed('displayedPlans.[].name', 'defaultPlanName', function () {
+    return this.displayedPlans.findBy('name', this.defaultPlanName);
+  }),
 
   scrollSection: null,
   steps: computed(() => [...Object.values(STEPS)]),

@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
-import { or } from '@ember/object/computed';
+import { or, not } from '@ember/object/computed';
 
 export default Component.extend({
 
@@ -12,6 +12,8 @@ export default Component.extend({
   showPlansSelector: true,
   showCancelButton: false,
   title: null,
+  showAnnual: false,
+  showMonthly: not('showAnnual'),
   isLoading: or('save.isRunning', 'accounts.fetchSubscriptions.isRunning'),
 
   save: task(function* () {
@@ -25,7 +27,7 @@ export default Component.extend({
 
   actions: {
     togglePlanPeriod() {
-      this.plan.togglePlanPeriod();
-    }
+      this.toggleProperty('showAnnual');
+    },
   }
 });

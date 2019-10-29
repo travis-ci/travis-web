@@ -4,7 +4,6 @@
       @title="Subscribe to a plan"
       @displayedPlans={{this.displayedPlans}}
       @selectedPlan={{this.selectedPlan}}
-      @showMonthly={{this.showMonthly}}
       @showAnnual={{this.showAnnual}}
       @account={{this.account}}
       @submit={{action 'next'}}
@@ -15,7 +14,6 @@
       @selectedPlan={{this.selectedPlan}}
       @newSubscription={{this.newSubscription}}
       @billingInfo={{this.billingInfo}}
-      @showAnnual={{this.showAnnual}}
       @scrollSection={{this.scrollSection}}
       @next={{action 'next'}}
       @back={{action 'back'}}
@@ -24,7 +22,6 @@
   {{else if this.isStepThree}}
     <Billing::Payment
       @selectedPlan={{this.selectedPlan}}
-      @showAnnual={{this.showAnnual}}
       @newSubscription={{this.newSubscription}}
       @isSavingSubscription={{this.isSavingSubscription}}
       @account={{this.account}}

@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
-import { reads, not, equal, and, or } from '@ember/object/computed';
+import { reads, not, equal, and, or, bool } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
 import config from 'travis/config/environment';
 import { computed } from '@ember/object';
@@ -16,10 +16,11 @@ export default Component.extend({
 
   showPlansSelector: false,
   showCancelModal: false,
-  showMonthly: reads('plan.showMonthly'),
-  displayedPlans: reads('plan.displayedPlans'),
   selectedPlan: reads('subscription.plan'),
-  showAnnual: reads('plan.showAnnual'),
+  showAnnual: bool('subscription.plan.annual'),
+  showMonthly: not('showAnnual'),
+  annualPlans: reads('plan.annualPlans'),
+  monthlyPlans: reads('plan.monthlyPlans'),
 
   requiresSourceAction: equal('subscription.paymentIntent.status', 'requires_source_action'),
   requiresSource: equal('subscription.paymentIntent.status', 'requires_source'),
@@ -35,6 +36,10 @@ export default Component.extend({
 
   handleError: reads('stripe.handleError'),
   options: config.stripeOptions,
+
+  displayedPlans: computed('showAnnual', 'annualPlans', 'monthlyPlans', function () {
+    return this.showAnnual ? this.annualPlans : this.monthlyPlans;
+  }),
 
   stripeErrorMessage: computed('lastPaymentIntentError', function () {
     if (this.lastPaymentIntentError) {
