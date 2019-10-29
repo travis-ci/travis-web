@@ -10,22 +10,8 @@ const STEPS = {
 };
 
 export default Component.extend({
-  plan: service(),
   metrics: service(),
   account: null,
-
-  showAnnual: false,
-  defaultPlanName: reads('plan.defaultPlanName'),
-  annualPlans: reads('plan.annualPlans'),
-  monthlyPlans: reads('plan.monthlyPlans'),
-
-  displayedPlans: computed('showAnnual', 'annualPlans', 'monthlyPlans', function () {
-    return this.showAnnual ? this.annualPlans : this.monthlyPlans;
-  }),
-
-  selectedPlan: computed('displayedPlans.[].name', 'defaultPlanName', function () {
-    return this.displayedPlans.findBy('name', this.defaultPlanName);
-  }),
 
   scrollSection: null,
   steps: computed(() => [...Object.values(STEPS)]),
@@ -34,6 +20,7 @@ export default Component.extend({
   isStepOne: equal('currentStep', STEPS.ONE),
   isStepTwo: equal('currentStep', STEPS.TWO),
   isStepThree: equal('currentStep', STEPS.THREE),
+  selectedPlan: reads('newSubscription.plan'),
 
   trackButtonClicks() {
     if (this.currentStep === STEPS.ONE) {

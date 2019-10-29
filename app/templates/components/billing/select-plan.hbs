@@ -68,7 +68,7 @@
             onclick={{action form.submit}}
             class='{{if this.showCancelButton 'button--green' 'button--blue'}}'
           >
-            Subscribe @{{ this.account.login }} to {{selectedPlan.builds}} job plan
+            Subscribe @{{this.account.login}} to {{selectedPlan.builds}} job plan
           </button>
           {{#if this.showCancelButton}}
             <a data-test-cancel-button

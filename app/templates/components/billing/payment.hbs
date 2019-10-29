@@ -35,11 +35,11 @@
     {{/if}}
   </StripeCard>
   <div class='billing-checkout__payment'>
-    {{#if this.isLoading}}
+    {{#if this.isLoadsling}}
       <LoadingIndicator/>
     {{else}}
       <button class='button--blue' {{action form.submit}} data-test-complete-payment='true'>
-        Pay {{format-currency this.selectedPlan.price}}
+        Pay {{format-currency this.price}}
       </button>
     {{/if}}
     </div>

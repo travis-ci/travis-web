@@ -17,10 +17,8 @@ export default Component.extend({
   showPlansSelector: false,
   showCancelModal: false,
   selectedPlan: reads('subscription.plan'),
-  showAnnual: bool('subscription.plan.annual'),
+  showAnnual: bool('selectedPlan.annual'),
   showMonthly: not('showAnnual'),
-  annualPlans: reads('plan.annualPlans'),
-  monthlyPlans: reads('plan.monthlyPlans'),
 
   requiresSourceAction: equal('subscription.paymentIntent.status', 'requires_source_action'),
   requiresSource: equal('subscription.paymentIntent.status', 'requires_source'),
@@ -36,10 +34,6 @@ export default Component.extend({
 
   handleError: reads('stripe.handleError'),
   options: config.stripeOptions,
-
-  displayedPlans: computed('showAnnual', 'annualPlans', 'monthlyPlans', function () {
-    return this.showAnnual ? this.annualPlans : this.monthlyPlans;
-  }),
 
   stripeErrorMessage: computed('lastPaymentIntentError', function () {
     if (this.lastPaymentIntentError) {
