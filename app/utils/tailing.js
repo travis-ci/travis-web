@@ -28,38 +28,39 @@ export default (function () {
   Tailing.prototype.run = function () {
     this.autoScroll();
     this.positionButton();
-    if (this.active()) {
+    if (this.isActive()) {
       return later(this.run.bind(this), this.options.timeout);
     }
   };
 
   Tailing.prototype.toggle = function () {
-    if (this.active()) {
+    if (this.isActive()) {
       return this.stop();
     } else {
       return this.start();
     }
   };
 
-  Tailing.prototype.active = function () {
-    return this.tail().classList.contains('active');
-  };
-
   Tailing.prototype.start = function () {
-    this.tail().classList.add('active');
+    const tail = this.tail();
+    if (tail) {
+      tail.classList.add('active');
+    }
     return this.run();
   };
 
   Tailing.prototype.isActive = function () {
-    return this.tail().classList.contains('active');
+    const tail = this.tail();
+    return tail && tail.classList.contains('active');
   };
 
   Tailing.prototype.stop = function () {
-    return this.tail().classList.remove('active');
+    const tail = this.tail();
+    return tail && tail.classList.remove('active');
   };
 
   Tailing.prototype.autoScroll = function () {
-    if (!this.active()) {
+    if (!this.isActive()) {
       return false;
     }
     const log = this.log();
