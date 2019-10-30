@@ -69,7 +69,8 @@ export default Service.extend({
   redirectUrl: null,
 
   signOut(runTeardown = true) {
-    this.storage.clearAuthData();
+    this.localStorage.clearAuthData();
+    this.sessionStorage.clearAuthData();
 
     this.setProperties({
       state: STATE.SIGNED_OUT,
