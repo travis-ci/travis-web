@@ -387,14 +387,13 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.visit();
     await profilePage.billing.visit();
 
-    assert.ok(profilePage.billing.manageButton.isHidden);
-    assert.ok(profilePage.billing.userDetails.isHidden);
-    assert.ok(profilePage.billing.billingDetails.isHidden);
-    assert.ok(profilePage.billing.creditCardNumber.isHidden);
-    assert.ok(profilePage.billing.price.isHidden);
-    assert.ok(profilePage.billing.annualInvitation.isHidden);
-    assert.ok(profilePage.billing.invoices.isHidden);
-    assert.equal(profilePage.billing.expiryMessage.text, 'You had a manual subscription that expired on July 16, 2018. If you have any questions or would like to update your plan, please contact our support team.');
+    assert.equal(profilePage.billing.plan.name, 'Small Business1 plan expired manual subscription');
+    assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining('5 concurrent jobs Expired July 16, 2018');
+    assert.equal(profilePage.billing.planMessage.text, 'Expired July 16, 2018');
+    assert.equal(profilePage.billing.price.text, '$69');
+    assert.equal(profilePage.billing.billingFormHeading.text, 'Subscribe to a plan');
+    assert.dom(profilePage.billing.billingPlanChoices.boxes.scope).exists({ count: 5 });
+    assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe @user-login to 2 job plan');
   });
 
   test('view billing on a marketplace plan', async function (assert) {

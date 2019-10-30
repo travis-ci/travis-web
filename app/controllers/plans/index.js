@@ -3,25 +3,20 @@ import config from 'travis/config/environment';
 import { filterBy } from '@ember/object/computed';
 import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
-import { LEAD_UTM_FIELDS } from 'travis/models/lead';
 
 const { plans } = config;
 
-const leadSourceName = 'plans-page';
-const outgoingUtmSource = `?utm_source=${leadSourceName}`;
-const supportedUtmFields = Object.values(LEAD_UTM_FIELDS);
+const referralSourceName = 'plans-page';
 
 export default Controller.extend({
-  queryParams: supportedUtmFields,
-
   auth: service(),
   metrics: service(),
 
   config,
-  leadSourceName,
-  billingUrl: `${config.billingEndpoint}/${outgoingUtmSource}`,
-  buildMatrixUrl: `${config.urls.buildMatrix}${outgoingUtmSource}`,
-  enterpriseUrl: `${config.urls.enterprise}${outgoingUtmSource}`,
+  referralSourceName,
+  billingUrl: config.billingEndpoint,
+  buildMatrixUrl: config.urls.buildMatrix,
+  enterpriseUrl: config.urls.enterprise,
 
   plans: computed(() => plans),
   annualPlans: filterBy('plans', 'period', 'annual'),
@@ -39,9 +34,7 @@ export default Controller.extend({
   scrollToContact: false,
 
   actions: {
-    gaCta(location) {
-      const page = `/virtual/signup?${location}`;
-      this.metrics.trackPage({ page });
+    signIn() {
       this.auth.signIn();
     },
 
