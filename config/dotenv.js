@@ -3,7 +3,6 @@ module.exports = function (env) {
     clientAllowedKeys: [
       'API_ENDPOINT',
       'TRAVIS_PRO',
-      'TRAVIS_ENTERPRISE',
     ],
     failOnMissingKey: false,
   };
