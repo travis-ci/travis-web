@@ -1,12 +1,9 @@
 import { isNone } from '@ember/utils';
 
 import { Promise as EmberPromise } from 'rsvp';
-import $ from 'jquery';
 import { get } from '@ember/object';
 import Service, { inject as service } from '@ember/service';
 import config from 'travis/config/environment';
-
-$.support.cors = true;
 
 let defaultOptions = {
   accepts: {
@@ -120,10 +117,10 @@ export default Service.extend({
       return error.call(this, data, status, xhr);
     };
 
-    options = $.extend(options, defaultOptions);
+    options = Object.assign(options, defaultOptions);
 
     if (options.data && (method === 'GET' || method === 'HEAD')) {
-      params = $.param(options.data);
+      params = encodeURIComponent(JSON.stringify(options.data));
       delimeter = url.indexOf('?') === -1 ? '?' : '&';
       url = url + delimeter + params;
     }
@@ -161,7 +158,7 @@ export default Service.extend({
         data = (() => {
           if (contentType && contentType.match(/application\/json/)) {
             try {
-              return $.parseJSON(xhr.responseText);
+              return JSON.parse(xhr.responseText);
             } catch (error1) {
               if (this.features.get('debugLogging')) {
                 // eslint-disable-next-line
