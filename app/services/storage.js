@@ -33,6 +33,7 @@ export default Service.extend({
     this.removeItem('travis.token');
     this.removeItem('travis.user');
     this.removeItem('travis.auth.updatedAt');
+    this.removeItem('travis.auth.become');
   },
 
   // method proxies
