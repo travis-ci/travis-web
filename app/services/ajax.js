@@ -14,6 +14,11 @@ let defaultOptions = {
   }
 };
 
+const PERMITTED_NON_AUTH_REQUESTS = {};
+if (config.statusPageStatusUrl) {
+  PERMITTED_NON_AUTH_REQUESTS[`GET:${config.statusPageStatusUrl}`] = true;
+}
+
 export default Service.extend({
   auth: service(),
   features: service(),
@@ -69,16 +74,18 @@ export default Service.extend({
     });
   },
 
-  needsAuth() {
-    return true;
+  needsAuth(method, url) {
+    const authUnnecessary = PERMITTED_NON_AUTH_REQUESTS[`${method}:${url}`];
+    return !authUnnecessary;
   },
 
   ajax(url, method, options) {
     let accepts, data, delimeter, endpoint, error, key, name, params,
       promise, ref, ref1, ref2, reject, resolve, success, token, value, xhr;
     method = (method || 'GET').toUpperCase();
-    endpoint = config.apiEndpoint || '';
     options = options || {};
+    const { addEndpoint = true } = options;
+    endpoint = !addEndpoint ? '' : config.apiEndpoint || '';
     token = get(this, 'auth.token');
 
     options.headers = options.headers || {};
