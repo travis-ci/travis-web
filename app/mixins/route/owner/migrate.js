@@ -34,9 +34,9 @@ export default Mixin.create({
   },
 
   redirect(model, transition) {
-    if (!this.get('features.proVersion')) {
+    if (!this.get('features.proVersion') || this.get('features.enterpriseVersion')) {
       transition.abort();
-      this.transitionTo(`${model.isUser ? 'account' : 'organization'}.repositories`);
+      model.isUser ? this.transitionTo('account.repositories') : this.transitionTo('organization.repositories', model);
     }
   }
 
