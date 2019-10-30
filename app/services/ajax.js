@@ -98,7 +98,7 @@ export default Service.extend({
     options.type = method;
     options.dataType = options.dataType || 'json';
     options.context = this;
-    if (options.data && method !== 'GET') {
+    if (options.data && method !== 'GET' && options.stringifyData !== false) {
       options.data = JSON.stringify(options.data);
     }
     if (method !== 'GET' && method !== 'HEAD') {
@@ -120,7 +120,8 @@ export default Service.extend({
     options = Object.assign(options, defaultOptions);
 
     if (options.data && (method === 'GET' || method === 'HEAD')) {
-      params = encodeURIComponent(JSON.stringify(options.data));
+      params = typeof options.data === 'string' ? options.data : JSON.stringify(options.data);
+      params = encodeURIComponent(params);
       delimeter = url.indexOf('?') === -1 ? '?' : '&';
       url = url + delimeter + params;
     }
