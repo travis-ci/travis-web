@@ -147,7 +147,8 @@ export default Service.extend({
   validateUserData(user) {
     const hasChannelsOnPro = field => field === 'channels' && !this.isProVersion;
     const hasAllFields = USER_FIELDS.every(field => !!user[field] || hasChannelsOnPro(field));
-    if (!hasAllFields || !user.correct_scopes) {
+    const hasCorrectScopes = user.correct_scopes || this.storage.isBecome;
+    if (!hasAllFields || !hasCorrectScopes) {
       throw new Error('User validation failed');
     }
   },
