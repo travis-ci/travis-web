@@ -6,7 +6,7 @@ import {
   observer,
   get
 } from '@ember/object';
-import { isEmpty } from '@ember/utils';
+import { isEmpty, isPresent } from '@ember/utils';
 import Service, { inject as service } from '@ember/service';
 import { equal, reads } from '@ember/object/computed';
 import { getOwner } from '@ember/application';
@@ -146,7 +146,7 @@ export default Service.extend({
 
   validateUserData(user) {
     const hasChannelsOnPro = field => field === 'channels' && !this.isProVersion;
-    const hasAllFields = USER_FIELDS.every(field => !!user[field] || hasChannelsOnPro(field));
+    const hasAllFields = USER_FIELDS.every(field => isPresent(user[field]) || hasChannelsOnPro(field));
     const hasCorrectScopes = user.correct_scopes || this.storage.isBecome;
     if (!hasAllFields || !hasCorrectScopes) {
       throw new Error('User validation failed');
