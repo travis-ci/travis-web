@@ -33,6 +33,6 @@ __END__
 var storage = %s;
 storage.setItem('travis.token', %p);
 storage.setItem('travis.user',  %p);
-storage.setItem('travis.become', true);
-window.location = %p;
+storage.setItem('travis.auth.updatedAt', Date.now());
+window.location.href = %p;
 </script>
