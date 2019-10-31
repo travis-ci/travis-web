@@ -1,43 +1,39 @@
-{{#unless this.subscription.manualSubscriptionExpired}}
-  <section class="billing-subscription">
-    <section class='plan-overview mb-5'>
-      <h3 class='plan-overview__header'>
-        Overview
-      </h3>
-      <BillingSummaryStatus @subscription={{this.subscription}}/>
-      {{#if this.subscription.plan.builds}}
-        <p class="plan-overview__description" data-test-plan-concurrency>
-          {{pluralize this.subscription.plan.builds "concurrent job"}}
+<section>
+  {{#if this.subscription.manualSubscriptionExpired}}
+    <div class="billing-subscription">
+      <Billing::Summary 
+        @subscription={{this.subscription}} 
+        @account={{this.account}}
+        @planMessage="Expired"
+      />
+    </div>
+    <Billing::Process 
+      @account={{this.account}} 
+      @plans={{this.plans}} 
+      @newSubscription={{this.newSubscription}}
+    />
+  {{else}}
+    <section class="billing-subscription">
+      <Billing::Summary 
+        @subscription={{this.subscription}} 
+        @account={{this.account}}
+      />
+      <div class='mt-5'>
+        <h3>
+          Billing details
+        </h3>
+        <p class="flex px-4 py-5 shadow items-center notice-banner--white" data-test-help-text='true'>
+          <div class="mr-4">
+            <SvgImage @name='icon-help' @class='icon-help' />
+          </div>
+          <span class="py-1 leading-loose" data-test-manual-subscription-banner='true'>
+            This manual subscription is paid to Travis CI by bank transfer. If you have any questions or would like to update your plan,
+            <LinkTo @route='help' @query={{hash anchor='form'}}>
+              contact our support team.
+            </LinkTo>
+          </span>
         </p>
-      {{/if}}
-      <span class='plan-overview__description--validity dark-red' data-test-plan-message='true'>
-        Renews on {{moment-format this.subscription.validTo "MMMM D, YYYY"}}
-      </span>
+      </div>
     </section>
-    <hr/>
-    <section class='mt-5'>
-      <h3>
-        Billing details
-      </h3>
-      <p class="flex px-4 py-5 shadow items-center notice-banner--white" data-test-help-text='true'>
-        <div class="mr-4">
-          <SvgImage @name='icon-help' @class='icon-help' />
-        </div>
-        <span class="py-1 leading-loose" data-test-manual-subscription-banner='true'>
-          This manual subscription is paid to Travis CI by bank transfer. If you have any questions or would like to update your plan,
-          <LinkTo @route='help' @query={{hash anchor='form'}}>
-            contact our support team.
-          </LinkTo>
-        </span>
-      </p>
-    </section>
-  </section>
-{{else}}
-  <span data-test-expiry-message>
-    {{#if this.subscription.manualSubscriptionExpired}}
-      You had a {{this.subscription.sourceWords}} subscription that expired on
-      {{moment-format this.subscription.validTo "MMMM D, YYYY"}}.
-      <ManualSubscriptionHelp />
-    {{/if}}
-  </span>
-{{/unless}}
+  {{/if}}
+</section>

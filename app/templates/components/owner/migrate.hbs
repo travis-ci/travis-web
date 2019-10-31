@@ -36,7 +36,7 @@
           </ExternalLinkTo>
           <SvgImage @name={{vcs-icon this.owner.vcsType}} @class="migrate__github-icon" />
         </p>
-        {{/if}}
+      {{/if}}
       <div class="migrate__repo-list">
         <RepositoryFilter @repositories={{this.repositories}} as |filter|>
           {{#if this.showFilter}}

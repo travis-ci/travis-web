@@ -14,34 +14,21 @@ export default TravisRoute.extend({
 
   needsAuth: false,
 
-  model(params) {
-    if (params.redirectUri) {
-      return { redirectUri: params.redirectUri };
+  model({ redirectUri }) {
+    if (redirectUri) {
+      this.auth.set('redirectUrl', redirectUri);
     }
   },
 
-  renderTemplate() {
+  renderTemplate(controller, model) {
     $('body').attr('id', 'auth');
-    return this.render('signin');
-  },
-
-  deactivate() {
-    return this.auth.set('redirected', false);
-  },
-
-  actions: {
-    afterSignIn() {
-      if (this.get('features.dashboard')) {
-        this.transitionTo('dashboard');
-      } else {
-        this.transitionTo('index');
-      }
-      return true;
-    }
+    return this.render('signin', {
+      model
+    });
   },
 
   redirect() {
-    if (this.signedIn()) {
+    if (this.auth.signedIn) {
       if (this.get('features.dashboard')) {
         return this.transitionTo('dashboard');
       } else {
