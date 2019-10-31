@@ -66,4 +66,8 @@
       </div>
     {{/if}}
   {{/if}}
+{{else}}
+  {{#if this.islist}}
+    <LoadingIndicator @height={{true}} />
+  {{/if}}
 {{/if}}

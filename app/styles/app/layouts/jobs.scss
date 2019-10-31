@@ -45,6 +45,11 @@
     flex: 0 0 3rem;
     justify-content: flex-end;
     align-items: center;
+
+    .loading-indicator {
+      margin-bottom: 0;
+      margin-top: 0.5em;
+    }
   }
 }
 
