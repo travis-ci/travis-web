@@ -104,12 +104,28 @@ textarea {
     }
   }
 
-  .ssh-hint {
-    float: right;
-    padding: 0.5em 0;
-    margin: 0;
-    color: $cement-grey;
-    font-size: $font-size-sm;
+  .form-footer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-content: stretch;
+    align-items: flex-start;
+
+    .form-actions {
+      order: 0;
+      flex: 1 1 auto;
+      align-self: auto;
+    }
+
+    .form-hint {
+      order: 1;
+      flex: 0 1 auto;
+      align-self: center;
+      margin: 0;
+      color: $cement-grey;
+      font-size: $font-size-sm;
+    }
   }
 }
 
