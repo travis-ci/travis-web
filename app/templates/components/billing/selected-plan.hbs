@@ -22,7 +22,7 @@
         {{format-currency selectedPlan.price floor='true'}}
       </p>
       <span data-test-selected-plan-period='true' class='selected-plan__period'>
-        {{if this.annual '/year' '/month'}}
+        {{if this.selectedPlan.annual '/year' '/month'}}
       </span>
     </div>
   </div>
