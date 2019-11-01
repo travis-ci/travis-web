@@ -479,13 +479,16 @@
 
   .billing-subscription {
 
-    .manual-badge {
-      margin-left: 0;
+    .white-badge {
       font-weight: 600;
       border: 1px solid $pebble-grey;
       color: $asphalt-grey;
       border-radius: 3px;
       background: white;
+
+      &.manual {
+        margin-left: 0;
+      }
     }
 
     h3 {

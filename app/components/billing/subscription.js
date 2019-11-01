@@ -10,8 +10,6 @@ export default Component.extend({
 
   subscription: reads('account.subscription'),
   plans: reads('plan.plans'),
-  trial: reads('account.trial'),
-  isGithubTrial: and('subscription.isGithub', 'trial.hasActiveTrial'),
   authenticationNotRequired: not('subscription.clientSecret'),
   isPending: and('subscription.isPending', 'authenticationNotRequired'),
 });

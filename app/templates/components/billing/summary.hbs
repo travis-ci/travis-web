@@ -49,12 +49,19 @@
       </div>
     </section>
   </div>
-  <Billing::Authorization 
-    @subscription={{this.subscription}} 
-    @account={{this.account}}
-    @isPending={{this.isPending}}
-    @isComplete={{this.isComplete}}
-  />
+  {{#if (and (not this.subscription.isStripe) this.subscription.activeManagedSubscription)}}
+    <ManageSubscriptionButton
+      @subscription={{this.subscription}}
+      @account={{this.account}}
+    />
+  {{else}}
+    <Billing::Authorization 
+      @subscription={{this.subscription}} 
+      @account={{this.account}}
+      @isPending={{this.isPending}}
+      @isComplete={{this.isComplete}}
+    />
+  {{/if}}
 </div>
 <hr />
 {{#if this.showBillingInfo}}

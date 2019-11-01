@@ -7,6 +7,17 @@
       <div class="flex flex--v-center flex--col flex-md-row overview__body">
         <div class="get-started">
           {{#if this.trial.hasActiveTrial}}
+            {{#if this.isGithubTrial}}
+              <p data-test-trial-message class="source plan-status-message">
+                You're trialing Travis CI via your
+                <ExternalLinkTo
+                  @href={{config-get "marketplaceEndpoint"}}
+                  class="billing-section-link"
+                >
+                  Github Marketplace subscription.
+                </ExternalLinkTo>
+              </p>
+            {{/if}}
             {{#if (eq this.trial.buildsRemaining 100)}}
               <p class="get-started__message color-asphalt-grey" data-test-trial-message='true'>
                 Your trial is active!

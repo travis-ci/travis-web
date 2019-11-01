@@ -4,7 +4,7 @@
   {{else}}
     Unknown plan
   {{/if}}
-  {{#if (and this.subscription.isSubscribed (not this.subscription.isManual))}}
+  {{#if (and this.subscription.isSubscribed this.subscription.isStripe)}}
     <span class="badge green square" data-test-active-status='true'>
       active
     </span>
@@ -25,8 +25,15 @@
         active
       </span>
     {{/if}}
-    <span class="badge square manual-badge" data-test-manual-status='true'>
+    <span class="badge square white-badge manual" data-test-manual-status='true'>
       manual subscription
+    </span>
+  {{else if this.subscription.isGithub}}
+    <span class="badge green square" data-test-active-status='true'>
+      active
+    </span>
+    <span class="badge square white-badge" data-test-github-status='true'>
+      github market subscription
     </span>
   {{else}}
     <span class="badge grey square" data-test-grey-status='true'>
