@@ -25,6 +25,7 @@ export default Component.extend({
   city: reads('newSubscription.billingInfo.city'),
   country: reads('newSubscription.billingInfo.country'),
   isLoading: or('createSubscription.isRunning', 'accounts.fetchSubscriptions.isRunning'),
+  selectedPlan: reads('newSubscription.plan'),
 
   coupon: reads('newSubscription.validateCoupon.last.value'),
   couponError: reads('newSubscription.validateCoupon.last.error'),

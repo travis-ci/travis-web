@@ -4,6 +4,7 @@ import { inject as service } from '@ember/service';
 export default TravisRoute.extend({
   accounts: service(),
   features: service(),
+  auth: service(),
   needsAuth: true,
 
   titleToken(org = {}) {
@@ -11,7 +12,7 @@ export default TravisRoute.extend({
   },
 
   beforeModel() {
-    if (this.signedIn()) {
+    if (this.auth.signedIn) {
       const { fetchOrganizations } = this.accounts;
       const { lastSuccessful } = fetchOrganizations;
       if (lastSuccessful && lastSuccessful._promise) {

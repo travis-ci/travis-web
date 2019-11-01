@@ -1,10 +1,10 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
-import { or } from '@ember/object/computed';
+import { computed } from '@ember/object';
+import { or, not, reads } from '@ember/object/computed';
 
 export default Component.extend({
-
   plan: service(),
   accounts: service(),
 
@@ -12,8 +12,20 @@ export default Component.extend({
   showPlansSelector: true,
   showCancelButton: false,
   title: null,
-  selectedPlan: null,
+  showAnnual: false,
+  showMonthly: not('showAnnual'),
+  monthlyPlans: reads('plan.monthlyPlans'),
+  annualPlans: reads('plan.annualPlans'),
+  defaultPlanName: reads('plan.defaultPlanName'),
   isLoading: or('save.isRunning', 'accounts.fetchSubscriptions.isRunning'),
+
+  displayedPlans: computed('showAnnual', 'annualPlans.[]', 'monthlyPlans.[]', function () {
+    return this.showAnnual ? this.annualPlans : this.monthlyPlans;
+  }),
+
+  selectedPlan: computed('displayedPlans.[].name', 'defaultPlanName', function () {
+    return this.displayedPlans.findBy('name', this.defaultPlanName);
+  }),
 
   save: task(function* () {
     if (this.submit.perform) {
@@ -27,7 +39,7 @@ export default Component.extend({
 
   actions: {
     togglePlanPeriod() {
-      this.plan.togglePlanPeriod();
+      this.toggleProperty('showAnnual');
     },
   }
 });

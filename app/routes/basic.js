@@ -14,21 +14,13 @@ export default Route.extend({
   },
 
   beforeModel(transition) {
-    if (!this.signedIn()) {
-      this.auth.autoSignIn();
-    }
-    if (!this.signedIn() && this.needsAuth) {
-      this.set('auth.afterSignInTransition', transition);
+    if (!this.auth.signedIn && this.needsAuth) {
       return reject('needs-auth');
     } else if (this.redirectToProfile(transition)) {
       return this.transitionTo('account');
     } else {
       return this._super(...arguments);
     }
-  },
-
-  signedIn() {
-    return this.get('auth.currentUser');
   },
 
   redirectToProfile(transition) {

@@ -1,7 +1,6 @@
 <div class='billing-checkout' data-test-payment-form='true'>
   <Billing::SelectedPlan 
-    @selectedPlan={{this.newSubscription.plan}} 
-    @showAnnual={{this.showAnnual}} 
+    @selectedPlan={{this.selectedPlan}}
     @goToFirstStep={{action this.goToFirstStep}}
     @totalPrice={{this.totalPrice}}
   />

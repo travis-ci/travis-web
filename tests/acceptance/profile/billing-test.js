@@ -343,7 +343,7 @@ module('Acceptance | profile/billing', function (hooks) {
 
     await profilePage.billing.changePlanResubscribe.click();
     assert.dom(profilePage.billing.billingPlanChoices.boxes.scope).exists({ count: 5 });
-    assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe @user-login to 2 job plan');
+    assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe @user-login to 5 job plan');
   });
 
   test('view billing on a canceled stripe plan', async function (assert) {
