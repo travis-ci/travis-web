@@ -47,9 +47,10 @@
       height: 12px;
       margin-left: 2px;
       margin-right: 8px;
+      opacity: 0.8;
       path {
         stroke: $turf-green;
-        stroke-width: 2;
+        stroke-width: 1;
       }
     }
 
@@ -82,10 +83,6 @@
         }
       }
     }
-  }
-
-  .list {
-    border-top: 1px solid $pebble-grey;
   }
 
   .yml-message-link {

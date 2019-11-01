@@ -114,7 +114,7 @@ export default create({
       text: text(),
       id: attribute('id'),
     },
-    source: text('.file-name')
+    source: text('.header')
   }),
 
   jobYamlNote: {
