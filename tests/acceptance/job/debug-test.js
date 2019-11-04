@@ -1,4 +1,5 @@
 import { module, test } from 'qunit';
+import { settled } from '@ember/test-helpers';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import jobPage from 'travis/tests/pages/job';
 import topPage from 'travis/tests/pages/top';
@@ -41,6 +42,7 @@ module('Acceptance | jobs/debug', function (hooks) {
     await jobPage
       .visit()
       .debugJob();
+    await settled();
 
     assert.deepEqual(requestBodies.pop(), { quiet: true });
     assert.equal(topPage.flashMessage.text, 'The job was successfully restarted in debug mode but make sure to watch the log for a host to connect to.');
