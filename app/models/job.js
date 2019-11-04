@@ -15,7 +15,6 @@ import promiseObject from 'travis/utils/promise-object';
 
 export default Model.extend(DurationCalculations, DurationAttributes, {
   api: service(),
-  ajax: service(),
   jobConfigFetcher: service(),
   features: service(),
   logId: attr(),
@@ -116,7 +115,7 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
 
   removeLog() {
     const url = `/job/${this.id}/log`;
-    return this.ajax.deleteV3(url).then(() => this.reloadLog());
+    return this.api.delete(url).then(() => this.reloadLog());
   },
 
   reloadLog() {

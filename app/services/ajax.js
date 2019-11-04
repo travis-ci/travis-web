@@ -27,16 +27,6 @@ export default Service.extend({
     });
   },
 
-  getV3(url, callback, errorCallback) {
-    return this.ajax(url, 'get', {
-      success: callback,
-      error: errorCallback,
-      headers: {
-        'Travis-API-Version': '3'
-      }
-    });
-  },
-
   post(url, data, callback) {
     return this.ajax(url, 'post', {
       data,
@@ -44,30 +34,10 @@ export default Service.extend({
     });
   },
 
-  postV3(url, data, callback) {
-    return this.ajax(url, 'post', {
-      data: data,
-      success: callback,
-      headers: {
-        'Travis-API-Version': '3'
-      }
-    });
-  },
-
   patch(url, data, callback) {
     return this.ajax(url, 'patch', {
       data,
       success: callback
-    });
-  },
-
-  deleteV3(url, data, callback) {
-    return this.ajax(url, 'delete', {
-      data,
-      success: callback,
-      headers: {
-        'Travis-API-Version': '3'
-      }
     });
   },
 
