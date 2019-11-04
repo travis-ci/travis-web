@@ -3,6 +3,7 @@ import { isNone } from '@ember/utils';
 import { Promise as EmberPromise } from 'rsvp';
 import { get } from '@ember/object';
 import Service, { inject as service } from '@ember/service';
+import serializeQueryParams from 'ember-fetch/utils/serialize-query-params';
 import config from 'travis/config/environment';
 
 let defaultOptions = {
@@ -47,7 +48,7 @@ export default Service.extend({
   },
 
   ajax(url, method, options) {
-    let accepts, data, delimeter, endpoint, error, key, name, params,
+    let accepts, data, endpoint, error, key, name,
       promise, ref, ref1, ref2, reject, resolve, success, token, value, xhr;
     method = (method || 'GET').toUpperCase();
     options = options || {};
@@ -90,11 +91,11 @@ export default Service.extend({
     options = Object.assign(options, defaultOptions);
 
     if (options.data && (method === 'GET' || method === 'HEAD')) {
-      params = typeof options.data === 'string' ? options.data : JSON.stringify(options.data);
-      params = encodeURIComponent(params);
-      delimeter = url.indexOf('?') === -1 ? '?' : '&';
+      const params = serializeQueryParams(options.data);
+      const delimeter = url.indexOf('?') === -1 ? '?' : '&';
       url = url + delimeter + params;
     }
+
     xhr = new XMLHttpRequest();
     xhr.open(method, url);
     if (options.accepts && (((ref = options.headers) != null ? ref.accept : void 0) == null)) {
