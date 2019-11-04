@@ -39,7 +39,7 @@
         >
           <Field.input @name='couponId' @placeholder='Coupon code'/>
         </form.field>
-        <div class="coupon-validation__validate-button-wrapper">
+        <div class="coupon-validation__validate-button-wrapper {{if this.validateCoupon.isRunning 'coupon-loading'}}">
           {{#if this.validateCoupon.isRunning}}
             <LoadingIndicator/>
           {{else if this.isValidCoupon}}

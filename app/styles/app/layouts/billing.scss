@@ -26,15 +26,24 @@
 
     .coupon-validation {
 
+      height: 38px;
+      
       &__input {
         flex-basis: 85%;
       }
-
+      
       &__validate-button-wrapper {
         flex-basis: 20%;
         font-size: 14px;
         margin-left: 10px;
-        align-self: flex-end;
+        align-items: center;
+        display: flex;
+        justify-content: flex-end;
+        height: 38px;
+      }
+
+      .coupon-loading {
+        justify-content: center;
       }
 
       &__validate-button {
@@ -42,9 +51,7 @@
       }
 
       &__valid-coupon {
-        flex-basis: 80%;
         color: $ansi-green;
-        margin-top: 5px;
 
         .icon-passed {
           @include colorSVG($ansi-green);
@@ -55,7 +62,6 @@
 
       &__invalid-coupon {
         color:  $ansi-red;
-        margin-top: 5px;
 
         .icon {
           width: 20px;
