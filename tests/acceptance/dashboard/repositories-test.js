@@ -252,6 +252,7 @@ module('Acceptance | dashboard/repositories', function (hooks) {
     assert.equal(page.starredRepos.length, 1);
 
     await page.myBuilds.builds[0].restart();
+    await settled();
 
     assert.equal(topPage.flashMessage.text, 'The build was successfully restarted.');
 

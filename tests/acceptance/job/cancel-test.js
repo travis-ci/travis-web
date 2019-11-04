@@ -1,4 +1,5 @@
 import { module, test } from 'qunit';
+import { settled } from '@ember/test-helpers';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import jobPage from 'travis/tests/pages/job';
 import topPage from 'travis/tests/pages/top';
@@ -30,6 +31,7 @@ module('Acceptance | jobs/cancel', function (hooks) {
     await jobPage
       .visit()
       .cancelJob();
+    await settled();
 
     assert.equal(topPage.flashMessage.text, 'Job has been successfully cancelled.', 'cancelled job notification should be displayed');
   });

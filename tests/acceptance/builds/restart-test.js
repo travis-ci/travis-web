@@ -1,4 +1,5 @@
 import { module, test } from 'qunit';
+import { settled } from '@ember/test-helpers';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import buildPage from 'travis/tests/pages/build';
 import topPage from 'travis/tests/pages/top';
@@ -25,6 +26,7 @@ module('Acceptance | builds/restart', function (hooks) {
     await buildPage
       .visit({ owner: 'travis-ci', repo: 'travis-web', build_id: build.id })
       .restartBuild();
+    await settled();
 
     assert.equal(topPage.flashMessage.text, 'The build was successfully restarted.', 'restarted notification should display proper build restarted text');
 
