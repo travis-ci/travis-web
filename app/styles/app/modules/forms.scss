@@ -114,15 +114,15 @@ textarea {
 
     .form-actions {
       order: 0;
-      flex: 1 1 auto;
+      flex: 0 1 auto;
       align-self: auto;
     }
 
     .form-hint {
       order: 1;
-      flex: 0 1 auto;
+      flex: 1 1 auto;
       align-self: center;
-      margin: 0;
+      margin: 0 0 0 20px;
       color: $cement-grey;
       font-size: $font-size-sm;
     }
