@@ -11,6 +11,7 @@ module('Integration | Component | billing-summary-status', function (hooks) {
     this.subscription = {
       isSubscribed: true,
       isExpired: false,
+      isStripe: true,
       plan: {
         name: 'Bootstrap'
       }

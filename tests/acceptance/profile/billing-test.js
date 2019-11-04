@@ -420,15 +420,11 @@ module('Acceptance | profile/billing', function (hooks) {
 
     assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining(`5 concurrent jobs Expires ${momentFromNow} on June 19`);
     assert.equal(profilePage.billing.planMessage.text, `Expires ${momentFromNow} on June 19`);
-    assert.equal(profilePage.billing.marketplaceButton.text, 'Continue with GitHub Marketplace');
-    assert.equal(profilePage.billing.newSubscriptionButton.text, 'New subscription');
 
     assert.ok(profilePage.billing.userDetails.isHidden);
     assert.ok(profilePage.billing.billingDetails.isHidden);
     assert.ok(profilePage.billing.creditCardNumber.isHidden);
     assert.ok(profilePage.billing.annualInvitation.isHidden);
-
-    await profilePage.billing.newSubscriptionButton.click();
 
     assert.dom(profilePage.billing.billingPlanChoices.boxes.scope).exists({ count: 5 });
     assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe @user-login to 2 job plan');
@@ -441,15 +437,10 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.visit();
     await profilePage.billing.visit();
 
-    assert.equal(profilePage.billing.marketplaceButton.text, 'Continue with GitHub Marketplace');
-    assert.equal(profilePage.billing.newSubscriptionButton.text, 'New subscription');
-
     assert.ok(profilePage.billing.userDetails.isHidden);
     assert.ok(profilePage.billing.billingDetails.isHidden);
     assert.ok(profilePage.billing.creditCardNumber.isHidden);
     assert.ok(profilePage.billing.annualInvitation.isHidden);
-
-    await profilePage.billing.newSubscriptionButton.click();
 
     assert.dom(profilePage.billing.billingPlanChoices.boxes.scope).exists({ count: 5 });
     assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe @user-login to 2 job plan');
@@ -776,11 +767,8 @@ module('Acceptance | profile/billing', function (hooks) {
 
     percySnapshot(assert);
 
-    assert.equal(profilePage.billing.trial.name.text, "You're trialing Travis CI via your Github Marketplace subscription.");
-    assert.equal(profilePage.billing.manageButton.text, 'Edit subscription');
     assert.ok(profilePage.billing.creditCardNumber.isHidden);
-    assert.equal(profilePage.billing.source, 'This subscription is managed by GitHub Marketplace.');
-    assert.ok(profilePage.billing.annualInvitation.isHidden);
+    // Assert github trial here.
   });
 
   test('view billing tab with Github trial subscription has ended', async function (assert) {
@@ -804,10 +792,8 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.visitOrganization({ name: 'org-login' });
     await profilePage.billing.visit();
 
-    assert.equal(profilePage.billing.manageButton.text, 'Edit subscription');
     assert.ok(profilePage.billing.creditCardNumber.isHidden);
-    assert.equal(profilePage.billing.source, 'This subscription is managed by GitHub Marketplace.');
-    assert.ok(profilePage.billing.annualInvitation.isHidden);
+    // Assert github trial here.
   });
 
   test('view billing tab on education account', async function (assert) {

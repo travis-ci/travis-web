@@ -27,6 +27,7 @@ module('Integration | Component | billing-summary', function (hooks) {
       validTo: new Date(2018, 5, 19),
       status: 'subscribed',
       isSubscribed: true,
+      isStripe: true,
       isCanceled: false,
       isExpired: false,
       isPending: false,

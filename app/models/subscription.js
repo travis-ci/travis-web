@@ -15,8 +15,8 @@ export default Model.extend({
   api: service(),
   accounts: service(),
 
-  source: 'github', // attr(),
-  status: 'subscribed', // attr(),
+  source: attr(),
+  status: attr(),
   validTo: attr(),
   permissions: attr(),
   organizationId: attr(),
@@ -24,9 +24,9 @@ export default Model.extend({
   clientSecret: attr(),
   paymentIntent: attr(),
 
-  billingInfo: null, // belongsTo('billing-info', { async: false }),
-  creditCardInfo: null, // belongsTo('credit-card-info', { async: false }),
-  invoices: null, // hasMany('invoice'),
+  billingInfo: belongsTo('billing-info', { async: false }),
+  creditCardInfo: belongsTo('credit-card-info', { async: false }),
+  invoices: hasMany('invoice'),
   owner: belongsTo('owner', { polymorphic: true }),
   plan: belongsTo(),
 
