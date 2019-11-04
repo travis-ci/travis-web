@@ -6,7 +6,7 @@
   />
   <div class='billing-checkout__details' data-test-contact-details='true'>
     <div class='flex flex--wrap'>
-      <div class='flex--col-3'>
+      <div class='flex--col-2'>
         <h4 data-test-contact-heading='true'>contact details</h4>
         <p data-test-contact-firstName='true' class='billing-checkout__details--info'>{{concat this.firstName ' ' this.lastName}}</p>
         <p data-test-contact-company='true' class='billing-checkout__details--info'>{{this.company}}</p>
@@ -14,15 +14,11 @@
         <p data-test-contact-email='true' class='billing-checkout__details--email'>{{this.email}}</p>
         </div>
       </div>
-      <div class='flex--col-3'>
+      <div class='flex--col-2'>
         <h4 data-test-billing-heading='true'>billing details</h4>
         <p data-test-billing-address='true' class='billing-checkout__details--info'>{{this.address}}</p>
         <p data-test-billing-city='true' class='billing-checkout__details--info'>{{this.city}}</p>
         <p data-test-billing-country='true' class='billing-checkout__details--info'>{{this.country}}</p>
-      </div>
-      <div class='flex--col-3'>
-        <h4>discount</h4>
-        <p data-test-billing-coupon='true' class='billing-checkout__details--info'>{{this.couponId}}</p>
       </div>
       <button data-test-edit-billing-button='true' class='mt-3 button--white button--hover' {{on 'click' (action back)}}>Edit details</button>
     </div>
