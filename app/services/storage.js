@@ -17,18 +17,23 @@ export default Service.extend({
     return this.getItem('travis.token');
   },
 
+  get user() {
+    return this.getItem('travis.user');
+  },
+
   get authUpdatedAt() {
     return +this.getItem('travis.auth.updatedAt');
   },
 
-  get user() {
-    return this.getItem('travis.user');
+  get isBecome() {
+    return !!this.getItem('travis.auth.become');
   },
 
   clearAuthData() {
     this.removeItem('travis.token');
     this.removeItem('travis.user');
     this.removeItem('travis.auth.updatedAt');
+    this.removeItem('travis.auth.become');
   },
 
   // method proxies

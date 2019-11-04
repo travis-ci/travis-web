@@ -25,6 +25,7 @@ export default Component.extend({
   coupon: reads('newSubscription.coupon'),
   country: reads('newSubscription.billingInfo.country'),
   isLoading: or('createSubscription.isRunning', 'accounts.fetchSubscriptions.isRunning'),
+  selectedPlan: reads('newSubscription.plan'),
 
   createSubscription: task(function* () {
     this.metrics.trackEvent({

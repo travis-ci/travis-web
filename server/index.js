@@ -31,12 +31,16 @@ module.exports = function (app) {
         storage = 'sessionStorage';
       }
       var user = JSON.stringify(req.body['user']);
+      var become = req.body['become'];
 
       var responseText = `
         <script>
           var storage = ${storage};
           storage.setItem('travis.token', '${token}');
           storage.setItem('travis.user', ${user});
+          if (${become}) {
+            storage.setItem('travis.auth.become', true);
+          }
           storage.setItem('travis.auth.updatedAt', Date.now());
           window.location.href = '${req.path}';
         </script>
