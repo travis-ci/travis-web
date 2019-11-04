@@ -69,7 +69,7 @@ export default Service.extend({
     options.type = method;
     options.dataType = options.dataType || 'json';
     options.context = this;
-    if (options.data && method !== 'GET' && options.stringifyData !== false) {
+    if (options.data && method !== 'GET' && options.stringifyData !== false && typeof options.data !== 'string') {
       options.data = JSON.stringify(options.data);
     }
     if (method !== 'GET' && method !== 'HEAD') {

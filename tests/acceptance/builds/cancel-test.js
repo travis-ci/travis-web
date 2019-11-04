@@ -1,6 +1,6 @@
 import $ from 'jquery';
 import { module, test } from 'qunit';
-import { visit, click } from '@ember/test-helpers';
+import { visit, click, settled } from '@ember/test-helpers';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import getFaviconUri from 'travis/utils/favicon-data-uris';
@@ -27,7 +27,9 @@ module('Acceptance | builds/cancel', function (hooks) {
     });
 
     await visit(`/travis-ci/travis-web/builds/${build.id}`);
+    await settled();
     await click('[data-test-repo-actions-cancel-button]');
+    await settled();
 
     assert.dom('[data-test-flash-message-text]').hasText('Build has been successfully cancelled.', 'cancelled build notification should be displayed');
     assert.equal($('head link[rel=icon]').attr('href'), getFaviconUri('yellow'), 'expected the favicon data URI to match the one for running');
