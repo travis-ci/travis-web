@@ -39,7 +39,7 @@
         >
           <Field.input @name='couponId' @placeholder='Coupon code'/>
         </form.field>
-        <div class="coupon-validation__validate-button">
+        <div class="coupon-validation__validate-button-wrapper">
           {{#if this.validateCoupon.isRunning}}
             <LoadingIndicator/>
           {{else if this.isValidCoupon}}
@@ -53,7 +53,7 @@
               Coupon invalid
             </p>
           {{else}}
-            <button class='button--white' {{on 'click' form.submit}} data-test-coupon-button='true'>
+            <button class='button--white coupon-validation__validate-button' {{on 'click' form.submit}} data-test-coupon-button='true'>
               Validate coupon
             </button>
           {{/if}}
