@@ -12,8 +12,6 @@ const STEPS = {
 export default Component.extend({
   metrics: service(),
   account: null,
-
-  scrollSection: null,
   steps: computed(() => [...Object.values(STEPS)]),
 
   currentStep: reads('steps.firstObject'),
@@ -52,11 +50,10 @@ export default Component.extend({
       }
     },
 
-    back(scrollSection) {
+    back() {
       const currentIndex = this.steps.indexOf(this.currentStep);
       const prevIndex = Math.max(0, currentIndex - 1);
       this.set('currentStep', this.steps[prevIndex]);
-      this.set('scrollSection', scrollSection);
     },
 
     cancel() {
