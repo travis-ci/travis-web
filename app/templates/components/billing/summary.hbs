@@ -62,7 +62,7 @@
       {{/if}}
     </section>
   </div>
-  {{#if (and (not this.subscription.isStripe) this.subscription.activeManagedSubscription)}}
+  {{#if this.subscription.isGithub}}
     <ManageSubscriptionButton
       @subscription={{this.subscription}}
       @account={{this.account}}
