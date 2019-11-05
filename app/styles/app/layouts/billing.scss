@@ -520,6 +520,12 @@
         margin: 0;
       }
 
+      &__trial {
+        font-size: 14px;
+        font-weight: 400;
+        margin: 0;
+      }
+
       &__name {
         font-weight: 300;
         font-size: 24px;
@@ -529,12 +535,14 @@
 
       &__description {
         font-weight: 100;
-        margin-top: 4px;
-        margin-bottom: 4px;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        align-items: flex-end;
 
         &--validity {
           font-size: 12px;
           font-weight: 400;
+          padding-bottom: 3px;
         }
       }
     }

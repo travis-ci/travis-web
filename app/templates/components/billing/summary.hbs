@@ -4,12 +4,23 @@
       <h3 class='plan-overview__header'> Overview </h3>
       <div class='plan'>
         <div>
-          <BillingSummaryStatus @subscription={{this.subscription}}/>
-          <p class='plan-overview__description' data-test-plan-concurrency>
-            {{#if this.subscription.plan}}
-              {{pluralize this.subscription.plan.builds "concurrent job"}}
+          <BillingSummaryStatus 
+            @subscription={{this.subscription}}
+            @isGithubTrial={{this.isGithubTrial}}
+          />
+          <div class='plan-overview__description flex' data-test-plan-concurrency>
+            {{#if this.isGithubTrial}}
+              <p class="plan-overview__trial" data-test-trial-subtext='true'>
+                The trial includes {{pluralize this.subscription.plan.builds "concurrent job"}} <br/>for both public and private projects.
+              </p>
             {{else}}
-              Unknown concurrent jobs
+              <span>
+                {{#if this.subscription.plan}}
+                  {{pluralize this.subscription.plan.builds "concurrent job"}}
+                {{else}}
+                  Unknown concurrent jobs
+                {{/if}}
+              </span>
             {{/if}}
             {{#if (and this.subscription.isManual (not this.subscription.manualSubscriptionExpired))}}
               <span class='plan-overview__description--validity dark-red display mt-4' data-test-plan-message='true'>
@@ -29,24 +40,26 @@
                 {{/if}}
               </span>
             {{/if}}
-          </p>
+          </div>
         </div>
       </div>
     </section>
     <section>
-      <div class='selected-plan__price'>
-        <p class='selected-plan__price--total' data-test-plan-total='true'>
-          Total:
-        </p>
-        {{#if this.subscription.plan }}
-          <p class='selected-plan__price--large' data-test-price>
-            {{format-currency this.subscription.plan.price floor='true'}}
+      {{#if this.showPrice}}
+        <div class='selected-plan__price'>
+          <p class='selected-plan__price--total' data-test-plan-total='true'>
+            Total:
           </p>
-          <span data-test-selected-plan-period='true' class='selected-plan__period'>
-            {{if this.subscription.plan.annual '/year' '/month'}}
-          </span>
-        {{/if}}
-      </div>
+          {{#if this.subscription.plan }}
+            <p class='selected-plan__price--large' data-test-price>
+              {{format-currency this.subscription.plan.price floor='true'}}
+            </p>
+            <span data-test-selected-plan-period='true' class='selected-plan__period'>
+              {{if this.subscription.plan.annual '/year' '/month'}}
+            </span>
+          {{/if}}
+        </div>
+      {{/if}}
     </section>
   </div>
   {{#if (and (not this.subscription.isStripe) this.subscription.activeManagedSubscription)}}

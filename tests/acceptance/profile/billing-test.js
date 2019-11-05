@@ -402,10 +402,9 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.visit();
     await profilePage.billing.visit();
 
-    assert.ok(profilePage.billing.userDetails.isHidden);
-    assert.ok(profilePage.billing.billingDetails.isHidden);
-    assert.ok(profilePage.billing.creditCardNumber.isHidden);
-    assert.ok(profilePage.billing.annualInvitation.isHidden);
+    assert.equal(profilePage.billing.plan.name, 'Small Business1 plan github marketplace subscription');
+    assert.dom(profilePage.billing.plan.concurrency.scope)
+      .hasTextContaining('The trial includes 5 concurrent jobs for both public and private projects. Valid until June 19, 2018');
   });
 
   test('view billing on a canceled marketplace plan', async function (assert) {

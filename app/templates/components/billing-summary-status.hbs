@@ -29,9 +29,11 @@
       manual subscription
     </span>
   {{else if this.subscription.isGithub}}
-    <span class="badge green square" data-test-active-status='true'>
-      active
-    </span>
+    {{#if (not this.isGithubTrial)}}
+      <span class="badge green square" data-test-active-status='true'>
+        active
+      </span>
+    {{/if}}
     <span class="badge square white-badge" data-test-github-status='true'>
       github marketplace subscription
     </span>
