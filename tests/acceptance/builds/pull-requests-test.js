@@ -4,7 +4,6 @@ import page from 'travis/tests/pages/build-list';
 import topPage from 'travis/tests/pages/top';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { percySnapshot } from 'ember-percy';
-import { settled } from '@ember/test-helpers';
 
 module('Acceptance | builds/pull requests', function (hooks) {
   setupApplicationTest(hooks);
@@ -106,7 +105,6 @@ module('Acceptance | builds/pull requests', function (hooks) {
     percySnapshot(assert);
 
     await page.builds[0].cancelButton.click();
-    await settled();
 
     assert.equal(topPage.flashMessage.text, 'Build has been successfully cancelled.');
 

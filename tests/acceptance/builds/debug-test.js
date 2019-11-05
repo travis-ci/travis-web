@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import { visit, click, settled } from '@ember/test-helpers';
+import { visit, click } from '@ember/test-helpers';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { enableFeature } from 'ember-feature-flags/test-support';
@@ -35,9 +35,7 @@ module('Acceptance | builds/debug', function (hooks) {
     });
 
     await visit(`/travis-ci/travis-web/builds/${build.id}`);
-    await settled();
     await click('[data-test-repo-actions-debug-button]');
-    await settled();
 
     assert.deepEqual(requestBodies.pop(), { quiet: true });
     assert.dom('[data-test-flash-message-text]').hasText('The build was successfully restarted in debug mode but make sure to watch the log for a host to connect to.');
