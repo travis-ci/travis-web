@@ -5,7 +5,7 @@ import { setupTest } from 'ember-qunit';
 import config from 'travis/config/environment';
 
 const authServiceStub = Service.extend({
-  assetToken() {
+  get assetToken() {
     return 'token-abc-123';
   }
 });

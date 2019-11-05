@@ -36,7 +36,7 @@ const App = Application.extend(Evented, {
   },
 
   subscribePusher(user) {
-    if (!user.channels) {
+    if (!user || !user.channels) {
       return;
     }
     Travis.pusher.subscribeAll(user.channels);
