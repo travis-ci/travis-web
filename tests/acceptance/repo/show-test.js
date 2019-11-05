@@ -1,6 +1,4 @@
-import {
-  visit,
-} from '@ember/test-helpers';
+import { settled, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import page from 'travis/tests/pages/repo/show';
@@ -114,6 +112,7 @@ module('Acceptance | show repo page', function (hooks) {
 
   test('visiting the root shows the most recent current build', async function (assert) {
     await visit('/');
+    await settled();
 
     assert.equal(buildPage.requiredJobs.length, 2, 'expected two required jobs in the matrix');
     assert.equal(buildPage.allowedFailureJobs.length, 1, 'expected one allowed failure job');
