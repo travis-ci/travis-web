@@ -1,4 +1,3 @@
-import $ from 'jquery';
 import TravisRoute from 'travis/routes/basic';
 import { inject as service } from '@ember/service';
 
@@ -21,7 +20,7 @@ export default TravisRoute.extend({
   },
 
   renderTemplate(controller, model) {
-    $('body').attr('id', 'auth');
+    window.document.querySelector('body').setAttribute('id', 'auth');
     return this.render('signin', {
       model
     });

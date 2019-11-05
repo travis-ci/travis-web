@@ -1,5 +1,4 @@
 /* global Travis */
-import $ from 'jquery';
 import URL from 'url';
 import TravisRoute from 'travis/routes/basic';
 import config from 'travis/config/environment';
@@ -39,13 +38,6 @@ export default TravisRoute.extend(BuildFaviconMixin, {
       });
     }
 
-    return this._super(...arguments);
-  },
-
-  renderTemplate: function () {
-    if (this.get('features.proVersion')) {
-      $('body').addClass('pro');
-    }
     return this._super(...arguments);
   },
 
