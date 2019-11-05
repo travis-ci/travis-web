@@ -88,7 +88,7 @@ export default Service.extend({
       return error.call(this, data, status, xhr);
     };
 
-    options = Object.assign(options, defaultOptions);
+    options = Object.assign({}, defaultOptions, options);
 
     if (options.data && (method === 'GET' || method === 'HEAD')) {
       const params = serializeQueryParams(options.data);
