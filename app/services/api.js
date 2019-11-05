@@ -1,6 +1,6 @@
 import Service, { inject as service } from '@ember/service';
-import emberAjaxRequest from 'ember-ajax/request';
-import config from 'travis/config/environment';
+// import emberAjaxRequest from 'ember-ajax/request';
+// import config from 'travis/config/environment';
 
 export default Service.extend({
   ajax: service(),
@@ -29,25 +29,13 @@ export default Service.extend({
 
   request(url, method = 'GET', options = {}) {
     options.addEndpoint = true;
-    const { addEndpoint = true } = options;
-    const endpoint = !addEndpoint ? '' : config.apiEndpoint || '';
-    const requestUrl = `${endpoint}${url}`;
-
-
     options.headers = options.headers || {};
     options.headers['Travis-API-Version'] = '3';
-    if (!options.headers['Accept']) {
-      options.headers['Accept'] = 'application/json';
-    }
+    options.headers['Accept'] = 'application/json';
+    // options.contentType = 'application/json';
+    options.lib = 'fetch';
 
-    options.contentType = 'application/json';
-
-    if (options.data && options.stringifyData !== false) {
-      options.data = JSON.stringify(options.data);
-    }
-    options.method = method;
     // ajax.ajax returns a promise
-    // return this.ajax.ajax(url, method, options);
-    return emberAjaxRequest(requestUrl, options);
+    return this.ajax.ajax(url, method, options);
   }
 });

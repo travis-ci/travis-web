@@ -4,11 +4,12 @@ import { Promise as EmberPromise } from 'rsvp';
 import { get } from '@ember/object';
 import Service, { inject as service } from '@ember/service';
 import serializeQueryParams from 'ember-fetch/utils/serialize-query-params';
+import fetch from 'fetch';
 import config from 'travis/config/environment';
 
-let defaultOptions = {
-  accepts: {
-    json: 'application/json; version=2'
+const defaultOptions = {
+  headers: {
+    'Accept': 'application/json; version=2'
   }
 };
 
@@ -21,25 +22,16 @@ export default Service.extend({
   auth: service(),
   features: service(),
 
-  get(url, callback, errorCallback) {
-    return this.ajax(url, 'get', {
-      success: callback,
-      error: errorCallback
-    });
+  get(url, options) {
+    return this.ajax(url, 'GET', options);
   },
 
-  post(url, data, callback) {
-    return this.ajax(url, 'post', {
-      data,
-      success: callback
-    });
+  post(url, options) {
+    return this.ajax(url, 'POST', options);
   },
 
-  patch(url, data, callback) {
-    return this.ajax(url, 'patch', {
-      data,
-      success: callback
-    });
+  patch(url, options) {
+    return this.ajax(url, 'PATCH', options);
   },
 
   needsAuth(method, url) {
@@ -47,39 +39,54 @@ export default Service.extend({
     return !authUnnecessary;
   },
 
-  ajax(url, method, options) {
-    let accepts, data, endpoint, error, key, name,
-      promise, ref, ref1, ref2, reject, resolve, success, token, value, xhr;
-    method = (method || 'GET').toUpperCase();
-    options = options || {};
+  ajax(requestUrl, mthd, opts) {
+    const options = Object.assign({}, defaultOptions, (opts || {}));
+    const method = (mthd || 'GET').toUpperCase();
     const { addEndpoint = true } = options;
-    endpoint = !addEndpoint ? '' : config.apiEndpoint || '';
-    token = get(this, 'auth.token');
+    const endpoint = !addEndpoint ? '' : config.apiEndpoint || '';
+    let url = `${endpoint}${requestUrl}`;
+    const token = get(this, 'auth.token');
+
+    options.dataType = options.dataType || 'json';
+    options.lib = options.lib || 'xhr';
+    options.context = this;
+
+    if (method !== 'GET' && method !== 'HEAD') {
+      options.contentType = options.contentType || 'application/json; charset=utf-8';
+    }
+
+    if (options.data && method !== 'GET' && options.stringifyData !== false && typeof options.data !== 'string') {
+      options.data = JSON.stringify(options.data);
+    }
+
+    if (options.data && (method === 'GET' || method === 'HEAD')) {
+      const params = serializeQueryParams(options.data);
+      const delimeter = url.indexOf('?') === -1 ? '?' : '&';
+      url = url + delimeter + params;
+    }
 
     options.headers = options.headers || {};
-
+    if (config.release) {
+      options.headers['X-Client-Release'] = config.release;
+    }
     if (token && (this.needsAuth(method, url) || options.forceAuth)) {
       if (!options.headers['Authorization']) {
         options.headers['Authorization'] = `token ${token}`;
       }
     }
+    if (options.contentType) {
+      options.headers['Content-Type'] = options.contentType;
+    }
+    if (!options.headers['Accept']) {
+      options.headers['Accept'] = 'application/json';
+    }
 
-    options.headers['X-Client-Release'] = config.release;
-    options.url = url = `${endpoint}${url}`;
-    options.type = method;
-    options.dataType = options.dataType || 'json';
-    options.context = this;
-    if (options.data && method !== 'GET' && options.stringifyData !== false && typeof options.data !== 'string') {
-      options.data = JSON.stringify(options.data);
-    }
-    if (method !== 'GET' && method !== 'HEAD') {
-      options.contentType = options.contentType || 'application/json; charset=utf-8';
-    }
-    success = options.success || ((() => {}));
+    const success = options.success || ((() => {}));
     options.success = function (data, status, xhr) {
       return success.call(this, data, status, xhr);
     };
-    error = options.error || (() => {});
+
+    const error = options.error || (() => {});
     options.error = (data, status, xhr) => {
       if (this.features.get('debugLogging')) {
         // eslint-disable-next-line
@@ -88,38 +95,29 @@ export default Service.extend({
       return error.call(this, data, status, xhr);
     };
 
-    options = Object.assign({}, defaultOptions, options);
-
-    if (options.data && (method === 'GET' || method === 'HEAD')) {
-      const params = serializeQueryParams(options.data);
-      const delimeter = url.indexOf('?') === -1 ? '?' : '&';
-      url = url + delimeter + params;
+    if (options.lib === 'fetch') {
+      return this.fetch(url, method, options);
+    } else {
+      return this.xhrFetch(url, method, options);
     }
+  },
 
-    xhr = new XMLHttpRequest();
+  xhrFetch(url, method, options) {
+    const xhr = new XMLHttpRequest();
     xhr.open(method, url);
-    if (options.accepts && (((ref = options.headers) != null ? ref.accept : void 0) == null)) {
-      accepts = [];
-      ref1 = options.accepts;
-      for (key in ref1) {
-        value = ref1[key];
-        accepts.pushObject(value);
-      }
-      xhr.setRequestHeader('Accept', accepts.join(', '));
-    }
+
     if (options.headers) {
-      ref2 = options.headers;
+      const ref2 = options.headers;
+      let name, value;
       for (name in ref2) {
         value = ref2[name];
         xhr.setRequestHeader(name, value);
       }
     }
-    if (options.contentType) {
-      xhr.setRequestHeader('Content-Type', options.contentType);
-    }
-    resolve = null;
-    reject = null;
-    promise = new EmberPromise((_resolve, _reject) => {
+
+    let resolve = null;
+    let reject = null;
+    const promise = new EmberPromise((_resolve, _reject) => {
       resolve = _resolve;
       return reject = _reject;
     });
@@ -150,17 +148,34 @@ export default Service.extend({
         }
       }
     };
-    data = options.data;
-    let contentType = options.contentType;
-    let isJSON = isNone(contentType) || contentType.match(/application\/json/);
+
+    let data = options.data;
+    const contentType = options.contentType;
+    const isJSON = isNone(contentType) || contentType.match(/application\/json/);
     if (typeof options.data === 'object' && isJSON) {
       data = JSON.stringify(data);
     }
+
     if (data) {
       xhr.send(data);
     } else {
       xhr.send();
     }
+
     return promise;
-  }
+  },
+
+  fetch(url, method, options) {
+    return fetch(url, {
+      body: options.data,
+      method,
+      ...options,
+    }).then(response => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        console.log('Not ok:', response);
+      }
+    });
+  },
 });
