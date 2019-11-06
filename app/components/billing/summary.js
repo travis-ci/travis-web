@@ -21,5 +21,5 @@ export default Component.extend({
   showBillingInfo: and('subscription.isStripe', 'isCompleteAndNotExpired'),
   trial: reads('account.trial'),
   isGithubTrial: and('subscription.isGithub', 'trial.hasActiveTrial'),
-  showPrice: not('isGithubTrial')
+  isNotGithubTrial: not('isGithubTrial')
 });
