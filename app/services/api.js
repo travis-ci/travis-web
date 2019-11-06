@@ -1,6 +1,4 @@
 import Service, { inject as service } from '@ember/service';
-// import emberAjaxRequest from 'ember-ajax/request';
-// import config from 'travis/config/environment';
 
 export default Service.extend({
   ajax: service(),
@@ -32,7 +30,6 @@ export default Service.extend({
     options.headers = options.headers || {};
     options.headers['Travis-API-Version'] = '3';
     options.headers['Accept'] = 'application/json';
-    // options.contentType = 'application/json';
     options.lib = 'fetch';
 
     // ajax.ajax returns a promise

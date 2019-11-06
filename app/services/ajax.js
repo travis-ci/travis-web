@@ -59,10 +59,14 @@ export default Service.extend({
       options.data = JSON.stringify(options.data);
     }
 
-    if (options.data && (method === 'GET' || method === 'HEAD')) {
-      const params = serializeQueryParams(options.data);
-      const delimeter = url.indexOf('?') === -1 ? '?' : '&';
-      url = url + delimeter + params;
+    if (options.data) {
+      if (method === 'GET' || method === 'HEAD') {
+        const params = serializeQueryParams(options.data);
+        const delimeter = url.indexOf('?') === -1 ? '?' : '&';
+        url = url + delimeter + params;
+      } else {
+        options.body = options.data;
+      }
     }
 
     options.headers = options.headers || {};
@@ -166,16 +170,38 @@ export default Service.extend({
   },
 
   fetch(url, method, options) {
-    return fetch(url, {
-      body: options.data,
-      method,
-      ...options,
-    }).then(response => {
-      if (response.ok) {
-        return response.json();
-      } else {
-        console.log('Not ok:', response);
-      }
+    return new EmberPromise((resolve, reject) => {
+      const fetchOptions = {
+        method,
+        ...options,
+      };
+      fetch(url, fetchOptions).then(response => {
+        const { 'content-type': resContentType = '' } = response.headers.map;
+        let res;
+        if (resContentType.includes('application/json')) {
+          res = response.json();
+        } else {
+          res = response.text();
+        }
+
+        if (response.ok) {
+          resolve(res);
+        } else {
+          reject(response);
+          this.logFetchError(response);
+        }
+      }).then(error => {
+        reject(error);
+        this.logFetchError(error);
+      });
     });
+  },
+
+  logFetchError(response) {
+    if (this.features.get('debugLogging')) {
+      const { status = 'UNKNOWN' } = response;
+      // eslint-disable-next-line
+      console.log(`[ERROR] Fetch error (${status}): ${response}`);
+    }
   },
 });
