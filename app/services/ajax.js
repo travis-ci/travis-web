@@ -171,10 +171,14 @@ export default Service.extend({
 
   fetch(url, method, options) {
     return new EmberPromise((resolve, reject) => {
+      const { headers, body } = options;
       const fetchOptions = {
+        headers,
         method,
-        ...options,
       };
+      if (body) {
+        fetchOptions['body'] = body;
+      }
       fetch(url, fetchOptions).then(response => {
         const { 'content-type': resContentType = '' } = response.headers.map;
         let res;
