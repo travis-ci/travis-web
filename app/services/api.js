@@ -32,7 +32,6 @@ export default Service.extend({
     options.headers['Accept'] = 'application/json';
     options.lib = 'fetch';
 
-    // ajax.ajax returns a promise
-    return this.ajax.ajax(url, method, options);
+    return this.ajax.request(url, method, options);
   }
 });

@@ -23,15 +23,15 @@ export default Service.extend({
   features: service(),
 
   get(url, options) {
-    return this.ajax(url, 'GET', options);
+    return this.request(url, 'GET', options);
   },
 
   post(url, options) {
-    return this.ajax(url, 'POST', options);
+    return this.request(url, 'POST', options);
   },
 
   patch(url, options) {
-    return this.ajax(url, 'PATCH', options);
+    return this.request(url, 'PATCH', options);
   },
 
   needsAuth(method, url) {
@@ -39,7 +39,7 @@ export default Service.extend({
     return !authUnnecessary;
   },
 
-  ajax(requestUrl, mthd, opts) {
+  request(requestUrl, mthd, opts) {
     const options = Object.assign({}, defaultOptions, (opts || {}));
     const method = (mthd || 'GET').toUpperCase();
     const { addEndpoint = true } = options;
