@@ -138,7 +138,7 @@ export default Service.extend({
       this.reportNewUser();
       this.reportToIntercom();
       if (this.first_sync)
-        this.router.transitionTo('first_sync')
+        this.router.transitionTo('first_sync');
       return this.currentUser;
     } catch (error) {
       const status = +error.status || +get(error, 'errors.firstObject.status');
