@@ -15,6 +15,14 @@ export default Component.extend({
   copied: false,
   baseYmlName: '.travis.yml',
 
+  isExpanded: computed('rawConfig.config', function () {
+    return this.get('rawConfig.config') !== '{}';
+  }),
+
+  toggleStatusClass: computed('isExpanded', function () {
+    return this.isExpanded ? 'expanded' : 'collapsed';
+  }),
+
   buttonLabel: computed('copied', 'rawConfig.source', function () {
     let source = this.get('rawConfig.source');
     return this.copied ? 'Copied!' : `Copy ${fileNameWithoutSha(source)}`;
@@ -59,6 +67,9 @@ export default Component.extend({
     copied() {
       this.set('copied', true);
       later(() => this.set('copied', false), 3000);
+    },
+    toggle() {
+      this.toggleProperty('isExpanded');
     }
   }
 });

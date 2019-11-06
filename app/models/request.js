@@ -27,6 +27,7 @@ export default Model.extend({
   pullRequest: attr('boolean'),
   pullRequestTitle: attr('string'),
   pullRequestNumber: attr('number'),
+  config: attr(),
   raw_configs: attr(),
   uniqRawConfigs: uniqBy('raw_configs', 'source'),
   noYaml: empty('raw_configs'),
