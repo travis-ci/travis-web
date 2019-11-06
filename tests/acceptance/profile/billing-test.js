@@ -417,6 +417,7 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.visit();
     await profilePage.billing.visit();
 
+    assert.equal(profilePage.billing.plan.name, 'Small Business1 plan canceled github marketplace subscription');
     assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining(`5 concurrent jobs Expires ${momentFromNow} on June 19`);
     assert.equal(profilePage.billing.planMessage.text, `Expires ${momentFromNow} on June 19`);
 
@@ -441,6 +442,9 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.ok(profilePage.billing.creditCardNumber.isHidden);
     assert.ok(profilePage.billing.annualInvitation.isHidden);
 
+    assert.equal(profilePage.billing.plan.name, 'Small Business1 plan expired github marketplace subscription');
+    assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining('The trial includes 5 concurrent jobs for both public and private projects. Expired June 19, 2018');
+    assert.equal(profilePage.billing.planMessage.text, 'Expired June 19, 2018');
     assert.dom(profilePage.billing.billingPlanChoices.boxes.scope).exists({ count: 5 });
     assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe @user-login to 2 job plan');
   });

@@ -47,9 +47,8 @@ module('Integration | Component | billing-summary-status', function (hooks) {
       @isPending={{isPending}}
     />`);
 
-    assert.dom('[data-test-plan-name]').hasText('Bootstrap plan canceled expired');
+    assert.dom('[data-test-plan-name]').hasText('Bootstrap plan expired');
     assert.dom(profilePage.billing.billingSubscription.expiredStatus).hasText('expired');
-    assert.dom(profilePage.billing.billingSubscription.canceledStatus).hasText('canceled');
   });
 
   test('it renders incomplete status', async function (assert) {
@@ -91,15 +90,16 @@ module('Integration | Component | billing-summary-status', function (hooks) {
       ...this.subscription,
       status: 'canceled',
       isCanceled: true,
+      isExpired: false,
+      isPending: false,
       isSubscribed: false,
     });
 
     await render(hbs`<BillingSummaryStatus
       @subscription={{subscription}}
-      @isPending={{isPending}}
     />`);
 
     assert.dom('[data-test-plan-name]').hasText('Bootstrap plan canceled');
-    assert.dom(profilePage.billing.billingSubscription.greyStatus).hasText('canceled');
+    assert.dom(profilePage.billing.billingSubscription.canceledStatus).hasText('canceled');
   });
 });

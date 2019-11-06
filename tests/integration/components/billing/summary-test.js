@@ -105,7 +105,7 @@ module('Integration | Component | billing-summary', function (hooks) {
     />`);
 
     assert.dom('h3').hasText('Overview');
-    assert.equal(profilePage.billing.plan.name, 'A plan canceled expired');
+    assert.equal(profilePage.billing.plan.name, 'A plan expired');
     assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining(`5 concurrent jobs Expired ${date}`);
     assert.equal(profilePage.billing.planMessage.text, `Expired ${date}`);
     assert.equal(profilePage.billing.price.text, '$129');

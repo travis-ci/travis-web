@@ -4,18 +4,7 @@
   {{else}}
     Unknown plan
   {{/if}}
-  {{#if (and this.subscription.isSubscribed this.subscription.isStripe)}}
-    <span class="badge green square" data-test-active-status='true'>
-      active
-    </span>
-  {{else if this.subscription.isExpired}}
-    <span class="badge grey square" data-test-canceled-status='true'>
-      canceled
-    </span>
-    <span class="badge red square" data-test-expired-status='true'>
-      {{this.subscription.status}}
-    </span>
-  {{else if this.subscription.isManual}}
+  {{#if this.subscription.isManual}}
     {{#if this.subscription.manualSubscriptionExpired}}
       <span class="badge red square" data-test-expired-status='true'>
         expired
@@ -28,26 +17,29 @@
     <span class="badge square white-badge manual" data-test-manual-status='true'>
       manual subscription
     </span>
-  {{else if this.subscription.isGithub}}
-    {{#if this.subscription.isCanceled}}
-      <span class="badge grey square" data-test-canceled-status='true'>
-        canceled
+  {{else}}
+    {{#if this.subscription.isSubscribed}}
+      <span class="badge green square" data-test-active-status='true'>
+        active
       </span>
     {{else if this.subscription.isExpired}}
       <span class="badge red square" data-test-expired-status='true'>
         expired
       </span>
+    {{else if this.subscription.isCanceled}}
+      <span class="badge grey square" data-test-canceled-status='true'>
+        canceled
+      </span>
     {{else}}
-      <span class="badge green square" data-test-active-status='true'>
-        active
+      <span class="badge grey square" data-test-grey-status='true'>
+        {{this.subscription.status}}
       </span>
     {{/if}}
+  {{/if}}
+
+  {{#if this.subscription.isGithub}}
     <span class="badge square white-badge" data-test-github-status='true'>
       github marketplace subscription
-    </span>
-  {{else}}
-    <span class="badge grey square" data-test-grey-status='true'>
-      {{this.subscription.status}}
     </span>
   {{/if}}
 </p>
