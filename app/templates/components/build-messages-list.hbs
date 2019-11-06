@@ -10,10 +10,10 @@
         &mdash; {{this.summary}}
       {{/unless}}
       <div class="tools">
-        <SvgImage @name="icon-dropdown-arrow" @class="icon-toggle icon-{{this.toggleStatusClass}}" />
         <ExternalLinkTo href="{{config-get 'urls.buildConfigValidation'}}">
           <SvgImage @name='icon-help' @class='icon-help' />
         </ExternalLinkTo>
+        <SvgImage @name="icon-dropdown-arrow" @class="icon-toggle icon-{{this.toggleStatusClass}}" />
       </div>
     </div>
     {{#if this.isExpanded}}

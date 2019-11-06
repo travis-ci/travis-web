@@ -54,7 +54,32 @@ pre.codedisplay[class*='language-'] {
   padding: 1em;
 }
 
-.file-name {
+.header {
   padding: 1em;
-  border-bottom: 1px solid $pebble-grey;
+  cursor: pointer;
+
+  .tools {
+    position: absolute;
+    right: 1em;
+    top: 1em;
+
+    .icon-help {
+      margin: 0 3px 3px 0;
+    }
+
+    .icon-toggle {
+      height: 15px;
+      width: 15px;
+      vertical-align: middle;
+      transform: scale(0.9, 1.1);
+      path {
+        stroke: $cement-grey;
+        stroke-width: 1;
+      }
+
+      &.icon-expanded {
+        transform: scaleY(-1);
+      }
+    }
+  }
 }
