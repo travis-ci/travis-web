@@ -92,6 +92,7 @@ export default Component.extend({
 
     try {
       return yield this.ajax.post(`${apiHost}${createRequestEndpoint}`, {
+        lib: 'fetch',
         data: {
           request: {
             requester: { name, email },

@@ -26,8 +26,8 @@ export default Service.extend({
         const { status = {} } = yield this.ajax.get(
           statusPageStatusUrl,
           {
+            lib: 'fetch',
             addEndpoint: false,
-            success: data => data,
           }
         ) || {};
 

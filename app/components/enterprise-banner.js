@@ -24,7 +24,7 @@ export default Component.extend({
   fetchData: task(function* () {
     const url = '/v3/enterprise_license';
 
-    let response = yield this.ajax.get(url);
+    let response = yield this.ajax.get(url, { lib: 'fetch' });
 
     const exp = new Date(Date.parse(response.expiration_time));
     this.setProperties({
