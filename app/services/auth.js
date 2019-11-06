@@ -58,6 +58,8 @@ export default Service.extend({
 
   currentUser: null,
 
+  first_sync: false,
+
   permissions: reads('currentUser.permissions'),
 
   token: reads('storage.token'),
@@ -135,6 +137,8 @@ export default Service.extend({
       yield this.currentUser.reload(options);
       this.reportNewUser();
       this.reportToIntercom();
+      if (this.first_sync)
+        this.router.transitionTo('first_sync')
       return this.currentUser;
     } catch (error) {
       const status = +error.status || +get(error, 'errors.firstObject.status');
@@ -197,8 +201,8 @@ export default Service.extend({
 
   syncingDidChange: observer('isSyncing', 'currentUser', function () {
     const user = this.currentUser;
-    if (user && user.get('isSyncing') && !user.get('syncedAt')) {
-      return this.router.transitionTo('first_sync');
+    if (user && !user.get('syncedAt')) {
+      this.first_sync = true;
     }
   }),
 
