@@ -8,9 +8,12 @@ import fetch from 'fetch';
 import config from 'travis/config/environment';
 
 const defaultOptions = {
+  dataType: 'json',
+  endpoint: config.apiEndpoint || '',
   headers: {
     'Accept': 'application/json; version=2'
-  }
+  },
+  lib: 'fetch',
 };
 
 const PERMITTED_NON_AUTH_REQUESTS = {};
@@ -42,13 +45,10 @@ export default Service.extend({
   request(requestUrl, mthd, opts) {
     const options = Object.assign({}, defaultOptions, (opts || {}));
     const method = (mthd || 'GET').toUpperCase();
-    const { addEndpoint = true } = options;
-    const endpoint = !addEndpoint ? '' : config.apiEndpoint || '';
-    let url = `${endpoint}${requestUrl}`;
     const token = get(this, 'auth.token');
+    const { endpoint = '' } = options;
+    let url = `${endpoint}${requestUrl}`;
 
-    options.dataType = options.dataType || 'json';
-    options.lib = options.lib || 'xhr';
     options.context = this;
 
     if (method !== 'GET' && method !== 'HEAD') {
@@ -99,10 +99,10 @@ export default Service.extend({
       return error.call(this, data, status, xhr);
     };
 
-    if (options.lib === 'fetch') {
-      return this.fetch(url, method, options);
-    } else {
+    if (options.lib === 'xhr') {
       return this.xhrFetch(url, method, options);
+    } else {
+      return this.fetch(url, method, options);
     }
   },
 

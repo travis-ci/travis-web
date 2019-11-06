@@ -26,11 +26,9 @@ export default Service.extend({
   },
 
   request(url, method = 'GET', options = {}) {
-    options.addEndpoint = true;
     options.headers = options.headers || {};
     options.headers['Travis-API-Version'] = '3';
     options.headers['Accept'] = 'application/json';
-    options.lib = 'fetch';
 
     return this.ajax.request(url, method, options);
   }

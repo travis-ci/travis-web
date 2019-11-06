@@ -45,7 +45,6 @@ TravisPusher.prototype.init = function (config, ajaxService) {
           let channelName = channel.name;
 
           TravisPusher.ajaxService.post('/pusher/auth', {
-            lib: 'fetch',
             data: {
               socket_id: socketId,
               channels: [channelName]

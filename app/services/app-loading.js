@@ -25,10 +25,7 @@ export default Service.extend({
       try {
         const { status = {} } = yield this.ajax.get(
           statusPageStatusUrl,
-          {
-            lib: 'fetch',
-            addEndpoint: false,
-          }
+          { endpoint: '' }
         ) || {};
 
         const { indicator, description } = status;
