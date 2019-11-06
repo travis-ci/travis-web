@@ -91,18 +91,9 @@
       {{/if}}
     </div>
     <hr />
-    {{#if this.subscription.isGithub}}
-      <ExternalLinkTo
-        @href={{config-get "marketplaceEndpoint"}}
-        class="button--blue marketplace-button"
-      >
-        Manage on GitHub Marketplace
-      </ExternalLinkTo>
-    {{else}}
-      <Billing::Process
-        @account={{this.account}}
-        @newSubscription={{this.newSubscription}}
-      />
-    {{/if}}
   </div>
 </div>
+<Billing::Process
+  @account={{this.account}}
+  @newSubscription={{this.newSubscription}}
+/>

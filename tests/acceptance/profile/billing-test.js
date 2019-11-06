@@ -402,7 +402,7 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.visit();
     await profilePage.billing.visit();
 
-    assert.equal(profilePage.billing.plan.name, 'Small Business1 plan github marketplace subscription');
+    assert.equal(profilePage.billing.plan.name, 'Small Business1 plan active github marketplace subscription');
     assert.dom(profilePage.billing.plan.concurrency.scope)
       .hasTextContaining('The trial includes 5 concurrent jobs for both public and private projects. Valid until June 19, 2018');
   });
