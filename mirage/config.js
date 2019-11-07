@@ -385,6 +385,15 @@ export default function () {
     };
   });
 
+  this.delete('/settings/env_vars/:env_var_id', function (schema, request) {
+    schema.envVars
+      .where({ envVarId: request.params.env_var_id })
+      .models
+      .map(envVar => envVar.destroyRecord());
+
+    return new Response(204);
+  });
+
   this.get('/repo/:repository_id/branches', function (schema) {
     return schema.branches.all();
   });
