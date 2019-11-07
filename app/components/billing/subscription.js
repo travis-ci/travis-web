@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
-import { reads, and, not } from '@ember/object/computed';
+import { reads } from '@ember/object/computed';
 
 export default Component.extend({
   plan: service(),
@@ -9,7 +9,5 @@ export default Component.extend({
   newSubscriptionProcess: false,
 
   subscription: reads('account.subscription'),
-  plans: reads('plan.plans'),
-  authenticationNotRequired: not('subscription.clientSecret'),
-  isPending: and('subscription.isPending', 'authenticationNotRequired'),
+  plans: reads('plan.plans')
 });

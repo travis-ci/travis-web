@@ -1,36 +1,10 @@
 <section>
   <section class="billing-subscription">
-    {{#if this.subscription.isSubscribed}}
-      <Billing::Summary
-        @subscription={{this.subscription}}
-        @account={{this.account}}
-        @planMessage="Valid until"
-      />
-    {{else if this.subscription.isCanceled}}
-      <Billing::Summary 
-        @subscription={{this.subscription}} 
-        @account={{this.account}}
-        @planMessage="Expires"
-      />
-    {{else if this.subscription.isIncomplete}}
-      <Billing::Summary 
-        @subscription={{this.subscription}} 
-        @account={{this.account}}
-        @planMessage="Incomplete"
-      />
-    {{else if this.isPending}}
-      <Billing::Summary 
-        @subscription={{this.subscription}}
-        @account={{this.account}}
-        @isPending={{true}}
-      />
-    {{else if this.subscription.isExpired}}
-      <Billing::Summary 
-        @subscription={{this.subscription}}
-        @account={{this.account}}
-        @planMessage="Expired"
-      />
-    {{/if}}
+    <Billing::Summary
+      @subscription={{this.subscription}}
+      @account={{this.account}}
+      @planMessage="Valid until"
+    />
   </section>
   {{#if this.subscription.isGithubResubscribable}}
     <Billing::Process 

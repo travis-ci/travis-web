@@ -28,15 +28,16 @@
               </span>
             {{else}}
               <span data-test-plan-message='true' class='plan-overview__description--validity ml-3
-                {{if (or this.subscription.manualSubscriptionExpired this.canceledOrExpired) 'dark-red' 'cement-grey'}}'
+                {{if this.canceledOrExpired 'dark-red' 'cement-grey'}}'
               >
-                {{this.planMessage}} 
-                {{#if (and this.isComplete this.isNotPending)}}
-                  {{#if this.isCanceled}}
-                    {{moment-from-now this.subscription.validTo}} on {{moment-format this.subscription.validTo "MMMM DD"}}
-                  {{else}}
-                    {{moment-format this.subscription.validTo "MMMM D, YYYY"}}
-                  {{/if}}
+                {{#if this.isSubscribed}}
+                  Valid until {{moment-format this.subscription.validTo "MMMM D, YYYY"}}
+                {{else if this.isIncomplete}}
+                  Incomplete 
+                {{else if (and this.isComplete this.isCanceled)}}
+                  Expires {{moment-from-now this.subscription.validTo}} on {{moment-format this.subscription.validTo "MMMM DD"}}
+                {{else if (and this.isComplete this.isExpired)}}
+                  Expired {{moment-format this.subscription.validTo "MMMM D, YYYY"}}
                 {{/if}}
               </span>
             {{/if}}
