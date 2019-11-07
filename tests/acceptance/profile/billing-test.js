@@ -412,14 +412,12 @@ module('Acceptance | profile/billing', function (hooks) {
     this.subscription.source = 'github';
     this.subscription.status = 'canceled';
 
-    const momentFromNow = moment(this.subscription.valid_to.getTime()).fromNow();
-
     await profilePage.visit();
     await profilePage.billing.visit();
 
     assert.equal(profilePage.billing.plan.name, 'Small Business1 plan canceled github marketplace subscription');
-    assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining(`5 concurrent jobs Expires ${momentFromNow} on June 19`);
-    assert.equal(profilePage.billing.planMessage.text, `Expires ${momentFromNow} on June 19`);
+    assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining('5 concurrent jobs Cancelled on June 19, 2018');
+    assert.equal(profilePage.billing.planMessage.text, 'Cancelled on June 19, 2018');
 
     assert.ok(profilePage.billing.userDetails.isHidden);
     assert.ok(profilePage.billing.billingDetails.isHidden);

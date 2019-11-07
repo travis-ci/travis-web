@@ -7,7 +7,6 @@ export default Component.extend({
   account: null,
 
   isEditPlanLoading: reads('subscription.changePlan.isLoading'),
-
   isIncomplete: reads('subscription.isIncomplete'),
   authenticationNotRequired: not('subscription.clientSecret'),
   isPending: and('subscription.isPending', 'authenticationNotRequired'),
@@ -22,6 +21,7 @@ export default Component.extend({
   isCompleteAndNotExpired: and('hasNotExpired', 'isComplete'),
   showBillingInfo: and('subscription.isStripe', 'isCompleteAndNotExpired'),
   trial: reads('account.trial'),
-  isGithubTrial: and('subscription.isGithub', 'trial.hasActiveTrial'),
+  isGithubSubscription: reads('subscription.isGithub'),
+  isGithubTrial: and('isGithubSubscription', 'trial.hasActiveTrial'),
   isNotGithubTrial: not('isGithubTrial')
 });
