@@ -100,13 +100,13 @@ export default Service.extend({
     };
 
     if (options.lib === 'xhr') {
-      return this.xhrFetch(url, method, options);
+      return this.xhrRequest(url, method, options);
     } else {
-      return this.fetch(url, method, options);
+      return this.fetchRequest(url, method, options);
     }
   },
 
-  xhrFetch(url, method, options) {
+  xhrRequest(url, method, options) {
     const xhr = new XMLHttpRequest();
     xhr.open(method, url);
 
@@ -169,7 +169,7 @@ export default Service.extend({
     return promise;
   },
 
-  fetch(url, method, options) {
+  fetchRequest(url, method, options) {
     return new EmberPromise((resolve, reject) => {
       const { headers, body } = options;
       const fetchOptions = {
