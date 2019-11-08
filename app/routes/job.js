@@ -8,7 +8,7 @@ export default TravisRoute.extend({
     return `Job #${model.get('number')}`;
   },
 
-  serialize(model/* , params*/) {
+  serialize(model /* , params*/) {
     let id = model.get ? model.get('id') : model;
     return {
       job_id: id
@@ -17,6 +17,7 @@ export default TravisRoute.extend({
 
   setupController(controller, model) {
     let buildController, repo;
+
     if (model && !model.get) {
       model = this.store.recordForId('job', model);
       this.store.find('job', model);
@@ -28,7 +29,7 @@ export default TravisRoute.extend({
     model.get('repo');
     let buildPromise = model.get('build');
     if (buildPromise) {
-      buildPromise.then((build) => {
+      buildPromise.then(build => {
         build = this.store.recordForId('build', build.get('id'));
         return buildController.set('build', build);
       });
@@ -41,19 +42,21 @@ export default TravisRoute.extend({
   },
 
   model(params) {
-    return this.store.find('job', params.job_id);
+    return this.store.findRecord('job', params.job_id);
   },
 
   afterModel(job) {
     const slug = this.modelFor('repo').get('slug');
     this.ensureJobOwnership(job, slug);
-    return job.get('build.request').then(request => request && request.fetchMessages.perform());
+    return job
+      .get('build.request')
+      .then(request => request && request.fetchMessages.perform());
   },
 
   ensureJobOwnership(job, urlSlug) {
     const jobSlug = job.get('repositorySlug') || job.get('repo.slug');
     if (jobSlug !== urlSlug) {
-      throw (new Error('invalidJobId'));
+      throw new Error('invalidJobId');
     }
   },
 
