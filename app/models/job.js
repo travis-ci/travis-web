@@ -42,7 +42,7 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
   eventType: alias('build.eventType'),
 
   // TODO: DO NOT SET OTHER PROPERTIES WITHIN A COMPUTED PROPERTY!
-  log: computed(function() {
+  log: computed(function () {
     this.set('isLogAccessed', true);
     return Log.create({
       job: this,
@@ -51,7 +51,7 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
     });
   }),
 
-  config: computed(function() {
+  config: computed(function () {
     return promiseObject(this.jobConfigFetcher.fetch(this));
   }),
 
@@ -61,7 +61,7 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
     return this.get('currentState.stateName');
   },
 
-  isFinished: computed('state', function() {
+  isFinished: computed('state', function () {
     let state = this.state;
     let finishedStates = ['passed', 'failed', 'errored', 'canceled'];
     return finishedStates.includes(state);
@@ -73,19 +73,19 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
 
   isReceived: equal('state', 'received'),
 
-  toBeQueued: computed('state', function() {
+  toBeQueued: computed('state', function () {
     let state = this.state;
     let queuedState = 'created';
     return isEqual(state, queuedState);
   }),
 
-  toBeStarted: computed('state', function() {
+  toBeStarted: computed('state', function () {
     let state = this.state;
     let waitingStates = ['queued', 'received'];
     return waitingStates.includes(state);
   }),
 
-  notStarted: computed('state', function() {
+  notStarted: computed('state', function () {
     let state = this.state;
     let waitingStates = ['created', 'queued', 'received'];
     return waitingStates.includes(state);
@@ -97,7 +97,7 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
     }
   },
 
-  canCancel: computed('isFinished', 'state', function() {
+  canCancel: computed('isFinished', 'state', function () {
     let isFinished = this.isFinished;
     let state = this.state;
     // not(isFinished) is insufficient since it will be true when state is undefined.
@@ -143,7 +143,6 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
 
     this.set('subscribed', true);
 
-    debugger;
     return this.repo.then(repo => Travis.pusher.subscribe(this.channelName));
   },
 
@@ -152,7 +151,7 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
     'id',
     'features.enterpriseVersion',
     'features.proVersion',
-    function() {
+    function () {
       let isRepoPrivate = this.get('repo.private');
       let id = this.id;
       let enterprise = this.get('features.enterpriseVersion');
@@ -175,7 +174,7 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
     }
   },
 
-  onStateChange: observer('state', function() {
+  onStateChange: observer('state', function () {
     if (this.state === 'finished' && Travis.pusher) {
       return this.unsubscribe();
     }
@@ -183,7 +182,7 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
 
   canRemoveLog: not('log.removed'),
 
-  slug: computed('repo.slug', 'number', function() {
+  slug: computed('repo.slug', 'number', function () {
     let slug = this.get('repo.slug');
     let number = this.number;
     return `${slug} #${number}`;

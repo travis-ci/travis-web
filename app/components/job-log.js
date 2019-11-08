@@ -33,7 +33,7 @@ export default Component.extend({
     job.unsubscribe();
   },
 
-  setupLog: task(function*(job) {
+  setupLog: task(function* (job) {
     yield this.store.findRecord('job', job.id, {
       reload: false,
       backgroundReload: false
