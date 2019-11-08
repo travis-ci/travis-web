@@ -14,6 +14,7 @@ export default Store.extend(FilterMixin, {
 
   init() {
     this._super(...arguments);
+    this.shouldAssertMethodCallsOnDestroyedStore = true;
     this.filteredArraysManager = FilteredArrayManager.create({ store: this });
   },
 
