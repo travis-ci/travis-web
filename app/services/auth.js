@@ -116,9 +116,11 @@ export default Service.extend({
 
       Travis.trigger('user:signed_in', this.currentUser);
 
-      this.reloadCurrentUser().then(() =>
-        Travis.trigger('user:refreshed', data.user)
-      );
+      this.reloadCurrentUser().then(() => {
+        Travis.trigger('user:refreshed', data.user);
+        if (this.currentUser && this.currentUser.get('recentlySignedUp') && this.currentUser.get('recentlySignedUp') === true)
+          this.router.transitionTo('first_sync');
+      });
     } catch (error) {
       this.signOut(false);
     }
@@ -225,4 +227,3 @@ function runAfterSignOutCallbacks() {
   afterSignOutCallbacks.forEach(callback => callback());
   afterSignOutCallbacks.clear();
 }
-
