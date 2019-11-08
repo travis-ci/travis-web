@@ -119,7 +119,7 @@ export default Service.extend({
       this.reloadCurrentUser().then(() => {
         Travis.trigger('user:refreshed', data.user);
         if (this.currentUser && this.currentUser.get('recentlySignedUp') && this.currentUser.get('recentlySignedUp') === true)
-          this.router.transitionTo('first_sync');
+          metrics.trackPage({ page: '/first_sync' });
       });
     } catch (error) {
       this.signOut(false);
