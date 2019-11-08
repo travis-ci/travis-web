@@ -58,8 +58,6 @@ export default Service.extend({
 
   currentUser: null,
 
-  first_sync: false,
-
   permissions: reads('currentUser.permissions'),
 
   token: reads('storage.token'),
@@ -118,9 +116,11 @@ export default Service.extend({
 
       Travis.trigger('user:signed_in', this.currentUser);
 
-      this.reloadCurrentUser().then(() =>
-        Travis.trigger('user:refreshed', data.user)
-      );
+      this.reloadCurrentUser().then(() => {
+        Travis.trigger('user:refreshed', data.user);
+        if (this.currentUser && this.currentUser.get('recentlySignedUp') && this.currentUser.get('recentlySignedUp') === true)
+          this.router.transitionTo('first_sync');
+      });
     } catch (error) {
       this.signOut(false);
     }
@@ -137,8 +137,6 @@ export default Service.extend({
       yield this.currentUser.reload(options);
       this.reportNewUser();
       this.reportToIntercom();
-      if (this.first_sync)
-        this.router.transitionTo('first_sync');
       return this.currentUser;
     } catch (error) {
       const status = +error.status || +get(error, 'errors.firstObject.status');
@@ -201,8 +199,8 @@ export default Service.extend({
 
   syncingDidChange: observer('isSyncing', 'currentUser', function () {
     const user = this.currentUser;
-    if (user && !user.get('syncedAt')) {
-      this.first_sync = true;
+    if (user && user.get('isSyncing') && !user.get('syncedAt')) {
+      return this.router.transitionTo('first_sync');
     }
   }),
 
@@ -229,4 +227,3 @@ function runAfterSignOutCallbacks() {
   afterSignOutCallbacks.forEach(callback => callback());
   afterSignOutCallbacks.clear();
 }
-
