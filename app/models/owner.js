@@ -18,7 +18,7 @@ export default VcsEntity.extend({
   name: attr('string'),
   login: attr('string'),
   channels: attr(),
-  isSyncing: attr('boolean'),
+  isSyncing: attr(),
   syncedAt: attr(),
   createdAt: attr('date'),
   avatarUrl: attr('string'),
