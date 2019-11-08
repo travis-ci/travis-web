@@ -105,12 +105,12 @@ export default Owner.extend({
 
   sync() {
     return this.api
-      .post(`/user/${this.id}/sync`, {})
+      .post(`/user/${this.id}/sync`)
       .then(() => this.poll());
   },
 
   poll() {
-    return this.api.get('/user', (data) => {
+    return this.api.get('/user').then((data) => {
       if (data.is_syncing) {
         later(
           () => this.poll(),
@@ -127,7 +127,7 @@ export default Owner.extend({
 
   joinMigrateBeta(orgs = []) {
     const organizations = orgs.mapBy('login');
-    return this.api.post(`/user/${this.id}/beta_migration_request`, { organizations })
+    return this.api.post(`/user/${this.id}/beta_migration_request`, { data: { organizations } })
       .then(() => this.fetchBetaMigrationRequests());
   },
 
