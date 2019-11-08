@@ -1,110 +1,96 @@
 import { isNone } from '@ember/utils';
 
 import { Promise as EmberPromise } from 'rsvp';
-import $ from 'jquery';
 import { get } from '@ember/object';
 import Service, { inject as service } from '@ember/service';
+import serializeQueryParams from 'ember-fetch/utils/serialize-query-params';
+import fetch from 'fetch';
 import config from 'travis/config/environment';
 
-$.support.cors = true;
-
-let defaultOptions = {
-  accepts: {
-    json: 'application/json; version=2'
-  }
+const defaultOptions = {
+  dataType: 'json',
+  endpoint: config.apiEndpoint || '',
+  headers: {
+    'Accept': 'application/json; version=2'
+  },
+  lib: 'fetch',
 };
+
+const PERMITTED_NON_AUTH_REQUESTS = {};
+if (config.statusPageStatusUrl) {
+  PERMITTED_NON_AUTH_REQUESTS[`GET:${config.statusPageStatusUrl}`] = true;
+}
 
 export default Service.extend({
   auth: service(),
   features: service(),
 
-  get(url, callback, errorCallback) {
-    return this.ajax(url, 'get', {
-      success: callback,
-      error: errorCallback
-    });
+  get(url, options) {
+    return this.request(url, 'GET', options);
   },
 
-  getV3(url, callback, errorCallback) {
-    return this.ajax(url, 'get', {
-      success: callback,
-      error: errorCallback,
-      headers: {
-        'Travis-API-Version': '3'
+  post(url, options) {
+    return this.request(url, 'POST', options);
+  },
+
+  patch(url, options) {
+    return this.request(url, 'PATCH', options);
+  },
+
+  needsAuth(method, url) {
+    const authUnnecessary = PERMITTED_NON_AUTH_REQUESTS[`${method}:${url}`];
+    return !authUnnecessary;
+  },
+
+  request(requestUrl, mthd, opts) {
+    const options = Object.assign({}, defaultOptions, (opts || {}));
+    const method = (mthd || 'GET').toUpperCase();
+    const token = get(this, 'auth.token');
+    const { endpoint = '' } = options;
+    let url = `${endpoint}${requestUrl}`;
+
+    options.context = this;
+
+    if (method !== 'GET' && method !== 'HEAD') {
+      options.contentType = options.contentType || 'application/json; charset=utf-8';
+    }
+
+    if (options.data && method !== 'GET' && options.stringifyData !== false && typeof options.data !== 'string') {
+      options.data = JSON.stringify(options.data);
+    }
+
+    if (options.data) {
+      if (method === 'GET' || method === 'HEAD') {
+        const params = serializeQueryParams(options.data);
+        const delimeter = url.indexOf('?') === -1 ? '?' : '&';
+        url = url + delimeter + params;
+      } else {
+        options.body = options.data;
       }
-    });
-  },
-
-  post(url, data, callback) {
-    return this.ajax(url, 'post', {
-      data,
-      success: callback
-    });
-  },
-
-  postV3(url, data, callback) {
-    return this.ajax(url, 'post', {
-      data: data,
-      success: callback,
-      headers: {
-        'Travis-API-Version': '3'
-      }
-    });
-  },
-
-  patch(url, data, callback) {
-    return this.ajax(url, 'patch', {
-      data,
-      success: callback
-    });
-  },
-
-  deleteV3(url, data, callback) {
-    return this.ajax(url, 'delete', {
-      data,
-      success: callback,
-      headers: {
-        'Travis-API-Version': '3'
-      }
-    });
-  },
-
-  needsAuth() {
-    return true;
-  },
-
-  ajax(url, method, options) {
-    let accepts, data, delimeter, endpoint, error, key, name, params,
-      promise, ref, ref1, ref2, reject, resolve, success, token, value, xhr;
-    method = (method || 'GET').toUpperCase();
-    endpoint = config.apiEndpoint || '';
-    options = options || {};
-    token = get(this, 'auth.token');
+    }
 
     options.headers = options.headers || {};
-
+    if (config.release) {
+      options.headers['X-Client-Release'] = config.release;
+    }
     if (token && (this.needsAuth(method, url) || options.forceAuth)) {
       if (!options.headers['Authorization']) {
         options.headers['Authorization'] = `token ${token}`;
       }
     }
+    if (options.contentType) {
+      options.headers['Content-Type'] = options.contentType;
+    }
+    if (!options.headers['Accept']) {
+      options.headers['Accept'] = 'application/json';
+    }
 
-    options.headers['X-Client-Release'] = config.release;
-    options.url = url = `${endpoint}${url}`;
-    options.type = method;
-    options.dataType = options.dataType || 'json';
-    options.context = this;
-    if (options.data && method !== 'GET') {
-      options.data = JSON.stringify(options.data);
-    }
-    if (method !== 'GET' && method !== 'HEAD') {
-      options.contentType = options.contentType || 'application/json; charset=utf-8';
-    }
-    success = options.success || ((() => {}));
+    const success = options.success || ((() => {}));
     options.success = function (data, status, xhr) {
       return success.call(this, data, status, xhr);
     };
-    error = options.error || (() => {});
+
+    const error = options.error || (() => {});
     options.error = (data, status, xhr) => {
       if (this.features.get('debugLogging')) {
         // eslint-disable-next-line
@@ -113,37 +99,29 @@ export default Service.extend({
       return error.call(this, data, status, xhr);
     };
 
-    options = $.extend(options, defaultOptions);
+    if (options.lib === 'xhr') {
+      return this.xhrRequest(url, method, options);
+    } else {
+      return this.fetchRequest(url, method, options);
+    }
+  },
 
-    if (options.data && (method === 'GET' || method === 'HEAD')) {
-      params = $.param(options.data);
-      delimeter = url.indexOf('?') === -1 ? '?' : '&';
-      url = url + delimeter + params;
-    }
-    xhr = new XMLHttpRequest();
+  xhrRequest(url, method, options) {
+    const xhr = new XMLHttpRequest();
     xhr.open(method, url);
-    if (options.accepts && (((ref = options.headers) != null ? ref.accept : void 0) == null)) {
-      accepts = [];
-      ref1 = options.accepts;
-      for (key in ref1) {
-        value = ref1[key];
-        accepts.pushObject(value);
-      }
-      xhr.setRequestHeader('Accept', accepts.join(', '));
-    }
+
     if (options.headers) {
-      ref2 = options.headers;
+      const ref2 = options.headers;
+      let name, value;
       for (name in ref2) {
         value = ref2[name];
         xhr.setRequestHeader(name, value);
       }
     }
-    if (options.contentType) {
-      xhr.setRequestHeader('Content-Type', options.contentType);
-    }
-    resolve = null;
-    reject = null;
-    promise = new EmberPromise((_resolve, _reject) => {
+
+    let resolve = null;
+    let reject = null;
+    const promise = new EmberPromise((_resolve, _reject) => {
       resolve = _resolve;
       return reject = _reject;
     });
@@ -154,7 +132,7 @@ export default Service.extend({
         data = (() => {
           if (contentType && contentType.match(/application\/json/)) {
             try {
-              return $.parseJSON(xhr.responseText);
+              return JSON.parse(xhr.responseText);
             } catch (error1) {
               if (this.features.get('debugLogging')) {
                 // eslint-disable-next-line
@@ -174,17 +152,60 @@ export default Service.extend({
         }
       }
     };
-    data = options.data;
-    let contentType = options.contentType;
-    let isJSON = isNone(contentType) || contentType.match(/application\/json/);
+
+    let data = options.data;
+    const contentType = options.contentType;
+    const isJSON = isNone(contentType) || contentType.match(/application\/json/);
     if (typeof options.data === 'object' && isJSON) {
       data = JSON.stringify(data);
     }
+
     if (data) {
       xhr.send(data);
     } else {
       xhr.send();
     }
+
     return promise;
-  }
+  },
+
+  fetchRequest(url, method, options) {
+    return new EmberPromise((resolve, reject) => {
+      const { headers, body } = options;
+      const fetchOptions = {
+        headers,
+        method,
+      };
+      if (body) {
+        fetchOptions['body'] = body;
+      }
+      fetch(url, fetchOptions).then(response => {
+        const { 'content-type': resContentType = '' } = response.headers.map;
+        let res;
+        if (resContentType.includes('application/json')) {
+          res = response.json();
+        } else {
+          res = response.text();
+        }
+
+        if (response.ok) {
+          resolve(res);
+        } else {
+          reject(response);
+          this.logFetchError(response);
+        }
+      }).then(error => {
+        reject(error);
+        this.logFetchError(error);
+      });
+    });
+  },
+
+  logFetchError(response) {
+    if (this.features.get('debugLogging')) {
+      const { status = 'UNKNOWN' } = response;
+      // eslint-disable-next-line
+      console.log(`[ERROR] Fetch error (${status}): ${response}`);
+    }
+  },
 });
