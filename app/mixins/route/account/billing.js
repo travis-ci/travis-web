@@ -4,6 +4,7 @@ import { inject as service } from '@ember/service';
 export default Mixin.create({
   stripe: service(),
   store: service(),
+  storage: service(),
 
   beforeModel() {
     return this.stripe.load();

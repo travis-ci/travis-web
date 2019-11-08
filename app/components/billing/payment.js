@@ -9,6 +9,7 @@ export default Component.extend({
   accounts: service(),
   flashes: service(),
   metrics: service(),
+  storage: service(),
 
   account: null,
   stripeElement: null,
@@ -53,11 +54,18 @@ export default Component.extend({
         const { clientSecret } = yield newSubscription.save();
         this.metrics.trackEvent({ button: 'pay-button' });
         yield this.stripe.handleStripePayment.perform(clientSecret);
+        this.clearBillingData();
       }
     } catch (error) {
       this.handleError();
     }
   }).drop(),
+
+  clearBillingData() {
+    this.storage.removeItem('travis.billing_step');
+    this.storage.removeItem('travis.selected_plan');
+    this.storage.removeItem('travis.billing_info');
+  },
 
   validateCoupon: task(function* () {
     yield this.newSubscription.validateCoupon.perform(this.couponId);
