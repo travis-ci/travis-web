@@ -7,7 +7,6 @@ import { or, not, reads } from '@ember/object/computed';
 export default Component.extend({
   plan: service(),
   accounts: service(),
-  storage: service(),
 
   account: null,
   showPlansSelector: true,
