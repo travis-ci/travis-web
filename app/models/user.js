@@ -16,9 +16,8 @@ export default Owner.extend({
   token: attr('string'),
   secureUserHash: attr('string'),
   gravatarId: attr('string'),
-  firstLoggedInAt: attr(),
+  firstLoggedInAt: attr('date'),
   allowMigration: attr('boolean'),
-  recentlySignedUp: attr(),
 
   type: 'user',
 
