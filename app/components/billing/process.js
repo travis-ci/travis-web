@@ -16,7 +16,10 @@ export default Component.extend({
   account: null,
   steps: computed(() => [...Object.values(STEPS)]),
 
-  currentStep: reads('steps.firstObject'),
+  currentStep: computed(function () {
+    return this.storage.billingStep || STEPS.ONE;
+  }),
+
   isStepOne: equal('currentStep', STEPS.ONE),
   isStepTwo: equal('currentStep', STEPS.TWO),
   isStepThree: equal('currentStep', STEPS.THREE),
@@ -40,8 +43,8 @@ export default Component.extend({
   persistBillingData(step) {
     this.storage.setItem('travis.billing_step', step);
     if (this.isStepTwo) {
-      const selectPlanName = this.selectedPlan.get('name');
-      this.storage.setItem('travis.selected_plan', selectPlanName);
+      const plan = this.selectedPlan.getProperties(['name', 'builds', 'price', 'annual']);
+      this.storage.setItem('travis.selected_plan', JSON.stringify(plan));
     } else if (this.isStepThree) {
       this.storage.setItem('travis.billing_info', JSON.stringify(this.billingInfo));
     }
@@ -68,7 +71,9 @@ export default Component.extend({
     back() {
       const currentIndex = this.steps.indexOf(this.currentStep);
       const prevIndex = Math.max(0, currentIndex - 1);
-      this.set('currentStep', this.steps[prevIndex]);
+      const currentStep = this.steps[prevIndex];
+      this.set('currentStep', currentStep);
+      this.persistBillingData(currentStep);
     },
 
     cancel() {

@@ -29,6 +29,18 @@ export default Service.extend({
     return !!this.getItem('travis.auth.become');
   },
 
+  get billingStep() {
+    return +this.getItem('travis.billing_step');
+  },
+
+  get billingInfo() {
+    return this.getItem('travis.billing_info');
+  },
+
+  get billingPlan() {
+    return this.getItem('travis.selected_plan');
+  },
+
   clearAuthData() {
     this.removeItem('travis.token');
     this.removeItem('travis.user');
