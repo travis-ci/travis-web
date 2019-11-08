@@ -48,6 +48,12 @@ export default Service.extend({
     this.removeItem('travis.auth.become');
   },
 
+  clearBillingData() {
+    this.storage.removeItem('travis.billing_step');
+    this.storage.removeItem('travis.selected_plan');
+    this.storage.removeItem('travis.billing_info');
+  },
+
   // method proxies
 
   getItem(key) {
