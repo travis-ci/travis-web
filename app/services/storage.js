@@ -33,17 +33,13 @@ export default Service.extend({
     return +this.getItem('travis.billing_step');
   },
 
-  get billingInfo() {
-    try {
-      return JSON.parse(this.getItem('travis.billing_info')) || {};
-    } catch (e) {
-      return {};
-    }
+  set billingStep(step) {
+    this.setItem('travis.billing_step', +step);
   },
 
-  get billingPlan() {
+  get billingInfo() {
     try {
-      return JSON.parse(this.getItem('travis.billing_plan')) || {};
+      return this.parseWithDefault('travis.billing_info', {});
     } catch (e) {
       return {};
     }
@@ -53,12 +49,24 @@ export default Service.extend({
     this.setItem('travis.billing_info', JSON.stringify(value));
   },
 
+  get billingPlan() {
+    try {
+      return this.parseWithDefault('travis.billing_plan', {});
+    } catch (e) {
+      return {};
+    }
+  },
+
   set billingPlan(plan) {
     this.setItem('travis.billing_plan', JSON.stringify(plan));
   },
 
-  set billingStep(step) {
-    this.setItem('travis.billing_step', +step);
+  parseWithDefault(key, defaultValue) {
+    try {
+      return JSON.parse(this.getItem(key)) || defaultValue;
+    } catch (e) {
+      return defaultValue;
+    }
   },
 
   clearAuthData() {
