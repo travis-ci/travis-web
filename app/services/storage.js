@@ -38,11 +38,7 @@ export default Service.extend({
   },
 
   get billingInfo() {
-    try {
-      return this.parseWithDefault('travis.billing_info', {});
-    } catch (e) {
-      return {};
-    }
+    return this.parseWithDefault('travis.billing_info', {});
   },
 
   set billingInfo(value) {
@@ -50,11 +46,7 @@ export default Service.extend({
   },
 
   get billingPlan() {
-    try {
-      return this.parseWithDefault('travis.billing_plan', {});
-    } catch (e) {
-      return {};
-    }
+    return this.parseWithDefault('travis.billing_plan', {});
   },
 
   set billingPlan(plan) {
