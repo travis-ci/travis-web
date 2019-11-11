@@ -6,7 +6,7 @@
       @planMessage="Valid until"
     />
   </section>
-  {{#if this.subscription.isGithubResubscribable}}
+  {{#if (and this.subscription.isGithubResubscribable (not this.hasExpiredStripeSubscription))}}
     <Billing::Process 
       @account={{this.account}} 
       @plans={{this.plans}} 

@@ -72,12 +72,19 @@
       @subscription={{this.subscription}}
       @account={{this.account}}
     />
-  {{else}}
+  {{/if}}
+  {{#if (and this.subscription.isGithub this.hasExpiredStripeSubscription)}}
+    <Billing::Authorization 
+      @subscription={{this.expiredStripeSubscription}} 
+      @account={{this.account}}
+      @isPending={{this.isPending}}
+    />
+  {{/if}}
+  {{#if this.subscription.isStripe}}
     <Billing::Authorization 
       @subscription={{this.subscription}} 
       @account={{this.account}}
       @isPending={{this.isPending}}
-      @isComplete={{this.isComplete}}
     />
   {{/if}}
 </div>

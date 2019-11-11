@@ -100,7 +100,14 @@ export default VcsEntity.extend({
   incompleteAccountSubscriptions: filterBy('accountSubscriptions', 'isIncomplete', true),
   pendingAccountSubscriptions: filterBy('accountSubscriptions', 'isPending', true),
   expiredAccountSubscriptions: filterBy('accountSubscriptions', 'isExpired', true),
-  hasExpiredStripeSubscription: filterBy('expiredAccountSubscriptions', 'isStripe', true),
+  expiredStripeSubscriptions: filterBy('expiredAccountSubscriptions', 'isStripe', true),
+
+  expiredStripeSubscription: computed('expiredStripeSubscriptions', function () {
+    if (this.expiredStripeSubscriptions.length > 1) {
+      this.logMultipleSubscriptionsError();
+    }
+    return this.expiredStripeSubscriptions.get('firstObject');
+  }),
 
   subscription: computed(
     'accountSubscriptions',
