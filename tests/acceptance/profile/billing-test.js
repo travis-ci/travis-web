@@ -407,6 +407,34 @@ module('Acceptance | profile/billing', function (hooks) {
       .hasTextContaining('The trial includes 5 concurrent jobs for both public and private projects. Valid until June 19, 2018');
   });
 
+  test('view billing on a cancelled marketplace plan with Stripe plan', async function (assert) {
+    this.trial.destroy();
+    this.subscription.source = 'github';
+    this.subscription.status = 'canceled';
+
+    server.create('subscription', {
+      plan: this.defaultPlan,
+      owner: this.user,
+      status: 'expired',
+      valid_to: new Date(2018, 4, 19),
+      source: 'stripe',
+      permissions: {
+        write: true
+      }
+    });
+
+    await profilePage.visit();
+    await profilePage.billing.visit();
+
+    assert.equal(profilePage.billing.plan.name, 'Small Business1 plan canceled github marketplace subscription');
+    assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining('5 concurrent jobs Cancelled on June 19, 2018');
+    assert.equal(profilePage.billing.planMessage.text, 'Cancelled on June 19, 2018');
+    assert.dom(profilePage.billing.changePlanResubscribe.scope).hasTextContaining('Subscribe to different plan');
+    assert.dom(profilePage.billing.resubscribeSubscriptionButton.scope).hasTextContaining('Resubscribe to plan');
+    assert.ok(profilePage.billing.billingPlanChoices.boxes.isHidden);
+    assert.ok(profilePage.billing.subscribeButton.isHidden);
+  });
+
   test('view billing on a canceled marketplace plan', async function (assert) {
     this.trial.destroy();
     this.subscription.source = 'github';
