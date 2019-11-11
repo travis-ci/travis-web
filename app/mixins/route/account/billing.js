@@ -11,10 +11,8 @@ export default Mixin.create({
   },
 
   newSubscription() {
-    const savedBillingInfo = JSON.parse(this.storage.billingInfo) || {};
-    const savedPlan = JSON.parse(this.storage.billingPlan) || {};
-    const plan = this.store.createRecord('plan', savedPlan);
-    const billingInfo = this.store.createRecord('billing-info', savedBillingInfo);
+    const plan = this.store.createRecord('plan', this.storage.billingPlan);
+    const billingInfo = this.store.createRecord('billing-info', this.storage.billingInfo);
     const creditCardInfo = this.store.createRecord('credit-card-info');
     return this.store.createRecord('subscription', {
       billingInfo,

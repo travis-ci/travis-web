@@ -34,11 +34,31 @@ export default Service.extend({
   },
 
   get billingInfo() {
-    return this.getItem('travis.billing_info');
+    try {
+      return JSON.parse(this.getItem('travis.billing_info')) || {};
+    } catch (e) {
+      return {};
+    }
   },
 
   get billingPlan() {
-    return this.getItem('travis.selected_plan');
+    try {
+      return JSON.parse(this.getItem('travis.billing_plan')) || {};
+    } catch (e) {
+      return {};
+    }
+  },
+
+  set billingInfo(value) {
+    this.setItem('travis.billing_info', JSON.stringify(value));
+  },
+
+  set billingPlan(plan) {
+    this.setItem('travis.billing_plan', JSON.stringify(plan));
+  },
+
+  set billingStep(step) {
+    this.setItem('travis.billing_step', +step);
   },
 
   clearAuthData() {
@@ -50,7 +70,7 @@ export default Service.extend({
 
   clearBillingData() {
     this.storage.removeItem('travis.billing_step');
-    this.storage.removeItem('travis.selected_plan');
+    this.storage.removeItem('travis.billing_plan');
     this.storage.removeItem('travis.billing_info');
   },
 

@@ -41,12 +41,12 @@ export default Component.extend({
   },
 
   persistBillingData(step) {
-    this.storage.setItem('travis.billing_step', step);
+    this.storage.billingStep = step;
     if (this.isStepTwo) {
       const plan = this.selectedPlan.getProperties(['name', 'builds', 'price', 'annual']);
-      this.storage.setItem('travis.selected_plan', JSON.stringify(plan));
+      this.storage.billingPlan = plan;
     } else if (this.isStepThree) {
-      this.storage.setItem('travis.billing_info', JSON.stringify(this.billingInfo));
+      this.storage.billingInfo = this.billingInfo;
     }
   },
 
