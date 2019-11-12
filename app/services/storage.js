@@ -33,8 +33,8 @@ export default Service.extend({
     return +this.getItem('travis.billing_step');
   },
 
-  set billingStep(step) {
-    this.setItem('travis.billing_step', +step);
+  set billingStep(value) {
+    this.setItem('travis.billing_step', +value);
   },
 
   get billingInfo() {
@@ -49,8 +49,8 @@ export default Service.extend({
     return this.parseWithDefault('travis.billing_plan', {});
   },
 
-  set billingPlan(plan) {
-    this.setItem('travis.billing_plan', JSON.stringify(plan));
+  set billingPlan(value) {
+    this.setItem('travis.billing_plan', JSON.stringify(value));
   },
 
   parseWithDefault(key, defaultValue) {
