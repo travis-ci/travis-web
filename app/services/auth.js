@@ -169,17 +169,15 @@ export default Service.extend({
 
   reportNewUser() {
     const { currentUser, metrics } = this;
-    const { syncedAt, login, recentlySignedUp } = currentUser;
+    const { login, recentlySignedUp } = currentUser;
     const signupUsers = this.storage.signupUsers || [];
 
-    if (!syncedAt && !signupUsers.includes(login)) {
-      metrics.trackPage({ page: '/virtual/signup-success' });
-      this.storage.signupUsers = signupUsers.concat([login]);
-    }
-    if (recentlySignedUp && recentlySignedUp === true)
-      this.metrics.trackEvent({
+    if (recentlySignedUp && recentlySignedUp === true && !signupUsers.includes(login)) {
+      metrics.trackEvent({
         event: 'first_authentication'
       });
+      this.storage.signupUsers = signupUsers.concat([login]);
+    }
   },
 
   clearNonAuthFlashes() {
