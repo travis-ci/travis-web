@@ -35,7 +35,7 @@ export default Owner.extend({
   },
 
   _rawPermissions: computed(function () {
-    return this.ajax.get('/users/permissions', { lib: 'xhr' });
+    return this.ajax.get('/users/permissions');
   }),
 
   permissions: computed('_rawPermissions', function () {

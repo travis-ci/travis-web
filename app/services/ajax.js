@@ -1,5 +1,3 @@
-import { isNone } from '@ember/utils';
-
 import { Promise as EmberPromise } from 'rsvp';
 import { get } from '@ember/object';
 import Service, { inject as service } from '@ember/service';
@@ -13,7 +11,6 @@ const defaultOptions = {
   headers: {
     'Accept': 'application/json; version=2'
   },
-  lib: 'fetch',
 };
 
 const PERMITTED_NON_AUTH_REQUESTS = {};
@@ -99,74 +96,7 @@ export default Service.extend({
       return error.call(this, data, status, xhr);
     };
 
-    if (options.lib === 'xhr') {
-      return this.xhrRequest(url, method, options);
-    } else {
-      return this.fetchRequest(url, method, options);
-    }
-  },
-
-  xhrRequest(url, method, options) {
-    const xhr = new XMLHttpRequest();
-    xhr.open(method, url);
-
-    if (options.headers) {
-      const ref2 = options.headers;
-      let name, value;
-      for (name in ref2) {
-        value = ref2[name];
-        xhr.setRequestHeader(name, value);
-      }
-    }
-
-    let resolve = null;
-    let reject = null;
-    const promise = new EmberPromise((_resolve, _reject) => {
-      resolve = _resolve;
-      return reject = _reject;
-    });
-    xhr.onreadystatechange = () => {
-      let contentType, data;
-      if (xhr.readyState === 4) {
-        contentType = xhr.getResponseHeader('Content-Type');
-        data = (() => {
-          if (contentType && contentType.match(/application\/json/)) {
-            try {
-              return JSON.parse(xhr.responseText);
-            } catch (error1) {
-              if (this.features.get('debugLogging')) {
-                // eslint-disable-next-line
-                console.log('error while parsing a response', method, options.url, xhr.responseText);
-              }
-            }
-          } else {
-            return xhr.responseText;
-          }
-        })();
-        if (xhr.status >= 200 && xhr.status < 300) {
-          resolve(data);
-          return options.success.call(options.context, data, xhr.status, xhr);
-        } else {
-          reject(xhr);
-          return options.error.call(options.context, data, xhr.status, xhr);
-        }
-      }
-    };
-
-    let data = options.data;
-    const contentType = options.contentType;
-    const isJSON = isNone(contentType) || contentType.match(/application\/json/);
-    if (typeof options.data === 'object' && isJSON) {
-      data = JSON.stringify(data);
-    }
-
-    if (data) {
-      xhr.send(data);
-    } else {
-      xhr.send();
-    }
-
-    return promise;
+    return this.fetchRequest(url, method, options);
   },
 
   fetchRequest(url, method, options) {
