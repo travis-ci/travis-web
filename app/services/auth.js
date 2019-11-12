@@ -118,8 +118,6 @@ export default Service.extend({
 
       this.reloadCurrentUser().then(() => {
         Travis.trigger('user:refreshed', data.user);
-        if (this.currentUser && this.currentUser.get('recentlySignedUp') && this.currentUser.get('recentlySignedUp') === true)
-          this.metrics.trackPage({ page: '/first_sync' });
       });
     } catch (error) {
       this.signOut(false);
@@ -171,13 +169,17 @@ export default Service.extend({
 
   reportNewUser() {
     const { currentUser, metrics } = this;
-    const { syncedAt, login } = currentUser;
+    const { syncedAt, login, recentlySignedUp } = currentUser;
     const signupUsers = this.storage.signupUsers || [];
 
     if (!syncedAt && !signupUsers.includes(login)) {
       metrics.trackPage({ page: '/virtual/signup-success' });
       this.storage.signupUsers = signupUsers.concat([login]);
     }
+    if (recentlySignedUp && recentlySignedUp === true)
+      this.metrics.trackEvent({
+        event: 'first_authentication'
+      });
   },
 
   clearNonAuthFlashes() {
