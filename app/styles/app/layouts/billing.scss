@@ -512,6 +512,14 @@
 
     .billing-subscription-section {
       margin-bottom: 25px;
+
+      h4 {
+        margin-top: 25px;
+        text-transform: uppercase;
+        font-weight: 700;
+        color: $cement-grey;
+        font-size: 12px;
+      }
     }
 
     .plan-overview {

@@ -1,6 +1,11 @@
 {{#if account.hasSubscriptionPermissions}}
-  <a href={{this.subscription.billingUrl}} class='button--blue manage-subscription'>
-    <SvgImage @name="github" @width="15px" @class="icon github-icon"/> Edit subscription
+  <a href={{this.subscription.billingUrl}} class="{{if this.subscription.isExpired 'button--green' 'button--blue'}} manage-subscription">
+    <SvgImage @name="github" @width="15px" @class="icon github-icon"/> 
+      {{#if this.subscription.isExpired}}
+        Resubscribe or change plan
+      {{else}}
+        Edit subscription
+      {{/if}}
   </a>
 {{else}}
   <div class="button--green manage-subscription disabled">
