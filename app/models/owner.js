@@ -96,11 +96,11 @@ export default VcsEntity.extend({
       return subscriptions.filterBy('owner.login', this.login);
     }),
 
-  activeAccountSubscriptions: filterBy('accountSubscriptions', 'isSubscribed', true),
-  incompleteAccountSubscriptions: filterBy('accountSubscriptions', 'isIncomplete', true),
-  pendingAccountSubscriptions: filterBy('accountSubscriptions', 'isPending', true),
-  expiredAccountSubscriptions: filterBy('accountSubscriptions', 'isExpired', true),
-  expiredStripeSubscriptions: filterBy('expiredAccountSubscriptions', 'isStripe', true),
+  activeAccountSubscriptions: filterBy('accountSubscriptions', 'isSubscribed'),
+  incompleteAccountSubscriptions: filterBy('accountSubscriptions', 'isIncomplete'),
+  pendingAccountSubscriptions: filterBy('accountSubscriptions', 'isPending'),
+  expiredAccountSubscriptions: filterBy('accountSubscriptions', 'isExpired'),
+  expiredStripeSubscriptions: filterBy('expiredAccountSubscriptions', 'isStripe'),
 
   expiredStripeSubscription: computed('expiredStripeSubscriptions', function () {
     if (this.expiredStripeSubscriptions.length > 1) {
