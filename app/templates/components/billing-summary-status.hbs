@@ -18,7 +18,11 @@
       manual subscription
     </span>
   {{else}}
-    {{#if this.subscription.isSubscribed}}
+    {{#if this.isGithubTrial}}
+      <span class="badge grey square grey-badge" data-test-canceled-status='true'>
+        trial
+      </span>
+    {{else if this.subscription.isSubscribed}}
       <span class="badge green square" data-test-active-status='true'>
         active
       </span>
@@ -27,11 +31,11 @@
         expired
       </span>
     {{else if this.subscription.isCanceled}}
-      <span class="badge grey square" data-test-canceled-status='true'>
+      <span class="badge grey square grey-badge" data-test-canceled-status='true'>
         canceled
       </span>
     {{else}}
-      <span class="badge grey square" data-test-grey-status='true'>
+      <span class="badge grey square grey-badge" data-test-grey-status='true'>
         {{this.subscription.status}}
       </span>
     {{/if}}

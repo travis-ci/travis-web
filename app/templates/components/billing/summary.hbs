@@ -9,19 +9,13 @@
             @isGithubTrial={{this.isGithubTrial}}
           />
           <div class='plan-overview__description flex' data-test-plan-concurrency>
-            {{#if this.isGithubTrial}}
-              <p class="plan-overview__trial" data-test-trial-subtext='true'>
-                The trial includes {{pluralize this.subscription.plan.builds "concurrent job"}} <br/>for both public and private projects.
-              </p>
-            {{else}}
-              <span>
-                {{#if this.subscription.plan}}
-                  {{pluralize this.subscription.plan.builds "concurrent job"}}
-                {{else}}
-                  Unknown concurrent jobs
-                {{/if}}
-              </span>
-            {{/if}}
+            <span>
+              {{#if this.subscription.plan}}
+                {{pluralize this.subscription.plan.builds "concurrent job"}}
+              {{else}}
+                Unknown concurrent jobs
+              {{/if}}
+            </span>
             {{#if (and this.subscription.isManual (not this.subscription.manualSubscriptionExpired))}}
               <span class='plan-overview__description--validity dark-red display mt-4' data-test-plan-message='true'>
                 Renews on {{moment-format this.subscription.validTo "MMMM D, YYYY"}}
@@ -74,7 +68,7 @@
     />
   {{/if}}
   {{#if (and this.subscription.isGithub this.hasExpiredStripeSubscription)}}
-    <h4 class="mt-5">resubscribe via travis ci:</h4>
+    <h4 class="resubscribe-stripe-heading">resubscribe via travis ci:</h4>
     <Billing::Authorization 
       @subscription={{this.expiredStripeSubscription}} 
       @account={{this.account}}
