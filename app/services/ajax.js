@@ -13,9 +13,9 @@ const defaultOptions = {
   },
 };
 
-const PERMITTED_NON_AUTH_REQUESTS = {};
+const PERMITTED_NON_AUTH_REQUESTS = [];
 if (config.statusPageStatusUrl) {
-  PERMITTED_NON_AUTH_REQUESTS[`GET:${config.statusPageStatusUrl}`] = true;
+  PERMITTED_NON_AUTH_REQUESTS.push(`GET:${config.statusPageStatusUrl}`);
 }
 
 export default Service.extend({
@@ -35,7 +35,7 @@ export default Service.extend({
   },
 
   needsAuth(method, url) {
-    const authUnnecessary = PERMITTED_NON_AUTH_REQUESTS[`${method}:${url}`];
+    const authUnnecessary = PERMITTED_NON_AUTH_REQUESTS.includes(`${method}:${url}`);
     return !authUnnecessary;
   },
 
