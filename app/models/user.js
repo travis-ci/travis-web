@@ -18,6 +18,7 @@ export default Owner.extend({
   gravatarId: attr('string'),
   firstLoggedInAt: attr('date'),
   allowMigration: attr('boolean'),
+  recentlySignedUp: attr('boolean'),
 
   type: 'user',
 

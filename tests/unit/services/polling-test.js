@@ -2,6 +2,7 @@ import EmberObject from '@ember/object';
 import { run } from '@ember/runloop';
 import Polling from 'travis/services/polling';
 import config from 'travis/config/environment';
+import { Promise } from 'rsvp';
 
 import { module, test } from 'qunit';
 
@@ -73,38 +74,44 @@ module('PollingService', function (hooks) {
     }, 50);
   });
 
-  test('it stops reloading models after they were removed from polling', function (assert) {
+  test('it stops reloading models after they were removed from polling', async function (assert) {
     assert.expect(4);
-    const done = assert.async();
+
+    let done;
+    let pollingComplete = new Promise(resolve => {
+      done = resolve;
+    });
+
+    let count = 0;
     const history = [];
     service = Polling.create({
-      pollingInterval: 30
+      pollingInterval: 1
     });
     const model1 = {
       reload: function () {
-        assert.ok(true);
+        count++;
+        assert.ok(true, `model1 reloaded ${count}x`);
+        if (count === 2) {
+          service.stopPolling(model1);
+          done();
+        }
         return history.push('model1');
       }
     };
     const model2 = {
       reload: function () {
-        assert.ok(true);
+        assert.ok(true, 'model2 reloaded');
+        service.stopPolling(model2);
         return history.push('model2');
       }
     };
     service.startPolling(model1);
     service.startPolling(model2);
-    return setTimeout(function () {
-      service.stopPolling(model2);
-      return setTimeout(function () {
-        service.stopPolling(model1);
-        run(function () {
-          return service.destroy();
-        });
-        assert.deepEqual(history, ['model1', 'model2', 'model1']);
-        done();
-      }, 30);
-    }, 40);
+
+    await pollingComplete;
+
+    run(service, 'destroy');
+    assert.deepEqual(history, ['model1', 'model2', 'model1']);
   });
 
   test('it runs a hook on each interval', function (assert) {
