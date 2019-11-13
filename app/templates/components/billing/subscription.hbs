@@ -3,7 +3,6 @@
     <Billing::Summary
       @subscription={{this.subscription}}
       @account={{this.account}}
-      @planMessage="Valid until"
     />
   </section>
   {{#if (and this.subscription.isGithubResubscribable (not this.hasExpiredStripeSubscription))}}
