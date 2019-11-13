@@ -23,9 +23,9 @@ module Travis
           storage = 'sessionStorage' if storage != 'localStorage'
           become = become ? true : false
           info = [
+            storage,
             Sanitize.fragment(token),
             Sanitize.fragment(user),
-            storage,
             become,
             request.fullpath
           ]
