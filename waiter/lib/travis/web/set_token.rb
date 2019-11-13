@@ -1,5 +1,6 @@
 require 'rack/request'
 require 'rack/response'
+require 'sanitize'
 
 module Travis
   module Web
@@ -21,7 +22,13 @@ module Travis
         if token =~ /\A[a-zA-Z\-_\d]+\Z/
           storage = 'sessionStorage' if storage != 'localStorage'
           become = become ? true : false
-          info = [storage, token, user, become, request.fullpath]
+          info = [
+            Sanitize.fragment(token),
+            Sanitize.fragment(user),
+            storage,
+            become,
+            request.fullpath
+          ]
           Rack::Response.new(template % info).finish
         end
       end
