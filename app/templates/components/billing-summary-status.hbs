@@ -12,20 +12,26 @@
     {{else}}
       <span class="badge green square" data-test-active-status='true'>
         active
-      </span>
+      </span> 
     {{/if}}
     <span class="badge square white-badge manual" data-test-manual-status='true'>
       manual subscription
     </span>
   {{else}}
-    {{#if this.isGithubTrial}}
-      <span class="badge grey square grey-badge" data-test-canceled-status='true'>
-        trial
-      </span>
-    {{else if this.subscription.isSubscribed}}
-      <span class="badge green square" data-test-active-status='true'>
-        active
-      </span>
+    {{#if this.subscription.isSubscribed}}
+      {{#if this.isGithubTrial}}
+        <span class="badge grey square grey-badge" data-test-canceled-status='true'>
+          trial
+        </span>
+      {{else if this.hasGithubTrialEnded}}
+        <span class="badge red square" data-test-expired-status='true'>
+          expired
+        </span>
+      {{else}}
+        <span class="badge green square" data-test-active-status='true'>
+          active
+        </span>
+      {{/if}}
     {{else if this.subscription.isExpired}}
       <span class="badge red square" data-test-expired-status='true'>
         expired

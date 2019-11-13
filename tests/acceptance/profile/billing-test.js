@@ -397,12 +397,67 @@ module('Acceptance | profile/billing', function (hooks) {
   });
 
   test('view billing on a marketplace plan', async function (assert) {
+    this.trial.destroy();
     this.subscription.source = 'github';
 
     await profilePage.visit();
     await profilePage.billing.visit();
 
+    assert.equal(profilePage.billing.plan.name, 'Small Business1 plan active github marketplace subscription');
+    assert.dom(profilePage.billing.plan.concurrency.scope)
+      .hasTextContaining('5 concurrent jobs Valid until June 19, 2018');
+  });
+
+  test('view billing tab with Github trial subscription', async function (assert) {
+    let trial = server.create('trial', {
+      builds_remaining: 0,
+      owner: this.organization,
+      status: 'started',
+      created_at: new Date(2018, 7, 16),
+      permissions: {
+        read: true,
+        write: true
+      }
+    });
+
+    this.subscription.owner = this.organization;
+    this.subscription.source = 'github';
+
+    trial.save();
+    this.subscription.save();
+
+    await profilePage.visitOrganization({ name: 'org-login' });
+    await profilePage.billing.visit();
+
+    percySnapshot(assert);
+
     assert.equal(profilePage.billing.plan.name, 'Small Business1 plan trial github marketplace subscription');
+    assert.dom(profilePage.billing.plan.concurrency.scope)
+      .hasTextContaining('5 concurrent jobs Valid until June 19, 2018');
+  });
+
+  test('view billing tab when Github trial subscription has ended', async function (assert) {
+    let trial = server.create('trial', {
+      builds_remaining: 0,
+      owner: this.organization,
+      status: 'ended',
+      created_at: new Date(2018, 7, 16),
+      permissions: {
+        read: true,
+        write: true
+      }
+    });
+
+    this.subscription.owner = this.organization;
+    this.subscription.source = 'github';
+
+    trial.save();
+    this.subscription.save();
+
+    await profilePage.visitOrganization({ name: 'org-login' });
+    await profilePage.billing.visit();
+
+    assert.equal(profilePage.billing.plan.name, 'Small Business1 plan expired github marketplace subscription');
     assert.dom(profilePage.billing.plan.concurrency.scope)
       .hasTextContaining('5 concurrent jobs Valid until June 19, 2018');
   });
@@ -468,7 +523,7 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.ok(profilePage.billing.creditCardNumber.isHidden);
     assert.ok(profilePage.billing.annualInvitation.isHidden);
 
-    assert.equal(profilePage.billing.plan.name, 'Small Business1 plan trial github marketplace subscription');
+    assert.equal(profilePage.billing.plan.name, 'Small Business1 plan expired github marketplace subscription');
     assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining('5 concurrent jobs Expired June 19, 2018');
     assert.equal(profilePage.billing.planMessage.text, 'Expired June 19, 2018');
     assert.dom(profilePage.billing.billingPlanChoices.boxes.scope).exists({ count: 5 });
@@ -771,58 +826,6 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.trial.openSourceMessage.body, 'You get 3 free additional concurrent jobs for your open source projects.');
     assert.dom(profilePage.billing.billingPlanChoices.boxes.scope).exists({ count: 5 });
     assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe @org-login to 2 job plan');
-  });
-
-  test('view billing tab with Github trial subscription', async function (assert) {
-    let trial = server.create('trial', {
-      builds_remaining: 0,
-      owner: this.organization,
-      status: 'started',
-      created_at: new Date(2018, 7, 16),
-      permissions: {
-        read: true,
-        write: true
-      }
-    });
-
-    this.subscription.owner = this.organization;
-    this.subscription.source = 'github';
-
-    trial.save();
-    this.subscription.save();
-
-    await profilePage.visitOrganization({ name: 'org-login' });
-    await profilePage.billing.visit();
-
-    percySnapshot(assert);
-
-    assert.ok(profilePage.billing.creditCardNumber.isHidden);
-    // Assert github trial here.
-  });
-
-  test('view billing tab with Github trial subscription has ended', async function (assert) {
-    let trial = server.create('trial', {
-      builds_remaining: 0,
-      owner: this.organization,
-      status: 'ended',
-      created_at: new Date(2018, 7, 16),
-      permissions: {
-        read: true,
-        write: true
-      }
-    });
-
-    this.subscription.owner = this.organization;
-    this.subscription.source = 'github';
-
-    trial.save();
-    this.subscription.save();
-
-    await profilePage.visitOrganization({ name: 'org-login' });
-    await profilePage.billing.visit();
-
-    assert.ok(profilePage.billing.creditCardNumber.isHidden);
-    // Assert github trial here.
   });
 
   test('view billing tab on education account', async function (assert) {
