@@ -2,8 +2,6 @@ import Service, { inject as service } from '@ember/service';
 
 export default Service.extend({
   ajax: service(),
-  auth: service(),
-  features: service(),
 
   get(url, options = {}) {
     return this.request(url, 'GET', options);
@@ -28,7 +26,6 @@ export default Service.extend({
   request(url, method = 'GET', options = {}) {
     options.headers = options.headers || {};
     options.headers['Travis-API-Version'] = '3';
-    options.headers['Accept'] = 'application/json';
 
     return this.ajax.request(url, method, options);
   }
