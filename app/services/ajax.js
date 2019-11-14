@@ -109,26 +109,33 @@ export default Service.extend({
       if (body) {
         fetchOptions['body'] = body;
       }
-      fetch(url, fetchOptions).then(response => {
-        const { 'content-type': resContentType = '' } = response.headers.map;
-        let res;
-        if (resContentType.includes('application/json')) {
-          res = response.json();
-        } else {
-          res = response.text();
-        }
 
-        if (response.ok) {
-          resolve(res);
+      fetch(url, fetchOptions).then(response => {
+        if (!response.ok) {
+          this.handleFetchError(reject, response);
         } else {
-          reject(response);
-          this.logFetchError(response);
+          const { 'content-type': resContentType = '' } = response.headers.map;
+
+          let resContent;
+          if (resContentType.includes('application/json')) {
+            resContent = response.json();
+          } else {
+            resContent = response.text();
+          }
+
+          resContent
+            .then(data => resolve(data))
+            .catch(error => this.handleFetchError(reject, error));
         }
-      }).then(error => {
-        reject(error);
-        this.logFetchError(error);
+      }).catch(error => {
+        this.handleFetchError(reject, error);
       });
     });
+  },
+
+  handleFetchError(reject, error) {
+    reject(error);
+    this.logFetchError(error);
   },
 
   logFetchError(response) {
