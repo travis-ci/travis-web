@@ -1,4 +1,4 @@
-FROM ruby:2.4
+FROM ruby:2.6
 
 LABEL maintainer Travis CI GmbH <support+travis-web-docker-images@travis-ci.com>
 
@@ -6,13 +6,13 @@ RUN groupadd --gid 1000 node \
   && useradd --uid 1000 --gid node --shell /bin/bash --create-home node
 
 ENV NPM_CONFIG_LOGLEVEL info
-ENV NODE_VERSION 10.7.0
+ENV NODE_VERSION 12.13.0
 
 RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.xz" \
   && tar -xJf "node-v$NODE_VERSION-linux-x64.tar.xz" -C /usr/local --strip-components=1 \
   && ln -s /usr/local/bin/node /usr/local/bin/nodejs
 
-ENV YARN_VERSION 0.22.0
+ENV YARN_VERSION 1.19.1
 
 RUN curl -fSL -o yarn.js "https://yarnpkg.com/downloads/$YARN_VERSION/yarn-legacy-$YARN_VERSION.js" \
   && mv yarn.js /usr/local/bin/yarn \
