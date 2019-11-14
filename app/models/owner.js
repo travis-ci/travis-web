@@ -110,10 +110,10 @@ export default VcsEntity.extend({
   }),
 
   subscription: computed(
-    'accountSubscriptions.firstObject',
-    'activeAccountSubscriptions.firstObject',
-    'pendingAccountSubscriptions.firstObject',
-    'incompleteAccountSubscriptions.firstObject', function () {
+    'accountSubscriptions.[]',
+    'activeAccountSubscriptions.[]',
+    'pendingAccountSubscriptions.[]',
+    'incompleteAccountSubscriptions.[]', function () {
       if (this.activeAccountSubscriptions.length > 1 ||
         this.pendingAccountSubscriptions.length > 1 ||
         this.incompleteAccountSubscriptions.length > 1) {
