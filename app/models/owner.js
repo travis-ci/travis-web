@@ -102,7 +102,7 @@ export default VcsEntity.extend({
   expiredAccountSubscriptions: filterBy('accountSubscriptions', 'isExpired'),
   expiredStripeSubscriptions: filterBy('expiredAccountSubscriptions', 'isStripe'),
 
-  expiredStripeSubscription: computed('expiredStripeSubscriptions', function () {
+  expiredStripeSubscription: computed('expiredStripeSubscriptions.[]', function () {
     if (this.expiredStripeSubscriptions.length > 1) {
       this.logMultipleSubscriptionsError();
     }
@@ -110,10 +110,10 @@ export default VcsEntity.extend({
   }),
 
   subscription: computed(
-    'accountSubscriptions',
-    'activeAccountSubscriptions',
-    'pendingAccountSubscriptions',
-    'incompleteAccountSubscriptions', function () {
+    'accountSubscriptions.firstObject',
+    'activeAccountSubscriptions.firstObject',
+    'pendingAccountSubscriptions.firstObject',
+    'incompleteAccountSubscriptions.firstObject', function () {
       if (this.activeAccountSubscriptions.length > 1 ||
         this.pendingAccountSubscriptions.length > 1 ||
         this.incompleteAccountSubscriptions.length > 1) {
