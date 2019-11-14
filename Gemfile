@@ -9,6 +9,7 @@ gem 'rack-protection', '~> 1.4'
 gem 'rack-mobile-detect'
 gem 'sinatra'
 gem 'hashr'
+gem 'sanitize'
 
 group :development, :test do
   gem 'rake'
