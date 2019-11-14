@@ -142,13 +142,13 @@ const Repo = VcsEntity.extend({
     }, (b) => b.get('repoId') === id);
   }),
 
-  cronJobs: computed('id', 'fetchCronJobs.last.value', function() {
+  cronJobs: computed('id', 'fetchCronJobs.lastSuccessful.value', function () {
     const crons = this.fetchCronJobs.get('lastSuccessful.value');
     if (!crons) {
       this.get('fetchCronJobs').perform();
     }
     return crons || [];
-	}),
+  }),
 
   fetchCronJobs: task(function* () {
     if (this.id) {
