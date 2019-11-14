@@ -27,46 +27,83 @@ export default Service.extend({
     return !authUnnecessary;
   },
 
+  isRetrieve(method) {
+    return method === 'GET' || method === 'HEAD';
+  },
+
+  setupHeaders(url, method, options = {}) {
+    const { headers = {} } = options;
+    const token = get(this, 'auth.token');
+
+    // Release
+    if (config.release) {
+      headers['X-Client-Release'] = config.release;
+    }
+
+    // Auth
+    if (token && (this.needsAuth(method, url) || options.forceAuth)) {
+      if (!headers['Authorization']) {
+        headers['Authorization'] = `token ${token}`;
+      }
+    }
+
+    // Content-Type
+    if (options.contentType) {
+      headers['Content-Type'] = options.contentType;
+    }
+
+    // Accept
+    if (!headers['Accept']) {
+      headers['Accept'] = 'application/json';
+    }
+
+    return headers;
+  },
+
+  setupContentType(method, contentType) {
+    if (this.isRetrieve(method)) {
+      return contentType;
+    }
+    return contentType || 'application/json; charset=utf-8';
+  },
+
+  setupBody(method, options) {
+    if (this.isRetrieve(method)) {
+      return null;
+    }
+
+    const { data, stringifyData } = options;
+    if (data && stringifyData !== false && typeof data !== 'string') {
+      return JSON.stringify(data);
+    }
+
+    return data;
+  },
+
+  setupUrl(requestUrl, method, options) {
+    const { endpoint = '', data } = options;
+    const baseUrl = `${endpoint}${requestUrl}`;
+
+    if (data && this.isRetrieve(method)) {
+      const params = serializeQueryParams(data);
+      const delimeter = baseUrl.indexOf('?') === -1 ? '?' : '&';
+      return `${baseUrl}${delimeter}${params}`;
+    }
+
+    return baseUrl;
+  },
+
   request(requestUrl, mthd = 'GET', opts = {}) {
     const options = Object.assign({}, defaultOptions, opts);
     const method = mthd.toUpperCase();
 
-    if (method !== 'GET' && method !== 'HEAD') {
-      options.contentType = options.contentType || 'application/json; charset=utf-8';
-    }
+    const url = this.setupUrl(requestUrl, method, options);
 
-    if (options.data && method !== 'GET' && options.stringifyData !== false && typeof options.data !== 'string') {
-      options.data = JSON.stringify(options.data);
-    }
+    options.contentType = this.setupContentType(method, options.contentType);
 
-    const { endpoint = '' } = options;
-    let url = `${endpoint}${requestUrl}`;
-    if (options.data) {
-      if (method === 'GET' || method === 'HEAD') {
-        const params = serializeQueryParams(options.data);
-        const delimeter = url.indexOf('?') === -1 ? '?' : '&';
-        url = url + delimeter + params;
-      } else {
-        options.body = options.data;
-      }
-    }
+    options.body = this.setupBody(method, options);
 
-    const token = get(this, 'auth.token');
-    options.headers = options.headers || {};
-    if (config.release) {
-      options.headers['X-Client-Release'] = config.release;
-    }
-    if (token && (this.needsAuth(method, url) || options.forceAuth)) {
-      if (!options.headers['Authorization']) {
-        options.headers['Authorization'] = `token ${token}`;
-      }
-    }
-    if (options.contentType) {
-      options.headers['Content-Type'] = options.contentType;
-    }
-    if (!options.headers['Accept']) {
-      options.headers['Accept'] = 'application/json';
-    }
+    options.headers = this.setupHeaders(url, method, options);
 
     return this.fetchRequest(url, method, options);
   },
