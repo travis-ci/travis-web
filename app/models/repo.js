@@ -141,12 +141,21 @@ const Repo = VcsEntity.extend({
     }, (b) => b.get('repoId') === id);
   }),
 
-  cronJobs: computed('id', function () {
-    let id = this.id;
-    return this.store.filter('cron', {
-      repository_id: id
-    }, (cron) => cron.get('branch.repoId') === id);
+  cronJobs: computed('id', 'fetchCronJobs.lastSuccessful.value', function () {
+    const crons = this.fetchCronJobs.get('lastSuccessful.value');
+    if (!crons) {
+      this.get('fetchCronJobs').perform();
+    }
+    return crons || [];
   }),
+
+  fetchCronJobs: task(function* () {
+    const id = this.id;
+    if (id) {
+      const crons = yield this.store.filter('cron', { repository_id: id }, (cron) => cron.get('branch.repoId') === id, [''], false);
+      return crons;
+    }
+  }).drop(),
 
   updateTimes() {
     let currentBuild = this.currentBuild;
