@@ -147,7 +147,11 @@ const Repo = VcsEntity.extend({
     if (!crons) {
       this.get('fetchCronJobs').perform();
     }
-    return crons || [];
+    if (crons) {
+      const store = this.store;
+      crons.map((cron) => store.createRecord('cron', cron));
+    }
+    return this.store.peekAll('cron') || [];
   }),
 
   fetchCronJobs: task(function* () {
