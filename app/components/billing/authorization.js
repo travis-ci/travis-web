@@ -26,9 +26,10 @@ export default Component.extend({
   retryAuthorizationClientSecret: reads('subscription.paymentIntent.client_secret'),
   hasSubscriptionPermissions: reads('account.hasSubscriptionPermissions'),
   notChargeInvoiceSubscription: not('subscription.chargeUnpaidInvoices.lastSuccessful.value'),
-  isCanceled: reads('subscription.isCanceled'),
-  isNotCanceled: not('isCanceled'),
-  canCancelSubscription: and('isNotCanceled', 'hasSubscriptionPermissions'),
+  isSubscribed: reads('subscription.isSubscribed'),
+  isIncomplete: reads('subscription.isIncomplete'),
+  isComplete: not('isIncomplete'),
+  canCancelSubscription: and('isSubscribed', 'hasSubscriptionPermissions'),
   cancelSubscriptionLoading: reads('subscription.cancelSubscription.isRunning'),
   isLoading: or('accounts.fetchSubscriptions.isRunning', 'cancelSubscriptionLoading', 'editPlan.isRunning', 'resubscribe.isRunning'),
 
