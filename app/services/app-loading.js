@@ -24,7 +24,7 @@ export default Service.extend({
     if (statusPageStatusUrl) {
       try {
         const { status = {} } = yield this.api.get(statusPageStatusUrl, {
-          endpoint: '',
+          host: '',
           travisApi: false
         }) || {};
 

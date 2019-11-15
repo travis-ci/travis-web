@@ -19,7 +19,7 @@ export default Service.extend({
   getDefaultOptions() {
     return {
       accept: DEFAULT_ACCEPT,
-      endpoint: config.apiEndpoint || '',
+      host: config.apiEndpoint || '',
     };
   },
 
@@ -85,8 +85,8 @@ export default Service.extend({
   },
 
   setupUrl(requestUrl, method, options) {
-    const { endpoint = '', data } = options;
-    const baseUrl = `${endpoint}${requestUrl}`;
+    const { host = '', data } = options;
+    const baseUrl = `${host}${requestUrl}`;
 
     if (data && this.isRetrieve(method)) {
       const params = serializeQueryParams(data);

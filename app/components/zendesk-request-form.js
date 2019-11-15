@@ -93,7 +93,7 @@ export default Component.extend({
     try {
       return yield this.api.post(createRequestEndpoint, {
         travisApi: false,
-        endpoint: apiHost,
+        host: apiHost,
         data: {
           request: {
             requester: { name, email },
