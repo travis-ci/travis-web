@@ -150,9 +150,10 @@ const Repo = VcsEntity.extend({
   }),
 
   fetchCronJobs: task(function* () {
-    const id = yield this.id;
+    const id = this.id;
     if (id) {
-      return this.store.filter('cron', { repository_id: id }, (cron) => cron.get('branch.repoId') === id, [''], false);
+      const crons = yield this.store.filter('cron', { repository_id: id }, (cron) => cron.get('branch.repoId') === id, [''], false);
+      return crons;
     }
   }).drop(),
 
