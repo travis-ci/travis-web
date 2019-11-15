@@ -23,8 +23,9 @@ export default Service.extend({
   fetchTravisStatus: task(function* () {
     if (statusPageStatusUrl) {
       try {
-        const { status = {} } = yield this.ajax.get(
+        const { status = {} } = yield this.ajax.request(
           statusPageStatusUrl,
+          'GET',
           { endpoint: '' }
         ) || {};
 

@@ -91,7 +91,7 @@ export default Component.extend({
     const { email, subject, description: body } = this;
 
     try {
-      return yield this.ajax.post(createRequestEndpoint, {
+      return yield this.ajax.request(createRequestEndpoint, 'POST', {
         endpoint: apiHost,
         data: {
           request: {
