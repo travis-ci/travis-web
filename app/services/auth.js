@@ -90,7 +90,7 @@ export default Service.extend({
     afterSignOutCallbacks.push(callback);
   },
 
-  signInWith(provider, data, options = {}) {
+  signInWith(provider) {
     assert(`Invalid provider to authenticate ${provider}`, availableProviders.includes(provider));
     this.signIn(provider);
   },
