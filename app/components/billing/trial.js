@@ -13,6 +13,7 @@ export default Component.extend({
 
   subscription: reads('account.subscription'),
   accountTrial: reads('account.trial'),
+  isGithubTrial: and('subscription.isGithub', 'accountTrial.hasActiveTrial'),
   newTrial: null,
   trial: computed('accountTrial', 'newTrial', function () {
     return !this.newTrial ? this.accountTrial : this.newTrial;
