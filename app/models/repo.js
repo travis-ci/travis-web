@@ -20,7 +20,6 @@ export const HISTORY_MIGRATION_STATUS = {
 };
 
 const Repo = VcsEntity.extend({
-  ajax: service(),
   api: service(),
   auth: service(),
 
@@ -147,17 +146,13 @@ const Repo = VcsEntity.extend({
     if (!crons) {
       this.get('fetchCronJobs').perform();
     }
-    if (crons) {
-      const store = this.store;
-      crons.map((cron) => store.createRecord('cron', cron));
-    }
-    return this.store.peekAll('cron') || [];
+    return crons || [];
   }),
 
   fetchCronJobs: task(function* () {
-    if (this.id) {
-      const response = yield this.ajax.getV3(`/repo/${this.id}/crons`) || {};
-      return response.crons || [];
+    const id = yield this.id;
+    if (id) {
+      return this.store.filter('cron', { repository_id: id }, (cron) => cron.get('branch.repoId') === id, [''], false);
     }
   }).drop(),
 
