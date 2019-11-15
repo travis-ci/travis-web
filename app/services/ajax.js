@@ -4,13 +4,11 @@ import Service, { inject as service } from '@ember/service';
 import serializeQueryParams from 'ember-fetch/utils/serialize-query-params';
 import fetch from 'fetch';
 import config from 'travis/config/environment';
-import { TRAVIS_API_VERSIONS } from 'travis/services/api';
 
 const PERMITTED_NON_AUTH_REQUESTS = [];
 if (config.statusPageStatusUrl) {
   PERMITTED_NON_AUTH_REQUESTS.push(`GET:${config.statusPageStatusUrl}`);
 }
-Object.freeze(PERMITTED_NON_AUTH_REQUESTS);
 
 const DEFAULT_ACCEPT = 'application/json';
 
@@ -21,7 +19,6 @@ export default Service.extend({
   getDefaultOptions() {
     return {
       accept: DEFAULT_ACCEPT,
-      dataType: 'json',
       endpoint: config.apiEndpoint || '',
     };
   },
@@ -52,7 +49,7 @@ export default Service.extend({
     }
 
     // Travis-API-Version
-    if (options.travisApi && TRAVIS_API_VERSIONS.includes(options.travisApi)) {
+    if (options.travisApi) {
       headers['Travis-API-Version'] = options.travisApi;
     }
 
