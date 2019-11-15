@@ -17,36 +17,38 @@
         {{#if this.auth.signedOut}}
           {{#if this.multiVcs.disabled}}
             <button class="hero-button org" {{action "signIn" "github"}}>
-              <SvgImage @name="icon-repooctocat" />
+              <SvgImage @name="sign-in-mascot" />
               <span class="label-align">
-                Sign up
+                Sign Up
               </span>
             </button>
           {{/if}}
 
           {{#if this.multiVcs.enabled}}
-            <button class="hero-button org" {{action "signIn" "github"}}>
-              <SvgImage @name="icon-repooctocat" />
-              <span class="label-align">
-                Sign up with Github
-              </span>
-            </button>
-            {{#if this.multiVcs.enableAssemblaLogin}}
-              <button class="hero-button org" {{action "signIn" "assembla"}}>
-                <SvgImage @name="icon-assembla" />
+            <div>
+              <button class="hero-button org multi-vcs" {{action "signIn" "github"}}>
+                <SvgImage @name="icon-repooctocat" />
                 <span class="label-align">
-                  Sign up with Assembla
+                  Sign up with Github
                 </span>
               </button>
-            {{/if}}
-            {{#if this.multiVcs.enableBitbucketLogin}}
-              <button class="hero-button org" {{action "signIn" "bitbucket"}}>
-                <SvgImage @name="icon-bitbucket" />
-                <span class="label-align">
-                  Sign up with Bitbucket
-                </span>
-              </button>
-            {{/if}}
+              {{#if this.multiVcs.enableAssemblaLogin}}
+                <button class="hero-button org multi-vcs" {{action "signIn" "assembla"}}>
+                  <SvgImage @name="icon-assembla" />
+                  <span class="label-align">
+                    Sign up with Assembla
+                  </span>
+                </button>
+              {{/if}}
+              {{#if this.multiVcs.enableBitbucketLogin}}
+                <button class="hero-button org multi-vcs" {{action "signIn" "bitbucket"}}>
+                  <SvgImage @name="icon-bitbucket" />
+                  <span class="label-align">
+                    Sign up with Bitbucket
+                  </span>
+                </button>
+              {{/if}}
+            </div>
           {{/if}}
         {{/if}}
         {{#if this.auth.signingIn}}

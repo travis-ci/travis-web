@@ -1000,9 +1000,13 @@
 .landing-page {
   #profile-menu-link {
     line-height: 0;
-    margin-top: 12px;
+    margin-top: 13px;
     position: relative;
     text-align: center;
+
+    @media #{$small-only} {
+      display: none;
+    }
   }
 
   .navigation-nested {

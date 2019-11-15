@@ -125,6 +125,27 @@
           Help
         </a>
       </li>
+      {{#if this.auth.signedOut}}
+        <li class="display-on-mobile">
+          <a class="navigation-anchor pointer" title="Login with GitHub" {{action "signIn" "github"}}>
+            Login with GitHub
+          </a>
+        </li>
+        {{#if this.multiVcs.enableAssemblaLogin}}
+          <li class="display-on-mobile">
+            <a class="navigation-anchor pointer" title="Login with Assembla" {{action "signIn" "assembla"}}>
+              Login with Assembla
+            </a>
+          </li>
+        {{/if}}
+        {{#if this.multiVcs.enableBitbucketLogin}}
+          <li class="display-on-mobile">
+            <a class="navigation-anchor pointer" title="Login with Bitbucket" {{action "signIn" "bitbucket"}}>
+              Login with Bitbucket
+            </a>
+          </li>
+        {{/if}}
+      {{/if}}
       {{#if this.deploymentVersion}}
         <li>
           <span class="deployment-version">

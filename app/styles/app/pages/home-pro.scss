@@ -663,6 +663,26 @@
 .hero-button {
   @extend .landing-button;
 
+  &.multi-vcs {
+    &.org:not(:first-child) { margin-top: 10px }
+    &.org:not(:last-child) { margin-bottom: 0 }
+
+    &.cta-index-page {
+      font-size: 18px;
+      margin-bottom: 10px;
+      float: left;
+
+      svg {
+        width: 20px;
+        height: 20px;
+      }
+
+      &:first-child {
+        margin-right: 10px;
+      }
+    }
+  }
+
   svg {
     width: 30px;
     height: 30px;
@@ -673,22 +693,6 @@
 
   &.org {
     margin: 2em auto;
-  }
-
-  &.multi-vcs {
-    font-size: 18px;
-    display: inline-block;
-    margin-bottom: 10px;
-    float: left;
-
-    svg {
-      width: 20px;
-      height: 20px;
-    }
-
-    &:first-child {
-      margin-right: 10px;
-    }
   }
 }
 
