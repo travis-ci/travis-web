@@ -1,8 +1,9 @@
-import $ from 'jquery';
+import { inject as service } from '@ember/service';
 import TravisRoute from 'travis/routes/basic';
 import config from 'travis/config/environment';
 
 export default TravisRoute.extend({
+  api: service(),
   needsAuth: false,
 
   titleToken(model) {
@@ -10,14 +11,10 @@ export default TravisRoute.extend({
   },
 
   model(params, transition) {
-    let includes =
-      '?include=user.repositories,organization.repositories,build.commit,repository.active';
-    let { owner } = this.paramsFor('owner');
-    return $.ajax({
-      url: `${config.apiEndpoint}/owner/${owner}${includes}`,
-      headers: {
-        'Travis-API-Version': '3'
-      }
-    });
+    const includes = '?include=user.repositories,organization.repositories,build.commit,repository.active';
+    const { owner } = this.paramsFor('owner');
+    const url = `${config.apiEndpoint}/owner/${owner}${includes}`;
+
+    return this.api.get(url);
   }
 });

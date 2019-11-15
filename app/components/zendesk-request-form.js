@@ -13,7 +13,6 @@ import {
   notEmpty
 } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
-import $ from 'jquery';
 import moment from 'moment';
 import config from 'travis/config/environment';
 
@@ -32,6 +31,7 @@ export default Component.extend({
   classNames: ['zendesk-request-form'],
 
   accounts: service(),
+  ajax: service(),
   auth: service(),
   features: service(),
   flashes: service(),
@@ -91,16 +91,15 @@ export default Component.extend({
     const { email, subject, description: body } = this;
 
     try {
-      return yield $.ajax({
-        type: 'POST',
-        url: `${apiHost}${createRequestEndpoint}`,
-        data: JSON.stringify({
+      return yield this.ajax.request(createRequestEndpoint, 'POST', {
+        endpoint: apiHost,
+        data: {
           request: {
             requester: { name, email },
             subject,
             comment: { body }
           }
-        }),
+        },
         contentType: 'application/json'
       });
     } catch (error) {
