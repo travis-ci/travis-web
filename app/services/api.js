@@ -1,5 +1,11 @@
 import Service, { inject as service } from '@ember/service';
 
+export const TRAVIS_API_V = {
+  TWO: '2',
+  THREE: '3',
+};
+export const TRAVIS_API_VERSIONS = Object.values(TRAVIS_API_V);
+
 export default Service.extend({
   ajax: service(),
 
@@ -24,8 +30,9 @@ export default Service.extend({
   },
 
   request(url, method = 'GET', options = {}) {
-    options.headers = options.headers || {};
-    options.headers['Travis-API-Version'] = '3';
+    if (options.travisApi === undefined) {
+      options.travisApi = TRAVIS_API_V.THREE;
+    }
 
     return this.ajax.request(url, method, options);
   }

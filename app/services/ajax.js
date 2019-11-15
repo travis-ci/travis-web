@@ -4,23 +4,27 @@ import Service, { inject as service } from '@ember/service';
 import serializeQueryParams from 'ember-fetch/utils/serialize-query-params';
 import fetch from 'fetch';
 import config from 'travis/config/environment';
-
-const defaultOptions = {
-  dataType: 'json',
-  endpoint: config.apiEndpoint || '',
-  headers: {
-    'Accept': 'application/json; version=2'
-  },
-};
+import { TRAVIS_API_VERSIONS } from 'travis/services/api';
 
 const PERMITTED_NON_AUTH_REQUESTS = [];
 if (config.statusPageStatusUrl) {
   PERMITTED_NON_AUTH_REQUESTS.push(`GET:${config.statusPageStatusUrl}`);
 }
+Object.freeze(PERMITTED_NON_AUTH_REQUESTS);
+
+const DEFAULT_ACCEPT = 'application/json';
 
 export default Service.extend({
   auth: service(),
   features: service(),
+
+  getDefaultOptions() {
+    return {
+      accept: DEFAULT_ACCEPT,
+      dataType: 'json',
+      endpoint: config.apiEndpoint || '',
+    };
+  },
 
   needsAuth(method, url) {
     const authUnnecessary = PERMITTED_NON_AUTH_REQUESTS.includes(`${method}:${url}`);
@@ -47,15 +51,18 @@ export default Service.extend({
       }
     }
 
+    // Travis-API-Version
+    if (options.travisApi && TRAVIS_API_VERSIONS.includes(options.travisApi)) {
+      headers['Travis-API-Version'] = options.travisApi;
+    }
+
     // Content-Type
     if (options.contentType) {
       headers['Content-Type'] = options.contentType;
     }
 
     // Accept
-    if (!headers['Accept']) {
-      headers['Accept'] = 'application/json';
-    }
+    headers['Accept'] = options.accept || DEFAULT_ACCEPT;
 
     return headers;
   },
@@ -94,7 +101,8 @@ export default Service.extend({
   },
 
   request(requestUrl, mthd = 'GET', opts = {}) {
-    const options = Object.assign({}, defaultOptions, opts);
+    const defaultOpts = this.getDefaultOptions();
+    const options = Object.assign({}, defaultOpts, opts);
     const method = mthd.toUpperCase();
 
     const url = this.setupUrl(requestUrl, method, options);
