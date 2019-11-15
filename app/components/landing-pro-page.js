@@ -8,7 +8,7 @@ export default Component.extend({
 
   actions: {
     signIn(provider) {
-      this.auth.signIn(provider);
+      this.auth.signInWith(provider);
     },
 
     signOut() {
