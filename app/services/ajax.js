@@ -1,5 +1,3 @@
-import { isNone } from '@ember/utils';
-
 import { Promise as EmberPromise } from 'rsvp';
 import { get } from '@ember/object';
 import Service, { inject as service } from '@ember/service';
@@ -13,160 +11,101 @@ const defaultOptions = {
   headers: {
     'Accept': 'application/json; version=2'
   },
-  lib: 'fetch',
 };
 
-const PERMITTED_NON_AUTH_REQUESTS = {};
+const PERMITTED_NON_AUTH_REQUESTS = [];
 if (config.statusPageStatusUrl) {
-  PERMITTED_NON_AUTH_REQUESTS[`GET:${config.statusPageStatusUrl}`] = true;
+  PERMITTED_NON_AUTH_REQUESTS.push(`GET:${config.statusPageStatusUrl}`);
 }
 
 export default Service.extend({
   auth: service(),
   features: service(),
 
-  get(url, options) {
-    return this.request(url, 'GET', options);
-  },
-
-  post(url, options) {
-    return this.request(url, 'POST', options);
-  },
-
-  patch(url, options) {
-    return this.request(url, 'PATCH', options);
-  },
-
   needsAuth(method, url) {
-    const authUnnecessary = PERMITTED_NON_AUTH_REQUESTS[`${method}:${url}`];
+    const authUnnecessary = PERMITTED_NON_AUTH_REQUESTS.includes(`${method}:${url}`);
     return !authUnnecessary;
   },
 
-  request(requestUrl, mthd, opts) {
-    const options = Object.assign({}, defaultOptions, (opts || {}));
-    const method = (mthd || 'GET').toUpperCase();
-    const token = get(this, 'auth.token');
-    const { endpoint = '' } = options;
-    let url = `${endpoint}${requestUrl}`;
-
-    options.context = this;
-
-    if (method !== 'GET' && method !== 'HEAD') {
-      options.contentType = options.contentType || 'application/json; charset=utf-8';
-    }
-
-    if (options.data && method !== 'GET' && options.stringifyData !== false && typeof options.data !== 'string') {
-      options.data = JSON.stringify(options.data);
-    }
-
-    if (options.data) {
-      if (method === 'GET' || method === 'HEAD') {
-        const params = serializeQueryParams(options.data);
-        const delimeter = url.indexOf('?') === -1 ? '?' : '&';
-        url = url + delimeter + params;
-      } else {
-        options.body = options.data;
-      }
-    }
-
-    options.headers = options.headers || {};
-    if (config.release) {
-      options.headers['X-Client-Release'] = config.release;
-    }
-    if (token && (this.needsAuth(method, url) || options.forceAuth)) {
-      if (!options.headers['Authorization']) {
-        options.headers['Authorization'] = `token ${token}`;
-      }
-    }
-    if (options.contentType) {
-      options.headers['Content-Type'] = options.contentType;
-    }
-    if (!options.headers['Accept']) {
-      options.headers['Accept'] = 'application/json';
-    }
-
-    const success = options.success || ((() => {}));
-    options.success = function (data, status, xhr) {
-      return success.call(this, data, status, xhr);
-    };
-
-    const error = options.error || (() => {});
-    options.error = (data, status, xhr) => {
-      if (this.features.get('debugLogging')) {
-        // eslint-disable-next-line
-        console.log(`[ERROR] API responded with an error (${status}): ${JSON.stringify(data)}`);
-      }
-      return error.call(this, data, status, xhr);
-    };
-
-    if (options.lib === 'xhr') {
-      return this.xhrRequest(url, method, options);
-    } else {
-      return this.fetchRequest(url, method, options);
-    }
+  isRetrieve(method) {
+    return method === 'GET' || method === 'HEAD';
   },
 
-  xhrRequest(url, method, options) {
-    const xhr = new XMLHttpRequest();
-    xhr.open(method, url);
+  setupHeaders(url, method, options = {}) {
+    const { headers = {} } = options;
+    const token = get(this, 'auth.token');
 
-    if (options.headers) {
-      const ref2 = options.headers;
-      let name, value;
-      for (name in ref2) {
-        value = ref2[name];
-        xhr.setRequestHeader(name, value);
+    // Release
+    if (config.release) {
+      headers['X-Client-Release'] = config.release;
+    }
+
+    // Auth
+    if (token && (this.needsAuth(method, url) || options.forceAuth)) {
+      if (!headers['Authorization']) {
+        headers['Authorization'] = `token ${token}`;
       }
     }
 
-    let resolve = null;
-    let reject = null;
-    const promise = new EmberPromise((_resolve, _reject) => {
-      resolve = _resolve;
-      return reject = _reject;
-    });
-    xhr.onreadystatechange = () => {
-      let contentType, data;
-      if (xhr.readyState === 4) {
-        contentType = xhr.getResponseHeader('Content-Type');
-        data = (() => {
-          if (contentType && contentType.match(/application\/json/)) {
-            try {
-              return JSON.parse(xhr.responseText);
-            } catch (error1) {
-              if (this.features.get('debugLogging')) {
-                // eslint-disable-next-line
-                console.log('error while parsing a response', method, options.url, xhr.responseText);
-              }
-            }
-          } else {
-            return xhr.responseText;
-          }
-        })();
-        if (xhr.status >= 200 && xhr.status < 300) {
-          resolve(data);
-          return options.success.call(options.context, data, xhr.status, xhr);
-        } else {
-          reject(xhr);
-          return options.error.call(options.context, data, xhr.status, xhr);
-        }
-      }
-    };
-
-    let data = options.data;
-    const contentType = options.contentType;
-    const isJSON = isNone(contentType) || contentType.match(/application\/json/);
-    if (typeof options.data === 'object' && isJSON) {
-      data = JSON.stringify(data);
+    // Content-Type
+    if (options.contentType) {
+      headers['Content-Type'] = options.contentType;
     }
 
-    if (data) {
-      xhr.send(data);
-    } else {
-      xhr.send();
+    // Accept
+    if (!headers['Accept']) {
+      headers['Accept'] = 'application/json';
     }
 
-    return promise;
+    return headers;
+  },
+
+  setupContentType(method, contentType) {
+    if (this.isRetrieve(method)) {
+      return contentType;
+    }
+    return contentType || 'application/json; charset=utf-8';
+  },
+
+  setupBody(method, options) {
+    if (this.isRetrieve(method)) {
+      return null;
+    }
+
+    const { data, stringifyData } = options;
+    if (data && stringifyData !== false && typeof data !== 'string') {
+      return JSON.stringify(data);
+    }
+
+    return data;
+  },
+
+  setupUrl(requestUrl, method, options) {
+    const { endpoint = '', data } = options;
+    const baseUrl = `${endpoint}${requestUrl}`;
+
+    if (data && this.isRetrieve(method)) {
+      const params = serializeQueryParams(data);
+      const delimeter = baseUrl.indexOf('?') === -1 ? '?' : '&';
+      return `${baseUrl}${delimeter}${params}`;
+    }
+
+    return baseUrl;
+  },
+
+  request(requestUrl, mthd = 'GET', opts = {}) {
+    const options = Object.assign({}, defaultOptions, opts);
+    const method = mthd.toUpperCase();
+
+    const url = this.setupUrl(requestUrl, method, options);
+
+    options.contentType = this.setupContentType(method, options.contentType);
+
+    options.body = this.setupBody(method, options);
+
+    options.headers = this.setupHeaders(url, method, options);
+
+    return this.fetchRequest(url, method, options);
   },
 
   fetchRequest(url, method, options) {
@@ -179,26 +118,33 @@ export default Service.extend({
       if (body) {
         fetchOptions['body'] = body;
       }
-      fetch(url, fetchOptions).then(response => {
-        const { 'content-type': resContentType = '' } = response.headers.map;
-        let res;
-        if (resContentType.includes('application/json')) {
-          res = response.json();
-        } else {
-          res = response.text();
-        }
 
-        if (response.ok) {
-          resolve(res);
+      fetch(url, fetchOptions).then(response => {
+        if (!response.ok) {
+          this.handleFetchError(reject, response);
         } else {
-          reject(response);
-          this.logFetchError(response);
+          const { 'content-type': resContentType = '' } = response.headers.map;
+
+          let resContent;
+          if (resContentType.includes('application/json')) {
+            resContent = response.json();
+          } else {
+            resContent = response.text();
+          }
+
+          resContent
+            .then(data => resolve(data))
+            .catch(error => this.handleFetchError(reject, error));
         }
-      }).then(error => {
-        reject(error);
-        this.logFetchError(error);
+      }).catch(error => {
+        this.handleFetchError(reject, error);
       });
     });
+  },
+
+  handleFetchError(reject, error) {
+    reject(error);
+    this.logFetchError(error);
   },
 
   logFetchError(response) {
