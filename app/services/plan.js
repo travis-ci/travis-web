@@ -2,15 +2,13 @@ import Service, { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 import config from 'travis/config/environment';
 import { task } from 'ember-concurrency';
-import { not, filterBy, reads } from '@ember/object/computed';
+import { filterBy, reads } from '@ember/object/computed';
 
 export default Service.extend({
   accounts: service(),
   store: service(),
 
-  showAnnual: false,
   availablePlans: config.plans,
-  showMonthly: not('showAnnual'),
   defaultPlans: filterBy('availablePlans', 'isDefault'),
   defaultPlanName: reads('defaultPlans.firstObject.name'),
   plans: reads('fetchPlans.lastSuccessful.value'),
@@ -41,16 +39,4 @@ export default Service.extend({
     const filteredAnnualPlans = nonGithubPlans.filter(plan => plan.annual && plan.builds);
     return filteredAnnualPlans.sort((a, b) => a.builds - b.builds);
   }),
-
-  displayedPlans: computed('showAnnual', 'monthlyPlans.[]', 'annualPlans.[]', function () {
-    return this.showAnnual ? this.annualPlans : this.monthlyPlans;
-  }),
-
-  selectedPlan: computed('displayedPlans.[].name', 'defaultPlanName', function () {
-    return this.displayedPlans.findBy('name', this.defaultPlanName);
-  }),
-
-  togglePlanPeriod() {
-    this.toggleProperty('showAnnual');
-  },
 });

@@ -1,0 +1,30 @@
+<div class="inner-yaml-container">
+  <div class="header" {{on 'click' (action 'toggle')}}>
+    <SvgImage @name="job-name-icon" @class="icon" @width=14 @height=14 />
+    <span class="vertical-align">
+      Build Config
+    </span>
+    <div class="tools">
+      <SvgImage @name="icon-dropdown-arrow" @class="icon-toggle icon-{{this.toggleStatusClass}}" />
+    </div>
+  </div>
+  {{#if this.isExpanded}}
+    <div class="position-relative">
+      <CodeBlock
+        @language="yaml"
+        class="codedisplay line-numbers"
+        data-test-yaml="true"
+      >{{this.formattedConfig}}</CodeBlock>
+      <CopyButton
+        @clipboardText={{this.config}}
+        @title={{this.buttonLabel}}
+        @success={{action "copied" this.config}}
+      >
+        <SvgImage @name="icon-copy" @class="icon" />
+        <span>
+          {{this.buttonLabel}}
+        </span>
+      </CopyButton>
+    </div>
+  {{/if}}
+</div>

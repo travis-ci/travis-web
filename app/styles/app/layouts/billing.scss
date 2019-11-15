@@ -9,10 +9,11 @@
   }
 
   .notice-banner--white {
-    display: block;
+    display: flex;
     margin-top: 1rem;
     margin-bottom: 1rem;
     padding: 0.5rem 0.9rem 0.6rem;
+    box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.15);
     font-size: $font-size-sm;
   }
 
@@ -49,7 +50,6 @@
       }
 
       &--email {
-        border-bottom: 2px $pebble-grey solid;
         display: inline-block;
         margin-bottom: 0;
         margin-top: 1px;
@@ -182,25 +182,26 @@
       margin-top: 24px;
     }
 
-    .switch-inner {
-      width: 175px;
-      height: 29px;
-      margin-left: -5px;
-      padding-top: 1px;
-
-      span {
-        width: 82px;
-        height: 24px;
-        line-height: 1.7;
-        padding-left: 0;
-
+    .switch {
+      .switch-inner {
+        width: 175px;
+        height: 30px;
+        margin-left: -5px;
+        padding-top: 1px;
+  
         span {
-          color: $ansi-black;
-          font-size: 1.2em;
-          font-weight: 500;
+          width: 82px;
+          height: 25px;
+          line-height: 1.7;
+          padding-left: 0;
+  
+          span {
+            color: $ansi-black;
+            font-size: 1.2em;
+            font-weight: 500;
+          }
         }
       }
-
       .on {
         padding-left: 1px;
       }
@@ -302,8 +303,8 @@
         }
 
         &--jobs {
-          margin: 5px 0;
           font-size: 14px;
+          margin: 5px 0;
         }
       }
     }
@@ -442,7 +443,7 @@
     }
 
     &__period {
-      font-size: .8em;
+      font-size: .7em;
       font-style: italic;
     }
   }
@@ -477,6 +478,15 @@
   }
 
   .billing-subscription {
+
+    .manual-badge {
+      margin-left: 0;
+      font-weight: 600;
+      border: 1px solid $pebble-grey;
+      color: $asphalt-grey;
+      border-radius: 3px;
+      background: white;
+    }
 
     h3 {
       margin-bottom: 0;
@@ -515,13 +525,13 @@
       }
 
       &__description {
-        font-weight: 400;
-        margin: 0;
+        font-weight: 100;
+        margin-top: 4px;
+        margin-bottom: 4px;
 
         &--validity {
-          font-weight: 700;
           font-size: 12px;
-          margin-left: 1em;
+          font-weight: 400;
         }
       }
     }

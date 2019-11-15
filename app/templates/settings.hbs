@@ -152,6 +152,38 @@
       {{/unless}}
     </section>
   {{/if}}
+  {{#if this.showBetaFeatures}}
+    <section class="settings-section beta_features">
+      <h2 class="small-title display-inline">
+        Beta Features
+      </h2>
+      <p>
+        These features are in beta. If you find things to be not working as expected
+        or lacking, please let us know in the <a href="{{config-get 'urls.communityEarlyReleases'}}">Travis CI community forum</a>
+        or email <a href="{{config-get 'urls.emailSupport'}}">support</a>.
+      </p>
+      <ul class="settings-list--columns">
+        {{#if this.showConfigValidationSwitches}}
+          <li>
+            <SettingsSwitch
+              @active={{this.model.settings.config_validation}}
+              @repo={{this.repo}}
+              @description="Enable build config validation"
+              @key="config_validation"
+            />
+            <ExternalLinkTo
+              href="https://docs.travis-ci.com/user/build-config-validation"
+              title="about build config validation"
+              class="settings-tooltip"
+            >
+              <EmberTooltip @text="Read about build config validation" />
+              <SvgImage @name="icon-help" @class="icon-help" />
+            </ExternalLinkTo>
+          </li>
+        {{/if}}
+      </ul>
+    </section>
+  {{/if}}
 </div>
 {{#if this.displaySettingsDisabledAfterMigrationModal}}
   <ModalDialog

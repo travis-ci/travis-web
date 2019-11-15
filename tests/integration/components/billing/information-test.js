@@ -34,7 +34,8 @@ module('Integration | Component | billing-information', function (hooks) {
         bllingZip: '',
         country: '',
         vatId: ''
-      }
+      },
+      plan: this.plans[0]
     };
 
     this['actions'] = {
@@ -45,7 +46,6 @@ module('Integration | Component | billing-information', function (hooks) {
 
     this.setProperties({
       displayedPlans: plans,
-      selectedPlan: plans[0],
       showAnnual: false,
       newSubscription
     });
@@ -54,7 +54,6 @@ module('Integration | Component | billing-information', function (hooks) {
   test('it renders billing information form correctly', async function (assert) {
     await render(hbs`
       <Billing::Information 
-        @selectedPlan={{selectedPlan}} 
         @displayedPlans={{displayedPlans}} 
         @showAnnual={{showAnnual}}
         @newSubscription={{newSubscription}}

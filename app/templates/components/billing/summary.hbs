@@ -4,28 +4,31 @@
       <h3 class='plan-overview__header'> Overview </h3>
       <div class='plan'>
         <div>
-          <BillingSummaryStatus 
-            @subscription={{this.subscription}}
-            @isPending={{this.isPending}}
-          />
+          <BillingSummaryStatus @subscription={{this.subscription}}/>
           <p class='plan-overview__description' data-test-plan-concurrency>
             {{#if this.subscription.plan}}
               {{pluralize this.subscription.plan.builds "concurrent job"}}
             {{else}}
               Unknown concurrent jobs
             {{/if}}
-            <span data-test-plan-message='true' class='plan-overview__description--validity 
-              {{if this.canceledOrExpired 'red' 'cement-grey'}}'
-            >
-              {{this.planMessage}} 
-              {{#if (and this.isComplete this.isNotPending)}}
-                {{#if this.isCanceled}}
-                  {{moment-from-now this.subscription.validTo}} on {{moment-format this.subscription.validTo "MMMM DD"}}
-                {{else}}
-                  {{moment-format this.subscription.validTo "MMMM D, YYYY"}}
+            {{#if (and this.subscription.isManual (not this.subscription.manualSubscriptionExpired))}}
+              <span class='plan-overview__description--validity dark-red display mt-4' data-test-plan-message='true'>
+                Renews on {{moment-format this.subscription.validTo "MMMM D, YYYY"}}
+              </span>
+            {{else}}
+              <span data-test-plan-message='true' class='plan-overview__description--validity ml-3
+                {{if (or this.subscription.manualSubscriptionExpired this.canceledOrExpired) 'dark-red' 'cement-grey'}}'
+              >
+                {{this.planMessage}} 
+                {{#if (and this.isComplete this.isNotPending)}}
+                  {{#if this.isCanceled}}
+                    {{moment-from-now this.subscription.validTo}} on {{moment-format this.subscription.validTo "MMMM DD"}}
+                  {{else}}
+                    {{moment-format this.subscription.validTo "MMMM D, YYYY"}}
+                  {{/if}}
                 {{/if}}
-              {{/if}}
-            </span>
+              </span>
+            {{/if}}
           </p>
         </div>
       </div>
@@ -36,17 +39,13 @@
           Total:
         </p>
         {{#if this.subscription.plan }}
-          {{#if this.subscription.isManual}}
-            <ManualSubscriptionHelp />
-          {{else}}
-            <p class='selected-plan__price--large' data-test-price>
-              {{format-currency this.price floor='true'}}
-            </p>
-          {{/if}}
+          <p class='selected-plan__price--large' data-test-price>
+            {{format-currency this.subscription.plan.price floor='true'}}
+          </p>
+          <span data-test-selected-plan-period='true' class='selected-plan__period'>
+            {{if this.subscription.plan.annual '/year' '/month'}}
+          </span>
         {{/if}}
-        <span data-test-selected-plan-period='true' class='selected-plan__period'>
-          {{if this.subscription.plan.annual '/year' '/month'}}
-        </span>
       </div>
     </section>
   </div>

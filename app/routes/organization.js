@@ -3,7 +3,8 @@ import { inject as service } from '@ember/service';
 
 export default TravisRoute.extend({
   accounts: service(),
-
+  features: service(),
+  auth: service(),
   needsAuth: true,
 
   titleToken(org = {}) {
@@ -11,12 +12,16 @@ export default TravisRoute.extend({
   },
 
   beforeModel() {
-    const { fetchOrganizations } = this.accounts;
-    const { lastSuccessful } = fetchOrganizations;
-    if (lastSuccessful && lastSuccessful._promise) {
-      return lastSuccessful._promise;
+    if (this.auth.signedIn) {
+      const { fetchOrganizations } = this.accounts;
+      const { lastSuccessful } = fetchOrganizations;
+      if (lastSuccessful && lastSuccessful._promise) {
+        return lastSuccessful._promise;
+      } else {
+        return fetchOrganizations.perform();
+      }
     } else {
-      return fetchOrganizations.perform();
+      return this._super(...arguments);
     }
   },
 
@@ -26,7 +31,7 @@ export default TravisRoute.extend({
   },
 
   afterModel(model) {
-    if (model && !model.error)
+    if (model && !model.error && !this.features.get('enterpriseVersion'))
       model.fetchBetaMigrationRequests();
   }
 });

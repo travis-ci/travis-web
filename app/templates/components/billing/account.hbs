@@ -10,7 +10,12 @@
       />
     {{/if}}
     {{#if this.isManual}}
-      <BillingManual @subscription={{this.subscription}} />
+      <BillingManual 
+        @subscription={{this.subscription}} 
+        @plans={{this.plans}} 
+        @account={{this.account}} 
+        @newSubscription={{this.newSubscription}}
+      />
     {{/if}}
     {{#if this.isManaged}}
       <Billing::Subscription

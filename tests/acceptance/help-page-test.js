@@ -170,6 +170,7 @@ module('Acceptance | help page', function (hooks) {
 
       await signInUser(this.user);
       await helpPage.visit();
+      await settled();
 
       assert.ok(helpPage.supportSection.form.isPresent);
     });

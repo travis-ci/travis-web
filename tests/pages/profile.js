@@ -274,6 +274,10 @@ export default create({
       scope: '[data-test-resubscribe-subscription]'
     },
 
+    changePlanResubscribe: {
+      scope: '[data-test-resubscribe-change-plan]'
+    },
+
     changeSubscriptionButton: {
       scope: '[data-test-change-subscription]'
     },
@@ -540,10 +544,15 @@ export default create({
     },
 
     plan: {
-      scope: '.plan',
       name: text('[data-test-plan-name]'),
       concurrency: {
         scope: '[data-test-plan-concurrency]'
+      }
+    },
+
+    manualSubscription: {
+      banner: {
+        scope: '[data-test-manual-subscription-banner]'
       }
     },
 
@@ -588,7 +597,8 @@ export default create({
       greyStatus: '[data-test-grey-status]',
       activeStatus: '[data-test-active-status]',
       canceledStatus: '[data-test-canceled-status]',
-      expiredStatus: '[data-test-expired-status]'
+      expiredStatus: '[data-test-expired-status]',
+      manualStatus: '[data-test-manual-status]'
     },
 
     userDetails: {

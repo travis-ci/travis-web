@@ -1,18 +1,14 @@
-/* global _gaq */
 import Component from '@ember/component';
-import config from 'travis/config/environment';
 import { inject as service } from '@ember/service';
 
 export default Component.extend({
   auth: service(),
   multiVcs: service(),
+  metrics: service(),
 
   actions: {
-    gaCta(location, provider) {
-      if (config.gaCode) {
-        _gaq.push(['_trackPageview', `/virtual/signup?${location}`]);
-      }
-      this.auth.signInWith(provider);
+    signIn(provider) {
+      this.auth.signIn(provider);
     },
 
     signOut() {

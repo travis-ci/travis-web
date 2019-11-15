@@ -19,11 +19,14 @@
       </p>
     {{/if}}
   </div>
-  <div class="form-elem">
+  <div class="form-elem form-footer">
     {{#if this.save.isRunning}}
       <LoadingIndicator />
     {{else}}
-      <input type="submit" value="Add" class="form-submit" />
+      <div class="form-actions">
+        <input type="submit" value="Add" class="form-submit" />
+      </div>
+      <p class="form-hint">Private key in PEM format only.</p>
     {{/if}}
   </div>
 </form>

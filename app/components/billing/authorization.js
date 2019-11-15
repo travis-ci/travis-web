@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
-import { reads, not, equal, and, or } from '@ember/object/computed';
+import { reads, not, equal, and, or, bool } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
 import config from 'travis/config/environment';
 import { computed } from '@ember/object';
@@ -16,10 +16,9 @@ export default Component.extend({
 
   showPlansSelector: false,
   showCancelModal: false,
-  showMonthly: reads('plan.showMonthly'),
-  displayedPlans: reads('plan.displayedPlans'),
-  selectedPlan: reads('plan.selectedPlan'),
-  showAnnual: reads('plan.showAnnual'),
+  selectedPlan: reads('subscription.plan'),
+  showAnnual: bool('selectedPlan.annual'),
+  showMonthly: not('showAnnual'),
 
   requiresSourceAction: equal('subscription.paymentIntent.status', 'requires_source_action'),
   requiresSource: equal('subscription.paymentIntent.status', 'requires_source'),
@@ -31,7 +30,7 @@ export default Component.extend({
   isNotCanceled: not('isCanceled'),
   canCancelSubscription: and('isNotCanceled', 'hasSubscriptionPermissions'),
   cancelSubscriptionLoading: reads('subscription.cancelSubscription.isRunning'),
-  isLoading: or('cancelSubscriptionLoading', 'editPlan.isRunning', 'resubscribe.isRunning'),
+  isLoading: or('accounts.fetchSubscriptions.isRunning', 'cancelSubscriptionLoading', 'editPlan.isRunning', 'resubscribe.isRunning'),
 
   handleError: reads('stripe.handleError'),
   options: config.stripeOptions,

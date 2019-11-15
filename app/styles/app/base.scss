@@ -190,6 +190,10 @@ span.emoji.emoji-sizer {
   line-height: 1;
 }
 
+.leading-loose {
+  line-height: 2;
+}
+
 .float-right {
   float: right;
 }
@@ -284,6 +288,10 @@ span.emoji.emoji-sizer {
 
 .red-bold {
   color: $ansi-red-bold;
+}
+
+.dark-red {
+  color: #DB4545;
 }
 
 @for $i from 1 through 100 {

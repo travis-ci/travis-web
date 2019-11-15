@@ -1,4 +1,3 @@
-/* global _gaq */
 import Controller from '@ember/controller';
 import config from 'travis/config/environment';
 import { filterBy } from '@ember/object/computed';
@@ -7,18 +6,17 @@ import { inject as service } from '@ember/service';
 
 const { plans } = config;
 
-const utmSourceName = 'plans-page';
-const utmSource = `?utm_source=${utmSourceName}`;
+const referralSourceName = 'plans-page';
 
 export default Controller.extend({
-  config,
-
   auth: service(),
+  metrics: service(),
 
-  utmSourceName,
-  billingUrl: `${config.billingEndpoint}/${utmSource}`,
-  buildMatrixUrl: `${config.urls.buildMatrix}${utmSource}`,
-  enterpriseUrl: `${config.urls.enterprise}${utmSource}`,
+  config,
+  referralSourceName,
+  billingUrl: config.billingEndpoint,
+  buildMatrixUrl: config.urls.buildMatrix,
+  enterpriseUrl: config.urls.enterprise,
 
   plans: computed(() => plans),
   annualPlans: filterBy('plans', 'period', 'annual'),
@@ -36,11 +34,7 @@ export default Controller.extend({
   scrollToContact: false,
 
   actions: {
-    gaCta(location) {
-      if (config.gaCode) {
-        const page = `/virtual/signup?${location}`;
-        _gaq.push(['_trackPageview', page]);
-      }
+    signIn() {
       this.auth.signIn();
     },
 

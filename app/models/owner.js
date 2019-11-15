@@ -17,8 +17,10 @@ export default VcsEntity.extend({
 
   name: attr('string'),
   login: attr('string'),
+  channels: attr(),
   isSyncing: attr('boolean'),
-  syncedAt: attr(),
+  syncedAt: attr('date'),
+  createdAt: attr('date'),
   avatarUrl: attr('string'),
   githubId: attr('string'),
   education: attr('boolean'),

@@ -1,5 +1,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
+import jobConfigArch from 'travis/utils/job-config-arch';
 import jobConfigLanguage from 'travis/utils/job-config-language';
 import { not } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
@@ -127,6 +128,11 @@ export default Component.extend({
     } else {
       return 'unknown';
     }
+  }),
+
+  arch: computed('jobsConfig.content.arch', function () {
+    let config = this.get('jobsConfig.content');
+    return jobConfigArch(config);
   }),
 
   osIcon: computed('os', function () {

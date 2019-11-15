@@ -49,9 +49,8 @@
   {{#if this.showPlansSelector}}
     <Billing::SelectPlan
       @title="Edit plan"
-      @displayedPlans={{this.displayedPlans}}
+      @account={{this.account}}
       @selectedPlan={{this.selectedPlan}}
-      @showMonthly={{this.showMonthly}}
       @showAnnual={{this.showAnnual}}
       @showPlansSelector={{this.showPlansSelector}}
       @submit={{this.editPlan}}
@@ -75,10 +74,6 @@
             <button {{on 'click' (fn (mut this.showCancelModal) true)}} class='button--white button--hover' data-test-open-cancel-subscription-modal='true'>
               Cancel subscription
             </button>
-          {{else}}
-            <div class='button disabled' data-test-open-cancel-subscription-modal='true'>
-              Cancel subscription
-            </div>
           {{/if}}
         </div>
       {{/if}}

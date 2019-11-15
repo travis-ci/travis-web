@@ -93,7 +93,7 @@ module('Acceptance | plans page', function (hooks) {
       size: 4,
       phone: '+1 555-555-5555',
       message: 'Test request message.',
-      utmSource: 'plans-page',
+      referralSource: 'plans-page',
     };
 
     hooks.beforeEach(async function () {
@@ -147,7 +147,7 @@ module('Acceptance | plans page', function (hooks) {
       assert.equal(data.team_size, mockData.size);
       assert.equal(data.phone, mockData.phone);
       assert.equal(data.message, mockData.message);
-      assert.equal(data.utm_source, mockData.utmSource);
+      assert.equal(data.referral_source, mockData.referralSource);
     });
 
     test('doesn\'t get sent if form is invalid', async function (assert) {

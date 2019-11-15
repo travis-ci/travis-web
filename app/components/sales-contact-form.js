@@ -2,6 +2,8 @@ import Component from '@ember/component';
 import { bool, reads } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
+import { UTM_FIELD_NAMES } from 'travis/services/utm';
+import objectCollect from 'travis/utils/object-collect';
 
 export default Component.extend({
   tagName: '',
@@ -9,6 +11,7 @@ export default Component.extend({
   flashes: service(),
   raven: service(),
   store: service(),
+  utm: service(),
 
   requiredMark: 'Required',
 
@@ -16,7 +19,15 @@ export default Component.extend({
   isSuccess: bool('send.lastSuccessful.value'),
 
   lead: null,
-  utmSource: 'travis-web',
+  referralSource: 'travis-web',
+
+  utm_source: reads('utm.source'),
+  utm_campaign: reads('utm.campaign'),
+  utm_medium: reads('utm.medium'),
+  utm_term: reads('utm.term'),
+  utm_content: reads('utm.content'),
+
+  utmFields: objectCollect(...UTM_FIELD_NAMES),
 
   send: task(function* () {
     try {
@@ -37,7 +48,10 @@ export default Component.extend({
 
   reset() {
     if (this.lead) this.lead.unloadRecord();
-    this.set('lead', this.store.createRecord('lead', { utm_source: this.utmSource }));
+    this.set('lead', this.store.createRecord('lead', {
+      referral_source: this.referralSource,
+      utm_fields: this.utmFields,
+    }));
   },
 
   // Lifecycle

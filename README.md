@@ -38,11 +38,24 @@ You should then be able to run `bundle install` as usual.
 
 At the moment Travis CI is available as two separate sites - https://travis-ci.org for Open Source
 projects and https://travis-ci.com for private projects. travis-web will connect
-to the Open Source version by default. In order to connect it to the API for private projects
-you need to run:
+to the Open Source version by default. In order to connect it to the API for private projects you need to setup your `.env` file.
+
+Copy `.env.example` to `.env`
 
 ```
-TRAVIS_PRO=true ember serve --ssl --ssl-key=ssl/server.key --ssl-cert=ssl/server.crt
+$ cp .env.example .env
+```
+
+Update the `.env` file to run the app in private repos mode:
+
+```
+TRAVIS_PRO=true
+```
+
+After setting up environment variables, you can run the app like so:
+
+```
+ember serve --ssl --ssl-key=ssl/server.key --ssl-cert=ssl/server.crt
 ```
 
 One caveat here is that the command will start server with SSL, so the page will
@@ -110,11 +123,16 @@ flag as mentioned previously in the `Feature Flags` section.
 `ember-cli-deploy` is available for deploying pull requests. See `after_success`
 in `.travis.yaml` and associated scripts for details. It uses the “lightning
 strategy” of deploying assets to S3 and `index.html` to a Redis server. You can
-deploy from your own machine too:
+deploy from your own machine too. First, update your `.env` file with the following variables:
 
 ```
-AWS_KEY=key AWS_SECRET=secret ORG_PRODUCTION_REDIS_URL=redis TRAVIS_PULL_REQUEST_BRANCH=branch \
-ember deploy org-production-pull-request --activate
+AWS_KEY=key
+AWS_SECRET=secret
+```
+Then run:
+
+```
+npm run deploy
 ```
 
 After success, your deployment will be available at branch.test-deployments.travis-ci.org.

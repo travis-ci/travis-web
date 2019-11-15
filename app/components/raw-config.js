@@ -3,6 +3,7 @@ import { computed } from '@ember/object';
 import {
   isInternal,
   presentedPath,
+  codeblockName,
   fileNameWithoutSha
 } from 'travis/utils/format-config';
 import { later } from '@ember/runloop';
@@ -13,6 +14,14 @@ export default Component.extend({
 
   copied: false,
   baseYmlName: '.travis.yml',
+
+  isExpanded: computed('rawConfig.config', function () {
+    return this.get('rawConfig.config') !== '{}';
+  }),
+
+  toggleStatusClass: computed('isExpanded', function () {
+    return this.isExpanded ? 'expanded' : 'collapsed';
+  }),
 
   buttonLabel: computed('copied', 'rawConfig.source', function () {
     let source = this.get('rawConfig.source');
@@ -50,10 +59,17 @@ export default Component.extend({
     return this.externalLinks.fileUrl(vcsType, { owner, repo, branch, file });
   }),
 
+  codeblockId: computed('rawConfig.source', function () {
+    return codeblockName(this.rawConfig.source);
+  }),
+
   actions: {
     copied() {
       this.set('copied', true);
       later(() => this.set('copied', false), 3000);
+    },
+    toggle() {
+      this.toggleProperty('isExpanded');
     }
   }
 });

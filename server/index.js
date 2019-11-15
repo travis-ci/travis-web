@@ -8,6 +8,7 @@
 // };
 
 var bodyParser = require('body-parser');
+var xssClean = require('xss-clean');
 
 module.exports = function (app) {
   var globSync   = require('glob').sync;
@@ -18,6 +19,7 @@ module.exports = function (app) {
   var morgan  = require('morgan');
   app.use(morgan('dev'));
   app.use(bodyParser.urlencoded({ extended: false }));
+  app.use(xssClean());
 
   mocks.forEach(function (route) { route(app); });
   proxies.forEach(function (route) { route(app); });
@@ -31,14 +33,18 @@ module.exports = function (app) {
         storage = 'sessionStorage';
       }
       var user = JSON.stringify(req.body['user']);
+      var become = req.body['become'];
 
       var responseText = `
         <script>
           var storage = ${storage};
           storage.setItem('travis.token', '${token}');
           storage.setItem('travis.user', ${user});
-          storage.setItem('travis.become', true);
-          window.location = '${req.path}';
+          if (${become}) {
+            storage.setItem('travis.auth.become', true);
+          }
+          storage.setItem('travis.auth.updatedAt', Date.now());
+          window.location.href = '${req.path}';
         </script>
       `;
 

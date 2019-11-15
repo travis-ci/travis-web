@@ -107,7 +107,7 @@
     padding-right: 16px;
     text-align: right;
     color: #999;
-    background: inline-image("ui/workers-close.svg") no-repeat right 6px;
+    background: url(/images/ui/workers-close.svg) no-repeat right 6px;
     @supports(position: sticky) {
       position: sticky;
       float: right;
@@ -200,7 +200,6 @@
   position: relative;
 
   pre {
-    clear: left;
     min-height: 42px;
     padding: 15px 0;
     color: $pebble-grey;
@@ -278,7 +277,7 @@
 
     // &.active
     .log-line:first-of-type {
-      background: darken($color-bg-log-hover, 10) inline-image("ui/log.fold.open.2.svg") no-repeat 8px 3px;
+      background: darken($color-bg-log-hover, 10) url(/images/ui/log.fold.open.2.svg) no-repeat 8px 3px;
 
       &.highlight {
         background-color: $color-bg-log-fold-highlight;
@@ -289,7 +288,7 @@
       visibility: visible;
       height: auto;
       min-height: 16px;
-      background-image: inline-image("ui/log.fold.closed.3.svg");
+      background-image: url(/images/ui/log.fold.closed.3.svg);
     }
 
     .fold-name {

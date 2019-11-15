@@ -10,13 +10,8 @@ const STEPS = {
 };
 
 export default Component.extend({
-  plan: service(),
   metrics: service(),
-
-  showMonthly: reads('plan.showMonthly'),
-  displayedPlans: reads('plan.displayedPlans'),
-  selectedPlan: reads('plan.selectedPlan'),
-  showAnnual: reads('plan.showAnnual'),
+  account: null,
 
   scrollSection: null,
   steps: computed(() => [...Object.values(STEPS)]),
@@ -25,6 +20,7 @@ export default Component.extend({
   isStepOne: equal('currentStep', STEPS.ONE),
   isStepTwo: equal('currentStep', STEPS.TWO),
   isStepThree: equal('currentStep', STEPS.THREE),
+  selectedPlan: reads('newSubscription.plan'),
 
   trackButtonClicks() {
     if (this.currentStep === STEPS.ONE) {

@@ -14,42 +14,39 @@
             Easily sync your projects with Travis CI and you'll be testing your code in minutes.
           </p>
           <div class="cta-container">
-            <a
-              href="https://travis-ci.com/signin"
+            <button
               class="hero-button cta-index-page {{if this.multiVcs.enabled "multi-vcs"}}"
               title="Sign up with GitHub"
-              {{action "gaCta" "index" "github"}}
+              {{action 'signIn' 'github'}}
             >
               <SvgImage @name="github-signin" />
               <span>
                 Sign up with GitHub
               </span>
-            </a>
+            </button>
             {{#if this.multiVcs.enableAssemblaLogin}}
-              <a
-                href="https://travis-ci.com/signin"
+              <button
                 class="hero-button cta-index-page multi-vcs"
                 title="Sign up with Assembla"
-                {{action "gaCta" "index" "assembla"}}
+                {{action 'signIn' 'assembla'}}
               >
                 <SvgImage @name="icon-assembla" />
                 <span>
                   Sign up with Assembla
                 </span>
-              </a>
+              </button>
             {{/if}}
             {{#if this.multiVcs.enableBitbucketLogin}}
-              <a
-                href="https://travis-ci.com/signin"
+              <button
                 class="hero-button cta-index-page multi-vcs"
                 title="Sign up with Bitbucket"
-                {{action "gaCta" "index" "bitbucket"}}
+                {{action 'signIn' 'bitbucket'}}
               >
                 <SvgImage @name="icon-bitbucket" />
                 <span>
                   Sign up with Bitbucket
                 </span>
-              </a>
+              </button>
             {{/if}}
           </div>
         </div>
@@ -433,7 +430,7 @@
         href="https://travis-ci.com/signin"
         class="start-building-button cta-index-page"
         title="Sign up with GitHub"
-        {{action "gaCta" "index"}}
+        {{action "signIn"}}
       >
         Start building now
       </a>
