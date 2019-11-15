@@ -2,7 +2,7 @@
 
 import Controller from '@ember/controller';
 import { computed } from '@ember/object';
-import { alias, filterBy, reads, none, not } from '@ember/object/computed';
+import { filterBy, reads, none, not } from '@ember/object/computed';
 import config from 'travis/config/environment';
 import { inject as service } from '@ember/service';
 
@@ -18,7 +18,7 @@ export default Controller.extend({
   config,
 
   unsortedEnvVars: filterBy('model.envVars', 'isNew', false),
-  cronJobs: alias('model.cronJobs.jobs.[]'),
+  cronJobs: reads('model.repository.cronJobs'),
 
   showAutoCancellationSwitches: computed('model.settings', function () {
     let settings = this.get('model.settings');
