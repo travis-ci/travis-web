@@ -27,6 +27,7 @@ module('Integration | Component | billing-summary', function (hooks) {
       validTo: new Date(2018, 5, 19),
       status: 'subscribed',
       isSubscribed: true,
+      isStripe: true,
       isCanceled: false,
       isExpired: false,
       isPending: false,
@@ -104,7 +105,7 @@ module('Integration | Component | billing-summary', function (hooks) {
     />`);
 
     assert.dom('h3').hasText('Overview');
-    assert.equal(profilePage.billing.plan.name, 'A plan canceled expired');
+    assert.equal(profilePage.billing.plan.name, 'A plan expired');
     assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining(`5 concurrent jobs Expired ${date}`);
     assert.equal(profilePage.billing.planMessage.text, `Expired ${date}`);
     assert.equal(profilePage.billing.price.text, '$129');
