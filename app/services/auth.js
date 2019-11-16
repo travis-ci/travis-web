@@ -151,7 +151,7 @@ export default Service.extend({
         this.signOut();
       }
     }
-  }).drop(),
+  }).keepLatest(),
 
   validateUserData(user) {
     const hasChannelsOnPro = field => field === 'channels' && !this.isProVersion;
