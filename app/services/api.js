@@ -24,8 +24,9 @@ export default Service.extend({
   },
 
   request(url, method = 'GET', options = {}) {
-    options.headers = options.headers || {};
-    options.headers['Travis-API-Version'] = '3';
+    if (options.travisApi === undefined) {
+      options.travisApi = '3';
+    }
 
     return this.ajax.request(url, method, options);
   }

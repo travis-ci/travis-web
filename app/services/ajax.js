@@ -5,22 +5,23 @@ import serializeQueryParams from 'ember-fetch/utils/serialize-query-params';
 import fetch from 'fetch';
 import config from 'travis/config/environment';
 
-const defaultOptions = {
-  dataType: 'json',
-  endpoint: config.apiEndpoint || '',
-  headers: {
-    'Accept': 'application/json; version=2'
-  },
-};
-
 const PERMITTED_NON_AUTH_REQUESTS = [];
 if (config.statusPageStatusUrl) {
   PERMITTED_NON_AUTH_REQUESTS.push(`GET:${config.statusPageStatusUrl}`);
 }
 
+const DEFAULT_ACCEPT = 'application/json; version=2';
+
 export default Service.extend({
   auth: service(),
   features: service(),
+
+  getDefaultOptions() {
+    return {
+      accept: DEFAULT_ACCEPT,
+      host: config.apiEndpoint || '',
+    };
+  },
 
   needsAuth(method, url) {
     const authUnnecessary = PERMITTED_NON_AUTH_REQUESTS.includes(`${method}:${url}`);
@@ -47,15 +48,18 @@ export default Service.extend({
       }
     }
 
+    // Travis-API-Version
+    if (options.travisApi) {
+      headers['Travis-API-Version'] = options.travisApi;
+    }
+
     // Content-Type
     if (options.contentType) {
       headers['Content-Type'] = options.contentType;
     }
 
     // Accept
-    if (!headers['Accept']) {
-      headers['Accept'] = 'application/json';
-    }
+    headers['Accept'] = options.accept || DEFAULT_ACCEPT;
 
     return headers;
   },
@@ -81,8 +85,8 @@ export default Service.extend({
   },
 
   setupUrl(requestUrl, method, options) {
-    const { endpoint = '', data } = options;
-    const baseUrl = `${endpoint}${requestUrl}`;
+    const { host = '', data } = options;
+    const baseUrl = `${host}${requestUrl}`;
 
     if (data && this.isRetrieve(method)) {
       const params = serializeQueryParams(data);
@@ -94,7 +98,8 @@ export default Service.extend({
   },
 
   request(requestUrl, mthd = 'GET', opts = {}) {
-    const options = Object.assign({}, defaultOptions, opts);
+    const defaultOpts = this.getDefaultOptions();
+    const options = Object.assign({}, defaultOpts, opts);
     const method = mthd.toUpperCase();
 
     const url = this.setupUrl(requestUrl, method, options);
