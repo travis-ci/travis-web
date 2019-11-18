@@ -2,7 +2,7 @@ import TravisRoute from 'travis/routes/basic';
 import { inject as service } from '@ember/service';
 
 export default TravisRoute.extend({
-  api: service(),
+  ajax: service(),
 
   needsAuth: true,
 
@@ -15,7 +15,7 @@ export default TravisRoute.extend({
     const repo = this.modelFor('repo');
     const url = `/repo/${repo.get('id')}/caches`;
 
-    return this.api.get(url).then((data) => consolidateCaches(repo, data));
+    return this.ajax.getV3(url).then((data) => consolidateCaches(repo, data));
   },
 });
 
