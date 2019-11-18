@@ -5,9 +5,9 @@ import config from 'travis/config/environment';
 import { inject as service } from '@ember/service';
 
 export default TravisRoute.extend({
-  ajax: service(),
   api: service(),
   auth: service(),
+  raven: service(),
 
   needsAuth: true,
 
@@ -47,6 +47,11 @@ export default TravisRoute.extend({
           fingerprint: data.fingerprint
         });
         return fingerprint;
+      }).catch(e => {
+        // 404s happen regularly and are unremarkable
+        if (e.status !== 404) {
+          this.raven.logException(e);
+        }
       });
     }
   },
