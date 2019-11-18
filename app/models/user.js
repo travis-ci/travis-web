@@ -10,7 +10,6 @@ import { or } from '@ember/object/computed';
 
 export default Owner.extend({
   ajax: service(),
-  api: service(),
 
   email: attr('string'),
   emails: attr(), // list of all known user emails
@@ -35,7 +34,7 @@ export default Owner.extend({
   },
 
   _rawPermissions: computed(function () {
-    return this.ajax.request('/users/permissions');
+    return this.ajax.get('/users/permissions');
   }),
 
   permissions: computed('_rawPermissions', function () {
@@ -104,13 +103,13 @@ export default Owner.extend({
   },
 
   sync() {
-    return this.api
-      .post(`/user/${this.id}/sync`)
+    return this.ajax
+      .postV3(`/user/${this.id}/sync`, {})
       .then(() => this.poll());
   },
 
   poll() {
-    return this.api.get('/user').then((data) => {
+    return this.ajax.getV3('/user', (data) => {
       if (data.is_syncing) {
         later(
           () => this.poll(),
@@ -127,7 +126,7 @@ export default Owner.extend({
 
   joinMigrateBeta(orgs = []) {
     const organizations = orgs.mapBy('login');
-    return this.api.post(`/user/${this.id}/beta_migration_request`, { data: { organizations } })
+    return this.ajax.postV3(`/user/${this.id}/beta_migration_request`, { organizations })
       .then(() => this.fetchBetaMigrationRequests());
   },
 
