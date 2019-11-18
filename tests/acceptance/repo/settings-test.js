@@ -375,10 +375,12 @@ module('Acceptance | repo settings', function (hooks) {
   });
 
   test('the SSH key section is hidden for public repositories', async function (assert) {
+    server.get(`/repos/${this.repository.id}/key`, (s, r) => new Response(404, {}, {}));
     this.repository.private = false;
     await settingsPage.visit({ organization: 'org-login', repo: 'repository-name' });
 
     assert.dom('[data-test-ssh-key-section]').doesNotExist();
+    assert.dom('[data-test-settings-content]').exists();
   });
 
   test('shows disabled modal message for migrated repository on .org', async function (assert) {
