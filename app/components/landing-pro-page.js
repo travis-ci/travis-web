@@ -3,11 +3,12 @@ import { inject as service } from '@ember/service';
 
 export default Component.extend({
   auth: service(),
+  multiVcs: service(),
   metrics: service(),
 
   actions: {
-    signIn() {
-      this.auth.signIn();
+    signIn(provider) {
+      this.auth.signInWith(provider);
     },
 
     signOut() {
