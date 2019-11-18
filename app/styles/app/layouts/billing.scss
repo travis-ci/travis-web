@@ -91,7 +91,7 @@
     &__box {
       background-color: #fff;
       border-radius: 5px;
-      padding: 8px 13px;
+      padding: 6px 13px;
       border: 1px solid $pebble-grey;
       margin-bottom: 10px;
       width: 120px;
@@ -120,14 +120,14 @@
 
       &--name {
         margin: 8px 0 0 0;
-        font-size: 1.2em;
+        font-size: 1.1em;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
       }
 
       &:hover {
-        background: rgba(181, 214, 217, 1);
+        box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.15);
         cursor: pointer;
       }
     }
@@ -213,7 +213,9 @@
 
     .highlight-plan {
       color: $oxide-blue;
-      background: rgba(181, 214, 217, 1);
+      border: 1px solid $oxide-blue;
+      box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.15);
+      background: rgba(181, 214, 217, .2);
     }
   }
 
