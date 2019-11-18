@@ -37,6 +37,8 @@ export default Model.extend({
   // API models this as hasMany but serializers:request#normalize overrides it
   build: belongsTo('build', { async: true }),
 
+  api: service(),
+
   isAccepted: computed('result', 'build.id', function () {
     // For some reason some of the requests have a null result beside the fact that
     // the build was created. We need to look into it, but for now we can just assume
@@ -55,8 +57,6 @@ export default Model.extend({
 
   isDraft: equal('pullRequestMergeable', PULL_REQUEST_MERGEABLE.DRAFT),
 
-  ajax: service(),
-
   messages: computed('repo.id', 'build.request.id', 'fetchMessages.last.value', function () {
     const messages = this.fetchMessages.get('lastSuccessful.value');
     if (!messages) {
@@ -69,7 +69,7 @@ export default Model.extend({
     const repoId = this.get('repo.id');
     const requestId = this.get('build.request.id');
     if (repoId && requestId) {
-      const response = yield this.ajax.getV3(`/repo/${repoId}/request/${requestId}/messages`) || {};
+      const response = yield this.api.get(`/repo/${repoId}/request/${requestId}/messages`) || {};
       return response.messages;
     }
   }).drop(),

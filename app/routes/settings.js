@@ -23,23 +23,6 @@ export default TravisRoute.extend({
     return repo.get('envVars.promise');
   },
 
-  fetchCronJobs() {
-    const repo = this.modelFor('repo');
-    const canCreateCron = repo.get('permissions.create_cron');
-
-    if (canCreateCron) {
-      return EmberObject.create({
-        enabled: true,
-        jobs: repo.get('cronJobs')
-      });
-    } else {
-      return EmberObject.create({
-        enabled: false,
-        jobs: []
-      });
-    }
-  },
-
   fetchCustomSshKey() {
     if (config.endpoints.sshKey) {
       const repo = this.modelFor('repo');
@@ -59,7 +42,7 @@ export default TravisRoute.extend({
     if (config.endpoints.sshKey) {
       const repo = this.modelFor('repo');
       const url = `/repos/${repo.get('id')}/key`;
-      return this.ajax.get(url, (data) => {
+      return this.api.get(url).then((data) => {
         const fingerprint = EmberObject.create({
           fingerprint: data.fingerprint
         });
@@ -86,7 +69,6 @@ export default TravisRoute.extend({
       settings: this.modelFor('repo').fetchSettings(),
       repository: this.modelFor('repo'),
       envVars: this.fetchEnvVars(),
-      cronJobs: this.fetchCronJobs(),
       sshKey: this.fetchSshKey(),
       customSshKey: this.fetchCustomSshKey(),
       hasPushAccess: this.hasPushAccess(),
