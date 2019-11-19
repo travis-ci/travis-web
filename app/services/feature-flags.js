@@ -10,6 +10,22 @@ export default Service.extend({
 
   serverFlags: [],
 
+  init() {
+    this._super();
+    this._setEnableAssemblaLogin();
+    this._setEnableBitbucketLogin();
+  },
+
+  _setEnableAssemblaLogin() {
+    const enableAssemblaLogin = window.localStorage['enableAssemblaLogin'] == 'true';
+    enableAssemblaLogin ? this.features.enable('enable-assembla-login') : this.features.disable('enable-assembla-login');
+  },
+
+  _setEnableBitbucketLogin() {
+    const enableBitbucketLogin = window.localStorage['enableBitbucketLogin'] == 'true';
+    enableBitbucketLogin ? this.features.enable('enable-bitbucket-login') : this.features.disable('enable-bitbucket-login');
+  },
+
   _setFlagState(flag) {
     const features = this.features;
 

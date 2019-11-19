@@ -21,6 +21,7 @@ export default TravisRoute.extend(BuildFaviconMixin, {
   needsAuth: false,
 
   init() {
+    this.featureFlags;
     this.auth.autoSignIn();
 
     this.auth.afterSignOut(() => {

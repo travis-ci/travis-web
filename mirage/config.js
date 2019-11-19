@@ -73,7 +73,7 @@ export default function () {
   });
 
   this.get('/users/permissions', (schema, request) => {
-    const { authorization } = request.requestHeaders;
+    let authorization = request.requestHeaders.Authorization;
 
     if (!authorization) {
       return {};

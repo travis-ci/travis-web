@@ -155,17 +155,17 @@ export default Component.extend({
 
   isNotMatrix: not('item.isMatrix'),
 
+  envExpanded: false,
+
   actions: {
+    closeEnv() {
+      this.set('envExpanded', false);
+    },
     expandEnv() {
-      const expandedStyles = getComputedStyle(this.element.querySelector('.expandEnv'));
-      const detailJobEnv = this.element.querySelector('.detail-job-env');
-      if (expandedStyles && expandedStyles['white-space'] === 'normal') {
-        detailJobEnv.classList.remove('expandEnv');
-        detailJobEnv.classList.add('closeEnv');
-      } else {
-        detailJobEnv.classList.remove('closeEnv');
-        detailJobEnv.classList.add('expandEnv');
-      }
+      this.set('envExpanded', true);
+    },
+    toggleEnv() {
+      this.set('envExpanded', !this.envExpanded);
     }
   }
 });
