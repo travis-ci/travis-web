@@ -4,8 +4,8 @@
       <div class="overview__heading">
         <h3 data-test-overview-heading='true'>Overview</h3>
       </div>
-      <div class="flex flex--v-center flex--col flex-md-row overview__body">
-        <div class="get-started flex--col-2">
+      <div class="flex flex--v-center mt-2 flex--col flex-md-row overview__body">
+        <div class="get-started">
           {{#if this.trial.hasActiveTrial}}
             {{#if (eq this.trial.buildsRemaining 100)}}
               <p class="get-started__message color-asphalt-grey" data-test-trial-message='true'>
@@ -42,19 +42,18 @@
               100 free builds to get you started
             </p>
             <p class="get-started__start-trial color-asphalt-grey" data-test-trial-subtext='true'>
-              For your open source projects, you will always get <b>3 free additional concurrent jobs</b> 
-              and builds are always free. The 100 trial builds will get used only when building private repositories.
+              Start your trial to get 100 free builds and 2 concurrent jobs for both public and private projects.
             </p>
           {{/if}}
         </div>
         <div class="icon-wrapper flex flex--v-center">
           {{svg-jar "icon-plus" class="icon icon-wrapper__plus"}}
         </div>
-        <div class="billing-trial-info flex--col-2" data-test-open-source-box='true'>
+        <div class="billing-trial-info" data-test-open-source-box='true'>
           <div class="billing-trial-info__box">
             <p class="billing-trial-info__box--open-source" data-test-open-source-header='true'>We &lt;3 open source</p>
             <p class="billing-trial-info__box--jobs" data-test-open-source-jobs='true'>
-              You get 3 free additional concurrent jobs for your open source projects.
+              For your open source projects, you will always get 3 free additional concurrent jobs and builds are always free. The 100 trial builds will get used only when building private repositories.
             </p>
           </div>
         </div>

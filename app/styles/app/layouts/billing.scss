@@ -258,11 +258,13 @@
 
       &__body {
         margin-bottom: 15px;
+        align-items: flex-start;
       }
     }
 
     .get-started {
 
+      flex-basis: 45%;
       &__message {
         font-weight: 300;
         font-size: 22px;
@@ -285,6 +287,7 @@
     }
 
     .billing-trial-info {
+      flex-basis: 55%;
       border: 1px solid $pebble-grey;
       padding: 8px;
       border-radius: 5px;
@@ -313,6 +316,7 @@
 
     .icon-wrapper {
       margin: 0 20px;
+      align-self: center;
 
       &__plus {
         @include colorSVG($oxide-blue);
