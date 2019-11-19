@@ -1,4 +1,4 @@
-import { vcsUrl, vcsName, vcsVocab, vcsIcon } from 'travis/utils/vcs';
+import { vcsUrl, vcsName, vcsVocab, vcsIcon, availableProviders } from 'travis/utils/vcs';
 import { module, test } from 'qunit';
 
 module('Unit | Utils | vcsName', function () {
@@ -51,5 +51,11 @@ module('Unit | Utils | vcsUrl', function () {
 
   test('throws if any param is missing', function (assert) {
     assert.throws(() => vcsUrl('branch', 'GithubRepository', { owner: 'owner', repo: 'repo' }));
+  });
+});
+
+module('Unit | Utils | availableProviders', function () {
+  test('returns the list of providers', function (assert) {
+    assert.deepEqual(availableProviders, ['assembla', 'bitbucket', 'github']);
   });
 });

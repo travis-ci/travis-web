@@ -9,7 +9,7 @@ import { task } from 'ember-concurrency';
 import timeAgoInWords from 'travis/utils/time-ago-in-words';
 
 export default Component.extend({
-  api: service(),
+  ajax: service(),
   storage: service(),
 
   lsLicense: 'travis.enterprise.license_msg_last_seen',
@@ -24,7 +24,7 @@ export default Component.extend({
   fetchData: task(function* () {
     const url = '/v3/enterprise_license';
 
-    const response = yield this.api.get(url);
+    let response = yield this.ajax.get(url);
 
     const exp = new Date(Date.parse(response.expiration_time));
     this.setProperties({
