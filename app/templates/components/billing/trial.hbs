@@ -5,7 +5,7 @@
         <h3 data-test-overview-heading='true'>Overview</h3>
       </div>
       <div class="flex flex--v-center flex--col flex-md-row overview__body">
-        <div class="get-started">
+        <div class="get-started flex--col-2">
           {{#if this.trial.hasActiveTrial}}
             {{#if (eq this.trial.buildsRemaining 100)}}
               <p class="get-started__message color-asphalt-grey" data-test-trial-message='true'>
@@ -21,8 +21,7 @@
                   @href={{config-get "urls.gettingStarted"}}
                   class="get-started-link"
                 >
-                  information on running your first build
-                </ExternalLinkTo>.
+                  information on running your first build</ExternalLinkTo>.
               </p>
             {{else}}
               <p class="get-started__message {{if this.isBuildLessThanEleven 'red' 'color-asphalt-grey'}}" data-test-trial-message='true'>
@@ -42,14 +41,15 @@
               100 free builds to get you started
             </p>
             <p class="get-started__start-trial color-asphalt-grey" data-test-trial-subtext='true'>
-              Start your trial to get 100 free builds and 2 concurrent jobs for both public and private projects.
+              For your open source projects, you will always get <b>3 free additional concurrent jobs</b> 
+              and builds are always free. The 100 trial builds will get used only when building private repositories.
             </p>
           {{/if}}
         </div>
         <div class="icon-wrapper flex flex--v-center">
           {{svg-jar "icon-plus" class="icon icon-wrapper__plus"}}
         </div>
-        <div class="billing-trial-info" data-test-open-source-box='true'>
+        <div class="billing-trial-info flex--col-2" data-test-open-source-box='true'>
           <div class="billing-trial-info__box">
             <p class="billing-trial-info__box--open-source" data-test-open-source-header='true'>We &lt;3 open source</p>
             <p class="billing-trial-info__box--jobs" data-test-open-source-jobs='true'>
@@ -63,7 +63,7 @@
           Your trial is almost finished. Subscribe to a plan before your free builds run out!
         </span>
       {{else if this.isBuildFinished}}
-        <span class="notice-banner--yellow" data-test-trial-ran-out='true'>
+        <span class="notice-banner--yellow trial-ended" data-test-trial-ran-out='true'>
           Your trial has ended. Subscribe to a plan to continue building your project!
         </span>
       {{/if}}
@@ -81,9 +81,18 @@
       {{/if}}
     </div>
     <hr />
+    {{#if this.subscription.isGithub}}
+      <ExternalLinkTo
+        @href={{config-get "marketplaceEndpoint"}}
+        class="button--blue marketplace-button"
+      >
+        Manage on GitHub Marketplace
+      </ExternalLinkTo>
+    {{else}}
+      <Billing::Process
+        @account={{this.account}}
+        @newSubscription={{this.newSubscription}}
+      />
+    {{/if}}
   </div>
 </div>
-<Billing::Process
-  @account={{this.account}}
-  @newSubscription={{this.newSubscription}}
-/>

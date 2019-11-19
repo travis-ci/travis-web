@@ -551,7 +551,7 @@ module('Acceptance | profile/billing', function (hooks) {
 
     assert.equal(profilePage.billing.trial.overviewHeading, 'Overview');
     assert.equal(profilePage.billing.trial.name.text, '100 free builds to get you started');
-    assert.equal(profilePage.billing.trial.subtext, 'Start your trial to get 100 free builds and 2 concurrent jobs for both public and private projects.');
+    assert.equal(profilePage.billing.trial.subtext, 'For your open source projects, you will always get 3 free additional concurrent jobs and builds are always free. The 100 trial builds will get used only when building private repositories.');
     assert.ok(profilePage.billing.trial.openSourceMessage.isPresent);
     assert.equal(profilePage.billing.trial.openSourceMessage.heading, 'We <3 open source');
     assert.equal(profilePage.billing.trial.openSourceMessage.body, 'You get 3 free additional concurrent jobs for your open source projects.');
@@ -641,7 +641,7 @@ module('Acceptance | profile/billing', function (hooks) {
 
     assert.equal(profilePage.billing.trial.overviewHeading, 'Overview');
     assert.equal(profilePage.billing.trial.name.text, '100 free builds to get you started');
-    assert.equal(profilePage.billing.trial.subtext, 'Start your trial to get 100 free builds and 2 concurrent jobs for both public and private projects.');
+    assert.equal(profilePage.billing.trial.subtext, 'For your open source projects, you will always get 3 free additional concurrent jobs and builds are always free. The 100 trial builds will get used only when building private repositories.');
     assert.ok(profilePage.billing.trial.openSourceMessage.isPresent);
     assert.equal(profilePage.billing.trial.openSourceMessage.heading, 'We <3 open source');
     assert.equal(profilePage.billing.trial.openSourceMessage.body, 'You get 3 free additional concurrent jobs for your open source projects.');
@@ -670,7 +670,7 @@ module('Acceptance | profile/billing', function (hooks) {
 
     assert.equal(profilePage.billing.trial.overviewHeading, 'Overview');
     assert.equal(profilePage.billing.trial.name.text, '100 free builds to get you started');
-    assert.equal(profilePage.billing.trial.subtext, 'Start your trial to get 100 free builds and 2 concurrent jobs for both public and private projects.');
+    assert.equal(profilePage.billing.trial.subtext, 'For your open source projects, you will always get 3 free additional concurrent jobs and builds are always free. The 100 trial builds will get used only when building private repositories.');
     assert.ok(profilePage.billing.trial.openSourceMessage.isPresent);
     assert.equal(profilePage.billing.trial.openSourceMessage.heading, 'We <3 open source');
     assert.equal(profilePage.billing.trial.openSourceMessage.body, 'You get 3 free additional concurrent jobs for your open source projects.');
