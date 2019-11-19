@@ -165,7 +165,7 @@ module.exports = function (environment) {
 
   const { TRAVIS_PRO, TRAVIS_ENTERPRISE, SOURCE_ENDPOINT } = process.env;
 
-  if (TRAVIS_PRO) {
+  if (TRAVIS_PRO && TRAVIS_PRO !== 'false') {
     ENV.featureFlags['pro-version'] = true;
     ENV.featureFlags['github-apps'] = true;
     ENV.pro = true;
