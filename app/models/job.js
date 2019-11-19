@@ -143,9 +143,7 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
 
     this.set('subscribed', true);
 
-    this.repo.then((repo) =>
-      Travis.pusher.subscribe(this.channelName)
-    );
+    return this.repo.then(repo => Travis.pusher.subscribe(this.channelName));
   },
 
   channelName: computed(
@@ -188,5 +186,5 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
     let slug = this.get('repo.slug');
     let number = this.number;
     return `${slug} #${number}`;
-  }),
+  })
 });

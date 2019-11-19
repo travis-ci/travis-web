@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
-import { reads, not, equal, and, or } from '@ember/object/computed';
+import { reads, not, equal, and, or, bool } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
 import config from 'travis/config/environment';
 import { computed } from '@ember/object';
@@ -16,10 +16,9 @@ export default Component.extend({
 
   showPlansSelector: false,
   showCancelModal: false,
-  showMonthly: reads('plan.showMonthly'),
-  displayedPlans: reads('plan.displayedPlans'),
-  selectedPlan: reads('plan.selectedPlan'),
-  showAnnual: reads('plan.showAnnual'),
+  selectedPlan: reads('subscription.plan'),
+  showAnnual: bool('selectedPlan.annual'),
+  showMonthly: not('showAnnual'),
 
   requiresSourceAction: equal('subscription.paymentIntent.status', 'requires_source_action'),
   requiresSource: equal('subscription.paymentIntent.status', 'requires_source'),
@@ -27,9 +26,10 @@ export default Component.extend({
   retryAuthorizationClientSecret: reads('subscription.paymentIntent.client_secret'),
   hasSubscriptionPermissions: reads('account.hasSubscriptionPermissions'),
   notChargeInvoiceSubscription: not('subscription.chargeUnpaidInvoices.lastSuccessful.value'),
-  isCanceled: reads('subscription.isCanceled'),
-  isNotCanceled: not('isCanceled'),
-  canCancelSubscription: and('isNotCanceled', 'hasSubscriptionPermissions'),
+  isSubscribed: reads('subscription.isSubscribed'),
+  isIncomplete: reads('subscription.isIncomplete'),
+  isComplete: not('isIncomplete'),
+  canCancelSubscription: and('isSubscribed', 'hasSubscriptionPermissions'),
   cancelSubscriptionLoading: reads('subscription.cancelSubscription.isRunning'),
   isLoading: or('accounts.fetchSubscriptions.isRunning', 'cancelSubscriptionLoading', 'editPlan.isRunning', 'resubscribe.isRunning'),
 

@@ -125,6 +125,27 @@
           Help
         </a>
       </li>
+      {{#if this.auth.signedOut}}
+        <li class="display-on-mobile">
+          <a class="navigation-anchor pointer" title="Login with GitHub" {{action "signIn" "github"}}>
+            Login with GitHub
+          </a>
+        </li>
+        {{#if this.multiVcs.enableAssemblaLogin}}
+          <li class="display-on-mobile">
+            <a class="navigation-anchor pointer" title="Login with Assembla" {{action "signIn" "assembla"}}>
+              Login with Assembla
+            </a>
+          </li>
+        {{/if}}
+        {{#if this.multiVcs.enableBitbucketLogin}}
+          <li class="display-on-mobile">
+            <a class="navigation-anchor pointer" title="Login with Bitbucket" {{action "signIn" "bitbucket"}}>
+              Login with Bitbucket
+            </a>
+          </li>
+        {{/if}}
+      {{/if}}
       {{#if this.deploymentVersion}}
         <li>
           <span class="deployment-version">
@@ -145,13 +166,42 @@
     {{/unless}}
     <li id="profile-menu-link" class="{{this.classProfile}}">
       {{#if this.auth.signedOut}}
-        <button
-          class="auth-button signed-out"
-          type="button"
-          {{action "signIn"}}
-        >
-          Sign in with GitHub
-        </button>
+        {{#if this.multiVcs.disabled}}
+          <button
+            class="auth-button signed-out"
+            type="button"
+            {{action "signIn" "github"}}
+          >
+            Sign in with GitHub
+          </button>
+        {{/if}}
+
+        {{#if this.multiVcs.enabled}}
+          <ul class="navigation-nested">
+            <li>
+              <button class="action" {{action "signIn" "github"}}>
+                Log in with GitHub
+              </button>
+            </li>
+            {{#if this.multiVcs.enableAssemblaLogin}}
+              <li>
+                <button class="action" {{action "signIn" "assembla"}}>
+                  Log in with Assembla
+                </button>
+              </li>
+            {{/if}}
+            {{#if this.multiVcs.enableBitbucketLogin}}
+              <li>
+                <button class="action" {{action "signIn" "bitbucket"}}>
+                  Log in with Bitbucket
+                </button>
+              </li>
+            {{/if}}
+          </ul>
+          <span class="auth-button">
+            Sign in
+          </span>
+        {{/if}}
       {{/if}}
       {{#if this.auth.signingIn}}
         <button class="auth-button signing-in" type="button">

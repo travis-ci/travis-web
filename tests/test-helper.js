@@ -5,4 +5,4 @@ import { start } from 'ember-qunit';
 
 setApplication(Application.create(config.APP));
 
-start();
+start({ setupTestIsolationValidation: true });

@@ -3,10 +3,9 @@ import Store from 'ember-data/store';
 import PaginatedCollectionPromise from 'travis/utils/paginated-collection-promise';
 import { inject as service } from '@ember/service';
 import FilteredArrayManager from 'travis/utils/filtered-array-manager';
-import FilterMixin from 'ember-data-filter/mixins/filter';
 import fetchLivePaginatedCollection from 'travis/utils/fetch-live-paginated-collection';
 
-export default Store.extend(FilterMixin, {
+export default Store.extend({
   auth: service(),
 
   defaultAdapter: 'application',
@@ -14,6 +13,7 @@ export default Store.extend(FilterMixin, {
 
   init() {
     this._super(...arguments);
+    this.shouldAssertMethodCallsOnDestroyedStore = true;
     this.filteredArraysManager = FilteredArrayManager.create({ store: this });
   },
 
@@ -69,11 +69,21 @@ export default Store.extend(FilterMixin, {
   //
   // For more info you may also see comments in FilteredArraysManager.
   filter(modelName, queryParams, filterFunction, dependencies, forceReload) {
+    if (arguments.length === 0) {
+      throw new Error('store.filter called with no arguments');
+    }
+    if (arguments.length === 1) {
+      return this.peekAll(modelName);
+    }
+    if (arguments.length === 2) {
+      filterFunction = queryParams;
+      return this.filteredArraysManager.filter(modelName, null, filterFunction, ['']);
+    }
+
     if (!dependencies) {
-      // just do what filter would normally do
-      return this._super(...arguments);
+      return this.filteredArraysManager.filter(modelName, queryParams, filterFunction, ['']);
     } else {
-      return this.filteredArraysManager.fetchArray(...arguments);
+      return this.filteredArraysManager.fetchArray(modelName, queryParams, filterFunction, dependencies, forceReload);
     }
   },
 
@@ -150,5 +160,10 @@ export default Store.extend(FilterMixin, {
     } else {
       return this._super(...arguments);
     }
+  },
+
+  destroy() {
+    this._super(...arguments);
+    this.filteredArraysManager.destroy();
   }
 });

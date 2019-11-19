@@ -21,7 +21,7 @@
           </form.field>
         </div>
         <div class='m-l-s'>
-          {{#if showMonthly}}
+          {{#if this.showMonthly}}
             <h4>billing cycle recommendation:</h4>
             <p>
               Switch to annual billing to receive
@@ -35,25 +35,22 @@
       <div class='plan-selector'>
         <h4 data-test-choose-plan-heading>Choose number of concurrent jobs</h4>
         <div class='billing-plans flex flex--wrap' data-test-billing-plan-choices>
-          {{#each displayedPlans as |plan|}}
+          {{#each this.displayedPlans as |plan|}}
             <div
               data-test-plan-box='true'
-              class='billing-plans__box pointer {{if (eq plan.id selectedPlan.id) 'highlight-plan'}}'
+              class='billing-plans__box pointer {{if (eq plan.id this.selectedPlan.id) 'highlight-plan'}}'
               onclick={{action (mut this.selectedPlan) plan}}
             >
-              <p class='billing-plans__box--price' data-test-selected-plan-price>
+              <p class='billing-plans__box--price' data-test-selected-plan-price="true">
                 {{format-currency plan.price floor="true"}}
-                <span class='color-asphalt-grey {{if (eq plan.id selectedPlan.id) 'highlight-plan'}}'>
+                <span class='color-asphalt-grey'>
                   {{if plan.annual '/year' '/month'}}
                 </span>
               </p>
-              <p class='billing-plans__box--name' data-test-selected-plan-name>
+              <p class='billing-plans__box--name color-asphalt-grey' data-test-selected-plan-name="true">
                 {{plan.name}}
               </p>
-              <p data-test-selected-plan-jobs
-                class='billing-plans__box--jobs
-                  {{if (eq plan.id selectedPlan.id) 'highlight-plan'}}'
-              >
+              <p class='billing-plans__box--jobs' data-test-selected-plan-jobs="true">
                 {{pluralize plan.builds 'concurrent job'}}
               </p>
             </div>
@@ -68,7 +65,7 @@
             onclick={{action form.submit}}
             class='{{if this.showCancelButton 'button--green' 'button--blue'}}'
           >
-            Subscribe @{{ this.account.login }} to {{selectedPlan.builds}} job plan
+            Subscribe @{{this.account.login}} to {{selectedPlan.builds}} job plan
           </button>
           {{#if this.showCancelButton}}
             <a data-test-cancel-button

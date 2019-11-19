@@ -2,31 +2,21 @@
   {{#if this.isStepOne}}
     <Billing::SelectPlan
       @title="Subscribe to a plan"
-      @displayedPlans={{this.displayedPlans}}
-      @selectedPlan={{this.selectedPlan}}
-      @showMonthly={{this.showMonthly}}
-      @showAnnual={{this.showAnnual}}
+      @newSubscription={{this.newSubscription}}
       @account={{this.account}}
       @submit={{action 'next'}}
     />
   {{else if this.isStepTwo}}
     <Billing::Information
-      @displayedPlans={{this.displayedPlans}}
-      @selectedPlan={{this.selectedPlan}}
       @newSubscription={{this.newSubscription}}
-      @billingInfo={{this.billingInfo}}
-      @showAnnual={{this.showAnnual}}
       @scrollSection={{this.scrollSection}}
+      @goToFirstStep={{action 'goToFirstStep'}}
       @next={{action 'next'}}
       @back={{action 'back'}}
-      @goToFirstStep={{action 'goToFirstStep'}}
     />
   {{else if this.isStepThree}}
     <Billing::Payment
-      @selectedPlan={{this.selectedPlan}}
-      @showAnnual={{this.showAnnual}}
       @newSubscription={{this.newSubscription}}
-      @isSavingSubscription={{this.isSavingSubscription}}
       @account={{this.account}}
       @goToFirstStep={{action 'goToFirstStep'}}
       @back={{action 'back'}}

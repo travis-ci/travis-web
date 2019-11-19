@@ -1,9 +1,11 @@
 import Component from '@ember/component';
 import { reads } from '@ember/object/computed';
-import { task, waitForProperty } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
+import { inject as service } from '@ember/service';
 
 export default Component.extend({
   classNames: ['job-log'],
+  store: service('store'),
 
   _oldJob: null,
 
@@ -27,19 +29,22 @@ export default Component.extend({
     this.set('_oldJob', this.job);
   },
 
-  teardownLog: task(function* (job) {
-    yield waitForProperty({ job }, 'job.isLoaded', v => v === true);
+  teardownLog(job) {
     job.unsubscribe();
-  }),
+  },
 
   setupLog: task(function* (job) {
+    yield this.store.findRecord('job', job.id, {
+      reload: false,
+      backgroundReload: false
+    });
     this.set('error', false);
     try {
       yield job.get('log.fetchTask').perform();
     } catch (e) {
       this.set('error', true);
     }
-    yield waitForProperty({ job }, 'job.isLoaded', v => v === true);
-    job.subscribe();
-  }),
+
+    yield job.subscribe();
+  })
 });
