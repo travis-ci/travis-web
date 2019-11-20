@@ -839,13 +839,77 @@ module('Acceptance | profile/billing', function (hooks) {
 
     percySnapshot(assert);
 
-    assert.equal(profilePage.billing.education.name, 'This is an educational account and includes a single build plan. Need help? Check our getting started guide');
-    assert.equal(profilePage.billing.newSubscriptionButton.text, 'New subscription');
-
-    await profilePage.billing.newSubscriptionButton.click();
-
+    assert.equal(profilePage.billing.plan.name, 'Bootstrap plan education subscription');
+    assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining('1 concurrent job');
     assert.dom(profilePage.billing.billingPlanChoices.boxes.scope).exists({ count: 5 });
     assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe @org-login to 2 job plan');
+  });
+
+
+  test('view billing tab on educational account after subscribing to a plan', async function (assert) {
+    window.Stripe = StripeMock;
+    let config = {
+      mock: true,
+      publishableKey: 'mock'
+    };
+    stubConfig('stripe', config, { instantiate: false });
+    const { owner } = getContext();
+    owner.inject('service:stripev3', 'config', 'config:stripe');
+
+    this.subscription = null;
+    this.organization.attrs.education = true;
+    this.organization.permissions = { createSubscription: true };
+    this.organization.save();
+
+    await profilePage.visitOrganization({ name: 'org-login' });
+    await profilePage.billing.visit();
+
+    const { billingForm, subscribeButton, billingPaymentForm } = profilePage.billing;
+    await subscribeButton.click();
+
+    percySnapshot(assert);
+
+    await selectChoose(billingForm.billingSelectCountry.scope, 'Germany');
+
+    await billingForm
+      .fillIn('firstname', 'John')
+      .fillIn('lastname', 'Doe')
+      .fillIn('companyName', 'Travis')
+      .fillIn('email', 'john@doe.com')
+      .fillIn('address', '15 Olalubi street')
+      .fillIn('city', 'Berlin')
+      .fillIn('zip', '353564')
+      .fillIn('vat', '356463')
+      .fillIn('coupon', '356463');
+
+    await billingForm.proceedPayment.click();
+
+    assert.equal(profilePage.billing.selectedPlanOverview.heading.text, 'summary');
+    assert.equal(profilePage.billing.selectedPlanOverview.name.text, `${this.defaultPlan.name} plan`);
+    assert.equal(profilePage.billing.selectedPlanOverview.jobs.text, `${this.defaultPlan.builds} concurrent jobs`);
+    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${this.defaultPlan.price / 100}`);
+    assert.equal(profilePage.billing.period.text, '/month');
+    assert.equal(profilePage.billing.selectedPlanOverview.changePlan.text, 'Change plan');
+
+    assert.equal(billingPaymentForm.contactDetails.contactHeading.text, 'contact details:');
+    assert.equal(billingPaymentForm.contactDetails.firstName.text, 'John Doe');
+    assert.equal(billingPaymentForm.contactDetails.company.text, 'Travis');
+    assert.equal(billingPaymentForm.contactDetails.email.text, 'john@doe.com');
+
+    assert.equal(billingPaymentForm.contactDetails.billingHeading.text, 'billing details:');
+    assert.equal(billingPaymentForm.contactDetails.address.text, '15 Olalubi street');
+    assert.equal(billingPaymentForm.contactDetails.city.text, 'Berlin');
+    assert.equal(billingPaymentForm.contactDetails.country.text, 'Germany');
+
+    assert.ok(billingPaymentForm.isPresent);
+
+    await billingPaymentForm.completePayment.click();
+
+    assert.equal(profilePage.billing.plan.name, 'Startup plan pending');
+    assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining('2 concurrent jobs (plus 1 for free)');
+
+    assert.equal(profilePage.billing.userDetails.text, 'contact name John Doe company name Travis billing email john@doe.com');
+    assert.equal(profilePage.billing.billingDetails.text, 'address 15 Olalubi street city Berlin post code 353564 country Germany');
   });
 
   test('logs an exception when there is a subscription without a plan and handles unknowns', async function (assert) {

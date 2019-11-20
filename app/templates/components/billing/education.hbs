@@ -1,17 +1,18 @@
 <section class="billing-subscription">
-  <section class="billing-subscription-section">
+  <div class="billing-subscription-section">
     <h3 class='plan-overview__header'> Overview </h3>
     <div class='plan'>
       <BillingSummaryStatus 
         @subscription={{this.subscription}}
         @account={{this.account}}
       />
+      <p class='plan-overview__description' data-test-plan-concurrency>1 concurrent job</p>
     </div>
-  </section>
-  <hr />
-  <Billing::Process 
-    @account={{this.account}} 
-    @plans={{this.plans}} 
-    @newSubscription={{this.newSubscription}}
-  />
+  </div>
 </section>
+<hr />
+<Billing::Process 
+  @account={{this.account}} 
+  @plans={{this.plans}} 
+  @newSubscription={{this.newSubscription}}
+/>
