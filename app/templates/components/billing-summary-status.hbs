@@ -1,12 +1,12 @@
 <p class='plan-overview__name flex flex--v-center' data-test-plan-name='true'>
   {{#if this.subscription.plan }}
     {{concat this.subscription.plan.name ' plan'}}
-  {{else if this.isDefaultEducationalView}}
+  {{else if this.isDefaultEducationView}}
     Bootstrap plan
   {{else}}
     Unknown plan
   {{/if}}
-  {{#if this.isDefaultEducationalView}}
+  {{#if this.isDefaultEducationView}}
     <span class="badge square white-badge ml-2" data-test-canceled-status='true'>
       education subscription
     </span>

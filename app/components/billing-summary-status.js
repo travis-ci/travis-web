@@ -8,5 +8,5 @@ export default Component.extend({
   isGithubTrial: and('subscription.isGithub', 'trial.hasActiveTrial'),
   hasGithubTrialEnded: and('subscription.isGithub', 'trial.isEnded'),
   noSubscription: empty('subscription'),
-  isDefaultEducationalView: and('noSubscription', 'account.education')
+  isDefaultEducationView: and('noSubscription', 'account.education')
 });
