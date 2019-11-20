@@ -47,7 +47,7 @@ export default Component.extend({
     let repo = this.repo;
     let user = this.user;
     if (user && repo) {
-      return user.hasAccessToRepo(repo);
+      return user.hasPullAccessToRepo(repo);
     }
   }),
 
