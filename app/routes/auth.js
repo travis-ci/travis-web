@@ -20,7 +20,6 @@ export default TravisRoute.extend({
   },
 
   renderTemplate(controller, model) {
-    document && document.querySelector('body').setAttribute('id', 'auth');
     return this.render('signin', {
       model
     });
