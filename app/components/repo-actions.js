@@ -35,7 +35,7 @@ export default Component.extend({
     }
   }),
 
-  userHasPermissionForRepo: computed('repo', 'user', 'user.permissions.[]', function () {
+  userHasPermissionForRepo: computed('repo.id', 'user', 'user.permissions.[]', function () {
     let repo = this.repo;
     let user = this.user;
     if (user && repo) {
@@ -43,7 +43,7 @@ export default Component.extend({
     }
   }),
 
-  userHasPullPermissionForRepo: computed('repo', 'user', 'user.pullPermissions.[]', function () {
+  userHasPullPermissionForRepo: computed('repo.id', 'user', 'user.pullPermissions.[]', function () {
     let repo = this.repo;
     let user = this.user;
     if (user && repo) {
@@ -51,7 +51,7 @@ export default Component.extend({
     }
   }),
 
-  userHasPushPermissionForRepo: computed('repo', 'user', 'user.pushPermissions.[]', function () {
+  userHasPushPermissionForRepo: computed('repo.id', 'user', 'user.pushPermissions.[]', function () {
     let repo = this.repo;
     let user = this.user;
     if (user && repo) {
