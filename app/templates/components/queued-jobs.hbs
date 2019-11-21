@@ -1,41 +1,39 @@
 {{#if this.jobs.isLoaded}}
-  {{#if this.queuedJobs.length}}
-    {{#each this.queuedJobs as |job|}}
-      <div
-        data-test-sidebar-queued-job
-        class="tile tile--sidebar {{job.state}}"
-      >
+  {{#each this.queuedJobs as |job|}}
+    <div
+      data-test-sidebar-queued-job
+      class="tile tile--sidebar {{job.state}}"
+    >
+      {{#if job.repo.slug}}
+        <StatusIcon @status={{job.state}} />
+        <LinkTo @route="job" @models={{array job.repo job}}>
+          <span class="label-align">
+            {{job.repo.slug}}
+          </span>
+        </LinkTo>
+      {{/if}}
+      <p class="tile-title float-right">
+        <SvgImage @name="icon-hash" @class="icon" />
         {{#if job.repo.slug}}
-          <StatusIcon @status={{job.state}} />
           <LinkTo @route="job" @models={{array job.repo job}}>
             <span class="label-align">
-              {{job.repo.slug}}
+              {{job.number}}
             </span>
           </LinkTo>
         {{/if}}
-        <p class="tile-title float-right">
-          <SvgImage @name="icon-hash" @class="icon" />
-          {{#if job.repo.slug}}
-            <LinkTo @route="job" @models={{array job.repo job}}>
-              <span class="label-align">
-                {{job.number}}
-              </span>
-            </LinkTo>
-          {{/if}}
-        </p>
-        <p>
-          <SvgImage @name="icon-clock" @class="icon" />
-          <span class="label-align">
-            Queued
-          </span>
-        </p>
-      </div>
-    {{/each}}
+      </p>
+      <p>
+        <SvgImage @name="icon-clock" @class="icon" />
+        <span class="label-align">
+          Queued
+        </span>
+      </p>
+    </div>
   {{else}}
     <div class="loading-container">
       There are no jobs queued
     </div>
-  {{/if}}
+  {{/each}}
 {{else}}
   <LoadingIndicator @center={{true}} />
 {{/if}}
