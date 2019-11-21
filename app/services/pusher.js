@@ -7,6 +7,7 @@ export default Service.extend({
   liveUpdatesRecordFetcher: service(),
 
   receive(event, data) {
+    console.log('RECEIVE', event, JSON.stringify(data));
     let build, commit, job;
     let store = this.store;
     let [name, type] = event.split(':');
