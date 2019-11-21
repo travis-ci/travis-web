@@ -267,9 +267,10 @@
       flex-basis: 50%;
       &__message {
         font-weight: 300;
-        font-size: 22px;
+        font-size: 24px;
         display: inline-block;
         margin: 0;
+        margin-top: 5px;
       }
 
       &__start-trial {
@@ -289,9 +290,10 @@
     .billing-trial-info {
       flex-basis: 50%;
       border: 1px solid $pebble-grey;
-      padding: 8px;
+      padding: 14px;
       border-radius: 5px;
       box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.15);
+      box-shadow: -1px 0px 22px -9px rgba(0,0,0,0.41);
       margin-top: 10px;
 
       @media #{$large-up} {

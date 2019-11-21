@@ -17,7 +17,7 @@
               {{/if}}
             </span>
             {{#if (and this.subscription.isManual (not this.subscription.manualSubscriptionExpired))}}
-              <span class='plan-overview__description--validity dark-red display mt-4' data-test-plan-message='true'>
+              <span class='plan-overview__description--validity dark-red display ml-2' data-test-plan-message='true'>
                 Renews on {{moment-format this.subscription.validTo "MMMM D, YYYY"}}
               </span>
             {{else}}

@@ -4,7 +4,7 @@
       <div class="overview__heading">
         <h3 data-test-overview-heading='true'>Overview</h3>
       </div>
-      <div class="flex flex--v-center mt-2 flex--col flex-md-row overview__body">
+      <div class="flex flex--v-center flex--col flex-md-row overview__body">
         <div class="get-started">
           {{#if this.trial.hasActiveTrial}}
             {{#if (eq this.trial.buildsRemaining 100)}}
@@ -51,9 +51,9 @@
         </div>
         <div class="billing-trial-info" data-test-open-source-box='true'>
           <div class="billing-trial-info__box">
-            <p class="billing-trial-info__box--open-source" data-test-open-source-header='true'>We &lt;3 open source</p>
+            <p class="billing-trial-info__box--open-source" data-test-open-source-header='true'>3 concurrent jobs, free!</p>
             <p class="billing-trial-info__box--jobs" data-test-open-source-jobs='true'>
-              Open source projects <b>always get 3 free additional concurrent jobs.</b> The 100 trial builds will get used only when building private repositories.
+              We &lt;3 open source! You will always get 3 free additional concurrent jobs for your open source projects.
             </p>
           </div>
         </div>
