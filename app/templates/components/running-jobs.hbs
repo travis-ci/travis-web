@@ -1,6 +1,6 @@
 {{#if this.jobs.isLoaded}}
-  {{#if this.jobs.length}}
-    {{#each this.jobs as |job|}}
+  {{#if this.runningJobs.length}}
+    {{#each this.runningJobs as |job|}}
       <div
         data-test-sidebar-running-job
         class="tile tile--sidebar {{job.state}}"
