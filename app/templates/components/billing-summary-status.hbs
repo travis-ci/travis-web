@@ -1,10 +1,16 @@
 <p class='plan-overview__name flex flex--v-center' data-test-plan-name='true'>
   {{#if this.subscription.plan }}
     {{concat this.subscription.plan.name ' plan'}}
+  {{else if this.isDefaultEducationView}}
+    Bootstrap plan
   {{else}}
     Unknown plan
   {{/if}}
-  {{#if this.subscription.isManual}}
+  {{#if this.isDefaultEducationView}}
+    <span class="badge square white-badge ml-2" data-test-education-subscription='true'>
+      education subscription
+    </span>
+  {{else if this.subscription.isManual}}
     {{#if this.subscription.manualSubscriptionExpired}}
       <span class="badge red square" data-test-expired-status='true'>
         expired
@@ -14,7 +20,7 @@
         active
       </span> 
     {{/if}}
-    <span class="badge square white-badge manual" data-test-manual-status='true'>
+    <span class="badge square white-badge ml-0 manual" data-test-manual-status='true'>
       manual subscription
     </span>
   {{else}}
@@ -48,7 +54,7 @@
   {{/if}}
 
   {{#if this.subscription.isGithub}}
-    <span class="badge square white-badge" data-test-github-status='true'>
+    <span class="badge square white-badge manual" data-test-github-status='true'>
       github marketplace subscription
     </span>
   {{/if}}
