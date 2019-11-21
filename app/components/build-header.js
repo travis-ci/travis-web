@@ -148,26 +148,24 @@ export default Component.extend({
     }
   }),
 
-  commitBody: computed('item.commit.body', function () {
+  commitBodyClass: computed('item.commit.body', function () {
     let body = this.get('item.commit.body');
-    this.$('commit-description').remove('fade-commit-message');
-
-    if (body.length > commitMessageLimit) {
-      this.$('.commit-description').addClass('fade-commit-message');
-    }
+    return body.length > commitMessageLimit ? 'fade-commit-message' : '';
   }),
 
   isNotMatrix: not('item.isMatrix'),
 
+  envExpanded: false,
+
   actions: {
+    closeEnv() {
+      this.set('envExpanded', false);
+    },
     expandEnv() {
-      if (this.$('.expandEnv').css('white-space') === 'normal') {
-        this.$('.detail-job-env').removeClass('expandEnv');
-        this.$('.detail-job-env').addClass('closeEnv');
-      } else {
-        this.$('.detail-job-env').removeClass('closeEnv');
-        this.$('.detail-job-env').addClass('expandEnv');
-      }
+      this.set('envExpanded', true);
+    },
+    toggleEnv() {
+      this.set('envExpanded', !this.envExpanded);
     }
   }
 });

@@ -12,6 +12,9 @@
             <span>
               {{#if this.subscription.plan}}
                 {{pluralize this.subscription.plan.builds "concurrent job"}}
+                {{#if this.account.education}}
+                  (plus 1 for free)
+                {{/if}}
               {{else}}
                 Unknown concurrent jobs
               {{/if}}
