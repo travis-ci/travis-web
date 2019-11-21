@@ -9,7 +9,7 @@
           <StatusIcon @status={{job.state}} />
           <LinkTo @route="job" @models={{array job.repo job}}>
             <span class="label-align">
-              {{job.repo.slug}}
+              {{job.number}}
             </span>
           </LinkTo>
         {{/if}}
