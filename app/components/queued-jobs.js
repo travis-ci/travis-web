@@ -11,7 +11,7 @@ export default Component.extend({
 
   queuedJobs: computed('jobs.@each.state', function () {
     const queuedStates = ['created', 'queued'];
-    return this.jobs.filter( job => queuedStates.includes(job.state));
+    return this.jobs.filter(job => queuedStates.includes(job.state));
   }),
 
   init() {
