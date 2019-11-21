@@ -5,6 +5,7 @@ import { task } from 'ember-concurrency';
 
 export default Service.extend({
   store: service(),
+  raven: service(),
 
   init() {
     this.toFetch = {};
@@ -30,14 +31,18 @@ export default Service.extend({
 
   fetchTask: task(function* () {
     for (let jobId in this.toFetch) {
-      const { job, resolve } = this.toFetch[jobId];
+      try {
+        const { job, resolve } = this.toFetch[jobId];
 
-      if (job._config) {
-        resolve(job._config);
-      } else {
-        const build = yield job.build;
-        yield this.store.queryRecord('build', { id: build.id, include: 'build.jobs,job.config' });
-        resolve(job._config);
+        if (job._config) {
+          resolve(job._config);
+        } else {
+          const build = yield job.build;
+          yield this.store.queryRecord('build', { id: build.id, include: 'build.jobs,job.config' });
+          resolve(job._config);
+        }
+      } catch (e) {
+        this.raven.logException(e);
       }
     }
     this.toFetch = {};

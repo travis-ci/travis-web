@@ -1,5 +1,6 @@
 import Component from '@ember/component';
 import Ember from 'ember';
+import { computed } from '@ember/object';
 import Polling from 'travis/mixins/polling';
 import config from 'travis/config/environment';
 import Visibility from 'visibilityjs';
@@ -12,6 +13,11 @@ export default Component.extend(Polling, {
   pollHook() {
     return this.store.find('job', {});
   },
+
+  runningJobs: computed('jobs.@each.state', function () {
+    const runningStates = ['started', 'received', 'failed', 'canceled'];
+    return this.jobs.filter(job => runningStates.includes(job.state));
+  }),
 
   init() {
     this._super(...arguments);
