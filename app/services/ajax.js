@@ -49,8 +49,8 @@ export default Service.extend({
     }
 
     // Travis-API-Version
-    if (options.travisApi) {
-      headers['Travis-API-Version'] = options.travisApi;
+    if (options.travisApiVersion) {
+      headers['Travis-API-Version'] = options.travisApiVersion;
     }
 
     // Content-Type
