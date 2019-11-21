@@ -1,48 +1,46 @@
 {{#if this.jobs.isLoaded}}
-  {{#if this.runningJobs.length}}
-    {{#each this.runningJobs as |job|}}
-      <div
-        data-test-sidebar-running-job
-        class="tile tile--sidebar {{job.state}}"
-      >
+  {{#each this.runningJobs as |job|}}
+    <div
+      data-test-sidebar-running-job
+      class="tile tile--sidebar {{job.state}}"
+    >
+      {{#if job.repo.slug}}
+        <StatusIcon @status={{job.state}} />
+        <LinkTo @route="job" @models={{array job.repo job}}>
+          <span class="label-align">
+            {{job.repo.slug}}
+          </span>
+        </LinkTo>
+      {{/if}}
+      <p class="tile-title float-right">
+        <SvgImage @name="icon-hash" @class="icon" />
         {{#if job.repo.slug}}
-          <StatusIcon @status={{job.state}} />
           <LinkTo @route="job" @models={{array job.repo job}}>
-            <span class="label-align">
-              {{job.repo.slug}}
+            <span data-test-running-job-title class="label-align">
+              {{job.number}}
             </span>
           </LinkTo>
         {{/if}}
-        <p class="tile-title float-right">
-          <SvgImage @name="icon-hash" @class="icon" />
-          {{#if job.repo.slug}}
-            <LinkTo @route="job" @models={{array job.repo job}}>
-              <span data-test-running-job-title class="label-align">
-                {{job.number}}
-              </span>
-            </LinkTo>
-          {{/if}}
-        </p>
-        <p>
-          <SvgImage @name="icon-clock" @class="icon" />
-          <span class="label-align">
-            Duration:
-            <time
-              class="duration"
-              datetime={{job.startedAt}}
-              title="Started {{pretty-date job.startedAt}}"
-            >
-              {{format-duration job.duration}}
-            </time>
-          </span>
-        </p>
-      </div>
-    {{/each}}
+      </p>
+      <p>
+        <SvgImage @name="icon-clock" @class="icon" />
+        <span class="label-align">
+          Duration:
+          <time
+            class="duration"
+            datetime={{job.startedAt}}
+            title="Started {{pretty-date job.startedAt}}"
+          >
+            {{format-duration job.duration}}
+          </time>
+        </span>
+      </p>
+    </div>
   {{else}}
     <div class="loading-container">
       There are no jobs running
     </div>
-  {{/if}}
+  {{/each}}
 {{else}}
   <LoadingIndicator @center="true" />
 {{/if}}
