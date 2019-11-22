@@ -262,12 +262,16 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.visit();
     await profilePage.billing.visit();
 
-    // assert resubscribing works.
     assert.ok(profilePage.billing.marketplaceButton.isHidden);
     assert.ok(profilePage.billing.userDetails.isHidden);
     assert.ok(profilePage.billing.billingDetails.isHidden);
     assert.ok(profilePage.billing.creditCardNumber.isHidden);
-    assert.ok(profilePage.billing.annualInvitation.isHidden);
+
+    await profilePage.billing.resubscribeSubscriptionButton.click();
+
+    assert.equal(profilePage.billing.plan.name, 'Small Business1 plan active');
+    assert.equal(profilePage.billing.userDetails.text, 'contact name User Name company name Travis CI GmbH billing email user@email.com');
+    assert.equal(profilePage.billing.billingDetails.text, 'address Rigaerstraße 8 city Berlin post code 10987 country Germany');
   });
 
   test('view billing on an incomplete stripe plan', async function (assert) {
@@ -594,8 +598,8 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.visit();
     await profilePage.billing.visit();
 
-    assert.ok(profilePage.billing.annualInvitation.isHidden);
-    // assert editing was disabled.
+    assert.ok(profilePage.billing.cancelSubscriptionButton.isHidden);
+    assert.ok(profilePage.billing.resubscribeSubscriptionButton.isHidden);
   });
 
   test('view billing tab when switch is clicked on plan changes correctly', async function (assert) {
