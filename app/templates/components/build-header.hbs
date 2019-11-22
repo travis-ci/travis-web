@@ -27,8 +27,8 @@
     </h2>
     <div class="commit-info">
       {{#if this.commit.body}}
-        <p class="commit-description" title="{{this.commit.body}}">
-          <span class="monospace {{this.commitBody}}">
+        <p class="commit-description {{this.commitBodyClass}}" title="{{this.commit.body}}">
+          <span class="monospace">
             {{format-message this.commit.body repo=this.item.repo pre=true}}
           </span>
         </p>
@@ -226,10 +226,10 @@
       </div>
     </div>
     {{#if this.environment}}
-      <div class="detail-job-env"
-        {{action "expandEnv" on="click"}}
-        {{action "expandEnv" on="mouseEnter"}}
-        {{action "expandEnv" on="mouseLeave"}}
+      <div class="detail-job-env {{if this.envExpanded 'expandEnv' 'closeEnv'}}"
+        {{on 'click' (action 'toggleEnv')}}
+        {{on 'mouseenter' (action 'expandEnv')}}
+        {{on 'mouseleave' (action 'closeEnv')}}
       >
         <SvgImage @name="icon-environment" @class="icon" />
         <span class="label-align" aria-label="Environment variables">

@@ -8,6 +8,7 @@
 // };
 
 var bodyParser = require('body-parser');
+var xssClean = require('xss-clean');
 
 module.exports = function (app) {
   var globSync   = require('glob').sync;
@@ -18,6 +19,7 @@ module.exports = function (app) {
   var morgan  = require('morgan');
   app.use(morgan('dev'));
   app.use(bodyParser.urlencoded({ extended: false }));
+  app.use(xssClean());
 
   mocks.forEach(function (route) { route(app); });
   proxies.forEach(function (route) { route(app); });

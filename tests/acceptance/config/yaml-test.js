@@ -123,7 +123,7 @@ module('Acceptance | config/yaml', function (hooks) {
     test('shows all unique raw configs', async function (assert) {
       await visit(`/travis-ci/travis-web/builds/${this.build.id}`);
       await page.yamlTab.click();
-      assert.equal(page.yaml.length, 2, 'expected two yaml code block');
+      assert.equal(page.yaml.length, 3, 'expected three yaml code block');
     });
 
     test('shows only file name for travis yml', async function (assert) {

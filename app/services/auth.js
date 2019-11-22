@@ -6,12 +6,14 @@ import {
   observer,
   get
 } from '@ember/object';
+import { assert } from '@ember/debug';
 import { isEmpty, isPresent } from '@ember/utils';
 import Service, { inject as service } from '@ember/service';
 import { equal, reads } from '@ember/object/computed';
 import { getOwner } from '@ember/application';
 import config from 'travis/config/environment';
 import { task } from 'ember-concurrency';
+import { availableProviders } from 'travis/utils/vcs';
 
 const { authEndpoint, apiEndpoint, intercom = {} } = config;
 
@@ -88,7 +90,12 @@ export default Service.extend({
     afterSignOutCallbacks.push(callback);
   },
 
-  signIn() {
+  signInWith(provider) {
+    assert(`Invalid provider to authenticate ${provider}`, availableProviders.includes(provider));
+    this.signIn(provider);
+  },
+
+  signIn(provider = 'github') {
     this.autoSignIn();
     if (this.signedIn) return;
 
@@ -99,7 +106,8 @@ export default Service.extend({
     if (url.pathname === '/plans') {
       url.pathname = '/';
     }
-    window.location.href = `${authEndpoint || apiEndpoint}/auth/handshake?redirect_uri=${url}`;
+    const path = provider === 'github' ? '/auth/handshake' : `/auth/handshake/${provider}`;
+    window.location.href = `${authEndpoint || apiEndpoint}${path}?redirect_uri=${url}`;
   },
 
   autoSignIn() {
@@ -116,9 +124,9 @@ export default Service.extend({
 
       Travis.trigger('user:signed_in', this.currentUser);
 
-      this.reloadCurrentUser().then(() =>
-        Travis.trigger('user:refreshed', data.user)
-      );
+      this.reloadCurrentUser().then(() => {
+        Travis.trigger('user:refreshed', data.user);
+      });
     } catch (error) {
       this.signOut(false);
     }
@@ -143,7 +151,7 @@ export default Service.extend({
         this.signOut();
       }
     }
-  }).drop(),
+  }).keepLatest(),
 
   validateUserData(user) {
     const hasChannelsOnPro = field => field === 'channels' && !this.isProVersion;
@@ -169,11 +177,13 @@ export default Service.extend({
 
   reportNewUser() {
     const { currentUser, metrics } = this;
-    const { syncedAt, login } = currentUser;
+    const { login, recentlySignedUp } = currentUser;
     const signupUsers = this.storage.signupUsers || [];
 
-    if (!syncedAt && !signupUsers.includes(login)) {
-      metrics.trackPage({ page: '/virtual/signup-success' });
+    if (recentlySignedUp && recentlySignedUp === true && !signupUsers.includes(login)) {
+      metrics.trackEvent({
+        event: 'first_authentication'
+      });
       this.storage.signupUsers = signupUsers.concat([login]);
     }
   },
@@ -225,4 +235,3 @@ function runAfterSignOutCallbacks() {
   afterSignOutCallbacks.forEach(callback => callback());
   afterSignOutCallbacks.clear();
 }
-

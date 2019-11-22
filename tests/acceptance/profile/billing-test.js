@@ -397,15 +397,97 @@ module('Acceptance | profile/billing', function (hooks) {
   });
 
   test('view billing on a marketplace plan', async function (assert) {
+    this.trial.destroy();
     this.subscription.source = 'github';
 
     await profilePage.visit();
     await profilePage.billing.visit();
 
-    assert.ok(profilePage.billing.userDetails.isHidden);
-    assert.ok(profilePage.billing.billingDetails.isHidden);
-    assert.ok(profilePage.billing.creditCardNumber.isHidden);
-    assert.ok(profilePage.billing.annualInvitation.isHidden);
+    assert.equal(profilePage.billing.plan.name, 'Small Business1 plan active github marketplace subscription');
+    assert.dom(profilePage.billing.plan.concurrency.scope)
+      .hasTextContaining('5 concurrent jobs Valid until June 19, 2018');
+  });
+
+  test('view billing tab with Github trial subscription', async function (assert) {
+    let trial = server.create('trial', {
+      builds_remaining: 0,
+      owner: this.organization,
+      status: 'started',
+      created_at: new Date(2018, 7, 16),
+      permissions: {
+        read: true,
+        write: true
+      }
+    });
+
+    this.subscription.owner = this.organization;
+    this.subscription.source = 'github';
+
+    trial.save();
+    this.subscription.save();
+
+    await profilePage.visitOrganization({ name: 'org-login' });
+    await profilePage.billing.visit();
+
+    percySnapshot(assert);
+
+    assert.equal(profilePage.billing.plan.name, 'Small Business1 plan trial github marketplace subscription');
+    assert.dom(profilePage.billing.plan.concurrency.scope)
+      .hasTextContaining('5 concurrent jobs Valid until June 19, 2018');
+  });
+
+  test('view billing tab when Github trial subscription has ended', async function (assert) {
+    let trial = server.create('trial', {
+      builds_remaining: 0,
+      owner: this.organization,
+      status: 'ended',
+      created_at: new Date(2018, 7, 16),
+      permissions: {
+        read: true,
+        write: true
+      }
+    });
+
+    this.subscription.owner = this.organization;
+    this.subscription.source = 'github';
+
+    trial.save();
+    this.subscription.save();
+
+    await profilePage.visitOrganization({ name: 'org-login' });
+    await profilePage.billing.visit();
+
+    assert.equal(profilePage.billing.plan.name, 'Small Business1 plan expired github marketplace subscription');
+    assert.dom(profilePage.billing.plan.concurrency.scope)
+      .hasTextContaining('5 concurrent jobs Valid until June 19, 2018');
+  });
+
+  test('view billing on a cancelled marketplace plan with Stripe plan', async function (assert) {
+    this.trial.destroy();
+    this.subscription.source = 'github';
+    this.subscription.status = 'canceled';
+
+    server.create('subscription', {
+      plan: this.defaultPlan,
+      owner: this.user,
+      status: 'expired',
+      valid_to: new Date(2018, 4, 19),
+      source: 'stripe',
+      permissions: {
+        write: true
+      }
+    });
+
+    await profilePage.visit();
+    await profilePage.billing.visit();
+
+    assert.equal(profilePage.billing.plan.name, 'Small Business1 plan canceled github marketplace subscription');
+    assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining('5 concurrent jobs Cancelled on June 19, 2018');
+    assert.equal(profilePage.billing.planMessage.text, 'Cancelled on June 19, 2018');
+    assert.dom(profilePage.billing.changePlanResubscribe.scope).hasTextContaining('Subscribe to different plan');
+    assert.dom(profilePage.billing.resubscribeSubscriptionButton.scope).hasTextContaining('Resubscribe to plan');
+    assert.ok(profilePage.billing.billingPlanChoices.boxes.isHidden);
+    assert.ok(profilePage.billing.subscribeButton.isHidden);
   });
 
   test('view billing on a canceled marketplace plan', async function (assert) {
@@ -413,22 +495,17 @@ module('Acceptance | profile/billing', function (hooks) {
     this.subscription.source = 'github';
     this.subscription.status = 'canceled';
 
-    const momentFromNow = moment(this.subscription.valid_to.getTime()).fromNow();
-
     await profilePage.visit();
     await profilePage.billing.visit();
 
-    assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining(`5 concurrent jobs Expires ${momentFromNow} on June 19`);
-    assert.equal(profilePage.billing.planMessage.text, `Expires ${momentFromNow} on June 19`);
-    assert.equal(profilePage.billing.marketplaceButton.text, 'Continue with GitHub Marketplace');
-    assert.equal(profilePage.billing.newSubscriptionButton.text, 'New subscription');
+    assert.equal(profilePage.billing.plan.name, 'Small Business1 plan canceled github marketplace subscription');
+    assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining('5 concurrent jobs Cancelled on June 19, 2018');
+    assert.equal(profilePage.billing.planMessage.text, 'Cancelled on June 19, 2018');
 
     assert.ok(profilePage.billing.userDetails.isHidden);
     assert.ok(profilePage.billing.billingDetails.isHidden);
     assert.ok(profilePage.billing.creditCardNumber.isHidden);
     assert.ok(profilePage.billing.annualInvitation.isHidden);
-
-    await profilePage.billing.newSubscriptionButton.click();
 
     assert.dom(profilePage.billing.billingPlanChoices.boxes.scope).exists({ count: 5 });
     assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe @user-login to 2 job plan');
@@ -441,16 +518,14 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.visit();
     await profilePage.billing.visit();
 
-    assert.equal(profilePage.billing.marketplaceButton.text, 'Continue with GitHub Marketplace');
-    assert.equal(profilePage.billing.newSubscriptionButton.text, 'New subscription');
-
     assert.ok(profilePage.billing.userDetails.isHidden);
     assert.ok(profilePage.billing.billingDetails.isHidden);
     assert.ok(profilePage.billing.creditCardNumber.isHidden);
     assert.ok(profilePage.billing.annualInvitation.isHidden);
 
-    await profilePage.billing.newSubscriptionButton.click();
-
+    assert.equal(profilePage.billing.plan.name, 'Small Business1 plan expired github marketplace subscription');
+    assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining('5 concurrent jobs Expired June 19, 2018');
+    assert.equal(profilePage.billing.planMessage.text, 'Expired June 19, 2018');
     assert.dom(profilePage.billing.billingPlanChoices.boxes.scope).exists({ count: 5 });
     assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe @user-login to 2 job plan');
   });
@@ -753,63 +828,6 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe @org-login to 2 job plan');
   });
 
-  test('view billing tab with Github trial subscription', async function (assert) {
-    let trial = server.create('trial', {
-      builds_remaining: 0,
-      owner: this.organization,
-      status: 'started',
-      created_at: new Date(2018, 7, 16),
-      permissions: {
-        read: true,
-        write: true
-      }
-    });
-
-    this.subscription.owner = this.organization;
-    this.subscription.source = 'github';
-
-    trial.save();
-    this.subscription.save();
-
-    await profilePage.visitOrganization({ name: 'org-login' });
-    await profilePage.billing.visit();
-
-    percySnapshot(assert);
-
-    assert.equal(profilePage.billing.trial.name.text, "You're trialing Travis CI via your Github Marketplace subscription.");
-    assert.equal(profilePage.billing.manageButton.text, 'Edit subscription');
-    assert.ok(profilePage.billing.creditCardNumber.isHidden);
-    assert.equal(profilePage.billing.source, 'This subscription is managed by GitHub Marketplace.');
-    assert.ok(profilePage.billing.annualInvitation.isHidden);
-  });
-
-  test('view billing tab with Github trial subscription has ended', async function (assert) {
-    let trial = server.create('trial', {
-      builds_remaining: 0,
-      owner: this.organization,
-      status: 'ended',
-      created_at: new Date(2018, 7, 16),
-      permissions: {
-        read: true,
-        write: true
-      }
-    });
-
-    this.subscription.owner = this.organization;
-    this.subscription.source = 'github';
-
-    trial.save();
-    this.subscription.save();
-
-    await profilePage.visitOrganization({ name: 'org-login' });
-    await profilePage.billing.visit();
-
-    assert.equal(profilePage.billing.manageButton.text, 'Edit subscription');
-    assert.ok(profilePage.billing.creditCardNumber.isHidden);
-    assert.equal(profilePage.billing.source, 'This subscription is managed by GitHub Marketplace.');
-    assert.ok(profilePage.billing.annualInvitation.isHidden);
-  });
-
   test('view billing tab on education account', async function (assert) {
     this.subscription = null;
     this.organization.attrs.education = true;
@@ -821,13 +839,77 @@ module('Acceptance | profile/billing', function (hooks) {
 
     percySnapshot(assert);
 
-    assert.equal(profilePage.billing.education.name, 'This is an educational account and includes a single build plan. Need help? Check our getting started guide');
-    assert.equal(profilePage.billing.newSubscriptionButton.text, 'New subscription');
-
-    await profilePage.billing.newSubscriptionButton.click();
-
+    assert.equal(profilePage.billing.plan.name, 'Bootstrap plan education subscription');
+    assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining('1 concurrent job');
     assert.dom(profilePage.billing.billingPlanChoices.boxes.scope).exists({ count: 5 });
     assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe @org-login to 2 job plan');
+  });
+
+
+  test('view billing tab on educational account after subscribing to a plan', async function (assert) {
+    window.Stripe = StripeMock;
+    let config = {
+      mock: true,
+      publishableKey: 'mock'
+    };
+    stubConfig('stripe', config, { instantiate: false });
+    const { owner } = getContext();
+    owner.inject('service:stripev3', 'config', 'config:stripe');
+
+    this.subscription = null;
+    this.organization.attrs.education = true;
+    this.organization.permissions = { createSubscription: true };
+    this.organization.save();
+
+    await profilePage.visitOrganization({ name: 'org-login' });
+    await profilePage.billing.visit();
+
+    const { billingForm, subscribeButton, billingPaymentForm } = profilePage.billing;
+    await subscribeButton.click();
+
+    percySnapshot(assert);
+
+    await selectChoose(billingForm.billingSelectCountry.scope, 'Germany');
+
+    await billingForm
+      .fillIn('firstname', 'John')
+      .fillIn('lastname', 'Doe')
+      .fillIn('companyName', 'Travis')
+      .fillIn('email', 'john@doe.com')
+      .fillIn('address', '15 Olalubi street')
+      .fillIn('city', 'Berlin')
+      .fillIn('zip', '353564')
+      .fillIn('vat', '356463')
+      .fillIn('coupon', '356463');
+
+    await billingForm.proceedPayment.click();
+
+    assert.equal(profilePage.billing.selectedPlanOverview.heading.text, 'summary');
+    assert.equal(profilePage.billing.selectedPlanOverview.name.text, `${this.defaultPlan.name} plan`);
+    assert.equal(profilePage.billing.selectedPlanOverview.jobs.text, `${this.defaultPlan.builds} concurrent jobs`);
+    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${this.defaultPlan.price / 100}`);
+    assert.equal(profilePage.billing.period.text, '/month');
+    assert.equal(profilePage.billing.selectedPlanOverview.changePlan.text, 'Change plan');
+
+    assert.equal(billingPaymentForm.contactDetails.contactHeading.text, 'contact details:');
+    assert.equal(billingPaymentForm.contactDetails.firstName.text, 'John Doe');
+    assert.equal(billingPaymentForm.contactDetails.company.text, 'Travis');
+    assert.equal(billingPaymentForm.contactDetails.email.text, 'john@doe.com');
+
+    assert.equal(billingPaymentForm.contactDetails.billingHeading.text, 'billing details:');
+    assert.equal(billingPaymentForm.contactDetails.address.text, '15 Olalubi street');
+    assert.equal(billingPaymentForm.contactDetails.city.text, 'Berlin');
+    assert.equal(billingPaymentForm.contactDetails.country.text, 'Germany');
+
+    assert.ok(billingPaymentForm.isPresent);
+
+    await billingPaymentForm.completePayment.click();
+
+    assert.equal(profilePage.billing.plan.name, 'Startup plan pending');
+    assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining('2 concurrent jobs (plus 1 for free)');
+
+    assert.equal(profilePage.billing.userDetails.text, 'contact name John Doe company name Travis billing email john@doe.com');
+    assert.equal(profilePage.billing.billingDetails.text, 'address 15 Olalubi street city Berlin post code 353564 country Germany');
   });
 
   test('logs an exception when there is a subscription without a plan and handles unknowns', async function (assert) {

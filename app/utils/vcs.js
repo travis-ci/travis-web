@@ -1,7 +1,11 @@
 import { assert } from '@ember/debug';
 import config from 'travis/config/environment';
 
-const { providers } = config;
+const {
+  providers,
+  enterprise: isEnterprise,
+  sourceEndpoint
+} = config;
 
 const vcsTypes = {
   AssemblaOrganization: 'assembla',
@@ -49,7 +53,8 @@ const arrayEqual = (array1, array2) => (
 
 export const vcsUrl = (resource, vcsType, params = {}) => {
   const vcs = vcsConfig(vcsType);
-  const url = vcs.endpoint + vcs.paths[resource];
+  const endpoint = isEnterprise && sourceEndpoint || vcs.endpoint;
+  const url = endpoint + vcs.paths[resource];
 
   assert(`Missing url params. URL: ${url}, PARAMS: ${JSON.stringify(params)}`, paramsValid(url, params));
   return replaceParams(url, params);
@@ -66,3 +71,5 @@ export const vcsVocab = (vcsType, vocabKey) => {
   }
   return vocab;
 };
+
+export const availableProviders = Object.keys(providers);

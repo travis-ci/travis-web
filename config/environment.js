@@ -159,9 +159,11 @@ module.exports = function (environment) {
     'broadcasts': true,
     'beta-features': true,
     'github-apps': false,
+    'enable-assembla-login': false,
+    'enable-bitbucket-login': false,
   };
 
-  const { TRAVIS_PRO, TRAVIS_ENTERPRISE } = process.env;
+  const { TRAVIS_PRO, TRAVIS_ENTERPRISE, SOURCE_ENDPOINT } = process.env;
 
   if (TRAVIS_PRO) {
     ENV.featureFlags['pro-version'] = true;
@@ -172,6 +174,9 @@ module.exports = function (environment) {
   if (TRAVIS_ENTERPRISE) {
     ENV.featureFlags['enterprise-version'] = true;
     ENV.enterprise = true;
+    if (SOURCE_ENDPOINT) {
+      ENV.sourceEndpoint = SOURCE_ENDPOINT;
+    }
   }
 
   ENV.pagination = {

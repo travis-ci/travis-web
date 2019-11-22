@@ -10,17 +10,46 @@
           Test and Deploy with Confidence
         </h1>
         <p>
-          Easily sync your GitHub projects with Travis CI
+          Easily sync your projects with Travis CI
           <br class="mobile-break" />
           and you’ll be testing your code in minutes!
         </p>
         {{#if this.auth.signedOut}}
-          <button class="hero-button org" {{action "signIn"}}>
-            <SvgImage @name="sign-in-mascot" />
-            <span class="label-align">
-              Sign Up
-            </span>
-          </button>
+          {{#if this.multiVcs.disabled}}
+            <button class="hero-button org" {{action "signIn" "github"}}>
+              <SvgImage @name="sign-in-mascot" />
+              <span class="label-align">
+                Sign Up
+              </span>
+            </button>
+          {{/if}}
+
+          {{#if this.multiVcs.enabled}}
+            <div>
+              <button class="hero-button org multi-vcs" {{action "signIn" "github"}}>
+                <SvgImage @name="icon-repooctocat" />
+                <span class="label-align">
+                  Sign up with Github
+                </span>
+              </button>
+              {{#if this.multiVcs.enableAssemblaLogin}}
+                <button class="hero-button org multi-vcs" {{action "signIn" "assembla"}}>
+                  <SvgImage @name="icon-assembla" />
+                  <span class="label-align">
+                    Sign up with Assembla
+                  </span>
+                </button>
+              {{/if}}
+              {{#if this.multiVcs.enableBitbucketLogin}}
+                <button class="hero-button org multi-vcs" {{action "signIn" "bitbucket"}}>
+                  <SvgImage @name="icon-bitbucket" />
+                  <span class="label-align">
+                    Sign up with Bitbucket
+                  </span>
+                </button>
+              {{/if}}
+            </div>
+          {{/if}}
         {{/if}}
         {{#if this.auth.signingIn}}
           <button class="hero-button org">
