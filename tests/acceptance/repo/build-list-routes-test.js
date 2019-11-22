@@ -95,6 +95,7 @@ module('Acceptance | repo build list routes', function (hooks) {
 
     const defaultBranchBuild = defaultBranch.createBuild({
       number: '1491',
+      state: 'canceled',
       event_type: 'push',
       repository,
     });
