@@ -62,6 +62,9 @@ export default Component.extend({
   canCancel: and('userHasPullPermissionForRepo', 'item.canCancel'),
   canRestart: and('userHasPullPermissionForRepo', 'item.canRestart'),
   canDebug: and('userHasPushPermissionForRepo', 'item.canDebug'),
+  isJobNotErrored: computed('job.state', function () {
+    return !(this.job && this.job.state === 'errored');
+  }),
 
   tooltips: or('labelless', 'mobilelabels'),
 

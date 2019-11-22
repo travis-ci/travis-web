@@ -67,7 +67,7 @@
     {{/if}}
   {{/if}}
 {{else}}
-  {{#if this.islist}}
-    <LoadingIndicator @height={{true}} />
+  {{#if (and this.islist this.isJobNotErrored)}}
+    <LoadingIndicator />
   {{/if}}
 {{/if}}
