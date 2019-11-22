@@ -529,6 +529,12 @@
     border-color: rgba(62, 170, 175, 0.2);
   }
 
+  .InputContainer {
+    .Input--empty {
+      color: red;
+    }
+  }
+
   .StripeElement--invalid {
     box-shadow: inset 0 0 1px 1px red;
   }

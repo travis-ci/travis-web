@@ -138,8 +138,6 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.price.text, '$69');
     assert.equal(profilePage.billing.period.text, '/month');
 
-    // Switch to annual plan banner test
-
     profilePage.billing.invoices.items[0].as(march2010 => {
       assert.equal(march2010.invoiceUrl.href, 'https://example.com/20102.pdf');
       assert.equal(march2010.invoiceDate, 'March 14, 2010');
