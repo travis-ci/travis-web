@@ -133,7 +133,7 @@ module('Unit | store.paginated', function (hooks) {
     });
   });
 
-  test('it sorts results and live updates the first page', function (assert) {
+  test('it sorts results and live updates the first page', async function (assert) {
     let store = this.owner.lookup('service:store');
 
     run(() => {
@@ -156,26 +156,29 @@ module('Unit | store.paginated', function (hooks) {
       return resolve(queryResult);
     };
 
-    let result = store.paginated('repo', {},
-      { filter: () => true, sort: 'id:desc' });
+    let result = store.paginated('repo', {}, { filter: () => true, sort: 'id:desc' });
 
-    let done = assert.async();
+    await assert.async()();
+
+    await result.then((collection) => {
+      assert.deepEqual(collection.toArray().map((r) => r.get('id')), ['1']);
+    });
+
+    run(() => {
+      store.push({
+        data: {
+          id: 2,
+          type: 'repo',
+          attributes: { }
+        }
+      });
+    });
+
+    result = store.paginated('repo', {}, { filter: () => true, sort: 'id:desc' });
+
+    await assert.async()();
 
     result.then((collection) => {
-      done();
-
-      assert.deepEqual(collection.toArray().map((r) => r.get('id')), ['1']);
-
-      run(() => {
-        store.push({
-          data: {
-            id: 2,
-            type: 'repo',
-            attributes: { }
-          }
-        });
-      });
-
       assert.deepEqual(collection.toArray().map((r) => r.get('id')), ['2']);
     });
   });
