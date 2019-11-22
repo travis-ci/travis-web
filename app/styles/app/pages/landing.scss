@@ -905,7 +905,7 @@
       }
       padding: 0 60px 0 60px;
 
-      
+
     }
 
     .landing-features-list .features-checked {
@@ -998,8 +998,57 @@
 }
 
 .landing-page {
+  #profile-menu-link {
+    line-height: 0;
+    margin-top: 13px;
+    position: relative;
+    text-align: center;
+
+    @media #{$small-only} {
+      display: none;
+    }
+  }
+
   .navigation-nested {
     background-color: white;
+    width: auto;
+    margin: 31px 0 0;
+    box-shadow: 0 -6px 0 #fff, 0 1px 6px rgba(0,0,0, .15);
+    width: 100%;
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+    z-index: 10;
+
+    .action {
+      cursor: pointer;
+      display: block;
+      padding: 7px 10px;
+      text-align: left;
+      width: 100%;
+
+      &:hover {
+        background-color: #EAEAEA;
+      }
+    }
+
+    ~ .auth-button {
+      cursor: default;
+      padding-top: 10px;
+      position: relative;
+      z-index: 11;
+
+      &:hover {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+    }
+
+    &:hover ~ .auth-button {
+      color: #fff;
+      background-color: #2EB459;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+    }
   }
 }
 

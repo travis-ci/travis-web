@@ -71,3 +71,5 @@ export const vcsVocab = (vcsType, vocabKey) => {
   }
   return vocab;
 };
+
+export const availableProviders = Object.keys(providers);

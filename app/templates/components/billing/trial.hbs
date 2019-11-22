@@ -21,7 +21,8 @@
                   @href={{config-get "urls.gettingStarted"}}
                   class="get-started-link"
                 >
-                  information on running your first build</ExternalLinkTo>.
+                  information on running your first build
+                </ExternalLinkTo>.
               </p>
             {{else}}
               <p class="get-started__message {{if this.isBuildLessThanEleven 'red' 'color-asphalt-grey'}}" data-test-trial-message='true'>
@@ -80,18 +81,9 @@
       {{/if}}
     </div>
     <hr />
-    {{#if this.subscription.isGithub}}
-      <ExternalLinkTo
-        @href={{config-get "marketplaceEndpoint"}}
-        class="button--blue marketplace-button"
-      >
-        Manage on GitHub Marketplace
-      </ExternalLinkTo>
-    {{else}}
-      <Billing::Process
-        @account={{this.account}}
-        @newSubscription={{this.newSubscription}}
-      />
-    {{/if}}
   </div>
 </div>
+<Billing::Process
+  @account={{this.account}}
+  @newSubscription={{this.newSubscription}}
+/>

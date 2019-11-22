@@ -113,7 +113,8 @@
     "npm": "6.2.0"
   },
   "dependencies": {
-    "watchman": "^1.0.0"
+    "watchman": "^1.0.0",
+    "xss-clean": "^0.1.1"
   },
   "greenkeeper": {
     "ignore": [

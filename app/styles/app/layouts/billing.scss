@@ -145,7 +145,7 @@
     &__box {
       background-color: #fff;
       border-radius: 5px;
-      padding: 8px 13px;
+      padding: 6px 13px;
       border: 1px solid $pebble-grey;
       margin-bottom: 10px;
       width: 120px;
@@ -174,14 +174,14 @@
 
       &--name {
         margin: 8px 0 0 0;
-        font-size: 1.2em;
+        font-size: 1.1em;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
       }
 
       &:hover {
-        background: rgba(181, 214, 217, 1);
+        box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.15);
         cursor: pointer;
       }
     }
@@ -267,7 +267,9 @@
 
     .highlight-plan {
       color: $oxide-blue;
-      background: rgba(181, 214, 217, 1);
+      border: 1px solid $oxide-blue;
+      box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.15);
+      background: rgba(181, 214, 217, .2);
     }
   }
 
@@ -537,13 +539,21 @@
 
   .billing-subscription {
 
-    .manual-badge {
-      margin-left: 0;
+    .grey-badge {
+      color: $cement-grey;
+      font-weight: 400;
+    }
+
+    .white-badge {
       font-weight: 600;
       border: 1px solid $pebble-grey;
       color: $asphalt-grey;
       border-radius: 3px;
       background: white;
+
+      &.manual {
+        margin-left: 0;
+      }
     }
 
     h3 {
@@ -567,11 +577,25 @@
 
     .billing-subscription-section {
       margin-bottom: 25px;
+
+      .resubscribe-stripe-heading {
+        margin-top: 25px;
+        text-transform: uppercase;
+        font-weight: 700;
+        color: $cement-grey;
+        font-size: .8em;
+      }
     }
 
     .plan-overview {
 
       &__header {
+        margin: 0;
+      }
+
+      &__trial {
+        font-size: 14px;
+        font-weight: 400;
         margin: 0;
       }
 
@@ -584,12 +608,14 @@
 
       &__description {
         font-weight: 100;
-        margin-top: 4px;
-        margin-bottom: 4px;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        align-items: center;
 
         &--validity {
           font-size: 12px;
           font-weight: 400;
+          padding-bottom: 1px;
         }
       }
     }

@@ -890,15 +890,11 @@ header.space-between {
 }
 
 .manage-subscription {
-  float: right;
+  margin-top: 10px;
 
-  &.new {
-    float: none;
-  }
-
-  &.resubscribe {
-    float: none;
-    margin-top: 1rem;
+  .github-icon {
+    @include colorSVG(#fff);
+    @include colorSVGFill(#fff);
   }
 }
 
