@@ -67,7 +67,7 @@
     {{/if}}
   {{/if}}
 {{else}}
-  {{#if (and this.islist this.isJobNotErrored)}}
+  {{#if this.userHasPullPermissionForRepo}}
     <LoadingIndicator />
   {{/if}}
 {{/if}}
