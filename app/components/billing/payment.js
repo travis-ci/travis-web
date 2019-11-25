@@ -71,7 +71,9 @@ export default Component.extend({
   }).drop(),
 
   validateCoupon: task(function* () {
-    yield this.newSubscription.validateCoupon.perform(this.couponId);
+    try {
+      yield this.newSubscription.validateCoupon.perform(this.couponId);
+    } catch {}
   }).drop(),
 
   handleError() {

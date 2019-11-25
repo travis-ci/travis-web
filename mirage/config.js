@@ -168,11 +168,12 @@ export default function () {
   this.get('/coupons/:coupon', function (schema, { params }) {
     const coupon = schema.coupons.find(params.coupon);
     if (!coupon) {
-      return new Response(404, {'Content-Type': 'application/json'}, {
-        '@type': 'error',
-        'error_type': 'not_found',
-        'error_message': `No such coupon: ${params.coupon}`
-      });
+      // return new Response(404, {'Content-Type': 'application/json'}, {
+      //   '@type': 'error',
+      //   'error_type': 'not_found',
+      //   'error_message': `No such coupon: ${params.coupon}`
+      // });
+      return new Response(404, {}, {});
     } else {
       return this.serialize(coupon);
     }
