@@ -553,8 +553,8 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.trial.name.text, '100 free builds to get you started');
     assert.equal(profilePage.billing.trial.subtext, 'Start your trial to get 100 free builds and 2 concurrent jobs for both public and private projects.');
     assert.ok(profilePage.billing.trial.openSourceMessage.isPresent);
-    assert.equal(profilePage.billing.trial.openSourceMessage.heading, 'We <3 open source');
-    assert.equal(profilePage.billing.trial.openSourceMessage.body, 'You get 3 free additional concurrent jobs for your open source projects.');
+    assert.equal(profilePage.billing.trial.openSourceMessage.heading, '3 concurrent jobs, free!');
+    assert.equal(profilePage.billing.trial.openSourceMessage.body, 'We <3 open source! You will always get 3 free additional concurrent jobs for your open source projects.');
     assert.dom(profilePage.billing.billingPlanChoices.boxes.scope).exists({ count: 5 });
     assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe @user-login to 2 job plan');
   });
@@ -569,8 +569,8 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.trial.name.text, 'You have 10 trial builds left');
     assert.equal(profilePage.billing.trial.subtext, 'The trial includes 2 concurrent jobs for both public and private projects.');
     assert.ok(profilePage.billing.trial.openSourceMessage.isPresent);
-    assert.equal(profilePage.billing.trial.openSourceMessage.heading, 'We <3 open source');
-    assert.equal(profilePage.billing.trial.openSourceMessage.body, 'You get 3 free additional concurrent jobs for your open source projects.');
+    assert.equal(profilePage.billing.trial.openSourceMessage.heading, '3 concurrent jobs, free!');
+    assert.equal(profilePage.billing.trial.openSourceMessage.body, 'We <3 open source! You will always get 3 free additional concurrent jobs for your open source projects.');
     assert.dom(profilePage.billing.billingPlanChoices.boxes.scope).exists({ count: 5 });
     assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe @user-login to 2 job plan');
   });
@@ -643,8 +643,8 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.trial.name.text, '100 free builds to get you started');
     assert.equal(profilePage.billing.trial.subtext, 'Start your trial to get 100 free builds and 2 concurrent jobs for both public and private projects.');
     assert.ok(profilePage.billing.trial.openSourceMessage.isPresent);
-    assert.equal(profilePage.billing.trial.openSourceMessage.heading, 'We <3 open source');
-    assert.equal(profilePage.billing.trial.openSourceMessage.body, 'You get 3 free additional concurrent jobs for your open source projects.');
+    assert.equal(profilePage.billing.trial.openSourceMessage.heading, '3 concurrent jobs, free!');
+    assert.equal(profilePage.billing.trial.openSourceMessage.body, 'We <3 open source! You will always get 3 free additional concurrent jobs for your open source projects.');
 
     await profilePage.billing.billingPlanChoices.lastBox.visit();
 
@@ -672,8 +672,8 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.trial.name.text, '100 free builds to get you started');
     assert.equal(profilePage.billing.trial.subtext, 'Start your trial to get 100 free builds and 2 concurrent jobs for both public and private projects.');
     assert.ok(profilePage.billing.trial.openSourceMessage.isPresent);
-    assert.equal(profilePage.billing.trial.openSourceMessage.heading, 'We <3 open source');
-    assert.equal(profilePage.billing.trial.openSourceMessage.body, 'You get 3 free additional concurrent jobs for your open source projects.');
+    assert.equal(profilePage.billing.trial.openSourceMessage.heading, '3 concurrent jobs, free!');
+    assert.equal(profilePage.billing.trial.openSourceMessage.body, 'We <3 open source! You will always get 3 free additional concurrent jobs for your open source projects.');
 
     assert.dom(profilePage.billing.billingPlanChoices.boxes.scope).exists({ count: 5 });
     assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe @org-login to 2 job plan');
@@ -719,8 +719,8 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.trial.name.text, 'Your trial is active!');
     assert.equal(profilePage.billing.trial.subtext, 'Start building by triggering a build on your dashboard or head over to our docs for information on running your first build .');
     assert.ok(profilePage.billing.trial.openSourceMessage.isPresent);
-    assert.equal(profilePage.billing.trial.openSourceMessage.heading, 'We <3 open source');
-    assert.equal(profilePage.billing.trial.openSourceMessage.body, 'You get 3 free additional concurrent jobs for your open source projects.');
+    assert.equal(profilePage.billing.trial.openSourceMessage.heading, '3 concurrent jobs, free!');
+    assert.equal(profilePage.billing.trial.openSourceMessage.body, 'We <3 open source! You will always get 3 free additional concurrent jobs for your open source projects.');
 
     assert.dom(profilePage.billing.billingPlanChoices.boxes.scope).exists({ count: 5 });
     assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe @org-login to 2 job plan');
@@ -754,8 +754,8 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.trial.name.text, 'You have 25 trial builds left');
     assert.equal(profilePage.billing.trial.subtext, 'The trial includes 2 concurrent jobs for both public and private projects.');
     assert.ok(profilePage.billing.trial.openSourceMessage.isPresent);
-    assert.equal(profilePage.billing.trial.openSourceMessage.heading, 'We <3 open source');
-    assert.equal(profilePage.billing.trial.openSourceMessage.body, 'You get 3 free additional concurrent jobs for your open source projects.');
+    assert.equal(profilePage.billing.trial.openSourceMessage.heading, '3 concurrent jobs, free!');
+    assert.equal(profilePage.billing.trial.openSourceMessage.body, 'We <3 open source! You will always get 3 free additional concurrent jobs for your open source projects.');
     assert.dom(profilePage.billing.billingPlanChoices.boxes.scope).exists({ count: 5 });
     assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe @org-login to 2 job plan');
   });
@@ -790,8 +790,8 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.trial.buildsRunningOutBanner, 'Your trial is almost finished. Subscribe to a plan before your free builds run out!');
     assert.equal(profilePage.billing.trial.subtext, 'The trial includes 2 concurrent jobs for both public and private projects.');
     assert.ok(profilePage.billing.trial.openSourceMessage.isPresent);
-    assert.equal(profilePage.billing.trial.openSourceMessage.heading, 'We <3 open source');
-    assert.equal(profilePage.billing.trial.openSourceMessage.body, 'You get 3 free additional concurrent jobs for your open source projects.');
+    assert.equal(profilePage.billing.trial.openSourceMessage.heading, '3 concurrent jobs, free!');
+    assert.equal(profilePage.billing.trial.openSourceMessage.body, 'We <3 open source! You will always get 3 free additional concurrent jobs for your open source projects.');
     assert.dom(profilePage.billing.billingPlanChoices.boxes.scope).exists({ count: 5 });
     assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe @org-login to 2 job plan');
   });
@@ -822,8 +822,8 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.trial.subtext, 'Your trial has just ended. To get the most out of Travis CI, set up a plan below!');
     assert.equal(profilePage.billing.trial.buildsRanOutBanner, 'Your trial has ended. Subscribe to a plan to continue building your project!');
     assert.ok(profilePage.billing.trial.openSourceMessage.isPresent);
-    assert.equal(profilePage.billing.trial.openSourceMessage.heading, 'We <3 open source');
-    assert.equal(profilePage.billing.trial.openSourceMessage.body, 'You get 3 free additional concurrent jobs for your open source projects.');
+    assert.equal(profilePage.billing.trial.openSourceMessage.heading, '3 concurrent jobs, free!');
+    assert.equal(profilePage.billing.trial.openSourceMessage.body, 'We <3 open source! You will always get 3 free additional concurrent jobs for your open source projects.');
     assert.dom(profilePage.billing.billingPlanChoices.boxes.scope).exists({ count: 5 });
     assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe @org-login to 2 job plan');
   });
@@ -839,13 +839,77 @@ module('Acceptance | profile/billing', function (hooks) {
 
     percySnapshot(assert);
 
-    assert.equal(profilePage.billing.education.name, 'This is an educational account and includes a single build plan. Need help? Check our getting started guide');
-    assert.equal(profilePage.billing.newSubscriptionButton.text, 'New subscription');
-
-    await profilePage.billing.newSubscriptionButton.click();
-
+    assert.equal(profilePage.billing.plan.name, 'Bootstrap plan education subscription');
+    assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining('1 concurrent job');
     assert.dom(profilePage.billing.billingPlanChoices.boxes.scope).exists({ count: 5 });
     assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe @org-login to 2 job plan');
+  });
+
+
+  test('view billing tab on educational account after subscribing to a plan', async function (assert) {
+    window.Stripe = StripeMock;
+    let config = {
+      mock: true,
+      publishableKey: 'mock'
+    };
+    stubConfig('stripe', config, { instantiate: false });
+    const { owner } = getContext();
+    owner.inject('service:stripev3', 'config', 'config:stripe');
+
+    this.subscription = null;
+    this.organization.attrs.education = true;
+    this.organization.permissions = { createSubscription: true };
+    this.organization.save();
+
+    await profilePage.visitOrganization({ name: 'org-login' });
+    await profilePage.billing.visit();
+
+    const { billingForm, subscribeButton, billingPaymentForm } = profilePage.billing;
+    await subscribeButton.click();
+
+    percySnapshot(assert);
+
+    await selectChoose(billingForm.billingSelectCountry.scope, 'Germany');
+
+    await billingForm
+      .fillIn('firstname', 'John')
+      .fillIn('lastname', 'Doe')
+      .fillIn('companyName', 'Travis')
+      .fillIn('email', 'john@doe.com')
+      .fillIn('address', '15 Olalubi street')
+      .fillIn('city', 'Berlin')
+      .fillIn('zip', '353564')
+      .fillIn('vat', '356463')
+      .fillIn('coupon', '356463');
+
+    await billingForm.proceedPayment.click();
+
+    assert.equal(profilePage.billing.selectedPlanOverview.heading.text, 'summary');
+    assert.equal(profilePage.billing.selectedPlanOverview.name.text, `${this.defaultPlan.name} plan`);
+    assert.equal(profilePage.billing.selectedPlanOverview.jobs.text, `${this.defaultPlan.builds} concurrent jobs`);
+    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${this.defaultPlan.price / 100}`);
+    assert.equal(profilePage.billing.period.text, '/month');
+    assert.equal(profilePage.billing.selectedPlanOverview.changePlan.text, 'Change plan');
+
+    assert.equal(billingPaymentForm.contactDetails.contactHeading.text, 'contact details:');
+    assert.equal(billingPaymentForm.contactDetails.firstName.text, 'John Doe');
+    assert.equal(billingPaymentForm.contactDetails.company.text, 'Travis');
+    assert.equal(billingPaymentForm.contactDetails.email.text, 'john@doe.com');
+
+    assert.equal(billingPaymentForm.contactDetails.billingHeading.text, 'billing details:');
+    assert.equal(billingPaymentForm.contactDetails.address.text, '15 Olalubi street');
+    assert.equal(billingPaymentForm.contactDetails.city.text, 'Berlin');
+    assert.equal(billingPaymentForm.contactDetails.country.text, 'Germany');
+
+    assert.ok(billingPaymentForm.isPresent);
+
+    await billingPaymentForm.completePayment.click();
+
+    assert.equal(profilePage.billing.plan.name, 'Startup plan pending');
+    assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining('2 concurrent jobs (plus 1 for free)');
+
+    assert.equal(profilePage.billing.userDetails.text, 'contact name John Doe company name Travis billing email john@doe.com');
+    assert.equal(profilePage.billing.billingDetails.text, 'address 15 Olalubi street city Berlin post code 353564 country Germany');
   });
 
   test('logs an exception when there is a subscription without a plan and handles unknowns', async function (assert) {
@@ -910,8 +974,8 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.trial.name.text, 'You have 10 trial builds left');
     assert.equal(profilePage.billing.trial.subtext, 'The trial includes 2 concurrent jobs for both public and private projects.');
     assert.ok(profilePage.billing.trial.openSourceMessage.isPresent);
-    assert.equal(profilePage.billing.trial.openSourceMessage.heading, 'We <3 open source');
-    assert.equal(profilePage.billing.trial.openSourceMessage.body, 'You get 3 free additional concurrent jobs for your open source projects.');
+    assert.equal(profilePage.billing.trial.openSourceMessage.heading, '3 concurrent jobs, free!');
+    assert.equal(profilePage.billing.trial.openSourceMessage.body, 'We <3 open source! You will always get 3 free additional concurrent jobs for your open source projects.');
     assert.dom(profilePage.billing.billingPlanChoices.boxes.scope).exists({ count: 5 });
     assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe @user-login to 2 job plan');
   });

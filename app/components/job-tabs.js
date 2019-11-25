@@ -1,7 +1,7 @@
 import { computed } from '@ember/object';
-import { match, not } from '@ember/object/computed';
 import { isEmpty } from '@ember/utils';
 import Component from '@ember/component';
+import { match, not } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 
 export default Component.extend({

@@ -17,10 +17,6 @@ export default TravisRoute.extend({
     return this.store.queryRecord('owner', { login: owner });
   },
 
-  renderTemplate() {
-    this._super(...arguments);
-  },
-
   actions: {
     error(error, /* transition, originRoute*/) {
       const is404 = error.status === 404 || error.errors.firstObject.status === '404';
