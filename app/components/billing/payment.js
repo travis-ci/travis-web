@@ -2,6 +2,7 @@ import Component from '@ember/component';
 import { task } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
 import { or, reads } from '@ember/object/computed';
+import { computed } from '@ember/object';
 import config from 'travis/config/environment';
 
 export default Component.extend({
@@ -32,6 +33,14 @@ export default Component.extend({
   couponError: reads('newSubscription.validateCoupon.last.error'),
   totalPrice: reads('newSubscription.totalPrice'),
   isValidCoupon: reads('coupon.valid'),
+  couponHasError: computed('couponError', {
+    get() {
+      return !!this.couponError;
+    },
+    set(key, value) {
+      return value;
+    }
+  }),
 
   createSubscription: task(function* () {
     this.metrics.trackEvent({
@@ -79,5 +88,9 @@ export default Component.extend({
     complete(stripeElement) {
       this.set('stripeElement', stripeElement);
     },
+
+    handleCouponFocus() {
+      this.set('couponHasError', false);
+    }
   }
 });

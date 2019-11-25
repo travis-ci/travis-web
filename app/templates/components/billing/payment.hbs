@@ -34,6 +34,7 @@
           class="coupon-validation__input"
           @value={{this.couponId}}
           @showValidationStatusIcons={{false}}
+          @onFocus={{action 'handleCouponFocus'}}
           @onChange={{action (mut this.couponId)}} 
           as |Field|
         >
@@ -47,7 +48,7 @@
               <SvgImage @name="icon-passed" @class="icon icon-passed" />
               Coupon applied
             </p>
-          {{else if this.couponError}}
+          {{else if this.couponHasError}}
             <p data-test-invalid-coupon="true" class="coupon-validation__invalid-coupon">
               <SvgImage @name="form-error-icon" @class="icon icon-warn" />
               Coupon invalid
