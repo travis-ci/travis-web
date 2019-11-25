@@ -156,6 +156,6 @@ export default Service.extend({
   logFetchError(response) {
     const { status = 'UNKNOWN' } = response;
     const message = `[ERROR] Fetch error (${status}): ${response}`;
-    warn(message);
+    warn(message, { id: 'travis.ajax.fetch' });
   },
 });
