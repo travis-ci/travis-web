@@ -29,7 +29,7 @@
   <h4 data-test-coupon-code='true' class="pb-3">coupon code</h4>
   <div class="pb-3">
     <TravisForm @onSubmit={{perform this.validateCoupon}} as |form|>
-      <div data-test-coupon-form='true' class="coupon-validation flex flex--center flex-v-center flex-md-row">
+      <div data-test-coupon-form='true' class="coupon-validation flex flex--center flex-v-center">
         <form.field
           class="coupon-validation__input"
           @value={{this.couponId}}
@@ -63,7 +63,9 @@
     </TravisForm>
   </div>
   <span class="notice-banner--white flex flex--v-center" data-test-help-text='true'>
-    <SvgImage @name='icon-help' @class='icon-help' />
+    <div>
+      <SvgImage @name='icon-help' @class='icon-help' />
+    </div>
     <span class="pl-3">
       Credit card details are never stored on nor reach our servers. Payment data is handled by Stripe.
     </span>
