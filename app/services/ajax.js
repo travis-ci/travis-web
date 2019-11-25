@@ -16,7 +16,6 @@ const DEFAULT_ACCEPT = 'application/json; version=2';
 export default Service.extend({
   auth: service(),
   features: service(),
-  raven: service(),
 
   getDefaultOptions() {
     return {
@@ -155,8 +154,6 @@ export default Service.extend({
   },
 
   logFetchError(response) {
-    this.raven.logException(response);
-
     const { status = 'UNKNOWN' } = response;
     const message = `[ERROR] Fetch error (${status}): ${response}`;
     warn(message);
