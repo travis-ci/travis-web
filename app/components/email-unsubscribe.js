@@ -51,7 +51,7 @@ export default Component.extend({
       yield repo && repo.auth.currentUser._rawPermissions;
     } catch (e) {}
 
-    return repo && repo.isCurrentUserACollaborator ? repo : null;
+    return repo;
   }).drop(),
 
   didInsertElement() {
