@@ -1115,13 +1115,13 @@ module('Acceptance | profile/billing', function (hooks) {
       .fillIn('zip', '353564');
 
     await billingForm.proceedPayment.click();
-
     await billingCouponForm.fillIn('couponId', 'fake_id');
-
     await billingCouponForm.submitCoupon.click();
+
     assert.equal(billingCouponForm.invalidCoupon.text, 'Coupon invalid');
 
     const coupon = this.coupons[0];
+
     await billingCouponForm.fillIn('couponId', coupon.id);
     await billingCouponForm.submitCoupon.click();
 
