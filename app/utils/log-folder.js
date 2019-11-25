@@ -1,8 +1,6 @@
 export default (function () {
   function LogFolder(element) {
     this.element = element;
-    // let handlerSelector = '.fold .log-line:first-of-type, .fold .fold-name';
-    // const handledElements = this.element.querySelectorAll(handlerSelector);
     if (this.element) {
       const _this = this;
       const handleClick = (event) => {
@@ -16,7 +14,6 @@ export default (function () {
         el.addEventListener('click', handleClick);
       };
       replaceEventListener(this.element);
-      // handledElements.forEach(replaceEventListener);
     }
   }
 

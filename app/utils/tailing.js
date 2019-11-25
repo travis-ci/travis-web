@@ -1,11 +1,11 @@
 import { throttle, later } from '@ember/runloop';
 
 export default (function () {
-  function Tailing(window1, tailSelector, logSelector) {
-    this.window = window1;
-    this.document = this.window.document;
+  function Tailing(tailSelector, logSelector) {
     this.tailSelector = tailSelector;
     this.logSelector = logSelector;
+    this.window = window;
+    this.document = document;
     this.position = this._scrollPosTop();
     this.document.addEventListener('scroll', () => {
       throttle(this, this.onScroll, [], 200, false);
@@ -124,13 +124,13 @@ export default (function () {
   };
 
   Tailing.prototype._scrollPosTop = function () {
-    const { document, window } = this;
-    return window.scrollY || window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || document.getElementsByTagName('html')[0].scrollTop;
+    const { window } = this;
+    return window && window.pageYOffset;
   };
 
   Tailing.prototype._scrollPosLeft = function () {
-    const { document, window } = this;
-    return window.scrollX || window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft || document.getElementsByTagName('html')[0].scrollTop;
+    const { window } = this;
+    return window && window.pageXOffset;
   };
 
   return Tailing;
