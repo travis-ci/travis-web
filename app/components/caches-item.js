@@ -4,7 +4,7 @@ import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
 
 export default Component.extend({
-  ajax: service(),
+  api: service(),
   flashes: service(),
 
   tagName: 'li',
@@ -19,7 +19,7 @@ export default Component.extend({
       let url = `/repo/${repo.get('id')}/caches?branch=${branch}`;
 
       try {
-        yield this.ajax.deleteV3(url);
+        yield this.api.delete(url);
         this.caches.removeObject(this.cache);
       } catch (e) {
         this.flashes.error('Could not delete the cache');

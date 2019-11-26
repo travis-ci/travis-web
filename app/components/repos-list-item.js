@@ -14,10 +14,4 @@ export default Component.extend(Polling, {
   color: computed('repo.currentBuild.state', function () {
     return colorForState(this.get('repo.currentBuild.state'));
   }),
-
-  scrollTop() {
-    if (window.scrollY > 0) {
-      this.scroller.scrollTo(0, 200);
-    }
-  }
 });

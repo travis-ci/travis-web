@@ -44,9 +44,11 @@ TravisPusher.prototype.init = function (config, ajaxService) {
         authorize: function (socketId, callback) {
           let channelName = channel.name;
 
-          TravisPusher.ajaxService.post('/pusher/auth', {
-            socket_id: socketId,
-            channels: [channelName]
+          TravisPusher.ajaxService.request('/pusher/auth', 'POST', {
+            data: {
+              socket_id: socketId,
+              channels: [channelName]
+            }
           }).then((data) => {
             callback(false, { auth: data['channels'][channelName] });
           });

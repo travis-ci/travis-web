@@ -6,7 +6,7 @@ import { alias } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
 
 export default Controller.extend({
-  ajax: service(),
+  api: service(),
   flashes: service(),
 
   repo: alias('model.repo'),
@@ -24,7 +24,7 @@ export default Controller.extend({
   deleteRepoCache: task(function* () {
     if (config.skipConfirmations || confirm('Are you sure?')) {
       try {
-        yield this.ajax.deleteV3(`/repo/${this.get('repo.id')}/caches`);
+        yield this.api.delete(`/repo/${this.get('repo.id')}/caches`);
         this.set('model', EmberObject.create());
       } catch (e) {
         this.flashes.error('Could not delete the caches');
