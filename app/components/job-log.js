@@ -15,7 +15,7 @@ export default Component.extend({
 
     if (newJob !== oldJob) {
       if (newJob) {
-        this.setupLog.perform(newJob);
+        this.get('setupLog').perform(newJob);
       }
 
       if (oldJob) {
@@ -31,7 +31,7 @@ export default Component.extend({
   },
 
   setupLog: task(function* (job) {
-    yield this.store.findRecord('job', job.id, {
+    yield this.get('store').findRecord('job', job.id, {
       reload: false,
       backgroundReload: false
     });
