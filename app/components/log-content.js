@@ -10,9 +10,9 @@ import { Promise as EmberPromise } from 'rsvp';
 
 import config from 'travis/config/environment';
 
-import { service } from 'ember-decorators/service';
-import { computed } from 'ember-decorators/object';
-import { alias } from 'ember-decorators/object/computed';
+import { inject as service } from '@ember/service';
+import { computed } from '@ember/object';
+import { alias, and } from '@ember/object/computed';
 
 Log.LIMIT = config.logLimit;
 
@@ -38,6 +38,9 @@ Log.Scroll.prototype = $.extend(new Log.Listener(), {
       $('#main').scrollTop(0);
       let offset = element.offset();
       let scrollTop = ((ref = offset) != null ? ref.top : void 0) - (window.innerHeight / 3);
+      if (isNaN(scrollTop)) {
+        return;
+      }
       return $('html, body').scrollTop(scrollTop);
     }
   }
@@ -69,15 +72,15 @@ Object.defineProperty(Log.Limit.prototype, 'limited', {
 });
 
 export default Component.extend({
-  @service auth: null,
-  @service permissions: null,
-  @service externalLinks: null,
-  @service router: null,
+  auth: service(),
+  permissions: service(),
+  externalLinks: service(),
+  router: service(),
 
   classNameBindings: ['logIsVisible:is-open'],
   logIsVisible: false,
 
-  @alias('auth.currentUser') currentUser: null,
+  currentUser: alias('auth.currentUser'),
 
   isShowingRemoveLogModal: false,
 
@@ -100,7 +103,7 @@ export default Component.extend({
 
   teardownLog(log) {
     let parts, ref;
-    if (log || (log = this.get('log'))) {
+    if (log || (log = this.log)) {
       parts = log.get('parts');
       parts.removeArrayObserver(this, {
         didChange: 'partsDidChange',
@@ -123,7 +126,7 @@ export default Component.extend({
   },
 
   createEngine(log) {
-    if (log || (log = this.get('log'))) {
+    if (log || (log = this.log)) {
       this.set('limited', false);
       this.clearLogElement();
       log.onClear(() => {
@@ -148,7 +151,7 @@ export default Component.extend({
       this.engine.limit = this.limit;
       this.logFolder = new LogFolder(this.$('#log'));
       let onLogLineClick = () => {
-        let router = this.get('router'),
+        let router = this.router,
           currentRouteName = router.get('currentRouteName');
         if (currentRouteName === 'build.index' || currentRouteName === 'job.index') {
           return EmberPromise.resolve();
@@ -163,25 +166,13 @@ export default Component.extend({
     }
   },
 
-  didUpdateAttrs() {
-    let oldJob = this.get('_oldJob');
-    let newJob = this.get('job');
-
-    if (oldJob && (oldJob.get('id') != newJob.get('id'))) {
-      this.teardownLog(oldJob.get('log'));
-      return this.createEngine(newJob.get('log'));
-    }
-
-    this.set('_oldJob', this.get('job'));
-  },
-
   unfoldHighlight() {
     return this.lineSelector.unfoldLines();
   },
 
   observeParts(log) {
     let parts;
-    if (log || (log = this.get('log'))) {
+    if (log || (log = this.log)) {
       parts = log.get('parts');
       parts.addArrayObserver(this, {
         didChange: 'partsDidChange',
@@ -199,7 +190,7 @@ export default Component.extend({
         // eslint-disable-next-line
         console.log('log view: parts did change');
       }
-      if (this.get('_state') !== 'inDOM') {
+      if (this._state !== 'inDOM') {
         return;
       }
       ref = parts.slice(start, start + added);
@@ -217,29 +208,28 @@ export default Component.extend({
     });
   },
 
-  @computed('log.plainTextUrl')
-  plainTextLogUrl(url) {
+  plainTextLogUrl: computed('log.plainTextUrl', function () {
+    let url = this.get('log.plainTextUrl');
     return `${config.apiEndpoint}${url}`;
-  },
+  }),
 
-  @computed('permissions.all', 'job.repo')
-  hasPermission(permissions, repo) {
-    return this.get('permissions').hasPermission(repo);
-  },
+  hasPermission: computed('permissions.all', 'job.repo', function () {
+    let repo = this.get('job.repo');
+    return this.permissions.hasPermission(repo);
+  }),
 
-  @computed('job', 'job.canRemoveLog', 'hasPermission')
-  canRemoveLog(job, canRemoveLog, hasPermission) {
+  canRemoveLog: computed('job', 'job.canRemoveLog', 'hasPermission', function () {
+    let job = this.job;
+    let canRemoveLog = this.get('job.canRemoveLog');
+    let hasPermission = this.hasPermission;
     if (job) {
       return canRemoveLog && hasPermission;
     }
-  },
+  }),
 
-  @computed('log.hasContent', 'job.canRemoveLog')
-  showToTop(hasContent, canRemoveLog) {
-    return hasContent && canRemoveLog;
-  },
+  showToTop: and('log.hasContent', 'job.canRemoveLog'),
 
-  @alias('showToTop') showTailing: null,
+  showTailing: alias('showToTop'),
 
   actions: {
     toTop() {

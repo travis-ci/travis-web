@@ -1,6 +1,6 @@
 /* eslint-disable no-console, no-control-regex */
 
-import ansiparse from 'npm:ansiparse';
+import ansiparse from 'ansiparse';
 
 let Log = function () {
   this.autoCloseFold = true;
@@ -192,7 +192,11 @@ Log.Part = function (id, num, string) {
   // https://github.com/travis-ci/travis-ci/issues/7106
   this.string = this.string.replace(/\r\u001B\[0m\n/g, '\n');
 
+  // Fix for issue: https://github.com/travis-pro/team-teal/issues/2782
+  this.string = this.string.replace(/\r\u001B\[0m\r\n/gm, '\n');
+
   this.string = this.string.replace(/\r+\n/gm, '\n');
+  this.string = this.string.replace(/\r+/gm, '\r');
   this.strings = this.string.split(/^/gm) || [];
   this.slices = ((function () {
     let _results;
@@ -233,7 +237,8 @@ Log.Part.prototype = Log.extend(new Log.Node, {
         spans.push(span);
       }
       if ((_ref3 = spans[0]) != null ? (_ref4 = _ref3.line) != null ? _ref4.cr : void 0 : void 0) {
-        spans[0].line.clear();
+        _ref3['class'] = ['clears'];
+        _ref4.clear();
       }
     }
     if (!(slice >= this.slices.length - 1)) {
@@ -249,15 +254,8 @@ newLineRegexp = new RegExp('\n');
 rRegexp = new RegExp('\r');
 
 removeCarriageReturns = function (string) {
-  let index;
-  index = string.lastIndexOf('\r');
-  if (index === -1) {
-    return string;
-  }
-  // FIXME the previous code is below. It surely was this way for a reason!
-  return string.substr(index + 1);
-  // FIXME indeed it was, reverting for now…
-  // return string.replace('\r', '');
+  const cut = string.lastIndexOf('\r') + 1;
+  return cut ? string.substr(cut) : string;
 };
 
 let foldNameCount = {};
@@ -298,7 +296,7 @@ Log.Span = function (id, num, text, classes) {
     this.text = this.text.replace(newLineAtTheEndRegexp, '');
     this.nl = !!((_ref = text[text.length - 1]) != null ? _ref.match(newLineRegexp) : void 0);
     this.cr = !!text.match(rRegexp);
-    this['class'] = this.cr && ['clears'] || classes;
+    this['class'] = classes;
   }
   return this;
 };
@@ -662,7 +660,9 @@ Object.defineProperty(Log.Fold.prototype, 'data', {
 Log.prototype = Log.extend(new Log.Node, {
   set: function (num, string) {
     if (this.parts[num]) {
-      return console.log(`part ${num} exists`);
+      if (Log.DEBUG) {
+        console.log(`part ${num} exists`);
+      }
     } else {
       this.parts[num] = true;
       return Log.Part.create(this, num, string);
@@ -866,7 +866,7 @@ Object.defineProperty(Log.Times.Time.prototype, 'stats', {
 Log.Deansi = {
   CLEAR_ANSI: /(?:\033)(?:\[0?c|\[[0356]n|\[7[lh]|\[\?25[lh]|\(B|H|\[(?:\d+(;\d+){,2})?G|\[(?:[12])?[JK]|[DM]|\[0K)/gm,
   apply: function (string) {
-    if (!string) {
+    if (!string || !string.length) {
       return [];
     }
     string = string.replace(this.CLEAR_ANSI, '');
@@ -952,6 +952,7 @@ Log.Renderer = function () {
 };
 
 Log.extend(Log.Renderer.prototype, {
+  currentLineNumber: 1,
   insert: function (data, pos) {
     let after, before, into, node;
     node = this.render(data);
@@ -1013,6 +1014,7 @@ Log.extend(Log.Renderer.prototype, {
   renderParagraph: function (data) {
     let node, para, type, _i, _len, _ref;
     para = this.para.cloneNode(true);
+    para.getElementsByTagName('a')[0].innerHTML = this.currentLineNumber++;
     if (data.id) {
       para.setAttribute('id', data.id);
     }
