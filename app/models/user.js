@@ -35,7 +35,7 @@ export default Owner.extend({
   },
 
   _rawPermissions: computed(function () {
-    return this.api.get('/users/permissions', { travisApi: '2' });
+    return this.api.get('/users/permissions', { travisApiVersion: null });
   }),
 
   permissions: computed('_rawPermissions', function () {
