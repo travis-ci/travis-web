@@ -143,7 +143,10 @@ export default Service.extend({
             .catch(error => this.handleFetchError(reject, error));
         }
       }).catch(error => {
-        this.handleFetchError(reject, error);
+        this.handleFetchError(reject, {
+          isNetworkError: true,
+          details: error,
+        });
       });
     });
   },
