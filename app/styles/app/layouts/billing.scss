@@ -91,7 +91,7 @@
     &__box {
       background-color: #fff;
       border-radius: 5px;
-      padding: 8px 13px;
+      padding: 6px 13px;
       border: 1px solid $pebble-grey;
       margin-bottom: 10px;
       width: 120px;
@@ -120,14 +120,14 @@
 
       &--name {
         margin: 8px 0 0 0;
-        font-size: 1.2em;
+        font-size: 1.1em;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
       }
 
       &:hover {
-        background: rgba(181, 214, 217, 1);
+        box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.15);
         cursor: pointer;
       }
     }
@@ -213,7 +213,9 @@
 
     .highlight-plan {
       color: $oxide-blue;
-      background: rgba(181, 214, 217, 1);
+      border: 1px solid $oxide-blue;
+      box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.15);
+      background: rgba(181, 214, 217, .2);
     }
   }
 
@@ -256,16 +258,19 @@
 
       &__body {
         margin-bottom: 15px;
+        align-items: flex-start;
       }
     }
 
     .get-started {
 
+      flex-basis: 50%;
       &__message {
         font-weight: 300;
-        font-size: 24px;
+        font-size: 22px;
         display: inline-block;
         margin: 0;
+        margin-top: 5px;
       }
 
       &__start-trial {
@@ -283,10 +288,11 @@
     }
 
     .billing-trial-info {
+      flex-basis: 50%;
       border: 1px solid $pebble-grey;
-      padding: 8px;
+      padding: 14px;
       border-radius: 5px;
-      box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.15);
+      box-shadow: 0px 0px 19px -8px rgba(0, 0, 0, 0.41);
       margin-top: 10px;
 
       @media #{$large-up} {
@@ -311,6 +317,7 @@
 
     .icon-wrapper {
       margin: 0 20px;
+      align-self: center;
 
       &__plus {
         @include colorSVG($oxide-blue);
@@ -490,7 +497,6 @@
       color: $asphalt-grey;
       border-radius: 3px;
       background: white;
-      margin-left: 0;
 
       &.manual {
         margin-left: 0;

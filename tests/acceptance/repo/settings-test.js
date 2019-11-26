@@ -123,7 +123,7 @@ module('Acceptance | repo settings', function (hooks) {
       assert.equal(cron.lastRun.text, 'Ran less than a minute ago');
       assert.equal(cron.lastRun.title, this.dailyCron.last_run.toISOString());
 
-      assert.equal(cron.nextRun.text, 'Scheduled in about 24 hours from now');
+      assert.equal(cron.nextRun.text, 'Scheduled in a day from now');
       assert.equal(cron.nextRun.title, this.dailyCron.next_run.toISOString());
 
       assert.ok(cron.dontRunIfRecentBuildExists.text.indexOf('Always run') === 0, 'expected cron to run even if there is a build in the last 24h');
@@ -375,10 +375,12 @@ module('Acceptance | repo settings', function (hooks) {
   });
 
   test('the SSH key section is hidden for public repositories', async function (assert) {
+    server.get(`/repos/${this.repository.id}/key`, (s, r) => new Response(404, {}, {}));
     this.repository.private = false;
     await settingsPage.visit({ organization: 'org-login', repo: 'repository-name' });
 
     assert.dom('[data-test-ssh-key-section]').doesNotExist();
+    assert.dom('[data-test-settings-content]').exists();
   });
 
   test('shows disabled modal message for migrated repository on .org', async function (assert) {

@@ -1,6 +1,7 @@
 import { Promise as EmberPromise } from 'rsvp';
 import { get } from '@ember/object';
 import Service, { inject as service } from '@ember/service';
+import { warn } from '@ember/debug';
 import serializeQueryParams from 'ember-fetch/utils/serialize-query-params';
 import fetch from 'fetch';
 import config from 'travis/config/environment';
@@ -10,7 +11,7 @@ if (config.statusPageStatusUrl) {
   PERMITTED_NON_AUTH_REQUESTS.push(`GET:${config.statusPageStatusUrl}`);
 }
 
-const DEFAULT_ACCEPT = 'application/json';
+const DEFAULT_ACCEPT = 'application/json; version=2';
 
 export default Service.extend({
   auth: service(),
@@ -49,8 +50,8 @@ export default Service.extend({
     }
 
     // Travis-API-Version
-    if (options.travisApi) {
-      headers['Travis-API-Version'] = options.travisApi;
+    if (options.travisApiVersion) {
+      headers['Travis-API-Version'] = options.travisApiVersion;
     }
 
     // Content-Type
@@ -153,10 +154,8 @@ export default Service.extend({
   },
 
   logFetchError(response) {
-    if (this.features.get('debugLogging')) {
-      const { status = 'UNKNOWN' } = response;
-      // eslint-disable-next-line
-      console.log(`[ERROR] Fetch error (${status}): ${response}`);
-    }
+    const { status = 'UNKNOWN' } = response;
+    const message = `[ERROR] Fetch error (${status}): ${response}`;
+    warn(message, { id: 'travis.ajax.fetch' });
   },
 });

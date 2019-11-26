@@ -66,4 +66,8 @@
       </div>
     {{/if}}
   {{/if}}
+{{else}}
+  {{#if this.userHasPullPermissionForRepo}}
+    <LoadingIndicator />
+  {{/if}}
 {{/if}}

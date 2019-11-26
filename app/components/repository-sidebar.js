@@ -18,7 +18,7 @@ export default Component.extend({
   store: service(),
   auth: service(),
   router: service(),
-  classNames: ['dupa'],
+  classNames: ['repository-sidebar'],
 
   didInsertElement(...args) {
     this._super(args);
@@ -79,7 +79,7 @@ export default Component.extend({
 
   runningJobs: computed(
     'features.showRunningJobsInSidebar',
-    'jobState.runningJobs.[]',
+    'jobState.runningJobs.@each.state',
     function () {
       let showRunningJobs = this.get('features.showRunningJobsInSidebar');
       let runningJobs = this.get('jobState.runningJobs');
@@ -90,7 +90,7 @@ export default Component.extend({
 
   queuedJobs: computed(
     'features.showRunningJobsInSidebar',
-    'jobState.queuedJobs.[]',
+    'jobState.queuedJobs.@each.state',
     function () {
       let showRunningJobs = this.get('features.showRunningJobsInSidebar');
       let queuedJobs = this.get('jobState.queuedJobs');
