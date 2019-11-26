@@ -29,7 +29,6 @@
   </div>
   {{#if this.isShowingConfirmationModal}}
     <ModalDialog
-      @targetAttachment="center"
       @translucentOverlay={{true}}
       @toggleConfirmationModal={{action "toggleConfirmationModal"}}
       @onClickOverlay={{action "toggleConfirmationModal"}}
