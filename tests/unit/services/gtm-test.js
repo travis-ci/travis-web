@@ -11,12 +11,12 @@ module('Acceptance | auth/call gtm', function (hooks) {
   let callCounter = 0;
 
   const gtmServiceStub = Service.extend({
-    trackEvent: (params) => {
+    trackEvent(params) {
       callCounter++;
     }
   });
 
-  hooks.beforeEach(function(assert) {
+  hooks.beforeEach(function () {
     this.currentUser = server.create('user');
     signInUser(this.currentUser);
     stubService('metrics', gtmServiceStub);
