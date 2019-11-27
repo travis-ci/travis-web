@@ -2169,7 +2169,8 @@ export default {
         "repositories",
         "installation",
         "is_syncing",
-        "synced_at"
+        "synced_at",
+        "recently_signed_up"
       ],
       "representations": {
         "minimal": [
@@ -2185,7 +2186,8 @@ export default {
           "education",
           "allow_migration",
           "is_syncing",
-          "synced_at"
+          "synced_at",
+          "recently_signed_up"
         ],
         "additional": [
           "repositories",
