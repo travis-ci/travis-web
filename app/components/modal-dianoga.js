@@ -4,11 +4,11 @@ export default Component.extend({
   tagName: '',
 
   clickOutsideToClose: true,
+  closeButton: false,
   isVisible: true,
   position: 'fixed',
 
   onClose() {
-    this.set('isVisible', false);
   },
 
   actions: {

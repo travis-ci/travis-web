@@ -8,5 +8,15 @@
     ...attributes
   >
     {{~yield~}}
+    {{#if this.closeButton}}
+      <button
+        type="button"
+        title="Close modal"
+        class="absolute cursor-pointer top-0 right-0 p-0 mt-8 mr-8"
+        {{on 'click' (action 'onClose')}}
+      >
+        <SvgImage @name="icon-failed" @class="w-5 h-5" />
+      </button>
+    {{/if}}
   </div>
 </OverlayBackdrop>

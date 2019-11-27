@@ -1,6 +1,8 @@
 <ModalDianoga
   @isVisible={{this.isOpen}}
-  @clickOutsideToClose={{true}}
+  @clickOutsideToClose={{false}}
+  @closeButton={{true}}
+  @onClose={{fn @onClose}}
 >
   <div class="migrate-beta-dialog" data-test-migrate-dialog="true">
     <div class="migrate-beta-dialog__image">
@@ -60,13 +62,5 @@
         {{/if}}
       </button>
     </div>
-    <button
-      type="button"
-      title="Close modal"
-      class="modal-close pointer"
-      {{on 'click' (fn @onClose)}}
-    >
-      <SvgImage @name="icon-failed" @class="icon" />
-    </button>
   </div>
 </ModalDianoga>
