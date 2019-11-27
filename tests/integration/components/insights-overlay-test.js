@@ -27,7 +27,7 @@ module('Integration | Component | insights-overlay', function (hooks) {
     assert.dom('[data-test-insights-overlay-title]').hasText('Build to get monthly insights');
     assert.dom('[data-test-insights-overlay-text]').hasText('All the build status results from the last 30 days will appear here. Have you tried logging in?');
     assert.dom('[data-test-insights-overlay-link]').hasText('Sign in with GitHub');
-    assert.dom('.overlay-backdrop').hasClass('overlay-backdrop--visible');
+    assert.dom('[data-test-overlay-backdrop]').exists();
   });
 
   test('week version renders correctly', async function (assert) {
@@ -39,7 +39,7 @@ module('Integration | Component | insights-overlay', function (hooks) {
     assert.dom('[data-test-insights-overlay-title]').hasText('It\'s been a quiet week for builds');
     assert.dom('[data-test-insights-overlay-text]').hasText('All the build status results from the last 7 days will appear here. Have you tried logging in?');
     assert.dom('[data-test-insights-overlay-link]').hasText('Sign in with GitHub');
-    assert.dom('.overlay-backdrop').hasClass('overlay-backdrop--visible');
+    assert.dom('[data-test-overlay-backdrop]').exists();
   });
 
   test('it does not show when there are builds', async function (assert) {
@@ -50,6 +50,7 @@ module('Integration | Component | insights-overlay', function (hooks) {
     await render(hbs`{{insights-overlay interval=interval owner=ownerData private=private}}`);
     await settled();
 
-    assert.dom('.overlay-backdrop').hasNoClass('overlay-backdrop--visible');
+    assert.dom('[data-test-overlay-backdrop]').doesNotExist();
+    assert.dom('[data-test-insights-overlay-title]').doesNotExist();
   });
 });
