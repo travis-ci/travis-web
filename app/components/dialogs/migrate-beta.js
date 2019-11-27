@@ -69,6 +69,6 @@ function makeOptionFromAccount(account) {
   const { id, title, isMigrationBetaAccepted, isOrganization, isUser } = account;
   const isNotAdmin = isOrganization && !account.get('permissions.admin');
   const state = isMigrationBetaAccepted ? 'subscribed' : isNotAdmin ? 'not admin' : '';
-  const disabled = isOrganization && (isMigrationBetaAccepted) || isUser || isNotAdmin;
+  const disabled = isOrganization && isMigrationBetaAccepted || isUser || isNotAdmin;
   return { id, title, state, disabled };
 }
