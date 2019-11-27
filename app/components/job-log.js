@@ -1,8 +1,11 @@
 import Component from '@ember/component';
+import { task } from 'ember-concurrency';
 import { alias } from 'ember-decorators/object/computed';
+import { service } from 'ember-decorators/service';
 
 export default Component.extend({
   @alias('job.log') log: null,
+  @service store: null,
 
   classNames: ['job-log'],
 
@@ -12,7 +15,7 @@ export default Component.extend({
 
     if (newJob !== oldJob) {
       if (newJob) {
-        this.setupLog(newJob);
+        this.get('setupLog').perform(newJob);
       }
 
       if (oldJob) {
@@ -27,11 +30,18 @@ export default Component.extend({
     job.unsubscribe();
   },
 
-  setupLog(job) {
-    this.set('error', false);
-    job.get('log').fetch().then(() => { }, () => {
-      this.set('error', true);
+  setupLog: task(function* (job) {
+    yield this.get('store').findRecord('job', job.id, {
+      reload: false,
+      backgroundReload: false
     });
-    job.subscribe();
-  }
+    this.set('error', false);
+    try {
+      yield job.get('log.fetchTask').perform();
+    } catch (e) {
+      this.set('error', true);
+    }
+
+    yield job.subscribe();
+  })
 });

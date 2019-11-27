@@ -49,7 +49,13 @@ test('visiting job-view', function (assert) {
     assert.equal(jobPage.state, '#1234.1 passed', 'displays build number');
     assert.equal(jobPage.author, 'Mr T authored and committed');
 
-    assert.equal(jobPage.log, 'Hello log');
+    const logNumbers = jobPage.log.match(/\d+/g);
+    const logContent = jobPage.log.split(/\d+/g).filter(Boolean);
+
+    assert.equal(logNumbers[0], '1');
+    assert.equal(logNumbers[1], '2');
+    assert.equal(logContent[0], 'Hello log');
+    assert.equal(logContent[1], 'Second line');
     assert.notOk(jobPage.hasTruncatedLog);
     assert.equal(jobPage.rawLogUrl, `https://api.travis-ci.org/v3/job/${job.id}/log.txt`);
   });

@@ -26,6 +26,14 @@ test('restarting build', function (assert) {
 
   andThen(() => {
     assert.equal(topPage.flashMessage.text, 'The build was successfully restarted.', 'restarted notification should display proper build restarted text');
-    assert.equal(buildPage.singleJobLogText, 'Hello log', 'shows log text of single build job');
+    
+    const logNumbers = buildPage.singleJobLogText.match(/\d+/g);
+    const logContent = buildPage.singleJobLogText.split(/\d+/g).filter(Boolean);
+
+    assert.equal(logNumbers.length, 2, 'counts lines of log text of single build job');
+    assert.equal(logNumbers[0], '1', 'shows number of first line of log text of single build job');
+    assert.equal(logContent[0], 'Hello log', 'shows content of first line of log text of single build job');
+    assert.equal(logNumbers[1], '2', 'shows number of second line of log text of single build job');
+    assert.equal(logContent[1], 'Second line', 'shows content of second line of log text of single build job');
   });
 });
