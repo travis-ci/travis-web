@@ -1,1 +1,12 @@
-{{yield}}
+<OverlayBackdrop
+  @visible={{this.isVisible}}
+  @position={{this.position}}
+  {{on 'click' (action 'clickOverlay')}}
+>
+  <div
+    class="bg-white p-8 relative rounded-sm"
+    ...attributes
+  >
+    {{~yield~}}
+  </div>
+</OverlayBackdrop>

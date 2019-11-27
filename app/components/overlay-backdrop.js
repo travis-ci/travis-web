@@ -1,8 +1,11 @@
 import Component from '@ember/component';
+import fade from 'ember-animated/transitions/fade';
 
 export default Component.extend({
-  classNames: ['overlay-backdrop'],
-  classNameBindings: ['visible:overlay-backdrop--visible'],
+  tagName: '',
 
-  visible: false
+  visible: false,
+  position: 'absolute',
+
+  transition: fade,
 });
