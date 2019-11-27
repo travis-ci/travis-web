@@ -1,5 +1,9 @@
 <ul class="repo-list">
   {{#each (sort-by "startedAt:desc" this.model) as |build|}}
     <MyBuild data-test-my-build @build={{build}} />
+  {{else}}
+    <p class="my-builds-empty flex items-center justify-center" data-test-empty-builds='true'>
+      You don't have any builds yet.
+    </p>
   {{/each}}
 </ul>
