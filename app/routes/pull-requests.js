@@ -15,7 +15,13 @@ export default TravisRoute.extend({
   },
 
   model() {
-    return this.modelFor('repo').get('pullRequests');
+    const { id: repoId } = this.modelFor('repo');
+
+    return this.store.query('build', {
+      repository_id: repoId,
+      event_type: 'pull_request',
+      limit: 10,
+    });
   },
 
   titleToken() {
