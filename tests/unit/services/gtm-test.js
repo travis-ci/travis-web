@@ -11,7 +11,6 @@ module('Acceptance | auth/call gtm', function (hooks) {
   let callCounter = 0;
 
   const gtmServiceStub = Service.extend({
-    callCounter: 0,
     trackEvent: (params) => {
       callCounter++;
     }
