@@ -5,6 +5,12 @@ export default Mixin.create({
   stripe: service(),
   store: service(),
   storage: service(),
+  router: service(),
+
+  // init() {
+  //   this._super(...arguments);
+  //   console.log(this.router.currentRoute);
+  // },
 
   beforeModel() {
     return this.stripe.load();

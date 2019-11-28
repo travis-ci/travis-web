@@ -6,13 +6,11 @@
       <Billing::Education 
         @newSubscription={{this.newSubscription}}
         @account={{this.account}} 
-        @plans={{plans}}
       />
     {{/if}}
     {{#if this.isManual}}
       <BillingManual 
         @subscription={{this.subscription}} 
-        @plans={{this.plans}} 
         @account={{this.account}} 
         @newSubscription={{this.newSubscription}}
       />
@@ -21,7 +19,6 @@
       <Billing::Subscription
         @newSubscription={{this.newSubscription}}
         @account={{this.account}}
-        @plans={{this.plans}} 
       />
     {{/if}}
     {{#if this.isTrial}}
