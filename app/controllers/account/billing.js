@@ -4,5 +4,5 @@ import BillingControllerMixin from 'travis/mixins/controller/billing';
 
 export default Controller.extend(BillingControllerMixin, {
   account: reads('model.account'),
-  newSubscription: reads('model.newSubscription'),
+  newSubscription: reads('model.newSubscription')
 });
