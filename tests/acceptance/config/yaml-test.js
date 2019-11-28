@@ -39,7 +39,12 @@ module('Acceptance | config/yaml', function (hooks) {
     const currentUser = server.create('user');
     signInUser(currentUser);
 
-    this.repository =  server.create('repository', { slug: slug });
+    this.repository = server.create('repository', { slug: slug });
+    server.create('setting', {
+      repository: this.repository,
+      name: 'config_validation',
+      value: true
+    });
 
     let branch = server.create('branch', { name: 'acceptance-tests' });
     this.request = server.create('request', { repository: this.repository, raw_configs: rawConfigs });
