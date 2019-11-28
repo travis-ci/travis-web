@@ -96,16 +96,16 @@ const Repo = VcsEntity.extend({
   }),
 
   settings: computed('id', 'fetchSettings.lastSuccessful.value', function () {
-    const { fetchSettings } = this;
-    const { value } = fetchSettings.lastSuccessful || {};
-    if (!value) fetchSettings.perform();
+    const { value } = this.fetchSettings.lastSuccessful || {};
+    if (!value) this.fetchSettings.perform();
     return value;
   }),
 
   fetchSettings: task(function* () {
-    const url = `/repo/${this.id}/settings`;
-    const response = yield this.api.get(url);
-    return this._convertV3SettingsToV2(response.settings);
+    try {
+      const response = yield this.api.get(`/repo/${this.id}/settings`);
+      return this._convertV3SettingsToV2(response.settings);
+    } catch (error) {}
   }).drop(),
 
   _buildRepoMatches(build, id) {
