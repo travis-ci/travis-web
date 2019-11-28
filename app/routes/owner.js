@@ -1,4 +1,3 @@
-import $ from 'jquery';
 import TravisRoute from 'travis/routes/basic';
 import { inject as service } from '@ember/service';
 
@@ -16,11 +15,6 @@ export default TravisRoute.extend({
   model(params) {
     const { owner } = params;
     return this.store.queryRecord('owner', { login: owner });
-  },
-
-  renderTemplate() {
-    $('body').attr('id', 'owner');
-    this._super(...arguments);
   },
 
   actions: {
