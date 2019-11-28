@@ -5,9 +5,6 @@
   />
   <TravisForm @onSubmit={{action next}} as |form|>
     <div data-test-billing-form>
-      {{#if this.scrollToContactDetails}}
-        <ScrollHere/>
-      {{/if}}
       <h3 data-test-contact-details-title='true'>
         Contact details
       </h3>
@@ -65,9 +62,6 @@
       <h3 data-test-billing-details-title='true'>
         Billing address
       </h3>
-      {{#if this.scrollToBillingDetails}}
-        <ScrollHere/>
-      {{/if}}
       <div class='flex flex--col flex-md-row'>
         <div class='full-width form-elem inline-form-elem'>
           <form.field
@@ -130,29 +124,16 @@
           </form.field>
       </div>
       </div>
-      <div class='flex flex--col flex-md-row'>
-        <div class='form-elem full-width inline-form-elem billing-optional-field'>
-          <form.field
-            @label='Vat Id'
-            @value={{this.newSubscription.billingInfo.vatId}}
-            @showValidationStatusIcons={{false}}
-            @onChange={{action (mut this.newSubscription.billingInfo.vatId)}} 
-            as |Field|
-          >
-            <Field.input @name='vat'/>
-          </form.field>
-        </div>
-        <div class='form-elem full-width billing-optional-field'>
-          <form.field
-            @label='Coupon'
-            @value={{this.newSubscription.coupon}}
-            @showValidationStatusIcons={{false}}
-            @onChange={{action (mut this.newSubscription.coupon)}} 
-            as |Field|
-          >
-            <Field.input @name='coupon'/>
-          </form.field>
-        </div>
+      <div class='form-elem-half-width inline-form-elem billing-optional-field'>
+        <form.field
+          @label='Vat Id'
+          @value={{newSubscription.billingInfo.vatId}}
+          @showValidationStatusIcons={{false}}
+          @onChange={{action (mut newSubscription.billingInfo.vatId)}} 
+          as |Field|
+        >
+          <Field.input @name='vat'/>
+        </form.field>
       </div>
       <div class='form-elem flex flex--wrap'>
         <button

@@ -16,7 +16,7 @@ module('Integration | Component | billing-payment', function (hooks) {
       id: 1,
       name: 'A',
       builds: 5,
-      amount: 20000,
+      price: 20000,
       annual: false
     };
 
@@ -41,7 +41,8 @@ module('Integration | Component | billing-payment', function (hooks) {
         bllingZip: '',
         country: '',
         vatId: ''
-      }
+      },
+      plan: selectedPlan
     };
 
     this['actions'] = {
@@ -77,7 +78,7 @@ module('Integration | Component | billing-payment', function (hooks) {
       @back={{action 'back'}}
       @selectedPlan={{selectedPlan}}/>`);
 
-    assert.dom('h3').hasText('Pay with card');
+    assert.dom('h3').hasText('Payment');
     assert.dom(profilePage.billing.billingPaymentForm.completePayment.scope).isVisible();
   });
 });
