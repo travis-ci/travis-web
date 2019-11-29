@@ -29,7 +29,7 @@ export default Component.extend(WithConfigValidation, {
   ),
 
   maxLevel: computed('sortedMessages', function () {
-    return this.get('sortedMessages')[0].level;
+    return this.get('sortedMessages.firstObject.level') || 'info';
   }),
 
   iconClass: computed('maxLevel', function () {
