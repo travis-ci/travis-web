@@ -1,5 +1,5 @@
 import Mixin from '@ember/object/mixin';
-import { and, gt, reads } from '@ember/object/computed';
+import { gt, reads } from '@ember/object/computed';
 import { computed } from '@ember/object';
 
 export default Mixin.create({
@@ -10,7 +10,7 @@ export default Mixin.create({
 
   isConfigValidationEnabled: reads('repo.settings.config_validation'),
 
-  showConfigValidation: and('isConfigValidationEnabled', 'hasMessages'),
+  showConfigValidation: reads('isConfigValidationEnabled'),
 
   messagesMaxLevel: computed('messages.@each.level', function () {
     if (this.hasMessages) {
