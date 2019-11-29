@@ -7,7 +7,7 @@ export default Mixin.create({
   storage: service(),
   router: service(),
 
-  // init() {
+  // activate() {
   //   this._super(...arguments);
   //   console.log(this.router.currentRoute);
   // },
