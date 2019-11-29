@@ -34,8 +34,70 @@
 
   .billing-checkout {
 
+    .coupon-validation {
+
+      height: 38px;
+      white-space: nowrap;
+      
+      &__input {
+        flex-basis: 85%;
+      }
+      
+      &__validate-button-wrapper {
+        flex-basis: 20%;
+        font-size: 14px;
+        margin-left: 10px;
+        align-items: center;
+        display: flex;
+        justify-content: flex-end;
+        height: 38px;
+      }
+
+      .coupon-loading {
+        justify-content: center;
+      }
+
+      &__validate-button {
+        padding: 11px;
+      }
+
+      &__valid-coupon {
+        color: $ansi-green;
+
+        .icon-passed {
+          @include colorSVG($ansi-green);
+    
+          color: inherit;
+        }
+      }
+
+      &__invalid-coupon {
+        color:  $ansi-red;
+
+        .icon {
+          width: 20px;
+          height: 20px;
+        }
+
+        .icon-warn {
+          @include colorSVG($ansi-red);
+    
+          color: inherit;
+        }
+      }
+
+    }
+
     &__payment {
       padding-top: 15px;
+    }
+
+    h4 {
+      text-transform: uppercase;
+      font-weight: 700;
+      margin: 0;
+      font-size: .8em;
+      color: $cement-grey;
     }
 
     &__details {
@@ -43,13 +105,6 @@
       border-radius: 5px;
       padding: 15px;
       color: $cement-grey;
-
-      h4 {
-        text-transform: uppercase;
-        font-weight: 700;
-        margin: 0;
-        font-size: .8em;
-      }
 
       &--info {
         margin-bottom: 0;
@@ -78,7 +133,6 @@
         border-bottom: 1px solid $cement-grey;
       }
     }
-
   }
 
   .billing-information-form {
