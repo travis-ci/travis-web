@@ -4,12 +4,22 @@ import { inject as service } from '@ember/service';
 
 export default Mixin.create({
   storage: service(),
-
+  router: service(),
   account: reads('model.account'),
   newSubscription: reads('model.newSubscription'),
   queryParams: ['billingStep'],
   billingStep: 1,
   lastStep: 3,
+
+  init() {
+    this.router.on('routeDidChange', () => {
+      // if(this.router.currentURL.queryParams) {
+      //   console.log('Query Params ' + this.router.currentURL.queryParams);
+      // }
+      // this.nextBillingStep();
+    });
+    this._super(...arguments);
+  },
 
   actions: {
     nextBillingStep() {
@@ -21,5 +31,5 @@ export default Mixin.create({
       const prevStep = Math.max(1, this.billingStep - 1);
       this.set('billingStep', prevStep);
     },
-  },
+  }
 });
