@@ -1,5 +1,6 @@
-{{#if @isOpen}}
+
   <Modal
+    @isVisible={{@isOpen}}
     @onClose={{fn @onClose}}
     @closeButton={{true}}
   >
@@ -51,4 +52,3 @@
       </div>
     </div>
   </Modal>
-{{/if}}

@@ -4,7 +4,7 @@ import fade from 'ember-animated/transitions/fade';
 export default Component.extend({
   tagName: '',
 
-  visible: false,
+  isVisible: false,
   position: 'absolute',
 
   transition: fade,

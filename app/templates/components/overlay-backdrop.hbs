@@ -1,4 +1,8 @@
-{{#animated-if this.visible use=this.transition}}
+<AnimatedIf
+  @predicate={{this.isVisible}}
+  @use={{this.transition}}
+  @duration={{300}}
+>
   <div
     class="overlay-backdrop flex items-center justify-center inset-0 overflow-hidden z-50 {{this.position}}"
     data-test-overlay-backdrop
@@ -6,4 +10,4 @@
   >
     {{~yield~}}
   </div>
-{{/animated-if}}
+</AnimatedIf>
