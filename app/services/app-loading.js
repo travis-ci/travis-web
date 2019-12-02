@@ -14,7 +14,7 @@ export const TRAVIS_STATUS = {
 };
 
 export default Service.extend({
-  api: service(),
+  ajax: service(),
   raven: service(),
 
   indicator: TRAVIS_STATUS.UNKNOWN,
@@ -23,10 +23,7 @@ export default Service.extend({
   fetchTravisStatus: task(function* () {
     if (statusPageStatusUrl) {
       try {
-        const { status = {} } = yield this.api.get(statusPageStatusUrl, {
-          host: '',
-          travisApiVersion: false
-        }) || {};
+        const { status = {} } = yield this.ajax.request(statusPageStatusUrl) || {};
 
         const { indicator, description } = status;
         if (indicator || description) {

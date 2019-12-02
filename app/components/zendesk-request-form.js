@@ -31,7 +31,7 @@ export default Component.extend({
   classNames: ['zendesk-request-form'],
 
   accounts: service(),
-  api: service(),
+  ajax: service(),
   auth: service(),
   features: service(),
   flashes: service(),
@@ -91,8 +91,7 @@ export default Component.extend({
     const { email, subject, description: body } = this;
 
     try {
-      return yield this.api.post(createRequestEndpoint, {
-        travisApiVersion: false,
+      return yield this.ajax.request(createRequestEndpoint, 'POST', {
         host: apiHost,
         data: {
           request: {
