@@ -14,7 +14,7 @@ export default Controller.extend({
 
   config,
   referralSourceName,
-  billingUrl: config.billingEndpoint,
+  billingUrl: `${config.billingEndpoint}/account/subscription`,
   buildMatrixUrl: config.urls.buildMatrix,
   enterpriseUrl: config.urls.enterprise,
 
