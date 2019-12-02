@@ -71,7 +71,7 @@ export default TravisRoute.extend({
 
   model() {
     return hash({
-      settings: this.modelFor('repo').fetchSettings(),
+      settings: this.modelFor('repo').fetchSettings.perform(),
       repository: this.modelFor('repo'),
       envVars: this.fetchEnvVars(),
       sshKey: this.fetchSshKey(),
