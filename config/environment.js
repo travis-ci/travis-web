@@ -208,8 +208,8 @@ module.exports = function (environment) {
       ENV.apiEndpoint = 'https://api.travis-ci.com';
       ENV.pusher.key = '59236bc0716a551eab40';
       ENV.pusher.channelPrefix = 'private-';
-      ENV.pagesEndpoint = 'https://billing.travis-ci.com';
-      ENV.billingEndpoint = 'https://billing.travis-ci.com';
+      ENV.pagesEndpoint = 'https://travis-ci.com/account/subscription';
+      ENV.billingEndpoint = 'https://travis-ci.com';
       ENV.marketplaceEndpoint = 'https://github.com/marketplace/travis-ci/';
       ENV.endpoints = {
         sshKey: true,
@@ -234,7 +234,7 @@ module.exports = function (environment) {
 
       if (ENV.apiEndpoint === 'https://api-staging.travis-ci.com') {
         ENV.pusher.key = '87d0723b25c51e36def8';
-        ENV.billingEndpoint = 'https://billing-staging.travis-ci.com';
+        ENV.billingEndpoint = 'https://staging.travis-ci.com';
       }
     }
 
@@ -337,7 +337,7 @@ module.exports = function (environment) {
 
     ENV.statusPageStatusUrl = undefined;
 
-    ENV.billingEndpoint = 'https://billing.travis-ci.com';
+    ENV.billingEndpoint = 'https://travis-ci.com';
     ENV.apiEndpoint = '';
     ENV.marketplaceEndpoint = 'https://github.com/marketplace/travis-ci/';
   }
