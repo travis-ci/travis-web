@@ -1,20 +1,10 @@
 {{#if @isOpen}}
-  <ModalDialog
-    @translucentOverlay={{true}}
-    @overlayPosition="sibling"
-    @clickOutsideToClose={{true}}
-    @animatable={{true}}
+  <Modal
+    @onClose={{fn @onClose}}
+    @closeButton={{true}}
   >
     <div data-test-cancel-subscription-modal="true" class="flex flex--v-center flex--center flex--col cancel-subscription-modal">
       <h2>We're sorry you'd like to cancel</h2>
-      <button
-        type="button"
-        title="Close modal"
-        class="modal-close pointer"
-        {{on 'click' (fn @onClose)}}
-      >
-        <SvgImage @name="icon-failed" @class="icon" />
-      </button>
       <p class="cancel-subscription-modal__message">
         To keep improving our product and how it works for our users, <br/> we'd like to hear your feedback on why you're cancelling.
       </p>
@@ -60,5 +50,5 @@
         </TravisForm>
       </div>
     </div>
-  </ModalDialog>
+  </Modal>
 {{/if}}
