@@ -5,8 +5,9 @@
 >
   <div
     class="bg-white p-8 relative rounded-sm"
-    {{on 'click' this.clickModal}}
+    data-test-modal
     ...attributes
+    {{on 'click' this.clickModal}}
   >
     {{~yield~}}
     {{#if this.closeButton}}
