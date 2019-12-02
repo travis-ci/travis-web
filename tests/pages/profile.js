@@ -352,6 +352,25 @@ export default create({
       scope: '[data-test-billing-info-title]',
     },
 
+
+    billingCouponForm: {
+      scope: '[data-test-coupon-form]',
+      isPresent: isPresent(),
+      fillIn: fillable(''),
+
+      submitCoupon: {
+        scope: '[data-test-coupon-button]'
+      },
+
+      validCoupon: {
+        scope: '[data-test-valid-coupon]'
+      },
+
+      invalidCoupon: {
+        scope: '[data-test-invalid-coupon]'
+      }
+    },
+
     billingForm: {
       scope: '[data-test-billing-form]',
       isPresent: isPresent(),

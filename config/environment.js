@@ -111,7 +111,7 @@ module.exports = function (environment) {
           fontSize: '15px',
           color: '#666',
           '::placeholder': {
-            color: '#666'
+            color: '#aaa'
           },
         },
         invalid: {
