@@ -19,7 +19,7 @@ module('Unit | Service | external-links', function (hooks) {
 
   test('billingUrl as organization', function (assert) {
     const service = this.owner.lookup('service:external-links');
-    assert.equal(service.billingUrl('organization', 'travis-ci'), 'https://travis-ci.com/account/subscription');
+    assert.equal(service.billingUrl('organization', 'travis-ci'), 'https://travis-ci.com/organizations/travis-ci/subscription');
   });
 
   test('billingUrl as user', function (assert) {
