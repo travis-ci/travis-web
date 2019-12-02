@@ -155,19 +155,16 @@
             {{/if}}
           </div>
         </RepositoryFilter>
-        {{#if this.isShowingRepositoryMigrationModal}}
-          <ModalDialog
+        <Modal
+          @isVisible={{this.isShowingRepositoryMigrationModal}}
+          @onClose={{action "closeMigrateModal"}}
+        >
+          <RepositoryMigrationModal
+            data-test-repository-migration-modal="true"
+            @repositories={{this.selectedRepositories}}
             @onClose={{action "closeMigrateModal"}}
-            @onClickOverlay={{action "closeMigrateModal"}}
-            @translucentOverlay={{true}}
-          >
-            <RepositoryMigrationModal
-              data-test-repository-migration-modal="true"
-              @repositories={{this.selectedRepositories}}
-              @onClose={{action "closeMigrateModal"}}
-            />
-          </ModalDialog>
-        {{/if}}
+          />
+        </Modal>
       </div>
     {{/if}}
 </div>

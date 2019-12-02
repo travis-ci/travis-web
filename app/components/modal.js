@@ -11,6 +11,10 @@ export default Component.extend({
   onClose() {
   },
 
+  clickModal(event) {
+    event.stopPropagation();
+  },
+
   actions: {
     onClose() {
       this.onClose();
