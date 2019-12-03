@@ -3,7 +3,7 @@ import TravisPusher from 'travis/utils/pusher';
 
 export function initialize(applicationInstance) {
   const app = applicationInstance.application;
-  app.pusher = new TravisPusher(config.pusher, applicationInstance.lookup('service:ajax'));
+  app.pusher = new TravisPusher(config.pusher, applicationInstance.lookup('service:api'));
 
   if (!applicationInstance.lookup('pusher:main')) {
     app.register('pusher:main', app.pusher, {
