@@ -18,7 +18,6 @@
         @models={{array this.repo this.job}}
         @title="Look at this job's config"
         @disabled={{this.job.build.request.noYaml}}
-        class={{if this.isConfig 'active'}}
         data-test-build-yaml-tab="true"
       >
         {{#if this.job.build.request.noYaml}}
