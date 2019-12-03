@@ -92,7 +92,7 @@ export default Component.extend({
 
     try {
       return yield this.ajax.request(createRequestEndpoint, 'POST', {
-        endpoint: apiHost,
+        host: apiHost,
         data: {
           request: {
             requester: { name, email },
@@ -103,7 +103,7 @@ export default Component.extend({
         contentType: 'application/json'
       });
     } catch (error) {
-      if (error.readyState === 0) { // Network error
+      if (error.isNetworkError) { // Network error
         this.flashes.error(
           "We're sorry, API is currently unavailable, please try to submit again a bit later"
         );

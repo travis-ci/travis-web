@@ -23,11 +23,7 @@ export default Service.extend({
   fetchTravisStatus: task(function* () {
     if (statusPageStatusUrl) {
       try {
-        const { status = {} } = yield this.ajax.request(
-          statusPageStatusUrl,
-          'GET',
-          { endpoint: '' }
-        ) || {};
+        const { status = {} } = yield this.ajax.request(statusPageStatusUrl) || {};
 
         const { indicator, description } = status;
         if (indicator || description) {

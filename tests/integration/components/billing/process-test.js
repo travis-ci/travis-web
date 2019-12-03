@@ -16,15 +16,17 @@ module('Integration | Component | billing-process', function (hooks) {
       id: 1,
       name: 'A',
       builds: 5,
-      amount: 20000,
+      price: 20000,
       annual: false
     }, {
       id: 1,
       name: 'B',
       builds: 10,
-      amount: 30000,
+      price: 30000,
       annual: true
     }];
+
+    this.plans = plans;
 
     const billingInfo = {
       firstName: '',
@@ -41,7 +43,7 @@ module('Integration | Component | billing-process', function (hooks) {
     const account = { id: 1, hasSubscriptionPermissions: true, type: 'Organization' };
     this.setProperties({
       account,
-      plans: plans,
+      plans,
       selectedPlan: plans[0],
       showAnnual: false,
       billingInfo,
@@ -62,19 +64,6 @@ module('Integration | Component | billing-process', function (hooks) {
     });
 
     stubService('accounts', mockAccounts);
-  });
-
-  test('renders billing payment form correctly', async function (assert) {
-
-    this.set('currentStep', 'stepTwo');
-
-    await render(hbs`<Billing::Process 
-      @account={{account}}
-      @plans={{plans}}
-      @currentStep={{currentStep}}
-    />`);
-
-    assert.dom('h3').hasText('Contact details');
   });
 
   test('deny subscription when user has no permission', async function (assert) {

@@ -1,7 +1,8 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { sort } from '@ember/object/computed';
+import { reads, sort } from '@ember/object/computed';
 import { pluralize } from 'ember-inflector';
+import WithConfigValidation from 'travis/mixins/components/with-config-validation';
 
 const MSGS = {
   'alert': 'alert',
@@ -10,9 +11,14 @@ const MSGS = {
   'info': 'info',
 };
 
-export default Component.extend({
+export default Component.extend(WithConfigValidation, {
   tagName: '',
   isExpanded: false,
+
+  request: null,
+
+  repo: reads('request.repo'),
+  messages: reads('request.messages'),
 
   toggleStatusClass: computed('isExpanded', function () {
     return this.get('isExpanded') ? 'expanded' : 'collapsed';
@@ -23,7 +29,7 @@ export default Component.extend({
   ),
 
   maxLevel: computed('sortedMessages', function () {
-    return this.get('sortedMessages')[0].level;
+    return this.get('sortedMessages.firstObject.level') || 'info';
   }),
 
   iconClass: computed('maxLevel', function () {
