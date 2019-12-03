@@ -1,75 +1,42 @@
 import { Promise as EmberPromise } from 'rsvp';
-import { get } from '@ember/object';
 import Service, { inject as service } from '@ember/service';
 import { warn } from '@ember/debug';
 import serializeQueryParams from 'ember-fetch/utils/serialize-query-params';
 import fetch from 'fetch';
 import config from 'travis/config/environment';
 
-const PERMITTED_NON_AUTH_REQUESTS = [];
-if (config.statusPageStatusUrl) {
-  PERMITTED_NON_AUTH_REQUESTS.push(`GET:${config.statusPageStatusUrl}`);
-}
-
 const DEFAULT_ACCEPT = 'application/json; version=2';
 
 export default Service.extend({
-  auth: service(),
   features: service(),
 
   getDefaultOptions() {
     return {
       accept: DEFAULT_ACCEPT,
-      host: config.apiEndpoint || '',
     };
-  },
-
-  needsAuth(method, url) {
-    const authUnnecessary = PERMITTED_NON_AUTH_REQUESTS.includes(`${method}:${url}`);
-    return !authUnnecessary;
   },
 
   isRetrieve(method) {
     return method === 'GET' || method === 'HEAD';
   },
 
-  setupHeaders(url, method, options = {}) {
+  setupHeaders(method, options = {}) {
     const { headers = {} } = options;
-    const token = get(this, 'auth.token');
 
     // Release
     if (config.release) {
       headers['X-Client-Release'] = config.release;
     }
 
-    // Auth
-    if (token && (this.needsAuth(method, url) || options.forceAuth)) {
-      if (!headers['Authorization']) {
-        headers['Authorization'] = `token ${token}`;
-      }
-    }
-
-    // Travis-API-Version
-    if (options.travisApiVersion) {
-      headers['Travis-API-Version'] = options.travisApiVersion;
-    }
-
     // Content-Type
-    if (options.contentType) {
-      headers['Content-Type'] = options.contentType;
+    if (!this.isRetrieve(method)) {
+      headers['Content-Type'] = options.contentType || 'application/json; charset=utf-8';
     }
 
     // Accept
     headers['Accept'] = options.accept || DEFAULT_ACCEPT;
 
     return headers;
-  },
-
-  setupContentType(method, contentType) {
-    if (this.isRetrieve(method)) {
-      return contentType;
-    }
-    return contentType || 'application/json; charset=utf-8';
   },
 
   setupBody(method, options) {
@@ -105,11 +72,9 @@ export default Service.extend({
 
     const url = this.setupUrl(requestUrl, method, options);
 
-    options.contentType = this.setupContentType(method, options.contentType);
-
     options.body = this.setupBody(method, options);
 
-    options.headers = this.setupHeaders(url, method, options);
+    options.headers = this.setupHeaders(method, options);
 
     return this.fetchRequest(url, method, options);
   },
@@ -143,7 +108,10 @@ export default Service.extend({
             .catch(error => this.handleFetchError(reject, error));
         }
       }).catch(error => {
-        this.handleFetchError(reject, error);
+        this.handleFetchError(reject, {
+          isNetworkError: true,
+          details: error,
+        });
       });
     });
   },

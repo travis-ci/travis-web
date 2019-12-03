@@ -1,17 +1,17 @@
 import { run } from '@ember/runloop';
 import EmberObject, { computed } from '@ember/object';
-import $ from 'jquery';
 import ArrayProxy from '@ember/array/proxy';
 import Service, { inject as service } from '@ember/service';
-import config from 'travis/config/environment';
 
 export default Service.extend({
+  api: service(),
   auth: service(),
+  raven: service(),
   storage: service(),
 
   broadcasts: computed('auth.signedIn', function () {
     let signedIn = this.get('auth.signedIn');
-    let apiEndpoint, broadcasts, options, seenBroadcasts;
+    let broadcasts,  seenBroadcasts;
     if (signedIn) {
       broadcasts = ArrayProxy.create({
         content: [],
@@ -19,20 +19,14 @@ export default Service.extend({
         isLoading: true
       });
 
-      apiEndpoint = config.apiEndpoint;
-      options = {};
-      options.type = 'GET';
-      options.headers = {
-        Authorization: `token ${this.get('auth.token')}`,
-        'Travis-API-Version': '3'
-      };
       seenBroadcasts = this.storage.getItem('travis.seen_broadcasts');
       if (seenBroadcasts) {
         seenBroadcasts = JSON.parse(seenBroadcasts);
       } else {
         seenBroadcasts = [];
       }
-      $.ajax(`${apiEndpoint}/broadcasts`, options).then((response) => {
+
+      this.api.get('/broadcasts').then((response) => {
         const receivedBroadcasts = response.broadcasts.reduce((processed, broadcast) => {
           if (!broadcast.expired && seenBroadcasts.indexOf(broadcast.id.toString()) === -1) {
             processed.unshift(EmberObject.create(broadcast));
@@ -45,6 +39,11 @@ export default Service.extend({
           broadcasts.set('content', receivedBroadcasts);
           broadcasts.set('isLoading', false);
         });
+      }).catch((response) => {
+        // 403 Forbidden responses are probably due to token expiry / automatic sign out
+        if (response.status !== 403) {
+          this.raven.logException(`Broadcast error: (${response.status}) ${response.statusText}`);
+        }
       });
       return broadcasts;
     }
