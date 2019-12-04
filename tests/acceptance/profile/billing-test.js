@@ -92,6 +92,8 @@ module('Acceptance | profile/billing', function (hooks) {
       }
     });
     this.organization = organization;
+
+    this.coupons = server.createList('coupon', 3);
   });
 
   test('view billing information with invoices', async function (assert) {
@@ -135,8 +137,6 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.creditCardNumber.text, '•••• •••• •••• 1919');
     assert.equal(profilePage.billing.price.text, '$69');
     assert.equal(profilePage.billing.period.text, '/month');
-
-    // Switch to annual plan banner test
 
     profilePage.billing.invoices.items[0].as(march2010 => {
       assert.equal(march2010.invoiceUrl.href, 'https://example.com/20102.pdf');
@@ -262,12 +262,16 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.visit();
     await profilePage.billing.visit();
 
-    // assert resubscribing works.
     assert.ok(profilePage.billing.marketplaceButton.isHidden);
     assert.ok(profilePage.billing.userDetails.isHidden);
     assert.ok(profilePage.billing.billingDetails.isHidden);
     assert.ok(profilePage.billing.creditCardNumber.isHidden);
-    assert.ok(profilePage.billing.annualInvitation.isHidden);
+
+    await profilePage.billing.resubscribeSubscriptionButton.click();
+
+    assert.equal(profilePage.billing.plan.name, 'Small Business1 plan active');
+    assert.equal(profilePage.billing.userDetails.text, 'contact name User Name company name Travis CI GmbH billing email user@email.com');
+    assert.equal(profilePage.billing.billingDetails.text, 'address Rigaerstraße 8 city Berlin post code 10987 country Germany');
   });
 
   test('view billing on an incomplete stripe plan', async function (assert) {
@@ -594,8 +598,8 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.visit();
     await profilePage.billing.visit();
 
-    assert.ok(profilePage.billing.annualInvitation.isHidden);
-    // assert editing was disabled.
+    assert.ok(profilePage.billing.cancelSubscriptionButton.isHidden);
+    assert.ok(profilePage.billing.resubscribeSubscriptionButton.isHidden);
   });
 
   test('view billing tab when switch is clicked on plan changes correctly', async function (assert) {
@@ -879,8 +883,7 @@ module('Acceptance | profile/billing', function (hooks) {
       .fillIn('address', '15 Olalubi street')
       .fillIn('city', 'Berlin')
       .fillIn('zip', '353564')
-      .fillIn('vat', '356463')
-      .fillIn('coupon', '356463');
+      .fillIn('vat', '356463');
 
     await billingForm.proceedPayment.click();
 
@@ -891,12 +894,12 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.period.text, '/month');
     assert.equal(profilePage.billing.selectedPlanOverview.changePlan.text, 'Change plan');
 
-    assert.equal(billingPaymentForm.contactDetails.contactHeading.text, 'contact details:');
+    assert.equal(billingPaymentForm.contactDetails.contactHeading.text, 'contact details');
     assert.equal(billingPaymentForm.contactDetails.firstName.text, 'John Doe');
     assert.equal(billingPaymentForm.contactDetails.company.text, 'Travis');
     assert.equal(billingPaymentForm.contactDetails.email.text, 'john@doe.com');
 
-    assert.equal(billingPaymentForm.contactDetails.billingHeading.text, 'billing details:');
+    assert.equal(billingPaymentForm.contactDetails.billingHeading.text, 'billing details');
     assert.equal(billingPaymentForm.contactDetails.address.text, '15 Olalubi street');
     assert.equal(billingPaymentForm.contactDetails.city.text, 'Berlin');
     assert.equal(billingPaymentForm.contactDetails.country.text, 'Germany');
@@ -980,6 +983,155 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe @user-login to 2 job plan');
   });
 
+  test('apply 10 dollars off coupon', async function (assert) {
+    this.subscription.destroy();
+
+    window.Stripe = StripeMock;
+    let config = {
+      mock: true,
+      publishableKey: 'mock'
+    };
+    stubConfig('stripe', config, { instantiate: false });
+    const { owner } = getContext();
+    owner.inject('service:stripev3', 'config', 'config:stripe');
+    this.organization.permissions = {
+      createSubscription: true
+    };
+    this.organization.save();
+
+    await profilePage.visitOrganization({ name: 'org-login' });
+    await profilePage.billing.visit();
+
+    const { billingForm, subscribeButton, billingCouponForm } = profilePage.billing;
+    await subscribeButton.click();
+
+    percySnapshot(assert);
+
+    await selectChoose(billingForm.billingSelectCountry.scope, 'Germany');
+
+    await billingForm
+      .fillIn('firstname', 'John')
+      .fillIn('lastname', 'Doe')
+      .fillIn('companyName', 'Travis')
+      .fillIn('email', 'john@doe.com')
+      .fillIn('address', '15 Olalubi street')
+      .fillIn('city', 'Berlin')
+      .fillIn('zip', '353564');
+
+    await billingForm.proceedPayment.click();
+
+    const coupon = this.coupons[1];
+    const price = Math.floor(coupon.amountOff / 100);
+    await billingCouponForm.fillIn('couponId', coupon.id);
+
+    await billingCouponForm.submitCoupon.click();
+
+    assert.equal(billingCouponForm.validCoupon.text, 'Coupon applied');
+    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${(this.defaultPlan.price / 100) - price}`);
+  });
+
+  test('apply 10% off coupon', async function (assert) {
+    this.subscription.destroy();
+
+    window.Stripe = StripeMock;
+    let config = {
+      mock: true,
+      publishableKey: 'mock'
+    };
+    stubConfig('stripe', config, { instantiate: false });
+    const { owner } = getContext();
+    owner.inject('service:stripev3', 'config', 'config:stripe');
+    this.organization.permissions = {
+      createSubscription: true
+    };
+    this.organization.save();
+
+    await profilePage.visitOrganization({ name: 'org-login' });
+    await profilePage.billing.visit();
+
+    const { billingForm, subscribeButton, billingCouponForm } = profilePage.billing;
+    await subscribeButton.click();
+
+    percySnapshot(assert);
+
+    await selectChoose(billingForm.billingSelectCountry.scope, 'Germany');
+
+    await billingForm
+      .fillIn('firstname', 'John')
+      .fillIn('lastname', 'Doe')
+      .fillIn('companyName', 'Travis CI')
+      .fillIn('email', 'john@doe.com')
+      .fillIn('address', '15 Olalubi street')
+      .fillIn('city', 'Berlin')
+      .fillIn('zip', '353564');
+
+    await billingForm.proceedPayment.click();
+
+    const coupon = this.coupons[0];
+    await billingCouponForm.fillIn('couponId', coupon.id);
+
+    await billingCouponForm.submitCoupon.click();
+
+    const amountInDollars = this.defaultPlan.price / 100;
+    const price = amountInDollars - (amountInDollars * coupon.percentageOff) / 100;
+
+    assert.equal(billingCouponForm.validCoupon.text, 'Coupon applied');
+    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${price.toFixed(2)}`);
+  });
+
+  test('apply invalid coupon', async function (assert) {
+    this.subscription.destroy();
+
+    window.Stripe = StripeMock;
+    let config = {
+      mock: true,
+      publishableKey: 'mock'
+    };
+    stubConfig('stripe', config, { instantiate: false });
+    const { owner } = getContext();
+    owner.inject('service:stripev3', 'config', 'config:stripe');
+    this.organization.permissions = {
+      createSubscription: true
+    };
+    this.organization.save();
+
+    await profilePage.visitOrganization({ name: 'org-login' });
+    await profilePage.billing.visit();
+
+    const { billingForm, subscribeButton, billingCouponForm } = profilePage.billing;
+    await subscribeButton.click();
+
+    percySnapshot(assert);
+
+    await selectChoose(billingForm.billingSelectCountry.scope, 'Germany');
+
+    await billingForm
+      .fillIn('firstname', 'John')
+      .fillIn('lastname', 'Doe')
+      .fillIn('companyName', 'Travis CI')
+      .fillIn('email', 'john@doe.com')
+      .fillIn('address', '15 Olalubi street')
+      .fillIn('city', 'Berlin')
+      .fillIn('zip', '353564');
+
+    await billingForm.proceedPayment.click();
+    await billingCouponForm.fillIn('couponId', 'fake_id');
+    await billingCouponForm.submitCoupon.click();
+
+    assert.equal(billingCouponForm.invalidCoupon.text, 'Coupon invalid');
+
+    const coupon = this.coupons[0];
+
+    await billingCouponForm.fillIn('couponId', coupon.id);
+    await billingCouponForm.submitCoupon.click();
+
+    const amountInDollars = this.defaultPlan.price / 100;
+    const price = amountInDollars - (amountInDollars * coupon.percentageOff) / 100;
+
+    assert.equal(billingCouponForm.validCoupon.text, 'Coupon applied');
+    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${price.toFixed(2)}`);
+  });
+
   test('view billing tab when no individual subscription should fill form and transition to payment', async function (assert) {
     window.Stripe = StripeMock;
     let config = {
@@ -1009,8 +1161,7 @@ module('Acceptance | profile/billing', function (hooks) {
       .fillIn('address', '15 Olalubi street')
       .fillIn('city', 'Berlin')
       .fillIn('zip', '353564')
-      .fillIn('vat', '356463')
-      .fillIn('coupon', '356463');
+      .fillIn('vat', '356463');
 
     await billingForm.proceedPayment.click();
 
@@ -1021,12 +1172,12 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.period.text, '/month');
     assert.equal(profilePage.billing.selectedPlanOverview.changePlan.text, 'Change plan');
 
-    assert.equal(billingPaymentForm.contactDetails.contactHeading.text, 'contact details:');
+    assert.equal(billingPaymentForm.contactDetails.contactHeading.text, 'contact details');
     assert.equal(billingPaymentForm.contactDetails.firstName.text, 'John Doe');
     assert.equal(billingPaymentForm.contactDetails.company.text, 'Travis');
     assert.equal(billingPaymentForm.contactDetails.email.text, 'john@doe.com');
 
-    assert.equal(billingPaymentForm.contactDetails.billingHeading.text, 'billing details:');
+    assert.equal(billingPaymentForm.contactDetails.billingHeading.text, 'billing details');
     assert.equal(billingPaymentForm.contactDetails.address.text, '15 Olalubi street');
     assert.equal(billingPaymentForm.contactDetails.city.text, 'Berlin');
     assert.equal(billingPaymentForm.contactDetails.country.text, 'Germany');
@@ -1077,8 +1228,7 @@ module('Acceptance | profile/billing', function (hooks) {
       .fillIn('address', '15 Olalubi street')
       .fillIn('city', 'Berlin')
       .fillIn('zip', '353564')
-      .fillIn('vat', '356463')
-      .fillIn('coupon', '356463');
+      .fillIn('vat', '356463');
 
     await billingForm.proceedPayment.click();
 
@@ -1089,12 +1239,12 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.period.text, '/month');
     assert.equal(profilePage.billing.selectedPlanOverview.changePlan.text, 'Change plan');
 
-    assert.equal(billingPaymentForm.contactDetails.contactHeading.text, 'contact details:');
+    assert.equal(billingPaymentForm.contactDetails.contactHeading.text, 'contact details');
     assert.equal(billingPaymentForm.contactDetails.firstName.text, 'John Doe');
     assert.equal(billingPaymentForm.contactDetails.company.text, 'Travis');
     assert.equal(billingPaymentForm.contactDetails.email.text, 'john@doe.com');
 
-    assert.equal(billingPaymentForm.contactDetails.billingHeading.text, 'billing details:');
+    assert.equal(billingPaymentForm.contactDetails.billingHeading.text, 'billing details');
     assert.equal(billingPaymentForm.contactDetails.address.text, '15 Olalubi street');
     assert.equal(billingPaymentForm.contactDetails.city.text, 'Berlin');
     assert.equal(billingPaymentForm.contactDetails.country.text, 'Germany');
