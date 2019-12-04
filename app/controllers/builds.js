@@ -12,7 +12,7 @@ export default Controller.extend(...mixins, {
   externalLinks: service(),
 
   buildsSorting: ['number:desc'],
-  builds: sort('model', 'buildsSorting'),
+  builds: sort('loadedBuilds', 'buildsSorting'),
 
   repoController: controller('repo'),
   repo: alias('repoController.repo'),

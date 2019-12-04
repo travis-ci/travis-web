@@ -9,7 +9,7 @@ export default Controller.extend(...mixins, {
   repoController: controller('repo'),
 
   buildsSorting: ['number:desc'],
-  builds: sort('model', 'buildsSorting'),
+  builds: sort('loadedBuilds', 'buildsSorting'),
 
   repo: alias('repoController.repo'),
   tab: alias('repoController.tab'),

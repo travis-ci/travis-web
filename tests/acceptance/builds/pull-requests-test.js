@@ -55,7 +55,7 @@ module('Acceptance | builds/pull requests', function (hooks) {
       committer: gitUser
     });
 
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 25; i++) {
       let build = server.create('build', {
         state: 'passed',
         number: 1000 - i,
@@ -85,7 +85,7 @@ module('Acceptance | builds/pull requests', function (hooks) {
 
     await page.visitPullRequests({ organization: 'travis-ci', repo: 'travis-web' });
 
-    assert.equal(page.builds.length, 10, 'expected a page of pull request builds');
+    assert.equal(page.builds.length, 25, 'expected a page of pull request builds');
 
     page.builds[0].as(pullRequest => {
       assert.ok(pullRequest.started, 'expected the pull request to have started');
@@ -110,6 +110,6 @@ module('Acceptance | builds/pull requests', function (hooks) {
 
     await page.showMoreButton.click();
 
-    assert.equal(page.builds.length, 11, 'expected another page to have loaded');
+    assert.equal(page.builds.length, 26, 'expected another page to have loaded');
   });
 });

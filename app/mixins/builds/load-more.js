@@ -1,9 +1,14 @@
 import Mixin from '@ember/object/mixin';
 import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
+import { computed } from '@ember/object';
+import { union } from '@ember/object/computed';
 
 export default Mixin.create({
   tabStates: service(),
+
+  moreBuilds: computed(() => []),
+  loadedBuilds: union('model', 'moreBuilds'),
 
   loadMoreBuilds: task(function* () {
     const tabName = this.get('tabStates.mainTab');
@@ -11,14 +16,14 @@ export default Mixin.create({
     const type = tabName === 'builds' ? 'push' : singularTab;
     const options = this._constructOptions(type);
     const builds = yield this.store.query('build', options);
-    this.builds.addObjects(builds);
+    this.moreBuilds.addObjects(builds);
   }).drop(),
 
   _constructOptions(type) {
     let options = {
       repository_id: this.get('repo.id'),
       offset: this.get('builds.length'),
-      limit: 10,
+      limit: 25,
     };
     if (type != null) {
       options.event_type = type.replace(/s$/, '');

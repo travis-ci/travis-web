@@ -20,7 +20,7 @@ export default TravisRoute.extend({
     return this.store.query('build', {
       repository_id: repoId,
       event_type: 'pull_request',
-      limit: 10,
+      limit: 25,
     });
   },
 
