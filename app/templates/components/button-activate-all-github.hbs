@@ -1,0 +1,10 @@
+{{#if this.githubId}}
+  <button
+    class="button--blue"
+    data-test-activate-button
+    {{on 'click' (action 'activateAll')}}
+  >
+    <SvgImage @name={{vcs-icon this.owner.vcsType}} @class="fill-current align-text-bottom w-5 h-5 ml-1 mr-2" />
+    Activate all repositories using GitHub Apps
+  </button>
+{{/if}}
