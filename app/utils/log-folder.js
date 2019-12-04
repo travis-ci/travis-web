@@ -7,7 +7,6 @@ export default (function () {
         let folder = _this.getFolderFromLine(event.target);
         _this.toggle(folder);
         event.preventDefault();
-        return false;
       };
       const replaceEventListener = (el) => {
         el.removeEventListener('click', handleClick);
