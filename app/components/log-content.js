@@ -234,7 +234,8 @@ export default Component.extend({
   actions: {
     toTop() {
       Travis.tailing.stop();
-      return this.scroller.scrollToElement(this.element, { duration: 100 });
+      const { pageYOffset = 0 } = window;
+      return this.scroller.scrollTo(pageYOffset, 0, { duration: 100 });
     },
 
     toggleTailing() {
