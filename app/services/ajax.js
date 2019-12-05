@@ -3,7 +3,6 @@ import Service, { inject as service } from '@ember/service';
 import { warn } from '@ember/debug';
 import serializeQueryParams from 'ember-fetch/utils/serialize-query-params';
 import fetch from 'fetch';
-import config from 'travis/config/environment';
 
 const DEFAULT_ACCEPT = 'application/json; version=2';
 
@@ -22,11 +21,6 @@ export default Service.extend({
 
   setupHeaders(method, options = {}) {
     const { headers = {} } = options;
-
-    // Release
-    if (config.release) {
-      headers['X-Client-Release'] = config.release;
-    }
 
     // Content-Type
     if (!this.isRetrieve(method)) {

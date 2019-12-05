@@ -38,6 +38,11 @@ export default Service.extend({
     const { headers = {} } = options;
     const { token } = this.auth;
 
+    // Release
+    if (config.release) {
+      headers['X-Client-Release'] = config.release;
+    }
+
     // Authorization
     if (token) {
       headers['Authorization'] = `token ${token}`;
