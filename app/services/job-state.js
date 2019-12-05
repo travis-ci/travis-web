@@ -2,6 +2,7 @@ import { isEmpty } from '@ember/utils';
 import Service, { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
 import { computed } from '@ember/object';
+import fetchAll from 'travis/utils/fetch-all';
 
 export default Service.extend({
   store: service(),
@@ -39,6 +40,8 @@ export default Service.extend({
     if (!isEmpty(jobs)) {
       return jobs;
     }
+
+    fetchAll(this.store, 'job', { state: this.runningStates });
 
     const allStates = this.queuedStates.concat(this.runningStates);
     let result = yield this.store.filter(

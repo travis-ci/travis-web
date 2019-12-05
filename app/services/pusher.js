@@ -1,10 +1,10 @@
 import Service, { inject as service } from '@ember/service';
 import { later } from '@ember/runloop';
 import config from 'travis/config/environment';
-import jobState from './job-state';
 
 export default Service.extend({
   store: service(),
+  jobState: service(),
   liveUpdatesRecordFetcher: service(),
 
   receive(event, data) {
@@ -31,7 +31,7 @@ export default Service.extend({
 
     if (name === 'job' && data.job) {
       store.push(store.normalize('job', data.job));
-      this.get('jobState.reloadJobs').perform();
+      this.jobState.reloadJobs.perform();
     }
 
     if (name === 'build' && data.build && data.build.commit) {
