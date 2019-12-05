@@ -15,7 +15,6 @@ export default Component.extend({
   updateTimesService: service('updateTimes'),
   repositories: service(),
   features: service(),
-  store: service(),
   auth: service(),
   router: service(),
   classNames: ['repository-sidebar'],
@@ -28,8 +27,7 @@ export default Component.extend({
     schedule('afterRender', () => {
       this.fetchRepositoryData.perform();
       if (this.get('features.showRunningJobsInSidebar')) {
-        this.get('jobState.fetchRunningJobs').perform();
-        this.get('jobState.fetchQueuedJobs').perform();
+        this.get('jobState.fetchJobs').perform();
       }
     });
   },
