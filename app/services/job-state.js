@@ -41,9 +41,9 @@ export default Service.extend({
       return jobs;
     }
 
-    fetchAll(this.store, 'job', { state: this.runningStates });
-
     const allStates = this.queuedStates.concat(this.runningStates);
+    fetchAll(this.store, 'job', { state: allStates });
+
     let result = yield this.store.filter(
       'job',
       job => allStates.includes(job.get('state'))
