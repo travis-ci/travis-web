@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { reads } from '@ember/object/computed';
+import { bool, reads } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import config from 'travis/config/environment';
 
@@ -13,6 +13,7 @@ export default Component.extend({
 
   owner: reads('accounts.user'),
   githubId: reads('owner.githubId'),
+  isVisible: bool('githubId'),
 
   activateAllUrl: computed('githubId', function () {
     const { githubId } = this;
