@@ -1,13 +1,11 @@
 import { throttle, later } from '@ember/runloop';
 
 export default (function () {
-  function Tailing(window1, tailSelector, logSelector) {
-    this.window = window1;
-    this.document = this.window.document;
+  function Tailing(tailSelector, logSelector) {
     this.tailSelector = tailSelector;
     this.logSelector = logSelector;
     this.position = this._scrollPosTop();
-    this.document.addEventListener('scroll', () => {
+    document.addEventListener('scroll', () => {
       throttle(this, this.onScroll, [], 200, false);
     });
     return this;
@@ -18,11 +16,11 @@ export default (function () {
   };
 
   Tailing.prototype.tail = function () {
-    return this.document.querySelector(this.tailSelector);
+    return document.querySelector(this.tailSelector);
   };
 
   Tailing.prototype.log = function () {
-    return this.document.querySelector(this.logSelector);
+    return document.querySelector(this.logSelector);
   };
 
   Tailing.prototype.run = function () {
@@ -69,7 +67,7 @@ export default (function () {
     const logBottom = logOffset + logHeight + 40;
 
     const scrollPosTop = this._scrollPosTop();
-    const windowHeight = this.window.innerHeight;
+    const windowHeight = window.innerHeight;
     const winBottom = scrollPosTop + windowHeight;
 
     const logWinDifference = logBottom - winBottom;
@@ -77,7 +75,7 @@ export default (function () {
     if (logWinDifference > 0) {
       const newYpos = logBottom - windowHeight;
       const newXpos = this._scrollPosLeft();
-      this.window.scrollTo(newXpos, newYpos);
+      window.scrollTo(newXpos, newYpos);
       return true;
     } else {
       return false;
@@ -124,13 +122,11 @@ export default (function () {
   };
 
   Tailing.prototype._scrollPosTop = function () {
-    const { document, window } = this;
-    return window.scrollY || window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || document.getElementsByTagName('html')[0].scrollTop;
+    return window && window.pageYOffset;
   };
 
   Tailing.prototype._scrollPosLeft = function () {
-    const { document, window } = this;
-    return window.scrollX || window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft || document.getElementsByTagName('html')[0].scrollTop;
+    return window && window.pageXOffset;
   };
 
   return Tailing;

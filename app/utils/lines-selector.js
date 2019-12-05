@@ -38,10 +38,11 @@ export default (function () {
       this.last_selected_line = (ref = this.getSelectedLines()) != null ? ref.first : void 0;
       return this.highlightLines();
     });
-    this.element.querySelectorAll(`${SELECTORS.LOG_LINE} a`).forEach(linkEl => {
-      linkEl.addEventListener('click', (event) => {
-        let callback = () => {
-          let parentEl = linkEl.parentNode;
+
+    this.element.addEventListener('click', event => {
+      if (event.target.tagName === 'A') {
+        const callback = () => {
+          const parentEl = event.target.parentNode;
           this.loadLineNumbers(parentEl, event.shiftKey);
         };
 
@@ -51,8 +52,7 @@ export default (function () {
           callback();
         }
         event.preventDefault();
-        return false;
-      });
+      }
     });
   }
 
@@ -70,7 +70,9 @@ export default (function () {
     this.removeAllHighlights();
     let lines = this.getSelectedLines();
     if (lines) {
-      let elements = this.element.querySelectorAll(SELECTORS.LOG_LINE).slice(lines.first - 1, lines.last);
+      const logLines = this.getLogLinesArray();
+      const elements = logLines.slice(lines.first - 1, lines.last);
+
       if (elements.length) {
         elements.forEach(el => el.classList.add('highlight'));
 
@@ -96,9 +98,10 @@ export default (function () {
     let lines = this.getSelectedLines();
     if (lines) {
       results = [];
+      const logLines = this.getLogLinesArray();
       for (index in lines) {
         l = lines[index];
-        line = this.element.querySelectorAll(SELECTORS.LOG_LINE).slice(l - 1, l);
+        line = logLines.slice(l - 1, l);
         results.push(this.folder.unfold(line));
       }
       return results;
@@ -120,8 +123,18 @@ export default (function () {
 
   LinesSelector.prototype.getLineNumberFromElement = function (element) {
     if (this && this.element) {
-      return this.element.querySelectorAll(SELECTORS.LOG_LINE).index(element) + 1;
+      const logLines = this.getLogLinesArray();
+      const index = logLines.indexOf(element);
+      return index + 1;
     }
+  };
+
+  LinesSelector.prototype.getLogLinesArray = function () {
+    if (this && this.element) {
+      const allLines = this.element.querySelectorAll(SELECTORS.LOG_LINE);
+      return [...allLines];
+    }
+    return [];
   };
 
   LinesSelector.prototype.removeAllHighlights = function () {

@@ -15,7 +15,7 @@ import { alias, and } from '@ember/object/computed';
 
 const SELECTORS = {
   CONTENT: '.log-body-content',
-  FIRST_HIGHLIGHT: '.log-line:visible.highlight:first'
+  FIRST_HIGHLIGHT: '.log-line.highlight'
 };
 
 Log.LIMIT = config.logLimit;
@@ -39,7 +39,7 @@ Log.Scroll.prototype = Log.extend(new Log.Listener(), {
         if (this.beforeScroll) {
           this.beforeScroll();
         }
-        return this.scroller.scrollToElement(element);
+        return element.scrollIntoView({ block: 'center' });
       }
     } catch (e) {}
   }
@@ -234,7 +234,8 @@ export default Component.extend({
   actions: {
     toTop() {
       Travis.tailing.stop();
-      return this.scroller.scrollToElement(this.element, { duration: 100 });
+      const { pageYOffset = 0 } = window;
+      return this.scroller.scrollTo(pageYOffset, 0, { duration: 100 });
     },
 
     toggleTailing() {

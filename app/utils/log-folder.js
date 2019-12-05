@@ -1,29 +1,21 @@
 export default (function () {
   function LogFolder(element) {
     this.element = element;
-    // let handlerSelector = '.fold .log-line:first-of-type, .fold .fold-name';
-    // const handledElements = this.element.querySelectorAll(handlerSelector);
     if (this.element) {
-      const _this = this;
       const handleClick = (event) => {
-        let folder = _this.getFolderFromLine(event.target);
-        _this.toggle(folder);
+        let folder = this.getFolderFromLine(event.target);
+        this.toggle(folder);
         event.preventDefault();
-        return false;
       };
-      const replaceEventListener = (el) => {
-        el.removeEventListener('click', handleClick);
-        el.addEventListener('click', handleClick);
-      };
-      replaceEventListener(this.element);
-      // handledElements.forEach(replaceEventListener);
+
+      this.element.addEventListener('click', handleClick);
     }
   }
 
   LogFolder.prototype.fold = function (line) {
     let folder;
     folder = this.getFolderFromLine(line);
-    if (folder.classList.contains('open')) {
+    if (folder.classList && folder.classList.contains('open')) {
       return this.toggle(folder);
     }
   };
@@ -31,7 +23,7 @@ export default (function () {
   LogFolder.prototype.unfold = function (line) {
     let folder;
     folder = this.getFolderFromLine(line);
-    if (!folder.classList.contains('open')) {
+    if (folder.classList && !folder.classList.contains('open')) {
       return this.toggle(folder);
     }
   };

@@ -1,7 +1,7 @@
 import Tailing from 'travis/utils/tailing';
 
 export function initialize(app) {
-  app.tailing = new Tailing(window, '#tail', '#log');
+  app.tailing = new Tailing('#tail', '#log');
 }
 
 export default {
