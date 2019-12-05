@@ -66,7 +66,7 @@ module('Acceptance | home/sidebar tabs', function (hooks) {
     let job = server.create('job', {
       number: '1234.1',
       repository: testRepo,
-      state: 'created',
+      state: 'queued',
       commit,
       build
     });
