@@ -1,12 +1,11 @@
 import ArrayProxy from '@ember/array/proxy';
 import EmberObject, { computed } from '@ember/object';
-import { fetch, Headers } from 'fetch';
-import config from 'travis/config/environment';
 import { inject as service } from '@ember/service';
 import { gt } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
 
 export default EmberObject.extend({
+  api: service(),
   features: service(),
   auth: service(),
   storage: service(),
@@ -34,29 +33,9 @@ export default EmberObject.extend({
     this.debug('log model: fetching log');
     this.clearParts();
 
-    let id = this.get('job.id');
-
-    const url = `${config.apiEndpoint}/job/${id}/log`;
-    const token = this.get('auth.token');
-    let headers = {
-      'Travis-API-Version': '3'
-    };
-
-    if (token) {
-      headers['Authorization'] = `token ${token}`;
-    }
-
-    // TODO: I'd like to clean API access to use fetch everywhere once we fully
-    //       switch to API V3
-    const response = yield fetch(url, {
-      headers: new Headers(headers)
-    });
-    let json;
-    if (response.ok) {
-      json = yield response.json();
-    } else {
-      throw 'error';
-    }
+    const id = this.get('job.id');
+    const url = `/job/${id}/log`;
+    const json = yield this.api.get(url).catch(err => { throw 'error'; });
 
     if (this.noRendering) {
       let text = "Log rendering is off because localStorage['travis.logRendering'] is `false`.";

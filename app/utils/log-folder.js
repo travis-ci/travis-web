@@ -1,27 +1,21 @@
-import $ from 'jquery';
-
 export default (function () {
   function LogFolder(element) {
     this.element = element;
-    let handlerSelector = '.fold .log-line:first-of-type, .fold .fold-name';
     if (this.element) {
-      this.element
-        .off('click', handlerSelector) // remove any previous click handlers
-        .on('click', handlerSelector, (function (_this) {
-          return function (event) {
-            let folder = _this.getFolderFromLine($(event.target));
-            _this.toggle(folder);
-            event.preventDefault();
-            return false;
-          };
-        })(this));
+      const handleClick = (event) => {
+        let folder = this.getFolderFromLine(event.target);
+        this.toggle(folder);
+        event.preventDefault();
+      };
+
+      this.element.addEventListener('click', handleClick);
     }
   }
 
   LogFolder.prototype.fold = function (line) {
     let folder;
     folder = this.getFolderFromLine(line);
-    if (folder.hasClass('open')) {
+    if (folder.classList && folder.classList.contains('open')) {
       return this.toggle(folder);
     }
   };
@@ -29,17 +23,24 @@ export default (function () {
   LogFolder.prototype.unfold = function (line) {
     let folder;
     folder = this.getFolderFromLine(line);
-    if (!folder.hasClass('open')) {
+    if (folder.classList && !folder.classList.contains('open')) {
       return this.toggle(folder);
     }
   };
 
   LogFolder.prototype.toggle = function (folder) {
-    return folder.toggleClass('open');
+    return folder.classList && folder.classList.toggle('open');
   };
 
   LogFolder.prototype.getFolderFromLine = function (line) {
-    return line.parents('.fold').first();
+    let currentLine = line;
+    while (currentLine.parentNode) {
+      currentLine = currentLine.parentNode;
+      if (currentLine.classList && currentLine.classList.contains('fold')) {
+        break;
+      }
+    }
+    return currentLine;
   };
 
   return LogFolder;
