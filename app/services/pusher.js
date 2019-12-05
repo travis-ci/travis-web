@@ -5,7 +5,6 @@ import jobState from './job-state';
 
 export default Service.extend({
   store: service(),
-  jobState: service(),
   liveUpdatesRecordFetcher: service(),
 
   receive(event, data) {
