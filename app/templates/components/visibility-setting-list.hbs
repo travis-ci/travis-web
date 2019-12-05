@@ -27,14 +27,10 @@
       Save
     </button>
   </div>
-  {{#if this.isShowingConfirmationModal}}
-    <ModalDialog
-      @translucentOverlay={{true}}
-      @toggleConfirmationModal={{action "toggleConfirmationModal"}}
-      @onClickOverlay={{action "toggleConfirmationModal"}}
-      @containerClass="visibility-settings-modal"
-      @overlayPosition="sibling"
-      @animatable={{true}}
+  <div>
+    <Modal
+      @isVisible={{this.isShowingConfirmationModal}}
+      class="visibility-settings-modal"
     >
       <div class="visibility-settings-modal__top">
         <h3 class="visibility-settings-modal__header" data-test-visibility-settings-modal-title>
@@ -88,6 +84,6 @@
           Confirm
         </button>
       </div>
-    </ModalDialog>
-  {{/if}}
+    </Modal>
+  </div>
 {{/if}}
