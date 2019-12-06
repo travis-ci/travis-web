@@ -1,14 +1,14 @@
 <AnimatedIf
   @predicate={{this.isVisible}}
   @use={{this.transition}}
-  @duration={{300}}
+  @duration={{this.animationDuration}}
 >
   <div
-    class="fixed inset-0 z-40 flex items-center justify-center overflow-hidden bg-grey-800-fog"
+    class="travis-modal-overlay fixed inset-0 z-50 flex items-center justify-center overflow-hidden bg-grey-800-fog"
     {{on 'click' (action 'clickOverlay')}}
   >
     <div
-      class="bg-white p-8 relative rounded-sm"
+      class="travis-modal bg-white p-8 relative rounded-sm"
       data-test-modal
       ...attributes
       {{on 'click' this.clickModal}}
