@@ -30,8 +30,8 @@ export default Service.extend({
     }
 
     if (name === 'job' && data.job) {
-      store.push(store.normalize('job', data.job));
-      this.jobState.reloadJobs.perform();
+      const newJob = store.push(store.normalize('job', data.job));
+      this.jobState.jobs.addObject(newJob);
     }
 
     if (name === 'build' && data.build && data.build.commit) {

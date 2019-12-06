@@ -1,56 +1,41 @@
-import { isEmpty } from '@ember/utils';
 import Service, { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
 import { computed } from '@ember/object';
 import fetchAll from 'travis/utils/fetch-all';
 
+const FINISHED_STATES = ['failed', 'canceled', 'passed'];
+const RUNNING_STATES = ['started', 'received'];
+const QUEUED_STATES = ['created', 'queued'];
+const RUNNING_AND_FINISHED_STATES = RUNNING_STATES.concat(FINISHED_STATES);
+
 export default Service.extend({
   store: service(),
 
-  finishedStates: ['failed', 'canceled', 'passed'],
-  runningStates: ['started', 'received'],
-  queuedStates: ['created', 'queued'],
-  runningAndFinishedStates: computed(function () {
-    return this.runningStates.concat(this.finishedStates);
-  }),
-
-  jobs: [],
+  jobs: computed(() => []),
+  apiFetch: computed(() => false),
 
   runningJobs: computed('jobs.@each.state', function () {
     const jobs = this.get('jobs');
-    let result = jobs.filter(job => this.runningAndFinishedStates.includes(job.state));
+    let result = jobs.filter(job => RUNNING_AND_FINISHED_STATES.includes(job.state));
     result.set('isLoaded', true);
     return result;
   }),
 
   queuedJobs: computed('jobs.@each.state', function () {
     const jobs = this.get('jobs');
-    let result = jobs.filter(job => this.queuedStates.includes(job.state));
+    let result = jobs.filter(job => QUEUED_STATES.includes(job.state));
     result.set('isLoaded', true);
     return result;
   }),
 
-  reloadJobs: task(function* () {
-    const jobs = yield this.store.peekAll('job') || [];
-    this.set('jobs', jobs);
-  }).keepLatest(),
-
   fetchJobs: task(function* () {
-    const jobs = this.jobs;
-    if (!isEmpty(jobs)) {
-      return jobs;
-    }
-
-    const allStates = this.queuedStates.concat(this.runningStates);
-    fetchAll(this.store, 'job', { state: allStates });
-
-    let result = yield this.store.filter(
-      'job',
-      job => allStates.includes(job.get('state'))
-    );
-
-    this.set('jobs', result);
-    return result;
-  }).keepLatest(),
+    if (this.get('apiFetch'))
+      return;
+    const allPendingStates = QUEUED_STATES.concat(RUNNING_STATES);
+    yield fetchAll(this.store, 'job', { state: allPendingStates });
+    const jobs = this.store.peekAll('job') || [];
+    this.set('jobs', jobs);
+    this.get('apiFetch', true);
+}).drop(),
 
 });
