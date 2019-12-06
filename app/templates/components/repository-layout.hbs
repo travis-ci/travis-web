@@ -55,31 +55,21 @@
     </div>
   </main>
 </article>
-{{#if this.isShowingStatusBadgeModal}}
-  <ModalDialog
+<Modal
+  @isVisible={{this.isShowingStatusBadgeModal}}
+  @onClose={{action "toggleStatusBadgeModal"}}
+>
+  <StatusImages
+    @repo={{this.repo}}
     @onClose={{action "toggleStatusBadgeModal"}}
-    @onClickOverlay={{action "toggleStatusBadgeModal"}}
-    @translucentOverlay={{true}}
-    @overlayPosition="sibling"
-    @animatable={{true}}
-  >
-    <StatusImages
-      @repo={{this.repo}}
-      @onClose={{action "toggleStatusBadgeModal"}}
-    />
-  </ModalDialog>
-{{/if}}
-{{#if this.isShowingTriggerBuildModal}}
-  <ModalDialog
+  />
+</Modal>
+<Modal
+  @isVisible={{this.isShowingTriggerBuildModal}}
+  @onClose={{action "toggleTriggerBuildModal"}}
+>
+  <TriggerCustomBuild
+    @repo={{this.repo}}
     @onClose={{action "toggleTriggerBuildModal"}}
-    @onClickOverlay={{action "toggleTriggerBuildModal"}}
-    @translucentOverlay={{true}}
-    @overlayPosition="sibling"
-    @animatable={{true}}
-  >
-    <TriggerCustomBuild
-      @repo={{this.repo}}
-      @onClose={{action "toggleTriggerBuildModal"}}
-    />
-  </ModalDialog>
-{{/if}}
+  />
+</Modal>

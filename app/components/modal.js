@@ -11,7 +11,7 @@ export default Component.extend({
   animationDuration: reads('durations.quick'),
   transition: fade,
 
-  clickOutsideToClose: true,
+  closeOnClickOverlay: true,
   closeButton: false,
   isVisible: true,
   position: 'fixed',
@@ -19,19 +19,13 @@ export default Component.extend({
   onClose() {
   },
 
-  clickModal(event) {
-    event.stopPropagation();
+  onClickOverlay() {
+    if (this.closeOnClickOverlay) {
+      this.onClose();
+    }
   },
 
-  actions: {
-    onClose() {
-      this.onClose();
-    },
-
-    clickOverlay() {
-      if (this.clickOutsideToClose) {
-        this.onClose();
-      }
-    },
+  onClickModal(event) {
+    event.stopPropagation();
   },
 });
