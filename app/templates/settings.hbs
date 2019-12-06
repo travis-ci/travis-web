@@ -185,11 +185,10 @@
     </section>
   {{/if}}
 </div>
-{{#if this.displaySettingsDisabledAfterMigrationModal}}
-  <ModalDialog
-    @translucentOverlay={{true}}
-    @overlayPosition="sibling"
-    @animatable={{true}}
+
+  <Modal
+    @isVisible={{this.displaySettingsDisabledAfterMigrationModal}}
+    @closeOnClickOverlay={{false}}
   >
     <div
       data-test-settings-disabled-after-migration-modal
@@ -225,5 +224,4 @@
         </LinkTo>
       </div>
     </div>
-  </ModalDialog>
-{{/if}}
+  </Modal>
