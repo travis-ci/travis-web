@@ -7,6 +7,7 @@ import topPage from 'travis/tests/pages/top';
 import { enableFeature } from 'ember-feature-flags/test-support';
 import { INSIGHTS_VIS_OPTIONS } from 'travis/controllers/account/settings';
 import { percySnapshot } from 'ember-percy';
+import { animationsSettled } from 'ember-animated/test-support';
 
 module('Acceptance | user settings', function (hooks) {
   setupApplicationTest(hooks);
@@ -203,6 +204,7 @@ module('Acceptance | user settings', function (hooks) {
 
     // Close modal with close button
     await insightsSettingsModal.closeButton.click();
+    await animationsSettled();
     assert.notOk(insightsSettingsModal.isVisible);
 
     // Reopen modal
@@ -211,6 +213,7 @@ module('Acceptance | user settings', function (hooks) {
 
     // Close modal with cancel button
     await insightsSettingsModal.cancelButton.click();
+    await animationsSettled();
     assert.notOk(insightsSettingsModal.isVisible);
 
     // Reopen modal
@@ -219,6 +222,7 @@ module('Acceptance | user settings', function (hooks) {
 
     // Confirm save
     await insightsSettingsModal.confirmButton.click();
+    await animationsSettled();
     assert.notOk(insightsSettingsModal.isVisible);
     assert.equal(topPage.flashMessage.text, 'Your private build insights are now private.');
   });
