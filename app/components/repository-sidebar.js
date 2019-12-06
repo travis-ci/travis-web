@@ -97,6 +97,16 @@ export default Component.extend({
     }
   ),
 
+  jobsLoaded: computed(
+    'features.showRunningJobsInSidebar',
+    'jobState.jobsLoaded',
+    function () {
+      let showRunningJobs = this.get('features.showRunningJobsInSidebar');
+      let jobsLoaded = this.get('jobState.jobsLoaded');
+      return showRunningJobs && jobsLoaded;
+    }
+  ),
+
   viewOwned: task(function* () {
     const ownedRepositories = yield this.get('repositories.requestOwnedRepositories').perform();
     const onIndexPage = this.get('router.currentRouteName') === 'index';

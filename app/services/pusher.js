@@ -30,8 +30,8 @@ export default Service.extend({
     }
 
     if (name === 'job' && data.job) {
-      const newJob = store.push(store.normalize('job', data.job));
-      this.jobState.jobs.addObject(newJob);
+      store.push(store.normalize('job', data.job));
+      this.jobState.fetchJobs.perform({ usePeek: true });
     }
 
     if (name === 'build' && data.build && data.build.commit) {
