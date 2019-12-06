@@ -12,7 +12,7 @@ export default Service.extend({
   store: service(),
 
   jobs: computed(() => []),
-  apiFetch: computed(() => false),
+  isLoaded: computed(() => false),
 
   runningJobs: computed('jobs.@each.state', function () {
     const jobs = this.get('jobs');
@@ -29,13 +29,13 @@ export default Service.extend({
   }),
 
   fetchJobs: task(function* () {
-    if (this.get('apiFetch'))
+    if (this.get('isLoaded'))
       return;
     const allPendingStates = QUEUED_STATES.concat(RUNNING_STATES);
     yield fetchAll(this.store, 'job', { state: allPendingStates });
     const jobs = this.store.peekAll('job') || [];
     this.set('jobs', jobs);
-    this.get('apiFetch', true);
+    this.get('isLoaded', true);
   }).drop(),
 
 });
