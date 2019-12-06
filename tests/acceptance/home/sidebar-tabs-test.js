@@ -97,16 +97,16 @@ module('Acceptance | home/sidebar tabs', function (hooks) {
     // TODO: Currently, we make the same request *30* times, which slows the test down
     // significantly. Need to investigate why.
 
+    server.createList('job', 4, { state: 'started', repository: this.repo, commit: this.commit, build: this.build, started_at: startedAt });
     server.createList('job', 5, { state: 'created', repository: this.repo, commit: this.commit, build: this.build });
-    server.createList('job', 5, { state: 'started', repository: this.repo, commit: this.commit, build: this.build, started_at: startedAt });
 
     this.owner.register('service:repositories', RepositoriesServiceStub);
 
     await visit('/');
     await click('[data-test-sidebar-running-tab] a');
 
-    assert.dom('[data-test-sidebar-running-tab]').hasText('Running (5/11)', 'running tab correctly shows number of started/queued jobs');
-    assert.dom('[data-test-sidebar-running-job]').exists({ count: 5 });
+    assert.dom('[data-test-sidebar-running-tab]').hasText('Running (4/10)', 'running tab correctly shows number of started/queued jobs');
+    assert.dom('[data-test-sidebar-running-job]').exists({ count: 4 });
     assert.dom('[data-test-sidebar-running-job]:first-of-type time.duration').hasAttribute('title', `Started ${prettyDate([startedAt])}`);
     assert.dom('[data-test-sidebar-queued-job]').exists({ count: 6 });
   });

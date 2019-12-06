@@ -13,13 +13,8 @@ export default Service.extend({
   jobs: reads('fetchJobs.lastSuccessful.value'),
   jobsLoaded: gt('fetchJobs.performCount', 0),
 
-  runningJobs: filter('jobs', function (job) {
-    return RUNNING_AND_FINISHED_STATES.includes(job.state);
-  }),
-
-  queuedJobs: filter('jobs', function (job) {
-    return QUEUED_STATES.includes(job.state);
-  }),
+  runningJobs: filter('jobs', (job) => RUNNING_AND_FINISHED_STATES.includes(job.state)),
+  queuedJobs: filter('jobs', (job) => QUEUED_STATES.includes(job.state)),
 
   fetchJobs: task(function* (options = {}) {
     const { usePeek } = options;
@@ -27,7 +22,6 @@ export default Service.extend({
       return this.store.peekAll('job');
     } else {
       const allPendingStates = QUEUED_STATES.concat(RUNNING_STATES);
-      //return yield fetchAll(this.store, 'job', { state: allPendingStates });
       return yield this.store.query('job', { state: allPendingStates });
     }
   })
