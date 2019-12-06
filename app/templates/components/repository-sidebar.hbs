@@ -20,11 +20,11 @@
 {{#if this.showRunningJobs}}
   <div class="travistab-body sidebar-list">
     <div>
-      <RunningJobs @jobs={{this.runningJobs}} />
+      <RunningJobs @jobs={{this.runningJobs}} @jobsLoaded={{this.jobsLoaded}} />
     </div>
     <hr class="sidebar-seperator" />
     <div>
-      <QueuedJobs @jobs={{this.queuedJobs}} />
+      <QueuedJobs @jobs={{this.queuedJobs}} @jobsLoaded={{this.jobsLoaded}} />
     </div>
   </div>
 {{else}}
