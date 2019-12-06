@@ -13,34 +13,44 @@ export default (function () {
   }
 
   LogFolder.prototype.fold = function (line) {
-    let folder;
-    folder = this.getFolderFromLine(line);
-    if (folder.classList && folder.classList.contains('open')) {
+    const folder = this.getFolderFromLine(line);
+    if (folder && folder.classList && folder.classList.contains('open')) {
       return this.toggle(folder);
     }
   };
 
   LogFolder.prototype.unfold = function (line) {
-    let folder;
-    folder = this.getFolderFromLine(line);
-    if (folder.classList && !folder.classList.contains('open')) {
+    const folder = this.getFolderFromLine(line);
+    if (folder && folder.classList && !folder.classList.contains('open')) {
       return this.toggle(folder);
     }
   };
 
   LogFolder.prototype.toggle = function (folder) {
-    return folder.classList && folder.classList.toggle('open');
+    return folder && folder.classList && folder.classList.toggle('open');
   };
 
   LogFolder.prototype.getFolderFromLine = function (line) {
-    let currentLine = line;
-    while (currentLine.parentNode) {
-      currentLine = currentLine.parentNode;
-      if (currentLine.classList && currentLine.classList.contains('fold')) {
+    let firstFoldLine, currentElem = line, parentElem = line.parentNode;
+
+    while (parentElem) {
+      if (!parentElem.classList || parentElem.classList.contains('log-body-content')) {
         break;
       }
+
+      if (parentElem.classList.contains('fold')) {
+        const { children } = parentElem;
+        if (children.length >= 2 && children[1] === currentElem) {
+          firstFoldLine = parentElem;
+        }
+        break;
+      }
+
+      currentElem = currentElem.parentNode;
+      parentElem = parentElem.parentNode;
     }
-    return currentLine;
+
+    return firstFoldLine;
   };
 
   return LogFolder;
