@@ -36,6 +36,6 @@ export default Service.extend({
     const jobs = this.store.peekAll('job') || [];
     this.set('jobs', jobs);
     this.get('apiFetch', true);
-}).drop(),
+  }).drop(),
 
 });
