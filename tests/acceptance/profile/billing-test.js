@@ -243,7 +243,7 @@ module('Acceptance | profile/billing', function (hooks) {
 
     percySnapshot(assert);
 
-    assert.dom(profilePage.billing.editBillingAddressForm.inputs.scope).exists({ count: 3 });
+    assert.dom(profilePage.billing.editBillingAddressForm.inputs.scope).exists({ count: 4 });
 
     await selectChoose('.billing-country', 'Nigeria');
 
