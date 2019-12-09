@@ -14,7 +14,7 @@
     margin-bottom: 1rem;
     padding: 0.5rem 0.9rem 0.6rem;
     box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.15);
-    font-size: $font-size-sm;
+    font-size: 13px;
   }
 
   .icon-help {
@@ -332,7 +332,7 @@
         flex-basis: 50%;
         &__message {
           font-weight: 300;
-          font-size: 22px;
+          font-size: 20px;
           display: inline-block;
           margin: 0;
           margin-top: 5px;
@@ -357,7 +357,7 @@
         border: 1px solid $pebble-grey;
         padding: 14px;
         border-radius: 5px;
-        box-shadow: 0px 0px 19px -8px rgba(0, 0, 0, 0.41);
+        box-shadow: 0px 0px 19px -8px rgba(0, 0, 0, 0.2);
         margin-top: 10px;
 
         @media #{$large-up} {
