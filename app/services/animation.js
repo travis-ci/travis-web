@@ -1,10 +1,9 @@
 import Service from '@ember/service';
 import { computed } from '@ember/object';
+import Ember from 'ember';
 import fade from 'ember-animated/transitions/fade';
-import config from 'travis/config/environment';
 
-const { environment } = config;
-const isTest = environment === 'test';
+const isTest = Ember.testing;
 
 export const DURATION_NAMES = {
   QUICK: 'quick',
