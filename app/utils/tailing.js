@@ -1,13 +1,11 @@
-import $ from 'jquery';
 import { throttle, later } from '@ember/runloop';
 
 export default (function () {
-  function Tailing(window1, tailSelector, logSelector) {
-    this.window = window1;
+  function Tailing(tailSelector, logSelector) {
     this.tailSelector = tailSelector;
     this.logSelector = logSelector;
-    this.position = this.window.scrollTop();
-    this.window.scroll(() => {
+    this.position = this._scrollPosTop();
+    document.addEventListener('scroll', () => {
       throttle(this, this.onScroll, [], 200, false);
     });
     return this;
@@ -18,55 +16,66 @@ export default (function () {
   };
 
   Tailing.prototype.tail = function () {
-    return $(this.tailSelector);
+    return document.querySelector(this.tailSelector);
   };
 
   Tailing.prototype.log = function () {
-    return $(this.logSelector);
+    return document.querySelector(this.logSelector);
   };
 
   Tailing.prototype.run = function () {
     this.autoScroll();
     this.positionButton();
-    if (this.active()) {
+    if (this.isActive()) {
       return later(this.run.bind(this), this.options.timeout);
     }
   };
 
   Tailing.prototype.toggle = function () {
-    if (this.active()) {
+    if (this.isActive()) {
       return this.stop();
     } else {
       return this.start();
     }
   };
 
-  Tailing.prototype.active = function () {
-    return this.tail().hasClass('active');
-  };
-
   Tailing.prototype.start = function () {
-    this.tail().addClass('active');
+    const tail = this.tail();
+    if (tail) {
+      tail.classList.add('active');
+    }
     return this.run();
   };
 
   Tailing.prototype.isActive = function () {
-    return this.tail().hasClass('active');
+    const tail = this.tail();
+    return tail && tail.classList.contains('active');
   };
 
   Tailing.prototype.stop = function () {
-    return this.tail().removeClass('active');
+    const tail = this.tail();
+    return tail && tail.classList.remove('active');
   };
 
   Tailing.prototype.autoScroll = function () {
-    let logBottom, winBottom;
-    if (!this.active()) {
+    if (!this.isActive()) {
       return false;
     }
-    logBottom = this.log().offset().top + this.log().outerHeight() + 40;
-    winBottom = this.window.scrollTop() + this.window.height();
-    if (logBottom - winBottom > 0) {
-      this.window.scrollTop(logBottom - this.window.height());
+    const log = this.log();
+    const logOffset = this._offsetTop(log);
+    const logHeight = log.offsetHeight;
+    const logBottom = logOffset + logHeight + 40;
+
+    const scrollPosTop = this._scrollPosTop();
+    const windowHeight = window.innerHeight;
+    const winBottom = scrollPosTop + windowHeight;
+
+    const logWinDifference = logBottom - winBottom;
+
+    if (logWinDifference > 0) {
+      const newYpos = logBottom - windowHeight;
+      const newXpos = this._scrollPosLeft();
+      window.scrollTo(newXpos, newYpos);
       return true;
     } else {
       return false;
@@ -76,7 +85,7 @@ export default (function () {
   Tailing.prototype.onScroll = function () {
     let position;
     this.positionButton();
-    position = this.window.scrollTop();
+    position = this._scrollPosTop();
     if (position < this.position) {
       this.stop();
     }
@@ -84,25 +93,40 @@ export default (function () {
   };
 
   Tailing.prototype.positionButton = function () {
-    let max, offset, tail;
-    tail = $('#tail');
-    if (tail.length === 0 || tail.css('position').search(/sticky/i) >= 0) {
+    let max, offset;
+    const tail = this.tail();
+    const log = this.log();
+    if (!tail || getComputedStyle(tail)['position'].search(/sticky/i) >= 0) {
       return;
     }
-    offset = $(window).scrollTop() - $('#log').offset().top;
-    max = $('#log').height() - $('#tail').height() + 5;
+
+    offset = this._scrollPosTop() - this._offsetTop(log);
+    max = log.clientHeight - tail.clientHeight + 5;
     if (offset > max) {
       offset = max;
     }
+
+    let newOffset = 0;
     if (offset > 0) {
-      return tail.css({
-        top: offset - 2
-      });
-    } else {
-      return tail.css({
-        top: 0
-      });
+      newOffset = offset - 2;
     }
+    tail.style.top = newOffset;
+
+    return newOffset;
+  };
+
+  Tailing.prototype._offsetTop = function (el) {
+    const { top } = el.getBoundingClientRect();
+    const scrollTop = this._scrollPosTop();
+    return top + scrollTop;
+  };
+
+  Tailing.prototype._scrollPosTop = function () {
+    return window && window.pageYOffset;
+  };
+
+  Tailing.prototype._scrollPosLeft = function () {
+    return window && window.pageXOffset;
   };
 
   return Tailing;
