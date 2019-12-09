@@ -5,6 +5,7 @@ import { inject as service } from '@ember/service';
 export default Mixin.create({
   storage: service(),
   router: service(),
+
   account: reads('model.account'),
   newSubscription: reads('model.newSubscription'),
   queryParams: ['billingStep'],
@@ -13,10 +14,9 @@ export default Mixin.create({
 
   init() {
     this.router.on('routeDidChange', () => {
-      // if(this.router.currentURL.queryParams) {
-      //   console.log('Query Params ' + this.router.currentURL.queryParams);
-      // }
-      // this.nextBillingStep();
+      if (this.billingStep !== this.storage.billingStep) {
+        this.storage.clearBillingData();
+      }
     });
     this._super(...arguments);
   },
