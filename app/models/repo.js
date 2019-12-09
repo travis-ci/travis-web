@@ -125,7 +125,7 @@ const Repo = VcsEntity.extend({
 
   builds: computed('id', function () {
     let id = this.id;
-    const builds = this.store.filter('build', {
+    const builds = this.store.query('build', {
       event_type: ['push', 'api', 'cron'],
       repository_id: id,
     }, (b) => {
