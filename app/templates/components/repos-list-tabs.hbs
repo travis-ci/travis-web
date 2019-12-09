@@ -8,6 +8,7 @@
     <li data-test-sidebar-running-tab id="tab_running" class={{this.classRunning}}>
       <a onclick={{action this.showRunningJobs}} class="pointer">
         Running ({{this.startedJobsCount}}/{{this.allJobsCount}})
+        <EmberTooltip @text="Running jobs (started jobs / all jobs)" />
       </a>
     </li>
   {{/if}}

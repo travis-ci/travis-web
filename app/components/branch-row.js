@@ -1,13 +1,12 @@
 import { run } from '@ember/runloop';
 import EmberObject, { computed } from '@ember/object';
-import $ from 'jquery';
 import ArrayProxy from '@ember/array/proxy';
 import Component from '@ember/component';
-import config from 'travis/config/environment';
 import { alias } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 
 export default Component.extend({
+  api: service(),
   auth: service(),
   router: service(),
   permissions: service(),
@@ -72,7 +71,7 @@ export default Component.extend({
   ),
 
   getLast5Builds: computed(function () {
-    let apiEndpoint, branchName, lastBuilds, options, repoId;
+    let branchName, lastBuilds, repoId;
     lastBuilds = ArrayProxy.create({
       content: [{}, {}, {}, {}, {}],
       isLoading: true,
@@ -81,22 +80,14 @@ export default Component.extend({
     if (!this.get('branch.last_build')) {
       lastBuilds.set('isLoading', false);
     } else {
-      apiEndpoint = config.apiEndpoint;
       repoId = this.get('branch.repository.id');
       branchName = encodeURIComponent(this.get('branch.name'));
-      options = {
-        headers: {
-          'Travis-API-Version': '3'
-        }
-      };
-      if (this.get('auth.signedIn')) {
-        options.headers.Authorization = `token ${this.get('auth.token')}`;
-      }
-      let path = `${apiEndpoint}/repo/${repoId}/builds`;
-      let params = `?branch.name=${branchName}&limit=5&build.event_type=push,api,cron`;
-      let url = `${path}${params}`;
 
-      $.ajax(url, options).then(response => {
+      const path = `/repo/${repoId}/builds`;
+      const params = `?branch.name=${branchName}&limit=5&build.event_type=push,api,cron`;
+      const url = `${path}${params}`;
+
+      this.api.get(url).then(response => {
         let array, i, trueLength;
         array = response.builds.map(build => EmberObject.create(build));
         // We need exactly 5 elements in array
