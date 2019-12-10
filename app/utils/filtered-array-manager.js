@@ -183,8 +183,11 @@ let FilteredArrayManager = EmberObject.extend({
     const filterArray = this.filteredArrayManagerForType(modelName).getFilterArray(queryParams, filterFunction, dependencies);
 
     if (queryParams) {
-      const queryPromise = this.store.peekAll(modelName);
-      const promise = resolve(queryPromise).then(() => filterArray);
+      let currentRecords = this.store.peekAll(modelName);
+      if (filterFunction) {
+        currentRecords = currentRecords.filter(record => filterFunction(record));
+      }
+      const promise = resolve(currentRecords).then(() => filterArray);
 
       return PromiseArray.create({ promise });
     }
