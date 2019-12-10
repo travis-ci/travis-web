@@ -63,9 +63,11 @@ export default Component.extend({
         const lastIndex = this.steps.length - 1;
         const nextIndex = Math.min(lastIndex, currentIndex + 1);
         const currentStep = this.steps[nextIndex];
-        this.moveToNextBillingStep();
         this.set('currentStep', currentStep);
         this.persistBillingData(currentStep);
+        if (this.moveToNextBillingStep) {
+          this.moveToNextBillingStep();
+        }
       }
     },
 
@@ -73,9 +75,11 @@ export default Component.extend({
       const currentIndex = this.steps.indexOf(this.currentStep);
       const prevIndex = Math.max(0, currentIndex - 1);
       const currentStep = this.steps[prevIndex];
-      this.moveToPrevBillingStep();
       this.set('currentStep', currentStep);
       this.persistBillingData(currentStep);
+      if (this.moveToPrevBillingStep) {
+        this.moveToPrevBillingStep();
+      }
     },
 
     cancel() {
