@@ -1,3 +1,7 @@
+<li
+  class="rows rows--dashboard {{if this.repo.active 'is-active'}}"
+  {{on 'mouseleave' (action this.closeDropup)}}
+>
 <div class="dash-head">
   <button
     class="dash-star {{if this.repo.starred 'is-starred'}}"
@@ -180,3 +184,4 @@
     {{/if}}
   </div>
 </div>
+</li>
