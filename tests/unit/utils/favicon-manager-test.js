@@ -1,31 +1,34 @@
-import $ from 'jquery';
 import FaviconManager from 'travis/utils/favicon-manager';
-
-var fakeHead, manager;
 
 import { module, test } from 'qunit';
 
 module('Favicon manager', function (hooks) {
   hooks.beforeEach(function () {
-    fakeHead = $('<div id="fake-head"></div>').appendTo($('#qunit-fixture'));
-    return manager = new FaviconManager(fakeHead[0]);
+    this.fixture = document.querySelector('#qunit-fixture');
+
+    const fh = document.createElement('div');
+    fh.setAttribute('id', 'fake-head');
+    this.fixture.appendChild(fh);
+
+    this.fakeHead = fh;
+    this.manager = new FaviconManager(fh);
   });
 
   hooks.afterEach(function () {
-    fakeHead.remove();
-    return manager = null;
+    this.fixture.removeChild(this.fakeHead);
+    this.manager = null;
   });
 
   test('use <head> tag by default', function (assert) {
-    manager = new FaviconManager();
-    assert.equal(manager.getHeadTag(), $('head')[0]);
+    this.manager = new FaviconManager();
+    assert.equal(this.manager.getHeadTag(), document.querySelector('head'));
   });
 
   test('set favicon if there is no link tag in head', function (assert) {
     let done = assert.async();
-    assert.equal(fakeHead.find('link').length, 0, 'there should be no link tags initially');
-    manager.setFavicon('foobar');
-    let link = fakeHead.find('link')[0];
+    assert.equal(this.fakeHead.querySelectorAll('link').length, 0, 'there should be no link tags initially');
+    this.manager.setFavicon('foobar');
+    const link = this.fakeHead.querySelectorAll('link')[0];
     assert.ok(link, 'link tag should be added by favicon manager');
     return setTimeout(function () {
       assert.equal(link.getAttribute('href'), 'foobar', 'href attribute for the link should be properly set');
@@ -37,10 +40,14 @@ module('Favicon manager', function (hooks) {
 
   test('replace existing link tag', function (assert) {
     let done = assert.async();
-    fakeHead.append($('<link id="foo" rel="icon"></link>'));
-    assert.ok('foo', fakeHead.find('link').attr('id'), 'initially link should exist');
-    manager.setFavicon('foobar');
-    const links = fakeHead.find('link');
+    const fooLink = document.createElement('link');
+    fooLink.setAttribute('id', 'foo');
+    fooLink.setAttribute('rel', 'icon');
+    this.fakeHead.appendChild(fooLink);
+
+    assert.ok('foo', this.fakeHead.querySelector('link').getAttribute('id'), 'initially link should exist');
+    this.manager.setFavicon('foobar');
+    const links = this.fakeHead.querySelectorAll('link');
     assert.equal(links.length, 1, 'there should be only one link in head');
     const link = links[0];
     assert.ok(!link.getAttribute('id'), 'existing link should be replaced with a new one');
@@ -53,7 +60,11 @@ module('Favicon manager', function (hooks) {
   });
 
   test('find link with rel=icon only', function (assert) {
-    fakeHead.append($('<link id="foo" rel="foo"></link>'));
-    assert.notOk(manager.getLinkTag());
+    const fooLink = document.createElement('link');
+    fooLink.setAttribute('id', 'foo');
+    fooLink.setAttribute('rel', 'foo');
+    this.fakeHead.appendChild(fooLink);
+
+    assert.notOk(this.manager.getLinkTag());
   });
 });

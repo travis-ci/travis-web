@@ -577,6 +577,7 @@ export default create({
 
     trial: {
       scope: '.billing',
+      bannerInformation: text('[data-test-help-text]'),
       overviewHeading: text('[data-test-overview-heading]'),
       buildsRunningOutBanner: text('[data-test-trial-running-out]'),
       buildsRanOutBanner: text('[data-test-trial-ran-out]'),

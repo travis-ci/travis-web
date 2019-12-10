@@ -14,7 +14,17 @@
     margin-bottom: 1rem;
     padding: 0.5rem 0.9rem 0.6rem;
     box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.15);
-    font-size: $font-size-sm;
+    font-size: 13px;
+  }
+
+  .icon-help {
+    width: 17px;
+    height: 17px;
+    border: 1px solid $cement-grey;
+
+    &:hover {
+      @include colorSVG($cement-grey);
+    }
   }
 
   .icon-help-yellow {
@@ -121,17 +131,6 @@
         margin-top: 1px;
         font-size: .6em;
         border-bottom: 1px solid $cement-grey;
-      }
-    }
-
-    .icon-help {
-      margin-right: 3px;
-      width: 19px;
-      height: 19px;
-      border: 1 solid $cement-grey;
-  
-      &:hover {
-        @include colorSVG($cement-grey);
       }
     }
   }
@@ -308,118 +307,117 @@
   .billing-process-cancel {
     margin-left: 10px;
   }
+  .billing-trial {
 
-  .initial-billing-view {
+    .initial-billing-view {
 
-    .overview {
+      .overview {
 
-      margin-bottom: 30px;
+        margin-bottom: 30px;
 
-      &__heading {
-        h3 {
-          margin: 0;
+        &__heading {
+          h3 {
+            margin: 0;
+          }
+        }
+
+        &__body {
+          margin-bottom: 15px;
+          align-items: flex-start;
         }
       }
 
-      &__body {
-        margin-bottom: 15px;
-        align-items: flex-start;
+      .get-started {
+
+        flex-basis: 50%;
+        &__message {
+          font-weight: 300;
+          font-size: 20px;
+          display: inline-block;
+          margin: 0;
+          margin-top: 5px;
+        }
+
+        &__start-trial {
+          font-size: 14px;
+          margin-top: 7px;
+          margin-bottom: 7px;
+        }
       }
-    }
 
-    .trial-ended {
-      margin-top: 2rem;
-    }
-
-    .get-started {
-
-      flex-basis: 50%;
-      &__message {
-        font-weight: 300;
-        font-size: 22px;
-        display: inline-block;
-        margin: 0;
+      .icon-get-plan {
+        @include colorSVG($oxide-blue);
+        height: 22px;
+        width: 21px;
         margin-top: 5px;
       }
 
-      &__start-trial {
-        font-size: 14px;
-        margin-top: 7px;
-        margin-bottom: 7px;
-      }
-    }
+      .billing-trial-info {
+        flex-basis: 50%;
+        border: 1px solid $pebble-grey;
+        padding: 14px;
+        border-radius: 5px;
+        box-shadow: 0px 0px 19px -8px rgba(0, 0, 0, 0.2);
+        margin-top: 10px;
 
-    .icon-get-plan {
-      @include colorSVG($oxide-blue);
-      height: 22px;
-      width: 21px;
-      margin-top: 5px;
-    }
+        @media #{$large-up} {
+          .billing-trial-info {
+            margin-top: 0;
+          }
+        }
 
-    .billing-trial-info {
-      flex-basis: 50%;
-      border: 1px solid $pebble-grey;
-      padding: 14px;
-      border-radius: 5px;
-      box-shadow: 0px 0px 19px -8px rgba(0, 0, 0, 0.41);
-      margin-top: 10px;
+        &__box {
 
-      @media #{$large-up} {
-        .billing-trial-info {
-          margin-top: 0;
+          &--open-source {
+            font-size: 16px;
+            margin: 0;
+          }
+
+          &--jobs {
+            font-size: 14px;
+            margin: 5px 0;
+          }
         }
       }
 
-      &__box {
+      .icon-wrapper {
+        margin: 0 20px;
+        align-self: center;
 
-        &--open-source {
-          font-size: 16px;
+        &__plus {
+          @include colorSVG($oxide-blue);
+          width: 18px;
+          height: 18px;
+          display: none;
+        }
+
+        @media #{$large-up} {
+          &__plus {
+            display: block;
+          }
+        }
+      }
+
+      .get-plan {
+
+        text-transform: uppercase;
+        color: $oxide-blue;
+        font-weight: 700;
+        font-size: 16px;
+        background: transparent;
+        padding-top: 5px;
+
+        p {
           margin: 0;
         }
 
-        &--jobs {
-          font-size: 14px;
-          margin: 5px 0;
+        &--disabled {
+          color: $asphalt-grey;
+          background: transparent;
         }
       }
     }
-
-    .icon-wrapper {
-      margin: 0 20px;
-      align-self: center;
-
-      &__plus {
-        @include colorSVG($oxide-blue);
-        width: 18px;
-        height: 18px;
-        display: none;
-      }
-
-      @media #{$large-up} {
-        &__plus {
-          display: block;
-        }
-      }
-    }
-
-    .get-plan {
-
-      text-transform: uppercase;
-      color: $oxide-blue;
-      font-weight: 700;
-      font-size: 16px;
-      background: transparent;
-      padding-top: 5px;
-
-      p {
-        margin: 0;
-      }
-
-      &--disabled {
-        color: $asphalt-grey;
-        background: transparent;
-      }
-    }
+    
   }
 
   h3 {
