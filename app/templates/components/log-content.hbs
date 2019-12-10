@@ -132,18 +132,12 @@
     {{/if}}
   </div>
 </section>
-{{#if this.isShowingRemoveLogModal}}
-  <ModalDialog
-    @onClose={{action "toggleRemoveLogModal"}}
-    @onClickOverlay={{action "toggleRemoveLogModal"}}
-    @targetAttachment="center"
-    @translucentOverlay={{true}}
-    @overlayPosition="sibling"
-    @animatable={{true}}
-  >
-    <RemoveLogPopup
-      @job={{this.job}}
-      @onCloseModal={{action "toggleRemoveLogModal"}}
-    />
-  </ModalDialog>
-{{/if}}
+<Modal
+  @isVisible={{this.isShowingRemoveLogModal}}
+  @onClose={{action "toggleRemoveLogModal"}}
+>
+  <RemoveLogPopup
+    @job={{this.job}}
+    @onCloseModal={{action "toggleRemoveLogModal"}}
+  />
+</Modal>
