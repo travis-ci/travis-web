@@ -131,7 +131,7 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining('5 concurrent jobs Valid until June 19, 2018');
 
     assert.equal(profilePage.billing.userDetails.text, 'contact name User Name company name Travis CI GmbH billing email user@email.com');
-    assert.equal(profilePage.billing.billingDetails.text, 'address Rigaerstraße 8 city Berlin post code 10987 country Germany');
+    assert.equal(profilePage.billing.billingDetails.text, 'address Rigaerstraße 8 city Berlin post code 10987 country Germany vat id 12345');
     assert.dom(profilePage.billing.planMessage.scope).hasText('Valid until June 19, 2018');
 
     assert.equal(profilePage.billing.creditCardNumber.text, '•••• •••• •••• 1919');
@@ -253,7 +253,7 @@ module('Acceptance | profile/billing', function (hooks) {
 
     await profilePage.billing.editBillingAddressForm.updateBillingAddressButton.click();
 
-    assert.equal(profilePage.billing.billingDetails.text, 'address Olalubi city Lagos post code 10987 country Nigeria');
+    assert.equal(profilePage.billing.billingDetails.text, 'address Olalubi city Lagos post code 10987 country Nigeria vat id 12345');
   });
 
   test('view billing on an expired stripe plan', async function (assert) {
@@ -271,7 +271,7 @@ module('Acceptance | profile/billing', function (hooks) {
 
     assert.equal(profilePage.billing.plan.name, 'Small Business1 plan active');
     assert.equal(profilePage.billing.userDetails.text, 'contact name User Name company name Travis CI GmbH billing email user@email.com');
-    assert.equal(profilePage.billing.billingDetails.text, 'address Rigaerstraße 8 city Berlin post code 10987 country Germany');
+    assert.equal(profilePage.billing.billingDetails.text, 'address Rigaerstraße 8 city Berlin post code 10987 country Germany vat id 12345');
   });
 
   test('view billing on an incomplete stripe plan', async function (assert) {
@@ -310,7 +310,7 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.planMessage.text, `Expires ${momentFromNow} on June 19`);
 
     assert.equal(profilePage.billing.userDetails.text, 'contact name User Name company name Travis CI GmbH billing email user@email.com');
-    assert.equal(profilePage.billing.billingDetails.text, 'address Rigaerstraße 8 city Berlin post code 10987 country Germany');
+    assert.equal(profilePage.billing.billingDetails.text, 'address Rigaerstraße 8 city Berlin post code 10987 country Germany vat id 12345');
     assert.dom(profilePage.billing.planMessage.scope).hasText(`Expires ${momentFromNow} on June 19`);
 
     assert.equal(profilePage.billing.creditCardNumber.text, '•••• •••• •••• 1919');
@@ -360,7 +360,7 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.planMessage.text, `Expires ${momentFromNow} on June 19`);
 
     assert.equal(profilePage.billing.userDetails.text, 'contact name User Name company name Travis CI GmbH billing email user@email.com');
-    assert.equal(profilePage.billing.billingDetails.text, 'address Rigaerstraße 8 city Berlin post code 10987 country Germany');
+    assert.equal(profilePage.billing.billingDetails.text, 'address Rigaerstraße 8 city Berlin post code 10987 country Germany vat id 12345');
     assert.dom(profilePage.billing.planMessage.scope).hasText(`Expires ${momentFromNow} on June 19`);
 
     assert.equal(profilePage.billing.creditCardNumber.text, '•••• •••• •••• 1919');
@@ -912,7 +912,7 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining('2 concurrent jobs (plus 1 for free)');
 
     assert.equal(profilePage.billing.userDetails.text, 'contact name John Doe company name Travis billing email john@doe.com');
-    assert.equal(profilePage.billing.billingDetails.text, 'address 15 Olalubi street city Berlin post code 353564 country Germany');
+    assert.equal(profilePage.billing.billingDetails.text, 'address 15 Olalubi street city Berlin post code 353564 country Germany vat id 356463');
   });
 
   test('logs an exception when there is a subscription without a plan and handles unknowns', async function (assert) {
@@ -1190,7 +1190,7 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining('2 concurrent jobs');
 
     assert.equal(profilePage.billing.userDetails.text, 'contact name John Doe company name Travis billing email john@doe.com');
-    assert.equal(profilePage.billing.billingDetails.text, 'address 15 Olalubi street city Berlin post code 353564 country Germany');
+    assert.equal(profilePage.billing.billingDetails.text, 'address 15 Olalubi street city Berlin post code 353564 country Germany vat id 356463');
     assert.dom(profilePage.billing.planMessage.scope).hasText('');
   });
 
@@ -1257,7 +1257,7 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining('2 concurrent jobs');
 
     assert.equal(profilePage.billing.userDetails.text, 'contact name John Doe company name Travis billing email john@doe.com');
-    assert.equal(profilePage.billing.billingDetails.text, 'address 15 Olalubi street city Berlin post code 353564 country Germany');
+    assert.equal(profilePage.billing.billingDetails.text, 'address 15 Olalubi street city Berlin post code 353564 country Germany vat id 356463');
     assert.dom(profilePage.billing.planMessage.scope).hasText('');
   });
 });

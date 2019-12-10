@@ -127,6 +127,12 @@
           <p>{{this.info.country}}</p>
         </section>
       {{/if}}
+      {{#if this.info.vatId}}
+        <section>
+          <h4>vat id</h4>
+          <p>{{this.info.vatId}}</p>
+        </section>
+      {{/if}}
     </div>
     {{#if this.account.hasSubscriptionPermissions}}
       <button class='button--blue billing-subscription__buttons' 
