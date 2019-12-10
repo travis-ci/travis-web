@@ -22,12 +22,12 @@ export default Mixin.create({
   },
 
   actions: {
-    nextBillingStep() {
+    moveToNextBillingStep() {
       const nextStep = Math.min(this.lastStep, this.billingStep + 1);
       this.set('billingStep', nextStep);
     },
 
-    prevBillingStep() {
+    moveToPrevBillingStep() {
       const prevStep = Math.max(1, this.billingStep - 1);
       this.set('billingStep', prevStep);
     },

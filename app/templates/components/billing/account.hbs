@@ -6,8 +6,8 @@
       <Billing::Education 
         @newSubscription={{this.newSubscription}}
         @account={{this.account}}
-        @nextBillingStep={{this.nextBillingStep}}
-        @prevBillingStep={{this.prevBillingStep}}
+        @moveToNextBillingStep={{this.moveToNextBillingStep}}
+        @moveToPrevBillingStep={{this.moveToPrevBillingStep}}
       />
     {{/if}}
     {{#if this.isManual}}
@@ -15,8 +15,8 @@
         @subscription={{this.subscription}} 
         @account={{this.account}} 
         @newSubscription={{this.newSubscription}}
-        @nextBillingStep={{this.nextBillingStep}}
-        @prevBillingStep={{this.prevBillingStep}}
+        @moveToNextBillingStep={{this.moveToNextBillingStep}}
+        @moveToPrevBillingStep={{this.moveToPrevBillingStep}}
       />
     {{/if}}
     {{#if this.isManaged}}
@@ -29,8 +29,8 @@
       <Billing::Trial 
         @account={{this.account}} 
         @newSubscription={{this.newSubscription}}
-        @nextBillingStep={{this.nextBillingStep}}
-        @prevBillingStep={{this.prevBillingStep}}
+        @moveToNextBillingStep={{this.moveToNextBillingStep}}
+        @moveToPrevBillingStep={{this.moveToPrevBillingStep}}
       />
     {{/if}}
   </section>
