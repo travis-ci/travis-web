@@ -19,7 +19,7 @@ GEM
     nokogumbo (2.0.1)
       nokogiri (~> 1.8, >= 1.8.4)
     power_assert (0.4.1)
-    puma (3.7.1)
+    puma (3.12.2)
     rack (1.6.11)
     rack-mobile-detect (0.4.0)
       rack
@@ -64,7 +64,7 @@ PLATFORMS
 DEPENDENCIES
   foreman
   hashr
-  puma (~> 3.7.1)
+  puma (~> 3.12.2)
   rack-mobile-detect
   rack-protection (~> 1.4)
   rack-ssl (~> 1.4)
