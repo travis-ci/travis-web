@@ -3,9 +3,11 @@ import { module, test } from 'qunit';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import sidebarPage from 'travis/tests/pages/sidebar';
 import signInUser from 'travis/tests/helpers/sign-in-user';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | search/flow', function (hooks) {
   setupApplicationTest(hooks);
+  setupMirage(hooks);
 
   test('searching from index page transitions to search page', async function (assert) {
     const currentUser = this.server.create('user');

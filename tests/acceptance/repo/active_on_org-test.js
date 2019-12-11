@@ -4,9 +4,11 @@ import page from 'travis/tests/pages/repo-not-active';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { percySnapshot } from 'ember-percy';
 import { enableFeature } from 'ember-feature-flags/test-support';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | repo not active', function (hooks) {
   setupApplicationTest(hooks);
+  setupMirage(hooks);
 
   test('view an active_on_org repository when GitHub Apps is present', async function (assert) {
     enableFeature('github-apps');

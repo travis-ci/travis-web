@@ -5,9 +5,11 @@ import branchesPage from 'travis/tests/pages/branches';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { prettyDate } from 'travis/helpers/pretty-date';
 import { percySnapshot } from 'ember-percy';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | repo branches', function (hooks) {
   setupApplicationTest(hooks);
+  setupMirage(hooks);
 
   hooks.beforeEach(function () {
     this.currentUser = this.server.create('user', {

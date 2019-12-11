@@ -3,9 +3,11 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import profilePage from 'travis/tests/pages/profile';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Integration | Component | billing-summary-status', function (hooks) {
   setupRenderingTest(hooks);
+  setupMirage(hooks);
 
   hooks.beforeEach(function () {
     this.subscription = {

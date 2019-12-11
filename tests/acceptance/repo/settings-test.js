@@ -6,11 +6,12 @@ import settingsPage from 'travis/tests/pages/settings';
 import topPage from 'travis/tests/pages/top';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { selectChoose, selectSearch } from 'ember-power-select/test-support';
-
 import moment from 'moment';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | repo settings', function (hooks) {
   setupApplicationTest(hooks);
+  setupMirage(hooks);
 
   hooks.beforeEach(async function () {
     const currentUser = this.server.create('user', {

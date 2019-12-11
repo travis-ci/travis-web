@@ -58,7 +58,6 @@ module('Acceptance | Profile | Migrate', function (hooks) {
     });
 
     module('tab with repositories to migrate', function (hooks) {
-
       hooks.beforeEach(async function () {
         generateRepositoriesForMigration(this.server, this.user);
         await profilePage.visit();
@@ -104,7 +103,7 @@ module('Acceptance | Profile | Migrate', function (hooks) {
 });
 
 function generateRepositoriesForMigration(server, user) {
-  this.server.createList('repository', 10, {
+  server.createList('repository', 10, {
     active_on_org: true,
     managed_by_installation: true,
     owner: {

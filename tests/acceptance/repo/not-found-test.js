@@ -6,12 +6,14 @@ import nonExistentRepoPage from 'travis/tests/pages/repo/non-existent';
 import { percySnapshot } from 'ember-percy';
 import { enableFeature } from 'ember-feature-flags/test-support';
 import signInUser from 'travis/tests/helpers/sign-in-user';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 let adapterException;
 let loggerError;
 
 module('Acceptance | repo/not found', function (hooks) {
   setupApplicationTest(hooks);
+  setupMirage(hooks);
 
   hooks.beforeEach(function () {
     // Ignore promise rejection.

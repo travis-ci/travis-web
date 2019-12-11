@@ -4,9 +4,11 @@ import { prettyDate } from 'travis/helpers/pretty-date';
 import { percySnapshot } from 'ember-percy';
 
 import requestsPage from 'travis/tests/pages/requests';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | repo | requests', function (hooks) {
   setupApplicationTest(hooks);
+  setupMirage(hooks);
 
   hooks.beforeEach(function () {
     this.repo = this.server.create('repository', { slug: 'travis-ci/travis-web' });
