@@ -6,6 +6,7 @@ import { countries } from 'travis/utils/countries';
 export default Component.extend({
   countries,
   flashes: service(),
+  raven: service(),
   classNames: ['address'],
   openEditContactForm: false,
   openEditBillingForm: false,
@@ -16,16 +17,10 @@ export default Component.extend({
       this.closeEditForms();
       this.flashes.clear();
     } catch (e) {
-      this.handleErrors(e);
+      this.flashes.error('There was an error updating your contact. Please verify you provided a valid VAT number');
+      this.raven.logException(e);
     }
   }).drop(),
-
-  handleErrors(e) {
-    if (e.errors.length) {
-      const error = e.errors.firstObject;
-      this.flashes.error(error.detail);
-    }
-  },
 
   closeEditForms() {
     this.set('openEditContactForm', false);
