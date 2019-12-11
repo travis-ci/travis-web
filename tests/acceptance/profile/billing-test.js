@@ -553,6 +553,7 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.visit();
     await profilePage.billing.visit();
 
+    assert.equal(profilePage.billing.trial.bannerInformation, 'Open source builds are always free. If you\'d like more concurrency, start a trial or subscribe to a plan.');
     assert.equal(profilePage.billing.trial.overviewHeading, 'Overview');
     assert.equal(profilePage.billing.trial.name.text, '100 free builds to get you started');
     assert.equal(profilePage.billing.trial.subtext, 'Start your trial to get 100 free builds and 2 concurrent jobs for both public and private projects.');

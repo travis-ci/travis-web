@@ -64,8 +64,15 @@ export default function () {
     return schema.organizations.all();
   });
 
-  this.get('/user', function (schema) {
-    return this.serialize(schema.users.first(), 'v3');
+  this.get('/user', function (schema, request) {
+    const { authorization } = request.requestHeaders;
+    const firstUser = schema.users.first();
+
+    if (authorization !== `token ${firstUser.token}`) {
+      return new Response(403, {}, {});
+    }
+
+    return this.serialize(firstUser, 'v3');
   });
 
   this.get('/users/:id', function ({ users }, request) {
@@ -396,6 +403,15 @@ export default function () {
         return envVar;
       })
     };
+  });
+
+  this.delete('/settings/env_vars/:env_var_id', function (schema, request) {
+    schema.envVars
+      .where({ envVarId: request.params.env_var_id })
+      .models
+      .map(envVar => envVar.destroyRecord());
+
+    return new Response(204);
   });
 
   this.get('/repo/:repository_id/branches', function (schema) {
