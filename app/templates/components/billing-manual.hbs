@@ -10,8 +10,7 @@
     <Billing::Process 
       @account={{this.account}} 
       @newSubscription={{this.newSubscription}}
-      @moveToNextBillingStep={{this.moveToNextBillingStep}}
-      @moveToPrevBillingStep={{this.moveToPrevBillingStep}}
+      @setBillingStep={{@setBillingStep}}
     />
   {{else}}
     <section class="billing-subscription">

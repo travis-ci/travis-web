@@ -50,10 +50,14 @@ export default Component.extend({
     }
   },
 
+  setBillingStep() {},
+
   actions: {
 
     goToFirstStep() {
       this.set('currentStep', STEPS.ONE);
+      this.persistBillingData(STEPS.ONE);
+      this.setBillingStep(STEPS.ONE);
     },
 
     next() {
@@ -64,10 +68,8 @@ export default Component.extend({
         const nextIndex = Math.min(lastIndex, currentIndex + 1);
         const currentStep = this.steps[nextIndex];
         this.set('currentStep', currentStep);
+        this.setBillingStep(currentStep);
         this.persistBillingData(currentStep);
-        if (this.moveToNextBillingStep) {
-          this.moveToNextBillingStep();
-        }
       }
     },
 
@@ -76,14 +78,13 @@ export default Component.extend({
       const prevIndex = Math.max(0, currentIndex - 1);
       const currentStep = this.steps[prevIndex];
       this.set('currentStep', currentStep);
+      this.setBillingStep(currentStep);
       this.persistBillingData(currentStep);
-      if (this.moveToPrevBillingStep) {
-        this.moveToPrevBillingStep();
-      }
     },
 
     cancel() {
       this.set('currentStep', STEPS.ONE);
+      this.setBillingStep(STEPS.ONE);
     },
   }
 });
