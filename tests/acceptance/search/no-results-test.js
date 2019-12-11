@@ -8,7 +8,7 @@ module('Acceptance | search/no results', function (hooks) {
   setupApplicationTest(hooks);
 
   test('visiting /search/no-results', async function (assert) {
-    const currentUser = server.create('user');
+    const currentUser = this.server.create('user');
     signInUser(currentUser);
 
     await visit('/search/no-results');

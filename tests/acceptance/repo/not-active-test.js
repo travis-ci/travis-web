@@ -8,7 +8,7 @@ module('Acceptance | repo not active', function (hooks) {
   setupApplicationTest(hooks);
 
   test('view inactive repo when not an admin or signed out', async function (assert) {
-    server.create('repository', {
+    this.server.create('repository', {
       slug: 'musterfrau/a-repo',
       active: false,
       permissions: {
@@ -24,7 +24,7 @@ module('Acceptance | repo not active', function (hooks) {
   });
 
   test('view inactive repo when admin and activate it', async function (assert) {
-    server.create('repository', {
+    this.server.create('repository', {
       slug: 'musterfrau/a-repo',
       active: false,
       permissions: {
@@ -32,7 +32,7 @@ module('Acceptance | repo not active', function (hooks) {
       }
     });
 
-    const user = server.create('user', {
+    const user = this.server.create('user', {
       name: 'Erika Musterfrau',
       login: 'musterfrau'
     });
@@ -48,7 +48,7 @@ module('Acceptance | repo not active', function (hooks) {
   });
 
   test('migrated repository does not show activation button or settings', async function (assert) {
-    server.create('repository', {
+    this.server.create('repository', {
       slug: 'musterfrau/a-repo',
       active: false,
       migration_status: 'migrated',
@@ -60,7 +60,7 @@ module('Acceptance | repo not active', function (hooks) {
       }
     });
 
-    const user = server.create('user', {
+    const user = this.server.create('user', {
       name: 'Erika Musterfrau',
       login: 'musterfrau'
     });
@@ -73,7 +73,7 @@ module('Acceptance | repo not active', function (hooks) {
   });
 
   test('view inactive repo when admin connected to Github Apps and activate it', async function (assert) {
-    server.create('repository', {
+    this.server.create('repository', {
       slug: 'musterfrau/a-repo',
       active: false,
       permissions: {
@@ -88,7 +88,7 @@ module('Acceptance | repo not active', function (hooks) {
       }
     });
 
-    const user = server.create('user', {
+    const user = this.server.create('user', {
       name: 'Erika Musterfrau',
       login: 'musterfrau'
     });

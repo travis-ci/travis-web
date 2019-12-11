@@ -11,14 +11,14 @@ module('Acceptance | repo not active', function (hooks) {
   test('view an active_on_org repository when GitHub Apps is present', async function (assert) {
     enableFeature('github-apps');
 
-    const user = server.create('user', {
+    const user = this.server.create('user', {
       name: 'Erika Musterfrau',
       login: 'musterfrau'
     });
 
     signInUser(user);
 
-    server.create('repository', {
+    this.server.create('repository', {
       slug: 'musterfrau/a-repo',
       active: true,
       active_on_org: true,

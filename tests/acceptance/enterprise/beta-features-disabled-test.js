@@ -3,12 +3,14 @@ import { module, test } from 'qunit';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { getContext } from '@ember/test-helpers';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | enterprise/beta features disabled', function (hooks) {
   setupApplicationTest(hooks);
+  setupMirage(hooks);
 
-  hooks.beforeEach(() => {
-    const currentUser = server.create('user');
+  hooks.beforeEach(function () {
+    const currentUser = this.server.create('user');
     signInUser(currentUser);
   });
 

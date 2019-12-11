@@ -10,35 +10,35 @@ module('Acceptance | repo branches', function (hooks) {
   setupApplicationTest(hooks);
 
   hooks.beforeEach(function () {
-    this.currentUser = server.create('user', {
+    this.currentUser = this.server.create('user', {
       name: 'User Name',
       login: 'user-login',
     });
 
     signInUser(this.currentUser);
 
-    const gitUser = server.create('git-user', {
+    const gitUser = this.server.create('git-user', {
       name: 'User Name'
     });
 
-    const otherUser = server.create('git-user', {
+    const otherUser = this.server.create('git-user', {
       name: 'Marsha P. Johnson'
     });
 
     // create organization
-    server.create('organization', {
+    this.server.create('organization', {
       name: 'Org Name',
       login: 'org-login',
     });
 
-    const repository = server.create('repository', {
+    const repository = this.server.create('repository', {
       name: 'repository-name',
       slug: 'org-login/repository-name'
     });
 
     const repoId = parseInt(repository.id);
 
-    const primaryBranch = server.create('branch', {
+    const primaryBranch = this.server.create('branch', {
       name: 'primary#yes',
       id: `/v3/repo/${repoId}/branch/primary#yes`,
       default_branch: true,
@@ -90,7 +90,7 @@ module('Acceptance | repo branches', function (hooks) {
     lastBuild.save();
     this.lastBuild = lastBuild;
 
-    const activeCreatedBranch = server.create('branch', {
+    const activeCreatedBranch = this.server.create('branch', {
       name: 'created',
       id: `/v3/repo/${repoId}/branch/created`,
       exists_on_github: true,
@@ -98,7 +98,7 @@ module('Acceptance | repo branches', function (hooks) {
       repository,
     });
 
-    server.create('build', {
+    this.server.create('build', {
       state: 'created',
       branch: activeCreatedBranch,
       repository,
@@ -107,7 +107,7 @@ module('Acceptance | repo branches', function (hooks) {
       committer: otherUser
     });
 
-    const activeFailedBranch = server.create('branch', {
+    const activeFailedBranch = this.server.create('branch', {
       name: 'edits',
       id: `/v3/repo/${repoId}/branch/edits`,
       exists_on_github: true,
@@ -115,7 +115,7 @@ module('Acceptance | repo branches', function (hooks) {
       repository,
     });
 
-    server.create('build', {
+    this.server.create('build', {
       state: 'failed',
       finished_at: oneYearAgo,
       branch: activeFailedBranch,
@@ -125,7 +125,7 @@ module('Acceptance | repo branches', function (hooks) {
       committer: otherUser
     });
 
-    const activeOlderFailedBranch = server.create('branch', {
+    const activeOlderFailedBranch = this.server.create('branch', {
       name: 'old-old-edits',
       id: `/v3/repo/${repoId}/branch/old-old-edits`,
       exists_on_github: true,
@@ -133,7 +133,7 @@ module('Acceptance | repo branches', function (hooks) {
       repository,
     });
 
-    server.create('build', {
+    this.server.create('build', {
       state: 'failed',
       finished_at: twoYearsAgo,
       branch: activeOlderFailedBranch,
@@ -145,7 +145,7 @@ module('Acceptance | repo branches', function (hooks) {
       committer: otherUser
     });
 
-    const olderInactiveBranch = server.create('branch', {
+    const olderInactiveBranch = this.server.create('branch', {
       name: 'older-edits',
       id: `/v3/repo/${repoId}/branch/older-edits`,
       exists_on_github: false,
@@ -157,7 +157,7 @@ module('Acceptance | repo branches', function (hooks) {
       finished_at: twoYearsAgo
     });
 
-    const newerInactiveBranch = server.create('branch', {
+    const newerInactiveBranch = this.server.create('branch', {
       name: 'old-edits',
       id: `/v3/repo/${repoId}/branch/old-edits`,
       exists_on_github: false,
@@ -165,7 +165,7 @@ module('Acceptance | repo branches', function (hooks) {
       repository,
     });
 
-    server.create('build', {
+    this.server.create('build', {
       state: 'errored',
       finished_at: oneYearAgo,
       branch: newerInactiveBranch,
@@ -229,11 +229,11 @@ module('Acceptance | repo branches', function (hooks) {
 
   test('view branches tab when no branches present', async function (assert) {
     // destroy state from previous tests
-    server.db.branches.remove();
-    server.db.repositories.remove();
-    server.db.builds.remove();
+    this.server.db.branches.remove();
+    this.server.db.repositories.remove();
+    this.server.db.builds.remove();
 
-    server.create('repository');
+    this.server.create('repository');
 
     await branchesPage.visit({ organization: 'travis-ci', repo: 'travis-web' });
 

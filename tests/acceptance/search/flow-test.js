@@ -8,10 +8,10 @@ module('Acceptance | search/flow', function (hooks) {
   setupApplicationTest(hooks);
 
   test('searching from index page transitions to search page', async function (assert) {
-    const currentUser = server.create('user');
+    const currentUser = this.server.create('user');
     signInUser(currentUser);
 
-    server.create('repository');
+    this.server.create('repository');
 
     await sidebarPage
       .visit()

@@ -28,7 +28,7 @@ module('Acceptance | repo/not found', function (hooks) {
   });
 
   test('visiting /non-existent/repository shows error message when authenticated', async function (assert) {
-    const user = server.create('user');
+    const user = this.server.create('user');
     signInUser(user);
 
     await nonExistentRepoPage.visit();

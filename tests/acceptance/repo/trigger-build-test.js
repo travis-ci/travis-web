@@ -12,12 +12,12 @@ module('Acceptance | repo/trigger build', function (hooks) {
   setupApplicationTest(hooks);
 
   hooks.beforeEach(function () {
-    this.currentUser = server.create('user', {
+    this.currentUser = this.server.create('user', {
       name: 'Ada Lovelace',
       login: 'adal',
     });
 
-    this.repo = server.create('repository', {
+    this.repo = this.server.create('repository', {
       name: 'difference-engine',
       slug: 'adal/difference-engine',
       permissions: {
@@ -27,7 +27,7 @@ module('Acceptance | repo/trigger build', function (hooks) {
 
     const repoId = parseInt(this.repo.id);
 
-    const defaultBranch = server.create('branch', {
+    const defaultBranch = this.server.create('branch', {
       name: 'master',
       id: `/v3/repo/${repoId}/branch/master`,
       default_branch: true,
@@ -45,7 +45,7 @@ module('Acceptance | repo/trigger build', function (hooks) {
       sha: 'c0ffee'
     });
 
-    server.create('branch', {
+    this.server.create('branch', {
       name: 'deleted',
       id: `/v3/repo/${repoId}/branch/deleted`,
       default_branch: false,
@@ -114,7 +114,7 @@ module('Acceptance | repo/trigger build', function (hooks) {
   });
 
   test('an error triggering a build is displayed', async function (assert) {
-    server.post('/repo/:repo_id/requests', function (schema, request) {
+    this.server.post('/repo/:repo_id/requests', function (schema, request) {
       return new Response(500, {}, {});
     });
 
@@ -126,7 +126,7 @@ module('Acceptance | repo/trigger build', function (hooks) {
   });
 
   test('a 429 shows a specific error message', async function (assert) {
-    server.post('/repo/:repo_id/requests', function (schema, request) {
+    this.server.post('/repo/:repo_id/requests', function (schema, request) {
       return new Response(429, {}, {});
     });
 

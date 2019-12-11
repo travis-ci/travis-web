@@ -10,14 +10,14 @@ module('Acceptance | repo/view migrated', function (hooks) {
   test('viewing migrated repository on com shows banner', async function (assert) {
     enableFeature('proVersion');
 
-    const user = server.create('user', {
+    const user = this.server.create('user', {
       name: 'Erika Musterfrau',
       login: 'musterfrau'
     });
 
     await signInUser(user);
 
-    const repository = server.create('repository', {
+    const repository = this.server.create('repository', {
       slug: 'musterfrau/a-repo',
       active: true,
       active_on_org: false,
@@ -33,14 +33,14 @@ module('Acceptance | repo/view migrated', function (hooks) {
   });
 
   test('viewing migrated repository on org shows banner', async function (assert) {
-    const user = server.create('user', {
+    const user = this.server.create('user', {
       name: 'Erika Musterfrau',
       login: 'musterfrau'
     });
 
     await signInUser(user);
 
-    const repository = server.create('repository', {
+    const repository = this.server.create('repository', {
       slug: 'musterfrau/a-repo',
       active: false,
       active_on_org: false,
