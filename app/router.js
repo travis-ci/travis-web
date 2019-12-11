@@ -25,7 +25,10 @@ Router.map(function () {
     this.route('index', { path: '/' });
     this.route('thank-you');
   });
-  this.route('team', { path: '/about' });
+  this.route('team', { path: '/about' }, function () {
+    this.route('index', { path: '/' });
+    this.route('travis-vs-jenkins', { path: 'travis-versus-jenkins' });
+  });
   this.route('logo', { path: '/logo' });
   this.route('help');
 
