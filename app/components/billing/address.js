@@ -14,6 +14,7 @@ export default Component.extend({
     try {
       yield this.subscription.save();
       this.closeEditForms();
+      this.flashes.clear();
     } catch (e) {
       this.handleErrors(e);
     }
@@ -21,8 +22,8 @@ export default Component.extend({
 
   handleErrors(e) {
     if (e.errors.length) {
-      const message = e.errors[0].detail;
-      this.flashes.error(message);
+      const error = e.errors.firstObject;
+      this.flashes.error(error.detail);
     }
   },
 
