@@ -2,14 +2,14 @@ import Pusher from 'travis-pusher';
 
 import { next } from '@ember/runloop';
 
-let TravisPusher = function (config, ajaxService) {
+let TravisPusher = function (config, apiService) {
   this.active_channels = [];
-  this.init(config, ajaxService);
-  TravisPusher.ajaxService = ajaxService;
+  this.init(config, apiService);
+  TravisPusher.apiService = apiService;
   return this;
 };
 
-TravisPusher.prototype.init = function (config, ajaxService) {
+TravisPusher.prototype.init = function (config, apiService) {
   if (!config.key) {
     // Set up a mock Pusher that ignores the expected methods.
     return this.pusher = {
@@ -23,7 +23,7 @@ TravisPusher.prototype.init = function (config, ajaxService) {
     };
   }
 
-  this.ajaxService = ajaxService;
+  this.apiService = apiService;
   Pusher.warn = this.warn.bind(this);
 
   if (config.debug) {
@@ -44,7 +44,8 @@ TravisPusher.prototype.init = function (config, ajaxService) {
         authorize: function (socketId, callback) {
           let channelName = channel.name;
 
-          TravisPusher.ajaxService.request('/pusher/auth', 'POST', {
+          TravisPusher.apiService.post('/pusher/auth', {
+            travisApiVersion: null,
             data: {
               socket_id: socketId,
               channels: [channelName]
