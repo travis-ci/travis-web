@@ -6,10 +6,12 @@ const controllerName = 'account.billing';
 export default TravisRoute.extend(AccountBillingMixin, {
 
   activate() {
+    this._super(...arguments);
     this.setupBillingStepSubscriptions(controllerName);
   },
 
   deactivate() {
+    this._super(...arguments);
     this.removeBillingStepSubscriptions(controllerName);
   },
 
