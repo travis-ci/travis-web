@@ -1,4 +1,4 @@
-import { currentURL, visit } from '@ember/test-helpers';
+import { currentURL, visit, settled } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import profilePage from 'travis/tests/pages/profile';
@@ -203,6 +203,7 @@ module('Acceptance | user settings', function (hooks) {
 
     // Close modal with close button
     await insightsSettingsModal.closeButton.click();
+    await settled();
     assert.notOk(insightsSettingsModal.isVisible);
 
     // Reopen modal
@@ -211,6 +212,7 @@ module('Acceptance | user settings', function (hooks) {
 
     // Close modal with cancel button
     await insightsSettingsModal.cancelButton.click();
+    await settled();
     assert.notOk(insightsSettingsModal.isVisible);
 
     // Reopen modal
@@ -219,6 +221,7 @@ module('Acceptance | user settings', function (hooks) {
 
     // Confirm save
     await insightsSettingsModal.confirmButton.click();
+    await settled();
     assert.notOk(insightsSettingsModal.isVisible);
     assert.equal(topPage.flashMessage.text, 'Your private build insights are now private.');
   });

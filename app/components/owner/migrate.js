@@ -55,10 +55,6 @@ export default Component.extend({
 
   actions: {
 
-    activateAll() {
-      window.location.href = this.activateAllUrl;
-    },
-
     toggleRepository(repo) {
       const { selectedRepositories } = this;
       const isSelected = selectedRepositories.includes(repo);
