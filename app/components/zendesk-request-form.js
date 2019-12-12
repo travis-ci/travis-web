@@ -143,6 +143,7 @@ export default Component.extend({
 });
 
 function buildDescriptionTemplate(page) {
+  const navigator = window && window.navigator || {}; // Fastboot does not have window
   const { language, vendor, userAgent, platform, appVersion } = navigator;
   /* eslint-disable */
   return `

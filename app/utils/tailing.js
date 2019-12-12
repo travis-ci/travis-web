@@ -1,6 +1,7 @@
 import { throttle, later } from '@ember/runloop';
+import { isFastboot, win, doc } from 'travis/utils/fastboot';
 
-export default (function () {
+export default (function (window, document) {
   function Tailing(tailSelector, logSelector) {
     this.tailSelector = tailSelector;
     this.logSelector = logSelector;
@@ -130,4 +131,4 @@ export default (function () {
   };
 
   return Tailing;
-}());
+}(isFastboot ? win : window, isFastboot ? doc : document));

@@ -1,3 +1,3 @@
-const isFastboot = typeof FastBoot === 'undefined';
+const isFastboot = typeof FastBoot !== 'undefined';
 
 export default isFastboot;
