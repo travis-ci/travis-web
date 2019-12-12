@@ -10,22 +10,6 @@ export default Mixin.create({
   queryParams: ['billingStep'],
   billingStep: 1,
 
-  init() {
-    this._super(...arguments);
-    this.clearBillingData();
-    this.addObserver('billingStep', this, 'billingStepChange');
-  },
-
-  billingStepChange() {
-    this.clearBillingData();
-  },
-
-  clearBillingData() {
-    if (this.billingStep !== this.storage.billingStep) {
-      this.storage.clearBillingData();
-    }
-  },
-
   actions: {
     setBillingStep(step) {
       this.set('billingStep', step);

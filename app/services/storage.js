@@ -91,5 +91,4 @@ export default Service.extend({
   clear() {
     return this.storage.clear();
   }
-
 });
