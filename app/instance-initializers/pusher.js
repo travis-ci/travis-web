@@ -1,9 +1,12 @@
 import config from 'travis/config/environment';
 import TravisPusher from 'travis/utils/pusher';
+import PusherStub from 'travis/utils/fastboot/stubs/pusher';
+import isFastboot from 'travis/utils/fastboot/isFastboot';
 
 export function initialize(applicationInstance) {
   const app = applicationInstance.application;
-  app.pusher = new TravisPusher(config.pusher, applicationInstance.lookup('service:ajax'));
+  const Pusher = isFastboot ? PusherStub : TravisPusher;
+  app.pusher = new Pusher(config.pusher, applicationInstance.lookup('service:ajax'));
 
   if (!applicationInstance.lookup('pusher:main')) {
     app.register('pusher:main', app.pusher, {
