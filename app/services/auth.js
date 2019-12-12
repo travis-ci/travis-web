@@ -34,7 +34,6 @@ const USER_FIELDS = ['id', 'login', 'token', 'correct_scopes', 'channels'];
 const TOKEN_EXPIRED_MSG = "You've been signed out, because your access token has expired.";
 
 export default Service.extend({
-  api: service(),
   router: service(),
   flashes: service(),
   intercom: service(),
@@ -85,7 +84,6 @@ export default Service.extend({
       runAfterSignOutCallbacks();
     }
     this.store.unloadAll();
-    this.api.get('/logout');
   },
 
   afterSignOut(callback) {

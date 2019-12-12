@@ -10,6 +10,7 @@ import {
 } from 'ember-keyboard-shortcuts';
 
 export default TravisRoute.extend(BuildFaviconMixin, {
+  api: service(),
   auth: service(),
   features: service(),
   featureFlags: service(),
@@ -129,6 +130,7 @@ export default TravisRoute.extend(BuildFaviconMixin, {
 
     signOut() {
       this.auth.signOut();
+      this.api.get('/logout');
     },
 
     disableTailing() {
