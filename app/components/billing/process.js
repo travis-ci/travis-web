@@ -42,12 +42,8 @@ export default Component.extend({
 
   persistBillingData(step) {
     this.storage.billingStep = step;
-    if (this.isStepTwo) {
-      const plan = this.selectedPlan.getProperties(['name', 'builds', 'price', 'annual']);
-      this.storage.billingPlan = plan;
-    } else if (this.isStepThree) {
-      this.storage.billingInfo = this.billingInfo;
-    }
+    this.storage.billingPlan = this.selectedPlan.getProperties(['name', 'builds', 'price', 'annual']);
+    this.storage.billingInfo = this.billingInfo;
   },
 
   setBillingStep() {},

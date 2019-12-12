@@ -10,6 +10,25 @@ export default Mixin.create({
     return this.stripe.load();
   },
 
+  setupController(controller) {
+    this._super(...arguments);
+    if (controller.get('billingStep') === 1) {
+      this.checkBillingStep(controller);
+    }
+    controller.set('newSubscription', this.newSubscription());
+  },
+
+  newSubscription() {
+    const plan = this.store.createRecord('plan', this.storage.billingPlan);
+    const billingInfo = this.store.createRecord('billing-info', this.storage.billingInfo);
+    const creditCardInfo = this.store.createRecord('credit-card-info');
+    return this.store.createRecord('subscription', {
+      billingInfo,
+      plan,
+      creditCardInfo,
+    });
+  },
+
   setupBillingStepSubscriptions(controllerName) {
     const controller = this.controllerFor(controllerName);
     controller.addObserver('billingStep', this, 'handleBillingStepChange');
@@ -26,16 +45,5 @@ export default Mixin.create({
     if (billingStepQueryParams !== this.storage.billingStep) {
       this.storage.clearBillingData();
     }
-  },
-
-  newSubscription() {
-    const plan = this.store.createRecord('plan', this.storage.billingPlan);
-    const billingInfo = this.store.createRecord('billing-info', this.storage.billingInfo);
-    const creditCardInfo = this.store.createRecord('credit-card-info');
-    return this.store.createRecord('subscription', {
-      billingInfo,
-      plan,
-      creditCardInfo,
-    });
   },
 });

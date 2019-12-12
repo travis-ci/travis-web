@@ -6,7 +6,7 @@ export default Mixin.create({
   storage: service(),
 
   account: reads('model.account'),
-  newSubscription: reads('model.newSubscription'),
+  newSubscription: null,
   queryParams: ['billingStep'],
   billingStep: 1,
 

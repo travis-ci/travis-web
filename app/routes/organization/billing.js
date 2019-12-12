@@ -1,6 +1,6 @@
 import TravisRoute from 'travis/routes/basic';
-import AccountBillingMixin from 'travis/mixins/route/account/billing';
 import { hash } from 'rsvp';
+import AccountBillingMixin from 'travis/mixins/route/account/billing';
 
 const controllerName = 'organization.billing';
 export default TravisRoute.extend(AccountBillingMixin, {
@@ -19,17 +19,9 @@ export default TravisRoute.extend(AccountBillingMixin, {
     this.checkBillingStep(controller);
   },
 
-  setupController(controller) {
-    this._super(...arguments);
-    if (controller.get('billingStep') === 1) {
-      this.checkBillingStep(controller);
-    }
-  },
-
   model() {
     return hash({
       account: this.modelFor('organization'),
-      newSubscription: this.newSubscription(),
     });
   }
 });
