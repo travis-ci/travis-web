@@ -11,7 +11,7 @@ export default Mixin.create({
   billingStep: 1,
 
   actions: {
-    setBillingStep(step) {
+    updateBillingQueryParams(step) {
       this.set('billingStep', step);
     },
   }

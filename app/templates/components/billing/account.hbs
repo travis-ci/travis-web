@@ -6,7 +6,7 @@
       <Billing::Education 
         @newSubscription={{this.newSubscription}}
         @account={{this.account}}
-        @setBillingStep={{@setBillingStep}}
+        @updateBillingQueryParams={{@updateBillingQueryParams}}
       />
     {{/if}}
     {{#if this.isManual}}
@@ -14,7 +14,7 @@
         @subscription={{this.subscription}} 
         @account={{this.account}} 
         @newSubscription={{this.newSubscription}}
-        @setBillingStep={{@setBillingStep}}
+        @updateBillingQueryParams={{@updateBillingQueryParams}}
       />
     {{/if}}
     {{#if this.isManaged}}
@@ -27,7 +27,7 @@
       <Billing::Trial 
         @account={{this.account}} 
         @newSubscription={{this.newSubscription}}
-        @setBillingStep={{@setBillingStep}}
+        @updateBillingQueryParams={{@updateBillingQueryParams}}
       />
     {{/if}}
   </section>

@@ -46,14 +46,14 @@ export default Component.extend({
     this.storage.billingInfo = this.billingInfo;
   },
 
-  setBillingStep() {},
+  updateBillingQueryParams() {},
 
   actions: {
 
     goToFirstStep() {
       this.set('currentStep', STEPS.ONE);
       this.persistBillingData(STEPS.ONE);
-      this.setBillingStep(STEPS.ONE);
+      this.updateBillingQueryParams(STEPS.ONE);
     },
 
     next() {
@@ -64,7 +64,7 @@ export default Component.extend({
         const nextIndex = Math.min(lastIndex, currentIndex + 1);
         const currentStep = this.steps[nextIndex];
         this.set('currentStep', currentStep);
-        this.setBillingStep(currentStep);
+        this.updateBillingQueryParams(currentStep);
         this.persistBillingData(currentStep);
       }
     },
@@ -74,13 +74,13 @@ export default Component.extend({
       const prevIndex = Math.max(0, currentIndex - 1);
       const currentStep = this.steps[prevIndex];
       this.set('currentStep', currentStep);
-      this.setBillingStep(currentStep);
+      this.updateBillingQueryParams(currentStep);
       this.persistBillingData(currentStep);
     },
 
     cancel() {
       this.set('currentStep', STEPS.ONE);
-      this.setBillingStep(STEPS.ONE);
+      this.updateBillingQueryParams(STEPS.ONE);
     },
   }
 });
