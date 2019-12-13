@@ -15,8 +15,9 @@ const BG_COLORS = {
   [COLORS.WHITE]: 'white',
 };
 
-const DISPLAYS = {
+export const DISPLAYS = {
   BLOCK: 'block',
+  INLINE: 'inline',
   INLINE_BLOCK: 'inline-block',
   FLEX: 'flex',
 };
