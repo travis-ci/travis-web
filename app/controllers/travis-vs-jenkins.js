@@ -5,6 +5,7 @@ export default Controller.extend({
   scrollToContact: false,
   toggleContactScroll() {
     this.set('scrollToContact', true);
+
     later(() => this.set('scrollToContact', false), 500);
   },
 });
