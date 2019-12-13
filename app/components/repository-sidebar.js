@@ -82,13 +82,7 @@ export default Component.extend({
       let showRunningJobs = this.get('features.showRunningJobsInSidebar');
       let runningJobs = this.get('jobState.runningJobs');
       if (!showRunningJobs) { return []; }
-      return runningJobs.sort((a, b) => {
-        const aNumber = parseFloat(a.number);
-        const bNumber = parseFloat(b.number);
-        if (aNumber > bNumber) return 1;
-        if (aNumber < bNumber) return -1;
-        return 0;
-      });
+      return runningJobs.sort((a, b) => parseFloat(a.number) - parseFloat(b.number));
     }
   ),
 
