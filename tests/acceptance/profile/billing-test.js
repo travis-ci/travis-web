@@ -9,12 +9,14 @@ import Service from '@ember/service';
 import StripeMock from 'travis/tests/helpers/stripe-mock';
 import { stubService, stubConfig } from 'travis/tests/helpers/stub-service';
 import { getContext } from '@ember/test-helpers';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | profile/billing', function (hooks) {
   setupApplicationTest(hooks);
+  setupMirage(hooks);
 
   hooks.beforeEach(function () {
-    this.user = server.create('user', {
+    this.user = this.server.create('user', {
       name: 'User Name of exceeding length',
       type: 'user',
       login: 'user-login',
@@ -27,14 +29,14 @@ module('Acceptance | profile/billing', function (hooks) {
 
     signInUser(this.user);
 
-    let trial = server.create('trial', {
+    let trial = this.server.create('trial', {
       owner: this.user,
       status: 'new',
       builds_remaining: 10,
     });
     this.trial = trial;
 
-    let plan = server.create('plan', {
+    let plan = this.server.create('plan', {
       name: 'Small Business1',
       builds: 5,
       annual: false,
@@ -43,17 +45,17 @@ module('Acceptance | profile/billing', function (hooks) {
     });
     this.plan = plan;
 
-    server.create('plan', { id: 'travis-ci-one-build', name: 'Bootstrap', builds: 1, price: 6900, currency: 'USD' });
-    this.defaultPlan = server.create('plan', { id: 'travis-ci-two-builds', name: 'Startup', builds: 2, price: 12900, currency: 'USD' });
-    server.create('plan', { id: 'travis-ci-five-builds', name: 'Premium', builds: 5, price: 24900, currency: 'USD' });
-    this.lastPlan = server.create('plan', { id: 'travis-ci-ten-builds', name: 'Small Business', builds: 10, price: 48900, currency: 'USD' });
+    this.server.create('plan', { id: 'travis-ci-one-build', name: 'Bootstrap', builds: 1, price: 6900, currency: 'USD' });
+    this.defaultPlan = this.server.create('plan', { id: 'travis-ci-two-builds', name: 'Startup', builds: 2, price: 12900, currency: 'USD' });
+    this.server.create('plan', { id: 'travis-ci-five-builds', name: 'Premium', builds: 5, price: 24900, currency: 'USD' });
+    this.lastPlan = this.server.create('plan', { id: 'travis-ci-ten-builds', name: 'Small Business', builds: 10, price: 48900, currency: 'USD' });
 
-    server.create('plan', { id: 'travis-ci-one-build-annual', name: 'Bootstrap', builds: 1, price: 75900, currency: 'USD', annual: true });
-    this.defaultAnnualPlan = server.create('plan', { id: 'travis-ci-two-builds-annual', name: 'Startup', builds: 2, price: 141900, currency: 'USD', annual: true });
-    server.create('plan', { id: 'travis-ci-five-builds-annual', name: 'Premium', builds: 5, price: 273900, currency: 'USD', annual: true });
-    server.create('plan', { id: 'travis-ci-ten-builds-annual', name: 'Small Business', builds: 10, price: 537900, currency: 'USD', annual: true });
+    this.server.create('plan', { id: 'travis-ci-one-build-annual', name: 'Bootstrap', builds: 1, price: 75900, currency: 'USD', annual: true });
+    this.defaultAnnualPlan = this.server.create('plan', { id: 'travis-ci-two-builds-annual', name: 'Startup', builds: 2, price: 141900, currency: 'USD', annual: true });
+    this.server.create('plan', { id: 'travis-ci-five-builds-annual', name: 'Premium', builds: 5, price: 273900, currency: 'USD', annual: true });
+    this.server.create('plan', { id: 'travis-ci-ten-builds-annual', name: 'Small Business', builds: 10, price: 537900, currency: 'USD', annual: true });
 
-    let subscription = server.create('subscription', {
+    let subscription = this.server.create('subscription', {
       plan,
       owner: this.user,
       status: 'subscribed',
@@ -83,7 +85,7 @@ module('Acceptance | profile/billing', function (hooks) {
       last_digits: '1919'
     });
 
-    let organization = server.create('organization', {
+    let organization = this.server.create('organization', {
       name: 'Org Name',
       type: 'organization',
       login: 'org-login',
@@ -93,7 +95,7 @@ module('Acceptance | profile/billing', function (hooks) {
     });
     this.organization = organization;
 
-    this.coupons = server.createList('coupon', 3);
+    this.coupons = this.server.createList('coupon', 3);
   });
 
   test('view billing information with invoices', async function (assert) {
@@ -131,7 +133,7 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining('5 concurrent jobs Valid until June 19, 2018');
 
     assert.equal(profilePage.billing.userDetails.text, 'contact name User Name company name Travis CI GmbH billing email user@email.com');
-    assert.equal(profilePage.billing.billingDetails.text, 'address Rigaerstraße 8 city Berlin post code 10987 country Germany');
+    assert.equal(profilePage.billing.billingDetails.text, 'address Rigaerstraße 8 city Berlin post code 10987 country Germany vat id 12345');
     assert.dom(profilePage.billing.planMessage.scope).hasText('Valid until June 19, 2018');
 
     assert.equal(profilePage.billing.creditCardNumber.text, '•••• •••• •••• 1919');
@@ -243,7 +245,7 @@ module('Acceptance | profile/billing', function (hooks) {
 
     percySnapshot(assert);
 
-    assert.dom(profilePage.billing.editBillingAddressForm.inputs.scope).exists({ count: 3 });
+    assert.dom(profilePage.billing.editBillingAddressForm.inputs.scope).exists({ count: 4 });
 
     await selectChoose('.billing-country', 'Nigeria');
 
@@ -253,7 +255,7 @@ module('Acceptance | profile/billing', function (hooks) {
 
     await profilePage.billing.editBillingAddressForm.updateBillingAddressButton.click();
 
-    assert.equal(profilePage.billing.billingDetails.text, 'address Olalubi city Lagos post code 10987 country Nigeria');
+    assert.equal(profilePage.billing.billingDetails.text, 'address Olalubi city Lagos post code 10987 country Nigeria vat id 12345');
   });
 
   test('view billing on an expired stripe plan', async function (assert) {
@@ -271,7 +273,7 @@ module('Acceptance | profile/billing', function (hooks) {
 
     assert.equal(profilePage.billing.plan.name, 'Small Business1 plan active');
     assert.equal(profilePage.billing.userDetails.text, 'contact name User Name company name Travis CI GmbH billing email user@email.com');
-    assert.equal(profilePage.billing.billingDetails.text, 'address Rigaerstraße 8 city Berlin post code 10987 country Germany');
+    assert.equal(profilePage.billing.billingDetails.text, 'address Rigaerstraße 8 city Berlin post code 10987 country Germany vat id 12345');
   });
 
   test('view billing on an incomplete stripe plan', async function (assert) {
@@ -310,7 +312,7 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.planMessage.text, `Expires ${momentFromNow} on June 19`);
 
     assert.equal(profilePage.billing.userDetails.text, 'contact name User Name company name Travis CI GmbH billing email user@email.com');
-    assert.equal(profilePage.billing.billingDetails.text, 'address Rigaerstraße 8 city Berlin post code 10987 country Germany');
+    assert.equal(profilePage.billing.billingDetails.text, 'address Rigaerstraße 8 city Berlin post code 10987 country Germany vat id 12345');
     assert.dom(profilePage.billing.planMessage.scope).hasText(`Expires ${momentFromNow} on June 19`);
 
     assert.equal(profilePage.billing.creditCardNumber.text, '•••• •••• •••• 1919');
@@ -360,7 +362,7 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.planMessage.text, `Expires ${momentFromNow} on June 19`);
 
     assert.equal(profilePage.billing.userDetails.text, 'contact name User Name company name Travis CI GmbH billing email user@email.com');
-    assert.equal(profilePage.billing.billingDetails.text, 'address Rigaerstraße 8 city Berlin post code 10987 country Germany');
+    assert.equal(profilePage.billing.billingDetails.text, 'address Rigaerstraße 8 city Berlin post code 10987 country Germany vat id 12345');
     assert.dom(profilePage.billing.planMessage.scope).hasText(`Expires ${momentFromNow} on June 19`);
 
     assert.equal(profilePage.billing.creditCardNumber.text, '•••• •••• •••• 1919');
@@ -413,7 +415,7 @@ module('Acceptance | profile/billing', function (hooks) {
   });
 
   test('view billing tab with Github trial subscription', async function (assert) {
-    let trial = server.create('trial', {
+    let trial = this.server.create('trial', {
       builds_remaining: 0,
       owner: this.organization,
       status: 'started',
@@ -441,7 +443,7 @@ module('Acceptance | profile/billing', function (hooks) {
   });
 
   test('view billing tab when Github trial subscription has ended', async function (assert) {
-    let trial = server.create('trial', {
+    let trial = this.server.create('trial', {
       builds_remaining: 0,
       owner: this.organization,
       status: 'ended',
@@ -471,7 +473,7 @@ module('Acceptance | profile/billing', function (hooks) {
     this.subscription.source = 'github';
     this.subscription.status = 'canceled';
 
-    server.create('subscription', {
+    this.server.create('subscription', {
       plan: this.defaultPlan,
       owner: this.user,
       status: 'expired',
@@ -703,7 +705,7 @@ module('Acceptance | profile/billing', function (hooks) {
       createSubscription: true
     };
     this.organization.save();
-    let trial = server.create('trial', {
+    let trial = this.server.create('trial', {
       builds_remaining: 100,
       owner: this.organization,
       status: 'new',
@@ -737,7 +739,7 @@ module('Acceptance | profile/billing', function (hooks) {
       createSubscription: true
     };
     this.organization.save();
-    let trial = server.create('trial', {
+    let trial = this.server.create('trial', {
       builds_remaining: 25,
       owner: this.organization,
       status: 'started',
@@ -771,7 +773,7 @@ module('Acceptance | profile/billing', function (hooks) {
       createSubscription: true
     };
     this.organization.save();
-    let trial = server.create('trial', {
+    let trial = this.server.create('trial', {
       builds_remaining: 10,
       owner: this.organization,
       status: 'started',
@@ -807,7 +809,7 @@ module('Acceptance | profile/billing', function (hooks) {
       createSubscription: true
     };
     this.organization.save();
-    let trial = server.create('trial', {
+    let trial = this.server.create('trial', {
       builds_remaining: 0,
       owner: this.organization,
       status: 'ended',
@@ -913,7 +915,7 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining('2 concurrent jobs (plus 1 for free)');
 
     assert.equal(profilePage.billing.userDetails.text, 'contact name John Doe company name Travis billing email john@doe.com');
-    assert.equal(profilePage.billing.billingDetails.text, 'address 15 Olalubi street city Berlin post code 353564 country Germany');
+    assert.equal(profilePage.billing.billingDetails.text, 'address 15 Olalubi street city Berlin post code 353564 country Germany vat id 356463');
   });
 
   test('logs an exception when there is a subscription without a plan and handles unknowns', async function (assert) {
@@ -1191,7 +1193,7 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining('2 concurrent jobs');
 
     assert.equal(profilePage.billing.userDetails.text, 'contact name John Doe company name Travis billing email john@doe.com');
-    assert.equal(profilePage.billing.billingDetails.text, 'address 15 Olalubi street city Berlin post code 353564 country Germany');
+    assert.equal(profilePage.billing.billingDetails.text, 'address 15 Olalubi street city Berlin post code 353564 country Germany vat id 356463');
     assert.dom(profilePage.billing.planMessage.scope).hasText('');
   });
 
@@ -1258,7 +1260,7 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining('2 concurrent jobs');
 
     assert.equal(profilePage.billing.userDetails.text, 'contact name John Doe company name Travis billing email john@doe.com');
-    assert.equal(profilePage.billing.billingDetails.text, 'address 15 Olalubi street city Berlin post code 353564 country Germany');
+    assert.equal(profilePage.billing.billingDetails.text, 'address 15 Olalubi street city Berlin post code 353564 country Germany vat id 356463');
     assert.dom(profilePage.billing.planMessage.scope).hasText('');
   });
 });

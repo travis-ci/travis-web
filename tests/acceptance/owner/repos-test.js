@@ -2,12 +2,14 @@ import { module, test } from 'qunit';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import ownerPage from 'travis/tests/pages/owner';
 import signInUser from 'travis/tests/helpers/sign-in-user';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | owner repositories', function (hooks) {
   setupApplicationTest(hooks);
+  setupMirage(hooks);
 
   hooks.beforeEach(function () {
-    let user = server.create('user', {
+    let user = this.server.create('user', {
       name: 'User Name',
       login: 'user-login'
     });
@@ -16,7 +18,7 @@ module('Acceptance | owner repositories', function (hooks) {
     signInUser(user);
 
     // create active repo
-    const firstRepository = server.create('repository', {
+    const firstRepository = this.server.create('repository', {
       slug: 'user-login/repository-name',
       owner: {
         login: user.login
@@ -47,14 +49,14 @@ module('Acceptance | owner repositories', function (hooks) {
     lastBuild.save();
 
     // create active repo
-    server.create('repository', {
+    this.server.create('repository', {
       slug: 'user-login/yet-another-repository-name',
       owner: {
         login: user.login
       }
     });
 
-    server.create('repository', {
+    this.server.create('repository', {
       slug: 'other/other',
       skipPermissions: true
     });

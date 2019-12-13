@@ -4,15 +4,17 @@ import { setupApplicationTest } from 'travis/tests/helpers/setup-application-tes
 import { enterpriseBanners } from 'travis/tests/pages/enterprise-banner';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { enableFeature } from 'ember-feature-flags/test-support';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | enterprise/banner', function (hooks) {
   setupApplicationTest(hooks);
+  setupMirage(hooks);
 
   hooks.beforeEach(function () {
-    const currentUser = server.create('user');
+    const currentUser = this.server.create('user');
     signInUser(currentUser);
 
-    server.get('/v3/enterprise_license', (schema, request) => {
+    this.server.get('/v3/enterprise_license', (schema, request) => {
       return {
         'license_id': 'ad12345',
         'seats': '30',

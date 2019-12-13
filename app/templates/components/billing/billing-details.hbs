@@ -57,19 +57,33 @@
               <field.input name="city" placeholder="City" />
             </form.field>
           </div>
-          <div class="form-elem">
-            <form.field
-              @label="Post Code"
-              @value={{this.info.zipCode}}
-              @required={{true}}
-              @validateOnField={{false}}
-              @showValidationStatusIcons={{false}}
-              @onChange={{action (mut this.info.zipCode)}}
-              as |field|
-            >
-              <field.input name="postCode" placeholder="Post Code" />
-            </form.field>
-          </div>  
+          <div class='flex flex--col flex-md-row w-full'>
+            <div class="form-elem inline-form-elem">
+              <form.field
+                @label="Post Code"
+                @value={{this.info.zipCode}}
+                @required={{true}}
+                @validateOnField={{false}}
+                @showValidationStatusIcons={{false}}
+                @onChange={{action (mut this.info.zipCode)}}
+                as |field|
+              >
+                <field.input name="postCode" placeholder="Post Code" />
+              </form.field>
+            </div>  
+            <div class="form-elem">
+              <form.field
+                @label="Vat Id"
+                @value={{this.info.vatId}}
+                @validateOnField={{false}}
+                @showValidationStatusIcons={{false}}
+                @onChange={{action (mut this.info.vatId)}}
+                as |field|
+              >
+                <field.input name="vatId" />
+              </form.field>
+            </div>
+          </div>
         </div>
         <div class="form-elem">
           {{#if this.editContact.isRunning}}
@@ -111,6 +125,12 @@
         <section>
           <h4>country</h4>
           <p>{{this.info.country}}</p>
+        </section>
+      {{/if}}
+      {{#if this.info.vatId}}
+        <section>
+          <h4>vat id</h4>
+          <p>{{this.info.vatId}}</p>
         </section>
       {{/if}}
     </div>

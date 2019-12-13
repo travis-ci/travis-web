@@ -64,8 +64,15 @@ export default function () {
     return schema.organizations.all();
   });
 
-  this.get('/user', function (schema) {
-    return this.serialize(schema.users.first(), 'v3');
+  this.get('/user', function (schema, request) {
+    const { authorization } = request.requestHeaders;
+    const firstUser = schema.users.first();
+
+    if (authorization !== `token ${firstUser.token}`) {
+      return new Response(403, {}, {});
+    }
+
+    return this.serialize(firstUser, 'v3');
   });
 
   this.get('/users/:id', function ({ users }, request) {
