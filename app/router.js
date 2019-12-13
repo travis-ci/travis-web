@@ -25,10 +25,7 @@ Router.map(function () {
     this.route('index', { path: '/' });
     this.route('thank-you');
   });
-  this.route('team', { path: '/about' }, function () {
-    this.route('index', { path: '/' });
-    this.route('travis-vs-jenkins', { path: 'travis-versus-jenkins' });
-  });
+  this.route('team', { path: '/about' });
   this.route('logo', { path: '/logo' });
   this.route('help');
 
@@ -47,6 +44,8 @@ Router.map(function () {
   this.route('unsubscribe', { path: '/account/preferences/unsubscribe' });
   this.route('profile', { path: '/profile/:login' });
   this.route('profile', { path: '/profile/:login/:section' });
+
+  this.route('travis-vs-jenkins');
 
   this.route('repo', { path: '/:owner/:name' }, function () {
     this.route('index', { path: '/' });
