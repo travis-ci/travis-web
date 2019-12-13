@@ -343,7 +343,6 @@ module.exports = {
         embertest: true
       },
       globals: {
-        server: true,
         triggerCopySuccess: true,
         triggerCopyError: true,
         signInUser: true,

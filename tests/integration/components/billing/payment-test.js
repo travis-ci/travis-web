@@ -6,9 +6,11 @@ import StripeMock from 'travis/tests/helpers/stripe-mock';
 import { stubConfig } from 'travis/tests/helpers/stub-service';
 import { getContext } from '@ember/test-helpers';
 import profilePage from 'travis/tests/pages/profile';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Integration | Component | billing-payment', function (hooks) {
   setupRenderingTest(hooks);
+  setupMirage(hooks);
 
   hooks.beforeEach(function () {
 
@@ -70,7 +72,7 @@ module('Integration | Component | billing-payment', function (hooks) {
 
   test('billing-payment renders correctly', async function (assert) {
 
-    await render(hbs`<Billing::Payment 
+    await render(hbs`<Billing::Payment
       @paymentInfo={{paymentInfo}}
       @newSubscription={{newSubscription}}
       @cancel={{action 'cancel'}}

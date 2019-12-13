@@ -4,12 +4,14 @@ import profilePage from 'travis/tests/pages/profile';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { enableFeature } from 'ember-feature-flags/test-support';
 import { percySnapshot } from 'ember-percy';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | profile/filtering', function (hooks) {
   setupApplicationTest(hooks);
+  setupMirage(hooks);
 
   hooks.beforeEach(function () {
-    const currentUser = server.create('user', {
+    const currentUser = this.server.create('user', {
       name: 'User Name',
       login: 'user-login',
     });
@@ -18,13 +20,13 @@ module('Acceptance | profile/filtering', function (hooks) {
     signInUser(currentUser);
 
     // create organization
-    server.create('organization', {
+    this.server.create('organization', {
       name: 'Org Name',
       login: 'org-login',
     });
 
     // create active repository
-    server.create('repository', {
+    this.server.create('repository', {
       name: 'specific-repository-name',
       owner: {
         login: 'user-login',
@@ -36,7 +38,7 @@ module('Acceptance | profile/filtering', function (hooks) {
     });
 
     // create inactive repository
-    server.create('repository', {
+    this.server.create('repository', {
       name: 'yet-another-repository-name',
       owner: {
         login: 'user-login',
@@ -48,7 +50,7 @@ module('Acceptance | profile/filtering', function (hooks) {
     });
 
     // create repository without admin permissions
-    server.create('repository', {
+    this.server.create('repository', {
       name: 'other-repository-name',
       owner: {
         login: 'user-login',
@@ -60,7 +62,7 @@ module('Acceptance | profile/filtering', function (hooks) {
     });
 
     // create other random repository to ensure correct filtering
-    server.create('repository', {
+    this.server.create('repository', {
       name: 'feminism-is-for-everybody',
       owner: {
         login: 'bellhooks',
@@ -89,14 +91,14 @@ module('Acceptance | profile/filtering', function (hooks) {
   test('paginate and filter GitHub Apps-managed repositories', async function (assert) {
     enableFeature('github-apps');
 
-    server.create('installation', {
+    this.server.create('installation', {
       owner: this.user,
       github_id: 2691
     });
     this.user.save();
 
     for (let i = 0; i < 15; i++) {
-      server.create('repository', {
+      this.server.create('repository', {
         name: `github-apps-public-repository-${(i + '').padStart(3, '0')}`,
         owner: {
           login: 'user-login',

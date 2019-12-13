@@ -5,9 +5,11 @@ import proHeader from 'travis/tests/pages/header/pro';
 import proLayout from 'travis/tests/pages/layouts/pro';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { enableFeature } from 'ember-feature-flags/test-support';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | layouts/pro', function (hooks) {
   setupApplicationTest(hooks);
+  setupMirage(hooks);
 
   test('header layout when unauthenticated', async function (assert) {
     enableFeature('proVersion');
@@ -27,7 +29,7 @@ module('Acceptance | layouts/pro', function (hooks) {
   test('header layout when authenticated', async function (assert) {
     enableFeature('proVersion');
 
-    const currentUser = server.create('user');
+    const currentUser = this.server.create('user');
     signInUser(currentUser);
 
     await visit('/');
