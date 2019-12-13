@@ -134,7 +134,7 @@ export default Component.extend({
 
   // Private //
   colorClass: prefix('color', 'bg', { dictionary: BG_COLORS }),
-  displayClass: reads('display'),
+  displayClass: prefix('display', ''),
   layerClass: prefix('layer', 'z'),
   overflowAllClass: prefix('overflow.all', 'overflow'),
   overflowXClass: prefix('overflow.x', 'overflow'),
