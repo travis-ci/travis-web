@@ -218,6 +218,11 @@ export default function () {
     return schema.broadcasts.all();
   });
 
+  this.get('/logout', schema => {
+    const firstUser = schema.users.first();
+    return this.serialize(firstUser, 'v3');
+  });
+
   this.get('/repos', function (schema, { queryParams }) {
     // search apparently still uses v2, so different response necessary
     const query = queryParams.search;
