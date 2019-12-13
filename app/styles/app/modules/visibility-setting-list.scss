@@ -75,27 +75,32 @@
 
 .visibility-settings-modal {
   padding: 16px 20px 20px;
+  font-style: normal;
 
-  &__top {
+  & &__top {
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
 
-  &__close-button {
+  & &__close-button {
     margin: 0;
     padding: 0;
     outline: none;
   }
 
-  &__header {
+  & &__header {
     font-size: 22px;
     font-weight: 300;
     color: $oxide-blue;
     margin: 0 2rem 0 0;
   }
 
-  &__controls .button {
+  & &__body {
+    color: $asphalt-grey;
+  }
+
+  & &__controls .button {
     margin: 0 1rem 0 0;
   }
 }

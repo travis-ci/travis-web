@@ -352,6 +352,25 @@ export default create({
       scope: '[data-test-billing-info-title]',
     },
 
+
+    billingCouponForm: {
+      scope: '[data-test-coupon-form]',
+      isPresent: isPresent(),
+      fillIn: fillable(''),
+
+      submitCoupon: {
+        scope: '[data-test-coupon-button]'
+      },
+
+      validCoupon: {
+        scope: '[data-test-valid-coupon]'
+      },
+
+      invalidCoupon: {
+        scope: '[data-test-invalid-coupon]'
+      }
+    },
+
     billingForm: {
       scope: '[data-test-billing-form]',
       isPresent: isPresent(),
@@ -558,6 +577,7 @@ export default create({
 
     trial: {
       scope: '.billing',
+      bannerInformation: text('[data-test-help-text]'),
       overviewHeading: text('[data-test-overview-heading]'),
       buildsRunningOutBanner: text('[data-test-trial-running-out]'),
       buildsRanOutBanner: text('[data-test-trial-ran-out]'),
