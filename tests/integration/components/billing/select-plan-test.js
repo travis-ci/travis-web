@@ -3,9 +3,11 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import profilePage from 'travis/tests/pages/profile';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Integration | Component | billing-select-plan', function (hooks) {
   setupRenderingTest(hooks);
+  setupMirage(hooks);
 
   hooks.beforeEach(function () {
 
@@ -41,8 +43,8 @@ module('Integration | Component | billing-select-plan', function (hooks) {
 
   test('it renders default selected plan', async function (assert) {
 
-    await render(hbs`<Billing::SelectPlan 
-      @displayedPlans={{displayedPlans}} 
+    await render(hbs`<Billing::SelectPlan
+      @displayedPlans={{displayedPlans}}
       @selectedPlan={{selectedPlan}}
       @showMonthly={{this.showMonthly}}
       @showAnnual={{this.showAnnual}}
@@ -59,8 +61,8 @@ module('Integration | Component | billing-select-plan', function (hooks) {
     this.set('showAnnual', true);
     this.set('showMonthly', false);
 
-    await render(hbs`<Billing::SelectPlan 
-      @displayedPlans={{displayedPlans}} 
+    await render(hbs`<Billing::SelectPlan
+      @displayedPlans={{displayedPlans}}
       @selectedPlan={{selectedPlan}}
       @showMonthly={{this.showMonthly}}
       @showAnnual={{this.showAnnual}}

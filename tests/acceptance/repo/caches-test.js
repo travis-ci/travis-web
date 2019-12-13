@@ -4,9 +4,11 @@ import { settled } from '@ember/test-helpers';
 import page from 'travis/tests/pages/caches';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { percySnapshot } from 'ember-percy';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | repo caches', function (hooks) {
   setupApplicationTest(hooks);
+  setupMirage(hooks);
 
   hooks.beforeEach(function () {
     const oneDayAgo = new Date(new Date().getTime() - 1000 * 60 * 60 * 24);
@@ -14,32 +16,32 @@ module('Acceptance | repo caches', function (hooks) {
     const threeDaysAgo = new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 3);
     const slug = 'org-login/repository-name';
 
-    const currentUser = server.create('user', {
+    const currentUser = this.server.create('user', {
       name: 'User Name',
       login: 'user-login'
     });
 
     const caches = [];
 
-    caches.push(server.create('cache', {
+    caches.push(this.server.create('cache', {
       branch: 'a-branch-name',
       lastModified: oneDayAgo,
       size: 89407938
     }));
 
-    caches.push(server.create('cache', {
+    caches.push(this.server.create('cache', {
       branch: 'PR.1919',
       lastModified: twoDaysAgo,
       size: 10061087
     }));
 
-    caches.push(server.create('cache', {
+    caches.push(this.server.create('cache', {
       branch: 'PR.1919',
       lastModified: threeDaysAgo,
       size: 10061086
     }));
 
-    this.repository = server.create('repository', { slug, caches });
+    this.repository = this.server.create('repository', { slug, caches });
 
     signInUser(currentUser);
   });
@@ -69,7 +71,7 @@ module('Acceptance | repo caches', function (hooks) {
 
     const branchQueryParams = [];
 
-    server.delete(`/repo/${this.repository.id}/caches`, function (schema, {queryParams}) {
+    this.server.delete(`/repo/${this.repository.id}/caches`, function (schema, {queryParams}) {
       branchQueryParams.push(queryParams.branch || 'empty');
     });
 
