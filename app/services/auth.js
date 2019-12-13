@@ -72,6 +72,7 @@ export default Service.extend({
   redirectUrl: null,
 
   signOut(runTeardown = true) {
+    this.api.get('/logout');
     this.localStorage.clearAuthData();
     this.sessionStorage.clearAuthData();
 
@@ -85,7 +86,6 @@ export default Service.extend({
       runAfterSignOutCallbacks();
     }
     this.store.unloadAll();
-    this.api.get('/logout');
   },
 
   afterSignOut(callback) {
