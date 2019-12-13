@@ -3,9 +3,11 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render, settled } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { Response } from 'ember-cli-mirage';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('RepositoryStatusToggleComponent', function (hooks) {
   setupRenderingTest(hooks);
+  setupMirage(hooks);
 
   test('it switches state when clicked', async function (assert) {
     this.set('repository', {
@@ -46,7 +48,7 @@ module('RepositoryStatusToggleComponent', function (hooks) {
 
     this.set('repository', repo);
 
-    server.post('/repo/:id/activate', (schema, request) => {
+    this.server.post('/repo/:id/activate', (schema, request) => {
       return new Response(409, {}, {});
     });
 
@@ -77,7 +79,7 @@ module('RepositoryStatusToggleComponent', function (hooks) {
 
     this.set('repository', repo);
 
-    server.post('/repo/:id/activate', (schema, request) => {
+    this.server.post('/repo/:id/activate', (schema, request) => {
       return new Response(404, {}, {});
     });
 

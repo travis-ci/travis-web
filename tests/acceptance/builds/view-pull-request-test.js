@@ -3,25 +3,27 @@ import { setupApplicationTest } from 'travis/tests/helpers/setup-application-tes
 import page from 'travis/tests/pages/build';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { percySnapshot } from 'ember-percy';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | builds/view pull request', function (hooks) {
   setupApplicationTest(hooks);
+  setupMirage(hooks);
 
   hooks.beforeEach(function () {
-    const currentUser = server.create('user');
+    const currentUser = this.server.create('user');
     signInUser(currentUser);
   });
 
   test('renders a pull request', async function (assert) {
-    let repository =  server.create('repository', { slug: 'travis-ci/travis-web' });
+    let repository =  this.server.create('repository', { slug: 'travis-ci/travis-web' });
 
     let commitBody =
       'Within the organization there is a gap between words and deeds, between what organizations say they will do, ' +
       'or what they are committed to doing, and what they are doing. – Sara Ahmed';
 
-    const branch = server.create('branch', { name: 'acceptance-tests' });
-    let  gitUser = server.create('git-user', { name: 'Mr T' });
-    let commit = server.create('commit', {
+    const branch = this.server.create('branch', { name: 'acceptance-tests' });
+    let  gitUser = this.server.create('git-user', { name: 'Mr T' });
+    let commit = this.server.create('commit', {
       author: gitUser,
       committer: gitUser,
       committer_name: 'Mr T',
@@ -29,7 +31,7 @@ module('Acceptance | builds/view pull request', function (hooks) {
       message: `This is a message\n${commitBody}`,
       branch_is_default: true
     });
-    let build = server.create('build', {
+    let build = this.server.create('build', {
       number: '5',
       state: 'passed',
       pull_request_number: '10',
@@ -40,7 +42,7 @@ module('Acceptance | builds/view pull request', function (hooks) {
       commit,
       isTag: false
     });
-    let job = server.create('job', { number: '5.1', state: 'passed', build, commit, repository, config: { language: 'Hello' } });
+    let job = this.server.create('job', { number: '5.1', state: 'passed', build, commit, repository, config: { language: 'Hello' } });
 
     commit.update('build', build);
     commit.update('job', job);

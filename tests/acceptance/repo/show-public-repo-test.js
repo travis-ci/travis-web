@@ -3,12 +3,14 @@ import { setupApplicationTest } from 'travis/tests/helpers/setup-application-tes
 import { settled, getContext } from '@ember/test-helpers';
 import page from 'travis/tests/pages/repo-not-active';
 import signInUser from 'travis/tests/helpers/sign-in-user';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | subscribing pusher to public repo', function (hooks) {
   setupApplicationTest(hooks);
+  setupMirage(hooks);
 
   test('viewing public repo results in a repo pusher channel', async function (assert) {
-    const repo = server.create('repository', {
+    const repo = this.server.create('repository', {
       slug: 'musterfrau/a-repo',
       private: false
     });
@@ -24,15 +26,15 @@ module('Acceptance | subscribing pusher to public repo', function (hooks) {
   });
 
   skip('viewing public repo as a signed in collaborator does not trigger subscription', async function (assert) {
-    const user = server.create('user', {
+    const user = this.server.create('user', {
       name: 'Travis CI',
       login: 'travisci',
     });
-    const repository = server.create('repository', {
+    const repository = this.server.create('repository', {
       slug: 'musterfrau/a-repo',
       private: false
     });
-    server.create('permission', { user, repository, push: true });
+    this.server.create('permission', { user, repository, push: true });
 
     signInUser(user);
 
@@ -46,15 +48,15 @@ module('Acceptance | subscribing pusher to public repo', function (hooks) {
   });
 
   test('viewing public repo as a signed in user triggers subscription', async function (assert) {
-    const user = server.create('user', {
+    const user = this.server.create('user', {
       name: 'Travis CI',
       login: 'travisci',
     });
-    const repository = server.create('repository', {
+    const repository = this.server.create('repository', {
       slug: 'musterfrau/a-repo',
       private: false
     });
-    server.schema.permissions.all().destroy();
+    this.server.schema.permissions.all().destroy();
 
     signInUser(user);
 

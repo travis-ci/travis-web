@@ -7,6 +7,7 @@ import { enableFeature } from 'ember-feature-flags/test-support';
 import { percySnapshot } from 'ember-percy';
 import { prettyDate } from 'travis/helpers/pretty-date';
 import RepositoriesService from 'travis/services/repositories';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 const RepositoriesServiceStub = RepositoriesService.extend({
   requestOwnedRepositories: task(function* () {
@@ -18,9 +19,10 @@ const RepositoriesServiceStub = RepositoriesService.extend({
 
 module('Acceptance | home/sidebar tabs', function (hooks) {
   setupApplicationTest(hooks);
+  setupMirage(hooks);
 
   hooks.beforeEach(function () {
-    const currentUser = server.create('user', {
+    const currentUser = this.server.create('user', {
       name: 'User Name',
       login: 'user-login'
     });
@@ -28,23 +30,23 @@ module('Acceptance | home/sidebar tabs', function (hooks) {
     signInUser(currentUser);
 
     // create active repo
-    server.create('repository', {
+    this.server.create('repository', {
       slug: 'org-login/repository-name'
     });
 
     // create active repo
-    let testRepo = server.create('repository', {
+    let testRepo = this.server.create('repository', {
       slug: 'org-login/yet-another-repository-name'
     });
     this.repo = testRepo;
 
-    server.create('repository', {
+    this.server.create('repository', {
       slug: 'other/other',
       skipPermissions: true
     });
 
-    let  gitUser = server.create('git-user', { name: 'Mr T' });
-    let commit = server.create('commit', {
+    let  gitUser = this.server.create('git-user', { name: 'Mr T' });
+    let commit = this.server.create('commit', {
       author: gitUser,
       committer: gitUser,
       branch: 'acceptance-tests',
@@ -53,17 +55,17 @@ module('Acceptance | home/sidebar tabs', function (hooks) {
     });
     this.commit = commit;
 
-    let build = server.create('build', {
+    let build = this.server.create('build', {
       repository: testRepo,
       state: 'queued',
       commit,
-      branch: server.create('branch', {
+      branch: this.server.create('branch', {
         name: 'acceptance-tests'
       })
     });
     this.build = build;
 
-    let job = server.create('job', {
+    let job = this.server.create('job', {
       number: '1234.1',
       repository: testRepo,
       state: 'queued',
@@ -97,8 +99,8 @@ module('Acceptance | home/sidebar tabs', function (hooks) {
     // TODO: Currently, we make the same request *30* times, which slows the test down
     // significantly. Need to investigate why.
 
-    server.createList('job', 4, { state: 'started', repository: this.repo, commit: this.commit, build: this.build, started_at: startedAt });
-    server.createList('job', 5, { state: 'created', repository: this.repo, commit: this.commit, build: this.build });
+    this.server.createList('job', 4, { state: 'started', repository: this.repo, commit: this.commit, build: this.build, started_at: startedAt });
+    this.server.createList('job', 5, { state: 'created', repository: this.repo, commit: this.commit, build: this.build });
 
     this.owner.register('service:repositories', RepositoriesServiceStub);
 

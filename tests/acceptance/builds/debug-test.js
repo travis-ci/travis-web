@@ -3,33 +3,35 @@ import { visit, click } from '@ember/test-helpers';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { enableFeature } from 'ember-feature-flags/test-support';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | builds/debug', function (hooks) {
   setupApplicationTest(hooks);
+  setupMirage(hooks);
 
   hooks.beforeEach(function () {
-    const currentUser = server.create('user');
+    const currentUser = this.server.create('user');
     signInUser(currentUser);
   });
 
   test('debugging single-job build', async function (assert) {
     enableFeature('debug-builds');
 
-    let repository =  server.create('repository', {
+    let repository =  this.server.create('repository', {
       private: true
     });
 
-    server.create('branch', {});
+    this.server.create('branch', {});
 
-    let  gitUser = server.create('git-user', { name: 'Mr T' });
-    let commit = server.create('commit', { author: gitUser, committer: gitUser, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
-    let build = server.create('build', { number: '5', repository, state: 'passed', commit });
-    let job = server.create('job', { number: '1234.1', repository, state: 'passed', build, commit });
-    server.create('log', { id: job.id });
+    let  gitUser = this.server.create('git-user', { name: 'Mr T' });
+    let commit = this.server.create('commit', { author: gitUser, committer: gitUser, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
+    let build = this.server.create('build', { number: '5', repository, state: 'passed', commit });
+    let job = this.server.create('job', { number: '1234.1', repository, state: 'passed', build, commit });
+    this.server.create('log', { id: job.id });
 
     const requestBodies = [];
 
-    server.post(`/job/${job.id}/debug`, function (schema, request) {
+    this.server.post(`/job/${job.id}/debug`, function (schema, request) {
       const parsedRequestBody = JSON.parse(request.requestBody);
       requestBodies.push(parsedRequestBody);
     });
@@ -44,14 +46,14 @@ module('Acceptance | builds/debug', function (hooks) {
   test('multi-job builds cannot be debugged', async function (assert) {
     enableFeature('debug-builds');
 
-    let repository =  server.create('repository');
-    server.create('branch', {});
+    let repository =  this.server.create('repository');
+    this.server.create('branch', {});
 
-    let  gitUser = server.create('git-user', { name: 'Mr T' });
-    let commit = server.create('commit', { author: gitUser, committer: gitUser, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
-    let build = server.create('build', { number: '5', repository, state: 'passed', commit });
-    server.create('job', { number: '1234.1', repository, state: 'passed', build, commit });
-    server.create('job', { number: '1234.2', repository, state: 'passed', build, commit });
+    let  gitUser = this.server.create('git-user', { name: 'Mr T' });
+    let commit = this.server.create('commit', { author: gitUser, committer: gitUser, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
+    let build = this.server.create('build', { number: '5', repository, state: 'passed', commit });
+    this.server.create('job', { number: '1234.1', repository, state: 'passed', build, commit });
+    this.server.create('job', { number: '1234.2', repository, state: 'passed', build, commit });
 
     await visit(`/travis-ci/travis-web/builds/${build.id}`);
 
