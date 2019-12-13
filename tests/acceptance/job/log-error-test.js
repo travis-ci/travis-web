@@ -5,21 +5,23 @@ import {
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import jobPage from 'travis/tests/pages/job';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | job/log error', function (hooks) {
   setupApplicationTest(hooks);
+  setupMirage(hooks);
 
   test('handling log error', async function (assert) {
     assert.expect(5);
 
-    let createdBy = server.create('user', { login: 'srivera', name: null });
+    let createdBy = this.server.create('user', { login: 'srivera', name: null });
 
-    let repository =  server.create('repository', { slug: 'travis-ci/travis-web' }),
-      branch = server.create('branch', { name: 'acceptance-tests' });
+    let repository =  this.server.create('repository', { slug: 'travis-ci/travis-web' }),
+      branch = this.server.create('branch', { name: 'acceptance-tests' });
 
-    let commit = server.create('commit', { branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
-    let build = server.create('build', { repository, branch, commit, state: 'passed', createdBy });
-    let job = server.create('job', { repository, commit, build, number: '1234.1', state: 'passed' });
+    let commit = this.server.create('commit', { branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
+    let build = this.server.create('build', { repository, branch, commit, state: 'passed', createdBy });
+    let job = this.server.create('job', { repository, commit, build, number: '1234.1', state: 'passed' });
 
     commit.job = job;
 

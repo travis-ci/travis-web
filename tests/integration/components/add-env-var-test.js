@@ -7,12 +7,14 @@ import hbs from 'htmlbars-inline-precompile';
 import DS from 'ember-data';
 import { percySnapshot } from 'ember-percy';
 import { selectChoose, selectSearch } from 'ember-power-select/test-support';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Integration | Component | add env-var', function (hooks) {
   setupRenderingTest(hooks);
+  setupMirage(hooks);
 
   hooks.beforeEach(async function () {
-    const repository = server.create('repository', {
+    const repository = this.server.create('repository', {
       name: 'repository-name',
       slug: 'org-login/repository-name',
       private: true
@@ -134,7 +136,7 @@ module('Integration | Component | add env-var', function (hooks) {
 
     let branchName = 'foo';
 
-    server.create('branch', {
+    this.server.create('branch', {
       name: branchName,
       id: `/v3/repo/${this.repository.id}/branch/food`,
       exists_on_github: true,
@@ -181,7 +183,7 @@ module('Integration | Component | add env-var', function (hooks) {
 
     let branchName = 'foo';
 
-    server.create('branch', {
+    this.server.create('branch', {
       name: branchName,
       id: `/v3/repo/${this.repository.id}/branch/food`,
       exists_on_github: true,

@@ -3,6 +3,7 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import Service from '@ember/service';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 import {
   EMAIL_UNSUBSCRIBE,
@@ -14,9 +15,10 @@ import {
 
 module('Integration | Component | email-unsubscribe', function (hooks) {
   setupRenderingTest(hooks);
+  setupMirage(hooks);
 
   hooks.beforeEach(async function () {
-    const repo = server.create('repository');
+    const repo = this.server.create('repository');
     repo.isCurrentUserACollaborator = true;
 
     const routerStub = Service.extend({
