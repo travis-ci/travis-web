@@ -3,13 +3,14 @@ import { setupRenderingTest } from 'ember-qunit';
 import profilePage from 'travis/tests/pages/profile';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Integration | Component | billing-invoices', function (hooks) {
   setupRenderingTest(hooks);
+  setupMirage(hooks);
 
   hooks.beforeEach(function () {
-
-    const user = server.create('user', {
+    const user = this.server.create('user', {
       name: 'User Name of exceeding length',
       type: 'user',
       login: 'user-login',
@@ -20,7 +21,7 @@ module('Integration | Component | billing-invoices', function (hooks) {
       }
     });
 
-    const plan = server.create('plan', {
+    const plan = this.server.create('plan', {
       name: 'Small Business Plan',
       builds: 5,
       annual: false,
@@ -28,7 +29,7 @@ module('Integration | Component | billing-invoices', function (hooks) {
       price: 6900
     });
 
-    const subscription = server.create('subscription', {
+    const subscription = this.server.create('subscription', {
       plan,
       owner: user,
       status: 'subscribed',

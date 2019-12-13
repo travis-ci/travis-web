@@ -3,9 +3,11 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render, settled, waitFor } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { INSIGHTS_INTERVALS } from 'travis/services/insights';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Integration | Component | build-status-chart', function (hooks) {
   setupRenderingTest(hooks);
+  setupMirage(hooks);
 
   hooks.beforeEach(function () {
     const [user1, user2] = this.server.createList('user', 2);

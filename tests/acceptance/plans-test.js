@@ -4,9 +4,11 @@ import { setupApplicationTest } from 'travis/tests/helpers/setup-application-tes
 import { enableFeature } from 'ember-feature-flags/test-support';
 import { percySnapshot } from 'ember-percy';
 import plansPage from 'travis/tests/pages/plans';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | plans page', function (hooks) {
   setupApplicationTest(hooks);
+  setupMirage(hooks);
 
   hooks.beforeEach(async function () {
     enableFeature('pro-version');
@@ -98,7 +100,7 @@ module('Acceptance | plans page', function (hooks) {
 
     hooks.beforeEach(async function () {
       this.requestHandler = (request) => JSON.parse(request.requestBody);
-      server.post('/leads', (schema, request) => {
+      this.server.post('/leads', (schema, request) => {
         return this.requestHandler(request);
       });
     });

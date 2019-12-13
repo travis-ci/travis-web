@@ -5,12 +5,14 @@ import topPage from 'travis/tests/pages/top';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { enableFeature } from 'ember-feature-flags/test-support';
 import { percySnapshot } from 'ember-percy';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | broadcasts', function (hooks) {
   setupApplicationTest(hooks);
+  setupMirage(hooks);
 
   hooks.beforeEach(function () {
-    const currentUser = server.create('user', {
+    const currentUser = this.server.create('user', {
       name: 'User Name',
       login: 'user-login'
     });
@@ -18,7 +20,7 @@ module('Acceptance | broadcasts', function (hooks) {
     signInUser(currentUser);
 
     // create active repo
-    server.create('repository', {
+    this.server.create('repository', {
       slug: 'org-login/repository-name'
     });
   });
@@ -28,14 +30,14 @@ module('Acceptance | broadcasts', function (hooks) {
 
     let date = new Date();
 
-    server.create('broadcast', {
+    this.server.create('broadcast', {
       category: 'warning',
       message: 'A warning',
       created_at: date,
       id: 1883
     });
 
-    server.create('broadcast', {
+    this.server.create('broadcast', {
       category: 'announcement',
       message: 'An announcement',
       created_at: date,
@@ -76,7 +78,7 @@ module('Acceptance | broadcasts', function (hooks) {
   test('the broadcast tower shows an announcement', async function (assert) {
     enableFeature('broadcasts');
 
-    server.create('broadcast', {
+    this.server.create('broadcast', {
       category: 'announcement',
       message: 'Another announcement'
     });
@@ -89,7 +91,7 @@ module('Acceptance | broadcasts', function (hooks) {
   test('a dismissed broadcast does not highlight the tower', async function (assert) {
     enableFeature('broadcasts');
 
-    server.create('broadcast', {
+    this.server.create('broadcast', {
       category: 'announcement',
       message: 'Welcome.',
       id: '2016'

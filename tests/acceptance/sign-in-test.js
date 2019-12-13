@@ -4,9 +4,11 @@ import { setupApplicationTest } from 'travis/tests/helpers/setup-application-tes
 import Service from '@ember/service';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { stubService } from 'travis/tests/helpers/stub-service';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | sign in', function (hooks) {
   setupApplicationTest(hooks);
+  setupMirage(hooks);
 
   test('visiting /signin starts auth flow if unauthenticated', async function (assert) {
     assert.expect(2);
@@ -33,7 +35,7 @@ module('Acceptance | sign in', function (hooks) {
   });
 
   test('visiting signin redirects to index if authenticated', async function (assert) {
-    const currentUser = server.create('user', 'withRepository');
+    const currentUser = this.server.create('user', 'withRepository');
 
     signInUser(currentUser);
 

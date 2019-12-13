@@ -3,12 +3,14 @@ import Ember from 'ember';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import jobPage from 'travis/tests/pages/job';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 let adapterException;
 let loggerError;
 
 module('Acceptance | job/invalid log', function (hooks) {
   setupApplicationTest(hooks);
+  setupMirage(hooks);
 
   hooks.beforeEach(function () {
     adapterException = Ember.Test.adapter.exception;
@@ -24,11 +26,11 @@ module('Acceptance | job/invalid log', function (hooks) {
 
   test('viewing invalid job shows error', async function (assert) {
     // create incorrect repository as this is resolved first, errors otherwise
-    server.create('repository', { slug: 'travis-ci/travis-api' });
+    this.server.create('repository', { slug: 'travis-ci/travis-api' });
 
-    const repository = server.create('repository', { slug: 'travis-ci/travis-web' });
+    const repository = this.server.create('repository', { slug: 'travis-ci/travis-web' });
     const incorrectSlug = 'travis-ci/travis-api';
-    const job = server.create('job', { repository });
+    const job = this.server.create('job', { repository });
     await visit(`${incorrectSlug}/jobs/${job.id}`);
 
     assert.equal(jobPage.jobNotFoundMessage, 'Oops, we couldn\'t find that job!', 'Shows missing job message');

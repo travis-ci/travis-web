@@ -9,32 +9,33 @@ import page from 'travis/tests/pages/build-list';
 import generatePusherPayload from 'travis/tests/helpers/generate-pusher-payload';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { percySnapshot } from 'ember-percy';
-
 import moment from 'moment';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | repo build list routes', function (hooks) {
   setupApplicationTest(hooks);
+  setupMirage(hooks);
 
   hooks.beforeEach(function () {
-    const currentUser = server.create('user', {
+    const currentUser = this.server.create('user', {
       name: 'User Name',
       login: 'user-login'
     });
 
     signInUser(currentUser);
 
-    const gitUser = server.create('git-user', {
+    const gitUser = this.server.create('git-user', {
       name: 'Other User Name'
     });
 
-    const repository = server.create('repository', {
+    const repository = this.server.create('repository', {
       slug: 'org-login/repository-name'
     });
     this.repository = repository;
 
     this.repoId = parseInt(repository.id);
 
-    this.branch = server.create('branch', { name: 'successful-cron-branch' });
+    this.branch = this.server.create('branch', { name: 'successful-cron-branch' });
 
     const oneYearAgo = new Date();
     oneYearAgo.setYear(oneYearAgo.getFullYear() - 1);
@@ -42,9 +43,9 @@ module('Acceptance | repo build list routes', function (hooks) {
 
     const beforeOneYearAgo = new Date(oneYearAgo.getTime() - 1000 * 60 * 5);
 
-    const cronBranch = server.create('branch', { repository, name: 'successful-cron-branch' });
+    const cronBranch = this.server.create('branch', { repository, name: 'successful-cron-branch' });
 
-    const lastBuild = server.create('build', {
+    const lastBuild = this.server.create('build', {
       state: 'passed',
       number: '1918',
       finished_at: oneYearAgo,
@@ -67,7 +68,7 @@ module('Acceptance | repo build list routes', function (hooks) {
     }, commitAttributes));
     lastBuild.save();
 
-    const failedBuild = server.create('build', {
+    const failedBuild = this.server.create('build', {
       state: 'failed',
       event_type: 'push',
       repository,
@@ -82,7 +83,7 @@ module('Acceptance | repo build list routes', function (hooks) {
       default_branch: true
     });
 
-    const erroredBuild = server.create('build', {
+    const erroredBuild = this.server.create('build', {
       state: 'errored',
       event_type: 'push',
       repository,
@@ -105,7 +106,7 @@ module('Acceptance | repo build list routes', function (hooks) {
     }));
     defaultBranchBuild.save();
 
-    const pullRequestCommit = server.create('commit', commitAttributes);
+    const pullRequestCommit = this.server.create('commit', commitAttributes);
     const pullRequestBuild = this.branch.createBuild({
       state: 'started',
       number: '1919',
@@ -165,7 +166,7 @@ module('Acceptance | repo build list routes', function (hooks) {
 
     assert.equal(page.builds[2].name, 'rarely-used', 'expected the old default branch to show');
 
-    const sevenOaksBranch = server.create('branch', {
+    const sevenOaksBranch = this.server.create('branch', {
       name: 'oldest-build-branch'
     });
 
@@ -177,7 +178,7 @@ module('Acceptance | repo build list routes', function (hooks) {
       state: 'passed'
     });
 
-    let us = server.create('git-user', { name: 'us' });
+    let us = this.server.create('git-user', { name: 'us' });
 
     olderBuild.createCommit({
       sha: 'acab',
@@ -194,7 +195,7 @@ module('Acceptance | repo build list routes', function (hooks) {
 
     let build, commit;
 
-    const branch = server.create('branch', {
+    const branch = this.server.create('branch', {
       name: 'no-dapl'
     });
 
@@ -256,7 +257,7 @@ module('Acceptance | repo build list routes', function (hooks) {
   });
 
   test('renders no builds messaging when none present', async function (assert) {
-    server.create('repository');
+    this.server.create('repository');
 
     await page.visitBuildHistory({ organization: 'travis-ci', repo: 'travis-web' });
 
