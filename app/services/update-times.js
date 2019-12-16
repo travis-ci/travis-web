@@ -2,7 +2,7 @@ import { bind } from '@ember/runloop';
 import Service from '@ember/service';
 import config from 'travis/config/environment';
 import eventually from 'travis/utils/eventually';
-import Visibility from 'visibilityjs';
+import Visibility from 'travis-visibilityjs';
 
 export default Service.extend({
   allowFinishedBuilds: false,

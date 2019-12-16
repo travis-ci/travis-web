@@ -1,6 +1,6 @@
 import Controller from '@ember/controller';
 import Ember from 'ember';
-import Visibility from 'visibilityjs';
+import Visibility from 'travis-visibilityjs';
 import { inject as service } from '@ember/service';
 import config from 'travis/config/environment';
 

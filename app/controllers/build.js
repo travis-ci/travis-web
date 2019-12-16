@@ -1,7 +1,7 @@
 import Controller, { inject as controller } from '@ember/controller';
 import Ember from 'ember';
 import Polling from 'travis/mixins/polling';
-import Visibility from 'visibilityjs';
+import Visibility from 'travis-visibilityjs';
 import config from 'travis/config/environment';
 
 import { inject as service } from '@ember/service';

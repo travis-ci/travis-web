@@ -124,7 +124,8 @@
   },
   "ember-addon": {
     "paths": [
-      "lib/travis-pusher"
+      "lib/travis-pusher",
+      "lib/travis-visibilityjs"
     ]
   }
 }
