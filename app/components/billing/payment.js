@@ -59,7 +59,11 @@ export default Component.extend({
           token: id,
           lastDigits: card.last4
         });
-        newSubscription.setProperties({ organizationId, plan: selectedPlan });
+        newSubscription.setProperties({
+          organizationId,
+          plan: selectedPlan,
+          coupon: this.isValidCoupon ? this.coupon : null
+        });
         const { clientSecret } = yield newSubscription.save();
         this.metrics.trackEvent({ button: 'pay-button' });
         yield this.stripe.handleStripePayment.perform(clientSecret);
@@ -73,7 +77,7 @@ export default Component.extend({
   validateCoupon: task(function* () {
     try {
       yield this.newSubscription.validateCoupon.perform(this.couponId);
-    } catch {}
+    } catch { }
   }).drop(),
 
   handleError() {
