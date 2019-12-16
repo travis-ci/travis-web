@@ -45,7 +45,7 @@ Router.map(function () {
   this.route('profile', { path: '/profile/:login' });
   this.route('profile', { path: '/profile/:login/:section' });
 
-  this.route('travis-vs-jenkins');
+  this.route('travisci-vs-jenkins');
 
   this.route('repo', { path: '/:owner/:name' }, function () {
     this.route('index', { path: '/' });
