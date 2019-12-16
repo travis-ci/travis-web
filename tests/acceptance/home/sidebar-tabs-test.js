@@ -86,7 +86,7 @@ module('Acceptance | home/sidebar tabs', function (hooks) {
     await visit('/');
     await click('[data-test-sidebar-running-tab] a');
 
-    assert.dom('[data-test-sidebar-running-tab]').hasText('Running (0/1) Running jobs (started jobs / all jobs)', 'running tab correctly shows number of started/queued jobs');
+    assert.dom('[data-test-sidebar-running-tab]').hasText('Running (0/1)', 'running tab correctly shows number of started/queued jobs');
     assert.dom('[data-test-sidebar-queued-job]').exists('expected one queued job');
     percySnapshot(assert);
   });
