@@ -77,7 +77,7 @@ export default Component.extend({
   validateCoupon: task(function* () {
     try {
       yield this.newSubscription.validateCoupon.perform(this.couponId);
-    } catch { }
+    } catch {}
   }).drop(),
 
   handleError() {
