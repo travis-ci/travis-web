@@ -1,4 +1,4 @@
-export function makeStorage() {
+function makeStorage() {
   const storage = {
     getItem(key) {
       return storage[key];
@@ -24,4 +24,7 @@ export function makeStorage() {
   return storage;
 }
 
-export default makeStorage();
+const localStorage = makeStorage();
+const sessionStorage = makeStorage();
+
+export { localStorage, sessionStorage, makeStorage };

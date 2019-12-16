@@ -1,4 +1,5 @@
 import Service from '@ember/service';
+import { isFastboot, localStorage } from 'travis/utils/fastboot';
 
 export default Service.extend({
 
@@ -10,7 +11,7 @@ export default Service.extend({
   },
 
   get storage() {
-    return window.localStorage;
+    return isFastboot ? localStorage : window.localStorage;
   },
 
   get token() {
@@ -51,6 +52,21 @@ export default Service.extend({
 
   set billingPlan(value) {
     this.setItem('travis.billing_plan', JSON.stringify(value));
+  },
+
+  get enableAssemblaLogin() {
+    return this.getItem('enableAssemblaLogin') === 'true';
+  },
+
+  get enableBitbucketLogin() {
+    return this.getItem('enableBitbucketLogin') === 'true';
+  },
+
+  get features() {
+    return this.parseWithDefault('travis.features', []);
+  },
+  set features(value = []) {
+    this.setItem('travis.features', JSON.stringify(value));
   },
 
   parseWithDefault(key, defaultValue) {
