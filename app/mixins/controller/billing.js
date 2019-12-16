@@ -9,10 +9,4 @@ export default Mixin.create({
   newSubscription: null,
   queryParams: ['billingStep'],
   billingStep: 1,
-
-  actions: {
-    updateBillingQueryParams(step) {
-      this.set('billingStep', step);
-    },
-  }
 });

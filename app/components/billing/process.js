@@ -12,6 +12,7 @@ const STEPS = {
 export default Component.extend({
   metrics: service(),
   storage: service(),
+  router: service(),
 
   account: null,
   steps: computed(() => [...Object.values(STEPS)]),
@@ -46,7 +47,9 @@ export default Component.extend({
     this.storage.billingInfo = this.billingInfo;
   },
 
-  updateBillingQueryParams() {},
+  updateBillingQueryParams(step) {
+    this.router.transitionTo({ queryParams: { billingStep: step }});
+  },
 
   actions: {
 

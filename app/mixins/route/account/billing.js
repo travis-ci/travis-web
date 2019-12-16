@@ -18,6 +18,11 @@ export default Mixin.create({
     controller.set('newSubscription', this.newSubscription());
   },
 
+  deactivate() {
+    this._super(...arguments);
+    this.controller.set('billingStep', 1);
+  },
+
   newSubscription() {
     const plan = this.store.createRecord('plan', this.storage.billingPlan);
     const billingInfo = this.store.createRecord('billing-info', this.storage.billingInfo);
@@ -29,19 +34,8 @@ export default Mixin.create({
     });
   },
 
-  setupBillingStepSubscriptions(controllerName) {
-    const controller = this.controllerFor(controllerName);
-    controller.addObserver('billingStep', this, 'handleBillingStepChange');
-  },
-
-  removeBillingStepSubscriptions(controllerName) {
-    const controller = this.controllerFor(controllerName);
-    controller.set('billingStep', 1);
-    controller.removeObserver('billingStep', this, 'handleBillingStepChange');
-  },
-
-  checkBillingStep(controller) {
-    const billingStepQueryParams = controller.get('billingStep');
+  checkBillingStep() {
+    const billingStepQueryParams = this.controller.get('billingStep');
     if (billingStepQueryParams !== this.storage.billingStep) {
       this.storage.clearBillingData();
     }
