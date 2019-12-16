@@ -3,12 +3,14 @@ import { module, skip } from 'qunit';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import { run } from '@ember/runloop';
 import signInUser from 'travis/tests/helpers/sign-in-user';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | auth/first sync', function (hooks) {
   setupApplicationTest(hooks);
+  setupMirage(hooks);
 
   hooks.beforeEach(function () {
-    this.currentUser = server.create('user', 'syncing');
+    this.currentUser = this.server.create('user', 'syncing');
     signInUser(this.currentUser);
   });
 

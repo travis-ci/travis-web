@@ -4,9 +4,12 @@ import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import profilePage from 'travis/tests/pages/profile';
 import moment from 'moment';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Integration | Component | billing-summary', function (hooks) {
   setupRenderingTest(hooks);
+  setupMirage(hooks);
+
   hooks.beforeEach(function () {
     const plan = {
       id: 1,
@@ -48,7 +51,7 @@ module('Integration | Component | billing-summary', function (hooks) {
   test('it renders active subscription', async function (assert) {
     const date = moment(this.subscription.validTo.getTime()).format('MMMM D, YYYY');
 
-    await render(hbs`<Billing::Summary 
+    await render(hbs`<Billing::Summary
       @subscription={{subscription}}
       @account={{account}}
       @planMessage={{planMessage}}
@@ -73,7 +76,7 @@ module('Integration | Component | billing-summary', function (hooks) {
     });
     this.set('planMessage', 'Expires');
 
-    await render(hbs`<Billing::Summary 
+    await render(hbs`<Billing::Summary
       @subscription={{subscription}}
       @account={{account}}
       @planMessage={{planMessage}}
@@ -98,7 +101,7 @@ module('Integration | Component | billing-summary', function (hooks) {
     });
     this.set('planMessage', 'Expired');
 
-    await render(hbs`<Billing::Summary 
+    await render(hbs`<Billing::Summary
       @subscription={{subscription}}
       @account={{account}}
       @planMessage={{planMessage}}
@@ -121,7 +124,7 @@ module('Integration | Component | billing-summary', function (hooks) {
     });
     this.set('planMessage', 'Expired');
 
-    await render(hbs`<Billing::Summary 
+    await render(hbs`<Billing::Summary
       @subscription={{subscription}}
       @account={{account}}
       @isPending={{isPending}}
@@ -142,7 +145,7 @@ module('Integration | Component | billing-summary', function (hooks) {
     });
     this.set('planMessage', 'Incomplete');
 
-    await render(hbs`<Billing::Summary 
+    await render(hbs`<Billing::Summary
       @subscription={{subscription}}
       @account={{account}}
       @planMessage={{planMessage}}

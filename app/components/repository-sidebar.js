@@ -82,7 +82,7 @@ export default Component.extend({
       let showRunningJobs = this.get('features.showRunningJobsInSidebar');
       let runningJobs = this.get('jobState.runningJobs');
       if (!showRunningJobs) { return []; }
-      return runningJobs;
+      return runningJobs.sort((a, b) => parseFloat(a.number) - parseFloat(b.number));
     }
   ),
 

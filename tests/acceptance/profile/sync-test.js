@@ -3,6 +3,7 @@ import { setupApplicationTest } from 'travis/tests/helpers/setup-application-tes
 import { waitFor } from '@ember/test-helpers';
 import profilePage from 'travis/tests/pages/profile';
 import signInUser from 'travis/tests/helpers/sign-in-user';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 async function finishSyncingUser(user) {
   user.is_syncing = false;
@@ -12,11 +13,12 @@ async function finishSyncingUser(user) {
 
 module('Acceptance | profile/sync', function (hooks) {
   setupApplicationTest(hooks);
+  setupMirage(hooks);
 
   hooks.beforeEach(function () {
     let twoYearsAgo = new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 365 * 2);
 
-    this.user = server.create('user', {
+    this.user = this.server.create('user', {
       name: 'Miss Major',
       login: 'miss-major',
       synced_at: twoYearsAgo
@@ -33,7 +35,7 @@ module('Acceptance | profile/sync', function (hooks) {
 
     let syncCalled = false;
 
-    server.post(`/user/${this.user.id}/sync`, () => {
+    this.server.post(`/user/${this.user.id}/sync`, () => {
       this.user.is_syncing = true;
       syncCalled = true;
       return this.user.save();

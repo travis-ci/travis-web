@@ -3,12 +3,14 @@ import { module, skip } from 'qunit';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { Response } from 'ember-cli-mirage';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | auth/GitHub Apps installation redirect', function (hooks) {
   setupApplicationTest(hooks);
+  setupMirage(hooks);
 
   hooks.beforeEach(function () {
-    this.currentUser = server.create('user');
+    this.currentUser = this.server.create('user');
     signInUser(this.currentUser);
   });
 
@@ -17,13 +19,13 @@ module('Acceptance | auth/GitHub Apps installation redirect', function (hooks) {
     let done = assert.async();
     let repetition = 0;
 
-    let installation = server.create('installation');
+    let installation = this.server.create('installation');
 
     installation.createOwner('organization', {
       login: 'the-org'
     });
 
-    server.get('/installation/:id', (schema, {params: {id}}) => {
+    this.server.get('/installation/:id', (schema, {params: {id}}) => {
       if (repetition < 2) {
         repetition++;
         return new Response(404, {}, {});
