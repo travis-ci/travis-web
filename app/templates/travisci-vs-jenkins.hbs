@@ -30,7 +30,7 @@
           </UiKit::Text>
           <UiKit::Button
             @onClick={{action this.toggleContactScroll}}
-            data-test-tvj-page-contact-button="true"
+            data-test-tvj-page-header-button="true"
           >
             Contact the Enterprise Team
           </UiKit::Button>
@@ -41,6 +41,7 @@
           @margin={{hash x='auto'}}
           @maxWidth='xs'
           @padding={{hash y=4}}
+          data-test-tvj-page-header-image="true"
         >
           <SvgImage @name='travis-enterprise' @width='100%'/>
         </UiKit::Box>
