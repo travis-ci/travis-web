@@ -114,6 +114,9 @@
     "watchman": "^1.0.0",
     "xss-clean": "^0.1.1"
   },
+  "fastbootDependencies": [
+    "url"
+  ],
   "greenkeeper": {
     "ignore": [
       "ember-power-select"

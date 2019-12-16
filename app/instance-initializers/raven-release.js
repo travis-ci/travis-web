@@ -1,5 +1,6 @@
 import config from 'travis/config/environment';
 import Raven from 'raven-js';
+import { isFastboot } from 'travis/utils/fastboot';
 
 export function initialize(appInstance) {
   let sha;
@@ -10,7 +11,13 @@ export function initialize(appInstance) {
     sha = appInstance.application.version.slice(6, -1);
   }
 
-  let env = window.location.href;
+  let env = '';
+  if (isFastboot) {
+    const fastboot = appInstance.lookup('service:fastboot');
+    env = fastboot.request.host;
+  } else {
+    env = window.location.href;
+  }
   let domain = env.includes('.org') ? 'org' : 'com';
   let release = `${domain}-${sha}`;
 
