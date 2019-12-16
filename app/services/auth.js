@@ -72,8 +72,10 @@ export default Service.extend({
 
   signOut(runTeardown = true) {
     this.api.get('/logout');
-    this.localStorage.clearAuthData();
-    this.sessionStorage.clearAuthData();
+    [this.localStorage, this.sessionStorage].forEach(storage => {
+      storage.clearAuthData();
+      storage.clearPreferencesData();
+    });
 
     this.setProperties({
       state: STATE.SIGNED_OUT,
