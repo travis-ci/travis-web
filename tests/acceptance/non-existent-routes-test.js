@@ -1,9 +1,11 @@
 import { currentURL, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | non existent routes', function (hooks) {
   setupApplicationTest(hooks);
+  setupMirage(hooks);
 
   test('visiting /some/non-existent/route', async function (assert) {
     await visit('/some/non-existent/route');

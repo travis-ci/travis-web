@@ -41,7 +41,6 @@ export default Service.extend({
   store: service(),
   localStorage: service('storage'),
   sessionStorage: service(),
-  ajax: service(),
   features: service(),
   metrics: service(),
 
