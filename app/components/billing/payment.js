@@ -62,7 +62,7 @@ export default Component.extend({
         newSubscription.setProperties({
           organizationId,
           plan: selectedPlan,
-          coupon: this.isValidCoupon ? this.coupon : null
+          coupon: this.isValidCoupon ? this.couponId : null
         });
         const { clientSecret } = yield newSubscription.save();
         this.metrics.trackEvent({ button: 'pay-button' });
