@@ -71,7 +71,7 @@ export default Service.extend({
   redirectUrl: null,
 
   signOut(runTeardown = true) {
-    [this.localStorage, this.sessionStorage].map(storage => {
+    [this.localStorage, this.sessionStorage].forEach(storage => {
       storage.clearAuthData();
       storage.clearPreferencesData();
     });
