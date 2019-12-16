@@ -8,6 +8,7 @@ import {
   bindKeyboardShortcuts,
   unbindKeyboardShortcuts
 } from 'ember-keyboard-shortcuts';
+import { isFastboot } from 'travis/utils/fastboot';
 
 export default TravisRoute.extend(BuildFaviconMixin, {
   auth: service(),
@@ -17,6 +18,7 @@ export default TravisRoute.extend(BuildFaviconMixin, {
   metrics: service(),
   repositories: service(),
   router: service(),
+  fastboot: service(),
 
   needsAuth: false,
 
@@ -141,7 +143,14 @@ export default TravisRoute.extend(BuildFaviconMixin, {
 
     error(error) {
       if (error === 'needs-auth') {
-        const currentURL = new URL(window.location.href);
+        let url = '';
+        if (isFastboot) {
+          const { protocol, host, path } = this.fastboot.request;
+          url = `${protocol}//${host}${path}`;
+        } else {
+          url = window.location.href;
+        }
+        const currentURL = new URL(url);
         const redirectUri = currentURL.href;
         const queryParams = { redirectUri };
         return this.transitionTo('auth', { queryParams });
