@@ -49,6 +49,19 @@
     </UiKit::Grid>
   </UiKit::Box>
 
+  {{!-- Compare section --}}
+  <UiKit::Box
+    @tag='section'
+    @margin={{hash bottom=16}}
+    data-test-tvj-page-compare-section="true"
+  >
+    <UiKit::Box  @margin={{hash bottom=5}} @textAlign='center'>
+      <UiKit::Text @tag='h2' @variant='h2' data-test-tvj-page-compare-title="true">
+        Why choose Travis CI over Jenkins?
+      </UiKit::Text>
+    </UiKit::Box>
+  </UiKit::Box>
+
   {{!-- Contact Section - To be implemented --}}
   {{#if this.scrollToContact}}<ScrollHere />{{/if}}
 </TravisLayout>
