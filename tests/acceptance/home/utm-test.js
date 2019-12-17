@@ -6,6 +6,7 @@ import {
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import { UTM_FIELDS } from 'travis/services/utm';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 const TEST_DATA = {
   [UTM_FIELDS.CAMPAIGN]: 'ca1',
@@ -19,6 +20,7 @@ const INITIAL_URL = `/?${TEST_QUERY_PARAMS.join('&')}`;
 
 module('Acceptance | utm capture', function (hooks) {
   setupApplicationTest(hooks);
+  setupMirage(hooks);
 
   test('utm query params get captured', async function (assert) {
     await visit(INITIAL_URL);
