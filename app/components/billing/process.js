@@ -43,7 +43,7 @@ export default Component.extend({
 
   persistBillingData(step) {
     this.storage.billingStep = step;
-    this.storage.billingPlan = this.selectedPlan.getProperties(['name', 'builds', 'price', 'annual']);
+    this.storage.billingPlan = this.selectedPlan.getProperties(['id', 'name', 'builds', 'price', 'annual']);
     this.storage.billingInfo = this.billingInfo;
   },
 
