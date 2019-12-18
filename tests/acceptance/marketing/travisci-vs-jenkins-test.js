@@ -2,6 +2,7 @@ import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import { percySnapshot } from 'ember-percy';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 import {
   create,
@@ -9,10 +10,10 @@ import {
   visitable
 } from 'ember-cli-page-object';
 
-const tvgPageUrl = '/travisci-vs-jenkins';
+const tvjPageUrl = '/travisci-vs-jenkins';
 
 const tvjPage = create({
-  visit: visitable(tvgPageUrl),
+  visit: visitable(tvjPageUrl),
 
   headerSection: {
     scope: '[data-test-tvj-page-header-section]',
@@ -35,13 +36,14 @@ const tvjPage = create({
 
 module('Acceptance | travis vs jenkins page', function (hooks) {
   setupApplicationTest(hooks);
+  setupMirage(hooks);
 
   hooks.beforeEach(async function () {
     await tvjPage.visit();
   });
 
   test('page structure', async function (assert) {
-    assert.equal(currentURL(), tvgPageUrl);
+    assert.equal(currentURL(), tvjPageUrl);
 
     const { headerSection } = tvjPage;
     const { title, button, image } = headerSection;
