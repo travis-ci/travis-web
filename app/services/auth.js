@@ -34,13 +34,13 @@ const USER_FIELDS = ['id', 'login', 'token', 'correct_scopes', 'channels'];
 const TOKEN_EXPIRED_MSG = "You've been signed out, because your access token has expired.";
 
 export default Service.extend({
+  api: service(),
   router: service(),
   flashes: service(),
   intercom: service(),
   store: service(),
   localStorage: service('storage'),
   sessionStorage: service(),
-  ajax: service(),
   features: service(),
   metrics: service(),
 
@@ -71,8 +71,11 @@ export default Service.extend({
   redirectUrl: null,
 
   signOut(runTeardown = true) {
-    this.localStorage.clearAuthData();
-    this.sessionStorage.clearAuthData();
+    this.api.get('/logout');
+    [this.localStorage, this.sessionStorage].forEach(storage => {
+      storage.clearAuthData();
+      storage.clearPreferencesData();
+    });
 
     this.setProperties({
       state: STATE.SIGNED_OUT,
