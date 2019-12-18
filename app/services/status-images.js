@@ -15,15 +15,20 @@ export const IMAGE_FORMATS = {
 export default Service.extend({
   auth: service(),
   features: service(),
+  fastboot: service(),
 
   imageUrl(repo, branch) {
-    let prefix = `${location.protocol}//${location.host}`;
+    let prefix = '';
 
     // the ruby app (waiter) does an indirect, internal redirect to api on build status images
     // but that does not work if you only run `ember serve`
     // so in development we use the api endpoint directly
     if (config.environment === 'development') {
       prefix = config.apiEndpoint;
+    } else if (this.fastboot.isFastBoot) {
+      prefix = `${this.fastboot.request.protocol}//${this.fastboot.request.host}`;
+    } else {
+      prefix = `${location.protocol}//${location.host}`;
     }
 
     let slug = repo.get('slug');
