@@ -1,4 +1,4 @@
-import { currentURL, visit, settled } from '@ember/test-helpers';
+import { currentURL, visit, settled, waitFor } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import profilePage from 'travis/tests/pages/profile';
@@ -199,31 +199,34 @@ module('Acceptance | user settings', function (hooks) {
 
     // Click save, modal should show
     await submit.click();
+    await waitFor(insightsSettingsModal.scope);
     assert.ok(insightsSettingsModal.isVisible);
     assert.equal(insightsSettingsModal.title, 'Restrict visibility of your private build insights');
     assert.equal(insightsSettingsModal.description, expectedPrivate.modalText);
 
     // Close modal with close button
     await insightsSettingsModal.closeButton.click();
-    await settled();
+    await waitFor(insightsSettingsModal.scope, { count: 0 });
     assert.notOk(insightsSettingsModal.isVisible);
 
     // Reopen modal
     await submit.click();
+    await waitFor(insightsSettingsModal.scope);
     assert.ok(insightsSettingsModal.isVisible);
 
     // Close modal with cancel button
     await insightsSettingsModal.cancelButton.click();
-    await settled();
+    await waitFor(insightsSettingsModal.scope, { count: 0 });
     assert.notOk(insightsSettingsModal.isVisible);
 
     // Reopen modal
     await submit.click();
+    await waitFor(insightsSettingsModal.scope);
     assert.ok(insightsSettingsModal.isVisible);
 
     // Confirm save
     await insightsSettingsModal.confirmButton.click();
-    await settled();
+    await waitFor(insightsSettingsModal.scope, { count: 0 });
     assert.notOk(insightsSettingsModal.isVisible);
     assert.equal(topPage.flashMessage.text, 'Your private build insights are now private.');
   });
