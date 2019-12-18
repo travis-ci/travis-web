@@ -8,7 +8,6 @@
   {{#if (and this.subscription.isGithubResubscribable (not this.hasExpiredStripeSubscription))}}
     <Billing::Process 
       @account={{this.account}} 
-      @plans={{this.plans}} 
       @newSubscription={{this.newSubscription}}
     />
   {{/if}}

@@ -12,6 +12,7 @@ const STEPS = {
 export default Component.extend({
   metrics: service(),
   storage: service(),
+  router: service(),
 
   account: null,
   steps: computed(() => [...Object.values(STEPS)]),
@@ -42,18 +43,20 @@ export default Component.extend({
 
   persistBillingData(step) {
     this.storage.billingStep = step;
-    if (this.isStepTwo) {
-      const plan = this.selectedPlan.getProperties(['id', 'name', 'builds', 'price', 'annual']);
-      this.storage.billingPlan = plan;
-    } else if (this.isStepThree) {
-      this.storage.billingInfo = this.billingInfo;
-    }
+    this.storage.billingPlan = this.selectedPlan.getProperties(['id', 'name', 'builds', 'price', 'annual']);
+    this.storage.billingInfo = this.billingInfo;
+  },
+
+  updateBillingQueryParams(step) {
+    this.router.transitionTo({ queryParams: { billingStep: step }});
   },
 
   actions: {
 
     goToFirstStep() {
       this.set('currentStep', STEPS.ONE);
+      this.persistBillingData(STEPS.ONE);
+      this.updateBillingQueryParams(STEPS.ONE);
     },
 
     next() {
@@ -64,6 +67,7 @@ export default Component.extend({
         const nextIndex = Math.min(lastIndex, currentIndex + 1);
         const currentStep = this.steps[nextIndex];
         this.set('currentStep', currentStep);
+        this.updateBillingQueryParams(currentStep);
         this.persistBillingData(currentStep);
       }
     },
@@ -73,11 +77,13 @@ export default Component.extend({
       const prevIndex = Math.max(0, currentIndex - 1);
       const currentStep = this.steps[prevIndex];
       this.set('currentStep', currentStep);
+      this.updateBillingQueryParams(currentStep);
       this.persistBillingData(currentStep);
     },
 
     cancel() {
       this.set('currentStep', STEPS.ONE);
+      this.updateBillingQueryParams(STEPS.ONE);
     },
   }
 });
