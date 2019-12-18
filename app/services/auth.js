@@ -72,7 +72,7 @@ export default Service.extend({
 
   signOut(runTeardown = true) {
     if (this.signedIn) this.api.get('/logout');
-    
+
     [this.localStorage, this.sessionStorage].forEach(storage => {
       storage.clearAuthData();
       storage.clearPreferencesData();
