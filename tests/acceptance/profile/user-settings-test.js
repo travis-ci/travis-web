@@ -1,4 +1,4 @@
-import { currentURL, visit, settled, waitFor } from '@ember/test-helpers';
+import { currentURL, visit, waitFor } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import profilePage from 'travis/tests/pages/profile';
