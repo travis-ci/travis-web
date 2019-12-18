@@ -52,11 +52,11 @@ export default TravisRoute.extend(BuildFaviconMixin, {
 
   activate() {
     this.setupRepoSubscriptions();
-    bindKeyboardShortcuts(this);
+    if (!isFastboot) bindKeyboardShortcuts(this);
   },
 
   deactivate() {
-    unbindKeyboardShortcuts(this);
+    if (!isFastboot) unbindKeyboardShortcuts(this);
   },
 
   // We send pusher updates through user channels now and this means that if a
