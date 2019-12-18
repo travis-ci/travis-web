@@ -12,9 +12,7 @@ export default Mixin.create({
 
   setupController(controller) {
     this._super(...arguments);
-    if (controller.get('billingStep') === 1) {
-      this.checkBillingStep(controller);
-    }
+    this.checkBillingStep();
     controller.set('newSubscription', this.newSubscription());
   },
 
@@ -24,7 +22,9 @@ export default Mixin.create({
   },
 
   newSubscription() {
-    const plan = this.store.createRecord('plan', this.storage.billingPlan);
+    const savedPlan = this.storage.billingPlan;
+    const selectedPlan = savedPlan && savedPlan.id && this.store.peekRecord('plan', savedPlan.id);
+    const plan = selectedPlan || this.store.createRecord('plan', this.storage.billingPlan);
     const billingInfo = this.store.createRecord('billing-info', this.storage.billingInfo);
     const creditCardInfo = this.store.createRecord('credit-card-info');
     return this.store.createRecord('subscription', {
