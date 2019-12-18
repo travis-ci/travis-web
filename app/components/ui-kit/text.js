@@ -3,9 +3,6 @@ import { checkDictionary } from 'travis/utils/ui-kit/assertions';
 import prefix from 'travis/utils/ui-kit/prefix';
 import concat from 'travis/utils/ui-kit/concat';
 import { variantProp } from 'travis/utils/ui-kit/variant';
-import { DISPLAYS } from 'travis/components/ui-kit/box';
-
-const DEFAULT_DISPLAY = DISPLAYS.INLINE;
 
 const COLORS = {
   BLUE_LIGHT: 'blue-light',
@@ -122,7 +119,7 @@ export default Component.extend({
   transform: variantProp(VARIANT_PROPS, DEFAULT_TRANSFORM),
   weight: variantProp(VARIANT_PROPS, DEFAULT_WEIGHT),
 
-  display: variantProp(VARIANT_PROPS, DEFAULT_DISPLAY),
+  display: variantProp(VARIANT_PROPS, null),
   margin: variantProp(VARIANT_PROPS, null),
   padding: variantProp(VARIANT_PROPS, null),
 
