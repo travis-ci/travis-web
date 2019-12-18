@@ -4,6 +4,7 @@ import { observer } from '@ember/object';
 import { alias } from '@ember/object/computed';
 
 export default Controller.extend({
+  headData: service(),
   auth: service(),
 
   repoController: controller('repo'),
@@ -12,6 +13,6 @@ export default Controller.extend({
   tab: alias('repoController.tab'),
 
   jobStateDidChange: observer('job.state', function () {
-    return this.send('faviconStateDidChange', this.get('job.state'));
+    this.headData.set('buildState', this.get('job.state'));
   })
 });

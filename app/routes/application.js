@@ -2,7 +2,6 @@
 import URL from 'url';
 import TravisRoute from 'travis/routes/basic';
 import config from 'travis/config/environment';
-import BuildFaviconMixin from 'travis/mixins/build-favicon';
 import { inject as service } from '@ember/service';
 import {
   bindKeyboardShortcuts,
@@ -10,7 +9,7 @@ import {
 } from 'ember-keyboard-shortcuts';
 import { isFastboot } from 'travis/utils/fastboot';
 
-export default TravisRoute.extend(BuildFaviconMixin, {
+export default TravisRoute.extend({
   auth: service(),
   features: service(),
   featureFlags: service(),

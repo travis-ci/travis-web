@@ -6,3 +6,17 @@
 {{#if model.useTailwindBase}}
   <link rel="stylesheet" href="/assets/tailwind-base.css" />
 {{/if}}
+
+{{#let
+  (hash
+    passed='green'
+    failed='red'
+    errored='red'
+    canceled='grey'
+  )
+  as |colorForState|
+}}
+  {{#let (get colorForState this.model.buildState) as |color| }}
+    <link rel="icon" type="image/png" href="/images/favicon{{if color (concat '-' color)}}.png" />
+  {{/let}}
+{{/let}}

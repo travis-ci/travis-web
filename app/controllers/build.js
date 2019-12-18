@@ -9,6 +9,7 @@ import { alias } from '@ember/object/computed';
 import { observer } from '@ember/object';
 
 export default Controller.extend(Polling, {
+  headData: service(),
   auth: service(),
   updateTimesService: service('updateTimes'),
 
@@ -19,8 +20,6 @@ export default Controller.extend(Polling, {
   repo: alias('repoController.repo'),
   currentUser: alias('auth.currentUser'),
   tab: alias('repoController.tab'),
-
-  sendFaviconStateChanges: true,
 
   updateTimes() {
     this.updateTimesService.push(this.get('build.stages'));
@@ -34,8 +33,6 @@ export default Controller.extend(Polling, {
   },
 
   buildStateDidChange: observer('build.state', function () {
-    if (this.sendFaviconStateChanges) {
-      this.send('faviconStateDidChange', this.get('build.state'));
-    }
+    this.headData.set('buildState', this.get('build.state'));
   })
 });
