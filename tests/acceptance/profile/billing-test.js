@@ -264,7 +264,11 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.visit();
     await profilePage.billing.visit();
 
+    percySnapshot(assert);
+
     assert.ok(profilePage.billing.marketplaceButton.isHidden);
+    assert.equal(profilePage.billing.userDetails.text, 'contact name User Name company name Travis CI GmbH billing email user@email.com');
+    assert.equal(profilePage.billing.billingDetails.text, 'address Rigaerstraße 8 city Berlin post code 10987 country Germany vat id 12345');
 
     await profilePage.billing.resubscribeSubscriptionButton.click();
 
@@ -279,8 +283,12 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.visit();
     await profilePage.billing.visit();
 
+    percySnapshot(assert);
+
     assert.equal(profilePage.billing.plan.name, 'Small Business1 plan incomplete');
     assert.ok(profilePage.billing.marketplaceButton.isHidden);
+    assert.equal(profilePage.billing.userDetails.text, 'contact name User Name company name Travis CI GmbH billing email user@email.com');
+    assert.equal(profilePage.billing.billingDetails.text, 'address Rigaerstraße 8 city Berlin post code 10987 country Germany vat id 12345');
   });
 
   test('cancel a stripe plan', async function (assert) {
