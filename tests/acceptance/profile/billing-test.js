@@ -265,9 +265,6 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.billing.visit();
 
     assert.ok(profilePage.billing.marketplaceButton.isHidden);
-    assert.ok(profilePage.billing.userDetails.isHidden);
-    assert.ok(profilePage.billing.billingDetails.isHidden);
-    assert.ok(profilePage.billing.creditCardNumber.isHidden);
 
     await profilePage.billing.resubscribeSubscriptionButton.click();
 
@@ -284,9 +281,6 @@ module('Acceptance | profile/billing', function (hooks) {
 
     assert.equal(profilePage.billing.plan.name, 'Small Business1 plan incomplete');
     assert.ok(profilePage.billing.marketplaceButton.isHidden);
-    assert.ok(profilePage.billing.userDetails.isHidden);
-    assert.ok(profilePage.billing.billingDetails.isHidden);
-    assert.ok(profilePage.billing.creditCardNumber.isHidden);
   });
 
   test('cancel a stripe plan', async function (assert) {
