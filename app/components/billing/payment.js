@@ -81,8 +81,6 @@ export default Component.extend({
     } catch {}
   }).drop(),
 
-  handleDisclaimerCheck() {},
-
   handleError() {
     let message = 'An error occurred when creating your subscription. Please try again.';
     const subscriptionErrors = this.newSubscription.errors;
