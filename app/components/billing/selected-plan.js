@@ -7,6 +7,6 @@ export default Component.extend({
   selectedPlanPrice: reads('selectedPlan.price'),
 
   price: computed('totalPrice', 'selectedPlanPrice', function () {
-    return this.totalPrice || Math.floor(this.selectedPlanPrice / 100);
+    return this.totalPrice >= 0 ? this.totalPrice :  Math.floor(this.selectedPlanPrice / 100);
   })
 });

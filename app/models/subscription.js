@@ -53,18 +53,26 @@ export default Model.extend({
 
   discountByAmount: computed('validateCouponResult.amountOff', 'planPrice', function () {
     const { amountOff } = this.validateCouponResult || {};
-    return amountOff && this.planPrice && this.planPrice - Math.floor(amountOff / 100);
+    return amountOff && this.planPrice && Math.max(0, this.planPrice - Math.floor(amountOff / 100));
   }),
 
   discountByPercentage: computed('validateCouponResult.percentageOff', 'planPrice', function () {
     const { percentageOff } = this.validateCouponResult || {};
     if (percentageOff && this.planPrice) {
-      const discountPrice = this.planPrice - (this.planPrice * percentageOff) / 100;
+      const discountPrice = Math.max(0, this.planPrice - (this.planPrice * percentageOff) / 100);
       return discountPrice.toFixed(2);
     }
   }),
 
-  totalPrice: or('discountByAmount', 'discountByPercentage', 'planPrice'),
+  totalPrice: computed('discountByAmount', 'discountByPercentage', 'planPrice', function () {
+    if (this.discountByAmount >= 0) {
+      return this.discountByAmount;
+    } else if (this.discountByAmount >= 0) {
+      return this.discountByPercentage;
+    } else {
+      return this.planPrice;
+    }
+  }),
 
   validateCoupon: task(function* (couponId) {
     return yield this.store.findRecord('coupon', couponId, {
