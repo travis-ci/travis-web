@@ -77,11 +77,27 @@
         <p>{{stripeError.message}}</p>
       {{/if}}
     </StripeCard>
+    <TravisForm as |form|>
+      <form.field
+        @disableFrame={{true}}
+        @value={{this.isDisclaimerChecked}}
+        @showValidationStatusIcons={{false}}
+        @onChange={{action (toggle 'isDisclaimerChecked' this)}} 
+        as |field|
+      >
+      <div class="flex">
+        <field.checkbox @name='disclaimer' class="flex-1"/>
+        <span class="text-xs">
+          I authorize Travis CI to send instructions to the financial institution that issued my card to take payments from my card account in accordance with the terms of my agreement with you.
+        </span>
+      </div>
+      </form.field>
+    </TravisForm>
     <div class='billing-checkout__payment'>
       {{#if this.isLoading}}
         <LoadingIndicator/>
       {{else}}
-        <button class='{{if this.stripeElement 'button--green' 'button disabled'}}' {{on 'click' form.submit}} data-test-complete-payment='true'>
+        <button class='{{if (and this.stripeElement this.isDisclaimerChecked) 'button--green' 'button disabled'}}' {{on 'click' form.submit}} data-test-complete-payment='true'>
           Pay {{this.discountedPrice}} to complete subscription
         </button>
       {{/if}}

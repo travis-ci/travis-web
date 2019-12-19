@@ -17,6 +17,7 @@ export default Component.extend({
   stripeLoading: false,
   newSubscription: null,
   couponId: null,
+  isDisclaimerChecked: false,
   options: config.stripeOptions,
 
   firstName: reads('newSubscription.billingInfo.firstName'),
@@ -79,6 +80,8 @@ export default Component.extend({
       yield this.newSubscription.validateCoupon.perform(this.couponId);
     } catch {}
   }).drop(),
+
+  handleDisclaimerCheck() {},
 
   handleError() {
     let message = 'An error occurred when creating your subscription. Please try again.';
