@@ -75,6 +75,10 @@ export default function () {
     return this.serialize(firstUser, 'v3');
   });
 
+  this.get('/logout', function () {
+    return new Response(200, {}, {});
+  });
+
   this.get('/users/:id', function ({ users }, request) {
     return this.serialize(users.find(request.params.id), 'user');
   });

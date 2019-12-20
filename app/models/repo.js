@@ -102,6 +102,7 @@ const Repo = VcsEntity.extend({
   }),
 
   fetchSettings: task(function* () {
+    if (!this.auth.signedIn) return {};
     try {
       const response = yield this.api.get(`/repo/${this.id}/settings`);
       return this._convertV3SettingsToV2(response.settings);

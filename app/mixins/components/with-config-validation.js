@@ -1,14 +1,17 @@
 import Mixin from '@ember/object/mixin';
-import { gt, reads } from '@ember/object/computed';
+import { and, gt, reads } from '@ember/object/computed';
 import { computed } from '@ember/object';
+import { inject as service } from '@ember/service';
 
 export default Mixin.create({
+  auth: service(),
+
   messages: null,
   repo: null,
 
   hasMessages: gt('messages.length', 0),
 
-  isConfigValidationEnabled: reads('repo.settings.config_validation'),
+  isConfigValidationEnabled: and('auth.signedIn', 'repo.settings.config_validation'),
 
   showConfigValidation: reads('isConfigValidationEnabled'),
 
