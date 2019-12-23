@@ -28,10 +28,6 @@
       <span class="badge green square" data-test-active-status='true'>
         active
       </span>
-    {{else if this.subscription.isCanceled}}
-      <span class="badge grey square grey-badge" data-test-canceled-status='true'>
-        canceled
-      </span>
     {{else if this.subscription.isExpired}}
       <span class="badge red square" data-test-expired-status='true'>
         expired
@@ -47,7 +43,7 @@
         active
       </span>
     {{else if this.subscription.isCanceled}}
-      <span class="badge grey square grey-badge" data-test-canceled-status='true'>
+      <span class="badge grey square grey-badge" data-test-grey-status='true'>
         canceled
       </span>
     {{else if this.isGithubTrial}}
