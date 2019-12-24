@@ -21,7 +21,10 @@ Router.map(function () {
   this.route('insufficient_oauth_permissions');
   this.route('auth');
   this.route('github_apps_installation', { path: '/settings/github-apps-installations/redirect' });
-  this.route('plans', { path: '/plans' });
+  this.route('plans', { path: '/plans' }, function () {
+    this.route('index', { path: '/' });
+    this.route('thank-you');
+  });
   this.route('team', { path: '/about' });
   this.route('logo', { path: '/logo' });
   this.route('help');

@@ -30,6 +30,7 @@ export default Component.extend({
   placeholder: '',
   helperText: '',
   disabled: false,
+  requiredMark: '*',
   showRequiredMark: false,
   allowClear: false,
   icon: '',
@@ -137,6 +138,10 @@ export default Component.extend({
     handleChange(value) {
       this.validate(value);
       this.onChange(value);
+    },
+
+    handleKeyUp(value) {
+      this.onKeyUp && this.onKeyUp(value);
     },
 
     handleClear() {

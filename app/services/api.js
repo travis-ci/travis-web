@@ -1,13 +1,9 @@
-import $ from 'jquery';
 import Service, { inject as service } from '@ember/service';
 import config from 'travis/config/environment';
-import { Promise as EmberPromise } from 'rsvp';
-import { run } from '@ember/runloop';
-import { get } from '@ember/object';
 
 export default Service.extend({
+  ajax: service(),
   auth: service(),
-  features: service(),
 
   get(url, options = {}) {
     return this.request(url, 'GET', options);
@@ -30,49 +26,33 @@ export default Service.extend({
   },
 
   request(url, method = 'GET', options = {}) {
-    let endpoint = config.apiEndpoint || '';
-    let token = get(this, 'auth.token');
+    options.host = config.apiEndpoint || '';
 
-    options.headers = options.headers || {};
-    options.headers['Travis-API-Version'] = '3';
-    if (!options.headers['Accept']) {
-      options.headers['Accept'] = 'application/json';
+    options.headers = this.setupHeaders(options);
+
+    return this.ajax.request(url, method, options);
+  },
+
+
+  setupHeaders(options = {}) {
+    const { headers = {} } = options;
+    const { token } = this.auth;
+
+    // Release
+    if (config.release) {
+      headers['X-Client-Release'] = config.release;
     }
 
+    // Authorization
     if (token) {
-      if (!options.headers['Authorization']) {
-        options.headers['Authorization'] = `token ${token}`;
-      }
-    }
-    options.url = url = `${endpoint}${url}`;
-    options.method = method;
-    options.dataType = options.dataType || 'json';
-    options.contentType = 'application/json';
-
-    if (options.data && options.stringifyData !== false) {
-      options.data = JSON.stringify(options.data);
+      headers['Authorization'] = `token ${token}`;
     }
 
-    return new EmberPromise((resolve, reject) => {
-      options.error = (jqXHR, textStatus, errorThrown) => {
-        if (get(this, 'features.debugLogging')) {
-          // eslint-disable-next-line
-          console.log(`[ERROR] API responded with an error (${status}): ${JSON.stringify(data)}`);
-        }
-        run(() => {
-          // TODO: in the future we might want to run some handler here
-          // that would process all args
-          reject(jqXHR);
-        });
-      };
+    // Travis-API-Version
+    if (options.travisApiVersion !== null) {
+      headers['Travis-API-Version'] = options.travisApiVersion || '3';
+    }
 
-      options.success = (payload, textStatus, jqXHR) => {
-        run(() => {
-          resolve(payload);
-        });
-      };
-
-      $.ajax(url, options);
-    });
-  }
+    return headers;
+  },
 });

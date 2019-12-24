@@ -1,15 +1,17 @@
-import { isEmpty } from '@ember/utils';
 import Component from '@ember/component';
+import { match, not, reads } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
+import WithConfigValidation from 'travis/mixins/components/with-config-validation';
 
-export default Component.extend({
-
+export default Component.extend(WithConfigValidation, {
   tagName: 'div',
   classNames: ['travistab'],
 
-  didRender() {
-    // Set the log to be default active tab unless something else is active
-    if (isEmpty(this.$('.travistab-nav--secondary').find('.active'))) {
-      this.$('#tab_log').addClass('active');
-    }
-  }
+  router: service(),
+
+  isConfig: match('router.currentRouteName', /config$/),
+  isLog: not('isConfig'),
+
+  messages: reads('job.build.request.messages')
+
 });

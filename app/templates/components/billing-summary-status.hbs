@@ -1,0 +1,66 @@
+<p class='plan-overview__name flex flex--v-center' data-test-plan-name='true'>
+  {{#if this.subscription.plan }}
+    {{concat this.subscription.plan.name ' plan'}}
+  {{else if this.isDefaultEducationView}}
+    Bootstrap plan
+  {{else}}
+    Unknown plan
+  {{/if}}
+  {{#if this.isDefaultEducationView}}
+    <span class="badge square white-badge ml-2" data-test-education-subscription='true'>
+      education subscription
+    </span>
+  {{else if this.subscription.isManual}}
+    {{#if this.subscription.manualSubscriptionExpired}}
+      <span class="badge red square" data-test-expired-status='true'>
+        expired
+      </span>
+    {{else}}
+      <span class="badge green square" data-test-active-status='true'>
+        active
+      </span> 
+    {{/if}}
+    <span class="badge square white-badge ml-0 manual" data-test-manual-status='true'>
+      manual subscription
+    </span>
+  {{else if this.subscription.isStripe}}
+    {{#if this.subscription.isSubscribed}}
+      <span class="badge green square" data-test-active-status='true'>
+        active
+      </span>
+    {{else if this.subscription.isExpired}}
+      <span class="badge red square" data-test-expired-status='true'>
+        expired
+      </span>
+    {{else}}
+      <span class="badge grey square grey-badge" data-test-grey-status='true'>
+        {{this.subscription.status}}
+      </span>
+    {{/if}}
+  {{else if this.subscription.isGithub}}
+    {{#if (and this.subscription.isSubscribed (not this.isGithubTrial))}}
+      <span class="badge green square" data-test-active-status='true'>
+        active
+      </span>
+    {{else if this.subscription.isCanceled}}
+      <span class="badge grey square grey-badge" data-test-grey-status='true'>
+        canceled
+      </span>
+    {{else if this.isGithubTrial}}
+      <span class="badge grey square grey-badge" data-test-trial-status='true'>
+        trial
+      </span>
+    {{else if this.hasGithubTrialEnded}}
+      <span class="badge red square" data-test-expired-status='true'>
+        expired
+      </span>
+    {{else}}
+      <span class="badge grey square grey-badge" data-test-grey-status='true'>
+        {{this.subscription.status}}
+      </span>
+    {{/if}}
+    <span class="badge square white-badge manual" data-test-github-status='true'>
+      github marketplace subscription
+    </span>
+  {{/if}}
+</p>

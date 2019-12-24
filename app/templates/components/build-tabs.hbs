@@ -4,8 +4,9 @@
       <LinkTo
         @route="build.index"
         @models={{array this.build.repo build}}
-        data-test-build-matrix-tab="true"
         @title="Look at this build’s jobs"
+        class={{if this.isLog 'active'}}
+        data-test-build-matrix-tab="true"
       >
         Build jobs
       </LinkTo>
@@ -21,7 +22,15 @@
         {{#if this.build.request.noYaml}}
           <EmberTooltip @text="Try a more recent build to see the config" />
         {{/if}}
+
         View config
+
+        {{#if this.showConfigValidation}}
+          <span class="tooltip-wrapper">
+            <span class="build-messages-badge badge-{{this.messagesMaxLevel}}"></span>
+            <EmberTooltip @text={{this.messagesBadgeTooltipText}} />
+          </span>
+        {{/if}}
       </LinkTo>
     </li>
   </ul>

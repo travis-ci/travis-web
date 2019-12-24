@@ -27,7 +27,7 @@ export default Component.extend({
       yield this.user.joinMigrateBeta(this.selectedAccounts.without(this.user).toArray());
       this.onClose();
       this.flashes.clear();
-      this.flashes.success('You have been successfully placed on the waitlist for beta!');
+      this.flashes.success('You have successfully joined the beta!');
     } catch (error) {
       this.flashes.clear();
       this.flashes.error('There was an error. Please try again later.', undefined, true);
@@ -66,9 +66,9 @@ export default Component.extend({
 });
 
 function makeOptionFromAccount(account) {
-  const { id, title, isMigrationBetaAccepted, isMigrationBetaRequested, isOrganization, isUser } = account;
+  const { id, title, isMigrationBetaAccepted, isOrganization, isUser } = account;
   const isNotAdmin = isOrganization && !account.get('permissions.admin');
-  const state = isMigrationBetaAccepted ? 'subscribed' : isMigrationBetaRequested ? 'waitlisted' : isNotAdmin ? 'not admin' : '';
-  const disabled = isOrganization && (isMigrationBetaAccepted || isMigrationBetaRequested) || isUser || isNotAdmin;
+  const state = isMigrationBetaAccepted ? 'subscribed' : isNotAdmin ? 'not admin' : '';
+  const disabled = isOrganization && isMigrationBetaAccepted || isUser || isNotAdmin;
   return { id, title, state, disabled };
 }

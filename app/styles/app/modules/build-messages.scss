@@ -1,3 +1,22 @@
+.build-messages-badge {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-left: 0.25em;
+  border-radius: 50%;
+
+  &.badge-alert,
+  &.badge-error {
+    background-color: $brick-red;
+  }
+  &.badge-warn {
+    background-color: $canary-yellow;
+  }
+  &.badge-info {
+    background-color: $turf-green;
+  }
+}
+
 .yml-messages {
   @include travisBorder;
 
@@ -5,20 +24,94 @@
 
   font-size: $font-size-sm;
 
-  .yml-message {
+  .header {
+    position: relative;
+    padding: 1em;
+    cursor: pointer;
+
+    .icon {
+      width: 18px;
+      height: 18px;
+      margin-bottom: 2px;
+    }
+
+    .icon-alert path,
+    .icon-error path {
+      stroke: $brick-red;
+    }
+    .icon-warn path {
+      stroke: $canary-yellow;
+    }
+    .icon-info {
+      width: 12px;
+      height: 12px;
+      margin-left: 2px;
+      margin-right: 8px;
+      opacity: 0.8;
+      path {
+        stroke: $turf-green;
+        stroke-width: 1;
+      }
+    }
+
+    .tools {
+      position: absolute;
+      right: 1em;
+      top: 1em;
+
+      .icon-toggle {
+        height: 15px;
+        width: 15px;
+        vertical-align: middle;
+        transform: scale(0.9, 1.1);
+        path {
+          stroke: $cement-grey;
+          stroke-width: 1;
+        }
+
+        &.icon-expanded {
+          transform: scaleY(-1);
+        }
+      }
+
+      .icon-help {
+        border: 0px;
+        transform: scale(0.8);
+        path {
+          stroke: $cement-grey;
+          stroke-width: 2;
+        }
+      }
+    }
+  }
+
+  .yml-message-link {
+    display: block;
+
+    &:hover {
+      background-color: $cream-light;
+    }
+  }
+
+  .yml-message-line {
     display: flex;
     align-items: flex-start;
 
-    padding: 6px;
+    padding: 6px 1em;
 
-    svg {
+    .icon-level {
+      width: 14px;
+      height: 14px;
+      margin-left: 2px;
+    }
+
+    .icon-help {
       width: 18px;
-      transform: scale(1.2);
+      height: 18px;
     }
 
     .icon-info {
-      @include colorSVGFull($oxide-blue, $oxide-blue);
-
+      @include colorSVGFull($turf-green, $turf-green);
       circle {
         fill: none;
       }
@@ -26,7 +119,6 @@
 
     .icon-warn {
       @include colorSVG($canary-yellow);
-
       color: inherit;
     }
 
@@ -34,14 +126,30 @@
       @include colorSVG($brick-red);
     }
 
+    .icon-alert {
+      @include colorSVG($brick-red);
+    }
+
     .message {
-      padding-left: 7px;
-      border-left: 1px solid $dry-cement;
-      margin-left: 2px;
+      flex-grow: 1;
+      margin-left: 6px;
+    }
+
+    .message-help svg {
+      display: none;
+      transform: scale(0.8);
+      border-color: $oxide-blue;
+      @include colorSVG($oxide-blue);
+    }
+
+    &:hover {
+      .message-help svg {
+        display: block;
+      }
     }
 
     code {
-      background-color: #eef0f4;
+      background-color: $pebble-grey;
       font-family: $font-family-monospace;
       font-size: $font-size-sm - 1px;
       padding: 2px;

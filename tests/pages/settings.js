@@ -118,7 +118,7 @@ export default create({
     delete: clickable('.cron-job-delete')
   }),
 
-  cronBrancheSelect: {
+  cronBranchSelect: {
     scope: '.branch-selector'
   },
 

@@ -3,6 +3,7 @@
 
 const providers = require('./providers');
 const { plans } = require('./plans.js');
+const { screens } = require('./screens.js');
 
 module.exports = function (environment) {
   const ENV = {
@@ -13,6 +14,7 @@ module.exports = function (environment) {
     defaultTitle: 'Travis CI',
     providers,
     plans,
+    screens,
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
@@ -44,12 +46,17 @@ module.exports = function (environment) {
       about: 'https://about.travis-ci.com',
       bestpracticessecurity: 'https://docs.travis-ci.com/user/best-practices-security#recommendations-on-how-to-avoid-leaking-secrets-to-build-logs',
       blog: 'https://blog.travis-ci.com',
+      buildMatrix: 'https://docs.travis-ci.com/user/build-matrix/',
+      buildConfigValidation: 'https://docs.travis-ci.com/user/build-config-validation/',
       changelog: 'https://changelog.travis-ci.com',
       community: 'https://travis-ci.community',
+      communityEarlyReleases: 'https://travis-ci.community/c/early-releases',
       dashboard: 'https://travis-ci.com/dashboard',
       docker: 'https://docs.travis-ci.com/user/docker/',
       docs: 'https://docs.travis-ci.com',
       gettingStarted: 'https://docs.travis-ci.com/user/getting-started/#to-get-started-with-travis-ci',
+      education: 'https://education.travis-ci.com',
+      emailSupport: 'mailto:support@travis-ci.com',
       enterprise: 'https://enterprise.travis-ci.com',
       imprint: 'https://docs.travis-ci.com/imprint.html',
       jobs: 'https://travisci.workable.com/',
@@ -95,7 +102,53 @@ module.exports = function (environment) {
     moment: {
       includeTimezone: 'subset'
     },
+
+    stripeOptions: {
+      hidePostalCode: true,
+      style: {
+        base: {
+          fontStyle: 'Source Sans Pro',
+          fontSize: '15px',
+          color: '#666',
+          '::placeholder': {
+            color: '#aaa'
+          },
+        },
+        invalid: {
+          color: 'red',
+          iconColor: 'red'
+        }
+      }
+    },
   };
+
+  ENV.metricsAdapters = [];
+  if (process.env.GOOGLE_ANALYTICS_ID) {
+    ENV.metricsAdapters.push({
+      name: 'GoogleAnalytics',
+      environments: ['development', 'production'],
+      config: {
+        id: process.env.GOOGLE_ANALYTICS_ID,
+        // Use `analytics_debug.js` in development
+        debug: environment === 'development',
+        // Use verbose tracing of GA events
+        trace: environment === 'development',
+        // Ensure development env hits aren't sent to GA
+        sendHitTask: environment !== 'development',
+      }
+    });
+  }
+
+  const { GOOGLE_TAGS_CONTAINER_ID, GOOGLE_TAGS_PARAMS } = process.env;
+  if (GOOGLE_TAGS_CONTAINER_ID) {
+    ENV.metricsAdapters.push({
+      name: 'GoogleTagManager',
+      config: {
+        id: GOOGLE_TAGS_CONTAINER_ID,
+        envParams: GOOGLE_TAGS_PARAMS,
+      }
+    });
+  }
 
   ENV.featureFlags = {
     'repository-filtering': true,
@@ -106,9 +159,11 @@ module.exports = function (environment) {
     'broadcasts': true,
     'beta-features': true,
     'github-apps': false,
+    'enable-assembla-login': false,
+    'enable-bitbucket-login': false,
   };
 
-  const { TRAVIS_PRO, TRAVIS_ENTERPRISE } = process.env;
+  const { TRAVIS_PRO, TRAVIS_ENTERPRISE, SOURCE_ENDPOINT } = process.env;
 
   if (TRAVIS_PRO) {
     ENV.featureFlags['pro-version'] = true;
@@ -119,12 +174,22 @@ module.exports = function (environment) {
   if (TRAVIS_ENTERPRISE) {
     ENV.featureFlags['enterprise-version'] = true;
     ENV.enterprise = true;
+    if (SOURCE_ENDPOINT) {
+      ENV.sourceEndpoint = SOURCE_ENDPOINT;
+    }
   }
 
   ENV.pagination = {
     dashboardReposPerPage: 25,
     profileReposPerPage: 25,
   };
+
+  if (process.env.STRIPE_PUBLISHABLE_KEY) {
+    ENV.stripe = {
+      publishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
+      lazyLoad: true,
+    };
+  }
 
   ENV.sentry = {
     dsn: 'https://e775f26d043843bdb7ae391dc0f2487a@app.getsentry.com/75334',
@@ -143,8 +208,8 @@ module.exports = function (environment) {
       ENV.apiEndpoint = 'https://api.travis-ci.com';
       ENV.pusher.key = '59236bc0716a551eab40';
       ENV.pusher.channelPrefix = 'private-';
-      ENV.pagesEndpoint = 'https://billing.travis-ci.com';
-      ENV.billingEndpoint = 'https://billing.travis-ci.com';
+      ENV.pagesEndpoint = 'https://travis-ci.com/account/subscription';
+      ENV.billingEndpoint = 'https://travis-ci.com';
       ENV.marketplaceEndpoint = 'https://github.com/marketplace/travis-ci/';
       ENV.endpoints = {
         sshKey: true,
@@ -169,7 +234,7 @@ module.exports = function (environment) {
 
       if (ENV.apiEndpoint === 'https://api-staging.travis-ci.com') {
         ENV.pusher.key = '87d0723b25c51e36def8';
-        ENV.billingEndpoint = 'https://billing-staging.travis-ci.com';
+        ENV.billingEndpoint = 'https://staging.travis-ci.com';
       }
     }
 
@@ -210,10 +275,6 @@ module.exports = function (environment) {
   }
 
   if (environment === 'test') {
-    ENV['ember-cli-mirage'] = {
-      autostart: true,
-    };
-
     // Testem prefers this...
     ENV.locationType = 'none';
 
@@ -239,6 +300,11 @@ module.exports = function (environment) {
     ENV.endpoints = {
       sshKey: true,
       caches: true
+    };
+
+    ENV.stripe = {
+      publishableKey: 'pk_test_5i2Bx5nJACluilHLb25d3P9N',
+      lazyLoad: true,
     };
 
     ENV.pusher = {};
@@ -267,7 +333,7 @@ module.exports = function (environment) {
 
     ENV.statusPageStatusUrl = undefined;
 
-    ENV.billingEndpoint = 'https://billing.travis-ci.com';
+    ENV.billingEndpoint = 'https://travis-ci.com';
     ENV.apiEndpoint = '';
     ENV.marketplaceEndpoint = 'https://github.com/marketplace/travis-ci/';
   }

@@ -1,31 +1,25 @@
 import { Promise as EmberPromise, resolve } from 'rsvp';
-import EmberObject from '@ember/object';
-import { alias } from '@ember/object/computed';
+import EmberObject, { computed, defineProperty } from '@ember/object';
 import ArrayProxy from '@ember/array/proxy';
 import stringHash from 'travis/utils/string-hash';
+import PromiseProxyMixin from '@ember/object/promise-proxy-mixin';
+
+const PromiseArray = ArrayProxy.extend(PromiseProxyMixin);
 
 // An array proxy wrapping records that fit a filtered array.
 let FilteredArray = ArrayProxy.extend({
-  arrangedContent: alias('content'),
+  init(createArgs) {
+    const { filterFunction, _all, dependencies } = createArgs;
+    defineProperty(
+      this,
+      'content',
+      computed(
+        `_all.@each.{${dependencies.join(',')}}`,
+        () => _all.filter(item => item && filterFunction(item))
+      )
+    );
 
-  // check if record should or shouldn't be a part of the filtered array. If the
-  // record passed as an argument is not yet in the array and the filter
-  // function returns a truthy value, tryRecord will push the record to the
-  // array. If the record is already in the array and the filter function
-  // returns falsey value, it will be removed. In other cases, it will be
-  // ignored.
-  tryRecord(record) {
-    if (!this.content.includes(record) && this.fits(record)) {
-      this.content.pushObject(record);
-    } else if (this.content.includes(record) && !this.fits(record)) {
-      this.content.removeObject(record);
-    }
-  },
-
-  // checks if a record should be a part of an array by running filterFunction
-  // with a record as an argument
-  fits(record) {
-    return this.filterFunction(record);
+    this._super(createArgs);
   }
 });
 
@@ -58,16 +52,9 @@ let FilteredArray = ArrayProxy.extend({
 // removed from all of the filtered arrays.
 let FilteredArrayManagerForType = EmberObject.extend({
   init() {
+    this._super(...arguments);
     this.arrays = {};
-    let store = this.store,
-      modelName = this.modelName;
-    this.allRecords = store.peekAll(modelName);
-    this.allRecords.addArrayObserver(this, {
-      willChange: 'allRecordsWillChange',
-      didChange: 'allRecordsDidChange'
-    });
-    this.arraysByDependency = {};
-    this.dependencies = [];
+    this.allRecords = this.store.peekAll(this.modelName);
   },
 
   // Fetches a filtered array. If an array for a given set of dependencies
@@ -94,16 +81,15 @@ let FilteredArrayManagerForType = EmberObject.extend({
   //
   // Returns a FilteredArray (an ArrayProxy)
   fetchArray(queryParams, filterFunction, dependencies, forceReload) {
-    let id = this.calculateId(...arguments);
-    let array = this.arrays[id];
+    let id = this.calculateId(queryParams, filterFunction, dependencies);
+    let hasArray = !!this.arrays[id];
+    let array = this._getFilterArray(id, queryParams, filterFunction, dependencies);
 
-    if (!array) {
-      array = this.createArray(id, ...arguments);
-    } else if (forceReload) {
+    if (hasArray && forceReload) {
       // if forceReload is true and array already exist, just run the query
       // to get new results
       let promise = new EmberPromise((resolve, reject) => {
-        this.fetchQuery(queryParams).then((queryResult) => {
+        this.fetchQuery(queryParams).then(queryResult => {
           array.set('queryResult', queryResult);
           resolve(array);
         }, reject);
@@ -115,40 +101,35 @@ let FilteredArrayManagerForType = EmberObject.extend({
     return array;
   },
 
+  _getFilterArray(id, queryParams, filterFunction, dependencies) {
+    let array = this.arrays[id];
+
+    if (!array) {
+      array = this.createArray(id, queryParams, filterFunction, dependencies);
+    }
+
+    return array;
+  },
+
+  getFilterArray(queryParams, filterFunction, dependencies) {
+    let id = this.calculateId(queryParams, filterFunction, dependencies);
+    return this._getFilterArray(id, queryParams, filterFunction, dependencies);
+  },
+
   // Creates an array for a given id and set of params.
   createArray(id, queryParams, filterFunction, dependencies) {
     // TODO: test what ahppens when records already exist in a store,I think it
     // won't work
-    let array = this.arrays[id] = FilteredArray.create({ filterFunction, content: [] });
-
-    // for each of the dependency add an array to a list of arrays by the
-    // dependency. Also, create observers on all of the records if it's a new
-    // dependency
-    dependencies.forEach((dependency) => {
-      let arrays = this.arraysByDependency[dependency];
-
-      if (!arrays) {
-        arrays = this.arraysByDependency[dependency] = [];
-      }
-
-      arrays.push(array);
-
-      if (!this.dependencies.includes(dependency)) {
-        this.dependencies.push(dependency);
-
-        this.allRecords.forEach((record) => {
-          this.addObserver(record, dependency);
-        });
-      }
-    });
-
-    // check existing records
-    this.allRecords.forEach((record) => array.tryRecord(record));
+    let array = (this.arrays[id] = FilteredArray.create({
+      filterFunction,
+      _all: this.allRecords,
+      dependencies
+    }));
 
     let promise = new EmberPromise((resolve, reject) => {
       // TODO: think about error handling, at the moment it will just pass the
       // reject from store.query
-      this.fetchQuery(queryParams).then((queryResult) => {
+      this.fetchQuery(queryParams).then(queryResult => {
         array.set('queryResult', queryResult);
         resolve(array);
       }, reject);
@@ -170,69 +151,25 @@ let FilteredArrayManagerForType = EmberObject.extend({
     }
   },
 
-  addObserver(record, property) {
-    record.addObserver(property, this, 'propertyDidChange');
-  },
-
-  removeObserver(record, property) {
-    if (record) {
-      record.removeObserver(property, this, 'propertyDidChange');
-    }
-  },
-
-  propertyDidChange(record, key, value, rev) {
-    let arrays = this.arraysByDependency[key];
-
-    arrays.forEach((array) => {
-      array.tryRecord(record);
-    });
-  },
-
   calculateId(queryParams, filterFunction, dependencies) {
     const params = queryParams || {};
-    let id = stringHash([
-      JSON.stringify(params),
-      (dependencies || []).sort(),
-      // not sure if this is a good idea, but I want to get the unique id for
-      // each set of arguments to filter
-      filterFunction.toString()
-    ].toString());
+    let id = stringHash(
+      [
+        JSON.stringify(params),
+        (dependencies || []).sort(),
+        // not sure if this is a good idea, but I want to get the unique id for
+        // each set of arguments to filter
+        filterFunction.toString()
+      ].toString()
+    );
 
     return id;
   },
 
-  allRecordsWillChange(array, offset, removeCount, addCount) {
-    this.removeRecords(array.slice(offset, offset + removeCount));
-  },
-
-  allRecordsDidChange(array, offset, removeCount, addCount) {
-    this.addRecords(array.slice(offset, offset + addCount));
-  },
-
-  addRecords(records) {
-    records.forEach((record) => this.addRecord(record));
-  },
-
-  removeRecords(records) {
-    records.forEach((record) => this.removeRecord(record));
-  },
-
-  addRecord(record) {
-    this.dependencies.forEach((dependency) => {
-      this.addObserver(record, dependency);
-    });
-
-    Object.values(this.arrays).forEach((array) => {
-      array.tryRecord(record);
-    });
-  },
-
-  // TODO: test removing, it seems that it shouldn't work, it's an edge case
-  // when it comes to travis-web, but we should probably make it work anyway,
-  // just in case we need it in the future
-  removeRecord(record) {
-    this.dependencies.forEach((dependency) => {
-      this.removeObserver(record, dependency);
+  destroy() {
+    this._super(...arguments);
+    Object.keys(this.arrays).forEach(key => {
+      this.arrays[key].destroy();
     });
   }
 });
@@ -242,19 +179,48 @@ let FilteredArrayManager = EmberObject.extend({
     this.filteredArrayManagersByType = {};
   },
 
-  fetchArray(modelName, queryParams, filterFunction, dependencies, forceReload) {
-    let [_, ...rest] = arguments;
-    return this.filteredArrayManagerForType(modelName).fetchArray(...rest)._promise;
+  filter(modelName, queryParams, filterFunction, dependencies) {
+    const filterArray = this.filteredArrayManagerForType(modelName).getFilterArray(queryParams, filterFunction, dependencies);
+
+    if (queryParams) {
+      let currentRecords = this.store.peekAll(modelName);
+      if (filterFunction) {
+        currentRecords = currentRecords.filter(record => filterFunction(record));
+      }
+      const promise = resolve(currentRecords).then(() => filterArray);
+
+      return PromiseArray.create({ promise });
+    }
+
+    return filterArray;
+  },
+
+  fetchArray(modelName, ...rest) {
+    return this.filteredArrayManagerForType(modelName).fetchArray(...rest)
+      ._promise;
   },
 
   filteredArrayManagerForType(modelName) {
     let manager = this.filteredArrayManagersByType[modelName];
 
     if (!manager) {
-      manager = this.filteredArrayManagersByType[modelName] = FilteredArrayManagerForType.create({ store: this.store, modelName: modelName });
+      manager = this.filteredArrayManagersByType[
+        modelName
+      ] = FilteredArrayManagerForType.create({
+        store: this.store,
+        modelName: modelName
+      });
     }
 
     return manager;
+  },
+
+  destroy() {
+    this._super(...arguments);
+    Object.keys(this.filteredArrayManagersByType).forEach(key => {
+      this.filteredArrayManagersByType[key].destroy();
+    });
+    this.filteredArrayManagersByType = {};
   }
 });
 

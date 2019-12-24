@@ -6,17 +6,6 @@ env:
   global:
     - PERCY_ENABLE=0
 
-matrix:
-  include:
-    - if: type = cron
-      env: TRY_CONFIG=ember-beta
-    - if: type = cron
-      env: TRY_CONFIG=ember-data-beta
-    - node_js: 10
-  allow_failures:
-    - env: TRY_CONFIG=ember-beta
-    - env: TRY_CONFIG=ember-data-beta
-
 dist: xenial
 
 addons:
@@ -52,3 +41,21 @@ script:
 after_script:
   - greenkeeper-lockfile-upload
   - "test $TRAVIS_PULL_REQUEST && test $TRAVIS_PULL_REQUEST != 'false' && $TRAVIS_SECURE_ENV_VARS == 'true' && ./config/deployment/deploy-pull-request.sh"
+
+jobs:
+  include:
+    - if: type = cron
+      env: TRY_CONFIG=ember-beta
+    - if: type = cron
+      env: TRY_CONFIG=ember-data-beta
+    - node_js: 10
+    - stage: ":ship: it to quay.io"
+      before_install: skip
+      install: skip
+      before_script: skip
+      script: make ship
+      if: type = cron OR commit_message =~ /ship:docker/ OR env(SHIP_DOCKER) = true
+      after_script: skip
+  allow_failures:
+    - env: TRY_CONFIG=ember-beta
+    - env: TRY_CONFIG=ember-data-beta

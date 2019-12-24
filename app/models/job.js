@@ -3,11 +3,9 @@
 import Model, { attr, belongsTo } from '@ember-data/model';
 import { observer, computed } from '@ember/object';
 import { alias, and, equal, not, reads } from '@ember/object/computed';
-import { on } from '@ember/object/evented';
 import { inject as service } from '@ember/service';
 import { isEqual } from '@ember/utils';
 import { getOwner } from '@ember/application';
-import { Promise as EmberPromise } from 'rsvp';
 import Log from 'travis/models/log';
 import DurationCalculations from 'travis/mixins/duration-calculations';
 import DurationAttributes from 'travis/mixins/duration-attributes';
@@ -15,7 +13,6 @@ import promiseObject from 'travis/utils/promise-object';
 
 export default Model.extend(DurationCalculations, DurationAttributes, {
   api: service(),
-  ajax: service(),
   jobConfigFetcher: service(),
   features: service(),
   logId: attr(),
@@ -116,7 +113,7 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
 
   removeLog() {
     const url = `/job/${this.id}/log`;
-    return this.ajax.deleteV3(url).then(() => this.reloadLog());
+    return this.api.delete(url).then(() => this.reloadLog());
   },
 
   reloadLog() {
@@ -138,39 +135,14 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
     return this.log.append(part);
   },
 
-  whenLoaded(callback) {
-    new EmberPromise((resolve, reject) => {
-      this.whenLoadedCallbacks = this.whenLoadedCallbacks || [];
-      if (this.isLoaded) {
-        resolve();
-      } else {
-        this.whenLoadedCallbacks.push(resolve);
-      }
-    }).then(() => callback(this));
-  },
-
-  didLoad: on('didLoad', function () {
-    (this.whenLoadedCallbacks || []).forEach((callback) => {
-      callback(this);
-    });
-  }),
-
   subscribe() {
-    // TODO: this is needed only because we may reach this place with a job that
-    //       is not fully loaded yet. A better solution would be to ensure that
-    //       we call subscribe only when the job is loaded, but I think that
-    //       would require a bigger refactoring.
-    this.whenLoaded(() => {
-      if (this.subscribed) {
-        return;
-      }
+    if (this.subscribed) {
+      return;
+    }
 
-      this.set('subscribed', true);
+    this.set('subscribed', true);
 
-      this.repo.then((repo) =>
-        Travis.pusher.subscribe(this.channelName)
-      );
-    });
+    return this.repo.then(repo => Travis.pusher.subscribe(this.channelName));
   },
 
   channelName: computed(
@@ -191,16 +163,14 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
   ),
 
   unsubscribe() {
-    this.whenLoaded(() => {
-      if (!this.subscribed) {
-        return;
-      }
-      this.set('subscribed', false);
-      if (Travis.pusher) {
-        const channel = `job-${this.id}`;
-        return Travis.pusher.unsubscribe(channel);
-      }
-    });
+    if (!this.subscribed) {
+      return;
+    }
+    this.set('subscribed', false);
+    if (Travis.pusher) {
+      const channel = `job-${this.id}`;
+      return Travis.pusher.unsubscribe(channel);
+    }
   },
 
   onStateChange: observer('state', function () {
@@ -215,5 +185,5 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
     let slug = this.get('repo.slug');
     let number = this.number;
     return `${slug} #${number}`;
-  }),
+  })
 });

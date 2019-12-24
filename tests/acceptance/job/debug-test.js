@@ -5,35 +5,37 @@ import topPage from 'travis/tests/pages/top';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { enableFeature } from 'ember-feature-flags/test-support';
 import { percySnapshot } from 'ember-percy';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | jobs/debug', function (hooks) {
   setupApplicationTest(hooks);
+  setupMirage(hooks);
 
   hooks.beforeEach(function () {
-    const currentUser = server.create('user');
+    const currentUser = this.server.create('user');
     signInUser(currentUser);
   });
 
   test('debugging job', async function (assert) {
     enableFeature('debugBuilds');
 
-    let repo =  server.create('repository', { slug: 'travis-ci/travis-web', private: true });
-    let branch = server.create('branch', { name: 'acceptance-tests' });
+    let repo =  this.server.create('repository', { slug: 'travis-ci/travis-web', private: true });
+    let branch = this.server.create('branch', { name: 'acceptance-tests' });
 
-    let  gitUser = server.create('git-user', { name: 'Mr T' });
-    let commit = server.create('commit', { author: gitUser, committer: gitUser, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
-    let build = server.create('build', { repository: repo, state: 'failed', commit, branch });
-    let job = server.create('job', { number: '1234.1', repository: repo, state: 'failed', commit, build });
+    let  gitUser = this.server.create('git-user', { name: 'Mr T' });
+    let commit = this.server.create('commit', { author: gitUser, committer: gitUser, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
+    let build = this.server.create('build', { repository: repo, state: 'failed', commit, branch });
+    let job = this.server.create('job', { number: '1234.1', repository: repo, state: 'failed', commit, build });
     commit.job = job;
 
     job.save();
     commit.save();
 
-    server.create('log', { id: job.id });
+    this.server.create('log', { id: job.id });
 
     const requestBodies = [];
 
-    server.post(`/job/${job.id}/debug`, function (schema, request) {
+    this.server.post(`/job/${job.id}/debug`, function (schema, request) {
       const parsedRequestBody = JSON.parse(request.requestBody);
       requestBodies.push(parsedRequestBody);
     });

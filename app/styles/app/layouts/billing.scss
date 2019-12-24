@@ -1,0 +1,709 @@
+.billing {
+
+  .notice-banner--red {
+    display: block;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    padding: 0.5rem 0.9rem 0.6rem;
+    font-size: $font-size-sm;
+  }
+
+  .notice-banner--white {
+    display: flex;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    padding: 0.5rem 0.9rem 0.6rem;
+    box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.15);
+    font-size: 13px;
+  }
+
+  .icon-help {
+    width: 17px;
+    height: 17px;
+    border: 1px solid $cement-grey;
+
+    &:hover {
+      @include colorSVG($cement-grey);
+    }
+  }
+
+  .icon-help-yellow {
+    @include colorSVG($dozer-yellow);
+    border: 1px solid $dozer-yellow;
+  }
+
+  .billing-checkout {
+
+    .coupon-validation {
+
+      height: 38px;
+      white-space: nowrap;
+      
+      &__input {
+        flex-basis: 85%;
+      }
+      
+      &__validate-button-wrapper {
+        flex-basis: 20%;
+        font-size: 14px;
+        margin-left: 10px;
+        align-items: center;
+        display: flex;
+        justify-content: flex-end;
+        height: 38px;
+      }
+
+      .coupon-loading {
+        justify-content: center;
+      }
+
+      &__validate-button {
+        padding: 11px;
+      }
+
+      &__valid-coupon {
+        color: $ansi-green;
+
+        .icon-passed {
+          @include colorSVG($ansi-green);
+    
+          color: inherit;
+        }
+      }
+
+      &__invalid-coupon {
+        color:  $ansi-red;
+
+        .icon {
+          width: 20px;
+          height: 20px;
+        }
+
+        .icon-warn {
+          @include colorSVG($ansi-red);
+    
+          color: inherit;
+        }
+      }
+
+    }
+
+    &__payment {
+      padding-top: 15px;
+    }
+
+    h4 {
+      text-transform: uppercase;
+      font-weight: 700;
+      margin: 0;
+      font-size: .8em;
+      color: $cement-grey;
+    }
+
+    &__details {
+      border: 2px $pebble-grey solid;
+      border-radius: 5px;
+      padding: 15px;
+      color: $cement-grey;
+
+      &--info {
+        margin-bottom: 0;
+        margin-top: 1px;
+        font-weight: 500;
+        font-size: 1em;
+        color: $asphalt-grey;
+      }
+
+      &--email {
+        display: inline-block;
+        margin-bottom: 0;
+        margin-top: 1px;
+        font-weight: 500;
+        font-size: 1em;
+        color: $asphalt-grey;
+      }
+
+      &--edit {
+        text-transform: uppercase;
+        display: inline-block;
+        font-weight: 700;
+        margin-bottom: 0;
+        margin-top: 1px;
+        font-size: .6em;
+        border-bottom: 1px solid $cement-grey;
+      }
+    }
+  }
+
+  .billing-information-form {
+    margin-top: .9em;
+
+    .billing-optional-field {
+      margin-bottom: 45px;
+    }
+
+    .back-button {
+      margin-left: 15px;
+    }
+  }
+
+  .billing-plans {
+    background-color: #fff;
+    margin-bottom: 1em;
+    margin-top: 1em;
+
+    &__box {
+      background-color: #fff;
+      border-radius: 5px;
+      padding: 6px 13px;
+      border: 1px solid $pebble-grey;
+      margin-bottom: 10px;
+      width: 120px;
+      flex-basis: 100%;
+      margin-right: 5px;
+
+      &--jobs {
+        color: $cement-grey;
+        text-transform: uppercase;
+        font-weight: 600;
+        font-size: 0.8em;
+        margin: 5px 0 5px 0;
+      }
+
+      &--price {
+        margin: 0;
+        font-weight: 500;
+        font-size: 1.7em;
+        color: $oxide-blue;
+
+        span {
+          font-size: .4em;
+          font-style: italic;
+        }
+      }
+
+      &--name {
+        margin: 8px 0 0 0;
+        font-size: 1.1em;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      &:hover {
+        box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.15);
+        cursor: pointer;
+      }
+    }
+
+    &__box:last-child {
+      margin-right: 0;
+    }
+
+    @media #{$medium-up} {
+      &__box {
+        flex-basis: 48%;
+      }
+    }
+
+    @media #{$large-up} {
+      &__box {
+        flex-basis: 32%;
+      }
+    }
+
+    @media #{$xlarge-up} {
+      &__box {
+        flex-basis: 24%;
+      }
+    }
+
+    &__slider {
+
+      margin-top: 2em;
+
+      p {
+        margin-top: 1em;
+        text-transform: uppercase;
+        color: $cement-grey;
+        font-weight: 700;
+        font-size: .8em;
+      }
+    }
+  }
+
+  .billing-select-plan {
+    h4 {
+      margin: 0;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: $cement-grey;
+      font-size: 12px;
+    }
+
+    h3 {
+      margin-bottom: 0;
+      margin-top: 24px;
+    }
+
+    .switch {
+      .switch-inner {
+        width: 175px;
+        height: 30px;
+        margin-left: -5px;
+        padding-top: 1px;
+  
+        span {
+          width: 82px;
+          height: 25px;
+          line-height: 1.7;
+          padding-left: 0;
+  
+          span {
+            color: $ansi-black;
+            font-size: 1.2em;
+            font-weight: 500;
+          }
+        }
+      }
+      .on {
+        padding-left: 1px;
+      }
+    }
+
+    .switch.active .switch-inner {
+      background-color: #d8d8d8;
+    }
+
+    .highlight-plan {
+      color: $oxide-blue;
+      border: 1px solid $oxide-blue;
+      box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.15);
+      background: rgba(181, 214, 217, .2);
+    }
+  }
+
+  .billing-italize {
+    font-style: italic;
+  }
+
+  .billing-plan-switch {
+
+    p {
+      margin: 0;
+    }
+  }
+
+  @media #{$xlarge-up} {
+    .billing-plan-switch {
+      height: 50px;
+    }
+  }
+
+  .discount-code-header {
+    margin-top: -5px;
+  }
+
+  .billing-process-cancel {
+    margin-left: 10px;
+  }
+  .billing-trial {
+
+    .initial-billing-view {
+
+      .overview {
+
+        margin-bottom: 30px;
+
+        &__heading {
+          h3 {
+            margin: 0;
+          }
+        }
+
+        &__body {
+          margin-bottom: 15px;
+          align-items: flex-start;
+        }
+
+        .trial-ended {
+          margin-top: 20px;
+          margin-bottom: -10px;
+        }
+
+      }
+
+      .get-started {
+
+        flex-basis: 50%;
+        &__message {
+          font-weight: 300;
+          font-size: 20px;
+          display: inline-block;
+          margin: 0;
+          margin-top: 5px;
+        }
+
+        &__start-trial {
+          font-size: 14px;
+          margin-top: 7px;
+          margin-bottom: 7px;
+        }
+      }
+
+      .icon-get-plan {
+        @include colorSVG($oxide-blue);
+        height: 22px;
+        width: 21px;
+        margin-top: 5px;
+      }
+
+      .billing-trial-info {
+        flex-basis: 50%;
+        border: 1px solid $pebble-grey;
+        padding: 14px;
+        border-radius: 5px;
+        box-shadow: 0px 0px 19px -8px rgba(0, 0, 0, 0.2);
+        margin-top: 10px;
+
+        @media #{$large-up} {
+          .billing-trial-info {
+            margin-top: 0;
+          }
+        }
+
+        &__box {
+
+          &--open-source {
+            font-size: 16px;
+            margin: 0;
+          }
+
+          &--jobs {
+            font-size: 14px;
+            margin: 5px 0;
+          }
+        }
+      }
+
+      .icon-wrapper {
+        margin: 0 20px;
+        align-self: center;
+
+        &__plus {
+          @include colorSVG($oxide-blue);
+          width: 18px;
+          height: 18px;
+          display: none;
+        }
+
+        @media #{$large-up} {
+          &__plus {
+            display: block;
+          }
+        }
+      }
+
+      .get-plan {
+
+        text-transform: uppercase;
+        color: $oxide-blue;
+        font-weight: 700;
+        font-size: 16px;
+        background: transparent;
+        padding-top: 5px;
+
+        p {
+          margin: 0;
+        }
+
+        &--disabled {
+          color: $asphalt-grey;
+          background: transparent;
+        }
+      }
+    }
+    
+  }
+
+  h3 {
+    color: $oxide-blue;
+    font-size: 18px;
+  }
+
+  hr {
+    border: .8px $pebble-grey solid;
+    margin: 0;
+  }
+
+  .cancel-link {
+    display: inline-block;
+    margin-left: 15px;
+  }
+
+  .edit {
+    text-transform: uppercase;
+    display: inline-block;
+    font-weight: 700;
+    margin-bottom: 0;
+    padding: 0;
+    margin-top: 1px;
+    font-size: .6em;
+    background: transparent;
+    border-bottom: 1px solid $cement-grey;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  .selected-plan {
+    border-radius: 5px;
+    margin: 20px 0 20px 0;
+    background: $pebble-grey;
+    padding: 1em;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-end;
+
+    &__details {
+
+      &--plan {
+        text-transform: uppercase;
+        font-weight: bold;
+        font-size: .8em;
+        color: $asphalt-grey;
+        margin: 0;
+      }
+
+      &--name {
+        margin: 0;
+        font-weight: 300;
+        font-size: 1.8em;
+      }
+
+      &--jobs {
+        margin: 0;
+      }
+
+      &--change-plan {
+        text-transform: uppercase;
+        font-weight: 700;
+        font-size: .6em;
+        border-bottom: 1px solid $cement-grey;
+        background: transparent;
+        padding: 0;
+      }
+    }
+
+    &__price {
+      display: flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      padding-bottom: 10px;
+
+      &--total {
+        margin-right: 7px;
+        text-transform: uppercase;
+        color: $cement-grey;
+        font-size: 12px;
+        font-weight: 700;
+      }
+
+      &--large {
+        font-size: 3.5em;
+        margin: 0;
+        font-weight: 300;
+        color: $oxide-blue;
+        display: flex;
+        align-items: flex-end;
+      }
+
+    }
+
+    &__period {
+      font-size: .7em;
+      font-style: italic;
+    }
+  }
+
+  .subscribe-message {
+    span {
+      font-weight: bold;
+    }
+  }
+
+  .StripeElement {
+    display: block;
+    font-size: 1em;
+    border-radius: 8px;
+    border: 4px solid transparent;
+    margin: -4px;
+    padding: 10px 9px;
+    box-shadow: inset 0 0 1px 1px #d0d0d0;
+  }
+
+  .StripeElement--focus {
+    outline: none;
+    border-color: rgba(62, 170, 175, 0.2);
+  }
+
+  .StripeElement--invalid {
+    box-shadow: inset 0 0 1px 1px red;
+  }
+
+  .StripeElement--webkit-autofill {
+    background-color: #FEFDE5 !important;
+  }
+
+  .billing-subscription {
+
+    .grey-badge {
+      color: $cement-grey;
+      font-weight: 400;
+    }
+
+    .white-badge {
+      font-weight: 600;
+      border: 1px solid $pebble-grey;
+      color: $asphalt-grey;
+      border-radius: 3px;
+      background: white;
+
+      &.manual {
+        margin-left: 0;
+      }
+    }
+
+    h3 {
+      margin-bottom: 0;
+    }
+
+    &__buttons {
+      margin-top: 16px;
+
+      &--cancel {
+        margin-left: 10px;
+      }
+    }
+
+    .payment {
+
+      h4 {
+        margin-top: 0;
+      }
+    }
+
+    .billing-subscription-section {
+      margin-bottom: 25px;
+
+      .resubscribe-stripe-heading {
+        margin-top: 25px;
+        text-transform: uppercase;
+        font-weight: 700;
+        color: $cement-grey;
+        font-size: .8em;
+      }
+    }
+
+    .plan-overview {
+
+      &__header {
+        margin: 0;
+      }
+
+      &__trial {
+        font-size: 14px;
+        font-weight: 400;
+        margin: 0;
+      }
+
+      &__name {
+        font-weight: 300;
+        font-size: 24px;
+        margin-top: 5px;
+        margin-bottom: 0;
+      }
+
+      &__description {
+        font-weight: 100;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        align-items: center;
+
+        &--validity {
+          font-size: 12px;
+          font-weight: 400;
+          padding-bottom: 1px;
+        }
+      }
+    }
+  }
+}
+
+.cancel-subscription-modal {
+
+  .confirm-cancellation-button {
+    margin-right: 20px;
+  }
+
+  .cancellation-information {
+    margin: 35px 0;
+    font-size: 16px;
+  }
+
+  h2 {
+    color: $oxide-blue;
+    margin: 0;
+  }
+
+  &__message {
+    color: $asphalt-grey;
+    font-size: 1.2rem;
+  }
+
+  h5 {
+    text-transform: uppercase;
+    color: $cement-grey;
+    font-weight: 700;
+    margin-top: 15px;
+    letter-spacing: 1px;
+  }
+
+  &__reason-options {
+
+    div {
+      width: 120px;
+      background: $pebble-grey;
+      margin: 0 20px 0 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border-radius: 5px;
+
+      p {
+        margin: 7px 0;
+        text-transform: uppercase;
+        font-weight: 900;
+        font-size: 12px;
+      }
+    }
+
+    div:hover {
+      background: $cement-grey;
+      color: white;
+    }
+
+    div.selected {
+      background: $cement-grey;
+      color: white;
+    }
+
+    div:last-child {
+      margin-right: 0;
+    }
+
+  }
+}

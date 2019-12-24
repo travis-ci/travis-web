@@ -1,0 +1,14 @@
+<section>
+  <section class="billing-subscription">
+    <Billing::Summary
+      @subscription={{this.subscription}}
+      @account={{this.account}}
+    />
+  </section>
+  {{#if (and this.subscription.isGithubResubscribable (not this.hasExpiredStripeSubscription))}}
+    <Billing::Process 
+      @account={{this.account}} 
+      @newSubscription={{this.newSubscription}}
+    />
+  {{/if}}
+</section>

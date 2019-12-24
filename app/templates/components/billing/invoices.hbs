@@ -1,0 +1,72 @@
+<section class='invoices' data-test-invoices='true'>
+  <h3>Invoice history</h3>
+  <div class='flex flex--wrap flex--v-center flex--space-between'>
+    <p class="invoice-issue-banner" data-test-help-text='true'>
+      <SvgImage @name='icon-help' @class='icon-help' />
+      Having trouble with your invoices?
+      <LinkTo @route='help' @query={{hash anchor='form'}}>
+        We’re happy to help
+      </LinkTo>
+    </p>
+    <div class="flex flex--wrap flex--v-center">
+      <TravisForm as |form|>
+        <div class='form-elem invoice-select-year'>
+          <form.field
+            data-test-invoice-select-year='true'
+            @value={{this.year}}
+            class='margin-top-0'
+            @onChange={{action (mut this.year)}}
+            @showValidationStatusIcons={{false}} 
+            as |field|
+          >
+            <field.select
+              @searchEnabled={{false}}
+              @options={{this.invoiceYears}} 
+              as |year|
+            >
+              {{year}}
+            </field.select>
+          </form.field>
+        </div>
+      </TravisForm>      
+    </div>
+  </div>
+  <div class='invoice-table'>
+    <table>
+      <thead>
+        <tr data-test-table-header-row='true'>
+          <th> invoice date </th>
+          <th> payment card </th>
+          <th> total </th>
+          <th> download </th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each (sort-by 'createdAt:desc' this.selectedInvoices) as |invoice|}}
+          <tr data-test-invoice='true' class='fade-in'>
+            <td>
+              <SvgImage @name='icon-invoice' @class='icon-invoice' />
+              <span class='invoice-date'>
+                {{moment-format invoice.createdAt 'MMMM DD, YYYY'}}
+              </span>
+            </td>
+            <td> 
+              <SvgImage @name="icon-credit-card" @class="icon--color" />
+              •••• •••• ••••
+              {{this.subscription.creditCardInfo.lastDigits}} 
+            </td>
+            <td> {{format-currency invoice.amountDue }} </td>
+            <td>
+              <a data-test-invoice-url='true' href={{invoice.url}}>
+                <EmberTooltip>
+                  {{moment-format invoice.createdAt 'MMMM'}} invoice
+                </EmberTooltip>
+                <SvgImage @name='icon-download' @class='icon icon-download' />
+              </a>
+            </td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+</section>

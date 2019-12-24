@@ -1,17 +1,15 @@
 import Component from '@ember/component';
 import Ember from 'ember';
-import Polling from 'travis/mixins/polling';
+import { reads } from '@ember/object/computed';
 import config from 'travis/config/environment';
 import Visibility from 'visibilityjs';
 import { inject as service } from '@ember/service';
 
-export default Component.extend(Polling, {
+export default Component.extend({
   store: service(),
   updateTimesService: service('updateTimes'),
 
-  pollHook() {
-    return this.store.find('job', {});
-  },
+  runningJobs: reads('jobs'),
 
   init() {
     this._super(...arguments);

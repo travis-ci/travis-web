@@ -1,5 +1,4 @@
 <div class="migrate" data-test-migrate-page>
-  {{#if this.owner.allowMigration}}
     <h1 data-test-title>
       Bring your public repositories here
     </h1>
@@ -11,31 +10,26 @@
         The first step is activating your repositories on GitHub Apps to later migrate them here.
       </p>
       <div class="migrate__activate">
-        <button
-          class="button--blue"
-          data-test-activate-button
-          onclick={{action "activateAll"}}
-        >
-          <SvgImage @name={{vcs-icon this.owner.vcsType}} @class="migrate__github-icon" />
-          Activate all repositories using GitHub Apps
-        </button>
+        <ButtonActivateAllGithub />
       </div>
       <p class="migrate__activate-note" data-test-manual-note>
         *Keep in mind that you can also select the specific repositories you’d like to migrate.
       </p>
     {{else}}
-      <p data-test-step2-intro>
-        If a repository you’d like to migrate is missing, please first
-        <ExternalLinkTo
-          data-test-activate-link="true"
-          @href={{this.activateAllUrl}}
-          @target="_self"
-          class="migrate__activate-all"
-        >
-          activate it on Github Apps
-        </ExternalLinkTo>
-        <SvgImage @name={{vcs-icon this.owner.vcsType}} @class="migrate__github-icon" />
-      </p>
+      {{#if this.owner.allowMigration}}
+        <p data-test-step2-intro>
+          If a repository you’d like to migrate is missing, please first
+          <ExternalLinkTo
+            data-test-activate-link="true"
+            @href={{this.activateAllUrl}}
+            @target="_self"
+            class="migrate__activate-all"
+          >
+            activate it on Github Apps
+          </ExternalLinkTo>
+          <SvgImage @name={{vcs-icon this.owner.vcsType}} @class="migrate__github-icon" />
+        </p>
+      {{/if}}
       <div class="migrate__repo-list">
         <RepositoryFilter @repositories={{this.repositories}} as |filter|>
           {{#if this.showFilter}}
@@ -85,9 +79,11 @@
                           <span class="profile-repo">
                             {{compute filter.computeName repository.name filter.query}}
                           </span>
-                          {{#unless repository.permissions.admin}}
+                          {{#if (not this.owner.allowMigration)}}
+                            <EmberTooltip @text="Migration is not available for this account" />
+                          {{else if (not repository.permissions.admin)}}
                             <EmberTooltip @text="Requires admin permissions" />
-                          {{/unless}}
+                          {{/if}}
                         </field.checkbox>
                       </form.field>
                       <div data-test-migration-status={{repository.migrationStatus}} class="migrate__status {{repository.migrationStatus}}">
@@ -123,46 +119,47 @@
             @collection={{this.repositories}}
             @route={{this.router.currentRouteName}}
           />
-          {{#if (or this.repositories.length filter.isFiltering)}}
-            <button
-              data-test-migrate-button
-              disabled={{not this.selectedRepositories.length}}
-              class="button--blue migrate__submit {{unless this.selectedRepositories.length 'disabled'}}"
-              onclick={{action (mut this.isShowingRepositoryMigrationModal) true}}
-            >
-              Migrate selected repositories to travis-ci.com
-            </button>
-          {{/if}}
+          <div class="migrate__submit">
+            {{#if this.owner.allowMigration}}
+              {{#if (or this.repositories.length filter.isFiltering)}}
+                <button
+                  data-test-migrate-button
+                  disabled={{not this.selectedRepositories.length}}
+                  class="button--blue {{unless this.selectedRepositories.length 'disabled'}}"
+                  onclick={{action (mut this.isShowingRepositoryMigrationModal) true}}
+                >
+                  Migrate selected repositories to travis-ci.com
+                </button>
+              {{/if}}
+            {{else}}
+              <PaperBlock>
+                <p>
+                  Your account needs to be part of the beta to start migrating public repositories here. Please, sign up for the beta below.
+                </p>
+                <div>
+                  <button
+                    class="button--blue"
+                    {{on 'click' (fn (mut this.isShowingMigrateBetaDialog) true)}}
+                  >
+                    Sign up for the beta
+                  </button>
+                </div>
+              </PaperBlock>
+            {{/if}}
+          </div>
         </RepositoryFilter>
-        {{#if this.isShowingRepositoryMigrationModal}}
-          <ModalDialog
+        <Modal
+          @isVisible={{this.isShowingRepositoryMigrationModal}}
+          @onClose={{action "closeMigrateModal"}}
+        >
+          <RepositoryMigrationModal
+            data-test-repository-migration-modal="true"
+            @repositories={{this.selectedRepositories}}
             @onClose={{action "closeMigrateModal"}}
-            @onClickOverlay={{action "closeMigrateModal"}}
-            @targetAttachment="center"
-            @translucentOverlay={{true}}
-          >
-            <RepositoryMigrationModal
-              data-test-repository-migration-modal="true"
-              @repositories={{this.selectedRepositories}}
-              @onClose={{action "closeMigrateModal"}}
-            />
-          </ModalDialog>
-        {{/if}}
+          />
+        </Modal>
       </div>
     {{/if}}
-  {{else}}
-    <p>
-      The migration feature is not enabled on your account. To enable it you can sign up for the beta.
-    </p>
-    <div>
-      <button
-        class="button--blue"
-        {{on 'click' (fn (mut this.isShowingMigrateBetaDialog) true)}}
-      >
-        Sign up for the beta
-      </button>
-    </div>
-  {{/if}}
 </div>
 
 <Dialogs::MigrateBeta

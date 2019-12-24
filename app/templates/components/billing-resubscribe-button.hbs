@@ -1,0 +1,27 @@
+{{#if this.account.hasSubscriptionPermissions}}
+  {{#if this.subscription.isResubscribable}}
+    <button {{on 'click' (action (perform this.resubscribe))}} class='button--green mr-1' data-test-resubscribe-subscription='true'>
+      Resubscribe to plan
+    </button>
+    <button {{on 'click' this.openPlansSelector}} class='button--white button--hover' data-test-resubscribe-change-plan='true'>
+      Subscribe to different plan
+    </button>
+  {{else}}
+    <button {{on 'click' this.openPlansSelector}} class='button--blue' data-test-change-subscription='true'>
+      Change plan
+    </button>
+  {{/if}}
+{{else}}
+  {{#if this.subscription.isResubscribable}}
+    <div class='button disabled' data-test-resubscribe-subscription-disabled='true'>
+      Resubscribe to plan
+    </div>
+    <div class='button disabled' data-test-resubscribe-subscription-disabled='true'>
+      Subscribe to different plan
+    </div>
+  {{else}}
+    <div class='button disabled' data-test-change-plan-disabled='true'>
+      Change plan
+    </div>
+  {{/if}}
+{{/if}}

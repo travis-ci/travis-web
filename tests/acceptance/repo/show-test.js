@@ -1,20 +1,20 @@
-import {
-  visit,
-} from '@ember/test-helpers';
+import { settled, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import page from 'travis/tests/pages/repo/show';
 import buildPage from 'travis/tests/pages/build';
 import signInUser from 'travis/tests/helpers/sign-in-user';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | show repo page', function (hooks) {
   setupApplicationTest(hooks);
+  setupMirage(hooks);
 
   hooks.beforeEach(function () {
-    const currentUser = server.create('user', {login: 'user-login'});
+    const currentUser = this.server.create('user', {login: 'user-login'});
     signInUser(currentUser);
 
-    const repo = server.create('repository', {
+    const repo = this.server.create('repository', {
       name: 'repository-name',
       slug: 'org-login/repository-name',
       owner: {
@@ -34,20 +34,20 @@ module('Acceptance | show repo page', function (hooks) {
       default_branch: false
     });
 
-    let gitUser = server.create('git-user', { name: 'Mr T' });
-    let commit = server.create('commit', { author: gitUser, committer: gitUser, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
-    let build = server.create('build', { repository: repo, state: 'passed', commit_id: commit.id, commit, branch, finished_at: new Date() });
+    let gitUser = this.server.create('git-user', { name: 'Mr T' });
+    let commit = this.server.create('commit', { author: gitUser, committer: gitUser, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
+    let build = this.server.create('build', { repository: repo, state: 'passed', commit_id: commit.id, commit, branch, finished_at: new Date() });
 
-    let firstJob = server.create('job', { number: '1234.1', repository: repo, state: 'passed', config: { env: 'JORTS', os: 'linux', language: 'node_js', node_js: 5 }, commit, build });
+    let firstJob = this.server.create('job', { number: '1234.1', repository: repo, state: 'passed', config: { env: 'JORTS', os: 'linux', language: 'node_js', node_js: 5 }, commit, build });
     commit.job = firstJob;
 
     firstJob.save();
     commit.save();
 
-    server.create('job', { number: '1234.2', repository: repo, state: 'passed', config: { env: 'JANTS', os: 'osx', language: 'ruby', rvm: 2.2 }, commit, build });
-    server.create('job', { allow_failure: true, number: '1234.999', repository: repo, state: 'failed', config: { language: 'ruby', os: 'jorts' }, commit, build });
+    this.server.create('job', { number: '1234.2', repository: repo, state: 'passed', config: { env: 'JANTS', os: 'osx', language: 'ruby', rvm: 2.2 }, commit, build });
+    this.server.create('job', { allow_failure: true, number: '1234.999', repository: repo, state: 'failed', config: { language: 'ruby', os: 'jorts' }, commit, build });
 
-    let otherRepository = server.create('repository', {
+    let otherRepository = this.server.create('repository', {
       name: 'other-repository',
       slug: 'org-login/other-repository',
       owner: {
@@ -61,7 +61,7 @@ module('Acceptance | show repo page', function (hooks) {
       default_branch: true
     });
 
-    let otherCommit = server.create('commit', {
+    let otherCommit = this.server.create('commit', {
       author: gitUser,
       committer: gitUser,
       branch: 'other-tests',
@@ -69,7 +69,7 @@ module('Acceptance | show repo page', function (hooks) {
       branch_is_default: true
     });
 
-    let otherBuild = server.create('build', {
+    let otherBuild = this.server.create('build', {
       repository: otherRepository,
       state: 'failed',
       commit_id: commit.id,
@@ -78,7 +78,7 @@ module('Acceptance | show repo page', function (hooks) {
       finished_at: new Date(1919, 4, 1),
     });
 
-    let otherJob = server.create('job', {
+    let otherJob = this.server.create('job', {
       number: '1919.1919',
       repository: otherRepository,
       state: 'failed',
@@ -114,6 +114,7 @@ module('Acceptance | show repo page', function (hooks) {
 
   test('visiting the root shows the most recent current build', async function (assert) {
     await visit('/');
+    await settled();
 
     assert.equal(buildPage.requiredJobs.length, 2, 'expected two required jobs in the matrix');
     assert.equal(buildPage.allowedFailureJobs.length, 1, 'expected one allowed failure job');

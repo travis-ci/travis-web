@@ -1,0 +1,87 @@
+{{#if this.requiresSourceAction}}
+  <span class="notice-banner--yellow" data-test-payment-error='true'>
+    <SvgImage @name='icon-help' @class='icon-help icon-help-yellow' />
+    There was a problem authorizing your card. Please retry.
+  </span>
+  {{#if this.retryAuthorization.isRunning}}
+    <LoadingIndicator/>
+  {{else}}
+    <button class="button--green" onClick={{action (perform this.retryAuthorization)}}>
+      Retry authorization
+    </button>
+  {{/if}}
+{{else if this.requiresSource}}
+  <span class="notice-banner--red" data-test-payment-error='true'>
+    {{this.stripeErrorMessage}}
+  </span>
+  <TravisForm
+    data-test-stripe-form='true' 
+    @onSubmit={{perform this.retryPayment}} 
+    as |form|
+  >
+    <StripeCard 
+      @complete={{action "complete"}} 
+      @options={{this.options}} 
+      as |stripeError|
+    >
+      {{#if stripeError}}
+        <p>{{stripeError.message}}</p>
+      {{/if}}
+    </StripeCard>
+      <span class="notice-banner--white" data-test-help-text='true'>
+        Credit card details are never stored on nor reach our servers. Payment data is handled by Stripe.
+      </span>
+    <div class='billing-checkout__payment'>
+      {{#if this.retryPayment.isRunning}}
+        <LoadingIndicator/>
+      {{else}}
+        <button class='button--green' {{action form.submit}} data-test-complete-payment='true'>
+          Pay {{format-currency this.subscription.plan.price}}
+        </button>
+      {{/if}}
+    </div>
+  </TravisForm>
+{{else if this.isPending}}
+  <span class="notice-banner--yellow" data-test-trial-running-out='true'>
+    We are currently waiting for Stripe to finish processing your order.
+  </span>
+{{else if (and this.isComplete this.subscription.isStripe)}}
+  {{#if this.showPlansSelector}}
+    <Billing::SelectPlan
+      @title="Edit plan"
+      @account={{this.account}}
+      @selectedPlan={{this.selectedPlan}}
+      @showAnnual={{this.showAnnual}}
+      @showPlansSelector={{this.showPlansSelector}}
+      @submit={{this.editPlan}}
+      @showCancelButton={{true}}
+    />
+  {{else}}
+    <div class="flex flex--wrap billing-subscription__buttons">
+      {{#if this.isLoading}}
+        <LoadingIndicator/>
+      {{else}}
+        <div class="billing-subscription__buttons--change">
+          <BillingResubscribeButton 
+            @account={{this.account}}
+            @subscription={{this.subscription}}
+            @resubscribe={{this.resubscribe}}
+            @openPlansSelector={{fn (mut this.showPlansSelector) true}}
+          />
+        </div>
+        <div class='billing-subscription__buttons--cancel'>
+          {{#if this.canCancelSubscription}}
+            <button {{on 'click' (fn (mut this.showCancelModal) true)}} class='button--white button--hover' data-test-open-cancel-subscription-modal='true'>
+              Cancel subscription
+            </button>
+          {{/if}}
+        </div>
+      {{/if}}
+    </div>
+  {{/if}}
+{{/if}}
+ <Dialogs::CancelSubscriptionModal 
+  @isOpen={{this.showCancelModal}}
+  @onClose={{fn (mut this.showCancelModal) false}}
+  @subscription={{this.subscription}}
+/>

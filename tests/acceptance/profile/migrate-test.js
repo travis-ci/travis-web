@@ -4,18 +4,20 @@ import { setupApplicationTest } from 'travis/tests/helpers/setup-application-tes
 import { enableFeature } from 'ember-feature-flags/test-support';
 import profilePage from 'travis/tests/pages/profile';
 import signInUser from 'travis/tests/helpers/sign-in-user';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | Profile | Migrate', function (hooks) {
   setupApplicationTest(hooks);
+  setupMirage(hooks);
 
   hooks.beforeEach(function () {
-    this.user = server.create('user', {
-      allowMigration: true,
+    this.user = this.server.create('user', {
+      allow_migration: true,
       login: 'user-login',
       github_id: 1974,
     });
 
-    server.create('installation', {
+    this.server.create('installation', {
       owner: this.user,
       github_id: 2691
     });
@@ -35,7 +37,9 @@ module('Acceptance | Profile | Migrate', function (hooks) {
 
       hooks.beforeEach(async function () {
         await profilePage.visit();
+        await settled();
         await profilePage.migrate.visit();
+        await settled();
       });
 
       test('is visitable', function (assert) {
@@ -54,10 +58,10 @@ module('Acceptance | Profile | Migrate', function (hooks) {
     });
 
     module('tab with repositories to migrate', function (hooks) {
-
       hooks.beforeEach(async function () {
-        generateRepositoriesForMigration(server, this.user);
+        generateRepositoriesForMigration(this.server, this.user);
         await profilePage.visit();
+        await settled();
         await profilePage.migrate.visit();
         await settled();
       });

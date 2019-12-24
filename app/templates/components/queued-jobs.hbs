@@ -1,5 +1,5 @@
-{{#if this.jobs.isLoaded}}
-  {{#each this.jobs as |job|}}
+{{#if this.jobsLoaded}}
+  {{#each this.queuedJobs as |job|}}
     <div
       data-test-sidebar-queued-job
       class="tile tile--sidebar {{job.state}}"
@@ -7,7 +7,9 @@
       {{#if job.repo.slug}}
         <StatusIcon @status={{job.state}} />
         <LinkTo @route="job" @models={{array job.repo job}}>
-          {{job.repo.slug}}
+          <span class="label-align">
+            {{job.repo.slug}}
+          </span>
         </LinkTo>
       {{/if}}
       <p class="tile-title float-right">

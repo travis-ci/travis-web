@@ -1,37 +1,38 @@
-{{#unless this.subscription.manualSubscriptionExpired}}
-  <section class="plan">
-    <h2>
-      Plan Overview
-    </h2>
-    <h3 data-test-plan-name>
-      {{this.subscription.plan.name}}
-    </h3>
-    <p data-test-plan-concurrency>
-      {{pluralize this.subscription.plan.builds "concurrent job"}}
-    </p>
-    <p>
-      Renewing on {{moment-format this.subscription.validTo "MMMM D, YYYY"}}
-    </p>
-  </section>
-  <section>
-    <h2>
-      Billing Information
-    </h2>
-    <section class="row">
-      <section class="payment">
+<section>
+  {{#if this.subscription.manualSubscriptionExpired}}
+    <div class="billing-subscription">
+      <Billing::Summary 
+        @subscription={{this.subscription}} 
+        @account={{this.account}}
+        @planMessage="Expired"
+      />
+    </div>
+    <Billing::Process 
+      @account={{this.account}} 
+      @newSubscription={{this.newSubscription}}
+    />
+  {{else}}
+    <section class="billing-subscription">
+      <Billing::Summary 
+        @subscription={{this.subscription}} 
+        @account={{this.account}}
+      />
+      <div class='mt-5'>
         <h3>
-          Payment details
+          Billing details
         </h3>
-        <PaymentDetails @subscription={{this.subscription}} />
-      </section>
+        <p class="flex px-4 py-5 shadow items-center notice-banner--white" data-test-help-text='true'>
+          <div class="mr-4">
+            <SvgImage @name='icon-help' @class='icon-help' />
+          </div>
+          <span class="py-1 leading-loose" data-test-manual-subscription-banner='true'>
+            This manual subscription is paid to Travis CI by bank transfer. If you have any questions or would like to update your plan,
+            <LinkTo @route='help' @query={{hash anchor='form'}}>
+              contact our support team.
+            </LinkTo>
+          </span>
+        </p>
+      </div>
     </section>
-  </section>
-{{else}}
-  <span data-test-expiry-message>
-    {{#if this.subscription.manualSubscriptionExpired}}
-      You had a {{this.subscription.sourceWords}} subscription that expired on
-      {{moment-format this.subscription.validTo "MMMM D, YYYY"}}.
-      <ManualSubscriptionHelp />
-    {{/if}}
-  </span>
-{{/unless}}
+  {{/if}}
+</section>

@@ -3,12 +3,14 @@ import { setupApplicationTest } from 'travis/tests/helpers/setup-application-tes
 import profilePage from 'travis/tests/pages/profile';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { percySnapshot } from 'ember-percy';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | profile/not found', function (hooks) {
   setupApplicationTest(hooks);
+  setupMirage(hooks);
 
   hooks.beforeEach(function () {
-    const currentUser = server.create('user', {
+    const currentUser = this.server.create('user', {
       name: 'User Name',
       login: 'user-login',
     });

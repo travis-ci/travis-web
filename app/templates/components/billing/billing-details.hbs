@@ -1,0 +1,149 @@
+<div class="billing-subscription-section">
+  <h3>
+    Billing details
+  </h3>
+  {{#if this.openEditBillingForm}}
+    <div class="edit-form" data-test-edit-billing-address-form='true'>
+      <TravisForm
+        @onSubmit={{perform this.editContact}}
+        as |form|
+      >
+        <div class='flex flex--col flex-md-row'>
+          <div class="form-elem inline-form-elem">
+            <form.field
+              @label="Street Address"
+              @value={{this.info.address}}
+              @required={{true}}
+              @validateOnField={{false}}
+              @showValidationStatusIcons={{false}}
+              @onChange={{action (mut this.info.address)}}
+              as |field|
+            >
+              <field.input name="address" placeholder="Address" />
+            </form.field>
+          </div>
+          <div class='form-elem'>
+            <form.field
+              @label='Country'
+              @value={{this.info.country}}
+              @required={{true}}
+              class='billing-country'
+              @showRequiredMark={{true}}
+              @showValidationStatusIcons={{false}}
+              @onChange={{action (mut this.info.country)}}
+              as |field|
+            >
+              <field.select
+                @placeholder='Select country'
+                @options={{this.countries}} 
+                as |country|
+              >
+                {{country}}
+              </field.select>
+            </form.field>
+          </div>
+        </div>
+        <div class='flex flex--col flex-md-row'>
+          <div class="form-elem inline-form-elem">
+            <form.field
+              @label="City"
+              @value={{this.info.city}}
+              @required={{true}}
+              @validateOnField={{false}}
+              @showValidationStatusIcons={{false}}
+              @onChange={{action (mut this.info.city)}}
+              as |field|
+            >
+              <field.input name="city" placeholder="City" />
+            </form.field>
+          </div>
+          <div class='flex flex--col flex-md-row w-full'>
+            <div class="form-elem inline-form-elem">
+              <form.field
+                @label="Post Code"
+                @value={{this.info.zipCode}}
+                @required={{true}}
+                @validateOnField={{false}}
+                @showValidationStatusIcons={{false}}
+                @onChange={{action (mut this.info.zipCode)}}
+                as |field|
+              >
+                <field.input name="postCode" placeholder="Post Code" />
+              </form.field>
+            </div>  
+            <div class="form-elem">
+              <form.field
+                @label="Vat Id"
+                @value={{this.info.vatId}}
+                @validateOnField={{false}}
+                @showValidationStatusIcons={{false}}
+                @onChange={{action (mut this.info.vatId)}}
+                as |field|
+              >
+                <field.input name="vatId" />
+              </form.field>
+            </div>
+          </div>
+        </div>
+        <div class="form-elem">
+          {{#if this.editContact.isRunning}}
+            <LoadingIndicator />
+          {{else}}
+            <div class="flex flex--wrap">
+              <button data-test-update-billing-address-button='true' onclick={{form.submit}} class="button--green">
+                Update billing details
+              </button>
+              <a data-test-cancel-billing-address-button='true' onClick={{action (toggle 'openEditBillingForm' this)}} class='link cancel-link'>
+                Cancel
+              </a>
+            </div>
+          {{/if}}
+        </div>
+      </TravisForm>
+    </div>
+  {{else}}
+    <div data-test-billing-details='true' class="flex flex--space-between flex--wrap">
+      {{#if this.info.address}}
+        <section>
+          <h4>address</h4>
+          <p>{{this.info.address}}</p>
+        </section>
+      {{/if}}
+      {{#if this.info.city}}
+        <section>
+          <h4>city</h4>
+          <p>{{this.info.city}}</p>
+        </section>
+      {{/if}}
+      {{#if this.info.zipCode}}
+        <section>
+          <h4>post code</h4>
+          <p>{{this.info.zipCode}}</p>
+        </section>
+      {{/if}}
+      {{#if this.info.country}}
+        <section>
+          <h4>country</h4>
+          <p>{{this.info.country}}</p>
+        </section>
+      {{/if}}
+      {{#if this.info.vatId}}
+        <section>
+          <h4>vat id</h4>
+          <p>{{this.info.vatId}}</p>
+        </section>
+      {{/if}}
+    </div>
+    {{#if this.account.hasSubscriptionPermissions}}
+      <button class='button--blue billing-subscription__buttons' 
+        onClick={{action (toggle 'openEditBillingForm' this)}} data-test-edit-billing-address='true'
+      >
+        Edit billing details
+      </button>
+    {{else}}
+      <div class='button disabled' ata-test-edit-billing-address='true'>
+        Edit billing details
+      </div>
+    {{/if}}
+  {{/if}}
+</div>

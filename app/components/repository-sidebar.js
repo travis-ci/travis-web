@@ -15,10 +15,9 @@ export default Component.extend({
   updateTimesService: service('updateTimes'),
   repositories: service(),
   features: service(),
-  store: service(),
   auth: service(),
   router: service(),
-  classNames: ['dupa'],
+  classNames: ['repository-sidebar'],
 
   didInsertElement(...args) {
     this._super(args);
@@ -28,8 +27,7 @@ export default Component.extend({
     schedule('afterRender', () => {
       this.fetchRepositoryData.perform();
       if (this.get('features.showRunningJobsInSidebar')) {
-        this.get('jobState.fetchRunningJobs').perform();
-        this.get('jobState.fetchQueuedJobs').perform();
+        this.get('jobState.fetchJobs').perform();
       }
     });
   },
@@ -79,23 +77,33 @@ export default Component.extend({
 
   runningJobs: computed(
     'features.showRunningJobsInSidebar',
-    'jobState.runningJobs.[]',
+    'jobState.runningJobs.@each.state',
     function () {
       let showRunningJobs = this.get('features.showRunningJobsInSidebar');
       let runningJobs = this.get('jobState.runningJobs');
       if (!showRunningJobs) { return []; }
-      return runningJobs;
+      return runningJobs.sort((a, b) => parseFloat(a.number) - parseFloat(b.number));
     }
   ),
 
   queuedJobs: computed(
     'features.showRunningJobsInSidebar',
-    'jobState.queuedJobs.[]',
+    'jobState.queuedJobs.@each.state',
     function () {
       let showRunningJobs = this.get('features.showRunningJobsInSidebar');
       let queuedJobs = this.get('jobState.queuedJobs');
       if (!showRunningJobs) { return []; }
       return queuedJobs;
+    }
+  ),
+
+  jobsLoaded: computed(
+    'features.showRunningJobsInSidebar',
+    'jobState.jobsLoaded',
+    function () {
+      let showRunningJobs = this.get('features.showRunningJobsInSidebar');
+      let jobsLoaded = this.get('jobState.jobsLoaded');
+      return showRunningJobs && jobsLoaded;
     }
   ),
 

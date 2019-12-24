@@ -30,7 +30,12 @@ body {
   overflow-x: hidden;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-weight: $font-weight-normal;
 }
 
@@ -95,8 +100,13 @@ a {
   &--center {
     justify-content: center;
   }
+
   &--space-between {
     justify-content: space-between;
+  }
+
+  &--flex-start {
+    justify-content: flex-start;
   }
 
   &--v-center {
@@ -106,7 +116,36 @@ a {
   &--wrap {
     flex-wrap: wrap;
   }
+
+  &--col {
+    flex-direction: column;
+  }
+
+  &--col-2 {
+    flex-basis: 50%;
+  }
+
+  &--col-3 {
+    flex-basis: 33.33%;
+  }
+
+  &--col-4 {
+    flex-basis: 25%;
+  }
 }
+
+@media #{$large-up} {
+  .flex-md-row {
+    flex-direction: row;
+  }
+}
+
+@media #{$large-up} {
+  .flex-md-col {
+    flex-direction: column;
+  }
+}
+
 
 .pointer {
   cursor: pointer;
@@ -151,6 +190,10 @@ span.emoji.emoji-sizer {
   line-height: 1;
 }
 
+.leading-loose {
+  line-height: 2;
+}
+
 .float-right {
   float: right;
 }
@@ -161,6 +204,10 @@ span.emoji.emoji-sizer {
 
 .margin-top-0 {
   margin-top: 0;
+}
+
+.margin-bottom-0 {
+  margin-bottom: 0;
 }
 
 .margin-left-s {
@@ -181,6 +228,10 @@ span.emoji.emoji-sizer {
 
 .position-relative {
   position: relative;
+}
+
+.full-width {
+  width: 100%;
 }
 
 .link {
@@ -223,6 +274,28 @@ span.emoji.emoji-sizer {
   color: $asphalt-grey;
 }
 
-.color-asphalt-blue {
+.cement-grey {
+  color: $cement-grey;
+}
+
+.color-oxide-blue {
   color: $oxide-blue;
+}
+
+.red {
+  color: $ansi-red;
+}
+
+.red-bold {
+  color: $ansi-red-bold;
+}
+
+.dark-red {
+  color: #DB4545;
+}
+
+@for $i from 1 through 100 {
+  .height-#{$i} {
+    height: $i + 0%;
+  }
 }

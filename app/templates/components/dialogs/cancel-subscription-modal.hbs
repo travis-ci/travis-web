@@ -1,0 +1,53 @@
+<Modal
+  @isVisible={{@isOpen}}
+  @onClose={{fn @onClose}}
+  @closeButton={{true}}
+>
+  <div data-test-cancel-subscription-modal="true" class="flex flex--v-center flex--center flex--col cancel-subscription-modal">
+    <h2>We're sorry you'd like to cancel</h2>
+    <p class="cancel-subscription-modal__message">
+      To keep improving our product and how it works for our users, <br/> we'd like to hear your feedback on why you're cancelling.
+    </p>
+    <h5>reason for cancellation</h5>
+    {{#if this.showCancelReasonValidation}}
+      <span class="notice-banner--red full-width" data-test-cancel-subscription-error='true'>
+        Please select a reason for cancelling
+      </span>
+    {{/if}}
+    <div class="flex cancel-subscription-modal__reason-options">
+      {{#each this.cancellationReasons as |reason|}}
+        <div data-test-cancel-reason-option='true' onClick={{action 'selectCancellationReason' reason}} class='{{if (eq selectedCancellationReason reason.name) 'selected'}}'>
+          <p>{{reason.name}}</p>
+        </div>
+      {{/each}}
+    </div>
+    <div class="full-width">
+      <TravisForm
+        @onSubmit={{perform this.cancelSubscription}}
+        as |form|
+      >
+        <div class="form-elem cancellation-information">
+          <form.field
+            @label=""
+            @onChange={{action (mut this.cancellationReasonDetails)}}
+            as |field|
+          >
+            <field.textarea rows="4" placeholder="Could you share more information with us?">{{this.cancellationReasonDetails}}</field.textarea>
+          </form.field>
+        </div>
+        <div class="flex flex--v-center flex--center">
+          {{#if this.cancelSubscription.isRunning}}
+            <LoadingIndicator />
+          {{else}}
+            <button data-test-cancel-subscription="true" {{action (perform this.cancelSubscription)}} class="button--red confirm-cancellation-button">
+              Confirm cancellation
+            </button>
+            <a class="link" {{on 'click' (fn @onClose)}}>
+              I changed my mind
+            </a>
+          {{/if}}
+        </div>
+      </TravisForm>
+    </div>
+  </div>
+</Modal>

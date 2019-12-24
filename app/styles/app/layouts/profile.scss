@@ -16,7 +16,6 @@ $profile-breakpoint: 600px;
   // FIXME there’s a naked h2 down there, it seems to me it needs scoping…?
   h2 {
     color: $oxide-blue;
-    font-weight: 300;
   }
 
   .profile-aside {
@@ -445,7 +444,8 @@ section.billing {
     font-size: 16px;
   }
 
-  .billing-section-link {
+  .billing-section-link,
+  .get-started-link {
     text-decoration: underline;
 
     &:hover,
@@ -458,6 +458,7 @@ section.billing {
   .plan {
     p {
       margin: 0.3em 0 0.3em 0;
+      font-weight: 100;
     }
 
     h3 {
@@ -512,16 +513,42 @@ section.billing {
     }
   }
 
+  section.billing-info {
+    padding: .1em 0;
+  }
+
   section.contact,
   section.payment {
     p {
       margin-top: 0;
       margin-bottom: 0.3em;
+      margin-right: 1.3em;
+
+      span {
+        margin-left: 1.3em;
+        color: $pebble-grey;
+      }
     }
 
     p.manual-help {
       @include linkStyle;
       margin-top: 1rem;
+    }
+
+    h4 {
+      text-transform: uppercase;
+      color: $cement-grey;
+      font-size: $font-size-s;
+      font-weight: $font-weight-bold;
+      margin-bottom: 5px;
+    }
+
+    .edit-form {
+      margin-top: 20px;
+
+      .form-elem {
+        width: 100%;
+      }
     }
   }
 
@@ -534,7 +561,6 @@ section.billing {
     margin-top: 1rem;
   }
 
-
   .notice-banner--yellow {
     display: block;
     margin-top: 1rem;
@@ -544,17 +570,17 @@ section.billing {
 }
 
 section.invoices {
-  font-size: $font-size-m;
-  padding-top: 1rem;
 
-  h2 {
-    margin: 0;
+  font-size: $font-size-m;
+
+  h3 {
+    color: $oxide-blue;
+    margin-bottom: 0;
   }
 
   .invoice-table {
     overflow-x: auto;
     padding-bottom: 20px;
-    padding-top: 20px;
   }
 
   .invoice-select-year {
@@ -568,6 +594,14 @@ section.invoices {
 
   .select-year-label {
     margin-right: 10px;
+  }
+
+  .invoice-issue-banner {
+    padding: 10px;
+    box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.15);
+    margin-right: 46px;
+    border-radius: 5px;
+    width: 75%;
   }
 
   table {
@@ -620,9 +654,11 @@ section.invoices {
   .icon-help {
     margin-right: 3px;
     transform: translateY(-2px);
+    width: 19px;
+    height: 19px;
+    border-color: $cement-grey;
 
     &:hover {
-      border-color: $pebble-grey;
       @include colorSVG($cement-grey);
     }
   }
@@ -638,10 +674,9 @@ section.invoices {
   }
 
   .icon-invoice {
-    height: 26px;
-    width: 26px;
-    transform: translate(-6px, 6px);
-    @include colorSVG(black);
+    height: 18px;
+    width: 28px;
+    transform: translate(-7px, 4px);
   }
 }
 
@@ -855,15 +890,11 @@ header.space-between {
 }
 
 .manage-subscription {
-  float: right;
+  margin-top: 10px;
 
-  &.new {
-    float: none;
-  }
-
-  &.resubscribe {
-    float: none;
-    margin-top: 1rem;
+  .github-icon {
+    @include colorSVG(#fff);
+    @include colorSVGFill(#fff);
   }
 }
 

@@ -2,9 +2,11 @@ import hbs from 'htmlbars-inline-precompile';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, settled } from '@ember/test-helpers';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Integration | Component | enterprise banner', function (hooks) {
   setupRenderingTest(hooks);
+  setupMirage(hooks);
 
   test('renders trial banner unexpired', async function (assert) {
     this.server.get('/v3/enterprise_license', (schema, response) => {

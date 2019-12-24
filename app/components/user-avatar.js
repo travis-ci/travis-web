@@ -57,7 +57,8 @@ export default Component.extend({
       let showStatus = this.showSubscriptionStatus;
       let isSubscribed = this.get('account.subscription.isSubscribed');
       let education = this.get('account.education');
-      return showStatus && (isSubscribed || education);
+      let manualSubscriptionExpired = this.get('account.subscription.manualSubscriptionExpired');
+      return showStatus && !manualSubscriptionExpired && (isSubscribed || education);
     }
   ),
 

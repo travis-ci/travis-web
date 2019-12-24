@@ -1,9 +1,10 @@
 import {
   click,
-  currentURL,
   currentRouteName,
+  currentURL,
+  settled,
   visit,
-  waitFor,
+  waitFor
 } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
@@ -14,12 +15,14 @@ import { prettyDate } from 'travis/helpers/pretty-date';
 import page from 'travis/tests/pages/dashboard';
 import topPage from 'travis/tests/pages/top';
 import generatePusherPayload from 'travis/tests/helpers/generate-pusher-payload';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | dashboard/repositories', function (hooks) {
   setupApplicationTest(hooks);
+  setupMirage(hooks);
 
   hooks.beforeEach(function () {
-    const currentUser = server.create('user', {
+    const currentUser = this.server.create('user', {
       name: 'User Name',
       login: 'user-login',
     });
@@ -27,8 +30,8 @@ module('Acceptance | dashboard/repositories', function (hooks) {
 
     signInUser(currentUser);
 
-    let build = server.create('build', {
-      branch: server.create('branch', { name: 'some-branch' }),
+    let build = this.server.create('build', {
+      branch: this.server.create('branch', { name: 'some-branch' }),
       event_type: 'push',
       number: 2,
       state: 'failed',
@@ -37,8 +40,8 @@ module('Acceptance | dashboard/repositories', function (hooks) {
       createdBy: currentUser
     });
 
-    server.create('build', {
-      branch: server.create('branch', { name: 'cron-branch' }),
+    this.server.create('build', {
+      branch: this.server.create('branch', { name: 'cron-branch' }),
       event_type: 'cron',
       number: 1,
       state: 'failed',
@@ -47,9 +50,9 @@ module('Acceptance | dashboard/repositories', function (hooks) {
       createdBy: currentUser
     });
 
-    let branch = server.create('branch', {
+    let branch = this.server.create('branch', {
       name: 'master',
-      lastBuild: server.create('build', {
+      lastBuild: this.server.create('build', {
         number: 1,
         event_type: 'api',
         state: 'passed',
@@ -61,15 +64,15 @@ module('Acceptance | dashboard/repositories', function (hooks) {
     let oneYearAgo = new Date(new Date() - 1000 * 60 * 60 * 24 * 365);
     let beforeOneYearAgo = new Date(oneYearAgo.getTime() - 1000 * 60 * 19 - 1000 * 19);
 
-    let permissionBuild = server.create('build', {
+    let permissionBuild = this.server.create('build', {
       id: 1919,
-      branch: server.create('branch', { name: 'another-branch' }),
+      branch: this.server.create('branch', { name: 'another-branch' }),
       event_type: 'push',
       number: 44,
       state: 'passed',
       started_at: beforeOneYearAgo,
       finished_at: oneYearAgo,
-      commit: server.create('commit', {
+      commit: this.server.create('commit', {
         message: 'get used to it',
         sha: 'acab'
       }),
@@ -77,16 +80,16 @@ module('Acceptance | dashboard/repositories', function (hooks) {
     });
     this.permissionBuild = permissionBuild;
 
-    let permissionBranch = server.create('branch', {
+    let permissionBranch = this.server.create('branch', {
       name: 'primary',
-      lastBuild: server.create('build', {
+      lastBuild: this.server.create('build', {
         number: 55,
         event_type: 'push',
         state: 'passed',
         createdBy: currentUser
       })
     });
-    this.repository = server.create('repository', {
+    this.repository = this.server.create('repository', {
       owner: {
         login: 'travis-ci',
         type: 'organization'
@@ -95,7 +98,7 @@ module('Acceptance | dashboard/repositories', function (hooks) {
       currentBuild: build,
       defaultBranch: branch,
     });
-    server.create('repository', {
+    this.server.create('repository', {
       owner: {
         login: 'travis-repos',
         type: 'organization'
@@ -103,7 +106,7 @@ module('Acceptance | dashboard/repositories', function (hooks) {
       name: 'repo-python',
       currentBuild: build,
     });
-    server.create('repository', {
+    this.server.create('repository', {
       owner: {
         login: 'travis-repos',
         type: 'organization'
@@ -112,7 +115,7 @@ module('Acceptance | dashboard/repositories', function (hooks) {
       currentBuild: build,
       private: true
     });
-    this.starredRepo = server.create('repository', {
+    this.starredRepo = this.server.create('repository', {
       owner: {
         login: 'travis-ci',
         type: 'organization'
@@ -180,7 +183,7 @@ module('Acceptance | dashboard/repositories', function (hooks) {
   test('Dashboard pagination works', async function (assert) {
     enableFeature('dashboard');
 
-    server.createList('repository', 12);
+    this.server.createList('repository', 12);
 
     await visit('/dashboard');
 
@@ -254,7 +257,7 @@ module('Acceptance | dashboard/repositories', function (hooks) {
 
     assert.equal(topPage.flashMessage.text, 'The build was successfully restarted.');
 
-    const commit = server.create('commit', {
+    const commit = this.server.create('commit', {
       id: 100,
       sha: 'acab',
       branch: 'primary',
@@ -296,13 +299,13 @@ module('Acceptance | dashboard/repositories', function (hooks) {
     });
 
 
-    let otherUser = server.create('user');
-    let otherBranch = server.create('branch', {
-      lastBuild: server.create('build', {
+    let otherUser = this.server.create('user');
+    let otherBranch = this.server.create('branch', {
+      lastBuild: this.server.create('build', {
         createdBy: otherUser
       })
     });
-    let otherRepository = server.create('repository', {
+    let otherRepository = this.server.create('repository', {
       defaultBranch: otherBranch
     });
 
@@ -312,7 +315,7 @@ module('Acceptance | dashboard/repositories', function (hooks) {
       repository: otherRepository
     });
 
-    let otherCommit = server.create('commit');
+    let otherCommit = this.server.create('commit');
 
     let otherJob = otherBuild.createJob({
       id: otherBuild.id,
@@ -343,8 +346,9 @@ module('Acceptance | dashboard/repositories', function (hooks) {
     enableFeature('dashboard');
 
     await visit('/dashboard');
-
+    await settled();
     await click('[data-test-signout-link]');
+    await settled();
 
     assert.equal(currentURL(), '/');
   });

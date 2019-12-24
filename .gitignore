@@ -9,7 +9,7 @@
 /node_modules/
 
 # misc
-/.env*
+/.env
 /.pnp*
 /.sass-cache
 /connect.lock
@@ -27,3 +27,6 @@
 
 # vs code JavaScript config file
 jsconfig.json
+
+# IDEs folders
+.idea

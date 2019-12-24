@@ -11,19 +11,44 @@
             The simplest way to test and deploy your projects.
           </h1>
           <p>
-            Easily sync your GitHub projects with Travis CI and you'll be testing your code in minutes.
+            Easily sync your projects with Travis CI and you'll be testing your code in minutes.
           </p>
-          <a
-            href="https://travis-ci.com/signin"
-            class="hero-button cta-index-page"
-            title="Sign up with GitHub"
-            {{action "gaCta" "index"}}
-          >
-            <SvgImage @name="github-signin" />
-            <span>
-              Sign up with GitHub
-            </span>
-          </a>
+          <div class="cta-container">
+            <button
+              class="hero-button cta-index-page {{if this.multiVcs.enabled "multi-vcs"}}"
+              title="Sign up with GitHub"
+              {{action 'signIn' 'github'}}
+            >
+              <SvgImage @name="github-signin" />
+              <span>
+                Sign up with GitHub
+              </span>
+            </button>
+            {{#if this.multiVcs.enableAssemblaLogin}}
+              <button
+                class="hero-button cta-index-page multi-vcs"
+                title="Sign up with Assembla"
+                {{action 'signIn' 'assembla'}}
+              >
+                <SvgImage @name="icon-assembla" />
+                <span>
+                  Sign up with Assembla
+                </span>
+              </button>
+            {{/if}}
+            {{#if this.multiVcs.enableBitbucketLogin}}
+              <button
+                class="hero-button cta-index-page multi-vcs"
+                title="Sign up with Bitbucket"
+                {{action 'signIn' 'bitbucket'}}
+              >
+                <SvgImage @name="icon-bitbucket" />
+                <span>
+                  Sign up with Bitbucket
+                </span>
+              </button>
+            {{/if}}
+          </div>
         </div>
         <div class="landing-hero-image">
           <img src="../images/pro-landing/hero-header.png" />
@@ -405,7 +430,7 @@
         href="https://travis-ci.com/signin"
         class="start-building-button cta-index-page"
         title="Sign up with GitHub"
-        {{action "gaCta" "index"}}
+        {{action "signIn"}}
       >
         Start building now
       </a>

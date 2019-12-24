@@ -1,0 +1,94 @@
+<div class='billing-subscription-section plan-overview'>
+  <div class="flex flex--space-between flex--wrap plan-overview__details">
+    <section>
+      <h3 class='plan-overview__header'> Overview </h3>
+      <div class='plan'>
+        <div>
+          <BillingSummaryStatus 
+            @subscription={{this.subscription}}
+            @account={{this.account}}
+          />
+          <div class='plan-overview__description flex' data-test-plan-concurrency>
+            <span>
+              {{#if this.subscription.plan}}
+                {{pluralize this.subscription.plan.builds "concurrent job"}}
+                {{#if this.account.education}}
+                  (plus 1 for free)
+                {{/if}}
+              {{else}}
+                Unknown concurrent jobs
+              {{/if}}
+            </span>
+            {{#if (and this.subscription.isManual (not this.subscription.manualSubscriptionExpired))}}
+              <span class='plan-overview__description--validity dark-red display ml-2' data-test-plan-message='true'>
+                Renews on {{moment-format this.subscription.validTo "MMMM D, YYYY"}}
+              </span>
+            {{else}}
+              <span data-test-plan-message='true' class='plan-overview__description--validity ml-3
+                {{if this.canceledOrExpired 'dark-red' 'cement-grey'}}'
+              >
+                {{#if this.isSubscribed}}
+                  Valid until {{moment-format this.subscription.validTo "MMMM D, YYYY"}}
+                {{else if this.isIncomplete}}
+                  Incomplete 
+                {{else if (and this.isComplete this.isCanceled)}}
+                  {{#if this.isGithubSubscription}}
+                    Cancelled on {{moment-format this.subscription.validTo "MMMM D, YYYY"}}
+                  {{else}}
+                    Expires {{moment-from-now this.subscription.validTo}} on {{moment-format this.subscription.validTo "MMMM DD"}}
+                  {{/if}}
+                {{else if (and this.isComplete this.isExpired)}}
+                  Expired {{moment-format this.subscription.validTo "MMMM D, YYYY"}}
+                {{/if}}
+              </span>
+            {{/if}}
+          </div>
+        </div>
+      </div>
+    </section>
+    <section>
+      {{#if this.isNotGithubTrial}}
+        <div class='selected-plan__price'>
+          <p class='selected-plan__price--total' data-test-plan-total='true'>
+            Total:
+          </p>
+          {{#if this.subscription.plan }}
+            <p class='selected-plan__price--large' data-test-price>
+              {{format-currency this.subscription.plan.price floor='true'}}
+            </p>
+            <span data-test-selected-plan-period='true' class='selected-plan__period'>
+              {{if this.subscription.plan.annual '/year' '/month'}}
+            </span>
+          {{/if}}
+        </div>
+      {{/if}}
+    </section>
+  </div>
+  {{#if this.subscription.isGithub}}
+    <ManageSubscriptionButton
+      @subscription={{this.subscription}}
+      @account={{this.account}}
+    />
+  {{/if}}
+  {{#if (and this.subscription.isGithub this.hasExpiredStripeSubscription)}}
+    <h4 class="resubscribe-stripe-heading">resubscribe via travis ci:</h4>
+    <Billing::Authorization 
+      @subscription={{this.expiredStripeSubscription}} 
+      @account={{this.account}}
+      @isPending={{this.isPending}}
+    />
+  {{/if}}
+  {{#if this.subscription.isStripe}}
+    <Billing::Authorization 
+      @subscription={{this.subscription}} 
+      @account={{this.account}}
+      @isPending={{this.isPending}}
+    />
+  {{/if}}
+</div>
+<hr />
+{{#if this.subscription.isStripe}}
+  <Billing::Address @subscription={{this.subscription}} @account={{this.account}}/>
+  <Billing::PaymentDetails @subscription={{this.subscription}} @account={{this.account}}//>
+  <hr />
+{{/if}}

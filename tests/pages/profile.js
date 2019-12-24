@@ -111,7 +111,7 @@ export default create({
       href: attribute('href')
     },
 
-    migrateButton: { scope: '[data-test-migrate-github-apps] '},
+    migrateButton: { scope: '[data-test-migrate-github-apps] ' },
   },
 
   manageGithubAppsLink: {
@@ -259,24 +259,352 @@ export default create({
       isDisabled: hasClass('disabled'),
     },
 
+    newSubscriptionButton: {
+      scope: '[data-test-manage-button]',
+      isDisabled: hasClass('disabled'),
+    },
+
+    getPlanButton: {
+      scope: '[data-test-get-a-plan]',
+      isDisabled: hasClass('disabled'),
+      isHidden: isHidden()
+    },
+
+    resubscribeSubscriptionButton: {
+      scope: '[data-test-resubscribe-subscription]'
+    },
+
+    changePlanResubscribe: {
+      scope: '[data-test-resubscribe-change-plan]'
+    },
+
+    changeSubscriptionButton: {
+      scope: '[data-test-change-subscription]'
+    },
+
+    cancelSubscriptionButton: {
+      scope: '[data-test-cancel-subscription]'
+    },
+
+    openCancelSubscriptionModal: {
+      scope: '[data-test-open-cancel-subscription-modal]'
+    },
+
+    dataTestCancelSubscriptionModal: {
+      scope: '[data-test-cancel-subscription-modal]',
+
+      error: {
+        scope: '[data-test-cancel-subscription-error]'
+      },
+
+      cancelReasonOptions: collection('[data-test-cancel-reason-option]')
+    },
+
+    editContactAddressButton: {
+      scope: '[data-test-edit-contact-address]'
+    },
+
+    editBillingAddressButton: {
+      scope: '[data-test-edit-billing-address]'
+    },
+
+    editContactAddressForm: {
+      scope: '[data-test-edit-contact-address-form]',
+      isPresent: isPresent(),
+      fillIn: fillable(''),
+
+      inputs: {
+        scope: 'input'
+      },
+
+      updateContactAddressButton: {
+        scope: '[data-test-update-contact-address-button]',
+      },
+
+      cancelContactAddressButton: {
+        scope: '[data-test-cancel-contact-address-button]',
+      },
+    },
+
+    editBillingAddressForm: {
+      scope: '[data-test-edit-billing-address-form]',
+      isPresent: isPresent(),
+      fillIn: fillable(''),
+
+      inputs: {
+        scope: 'input'
+      },
+
+      updateBillingAddressButton: {
+        scope: '[data-test-update-billing-address-button]',
+      },
+
+      cancelBillingAddressButton: {
+        scope: '[data-test-cancel-billing-address-button]',
+      },
+    },
+
+    noPermissionMessage: {
+      scope: '[data-test-no-permission-message]',
+    },
+
+    billingFormHeading: {
+      scope: '[data-test-billing-info-title]',
+    },
+
+
+    billingCouponForm: {
+      scope: '[data-test-coupon-form]',
+      isPresent: isPresent(),
+      fillIn: fillable(''),
+
+      submitCoupon: {
+        scope: '[data-test-coupon-button]'
+      },
+
+      validCoupon: {
+        scope: '[data-test-valid-coupon]'
+      },
+
+      invalidCoupon: {
+        scope: '[data-test-invalid-coupon]'
+      }
+    },
+
+    billingForm: {
+      scope: '[data-test-billing-form]',
+      isPresent: isPresent(),
+      fillIn: fillable(''),
+
+      input: {
+        scope: '[data-test-billing-form] input',
+        isPresent: isPresent(),
+      },
+
+      select: {
+        scope: '[data-test-billing-form] [data-billing-form-select]',
+        isPresent: isPresent(),
+      },
+
+      billingSelectCountry: {
+        scope: '.billing-country'
+      },
+
+      proceedPayment: {
+        scope: '[data-test-proceed-to-payment-button]'
+      },
+
+      backToPlans: {
+        scope: '[data-test-back-to-plans]'
+      }
+    },
+
+    switchPlan: {
+      scope: '.travis-form__field--switch',
+      isPresent: isPresent(),
+    },
+
+    stripeForm: {
+      scope: '[data-test-stripe-form]'
+    },
+
+    billingPaymentForm: {
+      scope: '[data-test-payment-form]',
+      isPresent: isPresent(),
+      fillIn: fillable(''),
+
+      completePayment: {
+        scope: '[data-test-complete-payment]'
+      },
+
+      paymentInfo: {
+        scope: '[data-test-payment-info]'
+      },
+
+      flashErrorMessage: {
+        scope: '.flash-message .message'
+      },
+
+      contactDetails: {
+        scope: '[data-test-contact-details]',
+
+        contactHeading: {
+          scope: '[data-test-contact-heading]',
+          text: text()
+        },
+
+        firstName: {
+          scope: '[data-test-contact-firstName]',
+          text: text()
+        },
+
+        company: {
+          scope: '[data-test-contact-company]',
+          text: text()
+        },
+
+        email: {
+          scope: '[data-test-contact-email]',
+          text: text()
+        },
+
+        contactEditButton: {
+          scope: '[data-test-edit-contact-button]',
+          text: text()
+        },
+
+        billingHeading: {
+          scope: '[data-test-billing-heading]',
+          text: text()
+        },
+
+        address: {
+          scope: '[data-test-billing-address]',
+          text: text()
+        },
+
+        city: {
+          scope: '[data-test-billing-city]',
+          text: text()
+        },
+
+        country: {
+          scope: '[data-test-billing-country]',
+          text: text()
+        },
+
+        billingEditButton: {
+          scope: '[data-test-edit-billing-button]',
+          text: text()
+        }
+      },
+
+    },
+
+    billingPlanChoices: {
+      scope: '[data-test-billing-plan-choices]',
+      isPresent: isPresent(),
+
+      boxes: {
+        scope: '[data-test-plan-box]',
+      },
+
+      lastBox: {
+        visit: clickable('[data-test-plan-box]:last-child'),
+      },
+    },
+
+    selectedPlan: {
+      scope: '.highlight-plan',
+      isHighlighted: hasClass('highlight-plan'),
+
+      heading: {
+        scope: '.highlight-plan [data-test-selected-plan-heading]',
+        text: text()
+      },
+
+      name: {
+        scope: '.highlight-plan [data-test-selected-plan-name]',
+        text: text()
+      },
+
+      jobs: {
+        scope: '.highlight-plan [data-test-selected-plan-jobs]',
+        text: text()
+      },
+
+      price: {
+        scope: '.highlight-plan [data-test-selected-plan-price]',
+        text: text()
+      },
+
+      changePlan: {
+        scope: '.highlight-plan [data-test-change-selected-plan]',
+        text: text()
+      }
+    },
+
+    selectedPlanOverview: {
+      scope: '.selected-plan',
+
+      heading: {
+        scope: '[data-test-selected-plan-heading]',
+        text: text()
+      },
+
+      name: {
+        scope: '[data-test-selected-plan-name]',
+        text: text()
+      },
+
+      jobs: {
+        scope: '[data-test-selected-plan-jobs]',
+        text: text()
+      },
+
+      price: {
+        scope: '[data-test-selected-plan-price]',
+        text: text()
+      },
+
+      changePlan: {
+        scope: '[data-test-change-selected-plan]',
+        text: text()
+      }
+    },
+
+    subscribeButton: {
+      scope: '[data-test-subscribe-button]',
+    },
+
     marketplaceButton: {
       scope: '.marketplace-button',
       href: attribute('href')
     },
 
     plan: {
-      scope: '.plan',
       name: text('[data-test-plan-name]'),
-      concurrency: text('[data-test-plan-concurrency]')
+      concurrency: {
+        scope: '[data-test-plan-concurrency]'
+      }
+    },
+
+    manualSubscription: {
+      banner: {
+        scope: '[data-test-manual-subscription-banner]'
+      }
     },
 
     trial: {
       scope: '.billing',
-      name: text('[data-test-trial-message]'),
-
+      bannerInformation: text('[data-test-help-text]'),
+      overviewHeading: text('[data-test-overview-heading]'),
+      buildsRunningOutBanner: text('[data-test-trial-running-out]'),
+      buildsRanOutBanner: text('[data-test-trial-ran-out]'),
+      subtext: text('[data-test-trial-subtext]'),
+      name: {
+        scope: '[data-test-trial-message]',
+        hasRedText: hasClass('red'),
+        text: text(),
+      },
+      openSourceMessage: {
+        scope: '[data-test-open-source-box]',
+        isPresent: isPresent(),
+        heading: text('[data-test-open-source-header]'),
+        body: text('[data-test-open-source-jobs]')
+      },
       link: {
         scope: '[data-test-trial-link]',
         href: attribute('href')
+      },
+      activateButton: {
+        scope: '[data-test-activate-button]',
+        isDisabled: hasClass('disabled'),
+        text: text()
+      },
+      subscribeMessage: {
+        scope: '[data-test-subscribe-message]',
+        text: text()
       }
     },
 
@@ -285,8 +613,20 @@ export default create({
       name: text('[data-test-education-message]'),
     },
 
-    address: {
-      scope: '.contact .address',
+    billingSubscription: {
+      greyStatus: '[data-test-grey-status]',
+      activeStatus: '[data-test-active-status]',
+      canceledStatus: '[data-test-grey-status]',
+      expiredStatus: '[data-test-expired-status]',
+      manualStatus: '[data-test-manual-status]'
+    },
+
+    userDetails: {
+      scope: '[data-test-user-details]',
+    },
+
+    billingDetails: {
+      scope: '[data-test-billing-details]'
     },
 
     source: text('[data-test-source]'),
@@ -294,10 +634,19 @@ export default create({
     creditCardNumber: { scope: '[data-test-credit-card]' },
     price: { scope: '[data-test-price]' },
 
+    period: {
+      scope: '[data-test-selected-plan-period]',
+      text: text()
+    },
+
     annualInvitation: { scope: '[data-test-annual-invitation]' },
 
     expiryMessage: {
       scope: '[data-test-expiry-message]'
+    },
+
+    planMessage: {
+      scope: '[data-test-plan-message]'
     },
 
     contactSupport: {
@@ -350,6 +699,7 @@ export default create({
       activateButton: {
         scope: '[data-test-activate-button]',
         isPresent: isPresent(),
+        isHidden: isHidden(),
         click: clickable()
       },
 

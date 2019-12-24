@@ -6,6 +6,7 @@ import jobPage from 'travis/tests/pages/job';
 import generatePusherPayload from 'travis/tests/helpers/generate-pusher-payload';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { prettyDate } from 'travis/helpers/pretty-date';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 const repoId = 100;
 
@@ -20,9 +21,10 @@ const repositoryTemplate = {
 
 module('Acceptance | home/with repositories', function (hooks) {
   setupApplicationTest(hooks);
+  setupMirage(hooks);
 
   hooks.beforeEach(function () {
-    const currentUser = server.create('user', {
+    const currentUser = this.server.create('user', {
       name: 'User Name',
       login: 'user-login'
     });
@@ -30,13 +32,13 @@ module('Acceptance | home/with repositories', function (hooks) {
     signInUser(currentUser);
 
     // create active repo
-    this.repository = server.create('repository', repositoryTemplate);
+    this.repository = this.server.create('repository', repositoryTemplate);
 
     this.branch = this.repository.createBranch({
       name: 'primary',
     });
 
-    server.create('repository', {
+    this.server.create('repository', {
       slug: 'org-login/some-other-repository-name'
     });
 
@@ -47,7 +49,7 @@ module('Acceptance | home/with repositories', function (hooks) {
     this.startedAt = beforeOneYearAgo.toISOString();
     this.finishedAt = oneYearAgo.toISOString();
 
-    server.create('repository', {
+    this.server.create('repository', {
       slug: 'org-login/yet-another-repository-name',
       owner: {
         login: 'org-login'
@@ -61,7 +63,7 @@ module('Acceptance | home/with repositories', function (hooks) {
       finished_at: this.finishedAt
     });
 
-    server.create('repository', {
+    this.server.create('repository', {
       slug: 'other/other',
       skipPermissions: true
     });
@@ -69,6 +71,7 @@ module('Acceptance | home/with repositories', function (hooks) {
 
   test('the home page shows the repositories', async function (assert) {
     await visit('/');
+    await settled();
 
     assert.equal(sidebarPage.sidebarRepositories.length, 3, 'expected three repositories in the sidebar');
 
@@ -93,12 +96,13 @@ module('Acceptance | home/with repositories', function (hooks) {
   test('Pusher events change the main display', async function (assert) {
     assert.expect(5);
     await visit('/');
+    await settled();
 
     assert.equal(sidebarPage.repoTitle, 'org-login / yet-another-repository-name', 'expected the displayed repository to be the one with a running build');
 
-    let createdBy = server.create('user', { login: 'srivera', name: 'Sylvia Rivera' });
+    let createdBy = this.server.create('user', { login: 'srivera', name: 'Sylvia Rivera' });
 
-    const commit = server.create('commit', {
+    const commit = this.server.create('commit', {
       id: 100,
       sha: 'acab',
       branch: 'primary',
@@ -146,7 +150,7 @@ module('Acceptance | home/with repositories', function (hooks) {
     app.pusher.receive('job:received', generatePusherPayload(job, { state: 'received' }));
 
     // This is necessary to have the log fetch not fail and put the log in an error state.
-    server.create('log', { id: job.id, content: ''});
+    this.server.create('log', { id: job.id, content: ''});
 
     build.state = 'started';
     build.finished_at = null;

@@ -13,3 +13,5 @@ export const presentedPath = (source = '', slug = '') => (
     .replace(/@\w{16}$/, sha => `@${formatSha(sha.substring(1))}`)
     .replace(slugRe(slug), '')
 );
+
+export const codeblockName = (source = '') => (`rccb_${fileName(source)}`);

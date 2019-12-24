@@ -1,18 +1,20 @@
-import { visit } from '@ember/test-helpers';
+import { settled, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import { enterpriseBanners } from 'travis/tests/pages/enterprise-banner';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { enableFeature } from 'ember-feature-flags/test-support';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | enterprise/banner', function (hooks) {
   setupApplicationTest(hooks);
+  setupMirage(hooks);
 
   hooks.beforeEach(function () {
-    const currentUser = server.create('user');
+    const currentUser = this.server.create('user');
     signInUser(currentUser);
 
-    server.get('/v3/enterprise_license', (schema, request) => {
+    this.server.get('/v3/enterprise_license', (schema, request) => {
       return {
         'license_id': 'ad12345',
         'seats': '30',
@@ -26,6 +28,7 @@ module('Acceptance | enterprise/banner', function (hooks) {
   test('banner is rendered in enterprise mode', async function (assert) {
     enableFeature('enterpriseVersion');
     await visit('/');
+    await settled();
 
     assert.ok(enterpriseBanners.trialBanner.isVisible);
   });

@@ -131,7 +131,7 @@
 
 .button--white {
   @extend %button;
-  border: 2px solid $pebble-grey;
+  border: 1px solid $pebble-grey;
   color: $asphalt-grey;
 
   &.button--hover {
@@ -229,10 +229,6 @@
   &:active {
     background: $dry-cement !important;
   }
-}
-
-#auth #navigation .auth-button {
-  display: none;
 }
 
 .action-button--restart,

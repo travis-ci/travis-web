@@ -2,7 +2,7 @@ import VcsEntity from 'travis/models/vcs-entity';
 import { attr, belongsTo } from '@ember-data/model';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
-import { reads, or, equal, notEmpty } from '@ember/object/computed';
+import { reads, or, equal, notEmpty, filterBy } from '@ember/object/computed';
 import config from 'travis/config/environment';
 import dynamicQuery from 'travis/utils/dynamic-query';
 
@@ -17,8 +17,10 @@ export default VcsEntity.extend({
 
   name: attr('string'),
   login: attr('string'),
+  channels: attr(),
   isSyncing: attr('boolean'),
-  syncedAt: attr(),
+  syncedAt: attr('date'),
+  createdAt: attr('date'),
   avatarUrl: attr('string'),
   githubId: attr('string'),
   education: attr('boolean'),
@@ -84,20 +86,44 @@ export default VcsEntity.extend({
   }),
 
   subscriptionError: reads('accounts.subscriptionError'),
+  subscriptions: reads('accounts.subscriptions'),
 
-  subscription: computed(
-    'accounts.subscriptions.@each.{validTo,owner,isSubscribed}',
+  accountSubscriptions: computed(
+    'subscriptions.@each.{validTo,owner,isSubscribed,isPending,isIncomplete}',
     'login',
     function () {
-      let subscriptions = this.get('accounts.subscriptions') || [];
-      let login = this.login;
-      const accountSubscriptions = subscriptions.filterBy('owner.login', login) || [];
-      const activeAccountSubscriptions = accountSubscriptions.filterBy('isSubscribed') || [];
-      if (activeAccountSubscriptions.length > 1) this.logMultipleSubscriptionsError();
-      return activeAccountSubscriptions.get('firstObject') ||
-        accountSubscriptions.get('lastObject');
+      let subscriptions = this.subscriptions || [];
+      return subscriptions.filterBy('owner.login', this.login);
+    }),
+
+  activeAccountSubscriptions: filterBy('accountSubscriptions', 'isSubscribed'),
+  incompleteAccountSubscriptions: filterBy('accountSubscriptions', 'isIncomplete'),
+  pendingAccountSubscriptions: filterBy('accountSubscriptions', 'isPending'),
+  expiredAccountSubscriptions: filterBy('accountSubscriptions', 'isExpired'),
+  expiredStripeSubscriptions: filterBy('expiredAccountSubscriptions', 'isStripe'),
+
+  expiredStripeSubscription: computed('expiredStripeSubscriptions.[]', function () {
+    if (this.expiredStripeSubscriptions.length > 1) {
+      this.logMultipleSubscriptionsError();
     }
-  ),
+    return this.expiredStripeSubscriptions.get('firstObject');
+  }),
+
+  subscription: computed(
+    'accountSubscriptions.[]',
+    'activeAccountSubscriptions.[]',
+    'pendingAccountSubscriptions.[]',
+    'incompleteAccountSubscriptions.[]', function () {
+      if (this.activeAccountSubscriptions.length > 1 ||
+        this.pendingAccountSubscriptions.length > 1 ||
+        this.incompleteAccountSubscriptions.length > 1) {
+        this.logMultipleSubscriptionsError();
+      }
+      return this.activeAccountSubscriptions.get('firstObject') ||
+        this.pendingAccountSubscriptions.get('firstObject') ||
+        this.incompleteAccountSubscriptions.get('firstObject') ||
+        this.accountSubscriptions.get('lastObject');
+    }),
 
   trial: computed('accounts.trials.@each.{created_at,owner,hasTrial}', 'login', function () {
     let trials = this.get('accounts.trials') || [];

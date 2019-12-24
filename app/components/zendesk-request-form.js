@@ -13,7 +13,6 @@ import {
   notEmpty
 } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
-import $ from 'jquery';
 import moment from 'moment';
 import config from 'travis/config/environment';
 
@@ -32,6 +31,7 @@ export default Component.extend({
   classNames: ['zendesk-request-form'],
 
   accounts: service(),
+  ajax: service(),
   auth: service(),
   features: service(),
   flashes: service(),
@@ -91,20 +91,19 @@ export default Component.extend({
     const { email, subject, description: body } = this;
 
     try {
-      return yield $.ajax({
-        type: 'POST',
-        url: `${apiHost}${createRequestEndpoint}`,
-        data: JSON.stringify({
+      return yield this.ajax.request(createRequestEndpoint, 'POST', {
+        host: apiHost,
+        data: {
           request: {
             requester: { name, email },
             subject,
             comment: { body }
           }
-        }),
+        },
         contentType: 'application/json'
       });
     } catch (error) {
-      if (error.readyState === 0) { // Network error
+      if (error.isNetworkError) { // Network error
         this.flashes.error(
           "We're sorry, API is currently unavailable, please try to submit again a bit later"
         );
@@ -121,6 +120,9 @@ export default Component.extend({
 
   didInsertElement() {
     this.flashes.clear();
+    if (!this.email && this.emails && this.emails.length) {
+      this.set('email', this.emails.firstObject);
+    }
     return this._super(...arguments);
   },
 

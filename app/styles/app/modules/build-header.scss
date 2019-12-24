@@ -11,6 +11,7 @@
   @include travisColorRows;
 
   font-size: 16px;
+  color: $asphalt-grey;
   clear: both;
 
   a:hover,
@@ -28,13 +29,15 @@
     @media #{$medium-up} {
       margin-left: 18px;
     }
+    margin-bottom: 3px;
     margin-left: 15px;
     font-size: 15px;
     display: grid;
     grid-template-columns: 20px fit-content(50%) 1fr;
     grid-template-rows: 1fr 1fr;
     grid-template-areas: "os name language"
-                         "os name language";
+                         "os name language"
+                         ". arch arch";
 
     .detail-job-os {
       grid-area: os;
@@ -48,6 +51,11 @@
 
     .detail-job-lang {
       grid-area: language;
+      padding-left: 6px;
+    }
+
+    .detail-job-arch {
+      grid-area: arch;
       padding-left: 6px;
     }
   }

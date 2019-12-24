@@ -1,4 +1,4 @@
-<div class="settings">
+<div class="settings" data-test-settings-content>
   <section class="settings-section">
     <h2 class="small-title">
       General
@@ -152,47 +152,76 @@
       {{/unless}}
     </section>
   {{/if}}
+  {{#if this.showBetaFeatures}}
+    <section class="settings-section beta_features">
+      <h2 class="small-title display-inline">
+        Beta Features
+      </h2>
+      <p>
+        These features are in beta. If you find things to be not working as expected
+        or lacking, please let us know in the <a href="{{config-get 'urls.communityEarlyReleases'}}">Travis CI community forum</a>
+        or email <a href="{{config-get 'urls.emailSupport'}}">support</a>.
+      </p>
+      <ul class="settings-list--columns">
+        {{#if this.showConfigValidationSwitches}}
+          <li>
+            <SettingsSwitch
+              @active={{this.model.settings.config_validation}}
+              @repo={{this.repo}}
+              @description="Enable build config validation"
+              @key="config_validation"
+            />
+            <ExternalLinkTo
+              href="https://docs.travis-ci.com/user/build-config-validation"
+              title="about build config validation"
+              class="settings-tooltip"
+            >
+              <EmberTooltip @text="Read about build config validation" />
+              <SvgImage @name="icon-help" @class="icon-help" />
+            </ExternalLinkTo>
+          </li>
+        {{/if}}
+      </ul>
+    </section>
+  {{/if}}
 </div>
-{{#if this.displaySettingsDisabledAfterMigrationModal}}
-  <ModalDialog
-    @targetAttachment="center"
-    @translucentOverlay={{true}}
-    @overlayPosition="sibling"
-    @animatable={{true}}
+
+<Modal
+  @isVisible={{this.displaySettingsDisabledAfterMigrationModal}}
+  @closeOnClickOverlay={{false}}
+>
+  <div
+    data-test-settings-disabled-after-migration-modal
+    class="migrated-repo-settings-modal"
   >
-    <div
-      data-test-settings-disabled-after-migration-modal
-      class="migrated-repo-settings-modal"
-    >
-      <h3 class="migrated-repo-settings-modal__header h3--teal">
-        Your repository has been migrated to <br />
-        travis-ci.com
-      </h3>
-      <p>
-        As a result, your repository is now in a <b>read-only</b> state.
-      </p>
-      <p>
-        If you wish to configure your repository, you can do so by visiting the settings page on travis-ci.com.
-        Read-only historical data, such as Requests, Build History and Branches can still be viewed.
-      </p>
-      <div>
-        <LinkTo
-          @route="builds"
-          @model={{this.repo}}
-          class="migrated-repo-settings-modal__button button--blue"
-        >
-          View Build History
-        </LinkTo>
-        <ExternalLinkTo
-          @href={{this.migratedRepositorySettingsLink}}
-          class="migrated-repo-settings-modal__button button--dark-grey"
-        >
-          Edit settings on .com
-        </ExternalLinkTo>
-        <LinkTo @route="repo.index" @model={{repo}} class="modal-close pointer">
-          <SvgImage @name="icon-failed" @class="icon" />
-        </LinkTo>
-      </div>
+    <h3 class="migrated-repo-settings-modal__header h3--teal">
+      Your repository has been migrated to <br />
+      travis-ci.com
+    </h3>
+    <p>
+      As a result, your repository is now in a <b>read-only</b> state.
+    </p>
+    <p>
+      If you wish to configure your repository, you can do so by visiting the settings page on travis-ci.com.
+      Read-only historical data, such as Requests, Build History and Branches can still be viewed.
+    </p>
+    <div>
+      <LinkTo
+        @route="builds"
+        @model={{this.repo}}
+        class="migrated-repo-settings-modal__button button--blue"
+      >
+        View Build History
+      </LinkTo>
+      <ExternalLinkTo
+        @href={{this.migratedRepositorySettingsLink}}
+        class="migrated-repo-settings-modal__button button--dark-grey"
+      >
+        Edit settings on .com
+      </ExternalLinkTo>
+      <LinkTo @route="repo.index" @model={{repo}} class="modal-close pointer">
+        <SvgImage @name="icon-failed" @class="icon" />
+      </LinkTo>
     </div>
-  </ModalDialog>
-{{/if}}
+  </div>
+</Modal>

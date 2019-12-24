@@ -1,5 +1,5 @@
 <div class="inner-yaml-container">
-  <div class="file-name">
+  <div class="header" {{on 'click' (action 'toggle')}}>
     {{#if this.fileUrl}}
       <ExternalLinkTo @href={{this.fileUrl}}>
         <SvgImage @name="job-name-icon" @class="icon" @width=14 @height=14 />
@@ -13,18 +13,28 @@
         {{this.filePath}}
       </span>
     {{/if}}
+    <div class="tools">
+      <SvgImage @name="icon-dropdown-arrow" @class="icon-toggle icon-{{this.toggleStatusClass}}" />
+    </div>
   </div>
-  <div class="position-relative">
-    <CodeBlock data-test-yaml="true" @language="yaml" class="codedisplay">{{this.formattedConfig}}</CodeBlock>
-    <CopyButton
-      @clipboardText={{this.rawConfig.config}}
-      @title={{this.buttonLabel}}
-      @success={{action "copied" this.rawConfig.source}}
-    >
-      <SvgImage @name="icon-copy" @class="icon" />
-      <span>
-        {{this.buttonLabel}}
-      </span>
-    </CopyButton>
-  </div>
+  {{#if this.isExpanded}}
+    <div class="position-relative">
+      <CodeBlock
+        @language="yaml"
+        class="codedisplay line-numbers"
+        id={{this.codeblockId}}
+        data-test-yaml="true"
+      >{{this.formattedConfig}}</CodeBlock>
+      <CopyButton
+        @clipboardText={{this.rawConfig.config}}
+        @title={{this.buttonLabel}}
+        @success={{action "copied" this.rawConfig.source}}
+      >
+        <SvgImage @name="icon-copy" @class="icon" />
+        <span>
+          {{this.buttonLabel}}
+        </span>
+      </CopyButton>
+    </div>
+  {{/if}}
 </div>

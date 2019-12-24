@@ -1,7 +1,11 @@
 import TravisRoute from 'travis/routes/basic';
+import AccountBillingMixin from 'travis/mixins/route/account/billing';
+import { hash } from 'rsvp';
 
-export default TravisRoute.extend({
+export default TravisRoute.extend(AccountBillingMixin, {
   model() {
-    return this.modelFor('account');
+    return hash({
+      account: this.modelFor('account'),
+    });
   }
 });

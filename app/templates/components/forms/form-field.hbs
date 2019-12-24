@@ -3,7 +3,7 @@
     {{this.label}}
     {{#if this.showRequiredMark}}
       <span class="travis-form__required-mark">
-        *
+        {{this.requiredMark}}
         <EmberTooltip @text="This field is required" @delay={{300}} />
       </span>
     {{/if}}
@@ -75,9 +75,21 @@
       onInit=(action "setFieldElementId")
       class="travis-form__field-component"
     )
+    slider=(component 'forms/form-slider'
+      form=form
+      value=this.value
+      max=this.max
+      min=this.min
+      step=this.step
+      list=this.list
+      onChange=(action 'handleChange')
+      onInit=(action 'setFieldElementId')
+      class='travis-form__field-component'
+    )
   )
 }}
-{{#if this.requiresValidation}}
+
+{{#if requiresValidation }}
   {{#if this.showValidationStatusIcons}}
     <div class="travis-form__field-badge travis-form__field-badge--error">
       <SvgImage @name="form-error-icon" @width=14 @height=14 />

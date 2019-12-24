@@ -1,0 +1,37 @@
+{{#if accounts.fetchSubscriptions.isRunning}}
+  <LoadingIndicator/>
+{{else}}
+  <section class="billing">
+    {{#if this.isEducation}}
+      <Billing::Education 
+        @newSubscription={{this.newSubscription}}
+        @account={{this.account}}
+      />
+    {{/if}}
+    {{#if this.isManual}}
+      <BillingManual 
+        @subscription={{this.subscription}} 
+        @account={{this.account}} 
+        @newSubscription={{this.newSubscription}}
+      />
+    {{/if}}
+    {{#if this.isManaged}}
+      <Billing::Subscription
+        @newSubscription={{this.newSubscription}}
+        @account={{this.account}}
+      />
+    {{/if}}
+    {{#if this.isTrial}}
+      <Billing::Trial 
+        @account={{this.account}} 
+        @newSubscription={{this.newSubscription}}
+      />
+    {{/if}}
+  </section>
+  {{#if this.invoices}}
+    <Billing::Invoices 
+      @invoices={{this.invoices}} 
+      @subscription={{this.subscription}}
+    />
+  {{/if}}
+{{/if}}

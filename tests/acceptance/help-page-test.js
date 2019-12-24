@@ -7,6 +7,7 @@ import { enableFeature } from 'ember-feature-flags/test-support';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import helpPage from 'travis/tests/pages/help';
 import config from 'travis/config/environment';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 import {
   UTC_START_TIME,
@@ -45,6 +46,7 @@ const checkBasicStructure = (assert, isSignedIn) => {
 
 module('Acceptance | help page', function (hooks) {
   setupApplicationTest(hooks);
+  setupMirage(hooks);
 
   module('for .org users', function (hooks) {
     hooks.beforeEach(async function () {
@@ -82,7 +84,7 @@ module('Acceptance | help page', function (hooks) {
 
   module('for .com education user', function (hooks) {
     hooks.beforeEach(async function () {
-      this.user = server.create('user', {
+      this.user = this.server.create('user', {
         education: true,
       });
       enableFeature('proVersion');
@@ -106,12 +108,12 @@ module('Acceptance | help page', function (hooks) {
 
   module('for .com trial user', function (hooks) {
     hooks.beforeEach(async function () {
-      this.user = server.create('user');
+      this.user = this.server.create('user');
       enableFeature('proVersion');
     });
 
     test('it has correct structure', async function (assert) {
-      this.trial = server.create('trial', {
+      this.trial = this.server.create('trial', {
         has_active_trial: true,
         builds_remaining: 100,
         owner: this.user,
@@ -131,7 +133,7 @@ module('Acceptance | help page', function (hooks) {
     });
 
     test('form not present after trial', async function (assert) {
-      this.trial = server.create('trial', {
+      this.trial = this.server.create('trial', {
         has_active_trial: true,
         builds_remaining: 0,
         owner: this.user,
@@ -150,7 +152,7 @@ module('Acceptance | help page', function (hooks) {
     });
 
     test('form present when subscribed after trial', async function (assert) {
-      this.trial = server.create('trial', {
+      this.trial = this.server.create('trial', {
         has_active_trial: true,
         builds_remaining: 0,
         owner: this.user,
@@ -162,7 +164,7 @@ module('Acceptance | help page', function (hooks) {
         }
       });
 
-      this.subscription = server.create('subscription', {
+      this.subscription = this.server.create('subscription', {
         owner: this.user,
         status: 'subscribed',
         valid_to: new Date(),
@@ -170,12 +172,13 @@ module('Acceptance | help page', function (hooks) {
 
       await signInUser(this.user);
       await helpPage.visit();
+      await settled();
 
       assert.ok(helpPage.supportSection.form.isPresent);
     });
 
     test('form present when org subscribed after trial', async function (assert) {
-      this.trial = server.create('trial', {
+      this.trial = this.server.create('trial', {
         has_active_trial: true,
         builds_remaining: 0,
         owner: this.user,
@@ -187,7 +190,7 @@ module('Acceptance | help page', function (hooks) {
         }
       });
 
-      this.organization = server.create('organization', {
+      this.organization = this.server.create('organization', {
         name: 'Org Name',
         type: 'organization',
         login: 'org-login',
@@ -196,7 +199,7 @@ module('Acceptance | help page', function (hooks) {
         }
       });
 
-      this.subscription = server.create('subscription', {
+      this.subscription = this.server.create('subscription', {
         owner: this.organization,
         status: 'subscribed',
         valid_to: new Date(),
@@ -211,7 +214,7 @@ module('Acceptance | help page', function (hooks) {
 
   module('for .com authorised user', function (hooks) {
     hooks.beforeEach(async function () {
-      this.user = server.create('user');
+      this.user = this.server.create('user');
       enableFeature('proVersion');
       await signInUser(this.user);
       await helpPage.visit();
@@ -251,7 +254,7 @@ module('Acceptance | help page', function (hooks) {
 
       hooks.beforeEach(function () {
         this.requestHandler = (request) => JSON.parse(request.requestBody);
-        server.post(`${apiHost}${createRequestEndpoint}`, (schema, request) => {
+        this.server.post(`${apiHost}${createRequestEndpoint}`, (schema, request) => {
           return this.requestHandler(request);
         });
       });

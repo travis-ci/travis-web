@@ -54,10 +54,19 @@
   background-color: #fff;
   border: solid 1px $pebble-grey;
   padding: 2em;
+
+  .notice-banner--red {
+    display: block;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    padding: 0.5rem 0.9rem 0.6rem;
+    text-align: center;
+    font-size: $font-size-sm;
+  }
 }
 
 .ember-modal-overlay.translucent {
-  background-color: rgba($cement-grey, 0.6);
+  background-color: rgba(0,0,0,.5);
 }
 
 .modal-close {

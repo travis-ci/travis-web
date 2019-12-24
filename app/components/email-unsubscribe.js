@@ -47,7 +47,11 @@ export default Component.extend({
     try {
       repo = yield this.store.findRecord('repo', this.repositoryId);
     } catch (e) {}
-    return repo && repo.isCurrentUserACollaborator ? repo : null;
+    try {
+      yield repo && repo.auth.currentUser._rawPermissions;
+    } catch (e) {}
+
+    return repo;
   }).drop(),
 
   didInsertElement() {
