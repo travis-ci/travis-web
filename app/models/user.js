@@ -104,6 +104,7 @@ export default Owner.extend({
   },
 
   sync() {
+    this.set('isSyncing', true);
     return this.api
       .post(`/user/${this.id}/sync`)
       .then(() => this.poll());
@@ -112,7 +113,6 @@ export default Owner.extend({
   poll() {
     return this.api.get('/user').then((data) => {
       if (data.is_syncing) {
-        this.set('isSyncing', true);
         later(
           () => this.poll(),
           config.intervals.syncingPolling
