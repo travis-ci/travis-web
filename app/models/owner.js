@@ -37,11 +37,11 @@ export default VcsEntity.extend({
 
   title: or('name', 'login'),
 
-  githubAppsRepositories: dynamicQuery(function* ({ page = 1, filter = '' }) {
+  githubAppsRepositories: dynamicQuery('syncedAt', function* ({ page = 1, filter = '' }) {
     return yield this.fetchRepositories({ page, filter, ghApps: true, activeOnOrg: false });
   }),
 
-  githubAppsRepositoriesOnOrg: dynamicQuery(function* ({ page = 1, filter = '' }) {
+  githubAppsRepositoriesOnOrg: dynamicQuery('syncedAt', function* ({ page = 1, filter = '' }) {
     return yield this.fetchRepositories({ page, filter, ghApps: true, activeOnOrg: true });
   }),
 
