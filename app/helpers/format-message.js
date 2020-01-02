@@ -20,7 +20,11 @@ function escape(text) {
 }
 
 function handleMaxLength(message, maxLength) {
-  return maxLength ? message.slice(0, maxLength) : message;
+  if (maxLength && message.length > maxLength) {
+    return `${message.slice(0, maxLength)}…`;
+  } else {
+    return message;
+  }
 }
 
 function handleShort(message, short) {

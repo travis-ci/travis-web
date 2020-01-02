@@ -264,10 +264,11 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.visit();
     await profilePage.billing.visit();
 
+    percySnapshot(assert);
+
     assert.ok(profilePage.billing.marketplaceButton.isHidden);
-    assert.ok(profilePage.billing.userDetails.isHidden);
-    assert.ok(profilePage.billing.billingDetails.isHidden);
-    assert.ok(profilePage.billing.creditCardNumber.isHidden);
+    assert.equal(profilePage.billing.userDetails.text, 'contact name User Name company name Travis CI GmbH billing email user@email.com');
+    assert.equal(profilePage.billing.billingDetails.text, 'address Rigaerstraße 8 city Berlin post code 10987 country Germany vat id 12345');
 
     await profilePage.billing.resubscribeSubscriptionButton.click();
 
@@ -282,11 +283,12 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.visit();
     await profilePage.billing.visit();
 
+    percySnapshot(assert);
+
     assert.equal(profilePage.billing.plan.name, 'Small Business1 plan incomplete');
     assert.ok(profilePage.billing.marketplaceButton.isHidden);
-    assert.ok(profilePage.billing.userDetails.isHidden);
-    assert.ok(profilePage.billing.billingDetails.isHidden);
-    assert.ok(profilePage.billing.creditCardNumber.isHidden);
+    assert.equal(profilePage.billing.userDetails.text, 'contact name User Name company name Travis CI GmbH billing email user@email.com');
+    assert.equal(profilePage.billing.billingDetails.text, 'address Rigaerstraße 8 city Berlin post code 10987 country Germany vat id 12345');
   });
 
   test('cancel a stripe plan', async function (assert) {
@@ -414,11 +416,12 @@ module('Acceptance | profile/billing', function (hooks) {
       .hasTextContaining('5 concurrent jobs Valid until June 19, 2018');
   });
 
-  test('view billing tab with Github trial subscription', async function (assert) {
+  test('view billing tab with marketplace trial subscription', async function (assert) {
     let trial = this.server.create('trial', {
       builds_remaining: 0,
       owner: this.organization,
       status: 'started',
+      hasActiveTrial: true,
       created_at: new Date(2018, 7, 16),
       permissions: {
         read: true,
@@ -442,11 +445,12 @@ module('Acceptance | profile/billing', function (hooks) {
       .hasTextContaining('5 concurrent jobs Valid until June 19, 2018');
   });
 
-  test('view billing tab when Github trial subscription has ended', async function (assert) {
+  test('view billing tab when marketplace trial subscription has ended', async function (assert) {
     let trial = this.server.create('trial', {
       builds_remaining: 0,
       owner: this.organization,
       status: 'ended',
+      hasActiveTrial: false,
       created_at: new Date(2018, 7, 16),
       permissions: {
         read: true,
@@ -456,6 +460,7 @@ module('Acceptance | profile/billing', function (hooks) {
 
     this.subscription.owner = this.organization;
     this.subscription.source = 'github';
+    this.subscription.status = 'expired';
 
     trial.save();
     this.subscription.save();
@@ -465,7 +470,7 @@ module('Acceptance | profile/billing', function (hooks) {
 
     assert.equal(profilePage.billing.plan.name, 'Small Business1 plan expired github marketplace subscription');
     assert.dom(profilePage.billing.plan.concurrency.scope)
-      .hasTextContaining('5 concurrent jobs Valid until June 19, 2018');
+      .hasTextContaining('5 concurrent jobs Expired June 19, 2018');
   });
 
   test('view billing on a cancelled marketplace plan with Stripe plan', async function (assert) {
@@ -518,6 +523,7 @@ module('Acceptance | profile/billing', function (hooks) {
   });
 
   test('view billing on an expired marketplace plan', async function (assert) {
+    this.trial.destroy();
     this.subscription.source = 'github';
     this.subscription.status = 'expired';
 
