@@ -112,13 +112,17 @@ export default Owner.extend({
   poll() {
     return this.api.get('/user').then((data) => {
       if (data.is_syncing) {
+        this.set('isSyncing', true);
         later(
-          () => this.poll(),
+          () =>  {
+            this.poll();
+          },
           config.intervals.syncingPolling
         );
       } else {
         run(() => {
           Travis.trigger('user:synced', data);
+          this.set('isSyncing', false);
           this.reload();
         });
       }
