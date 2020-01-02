@@ -114,9 +114,7 @@ export default Owner.extend({
       if (data.is_syncing) {
         this.set('isSyncing', true);
         later(
-          () =>  {
-            this.poll();
-          },
+          () => this.poll(),
           config.intervals.syncingPolling
         );
       } else {
