@@ -60,6 +60,7 @@ module('Unit | Helper | format message', function () {
   });
 
   test('it accepts a maxLength', assert => {
-    assert.equal(formatMessage(['123456789'], { maxLength: 3 }), '123');
+    assert.equal(formatMessage(['123'], { maxLength: 3 }), '123');
+    assert.equal(formatMessage(['123456789'], { maxLength: 3 }), '123…');
   });
 });

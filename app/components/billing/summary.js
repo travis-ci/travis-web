@@ -19,7 +19,6 @@ export default Component.extend({
   isExpired: or('subscription.isExpired', 'subscription.manualSubscriptionExpired'),
   canceledOrExpired: or('isExpired', 'isCanceled'),
   isCompleteAndNotExpired: and('hasNotExpired', 'isComplete'),
-  showBillingInfo: and('subscription.isStripe', 'isCompleteAndNotExpired'),
   trial: reads('account.trial'),
   isGithubSubscription: reads('subscription.isGithub'),
   isGithubTrial: and('isGithubSubscription', 'trial.hasActiveTrial'),
