@@ -8,8 +8,6 @@ export default Route.extend({
   beforeModel() {
     if (this.get('auth.signedIn')) {
       this.transitionTo('index');
-    } else {
-      this.auth.signIn();
     }
   }
 });
