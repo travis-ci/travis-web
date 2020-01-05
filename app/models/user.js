@@ -24,6 +24,7 @@ export default Owner.extend({
   type: 'user',
 
   fullName: or('name', 'login'),
+  applyFilterRepos: false,
 
   gravatarUrl: computed('gravatarId', function () {
     return `https//www.gravatar.com/avatar/${this.gravatarId}?s=48&d=mm`;
@@ -103,8 +104,9 @@ export default Owner.extend({
     }
   },
 
-  sync() {
+  sync(isOrganization) {
     this.set('isSyncing', true);
+    this.set('applyFilterRepos', !isOrganization);
     return this.api
       .post(`/user/${this.id}/sync`)
       .then(() => this.poll());
@@ -139,7 +141,9 @@ export default Owner.extend({
   },
 
   applyReposFilter() {
-    const filterTerm = this.get('githubAppsRepositories.filterTerm');
-    return this.githubAppsRepositories.applyFilter(filterTerm || '');
+    if (this.applyFilterRepos) {
+      const filterTerm = this.get('githubAppsRepositories.filterTerm');
+      return this.githubAppsRepositories.applyFilter(filterTerm || '');
+    }
   },
 });

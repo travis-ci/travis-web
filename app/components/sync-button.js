@@ -10,9 +10,7 @@ export default Component.extend({
 
   actions: {
     sync() {
-      if (!this.isOrganization) {
-        return this.user.sync();
-      }
+      return this.user.sync(this.isOrganization);
     }
   }
 });
