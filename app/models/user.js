@@ -122,6 +122,7 @@ export default Owner.extend({
           Travis.trigger('user:synced', data);
           this.set('isSyncing', false);
           this.reload();
+          this.applyReposFilter();
         });
       }
     });
@@ -135,6 +136,10 @@ export default Owner.extend({
 
   reload(options = {}) {
     return this.store.queryRecord('user', Object.assign({}, options, { current: true }));
-  }
+  },
 
+  applyReposFilter() {
+    const filterTerm = this.get('githubAppsRepositories.filterTerm');
+    return this.githubAppsRepositories.applyFilter(filterTerm || '');
+  },
 });
