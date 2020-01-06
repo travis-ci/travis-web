@@ -1,0 +1,82 @@
+<TravisLayout @layoutName="layouts/center" class="tailwind-overrides">
+  <UiKit::Box
+    @position={{hash type='relative'}}
+    @margin={{hash top=20 x='auto'}}
+    @maxWidth='3xl'
+  >
+    <UiKit::Box
+      @position={{hash type='absolute' top=0 right=0}}
+      @margin={{hash top=-16 right=-10}}
+      @height={{64}}
+    >
+      <SvgImage @name="grey-blob" @height={{224}} />
+    </UiKit::Box>
+
+    <UiKit::Box
+      @color='white'
+      @layer='10'
+      @overflow={{hash all='hidden'}}
+      @padding={{hash all=8 top=4}}
+      @position={{hash type='relative'}}
+      @radius='md'
+      @shadow='md'
+      @textAlign='center'
+    >
+      <UiKit::Text @tag='h1' @variant='h1'>Sign up for Travis CI</UiKit::Text>
+      <UiKit::Text @margin={{hash bottom=6}}>
+        Set up your first project in just one minute.
+        Your first 100 builds are free! No credit card required.
+      </UiKit::Text>
+
+      <UiKit::Button
+        @onClick={{action 'signIn' 'github'}}
+        @color='green'
+        @invert={{true}}
+      >
+        <UiKit::Box
+          @display='inline-block'
+          @margin={{hash right=2}}
+          @padding={{hash right=2}}
+          @borderColor='green'
+          @borderWidth={{hash right='xs'}}
+          class='align-text-bottom'
+        >
+          <SvgImage @name='icon-repooctocat' @class="fill-current w-5 h-5" />
+        </UiKit::Box>
+        Sign Up With GitHub
+      </UiKit::Button>
+
+      <UiKit::Button
+        @onClick={{action 'signIn' 'bitbucket'}}
+        @color='blue'
+        @invert={{true}}
+      >
+        <UiKit::Box
+          @display='inline-block'
+          @margin={{hash right=2}}
+          @padding={{hash right=2}}
+          @borderColor='blue'
+          @borderWidth={{hash right='xs'}}
+          class='align-text-bottom'
+        >
+          <SvgImage @name='icon-bitbucket' @class="fill-current w-5 h-5" />
+        </UiKit::Box>
+        Sign Up With BitBucket
+      </UiKit::Button>
+
+      <UiKit::Text @margin={{hash y=6}}>
+        Already have an account?
+        <UiKit::Link @route='signin' @color='green'>Sign in</UiKit::Link>
+      </UiKit::Text>
+    </UiKit::Box>
+
+    <UiKit::Box
+      @layer='0'
+      @margin={{hash bottom=-10 left=-10}}
+      @position={{hash type='absolute' bottom=0 left=0}}
+      @width={{56}}
+    >
+      <SvgImage @name="yellow-waves" />
+    </UiKit::Box>
+  </UiKit::Box>
+</TravisLayout>

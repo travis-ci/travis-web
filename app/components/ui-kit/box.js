@@ -88,6 +88,7 @@ const MAX_WIDTHS = {
   LG: 'lg',
   XL: 'xl',
   XXL: '2xl',
+  XXXL: '3xl',
   FULL: 'full',
 };
 
