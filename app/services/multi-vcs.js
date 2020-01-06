@@ -38,4 +38,13 @@ export default Service.extend({
   enableBitbucketLogin: computed('features.enableBitbucketLogin', function () {
     return this.features.get('enableBitbucketLogin');
   }),
+
+  primaryProvider: 'github',
+
+  isPrimaryProvider(provider) {
+    return provider === this.primaryProvider;
+  },
+  isProviderEnabled(provider) {
+    return this.features.isEnabled(`enable-${provider}-login`);
+  },
 });

@@ -1,0 +1,33 @@
+{{#if this.isProviderEnabled}}
+  <UiKit::Button
+    @onClick={{action this.signin}}
+    @color={{this.color}}
+    @invert={{true}}
+  >
+    <UiKit::Box
+      @display='inline-block'
+      @margin={{hash right=2}}
+      @padding={{hash right=2}}
+      @borderColor={{this.color}}
+      @borderWidth={{hash right='xs'}}
+      class='align-text-bottom'
+    >
+      <SvgImage @name='icon-repooctocat' @class="fill-current w-5 h-5" />
+    </UiKit::Box>
+    Sign {{if this.isSignup 'Up' 'In'}} With {{this.provider}}
+  </UiKit::Button>
+{{/if}}
+
+
+{{!-- {{#if this.multiVcs.enableBitbucketLogin}}
+  <button
+    class="hero-button cta-index-page multi-vcs"
+    title="Sign up with Bitbucket"
+    {{action 'signIn' 'bitbucket'}}
+  >
+    <SvgImage @name="icon-bitbucket" />
+    <span>
+      Sign up with Bitbucket
+    </span>
+  </button>
+{{/if}} --}}

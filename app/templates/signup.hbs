@@ -28,7 +28,7 @@
         Your first 100 builds are free! No credit card required.
       </UiKit::Text>
 
-      <UiKit::Button
+      {{!-- <UiKit::Button
         @onClick={{action 'signIn' 'github'}}
         @color='green'
         @invert={{true}}
@@ -44,9 +44,12 @@
           <SvgImage @name='icon-repooctocat' @class="fill-current w-5 h-5" />
         </UiKit::Box>
         Sign Up With GitHub
-      </UiKit::Button>
+      </UiKit::Button> --}}
 
-      <UiKit::Button
+      <UiKit::ButtonSignin />
+      <UiKit::ButtonSignin @provider='bitbucket' />
+
+      {{!-- <UiKit::Button
         @onClick={{action 'signIn' 'bitbucket'}}
         @color='blue'
         @invert={{true}}
@@ -62,7 +65,7 @@
           <SvgImage @name='icon-bitbucket' @class="fill-current w-5 h-5" />
         </UiKit::Box>
         Sign Up With BitBucket
-      </UiKit::Button>
+      </UiKit::Button> --}}
 
       <UiKit::Text @margin={{hash y=6}}>
         Already have an account?
