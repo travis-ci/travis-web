@@ -13,14 +13,6 @@ export default TravisRoute.extend({
 
   needsAuth: false,
 
-  beforeModel() {
-    if (this.get('auth.signedIn')) {
-      this.transitionTo('index');
-    } else {
-      this.auth.signIn();
-    }
-  },
-
   model({ redirectUri }) {
     if (redirectUri) {
       this.auth.set('redirectUrl', redirectUri);
