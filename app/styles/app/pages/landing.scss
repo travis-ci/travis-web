@@ -997,16 +997,14 @@
   }
 }
 
-.landing-page {
-  #profile-menu-link {
-    line-height: 0;
-    margin-top: 13px;
-    position: relative;
-    text-align: center;
+#profile-menu-link.signed-out {
+  line-height: 0;
+  margin-top: 13px;
+  position: relative;
+  text-align: center;
 
-    @media #{$small-only} {
-      display: none;
-    }
+  @media #{$small-only} {
+    display: none;
   }
 
   .navigation-nested {
