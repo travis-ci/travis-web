@@ -101,11 +101,6 @@ export default Component.extend({
     return !hasGitHubAppsInstallation && isAllowedByLimit && hasLegacyRepos;
   }),
 
-  didUpdateAttrs() {
-    this._super(...arguments);
-    this.appsRepos.reload();
-  },
-
   migrate: task(function* () {
     let queryParams = {
       sort_by: 'name',

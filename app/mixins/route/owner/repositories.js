@@ -25,8 +25,8 @@ export default Mixin.create({
   afterModel() {
     const { owner } = this;
     if (owner && !owner.error) {
-      owner.legacyRepositories.switchToPage(this.legacyPage);
-      owner.githubAppsRepositories.switchToPage(this.appsPage);
+      owner.legacyRepositories.reload({ page: this.legacyPage });
+      owner.githubAppsRepositories.reload({ page: this.appsPage });
     }
   },
 
