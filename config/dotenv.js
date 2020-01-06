@@ -3,6 +3,7 @@ module.exports = function (env) {
     clientAllowedKeys: [
       'API_ENDPOINT',
       'TRAVIS_PRO',
+      'BITBUCKET_LOGIN',
     ],
     failOnMissingKey: false,
   };
