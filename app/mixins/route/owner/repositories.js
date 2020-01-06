@@ -22,6 +22,8 @@ export default Mixin.create({
     this.appsPage = params['apps-page'];
   },
 
+  // implement a caching mechanism here for dynamic query promises
+  // using storage.
   afterModel() {
     const { owner } = this;
     if (owner && !owner.error) {
