@@ -7,7 +7,6 @@ import { inject as service } from '@ember/service';
 export default TravisRoute.extend(ScrollResetMixin, {
   store: service(),
   tabStates: service(),
-  repositories: service(),
   auth: service(),
   features: service(),
 
