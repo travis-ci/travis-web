@@ -17,18 +17,6 @@ export default Controller.extend({
     return false;
   }),
 
-  xardion: computed('redirectUri', function () {
-    return this.router.urlFor('account.billing');
-  }),
-
-  xardion2: computed('redirectUri', function () {
-    if (this.redirectUri) {
-      const { pathname } = new URL(this.redirectUri);
-      return pathname;
-    }
-    return false;
-  }),
-
   isOrganizationUrl(pathname) {
     return pathname && pathname.startsWith('/organizations') && pathname.endsWith('subscription');
   }

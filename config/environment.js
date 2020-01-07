@@ -198,10 +198,6 @@ module.exports = function (environment) {
     ]
   };
 
-  if (process.env.BITBUCKET_LOGIN) {
-    ENV.featureFlags['enable-bitbucket-login'] = true;
-  }
-
   if (typeof process !== 'undefined') {
     if (ENV.featureFlags['pro-version'] && !ENV.featureFlags['enterprise-version']) {
       // set defaults for pro if it's used
