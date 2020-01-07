@@ -11,6 +11,10 @@ export default Component.extend({
   isSignup: false,
   provider: 'github',
 
+  vcsType: computed('provider', function () {
+    return `${this.provider.capitalize()}User`;
+  }),
+
   isPrimaryProvider: computed('provider', function () {
     return this.multiVcs.isPrimaryProvider(this.provider);
   }),

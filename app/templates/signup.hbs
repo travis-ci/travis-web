@@ -24,48 +24,15 @@
     >
       <UiKit::Text @tag='h1' @variant='h1'>Sign up for Travis CI</UiKit::Text>
       <UiKit::Text @margin={{hash bottom=6}}>
-        Set up your first project in just one minute.
+        Set up your first project in just one minute.<br/>
         Your first 100 builds are free! No credit card required.
       </UiKit::Text>
 
-      {{!-- <UiKit::Button
-        @onClick={{action 'signIn' 'github'}}
-        @color='green'
-        @invert={{true}}
-      >
-        <UiKit::Box
-          @display='inline-block'
-          @margin={{hash right=2}}
-          @padding={{hash right=2}}
-          @borderColor='green'
-          @borderWidth={{hash right='xs'}}
-          class='align-text-bottom'
-        >
-          <SvgImage @name='icon-repooctocat' @class="fill-current w-5 h-5" />
-        </UiKit::Box>
-        Sign Up With GitHub
-      </UiKit::Button> --}}
-
-      <UiKit::ButtonSignin />
-      <UiKit::ButtonSignin @provider='bitbucket' />
-
-      {{!-- <UiKit::Button
-        @onClick={{action 'signIn' 'bitbucket'}}
-        @color='blue'
-        @invert={{true}}
-      >
-        <UiKit::Box
-          @display='inline-block'
-          @margin={{hash right=2}}
-          @padding={{hash right=2}}
-          @borderColor='blue'
-          @borderWidth={{hash right='xs'}}
-          class='align-text-bottom'
-        >
-          <SvgImage @name='icon-bitbucket' @class="fill-current w-5 h-5" />
-        </UiKit::Box>
-        Sign Up With BitBucket
-      </UiKit::Button> --}}
+      <UiKit::ButtonSignin @isSignup={{true}} />
+      {{#if this.multiVcs.enabled}}
+        <UiKit::ButtonSignin @isSignup={{true}} @provider='assembla' />
+        <UiKit::ButtonSignin @isSignup={{true}} @provider='bitbucket' />
+      {{/if}}
 
       <UiKit::Text @margin={{hash y=6}}>
         Already have an account?
