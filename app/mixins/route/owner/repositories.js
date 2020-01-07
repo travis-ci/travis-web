@@ -22,13 +22,11 @@ export default Mixin.create({
     this.appsPage = params['apps-page'];
   },
 
-  // implement a caching mechanism here for dynamic query promises
-  // using storage.
   afterModel() {
     const { owner } = this;
     if (owner && !owner.error) {
-      owner.legacyRepositories.reload({ page: this.legacyPage });
-      owner.githubAppsRepositories.reload({ page: this.appsPage });
+      owner.legacyRepositories.switchToPage(this.legacyPage);
+      owner.githubAppsRepositories.switchToPage(this.appsPage);
     }
   },
 
