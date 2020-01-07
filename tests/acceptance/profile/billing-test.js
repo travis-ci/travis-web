@@ -1039,6 +1039,52 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${(this.defaultPlan.price / 100) - price}`);
   });
 
+  test('apply coupon value higher than price', async function (assert) {
+    this.subscription.destroy();
+
+    window.Stripe = StripeMock;
+    let config = {
+      mock: true,
+      publishableKey: 'mock'
+    };
+    stubConfig('stripe', config, { instantiate: false });
+    const { owner } = getContext();
+    owner.inject('service:stripev3', 'config', 'config:stripe');
+    this.organization.permissions = {
+      createSubscription: true
+    };
+    this.organization.save();
+
+    await profilePage.visitOrganization({ name: 'org-login' });
+    await profilePage.billing.visit();
+
+    const { billingForm, subscribeButton, billingCouponForm } = profilePage.billing;
+    await subscribeButton.click();
+
+    percySnapshot(assert);
+
+    await selectChoose(billingForm.billingSelectCountry.scope, 'Germany');
+
+    await billingForm
+      .fillIn('firstname', 'John')
+      .fillIn('lastname', 'Doe')
+      .fillIn('companyName', 'Travis')
+      .fillIn('email', 'john@doe.com')
+      .fillIn('address', '15 Olalubi street')
+      .fillIn('city', 'Berlin')
+      .fillIn('zip', '353564');
+
+    await billingForm.proceedPayment.click();
+
+    const coupon = this.coupons[2];
+    await billingCouponForm.fillIn('couponId', coupon.id);
+
+    await billingCouponForm.submitCoupon.click();
+
+    assert.equal(billingCouponForm.validCoupon.text, 'Coupon applied');
+    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${0}`);
+  });
+
   test('apply 10% off coupon', async function (assert) {
     this.subscription.destroy();
 
@@ -1082,7 +1128,7 @@ module('Acceptance | profile/billing', function (hooks) {
     await billingCouponForm.submitCoupon.click();
 
     const amountInDollars = this.defaultPlan.price / 100;
-    const price = amountInDollars - (amountInDollars * coupon.percentageOff) / 100;
+    const price = amountInDollars - (amountInDollars * coupon.percentOff) / 100;
 
     assert.equal(billingCouponForm.validCoupon.text, 'Coupon applied');
     assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${price.toFixed(2)}`);
@@ -1129,16 +1175,15 @@ module('Acceptance | profile/billing', function (hooks) {
 
     assert.equal(billingCouponForm.invalidCoupon.text, 'Coupon invalid');
 
-    const coupon = this.coupons[0];
+    const coupon = this.coupons[1];
 
     await billingCouponForm.fillIn('couponId', coupon.id);
     await billingCouponForm.submitCoupon.click();
 
-    const amountInDollars = this.defaultPlan.price / 100;
-    const price = amountInDollars - (amountInDollars * coupon.percentageOff) / 100;
+    const price = Math.floor(coupon.amountOff / 100);
 
     assert.equal(billingCouponForm.validCoupon.text, 'Coupon applied');
-    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${price.toFixed(2)}`);
+    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${(this.defaultPlan.price / 100) - price}`);
   });
 
   test('view billing tab when no individual subscription should fill form and transition to payment', async function (assert) {
