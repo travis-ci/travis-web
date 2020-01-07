@@ -902,7 +902,11 @@ main {
     font-weight: 300;
     line-height: 1.5em;
     color: #666666;
-    margin-bottom: 60px;
+  }
+
+  .signin-link {
+    color: $turf-green;
+    border-bottom: 1px solid currentColor;
   }
 }
 

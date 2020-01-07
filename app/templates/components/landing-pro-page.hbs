@@ -13,41 +13,16 @@
           <p>
             Easily sync your projects with Travis CI and you'll be testing your code in minutes.
           </p>
+          <p class="mb-10">
+            Start building for free!
+          </p>
           <div class="cta-container">
-            <button
-              class="hero-button cta-index-page {{if this.multiVcs.enabled "multi-vcs"}}"
-              title="Sign up with GitHub"
-              {{action 'signIn' 'github'}}
-            >
-              <SvgImage @name="github-signin" />
-              <span>
-                Sign up with GitHub
-              </span>
-            </button>
-            {{#if this.multiVcs.enableAssemblaLogin}}
-              <button
-                class="hero-button cta-index-page multi-vcs"
-                title="Sign up with Assembla"
-                {{action 'signIn' 'assembla'}}
-              >
-                <SvgImage @name="icon-assembla" />
-                <span>
-                  Sign up with Assembla
-                </span>
-              </button>
-            {{/if}}
-            {{#if this.multiVcs.enableBitbucketLogin}}
-              <button
-                class="hero-button cta-index-page multi-vcs"
-                title="Sign up with Bitbucket"
-                {{action 'signIn' 'bitbucket'}}
-              >
-                <SvgImage @name="icon-bitbucket" />
-                <span>
-                  Sign up with Bitbucket
-                </span>
-              </button>
-            {{/if}}
+
+            <LinkTo @route='signup' class='hero-button cta-index-page'>Sign up</LinkTo>
+
+            <p class="mt-10">
+              Already have an account? <LinkTo @route='signin' class="signin-link">Sign in</LinkTo>
+            </p>
           </div>
         </div>
         <div class="landing-hero-image">
