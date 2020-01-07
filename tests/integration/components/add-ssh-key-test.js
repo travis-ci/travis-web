@@ -5,7 +5,8 @@ import {
   render,
   click,
   fillIn,
-  triggerEvent
+  triggerEvent,
+  waitFor
 } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import DS from 'ember-data';
@@ -28,6 +29,7 @@ module('Integration | Component | add ssh-key', function (hooks) {
     this.set('repo', repo);
 
     await render(hbs`{{add-ssh-key repo=repo sshKeyAdded="sshKeyAdded"}}`);
+    await waitFor('.form-submit');
 
     var sshKey = store.peekAll('ssh_key').objectAt(0);
 
