@@ -19,6 +19,7 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
   queue: attr(),
   state: attr(),
   number: attr(),
+  jobIdNumber: attr(),
   allowFailure: attr('boolean'),
   tags: attr(),
   repositoryPrivate: attr(),
@@ -39,6 +40,10 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
   isTag: alias('build.isTag'),
   tag: alias('build.tag'),
   eventType: alias('build.eventType'),
+
+  jobNumber: computed('number', 'jobIdNumber', function () {
+    return this.jobIdNumber ? this.jobIdNumber : this.number;
+  }),
 
   // TODO: DO NOT SET OTHER PROPERTIES WITHIN A COMPUTED PROPERTY!
   log: computed(function () {

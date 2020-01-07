@@ -8,7 +8,7 @@
         <OrgItem @account={{this.user}} />
       </li>
     </ul>
-    <SyncButton />
+    <SyncButton @isOrganization={{this.isOrganization}}/>
   </section>
   {{#if this.showMigrationBetaBanner}}
     <section class="migrate-beta" data-test-sidebar-migrate>
