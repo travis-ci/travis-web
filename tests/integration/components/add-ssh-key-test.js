@@ -29,7 +29,6 @@ module('Integration | Component | add ssh-key', function (hooks) {
     this.set('repo', repo);
 
     await render(hbs`{{add-ssh-key repo=repo sshKeyAdded="sshKeyAdded"}}`);
-    await waitFor('.form-submit');
 
     var sshKey = store.peekAll('ssh_key').objectAt(0);
 
@@ -40,6 +39,7 @@ module('Integration | Component | add ssh-key', function (hooks) {
     fillIn('.ssh-description', 'FOO');
     fillIn('.ssh-value', 'bar');
 
+    await waitFor('.form-footer .form-submit');
     await click('.form-submit');
 
     assert.equal(sshKey.get('description'), 'FOO', 'description should be set');
