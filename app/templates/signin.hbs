@@ -27,48 +27,22 @@
         Welcome back, hop back in with:
       </UiKit::Text>
 
-      <UiKit::Button
-        @onClick={{action 'signIn' 'github'}}
-        @color='green'
-        @invert={{true}}
-      >
-        <UiKit::Box
-          @display='inline-block'
-          @margin={{hash right=2}}
-          @padding={{hash right=2}}
-          @borderColor='green'
-          @borderWidth={{hash right='xs'}}
-          class='align-text-bottom'
-        >
-          <SvgImage @name='icon-repooctocat' @class="fill-current w-5 h-5" />
-        </UiKit::Box>
-        Sign In With GitHub
-      </UiKit::Button>
+      {{#if this.multiVcs.disabled}}
+        <UiKit::ButtonSignin />
+      {{else}}
+        <UiKit::ButtonSignin />
+
+        <UiKit::Text @margin={{hash y=6}}>
+          or log-in with another account
+        </UiKit::Text>
+
+        <UiKit::ButtonSignin @provider='assembla' />
+        <UiKit::ButtonSignin @provider='bitbucket' />
+      {{/if}}
 
       <UiKit::Text @margin={{hash y=6}}>
-        or log-in with another account
-      </UiKit::Text>
-
-      <UiKit::Button
-        @onClick={{action 'signIn' 'bitbucket'}}
-        @color='blue'
-        @invert={{true}}
-      >
-        <UiKit::Box
-          @display='inline-block'
-          @margin={{hash right=2}}
-          @padding={{hash right=2}}
-          @borderColor='blue'
-          @borderWidth={{hash right='xs'}}
-          class='align-text-bottom'
-        >
-          <SvgImage @name='icon-bitbucket' @class="fill-current w-5 h-5" />
-        </UiKit::Box>
-        Sign In With BitBucket
-      </UiKit::Button>
-
-      <UiKit::Text @margin={{hash y=6}}>
-        Don't have an account? Sign up
+        Don't have an account?
+        <UiKit::Link @route='signup' @color='green'>Sign up</UiKit::Link>
       </UiKit::Text>
     </UiKit::Box>
 
