@@ -47,18 +47,20 @@
 {{#if this.showGitHubApps}}
   {{#if this.appsInstallationEnabled }}
     <div id="github-apps-repositories" data-test-github-app-repos>
-      <header class="space-between" data-test-github-apps-integration-header>
-        <h2>
-          GitHub Apps Integration
-        </h2>
-        <ExternalLinkTo
-          @href={{this.appsManagementURL}}
-          class="button--white migrate"
-        >
-          <SvgImage @name={{vcs-icon this.owner.vcsType}} />
-          Manage repositories on GitHub
-        </ExternalLinkTo>
-      </header>
+      {{#if isGithubRepository}}
+        <header class="space-between" data-test-github-apps-integration-header>
+          <h2>
+            GitHub Apps Integration
+          </h2>
+          <ExternalLinkTo
+            @href={{this.appsManagementURL}}
+            class="button--white migrate"
+          >
+            <SvgImage @name={{vcs-icon this.owner.vcsType}} />
+            Manage repositories on GitHub
+          </ExternalLinkTo>
+        </header>
+      {{/if}}
       <RepositoryFilter @repositories={{this.appsRepos}} as |filter|>
         {{#if this.showAppsReposFilter}}
           <filter.form as |form|>
