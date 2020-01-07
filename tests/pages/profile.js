@@ -616,7 +616,7 @@ export default create({
     billingSubscription: {
       greyStatus: '[data-test-grey-status]',
       activeStatus: '[data-test-active-status]',
-      canceledStatus: '[data-test-canceled-status]',
+      canceledStatus: '[data-test-grey-status]',
       expiredStatus: '[data-test-expired-status]',
       manualStatus: '[data-test-manual-status]'
     },
