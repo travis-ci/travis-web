@@ -39,7 +39,11 @@ export default Component.extend({
 
   reposToMigrate: reads('model.githubAppsRepositoriesOnOrg'),
 
-  showMigrateTab: and('features.proVersion', 'isNotEnterpriseVersion'),
+  isGithubVcs: computed('user.vcsType', function () {
+    return this.user.vcsType == 'GithubUser' || this.user.vcsType == 'GithubOrganization';
+  }),
+
+  showMigrateTab: and('features.proVersion', 'isNotEnterpriseVersion', 'isGithubVcs'),
   showSubscriptionStatusBanner: and('checkSubscriptionStatus', 'model.subscriptionError'),
   showMigrationBetaBanner: and('isNotProVersion', 'isNotEnterpriseVersion', 'hasAccountsForBeta'),
 
