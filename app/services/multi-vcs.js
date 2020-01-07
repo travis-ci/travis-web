@@ -3,7 +3,6 @@ import { computed } from '@ember/object';
 
 export default Service.extend({
   features: service(),
-  storage: service(),
 
   enabled: computed('features.{enableAssemblaLogin,enableBitbucketLogin}', function () {
     return this.features.get('enableAssemblaLogin') || this.features.get('enableBitbucketLogin');
