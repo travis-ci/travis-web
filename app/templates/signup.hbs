@@ -30,8 +30,8 @@
 
       <UiKit::ButtonSignin @isSignup={{true}} />
       {{#if this.multiVcs.enabled}}
-        <UiKit::ButtonSignin @isSignup={{true}} @provider='assembla' />
         <UiKit::ButtonSignin @isSignup={{true}} @provider='bitbucket' />
+        <UiKit::ButtonSignin @isSignup={{true}} @provider='assembla' />
       {{/if}}
 
       <UiKit::Text @margin={{hash y=6}}>

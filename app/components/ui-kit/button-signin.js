@@ -2,6 +2,12 @@ import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 
+const providerColors = {
+  github: 'green',
+  bitbucket: 'blue',
+  assembla: 'grey',
+};
+
 export default Component.extend({
   tagName: '',
 
@@ -25,8 +31,8 @@ export default Component.extend({
     return isPrimaryProvider || (multiVcs.enabled && multiVcs.isProviderEnabled(provider));
   }),
 
-  color: computed('isPrimaryProvider', function () {
-    return this.isPrimaryProvider ? 'green' : 'blue';
+  color: computed('provider', function () {
+    return providerColors[this.provider] || 'grey';
   }),
 
   signin() {

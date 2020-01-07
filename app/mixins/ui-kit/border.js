@@ -17,12 +17,14 @@ const BORDER_WIDTHS = {
 const COLORS = {
   BLUE: 'blue',
   GREEN: 'green',
+  GREY: 'grey',
   GREY_LIGHT: 'grey-light',
 };
 
 const BORDER_COLORS = {
   [COLORS.BLUE]: 'blue-400',
   [COLORS.GREEN]: 'green-300',
+  [COLORS.GREY]: 'grey-700',
   [COLORS.GREY_LIGHT]: 'grey-150',
 };
 
