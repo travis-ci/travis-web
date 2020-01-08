@@ -6,9 +6,11 @@ import {
   DEFAULT_INSIGHTS_INTERVAL,
   INSIGHTS_INTERVALS
 } from 'travis/services/insights';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Integration | Component | insights-overlay', function (hooks) {
   setupRenderingTest(hooks);
+  setupMirage(hooks);
 
   hooks.beforeEach(function () {
     const user = this.server.create('user');

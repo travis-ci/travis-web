@@ -5,6 +5,7 @@ import { percySnapshot } from 'ember-percy';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import page from 'travis/tests/pages/build';
 import { codeblockName } from 'travis/utils/format-config';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 let slug = 'travis-ci/travis-web';
 
@@ -33,28 +34,29 @@ let rawConfigs = [
 
 module('Acceptance | config/yaml', function (hooks) {
   setupApplicationTest(hooks);
+  setupMirage(hooks);
 
   // Shouldn’t be necessary, but without this, Mirage’s beta_features 403s.
   hooks.beforeEach(function () {
-    const currentUser = server.create('user');
+    const currentUser = this.server.create('user');
     signInUser(currentUser);
 
-    this.repository = server.create('repository', { slug: slug });
-    server.create('setting', {
+    this.repository = this.server.create('repository', { slug: slug });
+    this.server.create('setting', {
       repository: this.repository,
       name: 'config_validation',
       value: true
     });
 
-    let branch = server.create('branch', { name: 'acceptance-tests' });
-    this.request = server.create('request', { repository: this.repository, raw_configs: rawConfigs });
-    this.build = server.create('build', { number: '5', state: 'started', repository: this.repository, branch, request: this.request });
-    this.job = server.create('job', { number: '1234.1', state: 'received', build: this.build, repository: this.repository, config: { language: 'Hello' } });
+    let branch = this.server.create('branch', { name: 'acceptance-tests' });
+    this.request = this.server.create('request', { repository: this.repository, raw_configs: rawConfigs });
+    this.build = this.server.create('build', { number: '5', state: 'started', repository: this.repository, branch, request: this.request });
+    this.job = this.server.create('job', { number: '1234.1', state: 'received', build: this.build, repository: this.repository, config: { language: 'Hello' } });
   });
 
   module('with a multi-job build', function (hooks) {
     hooks.beforeEach(function () {
-      server.create('job', { number: '1234.2', state: 'received', build: this.build, repository: this.repository, config: { language: 'Hello' } });
+      this.server.create('job', { number: '1234.2', state: 'received', build: this.build, repository: this.repository, config: { language: 'Hello' } });
     });
 
     test('renders build yaml', async function (assert) {
@@ -70,7 +72,7 @@ module('Acceptance | config/yaml', function (hooks) {
     });
 
     test('shows build messages when they exist', async function (assert) {
-      const msg1 = server.create('message', {
+      const msg1 = this.server.create('message', {
         request: this.request,
         level: 'warn',
         key: 'jortleby',
@@ -82,7 +84,7 @@ module('Acceptance | config/yaml', function (hooks) {
         line: 2,
       });
 
-      server.create('message', {
+      this.server.create('message', {
         request: this.request,
         level: 'warn',
         key: 'language',
@@ -167,7 +169,7 @@ module('Acceptance | config/yaml', function (hooks) {
 
   module('with a single-job build', function () {
     test('shows yaml', async function (assert) {
-      server.create('message', {
+      this.server.create('message', {
         request: this.request,
         level: 'warn',
         key: 'jortle'

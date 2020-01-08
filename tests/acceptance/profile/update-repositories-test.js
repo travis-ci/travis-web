@@ -2,12 +2,14 @@ import { module, test } from 'qunit';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import profilePage from 'travis/tests/pages/profile';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | profile/update-repositories', function (hooks) {
   setupApplicationTest(hooks);
+  setupMirage(hooks);
 
   hooks.beforeEach(function () {
-    const currentUser = server.create('user', {
+    const currentUser = this.server.create('user', {
       name: 'User Name',
       login: 'user-login',
     });
@@ -15,13 +17,13 @@ module('Acceptance | profile/update-repositories', function (hooks) {
     signInUser(currentUser);
 
     // create organization
-    server.create('organization', {
+    this.server.create('organization', {
       name: 'Org Name',
       login: 'org-login',
     });
 
     // create active repository
-    server.create('repository', {
+    this.server.create('repository', {
       name: 'repository-name',
       owner: {
         login: 'user-login',
@@ -33,7 +35,7 @@ module('Acceptance | profile/update-repositories', function (hooks) {
     });
 
     // create inactive repository
-    server.create('repository', {
+    this.server.create('repository', {
       name: 'yet-another-repository-name',
       owner: {
         login: 'user-login',
@@ -45,7 +47,7 @@ module('Acceptance | profile/update-repositories', function (hooks) {
     });
 
     // create repository without admin permissions
-    server.create('repository', {
+    this.server.create('repository', {
       name: 'other-repository-name',
       owner: {
         login: 'user-login',
@@ -57,7 +59,7 @@ module('Acceptance | profile/update-repositories', function (hooks) {
     });
 
     // create other random repository to ensure correct filtering
-    server.create('repository', {
+    this.server.create('repository', {
       name: 'feminism-is-for-everybody',
       owner: {
         login: 'bellhooks',
@@ -69,7 +71,7 @@ module('Acceptance | profile/update-repositories', function (hooks) {
     });
 
     // create migrated repository
-    server.create('repository', {
+    this.server.create('repository', {
       name: 'already-migrated-repository',
       owner: {
         login: 'user-login',

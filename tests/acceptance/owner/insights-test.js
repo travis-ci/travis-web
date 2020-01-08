@@ -6,12 +6,14 @@ import signInUser from 'travis/tests/helpers/sign-in-user';
 import { INSIGHTS_PRIVACY_OPTIONS } from 'travis/components/insights-privacy-selector';
 import { percySnapshot } from 'ember-percy';
 import { enableFeature } from 'ember-feature-flags/test-support';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | owner insights', function (hooks) {
   setupApplicationTest(hooks);
+  setupMirage(hooks);
 
   hooks.beforeEach(function () {
-    this.currentUser = server.create('user', {
+    this.currentUser = this.server.create('user', {
       name: 'Aria',
       login: 'bellsareringing',
       permissions: {
@@ -19,7 +21,7 @@ module('Acceptance | owner insights', function (hooks) {
       },
     });
 
-    this.otherUser = server.create('user', {
+    this.otherUser = this.server.create('user', {
       name: 'Mako',
       login: 'keepitwavy',
       permissions: {
@@ -29,7 +31,7 @@ module('Acceptance | owner insights', function (hooks) {
   });
 
   test('the owner insights page shows insights components', async function (assert) {
-    server.createList('insight-metric', 15);
+    this.server.createList('insight-metric', 15);
 
     await insightsPage.visit({ username: this.currentUser.login });
     await settled();

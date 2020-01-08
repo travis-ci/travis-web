@@ -10,12 +10,18 @@ export default Factory.extend({
     return `VALID_COUPON_${i}`;
   },
 
-  percentageOff(i) {
-    return i === 0 ? 10 : null;
+  percentOff(i) {
+    return i === 0 ? 15 : null;
   },
 
   amountOff(i) {
-    return i > 0 ? 1000 : null;
+    if (i === 1) {
+      return 1000;
+    } else if (i > 1) {
+      return 10000000;
+    } else {
+      return null;
+    }
   },
 
   valid() {
