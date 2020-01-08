@@ -16,9 +16,13 @@ export default Component.extend({
       yield this.subscription.save();
       this.closeEditForms();
       this.flashes.clear();
-    } catch (e) {
-      this.flashes.error('There was an error updating your contact. Please verify you provided a valid VAT number');
-      this.raven.logException(e);
+    } catch (error) {
+      let errorMessage = 'There was an error updating your contact. Please verify you provided a valid VAT number';
+      if (error && error.errors && error.errors.length > 0) {
+        errorMessage = error.errors[0].detail;
+      }
+      this.flashes.error(errorMessage);
+      this.raven.logException(error);
     }
   }).drop(),
 
