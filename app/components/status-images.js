@@ -6,6 +6,7 @@ import { bindKeyboardShortcuts, unbindKeyboardShortcuts } from 'ember-keyboard-s
 import { task } from 'ember-concurrency';
 import { IMAGE_FORMATS } from 'travis/services/status-images';
 import BranchSearching from 'travis/mixins/branch-searching';
+import { isFastboot } from 'travis/utils/fastboot';
 
 export default Component.extend(BranchSearching, {
   classNames: ['popup', 'status-images'],
@@ -33,12 +34,12 @@ export default Component.extend(BranchSearching, {
 
   didInsertElement() {
     this._super(...arguments);
-    bindKeyboardShortcuts(this);
+    if (!isFastboot) bindKeyboardShortcuts(this);
   },
 
   willDestroyElement() {
     this._super(...arguments);
-    unbindKeyboardShortcuts(this);
+    if (!isFastboot) unbindKeyboardShortcuts(this);
   },
 
   searchBranches: task(function* (query) {

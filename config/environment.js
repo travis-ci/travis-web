@@ -120,6 +120,10 @@ module.exports = function (environment) {
         }
       }
     },
+
+    fastboot: {
+      hostWhitelist: ['travis-ci.org', 'travis-ci.com', /^localhost:\d+$/]
+    }
   };
 
   ENV.metricsAdapters = [];

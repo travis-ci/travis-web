@@ -4,6 +4,7 @@ import {
   bindKeyboardShortcuts,
   unbindKeyboardShortcuts
 } from 'ember-keyboard-shortcuts';
+import { isFastboot } from 'travis/utils/fastboot';
 
 export default Component.extend({
   classNames: ['remove-log-popup'],
@@ -16,12 +17,12 @@ export default Component.extend({
 
   didInsertElement() {
     this._super(...arguments);
-    bindKeyboardShortcuts(this);
+    if (!isFastboot) bindKeyboardShortcuts(this);
   },
 
   willDestroyElement() {
     this._super(...arguments);
-    unbindKeyboardShortcuts(this);
+    if (!isFastboot) unbindKeyboardShortcuts(this);
   },
 
   actions: {

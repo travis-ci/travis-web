@@ -101,10 +101,8 @@ module.exports = function () {
   });
 
   importNpmDependency(app, 'node_modules/fuzzysort/fuzzysort.js');
-  importNpmDependency(app, 'node_modules/pusher-js/dist/web/pusher.js');
   importNpmDependency(app, 'node_modules/raven-js/dist/raven.js');
   importNpmDependency(app, 'node_modules/emoji-js/lib/emoji.js');
-  importNpmDependency(app, 'node_modules/visibilityjs/index.js');
   importNpmDependency(app, 'node_modules/ansiparse/lib/ansiparse.js', 'amd');
   importNpmDependency(app, 'node_modules/yamljs/index.js');
 

@@ -2,7 +2,6 @@ import { module, test } from 'qunit';
 import { visit, click } from '@ember/test-helpers';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import signInUser from 'travis/tests/helpers/sign-in-user';
-import getFaviconUri from 'travis/utils/favicon-data-uris';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | builds/cancel', function (hooks) {
@@ -33,6 +32,6 @@ module('Acceptance | builds/cancel', function (hooks) {
     assert.dom('[data-test-flash-message-text]').hasText('Build has been successfully cancelled.', 'cancelled build notification should be displayed');
     // Ember-test-helpers find does not work here
     const iconHref = window.document.querySelector('head link[rel=icon]').getAttribute('href');
-    assert.equal(iconHref, getFaviconUri('yellow'), 'expected the favicon data URI to match the one for running');
+    assert.equal(iconHref, '/images/favicon-yellow.png', 'expected the favicon data URI to match the one for running');
   });
 });

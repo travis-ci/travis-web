@@ -17,12 +17,12 @@ export default Service.extend({
   },
 
   _setEnableAssemblaLogin() {
-    const enableAssemblaLogin = window.localStorage['enableAssemblaLogin'] == 'true';
+    const { enableAssemblaLogin } = this.storage;
     enableAssemblaLogin ? this.features.enable('enable-assembla-login') : this.features.disable('enable-assembla-login');
   },
 
   _setEnableBitbucketLogin() {
-    const enableBitbucketLogin = window.localStorage['enableBitbucketLogin'] == 'true';
+    const { enableBitbucketLogin } = this.storage;
     enableBitbucketLogin ? this.features.enable('enable-bitbucket-login') : this.features.disable('enable-bitbucket-login');
   },
 
@@ -45,7 +45,7 @@ export default Service.extend({
       return obj;
     });
 
-    this.storage.setItem('travis.features', JSON.stringify(state));
+    this.storage.features = state;
 
     return state;
   },
@@ -53,7 +53,7 @@ export default Service.extend({
   fetchTask: task(function* ({forceServerRequest} = false) {
     try {
       // try to read from local storage first, fall back to API
-      const localFlags = yield JSON.parse(this.storage.getItem('travis.features'));
+      const localFlags = yield this.storage.features;
 
       if (!forceServerRequest && !isEmpty(localFlags)) {
         this._setFlagStateFromStorage(localFlags);

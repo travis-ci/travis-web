@@ -1,0 +1,18 @@
+{
+  "name": "travis-visibilityjs",
+  "keywords": [
+    "ember-addon"
+  ],
+  "dependencies": {
+    "broccoli-funnel": "^3.0.0",
+    "broccoli-merge-trees": "^3.0.2",
+    "broccoli-stew": "^3.0.0",
+    "ember-cli-babel": "^7.13.0",
+    "visibilityjs": "^2.0.0"
+  },
+  "ember-addon": {
+    "fastbootDependencies": [
+      "visibilityjs"
+    ]
+  }
+}

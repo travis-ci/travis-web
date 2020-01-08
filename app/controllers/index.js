@@ -2,7 +2,7 @@ import Controller from '@ember/controller';
 import Ember from 'ember';
 import { computed } from '@ember/object';
 import { alias } from '@ember/object/computed';
-import Visibility from 'visibilityjs';
+import Visibility from 'travis-visibilityjs';
 import config from 'travis/config/environment';
 import { inject as service } from '@ember/service';
 

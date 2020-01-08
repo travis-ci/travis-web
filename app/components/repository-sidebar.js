@@ -2,7 +2,7 @@ import { isEmpty } from '@ember/utils';
 import { schedule } from '@ember/runloop';
 import Component from '@ember/component';
 import Ember from 'ember';
-import Visibility from 'visibilityjs';
+import Visibility from 'travis-visibilityjs';
 import { task } from 'ember-concurrency';
 import { computed } from '@ember/object';
 import { alias } from '@ember/object/computed';

@@ -1,6 +1,6 @@
-import ArrayProxy from '@ember/array/proxy';
 import TravisRoute from 'travis/routes/basic';
 import { inject as service } from '@ember/service';
+import ArrayProxy from '@ember/array/proxy';
 
 export default TravisRoute.extend({
   repositories: service(),
@@ -10,16 +10,13 @@ export default TravisRoute.extend({
 
   model() {
     const repoId = this.modelFor('repo').get('id');
-    let allTheBranches = ArrayProxy.create();
-
     const path = `/repo/${repoId}/branches`;
     const includes = 'build.commit,build.created_by&limit=100';
     const url = `${path}?include=${includes}`;
 
-    return this.api.get(url).then((response) => {
-      allTheBranches = response.branches;
-      return allTheBranches;
-    });
+    return this.api.get(url).then((response) =>
+      ArrayProxy.create({ content: response.branches })
+    );
   },
 
   activate() {

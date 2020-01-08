@@ -1,4 +1,4 @@
-import Pusher from 'pusher-js';
+import Pusher from 'travis-pusher';
 
 import { next } from '@ember/runloop';
 

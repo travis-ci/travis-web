@@ -43,6 +43,7 @@
     "ember-cli-document-title-northm": "^1.0.3",
     "ember-cli-dotenv": "^2.2.3",
     "ember-cli-eslint": "^5.1.0",
+    "ember-cli-fastboot": "^2.2.1",
     "ember-cli-head": "^0.4.1",
     "ember-cli-htmlbars": "^4.0.1",
     "ember-cli-inject-live-reload": "^2.0.1",
@@ -95,7 +96,6 @@
     "fuzzysort": "^1.0.1",
     "loader.js": "^4.7.0",
     "postcss-scss": "^2.0.0",
-    "pusher-js": "^5.0.0",
     "qunit-dom": "^0.9.0",
     "raven-js": "^3.15.0",
     "svgo": "^1.0.5",
@@ -109,12 +109,23 @@
     "npm": "6.2.0"
   },
   "dependencies": {
+    "broccoli-stew": "^3.0.0",
+    "pusher-js": "^5.0.3",
     "watchman": "^1.0.0",
     "xss-clean": "^0.1.1"
   },
+  "fastbootDependencies": [
+    "url"
+  ],
   "greenkeeper": {
     "ignore": [
       "ember-power-select"
+    ]
+  },
+  "ember-addon": {
+    "paths": [
+      "lib/travis-pusher",
+      "lib/travis-visibilityjs"
     ]
   }
 }

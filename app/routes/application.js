@@ -2,14 +2,14 @@
 import URL from 'url';
 import TravisRoute from 'travis/routes/basic';
 import config from 'travis/config/environment';
-import BuildFaviconMixin from 'travis/mixins/build-favicon';
 import { inject as service } from '@ember/service';
 import {
   bindKeyboardShortcuts,
   unbindKeyboardShortcuts
 } from 'ember-keyboard-shortcuts';
+import { isFastboot } from 'travis/utils/fastboot';
 
-export default TravisRoute.extend(BuildFaviconMixin, {
+export default TravisRoute.extend({
   auth: service(),
   features: service(),
   featureFlags: service(),
@@ -17,6 +17,7 @@ export default TravisRoute.extend(BuildFaviconMixin, {
   metrics: service(),
   repositories: service(),
   router: service(),
+  fastboot: service(),
 
   needsAuth: false,
 
@@ -50,11 +51,11 @@ export default TravisRoute.extend(BuildFaviconMixin, {
 
   activate() {
     this.setupRepoSubscriptions();
-    bindKeyboardShortcuts(this);
+    if (!isFastboot) bindKeyboardShortcuts(this);
   },
 
   deactivate() {
-    unbindKeyboardShortcuts(this);
+    if (!isFastboot) unbindKeyboardShortcuts(this);
   },
 
   // We send pusher updates through user channels now and this means that if a
@@ -141,7 +142,14 @@ export default TravisRoute.extend(BuildFaviconMixin, {
 
     error(error) {
       if (error === 'needs-auth') {
-        const currentURL = new URL(window.location.href);
+        let url = '';
+        if (isFastboot) {
+          const { protocol, host, path } = this.fastboot.request;
+          url = `${protocol}//${host}${path}`;
+        } else {
+          url = window.location.href;
+        }
+        const currentURL = new URL(url);
         const redirectUri = currentURL.href;
         const queryParams = { redirectUri };
         return this.transitionTo('auth', { queryParams });

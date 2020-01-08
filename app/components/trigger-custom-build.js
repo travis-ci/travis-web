@@ -8,6 +8,7 @@ import {
   unbindKeyboardShortcuts
 } from 'ember-keyboard-shortcuts';
 import BranchSearching from 'travis/mixins/branch-searching';
+import { isFastboot } from 'travis/utils/fastboot';
 
 export default Component.extend(BranchSearching, {
   classNames: ['trigger-build-modal'],
@@ -29,12 +30,12 @@ export default Component.extend(BranchSearching, {
   didInsertElement() {
     this._super(...arguments);
     this.set('triggerBuildBranch', this.repo.defaultBranch.name);
-    bindKeyboardShortcuts(this);
+    if (!isFastboot) bindKeyboardShortcuts(this);
   },
 
   willDestroyElement() {
     this._super(...arguments);
-    unbindKeyboardShortcuts(this);
+    if (!isFastboot) unbindKeyboardShortcuts(this);
   },
 
   createBuild: task(function* () {

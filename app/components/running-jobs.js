@@ -2,7 +2,7 @@ import Component from '@ember/component';
 import Ember from 'ember';
 import { reads } from '@ember/object/computed';
 import config from 'travis/config/environment';
-import Visibility from 'visibilityjs';
+import Visibility from 'travis-visibilityjs';
 import { inject as service } from '@ember/service';
 
 export default Component.extend({

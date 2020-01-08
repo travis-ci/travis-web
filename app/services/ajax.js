@@ -1,4 +1,3 @@
-import { Promise as EmberPromise } from 'rsvp';
 import Service, { inject as service } from '@ember/service';
 import { warn } from '@ember/debug';
 import serializeQueryParams from 'ember-fetch/utils/serialize-query-params';
@@ -73,51 +72,43 @@ export default Service.extend({
     return this.fetchRequest(url, method, options);
   },
 
-  fetchRequest(url, method, options) {
-    return new EmberPromise((resolve, reject) => {
-      const { headers, body } = options;
-      const fetchOptions = {
-        headers,
-        method,
-      };
-      if (body) {
-        fetchOptions['body'] = body;
-      }
+  fetchRequest(url, method, { headers, body }) {
+    const fetchOptions = {
+      headers,
+      method,
+    };
 
-      fetch(url, fetchOptions).then(response => {
-        if (!response.ok) {
-          this.handleFetchError(reject, response);
+    if (body) {
+      fetchOptions.body = body;
+    }
+
+    return fetch(url, fetchOptions)
+      .then(response => {
+        if (response.ok) {
+          return isJsonResponse(response) ? response.json() : response.text();
         } else {
-          const { 'content-type': resContentType = '' } = response.headers.map;
-
-          let resContent;
-          if (resContentType.includes('application/json')) {
-            resContent = response.json();
-          } else {
-            resContent = response.text();
-          }
-
-          resContent
-            .then(data => resolve(data))
-            .catch(error => this.handleFetchError(reject, error));
+          this.handleFetchError(response);
         }
-      }).catch(error => {
-        this.handleFetchError(reject, {
+      })
+      .catch(error => {
+        this.handleFetchError({
           isNetworkError: true,
           details: error,
         });
       });
-    });
   },
 
-  handleFetchError(reject, error) {
-    reject(error);
+  handleFetchError(error) {
     this.logFetchError(error);
   },
 
   logFetchError(response) {
     const { status = 'UNKNOWN' } = response;
-    const message = `[ERROR] Fetch error (${status}): ${response}`;
+    const message = `[ERROR] Fetch error (${status}): ${JSON.stringify(response)}`;
     warn(message, { id: 'travis.ajax.fetch' });
   },
 });
+
+function isJsonResponse(response) {
+  return response.headers.get('content-type').includes('application/json');
+}

@@ -10,7 +10,6 @@ import generatePusherPayload from 'travis/tests/helpers/generate-pusher-payload'
 import { percySnapshot } from 'ember-percy';
 
 import jobPage from 'travis/tests/pages/job';
-import getFaviconUri from 'travis/utils/favicon-data-uris';
 
 import config from 'travis/config/environment';
 import { setupMirage } from 'ember-cli-mirage/test-support';
@@ -63,7 +62,7 @@ module('Acceptance | job/basic layout', function (hooks) {
 
     // Ember-test-helpers find does not work here
     const iconHref = window.document.querySelector('head link[rel=icon]').getAttribute('href');
-    assert.equal(iconHref, getFaviconUri('green'), 'expected the favicon data URI to match the one for passing');
+    assert.equal(iconHref, '/images/favicon-green.png', 'expected the favicon data URI to match the one for passing');
 
     assert.equal(jobPage.branch, 'acceptance-tests', 'displays the branch');
     assert.equal(jobPage.message, 'acceptance-tests This is a message', 'displays message');
@@ -123,7 +122,7 @@ module('Acceptance | job/basic layout', function (hooks) {
 
     // Ember-test-helpers find does not work here
     const iconHref = window.document.querySelector('head link[rel=icon]').getAttribute('href');
-    assert.equal(iconHref, getFaviconUri('green'), 'expected the favicon data URI to match the one for passing');
+    assert.equal(iconHref, '/images/favicon-green.png', 'expected the favicon data URI to match the one for passing');
 
     assert.equal(jobPage.message, 'Pull Request #1 draft', 'displays message');
     assert.equal(jobPage.badge, 'draft', 'displays badge');
