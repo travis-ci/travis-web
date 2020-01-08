@@ -4,6 +4,7 @@ import {
   reads,
   or,
   and,
+  match,
   not,
   filterBy,
   notEmpty
@@ -39,9 +40,7 @@ export default Component.extend({
 
   reposToMigrate: reads('model.githubAppsRepositoriesOnOrg'),
 
-  isGithubVcs: computed('user.vcsType', function () {
-    return this.user.vcsType == 'GithubUser' || this.user.vcsType == 'GithubOrganization';
-  }),
+  isGithubVcs: match('user.vcs_type', /Github\S+$/),
 
   showMigrateTab: and('features.proVersion', 'isNotEnterpriseVersion', 'isGithubVcs'),
   showSubscriptionStatusBanner: and('checkSubscriptionStatus', 'model.subscriptionError'),

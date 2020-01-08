@@ -4,6 +4,7 @@ import {
   reads,
   notEmpty,
   or,
+  match,
   not,
   and,
   bool
@@ -36,6 +37,7 @@ export default Component.extend({
   isFilteringEnabled: reads('features.repositoryFiltering'),
   isLoadingBetaRequests: reads('owner.fetchBetaMigrationRequestsTask.isRunning'),
   isNotLoadingBetaRequests: not('isLoadingBetaRequests'),
+  isGithubVcs: match('owner.vcs_type', /Github\S+$/),
 
   get migrationRepositoryCountLimit() {
     return migrationRepositoryCountLimit;
@@ -58,7 +60,7 @@ export default Component.extend({
   appsReposOnOrg: reads('owner.githubAppsRepositoriesOnOrg'),
 
   showGitHubApps: reads('isAppsEnabled'),
-  showMigrationStatusBanner: and('isNotEnterprise', 'isNotPro', 'isNotLoadingBetaRequests'),
+  showMigrationStatusBanner: and('isNotEnterprise', 'isNotPro', 'isNotLoadingBetaRequests', 'isGithubVcs'),
   showLegacyReposFilter: or('isFilteringEnabled', 'shouldShowLegacyReposFilter'),
   showAppsReposFilter: and('isFilteringEnabled', 'shouldShowAppsReposFilter'),
   showLegacyRepos: or('hasLegacyRepos', 'isLoadingLegacyRepos', 'isFilteringLegacyRepos', 'isNotAppsEnabled'),

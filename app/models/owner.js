@@ -29,6 +29,7 @@ export default VcsEntity.extend({
   type: attr('string'),
   isUser: equal('type', 'user'),
   isOrganization: equal('type', 'organization'),
+  vcsType: attr('string'),
 
   // This is set by serializers:subscription
   subscriptionPermissions: attr(),
@@ -68,7 +69,8 @@ export default VcsEntity.extend({
   },
 
   fetchBetaMigrationRequests() {
-    return this.tasks.fetchBetaMigrationRequestsTask.perform();
+    if (this.vcsType.match(/Github\S+$/))
+      return this.tasks.fetchBetaMigrationRequestsTask.perform();
   },
 
   migrationBetaRequests: computed('tasks.fetchBetaMigrationRequestsTask.lastSuccessful.value.[]', 'login', function () {
