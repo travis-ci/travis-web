@@ -278,6 +278,7 @@ module('Acceptance | profile/basic layout', function (hooks) {
       name: 'extra-repository',
       owner: {
         login: 'org0',
+        vcs_type: 'GithubOrganization'
       },
       active: true,
       permissions: {
@@ -344,6 +345,7 @@ module('Acceptance | profile/basic layout', function (hooks) {
         name: `extra-repository-${index}`,
         owner: {
           login: 'org0',
+          vcs_type: 'GithubOrganization',
         },
         active: true,
         permissions: {
@@ -356,6 +358,7 @@ module('Acceptance | profile/basic layout', function (hooks) {
         name: `extra-inactive-repository-${index}`,
         owner: {
           login: 'org0',
+          vcs_type: 'GithubOrganization',
         },
         active: false,
         permissions: {
