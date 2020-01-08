@@ -18,7 +18,8 @@ export default Component.extend({
       this.flashes.clear();
     } catch (error) {
       let errorMessage = 'There was an error updating your contact. Please verify you provided a valid VAT number';
-      if (error && error.errors && error.errors.length > 0) {
+      const hasErrorMessage = error && error.errors && error.errors.length > 0;
+      if (hasErrorMessage) {
         errorMessage = error.errors[0].detail;
       }
       this.flashes.error(errorMessage);
