@@ -620,15 +620,18 @@
         background-size: 57px;
         margin-top: 7px;
       }
+
       @media #{$large-up} {
         background-image: url("../images/landing-page/build-flow.png");
+        background-position: center center;
         background-repeat: no-repeat;
         width: 900px;
-        height: 114px;
-        background-size: 900px;
+        height: 116px;
+        background-size:100% auto;
         margin: 0 auto;
       }
     }
+
 
     .build-pr-image {
       @media #{$small-up} {
@@ -639,6 +642,7 @@
         background-size: 57px;
         margin-top: 7px;
       }
+
       @media #{$large-up} {
         background-image: url("../images/landing-page/pr-flow.png");
         background-repeat: no-repeat;
