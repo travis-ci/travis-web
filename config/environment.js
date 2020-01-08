@@ -32,7 +32,8 @@ module.exports = function (environment) {
     },
 
     // defaults for running travis-web
-    apiEndpoint: 'https://api.travis-ci.org',
+    // apiEndpoint: 'https://api.travis-ci.org',
+    apiEndpoint: 'http://127.0.0.1:9293',
     pusher: {
       key: '5df8ac576dcccf4fd076',
       host: 'ws.pusherapp.com',
