@@ -1,6 +1,7 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
+import { reads } from '@ember/object/computed';
 
 const providerColors = {
   github: 'green',
@@ -15,14 +16,14 @@ export default Component.extend({
   multiVcs: service(),
 
   isSignup: false,
-  provider: 'github',
+  provider: reads('multiVcs.primaryProvider'),
 
   vcsType: computed('provider', function () {
     return `${this.provider.capitalize()}User`;
   }),
 
-  isPrimaryProvider: computed('provider', function () {
-    return this.multiVcs.isPrimaryProvider(this.provider);
+  isPrimaryProvider: computed('provider', 'multiVcs.primaryProvider', function () {
+    return this.provider === this.multiVcs.primaryProvider;
   }),
 
   isProviderEnabled: computed('provider', 'isPrimaryProvider', function () {

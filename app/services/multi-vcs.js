@@ -22,9 +22,6 @@ export default Service.extend({
 
   primaryProvider: 'github',
 
-  isPrimaryProvider(provider) {
-    return provider === this.primaryProvider;
-  },
   isProviderEnabled(provider) {
     return this.features.isEnabled(`enable-${provider}-login`);
   },
