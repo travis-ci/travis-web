@@ -5,11 +5,19 @@
     @maxWidth='3xl'
   >
     <UiKit::Box
-      @position={{hash type='absolute' top=0 right=0}}
-      @margin={{hash top=-16 right=-10}}
+      @position={{hash type='absolute' top=0 left=0}}
+      @margin={{hash top=-12 left=-32}}
       @height={{64}}
     >
-      <SvgImage @name="grey-blob" @height={{224}} />
+      <SvgImage @name="blue-blob" @height={{224}} />
+    </UiKit::Box>
+
+    <UiKit::Box
+      @position={{hash type='absolute' top=0 right=0}}
+      @margin={{hash top=-12 right=-16}}
+      @width={{56}}
+    >
+      <SvgImage @name="grey-gradient-circle" />
     </UiKit::Box>
 
     <UiKit::Box
@@ -42,11 +50,11 @@
 
     <UiKit::Box
       @layer='0'
-      @margin={{hash bottom=-10 left=-10}}
+      @margin={{hash bottom=-16 left=-20}}
       @position={{hash type='absolute' bottom=0 left=0}}
       @width={{56}}
     >
-      <SvgImage @name="yellow-waves" />
+      <SvgImage @name="red-dash-circle" />
     </UiKit::Box>
   </UiKit::Box>
 </TravisLayout>
