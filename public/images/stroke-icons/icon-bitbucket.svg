@@ -1,11 +1,7 @@
-<?xml version="1.0" standalone="no"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20010904//EN"
- "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
-<svg version="1.0" xmlns="http://www.w3.org/2000/svg"
- width="90.000000pt" height="99.000000pt" viewBox="0 0 90.000000 99.000000"
- preserveAspectRatio="xMidYMid meet">
-<g>
-<path class="header__svg-logo__icon--path--3" d="M2,41.25a2,2,0,0,0-2,2.32L8.49,95.11a2.72,2.72,0,0,0,2.66,2.27H51.88a2,2,0,0,0,2-1.68l8.51-52.11a2,2,0,0,0-2-2.32ZM37.75,78.5h-13L21.23,60.12H40.9Z"></path>
-<path class="header__svg-logo__icon--path--4" d="M59.67,60.12H40.9L37.75,78.5h-13L9.4,96.73a2.71,2.71,0,0,0,1.75.66H51.89a2,2,0,0,0,2-1.68Z"></path>
-</g>
+<?xml version="1.0" encoding="utf-8"?>
+<svg version="1.0" viewBox="0 0 66 60" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+  <g transform="matrix(1, 0, 0, 1, 1.804999, -39.320004)">
+    <path class="header__svg-logo__icon--path--3" d="M2,41.25a2,2,0,0,0-2,2.32L8.49,95.11a2.72,2.72,0,0,0,2.66,2.27H51.88a2,2,0,0,0,2-1.68l8.51-52.11a2,2,0,0,0-2-2.32ZM37.75,78.5h-13L21.23,60.12H40.9Z"/>
+    <path class="header__svg-logo__icon--path--4" d="M59.67,60.12H40.9L37.75,78.5h-13L9.4,96.73a2.71,2.71,0,0,0,1.75.66H51.89a2,2,0,0,0,2-1.68Z"/>
+  </g>
 </svg>
