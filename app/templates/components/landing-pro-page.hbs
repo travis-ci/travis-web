@@ -149,7 +149,7 @@
     <section class="section-opensource section--white section--center">
       <h2>
         Testing your open source<br />
-        projects is always 10000% free!
+        projects is always 100% free!
       </h2>
       <p>
         <em>Seriously. Always.</em>
@@ -197,7 +197,7 @@
             is created
           </p>
           <p class="build-step-7 build-steps">
-            GitHub tells Travis CI<br />
+            Cloud platform tells Travis CI
             the build is mergeable
           </p>
           <p class="build-step-8 build-steps">
@@ -401,14 +401,9 @@
       <p class="run-test">
         Run your tests with Travis CI
       </p>
-      <a
-        href="https://travis-ci.com/signin"
-        class="start-building-button cta-index-page"
-        title="Sign up with GitHub"
-        {{action "signIn"}}
-      >
+      <LinkTo @route='signup' class="start-building-button cta-index-page">
         Start building now
-      </a>
+      </LinkTo>
     </section>
   </main>
 </div>
