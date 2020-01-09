@@ -66,8 +66,8 @@
           <filter.form as |form|>
             <div class="not-locked-profile-repositories-filter">
               <form.searchField
-                @placeholder="Filter GitHub Apps repositories"
-                @title="Filter GitHub Apps repositories"
+                @placeholder="Filter {{vcs-name this.owner.vcsType}} repositories"
+                @title="Filter {{vcs-name this.owner.vcsType}} repositories"
               />
             </div>
           </filter.form>
@@ -91,9 +91,11 @@
                   <p>
                     We couldn’t find any active repositories you have access to.
                   </p>
-                  <p>
-                    You can add repositories by clicking the “Manage repositories on GitHub” button above.
-                  </p>
+                  {{#if this.isGithubRepository}}
+                    <p>
+                      You can add repositories by clicking the “Manage repositories on GitHub” button above.
+                    </p>
+                  {{/if}}
                 </li>
               {{/each}}
             </ul>

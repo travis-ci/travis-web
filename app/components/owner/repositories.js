@@ -1,7 +1,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import {
-  match,
   reads,
   notEmpty,
   or,
@@ -28,7 +27,7 @@ export default Component.extend({
   login: reads('owner.login'),
 
   appsInstallationEnabled: or('isNotGithubRepository', 'hasGitHubAppsInstallation'),
-  isGithubRepository: match('owner.vcs_type', /Github\S+$/),
+  isGithubRepository: match('owner.vcsType', /Github\S+$/),
   isNotGithubRepository: not('isGithubRepository'),
   hasGitHubAppsInstallation: notEmpty('owner.installation'),
 
@@ -41,7 +40,7 @@ export default Component.extend({
   isFilteringEnabled: reads('features.repositoryFiltering'),
   isLoadingBetaRequests: reads('owner.fetchBetaMigrationRequestsTask.isRunning'),
   isNotLoadingBetaRequests: not('isLoadingBetaRequests'),
-  isGithubVcs: match('owner.vcs_type', /Github\S+$/),
+  isGithubVcs: match('owner.vcsType', /Github\S+$/),
 
   get migrationRepositoryCountLimit() {
     return migrationRepositoryCountLimit;

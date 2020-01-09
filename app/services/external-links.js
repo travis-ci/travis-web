@@ -11,6 +11,8 @@ export const vcsLinks = {
   issueUrl: (vcsType, { owner, repo, issue }) => vcsUrl('issue', vcsType, { owner, repo, issue }),
 
   profileUrl: (vcsType, { owner }) => vcsUrl('profile', vcsType, { owner }),
+
+  accessSettingsUrl: (vcsType, { owner }) => vcsUrl('accessSettings', vcsType, { owner }),
 };
 
 export default Service.extend({

@@ -29,7 +29,6 @@ export default VcsEntity.extend({
   type: attr('string'),
   isUser: equal('type', 'user'),
   isOrganization: equal('type', 'organization'),
-  vcsType: attr('string'),
 
   // This is set by serializers:subscription
   subscriptionPermissions: attr(),
@@ -69,7 +68,7 @@ export default VcsEntity.extend({
   },
 
   fetchBetaMigrationRequests() {
-    if (this.vcsType.match(/Github\S+$/))
+    if (this.vcsType && this.vcsType.match(/Github\S+$/))
       return this.tasks.fetchBetaMigrationRequestsTask.perform();
   },
 

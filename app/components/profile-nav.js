@@ -11,8 +11,9 @@ import {
 } from '@ember/object/computed';
 import { computed } from '@ember/object';
 import config from 'travis/config/environment';
+import { vcsLinks } from 'travis/services/external-links';
 
-const { billingEndpoint, githubOrgsOauthAccessSettingsUrl } = config;
+const { billingEndpoint } = config;
 
 export default Component.extend({
   tagName: '',
@@ -25,6 +26,8 @@ export default Component.extend({
 
   user: reads('accounts.user'),
   organizations: reads('accounts.organizations'),
+  vcsType: reads('user.vcsType'),
+  vcsId: reads('user.vcsId'),
 
   isProVersion: reads('features.proVersion'),
   isNotProVersion: not('isProVersion'),
@@ -37,10 +40,13 @@ export default Component.extend({
 
   accountName: or('model.name', 'model.login'),
   billingUrl: or('model.subscription.billingUrl', 'model.billingUrl'),
+  accessSettingsUrl: computed('user.vcsType', 'user.vcsId', function () {
+    return vcsLinks.accessSettingsUrl(this.user.vcsType, { owner: this.user.login });
+  }),
 
   reposToMigrate: reads('model.githubAppsRepositoriesOnOrg'),
 
-  isGithubVcs: match('user.vcs_type', /Github\S+$/),
+  isGithubVcs: match('user.vcsType', /Github\S+$/),
 
   showMigrateTab: and('features.proVersion', 'isNotEnterpriseVersion', 'isGithubVcs'),
   showSubscriptionStatusBanner: and('checkSubscriptionStatus', 'model.subscriptionError'),
@@ -50,10 +56,6 @@ export default Component.extend({
   hasAdminPermissions: reads('model.permissions.admin'),
   isOrganizationAdmin: and('isOrganization', 'hasAdminPermissions'),
   showOrganizationSettings: and('isOrganizationAdmin', 'isProVersion'),
-
-  get githubOrgsOauthAccessSettingsUrl() {
-    return githubOrgsOauthAccessSettingsUrl;
-  },
 
   checkSubscriptionStatus: computed('features.enterpriseVersion', function () {
     return !this.features.get('enterpriseVersion') && !!billingEndpoint;
