@@ -68,8 +68,7 @@ export default VcsEntity.extend({
   },
 
   fetchBetaMigrationRequests() {
-    if (this.vcsType && this.vcsType.match(/Github\S+$/))
-      return this.tasks.fetchBetaMigrationRequestsTask.perform();
+    return this.tasks.fetchBetaMigrationRequestsTask.perform();
   },
 
   migrationBetaRequests: computed('tasks.fetchBetaMigrationRequestsTask.lastSuccessful.value.[]', 'login', function () {

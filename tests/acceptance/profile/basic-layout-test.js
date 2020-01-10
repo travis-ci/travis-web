@@ -49,9 +49,9 @@ module('Acceptance | profile/basic layout', function (hooks) {
       name: 'Org Name',
       type: 'organization',
       login: 'org-login',
-      github_id: 1983,
       vcs_type: 'GithubOrganization',
-      vcs_id: 1983
+      vcs_id: 1983,
+      github_id: 1983,
     });
     this.organization = organization;
 
