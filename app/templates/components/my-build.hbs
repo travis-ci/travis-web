@@ -15,9 +15,10 @@
         <LinkTo
           @route="owner"
           @model={{this.build.repo.owner.login}}
-          class="inner-underline"
+          class="inner-underline repo-dashboard"
         >
           {{this.build.repo.owner.login}}
+          <SvgImage @name={{vcs-icon this.build.repo.vcsType}} />
         </LinkTo>
       </div>
       <div class="row-content" data-test-repo-name>
