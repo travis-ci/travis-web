@@ -278,6 +278,7 @@ module('Acceptance | profile/basic layout', function (hooks) {
       name: 'extra-repository',
       owner: {
         login: 'org0',
+        vcs_type: 'GithubOrganization'
       },
       active: true,
       permissions: {
@@ -344,24 +345,28 @@ module('Acceptance | profile/basic layout', function (hooks) {
         name: `extra-repository-${index}`,
         owner: {
           login: 'org0',
+          vcs_type: 'GithubOrganization',
         },
         active: true,
         permissions: {
           admin: true
         },
-        github_id: 10000 + index
+        github_id: 10000 + index,
+        vcs_type: 'GithubRepository',
       });
 
       this.server.create('repository', {
         name: `extra-inactive-repository-${index}`,
         owner: {
           login: 'org0',
+          vcs_type: 'GithubOrganization',
         },
         active: false,
         permissions: {
           admin: true
         },
-        github_id: 20000 + index
+        github_id: 20000 + index,
+        vcs_type: 'GithubRepository',
       });
 
       repositoryIds.push(10000 + index);
