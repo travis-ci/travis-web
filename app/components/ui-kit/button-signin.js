@@ -4,7 +4,7 @@ import { computed } from '@ember/object';
 import { reads } from '@ember/object/computed';
 
 const providerColors = {
-  github: 'green',
+  github: 'grey-dark',
   bitbucket: 'blue',
   assembla: 'grey',
 };

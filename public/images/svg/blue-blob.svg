@@ -8,13 +8,13 @@
 </style>
 <linearGradient id="blue-blob-blue-monday-taako" gradientUnits="userSpaceOnUse" x1="4.5233" y1="62.1356" x2="231.9436" y2="62.1356">
 	<stop  offset="0" style="stop-color:#FFFFFF;stop-opacity:0"/>
-	<stop  offset="0.0152" style="stop-color:#F7F7FC;stop-opacity:0.0152"/>
-	<stop  offset="0.2146" style="stop-color:#BAC2E3;stop-opacity:0.2146"/>
-	<stop  offset="0.4063" style="stop-color:#8D9CCF;stop-opacity:0.4063"/>
-	<stop  offset="0.5856" style="stop-color:#6E84C2;stop-opacity:0.5856"/>
-	<stop  offset="0.7496" style="stop-color:#5775B9;stop-opacity:0.7496"/>
-	<stop  offset="0.8929" style="stop-color:#476DB4;stop-opacity:0.8929"/>
-	<stop  offset="1" style="stop-color:#416AB3"/>
+	<stop  offset="0.0152" style="stop-color:#F7F7FF;stop-opacity:0.0152"/>
+	<stop  offset="0.2146" style="stop-color:#BAC2FF;stop-opacity:0.2146"/>
+	<stop  offset="0.4063" style="stop-color:#7D9CFF;stop-opacity:0.4063"/>
+	<stop  offset="0.5856" style="stop-color:#6684FF;stop-opacity:0.5856"/>
+	<stop  offset="0.7496" style="stop-color:#4775FF;stop-opacity:0.7496"/>
+	<stop  offset="0.8929" style="stop-color:#276DFF;stop-opacity:0.8929"/>
+	<stop  offset="1" style="stop-color:#0068FF"/>
 </linearGradient>
 <path class="st0" d="M80.958,57.596c0,0,19.455-53.826,83.009-42.802c0,0,28.069,4.282,57.069-8.431
 	c29.326-12.855-9.772,29.734-9.772,29.734s-25.392,24.741-54.503,27.335c-29.111,2.594-37.542,47.341-40.784,50.584

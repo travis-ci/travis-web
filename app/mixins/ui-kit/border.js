@@ -19,6 +19,7 @@ const COLORS = {
   GREEN: 'green',
   GREY: 'grey',
   GREY_LIGHT: 'grey-light',
+  GREY_DARK: 'grey-dark',
 };
 
 const BORDER_COLORS = {
@@ -26,6 +27,7 @@ const BORDER_COLORS = {
   [COLORS.GREEN]: 'green-300',
   [COLORS.GREY]: 'grey-700',
   [COLORS.GREY_LIGHT]: 'grey-150',
+  [COLORS.GREY_DARK]: 'grey-800',
 };
 
 export default Mixin.create({
