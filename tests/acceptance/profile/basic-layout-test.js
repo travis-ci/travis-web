@@ -24,6 +24,8 @@ module('Acceptance | profile/basic layout', function (hooks) {
       name: 'User Name of exceeding length',
       login: 'user-login',
       github_id: 1974,
+      vcs_type: 'GithubUser',
+      vcs_id: 1974,
       avatar_url: '/images/tiny.gif'
     });
 
@@ -74,7 +76,8 @@ module('Acceptance | profile/basic layout', function (hooks) {
         name: `Generic org ${orgIndex}`,
         type: 'organization',
         login: `org${orgIndex}`,
-        github_id: 1000 + orgIndex
+        github_id: 1000 + orgIndex,
+        vcs_type: 'GithubOrganization'
       });
 
       if (orgIndex === 9) {
@@ -90,6 +93,7 @@ module('Acceptance | profile/basic layout', function (hooks) {
       name: 'repository-name',
       owner: {
         login: 'user-login',
+        vcs_type: 'GithubUser'
       },
       active: true,
       permissions: {
@@ -102,6 +106,7 @@ module('Acceptance | profile/basic layout', function (hooks) {
       name: 'yet-another-repository-name',
       owner: {
         login: 'user-login',
+        vcs_type: 'GithubUser'
       },
       active: false,
       permissions: {
@@ -114,6 +119,7 @@ module('Acceptance | profile/basic layout', function (hooks) {
       name: 'other-repository-name',
       owner: {
         login: 'user-login',
+        vcs_type: 'GithubUser'
       },
       active: true,
       permissions: {
@@ -125,6 +131,7 @@ module('Acceptance | profile/basic layout', function (hooks) {
       name: 'github-apps-public-repository',
       owner: {
         login: 'user-login',
+        vcs_type: 'GithubUser'
       },
       active: true,
       managed_by_installation: true,
@@ -137,7 +144,8 @@ module('Acceptance | profile/basic layout', function (hooks) {
     this.server.create('repository', {
       name: 'github-apps-private-repository',
       owner: {
-        login: 'user-login'
+        login: 'user-login',
+        vcs_type: 'GithubUser'
       },
       active: true,
       managed_by_installation: true,
@@ -150,7 +158,8 @@ module('Acceptance | profile/basic layout', function (hooks) {
     this.server.create('repository', {
       name: 'github-apps-locked-repository',
       owner: {
-        login: 'user-login'
+        login: 'user-login',
+        vcs_type: 'GithubUser'
       },
       active: true,
       managed_by_installation: true,
@@ -163,6 +172,7 @@ module('Acceptance | profile/basic layout', function (hooks) {
       name: 'feminism-is-for-everybody',
       owner: {
         login: 'bellhooks',
+        vcs_type: 'GithubUser'
       },
       active: false
     });
@@ -351,7 +361,8 @@ module('Acceptance | profile/basic layout', function (hooks) {
         permissions: {
           admin: true
         },
-        github_id: 10000 + index
+        github_id: 10000 + index,
+        vcs_type: 'GithubRepository'
       });
 
       this.server.create('repository', {
@@ -364,7 +375,8 @@ module('Acceptance | profile/basic layout', function (hooks) {
         permissions: {
           admin: true
         },
-        github_id: 20000 + index
+        github_id: 20000 + index,
+        vcs_type: 'GithubRepository'
       });
 
       repositoryIds.push(10000 + index);
@@ -387,12 +399,14 @@ module('Acceptance | profile/basic layout', function (hooks) {
         name: `extra-repository-${index}`,
         owner: {
           login: 'org0',
+          vcs_type: 'GithubOrganization'
         },
         active: true,
         permissions: {
           admin: true
         },
-        github_id: 10000 + index
+        github_id: 10000 + index,
+        vcs_type: 'GithubRepository'
       });
     }
 
