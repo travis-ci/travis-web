@@ -364,7 +364,7 @@ module('Acceptance | profile/basic layout', function (hooks) {
           admin: true
         },
         github_id: 10000 + index,
-        vcs_type: 'GithubRepository'
+        vcs_type: 'GithubRepository',
       });
 
       this.server.create('repository', {
@@ -378,7 +378,7 @@ module('Acceptance | profile/basic layout', function (hooks) {
           admin: true
         },
         github_id: 20000 + index,
-        vcs_type: 'GithubRepository'
+        vcs_type: 'GithubRepository',
       });
 
       repositoryIds.push(10000 + index);
