@@ -198,8 +198,6 @@ module.exports = function (environment) {
     ]
   };
 
-  ENV.apiEndpoint = ENV.apiEndpoint.replace('api.', 'api-staging.');
-
   if (typeof process !== 'undefined') {
     if (ENV.featureFlags['pro-version'] && !ENV.featureFlags['enterprise-version']) {
       // set defaults for pro if it's used
@@ -227,8 +225,8 @@ module.exports = function (environment) {
       }
     }
 
-    if (ENV.apiEndpoint) {
-      ENV.apiEndpoint = ENV.apiEndpoint.replace('api.', 'api-staging.');
+    if (process.env.API_ENDPOINT) {
+      ENV.apiEndpoint = process.env.API_ENDPOINT;
 
       if (ENV.apiEndpoint === 'https://api-staging.travis-ci.org') {
         ENV.pusher.key = 'dd3f11c013317df48b50';
