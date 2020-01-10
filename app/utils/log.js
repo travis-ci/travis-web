@@ -195,6 +195,10 @@ Log.Part = function (id, num, string) {
   // Fix for issue: https://github.com/travis-pro/team-teal/issues/2782
   this.string = this.string.replace(/\r\u001B\[0m\r\n/gm, '\n');
 
+  // Match case where json is joined with travis:time eg: "{"key": "val"}travis:time:325435"
+  // Add a line break. Ticket: https://travisci.assembla.com/spaces/Web/tickets/realtime_cardwall?ticket=184
+  this.string = this.string.replace(/}/gm, '}\n');
+
   this.string = this.string.replace(/\r+\n/gm, '\n');
   this.string = this.string.replace(/\r+/gm, '\r');
   this.strings = this.string.split(/^/gm) || [];
