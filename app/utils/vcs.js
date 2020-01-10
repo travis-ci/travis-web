@@ -43,11 +43,13 @@ const templateParams = (template) => {
 };
 
 const paramsValid = (template, params) => (
-  arrayGE(Object.keys(params), templateParams(template))
+  arrayContainsArray(Object.keys(params), templateParams(template))
 );
 
-const arrayGE = (array1, array2) => (
-  array1.sort().toString() >= array2.sort().toString()
+const arrayContainsArray = (superset, subset) => (
+  subset.every((value) => (
+    superset.indexOf(value) >= 0
+  ))
 );
 
 export const vcsUrl = (resource, vcsType, params = {}) => {

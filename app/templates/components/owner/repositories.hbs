@@ -45,7 +45,7 @@
   {{/if}}
 {{/if}}
 {{#if this.showGitHubApps}}
-  {{#if this.appsInstallationEnabled }}
+  {{#if this.skipGitHubAppsInstallation }}
     <div id="github-apps-repositories" data-test-github-app-repos>
       {{#if isGithubRepository}}
         <header class="space-between" data-test-github-apps-integration-header>
@@ -91,7 +91,7 @@
                   <p>
                     We couldn’t find any active repositories you have access to.
                   </p>
-                  {{#if this.isGithubRepository}}
+                  {{#if this.isMatchGithub}}
                     <p>
                       You can add repositories by clicking the “Manage repositories on GitHub” button above.
                     </p>

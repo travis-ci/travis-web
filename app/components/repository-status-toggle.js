@@ -1,5 +1,4 @@
 import Component from '@ember/component';
-import config from 'travis/config/environment';
 import { task } from 'ember-concurrency';
 import { computed } from '@ember/object';
 import { reads } from '@ember/object/computed';
@@ -14,9 +13,8 @@ export default Component.extend({
   tagName: 'li',
   classNames: ['profile-repolist-item'],
   classNameBindings: ['repository.active:active'],
-  githubOrgsOauthAccessSettingsUrl: config.githubOrgsOauthAccessSettingsUrl,
   accessSettingsUrl: computed('user.vcsType', 'user.vcsId', function () {
-    return vcsLinks.accessSettingsUrl(this.user.vcsType, { owner: this.user.login });
+    return this.user && vcsLinks.accessSettingsUrl(this.user.vcsType, { owner: this.user.login });
   }),
 
   admin: computed('repository.permissions', function () {

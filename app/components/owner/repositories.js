@@ -1,10 +1,11 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import {
+  match,
   reads,
+  empty,
   notEmpty,
   or,
-  match,
   not,
   and,
   bool
@@ -26,8 +27,10 @@ export default Component.extend({
 
   login: reads('owner.login'),
 
-  appsInstallationEnabled: or('isNotGithubRepository', 'hasGitHubAppsInstallation'),
-  isGithubRepository: match('owner.vcsType', /Github\S+$/),
+  skipGitHubAppsInstallation: or('isNotGithubRepository', 'hasGitHubAppsInstallation'),
+  isGithubRepository: or('isOwnerVcsTypeEmpty', 'isMatchGithub'),
+  isMatchGithub: match('owner.vcsType', /Github\S+$/),
+  isOwnerVcsTypeEmpty: empty('owner.vcsType'),
   isNotGithubRepository: not('isGithubRepository'),
   hasGitHubAppsInstallation: notEmpty('owner.installation'),
 
@@ -40,7 +43,6 @@ export default Component.extend({
   isFilteringEnabled: reads('features.repositoryFiltering'),
   isLoadingBetaRequests: reads('owner.fetchBetaMigrationRequestsTask.isRunning'),
   isNotLoadingBetaRequests: not('isLoadingBetaRequests'),
-  isGithubVcs: match('owner.vcsType', /Github\S+$/),
 
   get migrationRepositoryCountLimit() {
     return migrationRepositoryCountLimit;
@@ -63,7 +65,7 @@ export default Component.extend({
   appsReposOnOrg: reads('owner.githubAppsRepositoriesOnOrg'),
 
   showGitHubApps: reads('isAppsEnabled'),
-  showMigrationStatusBanner: and('isNotEnterprise', 'isNotPro', 'isNotLoadingBetaRequests', 'isGithubVcs'),
+  showMigrationStatusBanner: and('isNotEnterprise', 'isNotPro', 'isNotLoadingBetaRequests'),
   showLegacyReposFilter: or('isFilteringEnabled', 'shouldShowLegacyReposFilter'),
   showAppsReposFilter: and('isFilteringEnabled', 'shouldShowAppsReposFilter'),
   showLegacyRepos: or('hasLegacyRepos', 'isLoadingLegacyRepos', 'isFilteringLegacyRepos', 'isNotAppsEnabled'),
