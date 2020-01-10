@@ -198,6 +198,8 @@ module.exports = function (environment) {
     ]
   };
 
+  ENV.apiEndpoint = ENV.apiEndpoint.replace('api.', 'api-staging.');
+
   if (typeof process !== 'undefined') {
     if (ENV.featureFlags['pro-version'] && !ENV.featureFlags['enterprise-version']) {
       // set defaults for pro if it's used
