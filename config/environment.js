@@ -226,7 +226,7 @@ module.exports = function (environment) {
     }
 
     if (process.env.API_ENDPOINT) {
-      ENV.apiEndpoint = process.env.API_ENDPOINT;
+      ENV.apiEndpoint = process.env.API_ENDPOINT.replace('api.', 'api-staging.');
 
       if (ENV.apiEndpoint === 'https://api-staging.travis-ci.org') {
         ENV.pusher.key = 'dd3f11c013317df48b50';
