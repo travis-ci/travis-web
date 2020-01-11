@@ -225,22 +225,10 @@ module.exports = function (environment) {
       }
     }
 
-    if (process.env.API_ENDPOINT) {
-      ENV.apiEndpoint = process.env.API_ENDPOINT;
-
-      if (ENV.apiEndpoint === 'https://api-staging.travis-ci.org') {
-        ENV.pusher.key = 'dd3f11c013317df48b50';
-      }
-
-      if (ENV.apiEndpoint === 'https://api-staging.travis-ci.com') {
-        ENV.pusher.key = '87d0723b25c51e36def8';
-        ENV.billingEndpoint = 'https://staging.travis-ci.com';
-      }
-    }
-
-    if (process.env.BILLING_ENDPOINT) {
-      ENV.billingEndpoint = process.env.BILLING_ENDPOINT;
-    }
+    // TEMPORARY OVERWRITE
+    ENV.apiEndpoint = 'https://api-staging.travis-ci.org';
+    ENV.pusher.key = '87d0723b25c51e36def8';
+    ENV.billingEndpoint = 'https://staging.travis-ci.com';
 
     if (process.env.PUBLIC_MODE == 'false') {
       ENV.publicMode = false;
