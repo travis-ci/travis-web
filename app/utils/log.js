@@ -187,9 +187,8 @@ Log.Part = function (id, num, string) {
   Log.Node.apply(this, arguments);
   this.string = string || '';
 
-  // Match case where json is joined with travis:time eg: "{"key": "val"}travis:time:325435"
-  // Add a line break. Ticket: https://travisci.assembla.com/spaces/Web/tickets/realtime_cardwall?ticket=184
-  this.string = this.string.replace(/}(?=travis_)/gm, '$&\n');
+  // For ticket: https://travisci.assembla.com/spaces/Web/tickets/realtime_cardwall?ticket=184
+  this.string = this.string.replace(/}(?=travis_(fold:end|time:end))/gm, '$&\n');
   this.string = this.string.replace(/\033\[1000D/gm, '\r');
 
   // This is an ultra-specific fix for this issue:
