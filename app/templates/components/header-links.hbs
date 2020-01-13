@@ -172,7 +172,7 @@
             type="button"
             {{action "signIn" "github"}}
           >
-            Sign in with GitHub
+            Sign in
           </button>
         {{/if}}
 
@@ -180,20 +180,20 @@
           <ul class="navigation-nested">
             <li>
               <button class="action" {{action "signIn" "github"}}>
-                Log in with GitHub
+                Sign in with GitHub
               </button>
             </li>
             {{#if this.multiVcs.enableAssemblaLogin}}
               <li>
                 <button class="action" {{action "signIn" "assembla"}}>
-                  Log in with Assembla
+                  Sign in with Assembla
                 </button>
               </li>
             {{/if}}
             {{#if this.multiVcs.enableBitbucketLogin}}
               <li>
                 <button class="action" {{action "signIn" "bitbucket"}}>
-                  Log in with Bitbucket
+                  Sign in with Bitbucket
                 </button>
               </li>
             {{/if}}
