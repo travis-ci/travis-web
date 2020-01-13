@@ -35,7 +35,7 @@ module.exports = {
       profile: '/:owner',
       repo: '/:owner/:repo',
       tag: '/:owner/:repo/src/:tag',
-      accessSettings: '/account/user/:owner',
+      accessSettings: '/account/user/:owner/',
     },
     vocabulary: {
       organization: 'Team',
