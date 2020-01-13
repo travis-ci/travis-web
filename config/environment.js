@@ -226,7 +226,7 @@ module.exports = function (environment) {
     }
 
     // TEMPORARY OVERWRITE
-    ENV.apiEndpoint = 'https://api-staging.travis-ci.org';
+    ENV.apiEndpoint = 'https://api-staging.travis-ci.com';
     ENV.pusher.key = '87d0723b25c51e36def8';
     ENV.billingEndpoint = 'https://staging.travis-ci.com';
 
