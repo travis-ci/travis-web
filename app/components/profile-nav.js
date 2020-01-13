@@ -6,7 +6,8 @@ import {
   and,
   not,
   filterBy,
-  notEmpty
+  notEmpty,
+  match
 } from '@ember/object/computed';
 import { computed } from '@ember/object';
 import config from 'travis/config/environment';
@@ -34,6 +35,8 @@ export default Component.extend({
   isEnterpriseVersion: reads('features.enterpriseVersion'),
   isNotEnterpriseVersion: not('isEnterpriseVersion'),
 
+  isMatchGithub: match('vcsType', /Github\S+$/),
+
   accountsForBeta: filterBy('accounts.all', 'isMigrationBetaRequested', false),
   hasAccountsForBeta: notEmpty('accountsForBeta'),
 
@@ -45,7 +48,7 @@ export default Component.extend({
 
   reposToMigrate: reads('model.githubAppsRepositoriesOnOrg'),
 
-  showMigrateTab: and('features.proVersion', 'isNotEnterpriseVersion'),
+  showMigrateTab: and('features.proVersion', 'isNotEnterpriseVersion', 'isMatchGithub'),
   showSubscriptionStatusBanner: and('checkSubscriptionStatus', 'model.subscriptionError'),
   showMigrationBetaBanner: and('isNotProVersion', 'isNotEnterpriseVersion', 'hasAccountsForBeta'),
 
