@@ -72,6 +72,7 @@
 
 .repo-dashboard {
   svg {
+    margin-left: 5px;
     @extend .icon--m;
     @include colorSVGFill(rgba(black, 0.2));
   }

@@ -15,16 +15,14 @@
 <div class="dash-body">
   <div class="dash-main">
     <header class="fade-out dash-header">
-      <h2 class="row-label">
+      <h2 class="row-label repo-dashboard">
         <LinkTo
           @route="owner"
           @model={{this.repo.owner.login}}
           @title={{this.repo.owner.login}}
-          class="repo-dashboard"
         >
-          {{this.repo.owner.login}}
-          <SvgImage @name={{vcs-icon this.repo.vcsType}} />
-        </LinkTo>
+          {{this.repo.owner.login}}</LinkTo>
+        <SvgImage @name={{vcs-icon this.repo.vcsType}} />
       </h2>
       <h1 class="row-content">
         <LinkTo
