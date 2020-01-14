@@ -1,9 +1,30 @@
 /* eslint-env node */
 'use strict';
 
+const deepFreeze = require('deep-freeze');
+
+const VCS_TYPES = {
+  ASSEMBLA: {
+    ORG: 'AssemblaOrganization',
+    REPO: 'AssemblaRepository',
+    USER: 'AssemblaUser'
+  },
+  BITBUCKET: {
+    ORG: 'BitbucketOrganization',
+    REPO: 'BitbucketRepository',
+    USER: 'BitbucketUser'
+  },
+  GITHUB: {
+    ORG: 'GithubOrganization',
+    REPO: 'GithubRepository',
+    USER: 'GithubUser'
+  }
+};
+
 // keys sorted alphabetically
-module.exports = {
+module.exports = deepFreeze({
   assembla: {
+    vcsTypes: [VCS_TYPES.ASSEMBLA.ORG, VCS_TYPES.ASSEMBLA.REPO, VCS_TYPES.ASSEMBLA.USER],
     endpoint: 'https://:portfolio.assembla.com',
     icon: 'icon-assembla',
     name: 'Assembla',
@@ -23,6 +44,7 @@ module.exports = {
   },
 
   bitbucket: {
+    vcsTypes: [VCS_TYPES.BITBUCKET.ORG, VCS_TYPES.BITBUCKET.REPO, VCS_TYPES.BITBUCKET.USER],
     endpoint: 'https://bitbucket.org',
     icon: 'icon-bitbucket',
     name: 'Bitbucket',
@@ -42,6 +64,8 @@ module.exports = {
   },
 
   github: {
+    vcsTypes: [VCS_TYPES.GITHUB.ORG, VCS_TYPES.GITHUB.REPO, VCS_TYPES.GITHUB.USER],
+    isDefault: true,
     endpoint: 'https://github.com',
     icon: 'icon-repooctocat',
     name: 'GitHub',
@@ -59,4 +83,6 @@ module.exports = {
       pullRequest: 'Pull Request',
     },
   },
-};
+
+  VCS_TYPES
+});
