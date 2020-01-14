@@ -10,7 +10,7 @@ const {
 export const defaultVcsConfig = Object.values(providers).find(config => config.isDefault);
 
 export const vcsConfig = (vcsType) => (
-  Object.values(providers).find(config => config.vcsTypes.includes(vcsType)) || defaultVcsConfig
+  Object.values(providers).find(provider => provider.vcsTypes.includes(vcsType)) || defaultVcsConfig
 );
 
 const replaceParams = (template, params) => (

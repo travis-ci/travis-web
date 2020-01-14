@@ -83,6 +83,4 @@ module.exports = deepFreeze({
       pullRequest: 'Pull Request',
     },
   },
-
-  VCS_TYPES
 });
