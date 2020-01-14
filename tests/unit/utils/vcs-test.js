@@ -19,7 +19,7 @@ module('Unit | Utils | vcsName', function () {
   });
 
   test('it returns default provider when vcs is not found in providers', function (assert) {
-    assert.throws(() => vcsName('OtherVcs'));
+    assert.equal(vcsName('OtherVcs'), 'GitHub');
   });
 });
 
