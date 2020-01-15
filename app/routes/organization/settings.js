@@ -16,7 +16,12 @@ export default TravisRoute.extend({
     if (organization.permissions.admin !== true) {
       this.transitionTo('organization.repositories', organization);
     }
-    const preferences = this.store.query('preference', { organization_id: organization.id });
-    return hash({ organization, preferences });
+    // const preferences = organization.get('preferences');
+    // this.store.query('preference', { organization_id: organization.id });
+
+    return hash({
+      organization,
+      preferences: organization.get('preferences')
+    });
   },
 });
