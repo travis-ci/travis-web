@@ -109,6 +109,7 @@
     "npm": "6.2.0"
   },
   "dependencies": {
+    "deep-freeze": "0.0.1",
     "watchman": "^1.0.0",
     "xss-clean": "^0.1.1"
   },
