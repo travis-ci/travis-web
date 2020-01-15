@@ -1,57 +1,28 @@
-import { currentURL } from '@ember/test-helpers';
+import { currentURL, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
-import { percySnapshot } from 'ember-percy';
 import { setupMirage } from 'ember-cli-mirage/test-support';
+import { percySnapshot } from 'ember-percy';
 
-import {
-  create,
-  text,
-  visitable
-} from 'ember-cli-page-object';
-
-const tvjPageUrl = '/travisci-vs-jenkins';
-
-const tvjPage = create({
-  visit: visitable(tvjPageUrl),
-
-  headerSection: {
-    scope: '[data-test-tvj-page-header-section]',
-
-    title: {
-      scope: '[data-test-tvj-page-header-title]',
-      text: text()
-    },
-
-    button: {
-      scope: '[data-test-tvj-page-header-button]',
-      text: text(),
-    },
-
-    image: {
-      scope: '[data-test-tvj-page-header-image]',
-    },
-  },
-});
+export const PAGE_URL = '/travisci-vs-jenkins';
+export const HEADER_TITLE = '[data-test-tvj-page-header-title]';
+export const HEADER_BUTTON = '[data-test-tvj-page-header-button]';
+export const HEADER_IMAGE = '[data-test-tvj-page-header-image]';
 
 module('Acceptance | travis vs jenkins page', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 
   hooks.beforeEach(async function () {
-    await tvjPage.visit();
+    await visit(PAGE_URL);
   });
 
   test('page structure', async function (assert) {
-    assert.equal(currentURL(), tvjPageUrl);
+    assert.equal(currentURL(), PAGE_URL);
 
-    const { headerSection } = tvjPage;
-    const { title, button, image } = headerSection;
-
-    assert.ok(headerSection.isPresent);
-    assert.ok(title.isPresent);
-    assert.ok(button.isPresent);
-    assert.ok(image.isPresent);
+    assert.dom(HEADER_TITLE).exists();
+    assert.dom(HEADER_BUTTON).exists();
+    assert.dom(HEADER_IMAGE).exists();
 
     percySnapshot(assert);
   });

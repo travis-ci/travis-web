@@ -3,7 +3,6 @@ import { checkDictionary } from 'travis/utils/ui-kit/assertions';
 import prefix from 'travis/utils/ui-kit/prefix';
 import concat from 'travis/utils/ui-kit/concat';
 import { variantProp } from 'travis/utils/ui-kit/variant';
-import spacingMixin from 'travis/mixins/ui-kit/spacing';
 
 const COLORS = {
   BLUE_LIGHT: 'blue-light',
@@ -106,7 +105,7 @@ const VARIANT_PROPS = {
 };
 
 // Component definition
-export default Component.extend(spacingMixin, {
+export default Component.extend({
   tagName: '',
 
   // Public interface
@@ -120,6 +119,7 @@ export default Component.extend(spacingMixin, {
   transform: variantProp(VARIANT_PROPS, DEFAULT_TRANSFORM),
   weight: variantProp(VARIANT_PROPS, DEFAULT_WEIGHT),
 
+  display: variantProp(VARIANT_PROPS, null),
   margin: variantProp(VARIANT_PROPS, null),
   padding: variantProp(VARIANT_PROPS, null),
 
@@ -142,8 +142,6 @@ export default Component.extend(spacingMixin, {
     'trackingClass',
     'transformClass',
     'weightClass',
-    'marginClasses',
-    'paddingClasses',
   ),
 
   // Lifecycle
