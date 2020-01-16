@@ -263,6 +263,7 @@ Repo.reopenClass({
   },
 
   fetchBySlug(store, slug) {
+    // TODO handle provider prefix
     let adapter, modelClass, promise, repos;
     repos = store.peekAll('repo').filterBy('slug', slug);
     if (repos.get('length') > 0) {

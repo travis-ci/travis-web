@@ -45,7 +45,7 @@ Router.map(function () {
   this.route('profile', { path: '/profile/:login' });
   this.route('profile', { path: '/profile/:login/:section' });
 
-  this.route('repo', { path: '/:owner/:name' }, function () {
+  this.route('repo', { path: '/:provider/:owner/:name' }, function () {
     this.route('index', { path: '/' });
     this.route('branches', { path: '/branches', resetNamespace: true });
     this.route('build', { path: '/builds/:build_id', resetNamespace: true }, function () {
@@ -64,6 +64,10 @@ Router.map(function () {
       this.route('index', { path: '/' });
     });
   });
+
+  this.route('github-repo', { path: '/:owner/:name' });
+
+  // TODO add provider prefix for owner route too
   this.route('owner', { path: '/:owner', resetNamespace: true }, function () {
     this.route('repositories', { path: '/' });
   });
