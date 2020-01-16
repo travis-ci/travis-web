@@ -3,6 +3,7 @@ import TravisRoute from 'travis/routes/basic';
 import Repo from 'travis/models/repo';
 import ScrollResetMixin from 'travis/mixins/scroll-reset';
 import { inject as service } from '@ember/service';
+import { availableProviders, defaultVcsConfig } from 'travis/utils/vcs';
 
 export default TravisRoute.extend(ScrollResetMixin, {
   store: service(),
@@ -45,16 +46,29 @@ export default TravisRoute.extend(ScrollResetMixin, {
     // slugs are sometimes unknown ???
     const slug = getWithDefault(repo, 'slug', 'unknown/unknown');
     const [owner, name] = slug.split('/');
+    const provider = repo.vcsProvider.prefix;
 
-    return {
-      owner: owner,
-      name: name
-    };
+    return { provider, owner, name };
   },
 
-  model(params) {
-    const { name, owner } = params;
+  beforeModel(transition) {
+    const { params, queryParams } = transition.to;
+    let { provider, owner, name } = params;
+
+    if (provider && !availableProviders.includes(provider)) {
+      // If provider isn't one of the available providers,
+      // then transition targets to one of the repository internal routes,
+      // e.g. /travis-ci/travis-web/branches - it has the same signature (/:provider/:owner/:name)
+      // so we're adding prefix here and redirecting to the proper route
+      transition.abort();
+      let internalRouteName;
+      [internalRouteName, owner, name] = [name, provider, owner];
+      this.transitionTo(internalRouteName, defaultVcsConfig.urlPrefix, owner, name, { queryParams });
+    }
+  },
+
+  model({ provider, owner, name }) {
     const slug = `${owner}/${name}`;
-    return Repo.fetchBySlug(this.store, slug);
+    return Repo.fetchBySlug(this.store, slug, provider);
   },
 });
