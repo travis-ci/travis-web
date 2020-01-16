@@ -1013,7 +1013,6 @@
 
   .navigation-nested {
     background-color: white;
-    width: auto;
     margin: 31px 0 0;
     box-shadow: 0 -6px 0 #fff, 0 1px 6px rgba(0,0,0, .15);
     width: 100%;
@@ -1025,8 +1024,9 @@
       cursor: pointer;
       display: block;
       padding: 7px 10px;
-      text-align: left;
       width: 100%;
+      display: flex;
+      justify-content: space-between;
 
       &:hover {
         background-color: #EAEAEA;
@@ -1034,6 +1034,7 @@
     }
 
     ~ .auth-button {
+      width: 192px;
       cursor: default;
       padding-top: 10px;
       position: relative;
