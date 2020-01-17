@@ -187,19 +187,19 @@
                   <SvgImage @name={{vcs-icon 'GithubUser'}} @class="align-text-top fill-current w-5 h-5" />
               </button>
             </li>
-            {{#if this.multiVcs.enableAssemblaLogin}}
-              <li>
-                <button class="action" {{action "signIn" "assembla"}}>
-                  Sign in with Assembla
-                  <SvgImage @name={{vcs-icon 'AssemblaUser'}} @class="align-text-top fill-current w-5 h-5" />
-                </button>
-              </li>
-            {{/if}}
             {{#if this.multiVcs.enableBitbucketLogin}}
               <li>
                 <button class="action" {{action "signIn" "bitbucket"}}>
                   Sign in with Bitbucket
                   <SvgImage @name={{vcs-icon 'BitbucketUser'}} @class="align-text-top fill-current w-5 h-5" />
+                </button>
+              </li>
+            {{/if}}
+            {{#if this.multiVcs.enableAssemblaLogin}}
+              <li>
+                <button class="action" {{action "signIn" "assembla"}}>
+                  Sign in with Assembla
+                  <SvgImage @name={{vcs-icon 'AssemblaUser'}} @class="align-text-top fill-current w-5 h-5" />
                 </button>
               </li>
             {{/if}}
