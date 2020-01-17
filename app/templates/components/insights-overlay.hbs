@@ -17,7 +17,7 @@
     {{/if}}
   </p>
   {{! CTA }}
-  <MultiSigninButton />
+  <MultiSigninButton data-test-insights-overlay-link="" />
   {{#if this.canSync}}
     <ExternalLinkTo
       @href={{config-get "urls.gettingStarted"}}

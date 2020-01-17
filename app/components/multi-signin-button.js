@@ -3,17 +3,26 @@ import { inject as service } from '@ember/service';
 import { and, not } from '@ember/object/computed';
 
 export default Component.extend({
+  tagName: '',
+
   animation: service(),
   auth: service(),
   multiVcs: service(),
+  router: service(),
 
-  isNotSignedIn: not('auth.signedIn'),
+  isLinkToSignin: false,
   isOpen: false,
 
-  showVcsOptions: and('multiVcs.enabled', 'isOpen'),
+  isNotLinkToSignin: not('isLinkToSignin'),
+  isNotSignedIn: not('auth.signedIn'),
+  isOpenable: and('isNotLinkToSignin', 'multiVcs.enabled'),
+
+  showVcsOptions: and('isOpenable', 'isOpen'),
 
   clickMainButton() {
-    if (this.multiVcs.disabled) {
+    if (this.isLinkToSignin) {
+      this.router.transitionTo('signin');
+    } else if (this.multiVcs.disabled) {
       this.auth.signIn();
     }
   },
@@ -21,6 +30,9 @@ export default Component.extend({
     this.set('isOpen', false);
   },
   open() {
-    this.set('isOpen', this.multiVcs.enabled);
+    this.set('isOpen', this.isOpenable);
+  },
+  signInWith(provider) {
+    this.auth.signInWith(provider);
   },
 });
