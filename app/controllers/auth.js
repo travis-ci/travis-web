@@ -5,6 +5,7 @@ import { reads } from '@ember/object/computed';
 
 export default Controller.extend({
   auth: service(),
+  multiVcs: service(),
   router: service(),
   redirectUri: reads('model.redirectUri'),
 

@@ -26,16 +26,43 @@
           Please sign in to view your repositories.
         {{/if}}
       </h1>
-      <p>
+      <div class="mb-4">
         <button
           type="button"
           title="Sign into Travis CI"
-          class="content-button sign-in"
-          onclick={{action "signIn" target=this.auth}}
+          class="block content-button sign-in"
+          {{on 'click' (action this.auth.signIn 'github')}}
         >
           Sign in with GitHub
+          <SvgImage @name={{vcs-icon 'GithubUser'}} @class="fill-current align-top ml-1 w-5 h-5" />
         </button>
-      </p>
+      </div>
+      {{#if this.multiVcs.enableBitbucketLogin}}
+        <div class="mb-4">
+          <button
+            type="button"
+            title="Sign into Travis CI"
+            class="block content-button sign-in"
+            {{on 'click' (action this.auth.signIn 'bitbucket')}}
+          >
+            Sign in with Bitbucket
+            <SvgImage @name={{vcs-icon 'BitbucketUser'}} @class="fill-current align-top ml-1 w-5 h-5" />
+          </button>
+        </div>
+      {{/if}}
+      {{#if this.multiVcs.enableAssemblaLogin}}
+        <div class="mb-4">
+          <button
+            type="button"
+            title="Sign into Travis CI"
+            class="block content-button sign-in"
+            {{on 'click' (action this.auth.signIn 'assembla')}}
+          >
+            Sign in with Assembla
+            <SvgImage @name={{vcs-icon 'AssemblaUser'}} @class="fill-current align-top ml-1 w-5 h-5" />
+          </button>
+        </div>
+      {{/if}}
     {{/if}}
     {{#if this.auth.signingIn}}
       <h2 class="content-subtitle">
