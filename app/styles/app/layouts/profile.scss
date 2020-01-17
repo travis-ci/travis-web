@@ -317,11 +317,10 @@ $profile-breakpoint: 600px;
   .label {
     margin-right: 0.5em;
     align-self: center;
-    flex: 1;
   }
 
   .token-field {
-    flex: 4;
+    flex-grow: 1;
 
     background-color: $pebble-grey;
     border-radius: 2px;
