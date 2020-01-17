@@ -26,6 +26,6 @@ module('Acceptance | auth/call gtm', function (hooks) {
 
   test('gtm call is performed once user signs up', async function (assert) {
     await visit('/');
-    assert.ok(callCounter === 1);
+    assert.ok(callCounter === 2); // two calls: first one without auth providers, second one with providers
   });
 });
