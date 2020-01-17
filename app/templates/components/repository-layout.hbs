@@ -5,7 +5,7 @@
         <RepositoryVisibilityIcon @repository={{this.repo}} />
       </div>
       <h1 data-test-repo-header-title class="inline-block vertical-align">
-        <LinkTo @route="owner" @model={{this.repo.owner.login}}>
+        <LinkTo @route="owner" @models={{array this.repo.provider this.repo.owner.login}}>
           {{this.repo.owner.login}}
         </LinkTo>
         /

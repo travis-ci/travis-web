@@ -65,12 +65,12 @@ Router.map(function () {
     });
   });
 
-  this.route('github-repo', { path: '/:owner/:name' });
-
   // TODO add provider prefix for owner route too
-  this.route('owner', { path: '/:owner', resetNamespace: true }, function () {
+  this.route('owner', { path: '/:provider/:owner', resetNamespace: true }, function () {
     this.route('repositories', { path: '/' });
   });
+
+  this.route('provider', { path: '/:provider' });
 
   this.route('error404', { path: '/404' });
   this.route('page-not-found', { path: '/*wildcard' });
