@@ -250,6 +250,9 @@ module.exports = {
       stroke: {
         transparent: 'transparent'
       },
+      inset: {
+        full: '100%',
+      },
     }
   },
   variants: {},

@@ -1,0 +1,35 @@
+{{#if this.isNotSignedIn}}
+  <div
+    class="multi-signin relative"
+    {{on 'mouseenter' (action this.open)}}
+    {{on 'mouseleave' (action this.close)}}
+    data-test-multi-signin-button
+  >
+    <div
+      class="hero-button"
+      {{on 'click' (action this.clickMainButton)}}
+    >
+      {{#if this.auth.signingIn}}
+        Signing in
+        <LoadingIndicator @white={{true}} @inline={{true}} />
+      {{else}}
+        Sign in
+      {{/if}}
+    </div>
+    <AnimatedIf
+      @predicate={{this.showVcsOptions}}
+      @use={{this.animation.transitions.fade}}
+      @duration={{this.animation.durations.quick}}
+    >
+      <div class="vcs-options absolute top-full">
+        <div>Github</div>
+        {{#if this.multiVcs.enableBitbucketLogin}}
+          <div>Bitbucket</div>
+        {{/if}}
+        {{#if this.multiVcs.enableAssemblaLogin}}
+          <div>Assembla</div>
+        {{/if}}
+      </div>
+    </AnimatedIf>
+  </div>
+{{/if}}
