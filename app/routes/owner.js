@@ -1,5 +1,6 @@
 import TravisRoute from 'travis/routes/basic';
 import { inject as service } from '@ember/service';
+import { vcsConfigByUrlPrefix, defaultVcsConfig } from 'travis/utils/vcs';
 
 export default TravisRoute.extend({
   auth: service(),
@@ -12,9 +13,20 @@ export default TravisRoute.extend({
     return name;
   },
 
-  model(params) {
-    const { owner } = params;
-    return this.store.queryRecord('owner', { login: owner });
+  beforeModel(transition) {
+    const { queryParams } = transition.to;
+    let { provider = '', owner = '' } = this.paramsFor('owner');
+
+    if (!vcsConfigByUrlPrefix(provider)) {
+      transition.abort();
+      let internalRouteName;
+      [internalRouteName, owner] = [owner, provider];
+      this.transitionTo(internalRouteName.camelize(), defaultVcsConfig.urlPrefix, owner, { queryParams });
+    }
+  },
+
+  model({ provider, owner }) {
+    return this.store.queryRecord('owner', { provider, login: owner });
   },
 
   actions: {

@@ -16,7 +16,7 @@
         <StatusIcon @status={{this.repo.defaultBranch.lastBuild.state}} />
         <LinkTo
           @route="repo"
-          @models={{array this.repo.vcsProvider.urlPrefix this.ownerName this.repoName}}
+          @models={{array this.repo.provider this.ownerName this.repoName}}
           class="label-align"
         >
           <span class="repo-title-text">
@@ -35,7 +35,7 @@
           <LinkTo
             @route="build"
             @models={{array
-              this.repo.owner.vcsProvider.urlPrefix
+              this.repo.provider
               this.ownerName
               this.repoName
               this.repo.defaultBranch.lastBuild.id
@@ -61,7 +61,7 @@
           <LinkTo
             @route="build"
             @models={{array
-              this.repo.owner.vcsProvider.urlPrefix
+              this.repo.provider
               this.ownerName
               this.repoName
               this.repo.defaultBranch.lastBuild.id
