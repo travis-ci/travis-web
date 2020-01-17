@@ -26,7 +26,7 @@
       Sign up for the beta
     </button>
   {{else if this.showSignInButton}}
-    <MultiSigninButton />
+    <MultiSigninButton @isLinkToSignin={{true}} />
   {{/if}}
   {{#if this.helperText}}
     <p>
