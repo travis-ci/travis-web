@@ -54,7 +54,7 @@
     "ember-cli-sri": "^2.1.1",
     "ember-cli-test-loader": "^2.1.0",
     "ember-cli-uglify": "^3.0.0",
-    "ember-composable-helpers": "^2.1.0",
+    "ember-composable-helpers": "^3.1.0",
     "ember-concurrency": "^1.0.0",
     "ember-concurrency-scroll": "^1.0.0",
     "ember-data": "~3.12.2",
