@@ -3,9 +3,11 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Integration | Component | branch row', function (hooks) {
   setupRenderingTest(hooks);
+  setupMirage(hooks);
 
   test('it renders data correctly', async function (assert) {
     const branch = EmberObject.create({

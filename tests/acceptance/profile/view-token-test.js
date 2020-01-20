@@ -6,12 +6,14 @@ import signInUser from 'travis/tests/helpers/sign-in-user';
 import {
   triggerCopySuccess
 } from 'ember-cli-clipboard/test-support';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | profile/view token', function (hooks) {
   setupApplicationTest(hooks);
+  setupMirage(hooks);
 
   hooks.beforeEach(function () {
-    const currentUser = server.create('user', {
+    const currentUser = this.server.create('user', {
       name: 'User Name',
       login: 'user-login',
     });
@@ -19,7 +21,7 @@ module('Acceptance | profile/view token', function (hooks) {
     signInUser(currentUser);
 
     // create organization
-    server.create('organization', {
+    this.server.create('organization', {
       name: 'Org Name',
       login: 'org-login',
     });
@@ -29,7 +31,8 @@ module('Acceptance | profile/view token', function (hooks) {
     await profilePage.visit();
     await profilePage.settings.visit();
 
-    assert.equal(profilePage.token.obfuscatedCharacters, '••••••••••••••••••••', 'expected token to be obfuscated by default');
+    assert.equal(profilePage.token.obfuscatedCharacters[0].text, '••••••••••••••••••••', 'expected token to be obfuscated by default');
+    assert.equal(profilePage.token.obfuscatedCharacters[1].text, '••••••••••••••••••••', 'expected asset token to be obfuscated by default');
 
     await profilePage.token.show();
 
@@ -40,7 +43,8 @@ module('Acceptance | profile/view token', function (hooks) {
     await profilePage.visit();
     await profilePage.settings.visit();
 
-    assert.equal(profilePage.token.obfuscatedCharacters, '••••••••••••••••••••', 'expected token to be obfuscated by default');
+    assert.equal(profilePage.token.obfuscatedCharacters[0].text, '••••••••••••••••••••', 'expected token to be obfuscated by default');
+    assert.equal(profilePage.token.obfuscatedCharacters[1].text, '••••••••••••••••••••', 'expected asset token to be obfuscated by default');
 
     triggerCopySuccess();
 

@@ -29,11 +29,53 @@ export default Service.extend({
     return !!this.getItem('travis.auth.become');
   },
 
+  get billingStep() {
+    return +this.getItem('travis.billing_step');
+  },
+
+  set billingStep(value) {
+    this.setItem('travis.billing_step', +value);
+  },
+
+  get billingInfo() {
+    return this.parseWithDefault('travis.billing_info', {});
+  },
+
+  set billingInfo(value) {
+    this.setItem('travis.billing_info', JSON.stringify(value));
+  },
+
+  get billingPlan() {
+    return this.parseWithDefault('travis.billing_plan', {});
+  },
+
+  set billingPlan(value) {
+    this.setItem('travis.billing_plan', JSON.stringify(value));
+  },
+
+  parseWithDefault(key, defaultValue) {
+    try {
+      return JSON.parse(this.getItem(key)) || defaultValue;
+    } catch (e) {
+      return defaultValue;
+    }
+  },
+
   clearAuthData() {
     this.removeItem('travis.token');
     this.removeItem('travis.user');
     this.removeItem('travis.auth.updatedAt');
     this.removeItem('travis.auth.become');
+  },
+
+  clearPreferencesData() {
+    this.removeItem('travis.features');
+  },
+
+  clearBillingData() {
+    this.storage.removeItem('travis.billing_step');
+    this.storage.removeItem('travis.billing_plan');
+    this.storage.removeItem('travis.billing_info');
   },
 
   // method proxies
@@ -53,5 +95,4 @@ export default Service.extend({
   clear() {
     return this.storage.clear();
   }
-
 });

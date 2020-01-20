@@ -1,7 +1,9 @@
 import Service, { inject as service } from '@ember/service';
+import config from 'travis/config/environment';
 
 export default Service.extend({
   ajax: service(),
+  auth: service(),
 
   get(url, options = {}) {
     return this.request(url, 'GET', options);
@@ -24,10 +26,33 @@ export default Service.extend({
   },
 
   request(url, method = 'GET', options = {}) {
-    if (options.travisApiVersion === undefined) {
-      options.travisApiVersion = '3';
-    }
+    options.host = config.apiEndpoint || '';
+
+    options.headers = this.setupHeaders(options);
 
     return this.ajax.request(url, method, options);
-  }
+  },
+
+
+  setupHeaders(options = {}) {
+    const { headers = {} } = options;
+    const { token } = this.auth;
+
+    // Release
+    if (config.release) {
+      headers['X-Client-Release'] = config.release;
+    }
+
+    // Authorization
+    if (token) {
+      headers['Authorization'] = `token ${token}`;
+    }
+
+    // Travis-API-Version
+    if (options.travisApiVersion !== null) {
+      headers['Travis-API-Version'] = options.travisApiVersion || '3';
+    }
+
+    return headers;
+  },
 });

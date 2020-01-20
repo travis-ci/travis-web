@@ -24,6 +24,7 @@ export default Owner.extend({
   type: 'user',
 
   fullName: or('name', 'login'),
+  applyFilterRepos: false,
 
   gravatarUrl: computed('gravatarId', function () {
     return `https//www.gravatar.com/avatar/${this.gravatarId}?s=48&d=mm`;
@@ -35,7 +36,7 @@ export default Owner.extend({
   },
 
   _rawPermissions: computed(function () {
-    return this.ajax.request('/users/permissions');
+    return this.api.get('/users/permissions', { travisApiVersion: null });
   }),
 
   permissions: computed('_rawPermissions', function () {
@@ -103,7 +104,9 @@ export default Owner.extend({
     }
   },
 
-  sync() {
+  sync(isOrganization) {
+    this.set('isSyncing', true);
+    this.set('applyFilterRepos', !isOrganization);
     return this.api
       .post(`/user/${this.id}/sync`)
       .then(() => this.poll());
@@ -119,7 +122,9 @@ export default Owner.extend({
       } else {
         run(() => {
           Travis.trigger('user:synced', data);
+          this.set('isSyncing', false);
           this.reload();
+          this.applyReposFilter();
         });
       }
     });
@@ -133,6 +138,12 @@ export default Owner.extend({
 
   reload(options = {}) {
     return this.store.queryRecord('user', Object.assign({}, options, { current: true }));
-  }
+  },
 
+  applyReposFilter() {
+    if (this.applyFilterRepos) {
+      const filterTerm = this.get('githubAppsRepositories.filterTerm');
+      return this.githubAppsRepositories.applyFilter(filterTerm || '');
+    }
+  },
 });

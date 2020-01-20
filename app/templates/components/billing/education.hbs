@@ -1,6 +1,6 @@
 <section class="billing-subscription">
   <div class="billing-subscription-section">
-    <h3 class='plan-overview__header'> Overview </h3>
+    <h3 class='plan-overview__header'>Overview</h3>
     <div class='plan'>
       <BillingSummaryStatus 
         @subscription={{this.subscription}}
@@ -13,6 +13,5 @@
 <hr />
 <Billing::Process 
   @account={{this.account}} 
-  @plans={{this.plans}} 
   @newSubscription={{this.newSubscription}}
 />

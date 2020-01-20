@@ -4,6 +4,7 @@ import config from 'travis/config/environment';
 
 export default Service.extend({
   store: service(),
+  jobState: service(),
   liveUpdatesRecordFetcher: service(),
 
   receive(event, data) {
@@ -26,6 +27,16 @@ export default Service.extend({
 
     if (name === 'job' && data.job && data.job.commit) {
       store.push(store.normalize('commit', data.job.commit));
+    }
+
+    if (name === 'job' && data.job) {
+      store.push(store.normalize('job', data.job));
+    }
+
+    if (name === 'job' && data.job && data.job.build_id) {
+      data.job.job_id_number = data.job.number;
+      store.push(store.normalize('job', data.job));
+      this.jobState.fetchJobs.perform({ usePeek: true });
     }
 
     if (name === 'build' && data.build && data.build.commit) {

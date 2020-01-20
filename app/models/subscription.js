@@ -1,6 +1,7 @@
 import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
 import { computed } from '@ember/object';
-import { and, equal, or } from '@ember/object/computed';
+import { typeOf } from '@ember/utils';
+import { and, equal, or, reads } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
 import config from 'travis/config/environment';
@@ -43,6 +44,42 @@ export default Model.extend({
   managedSubscription: or('isStripe', 'isGithub'),
   isResubscribable: and('isStripe', 'isNotSubscribed'),
   isGithubResubscribable: and('isGithub', 'isNotSubscribed'),
+
+  priceInCents: reads('plan.price'),
+  validateCouponResult: reads('validateCoupon.last.value'),
+
+  planPrice: computed('priceInCents', function () {
+    return this.priceInCents && Math.floor(this.priceInCents / 100);
+  }),
+
+  discountByAmount: computed('validateCouponResult.amountOff', 'planPrice', function () {
+    const { amountOff } = this.validateCouponResult || {};
+    return amountOff && this.planPrice && Math.max(0, this.planPrice - Math.floor(amountOff / 100));
+  }),
+
+  discountByPercentage: computed('validateCouponResult.percentOff', 'planPrice', function () {
+    const { percentOff } = this.validateCouponResult || {};
+    if (percentOff && this.planPrice) {
+      const discountPrice = Math.max(0, this.planPrice - (this.planPrice * percentOff) / 100);
+      return +discountPrice.toFixed(2);
+    }
+  }),
+
+  totalPrice: computed('discountByAmount', 'discountByPercentage', 'planPrice', function () {
+    if (typeOf(this.discountByAmount) === 'number' && this.discountByAmount >= 0) {
+      return this.discountByAmount;
+    } else if (typeOf(this.discountByPercentage) === 'number' && this.discountByPercentage >= 0) {
+      return this.discountByPercentage;
+    } else {
+      return this.planPrice;
+    }
+  }),
+
+  validateCoupon: task(function* (couponId) {
+    return yield this.store.findRecord('coupon', couponId, {
+      reload: true,
+    });
+  }).drop(),
 
   billingUrl: computed('owner.{type,login}', 'isGithub', 'isResubscribable', function () {
     let type = this.get('owner.type');

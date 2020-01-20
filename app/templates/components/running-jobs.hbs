@@ -1,4 +1,4 @@
-{{#if this.jobs.isLoaded}}
+{{#if this.jobsLoaded}}
   {{#each this.runningJobs as |job|}}
     <div
       data-test-sidebar-running-job
@@ -17,7 +17,7 @@
         {{#if job.repo.slug}}
           <LinkTo @route="job" @models={{array job.repo job}}>
             <span data-test-running-job-title class="label-align">
-              {{job.number}}
+              {{job.jobNumber}}
             </span>
           </LinkTo>
         {{/if}}

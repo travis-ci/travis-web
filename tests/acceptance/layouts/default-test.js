@@ -3,9 +3,11 @@ import { setupApplicationTest } from 'travis/tests/helpers/setup-application-tes
 import defaultHeader from 'travis/tests/pages/header/default';
 import defaultLayout from 'travis/tests/pages/layouts/default';
 import signInUser from 'travis/tests/helpers/sign-in-user';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | layouts/default', function (hooks) {
   setupApplicationTest(hooks);
+  setupMirage(hooks);
 
   test('header layout when unauthenticated', async function (assert) {
     await defaultHeader.visit();
@@ -21,7 +23,7 @@ module('Acceptance | layouts/default', function (hooks) {
   });
 
   test('header layout when authenticated', async function (assert) {
-    const currentUser = server.create('user');
+    const currentUser = this.server.create('user');
     signInUser(currentUser);
 
     await defaultHeader.visit();

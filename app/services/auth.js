@@ -34,13 +34,13 @@ const USER_FIELDS = ['id', 'login', 'token', 'correct_scopes', 'channels'];
 const TOKEN_EXPIRED_MSG = "You've been signed out, because your access token has expired.";
 
 export default Service.extend({
+  api: service(),
   router: service(),
   flashes: service(),
   intercom: service(),
   store: service(),
   localStorage: service('storage'),
   sessionStorage: service(),
-  ajax: service(),
   features: service(),
   metrics: service(),
 
@@ -71,8 +71,12 @@ export default Service.extend({
   redirectUrl: null,
 
   signOut(runTeardown = true) {
-    this.localStorage.clearAuthData();
-    this.sessionStorage.clearAuthData();
+    if (this.signedIn) this.api.get('/logout');
+
+    [this.localStorage, this.sessionStorage].forEach(storage => {
+      storage.clearAuthData();
+      storage.clearPreferencesData();
+    });
 
     this.setProperties({
       state: STATE.SIGNED_OUT,
@@ -177,13 +181,19 @@ export default Service.extend({
 
   reportNewUser() {
     const { currentUser, metrics } = this;
-    const { login, recentlySignedUp } = currentUser;
+    const { login, recentlySignedUp, vcsProvider } = currentUser;
     const signupUsers = this.storage.signupUsers || [];
 
     if (recentlySignedUp && recentlySignedUp === true && !signupUsers.includes(login)) {
       metrics.trackEvent({
         event: 'first_authentication'
       });
+      if (vcsProvider) {
+        metrics.trackEvent({
+          event: 'first_authentication_with_provider',
+          authProvider: vcsProvider.name
+        });
+      }
       this.storage.signupUsers = signupUsers.concat([login]);
     }
   },

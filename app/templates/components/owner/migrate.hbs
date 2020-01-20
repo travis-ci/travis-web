@@ -10,14 +10,7 @@
         The first step is activating your repositories on GitHub Apps to later migrate them here.
       </p>
       <div class="migrate__activate">
-        <button
-          class="button--blue"
-          data-test-activate-button
-          onclick={{action "activateAll"}}
-        >
-          <SvgImage @name={{vcs-icon this.owner.vcsType}} @class="migrate__github-icon" />
-          Activate all repositories using GitHub Apps
-        </button>
+        <ButtonActivateAllGithub />
       </div>
       <p class="migrate__activate-note" data-test-manual-note>
         *Keep in mind that you can also select the specific repositories you’d like to migrate.
@@ -155,20 +148,16 @@
             {{/if}}
           </div>
         </RepositoryFilter>
-        {{#if this.isShowingRepositoryMigrationModal}}
-          <ModalDialog
+        <Modal
+          @isVisible={{this.isShowingRepositoryMigrationModal}}
+          @onClose={{action "closeMigrateModal"}}
+        >
+          <RepositoryMigrationModal
+            data-test-repository-migration-modal="true"
+            @repositories={{this.selectedRepositories}}
             @onClose={{action "closeMigrateModal"}}
-            @onClickOverlay={{action "closeMigrateModal"}}
-            @targetAttachment="center"
-            @translucentOverlay={{true}}
-          >
-            <RepositoryMigrationModal
-              data-test-repository-migration-modal="true"
-              @repositories={{this.selectedRepositories}}
-              @onClose={{action "closeMigrateModal"}}
-            />
-          </ModalDialog>
-        {{/if}}
+          />
+        </Modal>
       </div>
     {{/if}}
 </div>

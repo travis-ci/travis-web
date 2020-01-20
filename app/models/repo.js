@@ -95,6 +95,20 @@ const Repo = VcsEntity.extend({
     }, (v) => v.get('repo.id') === id);
   }),
 
+  settings: computed('id', 'fetchSettings.lastSuccessful.value', function () {
+    const { value } = this.fetchSettings.lastSuccessful || {};
+    if (!value) this.fetchSettings.perform();
+    return value;
+  }),
+
+  fetchSettings: task(function* () {
+    if (!this.auth.signedIn) return {};
+    try {
+      const response = yield this.api.get(`/repo/${this.id}/settings`);
+      return this._convertV3SettingsToV2(response.settings);
+    } catch (error) {}
+  }).drop(),
+
   _buildRepoMatches(build, id) {
     // TODO: I don't understand why we need to compare string id's here
     return `${build.get('repo.id')}` === `${id}`;
@@ -162,12 +176,6 @@ const Repo = VcsEntity.extend({
     if (currentBuild) {
       return currentBuild.updateTimes();
     }
-  },
-
-  fetchSettings() {
-    const url = `/repo/${this.id}/settings`;
-    return this.api.get(url).
-      then(data => this._convertV3SettingsToV2(data['settings']));
   },
 
   startMigration() {

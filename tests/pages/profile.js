@@ -129,7 +129,7 @@ export default create({
   token: {
     show: clickable('.token-actions button.show-token'),
     value: text('.auth-token'),
-    obfuscatedCharacters: text('.obfuscated-chars'),
+    obfuscatedCharacters: collection('.obfuscated-chars'),
     tokenCopiedText: text('.token-copied-text'),
   },
 
@@ -352,6 +352,25 @@ export default create({
       scope: '[data-test-billing-info-title]',
     },
 
+
+    billingCouponForm: {
+      scope: '[data-test-coupon-form]',
+      isPresent: isPresent(),
+      fillIn: fillable(''),
+
+      submitCoupon: {
+        scope: '[data-test-coupon-button]'
+      },
+
+      validCoupon: {
+        scope: '[data-test-valid-coupon]'
+      },
+
+      invalidCoupon: {
+        scope: '[data-test-invalid-coupon]'
+      }
+    },
+
     billingForm: {
       scope: '[data-test-billing-form]',
       isPresent: isPresent(),
@@ -558,6 +577,7 @@ export default create({
 
     trial: {
       scope: '.billing',
+      bannerInformation: text('[data-test-help-text]'),
       overviewHeading: text('[data-test-overview-heading]'),
       buildsRunningOutBanner: text('[data-test-trial-running-out]'),
       buildsRanOutBanner: text('[data-test-trial-ran-out]'),
@@ -596,7 +616,7 @@ export default create({
     billingSubscription: {
       greyStatus: '[data-test-grey-status]',
       activeStatus: '[data-test-active-status]',
-      canceledStatus: '[data-test-canceled-status]',
+      canceledStatus: '[data-test-grey-status]',
       expiredStatus: '[data-test-expired-status]',
       manualStatus: '[data-test-manual-status]'
     },

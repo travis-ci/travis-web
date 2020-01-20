@@ -4,10 +4,10 @@
       summary
     </p>
     <p class='selected-plan__details--name' data-test-selected-plan-name>
-      {{selectedPlan.name}} plan
+      {{this.selectedPlan.name}} plan
     </p>
     <p class='selected-plan__details--jobs' data-test-selected-plan-jobs>
-      {{pluralize selectedPlan.builds 'concurrent job'}}
+      {{pluralize this.selectedPlan.builds 'concurrent job'}}
     </p>
     <button onClick={{action this.goToFirstStep}} class='mt-3 button--white button--hover' data-test-change-selected-plan>
       Change plan
@@ -19,7 +19,7 @@
         Total:
       </p>
       <p class='selected-plan__price--large' data-test-selected-plan-price>
-        {{format-currency selectedPlan.price floor='true'}}
+        ${{this.price}}
       </p>
       <span data-test-selected-plan-period='true' class='selected-plan__period'>
         {{if this.selectedPlan.annual '/year' '/month'}}

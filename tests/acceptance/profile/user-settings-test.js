@@ -1,4 +1,4 @@
-import { currentURL, visit } from '@ember/test-helpers';
+import { currentURL, visit, waitFor } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import profilePage from 'travis/tests/pages/profile';
@@ -7,16 +7,18 @@ import topPage from 'travis/tests/pages/top';
 import { enableFeature } from 'ember-feature-flags/test-support';
 import { INSIGHTS_VIS_OPTIONS } from 'travis/controllers/account/settings';
 import { percySnapshot } from 'ember-percy';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | user settings', function (hooks) {
   setupApplicationTest(hooks);
+  setupMirage(hooks);
 
   hooks.beforeEach(function () {
-    const user = server.create('user');
+    const user = this.server.create('user');
     signInUser(user);
     this.user = user;
 
-    server.create('organization', {
+    this.server.create('organization', {
       name: 'Org Name',
       type: 'organization',
       login: 'org-login',
@@ -25,17 +27,17 @@ module('Acceptance | user settings', function (hooks) {
       }
     });
 
-    server.loadFixtures('preferences');
+    this.server.loadFixtures('preferences');
   });
 
   test('changing feature flags', async function (assert) {
-    server.create('feature', {
+    this.server.create('feature', {
       name: 'jorts',
       description: 'Jorts!',
       enabled: true
     });
 
-    const jantsFeature = server.create('feature', {
+    const jantsFeature = this.server.create('feature', {
       name: 'jants',
       description: 'Jants?',
       enabled: false
@@ -62,7 +64,7 @@ module('Acceptance | user settings', function (hooks) {
 
     let patchRequestBody;
 
-    server.patch(`/user/${this.user.id}/beta_feature/${jantsFeature.id}`, function (schema, request) {
+    this.server.patch(`/user/${this.user.id}/beta_feature/${jantsFeature.id}`, function (schema, request) {
       patchRequestBody = JSON.parse(request.requestBody);
       const feature = schema.features.find(jantsFeature.id);
       feature.enabled = true;
@@ -106,7 +108,7 @@ module('Acceptance | user settings', function (hooks) {
   test('Email settings can be toggled', async function (assert) {
     const AMOUNT_OF_REPOS = 3;
 
-    server.createList('repository', AMOUNT_OF_REPOS, {
+    this.server.createList('repository', AMOUNT_OF_REPOS, {
       email_subscribed: false
     });
 
@@ -128,7 +130,7 @@ module('Acceptance | user settings', function (hooks) {
   });
 
   test('User can resubscribe to repository', async function (assert) {
-    server.create('repository', { email_subscribed: false });
+    this.server.create('repository', { email_subscribed: false });
 
     await profilePage.visit({ username: 'testuser' });
     await profilePage.settings.visit();
@@ -197,28 +199,34 @@ module('Acceptance | user settings', function (hooks) {
 
     // Click save, modal should show
     await submit.click();
+    await waitFor(insightsSettingsModal.scope);
     assert.ok(insightsSettingsModal.isVisible);
     assert.equal(insightsSettingsModal.title, 'Restrict visibility of your private build insights');
     assert.equal(insightsSettingsModal.description, expectedPrivate.modalText);
 
     // Close modal with close button
     await insightsSettingsModal.closeButton.click();
+    await waitFor(insightsSettingsModal.scope, { count: 0 });
     assert.notOk(insightsSettingsModal.isVisible);
 
     // Reopen modal
     await submit.click();
+    await waitFor(insightsSettingsModal.scope);
     assert.ok(insightsSettingsModal.isVisible);
 
     // Close modal with cancel button
     await insightsSettingsModal.cancelButton.click();
+    await waitFor(insightsSettingsModal.scope, { count: 0 });
     assert.notOk(insightsSettingsModal.isVisible);
 
     // Reopen modal
     await submit.click();
+    await waitFor(insightsSettingsModal.scope);
     assert.ok(insightsSettingsModal.isVisible);
 
     // Confirm save
     await insightsSettingsModal.confirmButton.click();
+    await waitFor(insightsSettingsModal.scope, { count: 0 });
     assert.notOk(insightsSettingsModal.isVisible);
     assert.equal(topPage.flashMessage.text, 'Your private build insights are now private.');
   });
