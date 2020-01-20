@@ -51,7 +51,7 @@
   {{#if this.accessSettingsUrl}}
     <section class="profile-additional no-divider">
       <h2>
-        Missing an {{vcs-vocab this.model.vcsType 'organization'}}?
+        Missing {{indefinite-article (vcs-vocab this.model.vcsType 'organization')}} {{vcs-vocab this.model.vcsType 'organization'}}?
       </h2>
       <ExternalLinkTo
         @href={{this.accessSettingsUrl}}
