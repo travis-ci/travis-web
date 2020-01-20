@@ -163,7 +163,7 @@ module.exports = function (environment) {
     'enable-bitbucket-login': false,
   };
 
-  const { TRAVIS_PRO, TRAVIS_ENTERPRISE, SOURCE_ENDPOINT } = process.env;
+  const { TRAVIS_PRO, TRAVIS_ENTERPRISE, SOURCE_ENDPOINT, ENABLED_DEV_FLAGS } = process.env;
 
   if (TRAVIS_PRO) {
     ENV.featureFlags['pro-version'] = true;
@@ -189,6 +189,17 @@ module.exports = function (environment) {
       publishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
       lazyLoad: true,
     };
+  }
+
+  if (ENABLED_DEV_FLAGS) {
+    try {
+      const devFlags = ENABLED_DEV_FLAGS.split(',');
+      if (devFlags.length) {
+        devFlags.forEach(flag => {
+          ENV.featureFlags[`dev-${flag}`] = true;
+        });
+      }
+    } catch (e) {}
   }
 
   ENV.sentry = {
