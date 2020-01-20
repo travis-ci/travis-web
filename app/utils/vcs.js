@@ -7,28 +7,10 @@ const {
   sourceEndpoint
 } = config;
 
-const vcsTypes = {
-  AssemblaOrganization: 'assembla',
-  AssemblaRepository: 'assembla',
-  AssemblaUser: 'assembla',
-  BitbucketOrganization: 'bitbucket',
-  BitbucketRepository: 'bitbucket',
-  BitbucketUser: 'bitbucket',
-  GithubOrganization: 'github',
-  GithubRepository: 'github',
-  GithubUser: 'github',
-};
+export const defaultVcsConfig = Object.values(providers).find(config => config.isDefault);
 
-const vcsId = (vcsType) => {
-  if (!vcsType) {
-    return 'github';
-  }
-  assert(`Invalid VCS Type "${vcsType}"`, vcsTypes[vcsType]);
-  return vcsTypes[vcsType];
-};
-
-const vcsConfig = (vcsType) => (
-  providers[vcsId(vcsType)]
+export const vcsConfig = (vcsType) => (
+  Object.values(providers).find(provider => provider.vcsTypes.includes(vcsType)) || defaultVcsConfig
 );
 
 const replaceParams = (template, params) => (
