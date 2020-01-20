@@ -33,6 +33,7 @@ module.exports = function (environment) {
 
     // defaults for running travis-web
     apiEndpoint: 'https://api.travis-ci.org',
+
     pusher: {
       key: '5df8ac576dcccf4fd076',
       host: 'ws.pusherapp.com',
@@ -87,7 +88,6 @@ module.exports = function (environment) {
       syncingPolling: 3000,
       githubAppsInstallationPolling: 4000,
     },
-    githubOrgsOauthAccessSettingsUrl: 'https://github.com/settings/connections/applications/f244293c729d5066cf27',
     apiTraceEndpoint: 'https://papertrailapp.com/systems/travis-org-api-production/events?q=program%3Aapp%2Fweb%20log-tracing%20',
     ajaxPolling: false,
     logLimit: 100000,
@@ -160,7 +160,7 @@ module.exports = function (environment) {
     'beta-features': true,
     'github-apps': false,
     'enable-assembla-login': false,
-    'enable-bitbucket-login': false,
+    'enable-bitbucket-login': true,
   };
 
   const { TRAVIS_PRO, TRAVIS_ENTERPRISE, SOURCE_ENDPOINT } = process.env;
@@ -225,22 +225,10 @@ module.exports = function (environment) {
       }
     }
 
-    if (process.env.API_ENDPOINT) {
-      ENV.apiEndpoint = process.env.API_ENDPOINT;
-
-      if (ENV.apiEndpoint === 'https://api-staging.travis-ci.org') {
-        ENV.pusher.key = 'dd3f11c013317df48b50';
-      }
-
-      if (ENV.apiEndpoint === 'https://api-staging.travis-ci.com') {
-        ENV.pusher.key = '87d0723b25c51e36def8';
-        ENV.billingEndpoint = 'https://staging.travis-ci.com';
-      }
-    }
-
-    if (process.env.BILLING_ENDPOINT) {
-      ENV.billingEndpoint = process.env.BILLING_ENDPOINT;
-    }
+    // TEMPORARY OVERWRITE
+    ENV.apiEndpoint = 'https://api-staging.travis-ci.com';
+    ENV.pusher.key = '87d0723b25c51e36def8';
+    ENV.billingEndpoint = 'https://staging.travis-ci.com';
 
     if (process.env.PUBLIC_MODE == 'false') {
       ENV.publicMode = false;

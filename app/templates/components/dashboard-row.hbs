@@ -20,8 +20,10 @@
           @route="owner"
           @models={{array this.repo.provider this.repo.owner.login}}
           @title={{this.repo.owner.login}}
+          class="repo-dashboard"
         >
           {{this.repo.owner.login}}
+          <SvgImage @name={{vcs-icon this.repo.vcsType}} />
         </LinkTo>
       </h2>
       <h1 class="row-content">

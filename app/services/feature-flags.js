@@ -22,8 +22,9 @@ export default Service.extend({
   },
 
   _setEnableBitbucketLogin() {
-    const enableBitbucketLogin = window.localStorage['enableBitbucketLogin'] == 'true';
-    enableBitbucketLogin ? this.features.enable('enable-bitbucket-login') : this.features.disable('enable-bitbucket-login');
+    const { enableBitbucketLogin } = window.localStorage;
+    if (enableBitbucketLogin === 'true') this.features.enable('enable-bitbucket-login');
+    if (enableBitbucketLogin === 'false') this.features.disable('enable-bitbucket-login');
   },
 
   _setFlagState(flag) {

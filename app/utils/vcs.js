@@ -23,18 +23,19 @@ const replaceParams = (template, params) => (
     .reduce((url, key) => url.replace(`:${key}`, params[key]), template)
 );
 
-const templateParams = (template) => (
-  template
-    .match(/:[a-z]+/g)
-    .map((param) => param.slice(1))
-);
+const templateParams = (template) => {
+  const params = template.match(/:[a-z]+/g);
+  return params ? params.map((param) => param.slice(1)) : [];
+};
 
 const paramsValid = (template, params) => (
-  arrayEqual(Object.keys(params), templateParams(template))
+  arrayContainsArray(Object.keys(params), templateParams(template))
 );
 
-const arrayEqual = (array1, array2) => (
-  array1.sort().toString() === array2.sort().toString()
+const arrayContainsArray = (superset, subset) => (
+  subset.every((value) => (
+    superset.indexOf(value) >= 0
+  ))
 );
 
 export const vcsUrl = (resource, vcsType, params = {}) => {

@@ -15,6 +15,8 @@ module('Acceptance | Profile | Migrate', function (hooks) {
       allow_migration: true,
       login: 'user-login',
       github_id: 1974,
+      vcs_type: 'GithubUser',
+      vcs_id: 1974
     });
 
     this.server.create('installation', {

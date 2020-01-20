@@ -1,10 +1,21 @@
-<a
-  class={{this.allClasses}}
-  href={{this.href}}
-  rel={{this.rel}}
-  target={{this.target}}
-  ...attributes
-><UiKit::Text
-    @tag='span'
-    @color={{this.color}}
-  >{{yield}}</UiKit::Text></a>
+{{#if this.route ~}}
+  <LinkTo
+    @route={{this.route}}
+    class={{this.allClasses}}
+    ...attributes
+  ><UiKit::Text
+      @tag='span'
+      @color={{this.color}}
+    >{{yield}}</UiKit::Text></LinkTo>
+{{~else~}}
+  <a
+    class={{this.allClasses}}
+    href={{this.href}}
+    rel={{this.rel}}
+    target={{this.target}}
+    ...attributes
+  ><UiKit::Text
+      @tag='span'
+      @color={{this.color}}
+    >{{yield}}</UiKit::Text></a>
+{{~/if}}
