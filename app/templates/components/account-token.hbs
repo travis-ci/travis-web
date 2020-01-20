@@ -9,7 +9,7 @@
       </span>
     {{else if this.tokenIsVisible}}
       <span class="auth-token">
-        {{this.auth.token}}
+        {{this.token}}
       </span>
     {{else}}
       <span class="obfuscated-chars">
@@ -21,7 +21,7 @@
 <div class="token-actions">
   <CopyButton
     class="copy-button"
-    @clipboardText={{this.auth.token}}
+    @clipboardText={{this.token}}
     @title="Copy to clipboard"
     @success={{action "copyTokenSuccessful"}}
   >

@@ -29,6 +29,7 @@ export const INSIGHTS_VIS_OPTIONS = [
 
 export default Controller.extend({
   features: service(),
+  auth: service(),
   preferences: service(),
   flashes: service(),
 
