@@ -55,7 +55,7 @@ export default TravisRoute.extend(ScrollResetMixin, {
     const { queryParams } = transition.to;
     let { provider = '', owner = '', name = '' } = this.paramsFor('repo');
 
-    if (!vcsConfigByUrlPrefix(provider)) {
+    if (provider && !vcsConfigByUrlPrefix(provider)) {
       // If provider isn't one of the available providers,
       // then transition targets to one of the repository internal routes,
       // e.g. /travis-ci/travis-web/branches - it has the same signature (/:provider/:owner/:name)
