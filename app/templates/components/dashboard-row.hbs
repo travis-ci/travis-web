@@ -18,7 +18,7 @@
       <h2 class="row-label">
         <LinkTo
           @route="owner"
-          @model={{this.repo.owner.login}}
+          @models={{array this.repo.provider this.repo.owner.login}}
           @title={{this.repo.owner.login}}
           class="repo-dashboard"
         >
@@ -29,7 +29,7 @@
       <h1 class="row-content">
         <LinkTo
           @route="repo"
-          @models={{array this.repo.owner.login this.repo.name}}
+          @models={{array this.repo.provider this.repo.owner.login this.repo.name}}
           @title={{this.repo.name}}
         >
           {{this.repo.name}}
@@ -50,6 +50,7 @@
             <LinkTo
               @route="build"
               @models={{array
+                this.repo.provider
                 this.repo.owner.login
                 this.repo.name
                 this.repo.defaultBranch.lastBuild.id
@@ -76,6 +77,7 @@
             <LinkTo
               @route="build"
               @models={{array
+                this.repo.provider
                 this.repo.owner.login
                 this.repo.name
                 this.repo.currentBuild.id

@@ -13,6 +13,10 @@ export const vcsConfig = (vcsType) => (
   Object.values(providers).find(provider => provider.vcsTypes.includes(vcsType)) || defaultVcsConfig
 );
 
+export const vcsConfigByUrlPrefix = (urlPrefix) => (
+  Object.values(providers).findBy('urlPrefix', urlPrefix)
+);
+
 const replaceParams = (template, params) => (
   Object
     .keys(params)

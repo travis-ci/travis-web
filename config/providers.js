@@ -28,6 +28,7 @@ module.exports = deepFreeze({
     endpoint: 'https://:portfolio.assembla.com',
     icon: 'icon-assembla',
     name: 'Assembla',
+    urlPrefix: 'assembla',
     paths: {
       branch: '/spaces/:owner/:repo/source/:branch?type=branch',
       commit: '/spaces/:owner/:repo/commits/:commit',
@@ -49,6 +50,7 @@ module.exports = deepFreeze({
     endpoint: 'https://bitbucket.org',
     icon: 'icon-bitbucket',
     name: 'Bitbucket',
+    urlPrefix: 'bitbucket',
     paths: {
       branch: '/:owner/:repo/src/:branch',
       commit: '/:owner/:repo/commits/:commit',
@@ -71,6 +73,7 @@ module.exports = deepFreeze({
     endpoint: 'https://github.com',
     icon: 'icon-repooctocat',
     name: 'GitHub',
+    urlPrefix: 'github',
     paths: {
       branch: '/:owner/:repo/tree/:branch',
       commit: '/:owner/:repo/commit/:commit',

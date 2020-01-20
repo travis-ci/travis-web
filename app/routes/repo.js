@@ -45,16 +45,13 @@ export default TravisRoute.extend(ScrollResetMixin, {
     // slugs are sometimes unknown ???
     const slug = getWithDefault(repo, 'slug', 'unknown/unknown');
     const [owner, name] = slug.split('/');
+    const provider = repo.get('vcsProvider.urlPrefix');
 
-    return {
-      owner: owner,
-      name: name
-    };
+    return { provider, owner, name };
   },
 
-  model(params) {
-    const { name, owner } = params;
+  model({ provider, owner, name }) {
     const slug = `${owner}/${name}`;
-    return Repo.fetchBySlug(this.store, slug);
+    return Repo.fetchBySlug(this.store, slug, provider);
   },
 });
