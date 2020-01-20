@@ -12,7 +12,20 @@
         developer.travis-ci.com
       </ExternalLinkTo>.
     </p>
-    <AccountToken @account={{this.model}} />
+    <AccountToken @token={{this.auth.token}}/>
+  </section>
+  <section>
+    <h3>
+      Assets authentication
+    </h3>
+    <p>
+      Assets tokens could be used for embedding status images or getting atom and RSS feeds.
+      To learn more about using our Asset tokens, please head to 
+      <ExternalLinkTo href="https://docs.travis-ci.com/user/status-images">
+        docs
+      </ExternalLinkTo>.
+    </p>
+    <AccountToken @token={{this.auth.assetToken}}/>
   </section>
   {{#if this.features.betaFeatures}}
     {{#if this.scrollToFeatures}}

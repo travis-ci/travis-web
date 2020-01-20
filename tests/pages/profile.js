@@ -129,7 +129,7 @@ export default create({
   token: {
     show: clickable('.token-actions button.show-token'),
     value: text('.auth-token'),
-    obfuscatedCharacters: text('.obfuscated-chars'),
+    obfuscatedCharacters: collection('.obfuscated-chars'),
     tokenCopiedText: text('.token-copied-text'),
   },
 
