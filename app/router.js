@@ -60,17 +60,20 @@ Router.map(function () {
     if (config.endpoints.caches) {
       this.route('caches', { path: '/caches', resetNamespace: true });
     }
-    this.route('settings', { resetNamespace: true }, function () {
-      this.route('index', { path: '/' });
-    });
+    this.route('settings', { resetNamespace: true });
   });
 
-  // TODO add provider prefix for owner route too
   this.route('owner', { path: '/:provider/:owner', resetNamespace: true }, function () {
     this.route('repositories', { path: '/' });
   });
 
   this.route('provider', { path: '/:provider' });
+
+  this.route('legacy-repo-url', { path: '/:owner' });
+  this.route('legacy-repo-url', { path: '/:owner/:repo' });
+  this.route('legacy-repo-url', { path: '/:owner/:repo/:method' });
+  this.route('legacy-repo-url', { path: '/:owner/:repo/:method/:id' });
+  this.route('legacy-repo-url', { path: '/:owner/:repo/:method/:id/:view' });
 
   this.route('error404', { path: '/404' });
   this.route('page-not-found', { path: '/*wildcard' });

@@ -3,7 +3,6 @@ import TravisRoute from 'travis/routes/basic';
 import Repo from 'travis/models/repo';
 import ScrollResetMixin from 'travis/mixins/scroll-reset';
 import { inject as service } from '@ember/service';
-import { vcsConfigByUrlPrefix, defaultVcsConfig } from 'travis/utils/vcs';
 
 export default TravisRoute.extend(ScrollResetMixin, {
   store: service(),
@@ -49,22 +48,6 @@ export default TravisRoute.extend(ScrollResetMixin, {
     const provider = repo.get('vcsProvider.urlPrefix');
 
     return { provider, owner, name };
-  },
-
-  beforeModel(transition) {
-    const { queryParams } = transition.to;
-    let { provider = '', owner = '', name = '' } = this.paramsFor('repo');
-
-    if (provider && !vcsConfigByUrlPrefix(provider)) {
-      // If provider isn't one of the available providers,
-      // then transition targets to one of the repository internal routes,
-      // e.g. /travis-ci/travis-web/branches - it has the same signature (/:provider/:owner/:name)
-      // so we're adding prefix here and redirecting to the proper route
-      transition.abort();
-      let internalRouteName;
-      [internalRouteName, owner, name] = [name, provider, owner];
-      this.transitionTo(internalRouteName.camelize(), defaultVcsConfig.urlPrefix, owner, name, { queryParams });
-    }
   },
 
   model({ provider, owner, name }) {
