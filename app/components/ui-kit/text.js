@@ -119,6 +119,8 @@ export default Component.extend({
   transform: variantProp(VARIANT_PROPS, DEFAULT_TRANSFORM),
   weight: variantProp(VARIANT_PROPS, DEFAULT_WEIGHT),
 
+  borderColor: variantProp(VARIANT_PROPS, null),
+  borderWidth: variantProp(VARIANT_PROPS, null),
   display: variantProp(VARIANT_PROPS, null),
   margin: variantProp(VARIANT_PROPS, null),
   padding: variantProp(VARIANT_PROPS, null),
