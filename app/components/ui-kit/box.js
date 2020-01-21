@@ -95,13 +95,14 @@ const POSITION_INSETS = {
 
 // Height & Width
 const MAX_WIDTHS = {
-  XXS: '2xs',
+  XS2: '2xs',
   XS: 'xs',
   SM: 'sm',
   MD: 'md',
   LG: 'lg',
   XL: 'xl',
-  XXL: '2xl',
+  XL2: '2xl',
+  XL6: '6xl',
   FULL: 'full',
 };
 
