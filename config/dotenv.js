@@ -3,7 +3,7 @@ module.exports = function (env) {
     clientAllowedKeys: [
       'API_ENDPOINT',
       'TRAVIS_PRO',
-      'ENABLED_DEV_FLAGS',
+      'ENABLE_FEATURE_FLAGS',
     ],
     failOnMissingKey: false,
   };

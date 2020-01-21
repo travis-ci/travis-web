@@ -13,7 +13,6 @@ export default TravisRoute.extend(BuildFaviconMixin, {
   auth: service(),
   features: service(),
   featureFlags: service(),
-  devFlags: service(),
   flashes: service(),
   metrics: service(),
   repositories: service(),
@@ -39,8 +38,6 @@ export default TravisRoute.extend(BuildFaviconMixin, {
         }
       });
     }
-
-    try { this.devFlags.load.perform(); } catch (e) {}
 
     return this._super(...arguments);
   },
