@@ -184,6 +184,19 @@
     </UiKit::Grid>
   </UiKit::Box>
 
+  {{!-- Trust section --}}
+  <UiKit::Box
+    @tag='section'
+    @margin={{hash bottom=16}}
+    data-test-tvj-page-trust-section="true"
+  >
+    <UiKit::Box  @margin={{hash bottom=10}} @textAlign='center'>
+      <UiKit::Text @size='3xl' @weight='bold' data-test-tvj-page-trust-title="true">
+        Travis CI is trusted by great companies
+      </UiKit::Text>
+    </UiKit::Box>
+  </UiKit::Box>
+
   {{!-- Contact Section - To be implemented --}}
   {{#if this.scrollToContact}}<ScrollHere />{{/if}}
 </TravisLayout>
