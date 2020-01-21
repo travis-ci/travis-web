@@ -1,7 +1,12 @@
 <ul class="repo-list">
   {{#each (sort-by "startedAt:desc" this.model) as |build|}}
     <MyBuild data-test-my-build @build={{build}} />
+  {{else if (and this.model (not this.model.length))}}
+    <NoBuilds 
+      @title="No builds started yet"
+      @subtitle="Want to start testing on Travis CI?"
+    />
   {{else}}
-    <NoBuilds />
+    <LoadingIndicator/>
   {{/each}}
 </ul>

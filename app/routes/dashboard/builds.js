@@ -4,7 +4,7 @@ import { inject as service } from '@ember/service';
 export default TravisRoute.extend({
   auth: service(),
 
-  model(params) {
+  model() {
     let currentUserId = this.get('auth.currentUser.id');
     let eventTypes = ['api', 'pull_request', 'push'];
     let query = {
