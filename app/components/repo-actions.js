@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
-import { alias, and, or } from '@ember/object/computed';
+import { reads, and, or } from '@ember/object/computed';
 import eventually from 'travis/utils/eventually';
 import { task, taskGroup } from 'ember-concurrency';
 
@@ -13,7 +13,7 @@ export default Component.extend({
   classNames: ['repo-main-tools'],
   classNameBindings: ['labelless', 'mobilelabels'],
 
-  user: alias('auth.currentUser'),
+  user: reads('auth.currentUser'),
 
   item: computed('type', 'job', 'build', function () {
     let type = this.type;
@@ -47,7 +47,12 @@ export default Component.extend({
     let repo = this.repo;
     let user = this.user;
     if (user && repo) {
-      return user.hasPullAccessToRepo(repo);
+      let a = user.hasPullAccessToRepo(repo);
+      // eslint-disable-next-line
+      console.log(repo.get('id'));
+      // eslint-disable-next-line
+      console.log(a);
+      return a;
     }
   }),
 
