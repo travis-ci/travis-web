@@ -126,7 +126,7 @@ module('Acceptance | owner insights', function (hooks) {
     assert.equal(insightsPage.noBuildOverlay.text, 'All the build status results from the last 30 days will appear here. Have you tried logging in?');
     assert.equal(insightsPage.noBuildOverlay.link.text, 'Sign in with GitHub');
 
-    await insightsPage.visitWeek({ username: this.currentUser.login });
+    await insightsPage.tabs.clickWeek();
     await settled();
 
     assert.ok(insightsPage.noBuildOverlay.isVisible);
@@ -146,7 +146,7 @@ module('Acceptance | owner insights', function (hooks) {
     assert.equal(insightsPage.noBuildOverlay.text, 'All the build status results from the last 30 days will appear here.');
     assert.equal(insightsPage.noBuildOverlay.link.text, 'Let\'s get you going');
 
-    await insightsPage.visitWeek({ username: this.currentUser.login });
+    await insightsPage.tabs.clickWeek();
     await settled();
 
     assert.ok(insightsPage.noBuildOverlay.isVisible);
@@ -166,7 +166,7 @@ module('Acceptance | owner insights', function (hooks) {
     assert.equal(insightsPage.noBuildOverlay.text, 'All the build status results from the last 30 days will appear here.');
     assert.notOk(insightsPage.noBuildOverlay.link.isPresent);
 
-    await insightsPage.visitWeek({ username: this.otherUser.login });
+    await insightsPage.tabs.clickWeek();
     await settled();
 
     assert.ok(insightsPage.noBuildOverlay.isVisible);
