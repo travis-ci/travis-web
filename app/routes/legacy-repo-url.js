@@ -3,8 +3,9 @@ import { vcsConfigByUrlPrefix, defaultVcsConfig } from 'travis/utils/vcs';
 import { isEmpty } from '@ember/utils';
 
 export default Route.extend({
+  templateName: 'error404',
+
   beforeModel(transition) {
-    transition.abort();
     const { params, queryParams } = transition.to;
     let { owner, repo, method, id, view } = params;
     let provider, routeName = 'provider', routeModels = [];
@@ -40,6 +41,9 @@ export default Route.extend({
       routeName = `${routeName}.${view}`;
     }
 
-    this.transitionTo(routeName, ...routeModels, { queryParams });
+    if (this._router.hasRoute(routeName)) {
+      transition.abort();
+      this.transitionTo(routeName, ...routeModels, { queryParams });
+    }
   }
 });
