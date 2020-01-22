@@ -1,5 +1,7 @@
-import { vcsUrl, vcsName, vcsVocab, vcsIcon, availableProviders } from 'travis/utils/vcs';
+import { vcsUrl, vcsConfig, vcsVocab, vcsIcon, availableProviders } from 'travis/utils/vcs';
 import { module, test } from 'qunit';
+
+const vcsName = (vcsType) => vcsConfig(vcsType).name;
 
 module('Unit | Utils | vcsName', function () {
   test('it defaults to Github', function (assert) {
@@ -16,8 +18,8 @@ module('Unit | Utils | vcsName', function () {
     assert.equal(vcsName('BitbucketRepository'), 'Bitbucket');
   });
 
-  test('it throws when vcs is not found in providers', function (assert) {
-    assert.throws(() => vcsName('OtherVcs'));
+  test('it returns default provider when vcs is not found in providers', function (assert) {
+    assert.equal(vcsName('OtherVcs'), 'GitHub');
   });
 });
 
