@@ -69,7 +69,7 @@ module('Acceptance | job/basic layout', function (hooks) {
     assert.equal(jobPage.message, 'acceptance-tests This is a message', 'displays message');
     assert.equal(jobPage.state, '#1234.1 passed', 'displays build number');
 
-    assert.equal(jobPage.createdBy.href, '/testuser');
+    assert.equal(jobPage.createdBy.href, '/github/testuser');
     assert.equal(jobPage.createdBy.text, 'Mr T');
     assert.ok(jobPage.createdBy.avatarSrc.startsWith('/images/favicon-gray.png'));
 
@@ -129,7 +129,7 @@ module('Acceptance | job/basic layout', function (hooks) {
     assert.equal(jobPage.badge, 'draft', 'displays badge');
     assert.equal(jobPage.state, '#1234.1 passed', 'displays build number');
 
-    assert.equal(jobPage.createdBy.href, '/testuser');
+    assert.equal(jobPage.createdBy.href, '/github/testuser');
     assert.equal(jobPage.createdBy.text, 'Mr T');
     assert.ok(jobPage.createdBy.avatarSrc.startsWith('/images/favicon-gray.png'));
 
