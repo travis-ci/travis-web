@@ -193,7 +193,7 @@
     @tag='section'
     @borderWidth={{hash top='xs'}}
     @margin={{hash bottom=16}}
-    @padding={{hash top=16}}
+    @padding={{hash top=20}}
     data-test-tvj-page-trust-section="true"
   >
     <UiKit::Box
@@ -206,6 +206,24 @@
           Travis CI is trusted by great companies
         </UiKit::Text>
       </UiKit::Box>
+
+      <UiKit::Grid @align='center' @justify='center' @base={{2}} @sm={{3}} @md={{5}} as |grid|>
+        <grid.item @padding={{hash x=8 bottom=6}}>
+          <SvgImage @name="customer-logos-zendesk" />
+        </grid.item>
+        <grid.item @padding={{hash x=8 bottom=6}}>
+          <SvgImage @name="customer-logos-engineyard" />
+        </grid.item>
+        <grid.item @padding={{hash x=8 bottom=6}}>
+          <SvgImage @name="customer-logos-heroku" />
+        </grid.item>
+        <grid.item @padding={{hash x=8 bottom=6}}>
+          <SvgImage @name="customer-logos-bittorrent" />
+        </grid.item>
+        <grid.item @padding={{hash x=8 bottom=6}}>
+          <SvgImage @name="customer-logos-moz" />
+        </grid.item>
+      </UiKit::Grid>
     </UiKit::Box>
   </UiKit::Box>
 
