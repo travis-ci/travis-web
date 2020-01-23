@@ -128,7 +128,7 @@
             <RequestIcon @event={{this.item.eventType}} @state={{item.state}} />
           {{/if}}
           <span data-test-build-header-build-state class="inner-underline">
-            #{{this.item.jobNumber}} {{humanize-state this.buildState}}
+            #{{this.item.number}} {{humanize-state this.buildState}}
           </span>
         </LinkTo>
       {{/if}}
