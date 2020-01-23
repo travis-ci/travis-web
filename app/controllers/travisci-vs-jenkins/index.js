@@ -11,6 +11,6 @@ export default Controller.extend({
   },
 
   contactSuccess() {
-    this.transitionToRoute('plans.thank-you');
+    this.transitionToRoute('travisci-vs-jenkins.thank-you');
   },
 });
