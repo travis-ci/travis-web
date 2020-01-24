@@ -293,18 +293,48 @@
       @padding={{hash y=10}}
       @position={{hash type='relative'}}
     >
-
       <UiKit::Box
         @margin={{hash x='auto'}}
         @maxWidth='6xl'
         @padding={{hash x=4}}
       >
-        <UiKit::Box  @margin={{hash bottom=5}} @textAlign='center'>
+        <UiKit::Box @margin={{hash bottom=5}} @textAlign='center'>
           <UiKit::Text @color='blue' @size='5xl' @weight='bold' data-test-tvj-page-compare-title="true">
             Learn how enterprises are adopting a microservice
             architecture with Travis CI
           </UiKit::Text>
         </UiKit::Box>
+
+
+        <UiKit::Grid @wrap='no-wrap' as |grid|>
+          <grid.item @flex='free' @padding={{hash right=6}}>
+            k8s
+          </grid.item>
+          <grid.item>
+            <UiKit::Text @margin={{hash bottom=6}} @size='2xl' @weight='light'>
+              &ldquo;
+              It has been a game changer for use because our process to deploy was hours if not
+              days before this, we were only building and deploying maybe once a week. We got to
+              the point now that we're deploying continuously.
+              &rdquo;
+            </UiKit::Text>
+            <UiKit::Text @color='green' @weight='bold'>
+              Michael McKay
+            </UiKit::Text>
+            <UiKit::Text @margin={{hash bottom=6}}>
+              DevOps lead, IBM Cloud Kubernetes Service Team
+            </UiKit::Text>
+
+            <UiKit::Link @href={{this.caseStudyUrl}}>
+              <UiKit::Button @color='blue' @invert={{true}}>
+                <UiKit::Grid @display='flex' @align='center'>
+                  Read the case study
+                  <UiKit::Text @color={{null}} @margin={{hash left=2}} @size='xl'>&rarr;</UiKit::Text>
+                </UiKit::Grid>
+              </UiKit::Button>
+            </UiKit::Link>
+          </grid.item>
+        </UiKit::Grid>
       </UiKit::Box>
     </UiKit::Box>
   </UiKit::Box>
