@@ -276,7 +276,7 @@
       @position={{hash type='absolute' top=0 left=0}}
       @width={{56}}
     >
-      <SvgImage @name="yellow-waves" />
+      <SvgImage @name="blue-waves" />
     </UiKit::Box>
 
     <UiKit::Box
@@ -307,8 +307,8 @@
 
 
         <UiKit::Grid @wrap='no-wrap' as |grid|>
-          <grid.item @flex='free' @padding={{hash right=6}}>
-            k8s
+          <grid.item @flex='free' @padding={{hash top=2 right=6}}>
+            <SvgImage @name='kubernetes' @width={{85}} />
           </grid.item>
           <grid.item>
             <UiKit::Text @margin={{hash bottom=6}} @size='2xl' @weight='light'>
@@ -321,7 +321,7 @@
             <UiKit::Text @color='green' @weight='bold'>
               Michael McKay
             </UiKit::Text>
-            <UiKit::Text @margin={{hash bottom=6}}>
+            <UiKit::Text @margin={{hash bottom=10}}>
               DevOps lead, IBM Cloud Kubernetes Service Team
             </UiKit::Text>
 
@@ -329,7 +329,7 @@
               <UiKit::Button @color='blue' @invert={{true}}>
                 <UiKit::Grid @display='flex' @align='center'>
                   Read the case study
-                  <UiKit::Text @color={{null}} @margin={{hash left=2}} @size='xl'>&rarr;</UiKit::Text>
+                  <UiKit::Text @color={{null}} @margin={{hash left=2}} @size='2xl' @weight='bold'>&rarr;</UiKit::Text>
                 </UiKit::Grid>
               </UiKit::Button>
             </UiKit::Link>
