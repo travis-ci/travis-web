@@ -1,4 +1,4 @@
-<TravisLayout @layoutName="layouts/striped" class="tailwind-overrides">
+<TravisLayout @layoutName="layouts/striped" class="tailwind-overrides flush-footer">
 
   {{!-- Header section --}}
   <UiKit::Box
@@ -262,5 +262,50 @@
         />
       </grid.item>
     </UiKit::Grid>
+  </UiKit::Box>
+
+  {{!-- Testimonial Section --}}
+  <UiKit::Box
+    @tag='section'
+    @position={{hash type='relative'}}
+    data-test-tvj-page-testimonial-section="true"
+  >
+    <UiKit::Box
+      @layer='0'
+      @margin={{hash top=-16 left=8}}
+      @position={{hash type='absolute' top=0 left=0}}
+      @width={{56}}
+    >
+      <SvgImage @name="yellow-waves" />
+    </UiKit::Box>
+
+    <UiKit::Box
+      @position={{hash type='absolute' top=0 right=0}}
+      @margin={{hash top=-16 right=8}}
+      @height={{64}}
+    >
+      <SvgImage @name="grey-blob" @height={{224}} />
+    </UiKit::Box>
+
+    <UiKit::Box
+      @color='grey-lighter'
+      @layer='10'
+      @padding={{hash y=10}}
+      @position={{hash type='relative'}}
+    >
+
+      <UiKit::Box
+        @margin={{hash x='auto'}}
+        @maxWidth='6xl'
+        @padding={{hash x=4}}
+      >
+        <UiKit::Box  @margin={{hash bottom=5}} @textAlign='center'>
+          <UiKit::Text @color='blue' @size='5xl' @weight='bold' data-test-tvj-page-compare-title="true">
+            Learn how enterprises are adopting a microservice
+            architecture with Travis CI
+          </UiKit::Text>
+        </UiKit::Box>
+      </UiKit::Box>
+    </UiKit::Box>
   </UiKit::Box>
 </TravisLayout>

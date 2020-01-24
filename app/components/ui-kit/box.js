@@ -8,10 +8,12 @@ import concat from 'travis/utils/ui-kit/concat';
 const COLORS = {
   WHITE: 'white',
   GREY_LIGHT: 'grey-light',
+  GREY_LIGHTER: 'grey-lighter',
 };
 
 const BG_COLORS = {
   [COLORS.WHITE]: 'white',
+  [COLORS.GREY_LIGHTER]: 'grey-100',
 };
 
 const BORDER_COLORS = {
