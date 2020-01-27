@@ -416,11 +416,12 @@ module('Acceptance | profile/billing', function (hooks) {
       .hasTextContaining('5 concurrent jobs Valid until June 19, 2018');
   });
 
-  test('view billing tab with Github trial subscription', async function (assert) {
+  test('view billing tab with marketplace trial subscription', async function (assert) {
     let trial = this.server.create('trial', {
       builds_remaining: 0,
       owner: this.organization,
       status: 'started',
+      hasActiveTrial: true,
       created_at: new Date(2018, 7, 16),
       permissions: {
         read: true,
@@ -444,11 +445,12 @@ module('Acceptance | profile/billing', function (hooks) {
       .hasTextContaining('5 concurrent jobs Valid until June 19, 2018');
   });
 
-  test('view billing tab when Github trial subscription has ended', async function (assert) {
+  test('view billing tab when marketplace trial subscription has ended', async function (assert) {
     let trial = this.server.create('trial', {
       builds_remaining: 0,
       owner: this.organization,
       status: 'ended',
+      hasActiveTrial: false,
       created_at: new Date(2018, 7, 16),
       permissions: {
         read: true,
@@ -458,6 +460,7 @@ module('Acceptance | profile/billing', function (hooks) {
 
     this.subscription.owner = this.organization;
     this.subscription.source = 'github';
+    this.subscription.status = 'expired';
 
     trial.save();
     this.subscription.save();
@@ -467,7 +470,7 @@ module('Acceptance | profile/billing', function (hooks) {
 
     assert.equal(profilePage.billing.plan.name, 'Small Business1 plan expired github marketplace subscription');
     assert.dom(profilePage.billing.plan.concurrency.scope)
-      .hasTextContaining('5 concurrent jobs Valid until June 19, 2018');
+      .hasTextContaining('5 concurrent jobs Expired June 19, 2018');
   });
 
   test('view billing on a cancelled marketplace plan with Stripe plan', async function (assert) {
@@ -520,6 +523,7 @@ module('Acceptance | profile/billing', function (hooks) {
   });
 
   test('view billing on an expired marketplace plan', async function (assert) {
+    this.trial.destroy();
     this.subscription.source = 'github';
     this.subscription.status = 'expired';
 
@@ -1035,6 +1039,52 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${(this.defaultPlan.price / 100) - price}`);
   });
 
+  test('apply coupon value higher than price', async function (assert) {
+    this.subscription.destroy();
+
+    window.Stripe = StripeMock;
+    let config = {
+      mock: true,
+      publishableKey: 'mock'
+    };
+    stubConfig('stripe', config, { instantiate: false });
+    const { owner } = getContext();
+    owner.inject('service:stripev3', 'config', 'config:stripe');
+    this.organization.permissions = {
+      createSubscription: true
+    };
+    this.organization.save();
+
+    await profilePage.visitOrganization({ name: 'org-login' });
+    await profilePage.billing.visit();
+
+    const { billingForm, subscribeButton, billingCouponForm } = profilePage.billing;
+    await subscribeButton.click();
+
+    percySnapshot(assert);
+
+    await selectChoose(billingForm.billingSelectCountry.scope, 'Germany');
+
+    await billingForm
+      .fillIn('firstname', 'John')
+      .fillIn('lastname', 'Doe')
+      .fillIn('companyName', 'Travis')
+      .fillIn('email', 'john@doe.com')
+      .fillIn('address', '15 Olalubi street')
+      .fillIn('city', 'Berlin')
+      .fillIn('zip', '353564');
+
+    await billingForm.proceedPayment.click();
+
+    const coupon = this.coupons[2];
+    await billingCouponForm.fillIn('couponId', coupon.id);
+
+    await billingCouponForm.submitCoupon.click();
+
+    assert.equal(billingCouponForm.validCoupon.text, 'Coupon applied');
+    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${0}`);
+  });
+
   test('apply 10% off coupon', async function (assert) {
     this.subscription.destroy();
 
@@ -1078,7 +1128,7 @@ module('Acceptance | profile/billing', function (hooks) {
     await billingCouponForm.submitCoupon.click();
 
     const amountInDollars = this.defaultPlan.price / 100;
-    const price = amountInDollars - (amountInDollars * coupon.percentageOff) / 100;
+    const price = amountInDollars - (amountInDollars * coupon.percentOff) / 100;
 
     assert.equal(billingCouponForm.validCoupon.text, 'Coupon applied');
     assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${price.toFixed(2)}`);
@@ -1125,16 +1175,15 @@ module('Acceptance | profile/billing', function (hooks) {
 
     assert.equal(billingCouponForm.invalidCoupon.text, 'Coupon invalid');
 
-    const coupon = this.coupons[0];
+    const coupon = this.coupons[1];
 
     await billingCouponForm.fillIn('couponId', coupon.id);
     await billingCouponForm.submitCoupon.click();
 
-    const amountInDollars = this.defaultPlan.price / 100;
-    const price = amountInDollars - (amountInDollars * coupon.percentageOff) / 100;
+    const price = Math.floor(coupon.amountOff / 100);
 
     assert.equal(billingCouponForm.validCoupon.text, 'Coupon applied');
-    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${price.toFixed(2)}`);
+    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${(this.defaultPlan.price / 100) - price}`);
   });
 
   test('view billing tab when no individual subscription should fill form and transition to payment', async function (assert) {
