@@ -227,6 +227,40 @@
     </UiKit::Box>
   </UiKit::Box>
 
-  {{!-- Contact Section - To be implemented --}}
+  {{!-- Contact Section --}}
   {{#if this.scrollToContact}}<ScrollHere />{{/if}}
+
+  <UiKit::Box
+    @tag='section'
+    @margin={{hash bottom=16 x='auto'}}
+    @maxWidth='6xl'
+    @padding={{hash x=4}}
+    data-test-tvj-page-contact-section="true"
+  >
+    <UiKit::Grid  @sm={{2}} @align='center' @gap={{4}} @justify='around' as |grid|>
+      <grid.item>
+        <UiKit::Box
+          @maxWidth={{hash base='full' sm='md'}}
+          @padding={{hash y=4}}
+          @textAlign={{hash base='center' sm='left'}}
+        >
+          <UiKit::Text @tag='h2' @leading='xs' @margin={{hash bottom=3}} @size='5xl' @weight='bold'>
+            Want to learn more about Travis CI Enterprise?
+          </UiKit::Text>
+          <UiKit::Text @margin={{hash bottom=4}}>
+            Find out how Travis CI Enterprise can benefit your team.
+          </UiKit::Text>
+          <UiKit::Text>
+            Contact our sales team to get a free trial license.
+          </UiKit::Text>
+        </UiKit::Box>
+      </grid.item>
+      <grid.item>
+        <SalesContactForm
+          @referralSource={{this.referralSourceName}}
+          @onSuccess={{action this.contactSuccess}}
+        />
+      </grid.item>
+    </UiKit::Grid>
+  </UiKit::Box>
 </TravisLayout>
