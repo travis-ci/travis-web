@@ -12,8 +12,8 @@
       </span>
     {{/if}}
   </div>
-  <div class="discount" data-test-stripe-discount='true'>
-    {{#if this.isValidDiscount}}
+  {{#if this.isValidDiscount}}
+    <div class="discount" data-test-stripe-discount='true'>
       <h6>Discount: </h6>
       <p> 
         {{#if this.percentOff}}
@@ -21,8 +21,8 @@
         {{else if this.amountOff}}
           ${{this.amountOff}}
         {{/if}}
-         off
+          off
       </p>
-    {{/if}}
-  </div>
+    </div>
+  {{/if}}
 {{/if}}

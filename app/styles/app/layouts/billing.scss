@@ -457,24 +457,6 @@
     }
   }
 
-  .discount {
-    display: flex;
-    margin: 0;
-
-    h6 {
-      text-transform: uppercase;
-      color: $cement-grey;
-      font-size: 12px;
-      font-weight: 700;
-      margin: 0 6px 0 0;
-    }
-
-    p {
-      margin: 0;
-      font-size: 12px;
-    }
-  }
-
   .selected-plan {
     border-radius: 5px;
     margin: 20px 0 20px 0;
@@ -519,6 +501,7 @@
       display: flex;
       align-items: baseline;
       flex-wrap: wrap;
+      padding-bottom: 10px;
 
       &--total {
         margin: 0 7px 0 0;
@@ -536,7 +519,25 @@
         display: flex;
         align-items: flex-end;
       }
+    }
 
+    .discount {
+      display: flex;
+      padding-top: -10px;
+      margin: 0;
+  
+      h6 {
+        text-transform: uppercase;
+        color: $cement-grey;
+        font-size: 12px;
+        font-weight: 700;
+        margin: 0 6px 0 0;
+      }
+  
+      p {
+        margin: 0;
+        font-size: 12px;
+      }
     }
 
     &__period {
