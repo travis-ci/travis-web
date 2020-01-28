@@ -122,8 +122,8 @@ module('Acceptance | profile/billing', function (hooks) {
 
     this.subscription.createDiscount({
       name: '10_PERCENT_OFF',
-      amount_off: 1000,
       percent_off: null,
+      amount_off: 1000,
       duration: 'forever',
       duration_in_months: 4,
       valid: true
@@ -144,7 +144,7 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.dom(profilePage.billing.planMessage.scope).hasText('Valid until June 19, 2018');
 
     assert.equal(profilePage.billing.creditCardNumber.text, '•••• •••• •••• 1919');
-    assert.dom('[data-test-stripe-discount]').hasText('$10 off');
+    assert.dom('[data-test-stripe-discount]').hasText('Discount: $10 off');
     assert.equal(profilePage.billing.price.text, '$69');
     assert.equal(profilePage.billing.period.text, '/month');
 
