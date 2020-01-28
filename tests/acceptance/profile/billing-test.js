@@ -99,7 +99,6 @@ module('Acceptance | profile/billing', function (hooks) {
   });
 
   test('view billing information with invoices', async function (assert) {
-
     this.subscription.createInvoice({
       id: '1919',
       created_at: new Date(1919, 4, 15),
@@ -121,6 +120,15 @@ module('Acceptance | profile/billing', function (hooks) {
       amount_due: 6900
     });
 
+    this.subscription.createDiscount({
+      name: '10_PERCENT_OFF',
+      amount_off: 1000,
+      percent_off: null,
+      duration: 'forever',
+      duration_in_months: 4,
+      valid: true
+    });
+
     await profilePage.visit();
     await profilePage.billing.visit();
 
@@ -131,12 +139,12 @@ module('Acceptance | profile/billing', function (hooks) {
 
     assert.equal(profilePage.billing.plan.name, 'Small Business1 plan active');
     assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining('5 concurrent jobs Valid until June 19, 2018');
-
     assert.equal(profilePage.billing.userDetails.text, 'contact name User Name company name Travis CI GmbH billing email user@email.com');
     assert.equal(profilePage.billing.billingDetails.text, 'address Rigaerstraße 8 city Berlin post code 10987 country Germany vat id 12345');
     assert.dom(profilePage.billing.planMessage.scope).hasText('Valid until June 19, 2018');
 
     assert.equal(profilePage.billing.creditCardNumber.text, '•••• •••• •••• 1919');
+    assert.dom('[data-test-stripe-discount]').hasText('$10 off');
     assert.equal(profilePage.billing.price.text, '$69');
     assert.equal(profilePage.billing.period.text, '/month');
 

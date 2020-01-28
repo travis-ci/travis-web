@@ -5,5 +5,7 @@ export default Model.extend({
   percentOff: attr('number'),
   amountOff: attr('number'),
   valid: attr('boolean'),
+  duration: attr('string'),
+  durationInMonths: attr('number'),
   subscription: belongsTo('subscription')
 });

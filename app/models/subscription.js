@@ -25,6 +25,7 @@ export default Model.extend({
   clientSecret: attr(),
   paymentIntent: attr(),
 
+  discount: belongsTo('discount', { async: false }),
   billingInfo: belongsTo('billing-info', { async: false }),
   creditCardInfo: belongsTo('credit-card-info', { async: false }),
   invoices: hasMany('invoice'),
