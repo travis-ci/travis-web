@@ -241,15 +241,14 @@ module.exports = {
       '0': '0',
       full: '100%',
     },
-    flex: {
-      'grow-single': '1 0 auto',
-      'shrink-single': '0 1 auto',
-      'resize-single': '1 1 auto',
-      none: 'none',
-    },
 
     /* ~~ Extend ~~ */
     extend: {
+      flex: {
+        'grow-single': '1 0 auto',
+        'shrink-single': '0 1 auto',
+        'resize-single': '1 1 auto',
+      },
       fill: {
         transparent: 'transparent'
       },
