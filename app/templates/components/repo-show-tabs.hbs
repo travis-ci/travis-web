@@ -41,7 +41,7 @@
     {{#if this.job.id}}
       {{#if this.repo.slug}}
         <LinkTo @route="job" @models={{array this.repo this.job}}>
-          Job #{{this.job.number}}
+          Job #{{this.job.jobNumber}}
         </LinkTo>
       {{/if}}
     {{/if}}

@@ -71,7 +71,8 @@ export default Service.extend({
   redirectUrl: null,
 
   signOut(runTeardown = true) {
-    this.api.get('/logout');
+    if (this.signedIn) this.api.get('/logout');
+
     [this.localStorage, this.sessionStorage].forEach(storage => {
       storage.clearAuthData();
       storage.clearPreferencesData();
@@ -180,13 +181,19 @@ export default Service.extend({
 
   reportNewUser() {
     const { currentUser, metrics } = this;
-    const { login, recentlySignedUp } = currentUser;
+    const { login, recentlySignedUp, vcsProvider } = currentUser;
     const signupUsers = this.storage.signupUsers || [];
 
     if (recentlySignedUp && recentlySignedUp === true && !signupUsers.includes(login)) {
       metrics.trackEvent({
         event: 'first_authentication'
       });
+      if (vcsProvider) {
+        metrics.trackEvent({
+          event: 'first_authentication_with_provider',
+          authProvider: vcsProvider.name
+        });
+      }
       this.storage.signupUsers = signupUsers.concat([login]);
     }
   },

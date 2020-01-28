@@ -1,15 +1,15 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { alias } from '@ember/object/computed';
+import { reads } from '@ember/object/computed';
 
 export default Component.extend({
   classNames: ['request-item'],
   classNameBindings: ['requestClass', 'highlightedClass'],
   tagName: 'li',
 
-  requestClass: alias('request.result'),
+  requestClass: reads('request.result'),
 
-  build: alias('request.build'),
+  build: reads('request.build'),
 
   type: computed('request.isPullRequest', function () {
     let isPullRequest = this.get('request.isPullRequest');

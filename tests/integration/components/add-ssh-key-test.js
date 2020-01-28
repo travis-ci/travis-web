@@ -5,7 +5,8 @@ import {
   render,
   click,
   fillIn,
-  triggerEvent
+  triggerEvent,
+  waitFor
 } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import DS from 'ember-data';
@@ -38,6 +39,7 @@ module('Integration | Component | add ssh-key', function (hooks) {
     fillIn('.ssh-description', 'FOO');
     fillIn('.ssh-value', 'bar');
 
+    await waitFor('.form-footer .form-submit');
     await click('.form-submit');
 
     assert.equal(sshKey.get('description'), 'FOO', 'description should be set');
