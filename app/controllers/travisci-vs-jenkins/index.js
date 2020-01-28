@@ -1,8 +1,11 @@
 import Controller from '@ember/controller';
 import { later } from '@ember/runloop';
+import config from 'travis/config/environment';
 
 export default Controller.extend({
   referralSourceName: 'travisci-vs-jenkins',
+
+  caseStudyUrl: config.urls.caseStudy,
 
   scrollToContact: false,
   toggleContactScroll() {

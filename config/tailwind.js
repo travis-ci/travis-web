@@ -244,6 +244,11 @@ module.exports = {
 
     /* ~~ Extend ~~ */
     extend: {
+      flex: {
+        'grow-single': '1 0 auto',
+        'shrink-single': '0 1 auto',
+        'resize-single': '1 1 auto',
+      },
       fill: {
         transparent: 'transparent'
       },

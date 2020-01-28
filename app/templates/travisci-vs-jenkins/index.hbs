@@ -1,4 +1,4 @@
-<TravisLayout @layoutName="layouts/striped" class="tailwind-overrides">
+<TravisLayout @layoutName="layouts/striped" class="tailwind-overrides flush-footer">
 
   {{!-- Header section --}}
   <UiKit::Box
@@ -192,8 +192,8 @@
   <UiKit::Box
     @tag='section'
     @borderWidth={{hash top='xs'}}
-    @margin={{hash bottom=16}}
-    @padding={{hash top=20}}
+    @margin={{hash bottom=24}}
+    @padding={{hash top=24}}
     data-test-tvj-page-trust-section="true"
   >
     <UiKit::Box
@@ -232,7 +232,7 @@
 
   <UiKit::Box
     @tag='section'
-    @margin={{hash bottom=16 x='auto'}}
+    @margin={{hash bottom=40 x='auto'}}
     @maxWidth='6xl'
     @padding={{hash x=4}}
     data-test-tvj-page-contact-section="true"
@@ -262,5 +262,78 @@
         />
       </grid.item>
     </UiKit::Grid>
+  </UiKit::Box>
+
+  {{!-- Testimonial Section --}}
+  <UiKit::Box
+    @tag='section'
+    @position={{hash type='relative'}}
+    data-test-tvj-page-testimonial-section="true"
+  >
+    <UiKit::Box
+      @layer='0'
+      @margin={{hash top=-16 left=8}}
+      @position={{hash type='absolute' top=0 left=0}}
+      @width={{56}}
+    >
+      <SvgImage @name="blue-waves" />
+    </UiKit::Box>
+
+    <UiKit::Box
+      @position={{hash type='absolute' top=0 right=0}}
+      @margin={{hash top=-16 right=8}}
+      @height={{64}}
+    >
+      <SvgImage @name="grey-blob" @height={{224}} />
+    </UiKit::Box>
+
+    <UiKit::Box
+      @color='grey-lighter'
+      @layer='10'
+      @padding={{hash y=10}}
+      @position={{hash type='relative'}}
+    >
+      <UiKit::Box
+        @margin={{hash x='auto'}}
+        @maxWidth='6xl'
+        @padding={{hash x=4}}
+      >
+        <UiKit::Box @margin={{hash bottom=5}} @textAlign='center'>
+          <UiKit::Text @color='blue' @size='5xl' @weight='bold' data-test-tvj-page-compare-title="true">
+            Learn how enterprises are adopting a microservice
+            architecture with Travis CI
+          </UiKit::Text>
+        </UiKit::Box>
+
+
+        <UiKit::Grid @base='auto' @wrap='no-wrap' as |grid|>
+          <grid.item @padding={{hash top=2 right=6}}>
+            <SvgImage @name='kubernetes' @width={{85}} />
+          </grid.item>
+          <grid.item>
+            <UiKit::Text @margin={{hash bottom=6}} @size='2xl' @weight='light'>
+              &ldquo;It has been a game changer for us because our process to deploy was hours if not
+              days before this, we were only building and deploying maybe once a week. We got to
+              the point now that we're deploying continuously.&rdquo;
+            </UiKit::Text>
+            <UiKit::Text @color='green' @weight='bold'>
+              Michael McKay
+            </UiKit::Text>
+            <UiKit::Text @margin={{hash bottom=10}}>
+              DevOps lead, IBM Cloud Kubernetes Service Team
+            </UiKit::Text>
+
+            <UiKit::Link @href={{this.caseStudyUrl}}>
+              <UiKit::Button @color='blue' @invert={{true}}>
+                <UiKit::Grid @display='flex' @align='center'>
+                  Read the case study
+                  <UiKit::Text @color={{null}} @margin={{hash left=2}} @size='2xl' @weight='bold'>&rarr;</UiKit::Text>
+                </UiKit::Grid>
+              </UiKit::Button>
+            </UiKit::Link>
+          </grid.item>
+        </UiKit::Grid>
+      </UiKit::Box>
+    </UiKit::Box>
   </UiKit::Box>
 </TravisLayout>
