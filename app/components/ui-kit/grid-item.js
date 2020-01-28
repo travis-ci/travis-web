@@ -25,15 +25,15 @@ function screenClass(key, screen) {
 }
 
 const FLEX_SIZES = {
-  INITIAL: 'initial',
-  FREE: 'free',
-  AUTO: 'auto',
+  GROW_SINGLE: 'grow-single',
+  SHRINK_SINGLE: 'shrink-single',
+  RESIZE_SINGLE: 'resize-single',
   NONE: 'none',
 };
 const FLEX_SIZE_VALS = {
-  [FLEX_SIZES.INITIAL]: 'initial',
-  [FLEX_SIZES.FREE]: '1',
-  [FLEX_SIZES.AUTO]: 'auto',
+  [FLEX_SIZES.GROW_SINGLE]: 'grow-single',
+  [FLEX_SIZES.SHRINK_SINGLE]: 'shrink-single',
+  [FLEX_SIZES.RESIZE_SINGLE]: 'resize-single',
   [FLEX_SIZES.NONE]: 'none',
 };
 

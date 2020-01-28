@@ -48,6 +48,7 @@ module.exports = function (environment) {
       blog: 'https://blog.travis-ci.com',
       buildMatrix: 'https://docs.travis-ci.com/user/build-matrix/',
       buildConfigValidation: 'https://docs.travis-ci.com/user/build-config-validation/',
+      caseStudy: 'https://blog.travis-ci.com/2019-06-5-case-study-ibm-cloud-kubernetes-service',
       changelog: 'https://changelog.travis-ci.com',
       community: 'https://travis-ci.community',
       communityEarlyReleases: 'https://travis-ci.community/c/early-releases',

@@ -306,17 +306,15 @@
         </UiKit::Box>
 
 
-        <UiKit::Grid @wrap='no-wrap' as |grid|>
-          <grid.item @flex='free' @padding={{hash top=2 right=6}}>
+        <UiKit::Grid @base='auto' @wrap='no-wrap' as |grid|>
+          <grid.item @padding={{hash top=2 right=6}}>
             <SvgImage @name='kubernetes' @width={{85}} />
           </grid.item>
           <grid.item>
             <UiKit::Text @margin={{hash bottom=6}} @size='2xl' @weight='light'>
-              &ldquo;
-              It has been a game changer for use because our process to deploy was hours if not
+              &ldquo;It has been a game changer for us because our process to deploy was hours if not
               days before this, we were only building and deploying maybe once a week. We got to
-              the point now that we're deploying continuously.
-              &rdquo;
+              the point now that we're deploying continuously.&rdquo;
             </UiKit::Text>
             <UiKit::Text @color='green' @weight='bold'>
               Michael McKay
