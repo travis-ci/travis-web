@@ -457,6 +457,25 @@
     }
   }
 
+  .discount {
+    display: flex;
+    margin-top: -10px;
+    margin: 0;
+
+    h6 {
+      text-transform: uppercase;
+      color: $cement-grey;
+      font-size: 12px;
+      font-weight: 700;
+      margin: 0 6px 0 0;
+    }
+
+    p {
+      margin: 0;
+      font-size: 12px;
+    }
+  }
+
   .selected-plan {
     border-radius: 5px;
     margin: 20px 0 20px 0;
@@ -518,25 +537,6 @@
         color: $oxide-blue;
         display: flex;
         align-items: flex-end;
-      }
-    }
-
-    .discount {
-      display: flex;
-      padding-top: -10px;
-      margin: 0;
-  
-      h6 {
-        text-transform: uppercase;
-        color: $cement-grey;
-        font-size: 12px;
-        font-weight: 700;
-        margin: 0 6px 0 0;
-      }
-  
-      p {
-        margin: 0;
-        font-size: 12px;
       }
     }
 
