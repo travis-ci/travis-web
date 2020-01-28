@@ -41,6 +41,8 @@
 
     .detail-job-os {
       grid-area: os;
+      display: flex;
+      align-items: center;
     }
 
     .detail-job-name {
