@@ -66,7 +66,7 @@
     </UiKit::Box>
 
     <UiKit::Grid @sm={{2}} @gap={{12}} as |grid|>
-      <grid.item @margin={{hash bottom=10}}>
+      <grid.item @margin={{hash bottom=10}} data-test-tvj-page-compare-item="true">
         <UiKit::Text @color='grey' @size='sm' @weight='bold'>01</UiKit::Text>
         <UiKit::Text
           @borderWidth={{hash bottom='px'}}
@@ -82,7 +82,7 @@
         </UiKit::Text>
       </grid.item>
 
-      <grid.item @margin={{hash bottom=10}}>
+      <grid.item @margin={{hash bottom=10}} data-test-tvj-page-compare-item="true">
         <UiKit::Text @color='grey' @size='sm' @weight='bold'>02</UiKit::Text>
         <UiKit::Text
           @borderWidth={{hash bottom='px'}}
@@ -99,7 +99,7 @@
         </UiKit::Text>
       </grid.item>
 
-      <grid.item @margin={{hash bottom=10}}>
+      <grid.item @margin={{hash bottom=10}} data-test-tvj-page-compare-item="true">
         <UiKit::Text @color='grey' @size='sm' @weight='bold'>03</UiKit::Text>
         <UiKit::Text
           @borderWidth={{hash bottom='px'}}
@@ -116,7 +116,7 @@
         </UiKit::Text>
       </grid.item>
 
-      <grid.item @margin={{hash bottom=10}}>
+      <grid.item @margin={{hash bottom=10}} data-test-tvj-page-compare-item="true">
         <UiKit::Text @color='grey' @size='sm' @weight='bold'>04</UiKit::Text>
         <UiKit::Text
           @borderWidth={{hash bottom='px'}}
@@ -134,7 +134,7 @@
         </UiKit::Text>
       </grid.item>
 
-      <grid.item @margin={{hash bottom=10}}>
+      <grid.item @margin={{hash bottom=10}} data-test-tvj-page-compare-item="true">
         <UiKit::Text @color='grey' @size='sm' @weight='bold'>05</UiKit::Text>
         <UiKit::Text
           @borderWidth={{hash bottom='px'}}
@@ -151,7 +151,7 @@
         </UiKit::Text>
       </grid.item>
 
-      <grid.item @margin={{hash bottom=10}}>
+      <grid.item @margin={{hash bottom=10}} data-test-tvj-page-compare-item="true">
         <UiKit::Text @color='grey' @size='sm' @weight='bold'>06</UiKit::Text>
         <UiKit::Text
           @borderWidth={{hash bottom='px'}}
@@ -168,7 +168,7 @@
         </UiKit::Text>
       </grid.item>
 
-      <grid.item @margin={{hash bottom=10}}>
+      <grid.item @margin={{hash bottom=10}} data-test-tvj-page-compare-item="true">
         <UiKit::Text @color='grey' @size='sm' @weight='bold'>07</UiKit::Text>
         <UiKit::Text
           @borderWidth={{hash bottom='px'}}
@@ -208,19 +208,19 @@
       </UiKit::Box>
 
       <UiKit::Grid @align='center' @justify='center' @base={{2}} @sm={{3}} @md={{5}} as |grid|>
-        <grid.item @padding={{hash x=8 bottom=6}}>
+        <grid.item @padding={{hash x=8 bottom=6}} data-test-tvj-page-trust-item="true">
           <SvgImage @name="customer-logos-zendesk" />
         </grid.item>
-        <grid.item @padding={{hash x=8 bottom=6}}>
+        <grid.item @padding={{hash x=8 bottom=6}} data-test-tvj-page-trust-item="true">
           <SvgImage @name="customer-logos-engineyard" />
         </grid.item>
-        <grid.item @padding={{hash x=8 bottom=6}}>
+        <grid.item @padding={{hash x=8 bottom=6}} data-test-tvj-page-trust-item="true">
           <SvgImage @name="customer-logos-heroku" />
         </grid.item>
-        <grid.item @padding={{hash x=8 bottom=6}}>
+        <grid.item @padding={{hash x=8 bottom=6}} data-test-tvj-page-trust-item="true">
           <SvgImage @name="customer-logos-bittorrent" />
         </grid.item>
-        <grid.item @padding={{hash x=8 bottom=6}}>
+        <grid.item @padding={{hash x=8 bottom=6}} data-test-tvj-page-trust-item="true">
           <SvgImage @name="customer-logos-moz" />
         </grid.item>
       </UiKit::Grid>
@@ -244,7 +244,14 @@
           @padding={{hash y=4}}
           @textAlign={{hash base='center' sm='left'}}
         >
-          <UiKit::Text @tag='h2' @leading='xs' @margin={{hash bottom=3}} @size='5xl' @weight='bold'>
+          <UiKit::Text
+            @tag='h2'
+            @leading='xs'
+            @margin={{hash bottom=3}}
+            @size='5xl'
+            @weight='bold'
+            data-test-tvj-page-contact-title="true"
+          >
             Want to learn more about Travis CI Enterprise?
           </UiKit::Text>
           <UiKit::Text @margin={{hash bottom=4}}>
@@ -299,7 +306,7 @@
         @padding={{hash x=4}}
       >
         <UiKit::Box @margin={{hash bottom=5}} @textAlign='center'>
-          <UiKit::Text @color='blue' @size='5xl' @weight='bold' data-test-tvj-page-compare-title="true">
+          <UiKit::Text @color='blue' @size='5xl' @weight='bold' data-test-tvj-page-testimonial-title="true">
             Learn how enterprises are adopting a microservice
             architecture with Travis CI
           </UiKit::Text>
@@ -311,19 +318,19 @@
             <SvgImage @name='kubernetes' @width={{85}} />
           </grid.item>
           <grid.item>
-            <UiKit::Text @margin={{hash bottom=6}} @size='2xl' @weight='light'>
+            <UiKit::Text @margin={{hash bottom=6}} @size='2xl' @weight='light' data-test-tvj-page-testimonial-quote="true">
               &ldquo;It has been a game changer for us because our process to deploy was hours if not
               days before this, we were only building and deploying maybe once a week. We got to
               the point now that we're deploying continuously.&rdquo;
             </UiKit::Text>
-            <UiKit::Text @color='green' @weight='bold'>
+            <UiKit::Text @color='green' @weight='bold' data-test-tvj-page-testimonial-name="true">
               Michael McKay
             </UiKit::Text>
-            <UiKit::Text @margin={{hash bottom=10}}>
+            <UiKit::Text @margin={{hash bottom=10}} data-test-tvj-page-testimonial-position="true">
               DevOps lead, IBM Cloud Kubernetes Service Team
             </UiKit::Text>
 
-            <UiKit::Link @href={{this.caseStudyUrl}}>
+            <UiKit::Link @href={{this.caseStudyUrl}} data-test-tvj-page-testimonial-link="true">
               <UiKit::Button @color='blue' @invert={{true}}>
                 <UiKit::Grid @display='flex' @align='center'>
                   Read the case study
