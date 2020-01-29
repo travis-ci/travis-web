@@ -47,7 +47,7 @@
       </div>
     </section>
     <section>
-      <Billing::Price @subscription={{this.subscription}} />
+      <Billing::Price @subscription={{this.subscription}} @trial={{this.trial}}/>
     </section>
   </div>
   {{#if this.subscription.isGithub}}
