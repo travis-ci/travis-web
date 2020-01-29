@@ -30,19 +30,21 @@
             Integrate with Github Enterprise or Github.com to bring flexibility to your CI/CD process.
             Get control over your security and scale out your build infrastructure as needed.
           </UiKit::Text>
-          <UiKit::Button
-            @onClick={{action this.toggleContactScroll}}
-            data-test-tvj-page-header-button="true"
-          >
-            Contact the Enterprise Team
-          </UiKit::Button>
+          <UiKit::Box @textAlign={{hash base='center' sm='left'}}>
+            <UiKit::Button
+              @onClick={{action this.toggleContactScroll}}
+              data-test-tvj-page-header-button="true"
+            >
+              Contact the Enterprise Team
+            </UiKit::Button>
+          </UiKit::Box>
         </UiKit::Box>
       </grid.item>
       <grid.item @sm='1/3'>
         <UiKit::Box
           @margin={{hash x='auto'}}
-          @maxWidth='xs'
-          @padding={{hash y=4}}
+          @maxWidth={{hash base='2xs' sm='xs'}}
+          @padding={{hash sm=(hash y=4)}}
           data-test-tvj-page-header-image="true"
         >
           <SvgImage @name='travis-enterprise' @width='100%'/>
