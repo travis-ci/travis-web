@@ -84,12 +84,11 @@
       @onChange={{action (toggle 'isDisclaimerChecked' this)}} 
       as |field|
     >
-      <div class="flex">
-        <field.checkbox @name='disclaimer' class="flex-1" data-test-disclaimer-checkbox='true'/>
+      <field.checkbox @name='disclaimer' class="flex-1" data-test-disclaimer-checkbox='true'>
         <span class="text-xs">
-          I authorize Travis CI to send instructions to the financial institution that issued my card to take payments from my card account in accordance with the terms of my agreement with you.
+          I authorize Travis CI to send instructions to the financial institution.
         </span>
-      </div>
+      </field.checkbox>
     </form.field>
     <div class='billing-checkout__payment'>
       {{#if this.isLoading}}
