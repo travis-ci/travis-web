@@ -1,6 +1,7 @@
 import { click, currentURL, fillIn, settled, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
+import { enableFeature } from 'ember-feature-flags/test-support';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { percySnapshot } from 'ember-percy';
 
@@ -77,109 +78,118 @@ module('Acceptance | travis vs jenkins page', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 
-  hooks.beforeEach(async function () {
+  test('org redirects', async function (assert) {
     await visit(PAGE_URL);
+    assert.equal(currentURL(), '/');
   });
 
-  test('page structure', async function (assert) {
-    assert.equal(currentURL(), PAGE_URL);
 
-    assert.dom(HEADER_TITLE).exists();
-    assert.dom(HEADER_BUTTON).exists();
-    assert.dom(HEADER_IMAGE).exists();
-
-    assert.dom(COMPARE_TITLE).exists();
-    assert.dom(COMPARE_ITEM).exists({ count: 7 });
-
-    assert.dom(TRUST_TITLE).exists();
-    assert.dom(TRUST_ITEM).exists({ count: 5 });
-
-    assert.dom(CONTACT_TITLE).exists();
-    assert.dom(CONTACT_FORM_CONTAINER).exists();
-    assert.dom(CONTACT_FORM_NAME).exists();
-    assert.dom(CONTACT_FORM_EMAIL).exists();
-    assert.dom(CONTACT_FORM_SIZE).exists();
-    assert.dom(CONTACT_FORM_PHONE).exists();
-    assert.dom(CONTACT_FORM_MESSAGE).exists();
-    assert.dom(CONTACT_FORM_SUBMIT).exists();
-
-    assert.dom(TESTIMONIAL_TITLE).exists();
-    assert.dom(TESTIMONIAL_QUOTE).exists();
-    assert.dom(TESTIMONIAL_NAME).exists();
-    assert.dom(TESTIMONIAL_POSITION).exists();
-    assert.dom(TESTIMONIAL_LINK).exists();
-
-    percySnapshot(assert);
-  });
-
-  test('thanks page structure', async function (assert) {
-    await visit(THANKS_URL);
-
-    checkThanksPageUrlAndContent(assert);
-
-    percySnapshot(assert);
-  });
-
-  module('Contact form / lead request', function (hooks) {
-    const mockData = {
-      name: 'Test Request',
-      email: 'test@request.com',
-      size: 4,
-      phone: '+1 555-555-5555',
-      message: 'Test request message.',
-      referralSource: 'travisci-vs-jenkins',
-    };
-
+  module('pro version', function (hooks) {
     hooks.beforeEach(async function () {
-      this.requestHandler = (request) => JSON.parse(request.requestBody);
-      this.server.post('/leads', (schema, request) => {
-        return this.requestHandler(request);
-      });
+      enableFeature('pro-version');
+      await visit(PAGE_URL);
     });
 
-    test('succeeds when all fields filled properly', async function (assert) {
-      let data = {};
+    test('page structure', async function (assert) {
+      assert.equal(currentURL(), PAGE_URL);
 
-      this.requestHandler = (request) => {
-        data = JSON.parse(request.requestBody);
-        return data;
-      };
+      assert.dom(HEADER_TITLE).exists();
+      assert.dom(HEADER_BUTTON).exists();
+      assert.dom(HEADER_IMAGE).exists();
 
-      await fillIn(CONTACT_FORM_NAME, mockData.name);
-      await fillIn(CONTACT_FORM_EMAIL, mockData.email);
-      await fillIn(CONTACT_FORM_SIZE, mockData.size);
-      await fillIn(CONTACT_FORM_PHONE, mockData.phone);
-      await fillIn(CONTACT_FORM_MESSAGE, mockData.message);
-      await click(CONTACT_FORM_SUBMIT);
-      await settled();
+      assert.dom(COMPARE_TITLE).exists();
+      assert.dom(COMPARE_ITEM).exists({ count: 7 });
 
-      // Assert data transmission
-      assert.equal(data.name, mockData.name);
-      assert.equal(data.email, mockData.email);
-      assert.equal(data.team_size, mockData.size);
-      assert.equal(data.phone, mockData.phone);
-      assert.equal(data.message, mockData.message);
-      assert.equal(data.referral_source, mockData.referralSource);
+      assert.dom(TRUST_TITLE).exists();
+      assert.dom(TRUST_ITEM).exists({ count: 5 });
 
-      // Assert thanks page URL and content
+      assert.dom(CONTACT_TITLE).exists();
+      assert.dom(CONTACT_FORM_CONTAINER).exists();
+      assert.dom(CONTACT_FORM_NAME).exists();
+      assert.dom(CONTACT_FORM_EMAIL).exists();
+      assert.dom(CONTACT_FORM_SIZE).exists();
+      assert.dom(CONTACT_FORM_PHONE).exists();
+      assert.dom(CONTACT_FORM_MESSAGE).exists();
+      assert.dom(CONTACT_FORM_SUBMIT).exists();
+
+      assert.dom(TESTIMONIAL_TITLE).exists();
+      assert.dom(TESTIMONIAL_QUOTE).exists();
+      assert.dom(TESTIMONIAL_NAME).exists();
+      assert.dom(TESTIMONIAL_POSITION).exists();
+      assert.dom(TESTIMONIAL_LINK).exists();
+
+      percySnapshot(assert);
+    });
+
+    test('thanks page structure', async function (assert) {
+      await visit(THANKS_URL);
+
       checkThanksPageUrlAndContent(assert);
+
+      percySnapshot(assert);
     });
 
-    test('doesn\'t get sent if form is invalid', async function (assert) {
-      let requestIsSent = false;
-
-      this.requestHandler = (request) => {
-        requestIsSent = true;
-        return JSON.parse(request.requestBody);
+    module('Contact form / lead request', function (hooks) {
+      const mockData = {
+        name: 'Test Request',
+        email: 'test@request.com',
+        size: 4,
+        phone: '+1 555-555-5555',
+        message: 'Test request message.',
+        referralSource: 'travisci-vs-jenkins',
       };
 
-      await click(CONTACT_FORM_SUBMIT);
-      await settled();
+      hooks.beforeEach(async function () {
+        this.requestHandler = (request) => JSON.parse(request.requestBody);
+        this.server.post('/leads', (schema, request) => {
+          return this.requestHandler(request);
+        });
+      });
 
-      assert.equal(requestIsSent, false);
+      test('succeeds when all fields filled properly', async function (assert) {
+        let data = {};
 
-      // Assert NOT thanks page URL and content
-      checkThanksPageUrlAndContent(assert, false);
+        this.requestHandler = (request) => {
+          data = JSON.parse(request.requestBody);
+          return data;
+        };
+
+        await fillIn(CONTACT_FORM_NAME, mockData.name);
+        await fillIn(CONTACT_FORM_EMAIL, mockData.email);
+        await fillIn(CONTACT_FORM_SIZE, mockData.size);
+        await fillIn(CONTACT_FORM_PHONE, mockData.phone);
+        await fillIn(CONTACT_FORM_MESSAGE, mockData.message);
+        await click(CONTACT_FORM_SUBMIT);
+        await settled();
+
+        // Assert data transmission
+        assert.equal(data.name, mockData.name);
+        assert.equal(data.email, mockData.email);
+        assert.equal(data.team_size, mockData.size);
+        assert.equal(data.phone, mockData.phone);
+        assert.equal(data.message, mockData.message);
+        assert.equal(data.referral_source, mockData.referralSource);
+
+        // Assert thanks page URL and content
+        checkThanksPageUrlAndContent(assert);
+      });
+
+      test('doesn\'t get sent if form is invalid', async function (assert) {
+        let requestIsSent = false;
+
+        this.requestHandler = (request) => {
+          requestIsSent = true;
+          return JSON.parse(request.requestBody);
+        };
+
+        await click(CONTACT_FORM_SUBMIT);
+        await settled();
+
+        assert.equal(requestIsSent, false);
+
+        // Assert NOT thanks page URL and content
+        checkThanksPageUrlAndContent(assert, false);
+      });
     });
   });
 });
