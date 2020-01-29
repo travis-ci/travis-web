@@ -97,6 +97,7 @@ module('Integration | Component | billing-payment', function (hooks) {
     assert.dom('h3').hasText('Payment');
     assert.dom(profilePage.billing.billingPaymentForm.completePayment.scope).isVisible();
     assert.dom('[data-test-complete-payment]').doesNotHaveClass('disabled');
+    assert.dom('[data-test-complete-payment]').isNotDisabled();
   });
 
   test('disable pay button when disclaimer is checked and stripe form is not filled', async function (assert) {
@@ -112,6 +113,7 @@ module('Integration | Component | billing-payment', function (hooks) {
     assert.dom('h3').hasText('Payment');
     assert.dom(profilePage.billing.billingPaymentForm.completePayment.scope).isVisible();
     assert.ok(profilePage.billing.billingPaymentForm.completePayment.isDisabled);
+    assert.dom('[data-test-complete-payment]').isDisabled();
   });
 
   test('disable pay button when disclaimer is unchecked and stripe form is filled', async function (assert) {
@@ -127,5 +129,6 @@ module('Integration | Component | billing-payment', function (hooks) {
     assert.dom('h3').hasText('Payment');
     assert.dom(profilePage.billing.billingPaymentForm.completePayment.scope).isVisible();
     assert.ok(profilePage.billing.billingPaymentForm.completePayment.isDisabled);
+    assert.dom('[data-test-complete-payment]').isDisabled();
   });
 });

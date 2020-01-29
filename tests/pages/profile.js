@@ -418,6 +418,10 @@ export default create({
         isDisabled: hasClass('button disabled'),
       },
 
+      disclaimerCheckbox: {
+        scope: '[data-test-check-disclaimer]'
+      },
+
       paymentInfo: {
         scope: '[data-test-payment-info]'
       },

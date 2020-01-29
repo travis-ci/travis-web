@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 import { task } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
-import { or, reads } from '@ember/object/computed';
+import { or, reads, and, not } from '@ember/object/computed';
 import { computed } from '@ember/object';
 import config from 'travis/config/environment';
 
@@ -20,6 +20,8 @@ export default Component.extend({
   isDisclaimerChecked: false,
   options: config.stripeOptions,
 
+  shouldCreateSubscription: and('isDisclaimerChecked', 'stripeElement'),
+  shouldNotCreateSubscription: not('shouldCreateSubscription'),
   firstName: reads('newSubscription.billingInfo.firstName'),
   lastName: reads('newSubscription.billingInfo.lastName'),
   company: reads('newSubscription.billingInfo.company'),
@@ -75,10 +77,16 @@ export default Component.extend({
     }
   }).drop(),
 
+  handleCreateSubscription: task(function* () {
+    if (this.shouldCreateSubscription) {
+      yield this.createSubscription.perform();
+    }
+  }).drop(),
+
   validateCoupon: task(function* () {
     try {
       yield this.newSubscription.validateCoupon.perform(this.couponId);
-    } catch {}
+    } catch { }
   }).drop(),
 
   handleError() {
