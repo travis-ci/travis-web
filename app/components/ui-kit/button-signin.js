@@ -39,7 +39,7 @@ export default Component.extend({
   color: computed('provider', function () {
     return providerColors[this.provider] || 'grey';
   }),
-  badgeColor: computed('color', function() {
+  badgeColor: computed('color', function () {
     return `${this.color}-light`;
   }),
 
