@@ -1234,7 +1234,6 @@ module('Acceptance | profile/billing', function (hooks) {
       .fillIn('zip', '353564')
       .fillIn('vat', '356463');
 
-    await this.owner.lookup('service:stripev3').load();
     await billingForm.proceedPayment.click();
 
     assert.equal(profilePage.billing.selectedPlanOverview.heading.text, 'summary');
