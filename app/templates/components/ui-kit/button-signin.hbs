@@ -3,7 +3,7 @@
     @onClick={{action this.signin}}
     @color={{this.color}}
     @invert={{true}}
-    class="block w-full max-w-2xs mb-4 mx-auto text-left"
+    class="block w-full max-w-2xs mb-4 mx-auto text-left relative"
     data-test-signin-button={{this.provider}}
     data-test-signin-button-primary={{this.isPrimaryProvider}}
     ...attributes
@@ -19,5 +19,14 @@
       <SvgImage @name={{vcs-icon this.vcsType}} @class="fill-current w-5 h-5" />
     </UiKit::Box>
     Sign {{if this.isSignup 'Up' 'In'}} With {{vcs-name this.vcsType}}
+    {{#if this.isBetaProvider}}
+
+      <UiKit::Badge
+        @color={{this.badgeColor}}
+        @pin='top-right'
+      >
+        Beta
+      </UiKit::Badge>
+    {{/if}}
   </UiKit::Button>
 {{/if}}

@@ -31,7 +31,8 @@ module('Acceptance | profile/view token', function (hooks) {
     await profilePage.visit();
     await profilePage.settings.visit();
 
-    assert.equal(profilePage.token.obfuscatedCharacters, '••••••••••••••••••••', 'expected token to be obfuscated by default');
+    assert.equal(profilePage.token.obfuscatedCharacters[0].text, '••••••••••••••••••••', 'expected token to be obfuscated by default');
+    assert.equal(profilePage.token.obfuscatedCharacters[1].text, '••••••••••••••••••••', 'expected asset token to be obfuscated by default');
 
     await profilePage.token.show();
 
@@ -42,7 +43,8 @@ module('Acceptance | profile/view token', function (hooks) {
     await profilePage.visit();
     await profilePage.settings.visit();
 
-    assert.equal(profilePage.token.obfuscatedCharacters, '••••••••••••••••••••', 'expected token to be obfuscated by default');
+    assert.equal(profilePage.token.obfuscatedCharacters[0].text, '••••••••••••••••••••', 'expected token to be obfuscated by default');
+    assert.equal(profilePage.token.obfuscatedCharacters[1].text, '••••••••••••••••••••', 'expected asset token to be obfuscated by default');
 
     triggerCopySuccess();
 

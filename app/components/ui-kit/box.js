@@ -9,10 +9,14 @@ import concat from 'travis/utils/ui-kit/concat';
 
 const COLORS = {
   WHITE: 'white',
+  BLUE_LIGHT: 'blue-light',
+  GREY_LIGHT: 'grey-light',
 };
 
 const BG_COLORS = {
   [COLORS.WHITE]: 'white',
+  [COLORS.BLUE_LIGHT]: 'blue-300',
+  [COLORS.GREY_LIGHT]: 'grey-300',
 };
 
 const DISPLAYS = {
@@ -78,6 +82,9 @@ const POSITION_INSETS = {
   X_AUTO: 'x-auto',
   Y_AUTO: 'y-auto',
 };
+const PIN_LOCATIONS = {
+  TOP_RIGHT: 'top-right',
+};
 
 // Height & Width
 const MAX_WIDTHS = {
@@ -104,6 +111,7 @@ export default Component.extend(spacingMixin, borderMixin, {
   display: DEFAULT_DISPLAY,
   layer: null,
   overflow: null,
+  pin: null,
   radius: null,
   shadow: null,
   textAlign: null,
@@ -126,6 +134,7 @@ export default Component.extend(spacingMixin, borderMixin, {
   overflowAllClass: prefix('overflow.all', 'overflow'),
   overflowXClass: prefix('overflow.x', 'overflow'),
   overflowYClass: prefix('overflow.y', 'overflow'),
+  pinClass: prefix('pin', 'pin'),
   radiusClass: prefix('radius', 'rounded'),
   shadowClass: prefix('shadow', 'shadow'),
   textAlignClass: prefix('textAlign', 'text'),
@@ -150,6 +159,7 @@ export default Component.extend(spacingMixin, borderMixin, {
     'overflowAllClass',
     'overflowXClass',
     'overflowYClass',
+    'pinClass',
     'radiusClass',
     'shadowClass',
     'textAlignClass',
@@ -175,6 +185,7 @@ export default Component.extend(spacingMixin, borderMixin, {
     checkDictionary(this.color, COLORS, '@color', 'Box');
     checkDictionary(this.display, DISPLAYS, '@display', 'Box');
     checkDictionary(this.layer, LAYERS, '@layer', 'Box');
+    checkDictionary(this.pin, PIN_LOCATIONS, '@pin', 'Box');
     checkDictionary(this.radius, RADII, '@radius', 'Box');
     checkDictionary(this.shadow, SHADOWS, '@shadow', 'Box');
     checkDictionary(this.textAlign, TEXT_ALIGNMENTS, '@textAlign', 'Box');

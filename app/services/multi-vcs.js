@@ -17,4 +17,10 @@ export default Service.extend({
   isProviderEnabled(provider) {
     return this.isProVersion && this.features.isEnabled(`enable-${provider}-login`);
   },
+  isProviderPrimary(provider) {
+    return provider === this.primaryProvider;
+  },
+  isProviderBeta(provider) {
+    return !this.isProviderPrimary(provider);
+  },
 });

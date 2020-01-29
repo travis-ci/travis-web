@@ -22,8 +22,8 @@ export default Component.extend({
     return `${this.provider.capitalize()}User`;
   }),
 
-  isPrimaryProvider: computed('provider', 'multiVcs.primaryProvider', function () {
-    return this.provider === this.multiVcs.primaryProvider;
+  isPrimaryProvider: computed('provider', function () {
+    return this.multiVcs.isProviderPrimary(this.provider);
   }),
 
   isProviderEnabled: computed('provider', 'isPrimaryProvider', function () {
@@ -32,8 +32,15 @@ export default Component.extend({
     return isPrimaryProvider || (multiVcs.enabled && multiVcs.isProviderEnabled(provider));
   }),
 
+  isBetaProvider: computed('provider', function () {
+    return this.multiVcs.isProviderBeta(this.provider);
+  }),
+
   color: computed('provider', function () {
     return providerColors[this.provider] || 'grey';
+  }),
+  badgeColor: computed('color', function() {
+    return `${this.color}-light`;
   }),
 
   signin() {

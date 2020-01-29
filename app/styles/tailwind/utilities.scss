@@ -6,3 +6,8 @@
 /* .skew-45 {
   transform: skewY(45deg);
 } */
+
+.pin-top-right {
+  @apply absolute top-0 right-0;
+  transform: translate(50%, -50%);
+}
