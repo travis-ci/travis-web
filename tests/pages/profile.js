@@ -419,7 +419,7 @@ export default create({
       },
 
       disclaimerCheckbox: {
-        scope: '[data-test-check-disclaimer]'
+        scope: '[data-test-disclaimer-checkbox]'
       },
 
       paymentInfo: {

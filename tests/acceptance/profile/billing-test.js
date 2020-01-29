@@ -95,6 +95,15 @@ module('Acceptance | profile/billing', function (hooks) {
     });
     this.organization = organization;
 
+    window.Stripe = StripeMock;
+    let config = {
+      mock: true,
+      publishableKey: 'mock'
+    };
+    stubConfig('stripe', config, { instantiate: false });
+    const { owner } = getContext();
+    owner.inject('service:stripev3', 'config', 'config:stripe');
+
     this.coupons = this.server.createList('coupon', 3);
   });
 
@@ -858,17 +867,7 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe @org-login to 2 job plan');
   });
 
-
   test('view billing tab on educational account after subscribing to a plan', async function (assert) {
-    window.Stripe = StripeMock;
-    let config = {
-      mock: true,
-      publishableKey: 'mock'
-    };
-    stubConfig('stripe', config, { instantiate: false });
-    const { owner } = getContext();
-    owner.inject('service:stripev3', 'config', 'config:stripe');
-
     this.subscription = null;
     this.organization.attrs.education = true;
     this.organization.permissions = { createSubscription: true };
@@ -915,6 +914,8 @@ module('Acceptance | profile/billing', function (hooks) {
 
     assert.ok(billingPaymentForm.isPresent);
 
+    assert.dom('[role="mount-point"]').exists();
+    await billingPaymentForm.disclaimerCheckbox.click();
     await billingPaymentForm.completePayment.click();
 
     assert.equal(profilePage.billing.plan.name, 'Startup plan pending');
@@ -995,14 +996,6 @@ module('Acceptance | profile/billing', function (hooks) {
   test('apply 10 dollars off coupon', async function (assert) {
     this.subscription.destroy();
 
-    window.Stripe = StripeMock;
-    let config = {
-      mock: true,
-      publishableKey: 'mock'
-    };
-    stubConfig('stripe', config, { instantiate: false });
-    const { owner } = getContext();
-    owner.inject('service:stripev3', 'config', 'config:stripe');
     this.organization.permissions = {
       createSubscription: true
     };
@@ -1041,15 +1034,6 @@ module('Acceptance | profile/billing', function (hooks) {
 
   test('apply coupon value higher than price', async function (assert) {
     this.subscription.destroy();
-
-    window.Stripe = StripeMock;
-    let config = {
-      mock: true,
-      publishableKey: 'mock'
-    };
-    stubConfig('stripe', config, { instantiate: false });
-    const { owner } = getContext();
-    owner.inject('service:stripev3', 'config', 'config:stripe');
     this.organization.permissions = {
       createSubscription: true
     };
@@ -1087,15 +1071,6 @@ module('Acceptance | profile/billing', function (hooks) {
 
   test('apply 10% off coupon', async function (assert) {
     this.subscription.destroy();
-
-    window.Stripe = StripeMock;
-    let config = {
-      mock: true,
-      publishableKey: 'mock'
-    };
-    stubConfig('stripe', config, { instantiate: false });
-    const { owner } = getContext();
-    owner.inject('service:stripev3', 'config', 'config:stripe');
     this.organization.permissions = {
       createSubscription: true
     };
@@ -1136,15 +1111,6 @@ module('Acceptance | profile/billing', function (hooks) {
 
   test('apply invalid coupon', async function (assert) {
     this.subscription.destroy();
-
-    window.Stripe = StripeMock;
-    let config = {
-      mock: true,
-      publishableKey: 'mock'
-    };
-    stubConfig('stripe', config, { instantiate: false });
-    const { owner } = getContext();
-    owner.inject('service:stripev3', 'config', 'config:stripe');
     this.organization.permissions = {
       createSubscription: true
     };
@@ -1187,16 +1153,7 @@ module('Acceptance | profile/billing', function (hooks) {
   });
 
   test('view billing tab when no individual subscription should fill form and transition to payment', async function (assert) {
-    window.Stripe = StripeMock;
-    let config = {
-      mock: true,
-      publishableKey: 'mock'
-    };
-    stubConfig('stripe', config, { instantiate: false });
-    const { owner } = getContext();
-    owner.inject('service:stripev3', 'config', 'config:stripe');
     this.subscription.destroy();
-
     await profilePage.visit();
     await profilePage.billing.visit();
 
@@ -1238,6 +1195,8 @@ module('Acceptance | profile/billing', function (hooks) {
 
     assert.ok(billingPaymentForm.isPresent);
 
+    assert.dom('[role="mount-point"]').exists();
+    await billingPaymentForm.disclaimerCheckbox.click();
     await billingPaymentForm.completePayment.click();
 
     assert.equal(profilePage.billing.plan.name, 'Startup plan pending');
@@ -1250,15 +1209,6 @@ module('Acceptance | profile/billing', function (hooks) {
 
   test('view billing tab when no organization subscription should fill form and transition to payment', async function (assert) {
     this.subscription.destroy();
-
-    window.Stripe = StripeMock;
-    let config = {
-      mock: true,
-      publishableKey: 'mock'
-    };
-    stubConfig('stripe', config, { instantiate: false });
-    const { owner } = getContext();
-    owner.inject('service:stripev3', 'config', 'config:stripe');
     this.organization.permissions = {
       createSubscription: true
     };
@@ -1284,6 +1234,7 @@ module('Acceptance | profile/billing', function (hooks) {
       .fillIn('zip', '353564')
       .fillIn('vat', '356463');
 
+    await this.owner.lookup('service:stripev3').load();
     await billingForm.proceedPayment.click();
 
     assert.equal(profilePage.billing.selectedPlanOverview.heading.text, 'summary');
@@ -1305,6 +1256,8 @@ module('Acceptance | profile/billing', function (hooks) {
 
     assert.ok(billingPaymentForm.isPresent);
 
+    assert.dom('[role="mount-point"]').exists();
+    await billingPaymentForm.disclaimerCheckbox.click();
     await billingPaymentForm.completePayment.click();
 
     assert.equal(profilePage.billing.plan.name, 'Startup plan pending');

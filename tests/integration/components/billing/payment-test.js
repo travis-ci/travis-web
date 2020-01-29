@@ -84,9 +84,8 @@ module('Integration | Component | billing-payment', function (hooks) {
     assert.dom(profilePage.billing.billingPaymentForm.completePayment.scope).isVisible();
   });
 
-  test('enable pay button when disclaimer is checked and stripe form is filled', async function (assert) {
+  test('enable pay button when disclaimer is checked', async function (assert) {
     this.set('isDisclaimerChecked', true);
-    this.set('stripeElement', true);
     await render(hbs`<Billing::Payment
       @isDisclaimerChecked={{this.isDisclaimerChecked}}
       @stripeElement={{this.stripeElement}}
@@ -100,28 +99,10 @@ module('Integration | Component | billing-payment', function (hooks) {
     assert.dom('[data-test-complete-payment]').isNotDisabled();
   });
 
-  test('disable pay button when disclaimer is checked and stripe form is not filled', async function (assert) {
-    this.set('isDisclaimerChecked', true);
-    this.set('stripeElement', false);
-    await render(hbs`<Billing::Payment
-      @isDisclaimerChecked={{this.isDisclaimerChecked}}
-      @stripeElement={{this.stripeElement}}
-      @cancel={{action 'cancel'}}
-      @goToFirstStep={{action 'goToFirstStep'}}
-      @back={{action 'back'}}/>`);
-
-    assert.dom('h3').hasText('Payment');
-    assert.dom(profilePage.billing.billingPaymentForm.completePayment.scope).isVisible();
-    assert.ok(profilePage.billing.billingPaymentForm.completePayment.isDisabled);
-    assert.dom('[data-test-complete-payment]').isDisabled();
-  });
-
-  test('disable pay button when disclaimer is unchecked and stripe form is filled', async function (assert) {
+  test('disable pay button when disclaimer is unchecked', async function (assert) {
     this.set('isDisclaimerChecked', false);
-    this.set('stripeElement', true);
     await render(hbs`<Billing::Payment
       @isDisclaimerChecked={{this.isDisclaimerChecked}}
-      @stripeElement={{this.stripeElement}}
       @cancel={{action 'cancel'}}
       @goToFirstStep={{action 'goToFirstStep'}}
       @back={{action 'back'}}/>`);

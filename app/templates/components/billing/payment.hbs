@@ -78,7 +78,6 @@
       {{/if}}
     </StripeCard>
     <form.field
-      data-test-check-disclaimer='true'
       @disableFrame={{true}}
       @value={{this.isDisclaimerChecked}}
       @showValidationStatusIcons={{false}}
@@ -98,7 +97,7 @@
       {{else}}
         <button 
           disabled={{this.shouldNotCreateSubscription}}
-          class='{{if this.shouldCreateSubscription 'button--green' 'button disabled'}}' 
+          class='{{if this.isDisclaimerChecked 'button--green' 'button disabled'}}' 
           {{on 'click' form.submit}} 
           data-test-complete-payment='true'
         >

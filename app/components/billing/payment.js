@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 import { task } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
-import { or, reads, and, not } from '@ember/object/computed';
+import { or, reads, not } from '@ember/object/computed';
 import { computed } from '@ember/object';
 import config from 'travis/config/environment';
 
@@ -20,8 +20,7 @@ export default Component.extend({
   isDisclaimerChecked: false,
   options: config.stripeOptions,
 
-  shouldCreateSubscription: and('isDisclaimerChecked', 'stripeElement'),
-  shouldNotCreateSubscription: not('shouldCreateSubscription'),
+  shouldNotCreateSubscription: not('isDisclaimerChecked'),
   firstName: reads('newSubscription.billingInfo.firstName'),
   lastName: reads('newSubscription.billingInfo.lastName'),
   company: reads('newSubscription.billingInfo.company'),
@@ -52,15 +51,12 @@ export default Component.extend({
     });
     const { stripeElement, account, newSubscription, selectedPlan } = this;
     try {
-      const {
-        token: { id, card },
-        error
-      } = yield this.stripe.createStripeToken.perform(stripeElement);
-      if (!error) {
+      const { token, error } = yield this.stripe.createStripeToken.perform(stripeElement);
+      if (!error && token && token.card) {
         const organizationId = account.type === 'organization' ? +(account.id) : null;
         newSubscription.creditCardInfo.setProperties({
-          token: id,
-          lastDigits: card.last4
+          token: token.id,
+          lastDigits: token.card.last4
         });
         newSubscription.setProperties({
           organizationId,
@@ -78,7 +74,7 @@ export default Component.extend({
   }).drop(),
 
   handleCreateSubscription: task(function* () {
-    if (this.shouldCreateSubscription) {
+    if (this.isDisclaimerChecked) {
       yield this.createSubscription.perform();
     }
   }).drop(),
@@ -102,6 +98,7 @@ export default Component.extend({
   actions: {
     complete(stripeElement) {
       this.set('stripeElement', stripeElement);
+      this.flashes.clear();
     },
 
     handleCouponFocus() {

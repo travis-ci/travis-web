@@ -305,6 +305,7 @@ module.exports = function (environment) {
     ENV.stripe = {
       publishableKey: 'pk_test_5i2Bx5nJACluilHLb25d3P9N',
       lazyLoad: true,
+      mock: true
     };
 
     ENV.pusher = {};
