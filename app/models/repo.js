@@ -6,7 +6,7 @@ import { reads, equal, or } from '@ember/object/computed';
 import { Promise as EmberPromise, } from 'rsvp';
 import { task } from 'ember-concurrency';
 import ExpandableRecordArray from 'travis/utils/expandable-record-array';
-import { defaultVcsConfig } from 'travis/utils/vcs'
+import { defaultVcsConfig } from 'travis/utils/vcs';
 import { isEmpty } from '@ember/utils';
 
 export const MIGRATION_STATUS = {

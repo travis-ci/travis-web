@@ -252,7 +252,12 @@ export default function () {
     return repos;
   });
 
-  this.get('/repo/:slug_or_id', function (schema, request) {
+  this.get('/repo/:id', function (schema, { params }) {
+    const repo = schema.repositories.find(params.id);
+    return repo || new Response(404, {});
+  });
+
+  this.get('/repo/:provider/:slug_or_id', function (schema, request) {
     if (request.params.slug_or_id.match(/^\d+$/)) {
       let repo = schema.repositories.find(request.params.slug_or_id);
 
@@ -435,7 +440,7 @@ export default function () {
     return this.serialize(sshKeys, 'v2');
   });
 
-  this.get('/owner/:login', function (schema, request) {
+  this.get('/owner/:provider/:login', function (schema, request) {
     let owner = schema.users.where({ login: request.params.login }).models[0];
     if (owner) {
       return this.serialize(owner, 'owner');
@@ -444,7 +449,7 @@ export default function () {
     }
   });
 
-  this.get('/owner/:login/repos', function (schema, { params, queryParams = {} }) {
+  this.get('/owner/:provider/:login/repos', function (schema, { params, queryParams = {} }) {
     const { login } = params;
     const { sort_by, name_filter } = queryParams;
 
