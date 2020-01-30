@@ -2089,6 +2089,7 @@ export default {
         "owner",
         "status",
         "valid_to",
+        "created_at",
         "source",
       ],
       "representations":  {
@@ -2101,6 +2102,7 @@ export default {
           "owner",
           "status",
           "valid_to",
+          "created_at",
           "source"
         ],
         "minimal":       [
@@ -2108,6 +2110,7 @@ export default {
           "owner",
           "status",
           "valid_to",
+          "created_at",
           "source"
         ],
       },

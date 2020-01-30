@@ -19,6 +19,7 @@ export default Model.extend({
   source: attr(),
   status: attr(),
   validTo: attr(),
+  createdAt: attr('date'),
   permissions: attr(),
   organizationId: attr(),
   coupon: attr(),
