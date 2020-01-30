@@ -191,6 +191,19 @@ module.exports = function (environment) {
     };
   }
 
+  try {
+    Object.keys(ENV.featureFlags).forEach(flagKey => {
+      const envFlagName = `FLAG_${flagKey.toUpperCase().replace(/-/g, '_')}`;
+      const envFlagVal = process.env[envFlagName];
+
+      if (envFlagVal === 'true') {
+        ENV.featureFlags[flagKey] = true;
+      } else if (envFlagVal === 'false') {
+        ENV.featureFlags[flagKey] = false;
+      }
+    });
+  } catch (e) {}
+
   if (ENABLE_FEATURE_FLAGS) {
     try {
       const devFlags = ENABLE_FEATURE_FLAGS.split(',');
