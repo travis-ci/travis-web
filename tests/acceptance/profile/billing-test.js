@@ -1255,9 +1255,11 @@ module('Acceptance | profile/billing', function (hooks) {
 
     assert.dom('[role="mount-point"]').exists();
     await billingPaymentForm.disclaimerCheckbox.click();
-    await billingPaymentForm.completePayment.click();
 
     percySnapshot(assert);
+
+    await billingPaymentForm.completePayment.click();
+
 
     assert.equal(profilePage.billing.plan.name, 'Startup plan pending');
     assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining('2 concurrent jobs');
