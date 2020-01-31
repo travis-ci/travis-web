@@ -1,12 +1,12 @@
-<div class="wrapper {{if this.auth.signedOut 'centered'}}">
-  <TopBar />
-  <FlashDisplay />
-  <div class="wrapper-main">
-    <div id="main" class="main" role="main">
-      <div id="getting-started" class="getting-started">
-        <h1 class="h2--grey">
-          First time here? Let's get you started!
-        </h1>
+<SidebarLayout>
+  <div id="getting-started" class="getting-started">
+    <h1 class="h2--grey">
+      First time here? Let's get you started!
+    </h1>
+
+    {{!-- Github --}}
+    {{#if this.showGithub}}
+      <div>
         <ol class="getting-started-steps">
           <li>
             <img
@@ -81,13 +81,11 @@
           </ExternalLinkTo>.
         </p>
       </div>
-    </div>
+    {{/if}}
+
+    {{!-- Bitbucket --}}
+    {{#if this.showBitbucket}}
+      <div>Bitbucket</div>
+    {{/if}}
   </div>
-  {{#if this.auth.signedIn}}
-    {{#unless this.features.dashboard}}
-      <aside id="left" class="{{unless this.auth.signedIn 'hidden'}}">
-        <RepositorySidebar />
-      </aside>
-    {{/unless}}
-  {{/if}}
-</div>
+</SidebarLayout>
