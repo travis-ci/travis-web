@@ -104,11 +104,11 @@ export default Component.extend({
 
   migrate: task(function* () {
     let queryParams = {
+      provider: providers.github.urlPrefix,
       sort_by: 'name',
       'repository.managed_by_installation': false,
       'repository.active': true,
       custom: {
-        provider: providers.github.urlPrefix,
         owner: this.owner.login,
         type: 'byOwner',
       },
