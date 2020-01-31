@@ -1220,8 +1220,6 @@ module('Acceptance | profile/billing', function (hooks) {
     const { billingForm, subscribeButton, billingPaymentForm } = profilePage.billing;
     await subscribeButton.click();
 
-    percySnapshot(assert);
-
     await selectChoose(billingForm.billingSelectCountry.scope, 'Germany');
 
     await billingForm
@@ -1258,6 +1256,8 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.dom('[role="mount-point"]').exists();
     await billingPaymentForm.disclaimerCheckbox.click();
     await billingPaymentForm.completePayment.click();
+
+    percySnapshot(assert);
 
     assert.equal(profilePage.billing.plan.name, 'Startup plan pending');
     assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining('2 concurrent jobs');
