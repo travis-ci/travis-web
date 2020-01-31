@@ -257,21 +257,16 @@ export default function () {
     return repo || new Response(404, {});
   });
 
-  this.get('/repo/:provider/:slug_or_id', function (schema, request) {
-    if (request.params.slug_or_id.match(/^\d+$/)) {
-      let repo = schema.repositories.find(request.params.slug_or_id);
-
-      if (repo) {
-        return repo;
-      } else {
-        return new Response(404, {});
-      }
+  this.get('/repo/:provider/:slug_or_id', function (schema, { params }) {
+    const { slug_or_id } = params;
+    let repo;
+    if (slug_or_id.match(/^\d+$/)) {
+      repo = schema.repositories.find(slug_or_id);
     } else {
-      let slug = request.params.slug_or_id;
-      let repos = schema.repositories.where({ slug: decodeURIComponent(slug) });
-
-      return repos.models[0];
+      const slug = decodeURIComponent(slug_or_id);
+      repo = schema.repositories.findBy({ slug });
     }
+    return repo || new Response(404, {});
   });
 
   this.get('/repo/:repositoryId/crons', function (schema, request) {

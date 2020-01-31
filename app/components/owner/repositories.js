@@ -15,6 +15,7 @@ import window from 'ember-window-mock';
 import { task } from 'ember-concurrency';
 import fetchAll from 'travis/utils/fetch-all';
 
+const { providers } = config;
 const { appName, migrationRepositoryCountLimit } = config.githubApps;
 
 export default Component.extend({
@@ -107,6 +108,7 @@ export default Component.extend({
       'repository.managed_by_installation': false,
       'repository.active': true,
       custom: {
+        provider: providers.github.urlPrefix,
         owner: this.owner.login,
         type: 'byOwner',
       },

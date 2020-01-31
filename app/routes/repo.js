@@ -10,6 +10,8 @@ export default TravisRoute.extend(ScrollResetMixin, {
   auth: service(),
   features: service(),
 
+  slug: null,
+
   onRunningTab: computed('features.showRunningJobsInSidebar', 'tabStates.sidebarTab', function () {
     let showRunningJobsInSidebar = this.get('features.showRunningJobsInSidebar');
     let sidebarTab = this.get('tabStates.sidebarTab');
@@ -52,6 +54,14 @@ export default TravisRoute.extend(ScrollResetMixin, {
 
   model({ provider, owner, name }) {
     const slug = `${owner}/${name}`;
+    this.set('slug', slug);
     return Repo.fetchBySlug(this.store, slug, provider);
   },
+
+  actions: {
+    error(error) {
+      error.slug = this.slug;
+      return true;
+    }
+  }
 });

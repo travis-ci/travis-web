@@ -22,6 +22,10 @@ export default V3Adapter.extend({
       const { provider, slug, custom } = query;
       const providerPrefix = provider ? `${provider}/` : '';
 
+      delete query.provider;
+      delete query.slug;
+      delete query.custom;
+
       // fetch repo by slug
       if (!id && slug) {
         return `${prefix}/repo/${providerPrefix}${encodeURIComponent(slug)}`;
