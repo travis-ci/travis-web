@@ -86,7 +86,15 @@
     >
       <field.checkbox @name='disclaimer' class="flex-1" data-test-disclaimer-checkbox='true'>
         <span class="text-xs">
-          I authorize Travis CI to send instructions to the financial institution.
+          I've read and accepted Travis CI 
+          <ExternalLinkTo
+            class="payment-terms"
+            data-test-payment-terms=""
+            @href={{this.config.urls.terms}}
+            @title="Terms of Service"
+          >
+            terms of Service
+          </ExternalLinkTo>
         </span>
       </field.checkbox>
     </form.field>

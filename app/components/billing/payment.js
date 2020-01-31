@@ -11,6 +11,7 @@ export default Component.extend({
   flashes: service(),
   metrics: service(),
   storage: service(),
+  config,
 
   account: null,
   stripeElement: null,
