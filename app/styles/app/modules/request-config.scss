@@ -1,3 +1,58 @@
+.request-configs {
+  position: relative;
+
+  &.closed .trigger-build-fields,
+  &.open .trigger-build-fields {
+    display: none;
+  }
+
+  .trigger-build-cancel,
+  .trigger-build-customize {
+    display: inline-block;
+    position: relative;
+    float: right;
+    top: -55px;
+    padding: 7px;
+    cursor: pointer;
+  }
+
+  .trigger-build-customize {
+    margin-left: 7px;
+  }
+
+  button.trigger-build {
+    position: relative;
+    float: right;
+    top: -55px;
+    width: 100px;
+    .loading-indicator i {
+      background-color: white;
+    }
+  }
+  &.closed button.trigger-build {
+    @include travisBorder;
+    background-color: white !important;
+    color: $asphalt-grey;
+  }
+
+  textarea {
+    height: 350px !important;
+  }
+
+  h4 {
+    color: #9d9d9d;
+    display: block;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 0.9em;
+    margin-bottom: 5px;
+  }
+
+  .ember-radio-button {
+    margin-right: 10px;
+  }
+}
+
 .paper-block + .request-config-container {
   margin-top: 1.2em;
 }
@@ -7,16 +62,17 @@
   border: 1px solid $pebble-grey;
   margin-bottom: 1.2em;
 
-  button {
+  button.copy-btn {
     display: none;
     position: absolute;
     right: 1em;
     top: 1em;
     border: 1px solid $pebble-grey;
     border-radius: 2px;
+    cursor: pointer;
   }
 
-  &:hover button {
+  &:hover button.copy-btn {
     display: block;
 
     &:hover {
