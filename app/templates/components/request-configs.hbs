@@ -2,9 +2,9 @@
   @request={{@request}}
   @viewMessage={{action (mut this.viewingMessage)}}
 />
-<div class="raw-configs">
+<div class="request-configs">
   {{#each @request.uniqRawConfigs as |rawConfig|}}
-    <RawConfig
+    <RequestRawConfig
       @rawConfig={{rawConfig}}
       @build={{@request.build}}
       @slug={{@request.repo.slug}}
