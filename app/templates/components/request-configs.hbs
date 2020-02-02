@@ -1,18 +1,125 @@
-<RequestMessagesList
-  @request={{@request}}
-  @viewMessage={{action (mut this.viewingMessage)}}
-/>
-<div class="request-configs">
+<TravisForm
+  @onSubmit={{perform this.triggerBuild}}
+  as |form|
+>
+  <div class="form-elem">
+    {{#unless this.closed}}
+      <a class="trigger-build-cancel" onclick={{action onCancel}}>Cancel</a>
+    {{/unless }}
+    {{#unless this.closed}}
+      <a class="trigger-build-customize" onclick={{action onCustomize}}>Customize</a>
+    {{/unless }}
+    <button
+      data-test-trigger-build-submit="true"
+      onclick={{action onTriggerBuild}}
+      type="button"
+      class="trigger-build button--blue"
+      title="Trigger build with your settings"
+    >
+      {{#if this.processing}}
+        <LoadingIndicator />
+      {{else}}
+        Trigger build
+      {{/if }}
+    </button>
+  </div>
+  <div class="trigger-build-fields">
+    <div class="form-elem">
+      <form.field
+        data-test-trigger-build-branch="true"
+        @label="Branch"
+        @placeholder="Select a branch"
+        @value={{this.branch}}
+        @showValidationStatusIcons={{false}}
+        @onChange={{action (mut this.branch)}}
+        as |field|
+      >
+        <field.select
+          @search={{perform this.searchBranches}}
+          as |branch|
+        >
+          {{branch}}
+        </field.select>
+      </form.field>
+    </div>
+    <div class="form-elem">
+      <form.field
+        data-test-trigger-build-sha="true"
+        @label="Commit"
+        @placeholder="Specify a Git sha (optiona)"
+        @value={{this.sha}}
+        @showValidationStatusIcons={{false}}
+        @onChange={{action (mut this.sha)}}
+        as |field|
+      >
+        {{field.input}}
+      </form.field>
+    </div>
+    <div class="form-elem">
+      <form.field
+        data-test-trigger-build-message="true"
+        @value={{this.message}}
+        @label="Message"
+        @onChange={{action (mut this.message)}}
+        @placeholder="Overwrite the commit message (optional)"
+        as |field|
+      >
+        {{field.input}}
+      </form.field>
+    </div>
+    <div class="form-elem">
+      <form.field
+        data-test-trigger-build-config="true"
+        @label="Config"
+        as |field|
+      >
+        <textarea type="text" onchange={{action setConfig}}
+        >{{readonly this.config}}</textarea>
+      </form.field>
+    </div>
+    <div class="form-elem">
+      <h4>
+        Merge mode
+      </h4>
+      {{#radio-button value="deep_merge_append" groupValue=mergeMode}}
+        Deep merge & append
+      {{/radio-button}}
+      {{#radio-button value="deep_merge_prepend" groupValue=mergeMode}}
+        Deep merge & prepend
+      {{/radio-button}}
+      {{#radio-button value="deep_merge" groupValue=mergeMode}}
+        Deep merge
+      {{/radio-button}}
+      {{#radio-button value="merge" groupValue=mergeMode}}
+        Merge
+      {{/radio-button}}
+      {{#radio-button value="replace" groupValue=mergeMode}}
+        Replace
+      {{/radio-button}}
+    </div>
+  </div>
+
+  {{#if this.closed}}
+    <RequestMessagesList
+      @request={{@request}}
+      @viewMessage={{action (mut this.viewingMessage)}}
+    />
+  {{/if}}
+
   {{#each @request.uniqRawConfigs as |rawConfig|}}
     <RequestRawConfig
       @rawConfig={{rawConfig}}
       @build={{@request.build}}
       @slug={{@request.repo.slug}}
+      @status={{this.status}}
     />
   {{else}}
     <div class="starred-empty">
       The .travis.yml file used for this job is not available
     </div>
   {{/each}}
-  <RequestConfig @config={{@request.config}} />
-</div>
+
+  {{#if this.closed}}
+    <RequestConfig @config={{@request.config}} />
+  {{/if}}
+</TravisForm>

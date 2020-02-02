@@ -1,5 +1,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
+import { match } from '@ember/object/computed';
 import {
   isInternal,
   presentedPath,
@@ -14,6 +15,16 @@ export default Component.extend({
 
   copied: false,
   baseYmlName: '.travis.yml',
+  status: undefined,
+  open: match('status', /open/),
+
+  display: computed('isApi', 'status', function () {
+    return !this.isApi || this.status != 'customize';
+  }),
+
+  isApi: computed('rawConfig.source', function () {
+    return this.rawConfig.source.includes('api');
+  }),
 
   isExpanded: computed('rawConfig.config', function () {
     return this.get('rawConfig.config') !== '{}';
