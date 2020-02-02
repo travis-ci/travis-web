@@ -19,7 +19,7 @@
     {{#if this.isExpanded}}
       <div class="list">
         {{#each this.request.messages as |message|}}
-          <BuildMessage @message={{message}} />
+          <RequestMessage @message={{message}} />
         {{/each}}
       </div>
     {{/if}}
