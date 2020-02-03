@@ -2,124 +2,126 @@
   @onSubmit={{perform this.triggerBuild}}
   as |form|
 >
-  <div class="trigger-build-buttons">
-    <button
-      data-test-trigger-build-submit="true"
-      onclick={{action onTriggerBuild}}
-      type="button"
-      class="trigger-build button--blue"
-      title="Trigger build with your settings"
-    >
-      {{#if this.processing}}
-        <LoadingIndicator />
-      {{else}}
-        Trigger build
-      {{/if }}
-    </button>
-    {{#unless this.closed}}
-      <a class="trigger-build-customize" onclick={{action onCustomize}}>Customize</a>
-    {{/unless }}
-    {{#unless this.closed}}
-      <a class="trigger-build-cancel" onclick={{action onCancel}}>Cancel</a>
-    {{/unless }}
-  </div>
-  <div class="trigger-build-fields">
-    <div class="form-elem">
-      <form.field
-        data-test-trigger-build-branch="true"
-        @label="Branch"
-        @placeholder="Select a branch"
-        @value={{this.branch}}
-        @showValidationStatusIcons={{false}}
-        @onChange={{action (mut this.branch)}}
-        as |field|
+  {{#if displayTriggerBuild}}
+    <div class="trigger-build-buttons">
+      <button
+        data-test-trigger-build-submit="true"
+        onclick={{action onTriggerBuild}}
+        type="button"
+        class="trigger-build button--blue"
+        title="Trigger build with your settings"
       >
-        <field.select
-          @search={{perform this.searchBranches}}
-          as |branch|
+        {{#if this.processing}}
+          <LoadingIndicator />
+        {{else}}
+          Trigger build
+        {{/if }}
+      </button>
+      {{#unless this.closed}}
+        <a class="trigger-build-customize" onclick={{action onCustomize}}>Customize</a>
+      {{/unless }}
+      {{#unless this.closed}}
+        <a class="trigger-build-cancel" onclick={{action onCancel}}>Cancel</a>
+      {{/unless }}
+    </div>
+    <div class="trigger-build-fields">
+      <div class="form-elem">
+        <form.field
+          data-test-trigger-build-branch="true"
+          @label="Branch"
+          @placeholder="Select a branch"
+          @value={{this.branch}}
+          @showValidationStatusIcons={{false}}
+          @onChange={{action (mut this.branch)}}
+          as |field|
         >
-          {{branch}}
-        </field.select>
-      </form.field>
-    </div>
-    <div class="form-elem">
-      <form.field
-        data-test-trigger-build-sha="true"
-        @label="Commit"
-        @placeholder="Specify a Git sha (optiona)"
-        @value={{this.sha}}
-        @showValidationStatusIcons={{false}}
-        @onChange={{action (mut this.sha)}}
-        as |field|
-      >
-        {{field.input}}
-      </form.field>
-    </div>
-    <div class="form-elem">
-      <form.field
-        data-test-trigger-build-message="true"
-        @value={{this.message}}
-        @label="Message"
-        @onChange={{action (mut this.message)}}
-        @placeholder="Overwrite the commit message (optional)"
-        as |field|
-      >
-        {{field.input}}
-      </form.field>
-    </div>
-    <div class="form-elem">
-      <div class="config-type {{this.configMode}}">
-        <span class="yaml">YAML</span>
-        <span class="javascript">JSON</span>
+          <field.select
+            @search={{perform this.searchBranches}}
+            as |branch|
+          >
+            {{branch}}
+          </field.select>
+        </form.field>
       </div>
-      <form.field
-        data-test-trigger-build-config="true"
-        @label="Build Config"
-        as |field|
-      >
-        {{ivy-codemirror
-          value=this.config
-          valueUpdated=(action (mut config))
-          options=(hash
-            mode=this.configMode
-            lineNumbers=true
-            tabSize=2
-            placeholder="Overwrite build config (YAML or JSON)"
-          )
-        }}
-      </form.field>
-    </div>
-    <div class="form-elem">
-      <h4>
-        Merge mode
-      </h4>
-      {{#radio-button value="deep_merge_append" groupValue=mergeMode}}
-        Deep Merge & Append
-      {{/radio-button}}
-      {{#radio-button value="deep_merge_prepend" groupValue=mergeMode}}
-        Deep Merge & Prepend
-      {{/radio-button}}
-      {{#radio-button value="deep_merge" groupValue=mergeMode}}
-        Deep Merge
-      {{/radio-button}}
-      {{#radio-button value="merge" groupValue=mergeMode}}
-        Merge
-      {{/radio-button}}
-      {{#radio-button value="replace" groupValue=mergeMode}}
-        Replace
-      {{/radio-button}}
+      <div class="form-elem">
+        <form.field
+          data-test-trigger-build-sha="true"
+          @label="Commit"
+          @placeholder="Specify a Git sha (optiona)"
+          @value={{this.sha}}
+          @showValidationStatusIcons={{false}}
+          @onChange={{action (mut this.sha)}}
+          as |field|
+        >
+          {{field.input}}
+        </form.field>
+      </div>
+      <div class="form-elem">
+        <form.field
+          data-test-trigger-build-message="true"
+          @value={{this.message}}
+          @label="Message"
+          @onChange={{action (mut this.message)}}
+          @placeholder="Overwrite the commit message (optional)"
+          as |field|
+        >
+          {{field.input}}
+        </form.field>
+      </div>
+      <div class="form-elem">
+        <div class="config-type {{this.configMode}}">
+          <span class="yaml">YAML</span>
+          <span class="javascript">JSON</span>
+        </div>
+        <form.field
+          data-test-trigger-build-config="true"
+          @label="Build Config"
+          as |field|
+        >
+          {{ivy-codemirror
+            value=this.config
+            valueUpdated=(action (mut config))
+            options=(hash
+              mode=this.configMode
+              lineNumbers=true
+              tabSize=2
+              placeholder="Overwrite build config"
+            )
+          }}
+        </form.field>
+      </div>
+      <div class="form-elem">
+        <h4>
+          Merge mode
+        </h4>
+        {{#radio-button value="deep_merge_append" groupValue=mergeMode}}
+          Deep Merge & Append
+        {{/radio-button}}
+        {{#radio-button value="deep_merge_prepend" groupValue=mergeMode}}
+          Deep Merge & Prepend
+        {{/radio-button}}
+        {{#radio-button value="deep_merge" groupValue=mergeMode}}
+          Deep Merge
+        {{/radio-button}}
+        {{#radio-button value="merge" groupValue=mergeMode}}
+          Merge
+        {{/radio-button}}
+        {{#radio-button value="replace" groupValue=mergeMode}}
+          Replace
+        {{/radio-button}}
 
-      <ExternalLinkTo class="hint" href="{{config-get 'urls.triggerBuildMergeModes'}}">
-        <SvgImage @name='icon-help' @class='icon-help' />
-      </ExternalLinkTo>
-    </div>
+        <ExternalLinkTo class="hint" href="{{config-get 'urls.triggerBuildMergeModes'}}">
+          <SvgImage @name='icon-help' @class='icon-help' />
+        </ExternalLinkTo>
+      </div>
 
-    {{#unless this.replacing}}
-      <h4>
-        Build Config
-      </h4>
-    {{/unless}}
-  </div>
+      {{#unless this.replacing}}
+        <h4>
+          Build Config
+        </h4>
+      {{/unless}}
+    </div>
+  {{/if}}
 
   {{#if this.closed}}
     <RequestMessagesList
