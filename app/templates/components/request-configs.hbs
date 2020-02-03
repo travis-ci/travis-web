@@ -4,6 +4,12 @@
 >
   {{#if displayTriggerBuild}}
     <div class="trigger-build-buttons">
+      {{#unless this.closed}}
+        <a class="trigger-build-cancel" onclick={{action onCancel}}>Cancel</a>
+      {{/unless }}
+      {{#unless this.closed}}
+        <a class="trigger-build-customize" onclick={{action onCustomize}}>Customize</a>
+      {{/unless }}
       <button
         data-test-trigger-build-submit="true"
         onclick={{action onTriggerBuild}}
@@ -17,12 +23,6 @@
           Trigger build
         {{/if }}
       </button>
-      {{#unless this.closed}}
-        <a class="trigger-build-customize" onclick={{action onCustomize}}>Customize</a>
-      {{/unless }}
-      {{#unless this.closed}}
-        <a class="trigger-build-cancel" onclick={{action onCancel}}>Cancel</a>
-      {{/unless }}
     </div>
     <div class="trigger-build-fields">
       <div class="form-elem">
