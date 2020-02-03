@@ -68,13 +68,9 @@
       </form.field>
     </div>
     <div class="form-elem">
-      <div class="config-modes">
-        {{#radio-button value="yaml" groupValue=configMode}}
-          YAML
-        {{/radio-button}}
-        {{#radio-button value="javascript" groupValue=configMode}}
-          JSON
-        {{/radio-button}}
+      <div class="config-type {{this.configMode}}">
+        <span class="yaml">YAML</span>
+        <span class="javascript">JSON</span>
       </div>
       <form.field
         data-test-trigger-build-config="true"
