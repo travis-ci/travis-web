@@ -15,6 +15,7 @@ export default Component.extend(BranchSearching, {
   status: 'closed',
   processing: false,
   closed: match('status', /closed/),
+  customize: match('status', /customize/),
   replacing: match('mergeMode', /replace/),
 
   branch: reads('request.repo.defaultBranch.name'),
@@ -47,6 +48,10 @@ export default Component.extend(BranchSearching, {
   searchBranches: task(function* (query) {
     const result = yield this.searchBranch.perform(this.get('repo.id'), query);
     return result.mapBy('name');
+  }),
+
+  multipleConfigs: computed('request.rawConfigs', function () {
+    return this.get('request.uniqRawConfigs.length') > 1;
   }),
 
   onTriggerBuild: function (e) {
