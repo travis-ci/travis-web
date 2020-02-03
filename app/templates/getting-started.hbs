@@ -88,11 +88,54 @@
           @number={{1}}
           @provider='bitbucket'
           @providerImg={{true}}
-          @title='Activate'
+          @title='Activate Bitbucket Repositories'
         >
           <UiKit::Text>
-            Once you're signed in, go to [your profile page] where you'll see the Settings Tab, and toggle
+            Once you're signed in, go to
+            <LinkTo @route='account.repositories'>your profile page</LinkTo>
+            where you'll see the Settings Tab, and toggle
             the repositories you want to use with Travis CI.
+          </UiKit::Text>
+          <div>
+            You need to be an admin for any repositories you want to integrate with Travis CI.
+          </div>
+        </GettingStartedStep>
+        <GettingStartedStep
+          @number={{2}}
+          @provider='bitbucket'
+          @title='Add a .travis.yml file to your repository'
+        >
+          <UiKit::Text>
+            In order for Travis CI to build your project, you'll need to add a
+            <code>.travis.yml</code>
+            configuration file to the root directory of your repository.
+          </UiKit::Text>
+          <UiKit::Text>
+            If a
+            <code>.travis.yml</code>
+            is not in your repository, or is not valid YAML, Travis CI will ignore it.
+          </UiKit::Text>
+          <UiKit::Text>
+            Here you can find some of our
+            <UiKit::Link @href={{config-get 'urls.languages'}}>basic language examples</UiKit::Link>.
+          </UiKit::Text>
+        </GettingStartedStep>
+        <GettingStartedStep
+          @number={{3}}
+          @provider='bitbucket'
+          @title='Trigger your first build'
+        >
+          <UiKit::Text>
+            Som you've synchronized your Bitbucket account with Travis CI, activated the repositories
+            you want to use, and added a
+            <code>.travis.yml</code>
+            file to your repository. All you need to do now is
+            commit to your local git history and <code>git push</code> it to bitbucket.
+            <em>That's all there is to it!</em>
+          </UiKit::Text>
+          <UiKit::Text>
+            Want to learn more?
+            <UiKit::Link @href={{config-get 'urls.docs'}}>Read up on our docs</UiKit::Link>.
           </UiKit::Text>
         </GettingStartedStep>
       {{/if}}

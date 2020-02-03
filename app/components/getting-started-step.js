@@ -2,9 +2,7 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 
 const COLORS = {
-  bitbucket: {
-    title: 'blue'
-  }
+  bitbucket: 'blue'
 };
 
 export default Component.extend({
@@ -26,7 +24,7 @@ export default Component.extend({
     return `getting-started-step-${number}${affix}`;
   }),
 
-  colors: computed('provider', function () {
+  color: computed('provider', function () {
     const { provider } = this;
     return COLORS[provider];
   }),

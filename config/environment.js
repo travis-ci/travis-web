@@ -60,6 +60,7 @@ module.exports = function (environment) {
       enterprise: 'https://enterprise.travis-ci.com',
       imprint: 'https://docs.travis-ci.com/imprint.html',
       jobs: 'https://travisci.workable.com/',
+      languages: 'https://docs.travis-ci.com/user/language-specific/',
       multiOS: 'https://docs.travis-ci.com/user/multi-os/',
       node: 'https://docs.travis-ci.com/user/languages/javascript-with-nodejs/',
       noRun: 'https://docs.travis-ci.com/user/common-build-problems/#i-pushed-a-commit-and-cant-fin',
