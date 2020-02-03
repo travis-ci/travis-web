@@ -93,6 +93,15 @@ module.exports = function () {
           'tailwind/base': '/assets/tailwind-base.css'
         }
       }
+    },
+    codemirror: {
+      modes: [
+        'yaml',
+        'javascript'
+      ],
+      addonFiles: [
+        'display/placeholder.js',
+      ]
     }
   });
 

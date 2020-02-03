@@ -94,6 +94,7 @@
     "eslint-plugin-ember": "^7.1.0",
     "eslint-plugin-node": "^10.0.0",
     "fuzzysort": "^1.0.1",
+    "ivy-codemirror": "^2.1.0",
     "loader.js": "^4.7.0",
     "postcss-scss": "^2.0.0",
     "pusher-js": "^5.0.0",

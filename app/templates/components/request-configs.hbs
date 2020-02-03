@@ -2,13 +2,7 @@
   @onSubmit={{perform this.triggerBuild}}
   as |form|
 >
-  <div class="form-elem">
-    {{#unless this.closed}}
-      <a class="trigger-build-cancel" onclick={{action onCancel}}>Cancel</a>
-    {{/unless }}
-    {{#unless this.closed}}
-      <a class="trigger-build-customize" onclick={{action onCustomize}}>Customize</a>
-    {{/unless }}
+  <div class="trigger-build-buttons">
     <button
       data-test-trigger-build-submit="true"
       onclick={{action onTriggerBuild}}
@@ -22,6 +16,12 @@
         Trigger build
       {{/if }}
     </button>
+    {{#unless this.closed}}
+      <a class="trigger-build-customize" onclick={{action onCustomize}}>Customize</a>
+    {{/unless }}
+    {{#unless this.closed}}
+      <a class="trigger-build-cancel" onclick={{action onCancel}}>Cancel</a>
+    {{/unless }}
   </div>
   <div class="trigger-build-fields">
     <div class="form-elem">
@@ -73,8 +73,12 @@
         @label="Config"
         as |field|
       >
-        <textarea type="text" onchange={{action setConfig}}
-        >{{readonly this.config}}</textarea>
+        {{ivy-codemirror
+          value=this.config
+          valueUpdated=(action (mut config))
+          options=(hash lineNumbers=true tabSize=2 mode="yaml"
+          placeholder="Overwrite build config (YAML or JSON)")
+        }}
       </form.field>
     </div>
     <div class="form-elem">
@@ -82,13 +86,13 @@
         Merge mode
       </h4>
       {{#radio-button value="deep_merge_append" groupValue=mergeMode}}
-        Deep merge & append
+        Deep Merge & Append
       {{/radio-button}}
       {{#radio-button value="deep_merge_prepend" groupValue=mergeMode}}
-        Deep merge & prepend
+        Deep Merge & Prepend
       {{/radio-button}}
       {{#radio-button value="deep_merge" groupValue=mergeMode}}
-        Deep merge
+        Deep Merge
       {{/radio-button}}
       {{#radio-button value="merge" groupValue=mergeMode}}
         Merge
@@ -97,6 +101,10 @@
         Replace
       {{/radio-button}}
     </div>
+
+    <h4>
+      Build Config
+    </h4>
   </div>
 
   {{#if this.closed}}
@@ -112,6 +120,7 @@
       @build={{@request.build}}
       @slug={{@request.repo.slug}}
       @status={{this.status}}
+      @mergeMode={{this.mergeMode}}
     />
   {{else}}
     <div class="starred-empty">

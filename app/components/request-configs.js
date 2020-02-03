@@ -153,11 +153,4 @@ export default Component.extend(BranchSearching, {
 
     this.flashes.error(message);
   },
-
-  // cannot figure out how to use form.field with a textarea or
-  // the mut helper with a textarea
-  setConfig: function (e) {
-    this.set('config', e.target.value);
-  }
-
 });

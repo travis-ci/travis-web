@@ -18,8 +18,12 @@ export default Component.extend({
   status: undefined,
   open: match('status', /open/),
 
-  display: computed('isApi', 'status', function () {
-    return !this.isApi || this.status != 'customize';
+  display: computed('isApi', 'status', 'mergeMode', function () {
+    return !this.isReplace && (!this.isApi || this.status != 'customize');
+  }),
+
+  isReplace: computed('mergeMode', function () {
+    return this.mergeMode == 'replace' && this.status == 'customize';
   }),
 
   isApi: computed('rawConfig.source', function () {
