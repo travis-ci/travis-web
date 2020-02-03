@@ -14,40 +14,6 @@
     }
   }
 
-  &.closed .trigger-build-fields,
-  &.open .trigger-build-fields {
-    display: none;
-  }
-
-  .trigger-build-cancel,
-  .trigger-build-customize {
-    display: inline-block;
-    line-height: 1;
-    cursor: pointer;
-
-    &:hover,
-    &:active {
-      color: $oxide-blue;
-    }
-  }
-
-  .trigger-build-cancel {
-    margin-left: 8px;
-    padding: 8px;
-    border: 1px solid transparent;
-  }
-
-  .trigger-build-customize {
-    @include travisBorder;
-    margin-left: 16px;
-    padding: 8px 12px;
-
-    &:hover,
-    &:active {
-      border-color: $oxide-blue;
-    }
-  }
-
   button.trigger-build {
     @include colorSVG($oxide-blue);
 
@@ -68,6 +34,40 @@
     @include travisBorder;
     background-color: white !important;
     color: $asphalt-grey;
+  }
+
+  .trigger-build-cancel,
+  .trigger-build-customize {
+    display: inline-block;
+    line-height: 1;
+    cursor: pointer;
+
+    &:hover,
+    &:active {
+      color: $oxide-blue;
+    }
+  }
+
+  .trigger-build-cancel {
+    margin-right: 8px;
+    padding: 8px;
+    border: 1px solid transparent;
+  }
+
+  .trigger-build-customize {
+    @include travisBorder;
+    margin-right: 16px;
+    padding: 8px 12px;
+
+    &:hover,
+    &:active {
+      border-color: $oxide-blue;
+    }
+  }
+
+  &.closed .trigger-build-fields,
+  &.open .trigger-build-fields {
+    display: none;
   }
 
   .config-type {
