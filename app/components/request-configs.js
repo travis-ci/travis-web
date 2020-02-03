@@ -6,7 +6,7 @@ import config from 'travis/config/environment';
 import { inject as service } from '@ember/service';
 import BranchSearching from 'travis/mixins/branch-searching';
 
-export default Component.extend({
+export default Component.extend(BranchSearching, {
   tagName: 'div',
   classNames: ['request-configs'],
   classNameBindings: ['status', 'processing'],
@@ -27,7 +27,7 @@ export default Component.extend({
   router: service(),
 
   searchBranches: task(function* (query) {
-    const result = yield this.searchBranch.perform(this.repo.id, query);
+    const result = yield this.searchBranch.perform(this.get('repo.id'), query);
     return result.mapBy('name');
   }),
 
