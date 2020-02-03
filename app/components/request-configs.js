@@ -16,7 +16,6 @@ export default Component.extend(BranchSearching, {
   processing: false,
   closed: match('status', /closed/),
   replacing: match('mergeMode', /replace/),
-  configMode: 'yaml',
 
   branch: reads('request.repo.defaultBranch.name'),
   sha: reads('request.commit.sha'),
@@ -59,6 +58,23 @@ export default Component.extend(BranchSearching, {
       this.set('status', 'open');
     }
   },
+
+  configMode: computed('config', function () {
+    console.log(this.config);
+    if (this.config && this.config[0] == '{') {
+      return 'javascript';
+    } else {
+      return 'yaml';
+    }
+  }),
+
+  configType: computed('configMode', function () {
+    if (this.configMode == 'javascript') {
+      return 'JSON';
+    } else {
+      return 'YAML';
+    }
+  }),
 
   apiConfig: computed('request.rawConfigs', function () {
     const config = this.get('request.uniqRawConfigs').find((config) => config.source.includes('api'));
