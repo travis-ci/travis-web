@@ -70,7 +70,7 @@
     <div class="form-elem">
       <form.field
         data-test-trigger-build-config="true"
-        @label="Config"
+        @label="Additional Build Config"
         as |field|
       >
         {{ivy-codemirror
@@ -100,6 +100,10 @@
       {{#radio-button value="replace" groupValue=mergeMode}}
         Replace
       {{/radio-button}}
+
+      <ExternalLinkTo class="hint" href="{{config-get 'urls.triggerBuildMergeModes'}}">
+        <SvgImage @name='icon-help' @class='icon-help' />
+      </ExternalLinkTo>
     </div>
 
     <h4>

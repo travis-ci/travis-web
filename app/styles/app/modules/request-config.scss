@@ -113,6 +113,11 @@
   .ember-radio-button {
     margin-right: 16px;
   }
+
+  .hint {
+    position: absolute;
+    right: 0;
+  }
 }
 
 .paper-block + .request-config-container {
