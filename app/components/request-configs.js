@@ -27,6 +27,23 @@ export default Component.extend(BranchSearching, {
   flashes: service(),
   router: service(),
 
+  displayTriggerBuild: computed(
+    'repo.migrationStatus',
+    'repo.permissions.create_request',
+    'features.{enterpriseVersion,proVersion}',
+    function () {
+      let migrationStatus = this.get('repo.migrationStatus');
+      let canTriggerBuild = this.get('repo.permissions.create_request');
+      let enterprise = this.get('features.enterpriseVersion');
+      let pro = this.get('features.proVersion');
+
+      if (enterprise || pro) {
+        return canTriggerBuild;
+      }
+      return canTriggerBuild && migrationStatus !== 'migrated';
+    }
+  ),
+
   searchBranches: task(function* (query) {
     const result = yield this.searchBranch.perform(this.get('repo.id'), query);
     return result.mapBy('name');
@@ -60,7 +77,6 @@ export default Component.extend(BranchSearching, {
   },
 
   configMode: computed('config', function () {
-    console.log(this.config);
     if (this.config && this.config[0] == '{') {
       return 'javascript';
     } else {

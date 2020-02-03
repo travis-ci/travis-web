@@ -8,6 +8,9 @@
 
     * {
       vertical-align: bottom;
+      user-select: none;
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
     }
   }
 
