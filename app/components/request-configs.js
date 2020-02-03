@@ -15,6 +15,8 @@ export default Component.extend(BranchSearching, {
   status: 'closed',
   processing: false,
   closed: match('status', /closed/),
+  replacing: match('mergeMode', /replace/),
+  configMode: 'yaml',
 
   branch: reads('request.repo.defaultBranch.name'),
   sha: reads('request.commit.sha'),
