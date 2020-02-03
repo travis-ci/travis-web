@@ -24,6 +24,14 @@
         {{/if }}
       </button>
     </div>
+    {{#unless this.closed}}
+      <p>
+        <SvgImage @name='rocket' @class='trigger-build-icon' />
+        Trigger a build request with the following
+        {{#if this.customize}}customized details and{{/if}}
+        build config{{#if this.multipleConfigs}}s{{/if}}.
+      </p>
+    {{/unless}}
     <div class="trigger-build-fields">
       <div class="form-elem">
         <form.field

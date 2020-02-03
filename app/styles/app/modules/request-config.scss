@@ -14,6 +14,20 @@
     }
   }
 
+  p {
+    padding: 1em;
+    border: 1px solid $pebble-grey;
+  }
+
+  .trigger-build-icon {
+    position: relative;
+    top: 2px;
+    height: 13px;
+    width: 16px;
+    margin-right: 6px;
+    opacity: 0.4;
+  }
+
   button.trigger-build {
     @include colorSVG($oxide-blue);
 
