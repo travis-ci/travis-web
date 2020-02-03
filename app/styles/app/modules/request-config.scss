@@ -67,6 +67,22 @@
     color: $asphalt-grey;
   }
 
+  .config-modes {
+    position: absolute;
+    right: 0;
+    font-size: 12px;
+    z-index: 2;
+
+    label {
+      margin: 0 0 0 8px;
+    }
+
+    input[type=radio] {
+      width: 12px;
+      margin: 0 4px 0 0;
+    }
+  }
+
   .CodeMirror {
     height: 350px !important;
     margin: -4px;

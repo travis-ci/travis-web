@@ -68,16 +68,28 @@
       </form.field>
     </div>
     <div class="form-elem">
+      <div class="config-modes">
+        {{#radio-button value="yaml" groupValue=configMode}}
+          YAML
+        {{/radio-button}}
+        {{#radio-button value="javascript" groupValue=configMode}}
+          JSON
+        {{/radio-button}}
+      </div>
       <form.field
         data-test-trigger-build-config="true"
-        @label="Additional Build Config"
+        @label="Build Config"
         as |field|
       >
         {{ivy-codemirror
           value=this.config
           valueUpdated=(action (mut config))
-          options=(hash lineNumbers=true tabSize=2 mode="yaml"
-          placeholder="Overwrite build config (YAML or JSON)")
+          options=(hash
+            mode=this.configMode
+            lineNumbers=true
+            tabSize=2
+            placeholder="Overwrite build config (YAML or JSON)"
+          )
         }}
       </form.field>
     </div>
@@ -106,9 +118,11 @@
       </ExternalLinkTo>
     </div>
 
-    <h4>
-      Build Config
-    </h4>
+    {{#unless this.replacing}}
+      <h4>
+        Build Config
+      </h4>
+    {{/unless}}
   </div>
 
   {{#if this.closed}}
