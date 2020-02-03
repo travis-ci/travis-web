@@ -1,0 +1,14 @@
+<UiKit::Grid
+  @sm={{2}}
+  as |grid|
+>
+  <grid.item @sm='1/4'>
+    <SvgImage @name={{this.imageName}} />
+  </grid.item>
+  <grid.item @sm='3/4'>
+    <UiKit::Text @color={{this.colors.title}} @size='xl' @weight='light'>
+      {{this.title}}
+    </UiKit::Text>
+    <UiKit::Box>{{yield}}</UiKit::Box>
+  </grid.item>
+</UiKit::Grid>

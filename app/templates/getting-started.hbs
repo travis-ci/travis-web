@@ -1,12 +1,12 @@
 <SidebarLayout>
-  <div id="getting-started" class="getting-started">
-    <h1 class="h2--grey">
+  <UiKit::Box @padding={{hash all=4}}>
+    <UiKit::Text @tag='h1' @color='grey-dark' @margin={{hash bottom=12}} @size='5xl' @weight='light'>
       First time here? Let's get you started!
-    </h1>
+    </UiKit::Text>
 
-    {{!-- Github --}}
-    {{#if this.showGithub}}
-      <div>
+    <div>
+      {{!-- Github --}}
+      {{#if this.showGithub}}
         <ol class="getting-started-steps">
           <li>
             <img
@@ -80,12 +80,22 @@
             docs
           </ExternalLinkTo>.
         </p>
-      </div>
-    {{/if}}
+      {{/if}}
 
-    {{!-- Bitbucket --}}
-    {{#if this.showBitbucket}}
-      <div>Bitbucket</div>
-    {{/if}}
-  </div>
+      {{!-- Bitbucket --}}
+      {{#if this.showBitbucket}}
+        <GettingStartedStep
+          @number={{1}}
+          @provider='bitbucket'
+          @providerImg={{true}}
+          @title='Activate'
+        >
+          <UiKit::Text>
+            Once you're signed in, go to [your profile page] where you'll see the Settings Tab, and toggle
+            the repositories you want to use with Travis CI.
+          </UiKit::Text>
+        </GettingStartedStep>
+      {{/if}}
+    </div>
+  </UiKit::Box>
 </SidebarLayout>
