@@ -8,7 +8,7 @@ export default TravisRoute.extend(TailwindBaseMixin, {
   features: service(),
 
   redirect() {
-    if (!this.get('features.proVersion')) {
+    if (!this.get('features.proVersion') || !this.get('features.devJenkinsPage')) {
       return this.transitionTo('/');
     }
   }
