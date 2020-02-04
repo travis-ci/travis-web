@@ -1,0 +1,25 @@
+<div class="validation-result" onclick={{action toggle}}>
+  {{#if this.validating}}
+    <LoadingIndicator className="validating-indicator" />
+  {{else}}
+    {{#if this.result}}
+      <span class="build-messages-badge badge-{{this.level}}" />
+      {{this.result}}
+    {{/if}}
+
+    {{#if this.summary}}
+      <div class="validation-summary">
+        &mdash; {{this.summary}}
+      </div>
+      <div class="toggle-validation-messages" />
+    {{/if}}
+  {{/if}}
+</div>
+
+{{#if this.displayMessages}}
+  <div class="yml-messages">
+    {{#each this.messages as |message|}}
+      <RequestMessage @message={{message}} />
+    {{/each}}
+  </div>
+{{/if}}

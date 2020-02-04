@@ -80,36 +80,16 @@
           @label="Build Config"
           as |field|
         >
-          <div class="validation-result" onclick={{action toggleValidationMessages}}>
-            {{#if this.validating}}
-              <LoadingIndicator className="validating-indicator" />
-            {{else}}
-              {{#if this.validationResult}}
-                <span class="build-messages-badge badge-{{this.validationResultLevel}}" />
-                {{this.validationResult}}
-              {{/if}}
-              {{#if this.validationSummary}}
-                <div class="validation-summary">
-                  &mdash; {{this.validationSummary}}
-                </div>
-                <div class="toggle-validation-messages" />
-              {{/if}}
-            {{/if}}
-          </div>
-          {{#if this.displayValidationMessages}}
-            <div class="yml-messages">
-              {{#each this.validationMessages as |message|}}
-                <RequestMessage @message={{message}} />
-              {{/each}}
-            </div>
-          {{/if}}
+          <RequestConfigValidate @config={{this.config}} />
+
           <div class="config-type {{this.configMode}}">
             <span class="yaml">YAML</span>
             <span class="javascript">JSON</span>
           </div>
+
           {{ivy-codemirror
             value=this.config
-            valueUpdated=(action "setConfig")
+            valueUpdated=(action (mut config))
             options=(hash
               mode=this.configMode
               lineNumbers=true

@@ -100,14 +100,6 @@
       margin-right: 7px;
     }
 
-    .toggle-validation-messages {
-      position: relative;
-      height: 6px;
-      width: 10px;
-      margin-left: 4px;
-      background-image: url(/images/svg/icon-dropdown-arrow.svg);
-    }
-
     .validating-indicator {
       position: relative;
       top: -2px;
@@ -121,9 +113,18 @@
     }
   }
 
-  &.validation-expanded .toggle-validation-messages {
-    transform: scaleY(-1);
+  .toggle-validation-messages {
+    position: relative;
+    top: -1px;
+    height: 5px;
+    width: 10px;
+    margin-left: 4px;
+    background-image: url(/images/svg/icon-dropdown-arrow.svg);
+  }
+
+  .expanded .toggle-validation-messages {
     top: -2px;
+    transform: scaleY(-1);
   }
 
   .config-type {
