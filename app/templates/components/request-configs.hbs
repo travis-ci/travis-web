@@ -5,14 +5,12 @@
   {{#if displayTriggerBuild}}
     <div class="trigger-build-buttons">
       {{#unless this.closed}}
-        <a class="trigger-build-cancel" onclick={{action onCancel}}>Cancel</a>
-      {{/unless }}
-      {{#unless this.closed}}
-        <a class="trigger-build-customize" onclick={{action onCustomize}}>Customize</a>
+        <a class="trigger-build-cancel" onclick={{action this.onCancel}}>Cancel</a>
+        <a class="trigger-build-customize" onclick={{action this.onCustomize}}>Customize</a>
       {{/unless }}
       <button
         data-test-trigger-build-submit="true"
-        onclick={{action onTriggerBuild}}
+        onclick={{action this.onTriggerBuild}}
         type="button"
         class="trigger-build button--blue"
         title="Trigger build with your settings"
@@ -29,7 +27,7 @@
         <SvgImage @name='rocket' @class='trigger-build-icon' />
         Trigger a build request with the following
         {{#if this.customize}}customized details and{{/if}}
-        build config{{#if this.multipleConfigs}}s{{/if}}.
+        build {{pluralize this.multipleConfigs 'config'}}
       </p>
     {{/unless}}
     <div class="trigger-build-fields">

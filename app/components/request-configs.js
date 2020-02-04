@@ -11,22 +11,21 @@ export default Component.extend(BranchSearching, {
   classNames: ['request-configs'],
   classNameBindings: ['status', 'processing'],
 
-  repo: reads('request.repo'),
-  status: 'closed',
-  processing: false,
-  closed: match('status', /closed/),
-  customize: match('status', /customize/),
-  replacing: match('mergeMode', /replace/),
-
-  branch: reads('request.repo.defaultBranch.name'),
-  sha: reads('request.commit.sha'),
-  message: reads('request.commit.message'),
-  config: undefined,
-  mergeMode: 'deep_merge_append',
-
   api: service(),
   flashes: service(),
   router: service(),
+
+  status: 'closed',
+  processing: false,
+  config: undefined,
+  mergeMode: 'deep_merge_append',
+  repo: reads('request.repo'),
+  closed: match('status', /closed/),
+  customize: match('status', /customize/),
+  replacing: match('mergeMode', /replace/),
+  branch: reads('request.repo.defaultBranch.name'),
+  sha: reads('request.commit.sha'),
+  message: reads('request.commit.message'),
 
   displayTriggerBuild: computed(
     'repo.migrationStatus',
@@ -99,7 +98,7 @@ export default Component.extend(BranchSearching, {
 
   apiConfig: computed('request.rawConfigs', function () {
     const config = this.get('request.uniqRawConfigs').find((config) => config.source.includes('api'));
-    if (config && config.config != '{}') {
+    if (config && config.config !== '{}') {
       return config.config;
     }
   }),
