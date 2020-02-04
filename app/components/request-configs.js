@@ -24,7 +24,12 @@ export default Component.extend(BranchSearching, {
   replacing: match('mergeMode', /replace/),
 
   config: undefined,
-  branch: reads('request.repo.defaultBranch.name'),
+  // strangely, if i use this instead of setting it manually later (in onCustomize)
+  // the editor will show a blank canvas, and only render the config once it gets
+  // clicked on
+  // config: reads('request.apiConfig'),
+
+  branch: reads('request.branchName'),
   sha: reads('request.commit.sha'),
   message: reads('request.commit.message'),
 
@@ -68,20 +73,18 @@ export default Component.extend(BranchSearching, {
     }
   },
 
-  onCancel: function () {
-    if (this.status == 'open' || this.status == 'customize') {
-      this.set('status', 'closed');
+  onCustomize: function () {
+    if (this.status == 'open') {
+      this.set('config', this.request.apiConfig);
+      this.set('status', 'customize');
+    } else if (this.status == 'customize') {
+      this.set('status', 'open');
     }
   },
 
-  onCustomize: function () {
-    if (this.status == 'open') {
-      this.set('status', 'customize');
-      if (typeof this.config === 'undefined') {
-        this.set('config', this.get('apiConfig'));
-      }
-    } else if (this.status == 'customize') {
-      this.set('status', 'open');
+  onCancel: function () {
+    if (this.status == 'open' || this.status == 'customize') {
+      this.set('status', 'closed');
     }
   },
 
@@ -98,13 +101,6 @@ export default Component.extend(BranchSearching, {
       return 'JSON';
     } else {
       return 'YAML';
-    }
-  }),
-
-  apiConfig: computed('request.rawConfigs', function () {
-    const config = this.get('request.uniqRawConfigs').find((config) => config.source.includes('api'));
-    if (config && config.config !== '{}') {
-      return config.config;
     }
   }),
 
