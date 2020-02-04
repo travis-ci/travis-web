@@ -42,10 +42,11 @@ export default Component.extend({
   initialConfig: true,
 
   configChanged: observer('config', function () {
-    if (!this.initialConfig) {
+    if (this.config) {
       debounce(this, this.validate, 1000);
+    } else {
+      this.reset();
     }
-    this.set('initialConfig', false);
   }),
 
   validate: function (final) {
@@ -64,6 +65,10 @@ export default Component.extend({
 
   error: function () {
     this.setResult(undefined, 'Invalid format', 'error');
+  },
+
+  reset: function () {
+    this.setResult(undefined, undefined, undefined);
   },
 
   setResult: function (messages, result, level) {

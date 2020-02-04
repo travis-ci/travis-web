@@ -57,6 +57,13 @@ export default Model.extend({
 
   isDraft: equal('pullRequestMergeable', PULL_REQUEST_MERGEABLE.DRAFT),
 
+  apiConfig: computed('uniqRawConfigs', function () {
+    const config = this.uniqRawConfigs.find((config) => config.source.includes('api'));
+    if (config && config.config !== '{}') {
+      return config.config;
+    }
+  }),
+
   messages: computed('repo.id', 'build.request.id', 'fetchMessages.last.value', function () {
     const messages = this.fetchMessages.get('lastSuccessful.value');
     if (!messages) {
