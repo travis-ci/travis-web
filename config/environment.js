@@ -48,6 +48,7 @@ module.exports = function (environment) {
       blog: 'https://blog.travis-ci.com',
       buildMatrix: 'https://docs.travis-ci.com/user/build-matrix/',
       buildConfigValidation: 'https://docs.travis-ci.com/user/build-config-validation/',
+      caseStudy: 'https://blog.travis-ci.com/2019-06-5-case-study-ibm-cloud-kubernetes-service',
       changelog: 'https://changelog.travis-ci.com',
       community: 'https://travis-ci.community',
       communityEarlyReleases: 'https://travis-ci.community/c/early-releases',
@@ -164,7 +165,7 @@ module.exports = function (environment) {
     'enable-bitbucket-login': false,
   };
 
-  const { TRAVIS_PRO, TRAVIS_ENTERPRISE, SOURCE_ENDPOINT } = process.env;
+  const { TRAVIS_PRO, TRAVIS_ENTERPRISE, SOURCE_ENDPOINT, ENABLE_FEATURE_FLAGS } = process.env;
 
   if (TRAVIS_PRO) {
     ENV.featureFlags['pro-version'] = true;
@@ -190,6 +191,30 @@ module.exports = function (environment) {
       publishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
       lazyLoad: true,
     };
+  }
+
+  try {
+    Object.keys(ENV.featureFlags).forEach(flagKey => {
+      const envFlagName = `FLAG_${flagKey.toUpperCase().replace(/-/g, '_')}`;
+      const envFlagVal = process.env[envFlagName];
+
+      if (envFlagVal === 'true') {
+        ENV.featureFlags[flagKey] = true;
+      } else if (envFlagVal === 'false') {
+        ENV.featureFlags[flagKey] = false;
+      }
+    });
+  } catch (e) {}
+
+  if (ENABLE_FEATURE_FLAGS) {
+    try {
+      const devFlags = ENABLE_FEATURE_FLAGS.split(',');
+      if (devFlags.length) {
+        devFlags.forEach(flagKey => {
+          ENV.featureFlags[flagKey] = true;
+        });
+      }
+    } catch (e) {}
   }
 
   ENV.sentry = {

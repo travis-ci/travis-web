@@ -92,11 +92,11 @@ export const PLANS_PAGE_MESSAGE_SECTION = '[data-test-plans-page-message-section
 export const PLANS_PAGE_MESSAGE_BUTTON = '[data-test-plans-page-message-button]';
 
 // travis/plans/thank-you
-export const PLANS_THANKS_PAGE_CONTAINER = '[data-test-plans-contact-thanks-container]';
-export const PLANS_THANKS_PAGE_TITLE = '[data-test-plans-contact-thanks-title]';
-export const PLANS_THANKS_PAGE_IMAGE = '[data-test-plans-contact-thanks-image]';
-export const PLANS_THANKS_PAGE_BODY = '[data-test-plans-contact-thanks-body]';
-export const PLANS_THANKS_PAGE_BUTTON = '[data-test-plans-contact-thanks-button]';
+export const PLANS_THANKS_PAGE_CONTAINER = '[data-test-plans-contact-thanks]';
+export const PLANS_THANKS_PAGE_TITLE = '[data-test-contact-thanks-title]';
+export const PLANS_THANKS_PAGE_IMAGE = '[data-test-contact-thanks-image]';
+export const PLANS_THANKS_PAGE_BODY = '[data-test-contact-thanks-body]';
+export const PLANS_THANKS_PAGE_BUTTON = '[data-test-contact-thanks-button]';
 
 // travis/components/sales-contact-form
 export const SALES_CONTACT_FORM_CONTAINER = '[data-test-sales-contact-form-container]';
