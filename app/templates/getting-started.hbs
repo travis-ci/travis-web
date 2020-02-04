@@ -1,5 +1,5 @@
 <SidebarLayout>
-  <UiKit::Box @padding={{hash all=4}}>
+  <UiKit::Box @margin={{hash x='auto'}} @maxWidth='5xl' @padding={{hash all=4}}>
     <UiKit::Text @tag='h1' @color='grey-dark' @margin={{hash bottom=12}} @size='5xl' @weight='light'>
       First time here? Let's get you started!
     </UiKit::Text>
@@ -90,7 +90,7 @@
           @providerImg={{true}}
           @title='Activate Bitbucket Repositories'
         >
-          <UiKit::Text>
+          <UiKit::Text @variant='p'>
             Once you're signed in, go to
             <LinkTo @route='account.repositories'>your profile page</LinkTo>
             where you'll see the Settings Tab, and toggle
@@ -105,17 +105,17 @@
           @provider='bitbucket'
           @title='Add a .travis.yml file to your repository'
         >
-          <UiKit::Text>
+          <UiKit::Text @variant='p'>
             In order for Travis CI to build your project, you'll need to add a
             <code>.travis.yml</code>
             configuration file to the root directory of your repository.
           </UiKit::Text>
-          <UiKit::Text>
+          <UiKit::Text @variant='p'>
             If a
             <code>.travis.yml</code>
             is not in your repository, or is not valid YAML, Travis CI will ignore it.
           </UiKit::Text>
-          <UiKit::Text>
+          <UiKit::Text @variant='p'>
             Here you can find some of our
             <UiKit::Link @href={{config-get 'urls.languages'}}>basic language examples</UiKit::Link>.
           </UiKit::Text>
@@ -125,7 +125,7 @@
           @provider='bitbucket'
           @title='Trigger your first build'
         >
-          <UiKit::Text>
+          <UiKit::Text @variant='p'>
             Som you've synchronized your Bitbucket account with Travis CI, activated the repositories
             you want to use, and added a
             <code>.travis.yml</code>
@@ -133,7 +133,7 @@
             commit to your local git history and <code>git push</code> it to bitbucket.
             <em>That's all there is to it!</em>
           </UiKit::Text>
-          <UiKit::Text>
+          <UiKit::Text @variant='p'>
             Want to learn more?
             <UiKit::Link @href={{config-get 'urls.docs'}}>Read up on our docs</UiKit::Link>.
           </UiKit::Text>

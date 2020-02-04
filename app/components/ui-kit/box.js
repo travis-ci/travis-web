@@ -88,6 +88,7 @@ const MAX_WIDTHS = {
   LG: 'lg',
   XL: 'xl',
   XXL: '2xl',
+  XL5: '5xl', // other changes incoming from jenkins page work
   FULL: 'full',
 };
 

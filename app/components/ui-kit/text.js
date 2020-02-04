@@ -83,6 +83,7 @@ const VARIANTS = {
   SMALLCAPS: 'smallcaps',
   H1: 'h1',
   H2: 'h2',
+  P: 'p',
 };
 const VARIANT_PROPS = {
   [VARIANTS.SMALLCAPS]: {
@@ -102,6 +103,9 @@ const VARIANT_PROPS = {
     margin: { bottom: 3 },
     size: '5xl',
     weight: 'bold',
+  },
+  [VARIANTS.P]: {
+    margin: { bottom: 3 },
   },
 };
 
