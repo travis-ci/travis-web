@@ -87,6 +87,7 @@ module('Acceptance | travis vs jenkins page', function (hooks) {
   module('pro version', function (hooks) {
     hooks.beforeEach(async function () {
       enableFeature('pro-version');
+      enableFeature('dev-jenkins-page');
       await visit(PAGE_URL);
     });
 
