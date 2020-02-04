@@ -1,0 +1,13 @@
+<button
+  data-test-trigger-build-submit="true"
+  onclick={{this.onclick}}
+  type="button"
+  class="trigger-build-button button--blue"
+  title="Trigger build"
+>
+  {{#if this.processing}}
+    <LoadingIndicator />
+  {{else}}
+    Trigger build
+  {{/if }}
+</button>
