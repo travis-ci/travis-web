@@ -88,7 +88,7 @@
     "ember-url": "^0.6.0",
     "ember-web-app": "^3.0.1",
     "ember-window-mock": "^0.5.0",
-    "emoji-datasource-apple": "^4.0.0",
+    "emoji-datasource-apple": "^5.0.0",
     "emoji-js": "^3.4.0",
     "eslint-plugin-ember": "^7.1.0",
     "eslint-plugin-node": "^10.0.0",
