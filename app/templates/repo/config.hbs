@@ -1,0 +1,17 @@
+<TriggerBuildDescription
+  @customize=true
+  @configs=0
+/>
+
+<TriggerBuildForm
+  @repo={{this.repo}}
+  @branch={{this.repo.defaultBranch.name}}
+  @message="Trigger a build"
+  @mergeMode="deep_merge_append"
+  @onChange={{action "formFieldChanged"}}
+/>
+
+<TriggerBuildButton
+  @processing={{this.processing}}
+  onclick={{action "triggerBuild"}}
+/>
