@@ -75,7 +75,7 @@ export default Component.extend(BranchSearching, {
   ),
 
   displayValidationMessages: computed('validationMessages', 'validationExpanded', function () {
-    return this.validationMessages && this.validationExpanded;
+    return this.validationMessages && this.validationMessages.length > 0 && this.validationExpanded;
   }),
 
   toggleValidationMessages: function () {
@@ -83,18 +83,26 @@ export default Component.extend(BranchSearching, {
   },
 
   configChanged: observer('config', function () {
-    debounce(this, this.validate, 1500);
+    if (!this.validating) {
+      debounce(this, this.validate, 750);
+    }
   }),
 
   validate: function () {
     this.set('validating', true);
-    this.yml.validate(this.config).then(function (data) {
+    this.yml.validate(this.config).then(data => {
       let error = data.messages.find(msg =>  msg.level == 'error' || msg.level == 'alert');
       this.set('validationMessages', data.messages);
       this.set('validationResult', error ? error.level : 'valid');
       this.set('validationResultLevel', this.get('validationMaxLevel'));
+    },
+    () => {
+      this.set('validationMessages', undefined);
+      this.set('validationResult', 'Invalid format');
+      this.set('validationResultLevel', 'error');
+    }).finally(() => {
       this.set('validating', false);
-    }.bind(this));
+    });
   },
 
   validationMaxLevel: computed('sortedMessages', function () {
@@ -278,5 +286,11 @@ export default Component.extend(BranchSearching, {
 
     this.flashes.error(message);
   },
+
+  actions: {
+    setConfig: function (config) {
+      this.set('config', config.replace(/\t/gm, '  '));
+    }
+  }
 });
 

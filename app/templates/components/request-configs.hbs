@@ -109,11 +109,12 @@
           </div>
           {{ivy-codemirror
             value=this.config
-            valueUpdated=(action (mut config))
+            valueUpdated=(action "setConfig")
             options=(hash
               mode=this.configMode
               lineNumbers=true
               tabSize=2
+              indentWithTabs=false
               placeholder="Overwrite build config"
             )
           }}
