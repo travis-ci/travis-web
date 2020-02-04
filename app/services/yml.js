@@ -9,7 +9,8 @@ export default Service.extend({
   },
 
   request(url, method = 'GET', options = {}) {
-    options.host = config.ymlEndpoint || 'https://yml-staging.travis-ci.org'; // TODO
+    // options.host = config.ymlEndpoint || 'https://yml-staging.travis-ci.org'; // TODO
+    options.host = 'https://yml-staging.travis-ci.org';
     options.headers = this.headers(options);
     return this.ajax.request(url, method, options);
   },
