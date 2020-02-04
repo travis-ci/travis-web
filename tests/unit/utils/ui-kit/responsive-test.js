@@ -83,4 +83,15 @@ module('Unit | Utility | ui-kit/responsive', function () {
       xl: { top: 10 },
     });
   });
+
+  test('Handles expanded value', function (assert) {
+    const result = getResponsiveProp(getResponsiveProp(null));
+    assert.deepEqual(result, {
+      base: null,
+      sm: undefined,
+      md: undefined,
+      lg: undefined,
+      xl: undefined,
+    });
+  });
 });

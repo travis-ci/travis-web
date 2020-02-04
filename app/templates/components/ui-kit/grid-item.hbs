@@ -1,6 +1,12 @@
-{{#let (element this.tag) as |Tag|}}
-  <Tag
-    class={{this.allClasses}}
-    ...attributes
-  >{{yield}}</Tag>
-{{/let}}
+<UiKit::Box
+  @tag={{this.tag}}
+  @display={{this.display}}
+  @borderColor={{this.borderColor}}
+  @borderWidth={{this.borderWidth}}
+  @margin={{this.margin}}
+  @padding={{this.padding}}
+  class={{this.allClasses}}
+  ...attributes
+>
+  {{~yield~}}
+</UiKit::Box>
