@@ -27,7 +27,7 @@
         <SvgImage @name='rocket' @class='trigger-build-icon' />
         Trigger a build request with the following
         {{#if this.customize}}customized details and{{/if}}
-        build {{pluralize this.request.rawConfigs.length 'config' without-count=true}}
+        build {{pluralize this.rawConfigsCount 'config' without-count=true}}
       </p>
     {{/unless}}
     <div class="trigger-build-fields">

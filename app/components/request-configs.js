@@ -132,6 +132,14 @@ export default Component.extend(BranchSearching, {
     return result.mapBy('name');
   }),
 
+  rawConfigsCount: computed('request.rawConfigs', 'customize', function () {
+    let configs = this.get('request.uniqRawConfigs');
+    if (this.customize) {
+      configs = configs.reject(config => config.source.includes('api'));
+    }
+    return configs.length;
+  }),
+
   onTriggerBuild: function (e) {
     e.toElement.blur();
     if (this.status == 'closed') {
