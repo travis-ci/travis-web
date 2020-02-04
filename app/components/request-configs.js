@@ -132,10 +132,6 @@ export default Component.extend(BranchSearching, {
     return result.mapBy('name');
   }),
 
-  multipleConfigs: computed('request.rawConfigs', function () {
-    return this.get('request.uniqRawConfigs.length') > 1;
-  }),
-
   onTriggerBuild: function (e) {
     e.toElement.blur();
     if (this.status == 'closed') {
