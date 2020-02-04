@@ -2,6 +2,7 @@
   @sm={{2}}
   as |grid|
 >
+  {{!-- Image --}}
   <grid.item
     @sm='1/4'
     @margin={{hash base=(hash bottom=4) sm=(hash bottom=12)}}
@@ -13,14 +14,36 @@
       </UiKit::Text>
     </UiKit::Box>
   </grid.item>
+
+  {{!-- Text --}}
   <grid.item
     @sm='3/4'
     @margin={{hash base=(hash bottom=8) sm=(hash bottom=12)}}
     @padding={{hash x=4}}
   >
-    <UiKit::Text @color={{this.color}} @size='2xl' @weight='light'>
-      {{this.title}}
-    </UiKit::Text>
+    {{!-- Title --}}
+    <UiKit::Grid @align='center' @base='auto' @justify='start' @wrap='no-wrap' as |titleGrid|>
+      <titleGrid.item @margin={{hash right=2}}>
+        <UiKit::Box
+          @color={{this.color}}
+          @display='flex'
+          @alignItems='center'
+          @justifyContent='center'
+          @radius='full'
+          @width={{8}}
+          @height={{8}}
+        >
+          <UiKit::Text @color='white' @size='xl' @weight='light'>{{this.number}}</UiKit::Text>
+        </UiKit::Box>
+      </titleGrid.item>
+      <titleGrid.item>
+        <UiKit::Text @color={{this.color}} @size='2xl' @weight='light'>
+          {{this.title}}
+        </UiKit::Text>
+      </titleGrid.item>
+    </UiKit::Grid>
+
+    {{!-- Content --}}
     <UiKit::Box>{{yield}}</UiKit::Box>
   </grid.item>
 </UiKit::Grid>

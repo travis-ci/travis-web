@@ -9,11 +9,13 @@ const COLORS = {
   WHITE: 'white',
   GREY_LIGHT: 'grey-light',
   GREY_LIGHTER: 'grey-lighter',
+  BLUE: 'blue',
 };
 
 const BG_COLORS = {
   [COLORS.WHITE]: 'white',
   [COLORS.GREY_LIGHTER]: 'grey-100',
+  [COLORS.BLUE]: 'blue-400',
 };
 
 const BORDER_COLORS = {
@@ -136,6 +138,9 @@ export default Component.extend({
   padding: null,
   position: null,
 
+  alignItems: null,
+  justifyContent: null,
+
   // Private //
   colorClass: prefix('color', 'bg', { dictionary: BG_COLORS }),
   displayClass: prefix('display', ''),
@@ -210,6 +215,10 @@ export default Component.extend({
     'paddingAll',
   ),
 
+  // Flex
+  alignItemsClass: prefix('alignItems', 'items'),
+  justifyContentClass: prefix('justifyContent', 'justify'),
+
   // Collected classes
   allClasses: concat(
     'colorClass',
@@ -234,6 +243,8 @@ export default Component.extend({
     'borderWidthClasses',
     'marginClasses',
     'paddingClasses',
+    'alignItemsClass',
+    'justifyContentClass',
   ),
 
   // Lifecycle

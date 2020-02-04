@@ -10,6 +10,7 @@ const COLORS = {
   GREEN: 'green',
   GREY: 'grey',
   GREY_DARK: 'grey-dark',
+  WHITE: 'white',
 };
 const DEFAULT_TEXT_COLOR = COLORS.GREY_DARK;
 
@@ -19,6 +20,7 @@ const TEXT_COLORS = {
   [COLORS.GREEN]: 'green-400',
   [COLORS.GREY]: 'grey-400',
   [COLORS.GREY_DARK]: 'grey-800',
+  [COLORS.WHITE]: 'white',
 };
 
 const FAMILIES = {
