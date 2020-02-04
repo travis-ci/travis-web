@@ -84,8 +84,51 @@
     display: none;
   }
 
+  .validation-result {
+    position: absolute;
+    top: -4px;
+    left: 85px;
+    line-height: 24px;
+    cursor: pointer;
+    color: lighten($cement-grey, 10%);
+
+    & > * {
+      display: inline-block;
+    }
+
+    .build-messages-badge {
+      margin-right: 7px;
+    }
+
+    .toggle-validation-messages {
+      position: relative;
+      height: 6px;
+      width: 10px;
+      margin-left: 4px;
+      background-image: url(/images/svg/icon-dropdown-arrow.svg);
+    }
+
+    .validating-indicator {
+      position: relative;
+      top: -2px;
+      left: 4px;
+      opacity: 0.6;
+
+      i {
+        width: 5px;
+        height: 5px;
+      }
+    }
+  }
+
+  &.validation-expanded .toggle-validation-messages {
+    transform: scaleY(-1);
+    top: -2px;
+  }
+
   .config-type {
     position: absolute;
+    top: 1px;
     right: 0;
     font-size: 10px;
     z-index: 2;

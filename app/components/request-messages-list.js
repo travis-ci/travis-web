@@ -16,7 +16,6 @@ export default Component.extend(WithConfigValidation, {
   isExpanded: false,
 
   request: null,
-
   repo: reads('request.repo'),
   messages: reads('request.messages'),
 

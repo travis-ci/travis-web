@@ -29,31 +29,6 @@
     padding: 1em;
     cursor: pointer;
 
-    .icon {
-      width: 18px;
-      height: 18px;
-      margin-bottom: 2px;
-    }
-
-    .icon-alert path,
-    .icon-error path {
-      stroke: $brick-red;
-    }
-    .icon-warn path {
-      stroke: $canary-yellow;
-    }
-    .icon-info {
-      width: 12px;
-      height: 12px;
-      margin-left: 2px;
-      margin-right: 8px;
-      opacity: 0.8;
-      path {
-        stroke: $turf-green;
-        stroke-width: 1;
-      }
-    }
-
     .tools {
       position: absolute;
       right: 1em;
@@ -82,6 +57,31 @@
           stroke-width: 2;
         }
       }
+    }
+  }
+
+  .icon {
+    width: 18px;
+    height: 18px;
+    margin-bottom: 2px;
+  }
+
+  .icon-alert path,
+  .icon-error path {
+    stroke: $brick-red;
+  }
+  .icon-warn path {
+    stroke: $canary-yellow;
+  }
+  .icon-info {
+    width: 12px;
+    height: 12px;
+    margin-left: 2px;
+    margin-right: 8px;
+    opacity: 0.8;
+    path {
+      stroke: $turf-green;
+      stroke-width: 1;
     }
   }
 

@@ -33,6 +33,7 @@ module.exports = function (environment) {
 
     // defaults for running travis-web
     apiEndpoint: 'https://api.travis-ci.org',
+    ymlEndpoint: 'https://config.travis-ci.org',
     pusher: {
       key: '5df8ac576dcccf4fd076',
       host: 'ws.pusherapp.com',
@@ -207,6 +208,7 @@ module.exports = function (environment) {
       //       we could just remove it from ruby process and rely
       //       on things set here, but I haven't tested that yet.
       ENV.apiEndpoint = 'https://api.travis-ci.com';
+      ENV.ymlEndpoint = 'https://config.travis-ci.com',
       ENV.pusher.key = '59236bc0716a551eab40';
       ENV.pusher.channelPrefix = 'private-';
       ENV.pagesEndpoint = 'https://travis-ci.com/account/subscription';
@@ -237,6 +239,10 @@ module.exports = function (environment) {
         ENV.pusher.key = '87d0723b25c51e36def8';
         ENV.billingEndpoint = 'https://staging.travis-ci.com';
       }
+    }
+
+    if (process.env.YML_ENDPOINT) {
+      ENV.ymlEndpoint = process.env.YML_ENDPOINT;
     }
 
     if (process.env.BILLING_ENDPOINT) {
