@@ -1,28 +1,58 @@
 import Component from '@ember/component';
-import { computed } from '@ember/object';
-import { reads, match } from '@ember/object/computed';
+import { computed, observer } from '@ember/object';
+import { reads, match, sort } from '@ember/object/computed';
+import { debounce } from '@ember/runloop';
 import { task, timeout } from 'ember-concurrency';
+import { pluralize } from 'ember-inflector';
 import config from 'travis/config/environment';
 import { inject as service } from '@ember/service';
 import BranchSearching from 'travis/mixins/branch-searching';
 
+const MSGS = {
+  'alert': 'alert',
+  'error': 'error',
+  'warn': 'warning',
+  'info': 'info',
+};
+
+function formatLevel(level, count) {
+  return pluralize(count, MSGS[level]);
+}
+
+function sortOrder(level) {
+  return Object.keys(MSGS).indexOf(level);
+}
+
+function countBy(objs, name) {
+  return objs.reduce((counts, obj) => {
+    if (!counts[obj[name]]) {
+      counts[obj[name]] = 0;
+    }
+    counts[obj[name]] += 1;
+    return counts;
+  }, {});
+}
+
 export default Component.extend(BranchSearching, {
   tagName: 'div',
   classNames: ['request-configs'],
-  classNameBindings: ['status', 'processing'],
+  classNameBindings: ['status', 'processing', 'validationExpanded:validation-expanded'],
 
   api: service(),
   flashes: service(),
   router: service(),
+  yml: service(),
 
   status: 'closed',
   processing: false,
-  config: undefined,
   mergeMode: 'deep_merge_append',
   repo: reads('request.repo'),
   closed: match('status', /closed/),
   customize: match('status', /customize/),
   replacing: match('mergeMode', /replace/),
+  validationExpanded: false,
+
+  config: undefined,
   branch: reads('request.repo.defaultBranch.name'),
   sha: reads('request.commit.sha'),
   message: reads('request.commit.message'),
@@ -43,6 +73,59 @@ export default Component.extend(BranchSearching, {
       return canTriggerBuild && migrationStatus !== 'migrated';
     }
   ),
+
+  displayValidationMessages: computed('validationMessages', 'validationExpanded', function () {
+    return this.validationMessages && this.validationExpanded;
+  }),
+
+  toggleValidationMessages: function () {
+    this.toggleProperty('validationExpanded');
+  },
+
+  configChanged: observer('config', function () {
+    debounce(this, this.validate, 1500);
+  }),
+
+  validate: function () {
+    this.set('validating', true);
+    this.yml.validate(this.config).then(function (data) {
+      let error = data.messages.find(msg =>  msg.level == 'error' || msg.level == 'alert');
+      this.set('validationMessages', data.messages);
+      this.set('validationResult', error ? error.level : 'valid');
+      this.set('validationResultLevel', this.get('validationMaxLevel'));
+      this.set('validating', false);
+    }.bind(this));
+  },
+
+  validationMaxLevel: computed('sortedMessages', function () {
+    return this.get('sortedMessages.firstObject.level') || 'info';
+  }),
+
+  validationSummary: computed('sortedMessages', function () {
+    let counts = countBy(this.get('sortedMessages'), 'level');
+    if (Object.entries(counts).length > 0) {
+      return Object.entries(counts).map((entry) => formatLevel(...entry)).join(', ');
+    }
+  }),
+
+  sortedMessages: sort('validationMessages', (lft, rgt) =>
+    sortOrder(lft.level) - sortOrder(rgt.level)
+  ),
+
+  maxLevel: computed('sortedMessages', function () {
+    return this.get('sortedMessages.firstObject.level') || 'info';
+  }),
+
+  iconClass: computed('maxLevel', function () {
+    return `icon icon-${this.get('maxLevel')}`;
+  }),
+
+  summary: computed('sortedMessages', function () {
+    let counts = countBy(this.get('sortedMessages'), 'level');
+    if (Object.entries(counts).length > 0) {
+      return Object.entries(counts).map((entry) => formatLevel(...entry)).join(', ');
+    }
+  }),
 
   searchBranches: task(function* (query) {
     const result = yield this.searchBranch.perform(this.get('repo.id'), query);
@@ -192,3 +275,4 @@ export default Component.extend(BranchSearching, {
     this.flashes.error(message);
   },
 });
+
