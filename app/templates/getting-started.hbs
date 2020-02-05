@@ -102,6 +102,15 @@
             <UiKit::Text @tag='span' @color={{null}} @weight='bold'>NOTE:</UiKit::Text>
             You need to be an admin for any repositories you want to integrate with Travis CI.
           </UiKit::Note>
+
+          <LinkTo @route='account.repositories'>
+            <UiKit::Button
+              @color='blue'
+              @invert={{true}}
+            >
+              Activate Repositories
+            </UiKit::Button>
+          </LinkTo>
         </GettingStartedStep>
         <GettingStartedStep
           @number={{2}}
@@ -110,12 +119,12 @@
         >
           <UiKit::Text @variant='p'>
             In order for Travis CI to build your project, you'll need to add a
-            <code>.travis.yml</code>
+            <UiKit::Code>.travis.yml</UiKit::Code>
             configuration file to the root directory of your repository.
           </UiKit::Text>
           <UiKit::Text @variant='p'>
             If a
-            <code>.travis.yml</code>
+            <UiKit::Code>.travis.yml</UiKit::Code>
             is not in your repository, or is not valid YAML, Travis CI will ignore it.
           </UiKit::Text>
           <UiKit::Text @variant='p'>
@@ -131,9 +140,11 @@
           <UiKit::Text @variant='p'>
             Som you've synchronized your Bitbucket account with Travis CI, activated the repositories
             you want to use, and added a
-            <code>.travis.yml</code>
+            <UiKit::Code>.travis.yml</UiKit::Code>
             file to your repository. All you need to do now is
-            commit to your local git history and <code>git push</code> it to bitbucket.
+            commit to your local git history and
+            <UiKit::Code>git push</UiKit::Code>
+            it to bitbucket.
             <em>That's all there is to it!</em>
           </UiKit::Text>
           <UiKit::Text @variant='p'>

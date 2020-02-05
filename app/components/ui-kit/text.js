@@ -121,7 +121,7 @@ const VARIANT_PROPS = {
     weight: 'bold',
   },
   [VARIANTS.P]: {
-    margin: { bottom: 3 },
+    margin: { bottom: 4 },
   },
 };
 

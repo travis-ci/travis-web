@@ -17,6 +17,7 @@ export const COLORS = {
 const BG_COLORS = {
   [COLORS.WHITE]: 'white',
   [COLORS.GREY_LIGHTER]: 'grey-100',
+  [COLORS.GREY_LIGHT]: 'grey-150',
   [COLORS.BLUE]: 'blue-400',
   [COLORS.YELLOW_LIGHT]: 'yellow-200',
   [COLORS.YELLOW_LIGHTER]: 'yellow-100',

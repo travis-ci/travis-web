@@ -1,4 +1,5 @@
 import Component from '@ember/component';
+import { computed } from '@ember/object';
 import { variantProp } from 'travis/utils/ui-kit/variant';
 import { COLORS as BG_COLOR_NAMES } from 'travis/components/ui-kit/box';
 import { COLORS as TEXT_COLOR_NAMES } from 'travis/components/ui-kit/text';
@@ -21,6 +22,9 @@ export default Component.extend({
 
   bgColor: variantProp(VARIANT_PROPS, null),
   textColor: variantProp(VARIANT_PROPS, null),
+
+  margin: computed(() => ({ bottom: 4 })),
+  padding: computed(() => ({ x: 4, y: 2 })),
 
   variant: null,
 });
