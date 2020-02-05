@@ -104,27 +104,6 @@ $nav-line-height: 35px;
   top: -2px;
 }
 
-.username {
-  color: $cement-grey;
-  padding-left: 20px;
-  background-color: #F7F7F7;
-  overflow: hidden;
-  white-space: nowrap;
-  @media #{$medium-up} {
-    span {
-      &:after {
-        content: "";
-        display: block;
-        position: absolute;
-        top: 0;
-        right: 0;
-        width: 4.75em;
-        height: 30px;
-        background: linear-gradient(-90deg, #F7F7F7 20%, rgba(255, 255, 255, 0) 100%);
-      }
-    }
-  }
-}
 .menu-separator {
   border-bottom: 1px #666666 solid;
   padding-top: 10px;
@@ -162,58 +141,102 @@ $nav-line-height: 35px;
     border-radius:2px;
     box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.15);
 
-    svg {
-      display: inline-block;
-      margin-left: 20px;
-      vertical-align: sub;
+    li {
+      line-height: 46px;
+
+      &:hover {
+        background-color: lighten($oxide-blue, 50%);
+      }
+
+      &.active:hover {
+        background-color: lighten($oxide-blue, 50%);
+      }
     }
 
-    a {
-      display: block;
+    .topbar-menu-item {
       text-align: left;
-      &:not(:first-child) {
-        line-height: 55px;
-      }
-      svg.icon path {
+      display: flex;
+      align-items: center;
+
+      .icon {
+        display: inline-block;
         stroke: #686B6E;
+        margin-left: 20px;
       }
-      li {
-        &:hover {
-          background-color: lighten($oxide-blue, 50%);
-        }
-        &.active:hover {
-          background-color: lighten($oxide-blue, 50%);
-        }
+
+      &__label {
+        margin-left: 7px;
+        position: relative;
+        top: -1px;
       }
+
       &:hover {
         text-decoration: none;
         color: $oxide-blue;
-        svg {
+
+        .icon {
           @include colorSVG($oxide-blue);
         }
       }
+
       &.active:hover {
         text-decoration: none;
         background-color: lighten($oxide-blue, 50%);
+
         a {
           color: $oxide-blue;
         }
-        svg {
+
+        .icon {
           @include colorSVG($oxide-blue);
         }
       }
-    }
-
-    .topbar-menu-item:hover {
-      text-decoration: none;
     }
   }
 
   .username {
     display: none;
+    color: $cement-grey;
+    padding-left: 20px;
+    background-color: #F7F7F7;
 
     @media #{$medium-up} {
-      display: block;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      &__text {
+        overflow: hidden;
+        white-space: nowrap;
+        position: relative;
+        flex-basis: 100%;
+        line-height: 36px;
+
+        &:after {
+          content: "";
+          display: block;
+          position: absolute;
+          top: 0;
+          right: 0;
+          width: 2.5em;
+          height: 30px;
+          background: linear-gradient(-90deg, #F7F7F7 20%, rgba(255, 255, 255, 0) 100%);
+        }
+      }
+
+      &__vcs-icon {
+        width: 35px;
+        min-width: 35px;
+        flex-basis: 35px;
+        display: flex;
+        align-items: center;
+
+        svg {
+          margin-left: 5px;
+          display: inline-flex;
+          fill: $cement-grey;
+        }
+      }
     }
   }
 
@@ -224,7 +247,7 @@ $nav-line-height: 35px;
       display: block;
       height: 1px;
       background-color: $cream-dark;
-      margin: 0 20px;
+      margin: 0;
     }
   }
 

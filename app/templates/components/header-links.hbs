@@ -224,33 +224,41 @@
         <div class="menu-separator"></div>
         <ul class="navigation-nested">
           <li class="username">
-            <span>
+            <div class="username__text">
               {{this.userName}}
-            </span>
+            </div>
+            <div class="username__vcs-icon">
+              <SvgImage @name={{vcs-icon this.user.vcsType}} @height=16 />
+              <EmberTooltip @text={{concat (vcs-name this.user.vcsType) ' account'}} @side='left' />
+            </div>
           </li>
-          <LinkTo
-            @route="account"
-            @title="Your profile"
-            class="signed-in topbar-menu-item"
-          >
-            <li>
+          <li>
+            <LinkTo
+              @route="account"
+              @title="Your profile"
+              class="signed-in topbar-menu-item"
+            >
               <SvgImage @name="icon-settings" @class="icon" />
-              Settings
-            </li>
-          </LinkTo>
-          <div class="nav-nested"></div>
-          <a
-            data-test-signout-link
-            href="/"
-            title="Sign out of Travis CI"
-            class="topbar-menu-item"
-            {{action "signOut"}}
-          >
-            <li>
+              <div class="topbar-menu-item__label">
+                Settings
+              </div>
+            </LinkTo>
+          </li>
+          <li>
+            <a
+              data-test-signout-link
+              href="/"
+              title="Sign out of this account"
+              class="topbar-menu-item"
+              {{action "signOut"}}
+            >
               <SvgImage @name="icon-sign-out" @class="icon" />
-              Sign Out
-            </li>
-          </a>
+              <div class="topbar-menu-item__label">
+                Sign Out
+              </div>
+            </a>
+          </li>
+          <div class="nav-nested"></div>
         </ul>
       {{/if}}
     </li>
