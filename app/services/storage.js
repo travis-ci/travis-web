@@ -21,8 +21,8 @@ export default Service.extend({
   },
 
   get user() {
-    const data = this.parseWithDefault('travis.user', {});
-    return data.user || data;
+    const data = this.parseWithDefault('travis.user', null);
+    return data && data.user || data;
   },
   deleteUser() {
     this.removeItem('travis.user');
@@ -37,11 +37,16 @@ export default Service.extend({
 
   get activeAccount() {
     const { accounts } = this;
-    const activeAccountId = this.getItem('travis.auth.activeAccountId');
-    return accounts.findBy('id', activeAccountId) || accounts.firstObject || null;
+    const activeAccountId = +this.getItem('travis.auth.activeAccountId');
+    const activeAccount = accounts.find(account => +account.id === activeAccountId);
+    return activeAccount || accounts.firstObject || null;
   },
-  set activeAccount({ id }) {
-    this.setItem('travis.auth.activeAccountId', id);
+  set activeAccount(account) {
+    if (account && account.id) {
+      this.setItem('travis.auth.activeAccountId', account.id);
+    } else {
+      this.removeItem('travis.auth.activeAccountId');
+    }
   },
 
   get authUpdatedAt() {

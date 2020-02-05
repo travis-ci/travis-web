@@ -62,7 +62,7 @@ export default Service.extend({
 
   permissions: reads('currentUser.permissions'),
 
-  token: reads('storage.activeAccount.token'),
+  token: reads('storage.activeAccount.authToken'),
   assetToken: reads('currentUser.token'),
 
   userName: reads('currentUser.fullName'),
@@ -100,9 +100,6 @@ export default Service.extend({
   },
 
   signIn(provider) {
-    this.autoSignIn();
-    if (this.signedIn) return;
-
     this.set('state', STATE.SIGNING_IN);
 
     const url = new URL(this.redirectUrl || window.location.href);
@@ -147,8 +144,8 @@ export default Service.extend({
     const userData = getProperties(user, USER_FIELDS);
     this.validateUserData(userData);
 
-    userData.token = token;
-    storage.accounts = accounts.filterBy('id', userData.id).concat([userData]);
+    userData.authToken = token;
+    storage.accounts = accounts.concat([userData]).uniqBy('id');
     storage.activeAccount = userData;
     storage.deleteUser();
     storage.deleteToken();
