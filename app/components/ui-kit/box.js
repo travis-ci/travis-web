@@ -135,6 +135,11 @@ const FLEX_DIRECTIONS = {
   COL_REVERSE: 'col-reverse',
 };
 
+const FLEX_WRAPS = {
+  wrap: 'wrap',
+  NO_WRAP: 'no-wrap',
+};
+
 // Component definition
 export default Component.extend({
   tagName: '',
@@ -164,6 +169,7 @@ export default Component.extend({
   flexAlign: null,
   flexJustify: null,
   flexDir: null,
+  flexWrap: null,
 
   // Private //
   colorClass: prefix('color', 'bg', { dictionary: BG_COLORS }),
@@ -243,6 +249,7 @@ export default Component.extend({
   flexAlignClass: prefix('flexAlign', 'items'),
   flexJusitfyClass: prefix('flexJustify', 'justify'),
   flexDirClass: prefix('flexDir', 'flex'),
+  flexWrapClass: prefix('flexWrap', 'flex'),
 
   // Collected classes
   allClasses: concat(
@@ -271,6 +278,7 @@ export default Component.extend({
     'flexAlignClass',
     'flexJusitfyClass',
     'flexDirClass',
+    'flexWrapClass',
   ),
 
   // Lifecycle
@@ -310,5 +318,6 @@ export default Component.extend({
     checkDictionary(this.flexAlign, FLEX_ALIGNMENTS, '@flexAlign', 'Box');
     checkDictionary(this.flexJustify, FLEX_JUSTIFICATIONS, '@flexJustify', 'Box');
     checkDictionary(this.flexDir, FLEX_DIRECTIONS, '@flexDir', 'Box');
+    checkDictionary(this.flexWrap, FLEX_WRAPS, '@flexWrap', 'Box');
   },
 });

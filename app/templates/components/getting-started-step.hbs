@@ -1,14 +1,15 @@
 <UiKit::Box
   @display='flex'
   @flexDir={{hash base='row' sm=this.smDir}}
+  @flexWrap='wrap'
 >
   {{!-- Image --}}
   <UiKit::Box
-    @margin={{hash base=(hash bottom=4) sm=(hash bottom=12)}}
+    @margin={{hash base=(hash bottom=4) sm=(hash bottom=20)}}
     @padding={{hash x=4}}
-    @width={{hash sm='1/4'}}
+    @width={{hash base='full' sm='1/3' md='1/4'}}
   >
-    <UiKit::Box @margin={{hash x='auto'}} @maxWidth='sm'>
+    <UiKit::Box @margin={{hash x='auto'}} @maxWidth='2xs'>
       <UiKit::Text @color={{this.color}}>
         <SvgImage @name={{this.imageName}} />
       </UiKit::Text>
@@ -17,9 +18,9 @@
 
   {{!-- Text --}}
   <UiKit::Box
-    @margin={{hash base=(hash bottom=8) sm=(hash bottom=12)}}
+    @margin={{hash base=(hash bottom=16) sm=(hash bottom=20)}}
     @padding={{hash x=4}}
-    @width={{hash sm='3/4'}}
+    @width={{hash base='full' sm='2/3' md='3/4'}}
   >
     {{!-- Title --}}
     <UiKit::Grid @align='center' @base='auto' @justify='start' @wrap='no-wrap' as |titleGrid|>
