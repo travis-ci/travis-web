@@ -14,11 +14,34 @@ export default Service.extend({
   },
 
   get token() {
-    return this.getItem('travis.token');
+    return this.getItem('travis.token') || '';
+  },
+  deleteToken() {
+    this.removeItem('travis.token');
   },
 
   get user() {
-    return this.getItem('travis.user');
+    const data = this.parseWithDefault('travis.user', {});
+    return data.user || data;
+  },
+  deleteUser() {
+    this.removeItem('travis.user');
+  },
+
+  get accounts() {
+    return this.parseWithDefault('travis.auth.accounts', []);
+  },
+  set accounts(value) {
+    this.setItem('travis.auth.accounts', JSON.stringify(value));
+  },
+
+  get activeAccount() {
+    const { accounts } = this;
+    const activeAccountId = this.getItem('travis.auth.activeAccountId');
+    return accounts.findBy('id', activeAccountId) || accounts.firstObject || null;
+  },
+  set activeAccount({ id }) {
+    this.setItem('travis.auth.activeAccountId', id);
   },
 
   get authUpdatedAt() {
@@ -32,7 +55,6 @@ export default Service.extend({
   get billingStep() {
     return +this.getItem('travis.billing_step');
   },
-
   set billingStep(value) {
     this.setItem('travis.billing_step', +value);
   },
@@ -40,7 +62,6 @@ export default Service.extend({
   get billingInfo() {
     return this.parseWithDefault('travis.billing_info', {});
   },
-
   set billingInfo(value) {
     this.setItem('travis.billing_info', JSON.stringify(value));
   },
@@ -48,17 +69,8 @@ export default Service.extend({
   get billingPlan() {
     return this.parseWithDefault('travis.billing_plan', {});
   },
-
   set billingPlan(value) {
     this.setItem('travis.billing_plan', JSON.stringify(value));
-  },
-
-  parseWithDefault(key, defaultValue) {
-    try {
-      return JSON.parse(this.getItem(key)) || defaultValue;
-    } catch (e) {
-      return defaultValue;
-    }
   },
 
   clearAuthData() {
@@ -76,6 +88,14 @@ export default Service.extend({
     this.storage.removeItem('travis.billing_step');
     this.storage.removeItem('travis.billing_plan');
     this.storage.removeItem('travis.billing_info');
+  },
+
+  parseWithDefault(key, defaultValue) {
+    try {
+      return JSON.parse(this.getItem(key)) || defaultValue;
+    } catch (e) {
+      return defaultValue;
+    }
   },
 
   // method proxies

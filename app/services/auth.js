@@ -29,7 +29,7 @@ const STATE = {
   SIGNING_IN: 'signing-in'
 };
 
-const USER_FIELDS = ['id', 'login', 'token', 'correct_scopes', 'channels'];
+const USER_FIELDS = ['id', 'login', 'token', 'correct_scopes', 'channels', 'vcs_type'];
 
 const TOKEN_EXPIRED_MSG = "You've been signed out, because your access token has expired.";
 
@@ -62,7 +62,7 @@ export default Service.extend({
 
   permissions: reads('currentUser.permissions'),
 
-  token: reads('storage.token'),
+  token: reads('storage.activeAccount.token'),
   assetToken: reads('currentUser.token'),
 
   userName: reads('currentUser.fullName'),
@@ -99,7 +99,7 @@ export default Service.extend({
     this.signIn(provider);
   },
 
-  signIn(provider = 'github') {
+  signIn(provider) {
     this.autoSignIn();
     if (this.signedIn) return;
 
@@ -110,30 +110,48 @@ export default Service.extend({
     if (url.pathname === '/plans') {
       url.pathname = '/';
     }
-    const path = provider === 'github' ? '/auth/handshake' : `/auth/handshake/${provider}`;
+    const providerSegment = provider ? `/${provider}` : '';
+    const path = `/auth/handshake${providerSegment}`;
     window.location.href = `${authEndpoint || apiEndpoint}${path}?redirect_uri=${url}`;
   },
 
   autoSignIn() {
     try {
-      const data = JSON.parse(this.storage.user);
-      const userData = getProperties(data.user || data, USER_FIELDS);
+      if (this.storage.user) {
+        this.handleNewLogin();
+      }
 
-      this.validateUserData(userData);
+      const { activeAccount } = this.storage;
 
       this.setProperties({
-        currentUser: createUserRecord(this.store, userData),
+        currentUser: createUserRecord(this.store, activeAccount),
         state: STATE.SIGNED_IN
       });
 
       Travis.trigger('user:signed_in', this.currentUser);
 
       this.reloadCurrentUser().then(() => {
-        Travis.trigger('user:refreshed', data.user);
+        Travis.trigger('user:refreshed', activeAccount);
       });
     } catch (error) {
       this.signOut(false);
     }
+  },
+
+  handleNewLogin() {
+    const { storage } = this;
+    const { user, token, accounts } = storage;
+
+    if (!user) return;
+
+    const userData = getProperties(user, USER_FIELDS);
+    this.validateUserData(userData);
+
+    userData.token = token;
+    storage.accounts = accounts.filterBy('id', userData.id).concat([userData]);
+    storage.activeAccount = userData;
+    storage.deleteUser();
+    storage.deleteToken();
   },
 
   reloadCurrentUser(include = []) {
