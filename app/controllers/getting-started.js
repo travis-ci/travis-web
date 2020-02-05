@@ -1,14 +1,19 @@
 import Controller from '@ember/controller';
 import { inject as service } from '@ember/service';
-import { equal } from '@ember/object/computed';
+import { equal, or } from '@ember/object/computed';
 
 export default Controller.extend({
   auth: service(),
   features: service(),
 
-  provider: 'github', // Eventually get this from a service
+  queryParams: ['provider'],
 
-  showGithub: equal('provider', 'github'),
-  showBitbucket: equal('provider', 'bitbucket'),
-  showAssembla: equal('provider', 'assembla'),
+  // Eventually get provider info from a service. Depends on other PRs in progress
+  provider: null,
+  defaultProvider: 'github',
+
+  selectedProvider: or('provider', 'defaultProvider'),
+
+  showGithub: equal('selectedProvider', 'github'),
+  showBitbucket: equal('selectedProvider', 'bitbucket'),
 });
