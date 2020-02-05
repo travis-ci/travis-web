@@ -30,6 +30,11 @@
     color: $asphalt-grey;
   }
 
+  &.customize .trigger-build-customize {
+    border-color: $oxide-blue;
+    color: $oxide-blue;
+  }
+
   &.closed .trigger-build-fields,
   &.open .trigger-build-fields {
     display: none;
