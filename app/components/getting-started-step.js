@@ -13,7 +13,7 @@ export default Component.extend({
   providerImg: false,
   title: '',
 
-  dir: computed('number', function () {
+  smDir: computed('number', function () {
     const { number } = this;
     return (number && number % 2 === 1) ? 'row' : 'row-reverse';
   }),

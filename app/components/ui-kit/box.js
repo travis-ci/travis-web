@@ -111,6 +111,29 @@ const MAX_WIDTHS = {
   FULL: 'full',
 };
 
+// Flexbox
+const FLEX_ALIGNMENTS = {
+  STRETCH: 'stretch',
+  START: 'start',
+  CENTER: 'center',
+  END: 'end',
+  BASELINE: 'baseline',
+};
+
+const FLEX_JUSTIFICATIONS = {
+  START: 'start',
+  CENTER: 'center',
+  END: 'end',
+  BETWEEN: 'between',
+  AROUND: 'around',
+};
+
+const FLEX_DIRECTIONS = {
+  ROW: 'row',
+  COL: 'col',
+  ROW_REVERSE: 'row-reverse',
+  COL_REVERSE: 'col-reverse',
+};
 
 // Component definition
 export default Component.extend({
@@ -138,8 +161,9 @@ export default Component.extend({
   padding: null,
   position: null,
 
-  alignItems: null,
-  justifyContent: null,
+  flexAlign: null,
+  flexJustify: null,
+  flexDir: null,
 
   // Private //
   colorClass: prefix('color', 'bg', { dictionary: BG_COLORS }),
@@ -216,8 +240,9 @@ export default Component.extend({
   ),
 
   // Flex
-  alignItemsClass: prefix('alignItems', 'items'),
-  justifyContentClass: prefix('justifyContent', 'justify'),
+  flexAlignClass: prefix('flexAlign', 'items'),
+  flexJusitfyClass: prefix('flexJustify', 'justify'),
+  flexDirClass: prefix('flexDir', 'flex'),
 
   // Collected classes
   allClasses: concat(
@@ -243,8 +268,9 @@ export default Component.extend({
     'borderWidthClasses',
     'marginClasses',
     'paddingClasses',
-    'alignItemsClass',
-    'justifyContentClass',
+    'flexAlignClass',
+    'flexJusitfyClass',
+    'flexDirClass',
   ),
 
   // Lifecycle
@@ -280,5 +306,9 @@ export default Component.extend({
     checkDictionary(bw.bottom, WIDTHS, '@borderWidth.bottom');
     checkDictionary(bw.left, WIDTHS, '@borderWidth.left');
     checkDictionary(bw.all, WIDTHS, '@borderWidth.all');
+
+    checkDictionary(this.flexAlign, FLEX_ALIGNMENTS, '@flexAlign', 'Box');
+    checkDictionary(this.flexJustify, FLEX_JUSTIFICATIONS, '@flexJustify', 'Box');
+    checkDictionary(this.flexDir, FLEX_DIRECTIONS, '@flexDir', 'Box');
   },
 });

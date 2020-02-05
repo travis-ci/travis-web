@@ -1,25 +1,25 @@
-<UiKit::Grid
-  @sm={{2}}
-  as |grid|
+<UiKit::Box
+  @display='flex'
+  @flexDir={{hash base='row' sm=this.smDir}}
 >
   {{!-- Image --}}
-  <grid.item
-    @sm='1/4'
+  <UiKit::Box
     @margin={{hash base=(hash bottom=4) sm=(hash bottom=12)}}
     @padding={{hash x=4}}
+    @width={{hash sm='1/4'}}
   >
     <UiKit::Box @margin={{hash x='auto'}} @maxWidth='sm'>
       <UiKit::Text @color={{this.color}}>
         <SvgImage @name={{this.imageName}} />
       </UiKit::Text>
     </UiKit::Box>
-  </grid.item>
+  </UiKit::Box>
 
   {{!-- Text --}}
-  <grid.item
-    @sm='3/4'
+  <UiKit::Box
     @margin={{hash base=(hash bottom=8) sm=(hash bottom=12)}}
     @padding={{hash x=4}}
+    @width={{hash sm='3/4'}}
   >
     {{!-- Title --}}
     <UiKit::Grid @align='center' @base='auto' @justify='start' @wrap='no-wrap' as |titleGrid|>
@@ -27,8 +27,8 @@
         <UiKit::Box
           @color={{this.color}}
           @display='flex'
-          @alignItems='center'
-          @justifyContent='center'
+          @flexAlign='center'
+          @flexJustify='center'
           @radius='full'
           @width={{8}}
           @height={{8}}
@@ -45,5 +45,5 @@
 
     {{!-- Content --}}
     <UiKit::Box>{{yield}}</UiKit::Box>
-  </grid.item>
-</UiKit::Grid>
+  </UiKit::Box>
+</UiKit::Box>
