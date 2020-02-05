@@ -6,7 +6,7 @@ export default Controller.extend({
   auth: service(),
   features: service(),
 
-  provider: 'bitbucket', // Eventually get this from a service
+  provider: 'github', // Eventually get this from a service
 
   showGithub: equal('provider', 'github'),
   showBitbucket: equal('provider', 'bitbucket'),

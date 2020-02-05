@@ -2,7 +2,8 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 
 const COLORS = {
-  bitbucket: 'blue'
+  bitbucket: 'blue',
+  github: 'grey-dark',
 };
 
 export default Component.extend({
