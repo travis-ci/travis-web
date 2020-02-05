@@ -135,6 +135,7 @@ $nav-line-height: 35px;
 }
 .navigation-nested {
   padding: 10px 0px 0px 0px;
+  z-index: 35;
 
   svg {
     display: none;
