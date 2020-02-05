@@ -5,17 +5,21 @@ import { checkDictionary } from 'travis/utils/ui-kit/assertions';
 import prefix from 'travis/utils/ui-kit/prefix';
 import concat from 'travis/utils/ui-kit/concat';
 
-const COLORS = {
+export const COLORS = {
   WHITE: 'white',
   GREY_LIGHT: 'grey-light',
   GREY_LIGHTER: 'grey-lighter',
   BLUE: 'blue',
+  YELLOW_LIGHT: 'yellow-light',
+  YELLOW_LIGHTER: 'yellow-lighter',
 };
 
 const BG_COLORS = {
   [COLORS.WHITE]: 'white',
   [COLORS.GREY_LIGHTER]: 'grey-100',
   [COLORS.BLUE]: 'blue-400',
+  [COLORS.YELLOW_LIGHT]: 'yellow-200',
+  [COLORS.YELLOW_LIGHTER]: 'yellow-100',
 };
 
 const BORDER_COLORS = {

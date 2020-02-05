@@ -4,12 +4,13 @@ import prefix from 'travis/utils/ui-kit/prefix';
 import concat from 'travis/utils/ui-kit/concat';
 import { variantProp } from 'travis/utils/ui-kit/variant';
 
-const COLORS = {
+export const COLORS = {
   BLUE_LIGHT: 'blue-light',
   BLUE: 'blue',
   GREEN: 'green',
   GREY: 'grey',
   GREY_DARK: 'grey-dark',
+  YELLOW_DARK: 'yellow-dark',
   WHITE: 'white',
 };
 const DEFAULT_TEXT_COLOR = COLORS.GREY_DARK;
@@ -20,6 +21,7 @@ const TEXT_COLORS = {
   [COLORS.GREEN]: 'green-400',
   [COLORS.GREY]: 'grey-400',
   [COLORS.GREY_DARK]: 'grey-800',
+  [COLORS.YELLOW_DARK]: 'yellow-600',
   [COLORS.WHITE]: 'white',
 };
 
@@ -39,6 +41,19 @@ const LEADINGS = {
   XL: 'xl',
 };
 const DEFAULT_LEADING = LEADINGS.MD;
+
+const LINES = {
+  UNDER: 'under',
+  THROUGH: 'through',
+  NONE: 'none',
+};
+const DEFAULT_LINE = LINES.NONE;
+
+const DECORATIONS = {
+  [LINES.UNDER]: 'underline',
+  [LINES.THROUGH]: 'line-through',
+  [LINES.NONE]: 'no-underline',
+};
 
 const SIZES = {
   XS3: '3xs',
@@ -120,6 +135,7 @@ export default Component.extend({
   color: variantProp(VARIANT_PROPS, DEFAULT_TEXT_COLOR),
   family: variantProp(VARIANT_PROPS, DEFAULT_FAMILY),
   leading: variantProp(VARIANT_PROPS, DEFAULT_LEADING),
+  line: variantProp(VARIANT_PROPS, DEFAULT_LINE),
   size: variantProp(VARIANT_PROPS, DEFAULT_SIZE),
   tracking: variantProp(VARIANT_PROPS, DEFAULT_TRACKING),
   transform: variantProp(VARIANT_PROPS, DEFAULT_TRANSFORM),
@@ -137,6 +153,7 @@ export default Component.extend({
   colorClass: prefix('color', 'text', { dictionary: TEXT_COLORS }),
   familyClass: prefix('family', 'font'),
   leadingClass: prefix('leading', 'leading'),
+  lineClass: prefix('line', '', { dictionary: DECORATIONS }),
   sizeClass: prefix('size', 'text'),
   trackingClass: prefix('tracking', 'tracking'),
   transformClass: prefix('transform'),
@@ -146,6 +163,7 @@ export default Component.extend({
     'colorClass',
     'familyClass',
     'leadingClass',
+    'lineClass',
     'sizeClass',
     'trackingClass',
     'transformClass',
@@ -160,6 +178,7 @@ export default Component.extend({
     checkDictionary(this.size, SIZES, '@size', 'Text');
     checkDictionary(this.family, FAMILIES, '@family', 'Text');
     checkDictionary(this.leading, LEADINGS, '@leading', 'Text');
+    checkDictionary(this.line, LINES, '@line', 'Text');
     checkDictionary(this.weight, WEIGHTS, '@weight', 'Text');
     checkDictionary(this.tracking, TRACKINGS, '@tracking', 'Text');
     checkDictionary(this.transform, TRANSFORMS, '@transform', 'Text');
