@@ -81,7 +81,7 @@
             @href={{this.repo.defaultBranch.lastBuild.commit.compareUrl}}
             class="label-align"
           >
-            <EmberTooltip @text="View diff on GitHub" />
+            <EmberTooltip @text="{{concat "View diff on " (vcs-name this.repo.vcsType)}}" />
             <span class="label-align commit-compare monospace">
               {{format-sha this.repo.defaultBranch.lastBuild.commit.sha}}
             </span>
