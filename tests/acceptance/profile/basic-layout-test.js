@@ -172,6 +172,7 @@ module('Acceptance | profile/basic layout', function (hooks) {
     enableFeature('github-apps');
     await profilePage.visit();
 
+
     percySnapshot(assert);
     assert.equal(document.title, 'User Name of exceeding length - Profile - Travis CI');
 
