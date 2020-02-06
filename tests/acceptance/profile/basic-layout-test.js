@@ -7,6 +7,7 @@ import {
   reset as resetWindow
 } from 'ember-window-mock';
 import Service from '@ember/service';
+import { settled } from '@ember/test-helpers';
 import config from 'travis/config/environment';
 import { enableFeature } from 'ember-feature-flags/test-support';
 import { percySnapshot } from 'ember-percy';
@@ -171,7 +172,7 @@ module('Acceptance | profile/basic layout', function (hooks) {
   test('view repositories', async function (assert) {
     enableFeature('github-apps');
     await profilePage.visit();
-
+    await settled();
 
     percySnapshot(assert);
     assert.equal(document.title, 'User Name of exceeding length - Profile - Travis CI');
