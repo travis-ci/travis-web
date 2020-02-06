@@ -174,7 +174,6 @@ module('Acceptance | profile/basic layout', function (hooks) {
     await profilePage.visit();
     await settled();
 
-    percySnapshot(assert);
     assert.equal(document.title, 'User Name of exceeding length - Profile - Travis CI');
 
     assert.equal(profilePage.name, 'User Name of exceeding length');
@@ -218,6 +217,8 @@ module('Acceptance | profile/basic layout', function (hooks) {
       assert.ok(repository.isPublic);
       assert.notOk(repository.settings.isDisabled);
     });
+
+    percySnapshot(assert);
   });
 
   test('view profile that has an expired subscription', async function (assert) {
