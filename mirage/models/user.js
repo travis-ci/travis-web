@@ -1,5 +1,5 @@
 import { Model, belongsTo } from 'ember-cli-mirage';
 
 export default Model.extend({
-  installation: belongsTo({ embed: true }),
+  installation: belongsTo('installation', { embed: true }),
 });
