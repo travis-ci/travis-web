@@ -174,50 +174,49 @@ module('Acceptance | profile/basic layout', function (hooks) {
     await profilePage.visit();
     await settled();
 
-    assert.ok(true);
-    // assert.equal(document.title, 'User Name of exceeding length - Profile - Travis CI');
+    assert.equal(document.title, 'User Name of exceeding length - Profile - Travis CI');
 
-    // assert.equal(profilePage.name, 'User Name of exceeding length');
-    // assert.equal(profilePage.login, '@user-login');
+    assert.equal(profilePage.name, 'User Name of exceeding length');
+    assert.equal(profilePage.login, '@user-login');
 
-    // assert.ok(profilePage.avatar.src.startsWith('/images/tiny.gif'), 'expected avatar URL to have the same beginning');
-    // assert.ok(profilePage.avatar.checkmark.isVisible, 'expected avatar to have a checkmark for active subscription');
+    assert.ok(profilePage.avatar.src.startsWith('/images/tiny.gif'), 'expected avatar URL to have the same beginning');
+    assert.ok(profilePage.avatar.checkmark.isVisible, 'expected avatar to have a checkmark for active subscription');
 
-    // assert.ok(profilePage.subscriptionStatus.isHidden, 'expected no subscription status banner');
+    assert.ok(profilePage.subscriptionStatus.isHidden, 'expected no subscription status banner');
 
-    // assert.equal(profilePage.accounts.length, 12, 'expected all accounts to be listed');
+    assert.equal(profilePage.accounts.length, 12, 'expected all accounts to be listed');
 
-    // assert.equal(profilePage.accounts[0].name, 'User Name of exceeding length');
-    // assert.ok(profilePage.accounts[0].avatar.checkmark.isVisible, 'expected a subscription checkmark for user account');
+    assert.equal(profilePage.accounts[0].name, 'User Name of exceeding length');
+    assert.ok(profilePage.accounts[0].avatar.checkmark.isVisible, 'expected a subscription checkmark for user account');
 
-    // assert.equal(profilePage.accounts[1].name, 'Org Name');
-    // assert.ok(profilePage.accounts[1].avatar.checkmark.isHidden, 'expected no subscription checkmark for org account');
+    assert.equal(profilePage.accounts[1].name, 'Org Name');
+    assert.ok(profilePage.accounts[1].avatar.checkmark.isHidden, 'expected no subscription checkmark for org account');
 
-    // assert.ok(profilePage.accounts[11].avatar.checkmark.isVisible, 'expected a subscription checkmark for the last org account');
+    assert.ok(profilePage.accounts[11].avatar.checkmark.isVisible, 'expected a subscription checkmark for the last org account');
 
-    // assert.notOk(profilePage.githubAppsInvitation.isVisible, 'expected GitHub Apps invitation not to be visible');
+    assert.notOk(profilePage.githubAppsInvitation.isVisible, 'expected GitHub Apps invitation not to be visible');
 
-    // assert.ok(profilePage.deprecatedBadge.isVisible, 'expected deprecated badge to be visible');
-    // assert.equal(profilePage.administerableRepositories.length, 2, 'expected two classic repositories, with inactive repositories hidden');
+    assert.ok(profilePage.deprecatedBadge.isVisible, 'expected deprecated badge to be visible');
+    assert.equal(profilePage.administerableRepositories.length, 2, 'expected two classic repositories, with inactive repositories hidden');
 
-    // assert.equal(profilePage.administerableRepositories[0].name, 'other-repository-name');
-    // assert.ok(profilePage.administerableRepositories[0].isDisabled, 'expected disabled repository to be disabled in UI');
-    // assert.equal(profilePage.administerableRepositories[1].name, 'repository-name');
-    // assert.ok(profilePage.administerableRepositories[1].isActive, 'expected active repository to appear active');
+    assert.equal(profilePage.administerableRepositories[0].name, 'other-repository-name');
+    assert.ok(profilePage.administerableRepositories[0].isDisabled, 'expected disabled repository to be disabled in UI');
+    assert.equal(profilePage.administerableRepositories[1].name, 'repository-name');
+    assert.ok(profilePage.administerableRepositories[1].isActive, 'expected active repository to appear active');
 
-    // assert.equal(profilePage.githubAppsRepositories.length, 2, 'expected two GitHub Apps-managed repositories');
+    assert.equal(profilePage.githubAppsRepositories.length, 2, 'expected two GitHub Apps-managed repositories');
 
-    // profilePage.githubAppsRepositories[0].as(repository => {
-    //   assert.equal(repository.name, 'github-apps-private-repository');
-    //   assert.ok(repository.isPrivate);
-    //   assert.ok(repository.settings.isDisabled);
-    // });
+    profilePage.githubAppsRepositories[0].as(repository => {
+      assert.equal(repository.name, 'github-apps-private-repository');
+      assert.ok(repository.isPrivate);
+      assert.ok(repository.settings.isDisabled);
+    });
 
-    // profilePage.githubAppsRepositories[1].as(repository => {
-    //   assert.equal(repository.name, 'github-apps-public-repository');
-    //   assert.ok(repository.isPublic);
-    //   assert.notOk(repository.settings.isDisabled);
-    // });
+    profilePage.githubAppsRepositories[1].as(repository => {
+      assert.equal(repository.name, 'github-apps-public-repository');
+      assert.ok(repository.isPublic);
+      assert.notOk(repository.settings.isDisabled);
+    });
 
     percySnapshot(assert);
   });

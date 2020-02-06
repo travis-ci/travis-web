@@ -33,7 +33,7 @@ export default VcsEntity.extend({
   // This is set by serializers:subscription
   subscriptionPermissions: attr(),
 
-  installation: belongsTo('installation', { async: false, inverse: 'owner' }),
+  installation: belongsTo('installation', { async: false }),
 
   title: or('name', 'login'),
 
