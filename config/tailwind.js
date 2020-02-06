@@ -229,7 +229,7 @@ module.exports = {
       '3xl': '48rem',
       '4xl': '56rem',
       '5xl': '64rem',
-      '6xl': '72rem',
+      '6xl': '73.1429rem', // 1024px
       full: '100%',
     },
     minHeight: {
@@ -244,6 +244,11 @@ module.exports = {
 
     /* ~~ Extend ~~ */
     extend: {
+      flex: {
+        'grow-single': '1 0 auto',
+        'shrink-single': '0 1 auto',
+        'resize-single': '1 1 auto',
+      },
       fill: {
         transparent: 'transparent'
       },

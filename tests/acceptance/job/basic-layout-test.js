@@ -339,6 +339,7 @@ module('Acceptance | job/basic layout', function (hooks) {
   I should not be blank.\r${ESCAPE}[0m
   ${ESCAPE}[31m-}
   ${ESCAPE}(B[m[32m+},
+  { "curl": "sample response" }travis_time:end:454546
   `;
     this.server.create('log', { id: job.id, content: complexLog });
 
@@ -410,6 +411,7 @@ module('Acceptance | job/basic layout', function (hooks) {
     assert.equal(jobPage.logLines[22].entireLineText, 'I should not be blank.');
 
     assert.equal(jobPage.logLines[24].entireLineText, '+},');
+    assert.equal(jobPage.logLines[25].entireLineText, '{ "curl": "sample response" }');
 
     await jobPage.logFolds[0].toggle();
 
