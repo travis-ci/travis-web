@@ -72,6 +72,8 @@ module.exports = function (environment) {
       terms: 'https://docs.travis-ci.com/legal/terms-of-service/',
       tutorial: 'https://docs.travis-ci.com/user/tutorial/',
       twitter: 'https://twitter.com/travisci',
+      pardotHost: 'https://info.travis-ci.com',
+      pardotForm: '/l/845883/2020-02-03/257j'
     },
     endpoints: {},
     githubApps: false,

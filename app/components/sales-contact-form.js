@@ -4,6 +4,9 @@ import { task } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
 import { UTM_FIELD_NAMES } from 'travis/services/utm';
 import objectCollect from 'travis/utils/object-collect';
+import config from 'travis/config/environment';
+
+const pardotFormUrl = config.urls.pardotHost + config.urls.pardotForm;
 
 export default Component.extend({
   tagName: '',
@@ -17,6 +20,7 @@ export default Component.extend({
 
   isSubmitting: reads('send.isRunning'),
   isSuccess: bool('send.lastSuccessful.value'),
+  pardotFormUrl,
 
   lead: null,
   referralSource: 'travis-web',
@@ -48,7 +52,7 @@ export default Component.extend({
 
   setHeight(element) {
     window.addEventListener('message', (event) => {
-      if (event.origin === 'https://info.travis-ci.com' && event.data) {
+      if (event.origin === config.urls.pardotHost && event.data) {
         element.style.height = `${event.data.scrollHeight + 10}px`;
       }
     });
