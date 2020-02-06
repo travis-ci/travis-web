@@ -49,7 +49,7 @@ export default Component.extend({
   setHeight(element) {
     window.addEventListener('message', (event) => {
       if (event.origin === 'https://info.travis-ci.com' && event.data) {
-        element.style.height = `${event.data.scrollHeight + 20}px`;
+        element.style.height = `${event.data.scrollHeight + 10}px`;
       }
     });
   },
