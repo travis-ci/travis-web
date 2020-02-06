@@ -223,12 +223,12 @@
         </LinkTo>
         <div class="menu-separator"></div>
         <ul class="navigation-nested">
-          <li class="username">
+          <li class="username navigation-nested__header">
             <div class="username__text">
               {{this.userName}}
             </div>
             <div class="username__vcs-icon">
-              <SvgImage @name={{vcs-icon this.user.vcsType}} @height=16 />
+              <SvgImage @name={{vcs-icon this.user.vcsType}} @height=14 />
               <EmberTooltip @text={{concat (vcs-name this.user.vcsType) ' account'}} @side='left' />
             </div>
           </li>
@@ -258,7 +258,30 @@
               </div>
             </a>
           </li>
-          <div class="nav-nested"></div>
+          <li class="nav-nested"></li>
+          <li class="section-header">
+            Switch accounts
+          </li>
+          {{#each this.auth.inactiveAccounts as |account| }}
+            <li class="username pointer topbar-menu-item">
+              <UserAvatar
+                @url={{account.avatarUrl}}
+                @name={{account.login}}
+                @size={{12}}
+              />
+              <div class="username__text topbar-menu-item__label">
+                {{account.login}}
+              </div>
+              <div class="username__vcs-icon">
+                <SvgImage @name={{vcs-icon account.vcsType}} @height=14 />
+              </div>
+            </li>
+          {{/each}}
+          <li class="text-right">
+            <LinkTo @route="signin" @title="Add another account" class="navigation-nested__link">
+              Add an account
+            </LinkTo>
+          </li>
         </ul>
       {{/if}}
     </li>

@@ -1,15 +1,15 @@
 /* global Travis */
 import URL from 'url';
-import {
+import EmberObject, {
   computed,
+  get,
   getProperties,
-  observer,
-  get
+  observer
 } from '@ember/object';
 import { assert } from '@ember/debug';
 import { isEmpty, isPresent } from '@ember/utils';
 import Service, { inject as service } from '@ember/service';
-import { equal, reads } from '@ember/object/computed';
+import { equal, filter, reads } from '@ember/object/computed';
 import { getOwner } from '@ember/application';
 import config from 'travis/config/environment';
 import { task } from 'ember-concurrency';
@@ -56,6 +56,15 @@ export default Service.extend({
     // primary storage for auth is the one in which auth data was updated last
     const { sessionStorage, localStorage } = this;
     return sessionStorage.authUpdatedAt > localStorage.authUpdatedAt ? sessionStorage : localStorage;
+  }),
+
+  accounts: computed(function () {
+    return this.storage.accounts.map(account => EmberObject.create(account));
+  }),
+
+  inactiveAccounts: filter('accounts', function (account) {
+    const { activeAccount } = this.storage;
+    return activeAccount && account.id !== activeAccount.id;
   }),
 
   currentUser: null,
@@ -119,6 +128,8 @@ export default Service.extend({
       }
 
       const { activeAccount } = this.storage;
+
+      if (!activeAccount) throw new Error('No active account');
 
       this.setProperties({
         currentUser: createUserRecord(this.store, activeAccount),
