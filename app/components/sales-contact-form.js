@@ -44,7 +44,15 @@ export default Component.extend({
     }
   }).drop(),
 
-  onSuccess() {},
+  onSuccess() { },
+
+  setHeight(element) {
+    window.addEventListener('message', (event) => {
+      if (event.origin === 'https://info.travis-ci.com' && event.data) {
+        element.style.height = `${event.data.scrollHeight + 20}px`;
+      }
+    });
+  },
 
   reset() {
     if (this.lead) this.lead.unloadRecord();
