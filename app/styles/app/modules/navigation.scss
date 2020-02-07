@@ -228,6 +228,18 @@ $nav-line-height: 35px;
       margin-right: 15px;
       position: relative;
       top: -2px;
+
+      &:hover {
+        color: darken($oxide-blue, 10%)
+      }
+    }
+
+    .navigation-nested__note {
+      padding: 0 14px 0 20px;
+      white-space: normal;
+      line-height: 1.4;
+      font-size: 0.8em;
+      color: $cement-grey;
     }
   }
 
