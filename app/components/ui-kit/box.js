@@ -7,17 +7,28 @@ import concat from 'travis/utils/ui-kit/concat';
 
 const COLORS = {
   WHITE: 'white',
-  GREY_LIGHT: 'grey-light',
+  BLUE_LIGHT: 'blue-light',
+  BLUE: 'blue',
+  GREEN: 'green',
   GREY_LIGHTER: 'grey-lighter',
+  GREY_LIGHT: 'grey-light',
+  GREY: 'grey',
+  GREY_DARK: 'grey-dark',
 };
 
 const BG_COLORS = {
   [COLORS.WHITE]: 'white',
+  [COLORS.BLUE_LIGHT]: 'blue-300',
+  [COLORS.GREY_LIGHT]: 'grey-300',
   [COLORS.GREY_LIGHTER]: 'grey-100',
 };
 
 const BORDER_COLORS = {
+  [COLORS.BLUE]: 'blue-400',
+  [COLORS.GREEN]: 'green-300',
+  [COLORS.GREY]: 'grey-700',
   [COLORS.GREY_LIGHT]: 'grey-150',
+  [COLORS.GREY_DARK]: 'grey-800',
 };
 
 const WIDTHS = {
@@ -94,6 +105,9 @@ const POSITION_INSETS = {
   X_AUTO: 'x-auto',
   Y_AUTO: 'y-auto',
 };
+const PIN_LOCATIONS = {
+  TOP_RIGHT: 'top-right',
+};
 
 // Height & Width
 const MAX_WIDTHS = {
@@ -104,6 +118,7 @@ const MAX_WIDTHS = {
   LG: 'lg',
   XL: 'xl',
   XL2: '2xl',
+  XL3: '3xl',
   XL6: '6xl',
   FULL: 'full',
 };
@@ -120,6 +135,7 @@ export default Component.extend({
   display: DEFAULT_DISPLAY,
   layer: null,
   overflow: null,
+  pin: null,
   radius: null,
   shadow: null,
   textAlign: null,
@@ -142,6 +158,7 @@ export default Component.extend({
   overflowAllClass: prefix('overflow.all', 'overflow'),
   overflowXClass: prefix('overflow.x', 'overflow'),
   overflowYClass: prefix('overflow.y', 'overflow'),
+  pinClass: prefix('pin', 'pin'),
   radiusClass: prefix('radius', 'rounded'),
   shadowClass: prefix('shadow', 'shadow'),
   textAlignClass: prefix('textAlign', 'text'),
@@ -217,6 +234,7 @@ export default Component.extend({
     'overflowAllClass',
     'overflowXClass',
     'overflowYClass',
+    'pinClass',
     'radiusClass',
     'shadowClass',
     'textAlignClass',
@@ -242,6 +260,7 @@ export default Component.extend({
     checkDictionary(this.color, COLORS, '@color', 'Box');
     checkDictionary(this.display, DISPLAYS, '@display', 'Box');
     checkDictionary(this.layer, LAYERS, '@layer', 'Box');
+    checkDictionary(this.pin, PIN_LOCATIONS, '@pin', 'Box');
     checkDictionary(this.radius, RADII, '@radius', 'Box');
     checkDictionary(this.shadow, SHADOWS, '@shadow', 'Box');
     checkDictionary(this.textAlign, TEXT_ALIGNMENTS, '@textAlign', 'Box');

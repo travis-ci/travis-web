@@ -93,15 +93,7 @@
       <SvgImage @name="hard-hat" />
     </div>
     <div class="sign-in align-center">
-      <button
-        title="Sign into Travis CI"
-        class="hero-button"
-        data-test-zendesk-form-log-in-button
-        {{action (action "signIn" false target=auth)}}
-      >
-        <SvgImage @name="icon-repooctocat" />
-        Sign in with GitHub
-      </button>
+      <MultiSigninButton data-test-zendesk-form-log-in-button="" />
     </div>
   {{else}}
     <h1
