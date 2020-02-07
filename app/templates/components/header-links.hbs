@@ -263,7 +263,7 @@
             Switch accounts
           </li>
           {{#each this.auth.inactiveAccounts as |account| }}
-            <li class="username pointer topbar-menu-item">
+            <li class="username pointer topbar-menu-item" {{on 'click' (action 'switchAccount' account.id target=this.auth)}}>
               <UserAvatar
                 @url={{account.avatarUrl}}
                 @name={{account.login}}

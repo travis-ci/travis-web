@@ -79,6 +79,20 @@ export default Service.extend({
 
   redirectUrl: null,
 
+  switchAccount(id) {
+    const { accounts, activeAccount } = this.storage;
+    const targetAccount = accounts.findBy('id', id);
+
+    if (!activeAccount || activeAccount.id === id || !targetAccount) {
+      return;
+    }
+
+    this.storage.activeAccount = targetAccount;
+    this.store.unloadAll();
+    this.autoSignIn();
+    this.router.transitionTo('/');
+  },
+
   signOut(runTeardown = true) {
     if (this.signedIn) this.api.get('/logout');
 
@@ -249,6 +263,11 @@ export default Service.extend({
   }),
 
   actions: {
+
+    switchAccount(id) {
+      this.switchAccount(id);
+    },
+
     signIn(runAfterSignIn) {
       let applicationRoute = getOwner(this).lookup('route:application');
       applicationRoute.send('signIn', runAfterSignIn);
