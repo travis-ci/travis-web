@@ -1,0 +1,81 @@
+<TravisLayout @layoutName="layouts/center">
+  <div class="content-page">
+    {{#if this.isRedirectingToAccountPage}}
+      <SvgImage
+        @name='account-unauthorized'
+        @width={{350}}
+        @height={{300}}
+        @alt='Account'
+      />
+    {{else}}
+      <img
+        src="/images/logos/TravisCI-Mascot-1.svg"
+        alt="Travis CI mascot"
+        width="200"
+        height="200"
+      />
+    {{/if}}
+    <h1 class="content-title auth">
+      We're so glad you're here!
+    </h1>
+    {{#if this.auth.signedOut}}
+      <h1 class="content-subtitle">
+        {{#if this.isRedirectingToAccountPage}}
+          Please sign in to view your account.
+        {{else}}
+          Please sign in to view your repositories.
+        {{/if}}
+      </h1>
+      <div class="mb-4">
+        <button
+          type="button"
+          title="Sign into Travis CI"
+          class="block content-button sign-in"
+          {{on 'click' (action this.auth.signIn 'github')}}
+        >
+          Sign in with GitHub
+          <SvgImage @name={{vcs-icon 'GithubUser'}} @class="fill-current align-top ml-1 w-5 h-5" />
+        </button>
+      </div>
+      {{#if this.multiVcs.enableBitbucketLogin}}
+        <div class="mb-4">
+          <button
+            type="button"
+            title="Sign into Travis CI"
+            class="block content-button sign-in"
+            {{on 'click' (action this.auth.signIn 'bitbucket')}}
+          >
+            Sign in with Bitbucket
+            <SvgImage @name={{vcs-icon 'BitbucketUser'}} @class="fill-current align-top ml-1 w-5 h-5" />
+          </button>
+        </div>
+      {{/if}}
+      {{#if this.multiVcs.enableAssemblaLogin}}
+        <div class="mb-4">
+          <button
+            type="button"
+            title="Sign into Travis CI"
+            class="block content-button sign-in"
+            {{on 'click' (action this.auth.signIn 'assembla')}}
+          >
+            Sign in with Assembla
+            <SvgImage @name={{vcs-icon 'AssemblaUser'}} @class="fill-current align-top ml-1 w-5 h-5" />
+          </button>
+        </div>
+      {{/if}}
+    {{/if}}
+    {{#if this.auth.signingIn}}
+      <h2 class="content-subtitle">
+        We're signing you in,
+        <br />
+        that might take a moment.
+      </h2>
+      <p class="content-button">
+        <span class="label-align">
+          Signing in
+        </span>
+        <LoadingIndicator @inline={{true}} @white={{true}} />
+      </p>
+    {{/if}}
+  </div>
+</TravisLayout>

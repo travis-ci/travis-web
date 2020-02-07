@@ -7,6 +7,7 @@ import { variantProp } from 'travis/utils/ui-kit/variant';
 export const COLORS = {
   BLUE_LIGHT: 'blue-light',
   BLUE: 'blue',
+  GREEN_LIGHT: 'green-light',
   GREEN: 'green',
   GREY: 'grey',
   GREY_DARK: 'grey-dark',
@@ -18,6 +19,7 @@ const DEFAULT_TEXT_COLOR = COLORS.GREY_DARK;
 const TEXT_COLORS = {
   [COLORS.BLUE_LIGHT]: 'blue-300',
   [COLORS.BLUE]: 'blue-400',
+  [COLORS.GREEN_LIGHT]: 'green-300',
   [COLORS.GREEN]: 'green-400',
   [COLORS.GREY]: 'grey-400',
   [COLORS.GREY_DARK]: 'grey-800',

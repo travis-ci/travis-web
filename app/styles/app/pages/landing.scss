@@ -620,15 +620,18 @@
         background-size: 57px;
         margin-top: 7px;
       }
+
       @media #{$large-up} {
         background-image: url("../images/landing-page/build-flow.png");
+        background-position: center center;
         background-repeat: no-repeat;
         width: 900px;
-        height: 114px;
-        background-size: 900px;
+        height: 116px;
+        background-size:100% auto;
         margin: 0 auto;
       }
     }
+
 
     .build-pr-image {
       @media #{$small-up} {
@@ -639,6 +642,7 @@
         background-size: 57px;
         margin-top: 7px;
       }
+
       @media #{$large-up} {
         background-image: url("../images/landing-page/pr-flow.png");
         background-repeat: no-repeat;
@@ -997,21 +1001,18 @@
   }
 }
 
-.landing-page {
-  #profile-menu-link {
-    line-height: 0;
-    margin-top: 13px;
-    position: relative;
-    text-align: center;
+#profile-menu-link.signed-out {
+  line-height: 0;
+  margin-top: 13px;
+  position: relative;
+  text-align: center;
 
-    @media #{$small-only} {
-      display: none;
-    }
+  @media #{$small-only} {
+    display: none;
   }
 
   .navigation-nested {
     background-color: white;
-    width: auto;
     margin: 31px 0 0;
     box-shadow: 0 -6px 0 #fff, 0 1px 6px rgba(0,0,0, .15);
     width: 100%;
@@ -1023,8 +1024,10 @@
       cursor: pointer;
       display: block;
       padding: 7px 10px;
-      text-align: left;
       width: 100%;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
 
       &:hover {
         background-color: #EAEAEA;
@@ -1032,6 +1035,7 @@
     }
 
     ~ .auth-button {
+      width: 192px;
       cursor: default;
       padding-top: 10px;
       position: relative;
