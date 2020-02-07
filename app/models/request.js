@@ -59,7 +59,7 @@ export default Model.extend({
 
   apiConfig: computed('uniqRawConfigs', function () {
     let config = this.uniqRawConfigs.find((config) => config.source.includes('api'));
-    if (config.config === '{}') {
+    if (config && config.config === '{}') {
       config.config = undefined;
     }
     return config;
