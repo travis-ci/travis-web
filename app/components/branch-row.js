@@ -21,7 +21,7 @@ export default Component.extend({
 
   commitUrl: computed('branch.repository.{slug,vcsType}', 'branch.last_build.commit.sha', function () {
     const [owner, repo] = this.get('branch.repository.slug').split('/');
-    const vcsType = this.get('branch.repository.vcsType');
+    const vcsType = this.get('branch.repository.vcs_type');
     const commit = this.get('branch.last_build.commit.sha');
 
     return this.externalLinks.commitUrl(vcsType, { owner, repo, commit });
