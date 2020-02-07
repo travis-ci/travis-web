@@ -124,7 +124,7 @@ module('Acceptance | owner insights', function (hooks) {
     assert.ok(insightsPage.noBuildOverlay.isVisible);
     assert.equal(insightsPage.noBuildOverlay.title, 'Build to get monthly insights');
     assert.equal(insightsPage.noBuildOverlay.text, 'All the build status results from the last 30 days will appear here. Have you tried logging in?');
-    assert.equal(insightsPage.noBuildOverlay.link.text, 'Sign in with GitHub');
+    assert.equal(insightsPage.noBuildOverlay.link.text, 'Sign in');
 
     await insightsPage.visitWeek({ username: this.currentUser.login });
     await settled();
@@ -132,7 +132,7 @@ module('Acceptance | owner insights', function (hooks) {
     assert.ok(insightsPage.noBuildOverlay.isVisible);
     assert.equal(insightsPage.noBuildOverlay.title, 'It\'s been a quiet week for builds');
     assert.equal(insightsPage.noBuildOverlay.text, 'All the build status results from the last 7 days will appear here. Have you tried logging in?');
-    assert.equal(insightsPage.noBuildOverlay.link.text, 'Sign in with GitHub');
+    assert.equal(insightsPage.noBuildOverlay.link.text, 'Sign in');
   });
 
   test('No-build overlay for current user displays correctly when logged in', async function (assert) {

@@ -8,18 +8,18 @@ import { setupMirage } from 'ember-cli-mirage/test-support';
 import { percySnapshot } from 'ember-percy';
 
 const SELECTORS = {
-  PAGE: '[data-test-signin-page]',
+  PAGE: '[data-test-signup-page]',
   BUTTON_PRIMARY: '[data-test-signin-button-primary]',
   BUTTON_ASSEMBLA: '[data-test-signin-button="assembla"]',
   BUTTON_BITBUCKET: '[data-test-signin-button="bitbucket"]',
 };
 
-module('Acceptance | sign in', function (hooks) {
+module('Acceptance | sign up', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 
-  test('visiting /signin shows signin page if unauthenticated', async function (assert) {
-    let signinRequest;
+  test('visiting /signup shows signup page if unauthenticated', async function (assert) {
+    let signupRequest;
 
     // avoid actually contacting GitHub
     const mockAuthService = Service.extend({
@@ -28,7 +28,7 @@ module('Acceptance | sign in', function (hooks) {
         return undefined;
       },
       signInWith(provider) {
-        signinRequest = provider;
+        signupRequest = provider;
       },
       afterSignOut() {
         return undefined;
@@ -40,27 +40,27 @@ module('Acceptance | sign in', function (hooks) {
 
     stubService('auth', mockAuthService);
 
-    await visit('/signin');
+    await visit('/signup');
 
-    assert.equal(currentURL(), '/signin');
+    assert.equal(currentURL(), '/signup');
     assert.dom(SELECTORS.PAGE).exists();
-    assert.dom(SELECTORS.BUTTON_PRIMARY).containsText('GitHub');
+    assert.dom(SELECTORS.BUTTON_PRIMARY).containsText('Sign Up With GitHub');
     assert.dom(SELECTORS.BUTTON_ASSEMBLA).doesNotExist();
     assert.dom(SELECTORS.BUTTON_BITBUCKET).doesNotExist();
 
     await click(SELECTORS.BUTTON_PRIMARY);
 
-    assert.equal(signinRequest, 'github');
+    assert.equal(signupRequest, 'github');
 
     percySnapshot(assert);
   });
 
-  test('visiting signin redirects to index if authenticated', async function (assert) {
+  test('visiting signup redirects to index if authenticated', async function (assert) {
     const currentUser = this.server.create('user', 'withRepository');
 
     signInUser(currentUser);
 
-    await visit('/signin');
+    await visit('/signup');
 
     assert.equal(currentURL(), '/');
   });

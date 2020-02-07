@@ -19,12 +19,6 @@ export default TravisRoute.extend({
     }
   },
 
-  renderTemplate(controller, model) {
-    return this.render('signin', {
-      model
-    });
-  },
-
   redirect() {
     if (this.auth.signedIn) {
       if (this.get('features.dashboard')) {
