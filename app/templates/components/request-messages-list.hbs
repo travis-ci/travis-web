@@ -1,27 +1,25 @@
-<div class="yml-messages">
-  <div class="header" {{action 'toggle'}}>
-    <span class="tooltip-wrapper level-icon">
-      <SvgImage @name="msg-{{this.maxLevel}}"  @class={{this.iconClass}} />
-      <EmberTooltip @text={{this.summary}} />
-    </span>
-    Build config validation
-    {{#if (and this.summary this.collapsed)}}
-      &mdash; {{this.summary}}
-    {{/if}}
-    <div class="tools">
-      <ExternalLinkTo href="{{config-get 'urls.buildConfigValidation'}}">
-        <SvgImage @name='icon-help' @class='icon-help' />
-      </ExternalLinkTo>
-      {{#if this.messages}}
-        <SvgImage @name="icon-dropdown-arrow" @class="icon-toggle icon-{{this.toggleStatusClass}}" />
-      {{/if}}
-    </div>
-  </div>
-  {{#if this.expanded}}
-    <div class="list">
-      {{#each this.messages as |message|}}
-        <RequestMessage @message={{message}} />
-      {{/each}}
-    </div>
+<div class="header" {{action 'toggle'}}>
+  <span class="tooltip-wrapper level-icon">
+    <SvgImage @name="msg-{{this.maxLevel}}"  @class={{this.iconClass}} />
+    <EmberTooltip @text={{this.summary}} />
+  </span>
+  Build config validation
+  {{#if (and this.summary this.collapsed)}}
+    &mdash; {{this.summary}}
   {{/if}}
+  <div class="tools">
+    <ExternalLinkTo href="{{config-get 'urls.buildConfigValidation'}}">
+      <SvgImage @name='icon-help' @class='icon-help' />
+    </ExternalLinkTo>
+    {{#if this.messages}}
+      <SvgImage @name="icon-dropdown-arrow" @class="icon-toggle icon-{{this.toggleStatusClass}}" />
+    {{/if}}
+  </div>
 </div>
+{{#if this.expanded}}
+  <div class="list">
+    {{#each this.messages as |message|}}
+      <RequestMessage @message={{message}} />
+    {{/each}}
+  </div>
+{{/if}}

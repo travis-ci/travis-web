@@ -4,7 +4,7 @@
     {{#if this.validating}}
       <LoadingIndicator className="validating-indicator" />
     {{else}}
-      <span class="build-messages-badge badge-{{this.level}}" />
+      <span class="request-messages-badge request-messages-badge-{{this.level}}" />
       {{this.result}}
 
       {{#if this.summary}}
@@ -18,7 +18,7 @@
 {{/if}}
 
 {{#if this.displayMessages}}
-  <div class="yml-messages">
+  <div class="request-messages">
     {{#each this.messages as |message|}}
       <RequestMessage @message={{message}} />
     {{/each}}

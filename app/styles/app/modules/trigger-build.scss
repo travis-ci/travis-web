@@ -42,8 +42,8 @@
       display: inline-block;
     }
 
-    .build-messages-badge {
-      margin-right: 7px;
+    .request-messages-badge {
+      margin-right: 5px;
     }
 
     .validating-indicator {
@@ -59,7 +59,7 @@
     }
   }
 
-  .yml-messages {
+  .request-messages {
     margin-top: 0;
     border-top: 0;
   }
@@ -132,6 +132,15 @@
   .CodeMirror-gutters {
     border: 0;
     background-color: transparent;
+  }
+
+  h4 {
+    color: #9d9d9d;
+    display: block;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 0.9em;
+    margin-bottom: 5px;
   }
 
   input[type=radio] {

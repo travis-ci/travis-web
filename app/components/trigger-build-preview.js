@@ -51,7 +51,7 @@ export default Component.extend({
   },
 
   expand: function () {
-    this.set('status', 'expanding')
+    this.set('status', 'expanding');
     this.yml.expand(this.merged).
       then(this.expandSuccess.bind(this), this.expandError.bind(this)).
       finally(() => this.set('status', 'preview'));

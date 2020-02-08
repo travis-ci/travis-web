@@ -3,6 +3,9 @@ import { computed } from '@ember/object';
 import { later } from '@ember/runloop';
 
 export default Component.extend({
+  tagName: 'div',
+  classNames: ['request-config'],
+  classNameBindings: ['expanded:request-config-expanded'],
   copied: false,
   expanded: true,
 

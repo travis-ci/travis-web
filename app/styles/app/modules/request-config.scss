@@ -92,11 +92,11 @@
 }
 
 
-.paper-block + .request-config-container {
+.paper-block + .request-config {
   margin-top: 1.2em;
 }
 
-.request-config-container {
+.request-config {
   position: relative;
   border: 1px solid $pebble-grey;
   margin-bottom: 1.2em;
@@ -120,6 +120,39 @@
 
       @include colorSVG($oxide-blue);
     }
+  }
+
+  .header {
+    padding: 1em;
+    cursor: pointer;
+
+    .tools {
+      position: absolute;
+      right: 1em;
+      top: 1em;
+
+      .icon-help {
+        margin: 0 3px 3px 0;
+      }
+
+      .icon-toggle {
+        height: 15px;
+        width: 15px;
+        vertical-align: middle;
+        transform: scale(0.9, 1.1);
+        path {
+          stroke: $cement-grey;
+          stroke-width: 1;
+        }
+
+        &.icon-expanded {
+          transform: scaleY(-1);
+        }
+      }
+    }
+  }
+  &.request-config-expanded .header {
+    border-bottom: 1px solid $pebble-grey;
   }
 }
 
@@ -147,34 +180,4 @@ pre.codedisplay[class*='language-'] {
 
 .job-tabs .paper-block {
   padding: 1em;
-}
-
-.header {
-  padding: 1em;
-  cursor: pointer;
-
-  .tools {
-    position: absolute;
-    right: 1em;
-    top: 1em;
-
-    .icon-help {
-      margin: 0 3px 3px 0;
-    }
-
-    .icon-toggle {
-      height: 15px;
-      width: 15px;
-      vertical-align: middle;
-      transform: scale(0.9, 1.1);
-      path {
-        stroke: $cement-grey;
-        stroke-width: 1;
-      }
-
-      &.icon-expanded {
-        transform: scaleY(-1);
-      }
-    }
-  }
 }

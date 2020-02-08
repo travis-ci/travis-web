@@ -11,16 +11,15 @@ import { later } from '@ember/runloop';
 import { inject as service } from '@ember/service';
 
 export default Component.extend({
+  tagName: 'div',
+  classNames: ['request-config'],
   externalLinks: service(),
+  classNameBindings: ['expanded:request-config-expanded'],
 
   copied: false,
   baseYmlName: '.travis.yml',
   status: undefined,
   open: match('status', /open/),
-
-  display: computed('api', 'status', 'mergeMode', function () {
-    return !this.replace && (!this.api || this.status != 'customize');
-  }),
 
   replace: computed('mergeMode', function () {
     return this.mergeMode == 'replace' && this.status == 'customize';

@@ -43,7 +43,10 @@ export default Component.extend(TriggerBuild, WithConfigValidation, {
   ),
 
   rawConfigs: computed('request.uniqRawConfigs', 'customize', function () {
-    let configs = this.get('request.uniqRawConfigs');
+    let configs = [];
+    if (this.mergeMode !== 'replace') {
+      configs = this.get('request.uniqRawConfigs');
+    }
     if (this.customize) {
       configs = configs.reject(config => config.source.includes('api'));
     }

@@ -11,7 +11,9 @@ const MSGS = {
 };
 
 export default Component.extend({
-  tagName: '',
+  tagName: 'div',
+  classNames: ['request-messages'],
+  classNameBindings: ['expanded:request-messages-expanded'],
   expanded: false,
   collapsed: not('expanded'),
 
