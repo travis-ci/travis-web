@@ -19,7 +19,7 @@
 {{#if this.expanded}}
   <div class="position-relative">
     <CodeBlock
-      @language="yaml"
+      @language={{this.language}}
       class="codedisplay line-numbers"
       id={{this.codeblockId}}
       data-test-yaml="true"

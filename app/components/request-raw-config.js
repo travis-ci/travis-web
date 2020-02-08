@@ -21,6 +21,15 @@ export default Component.extend({
   status: undefined,
   open: match('status', /open/),
 
+  language: computed('rawConfig.config', function () {
+    try {
+      JSON.parse(this.rawConfig.config);
+      return 'json';
+    } catch (e) {
+      return 'yaml';
+    }
+  }),
+
   replace: computed('mergeMode', function () {
     return this.mergeMode == 'replace' && this.status == 'customize';
   }),
