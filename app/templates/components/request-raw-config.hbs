@@ -25,9 +25,9 @@
       data-test-yaml="true"
     >{{this.formattedConfig}}</CodeBlock>
     <CopyButton
-      @clipboardText={{this.rawConfig.config}}
+      @clipboardText={{this.config.config}}
       @title={{this.buttonLabel}}
-      @success={{action "copied" this.rawConfig.source}}
+      @success={{action "copied" this.config.source}}
     >
       <SvgImage @name="icon-copy" @class="icon" />
       <span>

@@ -65,7 +65,7 @@
 {{#unless (or this.replace this.preview)}}
   {{#each rawConfigs as |rawConfig|}}
     <RequestRawConfig
-      @rawConfig={{rawConfig}}
+      @config={{rawConfig}}
       @build={{@request.build}}
       @slug={{@request.repo.slug}}
     />
