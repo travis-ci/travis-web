@@ -33,7 +33,6 @@ export default Component.extend({
 
   summary: computed('sortedMessages', function () {
     let counts = countBy(this.get('sortedMessages'), 'level');
-    console.log(counts)
     if (Object.entries(counts).length > 0) {
       return Object.entries(counts).map((entry) => formatLevel(...entry)).join(', ');
     }

@@ -22,8 +22,8 @@ export default Component.extend({
 
   configs: computed('request.uniqRawConfigs', 'config', function () {
     let configs = this.get('request.uniqRawConfigs') || [];
-    configs = configs.reject(config => config.source === 'api');
     if (this.config) {
+      configs = configs.reject(config => config.source === 'api');
       configs.unshift({ config: this.config, source: 'api' });
     }
     return configs;

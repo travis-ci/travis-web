@@ -12,7 +12,9 @@
       <ExternalLinkTo href="{{config-get 'urls.buildConfigValidation'}}">
         <SvgImage @name='icon-help' @class='icon-help' />
       </ExternalLinkTo>
-      <SvgImage @name="icon-dropdown-arrow" @class="icon-toggle icon-{{this.toggleStatusClass}}" />
+      {{#if this.messages}}
+        <SvgImage @name="icon-dropdown-arrow" @class="icon-toggle icon-{{this.toggleStatusClass}}" />
+      {{/if}}
     </div>
   </div>
   {{#if this.expanded}}
