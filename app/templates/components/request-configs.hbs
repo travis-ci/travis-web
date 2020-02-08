@@ -1,11 +1,14 @@
 {{#if displayTriggerBuild}}
   <div class="trigger-build-buttons">
     {{#unless this.closed}}
-      <a class="trigger-build-cancel" onclick={{action this.onCancel}}>
+      <a class="trigger-build-button trigger-build-button-cancel" onclick={{action this.onCancel}}>
         Cancel
       </a>
-      <a class="trigger-build-customize" onclick={{action this.onCustomize}}>
+      <a class="trigger-build-button trigger-build-button-customize" onclick={{action this.onCustomize}}>
         Customize
+      </a>
+      <a class="trigger-build-button trigger-build-button-preview" onclick={{action this.onPreview}}>
+        Preview
       </a>
     {{/unless }}
 
@@ -15,16 +18,17 @@
     />
   </div>
 
-  {{#unless this.closed}}
+  {{#if (or this.open this.customize)}}
     <TriggerBuildDescription
       @customize={{this.customize}}
       @configs={{this.rawConfigs.length}}
     />
-  {{/unless}}
+  {{/if}}
 
   {{#if this.customize}}
     <TriggerBuildForm
       @repo={{this.repo}}
+      @request={{this.request}}
       @config={{this.config}}
       @branch={{this.branch}}
       @sha={{this.sha}}
@@ -39,16 +43,26 @@
       </h4>
     {{/unless}}
   {{/if}}
+
+  {{#if this.preview}}
+    <TriggerBuildPreview
+      @request={{@request}}
+      @config={{this.config}}
+      @branch={{this.branch}}
+      @sha={{this.sha}}
+      @message={{this.message}}
+      @mergeMode={{this.mergeMode}}
+    />
+  {{/if}}
 {{/if}}
 
-{{#if this.closed}}
+{{#if (and this.closed this.showConfigValidation)}}
   <RequestMessagesList
-    @request={{@request}}
-    @viewMessage={{action (mut this.viewingMessage)}}
+    @messages={{this.request.messages}}
   />
 {{/if}}
 
-{{#unless this.replace}}
+{{#unless (or this.replace this.preview)}}
   {{#each rawConfigs as |rawConfig|}}
     <RequestRawConfig
       @rawConfig={{rawConfig}}

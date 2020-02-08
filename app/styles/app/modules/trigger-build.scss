@@ -1,4 +1,4 @@
-.trigger-build-button {
+.trigger-build-button-submit {
   @include colorSVG($oxide-blue);
 
   width: 100px;
@@ -12,34 +12,6 @@
 
   .loading-indicator i {
     background-color: white;
-  }
-}
-
-.trigger-build-cancel,
-.trigger-build-customize {
-  line-height: 1;
-  cursor: pointer;
-
-  &:hover,
-  &:active {
-    color: $oxide-blue;
-  }
-}
-
-.trigger-build-cancel {
-  margin-right: 8px;
-  padding: 8px;
-  border: 1px solid transparent;
-}
-
-.trigger-build-customize {
-  @include travisBorder;
-  margin-right: 16px;
-  padding: 8px 12px;
-
-  &:hover,
-  &:active {
-    border-color: $oxide-blue;
   }
 }
 
@@ -59,12 +31,12 @@
 
 .trigger-build {
   .validation-result {
-    position: absolute;
-    top: -4px;
-    left: 85px;
-    line-height: 24px;
-    cursor: pointer;
+    margin-top: 1em;
+    padding: 1em;
+    border: 1px solid $dry-cement;
+    font-size: 13px;
     color: lighten($cement-grey, 10%);
+    cursor: pointer;
 
     & > * {
       display: inline-block;
@@ -85,6 +57,11 @@
         height: 5px;
       }
     }
+  }
+
+  .yml-messages {
+    margin-top: 0;
+    border-top: 0;
   }
 
   .toggle-validation-messages {
@@ -123,6 +100,10 @@
     }
   }
 
+  .travis-form__field-component {
+    box-shadow: inset 0 0 1px 1px $dry-cement !important;
+  }
+
   .CodeMirror {
     height: 350px !important;
     margin: -4px;
@@ -130,7 +111,7 @@
     width: calc(100% + 8px);
     border-radius: 10px;
     border: 4px solid transparent;
-    box-shadow: inset 0 0 1px 1px lighten($cement-grey, 20%);
+    box-shadow: inset 0 0 1px 1px $dry-cement;
     transition: border-color 0.2s ease-in;
     color: $asphalt-grey;
     line-height: 150%;
@@ -167,3 +148,29 @@
   }
 }
 
+.trigger-build-preview-container {
+  display: flex;
+
+  & > div {
+    flex-grow: 1;
+    align-items: stretch;
+  }
+
+  .left {
+    margin-right: 0.5em;
+  }
+
+  .right {
+    margin-left: 0.5em;
+  }
+
+  pre,
+  div > div {
+    height: calc(100% - 45px);
+    border: 1px solid $dry-cement;
+  }
+
+  div > div {
+    padding: 10px 20px;
+  }
+}

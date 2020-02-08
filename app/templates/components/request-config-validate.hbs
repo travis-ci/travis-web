@@ -1,20 +1,21 @@
-<div class="validation-result" onclick={{action toggle}}>
-  {{#if this.validating}}
-    <LoadingIndicator className="validating-indicator" />
-  {{else}}
-    {{#if this.result}}
+{{#if (or this.validating this.result)}}
+  <div class="validation-result" onclick={{action toggle}}>
+    Validation:
+    {{#if this.validating}}
+      <LoadingIndicator className="validating-indicator" />
+    {{else}}
       <span class="build-messages-badge badge-{{this.level}}" />
       {{this.result}}
-    {{/if}}
 
-    {{#if this.summary}}
-      <div class="validation-summary">
-        &mdash; {{this.summary}}
-      </div>
-      <div class="toggle-validation-messages" />
+      {{#if this.summary}}
+        <div class="validation-summary">
+          &mdash; {{this.summary}}
+        </div>
+        <div class="toggle-validation-messages" />
+      {{/if}}
     {{/if}}
-  {{/if}}
-</div>
+  </div>
+{{/if}}
 
 {{#if this.displayMessages}}
   <div class="yml-messages">

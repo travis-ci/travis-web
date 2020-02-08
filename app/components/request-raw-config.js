@@ -18,24 +18,24 @@ export default Component.extend({
   status: undefined,
   open: match('status', /open/),
 
-  display: computed('isApi', 'status', 'mergeMode', function () {
-    return !this.isReplace && (!this.isApi || this.status != 'customize');
+  display: computed('api', 'status', 'mergeMode', function () {
+    return !this.replace && (!this.api || this.status != 'customize');
   }),
 
-  isReplace: computed('mergeMode', function () {
+  replace: computed('mergeMode', function () {
     return this.mergeMode == 'replace' && this.status == 'customize';
   }),
 
-  isApi: computed('rawConfig.source', function () {
+  api: computed('rawConfig.source', function () {
     return this.rawConfig.source.includes('api');
   }),
 
-  isExpanded: computed('rawConfig.config', function () {
+  expanded: computed('rawConfig.config', function () {
     return this.get('rawConfig.config') !== '{}';
   }),
 
-  toggleStatusClass: computed('isExpanded', function () {
-    return this.isExpanded ? 'expanded' : 'collapsed';
+  toggleStatusClass: computed('expanded', function () {
+    return this.expanded ? 'expanded' : 'collapsed';
   }),
 
   buttonLabel: computed('copied', 'rawConfig.source', function () {
@@ -84,7 +84,7 @@ export default Component.extend({
       later(() => this.set('copied', false), 3000);
     },
     toggle() {
-      this.toggleProperty('isExpanded');
+      this.toggleProperty('expanded');
     }
   }
 });

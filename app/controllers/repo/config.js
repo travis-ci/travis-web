@@ -10,7 +10,7 @@ export default Controller.extend(TriggerBuild, {
       this.set(field, value);
     },
     triggerBuild() {
-      if(!this.processing) {
+      if (!this.processing) {
         this.set('processing', true);
         this.submitBuildRequest.perform();
       }

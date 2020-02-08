@@ -4,10 +4,10 @@ import { later } from '@ember/runloop';
 
 export default Component.extend({
   copied: false,
-  isExpanded: true,
+  expanded: true,
 
-  toggleStatusClass: computed('isExpanded', function () {
-    return this.isExpanded ? 'expanded' : 'collapsed';
+  toggleStatusClass: computed('expanded', function () {
+    return this.expanded ? 'expanded' : 'collapsed';
   }),
 
   buttonLabel: computed('copied', function () {
@@ -29,7 +29,7 @@ export default Component.extend({
       later(() => this.set('copied', false), 3000);
     },
     toggle() {
-      this.toggleProperty('isExpanded');
+      this.toggleProperty('expanded');
     }
   }
 });

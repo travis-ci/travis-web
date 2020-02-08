@@ -28,11 +28,18 @@ export default Component.extend(BranchSearching, {
     }
   }),
 
+  configs: computed('request.uniqRawConfigs', 'config', function () {
+    let configs = this.get('request.uniqRawConfigs') || [];
+    configs = configs.reject(config => config.source === 'api');
+    if (this.config) {
+      configs.unshift({ config: this.config, source: 'api' });
+    }
+    return configs;
+  }),
+
   actions: {
     change: function (field, value) {
       this.onChange(field, value);
     }
   }
-
 });
-

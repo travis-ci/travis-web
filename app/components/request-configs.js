@@ -2,17 +2,21 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { reads, match } from '@ember/object/computed';
 import TriggerBuild from 'travis/mixins/trigger-build';
+import WithConfigValidation from 'travis/mixins/components/with-config-validation';
 
-export default Component.extend(TriggerBuild, {
+export default Component.extend(TriggerBuild, WithConfigValidation, {
   tagName: 'div',
   classNames: ['request-configs'],
-  classNameBindings: ['status'],
+  classNameBindings: ['status', 'customized'],
 
   repo: reads('request.repo'),
   status: 'closed',
   closed: match('status', /closed/),
   customize: match('status', /customize/),
+  preview: match('status', /preview/),
   replace: match('mergeMode', /replace/),
+
+  customized: false,
   processing: false,
 
   branch: reads('request.branchName'),
@@ -38,7 +42,7 @@ export default Component.extend(TriggerBuild, {
     }
   ),
 
-  rawConfigs: computed('request.rawConfigs', 'customize', function () {
+  rawConfigs: computed('request.uniqRawConfigs', 'customize', function () {
     let configs = this.get('request.uniqRawConfigs');
     if (this.customize) {
       configs = configs.reject(config => config.source.includes('api'));
@@ -53,28 +57,42 @@ export default Component.extend(TriggerBuild, {
     e.toElement.blur();
     if (this.status == 'closed') {
       this.set('status', 'open');
-    } else if (this.status == 'open' || this.status == 'customize') {
+    } else if (this.status == 'open' || this.status == 'customize' || this.status == 'preview') {
       this.set('processing', true);
       this.submitBuildRequest.perform();
     }
   },
 
+  onPreview() {
+    this.set('status', 'preview');
+  },
+
   onCustomize() {
-    if (this.status == 'open') {
-      this.set('status', 'customize');
-    } else if (this.status == 'customize') {
+    if (this.status == 'customize') {
       this.set('status', 'open');
+      this.reset();
+    } else {
+      this.set('status', 'customize');
     }
   },
 
   onCancel() {
-    if (this.status == 'open' || this.status == 'customize') {
-      this.set('status', 'closed');
-    }
+    this.set('status', 'closed');
+    this.reset();
+  },
+
+  reset() {
+    this.set('customized', false);
+    this.set('branch', this.get('request.branchName'));
+    this.set('sha', this.get('request.commit.sha'));
+    this.set('message', this.get('request.commit.message'));
+    this.set('config', this.get('request.apiConfig.config'));
+    this.set('mergeMode', this.get('request.mergeMode'));
   },
 
   actions: {
     formFieldChanged(key, value) {
+      this.set('customized', true);
       this.set(key, value);
     }
   }

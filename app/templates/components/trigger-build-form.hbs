@@ -53,8 +53,6 @@
         @label="Build Config"
         as |field|
       >
-        <RequestConfigValidate @config={{this.config}} />
-
         <div class="config-type {{this.configMode}}">
           <span class="yaml">YAML</span>
           <span class="javascript">JSON</span>
@@ -71,6 +69,9 @@
             placeholder="Overwrite build config"
           )
         }}
+
+        <RequestConfigValidate @configs={{this.configs}} />
+
       </form.field>
     </div>
     <div class="form-elem">
