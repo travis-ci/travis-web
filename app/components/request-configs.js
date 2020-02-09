@@ -67,7 +67,13 @@ export default Component.extend(TriggerBuild, WithConfigValidation, {
   },
 
   onPreview() {
-    this.set('status', 'preview');
+    if (!this.preview) {
+      this.set('status', 'preview');
+    } else if (this.customized) {
+      this.set('status', 'customize');
+    } else {
+      this.set('status', 'open');
+    }
   },
 
   onCustomize() {
