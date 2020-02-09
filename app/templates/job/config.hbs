@@ -4,4 +4,8 @@
     This is the configuration for all of build #{{this.model.build.number}}, including this job
   </PaperBlock>
 {{/if}}
-<RequestConfigs @request={{this.model}} />
+
+<RequestConfigs
+  @request={{this.model}}
+  @status={{this.status}}
+/>
