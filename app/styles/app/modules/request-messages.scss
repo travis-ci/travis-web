@@ -90,36 +90,7 @@
     }
   }
 
-<<<<<<< HEAD:app/styles/app/modules/build-messages.scss
-  .icon {
-    width: 18px;
-    height: 18px;
-    margin-bottom: 2px;
-  }
-
-  .icon-alert path,
-  .icon-error path {
-    stroke: $brick-red;
-  }
-  .icon-warn path {
-    stroke: $canary-yellow;
-  }
-  .icon-info {
-    width: 12px;
-    height: 12px;
-    margin-left: 2px;
-    margin-right: 8px;
-    opacity: 0.8;
-    path {
-      stroke: $turf-green;
-      stroke-width: 1;
-    }
-  }
-
-  .yml-message-link {
-=======
   .request-message-link {
->>>>>>> 4ee2263ac67f860217fd0c59d276c13ee8ca83c0:app/styles/app/modules/request-messages.scss
     display: block;
 
     &:hover {

@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-.trigger-build-button {
-=======
 .trigger-build-button-submit {
->>>>>>> 4ee2263ac67f860217fd0c59d276c13ee8ca83c0
   @include colorSVG($oxide-blue);
 
   width: 100px;
@@ -19,37 +15,6 @@
   }
 }
 
-<<<<<<< HEAD
-.trigger-build-cancel,
-.trigger-build-customize {
-  line-height: 1;
-  cursor: pointer;
-
-  &:hover,
-  &:active {
-    color: $oxide-blue;
-  }
-}
-
-.trigger-build-cancel {
-  margin-right: 8px;
-  padding: 8px;
-  border: 1px solid transparent;
-}
-
-.trigger-build-customize {
-  @include travisBorder;
-  margin-right: 16px;
-  padding: 8px 12px;
-
-  &:hover,
-  &:active {
-    border-color: $oxide-blue;
-  }
-}
-
-=======
->>>>>>> 4ee2263ac67f860217fd0c59d276c13ee8ca83c0
 .trigger-build-description {
   padding: 1em;
   border: 1px solid $pebble-grey;
@@ -66,33 +31,19 @@
 
 .trigger-build {
   .validation-result {
-<<<<<<< HEAD
-    position: absolute;
-    top: -4px;
-    left: 85px;
-    line-height: 24px;
-    cursor: pointer;
-    color: lighten($cement-grey, 10%);
-=======
     margin-top: 1em;
     padding: 1em;
     border: 1px solid $dry-cement;
     font-size: 13px;
     color: lighten($cement-grey, 10%);
     cursor: pointer;
->>>>>>> 4ee2263ac67f860217fd0c59d276c13ee8ca83c0
 
     & > * {
       display: inline-block;
     }
 
-<<<<<<< HEAD
-    .build-messages-badge {
-      margin-right: 7px;
-=======
     .request-messages-badge {
       margin-right: 5px;
->>>>>>> 4ee2263ac67f860217fd0c59d276c13ee8ca83c0
     }
 
     .validating-indicator {
@@ -108,14 +59,11 @@
     }
   }
 
-<<<<<<< HEAD
-=======
   .request-messages {
     margin-top: 0;
     border-top: 0;
   }
 
->>>>>>> 4ee2263ac67f860217fd0c59d276c13ee8ca83c0
   .toggle-validation-messages {
     position: relative;
     top: -1px;
@@ -152,13 +100,10 @@
     }
   }
 
-<<<<<<< HEAD
-=======
   .travis-form__field-component {
     box-shadow: inset 0 0 1px 1px $dry-cement !important;
   }
 
->>>>>>> 4ee2263ac67f860217fd0c59d276c13ee8ca83c0
   .CodeMirror {
     height: 350px !important;
     margin: -4px;
@@ -166,11 +111,7 @@
     width: calc(100% + 8px);
     border-radius: 10px;
     border: 4px solid transparent;
-<<<<<<< HEAD
-    box-shadow: inset 0 0 1px 1px lighten($cement-grey, 20%);
-=======
     box-shadow: inset 0 0 1px 1px $dry-cement;
->>>>>>> 4ee2263ac67f860217fd0c59d276c13ee8ca83c0
     transition: border-color 0.2s ease-in;
     color: $asphalt-grey;
     line-height: 150%;
@@ -193,8 +134,6 @@
     background-color: transparent;
   }
 
-<<<<<<< HEAD
-=======
   h4 {
     color: #9d9d9d;
     display: block;
@@ -204,7 +143,6 @@
     margin-bottom: 5px;
   }
 
->>>>>>> 4ee2263ac67f860217fd0c59d276c13ee8ca83c0
   input[type=radio] {
     margin-right: 8px;
   }
@@ -219,8 +157,6 @@
   }
 }
 
-<<<<<<< HEAD
-=======
 .trigger-build-preview-container {
   display: flex;
 
@@ -247,4 +183,3 @@
     padding: 10px 20px;
   }
 }
->>>>>>> 4ee2263ac67f860217fd0c59d276c13ee8ca83c0
