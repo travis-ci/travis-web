@@ -2,10 +2,25 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { task } from 'ember-concurrency';
 import BranchSearching from 'travis/mixins/branch-searching';
+import { bindKeyboardShortcuts, unbindKeyboardShortcuts } from 'ember-keyboard-shortcuts';
 
 export default Component.extend(BranchSearching, {
   tagName: 'div',
   classNames: ['trigger-build'],
+
+  keyboardShortcuts: {
+    'shift+enter': 'submit'
+  },
+
+  didInsertElement() {
+    this._super(...arguments);
+    bindKeyboardShortcuts(this);
+  },
+
+  willDestroyElement() {
+    this._super(...arguments);
+    unbindKeyboardShortcuts(this);
+  },
 
   searchBranches: task(function* (query) {
     const result = yield this.searchBranch.perform(this.get('repo.id'), query);
@@ -41,6 +56,9 @@ export default Component.extend(BranchSearching, {
     change: function (field, value) {
       this.set(field, value);
       this.onChange(field, value);
+    },
+    submit: function () {
+      this.onSubmit();
     }
   }
 });

@@ -61,8 +61,7 @@ export default Component.extend(TriggerBuild, WithConfigValidation, {
     if (this.status == 'closed') {
       this.set('status', 'open');
     } else if (this.status == 'open' || this.status == 'customize' || this.status == 'preview') {
-      this.set('processing', true);
-      this.submitBuildRequest.perform();
+      this.submit();
     }
   },
 
@@ -90,6 +89,11 @@ export default Component.extend(TriggerBuild, WithConfigValidation, {
     this.reset();
   },
 
+  submit() {
+    this.set('processing', true);
+    this.submitBuildRequest.perform();
+  },
+
   reset() {
     this.set('customized', false);
     this.set('branch', this.get('request.branchName'));
@@ -103,6 +107,9 @@ export default Component.extend(TriggerBuild, WithConfigValidation, {
     formFieldChanged(key, value) {
       this.set('customized', true);
       this.set(key, value);
+    },
+    submit() {
+      this.submit();
     }
   }
 });
