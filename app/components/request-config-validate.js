@@ -41,8 +41,8 @@ export default Component.extend({
   expanded: false,
   initialConfig: true,
 
-  configChanged: observer('config', function () {
-    if (this.config) {
+  configsChanged: observer('configs', function () {
+    if (this.configs[0] && this.configs[0].source == 'api') {
       debounce(this, this.validate, 1000);
     } else {
       this.reset();
@@ -52,7 +52,7 @@ export default Component.extend({
   validate: function (final) {
     if (this.validating) return;
     this.set('validating', true);
-    this.yml.validate(this.config.replace(/\t/gm, '  ')).
+    this.yml.validate(this.configs).
       then(this.success.bind(this), this.error.bind(this)).
       finally(() => this.set('validating', false));
   },
@@ -60,21 +60,24 @@ export default Component.extend({
   success: function (data) {
     let error = data.messages.find(msg =>  msg.level == 'error' || msg.level == 'alert');
     let result = error ? error.level : 'valid';
-    this.setResult(data.messages, result, this.maxLevel);
+    this.setResult(result, data.config, data.messages);
+    this.set('level', this.maxLevel);
   },
 
   error: function () {
-    this.setResult(undefined, 'Invalid format', 'error');
+    this.setResult('Invalid format');
+    this.set('level', 'error');
   },
 
   reset: function () {
-    this.setResult(undefined, undefined, undefined);
+    this.setResult();
+    this.set('level', undefined);
   },
 
-  setResult: function (messages, result, level) {
-    this.set('messages', messages);
+  setResult: function (result, config, messages) {
     this.set('result', result);
-    this.set('level', level);
+    this.set('merged', config);
+    this.set('messages', messages);
   },
 
   displayMessages: computed('messages', 'expanded', function () {

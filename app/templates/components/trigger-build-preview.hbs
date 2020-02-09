@@ -1,0 +1,41 @@
+<p class="trigger-build-description">
+  <SvgImage @name='rocket' @class='trigger-build-icon' />
+  The triggered build will have the following build config
+  and job matrix.
+</p>
+
+{{#if this.validating}}
+  <LoadingIndicator />
+{{else}}
+  <RequestMessagesList
+    @messages={{this.messages}}
+  />
+
+  <div class="trigger-build-preview-container">
+    <div class="left">
+      <h4>
+        Build Config
+      </h4>
+
+      <CodeBlock
+        @language="json"
+        class="codedisplay"
+      >{{this.formattedConfig}}</CodeBlock>
+    </div>
+
+    <div class="right">
+      <h4>
+        Build Matrix
+      </h4>
+
+      {{#if this.expanding}}
+        <LoadingIndicator />
+      {{else}}
+        <CodeBlock
+          @language="json"
+          class="codedisplay"
+        >{{this.formattedMatrix}}</CodeBlock>
+      {{/if}}
+    </div>
+  </div>
+{{/if}}

@@ -1,12 +1,24 @@
 {{#if displayTriggerBuild}}
   <div class="trigger-build-buttons">
     {{#unless this.closed}}
+<<<<<<< HEAD
       <a class="trigger-build-cancel" onclick={{action this.onCancel}}>
         Cancel
       </a>
       <a class="trigger-build-customize" onclick={{action this.onCustomize}}>
         Customize
       </a>
+=======
+      <a class="trigger-build-button trigger-build-button-cancel" onclick={{action this.onCancel}}>
+        Cancel
+      </a>
+      <a class="trigger-build-button trigger-build-button-customize" onclick={{action this.onCustomize}}>
+        Customize
+      </a>
+      <a class="trigger-build-button trigger-build-button-preview" onclick={{action this.onPreview}}>
+        Preview
+      </a>
+>>>>>>> 4ee2263ac67f860217fd0c59d276c13ee8ca83c0
     {{/unless }}
 
     <TriggerBuildButton
@@ -15,16 +27,28 @@
     />
   </div>
 
+<<<<<<< HEAD
   {{#unless this.closed}}
+=======
+  {{#if (or this.open this.customize)}}
+>>>>>>> 4ee2263ac67f860217fd0c59d276c13ee8ca83c0
     <TriggerBuildDescription
       @customize={{this.customize}}
       @configs={{this.rawConfigs.length}}
     />
+<<<<<<< HEAD
   {{/unless}}
+=======
+  {{/if}}
+>>>>>>> 4ee2263ac67f860217fd0c59d276c13ee8ca83c0
 
   {{#if this.customize}}
     <TriggerBuildForm
       @repo={{this.repo}}
+<<<<<<< HEAD
+=======
+      @request={{this.request}}
+>>>>>>> 4ee2263ac67f860217fd0c59d276c13ee8ca83c0
       @config={{this.config}}
       @branch={{this.branch}}
       @sha={{this.sha}}
@@ -39,6 +63,7 @@
       </h4>
     {{/unless}}
   {{/if}}
+<<<<<<< HEAD
 {{/if}}
 
 {{#if this.closed}}
@@ -49,13 +74,38 @@
 {{/if}}
 
 {{#unless this.replace}}
+=======
+
+  {{#if this.preview}}
+    <TriggerBuildPreview
+      @request={{@request}}
+      @config={{this.config}}
+      @branch={{this.branch}}
+      @sha={{this.sha}}
+      @message={{this.message}}
+      @mergeMode={{this.mergeMode}}
+    />
+  {{/if}}
+{{/if}}
+
+{{#if (and this.closed this.showConfigValidation)}}
+  <RequestMessagesList
+    @messages={{this.request.messages}}
+  />
+{{/if}}
+
+{{#unless (or this.replace this.preview)}}
+>>>>>>> 4ee2263ac67f860217fd0c59d276c13ee8ca83c0
   {{#each rawConfigs as |rawConfig|}}
     <RequestRawConfig
       @rawConfig={{rawConfig}}
       @build={{@request.build}}
       @slug={{@request.repo.slug}}
+<<<<<<< HEAD
       @status={{this.status}}
       @mergeMode={{this.mergeMode}}
+=======
+>>>>>>> 4ee2263ac67f860217fd0c59d276c13ee8ca83c0
     />
   {{else}}
     <div class="starred-empty">

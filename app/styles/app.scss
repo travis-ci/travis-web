@@ -36,7 +36,6 @@
 @import "app/modules/forms";
 @import "app/modules/notice";
 @import "app/modules/build-header";
-@import "app/modules/build-messages";
 @import "app/modules/avatar";
 @import "app/modules/popup";
 @import "app/modules/lastbuild";
@@ -54,6 +53,10 @@
 @import "app/modules/paper-block";
 @import "app/modules/travis-form";
 @import "app/modules/request-config";
+<<<<<<< HEAD
+=======
+@import "app/modules/request-messages";
+>>>>>>> 4ee2263ac67f860217fd0c59d276c13ee8ca83c0
 @import "app/modules/loading-overlay";
 @import "app/modules/migrate";
 @import "app/modules/modals";

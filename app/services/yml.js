@@ -1,10 +1,20 @@
 import Service, { inject as service } from '@ember/service';
+// import config from 'travis/config/environment';
 
 export default Service.extend({
   ajax: service(),
 
-  validate(config) {
-    return this.request('/parse', 'POST', { data: this.body(config) });
+  validate(configs) {
+    return this.request('/parse', 'POST', {
+      data: this.normalize(configs),
+      contentType: 'application/vnd.travis-ci.configs+json'
+    });
+  },
+
+  expand(config) {
+    return this.request('/expand', 'POST', {
+      data: { config: config }
+    });
   },
 
   request(url, method = 'GET', options = {}) {
@@ -14,14 +24,18 @@ export default Service.extend({
     return this.ajax.request(url, method, options);
   },
 
-  body(config) {
-    return config;
-  },
-
   headers(options = {}) {
     const { headers = {} } = options;
     headers['Authorization'] = 'Basic eDpqZm5DcWJKbGJ2eFpsWDQwdUUwREtn'; // TODO
-    headers['Content-Type'] = 'text/plain;charset=UTF-8';
     return headers;
+  },
+
+  normalize(configs) {
+    return configs.map(config => {
+      if (config.source == 'api') {
+        config.config = config.config.replace(/\t/gm, '  ');
+      }
+      return config;
+    });
   },
 });

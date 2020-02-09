@@ -24,13 +24,57 @@
     }
   }
 
+<<<<<<< HEAD
   &.closed .trigger-build-button {
+=======
+  .trigger-build-button-cancel,
+  .trigger-build-button-customize,
+  .trigger-build-button-preview {
+    line-height: 1;
+    cursor: pointer;
+
+    &:hover,
+    &:active {
+      color: $oxide-blue;
+    }
+  }
+
+  .trigger-build-button-cancel {
+    margin-right: 8px;
+    padding: 8px;
+    border: 1px solid transparent;
+  }
+
+  .trigger-build-button-customize,
+  .trigger-build-button-preview {
+    @include travisBorder;
+    margin-right: 8px;
+    padding: 8px 12px;
+
+    &:hover,
+    &:active {
+      border-color: $oxide-blue;
+    }
+  }
+
+  &.closed .trigger-build-button-submit {
+>>>>>>> 4ee2263ac67f860217fd0c59d276c13ee8ca83c0
     @include travisBorder;
     background-color: white !important;
     color: $asphalt-grey;
   }
 
+<<<<<<< HEAD
   &.customize .trigger-build-customize {
+=======
+  &.customize .trigger-build-button-customize,
+  &.customized .trigger-build-button-customize {
+    border-color: $oxide-blue;
+    color: $oxide-blue;
+  }
+
+  &.preview .trigger-build-button-preview {
+>>>>>>> 4ee2263ac67f860217fd0c59d276c13ee8ca83c0
     border-color: $oxide-blue;
     color: $oxide-blue;
   }
@@ -40,6 +84,10 @@
     display: none;
   }
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 4ee2263ac67f860217fd0c59d276c13ee8ca83c0
 .trigger-build-buttons {
   position: absolute;
   top: -50px;
@@ -55,11 +103,19 @@
 }
 
 
+<<<<<<< HEAD
 .paper-block + .request-config-container {
   margin-top: 1.2em;
 }
 
 .request-config-container {
+=======
+.paper-block + .request-config {
+  margin-top: 1.2em;
+}
+
+.request-config {
+>>>>>>> 4ee2263ac67f860217fd0c59d276c13ee8ca83c0
   position: relative;
   border: 1px solid $pebble-grey;
   margin-bottom: 1.2em;
@@ -84,6 +140,42 @@
       @include colorSVG($oxide-blue);
     }
   }
+<<<<<<< HEAD
+=======
+
+  .header {
+    padding: 1em;
+    cursor: pointer;
+
+    .tools {
+      position: absolute;
+      right: 1em;
+      top: 1em;
+
+      .icon-help {
+        margin: 0 3px 3px 0;
+      }
+
+      .icon-toggle {
+        height: 15px;
+        width: 15px;
+        vertical-align: middle;
+        transform: scale(0.9, 1.1);
+        path {
+          stroke: $cement-grey;
+          stroke-width: 1;
+        }
+
+        &.icon-expanded {
+          transform: scaleY(-1);
+        }
+      }
+    }
+  }
+  &.request-config-expanded .header {
+    border-bottom: 1px solid $pebble-grey;
+  }
+>>>>>>> 4ee2263ac67f860217fd0c59d276c13ee8ca83c0
 }
 
 $request-config-code-font-size: 12px;
@@ -111,6 +203,7 @@ pre.codedisplay[class*='language-'] {
 .job-tabs .paper-block {
   padding: 1em;
 }
+<<<<<<< HEAD
 
 .header {
   padding: 1em;
@@ -141,3 +234,5 @@ pre.codedisplay[class*='language-'] {
     }
   }
 }
+=======
+>>>>>>> 4ee2263ac67f860217fd0c59d276c13ee8ca83c0
