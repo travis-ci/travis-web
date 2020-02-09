@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { match } from '@ember/object/computed';
+import { reads, match } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 
 export default Component.extend({
@@ -8,11 +8,12 @@ export default Component.extend({
   classNames: ['trigger-build-preview', 'status'],
 
   yml: service(),
-  status: 'validating',
-  validating: match('status', /validating/),
-  expanding: match('status', /expanding/),
+  status: 'loading',
+  loading: match('status', /loading/),
 
-  formattedConfig: computed('config', function () {
+  repo: reads('request.repo'),
+
+  formattedConfig: computed('merged', function () {
     return JSON.stringify(this.merged, null, 2);
   }),
 
@@ -20,50 +21,16 @@ export default Component.extend({
     return JSON.stringify(this.matrix, null, 2);
   }),
 
-  configs: computed('request.uniqRawConfigs', 'config', function () {
-    let configs = this.get('request.uniqRawConfigs') || [];
-    if (this.config) {
-      configs = configs.reject(config => config.source === 'api');
-      configs.unshift({ config: this.config, source: 'api' });
-    }
-    return configs;
-  }),
-
   didInsertElement: function () {
-    this.validate();
+    this.preview();
   },
 
-  validate: function () {
-    this.yml.validate(this.configs).
-      then(this.validationSuccess.bind(this), this.validationError.bind(this)).
-      finally(this.expand.bind(this));
-  },
-
-  validationSuccess: function (data) {
-    this.set('merged', data.config);
-    this.set('messages', data.messages);
-  },
-
-  validationError: function () {
-    // TODO
-    // this.set('matrix', undefined);
-    // this.set('messages', undefined);
-  },
-
-  expand: function () {
-    this.set('status', 'expanding');
-    this.yml.expand(this.merged).
-      then(this.expandSuccess.bind(this), this.expandError.bind(this)).
-      finally(() => this.set('status', 'preview'));
-  },
-
-  expandSuccess: function (data) {
-    this.set('matrix', data);
-  },
-
-  expandError: function () {
-    // TODO
-    // this.set('matrix', undefined);
-    // this.set('messages', undefined);
+  preview: function () {
+    this.yml.configs(this.get('repo'), this.ref, this.mergeMode, this.config).then((data) => { // TODO error handling
+      this.set('merged', data.config);
+      this.set('messages', data.messages);
+      this.set('matrix', data.matrix);
+      this.set('status', 'done');
+    });
   },
 });

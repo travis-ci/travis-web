@@ -1,12 +1,7 @@
 import Model, { attr, belongsTo } from '@ember-data/model';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
-import {
-  empty,
-  equal,
-  gt,
-  uniqBy
-} from '@ember/object/computed';
+import { equal, gt, uniqBy } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
 
 export const PULL_REQUEST_MERGEABLE = {
@@ -30,7 +25,6 @@ export default Model.extend({
   config: attr(),
   raw_configs: attr(),
   uniqRawConfigs: uniqBy('raw_configs', 'source'),
-  noYaml: empty('raw_configs'),
   repo: belongsTo('repo', { async: true }),
   commit: belongsTo('commit', { async: true }),
 

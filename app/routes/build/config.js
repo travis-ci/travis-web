@@ -9,5 +9,9 @@ export default TravisRoute.extend({
 
   afterModel(request) {
     return request.fetchMessages.perform();
+  },
+
+  setupController(controller, model) {
+    controller.set('model', model);
   }
 });

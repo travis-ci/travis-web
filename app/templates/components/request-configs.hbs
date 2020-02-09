@@ -39,29 +39,31 @@
       @repo={{this.repo}}
       @request={{this.request}}
       @config={{this.config}}
+      @refType={{this.refType}}
       @branch={{this.branch}}
       @sha={{this.sha}}
       @message={{this.message}}
       @mergeMode={{this.mergeMode}}
+      @loading={{this.loading}}
+      @messages={{this.messages}}
       @onChange={{action "formFieldChanged"}}
       @onSubmit={{action "submit"}}
     />
 
     {{#unless this.replace}}
       <h4>
-        Build Config
+        Build {{pluralize this.rawConfigs.length 'Config' without-count=true}}
       </h4>
     {{/unless}}
   {{/if}}
 
   {{#if this.preview}}
     <TriggerBuildPreview
-      @request={{@request}}
-      @config={{this.config}}
-      @branch={{this.branch}}
-      @sha={{this.sha}}
-      @message={{this.message}}
+      @repo={{this.repo}}
+      @request={{this.request}}
+      @ref={{this.ref}}
       @mergeMode={{this.mergeMode}}
+      @config={{this.config}}
     />
   {{/if}}
 {{/if}}
@@ -73,19 +75,28 @@
 {{/if}}
 
 {{#unless (or this.replace this.preview)}}
-  {{#each rawConfigs as |rawConfig|}}
+  {{#each this.rawConfigs as |config|}}
     <RequestRawConfig
-      @config={{rawConfig}}
+      @source={{config.source}}
+      @config={{get config 'config'}}
       @build={{@request.build}}
       @slug={{@request.repo.slug}}
     />
   {{else}}
-    <div class="starred-empty">
-      The .travis.yml file used for this job is not available
-    </div>
+    {{#if this.loading}}
+      <LoadingIndicator
+        className="validating-indicator"
+      />
+    {{else}}
+      <div class="starred-empty">
+        Build configs not available.
+      </div>
+    {{/if}}
   {{/each}}
 {{/unless}}
 
 {{#if this.closed}}
-  <RequestConfig @config={{@request.config}} />
+  <RequestConfig
+    @config={{@request.config}}
+  />
 {{/if}}

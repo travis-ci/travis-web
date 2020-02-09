@@ -1,0 +1,16 @@
+{{#if (or this.loading this.imports)}}
+  <h4>
+    Imported Build {{pluralize this.imports.length 'Config' without-count=true}}
+  </h4>
+  {{#if this.loading}}
+    <p class="loading-configs">
+      Loading <LoadingIndicator />
+    </p>
+  {{/if}}
+  {{#each this.imports as |config|}}
+    <RequestRawConfig
+      @source={{config.source}}
+      @config={{config.config}}
+    />
+  {{/each}}
+{{/if}}

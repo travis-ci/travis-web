@@ -1,8 +1,11 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { alias } from '@ember/object/computed';
+import { alias, match, not } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
 
 export default Component.extend({
+  router: service(),
+
   job: alias('build.jobs.firstObject'),
 
   noJobsError: computed('build.jobs.[]', function () {
@@ -21,5 +24,12 @@ export default Component.extend({
       jobs.forEach((j) => j.get('config'));
       return jobs.isEvery('isLoaded') && jobs.isEvery('isConfigLoaded') && stagesAreLoaded;
     }
-  )
+  ),
+
+  isConfig: match('router.currentRouteName', /config$/),
+  isLog: not('isConfig'),
+
+  routeName: computed('router.currentRouteName', function () {
+    return this.get('router.currentRouteName');
+  })
 });

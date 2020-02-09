@@ -18,21 +18,27 @@
 </div>
 {{#if this.expanded}}
   <div class="position-relative">
-    <CodeBlock
-      @language={{this.language}}
-      class="codedisplay line-numbers"
-      id={{this.codeblockId}}
-      data-test-yaml="true"
-    >{{this.formattedConfig}}</CodeBlock>
-    <CopyButton
-      @clipboardText={{this.config.config}}
-      @title={{this.buttonLabel}}
-      @success={{action "copied" this.config.source}}
-    >
-      <SvgImage @name="icon-copy" @class="icon" />
-      <span>
-        {{this.buttonLabel}}
-      </span>
-    </CopyButton>
+    {{#if this.loading}}
+      <div class="loading">
+        Loading <LoadingIndicator />
+      </div>
+    {{else}}
+      <CodeBlock
+        @language={{this.language}}
+        class="codedisplay line-numbers"
+        id={{this.codeblockId}}
+        data-test-yaml="true"
+      >{{this.formattedConfig}}</CodeBlock>
+      <CopyButton
+        @clipboardText={{this.config.config}}
+        @title={{this.buttonLabel}}
+        @success={{action "copied" this.config.source}}
+      >
+        <SvgImage @name="icon-copy" @class="icon" />
+        <span>
+          {{this.buttonLabel}}
+        </span>
+      </CopyButton>
+    {{/if}}
   </div>
 {{/if}}

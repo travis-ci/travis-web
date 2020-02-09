@@ -8,6 +8,7 @@ export default Component.extend(BranchSearching, {
   tagName: 'div',
   classNames: ['trigger-build'],
 
+
   keyboardShortcuts: {
     'shift+enter': 'submit'
   },
@@ -43,6 +44,7 @@ export default Component.extend(BranchSearching, {
     }
   }),
 
+  // TODO
   configs: computed('request.uniqRawConfigs', 'config', function () {
     let configs = this.get('request.uniqRawConfigs') || [];
     configs = configs.reject(config => config.source === 'api');

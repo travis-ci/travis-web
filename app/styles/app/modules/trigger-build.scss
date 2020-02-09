@@ -88,11 +88,10 @@
 
 .trigger-build {
   .validation-result {
+    position: relative;
     margin-top: 1em;
     padding: 1em;
     border: 1px solid $dry-cement;
-    font-size: 13px;
-    color: lighten($cement-grey, 10%);
     cursor: pointer;
 
     & > * {
@@ -104,14 +103,14 @@
     }
 
     .validating-indicator {
-      position: relative;
-      top: -2px;
-      left: 4px;
+      position: absolute;
+      margin-left: 8px;
+      margin-top: -3px;
       opacity: 0.6;
 
       i {
-        width: 5px;
-        height: 5px;
+        width: 6px;
+        height: 6px;
       }
     }
   }
@@ -121,17 +120,21 @@
     border-top: 0;
   }
 
-  .toggle-validation-messages {
-    position: relative;
-    top: -1px;
-    height: 5px;
-    width: 10px;
-    margin-left: 4px;
-    background-image: url(/images/svg/icon-dropdown-arrow.svg);
+  .icon-toggle {
+    position: absolute;
+    top: calc(1em + 2px);
+    right: 1em;
+    height: 15px;
+    width: 15px;
+    vertical-align: middle;
+    transform: scale(0.9, 1.1);
+    path {
+      stroke: $cement-grey;
+      stroke-width: 1;
+    }
   }
 
-  .expanded .toggle-validation-messages {
-    top: -2px;
+  .expanded .icon-toggle {
     transform: scaleY(-1);
   }
 
@@ -186,22 +189,31 @@
     }
   }
 
+  .CodeMirror-placeholder {
+    color: $cement-grey;
+  }
+
   .CodeMirror-gutters {
     border: 0;
     background-color: transparent;
   }
 
+  label.ref-type,
   h4 {
-    color: #9d9d9d;
+    color: $cement-grey;
     display: block;
     text-transform: uppercase;
     font-weight: 600;
     font-size: 0.9em;
-    margin-bottom: 5px;
+    margin-bottom: 1em;
+  }
+
+  label.ref-type {
+    display: inline-block;
   }
 
   input[type=radio] {
-    margin-right: 8px;
+    margin-right: 6px;
   }
 
   .ember-radio-button {
@@ -212,6 +224,27 @@
     position: absolute;
     right: 0;
   }
+
+  .loading-configs {
+    padding: 1em;
+    border: 1px solid $pebble-grey;
+
+    & > div {
+      display: inline-block;
+
+      .loading-indicator {
+        position: relative;
+        top: -2px;
+        left: 4px;
+        opacity: 0.6;
+
+        i {
+          width: 5px;
+          height: 5px;
+        }
+      }
+    }
+  }
 }
 
 .trigger-build-preview-container {
@@ -220,6 +253,7 @@
   & > div {
     flex-grow: 1;
     align-items: stretch;
+    width: 50%;
   }
 
   .left {

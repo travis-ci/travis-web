@@ -1,10 +1,18 @@
-.repo-config {
+.repo-config .request-configs {
   position: relative;
-  padding-top: 35px;
+  top: -1em;
+
+  .trigger-build-description {
+    margin-bottom: 2em;
+  }
 
   .trigger-build-buttons {
     position: absolute;
-      top: 0;
-      right: 0;
+    top: 63px;
+    right: 0;
+  }
+
+  .trigger-build-button-cancel {
+    display: none;
   }
 }

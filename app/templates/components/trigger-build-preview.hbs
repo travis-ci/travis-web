@@ -4,7 +4,7 @@
   and job matrix.
 </p>
 
-{{#if this.validating}}
+{{#if this.loading}}
   <LoadingIndicator />
 {{else}}
   <RequestMessagesList
@@ -28,14 +28,10 @@
         Build Matrix
       </h4>
 
-      {{#if this.expanding}}
-        <LoadingIndicator />
-      {{else}}
-        <CodeBlock
-          @language="json"
-          class="codedisplay"
-        >{{this.formattedMatrix}}</CodeBlock>
-      {{/if}}
+      <CodeBlock
+        @language="json"
+        class="codedisplay"
+      >{{this.formattedMatrix}}</CodeBlock>
     </div>
   </div>
 {{/if}}

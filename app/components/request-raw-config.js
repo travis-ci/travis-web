@@ -21,9 +21,13 @@ export default Component.extend({
   status: undefined,
   open: match('status', /open/),
 
-  language: computed('config.config', function () {
+  loading: computed('config', function () {
+    return !this.config;
+  }),
+
+  language: computed('config', function () {
     try {
-      JSON.parse(this.config.config);
+      JSON.parse(this.config);
       return 'json';
     } catch (e) {
       return 'yaml';
@@ -34,44 +38,43 @@ export default Component.extend({
     return this.mergeMode == 'replace' && this.status == 'customize';
   }),
 
-  api: computed('config.source', function () {
-    return this.config.source.includes('api');
+  api: computed('source', function () {
+    return this.source.includes('api');
   }),
 
-  expanded: computed('config.config', function () {
-    return this.get('config.config') !== '{}';
+  expanded: computed('config', function () {
+    return this.get('config') !== '{}';
   }),
 
   toggleStatusClass: computed('expanded', function () {
     return this.expanded ? 'expanded' : 'collapsed';
   }),
 
-  buttonLabel: computed('copied', 'config.source', function () {
-    let source = this.get('config.source');
+  buttonLabel: computed('copied', 'source', function () {
+    let source = this.get('source');
     return this.copied ? 'Copied!' : `Copy ${fileNameWithoutSha(source)}`;
   }),
 
-  formattedConfig: computed('config.config', 'slug', function () {
-    let config = this.get('config.config');
+  formattedConfig: computed('config', 'slug', function () {
     try {
-      return JSON.stringify(JSON.parse(config), null, 2);
+      return JSON.stringify(JSON.parse(this.config), null, 2);
     } catch (e) {
-      return config;
+      return this.config;
     }
   }),
 
-  filePath: computed('config.source', 'slug', function () {
-    let source = this.get('config.source');
+  filePath: computed('source', 'slug', function () {
+    let source = this.get('source');
     let name = fileNameWithoutSha(source);
     if (name === this.baseYmlName) { return name; }
 
     return presentedPath(source, this.slug);
   }),
 
-  fileUrl: computed('config.source', 'build.branchName', 'build.repo.{slug,vcsType}', function () {
+  fileUrl: computed('source', 'build.branchName', 'build.repo.{slug,vcsType}', function () {
     const slug = this.get('build.repo.slug');
     const vcsType = this.get('build.repo.vcsType');
-    const source = this.get('config.source');
+    const source = this.get('source');
     if (isInternal(source, slug)) {
       return;
     }
@@ -82,8 +85,8 @@ export default Component.extend({
     return this.externalLinks.fileUrl(vcsType, { owner, repo, branch, file });
   }),
 
-  codeblockId: computed('config.source', function () {
-    return codeblockName(this.config.source);
+  codeblockId: computed('source', function () {
+    return codeblockName(this.source);
   }),
 
   actions: {

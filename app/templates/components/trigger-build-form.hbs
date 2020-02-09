@@ -4,40 +4,58 @@
 >
   <div class="trigger-build-fields">
     <div class="form-elem">
-      <form.field
-        data-test-trigger-build-branch="true"
-        @label="Branch"
-        @placeholder="Select a branch"
-        @value={{this.branch}}
-        @showValidationStatusIcons={{false}}
-        @onChange={{action "change" "branch"}}
-        as |field|
-      >
-        <field.select
-          @search={{perform this.searchBranches}}
-          as |branch|
+      {{#radio-button
+        value="branch"
+        groupValue=refType
+        changed=(action "change" "refType")
+        classNames="ref-type"
+      }}
+        Branch
+      {{/radio-button}}
+      {{#radio-button
+        value="sha"
+        groupValue=refType
+        changed=(action "change" "refType")
+        classNames="ref-type"
+      }}
+        Commit
+      {{/radio-button}}
+
+      {{#if (eq refType 'branch') }}
+        <form.field
+          data-test-trigger-build-branch="true"
+          @classNames="ref-type-branch"
+          @placeholder="Select a branch"
+          @value={{this.branch}}
+          @showValidationStatusIcons={{false}}
+          @onChange={{action "change" "branch"}}
+          as |field|
         >
-          {{branch}}
-        </field.select>
-      </form.field>
-    </div>
-    <div class="form-elem">
-      <form.field
-        data-test-trigger-build-sha="true"
-        @label="Commit"
-        @placeholder="Specify a Git sha (optional)"
-        @value={{this.sha}}
-        @showValidationStatusIcons={{false}}
-        @onChange={{action "change" "sha"}}
-        as |field|
-      >
-        {{field.input}}
-      </form.field>
+          <field.select
+            @search={{perform this.searchBranches}}
+            as |branch|
+          >
+            {{branch}}
+          </field.select>
+        </form.field>
+      {{else}}
+        <form.field
+          data-test-trigger-build-sha="true"
+          @placeholder="Specify a Git sha (optional)"
+          @value={{this.sha}}
+          @showValidationStatusIcons={{false}}
+          @onChange={{action "change" "sha"}}
+          as |field|
+        >
+          {{field.input}}
+        </form.field>
+      {{/if}}
     </div>
 
     <div class="form-elem">
       <form.field
         data-test-trigger-build-message="true"
+        @classNames="ref-type-sha"
         @value={{this.message}}
         @label="Message"
         @onChange={{action "change" "message"}}
@@ -50,7 +68,7 @@
     <div class="form-elem">
       <form.field
         data-test-trigger-build-config="true"
-        @label="Build Config"
+        @label="Custom Build Config"
         as |field|
       >
         <div class="config-type {{this.configMode}}">
@@ -70,10 +88,14 @@
           )
         }}
 
-        <RequestConfigValidate @configs={{this.configs}} />
+        <TriggerBuildValidate
+          @loading={{this.loading}}
+          @messages={{this.messages}}
+        />
 
       </form.field>
     </div>
+
     <div class="form-elem">
       <h4>
         Merge mode

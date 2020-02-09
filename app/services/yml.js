@@ -4,7 +4,22 @@ import Service, { inject as service } from '@ember/service';
 export default Service.extend({
   ajax: service(),
 
-  validate(configs) {
+  configs(repo, ref, mode, config) {
+    let data = {
+      repo: {
+        slug: repo.get('slug'),
+        private: repo.get('private'),
+        default_branch: repo.get('defaultBranch.name')
+      },
+      ref: ref,
+      mode: mode,
+      config: config,
+      type: 'api'
+    };
+    return this.request('/configs', 'POST', { data: data });
+  },
+
+  parse(configs) {
     return this.request('/parse', 'POST', {
       data: this.normalize(configs),
       contentType: 'application/vnd.travis-ci.configs+json'
@@ -19,7 +34,8 @@ export default Service.extend({
 
   request(url, method = 'GET', options = {}) {
     // options.host = config.ymlEndpoint || 'https://yml-staging.travis-ci.org'; // TODO
-    options.host = 'https://yml-staging.travis-ci.org';
+    // options.host = 'https://yml-staging.travis-ci.org';
+    options.host = 'http://localhost:9292';
     options.headers = this.headers(options);
     return this.ajax.request(url, method, options);
   },

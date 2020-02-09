@@ -18,7 +18,7 @@ export default Component.extend({
   }),
 
   formattedConfig: computed('config', 'slug', function () {
-    const config = this.get('config');
+    const config = this.config;
     try {
       return JSON.stringify(config, null, 2);
     } catch (e) {

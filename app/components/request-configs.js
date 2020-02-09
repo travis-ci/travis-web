@@ -1,6 +1,8 @@
 import Component from '@ember/component';
-import { computed } from '@ember/object';
-import { reads, match } from '@ember/object/computed';
+import { computed, observer } from '@ember/object';
+import { reads, equal, match, or } from '@ember/object/computed';
+import { debounce } from '@ember/runloop';
+import { inject as service } from '@ember/service';
 import TriggerBuild from 'travis/mixins/trigger-build';
 import WithConfigValidation from 'travis/mixins/components/with-config-validation';
 
@@ -9,21 +11,46 @@ export default Component.extend(TriggerBuild, WithConfigValidation, {
   classNames: ['request-configs'],
   classNameBindings: ['status', 'customized'],
 
+  api: service(),
+  router: service(),
+  yml: service(),
+
   repo: reads('request.repo'),
+  rawConfigs: reads('request.uniqRawConfigs'),
   status: 'closed',
   closed: match('status', /closed/),
   customize: match('status', /customize/),
   preview: match('status', /preview/),
   replace: match('mergeMode', /replace/),
 
+  loading: true,
   customized: false,
   processing: false,
 
-  branch: reads('request.branchName'),
-  sha: reads('request.commit.sha'),
+  refType: 'branch',
+  branch: reads('originalBranch'),
+  sha: reads('originalSha'),
   message: reads('request.commit.message'),
   config: reads('request.apiConfig.config'),
-  mergeMode: reads('request.mergeMode'), // TODO store and serve merge mode for api request configs
+  mergeMode: reads('originalMergeMode'), // TODO store and serve merge mode for api request configs
+
+  originalBranch: or('requestBranch', 'repoDefaultBranch'),
+  originalSha: or('requestSha', 'repoDefaultBranchLastCommitSha'),
+  originalMergeMode: or('request.mergeMode', 'defaultMergeMode'),
+  isOriginalBranch: equal('branch', 'originalBranch'),
+  isOriginalSha: equal('sha', 'originalSha'),
+
+  requestBranch: reads('request.branchName'),
+  repoDefaultBranch: reads('repo.defaultBranch.name'),
+  requestSha: reads('request.commit.sha'),
+  repoDefaultBranchLastCommitSha: reads('repo.defaultBranch.lastBuild.commit.sha'),
+  defaultMergeMode: 'deep_merge_append',
+
+  isRepoConfig: match('router.currentRouteName', /repo\.config/),
+
+  didInsertElement() {
+    this.load();
+  },
 
   displayTriggerBuild: computed(
     'repo.migrationStatus',
@@ -42,16 +69,53 @@ export default Component.extend(TriggerBuild, WithConfigValidation, {
     }
   ),
 
-  rawConfigs: computed('request.uniqRawConfigs', 'customize', function () {
-    let configs = [];
-    if (this.mergeMode !== 'replace') {
-      configs = this.get('request.uniqRawConfigs');
-    }
-    if (this.customize) {
-      configs = configs.reject(config => config.source.includes('api'));
-    }
-    return configs;
+  ref: computed('refType', 'branch', 'sha', function () {
+    return this.get(this.refType);
   }),
+
+  branchChanged: observer('branch', function () {
+    if (!this.isOriginalBranch && this.sha === this.originalSha) {
+      this.set('sha', '');
+    } else if (this.branch === this.originalBranch && !this.sha) {
+      this.set('sha', this.originalSha);
+    }
+  }),
+
+  shaChanged: observer('sha', function () {
+    if (this.sha && !this.isOriginalSha) {
+      this.set('branch', undefined);
+    }
+  }),
+
+  fieldChanged: observer('refType', 'branch', 'sha', 'mergeMode', function () {
+    this.load();
+  }),
+
+  configChanged: observer('config', function () {
+    debounce(this, 'load', 500);
+  }),
+
+  load: function () {
+    if (this.status !== 'closed' && this.status !== 'open') {
+      this.set('loading', true);
+      this.yml.configs(this.repo, this.ref, this.mergeMode, this.config)
+        .then(this.success.bind(this)) // , this.error.bind(this)
+        .catch(this.error.bind(this))
+        .finally(() => this.set('loading', false));
+    }
+  },
+
+  success: function (data) {
+    this.set('rawConfigs', data.raw_configs);
+    this.set('messages', data.messages);
+  },
+
+  error: function (resp) {
+    resp.json().then((e) => {
+      this.set('rawConfigs', []);
+      this.set('messages', [{ level: 'error', code: e.error_type, args: { message: e.error_message } }]);
+    });
+  },
 
   // shouldn't these actually be actions, and shouldn't the template
   // use onclick={{action "triggerBuild"}} rather than
@@ -68,7 +132,7 @@ export default Component.extend(TriggerBuild, WithConfigValidation, {
   onPreview() {
     if (!this.preview) {
       this.set('status', 'preview');
-    } else if (this.customized) {
+    } else if (this.customized || this.isRepoConfig) {
       this.set('status', 'customize');
     } else {
       this.set('status', 'open');
@@ -96,11 +160,12 @@ export default Component.extend(TriggerBuild, WithConfigValidation, {
 
   reset() {
     this.set('customized', false);
-    this.set('branch', this.get('request.branchName'));
-    this.set('sha', this.get('request.commit.sha'));
-    this.set('message', this.get('request.commit.message'));
-    this.set('config', this.get('request.apiConfig.config'));
-    this.set('mergeMode', this.get('request.mergeMode'));
+    this.set('branch', this.originalBranch);
+    this.set('sha', this.originalSha);
+    this.set('message', this.request.get('commit.message'));
+    this.set('mergeMode', this.originalMMergeMode);
+    this.set('rawConfigs', this.request.uniqRawConfigs);
+    this.set('config', this.request.get('apiConfig.config'));
   },
 
   actions: {
