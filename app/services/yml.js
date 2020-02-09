@@ -1,5 +1,4 @@
 import Service, { inject as service } from '@ember/service';
-import config from 'travis/config/environment';
 
 export default Service.extend({
   ajax: service(),
