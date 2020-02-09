@@ -14,61 +14,6 @@
     position: absolute;
     top: -50px;
     right: 0;
-
-    & > * {
-      display: inline-block;
-      vertical-align: bottom;
-      user-select: none;
-      -webkit-touch-callout: none;
-      -webkit-user-select: none;
-    }
-  }
-
-  .trigger-build-button-cancel,
-  .trigger-build-button-customize,
-  .trigger-build-button-preview {
-    line-height: 1;
-    cursor: pointer;
-
-    &:hover,
-    &:active {
-      color: $oxide-blue;
-    }
-  }
-
-  .trigger-build-button-cancel {
-    margin-right: 8px;
-    padding: 8px;
-    border: 1px solid transparent;
-  }
-
-  .trigger-build-button-customize,
-  .trigger-build-button-preview {
-    @include travisBorder;
-    margin-right: 8px;
-    padding: 8px 12px;
-
-    &:hover,
-    &:active {
-      border-color: $oxide-blue;
-    }
-  }
-
-  &.closed .trigger-build-button-submit {
-    @include travisBorder;
-    background-color: white !important;
-    color: $asphalt-grey;
-  }
-
-  &.customize .trigger-build-button-customize,
-  &.customized .trigger-build-button-customize {
-    border-color: $oxide-blue;
-    color: $oxide-blue;
-  }
-
-  &.preview .trigger-build-button-preview {
-    border-color: $oxide-blue;
-    color: $oxide-blue;
   }
 
   &.closed .trigger-build-fields,
@@ -76,20 +21,6 @@
     display: none;
   }
 }
-.trigger-build-buttons {
-  position: absolute;
-  top: -50px;
-  right: 0;
-
-  & > * {
-    display: inline-block;
-    vertical-align: bottom;
-    user-select: none;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-  }
-}
-
 
 .paper-block + .request-config {
   margin-top: 1.2em;

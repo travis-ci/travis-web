@@ -67,6 +67,7 @@ export default Component.extend({
   error: function () {
     this.setResult('Invalid format');
     this.set('level', 'error');
+    this.set('messages', [{ level: 'error', code: 'parse_error' }]);
   },
 
   reset: function () {

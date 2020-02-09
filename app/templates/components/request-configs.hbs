@@ -1,13 +1,22 @@
 {{#if displayTriggerBuild}}
   <div class="trigger-build-buttons">
     {{#unless this.closed}}
-      <a class="trigger-build-button trigger-build-button-cancel" onclick={{action this.onCancel}}>
+      <a
+        class="trigger-build-button trigger-build-button-cancel"
+        onclick={{action this.onCancel}}
+      >
         Cancel
       </a>
-      <a class="trigger-build-button trigger-build-button-customize" onclick={{action this.onCustomize}}>
+      <a
+        class="trigger-build-button trigger-build-button-customize"
+        onclick={{action this.onCustomize}}
+      >
         Customize
       </a>
-      <a class="trigger-build-button trigger-build-button-preview" onclick={{action this.onPreview}}>
+      <a
+        class="trigger-build-button trigger-build-button-preview"
+        onclick={{action this.onPreview}}
+      >
         Preview
       </a>
     {{/unless }}
@@ -18,12 +27,12 @@
     />
   </div>
 
-  {{#if (or this.open this.customize)}}
+  {{#unless (or this.closed this.preview)}}
     <TriggerBuildDescription
       @customize={{this.customize}}
       @configs={{this.rawConfigs.length}}
     />
-  {{/if}}
+  {{/unless}}
 
   {{#if this.customize}}
     <TriggerBuildForm

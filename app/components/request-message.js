@@ -149,6 +149,10 @@ export default Component.extend({
     return `<code>${escape(key)}</code>: invalid env var <code>${escape(args.var)}</code>`;
   },
 
+  parse_error(key, args) {
+    return 'parse error';
+  },
+
   iconClass: computed('message.level', function () {
     let level = this.get('message.level');
     return `icon icon-level icon-${level}`;
