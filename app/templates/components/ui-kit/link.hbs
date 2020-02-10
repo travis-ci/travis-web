@@ -1,10 +1,21 @@
-<UiKit::Text
-  @tag='a'
-  @color={{this.color}}
-  href={{this.href}}
-  rel={{this.rel}}
-  target={{this.target}}
-  ...attributes
->
-  {{~yield~}}
-</UiKit::Text>
+{{#if this.route ~}}
+  <LinkTo
+    @route={{this.route}}
+    class={{this.allClasses}}
+    ...attributes
+  ><UiKit::Text
+      @tag='span'
+      @color={{this.color}}
+    >{{yield}}</UiKit::Text></LinkTo>
+{{~else~}}
+  <UiKit::Text
+    @tag='a'
+    @color={{this.color}}
+    href={{this.href}}
+    rel={{this.rel}}
+    target={{this.target}}
+    ...attributes
+  >
+    {{~yield~}}
+  </UiKit::Text>
+{{~/if}}

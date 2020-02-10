@@ -17,23 +17,8 @@
     {{/if}}
   </p>
   {{! CTA }}
-  {{#if this.auth.signedOut}}
-    <button
-      class="hero-button"
-      onclick={{action "signIn"}}
-      data-test-insights-overlay-link
-    >
-      <SvgImage @name="icon-repooctocat" />
-      Sign in with GitHub
-    </button>
-  {{else if this.auth.signingIn}}
-    <button class="hero-button" data-test-insights-overlay-link>
-      <span>
-        Signing In
-      </span>
-      <LoadingIndicator @white={{true}} @inline={{true}} />
-    </button>
-  {{else if this.canSync}}
+  <MultiSigninButton data-test-insights-overlay-link="" />
+  {{#if this.canSync}}
     <ExternalLinkTo
       @href={{config-get "urls.gettingStarted"}}
       class="button button--blue"

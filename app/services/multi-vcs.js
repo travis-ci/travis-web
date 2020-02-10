@@ -1,22 +1,26 @@
 import Service, { inject as service } from '@ember/service';
-import { computed } from '@ember/object';
+import { and, not, or, reads } from '@ember/object/computed';
 
 export default Service.extend({
   features: service(),
 
-  enabled: computed('features.{enableAssemblaLogin,enableBitbucketLogin}', function () {
-    return this.features.get('enableAssemblaLogin') || this.features.get('enableBitbucketLogin');
-  }),
+  isProVersion: reads('features.proVersion'),
 
-  disabled: computed('enabled', function () {
-    return !this.enabled;
-  }),
+  enabled: or('enableAssemblaLogin', 'enableBitbucketLogin'),
+  disabled: not('enabled'),
 
-  enableAssemblaLogin: computed('features.enableAssemblaLogin', function () {
-    return this.features.get('enableAssemblaLogin');
-  }),
+  enableAssemblaLogin: and('isProVersion', 'features.enableAssemblaLogin'),
+  enableBitbucketLogin: and('isProVersion', 'features.enableBitbucketLogin'),
 
-  enableBitbucketLogin: computed('features.enableBitbucketLogin', function () {
-    return this.features.get('enableBitbucketLogin');
-  }),
+  primaryProvider: 'github',
+
+  isProviderEnabled(provider) {
+    return this.isProVersion && this.features.isEnabled(`enable-${provider}-login`);
+  },
+  isProviderPrimary(provider) {
+    return provider === this.primaryProvider;
+  },
+  isProviderBeta(provider) {
+    return !this.isProviderPrimary(provider);
+  },
 });
