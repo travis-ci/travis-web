@@ -18,9 +18,14 @@
     >
       <SvgImage @name={{vcs-icon this.vcsType}} @class="fill-current w-5 h-5" />
     </UiKit::Box>
-    Sign {{if this.isSignup 'Up' 'In'}} With {{vcs-name this.vcsType}}
-    {{#if this.isBetaProvider}}
 
+    {{#if this.account}}
+      {{this.account.login}}
+    {{else}}
+      Sign {{if this.isSignup 'Up' 'In'}} With {{vcs-name this.vcsType}}
+    {{/if}}
+
+    {{#if this.isBetaProvider}}
       <UiKit::Badge
         @color={{this.badgeColor}}
         @pin='top-right'
@@ -28,5 +33,6 @@
         Beta
       </UiKit::Badge>
     {{/if}}
+
   </UiKit::Button>
 {{/if}}
