@@ -10,6 +10,7 @@ export const COLORS = {
   BLUE_LIGHT: 'blue-light',
   BLUE: 'blue',
   GREEN: 'green',
+  GREY_LIGHTEST: 'grey-lightest',
   GREY_LIGHTER: 'grey-lighter',
   GREY_LIGHT: 'grey-light',
   GREY: 'grey',
@@ -21,9 +22,9 @@ export const COLORS = {
 const BG_COLORS = {
   [COLORS.WHITE]: 'white',
   [COLORS.BLUE_LIGHT]: 'blue-300',
+  [COLORS.GREY_LIGHTEST]: 'grey-100',
+  [COLORS.GREY_LIGHTER]: 'grey-200',
   [COLORS.GREY_LIGHT]: 'grey-300',
-  [COLORS.GREY_LIGHTER]: 'grey-100',
-  [COLORS.GREY_LIGHT]: 'grey-150',
   [COLORS.GREY_DARK]: 'grey-800',
   [COLORS.BLUE]: 'blue-400',
   [COLORS.YELLOW_LIGHT]: 'yellow-200',
@@ -33,8 +34,8 @@ const BG_COLORS = {
 const BORDER_COLORS = {
   [COLORS.BLUE]: 'blue-400',
   [COLORS.GREEN]: 'green-300',
-  [COLORS.GREY]: 'grey-700',
   [COLORS.GREY_LIGHT]: 'grey-150',
+  [COLORS.GREY]: 'grey-700',
   [COLORS.GREY_DARK]: 'grey-800',
 };
 
