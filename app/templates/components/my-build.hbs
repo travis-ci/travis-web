@@ -18,6 +18,7 @@
           class="inner-underline"
         >
           {{this.build.repo.owner.login}}
+          <SvgImage @name={{vcs-icon this.build.repo.vcsType}} />
         </LinkTo>
       </div>
       <div class="row-content" data-test-repo-name>

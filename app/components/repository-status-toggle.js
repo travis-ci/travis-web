@@ -1,17 +1,21 @@
 import Component from '@ember/component';
-import config from 'travis/config/environment';
 import { task } from 'ember-concurrency';
 import { computed } from '@ember/object';
+import { reads } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import hasErrorWithStatus from 'travis/utils/api-errors';
+import { vcsLinks } from 'travis/services/external-links';
 
 export default Component.extend({
   externalLinks: service(),
-
+  accounts: service(),
+  user: reads('accounts.user'),
   tagName: 'li',
   classNames: ['profile-repolist-item'],
   classNameBindings: ['repository.active:active'],
-  githubOrgsOauthAccessSettingsUrl: config.githubOrgsOauthAccessSettingsUrl,
+  accessSettingsUrl: computed('user.vcsType', 'user.vcsId', function () {
+    return this.user && vcsLinks.accessSettingsUrl(this.user.vcsType, { owner: this.user.login });
+  }),
 
   admin: computed('repository.permissions', function () {
     let permissions = this.get('repository.permissions');

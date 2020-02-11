@@ -15,6 +15,7 @@ module('RepositoryStatusToggleComponent', function (hooks) {
       name: 'foo-bar',
       owner: {
         login: 'foo',
+        vcs_type: 'GithubRepository'
       },
       description: 'A foo repo',
       active: true,
@@ -36,6 +37,7 @@ module('RepositoryStatusToggleComponent', function (hooks) {
       data: {
         id: 10001,
         type: 'repo',
+        vcs_type: 'GithubRepository',
         attributes: {
           slug: 'travis-ci/travis-web',
           active: false,
@@ -87,7 +89,7 @@ module('RepositoryStatusToggleComponent', function (hooks) {
     assert.dom('.switch').findElement().click();
     settled().then(() => {
       assert.dom('.repositories-error').hasText(
-        'An error happened when we tried to alter settings on GitHub. It may be caused by API restrictions, please review and add your authorized Orgs.'
+        'An error happened when we tried to alter settings on GitHub.'
       );
     });
   });

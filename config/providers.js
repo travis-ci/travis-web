@@ -37,6 +37,7 @@ module.exports = deepFreeze({
       profile: '/spaces/:owner',
       repo: '/spaces/:owner/:repo/source',
       tag: '/spaces/:owner/:repo/source/:tag?type=tag',
+      accessSettings: '',
     },
     vocabulary: {
       organization: 'Portfolio',
@@ -58,9 +59,10 @@ module.exports = deepFreeze({
       profile: '/:owner',
       repo: '/:owner/:repo',
       tag: '/:owner/:repo/src/:tag',
+      accessSettings: '/:owner/profile/teams',
     },
     vocabulary: {
-      organization: 'Organization',
+      organization: 'Team',
       pullRequest: 'Pull Request',
     },
   },
@@ -80,6 +82,7 @@ module.exports = deepFreeze({
       profile: '/:owner',
       repo: '/:owner/:repo',
       tag: '/:owner/:repo/releases/tag/:tag',
+      accessSettings: '/settings/connections/applications/f244293c729d5066cf27',
     },
     vocabulary: {
       organization: 'Organization',
