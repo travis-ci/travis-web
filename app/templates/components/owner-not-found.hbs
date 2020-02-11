@@ -14,8 +14,8 @@
     {{#unless this.auth.signedIn}}
       <p class="page-notice">
         This owner may not exist or you may need to
-        <LinkTo @route="auth" class="auth-button--white m-l-s" @action="singI">
-          Sign in with GitHub
+        <LinkTo @route="signin" class="auth-button--white m-l-s">
+          Sign in
         </LinkTo>
       </p>
     {{/unless}}
