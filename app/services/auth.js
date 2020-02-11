@@ -127,7 +127,7 @@ export default Service.extend({
 
     const url = new URL(this.redirectUrl || window.location.href);
 
-    if (url.pathname === '/plans') {
+    if (['/signin', '/plans'].includes(url.pathname)) {
       url.pathname = '/';
     }
     const providerSegment = provider ? `/${provider}` : '';
