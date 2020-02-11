@@ -22,7 +22,7 @@ export default TravisRoute.extend({
   tab: null,
   owner: null,
 
-  model({ page, tab }, transition) {
+  model({ page, tab }) {
     const owner = this.modelFor('owner');
 
     this.setProperties({ tab, page, owner });
@@ -34,11 +34,11 @@ export default TravisRoute.extend({
     const limit = config.pagination.profileReposPerPage;
     const page = this.page || 1;
     const offset = (page - 1) * limit;
-    const owner = this.paramsFor('owner').owner;
+    const { owner, provider } = this.paramsFor('owner');
     const type = 'byOwner';
     const sort_by = 'default_branch.last_build:desc'; // eslint-disable-line
 
-    const queryParams = { offset, limit, sort_by, custom: { owner, type, }};
+    const queryParams = { offset, limit, sort_by, provider, custom: { owner, type, }};
 
     if (this.features.get('github-apps')) {
       queryParams['repository.active'] = true;
@@ -57,7 +57,8 @@ export default TravisRoute.extend({
     );
   },
 
-  loadData(controller) {
+  loadData() {
+    const { controller } = this;
     controller.setProperties({ builds: null, repos: null });
 
     if (this.tab === OWNER_TABS.INSIGHTS) {
@@ -67,8 +68,8 @@ export default TravisRoute.extend({
     }
   },
 
-  setupController(controller, model) {
+  setupController() {
     this._super(...arguments);
-    this.loadData(controller);
+    this.loadData();
   }
 });
