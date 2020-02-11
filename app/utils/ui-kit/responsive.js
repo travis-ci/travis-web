@@ -1,4 +1,3 @@
-import { isNone } from '@ember/utils';
 import config from 'travis/config/environment';
 
 export const { screens } = config;
@@ -11,13 +10,10 @@ export function getResponsiveProp(value) {
   let { base } = saferVal;
   const { sm, md, lg, xl } = saferVal;
 
-  if (
-    isNone(base) &&
-    isNone(sm) &&
-    isNone(md) &&
-    isNone(lg) &&
-    isNone(xl)
-  ) {
+  const keys = Object.keys(saferVal);
+  const hasScreenKey = keys.some(key => screenKeys.includes(key));
+
+  if (!hasScreenKey) {
     base = value;
   }
 

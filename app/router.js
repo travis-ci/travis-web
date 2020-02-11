@@ -47,6 +47,11 @@ Router.map(function () {
   this.route('profile', { path: '/profile/:login' });
   this.route('profile', { path: '/profile/:login/:section' });
 
+  this.route('travisci-vs-jenkins', function () {
+    this.route('index', { path: '/' });
+    this.route('thank-you');
+  });
+
   this.route('repo', { path: '/:provider/:owner/:name' }, function () {
     this.route('index', { path: '/' });
     this.route('branches', { path: '/branches', resetNamespace: true });

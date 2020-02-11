@@ -12,9 +12,9 @@
     {{#unless this.auth.signedIn}}
       <p class="page-notice">
         This repository may not exist or you may need to
-        <button class="auth-button--white m-l-s" {{action "signIn"}}>
-          Sign in with GitHub
-        </button>
+        <LinkTo @route="signin" class="auth-button--white m-l-s">
+          Sign in
+        </LinkTo>
       </p>
     {{/unless}}
   {{/if}}

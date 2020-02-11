@@ -7,6 +7,7 @@ import {
   reset as resetWindow
 } from 'ember-window-mock';
 import Service from '@ember/service';
+import { settled } from '@ember/test-helpers';
 import config from 'travis/config/environment';
 import { enableFeature } from 'ember-feature-flags/test-support';
 import { percySnapshot } from 'ember-percy';
@@ -183,8 +184,8 @@ module('Acceptance | profile/basic layout', function (hooks) {
   test('view repositories', async function (assert) {
     enableFeature('github-apps');
     await profilePage.visit();
+    await settled();
 
-    percySnapshot(assert);
     assert.equal(document.title, 'User Name of exceeding length - Profile - Travis CI');
 
     assert.equal(profilePage.name, 'User Name of exceeding length');
@@ -228,6 +229,8 @@ module('Acceptance | profile/basic layout', function (hooks) {
       assert.ok(repository.isPublic);
       assert.notOk(repository.settings.isDisabled);
     });
+
+    percySnapshot(assert);
   });
 
   test('view profile that has an expired subscription', async function (assert) {
@@ -364,7 +367,7 @@ module('Acceptance | profile/basic layout', function (hooks) {
           admin: true
         },
         github_id: 10000 + index,
-        vcs_type: 'GithubRepository',
+        vcs_type: 'GithubRepository'
       });
 
       this.server.create('repository', {
@@ -378,7 +381,7 @@ module('Acceptance | profile/basic layout', function (hooks) {
           admin: true
         },
         github_id: 20000 + index,
-        vcs_type: 'GithubRepository',
+        vcs_type: 'GithubRepository'
       });
 
       repositoryIds.push(10000 + index);

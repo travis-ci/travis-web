@@ -1,0 +1,27 @@
+<UiKit::box
+  @textAlign='center'
+  data-test-contact-thanks-container="true"
+  ...attributes
+>
+  <UiKit::Text @tag='h1' @variant='h1' data-test-contact-thanks-title="true">
+    Thank you!
+  </UiKit::Text>
+  <UiKit::box
+    @maxWidth='lg'
+    @margin={{hash y=4 x='auto'}}
+    data-test-contact-thanks-image="true"
+  >
+    <SvgImage @name="hard-hat-success" />
+  </UiKit::box>
+  <UiKit::Text @margin={{hash bottom=4}} data-test-contact-thanks-body="true">
+    We'll get back to you as soon as possible.
+  </UiKit::Text>
+
+  {{#if this.backRoute}}
+    <LinkTo @route={{this.backRoute}}>
+      <UiKit::Button data-test-contact-thanks-button="true">
+        Back
+      </UiKit::Button>
+    </LinkTo>
+  {{/if}}
+</UiKit::box>

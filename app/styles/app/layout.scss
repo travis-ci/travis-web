@@ -35,6 +35,10 @@ $padding-top: 24px;
   #main,
   #left {
     padding-bottom: 45px;
+
+    .flush-footer & {
+      padding-bottom: 0;
+    }
   }
 }
 
