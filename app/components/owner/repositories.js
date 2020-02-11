@@ -17,6 +17,7 @@ import window from 'ember-window-mock';
 import { task } from 'ember-concurrency';
 import fetchAll from 'travis/utils/fetch-all';
 
+const { providers } = config;
 const { appName, migrationRepositoryCountLimit } = config.githubApps;
 
 export default Component.extend({
@@ -110,6 +111,7 @@ export default Component.extend({
 
   migrate: task(function* () {
     let queryParams = {
+      provider: providers.github.urlPrefix,
       sort_by: 'name',
       'repository.managed_by_installation': false,
       'repository.active': true,
