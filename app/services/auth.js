@@ -11,7 +11,6 @@ import { isEmpty, isPresent } from '@ember/utils';
 import Service, { inject as service } from '@ember/service';
 import {
   equal,
-  filter,
   or,
   reads
 } from '@ember/object/computed';
@@ -96,21 +95,22 @@ export default Service.extend({
   signOut(runTeardown = true) {
     if (this.signedIn) this.api.get('/logout');
 
-    this.storage.clearLoginData();
     [this.localStorage, this.sessionStorage].forEach(storage => {
       storage.clearPreferencesData();
     });
 
-    this.setProperties({
-      state: STATE.SIGNED_OUT,
-      currentUser: null
-    });
+    this.set('state', STATE.SIGNED_OUT);
+
+    const { accounts, activeAccount } = this.storage;
+    accounts.removeObject(activeAccount);
+    this.storage.setProperties({ accounts, activeAccount: null });
 
     if (runTeardown) {
       this.clearNonAuthFlashes();
       runAfterSignOutCallbacks();
     }
     this.store.unloadAll();
+    this.router.transitionTo('signin');
   },
 
   afterSignOut(callback) {
