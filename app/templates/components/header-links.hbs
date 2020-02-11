@@ -127,21 +127,24 @@
       </li>
       {{#if this.auth.signedOut}}
         <li class="display-on-mobile">
-          <a class="navigation-anchor pointer" title="Login with GitHub" {{action "signIn" "github"}}>
-            Login with GitHub
+          <a class="navigation-anchor pointer" title="Sign in with GitHub" {{action "signIn" "github"}}>
+            Sign in with GitHub
+            <SvgImage @name={{vcs-icon 'GithubUser'}} @class="align-text-top fill-current w-5 h-5" />
           </a>
         </li>
-        {{#if this.multiVcs.enableAssemblaLogin}}
+        {{#if this.multiVcs.enableBitbucketLogin}}
           <li class="display-on-mobile">
-            <a class="navigation-anchor pointer" title="Login with Assembla" {{action "signIn" "assembla"}}>
-              Login with Assembla
+            <a class="navigation-anchor pointer" title="Sign in with Bitbucket" {{action "signIn" "bitbucket"}}>
+              Sign in with Bitbucket
+              <SvgImage @name={{vcs-icon 'BitbucketUser'}} @class="align-text-top fill-current w-5 h-5" />
             </a>
           </li>
         {{/if}}
-        {{#if this.multiVcs.enableBitbucketLogin}}
+        {{#if this.multiVcs.enableAssemblaLogin}}
           <li class="display-on-mobile">
-            <a class="navigation-anchor pointer" title="Login with Bitbucket" {{action "signIn" "bitbucket"}}>
-              Login with Bitbucket
+            <a class="navigation-anchor pointer" title="Sign in with Assembla" {{action "signIn" "assembla"}}>
+              Sign in with Assembla
+              <SvgImage @name={{vcs-icon 'AssemblaUser'}} @class="align-text-top fill-current w-5 h-5" />
             </a>
           </li>
         {{/if}}
@@ -172,7 +175,7 @@
             type="button"
             {{action "signIn" "github"}}
           >
-            Sign in with GitHub
+            Sign in
           </button>
         {{/if}}
 
@@ -180,20 +183,23 @@
           <ul class="navigation-nested">
             <li>
               <button class="action" {{action "signIn" "github"}}>
-                Log in with GitHub
+                Sign in with GitHub
+                  <SvgImage @name={{vcs-icon 'GithubUser'}} @class="align-text-top fill-current w-5 h-5" />
               </button>
             </li>
-            {{#if this.multiVcs.enableAssemblaLogin}}
-              <li>
-                <button class="action" {{action "signIn" "assembla"}}>
-                  Log in with Assembla
-                </button>
-              </li>
-            {{/if}}
             {{#if this.multiVcs.enableBitbucketLogin}}
               <li>
                 <button class="action" {{action "signIn" "bitbucket"}}>
-                  Log in with Bitbucket
+                  Sign in with Bitbucket
+                  <SvgImage @name={{vcs-icon 'BitbucketUser'}} @class="align-text-top fill-current w-5 h-5" />
+                </button>
+              </li>
+            {{/if}}
+            {{#if this.multiVcs.enableAssemblaLogin}}
+              <li>
+                <button class="action" {{action "signIn" "assembla"}}>
+                  Sign in with Assembla
+                  <SvgImage @name={{vcs-icon 'AssemblaUser'}} @class="align-text-top fill-current w-5 h-5" />
                 </button>
               </li>
             {{/if}}

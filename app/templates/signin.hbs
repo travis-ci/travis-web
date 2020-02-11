@@ -1,54 +1,66 @@
-<TravisLayout @layoutName="layouts/center">
-  <div class="content-page">
-    {{#if this.isRedirectingToAccountPage}}
-      <SvgImage
-        @name='account-unauthorized'
-        @width={{350}}
-        @height={{300}}
-        @alt='Account'
-      />
-    {{else}}
-      <img
-        src="/images/logos/TravisCI-Mascot-1.svg"
-        alt="Travis CI mascot"
-        width="200"
-        height="200"
-      />
-    {{/if}}
-    <h1 class="content-title auth">
-      We're so glad you're here!
-    </h1>
-    {{#if this.auth.signedOut}}
-      <h1 class="content-subtitle">
-        {{#if this.isRedirectingToAccountPage}}
-          Please sign in to view your account.
-        {{else}}
-          Please sign in to view your repositories.
-        {{/if}}
-      </h1>
-      <p>
-        <button
-          type="button"
-          title="Sign into Travis CI"
-          class="content-button sign-in"
-          onclick={{action "signIn" target=this.auth}}
-        >
-          Sign in with GitHub
-        </button>
-      </p>
-    {{/if}}
-    {{#if this.auth.signingIn}}
-      <h2 class="content-subtitle">
-        We're signing you in,
-        <br />
-        that might take a moment.
-      </h2>
-      <p class="content-button">
-        <span class="label-align">
-          Signing in
-        </span>
-        <LoadingIndicator @inline={{true}} @white={{true}} />
-      </p>
-    {{/if}}
-  </div>
+<TravisLayout @layoutName="layouts/center" class="tailwind-overrides" data-test-signin-page="">
+  <UiKit::Box
+    @position={{hash type='relative'}}
+    @margin={{hash top=20 x='auto'}}
+    @maxWidth='2xl'
+  >
+    <UiKit::Box
+      @position={{hash type='absolute' top=0 left=0}}
+      @margin={{hash top=-12 left=-32}}
+      @height={{64}}
+    >
+      <SvgImage @name="blue-blob" @height={{224}} />
+    </UiKit::Box>
+
+    <UiKit::Box
+      @position={{hash type='absolute' top=0 right=0}}
+      @margin={{hash top=-12 right=-16}}
+      @width={{56}}
+    >
+      <SvgImage @name="grey-gradient-circle" />
+    </UiKit::Box>
+
+    <UiKit::Box
+      @color='white'
+      @layer='10'
+      @overflow={{hash all='hidden'}}
+      @padding={{hash all=8 top=4}}
+      @position={{hash type='relative'}}
+      @radius='md'
+      @shadow='md'
+      @textAlign='center'
+    >
+      <UiKit::Text @tag='h1' @variant='h1'>Sign in</UiKit::Text>
+      <UiKit::Text @margin={{hash bottom=6}}>
+        Welcome back, hop back in with:
+      </UiKit::Text>
+
+      {{#if this.multiVcs.disabled}}
+        <UiKit::ButtonSignin />
+      {{else}}
+        <UiKit::ButtonSignin />
+
+        <UiKit::Text @margin={{hash y=6}}>
+          or sign in with another account
+        </UiKit::Text>
+
+        <UiKit::ButtonSignin @provider='bitbucket' />
+        <UiKit::ButtonSignin @provider='assembla' />
+      {{/if}}
+
+      <UiKit::Text @margin={{hash y=6}}>
+        Don't have an account?
+        <UiKit::Link @route='signup' @color='green-light'>Sign up</UiKit::Link>
+      </UiKit::Text>
+    </UiKit::Box>
+
+    <UiKit::Box
+      @layer='0'
+      @margin={{hash bottom=-16 left=-20}}
+      @position={{hash type='absolute' bottom=0 left=0}}
+      @width={{56}}
+    >
+      <SvgImage @name="red-dash-circle" />
+    </UiKit::Box>
+  </UiKit::Box>
 </TravisLayout>

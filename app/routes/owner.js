@@ -12,9 +12,8 @@ export default TravisRoute.extend({
     return name;
   },
 
-  model(params) {
-    const { owner } = params;
-    return this.store.queryRecord('owner', { login: owner });
+  model({ provider, owner }) {
+    return this.store.queryRecord('owner', { provider, login: owner });
   },
 
   actions: {
