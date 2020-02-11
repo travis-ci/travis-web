@@ -231,14 +231,14 @@
         flex-direction: row;
       }
 
-      p {
+      .build-steps {
         @media #{$small-only} {
-          width: 160px;
+          width: 200px;
           text-align: left;
           padding-left: 15px;
         }
         @media #{$medium-only} {
-          width: 160px;
+          width: 200px;
           text-align: left;
           padding-left: 15px;
         }
@@ -254,18 +254,13 @@
     }
 
     .branch-pr-container {
-      @media #{$small-only} {
-        display: grid;
-        grid-template-columns: .2fr 1fr;
-        margin: 0 auto;
-        width: 215px;
+      @media #{$small-up} {
+        display: flex;
+        justify-content: center;
       }
 
-      @media #{$medium-only} {
-        display: grid;
-        grid-template-columns: .2fr 1fr;
-        margin: 0 auto;
-        width: 215px;
+      @media #{$large-up} {
+        flex-direction: column;
       }
     }
 
@@ -288,10 +283,11 @@
 
       @media #{$large-up} {
         background-image: url("../images/landing-page/build-flow.png");
+        background-position: center center;
         background-repeat: no-repeat;
         width: 900px;
-        height: 114px;
-        background-size: 900px;
+        height: 116px;
+        background-size:100% auto;
         margin: 0 auto;
       }
     }
@@ -902,7 +898,11 @@ main {
     font-weight: 300;
     line-height: 1.5em;
     color: #666666;
-    margin-bottom: 60px;
+  }
+
+  .signin-link {
+    color: $turf-green;
+    border-bottom: 1px solid currentColor;
   }
 }
 

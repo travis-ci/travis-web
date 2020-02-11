@@ -1,0 +1,60 @@
+<TravisLayout @layoutName="layouts/center" class="tailwind-overrides" data-test-signup-page="">
+  <UiKit::Box
+    @position={{hash type='relative'}}
+    @margin={{hash top=20 x='auto'}}
+    @maxWidth='3xl'
+  >
+    <UiKit::Box
+      @position={{hash type='absolute' top=0 left=0}}
+      @margin={{hash top=-12 left=-32}}
+      @height={{64}}
+    >
+      <SvgImage @name="blue-blob" @height={{224}} />
+    </UiKit::Box>
+
+    <UiKit::Box
+      @position={{hash type='absolute' top=0 right=0}}
+      @margin={{hash top=-12 right=-16}}
+      @width={{56}}
+    >
+      <SvgImage @name="grey-gradient-circle" />
+    </UiKit::Box>
+
+    <UiKit::Box
+      @color='white'
+      @layer='10'
+      @overflow={{hash all='hidden'}}
+      @padding={{hash all=8 top=4}}
+      @position={{hash type='relative'}}
+      @radius='md'
+      @shadow='md'
+      @textAlign='center'
+    >
+      <UiKit::Text @tag='h1' @variant='h1'>Sign up for Travis CI</UiKit::Text>
+      <UiKit::Text @margin={{hash bottom=6}}>
+        Set up your first project in just one minute.<br/>
+        Your first 100 builds are free! No credit card required.
+      </UiKit::Text>
+
+      <UiKit::ButtonSignin @isSignup={{true}} />
+      {{#if this.multiVcs.enabled}}
+        <UiKit::ButtonSignin @isSignup={{true}} @provider='bitbucket' />
+        <UiKit::ButtonSignin @isSignup={{true}} @provider='assembla' />
+      {{/if}}
+
+      <UiKit::Text @margin={{hash y=6}}>
+        Already have an account?
+        <UiKit::Link @route='signin' @color='green-light'>Sign in</UiKit::Link>
+      </UiKit::Text>
+    </UiKit::Box>
+
+    <UiKit::Box
+      @layer='0'
+      @margin={{hash bottom=-16 left=-20}}
+      @position={{hash type='absolute' bottom=0 left=0}}
+      @width={{56}}
+    >
+      <SvgImage @name="red-dash-circle" />
+    </UiKit::Box>
+  </UiKit::Box>
+</TravisLayout>

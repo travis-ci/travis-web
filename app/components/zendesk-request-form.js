@@ -136,6 +136,10 @@ export default Component.extend({
     handleSubmit() {
       this.zendeskRequest.perform();
       return false;
+    },
+
+    goBack() {
+      window.history.go(-1);
     }
 
   }

@@ -11,4 +11,6 @@ export default Component.extend({
   href: null,
   rel: 'noopener noreferrer',
   target: '_blank',
+
+  route: null,
 });

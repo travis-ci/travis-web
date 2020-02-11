@@ -20,6 +20,8 @@ Router.map(function () {
   this.route('first_sync');
   this.route('insufficient_oauth_permissions');
   this.route('auth');
+  this.route('signin');
+  this.route('signup');
   this.route('github_apps_installation', { path: '/settings/github-apps-installations/redirect' });
   this.route('plans', { path: '/plans' }, function () {
     this.route('index', { path: '/' });
@@ -44,6 +46,11 @@ Router.map(function () {
   this.route('unsubscribe', { path: '/account/preferences/unsubscribe' });
   this.route('profile', { path: '/profile/:login' });
   this.route('profile', { path: '/profile/:login/:section' });
+
+  this.route('travisci-vs-jenkins', function () {
+    this.route('index', { path: '/' });
+    this.route('thank-you');
+  });
 
   this.route('repo', { path: '/:owner/:name' }, function () {
     this.route('index', { path: '/' });
@@ -70,7 +77,6 @@ Router.map(function () {
 
   this.route('error404', { path: '/404' });
   this.route('page-not-found', { path: '/*wildcard' });
-  this.route('signin');
 });
 
 export default Router;
