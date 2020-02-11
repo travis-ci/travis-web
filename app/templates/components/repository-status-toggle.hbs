@@ -1,7 +1,7 @@
 <RepositoryVisibilityIcon @repository={{this.repository}} />
 <LinkTo
   @route="repo"
-  @models={{array this.repository.owner.login this.repository.name}}
+  @models={{array this.repository.provider this.repository.owner.login this.repository.name}}
   class="profile-repo"
   @classNameBindings="admin:admin:non-admin"
 >
@@ -27,7 +27,7 @@
   {{else}}
     <LinkTo
       @route="settings"
-      @models={{array this.repository.owner.login this.repository.name}}
+      @models={{array this.repository.provider this.repository.owner.login this.repository.name}}
       @tagName="button"
       @title="Go to Travis CI repository settings"
       class="button profile-settings"
@@ -51,16 +51,16 @@
         Request cannot be completed because the repository ssh key is still pending to be created.
         Please retry in a bit, or try syncing the repository if this condition does not resolve.
       {{else}}
-        An error happened when we tried to alter settings on GitHub.
-        {{#if this.githubOrgsOauthAccessSettingsUrl}}
+        An error happened when we tried to alter settings on {{vcs-name this.user.vcsType}}.
+        {{#if this.accessSettingsUrl}}
           It may be caused by API restrictions, please
           <ExternalLinkTo
-            @href={{this.githubOrgsOauthAccessSettingsUrl}}
-            @title="Orgs Oauth Access Settings on GitHub"
+            @href={{this.accessSettingsUrl}}
+            @title="{{vcs-vocab this.model.vcsType 'organization' plural=true lower=false}} Access Settings on {{vcs-name this.user.vcsType}}"
           >
             review and add
           </ExternalLinkTo>
-          your authorized Orgs.
+          your authorized {{vcs-vocab this.model.vcsType 'organization' plural=true lower=false}}.
         {{/if}}
         <button type="button" class="no-button close" onclick={{action "close"}}>
           <SvgImage @name="icon-failed" @class="icon red" />

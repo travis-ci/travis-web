@@ -70,6 +70,15 @@
   @include colorSVGFill(rgba(black, 0.2));
 }
 
+.repo-dashboard {
+  svg {
+    vertical-align: top;
+    margin-left: 5px;
+    @extend .icon--m;
+    @include colorSVGFill(rgba(black, 0.2));
+  }
+}
+
 .repo-navigation {
   margin: 1.9em 0 1.2em;
   display: flex;
