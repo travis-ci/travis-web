@@ -52,8 +52,8 @@ export default VcsEntity.extend({
   }),
 
   fetchRepositories({ page, filter, ghApps, active, activeOnOrg }) {
+    const { provider, login: owner } = this;
     const offset = (page - 1) * limit;
-    const owner = this.login;
     const type = 'byOwner';
     const shouldSkip = ghApps && !this.features.get('github-apps');
 
@@ -61,9 +61,12 @@ export default VcsEntity.extend({
       'repository.managed_by_installation': ghApps,
       'repository.active_on_org': activeOnOrg,
       'repository.active': active,
-      sort_by: 'name',
+      limit,
+      offset,
       name_filter: filter,
-      limit, offset, custom: { owner, type, },
+      sort_by: 'name',
+      provider,
+      custom: { owner, type, },
     }, { live: false });
   },
 

@@ -15,19 +15,19 @@
 <div class="dash-body">
   <div class="dash-main">
     <header class="fade-out dash-header">
-      <h2 class="row-label">
+      <h2 class="row-label repo-dashboard">
         <LinkTo
           @route="owner"
-          @model={{this.repo.owner.login}}
+          @models={{array this.repo.provider this.repo.owner.login}}
           @title={{this.repo.owner.login}}
         >
-          {{this.repo.owner.login}}
-        </LinkTo>
+          {{this.repo.owner.login}}</LinkTo>
+        <SvgImage @name={{vcs-icon this.repo.vcsType}} />
       </h2>
       <h1 class="row-content">
         <LinkTo
           @route="repo"
-          @models={{array this.repo.owner.login this.repo.name}}
+          @models={{array this.repo.provider this.repo.owner.login this.repo.name}}
           @title={{this.repo.name}}
         >
           {{this.repo.name}}
@@ -48,6 +48,7 @@
             <LinkTo
               @route="build"
               @models={{array
+                this.repo.provider
                 this.repo.owner.login
                 this.repo.name
                 this.repo.defaultBranch.lastBuild.id
@@ -74,6 +75,7 @@
             <LinkTo
               @route="build"
               @models={{array
+                this.repo.provider
                 this.repo.owner.login
                 this.repo.name
                 this.repo.currentBuild.id
