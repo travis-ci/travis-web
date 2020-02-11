@@ -20,6 +20,8 @@ export default Owner.extend({
   firstLoggedInAt: attr('date'),
   allowMigration: attr('boolean'),
   recentlySignedUp: attr('boolean'),
+  channels: attr(),
+  authToken: attr('string'),
 
   type: 'user',
 

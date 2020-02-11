@@ -1,6 +1,6 @@
 /* global Travis */
 import URL from 'url';
-import EmberObject, {
+import {
   computed,
   get,
   getProperties,
@@ -9,7 +9,12 @@ import EmberObject, {
 import { assert } from '@ember/debug';
 import { isEmpty, isPresent } from '@ember/utils';
 import Service, { inject as service } from '@ember/service';
-import { equal, filter, reads } from '@ember/object/computed';
+import {
+  equal,
+  filter,
+  or,
+  reads
+} from '@ember/object/computed';
 import { getOwner } from '@ember/application';
 import config from 'travis/config/environment';
 import { task } from 'ember-concurrency';
@@ -52,26 +57,24 @@ export default Service.extend({
 
   isProVersion: reads('features.proVersion'),
 
-  storage: computed('sessionStorage.authUpdatedAt', 'localStorage.authUpdatedAt', function () {
-    // primary storage for auth is the one in which auth data was updated last
-    const { sessionStorage, localStorage } = this;
-    return sessionStorage.authUpdatedAt > localStorage.authUpdatedAt ? sessionStorage : localStorage;
+  storage: reads('localStorage.auth'),
+
+  accounts: reads('storage.accounts'),
+
+  inactiveAccounts: computed('accounts.@each.id', 'storage.activeAccount.id', function () {
+    const { accounts, activeAccount } = this.storage;
+    if (accounts && accounts.length > 0 && activeAccount) {
+      return accounts.filter(account => account.id !== activeAccount.id);
+    } else {
+      return [];
+    }
   }),
 
-  accounts: computed(function () {
-    return this.storage.accounts.map(account => EmberObject.create(account));
-  }),
-
-  inactiveAccounts: filter('accounts', function (account) {
-    const { activeAccount } = this.storage;
-    return activeAccount && account.id !== activeAccount.id;
-  }),
-
-  currentUser: null,
+  currentUser: reads('storage.activeAccount'),
 
   permissions: reads('currentUser.permissions'),
 
-  token: reads('storage.activeAccount.authToken'),
+  token: or('currentUser.authToken', 'storage.token'),
   assetToken: reads('currentUser.token'),
 
   userName: reads('currentUser.fullName'),
@@ -80,14 +83,11 @@ export default Service.extend({
   redirectUrl: null,
 
   switchAccount(id) {
-    const { accounts, activeAccount } = this.storage;
-    const targetAccount = accounts.findBy('id', id);
+    const targetAccount = this.accounts.findBy('id', id);
 
-    if (!activeAccount || activeAccount.id === id || !targetAccount) {
-      return;
-    }
+    if (!targetAccount) return;
 
-    this.storage.activeAccount = targetAccount;
+    this.storage.set('activeAccount', targetAccount);
     this.store.unloadAll();
     this.autoSignIn();
     this.router.transitionTo('/');
@@ -96,8 +96,8 @@ export default Service.extend({
   signOut(runTeardown = true) {
     if (this.signedIn) this.api.get('/logout');
 
+    this.storage.clearLoginData();
     [this.localStorage, this.sessionStorage].forEach(storage => {
-      storage.clearAuthData();
       storage.clearPreferencesData();
     });
 
@@ -137,24 +137,18 @@ export default Service.extend({
 
   autoSignIn() {
     try {
-      if (this.storage.user) {
-        this.handleNewLogin();
-      }
-
-      const { activeAccount } = this.storage;
-
-      if (!activeAccount) throw new Error('No active account');
-
-      this.setProperties({
-        currentUser: createUserRecord(this.store, activeAccount),
-        state: STATE.SIGNED_IN
-      });
-
-      Travis.trigger('user:signed_in', this.currentUser);
-
-      this.reloadCurrentUser().then(() => {
-        Travis.trigger('user:refreshed', activeAccount);
-      });
+      debugger;
+      const promise = this.storage.user ? this.handleNewLogin() : this.reloadCurrentUser();
+      return promise
+        .then(() => {
+          const { currentUser } = this;
+          this.set('state', STATE.SIGNED_IN);
+          Travis.trigger('user:signed_in', currentUser);
+          Travis.trigger('user:refreshed', currentUser);
+        })
+        .catch(error => {
+          throw new Error(error);
+        });
     } catch (error) {
       this.signOut(false);
     }
@@ -162,32 +156,39 @@ export default Service.extend({
 
   handleNewLogin() {
     const { storage } = this;
-    const { user, token, accounts } = storage;
+    const { user, token, isBecome } = storage;
 
-    if (!user) return;
+    storage.clearLoginData();
+
+    if (!user || !token) throw new Error('No login data');
 
     const userData = getProperties(user, USER_FIELDS);
-    this.validateUserData(userData);
+    this.validateUserData(userData, isBecome);
 
-    userData.authToken = token;
-    storage.accounts = accounts.concat([userData]).uniqBy('id');
-    storage.activeAccount = userData;
-    storage.deleteUser();
-    storage.deleteToken();
+    const userRecord = createUserRecord(this.store, userData);
+
+    return this.reloadUser(userRecord).then(() => {
+      userRecord.set('authToken', token);
+      storage.accounts.addObject(userRecord);
+      storage.set('activeAccount', userRecord);
+      this.reportNewUser();
+      this.reportToIntercom();
+    });
   },
 
   reloadCurrentUser(include = []) {
-    includes = includes.concat(include, ['owner.installation']).uniq();
-    return this.fetchCurrentUser.perform();
+    if (!this.currentUser) throw new Error('No active account');
+    return this.reloadUser(this.currentUser, include);
   },
 
-  fetchCurrentUser: task(function* () {
+  reloadUser(userRecord, include = []) {
+    includes = includes.concat(include, ['owner.installation']).uniq();
+    return this.fetchCurrentUser.perform(userRecord);
+  },
+
+  fetchCurrentUser: task(function* (userRecord) {
     try {
-      const options = { included: includes.join(',') };
-      yield this.currentUser.reload(options);
-      this.reportNewUser();
-      this.reportToIntercom();
-      return this.currentUser;
+      return yield userRecord.reload({ included: includes.join(',') });
     } catch (error) {
       const status = +error.status || +get(error, 'errors.firstObject.status');
       if (status === 401 || status === 403 || status === 500) {
@@ -197,10 +198,10 @@ export default Service.extend({
     }
   }).keepLatest(),
 
-  validateUserData(user) {
+  validateUserData(user, isBecome) {
     const hasChannelsOnPro = field => field === 'channels' && !this.isProVersion;
     const hasAllFields = USER_FIELDS.every(field => isPresent(user[field]) || hasChannelsOnPro(field));
-    const hasCorrectScopes = user.correct_scopes || this.storage.isBecome;
+    const hasCorrectScopes = user.correct_scopes || isBecome;
     if (!hasAllFields || !hasCorrectScopes) {
       throw new Error('User validation failed');
     }
