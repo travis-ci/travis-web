@@ -136,8 +136,8 @@ export default Service.extend({
   },
 
   autoSignIn() {
+    this.set('state', STATE.SIGNING_IN);
     try {
-      debugger;
       const promise = this.storage.user ? this.handleNewLogin() : this.reloadCurrentUser();
       return promise
         .then(() => {

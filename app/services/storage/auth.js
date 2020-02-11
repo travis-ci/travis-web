@@ -4,7 +4,6 @@ import { parseWithDefault } from '../storage';
 import Service, { inject as service } from '@ember/service';
 
 const storage = getStorage();
-const accountsCache = null;
 
 export default Service.extend({
   store: service(),
@@ -117,7 +116,6 @@ function serializeUserRecord(record) {
 }
 
 function extractUserRecord(store, userData) {
-  const record = store.peekRecord('user', userData.id);
-  return record || store.push(store.normalize('user', userData));
+  return store.push(store.normalize('user', userData));
 }
 

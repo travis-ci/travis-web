@@ -33,7 +33,7 @@ export default Owner.extend({
   }),
 
   init() {
-    if (this.isSyncing) this.poll();
+    this.schedulePoll();
     return this._super(...arguments);
   },
 
@@ -114,20 +114,21 @@ export default Owner.extend({
       .then(() => this.poll());
   },
 
+  schedulePoll() {
+    later(
+      () => this.isSyncing && this.poll(),
+      config.intervals.syncingPolling
+    );
+  },
+
   poll() {
-    return this.api.get('/user').then((data) => {
-      if (data.is_syncing) {
-        later(
-          () => this.poll(),
-          config.intervals.syncingPolling
-        );
+    return this.reload().then(() => {
+      if (this.isSyncing) {
+        this.schedulePoll();
       } else {
-        run(() => {
-          Travis.trigger('user:synced', data);
-          this.set('isSyncing', false);
-          this.reload();
-          this.applyReposFilter();
-        });
+        Travis.trigger('user:synced', this);
+        this.set('isSyncing', false);
+        this.applyReposFilter();
       }
     });
   },
