@@ -1,16 +1,13 @@
 import Controller from '@ember/controller';
 import { inject as service } from '@ember/service';
-import { equal, or } from '@ember/object/computed';
+import { equal, or, reads } from '@ember/object/computed';
 
 export default Controller.extend({
-  auth: service(),
   features: service(),
+  multiVcs: service(),
 
-  queryParams: ['provider'],
-
-  // Eventually get provider info from a service. Depends on other PRs in progress
-  provider: null,
-  defaultProvider: 'github',
+  provider: reads('multiVcs.userSlug'),
+  defaultProvider: reads('multiVcs.primaryProvider'),
 
   selectedProvider: or('provider', 'defaultProvider'),
 
