@@ -56,8 +56,30 @@ $nav-line-height: 35px;
       }
     }
 
-    .avatar {
-      margin-right: 10px;
+    .navigation-avatar {
+      &--bitbucket {
+        position: relative;
+
+        &:after {
+          content: "Beta";
+          position: absolute;
+          right: -1px;
+          top: -15px;
+          background-color: $cement-grey;
+          border-radius: 2px;
+          color: white;
+          text-transform: uppercase;
+          display: inline-block;
+          padding: 2px 4px;
+          line-height: 1.1;
+          font-size: 0.6em;
+          font-weight: 600;
+        }
+      }
+
+      .avatar {
+        margin-right: 10px;
+      }
     }
 
     .navigation-profile-link{
