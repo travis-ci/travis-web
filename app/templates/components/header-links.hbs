@@ -224,39 +224,81 @@
             @url={{this.user.avatarUrl}}
             @name={{this.user.fullName}}
             @size={{40}}
+            @providerIcon={{vcs-icon this.user.vcsType}}
+            class="navigation-avatar navigation-avatar--{{this.user.provider}}"
           />
           <SvgImage @name="icon-dropdown-arrow" @class="icon" />
         </LinkTo>
         <div class="menu-separator"></div>
         <ul class="navigation-nested">
-          <li class="username">
-            <span>
+          <li class="username navigation-nested__header">
+            <div class="username__text">
               {{this.userName}}
-            </span>
+            </div>
+            <div class="username__vcs-icon">
+              <SvgImage @name={{vcs-icon this.user.vcsType}} @height=14 />
+              <EmberTooltip @text={{concat (vcs-name this.user.vcsType) ' account'}} @side='left' />
+            </div>
           </li>
-          <LinkTo
-            @route="account"
-            @title="Your profile"
-            class="signed-in topbar-menu-item"
-          >
-            <li>
+          {{#if (eq this.user.provider 'bitbucket')}}
+            <li class="topbar-menu-item--warning">
+              Bitbucket support is currently in Beta
+            </li>
+          {{/if}}
+          <li>
+            <LinkTo
+              @route="account"
+              @title="Your profile"
+              class="signed-in topbar-menu-item"
+            >
               <SvgImage @name="icon-settings" @class="icon" />
-              Settings
-            </li>
-          </LinkTo>
-          <div class="nav-nested"></div>
-          <a
-            data-test-signout-link
-            href="/"
-            title="Sign out of Travis CI"
-            class="topbar-menu-item"
-            {{action "signOut"}}
-          >
-            <li>
+              <div class="topbar-menu-item__label">
+                Settings
+              </div>
+            </LinkTo>
+          </li>
+          <li>
+            <a
+              data-test-signout-link
+              href="/"
+              title="Sign out of this account"
+              class="topbar-menu-item"
+              {{action "signOut"}}
+            >
               <SvgImage @name="icon-sign-out" @class="icon" />
-              Sign Out
+              <div class="topbar-menu-item__label">
+                Sign Out
+              </div>
+            </a>
+          </li>
+          <li class="nav-nested"></li>
+          <li class="section-header">
+            Switch accounts
+          </li>
+          {{#each this.auth.inactiveAccounts as |account| }}
+            <li class="username pointer topbar-menu-item" {{on 'click' (action 'switchAccount' account.id target=this.auth)}}>
+              <UserAvatar
+                @url={{account.avatarUrl}}
+                @name={{or account.fullName account.login}}
+                @size={{12}}
+              />
+              <div class="username__text topbar-menu-item__label">
+                {{or account.login account.fullName}}
+              </div>
+              <div class="username__vcs-icon">
+                <SvgImage @name={{vcs-icon account.vcsType}} @height=14 />
+              </div>
             </li>
-          </a>
+          {{else}}
+            <li class="navigation-nested__note">
+              We don't know your other accounts yet. You can add one!
+            </li>
+          {{/each}}
+          <li class="text-right">
+            <LinkTo @route="signin" @title="Add another account" class="navigation-nested__link">
+              Add an account
+            </LinkTo>
+          </li>
         </ul>
       {{/if}}
     </li>

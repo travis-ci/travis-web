@@ -1018,7 +1018,7 @@
     width: 100%;
     border-top-right-radius: 0;
     border-top-left-radius: 0;
-    z-index: 10;
+    z-index: 35;
 
     .action {
       cursor: pointer;
@@ -1039,7 +1039,7 @@
       cursor: default;
       padding-top: 10px;
       position: relative;
-      z-index: 11;
+      z-index: 36;
 
       &:hover {
         border-bottom-left-radius: 0;
