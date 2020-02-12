@@ -81,7 +81,7 @@
   </h3>
   <div class="row-item row-commit">
     <ExternalLinkTo @href={{this.build.commit.url}}>
-      <EmberTooltip @text="View commit on GitHub" />
+      <EmberTooltip @text="{{concat "View commit on " (vcs-name this.build.repo.vcsType)}}" />
       <SvgImage @name="icon-commit" @class="icon" />
       <span class="label-align inner-underline monospace">
         {{format-sha this.build.commit.sha}}
