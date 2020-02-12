@@ -1,11 +1,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 
-const COLORS = {
-  bitbucket: 'blue',
-  github: 'grey-dark',
-};
-
 export default Component.extend({
   tagName: '',
 
@@ -23,10 +18,5 @@ export default Component.extend({
     const { number, provider, providerImg } = this;
     const affix = providerImg ? `-${provider}` : '';
     return `getting-started-step-${number}${affix}`;
-  }),
-
-  color: computed('provider', function () {
-    const { provider } = this;
-    return COLORS[provider];
   }),
 });

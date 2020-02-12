@@ -1,7 +1,7 @@
 {{#if this.isProviderEnabled}}
   <UiKit::Button
     @onClick={{action this.signin}}
-    @color={{this.color}}
+    @color={{vcs-color this.vcsType 'main'}}
     @invert={{true}}
     class="block w-full max-w-2xs mb-4 mx-auto text-left relative"
     data-test-signin-button={{this.provider}}
@@ -12,7 +12,7 @@
       @display='inline-block'
       @margin={{hash right=1}}
       @padding={{hash right=2}}
-      @borderColor={{this.color}}
+      @borderColor={{vcs-color this.vcsType 'main'}}
       @borderWidth={{hash right='xs'}}
       class='align-text-bottom'
     >
@@ -22,7 +22,7 @@
     {{#if this.isBetaProvider}}
 
       <UiKit::Badge
-        @color={{this.badgeColor}}
+        @color={{vcs-color this.vcsType 'light'}}
         @pin='top-right'
       >
         Beta

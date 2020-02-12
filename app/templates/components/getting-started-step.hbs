@@ -10,7 +10,7 @@
     @width={{hash base='full' sm='1/3' md='1/4'}}
   >
     <UiKit::Box @margin={{hash x='auto'}} @maxWidth='2xs'>
-      <UiKit::Text @color={{this.color}}>
+      <UiKit::Text @color={{vcs-color this.provider 'main'}}>
         <SvgImage @name={{this.imageName}} />
       </UiKit::Text>
     </UiKit::Box>
@@ -32,7 +32,7 @@
     >
       <titleGrid.item @margin={{hash bottom=4 right=2}}>
         <UiKit::Box
-          @color={{this.color}}
+          @color={{vcs-color this.provider 'main'}}
           @display='flex'
           @flexAlign='center'
           @flexJustify='center'
@@ -44,7 +44,7 @@
         </UiKit::Box>
       </titleGrid.item>
       <titleGrid.item @margin={{hash bottom=4}}>
-        <UiKit::Text @color={{this.color}} @size='2xl' @weight='light'>
+        <UiKit::Text @color={{vcs-color this.provider 'main'}} @size='2xl' @weight='light'>
           {{this.title}}
         </UiKit::Text>
       </titleGrid.item>

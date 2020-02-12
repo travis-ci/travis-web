@@ -17,6 +17,14 @@ export const vcsConfigByUrlPrefix = (urlPrefix) => (
   Object.values(providers).findBy('urlPrefix', urlPrefix)
 );
 
+export const vcsConfigByUrlPrefixOrType = (prefixOrType) => {
+  let config = vcsConfigByUrlPrefix(prefixOrType);
+  if (!config) {
+    config = vcsConfig(prefixOrType);
+  }
+  return config;
+};
+
 const replaceParams = (template, params) => (
   Object
     .keys(params)
@@ -57,6 +65,15 @@ export const vcsVocab = (vcsType, vocabKey) => {
     throw new Error(`Invalid vocabulary key: ${vocabKey}`);
   }
   return vocab;
+};
+
+export const vcsColor = (vcsType, colorKey) => {
+  const config = vcsConfigByUrlPrefixOrType(vcsType);
+  const color = config.colors[colorKey];
+  if (!color) {
+    throw new Error(`Invalid color key: ${colorKey}`);
+  }
+  return color;
 };
 
 export const availableProviders = Object.keys(providers);

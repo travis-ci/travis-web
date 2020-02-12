@@ -1,7 +1,7 @@
 import Service, { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 import { and, not, or, reads } from '@ember/object/computed';
-import { vcsConfig } from 'travis/utils/vcs';
+import { defaultVcsConfig, vcsConfig } from 'travis/utils/vcs';
 
 export default Service.extend({
   auth: service(),
@@ -15,7 +15,8 @@ export default Service.extend({
   enableAssemblaLogin: and('isProVersion', 'features.enableAssemblaLogin'),
   enableBitbucketLogin: and('isProVersion', 'features.enableBitbucketLogin'),
 
-  primaryProvider: 'github',
+  primaryProviderConfig: computed(() => defaultVcsConfig),
+  primaryProvider: reads('primaryProviderConfig.urlPrefix'),
 
   isProviderEnabled(provider) {
     return this.isProVersion && this.features.isEnabled(`enable-${provider}-login`);
