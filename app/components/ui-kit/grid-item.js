@@ -2,10 +2,9 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { or } from '@ember/object/computed';
 
-import spacingMixin from 'travis/mixins/ui-kit/spacing';
-import borderMixin from 'travis/mixins/ui-kit/border';
-import { requireProp } from 'travis/utils/ui-kit/assertions';
+import { checkDictionary, requireProp } from 'travis/utils/ui-kit/assertions';
 import concat from 'travis/utils/ui-kit/concat';
+import prefix from 'travis/utils/ui-kit/prefix';
 
 function screenClass(key, screen) {
   return computed('sizePrefix', key, function () {
@@ -26,19 +25,19 @@ function screenClass(key, screen) {
 }
 
 const FLEX_SIZES = {
-  INITIAL: 'initial',
-  EVEN: 'even',
-  AUTO: 'auto',
+  GROW_SINGLE: 'grow-single',
+  SHRINK_SINGLE: 'shrink-single',
+  RESIZE_SINGLE: 'resize-single',
   NONE: 'none',
 };
 const FLEX_SIZE_VALS = {
-  [FLEX_SIZES.INITIAL]: 'flex-initial',
-  [FLEX_SIZES.EVEN]: 'flex-1',
-  [FLEX_SIZES.AUTO]: 'flex-auto',
-  [FLEX_SIZES.NONE]: 'flex-none',
+  [FLEX_SIZES.GROW_SINGLE]: 'grow-single',
+  [FLEX_SIZES.SHRINK_SINGLE]: 'shrink-single',
+  [FLEX_SIZES.RESIZE_SINGLE]: 'resize-single',
+  [FLEX_SIZES.NONE]: 'none',
 };
 
-export default Component.extend(spacingMixin, borderMixin, {
+export default Component.extend({
   tagName: '',
 
   // Public interface
@@ -51,6 +50,13 @@ export default Component.extend(spacingMixin, borderMixin, {
   lg: null,
   xl: null,
   gap: null,
+
+  display: null,
+  flex: null,
+  borderColor: null,
+  borderWidth: null,
+  margin: null,
+  padding: null,
 
   // Private
   sizePrefix: computed('grid.isCol', function () {
@@ -75,6 +81,7 @@ export default Component.extend(spacingMixin, borderMixin, {
 
     return currentGap === 0 ? '' : `p${paddingDir}-${currentGap}`;
   }),
+  flexClass: prefix('flex', 'flex', { dictionary: FLEX_SIZE_VALS }),
 
   allClasses: concat(
     'componentClass',
@@ -84,10 +91,7 @@ export default Component.extend(spacingMixin, borderMixin, {
     'lgClass',
     'xlClass',
     'gapClass',
-    'borderColorClass',
-    'borderWidthClasses',
-    'marginClasses',
-    'paddingClasses',
+    'flexClass'
   ),
 
   // Lifecycle
@@ -95,5 +99,6 @@ export default Component.extend(spacingMixin, borderMixin, {
     this._super(...arguments);
 
     requireProp(this.grid, '@grid', 'GridItem');
+    checkDictionary(this.flex, FLEX_SIZES, '@flex', 'GridItem');
   },
 });

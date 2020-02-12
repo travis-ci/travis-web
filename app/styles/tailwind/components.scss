@@ -17,7 +17,7 @@
       }
 
       .travis-form__field-component {
-        @apply text-grey-800 rounded-sm appearance-none;
+        @apply text-grey-800 rounded-lg appearance-none;
       }
 
       .travis-form__error-message {
@@ -25,7 +25,7 @@
       }
 
       &:not(.travis-form__field--without-frame) .travis-form__field-component {
-        box-shadow: inset 0 0 1px 1px theme('colors.grey.700');
+        box-shadow: inset 0 0 1px 1px theme('colors.grey.400');
       }
       &.travis-form__field--error .travis-form__field-component {
         box-shadow: inset 0 0 1px 1px theme('colors.red.300');

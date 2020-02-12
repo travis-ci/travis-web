@@ -61,6 +61,10 @@ export default Component.extend({
     return `<code>${escape(key)}</code>: duplicate values: <code>${format(args.values)}</code>`;
   },
 
+  duplicate_key(key, args) {
+    return `<code>${escape(key)}</code>: duplicate key: <code>${format(args.key)}</code>`;
+  },
+
   edge(key, args) {
     return `<code>${escape(key)}</code> is experimental and might change or be removed`;
   },
