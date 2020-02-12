@@ -224,6 +224,7 @@
             @url={{this.user.avatarUrl}}
             @name={{this.user.fullName}}
             @size={{40}}
+            @providerIcon={{vcs-icon this.user.vcsType}}
             class="navigation-avatar navigation-avatar--{{this.user.provider}}"
           />
           <SvgImage @name="icon-dropdown-arrow" @class="icon" />
@@ -239,6 +240,11 @@
               <EmberTooltip @text={{concat (vcs-name this.user.vcsType) ' account'}} @side='left' />
             </div>
           </li>
+          {{#if (eq this.user.provider 'bitbucket')}}
+            <li class="topbar-menu-item--warning">
+              Bitbucket support is currently in Beta
+            </li>
+          {{/if}}
           <li>
             <LinkTo
               @route="account"

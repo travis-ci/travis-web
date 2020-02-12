@@ -63,8 +63,8 @@ $nav-line-height: 35px;
         &:after {
           content: "Beta";
           position: absolute;
-          right: -1px;
-          top: -15px;
+          left: -25px;
+          top: 5px;
           background-color: $cement-grey;
           border-radius: 2px;
           color: white;
@@ -149,8 +149,18 @@ $nav-line-height: 35px;
     }
   }
 
-  .topbar-menu-item:hover {
-    text-decoration: underline;
+  .topbar-menu-item {
+    &:hover {
+      text-decoration: underline;
+    }
+
+    &--warning {
+      background-color: lighten($canary-yellow, 30%);
+      color: $dozer-yellow;
+      line-height: 1.7;
+      font-size: 0.7em;
+      text-align: center;
+    }
   }
 
   .section-header {
