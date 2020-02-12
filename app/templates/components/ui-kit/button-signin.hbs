@@ -20,9 +20,13 @@
     </UiKit::Box>
 
     {{#if this.account}}
-      {{this.account.login}}
+      {{or this.account.login this.account.fullName}}
     {{else}}
-      Sign {{if this.isSignup 'Up' 'In'}} With {{vcs-name this.vcsType}}
+      {{#if this.isLoading}}
+        Signing {{if this.isSignup 'Up' 'In'}}...
+      {{else}}
+        Sign {{if this.isSignup 'Up' 'In'}} With {{vcs-name this.vcsType}}
+      {{/if}}
     {{/if}}
 
     {{#if this.isBetaProvider}}

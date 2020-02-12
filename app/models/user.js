@@ -140,7 +140,8 @@ export default Owner.extend({
   },
 
   reload(options = {}) {
-    return this.store.queryRecord('user', Object.assign({}, options, { current: true }));
+    const { authToken } = this;
+    return this.store.queryRecord('user', Object.assign({}, options, { current: true, authToken }));
   },
 
   applyReposFilter() {

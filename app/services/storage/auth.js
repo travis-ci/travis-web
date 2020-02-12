@@ -35,7 +35,7 @@ export default Service.extend({
     get() {
       const accountsData = storage.getItem('travis.auth.accounts');
       const accounts = parseWithDefault(accountsData, []).map(account =>
-        extractUserRecord(this.store, account)
+        extractAccountRecord(this.store, account)
       );
       accounts.addArrayObserver(this, {
         willChange: 'persistAccounts',
@@ -47,7 +47,7 @@ export default Service.extend({
       this.persistAccounts(accounts);
       return accounts;
     }
-  }),
+  }).volatile(),
 
   persistAccounts(newValue) {
     const records = (newValue || []).map(record => serializeUserRecord(record));
@@ -115,7 +115,8 @@ function serializeUserRecord(record) {
   return record.serialize({ includeId: true });
 }
 
-function extractUserRecord(store, userData) {
-  return store.push(store.normalize('user', userData));
+function extractAccountRecord(store, userData) {
+  const record = store.peekRecord('user', userData.id);
+  return record || store.push(store.normalize('user', userData));
 }
 

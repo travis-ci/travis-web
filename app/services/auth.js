@@ -81,15 +81,14 @@ export default Service.extend({
 
   redirectUrl: null,
 
-  switchAccount(id) {
-    const targetAccount = this.accounts.findBy('id', id);
-
-    if (!targetAccount) return;
-
-    this.storage.set('activeAccount', targetAccount);
+  switchAccount(id, redirectUrl) {
     this.store.unloadAll();
-    this.autoSignIn();
-    this.router.transitionTo('/');
+    const targetAccount = this.accounts.findBy('id', id);
+    this.storage.set('activeAccount', targetAccount);
+    if (redirectUrl)
+      window.location.href = redirectUrl;
+    else
+      window.location.reload();
   },
 
   signOut(runTeardown = true) {
@@ -165,10 +164,10 @@ export default Service.extend({
     const userData = getProperties(user, USER_FIELDS);
     this.validateUserData(userData, isBecome);
 
-    const userRecord = createUserRecord(this.store, userData);
+    const userRecord = pushUserToStore(this.store, userData);
+    userRecord.set('authToken', token);
 
     return this.reloadUser(userRecord).then(() => {
-      userRecord.set('authToken', token);
       storage.accounts.addObject(userRecord);
       storage.set('activeAccount', userRecord);
       this.reportNewUser();
@@ -183,10 +182,10 @@ export default Service.extend({
 
   reloadUser(userRecord, include = []) {
     includes = includes.concat(include, ['owner.installation']).uniq();
-    return this.fetchCurrentUser.perform(userRecord);
+    return this.fetchUser.perform(userRecord);
   },
 
-  fetchCurrentUser: task(function* (userRecord) {
+  fetchUser: task(function* (userRecord) {
     try {
       return yield userRecord.reload({ included: includes.join(',') });
     } catch (error) {
@@ -280,7 +279,7 @@ export default Service.extend({
   }
 });
 
-function createUserRecord(store, user) {
+function pushUserToStore(store, user) {
   const record = store.push(store.normalize('user', user));
   const installation = store.peekAll('installation').findBy('owner.id', user.id) || null;
   record.setProperties({ installation });

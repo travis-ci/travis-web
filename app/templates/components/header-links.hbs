@@ -276,7 +276,7 @@
                 @size={{12}}
               />
               <div class="username__text topbar-menu-item__label">
-                {{account.login}}
+                {{or account.login account.fullName}}
               </div>
               <div class="username__vcs-icon">
                 <SvgImage @name={{vcs-icon account.vcsType}} @height=14 />

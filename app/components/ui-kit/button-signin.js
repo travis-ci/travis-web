@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
-import { or, reads } from '@ember/object/computed';
+import { or } from '@ember/object/computed';
 
 const providerColors = {
   github: 'grey-dark',
@@ -19,6 +19,8 @@ export default Component.extend({
 
   isSignup: false,
   provider: or('account.provider', 'multiVcs.primaryProvider'),
+
+  isLoading: false,
 
   vcsType: computed('provider', function () {
     return `${this.provider.capitalize()}User`;
@@ -47,8 +49,9 @@ export default Component.extend({
 
   signin() {
     if (this.account) {
-      this.auth.switchAccount(this.account.id);
+      this.auth.switchAccount(this.account.id, '/');
     } else {
+      this.set('isLoading', true);
       this.auth.signInWith(this.provider);
     }
   },
