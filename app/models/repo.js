@@ -124,29 +124,27 @@ const Repo = VcsEntity.extend({
     return array;
   },
 
-  builds: computed('id', function () {
-    let id = this.id;
-    const builds = this.store.filter('build', {
-      event_type: ['push', 'api', 'cron'],
-      repository_id: id,
-    }, (b) => {
-      let eventTypes = ['push', 'api', 'cron'];
-      return this._buildRepoMatches(b, id) && eventTypes.includes(b.get('eventType'));
-    });
-    return this._buildObservableArray(builds);
-  }),
+  fetchBuilds: task(function* () {
+    try {
+      const { id } = this;
+      const response = yield this.store.query('build', {
+        event_type: ['push', 'api', 'cron'],
+        repository_id: id,
+      });
+      return response;
+    } catch (error) {}
+  }).drop(),
 
-  pullRequests: computed('id', function () {
-    let id = this.id;
-    const builds = this.store.filter('build', {
-      event_type: 'pull_request',
-      repository_id: id,
-    }, (b) => {
-      const isPullRequest = b.get('eventType') === 'pull_request';
-      return this._buildRepoMatches(b, id) && isPullRequest;
-    });
-    return this._buildObservableArray(builds);
-  }),
+  fetchPullRequests: task(function* () {
+    try {
+      const { id } = this;
+      const response = yield this.store.query('build', {
+        event_type: 'pull_request',
+        repository_id: id,
+      });
+      return response;
+    } catch (error) {}
+  }).drop(),
 
   branches: computed('id', function () {
     let id = this.id;

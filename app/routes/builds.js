@@ -19,6 +19,9 @@ export default TravisRoute.extend({
   },
 
   model() {
-    return this.modelFor('repo').get('builds');
+    const repo = this.modelFor('repo');
+    const { fetchBuilds } = repo;
+    fetchBuilds.perform();
+    return fetchBuilds;
   },
 });

@@ -1,4 +1,4 @@
-import { sort, alias } from '@ember/object/computed';
+import { sort, alias, reads } from '@ember/object/computed';
 import Controller, { inject as controller } from '@ember/controller';
 import LoadMoreBuildsMixin from 'travis/mixins/builds/load-more';
 import { inject as service } from '@ember/service';
@@ -12,7 +12,8 @@ export default Controller.extend(...mixins, {
   externalLinks: service(),
 
   buildsSorting: ['number:desc'],
-  builds: sort('model', 'buildsSorting'),
+  buildsValue: reads('model.lastSuccessful.value'),
+  builds: sort('buildsValue', 'buildsSorting'),
 
   repoController: controller('repo'),
   repo: alias('repoController.repo'),
