@@ -135,17 +135,6 @@ const Repo = VcsEntity.extend({
     } catch (error) {}
   }).drop(),
 
-  fetchPullRequests: task(function* () {
-    try {
-      const { id } = this;
-      const response = yield this.store.query('build', {
-        event_type: 'pull_request',
-        repository_id: id,
-      });
-      return response;
-    } catch (error) {}
-  }).drop(),
-
   branches: computed('id', function () {
     let id = this.id;
     return this.store.filter('branch', {
