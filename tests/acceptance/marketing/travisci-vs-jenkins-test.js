@@ -5,6 +5,11 @@ import { enableFeature } from 'ember-feature-flags/test-support';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { percySnapshot } from 'ember-percy';
 
+import {
+  SALES_CONTACT_FORM_CONTAINER,
+  SALES_CONTACT_IFRAME
+} from 'travis/tests/helpers/selectors';
+
 // Main page
 export const PAGE_URL = '/travisci-vs-jenkins';
 
@@ -87,13 +92,8 @@ module('Acceptance | travis vs jenkins page', function (hooks) {
       assert.dom(TRUST_ITEM).exists({ count: 5 });
 
       assert.dom(CONTACT_TITLE).exists();
-      // assert.dom(CONTACT_FORM_CONTAINER).exists();
-      // assert.dom(CONTACT_FORM_NAME).exists();
-      // assert.dom(CONTACT_FORM_EMAIL).exists();
-      // assert.dom(CONTACT_FORM_SIZE).exists();
-      // assert.dom(CONTACT_FORM_PHONE).exists();
-      // assert.dom(CONTACT_FORM_MESSAGE).exists();
-      // assert.dom(CONTACT_FORM_SUBMIT).exists();
+      assert.dom(SALES_CONTACT_FORM_CONTAINER).exists();
+      assert.dom(SALES_CONTACT_IFRAME).exists();
 
       assert.dom(TESTIMONIAL_TITLE).exists();
       assert.dom(TESTIMONIAL_QUOTE).exists();
