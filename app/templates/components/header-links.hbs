@@ -129,14 +129,14 @@
         <li class="display-on-mobile">
           <a class="navigation-anchor pointer" title="Sign in with GitHub" {{action "signIn" "github"}}>
             Sign in with GitHub
-            <SvgImage @name={{vcs-icon 'GithubUser'}} @class="align-text-top fill-current w-5 h-5" />
+            <SvgImage @name={{vcs-icon 'GithubUser'}} @class="signin-provider-icon align-text-top fill-current w-5 h-5" />
           </a>
         </li>
         {{#if this.multiVcs.enableBitbucketLogin}}
           <li class="display-on-mobile">
             <a class="navigation-anchor pointer" title="Sign in with Bitbucket" {{action "signIn" "bitbucket"}}>
               Sign in with Bitbucket
-              <SvgImage @name={{vcs-icon 'BitbucketUser'}} @class="align-text-top fill-current w-5 h-5" />
+              <SvgImage @name={{vcs-icon 'BitbucketUser'}} @class="signin-provider-icon align-text-top fill-current w-5 h-5" />
             </a>
           </li>
         {{/if}}
@@ -144,7 +144,7 @@
           <li class="display-on-mobile">
             <a class="navigation-anchor pointer" title="Sign in with Assembla" {{action "signIn" "assembla"}}>
               Sign in with Assembla
-              <SvgImage @name={{vcs-icon 'AssemblaUser'}} @class="align-text-top fill-current w-5 h-5" />
+              <SvgImage @name={{vcs-icon 'AssemblaUser'}} @class="signin-provider-icon align-text-top fill-current w-5 h-5" />
             </a>
           </li>
         {{/if}}
@@ -184,14 +184,14 @@
             <li>
               <button class="action" {{action "signIn" "github"}}>
                 Sign in with GitHub
-                  <SvgImage @name={{vcs-icon 'GithubUser'}} @class="align-text-top fill-current w-5 h-5" />
+                <SvgImage @name={{vcs-icon 'GithubUser'}} @class="signin-provider-icon align-text-top fill-current w-5 h-5" />
               </button>
             </li>
             {{#if this.multiVcs.enableBitbucketLogin}}
               <li>
                 <button class="action" {{action "signIn" "bitbucket"}}>
                   Sign in with Bitbucket
-                  <SvgImage @name={{vcs-icon 'BitbucketUser'}} @class="align-text-top fill-current w-5 h-5" />
+                  <SvgImage @name={{vcs-icon 'BitbucketUser'}} @class="signin-provider-icon align-text-top fill-current w-5 h-5" />
                 </button>
               </li>
             {{/if}}
@@ -199,7 +199,7 @@
               <li>
                 <button class="action" {{action "signIn" "assembla"}}>
                   Sign in with Assembla
-                  <SvgImage @name={{vcs-icon 'AssemblaUser'}} @class="align-text-top fill-current w-5 h-5" />
+                  <SvgImage @name={{vcs-icon 'AssemblaUser'}} @class="signin-provider-icon align-text-top fill-current w-5 h-5" />
                 </button>
               </li>
             {{/if}}
