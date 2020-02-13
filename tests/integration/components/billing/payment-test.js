@@ -83,4 +83,33 @@ module('Integration | Component | billing-payment', function (hooks) {
     assert.dom('h3').hasText('Payment');
     assert.dom(profilePage.billing.billingPaymentForm.completePayment.scope).isVisible();
   });
+
+  test('enable pay button when disclaimer is checked', async function (assert) {
+    this.set('isDisclaimerChecked', true);
+    await render(hbs`<Billing::Payment
+      @isDisclaimerChecked={{this.isDisclaimerChecked}}
+      @stripeElement={{this.stripeElement}}
+      @cancel={{action 'cancel'}}
+      @goToFirstStep={{action 'goToFirstStep'}}
+      @back={{action 'back'}}/>`);
+
+    assert.dom('h3').hasText('Payment');
+    assert.dom(profilePage.billing.billingPaymentForm.completePayment.scope).isVisible();
+    assert.dom('[data-test-complete-payment]').doesNotHaveClass('disabled');
+    assert.dom('[data-test-complete-payment]').isNotDisabled();
+  });
+
+  test('disable pay button when disclaimer is unchecked', async function (assert) {
+    this.set('isDisclaimerChecked', false);
+    await render(hbs`<Billing::Payment
+      @isDisclaimerChecked={{this.isDisclaimerChecked}}
+      @cancel={{action 'cancel'}}
+      @goToFirstStep={{action 'goToFirstStep'}}
+      @back={{action 'back'}}/>`);
+
+    assert.dom('h3').hasText('Payment');
+    assert.dom(profilePage.billing.billingPaymentForm.completePayment.scope).isVisible();
+    assert.ok(profilePage.billing.billingPaymentForm.completePayment.isDisabled);
+    assert.dom('[data-test-complete-payment]').isDisabled();
+  });
 });

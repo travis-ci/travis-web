@@ -34,6 +34,11 @@
 
   .billing-checkout {
 
+    .payment-terms {
+      color: $oxide-blue;
+      text-decoration: underline;
+    }
+
     .coupon-validation {
 
       height: 38px;

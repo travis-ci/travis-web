@@ -414,7 +414,12 @@ export default create({
       fillIn: fillable(''),
 
       completePayment: {
-        scope: '[data-test-complete-payment]'
+        scope: '[data-test-complete-payment]',
+        isDisabled: hasClass('button disabled'),
+      },
+
+      disclaimerCheckbox: {
+        scope: '[data-test-disclaimer-checkbox]'
       },
 
       paymentInfo: {

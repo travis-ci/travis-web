@@ -71,17 +71,43 @@
     </span>
   </span>
   <h4 data-test-credit-card='true' class="py-3">credit card details</h4>
-  <TravisForm data-test-stripe-form='true' @onSubmit={{perform this.createSubscription}} as |form|>
-    <StripeCard @complete={{action "complete"}} @options={{this.options}} as |stripeError|>
+  <TravisForm @onSubmit={{perform this.handleCreateSubscription}} as |form|>
+    <StripeCard data-test-stripe-form='true' @complete={{action "complete"}} @options={{this.options}} as |stripeError|>
       {{#if stripeError}}
         <p>{{stripeError.message}}</p>
       {{/if}}
     </StripeCard>
+    <form.field
+      @disableFrame={{true}}
+      @value={{this.isDisclaimerChecked}}
+      @showValidationStatusIcons={{false}}
+      @onChange={{action (toggle 'isDisclaimerChecked' this)}} 
+      as |field|
+    >
+      <field.checkbox @name='disclaimer' class="flex-1" data-test-disclaimer-checkbox='true'>
+        <span class="text-xs">
+          I've read and accepted Travis CI 
+          <ExternalLinkTo
+            class="payment-terms"
+            data-test-payment-terms=""
+            @href={{this.config.urls.terms}}
+            @title="Terms of Service"
+          >
+            terms of Service
+          </ExternalLinkTo>
+        </span>
+      </field.checkbox>
+    </form.field>
     <div class='billing-checkout__payment'>
       {{#if this.isLoading}}
         <LoadingIndicator/>
       {{else}}
-        <button class='{{if this.stripeElement 'button--green' 'button disabled'}}' {{on 'click' form.submit}} data-test-complete-payment='true'>
+        <button 
+          disabled={{this.shouldNotCreateSubscription}}
+          class='{{if this.isDisclaimerChecked 'button--green' 'button disabled'}}' 
+          {{on 'click' form.submit}} 
+          data-test-complete-payment='true'
+        >
           Pay {{this.discountedPrice}} to complete subscription
         </button>
       {{/if}}

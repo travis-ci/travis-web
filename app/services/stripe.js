@@ -1,4 +1,5 @@
 import Service, { inject as service } from '@ember/service';
+import Ember from 'ember';
 import { task } from 'ember-concurrency';
 
 export default Service.extend({
@@ -13,6 +14,11 @@ export default Service.extend({
   },
 
   createStripeToken: task(function* (stripeElement) {
+    if (!Ember.testing && !stripeElement) {
+      const message = 'Please enter a valid credit or debit card.';
+      this.flashes.error(message);
+      return { error: { message }};
+    }
     const result = yield this.stripev3.createToken(stripeElement);
     if (result && result.error) {
       this.flashErrorMessage(result.error);
@@ -44,6 +50,6 @@ export default Service.extend({
 
   flashErrorMessage(stripeError) {
     const errorMessage = this.handleError(stripeError);
-    this.flashes(errorMessage);
+    this.flashes.error(errorMessage);
   }
 });
