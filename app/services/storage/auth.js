@@ -108,8 +108,8 @@ function getStorage() {
     sessionStorage = window.sessionStorage;
   }
   // primary storage for auth is the one in which auth data was updated last
-  const sessionStorageUpdatedAt = sessionStorage['travis.auth.updatedAt'];
-  const localStorageUpdatedAt = localStorage['travis.auth.updatedAt'];
+  const sessionStorageUpdatedAt = +sessionStorage.getItem('travis.auth.updatedAt');
+  const localStorageUpdatedAt = +localStorage.getItem('travis.auth.updatedAt');
   return sessionStorageUpdatedAt > localStorageUpdatedAt ? sessionStorage : localStorage;
 }
 
