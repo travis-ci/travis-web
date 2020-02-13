@@ -86,7 +86,6 @@ export default Service.extend({
   clearLoginData() {
     storage.removeItem('travis.token');
     storage.removeItem('travis.user');
-    storage.removeItem('travis.auth.updatedAt');
     storage.removeItem('travis.auth.become');
   },
 
