@@ -101,6 +101,7 @@ export const PLANS_THANKS_PAGE_BUTTON = '[data-test-contact-thanks-button]';
 // travis/components/sales-contact-form
 export const SALES_CONTACT_FORM_CONTAINER = '[data-test-sales-contact-form-container]';
 export const SALES_CONTACT_FORM_NAME = '[data-test-sales-contact-form-name]';
+export const SALES_CONTACT_IFRAME = '[data-test-sales-contact-iframe]';
 export const SALES_CONTACT_FORM_EMAIL = '[data-test-sales-contact-form-email]';
 export const SALES_CONTACT_FORM_SIZE = '[data-test-sales-contact-form-size]';
 export const SALES_CONTACT_FORM_PHONE = '[data-test-sales-contact-form-phone]';

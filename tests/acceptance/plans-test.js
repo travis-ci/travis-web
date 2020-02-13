@@ -48,20 +48,13 @@ module('Acceptance | plans page', function (hooks) {
     assert.ok(button.isPresent);
   });
 
-  // test('contact section structure', async function (assert) {
-  //   const { contactSection } = plansPage;
-  //   const { form } = contactSection;
-  //   const { name, email, size, phone, message, submit } = form;
+  test('contact section structure', async function (assert) {
+    const { contactSection } = plansPage;
+    const { form } = contactSection;
+    const { iframe } = form;
 
-  //   assert.ok(contactSection.isPresent);
-  //   assert.ok(form.isPresent);
-  //   assert.ok(name.isPresent);
-  //   assert.ok(email.isPresent);
-  //   assert.ok(size.isPresent);
-  //   assert.ok(phone.isPresent);
-  //   assert.ok(message.isPresent);
-  //   assert.ok(submit.isPresent);
-  // });
+    assert.ok(iframe.isPresent);
+  });
 
   test('enterprise section structure', async function (assert) {
     const { enterpriseSection } = plansPage;
