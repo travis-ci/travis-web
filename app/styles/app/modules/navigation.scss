@@ -139,8 +139,13 @@ $nav-line-height: 35px;
   padding: 10px 0px 0px 0px;
   z-index: 35;
 
-  svg {
+  svg:not(.signin-provider-icon) {
     display: none;
+  }
+
+  .signin-provider-icon {
+    display: inline-block;
+    margin-left: 7px;
   }
 
   a {
