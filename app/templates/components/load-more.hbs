@@ -1,0 +1,10 @@
+<div>
+  {{yield this}}
+  <div>
+    {{#if this.fetchTask.isRunning}}
+      <LoadingIndicator />
+    {{else if this.isNotLastItemFound}}
+      <ShowMoreButton @click={{perform this.fetchTask}} />
+    {{/if}}
+  </div>
+</div>

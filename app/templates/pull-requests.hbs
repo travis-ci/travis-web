@@ -1,20 +1,15 @@
-{{#if this.isLoaded}}
-  <ul class="build-list">
-    {{#each this.builds as |build|}}
-      <BuildsItem @build={{build}} />
-    {{else}}
-      <MissingNotice @title="No {{vcs-vocab this.repo.vcsType 'pullRequest' lower=true}} builds for this repository" />
-    {{/each}}
-  </ul>
-  {{#if this.displayShowMoreButton}}
-    <p>
-      {{#if this.loadMoreBuilds.isRunning}}
-        <LoadingIndicator />
-      {{else}}
-        <ShowMoreButton @click={{perform this.loadMoreBuilds}} />
-      {{/if}}
-    </p>
+<LoadMore
+  @modelName={{this.loaderModelName}}
+  @options={{this.loaderOptions}}
+  as |loader|
+>
+  {{#if loader.isNoneFound}}
+    <MissingNotice @title="No {{vcs-vocab this.repo.vcsType 'pullRequest' lower=true}} builds for this repository" />
+  {{else}}
+    <ul class="build-list">
+      {{#each loader.items as |build|}}
+        <BuildsItem @build={{build}} />
+      {{/each}}
+    </ul>
   {{/if}}
-{{else}}
-  <LoadingIndicator />
-{{/if}}
+</LoadMore>
