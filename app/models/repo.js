@@ -124,16 +124,17 @@ const Repo = VcsEntity.extend({
     return array;
   },
 
-  fetchBuilds: task(function* () {
-    try {
-      const { id } = this;
-      const response = yield this.store.query('build', {
-        event_type: ['push', 'api', 'cron'],
-        repository_id: id,
-      });
-      return response;
-    } catch (error) {}
-  }).drop(),
+  builds: computed('id', function () {
+    let id = this.id;
+    const builds = this.store.filter('build', {
+      event_type: ['push', 'api', 'cron'],
+      repository_id: id,
+    }, (b) => {
+      let eventTypes = ['push', 'api', 'cron'];
+      return this._buildRepoMatches(b, id) && eventTypes.includes(b.get('eventType'));
+    });
+    return this._buildObservableArray(builds);
+  }),
 
   branches: computed('id', function () {
     let id = this.id;
