@@ -5,6 +5,7 @@ import { enableFeature } from 'ember-feature-flags/test-support';
 import { percySnapshot } from 'ember-percy';
 import plansPage from 'travis/tests/pages/plans';
 import { setupMirage } from 'ember-cli-mirage/test-support';
+import config from 'travis/config/environment';
 
 module('Acceptance | plans page', function (hooks) {
   setupApplicationTest(hooks);
@@ -54,6 +55,7 @@ module('Acceptance | plans page', function (hooks) {
     const { iframe } = form;
 
     assert.ok(iframe.isPresent);
+    assert.equal(iframe.src, config.urls.pardotHost + config.urls.pardotForm);
   });
 
   test('enterprise section structure', async function (assert) {

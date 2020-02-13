@@ -4,7 +4,7 @@ import {
   create,
   isPresent,
   text,
-  visitable
+  visitable,
 } from 'ember-cli-page-object';
 
 import {
@@ -105,6 +105,7 @@ export default create({
       iframe: {
         scope: SALES_CONTACT_IFRAME,
         isPresent: isPresent(),
+        src: attribute('src'),
       },
     },
   },
