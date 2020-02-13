@@ -1,32 +1,15 @@
-{{#unless this.isSuccess}}
-  <UiKit::box data-test-sales-contact-form-container="true">
-    <div class="iframe-wrapper">
-      <iframe 
-        data-test-sales-contact-iframe="true"
-        class="pardot-iframe"
-        id="pardot-iframe"
-        src={{this.pardotFormUrl}} 
-        type="text/html" 
-        frameborder="0" 
-        allowTransparency="true"
-        {{did-insert this.setHeight}}
-      ></iframe>
-    </div>
-  </UiKit::box>
-{{else}}
-  <UiKit::box @textAlign='center' data-test-sales-contact-success-container="true">
-    <UiKit::Text @tag='h2' @variant='h2' data-test-sales-contact-success-title="true">
-      Thank you!
-    </UiKit::Text>
-    <UiKit::box
-      @maxWidth='xs'
-      @margin={{hash y=4 x='auto'}}
-      data-test-sales-contact-success-image="true"
-    >
-      <SvgImage @name="hard-hat-success" />
-    </UiKit::box>
-    <UiKit::Text data-test-sales-contact-success-body="true">
-      We'll get back to you as soon as possible.
-    </UiKit::Text>
-  </UiKit::box>
-{{/unless}}
+<UiKit::box data-test-sales-contact-form-container="true">
+  <div class="iframe-wrapper">
+    <iframe 
+      data-test-sales-contact-iframe="true"
+      class="pardot-iframe"
+      id="pardot-iframe"
+      src={{this.pardotFormUrl}} 
+      type="text/html" 
+      frameborder="0" 
+      allowTransparency="true"
+      {{did-insert this.setHeight}}
+    ></iframe>
+  </div>
+</UiKit::box>
+
