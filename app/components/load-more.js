@@ -5,6 +5,8 @@ import { A } from '@ember/array';
 import { computed } from '@ember/object';
 import { and, empty, not } from '@ember/object/computed';
 
+const DEFAULT_LIMIT = 10;
+
 export default Component.extend({
   tagName: '',
 
@@ -12,21 +14,27 @@ export default Component.extend({
 
   modelName: 'build',
   options: computed(() => ({})),
-  limit: 10,
+  limit: DEFAULT_LIMIT,
   startFirstLoad: false,
   initialItems: null,
 
   fetchTask: task(function* () {
-    const { modelName, items, limit, options } = this;
+    const { items, limit } = this;
     const { length: offset = 0 } = items;
-    const queryOptions = { ...options, limit, offset };
 
-    const result = yield this.store.query(modelName, queryOptions);
+    const result = yield this.queryStore(limit, offset);
 
     this.loadItems(result, limit);
 
     return result;
   }).drop(),
+
+  queryStore(limit = DEFAULT_LIMIT, offset = 0) {
+    const { modelName, options } = this;
+    const queryOptions = { ...options, limit, offset };
+
+    return this.store.query(modelName, queryOptions);
+  },
 
   loadItems(newItems, lastFoundThreshold = 1) {
     newItems.forEach(item => this.items.pushObject(item));

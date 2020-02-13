@@ -5,7 +5,6 @@ import { computed } from '@ember/object';
 import { reads, equal, or } from '@ember/object/computed';
 import { Promise as EmberPromise, } from 'rsvp';
 import { task } from 'ember-concurrency';
-import ExpandableRecordArray from 'travis/utils/expandable-record-array';
 
 export const MIGRATION_STATUS = {
   QUEUED: 'queued',
@@ -109,32 +108,14 @@ const Repo = VcsEntity.extend({
     } catch (error) {}
   }).drop(),
 
-  _buildRepoMatches(build, id) {
-    // TODO: I don't understand why we need to compare string id's here
-    return `${build.get('repo.id')}` === `${id}`;
-  },
-
-  _buildObservableArray(builds) {
-    const array = ExpandableRecordArray.create({
-      type: 'build',
-      content: []
-    });
-    array.load(builds);
-    array.observe(builds);
-    return array;
-  },
-
-  builds: computed('id', function () {
-    let id = this.id;
-    const builds = this.store.filter('build', {
+  fetchBuilds(limit = 10, offset = 0) {
+    return this.store.query('build', {
       event_type: ['push', 'api', 'cron'],
-      repository_id: id,
-    }, (b) => {
-      let eventTypes = ['push', 'api', 'cron'];
-      return this._buildRepoMatches(b, id) && eventTypes.includes(b.get('eventType'));
+      repository_id: this.id,
+      limit,
+      offset,
     });
-    return this._buildObservableArray(builds);
-  }),
+  },
 
   branches: computed('id', function () {
     let id = this.id;
