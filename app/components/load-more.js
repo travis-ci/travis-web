@@ -13,7 +13,8 @@ export default Component.extend({
   modelName: 'build',
   options: computed(() => ({})),
   limit: 10,
-  startFirstLoad: true,
+  startFirstLoad: false,
+  initialItems: null,
 
   fetchTask: task(function* () {
     const { modelName, items, limit, options } = this;
@@ -22,14 +23,18 @@ export default Component.extend({
 
     const result = yield this.store.query(modelName, queryOptions);
 
-    result.forEach(item => items.pushObject(item));
-
-    if (result.length < limit) {
-      this.set('isLastItemFound', true);
-    }
+    this.loadItems(result, limit);
 
     return result;
   }).drop(),
+
+  loadItems(newItems, lastFoundThreshold = 1) {
+    newItems.forEach(item => this.items.pushObject(item));
+
+    if (newItems.length < lastFoundThreshold) {
+      this.set('isLastItemFound', true);
+    }
+  },
 
   items: computed(() => A()),
   isEmptyItems: empty('items'),
@@ -40,6 +45,9 @@ export default Component.extend({
 
   didReceiveAttrs() {
     this._super(...arguments);
+    if (this.initialItems) {
+      this.loadItems(this.initialItems);
+    }
     if (this.startFirstLoad) {
       this.fetchTask.perform();
     }
