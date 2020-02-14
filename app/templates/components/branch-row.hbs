@@ -65,7 +65,7 @@
     <div class="row-item">
 
       <ExternalLinkTo @href={{this.commitUrl}}>
-        <EmberTooltip @text="{{concat "View commit on " (vcs-name this.branch.repository.vcs_type)}}" />
+        <EmberTooltip @text="{{concat "View commit on " (vcs-name this.vcsType)}}" />
         <SvgImage @name="icon-commit" @class="icon" />
         <span class="inner-underline monospace">
           {{#if this.branch.last_build}}
