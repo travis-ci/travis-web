@@ -33,9 +33,5 @@ export default Controller.extend(...mixins, {
     let tab = this.tab;
     let lastBuildNumber = this.get('builds.lastObject.number');
     return tab !== 'branches' && parseInt(lastBuildNumber) > 1;
-  }),
-
-  fetchMoreBuilds(limit, offset) {
-    return this.repo.fetchBuilds(limit, offset);
-  },
+  })
 });
