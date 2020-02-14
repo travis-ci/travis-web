@@ -30,6 +30,9 @@ Router.map(function () {
   this.route('team', { path: '/about' });
   this.route('logo', { path: '/logo' });
   this.route('help');
+  this.route('integration', function () {
+    this.route('bitbucket');
+  });
 
   this.route('account', function () {
     this.route('repositories');
