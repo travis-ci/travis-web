@@ -3,11 +3,11 @@
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 viewBox="0 0 188.261 192.174" style="enable-background:new 0 0 188.261 192.174;" xml:space="preserve">
 <style type="text/css">
-	.st0{clip-path:url(#SVGID_2_);}
+	.fake{fill:url(#this_fixes_gradient);}
+	.st0{clip-path:url(#gs-1-bb-clip);}
 	.st1{fill:#F1F1F1;}
 	.st2{fill:#44AAAE;}
 	.st3{fill:#3EAAAF;}
-	.st4{font-family:'SourceSansPro-Regular';}
 	.st5{font-size:14px;}
 	.st6{fill:#666666;}
 	.st7{letter-spacing:29;}
@@ -27,10 +27,10 @@
 </style>
 <g>
 	<defs>
-		<circle id="SVGID_1_" cx="95.092" cy="97.119" r="85.97"/>
+		<circle id="gs-1-bb-circle" cx="95.092" cy="97.119" r="85.97"/>
 	</defs>
-	<clipPath id="SVGID_2_">
-		<use xlink:href="#SVGID_1_"  style="overflow:visible;"/>
+	<clipPath id="gs-1-bb-clip">
+		<use xlink:href="#gs-1-bb-circle"  style="overflow:visible;"/>
 	</clipPath>
 	<g class="st0">
 		<g>
@@ -69,7 +69,7 @@
 			<g>
 				<g id="icon-invoice_7_">
 					<g>
-						<polyline class="st10" points="-137.357,145.794 -131.243,145.794 -131.243,133.451 -142.59,133.451 -142.59,145.794 
+						<polyline class="st10" points="-137.357,145.794 -131.243,145.794 -131.243,133.451 -142.59,133.451 -142.59,145.794
 							-140.568,145.794 						"/>
 						<path class="st10" d="M-137.357,145.794"/>
 						<path class="st10" d="M-140.568,145.794"/>
@@ -144,7 +144,7 @@
 			<g>
 				<g id="icon-invoice_3_">
 					<g>
-						<polyline class="st10" points="-131.417,106.533 -125.303,106.533 -125.303,94.19 -136.65,94.19 -136.65,106.533 
+						<polyline class="st10" points="-131.417,106.533 -125.303,106.533 -125.303,94.19 -136.65,94.19 -136.65,106.533
 							-134.627,106.533 						"/>
 						<path class="st10" d="M-131.417,106.533"/>
 						<path class="st10" d="M-134.627,106.533"/>
@@ -160,6 +160,6 @@
 			</g>
 		</g>
 	</g>
-	<use xlink:href="#SVGID_1_"  style="overflow:visible;fill:none;stroke:#E7E8E6;stroke-width:4;stroke-miterlimit:10;"/>
+	<use xlink:href="#gs-1-bb-circle"  style="overflow:visible;fill:none;stroke:#E7E8E6;stroke-width:4;stroke-miterlimit:10;"/>
 </g>
 </svg>
