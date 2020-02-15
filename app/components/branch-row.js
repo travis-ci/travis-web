@@ -9,7 +9,6 @@ export default Component.extend({
   api: service(),
   auth: service(),
   router: service(),
-  store: service(),
   permissions: service(),
   externalLinks: service(),
 
@@ -20,18 +19,11 @@ export default Component.extend({
   isTriggering: false,
   hasTriggered: false,
 
-  commitUrl: computed('branch.repository.id', 'branch.last_build.commit.sha', function () {
-    const repository = this.store.peekRecord('repo', this.get('branch.repository.id'));
-    const owner = repository.owner.login;
-    const repo = repository.name;
-    const vcsType = repository.vcsType;
+  commitUrl: computed('branch.repository.{slug,vcsType}', 'branch.last_build.commit.sha', 'vcsType', function () {
+    const [owner, repo] = this.get('branch.repository.slug').split('/');
+    const vcsType = this.get('vcsType');
     const commit = this.get('branch.last_build.commit.sha');
     return this.externalLinks.commitUrl(vcsType, { owner, repo, commit });
-  }),
-
-  vcsType: computed('branch.repository.id', function () {
-    const repository = this.store.peekRecord('repo', this.get('branch.repository.id'));
-    return repository.vcsType;
   }),
 
   rawCreatedBy: alias('branch.last_build.created_by'),
