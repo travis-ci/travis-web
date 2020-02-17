@@ -19,11 +19,10 @@ export default Component.extend({
   isTriggering: false,
   hasTriggered: false,
 
-  commitUrl: computed('branch.repository.{slug,vcsType}', 'branch.last_build.commit.sha', function () {
+  commitUrl: computed('branch.repository.slug', 'branch.last_build.commit.sha', 'vcsType', function () {
     const [owner, repo] = this.get('branch.repository.slug').split('/');
-    const vcsType = this.get('branch.repository.vcs_type');
+    const vcsType = this.get('vcsType');
     const commit = this.get('branch.last_build.commit.sha');
-
     return this.externalLinks.commitUrl(vcsType, { owner, repo, commit });
   }),
 

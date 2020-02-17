@@ -6,6 +6,7 @@ import { alias, notEmpty, filter } from '@ember/object/computed';
 export default Controller.extend({
   repoController: controller('repo'),
   tab: alias('repoController.tab'),
+  repo: alias('repoController.repo'),
 
   defaultBranch: computed('model', function () {
     let model = this.model;
