@@ -1,12 +1,12 @@
-<div class="topbar {{if this.isOpen 'has-autoheight'}} {{if this.showBroadcasts 'has-autoheight'}}" >
+<div class="topbar {{if this.isNavigationOpen 'has-autoheight'}} {{if this.showBroadcasts 'has-autoheight'}}" >
   <h1 id="logo" class="logo">
     <LinkTo @route="index">
       Travis CI
     </LinkTo>
   </h1>
-  <HeaderBurgerMenu @isOpen={{this.isOpen}} />
+  <HeaderBurgerMenu @isOpen={{this.isNavigationOpen}} @onClick={{action 'toggleNavigation'}} />
   <HeaderBroadcasts @showBroadcasts={{this.showBroadcasts}} />
-  <HeaderLinks @isOpen={{this.isOpen}} />
+  <HeaderLinks @isOpen={{this.isNavigationOpen}} />
 </div>
 {{#if this.features.enterpriseVersion}}
   <EnterpriseBanner />
