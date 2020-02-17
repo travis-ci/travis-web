@@ -109,7 +109,11 @@ export default Service.extend({
       runAfterSignOutCallbacks();
     }
     this.store.unloadAll();
-    this.router.transitionTo('signin');
+
+    const { currentRouteName } = this.router;
+    if (currentRouteName && currentRouteName !== 'signin') {
+      this.router.transitionTo('signin');
+    }
   },
 
   afterSignOut(callback) {
