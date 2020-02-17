@@ -1,7 +1,7 @@
 /* global Travis */
 import { attr } from '@ember-data/model';
 import { computed } from '@ember/object';
-import { run, later } from '@ember/runloop';
+import { later } from '@ember/runloop';
 import { inject as service } from '@ember/service';
 import ArrayProxy from '@ember/array/proxy';
 import Owner from 'travis/models/owner';
