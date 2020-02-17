@@ -46,7 +46,7 @@ export default TravisRoute.extend(BuildFaviconMixin, {
   },
 
   model() {
-    if (this.get('auth.signedIn')) {
+    if (this.auth.signedIn) {
       return this.get('featureFlags.fetchTask').perform();
     }
   },
