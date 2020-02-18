@@ -1,1 +1,7 @@
-<TravisLayout @layoutName="layouts/striped" class="tailwind-overrides">{{outlet}}</TravisLayout>
+<Layouts::Striped
+  @useTailwind={{true}}
+  @isTopBarWhite={{true}}
+  as |layout|
+>
+  {{outlet}}
+</Layouts::Striped>

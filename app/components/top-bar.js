@@ -16,6 +16,8 @@ export default Component.extend(InViewportMixin, {
 
   tagName: 'header',
   classNames: ['top'],
+  classNameBindings: ['isWhite:top--white'],
+  isWhite: false,
   landingPage: false,
   isOpen: reads('is-open'),
 
