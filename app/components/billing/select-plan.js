@@ -2,10 +2,10 @@ import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
 import { computed } from '@ember/object';
-import { or, not, reads } from '@ember/object/computed';
+import config from 'travis/config/environment';
+import { or, not, reads, filterBy } from '@ember/object/computed';
 
 export default Component.extend({
-  plan: service(),
   accounts: service(),
 
   account: null,
@@ -14,9 +14,11 @@ export default Component.extend({
   title: null,
   showAnnual: false,
   showMonthly: not('showAnnual'),
-  monthlyPlans: reads('plan.monthlyPlans'),
-  annualPlans: reads('plan.annualPlans'),
-  defaultPlanName: reads('plan.defaultPlanName'),
+  monthlyPlans: reads('account.monthlyPlans'),
+  annualPlans: reads('account.annualPlans'),
+  availablePlans: computed(() => config.plans),
+  defaultPlans: filterBy('availablePlans', 'isDefault'),
+  defaultPlanName: reads('defaultPlans.firstObject.name'),
   isLoading: or('save.isRunning', 'accounts.fetchSubscriptions.isRunning'),
 
   displayedPlans: computed('showAnnual', 'annualPlans.[]', 'monthlyPlans.[]', function () {

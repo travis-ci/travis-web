@@ -2,6 +2,7 @@ import VcsEntity from 'travis/models/vcs-entity';
 import { attr, belongsTo } from '@ember-data/model';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
+import { task } from 'ember-concurrency';
 import { reads, or, equal, notEmpty, filterBy } from '@ember/object/computed';
 import config from 'travis/config/environment';
 import dynamicQuery from 'travis/utils/dynamic-query';
@@ -29,6 +30,7 @@ export default VcsEntity.extend({
   type: attr('string'),
   isUser: equal('type', 'user'),
   isOrganization: equal('type', 'organization'),
+  eligiblePlans: reads('fetchPlans.lastSuccessful.value'),
 
   // This is set by serializers:subscription
   subscriptionPermissions: attr(),
@@ -66,6 +68,33 @@ export default VcsEntity.extend({
       limit, offset, custom: { owner, type, },
     }, { live: false });
   },
+
+  fetchPlans: task(function* () {
+    if (this.isOrganization) {
+      return yield this.store.findAll('plan', {
+        adapterOptions: { organizationId: this.id }
+      }) || [];
+    } else {
+      return yield this.store.findAll('plan') || [];
+    }
+  }).keepLatest(),
+
+  nonGithubPlans: computed('eligiblePlans.@each.{id,name,annual,builds}', function () {
+    const eligiblePlans = this.eligiblePlans || [];
+    return eligiblePlans.filter(plan => plan.id && !plan.id.startsWith('github'));
+  }),
+
+  monthlyPlans: computed('nonGithubPlans.@each.{name,annual,builds}', function () {
+    const nonGithubPlans = this.nonGithubPlans || [];
+    const filteredMonthlyPlans = nonGithubPlans.filter(plan => !plan.annual && plan.builds);
+    return filteredMonthlyPlans.sort((a, b) => a.builds - b.builds);
+  }),
+
+  annualPlans: computed('nonGithubPlans.@each.{name,annual,builds}', function () {
+    const nonGithubPlans = this.nonGithubPlans || [];
+    const filteredAnnualPlans = nonGithubPlans.filter(plan => plan.annual && plan.builds);
+    return filteredAnnualPlans.sort((a, b) => a.builds - b.builds);
+  }),
 
   fetchBetaMigrationRequests() {
     return this.tasks.fetchBetaMigrationRequestsTask.perform();
