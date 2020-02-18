@@ -43,56 +43,55 @@ $nav-line-height: 35px;
       }
     }
   }
+}
 
-  .profile {
-    @media #{$medium-up} {
-      line-height: $top-height;
-      float: right;
-      margin-right: 0;
+.profile.menu {
+  line-height: $top-height;
+  float: right;
+  margin-right: 0;
 
-      > a {
-        text-decoration: none;
-        padding-right: 0;
-      }
-    }
+  &.signed-in a {
+    text-decoration: none;
+  }
 
-    .navigation-avatar {
-      &--bitbucket {
-        position: relative;
+  &.signed-out .navigation-nested li .action {
+    padding: 0 10px;
+    white-space: nowrap;
+  }
 
-        &:after {
-          content: "Beta";
-          position: absolute;
-          left: -25px;
-          top: 5px;
-          background-color: $cement-grey;
-          border-radius: 2px;
-          color: white;
-          text-transform: uppercase;
-          display: inline-block;
-          padding: 2px 4px;
-          line-height: 1.1;
-          font-size: 0.6em;
-          font-weight: 600;
-        }
-      }
+  > a {
+    text-decoration: none;
+    padding-right: 0;
 
-      .avatar {
-        margin-right: 10px;
-      }
-    }
-
-    .navigation-profile-link{
-      display: none;
-
-      @media #{$medium-up} {
-        display: block;
-      }
+    &:hover {
+      text-decoration: none;
     }
   }
 
-  .signed-in a {
-    text-decoration: none;
+  .navigation-avatar {
+    &--bitbucket {
+      position: relative;
+
+      &:after {
+        content: "Beta";
+        position: absolute;
+        left: -25px;
+        top: 5px;
+        background-color: $cement-grey;
+        border-radius: 2px;
+        color: white;
+        text-transform: uppercase;
+        display: inline-block;
+        padding: 2px 4px;
+        line-height: 1.1;
+        font-size: 0.6em;
+        font-weight: 600;
+      }
+    }
+
+    .avatar {
+      margin-right: 10px;
+    }
   }
 }
 
@@ -100,11 +99,6 @@ $nav-line-height: 35px;
   display: block;
   width: 100%;
   line-height: $nav-line-height;
-
-  &:hover {
-    text-decoration: underline;
-    cursor: pointer;
-  }
 
   @media #{$medium-up} {
     line-height: $top-height + 1px;
@@ -346,12 +340,12 @@ $nav-line-height: 35px;
   }
 }
 
-ul #profile-menu-link:hover > ul,
-ul #profile-menu-link ul:hover {
+.profile.menu.open .navigation-nested,
+.profile.signed-out:hover .navigation-nested {
   display: block;
 }
 
-ul #profile-menu-link:focus-within > ul {
+.profile.menu:focus-within > ul {
   opacity: 1; // Prevents this rule from being merged with the one above during minification. For IE support.
   display: block;
 }
