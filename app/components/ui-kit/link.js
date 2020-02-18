@@ -7,6 +7,7 @@ export default Component.extend({
 
   // Public interface
   color: DEFAULT_TEXT_COLOR,
+  line: null,
 
   href: null,
   rel: 'noopener noreferrer',
