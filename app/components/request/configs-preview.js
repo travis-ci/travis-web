@@ -5,7 +5,7 @@ import { inject as service } from '@ember/service';
 
 export default Component.extend({
   tagName: 'div',
-  classNames: ['trigger-build-preview', 'status'],
+  classNames: ['request-configs-preview', 'status'],
 
   yml: service(),
   status: 'loading',

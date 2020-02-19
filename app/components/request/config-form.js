@@ -6,7 +6,7 @@ import { bindKeyboardShortcuts, unbindKeyboardShortcuts } from 'ember-keyboard-s
 
 export default Component.extend(BranchSearching, {
   tagName: 'div',
-  classNames: ['trigger-build'],
+  classNames: ['request-configs-form'],
 
 
   keyboardShortcuts: {

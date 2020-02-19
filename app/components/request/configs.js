@@ -163,7 +163,7 @@ export default Component.extend(TriggerBuild, WithConfigValidation, {
     this.set('branch', this.originalBranch);
     this.set('sha', this.originalSha);
     this.set('message', this.request.get('commit.message'));
-    this.set('mergeMode', this.originalMMergeMode);
+    this.set('mergeMode', this.originalMergeMode);
     this.set('rawConfigs', this.request.uniqRawConfigs);
     this.set('config', this.request.get('apiConfig.config'));
   },

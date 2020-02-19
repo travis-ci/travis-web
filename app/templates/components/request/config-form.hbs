@@ -2,7 +2,7 @@
   @onSubmit={{perform this.triggerBuild}}
   as |form|
 >
-  <div class="trigger-build-fields">
+  <div class="request-configs-fields">
     <div class="form-elem">
       {{#radio-button
         value="branch"
@@ -23,7 +23,7 @@
 
       {{#if (eq refType 'branch') }}
         <form.field
-          data-test-trigger-build-branch="true"
+          data-test-request-configs-branch="true"
           @classNames="ref-type-branch"
           @placeholder="Select a branch"
           @value={{this.branch}}
@@ -40,7 +40,7 @@
         </form.field>
       {{else}}
         <form.field
-          data-test-trigger-build-sha="true"
+          data-test-request-configs-sha="true"
           @placeholder="Specify a Git sha (optional)"
           @value={{this.sha}}
           @showValidationStatusIcons={{false}}
@@ -54,7 +54,7 @@
 
     <div class="form-elem">
       <form.field
-        data-test-trigger-build-message="true"
+        data-test-request-configs-message="true"
         @classNames="ref-type-sha"
         @value={{this.message}}
         @label="Message"
@@ -67,7 +67,7 @@
     </div>
     <div class="form-elem">
       <form.field
-        data-test-trigger-build-config="true"
+        data-test-request-configs-config="true"
         @label="Custom Build Config"
         as |field|
       >
@@ -88,7 +88,7 @@
           )
         }}
 
-        <TriggerBuildValidate
+        <Request::ConfigValidate
           @loading={{this.loading}}
           @messages={{this.messages}}
         />

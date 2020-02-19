@@ -4,7 +4,7 @@ import { pluralize } from 'ember-inflector';
 
 export default Component.extend({
   tagName: 'p',
-  classNames: ['trigger-build-description'],
+  classNames: ['request-configs-description'],
 
   configs: 0,
   customize: false,

@@ -1,5 +1,5 @@
-<p class="trigger-build-description">
-  <SvgImage @name='rocket' @class='trigger-build-icon' />
+<p class="request-configs-description">
+  <SvgImage @name='rocket' @class='request-configs-icon' />
   The triggered build will have the following build config
   and job matrix.
 </p>
@@ -7,11 +7,11 @@
 {{#if this.loading}}
   <LoadingIndicator />
 {{else}}
-  <RequestMessagesList
+  <Request::Messages
     @messages={{this.messages}}
   />
 
-  <div class="trigger-build-preview-container">
+  <div class="request-configs-preview-container">
     <div class="left">
       <h4>
         Build Config

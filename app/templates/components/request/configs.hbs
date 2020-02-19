@@ -1,41 +1,41 @@
 {{#if displayTriggerBuild}}
-  <div class="trigger-build-buttons">
+  <div class="request-configs-buttons">
     {{#unless this.closed}}
       <a
-        class="trigger-build-button trigger-build-button-cancel"
+        class="request-configs-button request-configs-button-cancel"
         onclick={{action this.onCancel}}
       >
         Cancel
       </a>
       <a
-        class="trigger-build-button trigger-build-button-customize"
+        class="request-configs-button request-configs-button-customize"
         onclick={{action this.onCustomize}}
       >
         Customize
       </a>
       <a
-        class="trigger-build-button trigger-build-button-preview"
+        class="request-configs-button request-configs-button-preview"
         onclick={{action this.onPreview}}
       >
         Preview
       </a>
     {{/unless }}
 
-    <TriggerBuildButton
+    <Request::ConfigsButtonTrigger
       @processing={{this.processing}}
       onclick={{action this.onTriggerBuild}}
     />
   </div>
 
   {{#unless (or this.closed this.preview)}}
-    <TriggerBuildDescription
+    <Request::ConfigsDescription
       @customize={{this.customize}}
       @configs={{this.rawConfigs.length}}
     />
   {{/unless}}
 
   {{#if this.customize}}
-    <TriggerBuildForm
+    <Request::ConfigForm
       @repo={{this.repo}}
       @request={{this.request}}
       @config={{this.config}}
@@ -58,7 +58,7 @@
   {{/if}}
 
   {{#if this.preview}}
-    <TriggerBuildPreview
+    <Request::ConfigsPreview
       @repo={{this.repo}}
       @request={{this.request}}
       @ref={{this.ref}}
@@ -69,14 +69,14 @@
 {{/if}}
 
 {{#if (and this.closed this.showConfigValidation)}}
-  <RequestMessagesList
+  <Request::Messages
     @messages={{this.request.messages}}
   />
 {{/if}}
 
 {{#unless (or this.replace this.preview)}}
   {{#each this.rawConfigs as |config|}}
-    <RequestRawConfig
+    <Request::RawConfig
       @source={{config.source}}
       @config={{get config 'config'}}
       @build={{@request.build}}
@@ -96,7 +96,7 @@
 {{/unless}}
 
 {{#if this.closed}}
-  <RequestConfig
+  <Request::Config
     @config={{@request.config}}
   />
 {{/if}}

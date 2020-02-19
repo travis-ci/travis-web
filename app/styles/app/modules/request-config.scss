@@ -13,20 +13,225 @@
     margin-bottom: 0.75em !important;
   }
 
-  .trigger-build-buttons {
+  .request-configs-buttons {
     position: absolute;
     top: -50px;
     right: 0;
   }
 
-  &.closed .trigger-build-fields,
-  &.open .trigger-build-fields {
+  &.closed .request-configs-fields,
+  &.open .request-configs-fields {
+    display: none;
+  }
+
+  .validation-result {
+    position: relative;
+    margin-top: 1em;
+    padding: 1em;
+    border: 1px solid $dry-cement;
+    cursor: pointer;
+
+    & > * {
+      display: inline-block;
+    }
+
+    .request-messages-badge {
+      margin-right: 5px;
+    }
+
+    .validating-indicator {
+      position: absolute;
+      margin-left: 8px;
+      margin-top: -3px;
+      opacity: 0.6;
+
+      i {
+        width: 6px;
+        height: 6px;
+      }
+    }
+  }
+
+  .request-messages {
+    margin-top: 0;
+  }
+
+  .icon-toggle {
+    height: 15px;
+    width: 15px;
+    vertical-align: middle;
+    transform: scale(0.9, 1.1);
+    path {
+      stroke: $cement-grey;
+      stroke-width: 1;
+    }
+    &.icon-expanded {
+      transform: scaleY(-1);
+    }
+  }
+
+  .config-type {
+    position: absolute;
+    top: 1px;
+    right: 0;
+    font-size: 10px;
+    z-index: 2;
+
+    * {
+      display: inline-block;
+      padding: 0 8px;
+      border: 1px solid transparent;
+      border-radius: 4px;
+    }
+
+    &.javascript .javascript,
+    &.yaml .yaml {
+      color: white;
+      background-color: $oxide-blue;
+      border-color: $oxide-blue;
+    }
+  }
+
+  .travis-form__field-component {
+    box-shadow: inset 0 0 1px 1px $dry-cement !important;
+  }
+
+  .CodeMirror {
+    height: 350px !important;
+    margin: -4px;
+    padding: 8px 12px 8px 4px;
+    width: calc(100% + 8px);
+    border-radius: 10px;
+    border: 4px solid transparent;
+    box-shadow: inset 0 0 1px 1px $dry-cement;
+    transition: border-color 0.2s ease-in;
+    color: $asphalt-grey;
+    line-height: 150%;
+    font-size: 12px;
+    font-family: Cousine, monospace;
+    line-height: 20px;
+
+    &.CodeMirror-focused {
+      outline: none;
+      border-color: rgba(62, 170, 175, 0.2);
+    }
+
+    pre {
+      padding: 0 14px;
+    }
+  }
+
+  .CodeMirror-placeholder {
+    color: $cement-grey;
+  }
+
+  .CodeMirror-gutters {
+    border: 0;
+    background-color: transparent;
+  }
+
+  label.ref-type,
+  h4 {
+    color: $cement-grey;
+    display: block;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 0.9em;
+    margin-bottom: 1em;
+  }
+
+  label.ref-type {
+    display: inline-block;
+  }
+
+  input[type=radio] {
+    margin-right: 6px;
+  }
+
+  .ember-radio-button {
+    margin-right: 16px;
+  }
+
+  .hint {
+    position: absolute;
+    right: 0;
+  }
+
+  .loading-configs {
+    padding: 1em;
+    border: 1px solid $pebble-grey;
+
+    & > div {
+      display: inline-block;
+
+      .loading-indicator {
+        position: relative;
+        top: -2px;
+        left: 4px;
+        opacity: 0.6;
+
+        i {
+          width: 5px;
+          height: 5px;
+        }
+      }
+    }
+  }
+}
+
+.repo-config .request-configs {
+  position: relative;
+  top: -1em;
+
+  .request-configs-description {
+    margin-bottom: 2em;
+  }
+
+  .request-configs-buttons {
+    position: absolute;
+    top: 63px;
+    right: 0;
+  }
+
+  .request-configs-button-cancel {
     display: none;
   }
 }
 
+.repo-config .request-configs .request-configs-preview .request-configs-description {
+    margin-bottom: 4em;
+}
+
 .paper-block + .request-config {
   margin-top: 1.2em;
+}
+
+.request-configs-preview-container {
+  display: flex;
+
+  & > div {
+    flex-grow: 1;
+    align-items: stretch;
+    width: 50%;
+  }
+
+  .left {
+    margin-right: 0.5em;
+  }
+
+  .right {
+    margin-left: 0.5em;
+  }
+
+  pre,
+  div > div {
+    height: calc(100% - 45px);
+    border: 1px solid $dry-cement;
+  }
+
+  div > div {
+    padding: 10px 20px;
+  }
 }
 
 .request-config {
@@ -67,21 +272,6 @@
       .icon-help {
         margin: 0 3px 3px 0;
       }
-
-      .icon-toggle {
-        height: 15px;
-        width: 15px;
-        vertical-align: middle;
-        transform: scale(0.9, 1.1);
-        path {
-          stroke: $cement-grey;
-          stroke-width: 1;
-        }
-
-        &.icon-expanded {
-          transform: scaleY(-1);
-        }
-      }
     }
   }
   &.request-config-expanded .header {
@@ -108,6 +298,95 @@
     }
   }
 }
+
+.request-configs-buttons {
+  & > * {
+    display: inline-block;
+    vertical-align: bottom;
+    user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+  }
+}
+
+.request-configs-button-submit {
+  @include colorSVG($oxide-blue);
+
+  width: 100px;
+  border: 1px solid $oxide-blue;
+  padding: 8px 12px;
+
+  &:active,
+  &:focus {
+    outline: none;
+  }
+
+  .loading-indicator i {
+    background-color: white;
+  }
+}
+
+.request-configs-button-cancel,
+.request-configs-button-customize,
+.request-configs-button-preview {
+  line-height: 1;
+  cursor: pointer;
+
+  &:hover,
+  &:active {
+    color: $oxide-blue;
+  }
+}
+
+.request-configs-button-cancel {
+  margin-right: 8px;
+  padding: 8px;
+  border: 1px solid transparent;
+}
+
+.request-configs-button-customize,
+.request-configs-button-preview {
+  @include travisBorder;
+  margin-right: 8px;
+  padding: 8px 12px;
+
+  &:hover,
+  &:active {
+    border-color: $oxide-blue;
+  }
+}
+
+.closed .request-configs-button-submit {
+  @include travisBorder;
+  background-color: white !important;
+  color: $asphalt-grey;
+}
+
+.customize .request-configs-button-customize,
+.customized .request-configs-button-customize {
+  border-color: $oxide-blue;
+  color: $oxide-blue;
+}
+
+.preview .request-configs-button-preview {
+  border-color: $oxide-blue;
+  color: $oxide-blue;
+}
+
+.request-configs-description {
+  padding: 1em;
+  border: 1px solid $pebble-grey;
+
+  .request-configs-icon {
+    position: relative;
+    top: 2px;
+    height: 13px;
+    width: 16px;
+    margin-right: 6px;
+    opacity: 0.4;
+  }
+}
+
 
 $request-config-code-font-size: 12px;
 pre.codedisplay[class*='language-'] {
