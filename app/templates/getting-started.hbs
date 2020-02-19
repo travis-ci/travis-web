@@ -17,9 +17,7 @@
         >
           <UiKit::Text @variant='p'>
             Once you're signed in, go to
-            <LinkTo @route='account.repositories'>
-              <UiKit::Text @tag='span' @line='under'>your profile page</UiKit::Text>
-            </LinkTo>
+            <UiKit::Link @route='account.repositories' @variant='link-underlined'>your profile page</UiKit::Link>
             where you'll see all the organizations you're a member of.
           </UiKit::Text>
 
@@ -56,7 +54,7 @@
 
           <UiKit::Text @variant='p'>
             Here you can find some of our
-            <UiKit::Link @color={{null}} @line='under' @href={{config-get 'urls.languages'}}>basic language examples</UiKit::Link>.
+            <UiKit::Link @href={{config-get 'urls.languages'}} @variant='link-underlined'>basic language examples</UiKit::Link>.
           </UiKit::Text>
         </GettingStartedStep>
 
@@ -78,7 +76,7 @@
 
           <UiKit::Text @variant='p'>
             Want to learn more?
-            <UiKit::Link @color={{null}} @line='under' @href={{config-get 'urls.docs'}}>Read up on our docs</UiKit::Link>.
+            <UiKit::Link @href={{config-get 'urls.docs'}} @variant='link-underlined'>Read up on our docs</UiKit::Link>.
           </UiKit::Text>
         </GettingStartedStep>
       {{/if}}
@@ -95,9 +93,7 @@
         >
           <UiKit::Text @variant='p'>
             Once you're signed in, go to
-            <LinkTo @route='account.repositories'>
-              <UiKit::Text @tag='span' @line='under'>your profile page</UiKit::Text>
-            </LinkTo>
+            <UiKit::Link @route='account.repositories' @variant='link-underlined'>your profile page</UiKit::Link>
             where you'll see the Settings Tab, and toggle
             the repositories you want to use with Travis CI.
           </UiKit::Text>
@@ -137,7 +133,7 @@
 
           <UiKit::Text @variant='p'>
             Here you can find some of our
-            <UiKit::Link @color={{null}} @line='under' @href={{config-get 'urls.languages'}}>basic language examples</UiKit::Link>.
+            <UiKit::Link @href={{config-get 'urls.languages'}} @variant='link-underlined'>basic language examples</UiKit::Link>.
           </UiKit::Text>
         </GettingStartedStep>
 
@@ -160,7 +156,7 @@
 
           <UiKit::Text @variant='p'>
             Want to learn more?
-            <UiKit::Link @color={{null}} @line='under' @href={{config-get 'urls.docs'}}>Read up on our docs</UiKit::Link>.
+            <UiKit::Link @href={{config-get 'urls.docs'}} @variant='link-underlined'>Read up on our docs</UiKit::Link>.
           </UiKit::Text>
         </GettingStartedStep>
       {{/if}}

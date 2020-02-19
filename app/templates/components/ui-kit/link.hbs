@@ -7,8 +7,7 @@
     {{~ '' ~}}
     <UiKit::Text
       @tag='span'
-      @color={{this.color}}
-      @line={{this.line}}
+      @variant={{this.variant}}
     >
       {{~yield~}}
     </UiKit::Text>
@@ -17,8 +16,7 @@
 {{~else~}}
   <UiKit::Text
     @tag='a'
-    @color={{this.color}}
-    @line={{this.line}}
+    @variant={{this.variant}}
     href={{this.href}}
     rel={{this.rel}}
     target={{this.target}}
