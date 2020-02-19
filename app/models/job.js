@@ -190,5 +190,10 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
     let slug = this.get('repo.slug');
     let number = this.number;
     return `${slug} #${number}`;
-  })
+  }),
+
+  didLoad() {
+    if (this.number)
+      this.set('jobIdNumber', this.number);
+  }
 });

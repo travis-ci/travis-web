@@ -60,11 +60,13 @@ module('Acceptance | profile/billing', function (hooks) {
       owner: this.user,
       status: 'subscribed',
       valid_to: new Date(2018, 5, 19),
+      created_at: new Date(2018, 5, 19),
       source: 'stripe',
       permissions: {
         write: true
       }
     });
+
     this.subscription = subscription;
 
     subscription.createBillingInfo({
@@ -99,7 +101,6 @@ module('Acceptance | profile/billing', function (hooks) {
   });
 
   test('view billing information with invoices', async function (assert) {
-
     this.subscription.createInvoice({
       id: '1919',
       created_at: new Date(1919, 4, 15),
@@ -131,7 +132,6 @@ module('Acceptance | profile/billing', function (hooks) {
 
     assert.equal(profilePage.billing.plan.name, 'Small Business1 plan active');
     assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining('5 concurrent jobs Valid until June 19, 2018');
-
     assert.equal(profilePage.billing.userDetails.text, 'contact name User Name company name Travis CI GmbH billing email user@email.com');
     assert.equal(profilePage.billing.billingDetails.text, 'address Rigaerstraße 8 city Berlin post code 10987 country Germany vat id 12345');
     assert.dom(profilePage.billing.planMessage.scope).hasText('Valid until June 19, 2018');
@@ -214,6 +214,62 @@ module('Acceptance | profile/billing', function (hooks) {
       assert.equal(march2010.invoiceCardDigits, '•••• •••• •••• 1919');
       assert.equal(march2010.invoiceCardPrice, '$69.00');
     });
+  });
+
+  test('create subscription with a forever discount', async function (assert) {
+    this.subscription.createDiscount({
+      name: '10_PERCENT_OFF',
+      percent_off: null,
+      amount_off: 1000,
+      duration: 'forever',
+      duration_in_months: null,
+      valid: true
+    });
+
+    await profilePage.visit();
+    await profilePage.billing.visit();
+
+    percySnapshot(assert);
+
+    assert.dom('[data-test-stripe-discount]').hasText('Discount: $10 forever');
+  });
+
+  test('create subscription with a 10% discount', async function (assert) {
+    this.subscription.created_at = new Date(2018, 5, 16);
+    this.subscription.createDiscount({
+      name: '10_PERCENT_OFF',
+      percent_off: 10,
+      amount_off: null,
+      duration: '',
+      duration_in_months: 3,
+      valid: true
+    });
+
+    await profilePage.visit();
+    await profilePage.billing.visit();
+
+    percySnapshot(assert);
+
+    assert.dom('[data-test-stripe-discount]').hasText('Discount: 10% off until September 2018');
+  });
+
+  test('create subscription with a $10 discount', async function (assert) {
+    this.subscription.created_at = new Date(2018, 5, 16);
+    this.subscription.createDiscount({
+      name: '10_PERCENT_OFF',
+      percent_off: null,
+      amount_off: 1000,
+      duration: '',
+      duration_in_months: 3,
+      valid: true
+    });
+
+    await profilePage.visit();
+    await profilePage.billing.visit();
+
+    percySnapshot(assert);
+
+    assert.dom('[data-test-stripe-discount]').hasText('Discount: $10 off until September 2018');
   });
 
   test('edit subscription contact updates user billing info', async function (assert) {
