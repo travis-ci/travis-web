@@ -28,9 +28,4 @@ export default Component.extend({
       return [];
     }
   }),
-
-  init() {
-    this._super(...arguments);
-    this.account.fetchPlans.perform();
-  }
 });

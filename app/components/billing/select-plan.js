@@ -7,6 +7,7 @@ import { or, not, reads, filterBy } from '@ember/object/computed';
 
 export default Component.extend({
   accounts: service(),
+  store: service(),
 
   account: null,
   showPlansSelector: true,
@@ -33,7 +34,8 @@ export default Component.extend({
     if (this.submit.perform) {
       yield this.submit.perform();
     } else {
-      this.newSubscription.set('plan', this.selectedPlan);
+      const selectedPlan = this.store.createRecord('plan', { ...this.selectedPlan });
+      this.newSubscription.set('plan', selectedPlan);
       this.submit();
     }
     this.set('showPlansSelector', false);

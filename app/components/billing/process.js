@@ -16,6 +16,7 @@ export default Component.extend({
 
   account: null,
   steps: computed(() => [...Object.values(STEPS)]),
+  plans: reads('account.eligiblePlans'),
 
   currentStep: computed(function () {
     return this.storage.billingStep || STEPS.ONE;

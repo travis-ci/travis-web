@@ -2,6 +2,7 @@ import VcsEntity from 'travis/models/vcs-entity';
 import { attr, belongsTo } from '@ember-data/model';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
+import ArrayProxy from '@ember/array/proxy';
 import { task } from 'ember-concurrency';
 import { reads, or, equal, notEmpty, filterBy } from '@ember/object/computed';
 import config from 'travis/config/environment';
@@ -15,6 +16,7 @@ export default VcsEntity.extend({
   raven: service(),
   store: service(),
   tasks: service(),
+  api: service(),
 
   name: attr('string'),
   login: attr('string'),
@@ -30,7 +32,6 @@ export default VcsEntity.extend({
   type: attr('string'),
   isUser: equal('type', 'user'),
   isOrganization: equal('type', 'organization'),
-  eligiblePlans: reads('fetchPlans.lastSuccessful.value'),
 
   // This is set by serializers:subscription
   subscriptionPermissions: attr(),
@@ -69,15 +70,21 @@ export default VcsEntity.extend({
     }, { live: false });
   },
 
-  fetchPlans: task(function* () {
+  fetchPlansTask: task(function* () {
     if (this.isOrganization) {
-      return yield this.store.findAll('plan', {
-        adapterOptions: { organizationId: this.id }
-      }) || [];
+      return yield this.api.get(`/plans_for/organization/${this.id}`);
     } else {
-      return yield this.store.findAll('plan') || [];
+      return yield this.api.get('/plans_for/user');
     }
   }).keepLatest(),
+
+  isFetchingPlans: reads('fetchPlansTask.isRunning'),
+
+  eligiblePlans: computed('fetchPlansTask', function () {
+    const plans = ArrayProxy.create({ content: [] });
+    this.fetchPlansTask.perform().then(result => plans.set('content', result.plans));
+    return plans;
+  }),
 
   nonGithubPlans: computed('eligiblePlans.@each.{id,name,annual,builds}', function () {
     const eligiblePlans = this.eligiblePlans || [];
