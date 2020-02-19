@@ -7,20 +7,26 @@
     @padding={{hash x=4}}
     data-test-integration-bb-header-section="true"
   >
-    <UiKit::Grid @gap={{4}} as |grid|>
-      <grid.item @sm='2/3'>
-        <UiKit::Text @tag='h1' @variant='h1'>
+    <UiKit::Grid @align='center' @gap={{4}} as |grid|>
+      <grid.item @sm='full' @md='2/3' @lg='2/3'>
+        <UiKit::Text
+          @tag='h1'
+          @variant='h1'
+          @leading={{hash base='none' md='2xs' lg='sm'}}
+        >
           Test your Bitbucket
           projects with Travis CI
         </UiKit::Text>
-        <UiKit::Text>
+        <UiKit::Text @variant='p'>
           Build, test, and deploy your software seamlessly with the Atlassian Bitbucket
           integration for Travis CI
         </UiKit::Text>
         <UiKit::ButtonSignin @provider='bitbucket' />
       </grid.item>
-      <grid.item @sm='1/3'>
-        <SvgImage @name='bb-integrate' />
+      <grid.item @sm='full' @md='1/3' @lg='1/3'>
+        <UiKit::Box @maxWidth='md' @margin={{hash x='auto'}}>
+          <SvgImage @name='bb-integrate' />
+        </UiKit::Box>
       </grid.item>
     </UiKit::Grid>
   </UiKit::Box>
