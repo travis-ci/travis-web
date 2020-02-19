@@ -166,7 +166,7 @@ export default JSONAPISerializer.extend({
   isIncluded(type, key, request) {
     let include = request.queryParams.include;
     let ownerAliases = ['user', 'organization'];
-    let subscriptionInclusions = ['billing_info', 'credit_card_info', 'plan'];
+    let subscriptionInclusions = ['billing_info', 'credit_card_info', 'discount', 'plan'];
 
     if (ownerAliases.includes(type)) {
       type = 'owner';
