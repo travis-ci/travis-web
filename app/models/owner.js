@@ -70,7 +70,7 @@ export default VcsEntity.extend({
     }, { live: false });
   },
 
-  fetchPlansTask: task(function* () {
+  fetchPlans: task(function* () {
     if (this.isOrganization) {
       return yield this.api.get(`/plans_for/organization/${this.id}`);
     } else {
@@ -78,11 +78,9 @@ export default VcsEntity.extend({
     }
   }).keepLatest(),
 
-  isFetchingPlans: reads('fetchPlansTask.isRunning'),
-
-  eligiblePlans: computed('fetchPlansTask', function () {
+  eligiblePlans: computed('fetchPlans', function () {
     const plans = ArrayProxy.create({ content: [] });
-    this.fetchPlansTask.perform().then(result => plans.set('content', result.plans));
+    this.fetchPlans.perform().then(result => plans.set('content', result.plans));
     return plans;
   }),
 
