@@ -21,8 +21,6 @@ export default Component.extend({
   isCompleteAndNotExpired: and('hasNotExpired', 'isComplete'),
   trial: reads('account.trial'),
   isGithubSubscription: reads('subscription.isGithub'),
-  isGithubTrial: and('isGithubSubscription', 'trial.hasActiveTrial'),
-  isNotGithubTrial: not('isGithubTrial'),
   expiredStripeSubscription: reads('account.expiredStripeSubscription'),
   hasExpiredStripeSubscription: bool('expiredStripeSubscription'),
 });
