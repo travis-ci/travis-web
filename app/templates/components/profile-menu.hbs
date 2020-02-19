@@ -1,11 +1,12 @@
 {{#if (and this.auth.signedOut this.showSignInButton)}}
 
-  <LinkTo
-    @route="signin"
-    class="auth-button signed-out"
+  <button
+    class="auth-button signed-out pointer"
+    type="button"
+    {{on 'click' (action 'signIn')}}
   >
     Sign in
-  </LinkTo>
+  </button>
 
 {{else if this.auth.signedIn}}
 

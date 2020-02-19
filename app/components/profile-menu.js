@@ -59,8 +59,12 @@ export default Component.extend({
 
   actions: {
 
-    signIn(provider) {
-      return this.auth.signInWith(provider);
+    signIn() {
+      const { auth, router } = this;
+      if (!auth.redirectUrl) {
+        auth.set('redirectUrl', window.location.href);
+      }
+      router.transitionTo('signin');
     },
 
     signOut() {
