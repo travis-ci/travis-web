@@ -1003,13 +1003,8 @@
 
 .profile.menu.signed-out {
   line-height: 0;
-  margin-top: 13px;
-  position: relative;
+  margin-top: 11px;
   text-align: center;
-
-  @media #{$small-only} {
-    display: none;
-  }
 
   .navigation-nested {
     background-color: white;

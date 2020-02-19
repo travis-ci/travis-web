@@ -1,50 +1,11 @@
-{{#if this.auth.signedOut}}
+{{#if (and this.auth.signedOut this.showSignInButton)}}
 
-  {{#if this.multiVcs.disabled}}
-    <button
-      class="auth-button signed-out"
-      type="button"
-      {{action "signIn" "github"}}
-    >
-      Sign in
-    </button>
-  {{/if}}
-
-  {{#if this.multiVcs.enabled}}
-    <ul class="navigation-nested">
-      <li>
-        <button class="action" {{action "signIn" "github"}}>
-          Sign in with GitHub
-          <SvgImage @name={{vcs-icon 'GithubUser'}} @class="signin-provider-icon align-text-top fill-current w-5 h-5" />
-        </button>
-      </li>
-      {{#if this.multiVcs.enableBitbucketLogin}}
-        <li>
-          <button class="action" {{action "signIn" "bitbucket"}}>
-            Sign in with Bitbucket
-            <SvgImage @name={{vcs-icon 'BitbucketUser'}} @class="signin-provider-icon align-text-top fill-current w-5 h-5" />
-          </button>
-        </li>
-      {{/if}}
-      {{#if this.multiVcs.enableAssemblaLogin}}
-        <li>
-          <button class="action" {{action "signIn" "assembla"}}>
-            Sign in with Assembla
-            <SvgImage @name={{vcs-icon 'AssemblaUser'}} @class="signin-provider-icon align-text-top fill-current w-5 h-5" />
-          </button>
-        </li>
-      {{/if}}
-    </ul>
-    <span class="auth-button">
-      Sign in
-    </span>
-  {{/if}}
-
-{{else if this.auth.signingIn}}
-
-  <button class="auth-button signing-in" type="button">
-    Signing In <LoadingIndicator @inline={{true}} />
-  </button>
+  <LinkTo
+    @route="signin"
+    class="auth-button signed-out"
+  >
+    Sign in
+  </LinkTo>
 
 {{else if this.auth.signedIn}}
 

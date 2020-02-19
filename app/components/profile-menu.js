@@ -1,6 +1,11 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
-import { or, reads } from '@ember/object/computed';
+import {
+  equal,
+  not,
+  or,
+  reads
+} from '@ember/object/computed';
 import { next } from '@ember/runloop';
 
 export default Component.extend({
@@ -9,12 +14,16 @@ export default Component.extend({
 
   auth: service(),
   multiVcs: service(),
+  router: service(),
 
   isMenuOpen: false,
 
   user: reads('auth.currentUser'),
 
   userName: or('user.name', 'user.login'),
+
+  isSignInPage: equal('router.currentRouteName', 'signin'),
+  showSignInButton: not('isSignInPage'),
 
   closeMenu() {
     if (this.isMenuOpen) {

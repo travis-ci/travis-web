@@ -11,7 +11,6 @@ $nav-line-height: 35px;
 
 .navigation {
   height: 0;
-  will-change: height;
   transition: height 200ms ease;
   overflow: hidden;
 
@@ -44,6 +43,10 @@ $nav-line-height: 35px;
       }
     }
   }
+
+  @media #{$small-only} {
+    clear: both;
+  }
 }
 
 .profile.menu {
@@ -51,10 +54,11 @@ $nav-line-height: 35px;
   margin-right: 0;
   position: absolute;
   top: 10px;
-  right: 0;
+  right: 15px;
 
   @media #{$small-only} {
     top: 0;
+    right: 0;
 
     .navigation-anchor {
       line-height: 50px;
@@ -72,7 +76,6 @@ $nav-line-height: 35px;
 
   > a {
     text-decoration: none;
-    padding-right: 0;
 
     &:hover {
       text-decoration: none;
@@ -104,6 +107,16 @@ $nav-line-height: 35px;
       margin-right: 10px;
     }
   }
+
+  .auth-button {
+    width: 150px;
+
+    @media #{$small-only} {
+      width: 100px;
+      margin-right: 11px
+    }
+
+  }
 }
 
 .navigation-anchor {
@@ -118,7 +131,7 @@ $nav-line-height: 35px;
 
   @media #{$small-only} {
     line-height: 50px;
-    padding: 0 8px;
+    padding: 0 10px;
 
     &:last-child {
       padding-bottom: 0;
