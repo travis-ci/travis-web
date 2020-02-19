@@ -71,11 +71,8 @@ export default VcsEntity.extend({
   },
 
   fetchPlans: task(function* () {
-    if (this.isOrganization) {
-      return yield this.api.get(`/plans_for/organization/${this.id}`);
-    } else {
-      return yield this.api.get('/plans_for/user');
-    }
+    const url = this.isOrganization ? `/plans_for/organization/${this.id}` : '/plans_for/user';
+    return yield this.api.get(url);
   }).keepLatest(),
 
   eligiblePlans: computed('fetchPlans', function () {
