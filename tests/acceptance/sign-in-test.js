@@ -54,14 +54,4 @@ module('Acceptance | sign in', function (hooks) {
 
     percySnapshot(assert);
   });
-
-  test('visiting signin redirects to index if authenticated', async function (assert) {
-    const currentUser = this.server.create('user', 'withRepository');
-
-    signInUser(currentUser);
-
-    await visit('/signin');
-
-    assert.equal(currentURL(), '/');
-  });
 });
