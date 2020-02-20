@@ -72,7 +72,7 @@ export default VcsEntity.extend({
   fetchPlans: task(function* () {
     const url = this.isOrganization ? `/plans_for/organization/${this.id}` : '/plans_for/user';
     const result = yield this.api.get(url);
-    return result.plans || [];
+    return result ? result.plans : [];
   }).keepLatest(),
 
   fetchPlansInstance: computed(function () {
