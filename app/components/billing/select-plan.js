@@ -15,6 +15,7 @@ export default Component.extend({
   title: null,
   showAnnual: false,
   showMonthly: not('showAnnual'),
+  isPlansLoading: reads('account.isFetchPlansRunning'),
   monthlyPlans: reads('account.monthlyPlans'),
   annualPlans: reads('account.annualPlans'),
   availablePlans: computed(() => config.plans),

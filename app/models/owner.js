@@ -2,7 +2,6 @@ import VcsEntity from 'travis/models/vcs-entity';
 import { attr, belongsTo } from '@ember-data/model';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
-import ArrayProxy from '@ember/array/proxy';
 import { task } from 'ember-concurrency';
 import { reads, or, equal, notEmpty, filterBy } from '@ember/object/computed';
 import config from 'travis/config/environment';
@@ -72,14 +71,16 @@ export default VcsEntity.extend({
 
   fetchPlans: task(function* () {
     const url = this.isOrganization ? `/plans_for/organization/${this.id}` : '/plans_for/user';
-    return yield this.api.get(url);
+    const result = yield this.api.get(url);
+    return result.plans || [];
   }).keepLatest(),
 
-  eligiblePlans: computed('fetchPlans', function () {
-    const plans = ArrayProxy.create({ content: [] });
-    this.fetchPlans.perform().then(result => plans.set('content', result.plans));
-    return plans;
+  fetchPlansInstance: computed(function () {
+    return this.fetchPlans.perform();
   }),
+
+  isFetchPlansRunning: reads('fetchPlansInstance.isRunning'),
+  eligiblePlans: reads('fetchPlansInstance.value'),
 
   nonGithubPlans: computed('eligiblePlans.@each.{id,name,annual,builds}', function () {
     const eligiblePlans = this.eligiblePlans || [];
