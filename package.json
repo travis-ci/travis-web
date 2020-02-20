@@ -26,7 +26,7 @@
     "ansiparse": "artursmirnov/ansiparse",
     "babel-eslint": "10.0.3",
     "broccoli-asset-rev": "^3.0.0",
-    "broccoli-funnel": "^2.0.1",
+    "broccoli-funnel": "^3.0.2",
     "broccoli-merge-trees": "^3.0.0",
     "ember-animated": "^0.9.0",
     "ember-c3": "^2.0.0",
