@@ -35,12 +35,13 @@
 {{!-- Highlights section --}}
 <UiKit::Box
   @borderWidth={{hash bottom='xs'}}
+  @margin={{hash bottom=16}}
 >
   <UiKit::Box
     @tag='section'
-    @margin={{hash bottom=16 x='auto'}}
     @maxWidth='6xl'
-    @padding={{hash x=4}}
+    @margin={{hash x='auto'}}
+    @padding={{hash x=4 bottom=16}}
     data-test-integration-bb-highlights-section="true"
   >
     <UiKit::Grid @align='center' @gap={{6}} as |grid|>
@@ -99,3 +100,42 @@
 </UiKit::Box>
 
 {{!-- Build flow section --}}
+<UiKit::Box
+  @tag='section'
+  @margin={{hash bottom=16 x='auto'}}
+  @maxWidth='6xl'
+  @padding={{hash x=4}}
+  data-test-integration-bb-header-section="true"
+>
+  <UiKit::Text @variant='h2'>
+    Get up and running with Travis CI and Bitbucket in seconds
+  </UiKit::Text>
+
+  <UiKit::Box @display='flex' @position={{hash type='relative'}} @width='full' class="build-flow-diagram">
+    {{!-- <UiKit::Grid @md={{5}} as |grid|> --}}
+      <UiKit::Box @width={{32}}>
+        <UiKit::Box><SvgImage @name='pull-icon-1' /></UiKit::Box>
+        <UiKit::Text>A pull request is created</UiKit::Text>
+      </UiKit::Box>
+      <UiKit::Box @width={{32}}>
+        <UiKit::Box><SvgImage @name='pull-icon-2' /></UiKit::Box>
+        <UiKit::Text>Cloud platform tells Travis CI the build is mergeable</UiKit::Text>
+      </UiKit::Box>
+      <UiKit::Box @width={{32}}>
+        <UiKit::Box><SvgImage @name='push-icon-3' /></UiKit::Box>
+        <UiKit::Text>Hooray! Your build passes!</UiKit::Text>
+      </UiKit::Box>
+      <UiKit::Box @width={{32}}>
+        <UiKit::Box><SvgImage @name='pull-icon-4' /></UiKit::Box>
+        <UiKit::Text>Travis CI updates the PR that it passed</UiKit::Text>
+      </UiKit::Box>
+      <UiKit::Box @width={{32}}>
+        <UiKit::Box><SvgImage @name='pull-icon-5' /></UiKit::Box>
+        <UiKit::Text>You merge in the PR goodness</UiKit::Text>
+      </UiKit::Box>
+
+      <UiKit::Box class='build-flow-diagram__bar'></UiKit::Box>
+
+    {{!-- </UiKit::Grid> --}}
+  </UiKit::Box>
+</UiKit::Box>

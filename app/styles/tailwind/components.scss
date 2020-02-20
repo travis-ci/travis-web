@@ -2,6 +2,30 @@
  * You can create Tailwind components using @apply here.
  * Here's an example:
 **/
+
+.build-flow-diagram {
+  @apply justify-between;
+
+  &__bar {
+    @apply absolute h-1 bg-grey-150 top-0 right-0 left-0 z-20 mt-16 ml-32 mr-32;
+    // margin: 8.5% calc(20% - 1.25rem) 0 calc(20% - 1.25rem);
+
+    &:before, &:after {
+      content: '';
+      @apply block absolute w-5 h-5 bg-red rounded-full -mt-2 border-white border-md z-10;
+    }
+
+    &:before {
+      @apply left-0 -ml-3;
+    }
+
+    &:after {
+      @apply right-0 -mr-3;
+    }
+  }
+}
+
+// Overrides
 .tailwind-overrides {
   @apply overflow-x-hidden;
 

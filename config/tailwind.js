@@ -132,6 +132,8 @@ module.exports = {
     borderWidth: {
       none: '0',
       px: '1px',
+      sm: '0.1429rem',
+      md: '0.25rem',
     },
     borderRadius: {
       none: '0',
