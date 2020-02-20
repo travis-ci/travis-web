@@ -80,7 +80,7 @@ export default VcsEntity.extend({
   }),
 
   isFetchPlansRunning: reads('fetchPlansInstance.isRunning'),
-  eligiblePlans: reads('fetchPlansInstance.value'),
+  eligiblePlans: reads('fetchPlans.lastSuccessful.value'),
 
   nonGithubPlans: computed('eligiblePlans.@each.{id,name,annual,builds}', function () {
     const eligiblePlans = this.eligiblePlans || [];
