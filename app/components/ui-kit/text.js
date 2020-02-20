@@ -102,6 +102,8 @@ const VARIANTS = {
   H1: 'h1',
   H2: 'h2',
   P: 'p',
+  LINK_BLUE: 'link-blue',
+  LINK_UNDER: 'link-underlined',
 };
 const VARIANT_PROPS = {
   [VARIANTS.SMALLCAPS]: {
@@ -124,6 +126,12 @@ const VARIANT_PROPS = {
   },
   [VARIANTS.P]: {
     margin: { bottom: 4 },
+  },
+  [VARIANTS.LINK_BLUE]: {
+    color: 'blue',
+  },
+  [VARIANTS.LINK_UNDER]: {
+    borderWidth: { bottom: 'px' },
   },
 };
 

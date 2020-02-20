@@ -23,7 +23,7 @@ const BG_COLORS = {
   [COLORS.WHITE]: 'white',
   [COLORS.BLUE_LIGHT]: 'blue-300',
   [COLORS.GREY_LIGHTEST]: 'grey-100',
-  [COLORS.GREY_LIGHTER]: 'grey-200',
+  [COLORS.GREY_LIGHTER]: 'grey-150',
   [COLORS.GREY_LIGHT]: 'grey-300',
   [COLORS.GREY_DARK]: 'grey-800',
   [COLORS.BLUE]: 'blue-400',
