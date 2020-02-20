@@ -21,13 +21,81 @@
           Build, test, and deploy your software seamlessly with the Atlassian Bitbucket
           integration for Travis CI
         </UiKit::Text>
-        <UiKit::ButtonSignin @provider='bitbucket' />
+        <UiKit::ButtonSignin @provider='bitbucket' @isSignup={{true}} />
       </grid.item>
       <grid.item @sm='full' @md='1/3' @lg='1/3'>
-        <UiKit::Box @maxWidth='md' @margin={{hash x='auto'}}>
+        <UiKit::Box @maxWidth='sm' @margin={{hash x='auto'}}>
           <SvgImage @name='bb-integrate' />
         </UiKit::Box>
       </grid.item>
     </UiKit::Grid>
   </UiKit::Box>
 </UiKit::Box>
+
+{{!-- Highlights section --}}
+<UiKit::Box
+  @borderWidth={{hash bottom='xs'}}
+>
+  <UiKit::Box
+    @tag='section'
+    @margin={{hash bottom=16 x='auto'}}
+    @maxWidth='6xl'
+    @padding={{hash x=4}}
+    data-test-integration-bb-highlights-section="true"
+  >
+    <UiKit::Grid @align='center' @gap={{6}} as |grid|>
+      {{!-- Row 1 --}}
+      <grid.item @sm='6/12' @margin={{hash sm=(hash y=10)}}>
+        <UiKit::Box @maxWidth='sm' @margin={{hash x='auto'}}>
+          <SvgImage @name='travis-console' />
+        </UiKit::Box>
+      </grid.item>
+      <grid.item @sm='6/12' @margin={{hash base=(hash bottom=10) sm=(hash y=10)}}>
+        <UiKit::Text @variant='h2' @color='blue-light'>
+          Integrate Bitbucket in seconds
+        </UiKit::Text>
+        <UiKit::Text>
+          Time is important when you're building software. So don't fret,
+          we'll spin Travis CI with Bitbucket within seconds.
+        </UiKit::Text>
+      </grid.item>
+
+      {{!-- Row 2 --}}
+      <grid.item @sm='6/12' @margin={{hash base=(hash bottom=4) sm=(hash y=10)}}>
+        <UiKit::Text @variant='h2' @color='blue-light'>
+          Bitbucket connects with Travis CI
+        </UiKit::Text>
+        <UiKit::Text>
+          Bitbucket lets Travis CI know instantly when something is committed
+          and lets the rest happen by itself.
+        </UiKit::Text>
+      </grid.item>
+      <grid.item @sm='6/12' @margin={{hash base=(hash bottom=10) sm=(hash y=10)}}>
+        <UiKit::Box @maxWidth='sm' @margin={{hash x='auto'}}>
+          <SvgImage @name='bb-connect' />
+        </UiKit::Box>
+      </grid.item>
+
+      {{!-- Row 3 --}}
+      <grid.item @sm='6/12' @margin={{hash sm=(hash y=10)}}>
+        <UiKit::Box @maxWidth='sm' @margin={{hash x='auto'}}>
+          <SvgImage @name='travis-community' />
+        </UiKit::Box>
+      </grid.item>
+      <grid.item @sm='6/12' @margin={{hash base=(hash bottom=10) sm=(hash y=10)}}>
+        <UiKit::Text @variant='h2' @color='blue-light'>
+          The Travis CI Community
+        </UiKit::Text>
+        <UiKit::Text>
+          Travis CI has a one of a kind, supportive community which is
+          always ready to hear your voice. We're excited to read your
+          suggestions, comments, and questions.
+        </UiKit::Text>
+      </grid.item>
+    </UiKit::Grid>
+
+    <UiKit::ButtonSignin @provider='bitbucket' @isSignup={{true}} />
+  </UiKit::Box>
+</UiKit::Box>
+
+{{!-- Build flow section --}}
