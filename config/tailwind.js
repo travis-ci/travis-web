@@ -215,6 +215,7 @@ module.exports = {
       '11/12': '91.666667%',
       full: '100%',
       screen: '100vw',
+      'max-content': 'max-content',
     }),
     maxHeight: {
       full: '100%',
