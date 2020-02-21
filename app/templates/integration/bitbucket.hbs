@@ -123,43 +123,43 @@
         @display='flex'
         class="items-center my-4 md:flex-col md:text-center"
       >
-        <UiKit::Box @width={{32}} class=""><SvgImage @name='pull-icon-1' /></UiKit::Box>
-        <UiKit::Text @width={{32}} class="">A pull request <br /> is created</UiKit::Text>
+        <UiKit::Box @width={{32}} @margin={{hash base=(hash x=4) md=(hash x=0)}}><SvgImage @name='pull-icon-1' /></UiKit::Box>
+        <UiKit::Text @width={{32}}>A pull request <br /> is created</UiKit::Text>
       </UiKit::Box>
       <UiKit::Box
         @display='flex'
         class="items-center my-4 z-30 md:flex-col md:text-center"
       >
-        <UiKit::Box @width={{32}} class=""><SvgImage @name='pull-icon-2' /></UiKit::Box>
-        <UiKit::Text @width={{32}} class="">Cloud platform tells Travis CI <br /> the build is mergeable</UiKit::Text>
+        <UiKit::Box @width={{32}} @margin={{hash base=(hash x=4) md=(hash x=0)}}><SvgImage @name='pull-icon-2' /></UiKit::Box>
+        <UiKit::Text @width={{32}}>Cloud platform tells Travis CI <br /> the build is mergeable</UiKit::Text>
       </UiKit::Box>
       <UiKit::Box
         @display='flex'
         class="items-center my-4 z-30 md:flex-col md:text-center"
       >
-        <UiKit::Box @width={{32}} class=""><SvgImage @name='push-icon-3' /></UiKit::Box>
-        <UiKit::Text @width={{32}} class="">Hooray! <br /> Your build passes!</UiKit::Text>
+        <UiKit::Box @width={{32}} @margin={{hash base=(hash x=4) md=(hash x=0)}}><SvgImage @name='push-icon-3' /></UiKit::Box>
+        <UiKit::Text @width={{32}}>Hooray! <br /> Your build passes!</UiKit::Text>
       </UiKit::Box>
       <UiKit::Box
         @display='flex'
         class="items-center my-4 z-30 md:flex-col md:text-center"
       >
-        <UiKit::Box @width={{32}} class=""><SvgImage @name='pull-icon-4' /></UiKit::Box>
-        <UiKit::Text @width={{32}} class="">Travis CI updates <br /> the PR that it passed</UiKit::Text>
+        <UiKit::Box @width={{32}} @margin={{hash base=(hash x=4) md=(hash x=0)}}><SvgImage @name='pull-icon-4' /></UiKit::Box>
+        <UiKit::Text @width={{32}}>Travis CI updates <br /> the PR that it passed</UiKit::Text>
       </UiKit::Box>
       <UiKit::Box
         @display='flex'
         class="items-center my-4 md:flex-col md:text-center"
       >
-        <UiKit::Box @width={{32}} class=""><SvgImage @name='pull-icon-5' /></UiKit::Box>
-        <UiKit::Text @width={{32}} class="">You merge in <br /> the PR goodness</UiKit::Text>
+        <UiKit::Box @width={{32}} @margin={{hash base=(hash x=4) md=(hash x=0)}}><SvgImage @name='pull-icon-5' /></UiKit::Box>
+        <UiKit::Text @width={{32}}>You merge in <br /> the PR goodness</UiKit::Text>
       </UiKit::Box>
 
       {{!-- mt-32 mb-32 ml-16 md:h-1 md:w-auto md:right-0 md:mt-16 md:ml-32 md:mr-32 md:mb-0 --}}
-      <UiKit::Box class='build-flow-diagram__bar absolute w-1 top-0 left-0 bottom-0'>
-        <UiKit::Box class='absolute w-5 h-5 bg-grey-150 rounded-full border-white border-md z-10 top-0 -ml-2 -mt-3'></UiKit::Box>
+      <UiKit::Box class='build-flow-diagram__bar absolute w-1 top-0 left-0 bottom-0 md:bottom-auto md:right-0 md:h-1 md:w-auto'>
+        <UiKit::Box class='absolute w-5 h-5 bg-grey-150 rounded-full border-white border-md z-10 top-0 -ml-2 -mt-3 md:left-0 md:-ml-4 md:-mt-2'></UiKit::Box>
         <UiKit::Box class='relative bg-grey-150 h-full w-full z-20'></UiKit::Box>
-        <UiKit::Box class='absolute w-5 h-5 bg-grey-150 rounded-full border-white border-md z-10 bottom-0 -ml-2 -mb-3'></UiKit::Box>
+        <UiKit::Box class='absolute w-5 h-5 bg-grey-150 rounded-full border-white border-md z-10 bottom-0 -ml-2 -mb-3 md:right-0 md:ml-0 md:-mr-2 md:-mb-2'></UiKit::Box>
       </UiKit::Box>
 
     {{!-- </UiKit::Grid> --}}

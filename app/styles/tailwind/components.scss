@@ -7,7 +7,11 @@
   &__bar {
     margin-top: 8.85rem;
     margin-bottom: 8.85rem;
-    margin-left: 3.75rem;
+    margin-left: 4.75rem;
+
+    @screen md {
+      margin: 5rem 8.25rem 0 8.25rem;
+    }
   }
 }
 
