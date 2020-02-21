@@ -7,6 +7,8 @@ export default Route.extend({
   title: 'Travis CI - Help Center',
 
   afterModel() {
-    return this.auth.reloadCurrentUser(['user.emails']);
+    if (this.auth.signedIn) {
+      return this.auth.reloadCurrentUser(['user.emails']);
+    }
   }
 });
