@@ -1,0 +1,26 @@
+{{#if this.result}}
+  <div class="validation-result" onclick={{action toggle}}>
+    Validation:
+    {{#if this.loading}}
+      <LoadingIndicator className="validating-indicator" />
+    {{else}}
+      <span class="request-messages-badge request-messages-badge-{{this.maxLevel}}" />
+      {{this.result}}
+
+      {{#if this.summary}}
+        <div class="validation-summary">
+          &mdash; {{this.summary}}
+        </div>
+        <SvgImage @name="icon-dropdown-arrow" @class="icon-toggle icon-{{this.toggleStatusClass}}" />
+      {{/if}}
+    {{/if}}
+  </div>
+
+  {{#if this.displayMessages}}
+    <div class="request-messages">
+      {{#each this.messages as |message|}}
+        <RequestMessage @message={{message}} />
+      {{/each}}
+    </div>
+  {{/if}}
+{{/if}}

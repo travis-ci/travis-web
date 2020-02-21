@@ -1,0 +1,37 @@
+<p class="request-configs-description">
+  <SvgImage @name='rocket' @class='request-configs-icon' />
+  The triggered build will have the following build config
+  and job matrix.
+</p>
+
+{{#if this.loading}}
+  <LoadingIndicator />
+{{else}}
+  <Request::Messages
+    @messages={{this.messages}}
+  />
+
+  <div class="request-configs-preview-container">
+    <div class="left">
+      <h4>
+        Build Config
+      </h4>
+
+      <CodeBlock
+        @language="json"
+        class="codedisplay"
+      >{{this.formattedConfig}}</CodeBlock>
+    </div>
+
+    <div class="right">
+      <h4>
+        Build Matrix
+      </h4>
+
+      <CodeBlock
+        @language="json"
+        class="codedisplay"
+      >{{this.formattedMatrix}}</CodeBlock>
+    </div>
+  </div>
+{{/if}}

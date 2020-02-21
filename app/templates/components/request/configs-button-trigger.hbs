@@ -1,0 +1,13 @@
+<button
+  data-test-request-configs-submit="true"
+  onclick={{this.onclick}}
+  type="button"
+  class="request-configs-button-submit button--blue"
+  title="Trigger build"
+>
+  {{#if this.processing}}
+    <LoadingIndicator />
+  {{else}}
+    Trigger build
+  {{/if }}
+</button>

@@ -41,7 +41,10 @@ module.exports = function () {
       extensions: ['js']
     },
     'ember-prism': {
-      'components': ['yaml'],
+      'components': [
+        'yaml',
+        'json'
+      ],
       plugins: [
         'line-numbers',
         'line-highlight'
@@ -93,6 +96,15 @@ module.exports = function () {
           'tailwind/base': '/assets/tailwind-base.css'
         }
       }
+    },
+    codemirror: {
+      modes: [
+        'yaml',
+        'javascript'
+      ],
+      addonFiles: [
+        'display/placeholder.js',
+      ]
     }
   });
 

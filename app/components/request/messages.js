@@ -1,8 +1,7 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { reads, sort } from '@ember/object/computed';
+import { not, sort } from '@ember/object/computed';
 import { pluralize } from 'ember-inflector';
-import WithConfigValidation from 'travis/mixins/components/with-config-validation';
 
 const MSGS = {
   'alert': 'alert',
@@ -11,20 +10,18 @@ const MSGS = {
   'info': 'info',
 };
 
-export default Component.extend(WithConfigValidation, {
-  tagName: '',
-  isExpanded: false,
+export default Component.extend({
+  tagName: 'div',
+  classNames: ['request-messages'],
+  classNameBindings: ['expanded:request-messages-expanded'],
+  expanded: false,
+  collapsed: not('expanded'),
 
-  request: null,
-
-  repo: reads('request.repo'),
-  messages: reads('request.messages'),
-
-  toggleStatusClass: computed('isExpanded', function () {
-    return this.get('isExpanded') ? 'expanded' : 'collapsed';
+  toggleStatusClass: computed('expanded', function () {
+    return this.get('expanded') ? 'expanded' : 'collapsed';
   }),
 
-  sortedMessages: sort('request.messages', (lft, rgt) =>
+  sortedMessages: sort('messages', (lft, rgt) =>
     sortOrder(lft.level) - sortOrder(rgt.level)
   ),
 
@@ -45,7 +42,7 @@ export default Component.extend(WithConfigValidation, {
 
   actions: {
     toggle() {
-      this.toggleProperty('isExpanded');
+      this.toggleProperty('expanded');
     }
   }
 });

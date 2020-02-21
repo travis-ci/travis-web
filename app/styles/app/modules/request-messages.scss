@@ -1,23 +1,25 @@
-.build-messages-badge {
+.request-messages-badge {
   display: inline-block;
   width: 8px;
   height: 8px;
   margin-left: 0.25em;
   border-radius: 50%;
-
-  &.badge-alert,
-  &.badge-error {
-    background-color: $brick-red;
-  }
-  &.badge-warn {
-    background-color: $canary-yellow;
-  }
-  &.badge-info {
-    background-color: $turf-green;
-  }
 }
 
-.yml-messages {
+.request-messages-badge-alert,
+.request-messages-badge-error {
+  background-color: $brick-red;
+}
+
+.request-messages-badge-warn {
+  background-color: $canary-yellow;
+}
+
+.request-messages-badge-info {
+  background-color: $turf-green;
+}
+
+.request-messages {
   @include travisBorder;
 
   margin: 1.2em 0;
@@ -28,31 +30,6 @@
     position: relative;
     padding: 1em;
     cursor: pointer;
-
-    .icon {
-      width: 18px;
-      height: 18px;
-      margin-bottom: 2px;
-    }
-
-    .icon-alert path,
-    .icon-error path {
-      stroke: $brick-red;
-    }
-    .icon-warn path {
-      stroke: $canary-yellow;
-    }
-    .icon-info {
-      width: 12px;
-      height: 12px;
-      margin-left: 2px;
-      margin-right: 8px;
-      opacity: 0.8;
-      path {
-        stroke: $turf-green;
-        stroke-width: 1;
-      }
-    }
 
     .tools {
       position: absolute;
@@ -75,6 +52,9 @@
       }
 
       .icon-help {
+        margin: -2px 5px 0 0;
+        width: 18px;
+        height: 18px;
         border: 0px;
         transform: scale(0.8);
         path {
@@ -84,8 +64,36 @@
       }
     }
   }
+  &.request-messages-expanded .header {
+    border-bottom: 1px solid $pebble-grey;
+  }
 
-  .yml-message-link {
+  .icon {
+    width: 18px;
+    height: 18px;
+    margin-bottom: 2px;
+  }
+
+  .icon-alert path,
+  .icon-error path {
+    stroke: $brick-red;
+  }
+  .icon-warn path {
+    stroke: $canary-yellow;
+  }
+  .icon-info {
+    width: 12px;
+    height: 12px;
+    margin-left: 2px;
+    margin-right: 8px;
+    opacity: 0.8;
+    path {
+      stroke: $turf-green;
+      stroke-width: 1;
+    }
+  }
+
+  .request-message-link {
     display: block;
 
     &:hover {
@@ -93,7 +101,7 @@
     }
   }
 
-  .yml-message-line {
+  .request-message-line {
     display: flex;
     align-items: flex-start;
 

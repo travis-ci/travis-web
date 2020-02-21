@@ -1,0 +1,102 @@
+{{#if displayTriggerBuild}}
+  <div class="request-configs-buttons">
+    {{#unless this.closed}}
+      <a
+        class="request-configs-button request-configs-button-cancel"
+        onclick={{action this.onCancel}}
+      >
+        Cancel
+      </a>
+      <a
+        class="request-configs-button request-configs-button-customize"
+        onclick={{action this.onCustomize}}
+      >
+        Customize
+      </a>
+      <a
+        class="request-configs-button request-configs-button-preview"
+        onclick={{action this.onPreview}}
+      >
+        Preview
+      </a>
+    {{/unless }}
+
+    <Request::ConfigsButtonTrigger
+      @processing={{this.processing}}
+      onclick={{action this.onTriggerBuild}}
+    />
+  </div>
+
+  {{#unless (or this.closed this.preview)}}
+    <Request::ConfigsDescription
+      @customize={{this.customize}}
+      @configs={{this.rawConfigs.length}}
+    />
+  {{/unless}}
+
+  {{#if this.customize}}
+    <Request::ConfigForm
+      @repo={{this.repo}}
+      @request={{this.request}}
+      @config={{this.config}}
+      @refType={{this.refType}}
+      @branch={{this.branch}}
+      @sha={{this.sha}}
+      @message={{this.message}}
+      @mergeMode={{this.mergeMode}}
+      @loading={{this.loading}}
+      @messages={{this.messages}}
+      @onChange={{action "formFieldChanged"}}
+      @onSubmit={{action "submit"}}
+    />
+
+    {{#unless this.replace}}
+      <h4>
+        Build {{pluralize this.rawConfigs.length 'Config' without-count=true}}
+      </h4>
+    {{/unless}}
+  {{/if}}
+
+  {{#if this.preview}}
+    <Request::ConfigsPreview
+      @repo={{this.repo}}
+      @request={{this.request}}
+      @ref={{this.ref}}
+      @mergeMode={{this.mergeMode}}
+      @config={{this.config}}
+    />
+  {{/if}}
+{{/if}}
+
+{{#if (and this.closed this.showConfigValidation)}}
+  <Request::Messages
+    @messages={{this.request.messages}}
+  />
+{{/if}}
+
+{{#unless (or this.replace this.preview)}}
+  {{#each this.rawConfigs as |config|}}
+    <Request::RawConfig
+      @source={{config.source}}
+      @config={{get config 'config'}}
+      @build={{@request.build}}
+      @slug={{@request.repo.slug}}
+    />
+  {{else}}
+    {{#if this.loading}}
+      <LoadingIndicator
+        className="validating-indicator"
+      />
+    {{else}}
+      <div class="starred-empty">
+        Build configs not available.
+      </div>
+    {{/if}}
+  {{/each}}
+{{/unless}}
+
+{{#if this.closed}}
+  <Request::Config
+    @config={{@request.config}}
+  />
+{{/if}}

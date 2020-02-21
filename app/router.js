@@ -53,6 +53,7 @@ Router.map(function () {
   this.route('repo', { path: '/:owner/:name' }, function () {
     this.route('index', { path: '/' });
     this.route('branches', { path: '/branches', resetNamespace: true });
+    this.route('config', { path: '/config' });
     this.route('build', { path: '/builds/:build_id', resetNamespace: true }, function () {
       this.route('config');
     });

@@ -18,11 +18,17 @@ export default Mixin.create({
   messagesMaxLevel: computed('messages.@each.level', function () {
     if (this.hasMessages) {
       return this.messages.sortBy('level').lastObject.level;
+    } else {
+      return 'info';
     }
   }),
 
   messagesBadgeTooltipText: computed('messagesMaxLevel', function () {
-    return `This build's config has ${this.messagesMaxLevel} level validation messages`;
+    if (this.hasMessages) {
+      return `This build's config has ${this.messagesMaxLevel} level validation messages`;
+    } else {
+      return "This build's config is valid";
+    }
   }),
 
 });

@@ -3,11 +3,14 @@ import { computed } from '@ember/object';
 import { later } from '@ember/runloop';
 
 export default Component.extend({
+  tagName: 'div',
+  classNames: ['request-config'],
+  classNameBindings: ['expanded:request-config-expanded'],
   copied: false,
-  isExpanded: true,
+  expanded: true,
 
-  toggleStatusClass: computed('isExpanded', function () {
-    return this.isExpanded ? 'expanded' : 'collapsed';
+  toggleStatusClass: computed('expanded', function () {
+    return this.expanded ? 'expanded' : 'collapsed';
   }),
 
   buttonLabel: computed('copied', function () {
@@ -15,7 +18,7 @@ export default Component.extend({
   }),
 
   formattedConfig: computed('config', 'slug', function () {
-    const config = this.get('config');
+    const config = this.config;
     try {
       return JSON.stringify(config, null, 2);
     } catch (e) {
@@ -29,7 +32,7 @@ export default Component.extend({
       later(() => this.set('copied', false), 3000);
     },
     toggle() {
-      this.toggleProperty('isExpanded');
+      this.toggleProperty('expanded');
     }
   }
 });
