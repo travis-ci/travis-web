@@ -23,7 +23,7 @@ export default Component.extend(TriggerBuild, WithConfigValidation, {
   preview: match('status', /preview/),
   replace: match('mergeMode', /replace/),
 
-  loading: true,
+  loading: false,
   customized: false,
   processing: false,
 

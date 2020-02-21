@@ -21,10 +21,6 @@ export default Component.extend({
   status: undefined,
   open: match('status', /open/),
 
-  loading: computed('config', function () {
-    return !this.config;
-  }),
-
   language: computed('config', function () {
     try {
       JSON.parse(this.config);
