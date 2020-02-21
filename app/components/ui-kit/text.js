@@ -132,6 +132,7 @@ export default Component.extend({
   borderWidth: variantProp(VARIANT_PROPS, null),
   display: variantProp(VARIANT_PROPS, null),
   margin: variantProp(VARIANT_PROPS, null),
+  maxWidth: variantProp(VARIANT_PROPS, null),
   padding: variantProp(VARIANT_PROPS, null),
 
   variant: null,
