@@ -112,7 +112,9 @@ export default Service.extend({
 
     const { currentRouteName } = this.router;
     if (currentRouteName && currentRouteName !== 'signin') {
-      this.router.transitionTo('signin');
+      try {
+        this.router.transitionTo('signin');
+      } catch (e) {}
     }
   },
 
