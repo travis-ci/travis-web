@@ -1,5 +1,4 @@
 import Component from '@ember/component';
-import { reads } from '@ember/object/computed';
 
 import { checkDictionary } from 'travis/utils/ui-kit/assertions';
 import prefix from 'travis/utils/ui-kit/prefix';
@@ -24,6 +23,7 @@ const BG_COLORS = {
 };
 
 const BORDER_COLORS = {
+  [COLORS.WHITE]: 'white',
   [COLORS.BLUE]: 'blue-400',
   [COLORS.GREEN]: 'green-300',
   [COLORS.GREY]: 'grey-700',
@@ -34,11 +34,15 @@ const BORDER_COLORS = {
 const WIDTHS = {
   NONE: 'none',
   XS: 'xs',
+  SM: 'sm',
+  MD: 'md',
 };
 
 const BORDER_WIDTHS = {
   [WIDTHS.NONE]: 'none',
   [WIDTHS.XS]: 'px',
+  [WIDTHS.SM]: 'sm',
+  [WIDTHS.MD]: 'md',
 };
 
 export const DISPLAYS = {
@@ -168,7 +172,7 @@ export default Component.extend({
   heightClass: prefix('height', 'h'),
 
   // Position
-  positionType: reads('position.type'),
+  positionType: prefix('position.type', ''),
   positionTop: prefix('position.top', 'top'),
   positionRight: prefix('position.right', 'right'),
   positionBottom: prefix('position.bottom', 'bottom'),

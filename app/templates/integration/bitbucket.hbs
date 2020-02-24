@@ -114,6 +114,7 @@
   <UiKit::Box
     @display='flex'
     @margin={{hash x='auto'}}
+    @maxWidth='full'
     @position={{hash type='relative'}}
     @width={{hash base='max-content' md='full'}}
     class="flex-col items-start justify-between md:flex-row md:items-start"
@@ -121,48 +122,92 @@
     <UiKit::Box
       @display='flex'
       @margin={{hash base=(hash bottom=4) md=(hash right=4 bottom=0)}}
-      class="items-center md:flex-col md:text-center"
+      @textAlign={{hash md='center'}}
+      @width={{hash md='1/5'}}
+      class="items-center md:flex-col"
     >
-      <UiKit::Box @width={{32}} @margin={{hash base=(hash x=4) md=(hash x=0)}}><SvgImage @name='pull-icon-1' /></UiKit::Box>
-      <UiKit::Text @width={{32}} @align={{hash md='center'}}>A pull request <br /> is created</UiKit::Text>
+      <UiKit::Box @width={{32}} @margin={{hash base=(hash x=4) md=(hash x=0)}} class="flex-shrink-0"><SvgImage @name='pull-icon-1' /></UiKit::Box>
+      <UiKit::Text>A pull request is created</UiKit::Text>
     </UiKit::Box>
     <UiKit::Box
       @display='flex'
+      @layer='30'
       @margin={{hash base=(hash y=4) md=(hash x=4 y=0)}}
-      class="items-center z-30 md:flex-col md:text-center"
+      @textAlign={{hash md='center'}}
+      @width={{hash md='1/5'}}
+      class="items-center md:flex-col"
     >
-      <UiKit::Box @width={{32}} @margin={{hash base=(hash x=4) md=(hash x=0)}}><SvgImage @name='pull-icon-2' /></UiKit::Box>
-      <UiKit::Text @width={{32}} @align={{hash md='center'}}>Cloud platform tells Travis CI <br /> the build is mergeable</UiKit::Text>
+      <UiKit::Box @width={{32}} @margin={{hash base=(hash x=4) md=(hash x=0)}} class="flex-shrink-0"><SvgImage @name='pull-icon-2' /></UiKit::Box>
+      <UiKit::Text>Cloud platform tells Travis CI the build is mergeable</UiKit::Text>
     </UiKit::Box>
     <UiKit::Box
       @display='flex'
+      @layer='30'
       @margin={{hash base=(hash y=4) md=(hash x=4 y=0)}}
-      class="items-center z-30 md:flex-col md:text-center"
+      @textAlign={{hash md='center'}}
+      @width={{hash md='1/5'}}
+      class="items-center md:flex-col"
     >
-      <UiKit::Box @width={{32}} @margin={{hash base=(hash x=4) md=(hash x=0)}}><SvgImage @name='push-icon-3' /></UiKit::Box>
-      <UiKit::Text @width={{32}} @align={{hash md='center'}}>Hooray! <br /> Your build passes!</UiKit::Text>
+      <UiKit::Box @width={{32}} @margin={{hash base=(hash x=4) md=(hash x=0)}} class="flex-shrink-0"><SvgImage @name='push-icon-3' /></UiKit::Box>
+      <UiKit::Text>Hooray! <br /> Your build passes!</UiKit::Text>
     </UiKit::Box>
     <UiKit::Box
       @display='flex'
+      @layer='30'
       @margin={{hash base=(hash y=4) md=(hash x=4 y=0)}}
-      class="items-center z-30 md:flex-col md:text-center"
+      @textAlign={{hash md='center'}}
+      @width={{hash md='1/5'}}
+      class="items-center md:flex-col"
     >
-      <UiKit::Box @width={{32}} @margin={{hash base=(hash x=4) md=(hash x=0)}}><SvgImage @name='pull-icon-4' /></UiKit::Box>
-      <UiKit::Text @width={{32}} @align={{hash md='center'}}>Travis CI updates <br /> the PR that it passed</UiKit::Text>
+      <UiKit::Box @width={{32}} @margin={{hash base=(hash x=4) md=(hash x=0)}} class="flex-shrink-0"><SvgImage @name='pull-icon-4' /></UiKit::Box>
+      <UiKit::Text>Travis CI updates the PR that it passed</UiKit::Text>
     </UiKit::Box>
     <UiKit::Box
       @display='flex'
       @margin={{hash base=(hash top=4) md=(hash top=0 left=4)}}
-      class="items-center md:flex-col md:text-center"
+      @textAlign={{hash md='center'}}
+      @width={{hash md='1/5'}}
+      class="items-center md:flex-col"
     >
-      <UiKit::Box @width={{32}} @margin={{hash base=(hash x=4) md=(hash x=0)}}><SvgImage @name='pull-icon-5' /></UiKit::Box>
-      <UiKit::Text @width={{32}} @align={{hash md='center'}}>You merge in <br /> the PR goodness</UiKit::Text>
+      <UiKit::Box @width={{32}} @margin={{hash base=(hash x=4) md=(hash x=0)}} class="flex-shrink-0"><SvgImage @name='pull-icon-5' /></UiKit::Box>
+      <UiKit::Text>You merge in the PR goodness</UiKit::Text>
     </UiKit::Box>
 
-    <UiKit::Box class='build-flow-diagram__bar absolute w-1 top-0 left-0 bottom-0 md:bottom-auto md:right-0 md:h-1 md:w-auto'>
-      <UiKit::Box class='absolute w-5 h-5 bg-grey-150 rounded-full border-white border-md z-10 top-0 -ml-2 -mt-3 md:left-0 md:-ml-4 md:-mt-2'></UiKit::Box>
-      <UiKit::Box class='relative bg-grey-150 h-full w-full z-20'></UiKit::Box>
-      <UiKit::Box class='absolute w-5 h-5 bg-grey-150 rounded-full border-white border-md z-10 bottom-0 -ml-2 -mb-3 md:right-0 md:ml-0 md:-mr-2 md:-mb-2'></UiKit::Box>
+    <UiKit::Box
+      @height={{hash md=1}}
+      @position={{hash base=(hash type='absolute' top=0 bottom=0 left=0) md=(hash bottom='auto' right=0)}}
+      @width={{hash base=1 md='auto'}}
+      class='build-flow-diagram__bar'
+    >
+      <UiKit::Box
+        @borderColor='white'
+        @borderWidth={{hash all='md'}}
+        @color='grey-lighter'
+        @height={{5}}
+        @layer='10'
+        @margin={{hash base=(hash left=-2 top=-3) md=(hash left=-4 top=-2)}}
+        @position={{hash base=(hash type='absolute' top=0) md=(hash left=0)}}
+        @radius='full'
+        @width={{5}}
+      ></UiKit::Box>
+      <UiKit::Box
+        @color='grey-lighter'
+        @height='full'
+        @layer='20'
+        @position={{hash type='relative'}}
+        @width='full'
+      ></UiKit::Box>
+      <UiKit::Box
+        @borderColor='white'
+        @borderWidth={{hash all='md'}}
+        @color='grey-lighter'
+        @height={{5}}
+        @layer='10'
+        @margin={{hash base=(hash left=-2 bottom=-3) md=(hash left=0 right=-2 bottom=-2)}}
+        @position={{hash base=(hash type='absolute' bottom=0) md=(hash right=0)}}
+        @radius='full'
+        @width={{5}}
+      ></UiKit::Box>
     </UiKit::Box>
   </UiKit::Box>
 </UiKit::Box>

@@ -5,10 +5,10 @@
 
 .build-flow-diagram {
   &__bar {
-    margin: 7.85rem 0 7.85rem 4.85rem;
+    margin: 7.9rem 0 7.9rem 4.85rem;
 
     @screen md {
-      margin: 4rem 8.05rem 0 8.15rem;
+      margin: 4rem calc(10% + 2.777rem) 0 calc(10% + 3.333rem);
     }
   }
 }
