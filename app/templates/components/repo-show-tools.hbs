@@ -29,7 +29,7 @@
   {{#if this.displayTriggerBuildLink}}
     <li>
       <!-- TODO activate trigger build if we're on build.config or job.onfig -->
-      <LinkTo @route="repo.config" @model={{this.repo}}>
+      <LinkTo @route="repo.config" @model={{this.repo}} trigger-build-anchor="true">
         Trigger build
       </LinkTo>
     </li>

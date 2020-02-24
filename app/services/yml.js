@@ -34,8 +34,8 @@ export default Service.extend({
 
   request(url, method = 'GET', options = {}) {
     // options.host = config.ymlEndpoint || 'https://yml-staging.travis-ci.org'; // TODO
-    // options.host = 'https://yml-staging.travis-ci.org';
-    options.host = 'http://localhost:9292';
+    options.host = 'https://yml-staging.travis-ci.org';
+    // options.host = 'http://localhost:9292';
     options.headers = this.headers(options);
     return this.ajax.request(url, method, options);
   },
