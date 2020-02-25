@@ -150,6 +150,30 @@ const Repo = VcsEntity.extend({
     return this._buildObservableArray(builds);
   }),
 
+  pushes: computed('id', function () {
+    let id = this.id;
+    const builds = this.store.filter('build', {
+      event_type: 'push',
+      repository_id: id,
+    }, (b) => {
+      const isPush = b.get('eventType') === 'push';
+      return this._buildRepoMatches(b, id) && isPush;
+    });
+    return this._buildObservableArray(builds);
+  }),
+
+  apis: computed('id', function () {
+    let id = this.id;
+    const builds = this.store.filter('build', {
+      event_type: 'api',
+      repository_id: id,
+    }, (b) => {
+      const isApi = b.get('eventType') === 'api';
+      return this._buildRepoMatches(b, id) && isApi;
+    });
+    return this._buildObservableArray(builds);
+  }),
+
   branches: computed('id', function () {
     let id = this.id;
     return this.store.filter('branch', {
