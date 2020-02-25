@@ -1,5 +1,5 @@
 {{!-- Header section --}}
-<UiKit::Box>
+<UiKit::Box @shadow='md'>
   <UiKit::Box
     @tag='section'
     @margin={{hash bottom=16 x='auto'}}
@@ -105,7 +105,7 @@
   @margin={{hash bottom=32 x='auto'}}
   @maxWidth='6xl'
   @padding={{hash x=4}}
-  data-test-integration-bb-header-section="true"
+  data-test-integration-bb-flow-section="true"
 >
   <UiKit::Text @variant='h2'>
     Get up and running with Travis CI and Bitbucket in seconds
@@ -218,7 +218,7 @@
   @margin={{hash bottom=16 x='auto'}}
   @maxWidth='6xl'
   @padding={{hash x=4}}
-  data-test-integration-bb-header-section="true"
+  data-test-integration-bb-testimonial-section="true"
 >
   <UiKit::Text
     @align='center'
@@ -314,4 +314,27 @@
       </UiKit::Box>
     </grid.item>
   </UiKit::Grid>
+</UiKit::Box>
+
+{{!-- Start section --}}
+<UiKit::Box
+  @color='grey-lighter'
+  @padding={{hash y=32}}
+>
+  <UiKit::Box
+    @tag='section'
+    @margin={{hash x='auto'}}
+    @maxWidth='6xl'
+    @padding={{hash x=4}}
+    data-test-integration-bb-start-section="true"
+  >
+    <UiKit::Text
+      @align='center'
+      @margin={{hash bottom=10}}
+      @size='5xl'
+      @weight='light'
+    >
+      So many great features, so let's get you started.
+    </UiKit::Text>
+  </UiKit::Box>
 </UiKit::Box>

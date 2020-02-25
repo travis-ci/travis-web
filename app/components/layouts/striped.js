@@ -5,4 +5,5 @@ export default Component.extend({
 
   useTailwind: false,
   isTopBarWhite: false,
+  isFlush: false,
 });
