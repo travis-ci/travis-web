@@ -130,7 +130,7 @@
     </ul>
     <AddCronJob @repository={{this.model.repository}} />
   </section>
-  {{#if (and (config-get 'endpoints.sshKey') or this.features.enterpriseVersion this.repo.private)}}
+  {{#if (and (config-get 'endpoints.sshKey') (or this.features.enterpriseVersion this.repo.private))}}
     <section class="settings-section" data-test-ssh-key-section>
       <h2 class="small-title">
         SSH Key
