@@ -7,7 +7,7 @@ export default TravisRoute.extend({
 
   beforeModel() {
     if (this.auth.signedIn) {
-      this.router.transitionTo('account.billing')
+      this.router.transitionTo('account.billing');
     }
   },
 });
