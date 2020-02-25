@@ -4,6 +4,13 @@ import prefix from 'travis/utils/ui-kit/prefix';
 import concat from 'travis/utils/ui-kit/concat';
 import { variantProp } from 'travis/utils/ui-kit/variant';
 
+export const ALIGNMENTS = {
+  LEFT: 'left',
+  CENTER: 'center',
+  RIGHT: 'right',
+  JUSTIFY: 'justify',
+};
+
 const COLORS = {
   BLUE_LIGHT: 'blue-light',
   BLUE: 'blue',
@@ -120,6 +127,7 @@ export default Component.extend({
   // Public interface
   tag: 'p',
 
+  align: variantProp(VARIANT_PROPS, null),
   color: variantProp(VARIANT_PROPS, DEFAULT_TEXT_COLOR),
   family: variantProp(VARIANT_PROPS, DEFAULT_FAMILY),
   leading: variantProp(VARIANT_PROPS, DEFAULT_LEADING),
@@ -138,6 +146,7 @@ export default Component.extend({
   variant: null,
 
   // Private
+  alignClass: prefix('align', 'text'),
   colorClass: prefix('color', 'text', { dictionary: TEXT_COLORS }),
   familyClass: prefix('family', 'font'),
   leadingClass: prefix('leading', 'leading'),
@@ -147,6 +156,7 @@ export default Component.extend({
   weightClass: prefix('weight', 'font'),
 
   allClasses: concat(
+    'alignClass',
     'colorClass',
     'familyClass',
     'leadingClass',
@@ -160,6 +170,7 @@ export default Component.extend({
   didReceiveAttrs() {
     this._super(...arguments);
 
+    checkDictionary(this.align, ALIGNMENTS, '@align', 'Text');
     checkDictionary(this.color, COLORS, '@color', 'Text');
     checkDictionary(this.size, SIZES, '@size', 'Text');
     checkDictionary(this.family, FAMILIES, '@family', 'Text');

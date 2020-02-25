@@ -1,8 +1,8 @@
 import Component from '@ember/component';
-
 import { checkDictionary } from 'travis/utils/ui-kit/assertions';
 import prefix from 'travis/utils/ui-kit/prefix';
 import concat from 'travis/utils/ui-kit/concat';
+import { ALIGNMENTS as TEXT_ALIGNMENTS } from 'travis/components/ui-kit/text';
 
 const COLORS = {
   WHITE: 'white',
@@ -52,13 +52,6 @@ export const DISPLAYS = {
   FLEX: 'flex',
 };
 const DEFAULT_DISPLAY = DISPLAYS.BLOCK;
-
-const TEXT_ALIGNMENTS = {
-  LEFT: 'left',
-  CENTER: 'center',
-  RIGHT: 'right',
-  JUSTIFY: 'justify',
-};
 
 const LAYERS = {
   AUTO: 'auto',

@@ -102,7 +102,7 @@
 {{!-- Build flow section --}}
 <UiKit::Box
   @tag='section'
-  @margin={{hash bottom=16 x='auto'}}
+  @margin={{hash bottom=32 x='auto'}}
   @maxWidth='6xl'
   @padding={{hash x=4}}
   data-test-integration-bb-header-section="true"
@@ -210,4 +210,108 @@
       ></UiKit::Box>
     </UiKit::Box>
   </UiKit::Box>
+</UiKit::Box>
+
+{{!-- Testimonial section --}}
+<UiKit::Box
+  @tag='section'
+  @margin={{hash bottom=16 x='auto'}}
+  @maxWidth='6xl'
+  @padding={{hash x=4}}
+  data-test-integration-bb-header-section="true"
+>
+  <UiKit::Text
+    @align='center'
+    @color='green'
+    @margin={{hash bottom=10}}
+    @size='5xl'
+    @weight='light'
+  >
+    People have said nice things about us.
+  </UiKit::Text>
+  <UiKit::Grid @lg={{3}} @gap={{6}} as |grid|>
+    <grid.item>
+      <UiKit::Box
+        @display='flex'
+        @height={{hash base='auto' lg='full'}}
+        @margin={{hash base=(hash bottom=12) lg=(hash bottom=0)}}
+        @padding={{hash all=6}}
+        @shadow='md'
+        class="flex-col"
+      >
+        <UiKit::Image @svg='rails' @alt='ruby on rails logo' @margin={{hash bottom=8}} @width={{24}} />
+        <UiKit::Text @variant='p' class="flex-grow-single">
+          Travis CI makes it so much easier for us to coordinate the thousands
+          of commits and contributors that flow through the Rails code base.
+          The test suite for such a large project is vast, and we wouldn't be
+          catching issues as quickly or smoothly without the help of Travis.
+        </UiKit::Text>
+        <UiKit::Text @margin={{hash bottom=1}} @weight='semibold'>
+          David Heinemeier Hansson
+        </UiKit::Text>
+        <UiKit::Text @margin={{hash bottom=1}}>
+          Creator of Ruby on Rails
+        </UiKit::Text>
+        <UiKit::Link @href='https://twitter.com/dhh'>
+          <UiKit::Image @svg='twitter' @alt='twitter logo' @width={{4}} />
+          dhh
+        </UiKit::Link>
+      </UiKit::Box>
+    </grid.item>
+    <grid.item>
+      <UiKit::Box
+        @display='flex'
+        @height={{hash base='auto' lg='full'}}
+        @margin={{hash base=(hash bottom=12) lg=(hash bottom=0)}}
+        @padding={{hash all=6}}
+        @shadow='md'
+        class="flex-col"
+      >
+        <UiKit::Image @svg='twitter-quote' @alt='twitter logo' @margin={{hash bottom=8}} @width={{8}} />
+        <UiKit::Text @variant='p' class="flex-grow-single">
+          We love Travis CI at @TwitterOSS and we use it for the majority of our open source projects on GitHub.
+          Travis CI is simple to use, we love their API to build tooling and adore the new container infrastructure for speedier builds.
+        </UiKit::Text>
+        <UiKit::Text @margin={{hash bottom=1}} @weight='semibold'>
+          Chris Aniszczyk
+        </UiKit::Text>
+        <UiKit::Text @margin={{hash bottom=1}}>
+          Creator of Ruby on Rails
+        </UiKit::Text>
+        <UiKit::Link @href='https://twitter.com/cra'>
+          <UiKit::Image @svg='twitter' @alt='twitter logo' @width={{4}} />
+          cra
+        </UiKit::Link>
+      </UiKit::Box>
+    </grid.item>
+    <grid.item>
+      <UiKit::Box
+        @display='flex'
+        @height={{hash base='auto' lg='full'}}
+        @margin={{hash base=(hash bottom=12) lg=(hash bottom=0)}}
+        @padding={{hash all=6}}
+        @shadow='md'
+        class="flex-col"
+      >
+        <UiKit::Box @display='flex' @margin={{hash bottom=6}} class="items-center">
+          <UiKit::Image @path='landing-page/pypy.png' @alt='pypy logo' @margin={{hash right=4}} @width={{24}} />
+          <UiKit::Image @svg='lang-python' @alt='python logo' @width={{8}} />
+        </UiKit::Box>
+        <UiKit::Text @variant='p' class="flex-grow-single">
+          Not only is Travis CI the best way to test your software, it is the right way.
+          rm -rf jenkins&amp;&amp;touch .travis.yml
+        </UiKit::Text>
+        <UiKit::Text @margin={{hash bottom=1}} @weight='semibold'>
+          Alex Gaynor
+        </UiKit::Text>
+        <UiKit::Text @margin={{hash bottom=1}}>
+          PyPy and Python Core Team Member
+        </UiKit::Text>
+        <UiKit::Link @href='https://github.com/alex'>
+          <UiKit::Image @svg='github' @alt='github logo' @width={{4}} />
+          alex
+        </UiKit::Link>
+      </UiKit::Box>
+    </grid.item>
+  </UiKit::Grid>
 </UiKit::Box>
