@@ -16,7 +16,7 @@ export default Service.extend({
       config: config,
       type: 'api'
     };
-    return this.request('/configs', 'POST', { data: data });
+    return this.request('/configs', 'POST', { data });
   },
 
   parse(configs) {

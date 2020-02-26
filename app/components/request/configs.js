@@ -2,6 +2,7 @@ import Component from '@ember/component';
 import { computed, observer } from '@ember/object';
 import { reads, equal, match, or } from '@ember/object/computed';
 import { debounce } from '@ember/runloop';
+import { task } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
 import TriggerBuild from 'travis/mixins/trigger-build';
 import WithConfigValidation from 'travis/mixins/components/with-config-validation';
@@ -13,7 +14,7 @@ export default Component.extend(TriggerBuild, WithConfigValidation, {
 
   api: service(),
   router: service(),
-  yml: service(),
+  store: service(),
 
   repo: reads('request.repo'),
   rawConfigs: reads('request.uniqRawConfigs'),
@@ -23,7 +24,7 @@ export default Component.extend(TriggerBuild, WithConfigValidation, {
   preview: match('status', /preview/),
   replace: match('mergeMode', /replace/),
 
-  loading: false,
+  loading: reads('load.isRunning'),
   customized: false,
   processing: false,
 
@@ -49,7 +50,7 @@ export default Component.extend(TriggerBuild, WithConfigValidation, {
   isRepoConfig: match('router.currentRouteName', /repo\.config/),
 
   didInsertElement() {
-    this.load();
+    this.load.perform();
   },
 
   displayTriggerBuild: computed(
@@ -88,34 +89,36 @@ export default Component.extend(TriggerBuild, WithConfigValidation, {
   }),
 
   fieldChanged: observer('refType', 'branch', 'sha', 'mergeMode', function () {
-    this.load();
+    this.load.perform();
   }),
 
   configChanged: observer('config', function () {
     debounce(this, 'load', 500);
   }),
 
-  load: function () {
+  load: task(function* () {
     if (this.status !== 'closed' && this.status !== 'open') {
-      this.set('loading', true);
-      this.yml.configs(this.repo, this.ref, this.mergeMode, this.config)
-        .then(this.success.bind(this)) // , this.error.bind(this)
-        .catch(this.error.bind(this))
-        .finally(() => this.set('loading', false));
+      let data = {
+        repo: {
+          slug: this.repo.get('slug'),
+          private: this.repo.get('private'),
+          default_branch: this.repo.get('defaultBranch.name'),
+        },
+        ref: this.ref,
+        mode: this.mergeMode,
+        config: this.config,
+        type: 'api'
+      };
+      try {
+        const result = yield this.store.queryRecord('build-config', { data });
+        this.set('rawConfigs', result.rawConfigs);
+        this.set('messages', result.messages);
+      } catch (e) {
+        this.set('rawConfigs', []);
+        this.set('messages', [{ level: 'error', code: e.error_type, args: { message: e.error_message } }]);
+      }
     }
-  },
-
-  success: function (data) {
-    this.set('rawConfigs', data.raw_configs);
-    this.set('messages', data.messages);
-  },
-
-  error: function (resp) {
-    resp.json().then((e) => {
-      this.set('rawConfigs', []);
-      this.set('messages', [{ level: 'error', code: e.error_type, args: { message: e.error_message } }]);
-    });
-  },
+  }).drop(),
 
   // shouldn't these actually be actions, and shouldn't the template
   // use onclick={{action "triggerBuild"}} rather than

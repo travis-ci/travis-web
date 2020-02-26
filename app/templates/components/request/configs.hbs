@@ -75,6 +75,7 @@
 {{/if}}
 
 {{#unless (or this.replace this.preview)}}
+  {{log this.rawConfigs}}
   {{#each this.rawConfigs as |config|}}
     <Request::RawConfig
       @source={{config.source}}

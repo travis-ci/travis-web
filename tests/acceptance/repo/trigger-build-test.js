@@ -100,18 +100,18 @@ module('Acceptance | repo/trigger build', function (hooks) {
     await triggerBuildPage.visit({ owner: 'adal', repo: 'difference-engine' });
 
     assert.equal(currentURL(), 'adal/difference-engine', 'we are on the repo page');
-    assert.ok(triggerBuildPage.popupIsHidden, 'modal is hidden');
+    assert.ok(triggerBuildPage.configFormIsHidden, 'modal is hidden');
 
-    await triggerBuildPage.openPopup();
+    await triggerBuildPage.showConfigForm();
 
-    assert.ok(triggerBuildPage.popupIsVisible, 'modal is visible after click');
+    assert.ok(triggerBuildPage.configFormIsVisible, 'config form is visible after click');
 
     await triggerBuildPage.writeMessage('This is a demo build');
     await triggerBuildPage.writeConfig('script: echo "Hello World"');
     percySnapshot(assert);
     await triggerBuildPage.clickSubmit();
 
-    assert.ok(triggerBuildPage.popupIsHidden, 'modal is hidden again');
+    assert.ok(triggerBuildPage.configFormIsHidden, 'config form is hidden again');
     assert.equal(currentURL(), '/adal/difference-engine/builds/9999', 'we transitioned after the build was triggered');
   });
 
@@ -121,7 +121,7 @@ module('Acceptance | repo/trigger build', function (hooks) {
     });
 
     await triggerBuildPage.visit({ owner: 'adal', repo: 'difference-engine' });
-    await triggerBuildPage.openPopup();
+    await triggerBuildPage.showConfigForm();
     await triggerBuildPage.clickSubmit();
 
     assert.equal(topPage.flashMessage.text, 'Oops, something went wrong, please try again.');
@@ -133,7 +133,7 @@ module('Acceptance | repo/trigger build', function (hooks) {
     });
 
     await triggerBuildPage.visit({ owner: 'adal', repo: 'difference-engine' });
-    await triggerBuildPage.openPopup();
+    await triggerBuildPage.showConfigForm();
     await triggerBuildPage.clickSubmit();
 
     assert.equal(topPage.flashMessage.text, 'You’ve exceeded the limit for triggering builds, please wait a while before trying again.');
