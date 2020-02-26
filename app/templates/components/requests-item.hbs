@@ -1,7 +1,7 @@
 <div class="row-item">
   <StatusIcon @status={{this.requestClass}} />
 </div>
-<div class="row-item fade-out {{this.requestClass}}">
+<div class="row-item fade-out">
   <RequestIcon @event={{this.request.event_type}} @state={{this.requestClass}} />
   <span class="label-align m-l-s" data-requests-item-related-model>
     {{#if this.request.isPullRequest}}

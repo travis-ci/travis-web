@@ -186,6 +186,9 @@ Object.defineProperty(Log.Nodes.prototype, 'length', {
 Log.Part = function (id, num, string) {
   Log.Node.apply(this, arguments);
   this.string = string || '';
+
+  // For ticket: https://travisci.assembla.com/spaces/Web/tickets/realtime_cardwall?ticket=184
+  this.string = this.string.replace(/}(?=travis_(fold:end|time:end))/gm, '$&\n');
   this.string = this.string.replace(/\033\[1000D/gm, '\r');
 
   // This is an ultra-specific fix for this issue:
@@ -194,6 +197,7 @@ Log.Part = function (id, num, string) {
 
   // Fix for issue: https://github.com/travis-pro/team-teal/issues/2782
   this.string = this.string.replace(/\r\u001B\[0m\r\n/gm, '\n');
+
 
   this.string = this.string.replace(/\r+\n/gm, '\n');
   this.string = this.string.replace(/\r+/gm, '\r');

@@ -129,7 +129,7 @@ export default create({
   token: {
     show: clickable('.token-actions button.show-token'),
     value: text('.auth-token'),
-    obfuscatedCharacters: text('.obfuscated-chars'),
+    obfuscatedCharacters: collection('.obfuscated-chars'),
     tokenCopiedText: text('.token-copied-text'),
   },
 
@@ -616,7 +616,7 @@ export default create({
     billingSubscription: {
       greyStatus: '[data-test-grey-status]',
       activeStatus: '[data-test-active-status]',
-      canceledStatus: '[data-test-canceled-status]',
+      canceledStatus: '[data-test-grey-status]',
       expiredStatus: '[data-test-expired-status]',
       manualStatus: '[data-test-manual-status]'
     },

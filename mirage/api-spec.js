@@ -687,6 +687,15 @@ export default {
         "minimal":        ["id", "card_owner", "expiration_date", "last_digits"],
       }
     },
+    "discount":                    {
+      "@type":            "resource",
+      "actions":          { },
+      "attributes":       ["id", "name", "percent_off", "amount_off", "valid", "duration", "duration_in_months"],
+      "representations":  {
+        "standard":       ["id", "name", "percent_off", "amount_off", "valid", "duration", "duration_in_months"],
+        "minimal":        ["id", "name", "percent_off", "amount_off", "valid", "duration", "duration_in_months"],
+      }
+    },
     "cron": {
       "@type": "resource",
       "actions": {
@@ -2076,9 +2085,11 @@ export default {
         "plan",
         "billing_info",
         "credit_card_info",
+        "discount",
         "owner",
         "status",
         "valid_to",
+        "created_at",
         "source",
       ],
       "representations":  {
@@ -2087,9 +2098,11 @@ export default {
           "plan",
           "billing_info",
           "credit_card_info",
+          "discount",
           "owner",
           "status",
           "valid_to",
+          "created_at",
           "source"
         ],
         "minimal":       [
@@ -2097,6 +2110,7 @@ export default {
           "owner",
           "status",
           "valid_to",
+          "created_at",
           "source"
         ],
       },
