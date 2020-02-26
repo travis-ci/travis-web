@@ -5,7 +5,7 @@ import { A } from '@ember/array';
 import { computed } from '@ember/object';
 import { and, empty, not } from '@ember/object/computed';
 
-const DEFAULT_LIMIT = 10;
+const DEFAULT_LIMIT = 25;
 
 export default Component.extend({
   tagName: '',
@@ -36,10 +36,10 @@ export default Component.extend({
     return this.store.query(modelName, queryOptions);
   },
 
-  loadItems(newItems, lastFoundThreshold = 1) {
+  loadItems(newItems) {
     newItems.forEach(item => this.items.pushObject(item));
 
-    if (newItems.length < lastFoundThreshold) {
+    if (newItems.length < this.limit) {
       this.set('isLastItemFound', true);
     }
   },
