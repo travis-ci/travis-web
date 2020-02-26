@@ -4,7 +4,6 @@ import prefix from 'travis/utils/ui-kit/prefix';
 import concat from 'travis/utils/ui-kit/concat';
 import { variantProp } from 'travis/utils/ui-kit/variant';
 
-<<<<<<< HEAD
 export const ALIGNMENTS = {
   LEFT: 'left',
   CENTER: 'center',
@@ -12,10 +11,7 @@ export const ALIGNMENTS = {
   JUSTIFY: 'justify',
 };
 
-const COLORS = {
-=======
 export const COLORS = {
->>>>>>> epic-bb-integration
   BLUE_LIGHT: 'blue-light',
   BLUE: 'blue',
   GREEN_LIGHT: 'green-light',
@@ -114,11 +110,8 @@ const VARIANTS = {
   H1: 'h1',
   H2: 'h2',
   P: 'p',
-<<<<<<< HEAD
-=======
   LINK_BLUE: 'link-blue',
   LINK_UNDER: 'link-underlined',
->>>>>>> epic-bb-integration
 };
 const VARIANT_PROPS = {
   [VARIANTS.SMALLCAPS]: {
