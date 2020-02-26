@@ -167,16 +167,15 @@ export default Service.extend({
   },
 
   reportToIntercom() {
-    if (this.isProVersion && intercom.enabled) {
-      const { id, name, email, firstLoggedInAt, secureUserHash } = this.currentUser;
-      this.intercom.setProperties({
-        'user.id': id,
-        'user.name': name,
-        'user.email': email,
-        'user.createdAt': firstLoggedInAt,
-        'user.hash': secureUserHash
-      });
-    }
+    const {
+      id,
+      name,
+      email,
+      firstLoggedInAt: createdAt,
+      secureUserHash: hash,
+      vcsProvider = {}
+    } = this.currentUser;
+    this.intercom.set('user', { id, name, email, createdAt, hash, provider: vcsProvider.name });
   },
 
   reportNewUser() {
