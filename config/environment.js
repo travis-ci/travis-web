@@ -61,7 +61,7 @@ module.exports = function (environment) {
       debug: false
     },
     intercom: {
-      appId: INTERCOM_APP_ID,
+      appId: INTERCOM_APP_ID || 'placeholder',
       enabled: !!INTERCOM_APP_ID,
       userProperties: {
         userIdProp: 'id',
