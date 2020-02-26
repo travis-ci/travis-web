@@ -1,5 +1,5 @@
 {{!-- Header section --}}
-<UiKit::Box @shadow='md'>
+<UiKit::Box @padding={{hash top=24 bottom=8}} @shadow='md'>
   <UiKit::Box
     @tag='section'
     @margin={{hash bottom=16 x='auto'}}
@@ -8,23 +8,34 @@
     data-test-integration-bb-header-section="true"
   >
     <UiKit::Grid @align='center' @gap={{4}} as |grid|>
-      <grid.item @sm='full' @md='2/3' @lg='2/3'>
-        <UiKit::Text
-          @tag='h1'
-          @variant='h1'
-          @leading={{hash base='none' md='2xs' lg='sm'}}
+      <grid.item @sm='full' @md='1/2' @lg='2/3'>
+        <UiKit::Box
+          @display='flex'
+          @flexDir='col'
+          @flexAlign={{hash base='center' md='start'}}
+          @textAlign={{hash base='center' md='left'}}
         >
-          Test your Bitbucket
-          projects with Travis CI
-        </UiKit::Text>
-        <UiKit::Text @variant='p'>
-          Build, test, and deploy your software seamlessly with the Atlassian Bitbucket
-          integration for Travis CI
-        </UiKit::Text>
-        <UiKit::ButtonSignin @provider='bitbucket' @isSignup={{true}} />
+          <UiKit::Text
+            @tag='h1'
+            @variant='h1'
+            @margin={{hash bottom=2}}
+            @leading={{hash base='none' md='2xs' lg='sm'}}
+          >
+            Test your Bitbucket
+            projects with Travis CI
+          </UiKit::Text>
+          <UiKit::Text @margin={{hash bottom=8}}>
+            Build, test, and deploy your software seamlessly with the Atlassian Bitbucket
+            integration for Travis CI
+          </UiKit::Text>
+          <UiKit::ButtonSignin @provider='bitbucket' @isSignup={{true}} />
+        </UiKit::Box>
       </grid.item>
-      <grid.item @sm='full' @md='1/3' @lg='1/3'>
-        <UiKit::Box @maxWidth='sm' @margin={{hash x='auto'}}>
+      <grid.item @sm='full' @md='1/2' @lg='1/3'>
+        <UiKit::Box
+          @maxWidth='sm'
+          @margin={{hash base=(hash x='auto' top=8) md=(hash top=0)}}
+        >
           <SvgImage @name='bb-integrate' />
         </UiKit::Box>
       </grid.item>
@@ -323,6 +334,9 @@
 >
   <UiKit::Box
     @tag='section'
+    @display='flex'
+    @flexDir='col'
+    @flexAlign='center'
     @margin={{hash x='auto'}}
     @maxWidth='6xl'
     @padding={{hash x=4}}
@@ -330,11 +344,22 @@
   >
     <UiKit::Text
       @align='center'
-      @margin={{hash bottom=10}}
       @size='5xl'
       @weight='light'
     >
       So many great features, so let's get you started.
     </UiKit::Text>
+
+    <UiKit::Text
+      @align='center'
+      @color='blue-light'
+      @margin={{hash bottom=10}}
+      @size='6xl'
+      @weight='light'
+    >
+      Run your tests with Travis CI
+    </UiKit::Text>
+
+    <UiKit::ButtonSignin @provider='bitbucket' @isSignup={{true}} />
   </UiKit::Box>
 </UiKit::Box>
