@@ -15,7 +15,7 @@ import config from 'travis/config/environment';
 import { task } from 'ember-concurrency';
 import { availableProviders } from 'travis/utils/vcs';
 
-const { authEndpoint, apiEndpoint, intercom = {} } = config;
+const { authEndpoint, apiEndpoint } = config;
 
 // Collects the list of includes from all requests
 // and ensures the future fetches don't override previously loaded includes
