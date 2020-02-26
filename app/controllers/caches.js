@@ -16,9 +16,8 @@ export default Controller.extend({
   cachesExist: computed('model.pushes.[]', 'model.pullRequests.[]', function () {
     let pushes = this.get('model.pushes');
     let pullRequests = this.get('model.pullRequests');
-    let apis = this.get('model.apis');
-    if (pushes || pullRequests || apis) {
-      return pushes.length || pullRequests.length || apis.length;
+    if (pushes || pullRequests) {
+      return pushes.length || pullRequests.length;
     }
   }),
 
