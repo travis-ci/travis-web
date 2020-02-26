@@ -4,30 +4,38 @@ import prefix from 'travis/utils/ui-kit/prefix';
 import concat from 'travis/utils/ui-kit/concat';
 import { ALIGNMENTS as TEXT_ALIGNMENTS } from 'travis/components/ui-kit/text';
 
-const COLORS = {
+export const COLORS = {
   WHITE: 'white',
   BLUE_LIGHT: 'blue-light',
   BLUE: 'blue',
   GREEN: 'green',
+  GREY_LIGHTEST: 'grey-lightest',
   GREY_LIGHTER: 'grey-lighter',
   GREY_LIGHT: 'grey-light',
   GREY: 'grey',
   GREY_DARK: 'grey-dark',
+  YELLOW_LIGHTER: 'yellow-lighter',
+  YELLOW_LIGHT: 'yellow-light',
 };
 
 const BG_COLORS = {
   [COLORS.WHITE]: 'white',
   [COLORS.BLUE_LIGHT]: 'blue-300',
+  [COLORS.GREY_LIGHTEST]: 'grey-100',
+  [COLORS.GREY_LIGHTER]: 'grey-150',
   [COLORS.GREY_LIGHT]: 'grey-300',
-  [COLORS.GREY_LIGHTER]: 'grey-100',
+  [COLORS.GREY_DARK]: 'grey-800',
+  [COLORS.BLUE]: 'blue-400',
+  [COLORS.YELLOW_LIGHT]: 'yellow-200',
+  [COLORS.YELLOW_LIGHTER]: 'yellow-100',
 };
 
 const BORDER_COLORS = {
   [COLORS.WHITE]: 'white',
   [COLORS.BLUE]: 'blue-400',
   [COLORS.GREEN]: 'green-300',
-  [COLORS.GREY]: 'grey-700',
   [COLORS.GREY_LIGHT]: 'grey-150',
+  [COLORS.GREY]: 'grey-700',
   [COLORS.GREY_DARK]: 'grey-800',
 };
 
@@ -116,10 +124,39 @@ const MAX_WIDTHS = {
   XL: 'xl',
   XL2: '2xl',
   XL3: '3xl',
+  XL5: '5xl',
   XL6: '6xl',
   FULL: 'full',
 };
 
+// Flexbox
+const FLEX_ALIGNMENTS = {
+  STRETCH: 'stretch',
+  START: 'start',
+  CENTER: 'center',
+  END: 'end',
+  BASELINE: 'baseline',
+};
+
+const FLEX_JUSTIFICATIONS = {
+  START: 'start',
+  CENTER: 'center',
+  END: 'end',
+  BETWEEN: 'between',
+  AROUND: 'around',
+};
+
+const FLEX_DIRECTIONS = {
+  ROW: 'row',
+  COL: 'col',
+  ROW_REVERSE: 'row-reverse',
+  COL_REVERSE: 'col-reverse',
+};
+
+const FLEX_WRAPS = {
+  wrap: 'wrap',
+  NO_WRAP: 'no-wrap',
+};
 
 // Component definition
 export default Component.extend({
@@ -147,6 +184,11 @@ export default Component.extend({
   margin: null,
   padding: null,
   position: null,
+
+  flexAlign: null,
+  flexJustify: null,
+  flexDir: null,
+  flexWrap: null,
 
   // Private //
   colorClass: prefix('color', 'bg', { dictionary: BG_COLORS }),
@@ -223,6 +265,12 @@ export default Component.extend({
     'paddingAll',
   ),
 
+  // Flex
+  flexAlignClass: prefix('flexAlign', 'items'),
+  flexJusitfyClass: prefix('flexJustify', 'justify'),
+  flexDirClass: prefix('flexDir', 'flex'),
+  flexWrapClass: prefix('flexWrap', 'flex'),
+
   // Collected classes
   allClasses: concat(
     'colorClass',
@@ -248,6 +296,10 @@ export default Component.extend({
     'borderWidthClasses',
     'marginClasses',
     'paddingClasses',
+    'flexAlignClass',
+    'flexJusitfyClass',
+    'flexDirClass',
+    'flexWrapClass',
   ),
 
   // Lifecycle
@@ -284,5 +336,10 @@ export default Component.extend({
     checkDictionary(bw.bottom, WIDTHS, '@borderWidth.bottom');
     checkDictionary(bw.left, WIDTHS, '@borderWidth.left');
     checkDictionary(bw.all, WIDTHS, '@borderWidth.all');
+
+    checkDictionary(this.flexAlign, FLEX_ALIGNMENTS, '@flexAlign', 'Box');
+    checkDictionary(this.flexJustify, FLEX_JUSTIFICATIONS, '@flexJustify', 'Box');
+    checkDictionary(this.flexDir, FLEX_DIRECTIONS, '@flexDir', 'Box');
+    checkDictionary(this.flexWrap, FLEX_WRAPS, '@flexWrap', 'Box');
   },
 });
