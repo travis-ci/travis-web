@@ -4,11 +4,6 @@ export default Component.extend({
   tagName: '',
 
   // Public interface
-  variant: 'link-blue',
+  tag: 'code',
 
-  href: null,
-  rel: 'noopener noreferrer',
-  target: '_blank',
-
-  route: null,
 });

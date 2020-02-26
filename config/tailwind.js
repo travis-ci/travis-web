@@ -59,6 +59,7 @@ module.exports = {
         default: '#ffe000',
         400: '#efcc03',
         500: '#dcc800',
+        600: '#c1a417',
       },
 
       // Cancelled / Neutral Color
