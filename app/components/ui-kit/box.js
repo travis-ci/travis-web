@@ -112,6 +112,7 @@ const POSITION_INSETS = {
 };
 const PIN_LOCATIONS = {
   TOP_RIGHT: 'top-right',
+  TOP_LEFT: 'top-left',
 };
 
 // Height & Width

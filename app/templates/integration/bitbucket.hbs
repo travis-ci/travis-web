@@ -1,5 +1,11 @@
 {{!-- Header section --}}
-<UiKit::Box @padding={{hash top=24 bottom=8}} @shadow='md'>
+<UiKit::Box
+  @color='white'
+  @layer='10'
+  @position={{hash type='relative'}}
+  @padding={{hash top=24 bottom=8}}
+  @shadow='md'
+>
   <UiKit::Box
     @tag='section'
     @margin={{hash bottom=16 x='auto'}}
@@ -52,9 +58,27 @@
     @tag='section'
     @maxWidth='6xl'
     @margin={{hash x='auto'}}
+    @position={{hash type='relative'}}
     @padding={{hash x=4 bottom=16}}
     data-test-integration-bb-highlights-section="true"
   >
+    <UiKit::Box
+      @layer='0'
+      @margin={{hash top=-16 left=12}}
+      @pin='top-left'
+      @width={{56}}
+    >
+      <SvgImage @name="yellow-waves" />
+    </UiKit::Box>
+    <UiKit::Box
+      @layer='0'
+      @margin={{hash top=-12 right=12}}
+      @pin='top-right'
+      @width={{56}}
+    >
+      <SvgImage @name="grey-gradient-circle" />
+    </UiKit::Box>
+
     <UiKit::Grid @align='center' @gap={{6}} as |grid|>
       {{!-- Row 1 --}}
       <grid.item @sm='6/12' @margin={{hash sm=(hash y=10)}}>
