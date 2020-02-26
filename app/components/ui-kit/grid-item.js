@@ -37,6 +37,18 @@ const FLEX_SIZE_VALS = {
   [FLEX_SIZES.NONE]: 'none',
 };
 
+const ORDERS = {
+  FIRST: 'first',
+  LAST: 'last',
+  NONE: 'none',
+  ONE: 1,
+  TWO: 2,
+  THREE: 3,
+  FOUR: 4,
+  FIVE: 5,
+  SIX: 6,
+}
+
 export default Component.extend({
   tagName: '',
 
@@ -50,6 +62,7 @@ export default Component.extend({
   lg: null,
   xl: null,
   gap: null,
+  order: null,
 
   display: null,
   flex: null,
@@ -82,6 +95,7 @@ export default Component.extend({
     return currentGap === 0 ? '' : `p${paddingDir}-${currentGap}`;
   }),
   flexClass: prefix('flex', 'flex', { dictionary: FLEX_SIZE_VALS }),
+  orderClass: prefix('order', 'order'),
 
   allClasses: concat(
     'componentClass',
@@ -91,7 +105,8 @@ export default Component.extend({
     'lgClass',
     'xlClass',
     'gapClass',
-    'flexClass'
+    'flexClass',
+    'orderClass',
   ),
 
   // Lifecycle
@@ -100,5 +115,6 @@ export default Component.extend({
 
     requireProp(this.grid, '@grid', 'GridItem');
     checkDictionary(this.flex, FLEX_SIZES, '@flex', 'GridItem');
+    checkDictionary(this.order, ORDERS, '@order', 'GridItem');
   },
 });

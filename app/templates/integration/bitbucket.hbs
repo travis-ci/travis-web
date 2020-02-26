@@ -60,6 +60,7 @@
     @margin={{hash x='auto'}}
     @position={{hash type='relative'}}
     @padding={{hash x=4 bottom=16}}
+    @textAlign={{hash base='center' sm='left'}}
     data-test-integration-bb-highlights-section="true"
   >
     <UiKit::Box
@@ -81,12 +82,12 @@
 
     <UiKit::Grid @align='center' @gap={{6}} as |grid|>
       {{!-- Row 1 --}}
-      <grid.item @sm='6/12' @margin={{hash sm=(hash y=10)}}>
+      <grid.item @sm='1/2' @margin={{hash sm=(hash y=10)}}>
         <UiKit::Box @maxWidth='sm' @margin={{hash x='auto'}}>
           <SvgImage @name='travis-console' />
         </UiKit::Box>
       </grid.item>
-      <grid.item @sm='6/12' @margin={{hash base=(hash bottom=10) sm=(hash y=10)}}>
+      <grid.item @sm='1/2' @margin={{hash base=(hash bottom=20) sm=(hash y=10)}}>
         <UiKit::Text @variant='h2' @color='blue-light'>
           Integrate Bitbucket in seconds
         </UiKit::Text>
@@ -97,7 +98,11 @@
       </grid.item>
 
       {{!-- Row 2 --}}
-      <grid.item @sm='6/12' @margin={{hash base=(hash bottom=4) sm=(hash y=10)}}>
+      <grid.item
+        @sm='1/2'
+        @margin={{hash base=(hash bottom=20) sm=(hash y=10)}}
+        @order={{hash base=4 sm='none'}}
+      >
         <UiKit::Text @variant='h2' @color='blue-light'>
           Bitbucket connects with Travis CI
         </UiKit::Text>
@@ -106,19 +111,23 @@
           and lets the rest happen by itself.
         </UiKit::Text>
       </grid.item>
-      <grid.item @sm='6/12' @margin={{hash base=(hash bottom=10) sm=(hash y=10)}}>
+      <grid.item
+        @sm='1/2'
+        @margin={{hash base=(hash bottom=4) sm=(hash y=10)}}
+        @order={{hash base=3 sm='none'}}
+      >
         <UiKit::Box @maxWidth='sm' @margin={{hash x='auto'}}>
           <SvgImage @name='bb-connect' />
         </UiKit::Box>
       </grid.item>
 
       {{!-- Row 3 --}}
-      <grid.item @sm='6/12' @margin={{hash sm=(hash y=10)}}>
+      <grid.item @sm='1/2' @margin={{hash sm=(hash y=10)}} @order={{5}}>
         <UiKit::Box @maxWidth='sm' @margin={{hash x='auto'}}>
           <SvgImage @name='travis-community' />
         </UiKit::Box>
       </grid.item>
-      <grid.item @sm='6/12' @margin={{hash base=(hash bottom=10) sm=(hash y=10)}}>
+      <grid.item @sm='1/2' @margin={{hash base=(hash bottom=20) sm=(hash y=10)}} @order={{6}}>
         <UiKit::Text @variant='h2' @color='blue-light'>
           The Travis CI Community
         </UiKit::Text>
@@ -130,7 +139,9 @@
       </grid.item>
     </UiKit::Grid>
 
-    <UiKit::ButtonSignin @provider='bitbucket' @isSignup={{true}} />
+    <UiKit::Box @margin={{hash sm=(hash top=10)}} @textAlign='center'>
+      <UiKit::ButtonSignin @provider='bitbucket' @isSignup={{true}} />
+    </UiKit::Box>
   </UiKit::Box>
 </UiKit::Box>
 
