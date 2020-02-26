@@ -59,4 +59,3 @@ jobs:
   allow_failures:
     - env: TRY_CONFIG=ember-beta
     - env: TRY_CONFIG=ember-data-beta
-
