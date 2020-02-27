@@ -7,6 +7,24 @@
   &__bar {
     margin: 7.9rem 0 7.9rem 4.85rem;
 
+
+    &-bg {
+      --gradient-dir: 180deg;
+      background-image: linear-gradient(var(--gradient-dir),
+        theme('colors.grey.300') 0%,
+        theme('colors.grey.150') calc(25% - theme('spacing.16')),
+        theme('colors.grey.150') calc(25% + theme('spacing.16')),
+        theme('colors.green.200') calc(50% - theme('spacing.16')),
+        theme('colors.green.200') calc(50% + theme('spacing.16')),
+        theme('colors.grey.150') calc(75% - theme('spacing.16')),
+        theme('colors.grey.150') calc(75% + theme('spacing.16')),
+        theme('colors.grey.300') 100%,
+      );
+      @screen md {
+        --gradient-dir: 90deg;
+      }
+    }
+
     @screen md {
       margin: 4rem calc(10% + 2.777rem) 0 calc(10% + 3.333rem);
     }

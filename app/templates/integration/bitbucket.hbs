@@ -153,7 +153,7 @@
   @padding={{hash x=4}}
   data-test-integration-bb-flow-section="true"
 >
-  <UiKit::Text @variant='h2'>
+  <UiKit::Text @variant='h2' @align='center'>
     Get up and running with Travis CI and Bitbucket in seconds
   </UiKit::Text>
 
@@ -228,7 +228,7 @@
       <UiKit::Box
         @borderColor='white'
         @borderWidth={{hash all='md'}}
-        @color='grey-lighter'
+        @color='grey-light'
         @height={{5}}
         @layer='10'
         @margin={{hash base=(hash left=-2 top=-3) md=(hash left=-4 top=-2)}}
@@ -242,11 +242,12 @@
         @layer='20'
         @position={{hash type='relative'}}
         @width='full'
+        class="build-flow-diagram__bar-bg"
       ></UiKit::Box>
       <UiKit::Box
         @borderColor='white'
         @borderWidth={{hash all='md'}}
-        @color='grey-lighter'
+        @color='grey-light'
         @height={{5}}
         @layer='10'
         @margin={{hash base=(hash left=-2 bottom=-3) md=(hash left=0 right=-2 bottom=-2)}}
