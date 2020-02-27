@@ -109,6 +109,7 @@ module('Acceptance | repo/trigger build', function (hooks) {
     await triggerBuildPage.writeMessage('This is a demo build');
     await triggerBuildPage.writeConfig('script: echo "Hello World"');
     percySnapshot(assert);
+
     await triggerBuildPage.clickSubmit();
 
     assert.ok(triggerBuildPage.configFormIsHidden, 'config form is hidden again');

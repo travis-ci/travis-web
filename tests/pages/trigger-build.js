@@ -28,7 +28,7 @@ export default create({
     value: attribute('value')
   }),
 
-  writeMessage: fillable('[data-test-trigger-build-message] input'),
-  writeConfig: fillable('[data-test-trigger-build-config] textarea'),
-  clickSubmit: clickable('[data-test-trigger-build-submit]')
+  writeMessage: fillable('[data-test-build-config-form] input'),
+  writeConfig: fillable('[data-test-build-config-form] textarea'),
+  clickSubmit: clickable('[data-test-request-configs-submit]')
 });

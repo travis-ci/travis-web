@@ -20,7 +20,6 @@
         Preview
       </a>
     {{/unless }}
-
     <Request::ConfigsButtonTrigger
       @processing={{this.processing}}
       onclick={{action this.onTriggerBuild}}
@@ -75,7 +74,6 @@
 {{/if}}
 
 {{#unless (or this.replace this.preview)}}
-  {{log this.rawConfigs}}
   {{#each this.rawConfigs as |config|}}
     <Request::RawConfig
       @source={{config.source}}
