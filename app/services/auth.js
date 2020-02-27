@@ -172,10 +172,10 @@ export default Service.extend({
       name,
       email,
       firstLoggedInAt: createdAt,
-      secureUserHash: hash,
+      secureUserHash: userHash,
       vcsProvider = {}
     } = this.currentUser;
-    this.intercom.set('user', { id, name, email, createdAt, hash, provider: vcsProvider.name });
+    this.intercom.set('user', { id, name, email, createdAt, userHash, provider: vcsProvider.name });
   },
 
   reportNewUser() {
