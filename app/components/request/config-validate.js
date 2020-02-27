@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { sort } from '@ember/object/computed';
+import { sort, empty, and, or, not } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import { pluralize } from 'ember-inflector';
 
@@ -41,35 +41,32 @@ export default Component.extend({
   initialConfig: true,
   messages: [],
 
-  displayMessages: computed('messages.[]', 'expanded', function () {
-    return this.get('messages.length') > 0 && this.expanded;
-  }),
+  isMessagesEmpty: empty('messages'),
+  hasMessages: not('isMessagesEmpty'),
+  displayMessages: and('hasMessages', 'expanded'),
 
   sortedMessages: sort('messages', (lft, rgt) =>
     sortOrder(lft.level) - sortOrder(rgt.level)
   ),
-
-  maxLevel: computed('sortedMessages.[]', function () {
-    return this.get('sortedMessages.firstObject.level') || 'info';
-  }),
+  maxLevel: or('sortedMessages.firstObject.level', 'info'),
 
   iconClass: computed('maxLevel', function () {
-    return `icon icon-${this.get('maxLevel')}`;
+    return `icon icon-${this.maxLevel}`;
   }),
 
   summary: computed('messages.[]', function () {
-    if (this.get('messages.length') > 0) {
+    if (this.hasMessages) {
       return Object.entries(this.counts).map((entry) => formatLevel(...entry)).join(', ');
     }
   }),
 
   result: computed('messages', function () {
     let msgs = this.messages || [];
-    let error = msgs.find(msg =>  msg.level == 'error' || msg.level == 'alert');
+    let error = msgs.find(msg =>  msg.level === 'error' || msg.level === 'alert');
     return error ? error.level : 'valid';
   }),
 
-  counts: computed('sortedMessages.[]', function () {
+  counts: computed('sortedMessages.@each.level', function () {
     return countBy(this.sortedMessages, 'level');
   }),
 
