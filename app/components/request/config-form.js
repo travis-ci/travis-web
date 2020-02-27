@@ -4,6 +4,15 @@ import { task } from 'ember-concurrency';
 import BranchSearching from 'travis/mixins/branch-searching';
 import { bindKeyboardShortcuts, unbindKeyboardShortcuts } from 'ember-keyboard-shortcuts';
 
+const CONFIG = {
+  SOURCE: {
+    API: 'api'
+  },
+  JAVASCRIPT: 'javascript',
+  YAML: 'yaml',
+  JSON: 'json',
+};
+
 export default Component.extend(BranchSearching, {
   tagName: 'div',
   classNames: ['request-configs-form'],
@@ -29,27 +38,22 @@ export default Component.extend(BranchSearching, {
   }),
 
   configMode: computed('config', function () {
-    if (this.config && this.config.startsWith('{')) {
-      return 'javascript';
-    } else {
-      return 'yaml';
-    }
+    const { config } = this;
+    return config && config.startsWith('{') ? CONFIG.JAVASCRIPT : CONFIG.YAML;
   }),
 
   configType: computed('configMode', function () {
-    if (this.configMode == 'javascript') {
-      return 'JSON';
-    } else {
-      return 'YAML';
-    }
+    const { JAVASCRIPT, JSON, YAML } = CONFIG;
+    return this.configMode === JAVASCRIPT ? JSON.toUpperCase() : YAML.toUpperCase();
   }),
 
   // TODO
   configs: computed('request.uniqRawConfigs', 'config', function () {
+    const { SOURCE } = CONFIG;
     let configs = this.get('request.uniqRawConfigs') || [];
-    configs = configs.reject(config => config.source === 'api');
+    configs = configs.reject(config => config.source === SOURCE.API);
     if (this.config) {
-      configs.unshift({ config: this.config, source: 'api' });
+      configs.unshift({ config: this.config, source: SOURCE.API });
     }
     return configs;
   }),
