@@ -43,6 +43,10 @@ module.exports = deepFreeze({
       organization: 'Portfolio',
       pullRequest: 'Merge Request',
     },
+    colors: {
+      main: 'grey',
+      light: 'grey-light',
+    },
   },
 
   bitbucket: {
@@ -64,6 +68,10 @@ module.exports = deepFreeze({
     vocabulary: {
       organization: 'Team',
       pullRequest: 'Pull Request',
+    },
+    colors: {
+      main: 'blue',
+      light: 'blue-light',
     },
   },
 
@@ -87,6 +95,10 @@ module.exports = deepFreeze({
     vocabulary: {
       organization: 'Organization',
       pullRequest: 'Pull Request',
+    },
+    colors: {
+      main: 'grey-dark',
+      light: 'grey',
     },
   },
 });
