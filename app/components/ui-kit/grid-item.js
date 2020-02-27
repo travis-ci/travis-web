@@ -47,7 +47,7 @@ const ORDERS = {
   FOUR: 4,
   FIVE: 5,
   SIX: 6,
-}
+};
 
 export default Component.extend({
   tagName: '',

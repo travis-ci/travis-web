@@ -8,7 +8,7 @@ export default BasicRoute.extend(TailwindBaseMixin, {
   features: service(),
 
   redirect() {
-    if (!this.get('features.proVersion') || !this.get('features.devBitbucketLanding')) {
+    if (!this.get('features.proVersion')) {
       return this.transitionTo('/');
     }
   }
