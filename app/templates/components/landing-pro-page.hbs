@@ -30,6 +30,25 @@
         </div>
       </div>
     </section>
+    {{#if this.multiVcs.enableBitbucketLogin}}
+      <section class="section-companies section--white section--center">
+        <div class="inner">
+          <h2 class="text-5xl text-grey-800 mb-8">
+            Now test your
+            <SvgImage @name='bitbucket-full' @width={{220}} />
+            projects with Travis CI
+          </h2>
+          <div>
+            <p class="text-lg mb-16 inline-block max-w-2xl">
+              Check out our new feature - now you can sign up to Travis CI using your Bitbucket account
+              and connect your repositories!
+            </p>
+          </div>
+          <UiKit::ButtonSignin @provider='bitbucket' @isLogoVisible={{false}} @isBetaBadgeVisible={{false}} @minWidth={{null}} />
+        </div>
+      </section>
+      <div class="spacer"></div>
+    {{/if}}
     <section class="section-companies section--white section--center">
       <div class="inner">
         <h3 class="customers-header">

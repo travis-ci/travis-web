@@ -11,6 +11,9 @@ export default Component.extend({
 
   isSignup: false,
   provider: reads('multiVcs.primaryProvider'),
+  isLogoVisible: true,
+  isBetaBadgeVisible: reads('isBetaProvider'),
+  minWidth: 'md',
 
   vcsType: computed('provider', function () {
     return `${this.provider.capitalize()}User`;
@@ -28,6 +31,11 @@ export default Component.extend({
 
   isBetaProvider: computed('provider', function () {
     return this.multiVcs.isProviderBeta(this.provider);
+  }),
+
+  minWidthClass: computed('minWidth', function () {
+    const { minWidth } = this;
+    return minWidth ? `min-w-${minWidth}` : '';
   }),
 
   signin() {

@@ -243,6 +243,7 @@ module.exports = {
     },
     minWidth: {
       '0': '0',
+      md: '16rem',
       full: '100%',
     },
 

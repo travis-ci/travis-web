@@ -3,23 +3,27 @@
     @onClick={{action this.signin}}
     @color={{vcs-color this.vcsType 'main'}}
     @invert={{true}}
-    class="w-full max-w-2xs mb-4 text-left relative"
+    class="{{this.minWidthClass}} mb-4 text-left relative pointer"
     data-test-signin-button={{this.provider}}
     data-test-signin-button-primary={{this.isPrimaryProvider}}
     ...attributes
   >
-    <UiKit::Box
-      @display='inline-block'
-      @margin={{hash right=1}}
-      @padding={{hash right=2}}
-      @borderColor={{vcs-color this.vcsType 'main'}}
-      @borderWidth={{hash right='xs'}}
-      class='align-text-bottom'
-    >
-      <SvgImage @name={{vcs-icon this.vcsType}} @class="fill-current w-5 h-5" />
-    </UiKit::Box>
+    {{#if this.isLogoVisible}}
+      <UiKit::Box
+        @display='inline-block'
+        @margin={{hash right=1}}
+        @padding={{hash right=2}}
+        @borderColor={{vcs-color this.vcsType 'main'}}
+        @borderWidth={{hash right='xs'}}
+        class='align-text-bottom'
+      >
+        <SvgImage @name={{vcs-icon this.vcsType}} @class="fill-current w-5 h-5" />
+      </UiKit::Box>
+    {{/if}}
+
     Sign {{if this.isSignup 'Up' 'In'}} With {{vcs-name this.vcsType}}
-    {{#if this.isBetaProvider}}
+
+    {{#if this.isBetaBadgeVisible}}
 
       <UiKit::Badge
         @color={{vcs-color this.vcsType 'light'}}
