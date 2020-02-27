@@ -6,6 +6,10 @@ import { reads, equal, or } from '@ember/object/computed';
 import { Promise as EmberPromise, } from 'rsvp';
 import { task } from 'ember-concurrency';
 import ExpandableRecordArray from 'travis/utils/expandable-record-array';
+import config from 'travis/config/environment';
+import dynamicQuery from 'travis/utils/dynamic-query';
+
+const { repoBuildsPerPage: limit } = config.pagination;
 
 export const MIGRATION_STATUS = {
   QUEUED: 'queued',
@@ -135,6 +139,28 @@ const Repo = VcsEntity.extend({
     });
     return this._buildObservableArray(builds);
   }),
+
+  // Using dynamicQuery effectively relies on accurate pagination, which
+  // is not possible if skip_count=true, which is the default for queries in
+  // the build adapter. force_count allows overriding this behavior, but we
+  // should use it cautiously for performance reasons. I think it may
+  // be fine for pull requests though?
+  fetchBuilds({ page, filter, eventType, forceCount }) {
+    const { id: repoId, store } = this;
+    const offset = (page - 1) * limit;
+
+    return store.paginated('build', {
+      repository_id: repoId,
+      event_type: eventType,
+      name_filter: filter,
+      force_count: forceCount,
+      limit, offset
+    }, { live: false });
+  },
+
+  pullRequests: dynamicQuery(function* ({ page = 1, filter = '' }) {
+    return yield this.fetchBuilds({ page, filter, eventType: 'pull_request', forceCount: true });
+  }, { appendResults: true }),
 
   branches: computed('id', function () {
     let id = this.id;

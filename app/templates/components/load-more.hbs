@@ -1,10 +1,20 @@
 <div>
-  {{yield this}}
+  {{!-- If missing notice text provided, automatically show/hide MissingNotice and yield --}}
+  {{#if this.missingNotice}}
+    {{#if this.isNoneFound}}
+      <MissingNotice @title={{this.missingNotice}} />
+    {{else}}
+      {{yield this}}
+    {{/if}}
+  {{!-- Otherwise, just yield and let them handle it if they want --}}
+  {{else}}
+    {{yield this}}
+  {{/if}}
   <div>
-    {{#if this.fetchTask.isRunning}}
+    {{#if this.items.isLoading}}
       <LoadingIndicator />
-    {{else if this.isNotLastItemFound}}
-      <ShowMoreButton @click={{perform this.fetchTask}} />
+    {{else if this.items.hasNextPage}}
+      <ShowMoreButton @click={{action 'showMore'}} />
     {{/if}}
   </div>
 </div>

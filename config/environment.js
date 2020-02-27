@@ -183,6 +183,7 @@ module.exports = function (environment) {
   ENV.pagination = {
     dashboardReposPerPage: 25,
     profileReposPerPage: 25,
+    repoBuildsPerPage: 25,
   };
 
   if (process.env.STRIPE_PUBLISHABLE_KEY) {
