@@ -29,7 +29,7 @@ export default Component.extend(BranchSearching, {
   }),
 
   configMode: computed('config', function () {
-    if (this.config && this.config[0] == '{') {
+    if (this.config && this.config.startsWith('{')) {
       return 'javascript';
     } else {
       return 'yaml';

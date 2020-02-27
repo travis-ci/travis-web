@@ -7,18 +7,12 @@ const { yml: host } = config.urls;
 export default V3Adapter.extend({
   ajax: service(),
 
-  getOptions(query) {
-    return {
-      host,
-      data: query.data,
-      headers: {
-        Authorization: 'Basic eDpqZm5DcWJKbGJ2eFpsWDQwdUUwREtn'
-      },
-    };
+  getOptions(data) {
+    return { host, data, headers: { Authorization: 'Basic eDpqZm5DcWJKbGJ2eFpsWDQwdUUwREtn' }};
   },
 
-  queryRecord(store, type, query) {
-    const options = this.getOptions(query);
+  queryRecord(store, type, { data }) {
+    const options = this.getOptions(data);
     return this.ajax.request('/configs', 'POST', options);
   }
 });
