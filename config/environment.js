@@ -74,6 +74,7 @@ module.exports = function (environment) {
       triggerBuildMergeModes: 'https://docs.travis-ci.com/user/triggering-builds/#merge-modes',
       tutorial: 'https://docs.travis-ci.com/user/tutorial/',
       twitter: 'https://twitter.com/travisci',
+      yml: 'https://yml-staging.travis-ci.org',
     },
     endpoints: {},
     githubApps: false,
