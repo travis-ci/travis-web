@@ -12,7 +12,7 @@ export default V3Adapter.extend({
       headers: {
         Authorization: 'Basic eDpqZm5DcWJKbGJ2eFpsWDQwdUUwREtn'
       },
-    },
+    };
   },
 
   queryRecord(store, type, query) {
