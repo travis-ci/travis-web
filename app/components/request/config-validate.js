@@ -5,19 +5,19 @@ import { inject as service } from '@ember/service';
 import { pluralize } from 'ember-inflector';
 
 // a lot of this is duplicated from request-messages-list
-const MSGS = {
-  'alert': 'alert',
-  'error': 'error',
-  'warn': 'warning',
-  'info': 'info',
+const MESSAGES = {
+  alert: 'alert',
+  error: 'error',
+  warn: 'warning',
+  info: 'info',
 };
 
 function formatLevel(level, count) {
-  return pluralize(count, MSGS[level]);
+  return pluralize(count, MESSAGES[level]);
 }
 
 function sortOrder(level) {
-  return Object.keys(MSGS).indexOf(level);
+  return Object.keys(MESSAGES).indexOf(level);
 }
 
 function countBy(objs, name) {

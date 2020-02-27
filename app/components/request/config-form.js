@@ -39,7 +39,8 @@ export default Component.extend(BranchSearching, {
 
   configMode: computed('config', function () {
     const { config } = this;
-    return config && config.startsWith('{') ? CONFIG.JAVASCRIPT : CONFIG.YAML;
+    const { JAVASCRIPT, YAML } = CONFIG;
+    return config && config.startsWith('{') ? JAVASCRIPT : YAML;
   }),
 
   configType: computed('configMode', function () {
