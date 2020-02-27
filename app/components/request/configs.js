@@ -49,10 +49,6 @@ export default Component.extend(TriggerBuild, WithConfigValidation, {
 
   isRepoConfig: match('router.currentRouteName', /repo\.config/),
 
-  didInsertElement() {
-    this.load.perform();
-  },
-
   displayTriggerBuild: computed(
     'repo.migrationStatus',
     'repo.permissions.create_request',
@@ -67,8 +63,7 @@ export default Component.extend(TriggerBuild, WithConfigValidation, {
         return canTriggerBuild;
       }
       return canTriggerBuild && migrationStatus !== 'migrated';
-    }
-  ),
+    }),
 
   ref: computed('refType', 'branch', 'sha', function () {
     return this.get(this.refType);
@@ -95,6 +90,10 @@ export default Component.extend(TriggerBuild, WithConfigValidation, {
   configChanged: observer('config', function () {
     debounce(this, 'load', 500);
   }),
+
+  didInsertElement() {
+    this.load.perform();
+  },
 
   load: task(function* () {
     if (this.status !== 'closed' && this.status !== 'open') {
