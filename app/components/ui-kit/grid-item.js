@@ -6,6 +6,8 @@ import { checkDictionary, requireProp } from 'travis/utils/ui-kit/assertions';
 import concat from 'travis/utils/ui-kit/concat';
 import prefix from 'travis/utils/ui-kit/prefix';
 
+import { FLEX_SIZES, FLEX_SIZE_VALS } from 'travis/components/ui-kit/box';
+
 function screenClass(key, screen) {
   return computed('sizePrefix', key, function () {
     const size = this.get(key);
@@ -23,19 +25,6 @@ function screenClass(key, screen) {
     return null;
   });
 }
-
-const FLEX_SIZES = {
-  GROW_SINGLE: 'grow-single',
-  SHRINK_SINGLE: 'shrink-single',
-  RESIZE_SINGLE: 'resize-single',
-  NONE: 'none',
-};
-const FLEX_SIZE_VALS = {
-  [FLEX_SIZES.GROW_SINGLE]: 'grow-single',
-  [FLEX_SIZES.SHRINK_SINGLE]: 'shrink-single',
-  [FLEX_SIZES.RESIZE_SINGLE]: 'resize-single',
-  [FLEX_SIZES.NONE]: 'none',
-};
 
 const ORDERS = {
   FIRST: 'first',

@@ -159,63 +159,70 @@
 
   <UiKit::Box
     @display='flex'
+    @flexDir={{hash base='col' md='row'}}
+    @flexAlign='start'
+    @flexJustify='between'
     @margin={{hash x='auto'}}
     @maxWidth='full'
     @position={{hash type='relative'}}
     @width={{hash base='max-content' md='full'}}
-    class="flex-col items-start justify-between md:flex-row md:items-start"
   >
     <UiKit::Box
       @display='flex'
+      @flexDir={{hash base='row' md='col'}}
+      @flexAlign='center'
       @margin={{hash base=(hash bottom=4) md=(hash right=4 bottom=0)}}
       @textAlign={{hash md='center'}}
       @width={{hash md='1/5'}}
-      class="items-center md:flex-col"
     >
-      <UiKit::Box @width={{32}} @margin={{hash base=(hash x=4) md=(hash x=0)}} class="flex-shrink-0"><SvgImage @name='pull-icon-1' /></UiKit::Box>
+      <UiKit::Box @width={{32}} @margin={{hash base=(hash x=4) md=(hash x=0)}} @flex='shrink-none'><SvgImage @name='pull-icon-1' /></UiKit::Box>
       <UiKit::Text>A pull request is created</UiKit::Text>
     </UiKit::Box>
     <UiKit::Box
       @display='flex'
+      @flexDir={{hash base='row' md='col'}}
+      @flexAlign='center'
       @layer='30'
       @margin={{hash base=(hash y=4) md=(hash x=4 y=0)}}
       @textAlign={{hash md='center'}}
       @width={{hash md='1/5'}}
-      class="items-center md:flex-col"
     >
-      <UiKit::Box @width={{32}} @margin={{hash base=(hash x=4) md=(hash x=0)}} class="flex-shrink-0"><SvgImage @name='pull-icon-2' /></UiKit::Box>
+      <UiKit::Box @width={{32}} @margin={{hash base=(hash x=4) md=(hash x=0)}} @flex='shrink-none'><SvgImage @name='pull-icon-2' /></UiKit::Box>
       <UiKit::Text>Cloud platform tells Travis CI the build is mergeable</UiKit::Text>
     </UiKit::Box>
     <UiKit::Box
       @display='flex'
+      @flexDir={{hash base='row' md='col'}}
+      @flexAlign='center'
       @layer='30'
       @margin={{hash base=(hash y=4) md=(hash x=4 y=0)}}
       @textAlign={{hash md='center'}}
       @width={{hash md='1/5'}}
-      class="items-center md:flex-col"
     >
-      <UiKit::Box @width={{32}} @margin={{hash base=(hash x=4) md=(hash x=0)}} class="flex-shrink-0"><SvgImage @name='push-icon-3' /></UiKit::Box>
+      <UiKit::Box @width={{32}} @margin={{hash base=(hash x=4) md=(hash x=0)}} @flex='shrink-none'><SvgImage @name='push-icon-3' /></UiKit::Box>
       <UiKit::Text>Hooray! <br /> Your build passes!</UiKit::Text>
     </UiKit::Box>
     <UiKit::Box
       @display='flex'
+      @flexDir={{hash base='row' md='col'}}
+      @flexAlign='center'
       @layer='30'
       @margin={{hash base=(hash y=4) md=(hash x=4 y=0)}}
       @textAlign={{hash md='center'}}
       @width={{hash md='1/5'}}
-      class="items-center md:flex-col"
     >
-      <UiKit::Box @width={{32}} @margin={{hash base=(hash x=4) md=(hash x=0)}} class="flex-shrink-0"><SvgImage @name='pull-icon-4' /></UiKit::Box>
+      <UiKit::Box @width={{32}} @margin={{hash base=(hash x=4) md=(hash x=0)}} @flex='shrink-none'><SvgImage @name='pull-icon-4' /></UiKit::Box>
       <UiKit::Text>Travis CI updates the PR that it passed</UiKit::Text>
     </UiKit::Box>
     <UiKit::Box
       @display='flex'
+      @flexDir={{hash base='row' md='col'}}
+      @flexAlign='center'
       @margin={{hash base=(hash top=4) md=(hash top=0 left=4)}}
       @textAlign={{hash md='center'}}
       @width={{hash md='1/5'}}
-      class="items-center md:flex-col"
     >
-      <UiKit::Box @width={{32}} @margin={{hash base=(hash x=4) md=(hash x=0)}} class="flex-shrink-0"><SvgImage @name='pull-icon-5' /></UiKit::Box>
+      <UiKit::Box @width={{32}} @margin={{hash base=(hash x=4) md=(hash x=0)}} @flex='shrink-none'><SvgImage @name='pull-icon-5' /></UiKit::Box>
       <UiKit::Text>You merge in the PR goodness</UiKit::Text>
     </UiKit::Box>
 
@@ -280,11 +287,11 @@
     <grid.item>
       <UiKit::Box
         @display='flex'
+        @flexDir='col'
         @height={{hash base='auto' lg='full'}}
         @margin={{hash base=(hash bottom=12) lg=(hash bottom=0)}}
         @padding={{hash all=6}}
         @shadow='md'
-        class="flex-col"
       >
         <UiKit::Image @svg='rails' @alt='ruby on rails logo' @margin={{hash bottom=8}} @width={{24}} />
         <UiKit::Text @variant='p' @size='sm' class="flex-grow-single">
@@ -308,11 +315,11 @@
     <grid.item>
       <UiKit::Box
         @display='flex'
+        @flexDir='col'
         @height={{hash base='auto' lg='full'}}
         @margin={{hash base=(hash bottom=12) lg=(hash bottom=0)}}
         @padding={{hash all=6}}
         @shadow='md'
-        class="flex-col"
       >
         <UiKit::Image @svg='twitter-quote' @alt='twitter logo' @margin={{hash bottom=8}} @width={{8}} />
         <UiKit::Text @variant='p' @size='sm' class="flex-grow-single">
@@ -334,13 +341,13 @@
     <grid.item>
       <UiKit::Box
         @display='flex'
+        @flexDir='col'
         @height={{hash base='auto' lg='full'}}
         @margin={{hash base=(hash bottom=12) lg=(hash bottom=0)}}
         @padding={{hash all=6}}
         @shadow='md'
-        class="flex-col"
       >
-        <UiKit::Box @display='flex' @margin={{hash bottom=6}} class="items-center">
+        <UiKit::Box @display='flex' @flexAlign='center' @margin={{hash bottom=6}}>
           <UiKit::Image @path='landing-page/pypy.png' @alt='pypy logo' @margin={{hash right=4}} @width={{24}} />
           <UiKit::Image @svg='lang-python' @alt='python logo' @width={{8}} />
         </UiKit::Box>

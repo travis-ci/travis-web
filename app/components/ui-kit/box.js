@@ -159,6 +159,21 @@ const FLEX_WRAPS = {
   NO_WRAP: 'no-wrap',
 };
 
+export const FLEX_SIZES = {
+  GROW_SINGLE: 'grow-single',
+  SHRINK_SINGLE: 'shrink-single',
+  RESIZE_SINGLE: 'resize-single',
+  NONE: 'none',
+  SHRINK_ZERO: 'shrink-none',
+};
+export const FLEX_SIZE_VALS = {
+  [FLEX_SIZES.GROW_SINGLE]: 'grow-single',
+  [FLEX_SIZES.SHRINK_SINGLE]: 'shrink-single',
+  [FLEX_SIZES.RESIZE_SINGLE]: 'resize-single',
+  [FLEX_SIZES.NONE]: 'none',
+  [FLEX_SIZES.SHRINK_ZERO]: 'shrink-0',
+};
+
 // Component definition
 export default Component.extend({
   tagName: '',
@@ -268,9 +283,10 @@ export default Component.extend({
 
   // Flex
   flexAlignClass: prefix('flexAlign', 'items'),
-  flexJusitfyClass: prefix('flexJustify', 'justify'),
+  flexJustifyClass: prefix('flexJustify', 'justify'),
   flexDirClass: prefix('flexDir', 'flex'),
   flexWrapClass: prefix('flexWrap', 'flex'),
+  flexClass: prefix('flex', 'flex', { dictionary: FLEX_SIZE_VALS }),
 
   // Collected classes
   allClasses: concat(
@@ -298,9 +314,10 @@ export default Component.extend({
     'marginClasses',
     'paddingClasses',
     'flexAlignClass',
-    'flexJusitfyClass',
+    'flexJustifyClass',
     'flexDirClass',
     'flexWrapClass',
+    'flexClass',
   ),
 
   // Lifecycle
@@ -342,5 +359,6 @@ export default Component.extend({
     checkDictionary(this.flexJustify, FLEX_JUSTIFICATIONS, '@flexJustify', 'Box');
     checkDictionary(this.flexDir, FLEX_DIRECTIONS, '@flexDir', 'Box');
     checkDictionary(this.flexWrap, FLEX_WRAPS, '@flexWrap', 'Box');
+    checkDictionary(this.flex, FLEX_SIZES, '@flex', 'Box');
   },
 });
