@@ -15,8 +15,7 @@ export default TravisRoute.extend({
   },
 
   model() {
-    const repo = this.modelFor('repo');
-    return repo.get('pullRequests');
+    return this.modelFor('repo').get('pullRequests');
   },
 
   titleToken() {
