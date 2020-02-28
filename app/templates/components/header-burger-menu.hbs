@@ -2,8 +2,12 @@
   <button
     type="button"
     class="tofuburger no-button"
-    onclick={{action "toggleBurgerMenu"}}
+    onclick={{action @onClick}}
   >
-    <SvgImage @name="icon-tofuburger" />
+    {{#if this.isOpen}}
+      <SvgImage @name="icon-close" />
+    {{else}}
+      <SvgImage @name="icon-tofuburger" />
+    {{/if}}
   </button>
 </div>

@@ -1,10 +1,13 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | build header', function (hooks) {
   setupRenderingTest(hooks);
+  setupMirage(hooks);
+
   const repo = { slug: 'travis-ci/travis-web' };
 
   test('render api build', async function (assert) {

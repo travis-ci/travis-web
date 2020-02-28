@@ -350,6 +350,6 @@ module('Acceptance | dashboard/repositories', function (hooks) {
     await click('[data-test-signout-link]');
     await settled();
 
-    assert.equal(currentURL(), '/');
+    assert.equal(currentURL(), '/signin');
   });
 });
