@@ -10,6 +10,8 @@ export const PULL_REQUEST_MERGEABLE = {
 };
 
 export default Model.extend({
+  api: service(),
+
   created_at: attr(),
   event_type: attr(),
   result: attr(),
@@ -31,7 +33,8 @@ export default Model.extend({
   // API models this as hasMany but serializers:request#normalize overrides it
   build: belongsTo('build', { async: true }),
 
-  api: service(),
+  isDraft: equal('pullRequestMergeable', PULL_REQUEST_MERGEABLE.DRAFT),
+  hasMessages: gt('messages.length', 0),
 
   isAccepted: computed('result', 'build.id', function () {
     // For some reason some of the requests have a null result beside the fact that
@@ -48,8 +51,6 @@ export default Model.extend({
     let eventType = this.event_type;
     return eventType === 'pull_request';
   }),
-
-  isDraft: equal('pullRequestMergeable', PULL_REQUEST_MERGEABLE.DRAFT),
 
   apiConfig: computed('uniqRawConfigs', function () {
     let config = this.uniqRawConfigs.find((config) => config.source.includes('api'));
@@ -81,6 +82,4 @@ export default Model.extend({
       return response.messages;
     }
   }).drop(),
-
-  hasMessages: gt('messages.length', 0),
 });

@@ -2,20 +2,23 @@
   <div class="request-configs-buttons" data-test-request-configs-button='true'>
     {{#unless this.closed}}
       <a
+        request-configs-button-cancel="true"
         class="request-configs-button request-configs-button-cancel"
-        onclick={{action this.onCancel}}
+        {{on 'click' (action this.onCancel)}}
       >
         Cancel
       </a>
       <a
+        request-configs-button-customize="true"
         class="request-configs-button request-configs-button-customize"
-        onclick={{action this.onCustomize}}
+        {{on 'click' (action this.onCustomize)}}
       >
         Customize
       </a>
       <a
+        request-configs-button-preview="true"
         class="request-configs-button request-configs-button-preview"
-        onclick={{action this.onPreview}}
+        {{on 'click' (action this.onPreview)}}
       >
         Preview
       </a>

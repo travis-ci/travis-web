@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 import { computed, observer } from '@ember/object';
-import { reads, equal, match, or } from '@ember/object/computed';
-import { debounce } from '@ember/runloop';
+import { reads, equal, or } from '@ember/object/computed';
+// import { debounce } from '@ember/runloop';
 import { task } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
 import TriggerBuild from 'travis/mixins/trigger-build';
@@ -16,19 +16,21 @@ export default Component.extend(TriggerBuild, WithConfigValidation, {
   router: service(),
   store: service(),
 
-  repo: reads('request.repo'),
-  rawConfigs: reads('request.uniqRawConfigs'),
-  status: 'closed',
-  closed: equal('status', 'closed'),
-  customize: equal('status', 'customize'),
-  preview: equal('status', 'preview'),
-  replace: equal('mergeMode', 'replace'),
-
-  loading: reads('load.isRunning'),
   customized: false,
   processing: false,
 
   refType: 'branch',
+  status: 'closed',
+  defaultMergeMode: 'deep_merge_append',
+
+  repo: reads('request.repo'),
+  rawConfigs: reads('request.uniqRawConfigs'),
+  closed: equal('status', 'closed'),
+  customize: equal('status', 'customize'),
+  preview: equal('status', 'preview'),
+  replace: equal('mergeMode', 'replace'),
+  loading: reads('load.isRunning'),
+
   branch: reads('originalBranch'),
   sha: reads('originalSha'),
   message: reads('request.commit.message'),
@@ -45,9 +47,8 @@ export default Component.extend(TriggerBuild, WithConfigValidation, {
   repoDefaultBranch: reads('repo.defaultBranch.name'),
   requestSha: reads('request.commit.sha'),
   repoDefaultBranchLastCommitSha: reads('repo.defaultBranch.lastBuild.commit.sha'),
-  defaultMergeMode: 'deep_merge_append',
 
-  isRepoConfig: match('router.currentRouteName', /repo\.config/),
+  isRepoConfig: equal('router.currentRouteName', 'repo.config'),
 
   displayTriggerBuild: computed(
     'repo.migrationStatus',
@@ -87,9 +88,9 @@ export default Component.extend(TriggerBuild, WithConfigValidation, {
     this.load.perform();
   }),
 
-  configChanged: observer('config', function () {
-    debounce(this, 'load', 500);
-  }),
+  // configChanged: observer('config', function () {
+  //   debounce(this, 'load', 500);
+  // }),
 
   didInsertElement() {
     this.load.perform();

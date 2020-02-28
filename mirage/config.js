@@ -3,6 +3,7 @@ import { Response } from 'ember-cli-mirage';
 import config from 'travis/config/environment';
 import fuzzysort from 'fuzzysort';
 
+const { yml } = config.urls;
 const { validAuthToken, apiEndpoint } = config;
 
 export default function () {
@@ -583,6 +584,30 @@ export default function () {
 
   this.get('/builds', (schema, { queryParams: { event_type: eventType } }) => {
     return schema.builds.all().filter(build => eventType.includes(build.eventType));
+  });
+
+  this.post(`${yml}/configs`, (schema, { params }) => {
+    const buildsConfig = schema.buildConfig.create({
+      raw_configs: [{
+        source: 'test/test_repo:.travis.yml@master',
+        config: 'script: echo "Hello World"',
+        mode: 'deep_merge_append'
+      }],
+      messages: [
+        {
+          type: 'config',
+          level: 'info',
+          key: 'root',
+          code: 'default',
+          args: {
+            key: 'os',
+            default: 'linux'
+          }
+        }
+      ],
+      full_messages: ['[info] on root: missing os, using the default "linux"'],
+    });
+    return buildsConfig;
   });
 
   this.get('/repo/:repo_id/builds', function (schema, request) {
