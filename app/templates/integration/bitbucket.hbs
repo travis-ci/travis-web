@@ -183,7 +183,7 @@
       @display='flex'
       @flexDir={{hash base='row' md='col'}}
       @flexAlign='center'
-      @layer='30'
+      @layer='10'
       @margin={{hash base=(hash y=4) md=(hash x=4 y=0)}}
       @textAlign={{hash md='center'}}
       @width={{hash md='1/5'}}
@@ -195,7 +195,7 @@
       @display='flex'
       @flexDir={{hash base='row' md='col'}}
       @flexAlign='center'
-      @layer='30'
+      @layer='10'
       @margin={{hash base=(hash y=4) md=(hash x=4 y=0)}}
       @textAlign={{hash md='center'}}
       @width={{hash md='1/5'}}
@@ -207,7 +207,7 @@
       @display='flex'
       @flexDir={{hash base='row' md='col'}}
       @flexAlign='center'
-      @layer='30'
+      @layer='10'
       @margin={{hash base=(hash y=4) md=(hash x=4 y=0)}}
       @textAlign={{hash md='center'}}
       @width={{hash md='1/5'}}
@@ -228,6 +228,7 @@
     </UiKit::Box>
 
     <UiKit::Box
+      @color='grey-light'
       @height={{hash md=1}}
       @position={{hash base=(hash type='absolute' top=0 bottom=0 left=0) md=(hash bottom='auto' right=0)}}
       @width={{hash base=1 md='auto'}}
@@ -236,24 +237,14 @@
       <UiKit::Box
         @color='grey-light'
         @height={{5}}
-        @layer='10'
         @margin={{hash base=(hash left=-2 top=-3) md=(hash left=-4 top=-2)}}
         @position={{hash base=(hash type='absolute' top=0) md=(hash left=0)}}
         @radius='full'
         @width={{5}}
       ></UiKit::Box>
       <UiKit::Box
-        @color='grey-lighter'
-        @height='full'
-        @layer='20'
-        @position={{hash type='relative'}}
-        @width='full'
-        class="build-flow-diagram__bar-bg"
-      ></UiKit::Box>
-      <UiKit::Box
         @color='grey-light'
         @height={{5}}
-        @layer='10'
         @margin={{hash base=(hash left=-2 bottom=-3) md=(hash left=0 right=-2 bottom=-2)}}
         @position={{hash base=(hash type='absolute' bottom=0) md=(hash right=0)}}
         @radius='full'

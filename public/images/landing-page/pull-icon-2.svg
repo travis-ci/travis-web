@@ -1,30 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Adobe Illustrator 23.0.6, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 98.826 110.606" style="enable-background:new 0 0 98.826 110.606;" xml:space="preserve">
-<style type="text/css">
+<svg version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 88.5 88.5" style="enable-background:new 0 0 98.826 110.606;" xmlns="http://www.w3.org/2000/svg">
+  <style type="text/css">
 	.st0{fill:#FFFFFF;stroke:#EDEEEF;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
 	.st1{fill:#FFFFFF;}
 	.st2{fill:none;stroke:#65BABE;stroke-width:2.2222;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
 	.st3{fill:none;stroke:#65BABE;stroke-width:2.2222;stroke-miterlimit:10;}
 </style>
-<circle class="st0" cx="50.301" cy="55.393" r="42.705"/>
-<circle class="st1" cx="31.785" cy="41.882" r="1.155"/>
-<circle class="st1" cx="35.198" cy="41.882" r="1.155"/>
-<circle class="st1" cx="38.61" cy="41.882" r="1.155"/>
-<g>
-	<polygon class="st2" points="26.901,37.493 26.901,48.355 19.585,54.706 26.901,61.057 26.901,71.919 76.18,71.919 76.18,37.493 	
-		"/>
-	<line class="st2" x1="35.85" y1="57.805" x2="65.082" y2="57.805"/>
-	<line class="st2" x1="35.85" y1="63.336" x2="52.811" y2="63.336"/>
-	<g>
-		<polyline class="st2" points="35.85,47.355 38.121,49.71 41.747,44.66 		"/>
-		<ellipse class="st3" cx="48.74" cy="47.355" rx="2.64" ry="2.695"/>
-		<g>
-			<line class="st2" x1="55.275" y1="44.66" x2="55.275" y2="50.05"/>
-			<line class="st2" x1="58.292" y1="44.66" x2="55.275" y2="48.149"/>
-			<line class="st2" x1="58.732" y1="50.05" x2="56.381" y2="46.869"/>
-		</g>
-	</g>
-</g>
+  <circle class="st0" cx="44.25" cy="44.25" r="42.705"/>
+  <circle class="st1" cx="25.734" cy="30.739" r="1.155"/>
+  <circle class="st1" cx="29.147" cy="30.739" r="1.155"/>
+  <circle class="st1" cx="32.559" cy="30.739" r="1.155"/>
+  <g transform="matrix(1, 0, 0, 1, -6.050999, -11.143002)">
+    <polygon class="st2" points="26.901,37.493 26.901,48.355 19.585,54.706 26.901,61.057 26.901,71.919 76.18,71.919 76.18,37.493 &#9;&#10;&#9;&#9;"/>
+    <line class="st2" x1="35.85" y1="57.805" x2="65.082" y2="57.805"/>
+    <line class="st2" x1="35.85" y1="63.336" x2="52.811" y2="63.336"/>
+    <g>
+      <polyline class="st2" points="35.85,47.355 38.121,49.71 41.747,44.66 &#9;&#9;"/>
+      <ellipse class="st3" cx="48.74" cy="47.355" rx="2.64" ry="2.695"/>
+      <g>
+        <line class="st2" x1="55.275" y1="44.66" x2="55.275" y2="50.05"/>
+        <line class="st2" x1="58.292" y1="44.66" x2="55.275" y2="48.149"/>
+        <line class="st2" x1="58.732" y1="50.05" x2="56.381" y2="46.869"/>
+      </g>
+    </g>
+  </g>
 </svg>
