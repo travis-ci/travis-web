@@ -1,0 +1,105 @@
+<UiKit::Box
+  @display='flex'
+  @flexDir={{hash base='col' md='row'}}
+  @flexAlign='start'
+  @flexJustify='between'
+  @margin={{hash x='auto'}}
+  @maxWidth='full'
+  @position={{hash type='relative'}}
+  @width={{hash base='max-content' md='full'}}
+  class="build-flow-diagram"
+>
+  <UiKit::Box
+    @display='flex'
+    @flexDir={{hash base='row' md='col'}}
+    @flexAlign='center'
+    @margin={{hash base=(hash bottom=4) md=(hash right=4 bottom=0)}}
+    @textAlign={{hash md='center'}}
+    @width={{hash md='1/5'}}
+  >
+    <UiKit::Box @width={{32}} @margin={{hash base=(hash x=4) md=(hash x=0)}} @flex='shrink-none'>
+      <SvgImage @name='{{this.variant}}-icon-1' />
+    </UiKit::Box>
+    <UiKit::Text>A pull request is created</UiKit::Text>
+  </UiKit::Box>
+  <UiKit::Box
+    @display='flex'
+    @flexDir={{hash base='row' md='col'}}
+    @flexAlign='center'
+    @layer='10'
+    @margin={{hash base=(hash y=4) md=(hash x=4 y=0)}}
+    @textAlign={{hash md='center'}}
+    @width={{hash md='1/5'}}
+  >
+    <UiKit::Box @width={{32}} @margin={{hash base=(hash x=4) md=(hash x=0)}} @flex='shrink-none'>
+      <SvgImage @name='{{this.variant}}-icon-2' />
+    </UiKit::Box>
+    <UiKit::Text>Cloud platform tells Travis CI the build is mergeable</UiKit::Text>
+  </UiKit::Box>
+  <UiKit::Box
+    @display='flex'
+    @flexDir={{hash base='row' md='col'}}
+    @flexAlign='center'
+    @layer='10'
+    @margin={{hash base=(hash y=4) md=(hash x=4 y=0)}}
+    @textAlign={{hash md='center'}}
+    @width={{hash md='1/5'}}
+  >
+    <UiKit::Box @width={{32}} @margin={{hash base=(hash x=4) md=(hash x=0)}} @flex='shrink-none'>
+      <SvgImage @name='{{this.variant}}-icon-3' />
+    </UiKit::Box>
+    <UiKit::Text>Hooray! <br /> Your build passes!</UiKit::Text>
+  </UiKit::Box>
+  <UiKit::Box
+    @display='flex'
+    @flexDir={{hash base='row' md='col'}}
+    @flexAlign='center'
+    @layer='10'
+    @margin={{hash base=(hash y=4) md=(hash x=4 y=0)}}
+    @textAlign={{hash md='center'}}
+    @width={{hash md='1/5'}}
+  >
+    <UiKit::Box @width={{32}} @margin={{hash base=(hash x=4) md=(hash x=0)}} @flex='shrink-none'>
+      <SvgImage @name='{{this.variant}}-icon-4' />
+    </UiKit::Box>
+    <UiKit::Text>Travis CI updates the PR that it passed</UiKit::Text>
+  </UiKit::Box>
+  <UiKit::Box
+    @display='flex'
+    @flexDir={{hash base='row' md='col'}}
+    @flexAlign='center'
+    @margin={{hash base=(hash top=4) md=(hash top=0 left=4)}}
+    @textAlign={{hash md='center'}}
+    @width={{hash md='1/5'}}
+  >
+    <UiKit::Box @width={{32}} @margin={{hash base=(hash x=4) md=(hash x=0)}} @flex='shrink-none'>
+      <SvgImage @name='{{this.variant}}-icon-5' />
+    </UiKit::Box>
+    <UiKit::Text>You merge in the PR goodness</UiKit::Text>
+  </UiKit::Box>
+
+  <UiKit::Box
+    @color='grey-light'
+    @height={{hash md=1}}
+    @position={{hash base=(hash type='absolute' top=0 bottom=0 left=0) md=(hash bottom='auto' right=0)}}
+    @width={{hash base=1 md='auto'}}
+    class='build-flow-diagram__bar'
+  >
+    <UiKit::Box
+      @color='grey-light'
+      @height={{5}}
+      @margin={{hash base=(hash left=-2 top=-3) md=(hash left=-4 top=-2)}}
+      @position={{hash base=(hash type='absolute' top=0) md=(hash left=0)}}
+      @radius='full'
+      @width={{5}}
+    />
+    <UiKit::Box
+      @color='grey-light'
+      @height={{5}}
+      @margin={{hash base=(hash left=-2 bottom=-3) md=(hash left=0 right=-2 bottom=-2)}}
+      @position={{hash base=(hash type='absolute' bottom=0) md=(hash right=0)}}
+      @radius='full'
+      @width={{5}}
+    />
+  </UiKit::Box>
+</UiKit::Box>
