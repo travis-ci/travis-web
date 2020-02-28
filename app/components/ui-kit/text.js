@@ -76,6 +76,7 @@ const SIZES = {
   XL2: '2xl',
   XL3: '3xl',
   XL4: '4xl',
+  XL4_5: '4.5xl',
   XL5: '5xl',
   XL6: '6xl',
 };

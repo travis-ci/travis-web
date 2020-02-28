@@ -12,6 +12,7 @@ export default Component.extend({
   isSignup: false,
   provider: reads('multiVcs.primaryProvider'),
   isLogoVisible: true,
+  isLogoSeparatorVisible: true,
   isBetaBadgeVisible: reads('isBetaProvider'),
   minWidth: 'md',
 
@@ -36,6 +37,10 @@ export default Component.extend({
   minWidthClass: computed('minWidth', function () {
     const { minWidth } = this;
     return minWidth ? `min-w-${minWidth}` : '';
+  }),
+
+  logoSeparatorWidth: computed('isLogoSeparatorVisible', function () {
+    return this.isLogoSeparatorVisible ? 'xs' : 'none';
   }),
 
   signin() {

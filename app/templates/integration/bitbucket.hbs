@@ -3,12 +3,12 @@
   @color='white'
   @layer='10'
   @position={{hash type='relative'}}
-  @padding={{hash top=24 bottom=8}}
+  @padding={{hash top=24 bottom=1}}
   @shadow='md'
 >
   <UiKit::Box
     @tag='section'
-    @margin={{hash bottom=16 x='auto'}}
+    @margin={{hash bottom=12 x='auto'}}
     @maxWidth='6xl'
     @padding={{hash x=4}}
     data-test-integration-bb-header-section="true"
@@ -34,7 +34,12 @@
             Build, test, and deploy your software seamlessly with the Atlassian Bitbucket
             integration for Travis CI
           </UiKit::Text>
-          <UiKit::ButtonSignin @provider='bitbucket' @isSignup={{true}} />
+          <UiKit::ButtonSignin
+            @provider='bitbucket'
+            @isSignup={{true}}
+            @isBetaBadgeVisible={{false}}
+            @isLogoSeparatorVisible={{false}}
+          />
         </UiKit::Box>
       </grid.item>
       <grid.item @sm='full' @md='1/2' @lg='1/3'>
@@ -88,7 +93,7 @@
         </UiKit::Box>
       </grid.item>
       <grid.item @sm='1/2' @margin={{hash base=(hash bottom=20) sm=(hash y=10)}}>
-        <UiKit::Text @variant='h2' @color='blue-light'>
+        <UiKit::Text @variant='h2' @color='blue-light' @size='4.5xl'>
           Integrate Bitbucket in seconds
         </UiKit::Text>
         <UiKit::Text>
@@ -103,7 +108,7 @@
         @margin={{hash base=(hash bottom=20) sm=(hash y=10)}}
         @order={{hash base=4 sm='none'}}
       >
-        <UiKit::Text @variant='h2' @color='blue-light'>
+        <UiKit::Text @variant='h2' @color='blue-light' @size='4.5xl'>
           Bitbucket connects with Travis CI
         </UiKit::Text>
         <UiKit::Text>
@@ -128,7 +133,7 @@
         </UiKit::Box>
       </grid.item>
       <grid.item @sm='1/2' @margin={{hash base=(hash bottom=20) sm=(hash y=10)}} @order={{6}}>
-        <UiKit::Text @variant='h2' @color='blue-light'>
+        <UiKit::Text @variant='h2' @color='blue-light' @size='4.5xl'>
           The Travis CI Community
         </UiKit::Text>
         <UiKit::Text>
@@ -140,7 +145,11 @@
     </UiKit::Grid>
 
     <UiKit::Box @margin={{hash sm=(hash top=10)}} @textAlign='center'>
-      <UiKit::ButtonSignin @provider='bitbucket' @isSignup={{true}} />
+      <UiKit::ButtonSignin
+        @provider='bitbucket'
+        @isSignup={{true}}
+        @isLogoSeparatorVisible={{false}}
+      />
     </UiKit::Box>
   </UiKit::Box>
 </UiKit::Box>
@@ -294,10 +303,10 @@
         <UiKit::Text @margin={{hash bottom=1}} @size='sm'>
           Creator of Ruby on Rails
         </UiKit::Text>
-        <UiKit::Link @href='https://twitter.com/dhh'>
+        <UiKit::Box>
           <UiKit::Image @svg='twitter' @alt='twitter logo' @width={{4}} />
-          dhh
-        </UiKit::Link>
+          <UiKit::Link @href='https://twitter.com/dhh'>dhh</UiKit::Link>
+        </UiKit::Box>
       </UiKit::Box>
     </grid.item>
     <grid.item>
@@ -320,10 +329,10 @@
         <UiKit::Text @margin={{hash bottom=1}} @size='sm'>
           Creator of Ruby on Rails
         </UiKit::Text>
-        <UiKit::Link @href='https://twitter.com/cra'>
+        <UiKit::Box>
           <UiKit::Image @svg='twitter' @alt='twitter logo' @width={{4}} />
-          cra
-        </UiKit::Link>
+          <UiKit::Link @href='https://twitter.com/cra'>cra</UiKit::Link>
+        </UiKit::Box>
       </UiKit::Box>
     </grid.item>
     <grid.item>
@@ -349,10 +358,10 @@
         <UiKit::Text @margin={{hash bottom=1}} @size='sm'>
           PyPy and Python Core Team Member
         </UiKit::Text>
-        <UiKit::Link @href='https://github.com/alex'>
+        <UiKit::Box>
           <UiKit::Image @svg='github' @alt='github logo' @width={{4}} />
-          alex
-        </UiKit::Link>
+          <UiKit::Link @href='https://github.com/alex'>alex</UiKit::Link>
+        </UiKit::Box>
       </UiKit::Box>
     </grid.item>
   </UiKit::Grid>

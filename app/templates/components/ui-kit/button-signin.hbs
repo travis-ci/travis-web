@@ -14,7 +14,7 @@
         @margin={{hash right=1}}
         @padding={{hash right=2}}
         @borderColor={{vcs-color this.vcsType 'main'}}
-        @borderWidth={{hash right='xs'}}
+        @borderWidth={{hash right=this.logoSeparatorWidth}}
         class='align-text-bottom'
       >
         <SvgImage @name={{vcs-icon this.vcsType}} @class="fill-current w-5 h-5" />

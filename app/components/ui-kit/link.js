@@ -4,7 +4,7 @@ export default Component.extend({
   tagName: '',
 
   // Public interface
-  variant: 'link-blue',
+  variant: 'link-underlined',
 
   href: null,
   rel: 'noopener noreferrer',

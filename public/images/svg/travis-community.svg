@@ -2,11 +2,22 @@
 <!-- Generator: Adobe Illustrator 23.0.6, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 viewBox="0 0 478.788 281.395" style="enable-background:new 0 0 478.788 281.395;" xml:space="preserve">
+
+<defs>
+  <filter id="grey-shadow">
+    <feDropShadow dx="0" dy="0" stdDeviation="5" flood-color="#b4bfca" />
+  </filter>
+  <filter id="green-shadow">
+    <feDropShadow dx="0" dy="0" stdDeviation="5" flood-color="#32d282" />
+  </filter>
+</defs>
+
 <style type="text/css">
+	.fake{fill:url(#this_fixes_gradient);}
 	.st0{fill:#B4BFCA;}
 	.st1{fill:#FFE000;}
 	.st2{fill:#FFBA8B;}
-	.st3{fill:#FFFFFF;}
+	.st3{fill:#FFFFFF;filter:url(#grey-shadow);}
 	.st4{fill:#66A4FF;}
 	.st5{fill:#F1F1F1;}
 	.st6{fill:none;}
@@ -29,6 +40,7 @@
 	.st23{font-family:'SourceSansPro-Bold';}
 	.st24{font-size:14px;}
 	.st25{fill:#32D282;}
+	.st26{fill:#FFFFFF;filter:url(#green-shadow);}
 </style>
 <g>
 	<g>
@@ -42,14 +54,11 @@
 	c0.031,0,0.055-0.025,0.057-0.055h0.004c0.462-4.075,3.69-7.308,7.765-7.773v-0.005c0.03-0.002,0.055-0.026,0.055-0.057
 	C410.006,129.638,409.981,129.614,409.951,129.612z"/>
 <g>
-	
+
 		<ellipse transform="matrix(0.149 -0.9888 0.9888 0.149 -158.486 352.2314)" class="st2" cx="125.392" cy="268.191" rx="5.547" ry="5.547"/>
 </g>
 <g>
 	<g>
-		
-			<image style="overflow:visible;opacity:0.15;" width="1550" height="738" xlink:href="F7157733E1673F0C.png"  transform="matrix(0.24 0 0 0.24 -3.0304 1.9569)">
-		</image>
 		<g>
 			<path class="st3" d="M9.046,11.006c-1.65,0-3,1.35-3,3v152.869c0,1.65,1.35,3,3,3h347.707c1.65,0,3-1.35,3-3V14.006
 				c0-1.65-1.35-3-3-3H9.046z"/>
@@ -226,8 +235,8 @@
 						<path class="st17" d="M33.794,29.304v1.78h-1.261v-0.52h-0.284v2.402h0.43v1.343h-2.207v-1.343h0.428v-2.402h-0.283v0.52
 							h-1.261v-1.78H33.794z M33.415,30.706v-1.023h-0.55H31.87h-2.137v1.023h0.503v-0.52h1.042v3.159h-0.429v0.586h1.449v-0.586
 							H31.87v-3.159h1.042v0.52H33.415z"/>
-						<polygon class="st10" points="33.415,29.683 33.415,30.706 32.911,30.706 32.911,30.186 31.87,30.186 31.87,33.345 
-							32.298,33.345 32.298,33.931 30.849,33.931 30.849,33.345 31.278,33.345 31.278,30.186 30.236,30.186 30.236,30.706 
+						<polygon class="st10" points="33.415,29.683 33.415,30.706 32.911,30.706 32.911,30.186 31.87,30.186 31.87,33.345
+							32.298,33.345 32.298,33.931 30.849,33.931 30.849,33.345 31.278,33.345 31.278,30.186 30.236,30.186 30.236,30.706
 							29.733,30.706 29.733,29.683 31.87,29.683 32.865,29.683 						"/>
 					</g>
 				</g>
@@ -353,11 +362,8 @@
 </g>
 <g>
 	<g>
-		
-			<image style="overflow:visible;opacity:0.8;" width="1215" height="459" xlink:href="F7157733E1673F0D.png"  transform="matrix(0.24 0 0 0.24 147.7339 148.1612)">
-		</image>
 		<g>
-			<path class="st3" d="M160.466,157.751c-1.73,0-3.145,1.415-3.145,3.145v84.563c0,1.73,1.415,3.145,3.145,3.145h266.079
+			<path class="st26" d="M160.466,157.751c-1.73,0-3.145,1.415-3.145,3.145v84.563c0,1.73,1.415,3.145,3.145,3.145h266.079
 				c1.73,0,3.145-1.415,3.145-3.145v-84.563c0-1.73-1.415-3.145-3.145-3.145H160.466z"/>
 		</g>
 	</g>

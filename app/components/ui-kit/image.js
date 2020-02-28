@@ -16,7 +16,7 @@ export default Component.extend({
   width: null,
 
   fullPath: computed('path', function () {
-    return `/images/${this.path}`;
+    return `../images/${this.path}`;
   }),
 
   // Lifecycle
