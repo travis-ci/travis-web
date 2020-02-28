@@ -37,6 +37,14 @@
       margin: 4rem calc(10% + 2.777rem) 0 calc(10% + 3.333rem);
     }
   }
+
+  .pull-icon-1_svg__ring,
+  .pull-icon-5_svg__ring {
+    transform: rotate(90deg);
+    @screen md {
+      transform: none;
+    }
+  }
 }
 
 // Overrides

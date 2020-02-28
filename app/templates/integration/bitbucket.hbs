@@ -166,6 +166,7 @@
     @maxWidth='full'
     @position={{hash type='relative'}}
     @width={{hash base='max-content' md='full'}}
+    class="build-flow-diagram"
   >
     <UiKit::Box
       @display='flex'
@@ -199,7 +200,7 @@
       @textAlign={{hash md='center'}}
       @width={{hash md='1/5'}}
     >
-      <UiKit::Box @width={{32}} @margin={{hash base=(hash x=4) md=(hash x=0)}} @flex='shrink-none'><SvgImage @name='push-icon-3' /></UiKit::Box>
+      <UiKit::Box @width={{32}} @margin={{hash base=(hash x=4) md=(hash x=0)}} @flex='shrink-none'><SvgImage @name='pull-icon-3' /></UiKit::Box>
       <UiKit::Text>Hooray! <br /> Your build passes!</UiKit::Text>
     </UiKit::Box>
     <UiKit::Box
@@ -233,8 +234,6 @@
       class='build-flow-diagram__bar'
     >
       <UiKit::Box
-        @borderColor='white'
-        @borderWidth={{hash all='md'}}
         @color='grey-light'
         @height={{5}}
         @layer='10'
@@ -252,8 +251,6 @@
         class="build-flow-diagram__bar-bg"
       ></UiKit::Box>
       <UiKit::Box
-        @borderColor='white'
-        @borderWidth={{hash all='md'}}
         @color='grey-light'
         @height={{5}}
         @layer='10'
