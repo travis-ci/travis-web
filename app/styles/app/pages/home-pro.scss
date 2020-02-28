@@ -134,12 +134,12 @@
 
     .list-check {
       @media #{$medium-only} {
-        padding-left: 10px
+        padding-left: 0;
       }
-      padding-left: 39px;
+      padding-left: 20px;
       padding-top: 12px;
 
-      img {
+      .checkmark {
         @media #{$small-only} {
           margin-right: 10px;
         }
@@ -164,12 +164,12 @@
 
   .list-check-container {
     @media #{$small-only} {
-      max-width: 338px;
+      max-width: 357px;
       margin: 0 auto;
     }
 
     @media #{$medium-only} {
-      max-width: 338px;
+      max-width: 345px;
       margin: 0 auto;
     }
 
