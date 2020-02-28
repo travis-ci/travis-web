@@ -167,6 +167,7 @@ export default Component.extend({
   margin: variantProp(VARIANT_PROPS, null),
   maxWidth: variantProp(VARIANT_PROPS, null),
   padding: variantProp(VARIANT_PROPS, null),
+  flex: variantProp(VARIANT_PROPS, null),
 
   variant: null,
 
