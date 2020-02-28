@@ -6,6 +6,8 @@ import fuzzysort from 'fuzzysort';
 const { validAuthToken, apiEndpoint } = config;
 
 export default function () {
+  this.timing = 0;
+
   const _defaultHandler = this.pretender._handlerFor;
 
   this.pretender._handlerFor = function (verb, path, request) {

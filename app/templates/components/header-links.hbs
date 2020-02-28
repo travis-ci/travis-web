@@ -125,30 +125,6 @@
           Help
         </a>
       </li>
-      {{#if this.auth.signedOut}}
-        <li class="display-on-mobile">
-          <a class="navigation-anchor pointer" title="Sign in with GitHub" {{action "signIn" "github"}}>
-            Sign in with GitHub
-            <SvgImage @name={{vcs-icon 'GithubUser'}} @class="align-text-top fill-current w-5 h-5" />
-          </a>
-        </li>
-        {{#if this.multiVcs.enableBitbucketLogin}}
-          <li class="display-on-mobile">
-            <a class="navigation-anchor pointer" title="Sign in with Bitbucket" {{action "signIn" "bitbucket"}}>
-              Sign in with Bitbucket
-              <SvgImage @name={{vcs-icon 'BitbucketUser'}} @class="align-text-top fill-current w-5 h-5" />
-            </a>
-          </li>
-        {{/if}}
-        {{#if this.multiVcs.enableAssemblaLogin}}
-          <li class="display-on-mobile">
-            <a class="navigation-anchor pointer" title="Sign in with Assembla" {{action "signIn" "assembla"}}>
-              Sign in with Assembla
-              <SvgImage @name={{vcs-icon 'AssemblaUser'}} @class="align-text-top fill-current w-5 h-5" />
-            </a>
-          </li>
-        {{/if}}
-      {{/if}}
       {{#if this.deploymentVersion}}
         <li>
           <span class="deployment-version">
@@ -167,98 +143,5 @@
         </ExternalLinkTo>
       </li>
     {{/unless}}
-    <li id="profile-menu-link" class="{{this.classProfile}}">
-      {{#if this.auth.signedOut}}
-        {{#if this.multiVcs.disabled}}
-          <button
-            class="auth-button signed-out"
-            type="button"
-            {{action "signIn" "github"}}
-          >
-            Sign in
-          </button>
-        {{/if}}
-
-        {{#if this.multiVcs.enabled}}
-          <ul class="navigation-nested">
-            <li>
-              <button class="action" {{action "signIn" "github"}}>
-                Sign in with GitHub
-                  <SvgImage @name={{vcs-icon 'GithubUser'}} @class="align-text-top fill-current w-5 h-5" />
-              </button>
-            </li>
-            {{#if this.multiVcs.enableBitbucketLogin}}
-              <li>
-                <button class="action" {{action "signIn" "bitbucket"}}>
-                  Sign in with Bitbucket
-                  <SvgImage @name={{vcs-icon 'BitbucketUser'}} @class="align-text-top fill-current w-5 h-5" />
-                </button>
-              </li>
-            {{/if}}
-            {{#if this.multiVcs.enableAssemblaLogin}}
-              <li>
-                <button class="action" {{action "signIn" "assembla"}}>
-                  Sign in with Assembla
-                  <SvgImage @name={{vcs-icon 'AssemblaUser'}} @class="align-text-top fill-current w-5 h-5" />
-                </button>
-              </li>
-            {{/if}}
-          </ul>
-          <span class="auth-button">
-            Sign in
-          </span>
-        {{/if}}
-      {{/if}}
-      {{#if this.auth.signingIn}}
-        <button class="auth-button signing-in" type="button">
-          Signing In <LoadingIndicator @inline={{true}} />
-        </button>
-      {{/if}}
-      {{#if this.auth.signedIn}}
-        <LinkTo
-          @route="account"
-          data-test-header-account-link="true"
-          class="navigation-anchor navigation-profile-link signed-in"
-        >
-          <UserAvatar
-            @url={{this.user.avatarUrl}}
-            @name={{this.user.fullName}}
-            @size={{40}}
-          />
-          <SvgImage @name="icon-dropdown-arrow" @class="icon" />
-        </LinkTo>
-        <div class="menu-separator"></div>
-        <ul class="navigation-nested">
-          <li class="username">
-            <span>
-              {{this.userName}}
-            </span>
-          </li>
-          <LinkTo
-            @route="account"
-            @title="Your profile"
-            class="signed-in topbar-menu-item"
-          >
-            <li>
-              <SvgImage @name="icon-settings" @class="icon" />
-              Settings
-            </li>
-          </LinkTo>
-          <div class="nav-nested"></div>
-          <a
-            data-test-signout-link
-            href="/"
-            title="Sign out of Travis CI"
-            class="topbar-menu-item"
-            {{action "signOut"}}
-          >
-            <li>
-              <SvgImage @name="icon-sign-out" @class="icon" />
-              Sign Out
-            </li>
-          </a>
-        </ul>
-      {{/if}}
-    </li>
   </ul>
 </nav>

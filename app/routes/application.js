@@ -22,7 +22,6 @@ export default TravisRoute.extend(BuildFaviconMixin, {
 
   init() {
     this.featureFlags;
-    this.auth.autoSignIn();
 
     this.auth.afterSignOut(() => {
       this.afterSignOut();
@@ -42,8 +41,12 @@ export default TravisRoute.extend(BuildFaviconMixin, {
     return this._super(...arguments);
   },
 
+  beforeModel() {
+    return this.auth.autoSignIn();
+  },
+
   model() {
-    if (this.get('auth.signedIn')) {
+    if (this.auth.signedIn) {
       return this.get('featureFlags.fetchTask').perform();
     }
   },

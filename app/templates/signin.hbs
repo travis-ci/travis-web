@@ -33,28 +33,37 @@
       @shadow='md'
       @textAlign='center'
     >
-      <UiKit::Text @tag='h1' @variant='h1'>Sign in</UiKit::Text>
+      <UiKit::Text @tag='h1' @variant='h1'>
+        Sign in
+      </UiKit::Text>
       <UiKit::Text @margin={{hash bottom=6}}>
-        Welcome back, hop back in with:
+        Welcome back{{if this.hasAccounts ', hop back in with:' '!'}}
       </UiKit::Text>
 
-      {{#if this.multiVcs.disabled}}
-        <UiKit::ButtonSignin />
-      {{else}}
-        <UiKit::ButtonSignin />
+      {{#if this.hasAccounts}}
+        {{#each this.accounts as |account| }}
+          <UiKit::ButtonSignin @account={{account}} />
+        {{/each}}
 
         <UiKit::Text @margin={{hash y=6}}>
           or sign in with another account
         </UiKit::Text>
+      {{/if}}
 
+      <UiKit::ButtonSignin />
+      {{#if this.showOtherProviders}}
         <UiKit::ButtonSignin @provider='bitbucket' />
         <UiKit::ButtonSignin @provider='assembla' />
       {{/if}}
 
-      <UiKit::Text @margin={{hash y=6}}>
-        Don't have an account?
-        <UiKit::Link @route='signup' @color='green-light'>Sign up</UiKit::Link>
-      </UiKit::Text>
+      {{#unless this.hasAccounts}}
+        <UiKit::Text @margin={{hash y=6}}>
+          Don't have an account?
+          <UiKit::Link @route='signup' @color='green-light'>
+            Sign up
+          </UiKit::Link>
+        </UiKit::Text>
+      {{/unless}}
     </UiKit::Box>
 
     <UiKit::Box

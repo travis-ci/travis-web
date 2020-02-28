@@ -999,15 +999,10 @@
   }
 }
 
-#profile-menu-link.signed-out {
+.profile.menu.signed-out {
   line-height: 0;
-  margin-top: 13px;
-  position: relative;
+  margin-top: 11px;
   text-align: center;
-
-  @media #{$small-only} {
-    display: none;
-  }
 
   .navigation-nested {
     background-color: white;
@@ -1016,7 +1011,7 @@
     width: 100%;
     border-top-right-radius: 0;
     border-top-left-radius: 0;
-    z-index: 10;
+    z-index: 35;
 
     .action {
       cursor: pointer;
@@ -1037,7 +1032,7 @@
       cursor: default;
       padding-top: 10px;
       position: relative;
-      z-index: 11;
+      z-index: 36;
 
       &:hover {
         border-bottom-left-radius: 0;

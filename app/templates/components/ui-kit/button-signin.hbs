@@ -21,10 +21,17 @@
       </UiKit::Box>
     {{/if}}
 
-    Sign {{if this.isSignup 'Up' 'In'}} With {{vcs-name this.vcsType}}
+    {{#if this.account}}
+      {{or this.account.login this.account.fullName}}
+    {{else}}
+      {{#if this.isLoading}}
+        Signing {{if this.isSignup 'Up' 'In'}}...
+      {{else}}
+        Sign {{if this.isSignup 'Up' 'In'}} With {{vcs-name this.vcsType}}
+      {{/if}}
+    {{/if}}
 
     {{#if this.isBetaBadgeVisible}}
-
       <UiKit::Badge
         @color={{vcs-color this.vcsType 'light'}}
         @pin='top-right'
@@ -32,5 +39,6 @@
         Beta
       </UiKit::Badge>
     {{/if}}
+
   </UiKit::Button>
 {{/if}}

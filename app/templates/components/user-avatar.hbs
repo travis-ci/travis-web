@@ -17,3 +17,11 @@
   <SvgImage @name="avatar-checkmark" @class="checkmark" />
   <EmberTooltip @text={{this.subscriptionTooltipText}} />
 {{/if}}
+{{#if this.providerIcon}}
+  <SvgImage
+    @name={{this.providerIcon}}
+    @width={{15}}
+    @height={{15}}
+    @class="avatar__provider-icon"
+  />
+{{/if}}

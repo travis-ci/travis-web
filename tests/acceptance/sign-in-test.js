@@ -2,7 +2,6 @@ import { click, currentURL, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import Service from '@ember/service';
-import signInUser from 'travis/tests/helpers/sign-in-user';
 import { stubService } from 'travis/tests/helpers/stub-service';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { percySnapshot } from 'ember-percy';
@@ -53,15 +52,5 @@ module('Acceptance | sign in', function (hooks) {
     assert.equal(signinRequest, 'github');
 
     percySnapshot(assert);
-  });
-
-  test('visiting signin redirects to index if authenticated', async function (assert) {
-    const currentUser = this.server.create('user', 'withRepository');
-
-    signInUser(currentUser);
-
-    await visit('/signin');
-
-    assert.equal(currentURL(), '/');
   });
 });

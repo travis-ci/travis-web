@@ -19,7 +19,7 @@ export default Component.extend(InViewportMixin, {
   classNameBindings: ['isWhite:top--white'],
   isWhite: false,
   landingPage: false,
-  isOpen: reads('is-open'),
+  isNavigationOpen: false,
 
   user: reads('auth.currentUser'),
 
@@ -60,4 +60,10 @@ export default Component.extend(InViewportMixin, {
   didExitViewport() {
     this.flashes.set('topBarVisible', false);
   },
+
+  actions: {
+    toggleNavigation() {
+      this.toggleProperty('isNavigationOpen');
+    }
+  }
 });
