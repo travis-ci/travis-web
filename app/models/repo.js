@@ -69,11 +69,13 @@ const Repo = VcsEntity.extend({
 
   vcsLogin: computed('slug', function () {
     const slug = this.get('slug');
+    const owner = this.get('owner');
     return slug && slug.split('/').length == 2 ? slug.split('/')[0] : owner;
   }),
 
   vcsName: computed('slug', function () {
     const slug = this.get('slug');
+    const name = this.get('name');
     return slug && slug.split('/').length == 2 ? slug.split('/')[1] : name;
   }),
 
