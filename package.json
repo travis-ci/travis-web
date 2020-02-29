@@ -57,7 +57,7 @@
     "ember-composable-helpers": "^2.1.0",
     "ember-concurrency": "^1.0.0",
     "ember-concurrency-scroll": "^1.0.0",
-    "ember-data": "~3.12.2",
+    "ember-data": "~3.16.2",
     "ember-element-helper": "^0.1.1",
     "ember-exam": "^4.0.0",
     "ember-export-application-global": "^2.0.0",
