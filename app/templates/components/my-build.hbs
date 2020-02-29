@@ -24,7 +24,7 @@
       <div class="row-content" data-test-repo-name>
         <LinkTo
           @route="repo"
-          @models={{array this.build.repo.provider this.build.repo.owner.login this.build.repo.name}}
+          @models={{array this.build.repo.provider this.build.repo.vcsLogin this.build.repo.vcsName}}
           class="inner-underline"
         >
           {{this.build.repo.name}}

@@ -27,7 +27,7 @@
       <h1 class="row-content">
         <LinkTo
           @route="repo"
-          @models={{array this.repo.provider this.repo.owner.login this.repo.name}}
+          @models={{array this.repo.provider this.repo.vcsLogin this.repo.vcsName}}
           @title={{this.repo.name}}
         >
           {{this.repo.name}}
