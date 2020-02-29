@@ -28,7 +28,7 @@
         Unsubscribe from
         <LinkTo
           @route="repo"
-          @model={{this.repo}}
+          @models={{array this.repo.provider this.repo.vcsLogin this.repo.vcsName}}>
           @target="_blank"
           class="repo-link repo-slug"
         >
@@ -71,7 +71,7 @@
         </button>
         <LinkTo
           @route="repo"
-          @model={{this.repo}}
+          @models={{array this.repo.provider this.repo.vcsLogin this.repo.vcsName}}>
           @tagName="button"
           @disabled={{this.task.isRunning}}
           class="no-button control"

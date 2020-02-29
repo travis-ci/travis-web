@@ -67,6 +67,16 @@ const Repo = VcsEntity.extend({
   defaultBranch: belongsTo('branch', { async: false }),
   currentBuild: belongsTo('build', { async: true, inverse: 'repoCurrentBuild' }),
 
+  vcsLogin: computed('slug', function () {
+    const slug = this.get('slug');
+    return slug && slug.split('/').length == 2 ? slug.split('/')[0] : owner;
+  }),
+
+  vcsName: computed('slug', function () {
+    const slug = this.get('slug');
+    return slug && slug.split('/').length == 2 ? slug.split('/')[1] : name;
+  }),
+
   _branches: hasMany('branch'),
 
   isCurrentUserACollaborator: computed('auth.currentUser.permissions.[]', function () {

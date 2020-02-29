@@ -20,7 +20,7 @@
     </h3>
     <p>
       Assets tokens could be used for embedding status images or getting atom and RSS feeds.
-      To learn more about using our Asset tokens, please head to 
+      To learn more about using our Asset tokens, please head to
       <ExternalLinkTo href="https://docs.travis-ci.com/user/status-images">
         docs
       </ExternalLinkTo>.
@@ -82,7 +82,7 @@
           {{#each this.unsubscribedRepos as |repo|}}
             <div class="row" data-test-email-settings-resubscribe-item>
               <div class="name">
-                <LinkTo @route="repo" @model={{repo}}>
+                <LinkTo @route="repo" @models={{array repo.provider repo.vcsLogin repo.vcsName}}>
                   {{repo.formattedSlug}}
                 </LinkTo>
               </div>

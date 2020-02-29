@@ -1,7 +1,7 @@
 <ul>
   <li data-test-current-tab-container id="tab_current" class={{this.classCurrent}}>
     {{#if repo.slug}}
-      <LinkTo @route="repo" @model={{this.repo}} @current-when="repo.index">
+      <LinkTo @route="repo" @models={{array this.repo.provider this.repo.vcsLogin this.repo.vcsName}} @current-when="repo.index">
         Current
       </LinkTo>
     {{/if}}
