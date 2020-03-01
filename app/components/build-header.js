@@ -60,8 +60,9 @@ export default Component.extend({
     return !['api', 'cron'].includes(eventType);
   }),
 
-  commitUrl: computed('item.repo.{slug,vcsType}', 'commit.sha', function () {
-    const [owner, repo] = this.get('item.repo.slug').split('/');
+  commitUrl: computed('item.repo.{vcsLogin,vcsName,vcsType}', 'commit.sha', function () {
+    const owner = this.get('item.repo.vcsLogin');
+    const repo = this.get('item.repo.vcsName');
     const vcsType = this.get('item.repo.vcsType');
     const commit = this.get('commit.sha');
 
