@@ -1,8 +1,7 @@
 import Component from '@ember/component';
 import { computed, observer } from '@ember/object';
 import { reads, equal, or } from '@ember/object/computed';
-// import { debounce } from '@ember/runloop';
-import { task } from 'ember-concurrency';
+import { task, timeout } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
 import TriggerBuild from 'travis/mixins/trigger-build';
 import WithConfigValidation from 'travis/mixins/components/with-config-validation';
@@ -88,15 +87,15 @@ export default Component.extend(TriggerBuild, WithConfigValidation, {
     this.load.perform();
   }),
 
-  // configChanged: observer('config', function () {
-  //   debounce(this, 'load', 500);
-  // }),
+  configChanged: observer('config', function () {
+    this.load.perform({ milliseconds: 200 });
+  }),
 
   didInsertElement() {
     this.load.perform();
   },
 
-  load: task(function* () {
+  load: task(function* (debounce) {
     if (this.status !== 'closed' && this.status !== 'open') {
       let data = {
         repo: {
@@ -109,6 +108,9 @@ export default Component.extend(TriggerBuild, WithConfigValidation, {
         config: this.config,
         type: 'api'
       };
+      if (debounce && debounce.milliseconds) {
+        yield timeout(debounce.milliseconds);
+      }
       try {
         const result = yield this.store.queryRecord('build-config', { data });
         this.set('rawConfigs', result.rawConfigs);

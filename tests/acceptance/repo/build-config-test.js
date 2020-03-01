@@ -88,8 +88,8 @@ module('Acceptance | repo/trigger build', function (hooks) {
     assert.dom('[request-configs-button-customize]').exists();
     assert.dom('[request-configs-button-preview]').exists();
     assert.dom('[data-test-request-configs-submit]').exists();
-    assert.dom('[data-test-request-configs-submit]').exists();
-    assert.dom('.option-dropdown [trigger-build-anchor]').hasAnyText('trigger build link is rendered');
+    assert.dom('[data-test-raw-configs]').exists();
+    assert.dom('.option-dropdown [trigger-build-anchor]').exists();
     assert.dom('[trigger-build-description]').hasAnyText('Trigger a build request with the following');
   });
 });

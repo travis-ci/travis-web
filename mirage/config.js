@@ -587,7 +587,7 @@ export default function () {
   });
 
   this.post(`${yml}/configs`, (schema, { params }) => {
-    const buildsConfig = schema.buildConfig.create({
+    const buildsConfig = schema.buildConfigs.create({
       raw_configs: [{
         source: 'test/test_repo:.travis.yml@master',
         config: 'script: echo "Hello World"',
@@ -605,9 +605,11 @@ export default function () {
           }
         }
       ],
-      full_messages: ['[info] on root: missing os, using the default "linux"'],
     });
-    return buildsConfig;
+    return new Response(200, {}, {
+      rawConfigs: buildsConfig.raw_configs,
+      messages: buildsConfig.messages,
+    });
   });
 
   this.get('/repo/:repo_id/builds', function (schema, request) {
