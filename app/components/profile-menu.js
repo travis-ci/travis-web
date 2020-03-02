@@ -22,6 +22,10 @@ export default Component.extend({
 
   userName: or('user.name', 'user.login'),
 
+  get redirectUrl() {
+    return window.location.href;
+  },
+
   isSignInPage: equal('router.currentRouteName', 'signin'),
   showSignInButton: not('isSignInPage'),
 
@@ -60,11 +64,8 @@ export default Component.extend({
   actions: {
 
     signIn() {
-      const { auth, router } = this;
-      if (!auth.redirectUrl) {
-        auth.set('redirectUrl', window.location.href);
-      }
-      router.transitionTo('signin');
+      const { redirectUrl } = this;
+      this.router.transitionTo('signin', { queryParams: { redirectUrl } });
     },
 
     signOut() {
