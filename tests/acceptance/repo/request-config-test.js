@@ -97,6 +97,8 @@ module('Acceptance | repo/request configs', function (hooks) {
       BUILD_CONFIG_FORM: '[data-test-build-config-form]',
       BUILD_CONFIG_FORM_MESSAGE: '[data-test-build-config-form] input',
       BUILD_CONFIG_FORM_SCRIPT: '[data-test-build-config-form] textarea',
+      PREVIEW_CONFIG: '[data-test-preview-config]',
+      PREVIEW_MATRIX: '[data-test-preview-matrix]',
     };
   });
 
@@ -148,17 +150,11 @@ module('Acceptance | repo/request configs', function (hooks) {
   test('preview config', async function (assert) {
     await visit(this.TEST_TARGETS.URL);
 
-    await click(this.TEST_TARGETS.CUSTOMIZE_BUTTON);
+    await click(this.TEST_TARGETS.PREVIEW_BUTTON);
 
     percySnapshot(assert);
-    assert.dom(this.TEST_TARGETS.BUILD_CONFIG_FORM).exists();
 
-    await fillIn(this.TEST_TARGETS.BUILD_CONFIG_FORM_MESSAGE, 'This is a demo build'),
-    await fillIn(this.TEST_TARGETS.BUILD_CONFIG_FORM_SCRIPT, 'script: echo "Hello World"');
-
-    click(this.TEST_TARGETS.CONFIGS_SUBMIT_BUTTON);
-    percySnapshot(assert);
-
-    assert.ok(this.TEST_TARGETS.BUILD_CONFIG_FORM, 'config form is hidden again');
+    assert.dom(this.TEST_TARGETS.PREVIEW_CONFIG).hasText('{ "language": "node_js", "os": [ "linux" ] }');
+    assert.dom(this.TEST_TARGETS.PREVIEW_MATRIX).hasText('[ { "os": "linux", "language": "node_js" } ]');
   });
 });

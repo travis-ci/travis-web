@@ -180,7 +180,7 @@ export default function () {
   this.get('/coupons/:coupon', function (schema, { params }) {
     const coupon = schema.coupons.find(params.coupon);
     if (!coupon) {
-      return new Response(404, {'Content-Type': 'application/json'}, {
+      return new Response(404, { 'Content-Type': 'application/json' }, {
         '@type': 'error',
         'error_type': 'not_found',
         'error_message': `No such coupon: ${params.coupon}`
@@ -605,10 +605,20 @@ export default function () {
           }
         }
       ],
+      matrix: [{
+        os: 'linux',
+        language: 'node_js',
+      }],
+      config: {
+        language: 'node_js',
+        os: ['linux'],
+      }
     });
     return new Response(200, {}, {
       rawConfigs: buildsConfig.raw_configs,
       messages: buildsConfig.messages,
+      matrix: buildsConfig.matrix,
+      config: buildsConfig.config,
     });
   });
 

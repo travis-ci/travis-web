@@ -1,15 +1,15 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { reads, match } from '@ember/object/computed';
+import { reads } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
+import { task } from 'ember-concurrency';
 
 export default Component.extend({
   tagName: 'div',
   classNames: ['request-configs-preview', 'status'],
 
-  yml: service(),
-  status: 'loading',
-  loading: match('status', /loading/),
+  store: service(),
+  loading: reads('load.isRunning'),
 
   repo: reads('request.repo'),
 
@@ -21,16 +21,30 @@ export default Component.extend({
     return JSON.stringify(this.matrix, null, 2);
   }),
 
-  didInsertElement: function () {
-    this.preview();
+  didInsertElement() {
+    this.load.perform();
   },
 
-  preview: function () {
-    this.yml.configs(this.get('repo'), this.ref, this.mergeMode, this.config).then((data) => { // TODO error handling
-      this.set('merged', data.config);
-      this.set('messages', data.messages);
-      this.set('matrix', data.matrix);
-      this.set('status', 'done');
-    });
-  },
+  load: task(function* () {
+    let data = {
+      repo: {
+        slug: this.repo.get('slug'),
+        private: this.repo.get('private'),
+        default_branch: this.repo.get('defaultBranch.name'),
+      },
+      ref: this.ref,
+      mode: this.mergeMode,
+      config: this.config,
+      type: 'api'
+    };
+    try {
+      const result = yield this.store.queryRecord('build-config', { data });
+      this.set('merged', result.config);
+      this.set('messages', result.messages);
+      this.set('matrix', result.matrix);
+    } catch (e) {
+      this.set('rawConfigs', []);
+      this.set('messages', [{ level: 'error', code: e.error_type, args: { message: e.error_message } }]);
+    }
+  }).drop(),
 });
