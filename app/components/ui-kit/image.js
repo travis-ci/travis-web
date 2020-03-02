@@ -15,10 +15,6 @@ export default Component.extend({
   height: null,
   width: null,
 
-  fullPath: computed('path', function () {
-    return `../images/${this.path}`;
-  }),
-
   // Lifecycle
   didReceiveAttrs() {
     this._super(...arguments);
