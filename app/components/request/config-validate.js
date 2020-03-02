@@ -66,7 +66,7 @@ export default Component.extend({
     return error ? error.level : 'valid';
   }),
 
-  counts: computed('sortedMessages.@each.level', function () {
+  counts: computed('sortedMessages.[]', function () {
     return countBy(this.sortedMessages, 'level');
   }),
 
