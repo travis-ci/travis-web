@@ -1,4 +1,4 @@
-<div class="header" {{action 'toggle'}}>
+<div class="header" {{action 'toggle'}} data-test-toggle-messages="true">
   <span class="tooltip-wrapper level-icon">
     <SvgImage @name="msg-{{this.maxLevel}}"  @class={{this.iconClass}} />
     <EmberTooltip @text={{this.summary}} />
@@ -17,7 +17,7 @@
 
 {{#if this.expanded}}
   <div class="list">
-    {{#each messages as |message|}}
+    {{#each this.messages as |message|}}
       <Request::Message @message={{message}} />
     {{/each}}
   </div>

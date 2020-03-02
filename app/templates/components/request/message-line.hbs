@@ -3,7 +3,7 @@
     <SvgImage @name={{this.level}} @class={{this.iconClass}} />
     <EmberTooltip @text={{this.tooltipText}} />
   </div>
-  <div class="message">
+  <div class="message" data-test-message-line="true">
     {{this.message}}
   </div>
   <ExternalLinkTo href="{{config-get 'urls.buildConfigValidation'}}#{{this.code}}" class="message-help">

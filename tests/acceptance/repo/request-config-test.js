@@ -99,6 +99,9 @@ module('Acceptance | repo/request configs', function (hooks) {
       BUILD_CONFIG_FORM_SCRIPT: '[data-test-build-config-form] textarea',
       PREVIEW_CONFIG: '[data-test-preview-config]',
       PREVIEW_MATRIX: '[data-test-preview-matrix]',
+      CONFIG_MESSAGES: '[data-test-configs-message]',
+      CONFIG_MESSAGE_LINE: '[data-test-message-line]',
+      TOGGLE_MESSAGE: '[data-test-toggle-messages]',
     };
   });
 
@@ -156,5 +159,10 @@ module('Acceptance | repo/request configs', function (hooks) {
 
     assert.dom(this.TEST_TARGETS.PREVIEW_CONFIG).hasText('{ "language": "node_js", "os": [ "linux" ] }');
     assert.dom(this.TEST_TARGETS.PREVIEW_MATRIX).hasText('[ { "os": "linux", "language": "node_js" } ]');
+
+    await click(this.TEST_TARGETS.TOGGLE_MESSAGE);
+
+    assert.dom(this.TEST_TARGETS.CONFIG_MESSAGES).exists({ count: 1 });
+    assert.dom(this.TEST_TARGETS.CONFIG_MESSAGE_LINE).hasText('root: missing os, using the default linux');
   });
 });
