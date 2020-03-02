@@ -83,52 +83,82 @@ module('Acceptance | repo/request configs', function (hooks) {
     this.repo.currentBuild = this.latestBuild;
     this.repo.save();
 
-    this.testTargets = {
-      url: `/adal/difference-engine/builds/${this.latestBuild.id}/config`
+    this.TEST_TARGETS = {
+      URL: `/adal/difference-engine/builds/${this.latestBuild.id}/config`,
+      CANCEL_BUTTON: '[data-test-request-configs-button-cancel]',
+      CUSTOMIZE_BUTTON: '[data-test-request-configs-button-customize]',
+      PREVIEW_BUTTON: '[data-test-request-configs-button-preview]',
+      CONFIGS_SUBMIT_BUTTON: '[data-test-request-configs-submit]',
+      RAW_CONFIGS: '[data-test-raw-configs]',
+      REQUEST_CONFIGS: '[data-test-request-config]',
+      FILE_PATH: '[data-test-file-path]',
+      BUILDS_DESCRIPTION: '[data-test-trigger-build-description]',
+      JSON: '[data-test-json]',
+      BUILD_CONFIG_FORM: '[data-test-build-config-form]',
+      BUILD_CONFIG_FORM_MESSAGE: '[data-test-build-config-form] input',
+      BUILD_CONFIG_FORM_SCRIPT: '[data-test-build-config-form] textarea',
     };
   });
 
   test('view request configs view', async function (assert) {
-    await visit(this.testTargets.url);
+    await visit(this.TEST_TARGETS.URL);
 
     percySnapshot(assert);
-    assert.dom('[data-test-request-configs-button-cancel]').exists();
-    assert.dom('[data-test-request-configs-button-customize]').exists();
-    assert.dom('[data-test-request-configs-button-preview]').exists();
-    assert.dom('[data-test-request-configs-submit]').exists();
-    assert.dom('[data-test-raw-configs]').exists({ count: 1 });
-    assert.dom('[data-test-request-config]').doesNotExist();
-    assert.dom('[data-test-file-path]').hasText('test/test_repo:.travis.yml@master');
-    assert.dom('[data-test-trigger-build-description]').hasAnyText('Trigger a build request with the following');
+    assert.dom(this.TEST_TARGETS.CANCEL_BUTTON).exists();
+    assert.dom(this.TEST_TARGETS.CUSTOMIZE_BUTTON).exists();
+    assert.dom(this.TEST_TARGETS.PREVIEW_BUTTON).exists();
+    assert.dom(this.TEST_TARGETS.PREVIEW_BUTTON).exists();
+    assert.dom(this.TEST_TARGETS.CONFIGS_SUBMIT_BUTTON).exists();
+    assert.dom(this.TEST_TARGETS.RAW_CONFIGS).exists({ count: 1 });
+    assert.dom(this.TEST_TARGETS.REQUEST_CONFIGS).doesNotExist();
+    assert.dom(this.TEST_TARGETS.FILE_PATH).hasText('test/test_repo:.travis.yml@master');
+    assert.dom(this.TEST_TARGETS.BUILDS_DESCRIPTION).hasAnyText('Trigger a build request with the following');
   });
 
   test('click on cancel button', async function (assert) {
-    await visit(this.testTargets.url);
+    await visit(this.TEST_TARGETS.URL);
 
-    await click('[data-test-request-configs-button-cancel]');
+    await click(this.TEST_TARGETS.CANCEL_BUTTON);
 
     percySnapshot(assert);
-    assert.dom('[data-test-request-configs-button-customize]').doesNotExist();
-    assert.dom('[data-test-request-configs-button-preview]').doesNotExist();
-    assert.dom('[data-test-trigger-build-description]').doesNotExist();
-    assert.dom('[data-test-request-config]').exists();
-    assert.dom('[data-test-json]').hasText('{ "script": "echo \\"Hello World\\"" }');
+    assert.dom(this.TEST_TARGETS.CUSTOMIZE_BUTTON).doesNotExist();
+    assert.dom(this.TEST_TARGETS.PREVIEW_BUTTON).doesNotExist();
+    assert.dom(this.TEST_TARGETS.BUILDS_DESCRIPTION).doesNotExist();
+    assert.dom(this.TEST_TARGETS.REQUEST_CONFIGS).exists();
+    assert.dom(this.TEST_TARGETS.JSON).hasText('{ "script": "echo \\"Hello World\\"" }');
   });
 
   test('customize config', async function (assert) {
-    await visit(this.testTargets.url);
+    await visit(this.TEST_TARGETS.URL);
 
-    await click('[data-test-request-configs-button-customize]');
+    await click(this.TEST_TARGETS.CUSTOMIZE_BUTTON);
 
     percySnapshot(assert);
-    assert.dom('[data-test-build-config-form]').exists();
+    assert.dom(this.TEST_TARGETS.BUILD_CONFIG_FORM).exists();
 
-    await fillIn('[data-test-build-config-form] input', 'This is a demo build'),
-    await fillIn('[data-test-build-config-form] textarea', 'script: echo "Hello World"');
+    await fillIn(this.TEST_TARGETS.BUILD_CONFIG_FORM_MESSAGE, 'This is a demo build'),
+    await fillIn(this.TEST_TARGETS.BUILD_CONFIG_FORM_SCRIPT, 'script: echo "Hello World"');
 
-    click('[data-test-request-configs-submit]');
+    click(this.TEST_TARGETS.CONFIGS_SUBMIT_BUTTON);
     percySnapshot(assert);
 
-    assert.ok('[data-test-build-config-form]', 'config form is hidden again');
+    assert.ok(this.TEST_TARGETS.BUILD_CONFIG_FORM, 'config form is hidden again');
+  });
+
+  test('preview config', async function (assert) {
+    await visit(this.TEST_TARGETS.URL);
+
+    await click(this.TEST_TARGETS.CUSTOMIZE_BUTTON);
+
+    percySnapshot(assert);
+    assert.dom(this.TEST_TARGETS.BUILD_CONFIG_FORM).exists();
+
+    await fillIn(this.TEST_TARGETS.BUILD_CONFIG_FORM_MESSAGE, 'This is a demo build'),
+    await fillIn(this.TEST_TARGETS.BUILD_CONFIG_FORM_SCRIPT, 'script: echo "Hello World"');
+
+    click(this.TEST_TARGETS.CONFIGS_SUBMIT_BUTTON);
+    percySnapshot(assert);
+
+    assert.ok(this.TEST_TARGETS.BUILD_CONFIG_FORM, 'config form is hidden again');
   });
 });
