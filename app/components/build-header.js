@@ -60,8 +60,8 @@ export default Component.extend({
     return !['api', 'cron'].includes(eventType);
   }),
 
-  commitUrl: computed('item.repo.{vcsLogin,vcsName,vcsType}', 'commit.sha', function () {
-    const owner = this.get('item.repo.vcsLogin');
+  commitUrl: computed('item.repo.{ownerName,vcsName,vcsType}', 'commit.sha', function () {
+    const owner = this.get('item.repo.ownerName');
     const repo = this.get('item.repo.vcsName');
     const vcsType = this.get('item.repo.vcsType');
     const commit = this.get('commit.sha');
@@ -69,16 +69,18 @@ export default Component.extend({
     return this.externalLinks.commitUrl(vcsType, { owner, repo, commit });
   }),
 
-  branchUrl: computed('item.repo.{slug,vcsType}', 'build.branchName', function () {
-    const [owner, repo] = this.get('item.repo.slug').split('/');
+  branchUrl: computed('item.repo.{ownerName,vcsName,vcsType}', 'build.branchName', function () {
+    const owner = this.get('item.repo.ownerName');
+    const repo = this.get('item.repo.vcsName');
     const vcsType = this.get('item.repo.vcsType');
     const branch = this.get('build.branchName');
 
     return this.externalLinks.branchUrl(vcsType, { owner, repo, branch });
   }),
 
-  tagUrl: computed('item.repo.{slug,vcsType}', 'build.tag.name', function () {
-    const [owner, repo] = this.get('item.repo.slug').split('/');
+  tagUrl: computed('item.repo.{ownerName,vcsName,vcsType}', 'build.tag.name', function () {
+    const owner = this.get('item.repo.ownerName');
+    const repo = this.get('item.repo.vcsName');
     const vcsType = this.get('item.repo.vcsType');
     const tag = this.get('build.tag.name');
 

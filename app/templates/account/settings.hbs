@@ -82,7 +82,7 @@
           {{#each this.unsubscribedRepos as |repo|}}
             <div class="row" data-test-email-settings-resubscribe-item>
               <div class="name">
-                <LinkTo @route="repo" @models={{array repo.provider repo.vcsLogin repo.vcsName}}>
+                <LinkTo @route="repo" @models={{array repo.provider repo.ownerName repo.vcsName}}>
                   {{repo.formattedSlug}}
                 </LinkTo>
               </div>

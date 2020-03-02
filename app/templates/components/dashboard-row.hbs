@@ -18,7 +18,7 @@
       <h2 class="row-label repo-dashboard">
         <LinkTo
           @route="owner"
-          @models={{array this.repo.provider this.repo.vcsLogin}}
+          @models={{array this.repo.provider this.repo.ownerName}}
           @title={{this.repo.owner.login}}
         >
           {{this.repo.owner.login}}
@@ -27,7 +27,7 @@
       <h1 class="row-content">
         <LinkTo
           @route="repo"
-          @models={{array this.repo.provider this.repo.vcsLogin this.repo.vcsName}}
+          @models={{array this.repo.provider this.repo.ownerName this.repo.vcsName}}
           @title={{this.repo.name}}
         >
           {{this.repo.name}}
@@ -49,7 +49,7 @@
               @route="build"
               @models={{array
                 this.repo.provider
-                this.repo.vcsLogin
+                this.repo.ownerName
                 this.repo.vcsName
                 this.repo.defaultBranch.lastBuild.id
               }}
@@ -76,7 +76,7 @@
               @route="build"
               @models={{array
                 this.repo.provider
-                this.repo.vcsLogin
+                this.repo.ownerName
                 this.repo.vcsName
                 this.repo.currentBuild.id
               }}

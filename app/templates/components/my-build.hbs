@@ -14,7 +14,7 @@
       <div class="row-content" data-test-owner>
         <LinkTo
           @route="owner"
-          @models={{array this.build.repo.provider this.build.repo.vcsLogin}}
+          @models={{array this.build.repo.provider this.build.repo.ownerName}}
           class="inner-underline"
         >
           {{this.build.repo.owner.login}}
@@ -24,7 +24,7 @@
       <div class="row-content" data-test-repo-name>
         <LinkTo
           @route="repo"
-          @models={{array this.build.repo.provider this.build.repo.vcsLogin this.build.repo.vcsName}}
+          @models={{array this.build.repo.provider this.build.repo.ownerName this.build.repo.vcsName}}
           class="inner-underline"
         >
           {{this.build.repo.name}}
@@ -62,7 +62,7 @@
       <div>
         <LinkTo
           @route="build"
-          @models={{array this.build.repo.provider this.build.repo.vcsLogin this.build.repo.vcsName this.build.id}}
+          @models={{array this.build.repo.provider this.build.repo.ownerName this.build.repo.vcsName this.build.id}}
           data-test-state-number="true"
           class="row-content color"
         >

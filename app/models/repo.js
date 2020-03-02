@@ -33,7 +33,9 @@ const Repo = VcsEntity.extend({
   githubLanguage: attr(),
   active: attr(),
   owner: attr(),
+  ownerName: attr('string'), //owner_name of repository normalized by provider
   name: attr('string'),
+  vcsName: attr('string'), //name of repository normalized by provider
   starred: attr('boolean'),
   active_on_org: attr('boolean'),
   emailSubscribed: attr('boolean'),
@@ -66,19 +68,6 @@ const Repo = VcsEntity.extend({
 
   defaultBranch: belongsTo('branch', { async: false }),
   currentBuild: belongsTo('build', { async: true, inverse: 'repoCurrentBuild' }),
-
-  vcsLogin: computed('slug', function () {
-    const slug = this.get('slug');
-    const owner = this.get('owner');
-
-    return slug && slug.split('/').length == 2 ? slug.split('/')[0] : owner && owner.login;
-  }),
-
-  vcsName: computed('slug', function () {
-    const slug = this.get('slug');
-    const name = this.get('name');
-    return slug && slug.split('/').length == 2 ? slug.split('/')[1] : name;
-  }),
 
   _branches: hasMany('branch'),
 
