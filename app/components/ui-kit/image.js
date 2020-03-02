@@ -1,5 +1,4 @@
 import Component from '@ember/component';
-import { computed } from '@ember/object';
 import { assert } from '@ember/debug';
 import { requireProp } from 'travis/utils/ui-kit/assertions';
 
