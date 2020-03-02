@@ -612,6 +612,11 @@ export default function () {
     });
   });
 
+  this.get('commits/:id', (schema, { params }) => {
+    const commit = schema.commits.find(params.id);
+    return new Response(200, {}, commit);
+  });
+
   this.get('/repo/:repo_id/builds', function (schema, request) {
     let builds = schema.builds.where({ repositoryId: request.params.repo_id });
 

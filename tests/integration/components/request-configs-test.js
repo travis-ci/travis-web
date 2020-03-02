@@ -31,8 +31,8 @@ module('Integration | Component | request configs', function (hooks) {
       @load={{this.load}}
       @displayTriggerBuild={{this.displayTriggerBuild}}/>`
     );
-    await waitFor('[trigger-build-description]');
+    await waitFor('[data-test-trigger-build-description]');
 
-    assert.dom('[trigger-build-description]').hasText('Trigger a build request with the following build configs');
+    assert.dom('[data-test-trigger-build-description]').hasText('Trigger a build request with the following build configs');
   });
 });

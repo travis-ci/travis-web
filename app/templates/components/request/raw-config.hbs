@@ -2,13 +2,13 @@
   {{#if this.fileUrl}}
     <ExternalLinkTo @href={{this.fileUrl}}>
       <SvgImage @name="job-name-icon" @class="icon" @width=14 @height=14 />
-      <span class="vertical-align">
+      <span class="vertical-align" data-test-file-path="true">
         {{this.filePath}}
       </span>
     </ExternalLinkTo>
   {{else}}
     <SvgImage @name="job-name-icon" @class="icon" @width=14 @height=14 />
-    <span class="vertical-align">
+    <span class="vertical-align" data-test-file-path="true">
       {{this.filePath}}
     </span>
   {{/if}}

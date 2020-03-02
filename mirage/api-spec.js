@@ -1861,6 +1861,7 @@ export default {
         "base_commit",
         "head_commit",
         "raw_configs",
+        "config",
         "pull_request_mergeable"
       ],
       "representations": {
@@ -1869,6 +1870,7 @@ export default {
           "state",
           "result",
           "message",
+          "config",
           "pull_request_mergeable"
         ],
         "standard": [
@@ -1886,6 +1888,7 @@ export default {
           "base_commit",
           "head_commit",
           "raw_configs",
+          "config",
           "pull_request_mergeable"
         ]
       }

@@ -2,21 +2,21 @@
   <div class="request-configs-buttons" data-test-request-configs-button='true'>
     {{#unless this.closed}}
       <a
-        request-configs-button-cancel="true"
+        data-test-request-configs-button-cancel="true"
         class="request-configs-button request-configs-button-cancel"
         {{on 'click' (action this.onCancel)}}
       >
         Cancel
       </a>
       <a
-        request-configs-button-customize="true"
+        data-test-request-configs-button-customize="true"
         class="request-configs-button request-configs-button-customize"
         {{on 'click' (action this.onCustomize)}}
       >
         Customize
       </a>
       <a
-        request-configs-button-preview="true"
+        data-test-request-configs-button-preview="true"
         class="request-configs-button request-configs-button-preview"
         {{on 'click' (action this.onPreview)}}
       >
@@ -99,7 +99,5 @@
 {{/unless}}
 
 {{#if this.closed}}
-  <Request::Config
-    @config={{@request.config}}
-  />
+  <Request::Config @config={{@request.config}}/>
 {{/if}}

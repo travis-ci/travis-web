@@ -1,10 +1,10 @@
 import { module, test } from 'qunit';
-import { visit } from '@ember/test-helpers';
+import { visit, click } from '@ember/test-helpers';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
-module('Acceptance | repo/trigger build', function (hooks) {
+module('Acceptance | repo/request configs', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 
@@ -29,9 +29,10 @@ module('Acceptance | repo/trigger build', function (hooks) {
       repository: this.repo,
       pull_request_mergeable: 'draft',
       raw_configs: [{
-        source: 'emmanuel-ci/test_repo:.travis.yml@master',
-        config: 'script: echo \"Hello World\"'
+        source: 'test/test_repo:.travis.yml@master',
+        config: 'script: echo "Hello World"'
       }],
+      config: { script: 'echo "Hello World"' },
       branch_name: 'master'
     });
 
@@ -82,14 +83,28 @@ module('Acceptance | repo/trigger build', function (hooks) {
     this.repo.save();
   });
 
-  test('trigger', async function (assert) {
+  test('view request configs view', async function (assert) {
     await visit(`/adal/difference-engine/builds/${this.latestBuild.id}/config`);
-    assert.dom('[request-configs-button-cancel]').exists();
-    assert.dom('[request-configs-button-customize]').exists();
-    assert.dom('[request-configs-button-preview]').exists();
+
+    assert.dom('[data-test-request-configs-button-cancel]').exists();
+    assert.dom('[data-test-request-configs-button-customize]').exists();
+    assert.dom('[data-test-request-configs-button-preview]').exists();
     assert.dom('[data-test-request-configs-submit]').exists();
-    assert.dom('[data-test-raw-configs]').exists();
-    assert.dom('.option-dropdown [trigger-build-anchor]').exists();
-    assert.dom('[trigger-build-description]').hasAnyText('Trigger a build request with the following');
+    assert.dom('[data-test-raw-configs]').exists({ count: 1 });
+    assert.dom('[data-test-request-config]').doesNotExist();
+    assert.dom('[data-test-file-path]').hasText('test/test_repo:.travis.yml@master');
+    assert.dom('[data-test-trigger-build-description]').hasAnyText('Trigger a build request with the following');
+  });
+
+  test('trigger cancel button', async function (assert) {
+    await visit(`/adal/difference-engine/builds/${this.latestBuild.id}/config`);
+
+    await click('[data-test-request-configs-button-cancel]');
+
+    assert.dom('[data-test-request-configs-button-customize]').doesNotExist();
+    assert.dom('[data-test-request-configs-button-preview]').doesNotExist();
+    assert.dom('[data-test-trigger-build-description]').doesNotExist();
+    assert.dom('[data-test-request-config]').exists();
+    assert.dom('[data-test-json]').hasText('{ "script": "echo \\"Hello World\\"" }');
   });
 });
