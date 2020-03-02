@@ -145,9 +145,9 @@ export default TravisRoute.extend(BuildFaviconMixin, {
     error(error) {
       if (error === 'needs-auth') {
         const currentURL = new URL(window.location.href);
-        const redirectUri = currentURL.href;
-        const queryParams = { redirectUri };
-        return this.transitionTo('auth', { queryParams });
+        const redirectUrl = currentURL.href;
+        const queryParams = { redirectUrl };
+        return this.transitionTo('signin', { queryParams });
       } else {
         return true;
       }
@@ -171,7 +171,7 @@ export default TravisRoute.extend(BuildFaviconMixin, {
       this.set('repositories.accessible', []);
       this.setDefault();
       if (this.get('features.enterpriseVersion')) {
-        return this.transitionTo('auth');
+        return this.transitionTo('signin');
       }
       return this.transitionTo('index');
     } catch (error) {}
