@@ -3,11 +3,13 @@ import { inject as service } from '@ember/service';
 
 export default Component.extend({
   auth: service(),
+  router: service(),
   features: service(),
 
   actions: {
     signIn() {
-      this.auth.signIn();
+      const redirectUrl = window.location.href;
+      this.router.transitionTo('signin', { queryParams: { redirectUrl }});
     }
   }
 });
