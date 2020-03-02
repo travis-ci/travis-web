@@ -98,7 +98,12 @@
     {{/each}}
 
     <li class="text-right">
-      <LinkTo @route="signin" @title="Add another account" class="navigation-nested__link">
+      <LinkTo
+        @route="signin"
+        @query={{hash redirectUrl=this.redirectUrl}}
+        @title="Add another account"
+        class="navigation-nested__link"
+      >
         Add an account
       </LinkTo>
     </li>
