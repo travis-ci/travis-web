@@ -1,8 +1,9 @@
 import { module, test } from 'qunit';
-import { visit, click } from '@ember/test-helpers';
+import { visit, click, fillIn } from '@ember/test-helpers';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { setupMirage } from 'ember-cli-mirage/test-support';
+import { percySnapshot } from 'ember-percy';
 
 module('Acceptance | repo/request configs', function (hooks) {
   setupApplicationTest(hooks);
@@ -81,11 +82,16 @@ module('Acceptance | repo/request configs', function (hooks) {
     this.latestBuild = latestBuild;
     this.repo.currentBuild = this.latestBuild;
     this.repo.save();
+
+    this.testTargets = {
+      url: `/adal/difference-engine/builds/${this.latestBuild.id}/config`
+    };
   });
 
   test('view request configs view', async function (assert) {
-    await visit(`/adal/difference-engine/builds/${this.latestBuild.id}/config`);
+    await visit(this.testTargets.url);
 
+    percySnapshot(assert);
     assert.dom('[data-test-request-configs-button-cancel]').exists();
     assert.dom('[data-test-request-configs-button-customize]').exists();
     assert.dom('[data-test-request-configs-button-preview]').exists();
@@ -96,15 +102,33 @@ module('Acceptance | repo/request configs', function (hooks) {
     assert.dom('[data-test-trigger-build-description]').hasAnyText('Trigger a build request with the following');
   });
 
-  test('trigger cancel button', async function (assert) {
-    await visit(`/adal/difference-engine/builds/${this.latestBuild.id}/config`);
+  test('click on cancel button', async function (assert) {
+    await visit(this.testTargets.url);
 
     await click('[data-test-request-configs-button-cancel]');
 
+    percySnapshot(assert);
     assert.dom('[data-test-request-configs-button-customize]').doesNotExist();
     assert.dom('[data-test-request-configs-button-preview]').doesNotExist();
     assert.dom('[data-test-trigger-build-description]').doesNotExist();
     assert.dom('[data-test-request-config]').exists();
     assert.dom('[data-test-json]').hasText('{ "script": "echo \\"Hello World\\"" }');
+  });
+
+  test('customize config', async function (assert) {
+    await visit(this.testTargets.url);
+
+    await click('[data-test-request-configs-button-customize]');
+
+    percySnapshot(assert);
+    assert.dom('[data-test-build-config-form]').exists();
+
+    await fillIn('[data-test-build-config-form] input', 'This is a demo build'),
+    await fillIn('[data-test-build-config-form] textarea', 'script: echo "Hello World"');
+
+    click('[data-test-request-configs-submit]');
+    percySnapshot(assert);
+
+    assert.ok('[data-test-build-config-form]', 'config form is hidden again');
   });
 });
