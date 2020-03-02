@@ -323,7 +323,7 @@
           </UiKit::Text>
           <UiKit::Text>
             Yes! We have many plans available for your concurrency needs. You can change your plan subscription at any time on the billing page or
-            <UiKit::Link onclick={{fn (mut scrollToContact true)}}>contact us</UiKit::Link>
+            <UiKit::Link {{on 'click' (action 'toggleContactScroll')}}>contact us</UiKit::Link>
             if you’re looking for something custom.
           </UiKit::Text>
         </grid.item>

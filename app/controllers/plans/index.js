@@ -1,16 +1,25 @@
 import Controller from '@ember/controller';
 import config from 'travis/config/environment';
-import { filterBy } from '@ember/object/computed';
+import { equal, filterBy } from '@ember/object/computed';
 import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
+import { later } from '@ember/runloop';
 
 const { plans } = config;
 
 const referralSourceName = 'plans-page';
 
+const SECTION = {
+  NONE: '',
+  CONTACT: 'contact',
+};
+
 export default Controller.extend({
   auth: service(),
   metrics: service(),
+
+  queryParams: ['section'],
+  section: SECTION.NONE,
 
   config,
   referralSourceName,
@@ -31,7 +40,7 @@ export default Controller.extend({
   ),
 
   showAnnual: true,
-  scrollToContact: false,
+  scrollToContact: equal('section', SECTION.CONTACT),
 
   actions: {
     signIn() {
@@ -39,10 +48,10 @@ export default Controller.extend({
     },
 
     toggleContactScroll() {
-      this.set('scrollToContact', true);
-      setTimeout(
-        () => this.set('scrollToContact', false),
-        500
+      this.set('section', SECTION.NONE);
+      later(
+        () => this.set('section', SECTION.CONTACT),
+        100
       );
     },
 
