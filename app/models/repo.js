@@ -70,7 +70,8 @@ const Repo = VcsEntity.extend({
   vcsLogin: computed('slug', function () {
     const slug = this.get('slug');
     const owner = this.get('owner');
-    return slug && slug.split('/').length == 2 ? slug.split('/')[0] : owner;
+
+    return slug && slug.split('/').length == 2 ? slug.split('/')[0] : owner && owner.login;
   }),
 
   vcsName: computed('slug', function () {
