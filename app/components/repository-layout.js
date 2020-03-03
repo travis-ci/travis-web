@@ -17,9 +17,9 @@ export default Component.extend({
     return this.get('statusImages').imageUrl(repo, branchName);
   }),
 
-  repoUrl: computed('repo.{vcsType,slug}', function () {
-    const owner = this.get('item.repo.ownerName');
-    const repo = this.get('item.repo.vcsName');
+  repoUrl: computed('repo.{ownerName,vcsName,vcsType}', function () {
+    const owner = this.get('repo.ownerName');
+    const repo = this.get('repo.vcsName');
     const vcsType = this.get('repo.vcsType');
 
     return this.externalLinks.repoUrl(vcsType, { owner, repo });
