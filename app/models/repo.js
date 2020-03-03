@@ -159,7 +159,7 @@ const Repo = VcsEntity.extend({
   },
 
   pullRequests: dynamicQuery(function* ({ page = 1, filter = '' }) {
-    return yield this.fetchBuilds({ page, filter, eventType: 'pull_request', forceCount: true });
+    return yield this.fetchBuilds({ page, filter, eventType: 'pull_request' });
   }, { appendResults: true, limitPagination: true, limit }),
 
   branches: computed('id', function () {
