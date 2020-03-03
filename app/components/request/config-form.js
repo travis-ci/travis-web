@@ -1,6 +1,7 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { task } from 'ember-concurrency';
+import { reads, or } from '@ember/object/computed';
 import BranchSearching from 'travis/mixins/branch-searching';
 import { bindKeyboardShortcuts, unbindKeyboardShortcuts } from 'ember-keyboard-shortcuts';
 
@@ -17,6 +18,13 @@ export default Component.extend(BranchSearching, {
   tagName: 'div',
   classNames: ['request-configs-form'],
 
+  requestSha: reads('request.commit.sha'),
+  repoDefaultBranchLastCommitSha: reads('repo.defaultBranch.lastBuild.commit.sha'),
+  originalSha: or('requestSha', 'repoDefaultBranchLastCommitSha'),
+
+  repoDefaultBranch: reads('repo.defaultBranch.name'),
+  originalBranch: or('requestBranch', 'repoDefaultBranch'),
+  requestBranch: reads('request.branchName'),
 
   keyboardShortcuts: {
     'shift+enter': 'submit'
@@ -60,11 +68,25 @@ export default Component.extend(BranchSearching, {
   }),
 
   actions: {
-    change: function (field, value) {
+
+    handleShaChange(value) {
+      const branch = value === this.originalSha ? this.originalBranch : '';
+      this.set('branch', branch);
+      this.onChange('sha', value);
+    },
+
+    handleBranchChange(value) {
+      const sha = value === this.originalBranch ? this.originalSha : '';
+      this.set('sha', sha);
+      this.onChange('branch', value);
+    },
+
+    change(field, value) {
       this.set(field, value);
       this.onChange(field, value);
     },
-    submit: function () {
+
+    submit() {
       this.onSubmit();
     }
   }

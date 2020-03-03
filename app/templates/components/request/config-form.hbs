@@ -28,7 +28,7 @@
           @placeholder="Select a branch"
           @value={{this.branch}}
           @showValidationStatusIcons={{false}}
-          @onChange={{action "change" "branch"}}
+          @onChange={{action "handleBranchChange"}}
           as |field|
         >
           <field.select
@@ -44,7 +44,7 @@
           @placeholder="Specify a Git sha (optional)"
           @value={{this.sha}}
           @showValidationStatusIcons={{false}}
-          @onChange={{action "change" "sha"}}
+          @onChange={{action "handleShaChange"}}
           as |field|
         >
           {{field.input}}

@@ -23,29 +23,29 @@ export default Component.extend(TriggerBuild, WithConfigValidation, {
   defaultMergeMode: 'deep_merge_append',
 
   repo: reads('request.repo'),
-  rawConfigs: reads('request.uniqRawConfigs'),
+  loadConfigsResult: reads('loadConfigs.lastSuccessful.value'),
+  rawConfigs: or('loadConfigsResult.rawConfigs', 'request.uniqRawConfigs'),
+  messages: reads('loadConfigsResult.messages'),
   closed: equal('status', 'closed'),
   customize: equal('status', 'customize'),
   preview: equal('status', 'preview'),
   replace: equal('mergeMode', 'replace'),
-  loading: reads('load.isRunning'),
+  loading: reads('loadConfigs.isRunning'),
 
-  branch: reads('originalBranch'),
-  sha: reads('originalSha'),
   message: reads('request.commit.message'),
   config: reads('request.apiConfig.config'),
   mergeMode: reads('originalMergeMode'), // TODO store and serve merge mode for api request configs
 
-  originalBranch: or('requestBranch', 'repoDefaultBranch'),
-  originalSha: or('requestSha', 'repoDefaultBranchLastCommitSha'),
-  originalMergeMode: or('request.mergeMode', 'defaultMergeMode'),
-  isOriginalBranch: equal('branch', 'originalBranch'),
-  isOriginalSha: equal('sha', 'originalSha'),
-
-  requestBranch: reads('request.branchName'),
-  repoDefaultBranch: reads('repo.defaultBranch.name'),
   requestSha: reads('request.commit.sha'),
   repoDefaultBranchLastCommitSha: reads('repo.defaultBranch.lastBuild.commit.sha'),
+  originalSha: or('requestSha', 'repoDefaultBranchLastCommitSha'),
+  sha: reads('originalSha'),
+
+  branch: reads('originalBranch'),
+  repoDefaultBranch: reads('repo.defaultBranch.name'),
+  originalBranch: or('requestBranch', 'repoDefaultBranch'),
+  requestBranch: reads('request.branchName'),
+  originalMergeMode: or('request.mergeMode', 'defaultMergeMode'),
 
   isRepoConfig: equal('router.currentRouteName', 'repo.config'),
 
@@ -69,58 +69,52 @@ export default Component.extend(TriggerBuild, WithConfigValidation, {
     return this.get(this.refType);
   }),
 
-  branchChanged: observer('branch', function () {
-    if (!this.isOriginalBranch && this.sha === this.originalSha) {
-      this.set('sha', '');
-    } else if (this.branch === this.originalBranch && !this.sha) {
-      this.set('sha', this.originalSha);
-    }
-  }),
-
-  shaChanged: observer('sha', function () {
-    if (this.sha && !this.isOriginalSha) {
-      this.set('branch', undefined);
-    }
-  }),
-
   fieldChanged: observer('refType', 'branch', 'sha', 'mergeMode', function () {
-    this.load.perform();
+    this.loadConfigs.perform();
   }),
 
   configChanged: observer('config', function () {
-    this.load.perform({ milliseconds: 200 });
+    this.loadConfigs.perform({ milliseconds: 200 });
   }),
 
   didInsertElement() {
-    this.load.perform();
+    this.loadConfigs.perform();
   },
 
-  load: task(function* (debounce) {
+  getConfigsData() {
+    return {
+      repo: {
+        slug: this.repo.get('slug'),
+        private: this.repo.get('private'),
+        default_branch: this.repo.get('defaultBranch.name'),
+      },
+      ref: this.ref,
+      mode: this.mergeMode,
+      config: this.config,
+      type: 'api'
+    };
+  },
+
+  loadConfigs: task(function* (debounce) {
     if (this.status !== 'closed' && this.status !== 'open') {
-      let data = {
-        repo: {
-          slug: this.repo.get('slug'),
-          private: this.repo.get('private'),
-          default_branch: this.repo.get('defaultBranch.name'),
-        },
-        ref: this.ref,
-        mode: this.mergeMode,
-        config: this.config,
-        type: 'api'
-      };
+      let data = this.getConfigsData();
       if (debounce && debounce.milliseconds) {
         yield timeout(debounce.milliseconds);
       }
       try {
-        const result = yield this.store.queryRecord('build-config', { data });
-        this.set('rawConfigs', result.rawConfigs);
-        this.set('messages', result.messages);
+        return yield this.store.queryRecord('build-config', { data });
       } catch (e) {
-        this.set('rawConfigs', []);
-        this.set('messages', [{ level: 'error', code: e.error_type, args: { message: e.error_message } }]);
+        this.handleLoadConfigError(e);
       }
     }
   }).drop(),
+
+  handleLoadConfigError(e) {
+    this.setProperties({
+      rawConfigs: [],
+      messages: [{ level: 'error', code: e.error_type, args: { message: e.error_message } }],
+    });
+  },
 
   // shouldn't these actually be actions, and shouldn't the template
   // use onclick={{action "triggerBuild"}} rather than
@@ -164,13 +158,15 @@ export default Component.extend(TriggerBuild, WithConfigValidation, {
   },
 
   reset() {
-    this.set('customized', false);
-    this.set('branch', this.originalBranch);
-    this.set('sha', this.originalSha);
-    this.set('message', this.request.get('commit.message'));
-    this.set('mergeMode', this.originalMergeMode);
-    this.set('rawConfigs', this.request.uniqRawConfigs);
-    this.set('config', this.request.get('apiConfig.config'));
+    this.setProperties({
+      customized: false,
+      branch: this.originalBranch,
+      sha: this.originalSha,
+      message: this.request.get('commit.message'),
+      mergeMode: this.originalMergeMode,
+      rawConfigs: this.request.uniqRawConfigs,
+      config: this.request.get('apiConfig.config')
+    });
   },
 
   actions: {
