@@ -20,11 +20,11 @@ module('Acceptance | enterprise/navigation', function (hooks) {
     });
   });
 
-  test('visiting `/` without being authenticated redirects to `/auth`', async function (assert) {
+  test('visiting `/` without being authenticated redirects to `/signin`', async function (assert) {
     enableFeature('enterpriseVersion');
 
     await visit('/');
 
-    assert.equal(currentURL(), '/auth');
+    assert.equal(currentURL(), '/signin');
   });
 });
