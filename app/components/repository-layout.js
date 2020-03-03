@@ -18,7 +18,8 @@ export default Component.extend({
   }),
 
   repoUrl: computed('repo.{vcsType,slug}', function () {
-    const [owner, repo] = this.get('repo.slug').split('/');
+    const owner = this.get('item.repo.ownerName');
+    const repo = this.get('item.repo.vcsName');
     const vcsType = this.get('repo.vcsType');
 
     return this.externalLinks.repoUrl(vcsType, { owner, repo });
