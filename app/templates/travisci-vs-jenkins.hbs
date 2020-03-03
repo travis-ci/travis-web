@@ -31,12 +31,11 @@
             Get control over your security and scale out your build infrastructure as needed.
           </UiKit::Text>
           <UiKit::Box @textAlign={{hash base='center' sm='left'}}>
-            <UiKit::Button
-              @onClick={{action this.goToContactForm}}
-              data-test-tvj-page-header-button="true"
-            >
-              Contact the Enterprise Team
-            </UiKit::Button>
+            <LinkTo @route='plans' @query={{hash section='contact'}}>
+              <UiKit::Button data-test-tvj-page-header-button="true">
+                Contact the Enterprise Team
+              </UiKit::Button>
+            </LinkTo>
           </UiKit::Box>
         </UiKit::Box>
       </grid.item>
@@ -254,7 +253,10 @@
       Find out how Travis CI Enterprise can benefit your team.
     </UiKit::Text>
     <UiKit::Text>
-      <UiKit::Link {{on 'click' (action this.goToContactForm)}}>Contact our sales team</UiKit::Link>
+
+      <LinkTo @route='plans' @query={{hash section='contact'}}>
+        <UiKit::Link>Contact our sales team</UiKit::Link>
+      </LinkTo>
         to get a free trial license.
     </UiKit::Text>
 </UiKit::Box>

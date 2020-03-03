@@ -3,7 +3,7 @@ import config from 'travis/config/environment';
 import { equal, filterBy } from '@ember/object/computed';
 import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
-import { later } from '@ember/runloop';
+import { next } from '@ember/runloop';
 
 const { plans } = config;
 
@@ -49,10 +49,7 @@ export default Controller.extend({
 
     toggleContactScroll() {
       this.set('section', SECTION.NONE);
-      later(
-        () => this.set('section', SECTION.CONTACT),
-        100
-      );
+      next(() => this.set('section', SECTION.CONTACT));
     },
 
     contactSuccess() {
