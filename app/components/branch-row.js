@@ -32,7 +32,7 @@ export default Component.extend({
   }),
 
   provider: computed('vcsType', function () {
-    return this.get('vcsType').toLowerCase().replace('repository', '');
+    return this.get('vcsType') && this.get('vcsType').toLowerCase().replace('repository', '');
   }),
 
   rawCreatedBy: alias('branch.last_build.created_by'),
