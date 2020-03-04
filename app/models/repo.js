@@ -140,26 +140,19 @@ const Repo = VcsEntity.extend({
     return this._buildObservableArray(builds);
   }),
 
-  // Using dynamicQuery effectively relies on accurate pagination, which
-  // is not possible if skip_count=true, which is the default for queries in
-  // the build adapter. force_count allows overriding this behavior, but we
-  // should use it cautiously for performance reasons. I think it may
-  // be fine for pull requests though?
-  fetchBuilds({ page, filter, eventType, forceCount }) {
+  fetchBuilds({ page, eventType }) {
     const { id: repoId, store } = this;
     const offset = (page - 1) * limit;
 
     return store.paginated('build', {
       repository_id: repoId,
       event_type: eventType,
-      name_filter: filter,
-      force_count: forceCount,
       limit, offset
     }, { live: false });
   },
 
-  pullRequests: dynamicQuery(function* ({ page = 1, filter = '' }) {
-    return yield this.fetchBuilds({ page, filter, eventType: 'pull_request' });
+  pullRequests: dynamicQuery(function* ({ page = 1 }) {
+    return yield this.fetchBuilds({ page, eventType: 'pull_request' });
   }, { appendResults: true, limitPagination: true, limit }),
 
   branches: computed('id', function () {
