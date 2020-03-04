@@ -32,6 +32,10 @@ export default Component.extend({
     return repository.vcsType;
   }),
 
+  provider: computed('vcsType', function () {
+    return this.get('vcsType').toLowerCase().replace('repository', '');
+  }),
+
   rawCreatedBy: alias('branch.last_build.created_by'),
 
   createdBy: computed(

@@ -14,5 +14,10 @@ export default Component.extend({
     let nameOrLogin = this.nameOrLogin;
     let eventType = this.eventType;
     return nameOrLogin && eventType !== 'cron';
+  }),
+
+  userProvider: computed('user.provider', 'provider', function () {
+    const userProvider = this.get('user.provider');
+    return userProvider ? userProvider : this.get('provider');
   })
 });
