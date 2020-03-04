@@ -2,7 +2,7 @@ import Service, { inject as service } from '@ember/service';
 import { task, timeout } from 'ember-concurrency';
 import { computed } from '@ember/object';
 import { reads, or } from '@ember/object/computed';
-// import config from 'travis/config/environment';
+import config from 'travis/config/environment';
 
 export default Service.extend({
   ajax: service(),
@@ -49,9 +49,7 @@ export default Service.extend({
   },
 
   request(url, method = 'GET', options = {}) {
-    // options.host = config.ymlEndpoint || 'https://yml-staging.travis-ci.org'; // TODO
-    options.host = 'https://yml-staging.travis-ci.org';
-    // options.host = 'http://localhost:9292';
+    options.host = config.ymlEndpoint;
     options.headers = this.headers(options);
     return this.ajax.request(url, method, options);
   },

@@ -56,7 +56,7 @@ module.exports = function (environment) {
 
     // defaults for running travis-web
     apiEndpoint: 'https://api.travis-ci.org',
-    ymlEndpoint: 'https://config.travis-ci.org',
+    ymlEndpoint: 'https://yml.travis-ci.org',
     pusher: {
       key: '5df8ac576dcccf4fd076',
       host: 'ws.pusherapp.com',
@@ -104,7 +104,6 @@ module.exports = function (environment) {
       triggerBuildMergeModes: 'https://docs.travis-ci.com/user/triggering-builds/#merge-modes',
       tutorial: 'https://docs.travis-ci.com/user/tutorial/',
       twitter: 'https://twitter.com/travisci',
-      yml: 'https://yml-staging.travis-ci.org',
     },
     endpoints: {},
     githubApps: false,
@@ -387,6 +386,7 @@ module.exports = function (environment) {
     ENV.statusPageStatusUrl = undefined;
 
     ENV.billingEndpoint = 'https://travis-ci.com';
+    ENV.ymlEndpoint = YML_ENDPOINT || 'https://yml-staging.travis-ci.org';
     ENV.apiEndpoint = '';
     ENV.marketplaceEndpoint = 'https://github.com/marketplace/travis-ci/';
   }

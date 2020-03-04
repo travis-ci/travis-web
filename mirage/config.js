@@ -3,7 +3,7 @@ import { Response } from 'ember-cli-mirage';
 import config from 'travis/config/environment';
 import fuzzysort from 'fuzzysort';
 
-const { yml } = config.urls;
+const { ymlEndpoint } = config;
 const { validAuthToken, apiEndpoint } = config;
 
 export default function () {
@@ -586,7 +586,7 @@ export default function () {
     return schema.builds.all().filter(build => eventType.includes(build.eventType));
   });
 
-  this.post(`${yml}/configs`, (schema, { params }) => {
+  this.post(`${ymlEndpoint}/configs`, (schema, { params }) => {
     const buildsConfig = schema.buildConfigs.create({
       raw_configs: [{
         source: 'test/test_repo:.travis.yml@master',

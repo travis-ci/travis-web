@@ -2,7 +2,7 @@ import V3Adapter from 'travis/adapters/v3';
 import { inject as service } from '@ember/service';
 import config from 'travis/config/environment';
 
-const { yml: host } = config.urls;
+const { ymlEndpoint: host } = config;
 
 export default V3Adapter.extend({
   ajax: service(),
