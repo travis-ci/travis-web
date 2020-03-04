@@ -44,7 +44,11 @@ export default Component.extend({
     return `icon icon-${this.maxLevel}`;
   }),
 
-  summary: computed('messages.[]', function () {
+  counts: computed('sortedMessages.[]', function () {
+    return countBy(this.sortedMessages, 'level');
+  }),
+
+  summary: computed('hasMessages', 'counts.level', function () {
     if (this.hasMessages) {
       return Object.entries(this.counts).map((entry) => formatLevel(...entry)).join(', ');
     }
@@ -54,10 +58,6 @@ export default Component.extend({
     let msgs = this.messages || [];
     let error = msgs.find(msg =>  msg.level === 'error' || msg.level === 'alert');
     return error ? error.level : 'valid';
-  }),
-
-  counts: computed('sortedMessages.[]', function () {
-    return countBy(this.sortedMessages, 'level');
   }),
 
   toggle: function () {
