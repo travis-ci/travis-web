@@ -59,7 +59,7 @@ export default Component.extend({
     }
   }),
 
-  result: computed('messages', function () {
+  result: computed('messages.[]', function () {
     let msgs = this.messages || [];
     let error = msgs.find(msg =>  msg.level === 'error' || msg.level === 'alert');
     return error ? error.level : 'valid';

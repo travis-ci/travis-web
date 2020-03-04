@@ -23,9 +23,11 @@ export default Component.extend(TriggerBuild, WithConfigValidation, {
   defaultMergeMode: 'deep_merge_append',
 
   repo: reads('request.repo'),
-  loadConfigsResult: reads('loadConfigs.lastSuccessful.value'),
+  loadConfigsResult: reads('loadConfigs.last.value'),
   rawConfigs: or('loadConfigsResult.rawConfigs', 'request.uniqRawConfigs'),
-  messages: reads('loadConfigsResult.messages'),
+  errorMessages: computed(() => []),
+  messages: or('loadConfigsResult.messages', 'errorMessages'),
+
   closed: equal('status', 'closed'),
   customize: equal('status', 'customize'),
   preview: equal('status', 'preview'),
@@ -74,7 +76,7 @@ export default Component.extend(TriggerBuild, WithConfigValidation, {
   }),
 
   configChanged: observer('config', function () {
-    this.loadConfigs.perform({ milliseconds: 200 });
+    this.loadConfigs.perform({ milliseconds: 500 });
   }),
 
   didInsertElement() {
@@ -110,10 +112,7 @@ export default Component.extend(TriggerBuild, WithConfigValidation, {
   }).drop(),
 
   handleLoadConfigError(e) {
-    this.setProperties({
-      rawConfigs: [],
-      messages: [{ level: 'error', code: e.type, args: { message: e.error_message } }],
-    });
+    this.set('errorMessages', [{ level: 'error', code: e.type, args: { message: e.error_message } }]);
   },
 
   // shouldn't these actually be actions, and shouldn't the template

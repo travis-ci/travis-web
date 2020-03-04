@@ -15,12 +15,10 @@
       {{/if}}
     {{/if}}
   </div>
-
   {{#if this.displayMessages}}
-    {{log this.messages}}
     <div class="request-messages">
       {{#each this.messages as |message|}}
-        <RequestMessage @message={{message}} />
+        <Request::Message @message={{message}} />
       {{/each}}
     </div>
   {{/if}}

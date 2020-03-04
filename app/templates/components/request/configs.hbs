@@ -35,7 +35,7 @@
       @configs={{this.rawConfigs.length}}
     />
   {{/unless}}
-
+  {{log this.messages}}
   {{#if this.customize}}
     <Request::ConfigForm
       @repo={{this.repo}}
@@ -76,7 +76,6 @@
     @messages={{this.request.messages}}
   />
 {{/if}}
-
 {{#unless (or this.replace this.preview)}}
   {{#each this.rawConfigs as |config|}}
     <Request::RawConfig
