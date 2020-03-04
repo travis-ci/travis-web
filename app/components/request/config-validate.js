@@ -1,6 +1,7 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { sort, gt, and, or } from '@ember/object/computed';
+import countBy from 'travis/utils/count-by';
 import { inject as service } from '@ember/service';
 import { pluralize } from 'ember-inflector';
 
@@ -18,16 +19,6 @@ function formatLevel(level, count) {
 
 function sortOrder(level) {
   return Object.keys(MESSAGES).indexOf(level);
-}
-
-function countBy(objs, name) {
-  return objs.reduce((counts, obj) => {
-    if (!counts[obj[name]]) {
-      counts[obj[name]] = 0;
-    }
-    counts[obj[name]] += 1;
-    return counts;
-  }, {});
 }
 
 export default Component.extend({
