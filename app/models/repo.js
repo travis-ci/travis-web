@@ -148,7 +148,7 @@ const Repo = VcsEntity.extend({
       repository_id: repoId,
       event_type: eventType,
       limit, offset
-    }, { live: false });
+    }, { live: true });
   },
 
   pullRequests: dynamicQuery(function* ({ page = 1 }) {
