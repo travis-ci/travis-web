@@ -112,7 +112,11 @@ export default Component.extend(TriggerBuild, WithConfigValidation, {
   }).drop(),
 
   handleLoadConfigError(e) {
-    this.set('errorMessages', [{ level: 'error', code: e.type, args: { message: e.error_message } }]);
+    if (e.json) {
+      e.json().then(e => {
+        this.set('errorMessages', [{ level: 'error', code: e.error_type, args: { message: e.error_message } }]);
+      });
+    }
   },
 
   // shouldn't these actually be actions, and shouldn't the template

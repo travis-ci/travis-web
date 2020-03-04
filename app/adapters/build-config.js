@@ -15,9 +15,4 @@ export default V3Adapter.extend({
     const options = this.getOptions(data);
     return this.ajax.request('/configs', 'POST', options);
   },
-
-  handleResponse(status, body) {
-    debugger;
-    return this._super(...arguments);
-  }
 });
