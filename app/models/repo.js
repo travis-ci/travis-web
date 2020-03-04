@@ -143,12 +143,17 @@ const Repo = VcsEntity.extend({
   fetchBuilds({ page, eventType }) {
     const { id: repoId, store } = this;
     const offset = (page - 1) * limit;
+    const eventTypes = typeof eventType === 'string' ? [eventType] : [...eventType];
 
-    return store.paginated('build', {
+    return store.filter('build', {
       repository_id: repoId,
       event_type: eventType,
       limit, offset
-    }, { live: true });
+    }, (b) => (
+      this._buildRepoMatches(b, repoId) && eventTypes.includes(b.get('eventType'))
+    ), [
+      'eventType', 'repo.id'
+    ]);
   },
 
   pullRequests: dynamicQuery(function* ({ page = 1 }) {
