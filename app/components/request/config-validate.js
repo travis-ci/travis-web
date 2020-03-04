@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { sort, empty, and, or, not } from '@ember/object/computed';
+import { sort, gt, and, or } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import { pluralize } from 'ember-inflector';
 
@@ -41,8 +41,7 @@ export default Component.extend({
   initialConfig: true,
   messages: [],
 
-  isMessagesEmpty: empty('messages'),
-  hasMessages: not('isMessagesEmpty'),
+  hasMessages: gt('messages.length', 0),
   displayMessages: and('hasMessages', 'expanded'),
 
   sortedMessages: sort('messages', (lft, rgt) =>

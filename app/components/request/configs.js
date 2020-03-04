@@ -112,7 +112,7 @@ export default Component.extend(TriggerBuild, WithConfigValidation, {
   handleLoadConfigError(e) {
     this.setProperties({
       rawConfigs: [],
-      messages: [{ level: 'error', code: e.error_type, args: { message: e.error_message } }],
+      messages: [{ level: 'error', code: e.type, args: { message: e.error_message } }],
     });
   },
 
@@ -123,7 +123,7 @@ export default Component.extend(TriggerBuild, WithConfigValidation, {
     e.toElement.blur();
     if (this.status == 'closed') {
       this.set('status', 'open');
-    } else if (this.status == 'open' || this.status == 'customize' || this.status == 'preview') {
+    } else if (['open', 'customize', 'preview'].includes(this.status)) {
       this.submit();
     }
   },
