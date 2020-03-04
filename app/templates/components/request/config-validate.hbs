@@ -1,10 +1,10 @@
 {{#if this.result}}
-  <div class="validation-result" onclick={{action toggle}}>
+  <div class="validation-result" onclick={{action toggle}} data-test-validation-result="true">
     Validation:
     {{#if this.loading}}
       <LoadingIndicator className="validating-indicator" />
     {{else}}
-      <span class="request-messages-badge request-messages-badge-{{this.maxLevel}}" />
+      <span data-test-validation-result-summary="true" class="request-messages-badge request-messages-badge-{{this.maxLevel}}" />
       {{this.result}}
 
       {{#if this.summary}}

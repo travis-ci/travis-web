@@ -102,10 +102,12 @@ module('Acceptance | repo/request configs', function (hooks) {
       CONFIG_MESSAGES: '[data-test-configs-message]',
       CONFIG_MESSAGE_LINE: '[data-test-message-line]',
       TOGGLE_MESSAGE: '[data-test-toggle-messages]',
+      VALIDATION_RESULT: '[data-test-validation-result]',
+      VALIDATION_RESULT_SUMMARY: '[data-test-validation-result-summary]'
     };
   });
 
-  test('view request configs view', async function (assert) {
+  test('request configs view', async function (assert) {
     await visit(this.TEST_TARGETS.URL);
 
     percySnapshot(assert);
@@ -148,6 +150,23 @@ module('Acceptance | repo/request configs', function (hooks) {
     percySnapshot(assert);
 
     assert.ok(this.TEST_TARGETS.BUILD_CONFIG_FORM, 'config form is hidden again');
+  });
+
+  test('customize invalid config', async function (assert) {
+    await visit(this.TEST_TARGETS.URL);
+
+    await click(this.TEST_TARGETS.CUSTOMIZE_BUTTON);
+
+    percySnapshot(assert);
+    assert.dom(this.TEST_TARGETS.BUILD_CONFIG_FORM).exists();
+
+    await fillIn(this.TEST_TARGETS.BUILD_CONFIG_FORM_MESSAGE, 'This is a demo build'),
+    await fillIn(this.TEST_TARGETS.BUILD_CONFIG_FORM_SCRIPT, 'invalid');
+    await click(this.TEST_TARGETS.VALIDATION_RESULT);
+
+    percySnapshot(assert);
+    assert.ok(this.TEST_TARGETS.VALIDATION_RESULT_SUMMARY, 'Validation:  error — 1 error');
+    assert.ok(this.TEST_TARGETS.CONFIG_MESSAGE_LINE, 'invalid config format (must be a hash)');
   });
 
   test('preview config', async function (assert) {

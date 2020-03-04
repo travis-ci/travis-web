@@ -614,12 +614,19 @@ export default function () {
         os: ['linux'],
       }
     });
-    return new Response(200, {}, {
-      rawConfigs: buildsConfig.raw_configs,
-      messages: buildsConfig.messages,
-      matrix: buildsConfig.matrix,
-      config: buildsConfig.config,
-    });
+    if (params.config === 'invalid') {
+      return Response(400, {}, {
+        error_type: 'invalid_config_format',
+        error_message: 'Invalid value: invalid'
+      });
+    } else {
+      return new Response(200, {}, {
+        rawConfigs: buildsConfig.raw_configs,
+        messages: buildsConfig.messages,
+        matrix: buildsConfig.matrix,
+        config: buildsConfig.config,
+      });
+    }
   });
 
   this.get('commits/:id', (schema, { params }) => {
