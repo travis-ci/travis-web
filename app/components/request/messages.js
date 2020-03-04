@@ -2,6 +2,7 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { not, sort } from '@ember/object/computed';
 import { pluralize } from 'ember-inflector';
+import countBy from 'travis/utils/count-by';
 
 const MSGS = {
   'alert': 'alert',
@@ -18,14 +19,14 @@ export default Component.extend({
   collapsed: not('expanded'),
 
   toggleStatusClass: computed('expanded', function () {
-    return this.get('expanded') ? 'expanded' : 'collapsed';
+    return this.expanded ? 'expanded' : 'collapsed';
   }),
 
-  sortedMessages: sort('messages', (lft, rgt) =>
+  sortedMessages: sort('messages.[]', (lft, rgt) =>
     sortOrder(lft.level) - sortOrder(rgt.level)
   ),
 
-  maxLevel: computed('sortedMessages', function () {
+  maxLevel: computed('sortedMessages.[]', function () {
     return this.get('sortedMessages.firstObject.level') || 'info';
   }),
 
@@ -33,8 +34,8 @@ export default Component.extend({
     return `icon icon-${this.get('maxLevel')}`;
   }),
 
-  summary: computed('sortedMessages', function () {
-    let counts = countBy(this.get('sortedMessages'), 'level');
+  summary: computed('sortedMessages.[]', function () {
+    let counts = countBy(this.sortedMessages, 'level');
     if (Object.entries(counts).length > 0) {
       return Object.entries(counts).map((entry) => formatLevel(...entry)).join(', ');
     }
@@ -53,15 +54,5 @@ function formatLevel(level, count) {
 
 function sortOrder(level) {
   return Object.keys(MSGS).indexOf(level);
-}
-
-function countBy(objs, name) {
-  return objs.reduce((counts, obj) => {
-    if (!counts[obj[name]]) {
-      counts[obj[name]] = 0;
-    }
-    counts[obj[name]] += 1;
-    return counts;
-  }, {});
 }
 

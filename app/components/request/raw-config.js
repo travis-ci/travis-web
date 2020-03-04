@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { match } from '@ember/object/computed';
+import { equal, not } from '@ember/object/computed';
 import {
   isInternal,
   presentedPath,
@@ -18,13 +18,10 @@ export default Component.extend({
 
   copied: false,
   baseYmlName: '.travis.yml',
-  status: undefined,
-  open: match('status', /open/),
+  status: null,
+  open: equal('status', 'open'),
 
-  loading: computed('config', function () {
-    return !this.config;
-  }),
-
+  loading: not('config'),
   language: computed('config', function () {
     try {
       JSON.parse(this.config);
@@ -51,8 +48,7 @@ export default Component.extend({
   }),
 
   buttonLabel: computed('copied', 'source', function () {
-    let source = this.get('source');
-    return this.copied ? 'Copied!' : `Copy ${fileNameWithoutSha(source)}`;
+    return this.copied ? 'Copied!' : `Copy ${fileNameWithoutSha(this.source)}`;
   }),
 
   formattedConfig: computed('config', 'slug', function () {
@@ -64,24 +60,22 @@ export default Component.extend({
   }),
 
   filePath: computed('source', 'slug', function () {
-    let source = this.get('source');
-    let name = fileNameWithoutSha(source);
+    let name = fileNameWithoutSha(this.source);
     if (name === this.baseYmlName) { return name; }
 
-    return presentedPath(source, this.slug);
+    return presentedPath(this.source, this.slug);
   }),
 
   fileUrl: computed('source', 'build.branchName', 'build.repo.{slug,vcsType}', function () {
     const slug = this.get('build.repo.slug');
     const vcsType = this.get('build.repo.vcsType');
-    const source = this.get('source');
-    if (isInternal(source, slug)) {
+    if (isInternal(this.source, slug)) {
       return;
     }
 
     const [owner, repo] = slug.split('/');
     const branch = this.get('build.branchName');
-    const file = fileNameWithoutSha(source);
+    const file = fileNameWithoutSha(this.source);
     return this.externalLinks.fileUrl(vcsType, { owner, repo, branch, file });
   }),
 

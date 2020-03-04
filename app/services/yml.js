@@ -12,6 +12,7 @@ export default Service.extend({
   loadConfigsResult: reads('loadConfigs.last.value'),
   rawConfigs: reads('loadConfigsResult.rawConfigs'),
   matrix: reads('loadConfigsResult.matrix'),
+  config: reads('loadConfigsResult.config'),
   errorMessages: computed(() => []),
   messages: or('loadConfigsResult.messages', 'errorMessages'),
 

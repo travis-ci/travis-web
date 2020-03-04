@@ -13,6 +13,7 @@ export default Component.extend({
   messages: reads('yml.messages'),
   loading: reads('yml.loading'),
   matrix: reads('yml.matrix'),
+  merged: reads('yml.config'),
   repo: reads('request.repo'),
 
   formattedConfig: computed('merged', function () {
