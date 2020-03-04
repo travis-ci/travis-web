@@ -1,7 +1,6 @@
 import Component from '@ember/component';
 import { computed, observer } from '@ember/object';
 import { reads, equal, or } from '@ember/object/computed';
-import { task, timeout } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
 import TriggerBuild from 'travis/mixins/trigger-build';
 import WithConfigValidation from 'travis/mixins/components/with-config-validation';
@@ -14,6 +13,7 @@ export default Component.extend(TriggerBuild, WithConfigValidation, {
   api: service(),
   router: service(),
   store: service(),
+  yml: service(),
 
   customized: false,
   processing: false,
@@ -23,16 +23,14 @@ export default Component.extend(TriggerBuild, WithConfigValidation, {
   defaultMergeMode: 'deep_merge_append',
 
   repo: reads('request.repo'),
-  loadConfigsResult: reads('loadConfigs.last.value'),
-  rawConfigs: or('loadConfigsResult.rawConfigs', 'request.uniqRawConfigs'),
-  errorMessages: computed(() => []),
-  messages: or('loadConfigsResult.messages', 'errorMessages'),
+  rawConfigs: or('yml.rawConfigs', 'request.uniqRawConfigs'),
+  messages: reads('yml.messages'),
+  loading: reads('yml.loading'),
 
   closed: equal('status', 'closed'),
   customize: equal('status', 'customize'),
   preview: equal('status', 'preview'),
   replace: equal('mergeMode', 'replace'),
-  loading: reads('loadConfigs.isRunning'),
 
   message: reads('request.commit.message'),
   config: reads('request.apiConfig.config'),
@@ -72,15 +70,15 @@ export default Component.extend(TriggerBuild, WithConfigValidation, {
   }),
 
   fieldChanged: observer('refType', 'branch', 'sha', 'mergeMode', function () {
-    this.loadConfigs.perform();
+    this.loadConfigs();
   }),
 
   configChanged: observer('config', function () {
-    this.loadConfigs.perform({ milliseconds: 500 });
+    this.loadConfigs({ milliseconds: 500 });
   }),
 
   didInsertElement() {
-    this.loadConfigs.perform();
+    this.loadConfigs();
   },
 
   getConfigsData() {
@@ -97,25 +95,10 @@ export default Component.extend(TriggerBuild, WithConfigValidation, {
     };
   },
 
-  loadConfigs: task(function* (debounce) {
+  loadConfigs(debounce) {
     if (this.status !== 'closed' && this.status !== 'open') {
       let data = this.getConfigsData();
-      if (debounce && debounce.milliseconds) {
-        yield timeout(debounce.milliseconds);
-      }
-      try {
-        return yield this.store.queryRecord('build-config', { data });
-      } catch (e) {
-        this.handleLoadConfigError(e);
-      }
-    }
-  }).drop(),
-
-  handleLoadConfigError(e) {
-    if (e.json) {
-      e.json().then(e => {
-        this.set('errorMessages', [{ level: 'error', code: e.error_type, args: { message: e.error_message } }]);
-      });
+      this.yml.loadConfigs.perform(data, debounce);
     }
   },
 

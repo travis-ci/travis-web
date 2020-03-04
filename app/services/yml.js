@@ -1,22 +1,37 @@
 import Service, { inject as service } from '@ember/service';
+import { task, timeout } from 'ember-concurrency';
+import { computed } from '@ember/object';
+import { reads, or } from '@ember/object/computed';
 // import config from 'travis/config/environment';
 
 export default Service.extend({
   ajax: service(),
+  store: service(),
 
-  configs(repo, ref, mode, config) {
-    let data = {
-      repo: {
-        slug: repo.get('slug'),
-        private: repo.get('private'),
-        default_branch: repo.get('defaultBranch.name')
-      },
-      ref: ref,
-      mode: mode,
-      config: config,
-      type: 'api'
-    };
-    return this.request('/configs', 'POST', { data });
+  loading: reads('loadConfigs.isRunning'),
+  loadConfigsResult: reads('loadConfigs.last.value'),
+  rawConfigs: reads('loadConfigsResult.rawConfigs'),
+  matrix: reads('loadConfigsResult.matrix'),
+  errorMessages: computed(() => []),
+  messages: or('loadConfigsResult.messages', 'errorMessages'),
+
+  loadConfigs: task(function* (data, debounce) {
+    if (debounce && debounce.milliseconds) {
+      yield timeout(debounce.milliseconds);
+    }
+    try {
+      return yield this.store.queryRecord('build-config', { data });
+    } catch (e) {
+      this.handleLoadConfigError(e);
+    }
+  }).drop(),
+
+  handleLoadConfigError(e) {
+    if (e.json) {
+      e.json().then(e => {
+        this.set('errorMessages', [{ level: 'error', code: e.error_type, args: { message: e.error_message } }]);
+      });
+    }
   },
 
   parse(configs) {

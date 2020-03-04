@@ -35,7 +35,6 @@
       @configs={{this.rawConfigs.length}}
     />
   {{/unless}}
-  {{log this.messages}}
   {{#if this.customize}}
     <Request::ConfigForm
       @repo={{this.repo}}
@@ -50,7 +49,6 @@
       @messages={{this.messages}}
       @onChange={{action "formFieldChanged"}}
       @onSubmit={{action "submit"}}
-      @loadConfigs={{this.loadConfigs}}
     />
 
     {{#unless this.replace}}
