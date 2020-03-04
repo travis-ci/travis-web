@@ -26,6 +26,15 @@ export default Component.extend({
     return this.externalLinks.commitUrl(vcsType, { owner, repo, commit });
   }),
 
+  vcsType: computed('branch.repository.id', function () {
+    const repository = this.store.peekRecord('repo', this.get('branch.repository.id'));
+    return repository.vcsType;
+  }),
+
+  provider: computed('vcsType', function () {
+    return this.get('vcsType').toLowerCase().replace('repository', '');
+  }),
+
   rawCreatedBy: alias('branch.last_build.created_by'),
 
   createdBy: computed(
