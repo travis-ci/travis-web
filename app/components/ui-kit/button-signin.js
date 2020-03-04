@@ -36,7 +36,7 @@ export default Component.extend({
 
   signin() {
     if (this.account) {
-      this.auth.switchAccount(this.account.id, '/');
+      this.auth.switchAccount(this.account.id, this.auth.redirectUrl || '/');
     } else {
       this.set('isLoading', true);
       this.auth.signInWith(this.provider);
