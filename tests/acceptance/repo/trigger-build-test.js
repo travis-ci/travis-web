@@ -60,6 +60,7 @@ module('Acceptance | repo/trigger build', function (hooks) {
   });
 
   test('trigger link is not visible to users without proper permissions', async function (assert) {
+    this.owner.lookup('service:features').disable('show-new-config-view');
     this.repo.update('permissions', { create_request: false });
     await triggerBuildPage.visit({ owner: 'adal', repo: 'difference-engine' });
 
@@ -67,6 +68,7 @@ module('Acceptance | repo/trigger build', function (hooks) {
   });
 
   test('trigger link is present when user has the proper permissions and has been migrated on com', async function (assert) {
+    this.owner.lookup('service:features').disable('show-new-config-view');
     this.repo.update('migration_status', 'migrated');
 
     enableFeature('proVersion');
@@ -96,8 +98,29 @@ module('Acceptance | repo/trigger build', function (hooks) {
     assert.notOk(triggerBuildPage.popupTriggerLinkIsPresent, 'trigger build link is not rendered');
   });
 
-  test('triggering a custom build via the dropdown', async function (assert) {
+  test('triggering a custom build via the new config form', async function (assert) {
     enableFeature('show-new-config-view');
+    await triggerBuildPage.visit({ owner: 'adal', repo: 'difference-engine' });
+
+    assert.equal(currentURL(), 'adal/difference-engine', 'we are on the repo page');
+    assert.ok(triggerBuildPage.configFormIsHidden, 'modal is hidden');
+
+    await triggerBuildPage.showConfigForm();
+
+    assert.ok(triggerBuildPage.configFormIsVisible, 'config form is visible after click');
+
+    await triggerBuildPage.writeConfigFormMessage('This is a demo build');
+    await triggerBuildPage.writeConfigFormConfig('script: echo "Hello World"');
+    percySnapshot(assert);
+
+    await triggerBuildPage.clickConfigFormSubmit();
+
+    assert.ok(triggerBuildPage.configFormIsHidden, 'config form is hidden again');
+    assert.equal(currentURL(), '/adal/difference-engine/builds/9999', 'we transitioned after the build was triggered');
+  });
+
+  test('triggering a custom build via the dropdown', async function (assert) {
+    this.owner.lookup('service:features').disable('show-new-config-view');
     await triggerBuildPage.visit({ owner: 'adal', repo: 'difference-engine' });
 
     assert.equal(currentURL(), 'adal/difference-engine', 'we are on the repo page');
@@ -117,8 +140,21 @@ module('Acceptance | repo/trigger build', function (hooks) {
     assert.equal(currentURL(), '/adal/difference-engine/builds/9999', 'we transitioned after the build was triggered');
   });
 
-  test('an error triggering a build is displayed', async function (assert) {
+  test('an error triggering a build is displayed with new config form', async function (assert) {
     enableFeature('show-new-config-view');
+    this.server.post('/repo/:repo_id/requests', function (schema, request) {
+      return new Response(500, {}, {});
+    });
+
+    await triggerBuildPage.visit({ owner: 'adal', repo: 'difference-engine' });
+    await triggerBuildPage.showConfigForm();
+    await triggerBuildPage.clickConfigFormSubmit();
+
+    assert.equal(topPage.flashMessage.text, 'Oops, something went wrong, please try again.');
+  });
+
+  test('an error triggering a build is displayed', async function (assert) {
+    this.owner.lookup('service:features').disable('show-new-config-view');
     this.server.post('/repo/:repo_id/requests', function (schema, request) {
       return new Response(500, {}, {});
     });
@@ -131,7 +167,7 @@ module('Acceptance | repo/trigger build', function (hooks) {
   });
 
   test('a 429 shows a specific error message', async function (assert) {
-    enableFeature('show-new-config-view');
+    this.owner.lookup('service:features').disable('show-new-config-view');
     this.server.post('/repo/:repo_id/requests', function (schema, request) {
       return new Response(429, {}, {});
     });
@@ -139,6 +175,19 @@ module('Acceptance | repo/trigger build', function (hooks) {
     await triggerBuildPage.visit({ owner: 'adal', repo: 'difference-engine' });
     await triggerBuildPage.openPopup();
     await triggerBuildPage.clickSubmit();
+
+    assert.equal(topPage.flashMessage.text, 'You’ve exceeded the limit for triggering builds, please wait a while before trying again.');
+  });
+
+  test('a 429 shows a specific error message with new config view', async function (assert) {
+    enableFeature('show-new-config-view');
+    this.server.post('/repo/:repo_id/requests', function (schema, request) {
+      return new Response(429, {}, {});
+    });
+
+    await triggerBuildPage.visit({ owner: 'adal', repo: 'difference-engine' });
+    await triggerBuildPage.showConfigForm();
+    await triggerBuildPage.clickConfigFormSubmit();
 
     assert.equal(topPage.flashMessage.text, 'You’ve exceeded the limit for triggering builds, please wait a while before trying again.');
   });
