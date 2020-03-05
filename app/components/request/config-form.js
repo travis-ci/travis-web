@@ -82,7 +82,6 @@ export default Component.extend(BranchSearching, {
     },
 
     change(field, value) {
-      this.set(field, value);
       this.onChange(field, value);
     },
 

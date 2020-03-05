@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { computed, observer } from '@ember/object';
+import { computed } from '@ember/object';
 import { reads, equal, or } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import TriggerBuild from 'travis/mixins/trigger-build';
@@ -69,14 +69,6 @@ export default Component.extend(TriggerBuild, WithConfigValidation, {
 
   ref: computed('refType', 'branch', 'sha', function () {
     return this.get(this.refType);
-  }),
-
-  fieldChanged: observer('refType', 'branch', 'sha', 'mergeMode', function () {
-    this.loadConfigs();
-  }),
-
-  configChanged: observer('config', function () {
-    this.loadConfigs({ milliseconds: 500 });
   }),
 
   didInsertElement() {
@@ -161,6 +153,11 @@ export default Component.extend(TriggerBuild, WithConfigValidation, {
     formFieldChanged(key, value) {
       this.set('customized', true);
       this.set(key, value);
+      if (key === 'config') {
+        this.loadConfigs({ milliseconds: 500 });
+      } else {
+        this.loadConfigs();
+      }
     },
     submit() {
       this.submit();
