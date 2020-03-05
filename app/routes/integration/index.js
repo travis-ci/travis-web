@@ -1,7 +1,7 @@
 import BasicRoute from 'travis/routes/basic';
 
 export default BasicRoute.extend({
-  redirect() {
+  beforeModel() {
     return this.transitionTo('/');
   }
 });

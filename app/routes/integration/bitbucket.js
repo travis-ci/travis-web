@@ -5,7 +5,7 @@ export default Route.extend({
   auth: service(),
   router: service(),
 
-  redirect() {
+  beforeModel() {
     if (this.auth.isSignedInWith('bitbucket')) {
       this.router.transitionTo('account.repositories');
     }

@@ -7,7 +7,7 @@ export default BasicRoute.extend(TailwindBaseMixin, {
 
   features: service(),
 
-  redirect() {
+  beforeModel() {
     if (!this.get('features.proVersion')) {
       return this.transitionTo('/');
     }
