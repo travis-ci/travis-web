@@ -34,12 +34,7 @@
             Build, test, and deploy your software seamlessly with the Atlassian Bitbucket
             integration for Travis&nbsp;CI
           </UiKit::Text>
-          <UiKit::ButtonSignin
-            @provider='bitbucket'
-            @isSignup={{true}}
-            @isBetaBadgeVisible={{false}}
-            @isLogoSeparatorVisible={{false}}
-          />
+          <UiKit::ButtonSignin @provider='bitbucket' @isSignup={{true}} />
         </UiKit::Box>
       </grid.item>
       <grid.item @sm='full' @md='1/2' @lg='1/3'>
@@ -145,11 +140,7 @@
     </UiKit::Grid>
 
     <UiKit::Box @margin={{hash sm=(hash top=10)}} @textAlign='center'>
-      <UiKit::ButtonSignin
-        @provider='bitbucket'
-        @isSignup={{true}}
-        @isLogoSeparatorVisible={{false}}
-      />
+      <UiKit::ButtonSignin @provider='bitbucket' @isSignup={{true}} />
     </UiKit::Box>
   </UiKit::Box>
 </UiKit::Box>
