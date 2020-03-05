@@ -187,6 +187,7 @@ class Travis::Web::App
       if options[:pro]
         config['pro'] = true
         config['featureFlags']['pro-version'] = true
+        config['featureFlags']['github-apps'] = true
       end
       if options[:enterprise]
         config['enterprise'] = true
