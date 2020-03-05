@@ -7,6 +7,7 @@ module('Integration | Component | request configs', function (hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function (assert) {
+
     const request = {
       id: 1,
       branchName: 'master',
@@ -20,15 +21,18 @@ module('Integration | Component | request configs', function (hooks) {
     };
 
     this.load = {
-      perform() {}
+      perform() { }
     };
     this.displayTriggerBuild = true;
     this.request = request;
+    this.showNewConfigView = true;
+    this.status = 'open';
 
     await render(hbs`<Request::Configs 
       @request={{this.request}} 
-      @status={{'open'}} 
+      @status={{this.status}} 
       @load={{this.load}}
+      @showNewConfigView={{this.showNewConfigView}}
       @displayTriggerBuild={{this.displayTriggerBuild}}/>`
     );
     await waitFor('[data-test-trigger-build-description]');

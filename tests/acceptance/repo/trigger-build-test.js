@@ -97,6 +97,7 @@ module('Acceptance | repo/trigger build', function (hooks) {
   });
 
   test('triggering a custom build via the dropdown', async function (assert) {
+    enableFeature('show-new-config-view');
     await triggerBuildPage.visit({ owner: 'adal', repo: 'difference-engine' });
 
     assert.equal(currentURL(), 'adal/difference-engine', 'we are on the repo page');
@@ -117,6 +118,7 @@ module('Acceptance | repo/trigger build', function (hooks) {
   });
 
   test('an error triggering a build is displayed', async function (assert) {
+    enableFeature('show-new-config-view');
     this.server.post('/repo/:repo_id/requests', function (schema, request) {
       return new Response(500, {}, {});
     });
@@ -129,6 +131,7 @@ module('Acceptance | repo/trigger build', function (hooks) {
   });
 
   test('a 429 shows a specific error message', async function (assert) {
+    enableFeature('show-new-config-view');
     this.server.post('/repo/:repo_id/requests', function (schema, request) {
       return new Response(429, {}, {});
     });

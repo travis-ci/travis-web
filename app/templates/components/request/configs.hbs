@@ -1,75 +1,75 @@
 {{#if this.displayTriggerBuild}}
-  <div class="request-configs-buttons" data-test-request-configs-button='true'>
-    {{#unless this.closed}}
-      <a
-        data-test-request-configs-button-cancel="true"
-        class="request-configs-button request-configs-button-cancel"
-        {{on 'click' (action this.onCancel)}}
-      >
-        Cancel
-      </a>
-      <a
-        data-test-request-configs-button-customize="true"
-        class="request-configs-button request-configs-button-customize"
-        {{on 'click' (action this.onCustomize)}}
-      >
-        Customize
-      </a>
-      <a
-        data-test-request-configs-button-preview="true"
-        class="request-configs-button request-configs-button-preview"
-        {{on 'click' (action this.onPreview)}}
-      >
-        Preview
-      </a>
-    {{/unless }}
-    <Request::ConfigsButtonTrigger
-      @processing={{this.processing}}
-      onclick={{action this.onTriggerBuild}}
-    />
-  </div>
-
-  {{#unless (or this.closed this.preview)}}
-    <Request::ConfigsDescription
-      @customize={{this.customize}}
-      @configs={{this.rawConfigs.length}}
-    />
-  {{/unless}}
-  {{#if this.customize}}
-    <Request::ConfigForm
-      @repo={{this.repo}}
-      @request={{this.request}}
-      @config={{this.config}}
-      @refType={{this.refType}}
-      @branch={{this.branch}}
-      @sha={{this.sha}}
-      @message={{this.message}}
-      @mergeMode={{this.mergeMode}}
-      @loading={{this.loading}}
-      @messages={{this.messages}}
-      @onChange={{action "formFieldChanged"}}
-      @onSubmit={{action "submit"}}
-    />
-
-    {{#unless this.replace}}
-      <h4>
-        Build {{pluralize this.rawConfigs.length 'Config' without-count=true}}
-      </h4>
+  {{#if this.showNewConfigView}}
+    <div class="request-configs-buttons" data-test-request-configs-button='true'>
+      {{#unless this.closed}}
+        <a
+          data-test-request-configs-button-cancel="true"
+          class="request-configs-button request-configs-button-cancel"
+          {{on 'click' (action this.onCancel)}}
+        >
+          Cancel
+        </a>
+        <a
+          data-test-request-configs-button-customize="true"
+          class="request-configs-button request-configs-button-customize"
+          {{on 'click' (action this.onCustomize)}}
+        >
+          Customize
+        </a>
+        <a
+          data-test-request-configs-button-preview="true"
+          class="request-configs-button request-configs-button-preview"
+          {{on 'click' (action this.onPreview)}}
+        >
+          Preview
+        </a>
+      {{/unless}}
+      <Request::ConfigsButtonTrigger
+        @processing={{this.processing}}
+        onclick={{action this.onTriggerBuild}}
+      />
+    </div>
+    {{#unless (or this.closed this.preview)}}
+      <Request::ConfigsDescription
+        @customize={{this.customize}}
+        @configs={{this.rawConfigs.length}}
+      />
     {{/unless}}
-  {{/if}}
+    {{#if this.customize}}
+      <Request::ConfigForm
+        @repo={{this.repo}}
+        @request={{this.request}}
+        @config={{this.config}}
+        @refType={{this.refType}}
+        @branch={{this.branch}}
+        @sha={{this.sha}}
+        @message={{this.message}}
+        @mergeMode={{this.mergeMode}}
+        @loading={{this.loading}}
+        @messages={{this.messages}}
+        @onChange={{action "formFieldChanged"}}
+        @onSubmit={{action "submit"}}
+      />
 
-  {{#if this.preview}}
-    <Request::ConfigsPreview
-      @repo={{this.repo}}
-      @request={{this.request}}
-      @ref={{this.ref}}
-      @mergeMode={{this.mergeMode}}
-      @config={{this.config}}
-    />
+      {{#unless this.replace}}
+        <h4>
+          Build {{pluralize this.rawConfigs.length 'Config' without-count=true}}
+        </h4>
+      {{/unless}}
+    {{/if}}
+    {{#if this.preview}}
+      <Request::ConfigsPreview
+        @repo={{this.repo}}
+        @request={{this.request}}
+        @ref={{this.ref}}
+        @mergeMode={{this.mergeMode}}
+        @config={{this.config}}
+      />
+    {{/if}}
   {{/if}}
 {{/if}}
 
-{{#if (and this.closed this.showConfigValidation)}}
+{{#if (and this.showConfigValidation (or this.closed (not this.showNewConfigView)))}}
   <Request::Messages
     @messages={{this.request.messages}}
   />
@@ -95,7 +95,6 @@
     {{/if}}
   {{/each}}
 {{/unless}}
-
-{{#if this.closed}}
+{{#if (or this.closed (not this.showNewConfigView))}}
   <Request::Config @config={{@request.config}}/>
 {{/if}}

@@ -1,6 +1,7 @@
 import { module, test } from 'qunit';
 import { visit, click, fillIn } from '@ember/test-helpers';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
+import { enableFeature } from 'ember-feature-flags/test-support';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { percySnapshot } from 'ember-percy';
@@ -108,6 +109,7 @@ module('Acceptance | repo/request configs', function (hooks) {
   });
 
   test('request configs view', async function (assert) {
+    enableFeature('show-new-config-view');
     await visit(this.TEST_TARGETS.URL);
 
     percySnapshot(assert);
@@ -123,6 +125,7 @@ module('Acceptance | repo/request configs', function (hooks) {
   });
 
   test('click on cancel button', async function (assert) {
+    enableFeature('show-new-config-view');
     await visit(this.TEST_TARGETS.URL);
 
     await click(this.TEST_TARGETS.CANCEL_BUTTON);
@@ -136,6 +139,7 @@ module('Acceptance | repo/request configs', function (hooks) {
   });
 
   test('customize config', async function (assert) {
+    enableFeature('show-new-config-view');
     await visit(this.TEST_TARGETS.URL);
 
     await click(this.TEST_TARGETS.CUSTOMIZE_BUTTON);
@@ -153,6 +157,7 @@ module('Acceptance | repo/request configs', function (hooks) {
   });
 
   test('customize invalid config', async function (assert) {
+    enableFeature('show-new-config-view');
     await visit(this.TEST_TARGETS.URL);
 
     await click(this.TEST_TARGETS.CUSTOMIZE_BUTTON);
@@ -170,6 +175,7 @@ module('Acceptance | repo/request configs', function (hooks) {
   });
 
   test('preview config', async function (assert) {
+    enableFeature('show-new-config-view');
     await visit(this.TEST_TARGETS.URL);
 
     await click(this.TEST_TARGETS.PREVIEW_BUTTON);

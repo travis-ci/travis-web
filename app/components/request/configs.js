@@ -14,6 +14,7 @@ export default Component.extend(TriggerBuild, WithConfigValidation, {
   router: service(),
   store: service(),
   yml: service(),
+  features: service(),
 
   customized: false,
   processing: false,
@@ -48,6 +49,7 @@ export default Component.extend(TriggerBuild, WithConfigValidation, {
   originalMergeMode: or('request.mergeMode', 'defaultMergeMode'),
 
   isRepoConfig: equal('router.currentRouteName', 'repo.config'),
+  showNewConfigView: reads('features.showNewConfigView'),
 
   displayTriggerBuild: computed(
     'repo.migrationStatus',
