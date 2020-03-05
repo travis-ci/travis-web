@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { sort, gt, and, or } from '@ember/object/computed';
+import { sort, gt, and, reads } from '@ember/object/computed';
 import countBy from 'travis/utils/count-by';
 import { inject as service } from '@ember/service';
 import { pluralize } from 'ember-inflector';
@@ -38,7 +38,12 @@ export default Component.extend({
   sortedMessages: sort('messages', (lft, rgt) =>
     sortOrder(lft.level) - sortOrder(rgt.level)
   ),
-  maxLevel: or('sortedMessages.firstObject.level', 'info'),
+
+  firstMessage: reads('sortedMessages.firstObject'),
+  firstMessageLevel: reads('firstMessage.level'),
+  maxLevel: computed('firstMessageLevel', function () {
+    return this.firstMessageLevel ? this.firstMessageLevel : 'info';
+  }),
 
   iconClass: computed('maxLevel', function () {
     return `icon icon-${this.maxLevel}`;

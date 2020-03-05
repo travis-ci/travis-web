@@ -2,7 +2,7 @@ import Component from '@ember/component';
 import config from 'travis/config/environment';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
-import { alias } from '@ember/object/computed';
+import { reads } from '@ember/object/computed';
 
 export default Component.extend({
   auth: service(),
@@ -14,7 +14,8 @@ export default Component.extend({
   classNameBindings: ['isOpen:is-open'],
   isOpen: false,
 
-  currentUser: alias('auth.currentUser'),
+  currentUser: reads('auth.currentUser'),
+  showNewConfigView: reads('features.showNewConfigView'),
 
   click(e) {
     this.toggleProperty('isOpen');

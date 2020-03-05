@@ -13,10 +13,15 @@ import { selectChoose } from 'ember-power-select/test-support';
 
 export default create({
   visit: visitable(':owner/:repo'),
+  popupIsHidden: isHidden('.trigger-build-modal'),
+  popupTriggerLinkIsHidden: isHidden('.option-dropdown .trigger-build-anchor'),
+  popupTriggerLinkIsPresent: isPresent('.option-dropdown .trigger-build-anchor'),
+  openPopup: clickable('.option-dropdown .trigger-build-anchor'),
+  popupIsVisible: isVisible('.trigger-build-modal'),
   configFormIsHidden: isHidden('[data-test-build-config-form]'),
   configFormIsVisible: isVisible('[data-test-build-config-form]'),
-  popupTriggerLinkIsHidden: isHidden('.option-dropdown [trigger-build-anchor]'),
-  popupTriggerLinkIsPresent: isPresent('.option-dropdown [trigger-build-anchor]'),
+  configFormTriggerLinkIsHidden: isHidden('.option-dropdown [trigger-build-anchor]'),
+  configFormTriggerLinkIsPresent: isPresent('.option-dropdown [trigger-build-anchor]'),
   showConfigForm: clickable('.option-dropdown [trigger-build-anchor]'),
   requestConfigButtonsIsPresent: isPresent('data-test-request-configs-button'),
 
@@ -28,7 +33,11 @@ export default create({
     value: attribute('value')
   }),
 
-  writeMessage: fillable('[data-test-build-config-form] input'),
-  writeConfig: fillable('[data-test-build-config-form] textarea'),
-  clickSubmit: clickable('[data-test-request-configs-submit]')
+  writeMessage: fillable('[data-test-trigger-build-message] input'),
+  writeConfig: fillable('[data-test-trigger-build-config] textarea'),
+  clickSubmit: clickable('[data-test-trigger-build-submit]'),
+
+  writeConfigFormMessage: fillable('[data-test-build-config-form] input'),
+  writeConfigFormConfig: fillable('[data-test-build-config-form] textarea'),
+  clickConfigFormSubmit: clickable('[data-test-request-configs-submit]'),
 });

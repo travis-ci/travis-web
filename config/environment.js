@@ -193,7 +193,7 @@ module.exports = function (environment) {
     'github-apps': false,
     'enable-assembla-login': false,
     'enable-bitbucket-login': false,
-    'show-new-config-view': false,
+    'show-new-config-view': true,
   };
 
   if (TRAVIS_PRO) {

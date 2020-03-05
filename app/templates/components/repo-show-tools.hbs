@@ -28,10 +28,17 @@
   {{/if}}
   {{#if this.displayTriggerBuildLink}}
     <li>
-      <!-- TODO activate trigger build if we're on build.config or job.onfig -->
-      <LinkTo @route="repo.config" @model={{this.repo}} trigger-build-anchor="true">
-        Trigger build
-      </LinkTo>
+      {{#if this.showNewConfigView}}
+        <LinkTo @route="repo.config" @model={{this.repo}} trigger-build-anchor="true">Trigger build</LinkTo>
+      {{else}}
+        <button
+          type="button"
+          class="trigger-build-anchor"
+          onclick={{action "triggerBuildModal"}}
+        >
+          Trigger build
+        </button>
+      {{/if}}
     </li>
   {{/if}}
 </ul>
