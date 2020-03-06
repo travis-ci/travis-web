@@ -88,9 +88,8 @@ export default VcsEntity.extend({
   }),
 
   monthlyPlans: computed('nonGithubPlans.@each.{name,annual,builds}', function () {
-    const nonGithubPlans = this.nonGithubPlans || [];
-    const filteredMonthlyPlans = nonGithubPlans.filter(plan => !plan.annual && plan.builds);
-    return filteredMonthlyPlans.sort((a, b) => a.builds - b.builds);
+    const filteredMonthlyPlans = this.nonGithubPlans.filter(plan => !plan.annual && plan.builds);
+    return filteredMonthlyPlans.sortBy('builds');
   }),
 
   annualPlans: computed('nonGithubPlans.@each.{name,annual,builds}', function () {
