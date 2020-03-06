@@ -9,6 +9,10 @@ export default Service.extend({
     return this._super(...arguments);
   },
 
+  get sortProps() {
+    return ['number:desc'];
+  },
+
   unsortedPullRequests: filterBy('_builds', 'eventType', 'pull_request'),
-  pullRequests: sort('unsortedPullRequests', (a, b) => a.number > b.number),
+  pullRequests: sort('unsortedPullRequests', 'sortProps'),
 });
