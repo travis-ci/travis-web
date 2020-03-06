@@ -18,6 +18,6 @@ export default Component.extend({
 
   userProvider: computed('user.provider', 'provider', function () {
     const userProvider = this.get('user.provider');
-    return userProvider ? userProvider : this.get('provider');
+    return userProvider || this.get('provider');
   })
 });
