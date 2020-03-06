@@ -19,7 +19,7 @@ export default Component.extend(TriggerBuild, WithConfigValidation, {
   customized: false,
   processing: false,
 
-  refType: 'branch',
+  refType: 'sha',
   status: 'closed',
   defaultMergeMode: 'deep_merge_append',
 

@@ -5,14 +5,6 @@
   <div class="request-configs-fields" data-test-build-config-form='true'>
     <div class="form-elem">
       {{#radio-button
-        value="branch"
-        groupValue=refType
-        changed=(action "change" "refType")
-        classNames="ref-type"
-      }}
-        Branch
-      {{/radio-button}}
-      {{#radio-button
         value="sha"
         groupValue=refType
         changed=(action "change" "refType")
@@ -20,7 +12,26 @@
       }}
         Commit
       {{/radio-button}}
-      {{#if (eq refType 'branch') }}
+      {{#radio-button
+        value="branch"
+        groupValue=refType
+        changed=(action "change" "refType")
+        classNames="ref-type"
+      }}
+        Branch
+      {{/radio-button}}
+      {{#if (eq refType 'sha') }}
+        <form.field
+          data-test-request-configs-sha="true"
+          @placeholder="Specify a Git sha (optional)"
+          @value={{this.sha}}
+          @showValidationStatusIcons={{false}}
+          @onChange={{action "handleShaChange"}}
+          as |field|
+        >
+          {{field.input}}
+        </form.field>
+      {{else}}
         <form.field
           data-test-request-configs-branch="true"
           @classNames="ref-type-branch"
@@ -36,17 +47,6 @@
           >
             {{branch}}
           </field.select>
-        </form.field>
-      {{else}}
-        <form.field
-          data-test-request-configs-sha="true"
-          @placeholder="Specify a Git sha (optional)"
-          @value={{this.sha}}
-          @showValidationStatusIcons={{false}}
-          @onChange={{action "handleShaChange"}}
-          as |field|
-        >
-          {{field.input}}
         </form.field>
       {{/if}}
     </div>
