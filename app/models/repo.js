@@ -140,21 +140,6 @@ const Repo = VcsEntity.extend({
     return this._buildObservableArray(builds);
   }),
 
-  fetchBuilds({ page, eventType }) {
-    const { id: repoId, store } = this;
-    const offset = (page - 1) * limit;
-
-    return store.paginated('build', {
-      repository_id: repoId,
-      event_type: eventType,
-      limit, offset
-    }, { live: false });
-  },
-
-  pullRequests: dynamicQuery(function* ({ page = 1 }) {
-    return yield this.fetchBuilds({ page, eventType: 'pull_request' });
-  }, { appendResults: true, limitPagination: true, limit }),
-
   branches: computed('id', function () {
     let id = this.id;
     return this.store.filter('branch', {

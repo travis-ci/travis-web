@@ -15,7 +15,7 @@ export default TravisRoute.extend({
   },
 
   model() {
-    return this.modelFor('repo').get('pullRequests');
+    return this.modelFor('repo');
   },
 
   titleToken() {

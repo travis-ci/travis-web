@@ -1,12 +1,5 @@
-<LoadMore
-  @dynamicQuery={{this.pullRequests}}
-  @liveItems={{this.livePullRequests}}
+<RepoBuildList
+  @repoId={{this.repo.id}}
+  @eventTypes='pull_request'
   @missingNotice="No {{vcs-vocab this.repo.vcsType 'pullRequest' lower=true}} builds for this repository"
-  as |loader|
->
-  <ul class="build-list">
-    {{#each loader.items as |build|}}
-      <BuildsItem @build={{build}} />
-    {{/each}}
-  </ul>
-</LoadMore>
+/>
