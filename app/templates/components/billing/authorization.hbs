@@ -57,7 +57,7 @@
       @showCancelButton={{true}}
     />
   {{else}}
-    <div class="flex flex--wrap billing-subscription__buttons">
+    <div class="flex flex--wrap {{if this.account.hasSubscriptionPermissions 'billing-subscription__buttons'}}">
       {{#if this.isLoading}}
         <LoadingIndicator/>
       {{else}}
