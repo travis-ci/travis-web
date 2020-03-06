@@ -10,5 +10,5 @@ export default Service.extend({
   },
 
   unsortedPullRequests: filterBy('_builds', 'eventType', 'pull_request'),
-  pullRequests: sort('unsortedPullRequests', (a, b) => a.number < b.number),
+  pullRequests: sort('unsortedPullRequests', (a, b) => a.number > b.number),
 });
