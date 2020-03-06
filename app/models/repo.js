@@ -6,10 +6,6 @@ import { reads, equal, or } from '@ember/object/computed';
 import { Promise as EmberPromise, } from 'rsvp';
 import { task } from 'ember-concurrency';
 import ExpandableRecordArray from 'travis/utils/expandable-record-array';
-import config from 'travis/config/environment';
-import dynamicQuery from 'travis/utils/dynamic-query';
-
-const { repoBuildsPerPage: limit } = config.pagination;
 
 export const MIGRATION_STATUS = {
   QUEUED: 'queued',
