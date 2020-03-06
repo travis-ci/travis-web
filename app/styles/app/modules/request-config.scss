@@ -52,6 +52,10 @@
     }
   }
 
+  &.customize .request-messages {
+    border-top: 0;
+  }
+
   .request-messages {
     margin-top: 0;
   }
@@ -193,7 +197,8 @@
     right: 0;
   }
 
-  .request-configs-button-cancel {
+  .request-configs-button-cancel,
+  .request-configs-button-customize {
     display: none;
   }
 }
