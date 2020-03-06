@@ -11,9 +11,9 @@
     {{yield this}}
   {{/if}}
   <div>
-    {{#if this.items.isLoading}}
+    {{#if this.dynamicQuery.isLoading}}
       <LoadingIndicator />
-    {{else if this.items.hasNextPage}}
+    {{else if this.dynamicQuery.hasNextPage}}
       <ShowMoreButton @click={{action 'showMore'}} />
     {{/if}}
   </div>

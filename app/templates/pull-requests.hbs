@@ -1,5 +1,6 @@
 <LoadMore
-  @items={{this.pullRequests}}
+  @dynamicQuery={{this.pullRequests}}
+  @liveItems={{this.livePullRequests}}
   @missingNotice="No {{vcs-vocab this.repo.vcsType 'pullRequest' lower=true}} builds for this repository"
   as |loader|
 >
