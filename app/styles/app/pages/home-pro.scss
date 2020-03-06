@@ -74,6 +74,10 @@
     text-align: center;
   }
 
+  .section-bitbucket {
+    padding-bottom: 25px;
+  }
+
   .section-companies {
     @media #{$small-only} {
       padding: 40px 0px;
@@ -134,12 +138,12 @@
 
     .list-check {
       @media #{$medium-only} {
-        padding-left: 10px
+        padding-left: 0;
       }
-      padding-left: 39px;
+      padding-left: 20px;
       padding-top: 12px;
 
-      img {
+      .checkmark {
         @media #{$small-only} {
           margin-right: 10px;
         }
@@ -164,12 +168,12 @@
 
   .list-check-container {
     @media #{$small-only} {
-      max-width: 338px;
+      max-width: 357px;
       margin: 0 auto;
     }
 
     @media #{$medium-only} {
-      max-width: 338px;
+      max-width: 345px;
       margin: 0 auto;
     }
 
@@ -1047,17 +1051,15 @@ main {
     padding: 15px;
 
     .rails-logo {
-      width: 160px;
+      width: 90px;
       position: relative;
-      right: 37px;
-      bottom: 10px;
+      margin-bottom: 2rem;
     }
 
     .twitter-logo {
-      width: 160px;
+      width: 32px;
       position: relative;
-      bottom: 20px;
-      right: 80px;
+      margin-bottom: 2rem;
     }
 
     .quote-pypy-logo {

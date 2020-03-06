@@ -11,3 +11,7 @@
   @apply absolute top-0 right-0;
   transform: translate(50%, -50%);
 }
+.pin-top-left {
+  @apply absolute top-0 left-0;
+  transform: translate(-50%, -50%);
+}

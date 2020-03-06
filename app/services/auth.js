@@ -17,7 +17,7 @@ import {
 import { getOwner } from '@ember/application';
 import config from 'travis/config/environment';
 import { task } from 'ember-concurrency';
-import { availableProviders } from 'travis/utils/vcs';
+import { availableProviders, vcsConfigByUrlPrefixOrType } from 'travis/utils/vcs';
 
 const { authEndpoint, apiEndpoint } = config;
 
@@ -132,12 +132,22 @@ export default Service.extend({
 
     const url = new URL(this.redirectUrl || window.location.href);
 
-    if (['/signin', '/plans'].includes(url.pathname)) {
+    if (['/signin', '/plans', '/integration/bitbucket'].includes(url.pathname)) {
       url.pathname = '/';
     }
     const providerSegment = provider ? `/${provider}` : '';
     const path = `/auth/handshake${providerSegment}`;
     window.location.href = `${authEndpoint || apiEndpoint}${path}?redirect_uri=${url}`;
+  },
+
+  getAccountByProvider(provider) {
+    const { vcsTypes } = vcsConfigByUrlPrefixOrType(provider);
+    const [,, userType] = vcsTypes;
+    return this.accounts.findBy('vcsType', userType);
+  },
+
+  isSignedInWith(provider) {
+    return !!this.getAccountByProvider(provider);
   },
 
   autoSignIn() {

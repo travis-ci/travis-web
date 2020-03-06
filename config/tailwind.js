@@ -133,6 +133,8 @@ module.exports = {
     borderWidth: {
       none: '0',
       px: '1px',
+      sm: '0.1429rem',
+      md: '0.25rem',
     },
     borderRadius: {
       none: '0',
@@ -214,6 +216,7 @@ module.exports = {
       '11/12': '91.666667%',
       full: '100%',
       screen: '100vw',
+      'max-content': 'max-content',
     }),
     maxHeight: {
       full: '100%',
@@ -240,6 +243,7 @@ module.exports = {
     },
     minWidth: {
       '0': '0',
+      md: '16rem',
       full: '100%',
     },
 
