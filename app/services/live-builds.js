@@ -5,11 +5,10 @@ export default Service.extend({
   store: service(),
 
   init() {
-    this.set('builds', this.store.peekAll('build'));
+    this.set('_builds', this.store.peekAll('build'));
     return this._super(...arguments);
   },
 
-  sortedBuilds: sort('builds', (a, b) => a.number < b.number),
-
-  pullRequests: filterBy('sortedBuilds', 'eventType', 'pull_request'),
+  unsortedPullRequests: filterBy('_builds', 'eventType', 'pull_request'),
+  pullRequests: sort('unsortedPullRequests', (a, b) => a.number < b.number),
 });
