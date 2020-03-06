@@ -212,6 +212,7 @@
 
 .job-arch {
   overflow: hidden;
+  min-width: 25px;
 
   @media #{$medium-up} {
     position: relative;
