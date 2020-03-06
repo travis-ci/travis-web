@@ -2,10 +2,10 @@
   @dynamicQuery={{this.loader}}
   @liveItems={{this.builds}}
   @missingNotice={{@missingNotice}}
-  as |loader|
+  as |loadMore|
 >
   <ul class="build-list">
-    {{#each loader.items as |build|}}
+    {{#each loadMore.items as |build|}}
       <BuildsItem @build={{build}} />
     {{/each}}
   </ul>
