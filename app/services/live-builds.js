@@ -1,5 +1,5 @@
 import Service, { inject as service } from '@ember/service';
-import { filterBy } from '@ember/object/computed';
+import { filterBy, sort } from '@ember/object/computed';
 
 export default Service.extend({
   store: service(),
@@ -9,5 +9,7 @@ export default Service.extend({
     return this._super(...arguments);
   },
 
-  pullRequests: filterBy('builds', 'eventType', 'pull_request'),
+  sortedBuilds: sort('builds', (a, b) => a.number < b.number),
+
+  pullRequests: filterBy('sortedBuilds', 'eventType', 'pull_request'),
 });
