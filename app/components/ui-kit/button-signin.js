@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
-import { or } from '@ember/object/computed';
+import { or, reads } from '@ember/object/computed';
 
 export default Component.extend({
   tagName: '',
@@ -13,6 +13,10 @@ export default Component.extend({
 
   isSignup: false,
   provider: or('account.provider', 'multiVcs.primaryProvider'),
+  isLogoVisible: true,
+  isLogoSeparatorVisible: true,
+  isBetaBadgeVisible: reads('isBetaProvider'),
+  minWidth: 'md',
 
   isLoading: false,
 
@@ -32,6 +36,15 @@ export default Component.extend({
 
   isBetaProvider: computed('provider', function () {
     return this.multiVcs.isProviderBeta(this.provider);
+  }),
+
+  minWidthClass: computed('minWidth', function () {
+    const { minWidth } = this;
+    return minWidth ? `min-w-${minWidth}` : '';
+  }),
+
+  logoSeparatorWidth: computed('isLogoSeparatorVisible', function () {
+    return this.isLogoSeparatorVisible ? 'xs' : 'none';
   }),
 
   signin() {

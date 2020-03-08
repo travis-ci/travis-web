@@ -1,9 +1,8 @@
 import Component from '@ember/component';
-import { reads } from '@ember/object/computed';
-
 import { checkDictionary } from 'travis/utils/ui-kit/assertions';
 import prefix from 'travis/utils/ui-kit/prefix';
 import concat from 'travis/utils/ui-kit/concat';
+import { ALIGNMENTS as TEXT_ALIGNMENTS } from 'travis/components/ui-kit/text';
 
 export const COLORS = {
   WHITE: 'white',
@@ -32,6 +31,7 @@ const BG_COLORS = {
 };
 
 const BORDER_COLORS = {
+  [COLORS.WHITE]: 'white',
   [COLORS.BLUE]: 'blue-400',
   [COLORS.GREEN]: 'green-300',
   [COLORS.GREY_LIGHT]: 'grey-150',
@@ -42,11 +42,15 @@ const BORDER_COLORS = {
 const WIDTHS = {
   NONE: 'none',
   XS: 'xs',
+  SM: 'sm',
+  MD: 'md',
 };
 
 const BORDER_WIDTHS = {
   [WIDTHS.NONE]: 'none',
   [WIDTHS.XS]: 'px',
+  [WIDTHS.SM]: 'sm',
+  [WIDTHS.MD]: 'md',
 };
 
 export const DISPLAYS = {
@@ -56,13 +60,6 @@ export const DISPLAYS = {
   FLEX: 'flex',
 };
 const DEFAULT_DISPLAY = DISPLAYS.BLOCK;
-
-const TEXT_ALIGNMENTS = {
-  LEFT: 'left',
-  CENTER: 'center',
-  RIGHT: 'right',
-  JUSTIFY: 'justify',
-};
 
 const LAYERS = {
   AUTO: 'auto',
@@ -115,6 +112,7 @@ const POSITION_INSETS = {
 };
 const PIN_LOCATIONS = {
   TOP_RIGHT: 'top-right',
+  TOP_LEFT: 'top-left',
 };
 
 // Height & Width
@@ -159,6 +157,21 @@ const FLEX_DIRECTIONS = {
 const FLEX_WRAPS = {
   wrap: 'wrap',
   NO_WRAP: 'no-wrap',
+};
+
+export const FLEX_SIZES = {
+  GROW_SINGLE: 'grow-single',
+  SHRINK_SINGLE: 'shrink-single',
+  RESIZE_SINGLE: 'resize-single',
+  NONE: 'none',
+  SHRINK_ZERO: 'shrink-none',
+};
+export const FLEX_SIZE_VALS = {
+  [FLEX_SIZES.GROW_SINGLE]: 'grow-single',
+  [FLEX_SIZES.SHRINK_SINGLE]: 'shrink-single',
+  [FLEX_SIZES.RESIZE_SINGLE]: 'resize-single',
+  [FLEX_SIZES.NONE]: 'none',
+  [FLEX_SIZES.SHRINK_ZERO]: 'shrink-0',
 };
 
 // Component definition
@@ -210,7 +223,7 @@ export default Component.extend({
   heightClass: prefix('height', 'h'),
 
   // Position
-  positionType: reads('position.type'),
+  positionType: prefix('position.type', ''),
   positionTop: prefix('position.top', 'top'),
   positionRight: prefix('position.right', 'right'),
   positionBottom: prefix('position.bottom', 'bottom'),
@@ -270,9 +283,10 @@ export default Component.extend({
 
   // Flex
   flexAlignClass: prefix('flexAlign', 'items'),
-  flexJusitfyClass: prefix('flexJustify', 'justify'),
+  flexJustifyClass: prefix('flexJustify', 'justify'),
   flexDirClass: prefix('flexDir', 'flex'),
   flexWrapClass: prefix('flexWrap', 'flex'),
+  flexClass: prefix('flex', 'flex', { dictionary: FLEX_SIZE_VALS }),
 
   // Collected classes
   allClasses: concat(
@@ -300,9 +314,10 @@ export default Component.extend({
     'marginClasses',
     'paddingClasses',
     'flexAlignClass',
-    'flexJusitfyClass',
+    'flexJustifyClass',
     'flexDirClass',
     'flexWrapClass',
+    'flexClass',
   ),
 
   // Lifecycle
@@ -344,5 +359,6 @@ export default Component.extend({
     checkDictionary(this.flexJustify, FLEX_JUSTIFICATIONS, '@flexJustify', 'Box');
     checkDictionary(this.flexDir, FLEX_DIRECTIONS, '@flexDir', 'Box');
     checkDictionary(this.flexWrap, FLEX_WRAPS, '@flexWrap', 'Box');
+    checkDictionary(this.flex, FLEX_SIZES, '@flex', 'Box');
   },
 });

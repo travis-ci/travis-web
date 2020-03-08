@@ -63,6 +63,11 @@ module.exports = function () {
           { removeTitle: false },
           { removeDesc: false },
           {
+            removeUnknownsAndDefaults: {
+              unknownContent: false,
+            }
+          },
+          {
             inlineStyles: {
               onlyMatchedOnce: false,
               removeMatchedSelectors: true
