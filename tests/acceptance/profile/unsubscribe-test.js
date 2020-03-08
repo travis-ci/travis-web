@@ -22,7 +22,8 @@ module('Acceptance | profile/unsubscribe', function (hooks) {
       this.repo = this.server.create('repository', {
         owner: {
           login: 'some-user'
-        }
+        },
+        owner_name: 'some-user'
       });
       await unsubscribePage.visit({ repository: '2' });
     });
@@ -48,7 +49,8 @@ module('Acceptance | profile/unsubscribe', function (hooks) {
           email_subscribed: true,
           owner: {
             login: this.user.login
-          }
+          },
+          owner_name: this.user.login
         });
         await unsubscribePage.visit({ repository: this.repo.id });
       });
@@ -90,7 +92,8 @@ module('Acceptance | profile/unsubscribe', function (hooks) {
           email_subscribed: false,
           owner: {
             login: this.user.login
-          }
+          },
+          owner_name: this.user.login
         });
         await unsubscribePage.visit({ repository: this.repo.id });
       });
