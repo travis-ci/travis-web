@@ -1,4 +1,6 @@
-{{#if this.showPlansSelector}}
+{{#if this.account.isFetchPlansRunning}}
+  <LoadingIndicator/>
+{{else if this.showPlansSelector}}
   <section class='billing-select-plan'>
     <TravisForm @onSubmit={{perform this.save}} as |form|>
       <h3 data-test-billing-info-title>
