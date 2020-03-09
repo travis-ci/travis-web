@@ -42,7 +42,7 @@
   {{/unless}}
   <ul class="jobs-list">
     {{#each this.filteredJobs as |job|}}
-      <JobsItem @job={{job}} @repo={{this.repo}} />
+      <JobsItem @job={{job}} @build={{this.build}} @repo={{this.repo}} />
     {{/each}}
   </ul>
   {{#if this.stageAllowFailuresText}}

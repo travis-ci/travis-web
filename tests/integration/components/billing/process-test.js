@@ -74,7 +74,6 @@ module('Integration | Component | billing-process', function (hooks) {
     await render(hbs`
     <Billing::Process 
       @account={{account}}
-      @plans={{plans}}
     />`);
 
     assert.dom('p').hasText("You don't have permission to create a subscription");
