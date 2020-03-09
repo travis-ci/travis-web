@@ -1,7 +1,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { and, empty } from '@ember/object/computed';
-import { A } from '@ember/array';
 
 export default Component.extend({
   tagName: '',
@@ -9,16 +8,13 @@ export default Component.extend({
   dynamicQuery: null,
   liveItems: null,
 
-  items: computed('liveItems.[]', 'dynamicQuery.[]', function () {
+  items: computed('liveItems', 'dynamicQuery', function () {
     const { liveItems, dynamicQuery } = this;
-    const items = A();
 
     if (liveItems)
-      liveItems.forEach(i => items.pushObject(i));
+      return liveItems;
     else
-      dynamicQuery.forEach(i => items.pushObject(i));
-
-    return items;
+      return dynamicQuery;
   }),
   isItemsEmpty: empty('items'),
   isNoneFound: and('dynamicQuery.isNotLoading', 'isItemsEmpty'),
