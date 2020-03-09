@@ -89,7 +89,7 @@ module('RepositoryStatusToggleComponent', function (hooks) {
     assert.dom('.switch').findElement().click();
     settled().then(() => {
       assert.dom('.repositories-error').hasText(
-        'An error happened when we tried to alter settings on GitHub. It may be caused by API restrictions, please review and add your authorized Organizations.'
+        'An error happened when we tried to alter settings on GitHub.'
       );
     });
   });
