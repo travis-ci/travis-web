@@ -309,7 +309,7 @@
   }
 }
 
-.request-configs-button-submit {
+.request-configs-button-trigger-build {
   @include colorSVG($oxide-blue);
 
   width: 100px;
@@ -356,7 +356,7 @@
   }
 }
 
-.closed .request-configs-button-submit {
+.closed .request-configs-button-trigger-build {
   @include travisBorder;
   background-color: white !important;
   color: $asphalt-grey;

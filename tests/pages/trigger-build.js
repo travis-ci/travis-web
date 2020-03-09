@@ -39,5 +39,5 @@ export default create({
 
   writeConfigFormMessage: fillable('[data-test-build-config-form] input'),
   writeConfigFormConfig: fillable('[data-test-build-config-form] textarea'),
-  clickConfigFormSubmit: clickable('[data-test-request-configs-submit]'),
+  clickConfigFormSubmit: clickable('[data-test-request-configs-trigger-build]'),
 });
