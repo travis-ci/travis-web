@@ -20,6 +20,8 @@ module('Acceptance | show repo page', function (hooks) {
       owner: {
         login: 'org-login'
       },
+      vcs_name: 'repository-name',
+      owner_name: 'org-login'
     });
 
     let branch = repo.createBranch({
