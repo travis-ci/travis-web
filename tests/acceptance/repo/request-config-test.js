@@ -111,6 +111,7 @@ module('Acceptance | repo/request configs', function (hooks) {
   test('request configs view', async function (assert) {
     enableFeature('show-new-config-view');
     await visit(this.TEST_TARGETS.URL);
+    await click(this.TEST_TARGETS.CONFIGS_SUBMIT_BUTTON);
 
     percySnapshot(assert);
     assert.dom(this.TEST_TARGETS.CANCEL_BUTTON).exists();
@@ -127,6 +128,7 @@ module('Acceptance | repo/request configs', function (hooks) {
   test('click on cancel button', async function (assert) {
     enableFeature('show-new-config-view');
     await visit(this.TEST_TARGETS.URL);
+    await click(this.TEST_TARGETS.CONFIGS_SUBMIT_BUTTON);
 
     await click(this.TEST_TARGETS.CANCEL_BUTTON);
 
@@ -141,6 +143,7 @@ module('Acceptance | repo/request configs', function (hooks) {
   test('customize config', async function (assert) {
     enableFeature('show-new-config-view');
     await visit(this.TEST_TARGETS.URL);
+    await click(this.TEST_TARGETS.CONFIGS_SUBMIT_BUTTON);
 
     await click(this.TEST_TARGETS.CUSTOMIZE_BUTTON);
 
@@ -150,7 +153,7 @@ module('Acceptance | repo/request configs', function (hooks) {
     await fillIn(this.TEST_TARGETS.BUILD_CONFIG_FORM_MESSAGE, 'This is a demo build'),
     await fillIn(this.TEST_TARGETS.BUILD_CONFIG_FORM_SCRIPT, 'script: echo "Hello World"');
 
-    click(this.TEST_TARGETS.CONFIGS_SUBMIT_BUTTON);
+    await click(this.TEST_TARGETS.CONFIGS_SUBMIT_BUTTON);
     percySnapshot(assert);
 
     assert.ok(this.TEST_TARGETS.BUILD_CONFIG_FORM, 'config form is hidden again');
@@ -159,6 +162,7 @@ module('Acceptance | repo/request configs', function (hooks) {
   test('customize invalid config', async function (assert) {
     enableFeature('show-new-config-view');
     await visit(this.TEST_TARGETS.URL);
+    await click(this.TEST_TARGETS.CONFIGS_SUBMIT_BUTTON);
 
     await click(this.TEST_TARGETS.CUSTOMIZE_BUTTON);
 
@@ -177,6 +181,7 @@ module('Acceptance | repo/request configs', function (hooks) {
   test('preview config', async function (assert) {
     enableFeature('show-new-config-view');
     await visit(this.TEST_TARGETS.URL);
+    await click(this.TEST_TARGETS.CONFIGS_SUBMIT_BUTTON);
 
     await click(this.TEST_TARGETS.PREVIEW_BUTTON);
 
