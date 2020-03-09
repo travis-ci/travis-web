@@ -22,6 +22,7 @@ export default Component.extend({
     set(key, val) { return typeof val === 'string' ? [val] : val; },
   }),
 
+  // Could be query rather than paginated?
   fetchBuilds({ page }) {
     const { eventTypes, repoId, store } = this;
     const offset = (page - 1) * limit;
