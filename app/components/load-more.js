@@ -8,7 +8,6 @@ export default Component.extend({
 
   dynamicQuery: null,
   liveItems: null,
-  missingNotice: '',
 
   items: computed('liveItems.[]', 'dynamicQuery.[]', function () {
     const { liveItems, dynamicQuery } = this;

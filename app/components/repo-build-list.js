@@ -14,6 +14,7 @@ export default Component.extend({
   store: service(),
 
   repoId: null,
+  missingNotice: 'No builds for this repository',
 
   sortProps: computed(() => SORT_PROPS),
   eventTypes: computed({
@@ -32,7 +33,7 @@ export default Component.extend({
     }, { live: false });
   },
 
-  loader: dynamicQuery(function* ({ page = 1 }) {
+  buildsLoader: dynamicQuery(function* ({ page = 1 }) {
     return yield this.fetchBuilds({ page, eventType: 'pull_request' });
   }, {
     limitPagination: true,

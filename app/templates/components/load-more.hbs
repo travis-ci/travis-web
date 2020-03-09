@@ -1,15 +1,5 @@
 <div>
-  {{!-- If missing notice text provided, automatically show/hide MissingNotice and yield --}}
-  {{#if this.missingNotice}}
-    {{#if this.isNoneFound}}
-      <MissingNotice @title={{this.missingNotice}} />
-    {{else}}
-      {{yield this}}
-    {{/if}}
-  {{!-- Otherwise, just yield and let them handle it if they want --}}
-  {{else}}
-    {{yield this}}
-  {{/if}}
+  {{yield this}}
   <div>
     {{#if this.dynamicQuery.isLoading}}
       <LoadingIndicator />
