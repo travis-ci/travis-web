@@ -27,7 +27,7 @@
   {{else}}
     <LinkTo
       @route="settings"
-      @models={{array this.repository.provider this.repository.owner.login this.repository.name}}
+      @models={{array this.repository.provider this.repository.ownerName this.repository.vcsName}}
       @tagName="button"
       @title="Go to Travis CI repository settings"
       class="button profile-settings"
