@@ -15,7 +15,8 @@ module('Integration | Component | branch row', function (hooks) {
       repository: {
         id: 15038,
         name: 'php-test-staging',
-        slug: 'travis-repos/php-test-staging'
+        slug: 'travis-repos/php-test-staging',
+        vcs_name: 'php-test-staging'
       },
       default_branch: true,
       exists_on_github: true,

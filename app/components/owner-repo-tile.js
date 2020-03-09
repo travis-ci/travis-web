@@ -6,6 +6,11 @@ export default Component.extend({
   classNames: ['owner-tile', 'rows', 'rows--owner', 'fade-out'],
   classNameBindings: ['repo.defaultBranch.lastBuild.state'],
 
+  repoName: computed('repo.slug', function () {
+    let slug = this.get('repo.slug');
+    return slug.split(/\//)[1];
+  }),
+
   isAnimating: computed('repo.defaultBranch.lastBuild.state', function () {
     let state = this.get('repo.defaultBranch.lastBuild.state');
     const animationStates = ['received', 'queued', 'started', 'booting'];

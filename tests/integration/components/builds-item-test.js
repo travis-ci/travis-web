@@ -26,7 +26,10 @@ module('Integration | Component | builds item', function (hooks) {
         url: 'a-url'
       },
       repo: {
-        slug: 'foo/bar'
+        slug: 'foo/bar',
+        name: 'bar',
+        vcs_name: 'bar',
+        owner_name: 'foo'
       }
     };
     this.build = build;

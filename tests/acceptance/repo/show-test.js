@@ -49,10 +49,12 @@ module('Acceptance | show repo page', function (hooks) {
 
     let otherRepository = this.server.create('repository', {
       name: 'other-repository',
+      vcs_name: 'other-repository',
       slug: 'org-login/other-repository',
       owner: {
         login: 'user-login'
       },
+      owner_name: 'user-login'
     });
 
     let otherBranch = otherRepository.createBranch({
