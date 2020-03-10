@@ -22,16 +22,15 @@ export default Component.extend({
     set(key, val) { return typeof val === 'string' ? [val] : val; },
   }),
 
-  // Could be query rather than paginated?
   fetchBuilds({ page }) {
     const { eventTypes, repoId, store } = this;
     const offset = (page - 1) * limit;
 
-    return store.paginated('build', {
+    return store.query('build', {
       repository_id: repoId,
       event_type: eventTypes,
       limit, offset
-    }, { live: false });
+    });
   },
 
   buildsLoader: dynamicQuery(function* ({ page = 1 }) {
