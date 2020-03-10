@@ -88,7 +88,7 @@ module('RepositoryStatusToggleComponent', function (hooks) {
     await render(hbs`{{repository-status-toggle repository=repository}}`);
     assert.dom('.switch').findElement().click();
     settled().then(() => {
-      assert.dom('.repositories-error').hasText(
+      assert.dom('.repositories-error').includesText(
         'An error happened when we tried to alter settings on GitHub.'
       );
     });
