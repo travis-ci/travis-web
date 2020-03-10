@@ -36,7 +36,6 @@ export default Component.extend({
   buildsLoader: dynamicQuery(function* ({ page = 1 }) {
     return yield this.fetchBuilds({ page });
   }, {
-    appendResults: true,
     limitPagination: true,
     limit,
   }),
