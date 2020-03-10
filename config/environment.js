@@ -25,8 +25,7 @@ const {
   TRAVIS_COMMIT,
   SOURCE_VERSION,
   DEPLOY_TARGET,
-  YML_ENDPOINT,
-  YML_AUTH,
+  YML_TOKEN,
 } = process.env;
 
 module.exports = function (environment) {
@@ -57,7 +56,6 @@ module.exports = function (environment) {
 
     // defaults for running travis-web
     apiEndpoint: 'https://api.travis-ci.org',
-    ymlEndpoint: 'https://yml.travis-ci.org',
     pusher: {
       key: '5df8ac576dcccf4fd076',
       host: 'ws.pusherapp.com',
@@ -262,7 +260,6 @@ module.exports = function (environment) {
       //       we could just remove it from ruby process and rely
       //       on things set here, but I haven't tested that yet.
       ENV.apiEndpoint = 'https://api.travis-ci.com';
-      ENV.ymlEndpoint = 'https://config.travis-ci.com',
       ENV.pusher.key = '59236bc0716a551eab40';
       ENV.pusher.channelPrefix = 'private-';
       ENV.pagesEndpoint = 'https://travis-ci.com/account/subscription';
@@ -282,8 +279,8 @@ module.exports = function (environment) {
       }
     }
 
-    if (YML_AUTH) {
-      ENV.ymlAuth = YML_AUTH || 'Basic eDpqZm5DcWJKbGJ2eFpsWDQwdUUwREtn';
+    if (YML_TOKEN) {
+      ENV.ymlToken = YML_TOKEN || 'secret';
     }
 
     if (API_ENDPOINT) {
@@ -297,10 +294,6 @@ module.exports = function (environment) {
         ENV.pusher.key = '87d0723b25c51e36def8';
         ENV.billingEndpoint = 'https://staging.travis-ci.com';
       }
-    }
-
-    if (YML_ENDPOINT) {
-      ENV.ymlEndpoint = YML_ENDPOINT;
     }
 
     if (BILLING_ENDPOINT) {
@@ -392,7 +385,6 @@ module.exports = function (environment) {
     ENV.statusPageStatusUrl = undefined;
 
     ENV.billingEndpoint = 'https://travis-ci.com';
-    ENV.ymlEndpoint = YML_ENDPOINT || 'https://yml-staging.travis-ci.org';
     ENV.apiEndpoint = '';
     ENV.marketplaceEndpoint = 'https://github.com/marketplace/travis-ci/';
   }

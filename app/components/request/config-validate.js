@@ -2,7 +2,6 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { sort, gt, and, reads } from '@ember/object/computed';
 import countBy from 'travis/utils/count-by';
-import { inject as service } from '@ember/service';
 import { pluralize } from 'ember-inflector';
 
 // a lot of this is duplicated from request-messages-list
@@ -25,8 +24,6 @@ export default Component.extend({
   tagName: 'div',
   className: 'config-validate',
   classNameBindings: ['expanded'],
-
-  yml: service(),
 
   expanded: false,
   initialConfig: true,

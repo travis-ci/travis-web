@@ -9,19 +9,19 @@ export default Component.extend({
 
   yml: service(),
 
+  repo: reads('request.repo'),
   rawConfigs: or('yml.rawConfigs', 'request.uniqRawConfigs'),
+  requestConfig: reads('yml.requestConfig'),
+  jobConfigs: reads('yml.jobConfigs'),
   messages: reads('yml.messages'),
   loading: reads('yml.loading'),
-  matrix: reads('yml.matrix'),
-  merged: reads('yml.config'),
-  repo: reads('request.repo'),
 
-  formattedConfig: computed('merged', function () {
-    return JSON.stringify(this.merged, null, 2);
+  formattedRequestConfig: computed('requestConfig', function () {
+    return JSON.stringify(this.requestConfig, null, 2);
   }),
 
-  formattedMatrix: computed('matrix', function () {
-    return JSON.stringify(this.matrix, null, 2);
+  formattedJobConfigs: computed('jobConfigs', function () {
+    return JSON.stringify(this.jobConfigs, null, 2);
   }),
 
   getConfigsData() {
@@ -39,7 +39,8 @@ export default Component.extend({
   },
 
   didInsertElement() {
+    let id = this.get('repo.id');
     let data = this.getConfigsData();
-    this.yml.loadConfigs.perform(data);
+    this.yml.loadConfigs.perform(id, data);
   },
 });

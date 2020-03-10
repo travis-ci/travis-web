@@ -91,8 +91,9 @@ export default Component.extend(TriggerBuild, WithConfigValidation, {
 
   loadConfigs(debounce) {
     if (this.status !== 'closed' && this.status !== 'open') {
+      let id = this.get('repo.id');
       let data = this.getConfigsData();
-      this.yml.loadConfigs.perform(data, debounce);
+      this.yml.loadConfigs.perform(id, data, debounce);
     }
   },
 

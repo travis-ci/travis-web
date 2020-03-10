@@ -6,23 +6,24 @@ import config from 'travis/config/environment';
 
 export default Service.extend({
   ajax: service(),
+  auth: service(),
   store: service(),
 
   loading: reads('loadConfigs.isRunning'),
   loadConfigsResult: reads('loadConfigs.last.value'),
   rawConfigs: reads('loadConfigsResult.rawConfigs'),
-  matrix: reads('loadConfigsResult.matrix'),
-  config: reads('loadConfigsResult.config'),
+  requestConfig: reads('loadConfigsResult.requestConfig'),
+  jobConfigs: reads('loadConfigsResult.jobConfigs'),
   errorMessages: computed(() => []),
   messages: or('loadConfigsResult.messages', 'errorMessages'),
 
-  loadConfigs: task(function* (data, debounce) {
+  loadConfigs: task(function* (id, data, debounce) {
     if (debounce) {
       const { searchDebounceRate } = config.intervals;
       yield timeout(searchDebounceRate);
     }
     try {
-      return yield this.store.queryRecord('build-config', { data });
+      return yield this.store.queryRecord('request-config', { id: id, data });
     } catch (e) {
       this.handleLoadConfigError(e);
     }
@@ -34,39 +35,5 @@ export default Service.extend({
         this.set('errorMessages', [{ level: 'error', code: e.error_type, args: { message: e.error_message } }]);
       });
     }
-  },
-
-  parse(configs) {
-    return this.request('/parse', 'POST', {
-      data: this.normalize(configs),
-      contentType: 'application/vnd.travis-ci.configs+json'
-    });
-  },
-
-  expand(config) {
-    return this.request('/expand', 'POST', {
-      data: { config: config }
-    });
-  },
-
-  request(url, method = 'GET', options = {}) {
-    options.host = config.ymlEndpoint;
-    options.headers = this.headers(options);
-    return this.ajax.request(url, method, options);
-  },
-
-  headers(options = {}) {
-    const { headers = {} } = options;
-    headers['Authorization'] = config.ymlAuth;
-    return headers;
-  },
-
-  normalize(configs) {
-    return configs.map(config => {
-      if (config.source == 'api') {
-        config.config = config.config.replace(/\t/gm, '  ');
-      }
-      return config;
-    });
   },
 });
