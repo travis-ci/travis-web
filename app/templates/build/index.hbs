@@ -12,10 +12,15 @@
     {{else}}
       <JobsList
         @jobs={{build.requiredJobs}}
+        @build={{build}}
         @repo={{build.repo}}
         @required={{true}}
       />
-      <JobsList @jobs={{build.allowedFailureJobs}} @repo={{build.repo}} />
+      <JobsList
+        @jobs={{build.allowedFailureJobs}}
+        @build={{build}}
+        @repo={{build.repo}}
+      />
     {{/if}}
   {{/if}}
 {{/let}}
