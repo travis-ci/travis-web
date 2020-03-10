@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { reads, equal, not, and } from '@ember/object/computed';
+import { reads, equal, and } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 
 import moment from 'moment';
@@ -18,11 +18,6 @@ export default Component.extend({
   jobConfig: reads('job.config'),
   dist: reads('jobConfig.dist'),
   language: reads('jobConfig.language'),
-
-  isPHPConfig: reads('jobConfig.php'),
-  isNotPHPConfig: not('isPHPConfig'),
-  isPHPLanguage: equal('language', 'php'),
-  isPHPDefault: and('isPHPLanguage', 'isNotPHPConfig'),
 
   isPreciseDist: equal('dist', 'precise'),
   isTrustyDist: equal('dist', 'trusty'),
