@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { reads, equal, and } from '@ember/object/computed';
+import { reads, equal, and, not } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 
 import moment from 'moment';
@@ -22,7 +22,8 @@ export default Component.extend({
   isPreciseDist: equal('dist', 'precise'),
   isTrustyDist: equal('dist', 'trusty'),
   isAndroidLanguage: equal('language', 'android'),
-  isPreciseEOL: and('isGceBuild', 'isPreciseDist', 'isAndroidLanguage'),
+  isNotAndroidLanguage: not('isAndroidLanguage'),
+  isPreciseEOL: and('isGceBuild', 'isPreciseDist', 'isNotAndroidLanguage'),
 
   isWindows: equal('jobConfig.os', 'windows'),
 
