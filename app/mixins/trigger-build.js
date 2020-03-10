@@ -13,8 +13,8 @@ export default Mixin.create({
 
     if (data) {
       let requestId = data.request.id;
-      let { delay } = config.intervals;
-      yield timeout(delay);
+      let { searchDebounceRate } = config.intervals;
+      yield timeout(searchDebounceRate);
       yield this.showRequestStatus.perform(this.get('repo.id'), requestId);
     }
   }),

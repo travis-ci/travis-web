@@ -96,9 +96,6 @@ export default Component.extend(TriggerBuild, WithConfigValidation, {
     }
   },
 
-  // shouldn't these actually be actions, and shouldn't the template
-  // use onclick={{action "triggerBuild"}} rather than
-  // onclick={{action this.onTriggerBuild}}
   onTriggerBuild(e) {
     e.toElement.blur();
     if (this.status == 'closed') {
@@ -154,7 +151,7 @@ export default Component.extend(TriggerBuild, WithConfigValidation, {
       this.set('customized', true);
       this.set(key, value);
       if (key === 'config') {
-        this.loadConfigs({ milliseconds: 500 });
+        this.loadConfigs(true);
       } else {
         this.loadConfigs();
       }
