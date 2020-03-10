@@ -25,7 +25,8 @@ const {
   TRAVIS_COMMIT,
   SOURCE_VERSION,
   DEPLOY_TARGET,
-  YML_ENDPOINT
+  YML_ENDPOINT,
+  YML_AUTH,
 } = process.env;
 
 module.exports = function (environment) {
@@ -279,6 +280,10 @@ module.exports = function (environment) {
           migrationRepositoryCountLimit: 50
         };
       }
+    }
+
+    if (YML_AUTH) {
+      ENV.ymlAuth = YML_AUTH || 'Basic eDpqZm5DcWJKbGJ2eFpsWDQwdUUwREtn';
     }
 
     if (API_ENDPOINT) {

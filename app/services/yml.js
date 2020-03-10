@@ -17,8 +17,9 @@ export default Service.extend({
   messages: or('loadConfigsResult.messages', 'errorMessages'),
 
   loadConfigs: task(function* (data, debounce) {
-    if (debounce && debounce.milliseconds) {
-      yield timeout(debounce.milliseconds);
+    if (debounce) {
+      const { searchDebounceRate } = config.intervals;
+      yield timeout(searchDebounceRate);
     }
     try {
       return yield this.store.queryRecord('build-config', { data });
@@ -56,7 +57,7 @@ export default Service.extend({
 
   headers(options = {}) {
     const { headers = {} } = options;
-    headers['Authorization'] = 'Basic eDpqZm5DcWJKbGJ2eFpsWDQwdUUwREtn'; // TODO
+    headers['Authorization'] = config.ymlAuth;
     return headers;
   },
 

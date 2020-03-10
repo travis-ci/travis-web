@@ -8,7 +8,7 @@ export default V3Adapter.extend({
   ajax: service(),
 
   getOptions(data) {
-    return { host, data, headers: { Authorization: 'Basic eDpqZm5DcWJKbGJ2eFpsWDQwdUUwREtn' }};
+    return { host, data, headers: { Authorization: config.ymlAuth }};
   },
 
   queryRecord(store, type, { data }) {
