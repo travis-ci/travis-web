@@ -5,11 +5,11 @@
         <RepositoryVisibilityIcon @repository={{this.repo}} />
       </div>
       <h1 data-test-repo-header-title class="inline-block vertical-align">
-        <LinkTo @route="owner" @models={{array this.repo.provider this.repo.owner.login}}>
+        <LinkTo @route="owner" @models={{array this.repo.provider this.repo.ownerName}} >
           {{this.repo.owner.login}}
         </LinkTo>
         /
-        <LinkTo @route="repo" @model={{this.repo}}>
+        <LinkTo @route="repo" @models={{array this.repo.provider this.repo.ownerName this.repo.vcsName}} >
           {{this.repo.name}}
         </LinkTo>
       </h1>

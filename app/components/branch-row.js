@@ -8,6 +8,7 @@ import { inject as service } from '@ember/service';
 export default Component.extend({
   api: service(),
   auth: service(),
+  store: service(),
   router: service(),
   permissions: service(),
   externalLinks: service(),
@@ -24,6 +25,15 @@ export default Component.extend({
     const vcsType = this.get('vcsType');
     const commit = this.get('branch.last_build.commit.sha');
     return this.externalLinks.commitUrl(vcsType, { owner, repo, commit });
+  }),
+
+  vcsType: computed('branch.repository.id', function () {
+    const repository = this.store.peekRecord('repo', this.get('branch.repository.id'));
+    return repository.vcsType;
+  }),
+
+  provider: computed('vcsType', function () {
+    return this.get('vcsType') && this.get('vcsType').toLowerCase().replace('repository', '');
   }),
 
   rawCreatedBy: alias('branch.last_build.created_by'),

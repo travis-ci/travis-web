@@ -8,7 +8,7 @@ module('Integration | Component | build header', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  const repo = { slug: 'travis-ci/travis-web' };
+  const repo = { slug: 'travis-ci/travis-web', name: 'travis-web', vcsName: 'travis-web', ownerName: 'travis-ci' };
 
   test('render api build', async function (assert) {
     let commit = {

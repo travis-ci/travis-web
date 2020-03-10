@@ -1,7 +1,7 @@
 {{#if this.isLoaded}}
   <ul class="build-list">
     {{#each this.builds as |build|}}
-      <BuildsItem @build={{build}} />
+      <BuildsItem @build={{build}} @vcsType={{this.repo.vcsType}} />
     {{else}}
       <MissingNotice @title="No {{vcs-vocab this.repo.vcsType 'pullRequest' lower=true}} builds for this repository" />
     {{/each}}

@@ -33,7 +33,9 @@ const Repo = VcsEntity.extend({
   githubLanguage: attr(),
   active: attr(),
   owner: attr(),
+  ownerName: attr('string'), // owner_name of repository normalized by provider
   name: attr('string'),
+  vcsName: attr('string'), // name of repository normalized by provider
   starred: attr('boolean'),
   active_on_org: attr('boolean'),
   emailSubscribed: attr('boolean'),

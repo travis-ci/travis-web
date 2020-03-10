@@ -1771,6 +1771,7 @@ export default {
       "attributes": [
         "id",
         "name",
+        "vcs_name",
         "slug",
         "description",
         "github_id",
@@ -1778,6 +1779,7 @@ export default {
         "active",
         "private",
         "owner",
+        "owner_name",
         "default_branch",
         "starred",
         "managed_by_installation",
@@ -1798,6 +1800,7 @@ export default {
         "standard": [
           "id",
           "name",
+          "vcs_name",
           "slug",
           "description",
           "github_id",
@@ -1805,6 +1808,7 @@ export default {
           "active",
           "private",
           "owner",
+          "owner_name",
           "default_branch",
           "starred",
           "managed_by_installation",

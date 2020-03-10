@@ -10,6 +10,9 @@ module('OwnerRepoTileComponent', function (hooks) {
   test('it renders', async function (assert) {
     const repo = EmberObject.create({
       slug: 'travis-ci/travis-chat',
+      name: 'travis-chat',
+      vcsName: 'travis-chat',
+      ownerName: 'travis-ci',
       active: false,
       'private': false,
       currentBuild: {

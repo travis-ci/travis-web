@@ -89,12 +89,15 @@ module('Acceptance | dashboard/repositories', function (hooks) {
         createdBy: currentUser
       })
     });
+
     this.repository = this.server.create('repository', {
       owner: {
         login: 'travis-ci',
         type: 'organization'
       },
       name: 'travis-web',
+      vcs_name: 'travis-web',
+      owner_name: 'travis-ci',
       currentBuild: build,
       defaultBranch: branch,
     });
@@ -104,7 +107,9 @@ module('Acceptance | dashboard/repositories', function (hooks) {
         type: 'organization'
       },
       name: 'repo-python',
+      vcs_name: 'repo-python',
       currentBuild: build,
+      owner_name: 'travis-repos',
     });
     this.server.create('repository', {
       owner: {
@@ -112,7 +117,9 @@ module('Acceptance | dashboard/repositories', function (hooks) {
         type: 'organization'
       },
       name: 'repo-clojure',
+      vcs_name: 'repo-clojure',
       currentBuild: build,
+      owner_name: 'travis-repos',
       private: true
     });
     this.starredRepo = this.server.create('repository', {
@@ -121,6 +128,8 @@ module('Acceptance | dashboard/repositories', function (hooks) {
         type: 'organization'
       },
       name: 'travis-lol-a-very-long-repository',
+      vcs_name: 'travis-lol-a-very-long-repository',
+      owner_name: 'travis-ci',
       starred: true,
       currentBuild: permissionBuild,
       defaultBranch: permissionBranch,
@@ -218,6 +227,7 @@ module('Acceptance | dashboard/repositories', function (hooks) {
       assert.ok(build.isPassed);
 
       assert.equal(build.owner.text, 'travis-ci');
+
       assert.ok(build.owner.href.endsWith('/travis-ci'));
 
       assert.equal(build.repo.text, 'travis-lol-a-very-long-repository');
