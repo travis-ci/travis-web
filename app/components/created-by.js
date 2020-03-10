@@ -1,5 +1,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
+import { or } from '@ember/object/computed';
 
 export default Component.extend({
   tagName: '',
@@ -16,8 +17,5 @@ export default Component.extend({
     return nameOrLogin && eventType !== 'cron';
   }),
 
-  userProvider: computed('user.provider', 'provider', function () {
-    const userProvider = this.get('user.provider');
-    return userProvider || this.get('provider');
-  })
+  userProvider: or('user.provider', 'provider')
 });
