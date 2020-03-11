@@ -13,22 +13,6 @@
         <code>dist: xenial</code> in your <em>.travis.yml</em>.
       </NoticeBanner>
     {{/if}}
-    {{#if this.isPHPDefault}}
-      <NoticeBanner>
-        This job {{this.conjugatedRun}} using the default <b>PHP</b> version,
-        which was updated to 7.2 on March 12th, 2019.
-        You can explicitly stay on the previous version by specifying
-        <code>php: 5.5</code> in your <em>.travis.yml</em>.
-      </NoticeBanner>
-    {{/if}}
-    {{#if this.isPythonDefault}}
-      <NoticeBanner>
-        This job {{this.conjugatedRun}} using the default <b>Python</b> version,
-        which was updated to 3.6 on April 16th, 2019.
-        You can explicitly stay on the previous version by specifying
-        <code>python: 2.7</code> in your <em>.travis.yml</em>.
-      </NoticeBanner>
-    {{/if}}
   {{/if}}
 {{/unless}}
 {{#if this.isWindows}}
