@@ -2,12 +2,14 @@ import { currentURL, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import { enableFeature } from 'ember-feature-flags/test-support';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | enterprise/navigation', function (hooks) {
   setupApplicationTest(hooks);
+  setupMirage(hooks);
 
   hooks.beforeEach(function () {
-    server.get('/v3/enterprise_license', (schema, response) => {
+    this.server.get('/v3/enterprise_license', (schema, response) => {
       return {
         'license_id': 'ad12345',
         'seats': '30',
@@ -18,11 +20,11 @@ module('Acceptance | enterprise/navigation', function (hooks) {
     });
   });
 
-  test('visiting `/` without being authenticated redirects to `/auth`', async function (assert) {
+  test('visiting `/` without being authenticated redirects to `/signin`', async function (assert) {
     enableFeature('enterpriseVersion');
 
     await visit('/');
 
-    assert.equal(currentURL(), '/auth');
+    assert.equal(currentURL(), '/signin');
   });
 });

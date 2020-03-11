@@ -161,13 +161,60 @@
           </UiKit::Text>
           <UiKit::Text @margin={{hash bottom=6}}>
             We love Open Source and offer a free plan for your projects.
-            You will receive unlimited builds and 3 concurrent jobs for free,
+            You will receive unlimited builds and 5 concurrent jobs for free,
             along with all the other features you've come to love from Travis CI.
           </UiKit::Text>
 
           <UiKit::Button @onClick={{action 'signIn'}} @color='grey' @invert={{true}} data-test-plans-page-oss-button="true">
             Set up your open source project now
           </UiKit::Button>
+        </UiKit::Box>
+      </grid.item>
+    </UiKit::Grid>
+  </UiKit::Box>
+  
+  {{!-- Enterprise section --}}
+  <UiKit::Box @tag='section' @margin={{hash bottom=20}} data-test-plans-page-enterprise-section="true">
+    <UiKit::Grid  @sm={{2}} @align='center' @gap={{4}} @justify='around' as |grid|>
+      <grid.item>
+        <UiKit::Box
+          @maxWidth={{hash base='full' sm='md'}}
+          @padding={{hash y=4}}
+          @textAlign={{hash base='center' sm='left'}}
+        >
+          <UiKit::Text @tag='h2' @leading='xs' @margin={{hash bottom=3}} @size='5xl' @weight='bold'>
+            Travis CI Enterprise
+          </UiKit::Text>
+          <UiKit::Text @margin={{hash bottom=6}}>
+            Our on-premises product is perfect for companies who
+            want to keep using the same features of Travis CI with
+            additional on-site security needs.
+          </UiKit::Text>
+          <UiKit::Text @margin={{hash bottom=6}}>
+            Travis CI Enterprise allows you to scale build infrastructure up and down based on demand. 
+            Whether you have 10 or 1000 developers using it, you'll benefit from our experience 
+            building and operating a continuous integration service at scale.
+          </UiKit::Text>
+          <UiKit::Text @margin={{hash bottom=6}}>
+            Whether you need to run just one build or a thousand builds at the same time, 
+            Travis CI gives you the means to scale up capacity based on demand. 
+            What works best on EC2 is easily possible on your own infrastructure as well.
+          </UiKit::Text>
+
+          <ExternalLinkTo @href='https://enterprise.travis-ci.com/Travis.CI.Enterprise.Information.Sheet.pdf'>
+            <UiKit::Button @color='grey' @invert={{true}} data-test-plans-page-enterprise-button="true">
+              Download the fact sheet
+            </UiKit::Button>
+          </ExternalLinkTo>
+        </UiKit::Box>
+      </grid.item>
+      <grid.item>
+        <UiKit::Box
+          @margin={{hash x='auto'}}
+          @maxWidth='2xs'
+          @padding={{hash base=(hash y=4)}}
+        >
+          <SvgImage @name='travis-enterprise' @width='100%'/>
         </UiKit::Box>
       </grid.item>
     </UiKit::Grid>
@@ -198,43 +245,6 @@
           @referralSource={{this.referralSourceName}}
           @onSuccess={{action 'contactSuccess'}}
         />
-      </grid.item>
-    </UiKit::Grid>
-  </UiKit::Box>
-
-  {{!-- Enterprise section --}}
-  <UiKit::Box @tag='section' @margin={{hash bottom=20}} data-test-plans-page-enterprise-section="true">
-    <UiKit::Grid  @sm={{2}} @align='center' @gap={{4}} @justify='around' as |grid|>
-      <grid.item>
-        <UiKit::Box
-          @margin={{hash x='auto'}}
-          @maxWidth='2xs'
-          @padding={{hash base=(hash y=4)}}
-        >
-          <SvgImage @name='travis-enterprise' @width='100%'/>
-        </UiKit::Box>
-      </grid.item>
-      <grid.item>
-        <UiKit::Box
-          @maxWidth={{hash base='full' sm='md'}}
-          @padding={{hash y=4}}
-          @textAlign={{hash base='center' sm='left'}}
-        >
-          <UiKit::Text @tag='h2' @leading='xs' @margin={{hash bottom=3}} @size='5xl' @weight='bold'>
-            Travis CI Enterprise
-          </UiKit::Text>
-          <UiKit::Text @margin={{hash bottom=6}}>
-            Our on-premises product is perfect for companies who
-            want to keep using the same features of Travis CI with
-            additional on-site security needs.
-          </UiKit::Text>
-
-          <ExternalLinkTo @href={{this.enterpriseUrl}}>
-            <UiKit::Button @color='grey' @invert={{true}} data-test-plans-page-enterprise-button="true">
-              Learn more about Travis CI Enterprise
-            </UiKit::Button>
-          </ExternalLinkTo>
-        </UiKit::Box>
       </grid.item>
     </UiKit::Grid>
   </UiKit::Box>

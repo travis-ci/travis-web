@@ -3,29 +3,31 @@ import { setupApplicationTest } from 'travis/tests/helpers/setup-application-tes
 import jobPage from 'travis/tests/pages/job';
 import topPage from 'travis/tests/pages/top';
 import signInUser from 'travis/tests/helpers/sign-in-user';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | jobs/cancel', function (hooks) {
   setupApplicationTest(hooks);
+  setupMirage(hooks);
 
   hooks.beforeEach(function () {
-    const currentUser = server.create('user');
+    const currentUser = this.server.create('user');
     signInUser(currentUser);
   });
 
   test('restarting job', async function (assert) {
-    let repo =  server.create('repository', { slug: 'travis-ci/travis-web' });
-    server.create('branch', {});
+    let repo =  this.server.create('repository', { slug: 'travis-ci/travis-web' });
+    this.server.create('branch', {});
 
-    let  gitUser = server.create('git-user', { name: 'Mr T' });
-    let commit = server.create('commit', { author: gitUser, committer: gitUser, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
-    let build = server.create('build', { repository: repo, state: 'running', commit });
-    let job = server.create('job', { number: '1234.1', repository: repo, state: 'running', commit, build });
+    let  gitUser = this.server.create('git-user', { name: 'Mr T' });
+    let commit = this.server.create('commit', { author: gitUser, committer: gitUser, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
+    let build = this.server.create('build', { repository: repo, state: 'running', commit });
+    let job = this.server.create('job', { number: '1234.1', repository: repo, state: 'running', commit, build });
     commit.job = job;
 
     job.save();
     commit.save();
 
-    server.create('log', { id: job.id });
+    this.server.create('log', { id: job.id });
 
     await jobPage
       .visit()

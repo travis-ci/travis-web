@@ -3,18 +3,26 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Integration | Component | branch row', function (hooks) {
   setupRenderingTest(hooks);
+  setupMirage(hooks);
 
   test('it renders data correctly', async function (assert) {
+    const repoObj = {
+      id: 15038,
+      name: 'php-test-staging',
+      slug: 'travis-repos/php-test-staging',
+      vcs_name: 'php-test-staging',
+      owner_name: 'travis-repos',
+      vcs_type: 'GithubRepository'
+    };
+    let store = this.owner.lookup('service:store');
+    store.push({ data: { id: repoObj.id, type: 'repo', attributes: repoObj } });
     const branch = EmberObject.create({
       name: 'master',
-      repository: {
-        id: 15038,
-        name: 'php-test-staging',
-        slug: 'travis-repos/php-test-staging'
-      },
+      repository: repoObj,
       default_branch: true,
       exists_on_github: true,
       last_build: {

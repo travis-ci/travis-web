@@ -1,0 +1,24 @@
+{{#if this.svg}}
+  <UiKit::Box
+    @display={{this.display}}
+    @margin={{this.margin}}
+    @height={{this.height}}
+    @width={{this.width}}
+  >
+    <SvgImage
+      @name={{@svg}}
+      @alt={{@alt}}
+      @width='100%'
+    />
+  </UiKit::Box>
+{{else}}
+  <UiKit::Box
+    @tag='img'
+    @display={{this.display}}
+    @margin={{this.margin}}
+    @height={{this.height}}
+    @width={{this.width}}
+    alt={{this.alt}}
+    src={{this.path}}
+  />
+{{/if}}

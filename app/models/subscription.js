@@ -1,5 +1,6 @@
 import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
 import { computed } from '@ember/object';
+import { typeOf } from '@ember/utils';
 import { and, equal, or, reads } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
@@ -18,12 +19,14 @@ export default Model.extend({
   source: attr(),
   status: attr(),
   validTo: attr(),
+  createdAt: attr('date'),
   permissions: attr(),
   organizationId: attr(),
   coupon: attr(),
   clientSecret: attr(),
   paymentIntent: attr(),
 
+  discount: belongsTo('discount', { async: false }),
   billingInfo: belongsTo('billing-info', { async: false }),
   creditCardInfo: belongsTo('credit-card-info', { async: false }),
   invoices: hasMany('invoice'),
@@ -53,18 +56,26 @@ export default Model.extend({
 
   discountByAmount: computed('validateCouponResult.amountOff', 'planPrice', function () {
     const { amountOff } = this.validateCouponResult || {};
-    return amountOff && this.planPrice && this.planPrice - Math.floor(amountOff / 100);
+    return amountOff && this.planPrice && Math.max(0, this.planPrice - Math.floor(amountOff / 100));
   }),
 
-  discountByPercentage: computed('validateCouponResult.percentageOff', 'planPrice', function () {
-    const { percentageOff } = this.validateCouponResult || {};
-    if (percentageOff && this.planPrice) {
-      const discountPrice = this.planPrice - (this.planPrice * percentageOff) / 100;
-      return discountPrice.toFixed(2);
+  discountByPercentage: computed('validateCouponResult.percentOff', 'planPrice', function () {
+    const { percentOff } = this.validateCouponResult || {};
+    if (percentOff && this.planPrice) {
+      const discountPrice = Math.max(0, this.planPrice - (this.planPrice * percentOff) / 100);
+      return +discountPrice.toFixed(2);
     }
   }),
 
-  totalPrice: or('discountByAmount', 'discountByPercentage', 'planPrice'),
+  totalPrice: computed('discountByAmount', 'discountByPercentage', 'planPrice', function () {
+    if (typeOf(this.discountByAmount) === 'number' && this.discountByAmount >= 0) {
+      return this.discountByAmount;
+    } else if (typeOf(this.discountByPercentage) === 'number' && this.discountByPercentage >= 0) {
+      return this.discountByPercentage;
+    } else {
+      return this.planPrice;
+    }
+  }),
 
   validateCoupon: task(function* (couponId) {
     return yield this.store.findRecord('coupon', couponId, {

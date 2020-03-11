@@ -5,12 +5,14 @@ import { setupApplicationTest } from 'travis/tests/helpers/setup-application-tes
 import topPage from 'travis/tests/pages/top';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { percySnapshot } from 'ember-percy';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | automatic sign out', function (hooks) {
   setupApplicationTest(hooks);
+  setupMirage(hooks);
 
   hooks.beforeEach(function () {
-    const currentUser = server.create('user');
+    const currentUser = this.server.create('user');
     signInUser(currentUser);
   });
 
@@ -20,7 +22,7 @@ module('Acceptance | automatic sign out', function (hooks) {
     await visitWithAbortedTransition('/account');
 
     assert.equal(topPage.flashMessage.text, "You've been signed out, because your access token has expired.");
-    assert.equal(currentURL(), '/');
+    assert.equal(currentURL(), '/signin');
     percySnapshot(assert);
   });
 });

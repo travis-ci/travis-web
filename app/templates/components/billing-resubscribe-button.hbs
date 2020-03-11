@@ -11,17 +11,4 @@
       Change plan
     </button>
   {{/if}}
-{{else}}
-  {{#if this.subscription.isResubscribable}}
-    <div class='button disabled' data-test-resubscribe-subscription-disabled='true'>
-      Resubscribe to plan
-    </div>
-    <div class='button disabled' data-test-resubscribe-subscription-disabled='true'>
-      Subscribe to different plan
-    </div>
-  {{else}}
-    <div class='button disabled' data-test-change-plan-disabled='true'>
-      Change plan
-    </div>
-  {{/if}}
 {{/if}}

@@ -13,9 +13,11 @@ import jobPage from 'travis/tests/pages/job';
 import getFaviconUri from 'travis/utils/favicon-data-uris';
 
 import config from 'travis/config/environment';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | job/basic layout', function (hooks) {
   setupApplicationTest(hooks);
+  setupMirage(hooks);
 
   hooks.beforeEach(function () {
     const { owner } = getContext();
@@ -23,14 +25,14 @@ module('Acceptance | job/basic layout', function (hooks) {
   });
 
   test('visiting job-view', async function (assert) {
-    let repo = server.create('repository', { slug: 'travis-ci/travis-web' }),
-      branch = server.create('branch', { name: 'acceptance-tests' });
+    let repo = this.server.create('repository', { slug: 'travis-ci/travis-web' }),
+      branch = this.server.create('branch', { name: 'acceptance-tests' });
 
-    let  gitUser = server.create('git-user', { name: 'Mr T' });
-    let commit = server.create('commit', { author: gitUser, committer: gitUser, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
+    let  gitUser = this.server.create('git-user', { name: 'Mr T' });
+    let commit = this.server.create('commit', { author: gitUser, committer: gitUser, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
 
-    let request = server.create('request');
-    server.create('message', {
+    let request = this.server.create('request');
+    this.server.create('message', {
       request,
       level: 'info',
       key: 'group',
@@ -40,19 +42,19 @@ module('Acceptance | job/basic layout', function (hooks) {
       }
     });
 
-    let user = server.create('user', {
+    let user = this.server.create('user', {
       name: 'Mr T',
       avatar_url: '/images/favicon-gray.png'
     });
 
-    let build = server.create('build', { repository: repo, state: 'passed', createdBy: user, commit, branch, request });
-    let job = server.create('job', { number: '1234.1', repository: repo, state: 'passed', build, commit });
+    let build = this.server.create('build', { repository: repo, state: 'passed', createdBy: user, commit, branch, request });
+    let job = this.server.create('job', { number: '1234.1', repository: repo, state: 'passed', build, commit });
     commit.job = job;
 
     job.save();
     commit.save();
 
-    server.create('log', { id: job.id });
+    this.server.create('log', { id: job.id });
 
     await visit('/travis-ci/travis-web/jobs/' + job.id);
     await waitFor('#log > .log-line');
@@ -67,7 +69,7 @@ module('Acceptance | job/basic layout', function (hooks) {
     assert.equal(jobPage.message, 'acceptance-tests This is a message', 'displays message');
     assert.equal(jobPage.state, '#1234.1 passed', 'displays build number');
 
-    assert.equal(jobPage.createdBy.href, '/testuser');
+    assert.equal(jobPage.createdBy.href, '/github/testuser');
     assert.equal(jobPage.createdBy.text, 'Mr T');
     assert.ok(jobPage.createdBy.avatarSrc.startsWith('/images/favicon-gray.png'));
 
@@ -83,14 +85,14 @@ module('Acceptance | job/basic layout', function (hooks) {
   });
 
   test('visiting pull request job-view', async function (assert) {
-    let repo = server.create('repository', { slug: 'travis-ci/travis-web' }),
-      branch = server.create('branch', { name: 'acceptance-tests' });
+    let repo = this.server.create('repository', { slug: 'travis-ci/travis-web' }),
+      branch = this.server.create('branch', { name: 'acceptance-tests' });
 
-    let  gitUser = server.create('git-user', { name: 'Mr T' });
-    let commit = server.create('commit', { author: gitUser, committer: gitUser, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
+    let  gitUser = this.server.create('git-user', { name: 'Mr T' });
+    let commit = this.server.create('commit', { author: gitUser, committer: gitUser, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
 
-    let request = server.create('request', { pull_request_mergeable: 'draft' });
-    server.create('message', {
+    let request = this.server.create('request', { pull_request_mergeable: 'draft' });
+    this.server.create('message', {
       request,
       level: 'info',
       key: 'group',
@@ -100,19 +102,19 @@ module('Acceptance | job/basic layout', function (hooks) {
       }
     });
 
-    let user = server.create('user', {
+    let user = this.server.create('user', {
       name: 'Mr T',
       avatar_url: '/images/favicon-gray.png'
     });
 
-    let build = server.create('build', { repository: repo, state: 'passed', createdBy: user, commit, branch, event_type: 'pull_request', pull_request_number: 1, request });
-    let job = server.create('job', { number: '1234.1', repository: repo, state: 'passed', build, commit });
+    let build = this.server.create('build', { repository: repo, state: 'passed', createdBy: user, commit, branch, event_type: 'pull_request', pull_request_number: 1, request });
+    let job = this.server.create('job', { number: '1234.1', repository: repo, state: 'passed', build, commit });
     commit.job = job;
 
     job.save();
     commit.save();
 
-    server.create('log', { id: job.id });
+    this.server.create('log', { id: job.id });
 
     await visit('/travis-ci/travis-web/jobs/' + job.id);
     await waitFor('#log > .log-line');
@@ -127,7 +129,7 @@ module('Acceptance | job/basic layout', function (hooks) {
     assert.equal(jobPage.badge, 'draft', 'displays badge');
     assert.equal(jobPage.state, '#1234.1 passed', 'displays build number');
 
-    assert.equal(jobPage.createdBy.href, '/testuser');
+    assert.equal(jobPage.createdBy.href, '/github/testuser');
     assert.equal(jobPage.createdBy.text, 'Mr T');
     assert.ok(jobPage.createdBy.avatarSrc.startsWith('/images/favicon-gray.png'));
 
@@ -144,17 +146,17 @@ module('Acceptance | job/basic layout', function (hooks) {
 
 
   test('visiting a job in created(received) state', async function (assert) {
-    let branch = server.create('branch', { name: 'acceptance-tests' });
-    let repo = server.create('repository', { slug: 'travis-ci/travis-web', defaultBranch: branch });
-    let commit = server.create('commit', {
+    let branch = this.server.create('branch', { name: 'acceptance-tests' });
+    let repo = this.server.create('repository', { slug: 'travis-ci/travis-web', defaultBranch: branch });
+    let commit = this.server.create('commit', {
       id: 100,
       sha: 'abcd',
       branch: 'acceptance-tests',
       message: 'This is a message',
     });
 
-    let request = server.create('request');
-    server.create('message', {
+    let request = this.server.create('request');
+    this.server.create('message', {
       request,
       level: 'info',
       key: 'group',
@@ -164,12 +166,12 @@ module('Acceptance | job/basic layout', function (hooks) {
       }
     });
 
-    let user = server.create('user', {
+    let user = this.server.create('user', {
       name: 'Mr T',
       avatar_url: '/images/favicon-gray.png'
     });
 
-    let build = server.create('build', {
+    let build = this.server.create('build', {
       id: 100,
       number: 15,
       repository: repo,
@@ -181,7 +183,7 @@ module('Acceptance | job/basic layout', function (hooks) {
       createdBy: user
     });
 
-    let job = server.create('job', {
+    let job = this.server.create('job', {
       id: 100,
       number: '1234.1',
       repository: repo,
@@ -190,7 +192,7 @@ module('Acceptance | job/basic layout', function (hooks) {
       commit
     });
 
-    server.create('log', { id: job.id });
+    this.server.create('log', { id: job.id });
 
     await visit('/travis-ci/travis-web/jobs/' + job.id);
 
@@ -269,21 +271,21 @@ module('Acceptance | job/basic layout', function (hooks) {
   });
 
   test('visiting a job with a truncated log', async function (assert) {
-    let repo =  server.create('repository', { slug: 'travis-ci/travis-web' });
-    let branch = server.create('branch', { name: 'acceptance-tests' });
+    let repo =  this.server.create('repository', { slug: 'travis-ci/travis-web' });
+    let branch = this.server.create('branch', { name: 'acceptance-tests' });
 
-    let gitAuthor = server.create('git-user', { name: 'Mr T' });
-    let gitCommitter = server.create('git-user', { name: 'Sylvia Rivera' });
-    let commit = server.create('commit', { author: gitAuthor, committer: gitCommitter, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
-    let build = server.create('build', { repository: repo, state: 'passed', commit, branch });
-    let job = server.create('job', { number: '1234.1', repository: repo, state: 'passed', commit, build });
+    let gitAuthor = this.server.create('git-user', { name: 'Mr T' });
+    let gitCommitter = this.server.create('git-user', { name: 'Sylvia Rivera' });
+    let commit = this.server.create('commit', { author: gitAuthor, committer: gitCommitter, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
+    let build = this.server.create('build', { repository: repo, state: 'passed', commit, branch });
+    let job = this.server.create('job', { number: '1234.1', repository: repo, state: 'passed', commit, build });
     commit.job = job;
 
     job.save();
     commit.save();
 
     const longLog = new Array(config.logLimit + 1).join('🤔\n');
-    server.create('log', { id: job.id, content: longLog });
+    this.server.create('log', { id: job.id, content: longLog });
 
     await jobPage.visit();
 
@@ -298,13 +300,13 @@ module('Acceptance | job/basic layout', function (hooks) {
   });
 
   test('visiting a job with a complex log', async function (assert) {
-    let repo =  server.create('repository', { slug: 'travis-ci/travis-web' }),
-      branch = server.create('branch', { name: 'acceptance-tests' });
+    let repo =  this.server.create('repository', { slug: 'travis-ci/travis-web' }),
+      branch = this.server.create('branch', { name: 'acceptance-tests' });
 
-    let  gitUser = server.create('git-user', { name: 'Mr T' });
-    let commit = server.create('commit', { author: gitUser, committer: gitUser, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
-    let build = server.create('build', { repository: repo, state: 'passed', commit, branch });
-    let job = server.create('job', { number: '1234.1', repository: repo, state: 'passed', commit, build });
+    let  gitUser = this.server.create('git-user', { name: 'Mr T' });
+    let commit = this.server.create('commit', { author: gitUser, committer: gitUser, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
+    let build = this.server.create('build', { repository: repo, state: 'passed', commit, branch });
+    let job = this.server.create('job', { number: '1234.1', repository: repo, state: 'passed', commit, build });
     commit.job = job;
 
     await job.save();
@@ -337,8 +339,9 @@ module('Acceptance | job/basic layout', function (hooks) {
   I should not be blank.\r${ESCAPE}[0m
   ${ESCAPE}[31m-}
   ${ESCAPE}(B[m[32m+},
+  { "curl": "sample response" }travis_time:end:454546
   `;
-    server.create('log', { id: job.id, content: complexLog });
+    this.server.create('log', { id: job.id, content: complexLog });
 
     await jobPage.visit();
 
@@ -408,6 +411,7 @@ module('Acceptance | job/basic layout', function (hooks) {
     assert.equal(jobPage.logLines[22].entireLineText, 'I should not be blank.');
 
     assert.equal(jobPage.logLines[24].entireLineText, '+},');
+    assert.equal(jobPage.logLines[25].entireLineText, '{ "curl": "sample response" }');
 
     await jobPage.logFolds[0].toggle();
 
@@ -417,13 +421,13 @@ module('Acceptance | job/basic layout', function (hooks) {
   });
 
   test('visiting a job with fold duration', async function (assert) {
-    let repo =  server.create('repository', { slug: 'travis-ci/travis-web' }),
-      branch = server.create('branch', { name: 'acceptance-tests' });
+    let repo =  this.server.create('repository', { slug: 'travis-ci/travis-web' }),
+      branch = this.server.create('branch', { name: 'acceptance-tests' });
 
-    let  gitUser = server.create('git-user', { name: 'Mr T' });
-    let commit = server.create('commit', { author: gitUser, committer: gitUser, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
-    let build = server.create('build', { repository: repo, state: 'passed', commit, branch });
-    let job = server.create('job', { number: '1234.1', repository: repo, state: 'passed', commit, build });
+    let  gitUser = this.server.create('git-user', { name: 'Mr T' });
+    let commit = this.server.create('commit', { author: gitUser, committer: gitUser, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
+    let build = this.server.create('build', { repository: repo, state: 'passed', commit, branch });
+    let job = this.server.create('job', { number: '1234.1', repository: repo, state: 'passed', commit, build });
     commit.job = job;
 
     job.save();
@@ -437,7 +441,7 @@ module('Acceptance | job/basic layout', function (hooks) {
   travis_time:end:2fde4b10:start=1515663514660495538,finish=1515663517010906954,duration=2350411416
   travis_fold:end:afold
   `;
-    server.create('log', { id: job.id, content: complexLog });
+    this.server.create('log', { id: job.id, content: complexLog });
 
     await jobPage.visit();
 
@@ -455,19 +459,19 @@ module('Acceptance | job/basic layout', function (hooks) {
   test('visiting a job when log-rendering is off', async function (assert) {
     localStorage.setItem('travis.logRendering', false);
 
-    let repo =  server.create('repository', { slug: 'travis-ci/travis-web' }),
-      branch = server.create('branch', { name: 'acceptance-tests' });
+    let repo =  this.server.create('repository', { slug: 'travis-ci/travis-web' }),
+      branch = this.server.create('branch', { name: 'acceptance-tests' });
 
-    let commit = server.create('commit', { branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
-    let build = server.create('build', { repository: repo, state: 'passed', commit, branch });
-    let job = server.create('job', { number: '1234.1', repository: repo, state: 'passed', commit, build });
+    let commit = this.server.create('commit', { branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
+    let build = this.server.create('build', { repository: repo, state: 'passed', commit, branch });
+    let job = this.server.create('job', { number: '1234.1', repository: repo, state: 'passed', commit, build });
     commit.job = job;
 
     await job.save();
     await commit.save();
 
     const log = 'I am a log that won’t render.';
-    server.create('log', { id: job.id, content: log });
+    this.server.create('log', { id: job.id, content: log });
 
     await jobPage.visit();
 

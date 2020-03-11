@@ -1,0 +1,32 @@
+{{#if this.isNotGithubTrial}}
+  <div class='selected-plan__price'>
+    <h6 class='selected-plan__price--total' data-test-plan-total='true'>
+      Total:
+    </h6>
+    {{#if this.subscription.plan }}
+      <p class='selected-plan__price--large' data-test-price>
+        {{format-currency this.subscription.plan.price floor='true'}}
+      </p>
+      <span data-test-selected-plan-period='true' class='selected-plan__period'>
+        {{if this.subscription.plan.annual '/year' '/month'}}
+      </span>
+    {{/if}}
+  </div>
+  {{#if this.discountIsValid}}
+    <div class="discount" data-test-stripe-discount='true'>
+      <h6>Discount: </h6>
+      <p> 
+        {{#if this.percentOff}}
+          {{this.percentOff}}%
+        {{else if this.amountOff}}
+          ${{this.amountOff}}
+        {{/if}}
+        {{#if (eq this.duration 'forever')}}
+          forever
+        {{else}}
+          off until {{moment-format (moment-add subscription.createdAt this.durationInMonths precision='months') 'MMMM YYYY'}}
+        {{/if}}
+      </p>
+    </div>
+  {{/if}}
+{{/if}}

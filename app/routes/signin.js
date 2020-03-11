@@ -1,15 +1,19 @@
 import Route from '@ember/routing/route';
+import TailwindBaseMixin from 'travis/mixins/tailwind-base';
 import { inject as service } from '@ember/service';
 
-export default Route.extend({
+export default Route.extend(TailwindBaseMixin, {
   auth: service(),
-  needsAuth: false,
 
-  beforeModel() {
-    if (this.get('auth.signedIn')) {
-      this.transitionTo('index');
-    } else {
-      this.auth.signIn();
+  queryParams: {
+    redirectUrl: {
+      refreshModel: true
+    }
+  },
+
+  model({ redirectUrl }) {
+    if (redirectUrl) {
+      this.auth.setProperties({ redirectUrl });
     }
   }
 });

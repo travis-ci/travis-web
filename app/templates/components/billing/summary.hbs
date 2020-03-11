@@ -1,4 +1,10 @@
 <div class='billing-subscription-section plan-overview'>
+  {{#if (not this.account.hasSubscriptionPermissions)}}
+    <span class="notice-banner--yellow" data-test-help='true'>
+      <SvgImage @name='icon-help' @class='icon-help icon-help-yellow' />
+      You don't have admin permissions to edit this subscription.
+    </span>
+  {{/if}}
   <div class="flex flex--space-between flex--wrap plan-overview__details">
     <section>
       <h3 class='plan-overview__header'> Overview </h3>
@@ -47,21 +53,7 @@
       </div>
     </section>
     <section>
-      {{#if this.isNotGithubTrial}}
-        <div class='selected-plan__price'>
-          <p class='selected-plan__price--total' data-test-plan-total='true'>
-            Total:
-          </p>
-          {{#if this.subscription.plan }}
-            <p class='selected-plan__price--large' data-test-price>
-              {{format-currency this.subscription.plan.price floor='true'}}
-            </p>
-            <span data-test-selected-plan-period='true' class='selected-plan__period'>
-              {{if this.subscription.plan.annual '/year' '/month'}}
-            </span>
-          {{/if}}
-        </div>
-      {{/if}}
+      <Billing::Price @subscription={{this.subscription}} @trial={{this.trial}}/>
     </section>
   </div>
   {{#if this.subscription.isGithub}}
@@ -87,7 +79,7 @@
   {{/if}}
 </div>
 <hr />
-{{#if this.showBillingInfo}}
+{{#if this.subscription.isStripe}}
   <Billing::Address @subscription={{this.subscription}} @account={{this.account}}/>
   <Billing::PaymentDetails @subscription={{this.subscription}} @account={{this.account}}//>
   <hr />

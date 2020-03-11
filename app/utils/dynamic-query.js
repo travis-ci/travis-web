@@ -140,14 +140,13 @@ const DynamicQuery = ArrayProxy.extend(Evented, {
         if (this.appendResults) {
           this.addObjects(results);
         } else {
-          this.setObjects(results);
+          this.set('content', results);
         }
         if (!this.hasPage(page)) {
           next(() => this.switchToPage(1));
         }
         return this;
       });
-
     return this.promise;
   },
 

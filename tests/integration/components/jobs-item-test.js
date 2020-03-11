@@ -13,6 +13,7 @@ module('Integration | Component | jobs item', function (hooks) {
       id: 10,
       state: 'passed',
       number: '2',
+      jobNumber: '2',
       config: {
         // this simulates a promise
         content: {
