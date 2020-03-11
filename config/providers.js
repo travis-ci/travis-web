@@ -28,6 +28,7 @@ module.exports = deepFreeze({
     endpoint: 'https://:portfolio.assembla.com',
     icon: 'icon-assembla',
     name: 'Assembla',
+    urlPrefix: 'assembla',
     paths: {
       branch: '/spaces/:owner/:repo/source/:branch?type=branch',
       commit: '/spaces/:owner/:repo/commits/:commit',
@@ -36,10 +37,15 @@ module.exports = deepFreeze({
       profile: '/spaces/:owner',
       repo: '/spaces/:owner/:repo/source',
       tag: '/spaces/:owner/:repo/source/:tag?type=tag',
+      accessSettings: '',
     },
     vocabulary: {
       organization: 'Portfolio',
       pullRequest: 'Merge Request',
+    },
+    colors: {
+      main: 'grey',
+      light: 'grey-light',
     },
   },
 
@@ -48,6 +54,7 @@ module.exports = deepFreeze({
     endpoint: 'https://bitbucket.org',
     icon: 'icon-bitbucket',
     name: 'Bitbucket',
+    urlPrefix: 'bitbucket',
     paths: {
       branch: '/:owner/:repo/src/:branch',
       commit: '/:owner/:repo/commits/:commit',
@@ -56,10 +63,15 @@ module.exports = deepFreeze({
       profile: '/:owner',
       repo: '/:owner/:repo',
       tag: '/:owner/:repo/src/:tag',
+      accessSettings: '/:owner/profile/teams',
     },
     vocabulary: {
-      organization: 'Organization',
+      organization: 'Team',
       pullRequest: 'Pull Request',
+    },
+    colors: {
+      main: 'blue',
+      light: 'blue-light',
     },
   },
 
@@ -69,6 +81,7 @@ module.exports = deepFreeze({
     endpoint: 'https://github.com',
     icon: 'icon-repooctocat',
     name: 'GitHub',
+    urlPrefix: 'github',
     paths: {
       branch: '/:owner/:repo/tree/:branch',
       commit: '/:owner/:repo/commit/:commit',
@@ -77,10 +90,15 @@ module.exports = deepFreeze({
       profile: '/:owner',
       repo: '/:owner/:repo',
       tag: '/:owner/:repo/releases/tag/:tag',
+      accessSettings: '/settings/connections/applications/f244293c729d5066cf27',
     },
     vocabulary: {
       organization: 'Organization',
       pullRequest: 'Pull Request',
+    },
+    colors: {
+      main: 'grey-dark',
+      light: 'grey',
     },
   },
 });

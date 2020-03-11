@@ -1,0 +1,14 @@
+<UiKit::Box
+  @tag={{this.tag}}
+  @color='grey-lighter'
+  @display='inline-block'
+  @padding={{hash x=1}}
+  @radius='sm'
+>
+  <UiKit::Text
+    @family='mono'
+    @size='sm'
+  >
+    {{~yield~}}
+  </UiKit::Text>
+</UiKit::Box>

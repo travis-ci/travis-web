@@ -13,41 +13,16 @@
           <p>
             Easily sync your projects with Travis CI and you'll be testing your code in minutes.
           </p>
+          <p class="mb-10">
+            Start building for free!
+          </p>
           <div class="cta-container">
-            <button
-              class="hero-button cta-index-page {{if this.multiVcs.enabled "multi-vcs"}}"
-              title="Sign up with GitHub"
-              {{action 'signIn' 'github'}}
-            >
-              <SvgImage @name="github-signin" />
-              <span>
-                Sign up with GitHub
-              </span>
-            </button>
-            {{#if this.multiVcs.enableAssemblaLogin}}
-              <button
-                class="hero-button cta-index-page multi-vcs"
-                title="Sign up with Assembla"
-                {{action 'signIn' 'assembla'}}
-              >
-                <SvgImage @name="icon-assembla" />
-                <span>
-                  Sign up with Assembla
-                </span>
-              </button>
-            {{/if}}
-            {{#if this.multiVcs.enableBitbucketLogin}}
-              <button
-                class="hero-button cta-index-page multi-vcs"
-                title="Sign up with Bitbucket"
-                {{action 'signIn' 'bitbucket'}}
-              >
-                <SvgImage @name="icon-bitbucket" />
-                <span>
-                  Sign up with Bitbucket
-                </span>
-              </button>
-            {{/if}}
+
+            <LinkTo @route='signup' class='hero-button cta-index-page'>Sign up</LinkTo>
+
+            <p class="mt-10">
+              Already have an account? <LinkTo @route='signin' class="signin-link">Sign in</LinkTo>
+            </p>
           </div>
         </div>
         <div class="landing-hero-image">
@@ -55,6 +30,28 @@
         </div>
       </div>
     </section>
+    {{#if this.multiVcs.enableBitbucketLogin}}
+      <section class="section-bitbucket section--white section--center">
+        <div class="inner">
+          <h2 class="text-5xl text-grey-800 mb-8">
+            Now test your
+            <SvgImage @name='bitbucket-full' @width={{220}} />
+            projects with Travis CI
+          </h2>
+          <div class="mb-10">
+            <p class="text-lg inline-block max-w-2xl">
+              Check out our new feature - now you can sign up to Travis CI using your Bitbucket account
+              and connect your repositories!
+            </p>
+          </div>
+
+          <LinkTo @route='integration.bitbucket' class="hero-button cta-index-page">
+            Learn More
+          </LinkTo>
+        </div>
+      </section>
+      <div class="spacer"></div>
+    {{/if}}
     <section class="section-companies section--white section--center">
       <div class="inner">
         <h3 class="customers-header">
@@ -98,14 +95,14 @@
         <div class="section-list">
           <ul class="list--features">
             <li>
-              <div class="feature-image-container">
-                <img src="../images/landing-page/Gh.svg" alt="" />
+              <div class="feature-image-container pt-6 text-center">
+                <SvgImage @name='cloud' @width={{55}} />
               </div>
               <h3 class="h3">
                 Get set up in seconds
               </h3>
               <p class="text-small">
-                Login with GitHub, tell Travis CI to test a project, and then push to GitHub. Could it be any simpler!
+                Login with your Cloud Platform, tell Travis CI to test a project, and then push. Could it be any simpler!
               </p>
             </li>
             <li>
@@ -166,6 +163,9 @@
             <li>
               <img src="../images/svg/stage-passed.svg" class="checkmark" /> Mac, Linux, and iOS support
             </li>
+            <li>
+              <SvgImage @name='stage-passed' @class='checkmark' /> Connect with Github, Bitbucket and more
+            </li>
           </ul>
         </div>
       </div>
@@ -174,12 +174,12 @@
     <section class="section-opensource section--white section--center">
       <h2>
         Testing your open source<br />
-        projects will always be free!
+        projects is always 100% free!
       </h2>
       <p>
         <em>Seriously. Always.</em>
         We like to think of it as our way of giving<br />
-        back to a community that connects so many people.
+        back to a community that gives us so much as well.
       </p>
     </section>
     <section class="section-branch-pr section--grey section--center">
@@ -190,12 +190,12 @@
         <div class="build-flow-image"></div>
         <div class="build-steps-container">
           <p class="build-step-1 build-steps">
-            You push your<br />
-            code to GitHub
+            Push your code
+            to your cloud platform
           </p>
           <p class="build-step-2 build-steps">
-            GitHub triggers<br />
-            Travis CI to build
+            Travis CI is triggered<br />
+            to build
           </p>
           <p class="build-step-3 build-steps">
             Hooray!<br />
@@ -222,7 +222,7 @@
             is created
           </p>
           <p class="build-step-7 build-steps">
-            GitHub tells Travis CI<br />
+            Travis CI is notified
             the build is mergeable
           </p>
           <p class="build-step-8 build-steps">
@@ -234,7 +234,7 @@
             the PR that it passed
           </p>
           <p class="build-step-10 build-steps">
-            You merge in<br />
+            Merge in
             the PR goodness
           </p>
         </div>
@@ -242,18 +242,6 @@
     </section>
     <section class="section-languages section--white section--center">
       <div class="inner">
-        <div class="section-languages-text-container">
-          <h2>
-            We support over<br />
-            30 different languages.
-          </h2>
-          <p>
-            These are just a few of our most popular languages,
-            <ExternalLinkTo @href="http://docs.travis-ci.com/user/languages/" @title="Supported languages">
-              check out the full list in our docs
-            </ExternalLinkTo>.
-          </p>
-        </div>
         <div class="section-languages-container">
           <ul class="list--languages">
             <li style="padding-bottom: 20px;">
@@ -346,6 +334,18 @@
             </li>
           </ul>
         </div>
+        <div class="section-languages-text-container">
+          <h2>
+            We support over<br />
+            30 different languages.
+          </h2>
+          <p>
+            These are just a few of our most popular languages,
+            <ExternalLinkTo @href="http://docs.travis-ci.com/user/languages/" @title="Supported languages">
+              check out the full list in our docs
+            </ExternalLinkTo>.
+          </p>
+        </div>
       </div>
     </section>
     <div class="spacer"></div>
@@ -426,14 +426,9 @@
       <p class="run-test">
         Run your tests with Travis CI
       </p>
-      <a
-        href="https://travis-ci.com/signin"
-        class="start-building-button cta-index-page"
-        title="Sign up with GitHub"
-        {{action "signIn"}}
-      >
+      <LinkTo @route='signup' class="start-building-button cta-index-page">
         Start building now
-      </a>
+      </LinkTo>
     </section>
   </main>
 </div>

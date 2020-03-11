@@ -12,7 +12,7 @@
           Make more informed decisions about your development workflow using your build Insights. <br />
           <LinkTo
             @route="owner.repositories"
-            @model={{this.organization.login}}
+            @models={{array this.organization.provider this.organization.login}}
             @query={{hash tab="insights"}}
           >
             View {{this.organization.fullName}}'s Insights

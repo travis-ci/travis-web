@@ -6,7 +6,7 @@
           Default Branch
         </h2>
         <ul class="blank-list">
-          <BranchRow @branch={{this.defaultBranch}} />
+          <BranchRow @branch={{this.defaultBranch}} @vcsType={{this.repo.vcsType}} />
         </ul>
       </section>
     {{/if}}
@@ -17,7 +17,7 @@
         </h2>
         <ul class="blank-list">
           {{#each this.activeBranches as |branch|}}
-            <BranchRow @branch={{branch}} />
+            <BranchRow @branch={{branch}} @vcsType={{this.repo.vcsType}} />
           {{/each}}
         </ul>
       </section>
@@ -29,7 +29,7 @@
         </h2>
         <ul class="blank-list">
           {{#each this.inactiveBranches as |branch|}}
-            <BranchRow @branch={{branch}} @inactive={{true}} />
+            <BranchRow @branch={{branch}} @inactive={{true}} @vcsType={{this.repo.vcsType}} />
           {{/each}}
         </ul>
       </section>

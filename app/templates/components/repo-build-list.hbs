@@ -8,7 +8,7 @@
   {{else}}
     <ul class="build-list">
       {{#each loader.items as |build|}}
-        <BuildsItem @build={{build}} />
+        <BuildsItem @build={{build}} @vcsType={{@repo.vcsType}} />
       {{/each}}
     </ul>
   {{/if}}

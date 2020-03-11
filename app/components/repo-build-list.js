@@ -13,7 +13,7 @@ const SORT_PROPS = ['number:desc'];
 export default Component.extend({
   store: service(),
 
-  repoId: null,
+  repo: null,
   missingNotice: 'No builds for this repository',
 
   sortProps: computed(() => SORT_PROPS),
@@ -23,8 +23,9 @@ export default Component.extend({
   }),
 
   fetchBuilds({ page }) {
-    const { eventTypes, repoId, store } = this;
+    const { eventTypes, repo, store } = this;
     const offset = (page - 1) * limit;
+    const { id: repoId } = repo;
 
     return store.query('build', {
       repository_id: repoId,
@@ -41,7 +42,7 @@ export default Component.extend({
   }),
 
   filteredBuilds: filter('_builds', function (build) {
-    return build.get('repo.id') === this.repoId && this.eventTypes.includes(build.eventType);
+    return build.get('repo.id') === this.get('repo.id') && this.eventTypes.includes(build.eventType);
   }),
 
   builds: sort('filteredBuilds', 'sortProps'),
@@ -54,6 +55,6 @@ export default Component.extend({
 
   didReceiveAttrs() {
     this._super(...arguments);
-    assert('RepoBuildList requires @repoId', !!this.repoId);
+    assert('RepoBuildList requires @repo', !!this.repo);
   },
 });

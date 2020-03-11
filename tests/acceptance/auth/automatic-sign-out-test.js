@@ -22,7 +22,7 @@ module('Acceptance | automatic sign out', function (hooks) {
     await visitWithAbortedTransition('/account');
 
     assert.equal(topPage.flashMessage.text, "You've been signed out, because your access token has expired.");
-    assert.equal(currentURL(), '/');
+    assert.equal(currentURL(), '/signin');
     percySnapshot(assert);
   });
 });

@@ -1,10 +1,12 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | builds item', function (hooks) {
   setupRenderingTest(hooks);
+  setupMirage(hooks);
 
   test('it renders', async function (assert) {
     const build = {
@@ -24,7 +26,10 @@ module('Integration | Component | builds item', function (hooks) {
         url: 'a-url'
       },
       repo: {
-        slug: 'foo/bar'
+        slug: 'foo/bar',
+        name: 'bar',
+        vcs_name: 'bar',
+        owner_name: 'foo'
       }
     };
     this.build = build;

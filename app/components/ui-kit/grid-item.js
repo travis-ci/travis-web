@@ -6,6 +6,8 @@ import { checkDictionary, requireProp } from 'travis/utils/ui-kit/assertions';
 import concat from 'travis/utils/ui-kit/concat';
 import prefix from 'travis/utils/ui-kit/prefix';
 
+import { FLEX_SIZES, FLEX_SIZE_VALS } from 'travis/components/ui-kit/box';
+
 function screenClass(key, screen) {
   return computed('sizePrefix', key, function () {
     const size = this.get(key);
@@ -24,17 +26,16 @@ function screenClass(key, screen) {
   });
 }
 
-const FLEX_SIZES = {
-  GROW_SINGLE: 'grow-single',
-  SHRINK_SINGLE: 'shrink-single',
-  RESIZE_SINGLE: 'resize-single',
+const ORDERS = {
+  FIRST: 'first',
+  LAST: 'last',
   NONE: 'none',
-};
-const FLEX_SIZE_VALS = {
-  [FLEX_SIZES.GROW_SINGLE]: 'grow-single',
-  [FLEX_SIZES.SHRINK_SINGLE]: 'shrink-single',
-  [FLEX_SIZES.RESIZE_SINGLE]: 'resize-single',
-  [FLEX_SIZES.NONE]: 'none',
+  ONE: 1,
+  TWO: 2,
+  THREE: 3,
+  FOUR: 4,
+  FIVE: 5,
+  SIX: 6,
 };
 
 export default Component.extend({
@@ -50,6 +51,7 @@ export default Component.extend({
   lg: null,
   xl: null,
   gap: null,
+  order: null,
 
   display: null,
   flex: null,
@@ -82,6 +84,7 @@ export default Component.extend({
     return currentGap === 0 ? '' : `p${paddingDir}-${currentGap}`;
   }),
   flexClass: prefix('flex', 'flex', { dictionary: FLEX_SIZE_VALS }),
+  orderClass: prefix('order', 'order'),
 
   allClasses: concat(
     'componentClass',
@@ -91,7 +94,8 @@ export default Component.extend({
     'lgClass',
     'xlClass',
     'gapClass',
-    'flexClass'
+    'flexClass',
+    'orderClass',
   ),
 
   // Lifecycle
@@ -100,5 +104,6 @@ export default Component.extend({
 
     requireProp(this.grid, '@grid', 'GridItem');
     checkDictionary(this.flex, FLEX_SIZES, '@flex', 'GridItem');
+    checkDictionary(this.order, ORDERS, '@order', 'GridItem');
   },
 });

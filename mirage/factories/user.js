@@ -14,6 +14,8 @@ export default Factory.extend({
   synced_at: '2016-01-01T23:04:31Z',
   is_syncing: false,
   recently_signed_up: true,
+  vcs_type: 'GithubUser',
+
   channels() {
     return `private-user-${this.id}`;
   },

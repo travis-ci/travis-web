@@ -1,0 +1,16 @@
+<UiKit::Box
+  @color={{this.color}}
+  @display={{this.display}}
+  @padding={{hash x=2}}
+  @pin={{this.pin}}
+  @radius='sm'
+  ...attributes
+>
+  <UiKit::Text
+    @color='white'
+    @size={{this.size}}
+    @weight='bold'
+  >
+    {{~yield~}}
+  </UiKit::Text>
+</UiKit::Box>

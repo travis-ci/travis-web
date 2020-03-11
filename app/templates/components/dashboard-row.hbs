@@ -15,10 +15,10 @@
 <div class="dash-body">
   <div class="dash-main">
     <header class="fade-out dash-header">
-      <h2 class="row-label">
+      <h2 class="row-label repo-dashboard">
         <LinkTo
           @route="owner"
-          @model={{this.repo.owner.login}}
+          @models={{array this.repo.provider this.repo.ownerName}}
           @title={{this.repo.owner.login}}
         >
           {{this.repo.owner.login}}
@@ -27,7 +27,7 @@
       <h1 class="row-content">
         <LinkTo
           @route="repo"
-          @models={{array this.repo.owner.login this.repo.name}}
+          @models={{array this.repo.provider this.repo.ownerName this.repo.vcsName}}
           @title={{this.repo.name}}
         >
           {{this.repo.name}}
@@ -48,8 +48,9 @@
             <LinkTo
               @route="build"
               @models={{array
-                this.repo.owner.login
-                this.repo.name
+                this.repo.provider
+                this.repo.ownerName
+                this.repo.vcsName
                 this.repo.defaultBranch.lastBuild.id
               }}
               @title="Last build on the default branch"
@@ -74,8 +75,9 @@
             <LinkTo
               @route="build"
               @models={{array
-                this.repo.owner.login
-                this.repo.name
+                this.repo.provider
+                this.repo.ownerName
+                this.repo.vcsName
                 this.repo.currentBuild.id
               }}
               @title="Last build on the repo"
@@ -94,7 +96,7 @@
           <div class="row-content row-item commit-sha">
             <SvgImage @name="icon-commit" @class="icon" />
             <ExternalLinkTo @href={{this.repo.currentBuild.commit.url}}>
-              <EmberTooltip @text="View commit on GitHub" />
+              <EmberTooltip @text="{{concat "View commit on " (vcs-name this.repo.vcsType)}}" />
               <span class="label-align monospace">
                 {{format-sha this.repo.currentBuild.commit.sha}}
               </span>

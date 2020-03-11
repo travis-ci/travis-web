@@ -1,7 +1,7 @@
 /* global Travis */
 import { attr } from '@ember-data/model';
 import { computed } from '@ember/object';
-import { run, later } from '@ember/runloop';
+import { later } from '@ember/runloop';
 import { inject as service } from '@ember/service';
 import ArrayProxy from '@ember/array/proxy';
 import Owner from 'travis/models/owner';
@@ -20,6 +20,8 @@ export default Owner.extend({
   firstLoggedInAt: attr('date'),
   allowMigration: attr('boolean'),
   recentlySignedUp: attr('boolean'),
+  channels: attr(),
+  authToken: attr('string'),
 
   type: 'user',
 
@@ -31,7 +33,7 @@ export default Owner.extend({
   }),
 
   init() {
-    if (this.isSyncing) this.poll();
+    this.schedulePoll();
     return this._super(...arguments);
   },
 
@@ -112,20 +114,21 @@ export default Owner.extend({
       .then(() => this.poll());
   },
 
+  schedulePoll() {
+    later(
+      () => this.isSyncing && this.poll(),
+      config.intervals.syncingPolling
+    );
+  },
+
   poll() {
-    return this.api.get('/user').then((data) => {
-      if (data.is_syncing) {
-        later(
-          () => this.poll(),
-          config.intervals.syncingPolling
-        );
+    return this.reload().then(() => {
+      if (this.isSyncing) {
+        this.schedulePoll();
       } else {
-        run(() => {
-          Travis.trigger('user:synced', data);
-          this.set('isSyncing', false);
-          this.reload();
-          this.applyReposFilter();
-        });
+        Travis.trigger('user:synced', this);
+        this.set('isSyncing', false);
+        this.applyReposFilter();
       }
     });
   },
@@ -137,7 +140,8 @@ export default Owner.extend({
   },
 
   reload(options = {}) {
-    return this.store.queryRecord('user', Object.assign({}, options, { current: true }));
+    const { authToken } = this;
+    return this.store.queryRecord('user', Object.assign({}, options, { current: true, authToken }));
   },
 
   applyReposFilter() {

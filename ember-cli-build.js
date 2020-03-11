@@ -58,9 +58,15 @@ module.exports = function () {
       optimizer: {
         svgoModule: SVGO,
         plugins: [
+          { prefixIds: true },
           { removeViewBox: false },
           { removeTitle: false },
           { removeDesc: false },
+          {
+            removeUnknownsAndDefaults: {
+              unknownContent: false,
+            }
+          },
           {
             inlineStyles: {
               onlyMatchedOnce: false,

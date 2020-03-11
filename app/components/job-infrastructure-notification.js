@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { alias, equal } from '@ember/object/computed';
+import { reads, equal, and, not } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 
 import moment from 'moment';
@@ -12,26 +12,33 @@ export default Component.extend({
   auth: service(),
   features: service(),
 
-  queue: alias('job.queue'),
-  jobConfig: alias('job.config'),
+  queue: reads('job.queue'),
+  isJobFinished: reads('job.isFinished'),
+  jobStartedAt: reads('job.startedAt'),
+  jobConfig: reads('job.config'),
+  dist: reads('jobConfig.dist'),
+  language: reads('jobConfig.language'),
+
+  isPreciseDist: equal('dist', 'precise'),
+  isTrustyDist: equal('dist', 'trusty'),
+  isAndroidLanguage: equal('language', 'android'),
+  isNotAndroidLanguage: not('isAndroidLanguage'),
+  isPreciseEOL: and('isGceBuild', 'isPreciseDist', 'isNotAndroidLanguage'),
 
   isWindows: equal('jobConfig.os', 'windows'),
 
-  conjugatedRun: computed('job.isFinished', function () {
-    let isFinished = this.get('job.isFinished');
-    return isFinished ? 'ran' : 'is running';
+  conjugatedRun: computed('isJobFinished', function () {
+    return this.isJobFinished ? 'ran' : 'is running';
   }),
 
+  isGceBuild: equal('queue', 'build.gce'),
   isLegacyInfrastructure: equal('queue', 'builds.linux'),
   isTrustySudoFalse: equal('queue', 'builds.ec2'),
+  isMacStadium6: equal('queue', 'builds.macstadium6'),
 
-  isTrustySudoRequired: computed('job.startedAt', 'queue', 'job.config.dist', function () {
-    let startedAt = this.get('job.startedAt');
-    let queue = this.queue;
-    let dist = this.get('job.config.dist');
-
-    if (queue === 'builds.gce' && dist === 'trusty') {
-      const jobRanAfterReleaseDate = Date.parse(startedAt) > Date.parse(LATEST_TRUSTY_RELEASE);
+  isTrustySudoRequired: computed('jobStartedAt', 'isGceBuild', 'isTrustyDist', function () {
+    if (this.isGceBuild && this.isTrustyDist) {
+      const jobRanAfterReleaseDate = Date.parse(this.jobStartedAt) > Date.parse(LATEST_TRUSTY_RELEASE);
       if (jobRanAfterReleaseDate) {
         return true;
       }
@@ -40,32 +47,8 @@ export default Component.extend({
     return false;
   }),
 
-  isMacStadium6: equal('queue', 'builds.macstadium6'),
 
-  isPreciseEOL: computed('queue', 'job.config.dist', 'job.config.language', function () {
-    let queue = this.queue;
-    let dist = this.get('job.config.dist');
-    let language = this.get('job.config.language');
-    if (queue === 'builds.gce' && dist === 'precise') {
-      if (language !== 'android') {
-        return true;
-      }
-    }
-  }),
-
-  isPHPDefault: computed('job.config.{language,php}', function () {
-    const language = this.get('job.config.language');
-    const php = this.get('job.config.php');
-    return language === 'php' && !php;
-  }),
-
-  isPythonDefault: computed('job.config.{language,python}', function () {
-    const language = this.get('job.config.language');
-    const python = this.get('job.config.python');
-    return language === 'python' && !python;
-  }),
-
-  macOSImage: alias('jobConfig.osx_image'),
+  macOSImage: reads('jobConfig.osx_image'),
   deprecatedXcodeImages: ['xcode8.1', 'xcode8.2', 'xcode6.4'],
 
   imageToRetirementDate: {
@@ -91,15 +74,13 @@ export default Component.extend({
   }),
 
   deprecatedOrRetiredMacImageMessage: computed(
-    'job.startedAt',
+    'jobStartedAt',
     'macOSImage',
-    'job.isFinished',
+    'isJobFinished',
     'conjugatedRun',
     'isDeprecatedOrRetiredMacImage',
     function () {
-      let startedAt = this.get('job.startedAt');
       let image = this.macOSImage;
-      let isFinished = this.get('job.isFinished');
       let conjugatedRun = this.conjugatedRun;
 
       if (image === 'xcode6.4') {
@@ -116,7 +97,7 @@ export default Component.extend({
       const newImageURLString = `<a href='https://docs.travis-ci.com/user/reference/osx/#${newImageAnchor}'>${newImageString}</a>`;
       const imageRetirementAnnouncementURL = 'https://blog.travis-ci.com/2017-11-21-xcode8-3-default-image-announce';
 
-      const jobRanBeforeRetirementDate = Date.parse(startedAt) < retirementDate;
+      const jobRanBeforeRetirementDate = Date.parse(this.jobStartedAt) < retirementDate;
       const retirementDateIsInTheFuture = retirementDate > new Date();
 
       const formattedRetirementDate = moment(retirementDate).format('MMMM D, YYYY');
@@ -132,7 +113,7 @@ export default Component.extend({
         retirementSentence = `This job ${conjugatedRun} on an OS X image that ${retirementLink}.`;
       } else {
         retirementSentence = `
-          This job ${isFinished ? 'was configured to run on' : 'is configured to run on'}
+          This job ${this.isJobFinished ? 'was configured to run on' : 'is configured to run on'}
           an OS X image that ${retirementLink}.`;
       }
 
