@@ -26,9 +26,7 @@
       Sign up for the beta
     </button>
   {{else if this.showSignInButton}}
-    <button class="auth-button signed-out" {{action "signIn"}}>
-      Sign in with GitHub
-    </button>
+    <MultiSigninButton @isLinkToSignin={{true}} />
   {{/if}}
   {{#if this.helperText}}
     <p>

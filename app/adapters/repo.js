@@ -1,7 +1,4 @@
 import V3Adapter from 'travis/adapters/v3';
-import config from 'travis/config/environment';
-
-const { apiEndpoint } = config;
 
 export default V3Adapter.extend({
   defaultSerializer: '-repo',
@@ -19,24 +16,38 @@ export default V3Adapter.extend({
   ].join(','),
 
   buildURL(modelName, id, snapshot, requestType, query) {
+    const prefix = this.urlPrefix();
+
     if (query) {
-      const custom = query.custom;
+      const { provider, slug, custom } = query;
+      const providerPrefix = provider ? `${provider}/` : '';
+
+      delete query.provider;
+      delete query.slug;
       delete query.custom;
+
+      // fetch repo by slug
+      if (!id && slug) {
+        return `${prefix}/repo/${providerPrefix}${encodeURIComponent(slug)}`;
+      }
+
       if (custom && custom.type === 'byOwner') {
         const { owner } = custom;
-        return `${apiEndpoint}/owner/${owner}/repos`;
+        return `${prefix}/owner/${providerPrefix}${owner}/repos`;
       }
     }
-    return this._super(...arguments);
+    return this._super(modelName, id, snapshot, requestType, query);
   },
 
   activate(id) {
-    const url = `${apiEndpoint}/repo/${id}/activate`;
+    const prefix = this.urlPrefix();
+    const url = `${prefix}/repo/${id}/activate`;
     return this.ajax(url, 'POST');
   },
 
   deactivate(id) {
-    const url = `${apiEndpoint}/repo/${id}/deactivate`;
+    const prefix = this.urlPrefix();
+    const url = `${prefix}/repo/${id}/deactivate`;
     return this.ajax(url, 'POST');
   },
 });

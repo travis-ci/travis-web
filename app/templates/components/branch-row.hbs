@@ -63,9 +63,8 @@
 <div class="two-line">
   <div class="row-commit">
     <div class="row-item">
-
       <ExternalLinkTo @href={{this.commitUrl}}>
-        <EmberTooltip @text="{{concat "View commit on " (vcs-name this.branch.repository.vcsType)}}" />
+        <EmberTooltip @text="{{concat "View commit on " (vcs-name this.vcsType)}}" />
         <SvgImage @name="icon-commit" @class="icon" />
         <span class="inner-underline monospace">
           {{#if this.branch.last_build}}
@@ -85,6 +84,7 @@
           @user={{this.createdBy}}
           @commit={{this.commit}}
           @committerOnly={{true}}
+          @provider={{this.provider}}
           @eventType={{this.branch.last_build.event_type}}
         />
       {{else}}

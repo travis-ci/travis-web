@@ -1,0 +1,44 @@
+{{#if this.isProviderEnabled}}
+  <UiKit::Button
+    @onClick={{action this.signin}}
+    @color={{vcs-color this.vcsType 'main'}}
+    @invert={{true}}
+    class="{{this.minWidthClass}} mb-4 text-left relative pointer"
+    data-test-signin-button={{this.provider}}
+    data-test-signin-button-primary={{this.isPrimaryProvider}}
+    ...attributes
+  >
+    {{#if this.isLogoVisible}}
+      <UiKit::Box
+        @display='inline-block'
+        @margin={{hash right=1}}
+        @padding={{hash right=2}}
+        @borderColor={{vcs-color this.vcsType 'main'}}
+        @borderWidth={{hash right=this.logoSeparatorWidth}}
+        class='align-text-bottom'
+      >
+        <SvgImage @name={{vcs-icon this.vcsType}} @class="fill-current w-5 h-5" />
+      </UiKit::Box>
+    {{/if}}
+
+    {{#if this.account}}
+      {{or this.account.login this.account.fullName}}
+    {{else}}
+      {{#if this.isLoading}}
+        Signing {{if this.isSignup 'Up' 'In'}}...
+      {{else}}
+        Sign {{if this.isSignup 'Up' 'In'}} With {{vcs-name this.vcsType}}
+      {{/if}}
+    {{/if}}
+
+    {{#if this.isBetaBadgeVisible}}
+      <UiKit::Badge
+        @color={{vcs-color this.vcsType 'light'}}
+        @pin='top-right'
+      >
+        Beta
+      </UiKit::Badge>
+    {{/if}}
+
+  </UiKit::Button>
+{{/if}}

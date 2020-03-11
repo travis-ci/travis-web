@@ -1,23 +1,19 @@
 import Controller from '@ember/controller';
 import { inject as service } from '@ember/service';
-import { computed } from '@ember/object';
-import { reads } from '@ember/object/computed';
+import { gt, reads } from '@ember/object/computed';
 
 export default Controller.extend({
   auth: service(),
-  router: service(),
-  redirectUri: reads('model.redirectUri'),
+  multiVcs: service(),
 
-  isRedirectingToAccountPage: computed('redirectUri', function () {
-    if (this.redirectUri) {
-      const { pathname } = new URL(this.redirectUri);
-      const accountUrl = this.router.urlFor('account.billing');
-      return this.isOrganizationUrl(pathname) || accountUrl === pathname;
-    }
-    return false;
-  }),
+  accounts: reads('auth.accounts'),
+  hasAccounts: gt('accounts.length', 0),
 
-  isOrganizationUrl(pathname) {
-    return pathname && pathname.startsWith('/organizations') && pathname.endsWith('subscription');
-  }
+  showOtherProviders: reads('multiVcs.enabled'),
+
+  actions: {
+    signIn(provider) {
+      this.auth.signInWith(provider);
+    },
+  },
 });

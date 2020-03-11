@@ -1,6 +1,6 @@
 {{#each this.tabs as |tab|}}
   <li class="insights-tab">
-    <LinkTo @query={{hash timeInterval=tab.slug}}>
+    <LinkTo @query={{hash timeInterval=tab.slug}} data-test-insights-period={{tab.slug}}>
       {{tab.title}}
     </LinkTo>
   </li>

@@ -10,8 +10,8 @@ import {
 } from 'ember-cli-page-object';
 
 export default create({
-  visitBuildHistory: visitable(':organization/:repo/builds'),
-  visitPullRequests: visitable(':organization/:repo/pull_requests'),
+  visitBuildHistory: visitable('github/:organization/:repo/builds'),
+  visitPullRequests: visitable('github/:organization/:repo/pull_requests'),
 
   showsNoBuildsMessaging: text('.missing-notice h2.page-title'),
 

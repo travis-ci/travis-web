@@ -1,8 +1,10 @@
 <LinkTo
   @route="build"
   @models={{array
-    this.repo.owner.login
-    this.repo.name build.id
+    this.repo.provider
+    this.repo.ownerName
+    this.repo.vcsName
+    build.id
   }}
 >
   <StatusIcon @status={{this.build.state}} />

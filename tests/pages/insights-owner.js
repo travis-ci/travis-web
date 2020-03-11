@@ -4,12 +4,18 @@ import {
   isPresent,
   isVisible,
   text,
-  visitable
+  visitable,
+  clickable
 } from 'ember-cli-page-object';
 
 export default create({
-  visit: visitable('/:username/?tab=insights'),
-  visitWeek: visitable('/:username/?tab=insights&timeInterval=week'),
+  visit: visitable('/github/:username/?tab=insights'),
+  visitWeek: visitable('/github/:username/?tab=insights&timeInterval=week'),
+
+  tabs: {
+    clickWeek: clickable('[data-test-insights-period=week]'),
+    clickMonth: clickable('[data-test-insights-period=month]'),
+  },
 
   privacySelector: {
     scope: '[data-test-insights-privacy-selector]',

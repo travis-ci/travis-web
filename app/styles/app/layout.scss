@@ -8,6 +8,11 @@ $padding-top: 24px;
   margin-top: $padding-top;
   padding-bottom: 5rem;
   background-color: white;
+
+  &--flush {
+    margin-top: 0;
+    padding-bottom: 0;
+  }
 }
 
 .loading-page {
@@ -36,7 +41,8 @@ $padding-top: 24px;
   #left {
     padding-bottom: 45px;
 
-    .flush-footer & {
+    .flush-footer &,
+    &.main--flush {
       padding-bottom: 0;
     }
   }
