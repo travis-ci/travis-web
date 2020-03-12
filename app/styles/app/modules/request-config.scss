@@ -55,6 +55,9 @@
   .request-messages {
     margin-top: 0;
   }
+  &.customize .request-messages {
+    border-top: 0;
+  }
 
   .icon-toggle {
     height: 15px;
