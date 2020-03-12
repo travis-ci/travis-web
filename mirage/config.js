@@ -3,7 +3,6 @@ import { Response } from 'ember-cli-mirage';
 import config from 'travis/config/environment';
 import fuzzysort from 'fuzzysort';
 
-const { ymlEndpoint } = config;
 const { validAuthToken, apiEndpoint } = config;
 
 export default function () {
@@ -588,12 +587,20 @@ export default function () {
     return schema.builds.all().filter(build => eventType.includes(build.eventType));
   });
 
-  this.post(`${ymlEndpoint}/configs`, (schema, { params }) => {
-    const buildsConfig = schema.buildConfigs.create({
+  this.post('/repo/:id/request/configs', (schema, { params }) => {
+    const requestConfig = schema.requestConfigs.create({
       raw_configs: [{
         source: 'test/test_repo:.travis.yml@master',
         config: 'script: echo "Hello World"',
         mode: 'deep_merge_append'
+      }],
+      request_config: {
+        language: 'node_js',
+        os: ['linux'],
+      },
+      job_configs: [{
+        os: 'linux',
+        language: 'node_js',
       }],
       messages: [
         {
@@ -606,15 +613,7 @@ export default function () {
             default: 'linux'
           }
         }
-      ],
-      matrix: [{
-        os: 'linux',
-        language: 'node_js',
-      }],
-      config: {
-        language: 'node_js',
-        os: ['linux'],
-      }
+      ]
     });
     if (params.config === 'invalid') {
       return Response(400, {}, {
@@ -623,10 +622,10 @@ export default function () {
       });
     } else {
       return new Response(200, {}, {
-        rawConfigs: buildsConfig.raw_configs,
-        messages: buildsConfig.messages,
-        matrix: buildsConfig.matrix,
-        config: buildsConfig.config,
+        raw_configs: requestConfig.raw_configs,
+        request_config: requestConfig.request_config,
+        job_configs: requestConfig.job_configs,
+        messages: requestConfig.messages,
       });
     }
   });
