@@ -102,7 +102,7 @@ module('Acceptance | repo/trigger build', function (hooks) {
     enableFeature('show-new-config-view');
     await triggerBuildPage.visit({ owner: 'adal', repo: 'difference-engine' });
 
-    assert.equal(currentURL(), 'adal/difference-engine', 'we are on the repo page');
+    assert.equal(currentURL(), '/github/adal/difference-engine', 'we are on the repo page');
     assert.ok(triggerBuildPage.configFormIsHidden, 'modal is hidden');
 
     await triggerBuildPage.showConfigForm();
@@ -116,7 +116,7 @@ module('Acceptance | repo/trigger build', function (hooks) {
     await triggerBuildPage.clickConfigFormSubmit();
 
     assert.ok(triggerBuildPage.configFormIsHidden, 'config form is hidden again');
-    assert.equal(currentURL(), '/adal/difference-engine/builds/9999', 'we transitioned after the build was triggered');
+    assert.equal(currentURL(), '/github/adal/difference-engine/builds/9999', 'we transitioned after the build was triggered');
   });
 
   test('triggering a custom build via the dropdown', async function (assert) {
