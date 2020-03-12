@@ -587,7 +587,7 @@ export default function () {
     return schema.builds.all().filter(build => eventType.includes(build.eventType));
   });
 
-  this.post('/repo/:id/request/configs', (schema, { params }) => {
+  this.post('/repo/:id/request/config', (schema, { params }) => {
     const requestConfig = schema.requestConfigs.create({
       raw_configs: [{
         source: 'test/test_repo:.travis.yml@master',

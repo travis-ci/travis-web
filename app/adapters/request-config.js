@@ -18,7 +18,7 @@ export default V3Adapter.extend({
   token: reads('auth.token'),
 
   queryRecord(store, type, { id, data }) {
-    const url = `${apiEndpoint}/repo/${id}/request/configs`;
+    const url = `${apiEndpoint}/repo/${id}/request/config`;
     const headers = { ...this.headers, Authorization: `token ${this.token}` };
     const options = { data, headers: headers};
     return this.ajax.request(url, 'POST', options);
