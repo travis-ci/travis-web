@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 23.0.6, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 145.314 146.061" style="enable-background:new 0 0 145.314 146.061;" xml:space="preserve">
+<style type="text/css">
+	.fake{fill:url(#this_fixes_gradient);}
+	.st0{fill:url(#grey-gradient-circle-merle);}
+</style>
+<linearGradient id="grey-gradient-circle-merle" gradientUnits="userSpaceOnUse" x1="-223.7928" y1="-1602.1202" x2="-308.5733" y2="-1501.0829" gradientTransform="matrix(0.9282 0.372 -0.372 0.9282 -257.9976 1611.3687)">
+	<stop  offset="0" style="stop-color:#FFFFFF;stop-opacity:0"/>
+	<stop  offset="0.4351" style="stop-color:#D4D9DF;stop-opacity:0.4351"/>
+	<stop  offset="0.7878" style="stop-color:#BDC6CF;stop-opacity:0.7878"/>
+	<stop  offset="1" style="stop-color:#B4BFCA"/>
+</linearGradient>
+<circle class="st0" cx="72.097" cy="72.097" r="65.946"/>
+</svg>

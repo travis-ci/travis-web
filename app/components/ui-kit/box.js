@@ -1,33 +1,56 @@
 import Component from '@ember/component';
-import { reads } from '@ember/object/computed';
-
 import { checkDictionary } from 'travis/utils/ui-kit/assertions';
 import prefix from 'travis/utils/ui-kit/prefix';
 import concat from 'travis/utils/ui-kit/concat';
+import { ALIGNMENTS as TEXT_ALIGNMENTS } from 'travis/components/ui-kit/text';
 
-const COLORS = {
+export const COLORS = {
   WHITE: 'white',
-  GREY_LIGHT: 'grey-light',
+  BLUE_LIGHT: 'blue-light',
+  BLUE: 'blue',
+  GREEN: 'green',
+  GREY_LIGHTEST: 'grey-lightest',
   GREY_LIGHTER: 'grey-lighter',
+  GREY_LIGHT: 'grey-light',
+  GREY: 'grey',
+  GREY_DARK: 'grey-dark',
+  YELLOW_LIGHTER: 'yellow-lighter',
+  YELLOW_LIGHT: 'yellow-light',
 };
 
 const BG_COLORS = {
   [COLORS.WHITE]: 'white',
-  [COLORS.GREY_LIGHTER]: 'grey-100',
+  [COLORS.BLUE_LIGHT]: 'blue-300',
+  [COLORS.GREY_LIGHTEST]: 'grey-100',
+  [COLORS.GREY_LIGHTER]: 'grey-150',
+  [COLORS.GREY_LIGHT]: 'grey-300',
+  [COLORS.GREY_DARK]: 'grey-800',
+  [COLORS.BLUE]: 'blue-400',
+  [COLORS.YELLOW_LIGHT]: 'yellow-200',
+  [COLORS.YELLOW_LIGHTER]: 'yellow-100',
 };
 
 const BORDER_COLORS = {
+  [COLORS.WHITE]: 'white',
+  [COLORS.BLUE]: 'blue-400',
+  [COLORS.GREEN]: 'green-300',
   [COLORS.GREY_LIGHT]: 'grey-150',
+  [COLORS.GREY]: 'grey-700',
+  [COLORS.GREY_DARK]: 'grey-800',
 };
 
 const WIDTHS = {
   NONE: 'none',
   XS: 'xs',
+  SM: 'sm',
+  MD: 'md',
 };
 
 const BORDER_WIDTHS = {
   [WIDTHS.NONE]: 'none',
   [WIDTHS.XS]: 'px',
+  [WIDTHS.SM]: 'sm',
+  [WIDTHS.MD]: 'md',
 };
 
 export const DISPLAYS = {
@@ -37,13 +60,6 @@ export const DISPLAYS = {
   FLEX: 'flex',
 };
 const DEFAULT_DISPLAY = DISPLAYS.BLOCK;
-
-const TEXT_ALIGNMENTS = {
-  LEFT: 'left',
-  CENTER: 'center',
-  RIGHT: 'right',
-  JUSTIFY: 'justify',
-};
 
 const LAYERS = {
   AUTO: 'auto',
@@ -94,6 +110,10 @@ const POSITION_INSETS = {
   X_AUTO: 'x-auto',
   Y_AUTO: 'y-auto',
 };
+const PIN_LOCATIONS = {
+  TOP_RIGHT: 'top-right',
+  TOP_LEFT: 'top-left',
+};
 
 // Height & Width
 const MAX_WIDTHS = {
@@ -104,10 +124,55 @@ const MAX_WIDTHS = {
   LG: 'lg',
   XL: 'xl',
   XL2: '2xl',
+  XL3: '3xl',
+  XL5: '5xl',
   XL6: '6xl',
   FULL: 'full',
 };
 
+// Flexbox
+const FLEX_ALIGNMENTS = {
+  STRETCH: 'stretch',
+  START: 'start',
+  CENTER: 'center',
+  END: 'end',
+  BASELINE: 'baseline',
+};
+
+const FLEX_JUSTIFICATIONS = {
+  START: 'start',
+  CENTER: 'center',
+  END: 'end',
+  BETWEEN: 'between',
+  AROUND: 'around',
+};
+
+const FLEX_DIRECTIONS = {
+  ROW: 'row',
+  COL: 'col',
+  ROW_REVERSE: 'row-reverse',
+  COL_REVERSE: 'col-reverse',
+};
+
+const FLEX_WRAPS = {
+  wrap: 'wrap',
+  NO_WRAP: 'no-wrap',
+};
+
+export const FLEX_SIZES = {
+  GROW_SINGLE: 'grow-single',
+  SHRINK_SINGLE: 'shrink-single',
+  RESIZE_SINGLE: 'resize-single',
+  NONE: 'none',
+  SHRINK_ZERO: 'shrink-none',
+};
+export const FLEX_SIZE_VALS = {
+  [FLEX_SIZES.GROW_SINGLE]: 'grow-single',
+  [FLEX_SIZES.SHRINK_SINGLE]: 'shrink-single',
+  [FLEX_SIZES.RESIZE_SINGLE]: 'resize-single',
+  [FLEX_SIZES.NONE]: 'none',
+  [FLEX_SIZES.SHRINK_ZERO]: 'shrink-0',
+};
 
 // Component definition
 export default Component.extend({
@@ -120,6 +185,7 @@ export default Component.extend({
   display: DEFAULT_DISPLAY,
   layer: null,
   overflow: null,
+  pin: null,
   radius: null,
   shadow: null,
   textAlign: null,
@@ -135,6 +201,11 @@ export default Component.extend({
   padding: null,
   position: null,
 
+  flexAlign: null,
+  flexJustify: null,
+  flexDir: null,
+  flexWrap: null,
+
   // Private //
   colorClass: prefix('color', 'bg', { dictionary: BG_COLORS }),
   displayClass: prefix('display', ''),
@@ -142,6 +213,7 @@ export default Component.extend({
   overflowAllClass: prefix('overflow.all', 'overflow'),
   overflowXClass: prefix('overflow.x', 'overflow'),
   overflowYClass: prefix('overflow.y', 'overflow'),
+  pinClass: prefix('pin', 'pin'),
   radiusClass: prefix('radius', 'rounded'),
   shadowClass: prefix('shadow', 'shadow'),
   textAlignClass: prefix('textAlign', 'text'),
@@ -151,7 +223,7 @@ export default Component.extend({
   heightClass: prefix('height', 'h'),
 
   // Position
-  positionType: reads('position.type'),
+  positionType: prefix('position.type', ''),
   positionTop: prefix('position.top', 'top'),
   positionRight: prefix('position.right', 'right'),
   positionBottom: prefix('position.bottom', 'bottom'),
@@ -209,6 +281,13 @@ export default Component.extend({
     'paddingAll',
   ),
 
+  // Flex
+  flexAlignClass: prefix('flexAlign', 'items'),
+  flexJustifyClass: prefix('flexJustify', 'justify'),
+  flexDirClass: prefix('flexDir', 'flex'),
+  flexWrapClass: prefix('flexWrap', 'flex'),
+  flexClass: prefix('flex', 'flex', { dictionary: FLEX_SIZE_VALS }),
+
   // Collected classes
   allClasses: concat(
     'colorClass',
@@ -217,6 +296,7 @@ export default Component.extend({
     'overflowAllClass',
     'overflowXClass',
     'overflowYClass',
+    'pinClass',
     'radiusClass',
     'shadowClass',
     'textAlignClass',
@@ -233,6 +313,11 @@ export default Component.extend({
     'borderWidthClasses',
     'marginClasses',
     'paddingClasses',
+    'flexAlignClass',
+    'flexJustifyClass',
+    'flexDirClass',
+    'flexWrapClass',
+    'flexClass',
   ),
 
   // Lifecycle
@@ -242,6 +327,7 @@ export default Component.extend({
     checkDictionary(this.color, COLORS, '@color', 'Box');
     checkDictionary(this.display, DISPLAYS, '@display', 'Box');
     checkDictionary(this.layer, LAYERS, '@layer', 'Box');
+    checkDictionary(this.pin, PIN_LOCATIONS, '@pin', 'Box');
     checkDictionary(this.radius, RADII, '@radius', 'Box');
     checkDictionary(this.shadow, SHADOWS, '@shadow', 'Box');
     checkDictionary(this.textAlign, TEXT_ALIGNMENTS, '@textAlign', 'Box');
@@ -268,5 +354,11 @@ export default Component.extend({
     checkDictionary(bw.bottom, WIDTHS, '@borderWidth.bottom');
     checkDictionary(bw.left, WIDTHS, '@borderWidth.left');
     checkDictionary(bw.all, WIDTHS, '@borderWidth.all');
+
+    checkDictionary(this.flexAlign, FLEX_ALIGNMENTS, '@flexAlign', 'Box');
+    checkDictionary(this.flexJustify, FLEX_JUSTIFICATIONS, '@flexJustify', 'Box');
+    checkDictionary(this.flexDir, FLEX_DIRECTIONS, '@flexDir', 'Box');
+    checkDictionary(this.flexWrap, FLEX_WRAPS, '@flexWrap', 'Box');
+    checkDictionary(this.flex, FLEX_SIZES, '@flex', 'Box');
   },
 });

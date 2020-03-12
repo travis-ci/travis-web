@@ -55,6 +55,7 @@ module.exports = function (environment) {
 
     // defaults for running travis-web
     apiEndpoint: 'https://api.travis-ci.org',
+
     pusher: {
       key: '5df8ac576dcccf4fd076',
       host: 'ws.pusherapp.com',
@@ -90,6 +91,7 @@ module.exports = function (environment) {
       enterprise: 'https://enterprise.travis-ci.com',
       imprint: 'https://docs.travis-ci.com/imprint.html',
       jobs: 'https://travisci.workable.com/',
+      languages: 'https://docs.travis-ci.com/user/language-specific/',
       multiOS: 'https://docs.travis-ci.com/user/multi-os/',
       node: 'https://docs.travis-ci.com/user/languages/javascript-with-nodejs/',
       noRun: 'https://docs.travis-ci.com/user/common-build-problems/#i-pushed-a-commit-and-cant-fin',
@@ -117,7 +119,6 @@ module.exports = function (environment) {
       syncingPolling: 3000,
       githubAppsInstallationPolling: 4000,
     },
-    githubOrgsOauthAccessSettingsUrl: 'https://github.com/settings/connections/applications/f244293c729d5066cf27',
     apiTraceEndpoint: 'https://papertrailapp.com/systems/travis-org-api-production/events?q=program%3Aapp%2Fweb%20log-tracing%20',
     ajaxPolling: false,
     logLimit: 100000,
@@ -209,6 +210,7 @@ module.exports = function (environment) {
   ENV.pagination = {
     dashboardReposPerPage: 25,
     profileReposPerPage: 25,
+    repoBuildsPerPage: 25,
   };
 
   if (STRIPE_PUBLISHABLE_KEY) {

@@ -1,22 +1,39 @@
 import Service, { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
+import { and, not, or, reads } from '@ember/object/computed';
+import { defaultVcsConfig, vcsConfig } from 'travis/utils/vcs';
 
 export default Service.extend({
+  auth: service(),
   features: service(),
 
-  enabled: computed('features.{enableAssemblaLogin,enableBitbucketLogin}', function () {
-    return this.features.get('enableAssemblaLogin') || this.features.get('enableBitbucketLogin');
-  }),
+  isProVersion: reads('features.proVersion'),
 
-  disabled: computed('enabled', function () {
-    return !this.enabled;
-  }),
+  enabled: or('enableAssemblaLogin', 'enableBitbucketLogin'),
+  disabled: not('enabled'),
 
-  enableAssemblaLogin: computed('features.enableAssemblaLogin', function () {
-    return this.features.get('enableAssemblaLogin');
-  }),
+  enableAssemblaLogin: and('isProVersion', 'features.enableAssemblaLogin'),
+  enableBitbucketLogin: and('isProVersion', 'features.enableBitbucketLogin'),
 
-  enableBitbucketLogin: computed('features.enableBitbucketLogin', function () {
-    return this.features.get('enableBitbucketLogin');
+  primaryProviderConfig: computed(() => defaultVcsConfig),
+  primaryProvider: reads('primaryProviderConfig.urlPrefix'),
+
+  isProviderEnabled(provider) {
+    return this.isProVersion && this.features.isEnabled(`enable-${provider}-login`);
+  },
+  isProviderPrimary(provider) {
+    return provider === this.primaryProvider;
+  },
+  isProviderBeta(provider) {
+    return !this.isProviderPrimary(provider);
+  },
+
+  userConfig: computed('auth.currentUser.vcsType', function () {
+    const { currentUser } = this.auth;
+    if (currentUser) {
+      const { vcsType } = currentUser;
+      return vcsConfig(vcsType);
+    }
   }),
+  userSlug: reads('userConfig.urlPrefix'),
 });

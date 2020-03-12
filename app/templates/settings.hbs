@@ -219,7 +219,7 @@
       >
         Edit settings on .com
       </ExternalLinkTo>
-      <LinkTo @route="repo.index" @model={{repo}} class="modal-close pointer">
+      <LinkTo @route="repo.index" @models={{array repo.provider repo.ownerName repo.vcsName}} class="modal-close pointer">
         <SvgImage @name="icon-failed" @class="icon" />
       </LinkTo>
     </div>
