@@ -1,6 +1,7 @@
-import Service from '@ember/service';
+import Service, { inject as service } from '@ember/service';
 
 export default Service.extend({
+  auth: service('storage/auth'),
 
   get signupUsers() {
     return JSON.parse(this.getItem('travis.signup.users')) || [];
@@ -9,30 +10,9 @@ export default Service.extend({
     this.setItem('travis.signup.users', JSON.stringify(value || []));
   },
 
-  get storage() {
-    return window.localStorage;
-  },
-
-  get token() {
-    return this.getItem('travis.token');
-  },
-
-  get user() {
-    return this.getItem('travis.user');
-  },
-
-  get authUpdatedAt() {
-    return +this.getItem('travis.auth.updatedAt');
-  },
-
-  get isBecome() {
-    return !!this.getItem('travis.auth.become');
-  },
-
   get billingStep() {
     return +this.getItem('travis.billing_step');
   },
-
   set billingStep(value) {
     this.setItem('travis.billing_step', +value);
   },
@@ -40,7 +20,6 @@ export default Service.extend({
   get billingInfo() {
     return this.parseWithDefault('travis.billing_info', {});
   },
-
   set billingInfo(value) {
     this.setItem('travis.billing_info', JSON.stringify(value));
   },
@@ -48,24 +27,8 @@ export default Service.extend({
   get billingPlan() {
     return this.parseWithDefault('travis.billing_plan', {});
   },
-
   set billingPlan(value) {
     this.setItem('travis.billing_plan', JSON.stringify(value));
-  },
-
-  parseWithDefault(key, defaultValue) {
-    try {
-      return JSON.parse(this.getItem(key)) || defaultValue;
-    } catch (e) {
-      return defaultValue;
-    }
-  },
-
-  clearAuthData() {
-    this.removeItem('travis.token');
-    this.removeItem('travis.user');
-    this.removeItem('travis.auth.updatedAt');
-    this.removeItem('travis.auth.become');
   },
 
   clearPreferencesData() {
@@ -76,6 +39,10 @@ export default Service.extend({
     this.storage.removeItem('travis.billing_step');
     this.storage.removeItem('travis.billing_plan');
     this.storage.removeItem('travis.billing_info');
+  },
+
+  parseWithDefault(key, defaultValue) {
+    return parseWithDefault(this.getItem(key), defaultValue);
   },
 
   // method proxies
@@ -94,5 +61,18 @@ export default Service.extend({
 
   clear() {
     return this.storage.clear();
-  }
+  },
+
+  get storage() {
+    return window.localStorage;
+  },
+
 });
+
+export function parseWithDefault(json, defaultValue) {
+  try {
+    return JSON.parse(json) || defaultValue;
+  } catch (e) {
+    return defaultValue;
+  }
+}

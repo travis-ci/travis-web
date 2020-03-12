@@ -1771,6 +1771,7 @@ export default {
       "attributes": [
         "id",
         "name",
+        "vcs_name",
         "slug",
         "description",
         "github_id",
@@ -1778,6 +1779,7 @@ export default {
         "active",
         "private",
         "owner",
+        "owner_name",
         "default_branch",
         "starred",
         "managed_by_installation",
@@ -1798,6 +1800,7 @@ export default {
         "standard": [
           "id",
           "name",
+          "vcs_name",
           "slug",
           "description",
           "github_id",
@@ -1805,6 +1808,7 @@ export default {
           "active",
           "private",
           "owner",
+          "owner_name",
           "default_branch",
           "starred",
           "managed_by_installation",
@@ -2187,7 +2191,9 @@ export default {
         "installation",
         "is_syncing",
         "synced_at",
-        "recently_signed_up"
+        "recently_signed_up",
+        "vcs_type",
+        "vcs_id"
       ],
       "representations": {
         "minimal": [
@@ -2204,7 +2210,9 @@ export default {
           "allow_migration",
           "is_syncing",
           "synced_at",
-          "recently_signed_up"
+          "recently_signed_up",
+          "vcs_type",
+          "vcs_id"
         ],
         "additional": [
           "repositories",

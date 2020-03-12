@@ -53,12 +53,15 @@ module('Acceptance | owner repositories', function (hooks) {
       slug: 'user-login/yet-another-repository-name',
       owner: {
         login: user.login
-      }
+      },
+      owner_name: user.login
     });
 
     this.server.create('repository', {
       slug: 'other/other',
-      skipPermissions: true
+      skipPermissions: true,
+      owner_name: 'other',
+      vcs_name: 'other'
     });
   });
 

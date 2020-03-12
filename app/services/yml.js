@@ -23,7 +23,9 @@ export default Service.extend({
       yield timeout(searchDebounceRate);
     }
     try {
-      return yield this.store.queryRecord('request-config', { id: id, data });
+      return yield this.store.queryRecord('request-config', { id: id, data }).then(function() {
+        console.log(arguments);
+      });
     } catch (e) {
       this.handleLoadConfigError(e);
     }

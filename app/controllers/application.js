@@ -1,8 +1,8 @@
 import Controller from '@ember/controller';
 import { inject as service } from '@ember/service';
-import { later } from '@ember/runloop';
 import QueryParams from 'ember-parachute';
 import { UTM_FIELDS, UTM_FIELD_NAMES } from 'travis/services/utm';
+import { next } from '@ember/runloop';
 
 export const UTM_QUERY_PARAMS = new QueryParams({
   [UTM_FIELDS.CAMPAIGN]: { defaultValue: null, replace: true, refresh: true },
@@ -19,13 +19,13 @@ export default Controller.extend(UTM_QUERY_PARAMS.Mixin, {
   setup({ queryParams }) {
     const hasUtms = this.utm.capture(queryParams);
     if (hasUtms) {
-      this.resetUTMs();
+      next(() => this.resetUTMs());
     }
   },
 
   resetUTMs() {
-    later(() => {
-      try { this.resetQueryParams([...UTM_FIELD_NAMES]); } catch (e) {}
-    }, 100);
+    try {
+      this.resetQueryParams([...UTM_FIELD_NAMES]);
+    } catch (e) {}
   }
 });

@@ -49,8 +49,9 @@ export default Model.extend({
     }
   ),
 
-  url: computed('build.repo.{slug,vcsType}', 'sha', function () {
-    const [owner, repo] = this.get('build.repo.slug').split('/');
+  url: computed('build.repo.{ownerName,vcsName,vcsType}', 'sha', function () {
+    const owner = this.get('build.repo.ownerName');
+    const repo = this.get('build.repo.vcsName');
     const vcsType = this.get('build.repo.vcsType');
     const commit = this.get('sha');
 

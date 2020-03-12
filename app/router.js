@@ -19,7 +19,8 @@ Router.map(function () {
 
   this.route('first_sync');
   this.route('insufficient_oauth_permissions');
-  this.route('auth');
+  this.route('signin');
+  this.route('signup');
   this.route('github_apps_installation', { path: '/settings/github-apps-installations/redirect' });
   this.route('plans', { path: '/plans' }, function () {
     this.route('index', { path: '/' });
@@ -28,6 +29,9 @@ Router.map(function () {
   this.route('team', { path: '/about' });
   this.route('logo', { path: '/logo' });
   this.route('help');
+  this.route('integration', function () {
+    this.route('bitbucket');
+  });
 
   this.route('account', function () {
     this.route('repositories');
@@ -50,33 +54,39 @@ Router.map(function () {
     this.route('thank-you');
   });
 
-  this.route('repo', { path: '/:owner/:name' }, function () {
+  this.route('repo', { path: '/:provider/:owner/:name' }, function () {
     this.route('index', { path: '/' });
     this.route('branches', { path: '/branches', resetNamespace: true });
     this.route('config', { path: '/config' });
+    this.route('builds', { path: '/builds', resetNamespace: true });
     this.route('build', { path: '/builds/:build_id', resetNamespace: true }, function () {
       this.route('config');
     });
     this.route('job', { path: '/jobs/:job_id', resetNamespace: true }, function () {
       this.route('config');
     });
-    this.route('builds', { path: '/builds', resetNamespace: true });
     this.route('pullRequests', { path: '/pull_requests', resetNamespace: true });
     this.route('requests', { path: '/requests', resetNamespace: true });
     if (config.endpoints.caches) {
       this.route('caches', { path: '/caches', resetNamespace: true });
     }
-    this.route('settings', { resetNamespace: true }, function () {
-      this.route('index', { path: '/' });
-    });
+    this.route('settings', { resetNamespace: true });
   });
-  this.route('owner', { path: '/:owner', resetNamespace: true }, function () {
+
+  this.route('owner', { path: '/:provider/:owner', resetNamespace: true }, function () {
     this.route('repositories', { path: '/' });
   });
 
+  this.route('provider', { path: '/:provider' });
+
+  this.route('legacy-repo-url', { path: '/:owner' });
+  this.route('legacy-repo-url', { path: '/:owner/:repo' });
+  this.route('legacy-repo-url', { path: '/:owner/:repo/:method' });
+  this.route('legacy-repo-url', { path: '/:owner/:repo/:method/:id' });
+  this.route('legacy-repo-url', { path: '/:owner/:repo/:method/:id/:view' });
+
   this.route('error404', { path: '/404' });
   this.route('page-not-found', { path: '/*wildcard' });
-  this.route('signin');
 });
 
 export default Router;

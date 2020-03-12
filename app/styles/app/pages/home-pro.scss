@@ -74,6 +74,10 @@
     text-align: center;
   }
 
+  .section-bitbucket {
+    padding-bottom: 25px;
+  }
+
   .section-companies {
     @media #{$small-only} {
       padding: 40px 0px;
@@ -134,12 +138,12 @@
 
     .list-check {
       @media #{$medium-only} {
-        padding-left: 10px
+        padding-left: 0;
       }
-      padding-left: 39px;
+      padding-left: 20px;
       padding-top: 12px;
 
-      img {
+      .checkmark {
         @media #{$small-only} {
           margin-right: 10px;
         }
@@ -164,12 +168,12 @@
 
   .list-check-container {
     @media #{$small-only} {
-      max-width: 338px;
+      max-width: 357px;
       margin: 0 auto;
     }
 
     @media #{$medium-only} {
-      max-width: 338px;
+      max-width: 345px;
       margin: 0 auto;
     }
 
@@ -231,14 +235,14 @@
         flex-direction: row;
       }
 
-      p {
+      .build-steps {
         @media #{$small-only} {
-          width: 160px;
+          width: 200px;
           text-align: left;
           padding-left: 15px;
         }
         @media #{$medium-only} {
-          width: 160px;
+          width: 200px;
           text-align: left;
           padding-left: 15px;
         }
@@ -254,18 +258,13 @@
     }
 
     .branch-pr-container {
-      @media #{$small-only} {
-        display: grid;
-        grid-template-columns: .2fr 1fr;
-        margin: 0 auto;
-        width: 215px;
+      @media #{$small-up} {
+        display: flex;
+        justify-content: center;
       }
 
-      @media #{$medium-only} {
-        display: grid;
-        grid-template-columns: .2fr 1fr;
-        margin: 0 auto;
-        width: 215px;
+      @media #{$large-up} {
+        flex-direction: column;
       }
     }
 
@@ -288,10 +287,11 @@
 
       @media #{$large-up} {
         background-image: url("../images/landing-page/build-flow.png");
+        background-position: center center;
         background-repeat: no-repeat;
         width: 900px;
-        height: 114px;
-        background-size: 900px;
+        height: 116px;
+        background-size:100% auto;
         margin: 0 auto;
       }
     }
@@ -902,7 +902,11 @@ main {
     font-weight: 300;
     line-height: 1.5em;
     color: #666666;
-    margin-bottom: 60px;
+  }
+
+  .signin-link {
+    color: $turf-green;
+    border-bottom: 1px solid currentColor;
   }
 }
 
@@ -1047,17 +1051,15 @@ main {
     padding: 15px;
 
     .rails-logo {
-      width: 160px;
+      width: 90px;
       position: relative;
-      right: 37px;
-      bottom: 10px;
+      margin-bottom: 2rem;
     }
 
     .twitter-logo {
-      width: 160px;
+      width: 32px;
       position: relative;
-      bottom: 20px;
-      right: 80px;
+      margin-bottom: 2rem;
     }
 
     .quote-pypy-logo {
