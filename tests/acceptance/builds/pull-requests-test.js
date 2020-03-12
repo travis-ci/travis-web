@@ -5,6 +5,10 @@ import topPage from 'travis/tests/pages/top';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { percySnapshot } from 'ember-percy';
 import { setupMirage } from 'ember-cli-mirage/test-support';
+import { settled } from '@ember/test-helpers';
+import config from 'travis/config/environment';
+
+const { repoBuildsPerPage } = config.pagination;
 
 module('Acceptance | builds/pull requests', function (hooks) {
   setupApplicationTest(hooks);
@@ -57,7 +61,7 @@ module('Acceptance | builds/pull requests', function (hooks) {
       committer: gitUser
     });
 
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < repoBuildsPerPage; i++) {
       let build = this.server.create('build', {
         state: 'passed',
         number: 1000 - i,
@@ -87,7 +91,7 @@ module('Acceptance | builds/pull requests', function (hooks) {
 
     await page.visitPullRequests({ organization: 'travis-ci', repo: 'travis-web' });
 
-    assert.equal(page.builds.length, 10, 'expected a page of pull request builds');
+    assert.equal(page.builds.length, repoBuildsPerPage, 'expected a page of pull request builds');
 
     page.builds[0].as(pullRequest => {
       assert.ok(pullRequest.started, 'expected the pull request to have started');
@@ -110,8 +114,10 @@ module('Acceptance | builds/pull requests', function (hooks) {
 
     assert.equal(topPage.flashMessage.text, 'Build has been successfully cancelled.');
 
+    await settled();
+
     await page.showMoreButton.click();
 
-    assert.equal(page.builds.length, 11, 'expected another page to have loaded');
+    assert.equal(page.builds.length, (repoBuildsPerPage + 1), 'expected another page to have loaded');
   });
 });
