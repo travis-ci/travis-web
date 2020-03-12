@@ -23,13 +23,11 @@ export default Service.extend({
       yield timeout(searchDebounceRate);
     }
     try {
-      return yield this.store.queryRecord('request-config', { id: id, data }).then(function() {
-        console.log(arguments);
-      });
+      return yield this.store.queryRecord('request-config', { id: id, data });
     } catch (e) {
       this.handleLoadConfigError(e);
     }
-  }).drop(),
+  }).restartable(),
 
   handleLoadConfigError(e) {
     if (e.json) {
