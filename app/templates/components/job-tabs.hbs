@@ -14,13 +14,14 @@
     </li>
     <li>
       <LinkTo
-        @route="job.config"
-        @models={{array this.repo this.job}}
-        @title="Look at this job's config"
-        @disabled={{this.job.build.request.noYaml}}
+        @route="{{route}}.config"
+        @models={{array this.repo this.model}}
+        @title="Look at this {{this.modelName}}'s config"
+        data-test-build-yaml-tab="true"
+        @disabled={{this.request.noConfigs}}
         data-test-build-config-tab="true"
       >
-        {{#if this.job.build.request.noYaml}}
+        {{#if this.job.build.request.noConfigs}}
           <EmberTooltip @text="Try a more recent job to see the config" />
         {{/if}}
 
