@@ -102,10 +102,10 @@ module('Acceptance | request/config', function (hooks) {
       await page.configTab.click();
       await page.requestMessagesHeader.click();
 
-      assert.equal(page.ymlMessages.length, 2, 'expected two yml messages');
+      assert.equal(page.requestMessages.length, 2, 'expected two request messages');
 
-      page.ymlMessages[0].as(message => {
-        assert.ok(message.icon.isWarning, 'expected the yml message to be a warn');
+      page.requestMessages[0].as(message => {
+        assert.ok(message.icon.isWarning, 'expected the request message to be a warn');
         assert.equal(message.message, 'unrecognised message code skortleby');
         assert.equal(page.config[0].codeblock.id, codeblockName(msg1.src));
         assert.equal(message.link.href, `#${codeblockName(msg1.src)}.${msg1.line + 1}`);
