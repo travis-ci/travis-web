@@ -1,5 +1,5 @@
 {{#if this.showConfigValidation}}
-  <div class="yml-messages">
+  <div class="request-messages">
     <div class="header" {{action 'toggle'}}>
       <span class="tooltip-wrapper level-icon">
         <SvgImage @name="msg-{{this.maxLevel}}"  @class={{this.iconClass}} />
@@ -19,7 +19,7 @@
     {{#if this.isExpanded}}
       <div class="list">
         {{#each this.request.messages as |message|}}
-          <BuildMessage @message={{message}} />
+          <Request::Message @message={{message}} />
         {{/each}}
       </div>
     {{/if}}
