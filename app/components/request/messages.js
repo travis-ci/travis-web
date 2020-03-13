@@ -15,10 +15,9 @@ export default Component.extend(WithConfigValidation, {
   tagName: '',
   isExpanded: false,
 
+  messages: [],
   request: null,
-
   repo: reads('request.repo'),
-  messages: reads('request.messages'),
 
   toggleStatusClass: computed('isExpanded', function () {
     return this.get('isExpanded') ? 'expanded' : 'collapsed';

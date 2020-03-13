@@ -5,5 +5,5 @@ export default Mixin.create({
   canCreateRequest: reads('repo.permissions.create_request'),
   repoMigrating: equal('repo.MigrationStatus', 'migrated'),
   repoNotMigrating: not('repoMigrating'),
-  displayTriggerBuild: and('canCreateRequest', 'repoNotMigrating'),
+  canTriggerBuild: and('canCreateRequest', 'repoNotMigrating'),
 });
