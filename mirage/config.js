@@ -621,6 +621,49 @@ export default function () {
     return this.serialize(builds, 'build');
   });
 
+  this.post('/repo/:id/request/config', (schema, { params }) => {
+    const requestConfig = schema.requestConfigs.create({
+      raw_configs: [{
+        source: 'test/test_repo:.travis.yml@master',
+        config: 'script: echo "Hello World"',
+        mode: 'deep_merge_append'
+      }],
+      request_config: {
+        language: 'node_js',
+        os: ['linux'],
+      },
+      job_configs: [{
+        os: 'linux',
+        language: 'node_js',
+      }],
+      messages: [
+        {
+          type: 'config',
+          level: 'info',
+          key: 'root',
+          code: 'default',
+          args: {
+            key: 'os',
+            default: 'linux'
+          }
+        }
+      ]
+    });
+    if (params.config === 'invalid') {
+      return Response(400, {}, {
+        error_type: 'invalid_config_format',
+        error_message: 'Invalid value: invalid'
+      });
+    } else {
+      return new Response(200, {}, {
+        raw_configs: requestConfig.raw_configs,
+        request_config: requestConfig.request_config,
+        job_configs: requestConfig.job_configs,
+        messages: requestConfig.messages,
+      });
+    }
+  });
+
   this.get('/repo/:repo_id/requests', function (schema, { params: { repo_id: repoId } }) {
     let requests = schema.requests.where({ repositoryId: repoId });
 
