@@ -1,4 +1,4 @@
-<div class="inner-yaml-container">
+<div class="inner-config-container">
   <div class="header" {{on 'click' (action 'toggle')}}>
     {{#if this.fileUrl}}
       <ExternalLinkTo @href={{this.fileUrl}}>
@@ -23,7 +23,7 @@
         @language="yaml"
         class="codedisplay line-numbers"
         id={{this.codeblockId}}
-        data-test-yaml="true"
+        data-test-config="true"
       >{{this.formattedConfig}}</CodeBlock>
       <CopyButton
         @clipboardText={{this.rawConfig.config}}
