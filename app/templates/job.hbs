@@ -7,7 +7,12 @@
       @repo={{this.repo}}
     />
     <JobInfrastructureNotification @job={{this.job}} />
-    <JobTabs @job={{this.job}} @repo={{this.repo}} />
+    <JobTabs
+      @route="job"
+      @model={{this.job}}
+      @request={{this.job.build.request}}
+      @repo={{this.repo}}
+    />
   {{else}}
     <div id="job">
       <LoadingIndicator />

@@ -8,10 +8,10 @@ export default Component.extend(WithConfigValidation, {
   classNames: ['travistab'],
 
   router: service(),
+  modelName: reads('model.constructor.modelName'),
 
   isConfig: match('router.currentRouteName', /config$/),
   isLog: not('isConfig'),
 
-  messages: reads('job.build.request.messages')
-
+  messages: reads('request.messages')
 });
