@@ -27,6 +27,6 @@ export default Component.extend({
     }
   ),
 
-  isConfig: match('router.currentRouteName', /config$/),
+  isConfig: match('routeName', /config$/),
   isLog: not('isConfig'),
 });
