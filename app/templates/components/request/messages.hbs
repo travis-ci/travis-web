@@ -6,19 +6,21 @@
         <EmberTooltip @text={{this.summary}} />
       </span>
       Build config validation
-      {{#unless this.isExpanded}}
+      {{#if this.displaySummary}}
         &mdash; {{this.summary}}
-      {{/unless}}
+      {{/if}}
       <div class="tools">
         <ExternalLinkTo href="{{config-get 'urls.buildConfigValidation'}}">
           <SvgImage @name='icon-help' @class='icon-help' />
         </ExternalLinkTo>
-        <SvgImage @name="icon-dropdown-arrow" @class="icon-toggle icon-{{this.toggleStatusClass}}" />
+        {{#if this.messages}}
+          <SvgImage @name="icon-dropdown-arrow" @class="icon-toggle icon-{{this.toggleStatus}}" />
+        {{/if}}
       </div>
     </div>
-    {{#if this.isExpanded}}
+    {{#if this.expanded}}
       <div class="list">
-        {{#each this.request.messages as |message|}}
+        {{#each this.messages as |message|}}
           <Request::Message @message={{message}} />
         {{/each}}
       </div>

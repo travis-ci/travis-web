@@ -1,0 +1,144 @@
+<TravisForm
+  @onSubmit={{perform this.triggerBuild}}
+  as |form|
+>
+  <div class="request-configs-fields" data-test-build-config-form='true'>
+    <div class="form-elem">
+      {{#radio-button
+        value="sha"
+        groupValue=refType
+        changed=(action "change" "refType")
+        classNames="ref-type"
+      }}
+        Commit
+      {{/radio-button}}
+      {{#radio-button
+        value="branch"
+        groupValue=refType
+        changed=(action "change" "refType")
+        classNames="ref-type"
+      }}
+        Branch
+      {{/radio-button}}
+      {{#if (eq refType 'sha') }}
+        <form.field
+          data-test-request-configs-sha="true"
+          @placeholder="Specify a Git sha (optional)"
+          @value={{this.sha}}
+          @showValidationStatusIcons={{false}}
+          @onChange={{action "change" "sha"}}
+          as |field|
+        >
+          {{field.input}}
+        </form.field>
+      {{else}}
+        <form.field
+          data-test-request-configs-branch="true"
+          @classNames="ref-type-branch"
+          @placeholder="Select a branch"
+          @value={{this.branch}}
+          @showValidationStatusIcons={{false}}
+          @onChange={{action "change" "branch"}}
+          as |field|
+        >
+          <field.select
+            @search={{perform this.searchBranches}}
+            as |branch|
+          >
+            {{branch}}
+          </field.select>
+        </form.field>
+      {{/if}}
+    </div>
+
+    <div class="form-elem">
+      <form.field
+        data-test-request-configs-message="true"
+        @classNames="ref-type-sha"
+        @value={{this.message}}
+        @label="Message"
+        @onChange={{action "change" "message"}}
+        @placeholder="Overwrite the commit message (optional)"
+        as |field|
+      >
+        {{field.input}}
+      </form.field>
+    </div>
+    <div class="form-elem">
+      <form.field
+        data-test-request-configs-config="true"
+        @label="Custom Build Config"
+        as |field|
+      >
+        <div class="config-type {{this.configMode}}">
+          <span class="yaml">YAML</span>
+          <span class="javascript">JSON</span>
+        </div>
+
+        {{ivy-codemirror
+          value=this.config
+          valueUpdated=(action "change" "config")
+          options=(hash
+            mode=this.configMode
+            lineNumbers=true
+            tabSize=2
+            indentWithTabs=false
+            placeholder="Overwrite build config"
+          )
+        }}
+
+        <Request::Messages
+          @request={{this.request}}
+          @messages={{this.messages}}
+          @loading={{this.loading}}
+        />
+
+      </form.field>
+    </div>
+
+    <div class="form-elem">
+      <h4>
+        Merge mode
+      </h4>
+      {{#radio-button
+        value="deep_merge_append"
+        groupValue=mergeMode
+        changed=(action "change" "mergeMode")
+      }}
+        Deep Merge & Append
+      {{/radio-button}}
+      {{#radio-button
+        value="deep_merge_prepend"
+        groupValue=mergeMode
+        changed=(action "change" "mergeMode")
+      }}
+        Deep Merge & Prepend
+      {{/radio-button}}
+      {{#radio-button
+        value="deep_merge"
+        groupValue=mergeMode
+        changed=(action "change" "mergeMode")
+      }}
+        Deep Merge
+      {{/radio-button}}
+      {{#radio-button
+        value="merge"
+        groupValue=mergeMode
+        changed=(action "change" "mergeMode")
+      }}
+        Merge
+      {{/radio-button}}
+      {{#radio-button
+        value="replace"
+        groupValue=mergeMode
+        changed=(action "change" "mergeMode")
+      }}
+        Replace
+      {{/radio-button}}
+
+      <ExternalLinkTo class="hint" href="{{config-get 'urls.triggerBuildMergeModes'}}">
+        <SvgImage @name='icon-help' @class='icon-help' />
+      </ExternalLinkTo>
+    </div>
+  </div>
+</TravisForm>
