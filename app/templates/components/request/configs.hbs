@@ -15,6 +15,13 @@
     </div>
   {{/if}}
 
+  {{#unless this.closed}}
+    <Request::ConfigsTriggerBuildNotice
+      @customize={{this.customize}}
+      @configs={{this.rawConfigs.length}}
+    />
+  {{/unless}}
+
   {{#if this.closed}}
     <Request::Messages
       @request={{this.request}}
@@ -33,12 +40,17 @@
     />
   {{/each}}
 
+  <Request::Config
+    @config={{this.request.config}}
+  />
+
 {{else}}
   <Request::Messages
-    @request={{@request}}
+    @request={{this.request}}
     @messages={{this.request.messages}}
     @viewMessage={{action (mut this.viewingMessage)}}
   />
+
   <div class="raw-configs">
     {{#each @request.uniqRawConfigs as |config|}}
       <Request::RawConfig
@@ -53,6 +65,9 @@
         The .travis.yml file used for this job is not available
       </div>
     {{/each}}
-    <Request::Config @config={{@request.config}} />
+
+    <Request::Config
+      @config={{this.request.config}}
+    />
   </div>
 {{/if}}
