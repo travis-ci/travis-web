@@ -19,10 +19,17 @@
       {{else}}
         <LoadingIndicator @center={{true}} />
       {{/if}}
-    {{else}}
+    {{else if this.isLog}}
       <JobInfrastructureNotification @job={{this.job}} />
-      <JobTabs @job={{this.job}} @repo={{this.repo}} />
+      <JobTabs
+        @route="build"
+        @model={{this.build}}
+        @request={{this.request}}
+        @repo={{this.repo}}
+      />
       <JobLog data-test-job-log="true" @job={{this.job}} />
+    {{else}}
+      <JobTabs @route="build" @model={{this.build}} @repo={{this.repo}} />
     {{/if}}
   {{else}}
     <NoBuilds />
