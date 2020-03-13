@@ -1,12 +1,12 @@
-<div class="yml-message">
+<div class="request-message">
   {{#if this.isLinkable}}
     <a
       href={{this.lineLink}}
-      class="yml-message-link"
+      class="request-message-link"
       tabindex="0"
-      data-test-yml-message-link="true"
+      data-test-request-message-link="true"
     >
-      <BuildMessageLine
+      <Request::MessageLine
         @iconClass={{this.iconClass}}
         @level={{this.message.level}}
         @code={{this.message.code}}
@@ -16,7 +16,7 @@
     </a>
   {{else}}
     <div tabindex="0">
-      <BuildMessageLine
+      <Request::MessageLine
         @iconClass={{this.iconClass}}
         @level={{this.message.level}}
         @code={{this.message.code}}

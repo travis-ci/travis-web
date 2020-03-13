@@ -1,4 +1,4 @@
-.build-messages-badge {
+.request-messages-badge {
   display: inline-block;
   width: 8px;
   height: 8px;
@@ -17,7 +17,7 @@
   }
 }
 
-.yml-messages {
+.request-messages {
   @include travisBorder;
 
   margin: 1.2em 0;
@@ -85,7 +85,7 @@
     }
   }
 
-  .yml-message-link {
+  .request-message-link {
     display: block;
 
     &:hover {
@@ -93,7 +93,7 @@
     }
   }
 
-  .yml-message-line {
+  .request-message-line {
     display: flex;
     align-items: flex-start;
 
