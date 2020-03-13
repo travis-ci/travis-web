@@ -1,8 +1,8 @@
-.paper-block + .inner-yaml-container {
+.paper-block + .inner-config-container {
   margin-top: 1.2em;
 }
 
-.inner-yaml-container {
+.inner-config-container {
   position: relative;
   border: 1px solid $pebble-grey;
   margin-bottom: 1.2em;
@@ -28,15 +28,15 @@
   }
 }
 
-$yaml-code-font-size: 12px;
+$config-code-font-size: 12px;
 pre.codedisplay[class*='language-'] {
   white-space: pre-wrap;
   background-color: white !important;
-  font-size: $yaml-code-font-size;
+  font-size: $config-code-font-size;
 
   code {
     font-family: $font-family-monospace;
-    font-size: $yaml-code-font-size;
+    font-size: $config-code-font-size;
     color: $asphalt-grey;
     line-height: 20px;
   }
@@ -45,7 +45,7 @@ pre.codedisplay[class*='language-'] {
     margin-top: -1px;
     border-right: 0px;
     color: $dry-cement;
-    font-size: $yaml-code-font-size;
+    font-size: $config-code-font-size;
     line-height: 17px;
   }
 }

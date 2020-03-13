@@ -32,7 +32,7 @@ let rawConfigs = [
   }
 ];
 
-module('Acceptance | config/yaml', function (hooks) {
+module('Acceptance | request/config', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 
@@ -59,16 +59,16 @@ module('Acceptance | config/yaml', function (hooks) {
       this.server.create('job', { number: '1234.2', state: 'received', build: this.build, repository: this.repository, config: { language: 'Hello' } });
     });
 
-    test('renders build yaml', async function (assert) {
+    test('renders build config', async function (assert) {
       await visit(`/travis-ci/travis-web/builds/${this.build.id}`);
 
       assert.equal(document.title, `Build #${this.build.number} - travis-ci/travis-web - Travis CI`);
-      await page.yamlTab.click();
+      await page.configTab.click();
 
       assert.equal(document.title, `Config - Build #${this.build.number} - travis-ci/travis-web - Travis CI`);
-      assert.equal(page.yaml[0].codeblock.text, 'language: jortle sudo: tortle');
-      assert.equal(page.yaml[0].source, '.travis.yml');
-      assert.equal(page.yaml[0].codeblock.id, codeblockName(source));
+      assert.equal(page.config[0].codeblock.text, 'language: jortle sudo: tortle');
+      assert.equal(page.config[0].source, '.travis.yml');
+      assert.equal(page.config[0].codeblock.id, codeblockName(source));
     });
 
     test('shows build messages when they exist', async function (assert) {
@@ -99,26 +99,26 @@ module('Acceptance | config/yaml', function (hooks) {
       });
 
       await visit(`/travis-ci/travis-web/builds/${this.build.id}`);
-      await page.yamlTab.click();
-      await page.yamlMessagesHeader.click();
+      await page.configTab.click();
+      await page.requestMessagesHeader.click();
 
       assert.equal(page.ymlMessages.length, 2, 'expected two yml messages');
 
       page.ymlMessages[0].as(message => {
         assert.ok(message.icon.isWarning, 'expected the yml message to be a warn');
         assert.equal(message.message, 'unrecognised message code skortleby');
-        assert.equal(page.yaml[0].codeblock.id, codeblockName(msg1.src));
+        assert.equal(page.config[0].codeblock.id, codeblockName(msg1.src));
         assert.equal(message.link.href, `#${codeblockName(msg1.src)}.${msg1.line + 1}`);
       });
 
       percySnapshot(assert);
     });
 
-    test('hides the tab when no yaml is found', async function (assert) {
+    test('hides the tab when no config is found', async function (assert) {
       this.request.raw_configs = [];
 
       await visit(`/travis-ci/travis-web/builds/${this.build.id}`);
-      assert.ok(page.yamlTab.isDisabled, 'expected the config tab to be disabled when there’s no .travis.yml');
+      assert.ok(page.configTab.isDisabled, 'expected the config tab to be disabled when there’s no .travis.yml');
     });
 
     test('shows the job note when viewing a single job', async function (assert) {
@@ -129,8 +129,8 @@ module('Acceptance | config/yaml', function (hooks) {
 
     test('shows all unique raw configs', async function (assert) {
       await visit(`/travis-ci/travis-web/builds/${this.build.id}`);
-      await page.yamlTab.click();
-      assert.equal(page.yaml.length, 3, 'expected three yaml code block');
+      await page.configTab.click();
+      assert.equal(page.config.length, 3, 'expected three config code block');
     });
 
     test('shows only file name for travis yml', async function (assert) {
@@ -140,8 +140,8 @@ module('Acceptance | config/yaml', function (hooks) {
         source: source
       }];
       await visit(`/travis-ci/travis-web/builds/${this.build.id}`);
-      await page.yamlTab.click();
-      assert.equal(page.yaml[0].source, '.travis.yml');
+      await page.configTab.click();
+      assert.equal(page.config[0].source, '.travis.yml');
     });
 
     test('shows internal path with sha', async function (assert) {
@@ -151,8 +151,8 @@ module('Acceptance | config/yaml', function (hooks) {
         source: source
       }];
       await visit(`/travis-ci/travis-web/builds/${this.build.id}`);
-      await page.yamlTab.click();
-      assert.equal(page.yaml[0].source, './internal/config.yml@7e0d841');
+      await page.configTab.click();
+      assert.equal(page.config[0].source, './internal/config.yml@7e0d841');
     });
 
     test('shows external path with formatted sha', async function (assert) {
@@ -162,13 +162,13 @@ module('Acceptance | config/yaml', function (hooks) {
         source: source
       }];
       await visit(`/travis-ci/travis-web/builds/${this.build.id}`);
-      await page.yamlTab.click();
-      assert.equal(page.yaml[0].source, 'some_path/config.yml@7e0d841');
+      await page.configTab.click();
+      assert.equal(page.config[0].source, 'some_path/config.yml@7e0d841');
     });
   });
 
   module('with a single-job build', function () {
-    test('shows yaml', async function (assert) {
+    test('shows config', async function (assert) {
       this.server.create('message', {
         request: this.request,
         level: 'warn',
@@ -176,18 +176,18 @@ module('Acceptance | config/yaml', function (hooks) {
       });
 
       await visit(`/travis-ci/travis-web/jobs/${this.job.id}`);
-      await page.yamlTab.click();
+      await page.configTab.click();
 
       assert.ok(page.jobYamlNote.isHidden, 'expected the job note to be hidden for a single-job build');
-      assert.equal(page.yaml[0].codeblock.text, 'language: jortle sudo: tortle');
-      assert.equal(page.yaml[0].source, '.travis.yml');
+      assert.equal(page.config[0].codeblock.text, 'language: jortle sudo: tortle');
+      assert.equal(page.config[0].source, '.travis.yml');
     });
 
-    test('hides the tab when no yaml is found', async function (assert) {
+    test('hides the tab when no config is found', async function (assert) {
       this.request.raw_configs = [];
 
       await visit(`/travis-ci/travis-web/jobs/${this.job.id}`);
-      assert.ok(page.yamlTab.isDisabled, 'expected the config tab to be disabled when there’s no .travis.yml');
+      assert.ok(page.configTab.isDisabled, 'expected the config tab to be disabled when there’s no .travis.yml');
     });
   });
 });
