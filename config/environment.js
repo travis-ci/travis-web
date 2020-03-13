@@ -196,6 +196,7 @@ module.exports = function (environment) {
     'enable-assembla-login': false,
     'enable-bitbucket-login': false,
     'gitlab-login': false,
+    'show-new-config-view': true,
   };
 
   if (TRAVIS_PRO) {
