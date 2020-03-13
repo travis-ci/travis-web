@@ -24,5 +24,4 @@ export default Mixin.create({
   messagesBadgeTooltipText: computed('messagesMaxLevel', function () {
     return `This build's config has ${this.messagesMaxLevel} level validation messages`;
   }),
-
 });

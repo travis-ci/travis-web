@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { reads, sort } from '@ember/object/computed';
+import { and, not, reads, sort } from '@ember/object/computed';
 import { pluralize } from 'ember-inflector';
 import WithConfigValidation from 'travis/mixins/components/with-config-validation';
 
@@ -12,18 +12,21 @@ const MSGS = {
 };
 
 export default Component.extend(WithConfigValidation, {
-  tagName: '',
-  isExpanded: false,
+  tagName: 'div',
+  className: 'request-messages',
+  expanded: false,
+  collapsed: not('expanded'),
+  displaySummary: and('collapsed', 'summary'),
 
   messgages: computed(() => []),
   request: null,
   repo: reads('request.repo'),
 
-  toggleStatusClass: computed('isExpanded', function () {
-    return this.get('isExpanded') ? 'expanded' : 'collapsed';
+  toggleStatus: computed('expanded', function () {
+    return this.get('expanded') ? 'expanded' : 'collapsed';
   }),
 
-  sortedMessages: sort('request.messages', (lft, rgt) =>
+  sortedMessages: sort('messages', (lft, rgt) =>
     sortOrder(lft.level) - sortOrder(rgt.level)
   ),
 
@@ -44,7 +47,7 @@ export default Component.extend(WithConfigValidation, {
 
   actions: {
     toggle() {
-      this.toggleProperty('isExpanded');
+      this.toggleProperty('expanded');
     }
   }
 });
