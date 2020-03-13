@@ -20,7 +20,7 @@
           class="label-align"
         >
           <span class="repo-title-text">
-            {{this.repoName}}
+            {{this.repo.name}}
           </span>
         </LinkTo>
       </h2>
@@ -63,7 +63,7 @@
             @models={{array
               this.repo.provider
               this.ownerName
-              this.repoName
+              this.repoVcsName
               this.repo.defaultBranch.lastBuild.id
             }}
           >
