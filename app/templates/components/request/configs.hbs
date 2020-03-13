@@ -4,7 +4,7 @@
 />
 <div class="raw-configs">
   {{#each @request.uniqRawConfigs as |rawConfig|}}
-    <RawConfig
+    <Request::RawConfig
       @rawConfig={{rawConfig}}
       @build={{@request.build}}
       @slug={{@request.repo.slug}}
