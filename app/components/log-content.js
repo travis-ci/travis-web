@@ -130,8 +130,10 @@ export default Component.extend({
       this.set('limited', false);
       this.clearLogElement();
       log.onClear(() => {
-        this.teardownLog();
-        return this.createEngine();
+        if (!this.isDestroyed && !this.isDestroying && this.element) {
+          this.teardownLog();
+          return this.createEngine();
+        }
       });
       this.scroll = new Log.Scroll({
         beforeScroll: () => {
