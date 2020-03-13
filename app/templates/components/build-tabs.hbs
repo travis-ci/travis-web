@@ -15,7 +15,7 @@
       <LinkTo
         @route="build.config"
         @models={{array this.build.repo this.build}}
-        data-test-build-config-tab
+        data-test-build-config-tab="true"
         @title="Look at this build's config"
         @disabled={{this.build.request.noConfigs}}
       >
