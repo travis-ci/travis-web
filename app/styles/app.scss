@@ -37,6 +37,7 @@
 @import "app/modules/notice";
 @import "app/modules/build-header";
 @import "app/modules/request-messages";
+@import "app/modules/request-config";
 @import "app/modules/avatar";
 @import "app/modules/popup";
 @import "app/modules/lastbuild";
@@ -53,7 +54,6 @@
 @import "app/modules/loading-screen";
 @import "app/modules/paper-block";
 @import "app/modules/travis-form";
-@import "app/modules/yaml";
 @import "app/modules/loading-overlay";
 @import "app/modules/migrate";
 @import "app/modules/modals";
