@@ -14,9 +14,9 @@
     </li>
     <li>
       <LinkTo
-        @route="{{route}}.config"
-        @models={{array this.repo this.model}}
-        @title="Look at this {{this.modelName}}'s config"
+        @route="job.config"
+        @models={{array this.repo this.job}}
+        @title="Look at this job's config"
         data-test-build-yaml-tab="true"
         @disabled={{this.request.noConfigs}}
         data-test-build-config-tab="true"
