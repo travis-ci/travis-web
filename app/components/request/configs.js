@@ -18,6 +18,12 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
 
   preview: service('request-config'),
   features: service(),
+
+  status: 'closed',
+  closed: equal('status', 'closed'),
+  customizing: equal('status', 'customize'),
+  previewing: equal('status', 'preview'),
+  replacing: equal('mergeMode', 'replace'),
   showNewConfigView: reads('features.showNewConfigView'),
 
   repo: reads('request.repo'),
@@ -27,7 +33,7 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
   loading: reads('preview.loading'),
 
   refType: 'sha',
-  sha: reads('originalSha'),
+  sha: truncated('originalSha', 10),
   branch: reads('originalBranch'),
   message: reads('request.commit.message'),
   config: reads('request.apiConfig.config'),
