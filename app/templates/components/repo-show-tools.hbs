@@ -31,15 +31,26 @@
       </LinkTo>
     </li>
   {{/if}}
-  {{#if this.displayTriggerBuildLink}}
+  {{#if this.canTriggerBuild}}
     <li>
-      <button
-        type="button"
-        class="trigger-build-anchor"
-        onclick={{action "triggerBuildModal"}}
-      >
-        Trigger build
-      </button>
+      {{#if this.repo.configValidation}}
+        <LinkTo
+          @route="repo.config"
+          @model={{this.repo}}
+          class="trigger-build-anchor"
+          trigger-build-anchor="true"
+        >
+          Trigger build
+        </LinkTo>
+      {{else}}
+        <button
+          type="button"
+          class="trigger-build-anchor"
+          onclick={{action "triggerBuildModal"}}
+        >
+          Trigger build
+        </button>
+      {{/if}}
     </li>
   {{/if}}
 </ul>
