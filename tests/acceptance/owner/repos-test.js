@@ -59,6 +59,7 @@ module('Acceptance | owner repositories', function (hooks) {
 
     this.server.create('repository', {
       slug: 'other/other',
+      name: 'other',
       skipPermissions: true,
       owner_name: 'other',
       vcs_name: 'other'
