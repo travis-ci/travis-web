@@ -89,10 +89,10 @@ export default create({
   },
 
   requestMessagesHeader: {
-    scope: '.yml-messages .header'
+    scope: '.request-messages .header'
   },
 
-  requestMessages: collection('.yml-message', {
+  requestMessages: collection('.request-message', {
     icon: {
       scope: '.level-icon svg',
       isInfo: hasClass('icon-info'),
@@ -101,7 +101,7 @@ export default create({
     },
     message: text('.message'),
     link: {
-      scope: '[data-test-yml-message-link]',
+      scope: '[data-test-request-message-link]',
       isPresent: isPresent(),
       href: attribute('href'),
       text: text(),
