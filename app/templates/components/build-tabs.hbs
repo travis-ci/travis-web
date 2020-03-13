@@ -17,9 +17,9 @@
         @models={{array this.build.repo this.build}}
         data-test-build-yaml-tab
         @title="Look at this build's config"
-        @disabled={{this.build.request.noYaml}}
+        @disabled={{this.build.request.noConfigs}}
       >
-        {{#if this.build.request.noYaml}}
+        {{#if this.build.request.noConfigs}}
           <EmberTooltip @text="Try a more recent build to see the config" />
         {{/if}}
 

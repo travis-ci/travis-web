@@ -30,7 +30,7 @@ export default Model.extend({
   config: attr(),
   raw_configs: attr(),
   uniqRawConfigs: uniqBy('raw_configs', 'source'),
-  noYaml: empty('raw_configs'),
+  noConfigs: empty('raw_configs'),
   repo: belongsTo('repo', { async: true }),
   commit: belongsTo('commit', { async: true }),
 
