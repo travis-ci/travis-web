@@ -3,6 +3,18 @@
     border: 1px solid $dry-cement;
     margin-bottom: 1em;
   }
+
+  h4 {
+    color: $cement-grey;
+    display: block;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 0.9em;
+  }
+
+  h4, label {
+    margin-bottom: 0.75em !important;
+  }
 }
 
 .request-configs-trigger-build-notice {
