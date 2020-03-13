@@ -1,0 +1,10 @@
+<div>
+  {{yield this}}
+  <div>
+    {{#if this.dynamicQuery.isLoading}}
+      <LoadingIndicator />
+    {{else if this.dynamicQuery.hasNextPage}}
+      <ShowMoreButton @click={{action 'showMore'}} />
+    {{/if}}
+  </div>
+</div>

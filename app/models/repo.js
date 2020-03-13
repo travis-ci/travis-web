@@ -140,18 +140,6 @@ const Repo = VcsEntity.extend({
     return this._buildObservableArray(builds);
   }),
 
-  pullRequests: computed('id', function () {
-    let id = this.id;
-    const builds = this.store.filter('build', {
-      event_type: 'pull_request',
-      repository_id: id,
-    }, (b) => {
-      const isPullRequest = b.get('eventType') === 'pull_request';
-      return this._buildRepoMatches(b, id) && isPullRequest;
-    });
-    return this._buildObservableArray(builds);
-  }),
-
   branches: computed('id', function () {
     let id = this.id;
     return this.store.filter('branch', {

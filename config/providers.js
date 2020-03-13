@@ -56,7 +56,7 @@ module.exports = deepFreeze({
     name: 'Bitbucket',
     urlPrefix: 'bitbucket',
     paths: {
-      branch: '/:owner/:repo/src/:branch',
+      branch: '/:owner/:repo/branch/:branch',
       commit: '/:owner/:repo/commits/:commit',
       file: '/:owner/:repo/src/:branch/:file',
       issue: '/:owner/:repo/issues/:issue',
