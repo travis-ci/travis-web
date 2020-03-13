@@ -15,52 +15,47 @@ export default Component.extend({
   copied: false,
   baseYmlName: '.travis.yml',
 
-  isExpanded: computed('rawConfig.config', function () {
-    return this.get('rawConfig.config') !== '{}';
+  isExpanded: computed('config', function () {
+    return this.config !== '{}';
   }),
 
   toggleStatusClass: computed('isExpanded', function () {
     return this.isExpanded ? 'expanded' : 'collapsed';
   }),
 
-  buttonLabel: computed('copied', 'rawConfig.source', function () {
-    let source = this.get('rawConfig.source');
-    return this.copied ? 'Copied!' : `Copy ${fileNameWithoutSha(source)}`;
+  buttonLabel: computed('copied', 'source', function () {
+    return this.copied ? 'Copied!' : `Copy ${fileNameWithoutSha(this.source)}`;
   }),
 
-  formattedConfig: computed('rawConfig.config', 'slug', function () {
-    let config = this.get('rawConfig.config');
+  formattedConfig: computed('config', 'slug', function () {
     try {
-      return JSON.stringify(JSON.parse(config), null, 2);
+      return JSON.stringify(JSON.parse(this.config), null, 2);
     } catch (e) {
-      return config;
+      return this.config;
     }
   }),
 
-  filePath: computed('rawConfig.source', 'slug', function () {
-    let source = this.get('rawConfig.source');
-    let name = fileNameWithoutSha(source);
+  filePath: computed('source', 'slug', function () {
+    let name = fileNameWithoutSha(this.source);
     if (name === this.baseYmlName) { return name; }
-
-    return presentedPath(source, this.slug);
+    return presentedPath(this.source, this.slug);
   }),
 
-  fileUrl: computed('rawConfig.source', 'build.branchName', 'build.repo.{slug,vcsType}', function () {
+  fileUrl: computed('source', 'build.branchName', 'build.repo.{slug,vcsType}', function () {
     const slug = this.get('build.repo.slug');
     const vcsType = this.get('build.repo.vcsType');
-    const source = this.get('rawConfig.source');
-    if (isInternal(source, slug)) {
+    if (isInternal(this.source, slug)) {
       return;
     }
 
     const [owner, repo] = slug.split('/');
     const branch = this.get('build.branchName');
-    const file = fileNameWithoutSha(source);
+    const file = fileNameWithoutSha(this.source);
     return this.externalLinks.fileUrl(vcsType, { owner, repo, branch, file });
   }),
 
-  codeblockId: computed('rawConfig.source', function () {
-    return codeblockName(this.rawConfig.source);
+  codeblockId: computed('source', function () {
+    return codeblockName(this.source);
   }),
 
   actions: {
