@@ -2,10 +2,10 @@
   <ul>
     <li>
       <LinkTo
-        @route="job.index"
-        @models={{array this.repo this.job}}
+        @route="{{this.route}}.index"
+        @models={{array this.repo this.model}}
         @id="tab_log"
-        @title="Look at this job's log"
+        @title="Look at this {{this.modelName}}'s log"
         class={{if this.isLog 'active'}}
         data-test-job-log-tab="true"
       >
@@ -14,10 +14,9 @@
     </li>
     <li>
       <LinkTo
-        @route="job.config"
-        @models={{array this.repo this.job}}
-        @title="Look at this job's config"
-        @disabled={{this.job.build.request.noYaml}}
+        @route="{{route}}.config"
+        @models={{array this.repo this.model}}
+        @title="Look at this {{this.modelName}}'s config"
         data-test-build-yaml-tab="true"
       >
         {{#if this.job.build.request.noYaml}}
@@ -36,6 +35,6 @@
     </li>
   </ul>
 </nav>
-<div class="travistab-body job-tabs">
+<div class="travistab-body {{this.route}}-tabs">
   {{outlet}}
 </div>
