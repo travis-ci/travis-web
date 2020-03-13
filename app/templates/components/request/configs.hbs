@@ -1,18 +1,58 @@
-<Request::Messages
-  @request={{@request}}
-  @viewMessage={{action (mut this.viewingMessage)}}
-/>
-<div class="raw-configs">
-  {{#each @request.uniqRawConfigs as |rawConfig|}}
+{{#if this.showNewConfigView}}
+  {{#if this.canTriggerBuild}}
+    <div class="request-configs-buttons" data-test-request-configs-button='true'>
+      <a
+        data-test-request-configs-button-cancel="true"
+        class="request-configs-button request-configs-button-cancel"
+        {{on 'click' (action this.onCancel)}}
+      >
+        Cancel
+      </a>
+      <Request::ConfigsButtonTrigger
+        @processing={{this.processing}}
+        @onTriggerBuild={{action this.onTriggerBuild}}
+      />
+    </div>
+  {{/if}}
+
+  {{#if this.closed}}
+    <Request::Messages
+      @request={{this.request}}
+      @messages={{this.request.messages}}
+      @viewMessage={{action (mut this.viewingMessage)}}
+    />
+  {{/if}}
+
+  {{#each this.rawConfigs as |config|}}
     <Request::RawConfig
-      @rawConfig={{rawConfig}}
+      @source={{config.source}}
+      @config={{get config 'config'}}
+      @loading={{this.loading}}
       @build={{@request.build}}
       @slug={{@request.repo.slug}}
     />
-  {{else}}
-    <div class="starred-empty">
-      The .travis.yml file used for this job is not available
-    </div>
   {{/each}}
-  <Request::Config @config={{@request.config}} />
-</div>
+
+{{else}}
+  <Request::Messages
+    @request={{@request}}
+    @messages={{this.request.messages}}
+    @viewMessage={{action (mut this.viewingMessage)}}
+  />
+  <div class="raw-configs">
+    {{#each @request.uniqRawConfigs as |config|}}
+      <Request::RawConfig
+        @source={{config.source}}
+        @config={{get config 'config'}}
+        @loading={{this.loading}}
+        @build={{@request.build}}
+        @slug={{@request.repo.slug}}
+      />
+    {{else}}
+      <div class="starred-empty">
+        The .travis.yml file used for this job is not available
+      </div>
+    {{/each}}
+    <Request::Config @config={{@request.config}} />
+  </div>
+{{/if}}
