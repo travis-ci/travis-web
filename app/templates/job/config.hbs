@@ -4,4 +4,6 @@
     This is the configuration for all of build #{{this.model.build.number}}, including this job
   </PaperBlock>
 {{/if}}
-<AnnotatedYaml @request={{this.model}} />
+<Request::Configs
+  @request={{this.model}}
+/>
