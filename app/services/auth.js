@@ -46,6 +46,7 @@ export default Service.extend({
   localStorage: service('storage'),
   sessionStorage: service(),
   features: service(),
+  featureFlags: service(),
   metrics: service(),
 
   state: STATE.SIGNED_OUT,
@@ -85,10 +86,16 @@ export default Service.extend({
     this.store.unloadAll();
     const targetAccount = this.accounts.findBy('id', id);
     this.storage.set('activeAccount', targetAccount);
+    this.applyFeatures();
     if (redirectUrl)
       window.location.href = redirectUrl;
     else
       window.location.reload();
+  },
+
+  applyFeatures() {
+    let featureSet = this.featureFlags.fetchTask.perform({ forceServerRequest: true });
+    featureSet.forEach(featureFlag => this.featureFlags.applyFeatureState(featureFlag));
   },
 
   signOut(runTeardown = true) {

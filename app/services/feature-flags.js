@@ -56,6 +56,7 @@ export default Service.extend({
     return state;
   },
 
+  // refactor to handle features between account switching
   fetchTask: task(function* ({forceServerRequest} = false) {
     try {
       // try to read from local storage first, fall back to API
@@ -77,6 +78,24 @@ export default Service.extend({
       this.raven.logException(e);
     }
   }).drop(),
+
+  _persistToLocalStorage(feature, status) {
+    const featureState = JSON.parse(this.storage.getItem('travis.features'));
+    const idx = featureState.findIndex(f => Object.keys(f)[0] === feature);
+    if (idx !== -1) {
+      featureState.splice(idx, 1);
+    }
+    featureState.pushObject({ [feature]: status });
+    this.storage.setItem('travis.features', JSON.stringify(featureState));
+  },
+
+  applyFeatureState(feature) {
+    const features = this.features;
+    let { name, enabled } = feature;
+
+    enabled ? features.enable(name) : features.disable(name);
+    this._persistToLocalStorage(name, enabled);
+  },
 
   reset() {
     this.serverFlags.map(flag => {
