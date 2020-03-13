@@ -36,10 +36,6 @@
 @import "app/modules/forms";
 @import "app/modules/notice";
 @import "app/modules/build-header";
-@import "app/modules/request/buttons";
-@import "app/modules/request/config";
-@import "app/modules/request/configs";
-@import "app/modules/request/messages";
 @import "app/modules/avatar";
 @import "app/modules/popup";
 @import "app/modules/lastbuild";
@@ -62,6 +58,11 @@
 @import "app/modules/visibility-setting-list";
 @import "app/modules/overlay-backdrop";
 @import "app/modules/migrate-beta-dialog";
+@import "app/modules/request/buttons";
+@import "app/modules/request/config";
+@import "app/modules/request/configs";
+@import "app/modules/request/form";
+@import "app/modules/request/messages";
 
 @import "app/animation/tractor";
 @import "app/animation/barricade";
