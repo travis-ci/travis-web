@@ -1,0 +1,85 @@
+.request-configs .request-configs-buttons {
+  position: absolute;
+  top: 1px;
+  right: 0;
+}
+
+.request-configs-buttons {
+  & > * {
+    display: inline-block;
+    vertical-align: bottom;
+    user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+  }
+}
+
+.request-configs-button-trigger-build {
+  @include colorSVG($oxide-blue);
+
+  width: 100px;
+  border: 1px solid $oxide-blue;
+  padding: 8px 12px;
+
+  &:active,
+  &:focus {
+    outline: none;
+  }
+
+  .loading-indicator i {
+    background-color: white;
+  }
+}
+
+.request-configs-button-cancel,
+.request-configs-button-customize,
+.request-configs-button-preview {
+  line-height: 1;
+  cursor: pointer;
+
+  &:hover,
+  &:active {
+    color: $oxide-blue;
+  }
+}
+
+.request-configs-button-cancel {
+  margin-right: 8px;
+  padding: 8px;
+  border: 1px solid transparent;
+}
+
+.request-configs-button-customize,
+.request-configs-button-preview {
+  @include travisBorder;
+  margin-right: 8px;
+  padding: 8px 12px;
+
+  &:hover,
+  &:active {
+    border-color: $oxide-blue;
+  }
+}
+
+.closed {
+  .request-configs-button-cancel {
+    display: none;
+  }
+  .request-configs-button-trigger-build {
+    @include travisBorder;
+    background-color: white !important;
+    color: $asphalt-grey;
+  }
+}
+
+.customize .request-configs-button-customize,
+.customized .request-configs-button-customize {
+  border-color: $oxide-blue;
+  color: $oxide-blue;
+}
+
+.preview .request-configs-button-preview {
+  border-color: $oxide-blue;
+  color: $oxide-blue;
+}
+
