@@ -2,7 +2,7 @@ import Component from '@ember/component';
 import config from 'travis/config/environment';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
-import { alias } from '@ember/object/computed';
+import { alias, reads } from '@ember/object/computed';
 import CanTriggerBuild from 'travis/mixins/components/can-trigger-build';
 
 export default Component.extend(CanTriggerBuild, {
@@ -12,6 +12,7 @@ export default Component.extend(CanTriggerBuild, {
 
   tagName: '',
   isOpen: false,
+  showNewConfigView: reads('features.showNewConfigView'),
 
   currentUser: alias('auth.currentUser'),
 
