@@ -189,7 +189,7 @@ export default Component.extend({
     return stripDetails(args.message);
   },
 
-  not_found(_, args) {
+  file_not_found(_, args) {
     return stripDetails(args.message);
   },
 
