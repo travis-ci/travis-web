@@ -102,6 +102,7 @@ module.exports = function (environment) {
       support: 'mailto:support@travis-ci.com',
       terms: 'https://docs.travis-ci.com/legal/terms-of-service/',
       travisVsJenkins: 'https://travis-ci.com/travisci-vs-jenkins',
+      triggerBuildMergeModes: 'https://docs.travis-ci.com/user/triggering-builds/#merge-modes',
       tutorial: 'https://docs.travis-ci.com/user/tutorial/',
       twitter: 'https://twitter.com/travisci',
       pardotHost: 'https://info.travis-ci.com',
