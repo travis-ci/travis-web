@@ -1,5 +1,5 @@
 import Mixin from '@ember/object/mixin';
-import { and, gt, reads } from '@ember/object/computed';
+import { gt } from '@ember/object/computed';
 import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
 
@@ -11,9 +11,10 @@ export default Mixin.create({
 
   hasMessages: gt('messages.length', 0),
 
-  isConfigValidationEnabled: and('auth.signedIn', 'repo.settings.config_validation'),
-
-  showConfigValidation: reads('isConfigValidationEnabled'),
+  // we want to show config messages for unauthenticated users, too. however,
+  // we then do not have a way to ask for the repository's config_validation
+  // setting. maybe we can check if the request.messages key is present?
+  showConfigValidation: true,
 
   messagesMaxLevel: computed('messages.@each.level', function () {
     if (this.hasMessages) {

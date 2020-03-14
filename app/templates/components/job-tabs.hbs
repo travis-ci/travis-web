@@ -18,7 +18,7 @@
         @models={{array this.repo this.model}}
         @title="Look at this {{this.modelName}}'s config"
         @disabled={{this.request.noConfigs}}
-        data-test-build-yaml-tab="true"
+        data-test-build-config-tab="true"
       >
         {{#if this.job.build.request.noConfigs}}
           <EmberTooltip @text="Try a more recent job to see the config" />
