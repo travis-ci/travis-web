@@ -1,3 +1,11 @@
+.repo-config .request-configs .request-configs-buttons {
+  top: -45px;
+
+  .request-configs-button-cancel {
+    display: none;
+  }
+}
+
 .request-configs .request-configs-buttons {
   position: absolute;
   top: 1px;
