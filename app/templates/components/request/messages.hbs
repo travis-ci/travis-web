@@ -6,9 +6,11 @@
         <EmberTooltip @text={{this.summary}} />
       </span>
 
-      <span data-test-config-messages-summary="true">
+      <span class="request-messages-summary" data-test-config-messages-summary="true">
         Build config validation
-        {{#if this.displaySummary}}
+        {{#if this.loading}}
+          <LoadingIndicator />
+        {{else if this.displaySummary}}
           &mdash; {{this.summary}}
         {{/if}}
       </span>
