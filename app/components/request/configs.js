@@ -47,6 +47,10 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
   repoDefaultBranch: reads('repo.defaultBranch.name'),
   repoDefaultBranchLastCommitSha: reads('repo.defaultBranch.lastBuild.commit.sha'),
 
+  ref: computed('refType', 'branch', 'sha', function () {
+    return this.get(this.refType);
+  }),
+
   onTriggerBuild(e) {
     e.toElement.blur();
     if (this.status == 'closed') {
@@ -62,6 +66,16 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
       this.reset();
     } else {
       this.set('status', 'customize');
+    }
+  },
+
+  onPreview() {
+    if (!this.preview) {
+      this.set('status', 'preview');
+    } else if (this.customized) {
+      this.set('status', 'customize');
+    } else {
+      this.set('status', 'open');
     }
   },
 
