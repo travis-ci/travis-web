@@ -20,6 +20,12 @@
   h4, label {
     margin-bottom: 0.75em !important;
   }
+
+  .icon-help {
+    path {
+      stroke: $cement-grey !important;
+    }
+  }
 }
 
 .request-configs-trigger-build-notice {
