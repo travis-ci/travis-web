@@ -53,15 +53,30 @@
         stroke-width: 1;
       }
     }
+    .icon-help {
+      border: 0px;
+      transform: scale(0.8);
+      path {
+        stroke: $cement-grey !important;
+        stroke-width: 2;
+      }
+    }
 
-      .icon-help {
-        border: 0px;
-        transform: scale(0.8);
-        path {
-          stroke: $cement-grey !important;
-          stroke-width: 2;
+    .request-messages-summary > div {
+      position: relative;
+      display: inline;
+      top: -2px;
+      left: 6px;
+
+      .loading-indicator {
+        opacity: 0.8;
+
+        i {
+          width: 6px;
+          height: 6px;
         }
       }
+    }
 
     .tools {
       position: absolute;
