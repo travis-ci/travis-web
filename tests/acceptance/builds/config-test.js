@@ -112,10 +112,9 @@ module('Acceptance | build/config', function (hooks) {
 
     percySnapshot(assert);
     assert.dom(this.TEST_TARGETS.TRIGGER_BUILD_BUTTON).exists();
-    // TODO these are hidden
-    // assert.dom(this.TEST_TARGETS.CANCEL_BUTTON).doesNotExist();
-    // assert.dom(this.TEST_TARGETS.CUSTOMIZE_BUTTON).doesNotExist();
-    // assert.dom(this.TEST_TARGETS.PREVIEW_BUTTON).doesNotExist();
+    assert.dom(this.TEST_TARGETS.CANCEL_BUTTON).doesNotExist();
+    assert.dom(this.TEST_TARGETS.CUSTOMIZE_BUTTON).doesNotExist();
+    assert.dom(this.TEST_TARGETS.PREVIEW_BUTTON).doesNotExist();
     assert.dom(this.TEST_TARGETS.RAW_CONFIGS).exists({ count: 1 });
     assert.dom(this.TEST_TARGETS.REQUEST_CONFIG).exists({ count: 1 });
     assert.dom(this.TEST_TARGETS.CONFIG_SOURCE).hasText('test/test_repo:.travis.yml@master');
@@ -145,10 +144,9 @@ module('Acceptance | build/config', function (hooks) {
     await click(this.TEST_TARGETS.CANCEL_BUTTON);
 
     percySnapshot(assert);
-    // TODO these are hidden
-    // assert.dom(this.TEST_TARGETS.CUSTOMIZE_BUTTON).doesNotExist();
-    // assert.dom(this.TEST_TARGETS.PREVIEW_BUTTON).doesNotExist();
-    // assert.dom(this.TEST_TARGETS.TRIGGER_BUILD_NOTICE).doesNotExist();
+    assert.dom(this.TEST_TARGETS.CUSTOMIZE_BUTTON).doesNotExist();
+    assert.dom(this.TEST_TARGETS.PREVIEW_BUTTON).doesNotExist();
+    assert.dom(this.TEST_TARGETS.TRIGGER_BUILD_NOTICE).doesNotExist();
     assert.dom(this.TEST_TARGETS.REQUEST_CONFIG).exists();
     assert.dom(this.TEST_TARGETS.REQUEST_CONFIG).hasAnyText('{ "script": "echo \\"Hello World\\"" }');
   });
