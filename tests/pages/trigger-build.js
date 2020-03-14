@@ -18,6 +18,12 @@ export default create({
   popupTriggerLinkIsPresent: isPresent('.option-dropdown .trigger-build-anchor'),
   openPopup: clickable('.option-dropdown .trigger-build-anchor'),
   popupIsVisible: isVisible('.trigger-build-modal'),
+  configFormIsHidden: isHidden('[data-test-request-config-form]'),
+  configFormIsVisible: isVisible('[data-test-request-config-form]'),
+  configFormTriggerLinkIsHidden: isHidden('.option-dropdown .trigger-build-anchor'),
+  configFormTriggerLinkIsPresent: isPresent('.option-dropdown .trigger-build-anchor'),
+  showConfigForm: clickable('.option-dropdown .trigger-build-anchor'),
+  requestConfigButtonsIsPresent: isPresent('data-test-request-configs-button'),
 
   selectBranch(branch) {
     selectChoose('[data-test-trigger-build-branch]', branch);
@@ -29,5 +35,9 @@ export default create({
 
   writeMessage: fillable('[data-test-trigger-build-message] input'),
   writeConfig: fillable('[data-test-trigger-build-config] textarea'),
-  clickSubmit: clickable('[data-test-trigger-build-submit]')
+  clickSubmit: clickable('[data-test-trigger-build-submit]'),
+
+  writeConfigFormMessage: fillable('[data-test-request-config-form] input'),
+  writeConfigFormConfig: fillable('[data-test-request-config-form] textarea'),
+  clickConfigFormSubmit: clickable('[data-test-request-configs-trigger-build]'),
 });
