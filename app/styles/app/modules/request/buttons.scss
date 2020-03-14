@@ -63,7 +63,8 @@
 
 .closed {
   .request-configs-button-cancel,
-  .request-configs-button-customize {
+  .request-configs-button-customize,
+  .request-configs-button-preview {
     display: none;
   }
   .request-configs-button-trigger-build {
