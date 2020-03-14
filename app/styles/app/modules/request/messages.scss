@@ -54,6 +54,15 @@
       }
     }
 
+      .icon-help {
+        border: 0px;
+        transform: scale(0.8);
+        path {
+          stroke: $cement-grey !important;
+          stroke-width: 2;
+        }
+      }
+
     .tools {
       position: absolute;
       right: 1em;
@@ -73,15 +82,6 @@
 
         &.icon-expanded {
           transform: scaleY(-1);
-        }
-      }
-
-      .icon-help {
-        border: 0px;
-        transform: scale(0.8);
-        path {
-          stroke: $cement-grey;
-          stroke-width: 2;
         }
       }
     }
@@ -110,6 +110,10 @@
     .icon-help {
       width: 18px;
       height: 18px;
+      margin-right: 5px;
+      path {
+        stroke: $cement-grey !important;
+      }
     }
 
     .icon-info {
