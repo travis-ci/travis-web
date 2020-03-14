@@ -21,6 +21,7 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
 
   status: 'closed',
   closed: equal('status', 'closed'),
+  loading: reads('preview.loading'),
   customizing: equal('status', 'customize'),
   previewing: equal('status', 'preview'),
   replacing: equal('mergeMode', 'replace'),
@@ -30,7 +31,6 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
   repoId: reads('repo.id'),
   rawConfigs: or('preview.rawConfigs', 'request.uniqRawConfigs'),
   messages: reads('preview.messages'),
-  loading: reads('preview.loading'),
 
   refType: 'sha',
   sha: reads('originalSha'),
