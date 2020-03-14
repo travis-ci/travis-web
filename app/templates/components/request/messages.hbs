@@ -1,6 +1,6 @@
 {{#if this.showConfigValidation}}
   <div class="request-messages" data-test-configs-messages="true">
-    <div class="header" {{action 'toggle'}}>
+    <div class="header" {{action 'toggle'}} data-test-configs-messages-toggle="true">
       <span class="tooltip-wrapper level-icon">
         <SvgImage @name="msg-{{this.maxLevel}}"  @class={{this.iconClass}} />
         <EmberTooltip @text={{this.summary}} />
@@ -19,7 +19,6 @@
         </ExternalLinkTo>
         {{#if this.messages}}
           <SvgImage
-            data-test-config-messages-toggle="true"
             @name="icon-dropdown-arrow"
             @class="icon-toggle icon-{{this.toggleStatus}}"
           />

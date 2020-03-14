@@ -94,14 +94,14 @@ module('Acceptance | build/config', function (hooks) {
       REQUEST_CONFIG: '[data-test-request-config]',
       CONFIG_SOURCE: '[data-test-config-source]',
       TRIGGER_BUILD_NOTICE: '[data-test-trigger-build-notice]',
-      BUILD_CONFIG_FORM: '[data-test-build-config-form]',
-      BUILD_CONFIG_FORM_MESSAGE: '[data-test-build-config-form] input',
-      BUILD_CONFIG_FORM_SCRIPT: '[data-test-build-config-form] textarea',
-      PREVIEW_CONFIG: '[data-test-preview-config]',
-      PREVIEW_MATRIX: '[data-test-preview-matrix]',
+      BUILD_CONFIG_FORM: '[data-test-request-config-form]',
+      BUILD_CONFIG_FORM_MESSAGE: '[data-test-request-config-form] input',
+      BUILD_CONFIG_FORM_SCRIPT: '[data-test-request-config-form] textarea',
+      PREVIEW_REQUEST_CONFIG: '[data-test-preview-request-config]',
+      PREVIEW_JOB_CONFIGS: '[data-test-preview-job-configs]',
       CONFIG_MESSAGES: '[data-test-configs-messages]',
+      CONFIG_MESSAGES_TOGGLE: '[data-test-configs-messages-toggle]',
       CONFIG_MESSAGES_SUMMARY: '[data-test-config-messages-summary]',
-      CONFIG_MESSAGES_TOGGLE: '[data-test-config-messages-toggle]',
       CONFIG_MESSAGE_LINE: '[data-test-config-message-line]',
     };
   });
@@ -112,6 +112,7 @@ module('Acceptance | build/config', function (hooks) {
 
     percySnapshot(assert);
     assert.dom(this.TEST_TARGETS.TRIGGER_BUILD_BUTTON).exists();
+    // TODO these are hidden
     // assert.dom(this.TEST_TARGETS.CANCEL_BUTTON).doesNotExist();
     // assert.dom(this.TEST_TARGETS.CUSTOMIZE_BUTTON).doesNotExist();
     // assert.dom(this.TEST_TARGETS.PREVIEW_BUTTON).doesNotExist();
@@ -144,6 +145,7 @@ module('Acceptance | build/config', function (hooks) {
     await click(this.TEST_TARGETS.CANCEL_BUTTON);
 
     percySnapshot(assert);
+    // TODO these are hidden
     // assert.dom(this.TEST_TARGETS.CUSTOMIZE_BUTTON).doesNotExist();
     // assert.dom(this.TEST_TARGETS.PREVIEW_BUTTON).doesNotExist();
     // assert.dom(this.TEST_TARGETS.TRIGGER_BUILD_NOTICE).doesNotExist();
@@ -157,15 +159,13 @@ module('Acceptance | build/config', function (hooks) {
     await click(this.TEST_TARGETS.TRIGGER_BUILD_BUTTON);
     await click(this.TEST_TARGETS.CUSTOMIZE_BUTTON);
 
-    percySnapshot(assert);
     assert.dom(this.TEST_TARGETS.BUILD_CONFIG_FORM).exists();
 
     await fillIn(this.TEST_TARGETS.BUILD_CONFIG_FORM_MESSAGE, 'This is a demo build'),
     await fillIn(this.TEST_TARGETS.BUILD_CONFIG_FORM_SCRIPT, 'script: echo "Hello World"');
-
-    await click(this.TEST_TARGETS.TRIGGER_BUILD_BUTTON);
     percySnapshot(assert);
 
+    await click(this.TEST_TARGETS.TRIGGER_BUILD_BUTTON);
     assert.ok(this.TEST_TARGETS.BUILD_CONFIG_FORM, 'config form is hidden again');
   });
 
@@ -175,16 +175,16 @@ module('Acceptance | build/config', function (hooks) {
     await click(this.TEST_TARGETS.TRIGGER_BUILD_BUTTON);
     await click(this.TEST_TARGETS.CUSTOMIZE_BUTTON);
 
-    percySnapshot(assert);
     assert.dom(this.TEST_TARGETS.BUILD_CONFIG_FORM).exists();
 
     await fillIn(this.TEST_TARGETS.BUILD_CONFIG_FORM_MESSAGE, 'This is a demo build'),
     await fillIn(this.TEST_TARGETS.BUILD_CONFIG_FORM_SCRIPT, 'invalid');
-    await click(this.TEST_TARGETS.CONFIG_MESSAGES);
 
-    percySnapshot(assert);
-    assert.ok(this.TEST_TARGETS.VALIDATION_RESULT_SUMMARY, 'Validation:  error — 1 error');
+    assert.dom(this.TEST_TARGETS.CONFIG_MESSAGES).exists({ count: 1 });
+    await click(this.TEST_TARGETS.CONFIG_MESSAGES);
+    assert.ok(this.TEST_TARGETS.CONFIG_MESSAGES_SUMMARY, 'Validation:  error — 1 error');
     assert.ok(this.TEST_TARGETS.CONFIG_MESSAGE_LINE, 'invalid config format (must be a hash)');
+    percySnapshot(assert);
   });
 
   test('previewing', async function (assert) {
@@ -195,12 +195,11 @@ module('Acceptance | build/config', function (hooks) {
 
     percySnapshot(assert);
 
-    assert.dom(this.TEST_TARGETS.PREVIEW_CONFIG).hasText('{ "language": "node_js", "os": [ "linux" ] }');
-    assert.dom(this.TEST_TARGETS.PREVIEW_MATRIX).hasText('[ { "os": "linux", "language": "node_js" } ]');
-
-    await click(this.TEST_TARGETS.CONFIG_MESSAGES_TOGGLE);
+    assert.dom(this.TEST_TARGETS.PREVIEW_REQUEST_CONFIG).hasText('{ "language": "node_js", "os": [ "linux" ] }');
+    assert.dom(this.TEST_TARGETS.PREVIEW_JOB_CONFIGS).hasText('[ { "os": "linux", "language": "node_js" } ]');
 
     assert.dom(this.TEST_TARGETS.CONFIG_MESSAGES).exists({ count: 1 });
+    await click(this.TEST_TARGETS.CONFIG_MESSAGES_TOGGLE);
     assert.dom(this.TEST_TARGETS.CONFIG_MESSAGE_LINE).hasText('root: missing os, using the default linux');
   });
 });

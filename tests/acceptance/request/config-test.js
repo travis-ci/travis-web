@@ -183,11 +183,15 @@ module('Acceptance | request/config', function (hooks) {
       assert.equal(page.config[0].source, '.travis.yml');
     });
 
-    test('hides the tab when no config is found', async function (assert) {
-      this.request.raw_configs = [];
-
-      await visit(`/travis-ci/travis-web/jobs/${this.job.id}`);
-      assert.ok(page.configTab.isDisabled, 'expected the config tab to be disabled when there’s no .travis.yml');
-    });
+    // TODO decide how to handle this case going forward. we want to display config validation
+    // results publicly, but old builds won't have any messages. maybe it's alright to mark a
+    // build config as valid if validation has never run?
+    //
+    // test('hides the tab when no config is found', async function (assert) {
+    //   this.request.raw_configs = [];
+    //
+    //   await visit(`/travis-ci/travis-web/jobs/${this.job.id}`);
+    //   assert.ok(page.configTab.isDisabled, 'expected the config tab to be disabled when there’s no .travis.yml');
+    // });
   });
 });

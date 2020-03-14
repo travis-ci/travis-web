@@ -629,12 +629,16 @@ export default function () {
         mode: 'deep_merge_append'
       }],
       request_config: {
-        language: 'node_js',
-        os: ['linux'],
+        config: {
+          language: 'node_js',
+          os: ['linux'],
+        }
       },
       job_configs: [{
-        os: 'linux',
-        language: 'node_js',
+        config: {
+          os: 'linux',
+          language: 'node_js',
+        }
       }],
       messages: [
         {
@@ -696,6 +700,11 @@ export default function () {
     function ({ messages }, { params: { request_id: requestId } }) {
       return this.serialize(messages.where({ requestId }));
     });
+
+  this.get('commits/:id', (schema, { params }) => {
+    const commit = schema.commits.find(params.id);
+    return new Response(200, {}, commit);
+  });
 
   this.get('/job/:id/log', function (schema, request) {
     let jobId = request.params.id;
