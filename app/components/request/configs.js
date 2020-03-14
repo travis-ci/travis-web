@@ -111,7 +111,7 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
       mode: this.mergeMode,
       config: this.config,
       data: {
-        branch: this.branch,
+        branch: this.refType === 'branch' ? this.branch : null,
         commit_message: this.message
       },
       type: 'api'
