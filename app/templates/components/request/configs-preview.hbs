@@ -11,12 +11,12 @@
     {{#if this.loading}}
       <LoadingIndicator />
     {{else}}
-      {{this.formattedRequestConfig}}
       <CodeBlock
         @language="json"
-        class="codedisplay"
+        @code="{{this.formattedRequestConfig}}"
+        class="codedisplay line-numbers"
         data-test-preview-config="true"
-      >{{this.formattedRequestConfig}}</CodeBlock>
+      />
     {{/if}}
   </div>
 
@@ -28,12 +28,12 @@
     {{#if this.loading}}
       <LoadingIndicator />
     {{else}}
-      {{this.formattedJobConfigs}}
       <CodeBlock
         @language="json"
-        class="codedisplay"
-        data-test-preview-matrix="true"
-      >{{this.formattedJobConfigs}}</CodeBlock>
+        @code="{{this.formattedJobConfigs}}"
+        class="codedisplay line-numbers"
+        data-test-preview-config="true"
+      />
     {{/if}}
   </div>
 </div>
