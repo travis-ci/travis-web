@@ -16,6 +16,6 @@ export default Component.extend({
   }),
 
   formattedJobConfigs: computed('jobConfigs', function () {
-    return JSON.stringify(this.jobConfigs, null, 2);
+    return this.jobConfigs.map((config) => JSON.stringify(config, null, 2));
   }),
 });
