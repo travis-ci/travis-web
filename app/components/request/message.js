@@ -153,6 +153,50 @@ export default Component.extend({
     return `<code>${escape(key)}</code>: invalid env var <code>${escape(args.var)}</code>`;
   },
 
+  invalid_config_format() {
+    return 'invalid config format (must be a hash)';
+  },
+
+  invalid_ref(_, args) {
+    return args.message;
+  },
+
+  skip_import(key, args) {
+    return `<code>${escape(key)}</code>: skipping import <code>${escape(args.source)}</code>, condition does not match: <code>${escape(args.condition)}</code>`;
+  },
+
+  too_many_imports(_, args) {
+    return args.message;
+  },
+
+  invalid_visibility(_, args) {
+    return args.message;
+  },
+
+  invalid_ownership(_, args) {
+    return args.message;
+  },
+
+  not_allowed(_, args) {
+    return args.message;
+  },
+
+  parse_error(_, args) {
+    return 'Parse error';
+  },
+
+  unauthorized(_, args) {
+    return stripDetails(args.message);
+  },
+
+  not_found(_, args) {
+    return stripDetails(args.message);
+  },
+
+  server_error(_, args) {
+    return stripDetails(args.message);
+  },
+
   iconClass: computed('message.level', function () {
     let level = this.get('message.level');
     return `icon icon-level icon-${level}`;
@@ -201,5 +245,9 @@ function truncate(str, length) {
     str = `${str.substring(0, length)} ...`;
   }
   return str;
+}
+
+function stripDetails(str) {
+  return str.replace(/ \(.*/s, '');
 }
 /* eslint-enable max-len */
