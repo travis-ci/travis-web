@@ -1,20 +1,28 @@
 {{#if this.showConfigValidation}}
-  <div class="request-messages">
+  <div class="request-messages" data-test-configs-messages="true">
     <div class="header" {{action 'toggle'}}>
       <span class="tooltip-wrapper level-icon">
         <SvgImage @name="msg-{{this.maxLevel}}"  @class={{this.iconClass}} />
         <EmberTooltip @text={{this.summary}} />
       </span>
-      Build config validation
-      {{#if this.displaySummary}}
-        &mdash; {{this.summary}}
-      {{/if}}
+
+      <span data-test-config-messages-summary="true">
+        Build config validation
+        {{#if this.displaySummary}}
+          &mdash; {{this.summary}}
+        {{/if}}
+      </span>
+
       <div class="tools">
         <ExternalLinkTo href="{{config-get 'urls.buildConfigValidation'}}">
           <SvgImage @name='icon-help' @class='icon-help' />
         </ExternalLinkTo>
         {{#if this.messages}}
-          <SvgImage @name="icon-dropdown-arrow" @class="icon-toggle icon-{{this.toggleStatus}}" />
+          <SvgImage
+            data-test-config-messages-toggle="true"
+            @name="icon-dropdown-arrow"
+            @class="icon-toggle icon-{{this.toggleStatus}}"
+          />
         {{/if}}
       </div>
     </div>
