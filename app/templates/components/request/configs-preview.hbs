@@ -1,0 +1,39 @@
+<Request::Messages
+  @messages={{this.messages}}
+/>
+
+<div class="request-configs-preview-container">
+  <div class="left">
+    <h4>
+      Build Config
+    </h4>
+
+    {{#if this.loading}}
+      <LoadingIndicator />
+    {{else}}
+      {{this.formattedRequestConfig}}
+      <CodeBlock
+        @language="json"
+        class="codedisplay"
+        data-test-preview-config="true"
+      >{{this.formattedRequestConfig}}</CodeBlock>
+    {{/if}}
+  </div>
+
+  <div class="right">
+    <h4>
+      Build Matrix
+    </h4>
+
+    {{#if this.loading}}
+      <LoadingIndicator />
+    {{else}}
+      {{this.formattedJobConfigs}}
+      <CodeBlock
+        @language="json"
+        class="codedisplay"
+        data-test-preview-matrix="true"
+      >{{this.formattedJobConfigs}}</CodeBlock>
+    {{/if}}
+  </div>
+</div>
