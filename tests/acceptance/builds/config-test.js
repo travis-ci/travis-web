@@ -194,7 +194,7 @@ module('Acceptance | build/config', function (hooks) {
     percySnapshot(assert);
 
     assert.dom(this.TEST_TARGETS.PREVIEW_REQUEST_CONFIG).hasText('{ "language": "node_js", "os": [ "linux" ] }');
-    assert.dom(this.TEST_TARGETS.PREVIEW_JOB_CONFIGS).hasText('[ { "os": "linux", "language": "node_js" } ]');
+    assert.dom(this.TEST_TARGETS.PREVIEW_JOB_CONFIGS).hasText('{ "os": "linux", "language": "node_js" }');
 
     assert.dom(this.TEST_TARGETS.CONFIG_MESSAGES).exists({ count: 1 });
     await click(this.TEST_TARGETS.CONFIG_MESSAGES_TOGGLE);
