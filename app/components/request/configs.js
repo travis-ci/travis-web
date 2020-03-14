@@ -33,7 +33,7 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
   loading: reads('preview.loading'),
 
   refType: 'sha',
-  sha: truncated('originalSha', 10),
+  sha: reads('originalSha'),
   branch: reads('originalBranch'),
   message: reads('request.commit.message'),
   config: reads('request.apiConfig.config'),
