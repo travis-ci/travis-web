@@ -15,6 +15,13 @@
       >
         Customize
       </a>
+      <a
+        data-test-request-configs-button-preview="true"
+        class="request-configs-button request-configs-button-preview"
+        {{on 'click' (action this.onPreview)}}
+      >
+        Preview
+      </a>
       <Request::ConfigsButtonTrigger
         @processing={{this.processing}}
         @onTriggerBuild={{action this.onTriggerBuild}}
@@ -30,8 +37,8 @@
     />
   {{else}}
     <Request::ConfigsTriggerBuildNotice
-      @customize={{this.customize}}
       @configs={{this.rawConfigs.length}}
+      @status={{this.status}}
     />
   {{/if}}
 
@@ -57,7 +64,17 @@
     {{/unless}}
   {{/if}}
 
-  {{#unless this.replacing}}
+  {{#if this.previewing}}
+    <Request::ConfigsPreview
+      @repo={{this.repo}}
+      @request={{this.request}}
+      @ref={{this.ref}}
+      @mergeMode={{this.mergeMode}}
+      @config={{this.config}}
+    />
+  {{/if}}
+
+  {{#unless (or this.replacing this.previewing)}}
     {{#each this.rawConfigs as |config|}}
       <Request::RawConfig
         @source={{config.source}}

@@ -1,0 +1,27 @@
+.request-configs-preview-container {
+  display: flex;
+
+  & > div {
+    flex-grow: 1;
+    align-items: stretch;
+    width: 50%;
+  }
+
+  .left {
+    margin-right: 0.5em;
+  }
+
+  .right {
+    margin-left: 0.5em;
+  }
+
+  pre,
+  div > div {
+    height: calc(100% - 45px);
+    border: 1px solid $dry-cement;
+  }
+
+  div > div {
+    padding: 10px 20px;
+  }
+}
