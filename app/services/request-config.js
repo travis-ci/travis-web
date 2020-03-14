@@ -5,8 +5,6 @@ import { reads, or } from '@ember/object/computed';
 import config from 'travis/config/environment';
 
 export default Service.extend({
-  ajax: service(),
-  auth: service(),
   store: service(),
 
   loading: reads('loadConfigs.isRunning'),
@@ -22,18 +20,16 @@ export default Service.extend({
       const { searchDebounceRate } = config.intervals;
       yield timeout(searchDebounceRate);
     }
-    try {
-      return yield this.store.queryRecord('request-config', { id, data });
-    } catch (e) {
+
+    return yield this.store.queryRecord('request-config', { id, data }).catch((e) => {
+      // TODO for some reason this still logs the 400 request as an error to the console
       this.handleLoadConfigError(e);
-    }
+    });
   }).restartable(),
 
   handleLoadConfigError(e) {
-    if (e.json) {
-      e.json().then(e => {
-        this.set('errorMessages', [{ level: 'error', code: e.error_type, args: { message: e.error_message } }]);
-      });
-    }
+    let error = e.errors[0];
+    let msg = { level: 'error', code: error.title, args: { message: error.detail } };
+    this.set('errorMessages', [msg]);
   },
 });
