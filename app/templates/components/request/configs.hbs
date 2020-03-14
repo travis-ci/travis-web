@@ -51,22 +51,6 @@
   {{/if}}
 
   {{#unless (or this.replacing this.previewing)}}
-    {{#each this.rawConfigs as |config|}}
-      <Request::RawConfig
-        @source={{config.source}}
-        @config={{get config 'config'}}
-        @loading={{this.loading}}
-        @build={{@request.build}}
-        @slug={{@request.repo.slug}}
-      />
-    {{/each}}
-
-    <Request::Config
-      @config={{this.request.config}}
-    />
-  {{/unless}}
-
-  {{#unless this.replacing}}
     <h4>
       Build {{pluralize this.rawConfigs.length 'Config' without-count=true}}
     </h4>
