@@ -21,19 +21,33 @@
   </div>
 
   <div class="right">
-    <h4>
-      Build Matrix
-    </h4>
-
     {{#if this.loading}}
+      <h4>
+        Jobs
+      </h4>
+
       <LoadingIndicator />
     {{else}}
-      <CodeBlock
-        @language="json"
-        @code="{{this.formattedJobConfigs}}"
-        class="codedisplay line-numbers"
-        data-test-preview-job-configs="true"
-      />
+      {{#each this.formattedJobConfigs as |config index|}}
+        <h4>
+          Job #{{incr index}}
+        </h4>
+
+        <CodeBlock
+          @language="json"
+          @code="{{config}}"
+          class="codedisplay line-numbers"
+          data-test-preview-job-configs="true"
+        />
+      {{else}}
+        <h4>
+          Jobs
+        </h4>
+
+        <p>
+          This build config does not result in any jobs and would be rejected.
+        </p>
+      {{/each}}
     {{/if}}
   </div>
 </div>
