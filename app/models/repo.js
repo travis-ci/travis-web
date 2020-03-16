@@ -81,6 +81,11 @@ const Repo = VcsEntity.extend({
     }
   }),
 
+  // slug built from normalized (by provider) owner and repo name
+  vcsSlug: computed('ownerName', 'vcsName', function () {
+    return `${this.ownerName}/${this.vcsName}`;
+  }),
+
   formattedSlug: computed('owner.login', 'name', function () {
     let login = this.get('owner.login');
     let name = this.name;

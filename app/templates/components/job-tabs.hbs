@@ -3,7 +3,7 @@
     <li>
       <LinkTo
         @route="job.index"
-        @models={{array repo job}}
+        @models={{array this.repo this.job}}
         @id="tab_log"
         @title="Look at this job's log"
         class={{if this.isLog 'active'}}
