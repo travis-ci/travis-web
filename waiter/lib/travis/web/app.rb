@@ -184,6 +184,12 @@ class Travis::Web::App
 
       config['featureFlags'] ||= {}
 
+      if options[:enable_feature_flags]
+        options[:enable_feature_flags].split(',').each do |flag|
+          config['featureFlags'][flag] = true
+        end
+      end
+
       if options[:pro]
         config['pro'] = true
         config['featureFlags']['pro-version'] = true
@@ -234,6 +240,8 @@ class Travis::Web::App
         'sshKey' => options[:ssh_key_enabled],
         'caches' => options[:caches_enabled]
       }
+
+      config[]
 
       regexp = %r(<meta name="travis/config/environment"\s+content="([^"]+)")
       string.gsub!(regexp) do
