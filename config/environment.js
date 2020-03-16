@@ -196,6 +196,7 @@ module.exports = function (environment) {
   if (TRAVIS_PRO) {
     ENV.featureFlags['pro-version'] = true;
     ENV.featureFlags['github-apps'] = true;
+    ENV.featureFlags['enableBitbucketLogin'] = true;
     ENV.pro = true;
   }
 
@@ -385,7 +386,6 @@ module.exports = function (environment) {
   }
 
   if (environment === 'production') {
-    ENV.featureFlags['enableBitbucketLogin'] = true;
     ENV.release = SOURCE_VERSION || TRAVIS_COMMIT || '-';
     if (DISABLE_SENTRY) {
       ENV.sentry = {
