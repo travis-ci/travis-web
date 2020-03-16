@@ -20,7 +20,6 @@
     "deploy": "bash ./config/deployment/deploy-local.sh"
   },
   "devDependencies": {
-    "@adopted-ember-addons/ember-stripe-elements": "^1.0.0-rc.2",
     "@csstools/postcss-sass": "^4.0.0",
     "@ember/optional-features": "^1.0.0",
     "active-model-adapter": "2.2.0",
@@ -79,6 +78,7 @@
     "ember-qunit-nice-errors": "1.2.0",
     "ember-resolver": "^5.0.1",
     "ember-source": "~3.12.0",
+    "ember-stripe-elements": "git+https://github.com/code-corps/ember-stripe-elements.git#develop",
     "ember-svg-jar": "^2.2.2",
     "ember-test-assets": "^1.1.1",
     "ember-test-selectors": "^2.0.0",

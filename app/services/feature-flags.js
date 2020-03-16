@@ -53,12 +53,15 @@ export default Service.extend({
     });
 
     const oldFeatureState = JSON.parse(this.storage.getItem('travis.features')) || {};
-    this.storage.setItem('travis.features', JSON.stringify({ ...oldFeatureState, [this.auth.userName]: state }));
+    this.storage.setItem('travis.features', JSON.stringify({
+      ...oldFeatureState,
+      [this.auth.userName]: state
+    }));
 
     return state;
   },
 
-  fetchTask: task(function* ({forceServerRequest} = false) {
+  fetchTask: task(function* ({ forceServerRequest } = false) {
     try {
       // try to read from local storage first, fall back to API
       const localFlags = yield JSON.parse(this.storage.getItem('travis.features'));
@@ -87,7 +90,10 @@ export default Service.extend({
       currentUserFeatureState.splice(idx, 1);
     }
     currentUserFeatureState.pushObject({ [feature]: status });
-    this.storage.setItem('travis.features', JSON.stringify({ ...featureState, [this.auth.userName]: currentUserFeatureState }));
+    this.storage.setItem('travis.features', JSON.stringify({
+      ...featureState,
+      [this.auth.userName]: currentUserFeatureState
+    }));
   },
 
   applyFeatureState(feature) {

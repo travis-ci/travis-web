@@ -72,7 +72,7 @@
   </span>
   <h4 data-test-credit-card='true' class="py-3">credit card details</h4>
   <TravisForm data-test-stripe-form='true' @onSubmit={{perform this.createSubscription}} as |form|>
-    <StripeCard @onComplete={{action "complete"}} @options={{this.options}} as |stripeError|>
+    <StripeCard @complete={{action "complete"}} @options={{this.options}} as |stripeError|>
       {{#if stripeError}}
         <p>{{stripeError.message}}</p>
       {{/if}}
