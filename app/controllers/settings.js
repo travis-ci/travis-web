@@ -9,6 +9,7 @@ import { inject as service } from '@ember/service';
 export default Controller.extend({
   externalLinks: service(),
   features: service(),
+  store: service(),
 
   envVars: computed('unsortedEnvVars', function () {
     let envVars = this.unsortedEnvVars;
@@ -58,6 +59,10 @@ export default Controller.extend({
     },
 
     sshKeyDeleted() {
+      const id = this.get('repo.id');
+      const currentSshKey = this.store.peekRecord('ssh_key', id);
+      if (currentSshKey)
+        this.store.unloadRecord(currentSshKey);
       return this.set('model.customSshKey', null);
     }
   }

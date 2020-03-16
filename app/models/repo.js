@@ -81,6 +81,11 @@ const Repo = VcsEntity.extend({
     }
   }),
 
+  // slug built from normalized (by provider) owner and repo name
+  vcsSlug: computed('ownerName', 'vcsName', function () {
+    return `${this.ownerName}/${this.vcsName}`;
+  }),
+
   formattedSlug: computed('owner.login', 'name', function () {
     let login = this.get('owner.login');
     let name = this.name;
@@ -136,18 +141,6 @@ const Repo = VcsEntity.extend({
     }, (b) => {
       let eventTypes = ['push', 'api', 'cron'];
       return this._buildRepoMatches(b, id) && eventTypes.includes(b.get('eventType'));
-    });
-    return this._buildObservableArray(builds);
-  }),
-
-  pullRequests: computed('id', function () {
-    let id = this.id;
-    const builds = this.store.filter('build', {
-      event_type: 'pull_request',
-      repository_id: id,
-    }, (b) => {
-      const isPullRequest = b.get('eventType') === 'pull_request';
-      return this._buildRepoMatches(b, id) && isPullRequest;
     });
     return this._buildObservableArray(builds);
   }),
