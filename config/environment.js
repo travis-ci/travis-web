@@ -39,7 +39,7 @@ module.exports = function (environment) {
     screens,
     EmberENV: {
       FEATURES: {
-        // Here you can enable experimental features on an ember canary build
+        // Here you can enable experimental features on an embfENV.featureFlags['github-apps'] = false;er canary build
         // e.g. EMBER_NATIVE_DECORATOR_SUPPORT: true
       },
       EXTEND_PROTOTYPES: {
@@ -385,6 +385,7 @@ module.exports = function (environment) {
   }
 
   if (environment === 'production') {
+    ENV.featureFlags['enableBitbucketLogin'] = true;
     ENV.release = SOURCE_VERSION || TRAVIS_COMMIT || '-';
     if (DISABLE_SENTRY) {
       ENV.sentry = {
