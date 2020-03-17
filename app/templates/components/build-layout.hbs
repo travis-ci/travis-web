@@ -22,10 +22,9 @@
     {{else if this.isLog}}
       <JobInfrastructureNotification @job={{this.job}} />
       <JobTabs
-        @route="build"
-        @model={{this.build}}
-        @request={{this.request}}
         @repo={{this.repo}}
+        @request={{this.request}}
+        @build={{this.build}}
       />
       <JobLog data-test-job-log="true" @job={{this.job}} />
     {{else}}
