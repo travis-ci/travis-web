@@ -655,12 +655,7 @@ export default function () {
         error_message: 'Invalid value: invalid'
       });
     } else {
-      return new Response(200, {}, {
-        raw_configs: requestConfig.raw_configs,
-        request_config: requestConfig.request_config,
-        job_configs: requestConfig.job_configs,
-        messages: requestConfig.messages,
-      });
+      return new Response(200, {}, requestConfig);
     }
   });
 
