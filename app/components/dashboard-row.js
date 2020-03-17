@@ -7,9 +7,8 @@ export default Component.extend({
   api: service(),
   flashes: service(),
 
-  tagName: 'li',
-  classNameBindings: ['repo.active:is-active'],
-  classNames: ['rows', 'rows--dashboard'],
+  tagName: '',
+
   isLoading: false,
   isTriggering: false,
   dropupIsOpen: false,
@@ -22,7 +21,7 @@ export default Component.extend({
     this.set('dropupIsOpen', true);
   },
 
-  mouseLeave() {
+  closeDropup() {
     this.set('dropupIsOpen', false);
   },
 

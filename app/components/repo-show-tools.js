@@ -9,19 +9,17 @@ export default Component.extend({
   permissions: service(),
   features: service(),
 
-  tagName: 'nav',
-  classNames: ['option-button'],
-  classNameBindings: ['isOpen:is-open'],
+  tagName: '',
   isOpen: false,
 
   currentUser: alias('auth.currentUser'),
 
-  click(e) {
-    this.toggleProperty('isOpen');
+  close() {
+    this.set('isOpen', false);
   },
 
-  mouseLeave() {
-    this.set('isOpen', false);
+  toggle() {
+    this.set('isOpen', !this.isOpen);
   },
 
   displaySettingsLink: computed('permissions.all', 'repo', function () {
