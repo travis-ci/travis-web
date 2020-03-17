@@ -9,11 +9,11 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
   classNames: ['request-configs'],
   classNameBindings: ['status'],
 
-  status: 'closed',
-  closed: equal('status', 'closed'),
-
   requestConfig: service(),
   features: service(),
+
+  status: 'closed',
+  closed: equal('status', 'closed'),
   showNewConfigView: reads('features.showNewConfigView'),
 
   repo: reads('request.repo'),
