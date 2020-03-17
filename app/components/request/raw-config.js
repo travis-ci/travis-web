@@ -1,5 +1,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
+import { equal, not } from '@ember/object/computed';
 import {
   isInternal,
   presentedPath,
@@ -15,9 +16,8 @@ export default Component.extend({
   copied: false,
   baseYmlName: '.travis.yml',
 
-  isExpanded: computed('config', function () {
-    return this.config !== '{}';
-  }),
+  isEmptyConfig: equal('config', '{}'),
+  isExpanded: not('isEmptyConfig'),
 
   toggleStatusClass: computed('isExpanded', function () {
     return this.isExpanded ? 'expanded' : 'collapsed';

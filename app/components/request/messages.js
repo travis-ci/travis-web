@@ -15,7 +15,7 @@ export default Component.extend(WithConfigValidation, {
   tagName: '',
   isExpanded: false,
 
-  messages: [],
+  messgages: computed(() => []),
   request: null,
   repo: reads('request.repo'),
 

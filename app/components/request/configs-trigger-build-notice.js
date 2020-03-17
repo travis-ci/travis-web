@@ -10,11 +10,8 @@ export default Component.extend({
   customize: false,
 
   message: computed('customize', 'configs', function () {
-    let msg = ['Trigger a build request with the following'];
-    if (this.customize) {
-      msg.push('details and');
-    }
-    msg.push(`build ${pluralize(this.configs + 1, 'config', { withoutCount: true })}`);
-    return msg.join(' ');
+    let configs = pluralize(this.configs + 1, 'config', { withoutCount: true });
+    if (this.customize) configs = `details and ${configs}`;
+    return `Trigger a build request with the following build ${configs}`;
   }),
 });
