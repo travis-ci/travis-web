@@ -8,10 +8,9 @@
     />
     <JobInfrastructureNotification @job={{this.job}} />
     <JobTabs
-      @route="job"
-      @model={{this.job}}
-      @request={{this.job.build.request}}
       @repo={{this.repo}}
+      @request={{this.job.build.request}}
+      @job={{this.job}}
     />
   {{else}}
     <div id="job">
