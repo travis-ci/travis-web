@@ -6,7 +6,6 @@ import config from 'travis/config/environment';
 import { computed } from '@ember/object';
 
 export default Component.extend({
-  plan: service(),
   stripe: service(),
   accounts: service(),
 

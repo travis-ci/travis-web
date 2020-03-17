@@ -47,6 +47,13 @@
     line-height: 0.9;
     overflow: hidden;
   }
+
+  &__provider-icon {
+    position: absolute;
+    top: 15px;
+    right: 5px;
+    fill: $asphalt-grey;
+  }
 }
 
 .account {

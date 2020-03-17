@@ -5,7 +5,6 @@ import Component from '@ember/component';
 import { htmlSafe } from '@ember/string';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
-import { alias } from '@ember/object/computed';
 import config from 'travis/config/environment';
 
 export default Component.extend({
@@ -18,14 +17,6 @@ export default Component.extend({
   features: service(),
   externalLinks: service(),
   multiVcs: service(),
-
-  user: alias('auth.currentUser'),
-
-  userName: computed('user.{login,name}', function () {
-    let login = this.get('user.login');
-    let name = this.get('user.name');
-    return name || login;
-  }),
 
   deploymentVersion: computed(function () {
     if (window && window.location) {
@@ -47,29 +38,7 @@ export default Component.extend({
     }
   }),
 
-  classProfile: computed('tab', 'auth.state', function () {
-    let tab = this.tab;
-    let authState = this.get('auth.state');
-    let classes = ['profile menu'];
-
-    if (tab === 'profile') {
-      classes.push('active');
-    }
-
-    classes.push(authState || 'signed-out');
-
-    return classes.join(' ');
-  }),
-
   actions: {
-
-    signIn(provider) {
-      return this.auth.signInWith(provider);
-    },
-
-    signOut() {
-      return this.auth.signOut();
-    },
 
     goToHelp() {
       if (this.router.currentRouteName !== 'help') {

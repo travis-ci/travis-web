@@ -13,7 +13,7 @@
       </h1>
       <div data-test-first-sync-notice-text class="content-text">
         <p>
-          Just a few more seconds as we talk to GitHub to find out which repositories belong to you.
+          Just a few more seconds as we talk to {{vcs-name this.user.vcsType}} to find out which repositories belong to you.
         </p>
         <p>
           If you're part of an {{vcs-vocab this.user.vcsType 'organization' lower=true}} that already has repositories set up on Travis CI, we'll take you to the list once we're done.
@@ -33,7 +33,7 @@
         Great news!
       </h1>
       <p class="content-subtitle">
-        We've successfully synchronized your details from GitHub. <br />
+        We've successfully synchronized your details from {{vcs-name this.user.vcsType}}. <br />
         We will redirect you to your profile in a few seconds.
       </p>
     {{/if}}

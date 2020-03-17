@@ -130,7 +130,7 @@
     </ul>
     <AddCronJob @repository={{this.model.repository}} />
   </section>
-  {{#if (and (config-get 'endpoints.sshKey') this.repo.private)}}
+  {{#if (and (config-get 'endpoints.sshKey') (or this.features.enterpriseVersion this.repo.private))}}
     <section class="settings-section" data-test-ssh-key-section>
       <h2 class="small-title">
         SSH Key
@@ -219,7 +219,7 @@
       >
         Edit settings on .com
       </ExternalLinkTo>
-      <LinkTo @route="repo.index" @model={{repo}} class="modal-close pointer">
+      <LinkTo @route="repo.index" @models={{array repo.provider repo.ownerName repo.vcsName}} class="modal-close pointer">
         <SvgImage @name="icon-failed" @class="icon" />
       </LinkTo>
     </div>

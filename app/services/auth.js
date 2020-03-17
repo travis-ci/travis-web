@@ -2,20 +2,24 @@
 import URL from 'url';
 import {
   computed,
+  get,
   getProperties,
-  observer,
-  get
+  observer
 } from '@ember/object';
 import { assert } from '@ember/debug';
 import { isEmpty, isPresent } from '@ember/utils';
 import Service, { inject as service } from '@ember/service';
-import { equal, reads } from '@ember/object/computed';
+import {
+  equal,
+  or,
+  reads
+} from '@ember/object/computed';
 import { getOwner } from '@ember/application';
 import config from 'travis/config/environment';
 import { task } from 'ember-concurrency';
-import { availableProviders } from 'travis/utils/vcs';
+import { availableProviders, vcsConfigByUrlPrefixOrType } from 'travis/utils/vcs';
 
-const { authEndpoint, apiEndpoint, intercom = {} } = config;
+const { authEndpoint, apiEndpoint } = config;
 
 // Collects the list of includes from all requests
 // and ensures the future fetches don't override previously loaded includes
@@ -29,7 +33,7 @@ const STATE = {
   SIGNING_IN: 'signing-in'
 };
 
-const USER_FIELDS = ['id', 'login', 'token', 'correct_scopes', 'channels'];
+const USER_FIELDS = ['id', 'login', 'token', 'correct_scopes', 'channels', 'vcs_type'];
 
 const TOKEN_EXPIRED_MSG = "You've been signed out, because your access token has expired.";
 
@@ -52,17 +56,24 @@ export default Service.extend({
 
   isProVersion: reads('features.proVersion'),
 
-  storage: computed('sessionStorage.authUpdatedAt', 'localStorage.authUpdatedAt', function () {
-    // primary storage for auth is the one in which auth data was updated last
-    const { sessionStorage, localStorage } = this;
-    return sessionStorage.authUpdatedAt > localStorage.authUpdatedAt ? sessionStorage : localStorage;
+  storage: reads('localStorage.auth'),
+
+  accounts: reads('storage.accounts'),
+
+  inactiveAccounts: computed('accounts.@each.id', 'storage.activeAccount.id', function () {
+    const { accounts, activeAccount } = this.storage;
+    if (accounts && accounts.length > 0 && activeAccount) {
+      return accounts.filter(account => account.id !== activeAccount.id);
+    } else {
+      return [];
+    }
   }),
 
-  currentUser: null,
+  currentUser: reads('storage.activeAccount'),
 
   permissions: reads('currentUser.permissions'),
 
-  token: reads('storage.token'),
+  token: or('currentUser.authToken', 'storage.token'),
   assetToken: reads('currentUser.token'),
 
   userName: reads('currentUser.fullName'),
@@ -70,24 +81,41 @@ export default Service.extend({
 
   redirectUrl: null,
 
+  switchAccount(id, redirectUrl) {
+    this.store.unloadAll();
+    const targetAccount = this.accounts.findBy('id', id);
+    this.storage.set('activeAccount', targetAccount);
+    if (redirectUrl)
+      window.location.href = redirectUrl;
+    else
+      window.location.reload();
+  },
+
   signOut(runTeardown = true) {
     if (this.signedIn) this.api.get('/logout');
 
     [this.localStorage, this.sessionStorage].forEach(storage => {
-      storage.clearAuthData();
       storage.clearPreferencesData();
     });
 
-    this.setProperties({
-      state: STATE.SIGNED_OUT,
-      currentUser: null
-    });
+    this.set('state', STATE.SIGNED_OUT);
+
+    const { accounts, activeAccount } = this.storage;
+    accounts.removeObject(activeAccount);
+    this.storage.setProperties({ accounts, activeAccount: null });
 
     if (runTeardown) {
       this.clearNonAuthFlashes();
       runAfterSignOutCallbacks();
     }
     this.store.unloadAll();
+
+    const { currentRouteName } = this.router;
+    if (currentRouteName && currentRouteName !== 'signin') {
+      try {
+        this.router.transitionTo('signin');
+      } catch (e) {}
+    }
   },
 
   afterSignOut(callback) {
@@ -99,55 +127,83 @@ export default Service.extend({
     this.signIn(provider);
   },
 
-  signIn(provider = 'github') {
-    this.autoSignIn();
-    if (this.signedIn) return;
-
+  signIn(provider) {
     this.set('state', STATE.SIGNING_IN);
 
     const url = new URL(this.redirectUrl || window.location.href);
 
-    if (url.pathname === '/plans') {
+    if (['/signin', '/plans', '/integration/bitbucket'].includes(url.pathname)) {
       url.pathname = '/';
     }
-    const path = provider === 'github' ? '/auth/handshake' : `/auth/handshake/${provider}`;
+    const providerSegment = provider ? `/${provider}` : '';
+    const path = `/auth/handshake${providerSegment}`;
     window.location.href = `${authEndpoint || apiEndpoint}${path}?redirect_uri=${url}`;
   },
 
+  getAccountByProvider(provider) {
+    const { vcsTypes } = vcsConfigByUrlPrefixOrType(provider);
+    const [,, userType] = vcsTypes;
+    return this.accounts.findBy('vcsType', userType);
+  },
+
+  isSignedInWith(provider) {
+    return !!this.getAccountByProvider(provider);
+  },
+
   autoSignIn() {
+    this.set('state', STATE.SIGNING_IN);
     try {
-      const data = JSON.parse(this.storage.user);
-      const userData = getProperties(data.user || data, USER_FIELDS);
-
-      this.validateUserData(userData);
-
-      this.setProperties({
-        currentUser: createUserRecord(this.store, userData),
-        state: STATE.SIGNED_IN
-      });
-
-      Travis.trigger('user:signed_in', this.currentUser);
-
-      this.reloadCurrentUser().then(() => {
-        Travis.trigger('user:refreshed', data.user);
-      });
+      const promise = this.storage.user ? this.handleNewLogin() : this.reloadCurrentUser();
+      return promise
+        .then(() => {
+          const { currentUser } = this;
+          this.set('state', STATE.SIGNED_IN);
+          Travis.trigger('user:signed_in', currentUser);
+          Travis.trigger('user:refreshed', currentUser);
+        })
+        .catch(error => {
+          throw new Error(error);
+        });
     } catch (error) {
       this.signOut(false);
     }
   },
 
-  reloadCurrentUser(include = []) {
-    includes = includes.concat(include, ['owner.installation']).uniq();
-    return this.fetchCurrentUser.perform();
-  },
+  handleNewLogin() {
+    const { storage } = this;
+    const { user, token, isBecome } = storage;
 
-  fetchCurrentUser: task(function* () {
-    try {
-      const options = { included: includes.join(',') };
-      yield this.currentUser.reload(options);
+    storage.clearLoginData();
+
+    if (!user || !token) throw new Error('No login data');
+
+    const userData = getProperties(user, USER_FIELDS);
+    this.validateUserData(userData, isBecome);
+
+    const userRecord = pushUserToStore(this.store, userData);
+    userRecord.set('authToken', token);
+
+    return this.reloadUser(userRecord).then(() => {
+      storage.accounts.addObject(userRecord);
+      storage.set('activeAccount', userRecord);
       this.reportNewUser();
       this.reportToIntercom();
-      return this.currentUser;
+    });
+  },
+
+  reloadCurrentUser(include = []) {
+    if (!this.currentUser) throw new Error('No active account');
+    return this.reloadUser(this.currentUser, include);
+  },
+
+  reloadUser(userRecord, include = []) {
+    includes = includes.concat(include, ['owner.installation']).uniq();
+    return this.fetchUser.perform(userRecord);
+  },
+
+  fetchUser: task(function* (userRecord) {
+    try {
+      return yield userRecord.reload({ included: includes.join(',') });
     } catch (error) {
       const status = +error.status || +get(error, 'errors.firstObject.status');
       if (status === 401 || status === 403 || status === 500) {
@@ -157,26 +213,25 @@ export default Service.extend({
     }
   }).keepLatest(),
 
-  validateUserData(user) {
+  validateUserData(user, isBecome) {
     const hasChannelsOnPro = field => field === 'channels' && !this.isProVersion;
     const hasAllFields = USER_FIELDS.every(field => isPresent(user[field]) || hasChannelsOnPro(field));
-    const hasCorrectScopes = user.correct_scopes || this.storage.isBecome;
+    const hasCorrectScopes = user.correct_scopes || isBecome;
     if (!hasAllFields || !hasCorrectScopes) {
       throw new Error('User validation failed');
     }
   },
 
   reportToIntercom() {
-    if (this.isProVersion && intercom.enabled) {
-      const { id, name, email, firstLoggedInAt, secureUserHash } = this.currentUser;
-      this.intercom.setProperties({
-        'user.id': id,
-        'user.name': name,
-        'user.email': email,
-        'user.createdAt': firstLoggedInAt,
-        'user.hash': secureUserHash
-      });
-    }
+    const {
+      id,
+      name,
+      email,
+      firstLoggedInAt: createdAt,
+      secureUserHash: userHash,
+      vcsProvider = {}
+    } = this.currentUser;
+    this.intercom.set('user', { id, name, email, createdAt, userHash, provider: vcsProvider.name });
   },
 
   reportNewUser() {
@@ -223,6 +278,11 @@ export default Service.extend({
   }),
 
   actions: {
+
+    switchAccount(id) {
+      this.switchAccount(id);
+    },
+
     signIn(runAfterSignIn) {
       let applicationRoute = getOwner(this).lookup('route:application');
       applicationRoute.send('signIn', runAfterSignIn);
@@ -234,7 +294,7 @@ export default Service.extend({
   }
 });
 
-function createUserRecord(store, user) {
+function pushUserToStore(store, user) {
   const record = store.push(store.normalize('user', user));
   const installation = store.peekAll('installation').findBy('owner.id', user.id) || null;
   record.setProperties({ installation });

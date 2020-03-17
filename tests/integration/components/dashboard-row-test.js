@@ -52,9 +52,11 @@ module('Integration | Component | dashboard row', function (hooks) {
       },
       id: 1234,
       name: 'travis-web',
+      vcs_name: 'travis-web',
       owner: {
         login: 'travis-ci'
       },
+      owner_name: 'travis-ci',
       slug: 'travis-ci/travis-web'
     });
 

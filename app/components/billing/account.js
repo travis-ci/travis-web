@@ -5,7 +5,6 @@ import { reads, empty, bool, not, and } from '@ember/object/computed';
 
 export default Component.extend({
   store: service(),
-  plan: service(),
   accounts: service(),
 
   account: null,
@@ -29,9 +28,4 @@ export default Component.extend({
       return [];
     }
   }),
-
-  init() {
-    this._super(...arguments);
-    this.plan.fetchPlans.perform(this.account);
-  }
 });

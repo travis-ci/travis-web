@@ -5,6 +5,28 @@ const providers = require('./providers');
 const { plans } = require('./plans.js');
 const { screens } = require('./screens.js');
 
+const {
+  TRAVIS_PRO,
+  TRAVIS_ENTERPRISE,
+  SOURCE_ENDPOINT,
+  ENABLE_FEATURE_FLAGS,
+  GOOGLE_ANALYTICS_ID,
+  GOOGLE_TAGS_CONTAINER_ID,
+  GOOGLE_TAGS_PARAMS,
+  STRIPE_PUBLISHABLE_KEY,
+  GITHUB_APPS_APP_NAME,
+  API_ENDPOINT,
+  BILLING_ENDPOINT,
+  PUBLIC_MODE,
+  AUTH_ENDPOINT,
+  API_TRACE_ENDPOINT,
+  INTERCOM_APP_ID,
+  DISABLE_SENTRY,
+  TRAVIS_COMMIT,
+  SOURCE_VERSION,
+  DEPLOY_TARGET
+} = process.env;
+
 module.exports = function (environment) {
   const ENV = {
     modulePrefix: 'travis',
@@ -33,14 +55,22 @@ module.exports = function (environment) {
 
     // defaults for running travis-web
     apiEndpoint: 'https://api.travis-ci.org',
+
     pusher: {
       key: '5df8ac576dcccf4fd076',
       host: 'ws.pusherapp.com',
       debug: false
     },
     intercom: {
-      appId: 'placeholder',
-      enabled: false
+      appId: INTERCOM_APP_ID || 'placeholder',
+      enabled: !!INTERCOM_APP_ID,
+      userProperties: {
+        userIdProp: 'id',
+        emailProp: 'email',
+        nameProp: 'name',
+        createdAtProp: 'firstLoggedInAt',
+        userHashProp: 'secureUserHash',
+      }
     },
     urls: {
       about: 'https://about.travis-ci.com',
@@ -61,6 +91,7 @@ module.exports = function (environment) {
       enterprise: 'https://enterprise.travis-ci.com',
       imprint: 'https://docs.travis-ci.com/imprint.html',
       jobs: 'https://travisci.workable.com/',
+      languages: 'https://docs.travis-ci.com/user/language-specific/',
       multiOS: 'https://docs.travis-ci.com/user/multi-os/',
       node: 'https://docs.travis-ci.com/user/languages/javascript-with-nodejs/',
       noRun: 'https://docs.travis-ci.com/user/common-build-problems/#i-pushed-a-commit-and-cant-fin',
@@ -90,7 +121,6 @@ module.exports = function (environment) {
       syncingPolling: 3000,
       githubAppsInstallationPolling: 4000,
     },
-    githubOrgsOauthAccessSettingsUrl: 'https://github.com/settings/connections/applications/f244293c729d5066cf27',
     apiTraceEndpoint: 'https://papertrailapp.com/systems/travis-org-api-production/events?q=program%3Aapp%2Fweb%20log-tracing%20',
     ajaxPolling: false,
     logLimit: 100000,
@@ -126,12 +156,12 @@ module.exports = function (environment) {
   };
 
   ENV.metricsAdapters = [];
-  if (process.env.GOOGLE_ANALYTICS_ID) {
+  if (GOOGLE_ANALYTICS_ID) {
     ENV.metricsAdapters.push({
       name: 'GoogleAnalytics',
       environments: ['development', 'production'],
       config: {
-        id: process.env.GOOGLE_ANALYTICS_ID,
+        id: GOOGLE_ANALYTICS_ID,
         // Use `analytics_debug.js` in development
         debug: environment === 'development',
         // Use verbose tracing of GA events
@@ -142,7 +172,6 @@ module.exports = function (environment) {
     });
   }
 
-  const { GOOGLE_TAGS_CONTAINER_ID, GOOGLE_TAGS_PARAMS } = process.env;
   if (GOOGLE_TAGS_CONTAINER_ID) {
     ENV.metricsAdapters.push({
       name: 'GoogleTagManager',
@@ -166,8 +195,6 @@ module.exports = function (environment) {
     'enable-bitbucket-login': false,
   };
 
-  const { TRAVIS_PRO, TRAVIS_ENTERPRISE, SOURCE_ENDPOINT, ENABLE_FEATURE_FLAGS } = process.env;
-
   if (TRAVIS_PRO) {
     ENV.featureFlags['pro-version'] = true;
     ENV.featureFlags['github-apps'] = true;
@@ -185,11 +212,12 @@ module.exports = function (environment) {
   ENV.pagination = {
     dashboardReposPerPage: 25,
     profileReposPerPage: 25,
+    repoBuildsPerPage: 25,
   };
 
-  if (process.env.STRIPE_PUBLISHABLE_KEY) {
+  if (STRIPE_PUBLISHABLE_KEY) {
     ENV.stripe = {
-      publishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
+      publishableKey: STRIPE_PUBLISHABLE_KEY,
       lazyLoad: true,
     };
   }
@@ -244,16 +272,16 @@ module.exports = function (environment) {
       };
       ENV.userlike = true;
 
-      if (process.env.GITHUB_APPS_APP_NAME) {
+      if (GITHUB_APPS_APP_NAME) {
         ENV.githubApps = {
-          appName: process.env.GITHUB_APPS_APP_NAME,
+          appName: GITHUB_APPS_APP_NAME,
           migrationRepositoryCountLimit: 50
         };
       }
     }
 
-    if (process.env.API_ENDPOINT) {
-      ENV.apiEndpoint = process.env.API_ENDPOINT;
+    if (API_ENDPOINT) {
+      ENV.apiEndpoint = API_ENDPOINT;
 
       if (ENV.apiEndpoint === 'https://api-staging.travis-ci.org') {
         ENV.pusher.key = 'dd3f11c013317df48b50';
@@ -265,29 +293,22 @@ module.exports = function (environment) {
       }
     }
 
-    if (process.env.BILLING_ENDPOINT) {
-      ENV.billingEndpoint = process.env.BILLING_ENDPOINT;
+    if (BILLING_ENDPOINT) {
+      ENV.billingEndpoint = BILLING_ENDPOINT;
     }
 
-    if (process.env.PUBLIC_MODE == 'false') {
+    if (PUBLIC_MODE == 'false') {
       ENV.publicMode = false;
     } else {
       ENV.publicMode = true;
     }
 
-    if (process.env.AUTH_ENDPOINT) {
-      ENV.authEndpoint = process.env.AUTH_ENDPOINT;
+    if (AUTH_ENDPOINT) {
+      ENV.authEndpoint = AUTH_ENDPOINT;
     }
 
-    if (process.env.API_TRACE_ENDPOINT) {
-      ENV.apiTraceEndpoint = process.env.API_TRACE_ENDPOINT;
-    }
-
-    if (process.env.INTERCOM_APP_ID) {
-      ENV.intercom = {
-        appId: process.env.INTERCOM_APP_ID,
-        enabled: true
-      };
+    if (API_TRACE_ENDPOINT) {
+      ENV.apiTraceEndpoint = API_TRACE_ENDPOINT;
     }
   }
 
@@ -366,16 +387,16 @@ module.exports = function (environment) {
   }
 
   if (environment === 'production') {
-    ENV.release = process.env.SOURCE_VERSION || process.env.TRAVIS_COMMIT || '-';
-    if (process.env.DISABLE_SENTRY) {
+    ENV.release = SOURCE_VERSION || TRAVIS_COMMIT || '-';
+    if (DISABLE_SENTRY) {
       ENV.sentry = {
         development: true
       };
     }
   }
 
-  if (process.env.DEPLOY_TARGET) {
-    var s3Bucket = require('./deploy')(process.env.DEPLOY_TARGET).s3.bucket;
+  if (DEPLOY_TARGET) {
+    var s3Bucket = require('./deploy')(DEPLOY_TARGET).s3.bucket;
     ENV.emojiPrepend = '//' + s3Bucket + '.s3.amazonaws.com';
   }
   return ENV;

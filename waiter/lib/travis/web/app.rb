@@ -187,10 +187,16 @@ class Travis::Web::App
       if options[:pro]
         config['pro'] = true
         config['featureFlags']['pro-version'] = true
+        config['featureFlags']['github-apps'] = true
       end
       if options[:enterprise]
         config['enterprise'] = true
         config['featureFlags']['enterprise-version'] = true
+      end
+
+      if options[:github_apps_app_name]
+        config['githubApps'] ||= {}
+        config['githubApps']['appName'] = options[:github_apps_app_name]
       end
 
       if !options[:public_mode].nil? && (options[:public_mode] == 'false' || options[:public_mode] == false)

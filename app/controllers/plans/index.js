@@ -6,8 +6,6 @@ import { inject as service } from '@ember/service';
 
 const { plans } = config;
 
-const referralSourceName = 'plans-page';
-
 const ANCHOR = {
   ENTERPRISE_SECTION: 'enterprise-section',
 };
@@ -19,9 +17,8 @@ export default Controller.extend({
   metrics: service(),
 
   config,
-  referralSourceName,
   anchor: '',
-  toEnterpriseSection: equal('anchor', ANCHOR.ENTERPRISE_SECTION),
+  scrollToEnterpriseSection: equal('anchor', ANCHOR.ENTERPRISE_SECTION),
   billingUrl: `${config.billingEndpoint}/account/subscription`,
   buildMatrixUrl: config.urls.buildMatrix,
   enterpriseUrl: config.urls.enterprise,

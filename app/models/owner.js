@@ -2,6 +2,7 @@ import VcsEntity from 'travis/models/vcs-entity';
 import { attr, belongsTo } from '@ember-data/model';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
+import { task } from 'ember-concurrency';
 import { reads, or, equal, notEmpty, filterBy } from '@ember/object/computed';
 import config from 'travis/config/environment';
 import dynamicQuery from 'travis/utils/dynamic-query';
@@ -14,6 +15,7 @@ export default VcsEntity.extend({
   raven: service(),
   store: service(),
   tasks: service(),
+  api: service(),
 
   name: attr('string'),
   login: attr('string'),
@@ -52,8 +54,8 @@ export default VcsEntity.extend({
   }),
 
   fetchRepositories({ page, filter, ghApps, active, activeOnOrg }) {
+    const { provider, login: owner } = this;
     const offset = (page - 1) * limit;
-    const owner = this.login;
     const type = 'byOwner';
     const shouldSkip = ghApps && !this.features.get('github-apps');
 
@@ -61,11 +63,43 @@ export default VcsEntity.extend({
       'repository.managed_by_installation': ghApps,
       'repository.active_on_org': activeOnOrg,
       'repository.active': active,
-      sort_by: 'name',
+      limit,
+      offset,
       name_filter: filter,
-      limit, offset, custom: { owner, type, },
+      sort_by: 'name',
+      provider,
+      custom: { owner, type, },
     }, { live: false });
   },
+
+  fetchPlans: task(function* () {
+    const url = this.isOrganization ? `/plans_for/organization/${this.id}` : '/plans_for/user';
+    const result = yield this.api.get(url);
+    return result ? result.plans : [];
+  }).keepLatest(),
+
+  fetchPlansInstance: computed(function () {
+    return this.fetchPlans.perform();
+  }),
+
+  isFetchPlansRunning: reads('fetchPlansInstance.isRunning'),
+  eligiblePlans: reads('fetchPlansInstance.value'),
+
+  nonGithubPlans: computed('eligiblePlans.@each.{id,name,annual,builds}', function () {
+    const eligiblePlans = this.eligiblePlans || [];
+    return eligiblePlans.filter(plan => plan.id && !plan.id.startsWith('github'));
+  }),
+
+  monthlyPlans: computed('nonGithubPlans.@each.{name,annual,builds}', function () {
+    const filteredMonthlyPlans = this.nonGithubPlans.filter(plan => !plan.annual && plan.builds);
+    return filteredMonthlyPlans.sortBy('builds');
+  }),
+
+  annualPlans: computed('nonGithubPlans.@each.{name,annual,builds}', function () {
+    const nonGithubPlans = this.nonGithubPlans || [];
+    const filteredAnnualPlans = nonGithubPlans.filter(plan => plan.annual && plan.builds);
+    return filteredAnnualPlans.sortBy('builds');
+  }),
 
   fetchBetaMigrationRequests() {
     return this.tasks.fetchBetaMigrationRequestsTask.perform();

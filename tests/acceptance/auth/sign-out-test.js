@@ -19,7 +19,7 @@ module('Acceptance | auth/sign out', function (hooks) {
     this.owner.lookup('service:flashes').success('TOTAL SUCCESS');
     await topPage.clickSignOutLink();
 
-    assert.equal(currentURL(), '/');
+    assert.equal(currentURL(), '/signin');
     assert.ok(topPage.flashMessage.isHidden, 'Does not display a flash message');
   });
 });

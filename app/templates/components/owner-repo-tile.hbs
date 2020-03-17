@@ -16,11 +16,11 @@
         <StatusIcon @status={{this.repo.defaultBranch.lastBuild.state}} />
         <LinkTo
           @route="repo"
-          @models={{array this.ownerName this.repoName}}
+          @models={{array this.repo.provider this.repo.ownerName this.repo.vcsName}}
           class="label-align"
         >
           <span class="repo-title-text">
-            {{this.repoName}}
+            {{this.repo.name}}
           </span>
         </LinkTo>
       </h2>
@@ -35,8 +35,9 @@
           <LinkTo
             @route="build"
             @models={{array
-              this.ownerName
-              this.repoName
+              this.repo.provider
+              this.repo.ownerName
+              this.repo.vcsName
               this.repo.defaultBranch.lastBuild.id
             }}
           >
@@ -60,6 +61,7 @@
           <LinkTo
             @route="build"
             @models={{array
+              this.repo.provider
               this.ownerName
               this.repoName
               this.repo.defaultBranch.lastBuild.id
@@ -81,7 +83,7 @@
             @href={{this.repo.defaultBranch.lastBuild.commit.compareUrl}}
             class="label-align"
           >
-            <EmberTooltip @text="View diff on GitHub" />
+            <EmberTooltip @text="{{concat "View diff on " (vcs-name this.repo.vcsType)}}" />
             <span class="label-align commit-compare monospace">
               {{format-sha this.repo.defaultBranch.lastBuild.commit.sha}}
             </span>
