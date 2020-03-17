@@ -203,6 +203,9 @@
   </UiKit::Box>
 
   {{!-- Enterprise section --}}
+  {{#if this.toEnterpriseSection}}
+    <ScrollHere />
+  {{/if}}
   <UiKit::Box @tag='section' @margin={{hash bottom=20}} data-test-plans-page-enterprise-section="true">
     <UiKit::Grid  @sm={{2}} @align='center' @gap={{4}} @justify='around' as |grid|>
       <grid.item>
