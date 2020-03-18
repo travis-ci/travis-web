@@ -35,10 +35,9 @@
     box-shadow: inset 0 0 1px 1px $dry-cement;
     transition: border-color 0.2s ease-in;
     color: $asphalt-grey;
-    line-height: 150%;
     font-size: 12px;
     font-family: Cousine, monospace;
-    line-height: 20px;
+    line-height: 1.7;
 
     &.CodeMirror-focused {
       outline: none;
