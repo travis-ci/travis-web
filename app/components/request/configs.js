@@ -5,9 +5,9 @@ import { inject as service } from '@ember/service';
 import CanTriggerBuild from 'travis/mixins/components/can-trigger-build';
 import TriggerBuild from 'travis/mixins/components/trigger-build';
 
-function truncated(property, chars) {
+function left(property, chars) {
   return computed(property, function () {
-    return this.get(property).slice(0, 7);
+    return this.get(property).slice(0, chars);
   });
 }
 
@@ -40,7 +40,7 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
   mergeMode: reads('originalMergeMode'), // TODO store and serve merge mode for api request configs
   defaultMergeMode: 'deep_merge_append',
 
-  originalSha: truncated('requestOrDefaultBranchSha', 10),
+  originalSha: left('requestOrDefaultBranchSha', 7),
   originalBranch: or('requestBranch', 'repoDefaultBranch'),
   originalMergeMode: or('request.mergeMode', 'defaultMergeMode'),
   requestBranch: reads('request.branchName'),
