@@ -4,23 +4,23 @@
 >
   <div class="request-configs-fields" data-test-request-config-form='true'>
     <div class="form-elem">
-      {{#radio-button
-        value="sha"
-        groupValue=refType
-        changed=(action "change" "refType")
-        classNames="ref-type"
-      }}
+      <RadioButton
+        @value="sha"
+        @groupValue={{refType}}
+        @changed={{action "change" refType}}
+        @classNames='ref-type'
+      >
         Commit
-      {{/radio-button}}
-      {{#radio-button
-        value="branch"
-        groupValue=refType
-        changed=(action "change" "refType")
-        classNames="ref-type"
-      }}
+      </RadioButton>
+      <RadioButton
+        @value='branch'
+        @groupValue={{refType}}
+        @changed={{action "change" refType}}
+        @classNames='ref-type'
+      >
         Branch
-      {{/radio-button}}
-      {{#if (eq refType 'sha') }}
+      </RadioButton>
+      {{#if (eq refType "sha") }}
         <form.field
           data-test-request-configs-sha="true"
           @placeholder="Specify a Git sha (optional)"
@@ -75,17 +75,17 @@
           <span class="javascript">JSON</span>
         </div>
 
-        {{ivy-codemirror
-          value=this.config
-          valueUpdated=(action "change" "config")
-          options=(hash
+        <IvyCodemirror
+          @value={{this.config}}
+          @valueUpdated={{action "change" "config"}}
+          @options={{hash
             mode=this.configMode
             lineNumbers=true
             tabSize=2
             indentWithTabs=false
             placeholder="Overwrite build config"
-          )
-        }}
+          }}
+        />
 
         <Request::Messages
           @request={{this.request}}
@@ -100,41 +100,41 @@
       <h4 class="request-configs-heading">
         Merge mode
       </h4>
-      {{#radio-button
-        value="deep_merge_append"
-        groupValue=mergeMode
-        changed=(action "change" "mergeMode")
-      }}
+      <RadioButton
+        @value="deep_merge_append"
+        @groupValue={{mergeMode}}
+        @changed={{action "change" refType}}
+      >
         Deep Merge & Append
-      {{/radio-button}}
-      {{#radio-button
-        value="deep_merge_prepend"
-        groupValue=mergeMode
-        changed=(action "change" "mergeMode")
-      }}
+      </RadioButton>
+      <RadioButton
+        @value="deep_merge_prepend"
+        @groupValue={{mergeMode}}
+        @changed={{action "change" refType}}
+      >
         Deep Merge & Prepend
-      {{/radio-button}}
-      {{#radio-button
-        value="deep_merge"
-        groupValue=mergeMode
-        changed=(action "change" "mergeMode")
-      }}
+      </RadioButton>
+      <RadioButton
+        @value="deep_merge"
+        @groupValue={{mergeMode}}
+        @changed={{action "change" refType}}
+      >
         Deep Merge
-      {{/radio-button}}
-      {{#radio-button
-        value="merge"
-        groupValue=mergeMode
-        changed=(action "change" "mergeMode")
-      }}
+      </RadioButton>
+      <RadioButton
+        @value="merge"
+        @groupValue={{mergeMode}}
+        @changed={{action "change" refType}}
+      >
         Merge
-      {{/radio-button}}
-      {{#radio-button
-        value="replace"
-        groupValue=mergeMode
-        changed=(action "change" "mergeMode")
-      }}
+      </RadioButton>
+      <RadioButton
+        @value="replace"
+        @groupValue={{mergeMode}}
+        @changed={{action "change" refType}}
+      >
         Replace
-      {{/radio-button}}
+      </RadioButton>
 
       <ExternalLinkTo class="hint" href="{{config-get 'urls.triggerBuildMergeModes'}}">
         <SvgImage @name='icon-help' @class='icon-help' />
