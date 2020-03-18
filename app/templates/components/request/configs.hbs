@@ -39,7 +39,7 @@
     />
 
     {{#unless this.replacing}}
-      <h4>
+      <h4 class="request-configs-heading">
         Build {{pluralize this.rawConfigs.length 'Config' without-count=true}}
       </h4>
     {{/unless}}
@@ -52,7 +52,7 @@
   {{/if}}
 
   {{#unless (or this.replacing this.previewing)}}
-    <h4>
+    <h4 class="request-configs-heading">
       Build {{pluralize this.rawConfigs.length 'Config' without-count=true}}
     </h4>
 
