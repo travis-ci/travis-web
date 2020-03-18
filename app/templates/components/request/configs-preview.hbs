@@ -4,7 +4,7 @@
 
 <div class="request-configs-preview-container">
   <div class="left">
-    <h4>
+    <h4 class="request-configs-heading">
       Build Config
     </h4>
 
@@ -22,14 +22,14 @@
 
   <div class="right">
     {{#if this.loading}}
-      <h4>
+      <h4 class="request-configs-heading">
         Jobs
       </h4>
 
       <LoadingIndicator />
     {{else}}
       {{#each this.formattedJobConfigs as |config index|}}
-        <h4>
+        <h4 class="request-configs-heading">
           Job #{{incr index}}
         </h4>
 
@@ -40,7 +40,7 @@
           data-test-preview-job-configs="true"
         />
       {{else}}
-        <h4>
+        <h4 class="request-configs-heading">
           Jobs
         </h4>
 
