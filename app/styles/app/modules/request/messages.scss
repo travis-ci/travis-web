@@ -53,15 +53,6 @@
         stroke-width: 1;
       }
     }
-    .icon-help {
-      border: 0px;
-      transform: scale(0.8);
-      opacity: 0.85;
-      path {
-        stroke: $cement-grey !important;
-        stroke-width: 2;
-      }
-    }
 
     .request-messages-summary > div {
       position: relative;
@@ -123,16 +114,6 @@
       margin-left: 2px;
     }
 
-    .icon-help {
-      width: 18px;
-      height: 18px;
-      margin-right: 5px;
-      opacity: 0.85;
-      path {
-        stroke: $cement-grey !important;
-      }
-    }
-
     .icon-info {
       @include colorSVGFull($turf-green, $turf-green);
       circle {
@@ -153,22 +134,18 @@
       @include colorSVG($brick-red);
     }
 
+    .icon-help {
+      display: none;
+      margin-right: 5px;
+    }
+
+    &:hover .icon-help {
+      display: block;
+    }
+
     .message {
       flex-grow: 1;
       margin-left: 6px;
-    }
-
-    .message-help svg {
-      display: none;
-      transform: scale(0.8);
-      border-color: $oxide-blue;
-      @include colorSVG($oxide-blue);
-    }
-
-    &:hover {
-      .message-help svg {
-        display: block;
-      }
     }
 
     code {
