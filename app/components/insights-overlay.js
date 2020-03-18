@@ -35,6 +35,7 @@ export default Component.extend({
       }
     );
   }),
+
   buildData: reads('requestData.lastSuccessful.value'),
   isLoading: reads('requestData.isRunning'),
   isNotLoading: not('isLoading'),
