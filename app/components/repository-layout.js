@@ -10,12 +10,18 @@ export default Component.extend({
   isShowingTriggerBuildModal: false,
   isShowingStatusBadgeModal: false,
 
-  statusImageUrl: computed('repo.slug', 'repo.private', 'repo.defaultBranch.name', function () {
-    const branchName = this.get('repo.defaultBranch.name');
-    const repo = this.get('repo');
+  statusImageUrl: computed(
+    'repo.slug',
+    'repo.private',
+    'repo.defaultBranch.name',
+    'repo.defaultBranch.lastBuild.state',
+    function () {
+      const branchName = this.get('repo.defaultBranch.name');
+      const repo = this.get('repo');
 
-    return this.get('statusImages').imageUrl(repo, branchName);
-  }),
+      return this.get('statusImages').imageUrl(repo, branchName);
+    }
+  ),
 
   repoUrl: computed('repo.{ownerName,vcsName,vcsType}', function () {
     const owner = this.get('repo.ownerName');

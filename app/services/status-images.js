@@ -26,15 +26,17 @@ export default Service.extend({
       prefix = config.apiEndpoint;
     }
 
-    let slug = repo.get('slug');
+    const slug = repo.get('slug');
+    const state = repo.get('defaultBranch.lastBuild.state') || 'unknown';
+    const url = `${prefix}/${slug}.svg?status=${state}`;
 
     // In Enterprise you can toggle public mode, where even "public" repositories are hidden
     // in which cases we need to generate a token for all images
     if (!config.publicMode || repo.get('private')) {
       const token = this.auth.assetToken;
-      return `${prefix}/${slug}.svg?token=${token}${branch ? `&branch=${branch}` : ''}`;
+      return `${url}&token=${token}${branch ? `&branch=${branch}` : ''}`;
     } else {
-      return `${prefix}/${slug}.svg${branch ? `?branch=${encodeURIComponent(branch)}` : ''}`;
+      return `${url}${branch ? `&branch=${encodeURIComponent(branch)}` : ''}`;
     }
   },
 
