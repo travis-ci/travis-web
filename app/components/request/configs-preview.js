@@ -3,7 +3,6 @@ import { computed } from '@ember/object';
 import { reads, mapBy } from '@ember/object/computed';
 
 export default Component.extend({
-  tagName: 'div',
   classNames: ['request-configs-preview'],
 
   requestConfig: reads('preview.requestConfig.config'),
