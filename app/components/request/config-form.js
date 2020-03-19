@@ -15,7 +15,6 @@ const CONFIG = {
 };
 
 export default Component.extend(BranchSearching, {
-  tagName: 'div',
   classNames: ['request-configs-form'],
 
   repo: reads('request.repo'),
