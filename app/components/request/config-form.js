@@ -44,11 +44,6 @@ export default Component.extend(BranchSearching, {
     return config && config.startsWith('{') ? JAVASCRIPT : YAML;
   }),
 
-  configType: computed('configMode', function () {
-    const { JAVASCRIPT, JSON, YAML } = CONFIG;
-    return this.configMode === JAVASCRIPT ? JSON.toUpperCase() : YAML.toUpperCase();
-  }),
-
   configs: computed('request.uniqRawConfigs', 'config', function () {
     const { SOURCE } = CONFIG;
     let configs = this.get('request.uniqRawConfigs') || [];
