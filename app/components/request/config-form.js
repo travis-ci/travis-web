@@ -23,6 +23,9 @@ export default Component.extend(BranchSearching, {
     'shift+enter': 'submit'
   },
 
+  onChange() {},
+  onSubmit() {},
+
   didInsertElement() {
     this._super(...arguments);
     bindKeyboardShortcuts(this);
