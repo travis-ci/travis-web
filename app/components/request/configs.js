@@ -12,7 +12,6 @@ function left(property, chars) {
 }
 
 export default Component.extend(CanTriggerBuild, TriggerBuild, {
-  tagName: 'div',
   classNames: ['request-configs'],
   classNameBindings: ['status'],
 
