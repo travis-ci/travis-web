@@ -104,7 +104,7 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
       },
       ref: this.ref,
       mode: this.mergeMode,
-      config: this.config,
+      config: this.config || '',
       data: {
         branch: this.refType === 'branch' ? this.branch : null,
         commit_message: this.message
@@ -116,6 +116,7 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
   reset() {
     this.setProperties({
       customized: false,
+      refType: 'sha',
       branch: this.originalBranch,
       sha: this.originalSha,
       message: this.request.get('commit.message'),
