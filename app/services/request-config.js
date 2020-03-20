@@ -7,14 +7,13 @@ import config from 'travis/config/environment';
 export default Service.extend({
   store: service(),
 
-  loading: reads('loadConfigs.isRunning'),
   loaded: false,
-  loadConfigsResult: reads('loadConfigs.last.value'),
-  rawConfigs: reads('loadConfigsResult.rawConfigs'),
-  requestConfig: reads('loadConfigsResult.requestConfig'),
-  jobConfigs: reads('loadConfigsResult.jobConfigs'),
+  loading: reads('loadConfigs.isRunning'),
+  rawConfigs: reads('result.rawConfigs'),
+  requestConfig: reads('result.requestConfig'),
+  jobConfigs: reads('result.jobConfigs'),
   errorMessages: computed(() => []),
-  messages: or('loadConfigsResult.messages', 'errorMessages'),
+  messages: or('result.messages', 'errorMessages'),
 
   loadConfigs: task(function* (id, data, debounce) {
     if (debounce) {
@@ -25,8 +24,9 @@ export default Service.extend({
     return yield this.store.queryRecord('request-config', { id, data }).catch((e) => {
       // TODO for some reason this still logs the 400 request as an error to the console
       this.handleLoadConfigError(e);
-    }).then(() => {
+    }).then((result) => {
       this.set('loaded', true);
+      this.set('result', result);
     });
   }).restartable(),
 
