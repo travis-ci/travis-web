@@ -3,6 +3,7 @@
     title="Latest push build on default branch: {{this.lastBuildState}}"
     name="status-images"
     class="pointer open-popup"
+    data-test-status-image-popup="true"
     {{on 'click' this.onClick}}
   >
     <img src={{this.statusImageUrl}} alt="build:{{this.lastBuildState}}" />
