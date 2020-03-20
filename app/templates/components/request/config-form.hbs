@@ -7,7 +7,7 @@
       <RadioButton
         @value="sha"
         @groupValue={{refType}}
-        @changed={{action "change" refType}}
+        @changed={{action "change" "refType"}}
         @classNames='ref-type'
       >
         Commit
@@ -15,7 +15,7 @@
       <RadioButton
         @value='branch'
         @groupValue={{refType}}
-        @changed={{action "change" refType}}
+        @changed={{action "change" "refType"}}
         @classNames='ref-type'
       >
         Branch
@@ -103,35 +103,35 @@
       <RadioButton
         @value="deep_merge_append"
         @groupValue={{mergeMode}}
-        @changed={{action "change" refType}}
+        @changed={{action "change" "mergeMode"}}
       >
         Deep Merge &amp; Append
       </RadioButton>
       <RadioButton
         @value="deep_merge_prepend"
         @groupValue={{mergeMode}}
-        @changed={{action "change" refType}}
+        @changed={{action "change" "mergeMode"}}
       >
         Deep Merge &amp; Prepend
       </RadioButton>
       <RadioButton
         @value="deep_merge"
         @groupValue={{mergeMode}}
-        @changed={{action "change" refType}}
+        @changed={{action "change" "mergeMode"}}
       >
         Deep Merge
       </RadioButton>
       <RadioButton
         @value="merge"
         @groupValue={{mergeMode}}
-        @changed={{action "change" refType}}
+        @changed={{action "change" "mergeMode"}}
       >
         Merge
       </RadioButton>
       <RadioButton
         @value="replace"
         @groupValue={{mergeMode}}
-        @changed={{action "change" refType}}
+        @changed={{action "change" "mergeMode"}}
       >
         Replace
       </RadioButton>
