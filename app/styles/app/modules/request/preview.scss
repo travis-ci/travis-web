@@ -1,10 +1,12 @@
 .request-configs-preview-container {
   display: flex;
 
-  & > div {
+  .left,
+  .right {
     flex-grow: 1;
     align-items: stretch;
     width: 50%;
+    padding: 10px 20px;
   }
 
   .left {
@@ -15,12 +17,7 @@
     margin-left: 0.5em;
   }
 
-  pre,
-  div > div {
+  .codedisplay {
     border: 1px solid $dry-cement;
-  }
-
-  div > div {
-    padding: 10px 20px;
   }
 }
