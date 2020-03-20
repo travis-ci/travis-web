@@ -35,4 +35,8 @@ export default Service.extend({
     let msg = { level: 'error', code: error.title, args: { message: error.detail } };
     this.set('errorMessages', [msg]);
   },
+
+  reset() {
+    this.set('loaded', false);
+  }
 });
