@@ -25,6 +25,7 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
   repoId: reads('repo.id'),
   rawConfigs: or('preview.rawConfigs', 'request.uniqRawConfigs'),
   messages: reads('preview.messages'),
+  loaded: reads('preview.loaded'),
 
   refType: 'sha',
   sha: reads('originalSha'),
@@ -90,7 +91,6 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
   load(debounce) {
     if (this.customizing || this.previewing) {
       this.preview.loadConfigs.perform(this.repoId, this.data, debounce);
-      this.set('loaded', true);
     }
   },
 
