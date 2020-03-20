@@ -116,7 +116,6 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
   reset() {
     this.setProperties({
       customized: false,
-      loaded: false,
       branch: this.originalBranch,
       sha: this.originalSha,
       message: this.request.get('commit.message'),
@@ -124,6 +123,7 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
       rawConfigs: this.request.uniqRawConfigs,
       config: this.request.get('apiConfig.config')
     });
+    this.preview.set('loaded', false);
   },
 
   submit() {
