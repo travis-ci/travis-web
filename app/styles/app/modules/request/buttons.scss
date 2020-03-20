@@ -12,14 +12,13 @@
   right: 0;
 }
 
-.request-configs-buttons {
-  & > * {
-    display: inline-block;
-    vertical-align: bottom;
-    user-select: none;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-  }
+.request-configs-button {
+  display: inline-block;
+  vertical-align: bottom;
+  outline: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
 }
 
 .request-configs-button-trigger-build {
