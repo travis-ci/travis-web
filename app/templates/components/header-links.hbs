@@ -110,13 +110,14 @@
             </LinkTo>
           </li>
           <li>
-            <ExternalLinkTo
-              @href={{this.config.urls.enterprise}}
+            <LinkTo
+              @route="plans"
+              @query={{hash anchor="enterprise-section"}}
               @title="Travis CI for Enterprise"
               class="navigation-anchor"
             >
               Enterprise
-            </ExternalLinkTo>
+            </LinkTo>
           </li>
         {{/if}}
       {{/if}}
