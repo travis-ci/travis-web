@@ -95,7 +95,7 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
     }
   },
 
-  data: computed('repo', 'ref', 'mergeMode', 'config', function () {
+  data: computed('repo', 'ref', 'mergeMode', 'config', 'message', function () {
     return {
       repo: {
         slug: this.repo.get('slug'),
