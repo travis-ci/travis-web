@@ -1,12 +1,10 @@
 import {
   attribute,
-  clickable,
   collection,
   create,
-  fillable,
   isPresent,
   text,
-  visitable
+  visitable,
 } from 'ember-cli-page-object';
 
 import {
@@ -24,12 +22,7 @@ import {
 
   PLANS_PAGE_CONTACT_SECTION,
   SALES_CONTACT_FORM_CONTAINER,
-  SALES_CONTACT_FORM_NAME,
-  SALES_CONTACT_FORM_EMAIL,
-  SALES_CONTACT_FORM_SIZE,
-  SALES_CONTACT_FORM_PHONE,
-  SALES_CONTACT_FORM_MESSAGE,
-  SALES_CONTACT_FORM_SUBMIT,
+  SALES_CONTACT_IFRAME,
 
   PLANS_PAGE_ENTERPRISE_SECTION,
   PLANS_PAGE_ENTERPRISE_BUTTON,
@@ -109,35 +102,10 @@ export default create({
       scope: SALES_CONTACT_FORM_CONTAINER,
       isPresent: isPresent(),
 
-      name: {
-        scope: SALES_CONTACT_FORM_NAME,
+      iframe: {
+        scope: SALES_CONTACT_IFRAME,
         isPresent: isPresent(),
-        fill: fillable(),
-      },
-      email: {
-        scope: SALES_CONTACT_FORM_EMAIL,
-        isPresent: isPresent(),
-        fill: fillable(),
-      },
-      size: {
-        scope: SALES_CONTACT_FORM_SIZE,
-        isPresent: isPresent(),
-        fill: fillable(),
-      },
-      phone: {
-        scope: SALES_CONTACT_FORM_PHONE,
-        isPresent: isPresent(),
-        fill: fillable(),
-      },
-      message: {
-        scope: SALES_CONTACT_FORM_MESSAGE,
-        isPresent: isPresent(),
-        fill: fillable(),
-      },
-      submit: {
-        scope: SALES_CONTACT_FORM_SUBMIT,
-        isPresent: isPresent(),
-        click: clickable(),
+        src: attribute('src'),
       },
     },
   },
