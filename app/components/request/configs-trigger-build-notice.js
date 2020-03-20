@@ -8,7 +8,7 @@ export default Component.extend({
   classNames: ['request-configs-trigger-build-notice'],
 
   configs: 0,
-  status: undefined,
+  status: null,
   customizing: equal('status', 'customize'),
   previewing: equal('status', 'preview'),
 
