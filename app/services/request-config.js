@@ -8,6 +8,7 @@ export default Service.extend({
   store: service(),
 
   loading: reads('loadConfigs.isRunning'),
+  loaded: false,
   loadConfigsResult: reads('loadConfigs.last.value'),
   rawConfigs: reads('loadConfigsResult.rawConfigs'),
   requestConfig: reads('loadConfigsResult.requestConfig'),
@@ -23,6 +24,8 @@ export default Service.extend({
     return yield this.store.queryRecord('request-config', { id: id, data }).catch((e) => {
       // TODO for some reason this still logs the 400 request as an error to the console
       this.handleLoadConfigError(e);
+    }).then(() => {
+      this.set('loaded', true);
     });
   }).restartable(),
 
