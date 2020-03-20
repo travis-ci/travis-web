@@ -123,7 +123,7 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
       rawConfigs: this.request.uniqRawConfigs,
       config: this.request.get('apiConfig.config')
     });
-    this.preview.set('loaded', false);
+    this.preview.reset();
   },
 
   submit() {
