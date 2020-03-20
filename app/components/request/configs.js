@@ -18,6 +18,7 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
   loading: reads('preview.loading'),
   customizing: equal('status', 'customize'),
   previewing: equal('status', 'preview'),
+  submitting: reads('submitBuildRequest.isRunning'),
   replacing: equal('mergeMode', 'replace'),
   showNewConfigView: reads('features.showNewConfigView'),
 
@@ -126,7 +127,6 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
   },
 
   submit() {
-    this.set('submitting', true);
     this.submitBuildRequest.perform();
   },
 
