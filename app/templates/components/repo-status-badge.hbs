@@ -1,0 +1,10 @@
+<div class="repo-badge inline-block vertical-align">
+  <a
+    title="Latest push build on default branch: {{this.lastBuildState}}"
+    name="status-images"
+    class="pointer open-popup"
+    {{on 'click' this.onClick}}
+  >
+    <img src={{this.statusImageUrl}} alt="build:{{this.lastBuildState}}" />
+  </a>
+</div>
