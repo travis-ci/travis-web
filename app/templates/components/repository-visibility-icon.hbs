@@ -1,3 +1,6 @@
+{{#if this.repository.shared}}
+  <SvgImage @name="icon-shared" @alt="Shared repository" @class="icon shared" />
+{{/if}}
 {{#if this.repository.private}}
   <SvgImage @name="icon-lock" @alt="Private repository" @class="icon private" />
   <EmberTooltip @text="Private repository" />

@@ -34,7 +34,7 @@
           @models={{array this.repo.provider this.repo.ownerName this.repo.vcsName}}
           @title={{this.repo.name}}
         >
-          {{this.repo.name}}
+          {{this.repo.name}}{{#if this.repo.shared}} <SvgImage @name="icon-shared" @alt="Shared repository" @class="icon shared" />{{/if}}
         </LinkTo>
       </h1>
     </header>
