@@ -101,7 +101,7 @@ module('Acceptance | show repo page', function (hooks) {
 
     const url = new URL(page.statusBadge.src);
     const expectedPath = `${url.pathname}?${url.searchParams}`;
-    assert.equal(expectedPath, '/org-login/repository-name.svg?branch=feminist%23yes');
+    assert.equal(expectedPath, '/org-login/repository-name.svg?status=passed&branch=feminist%23yes');
 
     assert.equal(page.statusBadge.title, 'Latest push build on default branch: passed');
   });
