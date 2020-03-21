@@ -26,7 +26,7 @@
   {{#if this.customizing}}
     <Request::ConfigForm
       @request={{this.request}}
-      @config={{this.config}}
+      @configs={{this.configs}}
       @refType={{this.refType}}
       @branch={{this.branch}}
       @sha={{this.sha}}
@@ -34,8 +34,16 @@
       @mergeMode={{this.mergeMode}}
       @loading={{this.loading}}
       @messages={{this.messages}}
-      @onChange={{action "formFieldChanged"}}
+      @onAdd={{action "add"}}
+      @onRemove={{action "remove"}}
+      @onChange={{action "update"}}
       @onSubmit={{action "submit"}}
+    />
+
+    <Request::Messages
+      @request={{this.request}}
+      @messages={{this.messages}}
+      @loading={{this.loading}}
     />
 
     {{#unless this.replacing}}

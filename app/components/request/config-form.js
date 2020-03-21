@@ -58,8 +58,24 @@ export default Component.extend(BranchSearching, {
   }),
 
   actions: {
+    add(ix) {
+      this.onAdd(ix);
+    },
+
+    remove(ix) {
+      this.onRemove(ix);
+    },
+
     change(field, value) {
       this.onChange(field, value);
+    },
+
+    changeConfig(ix, value) {
+      this.onChange('config', value, ix);
+    },
+
+    changeMergeMode(ix, value) {
+      this.onChange('mergeMode', value, ix);
     },
 
     submit() {

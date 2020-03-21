@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { computed } from '@ember/object';
+import { computed, set } from '@ember/object';
 import { equal, or, reads } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import truncate from 'travis/utils/computed';
@@ -32,8 +32,9 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
   sha: reads('originalSha'),
   branch: reads('originalBranch'),
   message: reads('request.commit.message'),
-  config: reads('request.apiConfig.config'),
-  mergeMode: reads('originalMergeMode'), // TODO store and serve merge mode for api request configs
+  // config: reads('request.apiConfig.config'),
+  // mergeMode: reads('originalMergeMode'), // TODO store and serve merge mode for api request configs
+  mergeMode: reads('configs.lastObject.mergeMode'),
   defaultMergeMode: 'deep_merge_append',
 
   originalSha: truncate('requestOrDefaultBranchSha', 7),
@@ -44,6 +45,10 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
   requestOrDefaultBranchSha: or('requestSha', 'repoDefaultBranchLastCommitSha'),
   repoDefaultBranch: reads('repo.defaultBranch.name'),
   repoDefaultBranchLastCommitSha: reads('repo.defaultBranch.lastBuild.commit.sha'),
+
+  configs: computed(function () {
+    return [{ config: null, mergeMode: this.originalMergeMode }];
+  }),
 
   ref: computed('refType', 'branch', 'sha', function () {
     return this.get(this.refType);
@@ -91,11 +96,11 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
 
   load(debounce) {
     if (this.customizing || this.previewing) {
-      this.preview.loadConfigs.perform(this.repoId, this.data, debounce);
+      this.preview.loadConfigs.perform(this.repoId, this.data(), debounce);
     }
   },
 
-  data: computed('repo', 'ref', 'mergeMode', 'config', 'message', function () {
+  data() {
     return {
       repo: {
         slug: this.repo.get('slug'),
@@ -104,14 +109,14 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
       },
       ref: this.ref,
       mode: this.mergeMode,
-      config: this.config || '',
+      configs: this.configs, // TODO this ends up being posted as '[object Object]'
       data: {
         branch: this.refType === 'branch' ? this.branch : null,
         commit_message: this.message
       },
       type: 'api'
     };
-  }),
+  },
 
   reset() {
     this.setProperties({
@@ -132,14 +137,21 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
   },
 
   actions: {
-    formFieldChanged(key, value) {
-      this.set('customized', true);
-      this.set(key, value);
-      if (key === 'config') {
+    add(ix) {
+      this.configs.insertAt(ix, { config: null, mergeMode: 'deep_merge_append' });
+    },
+    remove(ix) {
+      this.configs.removeAt(ix);
+    },
+    update(key, value, ix) {
+      if (key === 'config' || key == 'mergeMode') {
+        set(this.configs[ix], key, value);
         this.load(true);
       } else {
+        this.set(key, value);
         this.load();
       }
+      this.set('customized', true);
     },
     submit() {
       this.submit();
