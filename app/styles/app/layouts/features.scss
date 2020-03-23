@@ -12,10 +12,6 @@
     background: linear-gradient(to bottom, #e2453c 0, #e2453c 16%, #e07e39 16%, #e07e39 32%, #e5d667 32%, #e5d667 48%, #51b95b 48%, #51b95b 66%, #1e72b7 66%, #1e72b7 86%, #6f5ba7 86%) no-repeat;
   }
 
-  .nav-nested {
-    display: none;
-  }
-
   .icon-broadcast:not(.warning):not(.announcement) {
     @include colorSVG(white);
   }
