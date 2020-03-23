@@ -4,7 +4,7 @@
     name="status-images"
     class="pointer open-popup"
     data-test-status-image-popup="true"
-    {{on 'click' this.onClick}}
+    {{on 'click' @onClick}}
   >
     <img src={{this.statusImageUrl}} alt="build:{{this.lastBuildState}}" />
   </a>

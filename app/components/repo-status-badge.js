@@ -22,7 +22,7 @@ export default Component.extend({
       const { defaultBranch, lastBuildState = 'unknown', repo } = this;
 
       const url = this.statusImages.imageUrl(repo, defaultBranch);
-      const divider = (url.indexOf('?') >= 0) ? '&' : '?';
+      const divider = url.includes('?') ? '&' : '?';
 
       return `${url}${divider}status=${lastBuildState}`;
     }
