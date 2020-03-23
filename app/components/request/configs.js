@@ -6,6 +6,12 @@ import truncate from 'travis/utils/computed';
 import CanTriggerBuild from 'travis/mixins/components/can-trigger-build';
 import TriggerBuild from 'travis/mixins/components/trigger-build';
 
+export const STATUSES = {
+  CLOSED: 'closed',
+  CUSTOMIZE: 'customize',
+  PREVIEW: 'preview'
+};
+
 export default Component.extend(CanTriggerBuild, TriggerBuild, {
   classNames: ['request-configs'],
   classNameBindings: ['status'],
@@ -13,11 +19,11 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
   preview: service('request-config'),
   features: service(),
 
-  status: 'closed',
-  closed: equal('status', 'closed'),
+  status: STATUSES.CLOSED,
+  closed: equal('status', STATUSES.CLOSED),
+  customizing: equal('status', STATUSES.CUSTOMIZE),
+  previewing: equal('status', STATUSES.PREVIEW),
   loading: reads('preview.loading'),
-  customizing: equal('status', 'customize'),
-  previewing: equal('status', 'preview'),
   submitting: reads('submitBuildRequest.isRunning'),
   replacing: equal('mergeMode', 'replace'),
   showNewConfigView: reads('features.showNewConfigView'),
@@ -56,7 +62,7 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
   onTrigger(e) {
     e.toElement.blur();
     if (this.closed) {
-      this.set('status', 'open');
+      this.set('status', STATUSES.OPEN);
     } else {
       this.submit();
     }
@@ -64,28 +70,28 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
 
   onCustomize() {
     if (this.customizing) {
-      this.set('status', 'open');
+      this.set('status', STATUSES.OPEN);
       this.reset();
     } else {
-      this.set('status', 'customize');
+      this.set('status', STATUSES.CUSTOMIZE);
     }
   },
 
   onPreview() {
     if (!this.previewing) {
-      this.set('status', 'preview');
+      this.set('status', STATUSES.PREVIEW);
       if (!this.loaded) {
         this.load();
       }
     } else if (this.customized) {
-      this.set('status', 'customize');
+      this.set('status', STATUSES.CUSTOMIZE);
     } else {
-      this.set('status', 'open');
+      this.set('status', STATUSES.OPEN);
     }
   },
 
   onCancel() {
-    this.set('status', 'closed');
+    this.set('status', STATUSES.CLOSED);
     this.reset();
   },
 
