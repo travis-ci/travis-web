@@ -26,7 +26,10 @@
           @models={{array this.build.repo.provider this.build.repo.ownerName this.build.repo.vcsName}}
           class="inner-underline"
         >
-          {{this.build.repo.name}}{{#if this.build.repo.shared}} <SvgImage @name="icon-shared" @alt="Shared repository" @class="icon shared" />{{/if}}
+          {{this.build.repo.name}}
+          {{#if this.build.repo.shared}}
+            <SvgImage @name="icon-shared" @alt="Shared repository" @class="icon shared" />
+          {{/if}}
         </LinkTo>
       </div>
     </section>
