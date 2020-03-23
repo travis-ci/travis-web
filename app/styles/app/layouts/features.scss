@@ -16,25 +16,6 @@
     color: white;
   }
 
-  .navigation-nested {
-    line-height: 38px;
-    background: linear-gradient(to top, #e2453c 0, #e2453c 14%, #e07e39 14%, #e07e39 31%, #e5d667 31%, #e5d667 47%, #51b95b 47%, #51b95b 64%, #1e72b7 64%, #1e72b7 82%, #6f5ba7 82%) no-repeat;
-    
-    a {
-      color: white;
-
-      &:hover,
-      &:active {
-        color: #3eaaaf;
-        background-color: rgba(255, 255, 255, 0.3);
-      }
-    }
-
-    &__note {
-      color: $ansi-white;
-    }
-  }
-
   .icon-broadcast:not(.warning):not(.announcement) {
     @include colorSVG(white);
   }

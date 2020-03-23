@@ -1,4 +1,5 @@
 import Service, { inject as service } from '@ember/service';
+import parseWithDefault from 'travis/utils/json-parser';
 
 export default Service.extend({
   auth: service('storage/auth'),
@@ -68,11 +69,3 @@ export default Service.extend({
   },
 
 });
-
-export function parseWithDefault(json, defaultValue) {
-  try {
-    return JSON.parse(json) || defaultValue;
-  } catch (e) {
-    return defaultValue;
-  }
-}

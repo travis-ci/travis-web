@@ -1,6 +1,6 @@
 import { computed } from '@ember/object';
 import { assert } from '@ember/debug';
-import { parseWithDefault } from '../storage';
+import parseWithDefault from 'travis/utils/json-parser';
 import Service, { inject as service } from '@ember/service';
 
 const storage = getStorage();
