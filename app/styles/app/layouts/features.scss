@@ -16,33 +16,6 @@
     display: none;
   }
 
-  .section-header {
-    padding: 0 20px;
-  }
-
-  .navigation-anchor {
-    color: white;
-  }
-
-  .navigation-nested {
-    line-height: 38px;
-    background: linear-gradient(to top, #e2453c 0, #e2453c 15%, #e07e39 15%, #e07e39 32%, #e5d667 32%, #e5d667 46%, #51b95b 46%, #51b95b 63%, #1e72b7 63%, #1e72b7 82%, #6f5ba7 82%) no-repeat;
-
-    a {
-      color: white;
-
-      &:hover,
-      &:active {
-        color: #3eaaaf;
-        background-color: rgba(255, 255, 255, 0.3);
-      }
-    }
-
-    &__note {
-      color: $ansi-white;
-    }
-  }
-
   .icon-broadcast:not(.warning):not(.announcement) {
     @include colorSVG(white);
   }

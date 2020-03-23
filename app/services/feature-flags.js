@@ -1,4 +1,5 @@
 import Service, { inject as service } from '@ember/service';
+import parseWithDefault from 'travis/utils/json-parser';
 import { task } from 'ember-concurrency';
 import { isEmpty } from '@ember/utils';
 
@@ -52,7 +53,7 @@ export default Service.extend({
       return obj;
     });
 
-    const oldFeatureState = JSON.parse(this.storage.getItem('travis.features')) || {};
+    const oldFeatureState = parseWithDefault(this.storage.getItem('travis.features'), {});
     this.storage.setItem('travis.features', JSON.stringify({
       ...oldFeatureState,
       [this.auth.userName]: state
@@ -64,7 +65,7 @@ export default Service.extend({
   fetchTask: task(function* ({forceServerRequest} = false) {
     try {
       // try to read from local storage first, fall back to API
-      const localFlags = yield JSON.parse(this.storage.getItem('travis.features'));
+      const localFlags = yield parseWithDefault(this.storage.getItem('travis.features'), {});
 
       if (!forceServerRequest && !isEmpty(localFlags) && !isEmpty(localFlags[this.auth.userName])) {
         this._setFlagStateFromStorage(localFlags[this.auth.userName]);
@@ -84,7 +85,7 @@ export default Service.extend({
   }).drop(),
 
   _persistToLocalStorage(feature, status) {
-    const featureState = JSON.parse(this.storage.getItem('travis.features'));
+    const featureState = parseWithDefault(this.storage.getItem('travis.features'), {});
     const currentUserFeatureState = featureState[this.auth.userName];
     const idx = currentUserFeatureState.findIndex(f => Object.keys(f)[0] === feature);
     if (idx !== -1) {
