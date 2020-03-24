@@ -1,5 +1,6 @@
 .repo-config .request-configs .request-configs-buttons {
-  top: -45px;
+  position: relative;
+  text-align: right;
 
   .request-configs-button-cancel {
     display: none;
