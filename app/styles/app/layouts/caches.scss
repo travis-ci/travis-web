@@ -25,6 +25,15 @@
   padding: 0;
   margin: 0;
   list-style: none;
+
+  .row-branch {
+    position: relative;
+    &:after {
+      content: "";
+
+      @include fadeOut(right, -90deg, white);
+    }
+  }
 }
 
 .cache-item {
@@ -36,6 +45,11 @@
   &:hover,
   &:active {
     background-color: $pebble-grey;
+    .row-branch {
+      &:after {
+        @include fadeOut(right, -90deg, $pebble-grey);
+      }
+    }
   }
 
   @media #{$medium-up} {
