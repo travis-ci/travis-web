@@ -30,8 +30,8 @@ export default Service.extend({
   }).restartable(),
 
   handleLoadConfigError(e) {
-    let error = e.errors[0];
-    let msg = { level: 'error', code: error.title, args: { message: error.detail } };
+    const error = e.errors[0];
+    const msg = { level: 'error', code: error.title, args: { message: error.detail } };
     this.set('errorMessages', [msg]);
   },
 
