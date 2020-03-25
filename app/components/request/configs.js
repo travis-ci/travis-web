@@ -28,6 +28,7 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
   replacing: equal('mergeMode', 'replace'),
   showNewConfigView: reads('features.showNewConfigView'),
 
+  request: null,
   repo: reads('request.repo'),
   repoId: reads('repo.id'),
   rawConfigs: or('preview.rawConfigs', 'request.uniqRawConfigs'),
