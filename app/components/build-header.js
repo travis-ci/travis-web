@@ -129,6 +129,8 @@ export default Component.extend({
     let os = this.get('jobsConfig.content.os');
     if (os === 'linux' || os === 'linux-ppc64le') {
       return 'linux';
+    } else if (os === 'freebsd') {
+      return 'freebsd';
     } else if (os === 'osx') {
       return 'osx';
     } else if (os === 'windows') {
@@ -147,6 +149,8 @@ export default Component.extend({
     let os = this.os;
     if (os === 'linux') {
       return 'icon-linux';
+    } else if (os === 'freebsd') {
+      return 'icon-freebsd';
     } else if (os === 'osx') {
       return 'icon-mac';
     } else if (os === 'windows') {
