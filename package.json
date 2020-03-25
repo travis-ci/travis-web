@@ -50,7 +50,7 @@
     "ember-cli-mirage": "^1.1.0",
     "ember-cli-moment-shim": "^3.5.0",
     "ember-cli-page-object": "^1.15.0-beta.3",
-    "ember-cli-postcss": "^4.2.1",
+    "ember-cli-postcss": "^6.0.0",
     "ember-cli-sentry": "^4.0.0",
     "ember-cli-sri": "^2.1.1",
     "ember-cli-test-loader": "^2.1.0",
