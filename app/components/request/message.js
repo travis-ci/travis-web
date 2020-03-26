@@ -177,40 +177,12 @@ export default Component.extend({
     return `${format(key)}: skipping stage #${format(args.number)} because its condition does not match: ${format(args.condition)}`;
   },
 
-  skip_allow_failure(key, args) {
-    return `<code>${escape(key)}</code>: skipping jobs allow failure rule #<code>${escape(args.number)}</code> because its condition does not match: <code>${escape(args.condition)}</code>`;
-  },
-
-  skip_exclude(key, args) {
-    return `<code>${escape(key)}</code>: skipping jobs exclude rule #<code>${escape(args.number)}</code> because its condition does not match: <code>${escape(args.condition)}</code>`;
-  },
-
-  skip_import(key, args) {
-    return `<code>${escape(key)}</code>: skipping import <code>${escape(args.source)}</code> because its condition does not match: <code>${escape(args.condition)}</code>`;
-  },
-
-  skip_job(key, args) {
-    return `<code>${escape(key)}</code>: skipping job #<code>${escape(args.number)}</code> because its condition does not match: <code>${escape(args.condition)}</code>`;
-  },
-
-  skip_notification(key, args) {
-    return `<code>${escape(key)}</code>: skipping notification <code>${escape(args.type)}</code> because its condition does not match: <code>${escape(args.condition)}</code>`;
-  },
-
-  skip_stage(key, args) {
-    return `<code>${escape(key)}</code>: skipping stage #<code>${escape(args.number)}</code> because its condition does not match: <code>${escape(args.condition)}</code>`;
-  },
-
   invalid_config_format() {
     return 'invalid config format (must be a hash)';
   },
 
   invalid_ref(_, args) {
     return args.message;
-  },
-
-  skip_import(key, args) {
-    return `<code>${escape(key)}</code>: skipping import <code>${escape(args.source)}</code>, condition does not match: <code>${escape(args.condition)}</code>`;
   },
 
   too_many_imports(_, args) {
