@@ -70,10 +70,7 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
   },
 
   onCustomize() {
-    if (this.customizing) {
-      this.set('status', STATUSES.OPEN);
-      this.reset();
-    } else {
+    if (!this.customizing) {
       this.set('status', STATUSES.CUSTOMIZE);
     }
   },
@@ -84,10 +81,6 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
       if (!this.loaded) {
         this.load();
       }
-    } else if (this.customized) {
-      this.set('status', STATUSES.CUSTOMIZE);
-    } else {
-      this.set('status', STATUSES.OPEN);
     }
   },
 
@@ -122,7 +115,6 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
 
   reset() {
     this.setProperties({
-      customized: false,
       refType: 'sha',
       branch: this.originalBranch,
       sha: this.originalSha,
@@ -140,7 +132,6 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
 
   actions: {
     formFieldChanged(key, value) {
-      this.set('customized', true);
       this.set(key, value);
       if (key === 'config') {
         this.load(true);
