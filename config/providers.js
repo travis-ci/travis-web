@@ -90,7 +90,7 @@ module.exports = deepFreeze({
       profile: '/:owner',
       repo: '/:owner/:repo',
       tag: '/:owner/:repo/releases/tag/:tag',
-      accessSettings: '/settings/connections/applications/f244293c729d5066cf27',
+      accessSettings: process.env.GITHUB_ORGS_OAUTH_ACCESS_SETTINGS_URL,
     },
     vocabulary: {
       organization: 'Organization',
