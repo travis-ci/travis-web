@@ -35,7 +35,6 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
   messages: reads('preview.messages'),
   loaded: reads('preview.loaded'),
 
-  refType: 'sha',
   sha: reads('originalSha'),
   branch: reads('originalBranch'),
   message: reads('request.commit.message'),
@@ -51,10 +50,6 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
   requestOrDefaultBranchSha: or('requestSha', 'repoDefaultBranchLastCommitSha'),
   repoDefaultBranch: reads('repo.defaultBranch.name'),
   repoDefaultBranchLastCommitSha: reads('repo.defaultBranch.lastBuild.commit.sha'),
-
-  ref: computed('refType', 'branch', 'sha', function () {
-    return this.get(this.refType);
-  }),
 
   didInsertElement() {
     this.load();
@@ -95,18 +90,19 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
     }
   },
 
-  data: computed('repo', 'ref', 'mergeMode', 'config', 'message', function () {
+  data: computed('repo', 'mergeMode', 'config', 'message', function () {
     return {
       repo: {
         slug: this.repo.get('slug'),
         private: this.repo.get('private'),
         default_branch: this.repo.get('defaultBranch.name'),
       },
-      ref: this.ref,
+      branch: this.branch,
+      sha: this.sha,
       mode: this.mergeMode,
       config: this.config || '',
       data: {
-        branch: this.refType === 'branch' ? this.branch : null,
+        branch: this.branch,
         commit_message: this.message
       },
       type: 'api'
@@ -115,7 +111,6 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
 
   reset() {
     this.setProperties({
-      refType: 'sha',
       branch: this.originalBranch,
       sha: this.originalSha,
       message: this.request.get('commit.message'),

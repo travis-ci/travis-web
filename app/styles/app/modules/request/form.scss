@@ -1,4 +1,4 @@
-.request-configs-form {
+.request-configs-form .travis-form {
   .config-type {
     position: absolute;
     top: 1px;
@@ -22,7 +22,24 @@
   }
 
   .travis-form__field-component {
-    box-shadow: inset 0 0 1px 1px $dry-cement;
+    box-shadow: inset 0 0 1px 1px $dry-cement !important;
+  }
+
+  .request-configs-fields-container {
+    display: flex;
+    flex-flow: row wrap;
+
+    .form-elem {
+      &:first-child {
+        flex-grow: 2;
+        margin-right: 0.5em;
+      }
+
+      &:last-child {
+        flex-grow: 1;
+        margin-left: 0.5em;
+      }
+    }
   }
 
   .CodeMirror {
