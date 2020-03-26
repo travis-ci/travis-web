@@ -24,8 +24,7 @@ const {
   DISABLE_SENTRY,
   TRAVIS_COMMIT,
   SOURCE_VERSION,
-  DEPLOY_TARGET,
-  GITHUB_ORGS_OAUTH_ACCESS_SETTINGS_URL
+  DEPLOY_TARGET
 } = process.env;
 
 module.exports = function (environment) {
@@ -296,10 +295,6 @@ module.exports = function (environment) {
 
     if (BILLING_ENDPOINT) {
       ENV.billingEndpoint = BILLING_ENDPOINT;
-    }
-
-    if (GITHUB_ORGS_OAUTH_ACCESS_SETTINGS_URL) {
-      ENV.providers.github.paths.accessSettings = GITHUB_ORGS_OAUTH_ACCESS_SETTINGS_URL;
     }
 
     if (PUBLIC_MODE == 'false') {
