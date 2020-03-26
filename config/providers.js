@@ -1,10 +1,6 @@
 /* eslint-env node */
 'use strict';
 
-const config = require('./environment');
-const { githubOrgsOauthAccessSettingsUrl } = config;
-const deepFreeze = require('deep-freeze');
-
 const VCS_TYPES = {
   ASSEMBLA: {
     ORG: 'AssemblaOrganization',
@@ -24,7 +20,7 @@ const VCS_TYPES = {
 };
 
 // keys sorted alphabetically
-module.exports = deepFreeze({
+module.exports = {
   assembla: {
     vcsTypes: [VCS_TYPES.ASSEMBLA.ORG, VCS_TYPES.ASSEMBLA.REPO, VCS_TYPES.ASSEMBLA.USER],
     endpoint: 'https://:portfolio.assembla.com',
@@ -92,7 +88,7 @@ module.exports = deepFreeze({
       profile: '/:owner',
       repo: '/:owner/:repo',
       tag: '/:owner/:repo/releases/tag/:tag',
-      accessSettings: githubOrgsOauthAccessSettingsUrl || '/settings/connections/applications/f244293c729d5066cf27',
+      accessSettings: '/settings/connections/applications/f244293c729d5066cf27',
     },
     vocabulary: {
       organization: 'Organization',
@@ -103,4 +99,4 @@ module.exports = deepFreeze({
       light: 'grey',
     },
   },
-});
+};

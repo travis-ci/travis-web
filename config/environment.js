@@ -299,7 +299,7 @@ module.exports = function (environment) {
     }
 
     if (GITHUB_ORGS_OAUTH_ACCESS_SETTINGS_URL) {
-      ENV.githubOrgsOauthAccessSettingsUrl = GITHUB_ORGS_OAUTH_ACCESS_SETTINGS_URL;
+      ENV.providers.github.paths.accessSettings = GITHUB_ORGS_OAUTH_ACCESS_SETTINGS_URL;
     }
 
     if (PUBLIC_MODE == 'false') {
