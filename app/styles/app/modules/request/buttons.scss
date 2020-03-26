@@ -77,7 +77,7 @@
   }
   .request-configs-button-trigger-build {
     @include travisBorder;
-    background-color: white !important;
+    background-color: white;
     color: $asphalt-grey;
   }
 }
