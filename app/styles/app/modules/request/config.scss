@@ -27,7 +27,7 @@
 $config-code-font-size: 12px;
 pre.codedisplay[class*='language-'] {
   white-space: pre-wrap;
-  background-color: white !important;
+  background-color: white;
   font-size: $config-code-font-size;
 
   code {
