@@ -1,6 +1,9 @@
 /* eslint-env node */
 'use strict';
 
+import config from 'travis/config/environment';
+const { githubOrgsOauthAccessSettingsUrl } = config;
+
 const deepFreeze = require('deep-freeze');
 
 const VCS_TYPES = {
@@ -90,7 +93,7 @@ module.exports = deepFreeze({
       profile: '/:owner',
       repo: '/:owner/:repo',
       tag: '/:owner/:repo/releases/tag/:tag',
-      accessSettings: '/settings/connections/applications/f244293c729d5066cf27',
+      accessSettings: githubOrgsOauthAccessSettingsUrl,
     },
     vocabulary: {
       organization: 'Organization',
