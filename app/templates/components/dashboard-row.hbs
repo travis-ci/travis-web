@@ -174,7 +174,7 @@
             There are no builds for this repo yet
           </p>
           {{#if this.isTriggering}}
-            <LoadingIndicator />
+            <LoadingIndicator @inline={{true}}/>
           {{else}}
             <button
               class="button--blue"
