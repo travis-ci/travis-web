@@ -59,9 +59,10 @@
         @label="Custom Build Config"
         as |field|
       >
-        <div class="config-type {{this.configMode}}">
+        <div class="config-type {{this.configMode}} tooltip-wrapper">
           <span class="yaml">YAML</span>
           <span class="javascript">JSON</span>
+          <EmberTooltip @text="Detected build config format" />
         </div>
 
         <IvyCodemirror
