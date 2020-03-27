@@ -18,6 +18,13 @@ export default Component.extend(WithConfigValidation, {
   isConfig: match('router.currentRouteName', /config$/),
   isLog: not('isConfig'),
 
+  request: computed('job', 'build', function () {
+    if (this.build)
+      return this.build.get('request');
+    else
+      return this.job.get('build.request');
+  }),
+
   route: computed('job', 'build', function () {
     if (this.job)
       return 'job';
