@@ -13,11 +13,17 @@
       border: 1px solid transparent;
       border-radius: 4px;
     }
+  }
 
-    &.javascript .javascript,
-    &.yaml .yaml {
-      border-color: lighten($cement-grey, 15);
-    }
+  .javascript .javascript,
+  .yaml .yaml {
+    border-color: lighten($cement-grey, 15);
+  }
+  .yaml .ember-tooltip {
+      left: -20px !important;
+  }
+  .javascript .ember-tooltip {
+      left: 20px !important;
   }
 
   .travis-form__field-component {
