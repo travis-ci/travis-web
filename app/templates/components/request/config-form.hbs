@@ -2,7 +2,7 @@
   @onSubmit={{perform this.triggerBuild}}
   as |form|
 >
-  <div class="request-configs-fields" data-test-request-config-form='true'>
+  <div class="request-configs-fields {{this.configMode}}" data-test-request-config-form='true'>
     <div class="request-configs-fields-container">
       <div class="form-elem">
         <form.field
@@ -59,7 +59,7 @@
         @label="Custom Build Config"
         as |field|
       >
-        <div class="config-type {{this.configMode}} tooltip-wrapper">
+        <div class="config-type tooltip-wrapper">
           <span class="yaml">YAML</span>
           <span class="javascript">JSON</span>
           <EmberTooltip @text="Detected build config format" />
