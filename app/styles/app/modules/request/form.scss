@@ -26,8 +26,12 @@
       left: 20px !important;
   }
 
-  .travis-form__field-component {
-    box-shadow: inset 0 0 1px 1px $dry-cement !important;
+  .travis-form__field .travis-form__field-component {
+    box-shadow: inset 0 0 1px 1px $dry-cement;
+  }
+
+  .travis-form__field .travis-form__field-checkbox {
+    box-shadow: none;
   }
 
   .request-configs-fields-container {
