@@ -12,6 +12,7 @@ export default Component.extend(WithConfigValidation, {
   isLog: not('isConfig'),
 
   repo: reads('build.repo'),
-  messages: reads('build.request.messages'),
+  request: reads('build.request'),
+  messages: reads('request.messages'),
 
 });
