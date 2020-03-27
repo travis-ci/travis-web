@@ -332,6 +332,7 @@ module.exports = function (environment) {
     ENV.intervals.branchCreatedSyncDelay = 0;
     ENV.intervals.triggerBuildRequestDelay = 0;
     ENV.intervals.fetchRecordsForPusherUpdatesThrottle = 0;
+    ENV.intervals.syncingPolling = 10;
     ENV.intervals.githubAppsInstallationPolling = 10;
     ENV.timing.syncingPageRedirectionTime = 30;
 
