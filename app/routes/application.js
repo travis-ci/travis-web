@@ -8,6 +8,7 @@ import {
   bindKeyboardShortcuts,
   unbindKeyboardShortcuts
 } from 'ember-keyboard-shortcuts';
+import { later } from '@ember/runloop';
 
 export default TravisRoute.extend(BuildFaviconMixin, {
   auth: service(),
@@ -28,11 +29,22 @@ export default TravisRoute.extend(BuildFaviconMixin, {
     });
 
     if (config.metricsAdapters.length > 0) {
-      const { metrics, router } = this;
+      const { metrics, router, controller } = this;
       router.on('routeDidChange', () => {
         try {
           const { currentURL: page } = router;
-          metrics.trackPage({ page });
+          let needsReset = true;
+
+          const hitCallback = () => {
+            needsReset = false;
+            controller && controller.resetUTMs();
+          };
+
+          metrics.trackPage({ page, hitCallback });
+
+          later(() => {
+            if (needsReset) this.controller.resetUTMs();
+          }, 1000);
         } catch (err) {}
       });
     }
