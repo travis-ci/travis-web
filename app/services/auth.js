@@ -251,7 +251,6 @@ export default Service.extend({
       }
     }
     if (this.utm.hasData) {
-      debugger;
       currentUser.set('utmParams', this.utm.all);
       currentUser.save().then(() => this.utm.clear());
     }

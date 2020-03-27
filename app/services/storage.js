@@ -25,13 +25,6 @@ export default Service.extend({
     this.setItem('travis.billing_plan', JSON.stringify(value));
   },
 
-  get utmData() {
-    return this.parseWithDefault('travis.utm_data', {});
-  },
-  set utmData(data = {}) {
-    this.setItem('travis.utm_data', JSON.stringify(data));
-  },
-
   clearPreferencesData() {
     this.removeItem('travis.features');
   },
