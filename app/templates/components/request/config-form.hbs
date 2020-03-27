@@ -90,41 +90,62 @@
       <h4 class="request-configs-heading">
         Merge mode
       </h4>
-      <RadioButton
-        @value="deep_merge_append"
-        @groupValue={{mergeMode}}
-        @changed={{action "change" "mergeMode"}}
+
+      <form.field
+        @disableFrame={{true}}
+        @value={{eq @mergeMode 'deep_merge_append'}}
+        @onChange={{action 'change' 'mergeMode' 'deep_merge_append'}}
+        class="inline-block mr-6"
+        as |field|
       >
-        Deep Merge &amp; Append
-      </RadioButton>
-      <RadioButton
-        @value="deep_merge_prepend"
-        @groupValue={{mergeMode}}
-        @changed={{action "change" "mergeMode"}}
+        <field.checkbox>
+          Deep Merge &amp; Append
+        </field.checkbox>
+      </form.field>
+      <form.field
+        @disableFrame={{true}}
+        @value={{eq @mergeMode 'deep_merge_prepend'}}
+        @onChange={{action 'change' 'mergeMode' 'deep_merge_prepend'}}
+        class="inline-block mr-6"
+        as |field|
       >
-        Deep Merge &amp; Prepend
-      </RadioButton>
-      <RadioButton
-        @value="deep_merge"
-        @groupValue={{mergeMode}}
-        @changed={{action "change" "mergeMode"}}
+        <field.checkbox>
+          Deep Merge &amp; Prepend
+        </field.checkbox>
+      </form.field>
+      <form.field
+        @disableFrame={{true}}
+        @value={{eq @mergeMode 'deep_merge'}}
+        @onChange={{action 'change' 'mergeMode' 'deep_merge'}}
+        class="inline-block mr-6"
+        as |field|
       >
-        Deep Merge
-      </RadioButton>
-      <RadioButton
-        @value="merge"
-        @groupValue={{mergeMode}}
-        @changed={{action "change" "mergeMode"}}
+        <field.checkbox>
+          Deep Merge
+        </field.checkbox>
+      </form.field>
+      <form.field
+        @disableFrame={{true}}
+        @value={{eq @mergeMode 'merge'}}
+        @onChange={{action 'change' 'mergeMode' 'merge'}}
+        class="inline-block mr-6"
+        as |field|
       >
-        Merge
-      </RadioButton>
-      <RadioButton
-        @value="replace"
-        @groupValue={{mergeMode}}
-        @changed={{action "change" "mergeMode"}}
+        <field.checkbox>
+          Merge
+        </field.checkbox>
+      </form.field>
+      <form.field
+        @disableFrame={{true}}
+        @value={{eq @mergeMode 'replace'}}
+        @onChange={{action 'change' 'mergeMode' 'replace'}}
+        class="inline-block mr-10"
+        as |field|
       >
-        Replace
-      </RadioButton>
+        <field.checkbox>
+          Replace
+        </field.checkbox>
+      </form.field>
 
       <ExternalLinkTo class="hint" href="{{config-get 'urls.triggerBuildMergeModes'}}">
         <SvgImage @name='icon-help' @class='icon-help' />
