@@ -27,6 +27,9 @@
           class="inner-underline"
         >
           {{this.build.repo.name}}
+          {{#if this.build.repo.shared}}
+            <SvgImage @name="icon-shared" @alt="Shared repository" @class="icon shared" />
+          {{/if}}
         </LinkTo>
       </div>
     </section>

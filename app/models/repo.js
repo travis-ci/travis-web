@@ -37,6 +37,7 @@ const Repo = VcsEntity.extend({
   name: attr('string'),
   vcsName: attr('string'), // name of repository normalized by provider
   starred: attr('boolean'),
+  shared: attr('boolean'),
   active_on_org: attr('boolean'),
   emailSubscribed: attr('boolean'),
   migrationStatus: attr('string'),

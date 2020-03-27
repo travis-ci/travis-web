@@ -179,6 +179,9 @@
             {{format-time this.item.finishedAt}}
           </time>
         </li>
+        {{#if this.item.repo.shared}}
+          <SvgImage @name="icon-shared" @alt="Shared repository" @class="icon shared" /> Shared repository
+        {{/if}}
       {{/if}}
     </ul>
   </div>
