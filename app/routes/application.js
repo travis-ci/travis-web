@@ -33,8 +33,7 @@ export default TravisRoute.extend(BuildFaviconMixin, {
         try {
           const { currentURL: page } = router;
           metrics.trackPage({ page });
-        } catch (err) {
-        }
+        } catch (err) {}
       });
     }
 
