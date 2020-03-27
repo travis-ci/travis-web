@@ -9,6 +9,7 @@ import {
 } from 'travis/utils/format-config';
 import { later } from '@ember/runloop';
 import { inject as service } from '@ember/service';
+import { parseWithDefault } from 'travis/services/storage';
 
 export default Component.extend({
   externalLinks: service(),
@@ -28,11 +29,8 @@ export default Component.extend({
   }),
 
   formattedConfig: computed('config', 'slug', function () {
-    try {
-      return JSON.stringify(JSON.parse(this.config), null, 2);
-    } catch (e) {
-      return this.config;
-    }
+    let object = parseWithDefault(this.config, null);
+    return object ? JSON.stringify(object, null, 2) : this.config;
   }),
 
   filePath: computed('source', 'slug', function () {
