@@ -14,8 +14,14 @@ let FilteredArray = ArrayProxy.extend({
       this,
       'content',
       computed(
-        `_all.@each.{${dependencies.join(',')}}`,
-        () => _all.filter(item => item && filterFunction(item))
+        `_all.@each.{${dependencies.join(',')}}`, {
+          get() {
+            return _all.filter(item => filterFunction(item));
+          },
+          set(key, value) {
+            return value;
+          }
+        }
       )
     );
 
@@ -29,7 +35,6 @@ let FilteredArray = ArrayProxy.extend({
 // added to one of the filtered arrays.
 //
 // Filtered arrays are indexed by an id unique for a given set of parameters,
-// calculated using the calculateId function.
 //
 // In order to minimise the number of observers FilteredArrayManagerForType will
 // group arrays by dependencies. Let's consider the following code:
@@ -90,7 +95,7 @@ let FilteredArrayManagerForType = EmberObject.extend({
       // to get new results
       let promise = new EmberPromise((resolve, reject) => {
         this.fetchQuery(queryParams).then(queryResult => {
-          array.set('queryResult', queryResult);
+          this.setProperties({ queryResult, content: queryResult });
           resolve(array);
         }, reject);
       });
@@ -197,7 +202,7 @@ let FilteredArrayManager = EmberObject.extend({
 
   fetchArray(modelName, ...rest) {
     return this.filteredArrayManagerForType(modelName).fetchArray(...rest)
-      ._promise;
+      ._lastPromise;
   },
 
   filteredArrayManagerForType(modelName) {

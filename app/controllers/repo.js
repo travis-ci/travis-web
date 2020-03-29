@@ -6,7 +6,7 @@ import eventually from 'travis/utils/eventually';
 import Visibility from 'visibilityjs';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
-import { reads } from '@ember/object/computed';
+import { alias } from '@ember/object/computed';
 import config from 'travis/config/environment';
 
 export default Controller.extend({
@@ -23,13 +23,13 @@ export default Controller.extend({
   buildController: controller('build'),
   buildsController: controller('builds'),
 
-  repos: reads('repositories.accessible'),
-  currentUser: reads('auth.currentUser'),
-  build: reads('buildController.build'),
-  builds: reads('buildsController.model'),
-  job: reads('jobController.job'),
+  repos: alias('repositories.accessible'),
+  currentUser: alias('auth.currentUser'),
+  build: alias('buildController.build'),
+  builds: alias('buildsController.model'),
+  job: alias('jobController.job'),
 
-  showGitHubApps: reads('features.github-apps'),
+  showGitHubApps: alias('features.github-apps'),
 
   showGitHubAppsCTA: computed('showGitHubApps', 'repo.private', 'currentUser', function () {
     let showGitHubApps = this.showGitHubApps;

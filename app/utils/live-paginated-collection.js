@@ -35,9 +35,9 @@ let LivePaginatedCollection = ArrayProxy.extend({
 LivePaginatedCollection.reopenClass({
   create(properties) {
     let instance = this._super(...arguments);
-    instance.setPaginationData(properties.content.get('queryResult'));
-
-    this.defineSortByFunction(instance, properties.store, properties.modelName, properties.sort, properties.dependencies);
+    const { store, modelName, sort, dependencies, content } = properties;
+    instance.setPaginationData(content.get('queryResult'));
+    this.defineSortByFunction(instance, store, modelName, sort, dependencies);
 
     return instance;
   },
@@ -83,7 +83,7 @@ LivePaginatedCollection.reopenClass({
       };
     }
 
-    let sortDependencies = [...dependencies]; // clone
+    let sortDependencies = [...dependencies];
 
     if (sortKey && !sortDependencies.includes(sortKey)) {
       sortDependencies.push(sortKey);
