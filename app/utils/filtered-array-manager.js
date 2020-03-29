@@ -95,7 +95,7 @@ let FilteredArrayManagerForType = EmberObject.extend({
       // to get new results
       let promise = new EmberPromise((resolve, reject) => {
         this.fetchQuery(queryParams).then(queryResult => {
-          this.setProperties({ queryResult, content: queryResult });
+          array.setProperties({ queryResult, content: queryResult });
           resolve(array);
         }, reject);
       });
