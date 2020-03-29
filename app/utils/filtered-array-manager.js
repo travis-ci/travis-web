@@ -35,6 +35,7 @@ let FilteredArray = ArrayProxy.extend({
 // added to one of the filtered arrays.
 //
 // Filtered arrays are indexed by an id unique for a given set of parameters,
+// calculated using the calculateId function.
 //
 // In order to minimise the number of observers FilteredArrayManagerForType will
 // group arrays by dependencies. Let's consider the following code:
