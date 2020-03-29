@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
-import { alias } from '@ember/object/computed';
+import { reads } from '@ember/object/computed';
 
 export default Component.extend({
   permissionsService: service('permissions'),
@@ -13,9 +13,9 @@ export default Component.extend({
   isTriggering: false,
   dropupIsOpen: false,
 
-  currentBuild: alias('repo.currentBuild'),
+  currentBuild: reads('repo.currentBuild'),
 
-  displayMenuTofu: alias('repo.permissions.create_request'),
+  displayMenuTofu: reads('repo.permissions.create_request'),
 
   openDropup() {
     this.set('dropupIsOpen', true);

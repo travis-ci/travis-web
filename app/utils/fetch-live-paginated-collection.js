@@ -18,9 +18,10 @@ let fetchLivePaginatedCollection = function (store, modelName, queryParams, opti
     if (options.forceReload) {
       // if forceReload was used, another query was fetched and we can update
       // pagination data based on the result
-      filteredArray._lastPromise.then((array) =>
-        liveCollection.setPaginationData(array.get('queryResult'))
-      );
+      filteredArray._lastPromise.then((array) => {
+        // liveCollection.set('content', array.get('queryResult'));
+        liveCollection.setPaginationData(array.get('queryResult'));
+      });
       liveCollection._lastPromise = filteredArray._lastPromise;
     }
 

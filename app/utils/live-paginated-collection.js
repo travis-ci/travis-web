@@ -83,14 +83,13 @@ LivePaginatedCollection.reopenClass({
       };
     }
 
-    let sortDependencies = dependencies.slice(0); // clone
+    let sortDependencies = [...dependencies]; // clone
 
     if (sortKey && !sortDependencies.includes(sortKey)) {
       sortDependencies.push(sortKey);
     }
 
-    sortDependencies = sortDependencies.map((dep) => `content.@each.${dep}`);
-    sortDependencies.push('content.[]');
+    sortDependencies = ['content.[]', `content.@each.{${sortDependencies.join(',')}}`];
 
     defineProperty(instance, 'sorted', computed(...sortDependencies, function () {
       return this.content.toArray().sort(sortByFunction);
