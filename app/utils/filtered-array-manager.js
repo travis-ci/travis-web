@@ -16,7 +16,7 @@ let FilteredArray = ArrayProxy.extend({
       computed(
         `_all.@each.{${dependencies.join(',')}}`, {
           get() {
-            return _all.filter(item => filterFunction(item));
+            return _all.filter(item => item && filterFunction(item));
           },
           set(key, value) {
             return value;
@@ -95,7 +95,7 @@ let FilteredArrayManagerForType = EmberObject.extend({
       // to get new results
       let promise = new EmberPromise((resolve, reject) => {
         this.fetchQuery(queryParams).then(queryResult => {
-          array.setProperties({ queryResult, content: queryResult });
+          array.setProperties({ content: queryResult, queryResult });
           resolve(array);
         }, reject);
       });
