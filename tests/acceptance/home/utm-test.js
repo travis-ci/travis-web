@@ -8,8 +8,9 @@ import { setupApplicationTest } from 'travis/tests/helpers/setup-application-tes
 import { UTM_FIELDS } from 'travis/services/utm';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { timeout } from 'ember-concurrency';
+import config from 'travis/config/environment';
 
-import { RESET_UTM_PARAMS_DELAY } from 'travis/routes/application';
+const { utmParametersResetDelay } = config.timing;
 
 const TEST_DATA = {
   [UTM_FIELDS.CAMPAIGN]: 'ca1',
@@ -28,7 +29,7 @@ module('Acceptance | utm capture', function (hooks) {
   test('utm query params get captured', async function (assert) {
     await visit(INITIAL_URL);
     await settled();
-    await timeout(RESET_UTM_PARAMS_DELAY);
+    await timeout(utmParametersResetDelay);
 
     const { campaign, content, medium, source, term } = this.owner.lookup('service:utm');
 

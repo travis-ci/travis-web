@@ -10,7 +10,7 @@ import {
 } from 'ember-keyboard-shortcuts';
 import { later } from '@ember/runloop';
 
-export const RESET_UTM_PARAMS_DELAY = 1000;
+const { utmParametersResetDelay } = config.timing;
 
 export default TravisRoute.extend(BuildFaviconMixin, {
   auth: service(),
@@ -23,7 +23,7 @@ export default TravisRoute.extend(BuildFaviconMixin, {
 
   needsAuth: false,
 
-  init() {
+  setupController(controller) {
     this.featureFlags;
 
     this.auth.afterSignOut(() => {
@@ -31,7 +31,7 @@ export default TravisRoute.extend(BuildFaviconMixin, {
     });
 
     if (config.metricsAdapters.length > 0) {
-      const { metrics, router, controller } = this;
+      const { metrics, router } = this;
       router.on('routeDidChange', () => {
         try {
           const { currentURL: page } = router;
@@ -39,14 +39,14 @@ export default TravisRoute.extend(BuildFaviconMixin, {
 
           const hitCallback = () => {
             needsReset = false;
-            controller && controller.resetUTMs();
+            controller.resetUTMs();
           };
 
           metrics.trackPage({ page, hitCallback });
 
           later(() => {
-            if (needsReset) this.controller.resetUTMs();
-          }, RESET_UTM_PARAMS_DELAY);
+            if (needsReset) controller.resetUTMs();
+          }, utmParametersResetDelay);
         } catch (err) {}
       });
     }
