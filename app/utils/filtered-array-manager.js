@@ -10,6 +10,11 @@ const PromiseArray = ArrayProxy.extend(PromiseProxyMixin);
 let FilteredArray = ArrayProxy.extend({
   init(createArgs) {
     const { filterFunction, _all, dependencies } = createArgs;
+    this.defineContentProperty(filterFunction, _all, dependencies);
+    this._super(createArgs);
+  },
+
+  defineContentProperty(filterFunction, _all, dependencies) {
     defineProperty(
       this,
       'content',
@@ -24,8 +29,6 @@ let FilteredArray = ArrayProxy.extend({
         }
       )
     );
-
-    this._super(createArgs);
   }
 });
 
