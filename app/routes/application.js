@@ -10,6 +10,8 @@ import {
 } from 'ember-keyboard-shortcuts';
 import { later } from '@ember/runloop';
 
+export const RESET_UTM_PARAMS_DELAY = 1000;
+
 export default TravisRoute.extend(BuildFaviconMixin, {
   auth: service(),
   features: service(),
@@ -44,7 +46,7 @@ export default TravisRoute.extend(BuildFaviconMixin, {
 
           later(() => {
             if (needsReset) this.controller.resetUTMs();
-          }, 1000);
+          }, RESET_UTM_PARAMS_DELAY);
         } catch (err) {}
       });
     }
