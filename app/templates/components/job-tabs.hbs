@@ -3,9 +3,10 @@
     <li>
       <LinkTo
         @route="job.index"
-        @models={{array repo job}}
+        @models={{array this.repo this.job}}
         @id="tab_log"
         @title="Look at this job's log"
+        class={{if this.isLog 'active'}}
         data-test-job-log-tab="true"
       >
         Job log
@@ -25,7 +26,7 @@
 
         View config
 
-        {{#if this.messagesMaxLevel}}
+        {{#if this.showConfigValidation}}
           <span class="tooltip-wrapper">
             <span class="build-messages-badge badge-{{this.messagesMaxLevel}}"></span>
             <EmberTooltip @text={{this.messagesBadgeTooltipText}} />

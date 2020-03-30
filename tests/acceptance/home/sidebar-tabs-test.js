@@ -7,6 +7,7 @@ import { enableFeature } from 'ember-feature-flags/test-support';
 import { percySnapshot } from 'ember-percy';
 import { prettyDate } from 'travis/helpers/pretty-date';
 import RepositoriesService from 'travis/services/repositories';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 const RepositoriesServiceStub = RepositoriesService.extend({
   requestOwnedRepositories: task(function* () {
@@ -18,9 +19,10 @@ const RepositoriesServiceStub = RepositoriesService.extend({
 
 module('Acceptance | home/sidebar tabs', function (hooks) {
   setupApplicationTest(hooks);
+  setupMirage(hooks);
 
   hooks.beforeEach(function () {
-    const currentUser = server.create('user', {
+    const currentUser = this.server.create('user', {
       name: 'User Name',
       login: 'user-login'
     });
@@ -28,23 +30,23 @@ module('Acceptance | home/sidebar tabs', function (hooks) {
     signInUser(currentUser);
 
     // create active repo
-    server.create('repository', {
+    this.server.create('repository', {
       slug: 'org-login/repository-name'
     });
 
     // create active repo
-    let testRepo = server.create('repository', {
+    let testRepo = this.server.create('repository', {
       slug: 'org-login/yet-another-repository-name'
     });
     this.repo = testRepo;
 
-    server.create('repository', {
+    this.server.create('repository', {
       slug: 'other/other',
       skipPermissions: true
     });
 
-    let  gitUser = server.create('git-user', { name: 'Mr T' });
-    let commit = server.create('commit', {
+    let  gitUser = this.server.create('git-user', { name: 'Mr T' });
+    let commit = this.server.create('commit', {
       author: gitUser,
       committer: gitUser,
       branch: 'acceptance-tests',
@@ -53,17 +55,17 @@ module('Acceptance | home/sidebar tabs', function (hooks) {
     });
     this.commit = commit;
 
-    let build = server.create('build', {
+    let build = this.server.create('build', {
       repository: testRepo,
       state: 'queued',
       commit,
-      branch: server.create('branch', {
+      branch: this.server.create('branch', {
         name: 'acceptance-tests'
       })
     });
     this.build = build;
 
-    let job = server.create('job', {
+    let job = this.server.create('job', {
       number: '1234.1',
       repository: testRepo,
       state: 'queued',
@@ -97,20 +99,18 @@ module('Acceptance | home/sidebar tabs', function (hooks) {
     // TODO: Currently, we make the same request *30* times, which slows the test down
     // significantly. Need to investigate why.
 
-    // the default mirage limit is 10, so if we create 15 jobs for each queued and
-    // started lists, the app code will have to do 2 queries
-    server.createList('job', 15, { state: 'created', repository: this.repo, commit: this.commit, build: this.build });
-    server.createList('job', 15, { state: 'started', repository: this.repo, commit: this.commit, build: this.build, started_at: startedAt });
+    this.server.createList('job', 4, { state: 'started', repository: this.repo, commit: this.commit, build: this.build, started_at: startedAt });
+    this.server.createList('job', 5, { state: 'created', repository: this.repo, commit: this.commit, build: this.build });
 
     this.owner.register('service:repositories', RepositoriesServiceStub);
 
     await visit('/');
     await click('[data-test-sidebar-running-tab] a');
 
-    assert.dom('[data-test-sidebar-running-tab]').hasText('Running (15/31)', 'running tab correctly shows number of started/queued jobs');
-    assert.dom('[data-test-sidebar-running-job]').exists({ count: 15 });
+    assert.dom('[data-test-sidebar-running-tab]').hasText('Running (4/10)', 'running tab correctly shows number of started/queued jobs');
+    assert.dom('[data-test-sidebar-running-job]').exists({ count: 4 });
     assert.dom('[data-test-sidebar-running-job]:first-of-type time.duration').hasAttribute('title', `Started ${prettyDate([startedAt])}`);
-    assert.dom('[data-test-sidebar-queued-job]').exists({ count: 16 });
+    assert.dom('[data-test-sidebar-queued-job]').exists({ count: 6 });
   });
 
   test('maintains sidebar tab state when viewing running job', async function (assert) {

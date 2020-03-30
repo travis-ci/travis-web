@@ -3,19 +3,23 @@
     <SvgImage @name="barricade" @class="barricade" />
   </figure>
   <h2 class="page-title">
-    We couldn't find the repository<br />
+    We couldn't display the repository<br />
     <span class="h2--red">
       {{this.slug}}
     </span>
   </h2>
   {{#if this.features.proVersion}}
-    {{#unless this.auth.signedIn}}
-      <p class="page-notice">
-        This repository may not exist or you may need to
-        <button class="auth-button--white m-l-s" {{action "signIn"}}>
-          Sign in with GitHub
-        </button>
-      </p>
-    {{/unless}}
+    <p class="page-notice">
+      This repository may not exist or you may need to
+      {{#if this.auth.signedIn}}
+        use another account to have access to it <br />
+      {{/if}}
+      <button
+        {{on 'click' (action 'signIn')}}
+        class="auth-button--white pointer m-l-s {{if this.auth.signedIn 'mt-5'}}"
+      >
+        Sign in {{if this.auth.signedIn 'with another account'}}
+      </button>
+    </p>
   {{/if}}
 </div>

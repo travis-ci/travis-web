@@ -1,14 +1,14 @@
 import { run } from '@ember/runloop';
 import EmberObject, { computed } from '@ember/object';
-import $ from 'jquery';
 import ArrayProxy from '@ember/array/proxy';
 import Component from '@ember/component';
-import config from 'travis/config/environment';
 import { alias } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 
 export default Component.extend({
+  api: service(),
   auth: service(),
+  store: service(),
   router: service(),
   permissions: service(),
   externalLinks: service(),
@@ -20,12 +20,20 @@ export default Component.extend({
   isTriggering: false,
   hasTriggered: false,
 
-  commitUrl: computed('branch.repository.{slug,vcsType}', 'branch.last_build.commit.sha', function () {
+  commitUrl: computed('branch.repository.slug', 'branch.last_build.commit.sha', 'vcsType', function () {
     const [owner, repo] = this.get('branch.repository.slug').split('/');
-    const vcsType = this.get('branch.repository.vcsType');
+    const vcsType = this.get('vcsType');
     const commit = this.get('branch.last_build.commit.sha');
-
     return this.externalLinks.commitUrl(vcsType, { owner, repo, commit });
+  }),
+
+  vcsType: computed('branch.repository.id', function () {
+    const repository = this.store.peekRecord('repo', this.get('branch.repository.id'));
+    return repository.vcsType;
+  }),
+
+  provider: computed('vcsType', function () {
+    return this.get('vcsType') && this.get('vcsType').toLowerCase().replace('repository', '');
   }),
 
   rawCreatedBy: alias('branch.last_build.created_by'),
@@ -72,7 +80,7 @@ export default Component.extend({
   ),
 
   getLast5Builds: computed(function () {
-    let apiEndpoint, branchName, lastBuilds, options, repoId;
+    let branchName, lastBuilds, repoId;
     lastBuilds = ArrayProxy.create({
       content: [{}, {}, {}, {}, {}],
       isLoading: true,
@@ -81,22 +89,14 @@ export default Component.extend({
     if (!this.get('branch.last_build')) {
       lastBuilds.set('isLoading', false);
     } else {
-      apiEndpoint = config.apiEndpoint;
       repoId = this.get('branch.repository.id');
       branchName = encodeURIComponent(this.get('branch.name'));
-      options = {
-        headers: {
-          'Travis-API-Version': '3'
-        }
-      };
-      if (this.get('auth.signedIn')) {
-        options.headers.Authorization = `token ${this.get('auth.token')}`;
-      }
-      let path = `${apiEndpoint}/repo/${repoId}/builds`;
-      let params = `?branch.name=${branchName}&limit=5&build.event_type=push,api,cron`;
-      let url = `${path}${params}`;
 
-      $.ajax(url, options).then(response => {
+      const path = `/repo/${repoId}/builds`;
+      const params = `?branch.name=${branchName}&limit=5&build.event_type=push,api,cron`;
+      const url = `${path}${params}`;
+
+      this.api.get(url).then(response => {
         let array, i, trueLength;
         array = response.builds.map(build => EmberObject.create(build));
         // We need exactly 5 elements in array

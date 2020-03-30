@@ -2,7 +2,7 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import jobConfigArch from 'travis/utils/job-config-arch';
 import jobConfigLanguage from 'travis/utils/job-config-language';
-import { not } from '@ember/object/computed';
+import { reads, not } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 
 const commitMessageLimit = 72;
@@ -60,24 +60,27 @@ export default Component.extend({
     return !['api', 'cron'].includes(eventType);
   }),
 
-  commitUrl: computed('item.repo.{slug,vcsType}', 'commit.sha', function () {
-    const [owner, repo] = this.get('item.repo.slug').split('/');
+  commitUrl: computed('item.repo.{ownerName,vcsName,vcsType}', 'commit.sha', function () {
+    const owner = this.get('item.repo.ownerName');
+    const repo = this.get('item.repo.vcsName');
     const vcsType = this.get('item.repo.vcsType');
     const commit = this.get('commit.sha');
 
     return this.externalLinks.commitUrl(vcsType, { owner, repo, commit });
   }),
 
-  branchUrl: computed('item.repo.{slug,vcsType}', 'build.branchName', function () {
-    const [owner, repo] = this.get('item.repo.slug').split('/');
+  branchUrl: computed('item.repo.{ownerName,vcsName,vcsType}', 'build.branchName', function () {
+    const owner = this.get('item.repo.ownerName');
+    const repo = this.get('item.repo.vcsName');
     const vcsType = this.get('item.repo.vcsType');
     const branch = this.get('build.branchName');
 
     return this.externalLinks.branchUrl(vcsType, { owner, repo, branch });
   }),
 
-  tagUrl: computed('item.repo.{slug,vcsType}', 'build.tag.name', function () {
-    const [owner, repo] = this.get('item.repo.slug').split('/');
+  tagUrl: computed('item.repo.{ownerName,vcsName,vcsType}', 'build.tag.name', function () {
+    const owner = this.get('item.repo.ownerName');
+    const repo = this.get('item.repo.vcsName');
     const vcsType = this.get('item.repo.vcsType');
     const tag = this.get('build.tag.name');
 
@@ -107,13 +110,18 @@ export default Component.extend({
     }
   }),
 
-  environment: computed('jobsConfig.content.{env,gemfile}', function () {
-    let env = this.get('jobsConfig.content.env');
-    let gemfile = this.get('jobsConfig.content.gemfile');
-    if (env) {
-      return env;
-    } else if (gemfile) {
-      return `Gemfile: ${gemfile}`;
+  globalEnv: reads('build.request.config.env.global'),
+  jobEnv: reads('jobsConfig.content.env'),
+  gemfile: reads('jobsConfig.content.gemfile'),
+
+  environment: computed('globalEnv', 'jobEnv', 'gemfile', function () {
+    if (this.jobEnv) {
+      let globalEnv = this.globalEnv || [];
+      let join = (vars, pair) => vars.concat([pair.join('=')]);
+      let vars = globalEnv.reduce((vars, obj) => Object.entries(obj).reduce(join, vars), []);
+      return vars.reduce((env, str) => env.replace(str, ''), this.jobEnv);
+    } else if (this.gemfile) {
+      return `Gemfile: ${this.gemfile}`;
     }
   }),
 
@@ -121,6 +129,8 @@ export default Component.extend({
     let os = this.get('jobsConfig.content.os');
     if (os === 'linux' || os === 'linux-ppc64le') {
       return 'linux';
+    } else if (os === 'freebsd') {
+      return 'freebsd';
     } else if (os === 'osx') {
       return 'osx';
     } else if (os === 'windows') {
@@ -139,6 +149,8 @@ export default Component.extend({
     let os = this.os;
     if (os === 'linux') {
       return 'icon-linux';
+    } else if (os === 'freebsd') {
+      return 'icon-freebsd';
     } else if (os === 'osx') {
       return 'icon-mac';
     } else if (os === 'windows') {

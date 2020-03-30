@@ -1,8 +1,10 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Unit | Service | insights', function (hooks) {
   setupTest(hooks);
+  setupMirage(hooks);
 
   hooks.beforeEach(function () {
     this.insightsService = this.owner.lookup('service:insights');
@@ -42,7 +44,7 @@ module('Unit | Service | insights', function (hooks) {
 
   test('active repos', async function (assert) {
     const user = this.server.create('user');
-    server.createList('insight-metric', 1);
+    this.server.createList('insight-metric', 1);
 
     let result = await this.insightsService.getActiveRepos(user, 'week');
     assert.equal(result.data.count, 75);
@@ -65,7 +67,7 @@ module('Unit | Service | insights', function (hooks) {
 
   test('metric sum', async function (assert) {
     const user = this.server.create('user');
-    server.createList('insight-metric', 5);
+    this.server.createList('insight-metric', 5);
     const metricName = 'count_started';
 
     let result = await this.insightsService.getChartData.perform(
@@ -82,7 +84,7 @@ module('Unit | Service | insights', function (hooks) {
 
   test('metric max', async function (assert) {
     const user = this.server.create('user');
-    server.createList('insight-metric', 10);
+    this.server.createList('insight-metric', 10);
     const metricName = 'count_finished';
 
     let result = await this.insightsService.getChartData.perform(
@@ -99,7 +101,7 @@ module('Unit | Service | insights', function (hooks) {
 
   test('metric avg', async function (assert) {
     const user = this.server.create('user');
-    server.createList('insight-metric', 10);
+    this.server.createList('insight-metric', 10);
     const metricName = 'count_passed';
 
     let result = await this.insightsService.getChartData.perform(
@@ -119,7 +121,7 @@ module('Unit | Service | insights', function (hooks) {
 
   test('metric count', async function (assert) {
     const user = this.server.create('user');
-    server.createList('insight-metric', 10);
+    this.server.createList('insight-metric', 10);
     const metricName = 'count_failed';
 
     let result = await this.insightsService.getChartData.perform(
@@ -136,7 +138,7 @@ module('Unit | Service | insights', function (hooks) {
 
   test('metric options', async function (assert) {
     const user = this.server.create('user');
-    server.createList('insight-metric', 10);
+    this.server.createList('insight-metric', 10);
     const metricNames = ['test', 'example'];
 
     let result = await this.insightsService.getChartData.perform(

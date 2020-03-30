@@ -5,11 +5,11 @@
         <RepositoryVisibilityIcon @repository={{this.repo}} />
       </div>
       <h1 data-test-repo-header-title class="inline-block vertical-align">
-        <LinkTo @route="owner" @model={{this.repo.owner.login}}>
+        <LinkTo @route="owner" @models={{array this.repo.provider this.repo.ownerName}} >
           {{this.repo.owner.login}}
         </LinkTo>
         /
-        <LinkTo @route="repo" @model={{this.repo}}>
+        <LinkTo @route="repo" @models={{array this.repo.provider this.repo.ownerName this.repo.vcsName}} >
           {{this.repo.name}}
         </LinkTo>
       </h1>
@@ -22,17 +22,7 @@
       >
         <SvgImage @name={{vcs-icon this.repo.vcsType}} />
       </ExternalLinkTo>
-      <div class="repo-badge inline-block vertical-align">
-        <a
-          id="status-image-popup"
-          title="Latest push build on default branch: {{this.repo.defaultBranch.lastBuild.state}}"
-          name="status-images"
-          class="pointer open-popup"
-          onclick={{action "toggleStatusBadgeModal"}}
-        >
-          <img src={{this.statusImageUrl}} alt="build:{{this.repo.defaultBranch.lastBuild.state}}" />
-        </a>
-      </div>
+      <RepoStatusBadge @repo={{this.repo}} @onClick={{action 'toggleStatusBadgeModal'}} />
     </div>
   </header>
   <main class="repo-main">
@@ -55,33 +45,21 @@
     </div>
   </main>
 </article>
-{{#if this.isShowingStatusBadgeModal}}
-  <ModalDialog
+<Modal
+  @isVisible={{this.isShowingStatusBadgeModal}}
+  @onClose={{action "toggleStatusBadgeModal"}}
+>
+  <StatusImages
+    @repo={{this.repo}}
     @onClose={{action "toggleStatusBadgeModal"}}
-    @onClickOverlay={{action "toggleStatusBadgeModal"}}
-    @targetAttachment="center"
-    @translucentOverlay={{true}}
-    @overlayPosition="sibling"
-    @animatable={{true}}
-  >
-    <StatusImages
-      @repo={{this.repo}}
-      @onClose={{action "toggleStatusBadgeModal"}}
-    />
-  </ModalDialog>
-{{/if}}
-{{#if this.isShowingTriggerBuildModal}}
-  <ModalDialog
+  />
+</Modal>
+<Modal
+  @isVisible={{this.isShowingTriggerBuildModal}}
+  @onClose={{action "toggleTriggerBuildModal"}}
+>
+  <TriggerCustomBuild
+    @repo={{this.repo}}
     @onClose={{action "toggleTriggerBuildModal"}}
-    @onClickOverlay={{action "toggleTriggerBuildModal"}}
-    @targetAttachment="center"
-    @translucentOverlay={{true}}
-    @overlayPosition="sibling"
-    @animatable={{true}}
-  >
-    <TriggerCustomBuild
-      @repo={{this.repo}}
-      @onClose={{action "toggleTriggerBuildModal"}}
-    />
-  </ModalDialog>
-{{/if}}
+  />
+</Modal>

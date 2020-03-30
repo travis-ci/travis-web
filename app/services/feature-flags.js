@@ -17,13 +17,19 @@ export default Service.extend({
   },
 
   _setEnableAssemblaLogin() {
-    const enableAssemblaLogin = window.localStorage['enableAssemblaLogin'] == 'true';
-    enableAssemblaLogin ? this.features.enable('enable-assembla-login') : this.features.disable('enable-assembla-login');
+    const { enableAssemblaLogin } = window.localStorage;
+    if (enableAssemblaLogin == 'true')
+      this.features.enable('enable-assembla-login');
+    else if (enableAssemblaLogin == 'false')
+      this.features.disable('enable-assembla-login');
   },
 
   _setEnableBitbucketLogin() {
-    const enableBitbucketLogin = window.localStorage['enableBitbucketLogin'] == 'true';
-    enableBitbucketLogin ? this.features.enable('enable-bitbucket-login') : this.features.disable('enable-bitbucket-login');
+    const { enableBitbucketLogin } = window.localStorage;
+    if (enableBitbucketLogin == 'true')
+      this.features.enable('enable-bitbucket-login');
+    else if (enableBitbucketLogin == 'false')
+      this.features.disable('enable-bitbucket-login');
   },
 
   _setFlagState(flag) {

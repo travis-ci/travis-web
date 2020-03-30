@@ -1,4 +1,3 @@
-import $ from 'jquery';
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
 
@@ -14,14 +13,11 @@ export default Route.extend({
         this.transitionTo('dashboard');
       }
     } else if (this.get('features.enterpriseVersion')) {
-      this.transitionTo('auth');
+      this.transitionTo('signin');
     }
   },
 
   renderTemplate(...args) {
-    if (this.get('auth.signedIn')) {
-      $('body').attr('id', 'home');
-    }
     this._super(args);
     this.render('build/index', {into: 'index', controller: 'build/index'});
   },

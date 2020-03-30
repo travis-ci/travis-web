@@ -1,0 +1,303 @@
+{{!-- Header section --}}
+<UiKit::Box
+  @color='white'
+  @layer='10'
+  @position={{hash type='relative'}}
+  @padding={{hash top=24 bottom=1}}
+  @shadow='md'
+>
+  <UiKit::Box
+    @tag='section'
+    @margin={{hash bottom=12 x='auto'}}
+    @maxWidth='6xl'
+    @padding={{hash x=4}}
+    data-test-integration-bb-header-section="true"
+  >
+    <UiKit::Grid @align='center' @gap={{4}} as |grid|>
+      <grid.item @sm='full' @md='1/2' @lg='2/3'>
+        <UiKit::Box
+          @display='flex'
+          @flexDir='col'
+          @flexAlign={{hash base='center' md='start'}}
+          @textAlign={{hash base='center' md='left'}}
+        >
+          <UiKit::Text
+            @tag='h1'
+            @variant='h1'
+            @margin={{hash bottom=2}}
+            @leading={{hash base='none' md='2xs' lg='sm'}}
+          >
+            Test your Bitbucket
+            projects with Travis&nbsp;CI
+          </UiKit::Text>
+          <UiKit::Text @margin={{hash bottom=8}}>
+            Build, test, and deploy your software seamlessly with the Atlassian Bitbucket
+            integration for Travis&nbsp;CI
+          </UiKit::Text>
+          <UiKit::ButtonSignin @provider='bitbucket' @isSignup={{true}} />
+        </UiKit::Box>
+      </grid.item>
+      <grid.item @sm='full' @md='1/2' @lg='1/3'>
+        <UiKit::Box
+          @maxWidth='sm'
+          @margin={{hash base=(hash x='auto' top=8) md=(hash top=0)}}
+        >
+          <SvgImage @name='bb-integrate' />
+        </UiKit::Box>
+      </grid.item>
+    </UiKit::Grid>
+  </UiKit::Box>
+</UiKit::Box>
+
+{{!-- Highlights section --}}
+<UiKit::Box
+  @borderWidth={{hash bottom='xs'}}
+  @margin={{hash bottom=16}}
+>
+  <UiKit::Box
+    @tag='section'
+    @maxWidth='6xl'
+    @margin={{hash x='auto'}}
+    @position={{hash type='relative'}}
+    @padding={{hash x=4 bottom=16}}
+    @textAlign={{hash base='center' sm='left'}}
+    data-test-integration-bb-highlights-section="true"
+  >
+    <UiKit::Box
+      @layer='0'
+      @margin={{hash top=-16 left=12}}
+      @pin='top-left'
+      @width={{56}}
+    >
+      <SvgImage @name="yellow-waves" />
+    </UiKit::Box>
+    <UiKit::Box
+      @layer='0'
+      @margin={{hash top=-12 right=12}}
+      @pin='top-right'
+      @width={{56}}
+    >
+      <SvgImage @name="grey-gradient-circle" />
+    </UiKit::Box>
+
+    <UiKit::Grid @align='center' @gap={{6}} as |grid|>
+      {{!-- Row 1 --}}
+      <grid.item @sm='1/2' @margin={{hash sm=(hash y=10)}}>
+        <UiKit::Box @maxWidth='sm' @margin={{hash x='auto'}}>
+          <SvgImage @name='travis-console' />
+        </UiKit::Box>
+      </grid.item>
+      <grid.item @sm='1/2' @margin={{hash base=(hash bottom=20) sm=(hash y=10)}}>
+        <UiKit::Text @variant='h2' @color='blue-light' @size='4xl'>
+          Integrate Bitbucket in seconds
+        </UiKit::Text>
+        <UiKit::Text>
+          Time is important when you're building software. So don't fret,
+          we'll spin Travis&nbsp;CI with Bitbucket within seconds.
+        </UiKit::Text>
+      </grid.item>
+
+      {{!-- Row 2 --}}
+      <grid.item
+        @sm='1/2'
+        @margin={{hash base=(hash bottom=20) sm=(hash y=10)}}
+        @order={{hash base=4 sm='none'}}
+      >
+        <UiKit::Text @variant='h2' @color='blue-light' @size='4xl'>
+          Bitbucket connects with Travis&nbsp;CI
+        </UiKit::Text>
+        <UiKit::Text>
+          Bitbucket lets Travis&nbsp;CI know instantly when something is committed
+          and lets the rest happen by itself.
+        </UiKit::Text>
+      </grid.item>
+      <grid.item
+        @sm='1/2'
+        @margin={{hash base=(hash bottom=4) sm=(hash y=10)}}
+        @order={{hash base=3 sm='none'}}
+      >
+        <UiKit::Box @maxWidth='sm' @margin={{hash x='auto'}}>
+          <SvgImage @name='bb-connect' />
+        </UiKit::Box>
+      </grid.item>
+
+      {{!-- Row 3 --}}
+      <grid.item @sm='1/2' @margin={{hash sm=(hash y=10)}} @order={{5}}>
+        <UiKit::Box @maxWidth='sm' @margin={{hash x='auto'}}>
+          <SvgImage @name='travis-community' />
+        </UiKit::Box>
+      </grid.item>
+      <grid.item @sm='1/2' @margin={{hash base=(hash bottom=20) sm=(hash y=10)}} @order={{6}}>
+        <UiKit::Text @variant='h2' @color='blue-light' @size='4xl'>
+          The Travis&nbsp;CI Community
+        </UiKit::Text>
+        <UiKit::Text>
+          Travis&nbsp;CI has a one of a kind, supportive community which is
+          always ready to hear your voice. We're excited to read your
+          suggestions, comments, and questions.
+        </UiKit::Text>
+      </grid.item>
+    </UiKit::Grid>
+
+    <UiKit::Box @margin={{hash sm=(hash top=10)}} @textAlign='center'>
+      <UiKit::ButtonSignin @provider='bitbucket' @isSignup={{true}} />
+    </UiKit::Box>
+  </UiKit::Box>
+</UiKit::Box>
+
+{{!-- Build flow section --}}
+<UiKit::Box
+  @tag='section'
+  @margin={{hash bottom=32 x='auto'}}
+  @maxWidth='6xl'
+  @padding={{hash x=4}}
+  data-test-integration-bb-flow-section="true"
+>
+  <UiKit::Text @variant='h2' @margin={{hash bottom=12}} @align='center'>
+    Get up and running with Travis&nbsp;CI and Bitbucket in seconds
+  </UiKit::Text>
+
+  <BuildFlowDiagram />
+</UiKit::Box>
+
+{{!-- Testimonial section --}}
+<UiKit::Box
+  @tag='section'
+  @margin={{hash bottom=16 x='auto'}}
+  @maxWidth='6xl'
+  @padding={{hash x=4}}
+  data-test-integration-bb-testimonial-section="true"
+>
+  <UiKit::Text
+    @align='center'
+    @color='green'
+    @margin={{hash bottom=16}}
+    @size='5xl'
+    @weight='light'
+  >
+    People have said nice things about us.
+  </UiKit::Text>
+  <UiKit::Grid @lg={{3}} @gap={{6}} as |grid|>
+    <grid.item>
+      <UiKit::Box
+        @display='flex'
+        @flexDir='col'
+        @height={{hash base='auto' lg='full'}}
+        @margin={{hash base=(hash bottom=12) lg=(hash bottom=0)}}
+        @padding={{hash all=6}}
+        @shadow='md'
+      >
+        <UiKit::Image @svg='rails' @alt='ruby on rails logo' @margin={{hash bottom=8}} @width={{24}} />
+        <UiKit::Text @variant='p' @size='sm' @flex='grow-single'>
+          Travis&nbsp;CI makes it so much easier for us to coordinate the thousands
+          of commits and contributors that flow through the Rails code base.
+          The test suite for such a large project is vast, and we wouldn't be
+          catching issues as quickly or smoothly without the help of Travis.
+        </UiKit::Text>
+        <UiKit::Text @margin={{hash bottom=1}} @size='sm' @weight='semibold'>
+          David Heinemeier Hansson
+        </UiKit::Text>
+        <UiKit::Text @margin={{hash bottom=1}} @size='sm'>
+          Creator of Ruby on Rails
+        </UiKit::Text>
+        <UiKit::Box>
+          <UiKit::Image @svg='twitter' @alt='twitter logo' @width={{4}} />
+          <UiKit::Link @href='https://twitter.com/dhh'>dhh</UiKit::Link>
+        </UiKit::Box>
+      </UiKit::Box>
+    </grid.item>
+    <grid.item>
+      <UiKit::Box
+        @display='flex'
+        @flexDir='col'
+        @height={{hash base='auto' lg='full'}}
+        @margin={{hash base=(hash bottom=12) lg=(hash bottom=0)}}
+        @padding={{hash all=6}}
+        @shadow='md'
+      >
+        <UiKit::Image @svg='twitter-quote' @alt='twitter logo' @margin={{hash bottom=8}} @width={{8}} />
+        <UiKit::Text @variant='p' @size='sm' @flex='grow-single'>
+          We love Travis&nbsp;CI at @TwitterOSS and we use it for the majority of our open source projects on GitHub.
+          Travis&nbsp;CI is simple to use, we love their API to build tooling and adore the new container infrastructure for speedier builds.
+        </UiKit::Text>
+        <UiKit::Text @margin={{hash bottom=1}} @size='sm' @weight='semibold'>
+          Chris Aniszczyk
+        </UiKit::Text>
+        <UiKit::Text @margin={{hash bottom=1}} @size='sm'>
+          Creator of Ruby on Rails
+        </UiKit::Text>
+        <UiKit::Box>
+          <UiKit::Image @svg='twitter' @alt='twitter logo' @width={{4}} />
+          <UiKit::Link @href='https://twitter.com/cra'>cra</UiKit::Link>
+        </UiKit::Box>
+      </UiKit::Box>
+    </grid.item>
+    <grid.item>
+      <UiKit::Box
+        @display='flex'
+        @flexDir='col'
+        @height={{hash base='auto' lg='full'}}
+        @margin={{hash base=(hash bottom=12) lg=(hash bottom=0)}}
+        @padding={{hash all=6}}
+        @shadow='md'
+      >
+        <UiKit::Box @display='flex' @flexAlign='center' @margin={{hash bottom=6}}>
+          <UiKit::Image @path='../images/landing-page/pypy.png' @alt='pypy logo' @margin={{hash right=4}} @width={{24}} />
+          <UiKit::Image @svg='lang-python' @alt='python logo' @width={{8}} />
+        </UiKit::Box>
+        <UiKit::Text @variant='p' @size='sm' @flex='grow-single'>
+          Not only is Travis&nbsp;CI the best way to test your software, it is the right way.
+          <br />
+          rm -rf jenkins&amp;&amp;touch .travis.yml
+        </UiKit::Text>
+        <UiKit::Text @margin={{hash bottom=1}} @size='sm' @weight='semibold'>
+          Alex Gaynor
+        </UiKit::Text>
+        <UiKit::Text @margin={{hash bottom=1}} @size='sm'>
+          PyPy and Python Core Team Member
+        </UiKit::Text>
+        <UiKit::Box>
+          <UiKit::Image @svg='github' @alt='github logo' @width={{4}} />
+          <UiKit::Link @href='https://github.com/alex'>alex</UiKit::Link>
+        </UiKit::Box>
+      </UiKit::Box>
+    </grid.item>
+  </UiKit::Grid>
+</UiKit::Box>
+
+{{!-- Start section --}}
+<UiKit::Box
+  @color='grey-lighter'
+  @padding={{hash y=32}}
+>
+  <UiKit::Box
+    @tag='section'
+    @display='flex'
+    @flexDir='col'
+    @flexAlign='center'
+    @margin={{hash x='auto'}}
+    @maxWidth='6xl'
+    @padding={{hash x=4}}
+    data-test-integration-bb-start-section="true"
+  >
+    <UiKit::Text
+      @align='center'
+      @size='5xl'
+      @weight='light'
+    >
+      So many great features, so let's get you started.
+    </UiKit::Text>
+
+    <UiKit::Text
+      @align='center'
+      @color='blue-light'
+      @margin={{hash bottom=10}}
+      @size='6xl'
+      @weight='light'
+    >
+      Run your tests with Travis&nbsp;CI
+    </UiKit::Text>
+
+    <UiKit::ButtonSignin @provider='bitbucket' @isSignup={{true}} />
+  </UiKit::Box>
+</UiKit::Box>

@@ -4,23 +4,29 @@ import page from 'travis/tests/pages/build-list';
 import topPage from 'travis/tests/pages/top';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { percySnapshot } from 'ember-percy';
+import { setupMirage } from 'ember-cli-mirage/test-support';
+import { settled } from '@ember/test-helpers';
+import config from 'travis/config/environment';
+
+const { repoBuildsPerPage } = config.pagination;
 
 module('Acceptance | builds/pull requests', function (hooks) {
   setupApplicationTest(hooks);
+  setupMirage(hooks);
 
   hooks.beforeEach(function () {
-    this.currentUser = server.create('user', {
+    this.currentUser = this.server.create('user', {
       name: 'Travis CI',
       login: 'travisci',
     });
 
-    this.branch = server.create('branch', { name: 'wetsuwetenstrong' });
+    this.branch = this.server.create('branch', { name: 'wetsuwetenstrong' });
 
     signInUser(this.currentUser);
   });
 
   test('renders no pull requests messaging when none present', async function (assert) {
-    server.create('repository');
+    this.server.create('repository');
 
     await page.visitPullRequests({ organization: 'travis-ci', repo: 'travis-web' });
 
@@ -28,10 +34,10 @@ module('Acceptance | builds/pull requests', function (hooks) {
   });
 
   test('view and cancel pull requests', async function (assert) {
-    const repository = server.create('repository');
-    const request = server.create('request', { pull_request_mergeable: 'draft' });
+    const repository = this.server.create('repository');
+    const request = this.server.create('request', { pull_request_mergeable: 'draft' });
 
-    const pullRequestBuild = server.create('build', {
+    const pullRequestBuild = this.server.create('build', {
       state: 'started',
       number: '1000',
       finished_at: new Date(),
@@ -45,7 +51,7 @@ module('Acceptance | builds/pull requests', function (hooks) {
       request
     });
 
-    const gitUser = server.create('git-user', {
+    const gitUser = this.server.create('git-user', {
       name: this.currentUser.name
     });
 
@@ -55,8 +61,8 @@ module('Acceptance | builds/pull requests', function (hooks) {
       committer: gitUser
     });
 
-    for (let i = 0; i < 10; i++) {
-      let build = server.create('build', {
+    for (let i = 0; i < repoBuildsPerPage; i++) {
+      let build = this.server.create('build', {
         state: 'passed',
         number: 1000 - i,
         finished_at: new Date() - i * 1000,
@@ -73,7 +79,7 @@ module('Acceptance | builds/pull requests', function (hooks) {
 
     pullRequestBuild.save();
 
-    server.create('job', {
+    this.server.create('job', {
       number: '1000.1',
       repository,
       state: 'started',
@@ -85,7 +91,7 @@ module('Acceptance | builds/pull requests', function (hooks) {
 
     await page.visitPullRequests({ organization: 'travis-ci', repo: 'travis-web' });
 
-    assert.equal(page.builds.length, 10, 'expected a page of pull request builds');
+    assert.equal(page.builds.length, repoBuildsPerPage, 'expected a page of pull request builds');
 
     page.builds[0].as(pullRequest => {
       assert.ok(pullRequest.started, 'expected the pull request to have started');
@@ -108,8 +114,10 @@ module('Acceptance | builds/pull requests', function (hooks) {
 
     assert.equal(topPage.flashMessage.text, 'Build has been successfully cancelled.');
 
+    await settled();
+
     await page.showMoreButton.click();
 
-    assert.equal(page.builds.length, 11, 'expected another page to have loaded');
+    assert.equal(page.builds.length, (repoBuildsPerPage + 1), 'expected another page to have loaded');
   });
 });

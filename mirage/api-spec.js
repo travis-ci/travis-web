@@ -687,6 +687,15 @@ export default {
         "minimal":        ["id", "card_owner", "expiration_date", "last_digits"],
       }
     },
+    "discount":                    {
+      "@type":            "resource",
+      "actions":          { },
+      "attributes":       ["id", "name", "percent_off", "amount_off", "valid", "duration", "duration_in_months"],
+      "representations":  {
+        "standard":       ["id", "name", "percent_off", "amount_off", "valid", "duration", "duration_in_months"],
+        "minimal":        ["id", "name", "percent_off", "amount_off", "valid", "duration", "duration_in_months"],
+      }
+    },
     "cron": {
       "@type": "resource",
       "actions": {
@@ -1762,6 +1771,7 @@ export default {
       "attributes": [
         "id",
         "name",
+        "vcs_name",
         "slug",
         "description",
         "github_id",
@@ -1769,6 +1779,7 @@ export default {
         "active",
         "private",
         "owner",
+        "owner_name",
         "default_branch",
         "starred",
         "managed_by_installation",
@@ -1789,6 +1800,7 @@ export default {
         "standard": [
           "id",
           "name",
+          "vcs_name",
           "slug",
           "description",
           "github_id",
@@ -1796,6 +1808,7 @@ export default {
           "active",
           "private",
           "owner",
+          "owner_name",
           "default_branch",
           "starred",
           "managed_by_installation",
@@ -2076,9 +2089,11 @@ export default {
         "plan",
         "billing_info",
         "credit_card_info",
+        "discount",
         "owner",
         "status",
         "valid_to",
+        "created_at",
         "source",
       ],
       "representations":  {
@@ -2087,9 +2102,11 @@ export default {
           "plan",
           "billing_info",
           "credit_card_info",
+          "discount",
           "owner",
           "status",
           "valid_to",
+          "created_at",
           "source"
         ],
         "minimal":       [
@@ -2097,6 +2114,7 @@ export default {
           "owner",
           "status",
           "valid_to",
+          "created_at",
           "source"
         ],
       },
@@ -2169,7 +2187,10 @@ export default {
         "repositories",
         "installation",
         "is_syncing",
-        "synced_at"
+        "synced_at",
+        "recently_signed_up",
+        "vcs_type",
+        "vcs_id"
       ],
       "representations": {
         "minimal": [
@@ -2185,7 +2206,10 @@ export default {
           "education",
           "allow_migration",
           "is_syncing",
-          "synced_at"
+          "synced_at",
+          "recently_signed_up",
+          "vcs_type",
+          "vcs_id"
         ],
         "additional": [
           "repositories",

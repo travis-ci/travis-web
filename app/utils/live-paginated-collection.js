@@ -1,6 +1,6 @@
 import { defineProperty, computed } from '@ember/object';
 import ArrayProxy from '@ember/array/proxy';
-import { alias } from '@ember/object/computed';
+import { reads } from '@ember/object/computed';
 import limit from 'travis/utils/computed-limit';
 
 // LivePaginatedCollection is an interface for a first page of paginated set of
@@ -25,7 +25,7 @@ let LivePaginatedCollection = ArrayProxy.extend({
     };
   }),
 
-  arrangedContent: alias('limited'),
+  arrangedContent: reads('limited'),
 
   setPaginationData(queryResult) {
     this.set('paginationData', queryResult.get('meta.pagination'));

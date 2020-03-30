@@ -93,15 +93,7 @@
       <SvgImage @name="hard-hat" />
     </div>
     <div class="sign-in align-center">
-      <button
-        title="Sign into Travis CI"
-        class="hero-button"
-        data-test-zendesk-form-log-in-button
-        {{action (action "signIn" false target=auth)}}
-      >
-        <SvgImage @name="icon-repooctocat" />
-        Sign in with GitHub
-      </button>
+      <MultiSigninButton data-test-zendesk-form-log-in-button="" />
     </div>
   {{else}}
     <h1
@@ -138,7 +130,7 @@
     One of our support engineers will get back to you as soon as possible.
   </div>
   <div class="back-link align-center">
-    <a class="button--blue" href={{this.page}} data-test-zendesk-form-back-link>
+    <a class="button--blue" {{action "goBack"}} data-test-zendesk-form-back-link>
       Head back
     </a>
   </div>

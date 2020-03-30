@@ -7,33 +7,38 @@ import {
   reset as resetWindow
 } from 'ember-window-mock';
 import Service from '@ember/service';
+import { settled } from '@ember/test-helpers';
 import config from 'travis/config/environment';
 import { enableFeature } from 'ember-feature-flags/test-support';
 import { percySnapshot } from 'ember-percy';
 import { stubService } from 'travis/tests/helpers/stub-service';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | profile/basic layout', function (hooks) {
   setupApplicationTest(hooks);
+  setupMirage(hooks);
 
   hooks.beforeEach(function () {
     resetWindow();
 
-    this.user = server.create('user', {
+    this.user = this.server.create('user', {
       name: 'User Name of exceeding length',
       login: 'user-login',
       github_id: 1974,
+      vcs_type: 'GithubUser',
+      vcs_id: 1974,
       avatar_url: '/images/tiny.gif'
     });
 
     signInUser(this.user);
 
-    server.create('installation', {
+    this.server.create('installation', {
       owner: this.user,
       github_id: 2691
     });
     this.user.save();
 
-    let subscription = server.create('subscription', {
+    let subscription = this.server.create('subscription', {
       owner: this.user,
       status: 'subscribed',
       valid_to: new Date(),
@@ -41,42 +46,45 @@ module('Acceptance | profile/basic layout', function (hooks) {
     this.subscription = subscription;
 
     // create organization
-    let organization = server.create('organization', {
+    let organization = this.server.create('organization', {
       name: 'Org Name',
       type: 'organization',
       login: 'org-login',
-      github_id: 1983
+      vcs_type: 'GithubOrganization',
+      vcs_id: 1983,
+      github_id: 1983,
     });
     this.organization = organization;
 
-    server.create('installation', {
+    this.server.create('installation', {
       owner: organization,
       github_id: 1962
     });
 
     organization.save();
 
-    server.create('subscription', {
+    this.server.create('subscription', {
       owner: organization,
       status: 'canceled'
     });
 
-    server.create('subscription', {
+    this.server.create('subscription', {
       owner: organization,
       status: 'expired'
     });
 
     // Pad with extra organisations to force an extra API response page
     for (let orgIndex = 0; orgIndex < 10; orgIndex++) {
-      let organization = server.create('organization', {
+      let organization = this.server.create('organization', {
         name: `Generic org ${orgIndex}`,
         type: 'organization',
         login: `org${orgIndex}`,
-        github_id: 1000 + orgIndex
+        github_id: 1000 + orgIndex,
+        vcs_type: 'GithubOrganization'
       });
 
       if (orgIndex === 9) {
-        server.create('subscription', {
+        this.server.create('subscription', {
           owner: organization,
           status: 'subscribed'
         });
@@ -84,10 +92,11 @@ module('Acceptance | profile/basic layout', function (hooks) {
     }
 
     // create active repository
-    this.activeAdminRepository = server.create('repository', {
+    this.activeAdminRepository = this.server.create('repository', {
       name: 'repository-name',
       owner: {
         login: 'user-login',
+        vcs_type: 'GithubUser'
       },
       active: true,
       permissions: {
@@ -96,10 +105,11 @@ module('Acceptance | profile/basic layout', function (hooks) {
     });
 
     // create inactive repository
-    server.create('repository', {
+    this.server.create('repository', {
       name: 'yet-another-repository-name',
       owner: {
         login: 'user-login',
+        vcs_type: 'GithubUser'
       },
       active: false,
       permissions: {
@@ -108,10 +118,11 @@ module('Acceptance | profile/basic layout', function (hooks) {
     });
 
     // create repository without admin permissions
-    server.create('repository', {
+    this.server.create('repository', {
       name: 'other-repository-name',
       owner: {
         login: 'user-login',
+        vcs_type: 'GithubUser'
       },
       active: true,
       permissions: {
@@ -119,10 +130,11 @@ module('Acceptance | profile/basic layout', function (hooks) {
       },
     });
 
-    server.create('repository', {
+    this.server.create('repository', {
       name: 'github-apps-public-repository',
       owner: {
         login: 'user-login',
+        vcs_type: 'GithubUser'
       },
       active: true,
       managed_by_installation: true,
@@ -132,10 +144,11 @@ module('Acceptance | profile/basic layout', function (hooks) {
       },
     });
 
-    server.create('repository', {
+    this.server.create('repository', {
       name: 'github-apps-private-repository',
       owner: {
-        login: 'user-login'
+        login: 'user-login',
+        vcs_type: 'GithubUser'
       },
       active: true,
       managed_by_installation: true,
@@ -145,10 +158,11 @@ module('Acceptance | profile/basic layout', function (hooks) {
       }
     });
 
-    server.create('repository', {
+    this.server.create('repository', {
       name: 'github-apps-locked-repository',
       owner: {
-        login: 'user-login'
+        login: 'user-login',
+        vcs_type: 'GithubUser'
       },
       active: true,
       managed_by_installation: true,
@@ -157,10 +171,11 @@ module('Acceptance | profile/basic layout', function (hooks) {
     });
 
     // create other random repository to ensure correct filtering
-    server.create('repository', {
+    this.server.create('repository', {
       name: 'feminism-is-for-everybody',
       owner: {
         login: 'bellhooks',
+        vcs_type: 'GithubUser'
       },
       active: false
     });
@@ -169,8 +184,8 @@ module('Acceptance | profile/basic layout', function (hooks) {
   test('view repositories', async function (assert) {
     enableFeature('github-apps');
     await profilePage.visit();
+    await settled();
 
-    percySnapshot(assert);
     assert.equal(document.title, 'User Name of exceeding length - Profile - Travis CI');
 
     assert.equal(profilePage.name, 'User Name of exceeding length');
@@ -214,6 +229,8 @@ module('Acceptance | profile/basic layout', function (hooks) {
       assert.ok(repository.isPublic);
       assert.notOk(repository.settings.isDisabled);
     });
+
+    percySnapshot(assert);
   });
 
   test('view profile that has an expired subscription', async function (assert) {
@@ -243,7 +260,7 @@ module('Acceptance | profile/basic layout', function (hooks) {
   });
 
   test('displays an error banner when subscription status cannot be determined', async function (assert) {
-    server.get('/subscriptions', function (schema) {
+    this.server.get('/subscriptions', function (schema) {
       return new Response(500, {}, {});
     });
 
@@ -255,7 +272,7 @@ module('Acceptance | profile/basic layout', function (hooks) {
   test('logs an exception when there is more than one active subscription', async function (assert) {
     assert.expect(1);
 
-    server.create('subscription', {
+    this.server.create('subscription', {
       owner: this.user,
       status: 'subscribed'
     });
@@ -272,10 +289,11 @@ module('Acceptance | profile/basic layout', function (hooks) {
   });
 
   test('view profiles for organizations that do not and do have GitHub Apps installations', async function (assert) {
-    server.create('repository', {
+    this.server.create('repository', {
       name: 'extra-repository',
       owner: {
         login: 'org0',
+        vcs_type: 'GithubOrganization'
       },
       active: true,
       permissions: {
@@ -338,28 +356,32 @@ module('Acceptance | profile/basic layout', function (hooks) {
     let repositoryIds = [];
 
     for (let index = 0; index < 5; index++) {
-      server.create('repository', {
+      this.server.create('repository', {
         name: `extra-repository-${index}`,
         owner: {
           login: 'org0',
+          vcs_type: 'GithubOrganization',
         },
         active: true,
         permissions: {
           admin: true
         },
-        github_id: 10000 + index
+        github_id: 10000 + index,
+        vcs_type: 'GithubRepository'
       });
 
-      server.create('repository', {
+      this.server.create('repository', {
         name: `extra-inactive-repository-${index}`,
         owner: {
           login: 'org0',
+          vcs_type: 'GithubOrganization',
         },
         active: false,
         permissions: {
           admin: true
         },
-        github_id: 20000 + index
+        github_id: 20000 + index,
+        vcs_type: 'GithubRepository'
       });
 
       repositoryIds.push(10000 + index);
@@ -378,16 +400,18 @@ module('Acceptance | profile/basic layout', function (hooks) {
 
   test('the migration button is not present when the owner has over 20 active legacy repositories', async function (assert) {
     for (let index = 0; index < config.githubApps.migrationRepositoryCountLimit + 1; index++) {
-      server.create('repository', {
+      this.server.create('repository', {
         name: `extra-repository-${index}`,
         owner: {
           login: 'org0',
+          vcs_type: 'GithubOrganization'
         },
         active: true,
         permissions: {
           admin: true
         },
-        github_id: 10000 + index
+        github_id: 10000 + index,
+        vcs_type: 'GithubRepository'
       });
     }
 
@@ -420,7 +444,7 @@ module('Acceptance | profile/basic layout', function (hooks) {
     let requestUserId = null;
     let organizations = [];
 
-    server.post('/user/:id/beta_migration_request', function (schema, request) {
+    this.server.post('/user/:id/beta_migration_request', function (schema, request) {
       let requestBody = JSON.parse(request.requestBody);
 
       isRequested = true;
@@ -438,7 +462,7 @@ module('Acceptance | profile/basic layout', function (hooks) {
   });
 
   test('Migration beta status message is present when apllied', async function (assert) {
-    server.create('beta-migration-request', {
+    this.server.create('beta-migration-request', {
       owner_id: this.user.id,
       owner_name: this.user.login
     });
@@ -448,7 +472,7 @@ module('Acceptance | profile/basic layout', function (hooks) {
   });
 
   test('Migration beta status message is present on organization when apllied', async function (assert) {
-    server.create('beta-migration-request', {
+    this.server.create('beta-migration-request', {
       owner_id: this.user.id,
       owner_name: this.user.login,
       organizations: [this.organization]
@@ -459,7 +483,7 @@ module('Acceptance | profile/basic layout', function (hooks) {
   });
 
   test('Migration beta success status message is present when request is accepted', async function (assert) {
-    server.create('beta-migration-request', {
+    this.server.create('beta-migration-request', {
       owner_id: this.user.id,
       owner_name: this.user.login,
       accepted_at: new Date().toString()
@@ -470,7 +494,7 @@ module('Acceptance | profile/basic layout', function (hooks) {
   });
 
   test('Migration beta success status message is present on organization when request is accepted', async function (assert) {
-    server.create('beta-migration-request', {
+    this.server.create('beta-migration-request', {
       owner_id: this.user.id,
       owner_name: this.user.login,
       accepted_at: new Date().toString(),

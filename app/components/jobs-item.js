@@ -1,5 +1,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
+import { reads } from '@ember/object/computed';
 import jobConfigArch from 'travis/utils/job-config-arch';
 import jobConfigLanguage from 'travis/utils/job-config-language';
 
@@ -20,14 +21,18 @@ export default Component.extend({
     }
   }),
 
-  environment: computed('job.config.content.{env,gemfile}', function () {
-    let env = this.get('job.config.content.env');
-    let gemfile = this.get('job.config.content.gemfile');
+  globalEnv: reads('build.request.config.env.global'),
+  jobEnv: reads('job.config.content.env'),
+  gemfile: reads('job.config.content.gemfile'),
 
-    if (env) {
-      return env;
-    } else if (gemfile) {
-      return `Gemfile: ${gemfile}`;
+  environment: computed('globalEnv', 'jobEnv', 'gemfile', function () {
+    if (this.jobEnv) {
+      let globalEnv = this.globalEnv || [];
+      let join = (vars, pair) => vars.concat([pair.join('=')]);
+      let vars = globalEnv.reduce((vars, obj) => Object.entries(obj).reduce(join, vars), []);
+      return vars.reduce((env, str) => env.replace(str, ''), this.jobEnv);
+    } else if (this.gemfile) {
+      return `Gemfile: ${this.gemfile}`;
     }
   }),
 
@@ -36,6 +41,8 @@ export default Component.extend({
 
     if (os === 'linux' || os === 'linux-ppc64le') {
       return 'linux';
+    } else if (os === 'freebsd') {
+      return 'freebsd';
     } else if (os === 'osx') {
       return 'osx';
     } else if (os === 'windows') {
@@ -50,6 +57,8 @@ export default Component.extend({
 
     if (os === 'linux') {
       return 'icon-linux';
+    } else if (os === 'freebsd') {
+      return 'icon-freebsd';
     } else if (os === 'osx') {
       return 'icon-mac';
     } else if (os === 'windows') {

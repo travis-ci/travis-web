@@ -18,7 +18,7 @@ $med-small-up: "only screen and (min-width: 38em)";
   &-left {
     display: flex;
     flex-flow: column nowrap;
-    align-items: baseline;
+    align-items: center;
     padding-top: 10px;
 
     @media #{$med-small-up} {
@@ -46,7 +46,7 @@ $med-small-up: "only screen and (min-width: 38em)";
   .insights-privacy-selector {
     display: flex;
     flex-flow: row wrap;
-    align-items: baseline;
+    align-items: center;
 
     &__title {
       margin-right: 5px;
@@ -165,6 +165,7 @@ $med-small-up: "only screen and (min-width: 38em)";
     justify-content: center;
     flex-flow: column nowrap;
     background-color: #fff;
+    overflow: visible;
   }
 
   h2, .insights-overlay__header {

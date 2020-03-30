@@ -1,7 +1,7 @@
 /* global Travis */
 import { attr } from '@ember-data/model';
 import { computed } from '@ember/object';
-import { run, later } from '@ember/runloop';
+import { later } from '@ember/runloop';
 import { inject as service } from '@ember/service';
 import ArrayProxy from '@ember/array/proxy';
 import Owner from 'travis/models/owner';
@@ -10,6 +10,7 @@ import { or } from '@ember/object/computed';
 
 export default Owner.extend({
   ajax: service(),
+  api: service(),
 
   email: attr('string'),
   emails: attr(), // list of all known user emails
@@ -19,22 +20,25 @@ export default Owner.extend({
   firstLoggedInAt: attr('date'),
   allowMigration: attr('boolean'),
   recentlySignedUp: attr('boolean'),
+  channels: attr(),
+  authToken: attr('string'),
 
   type: 'user',
 
   fullName: or('name', 'login'),
+  applyFilterRepos: false,
 
   gravatarUrl: computed('gravatarId', function () {
     return `https//www.gravatar.com/avatar/${this.gravatarId}?s=48&d=mm`;
   }),
 
   init() {
-    if (this.isSyncing) this.poll();
+    this.schedulePoll();
     return this._super(...arguments);
   },
 
   _rawPermissions: computed(function () {
-    return this.ajax.get('/users/permissions');
+    return this.api.get('/users/permissions', { travisApiVersion: null });
   }),
 
   permissions: computed('_rawPermissions', function () {
@@ -102,36 +106,48 @@ export default Owner.extend({
     }
   },
 
-  sync() {
-    return this.ajax
-      .postV3(`/user/${this.id}/sync`, {})
+  sync(isOrganization) {
+    this.set('isSyncing', true);
+    this.set('applyFilterRepos', !isOrganization);
+    return this.api
+      .post(`/user/${this.id}/sync`)
       .then(() => this.poll());
   },
 
+  schedulePoll() {
+    later(
+      () => this.isSyncing && this.poll(),
+      config.intervals.syncingPolling
+    );
+  },
+
   poll() {
-    return this.ajax.getV3('/user', (data) => {
-      if (data.is_syncing) {
-        later(
-          () => this.poll(),
-          config.intervals.syncingPolling
-        );
+    return this.reload().then(() => {
+      if (this.isSyncing) {
+        this.schedulePoll();
       } else {
-        run(() => {
-          Travis.trigger('user:synced', data);
-          this.reload();
-        });
+        Travis.trigger('user:synced', this);
+        this.set('isSyncing', false);
+        this.applyReposFilter();
       }
     });
   },
 
   joinMigrateBeta(orgs = []) {
     const organizations = orgs.mapBy('login');
-    return this.ajax.postV3(`/user/${this.id}/beta_migration_request`, { organizations })
+    return this.api.post(`/user/${this.id}/beta_migration_request`, { data: { organizations } })
       .then(() => this.fetchBetaMigrationRequests());
   },
 
   reload(options = {}) {
-    return this.store.queryRecord('user', Object.assign({}, options, { current: true }));
-  }
+    const { authToken } = this;
+    return this.store.queryRecord('user', Object.assign({}, options, { current: true, authToken }));
+  },
 
+  applyReposFilter() {
+    if (this.applyFilterRepos) {
+      const filterTerm = this.get('githubAppsRepositories.filterTerm');
+      return this.githubAppsRepositories.applyFilter(filterTerm || '');
+    }
+  },
 });

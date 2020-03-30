@@ -1,0 +1,29 @@
+<AnimatedIf
+  @predicate={{this.isVisible}}
+  @use={{this.transition}}
+  @duration={{this.animationDuration}}
+>
+  <div
+    class="travis-modal-overlay fixed inset-0 z-50 flex items-center justify-center overflow-hidden bg-grey-800-fog"
+    {{on 'click' (action this.onClickOverlay)}}
+  >
+    <div
+      class="travis-modal bg-white p-8 relative rounded-sm"
+      data-test-modal
+      ...attributes
+      {{on 'click' this.onClickModal}}
+    >
+      {{~yield~}}
+      {{#if this.closeButton}}
+        <button
+          type="button"
+          title="Close modal"
+          class="absolute cursor-pointer top-0 right-0 p-0 mt-8 mr-8"
+          {{on 'click' this.onClose}}
+        >
+          <SvgImage @name="icon-failed" @class="w-5 h-5" />
+        </button>
+      {{/if}}
+    </div>
+  </div>
+</AnimatedIf>

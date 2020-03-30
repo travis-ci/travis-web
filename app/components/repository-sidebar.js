@@ -15,7 +15,6 @@ export default Component.extend({
   updateTimesService: service('updateTimes'),
   repositories: service(),
   features: service(),
-  store: service(),
   auth: service(),
   router: service(),
   classNames: ['repository-sidebar'],
@@ -28,8 +27,7 @@ export default Component.extend({
     schedule('afterRender', () => {
       this.fetchRepositoryData.perform();
       if (this.get('features.showRunningJobsInSidebar')) {
-        this.get('jobState.fetchRunningJobs').perform();
-        this.get('jobState.fetchQueuedJobs').perform();
+        this.get('jobState.fetchJobs').perform();
       }
     });
   },
@@ -84,7 +82,7 @@ export default Component.extend({
       let showRunningJobs = this.get('features.showRunningJobsInSidebar');
       let runningJobs = this.get('jobState.runningJobs');
       if (!showRunningJobs) { return []; }
-      return runningJobs;
+      return runningJobs.sort((a, b) => parseFloat(a.number) - parseFloat(b.number));
     }
   ),
 
@@ -96,6 +94,16 @@ export default Component.extend({
       let queuedJobs = this.get('jobState.queuedJobs');
       if (!showRunningJobs) { return []; }
       return queuedJobs;
+    }
+  ),
+
+  jobsLoaded: computed(
+    'features.showRunningJobsInSidebar',
+    'jobState.jobsLoaded',
+    function () {
+      let showRunningJobs = this.get('features.showRunningJobsInSidebar');
+      let jobsLoaded = this.get('jobState.jobsLoaded');
+      return showRunningJobs && jobsLoaded;
     }
   ),
 

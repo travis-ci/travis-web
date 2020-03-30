@@ -1,5 +1,5 @@
-{{#if this.hasSubscriptionPermissions}}
-  {{#if this.canResubscribe}}
+{{#if this.account.hasSubscriptionPermissions}}
+  {{#if this.subscription.isResubscribable}}
     <button {{on 'click' (action (perform this.resubscribe))}} class='button--green mr-1' data-test-resubscribe-subscription='true'>
       Resubscribe to plan
     </button>
@@ -10,18 +10,5 @@
     <button {{on 'click' this.openPlansSelector}} class='button--blue' data-test-change-subscription='true'>
       Change plan
     </button>
-  {{/if}}
-{{else}}
-  {{#if this.canResubscribe}}
-    <div class='button disabled' data-test-resubscribe-subscription='true'>
-      Resubscribe to plan
-    </div>
-    <div class='button disabled' data-test-resubscribe-subscription='true'>
-      Subscribe to different plan
-    </div>
-  {{else}}
-    <div class='button disabled' data-test-resubscribe-subscription='true'>
-      Change plan
-    </div>
   {{/if}}
 {{/if}}

@@ -14,7 +14,7 @@
       <div class="row-content" data-test-owner>
         <LinkTo
           @route="owner"
-          @model={{this.build.repo.owner.login}}
+          @models={{array this.build.repo.provider this.build.repo.ownerName}}
           class="inner-underline"
         >
           {{this.build.repo.owner.login}}
@@ -23,10 +23,13 @@
       <div class="row-content" data-test-repo-name>
         <LinkTo
           @route="repo"
-          @models={{array this.build.repo.owner.login this.build.repo.name}}
+          @models={{array this.build.repo.provider this.build.repo.ownerName this.build.repo.vcsName}}
           class="inner-underline"
         >
           {{this.build.repo.name}}
+          {{#if this.build.repo.shared}}
+            <SvgImage @name="icon-shared" @alt="Shared repository" @class="icon shared" />
+          {{/if}}
         </LinkTo>
       </div>
     </section>
@@ -61,7 +64,7 @@
       <div>
         <LinkTo
           @route="build"
-          @models={{array this.build.repo.owner.login this.build.repo.name this.build.id}}
+          @models={{array this.build.repo.provider this.build.repo.ownerName this.build.repo.vcsName this.build.id}}
           data-test-state-number="true"
           class="row-content color"
         >

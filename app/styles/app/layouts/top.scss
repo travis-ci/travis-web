@@ -44,7 +44,6 @@
   }
 }
 
-#auth .top .cta,
 .landing-pro .cta {
   display: none !important;
 }
@@ -54,28 +53,32 @@
 }
 
 .landing-pro .top,
-.landing-page .top {
+.landing-page .top,
+.top--white {
   background-color: white;
   border-bottom: 1px solid $pebble-grey;
 }
 
 .topbar {
-  height: $top-height;
+  height: auto;
+  max-height: $top-height;
   padding: 0 $column-gutter/2 20px $column-gutter/2;
   clear: both;
   overflow: hidden;
   font-size: $font-size-m;
   color: $asphalt-grey;
+  transition: max-height 0.3s ease-in-out;
+
   @media #{$medium-up} {
     padding: 10px $column-gutter/2 66px $column-gutter/2;
   }
 
-  a {
+  a:not(.auth-button) {
     color: $asphalt-grey;
   }
 
-  &.has-autoheight {
-    height: auto;
+  &.expanded {
+    max-height: 500px;
   }
 
   .layout-striped & {
@@ -85,7 +88,7 @@
 
   @media #{$medium-up} {
     &,
-    &.has-autoheight {
+    &.expanded {
       position: relative;
       height: $top-height;
       overflow: visible;

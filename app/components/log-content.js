@@ -2,7 +2,6 @@
 import { scheduleOnce, run, schedule } from '@ember/runloop';
 
 import Component from '@ember/component';
-import $ from 'jquery';
 import LinesSelector from 'travis/utils/lines-selector';
 import Log from 'travis/utils/log';
 import LogFolder from 'travis/utils/log-folder';
@@ -14,6 +13,11 @@ import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 import { alias, and } from '@ember/object/computed';
 
+const SELECTORS = {
+  CONTENT: '.log-body-content',
+  FIRST_HIGHLIGHT: '.log-line.highlight'
+};
+
 Log.LIMIT = config.logLimit;
 
 Log.Scroll = function (options = {}) {
@@ -21,7 +25,7 @@ Log.Scroll = function (options = {}) {
   return this;
 };
 
-Log.Scroll.prototype = $.extend(new Log.Listener(), {
+Log.Scroll.prototype = Log.extend(new Log.Listener(), {
   insert() {
     if (this.numbers) {
       this.tryScroll();
@@ -29,20 +33,15 @@ Log.Scroll.prototype = $.extend(new Log.Listener(), {
     return true;
   },
   tryScroll() {
-    let ref;
-    let element = $('#log .log-line:visible.highlight:first');
-    if (element) {
-      if (this.beforeScroll) {
-        this.beforeScroll();
+    try {
+      let element = document.querySelector(`${SELECTORS.CONTENT} ${SELECTORS.FIRST_HIGHLIGHT}`);
+      if (element) {
+        if (this.beforeScroll) {
+          this.beforeScroll();
+        }
+        return element.scrollIntoView({ block: 'center' });
       }
-      $('#main').scrollTop(0);
-      let offset = element.offset();
-      let scrollTop = ((ref = offset) != null ? ref.top : void 0) - (window.innerHeight / 3);
-      if (isNaN(scrollTop)) {
-        return;
-      }
-      return $('html, body').scrollTop(scrollTop);
-    }
+    } catch (e) {}
   }
 });
 
@@ -76,6 +75,7 @@ export default Component.extend({
   permissions: service(),
   externalLinks: service(),
   router: service(),
+  scroller: service(),
 
   classNameBindings: ['logIsVisible:is-open'],
   logIsVisible: false,
@@ -119,9 +119,9 @@ export default Component.extend({
   },
 
   clearLogElement() {
-    let logElement = this.$('#log');
-    if (logElement && logElement[0]) {
-      logElement[0].innerHTML = '';
+    const logElement = this.element && this.element.querySelector(SELECTORS.CONTENT);
+    if (logElement) {
+      logElement.innerHTML = '';
     }
   },
 
@@ -130,8 +130,10 @@ export default Component.extend({
       this.set('limited', false);
       this.clearLogElement();
       log.onClear(() => {
-        this.teardownLog();
-        return this.createEngine();
+        if (!this.isDestroyed && !this.isDestroying && this.element) {
+          this.teardownLog();
+          return this.createEngine();
+        }
       });
       this.scroll = new Log.Scroll({
         beforeScroll: () => {
@@ -149,7 +151,7 @@ export default Component.extend({
         listeners: [this.scroll, this.limit]
       });
       this.engine.limit = this.limit;
-      this.logFolder = new LogFolder(this.$('#log'));
+      this.logFolder = new LogFolder(this.element.querySelector(SELECTORS.CONTENT));
       let onLogLineClick = () => {
         let router = this.router,
           currentRouteName = router.get('currentRouteName');
@@ -160,7 +162,7 @@ export default Component.extend({
         }
       };
       this.lineSelector = new LinesSelector(
-        this.$('#log'), this.scroll, this.logFolder, null, onLogLineClick
+        this.element.querySelector(SELECTORS.CONTENT), this.scroll, this.logFolder, null, onLogLineClick
       );
       this.observeParts(log);
     }
@@ -234,7 +236,8 @@ export default Component.extend({
   actions: {
     toTop() {
       Travis.tailing.stop();
-      return $(window).scrollTop(0);
+      const { pageYOffset = 0 } = window;
+      return this.scroller.scrollTo(pageYOffset, 0, { duration: 100 });
     },
 
     toggleTailing() {
@@ -249,7 +252,7 @@ export default Component.extend({
 
     toggleRemoveLogModal() {
       this.toggleProperty('isShowingRemoveLogModal');
-    }
+    },
   },
 
   // don't remove this, it's needed as an empty willChange callback

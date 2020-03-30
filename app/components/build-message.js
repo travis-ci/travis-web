@@ -18,135 +18,163 @@ export default Component.extend({
     if (this[code]) {
       return htmlSafe(this[code](key, args));
     } else {
-      return htmlSafe(`unrecognised message code <code>${escape(code)}</code>`);
+      return htmlSafe(`unrecognised message code ${format(code)}`);
     }
   }),
 
   alias_key(key, args) {
-    return `<code>${escape(key)}</code>: key <code>${escape(args.alias)}</code> is an alias for <code>${escape(args.key)}</code>, using <code>${escape(args.key)}</code>`;
+    return `${format(key)}: key ${format(args.alias)} is an alias for ${format(args.key)}, using ${format(args.key)}`;
   },
 
   alias_value(key, args) {
-    return `<code>${escape(key)}</code>: value <code>${escape(args.alias)}</code> is an alias for <code>${format(args.value)}</code>, using <code>${format(args.value)}</code>`;
+    return `${format(key)}: value ${format(args.alias)} is an alias for ${format(args.value)}, using ${format(args.value)}`;
   },
 
   cast(key, args) {
-    return `<code>${escape(key)}</code>: casting value <code>${format(args.given_value)}</code> (<code>${escape(args.given_type)}</code>) to <code>${format(args.value)}</code> (<code>${escape(args.type)}</code>)`;
+    return `${format(key)}: casting value ${format(args.given_value)} (${format(args.given_type)}) to ${format(args.value)} (${format(args.type)})`;
   },
   condition(key, args) {
-    return `<code>${escape(key)}</code>: condition <code>${escape(args.condition)}</code> does not match, skipping notification`;
+    return `${format(key)}: condition ${format(args.condition)} does not match, skipping notification`;
   },
 
   default(key, args) {
-    return `<code>${escape(key)}</code>: missing <code>${escape(args.key)}</code>, using the default <code>${escape(args.default)}</code>`;
+    return `${format(key)}: missing ${format(args.key)}, using the default ${format(args.default)}`;
   },
 
   deprecated(key, args) {
-    return `<code>${escape(key)}</code> is deprecated: <code>${escape(args.info)}</code>`;
+    return `${format(key)} is deprecated: ${format(args.info)}`;
   },
 
   deprecated_key(key, args) {
-    return `<code>${escape(key)}</code>: deprecated key <code>${escape(args.key)}</code> (${escape(args.info)})`;
+    return `${format(key)}: deprecated key ${format(args.key)} (${escape(args.info)})`;
   },
 
   deprecated_value(key, args) {
-    return `<code>${escape(key)}</code>: deprecated value <code>${format(args.value)}</code> (${escape(args.info)})`;
+    return `${format(key)}: deprecated value ${format(args.value)} (${escape(args.info)})`;
   },
 
   downcase(key, args) {
-    return `<code>${escape(key)}</code>: downcasing <code>${escape(args.value)}</code>`;
+    return `${format(key)}: downcasing ${format(args.value)}`;
   },
 
   duplicate(key, args) {
-    return `<code>${escape(key)}</code>: duplicate values: <code>${format(args.values)}</code>`;
+    return `${format(key)}: duplicate values: ${format(args.values)}`;
+  },
+
+  duplicate_key(key, args) {
+    return `${format(key)}: duplicate key: ${format(args.key)}`;
   },
 
   edge(key, args) {
-    return `<code>${escape(key)}</code> is experimental and might change or be removed`;
+    return `${format(key)} is experimental and might change or be removed`;
   },
 
   flagged(key, args) {
-    return `<code>${escape(key)}</code> your repository must be feature flagged for <code>${escape(args.key)}</code> to be used`;
+    return `${format(key)} your repository must be feature flagged for ${format(args.key)} to be used`;
   },
 
   required(key, args) {
-    return `<code>${escape(key)}</code>: missing required key <code>${escape(args.key)}</code>`;
+    return `${format(key)}: missing required key ${format(args.key)}`;
   },
 
   secure(key, args) {
-    return `<code>${escape(key)}</code>: using a plain string on a key that expects an encrypted string`;
+    return `${format(key)}: using a plain string on a key that expects an encrypted string`;
   },
 
   empty(key, args) {
-    return `<code>${escape(key)}</code>: empty section`;
+    return `${format(key)}: empty section`;
   },
 
   find_key(key, args) {
-    return `<code>${escape(key)}</code>: key <code>${escape(args.original)}</code> is not known, but <code>${escape(args.key)}</code> is, using <code>${escape(args.key)}</code>`;
+    return `${format(key)}: key ${format(args.original)} is not known, but ${format(args.key)} is, using ${format(args.key)}`;
   },
 
   find_value(key, args) {
-    return `<code>${escape(key)}</code>: value <code>${escape(args.original)}</code> is not known, but <code>${escape(args.value)}</code> is, using <code>${escape(args.value)}</code>`;
+    return `${format(key)}: value ${format(args.original)} is not known, but ${format(args.value)} is, using ${format(args.value)}`;
   },
 
   clean_key(key, args) {
-    return `<code>${escape(key)}</code>: key <code>${escape(args.original)}</code> contains special characters, using <code>${escape(args.key)}</code>`;
+    return `${format(key)}: key ${format(args.original)} contains special characters, using ${format(args.key)}`;
   },
 
   clean_value(key, args) {
-    return `<code>${escape(key)}</code>: value <code>${escape(args.original)}</code> is not known, but <code>${escape(args.value)}</code> is, using <code>${escape(args.value)}</code>`;
+    return `${format(key)}: value ${format(args.original)} is not known, but ${format(args.value)} is, using ${format(args.value)}`;
   },
 
   overwrite(key, args) {
-    return `<code>${escape(key)}</code>: both <code>${escape(args.key)}</code> and <code>${escape(args.other)}</code> given, <code>${escape(args.key)}</code> overwrites <code>${escape(args.other)}</code>`;
+    return `${format(key)}: both ${format(args.key)} and ${format(args.other)} given, ${format(args.key)} overwrites ${format(args.other)}`;
   },
 
   strip_key(key, args) {
-    return `<code>${escape(key)}</code>: key <code>${escape(args.original)}</code> contains whitespace, using <code>${escape(args.key)}</code>`;
+    return `${format(key)}: key ${format(args.original)} contains whitespace, using ${format(args.key)}`;
   },
 
   underscore_key(key, args) {
-    return `<code>${escape(key)}</code>: key <code>${escape(args.original)}</code> is not underscored, using <code>${escape(args.key)}</code>`;
+    return `${format(key)}: key ${format(args.original)} is not underscored, using ${format(args.key)}`;
   },
 
   unexpected_seq(key, args) {
-    return `<code>${escape(key)}</code>: <code>${escape(args.key)}</code> unexpected sequence, using the first value (<code>${format(args.value)}</code>)`;
+    return `${format(key)}: ${format(args.key)} unexpected sequence, using the first value (${format(args.value)})`;
   },
 
   unknown_key(key, args) {
-    return `<code>${escape(key)}</code>: unknown key <code>${escape(args.key)}</code> (<code>${escape(args.value)}</code>)`;
+    return `${format(key)}: unknown key ${format(args.key)} (${format(args.value)})`;
   },
 
   unknown_value(key, args) {
-    return `<code>${escape(key)}</code>: unknown value <code>${escape(args.value)}</code>`;
+    return `${format(key)}: unknown value ${format(args.value)}`;
   },
 
   unknown_default(key, args) {
-    return `<code>${escape(key)}</code>: unknown value <code>${escape(args.value)}</code>, using the default <code>${escape(args.default)}</code>`;
+    return `${format(key)}: unknown value ${format(args.value)}, using the default ${format(args.default)}`;
   },
 
   unknown_var(key, args) {
-    return `<code>${escape(key)}</code>: unknown template variable <code>${escape(args.var)}</code>`;
+    return `${format(key)}: unknown template variable ${format(args.var)}`;
   },
 
   unsupported(key, args) {
-    return `<code>${escape(key)}</code>: the key <code>${escape(args.key)}</code> (<code>${escape(args.value)}</code>) is not supported on the <code>${escape(args.on_key)}</code> <code>${escape(args.on_value)}</code>`;
+    return `${format(key)}: the key ${format(args.key)} (${format(args.value)}) is not supported on the ${format(args.on_key)} ${format(args.on_value)}`;
   },
 
   invalid_type(key, args) {
-    return `<code>${escape(key)}</code>: unexpected <code>${escape(args.actual)}</code>, expected <code>${escape(args.expected)}</code> (<code>${format(args.value)}</code>)`;
+    return `${format(key)}: unexpected ${format(args.actual)}, expected ${format(args.expected)} (${format(args.value)})`;
   },
 
   invalid_format(key, args) {
-    return `<code>${escape(key)}</code>: invalid format <code>${escape(args.value)}</code>`;
+    return `${format(key)}: invalid format ${format(args.value)}`;
   },
 
   invalid_condition(key, args) {
-    return `<code>${escape(key)}</code>: invalid condition <code>${escape(args.condition)}</code>`;
+    return `${format(key)}: invalid condition ${format(args.condition)}`;
   },
 
   invalid_env_var(key, args) {
-    return `<code>${escape(key)}</code>: invalid env var <code>${escape(args.var)}</code>`;
+    return `${format(key)}: invalid env var ${format(args.var)}`;
+  },
+
+  skip_allow_failure(key, args) {
+    return `${format(key)}: skipping jobs allow failure rule #${format(args.number)} because its condition does not match: ${format(args.condition)}`;
+  },
+
+  skip_exclude(key, args) {
+    return `${format(key)}: skipping jobs exclude rule #${format(args.number)} because its condition does not match: ${format(args.condition)}`;
+  },
+
+  skip_import(key, args) {
+    return `${format(key)}: skipping import ${format(args.source)} because its condition does not match: ${format(args.condition)}`;
+  },
+
+  skip_job(key, args) {
+    return `${format(key)}: skipping job #${format(args.number)} because its condition does not match: ${format(args.condition)}`;
+  },
+
+  skip_notification(key, args) {
+    return `${format(key)}: skipping notification ${format(args.type)} because its condition does not match: ${format(args.condition)}`;
+  },
+
+  skip_stage(key, args) {
+    return `${format(key)}: skipping stage #${format(args.number)} because its condition does not match: ${format(args.condition)}`;
   },
 
   iconClass: computed('message.level', function () {
@@ -176,7 +204,7 @@ export default Component.extend({
 
 function format(obj, length) {
   length = length || 30;
-  return escape(truncate(dump(obj, length), 30));
+  return `<code>${escape(truncate(dump(obj, length), 30))}</code>`;
 }
 
 function dump(obj, length) {

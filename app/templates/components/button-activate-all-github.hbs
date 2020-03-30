@@ -1,0 +1,22 @@
+{{#if this.isVisible}}
+  {{#if this.useUiKit}}
+    <UiKit::Button
+      @color='grey'
+      @invert={{true}}
+      {{on 'click' (action 'activateAll')}}
+      data-test-activate-button
+    >
+      <SvgImage @name='icon-repooctocat' @class="fill-current inline-block align-text-bottom w-5 h-5 ml-1 mr-2" />
+      Activate all repositories using GitHub Apps
+    </UiKit::Button>
+  {{else}}
+    <button
+      class="button--blue"
+      data-test-activate-button
+      {{on 'click' (action 'activateAll')}}
+    >
+      <SvgImage @name='icon-repooctocat' @class="fill-current align-text-bottom w-5 h-5 ml-1 mr-2" />
+      Activate all repositories using GitHub Apps
+    </button>
+  {{/if}}
+{{/if}}

@@ -231,10 +231,6 @@
   }
 }
 
-#auth #navigation .auth-button {
-  display: none;
-}
-
 .action-button--restart,
 .action-button--debug,
 .action-button--cancel {
@@ -382,5 +378,15 @@
   &:hover,
   &:active {
     background-color: #999a98;
+  }
+}
+
+.multi-signin-button {
+  &__vcs-button {
+    background-color: #ffffff;
+
+    &:hover {
+      background-color: #eaeaea;
+    }
   }
 }

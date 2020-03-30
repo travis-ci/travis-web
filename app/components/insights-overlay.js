@@ -35,13 +35,14 @@ export default Component.extend({
       }
     );
   }),
+
   buildData: reads('requestData.lastSuccessful.value'),
   isLoading: reads('requestData.isRunning'),
   isNotLoading: not('isLoading'),
   totalBuilds: reads('buildData.data.count_started.total'),
   hasNoBuilds: equal('totalBuilds', 0),
   showOverlay: and('isNotLoading', 'hasNoBuilds'),
-  canSync: reads('owner.permissions.sync'),
+  canSync: and('auth.signedIn', 'owner.permissions.sync'),
 
   isMonth: equal('interval', INSIGHTS_INTERVALS.MONTH),
   isWeek: equal('interval', INSIGHTS_INTERVALS.WEEK),

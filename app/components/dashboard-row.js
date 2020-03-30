@@ -25,6 +25,10 @@ export default Component.extend({
     this.set('dropupIsOpen', true);
   },
 
+  closeDropup() {
+    this.set('dropupIsOpen', false);
+  },
+
   triggerBuild() {
     const self = this;
     let data = {};

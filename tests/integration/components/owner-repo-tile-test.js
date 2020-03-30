@@ -10,8 +10,12 @@ module('OwnerRepoTileComponent', function (hooks) {
   test('it renders', async function (assert) {
     const repo = EmberObject.create({
       slug: 'travis-ci/travis-chat',
+      name: 'travis-chat',
+      vcsName: 'travis-chat',
+      ownerName: 'travis-ci',
       active: false,
       'private': false,
+      shared: true,
       currentBuild: {
         number: '25',
         state: 'passed',
@@ -49,6 +53,7 @@ module('OwnerRepoTileComponent', function (hooks) {
 
     assert.dom('.owner-tile').hasClass('passed', 'component should have state class (passed)');
     assert.dom('.owner-tile-section:nth-of-type(1) span.repo-title-text').hasText('travis-chat', 'should display correct repo name');
+    assert.dom('.owner-tile-section:nth-of-type(1) span.repo-title-text svg').hasClass('shared', 'should display correct repo share icon');
     assert.dom('.owner-tile-section:nth-of-type(2) span.label-align').hasText('25', 'should display correct build number');
     assert.dom('.owner-tile-section:nth-of-type(3) span.default-branch-name').hasText('master', 'should display branch name');
     assert.dom('.owner-tile-section:nth-of-type(4) span.commit-compare').hasText('16fff34', 'should display correct commit sha');

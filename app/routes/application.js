@@ -1,5 +1,4 @@
 /* global Travis */
-import $ from 'jquery';
 import URL from 'url';
 import TravisRoute from 'travis/routes/basic';
 import config from 'travis/config/environment';
@@ -23,7 +22,6 @@ export default TravisRoute.extend(BuildFaviconMixin, {
 
   init() {
     this.featureFlags;
-    this.auth.autoSignIn();
 
     this.auth.afterSignOut(() => {
       this.afterSignOut();
@@ -43,15 +41,12 @@ export default TravisRoute.extend(BuildFaviconMixin, {
     return this._super(...arguments);
   },
 
-  renderTemplate: function () {
-    if (this.get('features.proVersion')) {
-      $('body').addClass('pro');
-    }
-    return this._super(...arguments);
+  beforeModel() {
+    return this.auth.autoSignIn();
   },
 
   model() {
-    if (this.get('auth.signedIn')) {
+    if (this.auth.signedIn) {
       return this.get('featureFlags.fetchTask').perform();
     }
   },
@@ -150,9 +145,9 @@ export default TravisRoute.extend(BuildFaviconMixin, {
     error(error) {
       if (error === 'needs-auth') {
         const currentURL = new URL(window.location.href);
-        const redirectUri = currentURL.href;
-        const queryParams = { redirectUri };
-        return this.transitionTo('auth', { queryParams });
+        const redirectUrl = currentURL.href;
+        const queryParams = { redirectUrl };
+        return this.transitionTo('signin', { queryParams });
       } else {
         return true;
       }
@@ -176,7 +171,7 @@ export default TravisRoute.extend(BuildFaviconMixin, {
       this.set('repositories.accessible', []);
       this.setDefault();
       if (this.get('features.enterpriseVersion')) {
-        return this.transitionTo('auth');
+        return this.transitionTo('signin');
       }
       return this.transitionTo('index');
     } catch (error) {}

@@ -20,7 +20,7 @@
       {{else if this.build.isTag}}
         <LinkTo
           @route="build"
-          @models={{array this.build.repo this.build}}
+          @model={{this.build.id}}
           @title={{this.build.tag.name}}
         >
           {{this.build.tag.name}}
@@ -28,7 +28,7 @@
       {{else}}
         <LinkTo
           @route="build"
-          @models={{array this.build.repo this.build}}
+          @model={{this.build.id}}
           @title={{this.build.branchName}}
         >
           {{this.build.branchName}}
@@ -46,7 +46,7 @@
           short="true"
           repo=this.build.repo
           eventType=this.build.eventType
-          maxLength=50
+          maxLength=72
         }}
       </div>
     {{/if}}
@@ -65,7 +65,7 @@
     {{#if this.build.id}}
       <LinkTo
         @route="build"
-        @models={{array this.build.repo this.build}}
+        @model={{this.build.id}}
         class="inner-underline"
       >
         {{#if this.build.isTag}}
@@ -81,7 +81,7 @@
   </h3>
   <div class="row-item row-commit">
     <ExternalLinkTo @href={{this.build.commit.url}}>
-      <EmberTooltip @text="View commit on GitHub" />
+      <EmberTooltip @text="{{concat "View commit on " (vcs-name this.vcsType)}}" />
       <SvgImage @name="icon-commit" @class="icon" />
       <span class="label-align inner-underline monospace">
         {{format-sha this.build.commit.sha}}

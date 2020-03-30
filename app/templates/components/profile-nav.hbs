@@ -8,7 +8,7 @@
         <OrgItem @account={{this.user}} />
       </li>
     </ul>
-    <SyncButton />
+    <SyncButton @isOrganization={{this.isOrganization}}/>
   </section>
   {{#if this.showMigrationBetaBanner}}
     <section class="migrate-beta" data-test-sidebar-migrate>
@@ -48,14 +48,14 @@
       {{/each}}
     </ul>
   </section>
-  {{#if this.githubOrgsOauthAccessSettingsUrl}}
+  {{#if this.accessSettingsUrl}}
     <section class="profile-additional no-divider">
       <h2>
-        Missing an {{vcs-vocab this.model.vcsType 'organization'}}?
+        Missing {{indefinite-article (vcs-vocab this.model.vcsType 'organization')}} {{vcs-vocab this.model.vcsType 'organization'}}?
       </h2>
       <ExternalLinkTo
-        @href={{this.githubOrgsOauthAccessSettingsUrl}}
-        @title="Organizations Oauth Access Settings on GitHub"
+        @href={{this.accessSettingsUrl}}
+        @title="{{vcs-vocab this.model.vcsType 'organization' plural=true lower=false}} Access Settings on {{vcs-name this.user.vcsType}}"
       >
         Review and add</ExternalLinkTo>
       your authorized {{vcs-vocab this.model.vcsType 'organization' plural=true lower=true}}.

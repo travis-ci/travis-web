@@ -1,7 +1,8 @@
 $nav-line-height: 35px;
 
 .navigation-toggle {
-  float: right;
+  float: left;
+  margin-right: 15px;
 
   @media #{$medium-up} {
     display: none;
@@ -10,7 +11,6 @@ $nav-line-height: 35px;
 
 .navigation {
   height: 0;
-  will-change: height;
   transition: height 200ms ease;
   overflow: hidden;
 
@@ -44,52 +44,77 @@ $nav-line-height: 35px;
     }
   }
 
-  .profile {
-    @media #{$medium-up} {
-      line-height: $top-height;
-      float: right;
-      margin-right: 0;
+  @media #{$small-only} {
+    clear: both;
+  }
+}
 
-      > a {
-        text-decoration: none;
-        padding-right: 0;
-      }
-    }
+.profile.menu {
+  line-height: $top-height;
+  margin-right: 0;
+  position: absolute;
+  top: 10px;
+  right: 15px;
 
-    .avatar {
-      margin-right: 10px;
-    }
+  @media #{$small-only} {
+    top: 0;
+    right: 0;
 
-    .navigation-profile-link{
-      display: none;
+    .navigation-anchor {
+      line-height: 50px;
 
-      @media #{$medium-up} {
-        display: block;
+      .avatar {
+        margin: 0 10px 0 0;
       }
     }
   }
 
-  .signed-in a {
+  &.signed-out .navigation-nested li .action {
+    padding: 0 10px;
+    white-space: nowrap;
+  }
+
+  > a {
     text-decoration: none;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  .navigation-avatar {
+    .avatar {
+      margin-right: 10px;
+    }
+  }
+
+  .auth-button {
+    width: 150px;
+
+    @media #{$small-only} {
+      width: 100px;
+      margin-right: 11px
+    }
+
   }
 }
 
 .navigation-anchor {
   display: block;
   width: 100%;
-  line-height: $nav-line-height;
+  line-height: $top-height + 1px;
+  padding: 0 1em;
 
-  &:hover {
-    text-decoration: underline;
-    cursor: pointer;
+  &:last-child {
+    padding-bottom: 10px;
   }
 
-  @media #{$medium-up} {
-    line-height: $top-height + 1px;
-    padding: 0 1em;
+  @media #{$small-only} {
+    line-height: 50px;
+    padding: 0 10px;
 
     &:last-child {
-      padding-bottom: 10px;
+      padding-bottom: 0;
     }
   }
 }
@@ -104,27 +129,6 @@ $nav-line-height: 35px;
   top: -2px;
 }
 
-.username {
-  color: $cement-grey;
-  padding-left: 20px;
-  background-color: #F7F7F7;
-  overflow: hidden;
-  white-space: nowrap;
-  @media #{$medium-up} {
-    span {
-      &:after {
-        content: "";
-        display: block;
-        position: absolute;
-        top: 0;
-        right: 0;
-        width: 4.75em;
-        height: 30px;
-        background: linear-gradient(-90deg, #F7F7F7 20%, rgba(255, 255, 255, 0) 100%);
-      }
-    }
-  }
-}
 .menu-separator {
   border-bottom: 1px #666666 solid;
   padding-top: 10px;
@@ -133,11 +137,30 @@ $nav-line-height: 35px;
     display: none;
   }
 }
-.navigation-nested {
-  padding: 10px 0px 0px 0px;
 
-  svg {
+.navigation-nested {
+  z-index: 35;
+  width: 200px;
+  padding: 0;
+  list-style: none;
+  line-height: $nav-line-height;
+  background-color: #FFFFFF;
+  border: 1px solid #F7F7F7;
+  border-radius:2px;
+  box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.15);
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 10px;
+  margin: 0;
+
+  svg:not(.signin-provider-icon) {
     display: none;
+  }
+
+  .signin-provider-icon {
+    display: inline-block;
+    margin-left: 7px;
   }
 
   a {
@@ -146,105 +169,165 @@ $nav-line-height: 35px;
     }
   }
 
-  .topbar-menu-item:hover {
-    text-decoration: underline;
+  .section-header {
+    padding: 5px 20px 0;
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: bold;
   }
 
-  @media #{$medium-up} {
-    width: 200px;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    line-height: $nav-line-height;
-    background-color: #FFFFFF;
-    border: 1px solid #F7F7F7;
-    border-radius:2px;
-    box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.15);
+  &__header {
+    color: $cement-grey;
+    background-color: #F7F7F7;
 
-    svg {
-      display: inline-block;
-      margin-left: 20px;
-      vertical-align: sub;
-    }
+    &.username .username__text {
+      line-height: 35px;
 
-    a {
-      display: block;
-      text-align: left;
-      &:not(:first-child) {
-        line-height: 55px;
-      }
-      svg.icon path {
-        stroke: #686B6E;
-      }
-      li {
-        &:hover {
-          background-color: lighten($oxide-blue, 50%);
-        }
-        &.active:hover {
-          background-color: lighten($oxide-blue, 50%);
-        }
-      }
-      &:hover {
-        text-decoration: none;
-        color: $oxide-blue;
-        svg {
-          @include colorSVG($oxide-blue);
-        }
-      }
-      &.active:hover {
-        text-decoration: none;
-        background-color: lighten($oxide-blue, 50%);
-        a {
-          color: $oxide-blue;
-        }
-        svg {
-          @include colorSVG($oxide-blue);
-        }
+      &:after {
+        background: linear-gradient(-90deg, #F7F7F7 20%, rgba(255, 255, 255, 0) 100%);
       }
     }
+  }
 
-    .topbar-menu-item:hover {
+  .topbar-menu-item {
+    line-height: 46px;
+    text-align: left;
+    display: flex;
+    align-items: center;
+
+    &:hover {
       text-decoration: none;
+      color: $oxide-blue;
+      background-color: lighten($oxide-blue, 50%);
+
+      .icon {
+        @include colorSVG($oxide-blue);
+      }
+
+      .username__text:after {
+        background: linear-gradient(-90deg, lighten($oxide-blue, 50%) 20%, rgba(255, 255, 255, 0) 100%);
+      }
     }
+
+    &.active:hover {
+      text-decoration: none;
+      background-color: lighten($oxide-blue, 50%);
+
+      a {
+        color: $oxide-blue;
+      }
+
+      .icon {
+        @include colorSVG($oxide-blue);
+      }
+    }
+
+    &--warning {
+      background-color: lighten($canary-yellow, 30%);
+      color: $dozer-yellow;
+      line-height: 1.7;
+      font-size: 0.7em;
+      text-align: center;
+    }
+
+    &__label {
+      margin-left: 7px;
+      position: relative;
+      top: -1px;
+    }
+
+    .icon {
+      display: inline-block;
+      stroke: #686B6E;
+      margin-left: 20px;
+    }
+
+    .avatar-wrapper {
+      max-width: 20px;
+      width: 20px;
+      flex-basis: 20px;
+
+      .avatar {
+        margin: 0;
+        transform: scale(0.5) translate(-20px, 2px);
+      }
+    }
+  }
+
+  a.navigation-nested__link {
+    text-decoration: underline;
+    color: $oxide-blue;
+    font-size: 12px;
+    margin-right: 15px;
+    position: relative;
+    top: -2px;
+
+    &:hover {
+      color: darken($oxide-blue, 10%)
+    }
+  }
+
+  .navigation-nested__note {
+    padding: 0 14px 0 20px;
+    white-space: normal;
+    line-height: 1.4;
+    font-size: 0.8em;
+    color: $cement-grey;
   }
 
   .username {
-    display: none;
+    padding-left: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
-    @media #{$medium-up} {
-      display: block;
+    &__text {
+      overflow: hidden;
+      white-space: nowrap;
+      position: relative;
+      flex-basis: 100%;
+
+      &:after {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        width: 2.5em;
+        background: linear-gradient(-90deg, #ffffff 20%, rgba(255, 255, 255, 0) 100%);
+      }
+    }
+
+    &__vcs-icon {
+      width: 35px;
+      min-width: 35px;
+      flex-basis: 35px;
+      display: flex;
+      align-items: center;
+
+      svg {
+        margin-left: 5px;
+        display: inline-flex;
+        fill: $cement-grey;
+      }
     }
   }
 
   .nav-nested {
-    display: none;
-
-    @media #{$medium-up} {
-      display: block;
-      height: 1px;
-      background-color: $cream-dark;
-      margin: 0 20px;
-    }
-  }
-
-
-
-  @media #{$medium-up} {
-    display: none;
-    position: absolute;
-    padding: 0 0 0 0;
-    margin: (-1px) 0 0 (-103px);
-
-    @include z-index(above-flashes)
+    display: block;
+    height: 1px;
+    background-color: $cream-dark;
+    margin: 0;
   }
 }
 
-ul #profile-menu-link:hover > ul,
-ul #profile-menu-link ul:hover {
+.profile.menu.open .navigation-nested,
+.profile.signed-out:hover .navigation-nested {
   display: block;
 }
 
-ul #profile-menu-link:focus-within > ul {
+.profile.menu:focus-within > ul {
   opacity: 1; // Prevents this rule from being merged with the one above during minification. For IE support.
   display: block;
 }

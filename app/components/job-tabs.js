@@ -1,26 +1,17 @@
-import { computed } from '@ember/object';
-import { isEmpty } from '@ember/utils';
 import Component from '@ember/component';
+import { match, not, reads } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
+import WithConfigValidation from 'travis/mixins/components/with-config-validation';
 
-export default Component.extend({
+export default Component.extend(WithConfigValidation, {
   tagName: 'div',
   classNames: ['travistab'],
 
-  messagesMaxLevel: computed('job.build.request.messages.@each.level', function () {
-    const msgs = this.get('job.build.request.messages');
-    if (!isEmpty(msgs)) {
-      return msgs.sortBy('level').lastObject.level;
-    }
-  }),
+  router: service(),
 
-  messagesBadgeTooltipText: computed('messagesMaxLevel', function () {
-    return `This build's config has ${this.messagesMaxLevel} level validation messages`;
-  }),
+  isConfig: match('router.currentRouteName', /config$/),
+  isLog: not('isConfig'),
 
-  didRender() {
-    // Set the log to be default active tab unless something else is active
-    if (isEmpty(this.$('.travistab-nav--secondary').find('.active'))) {
-      this.$('#tab_log').addClass('active');
-    }
-  }
+  messages: reads('job.build.request.messages')
+
 });

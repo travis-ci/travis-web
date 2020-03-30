@@ -1,4 +1,4 @@
-<div class="settings">
+<div class="settings" data-test-settings-content>
   <section class="settings-section">
     <h2 class="small-title">
       General
@@ -130,7 +130,7 @@
     </ul>
     <AddCronJob @repository={{this.model.repository}} />
   </section>
-  {{#if (and (config-get 'endpoints.sshKey') this.repo.private)}}
+  {{#if (and (config-get 'endpoints.sshKey') (or this.features.enterpriseVersion this.repo.private))}}
     <section class="settings-section" data-test-ssh-key-section>
       <h2 class="small-title">
         SSH Key
@@ -185,46 +185,43 @@
     </section>
   {{/if}}
 </div>
-{{#if this.displaySettingsDisabledAfterMigrationModal}}
-  <ModalDialog
-    @targetAttachment="center"
-    @translucentOverlay={{true}}
-    @overlayPosition="sibling"
-    @animatable={{true}}
+
+<Modal
+  @isVisible={{this.displaySettingsDisabledAfterMigrationModal}}
+  @closeOnClickOverlay={{false}}
+>
+  <div
+    data-test-settings-disabled-after-migration-modal
+    class="migrated-repo-settings-modal"
   >
-    <div
-      data-test-settings-disabled-after-migration-modal
-      class="migrated-repo-settings-modal"
-    >
-      <h3 class="migrated-repo-settings-modal__header h3--teal">
-        Your repository has been migrated to <br />
-        travis-ci.com
-      </h3>
-      <p>
-        As a result, your repository is now in a <b>read-only</b> state.
-      </p>
-      <p>
-        If you wish to configure your repository, you can do so by visiting the settings page on travis-ci.com.
-        Read-only historical data, such as Requests, Build History and Branches can still be viewed.
-      </p>
-      <div>
-        <LinkTo
-          @route="builds"
-          @model={{this.repo}}
-          class="migrated-repo-settings-modal__button button--blue"
-        >
-          View Build History
-        </LinkTo>
-        <ExternalLinkTo
-          @href={{this.migratedRepositorySettingsLink}}
-          class="migrated-repo-settings-modal__button button--dark-grey"
-        >
-          Edit settings on .com
-        </ExternalLinkTo>
-        <LinkTo @route="repo.index" @model={{repo}} class="modal-close pointer">
-          <SvgImage @name="icon-failed" @class="icon" />
-        </LinkTo>
-      </div>
+    <h3 class="migrated-repo-settings-modal__header h3--teal">
+      Your repository has been migrated to <br />
+      travis-ci.com
+    </h3>
+    <p>
+      As a result, your repository is now in a <b>read-only</b> state.
+    </p>
+    <p>
+      If you wish to configure your repository, you can do so by visiting the settings page on travis-ci.com.
+      Read-only historical data, such as Requests, Build History and Branches can still be viewed.
+    </p>
+    <div>
+      <LinkTo
+        @route="builds"
+        @model={{this.repo}}
+        class="migrated-repo-settings-modal__button button--blue"
+      >
+        View Build History
+      </LinkTo>
+      <ExternalLinkTo
+        @href={{this.migratedRepositorySettingsLink}}
+        class="migrated-repo-settings-modal__button button--dark-grey"
+      >
+        Edit settings on .com
+      </ExternalLinkTo>
+      <LinkTo @route="repo.index" @models={{array repo.provider repo.ownerName repo.vcsName}} class="modal-close pointer">
+        <SvgImage @name="icon-failed" @class="icon" />
+      </LinkTo>
     </div>
-  </ModalDialog>
-{{/if}}
+  </div>
+</Modal>

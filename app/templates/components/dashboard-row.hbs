@@ -1,123 +1,111 @@
 <li
   class="rows rows--dashboard {{if this.repo.active 'is-active'}}"
-  {{on 'mouseleave' (action 'closeDropup')}}
+  {{on 'mouseleave' (action this.closeDropup)}}
 >
-  <div class="dash-head">
-    <button
-      class="dash-star {{if this.repo.starred 'is-starred'}}"
-      title="{{if this.repo.starred 'un'}}star this repo"
-      onclick={{action "starRepo"}}
-    >
-      <SvgImage @name="icon-star" @class="icon--m" />
-    </button>
-    {{#if this.repo.private}}
-      <span class="dash-private" title="private repository">
-        <SvgImage @name="icon-private" @class="icon" />
-      </span>
-    {{/if}}
-  </div>
-  <div class="dash-body">
-    <div class="dash-main">
-      <header class="fade-out dash-header">
-        <h2 class="row-label">
-          <LinkTo
-            @route="owner"
-            @model={{this.repo.owner.login}}
-            @title={{this.repo.owner.login}}
-          >
-            {{this.repo.owner.login}}
-          </LinkTo>
-        </h2>
-        <h1 class="row-content">
-          <LinkTo
-            @route="repo"
-            @models={{array this.repo.owner.login this.repo.name}}
-            @title={{this.repo.name}}
-          >
-            {{this.repo.name}}
-          </LinkTo>
-        </h1>
-      </header>
-      {{#if this.repo.active}}
-        <section class="dash-default {{this.repo.defaultBranch.lastBuild.state}} fade-out">
+<div class="dash-head">
+  <button
+    class="dash-star {{if this.repo.starred 'is-starred'}}"
+    title="{{if this.repo.starred 'un'}}star this repo"
+    onclick={{action "starRepo"}}
+  >
+    <SvgImage @name="icon-star" @class="icon--m" />
+  </button>
+  {{#if this.repo.private}}
+    <span class="dash-private" title="private repository">
+      <SvgImage @name="icon-private" @class="icon" />
+    </span>
+  {{/if}}
+</div>
+<div class="dash-body">
+  <div class="dash-main">
+    <header class="fade-out dash-header">
+      <h2 class="row-label repo-dashboard">
+        <LinkTo
+          @route="owner"
+          @models={{array this.repo.provider this.repo.ownerName}}
+          @title={{this.repo.owner.login}}
+        >
+          {{this.repo.owner.login}}
+        </LinkTo>
+      </h2>
+      <h1 class="row-content">
+        <LinkTo
+          @route="repo"
+          @models={{array this.repo.provider this.repo.ownerName this.repo.vcsName}}
+          @title={{this.repo.name}}
+        >
+          {{this.repo.name}}
+          {{#if this.repo.shared}}
+            <SvgImage @name="icon-shared" @alt="Shared repository" @class="icon shared" />
+          {{/if}}
+        </LinkTo>
+      </h1>
+    </header>
+    {{#if this.repo.active}}
+      <section class="dash-default {{this.repo.defaultBranch.lastBuild.state}} fade-out">
+        <h3 class="label">
+          Default branch
+        </h3>
+        <p class="row-content color">
+          <RequestIcon
+            @event={{this.repo.defaultBranch.lastBuild.eventType}}
+            @state={{this.repo.defaultBranch.lastBuild.state}}
+          />
+          {{#if this.repo.defaultBranch.lastBuild.id}}
+            <LinkTo
+              @route="build"
+              @models={{array
+                this.repo.provider
+                this.repo.ownerName
+                this.repo.vcsName
+                this.repo.defaultBranch.lastBuild.id
+              }}
+              @title="Last build on the default branch"
+            >
+              {{this.repo.defaultBranch.lastBuild.branch.name}}
+              {{this.repo.defaultBranch.lastBuild.state}}
+            </LinkTo>
+          {{else}}
+            <span title="Default branch has never been built">
+              {{this.repo.defaultBranch.name}}
+            </span>
+          {{/if}}
+        </p>
+      </section>
+      {{#if this.repo.currentBuild}}
+        <section class="dash-last {{this.repo.currentBuild.state}}">
           <h3 class="label">
             Default branch
           </h3>
           <p class="row-content color">
-            <RequestIcon
-              @event={{this.repo.defaultBranch.lastBuild.eventType}}
-              @state={{this.repo.defaultBranch.lastBuild.state}}
-            />
-            {{#if this.repo.defaultBranch.lastBuild.id}}
-              <LinkTo
-                @route="build"
-                @models={{array
-                  this.repo.owner.login
-                  this.repo.name
-                  this.repo.defaultBranch.lastBuild.id
-                }}
-                @title="Last build on the default branch"
-              >
-                {{this.repo.defaultBranch.lastBuild.branch.name}}
-                {{this.repo.defaultBranch.lastBuild.state}}
-              </LinkTo>
-            {{else}}
-              <span title="Default branch has never been built">
-                {{this.repo.defaultBranch.name}}
+            <StatusIcon @status={{this.repo.currentBuild.state}} />
+            <LinkTo
+              @route="build"
+              @models={{array
+                this.repo.provider
+                this.repo.ownerName
+                this.repo.vcsName
+                this.repo.currentBuild.id
+              }}
+              @title="Last build on the repo"
+            >
+              <span class="label-align">
+                #{{this.repo.currentBuild.number}}
+                {{humanize-state this.repo.currentBuild.state}}
               </span>
             {{/if}}
           </p>
         </section>
-        {{#if this.repo.currentBuild}}
-          <section class="dash-last {{this.repo.currentBuild.state}}">
-            <h3 class="label">
-              Last build
-            </h3>
-            <p class="row-content color">
-              <StatusIcon @status={{this.repo.currentBuild.state}} />
-              <LinkTo
-                @route="build"
-                @models={{array
-                  this.repo.owner.login
-                  this.repo.name
-                  this.repo.currentBuild.id
-                }}
-                @title="Last build on the repo"
-              >
-                <span class="label-align">
-                  #{{this.repo.currentBuild.number}}
-                  {{humanize-state this.repo.currentBuild.state}}
-                </span>
-              </LinkTo>
-            </p>
-          </section>
-          <section class="dash-commit">
-            <h3 class="label">
-              Commit
-            </h3>
-            <div class="row-content row-item commit-sha">
-              <SvgImage @name="icon-commit" @class="icon" />
-              <ExternalLinkTo @href={{this.repo.currentBuild.commit.url}}>
-                <EmberTooltip @text="View commit on GitHub" />
-                <span class="label-align monospace">
-                  {{format-sha this.repo.currentBuild.commit.sha}}
-                </span>
-              </ExternalLinkTo>
-              <SvgImage @name="icon-external-link" @class="icon" />
-            </div>
-          </section>
-          <section class="fade-out dash-finished">
-            <h3 class="label">
-              Finished
-            </h3>
-            <p class="row-content" title="{{this.repo.currentBuild.finishedAt}}">
-              <SvgImage @name="icon-calendar" @class="icon" />
-              <span class="label-align">
-                {{#if this.repo.currentBuild.finishedAt}}
-                  {{format-time this.repo.currentBuild.finishedAt}}
-                {{else}}
-                  still running
-                {{/if}}
+        <section class="dash-commit">
+          <h3 class="label">
+            Commit
+          </h3>
+          <div class="row-content row-item commit-sha">
+            <SvgImage @name="icon-commit" @class="icon" />
+            <ExternalLinkTo @href={{this.repo.currentBuild.commit.url}}>
+              <EmberTooltip @text="{{concat "View commit on " (vcs-name this.repo.vcsType)}}" />
+              <span class="label-align monospace">
+                {{format-sha this.repo.currentBuild.commit.sha}}
               </span>
             </p>
           </section>
@@ -179,9 +167,27 @@
                 Trigger a build
               </button>
             {{/if}}
-          </div>
-        {{/if}}
+          {{/if}}
+        </div>
+      {{else}}
+        <div class="dash-no-build">
+          <p class="dash-helptext helptext">
+            There are no builds for this repo yet
+          </p>
+          {{#if this.isTriggering}}
+            <LoadingIndicator @inline={{true}}/>
+          {{else}}
+            <button
+              class="button--blue"
+              title="Trigger a build on the default branch"
+              onclick={{action "triggerBuild"}}
+            >
+              Trigger a build
+            </button>
+          {{/if}}
+        </div>
       {{/if}}
     </div>
   </div>
+</div>
 </li>

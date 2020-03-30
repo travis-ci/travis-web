@@ -33,8 +33,8 @@ end
 
 if ENV['TRAVIS_PRO']
   ENV['API_ENDPOINT'] ||= "https://api.travis-ci.com"
-  ENV['PAGES_ENDPOINT'] ||= "https://billing.travis-ci.com"
-  ENV['BILLING_ENDPOINT'] ||= "https://billing.travis-ci.com"
+  ENV['PAGES_ENDPOINT'] ||= "https://travis-ci.com/account/subscription"
+  ENV['BILLING_ENDPOINT'] ||= "https://travis-ci.com/account/subscription"
 
   ENV['SSH_KEY_ENABLED'] = 'true' unless ENV.has_key?('SSH_KEY_ENABLED')
   ENV['CACHES_ENABLED'] = 'true' unless ENV.has_key?('CACHES_ENABLED')
@@ -71,5 +71,7 @@ run Travis::Web::App.build(
   public_mode: ENV['PUBLIC_MODE'],
   assets_host: ENV['ASSETS_HOST'],
   ajax_polling: ENV['AJAX_POLLING'],
-  github_orgs_oauth_access_settings_url: ENV['GITHUB_ORGS_OAUTH_ACCESS_SETTINGS_URL']
+  github_orgs_oauth_access_settings_url: ENV['GITHUB_ORGS_OAUTH_ACCESS_SETTINGS_URL'],
+  github_apps_app_name: ENV['GITHUB_APPS_APP_NAME'],
+  enable_feature_flags: ENV['ENABLE_FEATURE_FLAGS']
 )

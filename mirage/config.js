@@ -6,6 +6,8 @@ import fuzzysort from 'fuzzysort';
 const { validAuthToken, apiEndpoint } = config;
 
 export default function () {
+  this.timing = 0;
+
   const _defaultHandler = this.pretender._handlerFor;
 
   this.pretender._handlerFor = function (verb, path, request) {
@@ -64,8 +66,19 @@ export default function () {
     return schema.organizations.all();
   });
 
-  this.get('/user', function (schema) {
-    return this.serialize(schema.users.first(), 'v3');
+  this.get('/user', function (schema, request) {
+    const { authorization } = request.requestHeaders;
+    const firstUser = schema.users.first();
+
+    if (authorization !== `token ${firstUser.token}`) {
+      return new Response(403, {}, {});
+    }
+
+    return this.serialize(firstUser, 'v3');
+  });
+
+  this.get('/logout', function () {
+    return new Response(200, {}, {});
   });
 
   this.get('/users/:id', function ({ users }, request) {
@@ -73,7 +86,7 @@ export default function () {
   });
 
   this.get('/users/permissions', (schema, request) => {
-    let authorization = request.requestHeaders.Authorization;
+    const { authorization } = request.requestHeaders;
 
     if (!authorization) {
       return {};
@@ -165,6 +178,19 @@ export default function () {
     );
   });
 
+  this.get('/coupons/:coupon', function (schema, { params }) {
+    const coupon = schema.coupons.find(params.coupon);
+    if (!coupon) {
+      return new Response(404, {'Content-Type': 'application/json'}, {
+        '@type': 'error',
+        'error_type': 'not_found',
+        'error_message': `No such coupon: ${params.coupon}`
+      });
+    } else {
+      return this.serialize(coupon);
+    }
+  });
+
   this.post('/subscription/:subscription_id/cancel', function (schema, { params, requestBody }) {
     const subscription = schema.subscriptions.where({ id: params.subscription_id });
     subscription.update(
@@ -228,21 +254,21 @@ export default function () {
     return repos;
   });
 
-  this.get('/repo/:slug_or_id', function (schema, request) {
-    if (request.params.slug_or_id.match(/^\d+$/)) {
-      let repo = schema.repositories.find(request.params.slug_or_id);
+  this.get('/repo/:id', function (schema, { params }) {
+    const repo = schema.repositories.find(params.id);
+    return repo || new Response(404, {});
+  });
 
-      if (repo) {
-        return repo;
-      } else {
-        return new Response(404, {});
-      }
+  this.get('/repo/:provider/:slug_or_id', function (schema, { params }) {
+    const { slug_or_id } = params;
+    let repo;
+    if (slug_or_id.match(/^\d+$/)) {
+      repo = schema.repositories.find(slug_or_id);
     } else {
-      let slug = request.params.slug_or_id;
-      let repos = schema.repositories.where({ slug: decodeURIComponent(slug) });
-
-      return repos.models[0];
+      const slug = decodeURIComponent(slug_or_id);
+      repo = schema.repositories.findBy({ slug });
     }
+    return repo || new Response(404, {});
   });
 
   this.get('/repo/:repositoryId/crons', function (schema, request) {
@@ -385,6 +411,15 @@ export default function () {
     };
   });
 
+  this.delete('/settings/env_vars/:env_var_id', function (schema, request) {
+    schema.envVars
+      .where({ envVarId: request.params.env_var_id })
+      .models
+      .map(envVar => envVar.destroyRecord());
+
+    return new Response(204);
+  });
+
   this.get('/repo/:repository_id/branches', function (schema) {
     return schema.branches.all();
   });
@@ -402,7 +437,7 @@ export default function () {
     return this.serialize(sshKeys, 'v2');
   });
 
-  this.get('/owner/:login', function (schema, request) {
+  this.get('/owner/:provider/:login', function (schema, request) {
     let owner = schema.users.where({ login: request.params.login }).models[0];
     if (owner) {
       return this.serialize(owner, 'owner');
@@ -411,7 +446,7 @@ export default function () {
     }
   });
 
-  this.get('/owner/:login/repos', function (schema, { params, queryParams = {} }) {
+  this.get('/owner/:provider/:login/repos', function (schema, { params, queryParams = {} }) {
     const { login } = params;
     const { sort_by, name_filter } = queryParams;
 

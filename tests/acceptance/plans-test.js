@@ -1,12 +1,15 @@
-import { currentURL, settled } from '@ember/test-helpers';
+import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import { enableFeature } from 'ember-feature-flags/test-support';
 import { percySnapshot } from 'ember-percy';
 import plansPage from 'travis/tests/pages/plans';
+import { setupMirage } from 'ember-cli-mirage/test-support';
+import config from 'travis/config/environment';
 
 module('Acceptance | plans page', function (hooks) {
   setupApplicationTest(hooks);
+  setupMirage(hooks);
 
   hooks.beforeEach(async function () {
     enableFeature('pro-version');
@@ -49,16 +52,10 @@ module('Acceptance | plans page', function (hooks) {
   test('contact section structure', async function (assert) {
     const { contactSection } = plansPage;
     const { form } = contactSection;
-    const { name, email, size, phone, message, submit } = form;
+    const { iframe } = form;
 
-    assert.ok(contactSection.isPresent);
-    assert.ok(form.isPresent);
-    assert.ok(name.isPresent);
-    assert.ok(email.isPresent);
-    assert.ok(size.isPresent);
-    assert.ok(phone.isPresent);
-    assert.ok(message.isPresent);
-    assert.ok(submit.isPresent);
+    assert.ok(iframe.isPresent);
+    assert.equal(iframe.src, config.urls.pardotHost + config.urls.pardotForm);
   });
 
   test('enterprise section structure', async function (assert) {
@@ -84,95 +81,6 @@ module('Acceptance | plans page', function (hooks) {
 
     assert.ok(messageSection.isPresent);
     assert.ok(button.isPresent);
-  });
-
-  module('Contact form / lead request', function (hooks) {
-    const mockData = {
-      name: 'Test Request',
-      email: 'test@request.com',
-      size: 4,
-      phone: '+1 555-555-5555',
-      message: 'Test request message.',
-      referralSource: 'plans-page',
-    };
-
-    hooks.beforeEach(async function () {
-      this.requestHandler = (request) => JSON.parse(request.requestBody);
-      server.post('/leads', (schema, request) => {
-        return this.requestHandler(request);
-      });
-    });
-
-    test('succeeds when all fields filled properly', async function (assert) {
-      const { form } = plansPage.contactSection;
-      const { name, email, size, phone, message, submit } = form;
-
-      await name.fill(mockData.name);
-      await email.fill(mockData.email);
-      await size.fill(mockData.size);
-      await phone.fill(mockData.phone);
-      await message.fill(mockData.message);
-      await submit.click();
-      await settled();
-
-      assert.equal(currentURL(), '/plans/thank-you');
-      const { thanks } = plansPage;
-      assert.ok(thanks.isPresent);
-      assert.ok(thanks.title.isPresent);
-      assert.ok(thanks.image.isPresent);
-      assert.ok(thanks.body.isPresent);
-      assert.ok(thanks.button.isPresent);
-    });
-
-    test('contains all necessary data', async function (assert) {
-      const { form } = plansPage.contactSection;
-      const { name, email, size, phone, message, submit } = form;
-      let data = {};
-
-      this.requestHandler = (request) => {
-        data = JSON.parse(request.requestBody);
-        return data;
-      };
-
-      await name.fill(mockData.name);
-      await email.fill(mockData.email);
-      await size.fill(mockData.size);
-      await phone.fill(mockData.phone);
-      await message.fill(mockData.message);
-      await submit.click();
-      await settled();
-
-      assert.equal(data.name, mockData.name);
-      assert.equal(data.email, mockData.email);
-      assert.equal(data.team_size, mockData.size);
-      assert.equal(data.phone, mockData.phone);
-      assert.equal(data.message, mockData.message);
-      assert.equal(data.referral_source, mockData.referralSource);
-    });
-
-    test('doesn\'t get sent if form is invalid', async function (assert) {
-      const { form } = plansPage.contactSection;
-      const { submit } = form;
-      let requestIsSent = false;
-
-      this.requestHandler = (request) => {
-        requestIsSent = true;
-        return JSON.parse(request.requestBody);
-      };
-
-      await submit.click();
-      await settled();
-
-      assert.equal(requestIsSent, false);
-
-      assert.equal(currentURL(), '/plans');
-      const { thanks } = plansPage;
-      assert.notOk(thanks.isPresent);
-      assert.notOk(thanks.title.isPresent);
-      assert.notOk(thanks.image.isPresent);
-      assert.notOk(thanks.body.isPresent);
-      assert.notOk(thanks.button.isPresent);
-    });
   });
 
   test('thanks page displays', async function (assert) {

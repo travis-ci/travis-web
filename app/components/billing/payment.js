@@ -2,6 +2,7 @@ import Component from '@ember/component';
 import { task } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
 import { or, reads } from '@ember/object/computed';
+import { computed } from '@ember/object';
 import config from 'travis/config/environment';
 
 export default Component.extend({
@@ -9,11 +10,13 @@ export default Component.extend({
   accounts: service(),
   flashes: service(),
   metrics: service(),
+  storage: service(),
 
   account: null,
   stripeElement: null,
   stripeLoading: false,
   newSubscription: null,
+  couponId: null,
   options: config.stripeOptions,
 
   firstName: reads('newSubscription.billingInfo.firstName'),
@@ -22,10 +25,22 @@ export default Component.extend({
   email: reads('newSubscription.billingInfo.billingEmail'),
   address: reads('newSubscription.billingInfo.address'),
   city: reads('newSubscription.billingInfo.city'),
-  coupon: reads('newSubscription.coupon'),
   country: reads('newSubscription.billingInfo.country'),
   isLoading: or('createSubscription.isRunning', 'accounts.fetchSubscriptions.isRunning'),
   selectedPlan: reads('newSubscription.plan'),
+
+  coupon: reads('newSubscription.validateCoupon.last.value'),
+  couponError: reads('newSubscription.validateCoupon.last.error'),
+  totalPrice: reads('newSubscription.totalPrice'),
+  isValidCoupon: reads('coupon.valid'),
+  couponHasError: computed('couponError', {
+    get() {
+      return !!this.couponError;
+    },
+    set(key, value) {
+      return value;
+    }
+  }),
 
   createSubscription: task(function* () {
     this.metrics.trackEvent({
@@ -33,25 +48,36 @@ export default Component.extend({
       category: 'Subscription',
     });
     const { stripeElement, account, newSubscription, selectedPlan } = this;
-    const {
-      token: { id, card },
-      error
-    } = yield this.stripe.createStripeToken.perform(stripeElement);
     try {
+      const {
+        token: { id, card },
+        error
+      } = yield this.stripe.createStripeToken.perform(stripeElement);
       if (!error) {
         const organizationId = account.type === 'organization' ? +(account.id) : null;
         newSubscription.creditCardInfo.setProperties({
           token: id,
           lastDigits: card.last4
         });
-        newSubscription.setProperties({ organizationId, plan: selectedPlan });
+        newSubscription.setProperties({
+          organizationId,
+          plan: selectedPlan,
+          coupon: this.isValidCoupon ? this.couponId : null
+        });
         const { clientSecret } = yield newSubscription.save();
         this.metrics.trackEvent({ button: 'pay-button' });
         yield this.stripe.handleStripePayment.perform(clientSecret);
+        this.storage.clearBillingData();
       }
     } catch (error) {
       this.handleError();
     }
+  }).drop(),
+
+  validateCoupon: task(function* () {
+    try {
+      yield this.newSubscription.validateCoupon.perform(this.couponId);
+    } catch {}
   }).drop(),
 
   handleError() {
@@ -68,5 +94,9 @@ export default Component.extend({
     complete(stripeElement) {
       this.set('stripeElement', stripeElement);
     },
+
+    handleCouponFocus() {
+      this.set('couponHasError', false);
+    }
   }
 });

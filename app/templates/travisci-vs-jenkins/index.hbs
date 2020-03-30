@@ -1,0 +1,345 @@
+<TravisLayout @layoutName="layouts/striped" class="tailwind-overrides flush-footer">
+
+  {{!-- Header section --}}
+  <UiKit::Box
+    @tag='section'
+    @margin={{hash top=3 bottom=16 x='auto'}}
+    @maxWidth='6xl'
+    @padding={{hash x=4}}
+    data-test-tvj-page-header-section="true"
+  >
+
+    <UiKit::Box  @margin={{hash bottom=5}} @textAlign='center'>
+      <UiKit::Text @tag='h1' @variant='h1' data-test-tvj-page-header-title="true">
+        Choosing Travis CI vs Jenkins
+      </UiKit::Text>
+    </UiKit::Box>
+
+    <UiKit::Grid @gap={{4}} as |grid|>
+      <grid.item @sm='2/3'>
+        <UiKit::Box
+          @margin={{hash bottom=10}}
+          @maxWidth='2xl'
+          @padding={{hash y=4}}
+        >
+          <UiKit::Text @margin={{hash bottom=3}}>
+            Travis CI Enterprise is the continuous integration and delivery platform
+            your team knows and loves, on your infrastructure.
+          </UiKit::Text>
+          <UiKit::Text @margin={{hash bottom=10}}>
+            Integrate with Github Enterprise or Github.com to bring flexibility to your CI/CD process.
+            Get control over your security and scale out your build infrastructure as needed.
+          </UiKit::Text>
+          <UiKit::Box @textAlign={{hash base='center' sm='left'}}>
+            <UiKit::Button
+              @onClick={{action this.toggleContactScroll}}
+              data-test-tvj-page-header-button="true"
+            >
+              Contact the Enterprise Team
+            </UiKit::Button>
+          </UiKit::Box>
+        </UiKit::Box>
+      </grid.item>
+      <grid.item @sm='1/3'>
+        <UiKit::Box
+          @margin={{hash x='auto'}}
+          @maxWidth={{hash base='2xs' sm='xs'}}
+          @padding={{hash sm=(hash y=4)}}
+          data-test-tvj-page-header-image="true"
+        >
+          <SvgImage @name='travis-enterprise' @width='100%'/>
+        </UiKit::Box>
+      </grid.item>
+    </UiKit::Grid>
+  </UiKit::Box>
+
+  {{!-- Compare section --}}
+  <UiKit::Box
+    @tag='section'
+    @margin={{hash bottom=16 x='auto'}}
+    @maxWidth='6xl'
+    @padding={{hash x=4}}
+    data-test-tvj-page-compare-section="true"
+  >
+    <UiKit::Box  @margin={{hash bottom=10}} @textAlign='center'>
+      <UiKit::Text @tag='h2' @variant='h2' @color='blue' data-test-tvj-page-compare-title="true">
+        Why choose Travis CI over Jenkins?
+      </UiKit::Text>
+    </UiKit::Box>
+
+    <UiKit::Grid @sm={{2}} @gap={{12}} as |grid|>
+      <grid.item @margin={{hash bottom=10}} data-test-tvj-page-compare-item="true">
+        <UiKit::Text @color='grey' @size='sm' @weight='bold'>01</UiKit::Text>
+        <UiKit::Text
+          @borderWidth={{hash bottom='px'}}
+          @color='green'
+          @display='inline-block'
+          @size='2xl'
+          @weight='bold'
+        >Modern user experience</UiKit::Text>
+        <UiKit::Text>
+          With our modern UI and API, your team will get a great
+          experience whether they use Travis CI Enterprise with
+          their web browser or our command line client.
+        </UiKit::Text>
+      </grid.item>
+
+      <grid.item @margin={{hash bottom=10}} data-test-tvj-page-compare-item="true">
+        <UiKit::Text @color='grey' @size='sm' @weight='bold'>02</UiKit::Text>
+        <UiKit::Text
+          @borderWidth={{hash bottom='px'}}
+          @color='green'
+          @display='inline-block'
+          @size='2xl'
+          @weight='bold'
+        >Familiarity</UiKit::Text>
+        <UiKit::Text>
+          Developers who are experienced with tools such as
+          GitHub will have used Travis CI for their open source
+          work, making it easier for them to get started and testing
+          your team's repositories as well.
+        </UiKit::Text>
+      </grid.item>
+
+      <grid.item @margin={{hash bottom=10}} data-test-tvj-page-compare-item="true">
+        <UiKit::Text @color='grey' @size='sm' @weight='bold'>03</UiKit::Text>
+        <UiKit::Text
+          @borderWidth={{hash bottom='px'}}
+          @color='green'
+          @display='inline-block'
+          @size='2xl'
+          @weight='bold'
+        >No maintenance bottleneck</UiKit::Text>
+        <UiKit::Text>
+          Maintaining the builds of your repositories should be
+          everyone’s job. Instead of relying on that one build person in
+          the team, Travis CI makes infrastructure and configuration a
+          team responsibility.
+        </UiKit::Text>
+      </grid.item>
+
+      <grid.item @margin={{hash bottom=10}} data-test-tvj-page-compare-item="true">
+        <UiKit::Text @color='grey' @size='sm' @weight='bold'>04</UiKit::Text>
+        <UiKit::Text
+          @borderWidth={{hash bottom='px'}}
+          @color='green'
+          @display='inline-block'
+          @size='2xl'
+          @weight='bold'
+        >Easy to manage pipelines</UiKit::Text>
+        <UiKit::Text>
+          Your time is valuable. Therefore, setting up new pipelines
+          is quick and done without the involvement of any other
+          team. You can also make changes and improvements as
+          your project evolves.
+        </UiKit::Text>
+      </grid.item>
+
+      <grid.item @margin={{hash bottom=10}} data-test-tvj-page-compare-item="true">
+        <UiKit::Text @color='grey' @size='sm' @weight='bold'>05</UiKit::Text>
+        <UiKit::Text
+          @borderWidth={{hash bottom='px'}}
+          @color='green'
+          @display='inline-block'
+          @size='2xl'
+          @weight='bold'
+        >Consistent environments</UiKit::Text>
+        <UiKit::Text>
+          Instead of using the build agent approach, where a
+          machine or host is reused between builds, Travis CI
+          encourages a 'clean room' approach, where each build is
+          run in a new, clean consistent environment.
+        </UiKit::Text>
+      </grid.item>
+
+      <grid.item @margin={{hash bottom=10}} data-test-tvj-page-compare-item="true">
+        <UiKit::Text @color='grey' @size='sm' @weight='bold'>06</UiKit::Text>
+        <UiKit::Text
+          @borderWidth={{hash bottom='px'}}
+          @color='green'
+          @display='inline-block'
+          @size='2xl'
+          @weight='bold'
+        >Easy to maintain upgrade</UiKit::Text>
+        <UiKit::Text>
+          Upgrading to the newest release takes only five minutes.
+          Travis CI Enterprise allows your ops/infrastructure team
+          to monitor the health of the machines, and easily
+          provides diagnostic information to our great support
+          team if a problem arises.
+        </UiKit::Text>
+      </grid.item>
+
+      <grid.item @margin={{hash bottom=10}} data-test-tvj-page-compare-item="true">
+        <UiKit::Text @color='grey' @size='sm' @weight='bold'>07</UiKit::Text>
+        <UiKit::Text
+          @borderWidth={{hash bottom='px'}}
+          @color='green'
+          @display='inline-block'
+          @size='2xl'
+          @weight='bold'
+        >Secret management</UiKit::Text>
+        <UiKit::Text>
+          Manage secrets easily together with your build
+          configuration or through your browser for each
+          repository. Travis CI makes sure they are not exposed to
+          users and contributors.
+        </UiKit::Text>
+      </grid.item>
+
+    </UiKit::Grid>
+  </UiKit::Box>
+
+  {{!-- Trust section --}}
+  <UiKit::Box
+    @tag='section'
+    @borderWidth={{hash top='xs'}}
+    @margin={{hash bottom=24}}
+    @padding={{hash top=24}}
+    data-test-tvj-page-trust-section="true"
+  >
+    <UiKit::Box
+      @margin={{hash x='auto'}}
+      @maxWidth='6xl'
+      @padding={{hash x=4}}
+    >
+      <UiKit::Box  @margin={{hash bottom=10}} @textAlign='center'>
+        <UiKit::Text @size='3xl' @weight='bold' data-test-tvj-page-trust-title="true">
+          Travis CI is trusted by great companies
+        </UiKit::Text>
+      </UiKit::Box>
+
+      <UiKit::Grid @align='center' @justify='center' @base={{3}} @md={{5}} as |grid|>
+        <grid.item @padding={{hash x=8 bottom=6}} data-test-tvj-page-trust-item="true">
+          <SvgImage @name="customer-logos-zendesk" />
+        </grid.item>
+        <grid.item @padding={{hash x=8 bottom=6}} data-test-tvj-page-trust-item="true">
+          <SvgImage @name="customer-logos-engineyard" />
+        </grid.item>
+        <grid.item @padding={{hash x=8 bottom=6}} data-test-tvj-page-trust-item="true">
+          <SvgImage @name="customer-logos-heroku" />
+        </grid.item>
+        <grid.item @padding={{hash x=8 bottom=6}} data-test-tvj-page-trust-item="true">
+          <SvgImage @name="customer-logos-bittorrent" />
+        </grid.item>
+        <grid.item @padding={{hash x=8 bottom=6}} data-test-tvj-page-trust-item="true">
+          <SvgImage @name="customer-logos-moz" />
+        </grid.item>
+      </UiKit::Grid>
+    </UiKit::Box>
+  </UiKit::Box>
+
+  {{!-- Contact Section --}}
+  {{#if this.scrollToContact}}<ScrollHere />{{/if}}
+
+  <UiKit::Box
+    @tag='section'
+    @margin={{hash bottom=40 x='auto'}}
+    @maxWidth='6xl'
+    @padding={{hash x=4}}
+    data-test-tvj-page-contact-section="true"
+  >
+    <UiKit::Grid  @sm={{2}} @align='center' @gap={{4}} @justify='around' as |grid|>
+      <grid.item>
+        <UiKit::Box
+          @maxWidth={{hash base='full' sm='md'}}
+          @padding={{hash y=4}}
+          @textAlign={{hash base='center' sm='left'}}
+        >
+          <UiKit::Text
+            @tag='h2'
+            @leading='xs'
+            @margin={{hash bottom=3}}
+            @size='5xl'
+            @weight='bold'
+            data-test-tvj-page-contact-title="true"
+          >
+            Want to learn more about Travis CI Enterprise?
+          </UiKit::Text>
+          <UiKit::Text @margin={{hash bottom=4}}>
+            Find out how Travis CI Enterprise can benefit your team.
+          </UiKit::Text>
+          <UiKit::Text>
+            Contact our sales team to get a free trial license.
+          </UiKit::Text>
+        </UiKit::Box>
+      </grid.item>
+      <grid.item>
+        <SalesContactForm />
+      </grid.item>
+    </UiKit::Grid>
+  </UiKit::Box>
+
+  {{!-- Testimonial Section --}}
+  <UiKit::Box
+    @tag='section'
+    @position={{hash type='relative'}}
+    data-test-tvj-page-testimonial-section="true"
+  >
+    <UiKit::Box
+      @layer='0'
+      @margin={{hash top=-16 left=8}}
+      @position={{hash type='absolute' top=0 left=0}}
+      @width={{56}}
+    >
+      <SvgImage @name="blue-waves" />
+    </UiKit::Box>
+
+    <UiKit::Box
+      @position={{hash type='absolute' top=0 right=0}}
+      @margin={{hash top=-16 right=8}}
+      @height={{64}}
+    >
+      <SvgImage @name="grey-blob" @height={{224}} />
+    </UiKit::Box>
+
+    <UiKit::Box
+      @color='grey-lightest'
+      @layer='10'
+      @padding={{hash y=10}}
+      @position={{hash type='relative'}}
+    >
+      <UiKit::Box
+        @margin={{hash x='auto'}}
+        @maxWidth='6xl'
+        @padding={{hash x=4}}
+      >
+        <UiKit::Box @margin={{hash bottom=5}} @textAlign='center'>
+          <UiKit::Text @color='blue' @size='5xl' @weight='bold' data-test-tvj-page-testimonial-title="true">
+            Learn how enterprises are adopting a microservice
+            architecture with Travis CI
+          </UiKit::Text>
+        </UiKit::Box>
+
+
+        <UiKit::Grid @base='auto' @wrap='no-wrap' as |grid|>
+          <grid.item @padding={{hash top=2 right=6}}>
+            <SvgImage @name='kubernetes' @width={{85}} />
+          </grid.item>
+          <grid.item>
+            <UiKit::Text @margin={{hash bottom=6}} @size='2xl' @weight='light' data-test-tvj-page-testimonial-quote="true">
+              &ldquo;It has been a game changer for us because our process to deploy was hours if not
+              days before this, we were only building and deploying maybe once a week. We got to
+              the point now that we're deploying continuously.&rdquo;
+            </UiKit::Text>
+            <UiKit::Text @color='green' @weight='bold' data-test-tvj-page-testimonial-name="true">
+              Michael McKay
+            </UiKit::Text>
+            <UiKit::Text @margin={{hash bottom=10}} data-test-tvj-page-testimonial-position="true">
+              DevOps lead, IBM Cloud Kubernetes Service Team
+            </UiKit::Text>
+
+            <UiKit::Link @href={{this.caseStudyUrl}} @variant={{null}} data-test-tvj-page-testimonial-link="true">
+              <UiKit::Button @color='blue' @invert={{true}}>
+                <UiKit::Grid @display='flex' @align='center'>
+                  Read the case study
+                  <UiKit::Text @color={{null}} @margin={{hash left=2}} @size='2xl' @weight='bold'>&rarr;</UiKit::Text>
+                </UiKit::Grid>
+              </UiKit::Button>
+            </UiKit::Link>
+          </grid.item>
+        </UiKit::Grid>
+      </UiKit::Box>
+    </UiKit::Box>
+  </UiKit::Box>
+</TravisLayout>

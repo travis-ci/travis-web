@@ -4,12 +4,14 @@ import { prettyDate } from 'travis/helpers/pretty-date';
 import { percySnapshot } from 'ember-percy';
 
 import requestsPage from 'travis/tests/pages/requests';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | repo | requests', function (hooks) {
   setupApplicationTest(hooks);
+  setupMirage(hooks);
 
   hooks.beforeEach(function () {
-    this.repo = server.create('repository', { slug: 'travis-ci/travis-web' });
+    this.repo = this.server.create('repository', { slug: 'travis-ci/travis-web' });
   });
 
   test('list requests', async function (assert) {
@@ -21,13 +23,13 @@ module('Acceptance | repo | requests', function (hooks) {
     });
     this.approvedRequest = approvedRequest;
 
-    let approvedCommit = server.create('commit', {
+    let approvedCommit = this.server.create('commit', {
       branch: 'acceptance-tests',
       message: 'A commit message',
       request: approvedRequest
     });
 
-    server.create('build', {
+    this.server.create('build', {
       repository: this.repo,
       state: 'passed',
       commit_id: approvedCommit.id,
@@ -53,13 +55,13 @@ module('Acceptance | repo | requests', function (hooks) {
       event_type: 'pull_request'
     });
 
-    let olderApprovedCommit = server.create('commit', {
+    let olderApprovedCommit = this.server.create('commit', {
       branch: 'acceptance-tests',
       message: 'An older commit message',
       request: olderApprovedRequest
     });
 
-    server.create('build', {
+    this.server.create('build', {
       repository: this.repo,
       state: 'passed',
       commit_id: olderApprovedCommit.id,

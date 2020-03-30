@@ -1,7 +1,7 @@
 <ul>
   <li data-test-current-tab-container id="tab_current" class={{this.classCurrent}}>
-    {{#if repo.slug}}
-      <LinkTo @route="repo" @model={{this.repo}} @current-when="repo.index">
+    {{#if this.repo.slug}}
+      <LinkTo @route="repo" @models={{array this.repo.provider this.repo.ownerName this.repo.vcsName}} @current-when="repo.index">
         Current
       </LinkTo>
     {{/if}}
@@ -41,7 +41,7 @@
     {{#if this.job.id}}
       {{#if this.repo.slug}}
         <LinkTo @route="job" @models={{array this.repo this.job}}>
-          Job #{{this.job.number}}
+          Job #{{this.job.jobNumber}}
         </LinkTo>
       {{/if}}
     {{/if}}

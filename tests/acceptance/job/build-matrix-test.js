@@ -3,26 +3,28 @@ import { module, test } from 'qunit';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import buildPage from 'travis/tests/pages/build';
 import { percySnapshot } from 'ember-percy';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | job/build matrix', function (hooks) {
   setupApplicationTest(hooks);
+  setupMirage(hooks);
 
   test('visiting build matrix', async function (assert) {
-    let repo =  server.create('repository', { slug: 'travis-ci/travis-web' });
-    let branch = server.create('branch', { name: 'acceptance-tests' });
+    let repo =  this.server.create('repository', { slug: 'travis-ci/travis-web' });
+    let branch = this.server.create('branch', { name: 'acceptance-tests' });
 
-    let  gitUser = server.create('git-user', { name: 'Mr T' });
-    let commit = server.create('commit', { author: gitUser, committer: gitUser, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
-    let build = server.create('build', { repository: repo, state: 'passed', commit_id: commit.id, commit, branch });
+    let  gitUser = this.server.create('git-user', { name: 'Mr T' });
+    let commit = this.server.create('commit', { author: gitUser, committer: gitUser, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
+    let build = this.server.create('build', { repository: repo, state: 'passed', commit_id: commit.id, commit, branch });
 
-    let firstJob = server.create('job', { number: '1234.1', repository: repo, state: 'passed', config: { env: 'JORTS', os: 'linux', language: 'node_js', node_js: 5 }, commit, build });
+    let firstJob = this.server.create('job', { number: '1234.1', repository: repo, state: 'passed', config: { env: 'JORTS', os: 'linux', language: 'node_js', node_js: 5 }, commit, build });
     commit.job = firstJob;
 
     firstJob.save();
     commit.save();
 
-    server.create('job', { number: '1234.2', repository: repo, state: 'passed', config: { env: 'JANTS', os: 'osx', language: 'ruby', rvm: 2.2 }, commit, build });
-    server.create('job', { allow_failure: true, number: '1234.999', repository: repo, state: 'failed', config: { language: 'ruby', os: 'jorts' }, commit, build });
+    this.server.create('job', { number: '1234.2', repository: repo, state: 'passed', config: { env: 'JANTS', os: 'osx', language: 'ruby', rvm: 2.2 }, commit, build });
+    this.server.create('job', { allow_failure: true, number: '1234.999', repository: repo, state: 'failed', config: { language: 'ruby', os: 'jorts' }, commit, build });
 
     await visit(`/travis-ci/travis-web/builds/${build.id}`);
 

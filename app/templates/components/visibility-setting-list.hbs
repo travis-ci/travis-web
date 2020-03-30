@@ -27,68 +27,62 @@
       Save
     </button>
   </div>
-  {{#if this.isShowingConfirmationModal}}
-    <ModalDialog
-      @targetAttachment="center"
-      @translucentOverlay={{true}}
-      @toggleConfirmationModal={{action "toggleConfirmationModal"}}
-      @onClickOverlay={{action "toggleConfirmationModal"}}
-      @containerClass="visibility-settings-modal"
-      @overlayPosition="sibling"
-      @animatable={{true}}
-    >
-      <div class="visibility-settings-modal__top">
-        <h3 class="visibility-settings-modal__header" data-test-visibility-settings-modal-title>
-          {{#if this.isChangeNegative}}
-            Restrict
-          {{else if this.isChangePositive}}
-            Increase
-          {{else}}
-            Update
-          {{/if}}
-          visibility of your private build insights
-        </h3>
-        <button
-          type="button"
-          title="Close modal"
-          class="pointer visibility-settings-modal__close-button"
-          autofocus={{this.focusOnModal}}
-          onclick={{action "toggleConfirmationModal"}}
-          data-test-visibility-settings-modal-close-button
-        >
-          <SvgImage @name="icon-failed" @class="icon" />
-        </button>
-      </div>
-      <div class="visibility-settings-modal__body">
-        <p data-test-visibility-settings-modal-description>
-          {{#if this.isChangeNeutral}}
-            Visibility update is in progress
-          {{else if this.selection.modalText}}
-            {{this.selection.modalText}}
-          {{else}}
-            This change will make your private build insights {{if this.isChangeNegative "only"}}
-            available to {{this.selectionTitle}}
-          {{/if}}
-        </p>
-      </div>
-      <div class="visibility-settings-modal__controls">
-        <button
-          data-test-visibility-settings-modal-cancel-button
-          role="button"
-          class="button button--red"
-          onclick={{action "toggleConfirmationModal"}}
-        >
-          Cancel
-        </button>
-        <button
-          data-test-visibility-settings-modal-confirm-button
-          role="button"
-          class="button button--blue"
-          onclick={{action "confirm"}}
-        >
-          Confirm
-        </button>
-      </div>
-    </ModalDialog>
-  {{/if}}
+  <Modal
+    @isVisible={{this.isShowingConfirmationModal}}
+    class="visibility-settings-modal"
+    data-test-visibility-settings-modal="true"
+  >
+    <div class="visibility-settings-modal__top">
+      <h3 class="visibility-settings-modal__header" data-test-visibility-settings-modal-title>
+        {{#if this.isChangeNegative}}
+          Restrict
+        {{else if this.isChangePositive}}
+          Increase
+        {{else}}
+          Update
+        {{/if}}
+        visibility of your private build insights
+      </h3>
+      <button
+        type="button"
+        title="Close modal"
+        class="pointer visibility-settings-modal__close-button"
+        autofocus={{this.focusOnModal}}
+        onclick={{action "toggleConfirmationModal"}}
+        data-test-visibility-settings-modal-close-button
+      >
+        <SvgImage @name="icon-failed" @class="icon" />
+      </button>
+    </div>
+    <div class="visibility-settings-modal__body">
+      <p data-test-visibility-settings-modal-description>
+        {{#if this.isChangeNeutral}}
+          Visibility update is in progress
+        {{else if this.selection.modalText}}
+          {{this.selection.modalText}}
+        {{else}}
+          This change will make your private build insights {{if this.isChangeNegative "only"}}
+          available to {{this.selectionTitle}}
+        {{/if}}
+      </p>
+    </div>
+    <div class="visibility-settings-modal__controls">
+      <button
+        data-test-visibility-settings-modal-cancel-button
+        role="button"
+        class="button button--red"
+        onclick={{action "toggleConfirmationModal"}}
+      >
+        Cancel
+      </button>
+      <button
+        data-test-visibility-settings-modal-confirm-button
+        role="button"
+        class="button button--blue"
+        onclick={{action "confirm"}}
+      >
+        Confirm
+      </button>
+    </div>
+  </Modal>
 {{/if}}

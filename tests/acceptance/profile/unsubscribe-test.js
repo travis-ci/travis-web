@@ -4,23 +4,26 @@ import { setupApplicationTest } from 'travis/tests/helpers/setup-application-tes
 import { percySnapshot } from 'ember-percy';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import unsubscribePage from 'travis/tests/pages/unsubscribe';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 const { emailUnsubscribe } = unsubscribePage;
 
 module('Acceptance | profile/unsubscribe', function (hooks) {
   setupApplicationTest(hooks);
+  setupMirage(hooks);
 
   hooks.beforeEach(async function () {
-    this.user = server.create('user');
+    this.user = this.server.create('user');
     await signInUser(this.user);
   });
 
   module('for invalid repository', function (hooks) {
     hooks.beforeEach(async function () {
-      this.repo = server.create('repository', {
+      this.repo = this.server.create('repository', {
         owner: {
           login: 'some-user'
-        }
+        },
+        owner_name: 'some-user'
       });
       await unsubscribePage.visit({ repository: '2' });
     });
@@ -42,11 +45,12 @@ module('Acceptance | profile/unsubscribe', function (hooks) {
   module('for valid repository', function (hooks) {
     module('when subscribed', function (hooks) {
       hooks.beforeEach(async function () {
-        this.repo = server.create('repository', {
+        this.repo = this.server.create('repository', {
           email_subscribed: true,
           owner: {
             login: this.user.login
-          }
+          },
+          owner_name: this.user.login
         });
         await unsubscribePage.visit({ repository: this.repo.id });
       });
@@ -84,11 +88,12 @@ module('Acceptance | profile/unsubscribe', function (hooks) {
 
     module('when unsubscribed', function (hooks) {
       hooks.beforeEach(async function () {
-        this.repo = server.create('repository', {
+        this.repo = this.server.create('repository', {
           email_subscribed: false,
           owner: {
             login: this.user.login
-          }
+          },
+          owner_name: this.user.login
         });
         await unsubscribePage.visit({ repository: this.repo.id });
       });

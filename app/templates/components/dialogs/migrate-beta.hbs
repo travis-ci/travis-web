@@ -1,76 +1,66 @@
-{{#if @isOpen}}
-  <ModalDialog
-    @translucentOverlay={{true}}
-    @overlayPosition="sibling"
-    @clickOutsideToClose={{false}}
-    @animatable={{true}}
-  >
-    <div class="migrate-beta-dialog" data-test-migrate-dialog="true">
-      <div class="migrate-beta-dialog__image">
-        <SvgImage @name="migrate-beta" @width="311px" />
-      </div>
-      <h3 class="h3--teal align-center">
-        Register for the beta
-      </h3>
-      <p>
-        Migrate all of your public repositories to travis-ci.com
-      </p>
-      <p>
-        Your account will be registered automatically once you apply. Also you can add any organizations.
-      </p>
-      <p>
-        <TravisForm as |form|>
-          <form.field
-            @label="Add Organizations"
-            @value={{this.selectedOptions}}
-            @multiple={{true}}
-            @onChange={{action "selectOptions"}}
-            data-test-migrate-accounts-select="true"
-            as |field|
-          >
-            <field.select
-              @placeholder="Search organizations"
-              @options={{this.selectableOptions}}
-              @searchField="title"
-              @onkeydown={{action "preventErase"}}
-              as |option|
-            >
-              <div
-                class="migrate-beta-dialog__option"
-                data-state={{option.state}}
-                data-test-account-option="true"
-              >
-                {{option.title}}
-              </div>
-            </field.select>
-          </form.field>
-        </TravisForm>
-      </p>
-      <p class="subtle">
-        We’ll email you and update your organization page once you can start migrating.
-      </p>
-      <div class="modal-controls">
-        <button
-          class="button--blue {{if this.register.isRunning 'disabled'}}"
-          disabled={{this.register.isRunning}}
-          onclick={{perform this.register}}
-          data-test-migrate-submit="true"
+<Modal
+  @isVisible={{this.isOpen}}
+  @closeOnClickOverlay={{false}}
+  @closeButton={{true}}
+  @onClose={{fn @onClose}}
+>
+  <div class="migrate-beta-dialog" data-test-migrate-dialog="true">
+    <div class="migrate-beta-dialog__image">
+      <SvgImage @name="migrate-beta" @width="311px" />
+    </div>
+    <h3 class="h3--teal align-center">
+      Register for the beta
+    </h3>
+    <p>
+      Migrate all of your public repositories to travis-ci.com
+    </p>
+    <p>
+      Your account will be registered automatically once you apply. Also you can add any organizations.
+    </p>
+    <p>
+      <TravisForm as |form|>
+        <form.field
+          @label="Add Organizations"
+          @value={{this.selectedOptions}}
+          @multiple={{true}}
+          @onChange={{action "selectOptions"}}
+          data-test-migrate-accounts-select="true"
+          as |field|
         >
-          {{#if this.register.isRunning}}
-            <LoadingIndicator @white={{true}} @inline={{true}} /> Joining...
-          {{else}}
-            Join the waitlist
-          {{/if}}
-        </button>
-      </div>
+          <field.select
+            @placeholder="Search organizations"
+            @options={{this.selectableOptions}}
+            @searchField="title"
+            @onkeydown={{action "preventErase"}}
+            as |option|
+          >
+            <div
+              class="migrate-beta-dialog__option"
+              data-state={{option.state}}
+              data-test-account-option="true"
+            >
+              {{option.title}}
+            </div>
+          </field.select>
+        </form.field>
+      </TravisForm>
+    </p>
+    <p class="subtle">
+      We’ll email you and update your organization page once you can start migrating.
+    </p>
+    <div class="modal-controls">
       <button
-        type="button"
-        title="Close modal"
-        class="modal-close pointer"
-        {{on 'click' (fn @onClose)}}
+        class="button--blue {{if this.register.isRunning 'disabled'}}"
+        disabled={{this.register.isRunning}}
+        onclick={{perform this.register}}
+        data-test-migrate-submit="true"
       >
-        <SvgImage @name="icon-failed" @class="icon" />
+        {{#if this.register.isRunning}}
+          <LoadingIndicator @white={{true}} @inline={{true}} /> Joining...
+        {{else}}
+          Join the beta
+        {{/if}}
       </button>
     </div>
-  </ModalDialog>
-{{/if}}
+  </div>
+</Modal>

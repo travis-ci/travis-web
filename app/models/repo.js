@@ -6,6 +6,8 @@ import { reads, equal, or } from '@ember/object/computed';
 import { Promise as EmberPromise, } from 'rsvp';
 import { task } from 'ember-concurrency';
 import ExpandableRecordArray from 'travis/utils/expandable-record-array';
+import { defaultVcsConfig } from 'travis/utils/vcs';
+import { isEmpty } from '@ember/utils';
 
 export const MIGRATION_STATUS = {
   QUEUED: 'queued',
@@ -31,8 +33,11 @@ const Repo = VcsEntity.extend({
   githubLanguage: attr(),
   active: attr(),
   owner: attr(),
+  ownerName: attr('string'), // owner_name of repository normalized by provider
   name: attr('string'),
+  vcsName: attr('string'), // name of repository normalized by provider
   starred: attr('boolean'),
+  shared: attr('boolean'),
   active_on_org: attr('boolean'),
   emailSubscribed: attr('boolean'),
   migrationStatus: attr('string'),
@@ -77,6 +82,11 @@ const Repo = VcsEntity.extend({
     }
   }),
 
+  // slug built from normalized (by provider) owner and repo name
+  vcsSlug: computed('ownerName', 'vcsName', function () {
+    return `${this.ownerName}/${this.vcsName}`;
+  }),
+
   formattedSlug: computed('owner.login', 'name', function () {
     let login = this.get('owner.login');
     let name = this.name;
@@ -94,6 +104,20 @@ const Repo = VcsEntity.extend({
       repository_id: id
     }, (v) => v.get('repo.id') === id);
   }),
+
+  settings: computed('id', 'fetchSettings.lastSuccessful.value', function () {
+    const { value } = this.fetchSettings.lastSuccessful || {};
+    if (!value) this.fetchSettings.perform();
+    return value;
+  }),
+
+  fetchSettings: task(function* () {
+    if (!this.auth.signedIn) return {};
+    try {
+      const response = yield this.api.get(`/repo/${this.id}/settings`);
+      return this._convertV3SettingsToV2(response.settings);
+    } catch (error) {}
+  }).drop(),
 
   _buildRepoMatches(build, id) {
     // TODO: I don't understand why we need to compare string id's here
@@ -118,18 +142,6 @@ const Repo = VcsEntity.extend({
     }, (b) => {
       let eventTypes = ['push', 'api', 'cron'];
       return this._buildRepoMatches(b, id) && eventTypes.includes(b.get('eventType'));
-    });
-    return this._buildObservableArray(builds);
-  }),
-
-  pullRequests: computed('id', function () {
-    let id = this.id;
-    const builds = this.store.filter('build', {
-      event_type: 'pull_request',
-      repository_id: id,
-    }, (b) => {
-      const isPullRequest = b.get('eventType') === 'pull_request';
-      return this._buildRepoMatches(b, id) && isPullRequest;
     });
     return this._buildObservableArray(builds);
   }),
@@ -162,12 +174,6 @@ const Repo = VcsEntity.extend({
     if (currentBuild) {
       return currentBuild.updateTimes();
     }
-  },
-
-  fetchSettings() {
-    const url = `/repo/${this.id}/settings`;
-    return this.api.get(url).
-      then(data => this._convertV3SettingsToV2(data['settings']));
   },
 
   startMigration() {
@@ -254,39 +260,12 @@ Repo.reopenClass({
     });
   },
 
-  fetchBySlug(store, slug) {
-    let adapter, modelClass, promise, repos;
-    repos = store.peekAll('repo').filterBy('slug', slug);
-    if (repos.get('length') > 0) {
-      return repos.get('firstObject');
-    } else {
-      promise = null;
-      adapter = store.adapterFor('repo');
-      modelClass = store.modelFor('repo');
-      promise = adapter.findRecord(store, modelClass, slug).then((payload) => {
-        let i, len, record, ref, repo, result, serializer;
-        serializer = store.serializerFor('repo');
-        modelClass = store.modelFor('repo');
-        result = serializer.normalizeResponse(store, modelClass, payload, null, 'findRecord');
-        repo = store.push({
-          data: result.data
-        });
-        ref = result.included;
-        for (i = 0, len = ref.length; i < len; i++) {
-          record = ref[i];
-          store.push({
-            data: record
-          });
-        }
-        return repo;
-      });
-      return promise['catch'](() => {
-        let error;
-        error = new Error('repo not found');
-        error.slug = slug;
-        throw error;
-      });
+  fetchBySlug(store, slug, provider = defaultVcsConfig.urlPrefix) {
+    const loadedRepos = store.peekAll('repo').filterBy('provider', provider).filterBy('slug', slug);
+    if (!isEmpty(loadedRepos)) {
+      return EmberPromise.resolve(loadedRepos.firstObject);
     }
+    return store.queryRecord('repo', { slug, provider });
   },
 });
 

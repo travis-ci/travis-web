@@ -52,10 +52,13 @@ module('Integration | Component | dashboard row', function (hooks) {
       },
       id: 1234,
       name: 'travis-web',
+      vcs_name: 'travis-web',
       owner: {
         login: 'travis-ci'
       },
-      slug: 'travis-ci/travis-web'
+      owner_name: 'travis-ci',
+      slug: 'travis-ci/travis-web',
+      shared: true
     });
 
     this.set('repo', repo);
@@ -66,6 +69,7 @@ module('Integration | Component | dashboard row', function (hooks) {
 
     assert.dom('.dash-header .row-content a').hasText('travis-web');
     assert.dom('.dash-header .row-content a').hasAttribute('title', 'travis-web');
+    assert.dom('.dash-header .row-content a svg').hasClass('shared', 'should display correct repo share icon');
 
     assert.dom('.dash-default').hasClass('passed', 'Indicates right state of default branch last build');
     assert.dom('.dash-last').hasClass('failed', 'Indicates right state of current build');

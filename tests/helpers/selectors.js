@@ -30,7 +30,7 @@ export const INSIGHTS_SETTINGS_LIST_ITEM = '[data-test-visibility-settings-list-
 export const INSIGHTS_SETTINGS_LIST_ITEM_DESCRIPTION = '[data-test-visibility-settings-list-item-description]';
 export const INSIGHTS_SETTINGS_LIST_ITEM_SELECTED = '[data-test-visibility-settings-list-item-selected]';
 export const INSIGHTS_SETTINGS_SUBMIT = '[data-test-visibility-settings-submit]';
-export const INSIGHTS_SETTINGS_MODAL = '.visibility-settings-modal';
+export const INSIGHTS_SETTINGS_MODAL = '[data-test-visibility-settings-modal]';
 export const INSIGHTS_SETTINGS_MODAL_TITLE = '[data-test-visibility-settings-modal-title]';
 export const INSIGHTS_SETTINGS_MODAL_DESCRIPTION = '[data-test-visibility-settings-modal-description]';
 export const INSIGHTS_SETTINGS_MODAL_CLOSE = '[data-test-visibility-settings-modal-close-button]';
@@ -92,20 +92,15 @@ export const PLANS_PAGE_MESSAGE_SECTION = '[data-test-plans-page-message-section
 export const PLANS_PAGE_MESSAGE_BUTTON = '[data-test-plans-page-message-button]';
 
 // travis/plans/thank-you
-export const PLANS_THANKS_PAGE_CONTAINER = '[data-test-plans-contact-thanks-container]';
-export const PLANS_THANKS_PAGE_TITLE = '[data-test-plans-contact-thanks-title]';
-export const PLANS_THANKS_PAGE_IMAGE = '[data-test-plans-contact-thanks-image]';
-export const PLANS_THANKS_PAGE_BODY = '[data-test-plans-contact-thanks-body]';
-export const PLANS_THANKS_PAGE_BUTTON = '[data-test-plans-contact-thanks-button]';
+export const PLANS_THANKS_PAGE_CONTAINER = '[data-test-plans-contact-thanks]';
+export const PLANS_THANKS_PAGE_TITLE = '[data-test-contact-thanks-title]';
+export const PLANS_THANKS_PAGE_IMAGE = '[data-test-contact-thanks-image]';
+export const PLANS_THANKS_PAGE_BODY = '[data-test-contact-thanks-body]';
+export const PLANS_THANKS_PAGE_BUTTON = '[data-test-contact-thanks-button]';
 
 // travis/components/sales-contact-form
 export const SALES_CONTACT_FORM_CONTAINER = '[data-test-sales-contact-form-container]';
-export const SALES_CONTACT_FORM_NAME = '[data-test-sales-contact-form-name]';
-export const SALES_CONTACT_FORM_EMAIL = '[data-test-sales-contact-form-email]';
-export const SALES_CONTACT_FORM_SIZE = '[data-test-sales-contact-form-size]';
-export const SALES_CONTACT_FORM_PHONE = '[data-test-sales-contact-form-phone]';
-export const SALES_CONTACT_FORM_MESSAGE = '[data-test-sales-contact-form-message]';
-export const SALES_CONTACT_FORM_SUBMIT = '[data-test-sales-contact-form-submit]';
+export const SALES_CONTACT_IFRAME = '[data-test-sales-contact-iframe]';
 
 // ember-power-select
 export const EPS_TRIGGER = '.ember-power-select-trigger';

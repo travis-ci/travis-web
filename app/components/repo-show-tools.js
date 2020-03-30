@@ -15,6 +15,14 @@ export default Component.extend({
 
   currentUser: alias('auth.currentUser'),
 
+  close() {
+    this.set('isOpen', false);
+  },
+
+  toggle() {
+    this.set('isOpen', !this.isOpen);
+  },
+
   displaySettingsLink: computed('permissions.all', 'repo', function () {
     let repo = this.repo;
     return this.permissions.hasPushPermission(repo);

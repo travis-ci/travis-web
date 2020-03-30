@@ -6,9 +6,11 @@ import StripeMock from 'travis/tests/helpers/stripe-mock';
 import { stubConfig } from 'travis/tests/helpers/stub-service';
 import { getContext } from '@ember/test-helpers';
 import profilePage from 'travis/tests/pages/profile';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Integration | Component | billing-payment', function (hooks) {
   setupRenderingTest(hooks);
+  setupMirage(hooks);
 
   hooks.beforeEach(function () {
 
@@ -16,7 +18,7 @@ module('Integration | Component | billing-payment', function (hooks) {
       id: 1,
       name: 'A',
       builds: 5,
-      amount: 20000,
+      price: 20000,
       annual: false
     };
 
@@ -41,7 +43,8 @@ module('Integration | Component | billing-payment', function (hooks) {
         bllingZip: '',
         country: '',
         vatId: ''
-      }
+      },
+      plan: selectedPlan
     };
 
     this['actions'] = {
@@ -69,7 +72,7 @@ module('Integration | Component | billing-payment', function (hooks) {
 
   test('billing-payment renders correctly', async function (assert) {
 
-    await render(hbs`<Billing::Payment 
+    await render(hbs`<Billing::Payment
       @paymentInfo={{paymentInfo}}
       @newSubscription={{newSubscription}}
       @cancel={{action 'cancel'}}
@@ -77,7 +80,7 @@ module('Integration | Component | billing-payment', function (hooks) {
       @back={{action 'back'}}
       @selectedPlan={{selectedPlan}}/>`);
 
-    assert.dom('h3').hasText('Pay with card');
+    assert.dom('h3').hasText('Payment');
     assert.dom(profilePage.billing.billingPaymentForm.completePayment.scope).isVisible();
   });
 });

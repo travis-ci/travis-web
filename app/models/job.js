@@ -13,13 +13,13 @@ import promiseObject from 'travis/utils/promise-object';
 
 export default Model.extend(DurationCalculations, DurationAttributes, {
   api: service(),
-  ajax: service(),
   jobConfigFetcher: service(),
   features: service(),
   logId: attr(),
   queue: attr(),
   state: attr(),
   number: attr(),
+  jobIdNumber: attr(),
   allowFailure: attr('boolean'),
   tags: attr(),
   repositoryPrivate: attr(),
@@ -40,6 +40,10 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
   isTag: alias('build.isTag'),
   tag: alias('build.tag'),
   eventType: alias('build.eventType'),
+
+  jobNumber: computed('number', 'jobIdNumber', function () {
+    return this.jobIdNumber ? this.jobIdNumber : this.number;
+  }),
 
   // TODO: DO NOT SET OTHER PROPERTIES WITHIN A COMPUTED PROPERTY!
   log: computed(function () {
@@ -114,7 +118,7 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
 
   removeLog() {
     const url = `/job/${this.id}/log`;
-    return this.ajax.deleteV3(url).then(() => this.reloadLog());
+    return this.api.delete(url).then(() => this.reloadLog());
   },
 
   reloadLog() {
@@ -186,5 +190,10 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
     let slug = this.get('repo.slug');
     let number = this.number;
     return `${slug} #${number}`;
-  })
+  }),
+
+  didLoad() {
+    if (this.number)
+      this.set('jobIdNumber', this.number);
+  }
 });

@@ -11,6 +11,8 @@ export const vcsLinks = {
   issueUrl: (vcsType, { owner, repo, issue }) => vcsUrl('issue', vcsType, { owner, repo, issue }),
 
   profileUrl: (vcsType, { owner }) => vcsUrl('profile', vcsType, { owner }),
+
+  accessSettingsUrl: (vcsType, { owner }) => vcsUrl('accessSettings', vcsType, { owner }),
 };
 
 export default Service.extend({
@@ -33,8 +35,8 @@ export default Service.extend({
   },
 
   billingUrl(accountType, login) {
-    const id = accountType === 'user' ? 'user' : login;
-    return `${config.billingEndpoint}/subscriptions/${id}`;
+    const id = accountType === 'user' ? 'account' : `organizations/${login}`;
+    return `${config.billingEndpoint}/${id}/subscription`;
   },
 
   openSourceMigrationDocs: 'https://docs.travis-ci.com/user/open-source-on-travis-ci-com/#existing-open-source-repositories-on-travis-ciorg',

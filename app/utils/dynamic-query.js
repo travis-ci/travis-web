@@ -54,6 +54,7 @@ export default function dynamicQuery(...args) {
 
   assert('Task must be provided', typeof taskFn === 'function');
   assert('Task must be a GeneratorFunction', taskFn.constructor.name === 'GeneratorFunction');
+  assert('Limit must be provided if using Limit Pagination', !initialState.limitPagination || initialState.limit);
 
   args.push(function () {
     const taskFnBound = bindGenerator(taskFn, this);
@@ -77,6 +78,8 @@ const DynamicQuery = ArrayProxy.extend(Evented, {
 
   appendResults: false,
 
+  limitPagination: false,
+  limit: null,
   pagination: null,
 
   isLoading: reads('task.isRunning'),
@@ -135,19 +138,22 @@ const DynamicQuery = ArrayProxy.extend(Evented, {
 
     this.promise = this.task.perform({ page, filter: filterTerm })
       .then((result = []) => {
-        this.set('pagination', result.pagination);
+        if (this.limitPagination) {
+          this.set('pagination', this.calcLimitPagination(result));
+        } else {
+          this.set('pagination', result.pagination);
+        }
         const results = result.toArray();
         if (this.appendResults) {
           this.addObjects(results);
         } else {
-          this.setObjects(results);
+          this.set('content', results);
         }
         if (!this.hasPage(page)) {
           next(() => this.switchToPage(1));
         }
         return this;
       });
-
     return this.promise;
   },
 
@@ -161,6 +167,20 @@ const DynamicQuery = ArrayProxy.extend(Evented, {
       this.set('filterTerm', filterTerm);
       this.trigger(EVENTS.FILTER_CHANGED, filterTerm);
     }
-  }
+  },
+
+  // For use with heuristic pagination, AKA skip_count=true
+  // Although now that I think about it, maybe it would be better to update API to do this?
+  calcLimitPagination({ length } = {}) {
+    const { limit, page, total: oldTotal = 0 } = this;
+    const limitDiff = length % limit;
+    const hasMore = length && limitDiff === 0;
+
+    const total = hasMore ? oldTotal + length + 1 : oldTotal + length;
+    const numberOfPages = hasMore ? page + 1 : page;
+    const isLast = page === numberOfPages;
+    const isFirst = page === 1;
+    return { total, numberOfPages, isLast, isFirst };
+  },
 
 });

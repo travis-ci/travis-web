@@ -1,46 +1,46 @@
 <nav
   class="option-button {{if this.isOpen 'is-open'}}"
-  {{on 'mouseleave' (action 'close')}}
-  {{on 'click' (action 'open')}}
+  {{on 'click' (action this.toggle)}}
+  {{on 'mouseleave' (action this.close)}}
 >
-  <button class="option-display" type="button" title="Show more options">
-    <span class="label-align">
-      More options
-    </span>
-    <span class="option-tofu">
-      <SvgImage @name="icon-tofuburger" @class="icon-tofu" />
-    </span>
-  </button>
-  <ul class="option-dropdown">
-    {{#if this.displaySettingsLink}}
-      <li>
-        <LinkTo @route="settings" @model={{this.repo}}>
-          Settings
-        </LinkTo>
-      </li>
-    {{/if}}
+<button class="option-display" type="button" title="Show more options">
+  <span class="label-align">
+    More options
+  </span>
+  <span class="option-tofu">
+    <SvgImage @name="icon-tofuburger" @class="icon-tofu" />
+  </span>
+</button>
+<ul class="option-dropdown">
+  {{#if this.displaySettingsLink}}
     <li>
       <LinkTo @route="requests" @model={{this.repo}}>
         Requests
       </LinkTo>
     </li>
-    {{#if this.displayCachesLink}}
-      <li>
-        <LinkTo @route="caches" @model={{this.repo}}>
-          Caches
-        </LinkTo>
-      </li>
-    {{/if}}
-    {{#if this.displayTriggerBuildLink}}
-      <li>
-        <button
-          type="button"
-          class="trigger-build-anchor"
-          {{on 'click' (action 'triggerBuildModal')}}
-        >
-          Trigger build
-        </button>
-      </li>
-    {{/if}}
-  </ul>
+  {{/if}}
+  <li>
+    <LinkTo @route="requests" @model={{this.repo}}>
+      Requests
+    </LinkTo>
+  </li>
+  {{#if this.displayCachesLink}}
+    <li>
+      <LinkTo @route="caches" @model={{this.repo}}>
+        Caches
+      </LinkTo>
+    </li>
+  {{/if}}
+  {{#if this.displayTriggerBuildLink}}
+    <li>
+      <button
+        type="button"
+        class="trigger-build-anchor"
+        onclick={{action "triggerBuildModal"}}
+      >
+        Trigger build
+      </button>
+    </li>
+  {{/if}}
+</ul>
 </nav>

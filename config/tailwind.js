@@ -59,6 +59,7 @@ module.exports = {
         default: '#ffe000',
         400: '#efcc03',
         500: '#dcc800',
+        600: '#c1a417',
       },
 
       // Cancelled / Neutral Color
@@ -132,6 +133,8 @@ module.exports = {
     borderWidth: {
       none: '0',
       px: '1px',
+      sm: '0.1429rem',
+      md: '0.25rem',
     },
     borderRadius: {
       none: '0',
@@ -213,6 +216,7 @@ module.exports = {
       '11/12': '91.666667%',
       full: '100%',
       screen: '100vw',
+      'max-content': 'max-content',
     }),
     maxHeight: {
       full: '100%',
@@ -229,7 +233,7 @@ module.exports = {
       '3xl': '48rem',
       '4xl': '56rem',
       '5xl': '64rem',
-      '6xl': '72rem',
+      '6xl': '73.1429rem', // 1024px
       full: '100%',
     },
     minHeight: {
@@ -239,11 +243,17 @@ module.exports = {
     },
     minWidth: {
       '0': '0',
+      md: '16rem',
       full: '100%',
     },
 
     /* ~~ Extend ~~ */
     extend: {
+      flex: {
+        'grow-single': '1 0 auto',
+        'shrink-single': '0 1 auto',
+        'resize-single': '1 1 auto',
+      },
       fill: {
         transparent: 'transparent'
       },
