@@ -75,7 +75,7 @@
       {{#if this.repo.currentBuild}}
         <section class="dash-last {{this.repo.currentBuild.state}}">
           <h3 class="label">
-            Default branch
+            Last build
           </h3>
           <p class="row-content color">
             <StatusIcon @status={{this.repo.currentBuild.state}} />
@@ -93,7 +93,7 @@
                 #{{this.repo.currentBuild.number}}
                 {{humanize-state this.repo.currentBuild.state}}
               </span>
-            {{/if}}
+            </LinkTo>
           </p>
         </section>
         <section class="dash-commit">
@@ -107,65 +107,64 @@
               <span class="label-align monospace">
                 {{format-sha this.repo.currentBuild.commit.sha}}
               </span>
-            </p>
-          </section>
-          <div class="dash-menu">
-            {{#if this.displayMenuTofu}}
-              {{#if this.isTriggering}}
-                <LoadingIndicator />
-              {{else}}
-                <div class="dropup {{if dropupIsOpen 'is-open'}}">
-                  <button
-                    type="button"
-                    class="dropup-tofu"
-                    onclick={{action "openDropup"}}
-                  >
-                  <SvgImage @name="icon-tofuburger" @class="icon-tofu" />
-                  </button>
-                  <ul class="dropup-list">
-                    <li>
-                      <button
-                        title="Trigger a build on the default branch"
-                        onclick={{action "triggerBuild"}}
-                      >
-                        <SvgImage @name="icon-restart" @class="icon" />
-                        <span class="label-align">
-                          Trigger a build
-                        </span>
-                      </button>
-                    </li>
-                    <li>
-                      <LinkTo
-                        @route="settings"
-                        @model={{this.repo}}
-                        @title="Settings for this repository"
-                      >
-                        <SvgImage @name="icon-settings" @class="icon" />
-                        <span class="label-align">
-                          Settings
-                        </span>
-                      </LinkTo>
-                    </li>
-                  </ul>
-                </div>
-              {{/if}}
-            {{/if}}
+            </ExternalLinkTo>
+            <SvgImage @name="icon-external-link" @class="icon" />
           </div>
-        {{else}}
-          <div class="dash-no-build">
-            <p class="dash-helptext helptext">
-              There are no builds for this repo yet
-            </p>
+        </section>
+        <section class="fade-out dash-finished">
+          <h3 class="label">
+            Finished
+          </h3>
+          <p class="row-content" title="{{this.repo.currentBuild.finishedAt}}">
+            <SvgImage @name="icon-calendar" @class="icon" />
+            <span class="label-align">
+              {{#if this.repo.currentBuild.finishedAt}}
+                {{format-time this.repo.currentBuild.finishedAt}}
+              {{else}}
+                still running
+              {{/if}}
+            </span>
+          </p>
+        </section>
+        <div class="dash-menu">
+          {{#if this.displayMenuTofu}}
             {{#if this.isTriggering}}
               <LoadingIndicator />
             {{else}}
-              <button
-                class="button--blue"
-                title="Trigger a build on the default branch"
-                onclick={{action "triggerBuild"}}
-              >
-                Trigger a build
-              </button>
+              <div class="dropup {{if dropupIsOpen 'is-open'}}">
+                <button
+                  type="button"
+                  class="dropup-tofu"
+                  onclick={{action "openDropup"}}
+                >
+                <SvgImage @name="icon-tofuburger" @class="icon-tofu" />
+                </button>
+                <ul class="dropup-list">
+                  <li>
+                    <button
+                      title="Trigger a build on the default branch"
+                      onclick={{action "triggerBuild"}}
+                    >
+                      <SvgImage @name="icon-restart" @class="icon" />
+                      <span class="label-align">
+                        Trigger a build
+                      </span>
+                    </button>
+                  </li>
+                  <li>
+                    <LinkTo
+                      @route="settings"
+                      @model={{this.repo}}
+                      @title="Settings for this repository"
+                    >
+                      <SvgImage @name="icon-settings" @class="icon" />
+                      <span class="label-align">
+                        Settings
+                      </span>
+                    </LinkTo>
+                  </li>
+                </ul>
+              </div>
             {{/if}}
           {{/if}}
         </div>
@@ -187,7 +186,7 @@
           {{/if}}
         </div>
       {{/if}}
-    </div>
+    {{/if}}
   </div>
 </div>
 </li>
