@@ -8,48 +8,22 @@ import {
   bindKeyboardShortcuts,
   unbindKeyboardShortcuts
 } from 'ember-keyboard-shortcuts';
-import { later } from '@ember/runloop';
-
-const { utmParametersResetDelay } = config.timing;
 
 export default TravisRoute.extend(BuildFaviconMixin, {
   auth: service(),
   features: service(),
   featureFlags: service(),
   flashes: service(),
-  metrics: service(),
   repositories: service(),
-  router: service(),
 
   needsAuth: false,
 
-  setupController(controller) {
+  init() {
     this.featureFlags;
 
     this.auth.afterSignOut(() => {
       this.afterSignOut();
     });
-
-    if (config.metricsAdapters.length > 0) {
-      const { metrics, router } = this;
-      router.on('routeDidChange', () => {
-        try {
-          const { currentURL: page } = router;
-          let needsReset = true;
-
-          const hitCallback = () => {
-            needsReset = false;
-            controller.resetUTMs();
-          };
-
-          metrics.trackPage({ page, hitCallback });
-
-          later(() => {
-            if (needsReset) controller.resetUTMs();
-          }, utmParametersResetDelay);
-        } catch (err) {}
-      });
-    }
 
     return this._super(...arguments);
   },
