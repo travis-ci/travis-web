@@ -101,6 +101,7 @@ module.exports = function (environment) {
       status: 'https://www.traviscistatus.com/',
       support: 'mailto:support@travis-ci.com',
       terms: 'https://docs.travis-ci.com/legal/terms-of-service/',
+      travisvsjenkins: 'https://travis-ci.com/travisci-vs-jenkins',
       tutorial: 'https://docs.travis-ci.com/user/tutorial/',
       twitter: 'https://twitter.com/travisci',
       pardotHost: 'https://info.travis-ci.com',
