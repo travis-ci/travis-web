@@ -249,10 +249,10 @@ export default Service.extend({
           authProvider: vcsProvider.name
         });
       }
-    }
-    if (this.utm.hasData) {
-      currentUser.set('utmParams', this.utm.all);
-      currentUser.save().then(() => this.utm.clear());
+      if (this.utm.hasData) {
+        currentUser.set('utmParams', this.utm.all);
+        currentUser.save().then(() => this.utm.clear());
+      }
     }
   },
 
