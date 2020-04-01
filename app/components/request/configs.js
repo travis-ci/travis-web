@@ -8,6 +8,7 @@ import TriggerBuild from 'travis/mixins/components/trigger-build';
 
 export const STATUSES = {
   CLOSED: 'closed',
+  OPEN: 'open',
   CUSTOMIZE: 'customize',
   PREVIEW: 'preview'
 };
@@ -21,6 +22,7 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
 
   status: STATUSES.CLOSED,
   closed: equal('status', STATUSES.CLOSED),
+  open: equal('status', STATUSES.OPEN),
   customizing: equal('status', STATUSES.CUSTOMIZE),
   previewing: equal('status', STATUSES.PREVIEW),
   loading: reads('preview.loading'),
@@ -32,8 +34,10 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
   repo: reads('request.repo'),
   repoId: reads('repo.id'),
   rawConfigs: or('preview.rawConfigs', 'request.uniqRawConfigs'),
-  messages: reads('preview.messages'),
+  messages: or('previewMessages', 'requestMessages'),
   loaded: reads('preview.loaded'),
+  previewMessages: reads('preview.messages'),
+  requestMessages: reads('request.messages'),
 
   sha: reads('originalSha'),
   branch: reads('originalBranch'),
@@ -52,7 +56,9 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
   repoDefaultBranchLastCommitSha: reads('repo.defaultBranch.lastBuild.commit.sha'),
 
   didInsertElement() {
-    this.load();
+    if (this.customizing) {
+      this.load();
+    }
   },
 
   onTrigger(e) {
@@ -67,6 +73,7 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
   onCustomize() {
     if (!this.customizing) {
       this.set('status', STATUSES.CUSTOMIZE);
+      this.load();
     }
   },
 
@@ -85,9 +92,7 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
   },
 
   load(debounce) {
-    if (this.customizing || this.previewing) {
-      this.preview.loadConfigs.perform(this.repoId, this.data, debounce);
-    }
+    this.preview.loadConfigs.perform(this.repoId, this.data, debounce);
   },
 
   data: computed('repo', 'mergeMode', 'config', 'message', function () {
