@@ -4,7 +4,6 @@ import { equal } from '@ember/object/computed';
 import { pluralize } from 'ember-inflector';
 
 export default Component.extend({
-  tagName: 'p',
   classNames: ['request-configs-trigger-build-notice'],
 
   configs: 0,
