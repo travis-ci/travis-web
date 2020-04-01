@@ -10,6 +10,7 @@ export default Component.extend(WithConfigValidation, {
   router: service(),
   modelName: reads('model.modelName'),
 
+  request: or('build.request', 'job.build.request'),
   build: null,
   job: null,
   model: or('job', 'build'),
@@ -17,13 +18,6 @@ export default Component.extend(WithConfigValidation, {
 
   isConfig: match('router.currentRouteName', /config$/),
   isLog: not('isConfig'),
-
-  request: computed('job', 'build', function () {
-    if (this.build)
-      return this.build.get('request');
-    else
-      return this.job.get('build.request');
-  }),
 
   route: computed('job', 'build', function () {
     if (this.job)
