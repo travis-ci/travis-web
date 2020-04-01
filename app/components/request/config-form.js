@@ -59,7 +59,7 @@ export default Component.extend(BranchSearching, {
     let configs = this.get('request.uniqRawConfigs') || [];
     configs = configs.reject(config => config.source === SOURCE.API);
     if (this.config) {
-      configs.unshift({ config: this.config, source: SOURCE.API });
+      configs = [{ config: this.config, source: SOURCE.API }, ...configs];
     }
     return configs;
   }),
