@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { equal, not } from '@ember/object/computed';
+import { equal, not, or } from '@ember/object/computed';
 import {
   isInternal,
   presentedPath,
@@ -17,11 +17,13 @@ export default Component.extend({
   copied: false,
   baseYmlName: '.travis.yml',
 
-  isEmptyConfig: equal('config', '{}'),
-  isExpanded: not('isEmptyConfig'),
+  expanded: not('empty'),
+  empty: or('emptyYAML', 'emptyJSON'),
+  emptyYAML: equal('formattedConfig', ''),
+  emptyJSON: equal('formattedConfig', '{}'),
 
-  toggleStatusClass: computed('isExpanded', function () {
-    return this.isExpanded ? 'expanded' : 'collapsed';
+  status: computed('expanded', function () {
+    return this.expanded ? 'expanded' : 'collapsed';
   }),
 
   buttonLabel: computed('copied', 'source', function () {
@@ -62,7 +64,7 @@ export default Component.extend({
       later(() => this.set('copied', false), 3000);
     },
     toggle() {
-      this.toggleProperty('isExpanded');
+      this.toggleProperty('expanded');
     }
   }
 });
