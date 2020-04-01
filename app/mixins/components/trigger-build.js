@@ -17,7 +17,7 @@ export default Mixin.create({
       yield timeout(searchDebounceRate);
       yield this.showRequestStatus.perform(this.get('repo.id'), requestId);
     }
-  }),
+  }).drop(),
 
   createBuild: task(function* () {
     try {
