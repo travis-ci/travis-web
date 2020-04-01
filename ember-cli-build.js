@@ -50,6 +50,9 @@ module.exports = function () {
         'line-highlight'
       ],
     },
+    codemirror: {
+      modes: ['javascript', 'yaml'],
+    },
     svg: {
       optimize: false,
       paths: [
