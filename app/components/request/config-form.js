@@ -11,7 +11,6 @@ const CONFIG = {
   },
   JAVASCRIPT: 'javascript',
   YAML: 'yaml',
-  JSON: 'json',
 };
 
 export default Component.extend(BranchSearching, {
@@ -23,7 +22,7 @@ export default Component.extend(BranchSearching, {
   rawConfigs: computed('preview.rawConfigs', function () {
     const configs = this.preview.rawConfigs;
     if (configs) {
-      return configs.reject(config => config.source.slice(0, 3) == 'api');
+      return configs.reject(config => config.source.slice(0, 3) == CONFIG.SOURCE.API);
     }
   }),
 
