@@ -4,7 +4,7 @@ import { later } from '@ember/runloop';
 
 export default Component.extend({
   copied: false,
-  expanded: false,
+  expanded: true,
 
   status: computed('expanded', function () {
     return this.expanded ? 'expanded' : 'collapsed';
