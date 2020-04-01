@@ -29,30 +29,23 @@
     <Request::ConfigForm
       @request={{this.request}}
       @config={{this.config}}
-      @refType={{this.refType}}
       @branch={{this.branch}}
       @sha={{this.sha}}
       @message={{this.message}}
       @mergeMode={{this.mergeMode}}
+      @preview={{this.preview}}
       @loading={{this.loading}}
       @messages={{this.messages}}
       @onChange={{action "formFieldChanged"}}
       @onSubmit={{action "submit"}}
     />
-
-    {{#unless this.replacing}}
-      <h4 class="request-configs-heading">
-        Build {{pluralize this.rawConfigs.length 'Config' without-count=true}}
-      </h4>
-    {{/unless}}
-
   {{else if this.previewing}}
     <Request::ConfigsPreview
       @preview={{this.preview}}
     />
   {{/if}}
 
-  {{#unless (or this.replacing this.previewing)}}
+  {{#if (or this.closed this.open)}}
     {{#each this.rawConfigs as |config|}}
       <Request::RawConfig
         data-test-raw-config="true"
@@ -68,7 +61,7 @@
       data-test-request-config="true"
       @config={{this.request.config}}
     />
-  {{/unless}}
+  {{/if}}
 
 {{else}}
   <Request::Messages
