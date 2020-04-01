@@ -4,22 +4,21 @@ import { later } from '@ember/runloop';
 
 export default Component.extend({
   copied: false,
-  isExpanded: true,
+  expanded: false,
 
-  toggleStatusClass: computed('isExpanded', function () {
-    return this.isExpanded ? 'expanded' : 'collapsed';
+  status: computed('expanded', function () {
+    return this.expanded ? 'expanded' : 'collapsed';
   }),
 
   buttonLabel: computed('copied', function () {
     return this.copied ? 'Copied!' : 'Copy build config';
   }),
 
-  formattedConfig: computed('config', 'slug', function () {
-    const config = this.get('config');
+  formattedConfig: computed('config', function () {
     try {
-      return JSON.stringify(config, null, 2);
+      return JSON.stringify(this.config, null, 2);
     } catch (e) {
-      return config;
+      return this.config;
     }
   }),
 
@@ -29,7 +28,7 @@ export default Component.extend({
       later(() => this.set('copied', false), 3000);
     },
     toggle() {
-      this.toggleProperty('isExpanded');
+      this.toggleProperty('expanded');
     }
   }
 });
