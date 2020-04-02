@@ -34,8 +34,11 @@
     outline: none;
   }
 
-  .loading-indicator i {
-    background-color: white;
+  .loading-indicator {
+    vertical-align: bottom;
+    i {
+      background-color: white;
+    }
   }
 }
 
