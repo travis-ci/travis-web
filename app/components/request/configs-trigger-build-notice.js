@@ -11,12 +11,12 @@ export default Component.extend({
   customizing: equal('status', 'customize'),
   previewing: equal('status', 'preview'),
 
-  message: computed('customize', 'configs', function () {
+  message: computed('customizing', 'previewing', 'configs', function () {
     if (this.previewing) {
       return 'The triggered build will have the following build config and job matrix.';
     }
     let configs = pluralize(this.configs + 1, 'config', { withoutCount: true });
-    if (this.customize) configs = `details and ${configs}`;
+    if (this.customizing) configs = `details and ${configs}`;
     return `Trigger a build request with the following build ${configs}`;
   }),
 });
