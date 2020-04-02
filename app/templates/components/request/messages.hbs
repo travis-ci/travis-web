@@ -1,5 +1,5 @@
 {{#if this.showConfigValidation}}
-  <div class="request-messages" data-test-configs-messages="true">
+  <div class="request-messages request-message-{{this.maxLevel}}" data-test-configs-messages="true">
     <div class="header" {{action 'toggle'}} data-test-configs-messages-toggle="true">
       <span class="tooltip-wrapper level-icon">
         <SvgImage @name="msg-{{this.maxLevel}}"  @class={{this.iconClass}} />
