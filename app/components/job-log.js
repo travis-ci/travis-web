@@ -9,6 +9,7 @@ export default Component.extend({
 
   _oldJob: null,
 
+  request: reads('job.build.request'),
   job: null,
   log: reads('job.log'),
 

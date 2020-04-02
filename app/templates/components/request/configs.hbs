@@ -10,18 +10,17 @@
     />
   {{/if}}
 
-  {{#unless this.closed}}
-    <Request::ConfigsTriggerBuildNotice
-      @configs={{this.rawConfigs.length}}
-      @status={{this.status}}
-    />
-  {{/unless}}
-
   {{#unless this.customizing}}
     <Request::Messages
       @request={{this.request}}
       @messages={{this.request.messages}}
-      @viewMessage={{action (mut this.viewingMessage)}}
+    />
+  {{/unless}}
+
+  {{#unless this.closed}}
+    <Request::ConfigsTriggerBuildNotice
+      @configs={{this.rawConfigs.length}}
+      @status={{this.status}}
     />
   {{/unless}}
 

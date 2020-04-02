@@ -50,4 +50,22 @@ $requestStatusMap: (
   approved: passed,
   rejected: failed,
   pending: created
-)
+);
+
+$configValidation: (
+  info: (
+    color: $turf-green,
+    gradient: $turf-green,
+    color-bg: $seed-green
+  ),
+  warn: (
+    color: $dozer-yellow,
+    gradient: $canary-yellow,
+    color-bg: $haze-yellow
+  ),
+  error: (
+    color: $brick-red,
+    gradient: $brick-red,
+    color-bg: $quartz-red
+  )
+);
