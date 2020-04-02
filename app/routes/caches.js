@@ -6,6 +6,13 @@ export default TravisRoute.extend({
 
   needsAuth: true,
 
+  redirect(model) {
+    const hasModel = model && model.get;
+    if (hasModel && !model.get('permissions.admin')) {
+      this.transitionTo('repo');
+    }
+  },
+
   setupController(/* controller*/) {
     this._super(...arguments);
     return this.controllerFor('repo').activate('caches');

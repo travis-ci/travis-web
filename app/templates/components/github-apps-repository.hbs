@@ -7,7 +7,7 @@
 >
   {{this.name}}
 </LinkTo>
-{{#if this.admin}}
+{{#if this.isAdmin}}
   {{#if this.isNotMatchGithub}}
     <TravisSwitch
       @active={{this.repository.active}}
