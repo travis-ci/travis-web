@@ -56,7 +56,7 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
   repoDefaultBranchLastCommitSha: reads('repo.defaultBranch.lastBuild.commit.sha'),
 
   didInsertElement() {
-    if (this.customizing) {
+    if (this.customizing || this.previewing) {
       this.load();
     }
   },
