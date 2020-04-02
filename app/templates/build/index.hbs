@@ -1,3 +1,7 @@
+<Request::Messages
+  @request={{this.request}}
+  @messages={{this.request.messages}}
+/>
 {{#let this.build as |build|}}
   {{#if build.isMatrix}}
     {{#if build.stages}}
