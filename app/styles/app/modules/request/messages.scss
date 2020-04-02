@@ -20,6 +20,10 @@
 .request-messages {
   @include travisBorder;
 
+  @each $level, $colors in $configValidation {
+    @include colorBg(map-get($colors, gradient), "request-message-#{$level}", 6px);
+  }
+
   margin: 1.2em 0;
 
   font-size: $font-size-sm;
@@ -54,7 +58,16 @@
       }
     }
     .icon-help {
-      margin-right: 12px;
+      margin-right: 6px;
+      opacity: 0.85;
+      width: 16px;
+      height: 16px;
+      margin-right: 6px;
+      border: 0;
+      path {
+        stroke: $cement-grey;
+        stroke-width: 2;
+      }
     }
 
     .request-messages-summary > div {

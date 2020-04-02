@@ -25,7 +25,10 @@
         @repo={{this.repo}}
         @build={{this.build}}
       />
-      <JobLog data-test-job-log="true" @job={{this.job}} />
+      <JobLog
+        data-test-job-log="true"
+        @job={{this.job}}
+        />
     {{else}}
       <JobTabs
         @repo={{this.repo}}
