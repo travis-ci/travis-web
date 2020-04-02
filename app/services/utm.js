@@ -48,7 +48,7 @@ export default Service.extend({
         utmData[field] = value;
       }
       return utmData;
-    }, {});
+    }, new QueryParamsHash());
   },
 
   clear() {
@@ -66,3 +66,9 @@ export default Service.extend({
     } catch (e) {}
   }
 });
+
+class QueryParamsHash extends Object {
+  toString() {
+    return Object.entries(this).map(([key, value]) => `${key}=${value}`).join('&');
+  }
+}

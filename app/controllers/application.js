@@ -16,6 +16,10 @@ export const UTM_QUERY_PARAMS = new QueryParams({
   [UTM_FIELDS.TERM]: { defaultValue: null, replace: true, refresh: true },
 });
 
+const SKIP_TRACKING_ROUTES = [
+  'plans.thank-you'  // reported manually at 'travis/routes/plans/thank-you'
+];
+
 export default Controller.extend(UTM_QUERY_PARAMS.Mixin, {
   features: service(),
   utm: service(),
@@ -26,11 +30,13 @@ export default Controller.extend(UTM_QUERY_PARAMS.Mixin, {
     this.utm.capture(queryParams);
   },
 
-  reportPage() {
+  trackPage(page) {
+    page = page || this.router.currentURL;
+
     return new Promise(resolve => {
       try {
         this.metrics.trackPage({
-          page: this.router.currentURL,
+          page,
           hitCallback: () => resolve()
         });
         // If page is not reported to GA for some reason,
@@ -43,11 +49,16 @@ export default Controller.extend(UTM_QUERY_PARAMS.Mixin, {
   },
 
   handleRouteChange() {
-    this.reportPage().then(() => {
-      if (this.utm.hasData) {
-        this.resetUTMs();
-      }
-    });
+    const { currentRouteName } = this.router;
+    const shouldReport = !SKIP_TRACKING_ROUTES.includes(currentRouteName);
+
+    if (shouldReport) {
+      this.trackPage().then(() => {
+        if (this.utm.hasData) {
+          this.resetUTMs();
+        }
+      });
+    }
   },
 
   resetUTMs() {
