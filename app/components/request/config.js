@@ -3,6 +3,7 @@ import { computed } from '@ember/object';
 import { later } from '@ember/runloop';
 
 export default Component.extend({
+  classNames: ['request-config'],
   copied: false,
   expanded: true,
 
@@ -10,7 +11,7 @@ export default Component.extend({
     return this.expanded ? 'expanded' : 'collapsed';
   }),
 
-  buttonLabel: computed('copied', function () {
+  buttonText: computed('copied', function () {
     return this.copied ? 'Copied' : 'Copy';
   }),
 

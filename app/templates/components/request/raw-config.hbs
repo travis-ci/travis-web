@@ -1,45 +1,42 @@
-<div class="inner-config-container">
-  <div class="header" {{on 'click' (action 'toggle')}}>
-    {{#if this.fileUrl}}
-      <ExternalLinkTo @href={{this.fileUrl}}>
-        <SvgImage @name="job-name-icon" @class="icon" @width=14 @height=14 />
-        <span class="vertical-align">
-          {{this.filePath}}
-        </span>
-      </ExternalLinkTo>
-    {{else}}
+<div class="header" {{on 'click' (action 'toggle')}}>
+  {{#if this.fileUrl}}
+    <ExternalLinkTo @href={{this.fileUrl}}>
       <SvgImage @name="job-name-icon" @class="icon" @width=14 @height=14 />
-      <span class="vertical-align" data-test-config-source="true">
+      <span class="vertical-align">
         {{this.filePath}}
       </span>
-    {{/if}}
-    <div class="tools">
-      {{#if this.expanded}}
-        <CopyButton
-          @clipboardText={{this.config}}
-          @title={{this.buttonLabel}}
-          @success={{action "copied" this.source}}
-        >
-          <SvgImage @name="icon-copy" @class="icon" />
-          <span>
-            {{this.buttonLabel}}
-          </span>
-        </CopyButton>
-      {{/if}}
-      <SvgImage
-        @name="icon-dropdown-arrow"
-        @class="icon-toggle icon-{{this.status}}"
-      />
-    </div>
-  </div>
-  {{#if this.expanded}}
-    <div class="position-relative">
-      <CodeBlock
-        @language="yaml"
-        class="codedisplay line-numbers"
-        id={{this.codeblockId}}
-        data-test-config="true"
-      >{{this.formattedConfig}}</CodeBlock>
-    </div>
+    </ExternalLinkTo>
+  {{else}}
+    <SvgImage @name="job-name-icon" @class="icon" @width=14 @height=14 />
+    <span class="vertical-align" data-test-config-source="true">
+      {{this.filePath}}
+    </span>
   {{/if}}
+  <div class="tools">
+    {{#if this.expanded}}
+      <Request::CopyButton
+        @copyText={{this.formattedConfig}}
+        @success={{action "copied"}}
+      >
+        <SvgImage @name="icon-copy" @class="icon" />
+        <span>
+          {{this.buttonText}}
+        </span>
+      </Request::CopyButton>
+    {{/if}}
+    <SvgImage
+      @name="icon-dropdown-arrow"
+      @class="icon-toggle icon-{{this.status}}"
+    />
+  </div>
 </div>
+{{#if this.expanded}}
+  <div class="position-relative">
+    <CodeBlock
+      @language="yaml"
+      class="codedisplay line-numbers"
+      id={{this.codeblockId}}
+      data-test-config="true"
+    >{{this.formattedConfig}}</CodeBlock>
+  </div>
+{{/if}}

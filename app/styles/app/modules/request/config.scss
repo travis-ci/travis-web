@@ -1,35 +1,40 @@
-.inner-config-container {
+.request-config {
   position: relative;
   border: 1px solid $pebble-grey;
   margin-bottom: 1.2em;
 
-  button {
-    margin-right: 1em;
-    cursor: pointer;
-    border-radius: 2px;
-    font-size: 12px;
-    color: $cement-grey;
-    @include colorSVG($cement-grey);
+  .copy-button{
+    display: inline-block;
 
-    span {
-      display: none;
-    }
+    button  {
+      cursor: pointer;
+      padding: 3px 8px 5px 8px;
+      border-radius: 2px;
+      border: 1px solid transparent;
+      font-size: 12px;
+      color: $cement-grey;
+      @include colorSVG($cement-grey);
 
-    svg {
-      width: 13px;
-      height: 15px;
-    }
+      span {
+        display: none;
+      }
 
-    &:active,
-    &:focus {
-      outline: none;
-    }
-  }
+      svg {
+        width: 13px;
+        height: 15px;
+      }
 
-  &:hover button {
-    border: 1px solid $cement-grey;
-    span {
-      display: inline-block;
+      &:hover {
+        margin-right: 1em;
+        border-color: $dry-cement;
+        span {
+          display: inline-block;
+        }
+      }
+      &:active,
+      &:focus {
+        outline: none;
+      }
     }
   }
 }
