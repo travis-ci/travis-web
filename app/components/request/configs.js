@@ -42,7 +42,7 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
   sha: reads('originalSha'),
   branch: reads('originalBranch'),
   message: reads('request.commit.message'),
-  config: reads('request.apiConfig.config'),
+  config: reads('formattedApiConfig'),
   mergeMode: reads('originalMergeMode'), // TODO store and serve merge mode for api request configs
   defaultMergeMode: 'deep_merge_append',
 
@@ -60,6 +60,15 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
       this.load();
     }
   },
+
+  formattedApiConfig: computed('request.apiConfig.config', function () {
+    const config = this.request.apiConfig.config;
+    try {
+      return JSON.stringify(JSON.parse(config), null, 2);
+    } catch (e) {
+      return config;
+    }
+  }),
 
   onTrigger(e) {
     e.toElement.blur();
