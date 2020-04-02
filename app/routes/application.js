@@ -14,9 +14,7 @@ export default TravisRoute.extend(BuildFaviconMixin, {
   features: service(),
   featureFlags: service(),
   flashes: service(),
-  metrics: service(),
   repositories: service(),
-  router: service(),
 
   needsAuth: false,
 
@@ -26,17 +24,6 @@ export default TravisRoute.extend(BuildFaviconMixin, {
     this.auth.afterSignOut(() => {
       this.afterSignOut();
     });
-
-    if (config.metricsAdapters.length > 0) {
-      const { metrics, router } = this;
-      router.on('routeDidChange', () => {
-        try {
-          const { currentURL: page } = router;
-          metrics.trackPage({ page });
-        } catch (err) {
-        }
-      });
-    }
 
     return this._super(...arguments);
   },
