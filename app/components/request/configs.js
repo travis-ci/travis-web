@@ -130,7 +130,7 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
       message: this.request.get('commit.message'),
       mergeMode: this.originalMergeMode,
       rawConfigs: this.request.uniqRawConfigs,
-      config: this.request.get('apiConfig.config')
+      config: this.formattedApiConfig
     });
     this.preview.reset();
   },
