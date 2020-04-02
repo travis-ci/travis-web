@@ -27,7 +27,8 @@ export default Component.extend({
   }),
 
   buttonLabel: computed('copied', 'source', function () {
-    return this.copied ? 'Copied!' : `Copy ${fileNameWithoutSha(this.source)}`;
+    return this.copied ? 'Copied' : 'Copy';
+    // return this.copied ? 'Copied!' : `Copy ${fileNameWithoutSha(this.source)}`;
   }),
 
   formattedConfig: computed('config', 'slug', function () {

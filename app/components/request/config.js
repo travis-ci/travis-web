@@ -11,7 +11,7 @@ export default Component.extend({
   }),
 
   buttonLabel: computed('copied', function () {
-    return this.copied ? 'Copied!' : 'Copy build config';
+    return this.copied ? 'Copied' : 'Copy';
   }),
 
   formattedConfig: computed('config', function () {

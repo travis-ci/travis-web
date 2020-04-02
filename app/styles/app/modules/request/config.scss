@@ -4,22 +4,32 @@
   margin-bottom: 1.2em;
 
   button {
-    display: none;
-    position: absolute;
-    right: 1em;
-    top: 1em;
-    border: 1px solid $pebble-grey;
+    margin-right: 1em;
+    cursor: pointer;
     border-radius: 2px;
+    font-size: 12px;
+    color: $cement-grey;
+    @include colorSVG($cement-grey);
+
+    span {
+      display: none;
+    }
+
+    svg {
+      width: 13px;
+      height: 15px;
+    }
+
+    &:active,
+    &:focus {
+      outline: none;
+    }
   }
 
   &:hover button {
-    display: block;
-
-    &:hover {
-      border-color: $oxide-blue;
-      color: $oxide-blue;
-
-      @include colorSVG($oxide-blue);
+    border: 1px solid $cement-grey;
+    span {
+      display: inline-block;
     }
   }
 }
