@@ -1,0 +1,8 @@
+<button
+  title={{@title}}
+  success={{@success}}
+  data-clipboard-text={{@copyText}}
+  {{on "click" (action 'copy')}}
+>
+  {{yield}}
+</button>

@@ -12,6 +12,7 @@ import { inject as service } from '@ember/service';
 import { parseWithDefault } from 'travis/services/storage';
 
 export default Component.extend({
+  classNames: ['request-config'],
   externalLinks: service(),
 
   copied: false,
@@ -26,8 +27,8 @@ export default Component.extend({
     return this.expanded ? 'expanded' : 'collapsed';
   }),
 
-  buttonLabel: computed('copied', 'source', function () {
-    return this.copied ? 'Copied!' : `Copy ${fileNameWithoutSha(this.source)}`;
+  buttonText: computed('copied', 'source', function () {
+    return this.copied ? 'Copied' : 'Copy';
   }),
 
   formattedConfig: computed('config', 'slug', function () {
@@ -65,6 +66,10 @@ export default Component.extend({
     },
     toggle() {
       this.toggleProperty('expanded');
+    },
+    noop(e) {
+      console.log('noop', e);
+      e.stopPropagation();
     }
   }
 });
