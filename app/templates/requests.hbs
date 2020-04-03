@@ -1,18 +1,22 @@
-<ul class="requests">
-  {{#each this.model as |request|}}
-    <RequestsItem @request={{request}} @highlightedRequestId={{this.requestId}} />
-  {{else}}
-    <MissingNotice @title="No requests for this repository">
-      <p class="page-notice">
-        Want to start testing this project on Travis CI?
-      </p>
-      <ExternalLinkTo
-        href="http://docs.travis-ci.com/user/getting-started/"
-        class="button"
-        title="Travis documentation on getting set up"
-      >
-        Read the Docs on Getting Started
-      </ExternalLinkTo>
-    </MissingNotice>
-  {{/each}}
-</ul>
+{{#if this.isAdmin}} 
+  <ul class="requests">
+    {{#each this.model as |request|}}
+      <RequestsItem @request={{request}} @highlightedRequestId={{this.requestId}} />
+    {{else}}
+      <MissingNotice @title="No requests for this repository">
+        <p class="page-notice">
+          Want to start testing this project on Travis CI?
+        </p>
+        <ExternalLinkTo
+          href="http://docs.travis-ci.com/user/getting-started/"
+          class="button"
+          title="Travis documentation on getting set up"
+        >
+          Read the Docs on Getting Started
+        </ExternalLinkTo>
+      </MissingNotice>
+    {{/each}}
+  </ul>
+{{else}}
+  <p>Your permissions are insufficient to access this content.</p>
+{{/if}}
