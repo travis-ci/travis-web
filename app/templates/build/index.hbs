@@ -1,9 +1,9 @@
-<Request::Messages
-  @request={{this.request}}
-  @messages={{this.request.messages}}
-/>
 {{#let this.build as |build|}}
   {{#if build.isMatrix}}
+    <Request::Messages
+      @request={{this.request}}
+      @messages={{this.request.messages}}
+    />
     {{#if build.stages}}
       {{#each build.sortedStages as |stage|}}
         <JobsList
