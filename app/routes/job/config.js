@@ -9,8 +9,4 @@ export default TravisRoute.extend({
       return this.store.findRecord('request', requestId);
     });
   },
-
-  afterModel(request) {
-    return request.fetchMessages.perform();
-  }
 });
