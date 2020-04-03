@@ -6,8 +6,8 @@ import { later } from '@ember/runloop';
 
 const { utmParametersResetDelay } = config.timing;
 
-const SKIP_TRACKING_ROUTES = [
-  'plans.thank-you'  // reported manually at 'travis/routes/plans/thank-you'
+const ROUTES_WITH_UTM = [
+  'plans.thank-you'
 ];
 
 export default Controller.extend({
@@ -17,7 +17,14 @@ export default Controller.extend({
   utm: service(),
 
   trackPage(page) {
-    page = page || this.router.currentURL;
+    const { currentURL, currentRouteName } = this.router;
+
+    page = page || currentURL;
+
+    if (ROUTES_WITH_UTM.includes(currentRouteName)) {
+      const delimiter = page.includes('?') ? '&' : '?';
+      page = `${page}${delimiter}${this.utm.existing.toString()}`;
+    }
 
     return new Promise(resolve => {
       try {
@@ -35,12 +42,7 @@ export default Controller.extend({
   },
 
   handleRouteChange() {
-    const { currentRouteName } = this.router;
-    const shouldReport = !SKIP_TRACKING_ROUTES.includes(currentRouteName);
-
-    if (shouldReport) {
-      this.trackPage().then(() => this.utm.removeFromUrl());
-    }
+    this.trackPage().then(() => this.utm.removeFromUrl());
   },
 
   init() {
