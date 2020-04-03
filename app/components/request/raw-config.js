@@ -66,10 +66,6 @@ export default Component.extend({
     },
     toggle() {
       this.toggleProperty('expanded');
-    },
-    noop(e) {
-      console.log('noop', e);
-      e.stopPropagation();
     }
   }
 });
