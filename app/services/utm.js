@@ -1,4 +1,4 @@
-import URL from 'url';
+import { URLSearchParams } from 'url';
 import Service, { inject as service } from '@ember/service';
 import { alias } from '@ember/object/computed';
 import { computed } from '@ember/object';
@@ -22,14 +22,7 @@ export const SERVICE_UTM_VARS = {
 
 export default Service.extend({
   storage: service(),
-
-  get url() {
-    return new URL(window.location.href);
-  },
-
-  get hasParamsInUrl() {
-    return UTM_FIELD_NAMES.any(field => this.url.searchParams.has(field));
-  },
+  router: service(),
 
   campaign: alias('storage.utm.campaign'),
   content: alias('storage.utm.content'),
@@ -49,6 +42,15 @@ export default Service.extend({
     return Object.keys(this.existing).length > 0;
   }),
 
+  searchParams: computed('router.location.path', function () {
+    const search = this.router.location.path.replace('/?', '');
+    return new URLSearchParams(search);
+  }),
+
+  hasParamsInUrl: computed('searchParams', function () {
+    return UTM_FIELD_NAMES.any(field => this.searchParams.has(field));
+  }),
+
   peek(fields, includeEmpty = true) {
     return fields.reduce((utmData, field) => {
       const value = this.get(SERVICE_UTM_VARS[field]);
@@ -62,7 +64,7 @@ export default Service.extend({
   capture(forceClear = false) {
     if (this.hasParamsInUrl) {
       UTM_FIELD_NAMES.forEach(field => {
-        const value = this.url.searchParams.get(field);
+        const value = this.searchParams.get(field);
         this.set(SERVICE_UTM_VARS[field], value);
       });
       if (forceClear) this.clearUrl();
@@ -75,11 +77,12 @@ export default Service.extend({
   },
 
   removeFromUrl() {
-    const { url, hasParamsInUrl } = this;
+    const { searchParams, hasParamsInUrl, router } = this;
 
     if (hasParamsInUrl) {
-      UTM_FIELD_NAMES.forEach(field => url.searchParams.delete(field));
-      history.replaceState({}, null, url.toString());
+      UTM_FIELD_NAMES.forEach(field => searchParams.delete(field));
+      const { queryParams } = router.recognize(`/?${searchParams.toString()}`) || {};
+      router.transitionTo({ queryParams });
     }
   }
 
