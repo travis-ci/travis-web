@@ -22,6 +22,7 @@ export default Owner.extend({
   recentlySignedUp: attr('boolean'),
   channels: attr(),
   authToken: attr('string'),
+  utmParams: attr(),
 
   type: 'user',
 

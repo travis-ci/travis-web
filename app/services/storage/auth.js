@@ -113,7 +113,7 @@ function getStorage() {
 }
 
 function serializeUserRecord(record) {
-  return record.serialize({ includeId: true });
+  return record.serialize({ includeId: true, forLocalStorage: true });
 }
 
 function extractAccountRecord(store, userData) {

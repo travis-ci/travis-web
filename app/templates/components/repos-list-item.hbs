@@ -5,6 +5,9 @@
         <StatusIcon @status={{this.repo.currentBuild.state}} />
         <span data-test-repos-list-item-slug class="label-align inner-underline">
           {{this.repo.slug}}
+          {{#if this.repo.shared}}
+            <SvgImage @name="icon-shared" @alt="Shared repository" @class="icon shared" />
+          {{/if}}
         </span>
       </LinkTo>
     {{/if}}

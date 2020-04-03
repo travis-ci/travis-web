@@ -35,6 +35,9 @@
           @title={{this.repo.name}}
         >
           {{this.repo.name}}
+          {{#if this.repo.shared}}
+            <SvgImage @name="icon-shared" @alt="Shared repository" @class="icon shared" />
+          {{/if}}
         </LinkTo>
       </h1>
     </header>
@@ -171,7 +174,7 @@
             There are no builds for this repo yet
           </p>
           {{#if this.isTriggering}}
-            <LoadingIndicator />
+            <LoadingIndicator @inline={{true}}/>
           {{else}}
             <button
               class="button--blue"
