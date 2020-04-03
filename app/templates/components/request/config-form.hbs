@@ -77,12 +77,6 @@
           }}
         />
 
-        <Request::Messages
-          @request={{this.request}}
-          @messages={{this.messages}}
-          @loading={{this.loading}}
-        />
-
       </form.field>
     </div>
 
@@ -170,9 +164,4 @@
       @slug={{@request.repo.slug}}
     />
   {{/each}}
-
-  <Request::Config
-    data-test-request-config="true"
-    @config={{this.requestConfig}}
-  />
 {{/unless}}
