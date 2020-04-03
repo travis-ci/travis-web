@@ -43,7 +43,7 @@ export default Service.extend({
   }),
 
   searchParams: computed('router.location.path', function () {
-    const search = this.router.location.path.replace('/?', '');
+    const search = this.router.location.path.split('?')[1] || '';
     return new URLSearchParams(search);
   }),
 
