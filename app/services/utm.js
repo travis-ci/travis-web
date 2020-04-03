@@ -1,5 +1,5 @@
+import URL from 'url';
 import Service, { inject as service } from '@ember/service';
-import { isEmpty } from '@ember/utils';
 import { alias } from '@ember/object/computed';
 import { computed } from '@ember/object';
 
@@ -22,6 +22,14 @@ export const SERVICE_UTM_VARS = {
 
 export default Service.extend({
   storage: service(),
+
+  get url() {
+    return new URL(window.location.href);
+  },
+
+  get hasParamsInUrl() {
+    return UTM_FIELD_NAMES.any(field => this.url.searchParams.has(field));
+  },
 
   campaign: alias('storage.utm.campaign'),
   content: alias('storage.utm.content'),
@@ -51,20 +59,30 @@ export default Service.extend({
     }, new QueryParamsHash());
   },
 
-  clear() {
+  capture(forceClear = false) {
+    if (this.hasParamsInUrl) {
+      UTM_FIELD_NAMES.forEach(field => {
+        const value = this.url.searchParams.get(field);
+        this.set(SERVICE_UTM_VARS[field], value);
+      });
+      if (forceClear) this.clearUrl();
+    }
+  },
+
+  removeFromStorage() {
     const [campaign, content, medium, source, term] = new Array(5).fill(null);
     this.setProperties({ campaign, content, medium, source, term });
   },
 
-  capture(queryParams) {
-    try {
-      UTM_FIELD_NAMES.forEach(field => {
-        if (queryParams && !isEmpty(queryParams[field])) {
-          this.set(SERVICE_UTM_VARS[field], queryParams[field]);
-        }
-      });
-    } catch (e) {}
+  removeFromUrl() {
+    const { url, hasParamsInUrl } = this;
+
+    if (hasParamsInUrl) {
+      UTM_FIELD_NAMES.forEach(field => url.searchParams.delete(field));
+      history.replaceState({}, null, url.toString());
+    }
   }
+
 });
 
 class QueryParamsHash extends Object {
