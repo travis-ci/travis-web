@@ -17,7 +17,6 @@ export default Component.extend(BranchSearching, {
   classNames: ['request-configs-form'],
 
   repo: reads('request.repo'),
-  requestConfig: reads('preview.requestConfig'),
 
   rawConfigs: computed('preview.rawConfigs', function () {
     const configs = this.preview.rawConfigs;
