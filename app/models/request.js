@@ -1,13 +1,7 @@
 import Model, { attr, belongsTo } from '@ember-data/model';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
-import {
-  empty,
-  equal,
-  gt,
-  uniqBy
-} from '@ember/object/computed';
-import { task } from 'ember-concurrency';
+import { empty, equal, gt, uniqBy } from '@ember/object/computed';
 
 export const PULL_REQUEST_MERGEABLE = {
   DRAFT: 'draft',
@@ -33,6 +27,7 @@ export default Model.extend({
   noConfigs: empty('raw_configs'),
   repo: belongsTo('repo', { async: true }),
   commit: belongsTo('commit', { async: true }),
+  messages: attr(),
 
   // API models this as hasMany but serializers:request#normalize overrides it
   build: belongsTo('build', { async: true }),
@@ -57,29 +52,12 @@ export default Model.extend({
 
   isDraft: equal('pullRequestMergeable', PULL_REQUEST_MERGEABLE.DRAFT),
 
+  hasMessages: gt('messages.length', 0),
+
   apiConfig: computed('uniqRawConfigs', function () {
     const configs = this.get('uniqRawConfigs');
     if (configs) {
       return configs.find((config) => config.source === 'api');
     }
   }),
-
-  messages: computed('repo.id', 'build.request.id', 'fetchMessages.last.value', function () {
-    const messages = this.fetchMessages.get('lastSuccessful.value');
-    if (!messages) {
-      this.fetchMessages.perform();
-    }
-    return messages || [];
-  }),
-
-  fetchMessages: task(function* () {
-    const repoId = this.get('repo.id');
-    const requestId = this.get('build.request.id');
-    if (repoId && requestId) {
-      const response = yield this.api.get(`/repo/${repoId}/request/${requestId}/messages`) || {};
-      return response.messages;
-    }
-  }).drop(),
-
-  hasMessages: gt('messages.length', 0),
 });
