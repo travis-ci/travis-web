@@ -10,12 +10,18 @@
     />
   {{/if}}
 
-  {{#unless this.customizing}}
+  {{#if (or this.closed this.open)}}
     <Request::Messages
       @request={{this.request}}
       @messages={{this.request.messages}}
     />
-  {{/unless}}
+  {{else}}
+    <Request::Messages
+      @request={{this.request}}
+      @messages={{this.messages}}
+      @loading={{this.loading}}
+    />
+  {{/if}}
 
   {{#unless this.closed}}
     <Request::ConfigsTriggerBuildNotice
