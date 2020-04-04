@@ -164,4 +164,9 @@
       @slug={{@request.repo.slug}}
     />
   {{/each}}
+
+  <Request::Config
+    data-test-request-config="true"
+    @config={{this.requestConfig}}
+  />
 {{/unless}}
