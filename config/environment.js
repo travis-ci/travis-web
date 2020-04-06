@@ -111,6 +111,7 @@ module.exports = function (environment) {
     githubApps: false,
     timing: {
       syncingPageRedirectionTime: 5000,
+      utmParametersResetDelay: 1000,
     },
     intervals: {
       updateTimes: 1000,
@@ -336,6 +337,7 @@ module.exports = function (environment) {
     ENV.intervals.syncingPolling = 0;
     ENV.intervals.githubAppsInstallationPolling = 10;
     ENV.timing.syncingPageRedirectionTime = 30;
+    ENV.timing.utmParametersResetDelay = 10;
 
     ENV.pagination.dashboardReposPerPage = 10;
     ENV.pagination.profileReposPerPage = 10;

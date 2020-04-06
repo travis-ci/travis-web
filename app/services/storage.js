@@ -2,13 +2,7 @@ import Service, { inject as service } from '@ember/service';
 
 export default Service.extend({
   auth: service('storage/auth'),
-
-  get signupUsers() {
-    return JSON.parse(this.getItem('travis.signup.users')) || [];
-  },
-  set signupUsers(value) {
-    this.setItem('travis.signup.users', JSON.stringify(value || []));
-  },
+  utm: service('storage/utm'),
 
   get billingStep() {
     return +this.getItem('travis.billing_step');
