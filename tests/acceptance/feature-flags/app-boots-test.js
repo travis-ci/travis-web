@@ -52,7 +52,7 @@ module('Acceptance | feature flags/app boots', function (hooks) {
     const currentUser = this.server.create('user');
     signInUser(currentUser);
 
-    window.localStorage.setItem('travis.features', JSON.stringify([{foo: false}, {bar: false}]));
+    window.localStorage.setItem('travis.features', JSON.stringify({ [currentUser.name]: [{ foo: false }, { bar: false }] }));
 
     await visit('/');
 
