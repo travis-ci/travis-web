@@ -14,9 +14,7 @@ module('Acceptance | repo caches', function (hooks) {
     const oneDayAgo = new Date(new Date().getTime() - 1000 * 60 * 60 * 24);
     const twoDaysAgo = new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 2);
     const threeDaysAgo = new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 3);
-    const ownerName = 'org-login';
-    const vcsName = 'repository-name';
-    const slug = `${ownerName}/${vcsName}`;
+    const slug = 'org-login/repository-name';
 
     const currentUser = this.server.create('user', {
       name: 'User Name',
@@ -43,11 +41,7 @@ module('Acceptance | repo caches', function (hooks) {
       size: 10061086
     }));
 
-    this.repository = this.server.create('repository', {
-      slug,
-      caches,
-      permissions: { admin: true },
-    });
+    this.repository = this.server.create('repository', { slug, caches });
 
     signInUser(currentUser);
   });

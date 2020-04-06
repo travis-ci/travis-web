@@ -28,15 +28,13 @@
   <main class="repo-main">
     <div class="repo-navigation">
       <RepoShowTabs @repo={{this.repo}} @build={{this.build}} @job={{this.job}} />
-      {{#if this.isAdmin}}
-        <RepoShowTools
-          @repo={{this.repo}}
-          @build={{this.build}}
-          @job={{this.job}}
-          @tab={{this.tab}}
-          @onTriggerBuild={{action "toggleTriggerBuildModal"}}
-        />
-      {{/if}}
+      <RepoShowTools
+        @repo={{this.repo}}
+        @build={{this.build}}
+        @job={{this.job}}
+        @tab={{this.tab}}
+        @onTriggerBuild={{action "toggleTriggerBuildModal"}}
+      />
     </div>
     <div class="travistab-body repo-body">
       {{#if hasBlock}}

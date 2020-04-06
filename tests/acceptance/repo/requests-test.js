@@ -11,7 +11,7 @@ module('Acceptance | repo | requests', function (hooks) {
   setupMirage(hooks);
 
   hooks.beforeEach(function () {
-    this.repo = this.server.create('repository', { slug: 'travis-ci/travis-web', permissions: { admin: true } });
+    this.repo = this.server.create('repository', { slug: 'travis-ci/travis-web' });
   });
 
   test('list requests', async function (assert) {

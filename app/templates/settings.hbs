@@ -1,227 +1,231 @@
-<div class="settings" data-test-settings-content>
-  <section class="settings-section">
-    <h2 class="small-title">
-      General
-    </h2>
-    <ul class="settings-list--columns">
-      <li>
-        <SettingsSwitch
-          @active={{this.model.settings.build_pushes}}
-          @repo={{this.repo}}
-          @description="Build pushed branches"
-          @key="build_pushes"
-        />
-        <ExternalLinkTo
-          href="https://docs.travis-ci.com/user/web-ui/#build-pushed-branches"
-          title="about branch updates"
-          class="settings-tooltip"
-        >
-          <EmberTooltip @text="Read more about branch updates" />
-          <SvgImage @name="icon-help" @class="icon-help" />
-        </ExternalLinkTo>
-      </li>
-      <li>
-        <LimitConcurrentBuilds
-          @value={{this.model.settings.maximum_number_of_builds}}
-          @enabled={{this.concurrentBuildsLimit}}
-          @repo={{this.repo}}
-        />
-      </li>
-      <li>
-        <SettingsSwitch
-          @active={{this.model.settings.build_pull_requests}}
-          @repo={{this.repo}}
-          @description="Build pushed {{vcs-vocab this.repo.vcsType 'pullRequest' plural=true lower=true}}"
-          @key="build_pull_requests"
-        />
-        <ExternalLinkTo
-          href="https://docs.travis-ci.com/user/web-ui/#build-pushed-pull-requests"
-          title="about {{vcs-vocab this.repo.vcsType 'pullRequest' lower=true}} updates"
-          class="settings-tooltip"
-        >
-          <EmberTooltip @text="Read more about {{vcs-vocab this.repo.vcsType 'pullRequest' lower=true}} updates" />
-          <SvgImage @name="icon-help" @class="icon-help" />
-        </ExternalLinkTo>
-      </li>
-    </ul>
-  </section>
-  {{#if this.showAutoCancellationSwitches}}
-    <section class="settings-section auto-cancellation">
-      <h2 class="small-title display-inline">
-        Auto Cancellation
-      </h2>
-      <p>
-        Auto Cancellation allows you to only run builds for the latest commits in the queue.
-        This setting can be applied to builds for Branch builds and {{vcs-vocab this.repo.vcsType 'pullRequest'}} builds separately.
-        Builds will only be canceled if they are waiting to run, allowing for any running jobs to finish.
-      </p>
-      <ul class="settings-list--columns">
-        <li>
-          <SettingsSwitch
-            @active={{this.model.settings.auto_cancel_pushes}}
-            @repo={{this.repo}}
-            @description="Auto cancel branch builds"
-            @key="auto_cancel_pushes"
-          />
-        </li>
-        <li>
-          <SettingsSwitch
-            @active={{this.model.settings.auto_cancel_pull_requests}}
-            @repo={{this.repo}}
-            @description="Auto cancel {{vcs-vocab this.repo.vcsType 'pullRequest' lower=true}} builds"
-            @key="auto_cancel_pull_requests"
-          />
-        </li>
-      </ul>
-    </section>
-  {{/if}}
-  {{#if this.showAllowConfigImportsSwitch}}
-    <section class="settings-section config-import">
-      <h2 class="small-title display-inline">
-        Config Import
-      </h2>
-      <ul class="settings-list--columns">
-        <li>
-          <SettingsSwitch
-            @active={{this.model.settings.allow_config_imports}}
-            @repo={{this.repo}}
-            @description="Allow importing config files from this repository"
-            @key="allow_config_imports"
-          />
-        </li>
-      </ul>
-    </section>
-  {{/if}}
-  <section class="settings-section">
-    <h2 class="small-title">
-      Environment Variables
-    </h2>
-    <p>
-      Customize your build using environment variables. For secure tips on generating private keys
-      <ExternalLinkTo @href={{config-get "urls.bestpracticessecurity"}}>
-        read our documentation
-      </ExternalLinkTo>
-    </p>
-    <ul class="settings-list--envvars">
-      {{#each this.envVars as |envVar|}}
-        <EnvVar @envVar={{envVar}} />
-      {{/each}}
-    </ul>
-    <div id="env-var-secrecy">
-      <p>
-        <SvgImage @name="icon-megaphone" @class="icon icon-megaphone" />
-        <span class="label-align">
-          If your secret variable has special characters like <code>&amp;</code>,
-          escape them by adding <code>\</code> in front of each special character.
-          For example, <code>ma&amp;w!doc</code> would be entered as <code>ma\&amp;w\!doc</code>.
-        </span>
-      </p>
-    </div>
-    <AddEnvVar @repo={{this.repo}} />
-  </section>
-  <section class="settings-section">
-    <h2 class="small-title display-inline">
-      Cron Jobs
-    </h2>
-    <ul class="settings-list--crons">
-      {{#each this.cronJobs as |cron|}}
-        <CronJob @cron={{cron}} />
-      {{/each}}
-    </ul>
-    <AddCronJob @repository={{this.model.repository}} />
-  </section>
-  {{#if (and (config-get 'endpoints.sshKey') (or this.features.enterpriseVersion this.repo.private))}}
-    <section class="settings-section" data-test-ssh-key-section>
+{{#if this.isAdmin}}
+  <div class="settings" data-test-settings-content>
+    <section class="settings-section">
       <h2 class="small-title">
-        SSH Key
+        General
       </h2>
-      {{#if this.model.customSshKey}}
-        <SshKey
-          @key={{this.model.customSshKey}}
-          @sshKeyDeleted={{action "sshKeyDeleted"}}
-          @pushAccess={{this.model.hasPushAccess}}
-        />
-      {{else}}
-        <SshKey @key={{this.model.sshKey}} />
-        <AddSshKey @repo={{this.repo}} @sshKeyAdded={{action "sshKeyAdded"}} />
-      {{/if}}
-      {{#unless this.model.hasPushAccess}}
-        <p>
-          You don't have sufficient permissons to add or remove ssh keys on this repository.
-        </p>
-      {{/unless}}
-    </section>
-  {{/if}}
-  {{#if this.showBetaFeatures}}
-    <section class="settings-section beta_features">
-      <h2 class="small-title display-inline">
-        Beta Features
-      </h2>
-      <p>
-        These features are in beta. If you find things to be not working as expected
-        or lacking, please let us know in the <a href="{{config-get 'urls.communityEarlyReleases'}}">Travis CI community forum</a>
-        or email <a href="{{config-get 'urls.emailSupport'}}">support</a>.
-      </p>
       <ul class="settings-list--columns">
-        {{#if this.showConfigValidationSwitches}}
+        <li>
+          <SettingsSwitch
+            @active={{this.model.settings.build_pushes}}
+            @repo={{this.repo}}
+            @description="Build pushed branches"
+            @key="build_pushes"
+          />
+          <ExternalLinkTo
+            href="https://docs.travis-ci.com/user/web-ui/#build-pushed-branches"
+            title="about branch updates"
+            class="settings-tooltip"
+          >
+            <EmberTooltip @text="Read more about branch updates" />
+            <SvgImage @name="icon-help" @class="icon-help" />
+          </ExternalLinkTo>
+        </li>
+        <li>
+          <LimitConcurrentBuilds
+            @value={{this.model.settings.maximum_number_of_builds}}
+            @enabled={{this.concurrentBuildsLimit}}
+            @repo={{this.repo}}
+          />
+        </li>
+        <li>
+          <SettingsSwitch
+            @active={{this.model.settings.build_pull_requests}}
+            @repo={{this.repo}}
+            @description="Build pushed {{vcs-vocab this.repo.vcsType 'pullRequest' plural=true lower=true}}"
+            @key="build_pull_requests"
+          />
+          <ExternalLinkTo
+            href="https://docs.travis-ci.com/user/web-ui/#build-pushed-pull-requests"
+            title="about {{vcs-vocab this.repo.vcsType 'pullRequest' lower=true}} updates"
+            class="settings-tooltip"
+          >
+            <EmberTooltip @text="Read more about {{vcs-vocab this.repo.vcsType 'pullRequest' lower=true}} updates" />
+            <SvgImage @name="icon-help" @class="icon-help" />
+          </ExternalLinkTo>
+        </li>
+      </ul>
+    </section>
+    {{#if this.showAutoCancellationSwitches}}
+      <section class="settings-section auto-cancellation">
+        <h2 class="small-title display-inline">
+          Auto Cancellation
+        </h2>
+        <p>
+          Auto Cancellation allows you to only run builds for the latest commits in the queue.
+          This setting can be applied to builds for Branch builds and {{vcs-vocab this.repo.vcsType 'pullRequest'}} builds separately.
+          Builds will only be canceled if they are waiting to run, allowing for any running jobs to finish.
+        </p>
+        <ul class="settings-list--columns">
           <li>
             <SettingsSwitch
-              @active={{this.model.settings.config_validation}}
+              @active={{this.model.settings.auto_cancel_pushes}}
               @repo={{this.repo}}
-              @description="Enable build config validation"
-              @key="config_validation"
+              @description="Auto cancel branch builds"
+              @key="auto_cancel_pushes"
             />
-            <ExternalLinkTo
-              href="https://docs.travis-ci.com/user/build-config-validation"
-              title="about build config validation"
-              class="settings-tooltip"
-            >
-              <EmberTooltip @text="Read about build config validation" />
-              <SvgImage @name="icon-help" @class="icon-help" />
-            </ExternalLinkTo>
           </li>
-        {{/if}}
+          <li>
+            <SettingsSwitch
+              @active={{this.model.settings.auto_cancel_pull_requests}}
+              @repo={{this.repo}}
+              @description="Auto cancel {{vcs-vocab this.repo.vcsType 'pullRequest' lower=true}} builds"
+              @key="auto_cancel_pull_requests"
+            />
+          </li>
+        </ul>
+      </section>
+    {{/if}}
+    {{#if this.showAllowConfigImportsSwitch}}
+      <section class="settings-section config-import">
+        <h2 class="small-title display-inline">
+          Config Import
+        </h2>
+        <ul class="settings-list--columns">
+          <li>
+            <SettingsSwitch
+              @active={{this.model.settings.allow_config_imports}}
+              @repo={{this.repo}}
+              @description="Allow importing config files from this repository"
+              @key="allow_config_imports"
+            />
+          </li>
+        </ul>
+      </section>
+    {{/if}}
+    <section class="settings-section">
+      <h2 class="small-title">
+        Environment Variables
+      </h2>
+      <p>
+        Customize your build using environment variables. For secure tips on generating private keys
+        <ExternalLinkTo @href={{config-get "urls.bestpracticessecurity"}}>
+          read our documentation
+        </ExternalLinkTo>
+      </p>
+      <ul class="settings-list--envvars">
+        {{#each this.envVars as |envVar|}}
+          <EnvVar @envVar={{envVar}} />
+        {{/each}}
       </ul>
+      <div id="env-var-secrecy">
+        <p>
+          <SvgImage @name="icon-megaphone" @class="icon icon-megaphone" />
+          <span class="label-align">
+            If your secret variable has special characters like <code>&amp;</code>,
+            escape them by adding <code>\</code> in front of each special character.
+            For example, <code>ma&amp;w!doc</code> would be entered as <code>ma\&amp;w\!doc</code>.
+          </span>
+        </p>
+      </div>
+      <AddEnvVar @repo={{this.repo}} />
     </section>
-  {{/if}}
-</div>
-
-<Modal
-  @isVisible={{this.displaySettingsDisabledAfterMigrationModal}}
-  @closeOnClickOverlay={{false}}
->
-  <div
-    data-test-settings-disabled-after-migration-modal
-    class="migrated-repo-settings-modal"
-  >
-    <h3 class="migrated-repo-settings-modal__header h3--teal">
-      Your repository has been migrated to <br />
-      travis-ci.com
-    </h3>
-    <p>
-      As a result, your repository is now in a <b>read-only</b> state.
-    </p>
-    <p>
-      If you wish to configure your repository, you can do so by visiting the settings page on travis-ci.com.
-      Read-only historical data, such as Requests, Build History and Branches can still be viewed.
-    </p>
-    <div>
-      <LinkTo
-        @route="builds"
-        @model={{this.repo}}
-        class="migrated-repo-settings-modal__button button--blue"
-      >
-        View Build History
-      </LinkTo>
-      <ExternalLinkTo
-        @href={{this.migratedRepositorySettingsLink}}
-        class="migrated-repo-settings-modal__button button--dark-grey"
-      >
-        Edit settings on .com
-      </ExternalLinkTo>
-      <LinkTo @route="repo.index" @models={{array repo.provider repo.ownerName repo.vcsName}} class="modal-close pointer">
-        <SvgImage @name="icon-failed" @class="icon" />
-      </LinkTo>
-    </div>
+    <section class="settings-section">
+      <h2 class="small-title display-inline">
+        Cron Jobs
+      </h2>
+      <ul class="settings-list--crons">
+        {{#each this.cronJobs as |cron|}}
+          <CronJob @cron={{cron}} />
+        {{/each}}
+      </ul>
+      <AddCronJob @repository={{this.model.repository}} />
+    </section>
+    {{#if (and (config-get 'endpoints.sshKey') (or this.features.enterpriseVersion this.repo.private))}}
+      <section class="settings-section" data-test-ssh-key-section>
+        <h2 class="small-title">
+          SSH Key
+        </h2>
+        {{#if this.model.customSshKey}}
+          <SshKey
+            @key={{this.model.customSshKey}}
+            @sshKeyDeleted={{action "sshKeyDeleted"}}
+            @pushAccess={{this.model.hasPushAccess}}
+          />
+        {{else}}
+          <SshKey @key={{this.model.sshKey}} />
+          <AddSshKey @repo={{this.repo}} @sshKeyAdded={{action "sshKeyAdded"}} />
+        {{/if}}
+        {{#unless this.model.hasPushAccess}}
+          <p>
+            You don't have sufficient permissons to add or remove ssh keys on this repository.
+          </p>
+        {{/unless}}
+      </section>
+    {{/if}}
+    {{#if this.showBetaFeatures}}
+      <section class="settings-section beta_features">
+        <h2 class="small-title display-inline">
+          Beta Features
+        </h2>
+        <p>
+          These features are in beta. If you find things to be not working as expected
+          or lacking, please let us know in the <a href="{{config-get 'urls.communityEarlyReleases'}}">Travis CI community forum</a>
+          or email <a href="{{config-get 'urls.emailSupport'}}">support</a>.
+        </p>
+        <ul class="settings-list--columns">
+          {{#if this.showConfigValidationSwitches}}
+            <li>
+              <SettingsSwitch
+                @active={{this.model.settings.config_validation}}
+                @repo={{this.repo}}
+                @description="Enable build config validation"
+                @key="config_validation"
+              />
+              <ExternalLinkTo
+                href="https://docs.travis-ci.com/user/build-config-validation"
+                title="about build config validation"
+                class="settings-tooltip"
+              >
+                <EmberTooltip @text="Read about build config validation" />
+                <SvgImage @name="icon-help" @class="icon-help" />
+              </ExternalLinkTo>
+            </li>
+          {{/if}}
+        </ul>
+      </section>
+    {{/if}}
   </div>
-</Modal>
+
+  <Modal
+    @isVisible={{this.displaySettingsDisabledAfterMigrationModal}}
+    @closeOnClickOverlay={{false}}
+  >
+    <div
+      data-test-settings-disabled-after-migration-modal
+      class="migrated-repo-settings-modal"
+    >
+      <h3 class="migrated-repo-settings-modal__header h3--teal">
+        Your repository has been migrated to <br />
+        travis-ci.com
+      </h3>
+      <p>
+        As a result, your repository is now in a <b>read-only</b> state.
+      </p>
+      <p>
+        If you wish to configure your repository, you can do so by visiting the settings page on travis-ci.com.
+        Read-only historical data, such as Requests, Build History and Branches can still be viewed.
+      </p>
+      <div>
+        <LinkTo
+          @route="builds"
+          @model={{this.repo}}
+          class="migrated-repo-settings-modal__button button--blue"
+        >
+          View Build History
+        </LinkTo>
+        <ExternalLinkTo
+          @href={{this.migratedRepositorySettingsLink}}
+          class="migrated-repo-settings-modal__button button--dark-grey"
+        >
+          Edit settings on .com
+        </ExternalLinkTo>
+        <LinkTo @route="repo.index" @models={{array repo.provider repo.ownerName repo.vcsName}} class="modal-close pointer">
+          <SvgImage @name="icon-failed" @class="icon" />
+        </LinkTo>
+      </div>
+    </div>
+  </Modal>
+{{else}}
+  <p>Your permissions are insufficient to access this content.</p>
+{{/if}}

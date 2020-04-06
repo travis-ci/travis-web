@@ -1,6 +1,5 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { bool } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 
 export default Component.extend({
@@ -9,8 +8,6 @@ export default Component.extend({
 
   isShowingTriggerBuildModal: false,
   isShowingStatusBadgeModal: false,
-
-  isAdmin: bool('repo.permissions.admin'),
 
   repoUrl: computed('repo.{ownerName,vcsName,vcsType}', function () {
     const owner = this.get('repo.ownerName');
