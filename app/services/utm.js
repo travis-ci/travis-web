@@ -42,8 +42,11 @@ export default Service.extend({
     return Object.keys(this.existing).length > 0;
   }),
 
-  searchParams: computed('router.location.path', function () {
-    const search = this.router.location.path.split('?')[1] || '';
+  searchParams: computed('router.currentURL', function () {
+    let search = '';
+    try {
+      search = this.router.location.getURL().split('?')[1] || '';
+    } catch (e) {}
     return new URLSearchParams(search);
   }),
 
@@ -67,7 +70,7 @@ export default Service.extend({
         const value = this.searchParams.get(field);
         this.set(SERVICE_UTM_VARS[field], value);
       });
-      if (forceClear) this.clearUrl();
+      if (forceClear) this.removeFromUrl();
     }
   },
 
