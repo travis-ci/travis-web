@@ -2,8 +2,9 @@ import Controller from '@ember/controller';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 import { alias, reads } from '@ember/object/computed';
+import WithConfigValidation from 'travis/mixins/components/with-config-validation';
 
-export default Controller.extend({
+export default Controller.extend(WithConfigValidation, {
   repositories: service(),
 
   latestCurrentBuild: alias('repositories.accessible.firstObject.currentBuild'),

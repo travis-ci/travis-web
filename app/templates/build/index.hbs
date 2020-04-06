@@ -1,9 +1,11 @@
 {{#let this.build as |build|}}
   {{#if build.isMatrix}}
-    <Request::Messages
-      @request={{this.request}}
-      @messages={{this.request.messages}}
-    />
+    {{#unless (eq this.messagesMaxLevel "info")}}
+      <Request::Messages
+        @request={{this.request}}
+        @messages={{this.request.messages}}
+      />
+    {{/unless}}
     {{#if build.stages}}
       {{#each build.sortedStages as |stage|}}
         <JobsList
