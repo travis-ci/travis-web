@@ -6,10 +6,6 @@ import { later } from '@ember/runloop';
 
 const { utmParametersResetDelay } = config.timing;
 
-const ROUTES_WITH_UTM = [
-  'plans.thank-you'
-];
-
 export default Controller.extend({
   features: service(),
   metrics: service(),
@@ -17,14 +13,10 @@ export default Controller.extend({
   utm: service(),
 
   trackPage(page) {
-    const { currentURL, currentRouteName } = this.router;
+    page = page || this.router.currentURL;
 
-    page = page || currentURL;
-
-    if (ROUTES_WITH_UTM.includes(currentRouteName)) {
-      const delimiter = page.includes('?') ? '&' : '?';
-      page = `${page}${delimiter}${this.utm.existing.toString()}`;
-    }
+    const delimiter = page.includes('?') ? '&' : '?';
+    page = `${page}${delimiter}${this.utm.existing}`;
 
     return new Promise(resolve => {
       try {
