@@ -1,4 +1,5 @@
 import Service, { inject as service } from '@ember/service';
+import parseWithDefault from 'travis/utils/json-parser';
 import { task } from 'ember-concurrency';
 import { isEmpty } from '@ember/utils';
 
@@ -6,6 +7,7 @@ export default Service.extend({
   store: service(),
   features: service(),
   raven: service(),
+  auth: service(),
   storage: service(),
 
   serverFlags: [],
@@ -51,7 +53,11 @@ export default Service.extend({
       return obj;
     });
 
-    this.storage.setItem('travis.features', JSON.stringify(state));
+    const oldFeatureState = parseWithDefault(this.storage.getItem('travis.features'), {});
+    this.storage.setItem('travis.features', JSON.stringify({
+      ...oldFeatureState,
+      [this.auth.userName]: state
+    }));
 
     return state;
   },
@@ -59,10 +65,10 @@ export default Service.extend({
   fetchTask: task(function* ({forceServerRequest} = false) {
     try {
       // try to read from local storage first, fall back to API
-      const localFlags = yield JSON.parse(this.storage.getItem('travis.features'));
+      const localFlags = yield parseWithDefault(this.storage.getItem('travis.features'), {});
 
-      if (!forceServerRequest && !isEmpty(localFlags)) {
-        this._setFlagStateFromStorage(localFlags);
+      if (!forceServerRequest && !isEmpty(localFlags) && !isEmpty(localFlags[this.auth.userName])) {
+        this._setFlagStateFromStorage(localFlags[this.auth.userName]);
       } else {
         const featureSet = yield this.store.findAll('beta-feature');
         this.set('serverFlags', featureSet);
@@ -77,6 +83,28 @@ export default Service.extend({
       this.raven.logException(e);
     }
   }).drop(),
+
+  _persistToLocalStorage(feature, status) {
+    const featureState = parseWithDefault(this.storage.getItem('travis.features'), {});
+    const currentUserFeatureState = featureState[this.auth.userName];
+    const idx = currentUserFeatureState.findIndex(f => Object.keys(f)[0] === feature);
+    if (idx !== -1) {
+      currentUserFeatureState.splice(idx, 1);
+    }
+    currentUserFeatureState.pushObject({ [feature]: status });
+    this.storage.setItem('travis.features', JSON.stringify({
+      ...featureState,
+      [this.auth.userName]: currentUserFeatureState
+    }));
+  },
+
+  applyFeatureState(feature) {
+    const features = this.features;
+    let { name, enabled } = feature;
+
+    enabled ? features.enable(name) : features.disable(name);
+    this._persistToLocalStorage(name, enabled);
+  },
 
   reset() {
     this.serverFlags.map(flag => {

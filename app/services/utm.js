@@ -1,5 +1,7 @@
-import Service from '@ember/service';
+import Service, { inject as service } from '@ember/service';
 import { isEmpty } from '@ember/utils';
+import { alias } from '@ember/object/computed';
+import { computed } from '@ember/object';
 
 export const UTM_FIELDS = {
   CAMPAIGN: 'utm_campaign',
@@ -19,22 +21,48 @@ export const SERVICE_UTM_VARS = {
 };
 
 export default Service.extend({
-  campaign: null,
-  content: null,
-  medium: null,
-  source: null,
-  term: null,
+  storage: service(),
+
+  campaign: alias('storage.utm.campaign'),
+  content: alias('storage.utm.content'),
+  medium: alias('storage.utm.medium'),
+  source: alias('storage.utm.source'),
+  term: alias('storage.utm.term'),
+
+  all: computed(...Object.values(SERVICE_UTM_VARS), function () {
+    return this.peek(UTM_FIELD_NAMES);
+  }),
+
+  existing: computed(...Object.values(SERVICE_UTM_VARS), function () {
+    return this.peek(UTM_FIELD_NAMES, false);
+  }),
+
+  hasData: computed('existing', function () {
+    return Object.keys(this.existing).length > 0;
+  }),
+
+  peek(fields, includeEmpty = true) {
+    return fields.reduce((utmData, field) => {
+      const value = this.get(SERVICE_UTM_VARS[field]);
+      if (value || includeEmpty) {
+        utmData[field] = value;
+      }
+      return utmData;
+    }, {});
+  },
+
+  clear() {
+    const [campaign, content, medium, source, term] = new Array(5).fill(null);
+    this.setProperties({ campaign, content, medium, source, term });
+  },
 
   capture(queryParams) {
-    let found = false;
     try {
       UTM_FIELD_NAMES.forEach(field => {
         if (queryParams && !isEmpty(queryParams[field])) {
-          found = true;
           this.set(SERVICE_UTM_VARS[field], queryParams[field]);
         }
       });
     } catch (e) {}
-    return found;
   }
 });
