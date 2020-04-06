@@ -1,7 +1,9 @@
-<Request::Messages
-  @request={{this.request}}
-  @messages={{this.request.messages}}
-/>
+{{#unless (eq this.messagesMaxLevel "info")}}
+  <Request::Messages
+    @request={{this.request}}
+    @messages={{this.request.messages}}
+  />
+{{/unless}}
 
 {{#if this.error}}
   <p class="notice-banner--red">
