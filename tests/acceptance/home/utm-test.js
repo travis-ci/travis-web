@@ -26,12 +26,20 @@ module('Acceptance | utm capture', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 
+  hooks.beforeEach(function () {
+    this.utm = this.owner.lookup('service:utm');
+  });
+
+  hooks.afterEach(function () {
+    this.utm.removeFromStorage();
+  });
+
   test('utm query params get captured', async function (assert) {
     await visit(INITIAL_URL);
     await settled();
     await timeout(utmParametersResetDelay);
 
-    const { campaign, content, medium, source, term } = this.owner.lookup('service:utm');
+    const { campaign, content, medium, source, term } = this.utm;
 
     assert.equal(currentURL(), '/');
     assert.equal(campaign, TEST_DATA[UTM_FIELDS.CAMPAIGN]);
