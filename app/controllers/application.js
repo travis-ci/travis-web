@@ -13,7 +13,7 @@ export default Controller.extend({
   utm: service(),
 
   trackPage(page) {
-    page = page || this.router.currentURL;
+    page = page || this.router.currentURL || this.router.location.getURL();
 
     const delimiter = page.includes('?') ? '&' : '?';
     page = `${page}${delimiter}${this.utm.existing}`;
