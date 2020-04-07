@@ -1,36 +1,27 @@
 import Controller from '@ember/controller';
 import { inject as service } from '@ember/service';
-import QueryParams from 'ember-parachute';
 import { Promise } from 'rsvp';
 import config from 'travis/config/environment';
-import { UTM_FIELDS, UTM_FIELD_NAMES } from 'travis/services/utm';
 import { later } from '@ember/runloop';
 
 const { utmParametersResetDelay } = config.timing;
 
-export const UTM_QUERY_PARAMS = new QueryParams({
-  [UTM_FIELDS.CAMPAIGN]: { defaultValue: null, replace: true, refresh: true },
-  [UTM_FIELDS.CONTENT]: { defaultValue: null, replace: true, refresh: true },
-  [UTM_FIELDS.MEDIUM]: { defaultValue: null, replace: true, refresh: true },
-  [UTM_FIELDS.SOURCE]: { defaultValue: null, replace: true, refresh: true },
-  [UTM_FIELDS.TERM]: { defaultValue: null, replace: true, refresh: true },
-});
-
-export default Controller.extend(UTM_QUERY_PARAMS.Mixin, {
+export default Controller.extend({
   features: service(),
-  utm: service(),
-  router: service(),
   metrics: service(),
+  router: service(),
+  utm: service(),
 
-  setup({ queryParams }) {
-    this.utm.capture(queryParams);
-  },
+  trackPage(page) {
+    page = page || this.router.currentURL || this.router.location.getURL();
 
-  reportPage() {
+    const delimiter = page.includes('?') ? '&' : '?';
+    page = `${page}${delimiter}${this.utm.existing}`;
+
     return new Promise(resolve => {
       try {
         this.metrics.trackPage({
-          page: this.router.currentURL,
+          page,
           hitCallback: () => resolve()
         });
         // If page is not reported to GA for some reason,
@@ -43,21 +34,12 @@ export default Controller.extend(UTM_QUERY_PARAMS.Mixin, {
   },
 
   handleRouteChange() {
-    this.reportPage().then(() => {
-      if (this.utm.hasData) {
-        this.resetUTMs();
-      }
-    });
-  },
-
-  resetUTMs() {
-    try {
-      this.resetQueryParams([...UTM_FIELD_NAMES]);
-    } catch (e) {}
+    this.trackPage().then(() => this.utm.removeFromUrl());
   },
 
   init() {
     this._super(...arguments);
     this.router.on('routeDidChange', () => this.handleRouteChange());
+    this.utm.capture();
   }
 });

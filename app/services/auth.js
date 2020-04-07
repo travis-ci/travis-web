@@ -251,7 +251,7 @@ export default Service.extend({
       }
       if (this.utm.hasData) {
         currentUser.set('utmParams', this.utm.all);
-        currentUser.save().then(() => this.utm.clear());
+        currentUser.save();
       }
     }
   },
