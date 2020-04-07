@@ -32,7 +32,7 @@
     {{#if this.repositories.loadingData}}
       <LoadingIndicator @center={{true}} />
     {{else}}
-      <ReposList @repos={{this.repositoryResults}} />
+      <ReposList @repos={{this.activeRepositoryResults}} />
     {{/if}}
   </div>
 {{/if}}
