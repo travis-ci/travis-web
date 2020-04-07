@@ -86,7 +86,7 @@ module('Acceptance | home/sidebar tabs', function (hooks) {
     await visit('/');
     await click('[data-test-sidebar-running-tab] a');
 
-    assert.dom('[data-test-sidebar-running-tab]').hasText('Running (0/1)', 'running tab correctly shows number of started/queued jobs');
+    assert.dom('[data-test-sidebar-running-tab]').containsText('Running (0/1)', 'running tab correctly shows number of started/queued jobs');
     assert.dom('[data-test-sidebar-queued-job]').exists('expected one queued job');
     percySnapshot(assert);
   });
@@ -107,7 +107,7 @@ module('Acceptance | home/sidebar tabs', function (hooks) {
     await visit('/');
     await click('[data-test-sidebar-running-tab] a');
 
-    assert.dom('[data-test-sidebar-running-tab]').hasText('Running (4/10)', 'running tab correctly shows number of started/queued jobs');
+    assert.dom('[data-test-sidebar-running-tab]').containsText('Running (4/10)', 'running tab correctly shows number of started/queued jobs');
     assert.dom('[data-test-sidebar-running-job]').exists({ count: 4 });
     assert.dom('[data-test-sidebar-running-job]:first-of-type time.duration').hasAttribute('title', `Started ${prettyDate([startedAt])}`);
     assert.dom('[data-test-sidebar-queued-job]').exists({ count: 6 });

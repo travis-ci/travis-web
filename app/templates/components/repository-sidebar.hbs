@@ -3,7 +3,7 @@
     <Input
       @id="travis-search"
       @value={{readonly this.repositories.searchQuery}}
-      @key-up={{action "onQueryChange"}}
+      @key-up={{action this.onQueryChange}}
       @placeholder="Search all repositories"
     />
     <label for="travis-search">
@@ -14,10 +14,10 @@
 <ReposListTabs
   @startedJobsCount={{this.startedJobsCount}}
   @allJobsCount={{this.allJobsCount}}
-  @showMyRepositories={{action "showMyRepositories"}}
-  @showRunningJobs={{action "showRunningJobs"}}
+  @showMyRepositories={{action this.showMyRepositories}}
+  @showRunningJobs={{action this.showRunningJobs}}
 />
-{{#if this.showRunningJobs}}
+{{#if this.isShowingRunningJobs}}
   <div class="travistab-body sidebar-list">
     <div>
       <RunningJobs @jobs={{this.runningJobs}} @jobsLoaded={{this.jobsLoaded}} />

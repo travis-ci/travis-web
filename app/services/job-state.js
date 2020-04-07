@@ -1,37 +1,37 @@
 import Service, { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
+import { computed } from '@ember/object';
 import { filter, reads, gt } from '@ember/object/computed';
 
-const FINISHED_STATES = ['failed', 'canceled', 'passed'];
-const RUNNING_STATES = ['started'];
-const QUEUED_STATES = ['created', 'queued', 'booting', 'received'];
-const RUNNING_AND_FINISHED_STATES = RUNNING_STATES.concat(FINISHED_STATES);
-const DISPLAY_TIMEOUT_SEC = 30;
+export const FINISHED_STATES = ['failed', 'canceled', 'passed'];
+export const RUNNING_STATES = ['started'];
+export const QUEUED_STATES = ['created', 'queued', 'booting', 'received'];
+export const UNFINISHED_STATES = QUEUED_STATES.concat(RUNNING_STATES);
 
 export default Service.extend({
   store: service(),
 
-  jobs: reads('fetchJobs.lastSuccessful.value'),
-  jobsLoaded: gt('fetchJobs.performCount', 0),
-
-  runningJobs: filter('jobs', (job) => {
-    let stillToShow = true;
-    if (job.finishedAt) {
-      const jobTime = new Date(job.finishedAt);
-      const nowTime = new Date();
-      stillToShow = !job.build.get('isFinished') || (nowTime.getTime() - jobTime.getTime()) <= DISPLAY_TIMEOUT_SEC;
-    }
-    return RUNNING_AND_FINISHED_STATES.includes(job.state) && stillToShow;
+  jobs: reads('peekJobs.lastSuccessful.value'),
+  jobsLoaded: gt('fetchUnfinishedJobs.performCount', 0),
+  sortedJobs: computed('jobs', function () {
+    const { jobs } = this;
+    return jobs && jobs.sortBy('number');
   }),
-  queuedJobs: filter('jobs', (job) => QUEUED_STATES.includes(job.state)),
 
-  fetchJobs: task(function* (options = {}) {
-    const { usePeek } = options;
-    if (usePeek) {
-      return this.store.peekAll('job');
-    } else {
-      const allPendingStates = QUEUED_STATES.concat(RUNNING_STATES);
-      return yield this.store.query('job', { state: allPendingStates });
-    }
-  })
+  runningJobs: filter('sortedJobs.@each.state', (job) => RUNNING_STATES.includes(job.state)),
+  queuedJobs: filter('sortedJobs.@each.state', (job) => QUEUED_STATES.includes(job.state)),
+  unfinishedJobs: computed('queuedJobs.[]', 'runningJobs.[]', function () {
+    const { queuedJobs = [], runningJobs = [] } = this;
+    return [...queuedJobs, ...runningJobs];
+  }),
+
+  peekJobs: task(function* () {
+    return yield this.store.peekAll('job');
+  }),
+
+  fetchUnfinishedJobs: task(function* () {
+    const unfinishedJobs = yield this.store.query('job', { state: UNFINISHED_STATES });
+    yield this.peekJobs.perform();
+    return unfinishedJobs;
+  }),
 });
