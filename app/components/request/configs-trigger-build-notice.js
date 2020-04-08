@@ -5,7 +5,7 @@ import { pluralize } from 'ember-inflector';
 import { STATUSES } from 'travis/components/request/configs';
 
 export default Component.extend({
-  classNames: ['request-configs-trigger-build-notice'],
+  tagName: '',
 
   configs: 0,
   status: null,

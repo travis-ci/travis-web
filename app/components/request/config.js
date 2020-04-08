@@ -3,7 +3,7 @@ import { computed } from '@ember/object';
 import { later } from '@ember/runloop';
 
 export default Component.extend({
-  classNames: ['request-config'],
+  tagName: '',
   copied: false,
   expanded: true,
 

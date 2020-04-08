@@ -1,17 +1,17 @@
-import ClipboardJS from 'ember-cli-clipboard';
+import ClipboardJS from 'clipboard';
 import Component from '@ember/component';
 import layout from 'travis/templates/components/request/copy-button';
 
 export default Component.extend({
   layout,
-  classNames: ['copy-button'],
+  tagName: '',
 
   didInsertElement(element) {
-    this.clipboard = this.createClipboard();
+    this.clipboard = this.createClipboard(element);
   },
 
-  createClipboard() {
-    const clipboard = new ClipboardJS(this.element, { text: this.copyText });
+  createClipboard(element) {
+    const clipboard = new ClipboardJS('body', { text: this.copyText });
     clipboard.on('success', this.success);
     return clipboard;
   },

@@ -12,7 +12,8 @@ import { inject as service } from '@ember/service';
 import { parseWithDefault } from 'travis/services/storage';
 
 export default Component.extend({
-  classNames: ['request-config'],
+  tagName: '',
+
   externalLinks: service(),
 
   copied: false,
