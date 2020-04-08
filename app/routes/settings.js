@@ -8,10 +8,11 @@ export default TravisRoute.extend({
   api: service(),
   auth: service(),
   raven: service(),
+  flashes: service(),
 
   needsAuth: true,
 
-  setupController: function (controller, model) {
+  setupController(controller, model) {
     this._super(...arguments);
     controller.set('repo', this.modelFor('repo'));
     this.controllerFor('repo').activate('settings');
@@ -67,6 +68,15 @@ export default TravisRoute.extend({
       const hasPushAccess = permissions.filter(p => p === repoId);
       return hasPushAccess;
     });
+  },
+
+  beforeModel() {
+    const repo = this.modelFor('repo');
+    const isAdmin = repo.get('permissions.admin');
+    if (!isAdmin) {
+      this.transitionTo('repo.index');
+      this.flashes.error('Your permissions are insufficient to access this repository\'s settings');
+    }
   },
 
   model() {

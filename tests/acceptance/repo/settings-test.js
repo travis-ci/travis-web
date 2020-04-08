@@ -30,7 +30,10 @@ module('Acceptance | repo settings', function (hooks) {
     const repository = this.server.create('repository', {
       name: 'repository-name',
       slug: 'org-login/repository-name',
-      private: true
+      private: true,
+      permissions: {
+        admin: true
+      }
     });
     repository.attrs.permissions.create_cron = true;
 
