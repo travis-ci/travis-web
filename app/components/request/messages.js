@@ -12,7 +12,6 @@ const MSGS = {
 };
 
 export default Component.extend(WithConfigValidation, {
-  className: 'request-messages',
   expanded: false,
   collapsed: not('expanded'),
   displaySummary: and('collapsed', 'summary'),

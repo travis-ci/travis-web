@@ -1,99 +1,101 @@
-{{#if this.showNewConfigView}}
-  {{#if this.canTriggerBuild}}
-    <Request::ConfigsButtons
-      @onCancel={{action this.onCancel}}
-      @onCustomize={{action this.onCustomize}}
-      @onPreview={{action this.onPreview}}
-      @onTrigger={{action this.onTrigger}}
-      @closed={{this.closed}}
-      @submitting={{this.submitting}}
-    />
-  {{/if}}
+<div class="request-configs {{this.status}}">
+  {{#if this.showNewConfigView}}
+    {{#if this.canTriggerBuild}}
+      <Request::ConfigsButtons
+        @onCancel={{action this.onCancel}}
+        @onCustomize={{action this.onCustomize}}
+        @onPreview={{action this.onPreview}}
+        @onTrigger={{action this.onTrigger}}
+        @closed={{this.closed}}
+        @submitting={{this.submitting}}
+      />
+    {{/if}}
 
-  {{#if (or this.closed this.open)}}
-    <Request::Messages
-      @request={{this.request}}
-      @messages={{this.request.messages}}
-    />
+    {{#if (or this.closed this.open)}}
+      <Request::Messages
+        @request={{this.request}}
+        @messages={{this.request.messages}}
+      />
+    {{else}}
+      <Request::Messages
+        @request={{this.request}}
+        @messages={{this.messages}}
+        @loading={{this.loading}}
+      />
+    {{/if}}
+
+    {{#unless this.closed}}
+      <Request::ConfigsTriggerBuildNotice
+        @configs={{this.rawConfigs.length}}
+        @status={{this.status}}
+      />
+    {{/unless}}
+
+    {{#if this.customizing}}
+      <Request::ConfigForm
+        @request={{this.request}}
+        @config={{this.config}}
+        @branch={{this.branch}}
+        @sha={{this.sha}}
+        @message={{this.message}}
+        @mergeMode={{this.mergeMode}}
+        @preview={{this.preview}}
+        @loading={{this.loading}}
+        @messages={{this.messages}}
+        @onChange={{action "formFieldChanged"}}
+        @onSubmit={{action "submit"}}
+      />
+    {{else if this.previewing}}
+      <Request::ConfigsPreview
+        @preview={{this.preview}}
+      />
+    {{/if}}
+
+    {{#if (or this.closed this.open)}}
+      {{#each this.rawConfigs as |config|}}
+        <Request::RawConfig
+          data-test-raw-config="true"
+          @source={{config.source}}
+          @config={{get config 'config'}}
+          @loading={{this.loading}}
+          @build={{@request.build}}
+          @slug={{@request.repo.slug}}
+        />
+      {{/each}}
+
+      <Request::Config
+        data-test-request-config="true"
+        @config={{this.request.config}}
+      />
+    {{/if}}
+
   {{else}}
     <Request::Messages
       @request={{this.request}}
-      @messages={{this.messages}}
-      @loading={{this.loading}}
+      @messages={{this.request.messages}}
+      @viewMessage={{action (mut this.viewingMessage)}}
     />
-  {{/if}}
 
-  {{#unless this.closed}}
-    <Request::ConfigsTriggerBuildNotice
-      @configs={{this.rawConfigs.length}}
-      @status={{this.status}}
-    />
-  {{/unless}}
+    <div class="raw-configs">
+      {{#each @request.uniqRawConfigs as |config|}}
+        <Request::RawConfig
+          data-test-raw-config="true"
+          @source={{config.source}}
+          @config={{get config 'config'}}
+          @loading={{this.loading}}
+          @build={{@request.build}}
+          @slug={{@request.repo.slug}}
+        />
+      {{else}}
+        <div class="starred-empty">
+          The .travis.yml file used for this job is not available
+        </div>
+      {{/each}}
 
-  {{#if this.customizing}}
-    <Request::ConfigForm
-      @request={{this.request}}
-      @config={{this.config}}
-      @branch={{this.branch}}
-      @sha={{this.sha}}
-      @message={{this.message}}
-      @mergeMode={{this.mergeMode}}
-      @preview={{this.preview}}
-      @loading={{this.loading}}
-      @messages={{this.messages}}
-      @onChange={{action "formFieldChanged"}}
-      @onSubmit={{action "submit"}}
-    />
-  {{else if this.previewing}}
-    <Request::ConfigsPreview
-      @preview={{this.preview}}
-    />
-  {{/if}}
-
-  {{#if (or this.closed this.open)}}
-    {{#each this.rawConfigs as |config|}}
-      <Request::RawConfig
-        data-test-raw-config="true"
-        @source={{config.source}}
-        @config={{get config 'config'}}
-        @loading={{this.loading}}
-        @build={{@request.build}}
-        @slug={{@request.repo.slug}}
+      <Request::Config
+        data-test-request-config="true"
+        @config={{this.request.config}}
       />
-    {{/each}}
-
-    <Request::Config
-      data-test-request-config="true"
-      @config={{this.request.config}}
-    />
+    </div>
   {{/if}}
-
-{{else}}
-  <Request::Messages
-    @request={{this.request}}
-    @messages={{this.request.messages}}
-    @viewMessage={{action (mut this.viewingMessage)}}
-  />
-
-  <div class="raw-configs">
-    {{#each @request.uniqRawConfigs as |config|}}
-      <Request::RawConfig
-        data-test-raw-config="true"
-        @source={{config.source}}
-        @config={{get config 'config'}}
-        @loading={{this.loading}}
-        @build={{@request.build}}
-        @slug={{@request.repo.slug}}
-      />
-    {{else}}
-      <div class="starred-empty">
-        The .travis.yml file used for this job is not available
-      </div>
-    {{/each}}
-
-    <Request::Config
-      data-test-request-config="true"
-      @config={{this.request.config}}
-    />
-  </div>
-{{/if}}
+</div>
