@@ -1,6 +1,6 @@
 import ClipboardJS from 'ember-cli-clipboard';
 import Component from '@ember/component';
-import layout from '../../templates/components/request/copy-button';
+import layout from 'travis/templates/components/request/copy-button';
 
 export default Component.extend({
   layout: layout,
