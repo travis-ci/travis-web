@@ -1,3 +1,4 @@
+import ClipboardJS from 'ember-cli-clipboard';
 import Component from '@ember/component';
 import layout from '../../templates/components/request/copy-button';
 
@@ -10,7 +11,7 @@ export default Component.extend({
   },
 
   createClipboard() {
-    const clipboard = new window.ClipboardJS(this.element, { text: this.copyText });
+    const clipboard = new ClipboardJS(this.element, { text: this.copyText });
     clipboard.on('success', this.success);
     return clipboard;
   },
