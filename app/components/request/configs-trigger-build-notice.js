@@ -2,14 +2,15 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { equal } from '@ember/object/computed';
 import { pluralize } from 'ember-inflector';
+import { STATUSES } from 'travis/components/request/configs';
 
 export default Component.extend({
   classNames: ['request-configs-trigger-build-notice'],
 
   configs: 0,
   status: null,
-  customizing: equal('status', 'customize'),
-  previewing: equal('status', 'preview'),
+  customizing: equal('status', STATUSES.CUSTOMIZE),
+  previewing: equal('status', STATUSES.PREVIEW),
 
   message: computed('customizing', 'previewing', 'configs', function () {
     if (this.previewing) {
