@@ -13,7 +13,7 @@ export default Service.extend({
 
   jobs: reads('peekJobs.lastSuccessful.value'),
   jobsLoaded: gt('fetchUnfinishedJobs.performCount', 0),
-  sortedJobs: computed('jobs', function () {
+  sortedJobs: computed('jobs.@each.number', function () {
     const { jobs } = this;
     return jobs && jobs.sortBy('number');
   }),
@@ -21,7 +21,8 @@ export default Service.extend({
   runningJobs: filter('sortedJobs.@each.state', (job) => RUNNING_STATES.includes(job.state)),
   queuedJobs: filter('sortedJobs.@each.state', (job) => QUEUED_STATES.includes(job.state)),
   unfinishedJobs: computed('queuedJobs.[]', 'runningJobs.[]', function () {
-    const { queuedJobs = [], runningJobs = [] } = this;
+    const queuedJobs = this.queuedJobs || [];
+    const runningJobs = this.runningJobs || [];
     return [...queuedJobs, ...runningJobs];
   }),
 

@@ -5,10 +5,9 @@ import Ember from 'ember';
 import Visibility from 'visibilityjs';
 import { task } from 'ember-concurrency';
 import { computed } from '@ember/object';
-import { and, equal, filterBy, reads } from '@ember/object/computed';
+import { and, filterBy, reads } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import config from 'travis/config/environment';
-import { SIDEBAR_TAB_STATES } from 'travis/services/tab-states';
 
 
 export default Component.extend({
@@ -53,11 +52,11 @@ export default Component.extend({
   }),
 
   showRunningJobs: function () {
-    this.tabStates.set('sidebarTab', SIDEBAR_TAB_STATES.RUNNING);
+    this.tabStates.switchSidebarToRunning();
   },
 
   showMyRepositories: function () {
-    this.set('tabStates.sidebarTab', SIDEBAR_TAB_STATES.OWNED);
+    this.tabStates.switchSidebarToOwned();
     this.router.transitionTo('index');
   },
 
@@ -82,11 +81,10 @@ export default Component.extend({
     }
   }),
 
-  tab: reads('tabStates.sidebarTab'),
-  isTabRunning: equal('tab', SIDEBAR_TAB_STATES.RUNNING),
-  isTabSearch: equal('tab', SIDEBAR_TAB_STATES.SEARCH),
+  isTabRunning: reads('tabStates.isSidebarRunning'),
+  isTabSearch: reads('tabStates.isSidebarSearch'),
 
-  repositoryResults: computed('isTabSearch', 'repositories.{searchResults.[],accessible.[]}', function () {
+  repositoryResults: computed('isTabSearch', 'repositories.searchResults.[]', 'repositories.accessible.[]', function () {
     const { isTabSearch, repositories } = this;
 
     if (isTabSearch) {
