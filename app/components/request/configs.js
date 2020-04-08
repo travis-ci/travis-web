@@ -104,24 +104,33 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
     this.preview.loadConfigs.perform(this.repoId, this.data, debounce);
   },
 
-  data: computed('repo', 'mergeMode', 'config', 'message', function () {
-    return {
-      repo: {
-        slug: this.repo.get('slug'),
-        private: this.repo.get('private'),
-        default_branch: this.repo.get('defaultBranch.name'),
-      },
-      branch: this.branch,
-      sha: this.sha,
-      mode: this.mergeMode,
-      config: this.config || '',
-      data: {
+  data: computed(
+    'repo.{slug,private}',
+    'repo.defaultBranch.name',
+    'branch',
+    'sha',
+    'mergeMode',
+    'config',
+    'message',
+    function () {
+      return {
+        repo: {
+          slug: this.repo.get('slug'),
+          private: this.repo.get('private'),
+          default_branch: this.repo.get('defaultBranch.name'),
+        },
         branch: this.branch,
-        commit_message: this.message
-      },
-      type: 'api'
-    };
-  }),
+        sha: this.sha,
+        mode: this.mergeMode,
+        config: this.config || '',
+        data: {
+          branch: this.branch,
+          commit_message: this.message
+        },
+        type: 'api'
+      };
+    }
+  ),
 
   reset() {
     this.setProperties({
