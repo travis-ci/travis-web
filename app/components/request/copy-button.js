@@ -3,7 +3,7 @@ import Component from '@ember/component';
 import layout from 'travis/templates/components/request/copy-button';
 
 export default Component.extend({
-  layout: layout,
+  layout,
   classNames: ['copy-button'],
 
   didInsertElement(element) {
