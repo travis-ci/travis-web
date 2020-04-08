@@ -14,8 +14,7 @@ export const STATUSES = {
 };
 
 export default Component.extend(CanTriggerBuild, TriggerBuild, {
-  classNames: ['request-configs'],
-  classNameBindings: ['status'],
+  tagName: '',
 
   preview: service('request-config'),
   features: service(),
@@ -75,7 +74,7 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
     if (this.closed) {
       this.set('status', STATUSES.OPEN);
     } else {
-      this.submit();
+      this.submitBuildRequest.perform();
     }
   },
 
@@ -144,10 +143,6 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
     this.preview.reset();
   },
 
-  submit() {
-    this.submitBuildRequest.perform();
-  },
-
   actions: {
     formFieldChanged(key, value) {
       this.set(key, value);
@@ -158,7 +153,7 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
       }
     },
     submit() {
-      this.submit();
+      this.submitBuildRequest.perform();
     }
   }
 });

@@ -3,7 +3,7 @@ import { computed } from '@ember/object';
 import { reads, mapBy } from '@ember/object/computed';
 
 export default Component.extend({
-  classNames: ['request-configs-preview'],
+  tagName: '',
 
   requestConfig: reads('preview.requestConfig.config'),
   jobConfigs: mapBy('preview.jobConfigs', 'config'),

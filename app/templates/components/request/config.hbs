@@ -1,32 +1,34 @@
-<div class="header" {{on 'click' (action 'toggle')}}>
-  <SvgImage @name="job-name-icon" @class="icon" @width=14 @height=14 />
-  <span class="vertical-align">
-    Build Config
-  </span>
-  <div class="tools">
-    {{#if this.expanded}}
-      <Request::CopyButton
-        @copyText={{this.formattedConfig}}
-        @success={{action "copied"}}
-      >
-        <SvgImage @name="icon-copy" @class="icon" />
-        <span>
-          {{this.buttonText}}
-        </span>
-      </Request::CopyButton>
-    {{/if}}
-    <SvgImage
-      @name="icon-dropdown-arrow"
-      @class="icon-toggle icon-{{this.status}}"
-    />
+<div class="request-config">
+  <div class="header" {{on 'click' (action 'toggle')}}>
+    <SvgImage @name="job-name-icon" @class="icon" @width=14 @height=14 />
+    <span class="vertical-align">
+      Build Config
+    </span>
+    <div class="tools">
+      {{#if this.expanded}}
+        <Request::CopyButton
+          @copyText={{this.formattedConfig}}
+          @success={{action "copied"}}
+        >
+          <SvgImage @name="icon-copy" @class="icon" />
+          <span>
+            {{this.buttonText}}
+          </span>
+        </Request::CopyButton>
+      {{/if}}
+      <SvgImage
+        @name="icon-dropdown-arrow"
+        @class="icon-toggle icon-{{this.status}}"
+      />
+    </div>
   </div>
+  {{#if this.expanded}}
+    <div class="position-relative">
+      <CodeBlock
+        @language="yaml"
+        class="codedisplay line-numbers"
+        data-test-config="true"
+      >{{this.formattedConfig}}</CodeBlock>
+    </div>
+  {{/if}}
 </div>
-{{#if this.expanded}}
-  <div class="position-relative">
-    <CodeBlock
-      @language="yaml"
-      class="codedisplay line-numbers"
-      data-test-config="true"
-    >{{this.formattedConfig}}</CodeBlock>
-  </div>
-{{/if}}
