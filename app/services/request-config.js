@@ -21,18 +21,19 @@ export default Service.extend({
       yield timeout(searchDebounceRate);
     }
 
-    return yield this.store.queryRecord('request-config', { id, data }).catch((e) => {
+    try {
+      const result = yield this.store.queryRecord('request-config', { id, data });
+      this.setProperties({ result, loaded: true });
+    } catch (e) {
       // TODO for some reason this still logs the 400 request as an error to the console
       this.handleLoadConfigError(e);
-    }).then((result) => {
-      this.set('loaded', true);
-      this.set('result', result);
-    });
+    }
   }).restartable(),
 
   handleLoadConfigError(e) {
     const error = e.errors[0];
     const msg = { level: 'error', code: error.title, args: { message: error.detail } };
+    this.set('result', null);
     this.set('errorMessages', [msg]);
   },
 
