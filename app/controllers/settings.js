@@ -2,7 +2,7 @@
 
 import Controller from '@ember/controller';
 import { computed } from '@ember/object';
-import { filterBy, reads, none, not, bool } from '@ember/object/computed';
+import { filterBy, reads, none, not, or } from '@ember/object/computed';
 import config from 'travis/config/environment';
 import { inject as service } from '@ember/service';
 
@@ -11,7 +11,7 @@ export default Controller.extend({
   features: service(),
   store: service(),
 
-  isAdmin: bool('repo.permissions.admin'),
+  hasSettingsPermission: or('repo.permissions.create_env_var', 'repo.permissions.create_cron', 'repo.permissions.create_key_pair'),
 
   envVars: computed('unsortedEnvVars', function () {
     let envVars = this.unsortedEnvVars;

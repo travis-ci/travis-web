@@ -72,8 +72,9 @@ export default TravisRoute.extend({
 
   beforeModel() {
     const repo = this.modelFor('repo');
-    const isAdmin = repo.get('permissions.admin');
-    if (!isAdmin) {
+    const hasSettingsPermission = repo.get('permissions.create_env_var') || repo.get('permissions.create_cron')
+                               || repo.get('permissions.create_key_pair');
+    if (!hasSettingsPermission) {
       this.transitionTo('repo.index');
       this.flashes.error('Your permissions are insufficient to access this repository\'s settings');
     }

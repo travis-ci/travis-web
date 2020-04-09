@@ -2,7 +2,7 @@ import Component from '@ember/component';
 import config from 'travis/config/environment';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
-import { alias, bool } from '@ember/object/computed';
+import { alias, or } from '@ember/object/computed';
 
 export default Component.extend({
   auth: service(),
@@ -22,7 +22,7 @@ export default Component.extend({
     this.set('isOpen', !this.isOpen);
   },
 
-  displaySettingsLink: bool('repo.permissions.admin'),
+  displaySettingsLink: or('repo.permissions.create_env_var', 'repo.permissions.create_cron', 'repo.permissions.create_key_pair'),
 
   displayCachesLink: computed('permissions.all', 'repo', function () {
     let repo = this.repo;

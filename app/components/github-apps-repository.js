@@ -5,7 +5,7 @@ import {
   match,
   reads,
   not,
-  bool
+  or
 } from '@ember/object/computed';
 import hasErrorWithStatus from 'travis/utils/api-errors';
 import { task } from 'ember-concurrency';
@@ -26,7 +26,7 @@ export default Component.extend({
     return this.user && vcsLinks.accessSettingsUrl(this.user.vcsType, { owner: this.user.login });
   }),
 
-  isAdmin: bool('repository.permissions.admin'),
+  hasSettingsPermission: or('repository.permissions.create_env_var', 'repository.permissions.create_cron', 'repository.permissions.create_key_pair'),
 
   toggleRepositoryTask: task(function* () {
     const repository = this.repository;

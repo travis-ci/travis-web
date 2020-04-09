@@ -32,7 +32,7 @@ module('Acceptance | repo settings', function (hooks) {
       slug: 'org-login/repository-name',
       private: true,
       permissions: {
-        admin: true
+        create_env_var: true
       }
     });
     repository.attrs.permissions.create_cron = true;
