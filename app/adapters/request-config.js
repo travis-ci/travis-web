@@ -1,13 +1,6 @@
 import AdapterError from '@ember-data/adapter/error';
 import V3Adapter from 'travis/adapters/v3';
-
-function parseJSON(string) {
-  try {
-    return JSON.parse(string);
-  } catch (e) {
-    return {};
-  }
-}
+import parseWithDefault from 'travis/utils/json-parser';
 
 export default V3Adapter.extend({
   queryRecord(store, type, { id, data }) {
@@ -17,7 +10,7 @@ export default V3Adapter.extend({
 
   handleResponse(status, headers, body) {
     if (status == 400) {
-      let error = parseJSON(body.error_message).error || {};
+      let error = parseWithDefault(body.error_message).error || {};
       let type = error.type;
       let message = error.message; // TODO API should unwrap this
 
