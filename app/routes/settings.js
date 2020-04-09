@@ -7,6 +7,7 @@ import { inject as service } from '@ember/service';
 export default TravisRoute.extend({
   api: service(),
   auth: service(),
+  permissions: service(),
   raven: service(),
   flashes: service(),
 
@@ -72,9 +73,8 @@ export default TravisRoute.extend({
 
   beforeModel() {
     const repo = this.modelFor('repo');
-    const hasSettingsPermission = repo.get('permissions.create_env_var') || repo.get('permissions.create_cron')
-                               || repo.get('permissions.create_key_pair');
-    if (!hasSettingsPermission) {
+    const hasPushPermission = this.permissions.hasPushPermission(repo);
+    if (!hasPushPermission) {
       this.transitionTo('repo.index');
       this.flashes.error('Your permissions are insufficient to access this repository\'s settings');
     }

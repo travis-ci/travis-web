@@ -140,7 +140,7 @@ module('Acceptance | profile/basic layout', function (hooks) {
       managed_by_installation: true,
       private: false,
       permissions: {
-        create_env_var: true
+        admin: true
       },
     });
 
