@@ -8,8 +8,6 @@ import signInUser from 'travis/tests/helpers/sign-in-user';
 import { selectChoose, selectSearch } from 'ember-power-select/test-support';
 import moment from 'moment';
 import { setupMirage } from 'ember-cli-mirage/test-support';
-import { stubService } from 'travis/tests/helpers/stub-service';
-import Service from '@ember/service';
 
 module('Acceptance | repo settings', function (hooks) {
   setupApplicationTest(hooks);
@@ -36,13 +34,6 @@ module('Acceptance | repo settings', function (hooks) {
         admin: true
       }
     });
-
-    const mockPermissionsService = Service.extend({
-      hasPushPermission() {
-        return true;
-      }
-    });
-    stubService('permissions', mockPermissionsService);
 
     repository.attrs.permissions.create_cron = true;
 

@@ -32,13 +32,6 @@ module('Acceptance | profile/basic layout', function (hooks) {
 
     signInUser(this.user);
 
-    const mockPermissionsService = Service.extend({
-      hasPushPermission(repo) {
-        return repo.name != 'github-apps-private-repository';
-      }
-    });
-    stubService('permissions', mockPermissionsService);
-
     this.server.create('installation', {
       owner: this.user,
       github_id: 2691
