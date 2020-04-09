@@ -27,7 +27,6 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
   loading: reads('preview.loading'),
   submitting: reads('submitBuildRequest.isRunning'),
   replacing: equal('mergeMode', 'replace'),
-  showNewConfigView: reads('features.showNewConfigView'),
 
   request: null,
   repo: reads('request.repo'),
@@ -61,7 +60,7 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
   },
 
   formattedApiConfig: computed('request.apiConfig.config', function () {
-    const config = this.request.apiConfig.config;
+    const config = this.get('request.apiConfig.config');
     try {
       return JSON.stringify(JSON.parse(config), null, 2);
     } catch (e) {
