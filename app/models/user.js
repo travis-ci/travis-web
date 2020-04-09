@@ -3,7 +3,6 @@ import { attr } from '@ember-data/model';
 import { computed } from '@ember/object';
 import { later } from '@ember/runloop';
 import { inject as service } from '@ember/service';
-import ArrayProxy from '@ember/array/proxy';
 import Owner from 'travis/models/owner';
 import config from 'travis/config/environment';
 import { or, reads } from '@ember/object/computed';
