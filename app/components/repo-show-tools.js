@@ -12,7 +12,6 @@ export default Component.extend(CanTriggerBuild, {
 
   tagName: '',
   isOpen: false,
-  showNewConfigView: reads('features.showNewConfigView'),
 
   currentUser: reads('auth.currentUser'),
 

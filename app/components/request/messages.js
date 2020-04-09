@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { and, not, reads, sort } from '@ember/object/computed';
+import { and, not, gt, reads, sort } from '@ember/object/computed';
 import { pluralize } from 'ember-inflector';
 import WithConfigValidation from 'travis/mixins/components/with-config-validation';
 
@@ -16,9 +16,10 @@ export default Component.extend(WithConfigValidation, {
   collapsed: not('expanded'),
   displaySummary: and('collapsed', 'summary'),
 
-  messgages: computed(() => []),
-  request: null,
   repo: reads('request.repo'),
+  request: null,
+  messgages: computed(() => []),
+  hasMessages: gt('messages.length', 0),
 
   toggleStatus: computed('expanded', function () {
     return this.get('expanded') ? 'expanded' : 'collapsed';
@@ -40,6 +41,8 @@ export default Component.extend(WithConfigValidation, {
     let counts = countBy(this.get('sortedMessages'), 'level');
     if (Object.entries(counts).length > 0) {
       return Object.entries(counts).map((entry) => formatLevel(...entry)).join(', ');
+    } else {
+      return 'valid';
     }
   }),
 

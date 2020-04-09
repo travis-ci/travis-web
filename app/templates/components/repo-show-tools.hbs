@@ -33,7 +33,7 @@
   {{/if}}
   {{#if this.canTriggerBuild}}
     <li>
-      {{#if this.showNewConfigView}}
+      {{#if this.repo.configValidation}}
         <LinkTo
           @route="repo.config"
           @model={{this.repo}}
