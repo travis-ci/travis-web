@@ -42,7 +42,7 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
   branch: reads('originalBranch'),
   message: reads('request.commit.message'),
   config: reads('formattedApiConfig'),
-  mergeMode: reads('originalMergeMode'), // TODO store and serve merge mode for api request configs
+  mergeMode: reads('originalMergeMode'),
   defaultMergeMode: 'deep_merge_append',
 
   originalSha: truncate('requestOrDefaultBranchSha', 7),

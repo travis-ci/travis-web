@@ -23,7 +23,7 @@ export default create({
   configFormTriggerLinkIsHidden: isHidden('.option-dropdown .trigger-build-anchor'),
   configFormTriggerLinkIsPresent: isPresent('.option-dropdown .trigger-build-anchor'),
   showConfigForm: clickable('.option-dropdown .trigger-build-anchor'),
-  requestConfigButtonsIsPresent: isPresent('data-test-request-configs-button'),
+  requestConfigButtonsIsPresent: isPresent('[data-test-request-configs-button]'),
 
   selectBranch(branch) {
     selectChoose('[data-test-trigger-build-branch]', branch);
