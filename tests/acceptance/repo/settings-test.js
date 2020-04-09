@@ -16,9 +16,8 @@ module('Acceptance | repo settings', function (hooks) {
   hooks.beforeEach(async function () {
     const currentUser = this.server.create('user', {
       name: 'User Name',
-      login: 'user-login',
+      login: 'user-login'
     });
-
     await signInUser(currentUser);
 
     // create organization
@@ -35,6 +34,10 @@ module('Acceptance | repo settings', function (hooks) {
         admin: true
       }
     });
+
+    let service = this.owner.lookup('service:permissions');
+    service.set('currentUser.pushPermissions', [repository.id]);
+
     repository.attrs.permissions.create_cron = true;
 
     repository.createSetting({ name: 'builds_only_with_travis_yml', value: true });
