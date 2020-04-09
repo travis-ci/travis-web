@@ -35,6 +35,10 @@ module('Acceptance | repo settings', function (hooks) {
       }
     });
 
+//    this.server.get('user/permissions', () => {
+//      return new Response(200, {}, {});
+//    });
+
     repository.attrs.permissions.create_cron = true;
 
     repository.createSetting({ name: 'builds_only_with_travis_yml', value: true });
