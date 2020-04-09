@@ -3,14 +3,13 @@ import { attr } from '@ember-data/model';
 import { computed } from '@ember/object';
 import { later } from '@ember/runloop';
 import { inject as service } from '@ember/service';
-import ArrayProxy from '@ember/array/proxy';
 import Owner from 'travis/models/owner';
 import config from 'travis/config/environment';
-import { or } from '@ember/object/computed';
+import { or, reads } from '@ember/object/computed';
 
 export default Owner.extend({
-  ajax: service(),
   api: service(),
+  permissionsService: service('permissions'),
 
   email: attr('string'),
   emails: attr(), // list of all known user emails
@@ -38,50 +37,10 @@ export default Owner.extend({
     return this._super(...arguments);
   },
 
-  _rawPermissions: computed(function () {
-    return this.api.get('/users/permissions', { travisApiVersion: null });
-  }),
-
-  permissions: computed('_rawPermissions', function () {
-    let _rawPermissions = this._rawPermissions;
-    let permissions = ArrayProxy.create({
-      content: []
-    });
-    _rawPermissions.then(data => permissions.set('content', data.permissions));
-    return permissions;
-  }),
-
-  adminPermissions: computed('_rawPermissions', function () {
-    let _rawPermissions = this._rawPermissions;
-    let permissions = ArrayProxy.create({
-      content: []
-    });
-    _rawPermissions.then(data => permissions.set('content', data.admin));
-    return permissions;
-  }),
-
-  pullPermissions: computed('_rawPermissions', function () {
-    let _rawPermissions = this._rawPermissions;
-    const permissions = ArrayProxy.create({
-      content: []
-    });
-    _rawPermissions.then(data => permissions.set('content', data.pull));
-    return permissions;
-  }),
-
-  pushPermissions: computed('_rawPermissions', function () {
-    let _rawPermissions = this._rawPermissions;
-    const permissions = ArrayProxy.create({
-      content: []
-    });
-    _rawPermissions.then(data => permissions.set('content', data.push));
-    return permissions;
-  }),
-
-  pushPermissionsPromise: computed('_rawPermissions', function () {
-    let _rawPermissions = this._rawPermissions;
-    return _rawPermissions.then(data => data.pull);
-  }),
+  permissions: reads('permissionsService.all'),
+  adminPermissions: reads('permissionsService.admin'),
+  pullPermissions: reads('permissionsService.pull'),
+  pushPermissions: reads('permissionsService.push'),
 
   hasAccessToRepo(repo) {
     let id = repo.get ? repo.get('id') : repo;

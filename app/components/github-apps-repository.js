@@ -4,8 +4,7 @@ import { computed } from '@ember/object';
 import {
   match,
   reads,
-  not,
-  bool
+  not
 } from '@ember/object/computed';
 import hasErrorWithStatus from 'travis/utils/api-errors';
 import { task } from 'ember-concurrency';
@@ -13,6 +12,7 @@ import { vcsLinks } from 'travis/services/external-links';
 
 export default Component.extend({
   accounts: service(),
+  permissions: service(),
   tagName: 'li',
   classNames: ['profile-repolist-item'],
   classNameBindings: ['migratable'],
@@ -26,7 +26,10 @@ export default Component.extend({
     return this.user && vcsLinks.accessSettingsUrl(this.user.vcsType, { owner: this.user.login });
   }),
 
-  isAdmin: bool('repository.permissions.admin'),
+  hasSettingsPermission: computed('permissions.all', 'repository', function () {
+    let repo = this.repository;
+    return this.permissions.hasPushPermission(repo);
+  }),
 
   toggleRepositoryTask: task(function* () {
     const repository = this.repository;
