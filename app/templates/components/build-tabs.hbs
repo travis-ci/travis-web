@@ -25,12 +25,10 @@
 
         View config
 
-        {{#if this.showConfigValidation}}
-          <span class="tooltip-wrapper">
-            <span class="request-messages-badge badge-{{this.messagesMaxLevel}}"></span>
-            <EmberTooltip @text={{this.messagesBadgeTooltipText}} />
-          </span>
-        {{/if}}
+        <span class="tooltip-wrapper">
+          <span class="request-messages-badge badge-{{this.messagesMaxLevel}}"></span>
+          <EmberTooltip @text={{this.messagesBadgeTooltipText}} />
+        </span>
       </LinkTo>
     </li>
   </ul>

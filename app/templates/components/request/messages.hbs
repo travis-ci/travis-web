@@ -1,4 +1,4 @@
-{{#if this.showConfigValidation}}
+{{#if (or this.hasMessages this.repo.configValidation)}}
   <div class="request-messages request-message-{{this.maxLevel}}" data-test-configs-messages="true">
     <div class="header" {{action 'toggle'}} data-test-configs-messages-toggle="true">
       <span class="tooltip-wrapper level-icon">
@@ -27,7 +27,7 @@
         {{/if}}
       </div>
     </div>
-    {{#if this.expanded}}
+    {{#if (and this.expanded this.hasMessages)}}
       <div class="list">
         {{#each this.messages as |message|}}
           <Request::Message @message={{message}} />
