@@ -108,9 +108,9 @@ export default function () {
         return combinedPermissions;
       }, {
         admin: [],
-        push: [1],
+        push: [],
         pull: [],
-        permissions: [1]
+        permissions: []
       });
     } else {
       return {};
