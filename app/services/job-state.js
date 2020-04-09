@@ -21,9 +21,7 @@ export default Service.extend({
   runningJobs: filter('sortedJobs.@each.state', (job) => RUNNING_STATES.includes(job.state)),
   queuedJobs: filter('sortedJobs.@each.state', (job) => QUEUED_STATES.includes(job.state)),
   unfinishedJobs: computed('queuedJobs.[]', 'runningJobs.[]', function () {
-    const queuedJobs = this.queuedJobs || [];
-    const runningJobs = this.runningJobs || [];
-    return [...queuedJobs, ...runningJobs];
+    return [...this.queuedJobs, ...this.runningJobs];
   }),
 
   peekJobs: task(function* () {
