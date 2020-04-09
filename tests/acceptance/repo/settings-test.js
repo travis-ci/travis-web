@@ -39,7 +39,7 @@ module('Acceptance | repo settings', function (hooks) {
 
     const mockPermissionsService = Service.extend({
       hasPushPermission() {
-          return true;
+        return true;
       }
     });
     stubService('permissions', mockPermissionsService);
