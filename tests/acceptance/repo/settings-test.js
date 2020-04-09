@@ -35,8 +35,7 @@ module('Acceptance | repo settings', function (hooks) {
       }
     });
 
-    let service = this.owner.lookup('service:permissions');
-    service.set('currentUser.pushPermissions', [repository.id]);
+    this.server.create('permission', { currentUser, repository, push: true });
 
     repository.attrs.permissions.create_cron = true;
 
