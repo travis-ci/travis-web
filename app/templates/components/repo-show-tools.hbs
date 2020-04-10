@@ -33,13 +33,13 @@
   {{/if}}
   {{#if this.canTriggerBuild}}
     <li>
-        <LinkTo
-          @route="repo.config"
-          @model={{this.repo}}
-          class="trigger-build-anchor"
-        >
-          Trigger build
-        </LinkTo>
+      <LinkTo
+        @route="repo.config"
+        @model={{this.repo}}
+        class="trigger-build-anchor"
+      >
+        Trigger build
+      </LinkTo>
     </li>
   {{/if}}
 </ul>

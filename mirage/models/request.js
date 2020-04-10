@@ -1,7 +1,7 @@
-import { Model, belongsTo } from 'ember-cli-mirage';
+import { Model, belongsTo, hasMany } from 'ember-cli-mirage';
 
 export default Model.extend({
   repository: belongsTo(),
-  build: belongsTo('build'),
+  builds: hasMany('build'),
   commit: belongsTo()
 });
