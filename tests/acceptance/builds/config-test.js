@@ -1,7 +1,6 @@
 import { module, test } from 'qunit';
 import { visit, click, fillIn } from '@ember/test-helpers';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
-import { enableFeature } from 'ember-feature-flags/test-support';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { percySnapshot } from 'ember-percy';
@@ -111,7 +110,6 @@ module('Acceptance | build/config', function (hooks) {
   });
 
   test('closed', async function (assert) {
-    enableFeature('show-new-config-view');
     await visit(this.TEST_TARGETS.URL);
 
     percySnapshot(assert);
@@ -125,7 +123,6 @@ module('Acceptance | build/config', function (hooks) {
   });
 
   test('open', async function (assert) {
-    enableFeature('show-new-config-view');
     await visit(this.TEST_TARGETS.URL);
 
     assert.dom(this.TEST_TARGETS.TRIGGER_BUILD_BUTTON).exists();
@@ -142,7 +139,6 @@ module('Acceptance | build/config', function (hooks) {
   });
 
   test('click on cancel button', async function (assert) {
-    enableFeature('show-new-config-view');
     await visit(this.TEST_TARGETS.URL);
     await click(this.TEST_TARGETS.TRIGGER_BUILD_BUTTON);
     await click(this.TEST_TARGETS.CANCEL_BUTTON);
@@ -156,7 +152,6 @@ module('Acceptance | build/config', function (hooks) {
   });
 
   test('customizing', async function (assert) {
-    enableFeature('show-new-config-view');
     await visit(this.TEST_TARGETS.URL);
     await click(this.TEST_TARGETS.TRIGGER_BUILD_BUTTON);
     await click(this.TEST_TARGETS.CUSTOMIZE_BUTTON);
@@ -172,7 +167,6 @@ module('Acceptance | build/config', function (hooks) {
   });
 
   test('customizing, invalid config', async function (assert) {
-    enableFeature('show-new-config-view');
     await visit(this.TEST_TARGETS.URL);
     await click(this.TEST_TARGETS.TRIGGER_BUILD_BUTTON);
     await click(this.TEST_TARGETS.CUSTOMIZE_BUTTON);
@@ -190,7 +184,6 @@ module('Acceptance | build/config', function (hooks) {
   });
 
   test('previewing', async function (assert) {
-    enableFeature('show-new-config-view');
     await visit(this.TEST_TARGETS.URL);
     await click(this.TEST_TARGETS.TRIGGER_BUILD_BUTTON);
     await click(this.TEST_TARGETS.PREVIEW_BUTTON);

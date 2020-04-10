@@ -8,7 +8,6 @@ import CanTriggerBuild from 'travis/mixins/components/can-trigger-build';
 export default Component.extend(CanTriggerBuild, {
   auth: service(),
   permissions: service(),
-  features: service(),
 
   tagName: '',
   isOpen: false,
