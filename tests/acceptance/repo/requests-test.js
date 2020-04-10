@@ -100,7 +100,7 @@ module('Acceptance | repo | requests', function (hooks) {
     requestsPage.requests[2].as(request => {
       assert.ok(request.isPending);
     });
-
+    debugger;
     requestsPage.requests[3].as(request => {
       assert.equal(request.buildNumber.text, '1871');
     });

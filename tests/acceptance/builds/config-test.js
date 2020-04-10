@@ -33,6 +33,10 @@ module('Acceptance | build/config', function (hooks) {
       raw_configs: [{
         source: 'test/test_repo:.travis.yml@master',
         config: 'script: echo "Hello World"'
+      },
+      {
+        source: 'api',
+        config: 'script: echo "Hello World"'
       }],
       config: { script: 'echo "Hello World"' },
       branch_name: 'master'
@@ -115,7 +119,7 @@ module('Acceptance | build/config', function (hooks) {
     assert.dom(this.TEST_TARGETS.CANCEL_BUTTON).doesNotExist();
     assert.dom(this.TEST_TARGETS.CUSTOMIZE_BUTTON).doesNotExist();
     assert.dom(this.TEST_TARGETS.PREVIEW_BUTTON).doesNotExist();
-    assert.dom(this.TEST_TARGETS.RAW_CONFIGS).exists({ count: 1 });
+    assert.dom(this.TEST_TARGETS.RAW_CONFIGS).exists({ count: 2 });
     assert.dom(this.TEST_TARGETS.REQUEST_CONFIG).exists({ count: 1 });
     assert.dom(this.TEST_TARGETS.CONFIG_SOURCE).hasText('test/test_repo:.travis.yml@master');
   });
@@ -131,7 +135,7 @@ module('Acceptance | build/config', function (hooks) {
     assert.dom(this.TEST_TARGETS.CANCEL_BUTTON).exists();
     assert.dom(this.TEST_TARGETS.CUSTOMIZE_BUTTON).exists();
     assert.dom(this.TEST_TARGETS.PREVIEW_BUTTON).exists();
-    assert.dom(this.TEST_TARGETS.RAW_CONFIGS).exists({ count: 1 });
+    assert.dom(this.TEST_TARGETS.RAW_CONFIGS).exists({ count: 2 });
     assert.dom(this.TEST_TARGETS.REQUEST_CONFIG).exists();
     assert.dom(this.TEST_TARGETS.CONFIG_SOURCE).hasText('test/test_repo:.travis.yml@master');
     assert.dom(this.TEST_TARGETS.TRIGGER_BUILD_NOTICE).hasAnyText('Trigger a build request with the following');

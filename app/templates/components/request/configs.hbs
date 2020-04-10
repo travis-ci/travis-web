@@ -54,7 +54,6 @@
     {{#if (or this.closed this.open)}}
       {{#each this.rawConfigs as |config|}}
         <Request::RawConfig
-          data-test-raw-config="true"
           @source={{config.source}}
           @config={{get config 'config'}}
           @loading={{this.loading}}
@@ -63,10 +62,7 @@
         />
       {{/each}}
 
-      <Request::Config
-        data-test-request-config="true"
-        @config={{this.request.config}}
-      />
+      <Request::Config @config={{this.request.config}} />
     {{/if}}
 
   {{else}}
@@ -92,10 +88,7 @@
         </div>
       {{/each}}
 
-      <Request::Config
-        data-test-request-config="true"
-        @config={{this.request.config}}
-      />
+      <Request::Config @config={{this.request.config}} />
     </div>
   {{/if}}
 </div>
