@@ -1,5 +1,5 @@
 <div class="request-configs {{this.status}}">
-  {{#if this.canTriggerBuild}}
+  {{#if (and this.canTriggerBuild this.repo.configValidation)}}
     <Request::ConfigsButtons
       @onCancel={{action this.onCancel}}
       @onCustomize={{action this.onCustomize}}

@@ -30,7 +30,7 @@ export default Mixin.create({
           merge_mode: this.mergeMode
         }
       };
-      return yield this.api.post(`/repo/${this.get('repo.id')}/requests`, { data: data });
+      return yield this.api.post(`/repo/${this.get('repo.id')}/requests`, { data });
     } catch (e) {
       this.displayError(e);
     }

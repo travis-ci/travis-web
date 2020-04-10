@@ -59,7 +59,7 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
   },
 
   formattedApiConfig: computed('request.apiConfig.config', function () {
-    const config = this.request.apiConfig.config;
+    const config = this.get('request.apiConfig.config');
     try {
       return JSON.stringify(JSON.parse(config), null, 2);
     } catch (e) {
