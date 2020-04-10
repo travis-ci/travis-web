@@ -5,36 +5,33 @@
 
   .copy-button {
     display: inline-block;
+    cursor: pointer;
+    padding: 3px 8px 5px 8px;
+    border-radius: 2px;
+    border: 1px solid transparent;
+    font-size: 12px;
+    color: $cement-grey;
+    @include colorSVG($cement-grey);
 
-    button  {
-      cursor: pointer;
-      padding: 3px 8px 5px 8px;
-      border-radius: 2px;
-      border: 1px solid transparent;
-      font-size: 12px;
-      color: $cement-grey;
-      @include colorSVG($cement-grey);
+    span {
+      display: none;
+    }
 
+    svg {
+      width: 13px;
+      height: 15px;
+    }
+
+    &:hover {
+      margin-right: 1em;
+      border-color: $dry-cement;
       span {
-        display: none;
+        display: inline-block;
       }
-
-      svg {
-        width: 13px;
-        height: 15px;
-      }
-
-      &:hover {
-        margin-right: 1em;
-        border-color: $dry-cement;
-        span {
-          display: inline-block;
-        }
-      }
-      &:active,
-      &:focus {
-        outline: none;
-      }
+    }
+    &:active,
+    &:focus {
+      outline: none;
     }
   }
 }
