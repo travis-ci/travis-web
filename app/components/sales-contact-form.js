@@ -11,7 +11,8 @@ export default Component.extend({
   utm: service(),
 
   pardotFormUrl: computed('utm.existing', function () {
-    return `${pardotFormUrl}?${this.utm.existing}`;
+    const { existing, hasData } = this.utm;
+    return hasData ? `${pardotFormUrl}?${existing}` : pardotFormUrl;
   }),
 
   setHeight(element) {
