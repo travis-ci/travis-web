@@ -48,7 +48,9 @@ export default Component.extend(WithConfigValidation, {
 
   actions: {
     toggle() {
-      this.toggleProperty('expanded');
+      if(this.hasMessages) {
+        this.toggleProperty('expanded');
+      }
     }
   }
 });

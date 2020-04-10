@@ -31,7 +31,7 @@
   .header {
     position: relative;
     padding: 1em;
-    cursor: pointer;
+    cursor: auto;
 
     .icon {
       width: 18px;
@@ -108,6 +108,10 @@
         }
       }
     }
+  }
+
+  &.request-messages-expandable .header {
+    cursor: pointer;
   }
 
   .list {
