@@ -65,6 +65,7 @@ module('Acceptance | repo | requests', function (hooks) {
       repository: this.repo,
       state: 'passed',
       commit_id: olderApprovedCommit.id,
+      commit: olderApprovedCommit,
       request: olderApprovedRequest,
       number: '1871'
     });
@@ -100,12 +101,12 @@ module('Acceptance | repo | requests', function (hooks) {
     requestsPage.requests[2].as(request => {
       assert.ok(request.isPending);
     });
-    debugger;
+
     requestsPage.requests[3].as(request => {
       assert.equal(request.buildNumber.text, '1871');
     });
 
-    assert.ok(requestsPage.missingNotice.isHidden);
+    assert.ok(requestsPage.isHidden);
 
     percySnapshot(assert);
   });

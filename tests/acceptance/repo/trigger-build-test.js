@@ -2,8 +2,6 @@ import { currentURL } from '@ember/test-helpers';
 import { module, skip, test } from 'qunit';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import triggerBuildPage from 'travis/tests/pages/trigger-build';
-import topPage from 'travis/tests/pages/top';
-import { Response } from 'ember-cli-mirage';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { percySnapshot } from 'ember-percy';
 import { setupMirage } from 'ember-cli-mirage/test-support';
@@ -59,7 +57,6 @@ module('Acceptance | repo/trigger build', function (hooks) {
   });
 
   test('trigger link is not visible to users without proper permissions', async function (assert) {
-    this.owner.lookup('service:features').disable('show-new-config-view');
     this.repo.update('permissions', { create_request: false });
     await triggerBuildPage.visit({ owner: 'adal', repo: 'difference-engine' });
 
@@ -67,10 +64,8 @@ module('Acceptance | repo/trigger build', function (hooks) {
   });
 
   test('trigger link is present when user has the proper permissions and has been migrated on com', async function (assert) {
-    this.owner.lookup('service:features').disable('show-new-config-view');
     this.repo.update('migration_status', 'migrated');
 
-    enableFeature('proVersion');
     signInUser(this.currentUser);
 
     await triggerBuildPage.visit({ owner: 'adal', repo: 'difference-engine' });
@@ -82,7 +77,6 @@ module('Acceptance | repo/trigger build', function (hooks) {
   // I'm not sure what our desired behavior is, so leaving this alone to be able to progress on the migration work.
   skip('trigger link is present when user has the proper permissions and has been migrated on enterprise', async function (assert) {
     this.repo.update('migration_status', 'migrated');
-    enableFeature('enterpriseVersion');
     signInUser(this.currentUser);
 
     await triggerBuildPage.visit({ owner: 'adal', repo: 'difference-engine' });
@@ -95,27 +89,6 @@ module('Acceptance | repo/trigger build', function (hooks) {
     signInUser(this.currentUser);
     await triggerBuildPage.visit({ owner: 'adal', repo: 'difference-engine' });
     assert.notOk(triggerBuildPage.popupTriggerLinkIsPresent, 'trigger build link is not rendered');
-  });
-
-  test('triggering a custom build via the popup', async function (assert) {
-    this.owner.lookup('service:features').disable('show-new-config-view');
-    await triggerBuildPage.visit({ owner: 'adal', repo: 'difference-engine' });
-
-    assert.equal(currentURL(), '/github/adal/difference-engine', 'we are on the repo page');
-    assert.ok(triggerBuildPage.popupIsHidden, 'modal is hidden');
-
-    await triggerBuildPage.openPopup();
-
-    assert.ok(triggerBuildPage.popupIsVisible, 'modal is visible after click');
-
-    await triggerBuildPage.writeMessage('This is a demo build');
-    await triggerBuildPage.writeConfig('script: echo "Hello World"');
-    percySnapshot(assert);
-
-    await triggerBuildPage.clickSubmit();
-
-    assert.ok(triggerBuildPage.popupIsHidden, 'modal is hidden again');
-    assert.equal(currentURL(), '/github/adal/difference-engine/builds/9999', 'we transitioned after the build was triggered');
   });
 
   test('triggering a custom build via the new config form', async function (assert) {
@@ -136,31 +109,5 @@ module('Acceptance | repo/trigger build', function (hooks) {
 
     assert.ok(triggerBuildPage.configFormIsHidden, 'config form is hidden again');
     assert.equal(currentURL(), '/github/adal/difference-engine/builds/9999', 'we transitioned after the build was triggered');
-  });
-
-  test('an error triggering a build is displayed', async function (assert) {
-    this.owner.lookup('service:features').disable('show-new-config-view');
-    this.server.post('/repo/:repo_id/requests', function (schema, request) {
-      return new Response(500, {}, {});
-    });
-
-    await triggerBuildPage.visit({ owner: 'adal', repo: 'difference-engine' });
-    await triggerBuildPage.openPopup();
-    await triggerBuildPage.clickSubmit();
-
-    assert.equal(topPage.flashMessage.text, 'Oops, something went wrong, please try again.');
-  });
-
-  test('a 429 shows a specific error message', async function (assert) {
-    this.owner.lookup('service:features').disable('show-new-config-view');
-    this.server.post('/repo/:repo_id/requests', function (schema, request) {
-      return new Response(429, {}, {});
-    });
-
-    await triggerBuildPage.visit({ owner: 'adal', repo: 'difference-engine' });
-    await triggerBuildPage.openPopup();
-    await triggerBuildPage.clickSubmit();
-
-    assert.equal(topPage.flashMessage.text, 'You’ve exceeded the limit for triggering builds, please wait a while before trying again.');
   });
 });
