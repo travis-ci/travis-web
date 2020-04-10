@@ -5,7 +5,6 @@ import triggerBuildPage from 'travis/tests/pages/trigger-build';
 import topPage from 'travis/tests/pages/top';
 import { Response } from 'ember-cli-mirage';
 import signInUser from 'travis/tests/helpers/sign-in-user';
-import { enableFeature } from 'ember-feature-flags/test-support';
 import { percySnapshot } from 'ember-percy';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
@@ -120,7 +119,6 @@ module('Acceptance | repo/trigger build', function (hooks) {
   });
 
   test('triggering a custom build via the new config form', async function (assert) {
-    enableFeature('show-new-config-view');
     await triggerBuildPage.visit({ owner: 'adal', repo: 'difference-engine' });
 
     assert.equal(currentURL(), '/github/adal/difference-engine', 'we are on the repo page');

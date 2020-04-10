@@ -23,7 +23,6 @@ module('Integration | Component | request configs', function (hooks) {
       },
     };
 
-    this.showNewConfigView = true;
     this.canTriggerBuild = true;
     this.repo = repo;
     this.request = request;
@@ -33,7 +32,6 @@ module('Integration | Component | request configs', function (hooks) {
       @repo={{this.repo}}
       @request={{this.request}}
       @status={{this.status}}
-      @showNewConfigView={{this.showNewConfigView}}
       @canTriggerBuild={{this.canTriggerBuild}}/>`
     );
 

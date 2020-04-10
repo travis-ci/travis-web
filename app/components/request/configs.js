@@ -17,7 +17,6 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
   tagName: '',
 
   preview: service('request-config'),
-  features: service(),
 
   status: STATUSES.CLOSED,
   closed: equal('status', STATUSES.CLOSED),
