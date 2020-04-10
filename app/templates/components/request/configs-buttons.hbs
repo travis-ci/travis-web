@@ -28,12 +28,15 @@
     onclick={{this.onTrigger}}
     type="button"
     class="request-configs-button-trigger-build button--blue"
-    title="Trigger build"
+    title="{{if this.closed 'Trigger build' 'Submit'}}"
   >
     {{#if this.submitting}}
       <LoadingIndicator />
-    {{else}}
+    {{else if this.closed}}
       Trigger build
+    {{else}}
+      <SvgImage @name='rocket' @class='request-configs-icon' />
+      Submit
     {{/if }}
   </button>
 </div>
