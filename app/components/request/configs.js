@@ -17,7 +17,6 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
   tagName: '',
 
   preview: service('request-config'),
-  features: service(),
 
   status: STATUSES.CLOSED,
   closed: equal('status', STATUSES.CLOSED),
@@ -27,7 +26,6 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
   loading: reads('preview.loading'),
   submitting: reads('submitBuildRequest.isRunning'),
   replacing: equal('mergeMode', 'replace'),
-  showNewConfigView: reads('features.showNewConfigView'),
 
   request: null,
   repo: reads('request.repo'),

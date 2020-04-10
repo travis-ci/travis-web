@@ -33,7 +33,6 @@
   {{/if}}
   {{#if this.canTriggerBuild}}
     <li>
-      {{#if this.showNewConfigView}}
         <LinkTo
           @route="repo.config"
           @model={{this.repo}}
@@ -41,15 +40,6 @@
         >
           Trigger build
         </LinkTo>
-      {{else}}
-        <button
-          type="button"
-          class="trigger-build-anchor"
-          onclick={{action "triggerBuildModal"}}
-        >
-          Trigger build
-        </button>
-      {{/if}}
     </li>
   {{/if}}
 </ul>
