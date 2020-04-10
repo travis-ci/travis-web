@@ -12,6 +12,7 @@ export function initialize(applicationInstance) {
   }
   app.inject('route', 'pusher', 'pusher:main');
   app.inject('component', 'pusher', 'pusher:main');
+  app.inject('service', 'pusher', 'pusher:main'); // temporary, until Pusher util refactoring
   app.pusher.store = applicationInstance.lookup('service:store');
   app.pusher.pusherService = applicationInstance.lookup('service:pusher');
 }

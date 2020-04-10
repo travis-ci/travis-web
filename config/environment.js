@@ -24,8 +24,11 @@ const {
   DISABLE_SENTRY,
   TRAVIS_COMMIT,
   SOURCE_VERSION,
-  DEPLOY_TARGET
+  DEPLOY_TARGET,
+  DEBUG
 } = process.env;
+
+const DEBUG_ENABLED = DEBUG === 'true';
 
 module.exports = function (environment) {
   const ENV = {
@@ -51,6 +54,14 @@ module.exports = function (environment) {
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
+
+      // Configure global logging based on debug feature flag
+      LOG_TRANSITIONS: DEBUG_ENABLED,
+      LOG_TRANSITIONS_INTERNAL: DEBUG_ENABLED,
+      LOG_ACTIVE_GENERATION: DEBUG_ENABLED,
+      LOG_MODULE_RESOLVER: DEBUG_ENABLED,
+      LOG_VIEW_LOOKUPS: DEBUG_ENABLED,
+
     },
 
     // defaults for running travis-web
@@ -186,7 +197,7 @@ module.exports = function (environment) {
 
   ENV.featureFlags = {
     'repository-filtering': true,
-    'debug-logging': false,
+    'debug-logging': DEBUG_ENABLED,
     'landing-page-cta': true,
     'show-running-jobs-in-sidebar': false,
     'debug-builds': false,

@@ -48,6 +48,7 @@ export default Service.extend({
   features: service(),
   metrics: service(),
   utm: service(),
+  pusher: service(),
   permissionsService: service('permissions'),
 
   state: STATE.SIGNED_OUT,
@@ -161,8 +162,7 @@ export default Service.extend({
         .then(() => {
           const { currentUser } = this;
           this.set('state', STATE.SIGNED_IN);
-          Travis.trigger('user:signed_in', currentUser);
-          Travis.trigger('user:refreshed', currentUser);
+          this.pusher.subscribeUser(currentUser);
         })
         .catch(error => {
           throw new Error(error);
