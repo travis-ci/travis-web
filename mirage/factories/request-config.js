@@ -6,6 +6,11 @@ export default Factory.extend({
       source: 'test/test_repo:.travis.yml@master',
       config: 'script: echo "Hello World"',
       mode: 'deep_merge_append'
+    },
+    {
+      source: 'api',
+      config: 'script: echo "Hello World"',
+      mode: 'deep_merge_append'
     }];
   },
 
