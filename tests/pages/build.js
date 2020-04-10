@@ -85,7 +85,7 @@ export default create({
 
   configTab: {
     scope: '[data-test-build-config-tab]',
-    isDisabled: hasClass('disabled')
+    isConfigTabHidden: isHidden()
   },
 
   requestMessagesHeader: {
