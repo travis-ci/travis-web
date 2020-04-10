@@ -48,7 +48,7 @@ docker-push-branch:
 .PHONY: ship
 ship: docker-build docker-login
 
-ifeq ($(BRANCH),master)
+ifeq ($(BRANCH),build_docker_image)
 ifeq ($(TRAVIS_PULL_REQUEST),false)
 ship: docker-push-latest-master
 endif
