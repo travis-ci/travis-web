@@ -1784,6 +1784,7 @@ export default {
         "starred",
         "managed_by_installation",
         "active_on_org",
+        "config_validation",
         "migration_status",
         "current_build",
         "last_started_build",
@@ -1811,6 +1812,7 @@ export default {
           "owner_name",
           "default_branch",
           "starred",
+          "config_validation",
           "managed_by_installation",
           "active_on_org",
           "migration_status"
