@@ -18,7 +18,7 @@ export default Component.extend(WithConfigValidation, {
 
   repo: reads('request.repo'),
   request: null,
-  messgages: computed(() => []),
+  messages: computed(() => []),
   hasMessages: gt('messages.length', 0),
 
   toggleStatus: computed('expanded', function () {
