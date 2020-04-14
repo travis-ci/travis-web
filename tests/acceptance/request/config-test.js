@@ -29,6 +29,10 @@ let rawConfigs = [
   {
     config: config,
     source: source2
+  },
+  {
+    config: config,
+    source: 'api'
   }
 ];
 
@@ -63,6 +67,7 @@ module('Acceptance | request/config', function (hooks) {
       await visit(`/travis-ci/travis-web/builds/${this.build.id}`);
 
       assert.equal(document.title, `Build #${this.build.number} - travis-ci/travis-web - Travis CI`);
+
       await page.configTab.click();
 
       assert.equal(document.title, `Config - Build #${this.build.number} - travis-ci/travis-web - Travis CI`);
@@ -187,7 +192,8 @@ module('Acceptance | request/config', function (hooks) {
       this.request.raw_configs = [];
 
       await visit(`/travis-ci/travis-web/jobs/${this.job.id}`);
-      assert.ok(page.configTab.isHidden, 'expected the config tab to be disabled when there’s no .travis.yml');
+
+      assert.ok(page.configTab.isDisabled, 'expected the config tab to be disabled when there’s no .travis.yml');
     });
   });
 });

@@ -85,7 +85,7 @@ export default create({
 
   configTab: {
     scope: '[data-test-build-config-tab]',
-    isConfigTabHidden: isHidden()
+    isDisabled: hasClass('disabled')
   },
 
   requestMessagesHeader: {
@@ -108,13 +108,13 @@ export default create({
     }
   }),
 
-  config: collection('.inner-config-container', {
+  config: collection('[data-test-raw-config]', {
     codeblock: {
       scope: '[data-test-config]',
       text: text(),
       id: attribute('id'),
     },
-    source: text('.header')
+    source: text('[data-test-config-source]')
   }),
 
   jobYamlNote: {

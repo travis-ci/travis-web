@@ -106,7 +106,7 @@ module('Acceptance | repo | requests', function (hooks) {
       assert.equal(request.buildNumber.text, '1871');
     });
 
-    assert.ok(requestsPage.isHidden);
+    assert.ok(requestsPage.missingNotice.isHidden);
 
     percySnapshot(assert);
   });

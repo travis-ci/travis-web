@@ -12,17 +12,13 @@ import {
 import { selectChoose } from 'ember-power-select/test-support';
 
 export default create({
-  visit: visitable(':owner/:repo'),
+  visit: visitable(':provider/:owner/:repo'),
   popupIsHidden: isHidden('.trigger-build-modal'),
-  popupTriggerLinkIsHidden: isHidden('.option-dropdown .trigger-build-anchor'),
-  popupTriggerLinkIsPresent: isPresent('.option-dropdown .trigger-build-anchor'),
-  openPopup: clickable('.option-dropdown .trigger-build-anchor'),
-  popupIsVisible: isVisible('.trigger-build-modal'),
   configFormIsHidden: isHidden('[data-test-request-config-form]'),
   configFormIsVisible: isVisible('[data-test-request-config-form]'),
-  configFormTriggerLinkIsHidden: isHidden('.option-dropdown .trigger-build-anchor'),
-  configFormTriggerLinkIsPresent: isPresent('.option-dropdown .trigger-build-anchor'),
-  showConfigForm: clickable('.option-dropdown .trigger-build-anchor'),
+  configFormTriggerLinkIsHidden: isHidden('[trigger-build-anchor]'),
+  configFormTriggerLinkIsPresent: isPresent('[trigger-build-anchor]'),
+  showConfigForm: clickable('[trigger-build-anchor]'),
   requestConfigButtonsIsPresent: isPresent('[data-test-request-configs-button]'),
 
   selectBranch(branch) {
