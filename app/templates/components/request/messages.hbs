@@ -1,6 +1,6 @@
 {{#if (or this.hasMessages this.repo.configValidation)}}
   <div class="request-messages request-message-{{this.maxLevel}} {{if this.hasMessages 'request-messages-expandable'}}" data-test-configs-messages="true">
-    <div class="header" {{action 'toggle'}} data-test-configs-messages-toggle="true">
+    <div class="header" {{on 'click' 'toggle'}} data-test-configs-messages-toggle="true">
       <span class="tooltip-wrapper level-icon">
         <SvgImage @name="msg-{{this.maxLevel}}"  @class={{this.iconClass}} />
         <EmberTooltip @text={{this.summary}} />
