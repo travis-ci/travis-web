@@ -20,6 +20,7 @@ module('Acceptance | build/config', function (hooks) {
     this.repo = this.server.create('repository', {
       name: 'difference-engine',
       slug: 'adal/difference-engine',
+      config_validation: true,
       permissions: {
         create_request: true
       }
@@ -113,6 +114,7 @@ module('Acceptance | build/config', function (hooks) {
     await visit(this.TEST_TARGETS.URL);
 
     percySnapshot(assert);
+
     assert.dom(this.TEST_TARGETS.TRIGGER_BUILD_BUTTON).exists();
     assert.dom(this.TEST_TARGETS.CANCEL_BUTTON).doesNotExist();
     assert.dom(this.TEST_TARGETS.CUSTOMIZE_BUTTON).doesNotExist();

@@ -45,7 +45,13 @@ module('Acceptance | request/config', function (hooks) {
     const currentUser = this.server.create('user');
     signInUser(currentUser);
 
-    this.repository = this.server.create('repository', { slug: slug });
+    this.repository = this.server.create('repository', {
+      slug,
+      permissions: {
+        create_request: true
+      }
+    }),
+
     this.server.create('setting', {
       repository: this.repository,
       name: 'config_validation',
