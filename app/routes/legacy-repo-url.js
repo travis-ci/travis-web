@@ -1,6 +1,7 @@
 import Route from '@ember/routing/route';
 import { vcsConfigByUrlPrefix, defaultVcsConfig } from 'travis/utils/vcs';
 import { isEmpty } from '@ember/utils';
+import { singularize } from 'ember-inflector';
 
 export default Route.extend({
   templateName: 'error404',
@@ -34,7 +35,7 @@ export default Route.extend({
       routeName = method;
     }
     if (id) {
-      routeName = method.singularize();
+      routeName = singularize(method);
       routeModels.push(id);
     }
     if (view) {
