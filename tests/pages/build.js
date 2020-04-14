@@ -89,10 +89,10 @@ export default create({
   },
 
   requestMessagesHeader: {
-    scope: '.request-messages .header'
+    scope: '[data-test-configs-messages]'
   },
 
-  requestMessages: collection('.request-message', {
+  requestMessages: collection('[data-test-configs-message]', {
     icon: {
       scope: '.level-icon svg',
       isInfo: hasClass('icon-info'),
@@ -105,7 +105,7 @@ export default create({
       isPresent: isPresent(),
       href: attribute('href'),
       text: text(),
-    }
+    },
   }),
 
   config: collection('[data-test-raw-config]', {
