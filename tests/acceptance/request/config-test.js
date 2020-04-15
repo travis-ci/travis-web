@@ -47,19 +47,43 @@ module('Acceptance | request/config', function (hooks) {
 
     this.repository = this.server.create('repository', {
       slug,
+      config_validation: true,
       permissions: {
         create_request: true
       }
     }),
 
-    this.server.create('setting', {
-      repository: this.repository,
-      name: 'config_validation',
-      value: true
-    });
+    this.server.create('setting', { repository: this.repository, name: 'config_validation', value: true });
 
     let branch = this.server.create('branch', { name: 'acceptance-tests' });
-    this.request = this.server.create('request', { repository: this.repository, raw_configs: rawConfigs });
+    this.msg1 = {
+      level: 'warn',
+      key: 'jortleby',
+      code: 'skortleby',
+      args: {
+        jortle: 'tortle'
+      },
+      src: source,
+      line: 2,
+    };
+    this.msg2 = {
+      level: 'warn',
+      key: 'language',
+      code: 'cast',
+      args: {
+        given_value: 'tortle',
+        given_type: 'str',
+        value: true,
+        type: 'bool'
+      },
+      src: source2,
+    };
+
+    this.request = this.server.create('request', {
+      repository: this.repository,
+      raw_configs: rawConfigs,
+      messages: [this.msg1, this.msg2]
+    });
     this.build = this.server.create('build', { number: '5', state: 'started', repository: this.repository, branch, request: this.request });
     this.job = this.server.create('job', { number: '1234.1', state: 'received', build: this.build, repository: this.repository, config: { language: 'Hello' } });
   });
@@ -83,32 +107,6 @@ module('Acceptance | request/config', function (hooks) {
     });
 
     test('shows build messages when they exist', async function (assert) {
-      const msg1 = this.server.create('message', {
-        request: this.request,
-        level: 'warn',
-        key: 'jortleby',
-        code: 'skortleby',
-        args: {
-          jortle: 'tortle'
-        },
-        src: source,
-        line: 2,
-      });
-
-      this.server.create('message', {
-        request: this.request,
-        level: 'warn',
-        key: 'language',
-        code: 'cast',
-        args: {
-          given_value: 'tortle',
-          given_type: 'str',
-          value: true,
-          type: 'bool'
-        },
-        src: source2,
-      });
-
       await visit(`/travis-ci/travis-web/builds/${this.build.id}`);
       await page.configTab.click();
       await page.requestMessagesHeader.click();
@@ -118,8 +116,8 @@ module('Acceptance | request/config', function (hooks) {
       page.requestMessages[0].as(message => {
         assert.ok(message.icon.isWarning, 'expected the request message to be a warn');
         assert.equal(message.message, 'unrecognised message code skortleby');
-        assert.equal(page.config[0].codeblock.id, codeblockName(msg1.src));
-        assert.equal(message.link.href, `#${codeblockName(msg1.src)}.${msg1.line + 1}`);
+        assert.equal(page.config[0].codeblock.id, codeblockName(this.msg1.src));
+        assert.equal(message.link.href, `#${codeblockName(this.msg1.src)}.${this.msg1.line + 1}`);
       });
 
       percySnapshot(assert);

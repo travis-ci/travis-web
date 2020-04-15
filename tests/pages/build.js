@@ -89,7 +89,7 @@ export default create({
   },
 
   requestMessagesHeader: {
-    scope: '[data-test-configs-messages]'
+    scope: '[data-test-configs-messages-toggle]'
   },
 
   requestMessages: collection('[data-test-configs-message]', {
