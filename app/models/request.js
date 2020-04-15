@@ -28,9 +28,16 @@ export default Model.extend({
   repo: belongsTo('repo', { async: true }),
   commit: belongsTo('commit', { async: true }),
   messages: attr(),
+  state: attr(),
 
   // API models this as hasMany but serializers:request#normalize overrides it
   build: belongsTo('build', { async: true }),
+
+  // TODO these are only here in order for the "trigger build" POST request
+  // to propagate them. not sure if that's the right thing to do.
+  branch: attr(),
+  sha: attr(),
+  merge_mode: attr(),
 
   api: service(),
 

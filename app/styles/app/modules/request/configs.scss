@@ -35,9 +35,23 @@
 }
 
 .request-configs-trigger-build-notice {
+  position: relative;
   margin: 1em 0;
-  padding: 1em;
+  padding: 1.5em 1em;
   border: 1px solid $dry-cement;
+
+  @each $status, $colors in $buildRequest {
+    @include colorBg(map-get($colors, gradient), $status, 5px);
+
+    &.#{$status} .request-configs-button-submit,
+    &.#{$status} .request-configs-link-success {
+      background-color: #{map-get($colors, gradient)};
+    }
+  }
+
+  .underline {
+    text-decoration: underline;
+  }
 
   .request-configs-icon {
     position: relative;
@@ -46,6 +60,62 @@
     width: 16px;
     margin-right: 6px;
     opacity: 0.4;
+  }
+
+  .request-configs-trigger-build-notice-buttons {
+    position: absolute;
+    top: 1em;
+    right: 1em;
+    padding-top: 2px;
+  }
+
+  .request-configs-button-submit,
+  .request-configs-button-reset,
+  .request-configs-link-success {
+    display: inline-block;
+    padding: 8px 12px;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  .request-configs-button-reset {
+    margin-right: 8px;
+
+    &:hover,
+    &:active {
+      color: $oxide-blue;
+    }
+  }
+
+  .request-configs-button-submit,
+  .request-configs-link-success {
+    width: 100px;
+    border-radius: 2px;
+    color: white;
+
+    &:active,
+    &:focus {
+      outline: none;
+    }
+
+    .loading-indicator {
+      vertical-align: bottom;
+      i {
+        background-color: white;
+      }
+    }
+
+    svg {
+      width: 9px;
+      height: 9px;
+      margin: 0 -6px 0 2px;
+      vertical-align: baseline;
+
+      path {
+        stroke: white;
+        stroke-width: 3px;
+      }
+    }
   }
 }
 

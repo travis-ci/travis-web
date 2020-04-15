@@ -1,23 +1,36 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { equal } from '@ember/object/computed';
-import { pluralize } from 'ember-inflector';
+import { equal, reads } from '@ember/object/computed';
 import { STATUSES } from 'travis/components/request/configs';
 
 export default Component.extend({
   tagName: '',
 
-  configs: 0,
-  status: null,
-  customizing: equal('status', STATUSES.CUSTOMIZE),
-  previewing: equal('status', STATUSES.PREVIEW),
+  configs: 1,
+  view: null,
+  build: null,
+  customizing: equal('view', STATUSES.CUSTOMIZE),
+  previewing: equal('view', STATUSES.PREVIEW),
+  submitting: reads('build.submitting'),
+  pending: reads('build.pending'),
+  success: reads('build.success'),
+  rejected: reads('build.rejected'),
 
-  message: computed('customizing', 'previewing', 'configs', function () {
-    if (this.previewing) {
-      return 'The triggered build will have the following build config and job matrix.';
+  state: computed('submitting', 'pending', 'success', 'rejected', function () {
+    if (this.submitting) {
+      return 'submitting';
+    } else if (this.pending) {
+      return 'pending';
+    } else if (this.success) {
+      return 'success';
+    } else if (this.rejected) {
+      return 'rejected';
     }
-    let configs = pluralize(this.configs + 1, 'config', { withoutCount: true });
-    if (this.customizing) configs = `details and ${configs}`;
-    return `Trigger a build request with the following build ${configs}`;
   }),
+
+  actions: {
+    reset() {
+      this.build.reset();
+    }
+  }
 });

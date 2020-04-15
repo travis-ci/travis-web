@@ -1,5 +1,14 @@
 <div class="request-configs-buttons" data-test-request-configs-button='true'>
-  {{#unless this.closed}}
+  {{#if this.closed}}
+    <button
+      data-test-request-configs-trigger-build="true"
+      onclick={{this.onTrigger}}
+      class="request-configs-button-trigger-build button--blue"
+      title="Trigger build"
+    >
+      Trigger build
+    </button>
+  {{else}}
     <button
       data-test-request-configs-button-cancel="true"
       class="request-configs-button request-configs-button-cancel"
@@ -21,21 +30,5 @@
     >
       Preview
     </button>
-  {{/unless}}
-
-  <button
-    data-test-request-configs-trigger-build="true"
-    onclick={{this.onTrigger}}
-    class="request-configs-button-trigger-build button--blue"
-    title="{{if this.closed 'Trigger build' 'Submit'}}"
-  >
-    {{#if this.submitting}}
-      <LoadingIndicator />
-    {{else if this.closed}}
-      Trigger build
-    {{else}}
-      <SvgImage @name='rocket' @class='request-configs-icon' />
-      Submit
-    {{/if }}
-  </button>
+  {{/if}}
 </div>

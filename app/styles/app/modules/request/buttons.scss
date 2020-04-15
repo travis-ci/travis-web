@@ -31,24 +31,6 @@
   &:focus {
     outline: none;
   }
-
-  .loading-indicator {
-    vertical-align: bottom;
-    i {
-      background-color: white;
-    }
-  }
-
-  svg {
-    width: 16px;
-    height: 13px;
-    vertical-align: bottom;
-    margin-right: 5px;
-
-    path {
-      fill: white;
-    }
-  }
 }
 
 .request-configs-button-cancel,
