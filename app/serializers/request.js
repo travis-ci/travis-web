@@ -27,6 +27,10 @@ let Serializer = V2FallbackSerializer.extend({
     // This converts this from hasMany to belongsTo
     if (resourceHash.builds) {
       resourceHash.build = resourceHash.builds[0];
+    } else if (resourceHash['@type'] === 'pending') {
+      resourceHash = resourceHash.request;
+      resourceHash['@type'] = 'request';
+      resourceHash.repository['@type'] = 'repository';
     }
 
     return this._super(modelClass, resourceHash);

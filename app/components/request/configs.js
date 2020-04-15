@@ -17,6 +17,7 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
   tagName: '',
 
   preview: service('request-config'),
+  build: service('trigger-build'),
 
   status: STATUSES.CLOSED,
   closed: equal('status', STATUSES.CLOSED),
@@ -24,7 +25,7 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
   customizing: equal('status', STATUSES.CUSTOMIZE),
   previewing: equal('status', STATUSES.PREVIEW),
   loading: reads('preview.loading'),
-  submitting: reads('submitBuildRequest.isRunning'),
+  submitting: reads('build.submit.isRunning'),
   replacing: equal('mergeMode', 'replace'),
 
   request: null,
@@ -58,6 +59,10 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
     }
   },
 
+  willDestroyElement() {
+    this.reset();
+  },
+
   formattedApiConfig: computed('request.apiConfig.config', function () {
     const config = this.get('request.apiConfig.config');
     try {
@@ -72,7 +77,7 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
     if (this.closed) {
       this.set('status', STATUSES.OPEN);
     } else {
-      this.submitBuildRequest.perform();
+      this.submitBuildRequest();
     }
   },
 
@@ -139,6 +144,18 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
       config: this.formattedApiConfig
     });
     this.preview.reset();
+    this.build.reset();
+  },
+
+  submitBuildRequest() {
+    this.build.submit.perform({
+      repo: this.repo,
+      branch: this.branch,
+      sha: this.sha,
+      config: this.config,
+      message: this.message,
+      merge_mode: this.mergeMode
+    });
   },
 
   actions: {
@@ -151,7 +168,7 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
       }
     },
     submit() {
-      this.submitBuildRequest.perform();
+      this.submitBuildRequest();
     }
   }
 });

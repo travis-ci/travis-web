@@ -1,6 +1,62 @@
-<p class="request-configs-trigger-build-notice">
+<p class="request-configs-trigger-build-notice {{this.state}}">
   <SvgImage @name='rocket' @class='request-configs-icon' />
   <span data-test-trigger-build-notice="true">
-    {{this.message}}
+    {{#if this.pending}}
+      Waiting for the build request to be processed ...
+    {{else if this.submitting}}
+      Submitting the build request ...
+    {{else if this.success}}
+      <LinkTo
+        @route="build"
+        @models={{array this.build.repo this.build.model}}
+      >
+        Success. You have triggered build <span class="underline">#{{this.build.number}}</span> with the given build {{if this.customizing 'details and'}} {{pluralize this.configs 'config' without-count=true}}.
+      </LinkTo>
+    {{else if this.rejected}}
+      TODO The build request was rejected: ...
+    {{else if this.timeout}}
+      TODO There was an issue processing the build request.
+    {{else if this.previewing}}
+      The triggered build will have the following build config and job matrix.
+    {{else if this.customizing}}
+      Trigger a build request with the following build details and {{pluralize this.configs 'config' without-count=true}}.
+    {{else}}
+      Trigger a build request with the following build {{pluralize this.configs 'config' without-count=true}}.
+    {{/if}}
   </span>
+
+  <div class="request-configs-trigger-build-notice-buttons">
+    {{#if this.success}}
+      <button
+        data-test-request-configs-button-reset="true"
+        class="request-configs-button request-configs-button-reset"
+        {{on 'click' (action 'reset')}}
+      >
+        Reset
+      </button>
+
+      <LinkTo
+        @route="build"
+        @models={{array this.build.repo this.build.model}}
+        class="request-configs-button request-configs-link-success"
+      >
+        <span>Go there</span>
+        <SvgImage @name='icon-arrowtabs' />
+      </LinkTo>
+    {{else}}
+      <button
+        data-test-request-configs-trigger-build="true"
+        class="request-configs-button-submit button--blue"
+        title="Trigger build"
+        onclick={{this.onTrigger}}
+      >
+        {{#if this.submitting}}
+          <LoadingIndicator />
+        {{else}}
+          Trigger build
+        {{/if }}
+      </button>
+    {{/if }}
+  </div>
 </p>
+

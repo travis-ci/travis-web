@@ -8,12 +8,18 @@ export default V3Adapter.extend({
 
     if (requestType === 'query' && query.repository_id) {
       return `${prefix}/repo/${query.repository_id}/requests`;
+    } else if (requestType === 'createRecord') {
+      const repo = snapshot.belongsTo('repo');
+      return `${prefix}/repo/${repo.id}/requests`;
     } else if (requestType === 'findRecord') {
-      let build = snapshot.belongsTo('build');
+      const build = snapshot.belongsTo('build');
+      const repo = snapshot.belongsTo('repo');
 
       if (build) {
         let repositoryId = build.belongsTo('repo').id;
         return `${prefix}/repo/${repositoryId}/request/${id}`;
+      } else if (repo) {
+        return `${prefix}/repo/${repo.id}/request/${id}`;
       } else {
         throw Error('Could not load request with an unknown repository');
       }
