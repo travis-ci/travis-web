@@ -1867,6 +1867,7 @@ export default {
         "base_commit",
         "head_commit",
         "raw_configs",
+        "messages",
         "config",
         "pull_request_mergeable"
       ],
@@ -1890,6 +1891,7 @@ export default {
           "builds",
           "owner",
           "created_at",
+          "messages",
           "event_type",
           "base_commit",
           "head_commit",
