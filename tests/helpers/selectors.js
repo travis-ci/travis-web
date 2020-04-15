@@ -109,8 +109,25 @@ export const EPS_OPTION = '.ember-power-select-option';
 // billing selectors
 export const BILLING_INFO_ADD_EMAIL = '[data-test-add-input]';
 export const BILLING_INFO_EMAIL_INPUT = '[data-test-multiple-input-field]';
-
 export const BILLING_INFO_FIRST_EMAIL_INPUT = '[data-test-multiple-input-field]:nth-child(1)';
 export const BILLING_INFO_SECOND_EMAIL_INPUT = '[data-test-multiple-input-field]:nth-child(2)';
 export const BILLING_INFO_THIRD_EMAIL_INPUT = '[data-test-multiple-input-field]:nth-child(3)';
 export const BILLING_INFO_FOURTH_EMAIL_INPUT = '[data-test-multiple-input-field]:nth-child(4)';
+
+export const TRIGGER_BUILD_BUTTON = '[data-test-request-configs-trigger-build]';
+export const CANCEL_BUTTON = '[data-test-request-configs-button-cancel]';
+export const CUSTOMIZE_BUTTON = '[data-test-request-configs-button-customize]';
+export const PREVIEW_BUTTON = '[data-test-request-configs-button-preview]';
+export const RAW_CONFIGS = '[data-test-raw-config]';
+export const REQUEST_CONFIG = '[data-test-request-config]';
+export const CONFIG_SOURCE = '[data-test-config-source]';
+export const TRIGGER_BUILD_NOTICE = '[data-test-trigger-build-notice]';
+export const BUILD_CONFIG_FORM = '[data-test-request-config-form]';
+export const BUILD_CONFIG_FORM_MESSAGE = '[data-test-request-config-form] input';
+export const BUILD_CONFIG_FORM_SCRIPT = '[data-test-request-config-form] textarea';
+export const PREVIEW_REQUEST_CONFIG = '[data-test-preview-request-config]';
+export const PREVIEW_JOB_CONFIGS = '[data-test-preview-job-configs]';
+export const CONFIG_MESSAGES = '[data-test-configs-messages]';
+export const CONFIG_MESSAGES_TOGGLE = '[data-test-configs-messages-toggle]';
+export const CONFIG_MESSAGES_SUMMARY = '[data-test-config-messages-summary]';
+export const CONFIG_MESSAGE_LINE = '[data-test-config-message-line]';
