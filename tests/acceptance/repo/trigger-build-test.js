@@ -23,6 +23,7 @@ module('Acceptance | repo/trigger build', function (hooks) {
       name: 'difference-engine',
       slug: 'adal/difference-engine',
       provider: 'github',
+      config_validation: true,
       permissions: {
         create_request: true
       }
