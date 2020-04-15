@@ -48,7 +48,7 @@ export default Service.extend({
   features: service(),
   metrics: service(),
   utm: service(),
-  pusher: service(),
+  pusherService: service('pusher'),
   permissionsService: service('permissions'),
 
   state: STATE.SIGNED_OUT,
@@ -162,7 +162,7 @@ export default Service.extend({
         .then(() => {
           const { currentUser } = this;
           this.set('state', STATE.SIGNED_IN);
-          this.pusher.subscribeUser(currentUser);
+          this.pusherService.subscribeUser(currentUser);
         })
         .catch(error => {
           throw new Error(error);

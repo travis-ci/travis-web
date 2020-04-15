@@ -230,10 +230,6 @@ const Repo = VcsEntity.extend({
 });
 
 Repo.reopenClass({
-  recent() {
-    return this.find();
-  },
-
   accessibleBy(store, reposIdsOrlogin) {
     let repos, reposIds;
     reposIds = reposIdsOrlogin || [];
@@ -249,14 +245,6 @@ Repo.reopenClass({
       };
       return store.query('repo', params)
         .then(() => resolve(repos), () => reject());
-    });
-  },
-
-  search(store, query) {
-    return store.query('repo', {
-      name_filter: query,
-      sort_by: 'name_filter:desc',
-      limit: 10
     });
   },
 

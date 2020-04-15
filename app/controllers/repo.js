@@ -25,8 +25,10 @@ export default Controller.extend({
 
   repos: alias('repositories.accessible'),
   currentUser: alias('auth.currentUser'),
-  build: alias('buildController.build'),
+
   builds: alias('buildsController.model'),
+
+  build: alias('buildController.build'),
   job: alias('jobController.job'),
 
   showGitHubApps: alias('features.github-apps'),

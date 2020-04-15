@@ -28,7 +28,7 @@
     "@glimmer/component": "^1.0.0",
     "@glimmer/tracking": "^1.0.0",
     "active-model-adapter": "2.2.0",
-    "ansiparse": "artursmirnov/ansiparse",
+    "ansiparse": "travis-ci/ansiparse",
     "babel-eslint": "^10.1.0",
     "broccoli-asset-rev": "^3.0.0",
     "broccoli-funnel": "^2.0.1",
