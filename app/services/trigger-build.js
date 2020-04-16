@@ -32,7 +32,6 @@ export default Service.extend({
     while (!this.success && !this.rejected && count++ < 30) {
       yield timeout(1000);
       yield this.request.reload();
-      console.log(this.request.state);
     }
     // if not finished display a message that the request has not been processed after 30s,
     // and offer going to the requests page (?)
