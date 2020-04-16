@@ -72,23 +72,18 @@ $configValidation: (
 
 $buildRequest: (
   submitting: (
-    color: $dozer-yellow,
     gradient: $canary-yellow,
-    color-bg: $haze-yellow
   ),
   pending: (
-    color: $dozer-yellow,
     gradient: $canary-yellow,
-    color-bg: $haze-yellow
   ),
   success: (
-    color: $turf-green,
     gradient: $turf-green,
-    color-bg: $seed-green
   ),
   rejected: (
-    color: $brick-red,
     gradient: $brick-red,
-    color-bg: $quartz-red
+  ),
+  errored: (
+    gradient: $brick-red,
   )
 );

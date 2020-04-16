@@ -73,7 +73,6 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
   }),
 
   onTrigger(e) {
-    e.toElement.blur();
     if (this.closed) {
       this.set('status', STATUSES.OPEN);
     } else {

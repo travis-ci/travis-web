@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { equal, reads } from '@ember/object/computed';
+import { equal, reads, or } from '@ember/object/computed';
 import { STATUSES } from 'travis/components/request/configs';
 
 export default Component.extend({
@@ -15,8 +15,10 @@ export default Component.extend({
   pending: reads('build.pending'),
   success: reads('build.success'),
   rejected: reads('build.rejected'),
+  finished: reads('build.finished'),
+  error: reads('build.error'),
 
-  state: computed('submitting', 'pending', 'success', 'rejected', function () {
+  state: computed('submitting', 'pending', 'success', 'rejected', 'error', function () {
     if (this.submitting) {
       return 'submitting';
     } else if (this.pending) {
@@ -25,6 +27,8 @@ export default Component.extend({
       return 'success';
     } else if (this.rejected) {
       return 'rejected';
+    } else if (this.error) {
+      return 'errored';
     }
   }),
 

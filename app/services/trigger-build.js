@@ -1,6 +1,6 @@
 import Service, { inject as service } from '@ember/service';
 import { task, timeout } from 'ember-concurrency';
-import { equal, reads } from '@ember/object/computed';
+import { equal, reads, or } from '@ember/object/computed';
 
 export default Service.extend({
   api: service(),
@@ -15,6 +15,8 @@ export default Service.extend({
   pending: equal('state', 'pending'),
   success: equal('state', 'finished'),
   rejected: equal('state', 'rejected'),
+  finished: or('success', 'rejected', 'error'),
+  timedout: false,
 
   submit: task(function* (data) {
     try {
@@ -22,22 +24,24 @@ export default Service.extend({
       yield this.request.save();
       yield this.poll.perform();
     } catch (e) {
-      console.log(e);
-      // return this.displayError(e);
+      this.set('error', e.message);
     }
   }).drop(),
 
   poll: task(function* () {
     let count = 0;
-    while (!this.success && !this.rejected && count++ < 30) {
-      yield timeout(1000);
+    while (false && !this.finished && count++ < 45) {
+      yield timeout(1000 + (count ** 2) * 5);
       yield this.request.reload();
     }
-    // if not finished display a message that the request has not been processed after 30s,
-    // and offer going to the requests page (?)
+
+    if (!this.finished) {
+      this.set('error', 'timeout');
+    }
   }).drop(),
 
   reset() {
     this.set('request', null);
+    this.set('error', null);
   }
 });
