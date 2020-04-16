@@ -15,7 +15,7 @@
     </span>
   </div>
   <div class="job-os {{this.os}}">
-    <EmberTooltip @text={{this.job.config.content.os}} />
+    <EmberTooltip @text='{{this.job.config.content.os}} {{this.job.config.content.dist}}' />
     <SvgImage @name={{osIcon}} @class="icon" />
   </div>
   {{#if this.name}}

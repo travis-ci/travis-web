@@ -140,6 +140,8 @@ export default Component.extend({
     }
   }),
 
+  dist: reads('jobsConfig.content.dist'),
+
   arch: computed('jobsConfig.content.arch', function () {
     let config = this.get('jobsConfig.content');
     return jobConfigArch(config);
