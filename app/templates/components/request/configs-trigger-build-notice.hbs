@@ -14,8 +14,10 @@
       </LinkTo>
     {{else if this.rejected}}
       TODO The build request was rejected: ...
-    {{else if this.timeout}}
-      TODO There was an issue processing the build request.
+    {{else if (eq this.error 'timeout')}}
+      Processing the build request takes a very long time. TODO: now what?
+    {{else if this.error}}
+      An error occured: {{this.error}}
     {{else if this.previewing}}
       The triggered build will have the following build config and job matrix.
     {{else if this.customizing}}
@@ -26,7 +28,7 @@
   </span>
 
   <div class="request-configs-trigger-build-notice-buttons">
-    {{#if this.success}}
+    {{#if this.finished}}
       <button
         data-test-request-configs-button-reset="true"
         class="request-configs-button request-configs-button-reset"
@@ -35,14 +37,16 @@
         Reset
       </button>
 
-      <LinkTo
-        @route="build"
-        @models={{array this.build.repo this.build.model}}
-        class="request-configs-button request-configs-link-success"
-      >
-        <span>Go there</span>
-        <SvgImage @name='icon-arrowtabs' />
-      </LinkTo>
+      {{#if this.success}}
+        <LinkTo
+          @route="build"
+          @models={{array this.build.repo this.build.model}}
+          class="request-configs-button request-configs-link-success"
+        >
+          <span>Go there</span>
+          <SvgImage @name='icon-arrowtabs' />
+        </LinkTo>
+      {{/if}}
     {{else}}
       <button
         data-test-request-configs-trigger-build="true"
