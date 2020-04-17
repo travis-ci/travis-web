@@ -4,7 +4,6 @@ import parseWithDefault from 'travis/utils/json-parser';
 
 export default V3Adapter.extend({
   buildURL: function (modelName, id, snapshot, requestType, query) {
-    console.log(modelName, id, snapshot, requestType, query);
     return `${this._super('repo', snapshot.belongsTo('repo').id)}/request/config`;
   },
 

@@ -9,8 +9,8 @@ export default Service.extend({
 
   loaded: false,
   loading: reads('loadConfigs.isRunning'),
+  config: reads('record.config'),
   rawConfigs: reads('record.rawConfigs'),
-  requestConfig: reads('record.requestConfig'),
   jobConfigs: reads('record.jobConfigs'),
   errorMessages: computed(() => []),
   messages: or('record.messages', 'errorMessages'),
@@ -33,11 +33,10 @@ export default Service.extend({
   }).restartable(),
 
   handleLoadConfigError(e) {
-    console.log(e);
-    // const error = e.errors[0];
-    // const msg = { level: 'error', code: error.title, args: { message: error.detail } };
-    // this.set('record', null);
-    // this.set('errorMessages', [msg]);
+    const error = e.errors[0];
+    const msg = { level: 'error', code: error.title, args: { message: error.detail } };
+    this.set('record', null);
+    this.set('errorMessages', [msg]);
   },
 
   reset() {

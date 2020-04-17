@@ -1,12 +1,12 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { reads, mapBy } from '@ember/object/computed';
+import { reads } from '@ember/object/computed';
 
 export default Component.extend({
   tagName: '',
 
-  requestConfig: reads('preview.requestConfig.config'),
-  jobConfigs: mapBy('preview.jobConfigs', 'config'),
+  requestConfig: reads('preview.config'),
+  jobConfigs: reads('preview.jobConfigs'),
   messages: reads('preview.messages'),
   loading: reads('preview.loading'),
 
@@ -15,6 +15,7 @@ export default Component.extend({
   }),
 
   formattedJobConfigs: computed('jobConfigs', function () {
-    return this.jobConfigs.map((config) => JSON.stringify(config, null, 2));
+    const configs = this.jobConfigs || [];
+    return configs.map((config) => JSON.stringify(config, null, 2));
   }),
 });
