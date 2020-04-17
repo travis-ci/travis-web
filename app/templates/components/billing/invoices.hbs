@@ -57,12 +57,21 @@
             </td>
             <td> {{format-currency invoice.amountDue }} </td>
             <td>
-              <a data-test-invoice-url='true' href={{invoice.url}}>
-                <EmberTooltip>
-                  {{moment-format invoice.createdAt 'MMMM'}} invoice
-                </EmberTooltip>
-                <SvgImage @name='icon-download' @class='icon icon-download' />
-              </a>
+              {{#if this.account.hasSubscriptionPermissions}}
+                <a data-test-invoice-url='true' href={{invoice.url}} class="invoice-link">
+                  <EmberTooltip>
+                    {{moment-format invoice.createdAt 'MMMM'}} invoice
+                  </EmberTooltip>
+                  <SvgImage @name='icon-download' @class='icon icon-download' />
+                </a>
+              {{else}}
+                <div data-test-invoice-url='true' class="invoice-link disabled">
+                  <EmberTooltip>
+                    You don't have sufficient permissions
+                  </EmberTooltip>
+                  <SvgImage @name='icon-download' @class='icon icon-download' />
+                </div>
+              {{/if}}
             </td>
           </tr>
         {{/each}}
