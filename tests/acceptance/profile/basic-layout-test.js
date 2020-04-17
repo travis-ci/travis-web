@@ -221,7 +221,7 @@ module('Acceptance | profile/basic layout', function (hooks) {
     profilePage.githubAppsRepositories[0].as(repository => {
       assert.equal(repository.name, 'github-apps-private-repository');
       assert.ok(repository.isPrivate);
-      assert.ok(repository.settings.isDisabled);
+      assert.notOk(repository.settings.isDisabled);
     });
 
     profilePage.githubAppsRepositories[1].as(repository => {

@@ -624,10 +624,14 @@ section.invoices {
     margin-top: 5px;
   }
 
-  td a {
+  td .invoice-link {
     display: inline-block;
     width: 54px;
     text-align: center;
+  }
+
+  .disabled {
+    cursor: not-allowed;
   }
 
   td,
