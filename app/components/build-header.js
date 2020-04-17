@@ -2,6 +2,7 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import jobConfigArch from 'travis/utils/job-config-arch';
 import jobConfigLanguage from 'travis/utils/job-config-language';
+import { jobConfigOs, jobConfigOsVersion } from 'travis/utils/job-config-os';
 import { reads, not } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 
@@ -126,21 +127,14 @@ export default Component.extend({
   }),
 
   os: computed('jobsConfig.content.os', function () {
-    let os = this.get('jobsConfig.content.os');
-    if (os === 'linux' || os === 'linux-ppc64le') {
-      return 'linux';
-    } else if (os === 'freebsd') {
-      return 'freebsd';
-    } else if (os === 'osx') {
-      return 'osx';
-    } else if (os === 'windows') {
-      return 'windows';
-    } else {
-      return 'unknown';
-    }
+    const os = this.get('jobsConfig.content.os');
+    return jobConfigOs(os);
   }),
 
-  dist: reads('jobsConfig.content.dist'),
+  osVersion: computed('jobsConfig.content.{dist,os,osx_image}', function () {
+    const config = this.get('jobsConfig.content') || {};
+    return jobConfigOsVersion(config);
+  }),
 
   arch: computed('jobsConfig.content.arch', function () {
     let config = this.get('jobsConfig.content');

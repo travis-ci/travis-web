@@ -3,6 +3,7 @@ import { computed } from '@ember/object';
 import { reads } from '@ember/object/computed';
 import jobConfigArch from 'travis/utils/job-config-arch';
 import jobConfigLanguage from 'travis/utils/job-config-language';
+import { jobConfigOs, jobConfigOsVersion } from 'travis/utils/job-config-os';
 
 export default Component.extend({
   tagName: 'li',
@@ -37,19 +38,8 @@ export default Component.extend({
   }),
 
   os: computed('job.config.content.os', function () {
-    let os = this.get('job.config.content.os');
-
-    if (os === 'linux' || os === 'linux-ppc64le') {
-      return 'linux';
-    } else if (os === 'freebsd') {
-      return 'freebsd';
-    } else if (os === 'osx') {
-      return 'osx';
-    } else if (os === 'windows') {
-      return 'windows';
-    } else {
-      return 'unknown';
-    }
+    const os = this.get('job.config.content.os');
+    return jobConfigOs(os);
   }),
 
   osIcon: computed('os', function () {
@@ -68,8 +58,13 @@ export default Component.extend({
     }
   }),
 
+  osVersion: computed('job.config.content.{dist,os,osx_image}', function () {
+    const config = this.get('job.config.content') || {};
+    return jobConfigOsVersion(config);
+  }),
+
   arch: computed('job.config.content.arch', function () {
     let config = this.get('job.config.content');
     return jobConfigArch(config);
-  })
+  }),
 });

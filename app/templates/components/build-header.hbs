@@ -198,7 +198,7 @@
   <div class="job-container">
     <div class="job-detail-container">
       <div class="detail-job-os {{this.os}}">
-        <EmberTooltip @text='{{this.os}} {{this.dist}}' />
+        <EmberTooltip @text='{{this.os}} {{this.osVersion}}' />
         <SvgImage @name={{osIcon}} @class="icon" />
       </div>
       {{#if this.name}}

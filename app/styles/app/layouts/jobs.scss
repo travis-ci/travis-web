@@ -147,6 +147,9 @@
 .job-os {
   position: relative;
   pointer-events: none;
+  overflow: hidden;
+  min-width: 25px;
+  text-transform: capitalize;
 
   .icon {
     width: 18px;
@@ -157,12 +160,13 @@
     margin-left: 10px;
     padding: 0.3em 0.5em 0.5em 0.5em;
     pointer-events: initial;
+    flex-basis: 6rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 
     .icon {
       padding-left: 0;
-      text-indent: 999%;
-      white-space: nowrap;
-      overflow: hidden;
     }
   }
 
