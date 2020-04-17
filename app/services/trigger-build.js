@@ -2,6 +2,12 @@ import Service, { inject as service } from '@ember/service';
 import { task, timeout } from 'ember-concurrency';
 import { equal, reads, or } from '@ember/object/computed';
 
+export const STATES = {
+  PENDING: 'closed',
+  SUCCESS: 'open',
+  REJECTED: 'customize',
+};
+
 export default Service.extend({
   api: service(),
   store: service(),
@@ -12,11 +18,11 @@ export default Service.extend({
   number: reads('model.number'),
   state: reads('request.state'),
   submitting: reads('submit.isRunning'),
-  pending: equal('state', 'pending'),
-  success: equal('state', 'finished'),
-  rejected: equal('state', 'rejected'),
+  pending: equal('state', STATES.PENDING),
+  success: equal('state', STATES.SUCCESS),
+  rejected: equal('state', STATES.REJECTED),
   finished: or('success', 'rejected', 'error'),
-  timedout: false,
+  error: null,
 
   submit: task(function* (data) {
     try {

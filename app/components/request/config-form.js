@@ -17,7 +17,7 @@ export default Component.extend(BranchSearching, {
   tagName: '',
 
   repo: reads('request.repo'),
-  requestConfig: reads('preview.requestConfig'),
+  requestConfig: reads('preview.requestConfig.config'),
 
   rawConfigs: computed('preview.rawConfigs', function () {
     const configs = this.preview.rawConfigs;
