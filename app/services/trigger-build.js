@@ -36,7 +36,7 @@ export default Service.extend({
 
   poll: task(function* () {
     let count = 0;
-    while (false && !this.finished && count++ < 45) {
+    while (!this.finished && count++ < 45) {
       yield timeout(1000 + (count ** 2) * 5);
       yield this.request.reload();
     }
