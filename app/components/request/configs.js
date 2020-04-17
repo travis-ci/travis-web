@@ -54,10 +54,12 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
     if (this.customizing || this.previewing) {
       this.load();
     }
+    this._super(...arguments);
   },
 
   willDestroyElement() {
     this.reset();
+    this._super(...arguments);
   },
 
   formattedApiConfig: computed('request.apiConfig.config', function () {
