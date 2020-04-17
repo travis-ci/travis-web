@@ -5,7 +5,10 @@ node_js: 10
 env:
   global:
     - PERCY_ENABLE=0
+    - JOBS=1
+    # See https://git.io/vdao3 for details.
 
+os: linux
 dist: xenial
 
 addons:
@@ -13,11 +16,6 @@ addons:
 
 cache:
   npm: true
-
-env:
-  global:
-    # See https://git.io/vdao3 for details.
-    - JOBS=1
 
 before_install:
   - npm config set spin false
