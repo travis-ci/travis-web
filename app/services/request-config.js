@@ -9,21 +9,23 @@ export default Service.extend({
 
   loaded: false,
   loading: reads('loadConfigs.isRunning'),
-  rawConfigs: reads('result.rawConfigs'),
-  requestConfig: reads('result.requestConfig'),
-  jobConfigs: reads('result.jobConfigs'),
+  rawConfigs: reads('record.rawConfigs'),
+  requestConfig: reads('record.requestConfig'),
+  jobConfigs: reads('record.jobConfigs'),
   errorMessages: computed(() => []),
-  messages: or('result.messages', 'errorMessages'),
+  messages: or('record.messages', 'errorMessages'),
 
-  loadConfigs: task(function* (id, data, debounce) {
+  loadConfigs: task(function* (data, debounce) {
     if (debounce) {
       const { searchDebounceRate } = config.intervals;
       yield timeout(searchDebounceRate);
     }
 
     try {
-      const result = yield this.store.queryRecord('request-config', { id, data });
-      this.setProperties({ result, loaded: true });
+      data.repo = yield this.store.findRecord('repo', data.repo.get('id'));
+      const record = this.store.createRecord('request-config', data);
+      yield record.save();
+      this.setProperties({ record: record, loaded: true });
     } catch (e) {
       // TODO for some reason this still logs the 400 request as an error to the console
       this.handleLoadConfigError(e);
@@ -31,10 +33,11 @@ export default Service.extend({
   }).restartable(),
 
   handleLoadConfigError(e) {
-    const error = e.errors[0];
-    const msg = { level: 'error', code: error.title, args: { message: error.detail } };
-    this.set('result', null);
-    this.set('errorMessages', [msg]);
+    console.log(e);
+    // const error = e.errors[0];
+    // const msg = { level: 'error', code: error.title, args: { message: error.detail } };
+    // this.set('record', null);
+    // this.set('errorMessages', [msg]);
   },
 
   reset() {

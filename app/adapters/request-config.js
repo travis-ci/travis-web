@@ -3,9 +3,9 @@ import V3Adapter from 'travis/adapters/v3';
 import parseWithDefault from 'travis/utils/json-parser';
 
 export default V3Adapter.extend({
-  queryRecord(store, type, { id, data }) {
-    const url = `${this.buildURL('repo', id)}/request/config`;
-    return this.ajax(url, 'POST', { data });
+  buildURL: function (modelName, id, snapshot, requestType, query) {
+    console.log(modelName, id, snapshot, requestType, query);
+    return `${this._super('repo', snapshot.belongsTo('repo').id)}/request/config`;
   },
 
   handleResponse(status, headers, body) {
