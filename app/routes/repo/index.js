@@ -5,58 +5,45 @@ export default TravisRoute.extend({
   features: service(),
   tabStates: service(),
 
-  afterModel(repo) {
+  model() {
+    const repo = this.modelFor('repo');
+    const build = repo.currentBuild;
+    return { repo, build };
+  },
+
+  afterModel({ build }) {
     try {
-      return repo.get('currentBuild.request').then(request => request && request.fetchMessages.perform());
+      return build.get('request').then(request => request && request.fetchMessages.perform());
     } catch (error) {}
   },
 
-  setupController(controller, model) {
-    this._super(...arguments);
-    this.controllerFor('repo').activate('current');
-    controller.set('repo', model);
-  },
+  setupController(controller, { repo, build }) {
+    const repoController = this.controllerFor('repo');
+    const job = build.get('jobs.firstObject');
 
-  deactivate() {
-    this.controllerFor('build').set('build', null);
-    this.controllerFor('job').set('job', null);
-    this.controllerFor('repo').set('migrationStatus', null);
-    this.stopObservingRepoStatus();
-    return this._super(...arguments);
+    repoController.setProperties({ build, job });
+    controller.setProperties({ repo, build });
   },
 
   activate() {
-    this.observeRepoStatus();
-    this.set('tabStates.mainTab', 'current');
+    this.controllerFor('repo').activate('current');
     return this._super(...arguments);
   },
 
-  observeRepoStatus() {
-    let controller = this.controllerFor('repo');
-    controller.addObserver('repo.active', this, 'renderTemplate');
-    controller.addObserver('repo.currentBuildId', this, 'renderTemplate');
-  },
-
-  stopObservingRepoStatus() {
-    let controller = this.controllerFor('repo');
-    controller.removeObserver('repo.active', this, 'renderTemplate');
-    controller.removeObserver('repo.currentBuildId', this, 'renderTemplate');
-  },
-
-  renderTemplate() {
-    let controller = this.controllerFor('repo');
+  renderTemplate(controller, { repo, build }) {
+    const repoController = this.controllerFor('repo');
+    const buildController = this.controllerFor('build');
+    buildController.setProperties({ repo, build });
 
     if (this.get('features.github-apps') &&
-      controller.get('repo.active_on_org') &&
-      controller.migrationStatus !== 'success') {
+      repo.get('active_on_org') &&
+      repoController.migrationStatus !== 'success') {
       this.render('repo/active-on-org');
-    } else if (!controller.get('repo.active')) {
+    } else if (!repo.active) {
       this.render('repo/not-active');
-    } else if (!controller.get('repo.currentBuildId')) {
-      this.render('repo/no-build');
     } else {
       this.render('build');
-      this.render('build/index', { into: 'build', controller: 'build' });
+      this.render('build/index', { into: 'build', controller: buildController });
     }
   }
 });

@@ -247,14 +247,6 @@ Repo.reopenClass({
         .then(() => resolve(repos), () => reject());
     });
   },
-
-  fetchBySlug(store, slug, provider = defaultVcsConfig.urlPrefix) {
-    const loadedRepos = store.peekAll('repo').filterBy('provider', provider).filterBy('slug', slug);
-    if (!isEmpty(loadedRepos)) {
-      return EmberPromise.resolve(loadedRepos.firstObject);
-    }
-    return store.queryRecord('repo', { slug, provider });
-  },
 });
 
 export default Repo;
