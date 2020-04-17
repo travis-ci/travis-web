@@ -153,7 +153,7 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
       sha: this.sha,
       config: this.config,
       message: this.message,
-      merge_mode: this.mergeMode
+      mergeMode: this.mergeMode
     });
   },
 

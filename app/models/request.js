@@ -37,7 +37,7 @@ export default Model.extend({
   // to propagate them. not sure if that's the right thing to do.
   branch: attr(),
   sha: attr(),
-  merge_mode: attr(),
+  mergeMode: attr(),
 
   api: service(),
 
