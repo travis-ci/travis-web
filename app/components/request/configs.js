@@ -32,10 +32,7 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
   repo: reads('request.repo'),
   repoId: reads('repo.id'),
   rawConfigs: or('preview.rawConfigs', 'request.uniqRawConfigs'),
-  messages: or('previewMessages', 'requestMessages'),
   loaded: reads('preview.loaded'),
-  previewMessages: reads('preview.messages'),
-  requestMessages: reads('request.messages'),
 
   sha: reads('originalSha'),
   branch: reads('originalBranch'),
@@ -64,10 +61,11 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
   },
 
   formattedApiConfig: computed('request.apiConfig.config', function () {
-    const config = this.get('request.apiConfig.config');
+    let config = this.get('request.apiConfig.config');
     try {
-      return JSON.stringify(JSON.parse(config), null, 2);
-    } catch (e) {
+      config = JSON.stringify(JSON.parse(config), null, 2);
+    } catch (e) {}
+    if (config !== '{}') {
       return config;
     }
   }),

@@ -10,8 +10,8 @@ export default Model.extend({
   config: attr('string'),
 
   // data returned from config validation/expansion
+  config: attr(),
   rawConfigs: attr(),
-  requestConfig: attr(),
   jobConfigs: attr(),
   messages: attr(),
 });
