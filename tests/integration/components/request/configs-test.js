@@ -2,30 +2,16 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, waitFor } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Integration | Component | request configs', function (hooks) {
   setupRenderingTest(hooks);
+  setupMirage(hooks);
 
   test('it renders', async function (assert) {
-    const repo = {
-      id: 1,
-    };
-
-    const request = {
-      id: 1,
-      branchName: 'master',
-      commit: {
-        sha: 'abcdef123',
-        message: 'commit message'
-      },
-      repo: {
-        slug: 'travis-ci/travis-yml'
-      },
-    };
-
+    this.repo = this.server.create('repository');
+    this.request = this.server.create('request');
     this.canTriggerBuild = true;
-    this.repo = repo;
-    this.request = request;
     this.status = 'open';
 
     await render(hbs`<Request::Configs
