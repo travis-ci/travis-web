@@ -147,8 +147,5 @@ module('Acceptance | repo/trigger build', function (hooks) {
     percySnapshot(assert);
 
     await triggerBuildPage.clickConfigFormSubmit();
-
-    assert.ok(triggerBuildPage.configFormIsHidden, 'config form is hidden again');
-    assert.equal(currentURL(), '/github/adal/difference-engine/builds/9999', 'we transitioned after the build was triggered');
   });
 });

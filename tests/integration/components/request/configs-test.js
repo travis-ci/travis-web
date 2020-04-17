@@ -37,6 +37,6 @@ module('Integration | Component | request configs', function (hooks) {
 
     const notice = '[data-test-trigger-build-notice]';
     await waitFor(notice);
-    assert.dom(notice).hasText('Trigger a build request with the following build configs');
+    assert.dom(notice).hasText('Trigger a build request with the following build configs.');
   });
 });
