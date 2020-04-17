@@ -63,12 +63,23 @@ module('Integration | Component | billing-invoices', function (hooks) {
       amountDue: 6900,
       year: 2010
     }];
+
     this.setProperties({ subscription, invoices });
   });
 
   test('renders billing invoices correctly', async function (assert) {
+    const account = {
+      hasSubscriptionPermissions: true
+    };
+    this.set('account', account);
 
-    await render(hbs`<Billing::Invoices @invoices={{this.invoices}} @subscription={{this.subscription}}/>`);
+    await render(hbs`
+      <Billing::Invoices 
+        @invoices={{this.invoices}} 
+        @subscription={{this.subscription}}
+        @account={{this.account}}
+      />`
+    );
 
     assert.dom('h3').hasText('Invoice history');
     assert.dom('[data-test-help-text]').containsText('Having trouble with your invoices?');
@@ -91,6 +102,46 @@ module('Integration | Component | billing-invoices', function (hooks) {
 
     profilePage.billing.invoices.items[1].as(february2010 => {
       assert.equal(february2010.invoiceUrl.href, 'https://example.com/2010.pdf');
+      assert.equal(february2010.invoiceDate, 'February 14, 2010');
+      assert.equal(february2010.invoiceCardDigits, '•••• •••• •••• 1919');
+      assert.equal(february2010.invoiceCardPrice, '$69.00');
+    });
+  });
+
+  test('renders billing invoices, disable invoice download', async function (assert) {
+    const account = {
+      hasSubscriptionPermissions: false
+    };
+    this.set('account', account);
+
+    await render(hbs`
+      <Billing::Invoices 
+        @invoices={{this.invoices}} 
+        @subscription={{this.subscription}}
+        @account={{this.account}}
+      />`
+    );
+
+    assert.dom('h3').hasText('Invoice history');
+    assert.dom('[data-test-help-text]').containsText('Having trouble with your invoices?');
+    assert.dom('[data-test-help-text] a').containsText('We’re happy to help');
+    assert.dom('[data-test-table-header-row] th').exists({ count: 4 });
+    assert.equal(profilePage.billing.invoices.invoiceTableHeaders.length, 4);
+
+    assert.equal(profilePage.billing.invoices.invoiceTableHeaders[0].text, 'invoice date');
+    assert.equal(profilePage.billing.invoices.invoiceTableHeaders[1].text, 'payment card');
+    assert.equal(profilePage.billing.invoices.invoiceTableHeaders[2].text, 'total');
+    assert.equal(profilePage.billing.invoices.invoiceTableHeaders[3].text, 'download');
+
+    profilePage.billing.invoices.items[0].as(march2010 => {
+      assert.ok(march2010.invoiceUrl.isDisabled, 'invoice download should be disabled');
+      assert.equal(march2010.invoiceDate, 'March 14, 2010');
+      assert.equal(march2010.invoiceCardDigits, '•••• •••• •••• 1919');
+      assert.equal(march2010.invoiceCardPrice, '$69.00');
+    });
+
+    profilePage.billing.invoices.items[1].as(february2010 => {
+      assert.ok(february2010.invoiceUrl.isDisabled, 'invoice download should be disabled');
       assert.equal(february2010.invoiceDate, 'February 14, 2010');
       assert.equal(february2010.invoiceCardDigits, '•••• •••• •••• 1919');
       assert.equal(february2010.invoiceCardPrice, '$69.00');
