@@ -20,10 +20,6 @@
 .request-messages {
   @include travisBorder;
 
-  @each $level, $colors in $configValidation {
-    @include colorBg(map-get($colors, gradient), "request-message-#{$level}", 5px);
-  }
-
   margin: 1.2em 0;
 
   font-size: $font-size-sm;
