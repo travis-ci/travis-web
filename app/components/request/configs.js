@@ -119,9 +119,9 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
       sha: this.originalSha,
       // TODO this is here only to make the component integration test happy,
       // not sure why this.request.get ever would be undefined ...
-      message: this.request.get && this.request.get('commit.message'),
+      message: this.request && this.request.get && this.request.get('commit.message'),
+      rawConfigs: this.request && this.request.uniqRawConfigs,
       mergeMode: this.originalMergeMode,
-      rawConfigs: this.request.uniqRawConfigs,
       config: this.formattedApiConfig
     });
     this.preview.reset();
