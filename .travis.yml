@@ -52,7 +52,7 @@ jobs:
       install: skip
       before_script: skip
       script: make ship
-      if: type = cron OR commit_message =~ /ship:docker/ OR env(SHIP_DOCKER) = true
+      if: commit_message =~ /ship:docker/ OR env(SHIP_DOCKER) = true
       after_script: skip
   allow_failures:
     - env: TRY_CONFIG=ember-beta
