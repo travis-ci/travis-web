@@ -129,14 +129,16 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
   },
 
   submitBuildRequest() {
-    this.build.submit.perform({
-      repo: this.repo,
-      branchName: this.branch,
-      commit: { sha: this.sha },
-      config: this.config,
-      message: this.message,
-      mergeMode: this.mergeMode
-    });
+    if (this.sha) {
+      this.build.submit.perform({
+        repo: this.repo,
+        branchName: this.branch,
+        commit: { sha: this.sha },
+        config: this.config,
+        message: this.message,
+        mergeMode: this.mergeMode
+      });
+    }
   },
 
   actions: {

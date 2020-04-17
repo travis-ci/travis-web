@@ -29,8 +29,10 @@
           <form.field
             data-test-request-configs-sha="true"
             @label="Commit"
-            @placeholder="Specify a Git sha (optional)"
+            @placeholder="Specify a Git sha (required)"
             @value={{this.sha}}
+            @required={{true}}
+            @showRequiredMark={{true}}
             @showValidationStatusIcons={{false}}
             @onChange={{action "change" "sha"}}
             as |field|

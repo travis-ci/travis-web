@@ -21,27 +21,29 @@
 }
 
 .request-configs-button-trigger-build {
-  @include colorSVG($oxide-blue);
-
+  @include travisBorder;
   width: 100px;
-  border: 1px solid $oxide-blue;
   padding: 8px 12px;
-
-  &:active,
-  &:focus {
-    outline: none;
-  }
+  color: $asphalt-grey;
 }
 
 .request-configs-button-cancel,
 .request-configs-button-customize,
-.request-configs-button-preview {
+.request-configs-button-preview,
+.request-configs-button-trigger-build {
+  @include travisBorder;
+  padding: 8px 12px;
   line-height: 1;
   cursor: pointer;
 
   &:hover,
   &:active {
     color: $oxide-blue;
+  }
+
+  &:active,
+  &:focus {
+    outline: none;
   }
 }
 
@@ -51,16 +53,8 @@
   border: 1px solid transparent;
 }
 
-.request-configs-button-customize,
-.request-configs-button-preview {
-  @include travisBorder;
+.request-configs-button-customize {
   margin-right: 8px;
-  padding: 8px 12px;
-
-  &:hover,
-  &:active {
-    border-color: $oxide-blue;
-  }
 }
 
 .closed {
@@ -68,11 +62,6 @@
   .request-configs-button-customize,
   .request-configs-button-preview {
     display: none;
-  }
-  .request-configs-button-trigger-build {
-    @include travisBorder;
-    background-color: white;
-    color: $asphalt-grey;
   }
 }
 
