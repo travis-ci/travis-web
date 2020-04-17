@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { equal, reads, or } from '@ember/object/computed';
+import { equal, reads } from '@ember/object/computed';
 import { STATUSES } from 'travis/components/request/configs';
 
 export default Component.extend({
