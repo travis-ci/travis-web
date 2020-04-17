@@ -115,7 +115,9 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
     this.setProperties({
       branch: this.originalBranch,
       sha: this.originalSha,
-      message: this.request.get('commit.message'),
+      // TODO this is here only to make the component integration test happy,
+      // not sure why this.request.get ever would be undefined ...
+      message: this.request.get && this.request.get('commit.message'),
       mergeMode: this.originalMergeMode,
       rawConfigs: this.request.uniqRawConfigs,
       config: this.formattedApiConfig
