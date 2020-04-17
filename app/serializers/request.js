@@ -34,6 +34,16 @@ let Serializer = V2FallbackSerializer.extend({
     }
 
     return this._super(modelClass, resourceHash);
+  },
+
+  serialize: function (snapshot, options) {
+    return {
+      branch: snapshot.attr('branchName'),
+      sha: snapshot.belongsTo('commit').attr('sha'),
+      config: snapshot.attr('config'),
+      message: snapshot.attr('message'),
+      merge_mode: snapshot.attr('mergeMode')
+    };
   }
 });
 
