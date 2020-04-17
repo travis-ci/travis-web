@@ -3,9 +3,9 @@ import { task, timeout } from 'ember-concurrency';
 import { equal, reads, or } from '@ember/object/computed';
 
 export const STATES = {
-  PENDING: 'closed',
-  SUCCESS: 'open',
-  REJECTED: 'customize',
+  PENDING: 'pending',
+  SUCCESS: 'finished',
+  REJECTED: 'rejected',
 };
 
 export default Service.extend({
@@ -26,6 +26,7 @@ export default Service.extend({
 
   submit: task(function* (data) {
     try {
+      data.commit = this.store.createRecord('commit', data.commit);
       this.set('request', this.store.createRecord('request', data));
       yield this.request.save();
       yield this.poll.perform();
