@@ -1,6 +1,6 @@
 .request-config {
+  @include travisBorder;
   position: relative;
-  border: 1px solid $pebble-grey;
   margin-bottom: 1.2em;
 
   .copy-button {
