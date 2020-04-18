@@ -6,7 +6,7 @@ export default Model.extend({
   message: attr('string'),
   branch: attr('string'),
   sha: attr('string'),
-  mode: attr('string'),
+  configs: attr(),
 
   // data returned from config validation/expansion
   config: attr(),

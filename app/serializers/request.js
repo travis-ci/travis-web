@@ -40,7 +40,7 @@ let Serializer = V2FallbackSerializer.extend({
     return {
       branch: snapshot.attr('branchName'),
       sha: snapshot.belongsTo('commit').attr('sha'),
-      config: snapshot.attr('config'),
+      configs: snapshot.attr('configs'),
       message: snapshot.attr('message'),
       merge_mode: snapshot.attr('mergeMode')
     };

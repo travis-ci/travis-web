@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { computed } from '@ember/object';
+import { computed, set } from '@ember/object';
 import { equal, or, reads } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import truncate from 'travis/utils/computed';
@@ -26,7 +26,6 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
   previewing: equal('status', STATUSES.PREVIEW),
   loading: reads('preview.loading'),
   submitting: reads('build.submit.isRunning'),
-  replacing: equal('mergeMode', 'replace'),
 
   request: null,
   repo: reads('request.repo'),
@@ -37,9 +36,6 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
   sha: reads('originalSha'),
   branch: reads('originalBranch'),
   message: reads('request.commit.message'),
-  config: reads('formattedApiConfig'),
-  mergeMode: reads('originalMergeMode'),
-  defaultMergeMode: 'deep_merge_append',
 
   originalSha: truncate('requestOrDefaultBranchSha', 7),
   originalBranch: or('requestBranch', 'repoDefaultBranch'),
@@ -49,6 +45,11 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
   requestOrDefaultBranchSha: or('requestSha', 'repoDefaultBranchLastCommitSha'),
   repoDefaultBranch: reads('repo.defaultBranch.name'),
   repoDefaultBranchLastCommitSha: reads('repo.defaultBranch.lastBuild.commit.sha'),
+  defaultMergeMode: 'deep_merge_append',
+
+  configs: computed(function () {
+    return [{ config: this.formattedApiConfig, mergeMode: this.originalMergeMode }];
+  }),
 
   didInsertElement() {
     if (this.customizing || this.previewing) {
@@ -107,8 +108,7 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
       message: this.message,
       branch: this.branch,
       sha: this.sha,
-      mode: this.mergeMode,
-      config: this.config
+      configs: this.configs
     };
     this.preview.loadConfigs.perform(data, debounce);
   },
@@ -121,8 +121,7 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
       // not sure why this.request.get ever would be undefined ...
       message: this.request && this.request.get && this.request.get('commit.message'),
       rawConfigs: this.request && this.request.uniqRawConfigs,
-      mergeMode: this.originalMergeMode,
-      config: this.formattedApiConfig
+      configs: [{ config: this.formattedApiConfig, mergeMode: this.originalMergeMode }]
     });
     this.preview.reset();
     this.build.reset();
@@ -134,9 +133,8 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
         repo: this.repo,
         branchName: this.branch,
         commit: { sha: this.sha },
-        config: this.config,
         message: this.message,
-        mergeMode: this.mergeMode
+        configs: this.configs,
       });
     } else {
       this.set('invalid', true);
@@ -145,13 +143,21 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
   },
 
   actions: {
-    formFieldChanged(key, value) {
-      this.set(key, value);
-      if (key === 'config') {
+    add(ix) {
+      this.configs.insertAt(ix, { config: null, mergeMode: 'deep_merge_append' });
+    },
+    remove(ix) {
+      this.configs.removeAt(ix);
+    },
+    update(key, ix, value) {
+      if (key === 'config' || key == 'mergeMode') {
+        set(this.configs[ix], key, value);
         this.load(true);
       } else {
+        this.set(key, value);
         this.load();
       }
+      this.set('customized', true);
     },
     submit() {
       this.submitBuildRequest();

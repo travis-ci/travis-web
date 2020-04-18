@@ -35,15 +35,16 @@
   {{#if this.customizing}}
     <Request::ConfigForm
       @request={{this.request}}
-      @config={{this.config}}
+      @configs={{this.configs}}
       @branch={{this.branch}}
       @sha={{this.sha}}
       @message={{this.message}}
-      @mergeMode={{this.mergeMode}}
       @preview={{this.preview}}
       @loading={{this.loading}}
       @messages={{this.messages}}
-      @onChange={{action "formFieldChanged"}}
+      @onAdd={{action "add"}}
+      @onRemove={{action "remove"}}
+      @onUpdate={{action "update"}}
       @onSubmit={{action "submit"}}
     />
   {{else if this.previewing}}

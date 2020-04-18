@@ -26,7 +26,7 @@ export default RESTAdapter.extend({
 
     for (let key in options.data) {
       let value = options.data[key];
-      if (Array.isArray(value)) {
+      if (type !== 'POST' && Array.isArray(value)) {
         options.data[key] = value.join(',');
       }
     }

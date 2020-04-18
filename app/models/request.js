@@ -22,14 +22,15 @@ export default Model.extend({
   pullRequestTitle: attr('string'),
   pullRequestNumber: attr('number'),
   config: attr(),
-  raw_configs: attr(),
-  uniqRawConfigs: uniqBy('raw_configs', 'source'),
-  noConfigs: empty('raw_configs'),
+  rawConfigs: attr(),
+  uniqRawConfigs: uniqBy('rawConfigs', 'source'),
+  noConfigs: empty('rawConfigs'),
   repo: belongsTo('repo', { async: true }),
   commit: belongsTo('commit', { async: true }),
   messages: attr(),
   state: attr(),
   mergeMode: attr(),
+  configs: attr(),
 
   // API models this as hasMany but serializers:request#normalize overrides it
   build: belongsTo('build', { async: true }),
