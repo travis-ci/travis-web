@@ -40,6 +40,7 @@
 
   .travis-form__field--error .travis-form__field-input {
     box-shadow: inset 0 0 1px 1px $brick-red;
+    transition: border-color 0.5s ease;
   }
 
   .travis-form__error-message {
@@ -118,4 +119,8 @@
   .icon-help {
     margin: 0 21px 3px 0;
   }
+}
+
+.flash-invalid-fields .travis-form__field.travis-form__field--error .travis-form__field-component {
+  border-color: rgba($brick-red, 0.25)
 }

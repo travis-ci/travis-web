@@ -1,4 +1,4 @@
-<div class="request-configs {{this.status}}">
+<div class="request-configs {{this.status}} {{if this.invalid 'flash-invalid-fields'}}">
   {{#if (and this.canTriggerBuild this.repo.configValidation)}}
     <Request::ConfigsButtons
       @onCancel={{action this.onCancel}}
