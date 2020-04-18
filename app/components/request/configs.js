@@ -138,6 +138,9 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
         message: this.message,
         mergeMode: this.mergeMode
       });
+    } else {
+      this.set('invalid', true);
+      setTimeout(() => this.set('invalid', false), 1500);
     }
   },
 
