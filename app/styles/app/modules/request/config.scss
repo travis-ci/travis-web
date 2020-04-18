@@ -41,20 +41,22 @@ pre.codedisplay[class*='language-'] {
   white-space: pre-wrap;
   background-color: white;
   font-size: $config-code-font-size;
+  line-height: 20px;
 
   code {
     font-family: $font-family-monospace;
-    font-size: $config-code-font-size;
     color: $asphalt-grey;
-    line-height: 20px;
   }
 
   .line-numbers-rows {
-    margin-top: -1px;
+    margin-top: -5px;
     border-right: 0px;
     color: $dry-cement;
-    font-size: $config-code-font-size;
-    line-height: 17px;
+    span {
+      font-family: $font-family-monospace;
+      height: 20px !important;
+      line-height: 24px;
+    }
   }
 }
 
