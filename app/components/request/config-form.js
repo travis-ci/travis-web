@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { task } from 'ember-concurrency';
-import { reads } from '@ember/object/computed';
+import { equal, reads } from '@ember/object/computed';
 import BranchSearching from 'travis/mixins/branch-searching';
 import { bindKeyboardShortcuts, unbindKeyboardShortcuts } from 'ember-keyboard-shortcuts';
 
@@ -18,6 +18,7 @@ export default Component.extend(BranchSearching, {
 
   repo: reads('request.repo'),
   requestConfig: reads('preview.config'),
+  replacing: equal('configs.lastObject.mergeMode', 'replace'),
 
   rawConfigs: computed('preview.rawConfigs', function () {
     const configs = this.preview.rawConfigs;
@@ -30,7 +31,7 @@ export default Component.extend(BranchSearching, {
     'shift+enter': 'submit'
   },
 
-  onChange() {},
+  onUpdate() {},
   onSubmit() {},
 
   didInsertElement() {
@@ -65,8 +66,16 @@ export default Component.extend(BranchSearching, {
   }),
 
   actions: {
-    change(field, value) {
-      this.onChange(field, value);
+    add(ix) {
+      this.onAdd(ix);
+    },
+
+    remove(ix) {
+      this.onRemove(ix);
+    },
+
+    update() {
+      this.onUpdate(...arguments);
     },
 
     submit() {

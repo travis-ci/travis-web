@@ -243,18 +243,16 @@ export default Component.extend({
 });
 
 function format(obj, length) {
-  length = length || 30;
-  return `<code>${escape(truncate(dump(obj, length), 30))}</code>`;
+  length = length || 60;
+  return `<code>${escape(truncate(dump(obj), length))}</code>`;
 }
 
-function dump(obj, length) {
+function dump(obj) {
   switch (typeOf(obj)) {
     case 'array':
       return `[${obj.map((obj) => dump(obj, 10)).join(', ')}]`;
     case 'object':
       return `{ ${Object.entries(obj).map((entry) => `${entry[0]}: ${dump(entry[1], 10)}`).join(', ')} }`;
-    case 'string':
-      return `${truncate(obj, length)}`;
     default:
       return obj;
   }

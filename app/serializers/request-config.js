@@ -23,13 +23,12 @@ export default V3Serializer.extend({
       },
       branch: snapshot.attr('branch'),
       sha: snapshot.attr('sha'),
-      mode: snapshot.attr('mode'),
-      config: snapshot.attr('config') || '',
+      configs: snapshot.attr('configs'),
       data: {
         repo: snapshot.belongsTo('repo').attr('slug'),
         branch: snapshot.attr('branch'),
         message: snapshot.attr('message'),
       }
     };
-  }
+  },
 });

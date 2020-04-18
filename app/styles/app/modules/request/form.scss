@@ -19,14 +19,40 @@
     }
   }
 
+  .config-field {
+    position: relative;
+  }
+
+  .request-configs-button-add,
+  .request-configs-button-remove {
+    display: inline-block;
+    position: relative;
+    top: 2px;
+    margin-left: 5px;
+    cursor: pointer;
+    opacity: 0.5;
+    svg {
+      width: 11px;
+      height: 11px;
+    }
+    path {
+      fill: $cement-grey;
+    }
+  }
+
+  .tooltip {
+    text-transform: none;
+    font-weight: normal;
+  }
+
   .javascript .javascript,
   .yaml .yaml {
     border-color: lighten($cement-grey, 15);
   }
-  .yaml .ember-tooltip {
+  .yaml .config-type .ember-tooltip {
       left: -20px !important;
   }
-  .javascript .ember-tooltip {
+  .javascript .config-type .ember-tooltip {
       left: 20px !important;
   }
 
