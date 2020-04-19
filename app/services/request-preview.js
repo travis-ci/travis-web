@@ -23,7 +23,7 @@ export default Service.extend({
 
     try {
       data.repo = yield this.store.findRecord('repo', data.repo.get('id'));
-      const record = this.store.createRecord('request-config', data);
+      const record = this.store.createRecord('request-preview', data);
       yield record.save();
       this.setProperties({ record: record, loaded: true });
     } catch (e) {

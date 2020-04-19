@@ -3,7 +3,7 @@ import V3Serializer from 'travis/serializers/v3';
 export default V3Serializer.extend({
   normalize(modelClass, resourceHash) {
     const hash = this._super(modelClass, {
-      '@type': 'request_config',
+      '@type': 'request_preview',
       id: new Date().getTime(),
       config: resourceHash.request_config.config,
       raw_configs: resourceHash.raw_configs,
