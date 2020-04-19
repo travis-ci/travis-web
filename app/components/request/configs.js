@@ -16,8 +16,9 @@ export const STATUSES = {
 export default Component.extend(CanTriggerBuild, TriggerBuild, {
   tagName: '',
 
-  preview: service('request-config'),
+  preview: service('request-preview'),
   build: service('trigger-build'),
+  store: service(),
 
   status: STATUSES.CLOSED,
   closed: equal('status', STATUSES.CLOSED),
@@ -53,7 +54,7 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
 
   didInsertElement() {
     if (this.customizing || this.previewing) {
-      this.load();
+      this.loadPreview();
     }
     this._super(...arguments);
   },
@@ -84,7 +85,7 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
   onCustomize() {
     if (!this.customizing) {
       this.set('status', STATUSES.CUSTOMIZE);
-      this.load();
+      this.loadPreview();
     }
   },
 
@@ -92,7 +93,7 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
     if (!this.previewing) {
       this.set('status', STATUSES.PREVIEW);
       if (!this.loaded) {
-        this.load();
+        this.loadPreview();
       }
     }
   },
@@ -102,7 +103,14 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
     this.reset();
   },
 
-  load(debounce) {
+  loadSha() {
+    // const branch = this.store.findRecord('branch', `/repo/${this.repo.get('id')}/branch/${this.branch}`);
+    // console.log(branch);
+    // console.log(branch.get('lastBuild'));
+    // this.set('sha', branch.get('lastBuild.commit.sha'))
+  },
+
+  loadPreview(debounce) {
     const data = {
       repo: this.repo,
       message: this.message,
@@ -152,10 +160,14 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
     update(key, ix, value) {
       if (key === 'config' || key == 'mergeMode') {
         set(this.configs[ix], key, value);
-        this.load(true);
+        this.loadPreview(true);
+      } else if (key === 'branch') {
+        this.set(key, value);
+        this.loadSha();
+        this.loadPreview();
       } else {
         this.set(key, value);
-        this.load();
+        this.loadPreview();
       }
       this.set('customized', true);
     },
