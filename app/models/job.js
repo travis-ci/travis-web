@@ -103,9 +103,9 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
   osVersion: computed('os', 'dist', 'osxImage', function () {
     const { os, dist, osxImage } = this;
     if (os === 'osx') {
-      return OSX_VERSIONS[osxImage] || 'unknown';
+      return OSX_VERSIONS[osxImage];
     } else {
-      return dist || 'unknown';
+      return dist;
     }
   }),
 
