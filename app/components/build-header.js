@@ -55,14 +55,7 @@ export default Component.extend({
     }
   }),
 
-  jobsConfig: computed('isJob', 'item.config', 'item.jobs.firstObject.config', function () {
-    let isJob = this.isJob;
-    if (isJob) {
-      return this.get('item.config');
-    } else {
-      return this.get('item.jobs.firstObject.config');
-    }
-  }),
+  jobsConfig: reads('job.config'),
 
   displayCompare: computed('item.eventType', function () {
     let eventType = this.get('item.eventType');
