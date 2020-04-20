@@ -46,10 +46,9 @@ export default Component.extend({
     }
   }),
 
-  job: computed('isJob', function () {
-    const { isJob, item } = this;
-    if (isJob) {
-      return item;
+  job: computed('isJob', 'item', 'item.jobs.firstObject', function () {
+    if (this.isJob) {
+      return this.item;
     } else {
       return this.get('item.jobs.firstObject');
     }
