@@ -47,7 +47,7 @@
         {{#each this.billingEmails as |email|}}
           <div class="form-elem">
             <form.field
-              @label='Billing Email Address'
+              @label={{email.label}}
               @value={{email.value}}
               @required={{true}}
               @showRequiredMark={{true}}

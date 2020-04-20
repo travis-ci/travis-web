@@ -9,7 +9,9 @@ export default Component.extend({
   billingEmails: computed('billingInfoEmail', {
     get() {
       const emails = this.billingInfoEmail || '';
-      return emails.split(',').map(email => ({ value: email }));
+      return emails.split(',').map((email, index) =>
+        ({ label: `Billing Email Address ${index + 1}`, value: email })
+      );
     },
     set(_, value) {
       return value;
@@ -25,7 +27,11 @@ export default Component.extend({
 
     addEmail(e) {
       e.preventDefault();
-      this.set('billingEmails', [...this.billingEmails, { value: ''}]);
+      const nextEmailNumber = this.billingEmails.length + 1;
+      this.set('billingEmails', [
+        ...this.billingEmails,
+        { label: `Billing Email Address ${nextEmailNumber}`, value: '' }
+      ]);
     },
   }
 
