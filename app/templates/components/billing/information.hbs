@@ -34,31 +34,35 @@
           </form.field>
         </div>
       </div>
-      <div class='flex flex--col flex-md-row'>
-        <div class='form-elem full-width inline-form-elem'>
-          <form.field
-            @label='Company Name'
-            @value={{this.newSubscription.billingInfo.company}}
-            @showValidationStatusIcons={{false}}
-            @onChange={{action (mut this.newSubscription.billingInfo.company)}} as |Field|
-          >
-            <Field.input @name='companyName'/>
-          </form.field>
-        </div>
-        <div class='full-width'>
-          <form.field
-            @label='Billing Email Addresses - Comma Separated'
-            @value={{this.newSubscription.billingInfo.billingEmail}}
-            @required={{true}}
-            @showRequiredMark={{true}}
-            @validator={{form-validator form.validators.email}}
-            @showValidationStatusIcons={{false}}
-            @onChange={{action (mut this.newSubscription.billingInfo.billingEmail)}} as |Field|
-          >
-            <Field.input @name='email'/>
-          </form.field>
-        </div>
+      <div class='form-elem billing-optional-field'>
+        <form.field
+          @label='Company Name'
+          @value={{this.newSubscription.billingInfo.company}}
+          @showValidationStatusIcons={{false}}
+          @onChange={{action (mut this.newSubscription.billingInfo.company)}} as |Field|
+        >
+          <Field.input @name='companyName'/>
+        </form.field>
       </div>
+        {{#each this.billingEmails as |email|}}
+          <div class="form-elem">
+            <form.field
+              @label='Billing Email Address'
+              @value={{email.value}}
+              @required={{true}}
+              @showRequiredMark={{true}}
+              @validator={{form-validator form.validators.email}}
+              @showValidationStatusIcons={{false}}
+              @onBlur={{action 'handleBlur'}}
+              @onChange={{action (mut email.value)}} as |Field|
+            >
+              <Field.input @name='email'/>
+            </form.field>
+          </div>
+        {{/each}}
+        <button {{on 'click' (action 'addEmail')}} class='button--blue mb-5'>
+          Add email
+        </button>
       <h3 data-test-billing-details-title='true'>
         Billing address
       </h3>
