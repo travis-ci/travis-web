@@ -2,7 +2,6 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import jobConfigArch from 'travis/utils/job-config-arch';
 import jobConfigLanguage from 'travis/utils/job-config-language';
-import { jobConfigOs, jobConfigOsVersion } from 'travis/utils/job-config-os';
 import { reads, not } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 
@@ -44,6 +43,15 @@ export default Component.extend({
       return this.get('item.build');
     } else {
       return this.item;
+    }
+  }),
+
+  job: computed('isJob', function () {
+    const { isJob, item } = this;
+    if (isJob) {
+      return item;
+    } else {
+      return this.get('item.jobs.firstObject');
     }
   }),
 
@@ -126,15 +134,8 @@ export default Component.extend({
     }
   }),
 
-  os: computed('jobsConfig.content.os', function () {
-    const os = this.get('jobsConfig.content.os');
-    return jobConfigOs(os);
-  }),
-
-  osVersion: computed('jobsConfig.content.{dist,os,osx_image}', function () {
-    const config = this.get('jobsConfig.content') || {};
-    return jobConfigOsVersion(config);
-  }),
+  os: reads('job.os'),
+  osVersion: reads('job.osVersion'),
 
   arch: computed('jobsConfig.content.arch', function () {
     let config = this.get('jobsConfig.content');

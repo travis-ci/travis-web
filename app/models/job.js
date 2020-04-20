@@ -11,6 +11,26 @@ import DurationCalculations from 'travis/mixins/duration-calculations';
 import DurationAttributes from 'travis/mixins/duration-attributes';
 import promiseObject from 'travis/utils/promise-object';
 
+export const OSX_VERSIONS = {
+  'xcode11.3': '10.14',
+  'xcode11.2': '10.14',
+  'xcode11.1': '10.14',
+  'xcode11': '10.14',
+  'xcode10.3': '10.14.4',
+  'xcode10.2': '10.14',
+  'xcode10.1': '10.13',
+  'xcode10': '10.13',
+  'xcode9.4': '10.13',
+  'xcode9.3': '10.13',
+  'xcode9.2': '10.12',
+  'xcode9.1': '10.12',
+  'xcode9': '10.12',
+  'xcode8.3': '10.12',
+  'xcode8': '10.11',
+  'xcode7.3': '10.11',
+  'xcode6.4': '10.10',
+};
+
 export default Model.extend(DurationCalculations, DurationAttributes, {
   api: service(),
   jobConfigFetcher: service(),
@@ -60,6 +80,34 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
   }),
 
   isConfigLoaded: reads('config.isFulfilled'),
+
+  os: computed('config.content.os', function () {
+    const os = this.get('config.content.os');
+
+    if (os === 'linux' || os === 'linux-ppc64le') {
+      return 'linux';
+    } else if (os === 'freebsd') {
+      return 'freebsd';
+    } else if (os === 'osx') {
+      return 'osx';
+    } else if (os === 'windows') {
+      return 'windows';
+    } else {
+      return 'unknown';
+    }
+  }),
+
+  dist: reads('config.content.dist'),
+  osxImage: reads('config.content.osx_image'),
+
+  osVersion: computed('os', 'dist', 'osxImage', function () {
+    const { os, dist, osxImage } = this;
+    if (os === 'osx') {
+      return OSX_VERSIONS[osxImage] || 'unknown';
+    } else {
+      return dist || 'unknown';
+    }
+  }),
 
   getCurrentState() {
     return this.get('currentState.stateName');
