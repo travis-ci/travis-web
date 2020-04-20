@@ -6,9 +6,14 @@ import { countries } from 'travis/utils/countries';
 export default Component.extend({
   countries,
   billingInfoEmail: reads('newSubscription.billingInfo.billingEmail'),
-  billingEmails: computed('billingInfoEmail', function () {
-    const emails = this.billingInfoEmail || '';
-    return emails.split(',').map(email => ({ value: email }));
+  billingEmails: computed('billingInfoEmail', {
+    get() {
+      const emails = this.billingInfoEmail || '';
+      return emails.split(',').map(email => ({ value: email }));
+    },
+    set(_, value) {
+      return value;
+    }
   }),
 
   actions: {
@@ -20,7 +25,7 @@ export default Component.extend({
 
     addEmail(e) {
       e.preventDefault();
-      this.set('billingInfoEmail', `${this.billingInfoEmail},`);
+      this.set('billingEmails', [...this.billingEmails, { value: ''}]);
     },
   }
 
