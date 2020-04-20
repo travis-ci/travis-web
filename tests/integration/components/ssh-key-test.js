@@ -4,7 +4,6 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import { percySnapshot } from 'ember-percy';
 
 module('Integration | Component | ssh-key', function (hooks) {
   setupRenderingTest(hooks);
@@ -26,7 +25,6 @@ module('Integration | Component | ssh-key', function (hooks) {
 
     assert.dom('.ssh-key-name span').hasText('Default', 'should display that no custom key is set');
     assert.dom('.ssh-key-value span').hasText('fingerprint', 'should display default key fingerprint');
-    percySnapshot(assert);
   });
 
   test('it renders the custom ssh key if custom key is set', async function (assert) {
@@ -62,7 +60,6 @@ module('Integration | Component | ssh-key', function (hooks) {
     await click('.ssh-key-action button');
 
     assert.ok(key.get('isDeleted'), 'key should be deleted');
-    percySnapshot(assert);
 
     var done = assert.async();
     done();

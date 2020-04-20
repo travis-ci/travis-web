@@ -5,9 +5,10 @@ import Ember from 'ember';
 import Visibility from 'visibilityjs';
 import { task } from 'ember-concurrency';
 import { computed } from '@ember/object';
-import { alias } from '@ember/object/computed';
+import { and, filterBy, reads } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import config from 'travis/config/environment';
+
 
 export default Component.extend({
   tabStates: service(),
@@ -27,7 +28,7 @@ export default Component.extend({
     schedule('afterRender', () => {
       this.fetchRepositoryData.perform();
       if (this.get('features.showRunningJobsInSidebar')) {
-        this.get('jobState.fetchJobs').perform();
+        this.get('jobState.fetchUnfinishedJobs').perform();
       }
     });
   },
@@ -50,62 +51,26 @@ export default Component.extend({
     }
   }),
 
-  actions: {
-    showRunningJobs: function () {
-      this.tabStates.set('sidebarTab', 'running');
-    },
-
-    showMyRepositories: function () {
-      this.set('tabStates.sidebarTab', 'owned');
-      this.router.transitionTo('index');
-    },
-
-    onQueryChange(query) {
-      if (query === '' || query === this.get('repositories.searchQuery')) { return; }
-      this.set('repositories.searchQuery', query);
-      this.get('repositories.showSearchResults').perform();
-    }
+  showRunningJobs: function () {
+    this.tabStates.switchSidebarToRunning();
   },
 
-  startedJobsCount: alias('runningJobs.length'),
+  showMyRepositories: function () {
+    this.tabStates.switchSidebarToOwned();
+    this.router.transitionTo('index');
+  },
 
-  allJobsCount: computed('runningJobs.length', 'queuedJobs.length', function () {
-    let runningAmount = this.get('runningJobs.length');
-    let queuedAmount = this.get('queuedJobs.length');
-    return runningAmount + queuedAmount;
-  }),
+  onQueryChange(query) {
+    if (query === '' || query === this.get('repositories.searchQuery')) { return; }
+    this.set('repositories.searchQuery', query);
+    this.get('repositories.showSearchResults').perform();
+  },
 
-  runningJobs: computed(
-    'features.showRunningJobsInSidebar',
-    'jobState.runningJobs.@each.state',
-    function () {
-      let showRunningJobs = this.get('features.showRunningJobsInSidebar');
-      let runningJobs = this.get('jobState.runningJobs');
-      if (!showRunningJobs) { return []; }
-      return runningJobs.sort((a, b) => parseFloat(a.number) - parseFloat(b.number));
-    }
-  ),
-
-  queuedJobs: computed(
-    'features.showRunningJobsInSidebar',
-    'jobState.queuedJobs.@each.state',
-    function () {
-      let showRunningJobs = this.get('features.showRunningJobsInSidebar');
-      let queuedJobs = this.get('jobState.queuedJobs');
-      if (!showRunningJobs) { return []; }
-      return queuedJobs;
-    }
-  ),
-
-  jobsLoaded: computed(
-    'features.showRunningJobsInSidebar',
-    'jobState.jobsLoaded',
-    function () {
-      let showRunningJobs = this.get('features.showRunningJobsInSidebar');
-      let jobsLoaded = this.get('jobState.jobsLoaded');
-      return showRunningJobs && jobsLoaded;
-    }
-  ),
+  startedJobsCount: reads('runningJobs.length'),
+  allJobsCount: reads('jobState.unfinishedJobs.length'),
+  runningJobs: reads('jobState.runningJobs'),
+  queuedJobs: reads('jobState.queuedJobs'),
+  jobsLoaded: reads('jobState.jobsLoaded'),
 
   viewOwned: task(function* () {
     const ownedRepositories = yield this.get('repositories.requestOwnedRepositories').perform();
@@ -116,24 +81,18 @@ export default Component.extend({
     }
   }),
 
-  tab: alias('tabStates.sidebarTab'),
+  isTabRunning: reads('tabStates.isSidebarRunning'),
+  isTabSearch: reads('tabStates.isSidebarSearch'),
 
-  repositoryResults: computed('tab', 'repositories.{searchResults.[],accessible.[]}', function () {
-    let tab = this.tab;
-    let searchResults = this.get('repositories.searchResults.[]');
-    let accessible = this.get('repositories.accessible.[]');
-    let results = accessible;
+  repositoryResults: computed('isTabSearch', 'repositories.searchResults.[]', 'repositories.accessible.[]', function () {
+    const { isTabSearch, repositories } = this;
 
-    if (tab === 'search') {
-      results =  searchResults;
+    if (isTabSearch) {
+      return repositories.searchResults;
     }
-
-    return results.filter(repo => repo.get('active'));
+    return repositories.accessible;
   }),
+  activeRepositoryResults: filterBy('repositoryResults', 'active', true),
 
-  showRunningJobs: computed('tab', 'features.showRunningJobsInSidebar', function () {
-    let tab = this.tab;
-    let featureEnabled = this.get('features.showRunningJobsInSidebar');
-    return featureEnabled && tab === 'running';
-  }),
+  isShowingRunningJobs: and('isTabRunning', 'features.showRunningJobsInSidebar'),
 });
