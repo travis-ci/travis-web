@@ -1,26 +1,19 @@
 import Service, { inject as service } from '@ember/service';
-import { computed } from '@ember/object';
-import { alias } from '@ember/object/computed';
+import { alias, reads } from '@ember/object/computed';
+import { task } from 'ember-concurrency';
 
 export default Service.extend({
   auth: service(),
-
-  init() {
-    this.all;
-    return this._super(...arguments);
-  },
+  api: service(),
 
   currentUser: alias('auth.currentUser'),
 
-  // This is computed property that can be used to allow any properties that
-  // use permissions service to add dependencies easier. So instead of depending
-  // on each of these things separately, we can depend on all
-  all: computed(
-    'currentUser.permissions.[]',
-    'currentUser.pushPermissions.[]',
-    'currentUser.adminPermissions.[]',
-    () => null
-  ),
+  permissions: reads('fetchPermissions.lastSuccessful.value'),
+
+  all: reads('permissions.permissions'),
+  admin: reads('permissions.admin'),
+  pull: reads('permissions.pull'),
+  push: reads('permissions.push'),
 
   hasPermission(repo) {
     return this.checkPermission(repo, 'permissions');
@@ -42,5 +35,9 @@ export default Service.extend({
     } else {
       return false;
     }
-  }
+  },
+
+  fetchPermissions: task(function* () {
+    return yield this.api.get('/users/permissions', { travisApiVersion: null });
+  }).drop()
 });

@@ -661,7 +661,8 @@ export default create({
         invoiceCardPrice: text('td', { at: 2 }),
         invoiceUrl: {
           scope: '[data-test-invoice-url]',
-          href: attribute('href')
+          href: attribute('href'),
+          isDisabled: hasClass('disabled')
         }
       }),
       invoiceTableHeaders: collection('[data-test-table-header-row] th'),

@@ -172,10 +172,9 @@ export default VcsEntity.extend({
     'subscription.permissions.write',
     'subscriptionPermissions.create',
     function () {
-      let subscription = this.subscription;
       let writePermissions = this.get('subscription.permissions.write');
       let createPermissions = this.get('subscriptionPermissions.create');
-      return subscription ? writePermissions : createPermissions;
+      return this.subscription ? writePermissions : createPermissions;
     }
   ),
 

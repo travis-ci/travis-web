@@ -48,6 +48,7 @@ export default Service.extend({
   features: service(),
   metrics: service(),
   utm: service(),
+  permissionsService: service('permissions'),
 
   state: STATE.SIGNED_OUT,
 
@@ -156,6 +157,7 @@ export default Service.extend({
     try {
       const promise = this.storage.user ? this.handleNewLogin() : this.reloadCurrentUser();
       return promise
+        .then(() => this.permissionsService.fetchPermissions.perform())
         .then(() => {
           const { currentUser } = this;
           this.set('state', STATE.SIGNED_IN);
