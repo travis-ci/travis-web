@@ -267,22 +267,6 @@
   }
 }
 
-.centered .jobs:not(.stage) {
-  @media #{$xlarge-up} {
-    .job-name {
-      flex: 0 0 42em;
-    }
-
-    .job-env {
-      flex: 0 0 21.5em;
-    }
-
-    .job-lang {
-      flex: 0 0 21.5em;
-    }
-  }
-}
-
 .job-duration {
   flex: 0 0 10rem;
   white-space: nowrap;
