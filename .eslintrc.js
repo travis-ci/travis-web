@@ -1,10 +1,14 @@
-/* eslint-env node */
+'use strict';
 
 module.exports = {
   root: true,
+  parser: 'babel-eslint',
   parserOptions: {
     ecmaVersion: 2018,
-    sourceType: 'module'
+    sourceType: 'module',
+    ecmaFeatures: {
+      legacyDecorators: true
+    }
   },
   plugins: [
     'ember'
@@ -311,7 +315,8 @@ module.exports = {
     'unicode-bom': [2, 'never'],
 
     // require regex literals to be wrapped in parentheses
-    'wrap-regex': 0
+    'wrap-regex': 0,
+    'ember/no-jquery': 'error'
   },
   overrides: [
     // node files

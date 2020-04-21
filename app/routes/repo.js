@@ -1,8 +1,8 @@
-import { getWithDefault, computed } from '@ember/object';
+import { getWithDefault } from '@ember/object';
 import TravisRoute from 'travis/routes/basic';
-import Repo from 'travis/models/repo';
 import ScrollResetMixin from 'travis/mixins/scroll-reset';
 import { inject as service } from '@ember/service';
+import { and } from '@ember/object/computed';
 
 export default TravisRoute.extend(ScrollResetMixin, {
   store: service(),
@@ -12,36 +12,9 @@ export default TravisRoute.extend(ScrollResetMixin, {
 
   slug: null,
 
-  onRunningTab: computed('features.showRunningJobsInSidebar', 'tabStates.sidebarTab', function () {
-    let showRunningJobsInSidebar = this.get('features.showRunningJobsInSidebar');
-    let sidebarTab = this.get('tabStates.sidebarTab');
-    return showRunningJobsInSidebar && sidebarTab === 'running';
-  }),
+  isOnRunningTab: and('features.showRunningJobsInSidebar', 'tabStates.isSidebarRunning'),
 
-  activate(...args) {
-    this._super(args);
-
-    if (this.get('auth.signedIn')) {
-      if (this.onRunningTab) {
-        return;
-      }
-      if (!this.get('tabStates.sidebarTab', 'search')) {
-        this.tabStates.set('sidebarTab', 'owned');
-      }
-      this.set('tabStates.mainTab', null);
-    }
-  },
-
-  titleToken(model) {
-    return model.get('slug');
-  },
-
-  setupController(controller, model) {
-    if (model && !model.get) {
-      model = this.store.find('repo', model.id);
-    }
-    return controller.set('repo', model);
-  },
+  titleToken: repo => repo.get('slug'),
 
   serialize(repo) {
     // slugs are sometimes unknown ???
@@ -53,9 +26,17 @@ export default TravisRoute.extend(ScrollResetMixin, {
   },
 
   model({ provider, owner, name }) {
+    const { store } = this;
     const slug = `${owner}/${name}`;
     this.set('slug', slug);
-    return Repo.fetchBySlug(this.store, slug, provider);
+    return store.peekAll('repo').findBy('slug', slug) || store.queryRecord('repo', { slug, provider });
+  },
+
+  activate() {
+    if (this.auth.signedIn && !this.tabStates.isSidebarSearch && !this.onRunningTab) {
+      this.tabStates.switchSidebarToOwned();
+    }
+    this._super(...arguments);
   },
 
   actions: {

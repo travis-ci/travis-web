@@ -32,6 +32,13 @@ module.exports = function () {
   }
 
   const app = new EmberApp({
+    autoImport: {
+      webpack: {
+        node: {
+          fs: 'empty'
+        }
+      }
+    },
     'ember-cli-babel': {
       includePolyfill: true,
     },
@@ -106,19 +113,5 @@ module.exports = function () {
     destDir: '/images/emoji'
   });
 
-  importNpmDependency(app, 'node_modules/fuzzysort/fuzzysort.js');
-  importNpmDependency(app, 'node_modules/pusher-js/dist/web/pusher.js');
-  importNpmDependency(app, 'node_modules/raven-js/dist/raven.js');
-  importNpmDependency(app, 'node_modules/emoji-js/lib/emoji.js');
-  importNpmDependency(app, 'node_modules/visibilityjs/index.js');
-  importNpmDependency(app, 'node_modules/ansiparse/lib/ansiparse.js', 'amd');
-  importNpmDependency(app, 'node_modules/yamljs/index.js');
-  importNpmDependency(app, 'node_modules/deep-freeze/index.js');
-
   return app.toTree(emojiAssets);
 };
-
-function importNpmDependency(app, path, transformation = 'cjs', alias) {
-  const as = alias || path.split('/')[1];
-  app.import(path, { using: [{ transformation, as }] });
-}

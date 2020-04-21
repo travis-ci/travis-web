@@ -10,6 +10,7 @@ import { or, reads } from '@ember/object/computed';
 export default Owner.extend({
   api: service(),
   permissionsService: service('permissions'),
+  pusher: service(),
 
   email: attr('string'),
   emails: attr(), // list of all known user emails
@@ -86,7 +87,7 @@ export default Owner.extend({
       if (this.isSyncing) {
         this.schedulePoll();
       } else {
-        Travis.trigger('user:synced', this);
+        this.pusher.subscribeUser(this);
         this.set('isSyncing', false);
         this.applyReposFilter();
       }

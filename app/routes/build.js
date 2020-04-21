@@ -4,52 +4,38 @@ import { inject as service } from '@ember/service';
 export default TravisRoute.extend({
   tabStates: service(),
 
-  titleToken(model) {
-    return `Build #${model.get('number')}`;
-  },
+  titleToken: model => `Build #${model.number}`,
 
-  serialize(model) {
-    const id = model.get ? model.get('id') : model;
-    return {
-      build_id: id
-    };
-  },
-
-  setupController(controller, model) {
-    if (model && !model.get) {
-      model = this.store.recordForId('build', model);
-      this.store.find('build', model);
-    }
-    const repo = this.controllerFor('repo');
-    controller.set('build', model);
-    return repo.activate('build');
-  },
-
-  activate() {
-    this.set('tabStates.mainTab', 'build');
-  },
+  serialize: model => ({
+    build_id: model.get('id')
+  }),
 
   model(params) {
     return this.store.findRecord('build', params.build_id);
   },
 
   afterModel(model) {
-    const slug = this.modelFor('repo').get('slug');
+    const { slug } = this.modelFor('repo');
     this.ensureBuildOwnership(model, slug);
     return model.get('request').then(request => request && request.fetchMessages.perform());
+  },
+
+  setupController(controller, build) {
+    const job = build.jobs.firstObject;
+    const repo = this.modelFor('repo');
+    this.controllerFor('repo').setProperties({ build, job });
+    controller.setProperties({ build, repo });
+  },
+
+  activate() {
+    this.tabStates.switchMainTabToBuild();
   },
 
   ensureBuildOwnership(build, urlSlug) {
     const buildRepoSlug = build.get('repo.slug');
 
     if (buildRepoSlug !== urlSlug) {
-      throw (new Error('invalidBuildId'));
+      throw new Error('invalidBuildId');
     }
   },
-
-  deactivate() {
-    this._super(...arguments);
-    this.controllerFor('job').set('job', null);
-    return this.controllerFor('build').set('build', null);
-  }
 });

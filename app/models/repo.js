@@ -230,10 +230,6 @@ const Repo = VcsEntity.extend({
 });
 
 Repo.reopenClass({
-  recent() {
-    return this.find();
-  },
-
   accessibleBy(store, reposIdsOrlogin) {
     let repos, reposIds;
     reposIds = reposIdsOrlogin || [];
@@ -250,22 +246,6 @@ Repo.reopenClass({
       return store.query('repo', params)
         .then(() => resolve(repos), () => reject());
     });
-  },
-
-  search(store, query) {
-    return store.query('repo', {
-      name_filter: query,
-      sort_by: 'name_filter:desc',
-      limit: 10
-    });
-  },
-
-  fetchBySlug(store, slug, provider = defaultVcsConfig.urlPrefix) {
-    const loadedRepos = store.peekAll('repo').filterBy('provider', provider).filterBy('slug', slug);
-    if (!isEmpty(loadedRepos)) {
-      return EmberPromise.resolve(loadedRepos.firstObject);
-    }
-    return store.queryRecord('repo', { slug, provider });
   },
 });
 

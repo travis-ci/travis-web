@@ -5,6 +5,7 @@ import config from 'travis/config/environment';
 import Repo from 'travis/models/repo';
 import { task, timeout } from 'ember-concurrency';
 import { computed } from '@ember/object';
+import { collect } from '@ember/object/computed';
 
 export default Service.extend({
   auth: service(),
@@ -13,32 +14,23 @@ export default Service.extend({
   api: service(),
   router: service(),
 
-  tasks: computed(
-    'requestOwnedRepositories',
-    'performSearchRequest',
-    'showSearchResults',
-    function () {
-      return [
-        this.requestOwnedRepositories,
-        this.performSearchRequest,
-        this.showSearchResults,
-      ];
-    }
-  ),
+  tasks: collect('requestOwnedRepositories', 'performSearchRequest', 'showSearchResults'),
 
   loadingData: computed('tasks.@each.isRunning', function () {
-    let tasks = this.tasks;
-    return tasks.any(task => task.get('isRunning'));
+    return this.tasks.isAny('isRunning');
   }),
 
   performSearchRequest: task(function* () {
-    const store = this.store;
-    const query = this.searchQuery;
+    const { store, query } = this;
 
     const urlQuery = this.get('router._router.currentURL').split('/')[2];
 
     if (!this.get('_searchResults.length') || urlQuery !== query) {
-      const searchResults = yield Repo.search(store, query);
+      const searchResults = yield store.query('repo', {
+        name_filter: query,
+        sort_by: 'name_filter:desc',
+        limit: 10
+      });
       this.set('_searchResults', searchResults);
     }
   }).drop(),
@@ -68,23 +60,13 @@ export default Service.extend({
     }
   }).drop(),
 
-  accessible: computed(
-    '_repos.[]',
-    '_repos.@each.{currentBuildFinishedAt,currentBuildId}',
-    function () {
-      let repos = this._repos;
-      return this.sortData(repos);
-    }
-  ),
+  accessible: computed('_repos.@each.{currentBuildFinishedAt,currentBuildId}', function () {
+    return this.sortData(this._repos);
+  }),
 
-  searchResults: computed(
-    '_searchResults.[]',
-    '_searchResults.@each.{currentBuildFinishedAt,currentBuildId}',
-    function () {
-      let repos = this._searchResults;
-      return this.sortData(repos);
-    }
-  ),
+  searchResults: computed('_searchResults.@each.{currentBuildFinishedAt,currentBuildId}', function () {
+    return this.sortData(this._searchResults);
+  }),
 
   sortData(repos) {
     if (repos && repos.toArray) {

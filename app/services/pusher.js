@@ -7,6 +7,12 @@ export default Service.extend({
   jobState: service(),
   liveUpdatesRecordFetcher: service(),
 
+  subscribeUser(user) {
+    if (user && user.channels) {
+      this.pusher.subscribeAll(user.channels);
+    }
+  },
+
   receive(event, data) {
     let build, commit, job;
     let store = this.store;
