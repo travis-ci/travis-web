@@ -1447,7 +1447,7 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.plan.name, 'Startup plan pending');
     assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining('2 concurrent jobs');
 
-    assert.equal(profilePage.billing.userDetails.text, 'contact name John Doe company name Travis billing email joe@jane.com,jane@email.com,joe@email.com,doe@email.com');
+    assert.equal(profilePage.billing.userDetails.text, 'contact name John Doe company name Travis billing email joe@jane.com jane@email.com joe@email.com doe@email.com');
     assert.equal(profilePage.billing.billingDetails.text, 'address 15 Olalubi street city Berlin post code 353564 country Germany vat id 356463');
     assert.dom(profilePage.billing.planMessage.scope).hasText('');
   });

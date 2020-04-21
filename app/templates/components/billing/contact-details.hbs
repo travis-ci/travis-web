@@ -100,7 +100,9 @@
       {{#if this.info.billingEmail}}
         <section class="flex--col-3">
           <h4>billing email</h4>
-          <p>{{this.info.billingEmail}}</p>
+          {{#each this.billingEmails as |email|}}
+            <p>{{email}}</p>
+          {{/each}}
         </section>
       {{/if}}
     </div>
