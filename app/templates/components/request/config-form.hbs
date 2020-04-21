@@ -29,15 +29,15 @@
           <form.field
             data-test-request-configs-sha="true"
             @label="Commit"
-            @placeholder="Specify a Git sha (required)"
+            @placeholder="Specify a Git sha (optional)"
             @value={{this.sha}}
-            @required={{true}}
-            @showRequiredMark={{true}}
-            @showValidationStatusIcons={{false}}
             @onChange={{action "update" "sha" null}}
             as |field|
           >
             {{field.input}}
+            <p class="request-configs-sha-notice">
+              Please make sure the given commit is on the selected branch.
+            </p>
           </form.field>
         </div>
       </div>
