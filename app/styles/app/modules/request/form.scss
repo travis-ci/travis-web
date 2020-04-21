@@ -23,6 +23,18 @@
     position: relative;
   }
 
+  .request-configs-sha-notice {
+    position: absolute;
+    display: none;
+    font-size: 13px;
+    margin: 8px 0 0 2px;
+    color: lighten($cement-grey, 10);
+  }
+
+  .travis-form__field-input:focus+.request-configs-sha-notice {
+    display: block;
+  }
+
   .request-configs-button-add,
   .request-configs-button-remove {
     display: inline-block;
@@ -75,18 +87,19 @@
   }
 
   .request-configs-fields-container {
+    position: relative;
     display: flex;
     flex-flow: row wrap;
 
     .form-elem {
       &:first-child {
-        flex-grow: 2;
-        margin-right: 0.5em;
+        width: 60%;
+        padding-right: 0.5em;
       }
 
       &:last-child {
-        flex-grow: 1;
-        margin-left: 0.5em;
+        width: 40%;
+        padding-left: 0.5em;
       }
     }
   }

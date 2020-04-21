@@ -34,16 +34,16 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
   rawConfigs: or('preview.rawConfigs', 'request.uniqRawConfigs'),
   loaded: reads('preview.loaded'),
 
-  sha: reads('originalSha'),
-  branch: reads('originalBranch'),
-  message: reads('request.commit.message'),
+  sha: or('customSha', 'originalSha'),
+  branch: or('customBranch', 'originalBranch'),
+  message: or('customMessage', 'request.commit.message'),
 
-  originalSha: truncate('requestOrDefaultBranchSha', 7),
+  originalSha: truncate('requestOrBranchSha', 7),
   originalBranch: or('requestBranch', 'repoDefaultBranch'),
   originalMergeMode: or('request.mergeMode', 'defaultMergeMode'),
   requestBranch: reads('request.branchName'),
   requestSha: reads('request.commit.sha'),
-  requestOrDefaultBranchSha: or('requestSha', 'repoDefaultBranchLastCommitSha'),
+  requestOrBranchSha: or('branchSha', 'requestSha', 'repoDefaultBranchLastCommitSha'),
   repoDefaultBranch: reads('repo.defaultBranch.name'),
   repoDefaultBranchLastCommitSha: reads('repo.defaultBranch.lastBuild.commit.sha'),
   defaultMergeMode: 'deep_merge_append',
@@ -104,10 +104,12 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
   },
 
   loadSha() {
-    // const branch = this.store.findRecord('branch', `/repo/${this.repo.get('id')}/branch/${this.branch}`);
-    // console.log(branch);
-    // console.log(branch.get('lastBuild'));
-    // this.set('sha', branch.get('lastBuild.commit.sha'))
+    this.store.findRecord('branch', `/repo/${this.repo.get('id')}/branch/${this.branch}`).then(branch => {
+      branch.get('lastBuild').then(build => {
+        this.set('customSha', null);
+        this.set('branchSha', build.get('commit.sha'));
+      });
+    });
   },
 
   loadPreview(debounce) {
@@ -115,7 +117,7 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
       repo: this.repo,
       message: this.message,
       branch: this.branch,
-      sha: this.sha,
+      sha: this.sha !== '' ? this.sha : null,
       configs: this.configs
     };
     this.preview.loadConfigs.perform(data, debounce);
@@ -123,9 +125,11 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
 
   reset() {
     this.setProperties({
-      branch: this.originalBranch,
-      sha: this.originalSha,
-      // TODO this is here only to make the component integration test happy,
+      customBranch: null,
+      customSha: null,
+      customMessage: null,
+      branchSha: null,
+      // TODO these conditionals are here only to make the tests happy,
       // not sure why this.request.get ever would be undefined ...
       message: this.request && this.request.get && this.request.get('commit.message'),
       rawConfigs: this.request && this.request.uniqRawConfigs,
@@ -162,12 +166,19 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
         set(this.configs[ix], key, value);
         this.loadPreview(true);
       } else if (key === 'branch') {
-        this.set(key, value);
+        this.set('customBranch', value);
         this.loadSha();
         this.loadPreview();
-      } else {
-        this.set(key, value);
+      } else if (key === 'sha') {
+        this.set('customSha', value);
         this.loadPreview();
+      } else if (key === 'message') {
+        this.set('customMessage', value);
+        this.loadPreview();
+      } else {
+        throw `${key} ... wat?`;
+        // this.set(key, value);
+        // this.loadPreview();
       }
       this.set('customized', true);
     },

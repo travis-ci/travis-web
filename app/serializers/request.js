@@ -1,7 +1,6 @@
 import V2FallbackSerializer from 'travis/serializers/v2_fallback';
 
-let Serializer = V2FallbackSerializer.extend({
-
+export default V2FallbackSerializer.extend({
   keyForV2Relationship: function (key/* , typeClass, method*/) {
     if (key === 'repo') {
       return 'repository_id';
@@ -40,11 +39,14 @@ let Serializer = V2FallbackSerializer.extend({
     return {
       branch: snapshot.attr('branchName'),
       sha: snapshot.belongsTo('commit').attr('sha'),
-      configs: snapshot.attr('configs'),
       message: snapshot.attr('message'),
-      merge_mode: snapshot.attr('mergeMode')
+      configs: configsFrom(snapshot.attr('configs'))
     };
-  }
+  },
+
 });
 
-export default Serializer;
+function configsFrom(configs) {
+  configs = configs.filter(config => config.config);
+  return configs.map(config => ({ config: config.config, mode: config.mergeMode }));
+}

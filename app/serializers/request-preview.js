@@ -23,7 +23,7 @@ export default V3Serializer.extend({
       },
       branch: snapshot.attr('branch'),
       sha: snapshot.attr('sha'),
-      configs: snapshot.attr('configs'),
+      configs: configsFrom(snapshot.attr('configs')),
       data: {
         repo: snapshot.belongsTo('repo').attr('slug'),
         branch: snapshot.attr('branch'),
@@ -32,3 +32,8 @@ export default V3Serializer.extend({
     };
   },
 });
+
+function configsFrom(configs) {
+  configs = configs.filter(config => config.config);
+  return configs.map(config => ({ config: config.config, mode: config.mergeMode }));
+}
