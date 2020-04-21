@@ -1,5 +1,5 @@
 <ul class="repo-list">
-  {{#each (sort-by "startedAt:desc" this.model) as |build|}}
+  {{#each sortedBuilds as |build|}}
     <MyBuild data-test-my-build @build={{build}} />
   {{/each}}
 </ul>

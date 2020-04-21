@@ -4,7 +4,8 @@ import {
   currentURL,
   settled,
   visit,
-  waitFor
+  waitFor,
+  waitUntil
 } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
@@ -302,7 +303,7 @@ module('Acceptance | dashboard/repositories', function (hooks) {
       repository: generatePusherPayload(this.repository, { current_build_id: build.id })
     });
 
-    await waitFor('.my-build:nth-child(1)');
+    await waitUntil(() => page.myBuilds.builds.length === 5);
 
     page.myBuilds.builds[0].as(build => {
       assert.equal(build.stateAndNumber.text, '#15 received');
