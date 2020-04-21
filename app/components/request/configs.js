@@ -36,7 +36,7 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
 
   sha: or('customSha', 'originalSha'),
   branch: or('customBranch', 'originalBranch'),
-  message: or('customMessage', 'request.commit.message'),
+  message: or('customMessage', 'branchMessage', 'request.commit.message'),
 
   originalSha: truncate('requestOrBranchSha', 7),
   originalBranch: or('requestBranch', 'repoDefaultBranch'),
@@ -108,6 +108,7 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
       branch.get('lastBuild').then(build => {
         this.set('customSha', null);
         this.set('branchSha', build.get('commit.sha'));
+        this.set('branchMessage', build.get('commit.message'));
       });
     });
   },
