@@ -44,6 +44,7 @@
           <Field.input @name='companyName'/>
         </form.field>
       </div>
+      <div data-test-email-inputs-wrapper="true">
         {{#each this.billingEmails as |email|}}
           <div class="form-elem">
             <form.field
@@ -56,13 +57,14 @@
               @onBlur={{action 'handleBlur'}}
               @onChange={{action (mut email.value)}} as |Field|
             >
-              <Field.input @name='email'/>
+              <Field.input @name='email' data-test-email-input='true'/>
             </form.field>
           </div>
         {{/each}}
-        <button {{on 'click' (action 'addEmail')}} class='button--blue mb-5'>
+        <button {{on 'click' (action 'addEmail')}} class='button--blue mb-5' data-test-add-email>
           Add email
         </button>
+      </div>
       <h3 data-test-billing-details-title='true'>
         Billing address
       </h3>
