@@ -117,6 +117,8 @@
     font-size: 12px;
     font-family: Cousine, monospace;
     line-height: 1.7;
+    resize: vertical;
+    overflow: hidden;
 
     &.CodeMirror-focused {
       outline: none;
