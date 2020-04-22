@@ -157,7 +157,6 @@
   }
 
   @media #{$medium-up} {
-    margin-left: 10px;
     padding: 0.3em 0.5em 0.5em 0.5em;
     pointer-events: initial;
     flex-basis: 6rem;
@@ -179,7 +178,7 @@
   overflow: hidden;
 
   @media #{$medium-up} {
-    flex: 1 0 40%;
+    flex: 1 1 40%;
     position: relative;
     padding: 0.3em 0.5em 0.5em 0.7em;
     align-self: flex-start;
@@ -189,7 +188,8 @@
 
     &:after {
       @include fadeOut(right, -90deg, white);
-      top: -1px;
+      bottom: 2px;
+      height: auto;
     }
   }
 }
@@ -198,7 +198,7 @@
   overflow: hidden;
 
   @media #{$medium-up} {
-    flex: 1 0 20%;
+    flex: 1 2 15%;
     position: relative;
     padding: 0.3em 0.5em 0.5em 0.7em;
     align-self: flex-start;
@@ -208,8 +208,8 @@
 
     &:after {
       @include fadeOut(right, -90deg, white);
-
-      top: -1px;
+      bottom: 2px;
+      height: auto;
     }
   }
 }
@@ -231,18 +231,17 @@
 
 .job-env {
   @media #{$medium-up} {
-    flex: 1 0 30%;
+    flex: 2 1 25%;
     position: relative;
-    max-width: 23em;
-    margin-left: -1em;
     padding: 0.3em 0.5em 0.5em 1.2em;
     align-self: flex-start;
     white-space: nowrap;
     overflow: hidden;
-    margin-right: 20px;
 
     &:after {
       @include fadeOut(right, -90deg, white);
+      bottom: 2px;
+      height: auto;
     }
 
     &:hover {
@@ -251,15 +250,6 @@
       }
       white-space: normal;
     }
-  }
-
-  @media #{$xlarge-up} {
-    flex: 2 0 20em;
-    max-width: 39em;
-  }
-
-  @media #{$xxlarge-up} {
-    max-width: 48em;
   }
 
   &.is-empty {
