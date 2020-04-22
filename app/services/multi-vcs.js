@@ -19,11 +19,15 @@ export default Service.extend({
   primaryProvider: reads('primaryProviderConfig.urlPrefix'),
 
   isProviderEnabled(provider) {
-    return this.isProVersion && this.features.isEnabled(`enable-${provider}-login`);
+    const { isProVersion, features } = this;
+    const isEnabled = features.isEnabled(`enable-${provider}-login`) || features.isEnabled(`${provider}-login`);
+    return isProVersion && isEnabled;
   },
+
   isProviderPrimary(provider) {
     return provider === this.primaryProvider;
   },
+
   isProviderBeta(provider) {
     return !this.isProviderPrimary(provider);
   },
@@ -35,5 +39,6 @@ export default Service.extend({
       return vcsConfig(vcsType);
     }
   }),
+
   userSlug: reads('userConfig.urlPrefix'),
 });
