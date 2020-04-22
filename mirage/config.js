@@ -621,7 +621,7 @@ export default function () {
     return this.serialize(builds, 'build');
   });
 
-  this.post('/repo/:id/request/config', (schema, { params }) => {
+  this.post('/repo/:id/request/preview', (schema, { params }) => {
     if (params.config === 'invalid') {
       return Response(400, {}, {
         error_type: 'invalid_config_format',
