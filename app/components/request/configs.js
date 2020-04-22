@@ -157,7 +157,7 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
 
   actions: {
     add(ix) {
-      this.configs.insertAt(ix, { config: null, mergeMode: 'deep_merge_append' });
+      this.configs.insertAt(ix + 1, { config: null, mergeMode: 'deep_merge_append' });
     },
     remove(ix) {
       this.configs.removeAt(ix);
