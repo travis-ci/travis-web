@@ -37,13 +37,14 @@ export default V2FallbackSerializer.extend({
 
   serialize: function (snapshot, options) {
     return {
-      branch: snapshot.attr('branchName'),
-      sha: snapshot.belongsTo('commit').attr('sha'),
-      message: snapshot.attr('message'),
-      configs: configsFrom(snapshot.attr('configs'))
+      request: {
+        branch: snapshot.attr('branchName'),
+        sha: snapshot.belongsTo('commit').attr('sha'),
+        message: snapshot.attr('message'),
+        configs: configsFrom(snapshot.attr('configs'))
+      }
     };
-  },
-
+  }
 });
 
 function configsFrom(configs) {
