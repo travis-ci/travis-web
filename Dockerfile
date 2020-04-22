@@ -40,4 +40,6 @@ COPY . /app
 RUN npm ci --silent
 RUN ember build --environment=production
 
+RUN cp -a public/* dist/
+
 CMD bundle exec puma -I lib -p ${PORT:-4000} -t ${PUMA_MIN_THREADS:-8}:${PUMA_MAX_THREADS:-12} -w ${PUMA_WORKERS:-2} --preload waiter/config.ru
