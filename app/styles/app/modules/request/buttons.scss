@@ -37,12 +37,10 @@
   cursor: pointer;
 
   &:hover,
-  &:active {
-    color: $oxide-blue;
-  }
-
   &:active,
   &:focus {
+    border-color: $oxide-blue;
+    color: $oxide-blue;
     outline: none;
   }
 }
@@ -51,6 +49,10 @@
   margin-right: 8px;
   padding: 8px;
   border: 1px solid transparent;
+
+  &:hover {
+    border-color: transparent;
+  }
 }
 
 .request-configs-button-customize {
