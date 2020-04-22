@@ -163,24 +163,21 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
       this.configs.removeAt(ix);
     },
     update(key, ix, value) {
+      let debounce = false;
       if (key === 'config' || key == 'mergeMode') {
         set(this.configs[ix], key, value);
-        this.loadPreview(true);
+        debounce = true;
       } else if (key === 'branch') {
         this.set('customBranch', value);
         this.loadSha();
-        this.loadPreview();
       } else if (key === 'sha') {
         this.set('customSha', value);
-        this.loadPreview();
       } else if (key === 'message') {
         this.set('customMessage', value);
-        this.loadPreview();
       } else {
-        throw `${key} ... wat?`;
-        // this.set(key, value);
-        // this.loadPreview();
+        throw `unknown field ${key}`;
       }
+      this.loadPreview(debounce);
       this.set('customized', true);
     },
     submit() {
