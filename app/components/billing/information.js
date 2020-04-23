@@ -9,9 +9,10 @@ export default Component.extend({
   billingEmails: computed('billingInfoEmail', {
     get() {
       const emails = this.billingInfoEmail || '';
-      return emails.split(',').map((email, index) =>
-        ({ label: `Billing Email Address ${index + 1}`, value: email })
-      );
+      return emails.split(',').map((email, index) => ({
+        label: `Billing Email Address ${index + 1}`,
+        value: email,
+      }));
     },
     set(_, value) {
       return value;
@@ -34,5 +35,4 @@ export default Component.extend({
       ]);
     },
   }
-
 });

@@ -37,34 +37,47 @@
             </form.field>
           </div>
         </div>
-        <div class='flex flex--col flex-md-row'>
-          <div class="form-elem inline-form-elem">
-            <form.field
-              @label="Company"
-              @value={{this.info.company}}
-              @required={{false}}
-              @validateOnField={{false}}
-              @showValidationStatusIcons={{false}}
-              @onChange={{action (mut this.info.company)}}
-              as |field|
-            >
-              <field.input name="company" placeholder="Company" />
-            </form.field>
-          </div>
-          <div class="form-elem">
-            <form.field
-              @label="Email"
-              @value={{this.info.billingEmail}}
-              @required={{true}}
-              @validateOnField={{false}}
-              @showValidationStatusIcons={{false}}
-              @onChange={{action (mut this.info.billingEmail)}}
-              as |field|
-            >
-              <field.input name="billingEmail" placeholder="Email" />
-            </form.field>
-          </div>
+
+        <div data-test-email-inputs-wrapper="true">
+          {{#each this.billingEmails as |email index|}}
+            <div class="form-elem">
+              <form.field
+                @label={{email.label}}
+                @value={{email.value}}
+                @required={{email.required}}
+                @showRequiredMark={{email.required}}
+                @validator={{form-validator form.validators.email}}
+                @showValidationStatusIcons={{false}}
+                @onBlur={{action 'handleBlur'}}
+                @onChange={{action (mut email.value)}} as |Field|
+              >
+                <div class="flex">
+                  <Field.input @name='email' data-test-email-input='true'/>
+                  {{#if (not email.required)}}
+                    <button class='ml-3 button--red' {{on 'click' (action 'deleteEmail' email.label)}}>Delete</button>
+                  {{/if}}
+                </div>
+              </form.field>
+            </div>
+          {{/each}}
+          <button {{on 'click' (action 'addEmail')}} class='button--blue mb-5' data-test-add-email>
+            Add email
+          </button>
         </div>
+        <div class='form-elem billing-optional-field mt-5'>
+          <form.field
+            @label="Company"
+            @value={{this.info.company}}
+            @required={{false}}
+            @validateOnField={{false}}
+            @showValidationStatusIcons={{false}}
+            @onChange={{action (mut this.info.company)}}
+            as |field|
+          >
+            <field.input name="company" placeholder="Company" />
+          </form.field>
+        </div>
+
         <div class="form-elem">
           {{#if this.editContact.isRunning}}
             <LoadingIndicator />
@@ -101,7 +114,7 @@
         <section class="flex--col-3">
           <h4>billing email</h4>
           {{#each this.billingEmails as |email|}}
-            <p>{{email}}</p>
+            <p>{{email.value}}</p>
           {{/each}}
         </section>
       {{/if}}
