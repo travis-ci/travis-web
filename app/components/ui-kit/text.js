@@ -198,7 +198,6 @@ export default Component.extend({
     this._super(...arguments);
 
     checkDictionary(this.align, ALIGNMENTS, '@align', 'Text');
-    checkDictionary(this.color, COLORS, '@color', 'Text');
     checkDictionary(this.size, SIZES, '@size', 'Text');
     checkDictionary(this.family, FAMILIES, '@family', 'Text');
     checkDictionary(this.leading, LEADINGS, '@leading', 'Text');

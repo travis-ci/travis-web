@@ -6,9 +6,7 @@ export default Controller.extend({
   features: service(),
   multiVcs: service(),
 
-  queryParams: ['provider'],
-
-  provider: 'gitlab', // reads('multiVcs.userSlug'),
+  provider: reads('multiVcs.userSlug'),
   defaultProvider: reads('multiVcs.primaryProvider'),
 
   selectedProvider: or('provider', 'defaultProvider'),
