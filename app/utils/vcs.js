@@ -55,7 +55,7 @@ export const vcsUrl = (resource, vcsType, params = {}) => {
   return replaceParams(url, params);
 };
 
-export const vcsName = (vcsType) => vcsConfig(vcsType).name;
+export const vcsName = (vcsType) => vcsConfigByUrlPrefixOrType(vcsType).name;
 
 export const vcsIcon = (vcsType) => vcsConfig(vcsType).icon;
 
