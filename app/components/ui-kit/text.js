@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { checkDictionary } from 'travis/utils/ui-kit/assertions';
+import { checkColor, checkDictionary } from 'travis/utils/ui-kit/assertions';
 import prefix from 'travis/utils/ui-kit/prefix';
 import concat from 'travis/utils/ui-kit/concat';
 import { variantProp } from 'travis/utils/ui-kit/variant';
@@ -198,6 +198,7 @@ export default Component.extend({
     this._super(...arguments);
 
     checkDictionary(this.align, ALIGNMENTS, '@align', 'Text');
+    checkColor({ value: this.color, dictionary: COLORS, component: 'Text'});
     checkDictionary(this.size, SIZES, '@size', 'Text');
     checkDictionary(this.family, FAMILIES, '@family', 'Text');
     checkDictionary(this.leading, LEADINGS, '@leading', 'Text');

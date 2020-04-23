@@ -1,6 +1,8 @@
 import { assert } from '@ember/debug';
 import { isNone, isPresent } from '@ember/utils';
+import { A } from '@ember/array';
 import { getResponsiveProp, screenKeys } from 'travis/utils/ui-kit/responsive';
+import { colorExists } from 'travis/utils/ui-kit/colors';
 
 export function checkDictionary(value, dictionary, propertyName = '', componentName = '') {
   // Allow null/undefined values
@@ -45,4 +47,34 @@ export function requireProp(value, propertyName = '', componentName = '') {
   );
 
   return false;
+}
+
+export function getValuesToCheck(inputValue) {
+  const responsivePropMap = getResponsiveProp(inputValue);
+  return A(Object.values(responsivePropMap)).compact().without('');
+}
+
+export function checkColor({value, dictionary, property = '@color', component = ''} = {}) {
+  // Allow null/undefined values
+  if (isNone(value)) {
+    return true;
+  }
+  const valuesToCheck = getValuesToCheck(value);
+  const dictVals = Object.values(dictionary);
+  const conflicts = A();
+
+  for (const currentValue of valuesToCheck) {
+    if (colorExists(currentValue)) {
+      continue;
+    }
+    if (dictVals.includes(currentValue)) {
+      continue;
+    }
+    conflicts.push(currentValue);
+  }
+
+  assert(
+    `${property} "${conflicts}" is not allowed on this ${component} component`,
+    !conflicts.length
+  );
 }
