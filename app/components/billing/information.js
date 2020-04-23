@@ -12,6 +12,7 @@ export default Component.extend({
       return emails.split(',').map((email, index) => ({
         label: `Billing Email Address ${index + 1}`,
         value: email,
+        required: index === 0
       }));
     },
     set(_, value) {

@@ -50,8 +50,8 @@
             <form.field
               @label={{email.label}}
               @value={{email.value}}
-              @required={{true}}
-              @showRequiredMark={{true}}
+              @required={{email.required}}
+              @showRequiredMark={{email.required}}
               @validator={{form-validator form.validators.email}}
               @showValidationStatusIcons={{false}}
               @onBlur={{action 'handleBlur'}}
