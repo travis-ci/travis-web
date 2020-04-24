@@ -38,6 +38,7 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
   sha: or('customSha', 'originalSha'),
   branch: or('customBranch', 'originalBranch'),
   message: or('customMessage', 'defaultMessage'),
+  configs: reads('formattedApiConfigs'),
 
   originalSha: truncate('requestOrBranchSha', 7),
   originalBranch: or('requestBranch', 'repoDefaultBranch'),
@@ -53,10 +54,6 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
     return `Build triggered by ${this.auth.currentUser.fullName} via UI`;
   }),
 
-  configs: computed(function () {
-    return [{ config: this.formattedApiConfig, mergeMode: this.originalMergeMode }];
-  }),
-
   didInsertElement() {
     if (this.customizing || this.previewing) {
       this.loadPreview();
@@ -69,14 +66,16 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
     this._super(...arguments);
   },
 
-  formattedApiConfig: computed('request.apiConfig.config', function () {
-    let config = this.get('request.apiConfig.config');
-    try {
-      config = JSON.stringify(JSON.parse(config), null, 2);
-    } catch (e) {}
-    if (config !== '{}') {
+  formattedApiConfigs: computed('request.apiConfigs[].config', function () {
+    return this.get('request.apiConfigs').map(config => {
+      try {
+        config.config = JSON.stringify(JSON.parse(config.config), null, 2);
+      } catch (e) {}
+      if (config === '{}') {
+        config.config = null;
+      }
       return config;
-    }
+    });
   }),
 
   onTrigger(e) {
@@ -135,7 +134,7 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
       customMessage: null,
       branchSha: null,
       rawConfigs: this.request && this.request.uniqRawConfigs,
-      configs: [{ config: this.formattedApiConfig, mergeMode: this.originalMergeMode }]
+      configs: this.formattedApiConfigs
     });
     this.preview.reset();
     this.build.reset();

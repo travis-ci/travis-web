@@ -8,6 +8,8 @@ export const PULL_REQUEST_MERGEABLE = {
   CLEAN: 'clean'
 };
 
+const DEFAULT_MERGE_MODE = 'deep_merge_append';
+
 export default Model.extend({
   created_at: attr(),
   event_type: attr(),
@@ -57,10 +59,15 @@ export default Model.extend({
 
   hasMessages: gt('messages.length', 0),
 
-  apiConfig: computed('uniqRawConfigs', function () {
-    const configs = this.get('uniqRawConfigs');
-    if (configs) {
-      return configs.find((config) => config.source === 'api');
-    }
+  apiConfigs: computed('uniqRawConfigs', function () {
+    const configs = this.get('uniqRawConfigs')  || [];
+    return configs.filter(this.isApiConfig).map((config) => {
+      config.mergeMode = config.mergeMode || DEFAULT_MERGE_MODE;
+      return config;
+    });
   }),
+
+  isApiConfig(config) {
+    return config.source.toString().startsWith('api');
+  }
 });
