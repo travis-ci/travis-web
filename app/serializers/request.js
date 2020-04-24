@@ -32,6 +32,14 @@ export default V2FallbackSerializer.extend({
       resourceHash.repository['@type'] = 'repository';
     }
 
+    if (resourceHash.raw_configs) {
+      resourceHash.raw_configs = resourceHash.raw_configs.map((config) => {
+        config.mergeMode = config.merge_mode;
+        delete config.merge_mode;
+        return config;
+      });
+    }
+
     return this._super(modelClass, resourceHash);
   },
 

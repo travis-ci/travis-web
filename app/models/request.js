@@ -60,7 +60,7 @@ export default Model.extend({
   hasMessages: gt('messages.length', 0),
 
   apiConfigs: computed('uniqRawConfigs', function () {
-    const configs = this.get('uniqRawConfigs')  || [];
+    const configs = this.get('uniqRawConfigs') || [];
     return configs.filter(this.isApiConfig).map((config) => {
       config.mergeMode = config.mergeMode || DEFAULT_MERGE_MODE;
       return config;
