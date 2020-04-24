@@ -229,11 +229,13 @@ export default Service.extend({
     const {
       id,
       name,
-      email,
+      emails,
+      email: userEmail,
       firstLoggedInAt: createdAt,
       secureUserHash: userHash,
       vcsProvider = {}
     } = this.currentUser;
+    const email = userEmail || emails && emails.firstObject;
     this.intercom.set('user', { id, name, email, createdAt, userHash, provider: vcsProvider.name });
   },
 
