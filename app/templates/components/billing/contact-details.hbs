@@ -54,7 +54,7 @@
                 <div class="flex">
                   <Field.input @name='email' data-test-email-input='true'/>
                   {{#if (not email.required)}}
-                    <button class='ml-3 button--red' {{on 'click' (action 'deleteEmail' email.label)}}>Delete</button>
+                    <button class='ml-3 button--white' {{on 'click' (action 'deleteEmail' email.label)}}>Delete Email</button>
                   {{/if}}
                 </div>
               </form.field>
@@ -99,19 +99,19 @@
   {{else}}
     <div data-test-user-details='true' class="flex flex--wrap">
       {{#if (or this.info.firstName this.info.lastName)}}
-        <section class="flex--col-3">
+        <section class="flex--one">
           <h4>contact name</h4>
           <p>{{this.info.firstName}} {{this.info.lastName}}</p>
         </section>
       {{/if}}
       {{#if this.info.company}}
-        <section class="flex--col-3">
+        <section class="flex--one">
           <h4>company name</h4>
           <p>{{this.info.company}}</p>
         </section>
       {{/if}}
       {{#if this.info.billingEmail}}
-        <section class="flex--col-3">
+        <section class="flex--one">
           <h4>billing email</h4>
           {{#each this.billingEmails as |email|}}
             <p>{{email.value}}</p>
