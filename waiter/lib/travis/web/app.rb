@@ -232,7 +232,7 @@ class Travis::Web::App
 
       if options['stripe_publishable_key']
         stripe = {}
-        stirpe['publishableKey'] = options['stripe_publishable_key']
+        stripe['publishableKey'] = options['stripe_publishable_key']
         stripe['lazyLoad'] = true
         config['stripe'] = stripe
       end
