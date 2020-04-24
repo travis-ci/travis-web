@@ -230,6 +230,13 @@ class Travis::Web::App
       pusher['encrypted'] = true
       config['pusher'] = pusher
 
+      if options['stripe_publishable_key']
+        stripe = {}
+        stirpe['publishableKey'] = options['stripe_publishable_key']
+        stripe['lazyLoad'] = true
+        config['stripe'] = stripe
+      end
+
       config['gaCode'] = options[:ga_code] if options[:ga_code]
 
       config['githubOrgsOauthAccessSettingsUrl'] = options[:github_orgs_oauth_access_settings_url]
