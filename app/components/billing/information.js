@@ -1,38 +1,32 @@
 import Component from '@ember/component';
-import { computed } from '@ember/object';
+import { inject as service } from '@ember/service';
 import { reads } from '@ember/object/computed';
 import { countries } from 'travis/utils/countries';
 
 export default Component.extend({
   countries,
+  multipleInput: service(),
   billingInfoEmail: reads('newSubscription.billingInfo.billingEmail'),
-  billingEmails: computed('billingInfoEmail', {
-    get() {
-      const emails = this.billingInfoEmail || '';
-      return emails.split(',').map((email, index) =>
-        ({ label: `Billing Email Address ${index + 1}`, value: email })
-      );
-    },
-    set(_, value) {
-      return value;
-    }
-  }),
+  billingEmails: reads('multipleInput.inputs'),
+
+  init() {
+    this._super(...arguments);
+    this.multipleInput.setProperties({
+      inputString: this.billingInfoEmail,
+      label: 'Billing Email Address',
+      required: 'first',
+    });
+  },
 
   actions: {
 
     handleBlur() {
-      const emails = this.billingEmails.map(email => email.value);
-      this.newSubscription.billingInfo.set('billingEmail', emails.join(','));
+      this.newSubscription.billingInfo.set('billingEmail', this.multipleInput.joinInputs());
     },
 
     addEmail(e) {
       e.preventDefault();
-      const nextEmailNumber = this.billingEmails.length + 1;
-      this.set('billingEmails', [
-        ...this.billingEmails,
-        { label: `Billing Email Address ${nextEmailNumber}`, value: '' }
-      ]);
+      this.multipleInput.addInput();
     },
   }
-
 });

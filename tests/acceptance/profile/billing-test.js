@@ -289,12 +289,16 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.billing.editContactAddressForm
       .fillIn('firstname', 'John')
       .fillIn('lastname', 'Doe')
-      .fillIn('company', 'Travis')
-      .fillIn('billingEmail', 'john@doe.com');
+      .fillIn('company', 'Travis');
+
+    await profilePage.billing.billingEmails.objectAt(0).fillEmail('joe@jane.com');
+
+    await click(BILLING_INFO_ADD_EMAIL);
+    await profilePage.billing.billingEmails.objectAt(1).fillEmail('jane@email.com');
 
     await profilePage.billing.editContactAddressForm.updateContactAddressButton.click();
 
-    assert.equal(profilePage.billing.userDetails.text, 'contact name John Doe company name Travis billing email john@doe.com');
+    assert.equal(profilePage.billing.userDetails.text, 'contact name John Doe company name Travis billing email joe@jane.com jane@email.com');
   });
 
   test('edit subscription billing updates user billing info', async function (assert) {
