@@ -230,9 +230,9 @@ class Travis::Web::App
       pusher['encrypted'] = true
       config['pusher'] = pusher
 
-      if options['stripe_publishable_key']
+      if options[:stripe_publishable_key]
         stripe = {}
-        stripe['publishableKey'] = options['stripe_publishable_key']
+        stripe['publishableKey'] = options[:stripe_publishable_key]
         stripe['lazyLoad'] = true
         config['stripe'] = stripe
       end
