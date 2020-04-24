@@ -13,7 +13,7 @@
         Success. You have triggered build <span class="underline">#{{this.build.number}}</span> with the given build {{if this.customizing 'details and'}} {{pluralize this.configs 'config' without-count=true}}.
       </LinkTo>
     {{else if this.rejected}}
-      TODO The build request was rejected: ...
+      The build request was rejected.
     {{else if (eq this.error 'timeout')}}
       Processing the build request takes a very long time. TODO: now what?
     {{else if this.error}}

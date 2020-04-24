@@ -18,7 +18,7 @@ export default V3Serializer.extend({
       type: 'api',
       repo: {
         slug: snapshot.belongsTo('repo').attr('slug'),
-        private: snapshot.belongsTo('repo').attr('slug'),
+        private: snapshot.belongsTo('repo').attr('private'),
         default_branch: snapshot.belongsTo('repo').belongsTo('defaultBranch').attr('name'),
       },
       branch: snapshot.attr('branch'),
