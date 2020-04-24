@@ -16,6 +16,7 @@ export const STATUSES = {
 export default Component.extend(CanTriggerBuild, TriggerBuild, {
   tagName: '',
 
+  auth: service(),
   preview: service('request-preview'),
   build: service('trigger-build'),
   store: service(),
@@ -36,7 +37,7 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
 
   sha: or('customSha', 'originalSha'),
   branch: or('customBranch', 'originalBranch'),
-  message: or('customMessage', 'branchMessage', 'request.commit.message'),
+  message: or('customMessage', 'defaultMessage'),
 
   originalSha: truncate('requestOrBranchSha', 7),
   originalBranch: or('requestBranch', 'repoDefaultBranch'),
@@ -46,7 +47,11 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
   requestOrBranchSha: or('branchSha', 'requestSha', 'repoDefaultBranchLastCommitSha'),
   repoDefaultBranch: reads('repo.defaultBranch.name'),
   repoDefaultBranchLastCommitSha: reads('repo.defaultBranch.lastBuild.commit.sha'),
+
   defaultMergeMode: 'deep_merge_append',
+  defaultMessage: computed(function () {
+    return `Build triggered by ${this.auth.currentUser.fullName} via UI`;
+  }),
 
   configs: computed(function () {
     return [{ config: this.formattedApiConfig, mergeMode: this.originalMergeMode }];
@@ -108,7 +113,6 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
       branch.get('lastBuild').then(build => {
         this.set('customSha', null);
         this.set('branchSha', build.get('commit.sha'));
-        this.set('branchMessage', build.get('commit.message'));
       });
     });
   },
@@ -130,9 +134,6 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
       customSha: null,
       customMessage: null,
       branchSha: null,
-      // TODO these conditionals are here only to make the tests happy,
-      // not sure why this.request.get ever would be undefined ...
-      message: this.request && this.request.get && this.request.get('commit.message'),
       rawConfigs: this.request && this.request.uniqRawConfigs,
       configs: [{ config: this.formattedApiConfig, mergeMode: this.originalMergeMode }]
     });
