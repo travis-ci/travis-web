@@ -67,7 +67,8 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
   },
 
   formattedApiConfigs: computed('request.apiConfigs[].config', function () {
-    return this.get('request.apiConfigs').map(config => {
+    const configs = this.get('request.apiConfigs') || [{}];
+    return configs.map(config => {
       try {
         config.config = JSON.stringify(JSON.parse(config.config), null, 2);
       } catch (e) {}
