@@ -120,7 +120,6 @@ module.exports = function () {
   importNpmDependency(app, 'node_modules/ansiparse/lib/ansiparse.js', 'amd');
   importNpmDependency(app, 'node_modules/yamljs/index.js');
   importNpmDependency(app, 'node_modules/deep-freeze/index.js');
-  importNpmDependency(app, 'node_modules/clipboard/dist/clipboard.min.js');
 
   return app.toTree(emojiAssets);
 };
