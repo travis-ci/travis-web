@@ -10,7 +10,6 @@ export default Component.extend({
   tagName: '',
 
   isLoading: false,
-  isTriggering: false,
   dropupIsOpen: false,
 
   currentBuild: alias('repo.currentBuild'),
@@ -23,22 +22,6 @@ export default Component.extend({
 
   closeDropup() {
     this.set('dropupIsOpen', false);
-  },
-
-  triggerBuild() {
-    const self = this;
-    let data = {};
-    data.request = `{ 'branch': '${this.get('repo.defaultBranch.name')}' }`;
-
-    this.api.post(`/repo/${this.get('repo.id')}/requests`, { data: data })
-      .then(() => {
-        self.set('isTriggering', false);
-        self.get('flashes')
-          .success(`You’ve successfully triggered a build for ${self.get('repo.slug')}.
-                   Hold tight, it might take a moment to show up.`);
-      });
-    this.set('dropupIsOpen', false);
-    this.set('isTriggering', true);
   },
 
   actions: {

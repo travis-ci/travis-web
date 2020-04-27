@@ -35,5 +35,6 @@ export default V3Serializer.extend({
 
 function configsFrom(configs) {
   configs = configs.filter(config => config.config);
+  if (configs.length === 0) configs = [{ config: '' }];
   return configs.map(config => ({ config: config.config, mode: config.mergeMode }));
 }
