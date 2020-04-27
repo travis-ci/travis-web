@@ -4,23 +4,26 @@ import { reads } from '@ember/object/computed';
 
 export default Component.extend({
   multipleInput: service(),
+
+  inputsString: reads('multipleInput.inputsString'),
+  billingEmails: reads('multipleInput.inputs'),
   billingEmail: reads('info.billingEmail'),
 
   init() {
     this._super(...arguments);
     this.multipleInput.setProperties({
-      inputString: this.billingEmail || '',
+      inputsString: this.billingEmail,
       label: 'Billing Email Address',
       required: 'first',
     });
   },
 
-  billingEmails: reads('multipleInput.inputs'),
 
   actions: {
 
     handleBlur() {
-      this.info.set('billingEmail', this.multipleInput.joinInputs());
+      this.multipleInput.joinInputs();
+      this.info.set('billingEmail', this.inputsString);
     },
 
     addEmail(e) {
