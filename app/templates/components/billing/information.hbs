@@ -57,7 +57,12 @@
               @onBlur={{action 'handleBlur'}}
               @onChange={{action (mut email.value)}} as |Field|
             >
-              <Field.input @name='email' data-test-email-input='true'/>
+              <div class="flex">
+                <Field.input @name='email' data-test-email-input='true'/>
+                {{#if (not email.required)}}
+                  <button class='ml-3 button--white' {{on 'click' (action 'deleteEmail' email.label)}}>Delete Email</button>
+                {{/if}}
+              </div>
             </form.field>
           </div>
         {{/each}}

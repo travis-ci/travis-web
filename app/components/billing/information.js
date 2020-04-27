@@ -8,6 +8,7 @@ export default Component.extend({
   multipleInput: service(),
   billingInfoEmail: reads('newSubscription.billingInfo.billingEmail'),
   billingEmails: reads('multipleInput.inputs'),
+  inputString: reads('multipleInput.inputString'),
 
   init() {
     this._super(...arguments);
@@ -21,12 +22,18 @@ export default Component.extend({
   actions: {
 
     handleBlur() {
-      this.newSubscription.billingInfo.set('billingEmail', this.multipleInput.joinInputs());
+      this.multipleInput.joinInputs();
+      this.newSubscription.billingInfo.set('billingEmail', this.inputString);
     },
 
     addEmail(e) {
       e.preventDefault();
       this.multipleInput.addInput();
     },
+
+    deleteEmail(emailLabel, e) {
+      e.preventDefault();
+      this.multipleInput.deleteInput(emailLabel);
+    }
   }
 });

@@ -9,7 +9,7 @@ export default Component.extend({
   init() {
     this._super(...arguments);
     this.multipleInput.setProperties({
-      inputString: this.billingEmail,
+      inputString: this.billingEmail || '',
       label: 'Billing Email Address',
       required: 'first',
     });

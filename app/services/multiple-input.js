@@ -4,7 +4,7 @@ import { computed } from '@ember/object';
 export default Service.extend({
   label: '',
   delimeter: ',',
-  inputString: null,
+  inputString: '',
   required: '',
 
   inputs: computed('inputString', {
@@ -24,7 +24,7 @@ export default Service.extend({
 
   joinInputs() {
     const inputValues = this.inputs.map(input => input.value);
-    return inputValues.join(this.delimeter);
+    this.set('inputString', inputValues.join(this.delimeter));
   },
 
   addInput() {
