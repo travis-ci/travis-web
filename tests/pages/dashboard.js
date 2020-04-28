@@ -14,7 +14,7 @@ let dashboardRowObject = {
   repoName: text('.dash-header .row-content a'),
   defaultBranch: text('.dash-default .row-content a'),
   lastBuild: text('.dash-last a .label-align'),
-  triggerBuild: clickable('.dash-menu .dropup-list li:first-of-type button'),
+  triggerBuild: clickable('.dash-menu .dropup-list li:first-of-type .trigger-build-anchor'),
   clickStarButton: clickable('.dash-head .dash-star'),
 
   menuButton: {
