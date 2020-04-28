@@ -133,6 +133,7 @@ module('Acceptance | dashboard/repositories', function (hooks) {
       starred: true,
       currentBuild: permissionBuild,
       defaultBranch: permissionBranch,
+      config_validation: true,
       permissions: {
         create_request: true
       }
@@ -174,19 +175,12 @@ module('Acceptance | dashboard/repositories', function (hooks) {
   });
 
   test('triggering a build', async function (assert) {
-    let requestCreated = false;
-
-    this.server.post(`/repo/${this.starredRepo.id}/requests`, () => {
-      requestCreated = true;
-      return true;
-    });
-
     await visit('/dashboard');
 
     await page.starredRepos[0].menuButton.click();
     await page.starredRepos[0].triggerBuild();
 
-    assert.ok(requestCreated);
+    assert.equal(currentURL(), `/github/${this.starredRepo.slug}/config`);
   });
 
   test('Dashboard pagination works', async function (assert) {
