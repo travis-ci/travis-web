@@ -34,6 +34,8 @@ export default Component.extend({
       const { value } = target;
       const fields = [...this.fields];
       fields[index] = { value };
+      const values = fields.map(input => input.value);
+      this.validateMultipleFields(values);
       this.set('fields', fields);
     },
 
