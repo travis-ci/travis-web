@@ -23,7 +23,7 @@ const { authEndpoint, apiEndpoint } = config;
 
 // Collects the list of includes from all requests
 // and ensures the future fetches don't override previously loaded includes
-let includes = [];
+let includes = ['owner.installation', 'user.emails'];
 
 const afterSignOutCallbacks = [];
 
@@ -200,7 +200,7 @@ export default Service.extend({
   },
 
   reloadUser(userRecord, include = []) {
-    includes = includes.concat(include, ['owner.installation']).uniq();
+    includes = includes.concat(include).uniq();
     return this.fetchUser.perform(userRecord);
   },
 
@@ -229,11 +229,13 @@ export default Service.extend({
     const {
       id,
       name,
-      email,
+      emails,
+      email: userEmail,
       firstLoggedInAt: createdAt,
       secureUserHash: userHash,
       vcsProvider = {}
     } = this.currentUser;
+    const email = userEmail || emails && emails.firstObject;
     this.intercom.set('user', { id, name, email, createdAt, userHash, provider: vcsProvider.name });
   },
 
