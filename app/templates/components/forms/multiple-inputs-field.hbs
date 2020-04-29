@@ -1,0 +1,22 @@
+{{#each this.fields as |field index|}}
+  <div class="mb-2 flex full-width">
+    <div class="travis-form__field full-width">
+      <input
+        data-test-input-field
+        class="travis-form__field-input travis-form__field-component"
+        type='text'
+        value={{field.value}}
+        autocomplete="off"
+        {{on 'change' (action 'handleChange' index)}}
+        {{on 'blur' (action 'handleBlur')}}
+      />
+    </div>
+    {{#if (eq index this.lastFieldIndex)}}
+      <button {{on 'click' (action 'addInput')}} class='button--blue ml-3 mb-5' data-test-add-input>
+        Add
+      </button>
+    {{else}}
+      <button {{on 'click' (action 'removeInput' index)}} class='ml-3 button--white'>Remove</button>
+    {{/if}}
+  </div>
+{{/each}}

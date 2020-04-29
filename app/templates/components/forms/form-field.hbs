@@ -86,10 +86,18 @@
       onInit=(action 'setFieldElementId')
       class='travis-form__field-component'
     )
+    multipleInputsField=(component 'forms/multiple-inputs-field'
+      form=form
+      value=this.value
+      disabled=this.disabled
+      validateMultipleFields=(action "validateMultipleFields")
+      onInit=(action "setFieldElementId")
+    )
   )
 }}
 
-{{#if requiresValidation }}
+
+{{#if this.requiresValidation }}
   {{#if this.showValidationStatusIcons}}
     <div class="travis-form__field-badge travis-form__field-badge--error">
       <SvgImage @name="form-error-icon" @width=14 @height=14 />
