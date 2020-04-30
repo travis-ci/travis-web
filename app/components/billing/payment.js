@@ -24,8 +24,7 @@ export default Component.extend({
   company: reads('newSubscription.billingInfo.company'),
   billingEmail: reads('newSubscription.billingInfo.billingEmail'),
   billingEmails: computed('billingEmail', function () {
-    const email = this.billingEmail || '';
-    return email.split(',');
+    return (this.billingEmail || '').split(',');
   }),
 
   address: reads('newSubscription.billingInfo.address'),
