@@ -39,6 +39,7 @@ export default Component.extend({
   enableValidationStatusIcons: true,
   enableValidationStatusMessage: true,
   validateOnField: true,
+  multipleFieldsValues: null,
 
   validator: null,
   required: equal('validator.kind', presense),
@@ -138,6 +139,7 @@ export default Component.extend({
     },
 
     validateMultipleFields(values = []) {
+      this.set('multipleFieldsValues', values);
       values.some(value => {
         this.validate(value);
         return this.state === FIELD_STATE.ERROR;

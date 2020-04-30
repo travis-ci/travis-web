@@ -14,7 +14,7 @@ export default Component.extend({
 
   isValid: not('hasErrors'),
 
-  onSubmit() {},
+  onSubmit() { },
 
   registerField(field) {
     this.fields.addObject(field);
@@ -26,7 +26,12 @@ export default Component.extend({
 
   validate() {
     this.fields.forEach(field => {
-      field.validate(field.value, true);
+      const { value, multipleFieldsValues } = field;
+      if (Array.isArray(multipleFieldsValues)) {
+        field.validateMultipleFields(multipleFieldsValues);
+      } else {
+        field.validate(value, true);
+      }
     });
   },
 

@@ -53,7 +53,7 @@
           @showRequiredMark={{true}}
           @showValidationStatusIcons={{false}}
           @validator={{form-validator form.validators.email}}
-          @value={{this.newSubscription.billingInfo.billingEmail}}
+          @initialValue={{this.newSubscription.billingInfo.billingEmail}}
           as |Field|
         >
           <Field.multipleInputsField @updateValue={{action 'updateValue'}}/>
