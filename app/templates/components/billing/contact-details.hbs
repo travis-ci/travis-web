@@ -37,32 +37,20 @@
             </form.field>
           </div>
         </div>
-
         <div data-test-email-inputs-wrapper="true">
-          {{#each this.billingEmails as |email index|}}
-            <div class="form-elem">
-              <form.field
-                @label={{email.label}}
-                @value={{email.value}}
-                @required={{email.required}}
-                @showRequiredMark={{email.required}}
-                @validator={{form-validator form.validators.email}}
-                @showValidationStatusIcons={{false}}
-                @onBlur={{action 'handleBlur'}}
-                @onChange={{action (mut email.value)}} as |Field|
-              >
-                <div class="flex">
-                  <Field.input @name='email' data-test-email-input='true'/>
-                  {{#if (not email.required)}}
-                    <button class='ml-3 button--white' {{on 'click' (action 'deleteEmail' email.label)}}>Delete Email</button>
-                  {{/if}}
-                </div>
-              </form.field>
-            </div>
-          {{/each}}
-          <button {{on 'click' (action 'addEmail')}} class='button--blue mb-5' data-test-add-email>
-            Add email
-          </button>
+          <form.field
+            @label='Billing Email Address'
+            @multipleInputsField={{true}}
+            @disableFrame={{true}}
+            @required={{true}}
+            @showRequiredMark={{true}}
+            @showValidationStatusIcons={{false}}
+            @validator={{form-validator form.validators.email}}
+            @value={{this.newSubscription.billingInfo.billingEmail}}
+            as |Field|
+          >
+            <Field.multipleInputsField @updateValue={{action 'updateValue'}}/>
+          </form.field>
         </div>
         <div class='form-elem billing-optional-field mt-5'>
           <form.field
