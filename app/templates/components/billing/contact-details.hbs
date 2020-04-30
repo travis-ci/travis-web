@@ -46,7 +46,7 @@
             @showRequiredMark={{true}}
             @showValidationStatusIcons={{false}}
             @validator={{form-validator form.validators.email}}
-            @value={{this.newSubscription.billingInfo.billingEmail}}
+            @initialValue={{this.info.billingEmail}}
             as |Field|
           >
             <Field.multipleInputsField @updateValue={{action 'updateValue'}}/>
@@ -102,7 +102,7 @@
         <section class="flex--one">
           <h4>billing email</h4>
           {{#each this.billingEmails as |email|}}
-            <p>{{email.value}}</p>
+            <p>{{email}}</p>
           {{/each}}
         </section>
       {{/if}}

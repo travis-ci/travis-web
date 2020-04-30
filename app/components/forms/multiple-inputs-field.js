@@ -1,10 +1,12 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
+import { reads } from '@ember/object/computed';
 
 export default Component.extend({
   div: '',
   delimeter: ',',
-  value: '',
+  initialValue: '',
+  value: reads('initialValue'),
 
   fields: computed('value', {
     get() {
@@ -22,6 +24,7 @@ export default Component.extend({
   updateValue() {},
 
   actions: {
+
     handleBlur() {
       const values = this.fields.map(input => input.value);
       this.validateMultipleFields(values);
