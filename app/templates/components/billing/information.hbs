@@ -1,5 +1,5 @@
 <div class='billing-information-form'>
-  <Billing::SelectedPlan 
+  <Billing::SelectedPlan
     @selectedPlan={{this.newSubscription.plan}} 
     @goToFirstStep={{action this.goToFirstStep}}
   />
@@ -56,7 +56,7 @@
           @initialValue={{this.newSubscription.billingInfo.billingEmail}}
           as |Field|
         >
-          <Field.multipleInputsField @updateValue={{action 'updateValue'}}/>
+          <Field.multipleInputsField @updateValues={{action 'updateValues'}}/>
         </form.field>
       </div>
       <h3 data-test-billing-details-title='true'>

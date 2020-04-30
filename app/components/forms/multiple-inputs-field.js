@@ -3,7 +3,7 @@ import { computed } from '@ember/object';
 import { reads } from '@ember/object/computed';
 
 export default Component.extend({
-  div: '',
+  tagName: '',
   delimeter: ',',
   initialValue: '',
   value: reads('initialValue'),
@@ -20,17 +20,26 @@ export default Component.extend({
     return this.fields.length - 1;
   }),
 
-  validateMultipleFields() {},
-  updateValue() {},
+  didInsertElement() {
+    this._super(...arguments);
+    const values = this.fields.map(input => input.value);
+    this.validateMultipleInputs(values);
+  },
+
+  validateMultipleInputs() {},
+  updateValues() {},
+  handleValidation(values) {
+    this.validateMultipleInputs(values);
+    this.updateValues(values);
+  },
 
   actions: {
 
     handleBlur() {
       const values = this.fields.map(input => input.value);
-      this.validateMultipleFields(values);
+      this.handleValidation(values);
       const value = values.join(this.delimeter);
       this.set('value', value);
-      this.updateValue(value);
     },
 
     handleChange(index, { target }) {
@@ -38,18 +47,18 @@ export default Component.extend({
       const fields = [...this.fields];
       fields[index] = { value };
       const values = fields.map(input => input.value);
-      this.validateMultipleFields(values);
+      this.handleValidation(values);
       this.set('fields', fields);
     },
 
-    removeInput(inputIndex, e) {
-      e.preventDefault();
+    removeInput(inputIndex) {
       const filteredFields = this.fields.filter((_, index) => index !== inputIndex);
+      const values = filteredFields.map(input => input.value);
+      this.handleValidation(values);
       this.set('fields', filteredFields);
     },
 
-    addInput(e) {
-      e.preventDefault();
+    addInput() {
       this.set('fields', [...this.fields, { value: '' }]);
     },
   }

@@ -14,7 +14,7 @@ export default Component.extend({
 
   isValid: not('hasErrors'),
 
-  onSubmit() { },
+  onSubmit() {},
 
   registerField(field) {
     this.fields.addObject(field);

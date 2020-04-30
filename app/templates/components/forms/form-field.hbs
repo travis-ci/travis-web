@@ -91,12 +91,11 @@
       initialValue=this.initialValue
       required=this.required
       disabled=this.disabled
-      validateMultipleFields=(action "validateMultipleFields")
+      validateMultipleInputs=(action "validateMultipleInputs")
       onInit=(action "setFieldElementId")
     )
   )
 }}
-
 
 {{#if this.requiresValidation }}
   {{#if this.showValidationStatusIcons}}

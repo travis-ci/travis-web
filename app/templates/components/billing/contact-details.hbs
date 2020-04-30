@@ -37,6 +37,7 @@
             </form.field>
           </div>
         </div>
+        {{log this.info.billingEmail}}
         <div data-test-email-inputs-wrapper="true">
           <form.field
             @label='Billing Email Address'
@@ -49,7 +50,7 @@
             @initialValue={{this.info.billingEmail}}
             as |Field|
           >
-            <Field.multipleInputsField @updateValue={{action 'updateValue'}}/>
+            <Field.multipleInputsField @updateValues={{action 'updateValues'}}/>
           </form.field>
         </div>
         <div class='form-elem billing-optional-field mt-5'>
