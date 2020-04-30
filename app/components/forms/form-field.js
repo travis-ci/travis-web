@@ -39,6 +39,7 @@ export default Component.extend({
   enableValidationStatusIcons: true,
   enableValidationStatusMessage: true,
   validateOnField: true,
+  isMultipleInputsField: true,
   multipleFieldsValues: null,
 
   validator: null,

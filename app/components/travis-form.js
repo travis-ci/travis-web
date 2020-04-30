@@ -26,8 +26,12 @@ export default Component.extend({
 
   validate() {
     this.fields.forEach(field => {
-      const { value, multipleFieldsValues } = field;
-      if (Array.isArray(multipleFieldsValues)) {
+      const {
+        value,
+        multipleFieldsValues,
+        isMultipleInputsField
+      } = field;
+      if (isMultipleInputsField) {
         field.validateMultipleFields(multipleFieldsValues);
       } else {
         field.validate(value, true);
