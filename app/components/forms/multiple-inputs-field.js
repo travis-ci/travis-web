@@ -23,11 +23,13 @@ export default Component.extend({
   didInsertElement() {
     this._super(...arguments);
     const values = this.fields.map(input => input.value);
-    this.validateMultipleInputs(values);
+    if (values.length > 0 && values[0]) {
+      this.validateMultipleInputs(values);
+    }
   },
 
-  validateMultipleInputs() {},
-  updateValues() {},
+  validateMultipleInputs() { },
+  updateValues() { },
   handleValidation(values) {
     this.validateMultipleInputs(values);
     this.updateValues(values);

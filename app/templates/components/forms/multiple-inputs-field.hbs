@@ -1,5 +1,5 @@
 {{#each this.fields as |field index|}}
-  <div class="mb-2 flex full-width">
+  <div class="mb-2 flex full-width multiple-input">
     <div class="travis-form__field full-width">
       <input
         data-test-multiple-input-field
@@ -12,11 +12,13 @@
       />
     </div>
     {{#if (eq index this.lastFieldIndex)}}
-      <button {{on 'click' (action 'addInput')}} class='button--blue ml-3 mb-5' data-test-add-input>
-        Add
+      <button class="multiple-input__add-input-button cursor-pointer" {{on 'click' (action 'addInput')}} data-test-add-input>
+        <SvgImage @name='icon-plus' @class='multiple-input__add-icon' />
       </button>
     {{else}}
-      <button {{on 'click' (action 'removeInput' index)}} class='ml-3 button--white'>Remove</button>
+      <button class="cursor-pointer" {{on 'click' (action 'removeInput' index)}} >
+        <SvgImage @name='icon-close' @class='multiple-input__remove-icon' />
+      </button>
     {{/if}}
   </div>
 {{/each}}
