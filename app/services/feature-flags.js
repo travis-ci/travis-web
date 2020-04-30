@@ -15,7 +15,6 @@ export default Service.extend({
   init() {
     this._super();
     this._setEnableAssemblaLogin();
-    this._setEnableBitbucketLogin();
   },
 
   _setEnableAssemblaLogin() {
@@ -24,14 +23,6 @@ export default Service.extend({
       this.features.enable('enable-assembla-login');
     else if (enableAssemblaLogin == 'false')
       this.features.disable('enable-assembla-login');
-  },
-
-  _setEnableBitbucketLogin() {
-    const { enableBitbucketLogin } = window.localStorage;
-    if (enableBitbucketLogin == 'true')
-      this.features.enable('enable-bitbucket-login');
-    else if (enableBitbucketLogin == 'false')
-      this.features.disable('enable-bitbucket-login');
   },
 
   _setFlagState(flag) {

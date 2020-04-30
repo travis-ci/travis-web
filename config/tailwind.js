@@ -35,6 +35,7 @@ module.exports = {
 
       // Failing Color
       red: {
+        90: '#fce8e2',
         100: '#ffdcdc',
         200: '#ffabab',
         300: '#ff5050',
