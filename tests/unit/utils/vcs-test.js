@@ -58,6 +58,6 @@ module('Unit | Utils | vcsUrl', function () {
 
 module('Unit | Utils | availableProviders', function () {
   test('returns the list of providers', function (assert) {
-    assert.deepEqual(availableProviders, ['assembla', 'bitbucket', 'github']);
+    assert.deepEqual(availableProviders, ['assembla', 'bitbucket', 'gitlab', 'github']);
   });
 });
