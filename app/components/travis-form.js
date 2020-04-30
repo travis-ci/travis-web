@@ -28,11 +28,11 @@ export default Component.extend({
     this.fields.forEach(field => {
       const {
         value,
-        multipleFieldsValues,
+        multipleInputsValue,
         isMultipleInputsField
       } = field;
       if (isMultipleInputsField) {
-        field.validateMultipleFields(multipleFieldsValues, true);
+        field.validateMultipleInputs(multipleInputsValue, true);
       } else {
         field.validate(value, true);
       }

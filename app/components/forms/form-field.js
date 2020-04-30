@@ -40,7 +40,7 @@ export default Component.extend({
   enableValidationStatusMessage: true,
   validateOnField: true,
   isMultipleInputsField: true,
-  multipleFieldsValues: null,
+  multipleInputsValue: null,
 
   validator: null,
   required: equal('validator.kind', presense),
@@ -123,7 +123,7 @@ export default Component.extend({
   onFocus() {},
   onChange() {},
   onKeyUp() {},
-  validateMultipleFields() {},
+  validateMultipleInputs() {},
 
   actions: {
 
@@ -139,8 +139,8 @@ export default Component.extend({
       this.onBlur(value);
     },
 
-    validateMultipleFields(values = [], isFormValidation = false) {
-      this.set('multipleFieldsValues', values);
+    validateMultipleInputs(values = [], isFormValidation = false) {
+      this.set('multipleInputsValue', values);
       values.some(value => {
         this.validate(value, isFormValidation);
         return this.state === FIELD_STATE.ERROR;
