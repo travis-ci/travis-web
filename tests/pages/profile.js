@@ -308,7 +308,7 @@ export default create({
       scope: '[data-test-edit-billing-address]'
     },
 
-    billingEmails: collection('[data-test-email-input]', {
+    billingEmails: collection('[data-test-multiple-input-field]', {
       fillEmail: fillable(''),
     }),
 

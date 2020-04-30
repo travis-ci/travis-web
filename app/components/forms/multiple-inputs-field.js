@@ -51,14 +51,16 @@ export default Component.extend({
       this.set('fields', fields);
     },
 
-    removeInput(inputIndex) {
+    removeInput(inputIndex, e) {
+      e.preventDefault();
       const filteredFields = this.fields.filter((_, index) => index !== inputIndex);
       const values = filteredFields.map(input => input.value);
       this.handleValidation(values);
       this.set('fields', filteredFields);
     },
 
-    addInput() {
+    addInput(e) {
+      e.preventDefault();
       this.set('fields', [...this.fields, { value: '' }]);
     },
   }

@@ -107,10 +107,10 @@ export const EPS_TRIGGER = '.ember-power-select-trigger';
 export const EPS_OPTION = '.ember-power-select-option';
 
 // billing selectors
-export const BILLING_INFO_ADD_EMAIL = '[data-test-add-email]';
-export const BILLING_INFO_EMAIL_INPUT = '[data-test-email-input]';
+export const BILLING_INFO_ADD_EMAIL = '[data-test-add-input]';
+export const BILLING_INFO_EMAIL_INPUT = '[data-test-multiple-input-field]';
 
-export const BILLING_INFO_FIRST_EMAIL_INPUT = '[data-test-email-input]:nth-child(1)';
-export const BILLING_INFO_SECOND_EMAIL_INPUT = '[data-test-email-input]:nth-child(2)';
-export const BILLING_INFO_THIRD_EMAIL_INPUT = '[data-test-email-input]:nth-child(3)';
-export const BILLING_INFO_FOURTH_EMAIL_INPUT = '[data-test-email-input]:nth-child(4)';
+export const BILLING_INFO_FIRST_EMAIL_INPUT = '[data-test-multiple-input-field]:nth-child(1)';
+export const BILLING_INFO_SECOND_EMAIL_INPUT = '[data-test-multiple-input-field]:nth-child(2)';
+export const BILLING_INFO_THIRD_EMAIL_INPUT = '[data-test-multiple-input-field]:nth-child(3)';
+export const BILLING_INFO_FOURTH_EMAIL_INPUT = '[data-test-multiple-input-field]:nth-child(4)';

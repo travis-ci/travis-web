@@ -952,11 +952,12 @@ module('Acceptance | profile/billing', function (hooks) {
       .fillIn('firstname', 'John')
       .fillIn('lastname', 'Doe')
       .fillIn('companyName', 'Travis')
-      .fillIn('email', 'john@doe.com')
       .fillIn('address', '15 Olalubi street')
       .fillIn('city', 'Berlin')
       .fillIn('zip', '353564')
       .fillIn('vat', '356463');
+
+    await profilePage.billing.billingEmails.objectAt(0).fillEmail('john@doe.com');
 
     await billingForm.proceedPayment.click();
 
@@ -1086,10 +1087,11 @@ module('Acceptance | profile/billing', function (hooks) {
       .fillIn('firstname', 'John')
       .fillIn('lastname', 'Doe')
       .fillIn('companyName', 'Travis')
-      .fillIn('email', 'john@doe.com')
       .fillIn('address', '15 Olalubi street')
       .fillIn('city', 'Berlin')
       .fillIn('zip', '353564');
+
+    await profilePage.billing.billingEmails.objectAt(0).fillEmail('joe@jane.com');
 
     await billingForm.proceedPayment.click();
 
@@ -1133,11 +1135,11 @@ module('Acceptance | profile/billing', function (hooks) {
       .fillIn('firstname', 'John')
       .fillIn('lastname', 'Doe')
       .fillIn('companyName', 'Travis')
-      .fillIn('email', 'john@doe.com')
       .fillIn('address', '15 Olalubi street')
       .fillIn('city', 'Berlin')
       .fillIn('zip', '353564');
 
+    await profilePage.billing.billingEmails.objectAt(0).fillEmail('joe@jane.com');
     await billingForm.proceedPayment.click();
 
     const coupon = this.coupons[2];
@@ -1179,11 +1181,11 @@ module('Acceptance | profile/billing', function (hooks) {
       .fillIn('firstname', 'John')
       .fillIn('lastname', 'Doe')
       .fillIn('companyName', 'Travis CI')
-      .fillIn('email', 'john@doe.com')
       .fillIn('address', '15 Olalubi street')
       .fillIn('city', 'Berlin')
       .fillIn('zip', '353564');
 
+    await profilePage.billing.billingEmails.objectAt(0).fillEmail('joe@jane.com');
     await billingForm.proceedPayment.click();
 
     const coupon = this.coupons[0];
@@ -1228,10 +1230,11 @@ module('Acceptance | profile/billing', function (hooks) {
       .fillIn('firstname', 'John')
       .fillIn('lastname', 'Doe')
       .fillIn('companyName', 'Travis CI')
-      .fillIn('email', 'john@doe.com')
       .fillIn('address', '15 Olalubi street')
       .fillIn('city', 'Berlin')
       .fillIn('zip', '353564');
+
+    await profilePage.billing.billingEmails.objectAt(0).fillEmail('joe@jane.com');
 
     await billingForm.proceedPayment.click();
     await billingCouponForm.fillIn('couponId', 'fake_id');
@@ -1275,11 +1278,12 @@ module('Acceptance | profile/billing', function (hooks) {
       .fillIn('firstname', 'John')
       .fillIn('lastname', 'Doe')
       .fillIn('companyName', 'Travis')
-      .fillIn('email', 'john@doe.com')
       .fillIn('address', '15 Olalubi street')
       .fillIn('city', 'Berlin')
       .fillIn('zip', '353564')
       .fillIn('vat', '356463');
+
+    await profilePage.billing.billingEmails.objectAt(0).fillEmail('john@doe.com');
 
     await billingForm.proceedPayment.click();
 
@@ -1342,11 +1346,12 @@ module('Acceptance | profile/billing', function (hooks) {
       .fillIn('firstname', 'John')
       .fillIn('lastname', 'Doe')
       .fillIn('companyName', 'Travis')
-      .fillIn('email', 'john@doe.com')
       .fillIn('address', '15 Olalubi street')
       .fillIn('city', 'Berlin')
       .fillIn('zip', '353564')
       .fillIn('vat', '356463');
+
+    await profilePage.billing.billingEmails.objectAt(0).fillEmail('john@doe.com');
 
     await billingForm.proceedPayment.click();
 
