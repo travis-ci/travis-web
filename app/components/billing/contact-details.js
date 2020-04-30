@@ -10,7 +10,7 @@ export default Component.extend({
   }),
 
   actions: {
-    updateValues(values) {
+    updateEmails(values) {
       this.info.set('billingEmail', values.join(','));
     },
   }

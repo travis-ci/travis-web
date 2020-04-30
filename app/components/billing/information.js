@@ -5,7 +5,7 @@ export default Component.extend({
   countries,
 
   actions: {
-    updateValues(values) {
+    updateEmails(values) {
       this.newSubscription.billingInfo.set('billingEmail', values.join(','));
     },
   }

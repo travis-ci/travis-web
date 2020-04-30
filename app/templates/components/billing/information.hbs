@@ -56,7 +56,7 @@
           @initialValue={{this.newSubscription.billingInfo.billingEmail}}
           as |Field|
         >
-          <Field.multipleInputsField @updateValues={{action 'updateValues'}}/>
+          <Field.multipleInputs @updateValues={{action 'updateEmails'}}/>
         </form.field>
       </div>
       <h3 data-test-billing-details-title='true'>
