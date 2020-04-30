@@ -139,10 +139,10 @@ export default Component.extend({
       this.onBlur(value);
     },
 
-    validateMultipleFields(values = []) {
+    validateMultipleFields(values = [], isFormValidation = false) {
       this.set('multipleFieldsValues', values);
       values.some(value => {
-        this.validate(value);
+        this.validate(value, isFormValidation);
         return this.state === FIELD_STATE.ERROR;
       });
     },
