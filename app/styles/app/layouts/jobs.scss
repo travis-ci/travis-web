@@ -147,6 +147,9 @@
 .job-os {
   position: relative;
   pointer-events: none;
+  overflow: hidden;
+  min-width: 25px;
+  text-transform: capitalize;
 
   .icon {
     width: 18px;
@@ -154,15 +157,15 @@
   }
 
   @media #{$medium-up} {
-    margin-left: 10px;
     padding: 0.3em 0.5em 0.5em 0.5em;
     pointer-events: initial;
+    flex-basis: 6rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 
     .icon {
       padding-left: 0;
-      text-indent: 999%;
-      white-space: nowrap;
-      overflow: hidden;
     }
   }
 
@@ -175,7 +178,7 @@
   overflow: hidden;
 
   @media #{$medium-up} {
-    flex: 1 0 40%;
+    flex: 1 1 40%;
     position: relative;
     padding: 0.3em 0.5em 0.5em 0.7em;
     align-self: flex-start;
@@ -185,7 +188,8 @@
 
     &:after {
       @include fadeOut(right, -90deg, white);
-      top: -1px;
+      bottom: 2px;
+      height: auto;
     }
   }
 }
@@ -194,7 +198,7 @@
   overflow: hidden;
 
   @media #{$medium-up} {
-    flex: 1 0 20%;
+    flex: 1 2 15%;
     position: relative;
     padding: 0.3em 0.5em 0.5em 0.7em;
     align-self: flex-start;
@@ -204,8 +208,8 @@
 
     &:after {
       @include fadeOut(right, -90deg, white);
-
-      top: -1px;
+      bottom: 2px;
+      height: auto;
     }
   }
 }
@@ -227,18 +231,17 @@
 
 .job-env {
   @media #{$medium-up} {
-    flex: 1 0 30%;
+    flex: 2 1 25%;
     position: relative;
-    max-width: 23em;
-    margin-left: -1em;
     padding: 0.3em 0.5em 0.5em 1.2em;
     align-self: flex-start;
     white-space: nowrap;
     overflow: hidden;
-    margin-right: 20px;
 
     &:after {
       @include fadeOut(right, -90deg, white);
+      bottom: 2px;
+      height: auto;
     }
 
     &:hover {
@@ -249,33 +252,8 @@
     }
   }
 
-  @media #{$xlarge-up} {
-    flex: 2 0 20em;
-    max-width: 39em;
-  }
-
-  @media #{$xxlarge-up} {
-    max-width: 48em;
-  }
-
   &.is-empty {
     opacity: 0.5;
-  }
-}
-
-.centered .jobs:not(.stage) {
-  @media #{$xlarge-up} {
-    .job-name {
-      flex: 0 0 42em;
-    }
-
-    .job-env {
-      flex: 0 0 21.5em;
-    }
-
-    .job-lang {
-      flex: 0 0 21.5em;
-    }
   }
 }
 
