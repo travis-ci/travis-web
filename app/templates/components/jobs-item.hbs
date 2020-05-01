@@ -15,8 +15,11 @@
     </span>
   </div>
   <div class="job-os {{this.os}}">
-    <EmberTooltip @text={{this.job.config.content.os}} />
-    <SvgImage @name={{osIcon}} @class="icon" />
+    <EmberTooltip @text='{{this.os}} {{this.osVersion}}' />
+    <SvgImage @name={{this.osIcon}} @class="icon" />
+    <span class="label-align" aria-label="OS Distribution / Version">
+      {{this.osVersion}}
+    </span>
   </div>
   {{#if this.name}}
     <div class="job-name">

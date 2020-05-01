@@ -25,6 +25,7 @@ module('Integration | Component | jobs item', function (hooks) {
       },
       duration: 100,
       startedAt,
+      os: 'linux',
     };
     this.job = job;
     await render(hbs`{{jobs-item job=job}}`);
