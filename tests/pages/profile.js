@@ -308,6 +308,10 @@ export default create({
       scope: '[data-test-edit-billing-address]'
     },
 
+    billingEmails: collection('[data-test-multiple-input-field]', {
+      fillEmail: fillable(''),
+    }),
+
     editContactAddressForm: {
       scope: '[data-test-edit-contact-address-form]',
       isPresent: isPresent(),

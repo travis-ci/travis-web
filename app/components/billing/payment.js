@@ -22,7 +22,11 @@ export default Component.extend({
   firstName: reads('newSubscription.billingInfo.firstName'),
   lastName: reads('newSubscription.billingInfo.lastName'),
   company: reads('newSubscription.billingInfo.company'),
-  email: reads('newSubscription.billingInfo.billingEmail'),
+  billingEmail: reads('newSubscription.billingInfo.billingEmail'),
+  billingEmails: computed('billingEmail', function () {
+    return (this.billingEmail || '').split(',');
+  }),
+
   address: reads('newSubscription.billingInfo.address'),
   city: reads('newSubscription.billingInfo.city'),
   country: reads('newSubscription.billingInfo.country'),
