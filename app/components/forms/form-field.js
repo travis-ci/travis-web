@@ -123,7 +123,13 @@ export default Component.extend({
   onFocus() {},
   onChange() {},
   onKeyUp() {},
-  validateMultipleInputs() {},
+  validateMultipleInputs(values = [''], isFormValidation = false) {
+    this.set('multipleInputsValue', values);
+    values.some(value => {
+      this.validate(value, isFormValidation);
+      return this.state === FIELD_STATE.ERROR;
+    });
+  },
 
   actions: {
 
@@ -139,12 +145,8 @@ export default Component.extend({
       this.onBlur(value);
     },
 
-    validateMultipleInputs(values = [], isFormValidation = false) {
-      this.set('multipleInputsValue', values);
-      values.some(value => {
-        this.validate(value, isFormValidation);
-        return this.state === FIELD_STATE.ERROR;
-      });
+    validateMultipleInputs(values = [''], isFormValidation = false) {
+      this.validateMultipleInputs(values, isFormValidation);
     },
 
     handleSelectBlur(publicAPI) {

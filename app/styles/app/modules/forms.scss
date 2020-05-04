@@ -81,6 +81,11 @@ textarea {
   &__add-input-button {
     padding-right: 3px;
     padding-left: 10px;
+    outline: none;
+  }
+
+  &__remove-input-button {
+    outline: none;
   }
 }
 
