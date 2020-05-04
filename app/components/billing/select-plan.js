@@ -34,7 +34,8 @@ export default Component.extend({
     if (this.submit.perform) {
       yield this.submit.perform();
     } else {
-      const selectedPlan = this.store.createRecord('plan', { ...this.selectedPlan });
+      const { store } = this;
+      const selectedPlan = store.peekRecord('plan', this.selectedPlan.id) || store.createRecord('plan', { ...this.selectedPlan });
       this.newSubscription.set('plan', selectedPlan);
       this.submit();
     }

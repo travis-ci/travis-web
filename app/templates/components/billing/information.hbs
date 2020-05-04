@@ -1,5 +1,5 @@
 <div class='billing-information-form'>
-  <Billing::SelectedPlan 
+  <Billing::SelectedPlan
     @selectedPlan={{this.newSubscription.plan}} 
     @goToFirstStep={{action this.goToFirstStep}}
   />
@@ -34,30 +34,30 @@
           </form.field>
         </div>
       </div>
-      <div class='flex flex--col flex-md-row'>
-        <div class='form-elem full-width inline-form-elem'>
-          <form.field
-            @label='Company Name'
-            @value={{this.newSubscription.billingInfo.company}}
-            @showValidationStatusIcons={{false}}
-            @onChange={{action (mut this.newSubscription.billingInfo.company)}} as |Field|
-          >
-            <Field.input @name='companyName'/>
-          </form.field>
-        </div>
-        <div class='full-width'>
-          <form.field
-            @label='Billing Email Address'
-            @value={{this.newSubscription.billingInfo.billingEmail}}
-            @required={{true}}
-            @showRequiredMark={{true}}
-            @validator={{form-validator form.validators.email}}
-            @showValidationStatusIcons={{false}}
-            @onChange={{action (mut this.newSubscription.billingInfo.billingEmail)}} as |Field|
-          >
-            <Field.input @name='email'/>
-          </form.field>
-        </div>
+      <div class='form-elem billing-optional-field'>
+        <form.field
+          @label='Company Name'
+          @value={{this.newSubscription.billingInfo.company}}
+          @showValidationStatusIcons={{false}}
+          @onChange={{action (mut this.newSubscription.billingInfo.company)}} as |Field|
+        >
+          <Field.input @name='companyName'/>
+        </form.field>
+      </div>
+      <div data-test-email-inputs-wrapper="true">
+        <form.field
+          @label='Billing Email Address'
+          @isMultipleInputsField={{true}}
+          @disableFrame={{true}}
+          @required={{true}}
+          @showRequiredMark={{true}}
+          @showValidationStatusIcons={{false}}
+          @validator={{form-validator form.validators.email}}
+          @initialValue={{this.newSubscription.billingInfo.billingEmail}}
+          as |Field|
+        >
+          <Field.multipleInputs @updateValues={{action 'updateEmails'}}/>
+        </form.field>
       </div>
       <h3 data-test-billing-details-title='true'>
         Billing address

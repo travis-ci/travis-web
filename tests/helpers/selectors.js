@@ -105,3 +105,12 @@ export const SALES_CONTACT_IFRAME = '[data-test-sales-contact-iframe]';
 // ember-power-select
 export const EPS_TRIGGER = '.ember-power-select-trigger';
 export const EPS_OPTION = '.ember-power-select-option';
+
+// billing selectors
+export const BILLING_INFO_ADD_EMAIL = '[data-test-add-input]';
+export const BILLING_INFO_EMAIL_INPUT = '[data-test-multiple-input-field]';
+
+export const BILLING_INFO_FIRST_EMAIL_INPUT = '[data-test-multiple-input-field]:nth-child(1)';
+export const BILLING_INFO_SECOND_EMAIL_INPUT = '[data-test-multiple-input-field]:nth-child(2)';
+export const BILLING_INFO_THIRD_EMAIL_INPUT = '[data-test-multiple-input-field]:nth-child(3)';
+export const BILLING_INFO_FOURTH_EMAIL_INPUT = '[data-test-multiple-input-field]:nth-child(4)';

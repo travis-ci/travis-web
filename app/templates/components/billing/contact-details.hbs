@@ -37,34 +37,35 @@
             </form.field>
           </div>
         </div>
-        <div class='flex flex--col flex-md-row'>
-          <div class="form-elem inline-form-elem">
-            <form.field
-              @label="Company"
-              @value={{this.info.company}}
-              @required={{false}}
-              @validateOnField={{false}}
-              @showValidationStatusIcons={{false}}
-              @onChange={{action (mut this.info.company)}}
-              as |field|
-            >
-              <field.input name="company" placeholder="Company" />
-            </form.field>
-          </div>
-          <div class="form-elem">
-            <form.field
-              @label="Email"
-              @value={{this.info.billingEmail}}
-              @required={{true}}
-              @validateOnField={{false}}
-              @showValidationStatusIcons={{false}}
-              @onChange={{action (mut this.info.billingEmail)}}
-              as |field|
-            >
-              <field.input name="billingEmail" placeholder="Email" />
-            </form.field>
-          </div>
+        <div data-test-email-inputs-wrapper="true">
+          <form.field
+            @label='Billing Email Address'
+            @isMultipleInputsField={{true}}
+            @disableFrame={{true}}
+            @required={{true}}
+            @showRequiredMark={{true}}
+            @showValidationStatusIcons={{false}}
+            @validator={{form-validator form.validators.email}}
+            @initialValue={{this.info.billingEmail}}
+            as |Field|
+          >
+            <Field.multipleInputs @updateValues={{action 'updateEmails'}}/>
+          </form.field>
         </div>
+        <div class='form-elem billing-optional-field mt-3'>
+          <form.field
+            @label="Company"
+            @value={{this.info.company}}
+            @required={{false}}
+            @validateOnField={{false}}
+            @showValidationStatusIcons={{false}}
+            @onChange={{action (mut this.info.company)}}
+            as |field|
+          >
+            <field.input name="company" placeholder="Company" />
+          </form.field>
+        </div>
+
         <div class="form-elem">
           {{#if this.editContact.isRunning}}
             <LoadingIndicator />
@@ -86,21 +87,23 @@
   {{else}}
     <div data-test-user-details='true' class="flex flex--wrap">
       {{#if (or this.info.firstName this.info.lastName)}}
-        <section class="flex--col-3">
+        <section class="flex--one">
           <h4>contact name</h4>
           <p>{{this.info.firstName}} {{this.info.lastName}}</p>
         </section>
       {{/if}}
       {{#if this.info.company}}
-        <section class="flex--col-3">
+        <section class="flex--one">
           <h4>company name</h4>
           <p>{{this.info.company}}</p>
         </section>
       {{/if}}
       {{#if this.info.billingEmail}}
-        <section class="flex--col-3">
+        <section class="flex--one">
           <h4>billing email</h4>
-          <p>{{this.info.billingEmail}}</p>
+          {{#each this.billingEmails as |email|}}
+            <p>{{email}}</p>
+          {{/each}}
         </section>
       {{/if}}
     </div>

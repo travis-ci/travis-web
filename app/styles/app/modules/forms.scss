@@ -64,6 +64,31 @@ textarea {
   }
 }
 
+.multiple-input {
+  &__add-icon{
+    width: 28px;
+    height: 28px;
+    @include colorSVGFull($oxide-blue, $oxide-blue);
+  }
+
+  &__remove-icon{
+    width: 22px;
+    height: 22px;
+    margin-left: 6px;
+    @include colorSVGFill($brick-red);
+  }
+
+  &__add-input-button {
+    padding-right: 3px;
+    padding-left: 10px;
+    outline: none;
+  }
+
+  &__remove-input-button {
+    outline: none;
+  }
+}
+
 .form-submit {
   display: inline-block;
   border: none;
