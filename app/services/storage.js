@@ -30,9 +30,9 @@ export default Service.extend({
   },
 
   clearBillingData() {
-    this.storage.removeItem('travis.billing_step');
-    this.storage.removeItem('travis.billing_plan');
-    this.storage.removeItem('travis.billing_info');
+    this.removeItem('travis.billing_step');
+    this.removeItem('travis.billing_plan');
+    this.removeItem('travis.billing_info');
   },
 
   parseWithDefault(key, defaultValue) {

@@ -39,6 +39,8 @@ export default Component.extend({
   enableValidationStatusIcons: true,
   enableValidationStatusMessage: true,
   validateOnField: true,
+  isMultipleInputsField: false,
+  multipleInputsValue: null,
 
   validator: null,
   required: equal('validator.kind', presense),
@@ -117,18 +119,34 @@ export default Component.extend({
     this.form.unregisterField(this);
   },
 
+  onBlur() {},
+  onFocus() {},
+  onChange() {},
+  onKeyUp() {},
+  validateMultipleInputs(values = [''], isFormValidation = false) {
+    this.set('multipleInputsValue', values);
+    values.some(value => {
+      this.validate(value, isFormValidation);
+      return this.state === FIELD_STATE.ERROR;
+    });
+  },
+
   actions: {
 
     handleFocus() {
       this.set('isFocused', true);
       this.clearError();
-      this.onFocus && this.onFocus();
+      this.onFocus();
     },
 
     handleBlur(value) {
       this.set('isFocused', false);
       this.validate(value);
-      this.onBlur && this.onBlur(value);
+      this.onBlur(value);
+    },
+
+    validateMultipleInputs(values = [''], isFormValidation = false) {
+      this.validateMultipleInputs(values, isFormValidation);
     },
 
     handleSelectBlur(publicAPI) {
@@ -141,7 +159,7 @@ export default Component.extend({
     },
 
     handleKeyUp(value) {
-      this.onKeyUp && this.onKeyUp(value);
+      this.onKeyUp(value);
     },
 
     handleClear() {

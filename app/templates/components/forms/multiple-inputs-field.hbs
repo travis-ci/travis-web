@@ -1,0 +1,24 @@
+{{#each this.fields as |field index|}}
+  <div class="mb-2 flex full-width multiple-input">
+    <div class="travis-form__field full-width">
+      <input
+        data-test-multiple-input-field
+        class="travis-form__field-input travis-form__field-component"
+        type='text'
+        value={{field.value}}
+        autocomplete="off"
+        {{on 'change' (action 'handleChange' index)}}
+        {{on 'blur' (action 'handleBlur')}}
+      />
+    </div>
+    {{#if (eq index this.lastFieldIndex)}}
+      <button class="multiple-input__add-input-button cursor-pointer" {{on 'click' (action 'addInput')}} data-test-add-input>
+        <SvgImage @name='icon-plus' @class='multiple-input__add-icon' />
+      </button>
+    {{else}}
+      <button class="cursor-pointer multiple-input__remove-input-button" {{on 'click' (action 'removeInput' index)}} >
+        <SvgImage @name='icon-close' @class='multiple-input__remove-icon' />
+      </button>
+    {{/if}}
+  </div>
+{{/each}}
