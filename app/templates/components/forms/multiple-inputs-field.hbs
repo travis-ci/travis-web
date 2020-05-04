@@ -16,7 +16,7 @@
         <SvgImage @name='icon-plus' @class='multiple-input__add-icon' />
       </button>
     {{else}}
-      <button class="cursor-pointer" {{on 'click' (action 'removeInput' index)}} >
+      <button class="cursor-pointer multiple-input__remove-input-button" {{on 'click' (action 'removeInput' index)}} >
         <SvgImage @name='icon-close' @class='multiple-input__remove-icon' />
       </button>
     {{/if}}
