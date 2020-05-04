@@ -48,6 +48,14 @@
                   </span>
                 </button>
               {{/if}}
+              {{#if this.multiVcs.enableGitlabLogin}}
+                <button class="hero-button org multi-vcs" {{action "signIn" "gitlab"}}>
+                  <SvgImage @name="icon-bitbucket" />
+                  <span class="label-align">
+                    Sign up with Gitlab
+                  </span>
+                </button>
+              {{/if}}
             </div>
           {{/if}}
         {{/if}}
