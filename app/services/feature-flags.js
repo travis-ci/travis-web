@@ -29,9 +29,9 @@ export default Service.extend({
   _setEnableGitlabLogin() {
     const { enableGitlabLogin } = window.localStorage;
     if (enableGitlabLogin == 'true')
-      this.features.enable('enable-gitlab-login');
+      this.features.enable('gitlab-login');
     else if (enableGitlabLogin == 'false')
-      this.features.disable('enable-gitlab-login');
+      this.features.disable('gitlab-login');
   },
 
   _setFlagState(flag) {

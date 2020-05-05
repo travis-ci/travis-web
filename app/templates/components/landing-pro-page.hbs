@@ -57,8 +57,8 @@
         <div class="inner">
           <h2 class="text-5xl text-grey-800 mb-8">
             Now test your
-            <SvgImage @name='gitlab-full' @width={{220}} />
-            projects with Travis CI
+            <SvgImage @name='gitlab-logo' @width={{35}} @class='ml-1' />
+            GitLab projects with Travis CI
           </h2>
           <div class="mb-10">
             <p class="text-lg inline-block max-w-2xl">
@@ -67,8 +67,9 @@
             </p>
           </div>
 
-          <LinkTo @route='integration.gitlab' class="hero-button cta-index-page">
-            Learn More
+          {{!-- Until gitlab integration page is added, link to sign in page --}}
+          <LinkTo @route='signin' class="hero-button cta-index-page">
+            Try It Out
           </LinkTo>
         </div>
       </section>
