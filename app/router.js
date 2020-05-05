@@ -31,6 +31,7 @@ Router.map(function () {
   this.route('help');
   this.route('integration', function () {
     this.route('bitbucket');
+    this.route('gitlab');
   });
 
   this.route('account', function () {
