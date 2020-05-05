@@ -32,7 +32,7 @@ export default Component.extend({
         isMultipleInputsField
       } = field;
       if (isMultipleInputsField) {
-        field.validateMultipleInputs(multipleInputsValue, true);
+        field.validateMultipleInputs(multipleInputsValue || [''], true);
       } else {
         field.validate(value, true);
       }
