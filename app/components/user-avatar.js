@@ -46,12 +46,12 @@ export default Component.extend({
     size = size * 2; // high-dpi
     try {
       url = new URL(this.url);
-      url.searchParams.set('v', '3');
-      url.searchParams.set('s', size);
-      return url.href;
     } catch (e) {
       return `${this.url}?v=3&s=${size}`; // relative image address
     }
+    url.searchParams.set('v', '3');
+    url.searchParams.set('s', size);
+    return url.href;
   }),
 
   showSubscriptionCheckmark: computed(
