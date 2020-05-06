@@ -22,7 +22,12 @@ export default Component.extend({
   }),
 
   avatarUrl: computed('url', 'size', function () {
-    let url = new URL(this.url);
+    let url;
+    try {
+      url = new URL(this.url);
+    } catch (e) {
+      return '';
+    }
     let size = this.size;
     if (!size) {
       size = 32;
@@ -33,7 +38,12 @@ export default Component.extend({
   }),
 
   highResAvatarUrl: computed('url', 'size', function () {
-    let url = new URL(this.url);
+    let url;
+    try {
+      url = new URL(this.url);
+    } catch (e) {
+      return '';
+    }
     let size = this.size;
     if (!size) {
       size = 32;
