@@ -60,8 +60,7 @@ export default Service.extend({
     } else {
       let user = this.get('auth.currentUser');
       if (user) {
-        const permissions = yield user.get('_rawPermissions');
-        const repositories = yield Repo.accessibleBy(this.store, permissions.pull);
+        const repositories = yield Repo.accessibleBy(this.store, user.pullPermissions);
         this.set('_repos', repositories);
         this.set('ownedRepos', repositories);
         return repositories;

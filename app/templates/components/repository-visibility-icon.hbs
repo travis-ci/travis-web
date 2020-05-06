@@ -1,7 +1,15 @@
-{{#if this.repository.private}}
-  <SvgImage @name="icon-lock" @alt="Private repository" @class="icon private" />
-  <EmberTooltip @text="Private repository" />
-{{else}}
-  <SvgImage @name="icon-os" @alt="Public repository" @class="icon public" />
-  <EmberTooltip @text="Public repository" />
+{{#if (and (not hideShared) this.repository.shared)}}
+  <span>
+    <SvgImage @name="icon-shared" @alt="Shared repository" @class="icon shared" />
+    <EmberTooltip @text="Shared repository" />
+  </span>
 {{/if}}
+<span>
+  {{#if this.repository.private}}
+    <SvgImage @name="icon-lock" @alt="Private repository" @class="icon private" />
+    <EmberTooltip @text="Private repository" />
+  {{else}}
+    <SvgImage @name="icon-os" @alt="Public repository" @class="icon public" />
+    <EmberTooltip @text="Public repository" />
+  {{/if}}
+</span>

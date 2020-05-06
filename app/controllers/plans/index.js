@@ -1,19 +1,24 @@
 import Controller from '@ember/controller';
 import config from 'travis/config/environment';
-import { filterBy } from '@ember/object/computed';
+import { filterBy, equal } from '@ember/object/computed';
 import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
 
 const { plans } = config;
 
-const referralSourceName = 'plans-page';
+const ANCHOR = {
+  ENTERPRISE_SECTION: 'enterprise-section',
+};
 
 export default Controller.extend({
+  queryParams: ['anchor'],
+
   auth: service(),
   metrics: service(),
 
   config,
-  referralSourceName,
+  anchor: '',
+  scrollToEnterpriseSection: equal('anchor', ANCHOR.ENTERPRISE_SECTION),
   billingUrl: `${config.billingEndpoint}/account/subscription`,
   buildMatrixUrl: config.urls.buildMatrix,
   enterpriseUrl: config.urls.enterprise,

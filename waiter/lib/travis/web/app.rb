@@ -184,6 +184,12 @@ class Travis::Web::App
 
       config['featureFlags'] ||= {}
 
+      if options[:enable_feature_flags]
+        options[:enable_feature_flags].split(',').each do |flag|
+          config['featureFlags'][flag] = true
+        end
+      end
+
       if options[:pro]
         config['pro'] = true
         config['featureFlags']['pro-version'] = true
@@ -223,6 +229,13 @@ class Travis::Web::App
       pusher['channelPrefix'] = options[:pusher_channel_prefix] if options[:pusher_channel_prefix]
       pusher['encrypted'] = true
       config['pusher'] = pusher
+
+      if options[:stripe_publishable_key]
+        stripe = {}
+        stripe['publishableKey'] = options[:stripe_publishable_key]
+        stripe['lazyLoad'] = true
+        config['stripe'] = stripe
+      end
 
       config['gaCode'] = options[:ga_code] if options[:ga_code]
 

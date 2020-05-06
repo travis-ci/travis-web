@@ -23,7 +23,7 @@ const { authEndpoint, apiEndpoint } = config;
 
 // Collects the list of includes from all requests
 // and ensures the future fetches don't override previously loaded includes
-let includes = [];
+let includes = ['owner.installation', 'user.emails'];
 
 const afterSignOutCallbacks = [];
 
@@ -47,6 +47,8 @@ export default Service.extend({
   sessionStorage: service(),
   features: service(),
   metrics: service(),
+  utm: service(),
+  permissionsService: service('permissions'),
 
   state: STATE.SIGNED_OUT,
 
@@ -155,6 +157,7 @@ export default Service.extend({
     try {
       const promise = this.storage.user ? this.handleNewLogin() : this.reloadCurrentUser();
       return promise
+        .then(() => this.permissionsService.fetchPermissions.perform())
         .then(() => {
           const { currentUser } = this;
           this.set('state', STATE.SIGNED_IN);
@@ -197,7 +200,7 @@ export default Service.extend({
   },
 
   reloadUser(userRecord, include = []) {
-    includes = includes.concat(include, ['owner.installation']).uniq();
+    includes = includes.concat(include).uniq();
     return this.fetchUser.perform(userRecord);
   },
 
@@ -226,20 +229,21 @@ export default Service.extend({
     const {
       id,
       name,
-      email,
+      emails,
+      email: userEmail,
       firstLoggedInAt: createdAt,
       secureUserHash: userHash,
       vcsProvider = {}
     } = this.currentUser;
+    const email = userEmail || emails && emails.firstObject;
     this.intercom.set('user', { id, name, email, createdAt, userHash, provider: vcsProvider.name });
   },
 
   reportNewUser() {
     const { currentUser, metrics } = this;
-    const { login, recentlySignedUp, vcsProvider } = currentUser;
-    const signupUsers = this.storage.signupUsers || [];
+    const { recentlySignedUp, vcsProvider } = currentUser;
 
-    if (recentlySignedUp && recentlySignedUp === true && !signupUsers.includes(login)) {
+    if (recentlySignedUp) {
       metrics.trackEvent({
         event: 'first_authentication'
       });
@@ -249,7 +253,10 @@ export default Service.extend({
           authProvider: vcsProvider.name
         });
       }
-      this.storage.signupUsers = signupUsers.concat([login]);
+      if (this.utm.hasData) {
+        currentUser.set('utmParams', this.utm.all);
+        currentUser.save();
+      }
     }
   },
 

@@ -179,6 +179,9 @@
             {{format-time this.item.finishedAt}}
           </time>
         </li>
+        {{#if this.item.repo.shared}}
+          <SvgImage @name="icon-shared" @alt="Shared repository" @class="icon shared" /> Shared repository
+        {{/if}}
       {{/if}}
     </ul>
   </div>
@@ -195,7 +198,7 @@
   <div class="job-container">
     <div class="job-detail-container">
       <div class="detail-job-os {{this.os}}">
-        <EmberTooltip @text={{this.os}} />
+        <EmberTooltip @text='{{this.os}} {{this.osVersion}}' />
         <SvgImage @name={{osIcon}} @class="icon" />
       </div>
       {{#if this.name}}

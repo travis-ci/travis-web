@@ -37,6 +37,7 @@ const Repo = VcsEntity.extend({
   name: attr('string'),
   vcsName: attr('string'), // name of repository normalized by provider
   starred: attr('boolean'),
+  shared: attr('boolean'),
   active_on_org: attr('boolean'),
   emailSubscribed: attr('boolean'),
   migrationStatus: attr('string'),
@@ -79,6 +80,11 @@ const Repo = VcsEntity.extend({
 
       return permissions.includes(id);
     }
+  }),
+
+  // slug built from normalized (by provider) owner and repo name
+  vcsSlug: computed('ownerName', 'vcsName', function () {
+    return `${this.ownerName}/${this.vcsName}`;
   }),
 
   formattedSlug: computed('owner.login', 'name', function () {

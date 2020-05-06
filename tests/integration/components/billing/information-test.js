@@ -1,8 +1,13 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import profilePage from 'travis/tests/pages/profile';
+import {
+  EPS_TRIGGER,
+  BILLING_INFO_ADD_EMAIL,
+  BILLING_INFO_EMAIL_INPUT
+} from 'travis/tests/helpers/selectors';
 
 module('Integration | Component | billing-information', function (hooks) {
   setupRenderingTest(hooks);
@@ -73,7 +78,7 @@ module('Integration | Component | billing-information', function (hooks) {
     assert.equal(profilePage.billing.selectedPlanOverview.changePlan.text, 'Change plan');
 
     assert.dom('input').isVisible({ count: 8 });
-    assert.dom('.ember-power-select-trigger').isVisible({ count: 1 });
+    assert.dom(EPS_TRIGGER).isVisible({ count: 1 });
   });
 
   test('it renders billing information form correctly', async function (assert) {
@@ -96,5 +101,24 @@ module('Integration | Component | billing-information', function (hooks) {
     );
 
     await profilePage.billing.billingForm.backToPlans.click();
+  });
+
+  test('it adds multiple email inputs to form', async function (assert) {
+    await render(hbs`
+      <Billing::Information 
+        @displayedPlans={{displayedPlans}} 
+        @showAnnual={{showAnnual}}
+        @newSubscription={{newSubscription}}
+        @next={{action 'next'}}
+        @back={{action 'back'}}
+        @goToFirstStep={{action 'goToFirstStep'}}
+      />`
+    );
+
+    await click(BILLING_INFO_ADD_EMAIL);
+    await click(BILLING_INFO_ADD_EMAIL);
+    await click(BILLING_INFO_ADD_EMAIL);
+
+    assert.dom(BILLING_INFO_EMAIL_INPUT).isVisible({ count: 4 });
   });
 });

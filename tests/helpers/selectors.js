@@ -100,13 +100,17 @@ export const PLANS_THANKS_PAGE_BUTTON = '[data-test-contact-thanks-button]';
 
 // travis/components/sales-contact-form
 export const SALES_CONTACT_FORM_CONTAINER = '[data-test-sales-contact-form-container]';
-export const SALES_CONTACT_FORM_NAME = '[data-test-sales-contact-form-name]';
-export const SALES_CONTACT_FORM_EMAIL = '[data-test-sales-contact-form-email]';
-export const SALES_CONTACT_FORM_SIZE = '[data-test-sales-contact-form-size]';
-export const SALES_CONTACT_FORM_PHONE = '[data-test-sales-contact-form-phone]';
-export const SALES_CONTACT_FORM_MESSAGE = '[data-test-sales-contact-form-message]';
-export const SALES_CONTACT_FORM_SUBMIT = '[data-test-sales-contact-form-submit]';
+export const SALES_CONTACT_IFRAME = '[data-test-sales-contact-iframe]';
 
 // ember-power-select
 export const EPS_TRIGGER = '.ember-power-select-trigger';
 export const EPS_OPTION = '.ember-power-select-option';
+
+// billing selectors
+export const BILLING_INFO_ADD_EMAIL = '[data-test-add-input]';
+export const BILLING_INFO_EMAIL_INPUT = '[data-test-multiple-input-field]';
+
+export const BILLING_INFO_FIRST_EMAIL_INPUT = '[data-test-multiple-input-field]:nth-child(1)';
+export const BILLING_INFO_SECOND_EMAIL_INPUT = '[data-test-multiple-input-field]:nth-child(2)';
+export const BILLING_INFO_THIRD_EMAIL_INPUT = '[data-test-multiple-input-field]:nth-child(3)';
+export const BILLING_INFO_FOURTH_EMAIL_INPUT = '[data-test-multiple-input-field]:nth-child(4)';

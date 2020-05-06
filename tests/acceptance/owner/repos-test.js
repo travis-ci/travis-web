@@ -20,6 +20,7 @@ module('Acceptance | owner repositories', function (hooks) {
     // create active repo
     const firstRepository = this.server.create('repository', {
       slug: 'user-login/repository-name',
+      name: 'repository-name',
       owner: {
         login: user.login
       }
@@ -51,6 +52,7 @@ module('Acceptance | owner repositories', function (hooks) {
     // create active repo
     this.server.create('repository', {
       slug: 'user-login/yet-another-repository-name',
+      name: 'yet-another-repository-name',
       owner: {
         login: user.login
       },

@@ -20,7 +20,10 @@
           class="label-align"
         >
           <span class="repo-title-text">
-            {{this.repoName}}
+            {{this.repo.name}}
+            {{#if this.repo.shared}}
+              <SvgImage @name="icon-shared" @alt="Shared repository" @class="icon shared" />
+            {{/if}}
           </span>
         </LinkTo>
       </h2>

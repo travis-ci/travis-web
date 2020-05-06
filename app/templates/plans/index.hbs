@@ -170,9 +170,12 @@
           </UiKit::Button>
         </UiKit::Box>
       </grid.item>
+      {{#if this.scrollToEnterpriseSection}}
+        <ScrollHere />
+      {{/if}}
     </UiKit::Grid>
   </UiKit::Box>
-  
+
   {{!-- Enterprise section --}}
   <UiKit::Box @tag='section' @margin={{hash bottom=20}} data-test-plans-page-enterprise-section="true">
     <UiKit::Grid  @sm={{2}} @align='center' @gap={{4}} @justify='around' as |grid|>
@@ -241,10 +244,7 @@
         </UiKit::Box>
       </grid.item>
       <grid.item>
-        <SalesContactForm
-          @referralSource={{this.referralSourceName}}
-          @onSuccess={{action 'contactSuccess'}}
-        />
+        <SalesContactForm/>
       </grid.item>
     </UiKit::Grid>
   </UiKit::Box>

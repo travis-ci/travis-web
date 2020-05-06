@@ -8,7 +8,7 @@ module('Integration | Component | build header', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  const repo = { slug: 'travis-ci/travis-web', name: 'travis-web', vcsName: 'travis-web', ownerName: 'travis-ci' };
+  const repo = { slug: 'travis-ci/travis-web', name: 'travis-web', vcsName: 'travis-web', ownerName: 'travis-ci', shared: true };
 
   test('render api build', async function (assert) {
     let commit = {
@@ -47,6 +47,7 @@ module('Integration | Component | build header', function (hooks) {
     assert.dom('.commit-stopwatch').hasAttribute('title', 'Started January 15, 2018 12:28:49');
     assert.dom('.commit-calendar').exists('displays a calendar after the job is passed');
     assert.dom('.commit-calendar').hasAttribute('title', 'Finished January 15, 2018 12:35:49');
+    assert.dom('.shared').exists('displays a shared repository indicator');
   });
 
   test('render push build', async function (assert) {

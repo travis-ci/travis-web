@@ -36,25 +36,15 @@ export default Component.extend({
     }
   }),
 
-  os: computed('job.config.content.os', function () {
-    let os = this.get('job.config.content.os');
-
-    if (os === 'linux' || os === 'linux-ppc64le') {
-      return 'linux';
-    } else if (os === 'osx') {
-      return 'osx';
-    } else if (os === 'windows') {
-      return 'windows';
-    } else {
-      return 'unknown';
-    }
-  }),
+  os: reads('job.os'),
 
   osIcon: computed('os', function () {
     let os = this.os;
 
     if (os === 'linux') {
       return 'icon-linux';
+    } else if (os === 'freebsd') {
+      return 'icon-freebsd';
     } else if (os === 'osx') {
       return 'icon-mac';
     } else if (os === 'windows') {
@@ -64,8 +54,10 @@ export default Component.extend({
     }
   }),
 
+  osVersion: reads('job.osVersion'),
+
   arch: computed('job.config.content.arch', function () {
     let config = this.get('job.config.content');
     return jobConfigArch(config);
-  })
+  }),
 });

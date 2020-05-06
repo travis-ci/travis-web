@@ -22,17 +22,7 @@
       >
         <SvgImage @name={{vcs-icon this.repo.vcsType}} />
       </ExternalLinkTo>
-      <div class="repo-badge inline-block vertical-align">
-        <a
-          id="status-image-popup"
-          title="Latest push build on default branch: {{this.repo.defaultBranch.lastBuild.state}}"
-          name="status-images"
-          class="pointer open-popup"
-          onclick={{action "toggleStatusBadgeModal"}}
-        >
-          <img src={{this.statusImageUrl}} alt="build:{{this.repo.defaultBranch.lastBuild.state}}" />
-        </a>
-      </div>
+      <RepoStatusBadge @repo={{this.repo}} @onClick={{action 'toggleStatusBadgeModal'}} />
     </div>
   </header>
   <main class="repo-main">

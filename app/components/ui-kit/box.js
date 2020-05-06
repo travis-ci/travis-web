@@ -16,6 +16,8 @@ export const COLORS = {
   GREY_DARK: 'grey-dark',
   YELLOW_LIGHTER: 'yellow-lighter',
   YELLOW_LIGHT: 'yellow-light',
+  RED: 'red-300',
+  RED_LIGHT: 'red-90',
 };
 
 const BG_COLORS = {
@@ -37,6 +39,8 @@ const BORDER_COLORS = {
   [COLORS.GREY_LIGHT]: 'grey-150',
   [COLORS.GREY]: 'grey-700',
   [COLORS.GREY_DARK]: 'grey-800',
+  [COLORS.RED]: 'red-300',
+  [COLORS.RED_LIGHT]: 'red-90',
 };
 
 const WIDTHS = {

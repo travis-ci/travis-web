@@ -1,13 +1,19 @@
-<RepositoryVisibilityIcon @repository={{this.repository}} />
+<RepositoryVisibilityIcon @repository={{this.repository}} @hideShared={{true}} />
 <LinkTo
   @route="repo"
   @models={{array this.repository.provider this.repository.ownerName this.repository.vcsName}}
   @query={{this.hash}}
   class="profile-repo"
 >
-  {{this.name}}
+  <span class="profile-repo-name">{{this.name}}</span>
+  {{#if this.repository.shared}}
+    <span>
+      <SvgImage @name="icon-shared" @alt="Shared repository" @class="icon shared" />
+      <EmberTooltip @text="Shared repository" />
+    </span>
+  {{/if}}
 </LinkTo>
-{{#if this.admin}}
+{{#if this.hasSettingsPermission}}
   {{#if this.isNotMatchGithub}}
     <TravisSwitch
       @active={{this.repository.active}}

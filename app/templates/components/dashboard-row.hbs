@@ -1,3 +1,7 @@
+<li
+  class="rows rows--dashboard {{if this.repo.active 'is-active'}}"
+  {{on 'mouseleave' (action this.closeDropup)}}
+>
 <div class="dash-head">
   <button
     class="dash-star {{if this.repo.starred 'is-starred'}}"
@@ -31,6 +35,9 @@
           @title={{this.repo.name}}
         >
           {{this.repo.name}}
+          {{#if this.repo.shared}}
+            <SvgImage @name="icon-shared" @alt="Shared repository" @class="icon shared" />
+          {{/if}}
         </LinkTo>
       </h1>
     </header>
@@ -167,7 +174,7 @@
             There are no builds for this repo yet
           </p>
           {{#if this.isTriggering}}
-            <LoadingIndicator />
+            <LoadingIndicator @inline={{true}}/>
           {{else}}
             <button
               class="button--blue"
@@ -182,3 +189,4 @@
     {{/if}}
   </div>
 </div>
+</li>

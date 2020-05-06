@@ -14,6 +14,11 @@ const VCS_TYPES = {
     REPO: 'BitbucketRepository',
     USER: 'BitbucketUser'
   },
+  GITLAB: {
+    ORG: 'GitlabOrganization',
+    REPO: 'GitlabRepository',
+    USER: 'GitlabUser'
+  },
   GITHUB: {
     ORG: 'GithubOrganization',
     REPO: 'GithubRepository',
@@ -75,6 +80,32 @@ module.exports = deepFreeze({
     },
   },
 
+  gitlab: {
+    vcsTypes: [VCS_TYPES.GITLAB.ORG, VCS_TYPES.GITLAB.REPO, VCS_TYPES.GITLAB.USER],
+    endpoint: 'https://gitlab.com',
+    icon: 'icon-gitlab',
+    name: 'GitLab',
+    urlPrefix: 'gitlab',
+    paths: {
+      branch: '/:owner/:repo/-/tree/:branch',
+      commit: '/:owner/:repo/-/tree/:commit',
+      file: '/:owner/:repo/-/blob/:branch/:file',
+      issue: '/:owner/:repo/-/issues/:issue',
+      profile: '/:owner',
+      repo: '/:owner/:repo',
+      tag: '/:owner/:repo/-/tree/:tag',
+      accessSettings: '/dashboard/groups',
+    },
+    vocabulary: {
+      organization: 'Group',
+      pullRequest: 'Merge Request',
+    },
+    colors: {
+      main: 'red-300',
+      light: 'red-300',
+    },
+  },
+
   github: {
     vcsTypes: [VCS_TYPES.GITHUB.ORG, VCS_TYPES.GITHUB.REPO, VCS_TYPES.GITHUB.USER],
     isDefault: true,
@@ -90,7 +121,7 @@ module.exports = deepFreeze({
       profile: '/:owner',
       repo: '/:owner/:repo',
       tag: '/:owner/:repo/releases/tag/:tag',
-      accessSettings: '/settings/connections/applications/f244293c729d5066cf27',
+      accessSettings: process.env.GITHUB_ORGS_OAUTH_ACCESS_SETTINGS_URL,
     },
     vocabulary: {
       organization: 'Organization',

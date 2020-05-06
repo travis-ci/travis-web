@@ -16,9 +16,8 @@ module('Acceptance | repo settings', function (hooks) {
   hooks.beforeEach(async function () {
     const currentUser = this.server.create('user', {
       name: 'User Name',
-      login: 'user-login',
+      login: 'user-login'
     });
-
     await signInUser(currentUser);
 
     // create organization
@@ -30,8 +29,12 @@ module('Acceptance | repo settings', function (hooks) {
     const repository = this.server.create('repository', {
       name: 'repository-name',
       slug: 'org-login/repository-name',
-      private: true
+      private: true,
+      permissions: {
+        admin: true
+      }
     });
+
     repository.attrs.permissions.create_cron = true;
 
     repository.createSetting({ name: 'builds_only_with_travis_yml', value: true });

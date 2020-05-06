@@ -46,14 +46,15 @@ export default Component.extend({
     }
   }),
 
-  jobsConfig: computed('isJob', 'item.config', 'item.jobs.firstObject.config', function () {
-    let isJob = this.isJob;
-    if (isJob) {
-      return this.get('item.config');
+  job: computed('isJob', 'item', 'item.jobs.firstObject', function () {
+    if (this.isJob) {
+      return this.item;
     } else {
-      return this.get('item.jobs.firstObject.config');
+      return this.get('item.jobs.firstObject');
     }
   }),
+
+  jobsConfig: reads('job.config'),
 
   displayCompare: computed('item.eventType', function () {
     let eventType = this.get('item.eventType');
@@ -125,18 +126,8 @@ export default Component.extend({
     }
   }),
 
-  os: computed('jobsConfig.content.os', function () {
-    let os = this.get('jobsConfig.content.os');
-    if (os === 'linux' || os === 'linux-ppc64le') {
-      return 'linux';
-    } else if (os === 'osx') {
-      return 'osx';
-    } else if (os === 'windows') {
-      return 'windows';
-    } else {
-      return 'unknown';
-    }
-  }),
+  os: reads('job.os'),
+  osVersion: reads('job.osVersion'),
 
   arch: computed('jobsConfig.content.arch', function () {
     let config = this.get('jobsConfig.content');
@@ -147,6 +138,8 @@ export default Component.extend({
     let os = this.os;
     if (os === 'linux') {
       return 'icon-linux';
+    } else if (os === 'freebsd') {
+      return 'icon-freebsd';
     } else if (os === 'osx') {
       return 'icon-mac';
     } else if (os === 'windows') {

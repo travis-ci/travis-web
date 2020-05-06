@@ -37,7 +37,7 @@ module('Acceptance | repo/not found', function (hooks) {
 
     assert.equal(currentURL(), '/non-existent/repository');
     assert.ok(nonExistentRepoPage.showsBarricadeIllustration, 'Shows image for aesthetics');
-    assert.equal(nonExistentRepoPage.errorMessage, 'We couldn\'t find the repository non-existent/repository', 'Shows message that repository was not found');
+    assert.equal(nonExistentRepoPage.errorMessage, 'We couldn\'t display the repository non-existent/repository', 'Shows message that repository was not found');
     assert.ok(nonExistentRepoPage.errorMessageProisHidden, 'does not show .com authenticated message');
   });
 
@@ -48,7 +48,7 @@ module('Acceptance | repo/not found', function (hooks) {
     percySnapshot(assert);
     assert.equal(currentURL(), '/non-existent/repository');
     assert.ok(nonExistentRepoPage.showsBarricadeIllustration, 'Shows image for aesthetics');
-    assert.equal(nonExistentRepoPage.errorMessage, 'We couldn\'t find the repository non-existent/repository', 'Shows message that repository was not found');
+    assert.equal(nonExistentRepoPage.errorMessage, 'We couldn\'t display the repository non-existent/repository', 'Shows message that repository was not found');
     assert.ok(nonExistentRepoPage.errorMessageProUnauthenticated, 'shows .com authenticated message');
   });
 });

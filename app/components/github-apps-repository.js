@@ -12,6 +12,7 @@ import { vcsLinks } from 'travis/services/external-links';
 
 export default Component.extend({
   accounts: service(),
+  permissions: service(),
   tagName: 'li',
   classNames: ['profile-repolist-item'],
   classNameBindings: ['migratable'],
@@ -25,11 +26,9 @@ export default Component.extend({
     return this.user && vcsLinks.accessSettingsUrl(this.user.vcsType, { owner: this.user.login });
   }),
 
-  admin: computed('repository.permissions', function () {
-    let permissions = this.get('repository.permissions');
-    if (permissions) {
-      return permissions.admin;
-    }
+  hasSettingsPermission: computed('permissions.all', 'repository', function () {
+    let repo = this.repository;
+    return this.permissions.hasPushPermission(repo);
   }),
 
   toggleRepositoryTask: task(function* () {

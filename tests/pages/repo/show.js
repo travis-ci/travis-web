@@ -9,7 +9,7 @@ export default create({
   visit: visitable(':organization/:repo'),
 
   statusBadge: {
-    scope: '#status-image-popup',
+    scope: '[data-test-status-image-popup]',
     src: attribute('src', 'img'),
     title: attribute('title'),
   },

@@ -101,13 +101,17 @@ module.exports = function (environment) {
       status: 'https://www.traviscistatus.com/',
       support: 'mailto:support@travis-ci.com',
       terms: 'https://docs.travis-ci.com/legal/terms-of-service/',
+      travisVsJenkins: 'https://travis-ci.com/travisci-vs-jenkins',
       tutorial: 'https://docs.travis-ci.com/user/tutorial/',
       twitter: 'https://twitter.com/travisci',
+      pardotHost: 'https://info.travis-ci.com',
+      pardotForm: '/l/845883/2020-02-03/257j'
     },
     endpoints: {},
     githubApps: false,
     timing: {
       syncingPageRedirectionTime: 5000,
+      utmParametersResetDelay: 1000,
     },
     intervals: {
       updateTimes: 1000,
@@ -191,6 +195,7 @@ module.exports = function (environment) {
     'github-apps': false,
     'enable-assembla-login': false,
     'enable-bitbucket-login': false,
+    'gitlab-login': false,
   };
 
   if (TRAVIS_PRO) {
@@ -330,8 +335,10 @@ module.exports = function (environment) {
     ENV.intervals.branchCreatedSyncDelay = 0;
     ENV.intervals.triggerBuildRequestDelay = 0;
     ENV.intervals.fetchRecordsForPusherUpdatesThrottle = 0;
+    ENV.intervals.syncingPolling = 0;
     ENV.intervals.githubAppsInstallationPolling = 10;
     ENV.timing.syncingPageRedirectionTime = 30;
+    ENV.timing.utmParametersResetDelay = 10;
 
     ENV.pagination.dashboardReposPerPage = 10;
     ENV.pagination.profileReposPerPage = 10;

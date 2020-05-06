@@ -13,6 +13,6 @@ module('Integration | Component | not found', function (hooks) {
     await render(hbs`{{repo-not-found slug=slug}}`);
 
     assert.dom('.barricade').exists('renders the barricade svg');
-    assert.dom('.page-title').hasText('We couldn\'t find the repository some-org/some-repo', 'displays the name of the not found repo');
+    assert.dom('.page-title').hasText('We couldn\'t display the repository some-org/some-repo', 'displays the name of the not found repo');
   });
 });

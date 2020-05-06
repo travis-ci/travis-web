@@ -97,6 +97,15 @@
             </LinkTo>
           </li>
         {{/if}}
+        <li>
+          <ExternalLinkTo
+            data-test-footer-travis-vs-jenkins-link="true"
+            @href={{this.config.urls.travisVsJenkins}}
+            @title="Travis CI vs Jenkins"
+          >
+            Travis CI vs Jenkins
+          </ExternalLinkTo>
+        </li>
       {{/unless}}
     </ul>
   </div>

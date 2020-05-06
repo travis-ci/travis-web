@@ -1,5 +1,7 @@
-import Service from '@ember/service';
-import { isEmpty } from '@ember/utils';
+import { URLSearchParams } from 'url';
+import Service, { inject as service } from '@ember/service';
+import { alias } from '@ember/object/computed';
+import { computed } from '@ember/object';
 
 export const UTM_FIELDS = {
   CAMPAIGN: 'utm_campaign',
@@ -19,22 +21,78 @@ export const SERVICE_UTM_VARS = {
 };
 
 export default Service.extend({
-  campaign: null,
-  content: null,
-  medium: null,
-  source: null,
-  term: null,
+  storage: service(),
+  router: service(),
 
-  capture(queryParams) {
-    let found = false;
+  campaign: alias('storage.utm.campaign'),
+  content: alias('storage.utm.content'),
+  medium: alias('storage.utm.medium'),
+  source: alias('storage.utm.source'),
+  term: alias('storage.utm.term'),
+
+  all: computed(...Object.values(SERVICE_UTM_VARS), function () {
+    return this.peek(UTM_FIELD_NAMES);
+  }),
+
+  existing: computed(...Object.values(SERVICE_UTM_VARS), function () {
+    return this.peek(UTM_FIELD_NAMES, false);
+  }),
+
+  hasData: computed('existing', function () {
+    return Object.keys(this.existing).length > 0;
+  }),
+
+  searchParams: computed('router.currentURL', function () {
+    let search = '';
     try {
-      UTM_FIELD_NAMES.forEach(field => {
-        if (queryParams && !isEmpty(queryParams[field])) {
-          found = true;
-          this.set(SERVICE_UTM_VARS[field], queryParams[field]);
-        }
-      });
+      search = this.router.location.getURL().split('?')[1] || '';
     } catch (e) {}
-    return found;
+    return new URLSearchParams(search);
+  }),
+
+  hasParamsInUrl: computed('searchParams', function () {
+    return UTM_FIELD_NAMES.any(field => this.searchParams.has(field));
+  }),
+
+  peek(fields, includeEmpty = true) {
+    return fields.reduce((utmData, field) => {
+      const value = this.get(SERVICE_UTM_VARS[field]);
+      if (value || includeEmpty) {
+        utmData[field] = value;
+      }
+      return utmData;
+    }, new QueryParamsHash());
+  },
+
+  capture(forceClear = false) {
+    if (this.hasParamsInUrl) {
+      UTM_FIELD_NAMES.forEach(field => {
+        const value = this.searchParams.get(field);
+        this.set(SERVICE_UTM_VARS[field], value);
+      });
+      if (forceClear) this.removeFromUrl();
+    }
+  },
+
+  removeFromStorage() {
+    const [campaign, content, medium, source, term] = new Array(5).fill(null);
+    this.setProperties({ campaign, content, medium, source, term });
+  },
+
+  removeFromUrl() {
+    const { searchParams, hasParamsInUrl, router } = this;
+
+    if (hasParamsInUrl) {
+      UTM_FIELD_NAMES.forEach(field => searchParams.delete(field));
+      const { queryParams } = router.recognize(`/?${searchParams.toString()}`) || {};
+      router.transitionTo({ queryParams });
+    }
   }
+
 });
+
+class QueryParamsHash extends Object {
+  toString() {
+    return Object.entries(this).map(([key, value]) => `${key}=${value}`).join('&');
+  }
+}

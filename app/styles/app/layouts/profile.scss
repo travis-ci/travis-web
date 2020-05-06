@@ -218,13 +218,21 @@ $profile-breakpoint: 600px;
 }
 
 .profile-repo {
+  display: flex;
   position: relative;
   flex: 1;
   padding: 0.25em 0.5em 0.3em;
-  white-space: nowrap;
-  overflow: hidden;
   border-radius: 2px;
   margin-right: 1rem;
+
+  .profile-repo-name {
+    height: 21px;
+    overflow: hidden;
+  }
+
+  .shared {
+    margin-left: 8px;
+  }
 
   .sync-spinner {
     vertical-align: top;
@@ -616,10 +624,14 @@ section.invoices {
     margin-top: 5px;
   }
 
-  td a {
+  td .invoice-link {
     display: inline-block;
     width: 54px;
     text-align: center;
+  }
+
+  .disabled {
+    cursor: not-allowed;
   }
 
   td,
