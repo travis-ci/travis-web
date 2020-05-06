@@ -1,5 +1,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
+import URL from 'url';
 
 export default Component.extend({
   tagName: 'span',
@@ -21,32 +22,26 @@ export default Component.extend({
   }),
 
   avatarUrl: computed('url', 'size', function () {
-    let url = this.url;
+    let url = new URL(this.url);
     let size = this.size;
     if (!size) {
       size = 32;
     }
-    const sizeParam = `&s=${size}`;
-    if (url.includes('?v=3')) {
-      return `${url}${sizeParam}`;
-    } else {
-      return `${url}?v=3&s=${size}`;
-    }
+    url.searchParams.set('v', '3');
+    url.searchParams.set('s', size);
+    return url.href;
   }),
 
   highResAvatarUrl: computed('url', 'size', function () {
-    let url = this.url;
+    let url = new URL(this.url);
     let size = this.size;
     if (!size) {
       size = 32;
     }
     size = size * 2; // high-dpi
-    const sizeParam = `&s=${size}`;
-    if (url.includes('?v=3')) {
-      return `${url}${sizeParam}`;
-    } else {
-      return `${url}?v=3&s=${size}`;
-    }
+    url.searchParams.set('v', '3');
+    url.searchParams.set('s', size);
+    return url.href;
   }),
 
   showSubscriptionCheckmark: computed(
