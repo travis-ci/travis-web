@@ -23,14 +23,14 @@ export default Component.extend({
 
   avatarUrl: computed('url', 'size', function () {
     let url;
-    try {
-      url = new URL(this.url);
-    } catch (e) {
-      return '';
-    }
     let size = this.size;
     if (!size) {
       size = 32;
+    }
+    try {
+      url = new URL(this.url);
+    } catch (e) {
+      return `${this.url}?v=3&s=${size}`; // relative image address
     }
     url.searchParams.set('v', '3');
     url.searchParams.set('s', size);
@@ -39,19 +39,19 @@ export default Component.extend({
 
   highResAvatarUrl: computed('url', 'size', function () {
     let url;
-    try {
-      url = new URL(this.url);
-    } catch (e) {
-      return '';
-    }
     let size = this.size;
     if (!size) {
       size = 32;
     }
     size = size * 2; // high-dpi
-    url.searchParams.set('v', '3');
-    url.searchParams.set('s', size);
-    return url.href;
+    try {
+      url = new URL(this.url);
+      url.searchParams.set('v', '3');
+      url.searchParams.set('s', size);
+      return url.href;
+    } catch (e) {
+      return `${this.url}?v=3&s=${size}`; // relative image address
+    }
   }),
 
   showSubscriptionCheckmark: computed(
