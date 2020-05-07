@@ -10,6 +10,7 @@ export default Component.extend({
   value: '',
   placeholder: '',
   autocomplete: 'off',
+  autofocus: false,
 
   onChange() {},
   onFocus() {},
