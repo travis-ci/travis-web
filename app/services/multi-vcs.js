@@ -41,9 +41,9 @@ export default Service.extend({
     }
   }),
 
-  currentProviderUrlPrefix: reads('currentProviderConfig.urlPrefix'),
+  currentProvider: reads('currentProviderConfig.urlPrefix'),
 
-  userProviderIsBeta: computed('currentProviderUrlPrefix', function () {
-    return this.isProviderBeta(this.currentProviderUrlPrefix);
+  currentProviderIsBeta: computed('currentProvider', function () {
+    return this.isProviderBeta(this.currentProvider);
   }),
 });

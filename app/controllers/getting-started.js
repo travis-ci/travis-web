@@ -6,7 +6,7 @@ export default Controller.extend({
   features: service(),
   multiVcs: service(),
 
-  provider: reads('multiVcs.currentProviderUrlPrefix'),
+  provider: reads('multiVcs.currentProvider'),
   defaultProvider: reads('multiVcs.primaryProvider'),
 
   selectedProvider: or('provider', 'defaultProvider'),
