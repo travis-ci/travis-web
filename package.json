@@ -20,7 +20,6 @@
     "deploy": "bash ./config/deployment/deploy-local.sh"
   },
   "devDependencies": {
-    "@adopted-ember-addons/ember-stripe-elements": "^1.0.0-rc.2",
     "@csstools/postcss-sass": "^4.0.0",
     "@ember/optional-features": "^1.0.0",
     "@ember/render-modifiers": "^1.0.2",
@@ -109,6 +108,7 @@
     "npm": "6.2.0"
   },
   "dependencies": {
+    "@adopted-ember-addons/ember-stripe-elements": "^1.0.0-rc.2",
     "deep-freeze": "0.0.1",
     "watchman": "^1.0.0",
     "xss-clean": "^0.1.1"
