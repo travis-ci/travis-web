@@ -33,7 +33,7 @@ export default Service.extend({
     return !this.isProviderPrimary(provider);
   },
 
-  userConfig: computed('auth.currentUser.vcsType', function () {
+  currentProviderConfig: computed('auth.currentUser.vcsType', function () {
     const { currentUser } = this.auth;
     if (currentUser) {
       const { vcsType } = currentUser;
@@ -41,5 +41,9 @@ export default Service.extend({
     }
   }),
 
-  userSlug: reads('userConfig.urlPrefix'),
+  currentProviderUrlPrefix: reads('currentProviderConfig.urlPrefix'),
+
+  userProviderIsBeta: computed('currentProviderUrlPrefix', function () {
+    return this.isProviderBeta(this.currentProviderUrlPrefix);
+  }),
 });

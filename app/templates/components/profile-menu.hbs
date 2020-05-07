@@ -37,9 +37,9 @@
       </div>
     </li>
 
-    {{#if (eq this.user.provider 'bitbucket')}}
+    {{#if this.multiVcs.userProviderIsBeta}}
       <li class="topbar-menu-item--warning">
-        Bitbucket support is currently in Beta
+        {{vcs-name this.user.vcsType}} support is currently in Beta
       </li>
     {{/if}}
 
