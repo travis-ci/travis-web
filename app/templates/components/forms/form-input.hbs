@@ -1,0 +1,16 @@
+<input 
+  data-test-input-field
+  disabled={{@disabled}}
+  name={{@name}}
+  value={{@value}}
+  placeholder={{@placeholder}}
+  autocomplete={{@autocomplete}}
+  autofocus={{@autofocus}}
+  type="text"
+  class="{{concat "travis-form__field-input travis-form__field-component " @class}}"
+  {{on 'keyup' (action 'keyUp')}}
+  {{on 'change' (action 'onChange')}}
+  {{on 'focusin' (action 'onFocusIn')}}
+  {{on 'focusout' (action 'onFocusOut')}}
+  ...attributes
+/>

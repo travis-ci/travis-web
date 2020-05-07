@@ -13,7 +13,7 @@
       @validator={{action "validateEnvName"}}
       as |field|
     >
-      <field.input class="env-name" placeholder="Name" />
+      <field.input @class="env-name" @placeholder="Name" />
     </form.field>
   </div>
   <div class="form-elem">
@@ -25,7 +25,7 @@
       @showValidationStatusIcons={{false}}
       as |field|
     >
-      <field.input class="env-value" placeholder="Value" />
+      <field.input @class="env-value" @placeholder="Value" />
     </form.field>
   </div>
   <div class="form-elem">

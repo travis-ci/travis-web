@@ -20,7 +20,7 @@
               @onChange={{action (mut this.info.firstName)}}
               as |field|
             >
-              <field.input name="firstname" placeholder="First Name" />
+              <field.input @name="firstname" @placeholder="First Name" />
             </form.field>
           </div>
           <div class="form-elem">
@@ -33,7 +33,7 @@
               @onChange={{action (mut this.info.lastName)}}
               as |field|
             >
-              <field.input name="lastname" placeholder="Last Name" />
+              <field.input @name="lastname" @placeholder="Last Name" />
             </form.field>
           </div>
         </div>
@@ -62,7 +62,7 @@
             @onChange={{action (mut this.info.company)}}
             as |field|
           >
-            <field.input name="company" placeholder="Company" />
+            <field.input @name="company" @placeholder="Company" />
           </form.field>
         </div>
 
