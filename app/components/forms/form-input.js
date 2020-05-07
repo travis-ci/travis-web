@@ -20,7 +20,7 @@ export default Component.extend({
 
   actions: {
 
-    onFocusIn() {
+    onFocus() {
       this.onFocus();
     },
 
