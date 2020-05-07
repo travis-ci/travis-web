@@ -81,7 +81,7 @@
     "ember-stripe-elements": "git+https://github.com/code-corps/ember-stripe-elements.git#develop",
     "ember-svg-jar": "^2.2.2",
     "ember-test-assets": "^1.1.1",
-    "ember-test-selectors": "^2.0.0",
+    "ember-test-selectors": "^4.1.0",
     "ember-tooltips": "^3.1.1",
     "ember-truth-helpers": "^2.0.0",
     "ember-try": "^1.2.0",
