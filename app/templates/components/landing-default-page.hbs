@@ -26,14 +26,14 @@
 
           {{#if this.multiVcs.enabled}}
             <div>
-              <button class="hero-button org multi-vcs" {{action "signIn" "github"}}>
+              <button class="hero-button org multi-vcs" {{on 'click' (action this.signIn 'github')}}>
                 <SvgImage @name="icon-repooctocat" />
                 <span class="label-align">
                   Sign up with Github
                 </span>
               </button>
               {{#if this.multiVcs.enableAssemblaLogin}}
-                <button class="hero-button org multi-vcs" {{action "signIn" "assembla"}}>
+                <button class="hero-button org multi-vcs" {{on 'click' (action this.signIn 'assembla')}}>
                   <SvgImage @name="icon-assembla" />
                   <span class="label-align">
                     Sign up with Assembla
@@ -41,10 +41,18 @@
                 </button>
               {{/if}}
               {{#if this.multiVcs.enableBitbucketLogin}}
-                <button class="hero-button org multi-vcs" {{action "signIn" "bitbucket"}}>
+                <button class="hero-button org multi-vcs" {{on 'click' (action this.signIn 'bitbucket')}}>
                   <SvgImage @name="icon-bitbucket" />
                   <span class="label-align">
                     Sign up with Bitbucket
+                  </span>
+                </button>
+              {{/if}}
+              {{#if this.multiVcs.enableGitlabLogin}}
+                <button class="hero-button org multi-vcs" {{on 'click' (action this.signIn 'gitlab')}}>
+                  <SvgImage @name="icon-bitbucket" />
+                  <span class="label-align">
+                    Sign up with Gitlab
                   </span>
                 </button>
               {{/if}}

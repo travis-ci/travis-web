@@ -195,6 +195,7 @@ module.exports = function (environment) {
     'github-apps': false,
     'enable-assembla-login': false,
     'enable-bitbucket-login': false,
+    'enable-gitlab-login': false,
     'gitlab-login': false,
   };
 
