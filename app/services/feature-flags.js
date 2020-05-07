@@ -15,6 +15,7 @@ export default Service.extend({
   init() {
     this._super();
     this._setEnableAssemblaLogin();
+    this._setEnableGitlabLogin();
   },
 
   _setEnableAssemblaLogin() {
@@ -23,6 +24,14 @@ export default Service.extend({
       this.features.enable('enable-assembla-login');
     else if (enableAssemblaLogin == 'false')
       this.features.disable('enable-assembla-login');
+  },
+
+  _setEnableGitlabLogin() {
+    const { enableGitlabLogin } = window.localStorage;
+    if (enableGitlabLogin == 'true')
+      this.features.enable('enable-gitlab-login');
+    else if (enableGitlabLogin == 'false')
+      this.features.disable('enable-gitlab-login');
   },
 
   _setFlagState(flag) {

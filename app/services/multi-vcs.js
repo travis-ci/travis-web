@@ -9,11 +9,12 @@ export default Service.extend({
 
   isProVersion: reads('features.proVersion'),
 
-  enabled: or('enableAssemblaLogin', 'enableBitbucketLogin'),
+  enabled: or('enableAssemblaLogin', 'enableBitbucketLogin', 'enableGitlabLogin'),
   disabled: not('enabled'),
 
   enableAssemblaLogin: and('isProVersion', 'features.enableAssemblaLogin'),
   enableBitbucketLogin: and('isProVersion', 'features.enableBitbucketLogin'),
+  enableGitlabLogin: and('isProVersion', 'features.enableGitlabLogin'),
 
   primaryProviderConfig: computed(() => defaultVcsConfig),
   primaryProvider: reads('primaryProviderConfig.urlPrefix'),
