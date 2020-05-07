@@ -14,7 +14,7 @@ export default Service.extend({
 
   enableAssemblaLogin: and('isProVersion', 'features.enableAssemblaLogin'),
   enableBitbucketLogin: and('isProVersion', 'features.enableBitbucketLogin'),
-  enableGitlabLogin: and('isProVersion', 'features.enableGitlabLogin'),
+  enableGitlabLogin: and('isProVersion', 'features.gitlabLogin'),
 
   primaryProviderConfig: computed(() => defaultVcsConfig),
   primaryProvider: reads('primaryProviderConfig.urlPrefix'),

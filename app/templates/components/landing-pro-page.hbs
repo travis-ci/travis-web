@@ -52,6 +52,29 @@
       </section>
       <div class="spacer"></div>
     {{/if}}
+    {{#if this.multiVcs.enableGitlabLogin}}
+      <section class="section-gitlab section--white section--center">
+        <div class="inner">
+          <h2 class="text-5xl text-grey-800 mb-8">
+            Now test your
+            <SvgImage @name='gitlab-logo' @width={{35}} @class='ml-1' />
+            GitLab projects with Travis CI
+          </h2>
+          <div class="mb-10">
+            <p class="text-lg inline-block max-w-2xl">
+              Check out our new feature - now you can sign up to Travis CI using your Gitlab account
+              and connect your repositories!
+            </p>
+          </div>
+
+          {{!-- Until gitlab integration page is added, link to sign in page --}}
+          <LinkTo @route='signin' class="hero-button cta-index-page">
+            Try It Out
+          </LinkTo>
+        </div>
+      </section>
+      <div class="spacer"></div>
+    {{/if}}
     <section class="section-companies section--white section--center">
       <div class="inner">
         <h3 class="customers-header">
