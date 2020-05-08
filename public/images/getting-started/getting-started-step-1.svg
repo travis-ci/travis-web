@@ -62,7 +62,7 @@
 					<circle class="st11" cx="-123.377" cy="57.513" r="1.999"/>
 				</g>
 				<g>
-					<text transform="matrix(1 0 0 1 -28.9912 57.6631)" class="st12 st4 st5">Filter Bitbucket Repositories </text>
+					<text transform="matrix(1 0 0 1 -28.9912 57.6631)" class="st12 st4 st5">Filter Repositories </text>
 				</g>
 			</g>
 			<text transform="matrix(1 0 0 1 -114.9443 106.0464)" class="st13 st4 st14">travis-ci/newfoundtest</text>

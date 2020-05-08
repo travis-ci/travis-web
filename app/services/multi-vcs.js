@@ -14,7 +14,7 @@ export default Service.extend({
 
   enableAssemblaLogin: and('isProVersion', 'features.enableAssemblaLogin'),
   enableBitbucketLogin: and('isProVersion', 'features.enableBitbucketLogin'),
-  enableGitlabLogin: and('isProVersion', 'features.enableGitlabLogin'),
+  enableGitlabLogin: and('isProVersion', 'features.gitlabLogin'),
 
   primaryProviderConfig: computed(() => defaultVcsConfig),
   primaryProvider: reads('primaryProviderConfig.urlPrefix'),
@@ -33,7 +33,7 @@ export default Service.extend({
     return !this.isProviderPrimary(provider);
   },
 
-  userConfig: computed('auth.currentUser.vcsType', function () {
+  currentProviderConfig: computed('auth.currentUser.vcsType', function () {
     const { currentUser } = this.auth;
     if (currentUser) {
       const { vcsType } = currentUser;
@@ -41,5 +41,9 @@ export default Service.extend({
     }
   }),
 
-  userSlug: reads('userConfig.urlPrefix'),
+  currentProvider: reads('currentProviderConfig.urlPrefix'),
+
+  currentProviderIsBeta: computed('currentProvider', function () {
+    return this.isProviderBeta(this.currentProvider);
+  }),
 });

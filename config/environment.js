@@ -5,6 +5,10 @@ const providers = require('./providers');
 const { plans } = require('./plans.js');
 const { screens } = require('./screens.js');
 
+const tailwindConfig = require('./tailwind.js');
+const resolveTwConfig = require('tailwindcss/resolveConfig');
+const tailwind = resolveTwConfig(tailwindConfig);
+
 const {
   TRAVIS_PRO,
   TRAVIS_ENTERPRISE,
@@ -37,6 +41,7 @@ module.exports = function (environment) {
     providers,
     plans,
     screens,
+    tailwind,
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
