@@ -78,14 +78,14 @@
   {{#if this.showAllowConfigImportsSwitch}}
     <section class="settings-section config-import">
       <h2 class="small-title display-inline">
-        Config Import
+        Import
       </h2>
       <ul class="settings-list--columns">
         <li>
           <SettingsSwitch
             @active={{this.model.settings.allow_config_imports}}
             @repo={{this.repo}}
-            @description="Allow importing config files from this repository"
+            @description="Allow importing files from this repository"
             @key="allow_config_imports"
           />
         </li>
