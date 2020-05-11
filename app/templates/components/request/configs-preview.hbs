@@ -9,7 +9,7 @@
     {{else}}
       <CodeBlock
         @language="json"
-        @code="{{this.formattedRequestConfig}}"
+        @code={{this.formattedRequestConfig}}
         class="codedisplay line-numbers"
         data-test-preview-request-config="true"
       />
@@ -31,7 +31,7 @@
 
         <CodeBlock
           @language="json"
-          @code="{{config}}"
+          @code={{config}}
           class="codedisplay line-numbers"
           data-test-preview-job-configs="true"
         />
