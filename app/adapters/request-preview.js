@@ -3,15 +3,16 @@ import V3Adapter from 'travis/adapters/v3';
 import parseWithDefault from 'travis/utils/json-parser';
 
 export default V3Adapter.extend({
-  buildURL: function (modelName, id, snapshot, requestType, query) {
-    return `${this._super('repo', snapshot.belongsTo('repo').id)}/request/preview`;
+  buildURL: function (modelName, modelId, snapshot, requestType, query) {
+    const id = snapshot.belongsTo('repo').id;
+    const endpoint = this._super('repo', id);
+    return `${endpoint}/request/preview`;
   },
 
   handleResponse(status, headers, body) {
     if (status == 400) {
-      let error = parseWithDefault(body.error_message).error || {};
-      let type = error.type;
-      let message = error.message; // TODO API should unwrap this
+      const error = parseWithDefault(body.error_message).error || {};
+      const { type, message } = error; // TODO API should unwrap this
 
       // this is really shoehorning our custom error type and message
       // through Ember's limited AdapterError API. would it be better

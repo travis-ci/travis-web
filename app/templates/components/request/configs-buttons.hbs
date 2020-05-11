@@ -2,7 +2,7 @@
   {{#if this.closed}}
     <button
       data-test-request-configs-trigger-build="true"
-      onclick={{this.onTrigger}}
+      {{on 'click' (action this.onTrigger)}}
       class="request-configs-button-trigger-build"
       title="Trigger build"
     >

@@ -15,7 +15,7 @@
     {{else if this.rejected}}
       The build request was rejected.
     {{else if (eq this.error 'timeout')}}
-      Processing the build request takes a very long time. TODO: now what?
+      Processing the build request takes a very long time.
     {{else if this.error}}
       An error occured: {{this.error}}
     {{else if this.previewing}}
@@ -52,7 +52,7 @@
         data-test-request-configs-trigger-build="true"
         class="request-configs-button-submit button--blue"
         title="Trigger build"
-        onclick={{this.onTrigger}}
+        {{on 'click' (action this.onTrigger)}}
       >
         {{#if this.submitting}}
           <LoadingIndicator />

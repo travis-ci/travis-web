@@ -26,8 +26,8 @@ export default Service.extend({
 
   submit: task(function* (data) {
     try {
-      data.commit = this.store.createRecord('commit', data.commit);
-      this.set('request', this.store.createRecord('request', data));
+      const commit = this.store.createRecord('commit', data.commit);
+      this.set('request', this.store.createRecord('request', { ...data, commit }));
       yield this.request.save();
       yield this.poll.perform();
     } catch (e) {

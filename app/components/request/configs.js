@@ -4,7 +4,6 @@ import { equal, or, reads } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import truncate from 'travis/utils/computed';
 import CanTriggerBuild from 'travis/mixins/components/can-trigger-build';
-import TriggerBuild from 'travis/mixins/components/trigger-build';
 
 export const STATUSES = {
   CLOSED: 'closed',
@@ -13,7 +12,7 @@ export const STATUSES = {
   PREVIEW: 'preview'
 };
 
-export default Component.extend(CanTriggerBuild, TriggerBuild, {
+export default Component.extend(CanTriggerBuild, {
   tagName: '',
 
   auth: service(),
@@ -142,18 +141,13 @@ export default Component.extend(CanTriggerBuild, TriggerBuild, {
   },
 
   submitBuildRequest() {
-    if (this.sha) {
-      this.build.submit.perform({
-        repo: this.repo,
-        branchName: this.branch,
-        commit: { sha: this.sha },
-        message: this.message,
-        configs: this.configs,
-      });
-    } else {
-      this.set('invalid', true);
-      setTimeout(() => this.set('invalid', false), 1500);
-    }
+    this.build.submit.perform({
+      repo: this.repo,
+      branchName: this.branch,
+      commit: { sha: this.sha },
+      message: this.message,
+      configs: this.configs,
+    });
   },
 
   actions: {
