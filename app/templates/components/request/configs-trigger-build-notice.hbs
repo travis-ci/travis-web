@@ -1,6 +1,6 @@
 <p class="request-configs-trigger-build-notice {{this.state}}">
-  <SvgImage @name='rocket' @class='request-configs-icon' />
-  <span data-test-trigger-build-notice="true">
+  <SvgImage @name='rocket' @class='request-configs-icon request-configs-trigger-build-notice-icon' />
+  <span class="request-configs-trigger-build-notice-text" data-test-trigger-build-notice="true">
     {{#if this.pending}}
       Waiting for the build request to be processed ...
     {{else if this.submitting}}
