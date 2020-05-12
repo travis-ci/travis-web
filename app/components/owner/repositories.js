@@ -79,7 +79,7 @@ export default Component.extend({
 
   appsActivationURL: computed('owner.githubId', function () {
     let githubId = this.get('owner.githubId');
-    return `https://github.com/apps/${appName}/installations/new/permissions?suggested_target_id=${githubId}`;
+    return `${config.githubEndpoint}/apps/${appName}/installations/new/permissions?suggested_target_id=${githubId}`;
   }),
 
   appsManagementURL: computed(
@@ -92,11 +92,11 @@ export default Component.extend({
       let installationGithubId = this.get('owner.installation.githubId');
 
       if (appName && appName.length) {
-        return `https://github.com/apps/${appName}/installations/new/permissions?suggested_target_id=${ownerGithubId}`;
+        return `${config.githubEndpoint}/apps/${appName}/installations/new/permissions?suggested_target_id=${ownerGithubId}`;
       } else if (isOrganization) {
-        return `https://github.com/organizations/${login}/settings/installations/${installationGithubId}`;
+        return `${config.githubEndpoint}/organizations/${login}/settings/installations/${installationGithubId}`;
       } else {
-        return `https://github.com/settings/installations/${installationGithubId}`;
+        return `${config.githubEndpoint}/settings/installations/${installationGithubId}`;
       }
     }
   ),
@@ -128,7 +128,7 @@ export default Component.extend({
     let githubQueryParams = repositories.map(repo => `repository_ids[]=${repo.githubId}`).join('&');
 
     window.location.href =
-      `https://github.com/apps/${appName}/installations/new/permissions` +
+      `${config.githubEndpoint}/apps/${appName}/installations/new/permissions` +
       `?suggested_target_id=${this.owner.githubId}&${githubQueryParams}`;
   })
 });

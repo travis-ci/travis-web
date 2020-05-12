@@ -60,6 +60,7 @@ module.exports = function (environment) {
 
     // defaults for running travis-web
     apiEndpoint: 'https://api.travis-ci.org',
+    githubEndpoint: SOURCE_ENDPOINT || 'https://github.com',
 
     pusher: {
       key: '5df8ac576dcccf4fd076',
