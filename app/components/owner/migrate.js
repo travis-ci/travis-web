@@ -41,7 +41,7 @@ export default Component.extend({
 
   activateAllUrl: computed('owner.githubId', function () {
     const { githubId } = this.owner;
-    return `https://github.com/apps/${appName}/installations/new/permissions?suggested_target_id=${githubId}`;
+    return `${config.githubEndpoint}/apps/${appName}/installations/new/permissions?suggested_target_id=${githubId}`;
   }),
 
   init() {
