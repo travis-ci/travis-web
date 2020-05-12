@@ -221,8 +221,12 @@ class Travis::Web::App
 
       config['defaultTitle'] = title
       config['apiEndpoint'] = options[:api_endpoint] if options[:api_endpoint]
-      config['githubAppsEndpoint'] = options[:source_endpoint] + '/github-apps' if options[:source_endpoint] && !options[:source_endpoint].include? 'github.com'
-      config['sourceEndpoint'] = options[:source_endpoint] if options[:source_endpoint]
+      config['githubAppsEndpoint'] = options[:github_apps_endpoint]
+      source_endpoint = options[:source_endpoint]
+      if source_endpoint
+        config['sourceEndpoint'] = source_endpoint
+        config['githubAppsEndpoint'] = source_endpoint + '/github-apps' unless source_endpoint.include? 'github.com'
+      end
       pusher = {}
       pusher['key'] = options[:pusher_key] if options[:pusher_key]
       pusher['host'] = options[:pusher_host] if options[:pusher_host]
