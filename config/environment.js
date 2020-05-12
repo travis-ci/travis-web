@@ -302,12 +302,8 @@ module.exports = function (environment) {
         ENV.billingEndpoint = 'https://staging.travis-ci.com';
       }
     }
-    if (SOURCE_ENDPOINT) {
-      if (SOURCE_ENDPOINT.indexOf('github.com') !== -1) {
-        ENV.githubAppsEndpoint = 'https://github.com/apps';
-      } else {
-        ENV.githubAppsEndpoint = SOURCE_ENDPOINT + '/github-apps';
-      }
+    if (SOURCE_ENDPOINT && !SOURCE_ENDPOINT.indexOf('github.com')) {
+      ENV.githubAppsEndpoint = SOURCE_ENDPOINT + '/github-apps';
     }
     if (BILLING_ENDPOINT) {
       ENV.billingEndpoint = BILLING_ENDPOINT;

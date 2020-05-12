@@ -52,6 +52,7 @@ run Travis::Web::App.build(
   userlike:        ENV['USERLIKE'],
   environment:     ENV['RACK_ENV'] || 'development',
   api_endpoint:    ENV['API_ENDPOINT'],
+  github_apps_endpoint: 'https://github.com/apps',
   pages_endpoint:   ENV['PAGES_ENDPOINT'],
   billing_endpoint: ENV['BILLING_ENDPOINT'],
   source_endpoint: ENV['SOURCE_ENDPOINT'] || 'https://github.com',
