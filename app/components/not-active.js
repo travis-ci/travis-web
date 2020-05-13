@@ -50,7 +50,7 @@ export default Component.extend({
       let appName = this.get('config.githubApps.appName');
       let ownerGithubId = this.get('repo.owner.github_id');
       let repoGithubId = this.get('repo.githubId');
-      return 'https://github.com/apps/' +
+      return `${config.githubAppsEndpoint}/` +
         `${appName}/installations/new/permissions` +
         `?suggested_target_id=${ownerGithubId}` +
         `&repository_ids=${repoGithubId}`;

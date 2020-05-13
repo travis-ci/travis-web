@@ -60,6 +60,7 @@ module.exports = function (environment) {
 
     // defaults for running travis-web
     apiEndpoint: 'https://api.travis-ci.org',
+    githubAppsEndpoint: 'https://github.com/apps',
 
     pusher: {
       key: '5df8ac576dcccf4fd076',
@@ -301,7 +302,9 @@ module.exports = function (environment) {
         ENV.billingEndpoint = 'https://staging.travis-ci.com';
       }
     }
-
+    if (SOURCE_ENDPOINT && !SOURCE_ENDPOINT.indexOf('github.com')) {
+      ENV.githubAppsEndpoint = SOURCE_ENDPOINT + '/github-apps';
+    }
     if (BILLING_ENDPOINT) {
       ENV.billingEndpoint = BILLING_ENDPOINT;
     }
