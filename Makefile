@@ -46,12 +46,4 @@ docker-push-branch:
 	$(DOCKER) push $(QUAY_IMAGE):$(VERSION_VALUE)-$(BRANCH)
 
 .PHONY: ship
-ship: docker-build docker-login
-
-ifeq ($(BRANCH),build_docker_image)
-ifeq ($(TRAVIS_PULL_REQUEST),false)
-ship: docker-push-latest-master
-endif
-else
-ship: docker-push-branch
-endif
+ship: docker-build docker-login docker-push-latest-master
