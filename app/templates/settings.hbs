@@ -78,7 +78,7 @@
   {{#if this.showAllowConfigImportsSwitch}}
     <section class="settings-section config-import">
       <h2 class="small-title display-inline">
-        Clone or import
+        Clone or Import
       </h2>
       <ul class="settings-list--columns">
         <li>
@@ -88,6 +88,14 @@
             @description="Allow files from this repository to be used in builds on other repositories"
             @key="allow_config_imports"
           />
+          <ExternalLinkTo
+            href={{config-get "urls.repoSettingsAllowCloneImport"}}
+            title="about clone or import functionality"
+            class="settings-tooltip"
+          >
+            <EmberTooltip @text="Read more about clone or import functionality" />
+            <SvgImage @name="icon-help" @class="icon-help" />
+          </ExternalLinkTo>
         </li>
       </ul>
     </section>

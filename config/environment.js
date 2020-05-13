@@ -103,6 +103,7 @@ module.exports = function (environment) {
       noRun: 'https://docs.travis-ci.com/user/common-build-problems/#i-pushed-a-commit-and-cant-fin',
       plans: 'https://travis-ci.com/plans',
       privacy: 'https://docs.travis-ci.com/legal/privacy-policy',
+      repoSettingsAllowCloneImport: 'https://docs.travis-ci.com/user/repo-settings-allow-clone-import',
       security: 'https://docs.travis-ci.com/legal/security',
       status: 'https://www.traviscistatus.com/',
       support: 'mailto:support@travis-ci.com',
