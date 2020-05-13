@@ -2,6 +2,7 @@ import Component from '@ember/component';
 import { computed, set } from '@ember/object';
 import { equal, or, reads } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
+import { isEmpty } from '@ember/utils';
 import truncate from 'travis/utils/computed';
 import CanTriggerBuild from 'travis/mixins/components/can-trigger-build';
 
@@ -66,10 +67,8 @@ export default Component.extend(CanTriggerBuild, {
   },
 
   formattedApiConfigs: computed('request.apiConfigs[].config', function () {
-    let configs = this.get('request.apiConfigs');
-    if (configs.length == 0) {
-      configs = [{}];
-    }
+    const apiConfigs = this.get('request.apiConfigs');
+    const configs = isEmpty(apiConfigs) ? [{}] : apiConfigs;
     return configs.map(config => {
       try {
         config.config = JSON.stringify(JSON.parse(config.config), null, 2);
