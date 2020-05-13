@@ -40,23 +40,23 @@ $config-code-font-size: 12px;
 pre.codedisplay[class*='language-'] {
   white-space: pre-wrap;
   background-color: white;
+  font-family: $font-family-monospace;
   font-size: $config-code-font-size;
-  line-height: 20px;
+
+  code,
+  .line-numbers-rows {
+    font-family: $font-family-monospace;
+    font-size: $config-code-font-size;
+  }
 
   code {
-    font-family: $font-family-monospace;
     color: $asphalt-grey;
   }
 
   .line-numbers-rows {
-    margin-top: -5px;
-    border-right: 0px;
     color: $dry-cement;
-    span {
-      font-family: $font-family-monospace;
-      height: 20px !important;
-      line-height: 24px;
-    }
+    border-right: 0px;
+    top: -1px;
   }
 }
 
