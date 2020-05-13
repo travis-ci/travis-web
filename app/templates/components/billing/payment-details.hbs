@@ -7,7 +7,7 @@
       {{#if this.openCreditCardForm}}
         <div class="edit-form">
           <TravisForm @onSubmit={{perform this.updateCreditCard}} as |form|>
-            <StripeCard @complete={{action "complete"}} @options={{this.options}} as |stripeError|>
+            <StripeCard @onComplete={{action "complete"}} @options={{this.options}} as |stripeError|>
               {{#if stripeError}}
                 <p>{{stripeError.message}}</p>
               {{/if}}
