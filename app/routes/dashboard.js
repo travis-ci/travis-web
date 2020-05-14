@@ -1,20 +1,33 @@
-import { hash } from 'rsvp';
+// import { hash } from 'rsvp';
 import TravisRoute from 'travis/routes/basic';
 import { inject as service } from '@ember/service';
+import getLiveModel from 'travis/utils/live-model';
 
 export default TravisRoute.extend({
   needsAuth: true,
 
   features: service(),
   accounts: service(),
+  store: service(),
 
   model(params) {
-    return hash({
-      starredRepos: this.store.filter('repo', {
+    const { store } = this;
+    return getLiveModel({
+      modelName: 'repo',
+      query: {
         active: true,
         sort_by: 'current_build:desc',
         starred: true
-      }, (repo) => repo.get('starred'), ['starred'], true),
+      },
+      store,
     });
+
+    // hash({
+    // starredRepos: this.store.query('repo', {
+    //   active: true,
+    //   sort_by: 'current_build:desc',
+    //   starred: true
+    // }),
+    // });
   },
 });
