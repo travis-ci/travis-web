@@ -94,7 +94,7 @@
     "fuzzysort": "^1.0.1",
     "loader.js": "^4.7.0",
     "postcss-scss": "^2.0.0",
-    "pusher-js": "^5.0.0",
+    "pusher-js": "^6.0.3",
     "qunit-dom": "^0.9.0",
     "raven-js": "^3.15.0",
     "svgo": "^1.0.5",
