@@ -13,8 +13,8 @@ export default TravisRoute.extend({
       starredRepos: this.store.filter('repo', {
         active: true,
         sort_by: 'current_build:desc',
-        starred: true
-      }, (repo) => repo.get('starred'), ['starred'], true),
+        starred: true,
+      }, (repo) => repo.starred && repo.active, ['starred', 'active'], true),
     });
   },
 });
