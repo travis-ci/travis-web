@@ -20,7 +20,7 @@
     as |form|
   >
     <StripeCard 
-      @complete={{action "complete"}} 
+      @onComplete={{action "complete"}} 
       @options={{this.options}} 
       as |stripeError|
     >
