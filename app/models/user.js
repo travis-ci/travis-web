@@ -86,10 +86,9 @@ export default Owner.extend({
       if (this.isSyncing) {
         this.schedulePoll();
       } else {
-        this.permissionsService.fetchPermissions.perform();
-        this.applyReposFilter();
         Travis.trigger('user:synced', this);
         this.set('isSyncing', false);
+        this.applyReposFilter();
       }
     });
   },
