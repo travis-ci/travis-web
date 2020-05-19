@@ -200,7 +200,7 @@ module.exports = function (environment) {
     'beta-features': true,
     'github-apps': false,
     'enable-assembla-login': false,
-    'enable-bitbucket-login': true,
+    'enable-bitbucket-login': false,
     'enable-gitlab-login': false,
     'gitlab-login': false,
   };
