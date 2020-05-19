@@ -28,7 +28,7 @@ export default Component.extend({
   isSubscribed: reads('subscription.isSubscribed'),
   isIncomplete: reads('subscription.isIncomplete'),
   isComplete: not('isIncomplete'),
-  canCancelSubscription: and('subscription.isStripe', 'isSubscribed', 'hasSubscriptionPermissions'),
+  canCancelSubscription: and('isSubscribed', 'hasSubscriptionPermissions'),
   cancelSubscriptionLoading: reads('subscription.cancelSubscription.isRunning'),
   isLoading: or('accounts.fetchSubscriptions.isRunning', 'cancelSubscriptionLoading', 'editPlan.isRunning', 'resubscribe.isRunning'),
 

@@ -44,7 +44,7 @@ export default Model.extend({
 
   isNotSubscribed: or('isCanceled', 'isExpired'),
   managedSubscription: or('isStripe', 'isGithub'),
-  isStripeResubscribable: and('isStripe', 'isNotSubscribed'),
+  isResubscribable: and('isStripe', 'isNotSubscribed'),
   isGithubResubscribable: and('isGithub', 'isNotSubscribed'),
 
   priceInCents: reads('plan.price'),
@@ -83,7 +83,7 @@ export default Model.extend({
     });
   }).drop(),
 
-  billingUrl: computed('owner.{type,login}', 'isGithub', 'isStripeResubscribable', function () {
+  billingUrl: computed('owner.{type,login}', 'isGithub', 'isResubscribable', function () {
     let type = this.get('owner.type');
     let login = this.get('owner.login');
     let isGithub = this.isGithub;
