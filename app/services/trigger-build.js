@@ -48,6 +48,8 @@ export default Service.extend({
   }).drop(),
 
   reset() {
+    this.poll.cancelAll({ resetState: true });
+    this.submit.cancelAll({ resetState: true });
     this.set('request', null);
     this.set('error', null);
   }
