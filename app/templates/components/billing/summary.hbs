@@ -65,7 +65,8 @@
   {{#if (and this.subscription.isGithub this.hasExpiredStripeSubscription)}}
     <h4 class="resubscribe-stripe-heading">resubscribe via travis ci:</h4>
     <Billing::Authorization 
-      @subscription={{this.subscription}} 
+      @githubSubscription={{this.subscription}} 
+      @subscription={{this.expiredStripeSubscription}} 
       @account={{this.account}}
       @isPending={{this.isPending}}
     />

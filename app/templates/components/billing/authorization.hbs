@@ -45,7 +45,7 @@
   <span class="notice-banner--yellow" data-test-trial-running-out='true'>
     We are currently waiting for Stripe to finish processing your order.
   </span>
-{{else if (and this.isComplete (or this.subscription.isStripe this.subscription.isGithub))}}
+{{else if (and this.isComplete this.subscription.isStripe)}}
   {{#if this.showPlansSelector}}
     <Billing::SelectPlan
       @title="Edit plan"
@@ -64,6 +64,7 @@
         <div class="billing-subscription__buttons--change">
           <BillingResubscribeButton 
             @account={{this.account}}
+            @githubSubscription={{this.githubSubscription}}
             @subscription={{this.subscription}}
             @resubscribe={{this.resubscribe}}
             @openPlansSelector={{fn (mut this.showPlansSelector) true}}

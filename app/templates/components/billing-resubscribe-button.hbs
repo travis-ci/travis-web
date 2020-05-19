@@ -1,5 +1,5 @@
 {{#if this.account.hasSubscriptionPermissions}}
-  {{#if (and this.subscription.isGithub this.subscription.isSubscribed)}}
+  {{#if this.isActiveGithubSubscription}}
     <span class="notice-banner--white flex flex--v-center" data-test-help-text='true'>
       <div>
         <SvgImage @name='icon-help' @class='icon-help' />
@@ -14,7 +14,7 @@
     <div class='button disabled' data-test-resubscribe-change-plan-disabled='true'>
       Subscribe to different plan
     </div>
-  {{else if (or this.subscription.isGithubResubscribable this.subscription.isStripeResubscribable)}}
+  {{else if this.isResubscribable}}
     <button {{on 'click' (action (perform this.resubscribe))}} class='button--green mr-1' data-test-resubscribe-subscription='true'>
       Resubscribe to plan
     </button>
