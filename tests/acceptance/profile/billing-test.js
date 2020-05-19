@@ -537,6 +537,33 @@ module('Acceptance | profile/billing', function (hooks) {
       .hasTextContaining('5 concurrent jobs Expired June 19, 2018');
   });
 
+
+  test('view billing on an active marketplace plan with Stripe plan', async function (assert) {
+    this.trial.destroy();
+    this.subscription.source = 'github';
+    this.subscription.status = 'subscribed';
+
+    this.server.create('subscription', {
+      plan: this.defaultPlan,
+      owner: this.user,
+      status: 'expired',
+      valid_to: new Date(2018, 4, 19),
+      source: 'stripe',
+      permissions: {
+        write: true
+      }
+    });
+
+    await profilePage.visit();
+    await profilePage.billing.visit();
+
+    assert.equal(profilePage.billing.plan.name, 'Small Business1 plan active github marketplace subscription');
+    assert.dom(profilePage.billing.inactiveResubscribeSubscriptionButton.scope).hasTextContaining('Resubscribe to plan');
+    assert.dom(profilePage.billing.inactiveChangePlanResubscribe.scope).hasTextContaining('Subscribe to different plan');
+    assert.ok(profilePage.billing.billingPlanChoices.boxes.isHidden);
+    assert.ok(profilePage.billing.subscribeButton.isHidden);
+  });
+
   test('view billing on a cancelled marketplace plan with Stripe plan', async function (assert) {
     this.trial.destroy();
     this.subscription.source = 'github';
