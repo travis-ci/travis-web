@@ -540,7 +540,7 @@ module('Acceptance | profile/billing', function (hooks) {
   });
 
 
-  test('view billing on an active marketplace plan with Stripe plan', async function (assert) {
+  test('view billing on an active marketplace plan and expired Stripe plan', async function (assert) {
     this.trial.destroy();
     this.subscription.source = 'github';
     this.subscription.status = 'subscribed';
