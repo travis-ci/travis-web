@@ -14,7 +14,7 @@
     <div class='button disabled' data-test-resubscribe-subscription-disabled='true'>
       Subscribe to different plan
     </div>
-  {{else if this.subscription.isResubscribable}}
+  {{else if (or this.subscription.isGithubResubscribable this.subscription.isStripeResubscribable)}}
     <button {{on 'click' (action (perform this.resubscribe))}} class='button--green mr-1' data-test-resubscribe-subscription='true'>
       Resubscribe to plan
     </button>
