@@ -4,6 +4,7 @@ node_js: 10
 
 env:
   global:
+    - PATH=/snap/bin:$PATH
     - PERCY_ENABLE=0
     - JOBS=1
     # See https://git.io/vdao3 for details.
@@ -12,7 +13,10 @@ os: linux
 dist: xenial
 
 addons:
-  chrome: stable
+  - snaps:
+    - name: docker
+      channel: latest/beta
+  - chrome: stable
 
 cache:
   npm: true
@@ -57,3 +61,9 @@ jobs:
   allow_failures:
     - env: TRY_CONFIG=ember-beta
     - env: TRY_CONFIG=ember-data-beta
+
+deploy:
+  - provider: script
+    script: make ship
+    on:
+      branch: master
