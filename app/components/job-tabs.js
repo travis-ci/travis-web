@@ -8,7 +8,7 @@ export default Component.extend(WithConfigValidation, {
   classNames: ['travistab'],
 
   router: service(),
-  modelName: reads('model.modelName'),
+  modelName: reads('model.constructor.modelName'),
 
   request: or('build.request', 'job.build.request'),
   build: null,
