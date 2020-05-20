@@ -209,6 +209,10 @@ export default Component.extend({
     return stripDetails(args.message);
   },
 
+  repo_not_found(_, args) {
+    return stripDetails(args.message);
+  },
+
   file_not_found(_, args) {
     return stripDetails(args.message);
   },
