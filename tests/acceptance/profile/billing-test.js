@@ -558,9 +558,12 @@ module('Acceptance | profile/billing', function (hooks) {
 
     await profilePage.visit();
     await profilePage.billing.visit();
+
     percySnapshot(assert);
 
     assert.equal(profilePage.billing.plan.name, 'Small Business1 plan active github marketplace subscription');
+    assert.ok(profilePage.billing.inactiveResubscribeSubscriptionButton.isDisabled);
+    assert.ok(profilePage.billing.inactiveChangePlanResubscribe.isDisabled);
     assert.dom(profilePage.billing.inactiveResubscribeSubscriptionButton.scope).hasTextContaining('Resubscribe to plan');
     assert.dom(profilePage.billing.inactiveChangePlanResubscribe.scope).hasTextContaining('Subscribe to different plan');
     assert.ok(profilePage.billing.billingPlanChoices.boxes.isHidden);

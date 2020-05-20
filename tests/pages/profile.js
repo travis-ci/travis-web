@@ -279,11 +279,13 @@ export default create({
     },
 
     inactiveResubscribeSubscriptionButton: {
-      scope: '[data-test-resubscribe-subscription-disabled]'
+      scope: '[data-test-resubscribe-subscription-disabled]',
+      isDisabled: hasClass('disabled'),
     },
 
     inactiveChangePlanResubscribe: {
-      scope: '[data-test-resubscribe-change-plan-disabled]'
+      scope: '[data-test-resubscribe-change-plan-disabled]',
+      isDisabled: hasClass('disabled'),
     },
 
     changeSubscriptionButton: {
