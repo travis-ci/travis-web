@@ -5,6 +5,10 @@ const providers = require('./providers');
 const { plans } = require('./plans.js');
 const { screens } = require('./screens.js');
 
+const tailwindConfig = require('./tailwind.js');
+const resolveTwConfig = require('tailwindcss/resolveConfig');
+const tailwind = resolveTwConfig(tailwindConfig);
+
 const {
   TRAVIS_PRO,
   TRAVIS_ENTERPRISE,
@@ -37,6 +41,7 @@ module.exports = function (environment) {
     providers,
     plans,
     screens,
+    tailwind,
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
@@ -55,6 +60,7 @@ module.exports = function (environment) {
 
     // defaults for running travis-web
     apiEndpoint: 'https://api.travis-ci.org',
+    githubAppsEndpoint: 'https://github.com/apps',
 
     pusher: {
       key: '5df8ac576dcccf4fd076',
@@ -195,6 +201,8 @@ module.exports = function (environment) {
     'github-apps': false,
     'enable-assembla-login': false,
     'enable-bitbucket-login': false,
+    'enable-gitlab-login': false,
+    'gitlab-login': false,
   };
 
   if (TRAVIS_PRO) {
@@ -294,7 +302,9 @@ module.exports = function (environment) {
         ENV.billingEndpoint = 'https://staging.travis-ci.com';
       }
     }
-
+    if (SOURCE_ENDPOINT && !SOURCE_ENDPOINT.indexOf('github.com')) {
+      ENV.githubAppsEndpoint = SOURCE_ENDPOINT + '/github-apps';
+    }
     if (BILLING_ENDPOINT) {
       ENV.billingEndpoint = BILLING_ENDPOINT;
     }

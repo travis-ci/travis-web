@@ -20,7 +20,7 @@
     as |form|
   >
     <StripeCard 
-      @complete={{action "complete"}} 
+      @onComplete={{action "complete"}} 
       @options={{this.options}} 
       as |stripeError|
     >
@@ -64,6 +64,7 @@
         <div class="billing-subscription__buttons--change">
           <BillingResubscribeButton 
             @account={{this.account}}
+            @githubSubscription={{this.githubSubscription}}
             @subscription={{this.subscription}}
             @resubscribe={{this.resubscribe}}
             @openPlansSelector={{fn (mut this.showPlansSelector) true}}

@@ -221,7 +221,12 @@ class Travis::Web::App
 
       config['defaultTitle'] = title
       config['apiEndpoint'] = options[:api_endpoint] if options[:api_endpoint]
-      config['sourceEndpoint'] = options[:source_endpoint] if options[:source_endpoint]
+      config['githubAppsEndpoint'] = options[:github_apps_endpoint]
+      source_endpoint = options[:source_endpoint]
+      if source_endpoint
+        config['sourceEndpoint'] = source_endpoint
+        config['githubAppsEndpoint'] = source_endpoint + '/github-apps' unless source_endpoint.include? 'github.com'
+      end
       pusher = {}
       pusher['key'] = options[:pusher_key] if options[:pusher_key]
       pusher['host'] = options[:pusher_host] if options[:pusher_host]
@@ -229,6 +234,13 @@ class Travis::Web::App
       pusher['channelPrefix'] = options[:pusher_channel_prefix] if options[:pusher_channel_prefix]
       pusher['encrypted'] = true
       config['pusher'] = pusher
+
+      if options[:stripe_publishable_key]
+        stripe = {}
+        stripe['publishableKey'] = options[:stripe_publishable_key]
+        stripe['lazyLoad'] = true
+        config['stripe'] = stripe
+      end
 
       config['gaCode'] = options[:ga_code] if options[:ga_code]
 

@@ -204,6 +204,7 @@ const countriesMap = {
   ZA: 'South Africa',
   GS: 'South Georgia And Sandwich Isl.',
   ES: 'Spain',
+  IC: 'Spain – Canary Islands',
   LK: 'Sri Lanka',
   SD: 'Sudan',
   SR: 'Suriname',

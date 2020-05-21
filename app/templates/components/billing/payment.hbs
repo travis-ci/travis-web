@@ -10,8 +10,10 @@
         <h4 data-test-contact-heading='true'>contact details</h4>
         <p data-test-contact-firstName='true' class='billing-checkout__details--info'>{{concat this.firstName ' ' this.lastName}}</p>
         <p data-test-contact-company='true' class='billing-checkout__details--info'>{{this.company}}</p>
-        <div>
-        <p data-test-contact-email='true' class='billing-checkout__details--email'>{{this.email}}</p>
+        <div class="flex flex--col">
+          {{#each this.billingEmails as |email|}}
+            <p data-test-contact-email='true' class='billing-checkout__details--email'>{{email}}</p>
+          {{/each}}
         </div>
       </div>
       <div class='flex--col-2'>
@@ -72,7 +74,7 @@
   </span>
   <h4 data-test-credit-card='true' class="py-3">credit card details</h4>
   <TravisForm data-test-stripe-form='true' @onSubmit={{perform this.createSubscription}} as |form|>
-    <StripeCard @complete={{action "complete"}} @options={{this.options}} as |stripeError|>
+    <StripeCard @onComplete={{action "complete"}} @options={{this.options}} as |stripeError|>
       {{#if stripeError}}
         <p>{{stripeError.message}}</p>
       {{/if}}

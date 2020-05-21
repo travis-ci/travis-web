@@ -52,6 +52,7 @@ run Travis::Web::App.build(
   userlike:        ENV['USERLIKE'],
   environment:     ENV['RACK_ENV'] || 'development',
   api_endpoint:    ENV['API_ENDPOINT'],
+  github_apps_endpoint: 'https://github.com/apps',
   pages_endpoint:   ENV['PAGES_ENDPOINT'],
   billing_endpoint: ENV['BILLING_ENDPOINT'],
   source_endpoint: ENV['SOURCE_ENDPOINT'] || 'https://github.com',
@@ -73,5 +74,6 @@ run Travis::Web::App.build(
   ajax_polling: ENV['AJAX_POLLING'],
   github_orgs_oauth_access_settings_url: ENV['GITHUB_ORGS_OAUTH_ACCESS_SETTINGS_URL'],
   github_apps_app_name: ENV['GITHUB_APPS_APP_NAME'],
-  enable_feature_flags: ENV['ENABLE_FEATURE_FLAGS']
+  enable_feature_flags: ENV['ENABLE_FEATURE_FLAGS'],
+  stripe_publishable_key: ENV['STRIPE_PUBLISHABLE_KEY']
 )

@@ -8,8 +8,12 @@ import { percySnapshot } from 'ember-percy';
 import Service from '@ember/service';
 import StripeMock from 'travis/tests/helpers/stripe-mock';
 import { stubService, stubConfig } from 'travis/tests/helpers/stub-service';
-import { getContext } from '@ember/test-helpers';
+import { getContext, click } from '@ember/test-helpers';
 import { setupMirage } from 'ember-cli-mirage/test-support';
+import {
+  BILLING_INFO_ADD_EMAIL,
+} from 'travis/tests/helpers/selectors';
+
 
 module('Acceptance | profile/billing', function (hooks) {
   setupApplicationTest(hooks);
@@ -285,12 +289,16 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.billing.editContactAddressForm
       .fillIn('firstname', 'John')
       .fillIn('lastname', 'Doe')
-      .fillIn('company', 'Travis')
-      .fillIn('billingEmail', 'john@doe.com');
+      .fillIn('company', 'Travis');
+
+    await profilePage.billing.billingEmails.objectAt(0).fillEmail('joe@jane.com');
+
+    await click(BILLING_INFO_ADD_EMAIL);
+    await profilePage.billing.billingEmails.objectAt(1).fillEmail('jane@email.com');
 
     await profilePage.billing.editContactAddressForm.updateContactAddressButton.click();
 
-    assert.equal(profilePage.billing.userDetails.text, 'contact name John Doe company name Travis billing email john@doe.com');
+    assert.equal(profilePage.billing.userDetails.text, 'contact name John Doe company name Travis billing email joe@jane.com jane@email.com');
   });
 
   test('edit subscription billing updates user billing info', async function (assert) {
@@ -463,6 +471,7 @@ module('Acceptance | profile/billing', function (hooks) {
   test('view billing on a marketplace plan', async function (assert) {
     this.trial.destroy();
     this.subscription.source = 'github';
+    percySnapshot(assert);
 
     await profilePage.visit();
     await profilePage.billing.visit();
@@ -523,10 +532,42 @@ module('Acceptance | profile/billing', function (hooks) {
 
     await profilePage.visitOrganization({ name: 'org-login' });
     await profilePage.billing.visit();
+    percySnapshot(assert);
 
     assert.equal(profilePage.billing.plan.name, 'Small Business1 plan expired github marketplace subscription');
     assert.dom(profilePage.billing.plan.concurrency.scope)
       .hasTextContaining('5 concurrent jobs Expired June 19, 2018');
+  });
+
+
+  test('view billing on an active marketplace plan and expired Stripe plan', async function (assert) {
+    this.trial.destroy();
+    this.subscription.source = 'github';
+    this.subscription.status = 'subscribed';
+
+    this.server.create('subscription', {
+      plan: this.defaultPlan,
+      owner: this.user,
+      status: 'expired',
+      valid_to: new Date(2018, 4, 19),
+      source: 'stripe',
+      permissions: {
+        write: true
+      }
+    });
+
+    await profilePage.visit();
+    await profilePage.billing.visit();
+
+    percySnapshot(assert);
+
+    assert.equal(profilePage.billing.plan.name, 'Small Business1 plan active github marketplace subscription');
+    assert.ok(profilePage.billing.inactiveResubscribeSubscriptionButton.isDisabled);
+    assert.ok(profilePage.billing.inactiveChangePlanResubscribe.isDisabled);
+    assert.dom(profilePage.billing.inactiveResubscribeSubscriptionButton.scope).hasTextContaining('Resubscribe to plan');
+    assert.dom(profilePage.billing.inactiveChangePlanResubscribe.scope).hasTextContaining('Subscribe to different plan');
+    assert.ok(profilePage.billing.billingPlanChoices.boxes.isHidden);
+    assert.ok(profilePage.billing.subscribeButton.isHidden);
   });
 
   test('view billing on a cancelled marketplace plan with Stripe plan', async function (assert) {
@@ -944,11 +985,12 @@ module('Acceptance | profile/billing', function (hooks) {
       .fillIn('firstname', 'John')
       .fillIn('lastname', 'Doe')
       .fillIn('companyName', 'Travis')
-      .fillIn('email', 'john@doe.com')
       .fillIn('address', '15 Olalubi street')
       .fillIn('city', 'Berlin')
       .fillIn('zip', '353564')
       .fillIn('vat', '356463');
+
+    await profilePage.billing.billingEmails.objectAt(0).fillEmail('john@doe.com');
 
     await billingForm.proceedPayment.click();
 
@@ -1078,10 +1120,11 @@ module('Acceptance | profile/billing', function (hooks) {
       .fillIn('firstname', 'John')
       .fillIn('lastname', 'Doe')
       .fillIn('companyName', 'Travis')
-      .fillIn('email', 'john@doe.com')
       .fillIn('address', '15 Olalubi street')
       .fillIn('city', 'Berlin')
       .fillIn('zip', '353564');
+
+    await profilePage.billing.billingEmails.objectAt(0).fillEmail('joe@jane.com');
 
     await billingForm.proceedPayment.click();
 
@@ -1125,11 +1168,11 @@ module('Acceptance | profile/billing', function (hooks) {
       .fillIn('firstname', 'John')
       .fillIn('lastname', 'Doe')
       .fillIn('companyName', 'Travis')
-      .fillIn('email', 'john@doe.com')
       .fillIn('address', '15 Olalubi street')
       .fillIn('city', 'Berlin')
       .fillIn('zip', '353564');
 
+    await profilePage.billing.billingEmails.objectAt(0).fillEmail('joe@jane.com');
     await billingForm.proceedPayment.click();
 
     const coupon = this.coupons[2];
@@ -1171,11 +1214,11 @@ module('Acceptance | profile/billing', function (hooks) {
       .fillIn('firstname', 'John')
       .fillIn('lastname', 'Doe')
       .fillIn('companyName', 'Travis CI')
-      .fillIn('email', 'john@doe.com')
       .fillIn('address', '15 Olalubi street')
       .fillIn('city', 'Berlin')
       .fillIn('zip', '353564');
 
+    await profilePage.billing.billingEmails.objectAt(0).fillEmail('joe@jane.com');
     await billingForm.proceedPayment.click();
 
     const coupon = this.coupons[0];
@@ -1220,10 +1263,11 @@ module('Acceptance | profile/billing', function (hooks) {
       .fillIn('firstname', 'John')
       .fillIn('lastname', 'Doe')
       .fillIn('companyName', 'Travis CI')
-      .fillIn('email', 'john@doe.com')
       .fillIn('address', '15 Olalubi street')
       .fillIn('city', 'Berlin')
       .fillIn('zip', '353564');
+
+    await profilePage.billing.billingEmails.objectAt(0).fillEmail('joe@jane.com');
 
     await billingForm.proceedPayment.click();
     await billingCouponForm.fillIn('couponId', 'fake_id');
@@ -1267,11 +1311,12 @@ module('Acceptance | profile/billing', function (hooks) {
       .fillIn('firstname', 'John')
       .fillIn('lastname', 'Doe')
       .fillIn('companyName', 'Travis')
-      .fillIn('email', 'john@doe.com')
       .fillIn('address', '15 Olalubi street')
       .fillIn('city', 'Berlin')
       .fillIn('zip', '353564')
       .fillIn('vat', '356463');
+
+    await profilePage.billing.billingEmails.objectAt(0).fillEmail('john@doe.com');
 
     await billingForm.proceedPayment.click();
 
@@ -1334,11 +1379,12 @@ module('Acceptance | profile/billing', function (hooks) {
       .fillIn('firstname', 'John')
       .fillIn('lastname', 'Doe')
       .fillIn('companyName', 'Travis')
-      .fillIn('email', 'john@doe.com')
       .fillIn('address', '15 Olalubi street')
       .fillIn('city', 'Berlin')
       .fillIn('zip', '353564')
       .fillIn('vat', '356463');
+
+    await profilePage.billing.billingEmails.objectAt(0).fillEmail('john@doe.com');
 
     await billingForm.proceedPayment.click();
 
@@ -1367,6 +1413,83 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining('2 concurrent jobs');
 
     assert.equal(profilePage.billing.userDetails.text, 'contact name John Doe company name Travis billing email john@doe.com');
+    assert.equal(profilePage.billing.billingDetails.text, 'address 15 Olalubi street city Berlin post code 353564 country Germany vat id 356463');
+    assert.dom(profilePage.billing.planMessage.scope).hasText('');
+  });
+
+  test('create subscription with multiple emails', async function (assert) {
+    this.subscription.destroy();
+
+    window.Stripe = StripeMock;
+    let config = {
+      mock: true,
+      publishableKey: 'mock'
+    };
+    stubConfig('stripe', config, { instantiate: false });
+    const { owner } = getContext();
+    owner.inject('service:stripev3', 'config', 'config:stripe');
+    this.organization.permissions = {
+      createSubscription: true
+    };
+    this.organization.save();
+
+    await profilePage.visitOrganization({ name: 'org-login' });
+    await profilePage.billing.visit();
+
+    const { billingForm, subscribeButton, billingPaymentForm } = profilePage.billing;
+    await subscribeButton.click();
+
+    await selectChoose(billingForm.billingSelectCountry.scope, 'Germany');
+
+    percySnapshot(assert);
+
+    await billingForm
+      .fillIn('firstname', 'John')
+      .fillIn('lastname', 'Doe')
+      .fillIn('companyName', 'Travis')
+      .fillIn('address', '15 Olalubi street')
+      .fillIn('city', 'Berlin')
+      .fillIn('zip', '353564')
+      .fillIn('vat', '356463');
+
+    await profilePage.billing.billingEmails.objectAt(0).fillEmail('joe@jane.com');
+
+    await click(BILLING_INFO_ADD_EMAIL);
+    await profilePage.billing.billingEmails.objectAt(1).fillEmail('jane@email.com');
+
+    await click(BILLING_INFO_ADD_EMAIL);
+    await profilePage.billing.billingEmails.objectAt(2).fillEmail('joe@email.com');
+
+    await click(BILLING_INFO_ADD_EMAIL);
+    await profilePage.billing.billingEmails.objectAt(3).fillEmail('doe@email.com');
+
+    await billingForm.proceedPayment.click();
+
+    assert.equal(profilePage.billing.selectedPlanOverview.heading.text, 'summary');
+    assert.equal(profilePage.billing.selectedPlanOverview.name.text, `${this.defaultPlan.name} plan`);
+    assert.equal(profilePage.billing.selectedPlanOverview.jobs.text, `${this.defaultPlan.builds} concurrent jobs`);
+    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${this.defaultPlan.price / 100}`);
+    assert.equal(profilePage.billing.period.text, '/month');
+    assert.equal(profilePage.billing.selectedPlanOverview.changePlan.text, 'Change plan');
+
+    assert.equal(billingPaymentForm.contactDetails.contactHeading.text, 'contact details');
+    assert.equal(billingPaymentForm.contactDetails.firstName.text, 'John Doe');
+    assert.equal(billingPaymentForm.contactDetails.company.text, 'Travis');
+    assert.dom(billingPaymentForm.contactDetails.email.scope).isVisible({ count: 4 });
+
+    assert.equal(billingPaymentForm.contactDetails.billingHeading.text, 'billing details');
+    assert.equal(billingPaymentForm.contactDetails.address.text, '15 Olalubi street');
+    assert.equal(billingPaymentForm.contactDetails.city.text, 'Berlin');
+    assert.equal(billingPaymentForm.contactDetails.country.text, 'Germany');
+
+    assert.ok(billingPaymentForm.isPresent);
+
+    await billingPaymentForm.completePayment.click();
+
+    assert.equal(profilePage.billing.plan.name, 'Startup plan pending');
+    assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining('2 concurrent jobs');
+
+    assert.equal(profilePage.billing.userDetails.text, 'contact name John Doe company name Travis billing email joe@jane.com jane@email.com joe@email.com doe@email.com');
     assert.equal(profilePage.billing.billingDetails.text, 'address 15 Olalubi street city Berlin post code 353564 country Germany vat id 356463');
     assert.dom(profilePage.billing.planMessage.scope).hasText('');
   });

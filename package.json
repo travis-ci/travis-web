@@ -78,7 +78,6 @@
     "ember-qunit-nice-errors": "1.2.0",
     "ember-resolver": "^5.0.1",
     "ember-source": "~3.12.0",
-    "ember-stripe-elements": "git+https://github.com/code-corps/ember-stripe-elements.git#develop",
     "ember-svg-jar": "^2.2.2",
     "ember-test-assets": "^1.1.1",
     "ember-test-selectors": "^4.0.0",
@@ -109,6 +108,7 @@
     "npm": "6.2.0"
   },
   "dependencies": {
+    "@adopted-ember-addons/ember-stripe-elements": "^1.0.0-rc.2",
     "deep-freeze": "0.0.1",
     "watchman": "^1.0.0",
     "xss-clean": "^0.1.1"
