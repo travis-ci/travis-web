@@ -1,8 +1,8 @@
 import config from 'travis/config/environment';
-import ActiveModelAdapter from 'active-model-adapter';
+import JSONAPIAdapter from '@ember-data/adapter/json-api';
 import { inject as service } from '@ember/service';
 
-export default ActiveModelAdapter.extend({
+export default JSONAPIAdapter.extend({
   auth: service(),
   features: service(),
 
