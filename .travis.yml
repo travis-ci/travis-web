@@ -13,10 +13,10 @@ os: linux
 dist: xenial
 
 addons:
-  - snaps:
+  snaps:
     - name: docker
       channel: latest/beta
-  - chrome: stable
+  chrome: stable
 
 cache:
   npm: true
@@ -56,14 +56,8 @@ jobs:
       install: skip
       before_script: skip
       script: make ship
-      if: commit_message =~ /ship:docker/ OR env(SHIP_DOCKER) = true
+      if: (branch = master and type = push ) OR commit_message =~ /ship:docker/ OR env(SHIP_DOCKER) = true
       after_script: skip
   allow_failures:
     - env: TRY_CONFIG=ember-beta
     - env: TRY_CONFIG=ember-data-beta
-
-deploy:
-  - provider: script
-    script: make ship
-    on:
-      branch: master
