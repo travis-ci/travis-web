@@ -59,7 +59,7 @@ module.exports = function (environment) {
     },
 
     // defaults for running travis-web
-    apiEndpoint: 'https://api.travis-ci.org',
+    apiEndpoint: TRAVIS_PRO ? 'https://api.travis-ci.com' : 'https://api.travis-ci.org',
     githubAppsEndpoint: 'https://github.com/apps',
 
     pusher: {
