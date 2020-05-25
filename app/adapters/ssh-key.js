@@ -1,4 +1,5 @@
 import ApplicationAdapter from 'travis/adapters/application';
+import { underscore } from '@ember/string';
 
 export default ApplicationAdapter.extend({
   namespace: 'settings',
@@ -13,14 +14,8 @@ export default ApplicationAdapter.extend({
     }
   },
 
-  findRecord(store, type, id) {
-    const url = `${this.urlPrefix()}/ssh_key/${id}`;
-    return this.ajax(url, 'GET');
-  },
-
-  deleteRecord(store, type, record) {
-    const url = `${this.urlPrefix()}/ssh_key/${record.id}`;
-    return this.ajax(url, 'DELETE');
+  pathForType(type) {
+    return underscore(type);
   },
 
   createRecord(store, type, record) {
@@ -32,5 +27,5 @@ export default ApplicationAdapter.extend({
 
     const url = `${this.urlPrefix()}/ssh_key/${record.id}`;
     return this.ajax(url, 'PATCH', { data });
-  }
+  },
 });
