@@ -19,6 +19,7 @@ export default TravisRoute.extend({
         sort_by: 'current_build:desc',
         starred: true
       },
+      filter: (repo) => repo.active && repo.starred,
       store,
     });
 
