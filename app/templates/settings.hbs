@@ -88,16 +88,12 @@
             @description="Allow files from this repository to be used in builds on other repositories"
             @key="allow_config_imports"
           />
-          <ExternalLinkTo
-            href={{config-get "urls.repoSettingsAllowCloneImport"}}
-            title="about clone or import functionality"
-            class="settings-tooltip"
-          >
-            <EmberTooltip @text="Read more about clone or import functionality" />
-            <SvgImage @name="icon-help" @class="icon-help" />
-          </ExternalLinkTo>
         </li>
       </ul>
+      <p>
+        <strong>ON</strong> makes files from this repository to be used in builds on other repositories in case it is needed to pull down additional private dependencies.<br>
+        <strong>OFF</strong> means that no information from the repository is shared and it is possible some builds using private dependencies between repos can break.
+      </p>
     </section>
   {{/if}}
   <section class="settings-section">
