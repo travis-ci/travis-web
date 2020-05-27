@@ -1,8 +1,8 @@
 import config from 'travis/config/environment';
-import ActiveModelAdapter from 'active-model-adapter';
+import RESTAdapter from '@ember-data/adapter/rest';
 import { inject as service } from '@ember/service';
 
-export default ActiveModelAdapter.extend({
+export default RESTAdapter.extend({
   auth: service(),
   features: service(),
 
