@@ -85,7 +85,7 @@ export default Service.extend({
 
   init() {
     this._super(...arguments);
-    window.addEventListener('focus', this.checkAuth.bind(this));
+    window.addEventListener('focus', () => this.checkAuth());
   },
 
   checkAuth() {
