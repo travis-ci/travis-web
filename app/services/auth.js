@@ -93,13 +93,7 @@ export default Service.extend({
       return;
     const { accounts } = this.storage;
     const { vcsId } = this.currentUser;
-    let stillLoggedIn = false;
-
-    accounts.map((user) => {
-      if (user.vcsId === vcsId) {
-        stillLoggedIn = true;
-      }
-    });
+    const stillLoggedIn = accounts.isAny('vcsId', vcsId);
 
     if (!stillLoggedIn) {
       this.router.transitionTo('signin');
