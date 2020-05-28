@@ -1,18 +1,7 @@
 import Component from '@ember/component';
 
 export default Component.extend({
-  tagName: 'input',
-  classNames: ['travis-form__field-input', 'travis-form__field-component'],
-  attributeBindings: [
-    'disabled',
-    'type',
-    'value',
-    'name',
-    'placeholder',
-    'autocomplete',
-    'autofocus',
-    'input:data-test-input-field'
-  ],
+  tagName: '',
   input: true,
 
   name: '',
@@ -29,20 +18,24 @@ export default Component.extend({
   onInit() {},
   onKeyUp() {},
 
-  focusIn() {
-    this.onFocus();
-  },
+  actions: {
 
-  focusOut() {
-    this.onBlur();
-  },
+    onFocus() {
+      this.onFocus();
+    },
 
-  change({ target }) {
-    this.onChange && this.onChange(target.value);
-  },
+    onFocusOut() {
+      this.onBlur();
+    },
 
-  keyUp({ target }) {
-    this.onKeyUp && this.onKeyUp(target.value);
+    onChange({ target }) {
+      this.onChange && this.onChange(target.value);
+    },
+
+    keyUp({ target }) {
+      this.onKeyUp && this.onKeyUp(target.value);
+    },
+
   },
 
   didInsertElement() {

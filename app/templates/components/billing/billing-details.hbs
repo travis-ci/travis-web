@@ -19,7 +19,7 @@
               @onChange={{action (mut this.info.address)}}
               as |field|
             >
-              <field.input name="address" placeholder="Address" />
+              <field.input @name="address" @placeholder="Address" />
             </form.field>
           </div>
           <div class='form-elem'>
@@ -54,7 +54,7 @@
               @onChange={{action (mut this.info.city)}}
               as |field|
             >
-              <field.input name="city" placeholder="City" />
+              <field.input @name="city" @placeholder="City" />
             </form.field>
           </div>
           <div class='flex flex--col flex-md-row w-full'>
@@ -68,7 +68,7 @@
                 @onChange={{action (mut this.info.zipCode)}}
                 as |field|
               >
-                <field.input name="postCode" placeholder="Post Code" />
+                <field.input @name="postCode" @placeholder="Post Code" />
               </form.field>
             </div>  
             <div class="form-elem">
@@ -80,7 +80,7 @@
                 @onChange={{action (mut this.info.vatId)}}
                 as |field|
               >
-                <field.input name="vatId" />
+                <field.input @name="vatId" />
               </form.field>
             </div>
           </div>
