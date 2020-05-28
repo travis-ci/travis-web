@@ -2,6 +2,7 @@ import Model, { attr, belongsTo } from '@ember-data/model';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 import { empty, equal, gt, uniqBy } from '@ember/object/computed';
+import { isEmpty } from '@ember/utils';
 
 export const PULL_REQUEST_MERGEABLE = {
   DRAFT: 'draft',
@@ -9,6 +10,10 @@ export const PULL_REQUEST_MERGEABLE = {
 };
 
 const DEFAULT_MERGE_MODE = 'deep_merge_append';
+
+const SOURCES = {
+  API: 'api'
+};
 
 export default Model.extend({
   created_at: attr(),
@@ -60,14 +65,16 @@ export default Model.extend({
   hasMessages: gt('messages.length', 0),
 
   apiConfigs: computed('uniqRawConfigs', function () {
-    const configs = this.get('uniqRawConfigs') || [];
-    return configs.filter(this.isApiConfig).map((config) => {
+    let configs = this.get('uniqRawConfigs') || [];
+    configs = configs.filter(this.isApiConfig);
+    configs = isEmpty(configs) ? [{}] : configs;
+    return configs.map((config) => {
       config.mergeMode = config.mergeMode || DEFAULT_MERGE_MODE;
       return config;
     });
   }),
 
   isApiConfig(config) {
-    return config.source.toString().startsWith('api');
+    return config.source.toString().startsWith(SOURCES.API);
   }
 });

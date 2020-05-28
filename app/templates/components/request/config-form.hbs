@@ -3,7 +3,7 @@
     @onSubmit={{perform this.triggerBuild}}
     as |form|
   >
-    <div class="request-configs-fields {{this.configMode}}" data-test-request-config-form='true'>
+    <div class="request-configs-fields" data-test-request-config-form='true'>
       <div class="request-configs-fields-container">
         <div class="form-elem">
           <form.field
@@ -57,7 +57,7 @@
       </div>
 
       {{#each this.configs as |config ix|}}
-        <div class="form-elem config-field">
+        <div class="form-elem config-field {{config.format}}">
           <div class="request-configs-config-header">
             <h4 class="request-configs-heading">
               Build config

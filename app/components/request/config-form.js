@@ -3,15 +3,8 @@ import { computed } from '@ember/object';
 import { task } from 'ember-concurrency';
 import { equal, reads } from '@ember/object/computed';
 import BranchSearching from 'travis/mixins/branch-searching';
+import SOURCES from 'travis/models/request';
 import { bindKeyboardShortcuts, unbindKeyboardShortcuts } from 'ember-keyboard-shortcuts';
-
-const CONFIG = {
-  SOURCE: {
-    API: 'api'
-  },
-  JAVASCRIPT: 'javascript',
-  YAML: 'yaml',
-};
 
 export default Component.extend(BranchSearching, {
   tagName: '',
@@ -23,7 +16,7 @@ export default Component.extend(BranchSearching, {
   rawConfigs: computed('preview.rawConfigs', function () {
     const configs = this.preview.rawConfigs;
     if (configs) {
-      return configs.reject(config => config.source.slice(0, 3) == CONFIG.SOURCE.API);
+      return configs.reject(config => config.source.slice(0, 3) == SOURCES.API);
     }
   }),
 
@@ -47,22 +40,6 @@ export default Component.extend(BranchSearching, {
   searchBranches: task(function* (query) {
     const result = yield this.searchBranch.perform(this.get('repo.id'), query);
     return result.mapBy('name');
-  }),
-
-  configMode: computed('config', function () {
-    const { config } = this;
-    const { JAVASCRIPT, YAML } = CONFIG;
-    return config && config.startsWith('{') ? JAVASCRIPT : YAML;
-  }),
-
-  configs: computed('request.uniqRawConfigs', 'config', function () {
-    const { SOURCE } = CONFIG;
-    let configs = this.get('request.uniqRawConfigs') || [];
-    configs = configs.reject(config => config.source === SOURCE.API);
-    if (this.config) {
-      configs = [{ config: this.config, source: SOURCE.API }, ...configs];
-    }
-    return configs;
   }),
 
   actions: {

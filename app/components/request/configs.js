@@ -2,7 +2,6 @@ import Component from '@ember/component';
 import { computed, set } from '@ember/object';
 import { equal, or, reads } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
-import { isEmpty } from '@ember/utils';
 import truncate from 'travis/utils/computed';
 import CanTriggerBuild from 'travis/mixins/components/can-trigger-build';
 
@@ -11,6 +10,11 @@ export const STATUSES = {
   OPEN: 'open',
   CUSTOMIZE: 'customize',
   PREVIEW: 'preview'
+};
+
+const FORMATS = {
+  JAVASCRIPT: 'javascript',
+  YAML: 'yaml',
 };
 
 export default Component.extend(CanTriggerBuild, {
@@ -67,15 +71,15 @@ export default Component.extend(CanTriggerBuild, {
   },
 
   formattedApiConfigs: computed('request.apiConfigs[].config', function () {
-    const apiConfigs = this.get('request.apiConfigs');
-    const configs = isEmpty(apiConfigs) ? [{}] : apiConfigs;
-    return configs.map(config => {
+    return this.get('request.apiConfigs').map(config => {
       try {
         config.config = JSON.stringify(JSON.parse(config.config), null, 2);
       } catch (e) {}
       if (config === '{}') {
         config.config = null;
       }
+      config.format = this.format(config.config);
+      console.log(config);
       return config;
     });
   }),
@@ -152,6 +156,10 @@ export default Component.extend(CanTriggerBuild, {
     });
   },
 
+  format(config) {
+    return config && config.startsWith('{') ? FORMATS.JAVASCRIPT : FORMATS.YAML;
+  },
+
   actions: {
     add(ix) {
       this.configs.insertAt(ix + 1, { config: null, mergeMode: 'deep_merge_append' });
@@ -163,6 +171,7 @@ export default Component.extend(CanTriggerBuild, {
       let debounce = false;
       if (key === 'config' || key == 'mergeMode') {
         set(this.configs[ix], key, value);
+        if (key === 'config') set(this.configs[ix], 'format', this.format(value));
         debounce = true;
       } else if (key === 'branch') {
         this.set('customBranch', value);
