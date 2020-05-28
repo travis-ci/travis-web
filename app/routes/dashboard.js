@@ -2,6 +2,7 @@
 import TravisRoute from 'travis/routes/basic';
 import { inject as service } from '@ember/service';
 import getLiveModel from 'travis/utils/live-model';
+import dashboardRepositoriesSort from 'travis/utils/dashboard-repositories-sort';
 
 export default TravisRoute.extend({
   needsAuth: true,
@@ -12,23 +13,18 @@ export default TravisRoute.extend({
 
   model(params) {
     const { store } = this;
-    return getLiveModel({
+    const liveModel = getLiveModel({
+      store,
       modelName: 'repo',
       query: {
         active: true,
         sort_by: 'current_build:desc',
         starred: true
       },
-      filter: (repo) => repo.active && repo.starred,
-      store,
+      filterFn: (repo) => repo.active && repo.starred,
+      sortFn: dashboardRepositoriesSort,
     });
 
-    // hash({
-    // starredRepos: this.store.query('repo', {
-    //   active: true,
-    //   sort_by: 'current_build:desc',
-    //   starred: true
-    // }),
-    // });
+    return liveModel;
   },
 });

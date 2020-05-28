@@ -1,16 +1,14 @@
 import Controller from '@ember/controller';
 import { task, taskGroup } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
-import { computed } from '@ember/object';
 import { reads } from '@ember/object/computed';
-import dashboardRepositoriesSort from 'travis/utils/dashboard-repositories-sort';
 
 export default Controller.extend({
   flashes: service(),
   api: service(),
 
   repos: reads('model.items'),
-  starredRepos: reads('model.filtered'),
+  starredRepos: reads('model.sorted'),
 
   starring: taskGroup().drop(),
 
@@ -37,14 +35,4 @@ export default Controller.extend({
                Please try again.`);
     }
   }).group('starring'),
-
-  // starredRepos: computed(
-  //   'model.items.[]',
-  //   'model.items.@each.currentBuildState',
-  //   'model.items.@each.currentBuildFinishedAt',
-  //   function () {
-  //     const repositories = this.get('model.items');
-  //     return repositories && repositories.toArray().sort(dashboardRepositoriesSort);
-  //   }
-  // )
 });

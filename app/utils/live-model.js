@@ -4,14 +4,16 @@ import { filter, sort } from '@ember/object/computed';
 import config from 'travis/config/environment';
 
 const { dashboardReposPerPage: limit } = config.pagination;
+import { inject as service } from '@ember/service';
 
 export default function getLiveModel({
   modelName,
   query,
-  fetch: fetchFn,
+  fetchFn,
   dynamicQueryOptions,
-  filter: filterFn,
-  sort: sortProps,
+  filterFn,
+  sortProps,
+  sortFn,
   store,
 } = {}) {
   const fetch = fetchFn || function ({ page }) {
@@ -21,33 +23,37 @@ export default function getLiveModel({
       limit,
       offset,
     };
-    console.log('FETCHING', modelName, qopts);
     return store.query(modelName, qopts);
   };
   const currentFilterFn = filterFn || ((item) => true);
   const items = store.peekAll(modelName);
+  const sorter = sortProps || sortFn || (() => true);
 
   const eor = EmberObject.extend({
     loader: dynamicQuery(function* ({ page = 1 }) {
-      console.log('dairy queen', page);
       return yield this.fetch({ page });
     }, dynamicQueryOptions),
 
     filtered: filter('items', currentFilterFn),
-    sorted: sort('filtered', 'sorter'),
-
+    sorted: typeof sorter === 'function' ?
+      sort('filtered', sorter) :
+      sort('filtered', 'sorter'),
   }).create({
     modelName,
     query,
     fetch,
     dynamicQueryOptions,
     filterer: currentFilterFn,
-    sorter: sortProps,
+    sortProps,
+    sortFn,
+    sorter,
 
     store,
 
     items,
   });
+
+  eor.loader.init();
 
   return eor;
 }
