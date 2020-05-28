@@ -21,7 +21,8 @@ export default TravisRoute.extend({
         sort_by: 'current_build:desc',
         starred: true
       },
-      filterFn: (repo) => repo.active && repo.starred,
+      filterFn: (repo) => !!repo.active && !!repo.starred,
+      filterKeys: ['active', 'starred'],
       sortFn: dashboardRepositoriesSort,
     });
 

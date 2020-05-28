@@ -12,6 +12,7 @@ export default function getLiveModel({
   fetchFn,
   dynamicQueryOptions,
   filterFn,
+  filterKeys,
   sortProps,
   sortFn,
   store,
@@ -26,6 +27,7 @@ export default function getLiveModel({
     return store.query(modelName, qopts);
   };
   const currentFilterFn = filterFn || ((item) => true);
+  const currentFilterKeys = filterKeys || [];
   const items = store.peekAll(modelName);
   const sorter = sortProps || sortFn || (() => true);
 
@@ -34,7 +36,7 @@ export default function getLiveModel({
       return yield this.fetch({ page });
     }, dynamicQueryOptions),
 
-    filtered: filter('items', currentFilterFn),
+    filtered: filter('items', currentFilterKeys, currentFilterFn),
     sorted: typeof sorter === 'function' ?
       sort('filtered', sorter) :
       sort('filtered', 'sorter'),
