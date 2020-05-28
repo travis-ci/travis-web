@@ -189,12 +189,16 @@ export default Component.extend({
     return args.message;
   },
 
-  invalid_visibility(_, args) {
+  invalid_ownership(_, args) {
     return args.message;
   },
 
-  invalid_ownership(_, args) {
-    return args.message;
+  import_not_allowed(key, args) {
+    return `${format(key)}: import not allowed from private repo ${format(args.repo)}`;
+  },
+
+  invalid_visibility(key, args) {
+    return `${format(key)}: cannot import from private repo ${format(args.repo)} to a public repo`;
   },
 
   not_allowed(_, args) {
