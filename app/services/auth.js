@@ -95,12 +95,12 @@ export default Service.extend({
     const { vcsId } = this.currentUser;
     let stillLoggedIn = false;
 
-    accounts.map( (user) => {
+    accounts.map((user) => {
       if (user.vcsId === vcsId) {
         stillLoggedIn = true;
       }
     });
-    
+
     if (!stillLoggedIn) {
       this.router.transitionTo('signin');
     }
