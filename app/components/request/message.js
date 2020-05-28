@@ -181,8 +181,8 @@ export default Component.extend({
     return 'invalid config format (must be a hash)';
   },
 
-  invalid_ref(_, args) {
-    return args.message;
+  invalid_ref(key, args) {
+    return `${format(key)}: invalid config source ref ${format(args.ref)}`;
   },
 
   too_many_imports(_, args) {
