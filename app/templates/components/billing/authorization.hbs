@@ -64,6 +64,7 @@
         <div class="billing-subscription__buttons--change">
           <BillingResubscribeButton 
             @account={{this.account}}
+            @githubSubscription={{this.githubSubscription}}
             @subscription={{this.subscription}}
             @resubscribe={{this.resubscribe}}
             @openPlansSelector={{fn (mut this.showPlansSelector) true}}

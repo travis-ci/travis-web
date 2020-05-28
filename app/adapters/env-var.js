@@ -1,7 +1,13 @@
 import ApplicationAdapter from 'travis/adapters/application';
+import { underscore } from '@ember/string';
+import { pluralize } from 'ember-inflector';
 
 export default ApplicationAdapter.extend({
   namespace: 'settings',
+
+  pathForType(type) {
+    return pluralize(underscore(type));
+  },
 
   buildURL(type, id, record) {
     let repoId, url;
