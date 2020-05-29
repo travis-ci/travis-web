@@ -54,6 +54,7 @@ export default Component.extend(CanTriggerBuild, {
   requestOrBranchSha: or('branchSha', 'requestSha', 'repoDefaultBranchLastCommitSha'),
   repoDefaultBranch: reads('repo.defaultBranch.name'),
   repoDefaultBranchLastCommitSha: reads('repo.defaultBranch.lastBuild.commit.sha'),
+  branchSha: null,
 
   defaultMergeMode: 'deep_merge_append',
   defaultMessage: computed(function () {
