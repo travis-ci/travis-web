@@ -79,7 +79,6 @@ export default Component.extend(CanTriggerBuild, {
         config.config = null;
       }
       config.format = this.format(config.config);
-      console.log(config);
       return config;
     });
   }),
