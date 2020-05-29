@@ -5,7 +5,7 @@ import { inject as service } from '@ember/service';
 import { isEmpty } from '@ember/utils';
 import truncate from 'travis/utils/computed';
 import CanTriggerBuild from 'travis/mixins/components/can-trigger-build';
-import DEFAULT_MERGE_MODE from 'travis/models/request';
+import { DEFAULT_MERGE_MODE } from 'travis/models/request';
 
 export const STATUSES = {
   CLOSED: 'closed',
@@ -75,16 +75,17 @@ export default Component.extend(CanTriggerBuild, {
   formattedApiConfigs: computed('request.apiConfigs[].config', function () {
     let configs = this.get('request.apiConfigs');
     configs = isEmpty(configs) ? [{}] : configs;
-    return configs.map(config => {
+    return configs.map(object => {
+      let { config, format, mergeMode } = object;
       try {
-        config.config = JSON.stringify(JSON.parse(config.config), null, 2);
+        config = JSON.stringify(JSON.parse(config), null, 2);
       } catch (e) {}
       if (config === '{}') {
-        config.config = null;
+        config = null;
       }
-      config.mergeMode = config.mergeMode || DEFAULT_MERGE_MODE;
-      config.format = this.format(config.config);
-      return config;
+      mergeMode = mergeMode || DEFAULT_MERGE_MODE;
+      format = format || this.format(config);
+      return { config, mergeMode, format };
     });
   }),
 
