@@ -83,6 +83,23 @@ export default Service.extend({
 
   redirectUrl: null,
 
+  init() {
+    this._super(...arguments);
+    window.addEventListener('focus', () => this.checkAuth());
+  },
+
+  checkAuth() {
+    if (!this.currentUser || !this.storage)
+      return;
+    const { accounts } = this.storage;
+    const { vcsId } = this.currentUser;
+    const stillLoggedIn = accounts.isAny('vcsId', vcsId);
+
+    if (!stillLoggedIn) {
+      this.router.transitionTo('signin');
+    }
+  },
+
   switchAccount(id, redirectUrl) {
     this.store.unloadAll();
     const targetAccount = this.accounts.findBy('id', id);
