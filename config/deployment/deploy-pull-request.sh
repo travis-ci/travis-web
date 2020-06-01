@@ -1,7 +1,5 @@
 export CLEANED_BRANCH_SUBDOMAIN=`echo $TRAVIS_PULL_REQUEST_BRANCH | tr '.' '-' | tr '/' '-' | tr '[:upper:]' '[:lower:]'`
 
-eval $(./config/deployment/store-redis-urls.sh)
-
 if [[ $TRAVIS_PULL_REQUEST_BRANCH = *staging* ]]
 then
   API_ENDPOINT=https://api-staging.travis-ci.org ember deploy org-staging-pull-request --activate

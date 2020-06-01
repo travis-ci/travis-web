@@ -78,18 +78,22 @@
   {{#if this.showAllowConfigImportsSwitch}}
     <section class="settings-section config-import">
       <h2 class="small-title display-inline">
-        Config Import
+        Clone or Import
       </h2>
       <ul class="settings-list--columns">
         <li>
           <SettingsSwitch
             @active={{this.model.settings.allow_config_imports}}
             @repo={{this.repo}}
-            @description="Allow importing config files from this repository"
+            @description="Allow files from this repository to be used in builds on other repositories"
             @key="allow_config_imports"
           />
         </li>
       </ul>
+      <p>
+        <strong>ON</strong> makes files from this repository to be used in builds on other repositories in case it is needed to pull down additional private dependencies.<br>
+        <strong>OFF</strong> means that no information from the repository is shared and it is possible some builds using private dependencies between repos can break.
+      </p>
     </section>
   {{/if}}
   <section class="settings-section">
