@@ -2,9 +2,9 @@ import EmberObject from '@ember/object';
 import dynamicQuery from 'travis/utils/dynamic-query';
 import { filter, sort } from '@ember/object/computed';
 import config from 'travis/config/environment';
+import { isEmpty } from '@ember/utils';
 
 const { dashboardReposPerPage: limit } = config.pagination;
-import { inject as service } from '@ember/service';
 
 export default function getLiveModel({
   modelName,
@@ -31,12 +31,16 @@ export default function getLiveModel({
   const items = store.peekAll(modelName);
   const sorter = sortProps || sortFn || (() => true);
 
+  const filterDep = isEmpty(currentFilterKeys) ?
+    'items.[]' :
+    `items.@each.{${currentFilterKeys.join(',')}}`;
+
   const eor = EmberObject.extend({
     loader: dynamicQuery(function* ({ page = 1 }) {
       return yield this.fetch({ page });
     }, dynamicQueryOptions),
 
-    filtered: filter('items', currentFilterKeys, currentFilterFn),
+    filtered: filter(filterDep, currentFilterKeys, currentFilterFn),
     sorted: typeof sorter === 'function' ?
       sort('filtered', sorter) :
       sort('filtered', 'sorter'),
