@@ -1,10 +1,7 @@
 import EmberObject from '@ember/object';
 import dynamicQuery from 'travis/utils/dynamic-query';
 import { filter, sort } from '@ember/object/computed';
-import config from 'travis/config/environment';
 import { isEmpty } from '@ember/utils';
-
-const { dashboardReposPerPage: limit } = config.pagination;
 
 export default function getLiveModel({
   modelName,
@@ -16,6 +13,7 @@ export default function getLiveModel({
   sortProps,
   sortFn,
   store,
+  limit,
 } = {}) {
   const fetch = fetchFn || function ({ page }) {
     const offset = (page - 1) * limit;

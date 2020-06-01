@@ -20,12 +20,10 @@ export default TravisRoute.extend({
 
   model(params) {
     const offset = (params.page - 1) * this.recordsPerPage;
+    const starredRepos = this.modelFor('dashboard').get('sorted');
+
     return hash({
-      starredRepos: this.store.filter('repo', {
-        active: true,
-        sort_by: 'current_build:desc',
-        starred: true
-      }, (repo) => repo.get('starred'), ['starred'], true),
+      starredRepos,
       repos: this.store.paginated('repo', {
         active: true,
         sort_by: 'current_build:desc',
