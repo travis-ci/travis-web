@@ -1,3 +1,82 @@
+  {{#if this.isVisible}}
+    {{!-- <div class="visibility-setting-list-item visibility-setting-list-item--save">
+      <button
+        class="settings-button"
+        onclick={{action "toggleConfirmationModal"}}
+        disabled={{this.isChangeNeutral}}
+        data-test-visibility-settings-submit
+      >
+        Save
+      </button>
+    </div> --}}
+    <Modal
+    @isVisible={{this.isShowingConfirmationModal}}
+    class="visibility-settings-modal"
+    data-test-visibility-settings-modal="true"
+  >
+    <div class="visibility-settings-modal__top">
+      <h3 class="visibility-settings-modal__header" data-test-visibility-settings-modal-title>
+        Prioritize your build
+      </h3>
+      <button
+        type="button"
+        title="Close modal"
+        class="pointer visibility-settings-modal__close-button"
+        autofocus={{this.focusOnModal}}
+        onclick={{action "toggleConfirmationModal"}}
+        data-test-visibility-settings-modal-close-button
+      >
+        <SvgImage @name="icon-failed" @class="icon" />
+      </button>
+    </div>
+    <div class="visibility-settings-modal__body">
+      <p data-test-visibility-settings-modal-description>
+        Bypass your scheduled build by fast tracking this one.
+      </p>
+      <h4>
+        SELECT AN OPTION
+      </h4>
+      <div data-test-visibility-settings-list>
+        {{#each this.options as |option|}}
+          {{#let (eq this.selectionKey option.key) as |selected|}}
+            <button
+              data-test-visibility-settings-list-item
+              data-test-visibility-settings-list-item-selected={{selected}}
+              autofocus={{and this.focusOnList selected}}
+              class="visibility-setting-list-item {{if selected 'visibility-setting-list-item--selected'}}"
+              onclick={{action (mut this.selectionKey) option.key}}
+            >
+              <span class="visibility-setting-list-item__radio"></span>
+              <span class="visibility-setting-list-item__description" data-test-visibility-settings-list-item-description>
+                {{option.description}}
+              </span>
+            </button>
+          {{/let}}
+        {{/each}}
+      </div>
+    </div>
+    <br />
+    <div class="visibility-settings-modal__controls">
+      <button
+        data-test-repo-actions-modal-confirm-button
+        role="button"
+        class="button button--blue"
+        onclick={{action "confirm"}}
+      >
+        Prioritize Build
+      </button>
+      <button
+        data-test-repo-actions-modal-cancel-button
+        role="button"
+        class="button button--red"
+        onclick={{action "toggleConfirmationModal"}}
+      >
+        Cancel
+      </button>
+    </div>
+  </Modal>
+{{/if}}
+
 {{#if this.canCancel}}
   {{#if this.cancel.isRunning}}
     <LoadingIndicator @height={{true}} />
@@ -19,6 +98,30 @@
         <span class="label-align">
           Cancel {{this.type}}
         </span>
+      </button>
+    </div>
+    <div class="action-button-container">
+      <button
+        data-test-repo-actions-cancel-button
+        class="action-button--restart"
+        aria-label="Restart {{this.type}}"
+        type="button"
+        {{action (perform this.restart)}}
+      >
+        {{#if this.tooltips}}
+          <EmberTooltip class={{if this.mobilelabels "hidden-on-mobile"}}>
+            Restart {{this.type}}
+          </EmberTooltip>
+        {{/if}}
+        <SvgImage @name="icon-restart" @class="icon" />
+        <button 
+          type="button"
+          class="trigger-build-anchor"
+          onclick={{action "toggleConfirmationModal"}}
+          disabled={{this.item.canDebug}}
+        >
+          Prioritize
+        </button>
       </button>
     </div>
   {{/if}}

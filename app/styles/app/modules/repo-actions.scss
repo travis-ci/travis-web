@@ -1,0 +1,107 @@
+.repo-actions-list {
+    list-style: none;
+    padding: .5rem 1rem;
+    font-style: italic;
+    color: $cement-grey;
+    background-color: #f5fbfb;
+    border-radius: 2px;
+  
+    &-item {
+      display: flex;
+      justify-content: flex-start;
+      align-items: baseline;
+      margin: .5rem 0;
+      padding: 0;
+      background-color: transparent;
+      cursor: pointer;
+      outline: none;
+  
+      &__description {
+        background-color: transparent;
+        cursor: pointer;
+        text-align: left;
+        color: $cement-grey;
+      }
+  
+      &__radio {
+        display: inline-block;
+        border: 1px solid $oxide-blue;
+        border-radius: 50%;
+        padding: 2px;
+        line-height: 0;
+        background-color: transparent;
+        cursor: pointer;
+        margin-right: 0.5rem;
+  
+        &::before {
+          content: '';
+          display: inline-block;
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+          background-color: transparent;
+        }
+      }
+  
+      &--selected &__radio::before {
+        background-color: $oxide-blue;
+      }
+    }
+  }
+  
+  .settings-button {
+    margin-top: .5rem;
+    padding: .25rem 1rem;
+    border-radius: 0.25rem;
+    text-transform: uppercase;
+    background-color: $oxide-blue;
+    font-size: 12px;
+    color: #ffffff;
+    border: 1px solid $oxide-blue;
+    cursor: pointer;
+  
+    &:hover {
+      background-color: darken($oxide-blue, 10);
+      border-color: darken($oxide-blue, 10);
+    }
+  
+    &[disabled] {
+      color: $oxide-blue;
+      border-color: $oxide-blue;
+      background-color: transparent;
+      cursor: default;
+    }
+  }
+  
+  .repo-actions-modal {
+    padding: 16px 20px 20px;
+    font-style: normal;
+  
+    & &__top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  
+    & &__close-button {
+      margin: 0;
+      padding: 0;
+      outline: none;
+    }
+  
+    & &__header {
+      font-size: 22px;
+      font-weight: 300;
+      color: $oxide-blue;
+      margin: 0 2rem 0 0;
+    }
+  
+    & &__body {
+      color: $asphalt-grey;
+    }
+  
+    & &__controls .button {
+      margin: 0 1rem 0 0;
+    }
+  }
+  
