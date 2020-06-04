@@ -101,27 +101,14 @@
       </button>
     </div>
     <div class="action-button-container">
-      <button
-        data-test-repo-actions-cancel-button
-        class="action-button--restart"
-        aria-label="Restart {{this.type}}"
+      <SvgImage @name="icon-restart" @class="icon" />
+      <button 
         type="button"
-        {{action (perform this.restart)}}
+        class="trigger-build-anchor"
+        onclick={{action "toggleConfirmationModal"}}
+        disabled={{this.item.canDebug}}
       >
-        {{#if this.tooltips}}
-          <EmberTooltip class={{if this.mobilelabels "hidden-on-mobile"}}>
-            Restart {{this.type}}
-          </EmberTooltip>
-        {{/if}}
-        <SvgImage @name="icon-restart" @class="icon" />
-        <button 
-          type="button"
-          class="trigger-build-anchor"
-          onclick={{action "toggleConfirmationModal"}}
-          disabled={{this.item.canDebug}}
-        >
-          Prioritize
-        </button>
+        Prioritize
       </button>
     </div>
   {{/if}}

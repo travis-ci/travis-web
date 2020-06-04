@@ -159,4 +159,14 @@ export default Model.extend(DurationCalculations, {
       return m.isValid() ? m.format('lll') : 'not finished yet';
     }
   }),
+
+  increasePriority() {
+    const url = `/build/${this.id}/cancel`;
+    console.log(url);
+    return this.api.post(url);
+  },
+
+  anPrioritizeBuild() {
+
+  }
 });

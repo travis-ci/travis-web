@@ -13,6 +13,7 @@ export default Component.extend({
   flashes: service(),
   features: service(),
   auth: service(),
+  api: service(),
 
   classNames: ['repo-main-tools'],
   classNameBindings: ['labelless', 'mobilelabels'],
@@ -49,7 +50,22 @@ export default Component.extend({
   isShowingModal: false,
   isShowingConfirmationModal: false,
   isNotShowingConfirmationModal: not('isShowingConfirmationModal'),
-  onConfirm() {},
+
+  onConfirm() {
+    // eslint-disable-next-line
+    // const repoId = this.modelFor('repo').get('id');
+    // let allTheBranches = ArrayProxy.create();
+
+    // const path = `/repo/${repoId}/branches`;
+    // const includes = 'build.commit,build.created_by&limit=100';
+    // const url = `${path}?include=${includes}`;
+
+    // return this.api.get(url).then((response) => {
+    //   console.log(response);
+    //   allTheBranches = response.branches;
+    //   return allTheBranches;
+    // });
+  },
 
   doAutofocus: false,
   focusOnList: and('doAutofocus', 'isNotShowingConfirmationModal'),
