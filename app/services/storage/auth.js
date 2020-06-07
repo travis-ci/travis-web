@@ -31,23 +31,21 @@ export default Service.extend({
     }
   }),
 
-  accounts: computed({
-    get() {
-      const accountsData = storage.getItem('travis.auth.accounts');
-      const accounts = parseWithDefault(accountsData, []).map(account =>
-        extractAccountRecord(this.store, account)
-      );
-      accounts.addArrayObserver(this, {
-        willChange: 'persistAccounts',
-        didChange: 'persistAccounts'
-      });
-      return accounts;
-    },
-    set(key, accounts) {
-      this.persistAccounts(accounts);
-      return accounts;
-    }
-  }).volatile(),
+  get accounts() {
+    const accountsData = storage.getItem('travis.auth.accounts');
+    const accounts = parseWithDefault(accountsData, []).map(account =>
+      extractAccountRecord(this.store, account)
+    );
+    accounts.addArrayObserver(this, {
+      willChange: 'persistAccounts',
+      didChange: 'persistAccounts'
+    });
+    return accounts;
+  },
+  set accounts(accounts) {
+    this.persistAccounts(accounts);
+    return accounts;
+  },
 
   persistAccounts(newValue) {
     const records = (newValue || []).map(record => serializeUserRecord(record));

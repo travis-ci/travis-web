@@ -4,7 +4,7 @@ import { inject as service } from '@ember/service';
 export default TravisRoute.extend({
   auth: service(),
 
-  model(params) {
+  model() {
     let currentUserId = this.get('auth.currentUser.id');
     let eventTypes = ['api', 'pull_request', 'push'];
     let query = {
@@ -13,7 +13,8 @@ export default TravisRoute.extend({
       include: 'build.jobs'
     };
 
-    return this.store.filter('build', query, build =>
-      build.get('createdBy.id') == currentUserId && eventTypes.includes(build.get('eventType')));
+    return this.store.filter('build', query, ({ createdBy, eventType }) => (
+      createdBy.get('id') == currentUserId && eventTypes.includes(eventType)
+    ));
   },
 });

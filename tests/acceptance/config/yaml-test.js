@@ -66,9 +66,10 @@ module('Acceptance | config/yaml', function (hooks) {
       await page.yamlTab.click();
 
       assert.equal(document.title, `Config - Build #${this.build.number} - travis-ci/travis-web - Travis CI`);
-      assert.equal(page.yaml[0].codeblock.text, 'language: jortle sudo: tortle');
-      assert.equal(page.yaml[0].source, '.travis.yml');
-      assert.equal(page.yaml[0].codeblock.id, codeblockName(source));
+      const config = page.yaml.objectAt(0);
+      assert.equal(config.codeblock.text, 'language: jortle sudo: tortle');
+      assert.equal(config.source, '.travis.yml');
+      assert.equal(config.codeblock.id, codeblockName(source));
     });
 
     test('shows build messages when they exist', async function (assert) {

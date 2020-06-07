@@ -110,7 +110,7 @@ export default create({
 
   yaml: collection('.inner-yaml-container', {
     codeblock: {
-      scope: '[data-test-yaml]',
+      scope: '[data-test-yaml]:first',
       text: text(),
       id: attribute('id'),
     },
