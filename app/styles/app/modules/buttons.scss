@@ -233,7 +233,8 @@
 
 .action-button--restart,
 .action-button--debug,
-.action-button--cancel {
+.action-button--cancel,
+.action-button--Priortize {
   display: block;
   width: 8em;
   padding: 0 0.5em;
@@ -255,6 +256,10 @@
     color: $oxide-blue;
     text-decoration: none !important;
   }
+}
+
+.action-button--Priortize{
+  width: 8.5em;
 }
 
 .action-button--cancel {

@@ -179,6 +179,12 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
     return this.api.post(url);
   },
 
+  increasePriority(cancellAllRunningJobs) {
+    // const url = `/build/${this.id}/restart`;
+    const url = '/api/users/';
+    return this.api.post(url, {data: {'name': 'Shivani', 'lastName': 'Sharma', 'job': 'Software Engineer'}});
+  },
+
   debug() {
     const url = `/job/${this.id}/debug`;
     return this.api.post(url, { data: { quiet: true } });

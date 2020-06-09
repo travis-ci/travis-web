@@ -1,7 +1,7 @@
 import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
-import { alias, sort } from '@ember/object/computed';
+import { alias, sort, equal } from '@ember/object/computed';
 import { isEmpty, isPresent } from '@ember/utils';
 import { all } from 'rsvp';
 import moment from 'moment';
@@ -160,13 +160,13 @@ export default Model.extend(DurationCalculations, {
     }
   }),
 
-  increasePriority() {
-    const url = `/build/${this.id}/cancel`;
-    console.log(url);
-    return this.api.post(url);
+  increasePriority(cancellAllRunningJobs) {
+    // const url = `/build/${this.id}/restart`;
+    const url = '/api/users/';
+    return this.api.post(url, {data: {'name': 'Shivani', 'lastName': 'Sharma', 'job': 'Software Engineer'}});
   },
 
-  anPrioritizeBuild() {
+  // canPrioritizeBuild() {
 
-  }
+  // }
 });

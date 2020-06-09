@@ -14,6 +14,7 @@ export default Component.extend({
   features: service(),
   auth: service(),
   api: service(),
+  jobState: service(),
 
   classNames: ['repo-main-tools'],
   classNameBindings: ['labelless', 'mobilelabels'],
@@ -29,43 +30,32 @@ export default Component.extend({
   // `displayValue` is used to generate text for the modal
   // `description` is for the label next to the radio button
   // `modalText` can be used to override the generated modal text
-  options: computed(() => [
-    {
-      key: 'private1',
-      displayValue: 'item1',
-      description: 'Place build at the top of the queue',
-      modalText: 'Place build at top of the queue',
-    },
-    {
-      key: 'private2',
-      displayValue: 'item2',
-      description: 'Place build at the top of the queue and cancel all running jobs',
-      modalText: 'Place build at the top of the queue and cancel all running jobs',
-    }
-  ]),
+  options: computed('type', function () {
+    let type = this.type;
+    let arr = [
+      {
+        key: 'private1',
+        displayValue: 'item1',
+        cancelRunningJobsVal: false,
+        description: `Place ${type} at the top of the queue`,
+        modalText: `Place ${type} at top of the queue`,
+      },
+      {
+        key: 'private2',
+        displayValue: 'item2',
+        cancelRunningJobsVal: true,
+        description: `Place ${type} at the top of the queue and cancel all running jobs`,
+        modalText: `Place ${type} at the top of the queue and cancel all running jobs`,
+      }
+    ];
+    return arr;
+  }),
 
-  isEmpty: empty('options'),
-  isVisible: not('isEmpty'),
+  // isEmpty: empty('options'),
+  // isVisible: not('isEmpty'),
 
-  isShowingModal: false,
   isShowingConfirmationModal: false,
   isNotShowingConfirmationModal: not('isShowingConfirmationModal'),
-
-  onConfirm() {
-    // eslint-disable-next-line
-    // const repoId = this.modelFor('repo').get('id');
-    // let allTheBranches = ArrayProxy.create();
-
-    // const path = `/repo/${repoId}/branches`;
-    // const includes = 'build.commit,build.created_by&limit=100';
-    // const url = `${path}?include=${includes}`;
-
-    // return this.api.get(url).then((response) => {
-    //   console.log(response);
-    //   allTheBranches = response.branches;
-    //   return allTheBranches;
-    // });
-  },
 
   doAutofocus: false,
   focusOnList: and('doAutofocus', 'isNotShowingConfirmationModal'),
@@ -153,6 +143,8 @@ export default Component.extend({
   canCancel: and('userHasPullPermissionForRepo', 'item.canCancel'),
   canRestart: and('userHasPullPermissionForRepo', 'item.canRestart'),
   canDebug: and('userHasPushPermissionForRepo', 'item.canDebug'),
+  canPrioritize: reads(''),
+  isQueued: reads('item.notStarted'),
 
   tooltips: or('labelless', 'mobilelabels'),
 
@@ -174,6 +166,7 @@ export default Component.extend({
     let type = this.type;
 
     yield eventually(this.item, (record) => {
+      // console.log(Record);
       record.restart().then(() => {
         this.flashes.success(`The ${type} was successfully restarted.`);
       }, () => {
@@ -197,6 +190,20 @@ export default Component.extend({
     });
   }).group('restarters'),
 
+  increasePriority: task(function* () {
+    let type = this.type;
+    this.set('isLoading', true);
+    yield eventually(this.item, (record) => {
+      record.increasePriority(this.selection.cancelRunningJobsVal).then((response) => {
+        this.flashes.success(`The ${type} was successfully prioritized.`);
+        this.set('isLoading', false);
+        this.set('isShowingConfirmationModal', false);
+      }, () => {
+        this.flashes.error(`An error occurred. The ${type} could not be prioritized.`);
+      });
+    });
+  }).drop(),
+
   displayFlashError(status, action) {
     let type = this.type;
     if (status === 422 || status === 400) {
@@ -211,16 +218,15 @@ export default Component.extend({
     }
   },
   actions: {
-    // triggerPrioritizeBuildModal() {
-    //   this.toggleProperty('isShowingModal');
-    // },
     confirm() {
       this.set('isShowingConfirmationModal', false);
       this.onConfirm(this.selectionKey);
     },
     toggleConfirmationModal() {
-      this.toggleProperty('isShowingConfirmationModal');
-      this.set('doAutofocus', true);
+      if (!this.isLoading) {
+        this.toggleProperty('isShowingConfirmationModal');
+        this.set('doAutofocus', true);
+      }
     },
   }
 
