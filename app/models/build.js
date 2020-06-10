@@ -13,6 +13,8 @@ export default Model.extend(DurationCalculations, {
 
   branchName: alias('branch.name'),
 
+  permissions: attr(),
+
   state: attr(),
   number: attr('number'),
   message: attr('string'),
