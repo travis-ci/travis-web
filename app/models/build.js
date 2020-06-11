@@ -12,7 +12,7 @@ export default Model.extend(DurationCalculations, {
   api: service(),
 
   branchName: alias('branch.name'),
-
+  permissions: attr(),
   state: attr(),
   number: attr('number'),
   message: attr('string'),
@@ -164,9 +164,5 @@ export default Model.extend(DurationCalculations, {
     // const url = `/build/${this.id}/restart`;
     const url = '/api/users/';
     return this.api.post(url, {data: {'name': 'Shivani', 'lastName': 'Sharma', 'job': 'Software Engineer'}});
-  },
-
-  // canPrioritizeBuild() {
-
-  // }
+  }
 });

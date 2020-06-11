@@ -22,7 +22,10 @@ export default Component.extend({
     'esc': 'toggleConfirmationModal'
   },
 
+  organization: reads('model.organization'),
+
   user: alias('auth.currentUser'),
+  showCancelModal: false,
 
   // Information about elements of options array:
   //
@@ -30,29 +33,28 @@ export default Component.extend({
   // `displayValue` is used to generate text for the modal
   // `description` is for the label next to the radio button
   // `modalText` can be used to override the generated modal text
-  options: computed('type', function () {
-    let type = this.type;
+  options: computed(() => {
     let arr = [
       {
         key: 'private1',
         displayValue: 'item1',
         cancelRunningJobsVal: false,
-        description: `Place ${type} at the top of the queue`,
-        modalText: `Place ${type} at top of the queue`,
+        description: 'Place build at the top of the queue',
+        modalText: 'Place build at top of the queue',
       },
       {
         key: 'private2',
         displayValue: 'item2',
         cancelRunningJobsVal: true,
-        description: `Place ${type} at the top of the queue and cancel all running jobs`,
-        modalText: `Place ${type} at the top of the queue and cancel all running jobs`,
+        description: 'Place build at the top of the queue and cancel all running jobs',
+        modalText: 'Place build at the top of the queue and cancel all running jobs',
       }
     ];
     return arr;
   }),
 
-  // isEmpty: empty('options'),
-  // isVisible: not('isEmpty'),
+  isEmpty: empty('options'),
+  isVisible: not('isEmpty'),
 
   isShowingConfirmationModal: false,
   isNotShowingConfirmationModal: not('isShowingConfirmationModal'),

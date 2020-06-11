@@ -1,79 +1,72 @@
-{{!-- {{#if this.isVisible}} --}}
-  <Modal
-    @isVisible={{this.isShowingConfirmationModal}}
-    class="visibility-settings-modal"
-    data-test-visibility-settings-modal="true"
-  >
-    <div class="visibility-settings-modal__top">
-      <h3 class="visibility-settings-modal__header" data-test-visibility-settings-modal-title>
-        Prioritize your {{this.type}}
-      </h3>
-      <button
-        type="button"
-        title="Close modal"
-        class="pointer visibility-settings-modal__close-button"
-        autofocus={{this.focusOnModal}}
-        onclick={{action "toggleConfirmationModal"}}
-        data-test-visibility-settings-modal-close-button
-        disabled={{this.isLoading}}
-      >
-        <SvgImage @name="icon-failed" @class="icon" />
-      </button>
+<Modal
+  @isVisible={{this.isShowingConfirmationModal}}
+  class="repo-actions-modal"
+>
+  <div class="repo-actions-modal__top">
+    <h3 class="repo-actions-modal__header">
+      Prioritize your build
+    </h3>
+    <button
+      type="button"
+      title="Close modal"
+      class="pointer repo-actions-modal__close-button"
+      autofocus={{this.focusOnModal}}
+      onclick={{action "toggleConfirmationModal"}}
+      disabled={{this.isLoading}}
+    >
+      <SvgImage @name="icon-failed" @class="icon" />
+    </button>
+  </div>
+  <div class="repo-actions-modal__body">
+    <p>
+      Bypass your scheduled build by fast tracking this one.
+    </p>
+    <p class="label-align">
+      SELECT AN OPTION
+    </p>
+    <div>
+      {{#each this.options as |option|}}
+        {{#let (eq this.selectionKey option.key) as |selected|}}
+          <button
+            data-test-repo-actions-item-selected={{selected}}
+            autofocus={{and this.focusOnList selected}}
+            class="repo-actions-item {{if selected 'repo-actions-item--selected'}}"
+            onclick={{action (mut this.selectionKey) option.key}}
+          >
+            <span class="repo-actions-item__radio"></span>
+            <span class="repo-actions-item__description">
+              {{option.description}}
+            </span>
+          </button>
+        {{/let}}
+      {{/each}}
     </div>
-    <div class="visibility-settings-modal__body">
-      <p data-test-visibility-settings-modal-description>
-        Bypass your scheduled {{this.type}} by fast tracking this one.
-      </p>
-      <p class="label-align">
-        SELECT AN OPTION
-      </p>
-      <div data-test-visibility-settings-list>
-        {{#each this.options as |option|}}
-          {{#let (eq this.selectionKey option.key) as |selected|}}
-            <button
-              data-test-visibility-settings-list-item
-              data-test-visibility-settings-list-item-selected={{selected}}
-              autofocus={{and this.focusOnList selected}}
-              class="visibility-setting-list-item {{if selected 'visibility-setting-list-item--selected'}}"
-              onclick={{action (mut this.selectionKey) option.key}}
-            >
-              <span class="visibility-setting-list-item__radio"></span>
-              <span class="visibility-setting-list-item__description" data-test-visibility-settings-list-item-description>
-                {{option.description}}
-              </span>
-            </button>
-          {{/let}}
-        {{/each}}
-      </div>
-    </div>
-    <br />
-    <div class="visibility-settings-modal__controls">
-      <button
-        data-test-repo-actions-modal-confirm-button
-        type="button"
-        class="button button--blue"
-        onclick={{action (perform this.increasePriority)}}
-      >
-      {{#if this.isLoading}}
-        <LoadingIndicator/>
-      {{/if}}
-      {{#if (not this.isLoading)}}
-        <span>Prioritize {{this.type}}</span>
-      {{/if}}
-      
-      </button>
-      <button
-        data-test-repo-actions-modal-cancel-button
-        role="button"
-        class="button button--red"
-        onclick={{action "toggleConfirmationModal"}}
-        disabled={{this.isLoading}}
-      >
-        Cancel
-      </button>
-    </div>
-  </Modal>
-{{!-- {{/if}} --}}
+  </div>
+  <br />
+  <div class="repo-actions-modal__controls">
+    <button
+      type="button"
+      class="button button--blue"
+      onclick={{action (perform this.increasePriority)}}
+    >
+    {{#if this.isLoading}}
+      <LoadingIndicator class="loading-indicator"/><span>Prioritizing the build</span>
+    {{else}}
+    <span>Prioritize build</span>
+    {{/if}}
+    </button>
+    {{#if (not this.isLoading)}}
+    <button
+      role="button"
+      class="button button--red"
+      onclick={{action "toggleConfirmationModal"}}
+      disabled={{this.isLoading}}
+    >
+      Cancel
+    </button>
+    {{/if}}
+  </div>
+</Modal> 
 
 {{#if this.canCancel}}
   {{#if this.cancel.isRunning}}
@@ -99,30 +92,32 @@
       </button>
     </div>
   {{/if}}
-  {{#if this.isQueued}}
-  <div class="action-button-container">
-      {{#if (not this.userHasPushPermissionForRepo)}}
-        <EmberTooltip
-        class={{if this.mobilelabels "hidden-on-mobile"}} 
-        @text="This action can be triggered only by users with push access to the repository" />
-      {{/if}}
-    <button 
-      type="button"
-      class="action-button--Priortize"
-      onclick={{action "toggleConfirmationModal"}}
-      disabled={{not this.userHasPushPermissionForRepo}}
-    >
-      {{#if this.tooltips}}
-        <EmberTooltip class={{if this.mobilelabels "hidden-on-mobile"}}>
-          Prioritize {{this.type}}
-        </EmberTooltip>
-      {{/if}}
-      <SvgImage @name="icon-priortize" @class="icon" />
-      <span class="label-align">
-        Prioritize {{this.type}}
-      </span>
-    </button>
-  </div>
+  {{#if (and (not this.build.priority) this.isQueued)}}
+    <div class="action-button-container">
+        {{#if (not this.userHasPushPermissionForRepo)}}
+          <EmberTooltip
+          class={{if this.mobilelabels "hidden-on-mobile"}} 
+          @text="This action can be triggered only by users with push access to the repository" />
+        {{/if}}
+      <button 
+        type="button"
+        class="action-button--Priortize"
+        {{!-- onclick={{action "increasePriority"}} --}}
+        {{!-- {{on 'click' (fn (mut this.showCancelModal) true)}} --}}
+        onclick={{action "toggleConfirmationModal"}}
+        disabled={{not this.userHasPushPermissionForRepo}}
+      >
+        {{#if this.tooltips}}
+          <EmberTooltip class={{if this.mobilelabels "hidden-on-mobile"}}>
+            Prioritize build
+          </EmberTooltip>
+        {{/if}}
+        <SvgImage @name="icon-priortize" @class="icon" />
+        <span class="label-align">
+          Prioritize build
+        </span>
+      </button>
+    </div>
   {{/if}}
 {{else if this.canRestart}}
   {{#if this.restarters.isRunning}}
