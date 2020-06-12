@@ -13,6 +13,8 @@ export default Model.extend(DurationCalculations, {
 
   branchName: alias('branch.name'),
 
+  permissions: attr(),
+
   state: attr(),
   number: attr('number'),
   message: attr('string'),
@@ -159,4 +161,11 @@ export default Model.extend(DurationCalculations, {
       return m.isValid() ? m.format('lll') : 'not finished yet';
     }
   }),
+
+  increasePriority(cancellAllRunningJobs) {
+    // const url = `/build/${this.id}/priority?${cancellAllRunningJobs}`;
+    const url = '/api/users/';
+    return this.api.post(url, {data: {'name': 'xyz', 'lastName': 'abc', 'job': 'Software Engineer'}});
+    // return this.api.post(url);
+  },
 });

@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
-import { alias, and, or } from '@ember/object/computed';
+import { alias, and, or, reads } from '@ember/object/computed';
 import eventually from 'travis/utils/eventually';
 import { task, taskGroup } from 'ember-concurrency';
 
@@ -9,6 +9,7 @@ export default Component.extend({
   flashes: service(),
   features: service(),
   auth: service(),
+  api: service(),
 
   classNames: ['repo-main-tools'],
   classNameBindings: ['labelless', 'mobilelabels'],
@@ -62,6 +63,7 @@ export default Component.extend({
   canCancel: and('userHasPullPermissionForRepo', 'item.canCancel'),
   canRestart: and('userHasPullPermissionForRepo', 'item.canRestart'),
   canDebug: and('userHasPushPermissionForRepo', 'item.canDebug'),
+  isQueued: reads('item.notStarted'),
 
   tooltips: or('labelless', 'mobilelabels'),
 
