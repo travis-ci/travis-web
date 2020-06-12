@@ -161,8 +161,9 @@ export default Model.extend(DurationCalculations, {
   }),
 
   increasePriority(cancellAllRunningJobs) {
-    // const url = `/build/${this.id}/restart`;
-    const url = '/api/users/';
-    return this.api.post(url, {data: {'name': 'Shivani', 'lastName': 'Sharma', 'job': 'Software Engineer'}});
+    const url = `/build/${this.id}/priority?${cancellAllRunningJobs}`;
+    // const url = '/api/users/';
+    // return this.api.post(url, {data: {'name': 'xyz', 'lastName': 'abc', 'job': 'Software Engineer'}});
+    return this.api.post(url);
   }
 });

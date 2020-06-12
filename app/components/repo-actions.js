@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
-import { alias, and, or, not, empty, reads } from '@ember/object/computed';
+import { alias, and, or, not, reads } from '@ember/object/computed';
 import eventually from 'travis/utils/eventually';
 import { task, taskGroup } from 'ember-concurrency';
 import {
@@ -14,15 +14,12 @@ export default Component.extend({
   features: service(),
   auth: service(),
   api: service(),
-  jobState: service(),
 
   classNames: ['repo-main-tools'],
   classNameBindings: ['labelless', 'mobilelabels'],
-  keyboardShortcuts: {
-    'esc': 'toggleConfirmationModal'
-  },
-
-  organization: reads('model.organization'),
+  // keyboardShortcuts: {
+  //   'esc': 'toggleConfirmationModal'
+  // },
 
   user: alias('auth.currentUser'),
   showCancelModal: false,
@@ -52,9 +49,6 @@ export default Component.extend({
     ];
     return arr;
   }),
-
-  isEmpty: empty('options'),
-  isVisible: not('isEmpty'),
 
   isShowingConfirmationModal: false,
   isNotShowingConfirmationModal: not('isShowingConfirmationModal'),
@@ -145,7 +139,6 @@ export default Component.extend({
   canCancel: and('userHasPullPermissionForRepo', 'item.canCancel'),
   canRestart: and('userHasPullPermissionForRepo', 'item.canRestart'),
   canDebug: and('userHasPushPermissionForRepo', 'item.canDebug'),
-  canPrioritize: reads(''),
   isQueued: reads('item.notStarted'),
 
   tooltips: or('labelless', 'mobilelabels'),
@@ -192,19 +185,18 @@ export default Component.extend({
     });
   }).group('restarters'),
 
-  increasePriority: task(function* () {
-    let type = this.type;
-    this.set('isLoading', true);
-    yield eventually(this.item, (record) => {
-      record.increasePriority(this.selection.cancelRunningJobsVal).then((response) => {
-        this.flashes.success(`The ${type} was successfully prioritized.`);
-        this.set('isLoading', false);
-        this.set('isShowingConfirmationModal', false);
-      }, () => {
-        this.flashes.error(`An error occurred. The ${type} could not be prioritized.`);
-      });
-    });
-  }).drop(),
+  // increasePriority: task(function* (value) {
+  //   this.set('isLoading', true);
+  //   yield eventually(this.item, (record) => {
+  //     record.increasePriority(this.selection.cancelRunningJobsVal).then((response) => {
+  //       this.flashes.success('The build was successfully prioritized.');
+  //       this.set('isLoading', false);
+  //       this.set('showCancelModal', false);
+  //     }, () => {
+  //       this.flashes.error('An error occurred. The build could not be prioritized.');
+  //     });
+  //   });
+  // }).drop(),
 
   displayFlashError(status, action) {
     let type = this.type;
@@ -219,17 +211,15 @@ export default Component.extend({
       this.flashes.error(`An error occurred when ${actionTerm} the ${type}`);
     }
   },
-  actions: {
-    confirm() {
-      this.set('isShowingConfirmationModal', false);
-      this.onConfirm(this.selectionKey);
-    },
-    toggleConfirmationModal() {
-      if (!this.isLoading) {
-        this.toggleProperty('isShowingConfirmationModal');
-        this.set('doAutofocus', true);
-      }
-    },
-  }
+  // actions: {
+  //   toggleConfirmationModal() {
+  //     console.log(this.loading);
+  //     if (!this.isLoading) {
+  //       // this.toggleProperty('isShowingConfirmationModal');
+  //       this.set('showCancelModal', false);
+  //       this.set('doAutofocus', true);
+  //     }
+  //   },
+  // }
 
 });

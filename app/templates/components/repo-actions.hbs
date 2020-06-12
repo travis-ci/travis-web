@@ -1,4 +1,4 @@
-<Modal
+{{!-- <Modal
   @isVisible={{this.isShowingConfirmationModal}}
   class="repo-actions-modal"
 >
@@ -66,7 +66,15 @@
     </button>
     {{/if}}
   </div>
-</Modal> 
+</Modal>  --}}
+
+<Dialogs::PrioritizeBuildModal 
+  @isOpen={{this.showCancelModal}}
+  @onClose={{fn (mut this.showCancelModal) false}}
+  @increasePriority={{this.increasePriority}}
+  @build={{this.build}}
+  @job={{this.job}}
+/>
 
 {{#if this.canCancel}}
   {{#if this.cancel.isRunning}}
@@ -102,9 +110,8 @@
       <button 
         type="button"
         class="action-button--Priortize"
-        {{!-- onclick={{action "increasePriority"}} --}}
-        {{!-- {{on 'click' (fn (mut this.showCancelModal) true)}} --}}
-        onclick={{action "toggleConfirmationModal"}}
+        {{on 'click' (fn (mut this.showCancelModal) true)}}
+        {{!-- @onClick={{action "toggleConfirmationModal"}} --}}
         disabled={{not this.userHasPushPermissionForRepo}}
       >
         {{#if this.tooltips}}
@@ -119,6 +126,7 @@
       </button>
     </div>
   {{/if}}
+  
 {{else if this.canRestart}}
   {{#if this.restarters.isRunning}}
     <LoadingIndicator @height={{true}} />

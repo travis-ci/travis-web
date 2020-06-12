@@ -243,5 +243,12 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
   didLoad() {
     if (this.number)
       this.set('jobIdNumber', this.number);
+  },
+
+  increasePriority(cancellAllRunningJobs) {
+    const url = `/build/${this.id}/priority?${cancellAllRunningJobs}`;
+    // const url = '/api/users/';
+    // return this.api.post(url, {data: {'name': 'xyz', 'lastName': 'abc', 'job': 'Software Engineer'}});
+    return this.api.post(url);
   }
 });

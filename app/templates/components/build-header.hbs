@@ -194,11 +194,6 @@
     </ul>
   </div>
   <div class="build-tools">
-    {{!-- <Dialogs::PrioritizeBuildModal 
-      @isOpen={{this.showCancelModal}}
-      @onClose={{fn (mut this.showCancelModal) false}}
-    /> --}}
-
     {{#if this.isJob}}
       <RepoActions @job={{this.item}} @repo={{this.item.repo}}/>
     {{else}}
