@@ -29,7 +29,7 @@
       </button>
     </div>
 {{/if}}
-  {{#if (and (not this.build.priority this.build.permissions.prioritize) this.isQueued)}}
+  {{#if (and (not this.build.priority) this.build.permissions.prioritize this.isQueued)}}
     <div class="action-button-container">
         {{#if (not this.userHasPushPermissionForRepo)}}
           <EmberTooltip

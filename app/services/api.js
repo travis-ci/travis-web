@@ -28,10 +28,6 @@ export default Service.extend({
   request(url, method = 'GET', options = {}) {
     options.host = config.apiEndpoint || '';
 
-    if (url == '/api/users/' || url == '/api/users?page=2') {
-      options.host = 'https://reqres.in';
-    }
-
     options.headers = this.setupHeaders(options);
 
     return this.ajax.request(url, method, options);
