@@ -244,8 +244,4 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
     if (this.number)
       this.set('jobIdNumber', this.number);
   },
-  increasePriority(cancellAllRunningJobs) {
-    const url = `/build/${this.id}/priority?${cancellAllRunningJobs}`;
-    return this.api.post(url);
-  },
 });

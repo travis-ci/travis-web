@@ -9,7 +9,6 @@ export default Component.extend({
   flashes: service(),
   features: service(),
   auth: service(),
-  api: service(),
 
   classNames: ['repo-main-tools'],
   classNameBindings: ['labelless', 'mobilelabels'],
@@ -63,7 +62,6 @@ export default Component.extend({
   canCancel: and('userHasPullPermissionForRepo', 'item.canCancel'),
   canRestart: and('userHasPullPermissionForRepo', 'item.canRestart'),
   canDebug: and('userHasPushPermissionForRepo', 'item.canDebug'),
-  isQueued: reads('item.notStarted'),
 
   tooltips: or('labelless', 'mobilelabels'),
 

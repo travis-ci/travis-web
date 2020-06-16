@@ -1,6 +1,6 @@
 <Modal
   class="repo-actions-modal"
-  @isVisible={{@isOpen}}
+  @isVisible={{this.isOpen}}
   @onClose={{fn @onClose}}
 >
   <div class="repo-actions-modal__top">
@@ -21,8 +21,8 @@
     <p>
       Bypass your scheduled build by fast tracking this one.
     </p>
-    <p class="label-align">
-      SELECT AN OPTION
+    <p class="label-transform">
+      Select an Option
     </p>
     <div>
       {{#each this.options as |option|}}
@@ -38,6 +38,31 @@
           </button>
         {{/let}}
       {{/each}}
+
+      {{!-- {{#let (eq cancelRunningJobsVal true) as |selected|}}
+        <button
+          class="repo-actions-item {{if selected 'repo-actions-item--selected'}}"
+          onclick={{action (mut cancelRunningJobsVal) true}}
+        >
+          <span class="repo-actions-item__radio"></span>
+          <span class="repo-actions-item__description">
+            Description 1
+          </span>
+        </button>
+      {{/let}}
+
+      {{#let (eq this.selectionKey option.key) as |selected|}}
+        <button
+          class="repo-actions-item {{if selected 'repo-actions-item--selected'}}"
+          onclick={{action (mut cancelRunningJobsVal) false}}
+        >
+          <span class="repo-actions-item__radio"></span>
+          <span class="repo-actions-item__description">
+            Description 2
+          </span>
+        </button>
+      {{/let}} --}}
+
     </div>
   </div>
   <br />
@@ -47,20 +72,20 @@
       class="button button--blue"
       onclick={{action (perform this.increasePriorityTask)}}
     >
-    {{#if this.isLoading}}
-      <LoadingIndicator class="loading-indicator"/><span>Prioritizing the build</span>
-    {{else}}
-    <span>Prioritize build</span>
-    {{/if}}
+      {{#if this.isLoading}}
+        <LoadingIndicator class="loading-indicator"/><span>Prioritizing the build</span>
+      {{else}}
+        <span>Prioritize build</span>
+      {{/if}}
     </button>
     {{#if (not this.isLoading)}}
-    <button
-      role="button"
-      class="button button--red"
-      {{on 'click' (fn @onClose)}}
-    >
-      Cancel
-    </button>
+      <button
+        role="button"
+        class="button button--red"
+        {{on 'click' (fn @onClose)}}
+      >
+        Cancel
+      </button>
     {{/if}}
   </div>
 </Modal> 

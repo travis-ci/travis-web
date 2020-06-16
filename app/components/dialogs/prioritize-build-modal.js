@@ -2,7 +2,7 @@ import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 import eventually from 'travis/utils/eventually';
-import { reads } from '@ember/object/computed';
+import { reads, or } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
 import {
   bindKeyboardShortcuts,
@@ -11,8 +11,9 @@ import {
 
 export default Component.extend({
   keyboardShortcuts: {
-    'esc': 'toggleConfirmationModal'
+    'esc': 'toggleCloseModal'
   },
+
   flashes: service(),
 
   didInsertElement() {
@@ -24,7 +25,7 @@ export default Component.extend({
     this._super(...arguments);
     unbindKeyboardShortcuts(this);
   },
-  isOpen: false,
+
   options: computed(() => {
     let arr = [
       {
@@ -45,46 +46,18 @@ export default Component.extend({
     return arr;
   }),
 
-  item: computed('type', 'job', 'build', function () {
-    let type = this.type;
-    let job = this.job;
-    let build = this.build;
-    if (type === 'job') {
-      return job;
-    } else {
-      return build;
-    }
-  }),
-
-  type: computed('job', 'build', function () {
-    let job = this.job;
-    if (job) {
-      return 'job';
-    } else {
-      return 'build';
-    }
-  }),
+  item: or('job.build', 'build'),
 
   initialKey: '',
-  initial: computed('initialKey', 'options.@each.key', function () {
-    return this.options.findBy('key', this.initialKey);
-  }),
-  initialIndex: computed('initial', 'options.[]', function () {
-    return this.options.indexOf(this.initial);
-  }),
-
   selectionKey: reads('initialKey'),
   selection: computed('selectionKey', 'options.@each.key', function () {
     return this.options.findBy('key', this.selectionKey);
   }),
-  selectionIndex: computed('selection', 'options.[]', function () {
-    return this.options.indexOf(this.selection);
-  }),
 
-  increasePriorityTask: task(function* (value) {
+  increasePriorityTask: task(function* () {
     this.set('isLoading', true);
     yield eventually(this.item, (record) => {
-      record.increasePriority(this.selection.cancelRunningJobsVal).then((response) => {
+      record.increasePriority(this.selection.cancelRunningJobsVal).then(() => {
         this.flashes.success('The build was successfully prioritized.');
         this.set('isLoading', false);
         this.set('isOpen', false);
@@ -93,11 +66,11 @@ export default Component.extend({
       });
     });
   }).drop(),
+
   actions: {
-    toggleConfirmationModal() {
+    toggleCloseModal() {
       if (!this.isLoading) {
         this.set('isOpen', false);
-        this.set('doAutofocus', true);
       }
     },
   }

@@ -1,15 +1,14 @@
 .repo-actions {
     list-style: none;
-    padding: .5rem 1rem;
+    padding: 0.5rem 1rem;
     font-style: italic;
     color: $cement-grey;
     background-color: #f5fbfb;
     border-radius: 2px;
   
     &-item {
-      justify-content: flex-start;
       align-items: baseline;
-      margin: .5rem 0;
+      margin: 0.5rem 0;
       padding: 0;
       background-color: transparent;
       cursor: pointer;
@@ -68,7 +67,7 @@
     }
   
     & &__header {
-      font-size: 22px;
+      font-size: 1.6rem;
       font-weight: 300;
       color: $oxide-blue;
       margin: 0 2rem 0 0;
@@ -82,6 +81,7 @@
       .loading-indicator {
         float: left;
       }
+      
       .button {
         margin: 0 1rem 0 0;
         display: inline-block;
@@ -90,8 +90,12 @@
         padding: 9px;
         margin-right: 5px;
         border-radius: 2px;
-        border-color: #9d9d9d;
+        border-color: $cement-grey;
         transform: none;
       }
     }
+  }
+
+  .label-transform {
+    text-transform: uppercase;
   }

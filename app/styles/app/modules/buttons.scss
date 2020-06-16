@@ -234,7 +234,7 @@
 .action-button--restart,
 .action-button--debug,
 .action-button--cancel,
-.action-button--Priortize {
+.action-button--priortize {
   display: block;
   width: 8em;
   padding: 0 0.5em;
@@ -258,7 +258,7 @@
   }
 }
 
-.action-button--Priortize{
+.action-button--priortize{
   width: 8.5em;
 }
 
@@ -330,13 +330,13 @@
 }
 
 .jobs-item {
-  // .repo-main-tools {
-  //   transform: translate(-5px, -2px);
+  .repo-main-tools {
+    // transform: translate(-5px, -2px);
 
-  //   button {
-  //     background: transparent;
-  //   }
-  // }
+    // button {
+    //   background: transparent;
+    // }
+  }
 }
 
 %log-button {

@@ -163,7 +163,7 @@ export default Model.extend(DurationCalculations, {
   }),
 
   increasePriority(cancellAllRunningJobs) {
-    const url = `/build/${this.id}/priority?${cancellAllRunningJobs}`;
+    const url = `/build/${this.id}/priority?cancel_all=${cancellAllRunningJobs}`;
     return this.api.post(url);
   },
 });
