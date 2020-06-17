@@ -31,14 +31,16 @@ export default Component.extend({
   item: or('job.build', 'build'),
 
   increasePriorityTask: task(function* () {
-    yield eventually(this.item, (record) => {
-      record.increasePriority(this.shouldCancelRunningJobs).then(() => {
+    try {
+      const record = yield this.item;
+      if (record.increasePriority) {
+        yield record.increasePriority(this.shouldCancelRunningJobs);
         this.flashes.success('The build was successfully prioritized.');
         this.set('isOpen', false);
-      }, () => {
-        this.flashes.error('An error occurred. The build could not be prioritized.');
-      });
-    });
+      }
+    } catch (error) {
+      this.flashes.error('An error occurred. The build could not be prioritized.');
+    }
   }).drop(),
 
   actions: {
