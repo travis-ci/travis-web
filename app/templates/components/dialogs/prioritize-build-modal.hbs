@@ -24,46 +24,31 @@
     <p class="label-transform">
       Select an Option
     </p>
-    <div>
-      {{#each this.options as |option|}}
-        {{#let (eq this.selectionKey option.key) as |selected|}}
-          <button
-            class="repo-actions-item {{if selected 'repo-actions-item--selected'}}"
-            onclick={{action (mut this.selectionKey) option.key}}
-          >
-            <span class="repo-actions-item__radio"></span>
-            <span class="repo-actions-item__description">
-              {{option.description}}
-            </span>
-          </button>
-        {{/let}}
-      {{/each}}
+    <TravisForm
+      as |form|
+    >
+      <form.field
+        @disableFrame={{true}}
+        @value={{this.shouldCancelRunningJobs}}
+        onclick={{action (mut this.shouldCancelRunningJobs) true}}
+        as |field|
+      >
+        <field.checkbox>
+          Place build at the top of the queue
+        </field.checkbox>
+      </form.field>
 
-      {{!-- {{#let (eq cancelRunningJobsVal true) as |selected|}}
-        <button
-          class="repo-actions-item {{if selected 'repo-actions-item--selected'}}"
-          onclick={{action (mut cancelRunningJobsVal) true}}
-        >
-          <span class="repo-actions-item__radio"></span>
-          <span class="repo-actions-item__description">
-            Description 1
-          </span>
-        </button>
-      {{/let}}
-
-      {{#let (eq this.selectionKey option.key) as |selected|}}
-        <button
-          class="repo-actions-item {{if selected 'repo-actions-item--selected'}}"
-          onclick={{action (mut cancelRunningJobsVal) false}}
-        >
-          <span class="repo-actions-item__radio"></span>
-          <span class="repo-actions-item__description">
-            Description 2
-          </span>
-        </button>
-      {{/let}} --}}
-
-    </div>
+      <form.field
+        @disableFrame={{true}}
+        @value={{not this.shouldCancelRunningJobs}}
+        onclick={{action (mut this.shouldCancelRunningJobs) false}}
+        as |field|
+      >
+        <field.checkbox>
+          Place build at the top of the queue and cancel all running jobs
+        </field.checkbox>
+      </form.field>
+    </TravisForm>
   </div>
   <br />
   <div class="repo-actions-modal__controls">
@@ -72,13 +57,13 @@
       class="button button--blue"
       onclick={{action (perform this.increasePriorityTask)}}
     >
-      {{#if this.isLoading}}
+      {{#if this.increasePriorityTask.isRunning}}
         <LoadingIndicator class="loading-indicator"/><span>Prioritizing the build</span>
       {{else}}
         <span>Prioritize build</span>
       {{/if}}
     </button>
-    {{#if (not this.isLoading)}}
+    {{#if (not this.increasePriorityTask.isRunning)}}
       <button
         role="button"
         class="button button--red"

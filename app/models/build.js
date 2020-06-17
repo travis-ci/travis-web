@@ -45,6 +45,8 @@ export default Model.extend(DurationCalculations, {
 
   stagesAreLoaded: alias('stages.isSettled'),
 
+  priority: attr('boolean'),
+
   config: computed('_config', 'currentState.stateName', function () {
     let config = this._config;
     let stateName = this.get('currentState.stateName');
