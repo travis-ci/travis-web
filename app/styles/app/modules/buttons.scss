@@ -234,7 +234,7 @@
 .action-button--restart,
 .action-button--debug,
 .action-button--cancel,
-.action-button--priortize {
+.action-button--prioritize {
   display: block;
   width: 8em;
   padding: 0 0.5em;
@@ -258,7 +258,7 @@
   }
 }
 
-.action-button--priortize{
+.action-button--prioritize{
   width: 8.5em;
 }
 
@@ -326,16 +326,6 @@
 @media #{$medium-up} {
   .repo-main-tools.mobilelabels {
     @include labelless;
-  }
-}
-
-.jobs-item {
-  .repo-main-tools {
-    // transform: translate(-5px, -2px);
-
-    // button {
-    //   background: transparent;
-    // }
   }
 }
 

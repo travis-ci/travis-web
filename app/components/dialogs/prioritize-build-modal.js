@@ -1,8 +1,6 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
-import { computed } from '@ember/object';
-import eventually from 'travis/utils/eventually';
-import { reads, or, not } from '@ember/object/computed';
+import { or } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
 import {
   bindKeyboardShortcuts,
@@ -11,7 +9,7 @@ import {
 
 export default Component.extend({
   keyboardShortcuts: {
-    'esc': 'toggleCloseModal'
+    'esc': 'closeModal'
   },
 
   flashes: service(),
@@ -33,6 +31,7 @@ export default Component.extend({
   increasePriorityTask: task(function* () {
     try {
       const record = yield this.item;
+
       if (record.increasePriority) {
         yield record.increasePriority(this.shouldCancelRunningJobs);
         this.flashes.success('The build was successfully prioritized.');
@@ -44,7 +43,7 @@ export default Component.extend({
   }).drop(),
 
   actions: {
-    toggleCloseModal() {
+    closeModal() {
       if (!this.isLoading) {
         this.set('isOpen', false);
       }
