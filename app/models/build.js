@@ -165,7 +165,13 @@ export default Model.extend(DurationCalculations, {
   }),
 
   increasePriority(shouldCancelRunningJobs) {
-    const url = `/build/${this.id}/priority?cancel_all=${shouldCancelRunningJobs ? true : false}`;
+    let isCancelRunningJob = false;
+
+    if (shouldCancelRunningJobs) {
+      isCancelRunningJob = true;
+    }
+
+    const url = `/build/${this.id}/priority?cancel_all=${isCancelRunningJob}`;
     return this.api.post(url);
   },
 });
