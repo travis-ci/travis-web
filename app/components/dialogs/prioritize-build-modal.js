@@ -31,11 +31,9 @@ export default Component.extend({
   item: or('job.build', 'build'),
 
   increasePriorityTask: task(function* () {
-    // this.set('isLoading', true);
     yield eventually(this.item, (record) => {
       record.increasePriority(this.shouldCancelRunningJobs).then(() => {
         this.flashes.success('The build was successfully prioritized.');
-        // this.set('isLoading', false);
         this.set('isOpen', false);
       }, () => {
         this.flashes.error('An error occurred. The build could not be prioritized.');
