@@ -219,4 +219,40 @@ module('Integration | Component | build header', function (hooks) {
     await render(hbs`{{build-header item=job}}`);
     assert.dom('.detail-job-arch').exists('does display CPU architecture');
   });
+
+  test('show prioritize heading', async function (assert) {
+    let build = {
+      eventType: 'push',
+      status: 'passed',
+      number: '1234',
+      priority: true,
+      branchName: 'feature-2',
+      branch: {
+        name: 'feature-2'
+      },
+      repo,
+    };
+
+    this.set('build', build);
+    await render(hbs`{{build-header item=build}}`);
+    assert.dom('.build-prioritize').hasText('Prioritized build');
+  });
+
+  test('show prioritize heading', async function (assert) {
+    let build = {
+      eventType: 'push',
+      status: 'passed',
+      number: '1234',
+      priority: false,
+      branchName: 'feature-2',
+      branch: {
+        name: 'feature-2'
+      },
+      repo,
+    };
+
+    this.set('build', build);
+    await render(hbs`{{build-header item=build}}`);
+    assert.dom('.build-prioritize').doesNotExist();
+  });
 });

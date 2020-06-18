@@ -8,11 +8,10 @@ import {
 } from 'ember-keyboard-shortcuts';
 
 export default Component.extend({
-  keyboardShortcuts: {
-    'esc': 'closeModal'
-  },
-
+  keyboardShortcuts: { 'esc': 'closeModal' },
   flashes: service(),
+  shouldCancelRunningJobs: true,
+  item: or('job.build', 'build'),
 
   didInsertElement() {
     this._super(...arguments);
@@ -23,10 +22,6 @@ export default Component.extend({
     this._super(...arguments);
     unbindKeyboardShortcuts(this);
   },
-
-  shouldCancelRunningJobs: true,
-
-  item: or('job.build', 'build'),
 
   increasePriorityTask: task(function* () {
     try {
