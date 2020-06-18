@@ -37,7 +37,6 @@ export default V2FallbackSerializer.extend({
   normalize: function (modelClass, resourceHash) {
     // TODO: remove this after switching to V3 entirely
     let type = resourceHash['@type'];
-    let permissionsHash = resourceHash['@permissions'];
     let commit = resourceHash.commit;
 
     if (!type && commit && commit.hasOwnProperty('branch_is_default')) {
