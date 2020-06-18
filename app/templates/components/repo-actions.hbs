@@ -22,7 +22,7 @@
       </button>
     </div>
 {{/if}}
-  {{#if (and (not this.build.priority this.build.permissions.prioritize) this.item.notStarted)}}
+  {{#if (and (not this.build.priority) this.build.permissions.prioritize this.item.notStarted)}}
     <div class="action-button-container">
         {{#if (not this.userHasPushPermissionForRepo)}}
           <EmberTooltip
