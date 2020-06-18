@@ -236,7 +236,7 @@
 .action-button--cancel,
 .action-button--prioritize {
   display: block;
-  width: 8em;
+  width: 8.5em;
   padding: 0 0.5em;
   border: 1px solid $pebble-grey;
   border-radius: 14px;
@@ -256,10 +256,6 @@
     color: $oxide-blue;
     text-decoration: none !important;
   }
-}
-
-.action-button--prioritize{
-  width: 8.5em;
 }
 
 .action-button--cancel {
