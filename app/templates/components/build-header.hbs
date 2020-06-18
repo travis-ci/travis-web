@@ -183,9 +183,13 @@
           <SvgImage @name="icon-shared" @alt="Shared repository" @class="icon shared" /> Shared repository
         {{/if}}
       {{/if}}
+      {{#if this.build.priority}}
+        <SvgImage @name="icon-prioritize" @class="icon" />
+        <span>Prioritized build</span>
+      {{/if}}
     </ul>
   </div>
-  <div class="build-tools">
+  <div class="build-tools align-action-btn">
     {{#if this.isJob}}
       <RepoActions @job={{this.item}} @repo={{this.item.repo}} />
     {{else}}

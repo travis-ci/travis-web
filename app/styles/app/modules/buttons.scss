@@ -233,9 +233,10 @@
 
 .action-button--restart,
 .action-button--debug,
-.action-button--cancel {
+.action-button--cancel,
+.action-button--prioritize {
   display: block;
-  width: 8em;
+  width: 8.5em;
   padding: 0 0.5em;
   border: 1px solid $pebble-grey;
   border-radius: 14px;
@@ -321,16 +322,6 @@
 @media #{$medium-up} {
   .repo-main-tools.mobilelabels {
     @include labelless;
-  }
-}
-
-.jobs-item {
-  .repo-main-tools {
-    transform: translate(-5px, -2px);
-
-    button {
-      background: transparent;
-    }
   }
 }
 
