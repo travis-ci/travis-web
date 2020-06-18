@@ -21,6 +21,31 @@
         </span>
       </button>
     </div>
+{{/if}}
+  {{#if (and (not this.build.priority) this.build.permissions.prioritize this.item.notStarted)}}
+    <div class="action-button-container">
+        {{#if (not this.userHasPushPermissionForRepo)}}
+          <EmberTooltip
+            class={{if this.mobilelabels "hidden-on-mobile"}} 
+            @text="This action can be triggered only by users with push access to the repository" />
+        {{/if}}
+      <button 
+        type="button"
+        class="action-button--prioritize"
+        {{on 'click' (fn (mut this.showPrioritizeBuildModal) true)}}
+        disabled={{not this.userHasPushPermissionForRepo}}
+      >
+        {{#if this.tooltips}}
+          <EmberTooltip class={{if this.mobilelabels "hidden-on-mobile"}}>
+            Prioritize build
+          </EmberTooltip>
+        {{/if}}
+        <SvgImage @name="icon-prioritize" @class="icon prioritize-icon" />
+        <span class="label-align">
+          Prioritize build
+        </span>
+      </button>
+    </div>
   {{/if}}
 {{else if this.canRestart}}
   {{#if this.restarters.isRunning}}
@@ -71,3 +96,10 @@
     <LoadingIndicator />
   {{/if}}
 {{/if}}
+<Dialogs::PrioritizeBuildModal 
+  @isOpen={{this.showPrioritizeBuildModal}}
+  @onClose={{fn (mut this.showPrioritizeBuildModal) false}}
+  @increasePriority={{this.increasePriority}}
+  @build={{this.build}}
+  @job={{this.job}}
+/>

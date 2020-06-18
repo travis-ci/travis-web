@@ -11,6 +11,12 @@
   margin-right: 4px;
 }
 
+.prioritize-icon {
+  @extend %icon;
+  width: 13px;
+  margin-right: 2px;
+}
+
 .icon--color {
   display: inline-block;
   vertical-align: middle;

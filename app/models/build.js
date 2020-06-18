@@ -13,6 +13,8 @@ export default Model.extend(DurationCalculations, {
 
   branchName: alias('branch.name'),
 
+  permissions: attr(),
+
   state: attr(),
   number: attr('number'),
   message: attr('string'),
@@ -42,6 +44,8 @@ export default Model.extend(DurationCalculations, {
   createdBy: belongsTo('user'),
 
   stagesAreLoaded: alias('stages.isSettled'),
+
+  priority: attr('boolean'),
 
   config: computed('_config', 'currentState.stateName', function () {
     let config = this._config;
@@ -159,4 +163,15 @@ export default Model.extend(DurationCalculations, {
       return m.isValid() ? m.format('lll') : 'not finished yet';
     }
   }),
+
+  increasePriority(shouldCancelRunningJobs) {
+    let isCancelRunningJob = false;
+
+    if (shouldCancelRunningJobs) {
+      isCancelRunningJob = true;
+    }
+
+    const url = `/build/${this.id}/priority?cancel_all=${isCancelRunningJob}`;
+    return this.api.post(url);
+  },
 });
