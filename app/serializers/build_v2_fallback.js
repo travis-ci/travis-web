@@ -38,7 +38,7 @@ export default V2FallbackSerializer.extend({
     // TODO: remove this after switching to V3 entirely
     let type = resourceHash['@type'];
     let commit = resourceHash.commit;
-
+    
     if (!type && commit && commit.hasOwnProperty('branch_is_default')) {
       let build = resourceHash.build,
         commit = resourceHash.commit;
