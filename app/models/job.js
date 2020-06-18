@@ -243,5 +243,5 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
   didLoad() {
     if (this.number)
       this.set('jobIdNumber', this.number);
-  },
+  }
 });
