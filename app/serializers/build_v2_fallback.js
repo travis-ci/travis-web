@@ -39,9 +39,7 @@ export default V2FallbackSerializer.extend({
     let type = resourceHash['@type'];
     let permissionsHash = resourceHash['@permissions'];
     let commit = resourceHash.commit;
-    if (permissionsHash) {
-      resourceHash.permissions = permissionsHash;
-    }
+
     if (!type && commit && commit.hasOwnProperty('branch_is_default')) {
       let build = resourceHash.build,
         commit = resourceHash.commit;
