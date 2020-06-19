@@ -1,7 +1,7 @@
 <Modal
   class="repo-actions-modal"
   @isVisible={{this.isOpen}}
-  @onClose={{fn @onClose}}
+  @onClose={{this.onClose}}
 >
   <div class="repo-actions-modal__top">
     <h3 class="repo-actions-modal__header">
@@ -12,7 +12,7 @@
       title="Close modal"
       class="pointer repo-actions-modal__close-button"
       autofocus={{this.focusOnModal}}
-      {{on 'click' (fn @onClose)}}
+      onclick={{this.onClose}}
     >
       <SvgImage @name="icon-failed" @class="icon" />
     </button>
@@ -29,8 +29,8 @@
     >
       <form.field
         @disableFrame={{true}}
-        @value={{this.shouldCancelRunningJobs}}
-        onclick={{action (mut this.shouldCancelRunningJobs) true}}
+        @value={{not this.shouldCancelRunningJobs}}
+        onclick={{action (mut this.shouldCancelRunningJobs) false}}
         as |field|
       >
         <field.checkbox>
@@ -40,8 +40,8 @@
 
       <form.field
         @disableFrame={{true}}
-        @value={{not this.shouldCancelRunningJobs}}
-        onclick={{action (mut this.shouldCancelRunningJobs) false}}
+        @value={{this.shouldCancelRunningJobs}}
+        onclick={{action (mut this.shouldCancelRunningJobs) true}}
         as |field|
       >
         <field.checkbox>
@@ -67,7 +67,7 @@
       <button
         role="button"
         class="button button--red"
-        {{on 'click' (fn @onClose)}}
+        onclick={{this.onClose}}
       >
         Cancel
       </button>
