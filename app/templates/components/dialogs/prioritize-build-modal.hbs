@@ -29,8 +29,8 @@
     >
       <form.field
         @disableFrame={{true}}
-        @value={{this.shouldCancelRunningJobs}}
-        onclick={{action (mut this.shouldCancelRunningJobs) true}}
+        @value={{not this.shouldCancelRunningJobs}}
+        onclick={{action (mut this.shouldCancelRunningJobs) false}}
         as |field|
       >
         <field.checkbox>
@@ -40,8 +40,8 @@
 
       <form.field
         @disableFrame={{true}}
-        @value={{not this.shouldCancelRunningJobs}}
-        onclick={{action (mut this.shouldCancelRunningJobs) false}}
+        @value={{this.shouldCancelRunningJobs}}
+        onclick={{action (mut this.shouldCancelRunningJobs) true}}
         as |field|
       >
         <field.checkbox>

@@ -10,7 +10,7 @@ import {
 export default Component.extend({
   keyboardShortcuts: { 'esc': 'closeModal' },
   flashes: service(),
-  shouldCancelRunningJobs: true,
+  shouldCancelRunningJobs: false,
   item: or('job.build', 'build'),
 
   didInsertElement() {
