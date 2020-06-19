@@ -39,7 +39,6 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
   queue: attr(),
   state: attr(),
   number: attr(),
-  permissions: alias('build.permissions'),
   jobIdNumber: attr(),
   allowFailure: attr('boolean'),
   tags: attr(),

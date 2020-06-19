@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
-import { alias, and, not, or } from '@ember/object/computed';
+import { alias, and, not, or, equal } from '@ember/object/computed';
 import eventually from 'travis/utils/eventually';
 import { task, taskGroup } from 'ember-concurrency';
 
@@ -63,8 +63,11 @@ export default Component.extend({
   canCancel: and('userHasPullPermissionForRepo', 'item.canCancel'),
   canRestart: and('userHasPullPermissionForRepo', 'item.canRestart'),
   canDebug: and('userHasPushPermissionForRepo', 'item.canDebug'),
-  isNotAlreadyHighPriority: not('item.priority'),
-  canPrioritize: and('item.notStarted', 'isNotAlreadyHighPriority', 'item.permissions.prioritize'),
+
+  isHighPriority: or('item.priority', 'item.build.priority'),
+  isNotAlreadyHighPriority: not('isHighPriority'),
+  hasPrioritizePermission: or('item.permissions.prioritize', 'item.build.permissions.prioritize'),
+  canPrioritize: and('item.notStarted', 'isNotAlreadyHighPriority', 'hasPrioritizePermission'),
   insufficientPermissions: not('userHasPushPermissionForRepo'),
   tooltips: or('labelless', 'mobilelabels'),
 
