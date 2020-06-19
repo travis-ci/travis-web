@@ -220,7 +220,7 @@ module('Integration | Component | build header', function (hooks) {
     assert.dom('.detail-job-arch').exists('does display CPU architecture');
   });
 
-  test('show prioritize heading', async function (assert) {
+  test('show prioritize heading if the build is prioritized', async function (assert) {
     let build = {
       eventType: 'push',
       status: 'passed',
@@ -238,7 +238,7 @@ module('Integration | Component | build header', function (hooks) {
     assert.dom('.build-prioritize').hasText('Prioritized build');
   });
 
-  test('show prioritize heading', async function (assert) {
+  test('does not show prioritize heading if the build is not prioritized', async function (assert) {
     let build = {
       eventType: 'push',
       status: 'passed',

@@ -50,7 +50,7 @@ module('Integration | Component | repo actions', function (hooks) {
     assert.dom('button[aria-label="Restart job"]').exists();
   });
 
-  test('it shows priortize button only if build is not prioritized, it is also not already started and if the org and user are having acces of it', async function (assert) {
+  test('it shows prioritize button only if build is not prioritized, it is also not already started and if the org and user are having acces of it', async function (assert) {
     this.set('build', EmberObject.create({  canCancel: true }));
     await render(hbs`{{repo-actions userHasPullPermissionForRepo=true userHasPushPermissionForRepo=true build=this.build canPrioritize=true}}`);
     assert.dom('.action-button-container').exists();

@@ -18,7 +18,7 @@ module('Integration | Component | Dialog | prioritize build modal', function (ho
     stubService('auth', authStub);
   });
 
-  test('it shows the priority action model and loading indicator if task is in running state', async function (assert) {
+  test('it shows the priority action modal and loading indicator if task is in running state', async function (assert) {
     this.set('build', EmberObject.create());
     this.set('job', EmberObject.create());
     this.set('priority', EmberObject.create({ isRunning: true }));

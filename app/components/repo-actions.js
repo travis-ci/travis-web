@@ -65,7 +65,7 @@ export default Component.extend({
   canDebug: and('userHasPushPermissionForRepo', 'item.canDebug'),
   isNotAlreadyHighPriority: not('item.priority'),
   canPrioritize: and('item.notStarted', 'isNotAlreadyHighPriority', 'item.permissions.prioritize'),
-  isTooltip: not('userHasPushPermissionForRepo'),
+  insufficientPermissions: not('userHasPushPermissionForRepo'),
   tooltips: or('labelless', 'mobilelabels'),
 
   cancel: task(function* () {
@@ -82,7 +82,7 @@ export default Component.extend({
 
   restarters: taskGroup().drop(),
 
-  closePriorityModel: function () {
+  closePriorityModal: function () {
     this.set('showPrioritizeBuildModal', false);
   },
 
