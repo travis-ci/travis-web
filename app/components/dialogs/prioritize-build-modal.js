@@ -31,6 +31,12 @@ export default Component.extend({
         yield record.increasePriority(this.shouldCancelRunningJobs);
         this.flashes.success('The build was successfully prioritized.');
         this.set('isOpen', false);
+
+        if (this.build) {
+          this.build.set('priority', true);
+        } else if (this.job) {
+          this.job.build.set('priority', true);
+        }
       }
     } catch (error) {
       this.flashes.error('An error occurred. The build could not be prioritized.');
