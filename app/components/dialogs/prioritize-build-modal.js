@@ -33,7 +33,7 @@ export default Component.extend({
         this.set('isOpen', false);
 
         const targetBuild = this.build || this.job.build;
-        targetBuild.set('priority', true);
+        targetBuild.reload();
       }
     } catch (error) {
       this.flashes.error('An error occurred. The build could not be prioritized.');
