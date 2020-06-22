@@ -63,7 +63,6 @@ export default Component.extend({
   canCancel: and('userHasPullPermissionForRepo', 'item.canCancel'),
   canRestart: and('userHasPullPermissionForRepo', 'item.canRestart'),
   canDebug: and('userHasPushPermissionForRepo', 'item.canDebug'),
-
   isHighPriority: or('item.priority', 'item.build.priority'),
   isNotAlreadyHighPriority: not('isHighPriority'),
   hasPrioritizePermission: or('item.permissions.prioritize', 'item.build.permissions.prioritize'),
