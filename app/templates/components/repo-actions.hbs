@@ -1,3 +1,10 @@
+<Dialogs::PrioritizeBuildModal 
+  @isOpen={{this.showCancelModal}}
+  @onClose={{fn (mut this.showCancelModal) false}}
+  @increasePriority={{this.increasePriority}}
+  @build={{this.build}}
+  @job={{this.job}}
+/>
 {{#if this.canCancel}}
   {{#if this.cancel.isRunning}}
     <LoadingIndicator @height={{true}} />
@@ -18,6 +25,31 @@
         <SvgImage @name="icon-failed" @class="icon" />
         <span class="label-align">
           Cancel {{this.type}}
+        </span>
+      </button>
+    </div>
+{{/if}}
+  {{#if (and (not this.build.priority this.build.permissions.prioritize) this.isQueued)}}
+    <div class="action-button-container">
+        {{#if (not this.userHasPushPermissionForRepo)}}
+          <EmberTooltip
+          class={{if this.mobilelabels "hidden-on-mobile"}} 
+          @text="This action can be triggered only by users with push access to the repository" />
+        {{/if}}
+      <button 
+        type="button"
+        class="action-button--Priortize"
+        {{on 'click' (fn (mut this.showCancelModal) true)}}
+        disabled={{not this.userHasPushPermissionForRepo}}
+      >
+        {{#if this.tooltips}}
+          <EmberTooltip class={{if this.mobilelabels "hidden-on-mobile"}}>
+            Prioritize build
+          </EmberTooltip>
+        {{/if}}
+        <SvgImage @name="icon-priortize" @class="icon" />
+        <span class="label-align">
+          Prioritize build
         </span>
       </button>
     </div>

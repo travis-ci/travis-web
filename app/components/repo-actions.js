@@ -9,6 +9,7 @@ export default Component.extend({
   flashes: service(),
   features: service(),
   auth: service(),
+  api: service(),
 
   classNames: ['repo-main-tools'],
   classNameBindings: ['labelless', 'mobilelabels'],
