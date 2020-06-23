@@ -32,8 +32,8 @@
       <button 
         type="button"
         class="action-button--prioritize"
-        {{action this.showPriorityModal}}
-        disabled={{not this.userHasPushPermissionForRepo}}
+        onclick={{action this.showPriorityModal}}
+        disabled={{this.insufficientPermissions}}
       >
         {{#if this.tooltips}}
           <EmberTooltip class={{if this.mobilelabels "hidden-on-mobile"}}>
