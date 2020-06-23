@@ -6,7 +6,7 @@
   <div class="repo-actions-modal__top">
     <h3
       class="repo-actions-modal__header"
-      prioritize-modal-header
+      data-test-prioritize-modal-header
     >
       Prioritize your build
     </h3>
@@ -14,7 +14,7 @@
       type="button"
       title="Close modal"
       class="pointer repo-actions-modal__close-button"
-      prioritize-close-button
+      data-test-prioritize-close-button
       autofocus={{this.focusOnModal}}
       onclick={{this.onClose}}
     >
@@ -37,7 +37,7 @@
         onclick={{action (mut this.shouldCancelRunningJobs) false}}
         as |field|
       >
-        <field.checkbox prioritize-checkbox>
+        <field.checkbox data-test-prioritize-checkbox>
           Place build at the top of the queue
         </field.checkbox>
       </form.field>
@@ -48,7 +48,7 @@
         onclick={{action (mut this.shouldCancelRunningJobs) true}}
         as |field|
       >
-        <field.checkbox prioritize-checkbox-with-cancel>
+        <field.checkbox data-test-prioritize-checkbox-with-cancel>
           Place build at the top of the queue and cancel all running jobs
         </field.checkbox>
       </form.field>
@@ -60,7 +60,7 @@
       type="button"
       class="button button--blue"
       onclick={{action (perform this.increasePriorityTask)}}
-      prioritize-button
+      data-test-prioritize-button
     >
       {{#if this.increasePriorityTask.isRunning}}
         <LoadingIndicator class="loading-indicator"/><span>Prioritizing the build</span>
@@ -73,7 +73,7 @@
         role="button"
         class="button button--red"
         onclick={{this.onClose}}
-        prioritize-cancel-button
+        data-test-prioritize-cancel-button
       >
         Cancel
       </button>
