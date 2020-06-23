@@ -44,8 +44,8 @@ module('Acceptance | builds/prioritize', function (hooks) {
     let branch = this.server.create('branch', { repository, name: 'acceptance-tests', default_branch: true });
     let gitUser = this.server.create('git-user', { name: 'Mr T' });
     let commit = this.server.create('commit', { author: gitUser, committer: gitUser, committer_name: 'Mr T', message: 'This is a message' });
-    let build = this.server.create('build', { number: '5', state: 'passed', permissions: { 'prioritize': true }, repository, commit, branch, priority: true });
-    let job = this.server.create('job', { number: '1234.1', state: 'passed', repository, commit, build });
+    let build = this.server.create('build', { number: '5', state: 'queued', permissions: { 'prioritize': true }, repository, commit, branch, priority: true });
+    let job = this.server.create('job', { number: '1234.1', state: 'queued', repository, commit, build });
     this.server.create('log', { id: job.id });
 
     await visit('/travis-ci/travis-web');
