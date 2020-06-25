@@ -59,6 +59,7 @@ export default Component.extend({
     }
   }),
 
+  showPriority: true,
   showPrioritizeBuildModal: false,
   canCancel: and('userHasPullPermissionForRepo', 'item.canCancel'),
   canRestart: and('userHasPullPermissionForRepo', 'item.canRestart'),
