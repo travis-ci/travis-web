@@ -32,9 +32,15 @@
       <button 
         type="button"
         class="action-button--prioritize"
-        {{action this.showPriorityModal}}
-        disabled={{not this.userHasPushPermissionForRepo}}
+        data-test-repo-actions-prioritize-button
+        onclick={{action this.showPriorityModal}}
+        disabled={{this.insufficientPermissions}}
       >
+        {{#if this.tooltips}}
+          <EmberTooltip class={{if this.mobilelabels "hidden-on-mobile"}}>
+            Prioritize build
+          </EmberTooltip>
+        {{/if}}
         <SvgImage @name="icon-prioritize" @class="icon prioritize-icon" />
         <span class="label-align">
           Prioritize build
