@@ -22,7 +22,7 @@
       </button>
     </div>
   {{/if}}
-  {{#if this.canPrioritize}}
+  {{#if (and this.canPrioritize this.showPriority)}}
     <div class="action-button-container">
       {{#if this.insufficientPermissions}}
         <EmberTooltip
