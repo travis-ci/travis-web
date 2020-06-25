@@ -68,8 +68,8 @@ export default Component.extend({
   hasPrioritizePermission: or('item.permissions.prioritize', 'item.build.permissions.prioritize'),
   insufficientPermissions: not('userHasPushPermissionForRepo'),
   tooltips: or('labelless', 'mobilelabels'),
-  showSmallIcons: not('tooltips'),
-  canPrioritize: and('item.notStarted', 'isNotAlreadyHighPriority', 'hasPrioritizePermission', 'showSmallIcons'),
+  noSmallIcons: not('tooltips'),
+  canPrioritize: and('item.notStarted', 'isNotAlreadyHighPriority', 'hasPrioritizePermission', 'noSmallIcons'),
 
   cancel: task(function* () {
     let type = this.type;
