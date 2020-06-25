@@ -59,13 +59,15 @@ export default Component.extend({
     }
   }),
 
-  showPriorityBtn: computed('showPriority', function () {
-    if (this.showPriority === false) {
-      return false;
-    }
+  showPriority: true,
 
-    return true;
-  }),
+  // showPriorityBtn: computed('showPriority', function () {
+  //   if (this.showPriority === false) {
+  //     return false;
+  //   }
+
+  //   return true;
+  // }),
 
   showPrioritizeBuildModal: false,
   canCancel: and('userHasPullPermissionForRepo', 'item.canCancel'),
@@ -76,7 +78,7 @@ export default Component.extend({
   hasPrioritizePermission: or('item.permissions.prioritize', 'item.build.permissions.prioritize'),
   insufficientPermissions: not('userHasPushPermissionForRepo'),
   tooltips: or('labelless', 'mobilelabels'),
-  canPrioritize: and('item.notStarted', 'isNotAlreadyHighPriority', 'hasPrioritizePermission', 'showPriorityBtn'),
+  canPrioritize: and('item.notStarted', 'isNotAlreadyHighPriority', 'hasPrioritizePermission', 'showPriority'),
 
   cancel: task(function* () {
     let type = this.type;
