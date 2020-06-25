@@ -35,11 +35,6 @@
         {{action this.showPriorityModal}}
         disabled={{not this.userHasPushPermissionForRepo}}
       >
-        {{#if this.tooltips}}
-          <EmberTooltip class={{if this.mobilelabels "hidden-on-mobile"}}>
-            Prioritize build
-          </EmberTooltip>
-        {{/if}}
         <SvgImage @name="icon-prioritize" @class="icon prioritize-icon" />
         <span class="label-align">
           Prioritize build
