@@ -60,15 +60,6 @@ export default Component.extend({
   }),
 
   showPriority: true,
-
-  // showPriorityBtn: computed('showPriority', function () {
-  //   if (this.showPriority === false) {
-  //     return false;
-  //   }
-
-  //   return true;
-  // }),
-
   showPrioritizeBuildModal: false,
   canCancel: and('userHasPullPermissionForRepo', 'item.canCancel'),
   canRestart: and('userHasPullPermissionForRepo', 'item.canRestart'),
