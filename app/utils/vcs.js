@@ -50,6 +50,9 @@ export const vcsUrl = (resource, vcsType, params = {}) => {
   const vcs = vcsConfig(vcsType);
   const endpoint = isEnterprise && sourceEndpoint || vcs.endpoint;
   const url = endpoint + vcs.paths[resource];
+  const { repo } = params;
+  const { vcsId } = repo || {};
+  if (vcsId) params.vcsId = vcsId;
 
   assert(`Missing url params. URL: ${url}, PARAMS: ${JSON.stringify(params)}`, paramsValid(url, params));
   return replaceParams(url, params);

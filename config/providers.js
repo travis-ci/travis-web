@@ -30,18 +30,18 @@ const VCS_TYPES = {
 module.exports = deepFreeze({
   assembla: {
     vcsTypes: [VCS_TYPES.ASSEMBLA.ORG, VCS_TYPES.ASSEMBLA.REPO, VCS_TYPES.ASSEMBLA.USER],
-    endpoint: 'https://:portfolio.assembla.com',
+    endpoint: 'https://app.assembla.com',
     icon: 'icon-assembla',
     name: 'Assembla',
     urlPrefix: 'assembla',
     paths: {
-      branch: '/spaces/:owner/:repo/source/:branch?type=branch',
-      commit: '/spaces/:owner/:repo/commits/:commit',
-      file: '/spaces/:owner/:repo/source/:branch/:file',
+      branch: '/spaces/:owner/:vscId/source/:branch?type=branch',
+      commit: '/spaces/:owner/:vcsId/commits/:commit',
+      file: '/spaces/:owner/:vcsId/source/:branch/:file',
       issue: '/spaces/:owner/tickets/:issue',
       profile: '/spaces/:owner',
-      repo: '/spaces/:owner/:repo/source',
-      tag: '/spaces/:owner/:repo/source/:tag?type=tag',
+      repo: '/spaces/:owner/:vcsId/source',
+      tag: '/spaces/:owner/:vcsId/source/:tag?type=tag',
       accessSettings: '',
     },
     vocabulary: {
