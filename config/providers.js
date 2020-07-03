@@ -45,7 +45,7 @@ module.exports = deepFreeze({
       accessSettings: '',
     },
     vocabulary: {
-      organization: 'Portfolio',
+      organization: 'Space',
       pullRequest: 'Merge Request',
     },
     colors: {
