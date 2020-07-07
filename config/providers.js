@@ -35,7 +35,7 @@ module.exports = deepFreeze({
     name: 'Assembla',
     urlPrefix: 'assembla',
     paths: {
-      branch: '/spaces/:owner/:vscId/source/:branch?type=branch',
+      branch: '/spaces/:owner/:vcsId/source/:branch?type=branch',
       commit: '/spaces/:owner/:vcsId/commits/:commit',
       file: '/spaces/:owner/:vcsId/source/:branch/:file',
       issue: '/spaces/:owner/tickets/:issue',

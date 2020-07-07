@@ -65,27 +65,30 @@ export default Component.extend({
     const owner = this.get('item.repo.ownerName');
     const repo = this.get('item.repo.vcsName');
     const vcsType = this.get('item.repo.vcsType');
+    const vcsId = this.get('item.repo.vcsId');
     const commit = this.get('commit.sha');
 
-    return this.externalLinks.commitUrl(vcsType, { owner, repo, commit });
+    return this.externalLinks.commitUrl(vcsType, { owner, repo, commit, vcsId });
   }),
 
   branchUrl: computed('item.repo.{ownerName,vcsName,vcsType}', 'build.branchName', function () {
     const owner = this.get('item.repo.ownerName');
     const repo = this.get('item.repo.vcsName');
     const vcsType = this.get('item.repo.vcsType');
+    const vcsId = this.get('item.repo.vcsId');
     const branch = this.get('build.branchName');
 
-    return this.externalLinks.branchUrl(vcsType, { owner, repo, branch });
+    return this.externalLinks.branchUrl(vcsType, { owner, repo, branch, vcsId });
   }),
 
   tagUrl: computed('item.repo.{ownerName,vcsName,vcsType}', 'build.tag.name', function () {
     const owner = this.get('item.repo.ownerName');
     const repo = this.get('item.repo.vcsName');
     const vcsType = this.get('item.repo.vcsType');
+    const vcsId = this.get('item.repo.vcsId');
     const tag = this.get('build.tag.name');
 
-    return this.externalLinks.tagUrl(vcsType, { owner, repo, tag });
+    return this.externalLinks.tagUrl(vcsType, { owner, repo, tag, vcsId });
   }),
 
   buildState: computed('item.jobs.firstObject.state', 'item.state', 'item.isMatrix', function () {
