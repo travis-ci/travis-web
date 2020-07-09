@@ -32,9 +32,4 @@ module('Integration | Component | page footer', function (hooks) {
 
     assert.dom('div.status').doesNotExist();
   });
-
-  test('it shows security statement', async function (assert) {
-    await render(hbs`{{page-footer}}`);
-    assert.dom('[data-test-footer-security-link]').exists();
-  });
 });
