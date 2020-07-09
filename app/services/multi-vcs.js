@@ -1,7 +1,7 @@
 import Service, { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
-import { and, not, or, reads } from '@ember/object/computed';
-import { defaultVcsConfig, vcsConfig } from 'travis/utils/vcs';
+import { not, or, reads } from '@ember/object/computed';
+import { defaultVcsConfig, vcsConfig, vcsConfigByUrlPrefix } from 'travis/utils/vcs';
 
 export default Service.extend({
   auth: service(),
@@ -12,9 +12,10 @@ export default Service.extend({
   enabled: or('enableAssemblaLogin', 'enableBitbucketLogin', 'enableGitlabLogin'),
   disabled: not('enabled'),
 
-  enableAssemblaLogin: and('isProVersion', 'features.enableAssemblaLogin'),
-  enableBitbucketLogin: and('isProVersion', 'features.enableBitbucketLogin'),
-  enableGitlabLogin: and('isProVersion', 'features.gitlabLogin'),
+  get enableGithubLogin() { return this.isProviderEnabled('github'); },
+  get enableAssemblaLogin() { return this.isProviderEnabled('assembla'); },
+  get enableBitbucketLogin() { return this.isProviderEnabled('bitbucket'); },
+  get enableGitlabLogin() { return this.isProviderEnabled('gitlab'); },
 
   primaryProviderConfig: computed(() => defaultVcsConfig),
   primaryProvider: reads('primaryProviderConfig.urlPrefix'),
@@ -22,7 +23,7 @@ export default Service.extend({
   isProviderEnabled(provider) {
     const { isProVersion, features } = this;
     const isEnabled = features.isEnabled(`enable-${provider}-login`) || features.isEnabled(`${provider}-login`);
-    return isProVersion && isEnabled;
+    return this.isProviderPrimary(provider) || isProVersion && isEnabled;
   },
 
   isProviderPrimary(provider) {
@@ -30,7 +31,7 @@ export default Service.extend({
   },
 
   isProviderBeta(provider) {
-    return !this.isProviderPrimary(provider);
+    return vcsConfigByUrlPrefix(provider).isBeta;
   },
 
   currentProviderConfig: computed('auth.currentUser.vcsType', function () {
