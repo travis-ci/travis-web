@@ -31,7 +31,8 @@ export default Service.extend({
   },
 
   isProviderBeta(provider) {
-    return vcsConfigByUrlPrefix(provider).isBeta;
+    const config = provider && vcsConfigByUrlPrefix(provider) || defaultVcsConfig;
+    return config.isBeta;
   },
 
   currentProviderConfig: computed('auth.currentUser.vcsType', function () {
