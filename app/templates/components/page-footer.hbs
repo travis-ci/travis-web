@@ -117,9 +117,16 @@
       <ul>
         <li>
           <ExternalLinkTo
-            data-test-footer-imprint-link="true"
-            @href={{this.config.urls.legal}}
+            @href={{this.config.urls.imprint}}
             @title="Imprint"
+          >
+            Imprint
+          </ExternalLinkTo>
+        </li>
+        <li>
+          <ExternalLinkTo
+            @href={{this.config.urls.legal}}
+            @title="Legal"
           >
             Legal
           </ExternalLinkTo>
