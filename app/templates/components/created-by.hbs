@@ -1,13 +1,14 @@
 {{#if this.showUser}}
-  <LinkTo @route="owner" @models={{array this.userProvider this.user.login}}>
+  <LinkTo @route="owner" @models={{array this.userProvider this.user.login}} class="commiter-link">
     <EmberTooltip @text={{concat "View repositories for " this.nameOrLogin}} />
     <UserAvatar
       @url={{this.user.avatarUrl}}
       @name={{this.user.name}}
       @small={{true}}
       @size={{18}}
+      class="comitter-avatar"
     />
-    <span class="label-align inner-underline">
+    <span class="label-align inner-underline commiter-name">
       {{this.nameOrLogin}}
     </span>
   </LinkTo>

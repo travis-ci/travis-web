@@ -26,12 +26,14 @@
 
           {{#if this.multiVcs.enabled}}
             <div>
-              <button class="hero-button org multi-vcs" {{on 'click' (action this.signIn 'github')}}>
-                <SvgImage @name="icon-repooctocat" />
-                <span class="label-align">
-                  Sign up with Github
-                </span>
-              </button>
+              {{#if this.multiVcs.enableGithubLogin}}
+                <button class="hero-button org multi-vcs" {{on 'click' (action this.signIn 'github')}}>
+                  <SvgImage @name="icon-repooctocat" />
+                  <span class="label-align">
+                    Sign up with Github
+                  </span>
+                </button>
+              {{/if}}
               {{#if this.multiVcs.enableAssemblaLogin}}
                 <button class="hero-button org multi-vcs" {{on 'click' (action this.signIn 'assembla')}}>
                   <SvgImage @name="icon-assembla" />

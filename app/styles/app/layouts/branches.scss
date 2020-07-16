@@ -60,6 +60,36 @@
       }
     }
   }
+
+  .row-commiter {
+    overflow: hidden;
+    position: relative;
+
+    &::after {
+      content: "";
+      display: block;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      width: 1.5em;
+      background: linear-gradient(-90deg, #fff 20%, #fff0 100%);
+    }
+
+    .row-item {
+      max-width: 100%;
+
+      .commiter-link {
+        display: inline-block;
+        max-width: 100%;
+      }
+
+      .commiter-name {
+        max-width: calc(100% - 26px);
+        overflow: hidden;
+      }
+    }
+  }
 }
 
 .is-relative {
