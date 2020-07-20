@@ -3,6 +3,11 @@
 
 const deepFreeze = require('deep-freeze');
 
+const {
+  GITHUB_ORGS_OAUTH_ACCESS_SETTINGS_URL,
+  DEFAULT_PROVIDER
+} = process && process.env || {};
+
 const VCS_TYPES = {
   ASSEMBLA: {
     ORG: 'AssemblaOrganization',
@@ -29,6 +34,8 @@ const VCS_TYPES = {
 // keys sorted alphabetically
 module.exports = deepFreeze({
   assembla: {
+    isDefault: DEFAULT_PROVIDER === 'assembla',
+    isBeta: true,
     vcsTypes: [VCS_TYPES.ASSEMBLA.ORG, VCS_TYPES.ASSEMBLA.REPO, VCS_TYPES.ASSEMBLA.USER],
     endpoint: 'https://:portfolio.assembla.com',
     icon: 'icon-assembla',
@@ -55,6 +62,8 @@ module.exports = deepFreeze({
   },
 
   bitbucket: {
+    isDefault: DEFAULT_PROVIDER === 'bitbucket',
+    isBeta: true,
     vcsTypes: [VCS_TYPES.BITBUCKET.ORG, VCS_TYPES.BITBUCKET.REPO, VCS_TYPES.BITBUCKET.USER],
     endpoint: 'https://bitbucket.org',
     icon: 'icon-bitbucket',
@@ -81,6 +90,8 @@ module.exports = deepFreeze({
   },
 
   gitlab: {
+    isDefault: DEFAULT_PROVIDER === 'gitlab',
+    isBeta: true,
     vcsTypes: [VCS_TYPES.GITLAB.ORG, VCS_TYPES.GITLAB.REPO, VCS_TYPES.GITLAB.USER],
     endpoint: 'https://gitlab.com',
     icon: 'icon-gitlab',
@@ -107,8 +118,9 @@ module.exports = deepFreeze({
   },
 
   github: {
+    isDefault: DEFAULT_PROVIDER === 'github' || !DEFAULT_PROVIDER,
+    isBeta: false,
     vcsTypes: [VCS_TYPES.GITHUB.ORG, VCS_TYPES.GITHUB.REPO, VCS_TYPES.GITHUB.USER],
-    isDefault: true,
     endpoint: 'https://github.com',
     icon: 'icon-repooctocat',
     name: 'GitHub',
@@ -121,7 +133,7 @@ module.exports = deepFreeze({
       profile: '/:owner',
       repo: '/:owner/:repo',
       tag: '/:owner/:repo/releases/tag/:tag',
-      accessSettings: process.env.GITHUB_ORGS_OAUTH_ACCESS_SETTINGS_URL,
+      accessSettings: GITHUB_ORGS_OAUTH_ACCESS_SETTINGS_URL,
     },
     vocabulary: {
       organization: 'Organization',

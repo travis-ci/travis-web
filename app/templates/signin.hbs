@@ -50,12 +50,10 @@
         </UiKit::Text>
       {{/if}}
 
-      <UiKit::ButtonSignin />
-      {{#if this.showOtherProviders}}
-        <UiKit::ButtonSignin @provider='bitbucket' />
-        <UiKit::ButtonSignin @provider='gitlab' />
-        <UiKit::ButtonSignin @provider='assembla' />
-      {{/if}}
+      <UiKit::ButtonSignin @provider='github' />
+      <UiKit::ButtonSignin @provider='bitbucket' />
+      <UiKit::ButtonSignin @provider='gitlab' />
+      <UiKit::ButtonSignin @provider='assembla' />
 
       {{#unless this.hasAccounts}}
         <UiKit::Text @margin={{hash y=6}}>
