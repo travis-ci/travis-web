@@ -9,6 +9,7 @@ import { or, reads } from '@ember/object/computed';
 
 export default Owner.extend({
   api: service(),
+  accounts: service(),
   permissionsService: service('permissions'),
 
   email: attr('string'),
@@ -87,6 +88,7 @@ export default Owner.extend({
         this.schedulePoll();
       } else {
         this.permissionsService.fetchPermissions.perform();
+        this.accounts.fetchOrganizations.perform();
         this.applyReposFilter();
         Travis.trigger('user:synced', this);
         this.set('isSyncing', false);
