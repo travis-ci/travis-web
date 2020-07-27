@@ -88,7 +88,7 @@ export default Owner.extend({
         this.schedulePoll();
       } else {
         this.permissionsService.fetchPermissions.perform();
-        this.accounts.fetchOrganizations();
+        this.accounts.fetchOrganizations.perform();
         this.applyReposFilter();
         Travis.trigger('user:synced', this);
         this.set('isSyncing', false);
