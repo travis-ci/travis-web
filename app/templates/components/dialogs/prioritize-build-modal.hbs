@@ -1,0 +1,82 @@
+<Modal
+  class="repo-actions-modal"
+  @isVisible={{this.isOpen}}
+  @onClose={{this.onClose}}
+>
+  <div class="repo-actions-modal__top">
+    <h3
+      class="repo-actions-modal__header"
+      data-test-prioritize-modal-header
+    >
+      Prioritize your build
+    </h3>
+    <button
+      type="button"
+      title="Close modal"
+      class="pointer repo-actions-modal__close-button"
+      data-test-prioritize-close-button
+      autofocus={{this.focusOnModal}}
+      onclick={{this.onClose}}
+    >
+      <SvgImage @name="icon-failed" @class="icon" />
+    </button>
+  </div>
+  <div class="repo-actions-modal__body">
+    <p>
+      Bypass your scheduled build by fast tracking this one.
+    </p>
+    <p class="label-transform">
+      Select an Option
+    </p>
+    <TravisForm
+      as |form|
+    >
+      <form.field
+        @disableFrame={{true}}
+        @value={{not this.shouldCancelRunningJobs}}
+        onclick={{action (mut this.shouldCancelRunningJobs) false}}
+        as |field|
+      >
+        <field.checkbox data-test-prioritize-checkbox>
+          Place build at the top of the queue
+        </field.checkbox>
+      </form.field>
+
+      <form.field
+        @disableFrame={{true}}
+        @value={{this.shouldCancelRunningJobs}}
+        onclick={{action (mut this.shouldCancelRunningJobs) true}}
+        as |field|
+      >
+        <field.checkbox data-test-prioritize-checkbox-with-cancel>
+          Place build at the top of the queue and cancel all running jobs
+        </field.checkbox>
+      </form.field>
+    </TravisForm>
+  </div>
+  <br />
+  <div class="repo-actions-modal__controls">
+    <button
+      type="button"
+      class="button button--blue"
+      onclick={{action (perform this.increasePriorityTask)}}
+      data-test-prioritize-button
+    >
+      {{#if this.increasePriorityTask.isRunning}}
+        <LoadingIndicator class="loading-indicator"/><span>Prioritizing the build</span>
+      {{else}}
+        <span>Prioritize build</span>
+      {{/if}}
+    </button>
+    {{#if (not this.increasePriorityTask.isRunning)}}
+      <button
+        role="button"
+        class="button button--red"
+        onclick={{this.onClose}}
+        data-test-prioritize-cancel-button
+      >
+        Cancel
+      </button>
+    {{/if}}
+  </div>
+</Modal> 
