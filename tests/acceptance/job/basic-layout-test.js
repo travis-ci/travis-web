@@ -44,7 +44,13 @@ module('Acceptance | job/basic layout', function (hooks) {
 
     let user = this.server.create('user', {
       name: 'Mr T',
-      avatar_url: '/images/favicon-gray.png'
+      avatar_url: '/images/favicon-gray.png',
+      allowance: {
+        concurrency_limit: 1,
+        private_repos: true,
+        public_repos: true,
+        subscription_type: 2
+      }
     });
 
     let build = this.server.create('build', { repository: repo, state: 'passed', createdBy: user, commit, branch, request });
@@ -168,7 +174,13 @@ module('Acceptance | job/basic layout', function (hooks) {
 
     let user = this.server.create('user', {
       name: 'Mr T',
-      avatar_url: '/images/favicon-gray.png'
+      avatar_url: '/images/favicon-gray.png',
+      allowance: {
+        concurrency_limit: 1,
+        private_repos: false,
+        public_repos: true,
+        subscription_type: 1
+      }
     });
 
     let build = this.server.create('build', {

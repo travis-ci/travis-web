@@ -28,6 +28,12 @@ module('Acceptance | profile/billing', function (hooks) {
       avatar_url: '/images/tiny.gif',
       permissions: {
         createSubscription: true
+      },
+      allowance: {
+        concurrency_limit: 1,
+        private_repos: true,
+        public_repos: true,
+        subscription_type: 2
       }
     });
 
