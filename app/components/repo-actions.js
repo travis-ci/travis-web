@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
-import { alias, and, or } from '@ember/object/computed';
+import { alias, and, not, or } from '@ember/object/computed';
 import eventually from 'travis/utils/eventually';
 import { task, taskGroup } from 'ember-concurrency';
 
@@ -59,10 +59,16 @@ export default Component.extend({
     }
   }),
 
+  showPriority: true,
+  showPrioritizeBuildModal: false,
   canCancel: and('userHasPullPermissionForRepo', 'item.canCancel'),
   canRestart: and('userHasPullPermissionForRepo', 'item.canRestart'),
   canDebug: and('userHasPushPermissionForRepo', 'item.canDebug'),
-
+  isHighPriority: or('item.priority', 'item.build.priority'),
+  isNotAlreadyHighPriority: not('isHighPriority'),
+  hasPrioritizePermission: or('item.permissions.prioritize', 'item.build.permissions.prioritize'),
+  canPrioritize: and('item.notStarted', 'isNotAlreadyHighPriority', 'hasPrioritizePermission'),
+  insufficientPermissions: not('userHasPushPermissionForRepo'),
   tooltips: or('labelless', 'mobilelabels'),
 
   cancel: task(function* () {
@@ -78,6 +84,14 @@ export default Component.extend({
   }).drop(),
 
   restarters: taskGroup().drop(),
+
+  closePriorityModal: function () {
+    this.set('showPrioritizeBuildModal', false);
+  },
+
+  showPriorityModal: function () {
+    this.set('showPrioritizeBuildModal', true);
+  },
 
   restart: task(function* () {
     let type = this.type;

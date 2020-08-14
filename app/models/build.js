@@ -45,6 +45,8 @@ export default Model.extend(DurationCalculations, {
 
   stagesAreLoaded: alias('stages.isSettled'),
 
+  priority: attr('boolean'),
+
   config: computed('_config', 'currentState.stateName', function () {
     let config = this._config;
     let stateName = this.get('currentState.stateName');
@@ -161,4 +163,15 @@ export default Model.extend(DurationCalculations, {
       return m.isValid() ? m.format('lll') : 'not finished yet';
     }
   }),
+
+  increasePriority(shouldCancelRunningJobs) {
+    let isCancelRunningJob = false;
+
+    if (shouldCancelRunningJobs) {
+      isCancelRunningJob = true;
+    }
+
+    const url = `/build/${this.id}/priority?cancel_all=${isCancelRunningJob}`;
+    return this.api.post(url);
+  },
 });
