@@ -32,6 +32,8 @@ export default VcsEntity.extend({
   isUser: equal('type', 'user'),
   isOrganization: equal('type', 'organization'),
 
+  allowance: attr(),
+
   // This is set by serializers:subscription
   subscriptionPermissions: attr(),
 

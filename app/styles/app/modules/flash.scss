@@ -13,7 +13,7 @@
     width: 100%;
   }
 
-  li.notice, li.success, li.error {
+  li.notice, li.success, li.error, li.warning {
     opacity: 1;
 
     @include z-index(flashes);
@@ -85,6 +85,11 @@
 
       stroke-width: 1.5px;
     }
+  }
+
+  .warning {
+    color: $brick-red;
+    background-color: $quartz-red;
   }
 }
 

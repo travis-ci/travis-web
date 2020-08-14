@@ -67,6 +67,17 @@ const Repo = VcsEntity.extend({
     return hasPermissions && (!isMigrated || isFailed);
   }),
 
+  allowance: reads('owner.allowance'),
+  canOwnerBuild: computed('allowance', 'private', function () {
+    const allowance = this.allowance;
+    const isPrivate = this.private;
+    if (allowance && allowance.subscription_type === 1)
+      return false;//true;
+    if (!allowance)
+      return false;
+    return isPrivate ? allowance.private_repos : allowance.public_repos;
+  }),
+
   defaultBranch: belongsTo('branch', { async: false }),
   currentBuild: belongsTo('build', { async: true, inverse: 'repoCurrentBuild' }),
 

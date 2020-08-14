@@ -6,19 +6,29 @@ import { alias } from '@ember/object/computed';
 const messageTypeToIcon = {
   notice: 'icon-flag',
   success: 'flash-success',
-  error: 'flash-error'
+  error: 'flash-error',
+  warning: ''
 };
 
 const messageTypeToPreamble = {
   notice: 'Heads up!',
   success: 'Hooray!',
-  error: 'Oh no!'
+  error: 'Oh no!',
+  warning: ''
 };
 
 const messageTypeToCloseButton = {
   notice: true,
   success: false,
-  error: true
+  error: true,
+  warning: false
+};
+
+const messageTypeToAutoclose = {
+  notice: false,
+  success: true,
+  error: false,
+  warning: false
 };
 
 export default Service.extend({
@@ -61,11 +71,12 @@ export default Service.extend({
       const { message, preamble = messageTypeToPreamble[type], aboveOverlay } = flash[type];
       const icon = messageTypeToIcon[type];
       const closeButton = messageTypeToCloseButton[type];
+      const autoClose = messageTypeToAutoclose[type];
       const item = { type, message, icon, preamble, closeButton, aboveOverlay };
 
       this.flashes.unshiftObject(item);
 
-      if (!closeButton) this.removeFlash(item);
+      if (autoClose) this.removeFlash(item);
     });
   },
 
@@ -90,9 +101,9 @@ export default Service.extend({
   },
 
   display(type, message, preamble, aboveOverlay = false) {
-    if (!['error', 'notice', 'success'].includes(type)) {
+    if (!['error', 'notice', 'success', 'warning'].includes(type)) {
       // eslint-disable-next-line
-      console.warn("WARNING: <service:flashes> display(type, message) function can only handle 'error', 'notice' and 'success' types");
+      console.warn("WARNING: <service:flashes> display(type, message) function can only handle 'error', 'warning', 'notice' and 'success' types");
     }
 
     this.loadFlashes([{ [type]: { message, preamble, aboveOverlay } }]);
@@ -108,5 +119,9 @@ export default Service.extend({
 
   notice(message, preamble = messageTypeToPreamble['notice'], aboveOverlay = false) {
     this.display('notice', message, preamble, aboveOverlay);
+  },
+
+  warning(message, preamble = messageTypeToPreamble['warning'], aboveOverlay = false) {
+    this.display('warning', message, preamble, aboveOverlay);
   }
 });

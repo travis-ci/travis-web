@@ -103,6 +103,8 @@ module.exports = function (environment) {
       node: 'https://docs.travis-ci.com/user/languages/javascript-with-nodejs/',
       noRun: 'https://docs.travis-ci.com/user/common-build-problems/#i-pushed-a-commit-and-cant-fin',
       plans: 'https://travis-ci.com/plans',
+      planSuffix: 'plan',
+      settingsSuffix: 'settings',
       status: 'https://www.traviscistatus.com/',
       support: 'mailto:support@travis-ci.com',
       travisVsJenkins: 'https://travis-ci.com/travisci-vs-jenkins',
