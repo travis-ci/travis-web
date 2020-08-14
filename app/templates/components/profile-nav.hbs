@@ -48,7 +48,7 @@
       {{/each}}
     </ul>
   </section>
-  {{#if this.accessSettingsUrl}}
+  {{#if (and this.accessSettingsUrl (not this.user.isAssembla))}}
     <section class="profile-additional no-divider">
       <h2>
         Missing {{indefinite-article (vcs-vocab this.model.vcsType 'organization')}} {{vcs-vocab this.model.vcsType 'organization'}}?

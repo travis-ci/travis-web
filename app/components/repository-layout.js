@@ -13,8 +13,9 @@ export default Component.extend({
     const owner = this.get('repo.ownerName');
     const repo = this.get('repo.vcsName');
     const vcsType = this.get('repo.vcsType');
+    const vcsId = this.get('repo.vcsId');
 
-    return this.externalLinks.repoUrl(vcsType, { owner, repo });
+    return this.externalLinks.repoUrl(vcsType, { owner, repo, vcsId});
   }),
 
   orgBuildHistoryLink: computed('repo.slug', function () {

@@ -28,7 +28,7 @@ module('Unit | Utils | vcsVocab', function () {
     assert.equal(vcsVocab('GithubRepository', 'pullRequest'), 'Pull Request');
     assert.equal(vcsVocab('AssemblaRepository', 'pullRequest'), 'Merge Request');
     assert.equal(vcsVocab('GithubRepository', 'organization'), 'Organization');
-    assert.equal(vcsVocab('AssemblaRepository', 'organization'), 'Portfolio');
+    assert.equal(vcsVocab('AssemblaRepository', 'organization'), 'Space');
   });
 
   test('throws if key is invalid', function (assert) {

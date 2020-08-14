@@ -4,7 +4,7 @@ import { computed } from '@ember/object';
 import { reads } from '@ember/object/computed';
 
 export default Model.extend({
-  vcsId: attr('number'),
+  vcsId: attr('string'),
   vcsType: attr('string'),
 
   vcsProvider: computed('vcsType', function () {
