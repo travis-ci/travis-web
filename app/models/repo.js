@@ -72,7 +72,7 @@ const Repo = VcsEntity.extend({
     const allowance = this.allowance;
     const isPrivate = this.private;
     if (allowance && allowance.subscription_type === 1)
-      return false;//true;
+      return true;
     if (!allowance)
       return false;
     return isPrivate ? allowance.private_repos : allowance.public_repos;
