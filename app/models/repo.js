@@ -87,6 +87,16 @@ const Repo = VcsEntity.extend({
     return `${this.ownerName}/${this.vcsName}`;
   }),
 
+  urlName: computed('slug', function () {
+    const { slug = '', vcsName } = this;
+    return slug.split('/').lastObject || vcsName;
+  }),
+
+  urlOwnerName: computed('slug', function () {
+    const { slug = '', ownerName } = this;
+    return slug.split('/').firstObject || ownerName;
+  }),
+
   formattedSlug: computed('owner.login', 'name', function () {
     let login = this.get('owner.login');
     let name = this.name;

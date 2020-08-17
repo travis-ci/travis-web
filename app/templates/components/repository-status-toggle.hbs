@@ -1,7 +1,7 @@
 <RepositoryVisibilityIcon @repository={{this.repository}} />
 <LinkTo
   @route="repo"
-  @models={{array this.repository.provider this.repository.ownerName this.repository.vcsName}}
+  @models={{array this.repository.provider this.repository.urlOwnerName this.repository.urlName}}
   class="profile-repo"
   @classNameBindings="admin:admin:non-admin"
 >
