@@ -57,8 +57,10 @@ export default Component.extend({
   isOrganizationAdmin: and('isOrganization', 'hasAdminPermissions'),
   showOrganizationSettings: and('isOrganizationAdmin', 'isProVersion'),
 
-  checkSubscriptionStatus: computed('features.enterpriseVersion', function () {
-    return !this.features.get('enterpriseVersion') && !!billingEndpoint;
+  showSubscriptionTab: computed('features.enterpriseVersion', 'model.isAssembla', 'model.isUser', function () {
+    const isAssemblaUser = this.model.isUser && this.model.isAssembla;
+    const isEnterprise = this.features.get('enterpriseVersion');
+    return !isEnterprise && !isAssemblaUser && !!billingEndpoint;
   }),
 
 });
