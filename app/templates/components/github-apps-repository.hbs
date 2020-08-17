@@ -1,7 +1,7 @@
 <RepositoryVisibilityIcon @repository={{this.repository}} @hideShared={{true}} />
 <LinkTo
   @route="repo"
-  @models={{array this.repository.provider this.repository.ownerName this.repository.vcsName}}
+  @models={{array this.repository.provider this.urlOwnerName this.urlRepoName}}
   @query={{this.hash}}
   class="profile-repo"
 >

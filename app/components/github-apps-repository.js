@@ -22,6 +22,18 @@ export default Component.extend({
   isMatchGithub: match('vcsType', /Github\S+$/),
   isNotMatchGithub: not('isMatchGithub'),
 
+  urlOwnerName: computed('repository.slug', function () {
+    const { repository } = this;
+    const { slug = '', ownerName } = repository || {};
+    return slug.split('/').firstObject || ownerName;
+  }),
+
+  urlRepoName: computed('repository.slug', function () {
+    const { repository } = this;
+    const { slug = '', vcsName } = repository || {};
+    return slug.split('/').lastObject || vcsName;
+  }),
+
   accessSettingsUrl: computed('user.vcsType', 'user.vcsId', function () {
     return this.user && vcsLinks.accessSettingsUrl(this.user.vcsType, { owner: this.user.login });
   }),

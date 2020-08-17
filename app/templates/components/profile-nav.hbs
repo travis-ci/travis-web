@@ -112,7 +112,7 @@
               Settings
             </LinkTo>
           </li>
-          {{#if this.checkSubscriptionStatus}}
+          {{#if this.showSubscriptionTab}}
             <li data-test-billing-tab>
               <LinkTo @route="account.billing">
                 Subscription
@@ -140,7 +140,7 @@
               </LinkTo>
             </li>
           {{/if}}
-          {{#if this.checkSubscriptionStatus}}
+          {{#if this.showSubscriptionTab}}
             <li data-test-billing-tab>
               <LinkTo @route="organization.billing" @model={{this.model}}>
                 Subscription
