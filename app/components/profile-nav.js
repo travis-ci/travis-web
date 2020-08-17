@@ -49,7 +49,7 @@ export default Component.extend({
   reposToMigrate: reads('model.githubAppsRepositoriesOnOrg'),
 
   showMigrateTab: and('features.proVersion', 'isNotEnterpriseVersion', 'isMatchGithub'),
-  showSubscriptionStatusBanner: and('checkSubscriptionStatus', 'model.subscriptionError'),
+  showSubscriptionStatusBanner: and('showSubscriptionTab', 'model.subscriptionError'),
   showMigrationBetaBanner: and('isNotProVersion', 'isNotEnterpriseVersion', 'hasAccountsForBeta'),
 
   isOrganization: reads('model.isOrganization'),
