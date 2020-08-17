@@ -53,9 +53,6 @@ export default TravisRoute.extend(ScrollResetMixin, {
   },
 
   model({ provider, owner, name }) {
-    if (provider === 'assembla') {
-      name = name.split('.').lastObject;
-    }
     const slug = `${owner}/${name}`;
     this.set('slug', slug);
     return Repo.fetchBySlug(this.store, slug, provider);
