@@ -50,7 +50,7 @@ export default Component.extend({
     if (!repo.canOwnerBuild) {
       this.flashes.warning(`Builds have been temporarily disabled for this repository due to a negative credit balance. \
                             Please go to the <a href="${plansPath}">Plan page</a> to replenish your credit balance or alter your \
-                            <a hreef="${settingsPath}">OSS Credits consumption setting</a>`);
+                            <a href="${settingsPath}">OSS Credits consumption setting</a>`);
     }
   }
 });

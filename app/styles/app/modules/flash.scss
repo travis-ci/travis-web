@@ -93,6 +93,11 @@
   }
 }
 
+ul.flash.warning+.wrapper-main,
+ul.flash.warning+.wrapper-main+#left {
+  margin-top: 55px;
+}
+
 .flash-message {
   display: flex;
   align-items: center;

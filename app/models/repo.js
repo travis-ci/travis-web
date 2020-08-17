@@ -68,7 +68,12 @@ const Repo = VcsEntity.extend({
   }),
 
   allowance: reads('owner.allowance'),
-  canOwnerBuild: computed('allowance', 'private', function () {
+  canOwnerBuild: computed('allowance', 'private', 'features.{proVersion,enterpriseVersion}', function () {
+    const org = !this.get('features.proVersion');
+    const enterprise = !!this.get('features.enterpriseVersion');
+    if (org || enterprise) {
+      return true;
+    }
     const allowance = this.allowance;
     const isPrivate = this.private;
     if (allowance && allowance.subscription_type === 1)

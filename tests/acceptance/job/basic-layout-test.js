@@ -44,13 +44,7 @@ module('Acceptance | job/basic layout', function (hooks) {
 
     let user = this.server.create('user', {
       name: 'Mr T',
-      avatar_url: '/images/favicon-gray.png',
-      allowance: {
-        concurrency_limit: 1,
-        private_repos: true,
-        public_repos: true,
-        subscription_type: 2
-      }
+      avatar_url: '/images/favicon-gray.png'
     });
 
     let build = this.server.create('build', { repository: repo, state: 'passed', createdBy: user, commit, branch, request });

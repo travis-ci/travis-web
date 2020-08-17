@@ -68,10 +68,13 @@ export default Component.extend({
     const plansPath = isUser ? `https://travis-ci.com/account/${config.planSuffix}` : `https://travis-ci.com/organizations/${login}/${config.planSuffix}`;
     const settingsPath = isUser ? `https://travis-ci.com/account/${config.settingsSuffix}` : `https://travis-ci.com/organizations/${login}/${config.settingsSuffix}`;
 
-    if (!allowance.public_repos) {
-      this.flashes.warning(`Builds have been temporarily disabled for this repository due to a negative credit balance. \
+    if (allowance && !allowance.public_repos) {
+      this.flashes.warning(`Builds have been temporarily disabled for public repositories due to a negative credit balance. \
                             Please go to the <a href="${plansPath}">Plan page</a> to replenish your credit balance or alter your \
-                            <a hreef="${settingsPath}">OSS Credits consumption setting</a>`);
+                            <a href="${settingsPath}">OSS Credits consumption setting</a>`);
+    } else if (allowance && !allowance.private_repos) {
+      this.flashes.warning(`Builds have been temporarily disabled for private repositories due to a negative credit balance. \
+                            Please go to the <a href="${plansPath}">Plan page</a> to replenish your credit balance`);
     }
   }
 
