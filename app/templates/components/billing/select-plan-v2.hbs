@@ -1,4 +1,4 @@
-{{#if this.account.isFetchPlansRunning}}
+{{#if this.account.isFetchV2PlansRunning}}
   <LoadingIndicator/>
 {{else if this.showPlansSelector}}
   <section class='billing-select-plan'>
@@ -18,16 +18,28 @@
                 {{plan.name}}
               </p>
               <p class='billing-plans__box-v2--price' data-test-selected-plan-price="true">
-                {{format-currency plan.price floor="true"}}
+                {{#if (eq plan.price 0)}}
+                  Free
+                {{else}}
+                  <span class='color-asphalt-grey'>
+                    Starting at
+                  </span>
+                  {{format-currency plan.price floor="true"}}
+                {{/if}}
               </p>
               <p class='billing-plans__box-v2--desc' data-test-selected-plan-jobs="true">
-                <SvgImage @name="icon-passed" @class="icon blue" /> 10,000 Credits
+                <SvgImage @name="icon-passed" @class="icon blue" /> {{plan.credits}} Credits
               </p>
               <p class='billing-plans__box-v2--desc' data-test-selected-plan-jobs="true">
                 <SvgImage @name="icon-passed" @class="icon blue" /> 40,000 OSS Credits<span class='color-cement-grey'>/month</span>
               </p>
               <p class='billing-plans__box-v2--desc' data-test-selected-plan-jobs="true">
-                <SvgImage @name="icon-passed" @class="icon blue" /> Unlimited unique users
+                <SvgImage @name="icon-passed" @class="icon blue" />
+                {{#if (eq plan.users '999,999')}}
+                  Unlimited unique users
+                {{else}}
+                  Up to {{plan.users}} unique users
+                {{/if}}
               </p>
               <p class='billing-plans__box-v2--desc' data-test-selected-plan-jobs="true">
                 <SvgImage @name="icon-passed" @class="icon blue" /> Private &amp; Open-Source repos
@@ -51,7 +63,7 @@
           {{/each}}
         </div>
       </div>
-      <div class='billing-plans__box-v2--desc'>
+      <div class='billing-plans__box-v2--cancel'>
         {{#if this.isLoading}}
           <LoadingIndicator/>
         {{else}}

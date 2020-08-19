@@ -2,8 +2,7 @@ import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
 import { computed } from '@ember/object';
-import config from 'travis/config/environment';
-import { or, not, reads, filterBy } from '@ember/object/computed';
+import { or, reads, filterBy } from '@ember/object/computed';
 
 export default Component.extend({
   accounts: service(),
@@ -13,17 +12,20 @@ export default Component.extend({
   showPlansSelector: true,
   showCancelButton: false,
   title: null,
-  showAnnual: false,
-  showMonthly: not('showAnnual'),
-  monthlyPlans: reads('account.monthlyPlans'),
-  annualPlans: reads('account.annualPlans'),
-  availablePlans: computed(() => config.plans),
+  availablePlans: reads('account.eligibleV2Plans'),
   defaultPlans: filterBy('availablePlans', 'isDefault'),
   defaultPlanName: reads('defaultPlans.firstObject.name'),
   isLoading: or('save.isRunning', 'accounts.fetchSubscriptions.isRunning'),
 
   displayedPlans: computed('availablePlans.[]', function () {
-    return this.availablePlans.slice(0, 3);
+    this.availablePlans.forEach((plan) => {
+      plan.price = plan.default_addons.reduce((a, b) => a + b.price, 0);
+      const credits = plan.default_addons.filter((addon) => addon.type === 'credit_private').reduce((a, b) => a + b.quantity, 0);
+      plan.credits = credits.toLocaleString();
+      const users = plan.default_addons.filter((addon) => addon.type === 'user_license').reduce((a, b) => a + b.quantity, 0);
+      plan.users = users.toLocaleString();
+    });
+    return this.availablePlans;
   }),
 
   selectedPlan: computed('displayedPlans.[].name', 'defaultPlanName', function () {

@@ -251,10 +251,15 @@
 
       &--price {
         margin: 0 0 25px 0;
-        font-weight: 400;
+        font-weight: 200;
         font-size: 1.7em;
         text-align: center;
         color: $oxide-blue;
+
+        span {
+          color: $cement-grey;
+          font-size: .5em;
+        }
       }
 
       &--name {
@@ -270,14 +275,22 @@
       &--button {
         display: block;
         max-width: 120px;
-        margin: 25px auto 5px auto;
+        margin: 25px auto 0 auto;
+      }
+
+      &--cancel {
+        color: $asphalt-grey;
+        font-weight: 500;
+        font-size: 0.8em;
+        text-align: center;
+        margin: 40px 0 0 0;
       }
 
       &--link {
         cursor: pointer;
         display: block;
-        max-width: 60px;
-        margin: 13px auto 0 auto;
+        max-width: fit-content;
+        margin: 20px auto 0 auto;
         font-size: 0.7em;
         text-align: center;
         border-bottom: 1px solid transparent;

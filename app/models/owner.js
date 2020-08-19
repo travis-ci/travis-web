@@ -101,6 +101,19 @@ export default VcsEntity.extend({
     return filteredAnnualPlans.sortBy('builds');
   }),
 
+  fetchV2Plans: task(function* () {
+    const url = this.isOrganization ? `/v2_plans_for/organization/${this.id}` : '/v2_plans_for/user';
+    const result = yield this.api.get(url);
+    return result ? result.v2_plans : [];
+  }).keepLatest(),
+
+  fetchV2PlansInstance: computed(function () {
+    return this.fetchV2Plans.perform();
+  }),
+
+  isFetchV2PlansRunning: reads('fetchV2PlansInstance.isRunning'),
+  eligibleV2Plans: reads('fetchV2PlansInstance.value'),
+
   fetchBetaMigrationRequests() {
     return this.tasks.fetchBetaMigrationRequestsTask.perform();
   },
