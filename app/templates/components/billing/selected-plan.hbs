@@ -4,10 +4,14 @@
       summary
     </p>
     <p class='selected-plan__details--name' data-test-selected-plan-name>
-      {{this.selectedPlan.name}} plan
+      {{this.selectedPlan.name}}
     </p>
     <p class='selected-plan__details--jobs' data-test-selected-plan-jobs>
-      {{pluralize this.selectedPlan.builds 'concurrent job'}}
+      {{#if (eq this.selectedPlan.starting_users 999999)}}
+        Unlimited unique users
+      {{else}}
+        Up to {{this.selectedPlan.starting_users}} unique users
+      {{/if}}
     </p>
     <button onClick={{action this.goToFirstStep}} class='mt-3 button--white button--hover' data-test-change-selected-plan>
       Change plan
@@ -16,14 +20,20 @@
   <div>
     <div class='selected-plan__price'>
       <p class='selected-plan__price--total' data-test-plan-total='true'>
-        Total:
+        Starting at:
       </p>
-      <p class='selected-plan__price--large' data-test-selected-plan-price>
-        ${{this.price}}
-      </p>
-      <span data-test-selected-plan-period='true' class='selected-plan__period'>
-        {{if this.selectedPlan.annual '/year' '/month'}}
-      </span>
+      {{#if (eq this.selectedPlan.starting_price 0)}}
+        <p class='selected-plan__price--large' data-test-selected-plan-price>
+          Free
+        </p>
+      {{else}}
+        <p class='selected-plan__price--large' data-test-selected-plan-price>
+          {{format-currency this.selectedPlan.starting_price floor="true"}}
+        </p>
+        <span data-test-selected-plan-period='true' class='selected-plan__period'>
+          /month
+        </span>
+      {{/if}}
     </div>
   </div>
 </div>

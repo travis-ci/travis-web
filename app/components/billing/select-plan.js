@@ -2,8 +2,7 @@ import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
 import { computed } from '@ember/object';
-import config from 'travis/config/environment';
-import { or, not, reads, filterBy } from '@ember/object/computed';
+import { or, reads, filterBy } from '@ember/object/computed';
 
 export default Component.extend({
   accounts: service(),
@@ -13,17 +12,13 @@ export default Component.extend({
   showPlansSelector: true,
   showCancelButton: false,
   title: null,
-  showAnnual: false,
-  showMonthly: not('showAnnual'),
-  monthlyPlans: reads('account.monthlyPlans'),
-  annualPlans: reads('account.annualPlans'),
-  availablePlans: computed(() => config.plans),
+  availablePlans: reads('account.eligibleV2Plans'),
   defaultPlans: filterBy('availablePlans', 'isDefault'),
   defaultPlanName: reads('defaultPlans.firstObject.name'),
   isLoading: or('save.isRunning', 'accounts.fetchSubscriptions.isRunning'),
 
-  displayedPlans: computed('showAnnual', 'annualPlans.[]', 'monthlyPlans.[]', function () {
-    return this.showAnnual ? this.annualPlans : this.monthlyPlans;
+  displayedPlans: computed('availablePlans.[]', function () {
+    return this.availablePlans;
   }),
 
   selectedPlan: computed('displayedPlans.[].name', 'defaultPlanName', function () {
@@ -40,11 +35,5 @@ export default Component.extend({
       this.submit();
     }
     this.set('showPlansSelector', false);
-  }).drop(),
-
-  actions: {
-    togglePlanPeriod() {
-      this.toggleProperty('showAnnual');
-    },
-  }
+  }).drop()
 });

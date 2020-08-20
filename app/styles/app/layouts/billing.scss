@@ -152,79 +152,6 @@
     margin-bottom: 1em;
     margin-top: 1em;
 
-    &__box {
-      background-color: #fff;
-      border-radius: 5px;
-      padding: 6px 13px;
-      border: 1px solid $pebble-grey;
-      margin-bottom: 10px;
-      width: 120px;
-      flex-basis: 100%;
-      margin-right: 5px;
-
-      &--jobs {
-        color: $cement-grey;
-        text-transform: uppercase;
-        font-weight: 600;
-        font-size: 0.8em;
-        margin: 5px 0 5px 0;
-      }
-
-      &--desc {
-        color: $asphalt-grey;
-        font-weight: 500;
-        font-size: 0.8em;
-        margin: 5px 0 5px 0;
-
-        span {
-          font-size: .4em;
-          font-style: italic;
-        }
-      }
-
-      &--price {
-        margin: 0;
-        font-weight: 500;
-        font-size: 1.7em;
-        color: $oxide-blue;
-
-        span {
-          font-size: .4em;
-          font-style: italic;
-        }
-      }
-
-      &--price-v2 {
-        margin: 0;
-        font-weight: 500;
-        font-size: 1.7em;
-        text-align: center;
-        color: $oxide-blue;
-      }
-
-      &--name {
-        margin: 8px 0 0 0;
-        font-size: 1.1em;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-
-      &--name-v2 {
-        margin: 8px 0 0 0;
-        font-size: 1.25em;
-        text-align: center;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-
-      &:hover {
-        box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.15);
-        cursor: pointer;
-      }
-    }
-
     &__box-v2 {
       background-color: #fff;
       border-radius: 5px;
@@ -314,10 +241,6 @@
         box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.15);
         cursor: pointer;
       }
-    }
-
-    &__box:last-child {
-      margin-right: 0;
     }
 
     &__box-v2:last-child {

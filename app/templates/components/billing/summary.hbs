@@ -1,4 +1,3 @@
-{{#if (not this.showPlansSelector)}}
 <div class='billing-subscription-section plan-overview'>
   {{#if (not this.account.hasSubscriptionPermissions)}}
     <span class="notice-banner--yellow" data-test-help='true'>
@@ -6,6 +5,7 @@
       You don't have admin permissions to edit this subscription.
     </span>
   {{/if}}
+  {{#if (not this.showPlansSelector)}}
   <div class="flex flex--space-between flex--wrap plan-overview__details">
     <section>
       <h3 class='plan-overview__header'> Plan information </h3>
@@ -57,6 +57,7 @@
       <Billing::Price @subscription={{this.subscription}} @trial={{this.trial}}/>
     </section>
   </div>
+  {{/if}}
   {{#if this.subscription.isGithub}}
     <ManageSubscriptionButton
       @subscription={{this.subscription}}
@@ -83,18 +84,8 @@
   {{/if}}
 </div>
 <hr />
-{{#if this.subscription.isStripe}}
+{{#if (and this.subscription.isStripe (not this.showPlansSelector))}}
   <Billing::Address @subscription={{this.subscription}} @account={{this.account}}/>
   <Billing::PaymentDetails @subscription={{this.subscription}} @account={{this.account}}//>
   <hr />
-{{/if}}
-{{else}}
-  <Billing::SelectPlanV2
-    @title="Edit plan"
-    @account={{this.account}}
-    @selectedPlan={{this.selectedPlan}}
-    @showPlansSelector={{this.showPlansSelector}}
-    @submit={{this.editPlan}}
-    @showCancelButton={{true}}
-  />
 {{/if}}

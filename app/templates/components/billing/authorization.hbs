@@ -15,13 +15,13 @@
     {{this.stripeErrorMessage}}
   </span>
   <TravisForm
-    data-test-stripe-form='true' 
-    @onSubmit={{perform this.retryPayment}} 
+    data-test-stripe-form='true'
+    @onSubmit={{perform this.retryPayment}}
     as |form|
   >
-    <StripeCard 
-      @onComplete={{action "complete"}} 
-      @options={{this.options}} 
+    <StripeCard
+      @onComplete={{action "complete"}}
+      @options={{this.options}}
       as |stripeError|
     >
       {{#if stripeError}}
@@ -47,11 +47,10 @@
   </span>
 {{else if (and this.isComplete this.subscription.isStripe)}}
   {{#if this.showPlansSelector}}
-    <Billing::SelectPlan
+    <Billing::SelectPlanV2
       @title="Edit plan"
       @account={{this.account}}
       @selectedPlan={{this.selectedPlan}}
-      @showAnnual={{this.showAnnual}}
       @showPlansSelector={{this.showPlansSelector}}
       @submit={{this.editPlan}}
       @showCancelButton={{true}}
@@ -62,7 +61,7 @@
         <LoadingIndicator/>
       {{else}}
         <div class="billing-subscription__buttons--change">
-          <BillingResubscribeButton 
+          <BillingResubscribeButton
             @account={{this.account}}
             @githubSubscription={{this.githubSubscription}}
             @subscription={{this.subscription}}
@@ -81,7 +80,7 @@
     </div>
   {{/if}}
 {{/if}}
- <Dialogs::CancelSubscriptionModal 
+ <Dialogs::CancelSubscriptionModal
   @isOpen={{this.showCancelModal}}
   @onClose={{fn (mut this.showCancelModal) false}}
   @subscription={{this.subscription}}
