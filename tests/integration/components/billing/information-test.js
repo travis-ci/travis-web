@@ -58,8 +58,8 @@ module('Integration | Component | billing-information', function (hooks) {
 
   test('it renders billing information form correctly', async function (assert) {
     await render(hbs`
-      <Billing::Information 
-        @displayedPlans={{displayedPlans}} 
+      <Billing::Information
+        @displayedPlans={{displayedPlans}}
         @showAnnual={{showAnnual}}
         @newSubscription={{newSubscription}}
         @next={{action 'next'}}
@@ -71,7 +71,7 @@ module('Integration | Component | billing-information', function (hooks) {
     assert.dom('[data-test-contact-details-title]').hasText('Contact details');
     assert.dom('[data-test-billing-details-title]').hasText('Billing address');
     assert.equal(profilePage.billing.selectedPlanOverview.heading.text, 'summary');
-    assert.equal(profilePage.billing.selectedPlanOverview.name.text, `${this.plans[0].name} plan`);
+    assert.equal(profilePage.billing.selectedPlanOverview.name.text, `${this.plans[0].name}`);
     assert.equal(profilePage.billing.selectedPlanOverview.jobs.text, `${this.plans[0].builds} concurrent jobs`);
     assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${this.plans[0].price / 100}`);
     assert.equal(profilePage.billing.period.text, '/month');
@@ -89,9 +89,9 @@ module('Integration | Component | billing-information', function (hooks) {
     };
 
     await render(hbs`
-      <Billing::Information 
-        @selectedPlan={{selectedPlan}} 
-        @displayedPlans={{displayedPlans}} 
+      <Billing::Information
+        @selectedPlan={{selectedPlan}}
+        @displayedPlans={{displayedPlans}}
         @showAnnual={{showAnnual}}
         @newSubscription={{newSubscription}}
         @next={{action 'next'}}
@@ -105,8 +105,8 @@ module('Integration | Component | billing-information', function (hooks) {
 
   test('it adds multiple email inputs to form', async function (assert) {
     await render(hbs`
-      <Billing::Information 
-        @displayedPlans={{displayedPlans}} 
+      <Billing::Information
+        @displayedPlans={{displayedPlans}}
         @showAnnual={{showAnnual}}
         @newSubscription={{newSubscription}}
         @next={{action 'next'}}

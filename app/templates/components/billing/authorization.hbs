@@ -47,7 +47,7 @@
   </span>
 {{else if (and this.isComplete this.subscription.isStripe)}}
   {{#if this.showPlansSelector}}
-    <Billing::SelectPlanV2
+    <Billing::SelectPlan
       @title="Edit plan"
       @account={{this.account}}
       @selectedPlan={{this.selectedPlan}}
