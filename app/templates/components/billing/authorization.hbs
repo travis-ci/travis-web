@@ -47,13 +47,11 @@
   </span>
 {{else if (and this.isComplete this.subscription.isStripe)}}
   {{#if this.showPlansSelector}}
-    <Billing::SelectPlan
-      @title="Edit plan"
+    <Billing::Process
       @account={{this.account}}
-      @selectedPlan={{this.selectedPlan}}
+      @subscription={{this.subscription}}
+      @newSubscription={{this.newSubscription}}
       @showPlansSelector={{this.showPlansSelector}}
-      @submit={{this.editPlan}}
-      @showCancelButton={{true}}
     />
   {{else}}
     <div class="flex flex--wrap {{if this.account.hasSubscriptionPermissions 'billing-subscription__buttons'}}">

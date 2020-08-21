@@ -1,13 +1,16 @@
+{{#if (eq this.skipBillingInfo true)}}
+  {{action next}}
+{{/if}}
 <div class='billing-information-form'>
+  <h3 data-test-contact-details-title='true'>
+    Contact details
+  </h3>
   <Billing::SelectedPlan
-    @selectedPlan={{this.newSubscription.plan}} 
+    @selectedPlan={{this.newSubscription.plan}}
     @goToFirstStep={{action this.goToFirstStep}}
   />
   <TravisForm @onSubmit={{action next}} as |form|>
     <div data-test-billing-form>
-      <h3 data-test-contact-details-title='true'>
-        Contact details
-      </h3>
       <div class='flex flex--col flex-md-row'>
         <div class='full-width form-elem inline-form-elem'>
           <form.field
@@ -70,7 +73,7 @@
             @required={{true}}
             @showRequiredMark={{true}}
             @showValidationStatusIcons={{false}}
-            @onChange={{action (mut this.newSubscription.billingInfo.address)}} 
+            @onChange={{action (mut this.newSubscription.billingInfo.address)}}
             as |Field|
           >
             <Field.input @name='address'/>
@@ -83,7 +86,7 @@
             @required={{true}}
             @showRequiredMark={{true}}
             @showValidationStatusIcons={{false}}
-            @onChange={{action (mut this.newSubscription.billingInfo.city)}} 
+            @onChange={{action (mut this.newSubscription.billingInfo.city)}}
             as |Field|
           >
             <Field.input @name='city'/>
@@ -98,7 +101,7 @@
             @required={{true}}
             @showRequiredMark={{true}}
             @showValidationStatusIcons={{false}}
-            @onChange={{action (mut this.newSubscription.billingInfo.zipCode)}} 
+            @onChange={{action (mut this.newSubscription.billingInfo.zipCode)}}
             as |Field|
           >
             <Field.input @name='zip'/>
@@ -112,7 +115,7 @@
             class='billing-country'
             @showRequiredMark={{true}}
             @showValidationStatusIcons={{false}}
-            @onChange={{action (mut this.newSubscription.billingInfo.country)}} 
+            @onChange={{action (mut this.newSubscription.billingInfo.country)}}
             as |Field|
           >
             <Field.select
@@ -129,7 +132,7 @@
           @label='Vat Id'
           @value={{newSubscription.billingInfo.vatId}}
           @showValidationStatusIcons={{false}}
-          @onChange={{action (mut newSubscription.billingInfo.vatId)}} 
+          @onChange={{action (mut newSubscription.billingInfo.vatId)}}
           as |Field|
         >
           <Field.input @name='vat'/>

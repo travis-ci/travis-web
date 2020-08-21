@@ -1,8 +1,5 @@
 <div class='selected-plan' data-test-selected-plan='true'>
   <div class='selected-plan__details'>
-    <p class='selected-plan__details--plan' data-test-selected-plan-heading='true'>
-      summary
-    </p>
     <p class='selected-plan__details--name' data-test-selected-plan-name>
       {{this.selectedPlan.name}}
     </p>
@@ -11,6 +8,9 @@
         Unlimited unique users
       {{else}}
         Up to {{this.selectedPlan.starting_users}} unique users
+        <div data-test-selected-plan-period='true' class='selected-plan__period'>
+          Charged monthly per usage - check pricing
+        </div>
       {{/if}}
     </p>
     <button onClick={{action this.goToFirstStep}} class='mt-3 button--white button--hover' data-test-change-selected-plan>
@@ -20,7 +20,7 @@
   <div>
     <div class='selected-plan__price'>
       <p class='selected-plan__price--total' data-test-plan-total='true'>
-        Starting at:
+        Total:
       </p>
       {{#if (eq this.selectedPlan.starting_price 0)}}
         <p class='selected-plan__price--large' data-test-selected-plan-price>
@@ -30,9 +30,6 @@
         <p class='selected-plan__price--large' data-test-selected-plan-price>
           {{format-currency this.selectedPlan.starting_price floor="true"}}
         </p>
-        <span data-test-selected-plan-period='true' class='selected-plan__period'>
-          /month
-        </span>
       {{/if}}
     </div>
   </div>

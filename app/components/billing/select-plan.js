@@ -34,6 +34,5 @@ export default Component.extend({
       this.newSubscription.set('plan', selectedPlan);
       this.submit();
     }
-    this.set('showPlansSelector', false);
   }).drop()
 });

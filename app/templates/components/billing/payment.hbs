@@ -1,5 +1,8 @@
 <div class='billing-checkout' data-test-payment-form='true'>
-  <Billing::SelectedPlan 
+  <h3 data-test-summary-title='true'>
+    Order Summary
+  </h3>
+  <Billing::SelectedPlan
     @selectedPlan={{this.selectedPlan}}
     @goToFirstStep={{action this.goToFirstStep}}
     @totalPrice={{this.totalPrice}}
@@ -37,7 +40,7 @@
           @value={{this.couponId}}
           @showValidationStatusIcons={{false}}
           @onFocus={{action 'handleCouponFocus'}}
-          @onChange={{action (mut this.couponId)}} 
+          @onChange={{action (mut this.couponId)}}
           as |Field|
         >
           <Field.input @name='couponId' @placeholder='Coupon code'/>
@@ -79,12 +82,18 @@
         <p>{{stripeError.message}}</p>
       {{/if}}
     </StripeCard>
+    <span class="notice-banner--yellow" data-test-plan-notice='true'>
+      Please note that you will be charged monthly for the unique users who triggered builds. You can
+      replenish your credit balance anytime by visiting the plan page and buying credits add-ons from there.
+      Purchased credits do not expire and can be used at any time. Your OSS Credit balance does expire and
+      will be replenished monthly.
+    </span>
     <div class='billing-checkout__payment'>
       {{#if this.isLoading}}
         <LoadingIndicator/>
       {{else}}
         <button class='{{if this.stripeElement 'button--green' 'button disabled'}}' {{on 'click' form.submit}} data-test-complete-payment='true'>
-          Pay {{this.discountedPrice}} to complete subscription
+          Pay {{this.discountedPrice}} to complete order
         </button>
       {{/if}}
     </div>
