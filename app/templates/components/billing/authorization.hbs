@@ -50,8 +50,8 @@
     <Billing::Process
       @account={{this.account}}
       @subscription={{this.subscription}}
-      @newSubscription={{this.newSubscription}}
       @showPlansSelector={{this.showPlansSelector}}
+      @retryAuthorization={{this.retryAuthorization}}
     />
   {{else}}
     <div class="flex flex--wrap {{if this.account.hasSubscriptionPermissions 'billing-subscription__buttons'}}">

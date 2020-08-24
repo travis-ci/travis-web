@@ -53,12 +53,17 @@
               <p class='billing-plans__box-v2--desc' data-test-selected-plan-jobs="true">
                 <SvgImage @name="icon-passed" @class="icon blue" /> Linux, Windows, macOS
               </p>
-              <button data-test-subscribe-button
-                onclick={{action form.submit}}
-                class='button--blue billing-plans__box-v2--button'
-              >
-                Upgrade
-              </button>
+              {{#if (eq plan.id this.subscription.plan.id)}}
+                <h4 class='billing-plans' data-test-current-plan-text>Your current plan</h4>
+              {{else}}
+                <button data-test-subscribe-button
+                  onclick={{action form.submit}}
+                  class='{{if (eq plan.id this.selectedPlan.id) 'button--blue' 'button--white'}} billing-plans__box-v2--button'
+                  disabled={{not (eq plan.id this.selectedPlan.id)}}
+                >
+                  Upgrade
+                </button>
+              {{/if}}
               <a
                 href="test"
                 class="billing-plans__box-v2--link"

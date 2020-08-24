@@ -31,7 +31,7 @@ export default Component.extend({
     } else {
       const { store } = this;
       const selectedPlan = store.peekRecord('plan', this.selectedPlan.id) || store.createRecord('plan', { ...this.selectedPlan });
-      this.newSubscription.set('plan', selectedPlan);
+      this.set('selectedPlanId', selectedPlan.id);
       this.submit();
     }
   }).drop()

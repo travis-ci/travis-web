@@ -6,7 +6,7 @@
     Contact details
   </h3>
   <Billing::SelectedPlan
-    @selectedPlan={{this.newSubscription.plan}}
+    @selectedPlan={{this.selectedPlan}}
     @goToFirstStep={{action this.goToFirstStep}}
   />
   <TravisForm @onSubmit={{action next}} as |form|>

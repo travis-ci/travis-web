@@ -281,10 +281,11 @@
 
   .billing-select-plan {
     h4 {
-      margin: 0;
+      margin: 35px 0 28px 0;
       text-transform: uppercase;
+      text-align: center;
       font-weight: 700;
-      color: $cement-grey;
+      color: $oxide-blue;
       font-size: 12px;
     }
 
@@ -326,7 +327,6 @@
       color: $oxide-blue;
       border: 1px solid $oxide-blue;
       box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.15);
-      background: rgba(181, 214, 217, .2);
     }
   }
 

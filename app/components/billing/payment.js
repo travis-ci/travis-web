@@ -19,23 +19,22 @@ export default Component.extend({
   couponId: null,
   options: config.stripeOptions,
 
-  firstName: reads('newSubscription.billingInfo.firstName'),
-  lastName: reads('newSubscription.billingInfo.lastName'),
-  company: reads('newSubscription.billingInfo.company'),
-  billingEmail: reads('newSubscription.billingInfo.billingEmail'),
+  firstName: reads('subscription.billingInfo.firstName'),
+  lastName: reads('subscription.billingInfo.lastName'),
+  company: reads('subscription.billingInfo.company'),
+  billingEmail: reads('subscription.billingInfo.billingEmail'),
   billingEmails: computed('billingEmail', function () {
     return (this.billingEmail || '').split(',');
   }),
 
-  address: reads('newSubscription.billingInfo.address'),
-  city: reads('newSubscription.billingInfo.city'),
-  country: reads('newSubscription.billingInfo.country'),
-  isLoading: or('createSubscription.isRunning', 'accounts.fetchSubscriptions.isRunning'),
-  selectedPlan: reads('newSubscription.plan'),
+  address: reads('subscription.billingInfo.address'),
+  city: reads('subscription.billingInfo.city'),
+  country: reads('subscription.billingInfo.country'),
+  isLoading: or('createSubscription.isRunning', 'accounts.fetchSubscriptions.isRunning', 'updatePlan.isRunning'),
 
-  coupon: reads('newSubscription.validateCoupon.last.value'),
-  couponError: reads('newSubscription.validateCoupon.last.error'),
-  totalPrice: reads('newSubscription.totalPrice'),
+  coupon: reads('subscription.validateCoupon.last.value'),
+  couponError: reads('subscription.validateCoupon.last.error'),
+  totalPrice: reads('subscription.totalPrice'),
   isValidCoupon: reads('coupon.valid'),
   couponHasError: computed('couponError', {
     get() {
@@ -45,6 +44,16 @@ export default Component.extend({
       return value;
     }
   }),
+
+  creditCardInfoExists: reads('subscription.creditCardInfo.isValid'),
+
+  updatePlan: task(function* () {
+    yield this.subscription.changePlan.perform({ plan: this.selectedPlan.id });
+    yield this.accounts.fetchSubscriptions.perform();
+    yield this.retryAuthorization.perform();
+    this.storage.clearBillingData();
+    this.set('showPlansSelector', false);
+  }).drop(),
 
   createSubscription: task(function* () {
     this.metrics.trackEvent({
