@@ -248,3 +248,38 @@ const countriesMap = {
 };
 
 export const countries = Object.values(countriesMap);
+
+export const zeroVatThresholdCountries = [
+  countriesMap['AL'],
+  countriesMap['BH'],
+  countriesMap['BY'],
+  countriesMap['CL'],
+  countriesMap['IN'],
+  countriesMap['LI'],
+  countriesMap['MA'],
+  countriesMap['CH'],
+  countriesMap['SA'],
+  countriesMap['RS'],
+  countriesMap['KR'],
+  countriesMap['TR'],
+  countriesMap['AE'],
+];
+
+export const nonZeroVatThresholdCountries = [
+  countriesMap['AD'],
+  countriesMap['AM'],
+  countriesMap['BS'],
+  countriesMap['BD'],
+  countriesMap['BR'],
+  countriesMap['CR'],
+  countriesMap['EG'],
+  countriesMap['GH'],
+  countriesMap['IS'],
+  countriesMap['KE'],
+  countriesMap['NZ'],
+  countriesMap['MX'],
+  countriesMap['NO'],
+  countriesMap['RU'],
+  countriesMap['SG'],
+  countriesMap['ZA'],
+];
