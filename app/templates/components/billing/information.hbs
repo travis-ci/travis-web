@@ -15,11 +15,11 @@
         <div class='full-width form-elem inline-form-elem'>
           <form.field
             @label='First Name'
-            @value={{this.newSubscription.billingInfo.firstName}}
+            @value={{this.subscription.billingInfo.firstName}}
             @required={{true}}
             @showRequiredMark={{true}}
             @showValidationStatusIcons={{false}}
-            @onChange={{action (mut this.newSubscription.billingInfo.firstName)}} as |Field|
+            @onChange={{action (mut this.subscription.billingInfo.firstName)}} as |Field|
           >
             <Field.input @name='firstname'/>
           </form.field>
@@ -27,11 +27,11 @@
         <div class='full-width form-elem'>
           <form.field
             @label='Last Name'
-            @value={{this.newSubscription.billingInfo.lastName}}
+            @value={{this.subscription.billingInfo.lastName}}
             @required={{true}}
             @showRequiredMark={{true}}
             @showValidationStatusIcons={{false}}
-            @onChange={{action (mut this.newSubscription.billingInfo.lastName)}} as |Field|
+            @onChange={{action (mut this.subscription.billingInfo.lastName)}} as |Field|
           >
             <Field.input @name='lastname'/>
           </form.field>
@@ -40,9 +40,9 @@
       <div class='form-elem billing-optional-field'>
         <form.field
           @label='Company Name'
-          @value={{this.newSubscription.billingInfo.company}}
+          @value={{this.subscription.billingInfo.company}}
           @showValidationStatusIcons={{false}}
-          @onChange={{action (mut this.newSubscription.billingInfo.company)}} as |Field|
+          @onChange={{action (mut this.subscription.billingInfo.company)}} as |Field|
         >
           <Field.input @name='companyName'/>
         </form.field>
@@ -56,7 +56,7 @@
           @showRequiredMark={{true}}
           @showValidationStatusIcons={{false}}
           @validator={{form-validator form.validators.email}}
-          @initialValue={{this.newSubscription.billingInfo.billingEmail}}
+          @initialValue={{this.subscription.billingInfo.billingEmail}}
           as |Field|
         >
           <Field.multipleInputs @updateValues={{action 'updateEmails'}}/>
@@ -69,11 +69,11 @@
         <div class='full-width form-elem inline-form-elem'>
           <form.field
             @label='Street Address'
-            @value={{this.newSubscription.billingInfo.address}}
+            @value={{this.subscription.billingInfo.address}}
             @required={{true}}
             @showRequiredMark={{true}}
             @showValidationStatusIcons={{false}}
-            @onChange={{action (mut this.newSubscription.billingInfo.address)}}
+            @onChange={{action (mut this.subscription.billingInfo.address)}}
             as |Field|
           >
             <Field.input @name='address'/>
@@ -82,11 +82,11 @@
         <div class='full-width form-elem'>
           <form.field
             @label='City'
-            @value={{this.newSubscription.billingInfo.city}}
+            @value={{this.subscription.billingInfo.city}}
             @required={{true}}
             @showRequiredMark={{true}}
             @showValidationStatusIcons={{false}}
-            @onChange={{action (mut this.newSubscription.billingInfo.city)}}
+            @onChange={{action (mut this.subscription.billingInfo.city)}}
             as |Field|
           >
             <Field.input @name='city'/>
@@ -97,11 +97,11 @@
         <div class='full-width form-elem inline-form-elem'>
           <form.field
             @label='Zip Code'
-            @value={{this.newSubscription.billingInfo.zipCode}}
+            @value={{this.subscription.billingInfo.zipCode}}
             @required={{true}}
             @showRequiredMark={{true}}
             @showValidationStatusIcons={{false}}
-            @onChange={{action (mut this.newSubscription.billingInfo.zipCode)}}
+            @onChange={{action (mut this.subscription.billingInfo.zipCode)}}
             as |Field|
           >
             <Field.input @name='zip'/>
@@ -110,12 +110,12 @@
         <div class='form-elem full-width select' data-billing-form-select>
           <form.field
             @label='Country'
-            @value={{this.newSubscription.billingInfo.country}}
+            @value={{this.subscription.billingInfo.country}}
             @required={{true}}
             class='billing-country'
             @showRequiredMark={{true}}
             @showValidationStatusIcons={{false}}
-            @onChange={{action (mut this.newSubscription.billingInfo.country)}}
+            @onChange={{action (mut this.subscription.billingInfo.country)}}
             as |Field|
           >
             <Field.select
@@ -130,9 +130,9 @@
       <div class='form-elem-half-width inline-form-elem billing-optional-field'>
         <form.field
           @label='Vat Id'
-          @value={{newSubscription.billingInfo.vatId}}
+          @value={{subscription.billingInfo.vatId}}
           @showValidationStatusIcons={{false}}
-          @onChange={{action (mut newSubscription.billingInfo.vatId)}}
+          @onChange={{action (mut subscription.billingInfo.vatId)}}
           as |Field|
         >
           <Field.input @name='vat'/>

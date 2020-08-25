@@ -522,8 +522,28 @@ export default create({
         text: text()
       },
 
-      jobs: {
-        scope: '.highlight-plan [data-test-selected-plan-jobs]',
+      credits: {
+        scope: '.highlight-plan [data-test-selected-plan-credits]',
+        text: text()
+      },
+
+      osscredits: {
+        scope: '.highlight-plan [data-test-selected-plan-oss-credits]',
+        text: text()
+      },
+
+      users: {
+        scope: '.highlight-plan [data-test-selected-plan-users]',
+        text: text()
+      },
+
+      repos: {
+        scope: '.highlight-plan [data-test-selected-plan-repos]',
+        text: text()
+      },
+
+      os: {
+        scope: '.highlight-plan [data-test-selected-plan-os]',
         text: text()
       },
 
@@ -551,8 +571,28 @@ export default create({
         text: text()
       },
 
-      jobs: {
-        scope: '[data-test-selected-plan-jobs]',
+      credits: {
+        scope: '[data-test-selected-plan-credits]',
+        text: text()
+      },
+
+      osscredits: {
+        scope: '[data-test-selected-plan-oss-credits]',
+        text: text()
+      },
+
+      users: {
+        scope: '[data-test-selected-plan-users]',
+        text: text()
+      },
+
+      repos: {
+        scope: '[data-test-selected-plan-repos]',
+        text: text()
+      },
+
+      os: {
+        scope: '[data-test-selected-plan-os]',
         text: text()
       },
 

@@ -60,27 +60,20 @@ export default Component.extend({
       action: 'Pay Button Clicked',
       category: 'Subscription',
     });
-    const { stripeElement, account, newSubscription, selectedPlan } = this;
+    const { stripeElement, subscription, selectedPlan } = this;
     try {
-      const {
-        token: { id, card },
-        error
-      } = yield this.stripe.createStripeToken.perform(stripeElement);
-      if (!error) {
-        const organizationId = account.type === 'organization' ? +(account.id) : null;
-        newSubscription.creditCardInfo.setProperties({
-          token: id,
-          lastDigits: card.last4
+      const { token } = yield this.stripe.createStripeToken.perform(stripeElement);
+      if (token) {
+        subscription.creditCardInfo.setProperties({
+          token: token.id,
+          lastDigits: token.card.last4
         });
-        newSubscription.setProperties({
-          organizationId,
-          plan: selectedPlan,
-          coupon: this.isValidCoupon ? this.couponId : null
-        });
-        const { clientSecret } = yield newSubscription.save();
+        yield subscription.save();
+        yield subscription.changePlan.perform({ plan: selectedPlan.id });
+        yield this.accounts.fetchSubscriptions.perform();
         this.metrics.trackEvent({ button: 'pay-button' });
-        yield this.stripe.handleStripePayment.perform(clientSecret);
         this.storage.clearBillingData();
+        this.set('showPlansSelector', false);
       }
     } catch (error) {
       this.handleError();
@@ -89,13 +82,13 @@ export default Component.extend({
 
   validateCoupon: task(function* () {
     try {
-      yield this.newSubscription.validateCoupon.perform(this.couponId);
+      yield this.subscription.validateCoupon.perform(this.couponId);
     } catch {}
   }).drop(),
 
   handleError() {
     let message = 'An error occurred when creating your subscription. Please try again.';
-    const subscriptionErrors = this.newSubscription.errors;
+    const subscriptionErrors = this.subscription.errors;
     if (subscriptionErrors && subscriptionErrors.get('validationErrors').length > 0) {
       const validationError = subscriptionErrors.get('validationErrors')[0];
       message = validationError.message;
@@ -110,6 +103,10 @@ export default Component.extend({
 
     handleCouponFocus() {
       this.set('couponHasError', false);
+    },
+
+    clearCreditCardData() {
+      this.subscription.set('creditCardInfo', null);
     }
   }
 });

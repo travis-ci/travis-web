@@ -16,23 +16,19 @@ module('Integration | Component | selected-billing-plan', function (hooks) {
     const plan1 = {
       id: 1,
       name: 'Startup',
-      builds: 5,
-      price: 20000,
-      annual: false
+      starting_price: 30,
+      starting_users: 10
     };
     this.plan1 = plan1;
     this.set('selectedPlan', plan1);
 
     await render(hbs`<Billing::SelectedPlan
-      @showAnnual={{false}}
       @selectedPlan={{selectedPlan}}
       @goToFirstStep={{action 'goToFirstStep'}}/>`);
 
-    assert.equal(profilePage.billing.selectedPlanOverview.heading.text, 'summary');
     assert.equal(profilePage.billing.selectedPlanOverview.name.text, `${this.plan1.name}`);
-    assert.equal(profilePage.billing.selectedPlanOverview.jobs.text, `${this.plan1.builds} concurrent jobs`);
-    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${this.plan1.price / 100}`);
-    assert.equal(profilePage.billing.period.text, '/month');
+    assert.equal(profilePage.billing.selectedPlanOverview.users.text, `Up to ${this.plan1.starting_users} unique users`);
+    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${this.plan1.price}`);
     assert.equal(profilePage.billing.selectedPlanOverview.changePlan.text, 'Change plan');
   });
 });

@@ -73,12 +73,10 @@ export default Component.extend({
         const currentIndex = this.steps.indexOf(this.currentStep);
         const lastIndex = this.steps.length - 1;
         const nextIndex = Math.min(lastIndex, currentIndex + 1);
-        if (this.currentStep === STEPS.ONE) {
-          if (this.billingInfoExists) {
-            const currentStep = STEPS.THREE;
-            this.set('currentStep', currentStep);
-            this.set('billingInfo', this.existingBillingInfo);
-          }
+        if (this.billingInfoExists && this.currentStep === STEPS.ONE) {
+          const currentStep = STEPS.THREE;
+          this.set('currentStep', currentStep);
+          this.set('billingInfo', this.existingBillingInfo);
         } else {
           const currentStep = this.steps[nextIndex];
           this.set('currentStep', currentStep);
