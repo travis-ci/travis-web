@@ -555,6 +555,10 @@ export default create({
       changePlan: {
         scope: '.highlight-plan [data-test-change-selected-plan]',
         text: text()
+      },
+
+      subscribeButton: {
+        scope: '[data-test-subscribe-button]',
       }
     },
 
@@ -604,11 +608,11 @@ export default create({
       changePlan: {
         scope: '[data-test-change-selected-plan]',
         text: text()
-      }
-    },
+      },
 
-    subscribeButton: {
-      scope: '[data-test-subscribe-button]',
+      subscribeButton: {
+        scope: '[data-test-subscribe-button]',
+      }
     },
 
     marketplaceButton: {

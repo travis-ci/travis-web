@@ -17,27 +17,23 @@ module('Integration | Component | billing-select-plan', function (hooks) {
 
     const plan1 = {
       id: 1,
-      name: 'Startup',
-      builds: 5,
-      price: 20000,
-      annual: false
+      name: 'Standard Tier Plan',
+      starting_users: 5,
+      starting_price: 20000
     };
     this.plan1 = plan1;
 
     const plan2 = {
       id: 2,
-      name: 'Premium',
-      builds: 10,
-      price: 30000,
-      annual: true
+      name: 'Pro Tier Plan',
+      starting_users: 10,
+      starting_price: 30000
     };
     this.plan2 = plan2;
 
     this.setProperties({
       displayedPlans: [plan1, plan2],
       selectedPlan: plan1,
-      showMonthly: true,
-      showAnnual: false
     });
   });
 
@@ -52,8 +48,8 @@ module('Integration | Component | billing-select-plan', function (hooks) {
     );
 
     assert.dom(profilePage.billing.selectedPlan.name.scope).hasText(`${this.plan1.name}`);
-    assert.dom(profilePage.billing.selectedPlan.jobs.scope).hasText(`${this.plan1.builds} concurrent jobs`);
-    assert.dom(profilePage.billing.selectedPlan.price.scope).hasText(`$${this.plan1.price / 100} /month`);
+    assert.dom(profilePage.billing.selectedPlan.users.scope).hasText(`Up to ${this.plan1.starting_users} unique users`);
+    assert.dom(profilePage.billing.selectedPlan.price.scope).hasText(`Starting at $${this.plan1.starting_price / 100}`);
   });
 
   test('changing selected plan should highlight new plan', async function (assert) {
@@ -70,7 +66,7 @@ module('Integration | Component | billing-select-plan', function (hooks) {
     );
 
     assert.dom(profilePage.billing.selectedPlan.name.scope).hasText(`${this.plan2.name}`);
-    assert.dom(profilePage.billing.selectedPlan.jobs.scope).hasText(`${this.plan2.builds} concurrent jobs`);
-    assert.dom(profilePage.billing.selectedPlan.price.scope).hasText(`$${this.plan2.price / 100} /year`);
+    assert.dom(profilePage.billing.selectedPlan.users.scope).hasText(`Up to ${this.plan2.starting_users} unique users`);
+    assert.dom(profilePage.billing.selectedPlan.price.scope).hasText(`Starting at $${this.plan2.starting_price / 100}`);
   });
 });

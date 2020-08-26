@@ -220,6 +220,14 @@ export default function () {
     return schema.plans.all();
   });
 
+  this.get('/v2_plans_for/user', function (schema) {
+    return schema.plans.all();
+  });
+
+  this.get('/v2_plans_for/organization/:organization_id', function (schema) {
+    return schema.plans.all();
+  });
+
   this.get('/broadcasts', schema => {
     return schema.broadcasts.all();
   });

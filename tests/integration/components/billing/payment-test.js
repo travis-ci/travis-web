@@ -80,7 +80,7 @@ module('Integration | Component | billing-payment', function (hooks) {
       @back={{action 'back'}}
       @selectedPlan={{selectedPlan}}/>`);
 
-    assert.dom('h3').hasText('Order summary');
+    assert.dom('h3').hasText('Order Summary');
     assert.dom(profilePage.billing.billingPaymentForm.completePayment.scope).isVisible();
   });
 });

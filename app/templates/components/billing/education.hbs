@@ -2,7 +2,7 @@
   <div class="billing-subscription-section">
     <h3 class='plan-overview__header'>Overview</h3>
     <div class='plan'>
-      <BillingSummaryStatus 
+      <BillingSummaryStatus
         @subscription={{this.subscription}}
         @account={{this.account}}
       />
@@ -11,7 +11,9 @@
   </div>
 </section>
 <hr />
-<Billing::Process 
-  @account={{this.account}} 
-  @newSubscription={{this.newSubscription}}
+<Billing::Process
+  @account={{this.account}}
+  @subscription={{this.subscription}}
+  @showPlansSelector={{true}}
+  @retryAuthorization={{this.retryAuthorization}}
 />

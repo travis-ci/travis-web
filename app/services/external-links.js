@@ -36,7 +36,7 @@ export default Service.extend({
 
   billingUrl(accountType, login) {
     const id = accountType === 'user' ? 'account' : `organizations/${login}`;
-    return `${config.billingEndpoint}/${id}/subscription`;
+    return `${config.billingEndpoint}/${id}/plan`;
   },
 
   openSourceMigrationDocs: 'https://docs.travis-ci.com/user/open-source-on-travis-ci-com/#existing-open-source-repositories-on-travis-ciorg',

@@ -3,7 +3,13 @@
     <p class='selected-plan__details--name' data-test-selected-plan-name>
       {{this.selectedPlan.name}}
     </p>
-    <p class='selected-plan__details--jobs' data-test-selected-plan-users>
+    <p class='selected-plan__details--desc' data-test-selected-plan-credits>
+      {{this.selectedPlan.credits}} Credits
+    </p>
+    <p class='selected-plan__details--desc' data-test-selected-plan-oss-credits>
+      40,000 OSS Credits<span class='color-cement-grey'>/month</span>
+    </p>
+    <p class='selected-plan__details--desc' data-test-selected-plan-users>
       {{#if (eq this.selectedPlan.starting_users 999999)}}
         Unlimited unique users
       {{else}}
