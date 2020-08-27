@@ -10,8 +10,9 @@ export default Model.extend({
   state: attr('string'),
   zipCode: attr('string'),
   country: attr('string'),
-  vatId: attr(),
-  billingEmail: attr(),
+  vatId: attr('string'),
+  billingEmail: attr('string'),
+  hasLocalRegistration: attr('boolean'),
 
   subscription: belongsTo('subscription')
 });

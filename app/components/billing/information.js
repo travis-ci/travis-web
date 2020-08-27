@@ -6,9 +6,9 @@ import { reads } from '@ember/object/computed';
 export default Component.extend({
   countries,
 
-  isRegisteredForLocalVat: false,
+  billingInfo: reads('newSubscription.billingInfo'),
 
-  country: reads('newSubscription.billingInfo.country'),
+  country: reads('billingInfo.country'),
 
   isZeroVatThresholdCountry: computed('country', function () {
     const { country } = this;
@@ -34,7 +34,7 @@ export default Component.extend({
 
   actions: {
     updateEmails(values) {
-      this.newSubscription.billingInfo.set('billingEmail', values.join(','));
+      this.billingInfo.set('billingEmail', values.join(','));
     },
   }
 });
