@@ -20,7 +20,7 @@ export default Model.extend({
   status: attr(),
   validTo: attr(),
   createdAt: attr('date'),
-  permissions: attr(),
+  permissions: computed('', () => ({ write: true, read: true })),
   organizationId: attr(),
   coupon: attr(),
   clientSecret: attr(),
@@ -94,7 +94,7 @@ export default Model.extend({
     if (isGithub) {
       return config.marketplaceEndpoint;
     } else {
-      return `${config.billingEndpoint}/subscriptions/${id}`;
+      return `${config.billingEndpoint}/v2_subscriptions/${id}`;
     }
   }),
 
@@ -120,24 +120,24 @@ export default Model.extend({
   }),
 
   chargeUnpaidInvoices: task(function* () {
-    return yield this.api.post(`/subscription/${this.id}/pay`);
+    return yield this.api.post(`/v2_subscription/${this.id}/pay`);
   }).drop(),
 
   cancelSubscription: task(function* (data) {
-    yield this.api.post(`/subscription/${this.id}/cancel`, {
+    yield this.api.post(`/v2_subscription/${this.id}/cancel`, {
       data
     });
-    yield this.accounts.fetchSubscriptions.perform();
+    yield this.accounts.fetchV2Subscriptions.perform();
   }).drop(),
 
   changePlan: task(function* (data) {
     yield this.api.patch(`/v2_subscription/${this.id}/plan`, {
       data
     });
-    yield this.accounts.fetchSubscriptions.perform();
+    yield this.accounts.fetchV2Subscriptions.perform();
   }).drop(),
 
   resubscribe: task(function* () {
-    return yield this.api.patch(`/subscription/${this.id}/resubscribe`);
+    return yield this.api.patch(`/v2_subscription/${this.id}/resubscribe`);
   }).drop(),
 });

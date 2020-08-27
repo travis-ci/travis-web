@@ -172,6 +172,45 @@ export default VcsEntity.extend({
         this.accountSubscriptions.get('lastObject');
     }),
 
+  v2subscriptions: reads('accounts.v2subscriptions'),
+
+  accountv2Subscriptions: computed(
+    'v2subscriptions.@each.{validTo,owner,isSubscribed,isPending,isIncomplete}',
+    'login',
+    function () {
+      let subscriptions = this.v2subscriptions || [];
+      return subscriptions.filterBy('owner.login', this.login);
+    }),
+
+  activeAccountv2Subscriptions: filterBy('accountv2Subscriptions', 'isSubscribed'),
+  incompleteAccountv2Subscriptions: filterBy('accountv2Subscriptions', 'isIncomplete'),
+  pendingAccountv2Subscriptions: filterBy('accountv2Subscriptions', 'isPending'),
+  expiredAccountv2Subscriptions: filterBy('accountv2Subscriptions', 'isExpired'),
+  expiredStripev2Subscriptions: filterBy('expiredAccountv2Subscriptions', 'isStripe'),
+
+  expiredStripev2Subscription: computed('expiredStripev2Subscriptions.[]', function () {
+    if (this.expiredStripev2Subscriptions.length > 1) {
+      this.logMultipleSubscriptionsError();
+    }
+    return this.expiredStripev2Subscriptions.get('firstObject');
+  }),
+
+  v2subscription: computed(
+    'accountv2Subscriptions.[]',
+    'activeAccountv2Subscriptions.[]',
+    'pendingAccountv2Subscriptions.[]',
+    'incompleteAccountv2Subscriptions.[]', function () {
+      if (this.activeAccountv2Subscriptions.length > 1 ||
+        this.pendingAccountv2Subscriptions.length > 1 ||
+        this.incompleteAccountv2Subscriptions.length > 1) {
+        this.logMultipleSubscriptionsError();
+      }
+      return this.activeAccountv2Subscriptions.get('firstObject') ||
+        this.pendingAccountv2Subscriptions.get('firstObject') ||
+        this.incompleteAccountv2Subscriptions.get('firstObject') ||
+        this.accountv2Subscriptions.get('lastObject');
+    }),
+
   trial: computed('accounts.trials.@each.{created_at,owner,hasTrial}', 'login', function () {
     let trials = this.get('accounts.trials') || [];
     let login = this.login;

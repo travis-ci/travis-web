@@ -10,6 +10,7 @@ export default Component.extend({
   account: null,
 
   subscription: reads('account.subscription'),
+  v2subscription: reads('account.v2subscription'),
   isSubscriptionEmpty: empty('subscription'),
   trial: reads('account.trial'),
   isEducationalAccount: bool('account.education'),

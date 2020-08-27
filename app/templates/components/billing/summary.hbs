@@ -6,57 +6,18 @@
     </span>
   {{/if}}
   {{#if (not this.showPlansSelector)}}
-  <div class="flex flex--space-between flex--wrap plan-overview__details">
-    <section>
-      <h3 class='plan-overview__header'> Plan information </h3>
-      <div class='plan'>
-        <div>
-          <BillingSummaryStatus
-            @subscription={{this.subscription}}
-            @account={{this.account}}
-          />
-          <div class='plan-overview__description flex' data-test-plan-concurrency>
-            <span>
-              {{#if this.subscription.plan}}
-                {{pluralize this.subscription.plan.builds "concurrent job"}}
-                {{#if this.account.education}}
-                  (plus 1 for free)
-                {{/if}}
-              {{else}}
-                Unknown concurrent jobs
-              {{/if}}
-            </span>
-            {{#if (and this.subscription.isManual (not this.subscription.manualSubscriptionExpired))}}
-              <span class='plan-overview__description--validity dark-red display ml-2' data-test-plan-message='true'>
-                Renews on {{moment-format this.subscription.validTo "MMMM D, YYYY"}}
-              </span>
-            {{else}}
-              <span data-test-plan-message='true' class='plan-overview__description--validity ml-3
-                {{if this.canceledOrExpired 'dark-red' 'cement-grey'}}'
-              >
-                {{#if this.isSubscribed}}
-                  Valid until {{moment-format this.subscription.validTo "MMMM D, YYYY"}}
-                {{else if this.isIncomplete}}
-                  Incomplete
-                {{else if (and this.isComplete this.isCanceled)}}
-                  {{#if this.isGithubSubscription}}
-                    Cancelled on {{moment-format this.subscription.validTo "MMMM D, YYYY"}}
-                  {{else}}
-                    Expires {{moment-from-now this.subscription.validTo}} on {{moment-format this.subscription.validTo "MMMM DD"}}
-                  {{/if}}
-                {{else if (and this.isComplete this.isExpired)}}
-                  Expired {{moment-format this.subscription.validTo "MMMM D, YYYY"}}
-                {{/if}}
-              </span>
-            {{/if}}
-          </div>
-        </div>
-      </div>
-    </section>
-    <section>
-      <Billing::Price @subscription={{this.subscription}} @trial={{this.trial}}/>
-    </section>
-  </div>
+    {{#if this.v2subscription.isValid}}
+      <Billing::PlanInfoV2
+        @subscription={{this.v2subscription}}
+        @account={{this.account}}
+      />
+    {{else}}
+      <Billing::PlanInfo
+        @subscription={{this.subscription}}
+        @account={{this.account}}
+        @trial={{this.trial}}
+      />
+    {{/if}}
   {{/if}}
   {{#if this.subscription.isGithub}}
     <ManageSubscriptionButton

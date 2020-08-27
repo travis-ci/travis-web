@@ -50,6 +50,7 @@ export default Component.extend({
   updatePlan: task(function* () {
     yield this.subscription.changePlan.perform({ plan: this.selectedPlan.id });
     yield this.accounts.fetchSubscriptions.perform();
+    yield this.accounts.fetchV2Subscriptions.perform();
     yield this.retryAuthorization.perform();
     this.storage.clearBillingData();
     this.set('showPlansSelector', false);
@@ -71,6 +72,7 @@ export default Component.extend({
         yield subscription.save();
         yield subscription.changePlan.perform({ plan: selectedPlan.id });
         yield this.accounts.fetchSubscriptions.perform();
+        yield this.accounts.fetchV2Subscriptions.perform();
         this.metrics.trackEvent({ button: 'pay-button' });
         this.storage.clearBillingData();
         this.set('showPlansSelector', false);

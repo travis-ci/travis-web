@@ -30,7 +30,7 @@ export default Component.extend({
   isComplete: not('isIncomplete'),
   canCancelSubscription: and('isSubscribed', 'hasSubscriptionPermissions'),
   cancelSubscriptionLoading: reads('subscription.cancelSubscription.isRunning'),
-  isLoading: or('accounts.fetchSubscriptions.isRunning', 'cancelSubscriptionLoading', 'editPlan.isRunning', 'resubscribe.isRunning'),
+  isLoading: or('accounts.fetchSubscriptions.isRunning', 'accounts.fetchV2Subscriptions.isRunning', 'cancelSubscriptionLoading', 'editPlan.isRunning', 'resubscribe.isRunning'),
 
   handleError: reads('stripe.handleError'),
   options: config.stripeOptions,
@@ -63,6 +63,7 @@ export default Component.extend({
   editPlan: task(function* () {
     yield this.subscription.changePlan.perform({ plan: this.selectedPlan.id });
     yield this.accounts.fetchSubscriptions.perform();
+    yield this.accounts.fetchV2Subscriptions.perform();
     yield this.retryAuthorization.perform();
   }).drop(),
 
@@ -72,6 +73,7 @@ export default Component.extend({
       yield this.stripe.handleStripePayment.perform(result.payment_intent.client_secret);
     } else {
       yield this.accounts.fetchSubscriptions.perform();
+      yield this.accounts.fetchV2Subscriptions.perform();
     }
   }).drop(),
 

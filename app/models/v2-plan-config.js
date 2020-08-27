@@ -5,10 +5,5 @@ export default Model.extend({
   starting_price: attr(),
   starting_users: attr(),
   private_credits: attr(),
-  public_credits: attr(),
-  // V1 plan
-  builds: attr(),
-  price: attr(),
-  annual: attr('boolean'),
-  currency: attr(),
+  public_credits: attr()
 });

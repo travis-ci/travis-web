@@ -1,0 +1,52 @@
+<div class="flex flex--space-between flex--wrap plan-overview__details">
+  <section>
+    <h3 class='plan-overview__header'> Plan information </h3>
+    <div class='plan'>
+      <div>
+        <p class='plan-overview__name flex flex--v-center' data-test-plan-name='true'>
+          {{#if this.subscription.plan }}
+            {{this.subscription.plan.name}}
+          {{else}}
+            Unknown plan
+          {{/if}}
+        </p>
+        <div class='plan-overview__description' data-test-plan-concurrency>
+          <p>
+            {{#if (eq this.subscription.plan.starting_users 999999)}}
+              Unlimited unique users
+            {{else}}
+              Up to {{this.subscription.plan.starting_users}} unique users
+            {{/if}}
+          </p>
+          <p>
+            {{this.subscription.plan.private_credits}} Credits
+          </p>
+          <p>
+            {{this.subscription.plan.public_credits}} OSS Credits per month
+          </p>
+          <p>
+            Linux, Windows, macOS builds
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section>
+    <div class='selected-plan__price'>
+      <h6 class='selected-plan__price--total' data-test-plan-total='true'>
+        Total:
+      </h6>
+      {{#if this.subscription.plan }}
+        {{#if (eq this.subscription.plan.starting_price 0)}}
+          <p class='selected-plan__price--large' data-test-price>
+            Free
+          </p>
+        {{else}}
+          <p class='selected-plan__price--large' data-test-price>
+            {{format-currency this.subscription.plan.starting_price floor="true"}}
+          </p>
+        {{/if}}
+      {{/if}}
+    </div>
+  </section>
+</div>
