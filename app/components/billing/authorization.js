@@ -30,7 +30,8 @@ export default Component.extend({
   isComplete: not('isIncomplete'),
   canCancelSubscription: and('isSubscribed', 'hasSubscriptionPermissions'),
   cancelSubscriptionLoading: reads('subscription.cancelSubscription.isRunning'),
-  isLoading: or('accounts.fetchSubscriptions.isRunning', 'accounts.fetchV2Subscriptions.isRunning', 'cancelSubscriptionLoading', 'editPlan.isRunning', 'resubscribe.isRunning'),
+  isLoading: or('accounts.fetchSubscriptions.isRunning', 'accounts.fetchV2Subscriptions.isRunning',
+    'cancelSubscriptionLoading', 'editPlan.isRunning', 'resubscribe.isRunning'),
 
   handleError: reads('stripe.handleError'),
   options: config.stripeOptions,

@@ -25,7 +25,6 @@ export default Model.extend({
   coupon: attr(),
   clientSecret: attr(),
   paymentIntent: attr(),
-  planName: attr(),
 
   discount: belongsTo('discount', { async: false }),
   billingInfo: belongsTo('billing-info', { async: false }),
@@ -33,6 +32,7 @@ export default Model.extend({
   invoices: hasMany('invoice'),
   owner: belongsTo('owner', { polymorphic: true }),
   plan: belongsTo(),
+  addons: attr(),
 
   isSubscribed: equal('status', 'subscribed'),
   isCanceled: equal('status', 'canceled'),
@@ -47,6 +47,40 @@ export default Model.extend({
   managedSubscription: or('isStripe', 'isGithub'),
   isResubscribable: and('isStripe', 'isNotSubscribed'),
   isGithubResubscribable: and('isGithub', 'isNotSubscribed'),
+
+  addonUsage: computed('addons', function () {
+    const publicUsages = this.addons.reduce((processed, addon) => {
+      if (addon.type === 'credit_public') {
+        processed.totalCredits += addon.current_usage.addon_quantity;
+        processed.usedCredits += addon.current_usage.addon_usage;
+        processed.remainingCredits += addon.current_usage.remaining;
+      }
+
+      return processed;
+    }, {
+      totalCredits: 0,
+      usedCredits: 0,
+      remainingCredits: 0,
+    });
+    const privateUsages = this.addons.reduce((processed, addon) => {
+      if (addon.type === 'credit_private') {
+        processed.totalCredits += addon.current_usage.addon_quantity;
+        processed.usedCredits += addon.current_usage.addon_usage;
+        processed.remainingCredits += addon.current_usage.remaining;
+      }
+
+      return processed;
+    }, {
+      totalCredits: 0,
+      usedCredits: 0,
+      remainingCredits: 0,
+    });
+
+    return {
+      public: publicUsages,
+      private: privateUsages
+    };
+  }),
 
   priceInCents: reads('plan.price'),
   validateCouponResult: reads('validateCoupon.last.value'),

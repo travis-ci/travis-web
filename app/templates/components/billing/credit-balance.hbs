@@ -1,0 +1,29 @@
+<div class="billing-subscription-credits">
+  <h3>
+    Credits
+  </h3>
+  <nav class="travistab-nav--secondary">
+    <ul>
+      <li>
+        <a class="{{if (eq this.creditsTab 0) 'active' ''}}" onclick={{action "setPrivateCreditsTab"}}>Paid credits</a>
+      </li>
+      <li>
+        <a class="{{if (eq this.creditsTab 1) 'active' ''}}" onclick={{action "setOSSCreditsTab"}}>Open Source Credits</a>
+      </li>
+    </ul>
+  </nav>
+
+  <p class='avail-credits'>
+    {{this.creditsAvailable}} available credits
+  </p>
+  <p class='used-credits'>
+    You have used {{this.creditsUsed}} of {{this.creditsTotal}} credits
+  </p>
+  <div class='credits-bar-bg'>
+    <div class='credits-bar' style='width: {{this.creditsUsedPercentage}}%'></div>
+  </div>
+  <p class='credits-bar-left'>
+    {{this.creditsAvailable}} available <span class='credits-bar-right'>{{this.creditsUsed}} used</span>
+  </p>
+</div>
+<hr />

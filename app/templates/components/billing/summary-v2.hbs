@@ -1,0 +1,103 @@
+<div class='billing-subscription-section plan-overview'>
+  {{#if (not this.account.hasSubscriptionPermissions)}}
+    <span class="notice-banner--yellow" data-test-help='true'>
+      <SvgImage @name='icon-help' @class='icon-help icon-help-yellow' />
+      You don't have admin permissions to edit this subscription.
+    </span>
+  {{/if}}
+  {{#if (not this.showPlansSelector)}}
+    <span class="notice-banner--white" data-test-plan-notice='true'>
+      {{#if (eq this.subscription.plan.starting_price 0)}}
+        Please note that your Credit balance will be replenished monthly. Additional add-ons are not available for this plan
+      {{else}}
+        Please note that you will ONLY be charged monthly  for the unique users who triggered builds! You can replenish your Credit balance anytime by Buying add-ons. Credits are timeless and can be used in any month. Your OSS Credit balance will be replenished monthly.
+      {{/if}}
+    </span>
+    <div class="flex flex--space-between flex--wrap plan-overview__details">
+      <section>
+        <h3 class='plan-overview__header'> Plan information </h3>
+        <div class='plan'>
+          <div>
+            <p class='plan-overview__name flex flex--v-center' data-test-plan-name='true'>
+              {{#if this.subscription.plan }}
+                {{this.subscription.plan.name}}
+              {{else}}
+                Unknown plan
+              {{/if}}
+            </p>
+            <div class='plan-overview__description' data-test-plan-concurrency>
+              <p>
+                {{#if (eq this.subscription.plan.starting_users 999999)}}
+                  Unlimited unique users
+                {{else}}
+                  Up to {{this.subscription.plan.starting_users}} unique users
+                {{/if}}
+              </p>
+              <p>
+                {{this.subscription.plan.private_credits}} Credits
+              </p>
+              <p>
+                {{this.subscription.plan.public_credits}} OSS Credits per month
+              </p>
+              <p>
+                Linux, Windows, macOS builds
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section>
+        <div class='selected-plan__price'>
+          <h6 class='selected-plan__price--total' data-test-plan-total='true'>
+            Total:
+          </h6>
+          {{#if this.subscription.plan }}
+            {{#if (eq this.subscription.plan.starting_price 0)}}
+              <p class='selected-plan__price--large' data-test-price>
+                Free
+              </p>
+            {{else}}
+              <p class='selected-plan__price--large' data-test-price>
+                {{format-currency this.subscription.plan.starting_price floor="true"}}
+              </p>
+            {{/if}}
+          {{/if}}
+        </div>
+      </section>
+    </div>
+  {{/if}}
+  {{#if this.subscription.isGithub}}
+    <ManageSubscriptionButton
+      @subscription={{this.subscription}}
+      @account={{this.account}}
+    />
+  {{/if}}
+  {{#if (and this.subscription.isGithub this.hasExpiredStripeSubscription)}}
+    <h4 class="resubscribe-stripe-heading">resubscribe via travis ci:</h4>
+    <Billing::Authorization
+      @githubSubscription={{this.subscription}}
+      @subscription={{this.expiredStripeSubscription}}
+      @account={{this.account}}
+      @isPending={{this.isPending}}
+      @showPlansSelector={{this.showPlansSelector}}
+    />
+  {{/if}}
+  {{#if this.subscription.isStripe}}
+    <Billing::Authorization
+      @newSubscription={{this.newSubscription}}
+      @subscription={{this.subscription}}
+      @account={{this.account}}
+      @isPending={{this.isPending}}
+      @showPlansSelector={{this.showPlansSelector}}
+    />
+  {{/if}}
+</div>
+<hr />
+{{#if (and this.subscription.isStripe (not this.showPlansSelector))}}
+  {{#if (not (eq this.subscription.plan.starting_price 0))}}
+    <Billing::Address @subscription={{this.subscription}} @account={{this.account}}/>
+    <Billing::PaymentDetails @subscription={{this.subscription}} @account={{this.account}}//>
+    <hr />
+  {{/if}}
+  <Billing::CreditBalance @subscription={{this.subscription}} @account={{this.account}}/>
+{{/if}}

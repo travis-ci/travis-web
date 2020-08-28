@@ -671,6 +671,60 @@
       }
     }
 
+    .billing-subscription-credits {
+      margin-bottom: 25px;
+
+      nav.travistab-nav--secondary {
+        li {
+          width: 45%;
+          font-size: 14px;
+          text-align: center;
+          padding-right: 1em;
+          cursor: pointer;
+        }
+      }
+
+      .avail-credits {
+        font-size: 14px;
+        font-weight: 600;
+        color: $asphalt-grey;
+      }
+
+      .used-credits {
+        font-size: 14px;
+        color: $asphalt-grey;
+        margin-bottom: 8px;
+      }
+
+      .credits-bar {
+        height: 20px;
+        background-color: $oxide-blue;
+        text-align: center;
+        line-height: 20px;
+        color: $cement-grey;
+        border-radius: 8px;
+      }
+
+      .credits-bar-bg {
+        background-color: $pebble-grey;
+        border-radius: 8px;
+      }
+
+      .credits-bar-left {
+        font-size: 14px;
+        color: $asphalt-grey;
+        text-align: left;
+        margin-top: 4px;
+      }
+
+      .credits-bar-right {
+        font-size: 14px;
+        color: $asphalt-grey;
+        text-align: right;
+        float: right;
+      }
+    }
+
     .plan-overview {
 
       &__header {
