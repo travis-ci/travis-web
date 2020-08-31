@@ -45,7 +45,10 @@ export default Component.extend({
     }
   }),
 
-  creditCardInfoExists: reads('subscription.creditCardInfo.isValid'),
+  creditCardInfo: reads('subscription.creditCardInfo'),
+  creditCardInfoEmpty: computed('subscription.creditCardInfo', function () {
+    return this.creditCardInfo.token == null;
+  }),
 
   updatePlan: task(function* () {
     yield this.subscription.changePlan.perform({ plan: this.selectedPlan.id });

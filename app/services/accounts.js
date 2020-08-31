@@ -18,6 +18,7 @@ export default Service.extend({
   subscriptions: reads('fetchSubscriptions.lastSuccessful.value'),
   v2subscriptions: reads('fetchV2Subscriptions.lastSuccessful.value'),
   subscriptionError: false,
+  v2SubscriptionError: false,
   trials: reads('fetchTrials.lastSuccessful.value'),
 
   all: computed('user', 'organizations.@each', function () {
@@ -47,7 +48,7 @@ export default Service.extend({
   }),
 
   fetchV2Subscriptions: task(function* () {
-    this.set('subscriptionError', false);
+    this.set('v2SubscriptionError', false);
     try {
       const subscriptions = yield this.store.findAll('v2_subscription') || [];
 
@@ -57,7 +58,7 @@ export default Service.extend({
 
       return subscriptions.sortBy('validTo');
     } catch (e) {
-      this.set('subscriptionError', true);
+      this.set('v2SubscriptionError', true);
     }
   }),
 

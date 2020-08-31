@@ -15,6 +15,7 @@ export default Component.extend({
 
   showPlansSelector: false,
   showCancelModal: false,
+  isV2Subscription: false,
   selectedPlan: reads('subscription.plan'),
   showAnnual: bool('selectedPlan.annual'),
   showMonthly: not('showAnnual'),
@@ -32,6 +33,9 @@ export default Component.extend({
   cancelSubscriptionLoading: reads('subscription.cancelSubscription.isRunning'),
   isLoading: or('accounts.fetchSubscriptions.isRunning', 'accounts.fetchV2Subscriptions.isRunning',
     'cancelSubscriptionLoading', 'editPlan.isRunning', 'resubscribe.isRunning'),
+
+  freeV2Plan: equal('subscription.plan.starting_price', 0),
+  canBuyAddons: not('freeV2Plan'),
 
   handleError: reads('stripe.handleError'),
   options: config.stripeOptions,

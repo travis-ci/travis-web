@@ -75,39 +75,39 @@
       Credit card details are never stored on nor reach our servers. Payment data is handled by Stripe.
     </span>
   </span>
-  {{#if (not this.creditCardInfoExists)}}
-  <h4 data-test-credit-card='true' class="py-3">credit card details</h4>
-  <TravisForm data-test-stripe-form='true' @onSubmit={{perform this.createSubscription}} as |form|>
-    <StripeCard @onComplete={{action "complete"}} @options={{this.options}} as |stripeError|>
-      {{#if stripeError}}
-        <p>{{stripeError.message}}</p>
-      {{/if}}
-    </StripeCard>
-    <div class='billing-checkout__payment'>
-      {{#if this.isLoading}}
-        <LoadingIndicator/>
-      {{else}}
-        <button class='{{if this.stripeElement 'button--green' 'button disabled'}}' {{on 'click' form.submit}} data-test-complete-payment='true'>
-          Pay {{this.discountedPrice}} to complete order
-        </button>
-      {{/if}}
-    </div>
-  </TravisForm>
+  {{#if this.creditCardInfoEmpty}}
+    <h4 data-test-credit-card='true' class="py-3">credit card details</h4>
+    <TravisForm data-test-stripe-form='true' @onSubmit={{perform this.createSubscription}} as |form|>
+      <StripeCard @onComplete={{action "complete"}} @options={{this.options}} as |stripeError|>
+        {{#if stripeError}}
+          <p>{{stripeError.message}}</p>
+        {{/if}}
+      </StripeCard>
+      <div class='billing-checkout__payment'>
+        {{#if this.isLoading}}
+          <LoadingIndicator/>
+        {{else}}
+          <button class='{{if this.stripeElement 'button--green' 'button disabled'}}' {{on 'click' form.submit}} data-test-complete-payment='true'>
+            Pay {{this.discountedPrice}} to complete order
+          </button>
+        {{/if}}
+      </div>
+    </TravisForm>
   {{else}}
-  <div class='billing-checkout__details' data-test-credit-card-details='true'>
-    <div class='flex flex--wrap'>
-      <div class='flex--col-2'>
-        <h4 data-test-credit-card='true'>credit card details</h4>
-        <div class="flex flex--v-center">
-        <SvgImage @name="icon-credit-card" @class="icon--color" />
-        <p data-test-credit-card>
-          •••• •••• ••••
-          {{this.subscription.creditCardInfo.lastDigits}}
-        </p>
+    <div class='billing-checkout__details' data-test-credit-card-details='true'>
+      <div class='flex flex--wrap'>
+        <div class='flex--col-2'>
+          <h4 data-test-credit-card='true'>credit card details</h4>
+          <div class="flex flex--v-center">
+          <SvgImage @name="icon-credit-card" @class="icon--color" />
+          <p data-test-credit-card>
+            •••• •••• ••••
+            {{this.subscription.creditCardInfo.lastDigits}}
+          </p>
+          </div>
         </div>
       </div>
     </div>
-  </div>
     <div class='mt-5'>
       {{#if this.isLoading}}
         <LoadingIndicator/>
