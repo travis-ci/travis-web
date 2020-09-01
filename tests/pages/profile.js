@@ -551,11 +551,6 @@ export default create({
         text: text()
       },
 
-      jobs: {
-        scope: '[data-test-selected-plan-jobs]',
-        text: text()
-      },
-
       price: {
         scope: '[data-test-selected-plan-price]',
         text: text()

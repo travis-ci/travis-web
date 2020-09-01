@@ -1,10 +1,7 @@
 import Controller from '@ember/controller';
 import config from 'travis/config/environment';
-import { filterBy, equal } from '@ember/object/computed';
-import { computed } from '@ember/object';
+import { equal, reads } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
-
-const { plans } = config;
 
 const ANCHOR = {
   ENTERPRISE_SECTION: 'enterprise-section',
@@ -23,24 +20,16 @@ export default Controller.extend({
   buildMatrixUrl: config.urls.buildMatrix,
   enterpriseUrl: config.urls.enterprise,
 
-  plans: computed(() => plans),
-  annualPlans: filterBy('plans', 'period', 'annual'),
-  monthlyPlans: filterBy('plans', 'period', 'monthly'),
-  plansToDisplay: computed(
-    'showAnnual',
-    'annualPlans',
-    'monthlyPlans',
-    function () {
-      return this.showAnnual ? this.annualPlans : this.monthlyPlans;
-    }
-  ),
-
-  showAnnual: true,
+  plans: reads('model.plans'),
   scrollToContact: false,
 
   actions: {
     signIn() {
       this.auth.signIn();
+    },
+
+    signUp() {
+      this.transitionToRoute('signup');
     },
 
     toggleContactScroll() {
